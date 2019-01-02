@@ -209,6 +209,83 @@
 			colour = input(user,"Choose Color") as color
 			update_icon()
 
+/obj/item/toy/crayon/spraycan/proc/check_color()
+	var/hred[2]
+	var/hgreen[2]
+	var/hblue[2]
+	var/numr[2]
+	var/numg[2]
+	var/numb[2]
+	var/rgb[3]
+
+	if(colour)
+		hred[1] = copytext(colour, 2,3)
+		hred[2] = copytext(colour, 3,4)
+		hgreen[1] = copytext(colour, 4,5)
+		hgreen[2] = copytext(colour, 5,6)
+		hblue[1] = copytext(colour, 6,7)
+		hblue[2] = copytext(colour, 7,8)
+
+		for(var/i = 1, i < 2, i++)
+			switch(hred[i])
+				if("a")
+					hred[i] = "10"
+				if("b")
+					hred[i] = "11"
+				if("c")
+					hred[i] = "12"
+				if("d")
+					hred[i] = "13"
+				if("e")
+					hred[i] = "14"
+				if("f")
+					hred[i] = "15"
+			switch(hgreen[i])
+				if("a")
+					hgreen[i] = "10"
+				if("b")
+					hgreen[i] = "11"
+				if("c")
+					hgreen[i] = "12"
+				if("d")
+					hgreen[i] = "13"
+				if("e")
+					hgreen[i] = "14"
+				if("f")
+					hgreen[i] = "15"
+			switch(hblue[i])
+				if("a")
+					hblue[i] = "10"
+				if("b")
+					hblue[i] = "11"
+				if("c")
+					hblue[i] = "12"
+				if("d")
+					hblue[i] = "13"
+				if("e")
+					hblue[i] = "14"
+				if("f")
+					hblue[i] = "15"
+
+		numr[1] = text2num(hred[1])
+		numr[2] = text2num(hred[2])
+		numg[1] = text2num(hgreen[1])
+		numg[2] = text2num(hgreen[2])
+		numb[1] = text2num(hblue[1])
+		numb[2] = text2num(hblue[2])
+
+		rgb[1] = numr[1] * 16 + numr[2]
+		rgb[2] = numg[1] * 16 + numg[2]
+		rgb[3] = numb[1] * 16 + numb[2]
+
+		if(rgb[1] >= 60 || rgb[2] >= 60 || rgb[3] >=60)
+			return TRUE
+		else
+			return FALSE
+
+	else
+		return FALSE
+
 /obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return
@@ -237,8 +314,11 @@
 		N.overlays += image('icons/effects/Nuke_sprays.dmi', choice)
 		N.spray_icon_state = choice
 	if((istype(target, /obj/mecha) || istype(target, /mob/living/silicon/robot)) && uses >= 10)
-		target.color = colour
-		uses -= 10
+		if(check_color())
+			target.color = colour
+			uses -= 10
+		else
+			to_chat(user, "<span class='warning'> This is a disgusting color, you need to choose another </span>")
 	playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 	..()
 
