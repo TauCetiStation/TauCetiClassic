@@ -183,9 +183,9 @@ var/list/perlin_noise
 
 			if (perlin_noise[i][j] > 200)
 				result = "empty"
-			else if (perlin_noise[i][j] > 140)
+			else if (perlin_noise[i][j] > 100)
 				result = "flora"
-			else if (perlin_noise[i][j] > 130)
+			else if (perlin_noise[i][j] > 60)
 				result = "empty"
 			else
 				result = "ice"
