@@ -97,13 +97,18 @@
 		else
 			to_chat(user, "\red The plating is going to need some support.")
 
-/turf/simulated/snow/Entered(atom/A, atom/OL)
+/turf/simulated/snow/Entered(atom/movable/AM)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
 		to_chat(usr, "\red Movement is admin-disabled.")//This is to identify lag problems
 		return
 
-	if(type == /turf/simulated/snow && iscarbon(A))
-		var/mob/living/carbon/perp = A
+	..()
+
+	if(!ticker || !ticker.mode)
+		return
+
+	if(type == /turf/simulated/snow && iscarbon(AM))
+		var/mob/living/carbon/perp = AM
 
 		var/amount = 7
 		var/hasfeet = TRUE
@@ -136,8 +141,6 @@
 
 		perp.update_inv_shoes()
 
-	..()
-
 /turf/simulated/snow/ChangeTurf(path, force_lighting_update = 0)
 	return ..(path, TRUE)
 
@@ -151,6 +154,36 @@
 
 	basetype = /turf/simulated/snow/ice
 	footstep_sound = 'sound/effects/icestep.ogg'
+
+/atom/movable
+	var/ice_slide_count = 0
+
+/turf/simulated/snow/ice/Entered(atom/movable/AM)
+	if(movement_disabled && usr.ckey != movement_disabled_exception)
+		to_chat(usr, "\red Movement is admin-disabled.")//This is to identify lag problems
+		return
+
+	..()
+
+	if(QDELETED(AM) || src != AM.loc)
+		return
+
+	if(!ticker || !ticker.mode)
+		return
+
+	if(AM.inertia_dir && !isturf(get_step(AM, AM.inertia_dir)))
+		AM.ice_slide_count = 0
+		return
+
+	if(!AM.ice_slide_count)
+		AM.ice_slide_count = rand(3,10)
+
+	AM.ice_slide_count--
+
+	if(AM.ice_slide_count)
+		stoplag() // Let a diagonal move finish, if necessary
+		AM.newtonian_move(AM.inertia_dir)
+
 
 // Noise source: codepen.io/yutt/pen/rICHm
 var/datum/perlin/snow_map_noise
