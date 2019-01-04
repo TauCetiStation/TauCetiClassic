@@ -83,6 +83,9 @@
 	if(burn_damage)
 		take_damage(null, burn_damage)
 
+/mob/living/carbon/human
+	var/next_autoheal_allowed = 0 // turns off autoheal on damage for period of time
+
 // Paincrit knocks someone down once they hit 60 shock_stage, so by default make it so that close to 100 additional damage needs to be dealt,
 // so that it's similar to PAIN. Lowered it a bit since hitting paincrit takes much longer to wear off than a halloss stun.
 // These control the damage thresholds for the various ways of removing limbs
@@ -99,6 +102,8 @@
 
 	if(status & ORGAN_DESTROYED)
 		return 0
+
+	owner.next_autoheal_allowed = world.time + 15 SECONDS
 
 	var/sharp = (damage_flags & DAM_SHARP)
 	var/edge  = (damage_flags & DAM_EDGE)
@@ -497,22 +502,23 @@ Note that amputating the affected organ does in fact remove the infection from t
 			continue
 			// let the GC handle the deletion of the wound
 
-		// slow healing
-		var/heal_amt = 0
+		if(world.time >= owner.next_autoheal_allowed)
+			// slow healing
+			var/heal_amt = 0
 
-		// if damage >= 50 AFTER treatment then it's probably too severe to heal within the timeframe of a round.
-		if (W.can_autoheal() && W.wound_damage() < 50)
-			heal_amt += 0.5
+			// if damage >= 50 AFTER treatment then it's probably too severe to heal within the timeframe of a round.
+			if (W.can_autoheal() && W.wound_damage() < 50)
+				heal_amt += 0.5
 
-		//we only update wounds once in [wound_update_accuracy] ticks so have to emulate realtime
-		heal_amt = heal_amt * wound_update_accuracy
-		//configurable regen speed woo, no-regen hardcore or instaheal hugbox, choose your destiny
-		heal_amt = heal_amt * config.organ_regeneration_multiplier
-		// amount of healing is spread over all the wounds
-		heal_amt = heal_amt / (wounds.len + 1)
-		// making it look prettier on scanners
-		heal_amt = round(heal_amt,0.1)
-		W.heal_damage(heal_amt)
+			//we only update wounds once in [wound_update_accuracy] ticks so have to emulate realtime
+			heal_amt = heal_amt * wound_update_accuracy
+			//configurable regen speed woo, no-regen hardcore or instaheal hugbox, choose your destiny
+			heal_amt = heal_amt * config.organ_regeneration_multiplier
+			// amount of healing is spread over all the wounds
+			heal_amt = heal_amt / (wounds.len + 1)
+			// making it look prettier on scanners
+			heal_amt = round(heal_amt,0.1)
+			W.heal_damage(heal_amt)
 
 		// Salving also helps against infection
 		if(W.germ_level > 0 && W.salved && prob(2))
