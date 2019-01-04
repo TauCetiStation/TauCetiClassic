@@ -117,10 +117,14 @@
 		if(T == chassis.loc && src == chassis.selected)
 			if(istype(target, /turf/simulated/wall/r_wall))
 				occupant_message("<font color='red'>[target] is too durable to drill through.</font>")
-			else if(istype(target, /turf/simulated/mineral))
-				for(var/turf/simulated/mineral/M in range(chassis,1))
-					if(get_dir(chassis,M)&chassis.dir)
-						M.GetDrilled()
+			else if(istype(target, /turf/simulated/mineral) || istype(target, /obj/structure/flora/mine_rocks))
+				if(istype(target, /turf/simulated/mineral))
+					for(var/turf/simulated/mineral/M in range(chassis,1))
+						if(get_dir(chassis,M)&chassis.dir)
+							M.GetDrilled()
+				else
+					var/obj/structure/flora/mine_rocks/M = target
+					M.GetDrilled()
 				log_message("Drilled through [target]")
 				if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 					var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
@@ -184,10 +188,14 @@
 				if(do_after_cooldown(target))//To slow down how fast mechs can drill through the station
 					log_message("Drilled through [target]")
 					target.ex_act(3)
-			else if(istype(target, /turf/simulated/mineral))
-				for(var/turf/simulated/mineral/M in range(chassis,1))
-					if(get_dir(chassis,M)&chassis.dir)
-						M.GetDrilled()
+			else if(istype(target, /turf/simulated/mineral) || istype(target, /obj/structure/flora/mine_rocks))
+				if(istype(target, /turf/simulated/mineral))
+					for(var/turf/simulated/mineral/M in range(chassis,1))
+						if(get_dir(chassis,M)&chassis.dir)
+							M.GetDrilled()
+				else
+					var/obj/structure/flora/mine_rocks/M = target
+					M.GetDrilled()
 				log_message("Drilled through [target]")
 				if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 					var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo

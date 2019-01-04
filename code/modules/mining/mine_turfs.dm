@@ -176,9 +176,9 @@
 			return
 
 		var/obj/item/weapon/pickaxe/P = W
-		if(last_act + P.digspeed > world.time)//prevents message spam
+		if(last_act > world.time)//prevents message spam
 			return
-		last_act = world.time
+		last_act = world.time + P.digspeed
 
 		if(istype(P, /obj/item/weapon/pickaxe/drill))
 			var/obj/item/weapon/pickaxe/drill/D = P

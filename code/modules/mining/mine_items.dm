@@ -295,6 +295,8 @@ proc/move_mining_shuttle()
 	else
 		power_supply = new(src)
 	power_supply.give(power_supply.maxcharge)
+	update_mode_stats()
+
 
 /obj/item/weapon/pickaxe/drill/update_icon()
 	if(!state)
@@ -353,6 +355,10 @@ proc/move_mining_shuttle()
 		to_chat(user, "<span class='notice'>[src] is now standard mode.</span>")
 	else
 		to_chat(user, "<span class='notice'>[src] is now safe mode.</span>")
+	update_mode_stats()
+
+/obj/item/weapon/pickaxe/drill/proc/update_mode_stats()
+	digspeed = mode ? initial(digspeed) : (initial(digspeed) * 3)
 
 
 /obj/item/weapon/pickaxe/drill/jackhammer

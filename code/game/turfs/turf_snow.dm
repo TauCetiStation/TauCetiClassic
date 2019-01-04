@@ -50,6 +50,8 @@
 
 				if(!QDELETED(O) && prob(1) && prob(5))
 					new /mob/living/simple_animal/hostile/mimic/copy(src, O)
+			if("mine_rocks")
+				new /obj/structure/flora/mine_rocks(src)
 			if("ice")
 				ChangeTurf(/turf/simulated/snow/ice)
 				return TRUE
@@ -184,6 +186,85 @@
 		stoplag() // Let a diagonal move finish, if necessary
 		AM.newtonian_move(AM.inertia_dir)
 
+/obj/structure/flora/mine_rocks
+	name = "rock"
+	desc = "Can be mined with proper tools."
+	icon = 'icons/turf/rocks.dmi'
+	icon_state = "basalt1"
+	anchored = TRUE
+	density = TRUE
+
+	var/last_act = 0
+	var/mineral/mineral
+	var/mineralSpawnChanceList = list("Uranium" = 5, "Platinum" = 5, "Iron" = 35, "Coal" = 20, "Diamond" = 3, "Gold" = 10, "Silver" = 10, "Phoron" = 20)
+	var/ore_amount = 0
+	var/mined_ore_loss = 0
+
+/obj/structure/flora/mine_rocks/atom_init()
+	. = ..()
+	icon_state = "basalt[rand(1,3)]"
+
+	var/mineral_name = pickweight(mineralSpawnChanceList) //temp mineral name
+
+	if(!name_to_mineral)
+		SetupMinerals()
+
+	if (mineral_name && mineral_name in name_to_mineral)
+		mineral = name_to_mineral[mineral_name]
+
+		if(prob(15))
+			ore_amount = rand(12,18)
+		else if(prob(45))
+			ore_amount = rand(8,12)
+		else
+			ore_amount = rand(6,10)
+
+/obj/structure/flora/mine_rocks/attackby(obj/item/weapon/W, mob/user)
+	. = ..()
+
+	if (istype(W, /obj/item/weapon/pickaxe))
+		var/turf/T = user.loc
+		if (!isturf(T))
+			return
+
+		var/obj/item/weapon/pickaxe/P = W
+		if(last_act > world.time)//prevents message spam
+			return
+		last_act = world.time + P.digspeed
+
+		if(istype(P, /obj/item/weapon/pickaxe/drill))
+			var/obj/item/weapon/pickaxe/drill/D = P
+			if(!(istype(D, /obj/item/weapon/pickaxe/drill/borgdrill) || istype(D, /obj/item/weapon/pickaxe/drill/jackhammer)))	//borgdrill & jackhammer can't lose energy and crit fail
+				if(D.state)
+					to_chat(user, "<span class='danger'>[D] is not ready!</span>")
+					return
+				if(!D.power_supply || !D.power_supply.use(D.drill_cost))
+					to_chat(user, "<span class='danger'>No power!</span>")
+					return
+				if(D.mode)
+					if(mineral)
+						mined_ore_loss = mineral.ore_loss
+				D.power_supply.use(D.drill_cost)
+
+		playsound(user, P.drill_sound, 70, 0)
+		to_chat(user, "<span class='warning'>You start [P.drill_verb].</span>")
+
+		if(!user.is_busy() && do_after(user,P.digspeed, target = src))
+			to_chat(user, "<span class='notice'>You finish [P.drill_verb] the rock.</span>")
+			GetDrilled()
+
+/obj/structure/flora/mine_rocks/proc/GetDrilled()
+	if (mineral && ore_amount)
+		ore_amount -= max(1, mined_ore_loss)
+		mined_ore_loss = 0
+		DropMineral()
+
+/obj/structure/flora/mine_rocks/proc/DropMineral()
+	if(!mineral)
+		return
+	new mineral.ore(loc)
+	if(ore_amount <= 0)
+		qdel(src)
 
 // Noise source: codepen.io/yutt/pen/rICHm
 var/datum/perlin/snow_map_noise
@@ -217,9 +298,15 @@ var/list/perlin_noise
 			if (perlin_noise[i][j] > 200)
 				result = "empty"
 			else if (perlin_noise[i][j] > 100)
-				result = "flora"
+				if(prob(1) && prob(15))
+					result = "mine_rocks"
+				else
+					result = "flora"
 			else if (perlin_noise[i][j] > 60)
-				result = "empty"
+				if(prob(1) && prob(5))
+					result = "mine_rocks"
+				else
+					result = "empty"
 			else
 				result = "ice"
 
