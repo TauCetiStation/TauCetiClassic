@@ -16,9 +16,17 @@
 	plane = GAME_PLANE
 
 	var/static/datum/dirt_cover/basedatum = /datum/dirt_cover/snow
+	var/static/image/snow_fall_overlay
 
 /turf/simulated/snow/atom_init(mapload)
 	. = ..()
+
+	if(!snow_fall_overlay)
+		snow_fall_overlay = image(icon, "snow_fall")
+		snow_fall_overlay.plane = LIGHTING_PLANE
+		snow_fall_overlay.layer = LIGHTING_LAYER - 1
+	overlays += snow_fall_overlay
+
 	if(type == /turf/simulated/snow)
 		icon_state = pick(
 			prob(80);icon_state + "0",
