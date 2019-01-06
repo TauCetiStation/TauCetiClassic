@@ -49,6 +49,7 @@ var/list/airlock_overlays = list()
 	var/image/old_panel_overlay
 	var/image/old_weld_overlay
 	var/image/old_sparks_overlay
+	var/image/old_frozen_overlay
 
 	door_open_sound          = 'sound/machines/airlock/airlockToggle.ogg'
 	door_close_sound         = 'sound/machines/airlock/airlockToggle.ogg'
@@ -57,6 +58,8 @@ var/list/airlock_overlays = list()
 	var/door_bolt_down_sound = 'sound/machines/airlock/airlockBoltsDown.ogg'
 	var/door_forced_sound    = 'sound/machines/airlock/airlockForced.ogg'
 
+	var/frozen = FALSE
+
 /obj/machinery/door/airlock/atom_init(mapload, dir = null)
 	..()
 	wires = new(src)
@@ -64,6 +67,7 @@ var/list/airlock_overlays = list()
 		inner_material = "glass"
 	if(dir)
 		src.dir = dir
+	check_temperature()
 	update_icon()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -230,6 +234,7 @@ var/list/airlock_overlays = list()
 	var/image/panel_overlay
 	var/image/weld_overlay
 	var/image/sparks_overlay
+	var/image/frozen_overlay
 
 	switch(state)
 		if(AIRLOCK_CLOSED)
@@ -247,6 +252,8 @@ var/list/airlock_overlays = list()
 					lights_overlay = get_airlock_overlay("lights_bolts", overlays_file)
 				else if(emergency)
 					lights_overlay = get_airlock_overlay("lights_emergency", overlays_file)
+			if(frozen)
+				frozen_overlay = get_airlock_overlay("snowairlock", 'icons/turf/overlays.dmi')
 
 		if(AIRLOCK_DENY)
 			frame_overlay = get_airlock_overlay("closed", icon)
@@ -259,6 +266,8 @@ var/list/airlock_overlays = list()
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
 			lights_overlay = get_airlock_overlay("lights_denied", overlays_file)
+			if(frozen)
+				frozen_overlay = get_airlock_overlay("snowairlock", 'icons/turf/overlays.dmi')
 
 		if(AIRLOCK_EMAG)
 			frame_overlay = get_airlock_overlay("closed", icon)
@@ -271,6 +280,8 @@ var/list/airlock_overlays = list()
 				panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
+			if(frozen)
+				frozen_overlay = get_airlock_overlay("snowairlock", 'icons/turf/overlays.dmi')
 
 		if(AIRLOCK_CLOSING)
 			frame_overlay = get_airlock_overlay("closing", icon)
@@ -334,6 +345,10 @@ var/list/airlock_overlays = list()
 		overlays -= old_sparks_overlay
 		overlays += sparks_overlay
 		old_sparks_overlay = sparks_overlay
+	if(frozen_overlay != old_frozen_overlay)
+		overlays -= old_frozen_overlay
+		overlays += frozen_overlay
+		old_frozen_overlay = frozen_overlay
 
 /proc/get_airlock_overlay(icon_state, icon_file)
 	var/iconkey = "[icon_state][icon_file]"
@@ -1042,6 +1057,9 @@ var/list/airlock_overlays = list()
 
 		for(var/obj/effect/fluid/F in T)
 			qdel(F)
+
+	check_temperature()
+
 	..()
 
 /obj/machinery/door/airlock/proc/autoclose()
@@ -1059,6 +1077,30 @@ var/list/airlock_overlays = list()
 	open()
 	bolt()
 	return
+
+/obj/machinery/door/airlock/proc/check_temperature(temp = T0C, update_icon = FALSE)
+	frozen = FALSE
+	if(z != ZLEVEL_STATION)
+		return
+
+	if(temp < T0C)
+		frozen = TRUE
+	else
+		for(var/dir in cardinal)
+			var/turf/simulated/T = get_step(src, dir)
+			if(!istype(T))
+				continue
+
+			var/datum/gas_mixture/GM = T.return_air()
+			if(!GM)
+				continue
+
+			if(GM.temperature < T0C)
+				frozen = TRUE
+				break
+
+	if(frozen && update_icon)
+		update_icon()
 
 /obj/machinery/door/airlock/proc/change_paintjob(obj/item/C, mob/user)
 	var/obj/item/weapon/airlock_painter/W

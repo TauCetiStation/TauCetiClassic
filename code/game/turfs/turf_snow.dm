@@ -274,6 +274,59 @@
 	if(ore_amount <= 0)
 		qdel(src)
 
+/obj/effect/overlay/frozen
+	icon = 'icons/turf/overlays.dmi'
+	icon_state = "snowfloor"
+	anchored = 1
+	mouse_opacity = 0
+
+	var/list/spread_dirs
+
+/obj/effect/overlay/frozen/atom_init()
+	. = ..()
+	var/turf/simulated/T = loc
+	if(!istype(T) || !T.zone || T.air_unsim)
+		return INITIALIZE_HINT_QDEL
+
+	plane = T.plane
+	layer = T.layer + 0.01
+
+	spread_dirs = cardinal.Copy()
+
+	addtimer(CALLBACK(src, .proc/spread), rand(3 SECONDS, 15 SECONDS))
+
+	T.frozen_overlay = src
+	T.zone.frozen_objs += src
+
+	playsound(src, 'sound/effects/icestep.ogg', 50, 1)
+
+/obj/effect/overlay/frozen/Destroy()
+	var/turf/simulated/T = loc
+	if(istype(T) && T.frozen_overlay)
+		T.frozen_overlay = null
+		T.zone.frozen_objs -= src
+	return ..()
+
+/obj/effect/overlay/frozen/proc/spread()
+	var/picked_dir = pick(spread_dirs)
+	spread_dirs -= picked_dir
+
+	var/turf/simulated/T = get_step(src, picked_dir)
+	if(istype(T) && !T.air_unsim)
+		var/obj/machinery/door/airlock/A = locate() in T
+		if(A)
+			A.check_temperature(T0C-1, TRUE)
+
+		var/datum/gas_mixture/GM = T.return_air()
+		if(GM.temperature < T0C && !T.frozen_overlay)
+			new type(T)
+
+	if(spread_dirs.len)
+		addtimer(CALLBACK(src, .proc/spread), rand(3 SECONDS, 15 SECONDS))
+	else
+		spread_dirs = null
+
+
 // Noise source: codepen.io/yutt/pen/rICHm
 var/datum/perlin/snow_map_noise
 var/list/raw_noise
