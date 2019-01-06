@@ -67,13 +67,18 @@
 	desc = "For grilling, broiling, charring, smoking, heating, roasting, toasting, simmering, searing, melting, and occasionally burning things."
 	icon = 'icons/obj/structures/scrap/bonfire.dmi'
 	icon_state = "bonfire"
-	light_color = "#E25822"
+	light_color = "#FFFCD5"
 	density = FALSE
 	anchored = TRUE
 	buckle_lying = 0
 	var/burning = 0
 	var/grill = FALSE
 	var/fire_stack_strength = 5
+	var/fuel = 0
+
+/obj/structure/bonfire/atom_init()
+	. = ..()
+	fuel = rand(180,360)
 
 /obj/structure/bonfire/dense
 	density = TRUE
@@ -109,6 +114,20 @@
 			//	return ..()
 	if(is_hot(W))
 		StartBurning()
+	if(istype(W, /obj/item/stack/sheet/wood) || istype(W, /obj/item/weapon/grown/log))
+		to_chat(user, "<span class='italics'>You added [W] into \the [src].")
+		var/add_fuel = rand(55, 85)
+		if(istype(W, /obj/item/stack/sheet/wood))
+			var/obj/item/stack/sheet/wood/S = W
+			S.use(1)
+		else
+			add_fuel *= 2.5
+			qdel(W)
+		fuel = min(fuel + add_fuel, 1000)
+		if(burning)
+			var/datum/effect/effect/system/smoke_spread/smoke = new
+			smoke.set_up(1, 0, src)
+			smoke.start()
 /*	if(grill)
 		if(user.a_intent != "hurt" && !(W.flags_1 & ABSTRACT_1))
 			if(user.temporarilyRemoveItemFromInventory(W))
@@ -134,6 +153,53 @@
 		qdel(src)
 		return
 	..()
+
+/obj/structure/bonfire/proc/CheckFuel()
+	. = TRUE
+	if(!fuel)
+		return FALSE
+	fuel--
+	var/power = 1
+	switch(fuel)
+		if(601 to 1000)
+			power = 2
+			set_light(6)
+		if(401 to 600)
+			power = 1.5
+			if(light_range != 6)
+				set_light(5)
+		if(201 to 400)
+			if(light_range != 4)
+				set_light(4)
+			power = 1.2
+		if(0 to 200)
+			if(light_range != 2)
+				set_light(2)
+
+	for(var/thing in RANGE_TURFS(2, src))
+		var/mob/living/carbon/human/H = locate() in thing // 1 human per turf
+		if(!H)
+			continue
+
+		var/turf/T = thing
+		var/loc_temp = H.get_temperature(T.return_air())
+		var/add_temp = rand(10, 20) * power
+
+		if(loc_temp < H.bodytemperature)
+			add_temp *= (1-H.get_cold_protection(loc_temp))
+		else if (loc_temp > H.bodytemperature)
+			add_temp *= (1-H.get_heat_protection(loc_temp))
+
+		var/dist = get_dist(src, thing)
+
+		if(fuel > 600 && dist <= 1)
+			if(prob(20))
+				H.emote("scream",,, 1)
+			H.adjust_fire_stacks(fire_stack_strength)
+			H.IgniteMob()
+
+		H.bodytemperature += (add_temp / max(1, dist))
+
 
 
 /obj/structure/bonfire/proc/CheckOxygen()
@@ -189,7 +255,7 @@
 */
 
 /obj/structure/bonfire/process()
-	if(!CheckOxygen())
+	if(!CheckOxygen() || !CheckFuel())
 		extinguish()
 		return
 	Burn()
