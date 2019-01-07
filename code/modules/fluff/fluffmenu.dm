@@ -18,9 +18,7 @@
 
 	. += "</table>"
 
-//var/datum/custom_item/editing_item = null
-//var/editing_item_oldname = null
-var/list/editing_item_list = list()
+var/list/editing_item_list = list() // stores the item that is currently being edited for each player
 var/list/editing_item_oldname_list = list()
 /proc/edit_custom_item_panel(datum/preferences/prefs, mob/user, readonly = FALSE)
 	if(!user)
@@ -32,7 +30,6 @@ var/list/editing_item_oldname_list = list()
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
 	dat += "<style type='text/css'>a.white, a.white:link, a.white:visited, a.white:active{color: #40628a;text-decoration: none;background: #ffffff;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
 	dat += "<style>body{background-color: #F5ECDD}</style>"
-	//dat += "<style>.main_menu{margin-left:150px;margin-top:135px}</style>"
 
 	var/icon/preview_icon = icon('icons/effects/effects.dmi', "nothing")
 	var/icon/preview_icon_mob = null
@@ -224,7 +221,15 @@ var/list/editing_item_oldname_list = list()
 		if(!editing_item || !editing_item.icon || !editing_item.icon_state)
 			return
 
+		var/itemCount = get_custom_items(user.client.ckey).len
+		var/slotCount = user.client.get_custom_items_slot_count()
+
+
 		if(editing_item_oldname) //editing
+			if(slotCount < itemCount) // can't edit, we have too much custom items
+				alert(user, "You have too much custom items, remove old ones before being able to edit", "Info", "OK")
+				return
+
 			editing_item.status = "submitted"
 			editing_item.moderator_message = ""
 			custom_item_premoderation_reject(user.client.ckey, editing_item_oldname, "") //remove old one from premoderation
@@ -235,7 +240,10 @@ var/list/editing_item_oldname_list = list()
 		else //adding new
 			var/datum/custom_item/old_item = get_custom_item(user.client.ckey, editing_item.name)
 			if(old_item)
-				to_chat(user, "<span class='alert'>You already have an item with name [editing_item.name]</span>")
+				alert(user, "You already have an item with name [editing_item.name]", "Info", "OK")
+				return
+			if(slotCount <= itemCount) // can't create, we have too much custom items
+				alert(user, "You don't have free custom item slots", "Info", "OK")
 				return
 
 			editing_item.status = "submitted"
@@ -243,7 +251,6 @@ var/list/editing_item_oldname_list = list()
 			custom_item_premoderation_add(user.client.ckey, editing_item.name)
 			qdel(editing_item)
 			user << browse(null, "window=edit_custom_item")
-			//return
 
 	if(href_list["delete"])
 		if(!editing_item || !editing_item.icon || !editing_item.icon_state || !editing_item_oldname)
@@ -259,6 +266,9 @@ var/list/editing_item_oldname_list = list()
 		if(!editing_item || !new_item_icon)
 			return
 		var/icon/I = new(new_item_icon)
+		if(!I)
+			to_chat(user, "This icon is invalid")
+			return
 		var/list/icon_states = icon_states(I)
 		if(icon_states.len == 0)
 			to_chat(user, "This icon has no states")
@@ -299,7 +309,7 @@ var/list/editing_item_oldname_list = list()
 	set desc = "Allows you to add custom items slots to people."
 
 	src = usr.client.holder
-	if(!check_rights(R_ADMIN|R_WHITELIST))
+	if(!check_rights(R_ADMIN|R_PERMISSIONS))
 		return
 
 	var/list/slots = get_custom_items_slot_all()
@@ -334,7 +344,7 @@ var/list/editing_item_oldname_list = list()
 	usr << browse(entity_ja(output),"window=customitems;size=600x500")
 
 /datum/admins/proc/customs_items_add(target_ckey = null)
-	if(!check_rights(R_WHITELIST))
+	if(!check_rights(R_ADMIN|R_PERMISSIONS))
 		return
 
 	if(!target_ckey)
@@ -359,7 +369,7 @@ var/list/editing_item_oldname_list = list()
 
 /datum/admins/proc/customs_items_history(user_ckey)
 	src = usr.client.holder
-	if(!check_rights(R_ADMIN|R_WHITELIST))
+	if(!check_rights(R_ADMIN|R_PERMISSIONS))
 		return
 
 	var/list/history = get_custom_items_history(user_ckey)
@@ -403,7 +413,7 @@ var/list/editing_item_oldname_list = list()
 	usr << browse(entity_ja(output),"window=customitems_history;size=600x500")
 
 /datum/admins/proc/customs_items_remove(target_ckey, index)
-	if(!check_rights(R_WHITELIST))
+	if(!check_rights(R_ADMIN|R_PERMISSIONS))
 		return
 
 	if(!target_ckey)

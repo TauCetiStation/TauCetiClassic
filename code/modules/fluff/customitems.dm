@@ -33,6 +33,7 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 /obj/item/clothing/gloves/custom
 	name = "Custom gloves"
 	body_parts_covered = 0
+	species_restricted = null
 
 /obj/item/clothing/shoes/custom
 	name = "Custom shoes"

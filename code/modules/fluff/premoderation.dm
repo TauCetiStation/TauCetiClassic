@@ -70,7 +70,7 @@
 
 /datum/admins/proc/customitemsview_panel(player_ckey = null)
 	src = usr.client.holder
-	if(!check_rights(R_ADMIN|R_WHITELIST))
+	if(!check_rights(R_ADMIN|R_PERMISSIONS))
 		return
 
 	var/output = {"<!DOCTYPE html>
