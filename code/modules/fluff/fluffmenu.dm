@@ -193,7 +193,7 @@ var/list/editing_item_oldname_list = list()
 
 	if(href_list["change_desc"])
 		var/new_item_desc = sanitize(input("Enter item desc:", "Text")  as text|null)
-		if(!editing_item || !new_item_desc || length(new_item_desc) <= 2 || length(new_item_desc) > 100)
+		if(!editing_item || !new_item_desc || length(new_item_desc) <= 2 || length(new_item_desc) > 500)
 			return
 		editing_item.desc = new_item_desc
 		edit_custom_item_panel(src, user)
