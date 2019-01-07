@@ -665,7 +665,7 @@
 /mob/living/carbon/proc/can_eat(flags = 255) //I don't know how and why does it work
 	return TRUE
 
-/mob/living/carbon/proc/crawl_in_blood(obj/effect/decal/cleanable/blood/floor_blood)
+/mob/living/carbon/proc/crawl_in_blood(obj/effect/decal/cleanable/blood/floor_blood, amount)
 	return
 
 /mob/living/carbon/get_nutrition()

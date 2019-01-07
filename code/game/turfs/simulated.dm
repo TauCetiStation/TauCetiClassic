@@ -142,7 +142,7 @@
 	..()
 
 //returns 1 if made bloody, returns 0 otherwise
-/turf/simulated/add_blood(mob/living/carbon/human/M)
+/turf/simulated/add_blood(mob/living/carbon/human/M, blood_datum)
 	if (!..())
 		return 0
 
@@ -158,7 +158,9 @@
 	var/obj/effect/decal/cleanable/blood/newblood = new /obj/effect/decal/cleanable/blood(src)
 
 	//Species-specific blood.
-	if(M.species)
+	if(blood_datum)
+		newblood.basedatum = blood_datum
+	else if(M.species)
 		newblood.basedatum = new M.species.blood_color
 	else
 		newblood.basedatum = new/datum/dirt_cover/red_blood()

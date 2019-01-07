@@ -420,7 +420,7 @@
 
 
 //returns 1 if made bloody, returns 0 otherwise
-/atom/proc/add_blood(mob/living/carbon/human/M)
+/atom/proc/add_blood(mob/living/carbon/human/M, blood_datum)
 	if(flags & NOBLOODY) return 0
 	.=1
 	if (!( istype(M, /mob/living/carbon/human) ))
@@ -431,7 +431,10 @@
 	M.check_dna()
 	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
-	add_dirt_cover(new M.species.blood_color)
+	if(blood_datum)
+		add_dirt_cover(blood_datum)
+	else
+		add_dirt_cover(new M.species.blood_color)
 //	blood_color = "#A10808"
 //	if (M.species)
 //		blood_color = M.species.blood_color

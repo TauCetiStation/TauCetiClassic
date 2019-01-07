@@ -96,7 +96,7 @@ var/global/list/image/splatter_cache=list()
 
 	perp.update_inv_shoes()
 	if(perp.lying)
-		perp.crawl_in_blood(src)
+		perp.crawl_in_blood(src, 2)
 	amount--
 
 /obj/effect/decal/cleanable/blood/proc/dry()
