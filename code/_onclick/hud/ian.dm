@@ -54,7 +54,7 @@
 
 
 /datum/hud/proc/ian_hud()
-	if(!(is_alien_whitelisted(mymob, "ian") || (config.allow_donators && mymob.client.donator && !is_alien_whitelisted_banned(mymob, "ian"))))
+	if(!(is_alien_whitelisted(mymob, "ian") || (mymob.client.supporter && !is_alien_whitelisted_banned(mymob, "ian"))))
 		return
 
 	var/ui_style = 'icons/mob/screen_corgi.dmi'

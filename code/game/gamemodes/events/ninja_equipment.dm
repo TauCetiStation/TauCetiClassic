@@ -589,6 +589,8 @@ ________________________________________________________________________________
 				to_chat(U, "You feel a tiny prick and a sudden rush of substance in to your veins.")
 
 		if("Trigger Ability")
+			if(!(href_list["name"] in list("Phase Jaunt","Phase Shift","Energy Blade","Energy Star","Energy Net","EM Burst","Smoke Bomb","Adrenaline Boost")))
+				return
 			var/ability_name = href_list["name"]+href_list["cost"]//Adds the name and cost to create the full proc name.
 			var/proc_arguments//What arguments to later pass to the proc, if any.
 			var/targets[] = list()//To later check for.

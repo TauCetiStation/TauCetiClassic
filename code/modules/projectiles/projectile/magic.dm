@@ -191,7 +191,7 @@
 	damage_type = OXY
 	nodamage = 1
 	flag = "magic"
-	var/list/doors = list(/obj/structure/mineral_door/iron, /obj/structure/mineral_door/silver,/obj/structure/mineral_door/gold, /obj/structure/mineral_door/uranium,
+	var/list/doors = list(/obj/structure/mineral_door/metal, /obj/structure/mineral_door/silver,/obj/structure/mineral_door/gold, /obj/structure/mineral_door/uranium,
 					/obj/structure/mineral_door/sandstone, /obj/structure/mineral_door/transparent/diamond, /obj/structure/mineral_door/wood)
 
 /obj/item/projectile/magic/door/on_hit(atom/target)

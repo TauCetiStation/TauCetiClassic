@@ -47,11 +47,6 @@ var/global/list/datum/stack_recipe/plastic_recipes = list ( \
 	new/datum/stack_recipe("plastic blinds", /obj/structure/curtain/blinds, 10, one_per_turf = TRUE, on_floor = TRUE)
 	)
 
-var/global/list/datum/stack_recipe/iron_recipes = list ( \
-	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, one_per_turf = TRUE, on_floor = TRUE), \
-	null, \
-)
-
 var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	new/datum/stack_recipe("golden door", /obj/structure/mineral_door/gold, 10, one_per_turf = TRUE, on_floor = TRUE), \
 	)
@@ -90,11 +85,6 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	sheettype = "iron"
 	color = "#333333"
 	perunit = 3750
-
-
-/obj/item/stack/sheet/mineral/iron/atom_init()
-	. = ..()
-	recipes = iron_recipes
 
 /*
  * Sandstone

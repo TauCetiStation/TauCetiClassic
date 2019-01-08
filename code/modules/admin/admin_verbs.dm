@@ -116,7 +116,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/achievement,
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/centcom_barriers_toggle,
-	/client/proc/gateway_fix
+	/client/proc/gateway_toggle
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -730,7 +730,7 @@ var/list/admin_verbs_hideable = list(
 
 	if(!check_rights(R_ADMIN))
 		return
-	var sec_level = input(usr, "It's currently code [get_security_level()].", "Select Security Level")  as null|anything in (list("green","blue","red","delta")-get_security_level())
+	var/sec_level = input(usr, "It's currently code [get_security_level()].", "Select Security Level")  as null|anything in (list("green","blue","red","delta")-get_security_level())
 	if(alert("Switch from code [get_security_level()] to code [sec_level]?","Change security level?","Yes","No") == "Yes")
 		set_security_level(sec_level)
 		log_admin("[key_name(usr)] changed the security level to code [sec_level].")
@@ -1058,18 +1058,17 @@ var/list/admin_verbs_hideable = list(
 // Gateway
 //////////////////////////////
 
-/client/proc/gateway_fix()
+/client/proc/gateway_toggle()
 	set category = "Event"
-	set name = "Connect Gateways"
+	set name = "Toggle Station Gateway"
 
 	if(!check_rights(R_FUN))
 		return
 
-	for(var/obj/machinery/gateway/G in machines)
-		G.atom_init()
+	config.gateway_enabled = !config.gateway_enabled
 
-	log_admin("[key_name(src)] connected gates")
-	message_admins("\blue [key_name_admin(src)] connected gates")
+	log_admin("[key_name(src)] toggle [config.gateway_enabled ? "on" : "off"] station gateway")
+	message_admins("[key_name(src)] toggle [config.gateway_enabled ? "on" : "off"] station gateway")
 
 //////////////////////////////
 // Velocity\Centcomm barriers

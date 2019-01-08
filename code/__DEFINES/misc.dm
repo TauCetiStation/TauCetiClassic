@@ -90,17 +90,6 @@
 #define MAX_STACK_AMOUNT_GLASS	50
 #define MAX_STACK_AMOUNT_RODS	60
 
-//some colors
-#define COLOR_RED 		"#FF0000"
-#define COLOR_GREEN 	"#00FF00"
-#define COLOR_BLUE 		"#0000FF"
-#define COLOR_CYAN 		"#00FFFF"
-#define COLOR_PINK 		"#FF00FF"
-#define COLOR_YELLOW 	"#FFFF00"
-#define COLOR_ORANGE 	"#FF9900"
-#define COLOR_WHITE 	"#FFFFFF"
-#define COLOR_GRAY      "#808080"
-
 //some arbitrary defines to be used by self-pruning global lists. (see master_controller)
 #define PROCESS_KILL 26	//Used to trigger removal from a processing list
 
@@ -202,3 +191,7 @@
 
 //Error handler defines
 #define ERROR_USEFUL_LEN 2
+
+#define CLIENT_FROM_VAR(I) (ismob(I) ? I:client : (istype(I, /client) ? I : (istype(I, /datum/mind) ? I:current?:client : null)))
+
+#define ENTITY_TAB "&nbsp;&nbsp;&nbsp;&nbsp;"

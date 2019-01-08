@@ -1286,6 +1286,86 @@
 	icon_state = "taj_hair_messylong"
 	species_allowed = list(TAJARAN)
 
+/datum/sprite_accessory/hair/taj_sidebraid
+	name = "Tajara Side Braid"
+	icon_state = "taj_hair_sidebraid"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_ribbons
+	name = "Tajara Ribbons"
+	icon_state = "taj_hair_ribbons"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_earrings
+	name = "Tajara Ear Rings"
+	icon_state = "taj_hair_earrings"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_combedback
+	name = "Tajara Combed Back"
+	icon_state = "taj_hair_combedback"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_tailedbangs
+	name = "Tajara Tailed Bangs"
+	icon_state = "taj_hair_tailedbangs"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_punk
+	name = "Tajara Punk"
+	icon_state = "taj_hair_punk"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_marmalade
+	name = "Tajara Marmalade"
+	icon_state = "taj_hair_marmalade"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_lynx
+	name = "Tajara Lynx"
+	icon_state = "taj_hair_lynx"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_longtail
+	name = "Tajara Long Tail"
+	icon_state = "taj_hair_longtail"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_shy
+	name = "Tajara Shy"
+	icon_state = "taj_hair_shy"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_metal
+	name = "Tajara Metal"
+	icon_state = "taj_hair_metal"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_ponytail
+	name = "Tajara Ponytail"
+	icon_state = "taj_hair_ponytail"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_overeye
+	name = "Tajara Over Eye"
+	icon_state = "taj_hair_overeye"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_tough
+	name = "Tajara Tough"
+	icon_state = "taj_hair_tough"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_cuttail
+	name = "Tajara Cut Tail"
+	icon_state = "taj_hair_cuttail"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_dreadlocks
+	name = "Tajara Dreadlocks"
+	icon_state = "taj_hair_dreadlocks"
+	species_allowed = list(TAJARAN)
+
 /datum/sprite_accessory/hair/vox_quills_short
 	name = "Short Vox Quills"
 	icon_state = "vox_shortquills"
