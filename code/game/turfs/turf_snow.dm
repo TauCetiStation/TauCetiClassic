@@ -168,6 +168,23 @@
 	basetype = /turf/simulated/snow/ice
 	footstep_sound = 'sound/effects/icestep.ogg'
 
+/turf/simulated/snow/ice/ChangeTurf(path, force_lighting_update = 0)
+	if(path != type)
+		var/obj/effect/overlay/ice_hole/IH = locate() in contents
+		if(IH)
+			qdel(IH)
+	return ..(path, TRUE)
+
+/turf/simulated/snow/ice/attackby(obj/O, mob/user)
+	. = ..()
+	if(!(locate(/obj/effect/overlay/ice_hole) in contents) && has_edge(O) && !user.is_busy())
+		playsound(src, 'sound/effects/digging.ogg', 50, 1, -1)
+		var/type = src.type
+		if(!do_after(user, 20 SECONDS, target = src) || type != src.type)
+			return
+		new /obj/effect/overlay/ice_hole(src)
+		playsound(src, 'sound/effects/digging.ogg', 50, 1, -1)
+
 /atom/movable
 	var/ice_slide_count = 0
 
@@ -329,6 +346,86 @@
 	else
 		spread_dirs = null
 
+/obj/effect/overlay/ice_hole
+	name = "ice hole"
+	icon = 'icons/turf/snow2.dmi'
+	icon_state = "ice_hole"
+	anchored = 1
+
+/obj/effect/overlay/ice_hole/attackby(obj/O, mob/user)
+	. = ..()
+	if (istype(O, /obj/item/weapon/wirerod) && !user.is_busy())
+		visible_message("<span class='notice'>[user] starts fishing.</span>")
+		if(do_after(user, 10 SECONDS, target = src))
+			if(prob(20))
+				var/fish_path = pick(
+					prob(90);/obj/item/fish_carp,
+					prob(20);/obj/item/fish_carp/mega
+					)
+				var/obj/fish = new fish_path(loc, get_step(user, get_dir(src, user)))
+				visible_message("<span class='notice'>[user] has caught [fish].</span>")
+			else
+				visible_message("<span class='notice'>[user] fails to catch anything.</span>")
+		else
+			visible_message("<span class='notice'>[user] stops fishing.</span>")
+
+/obj/random/misc/all/high
+	spawn_nothing_percentage = 40
+
+/obj/item/fish_carp
+	name = "space carp"
+	desc = "A ferocious, fang-bearing creature that resembles a fish."
+	icon = 'icons/mob/animal.dmi'
+	icon_state = "carp_dead"
+	var/meat_amount_max = 1
+	var/loot_amount = 1
+
+/obj/item/fish_carp/atom_init(mapload, catch_target_turf)
+	. = ..()
+
+	appearance_flags |= PIXEL_SCALE
+	var/matrix/Mx = matrix()
+	Mx.Scale(0.5)
+	transform = Mx
+
+	if(catch_target_turf)
+		INVOKE_ASYNC(src, .proc/play_catch_anim, catch_target_turf)
+
+/obj/item/fish_carp/attackby(obj/item/weapon/W, mob/user)
+	. = ..()
+	if(is_sharp(W) && !user.is_busy())
+		to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
+		playsound(src, 'sound/weapons/slice.ogg', 50, 1, -1)
+		if(!do_after(user, 80, target = src) || QDELETED(src))
+			return
+		var/amount = rand(1, meat_amount_max)
+		for (var/i in 1 to amount)
+			new /obj/item/weapon/reagent_containers/food/snacks/carpmeat(loc)
+		for (var/i in 1 to loot_amount)
+			new /obj/random/misc/all/high(src)
+		for(var/obj/item/loot in contents)
+			if(prob(66))
+				loot.make_old()
+			loot.loc = loc
+		visible_message("<span class='notice'>[user] butchers [src].</span>")
+		qdel(src)
+
+/obj/item/fish_carp/proc/play_catch_anim(turf/target)
+	var/throw_dist = get_dist(src, target)
+	var/throw_dist_half = round(throw_dist * 0.5)
+	animate(src, pixel_y = 48, time = throw_dist_half, easing = SINE_EASING)
+	animate(pixel_y = 0, time = throw_dist_half, easing = BOUNCE_EASING)
+	for (var/i in 1 to 2)
+		if(QDELETED(src))
+			return
+		sleep(1)
+		loc = get_step(src, get_dir(src, target))
+
+/obj/item/fish_carp/mega
+	icon = 'icons/mob/megacarp.dmi'
+	icon_state = "megacarp_dead"
+	meat_amount_max = 4
+	loot_amount = 3
 
 // Noise source: codepen.io/yutt/pen/rICHm
 var/datum/perlin/snow_map_noise
