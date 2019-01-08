@@ -32,7 +32,7 @@
 			to_chat(user, "<span class='notice'>You [anchored ? "attach" : "detach"] the [src] [anchored ? "to" : "from"] the ground</span>")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 		processing_wrench = FALSE
-			return
+		return
 	else
 		return ..()
 
