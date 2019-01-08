@@ -27,6 +27,9 @@
 		snow_fall_overlay.layer = LIGHTING_LAYER - 1
 	overlays += snow_fall_overlay
 
+	if(IsEven(x) && IsEven(y))
+		set_light(1.4, 1, "#0000FF")
+
 	if(type == /turf/simulated/snow)
 		icon_state = pick(
 			prob(80);icon_state + "0",
