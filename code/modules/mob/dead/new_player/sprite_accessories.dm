@@ -835,11 +835,6 @@
 	icon_state = "hair_ougi"
 	gender = NEUTER
 
-datum/sprite_accessory/hair/quadcurls
-	name = "Quadcurls "
-	icon_state = "hair_quadcurls"
-	gender = FEMALE
-
 //datum/sprite_accessory/hair/modern
 //	name = "Modern"
 //	icon_state = "hair_modern"
