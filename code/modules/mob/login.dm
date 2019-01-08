@@ -37,8 +37,6 @@
 	client.pixel_y = 0
 	next_move = 1
 
-	sight |= SEE_BLACKNESS
-
 	..()
 
 	if(loc && !isturf(loc))
