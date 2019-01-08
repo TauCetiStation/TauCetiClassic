@@ -6,7 +6,7 @@
 	opacity = TRUE
 	density = FALSE
 	anchored = TRUE
-	var/processing_wrench
+	var/processing_wrench = FALSE
 
 /obj/structure/curtain/open
 	icon_state = "open"
@@ -26,14 +26,12 @@
 
 /obj/structure/curtain/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench) && !processing_wrench)
-		processing_wrench = 1
+		processing_wrench = TRUE
 		if(do_after(user, 20, target = src))
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "attach" : "detach"] the [src] [anchored ? "to" : "from"] the ground</span>")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			processing_wrench = 0
-		else
-			processing_wrench = 0
+		processing_wrench = FALSE
 			return
 	else
 		return ..()
@@ -73,19 +71,19 @@
 /obj/structure/curtain/open/shower/security
 	color = "#aa0000"
 
-//BLINDS//
-//plastic ones
+// BLINDS //
+// plastic ones
 /obj/structure/curtain/blinds
 	name = "plastic blinds"
 	desc = "Who's that peekin' though the blinds?"
 	icon = 'icons/obj/blinds/blinds_plastic.dmi'
 	icon_state = "closed"
-	var/list/has_been_checked
+	var/list/has_been_checked = FALSE
 
 /obj/structure/curtain/blinds/atom_init()
 	. = ..()
 	icon_update()
-	for(var/obj/structure/curtain/blinds/B in range (2, src))
+	for(var/obj/structure/curtain/blinds/B in range(2, src))
 		B.icon_update()
 
 /obj/structure/curtain/blinds/proc/icon_update()
@@ -95,7 +93,7 @@
 		verbs -= /obj/structure/curtain/blinds/verb/toggle_blinds
 	var/position
 	var/isitopened
-	if(opacity)//Are they closed?
+	if(opacity) // Are they closed?
 		isitopened = "closed"
 	else
 		isitopened = "opened"
@@ -103,7 +101,7 @@
 		position = "_right"
 	if(locate(/obj/structure/curtain/blinds, get_step(src, EAST)))
 		position = "_left"
-	if((locate(/obj/structure/curtain/blinds, get_step(src, SOUTH))) || ( locate(/obj/structure/curtain/blinds, get_step(src, EAST)) && locate(/obj/structure/curtain/blinds, get_step(src, WEST))))
+	if(locate(/obj/structure/curtain/blinds, get_step(src, SOUTH)) || ( locate(/obj/structure/curtain/blinds, get_step(src, EAST)) && locate(/obj/structure/curtain/blinds, get_step(src, WEST))))
 		position = "_center"
 	icon_state = "[isitopened][position]"
 
@@ -119,7 +117,7 @@
 		playsound(get_turf(loc), 'sound/effects/curtain.ogg', 15, 1, -5)
 		icon_update()
 		check_sides()
-		if(opacity)//Are they closed?
+		if(opacity) // Are they closed?
 			verbs +=/obj/structure/curtain/blinds/verb/peek
 		else
 			verbs -=/obj/structure/curtain/blinds/verb/peek
@@ -137,14 +135,14 @@
 	return
 
 /obj/structure/curtain/blinds/attackby(obj/item/weapon/W, mob/user)
-	.=..()
+	. = ..()
 	icon_update()
-	for(var/obj/structure/curtain/blinds/B in range (2, src))
+	for(var/obj/structure/curtain/blinds/B in range(2, src))
 		B.icon_update()
 
 /obj/structure/curtain/blinds/proc/check_sides()
 	has_been_checked += src
-	for(var/obj/structure/curtain/blinds/B in range (1, src))
+	for(var/obj/structure/curtain/blinds/B in range(1, src))
 		if(!(B in has_been_checked))
 			B.set_opacity(src.opacity)
 			B.icon_update()
@@ -156,7 +154,7 @@
 	spawn(5)
 		has_been_checked = null
 
-//Wooden blinds//
+// Wooden blinds //
 /obj/structure/curtain/blinds/wooden
 	name = "wooden blinds"
 	desc = "Who's that peekin' though the blinds?"
@@ -169,7 +167,7 @@
 		verbs -= /obj/structure/curtain/blinds/wooden/verb/wooden_toggle_blinds
 	var/position
 	var/isitopened
-	if(opacity)//Are they closed?
+	if(opacity) // Are they closed?
 		isitopened = "closed"
 	else
 		isitopened = "opened"
@@ -177,7 +175,7 @@
 		position = "_right"
 	if(locate(/obj/structure/curtain/blinds, get_step(src, EAST)))
 		position = "_left"
-	if((locate(/obj/structure/curtain/blinds, get_step(src, SOUTH))) || ( locate(/obj/structure/curtain/blinds, get_step(src, EAST)) && locate(/obj/structure/curtain/blinds, get_step(src, WEST))))
+	if(locate(/obj/structure/curtain/blinds, get_step(src, SOUTH)) || ( locate(/obj/structure/curtain/blinds, get_step(src, EAST)) && locate(/obj/structure/curtain/blinds, get_step(src, WEST))))
 		position = "_center"
 	icon_state = "[isitopened][position]"
 
@@ -211,12 +209,12 @@
 
 /obj/structure/curtain/blinds/wooden/check_sides()
 	has_been_checked += src
-	for(var/obj/structure/curtain/blinds/wooden/B in range (1, src))
+	for(var/obj/structure/curtain/blinds/wooden/B in range(1, src))
 		if(!(B in has_been_checked))
 			B.set_opacity(src.opacity)
 			B.icon_update()
 			B.check_sides()
-			if(B.opacity)//Are they closed?
+			if(B.opacity) // Are they closed?
 				B.verbs +=/obj/structure/curtain/blinds/wooden/verb/wooden_peek
 			else
 				B.verbs -=/obj/structure/curtain/blinds/wooden/verb/wooden_peek
