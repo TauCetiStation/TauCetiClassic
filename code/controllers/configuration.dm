@@ -163,6 +163,8 @@
 	var/allow_byond_membership = 0
 	var/donate_info_url = 0
 
+	var/customitem_slot_by_time = 80000 // Gives one slot for fluff items after playing this much minutes
+
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
 
@@ -575,6 +577,9 @@
 
 				if("donate_info_url")
 					config.donate_info_url = value
+
+				if("customitem_slot_by_time")
+					config.customitem_slot_by_time = text2num(value)
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")

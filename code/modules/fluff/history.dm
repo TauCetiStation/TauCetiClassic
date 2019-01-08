@@ -19,8 +19,6 @@
 	admin_ckey = ckey(admin_ckey)
 
 	ammount = round(ammount)
-	if(ammount < 0)
-		ammount = 0
 
 	customItemsCache.cd = "/"
 	var/list/slots = null
@@ -77,8 +75,6 @@
 		slots[player_ckey] = 0
 
 	slots[player_ckey] = ammount
-	if(slots[player_ckey] < 0)
-		slots[player_ckey] = 0
 
 	customItemsCache["slots"] << slots
 
@@ -89,19 +85,3 @@
 	if(!slots)
 		slots = list()
 	return slots
-
-/client/proc/add_custom_item_slot(ammount = 1)
-	customItemsCache.cd = "/"
-	var/list/slots = null
-	customItemsCache["slots"] >> slots
-	if(!slots)
-		slots = list()
-
-	if(!(ckey in slots))
-		slots[ckey] = 0
-
-	slots[ckey] += ammount
-	if(slots[ckey] < 0)
-		slots[ckey] = 0
-
-	customItemsCache["slots"] << slots

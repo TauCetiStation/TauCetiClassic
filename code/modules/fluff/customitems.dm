@@ -60,12 +60,18 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 
 	var/ammount = 0
 
-	if(ckey in slots)
-		ammount += slots[ckey]
-
 	//all your donator checks go here
 	if(supporter)
 		ammount += 1
+
+	if(player_ingame_age >= config.customitem_slot_by_time)
+		ammount += 1
+
+	if(ckey in slots)
+		ammount += slots[ckey]
+
+	if(ammount < 0)
+		ammount = 0
 
 	return ammount
 

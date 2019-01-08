@@ -145,7 +145,7 @@ var/list/editing_item_oldname_list = list()
 	if(href_list["show_info"])
 		if(alert(user, "You can get custom item slots by supporting the project, monetary or through contributions like coding and spriting", "Info", "Show Donation Links", "OK") == "Show Donation Links")
 			if(config.donate_info_url)
-				to_chat(user, "<a href='[config.donate_info_url]'>Support project</a>")
+				to_chat(user, "<a href='[config.donate_info_url]'>Support this project</a>")
 			if(config.allow_byond_membership)
 				to_chat(user, "<a href='http://www.byond.com/membership'>Become Byond Member</a>")
 			if(!config.donate_info_url && !config.allow_byond_membership)
@@ -352,14 +352,12 @@ var/list/editing_item_oldname_list = list()
 		if(!target_ckey)
 			return
 
-	var/ammount = input(usr,"type in ammount:","Ammount", 1) as null|num
+	var/ammount = input(usr,"type in ammount (can be negative):","Ammount", 1) as null|num
 	if(!ammount)
 		return
 	ammount = round(ammount)
-	if(ammount < 0)
-		ammount = 0
 
-	var/reason = input(usr, "([target_ckey] +[ammount]) type in reason:", "Reason") as null|text
+	var/reason = input(usr, "([target_ckey] [ammount > 0 ? "+" : ""][ammount]) type in reason:", "Reason") as null|text
 	if(!reason)
 		return
 
