@@ -4,8 +4,12 @@
 
 /datum/dirt_cover/New(datum/dirt_cover/cover)
 	if(cover)
-		name = cover.name
-		color = cover.color
+		if(ispath(cover))
+			name = initial(cover.name)
+			color = initial(cover.color)
+		else
+			name = cover.name
+			color = cover.color
 	..()
 
 /datum/dirt_cover/dirt
