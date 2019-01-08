@@ -80,6 +80,10 @@
 	icon_state = "closed"
 	var/list/has_been_checked = FALSE
 
+/obj/structure/curtain/blinds/attack_hand(mob/user)
+	if(icon_state == "closed_left_peekin" || icon_state == "closed_peekin" || icon_state == "closed" || icon_state == "opened" || icon_state == "closed_left" || icon_state == "opened_left")
+		toggle_blinds_plastic()
+
 /obj/structure/curtain/blinds/atom_init()
 	. = ..()
 	icon_update()
@@ -87,10 +91,10 @@
 		B.icon_update()
 
 /obj/structure/curtain/blinds/proc/icon_update()
-	if((icon_state == "closed_right_peekin") || (icon_state == "closed_peekin") || (icon_state == "closed") || (icon_state == "opened") || (icon_state == "closed_left") || (icon_state == "opened_left"))
-		verbs += /obj/structure/curtain/blinds/verb/toggle_blinds
+	if(icon_state == "closed_left_peekin" || icon_state == "closed_peekin" || icon_state == "closed" || icon_state == "opened" || icon_state == "closed_left" || icon_state == "opened_left")
+		verbs += /obj/structure/curtain/blinds/verb/toggle_blinds_plastic
 	else
-		verbs -= /obj/structure/curtain/blinds/verb/toggle_blinds
+		verbs -= /obj/structure/curtain/blinds/verb/toggle_blinds_plastic
 	var/position
 	var/isitopened
 	if(opacity) // Are they closed?
@@ -105,14 +109,12 @@
 		position = "_center"
 	icon_state = "[isitopened][position]"
 
-
-
-/obj/structure/curtain/blinds/verb/toggle_blinds()
+/obj/structure/curtain/blinds/verb/toggle_blinds_plastic()
 	set name = "Toggle"
 	set desc = ""
 	set category = "Object"
 	set src in oview(1)
-	if((icon_state == "closed_right_peekin") || (icon_state == "closed_peekin") || (icon_state == "closed") || (icon_state == "opened") || (icon_state == "left_closed") || (icon_state == "left_opened"))
+	if(icon_state == "closed_left_peekin" || icon_state == "closed_peekin" || icon_state == "closed" || icon_state == "opened" || icon_state == "closed_left" || icon_state == "opened_left")
 		set_opacity(!opacity)
 		playsound(get_turf(loc), 'sound/effects/curtain.ogg', 15, 1, -5)
 		icon_update()
@@ -129,7 +131,7 @@
 	set category = "Object"
 	set src in oview(1)
 	usr.visible_message("<span class='notice'>[usr] peeks through \the [src]...</span>")
-	if((icon_state == "closed") || (icon_state == "closed_center") || (icon_state == "closed_left") || (icon_state == "closed_right"))
+	if(icon_state == "closed" || icon_state == "closed_center" || icon_state == "closed_left" || icon_state == "closed_right")
 		icon_state = "[icon_state]_peekin"
 		opacity = FALSE
 	return
@@ -137,17 +139,17 @@
 /obj/structure/curtain/blinds/attackby(obj/item/weapon/W, mob/user)
 	. = ..()
 	icon_update()
-	for(var/obj/structure/curtain/blinds/B in range(2, src))
+	for(var/obj/structure/curtain/blinds/B in range (2, src))
 		B.icon_update()
 
 /obj/structure/curtain/blinds/proc/check_sides()
 	has_been_checked += src
-	for(var/obj/structure/curtain/blinds/B in range(1, src))
+	for(var/obj/structure/curtain/blinds/B in range (1, src))
 		if(!(B in has_been_checked))
 			B.set_opacity(src.opacity)
 			B.icon_update()
 			B.check_sides()
-			if(B.opacity)//Are they closed?
+			if(B.opacity) // Are they closed?
 				B.verbs +=/obj/structure/curtain/blinds/verb/peek
 			else
 				B.verbs -=/obj/structure/curtain/blinds/verb/peek
@@ -160,8 +162,12 @@
 	desc = "Who's that peekin' though the blinds?"
 	icon = 'icons/obj/blinds/blinds_wooden.dmi'
 
+/obj/structure/curtain/blinds/wooden/attack_hand(mob/user)
+	if(icon_state == "closed_left_peekin" || icon_state == "closed_peekin" || icon_state == "closed" || icon_state == "opened" || icon_state == "closed_left" || icon_state == "opened_left")
+		wooden_toggle_blinds()
+
 /obj/structure/curtain/blinds/wooden/icon_update()
-	if((icon_state == "closed_right_peekin") || (icon_state == "closed_peekin") || (icon_state == "closed") || (icon_state == "opened") || (icon_state == "closed_left") || (icon_state == "opened_left"))
+	if(icon_state == "closed_left_peekin" || icon_state == "closed_peekin" || icon_state == "closed" || icon_state == "opened" || icon_state == "closed_left" || icon_state == "opened_left")
 		verbs += /obj/structure/curtain/blinds/wooden/verb/wooden_toggle_blinds
 	else
 		verbs -= /obj/structure/curtain/blinds/wooden/verb/wooden_toggle_blinds
@@ -195,12 +201,12 @@
 	set desc = ""
 	set category = "Object"
 	set src in oview(1)
-	if((icon_state == "closed_right_peekin") || (icon_state == "closed_peekin") || (icon_state == "closed") || (icon_state == "opened") || (icon_state == "left_closed") || (icon_state == "left_opened"))
+	if(icon_state == "closed_left_peekin" || icon_state == "closed_peekin" || icon_state == "closed" || icon_state == "opened" || icon_state == "closed_left" || icon_state == "opened_left")
 		set_opacity(!opacity)
 		playsound(get_turf(loc), 'sound/effects/curtain.ogg', 15, 1, -5)
 		icon_update()
 		check_sides()
-		if(opacity)//Are they closed?
+		if(opacity) // Are they closed?
 			verbs +=/obj/structure/curtain/blinds/wooden/verb/wooden_peek
 		else
 			verbs -=/obj/structure/curtain/blinds/wooden/verb/wooden_peek
@@ -209,7 +215,7 @@
 
 /obj/structure/curtain/blinds/wooden/check_sides()
 	has_been_checked += src
-	for(var/obj/structure/curtain/blinds/wooden/B in range(1, src))
+	for(var/obj/structure/curtain/blinds/wooden/B in range (1, src))
 		if(!(B in has_been_checked))
 			B.set_opacity(src.opacity)
 			B.icon_update()
