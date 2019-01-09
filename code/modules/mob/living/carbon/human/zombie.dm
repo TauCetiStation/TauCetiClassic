@@ -185,7 +185,7 @@
 	// remove the character from the list of the dead
 	if(H.stat == DEAD)
 		dead_mob_list -= H
-		living_mob_list += H
+		alive_mob_list += H
 		H.tod = null
 		H.timeofdeath = 0
 	H.stat = CONSCIOUS
@@ -355,7 +355,7 @@ var/list/zombie_list = list()
 	var/mob/living/carbon/human/target = null
 	var/min_dist = 999
 
-	for(var/mob/living/carbon/human/H in mob_list)
+	for(var/mob/living/carbon/human/H in human_list)
 		if(H.stat == DEAD || iszombie(H) || H.z != user.z)
 			continue
 		var/turf/target_turf = get_turf(H)

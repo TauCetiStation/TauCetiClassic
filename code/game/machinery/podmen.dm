@@ -91,7 +91,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 			return
 
 /obj/item/seeds/replicapod/proc/request_player()
-	for(var/mob/dead/observer/O in dead_mob_list)
+	for(var/mob/dead/observer/O in observer_list)
 		if(O.has_enabled_antagHUD && config.antag_hud_restricted)
 			continue
 		if(jobban_isbanned(O, ROLE_PLANT))

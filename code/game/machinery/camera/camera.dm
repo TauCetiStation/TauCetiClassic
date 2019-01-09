@@ -173,8 +173,8 @@
 			itemname = P.name
 			info = P.notehtml
 		to_chat(U, "You hold \the [itemname] up to the camera ...")
-		for(var/mob/living/silicon/ai/O in living_mob_list)
-			if(!O.client)
+		for(var/mob/living/silicon/ai/O in ai_list)
+			if(!O.client || O.stat == DEAD)
 				continue
 			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U.name]</a></b> holds \a [itemname] up to one of your cameras ...")
 			O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, entity_ja(info)), text("window=[]", itemname))
@@ -251,13 +251,13 @@
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = 1
-	for(var/mob/living/silicon/S in mob_list)
+	for(var/mob/living/silicon/S in silicon_list)
 		S.triggerAlarm("Camera", get_area(src), list(src), src)
 
 
 /obj/machinery/camera/proc/cancelCameraAlarm()
 	alarm_on = 0
-	for(var/mob/living/silicon/S in mob_list)
+	for(var/mob/living/silicon/S in silicon_list)
 		S.cancelAlarm("Camera", get_area(src), src)
 
 /obj/machinery/camera/proc/can_use()

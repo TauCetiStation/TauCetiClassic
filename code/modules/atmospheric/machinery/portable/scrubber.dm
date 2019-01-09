@@ -150,12 +150,18 @@
 
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/atom_init()
 	. = ..()
+	scrubber_huge_list += src
+
 	cell = null
 
 	id = gid
 	gid++
 
 	name = "[name] (ID [id])"
+
+/obj/machinery/portable_atmospherics/powered/scrubber/huge/Destroy()
+	scrubber_huge_list -= src
+	return ..()
 
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/attack_ghost(mob/user)
 	return //Do not show anything

@@ -1254,6 +1254,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(istype(H))
 		src.icon_state = H.gender == MALE? "head_m" : "head_f"
 	. = ..()
+	organ_head_list += src
 	//Add (facial) hair.
 	if(H.f_style)
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.f_style]
@@ -1304,6 +1305,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 		H.client.eye = src
 	H.update_body()
 	H.update_hair()
+
+/obj/item/weapon/organ/head/Destroy()
+	organ_head_list -= src
+	return ..()
 
 /obj/item/weapon/organ/head/proc/transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
 	brainmob = new(src)
