@@ -287,6 +287,7 @@ proc/move_mining_shuttle()
 	var/obj/item/weapon/stock_parts/cell/power_supply
 	var/cell_type = /obj/item/weapon/stock_parts/cell
 	var/mode = 0
+	var/on = FALSE
 
 /obj/item/weapon/pickaxe/drill/atom_init()
 	. = ..()
@@ -347,14 +348,18 @@ proc/move_mining_shuttle()
 			power_supply = null
 			to_chat(user, "<span class='notice'>You pull the powercell out of \the [src].</span>")
 		return
-
 /obj/item/weapon/pickaxe/drill/attack_self(mob/user)
+	if(!on)
+		on = TRUE
+		to_chat(user, "<span class='notice'>You turned on the [src] in [mode ? "standard" : "safe"] mode. Use again to switch the mode.</span>")
+		return
+
 	mode = !mode
 
 	if(mode)
-		to_chat(user, "<span class='notice'>[src] is now standard mode.</span>")
+		to_chat(user, "<span class='notice'>[src] is now standard mode. Chance to loose some precious ore, faster digging speed.</span>")
 	else
-		to_chat(user, "<span class='notice'>[src] is now safe mode.</span>")
+		to_chat(user, "<span class='notice'>[src] is now safe mode. No ore loss, slow digging speed.</span>")
 	update_mode_stats()
 
 /obj/item/weapon/pickaxe/drill/proc/update_mode_stats()
