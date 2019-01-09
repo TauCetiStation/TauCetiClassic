@@ -262,6 +262,10 @@
 
 		if(istype(P, /obj/item/weapon/pickaxe/drill))
 			var/obj/item/weapon/pickaxe/drill/D = P
+			if(!D.on)
+				last_act = world.time + 10
+				to_chat(user, "<span class='danger'>[D] is turned off!</span>")
+				return
 			if(!(istype(D, /obj/item/weapon/pickaxe/drill/borgdrill) || istype(D, /obj/item/weapon/pickaxe/drill/jackhammer)))	//borgdrill & jackhammer can't lose energy and crit fail
 				if(D.state)
 					to_chat(user, "<span class='danger'>[D] is not ready!</span>")
