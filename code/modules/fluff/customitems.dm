@@ -217,5 +217,5 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 		if(H.put_in_hands(item))
 			to_chat(H, "<span class='notice'>Placing \the [item] in your hands!</span>")
 			continue
-		to_chat(H, "<span class='danger'>Failed to locate a storage object on your mob, either you spawned with no arms and no backpack or this is a bug.</span>")
+		world.log << "Failed to locate a storage object for [H], either he spawned with no arms and no backpack or this is a bug"
 		qdel(item)
