@@ -2,10 +2,6 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 
 /obj/item/customitem
 	name = "Custom item"
-	desc = "custom item."
-	icon = 'icons/obj/candle.dmi'
-	icon_state = "candle"
-	item_state = "candle"
 
 /obj/item/weapon/lighter/zippo/custom
 	name = "Custom zippo"
@@ -160,7 +156,7 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 		custom_items += item_name
 
 /proc/give_custom_items(mob/living/carbon/human/H, datum/job/job)
-	if(!H.client.prefs.custom_items || !H.client.prefs.custom_items.len || job.title == "Cyborg" || job.title == "AI")
+	if(!H.client.prefs.custom_items || !H.client.prefs.custom_items.len || !job.give_loadout_items)
 		return
 
 	var/list/custom_items = H.client.prefs.custom_items

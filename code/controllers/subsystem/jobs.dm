@@ -354,7 +354,7 @@ var/datum/subsystem/job/SSjob
 		var/list/custom_equip_slots = list() //If more than one item takes the same slot, all after the first one spawn in storage.
 		var/list/custom_equip_leftovers = list()
 		var/metadata
-		if(H.client.prefs.gear && H.client.prefs.gear.len && job.title != "Cyborg" && job.title != "AI")
+		if(H.client.prefs.gear && H.client.prefs.gear.len && job.give_loadout_items)
 			for(var/thing in H.client.prefs.gear)
 				var/datum/gear/G = gear_datums[thing]
 				if(G)
