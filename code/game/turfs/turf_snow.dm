@@ -177,13 +177,20 @@
 
 /turf/simulated/snow/ice/attackby(obj/O, mob/user)
 	. = ..()
-	if(!(locate(/obj/effect/overlay/ice_hole) in contents) && has_edge(O) && !user.is_busy())
-		playsound(src, 'sound/effects/digging.ogg', 50, 1, -1)
-		var/type = src.type
-		if(!do_after(user, 20 SECONDS, target = src) || type != src.type)
-			return
-		new /obj/effect/overlay/ice_hole(src)
-		playsound(src, 'sound/effects/digging.ogg', 50, 1, -1)
+	if(locate(/obj/effect/overlay/ice_hole) in range(4))
+		to_chat(user, "<span class='notice'>Too close to the other ice hole.</span>")
+		return
+	if(!has_edge(O))
+		to_chat(user, "<span class='notice'>You can't make ice hole with [O].</span>")
+		return
+	if(user.is_busy())
+		return
+	playsound(src, 'sound/effects/digging.ogg', 50, 1, -1)
+	var/type = src.type
+	if(!do_after(user, 20 SECONDS, target = src) || type != src.type)
+		return
+	new /obj/effect/overlay/ice_hole(src)
+	playsound(src, 'sound/effects/digging.ogg', 50, 1, -1)
 
 /atom/movable
 	var/ice_slide_count = 0
@@ -355,21 +362,32 @@
 	icon = 'icons/turf/snow2.dmi'
 	icon_state = "ice_hole"
 	anchored = 1
+	var/fish_amount = 0
+
+/obj/effect/overlay/ice_hole/atom_init()
+	. = ..()
+	fish_amount = rand(1, 30)
 
 /obj/effect/overlay/ice_hole/attackby(obj/O, mob/user)
 	. = ..()
 	if (istype(O, /obj/item/weapon/wirerod) && !user.is_busy())
+		if(fish_amount && fish_amount < 3)
+			to_chat(user, "<span class='warning'>Looks like there is almost no fish left in this location.</span>")
 		visible_message("<span class='notice'>[user] starts fishing.</span>")
 		if(do_after(user, 10 SECONDS, target = src))
-			if(prob(20))
-				var/fish_path = pick(
-					prob(90);/obj/item/fish_carp,
-					prob(20);/obj/item/fish_carp/mega
-					)
-				var/obj/fish = new fish_path(loc, get_step(user, get_dir(src, user)))
-				visible_message("<span class='notice'>[user] has caught [fish].</span>")
+			if(!fish_amount)
+				to_chat(user, "<span class='warning'>No fish left here, time to change location.</span>")
 			else
-				visible_message("<span class='notice'>[user] fails to catch anything.</span>")
+				if(prob(20))
+					fish_amount--
+					var/fish_path = pick(
+						prob(90);/obj/item/fish_carp,
+						prob(20);/obj/item/fish_carp/mega
+						)
+					var/obj/fish = new fish_path(loc, get_step(user, get_dir(src, user)))
+					visible_message("<span class='notice'>[user] has caught [fish].</span>")
+					return
+			visible_message("<span class='notice'>[user] fails to catch anything.</span>")
 		else
 			visible_message("<span class='notice'>[user] stops fishing.</span>")
 
