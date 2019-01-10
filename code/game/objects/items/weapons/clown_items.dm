@@ -42,24 +42,12 @@
 		var/mob/living/carbon/human/H = target
 		var/body_part_name
 		switch(def_zone)
-			if(O_MOUTH)
-				body_part_name = "mouth"
-			if(BP_GROIN)
-				body_part_name = "groin"
-			if(BP_HEAD)
-				body_part_name = "head"
-			if(BP_CHEST)
-				body_part_name = "chest"
-			if(O_EYES)
-				body_part_name = "eyes"
-			if(BP_L_LEG)
+			if(BP_L_LEG, BP_R_LEG)
 				body_part_name = "legs"
-			if(BP_R_LEG)
-				body_part_name = "legs"
-			if(BP_L_ARM)
+			if(BP_L_ARM, BP_R_ARM)
 				body_part_name = "arms"
-			if(BP_R_ARM)
-				body_part_name = "arms"
+			else
+				body_part_name = def_zone
 		if(target == user)
 			user.visible_message("<span class='notice'>\the [user] starts to clean \his [body_part_name] out with soap.</span>")
 		else
@@ -99,8 +87,9 @@
 					if(H.belt && H.belt.clean_blood())
 						H.update_inv_belt()
 				if("eyes")
-					if(!(H.head.flags_inv & HIDEEYES))
-						if(H.glasses && H.glasses.clean_blood())
+					if(!(H.head && (H.head.flags_inv & HIDEEYES)))
+						if(H.glasses)
+							H.glasses.clean_blood()
 							H.update_inv_glasses()
 						else
 							H.eye_blurry = max(H.eye_blurry, 5)
