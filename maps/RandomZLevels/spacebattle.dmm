@@ -1503,8 +1503,8 @@
 /turf/simulated/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "eq" = (
-/obj/machinery/gateway/centeraway{
-	calibrated = 0
+/obj/machinery/gateway/center{
+	name = "NMV Daedalus Gateway"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/spacebattle/cruiser)

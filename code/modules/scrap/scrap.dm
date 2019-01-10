@@ -269,6 +269,21 @@ var/global/list/scrap_base_cache = list()
 	base_max = 14
 	base_spread = 16
 
+//todo: icon?
+/obj/structure/scrap/newyear
+	loot_list = list(
+		/obj/random/plushie,
+		/obj/random/plushie,
+		/obj/random/randomfigure,
+		/obj/random/randomfigure,
+		/obj/random/randomfigure,
+		/obj/random/randomtoy,
+		/obj/random/randomtoy,
+		/obj/random/randomtoy,
+		/obj/random/cloth/ny_random_cloth,
+		/obj/random/cloth/ny_random_cloth,
+	)
+
 /obj/structure/scrap/medical
 	icontype = "medical"
 	name = "medical refuse pile"
