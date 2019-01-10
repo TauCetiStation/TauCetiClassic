@@ -3,6 +3,7 @@
 /obj/item/weapon/storage/box/samplebags
 	name = "sample bag box"
 	desc = "A box claiming to contain sample bags."
+	icon_state = "evidence_box"
 
 /obj/item/weapon/storage/box/samplebags/atom_init()
 	for (var/i in 1 to 7)
@@ -18,7 +19,7 @@
 	desc = "Used to extract geological core samples."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "sampler0"
-	item_state = "screwdriver_brown"
+	item_state = "sampler"
 	w_class = 1.0
 	//slot_flags = SLOT_BELT
 	var/sampled_turf = ""

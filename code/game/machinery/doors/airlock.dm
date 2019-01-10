@@ -350,7 +350,7 @@ var/list/airlock_overlays = list()
 			update_icon(AIRLOCK_CLOSING)
 		if("deny")
 			update_icon(AIRLOCK_DENY)
-			playsound(src, door_deni_sound, 50, 0, 3)
+			playsound(src, door_deni_sound, 40, 0, 3)
 			sleep(6)
 			update_icon(AIRLOCK_CLOSED)
 			icon_state = "closed"

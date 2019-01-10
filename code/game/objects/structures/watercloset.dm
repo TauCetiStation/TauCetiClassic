@@ -149,23 +149,22 @@
 	playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
 	add_fingerprint(user)
 	busy = 1
-	sleep(60)
-	if(emagged)
-		var/mob/living/carbon/C = user
-		if(ishuman(C))
-			var/mob/living/carbon/human/H = C
-			if(H.gloves)
-				new /obj/effect/decal/cleanable/ash(H.loc)
-				qdel(H.gloves)
-				H.adjustFireLoss(5)
-			else
-				H.adjustFireLoss(20)
-	busy = 0
-
-	if(!Adjacent(user)) return		//Person has moved away from the dryer
-
-	for(var/mob/V in viewers(src, null))
-		V.show_message("\blue [user] dried their hands using \the [src].")
+	if(do_after(user, 40, target = src))
+		if(emagged)
+			var/mob/living/carbon/C = user
+			if(ishuman(C))
+				var/mob/living/carbon/human/H = C
+				if(H.gloves)
+					new /obj/effect/decal/cleanable/ash(H.loc)
+					qdel(H.gloves)
+					H.adjustFireLoss(5)
+				else
+					H.adjustFireLoss(20)
+		busy = 0
+		for(var/mob/V in viewers(src, null))
+			V.show_message("\blue [user] dried their hands using \the [src].")
+	else
+		busy = 0
 
 /obj/structure/dryer/attackby(obj/item/O, mob/user)
 
@@ -227,12 +226,14 @@
 					user.visible_message("<span class='danger'>[user] hold [GM.name] under the [src]!</span>", "<span class='notice'>You hold [GM.name] under the [src]!</span>")
 					playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
 					GM.adjustFireLoss(10)
-					sleep(60)
-					busy = 0
-					if(!Adjacent(user) || !Adjacent(GM)) return		//User or target has moved
-					GM.adjustFireLoss(25)
-					user.visible_message("<span class='danger'>[GM.name] skins are burning under the [src]!</span>")
-					return
+					if(do_after(user, 40, target = src))
+						busy = 0
+						if(!Adjacent(user) || !Adjacent(GM)) return		//User or target has moved
+						GM.adjustFireLoss(25)
+						user.visible_message("<span class='danger'>[GM.name] skins are burning under the [src]!</span>")
+						return
+					else
+						busy = 0
 				else
 					to_chat(user, "<span class='notice'>You need a tighter grip.</span>")
 					return
@@ -240,29 +241,33 @@
 		busy = 1
 		to_chat(usr, "\blue You start drying \the [I].")
 		playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
-		sleep(60)
-		var/mob/living/carbon/C = user
-		C.apply_damage(25, BURN, C.hand ? BP_L_ARM : BP_R_ARM)
-		to_chat(C, "<span class='danger'>The dryer is burning!</span>")
-		new /obj/effect/decal/cleanable/ash(C.loc)
-		qdel(O)
-		busy = 0
-		return
+		if(do_after(user, 40, target = src))
+			var/mob/living/carbon/C = user
+			C.apply_damage(25, BURN, C.hand ? BP_L_ARM : BP_R_ARM)
+			to_chat(C, "<span class='danger'>The dryer is burning!</span>")
+			new /obj/effect/decal/cleanable/ash(C.loc)
+			qdel(O)
+			busy = 0
+			return
+		else
+			busy = 0
 
 	busy = 1
 	to_chat(usr, "\blue You start drying \the [I].")
 	playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
-	sleep(60)
-	busy = 0
+	if(do_after(user, 40, target = src))
+		busy = 0
 
-	if(user.loc != location) return				//User has moved
-	if(!I) return 								//Item's been destroyed while drying
-	if(user.get_active_hand() != I) return		//Person has switched hands or the item in their hands
+		if(user.loc != location) return				//User has moved
+		if(!I) return 								//Item's been destroyed while drying
+		if(user.get_active_hand() != I) return		//Person has switched hands or the item in their hands
 
-	O.wet = 0
-	user.visible_message( \
-		"\blue [user] drying \a [I] using \the [src].", \
-		"\blue You dry \a [I] using \the [src].")
+		O.wet = 0
+		user.visible_message( \
+			"\blue [user] drying \a [I] using \the [src].", \
+			"\blue You dry \a [I] using \the [src].")
+	else
+		busy = 0
 
 /obj/machinery/shower
 	name = "shower"
@@ -569,25 +574,24 @@
 	if(!Adjacent(user))
 		return
 
+	if(user.is_busy())
+		return
 	if(busy)
 		to_chat(user, "\red Someone's already washing here.")
 		return
 	user.SetNextMove(CLICK_CD_INTERACT)
 	playsound(src, 'sound/items/wash.ogg', 50, 1, 1)
-
 	to_chat(user, "\blue You start washing your hands.")
-
 	busy = 1
-	sleep(40)
-	busy = 0
-
-	if(!Adjacent(user)) return		//Person has moved away from the sink
-
-	user.clean_blood()
-	if(ishuman(user))
-		user:update_inv_gloves()
-	for(var/mob/V in viewers(src, null))
-		V.show_message("\blue [user] washes their hands using \the [src].")
+	if(do_after(user, 30, target = src))
+		busy = 0
+		user.clean_blood()
+		if(ishuman(user))
+			user:update_inv_gloves()
+		for(var/mob/V in viewers(src, null))
+			V.show_message("\blue [user] washes their hands using \the [src].")
+	else
+		busy = 0
 
 /obj/structure/sink/attackby(obj/item/O, mob/user)
 	if(busy)
@@ -628,18 +632,20 @@
 
 	playsound(src, 'sound/items/wash.ogg', 50, 1, 1)
 	busy = 1
-	sleep(40)
-	busy = 0
+	if(do_after(user, 30, target = src))
+		busy = 0
 
-	if(user.loc != location) return				//User has moved
-	if(!I) return 								//Item's been destroyed while washing
-	if(user.get_active_hand() != I) return		//Person has switched hands or the item in their hands
+		if(user.loc != location) return				//User has moved
+		if(!I) return 								//Item's been destroyed while washing
+		if(user.get_active_hand() != I) return		//Person has switched hands or the item in their hands
 
-	O.clean_blood()
-	O.make_wet()
-	user.visible_message( \
-		"\blue [user] washes \a [I] using \the [src].", \
-		"\blue You wash \a [I] using \the [src].")
+		O.clean_blood()
+		O.make_wet()
+		user.visible_message( \
+			"\blue [user] washes \a [I] using \the [src].", \
+			"\blue You wash \a [I] using \the [src].")
+	else
+		busy = 0
 
 
 /obj/structure/sink/kitchen

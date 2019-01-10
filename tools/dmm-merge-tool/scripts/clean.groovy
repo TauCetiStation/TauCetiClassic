@@ -60,7 +60,7 @@ if (mapNumbersToClean.empty) {
 
 mapNumbersToClean.each { number ->
     def mapFile = mapFiles.get(number)
-    def p = /java -jar JTGMerge.jar clean "${mapFile.path}.backup" "$mapFile.path"/.execute()
+    def p = /java -jar JTGMerge.jar clean --separator=NIX "${mapFile.path}.backup" "$mapFile.path"/.execute()
     p.consumeProcessOutput(System.out, System.err)
     p.waitFor()
 }

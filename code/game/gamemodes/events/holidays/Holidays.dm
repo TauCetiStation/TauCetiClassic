@@ -27,6 +27,7 @@ var/global/Holiday = null
 		if(1)	//Jan
 			switch(DD)
 				if(1)							Holiday = "New Year's Day"
+				if(7)							Holiday = "Christmas"
 
 		if(2)	//Feb
 			switch(DD)
@@ -103,8 +104,8 @@ var/global/Holiday = null
 				if(14)							Holiday = "Monkey Day"
 				if(21)							if(YY==12)	Holiday = "End of the World"
 				if(22)							Holiday = "Orgasming Day"		//lol. These all actually exist
-				if(24)							Holiday = "Christmas Eve"
-				if(25)							Holiday = "Christmas"
+				if(24)							Holiday = "Catolic Christmas Eve"
+				if(25)							Holiday = "Catolic Christmas"
 				if(26)							Holiday = "Boxing Day"
 				if(31)							Holiday = "New Year's Eve"
 
@@ -138,13 +139,6 @@ var/global/Holiday = null
 	if(Holiday)
 		to_chat(world, "<font color='blue'>and...</font>")
 		to_chat(world, "<h4>Happy [Holiday] Everybody!</h4>")
-		switch(Holiday)			//special holidays
-			if("Easter")
-				//do easter stuff
-			if("Christmas Eve","Christmas")
-				Christmas_Game_Start()
-
-	return
 
 //Nested in the random events loop. Will be triggered every 2 minutes
 /proc/Holiday_Random_Event()
@@ -173,6 +167,3 @@ var/global/Holiday = null
 			message_admins("\blue DEBUG: Event: Egg spawned at [Egg.loc] ([Egg.x],[Egg.y],[Egg.z])")*/
 		if("End of the World")
 			if(prob(eventchance))	GameOver()
-
-		if("Christmas","Christmas Eve")
-			if(prob(eventchance))	ChristmasEvent()

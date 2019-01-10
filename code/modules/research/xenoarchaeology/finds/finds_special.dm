@@ -25,10 +25,20 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/clothing/mask/gas/poltergeist/process()
-	if(heard_talk.len && istype(src.loc, /mob/living) && prob(10))
+var/list/bad_messages = list("Never take me off, please!",\
+		"They all want to wear me... But I'm yours!",\
+		"They're all want to take me from you! Bastards!",\
+		"We are one",\
+		"I want to be only yours!",\
+		"Help me!")
+
+/obj/item/clothing/mask/gas/poltergeist/process(/mob/living/H)
+	if(heard_talk.len && istype(src.loc, /mob/living) && prob(20))
 		var/mob/living/M = src.loc
 		M.say(pick(heard_talk))
+	if(istype(src.loc, /mob/living) && prob(20))
+		var/mob/living/M = src.loc
+		to_chat(M, "A strange voice goes through your head: <b><font color='red' size='[num2text(rand(1,3))]'><b>[pick(bad_messages)]</b></font>")
 
 /obj/item/clothing/mask/gas/poltergeist/hear_talk(mob/M, text)
 	..()
@@ -203,3 +213,40 @@
 
 /obj/effect/shadow_wight/Bump(var/atom/obstacle)
 	to_chat(obstacle, "\red You feel a chill run down your spine!")
+
+
+//healing tool
+/obj/item/weapon/strangetool
+	name = "strange device"
+	desc = "This device is made of metal, emits a strange purple formation of unknown origin."
+	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon_state = "strange_tool"
+	var/last_time_used = 0
+
+/obj/item/weapon/strangetool/attack_self(mob/user)
+	if(last_time_used + 50 < world.time)
+		to_chat(user, "<span class='notice'><font color='purple'>Divice blinks brightly.</font></span>")
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			to_chat(C, "\blue You feel a soothing energy invigorate you.")
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				for(var/obj/item/organ/external/BP in H.bodyparts)
+					BP.heal_damage(rand(20,30),rand(20,30))
+				H.vessel.add_reagent("blood",5)
+				H.nutrition += rand(30,55)
+				H.adjustBrainLoss(rand(-10,-25))
+				H.radiation -= min(H.radiation, rand(20,30))
+				H.bodytemperature = initial(H.bodytemperature)
+				spawn(1)
+					H.fixblood()
+			//
+			C.adjustOxyLoss(rand(-40,-20))
+			C.adjustToxLoss(rand(-40,-20))
+			C.adjustBruteLoss(rand(-40,-20))
+			C.adjustFireLoss(rand(-40,-20))
+			//
+			C.regenerate_icons()
+		last_time_used = world.time
+	else
+		to_chat(user, "<span class='notice'><font color='red'>Divice blinks faintly.</font></span>")

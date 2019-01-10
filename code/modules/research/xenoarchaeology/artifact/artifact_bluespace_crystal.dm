@@ -1,5 +1,6 @@
 /obj/machinery/artifact/bluespace_crystal
 	name = "bluespace crystal"
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "ano120"
 	icon_num = 0
 	density = 1
@@ -18,8 +19,6 @@
 	my_effect = new /datum/artifact_effect/tesla(src)
 	my_effect.trigger = 13 //TRIGGER_NEAR
 	desc = "A blue strange crystal"
-	icon = 'icons/obj/xenoarchaeology.dmi'
-	icon_state = "ano120"
 	icon_num = 12
 	set_light(4)
 

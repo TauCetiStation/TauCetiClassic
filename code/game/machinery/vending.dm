@@ -753,10 +753,10 @@
 	vend_delay = 34
 	icon_state = "cigs"
 	light_color = "#dddddd"
-	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10,/obj/item/weapon/storage/fancy/cigarettes/menthol = 5,/obj/item/weapon/storage/box/matches = 10,/obj/item/weapon/lighter/random = 4)
+	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10, /obj/item/weapon/storage/fancy/cigarettes/menthol = 5, /obj/item/weapon/storage/box/matches = 10, /obj/item/weapon/lighter/random = 4, /obj/item/clothing/mask/ecig = 4)
 	contraband = list(/obj/item/weapon/lighter/zippo = 4)
 	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2)
-	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 15,/obj/item/weapon/storage/fancy/cigarettes/menthol = 25,/obj/item/weapon/storage/box/matches = 1,/obj/item/weapon/lighter/random = 2)
+	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 20, /obj/item/weapon/storage/fancy/cigarettes/menthol = 30, /obj/item/weapon/storage/box/matches = 10, /obj/item/weapon/lighter/random = 15, /obj/item/clothing/mask/ecig = 40)
 	refill_canister = /obj/item/weapon/vending_refill/cigarette
 
 /obj/machinery/vending/medical
@@ -772,7 +772,7 @@
 					/obj/item/weapon/reagent_containers/syringe/antiviral = 4,/obj/item/weapon/reagent_containers/syringe = 12,
 					/obj/item/device/healthanalyzer = 5,/obj/item/weapon/reagent_containers/glass/beaker = 4, /obj/item/weapon/reagent_containers/dropper = 2,
 					/obj/item/stack/medical/advanced/bruise_pack = 3, /obj/item/stack/medical/advanced/ointment = 3, /obj/item/stack/medical/splint = 2)
-	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 3,/obj/item/weapon/reagent_containers/pill/stox = 4,/obj/item/weapon/reagent_containers/pill/antitox = 6)
+	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 3,/obj/item/weapon/reagent_containers/pill/stox = 4,/obj/item/weapon/reagent_containers/pill/dylovene = 6)
 
 
 //This one's from bay12

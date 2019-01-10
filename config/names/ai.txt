@@ -33,15 +33,16 @@ Computer
 Conky 2000
 Cutie
 Data
+Decimus
 Dee Model
 Deep Thought
 Dor-15
 Dorfl
 Dot Matrix
 Duey
+E-Man
 E.D.I.
 ED-209
-E-Man
 Emma-2
 Erasmus
 Ez-27
@@ -63,6 +64,7 @@ HAL 9000
 Hadaly
 Huey
 Irona
+Ironhide
 Jay-Dub
 Jinx
 Johnny 5
@@ -82,12 +84,15 @@ Max 404
 Maximillian
 Mechagodzilla
 Mechani-Kong
+Megatron
 Metalhead
 Mr. R.I.N.G.
+Mugsy3000
 NCH
 Necron-99
 Norby
 OMM 0910
+Optimus
 Orange v 3.5
 PTO
 Project 2501
@@ -97,6 +102,7 @@ R4-P17
 Revelation
 Ro-Man
 Robbie
+Robot Devil
 S.A.M.
 S.H.O.C.K.
 S.H.R.O.U.D.
@@ -107,6 +113,7 @@ SID 6.7
 Setaur
 Shrike
 Solo
+Soundwave
 Speedy
 Super 17
 Surgeon General Kraken
@@ -115,6 +122,7 @@ T-800
 T-850
 THX 1138
 TWA
+Terminus
 Terminus
 Tidy
 Tik-Tok
@@ -137,11 +145,3 @@ Z-2
 Z-3
 Zed
 Zord
-Mugsy3000
-Terminus
-Decimus
-Robot Devil
-Optimus
-Megatron
-Soundwave
-Ironhide

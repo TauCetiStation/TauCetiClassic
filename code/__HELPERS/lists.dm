@@ -578,7 +578,6 @@ proc/dd_sortedTextList(list/incoming)
 	var/case_sensitive = 1
 	return dd_sortedtextlist(incoming, case_sensitive)
 
-
 datum/proc/dd_SortValue()
 	return "[src]"
 
@@ -587,6 +586,12 @@ datum/proc/dd_SortValue()
 
 /obj/machinery/camera/dd_SortValue()
 	return "[c_tag]"
+
+/proc/filter_list(var/list/L, var/type)
+	. = list()
+	for(var/entry in L)
+		if(istype(entry, type))
+			. += entry
 
 ///datum/alarm/dd_SortValue()
 //	return "[sanitize(last_name)]"

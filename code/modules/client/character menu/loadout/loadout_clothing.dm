@@ -190,3 +190,16 @@
 	m65s["ranger"] = /obj/item/clothing/under/pants/milipants_army/ranger
 	m65s["navy"] = /obj/item/clothing/under/pants/milipants_army/navy
 	gear_tweaks += new/datum/gear_tweak/path(m65s)
+
+/datum/gear/suit/color_shirt
+	display_name = "Colored shirt selection"
+	path = /obj/item/clothing/suit/blueshirt
+
+/datum/gear/suit/color_shirt/New()
+	..()
+	var/shirt = list()
+	shirt["blue"] = /obj/item/clothing/suit/blueshirt
+	shirt["orange"] = /obj/item/clothing/suit/chemshirt
+	shirt["purple"] = /obj/item/clothing/suit/roundshirt
+	shirt["grey"] = /obj/item/clothing/suit/catshirt
+	gear_tweaks += new/datum/gear_tweak/path(shirt)

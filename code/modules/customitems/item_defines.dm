@@ -342,16 +342,6 @@
 	reagents.add_reagent("sugar", 10)
 	reagents.add_reagent("ethanol", 5)
 
-/obj/item/clothing/mask/fluff/electriccig //CubeJackal: Barry Sharke
-	name = "Electronic cigarette"
-	desc = "An electronic cigarette. Most of the relief of a real cigarette with none of the side effects. Often used by smokers who are trying to quit the habit."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "ecig"
-	throw_speed = 0.5
-	item_state = "ecig"
-	w_class = 1
-	body_parts_covered = null
-
 //Strange penlight, Nerezza: Asher Spock
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1
@@ -736,6 +726,7 @@
 	icon_state = "indiana"
 	item_state = "indiana"
 	item_color = "indiana"
+	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/fluff/cowboy
 	name = "western suit"
@@ -842,13 +833,6 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 */
-
-/obj/item/clothing/mask/mara_kilpatrick_1 //staghorn: Mara Kilpatrick
-	name = "shamrock pendant"
-	desc = "A silver and emerald shamrock pendant. It has the initials \"M.K.\" engraved on the back."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "mara_kilpatrick_1"
-	w_class = 2
 
 ////// Small locket - Altair An-Nasaqan - Serithi
 
