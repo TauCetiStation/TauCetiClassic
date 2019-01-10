@@ -34,7 +34,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 	if(heard_talk.len && istype(src.loc, /mob/living) && prob(20))
 		var/mob/living/M = src.loc
 		M.say(pick(heard_talk))
-	if(istype(src.loc, /mob/living) && prob(20))
+	if(istype(src.loc, /mob/living) && prob(4))
 		var/mob/living/M = src.loc
 		to_chat(M, "A strange voice goes through your head: <b><font color='red' size='[num2text(rand(1,3))]'><b>[pick(bad_messages)]</b></font>")
 
@@ -68,7 +68,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/vampiric/process()
-	//see if we've identified anyone nearby
+	// see if we've identified anyone nearby
 	if(world.time - last_bloodcall > bloodcall_interval && nearby_mobs.len)
 		var/mob/living/carbon/human/M = pop(nearby_mobs)
 		if(M in view(7,src) && M.health > 20)
@@ -76,7 +76,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 				bloodcall(M)
 				nearby_mobs.Add(M)
 
-	//suck up some blood to gain power
+	// suck up some blood to gain power
 	if(world.time - last_eat > eat_interval)
 		var/obj/effect/decal/cleanable/blood/B = locate() in range(2,src)
 		if(B)
@@ -88,7 +88,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 				charges += 1
 				playsound(src.loc, 'sound/effects/splat.ogg', 50, 1, -3)
 
-	//use up stored charges
+	// use up stored charges
 	if(charges >= 10)
 		charges -= 10
 		new /obj/effect/spider/eggcluster(pick(view(1,src)))
@@ -111,7 +111,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 			src.visible_message("\red [bicon(src)] [src]'s eyes glow ruby red for a moment!")
 			charges -= 0.1
 
-	//check on our shadow wights
+	// check on our shadow wights
 	if(shadow_wights.len)
 		wight_check_index++
 		if(wight_check_index > shadow_wights.len)
@@ -145,7 +145,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 		B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 		M.vessel.remove_reagent("blood",rand(25,50))
 
-//animated blood 2 SPOOKY
+// animated blood 2 SPOOKY
 /obj/effect/decal/cleanable/blood/splatter/animated
 	var/turf/target_turf
 	var/loc_last_process
@@ -162,7 +162,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 			target_turf = null
 		loc_last_process = src.loc
 
-		//leave some drips behind
+		// leave some drips behind
 		if(prob(50))
 			var/obj/effect/decal/cleanable/blood/drip/D = new(src.loc)
 			D.blood_DNA = src.blood_DNA.Copy()
@@ -213,7 +213,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 	to_chat(obstacle, "\red You feel a chill run down your spine!")
 
 
-//healing tool
+// healing tool
 /obj/item/weapon/strangetool
 	name = "strange device"
 	desc = "This device is made of metal, emits a strange purple formation of unknown origin."

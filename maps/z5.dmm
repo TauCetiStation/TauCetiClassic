@@ -3838,11 +3838,6 @@
 /turf/simulated/floor/plating,
 /area/mine/living_quarters)
 "ib" = (
-/obj/machinery/camera{
-	c_tag = "Misc Test Chamber";
-	dir = 2;
-	network = list("Research","SS13")
-	},
 /obj/machinery/artifact_scanpad,
 /turf/simulated/floor/engine,
 /area/research_outpost/outpost_misc_lab)
@@ -4520,6 +4515,11 @@
 /turf/simulated/floor/plating,
 /area/research_outpost/maint)
 "jd" = (
+/obj/machinery/camera{
+	c_tag = "Misc Test Chamber";
+	dir = 2;
+	network = list("Research","SS13")
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -7328,6 +7328,7 @@
 	pixel_x = -32;
 	pixel_y = 0
 	},
+/obj/structure/window/reinforced,
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "warning"
@@ -13337,9 +13338,6 @@
 /area/mine/production)
 "Sb" = (
 /obj/machinery/artifact_scanpad,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /turf/simulated/floor/engine,
 /area/research_outpost/iso2)
 "Sc" = (

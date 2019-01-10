@@ -225,6 +225,7 @@
 			var/obj/item/weapon/storage/box/new_box = new_item
 			new_box.max_w_class = pick(1,2,2,3,3,3,4,4)
 			new_box.max_storage_space = rand(new_box.max_w_class, new_box.max_w_class * 10)
+			new_box.foldable = FALSE
 			if(prob(30))
 				apply_image_decorations = 1
 		if(12)
@@ -295,7 +296,7 @@
 				new_item.icon = 'icons/obj/xenoarchaeology.dmi'
 				new_item.icon_state = icon_state
 		if(17)
-			//cultblade
+			// cultblade
 			apply_prefix = 0
 			new_item = new /obj/item/weapon/melee/cultblade(src.loc)
 			apply_material_decorations = 0
@@ -309,10 +310,10 @@
 		if(19)
 			apply_prefix = 0
 			new_item = new /obj/item/weapon/claymore(src.loc)
-			new_item.force = 10
+			new_item.force = 17
 			item_type = new_item.name
 		if(20)
-			//arcane clothing
+			// arcane clothing
 			apply_prefix = 0
 			var/list/possible_spawns = list(/obj/item/clothing/head/culthood,
 			/obj/item/clothing/head/magus,
@@ -322,7 +323,7 @@
 			var/new_type = pick(possible_spawns)
 			new_item = new new_type(src.loc)
 		if(21)
-			//soulstone
+			// soulstone
 			apply_prefix = 0
 			new_item = new /obj/item/device/soulstone(src.loc)
 			item_type = new_item.name
@@ -352,7 +353,7 @@
 		if(25)
 			apply_prefix = 0
 			new_item = new /obj/item/weapon/katana(src.loc)
-			new_item.force = 10
+			new_item.force = 17
 			item_type = new_item.name
 		if(26)
 			//energy gun
