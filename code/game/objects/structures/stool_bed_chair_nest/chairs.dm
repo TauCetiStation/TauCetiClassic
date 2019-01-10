@@ -48,11 +48,16 @@
 	icon_state = "chair_black"
 	behind = "chair_behind_black"
 
-/obj/structure/stool/bed/chair/metal/post_buckle_mob(mob/living/M)
+/obj/structure/stool/bed/chair/post_buckle_mob(mob/living/M)
+	. = ..()
 	if(buckled_mob && behind)
 		icon_state = behind
 	else
 		icon_state = initial(icon_state)
+	if(dir == 1 && buckled_mob && !istype(src, /obj/structure/stool/bed/chair/schair/wagon/bench))
+		layer = FLY_LAYER
+	else
+		layer = OBJ_LAYER
 
 /obj/structure/stool/bed/chair/schair
 	name = "shuttle chair"
@@ -115,6 +120,10 @@
 		..()
 
 /obj/structure/stool/bed/chair/user_buckle_mob(mob/living/M, mob/user)
+	if(dir == 1 && !istype(src, /obj/structure/stool/bed/chair/schair/wagon/bench))
+		layer = FLY_LAYER
+	else
+		layer = OBJ_LAYER
 	if(flipped)
 		to_chat(usr, "<span class='notice'>You can't do it, while \the [src] is flipped.</span>")
 		if(usr != M)
@@ -130,7 +139,7 @@
 	return
 
 /obj/structure/stool/bed/chair/handle_rotation() // making this into a seperate proc so office chairs can call it on Move()
-	if(dir == NORTH)
+	if(dir == 1)
 		layer = FLY_LAYER
 	else
 		layer = OBJ_LAYER

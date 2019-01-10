@@ -18,13 +18,8 @@
 		behind.layer = FLY_LAYER
 		overlays += behind
 
-/obj/structure/stool/bed/chair/atom_init_late()
+/obj/structure/stool/bed/chair/schair/wagon/bench/atom_init_late()
 	return
 
 /obj/structure/stool/bed/chair/schair/wagon/bench/rotate()
 	return
-
-/obj/structure/stool/bed/chair/user_buckle_mob(mob/living/M, mob/user)
-	..()
-	if(src.dir == NORTH)
-		src.layer = OBJ_LAYER
