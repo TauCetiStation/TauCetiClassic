@@ -49,6 +49,12 @@ var/list/blacklisted_builds = list(
 		completed_asset_jobs += job
 		return
 
+	if (href_list["action"] && href_list["action"] == "debugFileOutput" && href_list["file"] && href_list["message"])
+		var/file = href_list["file"]
+		var/message = href_list["message"]
+		debugFileOutput.error(file, message, src)
+		return
+
 	//Admin PM
 	if(href_list["priv_msg"])
 		var/client/C = locate(href_list["priv_msg"])
@@ -217,9 +223,9 @@ var/list/blacklisted_builds = list(
 		add_admin_verbs()
 		admin_memo_show()
 
-	if(config.allow_donators && ckey in donators)
-		donator = 1
-		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting us! You have access to all the additional donator-only features this month.</span>")
+	if (config.allow_donators && (ckey in donators) || config.allow_byond_membership && IsByondMember())
+		supporter = 1
+		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting [(ckey in donators) ? "us" : "Byond"]! You are awesome! You have access to all the additional supporters-only features this month.</span>")
 		
 	log_client_to_db(tdata)
 

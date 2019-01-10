@@ -266,7 +266,8 @@
 /area/shuttle/arrival/pre_game)
 "acV" = (
 /obj/structure/object_wall/wagon{
-	icon_state = "6,4"
+	icon_state = "6,4";
+	opacity = 0
 	},
 /turf/space,
 /area/shuttle/arrival/pre_game)
@@ -349,7 +350,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "6,0";
 	name = "shuttle wall";
-	opacity = 1
+	opacity = 0
 	},
 /turf/space,
 /area/shuttle/arrival/pre_game)
@@ -7692,8 +7693,8 @@
 /obj/item/weapon/storage/pill_bottle/bicaridine,
 /obj/item/weapon/storage/pill_bottle/dermaline,
 /obj/item/weapon/storage/pill_bottle/dermaline,
-/obj/item/weapon/storage/pill_bottle/antitox,
-/obj/item/weapon/storage/pill_bottle/antitox,
+/obj/item/weapon/storage/pill_bottle/dylovene,
+/obj/item/weapon/storage/pill_bottle/dylovene,
 /obj/item/weapon/storage/pill_bottle/tramadol,
 /obj/item/weapon/storage/pill_bottle/tramadol,
 /obj/item/weapon/storage/box/autoinjectors,
@@ -7781,8 +7782,8 @@
 /obj/item/weapon/storage/pill_bottle/bicaridine,
 /obj/item/weapon/storage/pill_bottle/dermaline,
 /obj/item/weapon/storage/pill_bottle/dermaline,
-/obj/item/weapon/storage/pill_bottle/antitox,
-/obj/item/weapon/storage/pill_bottle/antitox,
+/obj/item/weapon/storage/pill_bottle/dylovene,
+/obj/item/weapon/storage/pill_bottle/dylovene,
 /obj/item/weapon/storage/pill_bottle/tramadol,
 /obj/item/weapon/storage/pill_bottle/tramadol,
 /obj/item/weapon/storage/box/autoinjectors,
@@ -7813,8 +7814,8 @@
 /obj/item/weapon/storage/pill_bottle/bicaridine,
 /obj/item/weapon/storage/pill_bottle/dermaline,
 /obj/item/weapon/storage/pill_bottle/dermaline,
-/obj/item/weapon/storage/pill_bottle/antitox,
-/obj/item/weapon/storage/pill_bottle/antitox,
+/obj/item/weapon/storage/pill_bottle/dylovene,
+/obj/item/weapon/storage/pill_bottle/dylovene,
 /obj/item/weapon/storage/pill_bottle/tramadol,
 /obj/item/weapon/storage/pill_bottle/tramadol,
 /obj/item/weapon/storage/box/autoinjectors,
@@ -15899,7 +15900,7 @@
 	},
 /area/wizard_station)
 "baK" = (
-/obj/structure/mineral_door/iron,
+/obj/structure/mineral_door/metal,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
@@ -17514,6 +17515,14 @@
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "brown"
+	},
+/area/centcom/arrival)
+"cab" = (
+/obj/effect/landmark/start{
+	name = "Fallback-Start"
+	},
+/turf/unsimulated/floor{
+	icon_state = "white"
 	},
 /area/centcom/arrival)
 "cbb" = (
@@ -22905,7 +22914,7 @@
 /area/wizard_station)
 "nOb" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/book/manual/robotics_cyborgs,
+/obj/item/weapon/book/manual/wiki/guide_to_robotics,
 /turf/unsimulated/floor{
 	icon_state = "cult";
 	name = "plating"
@@ -71319,7 +71328,7 @@ asq
 asB
 aoo
 atf
-atq
+cab
 atx
 atq
 atq

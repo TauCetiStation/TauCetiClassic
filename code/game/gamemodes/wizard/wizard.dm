@@ -123,6 +123,9 @@
 		wizard_mob.name = newname
 		if(wizard_mob.mind)
 			wizard_mob.mind.name = newname
+		if(istype(wizard_mob.dna, /datum/dna))
+			var/datum/dna/dna = wizard_mob.dna
+			dna.real_name = newname
 	return
 
 

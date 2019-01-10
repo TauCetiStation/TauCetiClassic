@@ -110,7 +110,6 @@
 	layer = 3
 	icon = 'icons/mob/critter.dmi'
 	icon_state = "blob"
-	var/triggerproc = "explode" //name of the proc thats called when the mine is triggered
 	var/triggered = 0
 
 /obj/effect/meatgrinder/atom_init()
@@ -128,9 +127,9 @@
 		for(var/mob/O in viewers(world.view, src.loc))
 			O << "<font color='red'>[M] triggered the \icon[src] [src]</font>"
 		triggered = 1
-		call(src,triggerproc)(M)
+		trigger_act()
 
-/obj/effect/meatgrinder/proc/triggerrad1(mob)
+/obj/effect/meatgrinder/proc/trigger_act(mob)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	for(var/mob/O in viewers(world.view, src.loc))
 		s.set_up(3, 1, src)
@@ -142,7 +141,6 @@
 /obj/effect/meatgrinder
 	name = "Meat Grinder"
 	icon_state = "blob"
-	triggerproc = "triggerrad1"
 
 
 /////For the Wishgranter///////////

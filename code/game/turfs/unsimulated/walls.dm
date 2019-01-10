@@ -10,11 +10,21 @@
 	icon_state = "fakewindows"
 	opacity = 0
 
-turf/unsimulated/wall/splashscreen
+/turf/unsimulated/wall/splashscreen
 	name = "Space Station 13"
-	icon = 'icons/misc/fullscreen.dmi'
+	icon = 'icons/misc/fullscreen_loading.dmi'
 	icon_state = "title"
 	layer = FLY_LAYER
+
+/turf/unsimulated/wall/splashscreen/atom_init()
+	. = ..()
+	var/newyear = FALSE
+	#ifdef NEWYEARCONTENT
+	icon = pick('icons/misc/fullscreen_newyear.dmi', 'icons/misc/fullscreen_leshiy.dmi')
+	newyear = TRUE
+	#endif
+	if(!newyear)
+		icon = pick('icons/misc/fullscreen_standart.dmi', 'icons/misc/fullscreen_leshiy.dmi')
 
 /turf/unsimulated/wall/other
 	icon_state = "r_wall"

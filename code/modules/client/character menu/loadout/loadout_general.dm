@@ -48,7 +48,7 @@ datum/gear/zippo
 
 /datum/gear/electriccig
 	display_name = "Electronic cigarette"
-	path = /obj/item/clothing/mask/fluff/electriccig
+	path = /obj/item/clothing/mask/ecig
 
 /datum/gear/game_kit
 	display_name = "Gaming Kit Selection"

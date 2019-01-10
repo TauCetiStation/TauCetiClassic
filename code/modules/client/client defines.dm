@@ -23,13 +23,14 @@
 	var/time_died_as_mouse = null //when the client last died as a mouse
 	var/time_joined_as_spacebum = null
 	var/adminhelped = 0
-	var/donator = 0
+	var/supporter = 0
 
 		///////////////
 		//SOUND STUFF//
 		///////////////
-	var/ambience_playing= null
-	var/played			= 0
+	var/ambience_playing = null
+	var/played = 0
+	var/adminSoundVolume = 50
 
 		////////////
 		//SECURITY//

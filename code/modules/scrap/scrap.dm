@@ -111,7 +111,7 @@ var/global/list/scrap_base_cache = list()
 	for(var/obj/item/loot in contents)
 		if(prob(66)) loot.make_old()
 	loot = new(src)
-	loot.max_w_class = 5
+	loot.set_slots(slots = 7, slot_size = ITEM_SIZE_HUGE)
 	shuffle_loot()
 
 /obj/structure/scrap/Destroy()
@@ -265,6 +265,21 @@ var/global/list/scrap_base_cache = list()
 	base_min = 9
 	base_max = 14
 	base_spread = 16
+
+//todo: icon?
+/obj/structure/scrap/newyear
+	loot_list = list(
+		/obj/random/plushie,
+		/obj/random/plushie,
+		/obj/random/randomfigure,
+		/obj/random/randomfigure,
+		/obj/random/randomfigure,
+		/obj/random/randomtoy,
+		/obj/random/randomtoy,
+		/obj/random/randomtoy,
+		/obj/random/cloth/ny_random_cloth,
+		/obj/random/cloth/ny_random_cloth,
+	)
 
 /obj/structure/scrap/medical
 	icontype = "medical"

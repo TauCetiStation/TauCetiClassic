@@ -207,7 +207,7 @@
 				if ((!( ticker ) || SSshuttle.location))
 					return
 				SSshuttle.incall()
-				captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+				captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
 				world << sound('sound/AI/shuttlecalled.ogg')
 				log_admin("[key_name(usr)] called the Emergency Shuttle")
 				message_admins("\blue [key_name_admin(usr)] called the Emergency Shuttle to the station")
@@ -219,7 +219,7 @@
 				switch(SSshuttle.direction)
 					if(-1)
 						SSshuttle.incall()
-						captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+						captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
 						log_admin("[key_name(usr)] called the Emergency Shuttle")
 						message_admins("\blue [key_name_admin(usr)] called the Emergency Shuttle to the station")
 						make_maint_all_access(FALSE)
@@ -239,7 +239,7 @@
 
 		SSshuttle.settimeleft( input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", SSshuttle.timeleft() ) as num )
 		log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [SSshuttle.timeleft()]")
-		captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+		captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
 		message_admins("\blue [key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [SSshuttle.timeleft()]")
 		href_list["secretsadmin"] = "check_antagonist"
 

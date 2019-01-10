@@ -273,9 +273,8 @@
 		return
 
 	var/dat = "<head><title>Communications Console</title></head><body>"
-	if (SSshuttle.online && SSshuttle.location==0)
-		var/timeleft = SSshuttle.timeleft()
-		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [timeleft / 60 % 60]:[add_zero(num2text(timeleft % 60), 2)]<BR>"
+	if (SSshuttle.online && SSshuttle.location == 0)
+		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [shuttleeta2text()]<BR>"
 
 	if (issilicon(user))
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
@@ -435,7 +434,7 @@
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-	captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
 	world << sound('sound/AI/shuttlecalled.ogg')
 
 	make_maint_all_access(FALSE)
@@ -476,7 +475,7 @@
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-	captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+	captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
 
 	return
 
@@ -542,7 +541,7 @@
 	SSshuttle.incall(2)
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
 	world << sound('sound/AI/shuttlecalled.ogg')
 
 	return ..()
@@ -567,7 +566,7 @@
 	SSshuttle.incall(2)
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
 	world << sound('sound/AI/shuttlecalled.ogg')
 
 	return ..()

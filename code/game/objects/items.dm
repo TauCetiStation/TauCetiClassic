@@ -393,27 +393,8 @@
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
 			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
-				if(isturf(src.loc))
-					var/list/rejections = list()
-					var/success = 0
-					var/failure = 0
-
-					for(var/obj/item/I in src.loc)
-						if(I.type in rejections) // To limit bag spamming: any given type only complains once
-							continue
-						if(!S.can_be_inserted(I))	// Note can_be_inserted still makes noise when the answer is no
-							rejections += I.type	// therefore full bags are still a little spammy
-							failure = 1
-							continue
-						success = 1
-						S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
-					if(success && !failure)
-						to_chat(user, "<span class='notice'>You put everything in [S].</span>")
-					else if(success)
-						to_chat(user, "<span class='notice'>You put some things in [S].</span>")
-					else
-						to_chat(user, "<span class='notice'>You fail to pick anything up with [S].</span>")
-
+				if(isturf(loc))
+					S.gather_all(loc, user)
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
 	return FALSE
@@ -637,7 +618,7 @@
 			if(slot_in_backpack)
 				if (H.back && istype(H.back, /obj/item/weapon/storage/backpack))
 					var/obj/item/weapon/storage/backpack/B = H.back
-					if(B.contents.len < B.storage_slots && w_class <= B.max_w_class)
+					if(B.can_be_inserted(src, M, 1))
 						return 1
 				return 0
 			if(slot_tie)

@@ -651,9 +651,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					if(GM.malf_mode_declared)
 						stat(null, "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
 				if(SSshuttle.online && SSshuttle.location < 2)
-					var/timeleft = SSshuttle.timeleft()
-					if(timeleft)
-						stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+					stat(null, "ETA-[shuttleeta2text()]")
 
 	if(client && client.holder)
 		if((client.holder.rights & R_ADMIN))

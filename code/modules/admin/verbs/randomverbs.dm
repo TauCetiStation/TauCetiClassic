@@ -938,11 +938,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(type == "Crew transfer")
 		SSshuttle.shuttlealert(1)
 		SSshuttle.incall()
-		captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+		captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
 	else
 		var/eaccess = alert(src, "Grant acces to maints for everyone?", "Confirm", "Yes", "No")
 		SSshuttle.incall()
-		captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+		captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
 		world << sound('sound/AI/shuttlecalled.ogg')
 
 		if(eaccess == "Yes")
