@@ -586,60 +586,83 @@
 	else
 		holder.del_reagent("mednanobots")
 
-////////////////////////////////////
-///// All the barber's bullshit/////
-////////////////////////////////////
-/datum/reagent/hair_dye
-	name = "Hair Dye"
-	id = "whitehairdye"
-	description = "A compound used to dye hair. Any hair."
-	data = list("r_color"=255,"g_color"=255,"b_color"=255)
+/datum/reagent/paint
+	name = "Paint"
+	id = "paint_"
 	reagent_state = LIQUID
-	color = "#FFFFFF" // to see rgb just look into data!
-	taste_message = "liquid colour"
+	data = list("r_color"=128,"g_color"=128,"b_color"=128)
+	description = "This paint will only adhere to floor tiles."
+	color = "#808080"
+	color_weight = 20
+	taste_message = "strong liquid colour"
 
-/datum/reagent/hair_dye/red
-	name = "Red Hair Dye"
-	id = "redhairdye"
-	data = list("r_color"=255,"g_color"=0,"b_color"=0)
-	color = "#FF0000"
+/datum/reagent/paint/red
+	name = "Red Paint"
+	id = "paint_red"
+	color = "#FE191A"
+	data = list("r_color"=254,"g_color"=25,"b_color"=26)
 
-/datum/reagent/hair_dye/green
-	name = "Green Hair Dye"
-	id = "greenhairdye"
-	data = list("r_color"=0,"g_color"=255,"b_color"=0)
-	color = "#00FF00"
+/datum/reagent/paint/green
+	name = "Green Paint"
+	color = "#18A31A"
+	id = "paint_green"
+	data = list("r_color"=24,"g_color"=163,"b_color"=26)
 
-/datum/reagent/hair_dye/blue
-	name = "Blue Hair Dye"
-	id = "bluehairdye"
-	data = list("r_color"=0,"g_color"=0,"b_color"=255)
-	color = "#0000FF"
+/datum/reagent/paint/blue
+	name = "Blue Paint"
+	color = "#247CFF"
+	id = "paint_blue"
+	data = list("r_color"=36,"g_color"=124,"b_color"=255)
 
-/datum/reagent/hair_dye/black
-	name = "Black Hair Dye"
-	id = "blackhairdye"
-	data = list("r_color"=0,"g_color"=0,"b_color"=0)
-	color = "#000000"
+/datum/reagent/paint/yellow
+	name = "Yellow Paint"
+	color = "#FDFE7D"
+	id = "paint_yellow"
+	data = list("r_color"=253,"g_color"=254,"b_color"=125)
 
-/datum/reagent/hair_dye/brown
-	name = "Brown Hair Dye"
-	id = "brownhairdye"
-	data = list("r_color"=50,"g_color"=0,"b_color"=0)
-	color = "#500000"
+/datum/reagent/paint/violet
+	name = "Violet Paint"
+	color = "#CC0099"
+	id = "paint_violet"
+	data = list("r_color"=253,"g_color"=254,"b_color"=125)
 
-/datum/reagent/hair_dye/blond
-	name = "Blond Hair Dye"
-	id = "blondhairdye"
-	data = list("r_color"=255,"g_color"=225,"b_color"=135)
-	color = "#FFE187"
+/datum/reagent/paint/black
+	name = "Black Paint"
+	color = "#333333"
+	id = "paint_black"
+	data = list("r_color"=51,"g_color"=51,"b_color"=51)
 
-/datum/reagent/hair_dye/reaction_mob(mob/M, method=TOUCH, volume)
+/datum/reagent/paint/white
+	name = "White Paint"
+	color = "#F0F8FF"
+	id = "paint_white"
+	data = list("r_color"=240,"g_color"=248,"b_color"=255)
+
+/datum/reagent/paint/custom
+	name = "Custom Paint"
+	id = "paint_custom"
+
+/datum/reagent/paint/reaction_turf(turf/T, volume)
+	if(!istype(T) || istype(T, /turf/space))
+		return
+	if(color_weight < 15)
+		return
+	var/ind = "[initial(T.icon)][color]"
+	if(!cached_icons[ind])
+		var/icon/overlay = new/icon(initial(T.icon))
+		overlay.Blend(color, ICON_MULTIPLY)
+		overlay.SetIntensity(volume * color_weight * 0.1)
+		T.icon = overlay
+		cached_icons[ind] = T.icon
+	else
+		T.icon = cached_icons[ind]
+
+/datum/reagent/paint/reaction_mob(mob/M, method=TOUCH, volume)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/r_tweak = ((data["r_color"] * volume) / 10) // volume of 10 basically just replaces the color alltogether, a potent hair dye this is.
-		var/g_tweak = ((data["g_color"] * volume) / 10)
-		var/b_tweak = ((data["b_color"] * volume) / 10)
+		var/r_tweak = ((data["r_color"] * volume * (color_weight / 10)) / 10) // volume of 10 basically just replaces the color alltogether, a potent hair dye this is.
+		var/g_tweak = ((data["g_color"] * volume * (color_weight / 10)) / 10)
+		var/b_tweak = ((data["b_color"] * volume * (color_weight / 10)) / 10)
 		var/volume_coefficient = max((10-volume)/10, 0)
 		if(H.client && volume >= 5 && !H.glasses)
 			H.eye_blurry = max(H.eye_blurry, volume)
@@ -669,6 +692,74 @@
 			H.lip_color = color
 		H.update_hair()
 		H.update_body()
+
+/datum/reagent/paint_remover
+	name = "Paint Remover"
+	id = "paint_remover"
+	description = "Paint remover is used to remove floor paint from floor tiles."
+	reagent_state = 2
+	color = "#808080"
+
+/datum/reagent/paint_remover/reaction_turf(turf/T, volume)
+	if(istype(T) && T.icon != initial(T.icon))
+		T.icon = initial(T.icon)
+
+////////////////////////////////////
+///// All the barber's bullshit/////
+////////////////////////////////////
+/datum/reagent/paint/hair_dye
+	name = "Hair Dye"
+	id = "whitehairdye"
+	description = "A compound used to dye hair. Any hair."
+	data = list("r_color"=255,"g_color"=255,"b_color"=255)
+	reagent_state = LIQUID
+	color = "#FFFFFF" // to see rgb just look into data!
+	color_weight = 10
+	taste_message = "liquid colour"
+
+/*
+TODO: Convert everything to custom hair dye. ~ Luduk.
+*/
+
+/datum/reagent/paint/hair_dye/red
+	name = "Red Hair Dye"
+	id = "redhairdye"
+	data = list("r_color"=255,"g_color"=0,"b_color"=0)
+	color = "#FF0000"
+
+/datum/reagent/paint/hair_dye/green
+	name = "Green Hair Dye"
+	id = "greenhairdye"
+	data = list("r_color"=0,"g_color"=255,"b_color"=0)
+	color = "#00FF00"
+
+/datum/reagent/paint/hair_dye/blue
+	name = "Blue Hair Dye"
+	id = "bluehairdye"
+	data = list("r_color"=0,"g_color"=0,"b_color"=255)
+	color = "#0000FF"
+
+/datum/reagent/paint/hair_dye/black
+	name = "Black Hair Dye"
+	id = "blackhairdye"
+	data = list("r_color"=0,"g_color"=0,"b_color"=0)
+	color = "#000000"
+
+/datum/reagent/paint/hair_dye/brown
+	name = "Brown Hair Dye"
+	id = "brownhairdye"
+	data = list("r_color"=50,"g_color"=0,"b_color"=0)
+	color = "#500000"
+
+/datum/reagent/paint/hair_dye/blond
+	name = "Blond Hair Dye"
+	id = "blondhairdye"
+	data = list("r_color"=255,"g_color"=225,"b_color"=135)
+	color = "#FFE187"
+
+/datum/reagent/paint/hair_dye/custom
+	name = "Custom Hair Dye"
+	id = "customhairdye"
 
 /datum/reagent/hair_growth_accelerator
 	name = "Hair Growth Accelerator"

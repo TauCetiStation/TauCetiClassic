@@ -20,6 +20,9 @@ datum
 			on_reaction(datum/reagents/holder, created_volume)
 				return
 
+			check_requirements(datum/reagents/holder)
+				return TRUE
+
 		//I recommend you set the result amount to the total volume of all components.
 
 		explosion_potassium
@@ -2265,6 +2268,11 @@ datum
 	required_reagents = list("lube" = 1, "sodiumchloride" = 1)
 	result_amount = 2
 
+/*
+TODO: Convert everything to custom hair dye,
+      so this will be all gone. ~ Luduk.
+*/
+
 /datum/chemical_reaction/hair_dye/red
 	name = "Red Hair Dye"
 	id = "redhairdye"
@@ -2307,6 +2315,59 @@ datum
 	required_reagents = list("hairdye" = 1, "sugar" = 1)
 	result_amount = 1
 
+// Converting dyes to paint. START madness
+
+/datum/chemical_reaction/hair_dye_empowering
+	name = "White Dye Empowering"
+	id = "whitedyeempower"
+	result = "paint_white"
+	required_reagents = list("hairdye" = 1, "glycerol" = 10)
+	result_amount = 1
+
+/datum/chemical_reaction/hair_dye_empowering/red
+	name = "Red Dye Empowering"
+	id = "reddyeempower"
+	result = "paint_red"
+	required_reagents = list("redhairdye" = 1, "glycerol" = 10)
+	result_amount = 1
+
+/datum/chemical_reaction/hair_dye_empowering/blue
+	name = "Blue Dye Empowering"
+	id = "bluedyeempower"
+	result = "paint_blue"
+	required_reagents = list("bluehairdye" = 1, "glycerol" = 10)
+	result_amount = 1
+
+/datum/chemical_reaction/hair_dye_empowering/green
+	name = "Green Dye Empowering"
+	id = "greendyeempower"
+	result = "paint_green"
+	required_reagents = list("greenhairdye" = 1, "glycerol" = 10)
+	result_amount = 1
+
+/datum/chemical_reaction/hair_dye_empowering/black
+	name = "Black Dye Empowering"
+	id = "blackdyeempower"
+	result = "paint_black"
+	required_reagents = list("blackhairdye" = 1, "glycerol" = 10)
+	result_amount = 1
+
+/datum/chemical_reaction/hair_dye_empowering/brown
+	name = "Brown Dye Empowering"
+	id = "browndyeempower"
+	result = "paint_brown"
+	required_reagents = list("brownhairdye" = 1, "glycerol" = 10)
+	result_amount = 1
+
+/datum/chemical_reaction/hair_dye_empowering/blond
+	name = "Blond Dye Empowering"
+	id = "blonddyeempower"
+	result = "paint_blond"
+	required_reagents = list("blondhairdye" = 1, "glycerol" = 10)
+	result_amount = 1
+
+// END madness.
+
 /datum/chemical_reaction/unholywater
 	name = "Unholy Water"
 	id = "unholywater"
@@ -2320,3 +2381,55 @@ datum
 	result = "hair_growth_accelerator"
 	required_reagents = list("ryetalyn" = 1, "anti_toxin" = 1, "sugar" = 1)
 	result_amount = 3
+
+/datum/chemical_reaction/paint_empowering
+	name = "Empowering Paint"
+	id = "paint_empowering"
+	result = null
+	required_reagents = list("customhairdye" = -1) // This is indeed very cheesy, but prevents from removing the paint.
+	result_amount = 1
+
+/datum/chemical_reaction/paint_empowering/check_requirements(datum/reagents/holder)
+	return holder.get_reagent_amount("glycerol") > 0
+
+/datum/chemical_reaction/paint_empowering/on_reaction(datum/reagents/holder, created_volume)
+	var/datum/reagent/chd
+	var/datum/reagent/gly
+	for(var/datum/reagent/R in holder.reagent_list)
+		if(R.id == "customhairdye")
+			chd = R
+		else if(R.id == "glycerol")
+			gly = R
+	var/modifier = min(chd.volume, gly.volume)
+	var/new_color_weight = chd.color_weight + modifier
+	if(new_color_weight >= 20)
+		holder.add_reagent("paint_custom", chd.volume, chd.data)
+		holder.remove_reagent("customhairdye", chd.volume)
+	else
+		chd.color_weight = new_color_weight
+	holder.remove_reagent("glycerol", modifier)
+
+/datum/chemical_reaction/paint_depowering
+	name = "Depowering Paint"
+	id = "paint_depowering"
+	result = null
+	required_reagents = list("customhairdye" = -1) // This is indeed very cheesy, but prevents from removing the paint.
+	result_amount = 1
+
+/datum/chemical_reaction/paint_depowering/check_requirements(datum/reagents/holder)
+	var/datum/reagent/R = holder.get_reagent(/datum/reagent/paint/hair_dye/custom)
+	return (R.color_weight > 10) && (holder.get_reagent_amount("water") > 0)
+
+/datum/chemical_reaction/paint_depowering/on_reaction(datum/reagents/holder, created_volume)
+	var/datum/reagent/chd
+	var/datum/reagent/wat
+	for(var/datum/reagent/R in holder.reagent_list)
+		if(R.id == "customhairdye")
+			chd = R
+		else if(R.id == "water")
+			wat = R
+	var/modifier = min(chd.volume, wat.volume)
+	var/new_color_weight = chd.color_weight + modifier
+	if(new_color_weight >= 10)
+		chd.color_weight = new_color_weight
+		holder.remove_reagent("water", modifier)
