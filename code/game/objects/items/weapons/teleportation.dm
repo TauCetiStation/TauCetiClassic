@@ -143,7 +143,7 @@ Frequency:
 	var/list/L = list(  )
 	for(var/obj/machinery/computer/teleporter/com in machines)
 		if(com.target)
-			if(com.target.z == ZLEVEL_CENTCOMM || com.target.z > 7)
+			if(com.target.z == ZLEVEL_CENTCOMM)
 				continue
 			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)
 				L["[com.id] (Active)"] = com.target
