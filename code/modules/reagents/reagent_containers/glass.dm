@@ -44,7 +44,8 @@
 		/obj/machinery/smartfridge/,
 		/obj/machinery/biogenerator,
 		/obj/machinery/hydroponics,
-		/obj/machinery/constructable_frame)
+		/obj/machinery/constructable_frame,
+		/obj/item/clothing/suit/space/rig)
 
 /obj/item/weapon/reagent_containers/glass/atom_init()
 	. = ..()

@@ -1,3 +1,9 @@
+/datum/rig_charge
+	var/short_name = "undef"
+	var/display_name = "undefined"
+	var/product_type = "undefined"
+	var/charges = 0
+
 /obj/item/rig_module
 	name = "hardsuit upgrade"
 	desc = "It looks pretty sciency."
@@ -6,7 +12,7 @@
 	//matter = list(MATERIAL_STEEL = 20000, MATERIAL_PLASTIC = 30000, MATERIAL_GLASS = 5000)
 
 	var/damage = 0
-	var/obj/item/clothing/head/helmet/space/rig/holder
+	var/obj/item/clothing/suit/space/rig/holder
 
 	var/module_cooldown = 10
 	var/next_use = 0
@@ -22,7 +28,6 @@
 	var/active                          // Basic module status
 	var/disruptable                     // Will deactivate if some other powers are used.
 
-	// Now in joules/watts!
 	var/use_power_cost = 0              // Power used when single-use ability called.
 	var/active_power_cost = 0           // Power used when turned on.
 	var/passive_power_cost = 0          // Power used when turned off.
@@ -48,10 +53,34 @@
 /obj/item/rig_module/atom_init()
 	. =..()
 
+	if(suit_overlay_inactive)
+		suit_overlay = suit_overlay_inactive
+
+	if(charges && charges.len)
+		var/list/processed_charges = list()
+		for(var/list/charge in charges)
+			var/datum/rig_charge/charge_dat = new
+
+			charge_dat.short_name   = charge[1]
+			charge_dat.display_name = charge[2]
+			charge_dat.product_type = charge[3]
+			charge_dat.charges      = charge[4]
+
+			if(!charge_selected)
+				charge_selected = charge_dat.short_name
+			processed_charges[charge_dat.short_name] = charge_dat
+
+		charges = processed_charges
+
+	stat_modules +=	new/stat_rig_module/activate(src)
+	stat_modules +=	new/stat_rig_module/deactivate(src)
+	stat_modules +=	new/stat_rig_module/engage(src)
+	stat_modules +=	new/stat_rig_module/select(src)
+	stat_modules +=	new/stat_rig_module/charge(src)
+
 // Called when the module is installed into a suit.
 /obj/item/rig_module/proc/installed(var/obj/item/clothing/head/helmet/space/rig/new_holder)
 	holder = new_holder
-	return
 
 //Proc for one-use abilities like teleport.
 /obj/item/rig_module/proc/engage()
@@ -64,12 +93,12 @@
 		to_chat(usr, "<span class='warning'>You cannot use the [interface_name] again so soon.</span>")
 		return 0
 
-	if(usr.lying || usr.stat || usr.stunned || usr.paralysis || usr.weakened)
+	if(usr.stat || usr.stunned || usr.paralysis || usr.weakened)
 		to_chat(usr, "<span class='warning'>You cannot use the suit in this state.</span>")
 		return 0
 
-	//if(!holder.check_power_cost(usr, use_power_cost, 0, src, (istype(usr,/mob/living/silicon ? 1 : 0) ) ) )
-	//	return 0
+	if(!holder.check_power_cost(usr, use_power_cost, 0, src) )
+		return 0
 
 	next_use = world.time + module_cooldown
 
@@ -126,4 +155,104 @@
 // Called by holder rigsuit attackby()
 // Checks if an item is usable with this module and handles it if it is
 /obj/item/rig_module/proc/accepts_item(var/obj/item/input_device)
+	return 0
+
+/mob/proc/Rig_SetupStat(var/obj/item/clothing/suit/space/rig/R)
+	if(R && R.installed_modules.len && !R.offline && statpanel("Hardsuit Modules"))
+		var/cell_status = R.cell ? "[R.cell.charge]/[R.cell.maxcharge]" : "ERROR"
+		stat("Suit charge", cell_status)
+		for(var/obj/item/rig_module/module in R.installed_modules)
+			for(var/stat_rig_module/SRM in module.stat_modules)
+				if(SRM.CanUse())
+					stat(SRM.module.interface_name,SRM)
+
+/stat_rig_module
+	parent_type = /atom/movable
+	var/module_mode = ""
+	var/obj/item/rig_module/module
+
+/stat_rig_module/New(var/obj/item/rig_module/module)
+	..()
+	src.module = module
+
+/stat_rig_module/proc/AddHref(var/list/href_list)
+	return
+
+/stat_rig_module/proc/CanUse()
+	return 0
+
+/stat_rig_module/Click()
+	if(CanUse())
+		var/list/href_list = list(
+							"interact_module" = module.holder.installed_modules.Find(module),
+							"module_mode" = module_mode
+							)
+		AddHref(href_list)
+		module.holder.Topic(usr, href_list)
+
+/stat_rig_module/DblClick()
+	return Click()
+
+/stat_rig_module/activate/New(var/obj/item/rig_module/module)
+	..()
+	name = module.activate_string
+	if(module.active_power_cost)
+		name += " ([module.active_power_cost]A)"
+	module_mode = "activate"
+
+/stat_rig_module/activate/CanUse()
+	return module.toggleable && !module.active
+
+/stat_rig_module/deactivate/New(var/obj/item/rig_module/module)
+	..()
+	name = module.deactivate_string
+	// Show cost despite being 0, if it means changing from an active cost.
+	if(module.active_power_cost || module.passive_power_cost)
+		name += " ([module.passive_power_cost]P)"
+
+	module_mode = "deactivate"
+
+/stat_rig_module/deactivate/CanUse()
+	return module.toggleable && module.active
+
+/stat_rig_module/engage/New(var/obj/item/rig_module/module)
+	..()
+	name = module.engage_string
+	if(module.use_power_cost)
+		name += " ([module.use_power_cost]E)"
+	module_mode = "engage"
+
+/stat_rig_module/engage/CanUse()
+	return module.usable
+
+/stat_rig_module/select/New()
+	..()
+	name = "Select"
+	module_mode = "select"
+
+/stat_rig_module/select/CanUse()
+	if(module.selectable)
+		name = module.holder.selected_module == module ? "Selected" : "Select"
+		return 1
+	return 0
+
+/stat_rig_module/charge/New()
+	..()
+	name = "Change Charge"
+	module_mode = "select_charge_type"
+
+/stat_rig_module/charge/AddHref(var/list/href_list)
+	var/charge_index = module.charges.Find(module.charge_selected)
+	if(!charge_index)
+		charge_index = 0
+	else
+		charge_index = charge_index == module.charges.len ? 1 : charge_index+1
+
+	href_list["charge_type"] = module.charges[charge_index]
+
+/stat_rig_module/charge/CanUse()
+	if(module.charges && module.charges.len)
+		var/datum/rig_charge/charge = module.charges[module.charge_selected]
+		name = "[charge.display_name] ([charge.charges]C) - Change"
+		return 1
 	return 0

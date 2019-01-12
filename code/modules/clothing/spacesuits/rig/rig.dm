@@ -88,12 +88,16 @@
 	var/mob/living/carbon/human/wearer // The person currently wearing the rig.
 	var/offline = 1
 
+	var/interface_title = "Hardsuit Controller"
+	var/interface_path = "hardsuit.tmpl"
+	var/obj/item/rig_module/selected_module = null // Primary system (used with middle-click)
 	var/list/initial_modules
 	var/list/installed_modules = list() // Power consumption/use bookkeeping.
 	var/cell_type = /obj/item/weapon/stock_parts/cell/high
 	var/obj/item/weapon/stock_parts/cell/cell // Power supply, if any.
 
 /obj/item/clothing/suit/space/rig/atom_init()
+	. = ..()
 	if(initial_modules && initial_modules.len)
 		for(var/path in initial_modules)
 			var/obj/item/rig_module/module = new path(src)
@@ -108,6 +112,118 @@
 /obj/item/clothing/suit/space/rig/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
+
+/obj/item/clothing/suit/space/rig/proc/check_power_cost(var/mob/living/user, var/cost, var/use_unconcious, var/obj/item/rig_module/mod)
+
+	if(!istype(user))
+		return 0
+
+	var/fail_msg
+
+	var/mob/living/carbon/human/H = user
+	if(istype(H) && H.wear_suit != src)
+		fail_msg = "<span class='warning'>You must be wearing \the [src] to do this.</span>"
+	else if(!fail_msg && ((use_unconcious && user.stat > 1) || (!use_unconcious && user.stat)))
+		fail_msg = "<span class='warning'>You are in no fit state to do that.</span>"
+	else if(!cell)
+		fail_msg = "<span class='warning'>There is no cell installed in the suit.</span>"
+	else if(cost && cell.charge < cost)
+		fail_msg = "<span class='warning'>Not enough stored power.</span>"
+
+	if(fail_msg)
+		to_chat(user, "[fail_msg]")
+		return 0
+
+	// This is largely for cancelling stealth and whatever.
+	if(mod && mod.disruptive)
+		for(var/obj/item/rig_module/module in (installed_modules - mod))
+			if(module.active && module.disruptable)
+				module.deactivate()
+
+	cell.use(cost)
+	return 1
+
+/obj/item/clothing/suit/space/rig/Topic(href,href_list)
+	var/mob/living/carbon/human/user = usr
+	if(offline || !istype(user) || user.wear_suit != src)
+		return 0
+
+	if(href_list["interact_module"])
+
+		var/module_index = text2num(href_list["interact_module"])
+
+		if(module_index > 0 && module_index <= installed_modules.len)
+			var/obj/item/rig_module/module = installed_modules[module_index]
+			switch(href_list["module_mode"])
+				if("activate")
+					module.activate()
+				if("deactivate")
+					module.deactivate()
+				if("engage")
+					module.engage()
+				if("select")
+					selected_module = module
+				if("select_charge_type")
+					module.charge_selected = href_list["charge_type"]
+		return 1
+	return 1
+
+/obj/item/clothing/suit/space/rig/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+	if(!user)
+		return
+
+	var/list/data = list()
+
+	if(selected_module)
+		data["primarysystem"] = "[selected_module.interface_name]"
+
+	data["seals"] =     "[src.offline]"
+	data["charge"] =       cell ? round(cell.charge,1) : 0
+	data["maxcharge"] =    cell ? cell.maxcharge : 0
+	data["chargestatus"] = cell ? Floor(cell.percent()/2) : 0
+
+	var/list/module_list = list()
+	var/i = 1
+	for(var/obj/item/rig_module/module in installed_modules)
+		var/list/module_data = list(
+			"index" =             i,
+			"name" =              "[module.interface_name]",
+			"desc" =              "[module.interface_desc]",
+			"can_use" =           "[module.usable]",
+			"can_select" =        "[module.selectable]",
+			"can_toggle" =        "[module.toggleable]",
+			"is_active" =         "[module.active]",
+			"engagecost" =        module.use_power_cost,
+			"activecost" =        module.active_power_cost,
+			"passivecost" =       module.passive_power_cost,
+			"engagestring" =      module.engage_string,
+			"activatestring" =    module.activate_string,
+			"deactivatestring" =  module.deactivate_string,
+			"damage" =            module.damage
+			)
+
+		if(module.charges && module.charges.len)
+
+			module_data["charges"] = list()
+			var/datum/rig_charge/selected = module.charges[module.charge_selected]
+			module_data["chargetype"] = selected ? "[selected.display_name]" : "none"
+
+			for(var/chargetype in module.charges)
+				var/datum/rig_charge/charge = module.charges[chargetype]
+				module_data["charges"] += list(list("caption" = "[chargetype] ([charge.charges])", "index" = "[chargetype]"))
+
+		module_list += list(module_data)
+		i++
+
+	if(module_list.len)
+		data["modules"] = module_list
+
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, interface_path, interface_title, 480, 550)
+		ui.set_initial_data(data)
+		ui.open()
+		ui.set_auto_update(1)
 
 //offline should not change outside this proc
 /obj/item/clothing/suit/space/rig/proc/update_offline()
@@ -130,7 +246,7 @@
 
 	if(!offline)
 		for(var/obj/item/rig_module/module in installed_modules)
-			cell.use(module.process() * CELLRATE)
+			cell.use(module.process())
 
 
 /obj/item/clothing/suit/space/rig/equipped(mob/M, slot)
