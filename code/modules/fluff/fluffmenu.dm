@@ -1,6 +1,5 @@
 /datum/preferences/proc/ShowFluffMenu(mob/user)
 	var/list/custom_items = get_custom_items(user.client.ckey)
-	//to_chat(user, "[custom_items.len]")
 
 	. += "<table align='center' width='570px'>"
 	. += "<tr><td colspan=3><center><b>Custom items slots: <font color='#E67300'>[user.client.get_custom_items_slot_count()]</font></b> \[<a href='?_src_=prefs;preference=fluff;show_info=1'>How to get more</a>\]</center></td></tr>"
@@ -46,22 +45,9 @@ var/list/editing_item_oldname_list = list()
 
 		if("[editing_item.icon_state]_mob" in icon_states(editing_item.icon))
 			var/mob_icon_state = "[editing_item.icon_state]_mob"
-			var/mob/living/carbon/human/dummy/mannequin = new(null, HUMAN)
 
 			preview_icon_mob = icon('icons/effects/effects.dmi', "nothing")
 			preview_icon_mob.Scale(150, 70)
-
-			mannequin.dir = SOUTH
-			var/icon/stamp = getFlatIcon(mannequin)
-			preview_icon_mob.Blend(stamp, ICON_OVERLAY, 13, 22)
-
-			mannequin.dir = NORTH
-			stamp = getFlatIcon(mannequin)
-			preview_icon_mob.Blend(stamp, ICON_OVERLAY, 109, 19)
-
-			mannequin.dir = WEST
-			stamp = getFlatIcon(mannequin)
-			preview_icon_mob.Blend(stamp, ICON_OVERLAY, 60, 18)
 
 			I = new(editing_item.icon,icon_state = mob_icon_state,dir = SOUTH)
 			preview_icon_mob.Blend(I, ICON_OVERLAY, 13, 22)
@@ -72,12 +58,9 @@ var/list/editing_item_oldname_list = list()
 			I = new(editing_item.icon,icon_state = mob_icon_state,dir = WEST)
 			preview_icon_mob.Blend(I, ICON_OVERLAY, 60, 18)
 
-			preview_icon_mob.Scale(preview_icon_mob.Width() * 2, preview_icon_mob.Height() * 2)
-			qdel(mannequin)
-
-	preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2)
 	user << browse_rsc(preview_icon, "itempreviewicon.png")
 	user << browse_rsc('html/prefs/dossier_photos.png')
+	user << browse_rsc('html/prefs/fluff_photos.png')
 	if(preview_icon_mob)
 		user << browse_rsc(preview_icon_mob, "itempreviewicon2.png")
 
@@ -86,14 +69,14 @@ var/list/editing_item_oldname_list = list()
 	dat += "<tr>"
 	dat += "<td>"
 	dat += "<td background='dossier_photos.png' style='background-repeat: no-repeat'>"
-	dat += "<img src=itempreviewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]>"
+	dat += "<img style='-ms-interpolation-mode:nearest-neighbor' src=itempreviewicon.png width=[preview_icon.Width() * 2] height=[preview_icon.Height() * 2]>"
 	dat += "</td>"
 	dat += "</tr>"
 	if(preview_icon_mob)
 		dat += "<tr>"
 		dat += "<td>"
-		dat += "<td background='dossier_photos.png' style='background-repeat: no-repeat'>"
-		dat += "<img src=itempreviewicon2.png width=[preview_icon_mob.Width()] height=[preview_icon_mob.Height()]>"
+		dat += "<td background='fluff_photos.png' style='background-repeat: no-repeat'>"
+		dat += "<img style='-ms-interpolation-mode:nearest-neighbor' src=itempreviewicon2.png width=[preview_icon_mob.Width() * 2] height=[preview_icon_mob.Height() * 2]>"
 		dat += "</td>"
 		dat += "</tr>"
 	dat += "</table>"
