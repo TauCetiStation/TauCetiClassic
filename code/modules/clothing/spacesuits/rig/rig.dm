@@ -85,11 +85,63 @@
 	var/obj/item/active_device = null                 // Currently deployed device, if any.
 
 /obj/item/clothing/suit/space/rig/equipped(mob/M)
+	var/mob/living/carbon/human/wearer // The person currently wearing the rig.
+	var/offline = 1
+
+	var/list/initial_modules
+	var/list/installed_modules = list() // Power consumption/use bookkeeping.
+	var/cell_type = /obj/item/weapon/stock_parts/cell/high
+	var/obj/item/weapon/stock_parts/cell/cell // Power supply, if any.
+
+/obj/item/clothing/suit/space/rig/atom_init()
+	if(initial_modules && initial_modules.len)
+		for(var/path in initial_modules)
+			var/obj/item/rig_module/module = new path(src)
+			installed_modules += module
+			module.installed(src)
+
+	if(cell_type)
+		cell = new cell_type(src)
+
+	START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/suit/space/rig/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+//offline should not change outside this proc
+/obj/item/clothing/suit/space/rig/proc/update_offline()
+	var/go_offline = (!istype(wearer) || loc != wearer || wearer.wear_suit != src || !cell || cell.charge <= 0)
+	if(offline != go_offline)
+		offline = go_offline
+		return 1
+	return 0
+
+/obj/item/clothing/suit/space/rig/process()
+	var/changed = update_offline()
+	if(changed)
+		if(offline)
+			to_chat(wearer, "<span class='danger'>Your suit beeps stridently, and suddenly goes dead.</span>")
+
+			for(var/obj/item/rig_module/module in installed_modules)
+				module.deactivate()
+		if(!offline)
+			to_chat(wearer, "<span class='notice'>Welcome back.</span>")
+
+	if(!offline)
+		for(var/obj/item/rig_module/module in installed_modules)
+			cell.use(module.process() * CELLRATE)
+
+
+/obj/item/clothing/suit/space/rig/equipped(mob/M, slot)
 	..()
 
 	var/mob/living/carbon/human/H = M
 
 	if(!istype(H)) return
+
+	if(slot == slot_wear_suit)
+		wearer = H
 
 	if(H.wear_suit != src)
 		return
@@ -97,6 +149,7 @@
 /obj/item/clothing/suit/space/rig/dropped()
 	..()
 
+	wearer = null
 	var/mob/living/carbon/human/H
 
 	if(helmet)
