@@ -83,6 +83,8 @@
 		return 0
 
 	if(href_list["show_preferences"])
+		client << browse_rsc('html/prefs/dossier_empty.png')
+		client << browse_rsc('html/prefs/opacity7.png')
 		client.prefs.ShowChoices(src)
 		return 1
 
