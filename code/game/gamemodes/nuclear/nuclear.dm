@@ -265,8 +265,10 @@
 
 		if(race == UNATHI)
 			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/unathi(synd_mob), slot_in_backpack)
+			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/cut(synd_mob), slot_shoes)
 		else if(race == TAJARAN)
 			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/tajaran(synd_mob), slot_in_backpack)
+			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/cut(synd_mob), slot_shoes)
 		else if(race == SKRELL)
 			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/skrell(synd_mob), slot_in_backpack)
 
