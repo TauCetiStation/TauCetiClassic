@@ -1294,6 +1294,7 @@ Owl & Griffin toys
 	w_class = 2
 	attack_verb = list("bitten", "eaten", "fin slapped")
 	var/bitesound = 'sound/weapons/bite.ogg'
+	var/next_hug = 0
 
 /obj/item/toy/carpplushie/atom_init()
 	. = ..()
@@ -1304,8 +1305,10 @@ Owl & Griffin toys
 	playsound(src, bitesound, 20, 1)
 
 /obj/item/toy/carpplushie/attack_self(mob/user)
-	playsound(src, bitesound, 20, 1)
-	to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
+	if(next_hug < world.time)
+		playsound(src, bitesound, 20, 1)
+		to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
+		next_hug = world.time + 8
 
 /*
  * Plushie
@@ -1317,15 +1320,19 @@ Owl & Griffin toys
 	icon = 'icons/obj/toy.dmi'
 	var/poof_sound = 'sound/weapons/thudswoosh.ogg'
 	attack_verb = list("poofed", "bopped", "whapped", "cuddled", "fluffed")
+	var/next_hug = 0
+	var/list/cuddle_verbs = list("hugs", "cuddles", "snugs")
 
 /obj/item/toy/plushie/attack(mob/M, mob/user)
 	. = ..()
 	playsound(src, poof_sound, 20, 1) // Play the whoosh sound in local area
 
 /obj/item/toy/plushie/attack_self(mob/user)
-	var/cuddle_verb = pick("hugs", "cuddles", "snugs")
-	user.visible_message("<span class='notice'>[user] [cuddle_verb] the [src].</span>")
-	playsound(src, poof_sound, 50, 1, -1)
+	if(next_hug < world.time)
+		next_hug = world.time + 8
+		var/cuddle_verb = pick(cuddle_verbs)
+		user.visible_message("<span class='notice'>[user] [cuddle_verb] the [src].</span>")
+		playsound(src, poof_sound, 50, 1, -1)
 
 /obj/random/plushie
 	name = "plushie"
@@ -1502,7 +1509,8 @@ Owl & Griffin toys
 							/obj/item/toy/prize/poly/polysec				= 1,
 							/obj/item/toy/prize/poly/polycompanion			= 1,
 							/obj/item/toy/prize/poly/polygold				= 1,
-							/obj/item/toy/prize/poly/polyspecial			= 1
+							/obj/item/toy/prize/poly/polyspecial			= 1,
+							/obj/item/toy/moocan                            = 1
 							)
 	return pick(figures)
 
@@ -1559,3 +1567,29 @@ Owl & Griffin toys
 	. = ..()
 	flick("conch_use",src)
 	playsound(src, 'sound/items/polaroid2.ogg', 20, 1)
+
+
+
+
+//////////////////////////////////////////////////////
+//			  	       Moo Can   				    //
+//////////////////////////////////////////////////////
+
+/obj/item/toy/moocan
+	name = "moo can"
+	desc = "A toy that makes 'mooo' when used."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "mooo"
+	w_class = 2
+	var/cooldown = FALSE
+
+/obj/item/toy/moocan/attack_self(mob/user)
+	if(!cooldown)
+		var/message = pick("Moooooo!", "Mooo", "Moo?", "MOOOO!")
+		to_chat(user, "<span class='notice'>You flip the moo can [src].</span>")
+		playsound(user, 'sound/items/moo.ogg', 20, 1)
+		loc.visible_message("<span class='danger'>[bicon(src)] [message]</span>")
+		cooldown = TRUE
+		spawn(30) cooldown = FALSE
+		return
+	..()

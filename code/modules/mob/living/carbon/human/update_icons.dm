@@ -398,6 +398,11 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(standing.len)
 		overlays_standing[HAIR_LAYER]	= standing
 
+	if(istype(wear_suit, /obj/item/clothing/suit/wintercoat))
+		var/obj/item/clothing/suit/wintercoat/W = wear_suit
+		if(W.hooded) // used for coat hood due to hair layer viewed over the suit
+			overlays_standing[HAIR_LAYER]   = null
+
 	apply_overlay(HAIR_LAYER)
 
 

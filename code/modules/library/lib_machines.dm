@@ -213,21 +213,25 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			if(!dbcon_old.IsConnected())
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
 			else
-				dat += {"<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A>([page] - [page + LIBRETURNLIMIT])<BR><BR>
-				<table>
-				<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td><td></td></tr>"}
-
 				var/DBQuery/query = dbcon_old.NewQuery("SELECT id, author, title, category, deletereason FROM library LIMIT [page], [LIBRETURNLIMIT]")
 				query.Execute()
 
+				var/first_id = null
+				var/last_id = null
+
 				while(query.NextRow())
-					var/id = query.item[1]
+					last_id = query.item[1]
+					if(!first_id)
+						first_id = last_id
 					var/author = query.item[2]
 					var/title = query.item[3]
 					var/category = query.item[4]
 					var/deletereason = query.item[5]
-					dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td><A href='?src=\ref[src];targetid=[id]'>\[Order\]</A></td><td>[(deletereason == null) ? "<A href='?src=\ref[src];deleteid=[id]'>\[Send removal request\]</A>" : "<font color=red>MARKED FOR REMOVAL</font>"]</td></tr>"
+					dat += "<tr><td>[last_id]</td><td>[author]</td><td>[title]</td><td>[category]</td><td><A href='?src=\ref[src];targetid=[last_id]'>\[Order\]</A></td><td>[(deletereason == null) ? "<A href='?src=\ref[src];deleteid=[last_id]'>\[Send removal request\]</A>" : "<font color=red>MARKED FOR REMOVAL</font>"]</td></tr>"
 				dat += "</table>"
+				dat = {"<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A>([first_id] - [last_id])<BR><BR>
+				<table>
+				<tr><td>ID</td><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td><td></td></tr>"} + dat
 			dat += {"
 			<BR><A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A>
 			 <A href='?src=\ref[src];pageprev=2'>\[<< Page\]</A>

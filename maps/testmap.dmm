@@ -87,7 +87,7 @@
 	},
 /area/centcom)
 "n" = (
-/obj/machinery/gateway/centerstation,
+/obj/machinery/gateway/center/station,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "vault"

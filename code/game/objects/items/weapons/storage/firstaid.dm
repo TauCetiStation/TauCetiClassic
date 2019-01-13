@@ -67,7 +67,7 @@
 	for (var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/syringe/antitoxin( src )
 	for (var/i in 1 to 3)
-		new /obj/item/weapon/reagent_containers/pill/antitox( src )
+		new /obj/item/weapon/reagent_containers/pill/dylovene( src )
 	new /obj/item/device/healthanalyzer( src )
 
 /obj/item/weapon/storage/firstaid/o2
@@ -106,51 +106,151 @@
 /*
  * Pill Bottles
  */
+
 /obj/item/weapon/storage/pill_bottle
 	name = "pill bottle"
 	desc = "It's an airtight container for storing medication."
 	icon_state = "pill_canister"
 	icon = 'icons/obj/chemical.dmi'
 	item_state = "contsolid"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
+	max_storage_space = 21
 	can_hold = list("/obj/item/weapon/reagent_containers/pill","/obj/item/weapon/dice","/obj/item/weapon/paper")
 	allow_quick_gather = 1
 	use_to_pickup = 1
-	max_storage_space = 21
-	use_sound = null
+	use_sound = 'sound/effects/pillbottle.ogg'
+	var/wrapper_color
+	var/label
 
-/obj/item/weapon/storage/pill_bottle/kelotane
-	name = "bottle of kelotane pills"
-	desc = "Contains pills used to treat burns."
+/obj/item/weapon/storage/pill_bottle/afterattack(mob/living/target, mob/living/user, proximity_flag)
+	if(!proximity_flag || !istype(target) || target != user)
+		return 1
+	if(!contents.len)
+		to_chat(user, "<span class='warning'>It's empty!</span>")
+		return 1
+	var/zone = user.zone_sel.selecting
+	if(zone == O_MOUTH && CanEat(user, target, src, "eat"))
+		user.visible_message("<span class='notice'>[user] pops a pill from \the [src].</span>")
+		playsound(get_turf(src), 'sound/effects/peelz.ogg', 50)
+		var/list/peelz = filter_list(contents,/obj/item/weapon/reagent_containers/pill/)
+		if(peelz.len)
+			var/obj/item/weapon/reagent_containers/pill/P = pick(peelz)
+			remove_from_storage(P)
+			P.attack(target,user)
+			return 1
 
-/obj/item/weapon/storage/pill_bottle/kelotane/atom_init()
+/obj/item/weapon/storage/pill_bottle/atom_init()
 	. = ..()
-	for (var/i in 1 to 7)
-		new /obj/item/weapon/reagent_containers/pill/kelotane(src)
+	update_icon()
 
-/obj/item/weapon/storage/pill_bottle/antitox
-	name = "Dylovene pills"
-	desc = "Contains pills used to counter toxins."
+/obj/item/weapon/storage/pill_bottle/update_icon()
+	overlays.Cut()
+	if(wrapper_color)
+		var/image/I = image(icon, "pillbottle_wrap")
+		I.color = wrapper_color
+		overlays += I
 
-/obj/item/weapon/storage/pill_bottle/antitox/atom_init()
-	. = ..()
-	for (var/i in 1 to 7)
-		new /obj/item/weapon/reagent_containers/pill/antitox(src)
+/obj/item/weapon/storage/pill_bottle/bicaridine
+	name = "pill bottle (Bicaridine)"
+	desc = "Contains pills used to stabilize the severely injured."
+
+	startswith = list(/obj/item/weapon/reagent_containers/pill/bicaridine = 12)
+	wrapper_color = COLOR_MAROON
+
+/obj/item/weapon/storage/pill_bottle/dexalin_plus
+	name = "pill bottle (Dexalin Plus)"
+	desc = "Contains pills used to treat extreme cases of oxygen deprivation."
+
+	startswith = list(/obj/item/weapon/reagent_containers/pill/dexalin_plus = 12)
+	wrapper_color = COLOR_CYAN_BLUE
+
+/obj/item/weapon/storage/pill_bottle/dexalin
+	name = "pill bottle (Dexalin)"
+	desc = "Contains pills used to treat oxygen deprivation."
+
+	startswith = list(/obj/item/weapon/reagent_containers/pill/dexalin = 12)
+	wrapper_color = COLOR_LIGHT_CYAN
+
+/obj/item/weapon/storage/pill_bottle/dermaline
+	name = "pill bottle (Dermaline)"
+	desc = "Contains pills used to treat burn wounds."
+
+	startswith = list(/obj/item/weapon/reagent_containers/pill/dermaline = 8)
+	wrapper_color = "#e8d131"
+
+/obj/item/weapon/storage/pill_bottle/dylovene
+	name = "pill bottle (Dylovene)"
+	desc = "Contains pills used to treat toxic substances in the blood."
+
+	startswith = list(/obj/item/weapon/reagent_containers/pill/dylovene = 12)
+	wrapper_color = COLOR_GREEN
 
 /obj/item/weapon/storage/pill_bottle/inaprovaline
-	name = "Inaprovaline pills"
+	name = "pill bottle (Inaprovaline)"
 	desc = "Contains pills used to stabilize patients."
 
-/obj/item/weapon/storage/pill_bottle/inaprovaline/atom_init()
-	. = ..()
-	for (var/i in 1 to 7)
-		new /obj/item/weapon/reagent_containers/pill/inaprovaline(src)
+	startswith = list(/obj/item/weapon/reagent_containers/pill/inaprovaline = 12)
+	wrapper_color = COLOR_PALE_BLUE_GRAY
+
+/obj/item/weapon/storage/pill_bottle/kelotane
+	name = "pill bottle (Kelotane)"
+	desc = "Contains pills used to treat burns."
+
+	startswith = list(/obj/item/weapon/reagent_containers/pill/kelotane = 12)
+	wrapper_color = COLOR_SUN
+
+/obj/item/weapon/storage/pill_bottle/spaceacillin
+	name = "pill bottle (Spaceacillin)"
+	desc = "A theta-lactam antibiotic. Effective against many diseases likely to be encountered in space."
+
+	startswith = list(/obj/item/weapon/reagent_containers/pill/spaceacillin = 7)
+	wrapper_color = COLOR_PALE_GREEN_GRAY
 
 /obj/item/weapon/storage/pill_bottle/tramadol
-	name = "Tramadol Pills"
+	name = "pill bottle (Tramadol)"
 	desc = "Contains pills used to relieve pain."
 
-/obj/item/weapon/storage/pill_bottle/tramadol/atom_init()
-	. = ..()
-	for (var/i in 1 to 7)
-		new /obj/item/weapon/reagent_containers/pill/tramadol(src)
+	startswith = list(/obj/item/weapon/reagent_containers/pill/tramadol = 7)
+	wrapper_color = COLOR_PURPLE_GRAY
+
+//Baycode specific Psychiatry pills.
+/obj/item/weapon/storage/pill_bottle/citalopram
+	name = "pill bottle (Citalopram)"
+	desc = "Mild antidepressant. For use in individuals suffering from depression or anxiety. 15u dose per pill."
+
+	startswith = list(/obj/item/weapon/reagent_containers/pill/citalopram = 12)
+	wrapper_color = COLOR_GRAY
+
+/obj/item/weapon/storage/pill_bottle/methylphenidate
+	name = "pill bottle (Methylphenidate)"
+	desc = "Mental stimulant. For use in individuals suffering from ADHD, or general concentration issues. 15u dose per pill."
+
+	startswith = list(/obj/item/weapon/reagent_containers/pill/methylphenidate = 12)
+	wrapper_color = COLOR_GRAY
+
+/obj/item/weapon/storage/pill_bottle/paroxetine
+	name = "pill bottle (Paroxetine)"
+	desc = "High-strength antidepressant. Only for use in severe depression. 10u dose per pill. <span class='warning'>WARNING: side-effects may include hallucinations.</span>"
+
+	startswith = list(/obj/item/weapon/reagent_containers/pill/paroxetine = 7)
+	wrapper_color = COLOR_GRAY
+
+/obj/item/weapon/storage/pill_bottle/paracetamol
+	name = "pill bottle (Paracetamol)"
+	desc = "Mild painkiller, also known as Tylenol. Won't fix the cause of your headache (unlike cyanide), but might make it bearable."
+
+	startswith = list(/obj/item/weapon/reagent_containers/pill/paracetamol = 12)
+	wrapper_color = "#a2819e"
+
+/obj/item/weapon/storage/pill_bottle/assorted
+	name = "pill bottle (assorted)"
+	desc = "Commonly found on paramedics, these assorted pill bottles contain all the basics."
+
+	startswith = list(
+			/obj/item/weapon/reagent_containers/pill/inaprovaline = 6,
+			/obj/item/weapon/reagent_containers/pill/dylovene = 6,
+			/obj/item/weapon/reagent_containers/pill/tramadol = 2,
+			/obj/item/weapon/reagent_containers/pill/dexalin = 2,
+			/obj/item/weapon/reagent_containers/pill/kelotane = 2,
+			/obj/item/weapon/reagent_containers/pill/hyronalin = 2
+		)

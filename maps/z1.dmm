@@ -6889,13 +6889,13 @@
 	name = "Kitchen Shutters";
 	opacity = 0
 	},
-/obj/item/weapon/reagent_containers/food/snacks/pie,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window{
 	dir = 4;
 	name = "Kitchen";
-	req_access_txt = "28"
+	req_access_txt = "0"
 	},
+/obj/item/weapon/bell,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -6996,6 +6996,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
+/obj/item/weapon/reagent_containers/food/snacks/pie,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -7572,6 +7573,7 @@
 /obj/structure/table/reinforced{
 	icon_state = "table_vertical"
 	},
+/obj/item/weapon/bell,
 /turf/simulated/floor/plating,
 /area/security/lobby)
 "alX" = (
@@ -24941,6 +24943,7 @@
 	pixel_x = -27
 	},
 /obj/structure/table/glass,
+/obj/structure/flora/plant/deskleaf,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -24998,6 +25001,7 @@
 	name = "Cargo Desk";
 	req_access_txt = "50"
 	},
+/obj/item/weapon/bell,
 /turf/simulated/floor,
 /area/quartermaster/office)
 "aSb" = (
@@ -28551,11 +28555,8 @@
 /turf/space,
 /area/shuttle/escape_pod1/station)
 "baa" = (
-/obj/item/weapon/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
-	},
 /obj/structure/table/glass,
+/obj/item/weapon/paper_bin,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -29098,6 +29099,13 @@
 	name = "Chemistry Desk";
 	req_access_txt = "33"
 	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Chem";
+	name = "Chemistry Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/medical/chemistry)
 "bbk" = (
@@ -29525,10 +29533,6 @@
 "bcc" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/southright{
-	name = "Research and Development Desk";
-	req_access_txt = "7"
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
@@ -29536,6 +29540,12 @@
 	name = "Biohazard Shutter";
 	opacity = 0
 	},
+/obj/machinery/door/window/southright{
+	dir = 1;
+	name = "Research and Development Desk";
+	req_access_txt = "7"
+	},
+/obj/item/weapon/bell,
 /turf/simulated/floor/plating,
 /area/rnd/lab)
 "bcd" = (
@@ -31768,6 +31778,7 @@
 /area/hallway/primary/port)
 "bgQ" = (
 /obj/structure/table/woodentable,
+/obj/structure/flora/plant/deskferntrim,
 /turf/simulated/floor/carpet,
 /area/crew_quarters/captain)
 "bgR" = (
@@ -34940,6 +34951,9 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/britcup,
+/obj/item/weapon/bell{
+	pixel_y = 12
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blue"
@@ -35062,6 +35076,7 @@
 	opacity = 0
 	},
 /obj/machinery/door/firedoor,
+/obj/item/weapon/bell,
 /turf/simulated/floor,
 /area/crew_quarters/heads)
 "box" = (
@@ -36028,7 +36043,6 @@
 	},
 /area/rnd/lab)
 "bqD" = (
-/obj/structure/flora/plant/random,
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Research Lab APC";
@@ -36038,6 +36052,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/structure/flora/plant/floorleaf,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurple"
@@ -39996,6 +40011,9 @@
 /area/medical/psych)
 "bzm" = (
 /obj/structure/table/woodentable,
+/obj/structure/flora/plant/deskferntrim{
+	icon_state = "plant-34-alternative"
+	},
 /turf/simulated/floor/wood,
 /area/medical/psych)
 "bzn" = (
@@ -44340,6 +44358,7 @@
 	name = "Engineering Desk";
 	req_access_txt = "32"
 	},
+/obj/item/weapon/bell,
 /turf/simulated/floor{
 	icon_state = "delivery";
 	name = "floor"
@@ -44491,10 +44510,6 @@
 "bJl" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/southright{
-	name = "Robotics Desk";
-	req_access_txt = "27"
-	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -44503,6 +44518,13 @@
 	name = "Biohazard Shutter";
 	opacity = 0
 	},
+/obj/machinery/door/window/southright{
+	dir = 1;
+	name = "Robotics Desk";
+	req_access_txt = "27"
+	},
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
 /turf/simulated/floor/plating,
 /area/assembly/robotics)
 "bJm" = (
@@ -45885,6 +45907,9 @@
 /area/construction)
 "bMu" = (
 /obj/machinery/door/firedoor,
+/obj/structure/sign/departments/chemistry{
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "neutralcorner"
@@ -50988,11 +51013,11 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = -32
 	},
-/obj/structure/flora/plant/random,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27;
 	pixel_y = 0
 	},
+/obj/structure/flora/plant/floorleaf,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -70326,6 +70351,13 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Chem";
+	name = "Chemistry Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/medical/reception)
 "eKb" = (
@@ -70384,6 +70416,13 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Chem";
+	name = "Chemistry Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/medical/reception)
 "eQb" = (
@@ -72081,7 +72120,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/asmaint)
 "hLb" = (
-/obj/machinery/gateway/centerstation,
+/obj/machinery/gateway/center/station,
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "darkblue"
@@ -73153,9 +73192,6 @@
 	},
 /area/hallway/primary/central)
 "jBb" = (
-/obj/structure/sign/departments/chemistry{
-	pixel_y = -32
-	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -73242,6 +73278,15 @@
 	icon_state = "bluefull"
 	},
 /area/medical/reception)
+"jRb" = (
+/obj/structure/stool/bed/chair/office/light{
+	dir = 4
+	},
+/obj/effect/landmark/start{
+	name = "Paramedic"
+	},
+/turf/simulated/floor,
+/area/medical/reception)
 "jSb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -73299,6 +73344,15 @@
 	icon_state = "freezerfloor2"
 	},
 /area/crew_quarters/captain)
+"jXb" = (
+/obj/structure/stool/bed/chair/office/light{
+	dir = 8
+	},
+/obj/effect/landmark/start{
+	name = "Paramedic"
+	},
+/turf/simulated/floor,
+/area/medical/reception)
 "jYb" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor/plating,
@@ -76521,6 +76575,14 @@
 	pixel_y = -2
 	},
 /obj/structure/table/glass,
+/obj/machinery/door_control{
+	desc = "A remote control-switch for a shutters.";
+	id = "Chem";
+	name = "Chemistry Shutters Control";
+	pixel_x = -5;
+	pixel_y = 27;
+	req_access_txt = "33"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whiteyellow"
@@ -118987,7 +119049,7 @@ bVg
 nwb
 eKb
 jNb
-eKb
+jXb
 bAT
 bfa
 bur
@@ -119499,7 +119561,7 @@ bcb
 bhQ
 bVa
 nAb
-eMb
+jRb
 jNb
 eMb
 caT

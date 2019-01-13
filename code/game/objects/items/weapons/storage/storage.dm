@@ -24,6 +24,9 @@
 	var/foldable = null	// BubbleWrap - if set, can be folded (when empty) into a sheet of cardboard
 	var/use_sound = "rustle"	//sound played when used. null for no sound.
 
+	//initializes the contents of the storage with some items based on an assoc list. The assoc key must be an item path,
+	//the assoc value can either be the quantity, or a list whose first value is the quantity and the rest are args.
+	var/list/startswith
 	var/datum/storage_ui/storage_ui = /datum/storage_ui/default
 
 /obj/item/weapon/storage/Destroy()
@@ -387,6 +390,20 @@
 
 	storage_ui = new storage_ui(src)
 	prepare_ui()
+
+	if(startswith)
+		for(var/item_path in startswith)
+			var/list/data = startswith[item_path]
+			if(islist(data))
+				var/qty = data[1]
+				var/list/argsl = data.Copy()
+				argsl[1] = src
+				for(var/i in 1 to qty)
+					new item_path(arglist(argsl))
+			else
+				for(var/i in 1 to (isnull(data)? 1 : data))
+					new item_path(src)
+		update_icon()
 
 /obj/item/weapon/storage/emp_act(severity)
 	if(!istype(src.loc, /mob/living))

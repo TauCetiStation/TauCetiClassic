@@ -81,7 +81,7 @@ client/proc/staffhelp(msg, help_type = null)
 		msg += "[original_word] "
 
 	var/ref_mob = "\ref[mob]"
-	msg = "\blue <b><font color=[colour]>[prefix]: </font>[get_options_bar(mob, 2, 1, 1, TRUE)][ai_found ? " (<A HREF='?_src_=holder;adminchecklaws=[ref_mob]'>CL</A>)" : ""]:</b> [msg]"
+	msg = "<font color=blue><b><font color=[colour]>[prefix]: </font>[get_options_bar(mob, 2, 1, 1, TRUE)][ai_found ? " (<A HREF='?_src_=holder;adminchecklaws=[ref_mob]'>CL</A>)" : ""]:</b> <span class='emojify linkify'>[msg]</span></font>"
 
 	//send this msg to all admins
 	var/admin_number_afk = 0
@@ -102,12 +102,12 @@ client/proc/staffhelp(msg, help_type = null)
 			if(isobserver(X.mob))
 				jump = "(<A HREF='?src=\ref[X.mob];ghostplayerobservejump=[ref_mob]'>JMP</A>) "
 			X << 'sound/effects/adminhelp.ogg'
-			to_chat(X, "<font color=blue><b><font color=[colour]>[prefix]: </font>[key_name(src, 1, 0, 0, TRUE)][jump]:</b> [original_msg]</font>")
+			to_chat(X, "<font color=blue><b><font color=[colour]>[prefix]: </font>[key_name(src, 1, 0, 0, TRUE)][jump]:</b> <span class='emojify linkify'>[original_msg]</span></font>")
 
 	adminhelped = 1 //Determines if they get the message to reply by clicking the name.
 
 	//show it to the person adminhelping too
-	to_chat(src, "<font color='blue'>PM to-<b>[target_group]</b>: [original_msg]</font>")
+	to_chat(src, "<font color='blue'>PM to-<b>[target_group]</b>: <span class='emojify linkify'>[original_msg]</span></font>")
 
 	var/mentor_number_present = mentors.len - mentor_number_afk
 	var/admin_number_present = admins.len - admin_number_afk
