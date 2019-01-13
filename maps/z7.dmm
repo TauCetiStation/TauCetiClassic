@@ -137,8 +137,8 @@
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard)
 "A" = (
-/obj/machinery/gateway/centeraway{
-	calibrated = 0
+/obj/machinery/gateway/center{
+	name = "Junkyard Gateway"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard)

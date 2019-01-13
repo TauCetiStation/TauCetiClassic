@@ -236,7 +236,7 @@
 /obj/item/weapon/storage/box/autoinjector/stimpack
 	name = "stimpack value kit"
 	desc = "A box with several stimpack autoinjectors for the economical miner."
-	icon_state = "grey_survival_box"
+	icon_state = "box"
 
 /obj/item/weapon/storage/box/autoinjector/stimpack/atom_init()
 	. = ..()

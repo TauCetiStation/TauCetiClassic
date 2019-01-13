@@ -14,6 +14,7 @@ var/datum/subsystem/job/SSjob
 	var/list/occupations = list()		//List of all jobs
 	var/list/unassigned = list()		//Players who need jobs
 	var/list/job_debug = list()			//Debug info
+	var/obj/effect/landmark/start/fallback_landmark
 
 /datum/subsystem/job/New()
 	NEW_SS_GLOBAL(SSjob)
@@ -416,16 +417,24 @@ var/datum/subsystem/job/SSjob
 	H.job = rank
 
 	if(!joined_late)
-		var/obj/S = null
-		for(var/obj/effect/landmark/start/sloc in landmarks_list)
-			if(sloc.name != rank)	continue
-			if(locate(/mob/living) in sloc.loc)	continue
-			S = sloc
-			break
-		if(!S)
-			S = locate("start*[rank]") // use old stype
-		if(istype(S, /obj/effect/landmark/start) && istype(S.loc, /turf))
-			H.loc = S.loc
+		var/obj/effect/landmark/start/spawn_mark = null
+		for(var/obj/effect/landmark/start/landmark in landmarks_list)
+			if((landmark.name == rank) && !(locate(/mob/living) in landmark.loc))
+				spawn_mark = landmark
+				break
+		if(!spawn_mark)
+			spawn_mark = locate("start*[rank]") // use old stype
+
+		if(!spawn_mark)
+			if(!fallback_landmark)
+				for(var/obj/effect/landmark/start/landmark in landmarks_list)
+					if(landmark.name == "Fallback-Start")
+						fallback_landmark = landmark
+			warning("Failed to find spawn position for [rank]. Using fallback spawn position!")
+			spawn_mark = fallback_landmark
+
+		if(istype(spawn_mark, /obj/effect/landmark/start) && istype(spawn_mark.loc, /turf))
+			H.loc = spawn_mark.loc
 		// Moving wheelchair if they have one
 		if(H.buckled && istype(H.buckled, /obj/structure/stool/bed/chair/wheelchair))
 			H.buckled.loc = H.loc

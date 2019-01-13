@@ -139,7 +139,7 @@
 	var/simultaneous_pm_warning_timeout = 100
 
 	var/assistant_maint = 0 //Do assistants get maint access?
-	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
+	var/gateway_enabled = 0
 	var/ghost_interaction = 0
 
 	var/comms_password = ""
@@ -160,6 +160,7 @@
 	var/check_randomizer = 0
 
 	var/allow_donators = 0
+	var/allow_byond_membership = 0
 	var/donate_info_url = 0
 
 	// The object used for the clickable stat() button.
@@ -491,8 +492,8 @@
 				if("assistant_maint")
 					config.assistant_maint = 1
 
-				if("gateway_delay")
-					config.gateway_delay = text2num(value)
+				if("gateway_enabled")
+					config.gateway_enabled = 1
 
 				if("continuous_rounds")
 					config.continous_rounds = 1
@@ -568,6 +569,9 @@
 
 				if("allow_donators")
 					config.allow_donators = 1
+
+				if("allow_byond_membership")
+					config.allow_byond_membership = 1
 
 				if("donate_info_url")
 					config.donate_info_url = value

@@ -12,7 +12,7 @@
 				total_cost += G.cost
 
 	var/fcolor =  "#3366CC"
-	var/max_cost = (config.allow_donators && user.client.donator) ? MAX_GEAR_COST_DONATOR : MAX_GEAR_COST
+	var/max_cost = user.client.supporter ? MAX_GEAR_COST_SUPPORTER : MAX_GEAR_COST
 	if(total_cost < max_cost)
 		fcolor = "#E67300"
 	. += "<table align='center' width='570px'>"
@@ -77,7 +77,7 @@
 						type_blacklist += G.subtype_path
 					total_cost += G.cost
 
-			if((total_cost + TG.cost) <= ((config.allow_donators && user.client.donator) ? MAX_GEAR_COST_DONATOR : MAX_GEAR_COST))
+			if((total_cost + TG.cost) <= (user.client.supporter ? MAX_GEAR_COST_SUPPORTER : MAX_GEAR_COST))
 				gear += TG.display_name
 
 	else if(href_list["gear"] && href_list["tweak"])

@@ -3959,9 +3959,7 @@
 	icon_state = "0-2";
 	pixel_y = 1
 	},
-/obj/machinery/gateway/centeraway{
-	calibrated = 0
-	},
+/obj/machinery/gateway/center,
 /turf/simulated/floor,
 /area/awaymission/gateroom)
 "kp" = (

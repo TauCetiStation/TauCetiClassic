@@ -102,9 +102,10 @@
 	prefs.save_preferences()
 	if(prefs.toggles & SOUND_MIDI)
 		to_chat(src, "You will now hear any sounds uploaded by admins.")
-		var/sound/break_sound = sound(null, repeat = 0, wait = 0, channel = 777)
+		var/sound/break_sound = sound(null, repeat = 0, wait = 0, channel = CHANNEL_ADMIN)
+		
 		break_sound.priority = 250
-		src << break_sound	//breaks the client's sound output on channel 777
+		src << break_sound	//breaks the client's sound output on channel CHANNEL_ADMIN
 	else
 		to_chat(src, "You will no longer hear sounds uploaded by admins; any currently playing midis have been disabled.")
 	feedback_add_details("admin_verb","TMidi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
