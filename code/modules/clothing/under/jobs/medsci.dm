@@ -51,8 +51,8 @@
 
 /obj/item/clothing/under/rank/chemist/skirt
 	name = "chemist's jumpskirt"
-	icon_state = "chemistryf"
-	item_color = "chemistryf"
+	icon_state = "skirt_chemistry"
+	item_color = "skirt_chemistry"
 
 /*
  * Medical
@@ -69,8 +69,8 @@
 
 /obj/item/clothing/under/rank/chief_medical_officer/skirt
 	name = "chief medical officer's jumpskirt"
-	icon_state = "cmof"
-	item_color = "cmof"
+	icon_state = "skirt_cmo"
+	item_color = "skirt_cmo"
 
 /obj/item/clothing/under/rank/geneticist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a genetics rank stripe on it."
@@ -84,8 +84,8 @@
 
 /obj/item/clothing/under/rank/geneticist/skirt
 	name = "geneticist's jumpskirt"
-	icon_state = "geneticsf"
-	item_color = "geneticsf"
+	icon_state = "skirt_genetics"
+	item_color = "skirt_genetics"
 
 /obj/item/clothing/under/rank/virologist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it."
@@ -99,8 +99,8 @@
 
 /obj/item/clothing/under/rank/virologist/skirt
 	name = "virologist's jumpskirt"
-	icon_state = "virologyf"
-	item_color = "virologyf"
+	icon_state = "skirt_virology"
+	item_color = "skirt_virology"
 
 /obj/item/clothing/under/rank/nursesuit
 	desc = "It's a jumpsuit commonly worn by nursing staff in the medical department."
@@ -144,8 +144,8 @@
 
 /obj/item/clothing/under/rank/medical/skirt
 	name = "medical doctor's jumpskirt"
-	icon_state = "medicalf"
-	item_color = "medicalf"
+	icon_state = "skirt_medical"
+	item_color = "skirt_medical"
 
 /obj/item/clothing/under/rank/medical/blue
 	name = "medical scrubs"
