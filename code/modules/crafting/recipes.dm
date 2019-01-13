@@ -64,3 +64,9 @@
 				/obj/item/stack/sheet/mineral/plastic = 4)
 	result = /obj/item/toy/sword
 	category = CAT_MISC
+
+/datum/crafting_recipe/cable_restraints
+	name = "Cable Restraints"
+	reqs = list(/obj/item/stack/cable_coil = 15)
+	result = /obj/item/weapon/handcuffs/cable
+	category = CAT_MISC
