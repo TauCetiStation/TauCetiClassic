@@ -131,13 +131,21 @@
 			src.dna.UpdateUI()
 		dna.check_integrity()
 		var/mob/living/carbon/human/H = src
-		H.r_hair   = dna.GetUIValueRange(DNA_UI_HAIR_R,    255)
-		H.g_hair   = dna.GetUIValueRange(DNA_UI_HAIR_G,    255)
-		H.b_hair   = dna.GetUIValueRange(DNA_UI_HAIR_B,    255)
+		H.natural_r_hair   = dna.GetUIValueRange(DNA_UI_HAIR_R,    255)
+		H.natural_g_hair   = dna.GetUIValueRange(DNA_UI_HAIR_G,    255)
+		H.natural_b_hair   = dna.GetUIValueRange(DNA_UI_HAIR_B,    255)
+		if(H.hair_painted)
+			H.r_hair = H.natural_r_hair
+			H.g_hair = H.natural_g_hair
+			H.b_hair = H.natural_b_hair
 
-		H.r_facial = dna.GetUIValueRange(DNA_UI_BEARD_R,   255)
-		H.g_facial = dna.GetUIValueRange(DNA_UI_BEARD_G,   255)
-		H.b_facial = dna.GetUIValueRange(DNA_UI_BEARD_B,   255)
+		H.natural_r_facial = dna.GetUIValueRange(DNA_UI_BEARD_R,   255)
+		H.natural_g_facial = dna.GetUIValueRange(DNA_UI_BEARD_G,   255)
+		H.natural_b_facial = dna.GetUIValueRange(DNA_UI_BEARD_B,   255)
+		if(H.facial_painted)
+			H.r_facial = H.natural_r_facial
+			H.g_facial = H.natural_g_facial
+			H.b_facial = H.natural_b_facial
 
 		H.r_skin   = dna.GetUIValueRange(DNA_UI_SKIN_R,    255)
 		H.g_skin   = dna.GetUIValueRange(DNA_UI_SKIN_G,    255)

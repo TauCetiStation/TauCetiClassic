@@ -225,12 +225,20 @@
 	if(istype(M, /mob/living/carbon/human))
 		M.dna.check_integrity()
 		var/mob/living/carbon/human/H = M
-		H.r_hair = hex2num(getblock(structure,1,3))
-		H.b_hair = hex2num(getblock(structure,2,3))
-		H.g_hair = hex2num(getblock(structure,3,3))
-		H.r_facial = hex2num(getblock(structure,4,3))
-		H.b_facial = hex2num(getblock(structure,5,3))
-		H.g_facial = hex2num(getblock(structure,6,3))
+		H.natural_r_hair = hex2num(getblock(structure,1,3))
+		H.natural_b_hair = hex2num(getblock(structure,2,3))
+		H.natural_g_hair = hex2num(getblock(structure,3,3))
+		if(H.hair_painted)
+			H.r_hair = H.natural_r_hair
+			H.g_hair = H.natural_g_hair
+			H.b_hair = H.natural_b_hair
+		H.natural_r_facial = hex2num(getblock(structure,4,3))
+		H.natural_b_facial = hex2num(getblock(structure,5,3))
+		H.natural_g_facial = hex2num(getblock(structure,6,3))
+		if(H.facial_painted)
+			H.r_facial = H.natural_r_facial
+			H.g_facial = H.natural_g_facial
+			H.b_facial = H.natural_b_facial
 		H.s_tone = round(((hex2num(getblock(structure,7,3)) / 16) - 220))
 		H.r_eyes = hex2num(getblock(structure,8,3))
 		H.g_eyes = hex2num(getblock(structure,9,3))

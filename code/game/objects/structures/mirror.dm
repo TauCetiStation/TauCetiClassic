@@ -241,17 +241,23 @@
 			else
 				var/new_hair = input(H, "Choose your hair color", "Hair Color") as null|color
 				if(new_hair)
-					H.r_hair = hex2num(copytext(new_hair, 2, 4))
-					H.g_hair = hex2num(copytext(new_hair, 4, 6))
-					H.b_hair = hex2num(copytext(new_hair, 6, 8))
+					H.natural_r_hair = hex2num(copytext(new_hair, 2, 4))
+					H.natural_g_hair = hex2num(copytext(new_hair, 4, 6))
+					H.natural_b_hair = hex2num(copytext(new_hair, 6, 8))
+					H.r_hair = H.natural_r_hair
+					H.g_hair = H.natural_g_hair
+					H.b_hair = H.natural_b_hair
 
 
 				if(H.gender == "male")
 					var/new_facial = input(H, "Choose your facial hair color", "Hair Color") as null|color
 					if(new_facial)
-						H.r_hair = hex2num(copytext(new_facial, 2, 4))
-						H.g_hair = hex2num(copytext(new_facial, 4, 6))
-						H.b_hair = hex2num(copytext(new_facial, 6, 8))
+						H.natural_r_facial = hex2num(copytext(new_facial, 2, 4))
+						H.natural_g_facial = hex2num(copytext(new_facial, 4, 6))
+						H.natural_b_facial = hex2num(copytext(new_facial, 6, 8))
+						H.r_facial = H.natural_r_facial
+						H.g_facial = H.natural_g_facial
+						H.b_facial = H.natural_b_facial
 			H.update_hair()
 			H.update_body()
 			H.check_dna(H)

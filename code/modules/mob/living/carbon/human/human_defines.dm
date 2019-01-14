@@ -5,11 +5,21 @@
 	var/b_hair = 0
 	var/h_style = "Bald"
 
+	var/natural_r_hair = 0
+	var/natural_g_hair = 0
+	var/natural_b_hair = 0
+	var/hair_painted = FALSE
+
 	//Facial hair colour and style
 	var/r_facial = 0
 	var/g_facial = 0
 	var/b_facial = 0
 	var/f_style = "Shaved"
+
+	var/natural_r_facial = 0
+	var/natural_g_facial = 0
+	var/natural_b_facial = 0
+	var/facial_painted = FALSE
 
 	//Eye colour
 	var/r_eyes = 0

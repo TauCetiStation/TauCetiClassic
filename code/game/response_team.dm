@@ -166,11 +166,19 @@ var/can_call_ert
 		M.g_facial = hex2num(copytext(new_facial, 4, 6))
 		M.b_facial = hex2num(copytext(new_facial, 6, 8))
 
+		M.natural_r_hair = M.r_facial
+		M.natural_g_hair = M.g_facial
+		M.natural_b_hair = M.b_facial
+
 	var/new_hair = input("Please select hair color.", "Character Generation") as color
 	if(new_facial)
 		M.r_hair = hex2num(copytext(new_hair, 2, 4))
 		M.g_hair = hex2num(copytext(new_hair, 4, 6))
 		M.b_hair = hex2num(copytext(new_hair, 6, 8))
+
+		M.natural_r_hair = M.r_hair
+		M.natural_g_hair = M.g_hair
+		M.natural_b_hair = M.b_hair
 
 	var/new_eyes = input("Please select eye color.", "Character Generation") as color
 	if(new_eyes)

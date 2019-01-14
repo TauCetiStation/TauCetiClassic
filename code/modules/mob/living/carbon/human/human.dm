@@ -1040,15 +1040,23 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	var/new_facial = input("Please select facial hair color.", "Character Generation",rgb(r_facial,g_facial,b_facial)) as color
 	if(new_facial)
-		r_facial = hex2num(copytext(new_facial, 2, 4))
-		g_facial = hex2num(copytext(new_facial, 4, 6))
-		b_facial = hex2num(copytext(new_facial, 6, 8))
+		natural_r_facial = hex2num(copytext(new_facial, 2, 4))
+		natural_g_facial = hex2num(copytext(new_facial, 4, 6))
+		natural_b_facial = hex2num(copytext(new_facial, 6, 8))
+
+		r_facial = natural_r_facial
+		g_facial = natural_g_facial
+		b_facial = natural_b_facial
 
 	var/new_hair = input("Please select hair color.", "Character Generation",rgb(r_hair,g_hair,b_hair)) as color
 	if(new_facial)
-		r_hair = hex2num(copytext(new_hair, 2, 4))
-		g_hair = hex2num(copytext(new_hair, 4, 6))
-		b_hair = hex2num(copytext(new_hair, 6, 8))
+		natural_r_hair = hex2num(copytext(new_hair, 2, 4))
+		natural_g_hair = hex2num(copytext(new_hair, 4, 6))
+		natural_b_hair = hex2num(copytext(new_hair, 6, 8))
+
+		r_hair = natural_r_hair
+		g_hair = natural_g_hair
+		b_hair = natural_b_hair
 
 	var/new_eyes = input("Please select eye color.", "Character Generation",rgb(r_eyes,g_eyes,b_eyes)) as color
 	if(new_eyes)
