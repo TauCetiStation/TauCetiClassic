@@ -5,6 +5,7 @@
 	desc = "A bell to ring to get people's attention. Don't break it."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "bell"
+	flags = NOBLUDGEON
 	hitsound = 'sound/items/oneding.ogg'
 	m_amt = 75
 
