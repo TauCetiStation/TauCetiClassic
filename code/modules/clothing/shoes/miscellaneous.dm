@@ -39,6 +39,13 @@
 	heat_protection = LEGS
 	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 
+/obj/item/clothing/shoes/combat/cut // Basically combat shoes but for xenos.
+	name = "mangled combat boots"
+	desc = "When you REALLY want to turn up the heat<br>They have the toe caps cut off of them."
+	icon_state = "swat_cut"
+	clipped_status = CLIPPED
+	species_restricted = list()
+
 /obj/item/clothing/shoes/space_ninja
 	name = "ninja shoes"
 	desc = "A pair of running shoes. Excellent for running and even better for smashing skulls."
