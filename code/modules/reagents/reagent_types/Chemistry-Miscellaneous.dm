@@ -700,6 +700,18 @@
 	reagent_state = 2
 	color = "#808080"
 
+/datum/reagent/paint_remover/reaction_mob(mob/M, method=TOUCH, volume)
+	if(method == TOUCH)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.r_hair = H.natural_r_hair
+			H.g_hair = H.natural_g_hair
+			H.b_hair = H.natural_b_hair
+			H.r_facial = H.natural_r_facial
+			H.g_facial = H.natural_g_facial
+			H.b_facial = H.natural_b_facial
+			H.update_hair()
+
 /datum/reagent/paint_remover/reaction_turf(turf/T, volume)
 	if(istype(T) && T.icon != initial(T.icon))
 		T.icon = initial(T.icon)

@@ -6629,6 +6629,27 @@
 "akE" = (
 /turf/simulated/floor/plating/airless/catwalk,
 /area/solar/auxport)
+"akF" = (
+/obj/structure/sign/poster{
+	dir = 6;
+	official = 1;
+	pixel_x = -32
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "red"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warningline"
+	},
+/area/hallway/secondary/exit)
 "akG" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -9645,19 +9666,11 @@
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint)
 "apy" = (
-/obj/structure/sign/poster{
-	dir = 6;
-	official = 1;
-	pixel_x = -32
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 8;
+	dir = 10;
 	icon_state = "red"
 	},
 /turf/simulated/floor{
@@ -11592,19 +11605,6 @@
 	},
 /area/security/prison)
 "asS" = (
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "red"
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "warningline"
-	},
-/area/hallway/secondary/exit)
-"asT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
@@ -11614,6 +11614,19 @@
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warninglinecorners"
+	},
+/area/crew_quarters)
+"asT" = (
+/obj/machinery/computer/cryopod{
+	density = 0;
+	pixel_x = 32
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "warningline"
 	},
 /area/crew_quarters)
 "asU" = (
@@ -12029,18 +12042,29 @@
 /turf/space,
 /area/shuttle/mining/station)
 "atK" = (
-/obj/machinery/computer/cryopod{
-	density = 0;
-	pixel_x = 32
+/obj/machinery/camera{
+	c_tag = "Research Division Access";
+	dir = 2;
+	network = list("SS13","Research")
+	},
+/obj/structure/sink{
+	dir = 4;
+	icon_state = "sink";
+	pixel_x = 12;
+	pixel_y = 0
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "freezerfloor"
 	},
 /turf/simulated/floor{
-	dir = 1;
+	dir = 8;
 	icon_state = "warningline"
 	},
-/area/crew_quarters)
+/area/rnd/hallway)
 "atL" = (
 /obj/structure/object_wall/mining{
 	dir = 4;
@@ -13464,20 +13488,9 @@
 	},
 /area/hallway/primary/fore)
 "awu" = (
-/obj/machinery/camera{
-	c_tag = "Research Division Access";
-	dir = 2;
-	network = list("SS13","Research")
-	},
-/obj/structure/sink{
-	dir = 4;
-	icon_state = "sink";
-	pixel_x = 12;
-	pixel_y = 0
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
+/obj/machinery/shower{
+	dir = 8;
+	icon_state = "shower"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -13654,9 +13667,14 @@
 	},
 /area/rnd/xenobiology)
 "awS" = (
-/obj/machinery/shower{
-	dir = 8;
-	icon_state = "shower"
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/obj/structure/sink{
+	dir = 4;
+	icon_state = "sink";
+	pixel_x = 12;
+	pixel_y = 0
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -13953,23 +13971,28 @@
 	},
 /area/crew_quarters/female)
 "axC" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
 	},
-/obj/structure/sink{
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4;
-	icon_state = "sink";
-	pixel_x = 12;
-	pixel_y = 0
+	step_x = 0;
+	step_y = 0
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor{
-	icon_state = "freezerfloor"
+	dir = 1;
+	icon_state = "asteroid"
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "warningline"
+	dir = 2;
+	icon_state = "siding8"
 	},
-/area/rnd/hallway)
+/area/crew_quarters/kitchen)
 "axD" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/wall/r_wall,
@@ -14392,7 +14415,7 @@
 /area/maintenance/fpmaint)
 "ayv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4;
@@ -14400,17 +14423,21 @@
 	step_y = 0
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/machinery/camera{
+	c_tag = "Hydroponics Pasture"
 	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "asteroid"
 	},
 /turf/simulated/floor{
-	dir = 2;
-	icon_state = "siding8"
+	dir = 1;
+	icon_state = "siding2"
 	},
 /area/crew_quarters/kitchen)
 "ayw" = (
@@ -14727,8 +14754,8 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/obj/machinery/camera{
-	c_tag = "Hydroponics Pasture"
+/mob/living/simple_animal/cow{
+	name = "Betsy"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -14806,9 +14833,6 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_y = 0
-	},
-/mob/living/simple_animal/cow{
-	name = "Betsy"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -15060,27 +15084,20 @@
 	},
 /area/crew_quarters)
 "azA" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
-	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
 	pixel_y = 0
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "asteroid"
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "siding2"
+	dir = 2;
+	icon_state = "siding8"
 	},
 /area/crew_quarters/kitchen)
 "azB" = (
@@ -15420,17 +15437,8 @@
 	name = "North Technical Storage"
 	})
 "aAf" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "asteroid"
-	},
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/simulated/floor/grass,
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "siding8"
@@ -15768,8 +15776,19 @@
 /turf/simulated/floor/plating,
 /area/maintenance/port)
 "aAG" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor/grass,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "asteroid"
+	},
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "siding8"
@@ -15827,19 +15846,10 @@
 /turf/simulated/floor/plating,
 /area/rnd/mixing)
 "aAN" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+/mob/living/simple_animal/chicken{
+	name = "Commander Clucky"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/grass,
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "siding8"
@@ -15965,15 +15975,13 @@
 /turf/simulated/floor/plating,
 /area/lawoffice)
 "aAX" = (
-/mob/living/simple_animal/chicken{
-	name = "Commander Clucky"
-	},
+/obj/structure/flora/tree/jungle,
 /turf/simulated/floor/grass,
 /turf/simulated/floor{
 	dir = 2;
-	icon_state = "siding8"
+	icon_state = "wood_siding2"
 	},
-/area/crew_quarters/kitchen)
+/area/garden)
 "aAY" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -16059,7 +16067,12 @@
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint)
 "aBd" = (
-/obj/structure/flora/tree/jungle,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/machinery/alarm{
+	dir = 2;
+	locked = 0;
+	pixel_y = 25
+	},
 /turf/simulated/floor/grass,
 /turf/simulated/floor{
 	dir = 2;
@@ -16466,11 +16479,6 @@
 /area/crew_quarters)
 "aBN" = (
 /obj/structure/flora/ausbushes/fullgrass,
-/obj/machinery/alarm{
-	dir = 2;
-	locked = 0;
-	pixel_y = 25
-	},
 /turf/simulated/floor/grass,
 /turf/simulated/floor{
 	dir = 2;
@@ -16660,7 +16668,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint)
 "aBY" = (
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor/grass,
 /turf/simulated/floor{
 	dir = 2;
@@ -16796,11 +16804,11 @@
 	},
 /area/rnd/mixing)
 "aCn" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/flora/ausbushes/lavendergrass,
 /turf/simulated/floor/grass,
 /turf/simulated/floor{
 	dir = 2;
-	icon_state = "wood_siding2"
+	icon_state = "wood_siding6"
 	},
 /area/garden)
 "aCo" = (
@@ -16885,11 +16893,11 @@
 	},
 /area/ai_monitored/storage/eva)
 "aCz" = (
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/ywflowers,
 /turf/simulated/floor/grass,
 /turf/simulated/floor{
 	dir = 2;
-	icon_state = "wood_siding6"
+	icon_state = "wood_siding10"
 	},
 /area/garden)
 "aCA" = (
@@ -17463,20 +17471,20 @@
 /turf/simulated/floor/plating,
 /area/crew_quarters/gym)
 "aDw" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/turf/simulated/floor/grass,
-/turf/simulated/floor{
-	dir = 2;
-	icon_state = "wood_siding10"
-	},
-/area/garden)
-"aDx" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/simulated/floor/grass,
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "wood_siding8"
+	},
+/area/garden)
+"aDx" = (
+/obj/structure/flora/junglebush/b,
+/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	dir = 2;
+	icon_state = "wood_siding1"
 	},
 /area/garden)
 "aDy" = (
@@ -17573,11 +17581,11 @@
 	},
 /area/ai_monitored/storage/eva)
 "aDI" = (
-/obj/structure/flora/junglebush/b,
+/obj/structure/flora/ausbushes/fullgrass,
 /turf/simulated/floor/grass,
 /turf/simulated/floor{
 	dir = 2;
-	icon_state = "wood_siding1"
+	icon_state = "wood_siding5"
 	},
 /area/garden)
 "aDJ" = (
@@ -17706,11 +17714,11 @@
 	},
 /area/maintenance/fsmaint)
 "aDT" = (
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/junglebush/b,
 /turf/simulated/floor/grass,
 /turf/simulated/floor{
 	dir = 2;
-	icon_state = "wood_siding5"
+	icon_state = "wood_siding8"
 	},
 /area/garden)
 "aDU" = (
@@ -17797,13 +17805,31 @@
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint2)
 "aEf" = (
-/obj/structure/flora/junglebush/b,
-/turf/simulated/floor/grass,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/machinery/alarm{
+	pixel_y = 23
+	},
+/obj/machinery/camera{
+	c_tag = "Barbershop";
+	dir = 2
+	},
+/obj/machinery/color_mixer,
 /turf/simulated/floor{
 	dir = 2;
-	icon_state = "wood_siding8"
+	icon_state = "purplechecker"
 	},
-/area/garden)
+/area/crew_quarters/barbershop)
 "aEg" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -76201,31 +76227,6 @@
 	icon_state = "barber"
 	},
 /area/medical/cmo)
-"psb" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/machinery/alarm{
-	pixel_y = 23
-	},
-/obj/machinery/camera{
-	c_tag = "Barbershop";
-	dir = 2
-	},
-/turf/simulated/floor{
-	dir = 2;
-	icon_state = "purplechecker"
-	},
-/area/crew_quarters/barbershop)
 "ptb" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -93083,9 +93084,9 @@ bsH
 bvw
 aWw
 bDo
-ayv
-aAf
-aAN
+axC
+azA
+aAG
 bOF
 bQE
 bTF
@@ -93340,9 +93341,9 @@ alk
 bvy
 byP
 bDu
-ayX
-aAG
-aAX
+ayv
+aAf
+aAN
 bOD
 bRg
 bTG
@@ -93597,7 +93598,7 @@ bsI
 bvB
 aQn
 bDv
-azc
+ayX
 bJP
 bMR
 aNi
@@ -93854,7 +93855,7 @@ cFd
 bvH
 byQ
 aMZ
-azA
+azc
 bJQ
 bMU
 aNi
@@ -94085,8 +94086,8 @@ aaa
 aRn
 hmb
 ajR
+akF
 apy
-asS
 asP
 ahw
 uab
@@ -106202,7 +106203,7 @@ bqy
 oHb
 aUs
 oOb
-psb
+aEf
 pJb
 pNb
 pTb
@@ -113363,7 +113364,7 @@ awT
 aDr
 azx
 azx
-asT
+asS
 aIX
 awT
 awT
@@ -113620,7 +113621,7 @@ awT
 awQ
 awQ
 awQ
-atK
+asT
 ayI
 axg
 aCN
@@ -119037,9 +119038,9 @@ bPS
 boH
 cnv
 akv
+atK
 awu
 awS
-axC
 bIs
 bLM
 bNd
@@ -129333,7 +129334,7 @@ ckE
 cuE
 cxp
 cdb
-aBY
+aBN
 cuE
 cCt
 aFn
@@ -129585,10 +129586,10 @@ aaa
 bWu
 bZb
 cdb
-aBY
+aBN
 coT
 cuE
-aDI
+aDx
 ccX
 aET
 cxs
@@ -129842,7 +129843,7 @@ aaa
 bWu
 bZd
 cdc
-aBY
+aBN
 ckE
 cuM
 cxp
@@ -129850,7 +129851,7 @@ cdd
 cdn
 cuE
 cCt
-aDT
+aDI
 ccX
 cdc
 bWu
@@ -130099,10 +130100,10 @@ aaa
 bWu
 bZk
 cdd
-aCn
+aBY
 coU
 cuE
-aDI
+aDx
 cdc
 aFe
 cxu
@@ -130356,12 +130357,12 @@ aaa
 bWu
 bZn
 bZp
-aCz
+aCn
 cqV
 cuE
 cxp
 cdb
-aBY
+aBN
 cuE
 cCt
 cMn
@@ -130612,11 +130613,11 @@ aaa
 aaa
 bWu
 bZp
-aBd
+aAX
 cla
 cpE
 cuE
-aDT
+aDI
 aEh
 cHi
 cuE
@@ -130869,7 +130870,7 @@ aaa
 aaa
 bWu
 bWu
-aBN
+aBd
 clb
 cpE
 cuE
@@ -131385,7 +131386,7 @@ aaa
 bZq
 bZq
 bZq
-aDw
+aCz
 cuN
 cxu
 cuE
@@ -131643,8 +131644,8 @@ aaa
 aaa
 bZq
 bZq
-aDx
-aEf
+aDw
+aDT
 aEr
 aFf
 aFg

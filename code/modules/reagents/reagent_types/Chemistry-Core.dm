@@ -7,6 +7,26 @@
 	custom_metabolism = 0.01
 	taste_message = null
 
+/datum/reagent/water/reaction_mob(mob/M, method=TOUCH, volume)
+	if(method == TOUCH)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/volume_coefficient = max((10-volume)/10, 0)
+
+			if(H.species && H.species.name in list(HUMAN, UNATHI, TAJARAN))
+				if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
+					H.r_hair = Clamp(round(H.r_hair * volume_coefficient + ((H.natural_r_hair * volume) / 10)), 0, 255)
+					H.g_hair = Clamp(round(H.g_hair * volume_coefficient + ((H.natural_g_hair * volume) / 10)), 0, 255)
+					H.b_hair = Clamp(round(H.b_hair * volume_coefficient + ((H.natural_b_hair * volume) / 10)), 0, 255)
+				if(!((H.wear_mask && (H.wear_mask.flags & HEADCOVERSMOUTH)) || (H.head && (H.head.flags & HEADCOVERSMOUTH))) && H.f_style != "Shaved")
+					H.r_facial = Clamp(round(H.r_facial * volume_coefficient + ((H.natural_r_facial * volume) / 10)), 0, 255)
+					H.g_facial = Clamp(round(H.g_facial * volume_coefficient + ((H.natural_g_facial * volume) / 10)), 0, 255)
+					H.b_facial = Clamp(round(H.b_facial * volume_coefficient + ((H.natural_b_facial * volume) / 10)), 0, 255)
+			if(!H.head && !H.wear_mask && H.h_style == "Bald" && H.f_style == "Shaved" && volume >= 10)
+				H.lip_style = null
+			H.update_hair()
+			H.update_body()
+
 /datum/reagent/water/reaction_turf(turf/simulated/T, volume)
 	spawn_fluid(T, volume) // so if will spawn even in space, just for pure visuals
 	if(!istype(T))

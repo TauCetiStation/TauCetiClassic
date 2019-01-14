@@ -16,3 +16,5 @@ var/global/list/joblist = list()            //list of all jobstypes, minus borg 
 
 var/global/list/all_areas = list()
 var/global/list/machines = list()
+
+var/global/list/color_mixer_icons_cache = list()
