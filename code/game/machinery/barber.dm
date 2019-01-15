@@ -337,6 +337,7 @@ A proc that does all the animations before mix()-ing.
 		s.start() //sparks always.
 		emagged = TRUE
 		update_icon(beaker_update = FALSE)
+		return
 
 	if(panel_open)
 		if(istype(O, /obj/item/weapon/wirecutters))
@@ -495,6 +496,8 @@ A proc that does all the animations before mix()-ing.
 /obj/machinery/color_mixer/Topic(href, href_list)
 	. = ..()
 	if(!. || !istype(usr, /mob/living))
+		return
+	if(usr.a_intent == I_GRAB && beakers["output"])
 		return
 
 	var/mob/living/user = usr
