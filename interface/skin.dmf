@@ -1371,7 +1371,7 @@ window "rpane"
 		anchor2 = none
 		font-family = ""
 		font-size = 0
-		font-style = "bold"
+		font-style = ""
 		text-color = #000000
 		background-color = #F24D50
 		is-visible = true
@@ -1425,7 +1425,7 @@ window "rpane"
 		anchor2 = none
 		font-family = ""
 		font-size = 0
-		font-style = "bold"
+		font-style = ""
 		text-color = #000000
 		background-color = none
 		is-visible = true
@@ -1453,7 +1453,7 @@ window "rpane"
 		anchor2 = none
 		font-family = ""
 		font-size = 0
-		font-style = "bold"
+		font-style = ""
 		text-color = #000000
 		background-color = #7186f0
 		is-visible = true
@@ -1481,7 +1481,7 @@ window "rpane"
 		anchor2 = none
 		font-family = ""
 		font-size = 0
-		font-style = "bold"
+		font-style = ""
 		text-color = #000000
 		background-color = #EADF96
 		is-visible = true
@@ -1509,7 +1509,7 @@ window "rpane"
 		anchor2 = none
 		font-family = ""
 		font-size = 0
-		font-style = "bold"
+		font-style = ""
 		text-color = #000000
 		background-color = #6D69E5
 		is-visible = true
