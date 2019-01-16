@@ -24,7 +24,16 @@
 	new_player_panel_proc()
 
 /mob/dead/new_player/proc/new_player_panel_proc()
-	var/output = "<div align='center'><B>New Player Options</B>"
+	var/output = null
+	var/client/C = client
+	if(C.player_ingame_age <= 60)
+		output += "<div align='center'><B>Welcome, New Player!</B>"
+	else
+		if(length(C.prefs.real_name) > 15)
+			output += "<div align='center'><B>Welcome,<br></B>"
+			output += "<div align='center'><B>[C.prefs.real_name]!</B>"
+		else
+			output += "<div align='center'><B>Welcome, [C.prefs.real_name]!</B>"
 	output +="<hr>"
 	output += "<p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
@@ -54,8 +63,6 @@
 
 			if(newpoll)
 				output += "<p><b><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
-			else
-				output += "<p><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
 
 	output += "</div>"
 
