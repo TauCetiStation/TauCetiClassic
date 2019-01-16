@@ -996,8 +996,8 @@ window "mainwindow"
 		on-hide = ""
 	elem "hotkey_toggle"
 		type = BUTTON
-		pos = 560,420
-		size = 80x20
+		pos = 552,420
+		size = 85x20
 		anchor1 = 100,100
 		anchor2 = none
 		font-family = ""
@@ -1014,14 +1014,14 @@ window "mainwindow"
 		right-click = false
 		saved-params = ""
 		on-size = ""
-		text = "Hotkey Toggle"
+		text = "Hotkey Mode"
 		image = ""
 		command = ".winset \"mainwindow.macro!=macro ? mainwindow.macro=macro hotkey_toggle.is-checked=false input.focus=true : mainwindow.macro=hotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true\""
-		is-flat = false
+		is-flat = true
 		stretch = false
 		is-checked = false
 		group = ""
-		button-type = pushbox
+		button-type = checkbox
 	elem "mainvsplit"
 		type = CHILD
 		pos = 3,0
@@ -1074,7 +1074,7 @@ window "mainwindow"
 		no-command = false
 	elem "saybutton"
 		type = BUTTON
-		pos = 520,420
+		pos = 510,420
 		size = 40x20
 		anchor1 = 100,100
 		anchor2 = none
@@ -1102,7 +1102,7 @@ window "mainwindow"
 		button-type = pushbox
 	elem "mebutton"
 		type = BUTTON
-		pos = 480,420
+		pos = 470,420
 		size = 40x20
 		anchor1 = 100,100
 		anchor2 = none
