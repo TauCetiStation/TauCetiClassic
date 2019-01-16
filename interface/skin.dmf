@@ -1373,7 +1373,7 @@ window "rpane"
 		font-size = 0
 		font-style = ""
 		text-color = #000000
-		background-color = #F7454B
+		background-color = none
 		is-visible = true
 		is-disabled = false
 		is-transparent = false
@@ -1455,7 +1455,7 @@ window "rpane"
 		font-size = 0
 		font-style = ""
 		text-color = #000000
-		background-color = #ABB7F4
+		background-color = none
 		is-visible = true
 		is-disabled = false
 		is-transparent = false
@@ -1483,7 +1483,7 @@ window "rpane"
 		font-size = 0
 		font-style = ""
 		text-color = #000000
-		background-color = #F9EFA9
+		background-color = none
 		is-visible = true
 		is-disabled = false
 		is-transparent = false
@@ -1511,7 +1511,7 @@ window "rpane"
 		font-size = 0
 		font-style = ""
 		text-color = #000000
-		background-color = #B0AEEF
+		background-color = none
 		is-visible = true
 		is-disabled = false
 		is-transparent = false
