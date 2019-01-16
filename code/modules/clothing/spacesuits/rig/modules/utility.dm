@@ -280,3 +280,106 @@
 	H.bodytemperature -= temp_adj
 	active_power_cost = round((temp_adj/max_cooling)*charge_consumption)
 	return active_power_cost
+
+/obj/item/rig_module/selfrepair
+	name = "hardsuit self-repair module"
+	desc = "A somewhat complicated looking complex full of tools."
+	icon_state = "scanner"
+	interface_name = "self-repair module"
+	interface_desc = "A module capable of repairing stuctural rig damage on the spot."
+	engage_string = "Begin repair"
+	usable = 1
+	selectable = 0
+	use_power_cost = 0
+	module_cooldown = 0
+	origin_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 4, TECH_ENGINEERING = 6)
+
+	charges = list(
+		list("metal", "metal", "metal", 30),
+	)
+	charge_selected = 0
+
+/obj/item/rig_module/selfrepair/engage()
+	if(!..())
+		return 0
+
+	var/mob/living/carbon/human/H = holder.wearer
+
+	if(active)
+		to_chat(H, "<span class='danger'>Self-repair in already active.</span>")
+		return 0
+
+	if(!charge_selected)
+		to_chat(H, "<span class='danger'>You have not selected a material type.</span>")
+		return 0
+
+	var/datum/rig_charge/charge = charges[charge_selected]
+
+	if(!charge)
+		return 0
+
+	if(holder.brute_damage || holder.burn_damage)
+		active = TRUE
+		to_chat(H, "<span class='notice'>Starting self-repair sequence</span>")
+
+	return 1
+
+/obj/item/rig_module/selfrepair/process()
+	if(!active)
+		return passive_power_cost
+
+	var/mob/living/carbon/human/H = holder.wearer
+
+	if(!holder.brute_damage && !holder.burn_damage)
+		deactivate()
+		to_chat(H, "<span class='notice'>Self-repair is completed</span>")
+		return passive_power_cost
+
+	if(!charge_selected)
+		deactivate()
+		return 0
+
+	var/datum/rig_charge/charge = charges[charge_selected]
+
+	if(!charge)
+		deactivate()
+		return 0
+
+	active_power_cost = passive_power_cost
+	if(holder.brute_damage && charge.charges > 0)
+		var/chargeuse = min(charge.charges, 3)
+
+		charge.charges -= chargeuse
+		holder.repair_breaches(BRUTE, chargeuse, H, stop_messages = TRUE)
+
+		active_power_cost = chargeuse * 200
+	else if(holder.burn_damage && charge.charges > 0)
+		var/chargeuse = min(charge.charges, 3)
+
+		charge.charges -= chargeuse
+		holder.repair_breaches(BURN, chargeuse, H, stop_messages = TRUE)
+
+		active_power_cost = chargeuse * 200
+	else
+		deactivate()
+		to_chat(H, "<span class='danger'>Not enough materials to continue self-repair</span>")
+
+	return active_power_cost
+
+/obj/item/rig_module/selfrepair/accepts_item(var/obj/item/input_item, var/mob/living/user)
+	var/mob/living/carbon/human/H = holder.wearer
+
+	if(istype(input_item, /obj/item/stack/sheet/metal) && istype(H) && user == H)
+		var/obj/item/stack/sheet/metal/metal = input_item
+		var/datum/rig_charge/charge = charges[1]
+
+		var/total_used = 30
+		total_used = min(total_used, 30 - charge.charges)
+		total_used = min(total_used, metal.get_amount())
+
+		metal.use(total_used)
+		if(total_used)
+			to_chat(user, "<font color='notice'>You transfer [total_used] of metal lists into the suit reservoir.</font>")
+		return 1
+
+	return 0

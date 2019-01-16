@@ -241,8 +241,8 @@
 
 			for(var/obj/item/rig_module/module in installed_modules)
 				module.deactivate()
-		if(!offline)
-			to_chat(wearer, "<span class='notice'>Welcome back.</span>")
+		//if(!offline)
+		//	to_chat(wearer, "<span class='notice'>Welcome back.</span>")
 
 	if(!offline)
 		for(var/obj/item/rig_module/module in installed_modules)

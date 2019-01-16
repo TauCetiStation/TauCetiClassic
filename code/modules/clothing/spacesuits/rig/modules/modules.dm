@@ -86,18 +86,18 @@
 /obj/item/rig_module/proc/engage()
 
 	if(damage >= 2)
-		to_chat(usr, "<span class='warning'>The [interface_name] is damaged beyond use!</span>")
+		to_chat(holder.wearer, "<span class='warning'>The [interface_name] is damaged beyond use!</span>")
 		return 0
 
 	if(world.time < next_use)
-		to_chat(usr, "<span class='warning'>You cannot use the [interface_name] again so soon.</span>")
+		to_chat(holder.wearer, "<span class='warning'>You cannot use the [interface_name] again so soon.</span>")
 		return 0
 
-	if(usr.stat || usr.stunned || usr.paralysis || usr.weakened)
-		to_chat(usr, "<span class='warning'>You cannot use the suit in this state.</span>")
+	if(holder.wearer.stat || holder.wearer.stunned || holder.wearer.paralysis || holder.wearer.weakened)
+		to_chat(holder.wearer, "<span class='warning'>You cannot use the suit in this state.</span>")
 		return 0
 
-	if(!holder.check_power_cost(usr, use_power_cost, 0, src) )
+	if(!holder.check_power_cost(holder.wearer, use_power_cost, 0, src) )
 		return 0
 
 	next_use = world.time + module_cooldown

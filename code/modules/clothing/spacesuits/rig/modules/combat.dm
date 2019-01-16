@@ -1,0 +1,168 @@
+/obj/item/rig_module/device/flash
+	name = "hardsuit mounted flash"
+	desc = "You are the law."
+	icon_state = "flash"
+	interface_name = "mounted flash"
+	interface_desc = "Disorientates your target by blinding them with a bright light."
+	device_type = /obj/item/device/flash
+	origin_tech = list(TECH_COMBAT = 2, TECH_MAGNET = 3, TECH_ENGINEERING = 5)
+
+/obj/item/rig_module/grenade_launcher
+	name = "hardsuit mounted grenade launcher"
+	desc = "A shoulder-mounted micro-explosive dispenser."
+	selectable = 1
+	icon_state = "grenadelauncher"
+	use_power_cost = 500
+
+	interface_name = "integrated grenade launcher"
+	interface_desc = "Discharges loaded grenades against the wearer's location."
+
+	var/fire_force = 30
+	var/fire_distance = 10
+
+	charges = list(
+		list("flashbang",   "flashbang",   /obj/item/weapon/grenade/flashbang,  3),
+		list("smoke bomb",  "smoke bomb",  /obj/item/weapon/grenade/smokebomb,  3),
+		list("EMP grenade", "EMP grenade", /obj/item/weapon/grenade/empgrenade, 3),
+		)
+
+/obj/item/rig_module/grenade_launcher/accepts_item(var/obj/item/input_device, var/mob/living/user)
+
+	if(!istype(input_device) || !istype(user))
+		return 0
+
+	var/datum/rig_charge/accepted_item
+	for(var/charge in charges)
+		var/datum/rig_charge/charge_datum = charges[charge]
+		if(input_device.type == charge_datum.product_type)
+			accepted_item = charge_datum
+			break
+
+	if(!accepted_item)
+		return 0
+
+	if(accepted_item.charges >= 5)
+		to_chat(user, "<span class='danger'>Another grenade of that type will not fit into the module.</span>")
+		return 0
+
+	to_chat(user, "<font color='blue'><b>You slot \the [input_device] into the suit module.</b></font>")
+	qdel(input_device)
+	accepted_item.charges++
+	return 1
+
+/obj/item/rig_module/grenade_launcher/engage(atom/target)
+
+	if(!..())
+		return 0
+
+	if(!target)
+		return 0
+
+	var/mob/living/carbon/human/H = holder.wearer
+
+	if(!charge_selected)
+		to_chat(H, "<span class='danger'>You have not selected a grenade type.</span>")
+		return 0
+
+	var/datum/rig_charge/charge = charges[charge_selected]
+
+	if(!charge)
+		return 0
+
+	if(charge.charges <= 0)
+		to_chat(H, "<span class='danger'>Insufficient grenades!</span>")
+		return 0
+
+	charge.charges--
+	var/obj/item/weapon/grenade/new_grenade = new charge.product_type(get_turf(H))
+	H.visible_message("<span class='danger'>[H] launches \a [new_grenade]!</span>")
+	msg_admin_attack("fired a grenade ([new_grenade.name]) from a rigsuit grenade launcher.")
+	new_grenade.activate(H)
+	new_grenade.throw_at(target,fire_force,fire_distance)
+
+/obj/item/rig_module/grenade_launcher/cleaner
+	name = "hardsuit mounted cleaning grenade launcher"
+	interface_name = "cleaning grenade launcher"
+	desc = "A shoulder-mounted micro-explosive dispenser designed only to accept standard cleaning foam grenades."
+
+	charges = list(
+		list("cleaning grenade",   "cleaning grenade",   /obj/item/weapon/grenade/chem_grenade/cleaner,  9),
+		)
+
+/obj/item/rig_module/grenade_launcher/smoke
+	name = "hardsuit mounted smoke grenade launcher"
+	interface_name = "smoke grenade launcher"
+	desc = "A shoulder-mounted micro-explosive dispenser designed only to accept standard smoke grenades."
+
+	charges = list(
+		list("smoke bomb",   "smoke bomb",   /obj/item/weapon/grenade/smokebomb,  6),
+	)
+
+/obj/item/rig_module/grenade_launcher/mfoam
+	name = "hardsuit mounted foam grenade launcher"
+	interface_name = "foam grenade launcher"
+	desc = "A shoulder-mounted micro-explosive dispenser designed only to accept standard metal foam grenades."
+
+	charges = list(
+		list("metal foam grenade",   "metal foam grenade",   /obj/item/weapon/grenade/chem_grenade/metalfoam,  4),
+	)
+
+/obj/item/rig_module/mounted
+
+	name = "mounted laser rifle"
+	desc = "A shoulder-mounted battery-powered laser rifle mount."
+	selectable = 1
+	usable = 0
+	module_cooldown = 0
+	icon_state = "lcannon"
+	use_power_cost = 0
+	var/recharge_speed = 50
+
+	suit_overlay = "mounted-lascannon"
+
+	engage_string = "Configure"
+
+	interface_name = "mounted laser rifle"
+	interface_desc = "A shoulder-mounted cell-powered laser rifle."
+
+	var/obj/item/weapon/gun/energy/gun = /obj/item/weapon/gun/energy/laser
+
+/obj/item/rig_module/mounted/atom_init()
+	. = ..()
+	if(gun)
+		gun = new gun(src)
+		gun.canremove = FALSE
+
+/obj/item/rig_module/mounted/engage(atom/target)
+
+	if(!..())
+		return 0
+
+	if(!target)
+		gun.attack_self(holder.wearer)
+		return
+
+	gun.Fire(target,holder.wearer)
+	return 1
+
+/obj/item/rig_module/mounted/process()
+	if(istype(gun) && gun.power_supply)
+		return gun.power_supply.give(recharge_speed)
+	return passive_power_cost
+
+/obj/item/rig_module/mounted/taser
+
+	name = "mounted taser"
+	desc = "A palm-mounted nonlethal energy projector."
+	icon_state = "taser"
+	use_power_cost = 0
+
+	usable = 1
+
+	suit_overlay_active = null
+	suit_overlay_inactive = null
+
+	interface_name = "mounted taser"
+	interface_desc = "A palm-mounted, cell-powered taser."
+	origin_tech = list(TECH_POWER = 5, TECH_COMBAT = 5, TECH_ENGINEERING = 6)
+	gun = /obj/item/weapon/gun/energy/taser
