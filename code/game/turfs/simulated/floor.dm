@@ -174,12 +174,12 @@ var/list/wood_icons = list("wood","wood-broken")
 				icon_state = "grass[pick("1","2","3","4")]"
 	else if(is_carpet_floor())
 		if(!broken && !burnt)
-			if(icon_state != "carpetsymbol")
+			if(!(icon_state in list("carpetsymbol", "blackcarpetsymbol", "purplecarpetsymbol", "orangecarpetsymbol", "greencarpetsymbol", "bluecarpetsymbol", "blue2carpetsymbol", "redcarpetsymbol", "cyancarpetsymbol")))
 				var/connectdir = 0
 				for(var/direction in cardinal)
 					if(istype(get_step(src,direction),/turf/simulated/floor))
 						var/turf/simulated/floor/FF = get_step(src,direction)
-						if(FF.is_carpet_floor())
+						if(FF.is_carpet_floor() && FF.floor_type == floor_type)
 							connectdir |= direction
 
 				//Check the diagonal connections for corners, where you have, for example, connections both north and east. In this case it checks for a north-east connection to determine whether to add a corner marker or not.
@@ -189,31 +189,48 @@ var/list/wood_icons = list("wood","wood-broken")
 				if(connectdir & NORTH && connectdir & EAST)
 					if(istype(get_step(src,NORTHEAST),/turf/simulated/floor))
 						var/turf/simulated/floor/FF = get_step(src,NORTHEAST)
-						if(FF.is_carpet_floor())
+						if(FF.is_carpet_floor() && FF.floor_type == floor_type)
 							diagonalconnect |= 1
 
 				//Southeast
 				if(connectdir & SOUTH && connectdir & EAST)
 					if(istype(get_step(src,SOUTHEAST),/turf/simulated/floor))
 						var/turf/simulated/floor/FF = get_step(src,SOUTHEAST)
-						if(FF.is_carpet_floor())
+						if(FF.is_carpet_floor() && FF.floor_type == floor_type)
 							diagonalconnect |= 2
 
 				//Northwest
 				if(connectdir & NORTH && connectdir & WEST)
 					if(istype(get_step(src,NORTHWEST),/turf/simulated/floor))
 						var/turf/simulated/floor/FF = get_step(src,NORTHWEST)
-						if(FF.is_carpet_floor())
+						if(FF.is_carpet_floor() && FF.floor_type == floor_type)
 							diagonalconnect |= 4
 
 				//Southwest
 				if(connectdir & SOUTH && connectdir & WEST)
 					if(istype(get_step(src,SOUTHWEST),/turf/simulated/floor))
 						var/turf/simulated/floor/FF = get_step(src,SOUTHWEST)
-						if(FF.is_carpet_floor())
+						if(FF.is_carpet_floor() && FF.floor_type == floor_type)
 							diagonalconnect |= 8
 
-				icon_state = "carpet[connectdir]-[diagonalconnect]"
+				var/base_icon_state = "carpet"
+				if(floor_type == /obj/item/stack/tile/carpet/black)
+					base_icon_state = "blackcarpet"
+				if(floor_type == /obj/item/stack/tile/carpet/purple)
+					base_icon_state = "purplecarpet"
+				if(floor_type == /obj/item/stack/tile/carpet/orange)
+					base_icon_state = "orangecarpet"
+				if(floor_type == /obj/item/stack/tile/carpet/green)
+					base_icon_state = "greencarpet"
+				if(floor_type == /obj/item/stack/tile/carpet/blue)
+					base_icon_state = "bluecarpet"
+				if(floor_type == /obj/item/stack/tile/carpet/blue2)
+					base_icon_state = "blue2carpet"
+				if(floor_type == /obj/item/stack/tile/carpet/red)
+					base_icon_state = "redcarpet"
+				if(floor_type == /obj/item/stack/tile/carpet/cyan)
+					base_icon_state = "cyancarpet"
+				icon_state = "[base_icon_state][connectdir]-[diagonalconnect]"
 
 	else if(is_wood_floor())
 		if(!broken && !burnt)
