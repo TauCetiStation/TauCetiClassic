@@ -179,7 +179,7 @@
 	breakouttime = 35 //easy to apply, easy to break out of
 	origin_tech = "engineering=3;combat=1"
 	throw_speed = 5
-	var/weaken = 2
+	var/weaken = 0.8
 
 /obj/item/weapon/legcuffs/bola/after_throw(datum/callback/callback)
 	..()
