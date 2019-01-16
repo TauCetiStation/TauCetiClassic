@@ -1365,15 +1365,15 @@ window "rpane"
 		lock = none
 	elem "rulesb"
 		type = BUTTON
-		pos = 278,0
+		pos = 439,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
 		font-family = ""
 		font-size = 0
-		font-style = ""
+		font-style = "bold"
 		text-color = #000000
-		background-color = none
+		background-color = #F24D50
 		is-visible = true
 		is-disabled = false
 		is-transparent = false
@@ -1425,7 +1425,7 @@ window "rpane"
 		anchor2 = none
 		font-family = ""
 		font-size = 0
-		font-style = ""
+		font-style = "bold"
 		text-color = #000000
 		background-color = none
 		is-visible = true
@@ -1447,14 +1447,14 @@ window "rpane"
 		button-type = pushbutton
 	elem "discord"
 		type = BUTTON
-		pos = 439,0
+		pos = 278,0
 		size = 67x16
 		anchor1 = none
 		anchor2 = none
 		font-family = ""
 		font-size = 0
 		font-style = "bold"
-		text-color = #ffffff
+		text-color = #000000
 		background-color = #7186f0
 		is-visible = true
 		is-disabled = false
@@ -1481,9 +1481,9 @@ window "rpane"
 		anchor2 = none
 		font-family = ""
 		font-size = 0
-		font-style = ""
+		font-style = "bold"
 		text-color = #000000
-		background-color = none
+		background-color = #EADF96
 		is-visible = true
 		is-disabled = false
 		is-transparent = false
@@ -1509,9 +1509,9 @@ window "rpane"
 		anchor2 = none
 		font-family = ""
 		font-size = 0
-		font-style = ""
+		font-style = "bold"
 		text-color = #000000
-		background-color = none
+		background-color = #6D69E5
 		is-visible = true
 		is-disabled = false
 		is-transparent = false
