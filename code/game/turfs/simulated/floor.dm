@@ -143,7 +143,6 @@ var/list/wood_icons = list("wood","wood-broken")
 			ReplaceWithLattice()
 
 /turf/simulated/floor/update_icon()
-	icon = initial(icon) //meh
 	if(is_plasteel_floor())
 		if(!broken && !burnt)
 			icon_state = icon_regular_floor
@@ -174,7 +173,6 @@ var/list/wood_icons = list("wood","wood-broken")
 			if(!(icon_state in list("grass1","grass2","grass3","grass4")))
 				icon_state = "grass[pick("1","2","3","4")]"
 	else if(is_carpet_floor())
-		icon = 'icons/turf/carpets.dmi' //meh
 		if(!broken && !burnt)
 			if(!(icon_state in list("carpetsymbol", "blackcarpetsymbol", "purplecarpetsymbol", "orangecarpetsymbol", "greencarpetsymbol", "bluecarpetsymbol", "blue2carpetsymbol", "redcarpetsymbol", "cyancarpetsymbol")))
 				var/connectdir = 0
@@ -412,6 +410,7 @@ var/list/wood_icons = list("wood","wood-broken")
 				var/turf/simulated/floor/FF = get_step(src,direction)
 				FF.update_icon() //so siding get updated properly
 	else if(is_carpet_floor())
+		icon = 'icons/turf/floors.dmi'
 		spawn(5)
 			if(src)
 				for(var/direction in list(1,2,4,8,5,6,9,10))
@@ -611,6 +610,7 @@ var/list/wood_icons = list("wood","wood-broken")
 			if(!broken && !burnt)
 				var/obj/item/stack/tile/T = C
 				floor_type = T.type
+				icon = initial(T.turf_type.icon)
 				if(!T.use(1))
 					return
 				intact = 1

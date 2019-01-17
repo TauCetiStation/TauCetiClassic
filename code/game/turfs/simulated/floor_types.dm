@@ -230,6 +230,7 @@
 	name = "carpet"
 	icon_state = "carpet"
 	floor_type = /obj/item/stack/tile/carpet
+	icon = 'icons/turf/carpets.dmi'
 
 /turf/simulated/floor/carpet/black
 	name = "black carpet"
