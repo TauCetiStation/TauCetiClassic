@@ -257,11 +257,6 @@ This function completely restores a damaged organ to perfect condition.
 
 	owner.updatehealth()
 
-/obj/item/organ/external/head/rejuvenate()
-	..()
-	owner.client.perspective = MOB_PERSPECTIVE
-	owner.client.eye = owner // Deheading species that do not need a head causes them to view the world from a perspective of their head.
-
 /obj/item/organ/external/proc/createwound(type = CUT, damage)
 	if(damage == 0)
 		return
@@ -1300,8 +1295,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	else
 		H.h_style = "Bald"
 		H.f_style = "Shaved"
-		H.client.perspective = EYE_PERSPECTIVE
-		H.client.eye = src
 	H.update_body()
 	H.update_hair()
 
