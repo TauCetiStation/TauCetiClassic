@@ -834,6 +834,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Emergency Treatment Centre"
 	icon_state = "exam_room"
 
+/area/medical/checkpoint
+	name = "Medical Checkpoint"
+	icon_state = "exam_room"
+
 //Security
 
 /area/security/main
