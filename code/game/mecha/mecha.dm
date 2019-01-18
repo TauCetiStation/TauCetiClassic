@@ -230,8 +230,14 @@
 			return
 	if(!target.Adjacent(src))
 		if(selected && selected.is_ranged())
+			if(selected.harmful && user.has_trait(TRAIT_PACIFISM))
+				to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
+				return
 			selected.action(target)
 	else if(selected && selected.is_melee())
+		if(!issilicon(target) && isliving(target) && selected.harmful && user.has_trait(TRAIT_PACIFISM))
+			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
+			return
 		selected.action(target)
 	else
 		src.melee_action(target)

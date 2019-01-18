@@ -113,12 +113,10 @@
 		if("disabil_menu")
 			. += "<b>Disabilities:</b>"
 			. += "<br>"
-			. += ShowDisabilityState(user,DISABILITY_NEARSIGHTED,"Needs Glasses")
 			. += ShowDisabilityState(user,DISABILITY_COUGHING,"Coughing")
 			. += ShowDisabilityState(user,DISABILITY_EPILEPTIC,"Seizures")
 			. += ShowDisabilityState(user,DISABILITY_TOURETTES,"Twitching")
 			. += ShowDisabilityState(user,DISABILITY_NERVOUS,"Nervousness")
-			. += ShowDisabilityState(user, DISABILITY_FATNESS, "Fatness")
 
 		//Gear
 		if("gear")
@@ -282,6 +280,7 @@
 						f_style = random_facial_hair_style(gender, species)
 						h_style = random_hair_style(gender, species)
 						ResetJobs()
+						ResetQuirks()
 						if(language && language != "None")
 							var/datum/language/lang = all_languages[language]
 							if(!(species in lang.allowed_species))

@@ -48,6 +48,9 @@
 	if(user.a_intent != "hurt" || !is_glass)
 		return ..()
 
+	if(user.has_trait(TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
+		return
 
 	force = 15 //Smashing bottles over someoen's head hurts.
 

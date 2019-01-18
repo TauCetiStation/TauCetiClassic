@@ -47,6 +47,11 @@
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
 		if (do_surgery(M,user,src))
 			return 0
+
+	if(force && user.has_trait(TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
+		return
+
 	// Knifing
 	if(edge)
 		for(var/obj/item/weapon/grab/G in M.grabbed_by)

@@ -731,3 +731,4 @@ datum/proc/dd_SortValue()
 #define LAZYLEN(L) length(L)
 #define LAZYCLEARLIST(L) if(L) L.Cut()
 #define LAZYCOPY(L) L && L.len ? L.Copy() : null
+#define SANITIZE_LIST(L) ( islist(L) ? L : list() )

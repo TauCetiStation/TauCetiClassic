@@ -95,6 +95,9 @@
 
 /obj/machinery/gibber/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/grab))
+		if(user.has_trait(TRAIT_PACIFISM))
+			to_chat(user, "<span class='notice'>You don't want to hurt anyone!</span>")
+			return
 		src.add_fingerprint(user)
 		var/obj/item/weapon/grab/G = W
 		move_into_gibber(user, G.affecting)

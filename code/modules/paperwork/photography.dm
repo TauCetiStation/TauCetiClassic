@@ -291,7 +291,11 @@
 	to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	icon_state = icon_off
 	on = 0
-	addtimer(CALLBACK(src, .proc/reload), 64)
+
+	var/realcooldown = 64
+	if (user.has_trait(TRAIT_PHOTOGRAPHER))
+		realcooldown *= 0.5
+	addtimer(CALLBACK(src, .proc/reload), realcooldown)
 
 /obj/item/device/camera/proc/reload()
 	icon_state = icon_on

@@ -234,6 +234,10 @@
 		get_scooped(M)
 	else
 		if (M.a_intent == "hurt")
+			if(M.has_trait(TRAIT_PACIFISM))
+				to_chat(M, "<span class='warning'>You don't want to harm [src]!</span>")
+				return
+
 			M.do_attack_animation(src)
 			if ((prob(75) && health > 0))
 				for(var/mob/O in viewers(src, null))

@@ -115,6 +115,9 @@
 	var/obj/item/weapon/grab/G = I
 	if(istype(G))	// handle grabbed mob
 		if(ismob(G.affecting))
+			if(user.has_trait(TRAIT_PACIFISM))
+				to_chat(user, "<span class='notice'>You don't want to hurt anyone!</span>")
+				return
 			var/mob/GM = G.affecting
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(user.is_busy()) return
@@ -133,6 +136,12 @@
 
 	if(!I || !I.canremove || I.flags & NODROP)
 		return
+
+	if(locate(/mob/living) in I.contents)
+		if(user.has_trait(TRAIT_PACIFISM))
+			to_chat(user, "<span class='notice'>You don't want to hurt anyone!</span>")
+			return
+
 	user.drop_item()
 	if(I)
 		I.loc = src

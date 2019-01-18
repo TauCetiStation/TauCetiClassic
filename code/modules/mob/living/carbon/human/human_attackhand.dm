@@ -135,6 +135,10 @@
 			return 1
 
 		if("hurt")
+			if(M.has_trait(TRAIT_PACIFISM))
+				to_chat(M, "<span class='warning'>You don't want to harm [src]!</span>")
+				return
+
 			M.do_attack_animation(src)
 			var/datum/unarmed_attack/attack = M.species.unarmed
 

@@ -379,6 +379,10 @@
 				return
 			un_equip_or_action(M, "CPR")
 		if ("hurt")
+			if(M.has_trait(TRAIT_PACIFISM))
+				to_chat(M, "<span class='warning'>You don't want to harm [src]!</span>")
+				return
+
 			M.do_attack_animation(src)
 			if(is_armored(M, 35))
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)

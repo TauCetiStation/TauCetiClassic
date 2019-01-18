@@ -337,6 +337,9 @@
 
 	joined_player_list += character.ckey
 
+	if(!issilicon(character))
+		SSquirks.AssignQuirks(character, character.client, TRUE)
+
 	qdel(src)
 
 /mob/dead/new_player/proc/AnnounceArrival(mob/living/carbon/human/character, rank)
@@ -423,10 +426,6 @@
 		// Set defer to 1 if you add more crap here so it only recalculates struc_enzymes once. - N3X
 		new_character.dna.SetSEState(GLASSESBLOCK,1,0)
 		new_character.disabilities |= NEARSIGHTED */
-
-	if(client.prefs.disabilities & DISABILITY_NEARSIGHTED)
-		new_character.dna.SetSEState(GLASSESBLOCK,1,1)
-		new_character.disabilities |= NEARSIGHTED
 
 	if(client.prefs.disabilities & DISABILITY_EPILEPTIC)
 		new_character.dna.SetSEState(EPILEPSYBLOCK,1,1)

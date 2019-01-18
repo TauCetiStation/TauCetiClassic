@@ -112,6 +112,13 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/gen_record = ""
 	var/disabilities = 0
 
+	// Quirk list
+	var/list/positive_quirks = list()
+	var/list/negative_quirks = list()
+	var/list/neutral_quirks = list()
+	var/list/all_quirks = list()
+	var/list/character_quirks = list()
+
 	// OOC Metadata:
 	var/metadata = ""
 	var/slot_name = ""
@@ -151,6 +158,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	dat += "<style type='text/css'>a.white, a.white:link, a.white:visited, a.white:active{color: #40628a;text-decoration: none;background: #ffffff;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
 	dat += "<style>body{background-image:url('dossier_empty.png');background-color: #F5ECDD;background-repeat:no-repeat;background-position:center top;}</style>"
 	dat += "<style>.main_menu{margin-left:150px;margin-top:135px}</style>"
+
 	if(path)
 		dat += "<div class='main_menu'>"
 		dat += "Slot: <b>[real_name]</b> - "
@@ -161,7 +169,8 @@ var/const/MAX_SAVE_SLOTS = 10
 		dat += "[menu_type=="occupation"?"<b>Occupation</b>":"<a href=\"byond://?src=\ref[user];preference=occupation\">Occupation</a>"] - "
 		dat += "[menu_type=="roles"?"<b>Roles</b>":"<a href=\"byond://?src=\ref[user];preference=roles\">Roles</a>"] - "
 		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"] - "
-		dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond://?src=\ref[user];preference=loadout\">Loadout</a>"]"
+		dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond://?src=\ref[user];preference=loadout\">Loadout</a>"] - "
+		dat += "[menu_type=="quirks"?"<b>Quirks</b>":"<a href=\"byond://?src=\ref[user];preference=quirks\">Quirks</a>"]"
 		dat += "<br><a href='?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
 		dat += "</div>"
 	else
@@ -181,6 +190,8 @@ var/const/MAX_SAVE_SLOTS = 10
 			dat += ShowLoadSlot(user)
 		if("loadout")
 			dat += ShowCustomLoadout(user)
+		if("quirks")
+			dat += ShowQuirks(user)
 	dat += "</body></html>"
 	user << browse(entity_ja(dat), "window=preferences;size=618x778;can_close=0;can_minimize=0;can_maximize=0;can_resize=0")
 
@@ -222,6 +233,9 @@ var/const/MAX_SAVE_SLOTS = 10
 		if("loadout")
 			menu_type = "loadout"
 
+		if("quirks")
+			menu_type = "quirks"
+
 		if("load_slot")
 			if(!IsGuestKey(user.key))
 				menu_type = "load_slot"
@@ -240,6 +254,9 @@ var/const/MAX_SAVE_SLOTS = 10
 
 		if("loadout")
 			process_link_loadout(user, href_list)
+
+		if("quirks")
+			process_link_quirks(user, href_list)
 
 	ShowChoices(user)
 	return 1
@@ -319,8 +336,6 @@ var/const/MAX_SAVE_SLOTS = 10
 
 
 	//Disabilities
-	if(disabilities & DISABILITY_NEARSIGHTED)
-		character.disabilities|=NEARSIGHTED
 	if(disabilities & DISABILITY_EPILEPTIC)
 		character.disabilities|=EPILEPSY
 	if(disabilities & DISABILITY_COUGHING)
@@ -329,10 +344,7 @@ var/const/MAX_SAVE_SLOTS = 10
 		character.disabilities|=TOURETTES
 	if(disabilities & DISABILITY_NERVOUS)
 		character.disabilities|=NERVOUS
-	if(disabilities & DISABILITY_FATNESS)
-		character.mutations += FAT
-		character.nutrition = 1000
-		character.overeatduration = 2000
+
 
 	// Wheelchair necessary?
 	var/obj/item/organ/external/l_leg = character.bodyparts_by_name[BP_L_LEG]

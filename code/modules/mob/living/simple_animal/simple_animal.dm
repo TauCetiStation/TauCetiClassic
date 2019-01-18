@@ -253,6 +253,9 @@
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
 		if("hurt", "disarm")
+			if(M.has_trait(TRAIT_PACIFISM))
+				to_chat(M, "<span class='warning'>You don't want to harm [src]!</span>")
+				return
 			M.do_attack_animation(src)
 			adjustBruteLoss(harm_intent_damage)
 			for(var/mob/O in viewers(src, null))

@@ -1017,7 +1017,7 @@
 
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(FAT in mutations)
-		if(overeatduration < 100)
+		if(!has_trait(TRAIT_FAT) && overeatduration < 100)
 			to_chat(src, "\blue You feel fit again!")
 			mutations.Remove(FAT)
 			update_body()
@@ -1026,13 +1026,14 @@
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 	else
-		if(overeatduration > 500 && !species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
-			mutations.Add(FAT)
-			update_body()
-			update_mutantrace()
-			update_mutations()
-			update_inv_w_uniform()
-			update_inv_wear_suit()
+		if(has_trait(TRAIT_FAT) || overeatduration > 500)
+			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
+				mutations.Add(FAT)
+				update_body()
+				update_mutantrace()
+				update_mutations()
+				update_inv_w_uniform()
+				update_inv_wear_suit()
 
 
 	// nutrition decrease
@@ -1173,7 +1174,7 @@
 
 
 		//Eyes
-		if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
+		if(sdisabilities & BLIND || has_trait(TRAIT_BLIND))	//disabled-blind, doesn't get better on its own
 			blinded = 1
 		else if(eye_blind)			//blindness, heals slowly over time
 			eye_blind = max(eye_blind-1,0)
@@ -1185,7 +1186,7 @@
 			eye_blurry = max(eye_blurry-1, 0)
 
 		//Ears
-		if(sdisabilities & DEAF)	//disabled-deaf, doesn't get better on its own
+		if(sdisabilities & DEAF || has_trait(TRAIT_DEAF))	//disabled-deaf, doesn't get better on its own
 			ear_deaf = max(ear_deaf, 1)
 		else if(ear_deaf)			//deafness, heals slowly over time
 			ear_deaf = max(ear_deaf-1, 0)
@@ -1465,7 +1466,7 @@
 		var/nearsighted = 0
 		var/impaired    = 0
 
-		if(disabilities & NEARSIGHTED)
+		if(disabilities & NEARSIGHTED || has_trait(TRAIT_NEARSIGHT))
 			nearsighted = 1
 
 		if(glasses)

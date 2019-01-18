@@ -82,6 +82,11 @@
 	attack_verb = list("HONKED")
 	var/spam_flag = 0
 
+/obj/item/weapon/bikehorn/golden
+	name = "golden bike horn"
+	desc = "Golden? Clearly, it's made with bananium! Honk!"
+	icon_state = "gold_horn"
+	item_state = "gold_horn"
 
 /obj/item/weapon/c_tube
 	name = "cardboard tube"

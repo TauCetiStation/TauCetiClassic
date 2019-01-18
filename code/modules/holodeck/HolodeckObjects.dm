@@ -99,6 +99,9 @@ turf/simulated/floor/holofloor/update_icon()
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(istype(G.affecting,/mob/living))
+			if(user.has_trait(TRAIT_PACIFISM))
+				to_chat(user, "<span class='notice'>You don't want to hurt anyone!</span>")
+				return
 			var/mob/living/M = G.affecting
 			var/state = G.state
 			qdel(W)	//gotta delete it here because if window breaks, it won't get deleted
@@ -275,6 +278,9 @@ obj/structure/stool/bed/chair/holochair
 
 /obj/structure/holohoop/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+		if(user.has_trait(TRAIT_PACIFISM))
+			to_chat(user, "<span class='notice'>You don't want to hurt anyone!</span>")
+			return
 		var/obj/item/weapon/grab/G = W
 		if(G.state<2)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")

@@ -66,6 +66,9 @@
 				if(!GM.loc == get_turf(src))
 					to_chat(user, "<span class='notice'>[GM.name] needs to be on the toilet.</span>")
 					return
+				if(user.has_trait(TRAIT_PACIFISM))
+					to_chat(user, "<span class='notice'>You don't want to hurt anyone!</span>")
+					return
 				if(open && !swirlie)
 					if(user.is_busy()) return
 					user.visible_message("<span class='danger'>[user] starts to give [GM.name] a swirlie!</span>", "<span class='notice'>You start to give [GM.name] a swirlie!</span>")
@@ -113,6 +116,9 @@
 			user.SetNextMove(CLICK_CD_MELEE)
 			var/mob/living/GM = G.affecting
 			if(G.state>1)
+				if(user.has_trait(TRAIT_PACIFISM))
+					to_chat(user, "<span class='notice'>You don't want to hurt anyone!</span>")
+					return
 				if(!GM.loc == get_turf(src))
 					to_chat(user, "<span class='notice'>[GM.name] needs to be on the urinal.</span>")
 					return
@@ -188,6 +194,9 @@
 			var/mob/living/GM = G.affecting
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(G.state>1)
+				if(user.has_trait(TRAIT_PACIFISM))
+					to_chat(user, "<span class='notice'>You don't want to hurt anyone!</span>")
+					return
 				if(!GM.loc == get_turf(src))
 					to_chat(user, "<span class='notice'>[GM.name] needs to be on the urinal.</span>")
 					return

@@ -648,6 +648,11 @@
 	if(alien == SKRELL) //Skrell get very drunk very quickly.
 		d *= 5
 
+	if(M.has_trait(TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
+		d *= 0.5
+	if(M.has_trait(TRAIT_LIGHT_DRINKER))
+		d *= 2
+
 	M.dizziness += dizzy_adj
 	if(d >= slur_start && d < pass_out)
 		if(!M.slurring)
@@ -720,7 +725,8 @@
 
 /datum/reagent/consumable/ethanol/kahlua/on_general_digest(mob/living/M)
 	..()
-	M.make_jittery(5)
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.make_jittery(5)
 
 /datum/reagent/consumable/ethanol/whiskey
 	name = "Whiskey"
@@ -754,7 +760,8 @@
 	M.drowsyness = max(0, M.drowsyness - 7)
 	if(M.bodytemperature > BODYTEMP_NORMAL)
 		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-	M.make_jittery(5)
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.make_jittery(5)
 
 /datum/reagent/consumable/ethanol/vodka
 	name = "Vodka"
@@ -786,7 +793,8 @@
 
 /datum/reagent/consumable/ethanol/threemileisland/on_general_digest(mob/living/M)
 	..()
-	M.druggy = max(M.druggy, 50)
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.druggy = max(M.druggy, 50)
 
 /datum/reagent/consumable/ethanol/gin
 	name = "Gin"
@@ -895,7 +903,8 @@
 
 /datum/reagent/consumable/ethanol/pwine/on_general_digest(mob/living/M)
 	..()
-	M.druggy = max(M.druggy, 50)
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.druggy = max(M.druggy, 50)
 	if(!data)
 		data = 1
 	data++
@@ -1103,7 +1112,8 @@
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_general_digest(mob/living/M)
 	..()
-	M.Stun(2)
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.Stun(10)
 
 /datum/reagent/consumable/ethanol/irish_cream
 	name = "Irish Cream"
@@ -1187,7 +1197,8 @@
 
 /datum/reagent/consumable/ethanol/manhattan_proj/on_general_digest(mob/living/M)
 	..()
-	M.druggy = max(M.druggy, 30)
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.druggy = max(M.druggy, 30)
 
 /datum/reagent/consumable/ethanol/whiskeysoda
 	name = "Whiskey Soda"

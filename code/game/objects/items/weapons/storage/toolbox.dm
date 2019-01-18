@@ -50,6 +50,12 @@
 	new /obj/item/device/analyzer(src)
 	new /obj/item/weapon/wirecutters(src)
 
+/obj/item/weapon/storage/toolbox/heirloom
+	desc = "It's seen better days."
+	icon_state = "blue_old"
+	item_state = "toolbox_blue"
+	w_class = ITEM_SIZE_NORMAL
+
 /obj/item/weapon/storage/toolbox/electrical
 	name = "electrical toolbox"
 	icon_state = "yellow"

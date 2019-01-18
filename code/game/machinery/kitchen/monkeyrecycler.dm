@@ -72,6 +72,9 @@
 		else
 			grind(O, user)
 	if (istype(O, /obj/item/weapon/grab))
+		if(user.has_trait(TRAIT_PACIFISM))
+			to_chat(user, "<span class='notice'>You don't want to hurt anyone!</span>")
+			return
 		var/obj/item/weapon/grab/G = O
 		var/grabbed = G.affecting
 		if(ismonkey(grabbed))

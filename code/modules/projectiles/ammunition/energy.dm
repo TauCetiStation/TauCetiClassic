@@ -21,6 +21,7 @@
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/item/projectile/beam/practice
 	select_name = "practice"
+	harmful = FALSE
 
 /obj/item/ammo_casing/energy/laser/scatter
 	projectile_type = /obj/item/projectile/beam/scatter
@@ -42,10 +43,12 @@
 /obj/item/ammo_casing/energy/laser/bluetag
 	projectile_type = /obj/item/projectile/beam/lastertag/blue
 	select_name = "bluetag"
+	harmful = FALSE
 
 /obj/item/ammo_casing/energy/laser/redtag
 	projectile_type = /obj/item/projectile/beam/lastertag/red
 	select_name = "redtag"
+	harmful = FALSE
 
 /obj/item/ammo_casing/energy/bolt
 	projectile_type = /obj/item/projectile/energy/bolt
@@ -65,12 +68,14 @@
 	projectile_type = /obj/item/projectile/energy/electrode
 	select_name = "stun - electrode"
 	fire_sound = 'sound/weapons/taser.ogg'
+	harmful = FALSE
 
 /obj/item/ammo_casing/energy/stun
 	projectile_type = /obj/item/projectile/beam/stun
 	select_name = "stun"
 	fire_sound = 'sound/weapons/taser.ogg'
 	e_cost = 50
+	harmful = FALSE
 
 /obj/item/ammo_casing/energy/electrode/gun
 	fire_sound = 'sound/weapons/gunshot.ogg'
@@ -82,6 +87,7 @@
 	projectile_type = /obj/item/projectile/ion
 	select_name = "ion"
 	fire_sound = 'sound/weapons/Laser.ogg'
+	harmful = FALSE
 
 /obj/item/ammo_casing/energy/declone
 	projectile_type = /obj/item/projectile/energy/declone

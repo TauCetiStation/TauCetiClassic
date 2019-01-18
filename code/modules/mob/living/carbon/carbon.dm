@@ -211,21 +211,29 @@
 					if(prob(30))
 						burndamage += halloss
 
-				if(brutedamage > 0)
-					status = "bruised"
-				if(brutedamage > 20)
-					status = "bleeding"
-				if(brutedamage > 40)
-					status = "mangled"
-				if(brutedamage > 0 && burndamage > 0)
-					status += " and "
-				if(burndamage > 40)
-					status += "peeling away"
+				if(has_trait(TRAIT_SELF_AWARE))
+					status = "[brutedamage] brute damage and [burndamage] burn damage"
+					if(!brutedamage && !burndamage)
+						status = "no damage"
+				else
 
-				else if(burndamage > 10)
-					status += "blistered"
-				else if(burndamage > 0)
-					status += "numb"
+					if(brutedamage > 40)
+						status = "mangled"
+					else if(brutedamage > 20)
+						status = "bleeding"
+					else if(brutedamage > 0)
+						status = "bruised"
+
+					if(brutedamage > 0 && burndamage > 0)
+						status += " and "
+
+					if(burndamage > 40)
+						status += "peeling away"
+					else if(burndamage > 10)
+						status += "blistered"
+					else if(burndamage > 0)
+						status += "numb"
+
 				if(BP.status & ORGAN_DESTROYED)
 					status = "MISSING!"
 				if(BP.status & ORGAN_MUTATED)
@@ -233,6 +241,26 @@
 				if(status == "")
 					status = "OK"
 				src.show_message(text("\t []My [] is [].", status == "OK" ? "\blue " : "\red ", BP.name,status), 1)
+
+			if(has_trait(TRAIT_SELF_AWARE))
+				if(toxloss)
+					if(toxloss > 40)
+						to_chat(src, "<span class='danger'>You feel very unwell!</span>")
+					else if(toxloss > 20)
+						to_chat(src, "<span class='danger'>You feel nauseated.</span>")
+					else if(toxloss > 10)
+						to_chat(src, "<span class='danger'>You feel sick.</span>")
+				if(oxyloss)
+					if(oxyloss > 30)
+						to_chat(src, "<span class='danger'>You're choking!</span>")
+					else if(oxyloss > 20)
+						to_chat(src, "<span class='danger'>Your thinking is clouded and distant.</span>")
+					else if(oxyloss > 10)
+						to_chat(src, "<span class='danger'>You feel lightheaded.</span>")
+
+			if(roundstart_quirks.len)
+				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
+
 			if(H.species && (H.species.name == SKELETON) && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
@@ -390,6 +418,9 @@
 		item = G.throw_held() //throw the person instead of the grab
 		qdel(G)
 		if(ismob(item))
+			if(has_trait(TRAIT_PACIFISM))
+				to_chat(src, "<span class='notice'>You gently let go of [item].</span>")
+				return
 			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 			var/turf/end_T = get_turf(target)
 			if(start_T && end_T)
@@ -407,6 +438,13 @@
 
 	//actually throw it!
 	if (item)
+		if(istype(item, /obj/item) && has_trait(TRAIT_PACIFISM))
+			var/obj/item/I = item
+			if(I.throwforce)
+				to_chat(src, "<span class='notice'>You set [I] down gently on the ground.</span>")
+				if(isturf(I.loc))
+					step_towards(I, target)
+				return
 		src.visible_message("<span class='rose'>[src] has thrown [item].</span>")
 
 		newtonian_move(get_dir(target, src))

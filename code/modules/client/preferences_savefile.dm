@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 19
+#define SAVEFILE_VERSION_MAX 20
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -67,6 +67,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(!(species in lang.allowed_species))
 				language = "None"
 				S["language"] << language
+
+	if(current_version < 20)
+		var/DISABILITY_NEARSIGHTED = 1
+		var/DISABILITY_FATNESS = 32
+
+		if(disabilities & (DISABILITY_NEARSIGHTED | DISABILITY_FATNESS))
+			disabilities &= ~(DISABILITY_NEARSIGHTED | DISABILITY_FATNESS)
+			S["disabilities"] << disabilities
 
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
@@ -212,6 +220,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["job_engsec_med"]		>> job_engsec_med
 	S["job_engsec_low"]		>> job_engsec_low
 
+	//Traits
+	S["all_quirks"]			>> all_quirks
+	S["positive_quirks"]	>> positive_quirks
+	S["negative_quirks"]	>> negative_quirks
+	S["neutral_quirks"]		>> neutral_quirks
+
 	//Miscellaneous
 	S["flavor_text"]		>> flavor_text
 	S["med_record"]			>> med_record
@@ -281,6 +295,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	job_engsec_high = sanitize_integer(job_engsec_high, 0, 65535, initial(job_engsec_high))
 	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
 	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
+
+	all_quirks = SANITIZE_LIST(all_quirks)
+	positive_quirks = SANITIZE_LIST(positive_quirks)
+	negative_quirks = SANITIZE_LIST(negative_quirks)
+	neutral_quirks = SANITIZE_LIST(neutral_quirks)
 
 	if(isnull(disabilities)) disabilities = 0
 	if(!player_alt_titles) player_alt_titles = new()
@@ -386,6 +405,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["job_engsec_high"]	<< job_engsec_high
 	S["job_engsec_med"]		<< job_engsec_med
 	S["job_engsec_low"]		<< job_engsec_low
+
+	//Traits
+	S["all_quirks"]			<< all_quirks
+	S["positive_quirks"]	<< positive_quirks
+	S["negative_quirks"]	<< negative_quirks
+	S["neutral_quirks"]		<< neutral_quirks
 
 	//Miscellaneous
 	S["flavor_text"]		<< flavor_text
