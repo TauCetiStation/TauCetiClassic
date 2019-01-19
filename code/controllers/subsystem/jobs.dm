@@ -514,13 +514,6 @@ var/datum/subsystem/job/SSjob
 	spawnId(H, rank, alt_title)
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_l_ear)
 
-	//Gives glasses to the vision impaired
-	if(H.disabilities & NEARSIGHTED)
-		var/equipped = H.equip_to_slot_or_del(new /obj/item/clothing/glasses/regular(H), slot_glasses)
-		if(equipped != 1)
-			var/obj/item/clothing/glasses/G = H.glasses
-			G.name = "prescription " + G.name
-			G.prescription = 1
 //		H.update_icons()
 
 	H.hud_updateflag |= (1 << ID_HUD)

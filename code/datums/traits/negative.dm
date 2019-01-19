@@ -199,7 +199,7 @@
 
 /datum/quirk/nearsighted/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/clothing/glasses/sunglasses/prescription/G = new
+	var/obj/item/clothing/glasses/regular/G = new
 	if(!H.equip_to_slot_if_possible(G, slot_glasses, null, TRUE))
 		H.put_in_hands(G)
 
