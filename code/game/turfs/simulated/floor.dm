@@ -318,7 +318,7 @@ var/list/wood_icons = list("wood","wood-broken")
 		src.icon_state = "wood-broken"
 		broken = 1
 	else if(is_carpet_floor())
-		icon_state = initial(floor_type:broken_icon_state)
+		icon_state = "[initial(floor_type:carpet_icon_state)]-broken"
 		if(!icon_state)
 			icon_state = "carpet-broken"
 		broken = 1

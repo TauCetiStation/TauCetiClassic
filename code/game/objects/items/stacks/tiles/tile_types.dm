@@ -60,7 +60,6 @@
 	max_amount = 60
 	turf_type = /turf/simulated/floor/carpet
 	var/carpet_icon_state = "carpet"
-	var/broken_icon_state = "carpet-broken"
 
 /obj/item/stack/tile/carpet/black
 	name = "black carpet"
@@ -69,7 +68,6 @@
 	icon_state = "tile-carpet"
 	turf_type = /turf/simulated/floor/carpet/black
 	carpet_icon_state = "blackcarpet"
-	broken_icon_state = "blackcarpet-broken"
 
 /obj/item/stack/tile/carpet/purple
 	name = "purple carpet"
@@ -78,7 +76,6 @@
 	icon_state = "tile-carpet"
 	turf_type = /turf/simulated/floor/carpet/purple
 	carpet_icon_state = "purplecarpet"
-	broken_icon_state = "purplecarpet-broken"
 
 /obj/item/stack/tile/carpet/orange
 	name = "orange carpet"
@@ -87,7 +84,6 @@
 	icon_state = "tile-carpet"
 	turf_type = /turf/simulated/floor/carpet/orange
 	carpet_icon_state = "orangecarpet"
-	broken_icon_state = "orangecarpet-broken"
 
 /obj/item/stack/tile/carpet/green
 	name = "green carpet"
@@ -96,7 +92,6 @@
 	icon_state = "tile-carpet"
 	turf_type = /turf/simulated/floor/carpet/green
 	carpet_icon_state = "greencarpet"
-	broken_icon_state = "greencarpet-broken"
 
 /obj/item/stack/tile/carpet/blue
 	name = "blue carpet"
@@ -105,7 +100,6 @@
 	icon_state = "tile-carpet"
 	turf_type = /turf/simulated/floor/carpet/blue
 	carpet_icon_state = "bluecarpet"
-	broken_icon_state = "bluecarpet-broken"
 
 /obj/item/stack/tile/carpet/blue2
 	name = "blue carpet"
@@ -114,7 +108,6 @@
 	icon_state = "tile-carpet"
 	turf_type = /turf/simulated/floor/carpet/blue2
 	carpet_icon_state = "blue2carpet"
-	broken_icon_state = "blue2carpet-broken"
 
 /obj/item/stack/tile/carpet/red
 	name = "red carpet"
@@ -123,7 +116,6 @@
 	icon_state = "tile-carpet"
 	turf_type = /turf/simulated/floor/carpet/red
 	carpet_icon_state = "redcarpet"
-	broken_icon_state = "redcarpet-broken"
 
 /obj/item/stack/tile/carpet/cyan
 	name = "cyan carpet"
@@ -132,4 +124,3 @@
 	icon_state = "tile-carpet"
 	turf_type = /turf/simulated/floor/carpet/cyan
 	carpet_icon_state = "cyancarpet"
-	broken_icon_state = "cyancarpet-broken"
