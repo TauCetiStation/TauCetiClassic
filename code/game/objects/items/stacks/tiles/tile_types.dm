@@ -59,6 +59,8 @@
 	flags = CONDUCT
 	max_amount = 60
 	turf_type = /turf/simulated/floor/carpet
+	var/carpet_icon_state = "carpet"
+	var/broken_icon_state = "carpet-broken"
 
 /obj/item/stack/tile/carpet/black
 	name = "black carpet"
@@ -66,6 +68,8 @@
 	desc = "A piece of black carpet. It is the same size as a normal floor tile!"
 	icon_state = "tile-carpet"
 	turf_type = /turf/simulated/floor/carpet/black
+	carpet_icon_state = "blackcarpet"
+	broken_icon_state = "blackcarpet-broken"
 
 /obj/item/stack/tile/carpet/purple
 	name = "purple carpet"
@@ -73,6 +77,8 @@
 	desc = "A piece of purple carpet. It is the same size as a normal floor tile!"
 	icon_state = "tile-carpet"
 	turf_type = /turf/simulated/floor/carpet/purple
+	carpet_icon_state = "purplecarpet"
+	broken_icon_state = "purplecarpet-broken"
 
 /obj/item/stack/tile/carpet/orange
 	name = "orange carpet"
@@ -80,6 +86,8 @@
 	desc = "A piece of orange carpet. It is the same size as a normal floor tile!"
 	icon_state = "tile-carpet"
 	turf_type = /turf/simulated/floor/carpet/orange
+	carpet_icon_state = "orangecarpet"
+	broken_icon_state = "orangecarpet-broken"
 
 /obj/item/stack/tile/carpet/green
 	name = "green carpet"
@@ -87,6 +95,8 @@
 	desc = "A piece of green carpet. It is the same size as a normal floor tile!"
 	icon_state = "tile-carpet"
 	turf_type = /turf/simulated/floor/carpet/green
+	carpet_icon_state = "greencarpet"
+	broken_icon_state = "greencarpet-broken"
 
 /obj/item/stack/tile/carpet/blue
 	name = "blue carpet"
@@ -94,6 +104,8 @@
 	desc = "A piece of blue carpet. It is the same size as a normal floor tile!"
 	icon_state = "tile-carpet"
 	turf_type = /turf/simulated/floor/carpet/blue
+	carpet_icon_state = "bluecarpet"
+	broken_icon_state = "bluecarpet-broken"
 
 /obj/item/stack/tile/carpet/blue2
 	name = "blue carpet"
@@ -101,6 +113,8 @@
 	desc = "A piece of blue carpet. It is the same size as a normal floor tile!"
 	icon_state = "tile-carpet"
 	turf_type = /turf/simulated/floor/carpet/blue2
+	carpet_icon_state = "blue2carpet"
+	broken_icon_state = "blue2carpet-broken"
 
 /obj/item/stack/tile/carpet/red
 	name = "red carpet"
@@ -108,6 +122,8 @@
 	desc = "A piece of red carpet. It is the same size as a normal floor tile!"
 	icon_state = "tile-carpet"
 	turf_type = /turf/simulated/floor/carpet/red
+	carpet_icon_state = "redcarpet"
+	broken_icon_state = "redcarpet-broken"
 
 /obj/item/stack/tile/carpet/cyan
 	name = "cyan carpet"
@@ -115,3 +131,5 @@
 	desc = "A piece of cyan carpet. It is the same size as a normal floor tile!"
 	icon_state = "tile-carpet"
 	turf_type = /turf/simulated/floor/carpet/cyan
+	carpet_icon_state = "cyancarpet"
+	broken_icon_state = "cyancarpet-broken"
