@@ -6,6 +6,7 @@
 	density = 0
 	anchored = 1.0
 	layer = 2.3 //under pipes
+	plane = FLOOR_PLANE
 	//	flags = CONDUCT
 
 /obj/structure/lattice/atom_init()

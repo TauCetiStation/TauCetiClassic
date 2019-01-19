@@ -229,6 +229,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["faction"] 			>> faction
 	S["religion"] 			>> religion
 	S["parallax"]			>> parallax
+	S["ambientocclusion"]	>> ambientocclusion
 	S["uplinklocation"] 	>> uplinklocation
 
 	S["UI_style_color"]		>> UI_style_color
@@ -271,6 +272,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 	b_type			= sanitize_text(b_type, initial(b_type))
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
+	ambientocclusion = sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
 	job_civilian_med = sanitize_integer(job_civilian_med, 0, 65535, initial(job_civilian_med))
@@ -404,6 +406,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["faction"] 			<< faction
 	S["religion"] 			<< religion
 	S["parallax"]			<< parallax
+	S["ambientocclusion"]	<< ambientocclusion
 	S["uplinklocation"] << uplinklocation
 
 	S["UI_style_color"]		<< UI_style_color
