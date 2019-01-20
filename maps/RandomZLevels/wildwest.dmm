@@ -115,9 +115,7 @@
 	},
 /area/awaymission/wwvault)
 "av" = (
-/obj/machinery/gateway/centeraway{
-	calibrated = 0
-	},
+/obj/machinery/gateway/center,
 /turf/simulated/shuttle/plating{
 	icon_state = "gcircuitoff"
 	},

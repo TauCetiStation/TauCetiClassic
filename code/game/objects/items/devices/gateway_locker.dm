@@ -6,7 +6,7 @@
 	icon_state = "recaller"
 	item_state = "walkietalkie"
 	w_class = 2
-	var/obj/machinery/gateway/centerstation/stationgate
+	var/obj/machinery/gateway/center/stationgate
 	var/used = FALSE
 	var/opened = FALSE
 
@@ -15,7 +15,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/device/gateway_locker/atom_init_late()
-	stationgate = locate(/obj/machinery/gateway/centerstation)
+	stationgate = locate(/obj/machinery/gateway/center/station/)
 
 /obj/item/device/gateway_locker/attack_self(mob/user)
 	if(!stationgate)
@@ -53,19 +53,17 @@
 		G.hacked = TRUE
 		G.update_icon()
 
-
 /obj/item/device/gateway_locker/proc/perform_gate(turf/turf, obj/item/device/radio/intercom/radio)
 	new /obj/effect/effect/sparks(turf)
-	var/obj/machinery/gateway/centeraway/Gate = new(turf)
+	var/obj/machinery/gateway/center/Gate = new(turf)
 	Gate.detect()
 	for(var/obj/machinery/gateway/G in Gate.linked)
 		G.hacked = TRUE
 		G.update_icon()
 	Gate.hacked = TRUE
 	Gate.update_icon()
-	Gate.stationgate = stationgate
-	stationgate.awaygate = Gate
-	Gate.stationgate.wait = 0
+	Gate.destination = stationgate
+	stationgate.destination = Gate
 	opened = TRUE
 	radio.autosay("Access was granted, It's Nice day to die, Crew.", "Gateway Message System", "Common")
 	qdel(radio)

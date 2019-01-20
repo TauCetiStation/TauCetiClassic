@@ -72120,7 +72120,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/asmaint)
 "hLb" = (
-/obj/machinery/gateway/centerstation,
+/obj/machinery/gateway/center/station,
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "darkblue"
