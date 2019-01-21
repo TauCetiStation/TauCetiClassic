@@ -346,23 +346,9 @@ var/list/wood_icons = list("wood","wood-broken")
 		src.icon_state = "wood-broken"
 		burnt = 1
 	else if(is_carpet_floor())
-		icon_state = "carpet-broken"
-		if(floor_type == /obj/item/stack/tile/carpet/black)
-			icon_state = "blackcarpet-broken"
-		else if(floor_type == /obj/item/stack/tile/carpet/purple)
-			icon_state = "purplecarpet-broken"
-		else if(floor_type == /obj/item/stack/tile/carpet/orange)
-			icon_state = "orangecarpet-broken"
-		else if(floor_type == /obj/item/stack/tile/carpet/green)
-			icon_state = "greencarpet-broken"
-		else if(floor_type == /obj/item/stack/tile/carpet/blue)
-			icon_state = "bluecarpet-broken"
-		else if(floor_type == /obj/item/stack/tile/carpet/blue2)
-			icon_state = "blue2carpet-broken"
-		else if(floor_type == /obj/item/stack/tile/carpet/red)
-			icon_state = "redcarpet-broken"
-		else if(floor_type == /obj/item/stack/tile/carpet/cyan)
-			icon_state = "cyancarpet-broken"
+		icon_state = "[initial(floor_type:carpet_icon_state)]-broken"
+		if(!icon_state)
+			icon_state = "carpet-broken"
 		burnt = 1
 	else if(is_grass_floor())
 		src.icon_state = "sand[pick("1","2","3")]"
