@@ -213,9 +213,8 @@ var/list/wood_icons = list("wood","wood-broken")
 						if(FF.is_carpet_floor() && FF.floor_type == floor_type)
 							diagonalconnect |= 8
 
-				var/base_icon_state = initial(floor_type:carpet_icon_state)
-				if(!base_icon_state)
-					base_icon_state = "carpet"
+				var/obj/item/stack/tile/carpet/C = floor_type
+				var/base_icon_state = initial(C.carpet_icon_state)
 				icon_state = "[base_icon_state][connectdir]-[diagonalconnect]"
 
 	else if(is_wood_floor())
@@ -318,9 +317,8 @@ var/list/wood_icons = list("wood","wood-broken")
 		src.icon_state = "wood-broken"
 		broken = 1
 	else if(is_carpet_floor())
-		icon_state = "[initial(floor_type:carpet_icon_state)]-broken"
-		if(!icon_state)
-			icon_state = "carpet-broken"
+		var/obj/item/stack/tile/carpet/C = floor_type
+		icon_state = "[initial(C.carpet_icon_state)]-broken"
 		broken = 1
 	else if(is_grass_floor())
 		src.icon_state = "sand[pick("1","2","3")]"
@@ -346,9 +344,8 @@ var/list/wood_icons = list("wood","wood-broken")
 		src.icon_state = "wood-broken"
 		burnt = 1
 	else if(is_carpet_floor())
-		icon_state = "[initial(floor_type:carpet_icon_state)]-broken"
-		if(!icon_state)
-			icon_state = "carpet-broken"
+		var/obj/item/stack/tile/carpet/C = floor_type
+		icon_state = "[initial(C.carpet_icon_state)]-broken"
 		burnt = 1
 	else if(is_grass_floor())
 		src.icon_state = "sand[pick("1","2","3")]"
