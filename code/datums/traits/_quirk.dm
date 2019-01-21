@@ -7,7 +7,6 @@
 	var/human_only = TRUE
 	var/gain_text
 	var/lose_text
-	var/mood_quirk = FALSE //if true, this quirk affects mood and is unavailable if moodlets are disabled
 	var/mob_trait //if applicable, apply and remove this mob trait
 	var/mob/living/quirk_holder
 

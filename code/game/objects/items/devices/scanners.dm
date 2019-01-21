@@ -78,7 +78,20 @@ REAGENT SCANNER
 	var/mode = TRUE
 
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/user)
-	health_analyze(M, user, mode)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT])
+			user.show_message("<span class = 'notice'>Analyzing Results for ERROR:\n&emsp; Overall Status: ERROR</span>")
+			user.show_message("&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font>", 1)
+			user.show_message("&emsp; Damage Specifics: <font color='blue'>?</font> - <font color='green'>?</font> - <font color='#FFA500'>?</font> - <font color='red'>?</font>")
+			user.show_message("<span class = 'notice'>Body Temperature: [H.bodytemperature-T0C]&deg;C ([H.bodytemperature*1.8-459.67]&deg;F)</span>", 1)
+			user.show_message("<span class = 'warning bold'>Warning: Blood Level ERROR: --% --cl.</span><span class = 'notice bold'>Type: ERROR</span>")
+			user.show_message("<span class = 'notice'>Subject's pulse:</span><font color='red'>-- bpm.</font>")
+			return
+		else
+			health_analyze(M, user, mode)
+	else
+		user.show_message("<span class = 'warning'>Analyzing Results not compiled. Unknown anatomy detected.</span>")
 
 /obj/item/device/healthanalyzer/verb/toggle_mode()
 	set name = "Switch Verbosity"
