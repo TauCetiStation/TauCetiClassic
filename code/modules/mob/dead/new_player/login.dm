@@ -8,6 +8,8 @@
 
 	if(join_motd)
 		to_chat(src, "<div class=\"motd\">[join_motd]</div>")
+	if(join_test_merge)
+		to_chat(src, "<div>[join_test_merge]</div>")
 
 	sight |= SEE_TURFS
 

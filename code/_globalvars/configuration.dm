@@ -2,6 +2,7 @@ var/datum/configuration/config = null
 
 var/host = null
 var/join_motd = null
+var/join_test_merge = null
 var/station_name = "NSS Exodus"
 var/game_version = "TauCetiStation"
 var/game_year = (text2num(time2text(world.realtime, "YYYY")) + 544)

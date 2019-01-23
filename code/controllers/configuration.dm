@@ -92,6 +92,12 @@
 	var/server_rules_url
 	var/discord_invite_url
 
+	// Changelog
+	var/changelog_link = ""
+	var/changelog_hash_link = ""
+
+	var/repository_link = ""
+
 	//Alert level description
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
@@ -575,6 +581,15 @@
 
 				if("donate_info_url")
 					config.donate_info_url = value
+
+				if("changelog_link")
+					config.changelog_link = value
+
+				if("changelog_hash_link")
+					config.changelog_hash_link = value
+				
+				if("repository_link")
+					config.repository_link = value
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
