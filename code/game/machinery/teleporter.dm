@@ -302,7 +302,7 @@
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
 					// Effects similar to mutagen.
-					if(!(human.species && human.species.flags[IS_SYNTHETIC]))
+					if(!human.species.flags[IS_SYNTHETIC])
 						randmuti(human)
 						randmutb(human)
 						domutcheck(human)
