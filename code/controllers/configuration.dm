@@ -139,7 +139,7 @@
 	var/simultaneous_pm_warning_timeout = 100
 
 	var/assistant_maint = 0 //Do assistants get maint access?
-	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
+	var/gateway_enabled = 0
 	var/ghost_interaction = 0
 
 	var/comms_password = ""
@@ -492,8 +492,8 @@
 				if("assistant_maint")
 					config.assistant_maint = 1
 
-				if("gateway_delay")
-					config.gateway_delay = text2num(value)
+				if("gateway_enabled")
+					config.gateway_enabled = 1
 
 				if("continuous_rounds")
 					config.continous_rounds = 1
