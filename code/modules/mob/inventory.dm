@@ -139,7 +139,9 @@ var/list/slot_equipment_priority = list(
 	if(!istype(W))		return 0
 	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
 	if(!l_hand)
-		W.loc = src		//TODO: move to equipped?
+		if(loc && Adjacent(loc))
+			W.do_pickup_animation(src, W.loc)
+		W.forceMove(src) //TODO: move to equipped?
 		l_hand = W
 		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
 		W.plane = ABOVE_HUD_PLANE
@@ -160,6 +162,8 @@ var/list/slot_equipment_priority = list(
 	if(!istype(W))		return 0
 	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
 	if(!r_hand)
+		if(loc && Adjacent(loc))
+			W.do_pickup_animation(src, W.loc)
 		W.loc = src
 		r_hand = W
 		W.layer = ABOVE_HUD_LAYER
@@ -203,9 +207,9 @@ var/list/slot_equipment_priority = list(
 		return 0
 
 // Removes an item from inventory and places it in the target atom
-/mob/proc/drop_from_inventory(obj/item/W, atom/target = null)
+/mob/proc/drop_from_inventory(obj/item/W, atom/target = null, anim_pixel_x = 0, anim_pixel_y = 0) // Please don't murder me for these stupid arguments they make sense in the grand scheme of things. ~Luduk
 	if(W)
-		remove_from_mob(W, target)
+		remove_from_mob(W, target, anim_pixel_x, anim_pixel_y)
 		if(!(W && W.loc))
 			return 1 // self destroying objects (tk, grabs)
 		update_icons()
@@ -271,22 +275,33 @@ var/list/slot_equipment_priority = list(
 	return 1
 
 // Attemps to remove an object on a mob. Will drop item to ground or move into target.
-/mob/proc/remove_from_mob(obj/O, atom/target)
-	if(!O) return
+/mob/proc/remove_from_mob(obj/O, atom/target, anim_pixel_x = 0, anim_pixel_y = 0)
+	if(!O)
+		return
 	src.u_equip(O)
 	if (src.client)
 		src.client.screen -= O
+
+	var/atom/movable/AN = O
+	if(istype(O, /obj/item))
+		var/obj/item/I = O
+		if(istype(I, /obj/item/weapon/grab))
+			var/obj/item/weapon/grab/G = I
+			if(G.affecting)
+				AN = G.affecting
+		if(target)
+			if(!((target.loc && target.loc == src) || (target.loc.loc && target.loc.loc == src))) // Currently storage works two levels deep, slap me if I'm wrong. ~Luduk
+				AN.do_putdown_animation(target, src, anim_pixel_x, anim_pixel_y)
+			I.forceMove(target)
+		else
+			AN.do_putdown_animation(loc, src, anim_pixel_x, anim_pixel_y)
+			I.forceMove(loc)
+		I.dropped(src)
+
 	O.layer = initial(O.layer)
 	O.plane = initial(O.plane)
 	O.appearance_flags = initial(O.appearance_flags)
 	O.screen_loc = null
-	if(istype(O, /obj/item))
-		var/obj/item/I = O
-		if(target)
-			I.forceMove(target)
-		else
-			I.forceMove(loc)
-		I.dropped(src)
 	return 1
 
 //Returns the item equipped to the specified slot, if any.

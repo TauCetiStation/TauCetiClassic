@@ -203,9 +203,7 @@
 			return
 		if(!W.canremove || W.flags & NODROP)
 			return
-		usr.drop_item()
-		if(W)
-			W.forceMove(src.loc)
+		usr.drop_from_inventory(W, loc)
 
 	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))
 		return
@@ -227,7 +225,7 @@
 		return
 	if(O.loc == user)
 		return
-	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis)
+	if(user.incapacitated())
 		return
 	if((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)))
 		return

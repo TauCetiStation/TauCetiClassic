@@ -345,7 +345,7 @@
 			return 1
 	return 1
 
-/obj/structure/table/MouseDrop_T(obj/O as obj, mob/user as mob)
+/obj/structure/table/MouseDrop_T(obj/O, mob/user)
 	..()
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
@@ -354,11 +354,7 @@
 	var/obj/item/weapon/W = O
 	if(!W.canremove || W.flags & NODROP)
 		return
-	user.drop_item()
-	if (O.loc != src.loc)
-		step(O, get_dir(O, src))
-	return
-
+	user.drop_from_inventory(O, loc)
 
 /obj/structure/table/attackby(obj/item/W, mob/user, params)
 	. = TRUE
@@ -377,7 +373,8 @@
 			else
 				if(world.time < (G.last_action + UPGRADE_COOLDOWN))
 					return
-				G.affecting.loc = src.loc
+				G.affecting.simple_move_animation(loc)
+				G.affecting.forceMove(loc)
 				G.affecting.Weaken(5)
 				visible_message("<span class='danger'>[G.assailant] puts [G.affecting] on \the [src].</span>")
 				M.attack_log += "\[[time_stamp()]\] <font color='orange'>Was laied by [A.name] on \the [src]([A.ckey])</font>"
@@ -415,15 +412,15 @@
 			destroy()
 			return FALSE
 
-	if(!(W.flags & ABSTRACT))
-		if(user.drop_item())
-			W.Move(loc)
-			var/list/click_params = params2list(params)
-			//Center the icon where the user clicked.
-			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
-				return
-			W.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-			W.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+	if(!(W.flags & ABSTRACT) && !(W.flags & NODROP))
+		var/new_pixel_x = W.pixel_x
+		var/new_pixel_y = W.pixel_y
+		var/list/click_params = params2list(params)
+		//Center the icon where the user clicked if possible.
+		if(click_params && click_params["icon-x"] && click_params["icon-y"])
+			new_pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			new_pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+		user.drop_from_inventory(W, loc, anim_pixel_x = new_pixel_x, anim_pixel_y = new_pixel_y)
 	return
 
 /obj/structure/table/proc/slam(var/mob/living/A, var/mob/living/M, var/obj/item/weapon/grab/G)

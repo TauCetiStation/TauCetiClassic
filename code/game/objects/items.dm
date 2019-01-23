@@ -875,3 +875,91 @@ var/global/list/items_blood_overlay_by_type = list()
 	var/obj/item/I = get_active_hand()
 	if(I && !I.abstract)
 		I.showoff(src)
+
+/atom/movable/proc/do_pickup_animation(atom/target, atom/old_loc)
+	var/turf/old_turf = get_turf(old_loc)
+	var/old_invisibility = invisibility
+	invisibility = 100
+	var/image/I = image(icon = src, loc = old_turf)
+	I.plane = GAME_PLANE
+	I.layer = MOB_LAYER + 1
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	if(istype(target,/mob))
+		I.dir = target.dir
+
+	if(istype(old_loc, /obj/item/weapon/storage))
+		I.pixel_x += old_loc.pixel_x
+		I.pixel_y += old_loc.pixel_y
+
+	flick_overlay(I, clients, 7)
+
+	var/matrix/M = new
+	M.Turn(pick(30, -30))
+
+	animate(I, transform = M, time = 1)
+	sleep(1)
+	animate(I, transform = matrix(), time = 1)
+	sleep(1)
+
+	var/to_x = (target.x - old_turf.x) * 32
+	var/to_y = (target.y - old_turf.y) * 32
+
+	animate(I, pixel_x = to_x, pixel_y = to_y, time = 3, transform = matrix() * 0, easing = CUBIC_EASING)
+	sleep(3)
+	invisibility = old_invisibility
+
+/atom/movable/proc/do_putdown_animation(atom/target, mob/user, additional_pixel_x = 0, additional_pixel_y = 0)
+	var/old_invisibility = invisibility // I don't know, it may be used.
+	invisibility = 100
+	var/turf/old_turf = get_turf(user)
+	var/image/I = image(icon = src, loc = old_turf, layer = layer + 0.1)
+	I.plane = GAME_PLANE
+	I.layer = MOB_LAYER + 1
+	I.transform = matrix() * 0
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	I.pixel_x = 0
+	I.pixel_y = 0
+
+	if(istype(target,/mob))
+		I.dir = target.dir
+	flick_overlay(I, clients, 4)
+
+	var/to_x = (target.x - old_turf.x) * 32 + additional_pixel_x
+	var/to_y = (target.y - old_turf.y) * 32 + additional_pixel_y
+
+	animate(I, pixel_x = to_x, pixel_y = to_y, time = 3, transform = matrix(), easing = CUBIC_EASING)
+	sleep(3)
+	pixel_x = additional_pixel_x || pixel_x
+	pixel_y = additional_pixel_y || pixel_y
+	invisibility = old_invisibility
+
+/atom/movable/proc/simple_move_animation(atom/target)
+	var/old_invisibility = invisibility // I don't know, it may be used.
+	invisibility = 100
+	var/turf/old_turf = get_turf(src)
+	var/image/I = image(icon = src, loc = src.loc)
+	I.plane = GAME_PLANE
+	I.layer = MOB_LAYER + 1
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+
+	flick_overlay(I, clients, 4)
+
+	var/to_x = (target.x - old_turf.x) * 32 + pixel_x
+	var/to_y = (target.y - old_turf.y) * 32 + pixel_y
+
+	animate(I, pixel_x = to_x, pixel_y = to_y, time = 3, easing = CUBIC_EASING)
+	sleep(3)
+	invisibility = old_invisibility
+
+/*
+HERE ONE DAY WILL BE AN ANIMATION TO DISPLAY WHEN PLAYER SHUFFLES AROUND WITH STUFF
+INSIDE HIS INVENTORY, SUCH AS PUTTING ITEMS FROM HANDS TO THE SATCHEL, TAKING THEM OUT,
+PUTTING ON A HELMET. REQUIREMENTS FOR SUCH ANIMATION ARE AS FOLLOWS:
+- MOVING THE ITEM TO THE THEORETICAL SPOT ON THE PLAYER(SLOT-DEPENDED PIXEL_X AND PIXEL_Y).
+- KEEPING THE ITEM SMALL AT ALL TIMES SO IT WOULDN'T LOOK STUPID(MATRIX TO SCALE DOWN).
+- CREATIVITY.
+- AND EVERYTHING NICE.
+
+please poke me from time to time to remind me that this should be done ~Luduk.
+/atom/movable/proc/inventory_shuffling_animation(target_slot)
+*/

@@ -73,9 +73,7 @@
 			return
 		if(!W.canremove || W.flags & NODROP)
 			return
-		user.drop_item()
-		if(W)
-			W.forceMove(src.loc)
+		user.drop_from_inventory(W, loc)
 	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))	//OOP? Doesn't heard.
 		return
 	else if(istype(W, /obj/item/stack/cable_coil))
