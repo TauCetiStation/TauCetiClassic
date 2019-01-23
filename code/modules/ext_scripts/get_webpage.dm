@@ -6,6 +6,8 @@
 		return
 
 	var/list/output = ext_python("get.py", address)
+	if(!output)
+		return
 	var/errorlevel = output[SHELLEO_ERRORLEVEL]
 	var/stdout = output[SHELLEO_STDOUT]
 	//var/stderr = output[SHELLEO_STDERR]
