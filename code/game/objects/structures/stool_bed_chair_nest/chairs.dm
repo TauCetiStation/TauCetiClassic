@@ -3,11 +3,11 @@
 	desc = "You sit in this. Either by will or force."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "chair"
-	buckle_lying = 0 // force people to sit up in chairs when buckled
-	var/can_flipped = 0
-	var/flipped = 0
-	var/flip_angle = 0
-	var/propelled = 0 // Check for fire-extinguisher-driven chairs
+	buckle_lying = FALSE // force people to sit up in chairs when buckled
+	var/can_flipped = FALSE
+	var/flipped = FALSE
+	var/flip_angle = FALSE
+	var/propelled = FALSE // Check for fire-extinguisher-driven chairs
 
 	var/behind = null
 	var/behind_buckled = null
@@ -56,7 +56,7 @@
 		..()
 
 /obj/structure/stool/bed/chair/user_buckle_mob(mob/living/M, mob/user)
-	if(dir == 1 && !istype(src, /obj/structure/stool/bed/chair/schair/wagon/bench))
+	if(dir == NORTH && !istype(src, /obj/structure/stool/bed/chair/schair/wagon/bench))
 		layer = FLY_LAYER
 	else
 		layer = OBJ_LAYER
@@ -75,7 +75,7 @@
 	return
 
 /obj/structure/stool/bed/chair/handle_rotation() // making this into a seperate proc so office chairs can call it on Move()
-	if(dir == 1 && buckled_mob)
+	if(dir == NORTH && buckled_mob)
 		layer = FLY_LAYER
 	else
 		layer = OBJ_LAYER
@@ -111,7 +111,7 @@
 		icon_state = behind
 	else
 		icon_state = initial(icon_state)
-	if(dir == 1 && buckled_mob && !istype(src, /obj/structure/stool/bed/chair/schair/wagon/bench))
+	if(dir == NORTH && buckled_mob && !istype(src, /obj/structure/stool/bed/chair/schair/wagon/bench))
 		layer = FLY_LAYER
 	else
 		layer = OBJ_LAYER
