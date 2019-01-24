@@ -15,4 +15,4 @@
 
 	new_player_panel()
 	client.playtitlemusic()
-	handle_privacy_poll()
+//	handle_privacy_poll() // commented cause polls are kinda broken now, needs refactoring
