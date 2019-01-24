@@ -48,9 +48,10 @@
 			dat += "<A href='?src=\ref[src];warn=\ref[T]'>(<font color=red><i>Message Holder</i></font>)</A> |<BR>"
 			dat += "********************************<BR>"
 		dat += "<HR>Explode Implants<BR>"
-		for(var/obj/item/weapon/implant/TSAD/E in implant_list)
+		for(var/obj/item/weapon/implant/explosive/E in implant_list)
 			Tr = get_turf(E)
 			if((Tr) && (Tr.z != src.z))	continue
+			if(!E.implanted) continue
 			var/loc_display = "Unknown"
 			var/mob/living/carbon/M = E.imp_in
 			if(M.z == ZLEVEL_STATION && !istype(M.loc, /turf/space))
@@ -61,8 +62,7 @@
 			dat += "[E.imp_in.name] <BR>"
 			dat += "Location: [loc_display]<BR>"
 			dat += "<A href='?src=\ref[src];warn=\ref[E]'>(<font color=red><i>Message Holder</i></font>)</A> |<BR>"
-		//	dat += "<A href='?src=\ref[src];Explode=\ref[E]'>(<font color=red>(Explode)</font>)</A> |<BR>"
-			dat += "<A href='?src=\ref[src];Shock=\ref[E]'>(<font color=red>(Shock)</font>)</A> |<BR>"
+			dat += "<A href='?src=\ref[src];Explode=\ref[E]'>(<font color=red>(Explode)</font>)</A><BR>"
 			dat += "********************************<BR>"
 		dat += "<HR><A href='?src=\ref[src];lock=1'>Lock Console</A>"
 
@@ -107,17 +107,8 @@
 			var/mob/living/carbon/R = I.imp_in
 			to_chat(R, "\green You hear a voice in your head saying: '[warning]'")
 
-	else if(href_list["Shock"])
-		var/obj/item/weapon/implant/TSAD/I = locate(href_list["Shock"])
-		if((I)&&(I.imp_in))
-			var/mob/living/carbon/R = I.imp_in
-			R.electrocute_act(15)
-			R.Stun(7)
-			playsound(R, 'sound/items/defib_zap.ogg', 50, 0)
-
-/*
 	else if(href_list["Explode"])
-		var/obj/item/weapon/implant/TSAD/I = locate(href_list["Explode"])
+		var/obj/item/weapon/implant/I = locate(href_list["Explode"])
 		if((I)&&(I.imp_in))
 			var/mob/living/carbon/R = I.imp_in
 			message_admins("\blue [key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) detonated [R.name]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[R.x];Y=[R.y];Z=[R.z]'>JMP</a>)")
@@ -126,12 +117,10 @@
 			sleep(37)
 			playsound(R, 'sound/items/Explosion_Small3.ogg', 75, 1, -3)
 			R.gib()
-*/
 	else if(href_list["lock"])
 		if(src.allowed(usr))
 			screen = !screen
 		else
 			to_chat(usr, "Unauthorized Access.")
-
 
 	src.updateUsrDialog()
