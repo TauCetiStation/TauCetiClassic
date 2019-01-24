@@ -30,15 +30,11 @@
 
 /mob/dead/new_player/proc/new_player_panel_proc()
 	var/output = null
-	var/client/C = client
-	if(C.player_ingame_age <= 60)
-		output += "<div align='center'><B>Welcome, New Player!</B>"
+	if(length(src.key) > 15)
+		output += "<div align='center'><B>Welcome,<br></B>"
+		output += "<div align='center'><B>[src.key]!</B>"
 	else
-		if(length(C.prefs.real_name) > 15)
-			output += "<div align='center'><B>Welcome,<br></B>"
-			output += "<div align='center'><B>[C.prefs.real_name]!</B>"
-		else
-			output += "<div align='center'><B>Welcome, [C.prefs.real_name]!</B>"
+		output += "<div align='center'><B>Welcome, [src.key]!</B>"
 	output +="<hr>"
 	output += "<p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
