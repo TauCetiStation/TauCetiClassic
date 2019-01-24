@@ -68,3 +68,5 @@
 	// Their chat window, sort of important.
 	// See /goon/code/datums/browserOutput.dm
 	var/datum/chatOutput/chatOutput
+
+	var/list/char_render_holders			//Should only be a key-value list of north/south/east/west = obj/screen.
