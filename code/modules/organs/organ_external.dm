@@ -1165,7 +1165,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	body_zone = BP_R_LEG
 	parent_bodypart = BP_GROIN
 	limb_layer = LIMB_R_LEG_LAYER
-	icon_position = RIGHT
 	regen_bodypart_penalty = 75
 
 	arterial_bleed_severity = 0.75
