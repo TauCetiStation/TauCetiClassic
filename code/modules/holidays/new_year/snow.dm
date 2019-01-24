@@ -64,7 +64,7 @@
 	name = "snowball"
 	desc = "Get ready for a snowball fight!"
 	force = 0
-	throwforce = 10
+	throwforce = 1
 	icon_state = "snowball"
 
 /obj/item/snowball/attack_hand(mob/user)

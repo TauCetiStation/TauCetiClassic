@@ -7,7 +7,7 @@
 
 /obj/item/decoration/attack_hand(mob/user)
 	var/choice = input("Do you want to take \the [src]?") in list("Yes", "Cancel")
-	if(choice == "Yes")
+	if(choice == "Yes" && get_dist(src, user) <= 1)
 		..()
 
 /obj/item/decoration/afterattack(atom/target, mob/living/user, flag, params)
