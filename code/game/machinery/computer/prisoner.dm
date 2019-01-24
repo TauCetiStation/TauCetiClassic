@@ -1,5 +1,5 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
+#define SHOCK_COOLDOWN 400
 /obj/machinery/computer/prisoner
 	name = "Prisoner Management"
 	icon = 'icons/obj/computer.dmi'
@@ -13,6 +13,7 @@
 	var/timeleft = 60
 	var/stop = 0.0
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
+	var/lastUsing = 0
 	light_color = "#B40000"
 
 /obj/machinery/computer/prisoner/ui_interact(mob/user)
@@ -47,7 +48,7 @@
 			dat += "ID: [T.id] | Location: [loc_display]<BR>"
 			dat += "<A href='?src=\ref[src];warn=\ref[T]'>(<font color=red><i>Message Holder</i></font>)</A> |<BR>"
 			dat += "********************************<BR>"
-		dat += "<HR>Explode Implants<BR>"
+		dat += "<HR>TSAD<BR>"
 		for(var/obj/item/weapon/implant/explosive/E in implant_list)
 			Tr = get_turf(E)
 			if((Tr) && (Tr.z != src.z))	continue
@@ -111,10 +112,15 @@
 	else if(href_list["Shock"])
 		var/obj/item/weapon/implant/I = locate(href_list["Shock"])
 		if((I)&&(I.imp_in))
-			var/mob/living/carbon/R = I.imp_in
-			R.electrocute_act(15)
-			R.Stun(7)
-			playsound(R, 'sound/items/defib_zap.ogg', 50, 0)
+			if(lastUsing + SHOCK_COOLDOWN > world.time)
+				to_chat(usr, "It isn't ready to use.")
+			else
+				var/mob/living/carbon/R = I.imp_in
+				R.electrocute_act(15)
+				R.Stun(7)
+				playsound(R, 'sound/items/defib_zap.ogg', 50, 0)
+				lastUsing = world.time
+
 /*
 	else if(href_list["Explode"])
 		var/obj/item/weapon/implant/I = locate(href_list["Explode"])
