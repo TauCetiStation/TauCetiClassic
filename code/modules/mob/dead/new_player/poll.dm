@@ -42,6 +42,7 @@
 	src << browse(entity_ja(output),"window=privacypoll;size=600x500")
 	return
 
+/*
 /datum/polloption
 	var/optionid
 	var/optiontext
@@ -524,3 +525,5 @@
 
 		to_chat(usr, "\blue Vote successful.")
 		usr << browse(null,"window=playerpoll")
+
+commented cause polls are kinda broken now, needs refactoring */

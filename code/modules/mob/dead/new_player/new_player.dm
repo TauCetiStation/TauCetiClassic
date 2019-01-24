@@ -177,7 +177,7 @@ commented cause polls are kinda broken now, needs refactoring */
 	else if(!href_list["late_join"])
 		new_player_panel()
 
-/*	if(href_list["privacy_poll"])
+	if(href_list["privacy_poll"])
 		establish_db_connection()
 		if(!dbcon.IsConnected())
 			return
@@ -216,7 +216,7 @@ commented cause polls are kinda broken now, needs refactoring */
 			usr << browse(null,"window=privacypoll")
 
 
-	if(href_list["showpoll"])
+/*	if(href_list["showpoll"])
 
 		handle_player_polling()
 		return
