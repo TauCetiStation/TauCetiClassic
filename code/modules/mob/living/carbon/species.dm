@@ -101,6 +101,7 @@
 		,BP_L_ARM  = /obj/item/organ/external/l_arm
 		,BP_R_ARM  = /obj/item/organ/external/r_arm
 		,BP_L_LEG  = /obj/item/organ/external/l_leg
+		,BP_R_LEG  = /obj/item/organ/external/r_leg
 		)
 
 	var/list/has_organ = list(
@@ -496,6 +497,7 @@
 		,BP_L_ARM  = /obj/item/organ/external/l_arm
 		,BP_R_ARM  = /obj/item/organ/external/r_arm
 		,BP_L_LEG  = /obj/item/organ/external/l_leg
+		,BP_R_LEG  = /obj/item/organ/external/r_leg
 		)
 
 	has_organ = list(
@@ -611,6 +613,7 @@
 		,BP_L_ARM  = /obj/item/organ/external/l_arm
 		,BP_R_ARM  = /obj/item/organ/external/r_arm
 		,BP_L_LEG  = /obj/item/organ/external/l_leg
+		,BP_R_LEG  = /obj/item/organ/external/r_leg
 		)
 
 	has_organ = list(
