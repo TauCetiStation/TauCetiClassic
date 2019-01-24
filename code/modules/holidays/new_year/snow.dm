@@ -1,6 +1,6 @@
 /obj/structure/snow
 	name = "snow"
-	desc = "It's just a pile of snow, nothing special."
+	desc = "It's just a pile of snow..."
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
 	anchored = TRUE
