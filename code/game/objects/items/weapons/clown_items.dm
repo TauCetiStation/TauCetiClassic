@@ -28,17 +28,13 @@
 	else if(istype(target,/obj/effect/decal/cleanable))
 		to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
 		qdel(target)
-	else if(ishuman(target))
-		return
 	else
 		to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
 		target.clean_blood()
 	return
 
 /obj/item/weapon/soap/attack(mob/target, mob/user, def_zone)
-	var/busy
-	if(target && user && ishuman(target) && ishuman(user) && !user.stat && user.zone_sel && !busy)
-		busy = 1
+	if(target && user && ishuman(target) && ishuman(user) && !user.stat && user.zone_sel && !user.is_busy())
 		var/mob/living/carbon/human/H = target
 		var/body_part_name
 		switch(def_zone)
@@ -128,12 +124,10 @@
 				user.visible_message("<span class='notice'>\the [user] cleans \his [body_part_name] out with soap.</span>")
 			else
 				user.visible_message("<span class='notice'>\the [user] cleans \the [target]'s [body_part_name] out with soap.</span>")
-			busy = 0
 			playsound(src.loc, 'sound/misc/slip.ogg', 50, 1)
 			return
 		else
 			user.visible_message("<span class='red'>\the [user] fails to clean \the [target]'s [body_part_name] out with soap.</span>")
-			busy = 0
 			return
 	..()
 
