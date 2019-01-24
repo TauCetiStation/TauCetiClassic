@@ -396,8 +396,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //STATION13
 
 /area/atmos
- 	name = "Atmospherics"
- 	icon_state = "atmos"
+	name = "Atmospherics"
+	icon_state = "atmos"
 
 //Maintenance
 /area/maintenance
@@ -564,9 +564,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Play Room"
 	icon_state = "fitness"
 
+/area/crew_quarters/theatre
+	name = "Theatre"
+	icon_state = "Theatre"
+
 /area/library
- 	name = "Library"
- 	icon_state = "library"
+	name = "Library"
+	icon_state = "library"
 
 
 /area/chapel/main
@@ -828,6 +832,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/medical/sleeper
 	name = "Emergency Treatment Centre"
+	icon_state = "exam_room"
+
+/area/medical/checkpoint
+	name = "Medical Checkpoint"
 	icon_state = "exam_room"
 
 //Security

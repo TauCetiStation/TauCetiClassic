@@ -28,8 +28,9 @@
 		///////////////
 		//SOUND STUFF//
 		///////////////
-	var/ambience_playing= null
-	var/played			= 0
+	var/ambience_playing = null
+	var/played = 0
+	var/adminSoundVolume = 50
 
 		////////////
 		//SECURITY//
@@ -67,3 +68,5 @@
 	// Their chat window, sort of important.
 	// See /goon/code/datums/browserOutput.dm
 	var/datum/chatOutput/chatOutput
+
+	var/list/char_render_holders			//Should only be a key-value list of north/south/east/west = obj/screen.

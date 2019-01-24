@@ -184,15 +184,22 @@
 	anchored = 1
 	state = 20//So it doesn't interact based on the above. Not really necessary.
 
+/obj/structure/AIcore/deactivated/atom_init()
+	. = ..()
+	aicore_deactivated_list += src
+
+/obj/structure/AIcore/deactivated/Destroy()
+	aicore_deactivated_list -= src
+	if(empty_playable_ai_cores.Find(src))
+		empty_playable_ai_cores -= src
+	return ..()
+
 /obj/structure/AIcore/deactivated/attackby(obj/item/device/aicard/A, mob/user)
 	if(istype(A, /obj/item/device/aicard))//Is it?
 		A.transfer_ai("INACTIVE","AICARD",src,user)
 	return
 
-/obj/structure/AIcore/deactivated/Destroy()
-	if(empty_playable_ai_cores.Find(src))
-		empty_playable_ai_cores -= src
-	return ..()
+
 
 /*
 This is a good place for AI-related object verbs so I'm sticking it here.
@@ -404,7 +411,7 @@ That prevents a few funky behaviors.
 	set category = "Admin"
 
 	var/list/cores = list()
-	for(var/obj/structure/AIcore/deactivated/D in world)
+	for(var/obj/structure/AIcore/deactivated/D in aicore_deactivated_list)
 		cores["[D] ([D.loc.loc])"] = D
 
 	var/id = input("Which core?", "Toggle AI Core Latejoin", null) as null|anything in cores

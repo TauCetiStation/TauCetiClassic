@@ -1,3 +1,11 @@
+/mob/living/carbon/atom_init()
+	. = ..()
+	carbon_list += src
+
+/mob/living/carbon/Destroy()
+	carbon_list -= src
+	return ..()
+
 /mob/living/carbon/Life()
 	..()
 

@@ -388,6 +388,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Debug"
 	set name = "Load Junkyard"
 	SSjunkyard.populate_junkyard()
+
+	//todo: safe gate ref in map datum
+	for(var/obj/machinery/gateway/center/G in gateways_list)
+		if (G.name == "Junkyard Gateway")
+			G.toggleon()
+
 	log_admin("[key_name(src)] pupulated junkyard. SSjunkyard.populate_junkyard() called.")
 	message_admins("[key_name_admin(src)] pupulated junkyard. SSjunkyard.populate_junkyard() called.")
 	feedback_add_details("admin_verb","PPJYD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -1860,15 +1866,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Debug Mob Lists"
 	set desc = "For when you just gotta know."
 
-	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs", "Clients", "Joined Clients"))
+	switch(input("Which list?") in list("Players","Admins","Mobs","Alive Mobs","Dead Mobs", "Clients", "Joined Clients"))
 		if("Players")
 			to_chat(usr, jointext(player_list,","))
 		if("Admins")
 			to_chat(usr, jointext(admins,","))
 		if("Mobs")
 			to_chat(usr, jointext(mob_list,","))
-		if("Living Mobs")
-			to_chat(usr, jointext(living_mob_list,","))
+		if("Alive Mobs")
+			to_chat(usr, jointext(alive_mob_list,","))
 		if("Dead Mobs")
 			to_chat(usr, jointext(dead_mob_list,","))
 		if("Clients")

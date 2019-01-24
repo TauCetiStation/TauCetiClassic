@@ -27,7 +27,7 @@
 				antag_candidates -= player
 
 
-	for(var/mob/dead/new_player/P in mob_list)
+	for(var/mob/dead/new_player/P in new_player_list)
 		if(P.client && P.ready)
 			num_players++
 
@@ -86,7 +86,7 @@
 	var/playercount = 0
 	var/traitorcount = 0
 
-	for(var/mob/living/player in mob_list)
+	for(var/mob/living/player in living_list)
 		if (player.client && player.mind && player.stat != DEAD)
 			playercount++
 			if(player.mind.special_role)
@@ -176,7 +176,7 @@
 		//message_admins("Checking number of players")
 		var/playercount = 0
 		var/traitorcount = 0
-		for(var/mob/living/player in mob_list)
+		for(var/mob/living/player in living_list)
 
 			if (player.client && player.mind && player.stat != DEAD)
 				playercount += 1

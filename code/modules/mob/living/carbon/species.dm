@@ -228,6 +228,7 @@
 	,HAS_UNDERWEAR = TRUE
 	,HAS_TAIL = TRUE
 	,HAS_SKIN_COLOR = TRUE
+	,NO_MINORCUTS = TRUE
 	)
 
 	flesh_color = "#34AF10"
@@ -423,7 +424,7 @@
 	brute_mod = 0.2
 	burn_mod = 0.2
 
-	eyes = "blank_eyes"
+	eyes = null
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
 
@@ -571,7 +572,7 @@
 	dietflags = 0		//IPCs can't eat, so no diet
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 
-	eyes = "blank_eyes"
+	eyes = null
 
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
@@ -602,6 +603,7 @@
 	,VIRUS_IMMUNE = TRUE
 	,BIOHAZZARD_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
+	,NO_MINORCUTS = TRUE
 	)
 
 	has_bodypart = list(
@@ -754,6 +756,7 @@
 	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
+	,NO_MINORCUTS
 	)
 
 	burn_mod = 2
@@ -797,7 +800,8 @@
 		RAD_IMMUNE = TRUE,
 		VIRUS_IMMUNE = TRUE,
 		BIOHAZZARD_IMMUNE = TRUE,
-		NO_FINGERPRINT = TRUE
+		NO_FINGERPRINT = TRUE,
+		NO_MINORCUTS = TRUE
 		)
 
 	has_organ = list(
@@ -856,6 +860,7 @@
 
 	icobase = 'icons/mob/human_races/r_zombie.dmi'
 	deform = 'icons/mob/human_races/r_zombie.dmi'
+	has_gendered_icons = FALSE
 
 	flags = list(
 	NO_BREATHE = TRUE
