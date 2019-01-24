@@ -13,10 +13,12 @@
 		return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/fluff/jane_sidsuit(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/weapon/implant/TSAD(H), slot_r_ear)
 
 	if(visualsOnly)
 		return
+
+	var/obj/item/weapon/implant/explosive/E = new(H)
+	E.inject(H)
 
 	return TRUE
 
