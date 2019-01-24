@@ -3,13 +3,13 @@
 	desc = "Looks unstable. Best to test it with the clown."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
-	density = 1
-	unacidable = 1//Can't destroy energy portals.
+	density = TRUE
+	unacidable = TRUE // Can't destroy energy portals.
 	var/failchance = 5
 	var/destroy_after_init = TRUE
 	var/obj/item/target = null
 	var/creator = null
-	anchored = 1.0
+	anchored = TRUE
 
 /obj/effect/portal/Bumped(mob/M)
 	spawn(0)
@@ -93,6 +93,8 @@
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		var/bad_effects = 0
+		if(H.species.flags[IS_SYNTHETIC])
+			return
 		if(prob(20))
 			bad_effects += 1
 			H.confused += 3
