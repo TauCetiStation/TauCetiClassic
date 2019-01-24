@@ -462,7 +462,7 @@
 
 /obj/item/weapon/storage/box/disks
 	name = "Diskette Box"
-	icon_state = "disk_kit"
+	icon_state = "disk_box"
 
 /obj/item/weapon/storage/box/disks/atom_init()
 	. = ..()
