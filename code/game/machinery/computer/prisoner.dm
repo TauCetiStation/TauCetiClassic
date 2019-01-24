@@ -63,7 +63,7 @@
 			dat += "Location: [loc_display]<BR>"
 			dat += "<A href='?src=\ref[src];warn=\ref[E]'>(<font color=red><i>Message Holder</i></font>)</A> |<BR>"
 		//	dat += "<A href='?src=\ref[src];Explode=\ref[E]'>(<font color=red>(Explode)</font>)</A><BR>"
-			dat += "<A href='?src=\ref[src];Shock=\ref[E]'>(<font color=red>(Explode)</font>)</A><BR>"
+			dat += "<A href='?src=\ref[src];Shock=\ref[E]'>(<font color=red>(Shock)</font>)</A><BR>"
 			dat += "********************************<BR>"
 		dat += "<HR><A href='?src=\ref[src];lock=1'>Lock Console</A>"
 
