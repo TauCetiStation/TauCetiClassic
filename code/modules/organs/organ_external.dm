@@ -17,7 +17,6 @@
 	// Appearance vars.
 	var/body_part = null              // Part flag
 	var/body_zone = null              // Unique identifier of this limb.
-	var/icon_position = 0             // Used in mob overlay layering calculations.
 
 	// Wound and structural data.
 	var/wound_update_accuracy = 1     // how often wounds should be updated, a higher number means less often
@@ -925,29 +924,56 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return 0
 
 /obj/item/organ/external/get_icon(icon/race_icon, icon/deform_icon, gender = "", fat = "")
-	if(!owner.species.has_gendered_icons)
+	if (!owner)
+		return
+
+	if (!owner.species.has_gendered_icons)
 		gender = ""
 
-	if (status & ORGAN_ROBOT && !(owner.species && owner.species.flags[IS_SYNTHETIC]))
-		return new /icon('icons/mob/human_races/robotic.dmi', "[body_zone][gender ? "_[gender]" : ""]")
+	if (status & ORGAN_ROBOT && !owner.species.flags[IS_SYNTHETIC])
+		return mutable_appearance('icons/mob/human_races/robotic.dmi', "[body_zone][gender ? "_[gender]" : ""]")
+
+	if ((HUSK in owner.mutations) && !owner.species.flags[IS_SYNTHETIC])
+		return mutable_appearance('icons/mob/human_races/husk.dmi', "[body_zone]")
 
 	if (status & ORGAN_MUTATED)
-		return new /icon(deform_icon, "[body_zone][gender ? "_[gender]" : ""][fat ? "_[fat]" : ""]")
+		return mutable_appearance(deform_icon, "[body_zone][gender ? "_[gender]" : ""][fat ? "_[fat]" : ""]")
 
-	return new /icon(race_icon, "[body_zone][gender ? "_[gender]" : ""][fat ? "_[fat]" : ""]")
+	return mutable_appearance(race_icon, "[body_zone][gender ? "_[gender]" : ""][fat ? "_[fat]" : ""]")
 
-/obj/item/organ/external/head/get_icon(icon/race_icon, icon/deform_icon)
+/obj/item/organ/external/head/get_icon(icon/race_icon, icon/deform_icon, gender = "")
 	if (!owner)
-		return ..()
+		return
 
-	var/g = ""
-	if(owner.species.has_gendered_icons)
-		g = owner.gender == FEMALE ? "_f" : "_m"
+	if ((HUSK in owner.mutations) && !owner.species.flags[IS_SYNTHETIC])
+		return mutable_appearance('icons/mob/human_races/husk.dmi', "[body_zone]")
+
+	if (!owner.species.has_gendered_icons)
+		gender = ""
 
 	if(status & ORGAN_MUTATED)
-		. = new /icon(deform_icon, "[body_zone][g]")
+		. = mutable_appearance(deform_icon, "[body_zone][gender ? "_[gender]" : ""]")
 	else
-		. = new /icon(race_icon, "[body_zone][g]")
+		. = mutable_appearance(race_icon, "[body_zone][gender ? "_[gender]" : ""]")
+
+	var/mutable_appearance/MA = .
+
+	//Eyes
+	if(owner.species.eyes)
+		var/mutable_appearance/img_eyes_s = mutable_appearance('icons/mob/human_face.dmi', owner.species.eyes)
+		if(!(HULK in owner.mutations))
+			img_eyes_s.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
+		else
+			img_eyes_s.color = "#ff0000"
+		MA.overlays += img_eyes_s
+
+	//Mouth	(lipstick!)
+	if(owner.lip_style && owner.species.flags[HAS_LIPS]) // skeletons are allowed to wear lipstick no matter what you think, agouri.
+		var/mutable_appearance/lips = mutable_appearance('icons/mob/human_face.dmi', "lips_[owner.lip_style]_s")
+		lips.color = owner.lip_color
+		MA.overlays += lips
+
+
 
 /obj/item/organ/external/proc/is_usable()
 	return !(status & (ORGAN_DESTROYED|ORGAN_MUTATED|ORGAN_DEAD))
@@ -1123,7 +1149,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	body_zone = BP_L_LEG
 	parent_bodypart = BP_GROIN
 	limb_layer = LIMB_L_LEG_LAYER
-	icon_position = LEFT
 	regen_bodypart_penalty = 75
 
 	arterial_bleed_severity = 0.75
