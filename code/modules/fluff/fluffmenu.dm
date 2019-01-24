@@ -292,7 +292,7 @@ var/list/editing_item_oldname_list = list()
 	set desc = "Allows you to add custom items slots to people."
 
 	src = usr.client.holder
-	if(!check_rights(R_ADMIN|R_PERMISSIONS))
+	if(!check_rights(R_PERMISSIONS))
 		return
 
 	var/list/slots = get_custom_items_slot_all()
@@ -327,7 +327,7 @@ var/list/editing_item_oldname_list = list()
 	usr << browse(entity_ja(output),"window=customitems;size=600x500")
 
 /datum/admins/proc/customs_items_add(target_ckey = null)
-	if(!check_rights(R_ADMIN|R_PERMISSIONS))
+	if(!check_rights(R_PERMISSIONS))
 		return
 
 	if(!target_ckey)
@@ -350,7 +350,7 @@ var/list/editing_item_oldname_list = list()
 
 /datum/admins/proc/customs_items_history(user_ckey)
 	src = usr.client.holder
-	if(!check_rights(R_ADMIN|R_PERMISSIONS))
+	if(!check_rights(R_PERMISSIONS))
 		return
 
 	var/list/history = get_custom_items_history(user_ckey)
@@ -394,7 +394,7 @@ var/list/editing_item_oldname_list = list()
 	usr << browse(entity_ja(output),"window=customitems_history;size=600x500")
 
 /datum/admins/proc/customs_items_remove(target_ckey, index)
-	if(!check_rights(R_ADMIN|R_PERMISSIONS))
+	if(!check_rights(R_PERMISSIONS))
 		return
 
 	if(!target_ckey)

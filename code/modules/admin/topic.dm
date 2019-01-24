@@ -195,7 +195,7 @@
 				whitelist_edit(target_ckey, role)
 
 	else if(href_list["custom_items"])
-		if(!check_rights(R_ADMIN))
+		if(!check_rights(R_PERMISSIONS))
 			return
 
 		var/target_ckey = ckey(href_list["ckey"])
