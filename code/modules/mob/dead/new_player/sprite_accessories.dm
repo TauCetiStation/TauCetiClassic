@@ -839,6 +839,7 @@
 //	icon_state = "hair_modern"
 //	gender = FEMALE
 
+//datum/sprite_accessory/hair/modern
 //	name = "Quadcurls"
 //	icon_state = "hair_quadcurls"
 //	gender = FEMALE
