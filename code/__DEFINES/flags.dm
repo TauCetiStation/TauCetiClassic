@@ -58,6 +58,7 @@
 #define BIOHAZZARD_IMMUNE  "biohazzard_immune"
 #define HAS_HAIR           "has_hair"
 #define NO_FINGERPRINT     "no_fingerprint"
+#define NO_MINORCUTS	   "no_minorcuts"
 
 //Species Diet Flags
 #define DIET_MEAT		1 // Meat.

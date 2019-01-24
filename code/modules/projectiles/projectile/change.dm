@@ -12,7 +12,7 @@
 	on_hit(atom/change)
 		wabbajack(change)
 
-/obj/item/projectile/change/proc/wabbajack (mob/M in living_mob_list)
+/obj/item/projectile/change/proc/wabbajack(mob/M)
 	if(istype(M, /mob/living) && M.stat != DEAD)
 		if(M.monkeyizing)	return
 		M.monkeyizing = 1

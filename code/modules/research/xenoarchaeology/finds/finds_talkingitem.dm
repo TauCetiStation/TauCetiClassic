@@ -114,13 +114,11 @@
 			msg+="!"
 
 	var/list/listening = viewers(holder_atom)
-	for(var/mob/M in mob_list)
+	for(var/mob/M in observer_list)
 		if (!M.client)
-			continue //skip monkeys and leavers
-		if (isnewplayer(M))
-			continue
-		if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
-			listening|=M
+			continue //skip leavers
+		if(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
+			listening |= M
 
 	for(var/mob/M in listening)
 		to_chat(M, "[bicon(holder_atom)] <b>[holder_atom]</b> reverberates, \blue\"[msg]\"")

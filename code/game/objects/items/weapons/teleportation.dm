@@ -60,7 +60,7 @@ Frequency:
 			if (sr)
 				src.temp += "<B>Located Beacons:</B><BR>"
 
-				for(var/obj/item/device/radio/beacon/W in world)
+				for(var/obj/item/device/radio/beacon/W in radio_beacon_list)
 					if (W.frequency == src.frequency)
 						var/turf/tr = get_turf(W)
 						if (tr.z == sr.z && tr)
@@ -78,7 +78,7 @@ Frequency:
 							src.temp += "[W.code]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
-				for (var/obj/item/weapon/implant/tracking/W in world)
+				for (var/obj/item/weapon/implant/tracking/W in implant_list)
 					if (!W.implanted || !(istype(W.loc,/obj/item/organ/external) || ismob(W.loc)))
 						continue
 					else
@@ -141,8 +141,10 @@ Frequency:
 		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
 		return
 	var/list/L = list(  )
-	for(var/obj/machinery/computer/teleporter/com in machines)
+	for(var/obj/machinery/computer/teleporter/com in teleporter_list)
 		if(com.target)
+			if(com.target.z == ZLEVEL_CENTCOMM)
+				continue
 			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)
 				L["[com.id] (Active)"] = com.target
 			else
@@ -158,7 +160,7 @@ Frequency:
 	if ((user.get_active_hand() != src || user.stat || user.restrained()))
 		return
 	var/count = 0	//num of portals from this teleport in world
-	for(var/obj/effect/portal/PO in world)
+	for(var/obj/effect/portal/PO in portal_list)
 		if(PO.creator == src)	count++
 	if(count >= 3)
 		user.show_message("<span class='notice'>\The [src] is recharging!</span>")

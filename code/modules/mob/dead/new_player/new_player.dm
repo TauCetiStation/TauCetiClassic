@@ -18,13 +18,27 @@
 		loc = locate(1,1,1)
 	lastarea = loc
 	. = ..()
+	new_player_list += src
+
+/mob/dead/new_player/Destroy()
+	new_player_list -= src
+	return ..()
 
 /mob/dead/new_player/verb/new_player_panel()
 	set src = usr
 	new_player_panel_proc()
 
 /mob/dead/new_player/proc/new_player_panel_proc()
-	var/output = "<div align='center'><B>New Player Options</B>"
+	var/output = null
+	var/client/C = client
+	if(C.player_ingame_age <= 60)
+		output += "<div align='center'><B>Welcome, New Player!</B>"
+	else
+		if(length(C.prefs.real_name) > 15)
+			output += "<div align='center'><B>Welcome,<br></B>"
+			output += "<div align='center'><B>[C.prefs.real_name]!</B>"
+		else
+			output += "<div align='center'><B>Welcome, [C.prefs.real_name]!</B>"
 	output +="<hr>"
 	output += "<p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
@@ -38,7 +52,7 @@
 
 	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
 
-	if(!IsGuestKey(src.key))
+/*	if(!IsGuestKey(src.key))
 		establish_db_connection()
 
 		if(dbcon.IsConnected())
@@ -56,9 +70,9 @@
 				output += "<p><b><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
 			else
 				output += "<p><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
+commented cause polls are kinda broken now, needs refactoring */
 
 	output += "</div>"
-
 	src << browse(entity_ja(output),"window=playersetup;size=210x240;can_close=0")
 	return
 
@@ -83,6 +97,8 @@
 		return 0
 
 	if(href_list["show_preferences"])
+		client << browse_rsc('html/prefs/dossier_empty.png')
+		client << browse_rsc('html/prefs/opacity7.png')
 		client.prefs.ShowChoices(src)
 		return 1
 
@@ -94,7 +110,7 @@
 			ready = !ready
 
 	if(href_list["refresh"])
-		src << browse(null, "window=playersetup") //closes the player setup window
+		src << browse(null, "window=playersetup") // closes the player setup window
 		new_player_panel_proc()
 
 	if(href_list["observe"])
@@ -117,8 +133,8 @@
 			observer.loc = O.loc
 			observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
 
-			//client.prefs.update_preview_icon()
-			//observer.icon = client.prefs.preview_icon
+			// client.prefs.update_preview_icon()
+			// observer.icon = client.prefs.preview_icon
 			observer.icon = 'icons/mob/mob.dmi'
 			observer.icon_state = "ghost"
 			observer.alpha = 127
@@ -162,20 +178,26 @@
 		AttemptLateSpawn(href_list["SelectedJob"])
 		return
 
-	if(href_list["privacy_poll"])
+	if(href_list["preference"] && (!ready || (href_list["preference"] == "close")))
+		if(client)
+			client.prefs.process_link(src, href_list)
+	else if(!href_list["late_join"])
+		new_player_panel()
+
+/*	if(href_list["privacy_poll"])
 		establish_db_connection()
 		if(!dbcon.IsConnected())
 			return
 		var/voted = 0
 
-		//First check if the person has not voted yet.
+		// First check if the person has not voted yet.
 		var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_privacy WHERE ckey='[src.ckey]'")
 		query.Execute()
 		while(query.NextRow())
 			voted = 1
 			break
 
-		//This is a safety switch, so only valid options pass through
+		// This is a safety switch, so only valid options pass through
 		var/option = "UNKNOWN"
 		switch(href_list["privacy_poll"])
 			if("signed")
@@ -200,11 +222,6 @@
 			to_chat(usr, "<b>Thank you for your vote!</b>")
 			usr << browse(null,"window=privacypoll")
 
-	if(href_list["preference"] && (!ready || (href_list["preference"] == "close")))
-		if(client)
-			client.prefs.process_link(src, href_list)
-	else if(!href_list["late_join"])
-		new_player_panel()
 
 	if(href_list["showpoll"])
 
@@ -260,6 +277,7 @@
 				for(var/optionid = id_min; optionid <= id_max; optionid++)
 					if(!isnull(href_list["option_[optionid]"]))	//Test if this optionid was selected
 						vote_on_poll(pollid, optionid, 1)
+*/ // commented cause polls are kinda broken now, needs refactoring
 
 /mob/dead/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)

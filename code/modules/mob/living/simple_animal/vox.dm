@@ -25,7 +25,7 @@
 
 /mob/living/simple_animal/vox/armalis/Die()
 
-	living_mob_list -= src
+	alive_mob_list -= src
 	dead_mob_list += src
 	stat = DEAD
 	visible_message("\red <B>[src] shudders violently and explodes!</B>","\red <B>You feel your body rupture!</B>")

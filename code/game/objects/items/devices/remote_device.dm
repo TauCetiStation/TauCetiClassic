@@ -17,12 +17,14 @@
 
 /obj/item/device/remote_device/atom_init()
 	. = ..()
+	remote_device_list += src
 	ID = new/obj/item/weapon/card/id
 	ID.access = list()
 	for(var/access in region_access)
 		ID.access += get_region_accesses(access)
 
 /obj/item/device/remote_device/Destroy()
+	remote_device_list -= src
 	QDEL_NULL(ID)
 	return ..()
 

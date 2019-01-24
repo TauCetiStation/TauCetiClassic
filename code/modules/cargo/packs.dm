@@ -516,14 +516,35 @@ datum/supply_pack/New()
 	crate_name = "Wooden planks crate"
 	group = "Engineering"
 
-/datum/supply_pack/carpet50
-	name = "50 carpet tiles"
-	contains = list(/obj/item/stack/tile/carpet)
+/datum/supply_pack/carpets
+	name = "Random carpets"
+	contains = list(/obj/item/stack/tile/carpet, /obj/item/stack/tile/carpet/black, /obj/item/stack/tile/carpet/purple, /obj/item/stack/tile/carpet/orange, /obj/item/stack/tile/carpet/green,
+					/obj/item/stack/tile/carpet/blue, /obj/item/stack/tile/carpet/blue2, /obj/item/stack/tile/carpet/red, /obj/item/stack/tile/carpet/cyan
+	)
 	amount = 50
 	cost = 2500
 	crate_type = /obj/structure/closet/crate
 	crate_name = "Carpet crate"
 	group = "Engineering"
+	var/num_contained = 4 // 4 random carpets per crate
+
+/datum/supply_pack/carpets/fill(obj/structure/closet/crate/C)
+	var/list/L = contains.Copy()
+	var/item
+	if(num_contained <= L.len)
+		for(var/i in 1 to num_contained)
+			item = pick_n_take(L)
+			var/n_item = new item(C)
+			if(istype(n_item, /obj/item/stack/tile))
+				var/obj/item/stack/sheet/n_sheet = n_item
+				n_sheet.set_amount(amount)
+	else
+		for(var/i in 1 to num_contained)
+			item = pick(L)
+			var/n_item = new item(C)
+			if(istype(n_item, /obj/item/stack/tile))
+				var/obj/item/stack/sheet/n_sheet = n_item
+				n_sheet.set_amount(amount)
 
 /datum/supply_pack/electrical
 	name = "Electrical maintenance crate"

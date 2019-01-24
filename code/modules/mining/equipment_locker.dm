@@ -450,7 +450,7 @@
 	else
 		user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
 		var/list/L = list()
-		for(var/obj/item/device/radio/beacon/B in world)
+		for(var/obj/item/device/radio/beacon/B in radio_beacon_list)
 			var/turf/T = get_turf(B)
 			if(T.z == ZLEVEL_STATION)
 				L += B

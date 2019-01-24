@@ -81,9 +81,6 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/religion = "None"               //Religious association.
 	var/nanotrasen_relation = "Neutral"
 
-	//Mob preview
-	var/icon/preview_icon = null
-
 	//Jobs, uses bitflags
 	var/job_civilian_high = 0
 	var/job_civilian_med = 0
@@ -142,10 +139,6 @@ var/const/MAX_SAVE_SLOTS = 10
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
 	update_preview_icon()
-	user << browse_rsc(preview_icon, "previewicon.png")
-	user << browse_rsc('html/prefs/dossier_empty.png')
-	user << browse_rsc('html/prefs/dossier_photos.png')
-	user << browse_rsc('html/prefs/opacity7.png')
 
 	var/dat = "<html><body link='#045EBE' vlink='045EBE' alink='045EBE'><center>"
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
@@ -186,14 +179,19 @@ var/const/MAX_SAVE_SLOTS = 10
 		if("fluff")
 			dat += ShowFluffMenu(user)
 	dat += "</body></html>"
-	user << browse(entity_ja(dat), "window=preferences;size=618x778;can_close=0;can_minimize=0;can_maximize=0;can_resize=0")
+
+	winshow(user, "preferences_window", TRUE)
+	user << browse(entity_ja(dat), "window=preferences_browser")
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(!user)
 		return
 
 	if(href_list["preference"] == "close")
-		user << browse(null, "window=preferences")
+		user << browse(null, "window=preferences_window")
+		var/client/C = user.client
+		if(C)
+			C.clear_character_previews()
 		return
 
 	if(!isnewplayer(user))
