@@ -20,7 +20,7 @@
 	if(!istype(ticker.mode, /datum/game_mode/gang))
 		return INITIALIZE_HINT_QDEL
 	set_light(2)
-	poi_list |= src
+	poi_list += src
 
 /obj/machinery/dominator/examine(mob/user)
 	..()
@@ -118,7 +118,7 @@
 /obj/machinery/dominator/Destroy()
 	if(!(stat & BROKEN))
 		set_broken()
-	poi_list.Remove(src)
+	poi_list -= src
 	return ..()
 
 /obj/machinery/dominator/emp_act(severity)

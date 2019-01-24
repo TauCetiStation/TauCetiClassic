@@ -253,7 +253,12 @@
 
 /obj/structure/flora/tree/pine/xmas/atom_init()
 	. = ..()
+	tree_xmas_list += src
 	icon_state = "pine_c"
+
+/obj/structure/flora/tree/pine/xmas/Destroy()
+	tree_xmas_list -= src
+	return ..()
 
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/flora/deadtrees.dmi'

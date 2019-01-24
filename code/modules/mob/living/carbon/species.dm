@@ -101,7 +101,6 @@
 		,BP_L_ARM  = /obj/item/organ/external/l_arm
 		,BP_R_ARM  = /obj/item/organ/external/r_arm
 		,BP_L_LEG  = /obj/item/organ/external/l_leg
-		,BP_R_LEG  = /obj/item/organ/external/r_leg
 		)
 
 	var/list/has_organ = list(
@@ -228,6 +227,7 @@
 	,HAS_UNDERWEAR = TRUE
 	,HAS_TAIL = TRUE
 	,HAS_SKIN_COLOR = TRUE
+	,NO_MINORCUTS = TRUE
 	)
 
 	flesh_color = "#34AF10"
@@ -496,7 +496,6 @@
 		,BP_L_ARM  = /obj/item/organ/external/l_arm
 		,BP_R_ARM  = /obj/item/organ/external/r_arm
 		,BP_L_LEG  = /obj/item/organ/external/l_leg
-		,BP_R_LEG  = /obj/item/organ/external/r_leg
 		)
 
 	has_organ = list(
@@ -602,6 +601,7 @@
 	,VIRUS_IMMUNE = TRUE
 	,BIOHAZZARD_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
+	,NO_MINORCUTS = TRUE
 	)
 
 	has_bodypart = list(
@@ -611,7 +611,6 @@
 		,BP_L_ARM  = /obj/item/organ/external/l_arm
 		,BP_R_ARM  = /obj/item/organ/external/r_arm
 		,BP_L_LEG  = /obj/item/organ/external/l_leg
-		,BP_R_LEG  = /obj/item/organ/external/r_leg
 		)
 
 	has_organ = list(
@@ -754,6 +753,7 @@
 	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
+	,NO_MINORCUTS
 	)
 
 	burn_mod = 2
@@ -797,7 +797,8 @@
 		RAD_IMMUNE = TRUE,
 		VIRUS_IMMUNE = TRUE,
 		BIOHAZZARD_IMMUNE = TRUE,
-		NO_FINGERPRINT = TRUE
+		NO_FINGERPRINT = TRUE,
+		NO_MINORCUTS = TRUE
 		)
 
 	has_organ = list(

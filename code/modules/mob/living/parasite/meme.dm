@@ -250,7 +250,7 @@ mob/living/parasite/meme/verb/Thought()
 	//target.show_message(rendered)
 	to_chat(target, rendered)
 	to_chat(usr, "<i>You make [target] hear:</i> [rendered]")
-	for(var/mob/dead/observer/G in mob_list)
+	for(var/mob/dead/observer/G in observer_list)
 		G.show_message("[usr] makes [target] hear: [rendered]")
 	log_say("Memetic Thought: [key_name(usr)] makes [key_name(target)] hear: [speaker] [message]")
 
@@ -399,7 +399,7 @@ mob/living/parasite/meme/verb/Hallucinate()
 	to_chat(usr, "<b>You make [target] hallucinate.</b>")
 
 // Jump to a closeby target through a whisper
-mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob in mob_list)
+mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob in human_list)
 	set category = "Meme"
 	set name	 = "Subtle Jump(350)"
 	set desc     = "Move to a closeby human through a whisper."
@@ -439,7 +439,7 @@ mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob i
 	message_admins("[src.key] has jumped to [target] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
 // Jump to a distant target through a shout
-mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob in mob_list)
+mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob in human_list)
 	set category = "Meme"
 	set name	 = "Obvious Jump(750)"
 	set desc     = "Move to any mob in view through a shout."
@@ -479,7 +479,7 @@ mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob 
 	message_admins("[src.key] has jumped to [target] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
 // Jump to an attuned mob for free
-mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob in mob_list)
+mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob in human_list)
 	set category = "Meme"
 	set name	 = "Attuned Jump(0)"
 	set desc     = "Move to a mob in sight that you have already attuned."

@@ -7,8 +7,8 @@
 
 	Announce()
 		if(!virus)
-			for(var/mob/living/carbon/human/H in living_mob_list)
-				if((H.virus2.len) || prob(30))
+			for(var/mob/living/carbon/human/H in human_list)
+				if(H.stat == DEAD || H.virus2.len || prob(30))
 					continue
 				if(prob(100))	// no lethal diseases outside virus mode!
 					infect_mob_random_lesser(H)
@@ -45,7 +45,9 @@
 //						virus_type = /datum/disease/t_virus
 					if("pierrot's throat")
 						virus_type = /datum/disease/pierrot_throat
-			for(var/mob/living/carbon/human/H in living_mob_list)
+			for(var/mob/living/carbon/human/H in human_list)
+				if(H.stat == DEAD)
+					continue
 
 				var/foundAlready = 0 // don't infect someone that already has the virus
 				for(var/datum/disease/D in H.viruses)

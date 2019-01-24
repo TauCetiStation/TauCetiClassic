@@ -24,7 +24,7 @@
 			M << sound('sound/effects/Explosion3.ogg')
 
 	//shake the station!
-	for(var/mob/living/carbon/C in mob_list)
+	for(var/mob/living/carbon/C in carbon_list)
 		if(C.z == T.z)
 			if(C.buckled)
 				shake_camera(C, 4, 1)

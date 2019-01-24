@@ -82,7 +82,7 @@
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
 	add_cell()
-	poi_list |= src
+	poi_list += src
 	add_iterators()
 	removeVerb(/obj/mecha/verb/disconnect_from_port)
 	log_message("[src.name] created.")
@@ -90,6 +90,7 @@
 	mechas_list += src //global mech list
 
 /obj/mecha/Destroy()
+	poi_list -= src
 	go_out()
 	poi_list.Remove(src)
 	for(var/mob/M in src)

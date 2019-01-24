@@ -112,6 +112,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	. = ..()
 
+	human_list += src
+
 	if(dna)
 		dna.real_name = real_name
 
@@ -122,6 +124,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	prev_gender = gender // Debug for plural genders
 	make_blood()
 	regenerate_icons()
+
+/mob/living/carbon/human/Destroy()
+	human_list -= src
+	return ..()
 
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
@@ -1125,7 +1131,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(!src_turf)
 		return
 
-	for(var/mob/living/carbon/M in world)
+	for(var/mob/living/carbon/M in carbon_list)
 		var/name = M.real_name
 		if(name in names)
 			namecounts[name]++
@@ -1153,7 +1159,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	else
 		T.show_message("\blue You hear a voice that seems to echo around the room: [say]")
 	usr.show_message("\blue You project your mind into [T.real_name]: [say]")
-	for(var/mob/dead/observer/G in world)
+	for(var/mob/dead/observer/G in observer_list)
 		G.show_message("<i>Telepathic message from <b>[src]</b> to <b>[T]</b>: [say]</i>")
 	log_say("Telepathic message from [key_name(src)] to [key_name(T)]: [say]")
 
@@ -1187,7 +1193,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	var/list/namecounts = list()
 	var/target = null	   //Chosen target.
 
-	for(var/mob/living/carbon/human/M in world) //#Z2 only carbon/human for now
+	for(var/mob/living/carbon/human/M in human_list) //#Z2 only carbon/human for now
 		var/name = M.real_name
 		if(!(REMOTE_TALK in src.mutations))
 			namecounts++

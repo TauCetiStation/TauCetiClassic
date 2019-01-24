@@ -257,11 +257,6 @@ This function completely restores a damaged organ to perfect condition.
 
 	owner.updatehealth()
 
-/obj/item/organ/external/head/rejuvenate()
-	..()
-	owner.client.perspective = MOB_PERSPECTIVE
-	owner.client.eye = owner // Deheading species that do not need a head causes them to view the world from a perspective of their head.
-
 /obj/item/organ/external/proc/createwound(type = CUT, damage)
 	if(damage == 0)
 		return
@@ -1136,23 +1131,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
 
-
-/obj/item/organ/external/r_leg
-	name = "right leg"
-	artery_name = "femoral artery"
-
-	body_part = LEG_RIGHT
-	body_zone = BP_R_LEG
-	parent_bodypart = BP_GROIN
-	limb_layer = LIMB_R_LEG_LAYER
-	icon_position = RIGHT
-	regen_bodypart_penalty = 75
-
-	arterial_bleed_severity = 0.75
-	max_damage = 50
-	min_broken_damage = 30
-	w_class = ITEM_SIZE_NORMAL
-
 /obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
 	if(!disfigured)
 		if(brute_dam > 40)
@@ -1254,6 +1232,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(istype(H))
 		src.icon_state = H.gender == MALE? "head_m" : "head_f"
 	. = ..()
+	organ_head_list += src
 	//Add (facial) hair.
 	if(H.f_style)
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.f_style]
@@ -1300,10 +1279,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 	else
 		H.h_style = "Bald"
 		H.f_style = "Shaved"
-		H.client.perspective = EYE_PERSPECTIVE
-		H.client.eye = src
 	H.update_body()
 	H.update_hair()
+
+/obj/item/weapon/organ/head/Destroy()
+	organ_head_list -= src
+	return ..()
 
 /obj/item/weapon/organ/head/proc/transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
 	brainmob = new(src)
