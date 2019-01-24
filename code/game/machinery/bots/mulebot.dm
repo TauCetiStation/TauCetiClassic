@@ -78,7 +78,7 @@
 
 /obj/machinery/bot/mulebot/atom_init_late()
 	var/count = 0
-	for(var/obj/machinery/bot/mulebot/other in machines)
+	for(var/obj/machinery/bot/mulebot/other in bots_list)
 		count++
 	if(!suffix)
 		suffix = "#[count]"

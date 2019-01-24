@@ -14,12 +14,14 @@
 /obj/machinery/computer/teleporter/atom_init()
 	id = "[rand(1000, 9999)]"
 	. = ..()
+	teleporter_list += src
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/teleporter/atom_init_late()
 	link_power_station()
 
 /obj/machinery/computer/teleporter/Destroy()
+	teleporter_list -= src
 	if (power_station)
 		power_station.teleporter_console = null
 		power_station = null
@@ -153,7 +155,7 @@
 		var/list/L = list()
 		var/list/areaindex = list()
 
-		for(var/obj/item/device/radio/beacon/R in world)
+		for(var/obj/item/device/radio/beacon/R in radio_beacon_list)
 			var/turf/T = get_turf(R)
 			if (!T)
 				continue
@@ -166,7 +168,7 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = R
 
-		for (var/obj/item/weapon/implant/tracking/I in world)
+		for (var/obj/item/weapon/implant/tracking/I in implant_list)
 			if (!I.implanted || !ismob(I.loc))
 				continue
 			else

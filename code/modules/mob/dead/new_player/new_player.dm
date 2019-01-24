@@ -18,6 +18,11 @@
 		loc = locate(1,1,1)
 	lastarea = loc
 	. = ..()
+	new_player_list += src
+
+/mob/dead/new_player/Destroy()
+	new_player_list -= src
+	return ..()
 
 /mob/dead/new_player/verb/new_player_panel()
 	set src = usr

@@ -176,12 +176,12 @@
 		vest.SetDisguise(chosen)
 
 /obj/machinery/abductor/console/proc/Initialize()
-	for(var/obj/machinery/abductor/pad/p in machines)
+	for(var/obj/machinery/abductor/pad/p in abductor_machinery_list)
 		if(p.team == team)
 			pad = p
 			break
 
-	for(var/obj/machinery/abductor/experiment/e in machines)
+	for(var/obj/machinery/abductor/experiment/e in abductor_machinery_list)
 		if(e.team == team)
 			experiment = e
 			e.console = src

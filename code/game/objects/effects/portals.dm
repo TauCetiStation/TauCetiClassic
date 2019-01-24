@@ -11,6 +11,16 @@
 	var/creator = null
 	anchored = TRUE
 
+/obj/effect/portal/atom_init()
+	. = ..()
+	portal_list += src
+	if(destroy_after_init)
+		QDEL_IN(src, 300)
+
+/obj/effect/portal/Destroy()
+	portal_list -= src
+	return ..()
+
 /obj/effect/portal/Bumped(mob/M)
 	spawn(0)
 		src.teleport(M)
@@ -23,10 +33,7 @@
 		return
 	return
 
-/obj/effect/portal/atom_init()
-	. = ..()
-	if(destroy_after_init)
-		QDEL_IN(src, 300)
+
 
 /obj/effect/portal/proc/teleport(atom/movable/M, density_check = TELE_CHECK_NONE, respect_entrydir = FALSE, use_forceMove = TRUE)
 	if (istype(M, /obj/effect)) //sparks don't teleport

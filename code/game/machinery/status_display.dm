@@ -44,9 +44,11 @@
 
 /obj/machinery/status_display/atom_init()
 	. = ..()
+	status_display_list += src
 	radio_controller.add_object(src, frequency)
 
 /obj/machinery/status_display/Destroy()
+	status_display_list -= src
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
 	return ..()
@@ -221,6 +223,13 @@
 
 	var/emotion = "Neutral"
 
+/obj/machinery/ai_status_display/atom_init()
+	. = ..()
+	ai_status_display_list += src
+
+/obj/machinery/ai_status_display/Destroy()
+	ai_status_display_list -= src
+	return ..()
 
 /obj/machinery/ai_status_display/process()
 	if(stat & NOPOWER)

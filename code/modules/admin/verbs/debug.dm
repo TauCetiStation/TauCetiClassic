@@ -1866,15 +1866,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Debug Mob Lists"
 	set desc = "For when you just gotta know."
 
-	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs", "Clients", "Joined Clients"))
+	switch(input("Which list?") in list("Players","Admins","Mobs","Alive Mobs","Dead Mobs", "Clients", "Joined Clients"))
 		if("Players")
 			to_chat(usr, jointext(player_list,","))
 		if("Admins")
 			to_chat(usr, jointext(admins,","))
 		if("Mobs")
 			to_chat(usr, jointext(mob_list,","))
-		if("Living Mobs")
-			to_chat(usr, jointext(living_mob_list,","))
+		if("Alive Mobs")
+			to_chat(usr, jointext(alive_mob_list,","))
 		if("Dead Mobs")
 			to_chat(usr, jointext(dead_mob_list,","))
 		if("Clients")

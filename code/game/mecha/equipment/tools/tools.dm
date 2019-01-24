@@ -305,6 +305,14 @@
 	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
 	var/disabled = 0 //malf
 
+/obj/item/mecha_parts/mecha_equipment/tool/rcd/atom_init()
+	. = ..()
+	mecha_rcd_list += src
+
+/obj/item/mecha_parts/mecha_equipment/tool/rcd/Destroy()
+	mecha_rcd_list -= src
+	return ..()
+
 /obj/item/mecha_parts/mecha_equipment/tool/rcd/action(atom/target)
 	if(istype(target,/area/shuttle)||istype(target, /turf/space/transit))//>implying these are ever made -Sieve
 		disabled = 1

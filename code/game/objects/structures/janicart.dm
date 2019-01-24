@@ -18,6 +18,12 @@
 /obj/structure/janitorialcart/atom_init()
 	create_reagents(100)
 	. = ..()
+	janitorialcart_list += src
+
+
+/obj/structure/janitorialcart/Destroy()
+	janitorialcart_list -= src
+	return ..()
 
 /obj/structure/janitorialcart/examine(mob/user)
 	..()

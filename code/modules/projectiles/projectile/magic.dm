@@ -26,7 +26,7 @@
 /obj/item/projectile/magic/change/on_hit(atom/change)
 	wabbajack(change)
 
-/obj/item/projectile/magic/change/proc/wabbajack (mob/M in living_mob_list)
+/obj/item/projectile/magic/change/proc/wabbajack(mob/M)
 	if(istype(M, /mob/living) && M.stat != DEAD)
 		if(M.monkeyizing)	return
 		M.monkeyizing = 1
@@ -175,7 +175,7 @@
 	var/old_stat = target.stat
 	target.revive()
 	if(!target.ckey || !target.mind)
-		for(var/mob/dead/observer/ghost in dead_mob_list)
+		for(var/mob/dead/observer/ghost in observer_list)
 			if(target.mind == ghost.mind)
 				ghost.reenter_corpse()
 				break
