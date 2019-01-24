@@ -93,7 +93,7 @@
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		var/bad_effects = 0
-		if(H.species && H.species.flags[IS_SYNTHETIC])
+		if(H.species.flags[IS_SYNTHETIC])
 			return
 		if(prob(20))
 			bad_effects += 1
