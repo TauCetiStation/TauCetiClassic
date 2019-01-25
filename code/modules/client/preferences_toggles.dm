@@ -103,7 +103,7 @@
 	if(prefs.toggles & SOUND_MIDI)
 		to_chat(src, "You will now hear any sounds uploaded by admins.")
 		var/sound/break_sound = sound(null, repeat = 0, wait = 0, channel = CHANNEL_ADMIN)
-		
+
 		break_sound.priority = 250
 		src << break_sound	//breaks the client's sound output on channel CHANNEL_ADMIN
 	else
@@ -249,3 +249,16 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.save_preferences()
 	to_chat(src, "You will [(prefs.chat_toggles & CHAT_CKEY) ? "now" : "no longer"] show your ckey in LOOC and deadchat.")
 	feedback_add_details("admin_verb","SC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/verb/toggle_ambient_occlusion()
+	set name = "Toggle Ambient Occlusion"
+	set category = "Preferences"
+	set desc = "Toggle ambient occlusion."
+
+	prefs.ambientocclusion = !prefs.ambientocclusion
+	to_chat(src, "Ambient Occlusion: [prefs.ambientocclusion ? "Enabled" : "Disabled"].")
+	prefs.save_preferences()
+	if(screen && screen.len)
+		var/obj/screen/plane_master/game_world/PM = locate() in screen
+		PM.backdrop(mob)
+	feedback_add_details("admin_verb","TAC")
