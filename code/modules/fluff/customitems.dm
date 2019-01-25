@@ -36,6 +36,9 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	body_parts_covered = 0
 	species_restricted = null
 
+/obj/item/clothing/accessory/custom
+	name = "Custom accessory"
+
 
 /datum/custom_item
 	var/item_type // normal, small, lighter
@@ -173,9 +176,9 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 
 		switch(custom_item_info.item_type)
 			if("normal", "small")
-				item = new /obj/item/customitem(null)
+				item = new /obj/item/customitem()
 			if("lighter")
-				var/obj/item/weapon/lighter/zippo/custom/zippo = new /obj/item/weapon/lighter/zippo/custom(null)
+				var/obj/item/weapon/lighter/zippo/custom/zippo = new /obj/item/weapon/lighter/zippo/custom()
 				zippo.icon_on = "[custom_item_info.icon_state]_on"
 				zippo.icon_off = custom_item_info.icon_state
 				item = zippo
@@ -193,6 +196,10 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 				item = new /obj/item/clothing/gloves/custom()
 			if("shoes")
 				item = new /obj/item/clothing/shoes/custom()
+			if("accessory")
+				var/obj/item/clothing/accessory/custom/accessory = new /obj/item/clothing/accessory/custom()
+				accessory.inv_overlay = image("icon" = custom_item_info.icon, "icon_state" = "[custom_item_info.icon_state]_inv")
+				item = accessory
 
 		if(!item)
 			continue
