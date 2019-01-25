@@ -44,9 +44,11 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		lighning_stage = 2
 	else
 		lighning_stage = 3
+	icon_state = "[initial(icon_state)][lighning_stage][lit ? "_lit" : ""]"
 	if(lit)
 		item_state = "[initial(icon_state)]_lit"
-	icon_state = "[initial(icon_state)][lighning_stage][lit ? "_lit" : ""]"
+	else
+		item_state = "[initial(icon_state)]"
 
 /obj/item/candle/attackby(obj/item/weapon/W, mob/user)
 	..()
