@@ -13,7 +13,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	var/candle_color
 	w_class = 1
 
-	var/wax
+	var/wax = 0
 	var/lit = FALSE
 	light_color = LIGHT_COLOR_FIRE
 
