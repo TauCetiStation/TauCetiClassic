@@ -60,7 +60,7 @@
 #define COLOR_TITANIUM         "#d1e6e3"
 #define COLOR_DARK_GUNMETAL    "#4c535b"
 
-#define	PIPE_COLOR_GREY		"#ffffff"	//yes white is grey
+#define	PIPE_COLOR_GREY		"#ffffff"	// yes white is grey
 #define	PIPE_COLOR_RED		"#ff0000"
 #define	PIPE_COLOR_BLUE		"#0000ff"
 #define	PIPE_COLOR_CYAN		"#00ffff"
@@ -68,3 +68,7 @@
 #define	PIPE_COLOR_YELLOW	"#ffcc00"
 #define	PIPE_COLOR_BLACK	"#444444"
 #define	PIPE_COLOR_ORANGE	"#b95a00"
+
+#define LIGHT_COLOR_FIRE       "#FAA019" // Warm orange color, leaning strongly towards yellow. rgb(250, 160, 25)
+#define LIGHT_COLOR_FLARE      "#F93C2F" // Bright, non-saturated red. Leaning slightly towards pink for visibility. rgb(250, 100, 75)
+#define LIGHT_COLOR_GHOST_CANDLE      "#a2fad1" // Used by ghost candles. rgb(162, 250, 209)

@@ -279,7 +279,7 @@
 				src.icon_state = initial(src.icon_state) + "1"
 			if(prob(5))
 				remove_fuel(1)
-			light_color = "#dbe2ff"
+			light_color = LIGHT_COLOR_FIRE
 			set_light(2)
 
 		//If you're actually actively welding, use fuel faster.

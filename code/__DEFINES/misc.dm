@@ -49,9 +49,6 @@
 #define GAME_STATE_PLAYING		3
 #define GAME_STATE_FINISHED		4
 
-//Object specific defines
-#define CANDLE_LUM 3 //For how bright candles are
-
 //Security levels
 #define SEC_LEVEL_GREEN	0
 #define SEC_LEVEL_BLUE	1
