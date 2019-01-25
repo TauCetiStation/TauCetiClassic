@@ -39,6 +39,9 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 /obj/item/clothing/accessory/custom
 	name = "Custom accessory"
 
+/obj/item/clothing/suit/storage/labcoat/custom
+	name = "Custom labcoat"
+
 
 /datum/custom_item
 	var/item_type // normal, small, lighter
@@ -200,6 +203,11 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 				var/obj/item/clothing/accessory/custom/accessory = new /obj/item/clothing/accessory/custom()
 				accessory.inv_overlay = image("icon" = custom_item_info.icon, "icon_state" = "[custom_item_info.icon_state]_inv")
 				item = accessory
+			if("labcoat")
+				var/obj/item/clothing/suit/storage/labcoat/custom/labcoat = new /obj/item/clothing/suit/storage/labcoat/custom()
+				if(!("[custom_item_info.icon_state]_open" in icon_states(custom_item_info.icon)))
+					labcoat.can_button_up = FALSE
+				item = labcoat
 
 		if(!item)
 			continue
