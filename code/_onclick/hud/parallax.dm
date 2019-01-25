@@ -10,18 +10,25 @@
 	var/parallax_movedir = 0
 	var/parallax_layers_max = 3
 	var/parallax_animate_timer
+	var/parallax_theme
 
 /datum/hud/proc/create_parallax()
 	var/client/C = mymob.client
 	if (!apply_parallax_pref())
 		return
 
-	if(!length(C.parallax_layers_cached))
+	if(!length(C.parallax_layers_cached) || C.parallax_theme != C.prefs.parallax_theme)
+		C.parallax_theme = C.prefs.parallax_theme
 		C.parallax_layers_cached = list()
-		C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_1(null, C.view)
-		C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_2(null, C.view)
-		//C.parallax_layers_cached += new /obj/screen/parallax_layer/planet(null, C.view) awaiting for new planet image in replace for lavaland
-		C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_3(null, C.view)
+		switch(C.prefs.parallax_theme)
+			if(PARALLAX_THEME_CLASSIC)
+				C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_1(null, C.view)
+				C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_2(null, C.view)
+			if(PARALLAX_THEME_TG)
+				C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_1(null, C.view, 'icons/effects/parallax_tg.dmi')
+				C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_2(null, C.view, 'icons/effects/parallax_tg.dmi')
+				//C.parallax_layers_cached += new /obj/screen/parallax_layer/planet(null, C.view, 'icons/effects/parallax_tg.dmi') awaiting for new planet image in replace for lavaland
+				C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_3(null, C.view, 'icons/effects/parallax_tg.dmi')
 
 	C.parallax_layers = C.parallax_layers_cached.Copy()
 
@@ -211,7 +218,7 @@
 				AM.update_parallax_contents()
 
 /obj/screen/parallax_layer
-	icon = 'icons/effects/parallax.dmi'
+	icon = 'icons/effects/parallax_classic.dmi'
 	var/speed = 1
 	var/offset_x = 0
 	var/offset_y = 0
@@ -222,6 +229,10 @@
 	screen_loc = "CENTER-7,CENTER-7"
 	mouse_opacity = 0
 
+/obj/screen/parallax_layer/New(loc, view, _icon)
+	if(_icon)
+		icon = _icon
+	..()
 
 /obj/screen/parallax_layer/atom_init(mapload, view)
 	. = ..()
