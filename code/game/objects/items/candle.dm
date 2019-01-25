@@ -13,7 +13,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	var/candle_color
 	w_class = 1
 
-	var/wax = 800
+	var/wax = 700
 	var/lit = FALSE
 	light_color = LIGHT_COLOR_FIRE
 
@@ -22,7 +22,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 
 /obj/item/candle/atom_init()
 	. = ..()
-	wax = rand(700, 900)
+	wax = rand(600, 800)
 	if(start_lit)
 		// No visible message
 		light(show_message = FALSE)
@@ -38,9 +38,9 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 
 /obj/item/candle/update_icon()
 	var/lighning_stage
-	if(wax > 500)
+	if(wax > 450)
 		lighning_stage = 1
-	else if(wax > 250)
+	else if(wax > 200)
 		lighning_stage = 2
 	else
 		lighning_stage = 3
@@ -49,6 +49,14 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		item_state = "[initial(icon_state)]_lit"
 	else
 		item_state = "[initial(icon_state)]"
+	if(istype(loc, /mob))
+		var/mob/M = loc
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.l_hand == src)
+				M.update_inv_l_hand()
+			if(H.r_hand == src)
+				M.update_inv_r_hand()
 
 /obj/item/candle/attackby(obj/item/weapon/W, mob/user)
 	..()
