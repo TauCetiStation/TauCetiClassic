@@ -407,7 +407,7 @@
 		if (prob(1) && paralysis < 10)
 			to_chat(src, "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
-	if (disabilities & COUGHING)
+	if (disabilities & COUGHING || has_trait(TRAIT_COUGH))
 		if (prob(5) && paralysis <= 1)
 			drop_item()
 			emote("cough")

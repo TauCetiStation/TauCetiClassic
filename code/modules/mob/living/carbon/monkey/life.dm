@@ -87,7 +87,7 @@
 			if ((prob(1) && paralysis < 10))
 				to_chat(src, "\red You have a seizure!")
 				Paralyse(10)
-		if (disabilities & COUGHING)
+		if (disabilities & COUGHING || has_trait(TRAIT_COUGH))
 			if ((prob(5) && paralysis <= 1))
 				drop_item()
 				spawn( 0 )

@@ -1,5 +1,6 @@
 //mob traits
 #define TRAIT_BLIND               "blind"
+#define TRAIT_COUGH               "cough"
 #define TRAIT_DEAF                "deaf"
 #define TRAIT_FAT                 "fatness"
 #define TRAIT_NEARSIGHT           "nearsighted"

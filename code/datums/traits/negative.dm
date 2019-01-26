@@ -51,3 +51,11 @@
 		H.put_in_hands(G)
 
 
+
+/datum/quirk/cough
+	name = "Coughing"
+	desc = "You have incurable coughing fit."
+	value = -1
+	mob_trait = TRAIT_COUGH
+	gain_text = "<span class='danger'>You can't stop coughing!</span>"
+	lose_text = "<span class='notice'>You feel relief again, as cough stops bothering you.</span>"

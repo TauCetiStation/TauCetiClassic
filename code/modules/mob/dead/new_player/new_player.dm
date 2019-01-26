@@ -431,10 +431,6 @@
 		new_character.dna.SetSEState(EPILEPSYBLOCK,1,1)
 		new_character.disabilities |= EPILEPSY
 
-	if(client.prefs.disabilities & DISABILITY_COUGHING)
-		new_character.dna.SetSEState(COUGHBLOCK,1,1)
-		new_character.disabilities |= COUGHING
-
 	if(client.prefs.disabilities & DISABILITY_TOURETTES)
 		new_character.dna.SetSEState(TWITCHBLOCK,1,1)
 		new_character.disabilities |= TOURETTES

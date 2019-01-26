@@ -338,8 +338,6 @@ var/const/MAX_SAVE_SLOTS = 10
 	//Disabilities
 	if(disabilities & DISABILITY_EPILEPTIC)
 		character.disabilities|=EPILEPSY
-	if(disabilities & DISABILITY_COUGHING)
-		character.disabilities|=COUGHING
 	if(disabilities & DISABILITY_TOURETTES)
 		character.disabilities|=TOURETTES
 	if(disabilities & DISABILITY_NERVOUS)

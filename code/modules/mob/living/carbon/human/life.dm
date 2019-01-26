@@ -171,7 +171,7 @@
 				O.show_message(text("\red <B>[src] starts having a seizure!"), 1)
 			Paralyse(10)
 			make_jittery(1000)
-	if (disabilities & COUGHING)
+	if (disabilities & COUGHING || has_trait(TRAIT_COUGH))
 		if ((prob(5) && paralysis <= 1))
 			drop_item()
 			spawn( 0 )
