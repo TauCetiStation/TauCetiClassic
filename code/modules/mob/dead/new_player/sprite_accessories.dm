@@ -844,14 +844,14 @@
 //	icon_state = "hair_twincurl"
 //	gender = FEMALE
 
-//datum/sprite_accessory/hair/quadcurls
-//	name = "Quadcurls"
-//	icon_state = "hair_quadcurls"
-//	gender = FEMALE
-
 //datum/sprite_accessory/hair/rapunzel
 //	name = "Rapunzel"
 //	icon_state = "hair_rapunzel"
+//	gender = FEMALE
+
+//datum/sprite_accessory/hair/quadcurls
+//	name = "Quadcurls"
+//	icon_state = "hair_quadcurls"
 //	gender = FEMALE
 
 //datum/sprite_accessory/hair/twincurl2
