@@ -71,10 +71,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 20)
 		var/DISABILITY_NEARSIGHTED = 1
 		var/DISABILITY_COUGHING = 2
+		var/DISABILITY_EPILEPTIC = 4
 		var/DISABILITY_FATNESS = 32
 
-		if(disabilities & (DISABILITY_NEARSIGHTED | DISABILITY_FATNESS | DISABILITY_COUGHING))
-			disabilities &= ~(DISABILITY_NEARSIGHTED | DISABILITY_FATNESS | DISABILITY_COUGHING)
+		if(disabilities & (DISABILITY_NEARSIGHTED | DISABILITY_FATNESS | DISABILITY_COUGHING | DISABILITY_EPILEPTIC))
+			disabilities &= ~(DISABILITY_NEARSIGHTED | DISABILITY_FATNESS | DISABILITY_COUGHING | DISABILITY_EPILEPTIC)
 			S["disabilities"] << disabilities
 
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")

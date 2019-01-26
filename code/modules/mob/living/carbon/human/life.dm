@@ -162,7 +162,7 @@
 		return ONE_ATMOSPHERE - pressure_difference
 
 /mob/living/carbon/human/proc/handle_disabilities()
-	if (disabilities & EPILEPSY)
+	if (disabilities & EPILEPSY || has_trait(TRAIT_EPILEPSY))
 		if ((prob(1) && paralysis < 1))
 			to_chat(src, "\red You have a seizure!")
 			for(var/mob/O in viewers(src, null))

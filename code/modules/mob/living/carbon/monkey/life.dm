@@ -83,7 +83,7 @@
 
 	proc/handle_disabilities()
 
-		if (disabilities & EPILEPSY)
+		if (disabilities & EPILEPSY || has_trait(TRAIT_EPILEPSY))
 			if ((prob(1) && paralysis < 10))
 				to_chat(src, "\red You have a seizure!")
 				Paralyse(10)

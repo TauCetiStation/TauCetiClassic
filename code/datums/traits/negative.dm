@@ -16,6 +16,16 @@
 
 
 
+/datum/quirk/cough
+	name = "Coughing"
+	desc = "You have incurable coughing fit."
+	value = -1
+	mob_trait = TRAIT_COUGH
+	gain_text = "<span class='danger'>You can't stop coughing!</span>"
+	lose_text = "<span class='notice'>You feel relief again, as cough stops bothering you.</span>"
+
+
+
 /datum/quirk/deafness
 	name = "Deaf"
 	desc = "You are incurably deaf."
@@ -23,6 +33,16 @@
 	mob_trait = TRAIT_DEAF
 	gain_text = "<span class='danger'>You can't hear anything.</span>"
 	lose_text = "<span class='notice'>You're able to hear again!</span>"
+
+
+
+/datum/quirk/epileptic
+	name = "Seizures"
+	desc = "You have incurable seizures."
+	value = -1
+	mob_trait = TRAIT_EPILEPSY
+	gain_text = "<span class='danger'>You start having a seizures!</span>"
+	lose_text = "<span class='notice'>You feel relief again, as seizures stops bothering you.</span>"
 
 
 
@@ -51,11 +71,3 @@
 		H.put_in_hands(G)
 
 
-
-/datum/quirk/cough
-	name = "Coughing"
-	desc = "You have incurable coughing fit."
-	value = -1
-	mob_trait = TRAIT_COUGH
-	gain_text = "<span class='danger'>You can't stop coughing!</span>"
-	lose_text = "<span class='notice'>You feel relief again, as cough stops bothering you.</span>"
