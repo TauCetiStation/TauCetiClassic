@@ -81,3 +81,11 @@
 		H.put_in_hands(G)
 
 
+
+/datum/quirk/nervous
+	name = "Nervous"
+	desc = "You are always nervous."
+	value = -1
+	mob_trait = TRAIT_NERVOUS
+	gain_text = "<span class='danger'>You feel nervous!</span>"
+	lose_text = "<span class='notice'>You feel less yourself less nervous.</span>"

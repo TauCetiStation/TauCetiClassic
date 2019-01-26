@@ -99,7 +99,7 @@
 				spawn( 0 )
 					emote("twitch")
 					return
-		if (disabilities & NERVOUS)
+		if (disabilities & NERVOUS || has_trait(TRAIT_NERVOUS))
 			if (prob(10))
 				stuttering = max(10, stuttering)
 

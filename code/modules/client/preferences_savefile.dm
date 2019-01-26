@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 20
+#define SAVEFILE_VERSION_MAX 21
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -68,16 +68,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				language = "None"
 				S["language"] << language
 
-	if(current_version < 20)
-		var/DISABILITY_NEARSIGHTED = 1
-		var/DISABILITY_COUGHING = 2
-		var/DISABILITY_EPILEPTIC = 4
-		var/DISABILITY_TOURETTES = 8
-		var/DISABILITY_FATNESS = 32
-
-		if(disabilities & (DISABILITY_NEARSIGHTED | DISABILITY_FATNESS | DISABILITY_COUGHING | DISABILITY_EPILEPTIC | DISABILITY_TOURETTES))
-			disabilities &= ~(DISABILITY_NEARSIGHTED | DISABILITY_FATNESS | DISABILITY_COUGHING | DISABILITY_EPILEPTIC | DISABILITY_TOURETTES)
-			S["disabilities"] << disabilities
+	if(current_version < 21)
+		S["disabilities"] << null
 
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
@@ -235,7 +227,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["sec_record"]			>> sec_record
 	S["gen_record"]			>> gen_record
 	S["be_role"]			>> be_role
-	S["disabilities"]		>> disabilities
 	S["player_alt_titles"]	>> player_alt_titles
 	S["organ_data"]			>> organ_data
 	S["gear"]				>> gear
@@ -304,7 +295,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	negative_quirks = SANITIZE_LIST(negative_quirks)
 	neutral_quirks = SANITIZE_LIST(neutral_quirks)
 
-	if(isnull(disabilities)) disabilities = 0
 	if(!player_alt_titles) player_alt_titles = new()
 	if(!organ_data) src.organ_data = list()
 	if(!be_role) src.be_role = list()
@@ -422,7 +412,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["gen_record"]			<< gen_record
 	S["player_alt_titles"]		<< player_alt_titles
 	S["be_role"]			<< be_role
-	S["disabilities"]		<< disabilities
 	S["organ_data"]			<< organ_data
 	S["gear"]				<< gear
 

@@ -415,7 +415,7 @@
 		if (prob(10) && paralysis <= 1)
 			Stun(10)
 			emote("twitch")
-	if (disabilities & NERVOUS)
+	if (disabilities & NERVOUS || has_trait(TRAIT_NERVOUS))
 		if (prob(10))
 			stuttering = max(10, stuttering)
 

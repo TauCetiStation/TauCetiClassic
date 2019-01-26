@@ -421,18 +421,8 @@
 	new_character.name = real_name
 	new_character.dna.ready_dna(new_character)
 	new_character.dna.b_type = client.prefs.b_type
-
-/*	if(client.prefs.disabilities)
-		// Set defer to 1 if you add more crap here so it only recalculates struc_enzymes once. - N3X
-		new_character.dna.SetSEState(GLASSESBLOCK,1,0)
-		new_character.disabilities |= NEARSIGHTED */
-
-	if(client.prefs.disabilities & DISABILITY_NERVOUS)
-		new_character.dna.SetSEState(NERVOUSBLOCK,1,1)
-		new_character.disabilities |= NERVOUS
-
-	// And uncomment this, too.
 	new_character.dna.UpdateSE()
+
 	if(key)
 		new_character.key = key		//Manually transfer the key to log them in
 

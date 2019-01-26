@@ -1,7 +1,3 @@
-// String identifiers for associative list lookup
-//Disabilities flags for character setup
-#define DISABILITY_NERVOUS			16
-
 // mob/var/list/mutations
 //"#49e46e
 #define STRUCDNASIZE 27

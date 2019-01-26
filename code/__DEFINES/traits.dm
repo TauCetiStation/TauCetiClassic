@@ -6,6 +6,7 @@
 #define TRAIT_FAT                 "fatness"
 #define TRAIT_TOURETTE            "tourette"
 #define TRAIT_NEARSIGHT           "nearsighted"
+#define TRAIT_NERVOUS             "nervous"
 
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention

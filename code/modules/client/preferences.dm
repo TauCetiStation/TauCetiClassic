@@ -110,7 +110,6 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/med_record = ""
 	var/sec_record = ""
 	var/gen_record = ""
-	var/disabilities = 0
 
 	// Quirk list
 	var/list/positive_quirks = list()
@@ -333,12 +332,6 @@ var/const/MAX_SAVE_SLOTS = 10
 			IO.mechanize()
 
 		else continue
-
-
-	//Disabilities
-	if(disabilities & DISABILITY_NERVOUS)
-		character.disabilities|=NERVOUS
-
 
 	// Wheelchair necessary?
 	var/obj/item/organ/external/l_leg = character.bodyparts_by_name[BP_L_LEG]

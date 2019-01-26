@@ -195,7 +195,7 @@
 				pixel_x = old_x
 				pixel_y = old_y
 				return
-	if (disabilities & NERVOUS)
+	if (disabilities & NERVOUS || has_trait(TRAIT_NERVOUS))
 		speech_problem_flag = 1
 		if (prob(10))
 			stuttering = max(10, stuttering)
