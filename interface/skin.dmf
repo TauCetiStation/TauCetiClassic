@@ -495,7 +495,7 @@ menu "menu"
 		is-disabled = false
 		saved-params = "is-checked"
 	elem "stretch"
-		name = "&Stretch to fit"
+		name = "&Auto (Stretch to fit)"
 		command = ".winset \"mapwindow.map.icon-size=0\""
 		category = "&Icons"
 		is-checked = true
@@ -513,7 +513,7 @@ menu "menu"
 		is-disabled = false
 		saved-params = "is-checked"
 	elem "icon32"
-		name = "&32x32"
+		name = "&32x32 (1x)"
 		command = ".winset \"mapwindow.map.icon-size=32\""
 		category = "&Icons"
 		is-checked = false
@@ -537,6 +537,42 @@ menu "menu"
 		is-checked = false
 		can-check = true
 		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem
+		name = "&Scaling Mode"
+		command = ""
+		category = ""
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem "nn"
+		name = "&Nearest Neighbor"
+		command = ".winset \"mapwindow.map.zoom-mode=distort\""
+		category = "&Scaling Mode"
+		is-checked = true
+		can-check = true
+		group = "scaling"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem "ps"
+		name = "&Point Sampling"
+		command = ".winset \"mapwindow.map.zoom-mode=normal\""
+		category = "&Scaling Mode"
+		is-checked = false
+		can-check = true
+		group = "scaling"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem "bl"
+		name = "&Bilinear"
+		command = ".winset \"mapwindow.map.zoom-mode=blur\""
+		category = "&Scaling Mode"
+		is-checked = false
+		can-check = true
+		group = "scaling"
 		is-disabled = false
 		saved-params = "is-checked"
 	elem
@@ -1204,6 +1240,7 @@ window "mapwindow"
 		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
 		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
 		style = ""
+		zoom-mode = distort
 
 window "outputwindow"
 	elem "outputwindow"
