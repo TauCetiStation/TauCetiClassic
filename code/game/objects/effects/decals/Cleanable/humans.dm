@@ -53,7 +53,7 @@ var/global/list/image/splatter_cache=list()
 	color = basedatum.color
 
 /obj/effect/decal/cleanable/blood/Crossed(mob/living/carbon/perp)
-	if(!istype(perp) || perp.has_trait(TRAIT_LIGHT_STEP))
+	if(!istype(perp))
 		return
 	if(amount < 1)
 		return

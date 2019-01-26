@@ -47,10 +47,6 @@
 /obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver. or wizards
 	if(M.mind.special_role == "Wizard")
 		return FALSE
-	if(chambered && M.has_trait(TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
-		if(chambered.harmful) // Is the bullet chambered harmful?
-			to_chat(M, "<span class='notice'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
-			return FALSE
 	return TRUE
 
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user)

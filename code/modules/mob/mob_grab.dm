@@ -245,9 +245,6 @@
 		if(isslime(affecting))
 			to_chat(assailant, "<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>")
 			return
-		if(assailant.has_trait(TRAIT_PACIFISM))
-			to_chat(assailant, "<span class='notice'>You don't want to risk hurting [affecting]!</span>")
-			return FALSE
 
 		assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
 		state = GRAB_NECK

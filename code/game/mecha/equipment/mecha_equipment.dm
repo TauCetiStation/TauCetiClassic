@@ -15,7 +15,6 @@
 	var/range = MELEE //bitflags
 	reliability = 1000
 	var/salvageable = 1
-	var/harmful = FALSE //Controls if equipment can be used to attack by a pacifist.
 
 
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(target=1)

@@ -91,8 +91,6 @@
 		adjusted_climb_time *= 2
 	if(isalien(user))
 		adjusted_climb_time *= 0.25 //aliens are terrifyingly fast
-	if(user.has_trait(TRAIT_FREERUNNING)) //do you have any idea how fast I am???
-		adjusted_climb_time *= 0.8
 
 	if(!do_after(user, adjusted_climb_time, target = user))
 		climbers -= user

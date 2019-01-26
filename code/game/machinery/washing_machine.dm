@@ -231,9 +231,6 @@
 		if( (state == 1) && hacked)
 			var/obj/item/weapon/grab/G = W
 			if(ishuman(G.assailant) && iscorgi(G.affecting))
-				if(user.has_trait(TRAIT_PACIFISM))
-					to_chat(user, "<span class='notice'>You don't want to hurt anyone!</span>")
-					return
 				G.affecting.loc = src
 				qdel(G)
 				state = 3

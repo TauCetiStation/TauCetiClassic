@@ -955,12 +955,6 @@ var/list/airlock_overlays = list()
 				else
 					spawn(0)	open(1)
 			else
-				if(!safe && user.has_trait(TRAIT_PACIFISM))
-					for(var/turf/T in locs)
-						for(var/mob/living/M in T)
-							if(!issilicon(M))
-								to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
-								return
 				if(beingcrowbarred == 0)
 					var/obj/item/weapon/twohanded/fireaxe/F = C
 					if(F:wielded)

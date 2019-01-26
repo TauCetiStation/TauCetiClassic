@@ -271,12 +271,9 @@ proc/listclearnulls(list/list)
 
 
 
-//Mergesort: any value in a list
-/proc/sortList(list/L)
-	if(L.len < 2)
-		return L
-	var/middle = L.len / 2 + 1 // Copy is first,second-1
-	return mergeLists(sortList(L.Copy(0,middle)), sortList(L.Copy(middle))) //second parameter null = to end of list
+//any value in a list
+/proc/sortList(list/L, cmp=/proc/cmp_text_asc)
+	return sortTim(L.Copy(), cmp)
 
 //Mergsorge: uses sortList() but uses the var's name specifically. This should probably be using mergeAtom() instead
 /proc/sortNames(list/L)

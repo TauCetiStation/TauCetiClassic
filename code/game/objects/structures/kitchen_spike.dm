@@ -49,9 +49,6 @@
 		else
 			to_chat(user, "<span class='notice'>You can't do that while something's on the spike!</span>")
 	else if(istype(I, /obj/item/weapon/grab))
-		if(user.has_trait(TRAIT_PACIFISM))
-			to_chat(user, "<span class='notice'>You don't want to hurt anyone!</span>")
-			return
 		var/obj/item/weapon/grab/G = I
 		if(istype(G.affecting, /mob/living))
 			if(!buckled_mob)

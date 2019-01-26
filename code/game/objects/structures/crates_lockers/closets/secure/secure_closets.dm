@@ -28,13 +28,6 @@
 	else
 		return 0
 
-/obj/structure/closet/secure_closet/examine(mob/user)
-	..()
-	if(isliving(user))
-		var/mob/living/L = user
-		if(L.has_trait(TRAIT_SKITTISH))
-			to_chat(user, "<span class='notice'>Ctrl-Shift-click [src] to jump inside.</span>")
-
 /obj/structure/closet/secure_closet/emp_act(severity)
 	for(var/obj/O in src)
 		O.emp_act(severity)
@@ -57,7 +50,7 @@
 	if(src.broken)
 		to_chat(user, "<span class='warning'>The locker appears to be broken.</span>")
 		return
-	if(!user.has_trait(TRAIT_SKITTISH) && user.loc == src)
+	if(user.loc == src)
 		to_chat(user, "<span class='notice'>You can't reach the lock from inside.</span>")
 		return
 	if(src.allowed(user))
@@ -140,31 +133,3 @@
 			overlays += "welded"
 	else
 		icon_state = icon_opened
-
-/obj/structure/closet/secure_closet/CtrlShiftClick(mob/living/user)
-	if(!user.has_trait(TRAIT_SKITTISH))
-		return ..()
-	if(!CanUseTopic(user) || !isturf(user.loc))
-		return
-	dive_into(user)
-
-/obj/structure/closet/secure_closet/proc/dive_into(mob/living/user)
-	var/turf/T1 = get_turf(user)
-	var/turf/T2 = get_turf(src)
-	if(!opened)
-		if(locked)
-			togglelock(user, TRUE)
-		if(!open(user))
-			to_chat(user, "<span class='warning'>It won't budge!</span>")
-			return
-	step_towards(user, T2)
-	T1 = get_turf(user)
-	if(T1 == T2)
-		user.resting = TRUE //so people can jump into crates without slamming the lid on their head
-		if(!close(user))
-			to_chat(user, "<span class='warning'>You can't get [src] to close!</span>")
-			user.resting = FALSE
-			return
-		user.resting = FALSE
-		togglelock(user)
-		T1.visible_message("<span class='warning'>[user] dives into [src]!</span>")

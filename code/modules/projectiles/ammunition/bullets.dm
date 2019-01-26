@@ -70,7 +70,6 @@
 	icon_state = "bshell"
 	projectile_type = "/obj/item/projectile/bullet/weakbullet/beanbag"
 	m_amt = 500
-	harmful = FALSE
 
 /obj/item/ammo_casing/shotgun/stunslug
 	name = "stun shell"

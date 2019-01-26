@@ -370,9 +370,6 @@
 			user.SetNextMove(CLICK_CD_MELEE)
 			if (G.state < GRAB_AGGRESSIVE)
 				if(user.a_intent == "hurt")
-					if(user.has_trait(TRAIT_PACIFISM))
-						to_chat(user, "<span class='notice'>You don't want to hurt anyone!</span>")
-						return
 					slam(A, M, G)
 				else
 					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")

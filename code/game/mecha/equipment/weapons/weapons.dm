@@ -76,7 +76,6 @@
 	energy_drain = 30
 	projectile = /obj/item/projectile/beam
 	fire_sound = 'sound/weapons/Laser.ogg'
-	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
 	equip_cooldown = 15
@@ -103,7 +102,6 @@
 	origin_tech = "materials=3;combat=6;powerstorage=4"
 	projectile = /obj/item/projectile/beam/pulse/heavy
 	fire_sound = 'sound/weapons/marauder.ogg'
-	harmful = TRUE
 
 
 /obj/item/projectile/beam/pulse/heavy
@@ -212,7 +210,6 @@
 	fire_sound = 'sound/weapons/Gunshot.ogg'
 	projectiles = 24
 	projectile_energy_cost = 15
-	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
 	name = "LBX AC 10 \"Scattershot\""
@@ -225,7 +222,6 @@
 	projectiles_per_shot = 4
 	deviation = 0.7
 	projectile_energy_cost = 25
-	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
 	name = "Ultra AC 2"
@@ -238,11 +234,8 @@
 	deviation = 0.3
 	projectile_energy_cost = 20
 	fire_cooldown = 2
-	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
-	harmful = TRUE
-
 	var/missile_speed = 2
 	var/missile_range = 30
 
@@ -286,7 +279,6 @@
 	missile_speed = 1.5
 	projectile_energy_cost = 800
 	equip_cooldown = 60
-	harmful = FALSE
 	var/det_time = 20
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/Fire(atom/movable/AM, atom/target, turf/aimloc)
@@ -313,7 +305,6 @@
 	missile_speed = 1.5
 	projectile_energy_cost = 100
 	equip_cooldown = 20
-	harmful = FALSE
 
 	can_attach(obj/mecha/combat/honker/M)
 		if(!istype(M))

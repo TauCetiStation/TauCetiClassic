@@ -60,16 +60,11 @@
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
 	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
 		var/can_switch = TRUE
-
-		if(M.has_trait(TRAIT_NOMOBSWAP) || has_trait(TRAIT_NOMOBSWAP))
-			can_switch = FALSE
-		else
-			var/turf/T = get_turf(src)
-			for(var/atom/A in T.contents - src)
-				if(A.density)
-					can_switch = FALSE
-					break
-
+		var/turf/T = get_turf(src)
+		for(var/atom/A in T.contents - src)
+			if(A.density)
+				can_switch = FALSE
+				break
 		if(can_switch && get_dist(M, src) <= 1)
 			now_pushing = 1
 			//TODO: Make this use Move(). we're pretty much recreating it here.
@@ -328,11 +323,6 @@
 	if(status_flags & GODMODE)
 		return
 	halloss = Clamp(amount, 0, maxHealth * 2)
-
-
-// ========= NUTRITION =========
-/mob/living/proc/adjustNutritionLoss(amount)
-	nutrition = max(nutrition - amount, 0)
 
 // ============================================================
 
@@ -643,13 +633,6 @@
 		if(pulling && pulling.anchored)
 			stop_pulling()
 			return
-
-		if(has_trait(TRAIT_PACIFISM) && isliving(pulling))
-			var/mob/living/M = pulling
-			if(M.pull_damage())
-				stop_pulling()
-				to_chat(src, "<span class='notice'>You don't want to risk hurting [M]!</span>")
-				return
 
 		if (!restrained())
 			var/diag = get_dir(src, pulling)

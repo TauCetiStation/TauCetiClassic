@@ -56,10 +56,6 @@ This is what happens, when we attack aliens.
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
 		if ("hurt")
-			if(M.has_trait(TRAIT_PACIFISM))
-				to_chat(M, "<span class='warning'>You don't want to harm [src]!</span>")
-				return
-
 			var/damage = rand(1, 9)
 			if (prob(90))
 				if (HULK in M.mutations)//HULK SMASH

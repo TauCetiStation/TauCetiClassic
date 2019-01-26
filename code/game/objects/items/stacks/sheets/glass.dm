@@ -333,7 +333,7 @@
 	return ..()
 
 /obj/item/weapon/shard/Crossed(atom/movable/AM)
-	if(ismob(AM) && !AM.has_trait(TRAIT_LIGHT_STEP))
+	if(ismob(AM))
 		var/mob/M = AM
 		to_chat(M, "\red <B>You step in the broken glass!</B>")
 		playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)

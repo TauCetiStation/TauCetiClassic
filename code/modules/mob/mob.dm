@@ -502,14 +502,6 @@
 				return
 			stop_pulling()
 
-		if(ishuman(AM))
-			var/mob/living/carbon/human/H = AM
-			if(H.pull_damage())
-				to_chat(src, "<span class='danger'>Pulling \the [H] in their current condition would probably be a bad idea.</span>")
-				if(has_trait(TRAIT_PACIFISM))
-					to_chat(src, "<span class='notice'>You don't want to risk hurting [H]!</span>")
-					return
-
 		src.pulling = AM
 		AM.pulledby = src
 		if(pullin)
@@ -523,6 +515,11 @@
 
 		src.pulling = AM
 		AM.pulledby = src
+
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if(H.pull_damage())
+				to_chat(src, "<span class='danger'>Pulling \the [H] in their current condition would probably be a bad idea.</span>")
 
 		count_pull_debuff()
 

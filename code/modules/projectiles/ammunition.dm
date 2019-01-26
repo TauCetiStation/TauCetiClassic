@@ -13,7 +13,6 @@
 	var/obj/item/projectile/BB = null 			//The loaded bullet
 	var/pellets = 0								//Pellets for spreadshot
 	var/variance = 0							//Variance for inaccuracy fundamental to the casing
-	var/harmful = TRUE //pacifism check for boolet, set to FALSE if bullet is non-lethal
 
 /obj/item/ammo_casing/atom_init()
 	. = ..()

@@ -27,8 +27,7 @@ var/datum/subsystem/quirks/SSquirks
 		SetupQuirks()
 
 	quirk_blacklist = list(
-		list("Vrolik Syndrome","Prosthetic Limb"),
-		list("Alcohol Tolerance","Light Drinker")
+		list("Blind", "Nearsighted")
 		)
 
 	quirk_blacklist_species = list(
