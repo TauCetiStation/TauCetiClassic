@@ -14,7 +14,6 @@
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
 	diary = file("data/logs/[date_string].log")
 	diary << "[log_end]\n[log_end]\nStarting up. [time2text(world.timeofday, "hh:mm.ss")][log_end]\n---------------------[log_end]"
-	changelog_hash = md5('html/changelog.html')
 
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND"
@@ -26,6 +25,7 @@
 	load_mode()
 	load_last_mode()
 	load_motd()
+	load_test_merge()
 	load_admins()
 	load_mentors()
 	if(config.allow_donators)
@@ -36,6 +36,9 @@
 		load_whitelistSQL()
 	LoadBans()
 	investigate_reset()
+
+	spawn
+		changelog_hash = trim(get_webpage(config.changelog_hash_link))
 
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)
 		// dumb and hardcoded but I don't care~
@@ -74,8 +77,6 @@
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
 
 	. = ..()
-
-	sleep_offline = 1
 
 	spawn(3000)		//so we aren't adding to the round-start lag
 		if(config.kick_inactive)
@@ -301,6 +302,13 @@ var/world_topic_spam_protect_time = world.timeofday
 
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
+
+/world/proc/load_test_merge()
+	if(fexists("test_merge.txt"))
+		join_test_merge = "<strong>Test merged PRs:</strong> "
+		var/list/prs = splittext(trim(file2text("test_merge.txt")), " ")
+		for(var/pr in prs)
+			join_test_merge += "<a href='[config.repository_link]/pull/[pr]'>#[pr]</a> "
 
 /world/proc/load_donators()
 	var/L = file2list("config/donators.txt")

@@ -87,7 +87,7 @@ Implants;
 ///Checks to see if the game can be setup and ran with the current number of players or whatnot.
 /datum/game_mode/proc/can_start()
 	var/playerC = 0
-	for(var/mob/dead/new_player/player in player_list)
+	for(var/mob/dead/new_player/player in new_player_list)
 		if(player.client && player.ready)
 			playerC++
 
@@ -273,7 +273,7 @@ Implants;
 			else
 				intercepttext += "<b>[M.name]</b>, the <b>[M.mind.assigned_role]</b> <br>"
 
-	for (var/obj/machinery/computer/communications/comm in machines)
+	for (var/obj/machinery/computer/communications/comm in communications_list)
 		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
 			intercept.name = "Cent. Com. Status Summary"
@@ -296,7 +296,7 @@ Implants;
 	var/list/candidates = list()
 
 	// Assemble a list of active players without jobbans.
-	for(var/mob/dead/new_player/player in player_list)
+	for(var/mob/dead/new_player/player in new_player_list)
 		if(player.client && player.ready)
 			if(role in player.client.prefs.be_role)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role) && !role_available_in_minutes(player, role))
@@ -335,7 +335,7 @@ Implants;
 
 /datum/game_mode/proc/num_players()
 	. = 0
-	for(var/mob/dead/new_player/P in player_list)
+	for(var/mob/dead/new_player/P in new_player_list)
 		if(P.client && P.ready)
 			. ++
 
@@ -345,8 +345,8 @@ Implants;
 ///////////////////////////////////
 /datum/game_mode/proc/get_living_heads()
 	var/list/heads = list()
-	for(var/mob/living/carbon/human/player in mob_list)
-		if(player.stat!=2 && player.mind && (player.mind.assigned_role in command_positions))
+	for(var/mob/living/carbon/human/player in human_list)
+		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in command_positions))
 			heads += player.mind
 	return heads
 
@@ -372,7 +372,7 @@ Implants;
 //////////////////////////
 proc/display_roundstart_logout_report()
 	var/msg = "\blue <b>Roundstart logout report\n\n"
-	for(var/mob/living/L in mob_list)
+	for(var/mob/living/L in living_list)
 
 		if(L.ckey)
 			var/found = 0
@@ -400,7 +400,7 @@ proc/display_roundstart_logout_report()
 					continue //Dead
 
 			continue //Happy connected client
-		for(var/mob/dead/observer/D in mob_list)
+		for(var/mob/dead/observer/D in observer_list)
 			if(D.mind && (D.mind.original == L || D.mind.current == L))
 				if(L.stat == DEAD)
 					if(L.suiciding)	//Suicider
@@ -419,14 +419,14 @@ proc/display_roundstart_logout_report()
 
 
 
-	for(var/mob/M in mob_list)
-		if(M.client && M.client.holder)
+	for(var/client/M in admins)
+		if(M.holder)
 			to_chat(M, msg)
 
 
 proc/get_nt_opposed()
 	var/list/dudes = list()
-	for(var/mob/living/carbon/human/man in player_list)
+	for(var/mob/living/carbon/human/man in human_list)
 		if(man.client)
 			if(man.client.prefs.nanotrasen_relation == "Opposed")
 				dudes += man

@@ -381,11 +381,11 @@
 			feedback_set_details("round_end_result","loss - rev heads killed")
 			completion_text += "<br><FONT size = 3, color='red'><B>The heads of staff managed to stop the revolution!</B></FONT>"
 	var/num_revs = 0
-	for(var/mob/living/carbon/mob in living_mob_list)
+	for(var/mob/living/carbon/mob in alive_mob_list)
 		if(mob.mind)
 			if(mob.mind in head_revolutionaries || mob.mind in revolutionaries)
 				num_revs++
-	completion_text += "<BR>[TAB]Command's Approval Rating: <B>[100 - round((num_revs/living_mob_list.len)*100, 0.1)]%</B>" // % of loyal crew
+	completion_text += "<BR>[TAB]Command's Approval Rating: <B>[100 - round((num_revs/alive_mob_list.len)*100, 0.1)]%</B>" // % of loyal crew
 	..()
 	return 1
 

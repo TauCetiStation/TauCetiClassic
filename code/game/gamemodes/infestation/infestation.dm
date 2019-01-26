@@ -108,27 +108,26 @@ Infestation:
 
 /datum/game_mode/proc/check_xeno_queen()
 	var/state = 0 // 0 = no queen
-	for(var/mob/living/carbon/alien/humanoid/queen/alive in living_mob_list)
-		if(alive)
-			state = 1
-	if(!state)
-		for(var/mob/living/carbon/alien/humanoid/queen/dead in dead_mob_list)
-			if(dead)
-				state = 2
+	for(var/mob/living/carbon/alien/humanoid/queen/Q in queen_list)
+		if(Q.stat != DEAD)
+			return 1
+		state = 2
 	return state
 
 /datum/game_mode/proc/count_hive_power()
 	var/count = 0
-	for(var/mob/living/carbon/alien/alive in living_mob_list)
-		if(alive)
-			count++
+	for(var/mob/living/carbon/alien/A in alien_list)
+		if(A.stat == DEAD)
+			continue
+		count++
 	return count
 
 /datum/game_mode/proc/count_hive_looses()
 	var/count = 0
-	for(var/mob/living/carbon/alien/dead in dead_mob_list)
-		if(dead)
-			count++
+	for(var/mob/living/carbon/alien/A in alien_list)
+		if(A.stat != DEAD)
+			continue
+		count++
 	return count
 
 /datum/game_mode/proc/auto_declare_completion_infestation()

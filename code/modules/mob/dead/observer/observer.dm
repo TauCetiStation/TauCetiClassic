@@ -86,7 +86,10 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	. = ..()
 
+	observer_list += src
+
 /mob/dead/observer/Destroy()
+	observer_list -= src
 	if (ghostimage)
 		ghost_darkness_images -= ghostimage
 		qdel(ghostimage)
@@ -535,7 +538,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	var/mob/living/carbon/ian/phoron_dog
-	for(var/mob/living/carbon/ian/IAN in living_mob_list) // Incase there is multi_ians, what should NOT ever happen normally!
+	for(var/mob/living/carbon/ian/IAN in alive_mob_list) // Incase there is multi_ians, what should NOT ever happen normally!
 		if(IAN.mind) // Mind means someone was or is in a body.
 			continue
 		phoron_dog = IAN

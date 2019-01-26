@@ -135,7 +135,7 @@
 		if(user)
 			to_chat(user, "\blue The connected wire doesn't have enough current.")
 		return 1
-	for(var/obj/singularity/singulo in world)
+	for(var/obj/singularity/singulo in poi_list)
 		if(singulo.z == z)
 			singulo.target = src
 	icon_state = "[icontype]1"
@@ -145,7 +145,7 @@
 
 
 /obj/machinery/singularity_beacon/proc/Deactivate(mob/user = null)
-	for(var/obj/singularity/singulo in world)
+	for(var/obj/singularity/singulo in poi_list)
 		if(singulo.target == src)
 			singulo.target = null
 	icon_state = "[icontype]0"

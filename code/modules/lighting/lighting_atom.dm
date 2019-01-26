@@ -99,3 +99,9 @@ var/mob/dview/dview_mob = new
 	simulated = 0
 
 	see_in_dark = 1e6
+
+/mob/dview/atom_init() // Properly prevents this mob from gaining huds or joining any global lists
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
+	return INITIALIZE_HINT_NORMAL

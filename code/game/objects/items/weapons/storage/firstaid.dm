@@ -113,6 +113,7 @@
 	icon_state = "pill_canister"
 	icon = 'icons/obj/chemical.dmi'
 	item_state = "contsolid"
+	flags = NOBLUDGEON
 	w_class = ITEM_SIZE_SMALL
 	max_storage_space = 21
 	can_hold = list("/obj/item/weapon/reagent_containers/pill","/obj/item/weapon/dice","/obj/item/weapon/paper")

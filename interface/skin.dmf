@@ -1256,7 +1256,7 @@ window "outputwindow"
 		font-style = ""
 		text-color = #000000
 		background-color = #ffffff
-		is-visible = true
+		is-visible = false
 		is-disabled = true
 		is-transparent = false
 		is-default = false
@@ -1271,7 +1271,93 @@ window "outputwindow"
 		use-title = false
 		on-show = ""
 		on-hide = ""
-
+	elem "output"
+		type = OUTPUT
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #ffffff
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = ""
+		on-size = ""
+		show-history = false
+		show-url = false
+		auto-format = false
+		use-title = false
+		on_show = ""
+		on_hide = ""
+window "preferences_window"
+	elem "preferences_window"
+		type = MAIN
+		pos = 200,20
+		size = 810x770
+		anchor1 = none
+		anchor2 = none
+		background-color = none
+		is-visible = false
+		saved-params = ""
+		statusbar = false
+		can-close = false
+		can-minimize = false
+		can-resize = false
+	elem "preferences_browser"
+		type = BROWSER
+		pos = 0,0
+		size = 618x770
+		anchor1 = 0,0
+		anchor2 = 90,100
+		background-color = none
+		saved-params = ""
+	elem "character_preview_map"
+		type = MAP
+		pos = 618,0
+		size = 195x770
+		anchor1 = 90,0
+		anchor2 = 100,100
+		right-click = true
+		saved-params = "zoom;letterbox;zoom-mode"
+window "barber_window"
+	elem "barber_window"
+		type = MAIN
+		pos = 200,20
+		size = 620x680
+		anchor1 = none
+		anchor2 = none
+		background-color = none
+		is-visible = false
+		saved-params = ""
+		statusbar = false
+		can-close = true
+		can-minimize = false
+		can-resize = false
+	elem "barber_browser"
+		type = BROWSER
+		pos = 0,195
+		size = 620x485
+		anchor1 = 0,0
+		anchor2 = 90,100
+		background-color = none
+		saved-params = ""
+	elem "barber_preview_map"
+		type = MAP
+		pos = 0,0
+		size = 620x195
+		anchor1 = 90,0
+		anchor2 = 100,100
+		background-color = #ffffff
+		right-click = true
+		saved-params = "zoom;letterbox;zoom-mode"
 window "rpane"
 	elem "rpane"
 		type = MAIN
