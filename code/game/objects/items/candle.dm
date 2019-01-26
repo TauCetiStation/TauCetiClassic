@@ -107,6 +107,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		lit = FALSE
 		update_icon()
 		set_light(0)
+		STOP_PROCESSING(SSobj, src)
 
  // Ghost candle
 /obj/item/candle/ghost
