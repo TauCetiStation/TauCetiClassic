@@ -250,6 +250,19 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	to_chat(src, "You will [(prefs.chat_toggles & CHAT_CKEY) ? "now" : "no longer"] show your ckey in LOOC and deadchat.")
 	feedback_add_details("admin_verb","SC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/toggle_ambient_occlusion()
+	set name = "Toggle Ambient Occlusion"
+	set category = "Preferences"
+	set desc = "Toggle ambient occlusion."
+
+	prefs.ambientocclusion = !prefs.ambientocclusion
+	to_chat(src, "Ambient Occlusion: [prefs.ambientocclusion ? "Enabled" : "Disabled"].")
+	prefs.save_preferences()
+	if(screen && screen.len)
+		var/obj/screen/plane_master/game_world/PM = locate() in screen
+		PM.backdrop(mob)
+	feedback_add_details("admin_verb","TAC")
+
 /client/verb/set_parallax_quality()
 	set name = "Set Parallax Quality"
 	set category = "Preferences"

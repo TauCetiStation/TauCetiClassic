@@ -3,6 +3,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion3"
 	layer = 3
+	plane = FLOOR_PLANE
 	anchored = 1.0
 	var/uses = 20
 	var/disabled = 1
