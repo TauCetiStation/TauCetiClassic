@@ -2,13 +2,13 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 #define CANDLE_LUMINOSITY	3
 
 /obj/item/candle
-	name = "red candle"
+	name = "white candle"
 	desc = "In Greek myth, Prometheus stole fire from the Gods and gave it to \
 		humankind. The jewelry he kept for himself."
 
 	icon = 'icons/obj/candle.dmi'
-	icon_state = "candle"
-	item_state = "candle"
+	icon_state = "white_candle"
+	item_state = "white_candle"
 
 	var/candle_color
 	w_class = 1
@@ -35,6 +35,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		visible_message(flavor_text)
 		set_light(CANDLE_LUMINOSITY, 1)
 		START_PROCESSING(SSobj, src)
+		playsound(get_turf(src), 'sound/items/matchstick_light.ogg', 50, 0)
 
 /obj/item/candle/update_icon()
 	var/lighning_stage
@@ -86,13 +87,15 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		var/obj/item/candle/C
 		if(istype(src, /obj/item/candle/ghost))
 			C = new /obj/item/trash/candle/ghost(src.loc)
+		else if(istype(src, /obj/item/candle/red))
+			C = new /obj/item/trash/candle/red(src.loc)
 		else
 			C = new /obj/item/trash/candle(src.loc)
 		if(istype(loc, /mob))
 			var/mob/M = loc
 			M.put_in_hands(C)
-			dropped()
 		qdel(src)
+		return
 	update_icon()
 	if(istype(loc, /turf)) // start a fire if possible
 		var/turf/T = loc
@@ -109,8 +112,8 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 /obj/item/candle/ghost
 	name = "black candle"
 
-	icon_state = "gcandle"
-	item_state = "gcandle"
+	icon_state = "black_candle"
+	item_state = "black_candle"
 
 	light_color = LIGHT_COLOR_GHOST_CANDLE
 
@@ -179,6 +182,12 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 			wax += 50
 			user.drop_item()
 			qdel(W)
+
+/obj/item/candle/red
+	name = "red candle"
+
+	icon_state = "red_candle"
+	item_state = "red_candle"
 
  // Infinite candle (Admin item)
 /obj/item/candle/infinite

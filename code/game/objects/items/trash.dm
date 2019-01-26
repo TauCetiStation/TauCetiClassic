@@ -46,15 +46,21 @@
 		name = "Tray"
 		icon_state = "tray"
 	candle
-		name = "candle"
+		name = "white candle"
 		icon = 'icons/obj/candle.dmi'
-		icon_state = "candle4"
+		icon_state = "white_candle4"
 	liquidfood
 		name = "\improper \"LiquidFood\" ration"
 		icon_state = "liquidfood"
 
 /obj/item/trash/candle/ghost
-	icon_state = "gcandle4"
+	name = "black candle"
+	icon_state = "black_candle4"
+
+/obj/item/trash/candle/red
+	name = "red candle"
+	icon_state = "red_candle4"
+
 
 /obj/item/trash/candle/ghost/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
 	..()
