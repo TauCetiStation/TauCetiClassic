@@ -1,4 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aaa" = (
+/obj/structure/sign/velocity_overlay/reklama{
+	desc = "Now It?s Pepsi for Those Who Think Young";
+	icon_state = "pepsi";
+	name = "\improper billboard"
+	},
+/turf/unsimulated/wall,
+/area/centcom/arrival)
 "aab" = (
 /obj/effect/step_trigger/thrower{
 	affect_ghosts = 1;
@@ -71868,7 +71876,7 @@ awm
 aoo
 aoo
 awm
-aoo
+aaa
 eHb
 eHb
 aoo
