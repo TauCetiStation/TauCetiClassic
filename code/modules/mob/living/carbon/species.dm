@@ -101,6 +101,7 @@
 		,BP_L_ARM  = /obj/item/organ/external/l_arm
 		,BP_R_ARM  = /obj/item/organ/external/r_arm
 		,BP_L_LEG  = /obj/item/organ/external/l_leg
+		,BP_R_LEG  = /obj/item/organ/external/r_leg
 		)
 
 	var/list/has_organ = list(
@@ -423,7 +424,7 @@
 	brute_mod = 0.2
 	burn_mod = 0.2
 
-	eyes = "blank_eyes"
+	eyes = null
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
 
@@ -496,6 +497,7 @@
 		,BP_L_ARM  = /obj/item/organ/external/l_arm
 		,BP_R_ARM  = /obj/item/organ/external/r_arm
 		,BP_L_LEG  = /obj/item/organ/external/l_leg
+		,BP_R_LEG  = /obj/item/organ/external/r_leg
 		)
 
 	has_organ = list(
@@ -570,7 +572,7 @@
 	dietflags = 0		//IPCs can't eat, so no diet
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 
-	eyes = "blank_eyes"
+	eyes = null
 
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
@@ -611,6 +613,7 @@
 		,BP_L_ARM  = /obj/item/organ/external/l_arm
 		,BP_R_ARM  = /obj/item/organ/external/r_arm
 		,BP_L_LEG  = /obj/item/organ/external/l_leg
+		,BP_R_LEG  = /obj/item/organ/external/r_leg
 		)
 
 	has_organ = list(
@@ -857,6 +860,7 @@
 
 	icobase = 'icons/mob/human_races/r_zombie.dmi'
 	deform = 'icons/mob/human_races/r_zombie.dmi'
+	has_gendered_icons = FALSE
 
 	flags = list(
 	NO_BREATHE = TRUE

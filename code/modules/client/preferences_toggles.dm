@@ -262,3 +262,48 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 		var/obj/screen/plane_master/game_world/PM = locate() in screen
 		PM.backdrop(mob)
 	feedback_add_details("admin_verb","TAC")
+
+/client/verb/set_parallax_quality()
+	set name = "Set Parallax Quality"
+	set category = "Preferences"
+	set desc = "Set space parallax quality."
+
+	var/new_setting = input(src, "Parallax quality:") as null|anything in list("Disable", "Low", "Medium", "High", "Insane")
+	if(!new_setting)
+		return
+
+	switch(new_setting)
+		if("Disable")
+			prefs.parallax = PARALLAX_DISABLE
+		if("Low")
+			prefs.parallax = PARALLAX_LOW
+		if("Medium")
+			prefs.parallax = PARALLAX_MED
+		if("High")
+			prefs.parallax = PARALLAX_HIGH
+		if("Insane")
+			prefs.parallax = PARALLAX_INSANE
+
+	to_chat(src, "Parallax (Fancy Space): [new_setting].")
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","TPX")
+
+	if (mob && mob.hud_used)
+		mob.hud_used.update_parallax_pref()
+
+/client/verb/set_parallax_theme()
+	set name = "Set Parallax Theme"
+	set category = "Preferences"
+	set desc = "Set space parallax theme."
+
+	var/new_setting = input(src, "Parallax theme:") as null|anything in list(PARALLAX_THEME_CLASSIC, PARALLAX_THEME_TG)
+	if(!new_setting)
+		return
+
+	prefs.parallax_theme = new_setting
+	to_chat(src, "Parallax theme: [new_setting].")
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","SPX")
+
+	if (mob && mob.hud_used)
+		mob.hud_used.update_parallax_pref()
