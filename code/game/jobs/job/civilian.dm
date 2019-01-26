@@ -14,7 +14,8 @@
 	restricted_species = list(TAJARAN, DIONA)
 
 /datum/job/qm/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	if(H.gender == FEMALE)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cargo_fem(H), slot_w_uniform)
 	else
@@ -41,13 +42,14 @@
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
-	access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
+	access = list(access_cargo, access_cargo_bot, access_mailsorting)
 	minimal_player_ingame_minutes = 960
 	restricted_species = list(SKRELL, DIONA)
 
 
 /datum/job/cargo_tech/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cargotech(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
 
@@ -75,7 +77,8 @@
 	restricted_species = list(SKRELL)
 
 /datum/job/mining/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), slot_back)
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), slot_back)
@@ -109,7 +112,8 @@
 	restricted_species = list(SKRELL)
 
 /datum/job/recycler/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/recycler(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/recyclervest/(H), slot_wear_suit)
@@ -138,7 +142,8 @@
 	restricted_species = list(TAJARAN)
 
 /datum/job/bartender/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), slot_back)
@@ -185,7 +190,8 @@
 	restricted_species = list(TAJARAN, SKRELL)
 
 /datum/job/chef/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chef(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
 
@@ -213,7 +219,8 @@
 	restricted_species = list(SKRELL)
 
 /datum/job/hydro/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
 	switch(H.backbag)
 		if(1) H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
@@ -244,11 +251,12 @@
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_janitor, access_maint_tunnels)
-	minimal_player_ingame_minutes = 480
+	minimal_player_ingame_minutes = 240
 	restricted_species = list(SKRELL)
 
 /datum/job/janitor/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/janitor(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
 
@@ -311,40 +319,45 @@
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_library)
-	alt_titles = list("Journalist")
+	alt_titles = list("Journalist", "Reporter")
 	minimal_player_ingame_minutes = 480
 
 /datum/job/librarian/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/red(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/weapon/barcodescanner(H), slot_l_hand)
 
 	if(visualsOnly)
 		return
 
+
+	H.equip_to_slot_or_del(new /obj/item/weapon/barcodescanner(H), slot_l_hand)
+	H.equip_to_slot_or_del(new /obj/item/device/pda/librarian(H), slot_belt)
+
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/bag/bookbag(H), slot_belt)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/librarian(H), slot_r_store)
+
 
 	return TRUE
 
 
 //var/global/lawyer = 0//Checks for another lawyer //This changed clothes on 2nd lawyer, both IA get the same dreds.
-/datum/job/lawyer
+/datum/job/internal_affairs_agent
 	title = "Internal Affairs Agent"
-	flag = LAWYER
+	flag = INTERNALAGENT
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "The Central Command"
 	selection_color = "#dddddd"
-	idtype = /obj/item/weapon/card/id/int
-	access = list(access_lawyer, access_court, access_sec_doors, access_medical, access_research, access_mailsorting, access_engine, access_engine_equip)
+	idtype = /obj/item/weapon/card/id/civ
+	access = list(access_lawyer, access_court, access_sec_doors, access_medical, access_research, access_mailsorting, access_engineering_lobby)
 	minimal_player_ingame_minutes = 1560
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
-/datum/job/lawyer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/internal_affairs_agent/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
@@ -368,6 +381,114 @@
 	START_PROCESSING(SSobj, L)
 	return TRUE
 
+/datum/job/lawyer
+	title = "Lawyer"
+	flag = LAWYER
+	department_flag = CIVILIAN
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "the head of personnel"
+	selection_color = "#dddddd"
+	idtype = /obj/item/weapon/card/id/civ
+	minimal_player_ingame_minutes = 240
+
+
+/datum/job/lawyer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!H)
+		return 0
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/bluesuit(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/lawyer/bluejacket(H), slot_wear_suit)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/briefcase(H), slot_l_hand)
+	H.equip_to_slot_or_del(new /obj/item/weapon/book/manual/wiki/security_space_law, slot_r_hand)
+
+	if(visualsOnly)
+		return
+
+	H.equip_to_slot_or_del(new /obj/item/device/pda/lawyer2(H), slot_belt)
+
+	return TRUE
+
+
+/datum/job/private_eye
+	title = "Private Eye"
+	flag = PRIVATEEYE
+	department_flag = CIVILIAN
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "the head of personnel"
+	selection_color = "#dddddd"
+	idtype = /obj/item/weapon/card/id/civ
+	minimal_player_ingame_minutes = 240
+	access = list(access_maint_tunnels)
+
+/datum/job/private_eye/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!H)
+		return 0
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
+	H.equip_to_slot_or_del(new /obj/item/clothing/suit/leathercoat(H), slot_wear_suit)
+	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(H), slot_glasses)
+
+	if(visualsOnly)
+		return
+
+	H.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(H), slot_l_store)
+
+	return TRUE
+
+/datum/job/waiter
+	title = "Waiter"
+	flag = WAITER
+	department_flag = CIVILIAN
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "the head of personnel"
+	selection_color = "#dddddd"
+	idtype = /obj/item/weapon/card/id/civ
+	minimal_player_ingame_minutes = 240
+
+/datum/job/waiter/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!H)
+		return 0
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/waiter(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
+
+	if(visualsOnly)
+		return
+
+	return TRUE
+
+/datum/job/paranormal_investigator
+	title = "Paranormal Investigator"
+	flag = INVESTIGATOR
+	department_flag = CIVILIAN
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "the head of personnel"
+	selection_color = "#dddddd"
+	idtype = /obj/item/weapon/card/id/civ
+	minimal_player_ingame_minutes = 240
+
+/datum/job/paranormal_investigator/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!H)	return 0
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/fluff/indiana	(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/indiana(H), slot_head)
+
+	if(visualsOnly)
+		return
+
+	H.equip_to_slot_or_del(new /obj/item/device/occult_scanner(H), slot_l_store)
+	H.equip_to_slot_or_del(new /obj/item/weapon/occult_pinpointer(H), slot_r_store)
+
+	return TRUE
+
 
 /datum/job/clown
 	title = "Clown"
@@ -380,11 +501,12 @@
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/clown
 	access = list(access_clown, access_theatre)
-	minimal_player_ingame_minutes = 480
+	minimal_player_ingame_minutes = 240
 	restricted_species = list(SKRELL)
 
 /datum/job/clown/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/clown(H), slot_back)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/clown(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/clown_shoes(H), slot_shoes)
@@ -418,7 +540,8 @@
 	restricted_species = list(SKRELL)
 
 /datum/job/mime/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/mime(H), slot_back)
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), slot_back)

@@ -143,11 +143,18 @@
 	apply_damage(shock_damage, BURN, def_zone, used_weapon="Electrocution")
 	playsound(loc, "sparks", 50, 1, -1)
 	if(shock_damage > 10)
-		visible_message(
-			"<span class='rose'>[src] was shocked by the [source]!</span>", \
-			"<span class='danger'>You feel a powerful shock course through your body!</span>", \
-			"<span class='rose'>You hear a heavy electrical crack.</span>" \
-		)
+		if(source)
+			visible_message(
+				"<span class='rose'>[src] was shocked by the [source]!</span>", \
+				"<span class='danger'>You feel a powerful shock course through your body!</span>", \
+				"<span class='rose'>You hear a heavy electrical crack.</span>" \
+				)
+		else
+			visible_message(
+				"<span class='rose'>[src] was shocked!</span>", \
+				"<span class='danger'>You feel a powerful shock course through your body!</span>", \
+				"<span class='rose'>You hear a heavy electrical crack.</span>" \
+				)
 		make_jittery(1000)
 		stuttering += 2
 		if(!tesla_shock || (tesla_shock && siemens_coeff > 0.5))

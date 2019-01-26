@@ -12,14 +12,16 @@
 	access = list(
 		access_medical, access_morgue, access_paramedic, access_genetics, access_heads,
 		access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-		access_keycard_auth, access_sec_doors, access_psychiatrist, access_maint_tunnels
+		access_keycard_auth, access_sec_doors, access_psychiatrist, access_maint_tunnels,
+		access_medbay_storage
 	)
 	minimal_player_age = 10
 	minimal_player_ingame_minutes = 2400
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/cmo/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/medic(H), slot_back)
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/med(H), slot_back)
@@ -49,13 +51,14 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
-	access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels)
+	access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels, access_medbay_storage)
 	alt_titles = list("Surgeon", "Nurse")
 	minimal_player_ingame_minutes = 960
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/doctor/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/medic(H), slot_back)
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/med(H), slot_back)
@@ -109,12 +112,13 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
-	access = list(access_medical, access_morgue, access_paramedic, access_maint_tunnels, access_external_airlocks, access_sec_doors, access_engine_equip, access_research, access_mailsorting)
+	access = list(access_medical, access_morgue, access_paramedic, access_maint_tunnels, access_external_airlocks, access_sec_doors, access_engine_equip, access_research, access_mailsorting, access_medbay_storage)
 	minimal_player_ingame_minutes = 1500 //they have too much access, so you have to play more to unlock it
 	restricted_species = list(IPC, DIONA)
 
 /datum/job/paramedic/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/fr_jacket(H), slot_wear_suit)
@@ -145,12 +149,13 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
-	access = list(access_medical, access_chemistry)
+	access = list(access_medical, access_chemistry, access_medbay_storage)
 	alt_titles = list("Pharmacist")
 	minimal_player_ingame_minutes = 960
 
 /datum/job/chemist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chemist(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/chemist(H), slot_wear_suit)
@@ -184,7 +189,8 @@
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/geneticist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/geneticist(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/genetics(H), slot_wear_suit)
@@ -220,7 +226,8 @@
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA)
 
 /datum/job/virologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/virologist(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/surgical(H), slot_wear_mask)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
@@ -256,7 +263,8 @@
 	restricted_species = list(UNATHI)
 
 /datum/job/psychiatrist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), slot_back)
@@ -278,5 +286,39 @@
 	else
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/medical(H), slot_belt)
+
+	return TRUE
+
+
+
+/datum/job/intern
+	title = "Medical Intern"
+	flag = INTERN
+	department_flag = MEDSCI
+	faction = "Station"
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "the chief medical officer"
+	selection_color = "#ffeef0"
+	idtype = /obj/item/weapon/card/id/med
+	access = list(access_medical)
+	minimal_player_ingame_minutes = 300
+
+/datum/job/intern/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!H)
+		return 0
+	switch(H.backbag)
+		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), slot_back)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
+
+	if(visualsOnly)
+		return
+
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_med(H), slot_l_ear)
+	H.equip_to_slot_or_del(new /obj/item/device/pda, slot_belt)
+
 
 	return TRUE

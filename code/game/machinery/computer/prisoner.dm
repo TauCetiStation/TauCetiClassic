@@ -1,11 +1,11 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
+#define SHOCK_COOLDOWN 400
 /obj/machinery/computer/prisoner
 	name = "Prisoner Management"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "explosive"
 	light_color = "#a91515"
-	req_access = list(access_armory)
+	req_one_access = list(access_armory, access_heads)
 	circuit = /obj/item/weapon/circuitboard/prisoner
 	var/id = 0.0
 	var/temp = null
@@ -13,6 +13,7 @@
 	var/timeleft = 60
 	var/stop = 0.0
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
+	var/lastUsing = 0
 	light_color = "#B40000"
 
 /obj/machinery/computer/prisoner/ui_interact(mob/user)
@@ -46,6 +47,24 @@
 				loc_display = pick(teleportlocs)
 			dat += "ID: [T.id] | Location: [loc_display]<BR>"
 			dat += "<A href='?src=\ref[src];warn=\ref[T]'>(<font color=red><i>Message Holder</i></font>)</A> |<BR>"
+			dat += "********************************<BR>"
+		dat += "<HR>TSAD<BR>"
+		for(var/obj/item/weapon/implant/explosive/E in implant_list)
+			Tr = get_turf(E)
+			if((Tr) && (Tr.z != src.z))	continue
+			if(!E.implanted) continue
+			var/loc_display = "Unknown"
+			var/mob/living/carbon/M = E.imp_in
+			if(M.z == ZLEVEL_STATION && !istype(M.loc, /turf/space))
+				var/turf/mob_loc = get_turf_loc(M)
+				loc_display = mob_loc.loc
+			if(E.malfunction)
+				loc_display = pick(teleportlocs)
+			dat += "[E.imp_in.name] <BR>"
+			dat += "Location: [loc_display]<BR>"
+			dat += "<A href='?src=\ref[src];warn=\ref[E]'>(<font color=red><i>Message Holder</i></font>)</A> |<BR>"
+		//	dat += "<A href='?src=\ref[src];Explode=\ref[E]'>(<font color=red>(Explode)</font>)</A><BR>"
+			dat += "<A href='?src=\ref[src];Shock=\ref[E]'>(<font color=red>Shock</font>)</A><BR>"
 			dat += "********************************<BR>"
 		dat += "<HR><A href='?src=\ref[src];lock=1'>Lock Console</A>"
 
@@ -89,5 +108,35 @@
 		if((I)&&(I.imp_in))
 			var/mob/living/carbon/R = I.imp_in
 			to_chat(R, "\green You hear a voice in your head saying: '[warning]'")
+
+	else if(href_list["Shock"])
+		var/obj/item/weapon/implant/I = locate(href_list["Shock"])
+		if((I)&&(I.imp_in))
+			if(lastUsing + SHOCK_COOLDOWN > world.time)
+				to_chat(usr, "It isn't ready to use.")
+			else
+				var/mob/living/carbon/R = I.imp_in
+				R.electrocute_act(15)
+				R.Stun(7)
+				playsound(R, 'sound/items/defib_zap.ogg', 50, 0)
+				lastUsing = world.time
+
+/*
+	else if(href_list["Explode"])
+		var/obj/item/weapon/implant/I = locate(href_list["Explode"])
+		if((I)&&(I.imp_in))
+			var/mob/living/carbon/R = I.imp_in
+			message_admins("\blue [key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) detonated [R.name]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[R.x];Y=[R.y];Z=[R.z]'>JMP</a>)")
+			log_game("\blue [key_name_admin(usr)] detonated [R.name]!")
+			playsound(R, 'sound/items/countdown.ogg', 75, 1, -3)
+			sleep(37)
+			playsound(R, 'sound/items/Explosion_Small3.ogg', 75, 1, -3)
+			R.gib()
+*/
+	else if(href_list["lock"])
+		if(src.allowed(usr))
+			screen = !screen
+		else
+			to_chat(usr, "Unauthorized Access.")
 
 	src.updateUsrDialog()

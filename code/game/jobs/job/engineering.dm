@@ -10,7 +10,7 @@
 	idtype = /obj/item/weapon/card/id/engGold
 	req_admin_notify = 1
 	access = list(
-		access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
+		access_engineering_lobby, access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 		access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
 		access_heads, access_construction, access_sec_doors, access_minisat,
 		access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload
@@ -20,7 +20,8 @@
 	restricted_species = list(UNATHI, TAJARAN, DIONA, IPC)
 
 /datum/job/chief_engineer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), slot_back)
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), slot_back)
@@ -50,14 +51,15 @@
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
 	idtype = /obj/item/weapon/card/id/eng
-	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction)
+	access = list(access_engineering_lobby, access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction)
 	alt_titles = list("Maintenance Technician","Engine Technician","Electrician")
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 540
 	restricted_species = list(IPC)
 
 /datum/job/engineer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), slot_back)
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), slot_back)
@@ -89,12 +91,13 @@
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
 	idtype = /obj/item/weapon/card/id/eng
-	access = list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction, access_external_airlocks)
+	access = list(access_engineering_lobby, access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction, access_external_airlocks)
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 600
 
 /datum/job/atmos/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), slot_back)
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), slot_back)
@@ -110,6 +113,42 @@
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(H), slot_l_ear)
 
 	return TRUE
+
+
+
+/datum/job/technical_assistant
+	title = "Technical Assistant"
+	flag = TECHNICASSISTANT
+	department_flag = ENGSEC
+	faction = "Station"
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "the chief engineer"
+	selection_color = "#fff5cc"
+	idtype = /obj/item/weapon/card/id/eng
+	access = list(access_engineering_lobby, access_construction)
+	minimal_player_age = 1
+	minimal_player_ingame_minutes = 200
+	restricted_species = list(IPC)
+
+/datum/job/technical_assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!H)
+		return 0
+	switch(H.backbag)
+		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), slot_back)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), slot_back)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/color/yellow(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/yellow(H), slot_shoes)
+
+	if(visualsOnly)
+		return
+
+	H.equip_to_slot_or_del(new /obj/item/device/pda, slot_belt)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(H), slot_l_ear)
+
+	return TRUE
+
 
 /proc/get_airlock_wires_identification()
 	var/list/wire_list = same_wires[/obj/machinery/door/airlock]

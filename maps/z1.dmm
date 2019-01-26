@@ -14590,6 +14590,16 @@
 	icon_state = "warning"
 	},
 /area/rnd/xenobiology)
+"ayH" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/landmark/start{
+	name = "Waiter"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/crew_quarters/bar)
 "ayI" = (
 /turf/simulated/floor{
 	icon_state = "white"
@@ -24414,6 +24424,21 @@
 /mob/living/simple_animal/walle,
 /turf/simulated/floor,
 /area/quartermaster/qm)
+"aQc" = (
+/obj/effect/landmark/start{
+	name = "Research Assistant"
+	},
+/turf/simulated/floor,
+/area/hallway/primary/starboard)
+"aQd" = (
+/obj/effect/landmark/start{
+	name = "Paranormal Investigator"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutralcorner"
+	},
+/area/hallway/primary/starboard)
 "aQe" = (
 /obj/structure/stool,
 /obj/machinery/light{
@@ -24719,6 +24744,15 @@
 /obj/random/scrap/dense_weighted,
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint2)
+"aQL" = (
+/obj/structure/stool,
+/obj/machinery/camera{
+	c_tag = "Locker Room";
+	dir = 2;
+	network = list("SS13")
+	},
+/turf/simulated/floor,
+/area/crew_quarters/locker)
 "aQM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -24843,6 +24877,10 @@
 	icon_state = "neutral"
 	},
 /area/storage/primary)
+"aQW" = (
+/obj/structure/stool,
+/turf/simulated/floor,
+/area/crew_quarters/locker)
 "aQX" = (
 /obj/structure/table,
 /obj/item/weapon/packageWrap,
@@ -24885,6 +24923,14 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/crew_quarters/playroom)
+"aRc" = (
+/obj/effect/landmark/start{
+	name = "Medical Intern"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/medical/reception)
 "aRd" = (
 /obj/structure/table/woodentable/poker,
 /obj/item/weapon/storage/fancy/crayons,
@@ -24994,12 +25040,11 @@
 	},
 /area/toxins/brainstorm_center)
 "aRm" = (
-/obj/structure/stool,
 /obj/effect/landmark/start{
-	name = "Intern"
+	name = "Security Cadet"
 	},
 /turf/simulated/floor,
-/area/crew_quarters/locker)
+/area/security/lobby)
 "aRn" = (
 /turf/simulated/wall,
 /area/hallway/secondary/exit)
@@ -25111,6 +25156,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint2)
+"aRy" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/effect/landmark/start{
+	name = "Technical Assistant"
+	},
+/turf/simulated/floor,
+/area/hallway/primary/aft)
 "aRz" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/toolbox/mechanical{
@@ -25126,6 +25180,15 @@
 	icon_state = "warning"
 	},
 /area/rnd/mixing)
+"aRA" = (
+/obj/effect/landmark/start{
+	name = "Technical Assistant"
+	},
+/turf/simulated/floor{
+	dir = 2;
+	icon_state = "yellowcorner"
+	},
+/area/hallway/primary/aft)
 "aRB" = (
 /obj/structure/table/reinforced,
 /obj/item/device/assembly/timer{
@@ -26441,17 +26504,11 @@
 	},
 /area/rnd/mixing)
 "aUu" = (
-/obj/structure/stool,
 /obj/effect/landmark/start{
-	name = "Intern"
+	name = "Lawyer"
 	},
-/obj/machinery/camera{
-	c_tag = "Locker Room";
-	dir = 2;
-	network = list("SS13")
-	},
-/turf/simulated/floor,
-/area/crew_quarters/locker)
+/turf/simulated/floor/wood,
+/area/security/vacantoffice)
 "aUv" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 9
@@ -35433,6 +35490,9 @@
 	},
 /area/medical/morgue)
 "bop" = (
+/obj/effect/landmark/start{
+	name = "Lawyer"
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken"
 	},
@@ -41831,6 +41891,9 @@
 "bCs" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/landmark/start{
+	name = "Research Assistant"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -42246,9 +42309,10 @@
 /turf/simulated/wall,
 /area/quartermaster/qm)
 "bDq" = (
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken4"
+/obj/effect/landmark/start{
+	name = "Private Eye"
 	},
+/turf/simulated/floor/wood,
 /area/security/vacantoffice)
 "bDr" = (
 /obj/machinery/computer/cargo,
@@ -51488,11 +51552,13 @@
 /turf/simulated/floor,
 /area/hallway/primary/aft)
 "bXz" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
+/obj/effect/landmark/start{
+	name = "Private Eye"
 	},
-/turf/simulated/floor,
-/area/hallway/primary/aft)
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken4"
+	},
+/area/security/vacantoffice)
 "bXA" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
@@ -96913,7 +96979,7 @@ bzj
 bEm
 bHO
 bLa
-bHO
+ayH
 bON
 bEl
 bUM
@@ -105649,13 +105715,13 @@ bop
 aZw
 bsZ
 bxv
-aZw
+bDq
 aZw
 bEO
 aSP
-aUu
-aRm
-aRm
+aQL
+aQW
+aQW
 aUs
 aUs
 oFb
@@ -106164,7 +106230,7 @@ brk
 btH
 bBm
 bBq
-bDq
+bXz
 bkW
 aSP
 bks
@@ -106676,7 +106742,7 @@ aYi
 boS
 brl
 btN
-aZw
+aUu
 bBs
 bDs
 aYb
@@ -111263,7 +111329,7 @@ ajX
 amQ
 alc
 aqy
-amo
+aRm
 amU
 aqT
 anU
@@ -111347,7 +111413,7 @@ czu
 cFK
 czu
 cki
-bXz
+aRy
 bYq
 clt
 cHn
@@ -111777,7 +111843,7 @@ ajX
 amQ
 alc
 aqy
-amo
+aRm
 amo
 amo
 amo
@@ -111861,7 +111927,7 @@ cAH
 cFL
 bVG
 clt
-cos
+aRA
 cGJ
 cHa
 bZu
@@ -118507,7 +118573,7 @@ bhQ
 jCb
 jHb
 bkH
-bkH
+aRc
 bkH
 eWb
 bjk
@@ -118758,7 +118824,7 @@ bCr
 bFN
 bIj
 bLL
-bcb
+aQc
 bbG
 bhQ
 bjk
@@ -120563,7 +120629,7 @@ bhQ
 jCb
 jJb
 bkH
-bkH
+aRc
 bkH
 eWb
 bjk
@@ -127496,7 +127562,7 @@ bCN
 bHm
 aVp
 bMd
-byZ
+aQd
 bPV
 bMv
 aKs
