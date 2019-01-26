@@ -93,7 +93,7 @@
 				spawn( 0 )
 					emote("cough")
 					return
-		if (disabilities & TOURETTES)
+		if (disabilities & TOURETTES || has_trait(TRAIT_TOURETTE))
 			if ((prob(10) && paralysis <= 1))
 				Stun(10)
 				spawn( 0 )

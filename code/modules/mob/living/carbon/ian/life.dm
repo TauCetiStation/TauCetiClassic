@@ -411,7 +411,7 @@
 		if (prob(5) && paralysis <= 1)
 			drop_item()
 			emote("cough")
-	if (disabilities & TOURETTES)
+	if (disabilities & TOURETTES || has_trait(TRAIT_TOURETTE))
 		if (prob(10) && paralysis <= 1)
 			Stun(10)
 			emote("twitch")

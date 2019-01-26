@@ -1,6 +1,5 @@
 // String identifiers for associative list lookup
 //Disabilities flags for character setup
-#define DISABILITY_TOURETTES 		8
 #define DISABILITY_NERVOUS			16
 
 // mob/var/list/mutations

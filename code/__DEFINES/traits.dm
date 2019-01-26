@@ -4,6 +4,7 @@
 #define TRAIT_DEAF                "deaf"
 #define TRAIT_EPILEPSY            "epilepsy"
 #define TRAIT_FAT                 "fatness"
+#define TRAIT_TOURETTE            "tourette"
 #define TRAIT_NEARSIGHT           "nearsighted"
 
 // common trait sources

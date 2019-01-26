@@ -113,7 +113,6 @@
 		if("disabil_menu")
 			. += "<b>Disabilities:</b>"
 			. += "<br>"
-			. += ShowDisabilityState(user,DISABILITY_TOURETTES,"Twitching")
 			. += ShowDisabilityState(user,DISABILITY_NERVOUS,"Nervousness")
 
 		//Gear

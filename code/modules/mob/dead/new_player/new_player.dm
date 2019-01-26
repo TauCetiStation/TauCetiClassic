@@ -427,10 +427,6 @@
 		new_character.dna.SetSEState(GLASSESBLOCK,1,0)
 		new_character.disabilities |= NEARSIGHTED */
 
-	if(client.prefs.disabilities & DISABILITY_TOURETTES)
-		new_character.dna.SetSEState(TWITCHBLOCK,1,1)
-		new_character.disabilities |= TOURETTES
-
 	if(client.prefs.disabilities & DISABILITY_NERVOUS)
 		new_character.dna.SetSEState(NERVOUSBLOCK,1,1)
 		new_character.disabilities |= NERVOUS

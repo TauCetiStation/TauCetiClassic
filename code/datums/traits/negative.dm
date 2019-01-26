@@ -56,6 +56,16 @@
 
 
 
+/datum/quirk/epileptic
+	name = "Twitching"
+	desc = "You have incurable twitching."
+	value = -1
+	mob_trait = TRAIT_TOURETTE
+	gain_text = "<span class='danger'>You start twitch!</span>"
+	lose_text = "<span class='notice'>You feel relief again, as twitching stops bothering you.</span>"
+
+
+
 /datum/quirk/nearsighted
 	name = "Nearsighted"
 	desc = "You are nearsighted without prescription glasses, but spawn with a pair."
