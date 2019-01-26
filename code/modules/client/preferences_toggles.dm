@@ -103,7 +103,7 @@
 	if(prefs.toggles & SOUND_MIDI)
 		to_chat(src, "You will now hear any sounds uploaded by admins.")
 		var/sound/break_sound = sound(null, repeat = 0, wait = 0, channel = CHANNEL_ADMIN)
-		
+
 		break_sound.priority = 250
 		src << break_sound	//breaks the client's sound output on channel CHANNEL_ADMIN
 	else
@@ -249,3 +249,48 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.save_preferences()
 	to_chat(src, "You will [(prefs.chat_toggles & CHAT_CKEY) ? "now" : "no longer"] show your ckey in LOOC and deadchat.")
 	feedback_add_details("admin_verb","SC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/verb/set_parallax_quality()
+	set name = "Set Parallax Quality"
+	set category = "Preferences"
+	set desc = "Set space parallax quality."
+
+	var/new_setting = input(src, "Parallax quality:") as null|anything in list("Disable", "Low", "Medium", "High", "Insane")
+	if(!new_setting)
+		return
+
+	switch(new_setting)
+		if("Disable")
+			prefs.parallax = PARALLAX_DISABLE
+		if("Low")
+			prefs.parallax = PARALLAX_LOW
+		if("Medium")
+			prefs.parallax = PARALLAX_MED
+		if("High")
+			prefs.parallax = PARALLAX_HIGH
+		if("Insane")
+			prefs.parallax = PARALLAX_INSANE
+
+	to_chat(src, "Parallax (Fancy Space): [new_setting].")
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","TPX")
+
+	if (mob && mob.hud_used)
+		mob.hud_used.update_parallax_pref()
+
+/client/verb/set_parallax_theme()
+	set name = "Set Parallax Theme"
+	set category = "Preferences"
+	set desc = "Set space parallax theme."
+
+	var/new_setting = input(src, "Parallax theme:") as null|anything in list(PARALLAX_THEME_CLASSIC, PARALLAX_THEME_TG)
+	if(!new_setting)
+		return
+
+	prefs.parallax_theme = new_setting
+	to_chat(src, "Parallax theme: [new_setting].")
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","SPX")
+
+	if (mob && mob.hud_used)
+		mob.hud_used.update_parallax_pref()

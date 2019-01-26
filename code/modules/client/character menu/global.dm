@@ -80,6 +80,10 @@
 	. += 					"</a></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
+	. += 					"<td width='45%'>Parallax theme:</td>"
+	. += 					"<td><a href='?_src_=prefs;preference=parallax_theme'><b>[parallax_theme]</b></a></td>"
+	. += 				"</tr>"
+	. += 				"<tr>"
 	. += 					"<td width='45%'>Melee Animations:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=see_animations'><b>[(toggles & SHOW_ANIMATIONS) ? "Yes" : "No"]</b></a></td>"
 	. += 				"</tr>"
@@ -144,6 +148,13 @@
 			parallax = Wrap(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
 			if (parent && parent.mob && parent.mob.hud_used)
 				parent.mob.hud_used.update_parallax_pref()
+
+		if("parallax_theme")
+			switch(parallax_theme)
+				if(PARALLAX_THEME_CLASSIC)
+					parallax_theme = PARALLAX_THEME_TG
+				if(PARALLAX_THEME_TG)
+					parallax_theme = PARALLAX_THEME_CLASSIC
 
 		if("hear_midis")
 			toggles ^= SOUND_MIDI

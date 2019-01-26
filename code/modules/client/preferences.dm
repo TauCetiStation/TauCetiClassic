@@ -118,6 +118,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	// jukebox volume
 	var/volume = 100
 	var/parallax = PARALLAX_HIGH
+	var/parallax_theme = PARALLAX_THEME_CLASSIC
 
 	//custom loadout
 	var/list/gear = list()
