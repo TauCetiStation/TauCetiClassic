@@ -71,6 +71,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 21)
 		S["disabilities"] << null
 
+		all_quirks = list()
+		positive_quirks = list()
+		negative_quirks = list()
+		neutral_quirks = list()
+
+		S["all_quirks"] << all_quirks
+		S["positive_quirks"] << positive_quirks
+		S["negative_quirks"] << negative_quirks
+		S["neutral_quirks"] << neutral_quirks
+
+
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
 		return
