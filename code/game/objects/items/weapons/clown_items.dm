@@ -15,14 +15,14 @@
 /*
  * Soap
  */
-/obj/item/weapon/soap/Crossed(mob/living/carbon/C) //EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
+/obj/item/weapon/soap/Crossed(mob/living/carbon/C) // EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
 	if(istype(C))
 		C.slip("the [src]", 4, 2)
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user, proximity)
 	if(!proximity) return
-	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
-	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
+	// I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
+	// So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(user.client && (target in user.client.screen))
 		to_chat(user, "<span class='notice'>You need to take that [target.name] off before cleaning it.</span>")
 	else if(istype(target,/obj/effect/decal/cleanable))
@@ -60,8 +60,8 @@
 				if("head")
 					if(H.head)
 						var/washmask = !(H.head.flags_inv & HIDEMASK)
-						var/washears = !((H.head.flags_inv & HIDEEARS) | (H.wear_mask && H.wear_mask.flags_inv & HIDEEARS))
-						var/washglasses = !((H.head.flags_inv & HIDEEYES) | (H.wear_mask && H.wear_mask.flags_inv & HIDEEYES))
+						var/washears = !((H.head.flags_inv & HIDEEARS) || (H.wear_mask && H.wear_mask.flags_inv & HIDEEARS))
+						var/washglasses = !((H.head.flags_inv & HIDEEYES) || (H.wear_mask && H.wear_mask.flags_inv & HIDEEYES))
 						if(washmask && H.wear_mask && H.wear_mask.clean_blood())
 							H.update_inv_wear_mask()
 						else
