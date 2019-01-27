@@ -157,11 +157,9 @@ var/list/editing_item_oldname_list = list()
 		editing_item_oldname = href_list["edit_item"]
 		editing_item_oldname_list[user.client.ckey] = editing_item_oldname
 
-		to_chat(usr, editing_item_oldname)
 		editing_item = get_custom_item(user.client.ckey, editing_item_oldname)
 		editing_item_list[user.client.ckey] = editing_item
 		if(editing_item)
-			to_chat(usr, "found")
 			edit_custom_item_panel(src, user)
 			return
 
