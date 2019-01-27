@@ -95,6 +95,7 @@
 
 /obj/machinery/alarm/atom_init(mapload, dir, building = 0)
 	. = ..()
+	alarm_list += src
 	set_frequency(frequency)
 
 	if(building)
@@ -134,6 +135,7 @@
 	TLV["temperature"] =	list(T0C-26, T0C, T0C+40, T0C+66) // K
 
 /obj/machinery/alarm/Destroy()
+	alarm_list -= src
 	if(wires)
 		QDEL_NULL(wires)
 	if(alarm_area && alarm_area.master_air_alarm == src)
@@ -1154,6 +1156,8 @@ FIRE ALARM
 /obj/machinery/firealarm/atom_init(mapload, dir, building)
 	. = ..()
 
+	firealarm_list += src
+
 	if(loc)
 		src.loc = loc
 
@@ -1173,6 +1177,10 @@ FIRE ALARM
 			overlays += image('icons/obj/monitors.dmi', "overlay_green")
 
 	update_icon()
+
+/obj/machinery/firealarm/Destroy()
+	firealarm_list -= src
+	return ..()
 
 /*
 FIRE ALARM CIRCUIT

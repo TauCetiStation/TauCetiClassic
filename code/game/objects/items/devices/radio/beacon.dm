@@ -6,6 +6,14 @@
 	var/code = "electronic"
 	origin_tech = "bluespace=1"
 
+/obj/item/device/radio/beacon/atom_init()
+	. = ..()
+	radio_beacon_list += src
+
+/obj/item/device/radio/beacon/Destroy()
+	radio_beacon_list -= src
+	return ..()
+
 /obj/item/device/radio/beacon/hear_talk()
 	return
 
@@ -57,6 +65,15 @@
 	item_state = "signaler"
 	origin_tech = "bluespace=1"
 
+/obj/item/device/beacon/medical/atom_init()
+	. = ..()
+	beacon_medical_list += src
+
+
+/obj/item/device/beacon/medical/Destroy()
+	beacon_medical_list -= src
+	return ..()
+
 /obj/item/weapon/medical/teleporter
 	name = "Body Teleporter"
 	desc = "A device used for teleporting injured(critical) or dead people."
@@ -78,7 +95,7 @@
 		return
 	var/found = 0
 	var/target_beacon
-	for(var/obj/item/device/beacon/medical/medical in world)
+	for(var/obj/item/device/beacon/medical/medical in beacon_medical_list)
 		if(medical)
 			if(isturf(medical.loc))
 				var/area/A = get_area(medical)

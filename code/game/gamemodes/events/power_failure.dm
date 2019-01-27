@@ -12,9 +12,9 @@ var/power_fail_event = 0
 
 	var/list/skipped_areas = list(/area/turret_protected/ai, /area/tcommsat/computer, /area/tcommsat/chamber)
 
-	for(var/obj/machinery/power/smes/S in machines)
+	for(var/obj/machinery/power/smes/S in smes_list)
 		var/area/current_area = get_area(S)
-		if(current_area.type in skipped_areas ||S.z != ZLEVEL_STATION)
+		if(current_area.type in skipped_areas || S.z != ZLEVEL_STATION)
 			continue
 		S.last_charge = S.charge
 		S.last_output = S.output
@@ -27,7 +27,7 @@ var/power_fail_event = 0
 		S.update_icon()
 		S.power_change()
 
-	for(var/obj/machinery/power/apc/C in machines)
+	for(var/obj/machinery/power/apc/C in apc_list)
 		if(C.cell && C.z == ZLEVEL_STATION)
 			C.cell.charge = 0
 
@@ -42,10 +42,10 @@ var/power_fail_event = 0
 		command_alert("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal")
 		player_list << sound('sound/AI/poweron.ogg')
 	if(badminery)
-		for(var/obj/machinery/power/apc/C in machines)
+		for(var/obj/machinery/power/apc/C in apc_list)
 			if(C.cell && C.z == ZLEVEL_STATION)
 				C.cell.charge = C.cell.maxcharge
-	for(var/obj/machinery/power/smes/S in machines)
+	for(var/obj/machinery/power/smes/S in smes_list)
 		var/area/current_area = get_area(S)
 		if(current_area.type in skipped_areas || S.z != ZLEVEL_STATION)
 			continue
@@ -62,7 +62,7 @@ var/power_fail_event = 0
 	if(announce)
 		command_alert("All SMESs on [station_name()] have been recharged. We apologize for the inconvenience.", "Power Systems Nominal")
 		player_list << sound('sound/AI/poweron.ogg')
-	for(var/obj/machinery/power/smes/S in machines)
+	for(var/obj/machinery/power/smes/S in smes_list)
 		if(S.z != ZLEVEL_STATION)
 			continue
 		S.RefreshParts()

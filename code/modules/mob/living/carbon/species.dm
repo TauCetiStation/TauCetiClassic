@@ -424,7 +424,7 @@
 	brute_mod = 0.2
 	burn_mod = 0.2
 
-	eyes = "blank_eyes"
+	eyes = null
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
 
@@ -572,7 +572,7 @@
 	dietflags = 0		//IPCs can't eat, so no diet
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 
-	eyes = "blank_eyes"
+	eyes = null
 
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
@@ -860,6 +860,7 @@
 
 	icobase = 'icons/mob/human_races/r_zombie.dmi'
 	deform = 'icons/mob/human_races/r_zombie.dmi'
+	has_gendered_icons = FALSE
 
 	flags = list(
 	NO_BREATHE = TRUE

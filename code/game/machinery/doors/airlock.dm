@@ -59,6 +59,7 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/atom_init(mapload, dir = null)
 	..()
+	airlock_list += src
 	wires = new(src)
 	if(glass && !inner_material)
 		inner_material = "glass"
@@ -69,12 +70,13 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/atom_init_late()
 	if(closeOtherId != null)
-		for (var/obj/machinery/door/airlock/A in machines)
+		for (var/obj/machinery/door/airlock/A in airlock_list)
 			if(A.closeOtherId == closeOtherId && A != src)
 				closeOther = A
 				break
 
 /obj/machinery/door/airlock/Destroy()
+	airlock_list -= src
 	QDEL_NULL(wires)
 	QDEL_NULL(electronics)
 	closeOther = null

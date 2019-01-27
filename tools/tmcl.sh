@@ -1,4 +1,10 @@
 #!/bin/bash
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd $parent_path
-exec java -jar ../.groovy-shell/groovy-shell.jar script.groovy "$@"
+
+cl=""
+for var in "$@"
+do
+    cl+="$var "
+done
+echo "$cl" > ../test_merge.txt

@@ -119,7 +119,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["UI_style_alpha"]		>> UI_style_alpha
 	S["permamuted"]			>> permamuted
 	S["permamuted"]			>> muted
-
+	S["parallax"]			>> parallax
+	S["parallax_theme"]		>> parallax_theme
 	//Antag preferences
 	S["be_role"]			>> be_role
 
@@ -140,6 +141,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	randomslot		= sanitize_integer(randomslot, 0, 1, initial(randomslot))
 	UI_style_color	= sanitize_hexcolor(UI_style_color, initial(UI_style_color))
 	UI_style_alpha	= sanitize_integer(UI_style_alpha, 0, 255, initial(UI_style_alpha))
+	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
+	parallax_theme	= sanitize_text(parallax_theme, initial(parallax_theme))
 	if(!cid_list)
 		cid_list = list()
 	ignore_cid_warning = sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
@@ -171,6 +174,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ghost_orbit"]		<< ghost_orbit
 	S["randomslot"]			<< randomslot
 	S["permamuted"]			<< permamuted
+	S["parallax"]			<< parallax
+	S["parallax_theme"]		<< parallax_theme
 	return 1
 
 /datum/preferences/proc/load_saved_character(dir)
@@ -241,13 +246,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["player_alt_titles"]	>> player_alt_titles
 	S["organ_data"]			>> organ_data
 	S["gear"]				>> gear
+	S["custom_items"]		>> custom_items
 
 	S["nanotrasen_relation"] >> nanotrasen_relation
 	S["home_system"] 		>> home_system
 	S["citizenship"] 		>> citizenship
 	S["faction"] 			>> faction
 	S["religion"] 			>> religion
-	S["parallax"]			>> parallax
+	S["ambientocclusion"]	>> ambientocclusion
+
 	S["uplinklocation"] 	>> uplinklocation
 
 	S["UI_style_color"]		>> UI_style_color
@@ -266,6 +273,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(isnull(nanotrasen_relation)) nanotrasen_relation = initial(nanotrasen_relation)
 	if(!real_name) real_name = random_name(gender)
 	if(!gear) gear = list()
+	if(!custom_items) custom_items = list()
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
@@ -289,7 +297,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	socks			= sanitize_integer(socks, 1, socks_t.len, initial(socks))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 	b_type			= sanitize_text(b_type, initial(b_type))
-	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
+	ambientocclusion = sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
 	job_civilian_med = sanitize_integer(job_civilian_med, 0, 65535, initial(job_civilian_med))
@@ -425,13 +433,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["be_role"]			<< be_role
 	S["organ_data"]			<< organ_data
 	S["gear"]				<< gear
+	S["custom_items"]		<< custom_items
 
 	S["nanotrasen_relation"] << nanotrasen_relation
 	S["home_system"] 		<< home_system
 	S["citizenship"] 		<< citizenship
 	S["faction"] 			<< faction
 	S["religion"] 			<< religion
-	S["parallax"]			<< parallax
+	S["ambientocclusion"]	<< ambientocclusion
 	S["uplinklocation"] << uplinklocation
 
 	S["UI_style_color"]		<< UI_style_color

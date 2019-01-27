@@ -725,6 +725,8 @@ datum/proc/dd_SortValue()
 #define UNSETEMPTY(L) if (L && !L.len) L = null
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }
+#define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
+#define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
 #define LAZYLEN(L) length(L)
 #define LAZYCLEARLIST(L) if(L) L.Cut()
 #define LAZYCOPY(L) L && L.len ? L.Copy() : null

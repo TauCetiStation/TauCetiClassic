@@ -81,9 +81,6 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/religion = "None"               //Religious association.
 	var/nanotrasen_relation = "Neutral"
 
-	//Mob preview
-	var/icon/preview_icon = null
-
 	//Jobs, uses bitflags
 	var/job_civilian_high = 0
 	var/job_civilian_med = 0
@@ -127,10 +124,13 @@ var/const/MAX_SAVE_SLOTS = 10
 	// jukebox volume
 	var/volume = 100
 	var/parallax = PARALLAX_HIGH
+	var/ambientocclusion = TRUE
+	var/parallax_theme = PARALLAX_THEME_CLASSIC
 
-	//custom loadout
+  //custom loadout
 	var/list/gear = list()
 	var/gear_tab = "General"
+	var/list/custom_items = list()
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -147,10 +147,6 @@ var/const/MAX_SAVE_SLOTS = 10
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
 	update_preview_icon()
-	user << browse_rsc(preview_icon, "previewicon.png")
-	user << browse_rsc('html/prefs/dossier_empty.png')
-	user << browse_rsc('html/prefs/dossier_photos.png')
-	user << browse_rsc('html/prefs/opacity7.png')
 
 	var/dat = "<html><body link='#045EBE' vlink='045EBE' alink='045EBE'><center>"
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
@@ -169,7 +165,8 @@ var/const/MAX_SAVE_SLOTS = 10
 		dat += "[menu_type=="roles"?"<b>Roles</b>":"<a href=\"byond://?src=\ref[user];preference=roles\">Roles</a>"] - "
 		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"] - "
 		dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond://?src=\ref[user];preference=loadout\">Loadout</a>"] - "
-		dat += "[menu_type=="quirks"?"<b>Quirks</b>":"<a href=\"byond://?src=\ref[user];preference=quirks\">Quirks</a>"]"
+		dat += "[menu_type=="quirks"?"<b>Quirks</b>":"<a href=\"byond://?src=\ref[user];preference=quirks\">Quirks</a>"] - "
+		dat += "[menu_type=="fluff"?"<b>Fluff</b>":"<a href=\"byond://?src=\ref[user];preference=fluff\">Fluff</a>"]"
 		dat += "<br><a href='?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
 		dat += "</div>"
 	else
@@ -191,15 +188,23 @@ var/const/MAX_SAVE_SLOTS = 10
 			dat += ShowCustomLoadout(user)
 		if("quirks")
 			dat += ShowQuirks(user)
+		if("fluff")
+			dat += ShowFluffMenu(user)
+
 	dat += "</body></html>"
-	user << browse(entity_ja(dat), "window=preferences;size=618x778;can_close=0;can_minimize=0;can_maximize=0;can_resize=0")
+
+	winshow(user, "preferences_window", TRUE)
+	user << browse(entity_ja(dat), "window=preferences_browser")
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(!user)
 		return
 
 	if(href_list["preference"] == "close")
-		user << browse(null, "window=preferences")
+		user << browse(null, "window=preferences_window")
+		var/client/C = user.client
+		if(C)
+			C.clear_character_previews()
 		return
 
 	if(!isnewplayer(user))
@@ -235,6 +240,9 @@ var/const/MAX_SAVE_SLOTS = 10
 		if("quirks")
 			menu_type = "quirks"
 
+		if("fluff")
+			menu_type = "fluff"
+
 		if("load_slot")
 			if(!IsGuestKey(user.key))
 				menu_type = "load_slot"
@@ -256,6 +264,10 @@ var/const/MAX_SAVE_SLOTS = 10
 
 		if("quirks")
 			process_link_quirks(user, href_list)
+
+		if("fluff")
+			process_link_fluff(user, href_list)
+			return 1
 
 	ShowChoices(user)
 	return 1

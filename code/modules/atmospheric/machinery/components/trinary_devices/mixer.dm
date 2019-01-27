@@ -25,6 +25,7 @@
 	use_power = 1
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon(safety = FALSE)
+	..()
 	if(istype(src, /obj/machinery/atmospherics/components/trinary/mixer/m_mixer))
 		icon_state = "m"
 	else if(istype(src, /obj/machinery/atmospherics/components/trinary/mixer/t_mixer))
