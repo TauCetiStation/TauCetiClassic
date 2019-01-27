@@ -241,7 +241,7 @@
 				else
 					customitemspremoderation_panel()
 			if("moderation_viewbyckey")
-				var/viewckey = sanitize(input("Enter player ckey","Text") as null|text)
+				var/viewckey = ckey(input("Enter player ckey","Text") as null|text)
 				if(viewckey)
 					customitemsview_panel(viewckey)
 			if("moderation_viewpremoderation")
