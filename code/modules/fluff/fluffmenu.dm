@@ -2,7 +2,7 @@
 	var/list/custom_items = get_custom_items(user.client.ckey)
 
 	. += "<table align='center' width='570px'>"
-	. += "<tr><td colspan=3><center><b>Custom items slots: <font color='#E67300'>[user.client.get_custom_items_slot_count()]</font></b> \[<a href='?_src_=prefs;preference=fluff;show_info=1'>How to get more</a>\]</center></td></tr>"
+	. += "<tr><td colspan=3><center><b>Custom items slots: <font color='#E67300'>[user.client.get_custom_items_slot_count()]</font></b><br>\[<a href='?_src_=prefs;preference=fluff;show_info=1'>Information and how to get more</a>\]</center></td></tr>"
 
 	for(var/item_name in custom_items)
 		var/datum/custom_item/item = custom_items[item_name]
@@ -126,13 +126,7 @@ var/list/editing_item_oldname_list = list()
 			to_chat(user, "<span class='alert'>Rejection reason for [itemname]: [item.moderator_message]</span>")
 
 	if(href_list["show_info"])
-		if(alert(user, "You can get custom item slots by supporting the project, monetary or through contributions like coding and spriting", "Info", "Show Donation Links", "OK") == "Show Donation Links")
-			if(config.donate_info_url)
-				to_chat(user, "<a href='[config.donate_info_url]'>Support this project</a>")
-			if(config.allow_byond_membership)
-				to_chat(user, "<a href='http://www.byond.com/membership'>Become Byond Member</a>")
-			if(!config.donate_info_url && !config.allow_byond_membership)
-				to_chat(user, "Server is not configured, go annoy admins")
+		link_with_alert(user, config.customitems_info_url)
 
 	if(href_list["add_item"])
 		var/itemCount = get_custom_items(user.client.ckey).len

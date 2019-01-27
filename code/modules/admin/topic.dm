@@ -229,11 +229,7 @@
 			if("moderation_reject")
 				var/itemname = href_list["itemname"]
 
-				var/reason = ""
-				if(alert(usr, "Attach reason?", "Attach reason?", "Yes", "No") == "Yes")
-					reason = sanitize(input("Write reason for item rejection","Text") as null|text)
-					if(!reason)
-						return
+				var/reason = sanitize(input("Write reason for item rejection or leave empty for no reason","Text") as null|text)
 
 				custom_item_premoderation_reject(target_ckey, itemname, reason)
 				if(href_list["viewthis"])

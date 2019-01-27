@@ -91,6 +91,7 @@
 	var/media_base_url = "http://example.org"
 	var/server_rules_url
 	var/discord_invite_url
+	var/customitems_info_url
 
 	// Changelog
 	var/changelog_link = ""
@@ -380,6 +381,9 @@
 
 				if ("discord_invite_url")
 					discord_invite_url = value
+
+				if ("customitems_info_url")
+					customitems_info_url = value
 
 				if("serverwhitelist_message")
 					config.serverwhitelist_message = value
