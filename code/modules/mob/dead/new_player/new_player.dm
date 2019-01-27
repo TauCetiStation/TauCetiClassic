@@ -314,7 +314,6 @@ commented cause polls are kinda broken now, needs refactoring */
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
 	SSjob.EquipRank(character, rank, 1)					//equips the human
-	EquipCustomItems(character)
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
 	if(character.mind.assigned_role == "AI")

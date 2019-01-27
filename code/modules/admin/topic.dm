@@ -2825,10 +2825,6 @@
 		log_admin("[key_name_admin(usr)] restored [title] from the recycle bin")
 		message_admins("[key_name_admin(usr)] removed [title] from the library database")
 
-	else if(href_list["populate_inactive_customitems"])
-		if(check_rights(R_ADMIN|R_SERVER))
-			populate_inactive_customitems_list(src.owner)
-
 	else if(href_list["vsc"])
 		if(check_rights(R_ADMIN|R_SERVER))
 			if(href_list["vsc"] == "airflow")
