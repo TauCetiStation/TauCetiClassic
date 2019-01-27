@@ -13159,6 +13159,7 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/lipstick/jade,
+/obj/item/toy/laugh_button,
 /turf/simulated/floor/wood,
 /area/crew_quarters/theatre)
 "avN" = (
