@@ -1,4 +1,5 @@
 /datum/preferences/proc/ShowFluffMenu(mob/user)
+	custom_items_fixnames(user.client.ckey)
 	var/list/custom_items = get_custom_items(user.client.ckey)
 
 	. += "<table align='center' width='570px'>"
@@ -7,11 +8,11 @@
 	for(var/item_name in custom_items)
 		var/datum/custom_item/item = custom_items[item_name]
 		if(item.status == "submitted")
-			. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;edit_item=[item.name]'>[item.name]</a> <font color='#E67300'>(Awating premoderation)</font></center></td></tr>"
+			. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;edit_item=[ckey(item.name)]'>[item.name]</a> <font color='#E67300'>(Awating premoderation)</font></center></td></tr>"
 		if(item.status == "accepted")
-			. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;edit_item=[item.name]'>[item.name]</a> <font color='#267F00'>(Accepted)</font></center></td></tr>"
+			. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;edit_item=[ckey(item.name)]'>[item.name]</a> <font color='#267F00'>(Accepted)</font></center></td></tr>"
 		if(item.status == "rejected")
-			. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;edit_item=[item.name]'>[item.name]</a> <font color='#FF0000'>(Rejected)</font>[item.moderator_message? " <a href='?_src_=prefs;preference=fluff;read_reason=[item.name]'>Reason</a>" : ""]</center></td></tr>"
+			. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;edit_item=[ckey(item.name)]'>[item.name]</a> <font color='#FF0000'>(Rejected)</font>[item.moderator_message? " <a href='?_src_=prefs;preference=fluff;read_reason=[ckey(item.name)]'>Reason</a>" : ""]</center></td></tr>"
 
 	. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;add_item=1'>Create new</a></center></td></tr>"
 
@@ -156,9 +157,11 @@ var/list/editing_item_oldname_list = list()
 		editing_item_oldname = href_list["edit_item"]
 		editing_item_oldname_list[user.client.ckey] = editing_item_oldname
 
+		to_chat(usr, editing_item_oldname)
 		editing_item = get_custom_item(user.client.ckey, editing_item_oldname)
 		editing_item_list[user.client.ckey] = editing_item
 		if(editing_item)
+			to_chat(usr, "found")
 			edit_custom_item_panel(src, user)
 			return
 
@@ -279,10 +282,10 @@ var/list/editing_item_oldname_list = list()
 	var/list/all_custom_items = get_custom_items(user.client.ckey)
 	for(var/item_name in all_custom_items)
 		var/datum/custom_item/item = all_custom_items[item_name]
-		var/ticked = (item.name in custom_items)
+		var/ticked = (item_name in custom_items)
 		var/accepted = (item.status == "accepted")
 		if(accepted || ticked)
-			. += "<tr style='vertical-align:top;'><td width=15%><a style='white-space:normal;' [ticked ? "style='font-weight:bold' " : ""]href='?_src_=prefs;preference=loadout;toggle_custom_gear=[item.name]'>[item.name][accepted ? "" : " (not accepted)"]</a></td>"
+			. += "<tr style='vertical-align:top;'><td width=15%><a style='white-space:normal;' [ticked ? "style='font-weight:bold' " : ""]href='?_src_=prefs;preference=loadout;toggle_custom_gear=[ckey(item.name)]'>[item.name][accepted ? "" : " (not accepted)"]</a></td>"
 			. += "<td width = 5% style='vertical-align:top'>0</td>"
 			. += "<td><font size=2><i>[item.desc]</i></font></td>"
 			. += "</tr>"

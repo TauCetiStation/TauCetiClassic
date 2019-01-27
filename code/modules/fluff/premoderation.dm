@@ -10,7 +10,7 @@
 		moderation_items = list()
 
 	for(var/datum/premoderation_item/entry in moderation_items)
-		if(entry.item_name == itemname && ckey(player_ckey) == entry.author_ckey)
+		if(ckey(entry.item_name) == ckey(itemname) && ckey(player_ckey) == entry.author_ckey)
 			return
 
 	var/datum/premoderation_item/new_entry = new /datum/premoderation_item()
@@ -29,6 +29,7 @@
 	return moderation_items
 
 /proc/custom_item_premoderation_accept(player_ckey, itemname)
+	itemname = ckey(itemname)
 	customItemsCache.cd = "/"
 	var/list/moderation_items = null
 	customItemsCache["premoderation"] >> moderation_items
@@ -36,7 +37,7 @@
 		moderation_items = list()
 
 	for(var/datum/premoderation_item/entry in moderation_items)
-		if(entry.item_name == itemname && ckey(player_ckey) == entry.author_ckey)
+		if(ckey(entry.item_name) == itemname && ckey(player_ckey) == entry.author_ckey)
 			moderation_items -= entry
 			break
 
@@ -45,6 +46,7 @@
 	custom_item_changestatus(player_ckey, itemname, "accepted")
 
 /proc/custom_item_premoderation_reject(player_ckey, itemname, reason)
+	itemname = ckey(itemname)
 	customItemsCache.cd = "/"
 	var/list/moderation_items = null
 	customItemsCache["premoderation"] >> moderation_items
@@ -52,7 +54,7 @@
 		moderation_items = list()
 
 	for(var/datum/premoderation_item/entry in moderation_items)
-		if(entry.item_name == itemname && ckey(player_ckey) == entry.author_ckey)
+		if(ckey(entry.item_name) == itemname && ckey(player_ckey) == entry.author_ckey)
 			moderation_items -= entry
 			break
 
@@ -98,17 +100,17 @@
 		for(var/itemname in items)
 			var/datum/custom_item/item = items[itemname]
 			output += "<tr>"
-			output += "<td style='text-align:center;'><a class='small' href='?src=\ref[src];custom_items=moderation_view;ckey=[player_ckey];itemname=[item.name]'>[item.name] ([item.status])</a></td>"
+			output += "<td style='text-align:center;'><a class='small' href='?src=\ref[src];custom_items=moderation_view;ckey=[player_ckey];itemname=[ckey(item.name)]'>[item.name] ([item.status])</a></td>"
 			output += "<td style='text-align:center;'>[player_ckey]</td>"
-			output += "<td style='text-align:center;'><a class='small' href='?src=\ref[src];custom_items=moderation_accept;ckey=[player_ckey];itemname=[item.name];viewthis=1'>Accept</a> <a class='small' href='?src=\ref[src];custom_items=moderation_reject;ckey=[player_ckey];itemname=[item.name];viewthis=1'>Deny</a></td>"
+			output += "<td style='text-align:center;'><a class='small' href='?src=\ref[src];custom_items=moderation_accept;ckey=[player_ckey];itemname=[ckey(item.name)];viewthis=1'>Accept</a> <a class='small' href='?src=\ref[src];custom_items=moderation_reject;ckey=[player_ckey];itemname=[ckey(item.name)];viewthis=1'>Deny</a></td>"
 			output += "</tr>"
 	else
 		var/list/premoderations = custom_item_premoderation_list()
 		for(var/datum/premoderation_item/item in premoderations)
 			output += "<tr>"
-			output += "<td style='text-align:center;'><a class='small' href='?src=\ref[src];custom_items=moderation_view;ckey=[item.author_ckey];itemname=[item.item_name]'>[item.item_name]</a></td>"
+			output += "<td style='text-align:center;'><a class='small' href='?src=\ref[src];custom_items=moderation_view;ckey=[item.author_ckey];itemname=[ckey(item.item_name)]'>[item.item_name]</a></td>"
 			output += "<td style='text-align:center;'>[item.author_ckey]</td>"
-			output += "<td style='text-align:center;'><a class='small' href='?src=\ref[src];custom_items=moderation_accept;ckey=[item.author_ckey];itemname=[item.item_name]'>Accept</a> <a class='small' href='?src=\ref[src];custom_items=moderation_reject;ckey=[item.author_ckey];itemname=[item.item_name]'>Deny</a></td>"
+			output += "<td style='text-align:center;'><a class='small' href='?src=\ref[src];custom_items=moderation_accept;ckey=[item.author_ckey];itemname=[ckey(item.item_name)]'>Accept</a> <a class='small' href='?src=\ref[src];custom_items=moderation_reject;ckey=[item.author_ckey];itemname=[ckey(item.item_name)]'>Deny</a></td>"
 			output += "</tr>"
 
 	output += {"

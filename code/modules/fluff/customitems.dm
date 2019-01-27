@@ -77,6 +77,23 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 
 	return ammount
 
+/proc/custom_items_fixnames(ckey)
+	var/list/items = get_custom_items(ckey)
+	if(!items || !items.len)
+		return
+
+	var/dirty = FALSE
+	for(var/old_item_name in items)
+		var/datum/custom_item/item = items[old_item_name]
+		if(old_item_name != ckey(item.name))
+			items[ckey(item.name)] = item
+			items -= old_item_name
+			dirty = TRUE
+
+	if(dirty)
+		customItemsCache.cd = "/items/[ckey]"
+		customItemsCache["items"] << items
+
 /client/proc/add_custom_item(datum/custom_item/item)
 	var/itemCount = 0
 	var/slotCount = get_custom_items_slot_count()
@@ -91,7 +108,7 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	if(slotCount <= itemCount) // can't create, we have too much custom items
 		return FALSE
 
-	items[item.name] = item
+	items[ckey(item.name)] = item
 	customItemsCache["items"] << items
 	return TRUE
 
@@ -102,7 +119,7 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	if(!items)
 		items = list()
 
-	items -= itemname
+	items -= ckey(itemname)
 
 	customItemsCache["items"] << items
 
@@ -117,8 +134,8 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	if(!item)
 		return
 
-	items -= oldname
-	items[newitem.name] = newitem
+	items -= ckey(oldname)
+	items[ckey(newitem.name)] = newitem
 
 	customItemsCache["items"] << items
 	return TRUE
@@ -138,7 +155,7 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	if(!items)
 		items = list()
 
-	return items[itemname]
+	return items[ckey(itemname)]
 
 /proc/custom_item_changestatus(ckey, itemname, status, moderator_message = "")
 	customItemsCache.cd = "/items/[ckey]"
@@ -147,7 +164,7 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	if(!items)
 		items = list()
 
-	var/datum/custom_item/item = items[itemname]
+	var/datum/custom_item/item = items[ckey(itemname)]
 	if(!item)
 		return
 	item.status = status
@@ -163,7 +180,7 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	if(item_name in custom_items)
 		custom_items -= item_name
 	else if(item.status == "accepted")
-		custom_items += item_name
+		custom_items += ckey(item_name)
 
 /proc/give_custom_items(mob/living/carbon/human/H, datum/job/job)
 	if(!H.client.prefs.custom_items || !H.client.prefs.custom_items.len || !job.give_loadout_items)
@@ -172,7 +189,7 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	var/list/custom_items = H.client.prefs.custom_items
 	var/list/all_my_custom_items = get_custom_items(H.client.ckey)
 	for(var/thing in custom_items)
-		var/datum/custom_item/custom_item_info = all_my_custom_items[thing]
+		var/datum/custom_item/custom_item_info = all_my_custom_items[ckey(thing)]
 		if(!custom_item_info)
 			continue
 		if(custom_item_info.status != "accepted")
