@@ -89,19 +89,17 @@
 	throw_speed = 3
 	throw_range = 15
 	attack_verb = list("HONKED")
-	var/spam_flag = 0
+	var/cooldown = FALSE
 
 /obj/item/weapon/bikehorn/attack(mob/target, mob/user, def_zone)
 	. = ..()
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
 
 /obj/item/weapon/bikehorn/attack_self(mob/user)
-	if (spam_flag == 0)
-		spam_flag = 1
-		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+	if(cooldown <= world.time)
+		cooldown = world.time + 8
+		playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 		src.add_fingerprint(user)
-		spawn(8)
-			spam_flag = 0
 	return
 
 /obj/item/weapon/bikehorn/dogtoy
