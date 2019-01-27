@@ -167,7 +167,7 @@ var/list/editing_item_oldname_list = list()
 			return
 
 	if(href_list["change_name"])
-		var/new_item_name = sanitize(input("Enter item name:", "Text")  as text|null)
+		var/new_item_name = sanitize_safe(input("Enter item name:", "Text")  as text|null, MAX_LNAME_LEN)
 		if(!editing_item || !new_item_name || length(new_item_name) <= 2 || length(new_item_name) > 40)
 			return
 		editing_item.name = new_item_name
