@@ -124,6 +124,7 @@ var/const/MAX_SAVE_SLOTS = 10
   //custom loadout
 	var/list/gear = list()
 	var/gear_tab = "General"
+	var/list/custom_items = list()
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -156,7 +157,8 @@ var/const/MAX_SAVE_SLOTS = 10
 		dat += "[menu_type=="occupation"?"<b>Occupation</b>":"<a href=\"byond://?src=\ref[user];preference=occupation\">Occupation</a>"] - "
 		dat += "[menu_type=="roles"?"<b>Roles</b>":"<a href=\"byond://?src=\ref[user];preference=roles\">Roles</a>"] - "
 		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"] - "
-		dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond://?src=\ref[user];preference=loadout\">Loadout</a>"]"
+		dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond://?src=\ref[user];preference=loadout\">Loadout</a>"] - "
+		dat += "[menu_type=="fluff"?"<b>Fluff</b>":"<a href=\"byond://?src=\ref[user];preference=fluff\">Fluff</a>"]"
 		dat += "<br><a href='?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
 		dat += "</div>"
 	else
@@ -176,6 +178,8 @@ var/const/MAX_SAVE_SLOTS = 10
 			dat += ShowLoadSlot(user)
 		if("loadout")
 			dat += ShowCustomLoadout(user)
+		if("fluff")
+			dat += ShowFluffMenu(user)
 	dat += "</body></html>"
 
 	winshow(user, "preferences_window", TRUE)
@@ -222,6 +226,9 @@ var/const/MAX_SAVE_SLOTS = 10
 		if("loadout")
 			menu_type = "loadout"
 
+		if("fluff")
+			menu_type = "fluff"
+
 		if("load_slot")
 			if(!IsGuestKey(user.key))
 				menu_type = "load_slot"
@@ -240,6 +247,10 @@ var/const/MAX_SAVE_SLOTS = 10
 
 		if("loadout")
 			process_link_loadout(user, href_list)
+
+		if("fluff")
+			process_link_fluff(user, href_list)
+			return 1
 
 	ShowChoices(user)
 	return 1

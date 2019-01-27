@@ -47,9 +47,6 @@
 	if(config && config.log_runtime)
 		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")
 
-	var/custom_items_file = file2text("config/custom_items.txt")
-	custom_items = splittext(custom_items_file, "\n")
-
 	slack_startup()
 
 	radio_controller = new /datum/controller/radio()

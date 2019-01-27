@@ -227,6 +227,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["player_alt_titles"]	>> player_alt_titles
 	S["organ_data"]			>> organ_data
 	S["gear"]				>> gear
+	S["custom_items"]		>> custom_items
 
 	S["nanotrasen_relation"] >> nanotrasen_relation
 	S["home_system"] 		>> home_system
@@ -253,6 +254,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(isnull(nanotrasen_relation)) nanotrasen_relation = initial(nanotrasen_relation)
 	if(!real_name) real_name = random_name(gender)
 	if(!gear) gear = list()
+	if(!custom_items) custom_items = list()
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
@@ -403,6 +405,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["disabilities"]		<< disabilities
 	S["organ_data"]			<< organ_data
 	S["gear"]				<< gear
+	S["custom_items"]		<< custom_items
 
 	S["nanotrasen_relation"] << nanotrasen_relation
 	S["home_system"] 		<< home_system

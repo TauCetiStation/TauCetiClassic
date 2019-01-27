@@ -91,6 +91,7 @@
 	var/media_base_url = "http://example.org"
 	var/server_rules_url
 	var/discord_invite_url
+	var/customitems_info_url
 
 	// Changelog
 	var/changelog_link = ""
@@ -168,6 +169,8 @@
 	var/allow_donators = 0
 	var/allow_byond_membership = 0
 	var/donate_info_url = 0
+
+	var/customitem_slot_by_time = 80000 // Gives one slot for fluff items after playing this much minutes
 
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
@@ -379,6 +382,9 @@
 				if ("discord_invite_url")
 					discord_invite_url = value
 
+				if ("customitems_info_url")
+					customitems_info_url = value
+
 				if("serverwhitelist_message")
 					config.serverwhitelist_message = value
 
@@ -582,12 +588,15 @@
 				if("donate_info_url")
 					config.donate_info_url = value
 
+				if("customitem_slot_by_time")
+					config.customitem_slot_by_time = text2num(value)
+
 				if("changelog_link")
 					config.changelog_link = value
 
 				if("changelog_hash_link")
 					config.changelog_hash_link = value
-				
+
 				if("repository_link")
 					config.repository_link = value
 
