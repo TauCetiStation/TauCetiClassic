@@ -138,7 +138,7 @@
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_bar)
-	minimal_player_ingame_minutes = 480
+	minimal_player_ingame_minutes = 240
 	restricted_species = list(TAJARAN)
 
 /datum/job/bartender/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -186,7 +186,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_kitchen)
 	alt_titles = list("Cook")
-	minimal_player_ingame_minutes = 480
+	minimal_player_ingame_minutes = 240
 	restricted_species = list(TAJARAN, SKRELL)
 
 /datum/job/chef/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -215,7 +215,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_hydroponics) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
 	alt_titles = list("Hydroponicist")
-	minimal_player_ingame_minutes = 480
+	minimal_player_ingame_minutes = 240
 	restricted_species = list(SKRELL)
 
 /datum/job/hydro/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -251,7 +251,7 @@
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_janitor, access_maint_tunnels)
-	minimal_player_ingame_minutes = 240
+	minimal_player_ingame_minutes = 120
 	restricted_species = list(SKRELL)
 
 /datum/job/janitor/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -285,7 +285,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_barber)
 	alt_titles = list("Stylist")
-	minimal_player_ingame_minutes = 480
+	minimal_player_ingame_minutes = 120
 
 /datum/job/barber/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)
@@ -313,23 +313,33 @@
 	flag = LIBRARIAN
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 1
+	total_positions = 2
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_library)
-	alt_titles = list("Journalist", "Reporter")
-	minimal_player_ingame_minutes = 480
+	alt_titles = list("Journalist")
+	minimal_player_ingame_minutes = 120
 
 /datum/job/librarian/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)
 		return 0
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/red(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
+
 
 	if(visualsOnly)
 		return
+
+	if(H.mind.role_alt_title == "Journalist")
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/black(H), slot_w_uniform)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
+		H.equip_to_slot_or_del(new /obj/item/device/pda/reporter(H), slot_belt)
+	else
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/red(H), slot_w_uniform)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/bag/bookbag(H), slot_belt)
+		H.equip_to_slot_or_del(new /obj/item/device/pda/librarian(H), slot_r_store)
+	return TRUE
 
 
 	H.equip_to_slot_or_del(new /obj/item/weapon/barcodescanner(H), slot_l_hand)
@@ -391,7 +401,7 @@
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/civ
-	minimal_player_ingame_minutes = 240
+	minimal_player_ingame_minutes = 120
 
 
 /datum/job/lawyer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -421,7 +431,7 @@
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/civ
-	minimal_player_ingame_minutes = 240
+	minimal_player_ingame_minutes = 120
 	access = list(access_maint_tunnels)
 
 /datum/job/private_eye/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -450,7 +460,7 @@
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/civ
-	minimal_player_ingame_minutes = 240
+	minimal_player_ingame_minutes = 120
 
 /datum/job/waiter/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)
@@ -473,7 +483,7 @@
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/civ
-	minimal_player_ingame_minutes = 240
+	minimal_player_ingame_minutes = 120
 
 /datum/job/paranormal_investigator/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -501,7 +511,7 @@
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/clown
 	access = list(access_clown, access_theatre)
-	minimal_player_ingame_minutes = 240
+	minimal_player_ingame_minutes = 120
 	restricted_species = list(SKRELL)
 
 /datum/job/clown/equip(mob/living/carbon/human/H, visualsOnly = FALSE)

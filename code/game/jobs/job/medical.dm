@@ -302,7 +302,7 @@
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
 	access = list(access_medical)
-	minimal_player_ingame_minutes = 300
+	minimal_player_ingame_minutes = 320
 
 /datum/job/intern/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)

@@ -195,7 +195,7 @@
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_research)
-	minimal_player_ingame_minutes = 400
+	minimal_player_ingame_minutes = 520
 
 /datum/job/research_assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)

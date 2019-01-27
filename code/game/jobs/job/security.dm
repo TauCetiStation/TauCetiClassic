@@ -237,7 +237,7 @@
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_sec_doors, access_maint_tunnels)
 	minimal_player_age = 2
-	minimal_player_ingame_minutes = 400
+	minimal_player_ingame_minutes = 520
 	restricted_species = list(DIONA, TAJARAN, IPC)
 
 /datum/job/cadet/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
