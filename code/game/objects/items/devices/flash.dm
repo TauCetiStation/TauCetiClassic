@@ -132,7 +132,11 @@
 
 
 /obj/item/device/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
-	if(!user || !clown_check(user) || !user.IsAdvancedToolUser()) 	return
+	if(!user || !clown_check(user))
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		return
 	if(broken)
 		user.show_message("<span class='warning'>The [src.name] is broken</span>", 2)
 		return
