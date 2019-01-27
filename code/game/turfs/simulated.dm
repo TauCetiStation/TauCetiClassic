@@ -64,7 +64,8 @@
 				var/footstepsound = "footsteps"
 
 				if(istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
-					footstepsound = "clownstep"
+					if(prob(25))
+						footstepsound = "clownstep"
 				if(H.shoes.wet)
 					footstepsound = 'sound/effects/waterstep.ogg'
 
