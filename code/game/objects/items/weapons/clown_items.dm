@@ -124,13 +124,13 @@
 /obj/item/toy/laugh_button/attack_self(mob/user)
 	if(!cooldown)
 		user.visible_message("<span class='notice'>[bicon(src)] \the [user] presses \the [src]</span>")
-		playsound(src.loc, 'sound/items/buttonclick.ogg', 50, 1)
+		playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
 		var/laugh = pick(
 			'sound/voice/fake_laugh/laugh1.ogg',
 			'sound/voice/fake_laugh/laugh2.ogg',
 			'sound/voice/fake_laugh/laugh3.ogg',
 			)
-		playsound(src.loc, laugh, 50, 1)
+		playsound(src, laugh, 50, 1)
 		flick("laugh_button_down",src)
 		icon_state = "laugh_button_off"
 		cooldown = TRUE
@@ -142,5 +142,5 @@
 	flick("laugh_button_up",src)
 	icon_state = "laugh_button_on"
 	cooldown = FALSE
-	playsound(src.loc, 'sound/items/buttonclick.ogg', 50, 1)
+	playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
 	return
