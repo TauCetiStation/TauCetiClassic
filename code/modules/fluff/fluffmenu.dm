@@ -19,7 +19,7 @@
 
 var/list/editing_item_list = list() // stores the item that is currently being edited for each player
 var/list/editing_item_oldname_list = list()
-/proc/edit_custom_item_panel(datum/preferences/prefs, mob/user, readonly = FALSE)
+/proc/edit_custom_item_panel(datum/preferences/prefs, mob/user, readonly = FALSE, adminview = FALSE)
 	if(!user)
 		return
 	var/datum/custom_item/editing_item = editing_item_list[user.client.ckey]
@@ -111,6 +111,8 @@ var/list/editing_item_oldname_list = list()
 
 		if(editing_item_oldname)
 			dat += " <a class='small' href='?_src_=prefs;preference=fluff;delete=1'>Delete</a>"
+	else if(adminview)
+		dat += " <a class='small' href='?_src_=prefs;preference=fluff;download=1'>Download icon</a>"
 
 	dat += "</body></html>"
 	user << browse(entity_ja(dat), "window=edit_custom_item;size=400x500;can_minimize=0;can_maximize=0;can_resize=0")
@@ -238,6 +240,12 @@ var/list/editing_item_oldname_list = list()
 			user.client.remove_custom_item(editing_item_oldname)
 			user << browse(null, "window=edit_custom_item")
 
+	if(href_list["download"])
+		if(!editing_item || !editing_item.icon)
+			return
+
+		usr << ftp(editing_item.icon)
+
 	if(href_list["upload_icon"])
 		var/new_item_icon = input("Pick icon:","Icon") as null|icon
 		if(!editing_item || !new_item_icon)
@@ -272,10 +280,17 @@ var/list/editing_item_oldname_list = list()
 	for(var/item_name in all_custom_items)
 		var/datum/custom_item/item = all_custom_items[item_name]
 		var/ticked = (item.name in custom_items)
-		. += "<tr style='vertical-align:top;'><td width=15%><a style='white-space:normal;' [ticked ? "style='font-weight:bold' " : ""]href='?_src_=prefs;preference=loadout;toggle_custom_gear=[item.name]'>[item.name]</a></td>"
-		. += "<td width = 5% style='vertical-align:top'>0</td>"
-		. += "<td><font size=2><i>[item.desc]</i></font></td>"
-		. += "</tr>"
+		var/accepted = (item.status == "accepted")
+		if(accepted || ticked)
+			. += "<tr style='vertical-align:top;'><td width=15%><a style='white-space:normal;' [ticked ? "style='font-weight:bold' " : ""]href='?_src_=prefs;preference=loadout;toggle_custom_gear=[item.name]'>[item.name][accepted ? "" : " (not accepted)"]</a></td>"
+			. += "<td width = 5% style='vertical-align:top'>0</td>"
+			. += "<td><font size=2><i>[item.desc]</i></font></td>"
+			. += "</tr>"
+		else
+			. += "<tr style='vertical-align:top;'><td width=15%>[item.name] (not accepted)</td>"
+			. += "<td width = 5% style='vertical-align:top'>0</td>"
+			. += "<td><font size=2><i>[item.desc]</i></font></td>"
+			. += "</tr>"
 
 	. += "</table>"
 

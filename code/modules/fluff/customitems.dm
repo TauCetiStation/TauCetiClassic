@@ -156,9 +156,13 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	customItemsCache["items"] << items
 
 /datum/preferences/proc/toggle_custom_item(mob/user, item_name)
+	var/datum/custom_item/item = get_custom_item(user.client.ckey, item_name)
+	if(!item)
+		return
+
 	if(item_name in custom_items)
 		custom_items -= item_name
-	else
+	else if(item.status == "accepted")
 		custom_items += item_name
 
 /proc/give_custom_items(mob/living/carbon/human/H, datum/job/job)
