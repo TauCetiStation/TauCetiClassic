@@ -1,5 +1,5 @@
 /datum/preferences/proc/ShowFluffMenu(mob/user)
-	custom_items_fixnames(user.client.ckey)
+	//custom_items_fixnames(user.client.ckey)
 	var/list/custom_items = get_custom_items(user.client.ckey)
 
 	. += "<table align='center' width='570px'>"
