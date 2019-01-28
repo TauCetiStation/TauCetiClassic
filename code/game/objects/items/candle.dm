@@ -20,6 +20,8 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	var/infinite = FALSE
 	var/start_lit = FALSE
 
+	var/faded_candle = /obj/item/trash/candle
+
 /obj/item/candle/atom_init()
 	. = ..()
 	wax = rand(600, 800)
@@ -84,22 +86,20 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	if(!infinite)
 		wax--
 	if(!wax)
-		var/obj/item/candle/C
-		if(istype(src, /obj/item/candle/ghost))
-			C = new /obj/item/trash/candle/ghost(src.loc)
-		else if(istype(src, /obj/item/candle/red))
-			C = new /obj/item/trash/candle/red(src.loc)
-		else
-			C = new /obj/item/trash/candle(src.loc)
-		if(istype(loc, /mob))
-			var/mob/M = loc
-			M.put_in_hands(C)
+		dropped()
+		fade()
 		qdel(src)
 		return
 	update_icon()
 	if(istype(loc, /turf)) // start a fire if possible
 		var/turf/T = loc
 		T.hotspot_expose(700, 5)
+
+/obj/item/candle/proc/fade()
+	var/obj/item/candle/C = new faded_candle(src.loc)
+	if(istype(loc, /mob))
+		var/mob/M = loc
+		M.put_in_hands(C)
 
 /obj/item/candle/attack_self(mob/user)
 	if(lit)
@@ -117,6 +117,8 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	item_state = "black_candle"
 
 	light_color = LIGHT_COLOR_GHOST_CANDLE
+
+	faded_candle = /obj/item/trash/candle/ghost
 
 /obj/item/candle/ghost/atom_init()
 	. = ..()
@@ -189,6 +191,8 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 
 	icon_state = "red_candle"
 	item_state = "red_candle"
+
+	faded_candle = /obj/item/trash/candle/red
 
  // Infinite candle (Admin item)
 /obj/item/candle/infinite
