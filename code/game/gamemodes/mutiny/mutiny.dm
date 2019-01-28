@@ -196,16 +196,16 @@ datum/game_mode/mutiny
 		return 0
 
 	proc/replace_nuke_with_ead()
-		for(var/obj/machinery/nuclearbomb/N in machines)
+		for(var/obj/machinery/nuclearbomb/N in poi_list)
 			ead = new(N.loc, src)
 			qdel(N)
 
 	proc/unbolt_vault_door()
-		var/obj/machinery/door/airlock/vault = locate(/obj/machinery/door/airlock/vault)
-		vault.locked = 0
+		var/obj/machinery/door/airlock/vault/V = locate() in airlock_list
+		V.locked = 0
 
 	proc/make_secret_transcript()
-		var/obj/machinery/computer/telecomms/server/S = locate(/obj/machinery/computer/telecomms/server)
+		var/obj/machinery/computer/telecomms/server/S = locate() in computer_list
 		if(!S) return
 
 		var/obj/item/weapon/paper/crumpled/bloody/transcript = new(S.loc)

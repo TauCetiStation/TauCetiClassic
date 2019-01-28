@@ -1,5 +1,9 @@
 {
-    "changelogPath": "html/changelog.html",
+    "changelogLocation": {
+        "org": "TauCetiStation",
+        "repo": "ClassicChangelog",
+        "path": "index.html"
+    },
     "changelogClasses": {
         "rscadd": "Feature",
         "rscdel": "Revert / Removal",
@@ -16,6 +20,6 @@
     "diffPathsLabels": {
         "^diff.+/icons/.+\\.dmi$": "Sprites",
         "^diff.+/maps/.+\\.dmm$": "Map Edit",
-        "^diff.+/tools/.+$": "Tools"
+        "^diff --git a/tools/.+$": "Tools"
     }
 }

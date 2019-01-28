@@ -270,3 +270,12 @@ USE_ALIEN_JOB_RESTRICTION
 ##client with version < BYOND_VERSION_MIN will be kicked, < recommend - just warned
 BYOND_VERSION_MIN 500
 # BYOND_VERSION_RECOMMEND 512
+
+## Changelog link
+CHANGELOG_LINK https://changelog.taucetistation.org
+
+## Changelog hash link
+CHANGELOG_HASH_LINK https://changelog.taucetistation.org/hash.txt
+
+## Repository link
+REPOSITORY_LINK https://github.com/TauCetiStation/TauCetiClassic

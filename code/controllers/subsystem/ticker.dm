@@ -372,7 +372,7 @@ var/datum/subsystem/ticker/ticker
 				captainless=0
 			if(player.mind.assigned_role != "MODE")
 				SSjob.EquipRank(player, player.mind.assigned_role, 0)
-				EquipCustomItems(player)
+			SSquirks.AssignQuirks(player, player.client, TRUE)
 	if(captainless)
 		for(var/mob/M in player_list)
 			if(!isnewplayer(M))
@@ -422,15 +422,9 @@ var/datum/subsystem/ticker/ticker
 	//Silicon laws report
 	var/ai_completions = "<h1>Round End Information</h1><HR>"
 
-	var/ai_or_borgs_in_round = 0
-	for (var/mob/living/silicon/silicon in mob_list)
-		if(silicon)
-			ai_or_borgs_in_round = 1
-			break
-
-	if(ai_or_borgs_in_round)
+	if(silicon_list.len)
 		ai_completions += "<H3>Silicons Laws</H3>"
-		for (var/mob/living/silicon/ai/aiPlayer in mob_list)
+		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
 			if(!aiPlayer)
 				continue
 			var/icon/flat = getFlatIcon(aiPlayer)
@@ -450,7 +444,7 @@ var/datum/subsystem/ticker/ticker
 
 		var/dronecount = 0
 
-		for (var/mob/living/silicon/robot/robo in mob_list)
+		for (var/mob/living/silicon/robot/robo in silicon_list)
 			if(!robo)
 				continue
 			if(istype(robo,/mob/living/silicon/robot/drone))

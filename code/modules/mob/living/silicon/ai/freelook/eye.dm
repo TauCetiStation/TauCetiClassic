@@ -16,7 +16,12 @@
 /mob/camera/Eye/ai
 	var/mob/living/silicon/ai/ai = null
 
+/mob/camera/Eye/ai/atom_init()
+	. = ..()
+	ai_eyes_list += src
+
 /mob/camera/Eye/ai/Destroy()
+	ai_eyes_list -= src
 	ai = null
 	return ..()
 

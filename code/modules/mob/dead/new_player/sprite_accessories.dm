@@ -830,6 +830,10 @@
 	name = "Country"
 	icon_state = "hair_country"
 
+/datum/sprite_accessory/hair/ougi
+	name = "Ougi"
+	icon_state = "hair_ougi"
+
 //datum/sprite_accessory/hair/modern
 //	name = "Modern"
 //	icon_state = "hair_modern"
@@ -846,7 +850,7 @@
 //	gender = FEMALE
 
 //datum/sprite_accessory/hair/quadcurls
-//	name = "Quadcurls "
+//	name = "Quadcurls"
 //	icon_state = "hair_quadcurls"
 //	gender = FEMALE
 

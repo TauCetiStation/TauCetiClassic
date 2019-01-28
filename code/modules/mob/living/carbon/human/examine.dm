@@ -482,6 +482,12 @@
 				if(V.stealth_active)
 					to_chat(H, "<span class='notice'>You can't focus your eyes on [src].</span>")
 					return
+
+	if(roundstart_quirks.len && isobserver(user))
+		var/mob/dead/observer/O = user
+		if(O.started_as_observer)
+			msg += "<span class='notice'>[t_He] has these traits: [get_trait_string()].</span>"
+
 	to_chat(user, msg)
 
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.

@@ -329,7 +329,7 @@ field_generator power level display
 
 /obj/machinery/field_generator/proc/warn_admins()
 	var/temp = TRUE //stops spam
-	for(var/obj/singularity/O in machines)
+	for(var/obj/singularity/O in poi_list)
 		if(O.last_warning && temp)
 			if((world.time - O.last_warning) > 50) //to stop message-spam
 				temp = FALSE

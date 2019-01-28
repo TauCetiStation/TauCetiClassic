@@ -1103,7 +1103,7 @@
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_general_digest(mob/living/M)
 	..()
-	M.Stun(2)
+	M.Stun(10)
 
 /datum/reagent/consumable/ethanol/irish_cream
 	name = "Irish Cream"

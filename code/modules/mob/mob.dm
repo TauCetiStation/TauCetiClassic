@@ -1,7 +1,7 @@
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	mob_list -= src
 	dead_mob_list -= src
-	living_mob_list -= src
+	alive_mob_list -= src
 	ghostize(bancheck = TRUE)
 	return ..()
 
@@ -12,7 +12,7 @@
 	if(stat == DEAD)
 		dead_mob_list += src
 	else
-		living_mob_list += src
+		alive_mob_list += src
 	. = ..()
 
 /mob/proc/Cell()
@@ -1026,7 +1026,7 @@ mob/proc/yank_out_object()
 
 /mob/proc/get_ghost(even_if_they_cant_reenter = 0)
 	if(mind)
-		for(var/mob/dead/observer/G in dead_mob_list)
+		for(var/mob/dead/observer/G in observer_list)
 			if(G.mind == mind)
 				if(G.can_reenter_corpse || even_if_they_cant_reenter)
 					return G

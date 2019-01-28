@@ -207,6 +207,9 @@
 	H.ckey = R.ckey
 	to_chat(H, "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>")
 
+	for(var/V in R.quirks)
+		new V(H)
+
 	// -- Mode/mind specific stuff goes here
 	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
 	if(mode)
@@ -462,7 +465,7 @@
 
 /obj/item/weapon/storage/box/disks
 	name = "Diskette Box"
-	icon_state = "disk_kit"
+	icon_state = "disk_box"
 
 /obj/item/weapon/storage/box/disks/atom_init()
 	. = ..()
