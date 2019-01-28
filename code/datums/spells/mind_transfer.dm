@@ -60,7 +60,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 		to_chat(user, "Their mind seems to be protected, so you only manage to break it")
 		to_chat(target, "You feel a flash of pain in your head")
 		for(var/obj/item/weapon/implant/mindshield/L in target)
-			if(L.implanted)
+			if(L.implanted && L.imp_in == target)
 				qdel(L)
 		target.adjustBrainLoss(15)
 		user.Paralyse(paralysis_amount_caster)
