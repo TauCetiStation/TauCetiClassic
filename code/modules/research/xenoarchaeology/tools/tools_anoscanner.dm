@@ -183,6 +183,7 @@
 	..()
 
 /obj/item/device/searcher/after_throw(datum/callback/callback)
+	..()
 	if(wavescanner)
 		wavescanner.remove_processor()
 		playsound(src, 'sound/items/buttonswitch.ogg', 50, 1)

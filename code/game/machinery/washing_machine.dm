@@ -282,6 +282,9 @@
 		if ( istype(W,/obj/item/clothing/head/helmet ) )
 			to_chat(user, "This item does not fit.")
 			return
+		if (istype(W, /obj/item/clothing/gloves/pipboy))
+			to_chat(user, "This item does not fit.")
+			return
 		if(!W.canremove) //if "can't drop" item
 			to_chat(user, "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>")
 			return
