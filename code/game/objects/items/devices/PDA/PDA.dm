@@ -1256,7 +1256,7 @@
 
 /obj/item/device/pda/clown/Crossed(mob/living/carbon/C) //Clown PDA is slippery.
 	if(istype(C))
-		if (C.slip("the PDA", 6, 2) && ishuman(C) && src.cartridge.charges < 5)
+		if (C.slip("the PDA", 4, 2) && ishuman(C) && src.cartridge.charges < 5)
 			cartridge.charges++
 
 /obj/item/device/pda/proc/available_pdas()
