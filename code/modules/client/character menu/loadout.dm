@@ -20,7 +20,7 @@
 	. += "<tr><td colspan=3><center><b>"
 
 	var/firstcat = 1
-	for(var/category in loadout_categories)
+	for(var/category in loadout_categories + list("Custom items"))
 		if(firstcat)
 			firstcat = 0
 		else
@@ -30,6 +30,9 @@
 		else
 			. += " <a href='?_src_=prefs;preference=loadout;select_category=[category]'>[category]</a> "
 	. += "</b></center></td></tr>"
+	if(gear_tab == "Custom items")
+		. += FluffLoadout(user)
+		return .
 
 	var/datum/loadout_category/LC = loadout_categories[gear_tab]
 	. += "<tr><td colspan=3><hr></td></tr>"
@@ -79,6 +82,8 @@
 
 			if((total_cost + TG.cost) <= (user.client.supporter ? MAX_GEAR_COST_SUPPORTER : MAX_GEAR_COST))
 				gear += TG.display_name
+	else if(href_list["toggle_custom_gear"])
+		toggle_custom_item(user, href_list["toggle_custom_gear"])
 
 	else if(href_list["gear"] && href_list["tweak"])
 		var/datum/gear/gear = gear_datums[href_list["gear"]]

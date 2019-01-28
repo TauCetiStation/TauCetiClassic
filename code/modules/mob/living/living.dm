@@ -1,4 +1,9 @@
+/mob/living/atom_init()
+	. = ..()
+	living_list += src
+
 /mob/living/Destroy()
+	living_list -= src
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 
@@ -521,7 +526,7 @@
 	// remove the character from the list of the dead
 	if(stat == DEAD)
 		dead_mob_list -= src
-		living_mob_list += src
+		alive_mob_list += src
 		tod = null
 		timeofdeath = 0
 
@@ -543,7 +548,7 @@
 	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
 	BP.disfigured = FALSE
 
-	for (var/obj/item/weapon/organ/head/H in world) // damn son, where'd you get this?
+	for (var/obj/item/weapon/organ/head/H in organ_head_list) // damn son, where'd you get this?
 		if(H.brainmob)
 			if(H.brainmob.real_name == src.real_name)
 				if(H.brainmob.mind)

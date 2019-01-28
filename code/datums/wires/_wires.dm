@@ -102,7 +102,7 @@ var/list/same_wires = list()
 
 /datum/wires/Destroy()
 	wires = null
-	QDEL_LIST_ASSOC(signallers)
+	QDEL_LIST_ASSOC_VAL(signallers)
 	return ..()
 
 /datum/wires/proc/randomize_wires()

@@ -122,7 +122,7 @@ var/global/list/scrap_base_cache = list()
 	return ..()
 
 //stupid shard copypaste
-/obj/structure/scrap/Crossed(AM as mob|obj)
+/obj/structure/scrap/Crossed(atom/movable/AM)
 	if(ismob(AM))
 		var/mob/M = AM
 		playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
@@ -205,6 +205,8 @@ var/global/list/scrap_base_cache = list()
 		if(!BP)
 			return 0
 		if(BP.status & ORGAN_ROBOT)
+			return 0
+		if(victim.species.flags[NO_MINORCUTS])
 			return 0
 		to_chat(user, "<span class='danger'>Ouch! You cut yourself while picking through \the [src].</span>")
 		BP.take_damage(5, null, DAM_SHARP | DAM_EDGE, "Sharp debris")

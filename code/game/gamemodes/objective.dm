@@ -606,7 +606,9 @@ datum/objective/steal
 				for(var/obj/item/clothing/suit/space/space_ninja/S in all_items) //Let an AI downloaded into a space ninja suit count
 					if(S.AI && S.AI.stat != DEAD)
 						return 1
-				for(var/mob/living/silicon/ai/ai in living_mob_list)
+				for(var/mob/living/silicon/ai/ai in ai_list)
+					if(ai.stat == DEAD)
+						continue
 					if(istype(ai.loc, /turf))
 						var/area/check_area = get_area(ai)
 						if(istype(check_area, /area/shuttle/escape/centcom))
@@ -699,11 +701,11 @@ datum/objective/absorb
 		if (ticker)
 			var/n_p = 1 //autowin
 			if (ticker.current_state == GAME_STATE_SETTING_UP)
-				for(var/mob/dead/new_player/P in player_list)
+				for(var/mob/dead/new_player/P in new_player_list)
 					if(P.client && P.ready && P.mind!=owner)
 						n_p ++
 			else if (ticker.current_state == GAME_STATE_PLAYING)
-				for(var/mob/living/carbon/human/P in player_list)
+				for(var/mob/living/carbon/human/P in human_list)
 					if(P.client && !(P.mind in ticker.mode.changelings) && P.mind!=owner)
 						n_p ++
 			target_amount = min(target_amount, n_p)

@@ -20,6 +20,14 @@
 	#define SEC_HUD 1 //Security HUD mode
 	#define MED_HUD 2 //Medical HUD mode
 
+/mob/living/silicon/atom_init()
+	. = ..()
+	silicon_list += src
+
+/mob/living/silicon/Destroy()
+	silicon_list -= src
+	return ..()
+
 /mob/living/silicon/proc/show_laws()
 	return
 

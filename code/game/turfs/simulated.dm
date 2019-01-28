@@ -1,5 +1,7 @@
 /turf/simulated
 	name = "station"
+	plane = FLOOR_PLANE
+
 	var/wet = 0
 	var/image/wet_overlay = null
 	var/thermite = 0

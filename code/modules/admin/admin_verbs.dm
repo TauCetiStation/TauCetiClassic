@@ -32,6 +32,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/get_whitelist, 			//Whitelist
 	/client/proc/add_to_whitelist,
 	/datum/admins/proc/whitelist_panel,
+	/datum/admins/proc/customitems_panel,
+	/datum/admins/proc/customitemspremoderation_panel,
 	/datum/admins/proc/library_recycle_bin,
 	/client/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
 	/client/proc/Getmob,				/*teleports a mob to our location*/
@@ -71,7 +73,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggledebuglogs,
 	/client/proc/toggleghostwriters,
 	/client/proc/toggledrones,
-	/client/proc/check_customitem_activity,
 	/client/proc/man_up,
 	/client/proc/global_man_up,
 	/client/proc/response_team, // Response Teams admin verb
@@ -105,7 +106,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/send_space_ninja,
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_add_random_ai_law,
-	/client/proc/make_sound,
+//	/client/proc/make_sound,
 	/client/proc/toggle_random_events,
 	/client/proc/set_global_ooc,
 	/client/proc/editappear,
@@ -142,7 +143,6 @@ var/list/admin_verbs_server = list(
 	/datum/admins/proc/toggle_aliens,
 	/datum/admins/proc/toggle_space_ninja,
 	/client/proc/toggle_random_events,
-	/client/proc/check_customitem_activity,
 	/client/proc/nanomapgen_DumpImage
 	)
 var/list/admin_verbs_debug = list(
@@ -237,7 +237,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_add_random_ai_law,
 	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/make_sound,
+//	/client/proc/make_sound,
 	/client/proc/toggle_random_events,
 	/client/proc/cmd_admin_add_random_ai_law,
 	/client/proc/Set_Holiday,
@@ -647,6 +647,9 @@ var/list/admin_verbs_hideable = list(
 	log_admin("[key_name(usr)] gave [key_name(T)] a [disease_type] disease2 with infection chance [D.infectionchance].")
 	message_admins("[key_name_admin(usr)] gave [key_name(T)] a [disease_type] disease2 with infection chance [D.infectionchance].")
 
+/* disabled because this is not a sound but a hearable message, and also very hard to use since you need to choose an item from a huge list and not a view at least.
+   so, this proc needs rewrite to be a verb per object or something like that and also better name because it can be named more obvious than using desc.
+   also "in world"
 /client/proc/make_sound(obj/O in world) // -- TLE
 	set category = "Special Verbs"
 	set name = "Make Sound"
@@ -660,7 +663,7 @@ var/list/admin_verbs_hideable = list(
 		log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound")
 		message_admins("\blue [key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[O.x];Y=[O.y];Z=[O.z]'>JMP</a>) make a sound")
 		feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
+*/
 
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
@@ -746,7 +749,7 @@ var/list/admin_verbs_hideable = list(
 //	feedback_add_details("admin_verb","MP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-/client/proc/editappear(mob/living/carbon/human/M as mob in world)
+/client/proc/editappear(mob/living/carbon/human/M as mob in human_list)
 	set name = "Edit Appearance"
 	set category = "Fun"
 
@@ -882,7 +885,7 @@ var/list/admin_verbs_hideable = list(
 		to_chat(usr, "You now won't get debug log messages")
 
 
-/client/proc/man_up(mob/T as mob in mob_list)
+/client/proc/man_up(mob/T as mob in player_list)
 	set category = "Fun"
 	set name = "Man Up"
 	set desc = "Tells mob to man up and deal with it."
@@ -899,7 +902,7 @@ var/list/admin_verbs_hideable = list(
 	set name = "Man Up Global"
 	set desc = "Tells everyone to man up and deal with it."
 
-	for (var/mob/T as mob in mob_list)
+	for (var/mob/T as mob in player_list)
 		to_chat(T, "<br><center><span class='notice'><b><font size=4>Man up.<br> Deal with it.</font></b><br>Move on.</span></center><br>")
 		T << 'sound/voice/ManUp1.ogg'
 
@@ -963,7 +966,7 @@ var/list/admin_verbs_hideable = list(
 	if(holder && holder.fakekey)
 		display_name = holder.fakekey
 
-	for(var/mob/M in mob_list)
+	for(var/mob/M in player_list)
 		if((M.mind && M.mind.special_role) || (M.client && M.client.holder))
 			to_chat(M, "<font color='#960018'><span class='ooc'><span class='prefix'>Antag-OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
 
@@ -1042,7 +1045,7 @@ var/list/admin_verbs_hideable = list(
 	if(alert("Are you really sure?",,"Yes","No") != "Yes")
 		return
 
-	for(var/atom/O in world)
+	for(var/atom/O in not_world)
 		if(O.icon)
 			if(O.color)
 				O.color = null
@@ -1086,7 +1089,7 @@ var/centcom_barriers_stat = 1
 
 	for(var/obj/effect/landmark/trololo/L in landmarks_list)
 		L.active = centcom_barriers_stat
-	for(var/obj/structure/centcom_barrier/B in world)
+	for(var/obj/structure/centcom_barrier/B in centcom_barrier_list)
 		B.density = centcom_barriers_stat
 
 	log_admin("[key_name(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")
@@ -1111,3 +1114,11 @@ var/centcom_barriers_stat = 1
 	invisibility = 101
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x3"
+
+/obj/structure/centcom_barrier/atom_init()
+	. = ..()
+	centcom_barrier_list += src
+
+/obj/structure/centcom_barrier/Destroy()
+	centcom_barrier_list -= src
+	return ..()

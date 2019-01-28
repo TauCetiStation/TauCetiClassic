@@ -90,7 +90,12 @@
 
 	. = ..()
 
+	monkey_list += src
 	update_icons()
+
+/mob/living/carbon/monkey/Destroy()
+	monkey_list -= src
+	return ..()
 
 /mob/living/carbon/monkey/unathi/atom_init()
 
