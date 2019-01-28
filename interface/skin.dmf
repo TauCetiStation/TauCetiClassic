@@ -552,7 +552,7 @@ menu "menu"
 		name = "&Nearest Neighbor"
 		command = ".winset \"mapwindow.map.zoom-mode=distort\""
 		category = "&Scaling Mode"
-		is-checked = true
+		is-checked = false
 		can-check = true
 		group = "scaling"
 		is-disabled = false
@@ -561,7 +561,7 @@ menu "menu"
 		name = "&Point Sampling"
 		command = ".winset \"mapwindow.map.zoom-mode=normal\""
 		category = "&Scaling Mode"
-		is-checked = false
+		is-checked = true
 		can-check = true
 		group = "scaling"
 		is-disabled = false
@@ -1231,7 +1231,7 @@ window "mapwindow"
 		border = none
 		drop-zone = true
 		right-click = false
-		saved-params = "icon-size"
+		saved-params = "icon-size;zoom-mode"
 		on-size = ""
 		icon-size = 0
 		text-mode = false
@@ -1240,7 +1240,6 @@ window "mapwindow"
 		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
 		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
 		style = ""
-		zoom-mode = distort
 
 window "outputwindow"
 	elem "outputwindow"
