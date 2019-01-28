@@ -15,7 +15,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banana_peel"
 	item_state = "banana_peel"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
@@ -33,7 +33,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soap"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
@@ -177,7 +177,7 @@
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
 	throwforce = 3
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	throw_speed = 3
 	throw_range = 15
 	attack_verb = list("HONKED")
@@ -211,7 +211,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "laugh_button_on"
 	var/cooldown = FALSE
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 /obj/item/toy/laugh_button/attack_self(mob/user)
 	if(!cooldown)
