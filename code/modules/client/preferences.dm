@@ -275,17 +275,17 @@ var/const/MAX_SAVE_SLOTS = 10
 	character.g_eyes = g_eyes
 	character.b_eyes = b_eyes
 
-	character.natural_r_hair = r_hair
-	character.natural_g_hair = g_hair
-	character.natural_b_hair = b_hair
+	character.r_hair = r_hair
+	character.g_hair = g_hair
+	character.b_hair = b_hair
 
 	character.r_hair = r_hair
 	character.g_hair = g_hair
 	character.b_hair = b_hair
 
-	character.natural_r_facial = r_facial
-	character.natural_g_facial = g_facial
-	character.natural_b_facial = b_facial
+	character.r_facial = r_facial
+	character.g_facial = g_facial
+	character.b_facial = b_facial
 
 	character.r_facial = r_facial
 	character.g_facial = g_facial

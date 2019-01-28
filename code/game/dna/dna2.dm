@@ -133,13 +133,13 @@ var/global/list/datum/dna/gene/dna_genes[0]
 		character.f_style = "Shaved"
 	var/beard	= facial_hair_styles_list.Find(character.f_style)
 
-	SetUIValueRange(DNA_UI_HAIR_R,    character.natural_r_hair,    255,    1)
-	SetUIValueRange(DNA_UI_HAIR_G,    character.natural_g_hair,    255,    1)
-	SetUIValueRange(DNA_UI_HAIR_B,    character.natural_b_hair,    255,    1)
+	SetUIValueRange(DNA_UI_HAIR_R,    character.r_hair,    255,    1)
+	SetUIValueRange(DNA_UI_HAIR_G,    character.g_hair,    255,    1)
+	SetUIValueRange(DNA_UI_HAIR_B,    character.b_hair,    255,    1)
 
-	SetUIValueRange(DNA_UI_BEARD_R,   character.natural_r_facial,  255,    1)
-	SetUIValueRange(DNA_UI_BEARD_G,   character.natural_g_facial,  255,    1)
-	SetUIValueRange(DNA_UI_BEARD_B,   character.natural_b_facial,  255,    1)
+	SetUIValueRange(DNA_UI_BEARD_R,   character.r_facial,  255,    1)
+	SetUIValueRange(DNA_UI_BEARD_G,   character.g_facial,  255,    1)
+	SetUIValueRange(DNA_UI_BEARD_B,   character.b_facial,  255,    1)
 
 	SetUIValueRange(DNA_UI_EYES_R,    character.r_eyes,    255,    1)
 	SetUIValueRange(DNA_UI_EYES_G,    character.g_eyes,    255,    1)

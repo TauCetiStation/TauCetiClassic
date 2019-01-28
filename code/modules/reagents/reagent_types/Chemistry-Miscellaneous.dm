@@ -664,34 +664,46 @@
 		var/g_tweak = ((data["g_color"] * volume * (color_weight / 10)) / 10)
 		var/b_tweak = ((data["b_color"] * volume * (color_weight / 10)) / 10)
 		var/volume_coefficient = max((10-volume)/10, 0)
+		var/hair_changes_occured = FALSE
+		var/body_changes_occured = FALSE
 		if(H.client && volume >= 5 && !H.glasses)
 			H.eye_blurry = max(H.eye_blurry, volume)
 			H.eye_blind = max(H.eye_blind, 1)
-		if(volume >= 10 && H.species && H.species.flags[HAS_SKIN_COLOR])
+		if(volume >= 10 && H.species.flags[HAS_SKIN_COLOR])
 			if(!H.wear_suit && !H.w_uniform && !H.shoes && !H.head && !H.wear_mask) // You either paint the full body, or beard/hair
-				H.r_skin = Clamp(round(H.r_skin*max((100-volume)/100, 0) + r_tweak*0.1), 0, 255) // Full body painting is costly! Hence, *0.1
-				H.g_skin = Clamp(round(H.g_skin*max((100-volume)/100, 0) + g_tweak*0.1), 0, 255)
-				H.b_skin = Clamp(round(H.b_skin*max((100-volume)/100, 0) + b_tweak*0.1), 0, 255)
-				H.r_hair = Clamp(round(H.r_hair*max((100-volume)/100, 0) + r_tweak*0.1), 0, 255) // If you're painting full body, all the painting is costly.
-				H.g_hair = Clamp(round(H.g_hair*max((100-volume)/100, 0) + g_tweak*0.1), 0, 255)
-				H.b_hair = Clamp(round(H.b_hair*max((100-volume)/100, 0) + b_tweak*0.1), 0, 255)
-				H.r_facial = Clamp(round(H.r_facial*max((100-volume)/100, 0) + r_tweak*0.1), 0, 255)
-				H.g_facial = Clamp(round(H.g_facial*max((100-volume)/100, 0) + g_tweak*0.1), 0, 255)
-				H.b_facial = Clamp(round(H.b_facial*max((100-volume)/100, 0) + b_tweak*0.1), 0, 255)
+				H.r_skin = Clamp(round(H.r_skin * max((100-volume)/100, 0) + r_tweak * 0.1), 0, 255) // Full body painting is costly! Hence, *0.1
+				H.g_skin = Clamp(round(H.g_skin * max((100-volume)/100, 0) + g_tweak * 0.1), 0, 255)
+				H.b_skin = Clamp(round(H.b_skin * max((100-volume)/100, 0) + b_tweak * 0.1), 0, 255)
+				H.dyed_r_hair = Clamp(round(H.dyed_r_hair * max((100-volume)/100, 0) + r_tweak * 0.1), 0, 255) // If you're painting full body, all the painting is costly.
+				H.dyed_g_hair = Clamp(round(H.dyed_g_hair * max((100-volume)/100, 0) + g_tweak * 0.1), 0, 255)
+				H.dyed_b_hair = Clamp(round(H.dyed_b_hair * max((100-volume)/100, 0) + b_tweak * 0.1), 0, 255)
+				H.hair_painted = TRUE
+				H.dyed_r_facial = Clamp(round(H.dyed_r_facial * max((100-volume)/100, 0) + r_tweak * 0.1), 0, 255)
+				H.dyed_g_facial = Clamp(round(H.dyed_g_facial * max((100-volume)/100, 0) + g_tweak * 0.1), 0, 255)
+				H.dyed_b_facial = Clamp(round(H.dyed_b_facial * max((100-volume)/100, 0) + b_tweak * 0.1), 0, 255)
+				H.facial_painted = TRUE
+				hair_changes_occured = TRUE
+				body_changes_occured = TRUE
 		else if(H.species && H.species.name in list(HUMAN, UNATHI, TAJARAN))
 			if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
-				H.r_hair = Clamp(round(H.r_hair*volume_coefficient + r_tweak), 0, 255)
-				H.g_hair = Clamp(round(H.g_hair*volume_coefficient + g_tweak), 0, 255)
-				H.b_hair = Clamp(round(H.b_hair*volume_coefficient + b_tweak), 0, 255)
+				H.r_hair = Clamp(round(H.r_hair * volume_coefficient + r_tweak), 0, 255)
+				H.g_hair = Clamp(round(H.g_hair * volume_coefficient + g_tweak), 0, 255)
+				H.b_hair = Clamp(round(H.b_hair * volume_coefficient + b_tweak), 0, 255)
+				hair_changes_occured = TRUE
 			if(!((H.wear_mask && (H.wear_mask.flags & HEADCOVERSMOUTH)) || (H.head && (H.head.flags & HEADCOVERSMOUTH))) && H.f_style != "Shaved")
-				H.r_facial = Clamp(round(H.r_facial*volume_coefficient + r_tweak), 0, 255)
-				H.g_facial = Clamp(round(H.g_facial*volume_coefficient + g_tweak), 0, 255)
-				H.b_facial = Clamp(round(H.b_facial*volume_coefficient + b_tweak), 0, 255)
+				H.dyed_r_facial = Clamp(round(H.dyed_r_facial * volume_coefficient + r_tweak), 0, 255)
+				H.dyed_g_facial = Clamp(round(H.dyed_g_facial * volume_coefficient + g_tweak), 0, 255)
+				H.dyed_b_facial = Clamp(round(H.dyed_b_facial * volume_coefficient + b_tweak), 0, 255)
+				hair_changes_occured = TRUE
 		if(!H.head && !H.wear_mask && H.h_style == "Bald" && H.f_style == "Shaved" && volume >= 5)
 			H.lip_style = "spray_face"
 			H.lip_color = color
-		H.update_hair()
-		H.update_body()
+			hair_changes_occured = TRUE
+			body_changes_occured = TRUE
+		if(hair_changes_occured)
+			H.update_hair()
+		if(body_changes_occured)
+			H.update_body()
 
 /datum/reagent/paint_remover
 	name = "Paint Remover"
@@ -704,13 +716,21 @@
 	if(method == TOUCH)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.r_hair = H.natural_r_hair
-			H.g_hair = H.natural_g_hair
-			H.b_hair = H.natural_b_hair
-			H.r_facial = H.natural_r_facial
-			H.g_facial = H.natural_g_facial
-			H.b_facial = H.natural_b_facial
-			H.update_hair()
+			var/changes_occured = FALSE
+			if(H.hair_painted && !(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
+				H.dyed_r_hair = H.r_hair
+				H.dyed_g_hair = H.g_hair
+				H.dyed_b_hair = H.b_hair
+				H.hair_painted = FALSE
+				changes_occured = TRUE
+			if(H.facial_painted && !((H.wear_mask && (H.wear_mask.flags & HEADCOVERSMOUTH)) || (H.head && (H.head.flags & HEADCOVERSMOUTH))) && H.f_style != "Shaved")
+				H.dyed_r_facial = H.r_facial
+				H.dyed_g_facial = H.g_facial
+				H.dyed_b_facial = H.b_facial
+				H.facial_painted = FALSE
+				changes_occured = TRUE
+			if(changes_occured)
+				H.update_hair()
 
 /datum/reagent/paint_remover/reaction_turf(turf/T, volume)
 	if(istype(T) && T.icon != initial(T.icon))
