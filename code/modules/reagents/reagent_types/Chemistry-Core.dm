@@ -56,7 +56,6 @@
 		qdel(hotspot)
 
 /datum/reagent/water/reaction_obj(obj/O, volume)
-	src = null
 	var/turf/T = get_turf(O)
 	var/hotspot = (locate(/obj/fire) in T)
 	if(hotspot && !istype(T, /turf/space))
@@ -69,6 +68,11 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 		if(!cube.wrapped)
 			cube.Expand()
+	else if(istype(O, /obj/machinery/camera))
+		var/obj/machinery/camera/C = O
+		if(C.painted)
+			C.remove_paint_state()
+			C.color = null
 
 /datum/reagent/water/on_diona_digest(mob/living/M)
 	..()

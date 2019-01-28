@@ -58,5 +58,3 @@ var/global/list/PDAs = list()
 
 var/global/list/all_areas = list()
 var/global/list/machines = list()
-
-var/global/list/color_mixer_icons_cache = list()

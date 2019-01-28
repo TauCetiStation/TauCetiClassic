@@ -5,7 +5,6 @@ it needs to create more trails.A beaker could have a steam_trail_follow system s
 would spawn and follow the beaker, even if it is carried or thrown.
 */
 
-
 /obj/effect/effect
 	name = "effect"
 	icon = 'icons/effects/effects.dmi'

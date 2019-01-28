@@ -79,17 +79,12 @@
 			var/fill_perc = round(tank.reagents.total_volume * 100 / tank.reagents.maximum_volume, 25)
 			var/tank_color = mix_color_from_reagents(tank.reagents.reagent_list)
 			var/is_open = "[filling_tank_id == tank_id ? "open" : "closed"]"
-			var/tank_hash = "[tank_id]||[tank_color]||[fill_perc]||[is_open]"
 
-			if(color_mixer_icons_cache[tank_hash])
-				overlays += color_mixer_icons_cache[tank_hash]
-			else
-				var/image/I = image('icons/obj/reagentfillings.dmi', "[tank_id]_[fill_perc]")
-				var/list/r_g_b = ReadRGB(tank_color)
-				I.color = RGB_CONTRAST(r_g_b[1], r_g_b[2], r_g_b[3])
-				I.overlays += icon('icons/obj/barber.dmi', "[tank_id]_[is_open]")
-				color_mixer_icons_cache[tank_hash] = I
-				overlays += I
+			var/image/I = image('icons/obj/reagentfillings.dmi', "[tank_id]_[fill_perc]")
+			var/list/r_g_b = ReadRGB(tank_color)
+			I.color = RGB_CONTRAST(r_g_b[1], r_g_b[2], r_g_b[3])
+			I.overlays += icon('icons/obj/barber.dmi', "[tank_id]_[is_open]")
+			overlays += I
 
 /obj/machinery/color_mixer/proc/isWireCut(wireIndex)
 	return wires.is_index_cut(wireIndex)
@@ -253,21 +248,7 @@ A proc that does all the animations before mix()-ing.
 	updateUsrDialog()
 
 /obj/machinery/color_mixer/attack_hand(mob/living/user)
-	if(user.a_intent == I_GRAB)
-		if(!processing && !panel_open)
-			if(beakers["output"])
-				beakers["output"].forceMove(loc)
-				user.put_in_hands(beakers["output"])
-				err_log("\[[worldtime2text()]\]<font color='blue'>NOT #104:</font> Output Tank was extracted.</span>", type = "NOT")
-				to_chat(user, "<span class='notice'>You take out [beakers["output"]] out of [src].</span>")
-				beakers["output"] = null
-				updateUsrDialog()
-				update_icon()
-			else
-				to_chat(user, "<span class='warning'>You reach for the beaker inside [src], but there is none.</span>")
-		else
-			to_chat(user, "<span class='warning'>You reach for the beaker inside [src], but it is currently busy.</span>")
-	else if(user.a_intent == I_HURT && processing)
+	if(user.a_intent == I_HURT && processing)
 		if(emagged)
 			to_chat(user, "<span class='warning'>You stick your hand into the machine, and...</span>")
 			if(ishuman(user))
@@ -314,8 +295,7 @@ A proc that does all the animations before mix()-ing.
 
 	if(!beakers["output"])
 		if(istype(O, /obj/item/weapon/reagent_containers/glass/beaker) && !filling_tank_id)
-			user.drop_from_inventory(O)
-			O.forceMove(src)
+			user.drop_from_inventory(O, src)
 			beakers["output"] = O
 			err_log("\[[worldtime2text()]\]<font color='blue'>NOT #103:</font> Output Tank was loaded.</span>", type = "NOT")
 			to_chat(user, "<span class='notice'>You put [O] inside [src].</span>")
@@ -495,9 +475,7 @@ A proc that does all the animations before mix()-ing.
 
 /obj/machinery/color_mixer/Topic(href, href_list)
 	. = ..()
-	if(!. || !istype(usr, /mob/living))
-		return
-	if(usr.a_intent == I_GRAB && beakers["output"])
+	if(!.)
 		return
 
 	var/mob/living/user = usr

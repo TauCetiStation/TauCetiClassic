@@ -13345,7 +13345,6 @@
 	},
 /area/rnd/xenobiology)
 "awg" = (
-/obj/structure/flora/plant/random,
 /obj/machinery/light_switch{
 	pixel_x = 27
 	},
@@ -76413,6 +76412,7 @@
 	c_tag = "Barbershop";
 	dir = 2
 	},
+/obj/machinery/color_mixer,
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "purplechecker"
@@ -76869,6 +76869,7 @@
 	},
 /area/crew_quarters/barbershop)
 "pXb" = (
+/obj/structure/closet/secure_closet/barber,
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "purplechecker"
@@ -77330,7 +77331,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/structure/closet/secure_closet/barber,
+/obj/structure/flora/plant/random,
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "purplechecker"
