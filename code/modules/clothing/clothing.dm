@@ -182,9 +182,10 @@ BLIND     // can't see anything
 	w_class = 2.0
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 0.9
-	var/wired = 0
+	var/wired = FALSE
 	var/obj/item/weapon/stock_parts/cell/cell = 0
-	var/clipped = 0
+	var/clipped = FALSE
+	var/protect_fingers = TRUE // Are we gonna get hurt when searching in the trash piles
 	body_parts_covered = ARMS
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")

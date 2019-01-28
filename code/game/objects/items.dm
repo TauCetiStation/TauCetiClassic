@@ -82,7 +82,7 @@
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
-/obj/item/device/proc/health_analyze(mob/living/M, mob/living/user, mode)
+/obj/item/proc/health_analyze(mob/living/M, mob/living/user, mode)
 	var/message
 	if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>", "<span class = 'warning'>You try to analyze the floor's vitals!</span>")

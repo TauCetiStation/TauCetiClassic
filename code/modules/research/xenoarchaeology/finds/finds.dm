@@ -29,13 +29,10 @@
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "strange"
 	var/obj/item/weapon/inside
-	var/method = 0// 0 = fire, 1 = brush, 2 = pick
 	origin_tech = "materials=5"
 
 /obj/item/weapon/ore/strangerock/atom_init(mapload, inside_item_type = 0)
 	. = ..()
-
-	//method = rand(0,2)
 	if(inside_item_type)
 		new/obj/item/weapon/archaeological_find(src, inside_item_type)
 		inside = locate() in contents
@@ -45,25 +42,37 @@
 		src.visible_message("The [src] crumbles away, leaving some dust and gravel behind.")*/
 
 /obj/item/weapon/ore/strangerock/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/weldingtool/))
-		var/obj/item/weapon/weldingtool/w = W
-		user.SetNextMove(CLICK_CD_INTERACT)
-		if(w.isOn())
-			if(w.get_fuel() >= 4 && !src.method)
-				if(inside)
-					inside.loc = get_turf(src)
-					for(var/mob/M in viewers(world.view, user))
-						M.show_message("<span class='info'>[src] burns away revealing [inside].</span>",1)
+	if(istype(W, /obj/item/weapon/pickaxe/brush))
+		if(do_after(user, 20, target = src) && W)
+			if(inside)
+				inside.forceMove(get_turf(src))
+				visible_message("<span class='notice'>\The [src] is brushed away revealing \the [inside].</span>")
+				inside = null
+			else
+				visible_message("<span class='warning'>\The [src] reveals nothing!</span>")
+			qdel(src)
+			return
+
+	if(istype(W, /obj/item/weapon/weldingtool/))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(do_after(user, 20, target = src) && WT && WT.isOn())
+			user.SetNextMove(CLICK_CD_INTERACT)
+			if(WT.isOn())
+				if(WT.get_fuel() >= 4)
+					if(inside)
+						inside.forceMove(get_turf(src))
+						for(var/mob/M in viewers(world.view, user))
+							M.show_message("<span class='info'>[src] burns away revealing [inside].</span>",1)
+					else
+						for(var/mob/M in viewers(world.view, user))
+							M.show_message("<span class='info'>[src] burns away into nothing.</span>",1)
+					qdel(src)
+					WT.remove_fuel(4)
 				else
 					for(var/mob/M in viewers(world.view, user))
-						M.show_message("<span class='info'>[src] burns away into nothing.</span>",1)
-				qdel(src)
-				w.remove_fuel(4)
-			else
-				for(var/mob/M in viewers(world.view, user))
-					M.show_message("<span class='info'>A few sparks fly off [src], but nothing else happens.</span>",1)
-				w.remove_fuel(1)
-			return
+						M.show_message("<span class='info'>A few sparks fly off [src], but nothing else happens.</span>",1)
+					WT.remove_fuel(1)
+		return
 
 	else if(istype(W,/obj/item/device/core_sampler/))
 		var/obj/item/device/core_sampler/S = W
@@ -197,11 +206,17 @@
 			"Could be some kind of animal trap",\
 			"There appear to be [pick("dark red","dark purple","dark green","dark blue")] stains along part of it")]."
 		if(10)
-			item_type = "[pick("cylinder","tank","chamber")]"
-			new_item = new /obj/item/weapon/lighter(src.loc)
-			additional_desc = "There is a tiny device attached."
-			if(prob(30))
-				apply_image_decorations = 1
+			apply_prefix = 0
+			var/pickpipboy = pick(1, 2, 3)
+			switch(pickpipboy)
+				if(1)
+					new_item = new /obj/item/clothing/gloves/pipboy(src.loc)
+				if(2)
+					new_item = new /obj/item/clothing/gloves/pipboy/pimpboy3billion(src.loc)
+				if(3)
+					new_item = new /obj/item/clothing/gloves/pipboy/pipboy3000mark4(src.loc)
+			apply_image_decorations = 0
+			apply_material_decorations = 0
 		if(11)
 			item_type = "box"
 			new_item = new /obj/item/weapon/storage/box(src.loc)
@@ -210,6 +225,7 @@
 			var/obj/item/weapon/storage/box/new_box = new_item
 			new_box.max_w_class = pick(1,2,2,3,3,3,4,4)
 			new_box.max_storage_space = rand(new_box.max_w_class, new_box.max_w_class * 10)
+			new_box.foldable = FALSE
 			if(prob(30))
 				apply_image_decorations = 1
 		if(12)
@@ -280,7 +296,7 @@
 				new_item.icon = 'icons/obj/xenoarchaeology.dmi'
 				new_item.icon_state = icon_state
 		if(17)
-			//cultblade
+			// cultblade
 			apply_prefix = 0
 			new_item = new /obj/item/weapon/melee/cultblade(src.loc)
 			apply_material_decorations = 0
@@ -294,10 +310,10 @@
 		if(19)
 			apply_prefix = 0
 			new_item = new /obj/item/weapon/claymore(src.loc)
-			new_item.force = 10
+			new_item.force = 17
 			item_type = new_item.name
 		if(20)
-			//arcane clothing
+			// arcane clothing
 			apply_prefix = 0
 			var/list/possible_spawns = list(/obj/item/clothing/head/culthood,
 			/obj/item/clothing/head/magus,
@@ -307,7 +323,7 @@
 			var/new_type = pick(possible_spawns)
 			new_item = new new_type(src.loc)
 		if(21)
-			//soulstone
+			// soulstone
 			apply_prefix = 0
 			new_item = new /obj/item/device/soulstone(src.loc)
 			item_type = new_item.name
@@ -337,7 +353,7 @@
 		if(25)
 			apply_prefix = 0
 			new_item = new /obj/item/weapon/katana(src.loc)
-			new_item.force = 10
+			new_item.force = 17
 			item_type = new_item.name
 		if(26)
 			//energy gun
@@ -349,8 +365,6 @@
 			if(spawn_type)
 				var/obj/item/weapon/gun/energy/new_gun = new spawn_type(src.loc)
 				new_item = new_gun
-				new_item.icon_state = "egun[rand(1,4)]"
-				new_item.icon = 'icons/obj/xenoarchaeology.dmi'
 
 				//5% chance to explode when first fired
 				//10% chance to have an unchargeable cell
