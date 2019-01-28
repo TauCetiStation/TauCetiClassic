@@ -74,6 +74,9 @@ var/list/cult_datums = list()
 	for(var/mob/living/silicon/S in player_list) // we hold mobs in this lists only with clients
 		S.client.images += blood_overlay
 
+/obj/effect/rune/update_icon()
+	color = "#a10808"
+
 /obj/effect/rune/Destroy()
 	QDEL_NULL(power)
 	QDEL_NULL(blood_overlay)
