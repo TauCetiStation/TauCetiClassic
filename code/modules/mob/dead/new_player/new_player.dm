@@ -30,15 +30,11 @@
 
 /mob/dead/new_player/proc/new_player_panel_proc()
 	var/output = null
-	var/client/C = client
-	if(C.player_ingame_age <= 60)
-		output += "<div align='center'><B>Welcome, New Player!</B>"
+	if(length(src.key) > 15)
+		output += "<div align='center'><B>Welcome,<br></B>"
+		output += "<div align='center'><B>[src.key]!</B>"
 	else
-		if(length(C.prefs.real_name) > 15)
-			output += "<div align='center'><B>Welcome,<br></B>"
-			output += "<div align='center'><B>[C.prefs.real_name]!</B>"
-		else
-			output += "<div align='center'><B>Welcome, [C.prefs.real_name]!</B>"
+		output += "<div align='center'><B>Welcome, [src.key]!</B>"
 	output +="<hr>"
 	output += "<p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
@@ -314,7 +310,6 @@ commented cause polls are kinda broken now, needs refactoring */
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
 	SSjob.EquipRank(character, rank, 1)					//equips the human
-	EquipCustomItems(character)
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
 	if(character.mind.assigned_role == "AI")
@@ -354,6 +349,9 @@ commented cause polls are kinda broken now, needs refactoring */
 		character.Robotize()
 
 	joined_player_list += character.ckey
+
+	if(!issilicon(character))
+		SSquirks.AssignQuirks(character, character.client, TRUE)
 
 	qdel(src)
 
@@ -436,34 +434,8 @@ commented cause polls are kinda broken now, needs refactoring */
 	new_character.name = real_name
 	new_character.dna.ready_dna(new_character)
 	new_character.dna.b_type = client.prefs.b_type
-
-/*	if(client.prefs.disabilities)
-		// Set defer to 1 if you add more crap here so it only recalculates struc_enzymes once. - N3X
-		new_character.dna.SetSEState(GLASSESBLOCK,1,0)
-		new_character.disabilities |= NEARSIGHTED */
-
-	if(client.prefs.disabilities & DISABILITY_NEARSIGHTED)
-		new_character.dna.SetSEState(GLASSESBLOCK,1,1)
-		new_character.disabilities |= NEARSIGHTED
-
-	if(client.prefs.disabilities & DISABILITY_EPILEPTIC)
-		new_character.dna.SetSEState(EPILEPSYBLOCK,1,1)
-		new_character.disabilities |= EPILEPSY
-
-	if(client.prefs.disabilities & DISABILITY_COUGHING)
-		new_character.dna.SetSEState(COUGHBLOCK,1,1)
-		new_character.disabilities |= COUGHING
-
-	if(client.prefs.disabilities & DISABILITY_TOURETTES)
-		new_character.dna.SetSEState(TWITCHBLOCK,1,1)
-		new_character.disabilities |= TOURETTES
-
-	if(client.prefs.disabilities & DISABILITY_NERVOUS)
-		new_character.dna.SetSEState(NERVOUSBLOCK,1,1)
-		new_character.disabilities |= NERVOUS
-
-	// And uncomment this, too.
 	new_character.dna.UpdateSE()
+
 	if(key)
 		new_character.key = key		//Manually transfer the key to log them in
 

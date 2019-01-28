@@ -1,4 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aaa" = (
+/obj/structure/sign/velocity_overlay/reklama{
+	desc = "Now It?s Pepsi for Those Who Think Young";
+	icon_state = "pepsi";
+	name = "\improper billboard"
+	},
+/turf/unsimulated/wall,
+/area/centcom/arrival)
 "aab" = (
 /obj/effect/step_trigger/thrower{
 	affect_ghosts = 1;
@@ -5247,8 +5255,12 @@
 	},
 /area/centcom/arrival)
 "atI" = (
+/obj/structure/urinal{
+	pixel_y = 32
+	},
 /obj/machinery/light{
-	dir = 1
+	dir = 8;
+	icon_state = "tube1"
 	},
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -5427,6 +5439,14 @@
 /turf/space,
 /area/shuttle/transport1/centcom)
 "aum" = (
+/obj/structure/sign/velocity_overlay/reklama/pda_x{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/arrival)
+"aun" = (
 /obj/structure/closet/emcloset{
 	pixel_x = -7
 	},
@@ -5435,25 +5455,24 @@
 	icon_state = "tube1"
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/arrival)
-"aun" = (
-/turf/unsimulated/floor{
-	dir = 9;
+	dir = 1;
 	icon_state = "green"
 	},
 /area/centcom/arrival)
 "aup" = (
+/obj/structure/sign/velocity_overlay/reklama/soda_ad{
+	pixel_x = -28;
+	pixel_y = -20
+	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "green"
+	icon_state = "floor"
 	},
 /area/centcom/arrival)
 "auq" = (
 /obj/machinery/vending/snack,
 /turf/unsimulated/floor{
-	icon_state = "floor"
+	dir = 5;
+	icon_state = "green"
 	},
 /area/centcom/arrival)
 "aur" = (
@@ -70047,7 +70066,7 @@ aaM
 aaM
 aaM
 aaM
-aeD
+aaM
 aoo
 aoo
 avA
@@ -70063,8 +70082,8 @@ auy
 aoo
 aoo
 aoo
-aaM
-aaM
+aoo
+aoo
 aaM
 aaM
 aeD
@@ -70301,12 +70320,12 @@ aqM
 asP
 aoo
 aaM
+aaM
+aaM
+aaM
+aaM
 aoo
-aoo
-aoo
-aoo
-aoo
-arZ
+aum
 arZ
 avT
 avB
@@ -70317,10 +70336,10 @@ avT
 arZ
 arZ
 arZ
+aup
 avB
 arZ
-aoo
-aoo
+ayk
 aoo
 aoo
 aoo
@@ -70559,10 +70578,10 @@ aoo
 aoo
 aaM
 aoo
-atH
-atq
 aoo
-aum
+aoo
+aoo
+aoo
 arZ
 avC
 avh
@@ -70576,8 +70595,8 @@ avC
 avh
 auO
 arZ
-avB
-ayk
+arZ
+arZ
 aoo
 asA
 asA
@@ -70816,7 +70835,7 @@ aoo
 aaM
 aaM
 aoo
-atH
+atI
 atq
 aoo
 aun
@@ -71073,7 +71092,7 @@ aoo
 ate
 aoo
 aoo
-atI
+atH
 atq
 auc
 dFb
@@ -71333,7 +71352,7 @@ atx
 atq
 atq
 aoo
-aup
+dFb
 arZ
 arZ
 arZ
@@ -71857,7 +71876,7 @@ awm
 aoo
 aoo
 awm
-aoo
+aaa
 eHb
 eHb
 aoo

@@ -483,6 +483,16 @@
 				H.shoes.make_wet(1) //<= wet
 				if(H.shoes.clean_blood())
 					H.update_inv_shoes()
+			else
+				var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
+				var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
+				var/no_legs = FALSE
+				if((!l_foot || (l_foot && (l_foot.status & ORGAN_DESTROYED))) && (!r_foot || (r_foot && (r_foot.status & ORGAN_DESTROYED))))
+					no_legs = TRUE
+				if(!no_legs)
+					H.feet_blood_DNA = null
+					H.feet_dirt_color = null
+					H.update_inv_shoes()
 			if(H.wear_mask && washmask)
 				H.wear_mask.make_wet(1) //<= wet
 				if(H.wear_mask.clean_blood())
@@ -501,7 +511,7 @@
 				H.belt.make_wet(1) //<= wet
 				if(H.belt.clean_blood())
 					H.update_inv_belt()
-			H.clean_blood(washshoes)
+			H.clean_blood()
 		else
 			if(M.wear_mask)						//if the mob is not human, it cleans the mask without asking for bitflags
 				if(M.wear_mask.clean_blood())

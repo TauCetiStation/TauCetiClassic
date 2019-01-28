@@ -372,7 +372,7 @@ var/datum/subsystem/ticker/ticker
 				captainless=0
 			if(player.mind.assigned_role != "MODE")
 				SSjob.EquipRank(player, player.mind.assigned_role, 0)
-				EquipCustomItems(player)
+			SSquirks.AssignQuirks(player, player.client, TRUE)
 	if(captainless)
 		for(var/mob/M in player_list)
 			if(!isnewplayer(M))

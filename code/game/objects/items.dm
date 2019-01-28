@@ -82,7 +82,7 @@
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
-/obj/item/device/proc/health_analyze(mob/living/M, mob/living/user, mode)
+/obj/item/proc/health_analyze(mob/living/M, mob/living/user, mode)
 	var/message
 	if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>", "<span class = 'warning'>You try to analyze the floor's vitals!</span>")
@@ -139,6 +139,8 @@
 					var/datum/data/record/V = virusDB[ID]
 					message += "<span class='warning'>Warning: Pathogen [V.fields["name"]] detected in subject's blood. Known antigen : [V.fields["antigen"]]</span><br>"
 //			user.show_message(text("\red Warning: Unknown pathogen detected in subject's blood."))
+		if(C.roundstart_quirks.len)
+			message += "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span><br>"
 	if(M.getCloneLoss())
 		user.show_message("<span class='warning'>Subject appears to have been imperfectly cloned.</span>")
 	for(var/datum/disease/D in M.viruses)

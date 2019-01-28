@@ -168,20 +168,20 @@
 	item_color = pick("red", "blue", "green", "purple","yellow","pink","black")
 	switch(item_color)
 		if("red")
-			light_color = "#ff0000"
+			light_color = COLOR_RED
 		if("blue")
-			light_color = "#0000b2"
+			light_color = COLOR_BLUE
 		if("green")
-			light_color = "#00ff00"
+			light_color = COLOR_GREEN
 		if("purple")
-			light_color = "#551a8b"
+			light_color = COLOR_PURPLE
 			light_power = 2
 		if("yellow")
-			light_color = "#ffff00"
+			light_color = COLOR_YELLOW
 		if("pink")
-			light_color = "#ff00ff"
+			light_color = COLOR_PINK
 		if("black")
-			light_color = "#aeaeae"
+			light_color = COLOR_GRAY
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()
 	if(wielded)

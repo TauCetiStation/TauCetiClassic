@@ -76,29 +76,53 @@
  */
 
 /obj/item/weapon/storage/fancy/candle_box
-	name = "candle pack"
-	desc = "A pack of red candles."
+	name = "white candle pack"
+	desc = "A pack of white candles."
 	icon = 'icons/obj/candle.dmi'
-	icon_state = "candlebox5"
+	icon_state = "candlebox"
 	icon_type = "candle"
-	item_state = "candlebox5"
+	item_state = "candlebox"
 	storage_slots = 5
 	throwforce = 2
 	slot_flags = SLOT_BELT
-
+	var/candle_type = "white"
 
 /obj/item/weapon/storage/fancy/candle_box/atom_init()
 	. = ..()
-	for (var/i in 1 to storage_slots)
-		new /obj/item/candle(src)
+	if(candle_type == "white")
+		for (var/i in 1 to storage_slots)
+			new /obj/item/candle(src)
+	if(candle_type == "red")
+		for (var/i in 1 to storage_slots)
+			new /obj/item/candle/red(src)
+	update_icon()
+
+/obj/item/weapon/storage/fancy/candle_box/update_icon()
+	var/list/candle_overlays = list()
+	var/candle_position = 0
+	for(var/obj/item/candle/C in contents)
+		candle_position ++
+		var/candle_color = "red_"
+		if(C.name == "white candle")
+			candle_color = "white_"
+		if(C.name == "black candle")
+			candle_color = "black_"
+		candle_overlays += image('icons/obj/candle.dmi', "[candle_color][candle_position]")
+	overlays = candle_overlays
+	return
+
+/obj/item/weapon/storage/fancy/candle_box/red
+	name = "red candle pack"
+	desc = "A pack of red candles."
+	candle_type = "red"
 
 /obj/item/weapon/storage/fancy/black_candle_box
-	name = "candle pack"
+	name = "black candle pack"
 	desc = "A pack of black candles."
 	icon = 'icons/obj/candle.dmi'
-	icon_state = "gcandlebox5"
-	icon_type = "gcandle"
-	item_state = "gcandlebox5"
+	icon_state = "black_candlebox5"
+	icon_type = "black_candle"
+	item_state = "black_candlebox5"
 	storage_slots = 5
 	throwforce = 2
 	slot_flags = SLOT_BELT

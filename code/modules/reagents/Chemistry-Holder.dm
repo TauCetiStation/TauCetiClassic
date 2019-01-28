@@ -230,6 +230,7 @@ var/const/INGEST = 2
 /datum/reagents/proc/handle_reactions()
 	if(my_atom.flags & NOREACT) return //Yup, no reactions here. No siree.
 
+
 	var/reaction_occured = 0
 	do
 		reaction_occured = 0
@@ -273,7 +274,7 @@ var/const/INGEST = 2
 						matching_container = 1
 
 				if(!C.required_other)
-					matching_other = 1
+					matching_other = C.check_requirements(src)
 
 				else
 					/*if(istype(my_atom, /obj/item/slime_core))
@@ -286,8 +287,6 @@ var/const/INGEST = 2
 
 						if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
 							matching_other = 1
-
-
 
 
 				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
@@ -450,6 +449,11 @@ var/const/INGEST = 2
 								if(!istype(D, /datum/disease/advance))
 									preserve += D
 							R.data["viruses"] = preserve
+			else if(R.id == "customhairdye" || R.id == "paint_custom")
+				for(var/color in R.data)
+					R.data[color] = (R.data[color] + data[color]) * 0.5
+				// I am well aware of RGB_CONTRAST define, but in reagent colors everywhere else we use hex codes, so I did the thing below. ~Luduk.
+				R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
 
 			if(!safety)
 				handle_reactions()
@@ -469,6 +473,9 @@ var/const/INGEST = 2
 		//for(var/D in R.data)
 		//	world << "Container data: [D] = [R.data[D]]"
 		//debug
+		if(reagent == "customhairdye" || reagent == "paint_custom")
+			R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
+
 		update_total()
 		my_atom.on_reagent_change()
 		if(!safety)

@@ -80,6 +80,12 @@
 	. += 					"</a></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
+	. += 					"<td width='45%'>Ambient Occlusion:</td>"
+	. += 					"<td><a href='?_src_=prefs;preference=ambientocclusion'><b>[ambientocclusion ? "Enabled" : "Disabled"]</b></a></td>"
+	. += 					"<td width='45%'>Parallax theme:</td>"
+	. += 					"<td><a href='?_src_=prefs;preference=parallax_theme'><b>[parallax_theme]</b></a></td>"
+	. += 				"</tr>"
+	. += 				"<tr>"
 	. += 					"<td width='45%'>Melee Animations:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=see_animations'><b>[(toggles & SHOW_ANIMATIONS) ? "Yes" : "No"]</b></a></td>"
 	. += 				"</tr>"
@@ -144,6 +150,19 @@
 			parallax = Wrap(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
 			if (parent && parent.mob && parent.mob.hud_used)
 				parent.mob.hud_used.update_parallax_pref()
+
+		if("ambientocclusion")
+			ambientocclusion = !ambientocclusion
+			if(parent && parent.screen && parent.screen.len)
+				var/obj/screen/plane_master/game_world/PM = locate(/obj/screen/plane_master/game_world) in parent.screen
+				PM.backdrop(parent.mob)
+
+		if("parallax_theme")
+			switch(parallax_theme)
+				if(PARALLAX_THEME_CLASSIC)
+					parallax_theme = PARALLAX_THEME_TG
+				if(PARALLAX_THEME_TG)
+					parallax_theme = PARALLAX_THEME_CLASSIC
 
 		if("hear_midis")
 			toggles ^= SOUND_MIDI

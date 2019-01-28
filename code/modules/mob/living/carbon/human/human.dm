@@ -1292,14 +1292,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	verbs += /mob/living/carbon/human/proc/bloody_doodle
 	return 1 //we applied blood to the item
 
-/mob/living/carbon/human/clean_blood(var/clean_feet)
-	.=..()
-	if(clean_feet && !shoes && istype(feet_blood_DNA, /list) && feet_blood_DNA.len)
-		feet_dirt_color = null
-		feet_blood_DNA = null
-		update_inv_shoes()
-		return 1
-
 /mob/living/carbon/human/get_visible_implants(class = 0)
 
 	var/list/visible_implants = list()

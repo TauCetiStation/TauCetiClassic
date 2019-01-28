@@ -122,7 +122,7 @@ var/global/list/scrap_base_cache = list()
 	return ..()
 
 //stupid shard copypaste
-/obj/structure/scrap/Crossed(AM as mob|obj)
+/obj/structure/scrap/Crossed(atom/movable/AM)
 	if(ismob(AM))
 		var/mob/M = AM
 		playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
@@ -197,7 +197,10 @@ var/global/list/scrap_base_cache = list()
 		if(victim.species.flags[IS_SYNTHETIC])
 			return 0
 		if(victim.gloves)
-			return 0
+			if(istype(victim.gloves, /obj/item/clothing/gloves))
+				var/obj/item/clothing/gloves/G = victim.gloves
+				if(G.protect_fingers)
+					return
 		var/obj/item/organ/external/BP = victim.bodyparts_by_name[pick(BP_L_ARM , BP_R_ARM)]
 		if(!BP)
 			return 0

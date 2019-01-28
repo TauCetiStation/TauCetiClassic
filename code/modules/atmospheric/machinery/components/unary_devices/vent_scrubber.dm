@@ -81,6 +81,8 @@
 	if(!istype(T))
 		return
 
+	..()
+
 	var/scrubber_icon = "scrubber"
 	if(welded)
 		scrubber_icon += "weld"

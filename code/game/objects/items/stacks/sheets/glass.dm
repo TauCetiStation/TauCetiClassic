@@ -51,7 +51,7 @@
 			return
 
 		var/obj/item/stack/sheet/rglass/RG = new (user.loc)
-		RG.add_fingerprint(user)	
+		RG.add_fingerprint(user)
 		for(var/obj/item/stack/sheet/rglass/G in user.loc)
 			if(G==RG)
 				continue
@@ -332,7 +332,7 @@
 			return
 	return ..()
 
-/obj/item/weapon/shard/Crossed(AM as mob|obj)
+/obj/item/weapon/shard/Crossed(atom/movable/AM)
 	if(ismob(AM))
 		var/mob/M = AM
 		to_chat(M, "\red <B>You step in the broken glass!</B>")

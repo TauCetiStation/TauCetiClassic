@@ -5,4 +5,10 @@
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "xenoarch_scanner"
 	anchored = 1
+	layer = INFRONT_MOB_LAYER
 	density = 0
+
+/obj/machinery/artifact_scanpad/atom_init()
+	. = ..()
+	var/image/I = image(icon, "xenoarch_scanner_bottom", ABOVE_NORMAL_TURF_LAYER)
+	overlays += I

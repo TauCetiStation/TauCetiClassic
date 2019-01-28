@@ -129,6 +129,23 @@
 	else if(istype(target, /obj/machinery/radiocarbon_spectrometer))
 		return
 
+	else if(istype(target, /obj/machinery/color_mixer))
+		var/obj/machinery/color_mixer/CM = target
+		if(CM.filling_tank_id)
+			if(CM.beakers[CM.filling_tank_id])
+				if(user.a_intent == I_GRAB)
+					var/obj/item/weapon/reagent_containers/glass/GB = CM.beakers[CM.filling_tank_id]
+					GB.afterattack(src, user, flag)
+				else
+					afterattack(CM.beakers[CM.filling_tank_id], user, flag)
+				CM.updateUsrDialog()
+				CM.update_icon()
+				return
+			else
+				to_chat(user, "<span class='warning'>You try to fill [user.a_intent == I_GRAB ? "[src] up from a tank" : "a tank up"], but find it is absent.</span>")
+				return
+
+
 	else if(reagents && reagents.total_volume)
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
 		src.reagents.reaction(target, TOUCH)
