@@ -151,20 +151,20 @@
 
 	if(is_bruised())
 		if(prob(2))
-			spawn owner.emote("me", 1, "coughs up blood!")
+			owner.emote("pain", 2, "coughs up blood!")
 			owner.drip(10)
 		if(prob(4))
-			spawn owner.emote("me", 1, "gasps for air!")
+			owner.emote("gasp", 2, "gasps for air!")
 			owner.losebreath += 15
 
 /obj/item/organ/internal/lungs/diona/process()
 	..()
 	if(is_bruised())
 		if(prob(2))
-			spawn owner.emote("me", 1, "annoyingly creaks!")
+			owner.emote("me", 2, "annoyingly creaks!")
 			owner.drip(10)
 		if(prob(4))
-			spawn owner.emote("me", 1, "smells of rot.")
+			owner.emote("me", 2, "smells of rot.")
 			owner.apply_damage(rand(1,15), TOX, BP_CHEST, 0)		//Diona's lungs are used to dispose of toxins, so when lungs are broken, diona gets intoxified.
 	if(owner.life_tick % process_accuracy == 0)
 		if(damage < 0)

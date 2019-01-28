@@ -395,7 +395,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech/cast(list/targets)
 	//usr.audible_message("<span class='warning'><b>[usr] lets out a horrible scream!</b></span>")
-	usr.emote("me",1,"<span class='warning'><b>lets out a horrible scream!</b></span>")
+	usr.emote("scream", 1, "<span class='warning'><b>lets out a horrible scream!</b></span>")
 	playsound(usr.loc, 'sound/effects/screech.ogg', 100, 1)
 
 	for(var/turf/T in targets)
