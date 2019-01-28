@@ -923,6 +923,21 @@ Note that amputating the affected organ does in fact remove the infection from t
 			return 1
 	return 0
 
+/obj/item/organ/external/proc/apply_body_color(mutable_appearance/MA)
+	if(status & ORGAN_DEAD)
+		MA.color = NECROSIS_COLOR_MOD
+	else if (owner.species.flags[HAS_SKIN_COLOR])
+		if(!(HULK in owner.mutations))
+			MA.color = RGB_CONTRAST(owner.r_skin, owner.g_skin, owner.b_skin)
+		else
+			MA.color = HULK_SKIN_COLOR
+	else if(owner.species.flags[HAS_SKIN_TONE])
+		if(!(HULK in owner.mutations))
+			MA.color = RGB_CONTRAST(owner.s_tone, owner.s_tone, owner.s_tone)
+		else
+			MA.color = HULK_SKIN_TONE
+	return MA
+
 /obj/item/organ/external/get_icon(icon/race_icon, icon/deform_icon, gender = "", fat = "")
 	if (!owner)
 		return
@@ -931,15 +946,15 @@ Note that amputating the affected organ does in fact remove the infection from t
 		gender = ""
 
 	if (status & ORGAN_ROBOT && !owner.species.flags[IS_SYNTHETIC])
-		return mutable_appearance('icons/mob/human_races/robotic.dmi', "[body_zone][gender ? "_[gender]" : ""]")
-
-	if ((HUSK in owner.mutations) && !owner.species.flags[IS_SYNTHETIC])
+		. = mutable_appearance('icons/mob/human_races/robotic.dmi', "[body_zone][gender ? "_[gender]" : ""]")
+	else if ((HUSK in owner.mutations) && !owner.species.flags[IS_SYNTHETIC])
 		return mutable_appearance('icons/mob/human_races/husk.dmi', "[body_zone]")
+	else if (status & ORGAN_MUTATED)
+		. = mutable_appearance(deform_icon, "[body_zone][gender ? "_[gender]" : ""][fat ? "_[fat]" : ""]")
+	else
+		. = mutable_appearance(race_icon, "[body_zone][gender ? "_[gender]" : ""][fat ? "_[fat]" : ""]")
 
-	if (status & ORGAN_MUTATED)
-		return mutable_appearance(deform_icon, "[body_zone][gender ? "_[gender]" : ""][fat ? "_[fat]" : ""]")
-
-	return mutable_appearance(race_icon, "[body_zone][gender ? "_[gender]" : ""][fat ? "_[fat]" : ""]")
+	apply_body_color(.)
 
 /obj/item/organ/external/head/get_icon(icon/race_icon, icon/deform_icon, gender = "")
 	if (!owner)
@@ -951,12 +966,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if (!owner.species.has_gendered_icons)
 		gender = ""
 
-	if(status & ORGAN_MUTATED)
-		. = mutable_appearance(deform_icon, "[body_zone][gender ? "_[gender]" : ""]")
-	else
-		. = mutable_appearance(race_icon, "[body_zone][gender ? "_[gender]" : ""]")
+	. = list()
 
-	var/mutable_appearance/MA = .
+	if(status & ORGAN_MUTATED)
+		. += apply_body_color(mutable_appearance(deform_icon, "[body_zone][gender ? "_[gender]" : ""]"))
+	else
+		. += apply_body_color(mutable_appearance(race_icon, "[body_zone][gender ? "_[gender]" : ""]"))
 
 	//Eyes
 	if(owner.species.eyes)
@@ -965,13 +980,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 			img_eyes_s.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
 		else
 			img_eyes_s.color = "#ff0000"
-		MA.overlays += img_eyes_s
+		. += img_eyes_s
 
 	//Mouth	(lipstick!)
 	if(owner.lip_style && owner.species.flags[HAS_LIPS]) // skeletons are allowed to wear lipstick no matter what you think, agouri.
 		var/mutable_appearance/lips = mutable_appearance('icons/mob/human_face.dmi', "lips_[owner.lip_style]_s")
 		lips.color = owner.lip_color
-		MA.overlays += lips
+		. += lips
 
 
 

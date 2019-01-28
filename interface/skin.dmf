@@ -503,9 +503,36 @@ menu "menu"
 		group = "size"
 		is-disabled = false
 		saved-params = "is-checked"
+	elem "icon128"
+		name = "&128x128 (4x)"
+		command = ".winset \"mapwindow.map.icon-size=128\""
+		category = "&Icons"
+		is-checked = false
+		can-check = true
+		group = "size"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem "icon96"
+		name = "&96x96 (3x)"
+		command = ".winset \"mapwindow.map.icon-size=96\""
+		category = "&Icons"
+		is-checked = false
+		can-check = true
+		group = "size"
+		is-disabled = false
+		saved-params = "is-checked"
 	elem "icon64"
 		name = "&64x64 (2x)"
 		command = ".winset \"mapwindow.map.icon-size=64\""
+		category = "&Icons"
+		is-checked = false
+		can-check = true
+		group = "size"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem "icon48"
+		name = "&48x48 (1.5x)"
+		command = ".winset \"mapwindow.map.icon-size=48\""
 		category = "&Icons"
 		is-checked = false
 		can-check = true
@@ -552,7 +579,7 @@ menu "menu"
 		name = "&Nearest Neighbor"
 		command = ".winset \"mapwindow.map.zoom-mode=distort\""
 		category = "&Scaling Mode"
-		is-checked = true
+		is-checked = false
 		can-check = true
 		group = "scaling"
 		is-disabled = false
@@ -561,7 +588,7 @@ menu "menu"
 		name = "&Point Sampling"
 		command = ".winset \"mapwindow.map.zoom-mode=normal\""
 		category = "&Scaling Mode"
-		is-checked = false
+		is-checked = true
 		can-check = true
 		group = "scaling"
 		is-disabled = false
@@ -1231,7 +1258,7 @@ window "mapwindow"
 		border = none
 		drop-zone = true
 		right-click = false
-		saved-params = "icon-size"
+		saved-params = "icon-size;zoom-mode"
 		on-size = ""
 		icon-size = 0
 		text-mode = false
@@ -1240,7 +1267,6 @@ window "mapwindow"
 		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
 		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
 		style = ""
-		zoom-mode = distort
 
 window "outputwindow"
 	elem "outputwindow"

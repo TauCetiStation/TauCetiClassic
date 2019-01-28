@@ -137,11 +137,6 @@ Please contact me on #coderbus IRC. ~Carn x
 #define TOTAL_LIMB_LAYERS		7
 //////////////////////////////////
 
-//Human organ color mods//////////
-#define HULK_SKIN_TONE rgb(48, 224, 40) // human
-#define HULK_SKIN_COLOR RGB_CONTRAST(35, 121, 11) // xenos
-#define NECROSIS_COLOR_MOD list(0.33,0.33,0.33, 0.59,0.59,0.59, 0.11,0.11,0.11)
-
 /mob/living/carbon/human
 	var/list/overlays_standing[TOTAL_LAYERS]
 	var/list/overlays_damage[TOTAL_LIMB_LAYERS]
@@ -189,10 +184,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(BODY_LAYER)
 	var/list/standing = list()
 
-	var/husk = (HUSK in mutations)
 	var/fat = (FAT in mutations) ? "fat" : null
-	var/hulk = (HULK in mutations)
-
 	var/g = (gender == FEMALE ? "f" : "m")
 
 	var/mutable_appearance/base_icon = mutable_appearance(null, null, -BODY_LAYER)
@@ -212,20 +204,6 @@ Please contact me on #coderbus IRC. ~Carn x
 			temp = BP.get_icon(race_icon, deform_icon, g)
 		else
 			temp = BP.get_icon(race_icon, deform_icon)
-
-		if(!husk)
-			if(BP.status & ORGAN_DEAD)
-				temp.color = NECROSIS_COLOR_MOD
-			else if (species.flags[HAS_SKIN_COLOR])
-				if(!hulk)
-					temp.color = RGB_CONTRAST(r_skin, g_skin, b_skin)
-				else
-					temp.color = HULK_SKIN_COLOR
-			else if(species.flags[HAS_SKIN_TONE])
-				if(!hulk)
-					temp.color = RGB_CONTRAST(s_tone, s_tone, s_tone)
-				else
-					temp.color = HULK_SKIN_TONE
 
 		base_icon.overlays += temp
 
@@ -965,7 +943,3 @@ Please contact me on #coderbus IRC. ~Carn x
 #undef TARGETED_LAYER
 #undef FIRE_LAYER
 #undef TOTAL_LAYERS
-
-#undef HULK_SKIN_TONE
-#undef HULK_SKIN_COLOR
-#undef NECROSIS_COLOR_MOD

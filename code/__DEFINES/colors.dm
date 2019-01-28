@@ -72,3 +72,8 @@
 #define LIGHT_COLOR_FIRE       "#FAA019" // Warm orange color, leaning strongly towards yellow. rgb(250, 160, 25)
 #define LIGHT_COLOR_FLARE      "#F93C2F" // Bright, non-saturated red. Leaning slightly towards pink for visibility. rgb(250, 100, 75)
 #define LIGHT_COLOR_GHOST_CANDLE      "#a2fad1" // Used by ghost candles. rgb(162, 250, 209)
+
+//Human organ color mods
+#define HULK_SKIN_TONE rgb(48, 224, 40) // human
+#define HULK_SKIN_COLOR RGB_CONTRAST(35, 121, 11) // xenos
+#define NECROSIS_COLOR_MOD list(0.33,0.33,0.33, 0.59,0.59,0.59, 0.11,0.11,0.11)
