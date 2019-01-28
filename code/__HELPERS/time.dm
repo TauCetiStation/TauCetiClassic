@@ -8,8 +8,8 @@
 proc/worldtime2text(time = world.time)
 	return "[round(time / 36000)+12]:[(time / 600 % 60) < 10 ? add_zero(time / 600 % 60, 1) : time / 600 % 60]"
 
-proc/time_stamp()
-	return time2text(world.timeofday, "hh:mm:ss")
+/proc/time_stamp(format = "hh:mm:ss", wtime = world.timeofday)
+	return time2text(wtime, format)
 
 /proc/shuttleeta2text()
 	var/timeleft = SSshuttle.timeleft()
