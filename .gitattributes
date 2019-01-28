@@ -5,3 +5,6 @@
 # dmi icon merger hook
 # needs additional setup, see tools/dmitool/README.md
 *.dmi merge=merge-dmi
+
+# line endings
+*.dm text eol=lf
