@@ -8,6 +8,18 @@
 /*
  * Banana Peals
  */
+
+/obj/item/weapon/bananapeel
+	name = "banana peel"
+	desc = "A peel from a banana."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "banana_peel"
+	item_state = "banana_peel"
+	w_class = ITEM_SIZE_SMALL
+	throwforce = 0
+	throw_speed = 4
+	throw_range = 20
+
 /obj/item/weapon/bananapeel/Crossed(mob/living/carbon/C)
 	if(istype(C))
 		C.slip("the [src]", 4, 2)
@@ -15,7 +27,30 @@
 /*
  * Soap
  */
-/obj/item/weapon/soap/Crossed(mob/living/carbon/C) // EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
+/obj/item/weapon/soap
+	name = "soap"
+	desc = "A cheap bar of soap. Doesn't smell."
+	gender = PLURAL
+	icon = 'icons/obj/items.dmi'
+	icon_state = "soap"
+	w_class = ITEM_SIZE_SMALL
+	throwforce = 0
+	throw_speed = 4
+	throw_range = 20
+
+/obj/item/weapon/soap/nanotrasen
+	desc = "A Nanotrasen brand bar of soap. Smells of phoron."
+	icon_state = "soapnt"
+
+/obj/item/weapon/soap/deluxe
+	desc = "A deluxe Waffle Co. brand bar of soap. Smells of condoms."
+	icon_state = "soapdeluxe"
+
+/obj/item/weapon/soap/syndie
+	desc = "An untrustworthy bar of soap. Smells of fear."
+	icon_state = "soapsyndie"
+
+/obj/item/weapon/soap/Crossed(mob/living/carbon/C) //EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
 	if(istype(C))
 		C.slip("the [src]", 4, 2)
 
@@ -134,13 +169,29 @@
 /*
  * Bike Horns
  */
+
+/obj/item/weapon/bikehorn
+	name = "bike horn"
+	desc = "A horn off of a bicycle."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "bike_horn"
+	item_state = "bike_horn"
+	throwforce = 3
+	w_class = ITEM_SIZE_TINY
+	throw_speed = 3
+	throw_range = 15
+	attack_verb = list("HONKED")
+	var/cooldown = FALSE
+
+/obj/item/weapon/bikehorn/attack(mob/target, mob/user, def_zone)
+	. = ..()
+	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+
 /obj/item/weapon/bikehorn/attack_self(mob/user)
-	if (spam_flag == 0)
-		spam_flag = 1
-		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+	if(cooldown <= world.time)
+		cooldown = world.time + 8
+		playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 		src.add_fingerprint(user)
-		spawn(20)
-			spam_flag = 0
 	return
 
 /obj/item/weapon/bikehorn/dogtoy
@@ -149,3 +200,39 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "dogtoy"
 	item_state = "dogtoy"
+
+//////////////////////////////////////////////////////
+//			       Fake Laugh Button   			    //
+//////////////////////////////////////////////////////
+
+/obj/item/toy/laugh_button
+	name = "laugh button"
+	desc = "It's a perfect adding to the bad joke."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "laugh_button_on"
+	var/cooldown = FALSE
+	w_class = ITEM_SIZE_TINY
+
+/obj/item/toy/laugh_button/attack_self(mob/user)
+	if(!cooldown)
+		user.visible_message("<span class='notice'>[bicon(src)] \the [user] presses \the [src]</span>")
+		playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
+		var/laugh = pick(
+			'sound/voice/fake_laugh/laugh1.ogg',
+			'sound/voice/fake_laugh/laugh2.ogg',
+			'sound/voice/fake_laugh/laugh3.ogg',
+			)
+		playsound(src, laugh, 50, 1)
+		flick("laugh_button_down",src)
+		icon_state = "laugh_button_off"
+		cooldown = TRUE
+		addtimer(CALLBACK(src, .proc/release_cooldown), 50)
+		return
+	..()
+
+/obj/item/toy/laugh_button/proc/release_cooldown()
+	flick("laugh_button_up",src)
+	icon_state = "laugh_button_on"
+	cooldown = FALSE
+	playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
+	return
