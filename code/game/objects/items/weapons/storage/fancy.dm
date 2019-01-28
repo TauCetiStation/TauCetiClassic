@@ -98,7 +98,7 @@
 	update_icon()
 
 /obj/item/weapon/storage/fancy/candle_box/update_icon()
-	overlays.Cut()
+	var/list/candle_overlays = list()
 	var/candle_position = 0
 	for(var/obj/item/candle/C in contents)
 		candle_position ++
@@ -107,7 +107,8 @@
 			candle_color = "white_"
 		if(C.name == "black candle")
 			candle_color = "black_"
-		overlays += image('icons/obj/candle.dmi', "[candle_color][candle_position]")
+		candle_overlays += image('icons/obj/candle.dmi', "[candle_color][candle_position]")
+	overlays = candle_overlays
 	return
 
 /obj/item/weapon/storage/fancy/candle_box/red
