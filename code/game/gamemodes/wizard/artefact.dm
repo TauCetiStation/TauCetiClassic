@@ -124,6 +124,11 @@
 	if(H.mind.special_role == "Wizard")
 		to_chat(H, "<span class='danger'>Your school years have long passed.</span>")
 		return
+
+	if(ismindshielded(H))
+		to_chat(H, "<span class='notice'>Something prevents you from becoming a magic girl that you've allways dreamed of</span>")
+		return
+
 	for(var/datum/mind/mind in previous_users)
 		if(H.mind == mind)
 			to_chat(H, "<span class='notice'>Not so fast, self-confident fulmar</span>")
@@ -144,7 +149,10 @@
 	var/wizard_name = "Grand Magus"
 	if(wizard)
 		wizard_name = wizard.name
-	to_chat(M, "<span class='notice'>You are [master]'s apprentice! You are bound by magic contract to follow their orders and help them in accomplishing their goals.</span>")
+	if(M.mind.special_role == "Traitor")
+		to_chat(M, "<span class='notice'>You succeed in getting those precious powers from that fool. Now it's time to show [master] what you are realy after. And remember - no witnesses </span>")
+	else  	
+		to_chat(M, "<span class='notice'>You are [master]'s apprentice! You are bound by magic contract to follow their orders and help them in accomplishing their goals.</span>")
 	switch(type)
 		if("destruction")
 			if(free_school_flags & SCHOOL_DESTRUCTION)
@@ -174,11 +182,18 @@
 				to_chat(M, "<span class='notice'>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap.</span>")
 	equip_apprentice(M)
 	if(wizard && wizard.current)
-		var/datum/objective/protect/new_objective = new /datum/objective/protect
-		new_objective.owner = M.mind
-		new_objective.target = wizard
-		new_objective.explanation_text = "Protect [wizard.current.real_name], the wizard."
-		M.mind.objectives += new_objective
+		if(M.mind.special_role == "Traitor")  //Because traitors gonna trait. Besides, mage with dualsaber and revolver is a bit too OP for this station
+			var/datum/objective/protect/new_objective = new /datum/objective/assassinate
+			new_objective.explanation_text = "Assassinate [wizard.current.real_name], the wizard."
+			new_objective.owner = M.mind
+			new_objective.target = wizard
+			M.mind.objectives += new_objective
+		else	
+			var/datum/objective/protect/new_objective = new /datum/objective/protect
+			new_objective.explanation_text = "Protect [wizard.current.real_name], the wizard."
+			new_objective.owner = M.mind
+			new_objective.target = wizard
+			M.mind.objectives += new_objective
 	uses--
 	previous_users += M.mind
 	playsound(M, 'sound/effects/magic.ogg', 100, 1)
