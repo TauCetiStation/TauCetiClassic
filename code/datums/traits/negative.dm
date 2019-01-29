@@ -89,3 +89,13 @@
 	mob_trait = TRAIT_NERVOUS
 	gain_text = "<span class='danger'>You feel nervous!</span>"
 	lose_text = "<span class='notice'>You feel less yourself less nervous.</span>"
+
+
+
+/datum/quirk/stress_eater
+	name = "Stress Eater"
+	desc = "You eat more when in pain."
+	value = -1
+	mob_trait = TRAIT_STRESS_EATER
+	gain_text = "<span class='danger'>You feel quenchless hunger when hurt.</span>"
+	lose_text = "<span class='notice'>You no longer feel the quenchless hunger when hurt.</span>"

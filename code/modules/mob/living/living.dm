@@ -1189,3 +1189,7 @@
 	// food, so this proc is used in walk penalty, etc. But you don't see fat of a person if the person is just
 	// digesting the giant pizza they ate, so we don't use this in examine code.
 	return nutrition
+
+
+/mob/living/proc/get_metabolism_factor()
+	return METABOLISM_FACTOR
