@@ -84,7 +84,6 @@
 	var/list/mounted_devices = null                   // Holder for the above device.
 	var/obj/item/active_device = null                 // Currently deployed device, if any.
 
-/obj/item/clothing/suit/space/rig/equipped(mob/M)
 	var/mob/living/carbon/human/wearer // The person currently wearing the rig.
 	var/offline = 1
 
