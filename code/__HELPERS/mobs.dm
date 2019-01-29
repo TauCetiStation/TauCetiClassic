@@ -125,7 +125,8 @@ proc/RoundHealth(health)
 	if(!user || !target)
 		return FALSE
 
-	user.busy_with_action = TRUE
+	var/busy_hand = user.hand
+	user.become_busy(_hand = busy_hand)
 
 	if(check_target_zone)
 		check_target_zone = user.zone_sel.selecting
@@ -154,22 +155,31 @@ proc/RoundHealth(health)
 			break
 		if(uninterruptible)
 			continue
-		if(user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
+		if(user.loc != user_loc || target.loc != target_loc || user.incapacitated() || user.lying )
 			. = FALSE
 			break
+		if(busy_hand)
+			if(user.l_hand != holding)
+				. = FALSE
+				break
+		else
+			if(user.r_hand != holding)
+				. = FALSE
+				break
 		if(check_target_zone && user.zone_sel.selecting != check_target_zone)
 			. = FALSE
 			break
 	if(progress)
 		qdel(progbar)
 	if(user)
-		user.busy_with_action = FALSE
+		user.become_not_busy(_hand = busy_hand)
 
 /proc/do_after(mob/user, delay, needhand = TRUE, atom/target = null, can_move = FALSE, progress = TRUE)
 	if(!user || target && QDELING(target))
 		return FALSE
 
-	user.busy_with_action = TRUE
+	var/busy_hand = user.hand
+	user.become_busy(_hand = busy_hand)
 
 	var/target_null = TRUE
 	var/atom/Tloc = null
@@ -222,12 +232,17 @@ proc/RoundHealth(health)
 			if(!holdingnull && QDELETED(holding))
 				. = FALSE
 				break
-			if(user.get_active_hand() != holding)
-				. = FALSE
-				break
+			if(user.hand != busy_hand)
+				if(user.get_inactive_hand() != holding)
+					. = FALSE
+					break
+			else
+				if(user.get_active_hand() != holding)
+					. = FALSE
+					break
 	if(progress)
 		qdel(progbar)
 	if(user)
-		user.busy_with_action = FALSE
+		user.become_not_busy(_hand = busy_hand)
 	if(target)
 		target.in_use_action = FALSE

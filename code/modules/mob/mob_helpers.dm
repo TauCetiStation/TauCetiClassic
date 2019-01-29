@@ -483,3 +483,9 @@ var/list/intents = list("help","disarm","grab","hurt")
 			to_chat(src, "<span class='warning'>Please wait while someone else will finish interacting with [target].</span>")
 		return TRUE
 	return FALSE
+
+/mob/proc/become_busy()
+	busy_with_action = TRUE
+
+/mob/proc/become_not_busy()
+	busy_with_action = FALSE
