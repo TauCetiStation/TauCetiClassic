@@ -695,9 +695,9 @@
 				body_changes_occured = TRUE
 		else if(H.species && H.species.name in list(HUMAN, UNATHI, TAJARAN))
 			if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
-				H.dyed_r_hair = Clamp(round(H.r_hair * volume_coefficient + r_tweak), 0, 255)
-				H.dyed_g_hair = Clamp(round(H.g_hair * volume_coefficient + g_tweak), 0, 255)
-				H.dyed_b_hair = Clamp(round(H.b_hair * volume_coefficient + b_tweak), 0, 255)
+				H.dyed_r_hair = Clamp(round(H.dyed_r_hair * volume_coefficient + r_tweak), 0, 255)
+				H.dyed_g_hair = Clamp(round(H.dyed_g_hair * volume_coefficient + g_tweak), 0, 255)
+				H.dyed_b_hair = Clamp(round(H.dyed_b_hair * volume_coefficient + b_tweak), 0, 255)
 				H.hair_painted = TRUE
 				hair_changes_occured = TRUE
 			if(!((H.wear_mask && (H.wear_mask.flags & HEADCOVERSMOUTH)) || (H.head && (H.head.flags & HEADCOVERSMOUTH))) && H.f_style != "Shaved")

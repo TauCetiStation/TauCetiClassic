@@ -251,6 +251,7 @@
 						H.r_facial = hex2num(copytext(new_facial, 2, 4))
 						H.g_facial = hex2num(copytext(new_facial, 4, 6))
 						H.b_facial = hex2num(copytext(new_facial, 6, 8))
+			H.update_hair_dyes()
 			H.update_hair()
 			H.update_body()
 			H.check_dna(H)

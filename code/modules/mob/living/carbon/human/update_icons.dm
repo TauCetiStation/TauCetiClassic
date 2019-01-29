@@ -228,8 +228,15 @@ Please contact me on #coderbus IRC. ~Carn x
 	overlays_standing[BODY_LAYER] = standing
 	apply_overlay(BODY_LAYER)
 
-
-
+/mob/living/carbon/human/proc/update_hair_dyes(update_type = "all")
+	if(!hair_painted && update_type == "all" || update_type == "hair")
+		dyed_r_hair = r_hair
+		dyed_g_hair = g_hair
+		dyed_b_hair = b_hair
+	if(!facial_painted && update_type == "all" || update_type == "facial")
+		dyed_r_facial = r_facial
+		dyed_g_facial = g_facial
+		dyed_b_facial = b_facial
 //HAIR OVERLAY
 /mob/living/carbon/human/proc/update_hair()
 	//Reset our hair

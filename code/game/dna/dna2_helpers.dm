@@ -139,6 +139,8 @@
 		H.g_facial = dna.GetUIValueRange(DNA_UI_BEARD_G,   255)
 		H.b_facial = dna.GetUIValueRange(DNA_UI_BEARD_B,   255)
 
+		H.update_hair_dyes()
+
 		H.r_skin   = dna.GetUIValueRange(DNA_UI_SKIN_R,    255)
 		H.g_skin   = dna.GetUIValueRange(DNA_UI_SKIN_G,    255)
 		H.b_skin   = dna.GetUIValueRange(DNA_UI_SKIN_B,    255)

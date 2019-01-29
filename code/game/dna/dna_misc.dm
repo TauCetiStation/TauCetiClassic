@@ -233,6 +233,8 @@
 		H.b_facial = hex2num(getblock(structure,5,3))
 		H.g_facial = hex2num(getblock(structure,6,3))
 
+		H.update_hair_dyes()
+
 		H.s_tone = round(((hex2num(getblock(structure,7,3)) / 16) - 220))
 		H.r_eyes = hex2num(getblock(structure,8,3))
 		H.g_eyes = hex2num(getblock(structure,9,3))

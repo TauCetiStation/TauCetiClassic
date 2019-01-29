@@ -1056,6 +1056,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		g_hair = hex2num(copytext(new_hair, 4, 6))
 		b_hair = hex2num(copytext(new_hair, 6, 8))
 
+	update_hair_dyes()
+
 	var/new_eyes = input("Please select eye color.", "Character Generation",rgb(r_eyes,g_eyes,b_eyes)) as color
 	if(new_eyes)
 		r_eyes = hex2num(copytext(new_eyes, 2, 4))

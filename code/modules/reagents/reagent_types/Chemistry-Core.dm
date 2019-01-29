@@ -16,16 +16,16 @@
 
 			if(H.species && H.species.name in list(HUMAN, UNATHI, TAJARAN))
 				if(H.hair_painted && !(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
-					H.dyed_r_hair = Clamp(round(H.r_hair * volume_coefficient + ((H.r_hair * volume) / 10)), 0, 255)
-					H.dyed_g_hair = Clamp(round(H.g_hair * volume_coefficient + ((H.g_hair * volume) / 10)), 0, 255)
-					H.dyed_b_hair = Clamp(round(H.b_hair * volume_coefficient + ((H.b_hair * volume) / 10)), 0, 255)
+					H.dyed_r_hair = Clamp(round(H.dyed_r_hair * volume_coefficient + ((H.r_hair * volume) / 10)), 0, 255)
+					H.dyed_g_hair = Clamp(round(H.dyed_g_hair * volume_coefficient + ((H.g_hair * volume) / 10)), 0, 255)
+					H.dyed_b_hair = Clamp(round(H.dyed_b_hair * volume_coefficient + ((H.b_hair * volume) / 10)), 0, 255)
 					if(H.dyed_r_hair == H.r_hair && H.dyed_g_hair == H.g_hair && H.dyed_b_hair == H.b_hair)
 						H.hair_painted = FALSE
 						changes_occured = TRUE
 				if(H.facial_painted && !((H.wear_mask && (H.wear_mask.flags & HEADCOVERSMOUTH)) || (H.head && (H.head.flags & HEADCOVERSMOUTH))) && H.f_style != "Shaved")
-					H.dyed_r_facial = Clamp(round(H.r_facial * volume_coefficient + ((H.r_facial * volume) / 10)), 0, 255)
-					H.dyed_g_facial = Clamp(round(H.g_facial * volume_coefficient + ((H.g_facial * volume) / 10)), 0, 255)
-					H.dyed_b_facial = Clamp(round(H.b_facial * volume_coefficient + ((H.b_facial * volume) / 10)), 0, 255)
+					H.dyed_r_facial = Clamp(round(H.dyed_r_facial * volume_coefficient + ((H.r_facial * volume) / 10)), 0, 255)
+					H.dyed_g_facial = Clamp(round(H.dyed_g_facial * volume_coefficient + ((H.g_facial * volume) / 10)), 0, 255)
+					H.dyed_b_facial = Clamp(round(H.dyed_b_facial * volume_coefficient + ((H.b_facial * volume) / 10)), 0, 255)
 					if(H.dyed_r_facial == H.r_facial && H.dyed_g_facial == H.g_facial && H.dyed_b_facial == H.b_facial)
 						H.facial_painted = FALSE
 						changes_occured = TRUE

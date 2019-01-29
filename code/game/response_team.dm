@@ -172,6 +172,8 @@ var/can_call_ert
 		M.g_hair = hex2num(copytext(new_hair, 4, 6))
 		M.b_hair = hex2num(copytext(new_hair, 6, 8))
 
+	M.update_hair_dyes() // Each time we change our r,g,b_hair's we need the dyes to correspond to them unless our head's already painted.
+
 	var/new_eyes = input("Please select eye color.", "Character Generation") as color
 	if(new_eyes)
 		M.r_eyes = hex2num(copytext(new_eyes, 2, 4))
