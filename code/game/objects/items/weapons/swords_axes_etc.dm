@@ -37,6 +37,7 @@
 	active = !active
 	if (active)
 		force = 30
+		hitsound = 'sound/weapons/blade1.ogg'
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass1"
 		else
@@ -47,6 +48,7 @@
 
 	else
 		force = 3
+		hitsound = null
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass0"
 		else

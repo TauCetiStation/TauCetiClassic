@@ -280,6 +280,7 @@ proc/move_mining_shuttle()
 	m_amt = 3750
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 	drill_sound = 'sound/items/drill.ogg'
+	hitsound = 'sound/items/drill_hit.ogg'
 	drill_verb = "drill"
 	digspeed = 30
 	var/drill_cost = 15

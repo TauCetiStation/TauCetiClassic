@@ -289,6 +289,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
 	force = 3.0
+	hitsound = 'sound/effects/magic.ogg'
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
@@ -301,6 +302,7 @@
 	desc = "Used for sweeping, and flying into the night while cackling. Black cat not included."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "broom"
+	hitsound = null
 
 /obj/item/weapon/staff/gentcane
 	name = "Gentlemans Cane"
@@ -308,6 +310,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cane"
 	item_state = "stick"
+	hitsound = null
 
 /obj/item/weapon/staff/stick
 	name = "stick"
@@ -316,6 +319,7 @@
 	icon_state = "stick"
 	item_state = "stick"
 	force = 3.0
+	hitsound = null
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5

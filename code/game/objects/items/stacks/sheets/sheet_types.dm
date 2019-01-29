@@ -89,6 +89,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	desc = "Sheets made out off metal. It has been dubbed Metal Sheets."
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
+	hitsound = 'sound/items/trayhit2.ogg'
 	m_amt = 3750
 	throwforce = 14.0
 	flags = CONDUCT

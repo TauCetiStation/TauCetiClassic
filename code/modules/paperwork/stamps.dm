@@ -9,6 +9,7 @@
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60
+	hitsound = 'sound/items/buttonswitch.ogg'
 	item_color = "cargo"
 	attack_verb = list("stamped")
 	var/stamp_by_message = ""
