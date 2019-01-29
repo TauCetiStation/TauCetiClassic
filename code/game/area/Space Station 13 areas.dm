@@ -769,13 +769,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Medbay Storage"
 	icon_state = "medbay3"
 
-/area/medical/psych
-	name = "Psych Room"
+/area/medical/medbreak
+	name = "Medbay Breaktime Room"
 	icon_state = "medbay3"
 	music = 'sound/ambience/signal.ogg'
 
-/area/medical/medbreak
-	name = "Medbay Breaktime Room"
+/area/medical/psych
+	name = "Psych Room"
 	icon_state = "medbay3"
 	music = 'sound/ambience/signal.ogg'
 
