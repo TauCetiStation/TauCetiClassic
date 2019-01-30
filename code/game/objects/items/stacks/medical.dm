@@ -72,7 +72,7 @@
 				to_chat(user, "<span class='warning'>The wounds on [M]'s [BP.name] have already been bandaged.</span>")
 				return 1
 			else
-				playsound(src.loc, 'sound/misc/bandage.ogg', 20, 1)
+				playsound(src, 'sound/misc/bandage.ogg', 15, 1)
 				user.visible_message("<span class='notice'>\The [user] starts treating [M]'s [BP.name].</span>", \
 									"<span class='notice'>You start treating [M]'s [BP.name].</span>")
 
@@ -199,7 +199,7 @@
 				to_chat(user, "<span class='warning'>The wounds on [M]'s [BP.name] have already been treated.</span>")
 				return 1
 			else
-				playsound(src.loc, 'sound/misc/bandage.ogg', 20, 1)
+				playsound(src, 'sound/misc/bandage.ogg', 15, 1)
 				user.visible_message("<span class='notice'>\The [user] starts treating [M]'s [BP.name].</span>", \
 									"<span class='notice'>You start treating [M]'s [BP.name].</span>")
 
