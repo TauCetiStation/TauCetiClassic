@@ -15,7 +15,7 @@ var/list
 					"hsbtoolbox" = "Spawn Toolbox",
 					"hsbmedkit" = "Spawn Medical Kit")
 
-mob
+/mob
 	var/datum/hSB/sandbox = null
 	proc
 		CanBuild()
@@ -29,7 +29,7 @@ mob
 			if(sandbox)
 				sandbox.update()
 
-datum/hSB
+/datum/hSB
 	var/owner = null
 	var/admin = 0
 	proc
@@ -110,7 +110,7 @@ datum/hSB
 					hsb.loc = usr.loc
 					to_chat(usr, "<b>Sandbox:  Created an airlock.")
 				if("hsbcanister")
-					var/list/hsbcanisters = typesof(/obj/machinery/portable_atmospherics/canister/) - /obj/machinery/portable_atmospherics/canister/
+					var/list/hsbcanisters = typesof(/obj/machinery/portable_atmospherics/canister) - /obj/machinery/portable_atmospherics/canister
 					var/hsbcanister = input(usr, "Choose a canister to spawn.", "Sandbox:") in hsbcanisters + "Cancel"
 					if(!(hsbcanister == "Cancel"))
 						new hsbcanister(usr.loc)
@@ -133,7 +133,7 @@ datum/hSB
 					if(!hsboxspawn) return
 
 					var/list/selectable = list()
-					for(var/O in typesof(/obj/item/))
+					for(var/O in typesof(/obj/item))
 					//Note, these istypes don't work
 						if(istype(O, /obj/item/weapon/gun))
 							continue

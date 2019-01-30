@@ -13,7 +13,7 @@
 /*
  * Borrowbook datum
  */
-datum/borrowbook // Datum used to keep track of who has borrowed what when and for how long.
+/datum/borrowbook // Datum used to keep track of who has borrowed what when and for how long.
 	var/bookname
 	var/mobname
 	var/getdate

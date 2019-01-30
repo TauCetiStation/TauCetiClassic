@@ -156,7 +156,7 @@ steam.start() -- spawns the effect
 			n = 10
 		number = n
 		cardinals = c
-		if(istype(loca, /turf/))
+		if(istype(loca, /turf))
 			location = loca
 		else
 			location = get_turf(loca)
@@ -317,7 +317,7 @@ steam.start() -- spawns the effect
 		n = 10
 	number = n
 	cardinals = c
-	if(istype(loca, /turf/))
+	if(istype(loca, /turf))
 		location = loca
 	else
 		location = get_turf(loca)
@@ -567,7 +567,7 @@ steam.start() -- spawns the effect
 
 	set_up(amt=5, loca, datum/reagents/carry = null, metalfoam = 0)
 		amount = round(sqrt(amt / 3), 1)
-		if(istype(loca, /turf/))
+		if(istype(loca, /turf))
 			location = loca
 		else
 			location = get_turf(loca)
@@ -694,7 +694,7 @@ steam.start() -- spawns the effect
 
 	set_up (amt, loc, flash = 0, flash_fact = 0)
 		amount = amt
-		if(istype(loc, /turf/))
+		if(istype(loc, /turf))
 			location = loc
 		else
 			location = get_turf(loc)

@@ -325,7 +325,7 @@
 		if(throwing)
 			..()
 			return
-		if(istype(obstacle, /obj/machinery/disposal/deliveryChute/))
+		if(istype(obstacle, /obj/machinery/disposal/deliveryChute))
 			return
 		obstacle.Bumped(src)
 		if(istype(obstacle, /obj))
@@ -894,7 +894,7 @@
 	if(!src.occupant) return
 	if(usr!=src.occupant)
 		return
-	var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector/) in loc
+	var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
 	if(possible_port)
 		if(connect(possible_port))
 			src.occupant_message("\blue [name] connects to the port.")

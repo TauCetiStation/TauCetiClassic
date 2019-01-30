@@ -18,7 +18,7 @@
 				//Only try to take a breath every 4 seconds, unless suffocating
 				breathe()
 			else //Still give containing object the chance to interact
-				if(istype(loc, /obj/))
+				if(istype(loc, /obj))
 					var/obj/location_as_object = loc
 					location_as_object.handle_internal_lifeform(src, 0)
 
@@ -219,7 +219,7 @@
 			losebreath--
 			if (prob(75)) //High chance of gasping for air
 				spawn emote("gasp")
-			if(istype(loc, /obj/))
+			if(istype(loc, /obj))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 		else
@@ -228,10 +228,10 @@
 
 			//No breath from internal atmosphere so get breath from location
 			if(!breath)
-				if(istype(loc, /obj/))
+				if(istype(loc, /obj))
 					var/obj/location_as_object = loc
 					breath = location_as_object.handle_internal_lifeform(src, BREATH_VOLUME)
-				else if(istype(loc, /turf/))
+				else if(istype(loc, /turf))
 					var/breath_moles = environment.total_moles * BREATH_PERCENTAGE
 					breath = loc.remove_air(breath_moles)
 
@@ -264,7 +264,7 @@
 
 
 			else //Still give containing object the chance to interact
-				if(istype(loc, /obj/))
+				if(istype(loc, /obj))
 					var/obj/location_as_object = loc
 					location_as_object.handle_internal_lifeform(src, 0)
 

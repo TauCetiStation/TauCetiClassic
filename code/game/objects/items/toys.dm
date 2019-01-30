@@ -1144,7 +1144,7 @@ Owl & Griffin toys
 		src.pixel_x = -5
 
 /obj/item/toy/singlecard/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/toy/singlecard/))
+	if(istype(I, /obj/item/toy/singlecard))
 		var/obj/item/toy/singlecard/C = I
 		if(C.parentdeck == src.parentdeck)
 			var/obj/item/toy/cardhand/H = new/obj/item/toy/cardhand(user.loc)
@@ -1160,7 +1160,7 @@ Owl & Griffin toys
 		else
 			to_chat(user, "<span class='notice'>You can't mix cards from other decks.</span>")
 
-	if(istype(I, /obj/item/toy/cardhand/))
+	if(istype(I, /obj/item/toy/cardhand))
 		var/obj/item/toy/cardhand/H = I
 		if(H.parentdeck == parentdeck)
 			H.currenthand += cardname

@@ -8,7 +8,7 @@
 	prime()
 		..()
 		for(var/obj/structure/closet/L in hear(7, get_turf(src)))
-			if(locate(/mob/living/carbon/, L))
+			if(locate(/mob/living/carbon, L))
 				for(var/mob/living/carbon/M in L)
 					bang(get_turf(src), M)
 

@@ -18,7 +18,7 @@
 			INVOKE_ASYNC(src, .proc/breathe)
 
 		else //Still give containing object the chance to interact
-			if(istype(loc, /obj/))
+			if(istype(loc, /obj))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
@@ -72,7 +72,7 @@
 			losebreath--
 			if (prob(75)) //High chance of gasping for air
 				INVOKE_ASYNC(src, .proc/emote, "gasp")
-			if(istype(loc, /obj/))
+			if(istype(loc, /obj))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 		else
@@ -81,10 +81,10 @@
 
 			//No breath from internal atmosphere so get breath from location
 			if(!breath)
-				if(istype(loc, /obj/))
+				if(istype(loc, /obj))
 					var/obj/location_as_object = loc
 					breath = location_as_object.handle_internal_lifeform(src, BREATH_VOLUME)
-				else if(istype(loc, /turf/))
+				else if(istype(loc, /turf))
 					var/breath_moles = 0
 					/*if(environment.return_pressure() > ONE_ATMOSPHERE)
 						// Loads of air around (pressure effect will be handled elsewhere), so lets just take a enough to fill our lungs at normal atmos pressure (using n = Pv/RT)
@@ -104,7 +104,7 @@
 
 
 			else //Still give containing object the chance to interact
-				if(istype(loc, /obj/))
+				if(istype(loc, /obj))
 					var/obj/location_as_object = loc
 					location_as_object.handle_internal_lifeform(src, 0)
 

@@ -1,4 +1,4 @@
-datum/directive
+/datum/directive
 	var/datum/game_mode/mutiny/mode
 	var/list/special_orders
 

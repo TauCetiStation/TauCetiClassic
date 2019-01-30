@@ -7,7 +7,7 @@
 
 var/list/all_supply_groups = list("Operations","Security","Hospitality","Engineering","Medical / Science","Hydroponics","Mining","Supply","Miscellaneous")
 
-datum/supply_pack
+/datum/supply_pack
 	var/name = "Crate"
 	var/group = "Operations"
 	var/true_manifest = ""
@@ -23,7 +23,7 @@ datum/supply_pack
 	var/special_enabled = FALSE
 	var/amount = 0
 
-datum/supply_pack/New()
+/datum/supply_pack/New()
 	true_manifest += "<ul>"
 	for(var/path in contains)
 		if(!path)

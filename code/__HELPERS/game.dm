@@ -308,7 +308,7 @@ proc
 		return 1
 #undef SIGN
 
-proc/isInSight(atom/A, atom/B)
+/proc/isInSight(atom/A, atom/B)
 	var/turf/Aturf = get_turf(A)
 	var/turf/Bturf = get_turf(B)
 

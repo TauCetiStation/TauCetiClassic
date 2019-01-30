@@ -1,4 +1,4 @@
-datum/directive/tau_ceti_needs_women
+/datum/directive/tau_ceti_needs_women
 	var/list/command_targets = list()
 	var/list/alien_targets = list()
 
@@ -40,7 +40,7 @@ datum/directive/tau_ceti_needs_women
 
 		return heads_reassigned
 
-datum/directive/tau_ceti_needs_women/get_description()
+/datum/directive/tau_ceti_needs_women/get_description()
 	return {"
 		<p>
 			Recent evidence suggests [get_target_gender()] aptitudes may be effected by radiation from [system_name()].
@@ -48,7 +48,7 @@ datum/directive/tau_ceti_needs_women/get_description()
 		</p>
 	"}
 
-datum/directive/tau_ceti_needs_women/initialize()
+/datum/directive/tau_ceti_needs_women/initialize()
 	for(var/mob/living/carbon/human/H in get_target_heads())
 		command_targets[H.wear_id] = 0
 
@@ -59,7 +59,7 @@ datum/directive/tau_ceti_needs_women/initialize()
 		"Remove [get_target_gender()] personnel from Command positions.",
 		"Terminate employment of all [get_target_gender()] Skrell, Tajara, and Unathi.")
 
-datum/directive/tau_ceti_needs_women/meets_prerequisites()
+/datum/directive/tau_ceti_needs_women/meets_prerequisites()
 	var/females = 0
 	var/males = 0
 	for(var/mob/M in player_list)
@@ -72,10 +72,10 @@ datum/directive/tau_ceti_needs_women/meets_prerequisites()
 
 	return males >= 2 && females >= 2
 
-datum/directive/tau_ceti_needs_women/directives_complete()
+/datum/directive/tau_ceti_needs_women/directives_complete()
 	return command_targets.len == count_heads_reassigned() && alien_targets.len == 0
 
-datum/directive/tau_ceti_needs_women/get_remaining_orders()
+/datum/directive/tau_ceti_needs_women/get_remaining_orders()
 	var/text = ""
 	for(var/head in command_targets)
 		if(!command_targets[head])

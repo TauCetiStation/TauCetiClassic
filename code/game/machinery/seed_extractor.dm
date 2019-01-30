@@ -49,7 +49,7 @@
 				new /obj/item/seeds/replicapod(loc)
 			qdel(IO)
 
-	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/))
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
 		user.drop_item()
 		to_chat(user, "<span class='notice'>You extract some seeds from the [F.name].</span>")
@@ -68,7 +68,7 @@
 			t_amount++
 		qdel(O)
 
-	else if(istype(O, /obj/item/weapon/grown/))
+	else if(istype(O, /obj/item/weapon/grown))
 		var/obj/item/weapon/grown/F = O
 		user.drop_item()
 		to_chat(user, "<span class='notice'>You extract some seeds from the [F.name].</span>")

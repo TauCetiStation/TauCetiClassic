@@ -32,7 +32,7 @@
 		handle_regular_hud_updates()
 
 
-/mob/living/carbon/brain/
+/mob/living/carbon/brain
 	proc/handle_mutations_and_radiation()
 
 		if (radiation)

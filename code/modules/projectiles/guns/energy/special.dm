@@ -134,7 +134,7 @@
 	icon_state = "xray"
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
 /*
-obj/item/weapon/gun/energy/staff/focus
+/obj/item/weapon/gun/energy/staff/focus
 	name = "mental focus"
 	desc = "An artefact that channels the will of the user into destructive bolts of force. If you aren't careful with it, you might poke someone's brain out."
 	icon = 'icons/obj/wizard.dmi'

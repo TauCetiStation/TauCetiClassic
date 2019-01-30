@@ -1,6 +1,6 @@
 
 //chemistry stuff here so that it can be easily viewed/modified
-datum
+/datum
 	reagent
 		tungsten
 			name = "Tungsten"
@@ -44,7 +44,7 @@ datum
 			reagent_state = LIQUID
 			color = "#ADFF2F"   //rgb: 173, 255, 47, toxic green
 
-datum
+/datum
 	chemical_reaction
 		lithiumsodiumtungstate	//LiNa2WO4, not the easiest chem to mix
 			name = "Lithium Sodium Tungstate"
@@ -83,7 +83,7 @@ datum
 	volume = 2
 	flags = OPENCONTAINER
 
-obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/W, mob/living/user)
+/obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/W, mob/living/user)
 	if(istype(W, /obj/item/weapon/pen))
 		var/new_label = sanitize_safe(input("What should the new label be?","Label solution tray"), MAX_NAME_LEN)
 		if(new_label)
