@@ -91,6 +91,9 @@
 
 	tally += max(2 * stance_damage, 0) //damaged/missing feet or legs is slow
 
+	if(tiredness > 30)
+		tally += tiredness / 100
+
 	return (tally + config.human_delay)
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0)

@@ -1064,6 +1064,7 @@
 	if(resting)
 		dizziness = max(0, dizziness - 15)
 		jitteriness = max(0, jitteriness - 15)
+		tiredness = max(0, tiredness - 1)
 	else
 		dizziness = max(0, dizziness - 3)
 		jitteriness = max(0, jitteriness - 3)
@@ -1114,7 +1115,7 @@
 				if(prob(3))
 					fake_attack(src)
 				if(!handling_hal)
-					spawn handle_hallucinations() //The not boring kind!
+					INVOKE_ASYNC(src, .proc/handle_hallucinations) //The not boring kind!
 
 			if(hallucination<=2)
 				hallucination = 0
@@ -1147,6 +1148,7 @@
 			speech_problem_flag = 1
 			handle_dreams()
 			adjustHalLoss(-3)
+			tiredness = max(0, tiredness - 5)
 			if (mind)
 				if((mind.active && client != null) || immune_to_ssd) //This also checks whether a client is connected, if not, sleep is not reduced.
 					sleeping = max(sleeping-1, 0)

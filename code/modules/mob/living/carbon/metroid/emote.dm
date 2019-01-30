@@ -45,6 +45,10 @@
 			message = "<B>The [src.name]</B> moans."
 			m_type = 2
 
+		if("yawn")
+			message = "<B>[name]</B> yawns."
+			m_type = 2
+
 		if("shiver")
 			message = "<B>The [src.name]</B> shivers."
 			m_type = 2

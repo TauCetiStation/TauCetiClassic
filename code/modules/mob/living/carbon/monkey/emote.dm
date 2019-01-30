@@ -78,6 +78,9 @@
 		if("moan")
 			message = "<B>The [src.name]</B> moans!"
 			m_type = 2
+		if("yawn")
+			message = "<B>[name]</B> yawns."
+			m_type = 2
 		if("nod")
 			message = "<B>The [src.name]</B> nods his head."
 			m_type = 1

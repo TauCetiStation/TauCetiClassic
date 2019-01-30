@@ -398,6 +398,7 @@
 	if(resting)
 		dizziness = max(0, dizziness - 5)
 		jitteriness = max(0, jitteriness - 5)
+		tiredness = max(0, tiredness - 1)
 	else
 		dizziness = max(0, dizziness - 1)
 		jitteriness = max(0, jitteriness - 1)
@@ -552,6 +553,7 @@
 			handle_dreams()
 			adjustHalLoss(-3)
 			sleeping = max(sleeping - 1, 0)
+			tiredness = max(0, tiredness - 5)
 			blinded = TRUE
 			stat = UNCONSCIOUS
 			if( prob(10) && health && !hal_crit )

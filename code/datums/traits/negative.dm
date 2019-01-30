@@ -89,3 +89,33 @@
 	mob_trait = TRAIT_NERVOUS
 	gain_text = "<span class='danger'>You feel nervous!</span>"
 	lose_text = "<span class='notice'>You feel less yourself less nervous.</span>"
+
+
+
+/datum/quirk/sleepy
+	name = "Sleepy"
+	desc = "You get tired when you don't sleep."
+	value = -1
+	mob_trait = TRAIT_SLEEPY
+	gain_text = "<span class='danger'>You feel like you're getting tired.</span>"
+	lose_text = "<span class='notice'>You feel as if you never need to sleep again.</span>"
+
+/datum/quirk/sleepy/on_process()
+	if(quirk_holder.resting || quirk_holder.sleeping || quirk_holder.buckled)
+		return
+	if(SSmob.times_fired % 10 == 5) // do you believe in magic? fires one time out of 10 ticks and that's all I wanted to know
+		quirk_holder.tiredness = min(200, quirk_holder.tiredness + 0.7)
+		var/show_mes = ""
+		if(quirk_holder.tiredness > 60)
+			if(prob(10))
+				quirk_holder.emote("yawn")
+		if(quirk_holder.tiredness > 120)
+			quirk_holder.slurring = max(30, quirk_holder.slurring)
+			show_mes = "<span class='notice'>You feel extremely sleepy.</span>"
+		if(quirk_holder.tiredness > 180)
+			quirk_holder.eye_blurry = max(30, quirk_holder.eye_blurry)
+		if(quirk_holder.tiredness == 200)
+			quirk_holder.hallucination = max(50, quirk_holder.slurring)
+			show_mes = "<span class='warning'>You really need to get some sleep!</span>"
+		if(show_mes && prob(10))
+			to_chat(quirk_holder, show_mes)

@@ -15,10 +15,9 @@
 	var/brainloss = 0	//'Retardation' damage caused by someone hitting you in the head with a bible or being infected with brainrot.
 	var/halloss = 0		//Hallucination damage. 'Fake' damage obtained through hallucinating or the holodeck. Sleeping should cause it to wear off.
 
-
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
 	var/list/atom/hallucinations = list() //A list of hallucinated people that try to attack the mob. See /obj/effect/fake_attacker in hallucinations.dm
-
+	var/tiredness = 0 // How long did the mob go without sleeping.
 
 	var/last_special = 0 //Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 
@@ -52,3 +51,6 @@
 	var/lasttaste = 0 // Prevent tastes spam
 
 	var/list/roundstart_quirks = list()
+
+	var/life_tick = 0      // The amount of life ticks that have processed on this mob.
+

@@ -136,6 +136,9 @@
 	if (bodytemperature >= 330.23) // 135 F
 		return -1	// slimes become supercharged at high temperatures
 
+	if(tiredness > 30)
+		tally += tiredness / 100
+
 	return tally+config.slime_delay
 
 /mob/living/carbon/slime/ObjBump(obj/O)

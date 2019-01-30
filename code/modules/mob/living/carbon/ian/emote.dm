@@ -70,6 +70,8 @@
 			m_type = 2
 		if("moan")
 			message = "<B>[src]</B> moans!"
+		if("yawn")
+			message = "<B>[src]</B> yawns."
 			m_type = 2
 		if("nod")
 			message = "<B>[src]</B> nods."
