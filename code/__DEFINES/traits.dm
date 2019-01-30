@@ -7,7 +7,7 @@
 #define TRAIT_TOURETTE            "tourette"
 #define TRAIT_NEARSIGHT           "nearsighted"
 #define TRAIT_NERVOUS             "nervous"
-#define TRAIT_AMBIDEXTROUS        "ambidextrous"
+#define TRAIT_MULTITASKING        "multitasking"
 
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention

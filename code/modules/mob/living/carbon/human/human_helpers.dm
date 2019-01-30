@@ -1,6 +1,6 @@
 /mob/living/carbon/human/is_busy(atom/target, show_warning = TRUE)
 	if(busy_with_action)
-		if(!has_trait(TRAIT_AMBIDEXTROUS) || (busy_left_hand && busy_right_hand))
+		if(!has_trait(TRAIT_MULTITASKING) || (busy_left_hand && busy_right_hand))
 			if(show_warning)
 				to_chat(src, "<span class='warning'>You are busy. Please finish or cancel your current action.</span>")
 			return TRUE
