@@ -21,11 +21,9 @@ var/global/list/cached_icons = list()
 	if(!proximity)
 		return
 	if(istype(target) && reagents.total_volume > 5)
-		for(var/mob/O in viewers(user))
-			O.show_message("\red \The [target] has been splashed with something by [user]!", 1)
-		spawn(5)
-			reagents.reaction(target, TOUCH)
-			reagents.remove_any(5)
+		visible_message("<span class='notice'>[target] has been splashed by [user] with [src].</span>")
+		reagents.reaction(target, TOUCH)
+		reagents.remove_any(5)
 	else
 		return ..()
 
@@ -41,6 +39,9 @@ var/global/list/cached_icons = list()
 	var/mixedcolor = mix_color_from_reagents(reagents.reagent_list)
 	for(var/datum/reagent/paint/P in reagents.reagent_list)
 		P.color = mixedcolor
+		P.data["r_color"] = hex2num(copytext(mixedcolor, 2, 4))
+		P.data["g_color"] = hex2num(copytext(mixedcolor, 4, 6))
+		P.data["b_color"] = hex2num(copytext(mixedcolor, 6, 8))
 
 /obj/item/weapon/reagent_containers/glass/paint/red
 	icon_state = "paint_red"
