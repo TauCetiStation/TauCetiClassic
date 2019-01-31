@@ -89,3 +89,63 @@
 	mob_trait = TRAIT_NERVOUS
 	gain_text = "<span class='danger'>You feel nervous!</span>"
 	lose_text = "<span class='notice'>You feel less yourself less nervous.</span>"
+
+
+
+/datum/quirk/hypochondria
+	name = "Hypochondria"
+	desc = "You always feel like you have one kind of disease or another, sometimes it bothers you a little too much."
+	value = -1
+	gain_text = "<span class='danger'>What is this itch? I think I have asthma!</span>"
+	lose_text = "<span class='notice'>You feel like you are cured of all your imagined diseases.</span>"
+	human_only = FALSE
+
+	var/datum/disease2/effect/current_effect
+	var/next_effect_run = 0
+	var/ticks = 0
+	var/current_effect_stage = 1
+
+	var/curing_reagent = ""
+
+/datum/quirk/hypochondria/on_spawn()
+	var/effect_type = pick(subtypesof(/datum/disease2/effect))
+	current_effect = new effect_type
+	next_effect_run = world.time + current_effect.cooldown + 60 SECONDS
+	curing_reagent = pick(chemical_reagents_list)
+
+/datum/quirk/hypochondria/on_process()
+	if(!iscarbon(quirk_holder))
+		return
+
+	if(next_effect_run > world.time)
+		return
+
+	var/mob/living/carbon/C = quirk_holder
+	if(C.reagents)
+		if(C.reagents.has_reagent("spaceacillin", 1))
+			next_effect_run = world.time + 3 SECONDS
+			return
+		if(C.reagents.has_reagent(curing_reagent, 1))
+			to_chat(C, "<span class='notice'>You feel fantastic, as if your inner craving for at least some sort of medicine faded away!</span>")
+			var/effect_type = pick(subtypesof(/datum/disease2/effect))
+			current_effect = new effect_type
+			next_effect_run = world.time + 300 SECONDS
+			ticks = 0
+			curing_reagent = pick(chemical_reagents_list)
+			return
+
+	if(!prob(rand(current_effect.chance_minm, current_effect.chance_maxm)))
+		return
+
+	current_effect.simulate(C, current_effect_stage)
+	ticks++
+	if(ticks > current_effect_stage * 10 && prob(50))
+		if(current_effect_stage < current_effect.max_stage)
+			current_effect_stage++
+		else if(prob(33))
+			var/effect_type = pick(subtypesof(/datum/disease2/effect))
+			current_effect = new effect_type
+			current_effect_stage = 1
+			ticks = 0
+
+	next_effect_run = world.time + current_effect.cooldown

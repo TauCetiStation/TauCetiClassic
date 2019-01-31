@@ -32,6 +32,7 @@
 	var/cooldown = 0
 
 /datum/disease2/effect/proc/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/proc/simulate(mob/living/carbon/C, _stage) // Simulate the disease instead of actually contracting it. Hypochondria uses this.
 /datum/disease2/effect/proc/deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 /datum/disease2/effect/proc/copy(datum/disease2/effectholder/holder_old, datum/disease2/effectholder/holder_new, datum/disease2/effect/effect_old)
 
@@ -40,6 +41,9 @@
 	level = 0 // can't get this one
 
 /datum/disease2/effect/invisible/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+	return
+
+/datum/disease2/effect/invsible/simulate(mob/living/carbon/C, _stage)
 	return
 
 /datum/disease2/effect/zombie
@@ -96,11 +100,11 @@
 				H.adjustToxLoss(3)
 			if(9) //IT HURTS
 				if(prob(33))
-					to_chat(H, "<span class='danger'>[pick("IT HURTS", "You feel a sharp pain across your whole body!")]</span>")
+					to_chat(H, "<span class='danger'>[pick("IT HURTS.", "You feel a sharp pain across your whole body!")]</span>")
 					H.adjustBruteLoss(rand(2,5))
 					H.apply_effect(50,AGONY,0)
 				else if(prob(33) && H.stat == CONSCIOUS)
-					to_chat(H, "<span class='danger'>[pick("Your heart stop for a second.", "It's hard for you to breathe.")]</span>")
+					to_chat(H, "<span class='danger'>[pick("Your heart stops for a second.", "It's hard for you to breathe.")]</span>")
 					H.adjustOxyLoss(rand(10,40))
 				else
 					to_chat(H, "<span class='danger'>[pick("Your body is paralyzed.")]</span>")
@@ -113,6 +117,47 @@
 					handle_infected_death(H)
 					H.update_canmove()
 					disease.dead = TRUE
+
+/datum/disease2/effect/zombie/simulate(mob/living/carbon/C, _stage)
+	switch(_stage)
+		if(1, 2, 3) // Increased hunger.
+			C.nutrition = max(C.nutrition - 20, 0)
+			if(prob(10)) // Should happen a lot, since we're faking.
+				to_chat(C, "<span class='notice'>[pick("You feel an odd gurgle in your stomach.", "You are hungry for something.", "You suddenly feel better.", "You suddenly feel worse.")]</span>")
+		if(4, 5, 6)
+			C.adjustToxLoss(1)
+			if(prob(70))
+				C.emote(pick("twitch","drool","sneeze","sniff","cough","shiver","giggle","laugh","gasp"))
+			else
+				var/possible_bodyparts = null
+				if(ishuman(C) || ismonkey(C))
+					possible_bodyparts = list("head", "chest", "groin", "left leg", "right leg", "left arm", "right arm")
+				else if(istype(C, /mob/living/carbon/ian))
+					possible_bodyparts = list("head", "body", "paws", "snout")
+				else if(isslime(C))
+					possible_bodyparts = list("body")
+				if(possible_bodyparts)
+					to_chat(C, "<span class='warning'>[pick("Your [pick(possible_bodyparts)] seems to become more green...", "Your [pick(possible_bodyparts)] hurts...")]</span>")
+				else
+					to_chat(C, "<span class='warning'>You seem to become more green...</span>")
+		if(7, 8)
+			to_chat(C, "<span class='danger'>[pick("Your brain hurts.", "Your muscles ache.", "Your muscles are sore.")]</span>")
+			C.apply_effect(20, AGONY, 0)
+			C.adjustToxLoss(3)
+		if(9)
+			if(prob(33))
+				to_chat(C, "<span class='danger'>[pick("IT HURTS.", "You feel a sharp pain across your whole body!")]</span>")
+				C.adjustToxLoss(rand(2, 5))
+				C.apply_effect(50, AGONY, 0)
+			else if(prob(33) && C.stat == CONSCIOUS)
+				to_chat(C, "<span class='danger'>[pick("Your heart stops for a second.", "It's hard for you to breath.")]</span>")
+				C.adjustHalLoss(rand(10, 40))
+			else
+				to_chat(C, "<span class='danger'>Your body is paralyzed.</span>")
+				C.Stun(4)
+		if(10)
+			C.emote("deathgasp")
+			C.sleeping = 20
 
 /datum/disease2/effect/zombie/copy(datum/disease2/effectholder/holder_old, datum/disease2/effectholder/holder_new, datum/disease2/effect/effect_old)
 	var/datum/disease2/effect/zombie/Z = effect_old
@@ -145,6 +190,17 @@
 					H.f_style = pick("Dwarf Beard", "Very Long Beard")
 					H.update_hair()
 
+/datum/disease2/effect/beard/simulate(mob/living/carbon/C, _stage)
+	if(ishuman(C))
+		switch(_stage)
+			if(1)
+				to_chat(C, "<span class='warning'>Your chin itches.</span>")
+			if(2)
+				to_chat(C, "<span class='warning'>You feel tough.</span>")
+			if(3)
+				to_chat(C, "<span class='warning'>You feel manly!</span>")
+				C.emote("scream", , , TRUE)
+
 /datum/disease2/effect/fire
 	name = "Spontaneous Combustion"
 	desc = "The virus turns fat into an extremely flammable compound, and raises the body's temperature, making the host burst into flames spontaneously."
@@ -166,6 +222,19 @@
 		to_chat(mob, "<span class='userdanger'>Your skin erupts into an inferno!</span>")
 		mob.emote("scream",,, 1)
 
+/datum/disease2/effect/fire/simulate(mob/living/carbon/C, _stage)
+	switch(_stage)
+		if(1)
+			if(prob(50))
+				to_chat(C, "<span class='warning'>[pick("You feel hot.", "You hear a crackling noise.", "You smell smoke.")]</span>")
+		if(2)
+			if(prob(50))
+				to_chat(C, "<span class='userdanger'>Your skin bursts into flames!</span>")
+				C.emote("scream", , , TRUE)
+		if(3)
+			to_chat(C, "<span class='userdanger'>Your skin erupts into an inferno!</span>")
+			C.emote("scream", , , TRUE)
+
 /datum/disease2/effect/flesh_eating
 	name = "Necrotizing Fasciitis"
 	desc = "The virus aggressively attacks body cells, necrotizing tissues and organs."
@@ -181,6 +250,15 @@
 		to_chat(mob, "<span class='userdanger'>[pick("You cringe as a violent pain takes over your body.", "It feels like your body is eating itself inside out.", "IT HURTS.")]</span>")
 		mob.adjustBruteLoss(rand(15,25))
 
+/datum/disease2/effect/flesh_eating/simulate(mob/living/carbon/C, _stage)
+	switch(_stage)
+		if(1, 2, 3)
+			if(prob(50))
+				to_chat(C, "<span class='warning'>[pick("You feel a sudden pain across your body.", "Drops of blood appear suddenly on your skin.")]</span>")
+		if(4)
+			to_chat(C, "<span class='userdanger'>[pick("You cringe as a violent pain takes over your body.", "It feels like your body is eating itself inside out.", "IT HURTS.")]</span>")
+			C.adjustHalLoss(rand(15,25))
+
 /datum/disease2/effect/flesh_death
 	name = "Autophagocytosis Necrosis"
 	desc = "The virus rapidly consumes infected cells, leading to heavy and widespread damage."
@@ -195,6 +273,15 @@
 	else if(holder.stage == 3)
 		to_chat(mob, "<span class='userdanger'>[pick("You feel your muscles weakening.", "Some of your skin detaches itself.", "You feel sandy.")]</span>")
 		mob.adjustBruteLoss(rand(6,10))
+
+/datum/disease2/effect/flesh_death/simulate(mob/living/carbon/C, _stage)
+	switch(_stage)
+		if(1, 2)
+			if(prob(20))
+				to_chat(C, "<span class='warning'>[pick("You feel your body break apart.", "Your skin feels like like dust.")]</span>")
+		if(3)
+			to_chat(C, "<span class='userdanger'>[pick("You feel your muscles weakening.", "You feel sandy.")]</span>")
+			C.adjustHalLoss(rand(6,10))
 
 /datum/disease2/effect/heal
 	name = "Basic Healing (does nothing)"
@@ -217,6 +304,10 @@
 		else
 			heal(H, disease, effectiveness)
 
+/datum/disease2/effect/heal/simulate(mob/living/carbon/C, _stage)
+	if(_stage == 2 && prob(5))
+		to_chat(C, "<span class='notice'>You feel as if you're cured from everything!</span>")
+
 /datum/disease2/effect/heal/proc/can_heal(mob/living/carbon/human/M,datum/disease2/disease/disease)
 	return 1
 
@@ -231,6 +322,10 @@
 	desc = "The virus reacts to direct starlight, producing regenerative chemicals. Works best against toxin-based damage."
 	level = 3
 	passive_message = "<span class='notice'>You miss the feeling of starlight on your skin.</span>"
+
+/datum/disease2/effect/heal/starlight/simulate(mob/living/carbon/C, _stage)
+	if(prob(5))
+		to_chat(C, "<span class='notice'>You feel your skin tingle as something seems to heal you.</span>")
 
 /datum/disease2/effect/heal/starlight/can_heal(mob/living/carbon/human/M,datum/disease2/disease/disease)
 	if(istype(get_turf(M), /turf/space))
@@ -272,6 +367,10 @@
 			to_chat(M, "<span class='notice'>You feel a mild warmth as your blood purifies itself.</span>")
 	return 1
 
+/datum/disease2/effect/heal/chem/simulate(mob/living/carbon/C, _stage)
+	if(prob(2))
+		to_chat(C, "<span class='notice'>You feel a mild warmth as your blood purifies itself.</span>")
+
 /datum/disease2/effect/heal/metabolism
 	name = "Metabolic Boost"
 	desc = "The virus causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast, but also causing increased hunger."
@@ -286,6 +385,10 @@
 	if(prob(2))
 		to_chat(M, "<span class='notice'>You feel an odd gurgle in your stomach, as if it was working much faster than normal.</span>")
 	return 1
+
+/datum/disease2/effect/heal/metabolism/simulate(mob/living/carbon/C, _stage)
+	if(prob(2))
+		to_chat(C, "<span class='notice'>You feel an odd gurgle in your stomach, as if it was working much faster than normal.</span>")
 
 /datum/disease2/effect/heal/darkness
 	name = "Nocturnal Regeneration"
@@ -305,6 +408,10 @@
 		else
 			return 0
 	return 0.5  // If they are inside something, let them heal, but more slowly
+
+/datum/disease2/effect/heal/darkness/simulate(mob/living/carbon/C, _stage)
+	if(prob(5))
+		to_chat(C, "<span class='notice'>Something soothes and mends your wounds.</span>")
 
 /datum/disease2/effect/heal/darkness/heal(mob/living/carbon/human/M,datum/disease2/disease/disease, actual_power)
 	var/heal_amt = 2 * actual_power
@@ -331,6 +438,11 @@
 	level = 4
 	passive_message = "<span class='notice'>The pain from your wounds makes you feel oddly sleepy...</span>"
 	var/active_coma = FALSE
+
+/datum/disease2/effect/heal/coma/simulate(mob/living/carbon/C, _stage)
+	if(C.getBruteLoss() + C.getFireLoss() >= 70)
+		to_chat(C, "<span class='warning'>You feel yourself slip into a regenerative coma...</span>")
+		C.sleeping += 50
 
 /datum/disease2/effect/heal/coma/can_heal(mob/living/carbon/human/M,datum/disease2/disease/disease)
 	if(M.status_flags & FAKEDEATH)
@@ -402,6 +514,10 @@
 	if(holder.stage	>= 5)
 		M.adjustBrainLoss(-3)
 
+/datum/disease2/effect/mind_restoration/simulate(mob/living/carbon/C, _stage)
+	if(prob(5))
+		to_chat(C, "<span class='notice'>You feel as if your mind is restored!")
+
 /datum/disease2/effect/sensory_restoration
 	name = "Sensory Restoration"
 	desc = "The virus stimulates the production and replacement of sensory tissues, causing the host to regenerate eyes and ears when damaged."
@@ -424,6 +540,10 @@
 				if(IO.damage > 0)
 					IO.damage = max(IO.damage - 1, 0)
 
+/datum/disease2/effect/sensory_restoration/simulate(mob/living/carbon/C, _stage)
+	if(prob(5))
+		to_chat(C, "<span class='notice'>You feel as if your perspective is restored!")
+
 /datum/disease2/effect/stage_boost
 	name = "Quick growth"
 	desc = "The virus mutates and quickly grows, reaching its full potential in moments."
@@ -437,6 +557,10 @@
 	if(disease.stage < disease.effects.len)
 		disease.stage = disease.effects.len
 		to_chat(mob, "<span class='notice'>You feel warmth inside your head.</span>")
+
+/datum/disease2/effect/stage_boost/simulate(mob/living/carbon/C, _stage)
+	if(prob(5))
+		to_chat(C, "<span class='notice'>You feel warmth inside your head.</span>")
 
 /datum/disease2/effect/cooldown_boost
 	name = "Virus booster"
@@ -455,6 +579,10 @@
 		disease.advance_stage()
 		to_chat(mob, "<span class='notice'>You feel that your brain is more active.</span>")
 
+/datum/disease2/effect/stage_boost/simulate(mob/living/carbon/C, _stage)
+	if(prob(5))
+		to_chat(C, "<span class='notice'>You feel that your brain is more active.</span>")
+
 /datum/disease2/effect/chance_boost
 	name = "Structure improvement"
 	desc = "The virus mutates and changes its structure, making effects show up more likely."
@@ -472,6 +600,10 @@
 			e.chance = max(min(e.chance * 2, 100), 40)
 		disease.advance_stage()
 		to_chat(mob, "<span class='notice'>You feel smarter.</span>")
+
+/datum/disease2/effect/chance_boost/simulate(mob/living/carbon/C, _stage)
+	if(prob(5))
+		to_chat(C, "<span class='notice'>You feel smarter.</span>")
 
 /datum/disease2/effect/chance_boost/copy(datum/disease2/effectholder/holder_old, datum/disease2/effectholder/holder_new, datum/disease2/effect/effect_old)
 	var/datum/disease2/effect/chance_boost/Z = effect_old
@@ -513,6 +645,24 @@
 			mob.make_jittery(50)
 			addtimer(CALLBACK(mob, /mob/.proc/gib), 50)
 
+/datum/disease2/effect/gibbingtons/simulate(mob/living/carbon/C, _stage)
+	switch(_stage)
+		if(1, 2, 3, 4, 5)
+			to_chat(C, "<span class='notice'>[pick("You feel angry for some reason.", "Your skin feels flakey.", "Your skin burns.", "Random small wounds are appearing on your skin.")]</span>")
+		if(6, 7, 8, 9)
+			to_chat(C, "<span class='warning'>[pick("You feel chemical reactions inside your body.", "You feel as if skin turns into bubbles that explode after a few seconds.", "You feel as if blood boils underneath your skin. Something is ripping you appart!", "You feel as if wounds on your body become worse.", "You feel small explosions inside of you.")]</span>")
+		if(10, 11, 12, 13)
+			if(ismonkey(C) || ishuman(C))
+				to_chat(C, "<span class='warning'>You feel as if your limbs might just fall off!</span>")
+				C.emote("scream", , , TRUE)
+			else
+				to_chat(C, "<span class='userdanger'>[pick("Something is ripping you appart!", "IT HURTS!")]</span>")
+			C.adjustHalLoss(rand(2,10))
+		if(14)
+			C.emote("scream", , , TRUE)
+			C.apply_effect(5, WEAKEN)
+			C.make_jittery(50)
+
 /datum/disease2/effect/radian
 	name = "Radian's Syndrome"
 	desc = "The virus mutates host's skin cells, increasing exposure to radiation."
@@ -529,6 +679,16 @@
 			mob.apply_effect(5, IRRADIATE, 0)
 		if(3)
 			mob.apply_effect(20, IRRADIATE, 0)
+
+/datum/disease2/effect/radian/simulate(mob/living/carbon/C, _stage)
+	switch(_stage)
+		if(1)
+			to_chat(C, "<span class='notice'>[pick("You feel warmth.", "You feel weak.")]</span>")
+		if(2)
+			to_chat(C, "<span class='warning'>[pick("You feel your skin flaking.", "You have a headache.")]</span>")
+			C.apply_effect(5, AGONY, 0)
+		if(3)
+			C.apply_effect(20, WEAKEN, 0)
 
 /*/datum/disease2/effect/deaf
 	name = "Dead Ear Syndrome"
@@ -558,6 +718,20 @@
 			if(8)
 				h.monkeyize()
 
+/datum/disease2/effect/monkey/simulate(mob/living/carbon/C, _stage)
+	if(ishuman(C))
+		switch(_stage)
+			if(1, 2, 3)
+				to_chat(C, "<span class='notice'>[pick("You want bananas.", "You feel very primitive.", "Is that a banana?")]</span>")
+			if(4, 5, 6)
+				to_chat(C, "<span class='danger'>[pick("You really want some bananas.", "You feel yourself slowly degrading.", "You feel smaller.")]</span>")
+			if(7)
+				if(prob(20))
+					C.say(pick("Bananas?", "Do you have some bananas?", "Ooh-ooh-ooh-eee-eee","Ooh ooh ooh eee eee eee aah aah aah", "Eeek! Eeek!"))
+			if(8)
+				C.say(pick("Bananas?", "Do you have some bananas?", "Ooh-ooh-ooh-eee-eee","Ooh ooh ooh eee eee eee aah aah aah", "Eeek! Eeek!"))
+				C.emote("scream", , , TRUE)
+
 /datum/disease2/effect/suicide
 	name = "Suicidal Syndrome"
 	desc = "The virus creates fake thoughts inside host's brain, making him very likely to commit suicide."
@@ -580,6 +754,20 @@
 				H.adjustOxyLoss(175 - H.getToxLoss() - H.getFireLoss() - H.getBruteLoss() - H.getOxyLoss())
 			H.updatehealth()
 
+/datum/disease2/effect/suicide/simulate(mob/living/carbon/C, _stage)
+	if((_stage >= 1 && _stage <= 7) || prob(70))
+		to_chat(C, "<span class='notice'>[pick("You feel very bad, thinking that there are people in the world who drown little tajaras.", "You are useless.", "Why do you exist?", "The world would be better without you.", "If suicide isn't an exit, then what is?", "Maybe they were right after all...", "I wish I hadn't been born.", "I wish I was dead.", "I feel so alone...", "Maybe I should end all of this.", "Everything I do is wrong.", "I am just an unfunny joke.", "Why should I disappoint everyone again?")]</span>")
+	else if(_stage == 8 && C.stat == CONSCIOUS)
+		if(ishuman(C) || ismonkey(C) || istype(C, /mob/living/carbon/ian))
+			if(prob(90))
+				C.emote("gasp")
+				C.visible_message("<span class='danger'>[C] tried to hold \his breath but couldn't.</span>")
+				C.adjustOxyLoss(10)
+			else
+				C.visible_message("<span class='danger'>[C] is holding \his breath. It looks like \he is trying to commit suicide.</span>")
+				C.adjustOxyLoss(max(30, 100 - C.getToxLoss() - C.getFireLoss() - C.getBruteLoss() - C.getOxyLoss()))
+			C.updatehealth()
+
 /datum/disease2/effect/killertoxins
 	name = "Toxification Syndrome"
 	desc = "The virus causes nausea and irritates the stomach, causing intoxication and occasional vomit."
@@ -598,6 +786,15 @@
 		to_chat(mob, "<span class='userdanger'>[pick("Your stomach hurts.", "You feel a sharp abdominal pain.")]</span>")
 		mob.reagents.add_reagent(pick("plasticide", "toxin", "amatoxin", "phoron", "lexorin", "carpotoxin", "mindbreaker", "plantbgone", "fluorine"), round(rand(1,3), 1)) // some random toxin
 
+/datum/disease2/effect/killertoxins/simulate(mob/living/carbon/C, _stage)
+	if(prob(20) || _stage == 1)
+		to_chat(C, "<span class='warning'>[pick("You feel nauseated.", "You feel like you're going to throw up!")]</span>")
+	else if(prob(20) || _stage == 2)
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			H.vomit()
+	else if(_stage == 3)
+		to_chat(C, "<span class='userdanger'>[pick("Your stomach hurts.", "You feel a sharp abdominal pain.")]</span>")
 
 /datum/disease2/effect/dna
 	name = "Reverse Pattern Syndrome"
@@ -607,12 +804,20 @@
 	cooldown = 10
 
 /datum/disease2/effect/dna/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	if(prob(20) || holder.stage	== 1)
+	if(prob(20) || holder.stage == 1)
 		to_chat(mob, "<span class='notice'>[pick("For some reason you feel different.", "Your skin feels itchy.", "You feel light headed.")]</span>")
 	else if(prob(20) || holder.stage == 2)
 		to_chat(mob, "<span class='warning'>[pick("Something is changing inside you.", "Your head hurts.")]</span>")
 	else if(holder.stage == 3)
 		scramble(0,mob,10)
+
+/datum/disease2/effect/dna/simulate(mob/living/carbon/C, _stage)
+	if(prob(20) || _stage == 1)
+		to_chat(C, "<span class='notice'>[pick("For some reason you feel different.", "Your skin feels itchy.", "You feel light headed.")]</span>")
+	else if(prob(20) || _stage == 2)
+		to_chat(C, "<span class='warning'>[pick("Something is changing inside you.", "Your head hurts.")]</span>")
+	else if(_stage == 3)
+		C.emote("scream", , , TRUE)
 
 /datum/disease2/effect/dna/deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 	mob.remove_any_mutations()
@@ -646,6 +851,25 @@
 				to_chat(mob, "<span class='userdanger'>[pick("Your hands are trembling and badly hurt.", "You feel your body break apart.")]</span>")
 				mob.apply_effect(20,AGONY,0)
 				mob.adjustBruteLoss(rand(5,15))
+
+/datum/disease2/effect/organs/simulate(mob/living/carbon/C, _stage)
+	switch(_stage)
+		if(1, 2, 3)
+			to_chat(C, "<span class='notice'>[pick("Your skin feels itchy.", "You feel weaker.")]</span>")
+		if(4, 5, 6)
+			C.adjustToxLoss(3)
+			to_chat(C, "<span class='warning'>[pick("Your arm hurts.", "Your leg hurts.")]</span>")
+		if(7)
+			if(ishuman(C) && prob(40))
+				var/mob/living/carbon/human/H = C
+				var/bodypart = pick(list(BP_R_ARM , BP_L_ARM , BP_R_LEG , BP_L_LEG))
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart]
+				if(!(BP.status & ORGAN_DEAD))
+					to_chat(H, "<span class='warning'>You can't feel your [BP.name] anymore...</span>")
+			else
+				to_chat(C, "<span class='userdanger'>You feel your body break apart.</span>")
+				C.apply_effect(20,AGONY,0)
+				C.adjustHalLoss(rand(5,15))
 
 /datum/disease2/effect/organs/deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 	if(ishuman(mob))
@@ -697,7 +921,19 @@
 				var/mob/living/carbon/human/H = mob
 				var/obj/item/organ/external/BP = pick(H.bodyparts)
 				BP.min_broken_damage = max(10, initial(BP.min_broken_damage) - 30)
-				to_chat(mob, "<span class='notice'>You feel like your [BP.name] is not as strong as it was before..</span>")
+				to_chat(mob, "<span class='notice'>You feel like your [BP.name] is not as strong as it was before.</span>")
+
+/datum/disease2/effect/bones/simulate(mob/living/carbon/C, _stage)
+	switch(_stage)
+		if(1, 2, 3, 4)
+			to_chat(C, "<span class='notice'>[pick("You seem less agile.", "You move more jaggy than usual.")]</span>")
+		if(5, 6, 7)
+			to_chat(C, "<span class='notice'>[pick("You feel like something is wrong with your bones.", "Your bones creak when you move.")]</span>")
+		if(8)
+			if(ishuman(C))
+				var/mob/living/carbon/human/H = C
+				var/obj/item/organ/external/BP = pick(H.bodyparts)
+				to_chat(C, "<span class='notice'>You feel like your [BP.name] is not as strong as it was before.</span>")
 
 /datum/disease2/effect/bones/deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 	if(ishuman(mob))
@@ -723,6 +959,16 @@
 			to_chat(mob, "<span class='warning'>[pick("Your stomach hurts a lot.", "Your skin seems to become more pale.", "You feel confused.", "Your breathing is hot and irregular.")]</span>")
 			mob.adjustToxLoss(10)
 
+/datum/disease2/effect/toxins/simulate(mob/living/carbon/C, _stage)
+	switch(_stage)
+		if(1)
+			to_chat(C, "<span class='notice'>[pick("You feel an odd gurgle in your stomach.", "You feel nauseated.")]</span>")
+		if(2)
+			to_chat(C, "<span class='warning'>[pick("Your stomach hurts.", "You feel a nasty pain inside your throat.")]</span>")
+			C.adjustToxLoss(1)
+		if(3)
+			to_chat(C, "<span class='warning'>[pick("Your stomach hurts a lot.", "Your skin seems to become more pale.", "You feel confused.", "Your breathing is hot and irregular.")]</span>")
+			C.adjustToxLoss(3)
 
 /*/datum/disease2/effect/shakey
 	name = "World Shaking Syndrome"
@@ -750,6 +996,16 @@
 			mob.dna.SetSEState(REMOTETALKBLOCK,1)
 			domutcheck(mob, null)
 
+/datum/disease2/effect/telepathic/simulate(mob/living/carbon/C, _stage)
+	switch(_stage)
+		if(1)
+			to_chat(C, "<span class='notice'>[pick("You heard something.", "Random thoughts are appearing inside your mind.", "Something is not right.")]</span>")
+		if(2)
+			to_chat(C, "<span class='warning'>[pick("You panic hearing so much random words.", "You can't understand what is going on with your head.")]</span>")
+		if(3)
+			var/mob/M = pick(viewers(7, C))
+			to_chat(C, "<span class='notice'>You know that [M] is thinking about [pick("cheese", "wine", "something", "end of the world", "women", "men", "tajarans", "hypochondria")].</span>")
+
 /datum/disease2/effect/mind
 	name = "Lazy Mind Syndrome"
 	desc = "The virus slowly damages the brain, making host very dumb."
@@ -774,6 +1030,15 @@
 		else
 			mob.adjustBrainLoss(10)
 
+/datum/disease2/effect/mind/simulate(mob/living/carbon/C, _stage)
+	if(prob(20) || _stage == 1)
+		to_chat(C, "<span class='notice'>[pick("Something is not right.", "You forget your name for a moment.", "You suddenly forgot where you were going.")]</span>")
+	else if(prob(20) || _stage == 2)
+		to_chat(C, "<span class='warning'>[pick("You feel dumb.", "You keep staring at something.", "You are drooling.")]</span>")
+	else if(_stage == 3)
+		to_chat(C, "<span class='userdanger'>[pick("You forgot how to breathe for a moment.", "Who am I?", "You feel very dumb.")]</span>")
+		C.adjustOxyLoss(5)
+
 /datum/disease2/effect/hallucinations
 	name = "Hallucinational Syndrome"
 	desc = "The virus stimulates the brain, causing occasional hallucinations."
@@ -790,6 +1055,16 @@
 	else if(holder.stage == 3)
 		to_chat(mob, "<span class='userdanger'>[pick("Oh, your head...", "Your head pounds.", "They're everywhere! Run!", "Something in the shadows...")]</span>")
 		mob.hallucination = max(mob.hallucination, 100)
+
+/datum/disease2/effect/hallucinations/simulate(mob/living/carbon/C, _stage)
+	if(prob(20) || _stage == 1)
+		to_chat(C, "<span class='notice'>[pick("Something appears in your peripheral vision, then winks out.", "You hear a faint whisper with no source.", "Your head aches.")]</span>")
+	else if(prob(20) || _stage == 2)
+		to_chat(C, "<span class='danger'>[pick("Something is following you.", "You are being watched.", "You hear a whisper in your ear.", "Thumping footsteps slam toward you from nowhere.")]</span>")
+		C.hallucination = max(C.hallucination, 50)
+	else if(_stage == 3)
+		to_chat(C, "<span class='userdanger'>[pick("Oh, your head...", "Your head pounds.", "They're everywhere! Run!", "Something in the shadows...")]</span>")
+		C.hallucination = max(C.hallucination, 100)
 
 /datum/disease2/effect/deaf
 	name = "Hard of Hearing Syndrome"
@@ -813,6 +1088,16 @@
 		else
 			to_chat(mob, "<span class='userdanger'>Your ears pop and begin ringing loudly!</span>")
 			mob.ear_deaf = max(mob.ear_deaf, 5)
+
+/datum/disease2/effect/deaf/simulate(mob/living/carbon/C, _stage)
+	if(prob(20) || _stage == 1)
+		to_chat(C, "<span class='notice'>You hear a ringing in your ear.</span>")
+	else if(prob(20) || _stage == 2)
+		to_chat(C, "<span class='warning italic'>Everything is so quiet suddenly...</span>")
+		C.ear_deaf = max(C.ear_deaf, 2)
+	else if(_stage == 3)
+		to_chat(C, "<span class='userdanger'>You feel like yours ears pop and begin ringing loudly!</span>")
+		C.ear_deaf = max(C.ear_deaf, 5)
 
 /datum/disease2/effect/giggle
 	name = "Uncontrolled Laughter Effect"
@@ -849,6 +1134,32 @@
 		else
 			mob.say(pick("haha","ha ha ha","ha","HA","hah","haaaaaa","hehe","hehehe","heh","heh heh","muahaha","mwahaha","heehee","teehee","hahaha","ahahaha","bahaha","gahaha"))
 
+/datum/disease2/effect/giggle/simulate(mob/living/carbon/C, _stage)
+	if(prob(20) || _stage == 1)
+		to_chat(C, "<span class='notice'>[pick("You smile for no reason.", "You feel very happy.")]</span>")
+	else if(prob(20) || _stage == 2)
+		if(prob(50))
+			to_chat(C, "<span class='notice'>Everything is so good in the world you can't stop smiling.</span>")
+		else
+			C.emote(pick("smile","grin"))
+	else if(prob(20) || _stage == 3)
+		if(prob(30))
+			to_chat(C, "<span class='warning'>[pick("You laugh unstoppable.", "You are almost crying from laughter.", "Your lungs hurt from laughing so much.")]</span>")
+		else
+			C.emote(pick("laugh","giggle"))
+	else if(_stage == 4)
+		if(prob(30))
+			to_chat(C, "<span class='userdanger'>[pick("AHAHAHA!","MUST LAUGH", "HELP ME, I CAN'T STOP")]</span>")
+		else if(prob(laughing_fit_chance))
+			to_chat(C, "<span notice='userdanger'>[pick("You have a laughing fit!", "You can't stop laughing!")]</span>")
+			C.apply_effect(2, WEAKEN)
+			C.make_jittery(50)
+			addtimer(CALLBACK(C, /mob/.proc/emote, pick("laugh","giggle")), 6)
+			addtimer(CALLBACK(C, /mob/.proc/emote, pick("laugh","giggle")), 12)
+			addtimer(CALLBACK(C, /mob/.proc/emote, pick("laugh","giggle")), 18)
+		else
+			C.say(pick("haha","ha ha ha","ha","HA","hah","haaaaaa","hehe","hehehe","heh","heh heh","muahaha","mwahaha","heehee","teehee","hahaha","ahahaha","bahaha","gahaha"))
+
 /datum/disease2/effect/confusion
 	name = "Topographical Cretinism"
 	desc = "The virus damages brain, making host be unable to orient in his surroundings."
@@ -865,6 +1176,16 @@
 	else if(holder.stage == 3)
 		to_chat(mob, "<span class='warning'><i>Where am I?</i></span>")
 		mob.confused = max(mob.confused, 10)
+
+/datum/disease2/effect/confusing/simulate(mob/living/carbon/C, _stage)
+	if(prob(20) || _stage == 1)
+		to_chat(C, "<span class='notice'>[pick("You suddenly forget where your right is.", "You suddenly forget where your left is.")]</span>")
+	else if(prob(20) || _stage == 2)
+		to_chat(C, "<span class='notice'>You have trouble telling right and left apart all of a sudden.</span>")
+		C.confused = max(C.confused, 2)
+	else if(_stage == 3)
+		to_chat(C, "<span class='warning italic'>Where am I?</span>")
+		C.confused = max(C.confused, 10)
 
 /*/datum/disease2/effect/mutation
 	name = "DNA Degradation"
@@ -909,6 +1230,26 @@
 		else
 			mob.emote("scream",,, 1)
 
+/datum/disease2/effect/scream/simulate(mob/living/carbon/C, _stage)
+	if(prob(20) || _stage == 1)
+		to_chat(C, "<span class='notice'>[pick("You want to talk a lot.", "You feel a desire to talk loud.")]</span>")
+	else if(prob(20) || _stage == 2)
+		if(prob(50))
+			to_chat(C, "<span class='warning'>Random squeals come out of your mouth.</span>")
+		else
+			C.say(pick("Aaie","Aww","Ah","Eeek"))
+
+	else if(prob(20) || _stage == 3)
+		if(prob(50))
+			to_chat(C, "<span class='warning'>[pick("Your voice becomes very loud.", "You can't control your mouth.")]</span>")
+		else
+			C.say(pick("AAAAH","AARRGH!","AAAWW","AAAAH","AAaiiee","Eeeyyaaauuugghhhhh!"))
+	else if(_stage == 4)
+		if(prob(30))
+			to_chat(C, "<span class='userdanger'>[pick("AAAAH!","MUST SCREAM", "You just can't shut up anymore")]</span>")
+		else
+			C.emote("scream", , , TRUE)
+
 /datum/disease2/effect/drowsness
 	name = "Narcolepsy"
 	desc = "The virus causes a hormone imbalance, making the host sleepy and narcoleptic."
@@ -934,6 +1275,25 @@
 				mob.emote("collapse")
 			else
 				mob.sleeping = max(mob.sleeping, 5)
+
+/datum/disease2/effect/drowsness/simulate(mob/living/carbon/C, _stage)
+	if(prob(20) || _stage == 1)
+		to_chat(C, "<span class='notice'>You feel tired.</span>")
+	else if(prob(20) || _stage == 2)
+		to_chat(C, "<span class='warning'>You feel very tired.</span>")
+		C.drowsyness = max(C.drowsyness, 2)
+	else if(prob(20) || _stage == 3)
+		C.drowsyness = max(C.drowsyness, 5)
+		to_chat(C, "<span class='warning'>[pick("You try to focus on staying awake.", "You nod off for a moment.")]</span>")
+	else if(_stage == 4)
+		C.drowsyness = max(C.drowsyness, 10)
+		to_chat(C, "<span class='userdanger'>[pick("So tired...","You feel very sleepy.","You have a hard time keeping your eyes open.","You try to stay awake.")]</span>")
+
+		if(prob(10))
+			if(prob(50))
+				C.emote("collapse")
+			else
+				C.sleeping = max(C.sleeping, 5)
 
 /datum/disease2/effect/blind
 	name = "Hyphema"
@@ -963,6 +1323,21 @@
 			if(E)
 				E.damage += 1
 
+/datum/disease2/effect/blind/simulate(mob/living/carbon/C, _stage)
+	if(prob(20) || _stage == 1)
+		to_chat(C, "<span class='notice'>Your eyes itch.</span>")
+	else if(prob(20) || _stage == 2)
+		to_chat(C, "<span class='warning'><i>Your eyes burn!</i></span>")
+		C.eye_blurry = max(C.eye_blurry, 2)
+	else if(_stage == 3)
+		C.eye_blurry = max(C.eye_blurry, 4)
+		C.eye_blind = max(C.eye_blind, 2)
+		to_chat(C, "<span class='warning'>Your eyes burn very much!</span>")
+	else if(_stage == 4)
+		C.eye_blurry = max(C.eye_blurry, 6)
+		C.eye_blind = max(C.eye_blind, 2)
+		to_chat(C, "<span class='userdanger'>[pick("Your eyes burn!", "Your eyes hurt!")]</span>")
+
 /datum/disease2/effect/weight_even
 	name = "Weight Even"
 	desc = "The virus alters the host's metabolism, making it far more efficient then normal, and synthesizing nutrients from normally unedible sources."
@@ -987,6 +1362,19 @@
 	delta = max(delta, -speed)
 	mob.nutrition = mob.nutrition + delta
 
+/datum/disease2/effect/weight_even/simulate(mob/living/carbon/C, _stage)
+	var/speed = 0
+	switch(_stage)
+		if(1)
+			speed = 5
+		if(2)
+			speed = 10
+		if(3)
+			speed = 30
+			C.overeatduration = 0
+
+	C.nutrition = C.nutrition + Clamp(target_nutrition - C.nutrition, -speed, speed)
+
 /datum/disease2/effect/hungry
 	name = "Appetiser Effect"
 	desc = "The virus mutates the host's metabolism, making it almost unable to gain nutrition from food."
@@ -1010,6 +1398,22 @@
 			to_chat(mob, "<span class='userdanger'>Your hunger makes you very weak.</span>")
 			mob.apply_effect(35,AGONY,0)
 
+/datum/disease2/effect/hungry/simulate(mob/living/carbon/C, _stage)
+	if(prob(20) || _stage == 1)
+		C.nutrition = max(0, C.nutrition - 5)
+		C.overeatduration = max(C.overeatduration - 5, 0)
+	else if(prob(20) || _stage == 2)
+		C.nutrition = max(0, C.nutrition - 10)
+		C.overeatduration = max(C.overeatduration - 10, 0)
+	else if(_stage == 3)
+		C.nutrition = max(0, C.nutrition - 20)
+		C.overeatduration = max(C.overeatduration - 20, 0)
+		to_chat(C, "<span class='warning'><i>[pick("So hungry...", "You'd kill someone for a bite of food...", "Hunger cramps seize you...")]</i></span>")
+
+		if(C.nutrition < 10 && prob(5))
+			to_chat(C, "<span class='userdanger'>Your hunger makes you very weak.</span>")
+			C.apply_effect(35, AGONY, 0)
+
 /datum/disease2/effect/fridge
 	name = "Refridgerator Syndrome"
 	desc = "The virus inhibits the body's thermoregulation, cooling the body down."
@@ -1032,6 +1436,22 @@
 		else
 			mob.emote("shiver")
 		mob.bodytemperature = min(mob.bodytemperature, 100)
+
+/datum/disease2/effect/fridge/simulate(mob/living/carbon/C, _stage)
+	if(prob(20) || _stage == 1)
+		to_chat(C, "<span class = 'notice'>[pick("You feel cold.", "You shiver.")]</span>")
+	else if(prob(20) || _stage == 2)
+		if(prob(50))
+			to_chat(C, "<span class = 'notice'>[pick("You feel very cold.", "Your jaw shakes.", "Your movements are choppy.")]</span>")
+		else
+			C.emote("shiver")
+		C.bodytemperature = min(C.bodytemperature, 260)
+	else if(_stage == 3)
+		if(prob(50))
+			to_chat(C, "<span class = 'warning'>[pick("You feel your blood run cold.", "You feel ice in your veins.", "You feel like you can't heat up.", "You shiver violently.")]</span>")
+		else
+			C.emote("shiver")
+		C.bodytemperature = min(C.bodytemperature, 100)
 
 /datum/disease2/effect/hair
 	name = "Hair Loss"
@@ -1061,6 +1481,25 @@
 					to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
 					spawn(50)
 						shed(H, FALSE)
+
+/datum/disease2/effect/hair/simulate(mob/living/carbon/C, _stage)
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+
+		if((is_face_bald(H) && is_bald(H)) || !is_race_valid(H.species.name))
+			return
+
+		switch(_stage)
+			if(1, 2, 3)
+				to_chat(H, "<span class='warning'>[pick("Your scalp itches.", "Your skin feels flakey.")]</span>")
+			if(4, 5, 6)
+				to_chat(H, "<span class='warning'>[pick("You notice that random hairs start to fall out.", "You feel more bald with every second.")]</span>")
+			if(7)
+				if(!is_face_bald(H))
+					to_chat(H, "<span class='danger'>You feel as if your hair starts to fall out...</span>")
+			if(8)
+				if(!is_face_bald(H) || !is_bald(H))
+					to_chat(H, "<span class='danger'>You feel as if your hair starts to fall out...</span>")
 
 /datum/disease2/effect/hair/proc/is_race_valid(race)
 	if(race == HUMAN || race == TAJARAN)
@@ -1145,6 +1584,26 @@
 				addtimer(CALLBACK(H, /mob/.proc/emote, "cough"), 12)
 				addtimer(CALLBACK(H, /mob/.proc/emote, "cough"), 18)
 
+/datum/disease2/effect/cough/simulate(mob/living/carbon/C, _stage)
+	if(prob(20) || _stage == 1)
+		to_chat(C, "<span class = 'notice'>[pick("You swallow excess mucus.", "You lightly cough.")]</span>")
+	else if(prob(20) || _stage == 2)
+		C.emote("cough")
+	else if(_stage == 3)
+		C.emote("cough")
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if(prob(drop_item_chance))
+				var/obj/item/I = H.get_active_hand()
+				if(I && I.w_class <= ITEM_SIZE_SMALL)
+					H.drop_item()
+			if(prob(couthing_fit_chance))
+				to_chat(H, "<span notice='userdanger'>[pick("You have a coughing fit!", "You can't stop coughing!")]</span>")
+				H.Stun(2)
+				addtimer(CALLBACK(H, /mob/.proc/emote, "cough"), 6)
+				addtimer(CALLBACK(H, /mob/.proc/emote, "cough"), 12)
+				addtimer(CALLBACK(H, /mob/.proc/emote, "cough"), 18)
+
 /datum/disease2/effect/sneeze
 	name = "Sneezing"
 	desc = "The virus causes irritation of the nasal cavity, making the host sneeze occasionally."
@@ -1176,6 +1635,27 @@
 					M = new(T)
 				M.virus2 = virus_copylist(mob.virus2)
 
+/datum/disease2/effect/sneeze/simulate(mob/living/carbon/C, _stage)
+	if(prob(20) || _stage == 1)
+		to_chat(C, "<span class='notice'>[pick("You sniff a little.", "You want to sneeze.")]</span>")
+	else if(prob(20) || _stage == 2)
+		if(prob(50))
+			to_chat(C, "<span class='notice'>[pick("The urge to sneeze is unbearable.")]</span>")
+		else if(prob(50))
+			C.emote("sniff")
+		else
+			C.emote("sneeze")
+	else if(_stage == 3)
+		if(prob(30))
+			to_chat(C, "<span class='warning'>[pick("You can't stop the urge to sneeze.")]</span>")
+		else
+			C.emote("sneeze")
+			if(prob(30))
+				var/turf/T = get_turf(C)
+				var/obj/effect/decal/cleanable/mucus/M = locate() in T.contents
+				if(!M)
+					M = new(T)
+
 /*/datum/disease2/effect/gunck
 	name = "Flemmingtons"
 	stage = 1
@@ -1206,6 +1686,20 @@
 			mob.emote("drool")
 			disease.spread(mob, 1)
 
+/datum/disease2/effect/drool/simulate(mob/living/carbon/C, _stage)
+	if(prob(20) || _stage == 1)
+		to_chat(C, "<span class = 'notice'>[pick("You swallow excess saliva.", "You seem to forget how to swallow saliva.")]</span>")
+	else if(prob(20) || _stage == 2)
+		if(prob(50))
+			to_chat(C, "<span class = 'notice'>[pick("You find it hard to keep saliva inside your mouth.", "You spit out excess saliva.")]</span>")
+		else
+			C.emote("drool")
+	else if(_stage == 3)
+		if(prob(30))
+			to_chat(C, "<span class = 'warning'>[pick("You drool for a moment, forgetting to close your mouth.", "You can't stop drooling.")]</span>")
+		else
+			C.emote("drool")
+
 /datum/disease2/effect/twitch
 	name = "Twitcher"
 	desc = "The virus causes random muscle spasms, causing constant twitching."
@@ -1226,6 +1720,20 @@
 			to_chat(mob, "<span class = 'warning'>[pick("The twitching is unbearable.", "You can't stop twitching.", "Your whole body twitches a bit.")]</span>")
 		else
 			mob.emote("twitch")
+
+/datum/disease2/effect/twitch/simulate(mob/living/carbon/C, _stage)
+	if(prob(20) || _stage == 1)
+		to_chat(C, "<span class = 'notice'>[pick("Your thumb twitches.", "Your ear twitches.", "You twitch a bit.")]</span>")
+	else if(prob(20) || _stage == 2)
+		if(prob(50))
+			to_chat(C, "<span class = 'notice'>[pick("Your whole body wants to twitch.", "Your hand twiches.", "Your leg twiches.")]</span>")
+		else
+			C.emote("twitch")
+	else if(_stage == 3)
+		if(prob(30))
+			to_chat(C, "<span class = 'warning'>[pick("The twitching is unbearable.", "You can't stop twitching.", "Your whole body twitches a bit.")]</span>")
+		else
+			C.emote("twitch")
 
 /datum/disease2/effect/headache
 	name = "Headache"
@@ -1252,3 +1760,21 @@
 					mob.emote("scream",,, 1)
 				else
 					H.apply_effect(10,AGONY,0)
+
+/datum/disease2/effect/headache/simulate(mob/living/carbon/C, _stage)
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if(!H.species.flags[NO_PAIN])
+			if(prob(20) || _stage == 1)
+				to_chat(H, "<span class='notice'>[pick("Your head hurts.", "Your head pounds.", "Your head hurts a bit.", "You have a headache.")]</span>")
+			else if(prob(20) || (_stage >= 2 && _stage <= 5))
+				to_chat(H, "<span class='warning'>[pick("Your head hurts a lot.", "Your head pounds incessantly.", "You have a throbbing headache.")]</span>")
+				H.apply_effect(5, AGONY, 0)
+			else if(_stage == 6)
+				to_chat(H, "<span class='userdanger'>[pick("Your head hurts!", "You feel a burning knife inside your brain!", "A wave of pain fills your head!")]</span>")
+				if(prob(stun_chance))
+					H.apply_effect(30, AGONY, 0)
+					H.Stun(2)
+					H.emote("scream",,, 1)
+				else
+					H.apply_effect(10, AGONY, 0)
