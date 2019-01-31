@@ -262,6 +262,7 @@
 
 /obj/item/weapon/twohanded/dualsaber/unwield()
 	set_light(0)
+	hitsound = initial(hitsound)
 	w_class = initial(w_class)
 	return ..()
 

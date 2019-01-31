@@ -48,7 +48,7 @@
 
 	else
 		force = 3
-		hitsound = null
+		hitsound = initial(hitsound)
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass0"
 		else
