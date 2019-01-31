@@ -14,9 +14,9 @@
 
 	origin_tech = "combat=2"
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), "\red <b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b>")
-		return (FIRELOSS)
+/obj/item/weapon/melee/baton/suicide_act(mob/user)
+	to_chat(viewers(user), "\red <b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b>")
+	return (FIRELOSS)
 
 /obj/item/weapon/melee/baton/update_icon()
 	if(status)

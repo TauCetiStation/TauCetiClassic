@@ -3,10 +3,10 @@
 	flags = NOBLOODY
 	can_embed = 0
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), pick("\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>", \
-							"\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>"))
-		return (BRUTELOSS|FIRELOSS)
+/obj/item/weapon/melee/energy/suicide_act(mob/user)
+	to_chat(viewers(user), pick("\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>", \
+						"\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>"))
+	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/axe
 	name = "energy axe"
@@ -23,9 +23,9 @@
 	sharp = 1
 	edge = 1
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), "\red <b>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</b>")
-		return (BRUTELOSS|FIRELOSS)
+/obj/item/weapon/melee/energy/axe/suicide_act(mob/user)
+	to_chat(viewers(user), "\red <b>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</b>")
+	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/sword
 	color

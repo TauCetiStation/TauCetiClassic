@@ -5,13 +5,13 @@
 	var/effect // description of what happens when not treated
 	var/duration = 0 // delay between start() and finish()
 
-	proc/start(mob/living/carbon/human/H)
-		// start the side effect, this should give some cue as to what's happening,
-		// such as gasping. These cues need to be unique among side-effects.
+/datum/genetics/side_effect/proc/start(mob/living/carbon/human/H)
+	// start the side effect, this should give some cue as to what's happening,
+	// such as gasping. These cues need to be unique among side-effects.
 
-	proc/finish(mob/living/carbon/human/H)
-		// Finish the side-effect. This should first check whether the cure has been
-		// applied, and if not, cause bad things to happen.
+/datum/genetics/side_effect/proc/finish(mob/living/carbon/human/H)
+	// Finish the side-effect. This should first check whether the cure has been
+	// applied, and if not, cause bad things to happen.
 
 /datum/genetics/side_effect/genetic_burn
 	name = "Genetic Burn"
