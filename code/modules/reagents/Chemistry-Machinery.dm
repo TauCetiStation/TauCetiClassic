@@ -20,8 +20,8 @@
 	var/recharged = 0
 	var/recharge_delay = 15
 	var/hackedcheck = 0
-	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
-	"sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron",
+	var/list/dispensable_reagents = list("hydrazine","lithium","carbon","ammonia","acetone",
+	"sodium","aluminum","silicon","phosphorus","sulfur","hacid","potassium","iron",
 	"copper","mercury","radium","water","ethanol","sugar","sacid","tungsten")
 
 /obj/machinery/chem_dispenser/proc/recharge()

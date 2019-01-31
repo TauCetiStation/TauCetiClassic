@@ -212,97 +212,48 @@
 		var/obj/item/weapon/storage/fancy/black_candle_box/G = O
 		G.teleporter_delay += volume
 
-/datum/reagent/oxygen
-	name = "Oxygen"
-	id = "oxygen"
-	description = "A colorless, odorless gas."
-	reagent_state = GAS
-	color = "#808080" // rgb: 128, 128, 128
-	taste_message = null
-	custom_metabolism = 0.01
-
-/datum/reagent/oxygen/on_vox_digest(mob/living/M)
-	..()
-	M.adjustToxLoss(REAGENTS_METABOLISM)
-	holder.remove_reagent(id, REAGENTS_METABOLISM) //By default it slowly disappears.
-	return FALSE
-
-/datum/reagent/copper
-	name = "Copper"
-	id = "copper"
-	description = "A highly ductile metal."
-	color = "#6E3B08" // rgb: 110, 59, 8
-	taste_message = null
-	custom_metabolism = 0.01
-
-/datum/reagent/nitrogen
-	name = "Nitrogen"
-	id = "nitrogen"
-	description = "A colorless, odorless, tasteless gas."
-	reagent_state = GAS
-	color = "#808080" // rgb: 128, 128, 128
-	taste_message = null
-	custom_metabolism = 0.01
-
-/datum/reagent/nitrogen/on_diona_digest(mob/living/M)
-	..()
-	M.adjustBruteLoss(-REM)
-	M.adjustOxyLoss(-REM)
-	M.adjustToxLoss(-REM)
-	M.adjustFireLoss(-REM)
-	M.nutrition += REM
-	return FALSE
-
-/datum/reagent/nitrogen/on_vox_digest(mob/living/M)
-	..()
-	M.adjustOxyLoss(-2 * REM)
-	holder.remove_reagent(id, REAGENTS_METABOLISM) //By default it slowly disappears.
-	return FALSE
-
-/datum/reagent/hydrogen
-	name = "Hydrogen"
-	id = "hydrogen"
-	description = "A colorless, odorless, nonmetallic, tasteless, highly combustible diatomic gas."
-	reagent_state = GAS
-	color = "#808080" // rgb: 128, 128, 128
-	taste_message = null
-	custom_metabolism = 0.01
-
-/datum/reagent/potassium
-	name = "Potassium"
-	id = "potassium"
-	description = "A soft, low-melting solid that can easily be cut with a knife. Reacts violently with water."
-	reagent_state = SOLID
-	color = "#A0A0A0" // rgb: 160, 160, 160
-	taste_message = "bad ideas"
-	custom_metabolism = 0.01
-
-/datum/reagent/mercury
-	name = "Mercury"
-	id = "mercury"
-	description = "A chemical element."
+/datum/reagent/acetone
+	name = "Acetone"
+	id = "acetone"
+	description = "A colorless liquid solvent used in chemical synthesis."
+	taste_message = "acid"
 	reagent_state = LIQUID
-	color = "#484848" // rgb: 72, 72, 72
-	overdose = REAGENTS_OVERDOSE
-	taste_message = "druggie poison"
-	restrict_species = list(IPC, DIONA)
+	color = "#808080"
+	custom_metabolism = REAGENTS_METABOLISM * 0.2
 
-/datum/reagent/mercury/on_general_digest(mob/living/M)
-	..()
-	if(M.canmove && !M.restrained() && istype(M.loc, /turf/space))
-		step(M, pick(cardinal))
-	if(prob(5))
-		M.emote(pick("twitch","drool","moan"))
-	M.adjustBrainLoss(2)
+/datum/reagent/acetone/on_general_digest(mob/living/M)
+	M.adjustToxLoss(REAGENTS_METABOLISM * 0.7) //Default toxin damage
 
-/datum/reagent/sulfur
-	name = "Sulfur"
-	id = "sulfur"
-	description = "A chemical element with a pungent smell."
+/datum/reagent/aluminum
+	name = "Aluminum"
+	id = "aluminum"
+	description = "A silvery white and ductile member of the boron group of chemical elements."
 	reagent_state = SOLID
-	color = "#BF8C00" // rgb: 191, 140, 0
-	taste_message = "impulsive decisions"
-	custom_metabolism = 0.01
+	color = "#A8A8A8"
+	taste_message = "metal"
+
+/datum/reagent/ammonia
+	name = "Ammonia"
+	id = "ammonia"
+	taste_message = "mordant"
+	description = "A caustic substance commonly used in fertilizer or household cleaners."
+	reagent_state = LIQUID
+	color = "#404030"
+	custom_metabolism = REAGENTS_METABOLISM * 0.5
+	overdose = 5
+
+/datum/reagent/ammonia/on_general_digest(mob/living/M)
+	M.adjustToxLoss(REAGENTS_METABOLISM * 0.35)
+
+/datum/reagent/ammonia/on_diona_digest(mob/living/M)
+	..()
+	M.nutrition += 1 * REM
+	return FALSE
+
+/datum/reagent/ammonia/on_vox_digest(mob/living/M)
+	..()
+	M.adjustOxyLoss(-2 * REAGENTS_METABOLISM)
+	return FALSE
 
 /datum/reagent/carbon
 	name = "Carbon"
@@ -323,58 +274,62 @@
 		else
 			dirtoverlay.alpha = min(dirtoverlay.alpha + volume * 30, 255)
 
-/datum/reagent/chlorine
-	name = "Chlorine"
-	id = "chlorine"
-	description = "A chemical element with a characteristic odour."
-	reagent_state = GAS
-	color = "#808080" // rgb: 128, 128, 128
-	overdose = REAGENTS_OVERDOSE
-	taste_message = "characteristic taste"
-
-/datum/reagent/chlorine/on_general_digest(mob/living/M)
-	..()
-	M.take_bodypart_damage(1 * REM, 0)
-
-/datum/reagent/fluorine
-	name = "Fluorine"
-	id = "fluorine"
-	description = "A highly-reactive chemical element."
-	reagent_state = GAS
-	color = "#808080" // rgb: 128, 128, 128
-	overdose = REAGENTS_OVERDOSE
-	taste_message = "toothpaste"
-
-/datum/reagent/fluorine/on_general_digest(mob/living/M)
-	..()
-	M.adjustToxLoss(REM)
-
-/datum/reagent/sodium
-	name = "Sodium"
-	id = "sodium"
-	description = "A chemical element, readily reacts with water."
-	reagent_state = SOLID
-	color = "#808080" // rgb: 128, 128, 128
-	taste_message = "horrible misjudgement"
+/datum/reagent/copper
+	name = "Copper"
+	id = "copper"
+	description = "A highly ductile metal."
+	color = "#6E3B08"
+	taste_message = "copper"
 	custom_metabolism = 0.01
 
-/datum/reagent/phosphorus
-	name = "Phosphorus"
-	id = "phosphorus"
-	description = "A chemical element, the backbone of biological energy carriers."
-	reagent_state = SOLID
-	color = "#832828" // rgb: 131, 40, 40
-	taste_message = "misguided choices"
-	custom_metabolism = 0.01
+/datum/reagent/fuel
+	name = "Welding fuel"
+	id = "fuel"
+	description = "Required for welders. Flamable."
+	reagent_state = LIQUID
+	color = "#660000"
+	overdose = REAGENTS_OVERDOSE
+	taste_message = "motor oil"
 
-/datum/reagent/phosphorus/on_diona_digest(mob/living/M)
+/datum/reagent/fuel/reaction_obj(obj/O, volume)
+	var/turf/the_turf = get_turf(O)
+	if(!the_turf)
+		return //No sense trying to start a fire if you don't have a turf to set on fire. --NEO
+	new /obj/effect/decal/cleanable/liquid_fuel(the_turf, volume)
+
+/datum/reagent/fuel/reaction_turf(turf/T, volume)
+	new /obj/effect/decal/cleanable/liquid_fuel(T, volume)
+
+/datum/reagent/fuel/on_general_digest(mob/living/M)
 	..()
-	M.adjustBruteLoss(-REM)
-	M.adjustOxyLoss(-REM)
-	M.adjustToxLoss(-REM)
-	M.adjustFireLoss(-REM)
-	M.nutrition += REM
-	return FALSE
+	M.adjustToxLoss(1)
+
+/datum/reagent/fuel/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with welding fuel to make them easy to ignite!
+	if(!istype(M, /mob/living))
+		return
+	if(method == TOUCH)
+		M.adjust_fire_stacks(volume / 10)
+
+/datum/reagent/fuel/hydrazine
+	name = "Hydrazine"
+	id = "hydrazine"
+	description = "A toxic, colorless, flammable liquid with a strong ammonia-like odor, in hydrate form."
+	taste_message = "sweet tasting metal"
+	reagent_state = LIQUID
+	color = "#808080"
+
+/datum/reagent/fuel/hydrazine/on_general_digest(mob/living/M)
+	M.adjustToxLoss(1.5)
+
+/datum/reagent/iron
+	name = "Iron"
+	id = "iron"
+	description = "Pure iron is a metal."
+	reagent_state = SOLID
+	color = "#C8A5DC"
+	overdose = REAGENTS_OVERDOSE
+	taste_message = "metal"
+	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/lithium
 	name = "Lithium"
@@ -393,17 +348,49 @@
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
 
-/datum/reagent/sugar
-	name = "Sugar"
-	id = "sugar"
-	description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
-	reagent_state = SOLID
-	color = "#FFFFFF" // rgb: 255, 255, 255
-	taste_message = "sweetness"
+/datum/reagent/mercury
+	name = "Mercury"
+	id = "mercury"
+	description = "A chemical element."
+	reagent_state = LIQUID
+	color = "#484848"
+	overdose = REAGENTS_OVERDOSE
+	taste_message = "druggie poison"
+	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/sugar/on_general_digest(mob/living/M)
+/datum/reagent/mercury/on_general_digest(mob/living/M)
 	..()
+	if(M.canmove && !M.restrained() && istype(M.loc, /turf/space))
+		step(M, pick(cardinal))
+	if(prob(5))
+		M.emote(pick("twitch","drool","moan"))
+	M.adjustBrainLoss(2)
+
+/datum/reagent/phosphorus
+	name = "Phosphorus"
+	id = "phosphorus"
+	description = "A chemical element, the backbone of biological energy carriers."
+	reagent_state = SOLID
+	color = "#832828"
+	taste_message = "vinegar"
+	custom_metabolism = REAGENTS_METABOLISM * 0.5
+
+/datum/reagent/phosphorus/on_diona_digest(mob/living/M)
+	..()
+	M.adjustBruteLoss(-REM)
+	M.adjustOxyLoss(-REM)
+	M.adjustToxLoss(-REM)
+	M.adjustFireLoss(-REM)
 	M.nutrition += REM
+	return FALSE
+
+/datum/reagent/potassium
+	name = "Potassium"
+	id = "potassium"
+	description = "A soft, low-melting solid that can easily be cut with a knife. Reacts violently with water."
+	reagent_state = SOLID
+	color = "#A0A0A0"
+	taste_message = "sweetness"
 
 /datum/reagent/radium
 	name = "Radium"
@@ -440,14 +427,41 @@
 			if(!glow)
 				new /obj/effect/decal/cleanable/greenglow(T)
 
-/datum/reagent/iron
-	name = "Iron"
-	id = "iron"
-	description = "Pure iron is a metal."
+/datum/reagent/silicon
+	name = "Silicon"
+	id = "silicon"
+	description = "A tetravalent metalloid, silicon is less reactive than its chemical analog carbon."
 	reagent_state = SOLID
-	color = "#C8A5DC" // rgb: 200, 165, 220
-	overdose = REAGENTS_OVERDOSE
-	taste_message = "metal"
+	color = "#A8A8A8"
+	taste_message = "a CPU"
+
+/datum/reagent/sodium
+	name = "Sodium"
+	id = "sodium"
+	description = "A chemical element, readily reacts with water."
+	reagent_state = SOLID
+	color = "#808080"
+	taste_message = "salty metal"
+
+/datum/reagent/sugar
+	name = "Sugar"
+	id = "sugar"
+	description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
+	reagent_state = SOLID
+	color = "#FFFFFF"
+	taste_message = "sweetness"
+
+/datum/reagent/sugar/on_general_digest(mob/living/M)
+	..()
+	M.nutrition += REM
+
+/datum/reagent/sulfur
+	name = "Sulfur"
+	id = "sulfur"
+	description = "A chemical element with a pungent smell."
+	reagent_state = SOLID
+	color = "#BF8C00"
+	taste_message = "old eggs"
 
 /datum/reagent/gold
 	name = "Gold"
@@ -455,7 +469,7 @@
 	description = "Gold is a dense, soft, shiny metal and the most malleable and ductile metal known."
 	reagent_state = SOLID
 	color = "#F7C430" // rgb: 247, 196, 48
-	taste_message = "bling"
+	taste_message = "expensive metal"
 
 /datum/reagent/silver
 	name = "Silver"
@@ -463,7 +477,7 @@
 	description = "A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal."
 	reagent_state = SOLID
 	color = "#D0D0D0" // rgb: 208, 208, 208
-	taste_message = "sub-par bling"
+	taste_message = "expensive yet reasonable metal"
 
 /datum/reagent/uranium
 	name ="Uranium"
@@ -471,7 +485,7 @@
 	description = "A silvery-white metallic chemical element in the actinide series, weakly radioactive."
 	reagent_state = SOLID
 	color = "#B8B8C0" // rgb: 184, 184, 192
-	taste_message = "bonehurting juice"
+	taste_message = "the inside of a reactor"
 
 /datum/reagent/uranium/on_general_digest(mob/living/M)
 	..()
@@ -485,18 +499,10 @@
 			if(!glow)
 				new /obj/effect/decal/cleanable/greenglow(T)
 
-/datum/reagent/aluminum
-	name = "Aluminum"
-	id = "aluminum"
-	description = "A silvery white and ductile member of the boron group of chemical elements."
-	reagent_state = SOLID
-	color = "#A8A8A8" // rgb: 168, 168, 168
+/datum/reagent/hydrogen
+	name = "Hydrogen"
+	id = "hydrogen"
+	description = "A colorless, odorless, nonmetallic, tasteless, highly combustible diatomic gas."
+	reagent_state = GAS
+	color = "#808080"
 	taste_message = null
-
-/datum/reagent/silicon
-	name = "Silicon"
-	id = "silicon"
-	description = "A tetravalent metalloid, silicon is less reactive than its chemical analog carbon."
-	reagent_state = SOLID
-	color = "#A8A8A8" // rgb: 168, 168, 168
-	taste_message = "a CPU"

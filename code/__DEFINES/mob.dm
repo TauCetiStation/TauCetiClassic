@@ -90,13 +90,6 @@
 #define NUTRITION_LEVEL_HUNGRY 250
 #define NUTRITION_LEVEL_STARVING 150
 
-// How many units of reagent are consumed per tick, by default.
-#define REAGENTS_METABOLISM 0.2
-
-// By defining the effect multiplier this way, it'll exactly adjust
-// all effects according to how they originally were with the 0.4 metabolism
-#define REAGENTS_EFFECT_MULTIPLIER REAGENTS_METABOLISM / 0.4
-
 // Factor of how fast mob nutrition decreases
 #define METABOLISM_FACTOR 1 // standart (for humans, other)
 #define SKRELL_METABOLISM_FACTOR 2 // Twice the speed for half the sense!

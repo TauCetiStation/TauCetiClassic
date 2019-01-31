@@ -25,6 +25,7 @@
 #include "code\__DEFINES\atmos.dm"
 #include "code\__DEFINES\atmospherics.dm"
 #include "code\__DEFINES\callbacks.dm"
+#include "code\__DEFINES\chemistry.dm"
 #include "code\__DEFINES\clothing.dm"
 #include "code\__DEFINES\colors.dm"
 #include "code\__DEFINES\combat.dm"

@@ -1,37 +1,3 @@
-/datum/reagent/srejuvenate
-	name = "Soporific Rejuvenant"
-	id = "stoxin2"
-	description = "Put people to sleep, and heals them."
-	reagent_state = LIQUID
-	color = "#c8a5dc" // rgb: 200, 165, 220
-	custom_metabolism = REAGENTS_METABOLISM * 0.5
-	overdose = REAGENTS_OVERDOSE
-	restrict_species = list(IPC, DIONA)
-
-/datum/reagent/srejuvenate/on_general_digest(mob/living/M)
-	..()
-	if(M.losebreath >= 10)
-		M.losebreath = max(10, M.losebreath-10)
-	if(!data)
-		data = 1
-	data++
-	switch(data)
-		if(1 to 15)
-			M.eye_blurry = max(M.eye_blurry, 10)
-		if(15 to 25)
-			M.drowsyness  = max(M.drowsyness, 20)
-		if(25 to INFINITY)
-			M.sleeping += 1
-			M.adjustOxyLoss(-M.getOxyLoss())
-			M.SetWeakened(0)
-			M.SetStunned(0)
-			M.SetParalysis(0)
-			M.dizziness = 0
-			M.drowsyness = 0
-			M.stuttering = 0
-			M.confused = 0
-			M.jitteriness = 0
-
 /datum/reagent/inaprovaline
 	name = "Inaprovaline"
 	id = "inaprovaline"
@@ -46,6 +12,11 @@
 	..()
 	if(M.losebreath >= 10)
 		M.losebreath = max(10, M.losebreath-5)
+	if(volume > overdose)
+		if(prob(5))
+			M.slurring = max(M.slurring, 10)
+		if(prob(2))
+			M.drowsyness = max(M.drowsyness, 5)
 
 /datum/reagent/inaprovaline/on_vox_digest(mob/living/M)
 	..()
@@ -72,44 +43,64 @@
 	description = "Most probably know this as Tylenol, but this chemical is a mild, simple painkiller."
 	reagent_state = LIQUID
 	color = "#c8a5dc"
-	overdose = 60
+	overdose = REAGENTS_OVERDOSE * 2
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/paracetamol/on_general_digest(mob/living/M)
 	..()
 	if(volume > overdose)
 		M.hallucination = max(M.hallucination, 2)
+		M.druggy = max(M.druggy, 2)
 
 /datum/reagent/tramadol
 	name = "Tramadol"
 	id = "tramadol"
-	description = "A simple, yet effective painkiller."
+	description = "A simple, yet effective painkiller. Don't mix with alcohol."
 	reagent_state = LIQUID
 	color = "#cb68fc"
-	overdose = 30
-	custom_metabolism = 0.025
+	custom_metabolism = 0.05
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/tramadol/on_general_digest(mob/living/M)
 	..()
-	if(volume > overdose)
+	if(volume  > 0.5 * overdose)
+		if(prob(1))
+			M.slurring = max(M.slurring, 10)
+	if(volume  > 0.75 * overdose)
+		if(prob(5))
+			M.slurring = max(M.slurring, 20)
+	if(volume  > overdose)
 		M.hallucination = max(M.hallucination, 2)
+		M.druggy = max(M.druggy, 10)
+		M.slurring = max(M.slurring, 30)
+		if(prob(1))
+			M.Weaken(2)
+			M.drowsyness = max(M.drowsyness, 5)
+	var/boozed = isboozed(M)
+	if(boozed)
+		M.adjustToxLoss(1)
+		M.adjustOxyLoss(REAGENTS_METABOLISM * 10) //drinking and opiating makes breathing kinda hard
 
-/datum/reagent/oxycodone
+/datum/reagent/tramadol/proc/isboozed(mob/living/M)
+	. = 0
+	var/list/pool = M.reagents.reagent_list
+	for(var/datum/reagent/consumable/ethanol in pool)
+		. = 1
+
+/datum/reagent/tramadol/oxycodone
 	name = "Oxycodone"
 	id = "oxycodone"
-	description = "An effective and very addictive painkiller."
+	description = "An effective and very addictive painkiller. Don't mix with alcohol."
 	reagent_state = LIQUID
 	color = "#800080"
 	overdose = 20
-	custom_metabolism = 0.025
+	custom_metabolism = 0.1
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/oxycodone/on_general_digest(mob/living/M)
+/datum/reagent/tramadol/oxycodone/on_general_digest(mob/living/M)
 	..()
 	if(volume > overdose)
-		M.druggy = max(M.druggy, 10)
-		M.hallucination = max(M.hallucination, 3)
+		M.hallucination = max(M.hallucination, 4)
 
 /datum/reagent/sterilizine
 	name = "Sterilizine"
@@ -210,7 +201,7 @@
 	M.adjustOxyLoss(-M.getOxyLoss())
 
 	if(holder.has_reagent("lexorin"))
-		holder.remove_reagent("lexorin", 2 * REM)
+		holder.remove_reagent("lexorin", 3 * REM)
 
 /datum/reagent/dexalinp/on_vox_digest(mob/living/M) // Now dexalin plus does not remove lexarin from Vox. For the better or the worse.
 	..()
@@ -263,33 +254,7 @@
 
 /datum/reagent/adminordrazine/on_general_digest(mob/living/M)
 	..()
-	M.reagents.remove_all_type(/datum/reagent/toxin, 5 * REM, 0, 1)
-	M.setCloneLoss(0)
-	M.setOxyLoss(0)
-	M.radiation = 0
-	M.heal_bodypart_damage(5,5)
-	M.adjustToxLoss(-5)
-	M.hallucination = 0
-	M.setBrainLoss(0)
-	M.disabilities = 0
-	M.sdisabilities = 0
-	M.eye_blurry = 0
-	M.eye_blind = 0
-	M.SetWeakened(0)
-	M.SetStunned(0)
-	M.SetParalysis(0)
-	M.silent = 0
-	M.dizziness = 0
-	M.drowsyness = 0
-	M.stuttering = 0
-	M.confused = 0
-	M.sleeping = 0
-	M.jitteriness = 0
-	for(var/datum/disease/D in M.viruses)
-		D.spread = "Remissive"
-		D.stage--
-		if(D.stage < 1)
-			D.cure()
+	M.rejuvenate()
 
 /datum/reagent/synaptizine
 	name = "Synaptizine"
@@ -332,9 +297,8 @@
 	id = "arithrazine"
 	description = "Arithrazine is an unstable medication used for the most extreme cases of radiation poisoning."
 	reagent_state = LIQUID
-	color = "#008000" // rgb: 200, 165, 220
-	custom_metabolism = 0.05
-	overdose = REAGENTS_OVERDOSE
+	color = "#008000"
+	custom_metabolism = REAGENTS_METABOLISM * 0.25
 	taste_message = null
 
 /datum/reagent/arithrazine/on_general_digest(mob/living/M)
@@ -349,22 +313,22 @@
 	id = "alkysine"
 	description = "Alkysine is a drug used to lessen the damage to neurological tissue after a catastrophic injury. Can heal brain tissue."
 	reagent_state = LIQUID
-	color = "#8b00ff" // rgb: 200, 165, 220
-	custom_metabolism = 0.05
-	overdose = REAGENTS_OVERDOSE
+	color = "#8b00ff"
+	custom_metabolism = REAGENTS_METABOLISM * 0.25
 	taste_message = null
 
 /datum/reagent/alkysine/on_general_digest(mob/living/M)
 	..()
 	M.adjustBrainLoss(-3 * REM)
+	M.confused++
+	M.drowsyness++
 
 /datum/reagent/imidazoline
 	name = "Imidazoline"
 	id = "imidazoline"
 	description = "Heals eye damage"
 	reagent_state = LIQUID
-	color = "#a0dbff" // rgb: 200, 165, 220
-	overdose = REAGENTS_OVERDOSE
+	color = "#a0dbff"
 	taste_message = "carrot"
 	restrict_species = list(IPC, DIONA)
 
@@ -433,14 +397,19 @@
 	id = "bicaridine"
 	description = "Bicaridine is an analgesic medication and can be used to treat blunt trauma."
 	reagent_state = LIQUID
-	color = "#bf0000" // rgb: 200, 165, 220
-	overdose = REAGENTS_OVERDOSE
+	color = "#bf0000"
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/bicaridine/on_general_digest(mob/living/M, alien)
 	..()
 	M.heal_bodypart_damage(2 * REM, 0)
+	if(volume > overdose)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			for(var/obj/item/organ/external/IO in H.organs)
+				if(IO.status & ORGAN_ARTERY_CUT && prob(2))
+					IO.status &= ~ORGAN_ARTERY_CUT
 
 /datum/reagent/hyperzine
 	name = "Hyperzine"
@@ -463,8 +432,9 @@
 	id = "cryoxadone"
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the targets body temperature must be under 170K for it to metabolise correctly."
 	reagent_state = LIQUID
-	color = "#80bfff" // rgb: 200, 165, 220
-	taste_message = null
+	color = "#80bfff"
+	taste_message = "sludge"
+
 
 /datum/reagent/cryoxadone/on_general_digest(mob/living/M)
 	..()
@@ -479,8 +449,8 @@
 	id = "clonexadone"
 	description = "A liquid compound similar to that used in the cloning process. Can be used to 'finish' the cloning process when used in conjunction with a cryo tube."
 	reagent_state = LIQUID
-	color = "#8080ff" // rgb: 200, 165, 220
-	taste_message = null
+	color = "#8080ff"
+	taste_message = "slime"
 
 /datum/reagent/clonexadone/on_general_digest(mob/living/M)
 	..()
@@ -493,29 +463,20 @@
 /datum/reagent/rezadone
 	name = "Rezadone"
 	id = "rezadone"
-	description = "A powder derived from fish toxin, this substance can effectively treat genetic damage in humanoids, though excessive consumption has side effects."
+	description = "A powder with almost magical properties, this substance can effectively treat genetic damage in humanoids, though excessive consumption has side effects."
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
-	overdose = REAGENTS_OVERDOSE
-	taste_message = null
+	taste_message = "sickness"
 
 /datum/reagent/rezadone/on_general_digest(mob/living/M)
 	..()
-	if(!data)
-		data = 1
-	data++
-	switch(data)
-		if(1 to 15)
-			M.adjustCloneLoss(-1)
-			M.heal_bodypart_damage(1, 1)
-		if(15 to 35)
-			M.adjustCloneLoss(-2)
-			M.heal_bodypart_damage(2, 1)
-			M.status_flags &= ~DISFIGURED
-		if(35 to INFINITY)
-			M.adjustToxLoss(1)
-			M.make_dizzy(5)
-			M.make_jittery(5)
+	M.adjustCloneLoss(-2)
+	M.adjustOxyLoss(-2)
+	M.heal_bodypart_damage(2, 2)
+	M.adjustToxLoss(-2)
+	if(volume > 10)
+		M.make_dizzy(5)
+		M.make_jittery(5)
 
 /datum/reagent/spaceacillin
 	name = "Spaceacillin"
@@ -580,3 +541,18 @@
 	..()
 	M.nutrition = max(M.nutrition - nutriment_factor, 0)
 	M.overeatduration = 0
+
+/datum/reagent/noexcutite
+	name = "Noexcutite"
+	id = "noexcutite"
+	description = "A thick, syrupy liquid that has a lethargic effect. Used to cure cases of jitteriness."
+	taste_message = "numbing coldness"
+	reagent_state = LIQUID
+	color = "#bc018a"
+	overdose = REAGENTS_OVERDOSE
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/noexcutite/on_general_digest(mob/living/M)
+	..()
+	M.make_jittery(-50)
+

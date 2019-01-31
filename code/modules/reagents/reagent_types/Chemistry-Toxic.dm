@@ -378,6 +378,7 @@
 	description = "A very corrosive mineral acid with the molecular formula H2SO4."
 	reagent_state = LIQUID
 	color = "#DB5008" // rgb: 219, 80, 8
+	taste_message = "acid"
 	toxpwr = 1
 	var/meltprob = 10
 
@@ -452,6 +453,16 @@
 			for(var/mob/M in viewers(5, O))
 				to_chat(M, "<span class='warning'>\the [O] melts.</span>")
 			qdel(O)
+
+/datum/reagent/toxin/acid/hydrochloric //Like sulfuric, but less toxic and more acidic.
+	name = "Hydrochloric Acid"
+	id = "hacid"
+	description = "A very corrosive mineral acid with the molecular formula HCl."
+	taste_message = "stomach acid"
+	reagent_state = LIQUID
+	color = "#808080"
+	toxpwr = 1
+	meltprob = 5
 
 /datum/reagent/toxin/acid/polyacid
 	name = "Polytrinic acid"
@@ -646,7 +657,7 @@
 	reagent_state = LIQUID
 	color = "#60a584" // rgb: 96, 165, 132
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
-	overdose = REAGENTS_OVERDOSE
+	overdose = REAGENTS_OVERDOSE / 3
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/space_drugs/on_general_digest(mob/living/M)

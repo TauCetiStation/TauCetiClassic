@@ -1,11 +1,3 @@
-#define SOLID 1
-#define LIQUID 2
-#define GAS 3
-#define FOOD_METABOLISM 0.4
-#define DRINK_METABOLISM 0.8
-#define REAGENTS_OVERDOSE 30
-#define REM REAGENTS_EFFECT_MULTIPLIER
-
 //The reaction procs must ALWAYS set src = null, this detaches the proc from the object (the reagent)
 //so that it can continue working when the reagent is deleted while the proc is still active.
 

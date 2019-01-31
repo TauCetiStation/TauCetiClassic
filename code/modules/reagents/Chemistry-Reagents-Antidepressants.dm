@@ -24,7 +24,7 @@
 	name = "Methylphenidate"
 	id = "methylphenidate"
 	result = "methylphenidate"
-	required_reagents = list("mindbreaker" = 1, "hydrogen" = 1)
+	required_reagents = list("mindbreaker" = 1, "lithium" = 1)
 	result_amount = 3
 
 /datum/reagent/antidepressant/citalopram
@@ -82,5 +82,5 @@
 	name = "Paroxetine"
 	id = "paroxetine"
 	result = "paroxetine"
-	required_reagents = list("mindbreaker" = 1, "oxygen" = 1, "inaprovaline" = 1)
+	required_reagents = list("mindbreaker" = 1, "acetone" = 1, "inaprovaline" = 1)
 	result_amount = 3
