@@ -54,6 +54,16 @@
 #define ARMS			1536
 #define FULL_BODY		1663
 
+// How much coverage(in percents) of each clothing part covers our body(aproximately)
+#define HEAD_COVERAGE    5
+#define FACE_COVERAGE    2
+#define EYES_COVERAGE    2
+#define MOUTH_COVERAGE   1
+#define CHEST_COVERAGE   30
+#define GROIN_COVERAGE   20
+#define ARMS_COVERAGE    10
+#define LEGS_COVERAGE    10
+
 // bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
 // Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()
 // The values here should add up to 1.

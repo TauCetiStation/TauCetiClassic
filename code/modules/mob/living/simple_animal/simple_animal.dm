@@ -419,16 +419,18 @@
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
-		return 0
+		return FALSE
 	if (isliving(the_target))
 		var/mob/living/L = the_target
 		if(L.stat != CONSCIOUS)
-			return 0
+			return FALSE
+		if(L.has_trait(TRAIT_NATURECHILD) && L.naturechild_check())
+			return FALSE
 	if (istype(the_target, /obj/mecha))
 		var/obj/mecha/M = the_target
 		if (M.occupant)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /mob/living/simple_animal/say(var/message)
 	if(stat)

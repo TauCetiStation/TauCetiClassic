@@ -126,12 +126,32 @@ var/list/slot_equipment_priority = list(
 	else		return l_hand
 
 //Checks if thing in mob's hands
-/mob/living/carbon/human/proc/is_in_hands(typepath)
-	if(istype(l_hand,typepath))
+/mob/proc/is_in_hands(typepath)
+	return FALSE
+
+/mob/living/carbon/monkey/is_in_hands(typepath)
+	if(istype(l_hand, typepath))
 		return l_hand
-	if(istype(r_hand,typepath))
+	if(istype(r_hand, typepath))
 		return r_hand
-	return 0
+	return FALSE
+
+/mob/living/carbon/human/is_in_hands(typepath)
+	if(istype(l_hand, typepath))
+		return l_hand
+	if(istype(r_hand, typepath))
+		return r_hand
+	return FALSE
+
+/mob/living/carbon/ian/is_in_hands(typepath)
+	if(istype(mouth, typepath))
+		return mouth
+	return FALSE
+
+/mob/living/silicon/robot/is_in_hands(typepath)
+	if(istype(module_active, typepath))
+		return module_active
+	return FALSE
 
 //Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(obj/item/W)
