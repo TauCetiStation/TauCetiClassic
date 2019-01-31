@@ -135,8 +135,8 @@
 
 /obj/structure/closet/wardrobe/atmospherics_yellow
 	name = "atmospherics wardrobe"
-	icon_state = "yellow"
-	icon_closed = "yellow"
+	icon_state = "atmos"
+	icon_closed = "atmos"
 
 /obj/structure/closet/wardrobe/atmospherics_yellow/PopulateContents()
 	for (var/i in 1 to 3)
