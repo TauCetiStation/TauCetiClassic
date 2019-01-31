@@ -10,4 +10,4 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/head/bearpelt/B = new(H.loc)
 	if(!H.equip_to_slot_if_possible(B, slot_head, null, TRUE))
-		H.put_in_hands(B, H.loc)
+		H.put_in_hands(B)

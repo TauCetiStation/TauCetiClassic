@@ -54,6 +54,8 @@
 
 	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
+	var/animalistic = TRUE // Determines whether the being here is an animal or nah.
+
 /mob/living/simple_animal/updatehealth()
 	return
 
@@ -424,7 +426,7 @@
 		var/mob/living/L = the_target
 		if(L.stat != CONSCIOUS)
 			return FALSE
-		if(L.has_trait(TRAIT_NATURECHILD) && L.naturechild_check())
+		if(animalistic && L.has_trait(TRAIT_NATURECHILD) && L.naturechild_check())
 			return FALSE
 	if (istype(the_target, /obj/mecha))
 		var/obj/mecha/M = the_target

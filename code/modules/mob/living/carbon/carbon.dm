@@ -708,7 +708,7 @@
 	return percentage_covered <= maximum_coverage
 
 /mob/living/carbon/naturechild_check()
-	return is_nude(maximum_coverage = 20) || is_in_hands(/obj/item/weapon/reagent_containers/food/snacks/meat) || is_in_hands(/obj/item/stack/sheet/animalhide) || istype(head, /obj/item/clothing/head/bearpelt) || istype(head, /obj/item/weapon/holder) || slurring || stuttering
+	return is_nude(maximum_coverage = 20) && !istype(head, /obj/item/clothing/head/bearpelt) && !istype(head, /obj/item/weapon/holder)
 
 /mob/living/carbon/proc/handle_phantom_move(NewLoc, direct)
 	if(!mind || !mind.changeling || length(mind.changeling.essences) < 1)

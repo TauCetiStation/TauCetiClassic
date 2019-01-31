@@ -28,6 +28,7 @@
 	faction = "cult"
 	status_flags = CANPUSH
 
+	animalistic = FALSE
 
 	Life()
 		..()
