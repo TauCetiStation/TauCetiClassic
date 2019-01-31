@@ -702,7 +702,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/borg/attackby(obj/item/weapon/W, mob/user)
 //	..()
 	user.set_machine(src)
-	if (!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey/ ))))
+	if (!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey))))
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
@@ -726,7 +726,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		else
 			to_chat(user, "This radio doesn't have any encryption keys!")
 
-	if(istype(W, /obj/item/device/encryptionkey/))
+	if(istype(W, /obj/item/device/encryptionkey))
 		if(keyslot)
 			to_chat(user, "The radio can't hold another key!")
 			return

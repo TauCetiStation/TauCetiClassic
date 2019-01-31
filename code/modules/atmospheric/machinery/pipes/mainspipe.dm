@@ -504,7 +504,7 @@
 
 //TODO: Get Mains valves working!
 /*
-obj/machinery/atmospherics/mains_pipe/valve
+/obj/machinery/atmospherics/mains_pipe/valve
 	icon_state = "mvalve0"
 
 	name = "mains shutoff valve"

@@ -525,7 +525,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/proc/set_sensors(mob/usr)
 	var/mob/M = usr
-	if (istype(M, /mob/dead/)) return
+	if (istype(M, /mob/dead)) return
 	if (usr.stat || usr.restrained()) return
 	if(has_sensor >= 2)
 		to_chat(usr, "The controls are locked.")

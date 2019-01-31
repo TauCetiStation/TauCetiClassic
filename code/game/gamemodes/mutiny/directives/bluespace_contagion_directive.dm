@@ -1,6 +1,6 @@
 #define INFECTION_COUNT 5
 
-datum/directive/bluespace_contagion
+/datum/directive/bluespace_contagion
 	var/list/infected = list()
 
 	proc/get_infection_candidates()
@@ -10,7 +10,7 @@ datum/directive/bluespace_contagion
 				candidates.Add(M)
 		return candidates
 
-datum/directive/bluespace_contagion/get_description()
+/datum/directive/bluespace_contagion/get_description()
 	return {"
 		<p>
 			A manufactured and near-undetectable virus is spreading on NanoTrasen stations.
@@ -19,7 +19,7 @@ datum/directive/bluespace_contagion/get_description()
 		</p>
 	"}
 
-datum/directive/bluespace_contagion/initialize()
+/datum/directive/bluespace_contagion/initialize()
 	var/list/candidates = get_infection_candidates()
 	var/list/infected_names = list()
 	for(var/i=0, i < INFECTION_COUNT, i++)
@@ -36,14 +36,14 @@ datum/directive/bluespace_contagion/initialize()
 		"Allow one hour for a cure to be manufactured.",
 		"If no cure arrives after that time, execute and burn the infected.")
 
-datum/directive/bluespace_contagion/meets_prerequisites()
+/datum/directive/bluespace_contagion/meets_prerequisites()
 	var/list/candidates = get_infection_candidates()
 	return candidates.len >= 7
 
-datum/directive/bluespace_contagion/directives_complete()
+/datum/directive/bluespace_contagion/directives_complete()
 	return infected.len == 0
 
-datum/directive/bluespace_contagion/get_remaining_orders()
+/datum/directive/bluespace_contagion/get_remaining_orders()
 	var/text = ""
 	for(var/victim in infected)
 		text += "<li>Kill [victim]</li>"

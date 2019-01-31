@@ -217,7 +217,7 @@
 	reagents.add_reagent("nutriment", potency)
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 
-obj/item/seeds/blackberry
+/obj/item/seeds/blackberry
 	name = "pack of black berry seeds"
 	desc = "Strange black spherical organic formations, glowing in the dark"
 	icon_state = "seed-alien5"

@@ -1,6 +1,6 @@
 #define MUTINY_RECRUITMENT_COOLDOWN 5
 
-datum/game_mode/mutiny
+/datum/game_mode/mutiny
 	var/datum/mutiny_fluff/fluff
 	var/datum/directive/current_directive
 	var/obj/item/weapon/mutiny/auth_key/captain/captains_key

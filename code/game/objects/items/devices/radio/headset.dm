@@ -261,7 +261,7 @@
 		recalculateChannels()
 		playsound(user, 'sound/items/Screwdriver.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>You pop out the encryption keys in the headset!</span>")
-	else if(istype(W, /obj/item/device/encryptionkey/))
+	else if(istype(W, /obj/item/device/encryptionkey))
 		if(keyslot1 && keyslot2)
 			to_chat(user, "<span class='notice'>The headset can't hold another key!</span>")
 			return

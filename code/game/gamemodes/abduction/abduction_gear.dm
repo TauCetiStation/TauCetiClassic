@@ -277,7 +277,7 @@
 	var/list/all_items = M.GetAllContents()
 
 	for(var/obj/I in all_items)
-		if(istype(I,/obj/item/device/radio/))
+		if(istype(I,/obj/item/device/radio))
 			var/obj/item/device/radio/r = I
 			r.on = 0
 

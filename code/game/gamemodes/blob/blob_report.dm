@@ -112,7 +112,7 @@
 		if(!result)	return 0
 		var/output = 0
 		output += (result.floor / max(floor,1))
-		output += (result.r_wall/ max(r_wall,1))
+		output += (result.r_wall / max(r_wall,1))
 		output += (result.wall / max(wall,1))
 		output += (result.window / max(window,1))
 		output += (result.door / max(door,1))

@@ -91,7 +91,7 @@
 	H.h_style = "Skinhead"
 	H.update_hair()
 
-proc/trigger_side_effect(mob/living/carbon/human/H)
+/proc/trigger_side_effect(mob/living/carbon/human/H)
 	set waitfor = 0
 	if(!H || !istype(H))
 		return

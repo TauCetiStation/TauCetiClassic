@@ -256,7 +256,7 @@
 		new /datum/data/mining_equipment("Mining voucher",    	     /obj/item/weapon/mining_voucher,                    			        10000)
 		)
 
-/datum/data/mining_equipment/
+/datum/data/mining_equipment
 	var/equipment_name = "generic"
 	var/equipment_path = null
 	var/cost = 0
@@ -594,7 +594,7 @@
 
 /**********************Mining drone**********************/
 
-/mob/living/simple_animal/hostile/mining_drone/
+/mob/living/simple_animal/hostile/mining_drone
 	name = "nanotrasen minebot"
 	desc = "A small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
 	icon = 'icons/obj/aibots.dmi'

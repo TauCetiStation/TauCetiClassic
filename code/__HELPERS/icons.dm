@@ -121,7 +121,7 @@ Get Flat Icon DEMO by DarkCampainger
 
 This is a test for the get flat icon proc, modified approprietly for icons and their states.
 Probably not a good idea to run this unless you want to see how the proc works in detail.
-mob
+/mob
 	icon = 'old_or_unused.dmi'
 	icon_state = "green"
 
@@ -199,14 +199,14 @@ mob
 				getFlatIcon(src)
 			Browse_Icon()
 
-obj/effect/overlayTest
+/obj/effect/overlayTest
 	icon = 'old_or_unused.dmi'
 	icon_state = "blue"
 	pixel_x = -24
 	pixel_y = 24
 	layer = TURF_LAYER // Should appear below the rest of the overlays
 
-world
+/world
 	view = "7x7"
 	maxx = 20
 	maxy = 20
@@ -317,7 +317,7 @@ icon
 		Higher value means brighter color
  */
 
-proc/ReadRGB(rgb)
+/proc/ReadRGB(rgb)
 	if(!rgb) return
 
 	// interpret the HSV or HSVA value
@@ -367,7 +367,7 @@ proc/ReadRGB(rgb)
 	. = list(r, g, b)
 	if(usealpha) . += alpha
 
-proc/ReadHSV(hsv)
+/proc/ReadHSV(hsv)
 	if(!hsv) return
 
 	// interpret the HSV or HSVA value
@@ -406,7 +406,7 @@ proc/ReadHSV(hsv)
 	. = list(hue, sat, val)
 	if(usealpha) . += alpha
 
-proc/HSVtoRGB(hsv)
+/proc/HSVtoRGB(hsv)
 	if(!hsv) return "#000000"
 	var/list/HSV = ReadHSV(hsv)
 	if(!HSV) return "#000000"
@@ -434,7 +434,7 @@ proc/HSVtoRGB(hsv)
 
 	return (HSV.len > 3) ? rgb(r,g,b,HSV[4]) : rgb(r,g,b)
 
-proc/RGBtoHSV(rgb)
+/proc/RGBtoHSV(rgb)
 	if(!rgb) return "#0000000"
 	var/list/RGB = ReadRGB(rgb)
 	if(!RGB) return "#0000000"
@@ -465,7 +465,7 @@ proc/RGBtoHSV(rgb)
 
 	return hsv(hue, sat, val, (RGB.len>3 ? RGB[4] : null))
 
-proc/hsv(hue, sat, val, alpha)
+/proc/hsv(hue, sat, val, alpha)
 	if(hue < 0 || hue >= 1536) hue %= 1536
 	if(hue < 0) hue += 1536
 	if((hue & 0xFF) == 0xFF)
@@ -498,7 +498,7 @@ proc/hsv(hue, sat, val, alpha)
 
 	amount<0 or amount>1 are allowed
  */
-proc/BlendHSV(hsv1, hsv2, amount)
+/proc/BlendHSV(hsv1, hsv2, amount)
 	var/list/HSV1 = ReadHSV(hsv1)
 	var/list/HSV2 = ReadHSV(hsv2)
 
@@ -552,7 +552,7 @@ proc/BlendHSV(hsv1, hsv2, amount)
 
 	amount<0 or amount>1 are allowed
  */
-proc/BlendRGB(rgb1, rgb2, amount)
+/proc/BlendRGB(rgb1, rgb2, amount)
 	var/list/RGB1 = ReadRGB(rgb1)
 	var/list/RGB2 = ReadRGB(rgb2)
 
@@ -568,10 +568,10 @@ proc/BlendRGB(rgb1, rgb2, amount)
 
 	return isnull(alpha) ? rgb(r, g, b) : rgb(r, g, b, alpha)
 
-proc/BlendRGBasHSV(rgb1, rgb2, amount)
+/proc/BlendRGBasHSV(rgb1, rgb2, amount)
 	return HSVtoRGB(RGBtoHSV(rgb1), RGBtoHSV(rgb2), amount)
 
-proc/HueToAngle(hue)
+/proc/HueToAngle(hue)
 	// normalize hsv in case anything is screwy
 	if(hue < 0 || hue >= 1536) hue %= 1536
 	if(hue < 0) hue += 1536
@@ -579,7 +579,7 @@ proc/HueToAngle(hue)
 	hue -= hue >> 8
 	return hue / (1530/360)
 
-proc/AngleToHue(angle)
+/proc/AngleToHue(angle)
 	// normalize hsv in case anything is screwy
 	if(angle < 0 || angle >= 360) angle -= 360 * round(angle / 360)
 	var/hue = angle * (1530/360)
@@ -589,7 +589,7 @@ proc/AngleToHue(angle)
 
 
 // positive angle rotates forward through red->green->blue
-proc/RotateHue(hsv, angle)
+/proc/RotateHue(hsv, angle)
 	var/list/HSV = ReadHSV(hsv)
 
 	// normalize hsv in case anything is screwy
@@ -611,13 +611,13 @@ proc/RotateHue(hsv, angle)
 	return hsv(HSV[1], HSV[2], HSV[3], (HSV.len > 3 ? HSV[4] : null))
 
 // Convert an rgb color to grayscale
-proc/GrayScale(rgb)
+/proc/GrayScale(rgb)
 	var/list/RGB = ReadRGB(rgb)
 	var/gray = RGB[1]*0.3 + RGB[2]*0.59 + RGB[3]*0.11
 	return (RGB.len > 3) ? rgb(gray, gray, gray, RGB[4]) : rgb(gray, gray, gray)
 
 // Change grayscale color to black->tone->white range
-proc/ColorTone(rgb, tone)
+/proc/ColorTone(rgb, tone)
 	var/list/RGB = ReadRGB(rgb)
 	var/list/TONE = ReadRGB(tone)
 
@@ -822,7 +822,7 @@ The _flatIcons list is a cache for generated icon files.
 		composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 	return composite
 
-proc/adjust_brightness(color, value)
+/proc/adjust_brightness(color, value)
 	if (!color) return "#FFFFFF"
 	if (!value) return color
 
@@ -832,7 +832,7 @@ proc/adjust_brightness(color, value)
 	RGB[3] = Clamp(RGB[3]+value,0,255)
 	return rgb(RGB[1],RGB[2],RGB[3])
 
-proc/sort_atoms_by_layer(list/atoms)
+/proc/sort_atoms_by_layer(list/atoms)
 	// Comb sort icons based on levels
 	var/list/result = atoms.Copy()
 	var/gap = result.len

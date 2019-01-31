@@ -1014,7 +1014,7 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/do_open()
 	send_status_if_allowed()
-	if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock/) && !closeOther.density)
+	if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock) && !closeOther.density)
 		closeOther.close()
 	if(hasPower())
 		use_power(50)

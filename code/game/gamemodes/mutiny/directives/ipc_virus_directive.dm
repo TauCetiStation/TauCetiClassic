@@ -1,4 +1,4 @@
-datum/directive/ipc_virus
+/datum/directive/ipc_virus
 	special_orders = list(
 		"Terminate employment of all IPC personnel.",
 		"Extract the Positronic Brains from IPC units.",
@@ -27,13 +27,13 @@ datum/directive/ipc_virus
 				roboticists.Add(M)
 		return roboticists
 
-datum/directive/ipc_virus/initialize()
+/datum/directive/ipc_virus/initialize()
 	for(var/mob/living/carbon/human/H in get_ipcs())
 		brains_to_enslave.Add(H.mind)
 		cyborgs_to_make.Add(H.mind)
 		ids_to_terminate.Add(H.wear_id)
 
-datum/directive/ipc_virus/get_description()
+/datum/directive/ipc_virus/get_description()
 	return {"
 		<p>
 			IPC units have been found to be infected with a violent and undesired virus in Virgus Ferrorus system.
@@ -41,15 +41,15 @@ datum/directive/ipc_virus/get_description()
 		</p>
 	"}
 
-datum/directive/ipc_virus/meets_prerequisites()
+/datum/directive/ipc_virus/meets_prerequisites()
 	var/list/ipcs = get_ipcs()
 	var/list/roboticists = get_roboticists()
 	return ipcs.len > 2 && roboticists.len > 1
 
-datum/directive/ipc_virus/directives_complete()
+/datum/directive/ipc_virus/directives_complete()
 	return brains_to_enslave.len == 0 && cyborgs_to_make.len == 0 && ids_to_terminate.len == 0
 
-datum/directive/ipc_virus/get_remaining_orders()
+/datum/directive/ipc_virus/get_remaining_orders()
 	var/text = ""
 	for(var/brain in brains_to_enslave)
 		text += "<li>Debrain [brain]</li>"

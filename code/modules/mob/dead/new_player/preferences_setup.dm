@@ -1,4 +1,4 @@
-datum/preferences
+/datum/preferences
 	//The mob should have a gender you want before running this proc. Will run fine without H
 	proc/randomize_appearance_for(mob/living/carbon/human/H)
 		if(H)
