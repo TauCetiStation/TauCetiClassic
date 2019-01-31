@@ -58,6 +58,7 @@
 	description = "A simple, yet effective painkiller. Don't mix with alcohol."
 	reagent_state = LIQUID
 	color = "#cb68fc"
+	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = 0.05
 	restrict_species = list(IPC, DIONA)
 
@@ -214,6 +215,7 @@
 	description = "Tricordrazine is a highly potent stimulant, originally derived from cordrazine. Can be used to treat a wide range of injuries."
 	reagent_state = LIQUID
 	color = "#00b080" // rgb: 200, 165, 220
+	overdose = REAGENTS_OVERDOSE * 3 // Abuse prevention
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
@@ -233,7 +235,7 @@
 	id = "anti_toxin"
 	description = "Dylovene is a broad-spectrum antitoxin."
 	reagent_state = LIQUID
-	color = "#00a000" // rgb: 200, 165, 220
+	color = "#00a000"
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
@@ -249,7 +251,7 @@
 	id = "adminordrazine"
 	description = "It's magic. We don't have to explain it."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 	taste_message = "admin abuse"
 
 /datum/reagent/adminordrazine/on_general_digest(mob/living/M)
@@ -261,7 +263,7 @@
 	id = "synaptizine"
 	description = "Synaptizine is used to treat various diseases."
 	reagent_state = LIQUID
-	color = "#99ccff" // rgb: 200, 165, 220
+	color = "#99ccff"
 	custom_metabolism = 0.01
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
@@ -298,6 +300,7 @@
 	description = "Arithrazine is an unstable medication used for the most extreme cases of radiation poisoning."
 	reagent_state = LIQUID
 	color = "#008000"
+	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = REAGENTS_METABOLISM * 0.25
 	taste_message = null
 
@@ -314,6 +317,7 @@
 	description = "Alkysine is a drug used to lessen the damage to neurological tissue after a catastrophic injury. Can heal brain tissue."
 	reagent_state = LIQUID
 	color = "#8b00ff"
+	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = REAGENTS_METABOLISM * 0.25
 	taste_message = null
 
@@ -329,6 +333,7 @@
 	description = "Heals eye damage"
 	reagent_state = LIQUID
 	color = "#a0dbff"
+	overdose = REAGENTS_OVERDOSE
 	taste_message = "carrot"
 	restrict_species = list(IPC, DIONA)
 
@@ -348,7 +353,7 @@
 	id = "peridaxon"
 	description = "Used to encourage recovery of organs and nervous systems. Medicate cautiously."
 	reagent_state = LIQUID
-	color = "#561ec3" // rgb: 200, 165, 220
+	color = "#561ec3"
 	overdose = 10
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
@@ -368,7 +373,7 @@
 	id = "kyphotorin"
 	description = "Used nanites to encourage recovery of body parts and bones. Medicate cautiously."
 	reagent_state = LIQUID
-	color = "#551a8b" // rgb: 85, 26, 139
+	color = "#551a8b"
 	overdose = 5.1
 	custom_metabolism = 0.07
 	taste_message = "machines"
@@ -398,6 +403,7 @@
 	description = "Bicaridine is an analgesic medication and can be used to treat blunt trauma."
 	reagent_state = LIQUID
 	color = "#bf0000"
+	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
@@ -466,17 +472,28 @@
 	description = "A powder with almost magical properties, this substance can effectively treat genetic damage in humanoids, though excessive consumption has side effects."
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
+	overdose = REAGENTS_OVERDOSE
 	taste_message = "sickness"
 
 /datum/reagent/rezadone/on_general_digest(mob/living/M)
 	..()
-	M.adjustCloneLoss(-2)
-	M.adjustOxyLoss(-2)
-	M.heal_bodypart_damage(2, 2)
-	M.adjustToxLoss(-2)
-	if(volume > 10)
-		M.make_dizzy(5)
-		M.make_jittery(5)
+	if(!data)
+		data = 1
+	data++
+	switch(data)
+		if(1 to 15)
+			M.adjustCloneLoss(-1)
+			M.adjustOxyLoss(-1)
+			M.adjustToxLoss(-1)
+			M.heal_bodypart_damage(1, 1)
+		if(15 to 35)
+			M.adjustCloneLoss(-2)
+			M.heal_bodypart_damage(2, 2)
+			M.status_flags &= ~DISFIGURED
+		if(35 to INFINITY)
+			M.adjustToxLoss(1)
+			M.make_dizzy(5)
+			M.make_jittery(5)
 
 /datum/reagent/spaceacillin
 	name = "Spaceacillin"
@@ -488,12 +505,12 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
-/datum/reagent/ethylredoxrazine // FUCK YOU, ALCOHOL
+/datum/reagent/ethylredoxrazine
 	name = "Ethylredoxrazine"
 	id = "ethylredoxrazine"
 	description = "A powerful oxidizer that reacts with ethanol."
 	reagent_state = SOLID
-	color = "#605048" // rgb: 96, 80, 72
+	color = "#605048"
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
@@ -510,7 +527,7 @@
 	id = "vitamin"
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
 	reagent_state = SOLID
-	color = "#664330" // rgb: 102, 67, 48
+	color = "#664330"
 	taste_message = null
 
 /datum/reagent/vitamin/on_general_digest(mob/living/M)
@@ -554,5 +571,5 @@
 
 /datum/reagent/noexcutite/on_general_digest(mob/living/M)
 	..()
-	M.make_jittery(-50)
+	M.make_jittery(-20)
 

@@ -222,7 +222,13 @@
 	custom_metabolism = REAGENTS_METABOLISM * 0.2
 
 /datum/reagent/acetone/on_general_digest(mob/living/M)
-	M.adjustToxLoss(REAGENTS_METABOLISM * 0.7) //Default toxin damage
+	M.adjustToxLoss(REAGENTS_METABOLISM * 0.2) // Low toxic
+
+/datum/reagent/acetone/on_vox_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(REAGENTS_METABOLISM)
+	holder.remove_reagent(id, REAGENTS_METABOLISM) //By default it slowly disappears.
+	return FALSE
 
 /datum/reagent/aluminum
 	name = "Aluminum"
@@ -243,16 +249,21 @@
 	overdose = 5
 
 /datum/reagent/ammonia/on_general_digest(mob/living/M)
-	M.adjustToxLoss(REAGENTS_METABOLISM * 0.35)
-
-/datum/reagent/ammonia/on_diona_digest(mob/living/M)
-	..()
-	M.nutrition += 1 * REM
-	return FALSE
+	M.adjustToxLoss(REAGENTS_METABOLISM * 0.2) // Low toxic
 
 /datum/reagent/ammonia/on_vox_digest(mob/living/M)
 	..()
-	M.adjustOxyLoss(-2 * REAGENTS_METABOLISM)
+	M.adjustOxyLoss(-2 * REM)
+	holder.remove_reagent(id, REAGENTS_METABOLISM) //By default it slowly disappears.
+	return FALSE
+
+/datum/reagent/ammonia/on_diona_digest(mob/living/M)
+	..()
+	M.adjustBruteLoss(-REM)
+	M.adjustOxyLoss(-REM)
+	M.adjustToxLoss(-REM)
+	M.adjustFireLoss(-REM)
+	M.nutrition += REM
 	return FALSE
 
 /datum/reagent/carbon
@@ -317,9 +328,6 @@
 	taste_message = "sweet tasting metal"
 	reagent_state = LIQUID
 	color = "#808080"
-
-/datum/reagent/fuel/hydrazine/on_general_digest(mob/living/M)
-	M.adjustToxLoss(1.5)
 
 /datum/reagent/iron
 	name = "Iron"
@@ -498,11 +506,3 @@
 			var/obj/effect/decal/cleanable/greenglow/glow = locate(/obj/effect/decal/cleanable/greenglow, T)
 			if(!glow)
 				new /obj/effect/decal/cleanable/greenglow(T)
-
-/datum/reagent/hydrogen
-	name = "Hydrogen"
-	id = "hydrogen"
-	description = "A colorless, odorless, nonmetallic, tasteless, highly combustible diatomic gas."
-	reagent_state = GAS
-	color = "#808080"
-	taste_message = null

@@ -319,14 +319,6 @@
 			M.drowsyness = min(40, (M.drowsyness + 2))
 	return TRUE
 
-/datum/reagent/ammonia
-	name = "Ammonia"
-	id = "ammonia"
-	description = "A caustic substance commonly used in fertilizer or household cleaners."
-	reagent_state = GAS
-	color = "#404030" // rgb: 64, 64, 48
-	taste_message = "floor cleaner"
-
 /datum/reagent/ultraglue
 	name = "Ultra Glue"
 	id = "glue"

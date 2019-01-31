@@ -461,8 +461,8 @@
 	taste_message = "stomach acid"
 	reagent_state = LIQUID
 	color = "#808080"
-	toxpwr = 1
-	meltprob = 5
+	toxpwr = 0.5
+	meltprob = 20
 
 /datum/reagent/toxin/acid/polyacid
 	name = "Polytrinic acid"
