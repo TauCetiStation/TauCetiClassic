@@ -4,7 +4,7 @@
 /obj/machinery/bodyscanner
 	var/locked
 	name = "Body Scanner"
-	desc = "Used for more detailed analysis of the patient."
+	desc = "Used for a more detailed analysis of the patient."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scanner_0"
 	density = 1

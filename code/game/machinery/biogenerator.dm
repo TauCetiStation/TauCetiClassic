@@ -1,6 +1,6 @@
 /obj/machinery/biogenerator
 	name = "Biogenerator"
-	desc = "Forms objects from biomass, it is logical, is not it?"
+	desc = "Forms objects from biomass, it is logical, isn't?"
 	icon = 'icons/obj/biogenerator.dmi'
 	icon_state = "biogen-empty"
 	density = 1
