@@ -47,18 +47,20 @@
 		return
 	next_click = world.time + 1
 
-	if(client.buildmode)
+	if(client && client.buildmode)
 		build_click(src, client.buildmode, params, A)
 		return
 
 	var/list/modifiers = params2list(params)
 
-	if(client.cob && client.cob.in_building_mode)
+	if(client && client.cob && client.cob.in_building_mode)
 		cob_click(client, modifiers)
 		return
 
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
+		return
+	if(relayClickOn(A, params)) // Ctrl Shift Click is selecting or deselcting a nymph, we ought to have it up higher.
 		return
 	if(modifiers["middle"])
 		MiddleClickOn(A)
@@ -131,8 +133,13 @@
 
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
-				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				var/resolved = A.attackby(W, src, params)
+				// Return TRUE in attackby() to prevent afterattack() effects (when safely moving items for example)
+				var/resolved = FALSE
+				if(!istype(W, /obj/item/nymph_morph_ball))
+					resolved = A.attackby(W, src, params)
+				else
+					var/obj/item/nymph_morph_ball/NM = W
+					resolved = A.attackby(NM.morphed_into, src, params)
 				if(!resolved && A && W)
 					W.afterattack(A, src, 1, params) // 1: clicking something Adjacent
 			else
@@ -147,8 +154,32 @@
 /mob/proc/DblClickOn(atom/A, params)
 	ClickOn(A,params)
 
-
 //	Translates into attack_hand, etc.
+
+/mob/proc/relayClickOn(atom/A, params)
+	return
+
+// Return TRUE to prevent from clicking.
+/mob/living/carbon/human/relayClickOn(atom/A, params)
+	if(get_species() == DIONA && gestalt_direct_control)
+		for(var/mob/living/carbon/monkey/diona/D in gestalt_subordinates)
+			if(D.client)
+				continue
+			if(D.selected && get_dist(D, src) <= 10)
+				var/old_intent = D.a_intent
+				var/old_zone_sel = D.zone_sel
+				var/old_hand = D.hand
+				if(D.hand != hand)
+					D.swap_hand()
+				D.a_intent = a_intent
+				D.zone_sel = zone_sel
+				D.ClickOn(A, params)
+				if(D.hand != old_hand)
+					D.swap_hand()
+				D.a_intent = old_intent
+				D.zone_sel = old_zone_sel
+		return TRUE
+	return FALSE
 
 /mob/proc/UnarmedAttack(atom/A)
 	if(ismob(A))
@@ -239,7 +270,7 @@
 	if(T && user.TurfAdjacent(T))
 		if(user.listed_turf == T)
 			user.listed_turf = null
-		else
+		else if(user.client)
 			user.listed_turf = T
 			user.client.statpanel = T.name
 	return
@@ -257,6 +288,23 @@
 
 /atom/proc/CtrlShiftClick(mob/user)
 	return
+
+/mob/living/carbon/monkey/diona/CtrlShiftClick(mob/user)
+	if(ishuman(user) && user.get_species() == DIONA && gestalt == user && gestalt.gestalt_direct_control)
+		var/language_key = ":q"
+		var/turf/T = get_turf(user)
+		if(istype(T, /turf/space))
+			language_key = ":f"
+		else
+			var/datum/gas_mixture/environment = T.return_air()
+			if(environment)
+				var/pressure = environment.return_pressure()
+				if(pressure < SOUND_MINIMUM_PRESSURE)
+					language_key = ":f"
+		if(!selected)
+			user.say("[language_key] [my_number] select.")
+		else
+			user.say("[language_key] [my_number] select stop.")
 
 /*
 	Misc helpers

@@ -440,7 +440,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				visible_message("<span class='notice'>You see something resembling [regenerating_bodypart.name] at [src]'s [regenerating_bodypart.parent.name]...</span>")
 			if(65)
 				visible_message("<span class='userdanger'>A new [regenerating_bodypart.name] has grown from [src]'s [regenerating_bodypart.parent.name]!</span>","<span class='userdanger'>You [species && species.flags[NO_PAIN] ? "notice" : "feel"] your [regenerating_bodypart.name] again!</span>")
-		if(prob(50))
+		if(prob(50) && !species.flags[NO_PAIN])
 			emote("scream",1,null,1)
 		if(regenerating_organ_time >= regenerating_capacity_penalty) // recover organ
 			regenerating_bodypart.rejuvenate()
@@ -1371,6 +1371,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(species.name == new_species)
 			return
 
+		for(var/ability in species.abilities)
+			verbs -= species.abilities
+
 		if(species.language)
 			remove_language(species.language)
 
@@ -1398,6 +1401,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		r_skin = 0
 		g_skin = 0
 		b_skin = 0
+
+	for(var/ability in species.abilities)
+		verbs += species.abilities
 
 	species.handle_post_spawn(src)
 	species.on_gain(src)
@@ -1770,3 +1776,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return species.taste_sensitivity
 	else
 		return 1
+
+/mob/living/carbon/human/proc/queue_order(order)
+	queued_orders += order

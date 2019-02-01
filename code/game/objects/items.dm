@@ -56,6 +56,8 @@
 	var/uncleanable = 0
 	var/toolspeed = 1
 
+	var/obj/item/item_holder // Perhaps somebody else comes up with an ingenious mechanic that uses this. item_holder allows us to use this object as an interface, harvesting the power of it's cool procs and vars for our insidious desires... ~Luduk.
+
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
@@ -303,9 +305,9 @@
 		S.remove_from_storage(src)
 
 	src.throwing = 0
-	if(src.loc == user)
+	if(loc == user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
-		if(!src.canremove)
+		if(!canremove)
 			return
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -314,7 +316,7 @@
 				V.attack_reaction(H, REACTION_ITEM_TAKEOFF)
 			if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
 				if(!user.delay_clothing_u_equip(src))
-					return 0
+					return FALSE
 			else
 				user.remove_from_mob(src)
 		else
@@ -334,11 +336,22 @@
 	if(QDELETED(src) || freeze_movement) // remove_from_mob() may remove DROPDEL items, so...
 		return
 
+	if(istype(item_holder, /obj/item/nymph_morph_ball))
+		var/obj/item/nymph_morph_ball/NM = item_holder
+		if(user.get_species() == DIONA)
+			forceMove(NM)
+			NM.pickup(user)
+			NM.add_fingerprint(user)
+			user.put_in_active_hand(NM, user.loc)
+			return
+		else
+			forceMove(NM)
+			qdel(NM)
+			return
+
 	src.pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
-	return
-
 
 /obj/item/attack_paw(mob/user)
 	if (!user || anchored)
@@ -359,9 +372,9 @@
 				if (M.client)
 					M.client.screen -= src
 	src.throwing = 0
-	if (src.loc == user)
+	if(loc == user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
-		if(istype(src, /obj/item/clothing) && !src:canremove)
+		if(istype(src, /obj/item/clothing) && !canremove)
 			return
 		else
 			user.remove_from_mob(src)
@@ -374,10 +387,14 @@
 	if(QDELETED(src) || freeze_movement) // no item - no pickup, you dummy!
 		return
 
-	src.pickup(user)
-	user.put_in_active_hand(src)
-	return
+	if(istype(item_holder, /obj/item/nymph_morph_ball))
+		var/obj/item/nymph_morph_ball/NM = item_holder
+		forceMove(NM)
+		qdel(NM)
+		return
 
+	pickup(user)
+	user.put_in_active_hand(src)
 
 /obj/item/attack_ai(mob/user)
 	if (istype(src.loc, /obj/item/weapon/robot_module))

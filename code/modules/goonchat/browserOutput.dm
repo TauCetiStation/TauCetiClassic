@@ -116,7 +116,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 
 /datum/chatOutput/proc/setAdminSoundVolume(volume = "")
 	owner.adminSoundVolume = Clamp(text2num(volume), 0, 100)
-	
+
 	var/sound/S = new()
 	S.channel = CHANNEL_ADMIN
 	S.volume = owner.adminSoundVolume
@@ -238,6 +238,9 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	if(islist(target))
 		var/encoded = url_encode(message)
 		for(var/I in target)
+			/*if(ismob(I))
+				var/mob/M = I
+				M.relayToChat(message)*/
 			var/client/C = CLIENT_FROM_VAR(I) //Grab us a client if possible
 
 			if (!C)
@@ -256,6 +259,10 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 
 			C << output(encoded, "browseroutput:output")
 	else
+		/*if(ismob(target))
+			var/mob/M = target
+			M.relayToChat(message)*/
+
 		var/client/C = CLIENT_FROM_VAR(target) //Grab us a client if possible
 
 		if (!C)
@@ -273,3 +280,17 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 			return
 
 		C << output(url_encode(message), "browseroutput:output")
+
+/*
+/mob/proc/relayToChat(message)
+	return
+
+/mob/living/carbon/monkey/diona/relayToChat(message)
+	world.log << "We are trying to relay"
+	if(stat != CONSCIOUS)
+		return
+	if(selected && gestalt && gestalt.gestalt_direct_control)
+		if(get_dist(gestalt, src) > 10)
+			return
+		to_chat(gestalt, "<span class='notice'>[src] transmits: \"</span>[message]<span class='notice'>\"</span>")
+*/

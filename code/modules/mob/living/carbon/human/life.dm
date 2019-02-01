@@ -973,7 +973,7 @@
 			light_amount = round((T.get_lumcount()*10)-5)
 
 		if(is_type_organ(O_LIVER, /obj/item/organ/internal/liver/diona) && !is_bruised_organ(O_LIVER)) // Specie may require light, but only plants, with chlorophyllic plasts can produce nutrition out of light!
-			nutrition += light_amount
+			nutrition += light_amount * 5 // Since now Diona's organs are eating nutriments too...
 
 		if(species.flags[IS_PLANT])
 			if(is_type_organ(O_KIDNEYS, /obj/item/organ/internal/kidneys/diona)) // Diona's kidneys contain all the nutritious elements. Damaging them means they aren't held.
@@ -1298,6 +1298,9 @@
 						s.zoom()
 
 	else
+		if(get_species() == DIONA && display_diona_hud)
+			process_diona_hud(src)
+
 		sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = species.darksight
 		see_invisible = see_in_dark>2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING

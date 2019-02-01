@@ -44,9 +44,37 @@
 	var/tmp/destspawn = 0 //Has it spawned the broken limb?
 	var/tmp/amputated = 0 //Whether this has been cleanly amputated, thus causing no pain
 	var/limb_layer = 0
-	var/damage_msg = "\red You feel an intense pain"
+	var/damage_msg = "<span class='warning'>You feel an intense pain</span>"
 
 	var/regen_bodypart_penalty = 0 // This variable determines how much time it would take to regenerate a bodypart, and the cost of it's regeneration.
+
+/obj/item/organ/external/proc/get_external_type()
+	switch(body_zone)
+		if(BP_HEAD)
+			if(owner.species.flags[IS_SYNTHETIC])
+				. = /obj/item/weapon/organ/head/posi
+			else
+				. = /obj/item/weapon/organ/head
+		if(BP_R_ARM)
+			if(status & ORGAN_ROBOT)
+				. = /obj/item/robot_parts/r_arm
+			else
+				. = /obj/item/weapon/organ/r_arm
+		if(BP_L_ARM)
+			if(status & ORGAN_ROBOT)
+				. = /obj/item/robot_parts/l_arm
+			else
+				. = /obj/item/weapon/organ/l_arm
+		if(BP_R_LEG)
+			if(status & ORGAN_ROBOT)
+				. = /obj/item/robot_parts/r_leg
+			else
+				. = /obj/item/weapon/organ/r_leg
+		if(BP_L_LEG)
+			if(status & ORGAN_ROBOT)
+				. = /obj/item/robot_parts/l_leg
+			else
+				. = /obj/item/weapon/organ/l_leg
 
 /obj/item/organ/external/insert_organ()
 	..()
@@ -160,6 +188,10 @@
 
 	//If limb took enough damage, try to cut or tear it off
 	if(owner && !(status & ORGAN_DESTROYED))
+		if(dionified && item_holder)
+			var/mob/living/carbon/monkey/diona/D = locate() in item_holder
+			D.adjustBruteLoss(brute)
+			D.adjustFireLoss(burn)
 		if(!cannot_amputate && (brute_dam + burn_dam + brute + burn + spillover) >= (max_damage * config.organ_health_multiplier))
 			//organs can come off in three cases
 			//1. If the damage source is edge_eligible and the brute damage dealt exceeds the edge threshold, then the organ is cut off.
@@ -213,6 +245,11 @@
 		status &= ~ORGAN_BROKEN
 		perma_injury = 0
 
+	if(dionified && item_holder)
+		var/mob/living/carbon/monkey/diona/D = locate() in item_holder
+		D.adjustBruteLoss(-brute)
+		D.adjustFireLoss(-burn)
+
 	//Sync the organ's damage with its wounds
 	src.update_damages()
 	owner.updatehealth()
@@ -243,6 +280,20 @@ This function completely restores a damaged organ to perfect condition.
 		W.embedded_objects.Cut()
 	wounds.Cut()
 	number_wounds = 0
+
+	if(dionified)
+		if(!item_holder)
+			var/external_type = get_external_type()
+			if(external_type) // Groin and chest don't get their special nymphs.
+				item_holder = new /obj/item/nymph_morph_ball(src, new external_type(null, owner))
+				var/mob/living/carbon/monkey/diona/D = new(item_holder)
+				D.disable_random_movement = TRUE
+				D.set_gestalt(owner)
+				D.set_target_action(null)
+		else
+			var/mob/living/carbon/monkey/diona/D = locate() in item_holder
+			if(D)
+				D.rejuvenate()
 
 	// handle organs
 	for(var/obj/item/organ/internal/IO in bodypart_organs)
@@ -657,32 +708,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 			var/obj/bodypart // Dropped limb object
 			add_blood(owner)
 
-			switch(body_zone)
-				if(BP_HEAD)
-					if(owner.species.flags[IS_SYNTHETIC])
-						bodypart = new /obj/item/weapon/organ/head/posi(owner.loc, owner)
-					else
-						bodypart = new /obj/item/weapon/organ/head(owner.loc, owner)
-				if(BP_R_ARM)
-					if(status & ORGAN_ROBOT)
-						bodypart = new /obj/item/robot_parts/r_arm(owner.loc)
-					else
-						bodypart = new /obj/item/weapon/organ/r_arm(owner.loc, owner)
-				if(BP_L_ARM)
-					if(status & ORGAN_ROBOT)
-						bodypart = new /obj/item/robot_parts/l_arm(owner.loc)
-					else
-						bodypart = new /obj/item/weapon/organ/l_arm(owner.loc, owner)
-				if(BP_R_LEG)
-					if(status & ORGAN_ROBOT)
-						bodypart = new /obj/item/robot_parts/r_leg(owner.loc)
-					else
-						bodypart = new /obj/item/weapon/organ/r_leg(owner.loc, owner)
-				if(BP_L_LEG)
-					if(status & ORGAN_ROBOT)
-						bodypart = new /obj/item/robot_parts/l_leg(owner.loc)
-					else
-						bodypart = new /obj/item/weapon/organ/l_leg(owner.loc, owner)
+			if(item_holder)
+				bodypart = item_holder
+				bodypart.forceMove(owner.loc)
+			else
+				var/external_type = get_external_type()
+				bodypart = new external_type(owner.loc, owner)
 
 			if(bodypart)
 				//Robotic limbs explode if sabotaged.
@@ -698,6 +729,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 				var/matrix/M = matrix()
 				M.Turn(rand(180))
 				bodypart.transform = M
+				if(item_holder)
+					item_holder.update_icon()
+					item_holder = null
 
 				if(!clean)
 					// Throw limb around.
@@ -1075,6 +1109,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	vital = TRUE
 	w_class = ITEM_SIZE_HUGE // Used for dismembering thresholds, in addition to storage. Humans are w_class 6, so it makes sense that chest is w_class 5.
 
+/obj/item/organ/external/chest/diona
+	dionified = TRUE
 
 /obj/item/organ/external/groin
 	name = "groin"
@@ -1093,6 +1129,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	vital = TRUE
 	w_class = ITEM_SIZE_LARGE
 
+/obj/item/organ/external/groin/diona
+	dionified = TRUE
 
 /obj/item/organ/external/head
 	name = "head"
@@ -1113,6 +1151,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/head/diona
 	vital = FALSE
+	dionified = TRUE
 
 /obj/item/organ/external/head/ipc
 	vital = FALSE
@@ -1136,6 +1175,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	..()
 	process_grasp(owner.l_hand, "left hand")
 
+/obj/item/organ/external/l_arm/diona
+	name = "left upper tendril"
+	dionified = TRUE
 
 /obj/item/organ/external/r_arm
 	name = "right arm"
@@ -1151,6 +1193,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
+
+/obj/item/organ/external/r_arm/diona
+	name = "right upper tendril"
+	dionified = TRUE
 
 /obj/item/organ/external/r_arm/process()
 	..()
@@ -1171,6 +1217,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
 
+/obj/item/organ/external/l_leg/diona
+	name = "left lower tendril"
+	dionified = TRUE
 
 /obj/item/organ/external/r_leg
 	name = "right leg"
@@ -1186,6 +1235,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
+
+/obj/item/organ/external/r_leg/diona
+	name = "right lower tendril"
+	dionified = TRUE
 
 /obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
 	if(!disfigured)
@@ -1233,7 +1286,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	//Setting base icon for this mob's race
 	var/icon/base
-	if(H.species && H.species.icobase)
+	if(H.species.icobase)
 		base = icon(H.species.icobase)
 	else
 		base = icon('icons/mob/human_races/r_human.dmi')
@@ -1253,7 +1306,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	icon = base
 	dir = SOUTH
-	src.transform = turn(src.transform, rand(70,130))
+	transform = turn(transform, rand(70,130))
 
 
 /****************************************************
@@ -1289,6 +1342,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 		src.icon_state = H.gender == MALE? "head_m" : "head_f"
 	. = ..()
 	organ_head_list += src
+	if(!istype(H))
+		return
 	//Add (facial) hair.
 	if(H.f_style)
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.f_style]

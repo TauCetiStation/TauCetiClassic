@@ -65,15 +65,20 @@
 		G.process()
 
 	if(!client && stat == CONSCIOUS)
-
-		if(prob(33) && canmove && isturf(loc) && !pulledby) //won't move if being pulled
-
-			step(src, pick(cardinal))
+		if(canmove)
+			handle_ai_movement()
 
 		if(prob(1))
 			emote(pick("scratch","jump","roll","tail"))
 	updatehealth()
 
+
+/mob/living/carbon/monkey/proc/handle_ai_movement()
+	if(prob(33) && isturf(loc) && !pulledby && !disable_random_movement) // won't move if being pulled
+		var/dir_ = pick(cardinal)
+		if(canmove)
+			loc.relaymove(src, dir_)
+		Move(get_step(src, dir_), dir_)
 
 /mob/living/carbon/monkey/calculate_affecting_pressure(pressure)
 	..()
@@ -633,10 +638,10 @@
 /mob/living/carbon/monkey/diona/Life()
 	if(stat != DEAD)
 		var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
-		if(gestalt && isturf(gestalt.loc))
+		if(loc == gestalt && isturf(gestalt.loc) && !istype(gestalt.loc, /turf/space))
 			var/turf/T = gestalt.loc
 			light_amount = round((T.get_lumcount()*10)-5)
-		else if(isturf(loc)) //else, there's considered to be no light
+		else if(isturf(loc) && !istype(loc, /turf/space)) //else, there's considered to be no light
 			var/turf/T = loc
 			light_amount = round((T.get_lumcount()*10)-5)
 
@@ -650,10 +655,36 @@
 			adjustToxLoss(-1)
 			adjustOxyLoss(-1)
 
+		if(istype(loc, /obj/item/nymph_morph_ball))
+			var/obj/item/nymph_morph_ball/NM = loc
+			if(NM.morphed_into)
+				nutrition -= NM.morphed_into.w_class
+			else
+				qdel(NM)
+			if(istype(NM.loc, /obj/item/organ))
+				var/obj/item/organ/O = NM.loc
+				nutrition += NM.morphed_into.w_class
+				O.owner.nutrition -= NM.morphed_into.w_class
+			else if(NM.loc == gestalt && iscarbon(gestalt))
+				var/mob/living/carbon/C = gestalt
+				nutrition += NM.morphed_into.w_class
+				C.nutrition -= NM.morphed_into.w_class
+
 		if(injecting)
-			if(gestalt && nutrition > 210)
-				gestalt.reagents.add_reagent(injecting,1)
+			if(loc == gestalt && nutrition > 210)
+				gestalt.reagents.add_reagent(injecting, 1)
 				nutrition -= 10
 			else
 				injecting = null
+
+		if(nutrition  < 220)
+			if(istype(loc, /obj/item/nymph_morph_ball))
+				var/obj/item/nymph_morph_ball/NM = loc
+				qdel(NM)
+			if(loc == gestalt && gestalt.nutrition > 210)
+				gestalt.nutrition -= 10
+				nutrition += 10
+
+		if(!client && stat == CONSCIOUS)
+			handle_order_queue()
 	..()

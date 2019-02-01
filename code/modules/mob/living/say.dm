@@ -118,6 +118,9 @@ var/list/department_radio_keys = list(
 		message = sanitize(message)
 
 	var/turf/T = get_turf(src)
+	if(istype(loc.loc, /obj/item/organ/external)) // Diona's inside holders inside organs.
+		var/obj/item/organ/external/O = loc.loc
+		T = get_turf(O.owner)
 
 	//handle nonverbal and sign languages here
 	if (speaking)
@@ -167,11 +170,13 @@ var/list/department_radio_keys = list(
 				listening += M
 				hearturfs += M.locs[1]
 				for(var/obj/O in M.contents)
-					listening_obj |= O
+					listening_obj += O
+				for(var/mob/living/L in M.contents)
+					listening += L
 			else if(istype(I, /obj))
 				var/obj/O = I
 				hearturfs += O.locs[1]
-				listening_obj |= O
+				listening_obj += O
 
 		for(var/mob/M in player_list)
 			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))

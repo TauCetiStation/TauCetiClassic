@@ -42,22 +42,29 @@
 	for(var/mob/living/M in contents)
 		M.show_message(message,m_type)
 
+/obj/item/nymph_morph_ball/hear_talk(mob/M, text, verb, datum/language/speaking)
+	var/mob/living/L = locate() in src
+	if(L)
+		L.hear_say(text, verb, language = speaking, speaker = M)
+
 // Mob procs and vars for scooping up
 /mob/living/var/holder_type
+
+/mob/living/proc/create_holder()
+	var/obj/item/weapon/holder/H = new holder_type(loc)
+	forceMove(H)
+	H.name = name
+	return H
 
 /mob/living/proc/get_scooped(mob/living/carbon/grabber)
 	if(!holder_type || buckled || pinned.len)
 		return
-	var/obj/item/weapon/holder/H = new holder_type(loc)
-	src.loc = H
-	H.name = src.name
-	H.attack_hand(grabber)
+	var/obj/item/weapon/holder/H = create_holder()
+	grabber.put_in_hands(H)
 
 	to_chat(grabber, "You scoop up [src].")
 	to_chat(src, "[grabber] scoops you up.")
 	LAssailant = grabber
-
-	return
 
 // Mob specific holders.
 

@@ -177,6 +177,13 @@
 	if(!slot) return
 	if(!istype(W)) return
 
+	// I sincerely regret this do not look a line lower or you will too. ~Luduk.
+	if(istype(W, /obj/item/nymph_morph_ball))
+		var/obj/item/nymph_morph_ball/NM = W
+		W = NM.morphed_into
+		drop_from_inventory(NM, W)
+	// Madness ends here, and that's good.
+
 	if(W == get_active_hand())
 		u_equip(W)
 

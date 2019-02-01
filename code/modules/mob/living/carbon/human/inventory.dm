@@ -234,6 +234,13 @@
 	if(!specie_has_slot(slot))
 		return
 
+	// I sincerely regret this do not look a line lower or you will too. ~Luduk.
+	if(istype(W, /obj/item/nymph_morph_ball))
+		var/obj/item/nymph_morph_ball/NM = W
+		W = NM.morphed_into
+		drop_from_inventory(NM, W)
+	// Madness ends here, and that's good.
+
 	W.screen_loc = null // will get moved if inventory is visible
 
 	W.loc = src

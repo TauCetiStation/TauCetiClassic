@@ -143,7 +143,7 @@
 	flags = SIGNLANG // For all intents and purposes, this is basically a sign language.
 
 /datum/language/diona_space/format_message(message, verb)
-	return "<span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
+	return "<span class='message'><span class='[colour]'>[capitalize(message)]</span></span>"
 
 /datum/language/human
 	name = "Sol Common"

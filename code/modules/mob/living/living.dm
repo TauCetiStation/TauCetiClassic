@@ -674,10 +674,10 @@
 								var/turf/location = M.loc
 								if (istype(location, /turf/simulated))
 									if(ishuman(M))
-										var/mob/living/carbon/H = M
-										var/blood_volume = round(H:vessel.get_reagent_amount("blood"))
+										var/mob/living/carbon/human/H = M
+										var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
 										if(blood_volume > 0)
-											H:vessel.remove_reagent("blood",1)
+											H.vessel.remove_reagent("blood",1)
 
 
 						pulling.Move(T, get_dir(pulling, T))

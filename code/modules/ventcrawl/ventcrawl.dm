@@ -20,8 +20,6 @@ var/list/ventcrawl_machinery = list(
 /mob/var/next_play_vent = 0
 
 /mob/living/proc/can_ventcrawl()
-	if(!client)
-		return FALSE
 	if(!ventcrawler)
 		to_chat(src, "<span class='warning'>You don't possess the ability to ventcrawl!</span>")
 		return FALSE
@@ -130,6 +128,7 @@ var/list/ventcrawl_machinery = list(
 						to_chat(src, "<span class='danger'>You feel a roaring wind pushing you away from the vent!</span>")
 
 			if(is_busy() || !do_after(src, 45, null, vent_found))
+				world.log << "couldn't climb"
 				return
 
 			if(!can_ventcrawl())
@@ -166,7 +165,8 @@ var/list/ventcrawl_machinery = list(
 		A.pipe_image.layer = ABOVE_LIGHTING_LAYER
 		A.pipe_image.plane = LIGHTING_PLANE
 		pipes_shown += A.pipe_image
-		client.images += A.pipe_image
+		if(client)
+			client.images += A.pipe_image
 
 /mob/living/proc/remove_ventcrawl()
 	is_ventcrawling = 0

@@ -27,6 +27,20 @@
 	holder_type = /obj/item/weapon/holder/diona
 	blood_datum = /datum/dirt_cover/green_blood
 
+	var/atom/last_pointed
+	var/atom/following
+	var/atom/move_target
+	var/action_on_target = ""
+	var/tried_to_accomplish = 0
+	var/to_target_dist = 1
+	var/selected = FALSE
+	var/unique_diona_hive_color = "" // Hex index, should be unique to each diona hive.
+	var/list/speech_buffer = list()
+
+/mob/living/carbon/monkey/diona/Login()
+	..()
+	if(!unique_diona_hive_color)
+		unique_diona_hive_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
 /mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M)
 
@@ -46,59 +60,75 @@
 	dna.mutantrace = "plant"
 	greaterform = DIONA
 	add_language("Rootspeak")
+	add_language("Rootsong")
+
+/mob/living/carbon/monkey/diona/Destroy()
+	set_gestalt(null)
+	return ..()
+
+/mob/living/carbon/monkey/diona/proc/set_gestalt(mob/living/carbon/human/H)
+	if(gestalt)
+		if(gestalt != H)
+			gestalt.gestalt_subordinates -= src
+		else
+			return
+	gestalt = H
+	if(gestalt)
+		gestalt.gestalt_subordinates += src
+	selected = FALSE
+	set_target_action(null)
 
 /mob/living/carbon/monkey/diona/proc/merging(mob/living/carbon/human/M)
-	var/count = 0
-	for(var/mob/living/carbon/monkey/diona in M)
-		count++
-	if(count >= 3)
-		visible_message(src, "<span class='notice'>[M]'s body seems to repel [src], as it attempts to twine with it's being.</span>")
-		return
 	to_chat(M, "You feel your being twine with that of [src] as it merges with your biomass.")
 	M.status_flags |= PASSEMOTES
 	to_chat(src, "You feel your being twine with that of [M] as you merge with its biomass.")
 	forceMove(M)
-	gestalt = M
+	following = null
+	set_target_action(null)
+	set_gestalt(M)
 
 /mob/living/carbon/monkey/diona/proc/splitting(mob/living/carbon/human/M)
-	to_chat(src.loc, "You feel a pang of loss as [src] splits away from your biomass.")
+	to_chat(M, "You feel a pang of loss as [src] splits away from your biomass.")
 	to_chat(src, "You wiggle out of the depths of [M]'s biomass and plop to the ground.")
-	gestalt = null
 	forceMove(get_turf(src))
+	following = null
+	set_target_action(null)
 	M.remove_passemotes_flag()
+
 //Verbs after this point.
 
-/mob/living/carbon/monkey/diona/verb/merge()
-
+/mob/living/carbon/monkey/diona/verb/merge(mob/living/carbon/human/H)
 	set category = "Diona"
 	set name = "Merge with gestalt"
 	set desc = "Merge with another diona."
-
-	if(gestalt)
-		return
 
 	if(incapacitated())
 		to_chat(src, "<span class='warning'>You must be conscious to do this.</span>")
 		return
 
-	var/list/choices = list()
-	for(var/mob/living/carbon/human/C in view(1,src))
-		if(C.get_species() == DIONA)
-			choices += C
-	var/mob/living/carbon/human/M = input(src,"Who do you wish to merge with?") in null|choices
-	if(!M || !src || !(src.Adjacent(M)))
+	if(loc == gestalt)
 		return
-	if(is_busy() || !do_after(src, 40, target = M))
+
+	if(!H)
+		var/list/choices = list()
+		for(var/mob/living/carbon/human/C in view(1,src))
+			if(C.get_species() == DIONA)
+				choices += C
+		H = input(src,"Who do you wish to merge with?") in null|choices
+	if(!H || !Adjacent(H))
 		return
-	merging(M)
+	if(H.get_species() != DIONA)
+		return
+	if(is_busy() || !do_after(src, 40, target = H))
+		return
+	merging(H)
 
 /mob/living/carbon/monkey/diona/verb/split()
-
 	set category = "Diona"
 	set name = "Split from gestalt"
 	set desc = "Split away from your gestalt as a lone nymph."
 
-	if(!gestalt)
+	if(loc != gestalt)
 		return
 
 	if(incapacitated())
@@ -112,7 +142,7 @@
 	set name = "Pass Knowledge"
 	set desc = "Teach the gestalt your own known languages."
 
-	if(!gestalt)
+	if(loc != gestalt)
 		return
 
 	if(gestalt.incapacitated(null))
@@ -233,10 +263,11 @@
 		to_chat(src, "You have not yet consumed enough to grow...")
 		return
 
-	src.split()
-	src.visible_message("\red [src] begins to shift and quiver, and erupts in a shower of shed bark as it splits into a tangle of nearly a dozen new dionaea.","\red You begin to shift and quiver, feeling your awareness splinter. All at once, we consume our stored nutrients to surge with growth, splitting into a tangle of at least a dozen new dionaea. We have attained our gestalt form.")
+	split()
+	visible_message("\red [src] begins to shift and quiver, and erupts in a shower of shed bark as it splits into a tangle of nearly a dozen new dionaea.","\red You begin to shift and quiver, feeling your awareness splinter. All at once, we consume our stored nutrients to surge with growth, splitting into a tangle of at least a dozen new dionaea. We have attained our gestalt form.")
 
 	var/mob/living/carbon/human/adult = new(get_turf(src.loc))
+	adult.unique_diona_hive_color = unique_diona_hive_color
 	adult.set_species(DIONA)
 
 	if(istype(loc,/obj/item/weapon/holder/diona))
@@ -256,28 +287,32 @@
 		src.drop_from_inventory(W)
 	qdel(src)
 
-/mob/living/carbon/monkey/diona/verb/steal_blood()
+/mob/living/carbon/monkey/diona/verb/steal_blood(mob/living/carbon/human/M)
 	set category = "Diona"
 	set name = "Steal Blood"
 	set desc = "Take a blood sample from a suitable donor."
 
-	var/list/choices = list()
-	for(var/mob/living/carbon/human/H in oview(1,src))
-		choices += H
+	if(M && !ishuman(M))
+		return
 
-	var/mob/living/carbon/human/M = input(src,"Who do you wish to take a sample from?") in null|choices
+	if(!M)
+		var/list/choices = list()
+		for(var/mob/living/carbon/human/H in oview(1,src))
+			choices += H
+
+		M = input(src,"Who do you wish to take a sample from?") in null|choices
 
 	if(!M || !src) return
 
 	if(M.species.flags[NO_BLOOD])
-		to_chat(src, "\red That donor has no blood to take.")
+		to_chat(src, "<span class='warning'>That donor has no blood to take.</span>")
 		return
 
 	if(donors.Find(M.real_name))
-		to_chat(src, "\red That donor offers you nothing new.")
+		to_chat(src, "<span class='warning'>That donor offers you nothing new.</span>")
 		return
 
-	src.visible_message("\red [src] flicks out a feeler and neatly steals a sample of [M]'s blood.","\red You flick out a feeler and neatly steal a sample of [M]'s blood.")
+	visible_message("<span class='warning'>[src] flicks out a feeler and neatly steals a sample of [M]'s blood.</span>", "<span class='warning'>You flick out a feeler and neatly steal a sample of [M]'s blood.</span>")
 	donors += M.real_name
 	for(var/datum/language/L in M.languages)
 		languages |= L
@@ -301,10 +336,9 @@
 
 
 /mob/living/carbon/monkey/diona/say_understands(mob/other,datum/language/speaking = null)
-
-	if (istype(other, /mob/living/carbon/human) && !speaking)
-		if(languages.len >= 2) // They have sucked down some blood.
-			return 1
+	if(istype(other, /mob/living/carbon/human) && !speaking)
+		if(languages.len >= 3) // They have sucked down some blood.
+			return TRUE
 	return ..()
 
 /mob/living/carbon/monkey/diona/say(var/message)
@@ -330,3 +364,121 @@
 		return
 
 	..(message, speaking, verb, null, null, message_range, null)
+
+/mob/living/carbon/monkey/diona/hear_say(message, verb = "says", datum/language/language = null, alt_name = "", italics = 0, mob/speaker = null, sound/speech_sound, sound_vol)
+	if(speaker.get_species() == DIONA && ishuman(speaker) && (istype(language, /datum/language/diona) || istype(language, /datum/language/diona_space)))
+		speech_buffer = list()
+		speech_buffer.Add(speaker)
+		//speech_buffer.Add(lowertext(html_decode(message)))
+		speech_buffer.Add(html_decode(message))
+	..()
+
+/mob/living/carbon/monkey/diona/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
+	if(speaker.get_species() == DIONA && ishuman(speaker) && (istype(language, /datum/language/diona) || istype(language, /datum/language/diona_space)))
+		speech_buffer = list()
+		speech_buffer.Add(speaker)
+		//speech_buffer.Add(lowertext(html_decode(message)))
+		speech_buffer.Add(html_decode(message))
+	..()
+
+/mob/living/carbon/monkey/diona/proc/set_target_action(target, action = "", max_dist_from_target = 1)
+	following = null
+	move_target = target
+	action_on_target = action
+	to_target_dist = max_dist_from_target
+
+/mob/living/carbon/monkey/diona/handle_ai_movement()
+	if(following)
+		move_target = null
+		if(!Adjacent(following) && !loc.Adjacent(following))
+			var/move_to = get_step_to(src, following)
+			if(canmove)
+				loc.relaymove(src, get_dir(loc, get_step_to(loc, following)))
+			Move(move_to, get_dir(src, move_to))
+	else if(move_target)
+		var/action_accomplished = FALSE
+		if(get_dist(src, move_target) <= to_target_dist)
+			switch(action_on_target)
+				if("")
+					action_accomplished = TRUE
+				if("grab")
+					if(put_in_hands(move_target))
+						action_accomplished = TRUE
+				if("bring")
+					if(put_in_hands(move_target))
+						set_target_action(gestalt, "drop")
+				if("drop")
+					drop_from_inventory(l_hand)
+					drop_from_inventory(r_hand)
+					action_accomplished = TRUE
+				if("merge")
+					merge(move_target)
+					if(loc == move_target)
+						action_accomplished = TRUE
+				if("bite")
+					steal_blood(move_target)
+					action_accomplished = TRUE
+				if("ventcrawl")
+					if(is_type_in_list(move_target, ventcrawl_machinery))
+						handle_ventcrawl(move_target)
+						if(is_ventcrawling)
+							action_accomplished = TRUE
+					else
+						action_accomplished = TRUE // It wasn't a ventcrawlable, well then, failsafe.
+				if("closet_hide")
+					if(istype(move_target, /obj/structure/closet))
+						var/obj/structure/closet/C = move_target
+						if(istype(C, /obj/structure/closet/secure_closet))
+							var/obj/structure/closet/secure_closet/SC = C
+							if(SC.locked)
+								SC.togglelock(src)
+							if(SC.open())
+								sleep(1)
+								SC.update_icon()
+								step_to(src, get_turf(SC))
+								sleep(1)
+								SC.close()
+								SC.update_icon()
+								SC.togglelock(src)
+						else if(C.open())
+							sleep(1)
+							C.update_icon()
+							step_to(src, get_turf(C))
+							sleep(1)
+							C.close()
+							C.update_icon()
+						if(loc == C)
+							action_accomplished = TRUE
+					else
+						action_accomplished = TRUE // It wasn't a closet, well then, failsafe.
+			if(action_accomplished)
+				display_cloud("order_done")
+				if(speech_buffer.len)
+					speech_buffer.Cut(1, 3)
+				set_target_action(null)
+				tried_to_accomplish = 0
+			else if(tried_to_accomplish < 3)
+				tried_to_accomplish++
+			else
+				display_cloud("order_failed")
+				speech_buffer.Cut(1, 3)
+				set_target_action(null)
+				tried_to_accomplish = 0
+		else
+			var/move_to = get_step_to(src, move_target)
+			var/old_loc = loc
+			if(canmove)
+				loc.relaymove(src, get_dir(loc, get_step_to(loc, move_target)))
+			Move(move_to, get_dir(src, move_to))
+			if(loc == old_loc)
+				if(tried_to_accomplish < 3)
+					tried_to_accomplish++
+				else
+					display_cloud("order_failed")
+					speech_buffer.Cut(1, 3)
+					set_target_action(null)
+					tried_to_accomplish = 0
+			else
+				tried_to_accomplish = 0
+	else
+		..()

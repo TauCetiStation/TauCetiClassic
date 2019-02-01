@@ -63,6 +63,8 @@
 		if(S.flags[IS_WHITELISTED])
 			whitelisted_species += S.name
 
+	initiate_nymph_orders()
+
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()
 

@@ -147,6 +147,9 @@
 
 	if(mob.monkeyizing)	return//This is sota the goto stop mobs from moving var
 
+	if(mob.onMove(n, direct)) // Gestalt controling it's nymphs.
+		return TRUE
+
 	if(isliving(mob))
 		var/mob/living/L = mob
 		if(L.incorporeal_move)//Move though walls
@@ -282,6 +285,27 @@
 
 /mob/proc/SelfMove(turf/n, direct)
 	return Move(n, direct)
+
+// Return TRUE to stop the whole other chain of movement.
+/mob/proc/onMove(turf/new_loc, direct)
+	return FALSE
+
+/mob/living/carbon/human/onMove(turf/new_loc, direct)
+	if(get_species() == DIONA && gestalt_direct_control)
+		for(var/mob/living/carbon/monkey/diona/D in gestalt_subordinates)
+			if(D.client)
+				continue
+			if(D.incapacitated(restrained_type = LEGS))
+				continue
+			if(D.selected && D.next_forced_moving < world.time && get_dist(D, src) <= 10)
+				var/old_intent = D.a_intent // We change intent to gestalt's to prevent nymphs swapping.
+				D.a_intent = a_intent
+				D.next_forced_moving = world.time + D.movement_delay()
+				D.loc.relaymove(D, direct)
+				D.Move(get_step(D, direct), direct)
+				D.a_intent = old_intent
+		return TRUE
+	return FALSE
 
 /mob/Move(n,direct)
 	//Camera control: arrow keys.

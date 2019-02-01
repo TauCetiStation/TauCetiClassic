@@ -99,3 +99,12 @@
 	var/robolimb_count = 0 // Number of robot limbs.
 	var/sightglassesmod = null
 	var/datum/personal_crafting/handcrafting
+
+	// Diona stuff.
+	var/list/gestalt_subordinates = list()
+	var/unique_diona_hive_color = "" // Hex index, should be unique to each diona hive.
+	var/display_diona_hud = FALSE
+	var/gestalt_direct_control = FALSE
+
+	var/list/queued_orders = list() // Queue nymph orders in case we are selecting many.
+	var/list/diona_hud_images = list()

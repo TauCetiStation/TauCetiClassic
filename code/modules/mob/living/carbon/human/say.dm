@@ -298,3 +298,15 @@
 	returns[3] = handled
 
 	return returns
+
+/mob/living/carbon/human/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
+	..()
+	for(var/obj/item/I in contents)
+		if(I.item_holder)
+			I.item_holder.hear_talk(speaker, message, verb, language)
+		if(istype(I, /obj/item/nymph_morph_ball))
+			I.hear_talk(speaker, message, verb, language)
+
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP.dionified && BP.item_holder) // Since they are lowkey nymphs.
+			BP.item_holder.hear_talk(speaker, message, verb, language)

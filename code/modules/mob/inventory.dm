@@ -272,7 +272,8 @@ var/list/slot_equipment_priority = list(
 
 // Attemps to remove an object on a mob. Will drop item to ground or move into target.
 /mob/proc/remove_from_mob(obj/O, atom/target)
-	if(!O) return
+	if(!O)
+		return FALSE
 	src.u_equip(O)
 	if (src.client)
 		src.client.screen -= O
@@ -282,12 +283,14 @@ var/list/slot_equipment_priority = list(
 	O.screen_loc = null
 	if(istype(O, /obj/item))
 		var/obj/item/I = O
-		if(target)
+		if(I.item_holder)
+			I.forceMove(I.item_holder) // Since we shouldn't ever actually leave it but one particularly horendous bootleg allows us to...
+		else if(target)
 			I.forceMove(target)
 		else
 			I.forceMove(loc)
 		I.dropped(src)
-	return 1
+	return TRUE
 
 //Returns the item equipped to the specified slot, if any.
 /mob/proc/get_equipped_item(var/slot)
@@ -365,9 +368,11 @@ var/list/slot_equipment_priority = list(
 //Create delay for equipping
 /mob/proc/delay_clothing_u_equip(obj/item/clothing/C) // Bone White - delays unequipping by parameter.  Requires W to be /obj/item/clothing/
 
-	if(!istype(C)) return 0
+	if(!istype(C))
+		return FALSE
 
-	if(C.equipping) return 0 // Item is already being (un)equipped
+	if(C.equipping)
+		return FALSE // Item is already being (un)equipped
 
 	var/tempX = usr.x
 	var/tempY = usr.y
@@ -379,11 +384,12 @@ var/list/slot_equipment_priority = list(
 		sleep (10) // Check if they've moved every 10 time units
 		if ((tempX != usr.x) || (tempY != usr.y))
 			to_chat(src, "<span class='red'>\The [C] is too fiddly to unequip whilst moving.</span>")
-			C.equipping = 0
-			return 0
+			C.equipping = FALSE
+			return FALSE
 	remove_from_mob(C)
 	to_chat(usr, "<span class='notice'>You have finished unequipping the [C].</span>")
 	C.equipping = 0
+	return TRUE
 
 /mob/proc/delay_clothing_equip_to_slot_if_possible(obj/item/clothing/C, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, delay_time = 0)
 	if(!istype(C)) return 0

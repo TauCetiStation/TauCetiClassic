@@ -23,6 +23,9 @@
 	holder_type = /obj/item/weapon/holder/monkey
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5)
 
+	var/my_number = 0
+	var/disable_random_movement = FALSE
+
 /mob/living/carbon/monkey/tajara
 	name = "farwa"
 	voice_name = "farwa"
@@ -58,7 +61,8 @@
 	R.my_atom = src
 
 	if(name == initial(name)) //To stop Pun-Pun becoming generic.
-		name = "[name] ([rand(1, 1000)])"
+		my_number = rand(1, 1000)
+		name = "[name] ([my_number])"
 		real_name = name
 
 	if (!(dna))
@@ -127,6 +131,8 @@
 	add_language("Rootspeak")
 
 /mob/living/carbon/monkey/diona/movement_delay()
+	if(locate(/obj/structure/diona_plant) in get_turf(src))
+		return -1
 	return ..(tally = 3.5)
 
 /mob/living/carbon/monkey/movement_delay(tally = 0)
@@ -521,3 +527,6 @@
 	message = capitalize(trim_left(message))
 
 	..(message, speaking, verb, alt_name, italics, message_range, used_radios)
+
+/mob/living/carbon/monkey/get_species()
+	return race
