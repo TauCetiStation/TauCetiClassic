@@ -231,6 +231,7 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 				var/obj/item/clothing/suit/storage/labcoat/custom/labcoat = new /obj/item/clothing/suit/storage/labcoat/custom()
 				if(!("[custom_item_info.icon_state]_open" in icon_states(custom_item_info.icon)))
 					labcoat.can_button_up = FALSE
+				labcoat.base_icon_state = custom_item_info.icon_state
 				item = labcoat
 
 		if(!item)
