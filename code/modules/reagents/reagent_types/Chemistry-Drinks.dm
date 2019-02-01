@@ -28,7 +28,7 @@
 	id = "orangejuice"
 	description = "Both delicious AND rich in Vitamin C, what more do you need?"
 	color = "#E78108" // rgb: 231, 129, 8
-	taste_message = "orange juice"
+	taste_message = "orange"
 
 /datum/reagent/consumable/drink/orangejuice/on_general_digest(mob/living/M)
 	..()
@@ -40,7 +40,7 @@
 	id = "tomatojuice"
 	description = "Tomatoes made into juice. What a waste of big, juicy tomatoes, huh?"
 	color = "#731008" // rgb: 115, 16, 8
-	taste_message = "tomato juice"
+	taste_message = "tomato"
 
 /datum/reagent/consumable/drink/tomatojuice/on_general_digest(mob/living/M)
 	..()
@@ -52,7 +52,7 @@
 	id = "limejuice"
 	description = "The sweet-sour juice of limes."
 	color = "#365E30" // rgb: 54, 94, 48
-	taste_message = "lime juice"
+	taste_message = "lime"
 
 /datum/reagent/consumable/drink/limejuice/on_general_digest(mob/living/M)
 	..()
@@ -64,7 +64,7 @@
 	id = "carrotjuice"
 	description = "It is just like a carrot but without crunching."
 	color = "#973800" // rgb: 151, 56, 0
-	taste_message = "carrot juice"
+	taste_message = "carrot"
 
 /datum/reagent/consumable/drink/carrotjuice/on_general_digest(mob/living/M)
 	..()
@@ -85,21 +85,21 @@
 	id = "berryjuice"
 	description = "A delicious blend of several different kinds of berries."
 	color = "#990066" // rgb: 153, 0, 102
-	taste_message = "berry juice"
+	taste_message = "berry"
 
 /datum/reagent/consumable/drink/grapejuice
 	name = "Grape Juice"
 	id = "grapejuice"
 	description = "It's grrrrrape!"
 	color = "#863333" // rgb: 134, 51, 51
-	taste_message = "grape juice"
+	taste_message = "grape"
 
 /datum/reagent/consumable/drink/grapesoda
 	name = "Grape Soda"
 	id = "grapesoda"
 	description = "Grapes made into a fine drank."
 	color = "#421C52" // rgb: 98, 57, 53
-	taste_message = "grape juice"
+	taste_message = "grape"
 	adj_drowsy 	= 	-3
 
 /datum/reagent/consumable/drink/poisonberryjuice
@@ -118,7 +118,7 @@
 	id = "watermelonjuice"
 	description = "Delicious juice made from watermelon."
 	color = "#863333" // rgb: 134, 51, 51
-	taste_message = "watermelon juice"
+	taste_message = "watermelon"
 
 /datum/reagent/consumable/drink/lemonjuice
 	name = "Lemon Juice"
@@ -132,7 +132,7 @@
 	id = "banana"
 	description = "The raw essence of a banana."
 	color = "#863333" // rgb: 175, 175, 0
-	taste_message = "banana juice"
+	taste_message = "banana"
 
 /datum/reagent/consumable/drink/nothing
 	name = "Nothing"
@@ -463,6 +463,29 @@
 		M.dizziness = max(0, M.dizziness - 15)
 	if(M.confused !=0)
 		M.confused = max(0, M.confused - 5)
+
+/datum/reagent/consumable/honey
+	name = "Honey"
+	id = "Honey"
+	description = "A golden yellow syrup, loaded with sugary sweetness."
+	reagent_state = LIQUID
+	color = "#FEAE00"
+	nutriment_factor = 15 * REAGENTS_METABOLISM
+	taste_message = "honey"
+
+/datum/reagent/consumable/honey/on_general_digest(mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(!holder)
+			return
+		H.nutrition += 15
+		if(H.getBruteLoss() && prob(60))
+			M.heal_bodypart_damage(2, 0)
+		if(H.getFireLoss() && prob(50))
+			M.heal_bodypart_damage(0, 2)
+		if(H.getToxLoss() && prob(50))
+			H.adjustToxLoss(-2)
+	..()
 
 //////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
 

@@ -596,15 +596,6 @@
 	reagents.add_reagent("vitamin", 1)
 	reagents.add_reagent("egg", 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/flour
-	name = "flour"
-	desc = "A small bag filled with some flour."
-	icon_state = "flour"
-
-/obj/item/weapon/reagent_containers/food/snacks/flour/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 1)
-
 /obj/item/weapon/reagent_containers/food/snacks/appendix
 //yes, this is the same as meat. I might do something different in future
 	name = "appendix"
@@ -3124,14 +3115,6 @@
 ///////////////////////////////////////////
 // new old food stuff from bs12
 ///////////////////////////////////////////
-
-/* Egg + flour = dough
-/obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/flour))
-		new /obj/item/weapon/reagent_containers/food/snacks/dough(src)
-		to_chat(user, "<span class='notice'>You make some dough.</span>")
-		qdel(W)
-		qdel(src) */
 
 /obj/item/weapon/reagent_containers/food/snacks/dough
 	name = "dough"
