@@ -18,12 +18,11 @@
 	real_name = name
 	. = ..()
 
-/mob/living/carbon/alien/humanoid/hunter
-	handle_environment()
-		if(m_intent == "run" || resting)
-			..()
-		else
-			adjustToxLoss(-heal_rate)
+/mob/living/carbon/alien/humanoid/hunter/handle_environment()
+	if(m_intent == "run" || resting)
+		..()
+	else
+		adjustToxLoss(-heal_rate)
 
 /mob/living/carbon/alien/humanoid/hunter/handle_hud_icons_health()
 	if (healths)
@@ -100,7 +99,7 @@
 	if(buckled)
 		to_chat(src, "<span class='alertalien'>You cannot leap in your current state.</span>")
 		return
-		
+
 	if(pounce_cooldown)
 		to_chat(src, "<span class='alertalien'>You are too fatigued to pounce right now!</span>")
 		return

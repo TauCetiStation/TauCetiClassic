@@ -13,16 +13,15 @@
 	offender_key // store the key of the offender
 	offender_cid // store the cid of the offender
 
-/datum/report_topic_handler
-	Topic(href,href_list)
-		..()
-		var/client/C = locate(href_list["client"])
-		if(href_list["action"] == "show_reports")
-			C.display_admin_reports()
-		else if(href_list["action"] == "remove")
-			C.mark_report_done(text2num(href_list["ID"]))
-		else if(href_list["action"] == "edit")
-			C.edit_report(text2num(href_list["ID"]))
+/datum/report_topic_handler/Topic(href,href_list)
+	..()
+	var/client/C = locate(href_list["client"])
+	if(href_list["action"] == "show_reports")
+		C.display_admin_reports()
+	else if(href_list["action"] == "remove")
+		C.mark_report_done(text2num(href_list["ID"]))
+	else if(href_list["action"] == "edit")
+		C.edit_report(text2num(href_list["ID"]))
 
 var/datum/report_topic_handler/report_topic_handler
 
