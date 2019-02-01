@@ -263,7 +263,7 @@
 	switch(welding)
 		//If off
 		if(0)
-			hitsound = null
+			hitsound = initial(hitsound)
 			if(src.icon_state != "welder") //Check that the sprite is correct, if it isnt, it means toggle() was not called
 				src.force = 3
 				src.damtype = "brute"
