@@ -363,8 +363,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 	drill_verb = "hammering"
 
-	attackby()
-		return
+/obj/item/weapon/pickaxe/drill/jackhammer/attackby()
+	return
 
 /obj/item/weapon/pickaxe/drill/diamond_drill //When people ask about the badass leader of the mining tools, they are talking about ME!
 	name = "diamond mining drill"
@@ -383,8 +383,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = ""
 	drill_verb = "drilling"
 
-	attackby()
-		return
+/obj/item/weapon/pickaxe/drill/borgdrill/attackby()
+	return
 
 
 
