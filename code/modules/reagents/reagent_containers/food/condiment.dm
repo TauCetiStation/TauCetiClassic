@@ -227,9 +227,6 @@
 	if(building)
 		pixel_x = (ndir & 3)? 0 : (ndir == 4 ? 32 : -32)
 		pixel_y = (ndir & 3)? (ndir == 1 ? 32 : -32) : 0
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/structure/condiment_shelf/atom_init_late()
 	update_icon()
 
 /obj/structure/condiment_shelf/attackby(obj/O, mob/user)
