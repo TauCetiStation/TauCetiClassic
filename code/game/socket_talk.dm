@@ -1,8 +1,7 @@
 // Module used for fast interprocess communication between BYOND and other processes
 
 /datum/socket_talk
-	var
-		enabled = 0
+	var/enabled = 0
 
 /datum/socket_talk/New()
 	..()
