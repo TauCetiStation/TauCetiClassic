@@ -522,6 +522,7 @@ var/global/list/all_objectives = list()
 		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray/cmo,
 		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
 		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
+		"the captain's space whale" = /obj/item/toy/plushie/space_whale/captains,
 	)
 
 	var/global/possible_items_special[] = list(

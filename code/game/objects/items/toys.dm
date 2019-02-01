@@ -1341,7 +1341,7 @@ Owl & Griffin toys
 	icon_state = "redfox"
 
 /obj/random/plushie/item_to_spawn()
-	return pick(subtypesof(/obj/item/toy/plushie)) // exclude the base type.
+	return pick(subtypesof(/obj/item/toy/plushie) - /obj/item/toy/plushie/space_whale/captains) // exclude the base type.
 
 /obj/item/toy/plushie/corgi // dogs are basically the best
 	name = "corgi plushie"
@@ -1349,6 +1349,11 @@ Owl & Griffin toys
 
 /obj/item/toy/plushie/space_whale
 	name = "space whale"
+	icon_state = "tau_kit"
+
+/obj/item/toy/plushie/space_whale/captains
+	name = "captain's space whale"
+	desc = "Handled directly from NanoTrasen to guard captain's dreams."
 	icon_state = "tau_kit"
 
 /obj/item/toy/plushie/girly_corgi
