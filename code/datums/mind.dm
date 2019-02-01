@@ -313,7 +313,7 @@
 			text += "<b>OPERATIVE</b>|<a href='?src=\ref[src];nuclear=clear'>nanotrasen</a>"
 			text += "<br><a href='?src=\ref[src];nuclear=lair'>To shuttle</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];nuclear=dressup'>dress up</a>."
 			var/code
-			for (var/obj/machinery/nuclearbomb/bombue in machines)
+			for (var/obj/machinery/nuclearbomb/bombue in poi_list)
 				if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
 					code = bombue.r_code
 					break
@@ -1026,7 +1026,7 @@
 					to_chat(usr, "\red Equipping a syndicate failed!")
 			if("tellcode")
 				var/code
-				for (var/obj/machinery/nuclearbomb/bombue in machines)
+				for (var/obj/machinery/nuclearbomb/bombue in poi_list)
 					if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
 						code = bombue.r_code
 						break
@@ -1286,34 +1286,34 @@
 
 	edit_memory()
 /*
-	proc/clear_memory(silent = 1)
-		var/datum/game_mode/current_mode = ticker.mode
+/datum/mind/proc/clear_memory(silent = 1)
+	var/datum/game_mode/current_mode = ticker.mode
 
-		// remove traitor uplinks
-		var/list/L = current.get_contents()
-		for (var/t in L)
-			if (istype(t, /obj/item/device/pda))
-				if (t:uplink) qdel(t:uplink)
-				t:uplink = null
-			else if (istype(t, /obj/item/device/radio))
-				if (t:traitorradio) qdel(t:traitorradio)
-				t:traitorradio = null
-				t:traitor_frequency = 0.0
-			else if (istype(t, /obj/item/weapon/SWF_uplink) || istype(t, /obj/item/weapon/syndicate_uplink))
-				if (t:origradio)
-					var/obj/item/device/radio/R = t:origradio
-					R.loc = current.loc
-					R.traitorradio = null
-					R.traitor_frequency = 0.0
-				qdel(t)
+	// remove traitor uplinks
+	var/list/L = current.get_contents()
+	for (var/t in L)
+		if (istype(t, /obj/item/device/pda))
+			if (t:uplink) qdel(t:uplink)
+			t:uplink = null
+		else if (istype(t, /obj/item/device/radio))
+			if (t:traitorradio) qdel(t:traitorradio)
+			t:traitorradio = null
+			t:traitor_frequency = 0.0
+		else if (istype(t, /obj/item/weapon/SWF_uplink) || istype(t, /obj/item/weapon/syndicate_uplink))
+			if (t:origradio)
+				var/obj/item/device/radio/R = t:origradio
+				R.loc = current.loc
+				R.traitorradio = null
+				R.traitor_frequency = 0.0
+			qdel(t)
 
-		// remove wizards spells
-		//If there are more special powers that need removal, they can be procced into here./N
-		current.spellremove(current)
+	// remove wizards spells
+	//If there are more special powers that need removal, they can be procced into here./N
+	current.spellremove(current)
 
-		// clear memory
-		memory = ""
-		special_role = null
+	// clear memory
+	memory = ""
+	special_role = null
 
 */
 
@@ -1688,7 +1688,7 @@
 	mind.assigned_role = "Armalis"
 	mind.special_role = "Vox Raider"
 
-mob/living/parasite/meme/mind_initialize() //Just in case
+/mob/living/parasite/meme/mind_initialize() //Just in case
 	..()
 	mind.assigned_role = "meme"
 

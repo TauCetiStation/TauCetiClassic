@@ -88,7 +88,7 @@
 	reagents.trans_to(D, amount_per_transfer_from_this, 1/spray_size)
 	D.icon += mix_color_from_reagents(D.reagents.reagent_list)
 
-	for(var/i in 0 to spray_size_current)
+	for(var/i in 1 to spray_size_current)
 		step_towards(D, A)
 		D.reagents.reaction(get_turf(D))
 		for(var/atom/T in get_turf(D))

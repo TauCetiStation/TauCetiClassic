@@ -16,8 +16,13 @@
 
 /obj/machinery/door/poddoor/atom_init()
 	. = ..()
+	poddoor_list += src
 	if(density)
 		layer = base_layer + PODDOOR_CLOSED_MOD
+
+/obj/machinery/door/poddoor/Destroy()
+	poddoor_list -= src
+	return ..()
 
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(!density)

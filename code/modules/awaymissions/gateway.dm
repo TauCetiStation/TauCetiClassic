@@ -1,5 +1,3 @@
-var/list/gateways_list = list()
-
 /obj/machinery/gateway
 	name = "gateway"
 	desc = "A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations."
@@ -38,7 +36,7 @@ var/list/gateways_list = list()
 	name = "Unknown Gateway"
 	density = TRUE
 	icon_state = "offcenter"
-	
+
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 5000
@@ -131,13 +129,13 @@ var/list/gateways_list = list()
 			destinations_choice[G.name] = G
 
 	//away gates always should be able to allow pass on station
-	var/atom/station_gate = locate(/obj/machinery/gateway/center/station/)
+	var/atom/station_gate = locate(/obj/machinery/gateway/center/station)
 	if(station_gate && !(station_gate in destinations_choice) && !istype(src,/obj/machinery/gateway/center/station))
 		destinations_choice[station_gate.name] = station_gate
 
 	if(length(awaydestinations))
 		destinations_choice["Unstable destination"] = pick(awaydestinations)
-	
+
 	destinations_choice["None"] = null
 
 	var/user_pick = input(user, "Select a destination from the following candidates:","Gateway Destination",null) as null|anything in destinations_choice
@@ -178,7 +176,7 @@ var/list/gateways_list = list()
 			if(E.imp_in == M)//Checking that it's actually implanted vs just in their pocket
 				to_chat(M, "The gate has detected your exile implant and is blocking your entry.")
 				return
-	
+
 	M.dir = SOUTH
 	enter_to_transit(M, get_step(destination.loc, SOUTH))
 	use_power(1000)
@@ -225,7 +223,7 @@ var/list/gateways_list = list()
 		qdel(AM) // THIS IS BLUESPACE FELLAS
 
 /* station gate tweaks */
-/obj/machinery/gateway/center/station/
+/obj/machinery/gateway/center/station
 	name = "NSS Exodus Gateway"
 	block_exile_implant = FALSE
 

@@ -1,6 +1,6 @@
 // reference: /client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
 
-datum/proc/on_varedit(modified_var) //called whenever a var is edited
+/datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	return
 
 /client/proc/debug_variables(datum/D in world)

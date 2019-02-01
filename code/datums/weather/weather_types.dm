@@ -241,7 +241,7 @@
 
 
 /datum/weather/acid_rain/impact(mob/living/L)
-	if(!istype(/turf/, L.loc))
+	if(!istype(/turf, L.loc))
 		return
 	L.water_act(5)
 	if(!prob(L.getarmor(null, "bio")))

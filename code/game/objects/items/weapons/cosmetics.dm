@@ -215,9 +215,13 @@
 	var/mob/living/carbon/human/barbertarget = null
 	var/selectedhairstyle = null
 	var/isfacehair = FALSE
+	var/list/char_render_holders
+	var/static/list/scissors_icon_cache
 
 /obj/item/weapon/scissors/proc/calculate_hash(mob/living/carbon/human/H)
-	var/hash = "" + H.species.name + H.gender + num2text(H.r_eyes + H.g_eyes*256 + H.b_eyes*256*256,9) + "_" + num2text(H.r_hair + H.g_hair*256 + H.b_hair*256*256,9) + "_" + num2text(H.r_facial + H.g_facial*256 + H.b_facial*256*256,9) + "_" + num2text(H.r_skin + H.g_skin*256 + H.b_skin*256*256,9) + "_" + num2text(H.s_tone)
+	var/hair_hash = H.hair_painted ? num2text(H.dyed_r_hair + H.dyed_g_hair * 256 + H.dyed_b_hair * 256 * 256, 9) : num2text(H.r_hair + H.g_hair * 256 + H.b_hair * 256 * 256, 9)
+	var/facial_hash = H.facial_painted ? num2text(H.dyed_r_facial + H.dyed_g_facial * 256 + H.dyed_b_facial * 256 * 256, 9) : num2text(H.r_facial + H.g_facial * 256 + H.b_facial * 256 * 256, 9)
+	var/hash = "" + H.species.name + H.gender + num2text(H.r_eyes + H.g_eyes*256 + H.b_eyes*256*256,9) + "_" + hair_hash + "_" + facial_hash + "_" + num2text(H.r_skin + H.g_skin*256 + H.b_skin*256*256,9) + "_" + num2text(H.s_tone)
 	if(!isfacehair && selectedhairstyle)
 		hash+="_" + selectedhairstyle
 	else
@@ -240,13 +244,23 @@
 	mannequin.g_eyes = H.g_eyes
 	mannequin.b_eyes = H.b_eyes
 
-	mannequin.r_hair = H.r_hair
-	mannequin.g_hair = H.g_hair
-	mannequin.b_hair = H.b_hair
+	if(!H.hair_painted)
+		mannequin.r_hair = H.r_hair
+		mannequin.g_hair = H.g_hair
+		mannequin.b_hair = H.b_hair
+	else
+		mannequin.r_hair = H.dyed_r_hair
+		mannequin.g_hair = H.dyed_g_hair
+		mannequin.b_hair = H.dyed_b_hair
 
-	mannequin.r_facial = H.r_facial
-	mannequin.g_facial = H.g_facial
-	mannequin.b_facial = H.b_facial
+	if(!H.facial_painted)
+		mannequin.r_facial = H.r_facial
+		mannequin.g_facial = H.g_facial
+		mannequin.b_facial = H.b_facial
+	else
+		mannequin.r_facial = H.dyed_r_facial
+		mannequin.g_facial = H.dyed_g_facial
+		mannequin.b_facial = H.dyed_b_facial
 
 	mannequin.r_skin = H.r_skin
 	mannequin.g_skin = H.g_skin
@@ -275,44 +289,59 @@
 /obj/item/weapon/scissors/Topic(href, href_list)
 	if(!barber || barber != usr || !barbertarget)
 		return
+	if(href_list["close"])
+		clear_character_previews()
+		return
 	switch(href_list["choice"])
 		if("selecthaircut")
 			selectedhairstyle = href_list["haircut"]
 			showui()
 		if("start")
-			barber << browse(null, "window=barber")
-			dohaircut()
+			INVOKE_ASYNC(src, .proc/dohaircut)
+			clear_character_previews()
 
-var/global/list/scissors_icon_cache = list()
+/obj/item/weapon/scissors/dropped(mob/user)
+	clear_character_previews()
+	..()
+
+/obj/item/weapon/scissors/proc/create_character_previews()
+	var/hash = calculate_hash(barbertarget)
+	var/mutable_appearance/MA = LAZYACCESS(scissors_icon_cache, hash)
+
+	if(!MA)
+		var/mob/living/carbon/human/dummy/mannequin = make_mannequin(barbertarget)
+		MA = new /mutable_appearance(mannequin)
+		qdel(mannequin)
+		LAZYSET(scissors_icon_cache, hash, MA)
+
+	var/pos = 0
+	for(var/D in cardinal)
+		pos++
+		var/obj/screen/O = LAZYACCESS(char_render_holders, "[D]")
+		if(!O)
+			O = new
+			LAZYSET(char_render_holders, "[D]", O)
+			barber.client.screen |= O
+		O.appearance = MA
+		O.dir = D
+		O.screen_loc = "barber_preview_map:[pos],0"
+
+/obj/item/weapon/scissors/proc/clear_character_previews()
+	barber << browse(null, "window=barber_window")
+	for(var/index in char_render_holders)
+		var/obj/screen/S = char_render_holders[index]
+		if(barber && barber.client)
+			barber.client.screen -= S
+		qdel(S)
+	char_render_holders = null
+	barber = null
+	barbertarget = null
 
 /obj/item/weapon/scissors/proc/showui()
 	if(!barber || !barbertarget)
 		return
-	var/icon/preview_icon = null
-	var/hash = calculate_hash(barbertarget)
-	if(!scissors_icon_cache[hash])
-		var/mob/living/carbon/human/dummy/mannequin = make_mannequin(barbertarget)
 
-		preview_icon = icon('icons/effects/effects.dmi', "nothing")
-		preview_icon.Scale(150, 70)
-
-		mannequin.dir = NORTH
-		var/icon/stamp = getFlatIcon(mannequin)
-		preview_icon.Blend(stamp, ICON_OVERLAY, 109, 19)
-
-		mannequin.dir = WEST
-		stamp = getFlatIcon(mannequin)
-		preview_icon.Blend(stamp, ICON_OVERLAY, 60, 18)
-
-		mannequin.dir = SOUTH
-		stamp = getFlatIcon(mannequin)
-		preview_icon.Blend(stamp, ICON_OVERLAY, 13, 22)
-
-		qdel(mannequin)
-		preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2)
-		scissors_icon_cache[hash] = preview_icon
-	else
-		preview_icon = scissors_icon_cache[hash]
+	create_character_previews()
 
 	var/list/selected_styles_list = hair_styles_list
 	if(isfacehair)
@@ -332,20 +361,25 @@ var/global/list/scissors_icon_cache = list()
 				haircutlist+="</tr><tr>"
 	haircutlist+="</tr></table>"
 
-	barber << browse_rsc(preview_icon, "tmp_haircutpreview.png")
+	winshow(barber, "barber_window", TRUE)
 	barber << browse("<html><head><title>Grooming</title></head>" \
 		+ "<body style='margin:0;text-align:center'>" \
-		+ "<img src='tmp_haircutpreview.png' width='450' style='-ms-interpolation-mode:nearest-neighbor' /><br>" \
 		+ "<a href='byond://?src=\ref[src];choice=start'><b>CONFIRM</b></a><br><br>" \
 		+ haircutlist \
-		+ "</body></html>", "window=barber;size=620x680")
+		+ "</body></html>", "window=barber_window")
+	onclose(barber, "barber_window", src)
 	return
 
 /obj/item/weapon/scissors/proc/dohaircut()
+	// saving those refs, it will be cleaned before do_after proc ends
+	var/mob/living/carbon/human/barber = src.barber
+	var/mob/living/carbon/human/barbertarget = src.barbertarget
+
 	if(!barber || !barbertarget || !selectedhairstyle)
 		return
 	if(!in_range(barbertarget, barber) || barber.get_active_hand() != src)
 		return
+
 	if(isfacehair)
 		barber.visible_message("<span class='notice'>[barber] starts cutting [barbertarget]'s facial hair with [src]!</span>", \
 							   "<span class='notice'>You start cutting [barbertarget]'s facial hair with [src], this might take a minute...</span>")
@@ -421,7 +455,4 @@ var/global/list/scissors_icon_cache = list()
 			else
 				to_chat(user, "<span class='notice'>You don't know how to cut the hair of this race!</span>")
 				return
-		else
-			..()
-	else
-		..()
+	..()

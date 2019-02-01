@@ -102,7 +102,7 @@
 
 /obj/machinery/power/apc/atom_init(mapload, ndir, building = 0)
 	. = ..()
-
+	apc_list += src
 	wires = new(src)
 
 	// offset 24 pixels in direction of dir
@@ -127,6 +127,7 @@
 		addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/Destroy()
+	apc_list -= src
 	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
 			if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))

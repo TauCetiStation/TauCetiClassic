@@ -2,6 +2,8 @@
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
 	icon = 'icons/turf/walls.dmi'
+	plane = GAME_PLANE
+
 	var/mineral = "metal"
 	var/rotting = 0
 

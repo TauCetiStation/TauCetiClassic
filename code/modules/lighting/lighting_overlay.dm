@@ -13,8 +13,6 @@
 	anchored = 1
 	flags = NOREACT
 
-	blend_mode       = BLEND_MULTIPLY
-
 	var/needs_update = FALSE
 
 /atom/movable/lighting_overlay/atom_init(mapload, no_update = FALSE)

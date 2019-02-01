@@ -13,7 +13,7 @@ var/global/list/space_surprises = list(		/obj/item/weapon/pickaxe/silver					=4,
 
 var/global/list/spawned_surprises = list()
 
-proc/spawn_room(atom/start_loc,x_size,y_size,wall,floor , clean = 0 , name)
+/proc/spawn_room(atom/start_loc,x_size,y_size,wall,floor , clean = 0 , name)
 	var/list/room_turfs = list("walls"=list(),"floors"=list())
 
 	//world << "Room spawned at [start_loc.x],[start_loc.y],[start_loc.z]"
@@ -54,7 +54,7 @@ proc/spawn_room(atom/start_loc,x_size,y_size,wall,floor , clean = 0 , name)
 
 	return room_turfs
 
-proc/admin_spawn_room_at_pos()
+/proc/admin_spawn_room_at_pos()
 	var/wall
 	var/floor
 	var/x = input("X position","X pos",usr.x) as num

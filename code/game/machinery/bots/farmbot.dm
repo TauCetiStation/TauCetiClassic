@@ -62,7 +62,7 @@
 	botcard.access = req_access
 
 	if ( !tank ) //Should be set as part of making it... but lets check anyway
-		tank = locate(/obj/structure/reagent_dispensers/watertank/) in contents
+		tank = locate(/obj/structure/reagent_dispensers/watertank) in contents
 	if ( !tank ) //An admin must have spawned the farmbot! Better give it a tank.
 		tank = new /obj/structure/reagent_dispensers/watertank(src)
 

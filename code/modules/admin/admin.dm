@@ -1017,7 +1017,7 @@ var/global/BSACooldown = 0
 			return "Destroy the AI"
 		if(3)
 			var/count = 0
-			for(var/mob/living/carbon/monkey/Monkey in world)
+			for(var/mob/living/carbon/monkey/Monkey in not_world)
 				if(Monkey.z == ZLEVEL_STATION)
 					count++
 			return "Kill all [count] of the monkeys on the station"
@@ -1105,7 +1105,7 @@ var/global/BSACooldown = 0
 
 /datum/admins/proc/output_ai_laws()
 	var/ai_number = 0
-	for(var/mob/living/silicon/S in mob_list)
+	for(var/mob/living/silicon/S in silicon_list)
 		ai_number++
 		if(isAI(S))
 			to_chat(usr, "<b>AI [key_name(S, usr)]'s laws:</b>")

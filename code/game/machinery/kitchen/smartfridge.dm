@@ -49,7 +49,7 @@
 		max_n_of_items = 1500 * B.rating
 
 /obj/machinery/smartfridge/proc/accept_check(obj/item/O)
-	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O,/obj/item/seeds/))
+	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown) || istype(O,/obj/item/seeds))
 		return 1
 	return 0
 
@@ -62,7 +62,7 @@
 	icon_off = "seeds-off"
 
 /obj/machinery/smartfridge/seeds/accept_check(obj/item/O)
-	if(istype(O,/obj/item/seeds/))
+	if(istype(O,/obj/item/seeds))
 		return 1
 	return 0
 
@@ -101,11 +101,11 @@
 	req_one_access_txt = "5;33"
 
 /obj/machinery/smartfridge/secure/medbay/accept_check(obj/item/O)
-	if(istype(O,/obj/item/weapon/reagent_containers/glass/))
+	if(istype(O,/obj/item/weapon/reagent_containers/glass))
 		return 1
-	if(istype(O,/obj/item/weapon/storage/pill_bottle/))
+	if(istype(O,/obj/item/weapon/storage/pill_bottle))
 		return 1
-	if(istype(O,/obj/item/weapon/reagent_containers/pill/))
+	if(istype(O,/obj/item/weapon/reagent_containers/pill))
 		return 1
 	return 0
 
@@ -118,9 +118,9 @@
 	icon_off = "smartfridge_virology-off"
 
 /obj/machinery/smartfridge/secure/virology/accept_check(obj/item/O)
-	if(istype(O,/obj/item/weapon/reagent_containers/glass/beaker/vial/))
+	if(istype(O,/obj/item/weapon/reagent_containers/glass/beaker/vial))
 		return 1
-	if(istype(O,/obj/item/weapon/virusdish/))
+	if(istype(O,/obj/item/weapon/virusdish))
 		return 1
 	return 0
 

@@ -14,12 +14,14 @@
 /obj/machinery/computer/teleporter/atom_init()
 	id = "[rand(1000, 9999)]"
 	. = ..()
+	teleporter_list += src
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/teleporter/atom_init_late()
 	link_power_station()
 
 /obj/machinery/computer/teleporter/Destroy()
+	teleporter_list -= src
 	if (power_station)
 		power_station.teleporter_console = null
 		power_station = null
@@ -153,7 +155,7 @@
 		var/list/L = list()
 		var/list/areaindex = list()
 
-		for(var/obj/item/device/radio/beacon/R in world)
+		for(var/obj/item/device/radio/beacon/R in radio_beacon_list)
 			var/turf/T = get_turf(R)
 			if (!T)
 				continue
@@ -166,7 +168,7 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = R
 
-		for (var/obj/item/weapon/implant/tracking/I in world)
+		for (var/obj/item/weapon/implant/tracking/I in implant_list)
 			if (!I.implanted || !ismob(I.loc))
 				continue
 			else
@@ -198,7 +200,7 @@
 			var/turf/T = get_turf(R)
 			if (!T || !R.teleporter_hub || !R.teleporter_console)
 				continue
-			if(T.z == ZLEVEL_CENTCOMM || T.z > 7)
+			if(T.z == ZLEVEL_CENTCOMM)
 				continue
 			var/tmpname = T.loc.name
 			if(areaindex[tmpname])
@@ -296,21 +298,25 @@
 	if (!com.target)
 		visible_message("<span class='notice'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
+	if(com.target.z == ZLEVEL_CENTCOMM)
+		visible_message("<span class='notice'>Unknown coordinates. Please reinstate coordinate matrix.</span>")
+		return
 	if (istype(M, /atom/movable))
 		if(do_teleport(M, com.target))
 			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
-					//Effects similar to mutagen.
-					randmuti(human)
-					randmutb(human)
-					domutcheck(human)
-					human.UpdateAppearance()
-			//		if(human.dna && human.dna.species.id == "human")
-			//			M  << "<span class='italics'>You hear a buzzing in your ears.</span>"
-			//			human.set_species(/datum/species/fly)
+					// Effects similar to mutagen.
+					if(!human.species.flags[IS_SYNTHETIC])
+						randmuti(human)
+						randmutb(human)
+						domutcheck(human)
+						human.UpdateAppearance()
+				//		if(human.dna && human.dna.species.id == "human")
+				//			M  << "<span class='italics'>You hear a buzzing in your ears.</span>"
+				//			human.set_species(/datum/species/fly)
 
-					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
+						human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
 			calibrated = 0
 	return
 

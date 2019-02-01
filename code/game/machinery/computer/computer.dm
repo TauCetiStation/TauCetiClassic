@@ -15,12 +15,17 @@
 
 /obj/machinery/computer/atom_init(mapload, obj/item/weapon/circuitboard/C)
 	. = ..()
+	computer_list += src
 	if(C && istype(C))
 		circuit = C
 	else
 		if(circuit)
 			circuit = new circuit(null)
 	power_change()
+
+/obj/machinery/computer/Destroy()
+	computer_list -= src
+	return ..()
 
 /obj/machinery/computer/process()
 	if(stat & (NOPOWER|BROKEN))
