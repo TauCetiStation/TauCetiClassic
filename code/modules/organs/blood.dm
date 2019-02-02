@@ -55,8 +55,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			if (reagents.has_reagent("iron"))	//Hematogen candy anyone?
 				B.volume += 0.8
 				reagents.remove_reagent("iron", 0.1)
-			var/mob/living/M
-			if (reagents.has_reagent("blood") && M.has_trait(TRAIT_HEMATOPHAGUS)) //0.4 like nutriment and 5 nutrition like hot ramen
+			if (reagents.has_reagent("blood") && has_trait(TRAIT_HEMATOPHAGUS)) //0.4 like nutriment and 5 nutrition like hot ramen
 				B.volume += 0.4
 				reagents.remove_reagent("blood", 0.4)
 
