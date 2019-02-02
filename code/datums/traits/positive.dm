@@ -10,24 +10,24 @@
 	set category = "IC"
 	set name = "Bite"
 	set desc = "Bites prey and drains them of a significant portion of blood, feeding you in the process."
-	var/list/choices = list()
-	for(var/mob/living/carbon/human/M in oview(1, src))
-		if(!istype(M,/mob/living/silicon) && Adjacent(M))
-			choices += M
-	if(target == src || isalien(src) || target.vessel.total_volume <= 0 || target.species.flags[NO_BLOOD])
+	if(isalien(src) || target.vessel.total_volume <= 0 || target.species.flags[NO_BLOOD])
 		to_chat(src, "<span class='red'>There appears to be no blood in this prey...</span>")
 		return
-	if(!target || !src || src.stat) return
-	if(!Adjacent(target)) return
-	if(last_special > world.time) return
-
+	if(target == src)
+		return
+	if(!target || !src || src.stat)
+		return
+	if(!Adjacent(target))
+		return
+	if(last_special > world.time)
+		return
+	var/obj/item/organ/external/BP = target.get_bodypart(BP_HEAD)
 	last_special = world.time + 600
-	src.visible_message("<font color='red'><b>[src] moves their head next to [target]'s neck, seemingly looking for something!</b></font>")
+	src.visible_message("<span class='warning bold'>[src] moves their head next to [target]'s neck, seemingly looking for something!</span>")
 	if(do_after(src, 300, target)) //Thrirty seconds.
-		src.visible_message("<span class='warning'>[src] suddenly extends their fangs and plunges them down into [target]'s neck!</span>")
+		src.visible_message("<span class='warning bold'>[src] suddenly extends their fangs and plunges them down into [target]'s neck!</span>")
 		target.vessel.remove_reagent("blood", 80)
 		src.nutrition = min(src.nutrition + 300, 400)
-		var/obj/item/organ/external/BP = target.get_bodypart(HEAD)
 		BP.take_damage(5, null, DAM_SHARP, "Fangs") //You're getting fangs pushed into your neck. What do you expect?
 
 /datum/quirk/Hematophagus/on_spawn()
