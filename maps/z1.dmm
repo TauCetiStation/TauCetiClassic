@@ -27402,9 +27402,8 @@
 "aUN" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_minesci";
-	locked = 1;
-	name = "Arrival Airlock"
+	name = "Arrival Airlock";
+	req_one_access_txt = "65;48"
 	},
 /turf/simulated/floor,
 /area/hallway/secondary/entry)

@@ -15,7 +15,7 @@
 	icon_state = "nightvision1"
 
 /obj/screen/alien/nightvision/Click()
-	if(istype(usr, /mob/living/carbon/alien/))
+	if(istype(usr, /mob/living/carbon/alien))
 		var/mob/living/carbon/alien/A = usr
 		A.toggle_nvg()
 

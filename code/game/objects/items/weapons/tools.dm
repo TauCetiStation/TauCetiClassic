@@ -67,10 +67,10 @@
 	attack_verb = list("stabbed")
 	var/random_color = TRUE
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), pick("<span class='danger'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
-							"<span class='danger'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
-		return(BRUTELOSS)
+/obj/item/weapon/screwdriver/suicide_act(mob/user)
+	to_chat(viewers(user), pick("<span class='danger'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='danger'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
+	return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/atom_init(mapload, param_color)
 	. = ..()
@@ -292,7 +292,7 @@
 	//I'm not sure what this does. I assume it has to do with starting fires...
 	//...but it doesnt check to see if the welder is on or not.
 	var/turf/location = src.loc
-	if(istype(location, /mob/))
+	if(istype(location, /mob))
 		var/mob/M = location
 		if(M.l_hand == src || M.r_hand == src)
 			location = get_turf(M)

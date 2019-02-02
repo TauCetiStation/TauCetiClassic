@@ -83,7 +83,7 @@
 		n = 20
 	number = n
 	cardinals = c
-	if(istype(loca, /turf/))
+	if(istype(loca, /turf))
 		location = loca
 	else
 		location = get_turf(loca)

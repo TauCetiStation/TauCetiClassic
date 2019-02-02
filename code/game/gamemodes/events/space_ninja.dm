@@ -912,7 +912,7 @@ Most of these are at various points of incomplete.
 	usr:proc_holder_list += A_C
 	usr:proc_holder_list += B_C
 
-mob/verb/remove_object_panel()
+/mob/verb/remove_object_panel()
 	set name = "Remove AI Ninja Verbs Debug"
 	set category = "Ninja Debug"
 	var/obj/effect/proc_holder/ai_return_control/A = locate() in src

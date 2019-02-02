@@ -53,7 +53,7 @@
 			qdel(src)
 			return
 
-	if(istype(W, /obj/item/weapon/weldingtool/))
+	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(do_after(user, 20, target = src) && WT && WT.isOn())
 			user.SetNextMove(CLICK_CD_INTERACT)
@@ -74,7 +74,7 @@
 					WT.remove_fuel(1)
 		return
 
-	else if(istype(W,/obj/item/device/core_sampler/))
+	else if(istype(W,/obj/item/device/core_sampler))
 		var/obj/item/device/core_sampler/S = W
 		S.sample_item(src, user)
 		user.SetNextMove(CLICK_CD_INTERACT)

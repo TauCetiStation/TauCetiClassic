@@ -40,7 +40,7 @@
 			targetAtoms += A
 
 	for(var/atom/movable/M in targetAtoms)
-		if(istype(M, /obj/machinery/atmospherics/) || istype(M,/obj/structure/cable/))
+		if(istype(M, /obj/machinery/atmospherics) || istype(M,/obj/structure/cable))
 			qdel(M)
 		else if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -55,7 +55,7 @@
 	//fix for basetypes coped from old turfs in mapload
 	for(var/turf/T2 in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
 		                   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
-		if(istype(T, /turf/simulated/floor/plating/airless/asteroid/) || istype(T, /turf/simulated/mineral/))
+		if(istype(T, /turf/simulated/floor/plating/airless/asteroid) || istype(T, /turf/simulated/mineral))
 			T2.basetype = /turf/simulated/floor/plating/airless/asteroid
 
 #define SPACETURF    "a"

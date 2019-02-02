@@ -95,7 +95,7 @@ var/const/INGEST = 2
 	if(amount < 0) return
 	if(amount > 2000) return
 	var/datum/reagents/R
-	if(istype(target,/datum/reagents/))
+	if(istype(target,/datum/reagents))
 		R = target
 	else
 		if (!target.reagents || src.total_volume<=0)

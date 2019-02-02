@@ -14,7 +14,7 @@
  *		Cigarette Box
  */
 
-/obj/item/weapon/storage/fancy/
+/obj/item/weapon/storage/fancy
 	icon = 'icons/obj/food.dmi'
 	icon_state = "donutbox6"
 	name = "donut box"
