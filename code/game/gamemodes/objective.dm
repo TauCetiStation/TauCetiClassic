@@ -501,7 +501,7 @@ var/global/list/all_objectives = list()
 	var/obj/item/steal_target
 	var/target_name
 
-	var/global/possible_items[] = list(
+	var/static/possible_items[] = list(
 		"the captain's antique laser gun" = /obj/item/weapon/gun/energy/laser/selfcharging/captain,
 		"a hand teleporter" = /obj/item/weapon/hand_tele,
 		"an RCD" = /obj/item/weapon/rcd,
@@ -524,7 +524,7 @@ var/global/list/all_objectives = list()
 		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
 	)
 
-	var/global/possible_items_special[] = list(
+	var/static/possible_items_special[] = list(
 		/*"nuclear authentication disk" = /obj/item/weapon/disk/nuclear,*///Broken with the change to nuke disk making it respawn on z level change.
 		"nuclear gun" = /obj/item/weapon/gun/energy/gun/nuclear,
 		"diamond drill" = /obj/item/weapon/pickaxe/drill/diamond_drill,
