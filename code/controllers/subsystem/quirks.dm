@@ -31,7 +31,8 @@ var/datum/subsystem/quirks/SSquirks
 		)
 
 	quirk_blacklist_species = list(
-		"Fatness" = list(DIONA, IPC)
+		"Fatness" = list(DIONA, IPC),
+		"Hematophagus" = list(SKRELL, DIONA, IPC)
 		)
 
 	..()
