@@ -24,11 +24,16 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(BP_HEAD)
 	last_special = world.time + 600
 	src.visible_message("<span class='warning bold'>[src] moves their head next to [target]'s neck, seemingly looking for something!</span>")
-	if(do_after(src, 300, target)) //Thrirty seconds.
+	if(do_after(src, 5 SECONDS, target))
 		src.visible_message("<span class='warning bold'>[src] suddenly extends their fangs and plunges them down into [target]'s neck!</span>")
-		target.vessel.remove_reagent("blood", 80)
-		src.nutrition = min(src.nutrition + 300, 400 - (src.get_nutrition() - src.nutrition))
-		BP.take_damage(5, null, DAM_SHARP, "Fangs") //You're getting fangs pushed into your neck. What do you expect?
+		for(var/i in 1 to 10)
+			src.visible_message("<span class='warning bold'>[src] slowly sucks blood from [target]'s neck!</span>")
+			if(do_after(src, 3 SECONDS, target))
+				target.vessel.remove_reagent("blood", 8)
+				src.nutrition = min(src.nutrition + 30, 400 - (src.get_nutrition() - src.nutrition))
+			else
+				break
+		BP.take_damage(5, null, DAM_SHARP, "Fangs")
 
 /datum/quirk/Hematophagus/on_spawn()
     quirk_holder.verbs += /mob/living/carbon/human/proc/Bite
