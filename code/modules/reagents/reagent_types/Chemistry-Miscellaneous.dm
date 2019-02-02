@@ -33,12 +33,6 @@
 	if(self.data && self.data["antibodies"] && istype(M, /mob/living/carbon))//... and curing
 		var/mob/living/carbon/C = M
 		C.antibodies |= self.data["antibodies"]
-/datum/reagent/blood/on_general_digest(mob/living/M)
-	if(M.has_trait(TRAIT_HEMATOPHAGUS))
-		if(M.nutrition < 450) //fat vampire, funny.
-			M.nutrition += 2 //like 30 blood give 300 nutrition
-	else
-		return
 
 /datum/reagent/blood/on_diona_digest(mob/living/M)
 	..() // Should be put in these procs, in case a xeno of sorts has a reaction to ALL reagents.
