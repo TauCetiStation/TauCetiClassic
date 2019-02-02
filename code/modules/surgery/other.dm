@@ -177,6 +177,8 @@
 	/obj/item/weapon/wrench = 70
 	)
 
+	disallowed_species = list("exclude", IPC)
+
 	min_duration = 70
 	max_duration = 90
 
