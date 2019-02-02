@@ -27,7 +27,7 @@
 	if(do_after(src, 300, target)) //Thrirty seconds.
 		src.visible_message("<span class='warning bold'>[src] suddenly extends their fangs and plunges them down into [target]'s neck!</span>")
 		target.vessel.remove_reagent("blood", 80)
-		src.nutrition = min(src.nutrition + 300, 400)
+		src.nutrition = min(src.nutrition + 300, 400 - (src.get_nutrition() - src.nutrition))
 		BP.take_damage(5, null, DAM_SHARP, "Fangs") //You're getting fangs pushed into your neck. What do you expect?
 
 /datum/quirk/Hematophagus/on_spawn()
