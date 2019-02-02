@@ -43,10 +43,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Arrival Shuttle"
 
 /area/shuttle/arrival/pre_game
-	name = "Tau Ceti Transfer Station 13"
+	name = "NTS Velocity"
 	icon_state = "shuttle2"
 
 /area/shuttle/arrival/transit
+	name = "Space"
 	icon_state = "shuttle"
 	parallax_movedir = EAST
 
@@ -764,13 +765,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "medbay"
 	music = 'sound/ambience/signal.ogg'
 
-/area/medical/psych
-	name = "Psych Room"
+/area/medical/storage
+	name = "Medbay Storage"
+	icon_state = "medbay3"
+
+/area/medical/medbreak
+	name = "Medbay Breaktime Room"
 	icon_state = "medbay3"
 	music = 'sound/ambience/signal.ogg'
 
-/area/medical/medbreak
-	name = "Break Room"
+/area/medical/psych
+	name = "Psych Room"
 	icon_state = "medbay3"
 	music = 'sound/ambience/signal.ogg'
 
@@ -809,10 +814,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/surgery2
 	name = "Operating Theatre 2"
 	icon_state = "surgery"
-
-/area/medical/surgerystorage
-	name = "Operating Storage"
-	icon_state = "surgery2"
 
 /area/medical/surgeryobs
 	name = "Operation Observation Room"
@@ -922,7 +923,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "recycleroffice"
 
 /area/quartermaster/miningbreaktime
-	name = "Breaktime room"
+	name = "Cargo Breaktime Room"
 	icon_state = "miningbreaktime"
 
 /area/quartermaster/miningoffice
@@ -976,7 +977,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "toxmisc"
 
 /area/rnd/scibreak
-	name = "Science Break Room"
+	name = "Science Breaktime Room"
 	icon_state = "toxlab"
 
 /area/toxins/server

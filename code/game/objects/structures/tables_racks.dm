@@ -445,7 +445,7 @@
 	T = locate() in get_step(src.loc,direction)
 	if (!T || T.flipped)
 		return 1
-	if (istype(T,/obj/structure/table/reinforced/))
+	if (istype(T,/obj/structure/table/reinforced))
 		var/obj/structure/table/reinforced/R = T
 		if (R.status == 2)
 			return 0

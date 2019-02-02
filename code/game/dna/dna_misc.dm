@@ -228,9 +228,11 @@
 		H.r_hair = hex2num(getblock(structure,1,3))
 		H.b_hair = hex2num(getblock(structure,2,3))
 		H.g_hair = hex2num(getblock(structure,3,3))
+
 		H.r_facial = hex2num(getblock(structure,4,3))
 		H.b_facial = hex2num(getblock(structure,5,3))
 		H.g_facial = hex2num(getblock(structure,6,3))
+
 		H.s_tone = round(((hex2num(getblock(structure,7,3)) / 16) - 220))
 		H.r_eyes = hex2num(getblock(structure,8,3))
 		H.g_eyes = hex2num(getblock(structure,9,3))

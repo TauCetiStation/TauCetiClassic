@@ -354,7 +354,7 @@ var/datum/subsystem/job/SSjob
 		var/list/custom_equip_slots = list() //If more than one item takes the same slot, all after the first one spawn in storage.
 		var/list/custom_equip_leftovers = list()
 		var/metadata
-		if(H.client.prefs.gear && H.client.prefs.gear.len && job.title != "Cyborg" && job.title != "AI")
+		if(H.client.prefs.gear && H.client.prefs.gear.len && job.give_loadout_items)
 			for(var/thing in H.client.prefs.gear)
 				var/datum/gear/G = gear_datums[thing]
 				if(G)
@@ -487,6 +487,9 @@ var/datum/subsystem/job/SSjob
 						new /obj/item/weapon/storage/box/survival(BPK)
 						H.equip_to_slot_or_del(BPK, slot_back,1)
 
+	//Give custom items
+	give_custom_items(H, job)
+
 	//Deferred item spawning.
 	for(var/thing in spawn_in_storage)
 		var/datum/gear/G = gear_datums[thing]
@@ -514,13 +517,6 @@ var/datum/subsystem/job/SSjob
 	spawnId(H, rank, alt_title)
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_l_ear)
 
-	//Gives glasses to the vision impaired
-	if(H.disabilities & NEARSIGHTED)
-		var/equipped = H.equip_to_slot_or_del(new /obj/item/clothing/glasses/regular(H), slot_glasses)
-		if(equipped != 1)
-			var/obj/item/clothing/glasses/G = H.glasses
-			G.name = "prescription " + G.name
-			G.prescription = 1
 //		H.update_icons()
 
 	H.hud_updateflag |= (1 << ID_HUD)

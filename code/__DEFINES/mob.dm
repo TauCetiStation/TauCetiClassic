@@ -107,6 +107,9 @@
 #define TASTE_SENSITIVITY_DULL 0.75
 #define TASTE_SENSITIVITY_NO_TASTE 0
 
+// Roundstart "trait" system
+#define MAX_QUIRKS 6 // The maximum amount of quirks one character can have at roundstart
+
 //Ian can lick or sniff
 #define IAN_STANDARD 0
 #define IAN_LICK     1

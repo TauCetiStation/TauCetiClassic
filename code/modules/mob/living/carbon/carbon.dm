@@ -219,21 +219,23 @@
 					if(prob(30))
 						burndamage += halloss
 
-				if(brutedamage > 0)
-					status = "bruised"
-				if(brutedamage > 20)
-					status = "bleeding"
 				if(brutedamage > 40)
 					status = "mangled"
+				else if(brutedamage > 20)
+					status = "bleeding"
+				else if(brutedamage > 0)
+					status = "bruised"
+
 				if(brutedamage > 0 && burndamage > 0)
 					status += " and "
+
 				if(burndamage > 40)
 					status += "peeling away"
-
 				else if(burndamage > 10)
 					status += "blistered"
 				else if(burndamage > 0)
 					status += "numb"
+
 				if(BP.status & ORGAN_DESTROYED)
 					status = "MISSING!"
 				if(BP.status & ORGAN_MUTATED)
@@ -241,6 +243,10 @@
 				if(status == "")
 					status = "OK"
 				src.show_message(text("\t []My [] is [].", status == "OK" ? "\blue " : "\red ", BP.name,status), 1)
+
+			if(roundstart_quirks.len)
+				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
+
 			if(H.species && (H.species.name == SKELETON) && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else

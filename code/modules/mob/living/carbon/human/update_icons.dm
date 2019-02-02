@@ -137,11 +137,6 @@ Please contact me on #coderbus IRC. ~Carn x
 #define TOTAL_LIMB_LAYERS		7
 //////////////////////////////////
 
-//Human organ color mods//////////
-#define HULK_SKIN_TONE rgb(48, 224, 40) // human
-#define HULK_SKIN_COLOR RGB_CONTRAST(35, 121, 11) // xenos
-#define NECROSIS_COLOR_MOD list(0.33,0.33,0.33, 0.59,0.59,0.59, 0.11,0.11,0.11)
-
 /mob/living/carbon/human
 	var/list/overlays_standing[TOTAL_LAYERS]
 	var/list/overlays_damage[TOTAL_LIMB_LAYERS]
@@ -189,10 +184,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(BODY_LAYER)
 	var/list/standing = list()
 
-	var/husk = (HUSK in mutations)
 	var/fat = (FAT in mutations) ? "fat" : null
-	var/hulk = (HULK in mutations)
-
 	var/g = (gender == FEMALE ? "f" : "m")
 
 	var/mutable_appearance/base_icon = mutable_appearance(null, null, -BODY_LAYER)
@@ -212,20 +204,6 @@ Please contact me on #coderbus IRC. ~Carn x
 			temp = BP.get_icon(race_icon, deform_icon, g)
 		else
 			temp = BP.get_icon(race_icon, deform_icon)
-
-		if(!husk)
-			if(BP.status & ORGAN_DEAD)
-				temp.color = NECROSIS_COLOR_MOD
-			else if (species.flags[HAS_SKIN_COLOR])
-				if(!hulk)
-					temp.color = RGB_CONTRAST(r_skin, g_skin, b_skin)
-				else
-					temp.color = HULK_SKIN_COLOR
-			else if(species.flags[HAS_SKIN_TONE])
-				if(!hulk)
-					temp.color = RGB_CONTRAST(s_tone, s_tone, s_tone)
-				else
-					temp.color = HULK_SKIN_TONE
 
 		base_icon.overlays += temp
 
@@ -273,7 +251,10 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(facial_hair_style && facial_hair_style.species_allowed && (species.name in facial_hair_style.species_allowed))
 			var/image/facial_s = image("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s", "layer" = -HAIR_LAYER)
 			if(facial_hair_style.do_colouration)
-				facial_s.color = RGB_CONTRAST(r_facial, g_facial, b_facial)
+				if(!facial_painted)
+					facial_s.color = RGB_CONTRAST(r_facial, g_facial, b_facial)
+				else
+					facial_s.color = RGB_CONTRAST(dyed_r_facial, dyed_g_facial, dyed_b_facial)
 			standing += facial_s
 
 	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)))
@@ -281,7 +262,10 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(hair_style && hair_style.species_allowed && (species.name in hair_style.species_allowed))
 			var/image/hair_s = image("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s", "layer" = -HAIR_LAYER)
 			if(hair_style.do_colouration)
-				hair_s.color = RGB_CONTRAST(r_hair, g_hair, b_hair)
+				if(!hair_painted)
+					hair_s.color = RGB_CONTRAST(r_hair, g_hair, b_hair)
+				else
+					hair_s.color = RGB_CONTRAST(dyed_r_hair, dyed_g_hair, dyed_b_hair)
 			standing += hair_s
 
 	if(standing.len)
@@ -604,6 +588,8 @@ Please contact me on #coderbus IRC. ~Carn x
 			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
 			bloodsies.color = feet_dirt_color.color
 			overlays_standing[SHOES_LAYER] = bloodsies
+		else
+			overlays_standing[SHOES_LAYER] = null
 
 	apply_overlay(SHOES_LAYER)
 
@@ -957,7 +943,3 @@ Please contact me on #coderbus IRC. ~Carn x
 #undef TARGETED_LAYER
 #undef FIRE_LAYER
 #undef TOTAL_LAYERS
-
-#undef HULK_SKIN_TONE
-#undef HULK_SKIN_COLOR
-#undef NECROSIS_COLOR_MOD

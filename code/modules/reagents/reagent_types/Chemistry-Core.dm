@@ -7,6 +7,35 @@
 	custom_metabolism = 0.01
 	taste_message = null
 
+/datum/reagent/water/reaction_mob(mob/M, method=TOUCH, volume)
+	if(method == TOUCH)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/volume_coefficient = max((10-volume)/10, 0)
+			var/changes_occured = FALSE
+
+			if(H.species && H.species.name in list(HUMAN, UNATHI, TAJARAN))
+				if(H.hair_painted && !(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
+					H.dyed_r_hair = Clamp(round(H.dyed_r_hair * volume_coefficient + ((H.r_hair * volume) / 10)), 0, 255)
+					H.dyed_g_hair = Clamp(round(H.dyed_g_hair * volume_coefficient + ((H.g_hair * volume) / 10)), 0, 255)
+					H.dyed_b_hair = Clamp(round(H.dyed_b_hair * volume_coefficient + ((H.b_hair * volume) / 10)), 0, 255)
+					if(H.dyed_r_hair == H.r_hair && H.dyed_g_hair == H.g_hair && H.dyed_b_hair == H.b_hair)
+						H.hair_painted = FALSE
+						changes_occured = TRUE
+				if(H.facial_painted && !((H.wear_mask && (H.wear_mask.flags & HEADCOVERSMOUTH)) || (H.head && (H.head.flags & HEADCOVERSMOUTH))) && H.f_style != "Shaved")
+					H.dyed_r_facial = Clamp(round(H.dyed_r_facial * volume_coefficient + ((H.r_facial * volume) / 10)), 0, 255)
+					H.dyed_g_facial = Clamp(round(H.dyed_g_facial * volume_coefficient + ((H.g_facial * volume) / 10)), 0, 255)
+					H.dyed_b_facial = Clamp(round(H.dyed_b_facial * volume_coefficient + ((H.b_facial * volume) / 10)), 0, 255)
+					if(H.dyed_r_facial == H.r_facial && H.dyed_g_facial == H.g_facial && H.dyed_b_facial == H.b_facial)
+						H.facial_painted = FALSE
+						changes_occured = TRUE
+			if(!H.head && !H.wear_mask && H.h_style == "Bald" && H.f_style == "Shaved" && volume >= 10)
+				H.lip_style = null
+				changes_occured = TRUE
+				H.update_body()
+			if(changes_occured)
+				H.update_hair()
+
 /datum/reagent/water/reaction_turf(turf/simulated/T, volume)
 	spawn_fluid(T, volume) // so if will spawn even in space, just for pure visuals
 	if(!istype(T))
@@ -27,7 +56,6 @@
 		qdel(hotspot)
 
 /datum/reagent/water/reaction_obj(obj/O, volume)
-	src = null
 	var/turf/T = get_turf(O)
 	var/hotspot = (locate(/obj/fire) in T)
 	if(hotspot && !istype(T, /turf/space))
@@ -40,6 +68,11 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 		if(!cube.wrapped)
 			cube.Expand()
+	else if(istype(O, /obj/machinery/camera))
+		var/obj/machinery/camera/C = O
+		if(C.painted)
+			C.remove_paint_state()
+			C.color = null
 
 /datum/reagent/water/on_diona_digest(mob/living/M)
 	..()

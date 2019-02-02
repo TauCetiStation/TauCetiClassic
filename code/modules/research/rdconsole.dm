@@ -358,7 +358,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				var/amount=text2num(href_list["amount"])
 				amount = max(1, min(10, amount))
 				for(var/M in being_built.materials)
-					power += round(being_built.materials[M] * amount/ 5)
+					power += round(being_built.materials[M] * amount / 5)
 				power = max(2000, power)
 				screen = 0.3
 				if(linked_lathe.busy)

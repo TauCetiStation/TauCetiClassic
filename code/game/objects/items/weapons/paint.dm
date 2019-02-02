@@ -125,28 +125,28 @@ var/global/list/cached_icons = list()
 	name = "any color"
 	icon_state = "paint_neutral"
 
-	attack_self(mob/user)
-		var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "black", "white")
-		if ((user.get_active_hand() != src || user.stat || user.restrained()))
-			return
-		switch(t1)
-			if("red")
-				color = "FF0000"
-			if("blue")
-				color = "0000FF"
-			if("green")
-				color = "00FF00"
-			if("yellow")
-				color = "FFFF00"
-			if("violet")
-				color = "FF00FF"
-			if("white")
-				color = "FFFFFF"
-			if("black")
-				color = "333333"
-		icon_state = "paint_[t1]"
-		add_fingerprint(user)
+/obj/item/weapon/paint/anycolor/attack_self(mob/user)
+	var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "black", "white")
+	if ((user.get_active_hand() != src || user.stat || user.restrained()))
 		return
+	switch(t1)
+		if("red")
+			color = "FF0000"
+		if("blue")
+			color = "0000FF"
+		if("green")
+			color = "00FF00"
+		if("yellow")
+			color = "FFFF00"
+		if("violet")
+			color = "FF00FF"
+		if("white")
+			color = "FFFFFF"
+		if("black")
+			color = "333333"
+	icon_state = "paint_[t1]"
+	add_fingerprint(user)
+	return
 
 
 /obj/item/weapon/paint/afterattack(turf/target, mob/user, proximity)
@@ -169,74 +169,8 @@ var/global/list/cached_icons = list()
 	name = "paint remover"
 	icon_state = "paint_neutral"
 
-	afterattack(turf/target, mob/user)
-		if(istype(target) && target.icon != initial(target.icon))
-			target.icon = initial(target.icon)
-		return
+/obj/item/weapon/paint/paint_remover/afterattack(turf/target, mob/user)
+	if(istype(target) && target.icon != initial(target.icon))
+		target.icon = initial(target.icon)
+	return
 */
-
-/datum/reagent/paint
-	name = "Paint"
-	id = "paint_"
-	reagent_state = 2
-	color = "#808080"
-	description = "This paint will only adhere to floor tiles."
-
-/datum/reagent/paint/red
-	name = "Red Paint"
-	id = "paint_red"
-	color = "#FE191A"
-
-/datum/reagent/paint/green
-	name = "Green Paint"
-	color = "#18A31A"
-	id = "paint_green"
-
-/datum/reagent/paint/blue
-	name = "Blue Paint"
-	color = "#247CFF"
-	id = "paint_blue"
-
-/datum/reagent/paint/yellow
-	name = "Yellow Paint"
-	color = "#FDFE7D"
-	id = "paint_yellow"
-
-/datum/reagent/paint/violet
-	name = "Violet Paint"
-	color = "#CC0099"
-	id = "paint_violet"
-
-/datum/reagent/paint/black
-	name = "Black Paint"
-	color = "#333333"
-	id = "paint_black"
-
-/datum/reagent/paint/white
-	name = "White Paint"
-	color = "#F0F8FF"
-	id = "paint_white"
-
-/datum/reagent/paint/reaction_turf(turf/T, volume)
-	if(!istype(T) || istype(T, /turf/space))
-		return
-	var/ind = "[initial(T.icon)][color]"
-	if(!cached_icons[ind])
-		var/icon/overlay = new/icon(initial(T.icon))
-		overlay.Blend(color,ICON_MULTIPLY)
-		overlay.SetIntensity(1.4)
-		T.icon = overlay
-		cached_icons[ind] = T.icon
-	else
-		T.icon = cached_icons[ind]
-
-/datum/reagent/paint_remover
-	name = "Paint Remover"
-	id = "paint_remover"
-	description = "Paint remover is used to remove floor paint from floor tiles."
-	reagent_state = 2
-	color = "#808080"
-
-/datum/reagent/paint_remover/reaction_turf(turf/T, volume)
-	if(istype(T) && T.icon != initial(T.icon))
-		T.icon = initial(T.icon)

@@ -160,7 +160,7 @@
 						for(var/i=1, i<=Perp.len, i += 2)
 							var/crimstat = ""
 							var/datum/data/record/R = Perp[i]
-							if(istype(Perp[i+1],/datum/data/record/))
+							if(istype(Perp[i+1],/datum/data/record))
 								var/datum/data/record/E = Perp[i+1]
 								crimstat = E.fields["criminal"]
 							var/background

@@ -138,7 +138,7 @@
 
 /turf/unsimulated/jungle/water/Entered(atom/movable/O)
 	..()
-	if(istype(O, /mob/living/))
+	if(istype(O, /mob/living))
 		var/mob/living/M = O
 		//slip in the murky water if we try to run through it
 		if(prob(10 + (M.m_intent == "run" ? 40 : 0)))

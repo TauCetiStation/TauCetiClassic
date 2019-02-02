@@ -81,6 +81,15 @@
 		hex = text("0[]", hex)
 	return hex
 
+/proc/numlist2hex(list/numlist)
+	var/hex = "#"
+	for(var/col_num in 1 to 3)
+		var/col_hex = num2hex(numlist[col_num])
+		while(length(col_hex) < 2)
+			col_hex = text("0[]", col_hex) // Takes care of leading zeroes.
+		hex += col_hex
+	return hex
+
 /proc/text2numlist(text, delimiter="\n")
 	var/list/num_list = list()
 	for(var/x in splittext(text, delimiter))

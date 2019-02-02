@@ -384,7 +384,17 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/capacitor = 1,
 							/obj/item/stack/cable_coil = 3)
 
-obj/item/weapon/circuitboard/biogenerator
+/obj/item/weapon/circuitboard/color_mixer
+	name = "circuit board (Color Mixer)"
+	build_path = /obj/machinery/color_mixer
+	origin_tech = "programming=2;materials=2"
+	req_components = list(
+							/obj/item/weapon/circuitboard/color_mixer = 1,
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/stack/cable_coil = 1)
+
+
+/obj/item/weapon/circuitboard/biogenerator
 	name = "circuit board (Biogenerator)"
 	build_path = /obj/machinery/biogenerator
 	board_type = "machine"
