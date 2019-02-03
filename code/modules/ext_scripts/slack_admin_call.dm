@@ -1,4 +1,4 @@
-proc/admin_call_cooldown(value1)
+/proc/admin_call_cooldown(value1)
 	ac_nameholder.Add(value1)
 	spawn(3000)
 		ac_nameholder.Remove(value1)

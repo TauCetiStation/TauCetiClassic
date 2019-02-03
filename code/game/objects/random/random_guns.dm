@@ -172,6 +172,6 @@
 						prob(200);/obj/item/ammo_casing/a357,\
 						prob(20);/obj/item/ammo_box/a357,\
 						prob(2);/obj/item/weapon/gun/projectile/revolver/mateba,\
-						prob(2);/obj/item/weapon/gun/projectile/revolver/,\
+						prob(2);/obj/item/weapon/gun/projectile/revolver,\
 						prob(2);/obj/item/weapon/gun/projectile/revolver/syndie\
 					)

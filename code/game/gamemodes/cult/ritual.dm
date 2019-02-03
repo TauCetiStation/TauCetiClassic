@@ -416,7 +416,7 @@ var/list/cult_datums = list()
 		to_chat(user, "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of.\
 		Most of these are useless, though.")
 
-obj/item/weapon/book/tome/imbued/atom_init()
+/obj/item/weapon/book/tome/imbued/atom_init()
 	. = ..()
 	unlocked = TRUE
 	if(!cultwords["travel"])

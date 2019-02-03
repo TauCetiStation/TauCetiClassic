@@ -354,7 +354,7 @@
 	newname = sanitize_safe(input(src,"You are a robot. Enter a name, or leave blank for the default name.", "Name change","") as text, MAX_NAME_LEN)
 	if (newname)
 		custom_name = newname
-		
+
 		updatename()
 		updateicon()
 
@@ -675,7 +675,7 @@
 			to_chat(user, "Unable to locate a radio.")
 		updateicon()
 
-	else if(istype(W, /obj/item/device/encryptionkey/) && opened)
+	else if(istype(W, /obj/item/device/encryptionkey) && opened)
 		if(radio)//sanityyyyyy
 			radio.attackby(W,user)//GTFO, you have your own procs
 		else
@@ -758,7 +758,7 @@
 					to_chat(src, "Hack attempt detected.")
 			return
 
-	else if(istype(W, /obj/item/borg/upgrade/))
+	else if(istype(W, /obj/item/borg/upgrade))
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
 			to_chat(usr, "You must access the borgs internals!")

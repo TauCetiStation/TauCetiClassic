@@ -297,8 +297,8 @@
 	target_types += /obj/effect/decal/cleanable/greenglow
 	target_types += /obj/effect/decal/cleanable/spiderling_remains
 	if(src.blood)
-		target_types += /obj/effect/decal/cleanable/blood/
-		target_types += /obj/effect/decal/cleanable/blood/gibs/
+		target_types += /obj/effect/decal/cleanable/blood
+		target_types += /obj/effect/decal/cleanable/blood/gibs
 		target_types += /obj/effect/decal/cleanable/blood/tracks
 		target_types += /obj/effect/decal/cleanable/blood/tracks/footprints
 		target_types += /obj/effect/decal/cleanable/blood/tracks/wheels

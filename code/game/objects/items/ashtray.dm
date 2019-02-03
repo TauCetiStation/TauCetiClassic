@@ -85,11 +85,12 @@
 	m_amt = 30
 	empty_desc = "Cheap plastic ashtray."
 	throwforce = 3.0
-	die()
-		..()
-		name = "pieces of plastic"
-		desc = "Pieces of plastic with ash on them."
-		return
+
+/obj/item/ashtray/plastic/die()
+	..()
+	name = "pieces of plastic"
+	desc = "Pieces of plastic with ash on them."
+	return
 
 
 /obj/item/ashtray/bronze
@@ -106,11 +107,11 @@
 	empty_desc = "Massive bronze ashtray."
 	throwforce = 10.0
 
-	die()
-		..()
-		name = "pieces of bronze"
-		desc = "Pieces of bronze with ash on them."
-		return
+/obj/item/ashtray/bronze/die()
+	..()
+	name = "pieces of bronze"
+	desc = "Pieces of bronze with ash on them."
+	return
 
 
 /obj/item/ashtray/glass
@@ -127,9 +128,9 @@
 	empty_desc = "Glass ashtray. Looks fragile."
 	throwforce = 6.0
 
-	die()
-		..()
-		name = "shards of glass"
-		desc = "Shards of glass with ash on them."
-		playsound(src, "shatter", 30, 1)
-		return
+/obj/item/ashtray/glass/die()
+	..()
+	name = "shards of glass"
+	desc = "Shards of glass with ash on them."
+	playsound(src, "shatter", 30, 1)
+	return

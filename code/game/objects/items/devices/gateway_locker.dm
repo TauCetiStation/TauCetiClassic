@@ -15,7 +15,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/device/gateway_locker/atom_init_late()
-	stationgate = locate(/obj/machinery/gateway/center/station/)
+	stationgate = locate(/obj/machinery/gateway/center/station)
 
 /obj/item/device/gateway_locker/attack_self(mob/user)
 	if(!stationgate)

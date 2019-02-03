@@ -133,7 +133,7 @@
 	if(zone == O_MOUTH && CanEat(user, target, src, "eat"))
 		user.visible_message("<span class='notice'>[user] pops a pill from \the [src].</span>")
 		playsound(get_turf(src), 'sound/effects/peelz.ogg', 50)
-		var/list/peelz = filter_list(contents,/obj/item/weapon/reagent_containers/pill/)
+		var/list/peelz = filter_list(contents,/obj/item/weapon/reagent_containers/pill)
 		if(peelz.len)
 			var/obj/item/weapon/reagent_containers/pill/P = pick(peelz)
 			remove_from_storage(P)

@@ -292,10 +292,10 @@ var/global/list/scrap_base_cache = list()
 	desc = "Pile of medical refuse. They sure don't cut expenses on these. "
 	parts_icon = 'icons/obj/structures/scrap/medical_trash.dmi'
 	loot_list = list(
-		/obj/random/meds/medical_supply/,
-		/obj/random/meds/medical_supply/,
-		/obj/random/meds/medical_supply/,
-		/obj/random/meds/medical_supply/,
+		/obj/random/meds/medical_supply,
+		/obj/random/meds/medical_supply,
+		/obj/random/meds/medical_supply,
+		/obj/random/meds/medical_supply,
 		/obj/random/materials/rods_scrap,
 		/obj/item/weapon/shard
 	)
@@ -337,8 +337,8 @@ var/global/list/scrap_base_cache = list()
 	desc = "Pile of military supply refuse. Who thought it was a clever idea to throw that out?"
 	parts_icon = 'icons/obj/structures/scrap/guns_trash.dmi'
 	loot_list = list(
-		/obj/preset/storage/weapons/random/,
-		/obj/preset/storage/weapons/random/,
+		/obj/preset/storage/weapons/random,
+		/obj/preset/storage/weapons/random,
 		/obj/random/tools/powercell,
 		/obj/random/guns/energy_weapon,
 		/obj/item/toy/gun,

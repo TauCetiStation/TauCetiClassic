@@ -53,6 +53,9 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	var/status // submitted accepted rejected
 	var/moderator_message
 
+	var/sprite_author
+	var/info
+
 /client/proc/get_custom_items_slot_count()
 	customItemsCache.cd = "/"
 	var/list/slots = null
@@ -228,12 +231,15 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 				var/obj/item/clothing/suit/storage/labcoat/custom/labcoat = new /obj/item/clothing/suit/storage/labcoat/custom()
 				if(!("[custom_item_info.icon_state]_open" in icon_states(custom_item_info.icon)))
 					labcoat.can_button_up = FALSE
+				labcoat.base_icon_state = custom_item_info.icon_state
 				item = labcoat
 
 		if(!item)
 			continue
 		item.name = custom_item_info.name
 		item.desc = custom_item_info.desc
+		if(custom_item_info.sprite_author)
+			item.desc = "[item.desc]<br><small><span style='color:#00BFFF;'><i>sprite author:</i> [custom_item_info.sprite_author]</span></small>"
 		item.icon = custom_item_info.icon
 		item.icon_custom = custom_item_info.icon
 		item.icon_state = custom_item_info.icon_state

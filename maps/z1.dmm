@@ -17974,7 +17974,7 @@
 	},
 /area/maintenance/asmaint2)
 "aDW" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/vending/junkfood,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warningcorner"
@@ -18553,7 +18553,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access_txt = "0";
+	req_one_access_txt = "47;12"
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/asmaint2)
@@ -21126,7 +21127,8 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access_txt = "0";
+	req_one_access_txt = "47;12"
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/asmaint2)
@@ -25156,7 +25158,7 @@
 	},
 /area/crew_quarters/kitchen)
 "aQZ" = (
-/obj/machinery/vending/snack,
+/obj/structure/closet/lasertag/blue,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "neutral"
@@ -26021,7 +26023,7 @@
 	},
 /area/storage/primary)
 "aSx" = (
-/obj/machinery/vending/cola,
+/obj/structure/closet/lasertag/red,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutral"
@@ -27402,9 +27404,8 @@
 "aUN" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_minesci";
-	locked = 1;
-	name = "Arrival Airlock"
+	name = "Arrival Airlock";
+	req_one_access_txt = "65;48"
 	},
 /turf/simulated/floor,
 /area/hallway/secondary/entry)
@@ -27855,6 +27856,14 @@
 	},
 /turf/simulated/floor,
 /area/engine/chiefs_office)
+"aVI" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "0";
+	req_one_access_txt = "47;12"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/fsmaint)
 "aVJ" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -28451,12 +28460,6 @@
 	icon_state = "neutral"
 	},
 /area/crew_quarters/playroom)
-"aXa" = (
-/obj/structure/closet/lasertag/red,
-/turf/simulated/floor{
-	icon_state = "neutral"
-	},
-/area/crew_quarters/playroom)
 "aXb" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -28464,7 +28467,7 @@
 /turf/simulated/floor,
 /area/hallway/primary/central)
 "aXc" = (
-/obj/structure/closet/lasertag/blue,
+/obj/machinery/vending/junkfood,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "neutral"
@@ -104154,7 +104157,7 @@ aRd
 aSG
 aTW
 aVw
-aXa
+aWT
 aZi
 bdv
 bdZ
@@ -116749,7 +116752,7 @@ aEa
 aEa
 aFm
 aEa
-asM
+aVI
 aef
 aef
 aef
