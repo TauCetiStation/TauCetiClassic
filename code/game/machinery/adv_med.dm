@@ -365,6 +365,7 @@
 		if (src.latestprint + 100 < world.time) //10sec cooldown
 			src.latestprint = world.time
 			to_chat(usr, "<span class='notice'>Printing... Please wait.</span>")
+			playsound(src.loc, 'sound/misc/medscan.ogg', 15, 1)
 			spawn(10)
 				var/obj/item/weapon/paper/P = new(loc)
 				var/mob/living/carbon/human/occupant = src.connected.occupant
