@@ -142,15 +142,15 @@
 	item_state = "focus"
 	projectile_type = "/obj/item/projectile/forcebolt"
 
-	attack_self(mob/living/user)
-		if(projectile_type == "/obj/item/projectile/forcebolt")
-			charge_cost = 200
-			to_chat(user, "\red The [src.name] will now strike a small area.")
-			projectile_type = "/obj/item/projectile/forcebolt/strong"
-		else
-			charge_cost = 100
-			to_chat(user, "\red The [src.name] will now strike only a single person.")
-			projectile_type = "/obj/item/projectile/forcebolt"
+/obj/item/weapon/gun/energy/staff/focus/attack_self(mob/living/user)
+	if(projectile_type == "/obj/item/projectile/forcebolt")
+		charge_cost = 200
+		to_chat(user, "\red The [src.name] will now strike a small area.")
+		projectile_type = "/obj/item/projectile/forcebolt/strong"
+	else
+		charge_cost = 100
+		to_chat(user, "\red The [src.name] will now strike only a single person.")
+		projectile_type = "/obj/item/projectile/forcebolt"
 	*/
 
 /obj/item/weapon/gun/energy/toxgun

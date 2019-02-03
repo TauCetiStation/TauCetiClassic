@@ -183,16 +183,16 @@ var/const/tk_maxrange = 15
 	return
 
 /*Not quite done likely needs to use something thats not get_step_to
-	proc/check_path()
-		var/turf/ref = get_turf(src.loc)
-		var/turf/target = get_turf(focus.loc)
-		if(!ref || !target)	return 0
-		var/distance = get_dist(ref, target)
-		if(distance >= 10)	return 0
-		for(var/i = 1 to distance)
-			ref = get_step_to(ref, target, 0)
-		if(ref != target)	return 0
-		return 1
+/obj/item/tk_grab/proc/check_path()
+	var/turf/ref = get_turf(src.loc)
+	var/turf/target = get_turf(focus.loc)
+	if(!ref || !target)	return 0
+	var/distance = get_dist(ref, target)
+	if(distance >= 10)	return 0
+	for(var/i = 1 to distance)
+		ref = get_step_to(ref, target, 0)
+	if(ref != target)	return 0
+	return 1
 */
 
 //equip_to_slot_or_del(obj/item/W, slot, del_on_fail = 1)

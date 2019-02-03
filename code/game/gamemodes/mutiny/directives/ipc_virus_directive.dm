@@ -13,19 +13,19 @@
 	var/list/cyborgs_to_make = list()
 	var/list/ids_to_terminate = list()
 
-	proc/get_ipcs()
-		var/list/machines[0]
-		for(var/mob/M in player_list)
-			if (M.is_ready() && M.get_species() == IPC)
-				machines.Add(M)
-		return machines
+/datum/directive/ipc_virus/proc/get_ipcs()
+	var/list/machines[0]
+	for(var/mob/M in player_list)
+		if (M.is_ready() && M.get_species() == IPC)
+			machines.Add(M)
+	return machines
 
-	proc/get_roboticists()
-		var/list/roboticists[0]
-		for(var/mob/M in player_list)
-			if (M.is_ready() && roboticist_roles.Find(M.mind.assigned_role))
-				roboticists.Add(M)
-		return roboticists
+/datum/directive/ipc_virus/proc/get_roboticists()
+	var/list/roboticists[0]
+	for(var/mob/M in player_list)
+		if (M.is_ready() && roboticist_roles.Find(M.mind.assigned_role))
+			roboticists.Add(M)
+	return roboticists
 
 /datum/directive/ipc_virus/initialize()
 	for(var/mob/living/carbon/human/H in get_ipcs())

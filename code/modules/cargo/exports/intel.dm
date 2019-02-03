@@ -8,8 +8,8 @@
 	cost = 25000
 	unit_name = "original article"
 	message = "of enemy intelligence"
-	var/global/originals_recieved = list()
-	var/global/copies_recieved = list()
+	var/static/originals_recieved = list()
+	var/static/copies_recieved = list()
 	var/copy_path = null
 	export_types = list(/obj/item/documents/syndicate)
 

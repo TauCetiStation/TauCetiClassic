@@ -11,10 +11,10 @@
 
 	muzzle_type = /obj/effect/projectile/bullet/muzzle
 
-	on_hit(atom/target, blocked = 0)
-		if (..(target, blocked))
-			var/mob/living/L = target
-			shake_camera(L, 3, 2)
+/obj/item/projectile/bullet/on_hit(atom/target, blocked = 0)
+	if (..(target, blocked))
+		var/mob/living/L = target
+		shake_camera(L, 3, 2)
 
 /obj/item/projectile/bullet/weakbullet // "rubber" bullets
 	damage = 10

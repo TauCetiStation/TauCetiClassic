@@ -30,4 +30,4 @@
 	board_path = "/obj/item/weapon/circuitboard/pacman/scrap"
 
 /obj/machinery/power/port_gen/pacman/scrap/overheat()
-		explosion(src.loc, 1, 5, 2, -1)
+	explosion(src.loc, 1, 5, 2, -1)

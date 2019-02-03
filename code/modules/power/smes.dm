@@ -462,9 +462,10 @@
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Magically produces power."
-	process()
-		charge = capacity
-		..()
+
+/obj/machinery/power/smes/magical/process()
+	charge = capacity
+	..()
 
 
 

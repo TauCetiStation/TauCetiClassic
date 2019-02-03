@@ -141,6 +141,6 @@
 	toxpwr = 0.5
 
 /datum/reagent/toxin/spore/on_general_digest(mob/living/M)
-		..()
-		M.damageoverlaytemp = 60
-		M.eye_blurry = max(M.eye_blurry, 3)
+	..()
+	M.damageoverlaytemp = 60
+	M.eye_blurry = max(M.eye_blurry, 3)

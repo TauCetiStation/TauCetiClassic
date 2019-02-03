@@ -7,8 +7,8 @@
 	var/list/accounts_to_suspend = list()
 	var/list/ids_to_terminate = list()
 
-	proc/get_crew_to_terminate()
-		return list()
+/datum/directive/terminations/proc/get_crew_to_terminate()
+	return list()
 
 /datum/directive/terminations/directives_complete()
 	for(var/account_number in accounts_to_suspend)
