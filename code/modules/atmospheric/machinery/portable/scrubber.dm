@@ -145,17 +145,23 @@
 	idle_power_usage = 500      //internal circuitry, friction losses and stuff
 	active_power_usage = 100000 //100 kW ~ 135 HP
 
-	var/global/gid = 1
+	var/static/gid = 1
 	var/id = 0
 
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/atom_init()
 	. = ..()
+	scrubber_huge_list += src
+
 	cell = null
 
 	id = gid
 	gid++
 
 	name = "[name] (ID [id])"
+
+/obj/machinery/portable_atmospherics/powered/scrubber/huge/Destroy()
+	scrubber_huge_list -= src
+	return ..()
 
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/attack_ghost(mob/user)
 	return //Do not show anything

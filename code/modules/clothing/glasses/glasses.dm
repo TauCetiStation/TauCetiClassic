@@ -203,6 +203,23 @@
 	item_state = "blindfold"
 	//vision_flags = BLIND  	// This flag is only supposed to be used if it causes permanent blindness, not temporary because of glasses
 
+/obj/item/clothing/glasses/sunglasses/blindfold/white
+	name = "blind personnel blindfold"
+	desc = "Indicates that the wearer suffers from blindness."
+	icon_state = "blindfoldwhite"
+	item_state = "blindfoldwhite"
+	var/colored_before = FALSE
+
+/obj/item/clothing/glasses/sunglasses/blindfold/white/equipped(mob/living/carbon/human/user, slot)
+	if(ishuman(user) && slot == slot_glasses)
+		update_icon(user)
+	..()
+
+/obj/item/clothing/glasses/sunglasses/blindfold/white/update_icon(mob/living/carbon/human/user)
+	if(ishuman(user) && !colored_before)
+		colored_before = TRUE
+		color = rgb(user.r_eyes, user.g_eyes, user.b_eyes)
+
 /obj/item/clothing/glasses/sunglasses/prescription
 	name = "prescription sunglasses"
 	prescription = 1

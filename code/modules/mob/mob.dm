@@ -1,7 +1,7 @@
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	mob_list -= src
 	dead_mob_list -= src
-	living_mob_list -= src
+	alive_mob_list -= src
 	ghostize(bancheck = TRUE)
 	return ..()
 
@@ -12,7 +12,7 @@
 	if(stat == DEAD)
 		dead_mob_list += src
 	else
-		living_mob_list += src
+		alive_mob_list += src
 	. = ..()
 
 /mob/proc/Cell()
@@ -321,6 +321,7 @@
 	var/obj/P = new /obj/effect/decal/point(tile)
 	P.pixel_x = A.pixel_x
 	P.pixel_y = A.pixel_y
+	P.plane = GAME_PLANE
 
 	QDEL_IN(P, 20)
 
@@ -936,7 +937,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			visible_implants += O
 	return visible_implants
 
-mob/proc/yank_out_object()
+/mob/proc/yank_out_object()
 	set category = "Object"
 	set name = "Yank out object"
 	set desc = "Remove an embedded item at the cost of bleeding and pain."
@@ -1026,7 +1027,7 @@ mob/proc/yank_out_object()
 
 /mob/proc/get_ghost(even_if_they_cant_reenter = 0)
 	if(mind)
-		for(var/mob/dead/observer/G in dead_mob_list)
+		for(var/mob/dead/observer/G in observer_list)
 			if(G.mind == mind)
 				if(G.can_reenter_corpse || even_if_they_cant_reenter)
 					return G

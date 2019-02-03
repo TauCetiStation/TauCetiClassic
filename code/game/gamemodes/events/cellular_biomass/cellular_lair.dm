@@ -3,7 +3,7 @@
 	health = 120
 	var/spawn_chance = 1
 	var/active = 1
-	var/spawned_mob = /mob/living/simple_animal/hostile/carp/
+	var/spawned_mob = /mob/living/simple_animal/hostile/carp
 	var/obj/lair_life_monitor/life_monitor = null
 
 /obj/structure/cellular_biomass/lair/atom_init(mapload, spawned_mob_type)

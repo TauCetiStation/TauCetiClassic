@@ -424,7 +424,7 @@
 	brute_mod = 0.2
 	burn_mod = 0.2
 
-	eyes = "blank_eyes"
+	eyes = null
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
 
@@ -473,7 +473,7 @@
 	burn_mod = 1.3
 	speed_mod = 7
 
-	restricted_inventory_slots = list(slot_wear_mask, slot_glasses, slot_gloves, slot_shoes) // These are trees. Not people. Deal with the fact that they don't have these.
+	// restricted_inventory_slots = list(slot_wear_mask, slot_glasses, slot_gloves, slot_shoes) // These are trees. Not people. Deal with the fact that they don't have these. P.S. I may return to this one day ~Luduk.
 
 	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
 	butcher_drops = list(/obj/item/stack/sheet/wood = 5)
@@ -572,7 +572,7 @@
 	dietflags = 0		//IPCs can't eat, so no diet
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 
-	eyes = "blank_eyes"
+	eyes = null
 
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
@@ -860,6 +860,7 @@
 
 	icobase = 'icons/mob/human_races/r_zombie.dmi'
 	deform = 'icons/mob/human_races/r_zombie.dmi'
+	has_gendered_icons = FALSE
 
 	flags = list(
 	NO_BREATHE = TRUE

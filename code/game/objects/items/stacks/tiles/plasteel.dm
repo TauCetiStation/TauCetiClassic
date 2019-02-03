@@ -11,6 +11,7 @@
 	throw_range = 3
 	flags = CONDUCT
 	max_amount = 60
+	turf_type = /turf/simulated/floor
 
 /obj/item/stack/tile/plasteel/atom_init()
 	. = ..()

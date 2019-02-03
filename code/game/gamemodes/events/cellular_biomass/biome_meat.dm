@@ -50,9 +50,9 @@
 
 /obj/structure/cellular_biomass/lair/meat/atom_init(mapload)
 	icon_state = "lair"
-	. = ..(mapload, pick(subtypesof(/mob/living/simple_animal/hostile/cellular/meat/)))
+	. = ..(mapload, pick(subtypesof(/mob/living/simple_animal/hostile/cellular/meat)))
 
-/mob/living/simple_animal/hostile/cellular/meat/
+/mob/living/simple_animal/hostile/cellular/meat
 	name = "insane creature"
 	desc = "A sanity-destroying otherthing."
 	icon = 'code/game/gamemodes/events/cellular_biomass/meatland_cellular.dmi'

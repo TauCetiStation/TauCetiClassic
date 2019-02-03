@@ -13,7 +13,7 @@
 
 /obj/effect/anomaly/atom_init()
 	. = ..()
-	poi_list |= src
+	poi_list += src
 	SetLuminosity(initial(luminosity))
 	aSignal = new(src)
 	aSignal.code = rand(1,100)
@@ -23,7 +23,7 @@
 		aSignal.frequency++
 
 /obj/effect/anomaly/Destroy()
-	poi_list.Remove(src)
+	poi_list -= src
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect()

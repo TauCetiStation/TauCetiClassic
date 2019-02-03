@@ -277,7 +277,7 @@
 	var/list/all_items = M.GetAllContents()
 
 	for(var/obj/I in all_items)
-		if(istype(I,/obj/item/device/radio/))
+		if(istype(I,/obj/item/device/radio))
 			var/obj/item/device/radio/r = I
 			r.on = 0
 
@@ -358,7 +358,7 @@
 		helm_cam.c_tag = "[user.real_name] Cam"
 		helm_cam.replace_networks(list("Abductor[team]"))
 
-		for(var/obj/machinery/computer/security/abductor_ag/C in machines)
+		for(var/obj/machinery/computer/security/abductor_ag/C in computer_list)
 			if(C.team == team)
 				if(C.network.len < 1)
 					C.network = helm_cam.network

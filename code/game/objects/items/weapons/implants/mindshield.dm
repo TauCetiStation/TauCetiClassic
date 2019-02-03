@@ -18,7 +18,7 @@
 	if(!ishuman(M))
 		return FALSE
 	var/mob/living/carbon/human/H = M
-	if(H.mind && (H.mind in (ticker.mode.head_revolutionaries | ticker.mode.A_bosses | ticker.mode.B_bosses)) || is_shadow_or_thrall(H))
+	if(H.mind && (H.mind in (ticker.mode.head_revolutionaries | ticker.mode.A_bosses | ticker.mode.B_bosses)) || is_shadow_or_thrall(H)|| H.mind.special_role == "Wizard")
 		M.visible_message("<span class='warning'>[M] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 		return FALSE
 

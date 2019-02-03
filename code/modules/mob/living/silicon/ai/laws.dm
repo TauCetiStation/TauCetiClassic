@@ -38,7 +38,7 @@
 	throw_alert("newlaw")
 	src.laws_sanity_check()
 	src.laws.add_ion_law(law)
-	for(var/mob/living/silicon/robot/R in mob_list)
+	for(var/mob/living/silicon/robot/R in silicon_list)
 		if(R.lawupdate && (R.connected_ai == src))
 			R.throw_alert("newlaw")
 			to_chat(R, "\red " + law + "\red...LAWS UPDATED")

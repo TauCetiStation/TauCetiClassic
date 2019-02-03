@@ -9,7 +9,7 @@
 
 	tod = worldtime2text() //weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
-	living_mob_list -= src
+	alive_mob_list -= src
 
 	return ..(gibbed)
 
@@ -24,7 +24,7 @@
 
 	tod = worldtime2text() //weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
-	living_mob_list -= src
+	alive_mob_list -= src
 
 	return ..(gibbed)
 

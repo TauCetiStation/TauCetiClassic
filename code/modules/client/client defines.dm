@@ -54,7 +54,7 @@
 	var/player_next_age_tick = 0
 
 	preload_rsc = 0 // This is 0 so we can set it to an URL once the player logs in and have them download the resources from a different server.
-	var/global/obj/screen/click_catcher/void
+	var/static/obj/screen/click_catcher/void
 
 		// /vg/: MEDIAAAAAAAA
 	// Set on login.
@@ -68,3 +68,5 @@
 	// Their chat window, sort of important.
 	// See /goon/code/datums/browserOutput.dm
 	var/datum/chatOutput/chatOutput
+
+	var/list/char_render_holders			//Should only be a key-value list of north/south/east/west = obj/screen.

@@ -1,5 +1,5 @@
 //gene sequence datum
-datum/genesequence
+/datum/genesequence
 	var/spawned_type
 	var/list/full_genome_sequence = list()
 

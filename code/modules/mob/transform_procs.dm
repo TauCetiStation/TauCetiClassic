@@ -47,6 +47,8 @@
 	if(mind)
 		mind.transfer_to(O)
 
+	transfer_trait_datums(O)
+
 	to_chat(O, "<B>You are now [O]. </B>")
 
 	spawn(0)//To prevent the proc from returning null.

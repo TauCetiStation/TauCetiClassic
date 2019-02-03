@@ -35,6 +35,7 @@ var/const/HOLOPAD_MODE = 0
 	icon_state = "holopad0"
 
 	layer = TURF_LAYER+0.1 //Preventing mice and drones from sneaking under them.
+	plane = FLOOR_PLANE
 
 	var/mob/living/silicon/ai/master//Which AI, if any, is controlling the object? Only one AI may control a hologram at any time.
 	var/last_request = 0 //to prevent request spam. ~Carn
@@ -80,8 +81,8 @@ var/const/HOLOPAD_MODE = 0
 			last_request = world.time
 			to_chat(user, "<span class='notice'>You request an AI's presence.</span>")
 			var/area/area = get_area(src)
-			for(var/mob/living/silicon/ai/AI in living_mob_list)
-				if(!AI.client)
+			for(var/mob/living/silicon/ai/AI in ai_list)
+				if(!AI.client || AI.stat == DEAD)
 					continue
 				to_chat(AI, "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>")
 		else

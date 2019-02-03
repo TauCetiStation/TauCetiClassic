@@ -1,7 +1,5 @@
-#define ALLOWED_ID_OVERLAYS list("id","gold","silver","centcom","ert","ert-leader","syndicate","syndicate-command")//List of overlays in pda.dmi
+#define ALLOWED_ID_OVERLAYS list("id", "gold", "silver", "centcom", "ert", "ert-leader", "syndicate", "syndicate-command", "clown", "mime") // List of overlays in pda.dmi
 //The advanced pea-green monochrome lcd of tomorrow.
-
-var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda
 	name = "\improper PDA"
@@ -54,6 +52,19 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
+/obj/item/device/pda/atom_init()
+	. = ..()
+	PDAs += src
+	PDAs = sortAtom(PDAs)
+	if(default_cartridge)
+		cartridge = new default_cartridge(src)
+	new /obj/item/weapon/pen(src)
+
+/obj/item/device/pda/Destroy()
+	PDAs -= src
+	if (src.id && prob(90)) //IDs are kept in 90% of the cases
+		src.id.loc = get_turf(src.loc)
+	return ..()
 
 /obj/item/device/pda/examine(mob/user)
 	..()
@@ -324,14 +335,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /*
  *	The Actual PDA
  */
-
-/obj/item/device/pda/atom_init()
-	. = ..()
-	PDAs += src
-	PDAs = sortAtom(PDAs)
-	if(default_cartridge)
-		cartridge = new default_cartridge(src)
-	new /obj/item/weapon/pen(src)
 
 /obj/item/device/pda/proc/can_use()
 
@@ -736,7 +739,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 		if("Toggle Door")
 			if(cartridge && cartridge.access_remote_door)
-				for(var/obj/machinery/door/poddoor/M in machines)
+				for(var/obj/machinery/door/poddoor/M in poddoor_list)
 					if(M.id == cartridge.remote_door_id)
 						if(M.density)
 							M.open()
@@ -1250,12 +1253,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		T.hotspot_expose(700,125)
 		explosion(T, 0, 0, 1, rand(1,2))
 	return
-
-/obj/item/device/pda/Destroy()
-	PDAs -= src
-	if (src.id && prob(90)) //IDs are kept in 90% of the cases
-		src.id.loc = get_turf(src.loc)
-	return ..()
 
 /obj/item/device/pda/clown/Crossed(mob/living/carbon/C) //Clown PDA is slippery.
 	if(istype(C))

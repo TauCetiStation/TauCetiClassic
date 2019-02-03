@@ -111,7 +111,7 @@
 					"<span class='italics'>You hear a ratchet.</span>")
 				update_icon()
 			else
-				var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector/) in loc
+				var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
 				if(!possible_port)
 					to_chat(user, "<span class='notice'>Nothing happens.</span>")
 					return

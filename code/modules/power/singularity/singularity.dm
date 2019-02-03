@@ -34,7 +34,7 @@
 		QDEL_IN(src, temp)
 	..()
 	START_PROCESSING(SSobj, src)
-	poi_list |= src
+	poi_list += src
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/singularity/atom_init_late()
@@ -45,7 +45,7 @@
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	poi_list.Remove(src)
+	poi_list -= src
 	return ..()
 
 /obj/singularity/attack_hand(mob/user)

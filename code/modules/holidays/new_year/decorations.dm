@@ -5,6 +5,11 @@
 	icon_state = "santa"
 	layer = 4.1
 
+/obj/item/decoration/attack_hand(mob/user)
+	var/choice = input("Do you want to take \the [src]?") in list("Yes", "Cancel")
+	if(choice == "Yes" && get_dist(src, user) <= 1)
+		..()
+
 /obj/item/decoration/afterattack(atom/target, mob/living/user, flag, params)
 	if(istype(target,/turf/simulated/wall))
 		usr.remove_from_mob(src)
@@ -16,7 +21,7 @@
 	desc = "Beautiful lights! Shinee!"
 	icon_state = "garland_on"
 	var/on = TRUE
-	var/brightness = 2
+	var/brightness = 4
 
 /obj/item/decoration/garland/proc/update_garland()
 	if(on)
@@ -30,6 +35,13 @@
 	. = ..()
 	light_color = pick("#FF0000", "#6111FF", "#FFA500", "#44FAFF")
 	update_garland()
+
+/obj/item/decoration/garland/attack_self(mob/user)
+	. = ..()
+	if(user.is_busy())
+		return
+	if(do_after(user, 5, target = src))
+		toggle()
 
 /obj/item/decoration/garland/verb/toggle()
 	set name = "Toggle garland"

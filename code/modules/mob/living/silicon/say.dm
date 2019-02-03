@@ -198,7 +198,7 @@
 
 	if (!message)
 		return
-	
+
 	var/area/A = get_area(src)
 	log_say("[name]/[key] : \[[A.name]/binary\]: [message]")
 
@@ -207,7 +207,7 @@
 
 	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[verb], \"[message]\"</span></span></i>"
 
-	for (var/mob/living/S in living_mob_list)
+	for (var/mob/living/S in alive_mob_list)
 		if(S.robot_talk_understand && (S.robot_talk_understand == robot_talk_understand)) // This SHOULD catch everything caught by the one below, but I'm not going to change it.
 			if(istype(S , /mob/living/silicon/ai))
 				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(src.name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
@@ -248,9 +248,8 @@
 
 	rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[verb], \"[message]\"</span></span></i>"
 
-	for (var/mob/M in dead_mob_list)
-		if(!isnewplayer(M) && !isbrain(M)) //No meta-evesdropping
-			M.show_message(rendered, 2)
+	for (var/mob/M in observer_list)
+		M.show_message(rendered, 2)
 
 #undef IS_AI
 #undef IS_ROBOT

@@ -32,7 +32,7 @@
 	display_name = "Vacuum-flask"
 	path = /obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask
 
-datum/gear/zippo
+/datum/gear/zippo
 	display_name = "Zippo lighter"
 	path = /obj/item/weapon/lighter/zippo
 	cost = 2

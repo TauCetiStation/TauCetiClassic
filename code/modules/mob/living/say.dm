@@ -162,13 +162,13 @@ var/list/department_radio_keys = list(
 		var/list/hearturfs = list()
 
 		for(var/I in hear)
-			if(istype(I, /mob/))
+			if(istype(I, /mob))
 				var/mob/M = I
 				listening += M
 				hearturfs += M.locs[1]
 				for(var/obj/O in M.contents)
 					listening_obj |= O
-			else if(istype(I, /obj/))
+			else if(istype(I, /obj))
 				var/obj/O = I
 				hearturfs += O.locs[1]
 				listening_obj |= O

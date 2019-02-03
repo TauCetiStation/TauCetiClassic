@@ -29,7 +29,7 @@ Pipelines + Other Objects -> Pipe network
 	var/icon_connect_type = "" //"-supply" or "-scrubbers"
 
 	var/pipe_color
-	var/global/datum/pipe_icon_manager/icon_manager
+	var/static/datum/pipe_icon_manager/icon_manager
 
 	var/device_type = 0
 	var/list/obj/machinery/atmospherics/nodes
@@ -246,7 +246,7 @@ Pipelines + Other Objects -> Pipe network
 	else
 		return FALSE
 
-obj/machinery/atmospherics/proc/check_connect_types(obj/machinery/atmospherics/atmos1, obj/machinery/atmospherics/atmos2)
+/obj/machinery/atmospherics/proc/check_connect_types(obj/machinery/atmospherics/atmos1, obj/machinery/atmospherics/atmos2)
 	return (atmos1.connect_types & atmos2.connect_types)
 
 /obj/machinery/atmospherics/proc/check_connect_types_construction(obj/machinery/atmospherics/atmos1, obj/item/pipe/pipe2)

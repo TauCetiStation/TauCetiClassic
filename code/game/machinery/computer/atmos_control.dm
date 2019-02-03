@@ -25,7 +25,7 @@
 	if(current)
 		dat += specific()
 	else
-		for(var/obj/machinery/alarm/alarm in machines)
+		for(var/obj/machinery/alarm/alarm in alarm_list)
 			if(alarm.hidden_from_console)
 				continue
 			dat += "<a href='?src=\ref[src]&alarm=\ref[alarm]'>"
