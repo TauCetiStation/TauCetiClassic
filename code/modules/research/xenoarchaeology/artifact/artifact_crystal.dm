@@ -1,8 +1,8 @@
 
 /obj/machinery/power/crystal
 	name = "large crystal"
-	icon = 'icons/obj/xenoarchaeology.dmi'
-	icon_state = ""
+	icon = 'icons/obj/xenoarchaeology/artifacts.dmi'
+	icon_state = "artifact_11"
 	density = TRUE
 	anchored = FALSE
 
@@ -18,7 +18,7 @@
 	if(anchored)
 		connect_to_network()
 
-	icon_custom_crystal = pick("ano70", "ano80")
+	icon_custom_crystal = pick("artifact_11", "artifact_12")
 	icon_state = icon_custom_crystal
 
 	desc = pick(\
@@ -104,7 +104,7 @@
 		icon_state = icon_custom_crystal
 		generate_power_stop()
 	if(wired)
-		src.overlays += image('icons/obj/xenoarchaeology.dmi', "crystal_overlay")
+		src.overlays += image('icons/obj/xenoarchaeology/artifacts.dmi', "crystal_overlay")
 	else
 		overlays.Cut()
 	return

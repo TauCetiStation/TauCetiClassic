@@ -1,13 +1,14 @@
 ////////////////////////////////
 //Old Alden-Saraspova counter///
 ////////////////////////////////
+// the old one that is used by borgs
 /obj/item/device/ano_scanner
 	name = "Alden-Saraspova counter"
 	desc = "Aids in triangulation of exotic particles."
-	icon = 'icons/obj/xenoarchaeology.dmi'
-	icon_state = "flashgun"
+	icon = 'icons/obj/xenoarchaeology/tools.dmi'
+	icon_state = "anoscanner_borg"
 	item_state = "lampgreen"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_BELT
 	var/nearest_artifact_id = "unknown"
 	var/nearest_artifact_distance = -1
@@ -33,7 +34,7 @@
 	to_chat(user, "<span class='info'>[message]</span>")
 
 /obj/item/device/ano_scanner/proc/scan()
-	//set background = 1
+	// set background = 1
 
 	last_scan_time = world.time
 	nearest_artifact_distance = -1
@@ -57,7 +58,7 @@
 	name = "wave scanner backpack"
 	desc = "Brand new NanoTrasen wave scanner, designed to search and analyze exotic waves."
 	slot_flags = SLOT_BACK
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "wave_scanner"
 	item_state = "wave_scanner"
 	w_class = ITEM_SIZE_LARGE
@@ -144,11 +145,11 @@
 /obj/item/device/searcher
 	name = "exotic wave searcher"
 	desc = "Searches for exotic waves."
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "wave_searcher"
 	item_state = "wave_searcher"
 	w_class = ITEM_SIZE_LARGE
-	throwforce = 0 //we shall not abuse
+	throwforce = 0 // we shall not abuse
 	throw_range = 0
 	slot_flags = null
 	var/nearest_artifact_id = "unknown"

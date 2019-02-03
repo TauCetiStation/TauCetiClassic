@@ -1,5 +1,5 @@
 
-//endless reagents!
+// endless reagents!
 /obj/item/weapon/reagent_containers/glass/replenishing
 	var/spawning_id
 
@@ -53,7 +53,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 /obj/item/weapon/vampiric
 	name = "statuette"
 	icon_state = "statuette"
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/finds.dmi'
 	var/charges = 0
 	var/list/nearby_mobs = list()
 	var/last_bloodcall = 0
@@ -217,7 +217,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 /obj/item/weapon/strangetool
 	name = "strange device"
 	desc = "This device is made of metal, emits a strange purple formation of unknown origin."
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/finds.dmi'
 	icon_state = "strange_tool"
 	var/last_time_used = 0
 

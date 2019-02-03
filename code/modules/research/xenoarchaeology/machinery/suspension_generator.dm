@@ -1,7 +1,7 @@
 /obj/machinery/suspension_gen
 	name = "suspension field generator"
 	desc = "It has stubby legs bolted up against it's body for stabilising."
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/machinery.dmi'
 	icon_state = "suspension_closed_panel"
 	density = 1
 	var/obj/item/weapon/stock_parts/cell/cell

@@ -27,4 +27,7 @@
 		"/obj/item/weapon/storage/box/excavation",
 		"/obj/item/weapon/anobattery",
 		"/obj/item/device/ano_scanner",
+		"/obj/item/taperoll/science",
+		"/obj/item/weapon/pickaxe/excavationdrill",
+		"/obj/item/weapon/pickaxe/excavationdrill/adv",
 		"/obj/item/weapon/pickaxe/hand")
