@@ -76,6 +76,26 @@
 	name = "red candle"
 	icon_state = "red_candle4"
 
+/obj/item/trash/chinese1
+	name = "chow mein"
+	icon_state = "chinese1"
+
+/obj/item/trash/chinese2
+	name = "Admiral Yamamoto carp"
+	icon_state = "chinese2"
+
+/obj/item/trash/chinese3
+	name = "chinese newdles"
+	icon_state = "chinese3"
+
+/obj/item/trash/chinese4
+	name = "fried rice"
+	icon_state = "chinese4"
+
+/obj/item/trash/fries
+	name = "Space Fries"
+	icon_state = "fries"
+
 
 /obj/item/trash/candle/ghost/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
 	..()
