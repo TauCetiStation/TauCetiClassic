@@ -535,13 +535,12 @@
 					message = "<B>[src]</B> sadly can't find anybody to give daps to, and daps \himself. Shameful."
 
 		if("pain")
-			if(!message)
-				if(miming)
-					message = "<span class='bold'>[src]</span> appears to be in pain!"
-					m_type = 1 // Can't we get defines for these?
-				else
-					message = "<span class='bold'>[src]</span> twists in pain."
-					m_type = 1
+			if(miming)
+				message = "<span class='bold'>[src]</span> appears to be in pain!"
+				m_type = 1 // Can't we get defines for these?
+			else
+				message = "<span class='bold'>[src]</span> [message ? message : "twists in pain"]."
+				m_type = 1
 
 			cloud_emote = "cloud-pain"
 

@@ -52,7 +52,7 @@
 	if(!(def_zone == BP_HEAD))
 		return ..()
 
-	if(	!(locate(/obj/machinery/optable, M.loc) && M.resting) && ( !(locate(/obj/structure/table/, M.loc) && M.lying) && prob(50) ) )
+	if(	!(locate(/obj/machinery/optable, M.loc) && M.resting) && ( !(locate(/obj/structure/table, M.loc) && M.lying) && prob(50) ) )
 		return ..()
 
 	var/mob/living/carbon/human/H = M

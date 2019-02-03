@@ -43,7 +43,7 @@
 var/mining_shuttle_moving = 0
 var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
-proc/move_mining_shuttle()
+/proc/move_mining_shuttle()
 	if(mining_shuttle_moving)	return
 	mining_shuttle_moving = 1
 	spawn(mining_shuttle_tickstomove*10)
@@ -364,8 +364,8 @@ proc/move_mining_shuttle()
 	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 	drill_verb = "hammering"
 
-	attackby()
-		return
+/obj/item/weapon/pickaxe/drill/jackhammer/attackby()
+	return
 
 /obj/item/weapon/pickaxe/drill/diamond_drill //When people ask about the badass leader of the mining tools, they are talking about ME!
 	name = "diamond mining drill"
@@ -384,8 +384,8 @@ proc/move_mining_shuttle()
 	desc = ""
 	drill_verb = "drilling"
 
-	attackby()
-		return
+/obj/item/weapon/pickaxe/drill/borgdrill/attackby()
+	return
 
 
 
@@ -493,7 +493,7 @@ proc/move_mining_shuttle()
 	var/range = 3
 	var/power = 4
 
-obj/item/projectile/kinetic/atom_init()
+/obj/item/projectile/kinetic/atom_init()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))
 		return

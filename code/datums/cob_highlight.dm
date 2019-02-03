@@ -3,16 +3,15 @@
 /client/var/datum/craft_or_build/cob
 
 /datum/craft_or_build
-	var
-		in_building_mode = FALSE
-		datum/stack_recipe/from_recipe = null
-		atom/build_this = null
-		obj/item/stack/using_this = null
-		turf/over_this = null
-		busy = FALSE
-		build_direction = NORTH
-		image/b_overlay = null
-		obj/effect/holo_build = null
+	var/in_building_mode = FALSE
+	var/datum/stack_recipe/from_recipe = null
+	var/atom/build_this = null
+	var/obj/item/stack/using_this = null
+	var/turf/over_this = null
+	var/busy = FALSE
+	var/build_direction = NORTH
+	var/image/b_overlay = null
+	var/obj/effect/holo_build = null
 
 /datum/craft_or_build/proc/turn_on_build_overlay(client/C, datum/stack_recipe/recipe, using)
 	if(!C.cob.in_building_mode)

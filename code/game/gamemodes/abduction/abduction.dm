@@ -391,7 +391,7 @@
 	var/target = pick(list("pets","lights","monkeys","fruits","shoes","bars of soap"))
 	explanation_text += " [target]."
 
-datum/objective/abductee/capture
+/datum/objective/abductee/capture
 	explanation_text = "Capture"
 
 /datum/objective/abductee/capture/New()

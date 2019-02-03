@@ -19105,7 +19105,9 @@
 	},
 /area/shuttle/officer/velocity)
 "fjb" = (
-/obj/machinery/door/unpowered/shuttle/officer,
+/obj/machinery/door/unpowered/shuttle/officer{
+	dock_tag = "arrival_officer"
+	},
 /turf/simulated/shuttle/floor/shuttle_new{
 	dir = 8;
 	icon_state = "vel_f01"

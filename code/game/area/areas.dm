@@ -11,7 +11,7 @@
 	layer = 10
 	mouse_opacity = 0
 
-	var/global/global_uid = 0
+	var/static/global_uid = 0
 	var/uid
 
 	var/parallax_movedir = 0
@@ -420,7 +420,7 @@ var/list/ghostteleportlocs = list()
 	if(istype(get_turf(mob), /turf/space)) // Can't fall onto nothing.
 		return
 
-	if(istype(mob,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
+	if(istype(mob,/mob/living/carbon/human))  // Only humans can wear magboots, so we give them a chance to.
 		var/mob/living/carbon/human/H = mob
 		if((istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP)))
 			return

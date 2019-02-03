@@ -272,24 +272,24 @@
 		return
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
-		if(istype(src, /obj/item/weapon/melee/))
+		if(istype(src, /obj/item/weapon/melee))
 			if(src.w_class < 4)
 				to_chat(user, "\red \The [src] is far too small for you to pick up.")
 				return
-		else if(istype(src, /obj/item/weapon/gun/))
+		else if(istype(src, /obj/item/weapon/gun))
 			if(prob(20))
 				user.say(pick(";RAAAAAAAARGH! WEAPON!", ";HNNNNNNNNNGGGGGGH! I HATE WEAPONS!!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGUUUUUNNNNHH!", ";AAAAAAARRRGH!" ))
 			user.visible_message("\blue [user] crushes \a [src] with hands.", "\blue You crush the [src].")
 			qdel(src)
 			//user << "\red \The [src] is far too small for you to pick up."
 			return
-		else if(istype(src, /obj/item/clothing/))
+		else if(istype(src, /obj/item/clothing))
 			if(prob(20))
 				to_chat(user, "\red [pick("You are not interested in [src].", "This is nothing.", "Humans stuff...", "A cat? A scary cat...",
 				"A Captain? Let's smash his skull! I don't like Captains!",
 				"Awww! Such lovely doggy! BUT I HATE DOGGIES!!", "A woman... A lying woman! I love womans! Fuck womans...")]")
 			return
-		else if(istype(src, /obj/item/weapon/book/))
+		else if(istype(src, /obj/item/weapon/book))
 			to_chat(user, "\red A book! I LOVE BOOKS!!")
 		else if(istype(src, /obj/item/weapon/reagent_containers/food))
 			if(prob(20))
@@ -745,7 +745,7 @@
 
 /obj/item/proc/get_loc_turf()
 	var/atom/L = loc
-	while(L && !istype(L, /turf/))
+	while(L && !istype(L, /turf))
 		L = L.loc
 	return loc
 

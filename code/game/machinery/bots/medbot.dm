@@ -486,7 +486,7 @@
 		if (!istype(D, /obj/machinery/door/firedoor) && D.check_access(src.botcard) && !istype(D,/obj/machinery/door/poddoor))
 			D.open()
 			src.frustration = 0
-	else if ((istype(M, /mob/living/)) && (!src.anchored))
+	else if ((istype(M, /mob/living)) && (!src.anchored))
 		src.loc = M.loc
 		src.frustration = 0
 	return

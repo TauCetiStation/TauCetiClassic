@@ -45,7 +45,7 @@
 	// see code\game\objects\items\weapons\kitchen.dm line 263
 
 	if ( isturf(target) || istype(target,/obj/structure/table) )
-		var/foundtable = istype(target,/obj/structure/table/)
+		var/foundtable = istype(target,/obj/structure/table)
 		if ( !foundtable ) //it must be a turf!
 			for(var/obj/structure/table/T in target)
 				foundtable = 1
