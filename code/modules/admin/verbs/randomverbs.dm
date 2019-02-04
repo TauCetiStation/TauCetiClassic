@@ -1108,3 +1108,24 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	feedback_add_details("admin_verb","FAXMESS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	message_admins("Fax message was created by [key_name_admin(usr)] and sent to [department]")
 	send2slack_custommsg("Fax message was created by [key_name_admin(usr)] and sent to [department]: [sent_text]")
+
+/client/proc/add_player_age()
+	set category = "Debug"
+	set name = "Increase player age"
+	set desc = "Allow a new player to skip the job time limits."
+
+	if(!check_rights(R_DEBUG))
+		return
+
+	var/client/target = input("Select player to increase his in-game age to [config.add_player_age_value] minutes") as null|anything in clients
+
+	if(!target)
+		return
+
+	if(target.player_ingame_age < config.add_player_age_value)
+		log_admin("[key_name(usr)] increased [key_name(target)] in-game age from [target.player_ingame_age] to [config.add_player_age_value]")
+		message_admins("[key_name_admin(usr)] increased [key_name_admin(target)] in-game age from [target.player_ingame_age] to [config.add_player_age_value]")
+
+		target.player_ingame_age = config.add_player_age_value
+	else
+		to_chat(src, "This player already has more minutes than [config.add_player_age_value]!")

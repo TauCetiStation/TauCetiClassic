@@ -175,7 +175,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/toggledebuglogs,
 	/client/proc/view_runtimes,
 	/client/proc/cmd_display_del_log,
-	/client/proc/cmd_display_init_log
+	/client/proc/cmd_display_init_log,
+	/client/proc/add_player_age,
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -269,6 +270,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_debug_tog_aliens,
 	/client/proc/cmd_debug_tog_vcounter,
 	/client/proc/enable_debug_verbs,
+	/client/proc/add_player_age,
 	/proc/possess,
 	/proc/release
 	)
