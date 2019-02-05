@@ -1112,9 +1112,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/add_player_age()
 	set category = "Debug"
 	set name = "Increase player age"
-	set desc = "Allow a new player to skip the job time limits."
+	set desc = "Allow a new player to skip the job time restrictions."
 
 	if(!check_rights(R_DEBUG))
+		return
+
+	if(!config.use_ingame_minutes_restriction_for_jobs)
 		return
 
 	var/client/target = input("Select player to increase his in-game age to [config.add_player_age_value] minutes") as null|anything in clients
