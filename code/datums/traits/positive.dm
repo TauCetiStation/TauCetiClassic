@@ -41,7 +41,9 @@
 				break
 		endblood = blood_in_target - bloodsucked
 		log_attack("[key_name(src)] bloodsuck [key_name(target)] and drink [bloodsucked] blood")
-		message_admins("[key_name_admin(src)] bloodsuck [key_name_admin(target)] and drink [bloodsucked] blood ([endblood]) [ADMIN_JMP(src)]")
+		message_admins("[key_name_admin(src)] bloodsuck [key_name_admin(target)], drinks [bloodsucked] from [blood_in_target] blood (now [endblood]) for [bloodsucked/8] times [ADMIN_JMP(src)]")
+		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been bloodsucked by [src.name] ([src.ckey]) and loss [bloodsucked] of [blood_in_target] blood</font>")
+		src.attack_log += text("\[[time_stamp()]\] <font color='red'>Bloodsuck from [target.name] ([target.ckey]) [bloodsucked] of [blood_in_target] blood</font>")
 		BP.take_damage(5, null, DAM_SHARP, "Fangs")
 
 /datum/quirk/Hematophagus/on_spawn()
