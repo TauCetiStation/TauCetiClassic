@@ -51,7 +51,7 @@
 			return
 
 		var/obj/item/stack/sheet/rglass/RG = new (user.loc)
-		RG.add_fingerprint(user)	
+		RG.add_fingerprint(user)
 		for(var/obj/item/stack/sheet/rglass/G in user.loc)
 			if(G==RG)
 				continue
@@ -254,11 +254,11 @@
 			if(QDELETED(src) || src.loc != user)
 				return 1
 
-			if(isturf(user.loc) && locate(/obj/structure/windoor_assembly/, user.loc))
+			if(isturf(user.loc) && locate(/obj/structure/windoor_assembly, user.loc))
 				to_chat(user, "\red There is already a windoor assembly in that location.")
 				return 1
 
-			if(isturf(user.loc) && locate(/obj/machinery/door/window/, user.loc))
+			if(isturf(user.loc) && locate(/obj/machinery/door/window, user.loc))
 				to_chat(user, "\red There is already a windoor in that location.")
 				return 1
 
@@ -332,7 +332,7 @@
 			return
 	return ..()
 
-/obj/item/weapon/shard/Crossed(AM as mob|obj)
+/obj/item/weapon/shard/Crossed(atom/movable/AM)
 	if(ismob(AM))
 		var/mob/M = AM
 		to_chat(M, "\red <B>You step in the broken glass!</B>")

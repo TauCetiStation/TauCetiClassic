@@ -82,7 +82,7 @@
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
-/obj/item/device/proc/health_analyze(mob/living/M, mob/living/user, mode)
+/obj/item/proc/health_analyze(mob/living/M, mob/living/user, mode)
 	var/message
 	if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>", "<span class = 'warning'>You try to analyze the floor's vitals!</span>")
@@ -139,6 +139,8 @@
 					var/datum/data/record/V = virusDB[ID]
 					message += "<span class='warning'>Warning: Pathogen [V.fields["name"]] detected in subject's blood. Known antigen : [V.fields["antigen"]]</span><br>"
 //			user.show_message(text("\red Warning: Unknown pathogen detected in subject's blood."))
+		if(C.roundstart_quirks.len)
+			message += "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span><br>"
 	if(M.getCloneLoss())
 		user.show_message("<span class='warning'>Subject appears to have been imperfectly cloned.</span>")
 	for(var/datum/disease/D in M.viruses)
@@ -270,24 +272,24 @@
 		return
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
-		if(istype(src, /obj/item/weapon/melee/))
+		if(istype(src, /obj/item/weapon/melee))
 			if(src.w_class < 4)
 				to_chat(user, "\red \The [src] is far too small for you to pick up.")
 				return
-		else if(istype(src, /obj/item/weapon/gun/))
+		else if(istype(src, /obj/item/weapon/gun))
 			if(prob(20))
 				user.say(pick(";RAAAAAAAARGH! WEAPON!", ";HNNNNNNNNNGGGGGGH! I HATE WEAPONS!!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGUUUUUNNNNHH!", ";AAAAAAARRRGH!" ))
 			user.visible_message("\blue [user] crushes \a [src] with hands.", "\blue You crush the [src].")
 			qdel(src)
 			//user << "\red \The [src] is far too small for you to pick up."
 			return
-		else if(istype(src, /obj/item/clothing/))
+		else if(istype(src, /obj/item/clothing))
 			if(prob(20))
 				to_chat(user, "\red [pick("You are not interested in [src].", "This is nothing.", "Humans stuff...", "A cat? A scary cat...",
 				"A Captain? Let's smash his skull! I don't like Captains!",
 				"Awww! Such lovely doggy! BUT I HATE DOGGIES!!", "A woman... A lying woman! I love womans! Fuck womans...")]")
 			return
-		else if(istype(src, /obj/item/weapon/book/))
+		else if(istype(src, /obj/item/weapon/book))
 			to_chat(user, "\red A book! I LOVE BOOKS!!")
 		else if(istype(src, /obj/item/weapon/reagent_containers/food))
 			if(prob(20))
@@ -743,7 +745,7 @@
 
 /obj/item/proc/get_loc_turf()
 	var/atom/L = loc
-	while(L && !istype(L, /turf/))
+	while(L && !istype(L, /turf))
 		L = L.loc
 	return loc
 

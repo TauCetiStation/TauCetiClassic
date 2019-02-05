@@ -290,7 +290,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/computer/communications/attackby(obj/I, mob/user)
-	if(istype(I,/obj/item/weapon/card/emag/))
+	if(istype(I,/obj/item/weapon/card/emag))
 		src.emagged = 1
 		to_chat(user, "You scramble the communication routing circuits!")
 	else

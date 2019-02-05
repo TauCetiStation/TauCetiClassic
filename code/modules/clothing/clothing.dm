@@ -182,9 +182,10 @@ BLIND     // can't see anything
 	w_class = 2.0
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 0.9
-	var/wired = 0
+	var/wired = FALSE
 	var/obj/item/weapon/stock_parts/cell/cell = 0
-	var/clipped = 0
+	var/clipped = FALSE
+	var/protect_fingers = TRUE // Are we gonna get hurt when searching in the trash piles
 	body_parts_covered = ARMS
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
@@ -524,7 +525,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/proc/set_sensors(mob/usr)
 	var/mob/M = usr
-	if (istype(M, /mob/dead/)) return
+	if (istype(M, /mob/dead)) return
 	if (usr.stat || usr.restrained()) return
 	if(has_sensor >= 2)
 		to_chat(usr, "The controls are locked.")

@@ -129,7 +129,7 @@
 			destinations_choice[G.name] = G
 
 	//away gates always should be able to allow pass on station
-	var/atom/station_gate = locate(/obj/machinery/gateway/center/station/)
+	var/atom/station_gate = locate(/obj/machinery/gateway/center/station)
 	if(station_gate && !(station_gate in destinations_choice) && !istype(src,/obj/machinery/gateway/center/station))
 		destinations_choice[station_gate.name] = station_gate
 
@@ -223,7 +223,7 @@
 		qdel(AM) // THIS IS BLUESPACE FELLAS
 
 /* station gate tweaks */
-/obj/machinery/gateway/center/station/
+/obj/machinery/gateway/center/station
 	name = "NSS Exodus Gateway"
 	block_exile_implant = FALSE
 

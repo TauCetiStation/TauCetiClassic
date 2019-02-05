@@ -1,4 +1,4 @@
-/mob/living/simple_animal/vox/armalis/
+/mob/living/simple_animal/vox/armalis
 
 	name = "serpentine alien"
 	real_name = "serpentine alien"

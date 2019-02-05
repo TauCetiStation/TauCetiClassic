@@ -246,11 +246,11 @@
 	icon_state = "purplecomb"
 	item_state = "purplecomb"
 
-	attack_self(mob/user)
-		if(user.r_hand == src || user.l_hand == src)
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [] uses [] to comb their hair with incredible style and sophistication. What a guy.", user, src), 1)
-		return
+/obj/item/weapon/fluff/cado_keppel_1/attack_self(mob/user)
+	if(user.r_hand == src || user.l_hand == src)
+		for(var/mob/O in viewers(user, null))
+			O.show_message(text("\red [] uses [] to comb their hair with incredible style and sophistication. What a guy.", user, src), 1)
+	return
 
 /obj/item/weapon/fluff/hugo_cinderbacth_1 //thatoneguy: Hugo Cinderbatch
 	name = "Old Cane"

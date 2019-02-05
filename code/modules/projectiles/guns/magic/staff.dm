@@ -1,4 +1,4 @@
-obj/item/weapon/gun/magic/staff/
+/obj/item/weapon/gun/magic/staff
 	slot_flags = SLOT_BACK
 	icon_state = "staff"
 	w_class = 4
@@ -19,7 +19,7 @@ obj/item/weapon/gun/magic/staff/
 	item_state = "staffofanimation"
 	item_color = "staffofanimation"
 
-obj/item/weapon/gun/magic/staff/healing
+/obj/item/weapon/gun/magic/staff/healing
 	name = "staff of healing"
 	desc = "An artefact that spits bolts of restoring magic which can remove ailments of all kinds and even raise the dead."
 	ammo_type = /obj/item/ammo_casing/magic/heal

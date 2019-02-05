@@ -28,24 +28,32 @@
 	return ..() && BP.open == 1 && target.op_stage.lipoplasty == 0
 
 /datum/surgery_step/lipoplasty/cut_fat/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] begins to cut away [target]'s excess fat with \the [tool].", \
-	"You begin to cut away [target]'s excess fat with \the [tool].")
-	if (target.overeatduration > 0)
-		target.custom_pain("Something hurts horribly in your chest!",1)
+	if(!target.has_trait(TRAIT_FAT))
+		user.visible_message("[user] begins to cut away [target]'s excess fat with \the [tool].",
+			"You begin to cut away [target]'s excess fat with \the [tool].")
+		if (target.overeatduration > 0)
+			target.custom_pain("Something hurts horribly in your chest!", 1)
+	else
+		user.visible_message("[user] starts inspecting [target]'s body.",
+			"You begin inspecting [target]'s body.")
 	..()
 
 /datum/surgery_step/lipoplasty/cut_fat/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (target.overeatduration > 0)
-		user.visible_message("\blue [user] cuts [target]'s excess fat loose with \the [tool].",		\
-		"\blue You have cut [target]'s excess fat loose with \the [tool].")
-		target.op_stage.lipoplasty = 1
+	if(!target.has_trait(TRAIT_FAT))
+		if (target.overeatduration > 0)
+			user.visible_message("<span class='notice'>[user] cuts [target]'s excess fat loose with \the [tool].</span>",
+				"<span class='notice'>You have cut [target]'s excess fat loose with \the [tool].</span>")
+			target.op_stage.lipoplasty = 1
+		else
+			user.visible_message("<span class='notice'>Unfortunately, there is nothing to cut on [target] with \the [tool].</span>",
+				"<span class='notice'>Unfortunately, there is nothing to cut on [target] with \the [tool].</span>")
 	else
-		user.visible_message("\blue Unfortunately, there is nothing to cut on [target] with \the [tool].",		\
-		"\blue Unfortunately, there is nothing to cut on [target] with \the [tool].")
+		user.visible_message("<span class='notice'>[user] realizes, that there is no known solution to resolve [target]'s fatness problem.</span>",
+			"<span class='notice'>Unfortunately, there is nothing you can do with the [target]'s excess fat.</span>")
 
 /datum/surgery_step/lipoplasty/cut_fat/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("\red [user]'s hand slips, cutting [target]'s chest with \the [tool]!" , \
-	"\red Your hand slips, cutting [target]'s chest with \the [tool]!" )
+	user.visible_message("<span class='red'>[user]'s hand slips, cutting [target]'s chest with \the [tool]!</span>",
+		"<span class='red'>Your hand slips, cutting [target]'s chest with \the [tool]!</span>")
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.createwound(CUT, 30)
 

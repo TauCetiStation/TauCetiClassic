@@ -26,6 +26,7 @@
 
 	var/light_disabled = 0
 	var/alarm_on = 0
+	var/painted = FALSE // Barber's paint can obstruct camera's view.
 
 /obj/machinery/camera/atom_init()
 	. = ..()
@@ -73,6 +74,11 @@
 	else
 		icon_state = "[initial(icon_state)]"
 
+/obj/machinery/camera/examine(mob/user)
+	..()
+	if(painted)
+		to_chat(user, "<span class='warning'>This camera appears to be painted.</span>")
+
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof() && status)
 		if(prob(100/severity))
@@ -84,10 +90,20 @@
 			..()
 
 /obj/machinery/camera/proc/fix_emp_state(list/previous_network)
-	network = previous_network
 	stat &= ~EMPED
-	cancelCameraAlarm()
-	toggle_cam(TRUE)
+	if(!painted)
+		network = previous_network
+		cancelCameraAlarm()
+		toggle_cam(TRUE)
+
+/obj/machinery/camera/proc/remove_paint_state()
+	if(!painted) // Water and paint remover can remove paint before the callback call, failsafe.
+		return
+	painted = FALSE
+	if(!(stat & EMPED))
+		visible_message("[bicon(src)] <span class='notice'>Paint drips from [src].</span>")
+		cancelCameraAlarm()
+		toggle_cam(FALSE)
 
 /obj/machinery/camera/ex_act(severity)
 	if(src.invuln)
@@ -232,9 +248,9 @@
 	if(show_message)
 		var/status_message = (status ? "reactivates" : "deactivates")
 		if(user)
-			visible_message("<span class='danger'>[user] [status_message] [src]!</span>")
+			visible_message("[bicon(src)] <span class='danger'>[user] [status_message] [src]!</span>")
 		else
-			visible_message("<span class='danger'>\The [src] [status_message]!</span>")
+			visible_message("[bicon(src)] <span class='danger'>\The [src] [status_message]!</span>")
 		playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
 
 	update_icon()
@@ -260,12 +276,14 @@
 	for(var/mob/living/silicon/S in silicon_list)
 		S.cancelAlarm("Camera", get_area(src), src)
 
-/obj/machinery/camera/proc/can_use()
+/obj/machinery/camera/proc/can_use(check_paint = TRUE)
 	if(!status)
-		return 0
+		return FALSE
 	if(stat & EMPED)
-		return 0
-	return 1
+		return FALSE
+	if(check_paint && painted && !isXRay())
+		return FALSE
+	return TRUE
 
 /obj/machinery/camera/proc/can_see()
 	var/list/see = null

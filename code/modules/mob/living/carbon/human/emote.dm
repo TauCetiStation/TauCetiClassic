@@ -19,6 +19,9 @@
 
 	if(stat == DEAD && (act != "deathgasp"))
 		return
+
+	var/cloud_emote = ""
+
 	switch(act)
 		if ("airguitar")
 			if (!src.restrained())
@@ -205,11 +208,13 @@
 				m_type = 1
 			else
 				if (!muzzled)
-					message = "<B>[src]</B> gasps!"
+					message = "<B>[src]</B> [message ? message : "gasps!"]"
 					m_type = 2
 				else
 					message = "<B>[src]</B> makes a weak noise."
 					m_type = 2
+
+			cloud_emote = "cloud-gasp"
 
 		if ("deathgasp")
 			message = "<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."
@@ -529,8 +534,18 @@
 				else
 					message = "<B>[src]</B> sadly can't find anybody to give daps to, and daps \himself. Shameful."
 
+		if("pain")
+			if(miming)
+				message = "<span class='bold'>[src]</span> appears to be in pain!"
+				m_type = 1 // Can't we get defines for these?
+			else
+				message = "<span class='bold'>[src]</span> [message ? message : "twists in pain"]."
+				m_type = 1
+
+			cloud_emote = "cloud-pain"
+
 		if ("scream")
-			if (miming)
+			if(miming)
 				message = "<B>[src]</B> acts out a scream!"
 				m_type = 1
 			else
@@ -548,11 +563,14 @@
 								m_type = 2
 								lastScream = world.time
 						else
-							message = "<B>[src]</B> screams!"
+							if(!message)
+								message = "<B>[src]</B> screams!"
 							m_type = 2
 					else
 						message = "<B>[src]</B> makes a very loud noise."
 						m_type = 2
+
+			cloud_emote = "cloud-scream"
 
 		if ("help")
 			to_chat(src, "blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough,\ncry, custom, deathgasp, drool, eyebrow, frown, gasp, giggle, groan, grumble, handshake, hug-(none)/mob, glare-(none)/mob,\ngrin, laugh, look-(none)/mob, moan, mumble, nod, pale, point-atom, raise, salute, shake, shiver, shrug,\nsigh, signal-#1-10, smile, sneeze, sniff, snore, stare-(none)/mob, tremble, twitch, twitch_s, whimper,\nwink, yawn")
@@ -560,11 +578,7 @@
 		else
 			to_chat(src, "\blue Unusable emote '[act]'. Say *help for a list.")
 
-
-
-
-
-	if (message)
+	if(message)
 		log_emote("[name]/[key] : [message]")
 
  //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
@@ -583,6 +597,11 @@
 		else if (m_type & 2)
 			for (var/mob/O in (hearers(src.loc, null) | get_mobs_in_view(world.view,src)))
 				O.show_message(message, m_type)
+
+	if(cloud_emote)
+		var/image/emote_bubble = image('icons/mob/emote.dmi', src, cloud_emote, MOB_LAYER + 1)
+		flick_overlay(emote_bubble, clients, 30)
+		QDEL_IN(emote_bubble, 3 SECONDS)
 
 /mob/living/carbon/human/verb/pose()
 	set name = "Set Pose"

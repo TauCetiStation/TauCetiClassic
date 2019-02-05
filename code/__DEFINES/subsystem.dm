@@ -19,8 +19,9 @@
 // Subsystem init_order, from highest priority to lowest priority
 // The numbers just define the ordering, they are meaningless otherwise.
 
-#define SS_INIT_FLUIDS    9
-#define SS_INIT_JOBS      8
+#define SS_INIT_FLUIDS    10
+#define SS_INIT_JOBS      9
+#define SS_INIT_QUIRKS    8
 #define SS_INIT_MAPPING   7
 #define SS_INIT_XENOARCH  6
 #define SS_INIT_ATOMS     5
@@ -39,6 +40,7 @@
 #define SS_PRIORITY_PARALAX    65
 #define SS_PRIORITY_DEFAULT    50
 #define SS_PRIORITY_OBJECTS    40
+#define SS_PRIORITY_QUIRKS     40
 #define SS_PRIORITY_ORBIT      35
 #define SS_PRIORITY_SPACEDRIFT 30
 #define SS_PRIORITY_THROWING   25
@@ -61,6 +63,7 @@
 #define SS_WAIT_SHUTTLES   10
 #define SS_WAIT_VOTE       10
 #define SS_WAIT_AIR        10
+#define SS_WAIT_QUIRKS     10
 #define SS_WAIT_DEFAULT    20
 #define SS_WAIT_SUN        600
 

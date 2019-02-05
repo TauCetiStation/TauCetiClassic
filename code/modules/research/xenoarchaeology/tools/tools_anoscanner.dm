@@ -1,3 +1,6 @@
+////////////////////////////////
+//Old Alden-Saraspova counter///
+////////////////////////////////
 /obj/item/device/ano_scanner
 	name = "Alden-Saraspova counter"
 	desc = "Aids in triangulation of exotic particles."
@@ -46,10 +49,11 @@
 			SSxenoarch.turfs_with_artifacts.Remove(T)
 	cur_turf.visible_message("<span class='info'>[src] clicks.</span>")
 
+/////////////////////////////////////////////////
+//Brand new version of Alden-Saraspova counter///
+/////////////////////////////////////////////////
 
-
-
-/obj/item/device/wave_scanner_backpack			//Same as /obj/item/device/ano_scanner but backpack
+/obj/item/device/wave_scanner_backpack
 	name = "wave scanner backpack"
 	desc = "Brand new NanoTrasen wave scanner, designed to search and analyze exotic waves."
 	slot_flags = SLOT_BACK
@@ -81,12 +85,13 @@
 		return
 
 	if(processor.loc == src)
-		//Detach the searcher into the user's hands
+		// Detach the searcher into the user's hands
 		if(!M.put_in_hands(processor))
 			to_chat(M, "<span class='warning'>You need a free hand to hold the [processor]!</span>")
 			return
+		playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
 	else
-		//Remove from their hands and put back "into" the backpack
+		// Remove from their hands and put back "into" the backpack
 		remove_processor()
 
 /obj/item/device/wave_scanner_backpack/equipped(mob/user, slot)
@@ -102,6 +107,7 @@
 		var/mob/M = processor.loc
 		if(M.drop_from_inventory(processor, src))
 			to_chat(M, "<span class='notice'>\The [processor] snaps back into the [src].</span>")
+			playsound(src, 'sound/items/buttonswitch.ogg', 50, 1)
 	else
 		processor.forceMove(src)
 
@@ -143,6 +149,7 @@
 	item_state = "wave_searcher"
 	w_class = ITEM_SIZE_LARGE
 	throwforce = 0 //we shall not abuse
+	throw_range = 0
 	slot_flags = null
 	var/nearest_artifact_id = "unknown"
 	var/nearest_artifact_distance = -1
@@ -165,7 +172,9 @@
 	..()
 	if(wavescanner)
 		wavescanner.remove_processor()
+		playsound(src, 'sound/items/buttonswitch.ogg', 50, 1)
 	else
+		playsound(src, 'sound/items/buttonswitch.ogg', 50, 1)
 		qdel(src)
 
 /obj/item/device/searcher/afterattack(obj/target, mob/user, proximity)
@@ -173,12 +182,23 @@
 		return
 	..()
 
+/obj/item/device/searcher/after_throw(datum/callback/callback)
+	..()
+	if(wavescanner)
+		wavescanner.remove_processor()
+		playsound(src, 'sound/items/buttonswitch.ogg', 50, 1)
+	else
+		playsound(src, 'sound/items/buttonswitch.ogg', 50, 1)
+		qdel(src)
+	return
+
 /obj/item/device/searcher/attack_self(mob/user)
 	return interact(user)
 
 /obj/item/device/searcher/interact(mob/user)
 	var/message = "Background radiation levels detected."
 	if(world.time - last_scan_time >= scan_delay)
+		playsound(src, 'sound/weapons/wave.ogg', 10, 1)
 		INVOKE_ASYNC(src, .proc/scan)
 		if(nearest_artifact_distance >= 0)
 			message = "Exotic energy detected on wavelength '[nearest_artifact_id]' in a radius of [nearest_artifact_distance]m"
