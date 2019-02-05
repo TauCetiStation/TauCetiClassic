@@ -1,12 +1,10 @@
-/mob/living/carbon/monkey/var
-	mob/npc_target = null // the NPC this monkey is attacking
-	mob/npc_fleeing = null // the monkey is scared of this mob
-	mob/hiding_behind = null
-	hid_behind = 0
-
+/mob/living/carbon/monkey
+	var/mob/npc_target = null // the NPC this monkey is attacking
+	var/mob/npc_fleeing = null // the monkey is scared of this mob
+	var/mob/hiding_behind = null
+	var/hid_behind = 0
 	var/list/hostiles = list()
-
-	fleeing_duration = 0
+	var/fleeing_duration = 0
 
 /mob/living/carbon/monkey/proc/npc_act()
 	if(!client && !stat)

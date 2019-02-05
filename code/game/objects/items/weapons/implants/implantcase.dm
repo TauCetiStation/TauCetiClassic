@@ -9,58 +9,55 @@
 	throw_range = 5
 	w_class = 1.0
 	var/obj/item/weapon/implant/imp = null
-	proc
-		update()
+
+/obj/item/weapon/implantcase/proc/update()
+	if (src.imp)
+		src.icon_state = text("implantcase-[]", src.imp.item_color)
+	else
+		src.icon_state = "implantcase-0"
+	return
 
 
-	update()
-		if (src.imp)
-			src.icon_state = text("implantcase-[]", src.imp.item_color)
+/obj/item/weapon/implantcase/attackby(obj/item/weapon/I, mob/user)
+	..()
+	if (istype(I, /obj/item/weapon/pen))
+		var/t = sanitize_safe(input(user, "What would you like the label to be?", input_default(src.name), null)  as text, MAX_NAME_LEN)
+		if (user.get_active_hand() != I)
+			return
+		if((!in_range(src, usr) && src.loc != user))
+			return
+		if(t)
+			src.name = text("Glass Case- '[]'", t)
 		else
-			src.icon_state = "implantcase-0"
-		return
-
-
-	attackby(obj/item/weapon/I, mob/user)
-		..()
-		if (istype(I, /obj/item/weapon/pen))
-			var/t = sanitize_safe(input(user, "What would you like the label to be?", input_default(src.name), null)  as text, MAX_NAME_LEN)
-			if (user.get_active_hand() != I)
+			src.name = "Glass Case"
+	else if(istype(I, /obj/item/weapon/reagent_containers/syringe))
+		if(!src.imp)	return
+		if(!src.imp.allow_reagents)	return
+		if(src.imp.reagents.total_volume >= src.imp.reagents.maximum_volume)
+			to_chat(user, "\red [src] is full.")
+		else
+			spawn(5)
+				I.reagents.trans_to(src.imp, 5)
+				to_chat(user, "\blue You inject 5 units of the solution. The syringe now contains [I.reagents.total_volume] units.")
+	else if (istype(I, /obj/item/weapon/implanter))
+		if (I:imp)
+			if ((src.imp || I:imp.implanted))
 				return
-			if((!in_range(src, usr) && src.loc != user))
-				return
-			if(t)
-				src.name = text("Glass Case- '[]'", t)
-			else
-				src.name = "Glass Case"
-		else if(istype(I, /obj/item/weapon/reagent_containers/syringe))
-			if(!src.imp)	return
-			if(!src.imp.allow_reagents)	return
-			if(src.imp.reagents.total_volume >= src.imp.reagents.maximum_volume)
-				to_chat(user, "\red [src] is full.")
-			else
-				spawn(5)
-					I.reagents.trans_to(src.imp, 5)
-					to_chat(user, "\blue You inject 5 units of the solution. The syringe now contains [I.reagents.total_volume] units.")
-		else if (istype(I, /obj/item/weapon/implanter))
-			if (I:imp)
-				if ((src.imp || I:imp.implanted))
+			I:imp.loc = src
+			src.imp = I:imp
+			I:imp = null
+			src.update()
+			I:update()
+		else
+			if (src.imp)
+				if (I:imp)
 					return
-				I:imp.loc = src
-				src.imp = I:imp
-				I:imp = null
-				src.update()
-				I:update()
-			else
-				if (src.imp)
-					if (I:imp)
-						return
-					src.imp.loc = I
-					I:imp = src.imp
-					src.imp = null
-					update()
-				I:update()
-		return
+				src.imp.loc = I
+				I:imp = src.imp
+				src.imp = null
+				update()
+			I:update()
+	return
 
 
 

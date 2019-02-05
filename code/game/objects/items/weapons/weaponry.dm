@@ -10,9 +10,9 @@
 	throw_range = 15
 	attack_verb = list("banned")
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), "\red <b>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</b>")
-		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
+/obj/item/weapon/banhammer/suicide_act(mob/user)
+	to_chat(viewers(user), "\red <b>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</b>")
+	return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 /obj/item/weapon/nullrod
 	name = "null rod"
@@ -114,12 +114,12 @@
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-	Get_shield_chance()
-		return 50
+/obj/item/weapon/claymore/Get_shield_chance()
+	return 50
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), "\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>")
-		return(BRUTELOSS)
+/obj/item/weapon/claymore/suicide_act(mob/user)
+	to_chat(viewers(user), "\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>")
+	return(BRUTELOSS)
 
 /obj/item/weapon/claymore/light
 	force = 20
@@ -143,9 +143,9 @@
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), "\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
-		return(BRUTELOSS)
+/obj/item/weapon/katana/suicide_act(mob/user)
+	to_chat(viewers(user), "\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
+	return(BRUTELOSS)
 
 /obj/item/weapon/katana/Get_shield_chance()
 		return 50
