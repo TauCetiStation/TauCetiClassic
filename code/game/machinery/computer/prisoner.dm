@@ -116,7 +116,7 @@
 				to_chat(usr, "It isn't ready to use.")
 			else
 				var/mob/living/carbon/R = I.imp_in
-				R.electrocute_act(15)
+				R.electrocute_act(15, src, 1.0, I.part.body_zone)
 				R.Stun(7)
 				playsound(R, 'sound/items/defib_zap.ogg', 50, 0)
 				lastUsing = world.time
