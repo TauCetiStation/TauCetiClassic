@@ -10,7 +10,11 @@
 	set category = "IC"
 	set name = "Bite"
 	set desc = "Bites prey and drains them of a significant portion of blood, feeding you in the process."
-	if(isalien(src) || target.vessel.total_volume <= 0 || target.species.flags[NO_BLOOD])
+	var bloodsucked = 0
+	var endblood = 0
+	var blood_in_target = target.vessel.total_volume
+	var/obj/item/organ/external/BP = target.get_bodypart(BP_HEAD)
+	if(isalien(src) || blood_in_target <= 0 || target.species.flags[NO_BLOOD])
 		to_chat(src, "<span class='red'>There appears to be no blood in this prey...</span>")
 		return
 	if(target == src)
@@ -21,18 +25,23 @@
 		return
 	if(last_special > world.time)
 		return
-	var/obj/item/organ/external/BP = target.get_bodypart(BP_HEAD)
 	last_special = world.time + 600
 	src.visible_message("<span class='warning bold'>[src] moves their head next to [target]'s neck, seemingly looking for something!</span>")
+	log_game("[key_name(src)] prepares use bloodsuck on [key_name(target)]")
 	if(do_after(src, 5 SECONDS, target))
 		src.visible_message("<span class='warning bold'>[src] suddenly extends their fangs and plunges them down into [target]'s neck!</span>")
+		message_admins("[key_name_admin(src)] start use bloodsuck on [key_name_admin(target)] with [blood_in_target] blood. [ADMIN_JMP(src)]")
 		for(var/i in 1 to 10)
 			src.visible_message("<span class='warning bold'>[src] slowly sucks blood from [target]'s neck!</span>")
 			if(do_after(src, 3 SECONDS, target))
 				target.vessel.remove_reagent("blood", 8)
+				bloodsucked += 8
 				src.nutrition = min(src.nutrition + 30, 400 - (src.get_nutrition() - src.nutrition))
 			else
 				break
+		endblood = blood_in_target - bloodsucked
+		log_attack("[key_name(src)] bloodsuck [key_name(target)] and drink [bloodsucked] blood")
+		message_admins("[key_name_admin(src)] bloodsuck [key_name_admin(target)] and drink [bloodsucked] blood ([endblood]) [ADMIN_JMP(src)]")
 		BP.take_damage(5, null, DAM_SHARP, "Fangs")
 
 /datum/quirk/Hematophagus/on_spawn()
