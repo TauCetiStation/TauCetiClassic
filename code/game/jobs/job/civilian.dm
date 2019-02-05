@@ -42,7 +42,7 @@
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
-	access = list(access_cargo, access_cargo_bot, access_mailsorting)
+	access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 	minimal_player_ingame_minutes = 960
 	restricted_species = list(SKRELL, DIONA)
 
