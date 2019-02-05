@@ -14,6 +14,7 @@
 	var endblood = 0
 	var blood_in_target = target.vessel.total_volume
 	var/obj/item/organ/external/BP = target.get_bodypart(BP_HEAD)
+	var bloodsuck_sound = sound('sound/effects/bloodsuck.ogg')
 	if(isalien(src) || blood_in_target <= 0 || target.species.flags[NO_BLOOD])
 		to_chat(src, "<span class='red'>There appears to be no blood in this prey...</span>")
 		return
@@ -34,6 +35,8 @@
 		for(var/i in 1 to 10)
 			src.visible_message("<span class='warning bold'>[src] slowly sucks blood from [target]'s neck!</span>")
 			if(do_after(src, 3 SECONDS, target))
+				for(var/mob/living/M in hearers(4, src))
+					M << playsound(src, bloodsuck_sound, 2, 0)
 				target.vessel.remove_reagent("blood", 8)
 				bloodsucked += 8
 				src.nutrition = min(src.nutrition + 30, 400 - (src.get_nutrition() - src.nutrition))
