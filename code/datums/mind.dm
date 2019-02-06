@@ -125,8 +125,9 @@
 
 		var/obj_count = 1
 		for(var/datum/objective/objective in objectives)
-			output += "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-			obj_count++
+			if(objective.hiden == 0)
+				output += "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+				obj_count++
 
 	recipient << browse(entity_ja(output),"window=memory")
 
