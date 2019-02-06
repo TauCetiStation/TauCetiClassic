@@ -1,10 +1,9 @@
 /obj/item/rig_module/device
 	name = "mounted device"
 	desc = "Some kind of hardsuit mount."
-	usable = 0
-	selectable = 1
-	toggleable = 0
-	disruptive = 0
+	usable = FALSE
+	selectable = TRUE
+	toggleable = FALSE
 
 	var/device_type
 	var/obj/item/device
@@ -15,7 +14,7 @@
 	icon_state = "scanner"
 	interface_name = "health scanner"
 	interface_desc = "Shows an informative health readout when used on a subject."
-	use_power_cost = 200
+	use_power_cost = 100
 	origin_tech = list(TECH_MAGNET = 3, TECH_BIO = 3, TECH_ENGINEERING = 5)
 	device_type = /obj/item/device/healthanalyzer
 
@@ -23,11 +22,10 @@
 	name = "hardsuit drill mount"
 	desc = "A very heavy diamond-tipped drill."
 	icon_state = "drill"
+	suit_overlay = "mounted-drill"
 	interface_name = "mounted drill"
 	interface_desc = "A diamond-tipped industrial drill."
-	suit_overlay_active = "mounted-drill"
-	suit_overlay_inactive = "mounted-drill"
-	use_power_cost = 75
+	use_power_cost = 200
 	origin_tech = list(TECH_MATERIAL = 6, TECH_POWER = 4, TECH_ENGINEERING = 6)
 	device_type = /obj/item/weapon/pickaxe/drill/jackhammer // this one doesn't use energy
 
@@ -39,8 +37,8 @@
 	interface_desc = "An exotic particle detector commonly used by xenoarchaeologists."
 	engage_string = "Begin Scan"
 	use_power_cost = 200
-	usable = 1
-	selectable = 0
+	usable = TRUE
+	selectable = FALSE
 	device_type = /obj/item/device/ano_scanner
 	origin_tech = list(TECH_BLUESPACE = 4, TECH_MAGNET = 4, TECH_ENGINEERING = 6)
 
@@ -51,8 +49,8 @@
 	interface_name = "ore detector"
 	interface_desc = "A sonar system for detecting large masses of ore."
 	engage_string = "Begin Scan"
-	usable = 1
-	selectable = 0
+	usable = TRUE
+	selectable = FALSE
 	use_power_cost = 200
 	device_type = /obj/item/weapon/mining_scanner
 	origin_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 4, TECH_ENGINEERING = 6)
@@ -85,7 +83,7 @@
 	icon_state = "rcd"
 	interface_name = "mounted RCD"
 	interface_desc = "A device for building or removing walls. Cell-powered."
-	usable = 1
+	usable = TRUE
 	engage_string = "Configure RCD"
 	use_power_cost = 0
 	origin_tech = list(TECH_MATERIAL = 6, TECH_MAGNET = 5, TECH_ENGINEERING = 7)
@@ -100,6 +98,10 @@
 /obj/item/rig_module/device/engage(atom/target)
 	if(!..() || !device)
 		return 0
+
+	if(damage > 0 && prob(20))
+		to_chat(holder.wearer, "<span class='warning'>[name] malfunctions and ignores your command!</span>")
+		return 1
 
 	if(!target)
 		device.attack_self(holder.wearer)
@@ -118,10 +120,10 @@
 	name = "hardsuit mounted chemical dispenser"
 	desc = "A complex web of tubing and needles suitable for hardsuit use."
 	icon_state = "injector"
-	usable = 1
-	selectable = 0
-	toggleable = 0
-	disruptive = 0
+	suit_overlay = "mounted-injector"
+	usable = TRUE
+	selectable = FALSE
+	toggleable = FALSE
 	use_power_cost = 500
 
 	engage_string = "Inject"
@@ -192,21 +194,28 @@
 	if(!..())
 		return 0
 
+	if(!charge_selected)
+		to_chat(holder.wearer, "<span class='danger'>You have not selected a chemical type.</span>")
+		return 0
+
+	return use_charge(charge_selected, target)
+
+/obj/item/rig_module/chem_dispenser/proc/use_charge(charge_selected, atom/target, show_warnings = TRUE)
 	var/mob/living/carbon/human/H = holder.wearer
 
-	if(!charge_selected)
-		to_chat(H, "<span class='danger'>You have not selected a chemical type.</span>")
-		return 0
-
 	var/datum/rig_charge/charge = charges[charge_selected]
+	if(damage > 0 && prob(40))
+		to_chat(H, "<span class='warning'>[name] malfunctions and injects wrong chemical!</span>")
+		charge = charges[pick(charges)]
 
 	if(!charge)
-		return 0
+		return FALSE
 
 	var/chems_to_use = 10
 	if(charge.charges <= 0)
-		to_chat(H, "<span class='danger'>Insufficient chems!</span>")
-		return 0
+		if(show_warnings)
+			to_chat(H, "<span class='danger'>Insufficient chems!</span>")
+		return FALSE
 	else if(charge.charges < chems_to_use)
 		chems_to_use = charge.charges
 
@@ -215,7 +224,7 @@
 		if(istype(target,/mob/living/carbon))
 			target_mob = target
 		else
-			return 0
+			return FALSE
 	else
 		target_mob = H
 
@@ -227,18 +236,17 @@
 	charge.charges -= chems_to_use
 	if(charge.charges < 0)
 		charge.charges = 0
-
-	return 1
+	return TRUE
 
 /obj/item/rig_module/chem_dispenser/combat
 	name = "hardsuit combat chemical injector"
 	desc = "A complex web of tubing and needles suitable for hardsuit use."
 
 	charges = list(
-		list("synaptizine", "synaptizine", "synaptizine",        30),
-		list("hyperzine",   "hyperzine",   "hyperzine",          30),
-		list("oxycodone",   "oxycodone",   "oxycodone", 		 30),
-		list("sugar",       "sugar",       "sugar", 			 80)
+		list("tricordrazine", "tricordrazine", "tricordrazine",      30),
+		list("hyperzine",     "hyperzine",     "hyperzine",          30),
+		list("oxycodone",     "oxycodone",     "oxycodone", 		 30),
+		list("sugar",         "sugar",         "sugar", 			 80)
 		)
 
 	interface_name = "combat chem dispenser"
@@ -248,16 +256,15 @@
 /obj/item/rig_module/chem_dispenser/injector
 	name = "hardsuit mounted chemical injector"
 	desc = "A complex web of tubing and a large needle suitable for hardsuit use."
-	usable = 0
-	selectable = 1
-	disruptive = 1
+	usable = FALSE
+	selectable = TRUE
 
 	interface_name = "mounted chem injector"
 	interface_desc = "Dispenses loaded chemicals via an arm-mounted injector."
 
 /obj/item/rig_module/cooling_unit
 	name = "hardsuit mounted cooling unit"
-	toggleable = 1
+	toggleable = TRUE
 	origin_tech = list(TECH_MAGNET = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 5)
 	interface_name = "mounted cooling unit"
 	interface_desc = "A heat sink with a liquid cooled radiator."
@@ -287,9 +294,11 @@
 	icon_state = "scanner"
 	interface_name = "self-repair module"
 	interface_desc = "A module capable of repairing stuctural rig damage on the spot."
-	engage_string = "Begin repair"
-	usable = 1
-	selectable = 0
+	activate_string = "Begin repair"
+	deactivate_string = "Stop repair"
+	toggleable = TRUE
+	usable = FALSE
+	selectable = FALSE
 	use_power_cost = 0
 	module_cooldown = 0
 	origin_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 4, TECH_ENGINEERING = 6)
@@ -299,28 +308,13 @@
 	)
 	charge_selected = 0
 
-/obj/item/rig_module/selfrepair/engage()
+/obj/item/rig_module/selfrepair/activate(forced = FALSE)
 	if(!..())
 		return 0
 
 	var/mob/living/carbon/human/H = holder.wearer
 
-	if(active)
-		to_chat(H, "<span class='danger'>Self-repair in already active.</span>")
-		return 0
-
-	if(!charge_selected)
-		to_chat(H, "<span class='danger'>You have not selected a material type.</span>")
-		return 0
-
-	var/datum/rig_charge/charge = charges[charge_selected]
-
-	if(!charge)
-		return 0
-
-	if(holder.brute_damage || holder.burn_damage)
-		active = TRUE
-		to_chat(H, "<span class='notice'>Starting self-repair sequence</span>")
+	to_chat(H, "<span class='notice'>Starting self-repair sequence</span>")
 
 	return 1
 
@@ -371,15 +365,113 @@
 
 	if(istype(input_item, /obj/item/stack/sheet/metal) && istype(H) && user == H)
 		var/obj/item/stack/sheet/metal/metal = input_item
-		var/datum/rig_charge/charge = charges[1]
+		var/datum/rig_charge/charge = charges[charges[1]]
 
 		var/total_used = 30
 		total_used = min(total_used, 30 - charge.charges)
 		total_used = min(total_used, metal.get_amount())
 
 		metal.use(total_used)
+		charge.charges += total_used
 		if(total_used)
 			to_chat(user, "<font color='notice'>You transfer [total_used] of metal lists into the suit reservoir.</font>")
 		return 1
 
 	return 0
+
+/obj/item/rig_module/med_teleport
+	name = "hardsuit medical teleport system"
+	origin_tech = list(TECH_MAGNET = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 5)
+	interface_name = "automated medical teleport system"
+	interface_desc = "System capable of saving the suit owner. But only once"
+
+	var/preparing = FALSE
+	var/teleport_timer = 0
+
+/obj/item/rig_module/med_teleport/process()
+	var/mob/living/carbon/human/H = holder.wearer
+	if(!H || damage>=2)
+		preparing = FALSE
+		return
+
+	var/should_work = (H.health < config.health_threshold_crit && H.stat != CONSCIOUS)
+	if(should_work)
+		if(!preparing)
+			preparing = TRUE
+			teleport_timer = 0
+
+		teleport_timer++
+		if(teleport_timer == 55)
+			to_chat(H, "<span class='danger'>Automated medical teleport system attempts to teleport your body...</span>")
+
+		if(teleport_timer > 60)
+			if(damage > 0)
+				if(prob(50))
+					to_chat(H, "<span class='danger'>Medical teleport system malfunctions and fails to teleport you</span>")
+					teleport_timer = 0
+					return
+
+			var/obj/item/device/beacon/medical/target_beacon
+			for(var/obj/item/device/beacon/medical/medical in beacon_medical_list)
+				if(medical)
+					if(isturf(medical.loc))
+						var/area/A = get_area(medical)
+						if(istype(A, /area/medical/sleeper))
+							target_beacon = medical
+							break
+			if(target_beacon)
+				if(H.wear_suit == holder) // rig stays
+					H.remove_from_mob(holder)
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				var/datum/effect/effect/system/spark_spread/s2 = new /datum/effect/effect/system/spark_spread
+				s.set_up(3, 1, H)
+				s2.set_up(3, 1, target_beacon)
+				s.start()
+				s2.start()
+				H.forceMove(get_turf(target_beacon))
+			else
+				to_chat(H, "<span class='danger'>Medical teleport system fails to teleport your body because there were no medical beacons in medbay</span>")
+			holder.installed_modules -= src
+			qdel(src) // We are done
+	else
+		preparing = FALSE
+
+/obj/item/rig_module/nuclear_generator
+	name = "hardsuit nuclear reactor module"
+	desc = "Looks like a small machine of doom"
+	origin_tech = list(TECH_MAGNET = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 5)
+	interface_name = "compact nuclear reactor"
+	interface_desc = "Passively generates energy. Becomes very unstable if damaged"
+
+	passive_power_cost = -50
+	var/unstable = FALSE
+
+/obj/item/rig_module/nuclear_generator/process()
+	if(damage == 1 && prob(2))
+		if(holder.wearer)
+			to_chat(holder.wearer, "<span class='warning'>Your damaged [name] irradiates you</span>")
+			holder.wearer.apply_effect(rand(5, 25), IRRADIATE, 0)
+
+	if(damage >= 2)
+		if(!unstable)
+
+			if(holder.wearer)
+				holder.wearer.visible_message("<span class='warning'>The nuclear reactor inside [holder.wearer]'s [holder] is gloving red and looks very unstable</span>")
+				to_chat(holder.wearer, "<span class='danger'>\[DANGER\] Your [name] is unstable and will explode in about a minute, remove your suit immediately</span>")
+				message_admins("[key_name_admin(src)]'s [holder] has a damaged [name] that will explode in about a minute [ADMIN_JMP(src)]")
+			else
+				holder.visible_message("<span class='warning'>The nuclear reactor inside [holder] is gloving red and looks very unstable</span>")
+			unstable = TRUE
+			addtimer(CALLBACK(src, .proc/boom), rand(60 SECONDS, 120 SECONDS))
+			light_color = LIGHT_COLOR_FLARE
+			set_light(5)
+
+	return passive_power_cost
+
+/obj/item/rig_module/nuclear_generator/proc/boom()
+	if(unstable)
+		explosion(loc,1,2,4,5) // syndicate minibomb
+
+		if(holder)
+			holder.installed_modules -= src
+		qdel(src)

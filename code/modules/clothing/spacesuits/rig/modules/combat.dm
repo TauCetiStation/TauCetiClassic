@@ -10,8 +10,9 @@
 /obj/item/rig_module/grenade_launcher
 	name = "hardsuit mounted grenade launcher"
 	desc = "A shoulder-mounted micro-explosive dispenser."
-	selectable = 1
+	selectable = TRUE
 	icon_state = "grenadelauncher"
+	suit_overlay = "grenade"
 	use_power_cost = 500
 
 	interface_name = "integrated grenade launcher"
@@ -108,17 +109,15 @@
 	)
 
 /obj/item/rig_module/mounted
-
 	name = "mounted laser rifle"
 	desc = "A shoulder-mounted battery-powered laser rifle mount."
-	selectable = 1
-	usable = 0
+	selectable = TRUE
+	usable = FALSE
 	module_cooldown = 0
 	icon_state = "lcannon"
+	suit_overlay = "mounted-lascannon"
 	use_power_cost = 0
 	var/recharge_speed = 50
-
-	suit_overlay = "mounted-lascannon"
 
 	engage_string = "Configure"
 
@@ -134,7 +133,6 @@
 		gun.canremove = FALSE
 
 /obj/item/rig_module/mounted/engage(atom/target)
-
 	if(!..())
 		return 0
 
@@ -151,16 +149,13 @@
 	return passive_power_cost
 
 /obj/item/rig_module/mounted/taser
-
 	name = "mounted taser"
 	desc = "A palm-mounted nonlethal energy projector."
 	icon_state = "taser"
+	suit_overlay = "mounted-taser"
 	use_power_cost = 0
 
-	usable = 1
-
-	suit_overlay_active = null
-	suit_overlay_inactive = null
+	usable = TRUE
 
 	interface_name = "mounted taser"
 	interface_desc = "A palm-mounted, cell-powered taser."

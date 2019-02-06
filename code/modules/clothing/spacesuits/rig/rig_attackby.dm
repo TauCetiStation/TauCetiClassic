@@ -52,6 +52,8 @@
 		if(is_wearing)
 			to_chat(user, "How do you propose to modify a hardsuit while it is being worn?")
 			return
+		if(user.is_busy())
+			return
 
 		if(!installed_modules)
 			installed_modules = list()
@@ -63,7 +65,7 @@
 
 		var/obj/item/rig_module/mod = W
 		to_chat(user, "You begin installing \the [mod] into \the [src].")
-		if(!do_after(user,40,target = src))
+		if(!do_after(user, 40, target = src))
 			return
 		if(!user || !W)
 			return
@@ -73,7 +75,6 @@
 		installed_modules |= mod
 		mod.forceMove(src)
 		mod.installed(src)
-		update_icon()
 		return 1
 
 	else if(!cell && istype(W,/obj/item/weapon/stock_parts/cell))
@@ -138,7 +139,6 @@
 				removed.forceMove(get_turf(src))
 				removed.removed()
 				installed_modules -= removed
-				update_icon()
 
 			if("helmet")
 				to_chat(user, "You detatch \the [helmet] from \the [src]'s helmet mount.")

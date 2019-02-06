@@ -802,22 +802,34 @@
 		return
 	if(istype(O, /obj/item/clothing/suit/space))
 		var/obj/item/clothing/suit/space/C = O
-		if(C.breaches.len)
-			C.breaches.Cut()
-			C.damage = 0
-			C.brute_damage = 0
-			C.burn_damage = 0
-			C.name = C.base_name
-			loaded = 0
-			user.visible_message("<span class='notice'>[user] fix [O] with [src].</span>")
-			playsound(src,'sound/effects/refill.ogg',50,1)
-			icon_state = "patcher_empty"
-			return
-		else
-			to_chat(user, "<span class='info'>[O] absolutely intact.</span>")
-			return
+		fix_spacesuit(C, user)
 	else
 		..()
+
+/obj/item/weapon/patcher/attack(mob/living/M, mob/living/user)
+	if(!loaded)
+		return
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(istype(H.wear_suit, /obj/item/clothing/suit/space))
+			var/obj/item/clothing/suit/space/C = H.wear_suit
+			fix_spacesuit(C, user)
+
+/obj/item/weapon/patcher/proc/fix_spacesuit(obj/item/clothing/suit/space/C, mob/living/user)
+	if(C.breaches.len)
+		C.breaches.Cut()
+		C.damage = 0
+		C.brute_damage = 0
+		C.burn_damage = 0
+		C.name = C.base_name
+		loaded = 0
+		user.visible_message("<span class='notice'>[user] fixes [C] with [src].</span>")
+		playsound(src,'sound/effects/refill.ogg',50,1)
+		icon_state = "patcher_empty"
+		return TRUE
+	else
+		to_chat(user, "<span class='info'>[C] is absolutely intact.</span>")
+		return FALSE
 
 /obj/item/weapon/patcher/examine(mob/user)
 	..()

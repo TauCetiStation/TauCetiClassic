@@ -22,11 +22,9 @@
 	var/selectable                      // Set to 1 to be able to assign the device as primary system.
 	var/redundant                       // Set to 1 to ignore duplicate module checking when installing.
 	var/permanent                       // If set, the module can't be removed.
-	var/disruptive = 1                  // Can disrupt by other effects.
-	var/activates_on_touch              // If set, unarmed attacks will call engage() on the target.
 
 	var/active                          // Basic module status
-	var/disruptable                     // Will deactivate if some other powers are used.
+	var/activate_on_start				// Set to TRUE for the device to automatically activate on suit equip
 
 	var/use_power_cost = 0              // Power used when single-use ability called.
 	var/active_power_cost = 0           // Power used when turned on.
@@ -35,11 +33,8 @@
 	var/list/charges                    // Associative list of charge types and remaining numbers.
 	var/charge_selected                 // Currently selected option used for charge dispensing.
 
-	// Icons.
 	var/suit_overlay
-	var/suit_overlay_active             // If set, drawn over icon and mob when effect is active.
-	var/suit_overlay_inactive           // As above, inactive.
-	var/suit_overlay_used               // As above, when engaged.
+	var/image/suit_overlay_image
 
 	//Display fluff
 	var/interface_name = "hardsuit upgrade"
@@ -52,9 +47,6 @@
 
 /obj/item/rig_module/atom_init()
 	. =..()
-
-	if(suit_overlay_inactive)
-		suit_overlay = suit_overlay_inactive
 
 	if(charges && charges.len)
 		var/list/processed_charges = list()
@@ -72,11 +64,23 @@
 
 		charges = processed_charges
 
+	if(suit_overlay)
+		suit_overlay_image = image("icon" = 'icons/mob/rig_modules.dmi', "icon_state" = "[suit_overlay]")
+
 	stat_modules +=	new/stat_rig_module/activate(src)
 	stat_modules +=	new/stat_rig_module/deactivate(src)
 	stat_modules +=	new/stat_rig_module/engage(src)
 	stat_modules +=	new/stat_rig_module/select(src)
 	stat_modules +=	new/stat_rig_module/charge(src)
+
+/obj/item/rig_module/Destroy()
+	deactivate()
+	for(var/stat_module in stat_modules)
+		qdel(stat_module)
+	if(holder)
+		holder.installed_modules -= src
+	holder = null
+	. = ..()
 
 // Called when the module is installed into a suit.
 /obj/item/rig_module/proc/installed(var/obj/item/clothing/head/helmet/space/rig/new_holder)
@@ -93,11 +97,11 @@
 		to_chat(holder.wearer, "<span class='warning'>You cannot use the [interface_name] again so soon.</span>")
 		return 0
 
-	if(holder.wearer.stat || holder.wearer.stunned || holder.wearer.paralysis || holder.wearer.weakened)
+	if(holder.wearer.lying || holder.wearer.stat || holder.wearer.stunned || holder.wearer.paralysis || holder.wearer.weakened)
 		to_chat(holder.wearer, "<span class='warning'>You cannot use the suit in this state.</span>")
 		return 0
 
-	if(!holder.check_power_cost(holder.wearer, use_power_cost, 0, src) )
+	if(!holder.check_power_cost(holder.wearer, use_power_cost, FALSE, src) )
 		return 0
 
 	next_use = world.time + module_cooldown
@@ -105,19 +109,12 @@
 	return 1
 
 // Proc for toggling on active abilities.
-/obj/item/rig_module/proc/activate()
+/obj/item/rig_module/proc/activate(forced = FALSE)
 
-	if(active || !engage())
+	if(active || (!forced && !engage()) || (forced && (damage >= 2 || !holder.check_power_cost(holder.wearer, use_power_cost, TRUE, src))))
 		return 0
 
-	active = 1
-
-	spawn(1)
-		if(suit_overlay_active)
-			suit_overlay = suit_overlay_active
-		else
-			suit_overlay = null
-		holder.update_icon()
+	active = TRUE
 
 	return 1
 
@@ -127,15 +124,7 @@
 	if(!active)
 		return 0
 
-	active = 0
-
-	spawn(1)
-		if(suit_overlay_inactive)
-			suit_overlay = suit_overlay_inactive
-		else
-			suit_overlay = null
-		if(holder)
-			holder.update_icon()
+	active = FALSE
 
 	return 1
 

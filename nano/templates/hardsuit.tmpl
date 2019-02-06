@@ -90,13 +90,11 @@ Used In File(s): /code/modules/clothing/spacesuits/rig/rig.dm
 						<div class='floatLeft' style='width: 100%'>
 							<div class='average floatLeft'>{{:helper.capitalizeFirstLetter(value.name)}}</div>
 							{{if value.damage > 0}}
-								<div class='floatLeft'>
-									{{if value.damage == 1}}
-										(<div class='orangeText'>damaged</div>)
-									{{else}}
-										(<div class='redText'>destroyed</div>)
-									{{/if}}
-								</div>
+								{{if value.damage == 1}}
+									&nbsp;(<span class='orangeText'>damaged</span>)
+								{{else}}
+									&nbsp;(<span class='redText'>destroyed</span>)
+								{{/if}}
 							{{/if}}
 							<div class='floatLeft' style='width: 100%; clear: left'>
 								<div class='caption floatLeft average' style='width: 20%; margin: 0'>

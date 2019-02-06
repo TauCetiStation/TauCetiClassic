@@ -49,6 +49,7 @@
 	icon_state = "rig-engineering"
 	item_state = "eng_hardsuit"
 	slowdown = 1
+	var/offline_slowdown = 5
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 20)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -86,6 +87,7 @@
 
 	var/mob/living/carbon/human/wearer // The person currently wearing the rig.
 	var/offline = 1
+	var/passive_energy_use = 10
 
 	var/interface_title = "Hardsuit Controller"
 	var/interface_path = "hardsuit.tmpl"
@@ -132,12 +134,6 @@
 	if(fail_msg)
 		to_chat(user, "[fail_msg]")
 		return 0
-
-	// This is largely for cancelling stealth and whatever.
-	if(mod && mod.disruptive)
-		for(var/obj/item/rig_module/module in (installed_modules - mod))
-			if(module.active && module.disruptable)
-				module.deactivate()
 
 	cell.use(cost)
 	return 1
@@ -240,12 +236,24 @@
 
 			for(var/obj/item/rig_module/module in installed_modules)
 				module.deactivate()
-		//if(!offline)
-		//	to_chat(wearer, "<span class='notice'>Welcome back.</span>")
+		if(!offline)
+			for(var/obj/item/rig_module/module in installed_modules)
+				if(module.activate_on_start)
+					module.activate()
+
+		if(!offline)
+			slowdown = initial(slowdown)
+		else
+			slowdown = offline_slowdown
 
 	if(!offline)
+		cell.use(passive_energy_use)
+
 		for(var/obj/item/rig_module/module in installed_modules)
 			cell.use(module.process())
+			if(!wearer) // module might uneqiup us
+				break
+		cell.charge = min(cell.maxcharge, cell.charge)
 
 
 /obj/item/clothing/suit/space/rig/equipped(mob/M, slot)
@@ -257,13 +265,15 @@
 
 	if(slot == slot_wear_suit)
 		wearer = H
+		update_icon(wearer)
 
 	if(H.wear_suit != src)
 		return
 
-/obj/item/clothing/suit/space/rig/dropped()
-	..()
+/obj/item/clothing/suit/space/rig/dropped(mob/user)
+	. = ..()
 
+	var/old_wearer = wearer
 	wearer = null
 	var/mob/living/carbon/human/H
 
@@ -282,6 +292,9 @@
 				boots.canremove = 1
 				H.drop_from_inventory(boots)
 				boots.loc = src
+
+	if(old_wearer == user)
+		update_icon(user)
 
 /obj/item/clothing/suit/space/rig/verb/toggle_helmet()
 
@@ -341,79 +354,73 @@
 		magpulse = 1
 		to_chat(H, "You enable the mag-pulse traction system.")
 
-/obj/item/clothing/suit/space/rig/attackby(obj/item/W, mob/user)
-
-	if(!isliving(user)) return
-
-	if(user.a_intent == "help")
-
-		if(isliving(loc) && !istype(W, /obj/item/weapon/patcher))
-			to_chat(user, "How do you propose to modify a hardsuit while it is being worn?")
-			return
-
-		var/target_zone = user.zone_sel.selecting
-
-		if(target_zone == BP_HEAD)
-
-			//Installing a component into or modifying the contents of the helmet.
-			if(!attached_helmet)
-				to_chat(user, "\The [src] does not have a helmet mount.")
-				return
-
-			if(istype(W,/obj/item/weapon/screwdriver))
-				if(!helmet)
-					to_chat(user, "\The [src] does not have a helmet installed.")
-				else
-					to_chat(user, "You detatch \the [helmet] from \the [src]'s helmet mount.")
-					helmet.loc = get_turf(src)
-					src.helmet = null
-				return
-			else if(istype(W,/obj/item/clothing/head/helmet/space))
-				if(helmet)
-					to_chat(user, "\The [src] already has a helmet installed.")
-				else
-					to_chat(user, "You attach \the [W] to \the [src]'s helmet mount.")
-					user.drop_item()
-					W.loc = src
-					src.helmet = W
-				return
-			else
-				return ..()
-
-		else if(target_zone == BP_L_LEG || target_zone == BP_R_LEG)
-
-			//Installing a component into or modifying the contents of the feet.
-			if(!attached_boots)
-				to_chat(user, "\The [src] does not have boot mounts.")
-				return
-
-			if(istype(W,/obj/item/weapon/screwdriver))
-				if(!boots)
-					to_chat(user, "\The [src] does not have any boots installed.")
-				else
-					to_chat(user, "You detatch \the [boots] from \the [src]'s boot mounts.")
-					boots.loc = get_turf(src)
-					boots = null
-				return
-			else if(istype(W,/obj/item/clothing/shoes/magboots))
-				if(boots)
-					to_chat(user, "\The [src] already has magboots installed.")
-				else
-					to_chat(user, "You attach \the [W] to \the [src]'s boot mounts.")
-					user.drop_item()
-					W.loc = src
-					boots = W
-			else
-				return ..()
-
-		else //wat
-			return ..()
-
-	..()
-
 /obj/item/clothing/suit/space/rig/examine(mob/user)
 	..()
 	to_chat(user, "Its mag-pulse traction system appears to be [magpulse ? "enabled" : "disabled"].")
+
+/obj/item/clothing/suit/space/rig/emp_act(severity_class)
+	//drain some charge
+	if(cell)
+		cell.emp_act(severity_class + 1)
+
+	//possibly damage some modules
+	take_hit((100/severity_class), "electrical pulse", is_emp = TRUE)
+
+/obj/item/clothing/suit/space/rig/proc/find_module(module_type)
+	for(var/obj/item/rig_module/module in installed_modules)
+		if(istype(module, module_type))
+			return module
+	return null
+
+/obj/item/clothing/suit/space/rig/proc/take_hit(damage, source, is_emp = FALSE)
+
+	if(!installed_modules.len)
+		return
+
+	var/chance
+	if(!is_emp)
+		var/damage_resistance = breach_threshold
+		chance = 2*max(0, damage - damage_resistance)
+	else
+		//Want this to be roughly independant of the number of modules, meaning that X emp hits will disable Y% of the suit's modules on average.
+		//that way people designing hardsuits don't have to worry (as much) about how adding that extra module will affect emp resiliance by 'soaking' hits for other modules
+		chance = 2*max(0, damage)*min(installed_modules.len/15, 1)
+
+	if(!prob(chance))
+		return
+
+	var/list/valid_modules = list()
+	for(var/obj/item/rig_module/module in installed_modules)
+		if(module.damage < 2)
+			valid_modules += module
+
+	var/obj/item/rig_module/dam_module = pick(valid_modules)
+
+	if(!dam_module)
+		return
+
+	dam_module.damage++
+
+	if(!source)
+		source = "hit"
+
+	if(wearer)
+		var/obj/item/rig_module/simple_ai/ai = find_module(/obj/item/rig_module/simple_ai/)
+		if(ai && ai.active)
+			ai.handle_module_damage(source, dam_module)
+		else
+			to_chat(wearer, "<span class='danger'>The [source] has damaged one of your rig modules</span>")
+	dam_module.deactivate()
+
+/obj/item/clothing/suit/space/rig/update_icon(mob/user)
+	. = ..()
+	var/equipped = (wearer == user)
+
+	for(var/obj/item/rig_module/module in installed_modules)
+		if(module.suit_overlay_image)
+			user.overlays -= module.suit_overlay_image
+			if(equipped)
+				user.overlays += module.suit_overlay_image
 
 //Engineering rig
 /obj/item/clothing/head/helmet/space/rig/engineering
