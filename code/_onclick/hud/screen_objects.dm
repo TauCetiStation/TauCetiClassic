@@ -75,6 +75,23 @@
 		if(I)
 			master.attackby(I, usr, params)
 			usr.next_move = world.time+2
+			return 1
+
+		var/obj/item/weapon/storage/S = master
+		if(!S || !S.storage_ui)
+			return 1
+		// Taking something out of the storage screen (including clicking on item border overlay)
+		var/list/PM = params2list(params)
+		var/list/screen_loc_params = splittext(PM["screen-loc"], ",")
+		var/list/screen_loc_X = splittext(screen_loc_params[1],":")
+		var/click_x = text2num(screen_loc_X[1])*32+text2num(screen_loc_X[2]) - 144
+
+		for(var/i=1,i<=S.storage_ui.click_border_start.len,i++)
+			if (S.storage_ui.click_border_start[i] <= click_x && click_x <= S.storage_ui.click_border_end[i] && i <= S.contents.len)
+				I = S.contents[i]
+				if (I)
+					I.Click(location, control, params)
+					return 1
 	return 1
 
 /obj/screen/gun
@@ -82,26 +99,26 @@
 	icon = 'icons/mob/screen1.dmi'
 	master = null
 
-	move
-		name = "Allow Walking"
-		icon_state = "no_walk0"
-		screen_loc = ui_gun2
+/obj/screen/gun/move
+	name = "Allow Walking"
+	icon_state = "no_walk0"
+	screen_loc = ui_gun2
 
-	run
-		name = "Allow Running"
-		icon_state = "no_run0"
-		screen_loc = ui_gun3
+/obj/screen/gun/run
+	name = "Allow Running"
+	icon_state = "no_run0"
+	screen_loc = ui_gun3
 
-	item
-		name = "Allow Item Use"
-		icon_state = "no_item0"
-		screen_loc = ui_gun1
+/obj/screen/gun/item
+	name = "Allow Item Use"
+	icon_state = "no_item0"
+	screen_loc = ui_gun1
 
-	mode
-		name = "Toggle Gun Mode"
-		icon_state = "gun0"
-		screen_loc = ui_gun_select
-		//dir = 1
+/obj/screen/gun/mode
+	name = "Toggle Gun Mode"
+	icon_state = "gun0"
+	screen_loc = ui_gun_select
+	//dir = 1
 
 /obj/screen/zone_sel
 	name = "damage zone"

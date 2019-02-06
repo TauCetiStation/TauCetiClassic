@@ -103,15 +103,15 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 	switch(rand(1,100))
 		if(1 to 80)
-			if (!(locate(/datum/objective/escape) in changeling.objectives))
-				var/datum/objective/escape/escape_objective = new
-				escape_objective.owner = changeling
-				changeling.objectives += escape_objective
-		else
 			if (!(locate(/datum/objective/survive) in changeling.objectives))
 				var/datum/objective/survive/survive_objective = new
 				survive_objective.owner = changeling
 				changeling.objectives += survive_objective
+		else
+			if (!(locate(/datum/objective/escape) in changeling.objectives))
+				var/datum/objective/escape/escape_objective = new
+				escape_objective.owner = changeling
+				changeling.objectives += escape_objective
 	return
 
 /datum/game_mode/proc/greet_changeling(datum/mind/changeling, you_are=1)

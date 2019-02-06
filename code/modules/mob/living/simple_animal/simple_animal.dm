@@ -64,7 +64,7 @@
 		if(health > 0)
 			icon_state = icon_living
 			dead_mob_list -= src
-			living_mob_list += src
+			alive_mob_list += src
 			stat = CONSCIOUS
 			density = 1
 		return 0
@@ -345,8 +345,6 @@
 		else
 			to_chat(user, "<span class='notice'> this [src] is dead, medical items won't bring it back to life.</span>")
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(attempt_harvest(O, user))
-		return
 	..()
 
 
@@ -436,7 +434,7 @@
 	if(stat)
 		return
 
-	message = sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN))
+	message = sanitize(message)
 
 	if(copytext(message,1,2) == "*")
 		return emote(copytext(message,2))

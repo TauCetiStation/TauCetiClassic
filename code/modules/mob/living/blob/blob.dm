@@ -212,7 +212,7 @@
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/input = input(src, "Please specify which key will be turned into a bloby.", "Key", "")
+	var/input = ckey(input(src, "Please specify which key will be turned into a bloby.", "Key", ""))
 
 	var/mob/dead/observer/G_found
 	if(!input)
@@ -224,7 +224,7 @@
 
 	else
 		for(var/mob/dead/observer/G in player_list)
-			if(G.client&&ckey(G.key)==ckey(input))
+			if(G.client&&ckey(G.key)==input)
 				G_found = G
 				break
 

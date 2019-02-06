@@ -14,7 +14,7 @@
  *		Cigarette Box
  */
 
-/obj/item/weapon/storage/fancy/
+/obj/item/weapon/storage/fancy
 	icon = 'icons/obj/food.dmi'
 	icon_state = "donutbox6"
 	name = "donut box"
@@ -64,7 +64,6 @@
 	icon_type = "egg"
 	name = "egg box"
 	storage_slots = 12
-	max_combined_w_class = 24
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/egg")
 
 /obj/item/weapon/storage/fancy/egg_box/atom_init()
@@ -77,22 +76,108 @@
  */
 
 /obj/item/weapon/storage/fancy/candle_box
-	name = "candle pack"
-	desc = "A pack of red candles."
+	name = "white candle pack"
+	desc = "A pack of white candles."
 	icon = 'icons/obj/candle.dmi'
-	icon_state = "candlebox5"
+	icon_state = "candlebox"
 	icon_type = "candle"
-	item_state = "candlebox5"
+	item_state = "candlebox"
 	storage_slots = 5
 	throwforce = 2
 	slot_flags = SLOT_BELT
-
+	var/candle_type = "white"
 
 /obj/item/weapon/storage/fancy/candle_box/atom_init()
 	. = ..()
-	for (var/i in 1 to storage_slots)
-		new /obj/item/candle(src)
+	if(candle_type == "white")
+		for (var/i in 1 to storage_slots)
+			new /obj/item/candle(src)
+	if(candle_type == "red")
+		for (var/i in 1 to storage_slots)
+			new /obj/item/candle/red(src)
+	update_icon()
 
+/obj/item/weapon/storage/fancy/candle_box/update_icon()
+	var/list/candle_overlays = list()
+	var/candle_position = 0
+	for(var/obj/item/candle/C in contents)
+		candle_position ++
+		var/candle_color = "red_"
+		if(C.name == "white candle")
+			candle_color = "white_"
+		if(C.name == "black candle")
+			candle_color = "black_"
+		candle_overlays += image('icons/obj/candle.dmi', "[candle_color][candle_position]")
+	overlays = candle_overlays
+	return
+
+/obj/item/weapon/storage/fancy/candle_box/red
+	name = "red candle pack"
+	desc = "A pack of red candles."
+	candle_type = "red"
+
+/obj/item/weapon/storage/fancy/black_candle_box
+	name = "black candle pack"
+	desc = "A pack of black candles."
+	icon = 'icons/obj/candle.dmi'
+	icon_state = "black_candlebox5"
+	icon_type = "black_candle"
+	item_state = "black_candlebox5"
+	storage_slots = 5
+	throwforce = 2
+	slot_flags = SLOT_BELT
+	var/cooldown = 0
+	var/teleporter_delay = 0
+
+/obj/item/weapon/storage/fancy/black_candle_box/atom_init()
+	. = ..()
+	for (var/i in 1 to storage_slots)
+		new /obj/item/candle/ghost(src)
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/storage/fancy/black_candle_box/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/weapon/storage/fancy/black_candle_box/process()
+	if(cooldown > 0)
+		cooldown--
+	else
+		cooldown = 300
+
+		if(contents.len >= storage_slots)
+			return
+
+		for(var/mob/living/M in viewers(7, loc))
+			return
+
+		for(var/obj/item/candle/ghost/CG in range(1, get_turf(src)))
+			loc.visible_message("<span class='warning'>[src] is nomming on [CG]... This looks oddly creepy.</span>")
+			CG.forceMove(src)
+			update_icon()
+			break
+
+		teleporter_delay--
+		if(teleporter_delay <= 0)
+			for(var/obj/item/candle/ghost/target in ghost_candles)
+				if(istype(target.loc, /turf))
+					loc.visible_message("<span class='warning'>You hear a loud pop, as [src] poofs out of existence.</span>")
+					playsound(loc, 'sound/effects/bubble_pop.ogg', 50, 1)
+					forceMove(get_turf(target))
+					visible_message("<span class='warning'>You hear a loud pop, as [src] poofs into existence.</span>")
+					playsound(loc, 'sound/effects/bubble_pop.ogg', 50, 1)
+					for(var/mob/living/A in viewers(3, loc))
+						A.confused += 10
+						A.make_jittery(150)
+					break
+			teleporter_delay += rand(5,10) // teleporter_delay-- is ran only once half a minute. This seems reasonable.
+
+/obj/item/weapon/storage/fancy/black_candle_box/attackby(obj/item/W, mob/user)
+	..()
+	if(istype(W, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = W
+		OS.scanned_type = src.type
+		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
 /*
  * Crayon Box
  */
@@ -281,7 +366,6 @@
 	item_state = "syringe_kit"
 	max_w_class = 3
 	can_hold = list("/obj/item/weapon/reagent_containers/glass/beaker/vial")
-	max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
 	storage_slots = 6
 	req_access = list(access_virology)
 

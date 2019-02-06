@@ -91,24 +91,6 @@
 					/obj/structure/closet/secure_closet/scientist\
 				)
 
-/obj/random/structures/proffessions_heads_crates
-	name = "Professions heads crates "
-	desc = "This is a heads crate supply."
-	icon = 'icons/obj/closet.dmi'
-	icon_state = "closed"
-/obj/random/structures/proffessions_heads_crates/item_to_spawn()
-	return pick(\
-					/obj/structure/closet/secure_closet/RD,\
-					/obj/structure/closet/secure_closet/CMO,\
-					/obj/structure/closet/secure_closet/engineering_chief,\
-/*					/obj/structure/closet/secure_closet/chef_personal,\ */
-					/obj/structure/closet/secure_closet/quartermaster,\
-					/obj/structure/closet/secure_closet/hop,\
-					/obj/structure/closet/secure_closet/hop2,\
-					/obj/structure/closet/secure_closet/hos,\
-					/obj/structure/closet/secure_closet/captains\
-				)
-
 /obj/random/structures/critters_crate
 	name = "Professions critters crates "
 	desc = "This is a critter crate supply."
@@ -201,7 +183,8 @@
 					/obj/machinery/vending/eva,\
 					/obj/machinery/vending/omskvend,\
 					/obj/machinery/vending/sustenance,\
-					/obj/machinery/vending/theater\
+					/obj/machinery/vending/theater,\
+					/obj/machinery/vending/weirdomat\
 				)
 
 /obj/random/structures/misc
@@ -264,7 +247,6 @@
 					prob(33);/obj/random/structures/generators,\
 					prob(33);/obj/random/structures/vendings,\
 					prob(20);/obj/random/mecha/wreckage,\
-					prob(13);/obj/random/structures/proffessions_heads_crates,\
 					prob(7);/obj/random/structures/rare_crates,\
 					prob(2);/obj/random/mecha/working\
 				)

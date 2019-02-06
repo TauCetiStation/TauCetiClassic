@@ -394,15 +394,15 @@ var/list/advance_cures = 	list(
 
 	if(D.symptoms.len > 0)
 
-		var/new_name = input(user, "Name your new disease.", "New Name")
+		var/new_name = sanitize_safe(input(user, "Name your new disease.", "New Name"), MAX_LNAME_LEN)
 		D.AssignName(new_name)
 		D.Refresh()
 
 		for(var/datum/disease/advance/AD in SSdisease.processing)
 			AD.Refresh()
 
-		for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
-			if(H.z != ZLEVEL_STATION)
+		for(var/mob/living/carbon/human/H in shuffle(human_list))
+			if(H.stat == DEAD || H.z != ZLEVEL_STATION)
 				continue
 			if(!H.has_disease(D))
 				H.contract_disease(D, 1)

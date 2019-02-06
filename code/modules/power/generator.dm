@@ -164,7 +164,7 @@
 	t += "<HR>"
 	t += "<A href='?src=\ref[src]'>Refresh</A> <A href='?src=\ref[src];close=1'>Close</A>"
 
-	user << browse(t, "window=teg;size=460x300")
+	user << browse(entity_ja(t), "window=teg;size=460x300")
 	onclose(user, "teg")
 
 

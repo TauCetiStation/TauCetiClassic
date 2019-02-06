@@ -3,6 +3,7 @@
 	desc = "It's useful for igniting flammable items."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "igniter1"
+	plane = FLOOR_PLANE
 	anchored = TRUE
 	use_power = 1
 	idle_power_usage = 2

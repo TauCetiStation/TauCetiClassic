@@ -51,7 +51,7 @@
 	for(var/language_name in all_languages)
 		var/datum/language/L = all_languages[language_name]
 		for(var/key in L.key)
-			language_keys[":[lowertext(key)]"] = L
+			language_keys[":[lowertext_(key)]"] = L
 
 	var/rkey = 0
 	for(var/T in subtypesof(/datum/species))

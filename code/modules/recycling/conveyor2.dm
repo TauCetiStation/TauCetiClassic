@@ -216,6 +216,7 @@
 
 /obj/machinery/conveyor_switch/atom_init(mapload, newid)
 	..()
+	conveyor_switch_list += src
 	if(!id)
 		id = newid
 	update()
@@ -226,6 +227,10 @@
 	for(var/obj/machinery/conveyor/C in machines)
 		if(C.id == id)
 			conveyors += C
+
+/obj/machinery/conveyor_switch/Destroy()
+	conveyor_switch_list -= src
+	return ..()
 
 // update the icon depending on the position
 
@@ -275,7 +280,7 @@
 	update()
 
 	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in machines)
+	for(var/obj/machinery/conveyor_switch/S in conveyor_switch_list)
 		if(S.id == src.id)
 			S.position = position
 			S.update()

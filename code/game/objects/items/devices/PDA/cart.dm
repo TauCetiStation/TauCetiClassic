@@ -273,7 +273,7 @@
 	/*		Power Monitor (Mode: 43 / 433)			*/
 	if(mode==43)
 		var/pMonData[0]
-		for(var/obj/machinery/computer/monitor/pMon in machines)
+		for(var/obj/machinery/computer/monitor/pMon in computer_list)
 			if(!(pMon.stat & (NOPOWER|BROKEN)) )
 				pMonData[++pMonData.len] = list ("Name" = pMon.name, "ref" = "\ref[pMon]")
 				if(isnull(powmonitor))
@@ -468,7 +468,7 @@
 		else
 			JaniData["user_loc"] = list("x" = 0, "y" = 0)
 		var/MopData[0]
-		for(var/obj/item/weapon/mop/M in world)
+		for(var/obj/item/weapon/mop/M in mop_list)
 			var/turf/ml = get_turf(M)
 			if(ml)
 				if(ml.z != cl.z)
@@ -481,7 +481,7 @@
 
 
 		var/BucketData[0]
-		for(var/obj/structure/mopbucket/B in world)
+		for(var/obj/structure/mopbucket/B in mopbucket_list)
 			var/turf/bl = get_turf(B)
 			if(bl)
 				if(bl.z != cl.z)
@@ -493,7 +493,7 @@
 			BucketData[++BucketData.len] = list("x" = 0, "y" = 0, dir=null, status = null)
 
 		var/CbotData[0]
-		for(var/obj/machinery/bot/cleanbot/B in machines)
+		for(var/obj/machinery/bot/cleanbot/B in bots_list)
 			var/turf/bl = get_turf(B)
 			if(bl)
 				if(bl.z != cl.z)
@@ -505,7 +505,7 @@
 		if(!CbotData.len)
 			CbotData[++CbotData.len] = list("x" = 0, "y" = 0, dir=null, status = null)
 		var/CartData[0]
-		for(var/obj/structure/janitorialcart/B in world)
+		for(var/obj/structure/janitorialcart/B in janitorialcart_list)
 			var/turf/bl = get_turf(B)
 			if(bl)
 				if(bl.z != cl.z)
@@ -590,10 +590,10 @@
 				if("alert")
 					post_status("alert", href_list["alert"])
 				if("setmsg1")
-					message1 = input("Line 1", "Enter Message Text", message1) as text|null
+					message1 = sanitize_safe(input("Line 1", "Enter Message Text", message1) as text|null, MAX_LNAME_LEN)
 					updateSelfDialog()
 				if("setmsg2")
-					message2 = input("Line 2", "Enter Message Text", message2) as text|null
+					message2 = sanitize_safe(input("Line 2", "Enter Message Text", message2) as text|null, MAX_LNAME_LEN)
 					updateSelfDialog()
 				else
 					post_status(href_list["statdisp"])

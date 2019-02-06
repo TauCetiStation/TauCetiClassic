@@ -84,7 +84,41 @@
 							/obj/item/toy/prize/poly/polysec				= 1,
 							/obj/item/toy/prize/poly/polycompanion			= 1,
 							/obj/item/toy/prize/poly/polygold				= 1,
-							/obj/item/toy/prize/poly/polyspecial			= 1
+							/obj/item/toy/prize/poly/polyspecial			= 1,
+							/obj/item/toy/eight_ball						= 3,
+							/obj/item/toy/eight_ball/conch					= 2,
+							/obj/item/toy/carpplushie						= 1,
+							/obj/item/toy/carpplushie						= 1,
+							/obj/item/toy/carpplushie						= 1,
+							/obj/item/toy/carpplushie						= 1,
+							/obj/item/toy/carpplushie						= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1
 							)
 
 	light_color = "#00ff00"
@@ -123,7 +157,7 @@
 
 	dat += "</b></center>"
 
-	user << browse(dat, "window=arcade")
+	user << browse(entity_ja(dat), "window=arcade")
 	onclose(user, "arcade")
 
 /obj/machinery/computer/arcade/Topic(href, href_list)

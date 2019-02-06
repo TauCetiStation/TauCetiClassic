@@ -31,7 +31,7 @@
 			dat += "<A href='?src=\ref[src];screen=1'>1. Cyborg Status</A><BR>"
 			dat += "<A href='?src=\ref[src];screen=2'>2. Emergency Full Destruct</A><BR>"
 		if(screen == 1)
-			for(var/mob/living/silicon/robot/R in mob_list)
+			for(var/mob/living/silicon/robot/R in silicon_list)
 				if(istype(R, /mob/living/silicon/robot/drone))
 					continue //There's a specific console for drones.
 				if(istype(user, /mob/living/silicon/ai))
@@ -88,7 +88,7 @@
 				\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
 			dat += "<A href='?src=\ref[src];screen=0'>(Return to Main Menu)</A><BR>"
 
-	user << browse(dat, "window=computer;size=400x500")
+	user << browse(entity_ja(dat), "window=computer;size=400x500")
 	onclose(user, "computer")
 
 /obj/machinery/computer/robotics/Topic(href, href_list)
@@ -203,7 +203,7 @@
 		sleep(10)
 	while(src.timeleft)
 
-	for(var/mob/living/silicon/robot/R in mob_list)
+	for(var/mob/living/silicon/robot/R in silicon_list)
 		if(!R.scrambledcodes && !istype(R, /mob/living/silicon/robot/drone))
 			R.self_destruct()
 

@@ -183,7 +183,7 @@ var/global/BSACooldown = 0
 		</body></html>
 	"}
 
-	usr << browse(body, "window=adminplayeropts;size=550x515")
+	usr << browse(entity_ja(body), "window=adminplayeropts;size=550x515")
 	feedback_add_details("admin_verb","SPP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -240,7 +240,7 @@ var/global/BSACooldown = 0
 			if(index == page)
 				dat += "</b>"
 
-	usr << browse(dat, "window=player_notes;size=400x400")
+	usr << browse(entity_ja(dat), "window=player_notes;size=400x400")
 
 
 /datum/admins/proc/player_has_info(key)
@@ -299,7 +299,7 @@ var/global/BSACooldown = 0
 	dat += "<A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A><br>"
 
 	dat += "</body></html>"
-	usr << browse(dat, "window=adminplayerinfo;size=480x480")
+	usr << browse(entity_ja(dat), "window=adminplayerinfo;size=480x480")
 
 
 
@@ -544,7 +544,7 @@ var/global/BSACooldown = 0
 
 	//world << "Channelname: [src.admincaster_feed_channel.channel_name] [src.admincaster_feed_channel.author]"
 	//world << "Msg: [src.admincaster_feed_message.author] [src.admincaster_feed_message.body]"
-	usr << browse(dat, "window=admincaster_main;size=400x600")
+	usr << browse(entity_ja(dat), "window=admincaster_main;size=400x600")
 	onclose(usr, "admincaster_main")
 
 /datum/admins/proc/Game()
@@ -568,7 +568,7 @@ var/global/BSACooldown = 0
 		<A href='?src=\ref[src];vsc=default'>Choose a default ZAS setting</A><br>
 		"}
 
-	usr << browse(dat, "window=admin2;size=210x280")
+	usr << browse(entity_ja(dat), "window=admin2;size=210x280")
 	return
 
 /datum/admins/proc/Secrets()
@@ -627,6 +627,7 @@ var/global/BSACooldown = 0
 			<A href='?src=\ref[src];secretsfun=ionstorm'>Spawn an Ion Storm</A><BR>
 			<A href='?src=\ref[src];secretsfun=spacevines'>Spawn Space-Vines</A><BR>
 			<A href='?src=\ref[src];secretsfun=comms_blackout'>Trigger a communication blackout</A><BR>
+			<A href='?src=\ref[src];secretsfun=drop_asteroid'>Drop asteroid</A><BR>
 			<BR>
 			<B>Fun Secrets</B><BR>
 			<BR>
@@ -677,7 +678,7 @@ var/global/BSACooldown = 0
 			<BR>
 			"}
 
-	usr << browse(dat, "window=secrets")
+	usr << browse(entity_ja(dat), "window=secrets")
 	return
 
 
@@ -716,16 +717,12 @@ var/global/BSACooldown = 0
 	if(!check_rights(0))
 		return
 
-	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
+	var/message = sanitize(input("Global message to send:", "Admin Announce", null, null)  as message, 500, extra = 0)
 
 	if(message)
-		if(!check_rights(R_SERVER,0))
-			message = strip_html(message,500)
-		else
-			message = sanitize(message, list("?"=LETTER_255))
-		to_chat(world, "\blue <b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n &emsp; [message]")
+		to_chat(world, "<b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n <span class='tabulated italic emojify linkify'>[message]</span>")
 		log_admin("Announce: [key_name(usr)] : [message]")
-	feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleooc()
 	set category = "Server"
@@ -1020,7 +1017,7 @@ var/global/BSACooldown = 0
 			return "Destroy the AI"
 		if(3)
 			var/count = 0
-			for(var/mob/living/carbon/monkey/Monkey in world)
+			for(var/mob/living/carbon/monkey/Monkey in not_world)
 				if(Monkey.z == ZLEVEL_STATION)
 					count++
 			return "Kill all [count] of the monkeys on the station"
@@ -1108,7 +1105,7 @@ var/global/BSACooldown = 0
 
 /datum/admins/proc/output_ai_laws()
 	var/ai_number = 0
-	for(var/mob/living/silicon/S in mob_list)
+	for(var/mob/living/silicon/S in silicon_list)
 		ai_number++
 		if(isAI(S))
 			to_chat(usr, "<b>AI [key_name(S, usr)]'s laws:</b>")

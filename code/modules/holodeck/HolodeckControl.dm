@@ -21,9 +21,7 @@
 	var/datum/map_template/holoscene/current_scene = null
 	var/list/supported_programs = list( \
 	"Empty Court" = "emptycourt", \
-	"Basketball Court" = "basketball",	\
 	"Thunderdome Court" = "thunderdomecourt",	\
-	"Boxing Ring"="boxingcourt",	\
 	"Beach" = "beach",	\
 	"Desert" = "desert",	\
 	"Space" = "space",	\
@@ -77,7 +75,7 @@
 	else
 		dat += "Gravity is <A href='?src=\ref[src];gravity=1'><font color=blue>(OFF)</font></A><BR>"
 
-	user << browse(dat, "window=computer;size=400x500")
+	user << browse(entity_ja(dat), "window=computer;size=400x500")
 	onclose(user, "computer")
 
 

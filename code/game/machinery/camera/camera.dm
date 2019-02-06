@@ -26,6 +26,7 @@
 
 	var/light_disabled = 0
 	var/alarm_on = 0
+	var/painted = FALSE // Barber's paint can obstruct camera's view.
 
 /obj/machinery/camera/atom_init()
 	. = ..()
@@ -73,6 +74,11 @@
 	else
 		icon_state = "[initial(icon_state)]"
 
+/obj/machinery/camera/examine(mob/user)
+	..()
+	if(painted)
+		to_chat(user, "<span class='warning'>This camera appears to be painted.</span>")
+
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof() && status)
 		if(prob(100/severity))
@@ -84,10 +90,20 @@
 			..()
 
 /obj/machinery/camera/proc/fix_emp_state(list/previous_network)
-	network = previous_network
 	stat &= ~EMPED
-	cancelCameraAlarm()
-	toggle_cam(TRUE)
+	if(!painted)
+		network = previous_network
+		cancelCameraAlarm()
+		toggle_cam(TRUE)
+
+/obj/machinery/camera/proc/remove_paint_state()
+	if(!painted) // Water and paint remover can remove paint before the callback call, failsafe.
+		return
+	painted = FALSE
+	if(!(stat & EMPED))
+		visible_message("[bicon(src)] <span class='notice'>Paint drips from [src].</span>")
+		cancelCameraAlarm()
+		toggle_cam(FALSE)
 
 /obj/machinery/camera/ex_act(severity)
 	if(src.invuln)
@@ -173,15 +189,15 @@
 			itemname = P.name
 			info = P.notehtml
 		to_chat(U, "You hold \the [itemname] up to the camera ...")
-		for(var/mob/living/silicon/ai/O in living_mob_list)
-			if(!O.client)
+		for(var/mob/living/silicon/ai/O in ai_list)
+			if(!O.client || O.stat == DEAD)
 				continue
 			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U.name]</a></b> holds \a [itemname] up to one of your cameras ...")
-			O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
+			O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, entity_ja(info)), text("window=[]", itemname))
 		for(var/mob/O in player_list)
 			if (O.client && O.client.eye == src)
 				to_chat(O, "[U] holds \a [itemname] up to one of the cameras ...")
-				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
+				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, entity_ja(info)), text("window=[]", itemname))
 	else if (istype(W, /obj/item/device/camera_bug))
 		if(!src.can_use())
 			to_chat(user, "<span class='notice'>Camera non-functional</span>")
@@ -232,9 +248,9 @@
 	if(show_message)
 		var/status_message = (status ? "reactivates" : "deactivates")
 		if(user)
-			visible_message("<span class='danger'>[user] [status_message] [src]!</span>")
+			visible_message("[bicon(src)] <span class='danger'>[user] [status_message] [src]!</span>")
 		else
-			visible_message("<span class='danger'>\The [src] [status_message]!</span>")
+			visible_message("[bicon(src)] <span class='danger'>\The [src] [status_message]!</span>")
 		playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
 
 	update_icon()
@@ -251,21 +267,23 @@
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = 1
-	for(var/mob/living/silicon/S in mob_list)
+	for(var/mob/living/silicon/S in silicon_list)
 		S.triggerAlarm("Camera", get_area(src), list(src), src)
 
 
 /obj/machinery/camera/proc/cancelCameraAlarm()
 	alarm_on = 0
-	for(var/mob/living/silicon/S in mob_list)
+	for(var/mob/living/silicon/S in silicon_list)
 		S.cancelAlarm("Camera", get_area(src), src)
 
-/obj/machinery/camera/proc/can_use()
+/obj/machinery/camera/proc/can_use(check_paint = TRUE)
 	if(!status)
-		return 0
+		return FALSE
 	if(stat & EMPED)
-		return 0
-	return 1
+		return FALSE
+	if(check_paint && painted && !isXRay())
+		return FALSE
+	return TRUE
 
 /obj/machinery/camera/proc/can_see()
 	var/list/see = null

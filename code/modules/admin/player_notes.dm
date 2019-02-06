@@ -4,11 +4,11 @@
 /*
 #define NOTESFILE "data/player_notes.sav"	//where the player notes are saved
 
-datum/admins/proc/notes_show(ckey)
+/datum/admins/proc/notes_show(ckey)
 	usr << browse("<head><title>Player Notes</title></head><body>[notes_gethtml(ckey)]</body>","window=player_notes;size=700x400")
 
 
-datum/admins/proc/notes_gethtml(ckey)
+/datum/admins/proc/notes_gethtml(ckey)
 	var/savefile/notesfile = new(NOTESFILE)
 	if(!notesfile)	return "<font color='red'>Error: Cannot access [NOTESFILE]</font>"
 	if(ckey)
@@ -89,7 +89,7 @@ datum/admins/proc/notes_gethtml(ckey)
 	if (!key || !note)
 		return
 
-	note = sanitize_alt(note)
+	note = sanitize(note)
 
 	//Loading list of notes for this key
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")

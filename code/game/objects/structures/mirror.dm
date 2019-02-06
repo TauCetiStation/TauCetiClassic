@@ -116,7 +116,7 @@
 
 	switch(choice)
 		if("name")
-			var/newname = copytext(sanitize(input(H, "Who are we again?", "Name change", H.name) as null|text),1,MAX_NAME_LEN)
+			var/newname = sanitize_safe(input(H, "Who are we again?", "Name change", H.name) as null|text, MAX_NAME_LEN)
 
 			if(!newname)
 				return
@@ -129,9 +129,9 @@
 				H.mind.name = newname
 
 		if ("skin tone")
-			var/new_tone = input(H, "Choose your skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Skin Tone") as text
+			var/new_tone = input(H, "Choose your skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Skin Tone") as num
 			if(new_tone)
-				H.s_tone = max(min(round(text2num(new_tone)), 220), 1)
+				H.s_tone = max(min(round(new_tone), 220), 1)
 				H.s_tone =  -H.s_tone + 35
 			H.update_hair()
 			H.update_body()
@@ -245,13 +245,12 @@
 					H.g_hair = hex2num(copytext(new_hair, 4, 6))
 					H.b_hair = hex2num(copytext(new_hair, 6, 8))
 
-
 				if(H.gender == "male")
 					var/new_facial = input(H, "Choose your facial hair color", "Hair Color") as null|color
 					if(new_facial)
-						H.r_hair = hex2num(copytext(new_facial, 2, 4))
-						H.g_hair = hex2num(copytext(new_facial, 4, 6))
-						H.b_hair = hex2num(copytext(new_facial, 6, 8))
+						H.r_facial = hex2num(copytext(new_facial, 2, 4))
+						H.g_facial = hex2num(copytext(new_facial, 4, 6))
+						H.b_facial = hex2num(copytext(new_facial, 6, 8))
 			H.update_hair()
 			H.update_body()
 			H.check_dna(H)

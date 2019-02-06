@@ -12,7 +12,7 @@
 	m_amt = 2000
 	g_amt = 1000
 	item_state = "sheet-metal"
-	w_class = 5.0
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/weapon/game_kit/red
 	icon_state = "game_kit_red"
@@ -88,9 +88,16 @@
 	return
 
 /obj/item/weapon/game_kit/chaplain/attack_ghost(mob/dead/observer/user)
-	set_light(3, 1, "a2fad1")
+	set_light(3, 1, "#a2fad1")
 	addtimer(CALLBACK(src, .atom/proc/set_light, 0), 10)
 	return interact(user)
+
+/obj/item/weapon/game_kit/chaplain/attackby(obj/item/W, mob/user)
+	..()
+	if(istype(W, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = W
+		OS.scanned_type = src.type
+		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
 
 /obj/item/weapon/game_kit/interact(mob/user)
 	user.machine = src
@@ -98,7 +105,7 @@
 	assets.send(user)
 	if (!( data ))
 		update()
-	user << browse(data, "window=game_kit")
+	user << browse(entity_ja(data), "window=game_kit")
 	onclose(user, "game_kit")
 
 /obj/item/weapon/game_kit/Topic(href, href_list)

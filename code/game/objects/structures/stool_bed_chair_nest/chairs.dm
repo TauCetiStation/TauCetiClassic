@@ -1,93 +1,16 @@
-/obj/structure/stool/bed/chair	//YES, chairs are a type of bed, which are a type of stool. This works, believe me.	-Pete
+/obj/structure/stool/bed/chair // YES, chairs are a type of bed, which are a type of stool. This works, believe me.	-Pete
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "chair"
-	buckle_lying = 0 //force people to sit up in chairs when buckled
-	var/can_flipped = 0
-	var/flipped = 0
-	var/flip_angle = 0
+	buckle_lying = FALSE // force people to sit up in chairs when buckled
+	var/can_flipped = FALSE
+	var/flipped = FALSE
+	var/flip_angle = FALSE
+	var/propelled = FALSE // Check for fire-extinguisher-driven chairs
 
-	var/propelled = 0 // Check for fire-extinguisher-driven chairs
-
-/obj/structure/stool/bed/chair/metal
-	icon_state = "chair_g"
-	can_flipped = 1
 	var/behind = null
 	var/behind_buckled = null
-
-/obj/structure/stool/bed/chair/metal/blue
-	icon_state = "chair_blu"
-
-/obj/structure/stool/bed/chair/metal/yellow
-	icon_state = "chair_y"
-
-/obj/structure/stool/bed/chair/metal/red
-	icon_state = "chair_r"
-
-/obj/structure/stool/bed/chair/metal/green
-	icon_state = "chair_gr"
-
-/obj/structure/stool/bed/chair/metal/white
-	icon_state = "chair_w"
-
-/obj/structure/stool/bed/chair/metal/black
-	icon_state = "chair_bla"
-
-/obj/structure/stool/bed/chair/metal/atom_init()
-	behind = "chair_behind_g"
-	. = ..()
-
-/obj/structure/stool/bed/chair/metal/blue/atom_init()
-	behind = "chair_behind_blu"
-	. = ..()
-
-/obj/structure/stool/bed/chair/metal/yellow/atom_init()
-	behind = "chair_behind_y"
-	. = ..()
-
-/obj/structure/stool/bed/chair/metal/red/atom_init()
-	behind = "chair_behind_r"
-	. = ..()
-
-/obj/structure/stool/bed/chair/metal/green/atom_init()
-	behind = "chair_behind_gr"
-	. = ..()
-
-/obj/structure/stool/bed/chair/metal/white/atom_init()
-	behind = "chair_behind_w"
-	. = ..()
-
-/obj/structure/stool/bed/chair/metal/black/atom_init()
-	behind = "chair_behind_bla"
-	. = ..()
-
-/obj/structure/stool/bed/chair/Move(atom/newloc, direct)
-	..()
-	handle_rotation()
-
-/obj/structure/stool/bed/chair/metal/post_buckle_mob(mob/living/M)
-	if(buckled_mob)
-		icon_state = behind
-	else
-		icon_state = initial(icon_state)
-
-/obj/structure/stool/bed/chair/schair
-	name = "shuttle chair"
-	desc = "You sit in this. Either by will or force."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "schair"
-	var/sarmrest = null
-
-/obj/structure/stool/bed/chair/schair/atom_init()
-	sarmrest = image("icons/obj/objects.dmi", "schair_armrest", layer = FLY_LAYER)
-	. = ..()
-
-/obj/structure/stool/bed/chair/schair/post_buckle_mob(mob/living/M)
-	if(buckled_mob)
-		overlays += sarmrest
-	else
-		overlays -= sarmrest
 
 /obj/structure/stool/bed/chair/atom_init()
 	..()
@@ -133,6 +56,10 @@
 		..()
 
 /obj/structure/stool/bed/chair/user_buckle_mob(mob/living/M, mob/user)
+	if(dir == NORTH && !istype(src, /obj/structure/stool/bed/chair/schair/wagon/bench))
+		layer = FLY_LAYER
+	else
+		layer = OBJ_LAYER
 	if(flipped)
 		to_chat(usr, "<span class='notice'>You can't do it, while \the [src] is flipped.</span>")
 		if(usr != M)
@@ -147,11 +74,11 @@
 		rotate()
 	return
 
-/obj/structure/stool/bed/chair/handle_rotation()	//making this into a seperate proc so office chairs can call it on Move()
-	if(src.dir == NORTH)
-		src.layer = FLY_LAYER
+/obj/structure/stool/bed/chair/handle_rotation() // making this into a seperate proc so office chairs can call it on Move()
+	if(dir == NORTH && buckled_mob)
+		layer = FLY_LAYER
 	else
-		src.layer = OBJ_LAYER
+		layer = OBJ_LAYER
 
 	if(buckled_mob)
 		buckled_mob.dir = dir
@@ -178,6 +105,17 @@
 		handle_rotation()
 		return
 
+/obj/structure/stool/bed/chair/post_buckle_mob(mob/living/M)
+	. = ..()
+	if(buckled_mob && behind)
+		icon_state = behind
+	else
+		icon_state = initial(icon_state)
+	if(dir == NORTH && buckled_mob && !istype(src, /obj/structure/stool/bed/chair/schair/wagon/bench))
+		layer = FLY_LAYER
+	else
+		layer = OBJ_LAYER
+
 /obj/structure/stool/bed/chair/proc/can_flip(mob/living/carbon/human/user)
 	if(!user || !isturf(user.loc) || user.incapacitated() || user.lying || user.a_intent != "hurt"|| !can_flipped)
 		return 0
@@ -191,7 +129,7 @@
 
 	if(!flipped)
 		M.TurnTo(0,new_angle)
-		flip_angle = new_angle	//save our angle for future flip
+		flip_angle = new_angle	// save our angle for future flip
 		if(new_angle==90)
 			offset_y = -4
 			offset_x = 2
@@ -199,7 +137,7 @@
 			offset_y = -4
 			offset_x = -2
 		flipped = 1
-		anchored = 0		//can be pulled
+		anchored = 0		// can be pulled
 		buckle_movable = 0
 		playsound(src.loc, 'sound/items/chair_fall.ogg', 25, 1)
 	else
@@ -210,6 +148,59 @@
 
 	animate(src, transform = M, pixel_y = offset_y, pixel_x = offset_x, time = 2, easing = EASE_IN|EASE_OUT)
 	handle_rotation()
+
+/obj/structure/stool/bed/chair/Move(atom/newloc, direct)
+	..()
+	handle_rotation()
+
+/obj/structure/stool/bed/chair/barber
+	icon_state = "barber_chair"
+
+/obj/structure/stool/bed/chair/metal
+	icon_state = "chair_gray"
+	can_flipped = 1
+	behind = "chair_behind_gray"
+
+/obj/structure/stool/bed/chair/metal/blue
+	icon_state = "chair_blue"
+	behind = "chair_behind_blue"
+
+/obj/structure/stool/bed/chair/metal/yellow
+	icon_state = "chair_yellow"
+	behind = "chair_behind_yellow"
+
+/obj/structure/stool/bed/chair/metal/red
+	icon_state = "chair_red"
+	behind = "chair_behind_red"
+
+/obj/structure/stool/bed/chair/metal/green
+	icon_state = "chair_green"
+	behind = "chair_behind_green"
+
+/obj/structure/stool/bed/chair/metal/white
+	icon_state = "chair_white"
+	behind = "chair_behind_white"
+
+/obj/structure/stool/bed/chair/metal/black
+	icon_state = "chair_black"
+	behind = "chair_behind_black"
+
+/obj/structure/stool/bed/chair/schair
+	name = "shuttle chair"
+	desc = "You sit in this. Either by will or force."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "schair"
+	var/sarmrest = null
+
+/obj/structure/stool/bed/chair/schair/atom_init()
+	sarmrest = image("icons/obj/objects.dmi", "schair_armrest", layer = FLY_LAYER)
+	. = ..()
+
+/obj/structure/stool/bed/chair/schair/post_buckle_mob(mob/living/M)
+	if(buckled_mob)
+		overlays += sarmrest
+	else
+		overlays -= sarmrest
 
 // Chair types
 /obj/structure/stool/bed/chair/wood/normal
@@ -316,6 +307,8 @@
 
 /obj/structure/stool/bed/chair/office/light
 	icon_state = "officechair_white"
+	behind = "officechair_white_behind"
 
 /obj/structure/stool/bed/chair/office/dark
 	icon_state = "officechair_dark"
+	behind = "officechair_dark_behind"

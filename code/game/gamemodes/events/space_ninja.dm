@@ -357,7 +357,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 			if(!ninja_mind.objectives.len||!mission_set)//If they somehow did not get an objective at this point, time to destroy the station.
 				var/nuke_code
 				var/temp_code
-				for(var/obj/machinery/nuclearbomb/N in machines)
+				for(var/obj/machinery/nuclearbomb/N in poi_list)
 					temp_code = text2num(N.r_code)
 					if(temp_code)//if it's actually a number. It won't convert any non-numericals.
 						nuke_code = N.r_code
@@ -484,7 +484,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 	var/mission
 	while(!mission)
-		mission = sanitize(copytext(input(src, "Please specify which mission the space ninja shall undertake.", "Specify Mission", ""),1,MAX_MESSAGE_LEN))
+		mission = sanitize(input(src, "Please specify which mission the space ninja shall undertake.", "Specify Mission", ""))
 		if(!mission)
 			if(alert("Error, no mission set. Do you want to exit the setup process?",,"Yes","No")=="Yes")
 				return
@@ -912,7 +912,7 @@ Most of these are at various points of incomplete.
 	usr:proc_holder_list += A_C
 	usr:proc_holder_list += B_C
 
-mob/verb/remove_object_panel()
+/mob/verb/remove_object_panel()
 	set name = "Remove AI Ninja Verbs Debug"
 	set category = "Ninja Debug"
 	var/obj/effect/proc_holder/ai_return_control/A = locate() in src

@@ -24,6 +24,7 @@
 	var/parts = /obj/item/weapon/table_parts
 	var/flipped = 0
 	var/health = 100
+	var/canconnect = TRUE
 
 /obj/structure/table/proc/update_adjacent()
 	for(var/direction in list(1,2,4,8,5,6,9,10))
@@ -61,7 +62,7 @@
 			var/tabledirs = 0
 			for(var/direction in list(turn(dir,90), turn(dir,-90)) )
 				var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
-				if (T && T.flipped && T.dir == src.dir)
+				if (canconnect && T && T.flipped && T.canconnect && T.dir == src.dir)
 					type++
 					tabledirs |= direction
 			var/base = "table"
@@ -111,7 +112,7 @@
 					continue
 			if(!skip_sum) //means there is a window between the two tiles in this direction
 				var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
-				if(T && !T.flipped)
+				if(T && !T.flipped && T.canconnect && canconnect)
 					if(direction <5)
 						dir_sum += direction
 					else
@@ -137,7 +138,8 @@
 			if(dir_sum%16 == 12) //12 doesn't exist as a dir.
 				dir_sum = 4
 		if(dir_sum%16 in list(5,6,9,10))
-			if(locate(/obj/structure/table,get_step(src.loc,dir_sum%16)))
+			var/obj/structure/table/T = locate(/obj/structure/table,get_step(src.loc,dir_sum%16))
+			if(T && T.canconnect && canconnect)
 				table_type = 3 //full table (not the 1 tile thick one, but one of the 'tabledir' tables)
 			else
 				table_type = 2 //1 tile thick, corner table (treated the same as streight tables in code later on)
@@ -250,10 +252,17 @@
 	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
 	if(istype(src, /obj/structure/table/reinforced))
 		return
+	else if(istype(src, /obj/structure/table/woodentable/fancy/black))
+		new/obj/item/weapon/table_parts/wood/fancy/black(loc)
+	else if(istype(src, /obj/structure/table/woodentable/fancy))
+		new/obj/item/weapon/table_parts/wood/fancy(loc)
 	else if(istype(src, /obj/structure/table/woodentable))
 		new/obj/item/weapon/table_parts/wood(loc)
 	else if(istype(src, /obj/structure/table/woodentable/poker))
 		new/obj/item/weapon/table_parts/wood(loc)
+	else if(istype(src, /obj/structure/table/glass))
+		var/obj/structure/table/glass/glasstable = src
+		glasstable.shatter()
 	else
 		new /obj/item/weapon/table_parts(loc)
 	density = 0
@@ -342,6 +351,9 @@
 		return
 	if(isessence(usr) || isrobot(usr))
 		return
+	var/obj/item/weapon/W = O
+	if(!W.canremove || W.flags & NODROP)
+		return
 	user.drop_item()
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
@@ -358,14 +370,7 @@
 			user.SetNextMove(CLICK_CD_MELEE)
 			if (G.state < GRAB_AGGRESSIVE)
 				if(user.a_intent == "hurt")
-					if (prob(15))
-						M.Weaken(5)
-					M.apply_damage(8,def_zone = BP_HEAD)
-					visible_message("<span class='danger'>[G.assailant] slams [G.affecting]'s face against \the [src]!</span>")
-					playsound(src.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-					M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slammed with face by [A.name] against \the [src]([A.ckey])</font>"
-					A.attack_log += "\[[time_stamp()]\] <font color='red'>Slams face of [M.name] against \the [src]([M.ckey])</font>"
-					msg_admin_attack("[key_name(A)] slams [key_name(M)] face against \the [src]")
+					slam(A, M, G)
 				else
 					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 					return
@@ -389,6 +394,8 @@
 		return
 
 	if(isrobot(user))
+		return
+	if(!W.canremove || W.flags & NODROP)
 		return
 
 	if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W,/obj/item/weapon/twohanded/dualsaber))
@@ -419,6 +426,16 @@
 			W.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 	return
 
+/obj/structure/table/proc/slam(var/mob/living/A, var/mob/living/M, var/obj/item/weapon/grab/G)
+	if (prob(15))
+		M.Weaken(5)
+	M.apply_damage(8,def_zone = BP_HEAD)
+	visible_message("<span class='danger'>[G.assailant] slams [G.affecting]'s face against \the [src]!</span>")
+	playsound(src.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+	M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slammed with face by [A.name] against \the [src]([A.ckey])</font>"
+	A.attack_log += "\[[time_stamp()]\] <font color='red'>Slams face of [M.name] against \the [src]([M.ckey])</font>"
+	msg_admin_attack("[key_name(A)] slams [key_name(M)] face against \the [src]")
+
 /obj/structure/table/proc/straight_table_check(var/direction)
 	var/obj/structure/table/T
 	for(var/angle in list(-90,90))
@@ -428,7 +445,7 @@
 	T = locate() in get_step(src.loc,direction)
 	if (!T || T.flipped)
 		return 1
-	if (istype(T,/obj/structure/table/reinforced/))
+	if (istype(T,/obj/structure/table/reinforced))
 		var/obj/structure/table/reinforced/R = T
 		if (R.status == 2)
 			return 0
@@ -530,6 +547,87 @@
 	return 1
 
 /*
+ * Glass tables
+ */
+/obj/structure/table/glass
+	name = "glass table"
+	desc = "Looks fragile. You should totally flip it. It is begging for it."
+	icon_state = "glasstable"
+	parts = /obj/item/weapon/table_parts/glass
+	health = 10
+
+/obj/structure/table/glass/flip(direction)
+	if( !straight_table_check(turn(direction,90)) || !straight_table_check(turn(direction,-90)) )
+		return 0
+
+	dir = direction
+	if(dir != NORTH)
+		layer = 5
+	flipped = 1
+	flags |= ON_BORDER
+	for(var/D in list(turn(direction, 90), turn(direction, -90)))
+		var/obj/structure/table/T = locate() in get_step(src,D)
+		if(T && !T.flipped)
+			T.flip(direction)
+
+	shatter()
+
+	return 1
+
+/obj/structure/table/glass/proc/shatter()
+	var/list/targets = list(get_step(src,dir),get_step(src,turn(dir, 45)),get_step(src,turn(dir, -45)))
+	for (var/atom/movable/A in get_turf(src))
+		if (!A.anchored)
+			A.throw_at(pick(targets),1,1)
+
+	canconnect = FALSE
+	update_adjacent()
+	playsound(src.loc, "shatter", 50, 1)
+	visible_message("<span class='warning'>[src] breaks!</span>")
+	var/obj/item/weapon/shard/debri = new /obj/item/weapon/shard( src.loc )
+	debri.throw_at(pick(targets),1,1)
+	qdel(src)
+
+/obj/structure/table/glass/on_climb(mob/living/user)
+	usr.forceMove(get_turf(src))
+	if(check_break(user))
+		usr.visible_message("<span class='warning'>[user] tries to climb onto \the [src], but breaks it!</span>")
+	else
+		..()
+
+/obj/structure/table/glass/Crossed(atom/movable/AM)
+	. = ..()
+	check_break(AM)
+
+/obj/structure/table/glass/proc/check_break(mob/living/M)
+	if(istype(M) && (M.checkpass(PASSTABLE) || M.checkpass(PASSCRAWL)))
+		return FALSE
+
+	if(has_gravity(M) && ishuman(M))
+		M.Weaken(5)
+		shatter()
+		return TRUE
+	else
+		return FALSE
+
+/obj/structure/table/glass/slam(var/mob/living/A, var/mob/living/M, var/obj/item/weapon/grab/G)
+	M.Weaken(5)
+	visible_message("<span class='danger'>[G.assailant] slams [G.affecting]'s face against \the [src], breaking it!</span>")
+	playsound(src.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+	M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slammed with face by [A.name] against \the [src]([A.ckey]), breaking it</font>"
+	A.attack_log += "\[[time_stamp()]\] <font color='red'>Slams face of [M.name] against \the [src]([M.ckey]), breaking it</font>"
+	msg_admin_attack("[key_name(A)] slams [key_name(M)] face against \the [src], breaking it")
+	if(prob(30) && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+		BP.createwound(CUT, 15)
+		BP.embed(new /obj/item/weapon/shard)
+		H.emote("scream",,, 1)
+	else
+		M.apply_damage(15,def_zone = BP_HEAD)
+	shatter()
+
+/*
  * Wooden tables
  */
 /obj/structure/table/woodentable
@@ -545,6 +643,17 @@
 	icon_state = "pokertable"
 	parts = /obj/item/weapon/table_parts/wood/poker
 	health = 50
+
+/obj/structure/table/woodentable/fancy
+	name = "fancy table"
+	desc = "A standard metal table frame covered with an amazingly fancy, patterned cloth."
+	icon_state = "fancytable"
+	parts = /obj/item/weapon/table_parts/wood/fancy
+
+/obj/structure/table/woodentable/fancy/black
+	icon_state = "fancytable_black"
+	parts = /obj/item/weapon/table_parts/wood/fancy/black
+
 /*
  * Reinforced tables
  */
@@ -655,6 +764,9 @@
 		return
 	if(isrobot(user) || isessence(user))
 		return
+	var/obj/item/weapon/W = O
+	if(!W.canremove || W.flags & NODROP)
+		return
 	user.drop_item()
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
@@ -679,6 +791,8 @@
 			destroy()
 			return
 	if(isrobot(user))
+		return
+	if(!W.canremove || W.flags & NODROP)
 		return
 	user.drop_item()
 	if(W && W.loc)	W.loc = src.loc

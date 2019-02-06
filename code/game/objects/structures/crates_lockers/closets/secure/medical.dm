@@ -69,6 +69,7 @@
 	new /obj/item/clothing/under/rank/nursesuit (src)
 	new /obj/item/clothing/head/nursehat (src)
 	new /obj/item/clothing/under/rank/medical(src)
+	new /obj/item/clothing/under/rank/medical/skirt(src)
 	new /obj/item/clothing/under/rank/nurse(src)
 	new /obj/item/clothing/under/rank/orderly(src)
 	new /obj/item/clothing/suit/storage/labcoat(src)
@@ -77,6 +78,8 @@
 //	new /obj/item/weapon/cartridge/medical(src)
 	new /obj/item/device/radio/headset/headset_med(src)
 	new /obj/item/weapon/storage/belt/medical(src)
+	new /obj/item/clothing/gloves/latex/nitrile(src)
+	new /obj/item/clothing/suit/surgicalapron(src)
 
 /obj/structure/closet/secure_closet/CMO
 	name = "Chief Medical Officer's Locker"
@@ -110,14 +113,17 @@
 	new /obj/item/device/remote_device/chief_medical_officer(src)
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/under/rank/chief_medical_officer(src)
+	new /obj/item/clothing/under/rank/chief_medical_officer/skirt(src)
 	new /obj/item/clothing/suit/storage/labcoat/cmo(src)
 	new /obj/item/weapon/cartridge/cmo(src)
-	new /obj/item/clothing/gloves/latex(src)
+	new /obj/item/clothing/gloves/latex/nitrile(src)
 	new /obj/item/clothing/shoes/brown	(src)
 	new /obj/item/device/radio/headset/heads/cmo(src)
 	new /obj/item/weapon/storage/belt/medical(src)
 	new /obj/item/device/flash(src)
 	new /obj/item/weapon/reagent_containers/hypospray/cmo(src)
+	new /obj/item/clothing/suit/surgicalapron(src)
+	new /obj/item/airbag(src)
 
 /obj/structure/closet/secure_closet/animal
 	name = "Animal Control"

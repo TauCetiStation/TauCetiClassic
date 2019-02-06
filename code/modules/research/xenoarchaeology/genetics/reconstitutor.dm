@@ -1,5 +1,5 @@
 //gene sequence datum
-datum/genesequence
+/datum/genesequence
 	var/spawned_type
 	var/list/full_genome_sequence = list()
 
@@ -16,6 +16,7 @@ datum/genesequence
 	circuit = "/obj/item/weapon/circuitboard/reconstitutor"
 	req_access = list(access_xenoarch) //Only used for record deletion right now. //xenoarch couldn't use it when it was access_heads
 	var/obj/machinery/clonepod/pod1 = 1 //Linked cloning pod.
+	var/last_used = 0 // We don't want seeds getting spammed
 	var/temp = ""
 	var/menu = 1 //Which menu screen to display
 	var/list/records = list()
@@ -109,8 +110,6 @@ datum/genesequence
 	dat += "<td><b>GENE3</b></td>"
 	dat += "<td><b>GENE4</b></td>"
 	dat += "<td><b>GENE5</b></td>"
-	dat += "<td><b>GENE6</b></td>"
-	dat += "<td><b>GENE7</b></td>"
 	dat += "<td></td>"
 	dat += "<td></td>"
 	dat += "</tr>"
@@ -120,7 +119,7 @@ datum/genesequence
 		var/datum/genesequence/cur_genesequence = discovered_genesequences[sequence_num]
 		dat += "<tr>"
 		var/num_correct = 0
-		for(var/curindex = 1, curindex <= 7, curindex++)
+		for(var/curindex = 1, curindex <= 5, curindex++)
 			var/bgcolour = "#ffffff"//white ffffff, red ff0000
 
 			//background colour hints at correct positioning
@@ -129,16 +128,16 @@ datum/genesequence
 				if(manually_placed_genomes[sequence_num][curindex] == cur_genesequence.full_genome_sequence[curindex])
 					bgcolour = "#008000"
 					num_correct += 1
-					if(num_correct == 7)
+					if(num_correct == 5)
 						discovered_genesequences -= cur_genesequence
 						completed_genesequences += cur_genesequence
-						manually_placed_genomes[sequence_num] = new/list(7)
+						manually_placed_genomes[sequence_num] = new/list(5)
 						updateDialog()
 						return
 				//yellow background if adjacent to correct slot
 				if(curindex > 1 && manually_placed_genomes[sequence_num][curindex] == cur_genesequence.full_genome_sequence[curindex - 1])
 					bgcolour = "#ffff00"
-				else if(curindex < 7 && manually_placed_genomes[sequence_num][curindex] == cur_genesequence.full_genome_sequence[curindex + 1])
+				else if(curindex < 5 && manually_placed_genomes[sequence_num][curindex] == cur_genesequence.full_genome_sequence[curindex + 1])
 					bgcolour = "#ffff00"
 
 			var/this_genome_slot = manually_placed_genomes[sequence_num][curindex]
@@ -153,7 +152,7 @@ datum/genesequence
 	for(var/sequence_num = 1, sequence_num <= completed_genesequences.len, sequence_num += 1)
 		var/datum/genesequence/cur_genesequence = completed_genesequences[sequence_num]
 		dat += "<tr>"
-		for(var/curindex = 1, curindex <= 7, curindex++)
+		for(var/curindex = 1, curindex <= 5, curindex++)
 			var/this_genome_slot = cur_genesequence.full_genome_sequence[curindex]
 			dat += "<td style='background-color:#008000'>[this_genome_slot]</td>"
 		dat += "<td><a href='?src=\ref[src];wipe=1;sequence_num=[sequence_num]'>Wipe</a></td>"
@@ -165,7 +164,7 @@ datum/genesequence
 	dat += "<br>"
 	dat += "<hr>"
 	dat += "<a href='?src=\ref[src];close=1'>Close</a>"
-	user << browse(dat, "window=reconstitutor;size=600x500")
+	user << browse(entity_ja(dat), "window=reconstitutor;size=600x500")
 	onclose(user, "reconstitutor")
 
 /obj/machinery/computer/reconstitutor/Topic(href, href_list)
@@ -196,7 +195,7 @@ datum/genesequence
 
 	else if(href_list["reset"])
 		var/sequence_num = text2num(href_list["sequence_num"])
-		for(var/curindex = 1, curindex <= 7, curindex++)
+		for(var/curindex = 1, curindex <= 5, curindex++)
 			var/old_genome = manually_placed_genomes[sequence_num][curindex]
 			manually_placed_genomes[sequence_num][curindex] = null
 			if(old_genome)
@@ -216,10 +215,14 @@ datum/genesequence
 	updateDialog()
 
 /obj/machinery/computer/reconstitutor/proc/reconstruct(sequence_num)
-	var/datum/genesequence/cloned_genesequence = completed_genesequences[sequence_num]
-	visible_message("<span class='notice'>[bicon(src)] [src] clones a packet of seeds from a reconstituted gene sequence!</span>")
-	playsound(src.loc, 'sound/effects/screech.ogg', 50, 1, -3)
-	new cloned_genesequence.spawned_type(src.loc)
+	if(world.time > src.last_used + 150)
+		var/datum/genesequence/cloned_genesequence = completed_genesequences[sequence_num]
+		visible_message("<span class='notice'>[bicon(src)] [src] clones a packet of seeds from a reconstituted gene sequence!</span>")
+		playsound(src.loc, 'sound/effects/screech.ogg', 50, 1, -3)
+		new cloned_genesequence.spawned_type(src.loc)
+		src.last_used = world.time
+	else
+		visible_message("<span class='notice'>[bicon(src)] [src] is recharging.</span>")
 
 /obj/machinery/computer/reconstitutor/animal/reconstruct(sequence_num)
 	var/datum/genesequence/cloned_genesequence = completed_genesequences[sequence_num]
@@ -274,7 +277,7 @@ datum/genesequence
 		//add genomes for new gene sequence to pool of discoverable genomes
 		undiscovered_genomes.Add(newly_discovered_genesequence.full_genome_sequence)
 		manually_placed_genomes.Add(null)
-		manually_placed_genomes[manually_placed_genomes.len] = new/list(7)
+		manually_placed_genomes[manually_placed_genomes.len] = new/list(5)
 
 	else
 		//there's no point scanning any more fossils, we've already discovered everything

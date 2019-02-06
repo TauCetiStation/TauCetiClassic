@@ -106,7 +106,7 @@ var/list/department_radio_keys = list(
 		if(dongle.translate_binary)
 			return 1
 
-/mob/living/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=0, message_range = world.view, list/used_radios = list(), sound/speech_sound, sound_vol, sanitize = 1)
+/mob/living/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=FALSE, message_range = world.view, list/used_radios = list(), sound/speech_sound, sound_vol, sanitize = TRUE, message_mode = FALSE)
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
@@ -115,7 +115,7 @@ var/list/department_radio_keys = list(
 			return
 
 	if(sanitize)
-		message = sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN))
+		message = sanitize(message)
 
 	var/turf/T = get_turf(src)
 
@@ -162,13 +162,13 @@ var/list/department_radio_keys = list(
 		var/list/hearturfs = list()
 
 		for(var/I in hear)
-			if(istype(I, /mob/))
+			if(istype(I, /mob))
 				var/mob/M = I
 				listening += M
 				hearturfs += M.locs[1]
 				for(var/obj/O in M.contents)
 					listening_obj |= O
-			else if(istype(I, /obj/))
+			else if(istype(I, /obj))
 				var/obj/O = I
 				hearturfs += O.locs[1]
 				listening_obj |= O
@@ -198,7 +198,8 @@ var/list/department_radio_keys = list(
 			if(O) //It's possible that it could be deleted in the meantime.
 				O.hear_talk(src, message, verb, speaking)
 
-	log_say("[name]/[key] : [message]")
+	var/area/A = get_area(src)
+	log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")
 	return 1
 
 /mob/living/proc/say_signlang(var/message, var/verb="gestures", var/datum/language/language)

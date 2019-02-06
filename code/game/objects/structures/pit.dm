@@ -210,7 +210,7 @@
 			qdel(src)
 			return
 	if(istype(W,/obj/item/weapon/pen))
-		var/msg = sanitize(input(user, "What should it say?", "Grave marker", message) as text|null)
+		var/msg = sanitize(input(user, "What should it say?", "Grave marker", input_default(message)) as text|null)
 		add_fingerprint(user)
 		if(msg)
 			message = msg
@@ -219,7 +219,7 @@
 //Grave jetsons items
 
 
-obj/item/weapon/gun/energy/laser/retro/jetsons
+/obj/item/weapon/gun/energy/laser/retro/jetsons
 	name ="unwanted laser"
 	icon_state = "jetsons"
 	item_state = "jetsons"
@@ -228,7 +228,7 @@ obj/item/weapon/gun/energy/laser/retro/jetsons
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice/jetsons)
 
 
-obj/item/weapon/gun/energy/laser/retro/jetsons/update_icon()
+/obj/item/weapon/gun/energy/laser/retro/jetsons/update_icon()
 	return 0
 
 /obj/item/ammo_casing/energy/laser/practice/jetsons

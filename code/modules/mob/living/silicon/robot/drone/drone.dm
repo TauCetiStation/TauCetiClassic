@@ -32,6 +32,8 @@
 
 	. = ..()
 
+	drone_list += src
+
 	if(camera && "Robots" in camera.network)
 		camera.add_network("Engineering")
 
@@ -61,6 +63,10 @@
 	//Some tidying-up.
 	flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: 'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
 	updateicon()
+
+/mob/living/silicon/robot/drone/Destroy()
+	drone_list -= src
+	return ..()
 
 /mob/living/silicon/robot/drone/init()
 	laws = new /datum/ai_laws/drone()
@@ -102,7 +108,7 @@
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = sanitize(message)
 
 	if (stat == DEAD)
 		return say_dead(message)
@@ -117,12 +123,12 @@
 				to_chat(src, "\red Your radio transmitter isn't functional.")
 				return
 
-			for (var/mob/living/S in living_mob_list)
-				if(isdrone(S))
+			for (var/mob/living/S in drone_list)
+				if(S.stat != DEAD)
 					to_chat(S, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,3))]\"</span></span></i>")
 
-			for (var/mob/M in dead_mob_list)
-				if(!isnewplayer(M) && !isbrain(M))
+			for (var/mob/M in observer_list)
+				if(M.client && M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 					to_chat(M, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,3))]\"</span></span></i>")
 
 		else
@@ -134,17 +140,14 @@
 				if(D.client)
 					to_chat(D, "<b>[src]</b> transmits, \"[message]\"")
 
-			for(var/mob/M in player_list)
-				if(isnewplayer(M))
-					continue
-				else if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
-					if(M.client)
-						to_chat(M, "<b>[src]</b> transmits, \"[message]\"")
+			for(var/mob/M in observer_list)
+				if(M.client && M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
+					to_chat(M, "<b>[src]</b> transmits, \"[message]\"")
 
 //Drones cannot be upgraded with borg modules so we need to catch some items before they get used in ..().
 /mob/living/silicon/robot/drone/attackby(obj/item/weapon/W, mob/user)
 
-	if(istype(W, /obj/item/borg/upgrade/))
+	if(istype(W, /obj/item/borg/upgrade))
 		to_chat(user, "\red The maintenance drone chassis not compatible with \the [W].")
 		return
 
@@ -201,7 +204,7 @@
 
 			user.visible_message("\red \the [user] swipes \his ID card through \the [src], attempting to reboot it.", "\red You swipe your ID card through \the [src], attempting to reboot it.")
 			var/drones = 0
-			for(var/mob/living/silicon/robot/drone/D in mob_list)
+			for(var/mob/living/silicon/robot/drone/D in drone_list)
 				if(D.key && D.client)
 					drones++
 			if(drones < config.max_maint_drones)
@@ -281,7 +284,7 @@
 //Reboot procs.
 
 /mob/living/silicon/robot/drone/proc/request_player()
-	for(var/mob/dead/observer/O in player_list)
+	for(var/mob/dead/observer/O in observer_list)
 		if(jobban_isbanned(O, ROLE_DRONE))
 			continue
 		if(role_available_in_minutes(O, ROLE_DRONE))

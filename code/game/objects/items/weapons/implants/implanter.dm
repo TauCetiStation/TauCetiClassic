@@ -9,9 +9,6 @@
 	var/obj/item/weapon/implant/imp = null
 
 /obj/item/weapon/implanter/proc/update()
-
-
-/obj/item/weapon/implanter/update()
 	if (imp)
 		icon_state = "implanter1"
 	else

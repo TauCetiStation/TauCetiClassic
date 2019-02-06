@@ -8,24 +8,18 @@
 	icon_state = "body_scanner_0"
 	density = 1
 	anchored = 1
-
 	light_color = "#00FF00"
 
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)))
-			set_light(2)
-		else
-			set_light(0)
-
-/*/obj/machinery/bodyscanner/allow_drop()
-	return 0*/
+/obj/machinery/bodyscanner/power_change()
+	..()
+	if(!(stat & (BROKEN|NOPOWER)))
+		set_light(2)
+	else
+		set_light(0)
 
 /obj/machinery/bodyscanner/relaymove(mob/user)
-	if (user.stat)
-		return
-	src.go_out()
-	return
+	if(!user.stat)
+		open_machine()
 
 /obj/machinery/bodyscanner/verb/eject()
 	set src in oview(1)
@@ -34,7 +28,7 @@
 
 	if (usr.stat != CONSCIOUS)
 		return
-	src.go_out()
+	open_machine()
 	add_fingerprint(usr)
 	return
 
@@ -43,122 +37,77 @@
 	set category = "Object"
 	set name = "Enter Body Scanner"
 
-	if (usr.stat != CONSCIOUS)
+	if (usr.stat != CONSCIOUS || usr.lying)
 		return
-	if (src.occupant)
-		to_chat(usr, "\blue <B>The scanner is already occupied!</B>")
+	if(!move_inside_checks(usr, usr))
 		return
-	if (usr.abiotic())
-		to_chat(usr, "\blue <B>Subject cannot have abiotic items on.</B>")
-		return
-	usr.client.perspective = EYE_PERSPECTIVE
-	usr.client.eye = src
-	usr.forceMove(src)
-	src.occupant = usr
-	src.icon_state = "body_scanner_1"
-	for(var/obj/O in src)
-		//O = null
-		qdel(O)
-		//Foreach goto(124)
-	src.add_fingerprint(usr)
-	return
+	close_machine(usr, usr)
 
-/obj/machinery/bodyscanner/proc/go_out()
-	if ((!( src.occupant ) || src.locked))
-		return
-	for(var/obj/O in src)
-		O.loc = src.loc
-		//Foreach goto(30)
-	if (src.occupant.client)
-		src.occupant.client.eye = src.occupant.client.mob
-		src.occupant.client.perspective = MOB_PERSPECTIVE
-	src.occupant.loc = src.loc
-	src.occupant = null
-	src.icon_state = "body_scanner_0"
-	return
+/obj/machinery/bodyscanner/proc/move_inside_checks(mob/target, mob/user)
+	if(occupant)
+		to_chat(user, "<span class='userdanger'>The scanner is already occupied!</span>")
+		return FALSE
+	if(!iscarbon(target))
+		return FALSE
+	if(target.abiotic())
+		to_chat(user, "<span class='userdanger'>Subject cannot have abiotic items on.</span>")
+		return FALSE
+	return TRUE
 
 /obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G, mob/user)
-	if ((!( istype(G, /obj/item/weapon/grab) ) || !( ismob(G.affecting) )))
+	if(!istype(G))
 		return
-	if (src.occupant)
-		to_chat(user, "\blue <B>The scanner is already occupied!</B>")
+	if(!move_inside_checks(G.affecting, user))
 		return
-	if (G.affecting.abiotic())
-		to_chat(user, "\blue <B>Subject cannot have abiotic items on.</B>")
-		return
-	user.SetNextMove(CLICK_CD_MELEE)
-	var/mob/M = G.affecting
-	if(M.buckled)
-		var/obj/O = M.buckled
-		O.user_unbuckle_mob(user)
-	if (M.client)
-		M.client.perspective = EYE_PERSPECTIVE
-		M.client.eye = src
-	M.loc = src
-	src.occupant = M
-	src.icon_state = "body_scanner_1"
-	for(var/obj/O in src)
-		O.loc = src.loc
-		//Foreach goto(154)
-	src.add_fingerprint(user)
-	//G = null
+	add_fingerprint(user)
+	close_machine(G.affecting)
 	qdel(G)
-	return
+
+/obj/machinery/bodyscanner/update_icon()
+	icon_state = "body_scanner_[occupant ? "1" : "0"]"
+
+/obj/machinery/bodyscanner/MouseDrop_T(mob/target, mob/user)
+	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user))
+		return
+	if(!iscarbon(user) && !isrobot(user))
+		return
+	if(!move_inside_checks(target, user))
+		return
+	add_fingerprint(user)
+	close_machine(target)
 
 /obj/machinery/bodyscanner/ex_act(severity)
+	var/should_destroy = FALSE
 	switch(severity)
 		if(1.0)
-			for(var/atom/movable/A as mob|obj in src)
-				A.loc = src.loc
-				ex_act(severity)
-				//Foreach goto(35)
-			//SN src = null
-			qdel(src)
-			return
+			should_destroy = TRUE
 		if(2.0)
-			if (prob(50))
-				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
-					ex_act(severity)
-					//Foreach goto(108)
-				//SN src = null
-				qdel(src)
-				return
+			if(prob(50))
+				should_destroy = TRUE
 		if(3.0)
-			if (prob(25))
-				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
-					ex_act(severity)
-					//Foreach goto(181)
-				//SN src = null
-				qdel(src)
-				return
-		else
-	return
+			if(prob(25))
+				should_destroy = TRUE
+	if(should_destroy)
+		for(var/atom/movable/A in src)
+			A.forceMove(loc)
+			ex_act(severity)
+		qdel(src)
 
 /obj/machinery/bodyscanner/blob_act()
 	if(prob(50))
-		for(var/atom/movable/A as mob|obj in src)
-			A.loc = src.loc
+		for(var/atom/movable/A in src)
+			A.forceMove(loc)
 		qdel(src)
 
 /obj/machinery/body_scanconsole/ex_act(severity)
-
 	switch(severity)
 		if(1.0)
-			//SN src = null
 			qdel(src)
-			return
 		if(2.0)
 			if (prob(50))
-				//SN src = null
 				qdel(src)
-				return
-		else
-	return
 
 /obj/machinery/body_scanconsole/blob_act()
-
 	if(prob(50))
 		qdel(src)
 
@@ -405,7 +354,7 @@
 		else
 			dat = "<font color='red'> Error: No Body Scanner connected.</font>"
 	dat += text("<BR><BR><A href='?src=\ref[];mach_close=scanconsole'>Close</A>", user)
-	user << browse(dat, "window=scanconsole;size=430x600")
+	user << browse(entity_ja(dat), "window=scanconsole;size=430x600")
 
 /obj/machinery/body_scanconsole/Topic(href, href_list)
 	. = ..()

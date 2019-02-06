@@ -1,4 +1,4 @@
-/mob/living/simple_animal/vox/armalis/
+/mob/living/simple_animal/vox/armalis
 
 	name = "serpentine alien"
 	real_name = "serpentine alien"
@@ -25,7 +25,7 @@
 
 /mob/living/simple_animal/vox/armalis/Die()
 
-	living_mob_list -= src
+	alive_mob_list -= src
 	dead_mob_list += src
 	stat = DEAD
 	visible_message("\red <B>[src] shudders violently and explodes!</B>","\red <B>You feel your body rupture!</B>")
@@ -87,7 +87,7 @@
 
 	targets += getmobs() //Fill list, prompt user with list
 	target = input("Select a creature!", "Speak to creature", null, null) as null|anything in targets
-	text = input("What would you like to say?", "Speak to creature", null, null)
+	text = sanitize(input("What would you like to say?", "Speak to creature", null, null))
 
 	if (!target || !text)
 		return

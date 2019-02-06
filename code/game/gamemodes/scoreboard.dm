@@ -2,32 +2,15 @@
 	if(achievements.len)
 		completions += "<br>[achievement_declare_completion()]"
 
-	//Print a list of antagonists to the server log
-	var/list/total_antagonists = list()
-	//Look into all mobs in world, dead or alive
-	for(var/datum/mind/Mind in minds)
-		var/temprole = Mind.special_role
-		if(temprole)							//if they are an antagonist of some sort.
-			if(temprole in total_antagonists)	//If the role exists already, add the name to it
-				total_antagonists[temprole] += ", [Mind.name]([Mind.key])"
-			else
-				total_antagonists.Add(temprole) //If the role doesnt exist in the list, create it and add the mob
-				total_antagonists[temprole] += ": [Mind.name]([Mind.key])"
-
-	//Now print them all into the log!
-	log_game("Antagonists at round end were...")
-	for(var/i in total_antagonists)
-		log_game("[i]s[total_antagonists[i]].")
-
 	// Score Calculation and Display
 
 	// Who is alive/dead, who escaped
-	for (var/mob/living/silicon/ai/I in mob_list)
+	for (var/mob/living/silicon/ai/I in ai_list)
 		if (I.stat == DEAD && I.z == ZLEVEL_STATION)
 			score["deadaipenalty"] = 1
 			score["deadcrew"] += 1
 
-	for (var/mob/living/carbon/human/I in mob_list)
+	for (var/mob/living/carbon/human/I in human_list)
 //		for (var/datum/ailment/disease/V in I.ailments)
 //			if (!V.vaccine && !V.spread != "Remissive") score["disease"]++
 		if (I.stat == DEAD && I.z == ZLEVEL_STATION)
@@ -39,7 +22,7 @@
 
 	var/area/escape_zone = locate(/area/shuttle/escape/centcom)
 
-	for(var/mob/living/player in living_mob_list)
+	for(var/mob/living/player in alive_mob_list)
 		if (player.client)
 			var/turf/location = get_turf(player.loc)
 			if (location in escape_zone)
@@ -52,7 +35,9 @@
 
 	var/cashscore = 0
 	var/dmgscore = 0
-	for(var/mob/living/carbon/human/E in living_mob_list)
+	for(var/mob/living/carbon/human/E in human_list)
+		if(E.stat == DEAD)
+			continue
 		cashscore = 0
 		dmgscore = 0
 		var/turf/location = get_turf(E.loc)
@@ -79,8 +64,9 @@
 
 	var/nukedpenalty = 1000
 	if (ticker.mode.config_tag == "nuclear")
+		var/datum/game_mode/nuclear/GM = ticker.mode
 		var/foecount = 0
-		for(var/datum/mind/M in ticker.mode:syndicates)
+		for(var/datum/mind/M in GM.syndicates)
 			foecount++
 			if (!M || !M.current)
 				score["opkilled"]++
@@ -95,7 +81,7 @@
 
 /*
 		score["disc"] = 1
-		for(var/obj/item/weapon/disk/nuclear/A in world)
+		for(var/obj/item/weapon/disk/nuclear/A in not_world)
 			if(A.loc != /mob/living/carbon) continue
 			var/turf/location = get_turf(A.loc)
 			var/area/bad_zone1 = locate(/area)
@@ -107,7 +93,7 @@
 			if (A.loc.z != ZLEVEL_STATION) score["disc"] = 0
 */
 		if (score["nuked"])
-			for (var/obj/machinery/nuclearbomb/NUKE in machines)
+			for (var/obj/machinery/nuclearbomb/NUKE in poi_list)
 				//if (NUKE.r_code == "Nope") continue
 				if (NUKE.detonated == 0)
 					continue
@@ -122,8 +108,9 @@
 					nukedpenalty = 10000
 
 	if (ticker.mode.config_tag == "rp-revolution")
+		var/datum/game_mode/revolution/rp_revolution/GM = ticker.mode
 		var/foecount = 0
-		for(var/datum/mind/M in ticker.mode:head_revolutionaries)
+		for(var/datum/mind/M in GM.head_revolutionaries)
 			foecount++
 			if (!M || !M.current)
 				score["opkilled"]++
@@ -135,7 +122,7 @@
 				score["opkilled"]++
 		if(foecount == score["arrested"])
 			score["allarrested"] = 1
-		for(var/mob/living/carbon/human/player in mob_list)
+		for(var/mob/living/carbon/human/player in human_list)
 			if(player.mind)
 				var/role = player.mind.assigned_role
 				if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director"))
@@ -143,7 +130,7 @@
 						score["deadcommand"]++
 
 	// Check station's power levels
-	for (var/obj/machinery/power/apc/A in machines)
+	for (var/obj/machinery/power/apc/A in apc_list)
 		if (A.z != ZLEVEL_STATION)
 			continue
 		for (var/obj/item/weapon/stock_parts/cell/C in A.contents)
@@ -151,12 +138,12 @@
 				score["powerloss"] += 1 // 200 charge leeway
 
 	// Check how much uncleaned mess is on the station
-	for (var/obj/effect/decal/cleanable/M in world)
+	for (var/obj/effect/decal/cleanable/M in decal_cleanable)
 		if (M.z != ZLEVEL_STATION)
 			continue
-		if (istype(M, /obj/effect/decal/cleanable/blood/gibs/))
+		if (istype(M, /obj/effect/decal/cleanable/blood/gibs))
 			score["mess"] += 3
-		if (istype(M, /obj/effect/decal/cleanable/blood/))
+		if (istype(M, /obj/effect/decal/cleanable/blood))
 			score["mess"] += 1
 //		if (istype(M, /obj/effect/decal/cleanable/greenpuke)) score["mess"] += 1
 //		if (istype(M, /obj/effect/decal/cleanable/poop)) score["mess"] += 1 // What the literal fuck Paradise. Jesus christ no. - Iamgoofball
@@ -166,7 +153,7 @@
 
 	//Research Levels
 	var/research_levels = 0
-	for(var/obj/machinery/r_n_d/server/core/C in machines)
+	for(var/obj/machinery/r_n_d/server/core/C in rnd_server_list)
 		for(var/datum/tech/T in C.files.known_tech)
 			research_levels += T.level - 1
 
@@ -259,16 +246,17 @@
 		var/crewcount = 0
 		var/diskdat = ""
 		var/bombdat = null
-		for(var/datum/mind/M in ticker.mode:syndicates)
+		var/datum/game_mode/nuclear/GM = ticker.mode
+		for(var/datum/mind/M in GM.syndicates)
 			foecount++
-		for(var/mob/living/C in living_mob_list)
+		for(var/mob/living/C in alive_mob_list)
 			if (!istype(C,/mob/living/carbon/human) || !istype(C,/mob/living/silicon/robot) || !istype(C,/mob/living/silicon/ai))
 				continue
 			if (!C.client)
 				continue
 			crewcount++
 
-		for(var/obj/item/weapon/disk/nuclear/N in world)
+		for(var/obj/item/weapon/disk/nuclear/N in poi_list)
 			if(!N)
 				continue
 			var/atom/disk_loc = N.loc
@@ -283,13 +271,13 @@
 			diskdat += "in [disk_loc.loc]"
 			break // Should only need one go-round, probably
 		var/nukedpenalty = 0
-		for(var/obj/machinery/nuclearbomb/NUKE in world)
+		for(var/obj/machinery/nuclearbomb/NUKE in poi_list)
 			//if (NUKE.r_code == "Nope") continue
 			if (NUKE.detonated == 0)
 				continue
 			var/turf/T = NUKE.loc
 			bombdat = T.loc
-			if (istype(T,/area/syndicate_station) || istype(T,/area/wizard_station) || istype(T,/area/solar/))
+			if (istype(T,/area/syndicate_station) || istype(T,/area/wizard_station) || istype(T,/area/solar))
 				nukedpenalty = 1000
 			else if (istype(T,/area/security/main) || istype(T,/area/security/brig) || istype(T,/area/security/armoury) || istype(T,/area/security/checkpoint))
 				nukedpenalty = 50000
@@ -316,21 +304,24 @@
 		var/comcount = 0
 		var/revcount = 0
 		var/loycount = 0
-		for(var/datum/mind/M in ticker.mode:head_revolutionaries)
+		var/datum/game_mode/revolution/rp_revolution/GM = ticker.mode
+		for(var/datum/mind/M in GM.head_revolutionaries)
 			if (M.current && M.current.stat != DEAD) foecount++
-		for(var/datum/mind/M in ticker.mode:revolutionaries)
+		for(var/datum/mind/M in GM.revolutionaries)
 			if (M.current && M.current.stat != DEAD) revcount++
-		for(var/mob/living/carbon/human/player in mob_list)
+		for(var/mob/living/carbon/human/player in human_list)
 			if(player.mind)
 				var/role = player.mind.assigned_role
 				if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director"))
 					if (player.stat != DEAD)
 						comcount++
 				else
-					if(player.mind in ticker.mode:revolutionaries)
+					if(player.mind in GM.revolutionaries)
 						continue
 					loycount++
-		for(var/mob/living/silicon/X in living_mob_list)
+		for(var/mob/living/silicon/X in silicon_list)
+			if(X.stat == DEAD)
+				continue
 			loycount++
 		var/revpenalty = 10000
 		dat += {"<B><U>MODE STATS</U></B><BR>
@@ -407,5 +398,5 @@
 		endgame_info_logged = 1
 		log_game(dat)
 
-	src << browse(dat, "window=roundstats;size=1000x600")
+	src << browse(entity_ja(dat), "window=roundstats;size=1000x600")
 	return

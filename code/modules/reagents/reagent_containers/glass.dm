@@ -19,8 +19,8 @@
 
 	//var/list/
 	can_be_placed_into = list(
-		/obj/machinery/chem_master/,
-		/obj/machinery/chem_dispenser/,
+		/obj/machinery/chem_master,
+		/obj/machinery/chem_dispenser,
 		/obj/machinery/reagentgrinder,
 		/obj/machinery/juicer,
 		/obj/structure/table,
@@ -41,7 +41,7 @@
 		/mob/living/simple_animal/hostile/retaliate/goat,
 		/obj/machinery/computer/centrifuge,
 		/obj/machinery/sleeper,
-		/obj/machinery/smartfridge/,
+		/obj/machinery/smartfridge,
 		/obj/machinery/biogenerator,
 		/obj/machinery/hydroponics,
 		/obj/machinery/constructable_frame)
@@ -129,6 +129,23 @@
 	else if(istype(target, /obj/machinery/radiocarbon_spectrometer))
 		return
 
+	else if(istype(target, /obj/machinery/color_mixer))
+		var/obj/machinery/color_mixer/CM = target
+		if(CM.filling_tank_id)
+			if(CM.beakers[CM.filling_tank_id])
+				if(user.a_intent == I_GRAB)
+					var/obj/item/weapon/reagent_containers/glass/GB = CM.beakers[CM.filling_tank_id]
+					GB.afterattack(src, user, flag)
+				else
+					afterattack(CM.beakers[CM.filling_tank_id], user, flag)
+				CM.updateUsrDialog()
+				CM.update_icon()
+				return
+			else
+				to_chat(user, "<span class='warning'>You try to fill [user.a_intent == I_GRAB ? "[src] up from a tank" : "a tank up"], but find it is absent.</span>")
+				return
+
+
 	else if(reagents && reagents.total_volume)
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
 		src.reagents.reaction(target, TOUCH)
@@ -140,7 +157,7 @@
 
 /obj/item/weapon/reagent_containers/glass/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/device/flashlight/pen))
-		var/tmp_label = sanitize(copytext(input(user, "Enter a label for [src.name]","Label",src.label_text), 1, MAX_NAME_LEN))
+		var/tmp_label = sanitize_safe(input(user, "Enter a label for [src.name]","Label", input_default(label_text)), MAX_NAME_LEN)
 		if(length(tmp_label) > 10)
 			to_chat(user, "<span class = 'rose'>The label can be at most 10 characters long.</span>")
 		else

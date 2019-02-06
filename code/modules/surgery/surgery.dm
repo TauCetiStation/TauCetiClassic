@@ -7,7 +7,7 @@
 	var/list/allowed_tools = null
 	// type paths referencing mutantraces that this step applies to.
 	var/list/allowed_species = null
-	var/list/disallowed_species = null
+	var/list/disallowed_species = list(IPC)
 
 	// duration of the step
 	var/min_duration = 0
@@ -31,17 +31,24 @@
 // Checks if this step applies to the mutantrace of the user.
 /datum/surgery_step/proc/is_valid_mutantrace(mob/living/carbon/human/target)
 
+	if(!ishuman(target)) // Juuuuust making sure.
+		return TRUE
+
 	if(allowed_species)
 		for(var/species in allowed_species)
-			if(target.species.name == species)
-				return 1
+			if(("exclude" in allowed_species) && target.species.name == species)
+				return FALSE
+			else if(target.species.name == species)
+				return TRUE
 
 	if(disallowed_species)
 		for(var/species in disallowed_species)
-			if(target.species.name == species)
-				return 0
+			if(("exclude" in disallowed_species) && target.species.name == species)
+				return TRUE
+			else if(target.species.name == species)
+				return FALSE
 
-	return 1
+	return TRUE
 
 // checks whether this step can be applied with the given user and target
 /datum/surgery_step/proc/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -144,8 +151,9 @@
 				swapped = 1
 
 /datum/surgery_status
-	var/eyes	=	0
-	var/face	=	0
-	var/appendix =	0
-	var/ribcage =	0
+	var/plasticsur = 0
+	var/eyes = 0
+	var/face = 0
+	var/appendix = 0
+	var/ribcage = 0
 	var/list/in_progress = list()

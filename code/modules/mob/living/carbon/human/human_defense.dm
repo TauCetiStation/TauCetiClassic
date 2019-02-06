@@ -225,7 +225,7 @@
 		if( (!hit_dir || is_the_opposite_dir(dir, hit_dir)) && prob(I.Get_shield_chance() - round(damage / 3) ))
 			visible_message("<span class='userdanger'>[src] blocks [attack_text] with the [r_hand.name]!</span>")
 			return 1
-	if(wear_suit && istype(wear_suit, /obj/item/))
+	if(wear_suit && istype(wear_suit, /obj/item))
 		var/obj/item/I = wear_suit
 		if(prob(I.Get_shield_chance() - round(damage / 3) ))
 			visible_message("<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
@@ -391,24 +391,39 @@
 
 	BP.embed(I, null, null, created_wound)
 
-/mob/living/carbon/human/bloody_hands(mob/living/source, amount = 2)
+/mob/living/carbon/human/bloody_hands(mob/living/carbon/human/source, amount = 2)
 	if (gloves)
-		gloves.add_blood(source)
-		gloves:transfer_blood = amount
-		gloves:bloody_hands_mob = source
+		if(istype(gloves, /obj/item/clothing/gloves))
+			var/obj/item/clothing/gloves/GL = gloves
+			GL.add_blood(source)
+			GL.transfer_blood = amount
+			GL.bloody_hands_mob = source
 	else
 		add_blood(source)
 		bloody_hands = amount
 		bloody_hands_mob = source
 	update_inv_gloves()		//updates on-mob overlays for bloody hands and/or bloody gloves
 
-/mob/living/carbon/human/bloody_body(mob/living/source)
+/mob/living/carbon/human/bloody_body(mob/living/carbon/human/source)
 	if(wear_suit)
 		wear_suit.add_blood(source)
 		update_inv_wear_suit()
 	if(w_uniform)
 		w_uniform.add_blood(source)
 		update_inv_w_uniform()
+
+/mob/living/carbon/human/crawl_in_blood(obj/effect/decal/cleanable/blood/floor_blood)
+	if(wear_suit)
+		wear_suit.add_dirt_cover(floor_blood.basedatum)
+		update_inv_wear_suit()
+	if(w_uniform)
+		w_uniform.add_dirt_cover(floor_blood.basedatum)
+		update_inv_w_uniform()
+	if (gloves)
+		gloves.add_dirt_cover(floor_blood.basedatum)
+	else
+		add_dirt_cover(floor_blood.basedatum)
+	update_inv_gloves()
 
 /mob/living/carbon/proc/check_thickmaterial(obj/item/organ/external/BP, target_zone)
 	return 0

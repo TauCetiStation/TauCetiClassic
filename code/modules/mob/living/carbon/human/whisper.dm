@@ -28,7 +28,9 @@
 	if(src.stat)
 		return
 
-	message = trim(sanitize_plus(copytext(message,1,MAX_MESSAGE_LEN)))	//made consistent with say
+	message = sanitize(message)	//made consistent with say
+	if(iszombie(src))
+		message = zombie_talk(message)
 
 	if(name != GetVoice())
 		alt_name = "(as [get_id_name("Unknown")])"
@@ -69,27 +71,6 @@
 	if(src.species.name == ABDUCTOR)
 		return
 
-	//looks like this only appears in whisper. Should it be elsewhere as well? Maybe handle_speech_problems?
-	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja)&&src.wear_mask:voice=="Unknown")
-		if(copytext(message, 1, 2) != "*")
-			var/list/temp_message = splittext(message, " ")
-			var/list/pick_list = list()
-			for(var/i = 1, i <= temp_message.len, i++)
-				pick_list += i
-			for(var/i=1, i <= abs(temp_message.len/3), i++)
-				var/H = pick(pick_list)
-				if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
-				temp_message[H] = ninjaspeak(temp_message[H])
-				pick_list -= H
-			// TODO:CYRILLIC
-			message = jointext(temp_message, " ")
-			message = replacetext(message, "o", "¤")
-			message = replacetext(message, "p", "þ")
-			message = replacetext(message, "l", "£")
-			message = replacetext(message, "s", "§")
-			message = replacetext(message, "u", "µ")
-			message = replacetext(message, "b", "ß")
-
 	//TODO: handle_speech_problems
 	if(src.stuttering)
 		message = stutter(message)
@@ -98,10 +79,8 @@
 	listening |= src
 
 	//ghosts
-	for(var/mob/M in dead_mob_list)	//does this include players who joined as observers as well?
-		if (!(M.client))
-			continue
-		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
+	for(var/mob/M in observer_list)	//does this include players who joined as observers as well?
+		if(M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
 			listening |= M
 
 	//Pass whispers on to anything inside the immediate listeners.

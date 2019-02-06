@@ -27,7 +27,7 @@
 				antag_candidates -= player
 
 
-	for(var/mob/dead/new_player/P in mob_list)
+	for(var/mob/dead/new_player/P in new_player_list)
 		if(P.client && P.ready)
 			num_players++
 
@@ -77,12 +77,16 @@
 	if(SSshuttle.departed)
 		return
 
+	if(SSshuttle.online)//shuttle in the way, but may be revoked
+		addtimer(CALLBACK(src, .proc/traitorcheckloop), autotraitor_delay)
+		return
+
 	//message_admins("Performing AutoTraitor Check")
 	var/list/possible_autotraitor = list()
 	var/playercount = 0
 	var/traitorcount = 0
 
-	for(var/mob/living/player in mob_list)
+	for(var/mob/living/player in living_list)
 		if (player.client && player.mind && player.stat != DEAD)
 			playercount++
 			if(player.mind.special_role)
@@ -159,8 +163,9 @@
 
 /datum/game_mode/traitor/autotraitor/latespawn(mob/living/carbon/human/character)
 	..()
-	if(SSshuttle.departed)
+	if(SSshuttle.departed || SSshuttle.online)
 		return
+
 	for(var/job in restricted_jobs)
 		if(character.mind.assigned_role == job)
 			return
@@ -171,7 +176,7 @@
 		//message_admins("Checking number of players")
 		var/playercount = 0
 		var/traitorcount = 0
-		for(var/mob/living/player in mob_list)
+		for(var/mob/living/player in living_list)
 
 			if (player.client && player.mind && player.stat != DEAD)
 				playercount += 1

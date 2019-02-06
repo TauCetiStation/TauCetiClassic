@@ -34,7 +34,7 @@
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return*/
 
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = sanitize(message)
 
 	if (stat == DEAD)
 		return say_dead(message)
@@ -84,16 +84,18 @@
 		verb = speaking.speech_verb
 		message = trim(copytext(message,2+length(speaking.key)))
 
+	var/area/A = get_area(src)
+
 	switch(message_mode)
 		if("department")
 			switch(bot_type)
 				if(IS_AI)
 					return AI.holopad_talk(message, verb, speaking)
 				if(IS_ROBOT)
-					log_say("[key_name(src)] : [message]")
+					log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")
 					R.radio.talk_into(src,message,message_mode,verb,speaking)
 				if(IS_PAI)
-					log_say("[key_name(src)] : [message]")
+					log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
 					P.radio.talk_into(src,message,message_mode,verb,speaking)
 			return 1
 
@@ -120,13 +122,13 @@
 						to_chat(src, "\red System Error - Transceiver Disabled")
 						return
 					else
-						log_say("[key_name(src)] : [message]")
+						log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
 						AI.aiRadio.talk_into(src,message,null,verb,speaking)
 				if(IS_ROBOT)
-					log_say("[key_name(src)] : [message]")
+					log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
 					R.radio.talk_into(src,message,null,verb,speaking)
 				if(IS_PAI)
-					log_say("[key_name(src)] : [message]")
+					log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
 					P.radio.talk_into(src,message,null,verb,speaking)
 			return 1
 
@@ -138,13 +140,13 @@
 							to_chat(src, "\red System Error - Transceiver Disabled")
 							return
 						else
-							log_say("[key_name(src)] : [message]")
+							log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
 							AI.aiRadio.talk_into(src,message,message_mode,verb,speaking)
 					if(IS_ROBOT)
-						log_say("[key_name(src)] : [message]")
+						log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
 						R.radio.talk_into(src,message,message_mode,verb,speaking)
 					if(IS_PAI)
-						log_say("[key_name(src)] : [message]")
+						log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
 						P.radio.talk_into(src,message,message_mode,verb,speaking)
 				return 1
 
@@ -174,9 +176,9 @@
 			rendered_b = "<span class='game say'><span class='name'>[voice_name]</span> [speaking.format_message(message_stars, verb)]</span>"
 			to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> [speaking.format_message(message, verb)]</span></i>")//The AI can "hear" its own message.
 		else
-			rendered_a = "<span class='game say'><span class='name'>[name]</span> [verb], <span class='message'>\"[sanitize_plus_chat(message)]\"</span></span>"
+			rendered_a = "<span class='game say'><span class='name'>[name]</span> [verb], <span class='message'>\"[message]\"</span></span>"
 			rendered_b = "<span class='game say'><span class='name'>[voice_name]</span> [verb], <span class='message'>\"[message_stars]\"</span></span>"
-			to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> [verb], <span class='message'><span class='body'>\"[sanitize_plus_chat(message)]\"</span></span></span></i>")//The AI can "hear" its own message.
+			to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> [verb], <span class='message'><span class='body'>\"[message]\"</span></span></span></i>")//The AI can "hear" its own message.
 
 		for(var/mob/M in hearers(T.loc))//The location is the object, default distance.
 			if(M.say_understands(src))//If they understand AI speak. Humans and the like will be able to.
@@ -192,19 +194,20 @@
 
 /mob/living/proc/robot_talk(message)
 
-	log_say("[key_name(src)] : [message]")
-
 	message = trim(message)
 
 	if (!message)
 		return
+
+	var/area/A = get_area(src)
+	log_say("[name]/[key] : \[[A.name]/binary\]: [message]")
 
 	var/verb = say_quote(message)
 
 
 	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[verb], \"[message]\"</span></span></i>"
 
-	for (var/mob/living/S in living_mob_list)
+	for (var/mob/living/S in alive_mob_list)
 		if(S.robot_talk_understand && (S.robot_talk_understand == robot_talk_understand)) // This SHOULD catch everything caught by the one below, but I'm not going to change it.
 			if(istype(S , /mob/living/silicon/ai))
 				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(src.name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
@@ -245,9 +248,8 @@
 
 	rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[verb], \"[message]\"</span></span></i>"
 
-	for (var/mob/M in dead_mob_list)
-		if(!isnewplayer(M) && !isbrain(M)) //No meta-evesdropping
-			M.show_message(rendered, 2)
+	for (var/mob/M in observer_list)
+		M.show_message(rendered, 2)
 
 #undef IS_AI
 #undef IS_ROBOT

@@ -234,7 +234,7 @@
 	t += "</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
 	t += "</TT>"
-	user << browse(t, "window=turbine")
+	user << browse(entity_ja(t), "window=turbine")
 	onclose(user, "turbine")
 
 /obj/machinery/power/turbine/Topic(href, href_list)
@@ -266,7 +266,7 @@
 /obj/machinery/computer/turbine_computer/atom_init_late()
 	search_turbine()
 	doors = new /list()
-	for(var/obj/machinery/door/poddoor/P in machines)
+	for(var/obj/machinery/door/poddoor/P in poddoor_list)
 		if(P.id == id)
 			doors += P
 
@@ -292,7 +292,7 @@
 		if(!compressor)
 			dat += "<A href='?src=\ref[src];search=1'>Search for compressor</A>"
 
-	user << browse(dat, "window=computer;size=400x500")
+	user << browse(entity_ja(dat), "window=computer;size=400x500")
 	onclose(user, "computer")
 
 

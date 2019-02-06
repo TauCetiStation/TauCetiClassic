@@ -17,6 +17,7 @@
 	var/ckey=null
 	var/mind=null
 	var/languages=null
+	var/list/quirks
 
 /datum/dna2/record/proc/GetData()
 	var/list/ser=list("data" = null, "owner" = null, "label" = null, "type" = null, "ue" = 0)
@@ -698,7 +699,7 @@
 
 		else if (bufferOption == "changeLabel")
 			var/datum/dna2/record/buf = buffers[bufferId]
-			var/text = sanitize(input(usr, "New Label:", "Edit Label", buf.name) as text|null)
+			var/text = sanitize_safe(input(usr, "New Label:", "Edit Label", input_default(buf.name)) as text|null, MAX_NAME_LEN)
 			buf.name = text
 			buffers[bufferId] = buf
 

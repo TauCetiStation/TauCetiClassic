@@ -74,6 +74,9 @@ var/list/cult_datums = list()
 	for(var/mob/living/silicon/S in player_list) // we hold mobs in this lists only with clients
 		S.client.images += blood_overlay
 
+/obj/effect/rune/update_icon()
+	color = "#a10808"
+
 /obj/effect/rune/Destroy()
 	QDEL_NULL(power)
 	QDEL_NULL(blood_overlay)
@@ -268,7 +271,7 @@ var/list/cult_datums = list()
 	[words[9]] is <a href='byond://?src=\ref[src];number=9;action=change'>[words[words[9]]]</A> <A href='byond://?src=\ref[src];number=9;action=clear'>Clear</A><BR>
 	[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
 	"}
-	usr << browse("[notedat]", "window=notes")
+	usr << browse("[entity_ja(notedat)]", "window=notes")
 
 /obj/item/weapon/book/tome/attack(mob/living/M, mob/living/user)
 
@@ -292,6 +295,14 @@ var/list/cult_datums = list()
 	M.visible_message("<span class='danger'>[user] beats [M] with the arcane tome!</span>")
 	to_chat(M, "<span class='danger'You feel searing heat inside!</span>")
 
+/obj/item/weapon/book/tome/afterattack(atom/A, mob/user, proximity)
+	if(!proximity)
+		return
+	if(iscultist(user) && A.reagents && A.reagents.has_reagent("water"))
+		var/water2convert = A.reagents.get_reagent_amount("water")
+		A.reagents.del_reagent("water")
+		to_chat(user, "<span class='warning'>You curse [A].</span>")
+		A.reagents.add_reagent("unholywater",water2convert)
 
 /obj/item/weapon/book/tome/attack_self(mob/living/carbon/human/user)
 	if(!istype(user) || !user.canmove || user.stat || user.incapacitated())
@@ -315,7 +326,7 @@ var/list/cult_datums = list()
 		if("Read it")
 			if(usr.get_active_hand() != src)
 				return
-			user << browse("[tomedat]", "window=Arcane Tome")
+			user << browse("[entity_ja(tomedat)]", "window=Arcane Tome")
 			return
 		if("Notes")
 			if(usr.get_active_hand() != src)
@@ -333,7 +344,7 @@ var/list/cult_datums = list()
 			[words[9]] is <a href='byond://?src=\ref[src];number=9;action=change'>[words[words[9]]]</A> <A href='byond://?src=\ref[src];number=9;action=clear'>Clear</A><BR>
 			[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
 			"}
-			user << browse("[notedat]", "window=notes")
+			user << browse("[entity_ja(notedat)]", "window=notes")
 			return
 	if(usr.get_active_hand() != src)
 		return
@@ -405,7 +416,7 @@ var/list/cult_datums = list()
 		to_chat(user, "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of.\
 		Most of these are useless, though.")
 
-obj/item/weapon/book/tome/imbued/atom_init()
+/obj/item/weapon/book/tome/imbued/atom_init()
 	. = ..()
 	unlocked = TRUE
 	if(!cultwords["travel"])

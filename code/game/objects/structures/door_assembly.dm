@@ -31,7 +31,7 @@
 
 /obj/structure/door_assembly/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/pen))
-		var/t = copytext(stripped_input(user, "Enter the name for the door.", name, created_name), 1, MAX_NAME_LEN)
+		var/t = sanitize_safe(input(user, "Enter the name for the door.", name, input_default(created_name)), MAX_LNAME_LEN)
 		if(!t)
 			return
 		if(!in_range(src, usr) && src.loc != usr)

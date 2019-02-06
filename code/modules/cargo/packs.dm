@@ -7,7 +7,7 @@
 
 var/list/all_supply_groups = list("Operations","Security","Hospitality","Engineering","Medical / Science","Hydroponics","Mining","Supply","Miscellaneous")
 
-datum/supply_pack
+/datum/supply_pack
 	var/name = "Crate"
 	var/group = "Operations"
 	var/true_manifest = ""
@@ -23,7 +23,7 @@ datum/supply_pack
 	var/special_enabled = FALSE
 	var/amount = 0
 
-datum/supply_pack/New()
+/datum/supply_pack/New()
 	true_manifest += "<ul>"
 	for(var/path in contains)
 		if(!path)
@@ -369,6 +369,16 @@ datum/supply_pack/New()
 	crate_name = "cigarette supply crate"
 	group = "Hospitality"
 
+/datum/supply_pack/vending_barber
+	name = "Barbershop supply crate"
+	contains = list(/obj/item/weapon/vending_refill/barbervend,
+					/obj/item/weapon/vending_refill/barbervend,
+					/obj/item/weapon/vending_refill/barbervend)
+	cost = 1500
+	crate_type = /obj/structure/closet/crate/freezer
+	crate_name = "barbershop supply crate"
+	group = "Hospitality"
+
 /datum/supply_pack/party
 	name = "Party equipment"
 	contains = list(/obj/item/weapon/storage/box/drinkingglasses,
@@ -506,14 +516,35 @@ datum/supply_pack/New()
 	crate_name = "Wooden planks crate"
 	group = "Engineering"
 
-/datum/supply_pack/carpet50
-	name = "50 carpet tiles"
-	contains = list(/obj/item/stack/tile/carpet)
+/datum/supply_pack/carpets
+	name = "Random carpets"
+	contains = list(/obj/item/stack/tile/carpet, /obj/item/stack/tile/carpet/black, /obj/item/stack/tile/carpet/purple, /obj/item/stack/tile/carpet/orange, /obj/item/stack/tile/carpet/green,
+					/obj/item/stack/tile/carpet/blue, /obj/item/stack/tile/carpet/blue2, /obj/item/stack/tile/carpet/red, /obj/item/stack/tile/carpet/cyan
+	)
 	amount = 50
 	cost = 2500
 	crate_type = /obj/structure/closet/crate
 	crate_name = "Carpet crate"
 	group = "Engineering"
+	var/num_contained = 4 // 4 random carpets per crate
+
+/datum/supply_pack/carpets/fill(obj/structure/closet/crate/C)
+	var/list/L = contains.Copy()
+	var/item
+	if(num_contained <= L.len)
+		for(var/i in 1 to num_contained)
+			item = pick_n_take(L)
+			var/n_item = new item(C)
+			if(istype(n_item, /obj/item/stack/tile))
+				var/obj/item/stack/sheet/n_sheet = n_item
+				n_sheet.set_amount(amount)
+	else
+		for(var/i in 1 to num_contained)
+			item = pick(L)
+			var/n_item = new item(C)
+			if(istype(n_item, /obj/item/stack/tile))
+				var/obj/item/stack/sheet/n_sheet = n_item
+				n_sheet.set_amount(amount)
 
 /datum/supply_pack/electrical
 	name = "Electrical maintenance crate"
@@ -631,7 +662,7 @@ datum/supply_pack/New()
 
 /datum/supply_pack/mecha_ripley
 	name = "Circuit Crate (\"Ripley\" APLU)"
-	contains = list(/obj/item/weapon/book/manual/ripley_build_and_repair,
+	contains = list(/obj/item/weapon/book/manual/wiki/guide_to_exosuits,
 					/obj/item/weapon/circuitboard/mecha/ripley/main, //TEMPORARY due to lack of circuitboard printer
 					/obj/item/weapon/circuitboard/mecha/ripley/peripherals) //TEMPORARY due to lack of circuitboard printer
 	cost = 3000
@@ -971,6 +1002,13 @@ datum/supply_pack/New()
 	crate_name = "Corgi crate"
 	group = "Hydroponics"
 
+/datum/supply_pack/shiba
+	name = "Shiba crate"
+	cost = 4000
+	crate_type = /obj/structure/closet/critter/shiba
+	crate_name = "Shiba crate"
+	group = "Hydroponics"
+
 /datum/supply_pack/cat
 	name = "Cat crate"
 	cost = 4000
@@ -1221,7 +1259,7 @@ datum/supply_pack/New()
 					/obj/item/weapon/caution,
 					/obj/item/weapon/caution,
 					/obj/item/weapon/caution,
-					/obj/item/weapon/watertank/janitor,
+					/obj/item/weapon/reagent_containers/watertank_backpack/janitor,
 					/obj/item/weapon/storage/bag/trash,
 					/obj/item/weapon/reagent_containers/spray/cleaner,
 					/obj/item/weapon/reagent_containers/glass/rag,
@@ -1251,8 +1289,9 @@ datum/supply_pack/New()
 
 /datum/supply_pack/barber
 	name = "Barber supplies"
-	contains = list(/obj/item/weapon/storage/box/hairsprays,
-	/obj/item/weapon/hair_growth_accelerator,
+	contains = list(/obj/item/weapon/storage/box/hairdyes,
+	/obj/item/weapon/reagent_containers/spray/hair_color_spray,
+	/obj/item/weapon/reagent_containers/glass/bottle/hair_growth_accelerator,
 	/obj/item/weapon/scissors,
 	/obj/item/weapon/razor)
 	cost = 1000

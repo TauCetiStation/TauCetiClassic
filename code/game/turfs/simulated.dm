@@ -1,5 +1,7 @@
 /turf/simulated
 	name = "station"
+	plane = FLOOR_PLANE
+
 	var/wet = 0
 	var/image/wet_overlay = null
 	var/thermite = 0
@@ -13,7 +15,7 @@
 	. = ..()
 	levelupdate()
 
-/turf/simulated/proc/AddTracks(mob/M,bloodDNA,comingdir,goingdir,bloodcolor="#A10808")
+/turf/simulated/proc/AddTracks(mob/M,bloodDNA,comingdir,goingdir, blooddatum = null)
 	var/typepath
 	if(ishuman(M))
 		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints
@@ -25,7 +27,9 @@
 	var/obj/effect/decal/cleanable/blood/tracks/tracks = locate(typepath) in src
 	if(!tracks)
 		tracks = new typepath(src)
-	tracks.AddTracks(bloodDNA,comingdir,goingdir,bloodcolor)
+	if(!blooddatum)
+		blooddatum = new /datum/dirt_cover/red_blood
+	tracks.AddTracks(bloodDNA,comingdir,goingdir,blooddatum)
 
 /turf/simulated/Entered(atom/A, atom/OL)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
@@ -76,24 +80,24 @@
 
 		// Tracking blood
 		var/list/bloodDNA = null
-		var/bloodcolor=""
+		var/datum/dirt_cover/blooddatum
 		if(M.shoes)
 			var/obj/item/clothing/shoes/S = M.shoes
 			if(S.track_blood && S.blood_DNA)
 				bloodDNA   = S.blood_DNA
-				bloodcolor = S.blood_color
+				blooddatum = new/datum/dirt_cover(S.dirt_overlay)
 				S.track_blood--
 		else
 			if(M.track_blood && M.feet_blood_DNA)
 				bloodDNA   = M.feet_blood_DNA
-				bloodcolor = M.feet_blood_color
+				blooddatum = new/datum/dirt_cover(M.feet_dirt_color)
 				M.track_blood--
 
 		if (bloodDNA)
-			src.AddTracks(M,bloodDNA,M.dir,0,bloodcolor) // Coming
+			src.AddTracks(M,bloodDNA,M.dir,0,blooddatum) // Coming
 			var/turf/simulated/from = get_step(M,reverse_direction(M.dir))
 			if(istype(from) && from)
-				from.AddTracks(M,bloodDNA,0,M.dir,bloodcolor) // Going
+				from.AddTracks(M,bloodDNA,0,M.dir,blooddatum) // Going
 
 			bloodDNA = null
 
@@ -157,9 +161,9 @@
 
 	//Species-specific blood.
 	if(M.species)
-		newblood.basecolor = M.species.blood_color
+		newblood.basedatum = new M.species.blood_color
 	else
-		newblood.basecolor = "#A10808"
+		newblood.basedatum = new/datum/dirt_cover/red_blood()
 
 	newblood.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	newblood.virus2 = virus_copylist(M.virus2)
@@ -171,10 +175,10 @@
 // Only adds blood on the floor -- Skie
 /turf/simulated/proc/add_blood_floor(mob/living/carbon/M)
 	if(istype(M, /mob/living/carbon/monkey))
-
+		var/mob/living/carbon/monkey/Monkey = M
 		var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(src)
-		this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-		this.basecolor = M.blood_color
+		this.blood_DNA[Monkey.dna.unique_enzymes] = Monkey.dna.b_type
+		this.basedatum = new Monkey.blood_datum
 		this.update_icon()
 
 	else if(istype(M,/mob/living/carbon/human))
@@ -184,9 +188,9 @@
 
 		//Species-specific blood.
 		if(H.species)
-			this.basecolor = H.species.blood_color
+			this.basedatum = new/datum/dirt_cover(H.species.blood_color)
 		else
-			this.basecolor = "#A10808"
+			this.basedatum = new/datum/dirt_cover/red_blood()
 		this.update_icon()
 
 		this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type

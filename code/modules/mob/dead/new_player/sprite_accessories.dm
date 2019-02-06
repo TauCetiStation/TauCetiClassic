@@ -674,14 +674,6 @@
 	name = "Blunt Bangs"
 	icon_state = "hair_bluntbangs"
 
-/datum/sprite_accessory/hair/whispybangshigh
-	name = "Whispy Bangish"
-	icon_state = "hair_whispybangshigh"
-
-/datum/sprite_accessory/hair/whispybangs
-	name = "Whispy Bangs"
-	icon_state = "hair_whispybangs"
-
 /datum/sprite_accessory/hair/combedbob
 	name = "Combed Bob"
 	icon_state = "hair_combedbob"
@@ -710,7 +702,137 @@
 	name = "Chub"
 	icon_state = "hair_chub"
 
+/datum/sprite_accessory/hair/ponytail6
+	name = "Ponytail female"
+	icon_state = "hair_ponytailf"
+	gender = FEMALE
 
+/datum/sprite_accessory/hair/wisp
+	name = "Wisp"
+	icon_state = "hair_wisp"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/halfshaved
+	name = "Half-Shaved Emo"
+	icon_state = "hair_halfshaved2"
+
+/datum/sprite_accessory/hair/longeralt2
+	name = "Long Hair Alt 2"
+	icon_state = "hair_longeralt2"
+
+/datum/sprite_accessory/hair/bun4
+	name = "Bun 4"
+	icon_state = "hair_bun4"
+
+/datum/sprite_accessory/hair/doublebun
+	name = "Double-Bun"
+	icon_state = "hair_doublebun"
+
+/datum/sprite_accessory/hair/rows
+	name = "Rows"
+	icon_state = "hair_rows1"
+
+/datum/sprite_accessory/hair/rows2
+	name = "Rows 2"
+	icon_state = "hair_rows2"
+
+/datum/sprite_accessory/hair/twintail
+	name = "Twintail"
+	icon_state = "hair_twintail"
+
+/datum/sprite_accessory/hair/coffeehouse
+	name = "Coffee House Cut"
+	icon_state = "hair_coffeehouse"
+	gender = MALE
+
+/datum/sprite_accessory/hair/veryshortovereye
+	name = "Overeye Very Short"
+	icon_state = "hair_veryshortovereye"
+
+/datum/sprite_accessory/hair/oxton
+	name = "Oxton"
+	icon_state = "hair_oxton"
+
+/datum/sprite_accessory/hair/zieglertail
+	name = "Zieglertail"
+	icon_state = "hair_ziegler"
+
+/datum/sprite_accessory/hair/fringeemo
+	name = "Emo Fringe"
+	icon_state = "hair_emofringe"
+
+/datum/sprite_accessory/hair/poofy2
+	name = "Poofy2"
+	icon_state = "hair_poofy2"
+
+/datum/sprite_accessory/hair/fringetail
+	name = "Fringetail"
+	icon_state = "hair_fringetail"
+
+/datum/sprite_accessory/hair/bun3
+	name = "Bun 3"
+	icon_state = "hair_bun3"
+
+/datum/sprite_accessory/hair/veryshortovereyealternate
+	name = "Overeye Very Short, Alternate"
+	icon_state = "hair_veryshortovereyealternate"
+
+/datum/sprite_accessory/hair/undercut2
+	name = "Undercut Swept Right"
+	icon_state = "hair_undercut2"
+	gender = MALE
+
+/datum/sprite_accessory/hair/spikyponytail
+	name = "Spiky Ponytail"
+	icon_state = "hair_spikyponytail"
+
+/datum/sprite_accessory/hair/grandebraid
+	name = "Grande Braid"
+	icon_state = "hair_grande"
+
+/datum/sprite_accessory/hair/fringetail
+	name = "Fringetail"
+	icon_state = "hair_fringetail"
+
+/datum/sprite_accessory/hair/rowbun
+	name = "Row Bun"
+	icon_state = "hair_rowbun"
+
+/datum/sprite_accessory/hair/rowdualbraid
+	name = "Row Dual Braid"
+	icon_state = "hair_rowdualtail"
+
+/datum/sprite_accessory/hair/rowbraid
+	name = "Row Braid"
+	icon_state = "hair_rowbraid"
+
+/datum/sprite_accessory/hair/regulationmohawk
+	name = "Regulation Mohawk"
+	icon_state = "hair_shavedmohawk"
+
+/datum/sprite_accessory/hair/topknot
+	name = "Topknot"
+	icon_state = "hair_topknot"
+
+/datum/sprite_accessory/hair/ronin
+	name = "Ronin"
+	icon_state = "hair_ronin"
+
+/datum/sprite_accessory/hair/bowlcut2
+	name = "Bowl 2"
+	icon_state = "hair_bowlcut2"
+
+/datum/sprite_accessory/hair/manbun
+	name = "Manbun"
+	icon_state = "hair_manbun"
+
+/datum/sprite_accessory/hair/country
+	name = "Country"
+	icon_state = "hair_country"
+
+/datum/sprite_accessory/hair/ougi
+	name = "Ougi"
+	icon_state = "hair_ougi"
 
 //datum/sprite_accessory/hair/modern
 //	name = "Modern"
@@ -728,7 +850,7 @@
 //	gender = FEMALE
 
 //datum/sprite_accessory/hair/quadcurls
-//	name = "Quadcurls "
+//	name = "Quadcurls"
 //	icon_state = "hair_quadcurls"
 //	gender = FEMALE
 
@@ -775,7 +897,7 @@
 	name = "Shaved"
 	icon_state = "bald"
 	gender = NEUTER
-	species_allowed = list(HUMAN , UNATHI , TAJARAN , SKRELL , VOX , IPC)
+	species_allowed = list(HUMAN , UNATHI , TAJARAN , SKRELL , VOX , IPC, DIONA)
 
 /datum/sprite_accessory/facial_hair/watson
 	name = "Watson Mustache"
@@ -882,95 +1004,115 @@
 ///////////////////////////////////
 */
 
-/datum/sprite_accessory/hair/icp_screen_pink
+/datum/sprite_accessory/hair/ipc_screen_pink
 	name = "pink IPC screen"
 	icon_state = "ipc_pink"
 	species_allowed = list(IPC)
-	do_colouration = 0
+	do_colouration = FALSE
 
-/datum/sprite_accessory/hair/icp_screen_red
+/datum/sprite_accessory/hair/ipc_screen_red
 	name = "red IPC screen"
 	icon_state = "ipc_red"
 	species_allowed = list(IPC)
-	do_colouration = 0
+	do_colouration = FALSE
 
-/datum/sprite_accessory/hair/icp_screen_green
+/datum/sprite_accessory/hair/ipc_screen_green
 	name = "green IPC screen"
 	icon_state = "ipc_green"
 	species_allowed = list(IPC)
-	do_colouration = 0
+	do_colouration = FALSE
 
-/datum/sprite_accessory/hair/icp_screen_blue
+/datum/sprite_accessory/hair/ipc_screen_blue
 	name = "blue IPC screen"
 	icon_state = "ipc_blue"
 	species_allowed = list(IPC)
-	do_colouration = 0
+	do_colouration = FALSE
 
-/datum/sprite_accessory/hair/icp_screen_breakout
+/datum/sprite_accessory/hair/ipc_screen_breakout
 	name = "breakout IPC screen"
 	icon_state = "ipc_breakout"
 	species_allowed = list(IPC)
-	do_colouration = 0
+	do_colouration = FALSE
 
-/datum/sprite_accessory/hair/icp_screen_eight
+/datum/sprite_accessory/hair/ipc_screen_eight
 	name = "eight IPC screen"
 	icon_state = "ipc_eight"
 	species_allowed = list(IPC)
-	do_colouration = 0
+	do_colouration = FALSE
 
-/datum/sprite_accessory/hair/icp_screen_goggles
+/datum/sprite_accessory/hair/ipc_screen_goggles
 	name = "goggles IPC screen"
 	icon_state = "ipc_goggles"
 	species_allowed = list(IPC)
-	do_colouration = 0
+	do_colouration = FALSE
 
-/datum/sprite_accessory/hair/icp_screen_heart
+/datum/sprite_accessory/hair/ipc_screen_heart
 	name = "heart IPC screen"
 	icon_state = "ipc_heart"
 	species_allowed = list(IPC)
-	do_colouration = 0
+	do_colouration = FALSE
 
-/datum/sprite_accessory/hair/icp_screen_monoeye
+/datum/sprite_accessory/hair/ipc_screen_monoeye
 	name = "monoeye IPC screen"
 	icon_state = "ipc_monoeye"
 	species_allowed = list(IPC)
-	do_colouration = 0
+	do_colouration = FALSE
 
-/datum/sprite_accessory/hair/icp_screen_nature
+/datum/sprite_accessory/hair/ipc_screen_nature
 	name = "nature IPC screen"
 	icon_state = "ipc_nature"
 	species_allowed = list(IPC)
-	do_colouration = 0
+	do_colouration = FALSE
 
-/datum/sprite_accessory/hair/icp_screen_orange
+/datum/sprite_accessory/hair/ipc_screen_orange
 	name = "orange IPC screen"
 	icon_state = "ipc_orange"
 	species_allowed = list(IPC)
-	do_colouration = 0
+	do_colouration = FALSE
 
-/datum/sprite_accessory/hair/icp_screen_purple
+/datum/sprite_accessory/hair/ipc_screen_purple
 	name = "purple IPC screen"
 	icon_state = "ipc_purple"
 	species_allowed = list(IPC)
-	do_colouration = 0
+	do_colouration = FALSE
 
-/datum/sprite_accessory/hair/icp_screen_shower
+/datum/sprite_accessory/hair/ipc_screen_shower
 	name = "shower IPC screen"
 	icon_state = "ipc_shower"
 	species_allowed = list(IPC)
-	do_colouration = 0
+	do_colouration = FALSE
 
-/datum/sprite_accessory/hair/icp_screen_static
+/datum/sprite_accessory/hair/ipc_screen_static
 	name = "static IPC screen"
 	icon_state = "ipc_static"
 	species_allowed = list(IPC)
-	do_colouration = 0
+	do_colouration = FALSE
 
-/datum/sprite_accessory/hair/icp_screen_yellow
+/datum/sprite_accessory/hair/ipc_screen_yellow
 	name = "yellow IPC screen"
 	icon_state = "ipc_yellow"
 	species_allowed = list(IPC)
-	do_colouration = 0
+	do_colouration = FALSE
+
+/datum/sprite_accessory/hair/ipc_screen_dot
+	name = "dot IPC screen"
+	icon_state = "ipc_dot"
+	species_allowed = list(IPC)
+
+/datum/sprite_accessory/hair/ipc_screen_four
+	name = "four IPC screen"
+	icon_state = "ipc_four"
+	species_allowed = list(IPC)
+
+/datum/sprite_accessory/hair/ipc_screen_eye
+	name = "eye IPC screen"
+	icon_state = "ipc_eye"
+	species_allowed = list(IPC)
+
+/datum/sprite_accessory/hair/ipc_screen_eyes
+	name = "eyes IPC screen"
+	icon_state = "ipc_eyes"
+	species_allowed = list(IPC)
 
 /datum/sprite_accessory/hair/unathi_warrior_horns
 	name = "Warrior Horns"
@@ -1148,6 +1290,86 @@
 	icon_state = "taj_hair_messylong"
 	species_allowed = list(TAJARAN)
 
+/datum/sprite_accessory/hair/taj_sidebraid
+	name = "Tajara Side Braid"
+	icon_state = "taj_hair_sidebraid"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_ribbons
+	name = "Tajara Ribbons"
+	icon_state = "taj_hair_ribbons"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_earrings
+	name = "Tajara Ear Rings"
+	icon_state = "taj_hair_earrings"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_combedback
+	name = "Tajara Combed Back"
+	icon_state = "taj_hair_combedback"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_tailedbangs
+	name = "Tajara Tailed Bangs"
+	icon_state = "taj_hair_tailedbangs"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_punk
+	name = "Tajara Punk"
+	icon_state = "taj_hair_punk"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_marmalade
+	name = "Tajara Marmalade"
+	icon_state = "taj_hair_marmalade"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_lynx
+	name = "Tajara Lynx"
+	icon_state = "taj_hair_lynx"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_longtail
+	name = "Tajara Long Tail"
+	icon_state = "taj_hair_longtail"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_shy
+	name = "Tajara Shy"
+	icon_state = "taj_hair_shy"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_metal
+	name = "Tajara Metal"
+	icon_state = "taj_hair_metal"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_ponytail
+	name = "Tajara Ponytail"
+	icon_state = "taj_hair_ponytail"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_overeye
+	name = "Tajara Over Eye"
+	icon_state = "taj_hair_overeye"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_tough
+	name = "Tajara Tough"
+	icon_state = "taj_hair_tough"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_cuttail
+	name = "Tajara Cut Tail"
+	icon_state = "taj_hair_cuttail"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_dreadlocks
+	name = "Tajara Dreadlocks"
+	icon_state = "taj_hair_dreadlocks"
+	species_allowed = list(TAJARAN)
+
 /datum/sprite_accessory/hair/vox_quills_short
 	name = "Short Vox Quills"
 	icon_state = "vox_shortquills"
@@ -1182,3 +1404,63 @@
 	name = "Tajara Smallsatche"
 	icon_state = "taj_facial_smallstache"
 	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/dio_bloom
+	name = "Diona Everbloom"
+	icon_state = "dio_bloom"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_rose
+	name = "Diona Rose"
+	icon_state = "dio_rose"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_king
+	name = "Diona Flowerking"
+	icon_state = "dio_king"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_vines
+	name = "Diona Vines Short"
+	icon_state = "dio_vines"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_vinel
+	name = "Diona Vines Long"
+	icon_state = "dio_vinel"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_lotus
+	name = "Diona Lotus"
+	icon_state = "dio_lotus"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_palm
+	name = "Diona Palmhead"
+	icon_state = "dio_palm"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_garland
+	name = "Diona Garland"
+	icon_state = "dio_garland"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_shrub
+	name = "Diona Shrub"
+	icon_state = "dio_shrub"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_ficus
+	name = "Diona Ficus"
+	icon_state = "dio_ficus"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)

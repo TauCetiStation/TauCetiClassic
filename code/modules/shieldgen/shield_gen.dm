@@ -8,7 +8,7 @@
 /obj/machinery/shield_gen
 	name = "shield generator"
 	desc = "Machine that generates an impenetrable field of energy when activated."
-	icon = 'code/modules/shieldgen/shielding.dmi'
+	icon = 'icons/obj/machines/shielding.dmi'
 	icon_state = "generator0"
 	var/active = 0
 	var/field_radius = 3
@@ -127,7 +127,7 @@
 	t += "<hr>"
 	t += "<A href='?src=\ref[src]'>Refresh</A> "
 	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-	user << browse(t, "window=shield_generator;size=500x400")
+	user << browse(entity_ja(t), "window=shield_generator;size=500x400")
 
 /obj/machinery/shield_gen/process()
 

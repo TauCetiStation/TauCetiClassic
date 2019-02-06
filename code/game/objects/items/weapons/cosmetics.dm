@@ -215,9 +215,13 @@
 	var/mob/living/carbon/human/barbertarget = null
 	var/selectedhairstyle = null
 	var/isfacehair = FALSE
+	var/list/char_render_holders
+	var/static/list/scissors_icon_cache
 
 /obj/item/weapon/scissors/proc/calculate_hash(mob/living/carbon/human/H)
-	var/hash = "" + H.species.name + H.gender + num2text(H.r_eyes + H.g_eyes*256 + H.b_eyes*256*256,9) + "_" + num2text(H.r_hair + H.g_hair*256 + H.b_hair*256*256,9) + "_" + num2text(H.r_facial + H.g_facial*256 + H.b_facial*256*256,9) + "_" + num2text(H.r_skin + H.g_skin*256 + H.b_skin*256*256,9) + "_" + num2text(H.s_tone)
+	var/hair_hash = H.hair_painted ? num2text(H.dyed_r_hair + H.dyed_g_hair * 256 + H.dyed_b_hair * 256 * 256, 9) : num2text(H.r_hair + H.g_hair * 256 + H.b_hair * 256 * 256, 9)
+	var/facial_hash = H.facial_painted ? num2text(H.dyed_r_facial + H.dyed_g_facial * 256 + H.dyed_b_facial * 256 * 256, 9) : num2text(H.r_facial + H.g_facial * 256 + H.b_facial * 256 * 256, 9)
+	var/hash = "" + H.species.name + H.gender + num2text(H.r_eyes + H.g_eyes*256 + H.b_eyes*256*256,9) + "_" + hair_hash + "_" + facial_hash + "_" + num2text(H.r_skin + H.g_skin*256 + H.b_skin*256*256,9) + "_" + num2text(H.s_tone)
 	if(!isfacehair && selectedhairstyle)
 		hash+="_" + selectedhairstyle
 	else
@@ -240,13 +244,23 @@
 	mannequin.g_eyes = H.g_eyes
 	mannequin.b_eyes = H.b_eyes
 
-	mannequin.r_hair = H.r_hair
-	mannequin.g_hair = H.g_hair
-	mannequin.b_hair = H.b_hair
+	if(!H.hair_painted)
+		mannequin.r_hair = H.r_hair
+		mannequin.g_hair = H.g_hair
+		mannequin.b_hair = H.b_hair
+	else
+		mannequin.r_hair = H.dyed_r_hair
+		mannequin.g_hair = H.dyed_g_hair
+		mannequin.b_hair = H.dyed_b_hair
 
-	mannequin.r_facial = H.r_facial
-	mannequin.g_facial = H.g_facial
-	mannequin.b_facial = H.b_facial
+	if(!H.facial_painted)
+		mannequin.r_facial = H.r_facial
+		mannequin.g_facial = H.g_facial
+		mannequin.b_facial = H.b_facial
+	else
+		mannequin.r_facial = H.dyed_r_facial
+		mannequin.g_facial = H.dyed_g_facial
+		mannequin.b_facial = H.dyed_b_facial
 
 	mannequin.r_skin = H.r_skin
 	mannequin.g_skin = H.g_skin
@@ -275,44 +289,59 @@
 /obj/item/weapon/scissors/Topic(href, href_list)
 	if(!barber || barber != usr || !barbertarget)
 		return
+	if(href_list["close"])
+		clear_character_previews()
+		return
 	switch(href_list["choice"])
 		if("selecthaircut")
 			selectedhairstyle = href_list["haircut"]
 			showui()
 		if("start")
-			barber << browse(null, "window=barber")
-			dohaircut()
+			INVOKE_ASYNC(src, .proc/dohaircut)
+			clear_character_previews()
 
-var/global/list/scissors_icon_cache = list()
+/obj/item/weapon/scissors/dropped(mob/user)
+	clear_character_previews()
+	..()
+
+/obj/item/weapon/scissors/proc/create_character_previews()
+	var/hash = calculate_hash(barbertarget)
+	var/mutable_appearance/MA = LAZYACCESS(scissors_icon_cache, hash)
+
+	if(!MA)
+		var/mob/living/carbon/human/dummy/mannequin = make_mannequin(barbertarget)
+		MA = new /mutable_appearance(mannequin)
+		qdel(mannequin)
+		LAZYSET(scissors_icon_cache, hash, MA)
+
+	var/pos = 0
+	for(var/D in cardinal)
+		pos++
+		var/obj/screen/O = LAZYACCESS(char_render_holders, "[D]")
+		if(!O)
+			O = new
+			LAZYSET(char_render_holders, "[D]", O)
+			barber.client.screen |= O
+		O.appearance = MA
+		O.dir = D
+		O.screen_loc = "barber_preview_map:[pos],0"
+
+/obj/item/weapon/scissors/proc/clear_character_previews()
+	barber << browse(null, "window=barber_window")
+	for(var/index in char_render_holders)
+		var/obj/screen/S = char_render_holders[index]
+		if(barber && barber.client)
+			barber.client.screen -= S
+		qdel(S)
+	char_render_holders = null
+	barber = null
+	barbertarget = null
 
 /obj/item/weapon/scissors/proc/showui()
 	if(!barber || !barbertarget)
 		return
-	var/icon/preview_icon = null
-	var/hash = calculate_hash(barbertarget)
-	if(!scissors_icon_cache[hash])
-		var/mob/living/carbon/human/dummy/mannequin = make_mannequin(barbertarget)
 
-		preview_icon = icon('icons/effects/effects.dmi', "nothing")
-		preview_icon.Scale(150, 70)
-
-		mannequin.dir = NORTH
-		var/icon/stamp = getFlatIcon(mannequin)
-		preview_icon.Blend(stamp, ICON_OVERLAY, 109, 19)
-
-		mannequin.dir = WEST
-		stamp = getFlatIcon(mannequin)
-		preview_icon.Blend(stamp, ICON_OVERLAY, 60, 18)
-
-		mannequin.dir = SOUTH
-		stamp = getFlatIcon(mannequin)
-		preview_icon.Blend(stamp, ICON_OVERLAY, 13, 22)
-
-		qdel(mannequin)
-		preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2)
-		scissors_icon_cache[hash] = preview_icon
-	else
-		preview_icon = scissors_icon_cache[hash]
+	create_character_previews()
 
 	var/list/selected_styles_list = hair_styles_list
 	if(isfacehair)
@@ -332,20 +361,25 @@ var/global/list/scissors_icon_cache = list()
 				haircutlist+="</tr><tr>"
 	haircutlist+="</tr></table>"
 
-	barber << browse_rsc(preview_icon, "tmp_haircutpreview.png")
+	winshow(barber, "barber_window", TRUE)
 	barber << browse("<html><head><title>Grooming</title></head>" \
 		+ "<body style='margin:0;text-align:center'>" \
-		+ "<img src='tmp_haircutpreview.png' width='450' style='-ms-interpolation-mode:nearest-neighbor' /><br>" \
 		+ "<a href='byond://?src=\ref[src];choice=start'><b>CONFIRM</b></a><br><br>" \
 		+ haircutlist \
-		+ "</body></html>", "window=barber;size=620x680")
+		+ "</body></html>", "window=barber_window")
+	onclose(barber, "barber_window", src)
 	return
 
 /obj/item/weapon/scissors/proc/dohaircut()
+	// saving those refs, it will be cleaned before do_after proc ends
+	var/mob/living/carbon/human/barber = src.barber
+	var/mob/living/carbon/human/barbertarget = src.barbertarget
+
 	if(!barber || !barbertarget || !selectedhairstyle)
 		return
 	if(!in_range(barbertarget, barber) || barber.get_active_hand() != src)
 		return
+
 	if(isfacehair)
 		barber.visible_message("<span class='notice'>[barber] starts cutting [barbertarget]'s facial hair with [src]!</span>", \
 							   "<span class='notice'>You start cutting [barbertarget]'s facial hair with [src], this might take a minute...</span>")
@@ -421,248 +455,4 @@ var/global/list/scissors_icon_cache = list()
 			else
 				to_chat(user, "<span class='notice'>You don't know how to cut the hair of this race!</span>")
 				return
-		else
-			..()
-	else
-		..()
-
-/obj/item/weapon/hair_growth_accelerator
-	name = "hair growth accelerator"
-	desc = "Revive your hair. Apply directly to a bald head."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "hairaccelerator"
-	item_state = "hairaccelerator"
-	slot_flags = SLOT_BELT
-	throwforce = 3
-	w_class = 2.0
-	throw_speed = 2
-	throw_range = 10
-	var/list/bald_hair_styles_list = list("Bald", "Balding Hair", "Skinhead", "Unathi Horns", "Tajaran Ears")
-	var/list/shaved_facial_hair_styles_list = list("Shaved")
-	var/list/allowed_races = list(HUMAN, UNATHI, TAJARAN)
-
-/obj/item/weapon/hair_growth_accelerator/attack(mob/M, mob/user, def_zone)
-	if(user.a_intent == "hurt")
-		..()
-		return
-
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-
-		if(user.is_busy()) return
-
-		if(def_zone == O_MOUTH)
-			if(H.species.name in allowed_races)
-				if((H.head && (H.head.flags & HEADCOVERSMOUTH)) || (H.wear_mask && (H.wear_mask.flags & MASKCOVERSMOUTH)))
-					to_chat(user, "<span class='warning'>The mask is in the way!</span>")
-					return
-
-				var/list/species_facial_hair = list()
-				if(H.species)
-					for(var/i in facial_hair_styles_list)
-						var/datum/sprite_accessory/hair/tmp_hair = facial_hair_styles_list[i]
-						if(i in shaved_facial_hair_styles_list)
-							continue
-						if(H.species.name in tmp_hair.species_allowed)
-							species_facial_hair += i
-				else
-					species_facial_hair = facial_hair_styles_list
-
-				if(species_facial_hair.len == 0)
-					to_chat(user, "<span class='notice'>You can't apply [src] to the face of this race!</span>")
-					return
-				var/random_facial_hair = pick(species_facial_hair)
-
-				if(random_facial_hair)
-					user.visible_message("<span class='notice'>[user] starts applying [src] to [H]'s face</span>", \
-									 	 "<span class='notice'>You start applying [src] to [H]'s face</span>")
-					if(do_after(user, 50, target = H))
-						H.f_style = random_facial_hair
-						H.update_hair()
-						user.visible_message("<span class='notice'>[user] applied [src] to [H]'s face</span>", \
-									 	 	 "<span class='notice'>You applied [src] to [H]'s face</span>")
-				return
-			else
-				to_chat(user, "<span class='notice'>You can't use [src] on this race!</span>")
-				return
-
-		else if(def_zone == BP_HEAD)
-			if(H.species.name in allowed_races)
-				if(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS)))
-					to_chat(user, "<span class='warning'>The headgear is in the way!</span>")
-					return
-
-				var/list/species_hair = list()
-				if(H.species)
-					for(var/i in hair_styles_list)
-						var/datum/sprite_accessory/hair/tmp_hair = hair_styles_list[i]
-						if(i in bald_hair_styles_list)
-							continue
-						if(H.species.name in tmp_hair.species_allowed)
-							species_hair += i
-				else
-					species_hair = hair_styles_list
-
-				if(species_hair.len == 0)
-					to_chat(user, "<span class='notice'>You can't apply [src] to the head of this race!</span>")
-					return
-				var/random_hair = pick(species_hair)
-
-				if(random_hair)
-					user.visible_message("<span class='notice'>[user] starts applying [src] to [H]'s head</span>", \
-									 	 "<span class='notice'>You start applying [src] to [H]'s head</span>")
-					if(do_after(user, 50, target = H))
-						H.h_style = random_hair
-						H.update_hair()
-						user.visible_message("<span class='notice'>[user] applied [src] to [H]'s head</span>", \
-									 	 	 "<span class='notice'>You applied [src] to [H]'s head</span>")
-				return
-			else
-				to_chat(user, "<span class='notice'>You can't use [src] on this race!</span>")
-				return
-		else
-			..()
-	else
-		..()
-
-/obj/item/weapon/hair_color_spray
-	name = "white hair color spray"
-	desc = "Changes hair color."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "hairspraywhite"
-	item_state = "hairspray"
-	slot_flags = SLOT_BELT
-	throwforce = 3
-	w_class = 2.0
-	throw_speed = 2
-	throw_range = 10
-	var/list/bald_hair_styles_list = list("Bald", "Balding Hair", "Skinhead", "Unathi Horns", "Tajaran Ears")
-	var/list/shaved_facial_hair_styles_list = list("Shaved")
-	var/list/allowed_races = list(HUMAN, UNATHI, TAJARAN)
-	var/spraycolor_r = 255
-	var/spraycolor_g = 255
-	var/spraycolor_b = 255
-	var/spraymode = 0
-
-/obj/item/weapon/hair_color_spray/attack_self(mob/user)
-	spraymode = 1 - spraymode
-	if(spraymode==0)
-		to_chat(user, "<span class='notice'>You will fully paint</span>")
-	else if(spraymode==1)
-		to_chat(user, "<span class='notice'>You will mix color</span>")
-	return
-
-/obj/item/weapon/hair_color_spray/attack(mob/M, mob/user, def_zone)
-	if(user.a_intent == "hurt")
-		..()
-		return
-
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-
-		if(user.is_busy()) return
-
-		if(def_zone == O_MOUTH)
-			if(H.species.name in allowed_races)
-				if((H.head && (H.head.flags & HEADCOVERSMOUTH)) || (H.wear_mask && (H.wear_mask.flags & MASKCOVERSMOUTH)))
-					to_chat(user, "<span class='warning'>The mask is in the way!</span>")
-					return
-
-				if(H.f_style in shaved_facial_hair_styles_list)
-					to_chat(user, "<span class='notice'>You can't paint a shaved face</span>")
-					return
-
-				playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
-				user.visible_message("<span class='notice'>[user] starts to paint [H]'s face hair with [src]</span>", \
-									 "<span class='notice'>You start painting [H]'s face hair with [src]</span>")
-				if(do_after(user, (100 - spraymode*80), target = H))
-					if(spraymode == 0)
-						H.r_facial = spraycolor_r
-						H.g_facial = spraycolor_g
-						H.b_facial = spraycolor_b
-					else if(spraymode == 1)
-						H.r_facial = round(H.r_facial*0.9 + spraycolor_r*0.1)
-						H.g_facial = round(H.g_facial*0.9 + spraycolor_g*0.1)
-						H.b_facial = round(H.b_facial*0.9 + spraycolor_b*0.1)
-					H.update_hair()
-					user.visible_message("<span class='notice'>[user] finished painting [H]'s face hair with [src]</span>", \
-									 	 "<span class='notice'>You finished painting [H]'s face hair with [src]</span>")
-				return
-			else
-				to_chat(user, "<span class='notice'>You can't paint this race!</span>")
-				return
-		else if(def_zone == BP_HEAD)
-			if(H.species.name in allowed_races)
-				if(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS)))
-					to_chat(user, "<span class='warning'>The headgear is in the way!</span>")
-					return
-
-				if(H.h_style in bald_hair_styles_list)
-					to_chat(user, "<span class='notice'>You can't paint a bald head</span>")
-					return
-
-				playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
-				user.visible_message("<span class='notice'>[user] starts to paint [H]'s head with [src]</span>", \
-									 "<span class='notice'>You start painting [H]'s head with [src]</span>")
-				if(do_after(user, (100 - spraymode*80), target = H))
-					if(spraymode == 0)
-						H.r_hair = spraycolor_r
-						H.g_hair = spraycolor_g
-						H.b_hair = spraycolor_b
-					else if(spraymode == 1)
-						H.r_hair = round(H.r_hair*0.9 + spraycolor_r*0.1)
-						H.g_hair = round(H.g_hair*0.9 + spraycolor_g*0.1)
-						H.b_hair = round(H.b_hair*0.9 + spraycolor_b*0.1)
-					H.update_hair()
-					user.visible_message("<span class='notice'>[user] finished painting [H]'s head with [src]</span>", \
-									 	 "<span class='notice'>You finished painting [H]'s head with [src]</span>")
-				return
-			else
-				to_chat(user, "<span class='notice'>You can't paint this race!</span>")
-				return
-		else
-			..()
-	else
-		..()
-
-/obj/item/weapon/hair_color_spray/red
-	name = "red hair color spray"
-	icon_state = "hairsprayred"
-	spraycolor_r = 255
-	spraycolor_g = 0
-	spraycolor_b = 0
-
-/obj/item/weapon/hair_color_spray/blue
-	name = "blue hair color spray"
-	icon_state = "hairsprayblue"
-	spraycolor_r = 0
-	spraycolor_g = 0
-	spraycolor_b = 255
-
-/obj/item/weapon/hair_color_spray/green
-	name = "green hair color spray"
-	icon_state = "hairspraygreen"
-	spraycolor_r = 0
-	spraycolor_g = 255
-	spraycolor_b = 0
-
-/obj/item/weapon/hair_color_spray/black
-	name = "black hair color spray"
-	icon_state = "hairsprayblack"
-	spraycolor_r = 0
-	spraycolor_g = 0
-	spraycolor_b = 0
-
-/obj/item/weapon/hair_color_spray/brown
-	name = "brown hair color spray"
-	icon_state = "hairspraybrown"
-	spraycolor_r = 50
-	spraycolor_g = 0
-	spraycolor_b = 0
-
-/obj/item/weapon/hair_color_spray/blond
-	name = "blond hair color spray"
-	icon_state = "hairsprayblond"
-	spraycolor_r = 255
-	spraycolor_g = 225
-	spraycolor_b = 135
+	..()

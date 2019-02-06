@@ -252,7 +252,7 @@
 	dat += "Path: {<a href='?src=\ref[src];operation=setpath'>[path]</a>}<br>"
 	dat += "Moving: <a href='?src=\ref[src];operation=togglemoving'>[moving ? "Enabled":"Disabled"]</a>"
 
-	user << browse(dat, "window=magnet;size=400x500")
+	user << browse(entity_ja(dat), "window=magnet;size=400x500")
 	onclose(user, "magnet")
 
 /obj/machinery/magnetic_controller/Topic(href, href_list)
@@ -303,7 +303,7 @@
 				if(speed <= 0)
 					speed = 1
 			if("setpath")
-				var/newpath = sanitize(copytext(input(usr, "Please define a new path!",,path) as text|null,1,MAX_MESSAGE_LEN))
+				var/newpath = sanitize_safe(input(usr, "Please define a new path!",,input_default(path)) as text|null)
 				if(newpath && newpath != "")
 					moving = 0 // stop moving
 					path = newpath

@@ -1,5 +1,6 @@
 /mob/living/carbon/human/movement_delay()
-
+	if(iszombie(src))
+		return src.zombie_movement_delay()
 	if(mind && mind.changeling && mind.changeling.strained_muscles)
 		if(!has_gravity(src))
 			return -3   // speed boost in space.
@@ -10,6 +11,13 @@
 		return -1 // It's hard to be slowed down in space by... anything
 
 	var/tally = species.speed_mod
+
+	if(is_type_organ(O_HEART, /obj/item/organ/internal/heart/ipc)) // IPC's heart is a servomotor, damaging it influences speed.
+		var/obj/item/organ/internal/IO = organs_by_name[O_HEART]
+		if(!IO) // If it's servomotor somehow is missing, it's absence should be treated as 100 damage to it.
+			tally += 20
+		else
+			tally += IO.damage/5
 
 	if(RUN in mutations)
 		tally -= 0.5
@@ -24,7 +32,7 @@
 	if(health_deficiency >= 40)
 		tally += (health_deficiency / 25)
 
-	var/hungry = (500 - nutrition) / 5 // So overeat would be 100 and default level would be 80
+	var/hungry = (500 - get_nutrition()) / 5 // So overeat would be 100 and default level would be 80
 	if(hungry >= 70)
 		tally += hungry / 50
 

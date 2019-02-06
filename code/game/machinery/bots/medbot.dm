@@ -130,7 +130,7 @@
 
 		dat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a><br>"
 
-	user << browse("<HEAD><TITLE>Medibot v1.0 controls</TITLE></HEAD>[dat]", "window=automed")
+	user << browse("<HEAD><TITLE>Medibot v1.0 controls</TITLE></HEAD>[entity_ja(dat)]", "window=automed")
 	onclose(user, "automed")
 
 /obj/machinery/bot/medbot/Topic(href, href_list)
@@ -486,7 +486,7 @@
 		if (!istype(D, /obj/machinery/door/firedoor) && D.check_access(src.botcard) && !istype(D,/obj/machinery/door/poddoor))
 			D.open()
 			src.frustration = 0
-	else if ((istype(M, /mob/living/)) && (!src.anchored))
+	else if ((istype(M, /mob/living)) && (!src.anchored))
 		src.loc = M.loc
 		src.frustration = 0
 	return
@@ -562,7 +562,7 @@
 /obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/pen))
-		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
+		var/t = sanitize_safe(input(user, "Enter new robot name", src.name, input_default(src.created_name)), MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && src.loc != usr)

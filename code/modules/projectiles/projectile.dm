@@ -18,6 +18,7 @@
 	anchored = 1 //There's a reason this is here, Mport. God fucking damn it -Agouri. Find&Fix by Pete. The reason this is here is to stop the curving of emitter shots.
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
+	appearance_flags = 0
 	var/bumped = 0		//Prevents it from hitting more than one guy at once
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
@@ -32,6 +33,8 @@
 
 	var/p_x = 16
 	var/p_y = 16 // the pixel location of the tile that the player clicked. Default is the center
+
+	var/dispersion = 0.0
 
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
@@ -166,6 +169,7 @@
 
 	var/forcedodge = 0 // force the projectile to pass
 	var/mob/M = ismob(A) ? A : null
+	var/mob/old_firer = firer
 	bumped = 1
 	if(firer && M)
 		if(!istype(A, /mob/living))
@@ -213,11 +217,11 @@
 		else
 			M.visible_message("<span class='userdanger'>[M.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")
 			//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
-		if(firer)
-			M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
-			firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
+		if(old_firer)
+			M.attack_log += "\[[time_stamp()]\] <b>[old_firer]/[old_firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
+			old_firer.attack_log += "\[[time_stamp()]\] <b>[old_firer]/[old_firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
 			if(!fake)
-				msg_admin_attack("[firer.name] ([firer.ckey]) shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(firer)] [ADMIN_FLW(firer)]") //BS12 EDIT ALG
+				msg_admin_attack("[old_firer.name] ([old_firer.ckey]) shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(old_firer)] [ADMIN_FLW(old_firer)]") //BS12 EDIT ALG
 		else
 			M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 			if(!fake)
@@ -304,6 +308,10 @@
 
 /obj/item/projectile/proc/setup_trajectory()
 	var/offset = 0
+
+	if(dispersion)
+		var/radius = round(dispersion * 9, 1)
+		offset = rand(-radius, radius)
 
 	// plot the initial trajectory
 	trajectory = new()

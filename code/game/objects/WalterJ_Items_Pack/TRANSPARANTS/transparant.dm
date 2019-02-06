@@ -27,13 +27,13 @@
 	if(istype(I, /obj/item/weapon/pen))
 
 		var/defaultText = "FUK NT!1"
-		var/targName = copytext(sanitize(input(usr, "Just write something here", "Transparant text", defaultText)),1,MAX_MESSAGE_LEN)
+		var/targName = sanitize(input(usr, "Just write something here", "Transparant text", input_default(defaultText)))
 		var/obj/item/weapon/transparant/text/W = new /obj/item/weapon/transparant/text
 		W.desc = targName
 		user.remove_from_mob(src)
 		user.put_in_hands(W)
 		qdel(src)
-		to_chat(user, "<span class='notice'>You writed: [targName] on your sign.</span>")
+		to_chat(user, "<span class='notice'>You writed: <span class='emojify'>[targName]</span> on your sign.</span>")
 		return
 
 	if(istype(I, /obj/item/toy/crayon))
@@ -49,11 +49,11 @@
 
 /obj/item/weapon/transparant/attack_self(mob/user)
 	for(var/mob/O in viewers(user, null))
-		O.show_message("[user] shows you: [bicon(src)] [src.blood_DNA ? "bloody " : ""][src.name]: it says: [src.desc]", 1)
+		O.show_message("[user] shows you: [bicon(src)] [src.blood_DNA ? "bloody " : ""][src.name]: it says: <span class='emojify'>[src.desc]</span>", 1)
 
 /obj/item/weapon/transparant/attack(mob/M, mob/user)
 	..()
-	M.show_message("<span class='attack'>\The <EM>[src.blood_DNA ? "bloody " : ""][bicon(src)][src.name]</EM> says: <EM>[src.desc]</EM></span>", 2)
+	M.show_message("<span class='attack'>\The <EM>[src.blood_DNA ? "bloody " : ""][bicon(src)][src.name]</EM> says: <span class='emojify bold'>[src.desc]</span></span>", 2)
 
 
 /obj/item/weapon/transparant/update_icon()

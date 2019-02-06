@@ -5,7 +5,8 @@ var/list/forbidden_varedit_object_types = list(
 		/datum/feedback_variable,          //Prevents people messing with feedback gathering
 		/datum/timedevent,                 //Nope.avi
 		/datum/craft_or_build,
-		/datum/stack_recipe
+		/datum/stack_recipe,
+		/datum/events,
 	)
 
 /client/proc/cmd_modify_ticker_variables()
@@ -39,7 +40,7 @@ var/list/forbidden_varedit_object_types = list(
 	switch(class)
 
 		if("text")
-			var_value = input("Enter new text:","Text") as null|text
+			var_value = sanitize(input("Enter new text:","Text") as null|text)
 
 		if("num")
 			var_value = input("Enter new number:","Num") as null|num
@@ -88,7 +89,7 @@ var/list/forbidden_varedit_object_types = list(
 	switch(class)
 
 		if("text")
-			var_value = input("Enter new text:","Text") as text
+			var_value = sanitize(input("Enter new text:","Text") as text)
 
 		if("num")
 			var_value = input("Enter new number:","Num") as num
@@ -127,7 +128,7 @@ var/list/forbidden_varedit_object_types = list(
 	if(!islist(L))
 		to_chat(usr, "Still not a list")
 		return
-		
+
 
 	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "icon", "icon_state")
 	var/list/names = sortList(L)
@@ -243,7 +244,7 @@ var/list/forbidden_varedit_object_types = list(
 			return
 
 		if("text")
-			L[L.Find(variable)] = input("Enter new text:","Text") as text
+			L[L.Find(variable)] = sanitize(input("Enter new text:","Text") as text)
 
 		if("num")
 			L[L.Find(variable)] = input("Enter new number:","Num") as num
@@ -271,9 +272,9 @@ var/list/forbidden_varedit_object_types = list(
 	if(!check_rights(R_VAREDIT))	return
 
 	var/list/icons_modifying = list("resize")
-	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "mutantrace", "player_ingame_age", "summon_type")
+	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "mutantrace", "player_ingame_age", "summon_type", "AI_Interact")
 	var/list/typechange_locked = list("player_next_age_tick","player_ingame_age")
-	var/list/fully_locked = list("holder", "player_next_age_tick", "resize_rev")
+	var/list/fully_locked = list("holder", "player_next_age_tick", "resize_rev", "step_x", "step_y")
 
 	if(is_type_in_list(O, forbidden_varedit_object_types))
 		to_chat(usr, "\red It is forbidden to edit this object's variables.")
@@ -494,11 +495,11 @@ var/list/forbidden_varedit_object_types = list(
 					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
 					if(isnull(var_new))
 						return
-					if((O.vars[variable] == 2) && (var_new < 2))//Bringing the dead back to life
+					if((O.vars[variable] == DEAD) && (var_new < DEAD))//Bringing the dead back to life
 						dead_mob_list -= O
-						living_mob_list += O
-					if((O.vars[variable] < 2) && (var_new == 2))//Kill him
-						living_mob_list -= O
+						alive_mob_list += O
+					if((O.vars[variable] < DEAD) && (var_new == DEAD))//Kill him
+						alive_mob_list -= O
 						dead_mob_list += O
 					O.vars[variable] = var_new
 				if("resize")

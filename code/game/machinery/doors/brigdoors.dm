@@ -41,11 +41,11 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/door_timer/atom_init_late()
-	for(var/obj/machinery/door/window/brigdoor/M in machines)
+	for(var/obj/machinery/door/window/brigdoor/M in brigdoor_list)
 		if (M.id == id)
 			targets += M
 
-	for(var/obj/machinery/flasher/F in machines)
+	for(var/obj/machinery/flasher/F in flasher_list)
 		if(F.id == id)
 			targets += F
 
@@ -212,7 +212,7 @@
 	dat += "<br/><br/><a href='?src=\ref[user];mach_close=computer'>Close</a>"
 	dat += "</TT></BODY></HTML>"
 
-	user << browse(dat, "window=computer;size=400x500")
+	user << browse(entity_ja(dat), "window=computer;size=400x500")
 	onclose(user, "computer")
 
 

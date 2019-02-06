@@ -10,7 +10,7 @@
 	var/obj/machinery/gravity_generator = null
 
 
-/obj/machinery/gravity_generator/
+/obj/machinery/gravity_generator
 	name = "Gravitational Generator"
 	desc = "A device which produces a gravaton field when set up."
 	icon = 'icons/obj/singularity.dmi'
@@ -55,7 +55,7 @@
 	var/obj/machinery/gravity_generator/foundgenerator = null
 	for(dir in list(NORTH,EAST,SOUTH,WEST))
 		//world << "SEARCHING IN [dir]"
-		foundgenerator = locate(/obj/machinery/gravity_generator/, get_step(src, dir))
+		foundgenerator = locate(/obj/machinery/gravity_generator, get_step(src, dir))
 		if (!isnull(foundgenerator))
 			//world << "FOUND"
 			break
@@ -93,7 +93,7 @@
 	else
 		dat += "No local gravity generator detected!"
 
-	user << browse(dat, "window=gravgen")
+	user << browse(entity_ja(dat), "window=gravgen")
 	onclose(user, "gravgen")
 
 

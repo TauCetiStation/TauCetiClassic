@@ -18,7 +18,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/pod/atom_init_late()
-	for(var/obj/machinery/mass_driver/M in machines)
+	for(var/obj/machinery/mass_driver/M in mass_driver_list)
 		if(M.id == id)
 			connected = M
 
@@ -30,19 +30,19 @@
 		to_chat(viewers(), "Cannot locate mass driver connector. Cancelling firing sequence!")
 		return
 
-	for(var/obj/machinery/door/poddoor/M in machines)
+	for(var/obj/machinery/door/poddoor/M in poddoor_list)
 		if(M.id == id)
 			M.open()
 
 	sleep(20)
 
-	for(var/obj/machinery/mass_driver/M in machines)
+	for(var/obj/machinery/mass_driver/M in mass_driver_list)
 		if(M.id == id)
 			M.power = connected.power
 			M.drive()
 
 	sleep(50)
-	for(var/obj/machinery/door/poddoor/M in machines)
+	for(var/obj/machinery/door/poddoor/M in poddoor_list)
 		if(M.id == id)
 			M.close()
 			return
@@ -70,7 +70,7 @@
 	else
 		dat += "<BR>\n<A href = '?src=\ref[src];door=1'>Toggle Outer Door</A><BR>"
 	dat += "<BR><BR><A href='?src=\ref[user];mach_close=computer'>Close</A></TT></BODY></HTML>"
-	user << browse(dat, "window=computer;size=400x500")
+	user << browse(entity_ja(dat), "window=computer;size=400x500")
 	onclose(user, "computer")
 
 
@@ -101,7 +101,7 @@
 	if(href_list["alarm"])
 		alarm()
 	if(href_list["drive"])
-		for(var/obj/machinery/mass_driver/M in machines)
+		for(var/obj/machinery/mass_driver/M in mass_driver_list)
 			if(M.id == id)
 				M.power = connected.power
 				M.drive()
@@ -113,7 +113,7 @@
 		time += tp
 		time = min(max(round(time), 0), 120)
 	if(href_list["door"])
-		for(var/obj/machinery/door/poddoor/M in machines)
+		for(var/obj/machinery/door/poddoor/M in poddoor_list)
 			if(M.id == id)
 				if(M.density)
 					M.open()

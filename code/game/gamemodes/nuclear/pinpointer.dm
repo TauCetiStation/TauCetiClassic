@@ -50,7 +50,7 @@
 
 /obj/item/weapon/pinpointer/examine(mob/user)
 	..()
-	for(var/obj/machinery/nuclearbomb/bomb in machines)
+	for(var/obj/machinery/nuclearbomb/bomb in poi_list)
 		if(bomb.timing)
 			to_chat(user, "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]")
 
@@ -109,10 +109,10 @@
 						return
 					to_chat(usr, "You set the pinpointer to locate [targetitem]")
 				if("DNA")
-					var/DNAstring = input("Input DNA string to search for." , "Please Enter String." , "")
+					var/DNAstring = sanitize(input("Input DNA string to search for." , "Please Enter String." , ""))
 					if(!DNAstring)
 						return
-					for(var/mob/living/carbon/M in mob_list)
+					for(var/mob/living/carbon/M in carbon_list)
 						if(!M.dna)
 							continue
 						if(M.dna.unique_enzymes == DNAstring)

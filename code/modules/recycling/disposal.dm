@@ -131,8 +131,8 @@
 				msg_admin_attack("[usr.name] ([usr.ckey]) placed [GM.name] ([GM.ckey]) in a disposals unit. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
 		return
 
-	if(!I)	return
-
+	if(!I || !I.canremove || I.flags & NODROP)
+		return
 	user.drop_item()
 	if(I)
 		I.loc = src
@@ -303,7 +303,7 @@
 
 
 	user.set_machine(src)
-	user << browse(dat, "window=disposal;size=360x170")
+	user << browse(entity_ja(dat), "window=disposal;size=360x170")
 	onclose(user, "disposal")
 
 // handle machine interaction

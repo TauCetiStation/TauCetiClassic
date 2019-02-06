@@ -753,10 +753,10 @@
 	vend_delay = 34
 	icon_state = "cigs"
 	light_color = "#dddddd"
-	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10,/obj/item/weapon/storage/fancy/cigarettes/menthol = 5,/obj/item/weapon/storage/box/matches = 10,/obj/item/weapon/lighter/random = 4)
+	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10, /obj/item/weapon/storage/fancy/cigarettes/menthol = 5, /obj/item/weapon/storage/box/matches = 10, /obj/item/weapon/lighter/random = 4, /obj/item/clothing/mask/ecig = 4)
 	contraband = list(/obj/item/weapon/lighter/zippo = 4)
 	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2)
-	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 15,/obj/item/weapon/storage/fancy/cigarettes/menthol = 25,/obj/item/weapon/storage/box/matches = 1,/obj/item/weapon/lighter/random = 2)
+	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 20, /obj/item/weapon/storage/fancy/cigarettes/menthol = 30, /obj/item/weapon/storage/box/matches = 10, /obj/item/weapon/lighter/random = 15, /obj/item/clothing/mask/ecig = 40)
 	refill_canister = /obj/item/weapon/vending_refill/cigarette
 
 /obj/machinery/vending/medical
@@ -772,7 +772,7 @@
 					/obj/item/weapon/reagent_containers/syringe/antiviral = 4,/obj/item/weapon/reagent_containers/syringe = 12,
 					/obj/item/device/healthanalyzer = 5,/obj/item/weapon/reagent_containers/glass/beaker = 4, /obj/item/weapon/reagent_containers/dropper = 2,
 					/obj/item/stack/medical/advanced/bruise_pack = 3, /obj/item/stack/medical/advanced/ointment = 3, /obj/item/stack/medical/splint = 2)
-	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 3,/obj/item/weapon/reagent_containers/pill/stox = 4,/obj/item/weapon/reagent_containers/pill/antitox = 6)
+	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 3,/obj/item/weapon/reagent_containers/pill/stox = 4,/obj/item/weapon/reagent_containers/pill/dylovene = 6)
 
 
 //This one's from bay12
@@ -843,10 +843,10 @@
 						/obj/item/seeds/cabbageseed = 3,/obj/item/seeds/carrotseed = 3,/obj/item/seeds/cherryseed = 3,/obj/item/seeds/chantermycelium = 3,
 						/obj/item/seeds/chiliseed = 3,/obj/item/seeds/cocoapodseed = 3,/obj/item/seeds/cornseed = 3,/obj/item/seeds/replicapod = 3,
 						/obj/item/seeds/eggplantseed = 3,/obj/item/seeds/grapeseed = 3,/obj/item/seeds/grassseed = 3,/obj/item/seeds/lemonseed = 3,
-						/obj/item/seeds/limeseed = 3,/obj/item/seeds/orangeseed = 3,/obj/item/seeds/potatoseed = 3,/obj/item/seeds/poppyseed = 3,
-						/obj/item/seeds/pumpkinseed = 3,/obj/item/seeds/riceseed= 3,/obj/item/seeds/soyaseed = 3,/obj/item/seeds/sunflowerseed = 3,
-						/obj/item/seeds/tomatoseed = 3,/obj/item/seeds/towermycelium = 3,/obj/item/seeds/watermelonseed = 3,/obj/item/seeds/wheatseed = 3,
-						/obj/item/seeds/whitebeetseed = 3)
+						/obj/item/seeds/limeseed = 3,/obj/item/seeds/orangeseed = 3,/obj/item/seeds/plastiseed = 3,/obj/item/seeds/potatoseed = 3,
+						/obj/item/seeds/poppyseed = 3,/obj/item/seeds/pumpkinseed = 3,/obj/item/seeds/riceseed= 3,/obj/item/seeds/soyaseed = 3,
+						/obj/item/seeds/sunflowerseed = 3,/obj/item/seeds/tomatoseed = 3,/obj/item/seeds/towermycelium = 3,/obj/item/seeds/watermelonseed = 3,
+						/obj/item/seeds/wheatseed = 3,/obj/item/seeds/whitebeetseed = 3)
 	contraband = list(/obj/item/seeds/amanitamycelium = 2,/obj/item/seeds/glowshroom = 2,/obj/item/seeds/libertymycelium = 2,/obj/item/seeds/mtearseed = 2,
 					  /obj/item/seeds/nettleseed = 2,/obj/item/seeds/reishimycelium = 2,/obj/item/seeds/reishimycelium = 2,/obj/item/seeds/shandseed = 2,)
 	premium = list(/obj/item/toy/waterflower = 1)
@@ -866,6 +866,91 @@
 	 /obj/item/device/modkit/wizard/unathi = 1, /obj/item/device/modkit/wizard/tajaran = 1, /obj/item/clothing/head/wizard/redhood = 1, /obj/item/clothing/head/wizard/bluehood = 1,
 	 /obj/item/clothing/suit/wizrobe/wiz_blue = 1, /obj/item/clothing/suit/wizrobe/wiz_red = 1)
 	contraband = list(/obj/item/weapon/reagent_containers/glass/bottle/wizarditis = 1)	//No one can get to the machine to hack it anyways; for the lulz - Microwave
+
+/obj/machinery/vending/weirdomat
+	name = "Weird-O-Mat"
+	desc = "A marvel, on the brink of technobabble and pixie fiction."
+	icon_state = "MagiVend"
+	light_color = "#97429a"
+	products = list(/obj/item/weapon/occult_pinpointer = 3,
+		/obj/item/device/occult_scanner = 3,
+		/obj/item/clothing/mask/gas/owl_mask = 3,
+		/obj/item/clothing/mask/pig = 3,
+		/obj/item/clothing/mask/horsehead = 3,
+		/obj/item/clothing/mask/cowmask = 3,
+		/obj/item/clothing/mask/chicken = 3,
+		/obj/item/weapon/kitchenknife/plastic = 3)
+	prices = list(/obj/item/weapon/occult_pinpointer = 400,
+		/obj/item/device/occult_scanner = 400,
+		/obj/item/clothing/mask/gas/owl_mask = 250,
+		/obj/item/clothing/mask/pig = 250,
+		/obj/item/clothing/mask/horsehead = 250,
+		/obj/item/clothing/mask/cowmask = 250,
+		/obj/item/clothing/mask/chicken = 250,
+		/obj/item/weapon/kitchenknife/plastic = 300)
+	contraband = list(/obj/item/weapon/nullrod = 1,
+		/obj/item/weapon/kitchenknife/ritual = 1)
+	premium = list(/obj/item/clothing/glasses/gglasses = 1,
+		/obj/item/toy/figure/wizard = 1,
+		/obj/item/weapon/storage/fancy/crayons = 1)
+	product_slogans = "Amicitiae nostrae memoriam spero sempiternam fore;Aequam memento rebus in arduis servare mentem;Vitanda est improba siren desidia;Serva me, servabo te;Faber est suae quisque fortunae"
+	vend_reply = "Have fun! No returns!"
+	product_ads = "Occult is magic;Knowledge is magic;All the magic!;None to spook us;The dice has been cast"
+
+/obj/machinery/vending/weirdomat/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = I
+		OS.scanned_type = src.type
+		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/ectoplasm))
+		RedeemEctoplasm(I, user)
+		return
+	..()
+
+/obj/machinery/vending/weirdomat/proc/RedeemEctoplasm(obj/plasm, redeemer)
+	if(plasm.in_use)
+		return
+	plasm.in_use = TRUE
+	var/selection = input(redeemer, "Pick your eternal reward", "Ectoplasm Redemption") in list("Misfortune Set", "Spiritual Bond Set", "Contract From Below", "Cryptorecorder", "Black Candle Box", "Cancel")
+	if(!selection || !Adjacent(redeemer))
+		plasm.in_use = FALSE
+		return
+	switch(selection)
+		if("Misfortune Set")
+			new /obj/item/weapon/storage/pill_bottle/ghostdice(loc)
+		if("Spiritual Bond Set")
+			new /obj/item/weapon/game_kit/chaplain(loc)
+		if("Contract From Below")
+			new /obj/item/weapon/pen/ghost(loc)
+		if("Cryptorecorder")
+			new /obj/item/device/camera/spooky(loc)
+		if("Black Candle Box")
+			new /obj/item/weapon/storage/fancy/black_candle_box(loc)
+		if("Cancel")
+			plasm.in_use = FALSE
+			return
+	qdel(plasm)
+
+/obj/machinery/vending/barbervend
+	name = "Fab-O-Vend"
+	desc = "It would seem it vends dyes, and other stuff to make you pretty."
+	icon_state = "barbervend"
+	product_slogans = "Spread the colour, like butter, onto toast... Onto their hair.; Sometimes, I dream about dyes...; Paint 'em up and call me Mr. Painter.; Look brother, I'm a vendomat, I solve practical problems."
+	product_ads = "Cut 'em all!; To sheds!; Hair be gone!; Prettify!; Beautify!"
+	req_access_txt = "69"
+	refill_canister = /obj/item/weapon/vending_refill/barbervend
+	products = list(/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/white = 10,
+					/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/red = 10,
+					/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/green = 10,
+					/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/blue = 10,
+					/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/black = 10,
+					/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/brown = 10,
+					/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/blond = 10,
+					/obj/item/weapon/reagent_containers/spray/hair_color_spray = 3)
+	contraband = list(/obj/item/weapon/razor = 1)
+	premium = list(/obj/item/weapon/scissors  = 3,
+				   /obj/item/weapon/reagent_containers/glass/bottle/hair_growth_accelerator = 3,
+				   /obj/item/weapon/storage/box/lipstick = 3)
 
 /obj/machinery/vending/dinnerware
 	name = "Dinnerware"
@@ -1029,14 +1114,22 @@
 	icon_state = "holy"
 	product_slogans = "HolyVend: Select your Religion today"
 	product_ads = "Pray now!;Atheists are heretic;Everything 100% Holy;Thirsty? Wanna pray? Why without candles?"
-	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 10, /obj/item/weapon/storage/fancy/candle_box = 25)
+	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 10, /obj/item/weapon/storage/fancy/candle_box = 25, /obj/item/weapon/storage/fancy/candle_box/red = 25,)
 	contraband = list(/obj/item/weapon/nullrod = 2)
-	prices = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 30, /obj/item/weapon/storage/fancy/candle_box = 50, /obj/item/weapon/nullrod = 100)
+	prices = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 30, /obj/item/weapon/storage/fancy/candle_box = 50, /obj/item/weapon/storage/fancy/candle_box/red = 50, /obj/item/weapon/nullrod = 100)
 
 /obj/machinery/vending/eva
 	name = "Hardsuit Kits"
 	desc = "Conversion kits for your alien hardsuit needs."
-	products = list(/obj/item/device/modkit/engineering/tajaran = 5, /obj/item/device/modkit/engineering/unathi = 5, /obj/item/device/modkit/engineering/skrell = 5, /obj/item/device/modkit/engineering/chief/skrell = 1, /obj/item/device/modkit/atmos/tajaran = 5, /obj/item/device/modkit/atmos/unathi = 5, /obj/item/device/modkit/atmos/skrell = 5, /obj/item/device/modkit/med/tajaran = 5, /obj/item/device/modkit/med/unathi = 5, /obj/item/device/modkit/med/skrell = 5, /obj/item/device/modkit/sec/tajaran = 5, /obj/item/device/modkit/sec/unathi = 5, /obj/item/device/modkit/sec/skrell = 5, /obj/item/device/modkit/mining/tajaran = 5, /obj/item/device/modkit/mining/unathi = 5, /obj/item/device/modkit/mining/skrell = 5, /obj/item/device/modkit = 10)
+	products = list(/obj/item/device/modkit/engineering/tajaran = 5, /obj/item/device/modkit/engineering/unathi = 5, /obj/item/device/modkit/engineering/skrell = 5,
+					/obj/item/device/modkit/atmos/tajaran = 5, /obj/item/device/modkit/atmos/unathi = 5, /obj/item/device/modkit/atmos/skrell = 5,
+					/obj/item/device/modkit/med/tajaran = 5, /obj/item/device/modkit/med/unathi = 5, /obj/item/device/modkit/med/skrell = 5,
+					/obj/item/device/modkit/sec/tajaran = 5, /obj/item/device/modkit/sec/unathi = 5, /obj/item/device/modkit/sec/skrell = 5,
+					/obj/item/device/modkit/mining/tajaran = 5, /obj/item/device/modkit/mining/unathi = 5, /obj/item/device/modkit/mining/skrell = 5,
+					/obj/item/device/modkit/engineering/chief/tajaran = 1, /obj/item/device/modkit/engineering/chief/unathi = 1, /obj/item/device/modkit/engineering/chief/skrell = 1,
+					/obj/item/device/modkit/med/cmo/tajaran = 1, /obj/item/device/modkit/med/cmo/unathi = 1, /obj/item/device/modkit/med/cmo/skrell = 1,
+					/obj/item/device/modkit/sec/hos/tajaran = 1, /obj/item/device/modkit/sec/hos/unathi = 1, /obj/item/device/modkit/sec/hos/skrell = 1,
+					/obj/item/device/modkit = 10)
 
 /obj/machinery/vending/eva/mining
 	name = "Mining Hardsuit Kits"
@@ -1048,7 +1141,10 @@
 	name = "Engineering Hardsuit Kits"
 	desc = "Conversion kits for your alien engineering and atmos hardsuits."
 	icon_state = "evaengi"
-	products = list(/obj/item/device/modkit/engineering/tajaran = 3, /obj/item/device/modkit/engineering/unathi = 3, /obj/item/device/modkit/engineering/skrell = 3, /obj/item/device/modkit/engineering/chief/skrell = 1, /obj/item/device/modkit/atmos/tajaran = 3, /obj/item/device/modkit/atmos/unathi = 3, /obj/item/device/modkit/atmos/skrell = 3, /obj/item/device/modkit = 6)
+	products = list(/obj/item/device/modkit/engineering/tajaran = 3, /obj/item/device/modkit/engineering/unathi = 3, /obj/item/device/modkit/engineering/skrell = 3,
+					/obj/item/device/modkit/atmos/tajaran = 3, /obj/item/device/modkit/atmos/unathi = 3, /obj/item/device/modkit/atmos/skrell = 3,
+					/obj/item/device/modkit/engineering/chief/tajaran = 1, /obj/item/device/modkit/engineering/chief/unathi = 1, /obj/item/device/modkit/engineering/chief/skrell = 1,
+					/obj/item/device/modkit = 6)
 
 
 //from old nanotrasen
@@ -1106,6 +1202,30 @@
 					/obj/item/clothing/under/fluff/olddressuniform = 5, /obj/item/clothing/under/fluff/jumpsuitdown = 5, /obj/item/clothing/under/fluff/jane_sidsuit = 5, /obj/item/clothing/under/sundress = 5,
 					/obj/item/clothing/under/roman = 3, /obj/item/clothing/shoes/roman = 3, /obj/item/clothing/head/helmet/roman = 2, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/smoking = 3,
 					/obj/item/clothing/suit/tuxedo = 3,/obj/item/clothing/under/popking = 1, /obj/item/clothing/under/popking/alternate = 1, /obj/item/clothing/suit/hooded/angel_suit = 1,
-					/obj/item/clothing/mask/fake_face = 2,)
-	prices = list(/obj/item/clothing/head/xenos = 100, /obj/item/clothing/suit/xenos = 200, /obj/item/clothing/suit/monkeysuit = 200)
+					/obj/item/clothing/mask/fake_face = 2, /obj/item/clothing/suit/hooded/ian_costume = 1, /obj/item/clothing/suit/hooded/carp_costume = 1)
+	prices = list(/obj/item/clothing/head/xenos = 100, /obj/item/clothing/suit/xenos = 200, /obj/item/clothing/suit/monkeysuit = 200, /obj/item/clothing/suit/hooded/carp_costume = 200)
 	contraband = list(/obj/item/clothing/mask/gas/fawkes = 2)
+
+/obj/machinery/vending/junkfood
+	name = "McNuffin's Fast Food"
+	desc = "Fastest food on the station, unhealthiest yet."
+	product_slogans = "I'm lovin it!;You deserve a break today!;Nobody can do it like McNuffin's can" //mcdonald's slogans adapted
+	product_ads = "One Two Three Four... Big Bite burger!;I'm lovin it!;Two meaty cutlets, special sauce, cheese -- everything on a bland bun. Right, it's a Big Bite!"
+	icon_state = "junkfood"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/monkeyburger = 6,
+					/obj/item/weapon/reagent_containers/food/snacks/cheeseburger = 4,
+					/obj/item/weapon/reagent_containers/food/snacks/fries/cardboard = 6,
+					/obj/item/weapon/reagent_containers/food/snacks/cheesyfries/cardboard = 4,
+					/obj/item/weapon/reagent_containers/food/snacks/hotdog = 5,
+					/obj/item/weapon/reagent_containers/food/drinks/cans/cola = 5,
+					/obj/item/weapon/reagent_containers/food/drinks/cans/space_up = 5,
+					/obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb = 5)
+	prices = list(/obj/item/weapon/reagent_containers/food/snacks/monkeyburger = 8,
+				  /obj/item/weapon/reagent_containers/food/snacks/cheeseburger = 12,
+				  /obj/item/weapon/reagent_containers/food/snacks/fries/cardboard = 6,
+				  /obj/item/weapon/reagent_containers/food/snacks/cheesyfries/cardboard = 9,
+				  /obj/item/weapon/reagent_containers/food/snacks/hotdog = 9,
+				  /obj/item/weapon/reagent_containers/food/drinks/cans/cola = 1,
+				  /obj/item/weapon/reagent_containers/food/drinks/cans/space_up = 1,
+				  /obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb = 1)
+	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/fishfingers = 2)

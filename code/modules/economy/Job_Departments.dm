@@ -14,6 +14,8 @@ var/list/station_departments = list("Command", "Medical", "Engineering", "Scienc
 
 /datum/job/assistant/department = "Civilian"
 
+/datum/job/barber/department = "Civilian"
+
 /datum/job/bartender/department = "Civilian"
 
 /datum/job/chef/department = "Civilian"
@@ -47,7 +49,7 @@ var/list/station_departments = list("Command", "Medical", "Engineering", "Scienc
 
 /datum/job/doctor/department = "Medical"
 
-/datum/job/emergencyphysician/department = "Medical"
+/datum/job/paramedic/department = "Medical"
 
 /datum/job/chemist/department = "Medical"
 
@@ -60,7 +62,7 @@ var/list/station_departments = list("Command", "Medical", "Engineering", "Scienc
 
 /datum/job/scientist/department = "Science"
 
-/datum/job/xenoarcheologist/department = "Science"
+/datum/job/xenoarchaeologist/department = "Science"
 
 /datum/job/roboticist/department = "Science"
 

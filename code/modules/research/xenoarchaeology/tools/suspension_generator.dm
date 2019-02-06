@@ -2,7 +2,7 @@
 	name = "suspension field generator"
 	desc = "It has stubby legs bolted up against it's body for stabilising."
 	icon = 'icons/obj/xenoarchaeology.dmi'
-	icon_state = "suspension2"
+	icon_state = "suspension_closed_panel"
 	density = 1
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/locked = 1
@@ -25,6 +25,7 @@
 			else
 				screwed = 1
 			to_chat(user, "<span class='info'>You [screwed ? "screw" : "unscrew"] the battery panel.</span>")
+			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
 	else if (istype(W, /obj/item/weapon/crowbar))
 		if(!locked)
 			if(!screwed)
@@ -34,7 +35,8 @@
 					else
 						open = 1
 					to_chat(user, "<span class='info'>You crowbar the battery panel [open ? "open" : "in place"].</span>")
-					icon_state = "suspension[open ? (cell ? "1" : "0") : "2"]"
+					playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
+					icon_state = "suspension_[open ? (cell ? "cell" : "no_cell") : "closed_panel"][anchored ? "_anchored" : ""]"
 				else
 					to_chat(user, "<span class='warning'>[src]'s safety locks are engaged, shut it down first.</span>")
 			else
@@ -47,7 +49,9 @@
 				anchored = 0
 			else
 				anchored = 1
+			icon_state = "suspension_[open ? (cell ? "cell" : "no_cell") : "closed_panel"][anchored ? "_anchored" : ""]"
 			to_chat(user, "<span class='info'>You wrench the stabilising legs [anchored ? "into place" : "up against the body"].</span>")
+			playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
 			if(anchored)
 				desc = "It is resting securely on four stubby legs."
 			else
@@ -63,7 +67,11 @@
 				W.loc = src
 				cell = W
 				to_chat(user, "<span class='info'>You insert the power cell.</span>")
-				icon_state = "suspension1"
+				playsound(src, 'sound/items/Screwdriver2.ogg', 80, 1)
+				if(anchored)
+					icon_state = "suspension_cell_anchored"
+				else
+					icon_state = "suspension_cell"
 	else if(istype(W, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/sci = W
 		if(access_xenoarch in sci.access)
@@ -113,7 +121,7 @@
 	dat += "<hr>"
 	dat += "<A href='?src=\ref[src]'> Refresh console </A><BR>"
 	dat += "<A href='?src=\ref[src];close=1'> Close console </A><BR>"
-	user << browse(dat, "window=suspension;size=500x400")
+	user << browse(entity_ja(dat), "window=suspension;size=500x400")
 	onclose(user, "suspension")
 
 /obj/machinery/suspension_gen/process()
@@ -164,7 +172,7 @@
 	. = ..()
 	if(!.)
 		return
-	
+
 	if(locked)
 		to_chat(usr, "<span class='warning'>Console locked!</span>")
 		return
@@ -174,6 +182,7 @@
 			if(cell.charge > 0)
 				if(anchored)
 					activate()
+					playsound(src, 'sound/items/penclick.ogg', 80, 1)
 				else
 					to_chat(usr, "<span class='warning'>You are unable to activate [src] until it is properly secured on the ground.</span>")
 		else
@@ -194,13 +203,17 @@
 		cell.add_fingerprint(user)
 		cell.updateicon()
 
-		icon_state = "suspension0"
+		if(anchored)
+			icon_state = "suspension_no_cell_anchored"
+		else
+			icon_state = "suspension_no_cell"
 		cell = null
 		to_chat(user, "<span class='info'>You remove the power cell</span>")
 
 //checks for whether the machine can be activated or not should already have occurred by this point
 /obj/machinery/suspension_gen/proc/activate()
 	//depending on the field type, we might pickup certain items
+	playsound(src, 'sound/machines/defib_zap.ogg', 80, 1)
 	var/turf/T = get_turf(get_step(src,dir))
 	var/success = 0
 	var/collected = 0
@@ -245,7 +258,7 @@
 	suspension_field = new(T)
 	suspension_field.field_type = field_type
 	src.visible_message("\blue [bicon(src)] [src] activates with a low hum.")
-	icon_state = "suspension3"
+	icon_state = "suspension_working"
 
 	for(var/obj/item/I in T)
 		I.loc = suspension_field
@@ -273,7 +286,7 @@
 		src.visible_message("\blue [bicon(src)] [src] deactivates with a gentle shudder.")
 		qdel(suspension_field)
 		suspension_field = null
-		icon_state = "suspension2"
+		icon_state = "suspension_[open ? (cell ? "cell" : "no_cell") : "closed_panel"][anchored ? "_anchored" : ""]"
 
 /obj/machinery/suspension_gen/Destroy()
 	//safety checks: clear the field and drop anything it's holding

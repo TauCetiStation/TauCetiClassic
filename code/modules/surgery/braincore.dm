@@ -46,6 +46,7 @@
 	/obj/item/weapon/kitchenknife = 75,	\
 	/obj/item/weapon/shard = 50, 		\
 	)
+	disallowed_species = list(IPC, DIONA)
 
 	min_duration = 80
 	max_duration = 100
@@ -101,17 +102,9 @@
 	target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	msg_admin_attack("[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-	var/mob/living/carbon/human/H
-	if(istype(target,/mob/living/carbon/human))
-		H = target
-
 	var/obj/item/brain/B
-	if(H && H.species && H.species.flags[IS_SYNTHETIC])
-		var/obj/item/device/mmi/posibrain/P = new(target.loc)
-		P.transfer_identity(target)
-	else
-		B = new(target.loc)
-		B.transfer_identity(target)
+	B = new(target.loc)
+	B.transfer_identity(target)
 
 	target.organs -= B
 	target.organs_by_name -= O_BRAIN // this is SOOO wrong.
@@ -198,7 +191,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/slime/can_use(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-	return istype(target, /mob/living/carbon/slime/) && target.stat == DEAD
+	return istype(target, /mob/living/carbon/slime) && target.stat == DEAD
 
 /datum/surgery_step/slime/cut_flesh
 	allowed_tools = list(

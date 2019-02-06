@@ -14,6 +14,7 @@ var/datum/subsystem/job/SSjob
 	var/list/occupations = list()		//List of all jobs
 	var/list/unassigned = list()		//Players who need jobs
 	var/list/job_debug = list()			//Debug info
+	var/obj/effect/landmark/start/fallback_landmark
 
 /datum/subsystem/job/New()
 	NEW_SS_GLOBAL(SSjob)
@@ -353,7 +354,7 @@ var/datum/subsystem/job/SSjob
 		var/list/custom_equip_slots = list() //If more than one item takes the same slot, all after the first one spawn in storage.
 		var/list/custom_equip_leftovers = list()
 		var/metadata
-		if(H.client.prefs.gear && H.client.prefs.gear.len && job.title != "Cyborg" && job.title != "AI")
+		if(H.client.prefs.gear && H.client.prefs.gear.len && job.give_loadout_items)
 			for(var/thing in H.client.prefs.gear)
 				var/datum/gear/G = gear_datums[thing]
 				if(G)
@@ -361,12 +362,14 @@ var/datum/subsystem/job/SSjob
 					if(G.allowed_roles)
 						for(var/job_name in G.allowed_roles)
 							if(job.title == job_name)
-								permitted = 1
+								permitted = TRUE
+							else if(H.mind.role_alt_title == job_name)
+								permitted = TRUE
 					else
-						permitted = 1
+						permitted = TRUE
 
 					if(G.whitelisted && (G.whitelisted != H.species.name || !is_alien_whitelisted(H, G.whitelisted)))
-						permitted = 0
+						permitted = FALSE
 
 					if(!permitted)
 						to_chat(H, "<span class='warning'>Your current job or whitelist status does not permit you to spawn with [thing]!</span>")
@@ -385,8 +388,16 @@ var/datum/subsystem/job/SSjob
 							custom_equip_leftovers.Add(thing)
 					else
 						spawn_in_storage += thing
+
+		if(H.species)
+			H.species.before_job_equip(H, job)
+
 		job.equip(H)
 		job.apply_fingerprints(H)
+
+		if(H.species)
+			H.species.after_job_equip(H, job)
+
 
 		for(var/thing in custom_equip_leftovers)
 			var/datum/gear/G = gear_datums[thing]
@@ -406,16 +417,24 @@ var/datum/subsystem/job/SSjob
 	H.job = rank
 
 	if(!joined_late)
-		var/obj/S = null
-		for(var/obj/effect/landmark/start/sloc in landmarks_list)
-			if(sloc.name != rank)	continue
-			if(locate(/mob/living) in sloc.loc)	continue
-			S = sloc
-			break
-		if(!S)
-			S = locate("start*[rank]") // use old stype
-		if(istype(S, /obj/effect/landmark/start) && istype(S.loc, /turf))
-			H.loc = S.loc
+		var/obj/effect/landmark/start/spawn_mark = null
+		for(var/obj/effect/landmark/start/landmark in landmarks_list)
+			if((landmark.name == rank) && !(locate(/mob/living) in landmark.loc))
+				spawn_mark = landmark
+				break
+		if(!spawn_mark)
+			spawn_mark = locate("start*[rank]") // use old stype
+
+		if(!spawn_mark)
+			if(!fallback_landmark)
+				for(var/obj/effect/landmark/start/landmark in landmarks_list)
+					if(landmark.name == "Fallback-Start")
+						fallback_landmark = landmark
+			warning("Failed to find spawn position for [rank]. Using fallback spawn position!")
+			spawn_mark = fallback_landmark
+
+		if(istype(spawn_mark, /obj/effect/landmark/start) && istype(spawn_mark.loc, /turf))
+			H.loc = spawn_mark.loc
 		// Moving wheelchair if they have one
 		if(H.buckled && istype(H.buckled, /obj/structure/stool/bed/chair/wheelchair))
 			H.buckled.loc = H.loc
@@ -468,24 +487,8 @@ var/datum/subsystem/job/SSjob
 						new /obj/item/weapon/storage/box/survival(BPK)
 						H.equip_to_slot_or_del(BPK, slot_back,1)
 
-	//TODO: Generalize this by-species
-	if(H.species)
-		if(H.species.name == TAJARAN || H.species.name == UNATHI)
-			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H),slot_shoes,1)
-		else if(H.species.name == VOX)
-			H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/vox(src), slot_wear_mask)
-			if(!H.r_hand)
-				H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), slot_r_hand)
-				H.internal = H.r_hand
-			else if (!H.l_hand)
-				H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), slot_l_hand)
-				H.internal = H.l_hand
-			H.internals.icon_state = "internal1"
-		if(H.get_species() == DIONA)
-			if (H.backbag == 1)
-				H.equip_to_slot_or_del(new /obj/item/device/flashlight/flare(H), slot_r_hand)
-			else
-				H.equip_to_slot_or_del(new /obj/item/device/flashlight/flare(H), slot_in_backpack)
+	//Give custom items
+	give_custom_items(H, job)
 
 	//Deferred item spawning.
 	for(var/thing in spawn_in_storage)
@@ -514,13 +517,6 @@ var/datum/subsystem/job/SSjob
 	spawnId(H, rank, alt_title)
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_l_ear)
 
-	//Gives glasses to the vision impaired
-	if(H.disabilities & NEARSIGHTED)
-		var/equipped = H.equip_to_slot_or_del(new /obj/item/clothing/glasses/regular(H), slot_glasses)
-		if(equipped != 1)
-			var/obj/item/clothing/glasses/G = H.glasses
-			G.name = "prescription " + G.name
-			G.prescription = 1
 //		H.update_icons()
 
 	H.hud_updateflag |= (1 << ID_HUD)

@@ -198,7 +198,7 @@ var/list/slot_equipment_priority = list(
 		W.forceMove(get_turf(src))
 		W.layer = initial(W.layer)
 		W.plane = initial(W.plane)
-		W.appearance_flags = 0
+		W.appearance_flags = initial(W.appearance_flags)
 		W.dropped()
 		return 0
 
@@ -214,10 +214,18 @@ var/list/slot_equipment_priority = list(
 
 //Drops the item in our left hand
 /mob/proc/drop_l_hand(atom/Target)
+	if(istype(l_hand, /obj/item))
+		var/obj/item/W = l_hand
+		if(W.flags & NODROP)
+			return FALSE
 	return drop_from_inventory(l_hand, Target)
 
 //Drops the item in our right hand
 /mob/proc/drop_r_hand(atom/Target)
+	if(istype(r_hand, /obj/item))
+		var/obj/item/W = r_hand
+		if(W.flags & NODROP)
+			return FALSE
 	return drop_from_inventory(r_hand, Target)
 
 //Drops the item in our active hand.
@@ -270,7 +278,7 @@ var/list/slot_equipment_priority = list(
 		src.client.screen -= O
 	O.layer = initial(O.layer)
 	O.plane = initial(O.plane)
-	O.appearance_flags = 0
+	O.appearance_flags = initial(O.appearance_flags)
 	O.screen_loc = null
 	if(istype(O, /obj/item))
 		var/obj/item/I = O

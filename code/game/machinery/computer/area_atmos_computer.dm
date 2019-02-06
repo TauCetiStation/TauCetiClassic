@@ -76,7 +76,7 @@
 			<i>[zone]</i>
 		</body>
 	</html>"}
-	user << browse("[dat]", "window=miningshuttle;size=400x400")
+	user << browse("[entity_ja(dat)]", "window=miningshuttle;size=400x400")
 	status = ""
 
 /obj/machinery/computer/area_atmos/Topic(href, href_list)
@@ -159,7 +159,7 @@
 	var/area/A = T.loc
 	if (A.master)
 		A = A.master
-	for(var/obj/machinery/portable_atmospherics/powered/scrubber/huge/scrubber in world )
+	for(var/obj/machinery/portable_atmospherics/powered/scrubber/huge/scrubber in scrubber_huge_list)
 		var/turf/T2 = get_turf(scrubber)
 		if(T2 && T2.loc)
 			var/area/A2 = T2.loc

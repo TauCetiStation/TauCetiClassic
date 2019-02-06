@@ -1,3 +1,8 @@
+/datum/gear/tabletop
+	display_name = "Tabletop Assistant"
+	path = /obj/item/device/tabletop_assistant
+	cost = 2
+
 /datum/gear/dice
 	display_name = "d20"
 	path = /obj/item/weapon/dice/d20
@@ -9,6 +14,11 @@
 /datum/gear/dice/nerd
 	display_name = "Dice pack"
 	path = /obj/item/weapon/storage/pill_bottle/dice
+
+/datum/gear/dice/ghastly
+	display_name = "Accursed Dice Pack"
+	path = /obj/item/weapon/storage/pill_bottle/ghostdice
+	allowed_roles = list("Chaplain", "Paranormal Investigator")
 
 /datum/gear/cards
 	display_name = "Deck of cards"
@@ -22,7 +32,7 @@
 	display_name = "Vacuum-flask"
 	path = /obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask
 
-datum/gear/zippo
+/datum/gear/zippo
 	display_name = "Zippo lighter"
 	path = /obj/item/weapon/lighter/zippo
 	cost = 2
@@ -38,7 +48,43 @@ datum/gear/zippo
 
 /datum/gear/electriccig
 	display_name = "Electronic cigarette"
-	path = /obj/item/clothing/mask/fluff/electriccig
+	path = /obj/item/clothing/mask/ecig
+
+/datum/gear/game_kit
+	display_name = "Gaming Kit Selection"
+	path = /obj/item/weapon/game_kit/red
+	cost = 3
+
+/datum/gear/game_kit/New()
+	..()
+	var/game_kits = list()
+	game_kits["red"] = /obj/item/weapon/game_kit/red
+	game_kits["blue"] = /obj/item/weapon/game_kit/blue
+	game_kits["purple"] = /obj/item/weapon/game_kit/purple
+	game_kits["orange"] = /obj/item/weapon/game_kit/orange
+	gear_tweaks += new/datum/gear_tweak/path(game_kits)
+
+/datum/gear/game_kitchaplain
+	display_name = "Ghostly Gaming Kit"
+	path = /obj/item/weapon/game_kit/chaplain
+	cost = 3
+	allowed_roles = list("Chaplain", "Paranormal Investigator")
+
+/datum/gear/ghostpen
+	display_name = "One Fancy Pen"
+	path = /obj/item/weapon/pen/ghost
+	allowed_roles = list("Chaplain", "Paranormal Investigator")
+
+/datum/gear/ghostcamera
+	display_name = "Anomalous Camera"
+	path = /obj/item/device/camera/spooky
+	allowed_roles = list("Chaplain", "Paranormal Investigator")
+	cost = 3
+
+/datum/gear/blackcandle
+	display_name = "Black Candle"
+	path = /obj/item/candle/ghost
+	allowed_roles = list("Chaplain", "Paranormal Investigator")
 
 /datum/gear/pulserifle
 	display_name = "Pulse rifle"

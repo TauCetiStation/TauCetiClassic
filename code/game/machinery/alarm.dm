@@ -44,6 +44,7 @@
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	frequency = 1439
 	allowed_checks = ALLOWED_CHECK_NONE
+	unacidable = TRUE
 
 	var/breach_detection = TRUE // Whether to use automatic breach detection or not
 	//var/skipprocess = 0 //Experimenting
@@ -94,6 +95,7 @@
 
 /obj/machinery/alarm/atom_init(mapload, dir, building = 0)
 	. = ..()
+	alarm_list += src
 	set_frequency(frequency)
 
 	if(building)
@@ -133,6 +135,7 @@
 	TLV["temperature"] =	list(T0C-26, T0C, T0C+40, T0C+66) // K
 
 /obj/machinery/alarm/Destroy()
+	alarm_list -= src
 	if(wires)
 		QDEL_NULL(wires)
 	if(alarm_area && alarm_area.master_air_alarm == src)
@@ -772,6 +775,10 @@
 			return FALSE
 
 
+/obj/machinery/alarm/attack_alien(mob/living/carbon/alien/humanoid/user)
+	user.show_message("You don't want to break these things", 1);
+	return
+
 /obj/machinery/alarm/attackby(obj/item/W, mob/user)
 
 	add_fingerprint(user)
@@ -1088,7 +1095,7 @@ FIRE ALARM
 		var/second = round(time) % 60
 		var/minute = (round(time) - second) / 60
 		var/dat = "<HTML><HEAD></HEAD><BODY><TT><B>Fire alarm</B> [d1]\n<HR>The current alert level is: [get_security_level()]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT></BODY></HTML>"
-		user << browse(dat, "window=firealarm")
+		user << browse(entity_ja(dat), "window=firealarm")
 		onclose(user, "firealarm")
 	else
 		if (A.fire)
@@ -1102,7 +1109,7 @@ FIRE ALARM
 		var/second = round(time) % 60
 		var/minute = (round(time) - second) / 60
 		var/dat = "<HTML><HEAD></HEAD><BODY><TT><B>[stars("Fire alarm")]</B> [d1]\n<HR><b>The current alert level is: [stars(get_security_level())]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT></BODY></HTML>"
-		user << browse(dat, "window=firealarm")
+		user << browse(entity_ja(dat), "window=firealarm")
 		onclose(user, "firealarm")
 
 /obj/machinery/firealarm/Topic(href, href_list)
@@ -1149,6 +1156,8 @@ FIRE ALARM
 /obj/machinery/firealarm/atom_init(mapload, dir, building)
 	. = ..()
 
+	firealarm_list += src
+
 	if(loc)
 		src.loc = loc
 
@@ -1168,6 +1177,10 @@ FIRE ALARM
 			overlays += image('icons/obj/monitors.dmi', "overlay_green")
 
 	update_icon()
+
+/obj/machinery/firealarm/Destroy()
+	firealarm_list -= src
+	return ..()
 
 /*
 FIRE ALARM CIRCUIT

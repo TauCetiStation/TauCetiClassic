@@ -82,16 +82,18 @@
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
-/obj/item/device/proc/healthanalyze(mob/living/M, mob/living/user, mode)
+/obj/item/proc/health_analyze(mob/living/M, mob/living/user, mode)
+	var/message
 	if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
-		user.visible_message("<span class = 'warning'>[user] has analyzed the floor's vitals!</span>", "<span class = 'warning'>You try to analyze the floor's vitals!</span>")
-		user.show_message("<span class = 'notice'>Analyzing Results for The floor:\n&emsp; Overall Status: Healthy</span>", 1)
-		user.show_message("<span class = 'notice'>&emsp; Damage Specifics: [0]-[0]-[0]-[0]</span>", 1)
-		user.show_message("<span class = 'notice'>Key: Suffocation/Toxin/Burns/Brute</span>", 1)
-		user.show_message("<span class = 'notice'>Body Temperature: ???</span>", 1)
+		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>", "<span class = 'warning'>You try to analyze the floor's vitals!</span>")
+		message += "<span class='notice'>Analyzing Results for The floor:\n&emsp; Overall Status: Healthy</span><br>"
+		message += "<span class='notice'>&emsp; Damage Specifics: [0]-[0]-[0]-[0]</span><br>"
+		message += "<span class='notice'>Key: Suffocation/Toxin/Burns/Brute</span><br>"
+		message += "<span class='notice'>Body Temperature: ???</span>"
+		user.show_message(message)
 		return
 	if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		to_chat(usr, "<span class = 'warning'>You don't have the dexterity to do this!</span>")
+		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.","<span class='notice'>You have analyzed [M]'s vitals.")
 
@@ -102,60 +104,58 @@
 	var/BR = M.getBruteLoss() > 50 	? 	"<b>[M.getBruteLoss()]</b>" 	: M.getBruteLoss()
 	if(M.status_flags & FAKEDEATH)
 		OX = fake_oxy > 50 			? 	"<b>[fake_oxy]</b>" 			: fake_oxy
-		user.show_message("<span class = 'notice'>Analyzing Results for [M]:\n&emsp; Overall Status: dead</span>")
+		message += "<span class='notice'>Analyzing Results for [M]:\n&emsp; Overall Status: dead</span><br>"
 	else
-		user.show_message("<span class = 'notice'>Analyzing Results for [M]:\n&emsp; Overall Status: [M.stat > 1 ? "dead" : "[M.health - M.halloss]% healthy"]</span>")
-	user.show_message("&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font>", 1)
-	user.show_message("&emsp; Damage Specifics: <font color='blue'>[OX]</font> - <font color='green'>[TX]</font> - <font color='#FFA500'>[BU]</font> - <font color='red'>[BR]</font>")
-	user.show_message("<span class = 'notice'>Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span>", 1)
+		message += "<span class='notice'>Analyzing Results for [M]:\n&emsp; Overall Status: [M.stat > 1 ? "dead" : "[M.health - M.halloss]% healthy"]</span><br>"
+	message += "&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font><br>"
+	message += "&emsp; Damage Specifics: <font color='blue'>[OX]</font> - <font color='green'>[TX]</font> - <font color='#FFA500'>[BU]</font> - <font color='red'>[BR]</font><br>"
+	message += "<span class='notice'>Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span><br>"
 	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
-		user.show_message("<span class = 'notice'>Time of Death: [M.tod]</span>")
-	if(istype(M, /mob/living/carbon/human) && mode == 1)
+		message += "<span class='notice'>Time of Death: [M.tod]</span><br>"
+	if(istype(M, /mob/living/carbon/human) && mode)
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_bodyparts(1, 1)
-		user.show_message("<span clas = 'notice'>Localized Damage, Brute/Burn:</span>",1)
-		if(length(damaged)>0)
+		message += "<span class='notice'>Localized Damage, Brute/Burn:</span><br>"
+		if(length(damaged))
 			for(var/obj/item/organ/external/BP in damaged)
-				user.show_message("<span class = 'notice'>&emsp; []: [][] - []</span>",	\
-				capitalize(BP.name),					\
-				(BP.brute_dam > 0)	?	"<span class = 'warning'>[BP.brute_dam]</span>"							:0,		\
-				(BP.status & ORGAN_BLEEDING)?"<span class = 'warning bold'>\[Bleeding\]</span>":"&emsp;", 		\
-				(BP.burn_dam > 0)	?	"<font color='#FFA500'>[BP.burn_dam]</font>"	:0)
+				message += "<span class='notice'>&emsp; [capitalize(BP.name)]: [(BP.brute_dam > 0) ? "<span class='warning'>[BP.brute_dam]</span>" : 0][(BP.status & ORGAN_BLEEDING) ? "<span class='warning bold'>\[Bleeding\]</span>" : "&emsp;"] - [(BP.burn_dam > 0) ? "<font color='#FFA500'>[BP.burn_dam]</font>" : 0]</span><br>"
 		else
-			user.show_message("<span class = 'notice'>&emsp; Limbs are OK.</span>",1)
+			message += "<span class='notice'>&emsp; Limbs are OK.</span><br>"
 
-	OX = M.getOxyLoss() > 50 ? 	"<font color='blue'><b>Severe oxygen deprivation detected</b></font>" 		: 	"Subject bloodstream oxygen level normal"
-	TX = M.getToxLoss() > 50 ? 	"<font color='green'><b>Dangerous amount of toxins detected</b></font>" 	: 	"Subject bloodstream toxin level minimal"
-	BU = M.getFireLoss() > 50 ? 	"<font color='#FFA500'><b>Severe burn damage detected</b></font>" 			:	"Subject burn injury status O.K"
-	BR = M.getBruteLoss() > 50 ? "<font color='red'><b>Severe anatomical damage detected</b></font>" 		: 	"Subject brute-force injury status O.K"
+	OX = M.getOxyLoss() > 50 ? "<font color='blue'><b>Severe oxygen deprivation detected</b></font>" : "Subject bloodstream oxygen level normal"
+	TX = M.getToxLoss() > 50 ? "<font color='green'><b>Dangerous amount of toxins detected</b></font>" : "Subject bloodstream toxin level minimal"
+	BU = M.getFireLoss() > 50 ? "<font color='#FFA500'><b>Severe burn damage detected</b></font>" : "Subject burn injury status O.K"
+	BR = M.getBruteLoss() > 50 ? "<font color='red'><b>Severe anatomical damage detected</b></font>" : "Subject brute-force injury status O.K"
 	if(M.status_flags & FAKEDEATH)
-		OX = fake_oxy > 50 ? 		"<span class = 'warning'>Severe oxygen deprivation detected<span class = 'notice'>" 	: 	"Subject bloodstream oxygen level normal"
-	user.show_message("[OX] | [TX] | [BU] | [BR]")
+		OX = fake_oxy > 50 ? 		"<span class='warning'>Severe oxygen deprivation detected<span class='notice'>" : "Subject bloodstream oxygen level normal"
+	message += "[OX] | [TX] | [BU] | [BR]<br>"
 	if(istype(M, /mob/living/carbon))
 		var/mob/living/carbon/C = M
-		if(C.reagents.total_volume > 0)
-			user.show_message("<span class = 'warning'>Warning: Unknown substance detected in subject's blood.</span>")
+		if(C.reagents.total_volume || C.is_infected_with_zombie_virus())
+			message += "<span class='warning'>Warning: Unknown substance detected in subject's blood.</span><br>"
 		if(C.virus2.len)
 			for (var/ID in C.virus2)
 				if (ID in virusDB)
 					var/datum/data/record/V = virusDB[ID]
-					user.show_message("<span class = 'warning'>Warning: Pathogen [V.fields["name"]] detected in subject's blood. Known antigen : [V.fields["antigen"]]</span>")
+					message += "<span class='warning'>Warning: Pathogen [V.fields["name"]] detected in subject's blood. Known antigen : [V.fields["antigen"]]</span><br>"
 //			user.show_message(text("\red Warning: Unknown pathogen detected in subject's blood."))
+		if(C.roundstart_quirks.len)
+			message += "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span><br>"
 	if(M.getCloneLoss())
-		user.show_message("<span class = 'warning'>Subject appears to have been imperfectly cloned.</span>")
+		user.show_message("<span class='warning'>Subject appears to have been imperfectly cloned.</span>")
 	for(var/datum/disease/D in M.viruses)
 		if(!D.hidden[SCANNER])
-			user.show_message("<span class = 'warning bold'>Warning: [D.form] Detected</span>\n<span class = 'warning'>Name: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span>")
+			message += "<span class = 'warning bold'>Warning: [D.form] Detected</span>\n<span class = 'warning'>Name: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span><br>"
 	if(M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
-		user.show_message("<span class = 'notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.</span>")
+		message += "<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.</span><br>"
 	if(M.has_brain_worms())
-		user.show_message("<span class = 'warning'>Subject suffering from aberrant brain activity. Recommend further scanning.</span>")
+		message += "<span class='warning'>Subject suffering from aberrant brain activity. Recommend further scanning.</span><br>"
 	else if(M.getBrainLoss() >= 100 || istype(M, /mob/living/carbon/human) && M:brain_op_stage == 4.0)
-		user.show_message("<span class = 'warning'>Subject is brain dead.</span>")
+		message += "<span class='warning'>Subject is brain dead.</span>"
 	else if(M.getBrainLoss() >= 60)
-		user.show_message("<span class = 'warning'>Severe brain damage detected. Subject likely to have mental retardation.</span>")
+		message += "<span class='warning'>Severe brain damage detected. Subject likely to have mental retardation.</span><br>"
 	else if(M.getBrainLoss() >= 10)
-		user.show_message("<span class = 'warning'>Significant brain damage detected. Subject may have had a concussion.</span>")
+		message += "<span class='warning'>Significant brain damage detected. Subject may have had a concussion.</span><br>"
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 
@@ -164,7 +164,7 @@
 		for(var/obj/item/organ/external/BP in H.bodyparts)
 			if(BP.status & ORGAN_BROKEN)
 				if(((BP.body_zone == BP_L_ARM) || (BP.body_zone == BP_R_ARM) || (BP.body_zone == BP_L_LEG) || (BP.body_zone == BP_R_LEG)) && !(BP.status & ORGAN_SPLINTED))
-					to_chat(user, "<span class='warning'>Unsecured fracture in subject [BP.name]. Splinting recommended for transport.</span>")
+					message += "<span class='warning'>Unsecured fracture in subject [BP.name]. Splinting recommended for transport.</span><br>"
 				if(!found_broken)
 					found_broken = TRUE
 
@@ -172,12 +172,12 @@
 				found_bleed = TRUE
 
 			if(BP.has_infected_wound())
-				to_chat(user, "<span class='warning'>Infected wound detected in subject [BP.name]. Disinfection recommended.</span>")
+				message += "<span class='warning'>Infected wound detected in subject [BP.name]. Disinfection recommended.</span><br>"
 
 		if(found_bleed)
-			user.show_message("<span class='warning'>Arterial bleeding detected. Advanced scanner required for location.</span>", 1)
+			message += "<span class='warning'>Arterial bleeding detected. Advanced scanner required for location.</span><br>"
 		if(found_broken)
-			user.show_message("<span class='warning'>Bone fractures detected. Advanced scanner required for location.</span>", 1)
+			message += "<span class='warning'>Bone fractures detected. Advanced scanner required for location.</span><br>"
 
 		if(H.vessel)
 			var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
@@ -185,13 +185,14 @@
 			var/blood_type = H.dna.b_type
 			blood_percent *= 100
 			if(blood_volume <= 500 && blood_volume > 336)
-				user.show_message("<span class = 'warning bold'>Warning: Blood Level LOW: [blood_percent]% [blood_volume]cl.</span><span class = 'notice'>Type: [blood_type]</span>")
+				message += "<span class='warning bold'>Warning: Blood Level LOW: [blood_percent]% [blood_volume]cl.</span><span class='notice'>Type: [blood_type]</span><br>"
 			else if(blood_volume <= 336)
-				user.show_message("<span class = 'warning bold'>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl.</span><span class = 'notice bold'>Type: [blood_type]</span>")
+				message += "<span class='warning bold'>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl.</span><span class='notice bold'>Type: [blood_type]</span><br>"
 			else
-				user.show_message("<span class = 'notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span>")
-		user.show_message("<span class = 'notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span>")
-	src.add_fingerprint(user)
+				message += "<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span><br>"
+		message += "<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
+	add_fingerprint(user)
+	user.show_message(message)
 	return
 
 /obj/item/Destroy()
@@ -271,24 +272,24 @@
 		return
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
-		if(istype(src, /obj/item/weapon/melee/))
+		if(istype(src, /obj/item/weapon/melee))
 			if(src.w_class < 4)
 				to_chat(user, "\red \The [src] is far too small for you to pick up.")
 				return
-		else if(istype(src, /obj/item/weapon/gun/))
+		else if(istype(src, /obj/item/weapon/gun))
 			if(prob(20))
 				user.say(pick(";RAAAAAAAARGH! WEAPON!", ";HNNNNNNNNNGGGGGGH! I HATE WEAPONS!!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGUUUUUNNNNHH!", ";AAAAAAARRRGH!" ))
 			user.visible_message("\blue [user] crushes \a [src] with hands.", "\blue You crush the [src].")
 			qdel(src)
 			//user << "\red \The [src] is far too small for you to pick up."
 			return
-		else if(istype(src, /obj/item/clothing/))
+		else if(istype(src, /obj/item/clothing))
 			if(prob(20))
 				to_chat(user, "\red [pick("You are not interested in [src].", "This is nothing.", "Humans stuff...", "A cat? A scary cat...",
 				"A Captain? Let's smash his skull! I don't like Captains!",
 				"Awww! Such lovely doggy! BUT I HATE DOGGIES!!", "A woman... A lying woman! I love womans! Fuck womans...")]")
 			return
-		else if(istype(src, /obj/item/weapon/book/))
+		else if(istype(src, /obj/item/weapon/book))
 			to_chat(user, "\red A book! I LOVE BOOKS!!")
 		else if(istype(src, /obj/item/weapon/reagent_containers/food))
 			if(prob(20))
@@ -394,27 +395,8 @@
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
 			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
-				if(isturf(src.loc))
-					var/list/rejections = list()
-					var/success = 0
-					var/failure = 0
-
-					for(var/obj/item/I in src.loc)
-						if(I.type in rejections) // To limit bag spamming: any given type only complains once
-							continue
-						if(!S.can_be_inserted(I))	// Note can_be_inserted still makes noise when the answer is no
-							rejections += I.type	// therefore full bags are still a little spammy
-							failure = 1
-							continue
-						success = 1
-						S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
-					if(success && !failure)
-						to_chat(user, "<span class='notice'>You put everything in [S].</span>")
-					else if(success)
-						to_chat(user, "<span class='notice'>You put some things in [S].</span>")
-					else
-						to_chat(user, "<span class='notice'>You fail to pick anything up with [S].</span>")
-
+				if(isturf(loc))
+					S.gather_all(loc, user)
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
 	return FALSE
@@ -466,14 +448,20 @@
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
 //Set disable_warning to 1 if you wish it to not give you outputs.
 /obj/item/proc/mob_can_equip(M, slot, disable_warning = 0)
-	if(!slot) return 0
-	if(!M) return 0
+	if(!slot)
+		return FALSE
+	if(!M)
+		return FALSE
 
 	if(ishuman(M))
 		//START HUMAN
 		var/mob/living/carbon/human/H = M
 		if(!H.has_bodypart_for_slot(slot))
-			return 0
+			return FALSE
+		if(!H.specie_has_slot(slot))
+			if(!disable_warning)
+				to_chat(H, "<span class='warning'>Your species can not wear clothing of this type.</span>")
+			return FALSE
 		//fat mutation
 		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
 			if(FAT in H.mutations)
@@ -632,7 +620,7 @@
 			if(slot_in_backpack)
 				if (H.back && istype(H.back, /obj/item/weapon/storage/backpack))
 					var/obj/item/weapon/storage/backpack/B = H.back
-					if(B.contents.len < B.storage_slots && w_class <= B.max_w_class)
+					if(B.can_be_inserted(src, M, 1))
 						return 1
 				return 0
 			if(slot_tie)
@@ -757,7 +745,7 @@
 
 /obj/item/proc/get_loc_turf()
 	var/atom/L = loc
-	while(L && !istype(L, /turf/))
+	while(L && !istype(L, /turf))
 		L = L.loc
 	return loc
 
@@ -840,24 +828,22 @@
 		var/obj/item/clothing/gloves/G = src
 		G.transfer_blood = 0
 
+/obj/item/add_dirt_cover()
+	if(!blood_overlay)
+		generate_dirt_cover()
+	..()
+	if(dirt_overlay)
+		if(blood_overlay.color != dirt_overlay.color)
+			overlays.Remove(blood_overlay)
+			blood_overlay.color = dirt_overlay.color
+			overlays += blood_overlay
 
 /obj/item/add_blood(mob/living/carbon/human/M)
 	if (!..())
 		return 0
 
-	if(istype(src, /obj/item/weapon/melee/energy))
-		return
-
 	//if we haven't made our blood_overlay already
-	if( !blood_overlay )
-		generate_blood_overlay()
-
-	//apply the blood-splatter overlay if it isn't already in there
-	if(!blood_DNA.len)
-		blood_overlay.color = blood_color
-		overlays += blood_overlay
-
-	//if this blood isn't already in the list, add it
+	//add_dirt_cover(new M.species.blood_color)
 
 	if(blood_DNA[M.dna.unique_enzymes])
 		return 0 //already bloodied with this blood. Cannot add more.
@@ -865,7 +851,7 @@
 	return 1 //we applied blood to the item
 
 var/global/list/items_blood_overlay_by_type = list()
-/obj/item/proc/generate_blood_overlay()
+/obj/item/proc/generate_dirt_cover()
 	if(blood_overlay)
 		return
 

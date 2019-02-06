@@ -31,11 +31,12 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/atom_init()
 	. = ..()
-	poi_list |= src
+	poi_list += src
 	r_code = "[rand(10000, 99999.0)]"//Creates a random code upon object spawn.
 	wires = new(src)
 
 /obj/machinery/nuclearbomb/Destroy()
+	poi_list -= src
 	QDEL_NULL(wires)
 	QDEL_NULL(auth)
 	return ..()
@@ -281,7 +282,7 @@ var/bomb_set
 		if (yes_code)
 			message = "*****"
 	dat += text("<HR>\n>[]<BR>\n<A href='?src=\ref[];type=1'>1</A>-<A href='?src=\ref[];type=2'>2</A>-<A href='?src=\ref[];type=3'>3</A><BR>\n<A href='?src=\ref[];type=4'>4</A>-<A href='?src=\ref[];type=5'>5</A>-<A href='?src=\ref[];type=6'>6</A><BR>\n<A href='?src=\ref[];type=7'>7</A>-<A href='?src=\ref[];type=8'>8</A>-<A href='?src=\ref[];type=9'>9</A><BR>\n<A href='?src=\ref[];type=R'>R</A>-<A href='?src=\ref[];type=0'>0</A>-<A href='?src=\ref[];type=E'>E</A><BR>\n</TT>", message, src, src, src, src, src, src, src, src, src, src, src, src)
-	user << browse(dat, "window=nuclearbomb;size=300x400")
+	user << browse(entity_ja(dat), "window=nuclearbomb;size=300x400")
 	onclose(user, "nuclearbomb")
 
 /obj/machinery/nuclearbomb/verb/make_deployable()
@@ -527,7 +528,7 @@ var/bomb_set
 
 /obj/item/weapon/disk/nuclear/atom_init()
 	. = ..()
-	poi_list |= src
+	poi_list += src
 	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/disk/nuclear/process()

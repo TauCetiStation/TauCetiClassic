@@ -73,11 +73,7 @@
 				H.equip_to_slot_or_del(new /obj/item/device/occult_scanner(H), slot_l_store)
 				H.equip_to_slot_or_del(new /obj/item/weapon/occult_pinpointer(H), slot_r_store)
 
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
-	return 1
+	return TRUE
 
 /datum/job/assistant/get_access()
 	if(config.assistant_maint)

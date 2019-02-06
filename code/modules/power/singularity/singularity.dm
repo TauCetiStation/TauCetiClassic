@@ -6,6 +6,7 @@
 	anchored = 1
 	density = 1
 	layer = 6
+	appearance_flags = 0
 	//light_range = 6
 	unacidable = 1 //Don't comment this out.
 	var/current_size = 1
@@ -33,7 +34,7 @@
 		QDEL_IN(src, temp)
 	..()
 	START_PROCESSING(SSobj, src)
-	poi_list |= src
+	poi_list += src
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/singularity/atom_init_late()
@@ -44,7 +45,7 @@
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	poi_list.Remove(src)
+	poi_list -= src
 	return ..()
 
 /obj/singularity/attack_hand(mob/user)

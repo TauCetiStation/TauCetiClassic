@@ -7,15 +7,16 @@
 	flags = OPENCONTAINER | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 3
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 2
 	throw_range = 10
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10) //Set to null instead of list, if there is only one.
 	var/spray_size = 3
-	var/list/spray_sizes = list(1,3)
+	var/list/spray_sizes = list(1,3) // When building this list, take into considiration what's written above.
 	volume = 250
-	var/safety = 0
+	var/safety = FALSE
+	var/triple_shot = FALSE
 
 	action_button_name = "Switch Spray"
 
@@ -34,7 +35,7 @@
 
 	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
 		if(!A.reagents.total_volume && A.reagents)
-			to_chat(user, "<span class='notice'>\The [A] is empty.</span>")
+			to_chat(user, "<span class='notice'>[A] does not have enough liquids.</span>")
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
@@ -53,8 +54,6 @@
 		to_chat(usr, "<span class = 'warning'>The safety is on!</span>")
 		return
 
-	Spray_at(A)
-
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 
 	if(reagents.has_reagent("sacid"))
@@ -66,32 +65,42 @@
 	if(reagents.has_reagent("lube"))
 		message_admins("[key_name_admin(user)] fired Space lube from \a [src]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 		log_game("[key_name(user)] fired Space lube from \a [src].")
-	return
+
+	user.SetNextMove(CLICK_CD_INTERACT * 2)
+
+	var/turf/T = get_turf(A) // BS12 edit, with the wall spraying.
+
+	if(triple_shot && reagents.total_volume >= amount_per_transfer_from_this * 3) // If it doesn't have triple the amount of reagents, but it passed the previous check, make it shoot just one tiny spray.
+		var/direction = get_dir(src, A)
+		var/turf/T1 = get_step(T, turn(direction, 90))
+		var/turf/T2 = get_step(T, turn(direction, -90))
+
+		INVOKE_ASYNC(src, .proc/Spray_at, T)
+		INVOKE_ASYNC(src, .proc/Spray_at, T1)
+		INVOKE_ASYNC(src, .proc/Spray_at, T2)
+	else
+		INVOKE_ASYNC(src, .proc/Spray_at, T)
 
 /obj/item/weapon/reagent_containers/spray/proc/Spray_at(atom/A)
+	var/spray_size_current = spray_size // This ensures, that a player doesn't switch to another mode mid-fly.
 	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(src))
 	D.create_reagents(amount_per_transfer_from_this)
 	reagents.trans_to(D, amount_per_transfer_from_this, 1/spray_size)
 	D.icon += mix_color_from_reagents(D.reagents.reagent_list)
 
-	var/turf/A_turf = get_turf(A)//BS12
+	for(var/i in 1 to spray_size_current)
+		step_towards(D, A)
+		D.reagents.reaction(get_turf(D))
+		for(var/atom/T in get_turf(D))
+			D.reagents.reaction(T)
 
-	spawn(0)
-		for(var/i=0, i<spray_size, i++)
-			step_towards(D,A)
-			D.reagents.reaction(get_turf(D))
-			for(var/atom/T in get_turf(D))
-				D.reagents.reaction(T)
-
-				// When spraying against the wall, also react with the wall, but
-				// not its contents. BS12
-				if(get_dist(D, A_turf) == 1 && A_turf.density)
-					D.reagents.reaction(A_turf)
-				sleep(2)
-			sleep(3)
-		qdel(D)
-
-	return
+			// When spraying against the wall, also react with the wall, but
+			// not its contents. BS12
+			if(get_dist(D, A) == 1 && A.density)
+				D.reagents.reaction(A)
+			sleep(2)
+		sleep(3)
+	qdel(D)
 
 /obj/item/weapon/reagent_containers/spray/attack_self(mob/user)
 	if(!possible_transfer_amounts)
@@ -112,7 +121,187 @@
 	if(isturf(usr.loc))
 		to_chat(usr, "<span class='notice'>You empty \the [src] onto the floor.</span>")
 		reagents.reaction(usr.loc)
-		spawn(5) src.reagents.clear_reagents()
+		sleep(5)
+		reagents.clear_reagents()
+//hair dyes!
+/obj/item/weapon/reagent_containers/spray/hair_color_spray
+	name = "hair color spray"
+	desc = "Changes hair colour! Don't forget to read the label!"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "hairspray"
+	item_state = "hairspray"
+	amount_per_transfer_from_this = 1
+	possible_transfer_amounts = list(1,5,10)
+	spray_size = 1
+	spray_sizes = list(1)
+
+/obj/item/weapon/reagent_containers/spray/hair_color_spray/atom_init()
+	. = ..()
+	name = "white hair color spray"
+	icon_state = "hairspraywhite"
+
+/obj/item/weapon/reagent_containers/spray/hair_color_spray/verb/change_label()
+	set name = "Change Label"
+	set category = "Object"
+	set src in usr
+
+	var/colour_spray = input(usr, "Choose desired label colour") as null|anything in list("white", "red", "green", "blue", "black", "brown", "blond")
+	if(colour_spray)
+		name = "[colour_spray] [initial(name)]"
+		icon_state = "[initial(icon_state)][colour_spray]"
+	else
+		name = "white hair color spray"
+		icon_state = "hairspraywhite"
+	update_icon()
+
+//thurible
+/obj/item/weapon/reagent_containers/spray/thurible
+	name = "thurible"
+	desc = "Is used to burn incense. Or heretics. Both? Both is good."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "thurible"
+	item_state = "thurible"
+	amount_per_transfer_from_this = 1
+	possible_transfer_amounts = list(1, 5, 10)
+	spray_size = 1
+	spray_sizes = list(1)
+	volume = 100
+	var/lit = FALSE
+	var/temperature = 0 // At 100, it all evaporates. Yes, even the dense metals. The name doesn't actually imply that this item's temperature is changing.
+	var/fuel = 300
+	safety = TRUE
+
+/obj/item/weapon/reagent_containers/spray/thurible/examine(mob/user)
+	..()
+	if(src in view(1, user))
+		var/temp_sight
+		var/is_fueled
+		switch(temperature)
+			if(-INFINITY to 0)
+				temp_sight = "blue"
+			if(0 to 30)
+				temp_sight = "normal"
+			if(30 to 60)
+				temp_sight = "yellow"
+			if(60 to 90)
+				temp_sight = "orange"
+			if(90 to INFINITY)
+				temp_sight = "<span class='warning'>boiling red</span>"
+		switch(fuel)
+			if(0)
+				is_fueled = "not fueled at all"
+			if(1 to 75)
+				is_fueled = "almost not fueled"
+			if(75 to 150)
+				is_fueled = "slightly fueled"
+			if(150 to 225)
+				is_fueled = "evenly fueled"
+			if(225 to 299)
+				is_fueled = "almost fueled"
+			if(300 to INFINITY)
+				is_fueled = "fully fueled"
+		to_chat(user, "The cap is [safety ? "on" : "off"]. The thurbile's surface is [temp_sight]. The canister in [src] is [is_fueled].")
+
+/obj/item/weapon/reagent_containers/spray/thurible/proc/light(mob/user, action_string = "lights up")
+	if(!lit)
+		icon_state = "thurible_lit"
+		update_icon()
+		lit = TRUE
+		user.visible_message("<span class='notice'>[user] [action_string] \the [src].</span>", "<span class='notice'>You light up \the [src].</span>")
+
+/obj/item/weapon/reagent_containers/spray/thurible/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/reagent_containers/spray/thurible/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/weapon/reagent_containers/spray/thurible/process()
+	if(lit && safety)
+		if(temperature >= 100)
+			var/datum/reagents/evaporate = new /datum/reagents
+			evaporate.my_atom = src // Important for fingerprint tracking, and etc.
+			var/evaporated_volume = 0
+			for(var/datum/reagent/A in reagents.reagent_list)
+				var/reagent_volume = min(A.volume/reagents.reagent_list.len, amount_per_transfer_from_this/reagents.reagent_list.len)
+				reagents.remove_reagent(A.id, reagent_volume) // Basically, we want the thurible to evaporate only amount_per_transfer_from_this cube of reagents total.
+				evaporated_volume += reagent_volume/2 // To prevent giant gaseous clouds, we divide the actual volume.
+				evaporate.add_reagent(A.id, reagent_volume, A.data, TRUE) // Safety(no reactions) should be TRUE, since "evaporate" is abstract, and not attached to any objects.
+			if(evaporate.reagent_list.len)
+				var/location = get_turf(src)
+				var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
+				S.attach(location)
+				S.set_up(evaporate, evaporated_volume, 0, location)
+				playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+				S.start()
+				temperature -= rand(evaporated_volume*3,evaporated_volume*6) // Release the "hot" gas, and chill.
+		fuel = max(fuel - 1, 0)
+		if(fuel == 0)
+			temperature = max(0, temperature - 1)
+		else
+			temperature = min(100, temperature+1)
+		if(temperature <=0)
+			visible_message("<span class='notice'>The fire in [src] just went out.</span>")
+			lit = FALSE
+			icon_state = "thurible"
+			update_icon()
+	else if(!lit)
+		if(temperature >= 0)
+			temperature = max(0, temperature - 1)
+		if(!safety)
+			for(var/datum/reagent/A in reagents.reagent_list)
+				if(!istype(A, /datum/reagent/toxin/phoron) && !istype(A, /datum/reagent/fuel))
+					continue
+				else
+					fuel += min(round(A.volume*3), 3) // Basically, 1 point of fuel reagent is 3 fuel points of thurible. 100 - is max fuel.
+					reagents.remove_reagent(A.id, min(A.volume, 1))
+
+/obj/item/weapon/reagent_containers/spray/thurible/attackby(obj/item/weapon/W, mob/user)
+	..()
+	if(!lit && safety) // You can't lit the fuel when the cap's off, cause then it wouldn't start to burn.
+		if(istype(W, /obj/item/weapon/weldingtool))
+			var/obj/item/weapon/weldingtool/WT = W
+			if(WT.isOn())
+				light(user, "casually lights")
+		else if(istype(W, /obj/item/weapon/lighter))
+			var/obj/item/weapon/lighter/L = W
+			if(L.lit)
+				light(user)
+		else if(istype(W, /obj/item/weapon/match))
+			var/obj/item/weapon/match/M = W
+			if(M.lit)
+				light(user)
+		else if(istype(W, /obj/item/candle))
+			var/obj/item/candle/C = W
+			if(C.lit)
+				light(user)
+	else if(!safety)
+		to_chat(user, "<span class='notice'>Put the cap back on.</span>")
+
+/obj/item/weapon/reagent_containers/spray/thurible/attack_self(mob/user)
+	if(lit) // You can't switch the spray mode, if the thing's burning.
+		user.visible_message("<span class='notice'>[user] extinguishes \the [src].</span>", "<span class='notice'>You extinguish \the [src].</span>")
+		lit = FALSE
+		icon_state = "thurible"
+		update_icon()
+	else
+		safety = !safety
+		to_chat(user, "<span class='notice'>You [safety ? "put on" : "take off"] the cap of [src].</span>")
+
+/obj/item/weapon/reagent_containers/spray/thurible/verb/switch_spray_size()
+	set name = "Adjust Nozzle"
+	set category = "Object"
+	set src in usr
+
+	if(!lit && !safety)
+		amount_per_transfer_from_this = next_in_list(amount_per_transfer_from_this, possible_transfer_amounts)
+		spray_size = next_in_list(spray_size, spray_sizes)
+		to_chat(usr, "<span class='notice'>You adjusted the pressure nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>")
+	else if(lit)
+		to_chat(usr, "<span class='notice'>The nozzle is too hot to the touch.</span>")
+	else if(safety)
+		to_chat(usr, "<span class='notice'>Take the cap off first.</span>")
 
 //space cleaner
 /obj/item/weapon/reagent_containers/spray/cleaner
@@ -153,9 +342,6 @@
 	safety = !safety
 	to_chat(usr, "<span class = 'notice'>You switch the safety [safety ? "on" : "off"].</span>")
 
-/obj/item/weapon/reagent_containers/spray/pepper/Spray_at(atom/A)
-	..()
-
 //water flower
 /obj/item/weapon/reagent_containers/spray/waterflower
 	name = "water flower"
@@ -183,45 +369,9 @@
 	possible_transfer_amounts = null
 	volume = 600
 	origin_tech = "combat=3;materials=3;engineering=3"
-
-
-//this is a big copypasta clusterfuck, but it's still better than it used to be!
-/obj/item/weapon/reagent_containers/spray/chemsprayer/Spray_at(atom/A)
-	var/Sprays[3]
-	for(var/i=1, i<=3, i++) // intialize sprays
-		if(src.reagents.total_volume < 1) break
-		var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(src))
-		D.create_reagents(amount_per_transfer_from_this)
-		src.reagents.trans_to(D, amount_per_transfer_from_this)
-
-		D.icon += mix_color_from_reagents(D.reagents.reagent_list)
-
-		Sprays[i] = D
-
-	var/direction = get_dir(src, A)
-	var/turf/T = get_turf(A)
-	var/turf/T1 = get_step(T,turn(direction, 90))
-	var/turf/T2 = get_step(T,turn(direction, -90))
-	var/list/the_targets = list(T,T1,T2)
-
-	for(var/i=1, i<=Sprays.len, i++)
-		spawn()
-			var/obj/effect/decal/chempuff/D = Sprays[i]
-			if(!D) continue
-
-			// Spreads the sprays a little bit
-			var/turf/my_target = pick(the_targets)
-			the_targets -= my_target
-
-			for(var/j=1, j<=rand(6,8), j++)
-				step_towards(D, my_target)
-				D.reagents.reaction(get_turf(D))
-				for(var/atom/t in get_turf(D))
-					D.reagents.reaction(t)
-				sleep(2)
-			qdel(D)
-
-	return
+	triple_shot = TRUE
+	spray_size = 7
+	spray_sizes = list(7)
 
 // Plant-B-Gone
 /obj/item/weapon/reagent_containers/spray/plantbgone // -- Skie

@@ -78,7 +78,7 @@
 
 /obj/machinery/bot/mulebot/atom_init_late()
 	var/count = 0
-	for(var/obj/machinery/bot/mulebot/other in machines)
+	for(var/obj/machinery/bot/mulebot/other in bots_list)
 		count++
 	if(!suffix)
 		suffix = "#[count]"
@@ -227,7 +227,7 @@
 		else
 			dat += "The bot is in maintenance mode and cannot be controlled.<BR>"
 
-	user << browse("<HEAD><TITLE>Mulebot [suffix ? "([suffix])" : ""]</TITLE></HEAD>[dat]", "window=mulebot;size=350x500")
+	user << browse("<HEAD><TITLE>Mulebot [suffix ? "([suffix])" : ""]</TITLE></HEAD>[entity_ja(dat)]", "window=mulebot;size=350x500")
 	onclose(user, "mulebot")
 
 /obj/machinery/bot/mulebot/Topic(href, href_list)
@@ -289,7 +289,7 @@
 
 		if("destination")
 			refresh=0
-			var/new_dest = input("Enter new destination tag", "Mulebot [suffix ? "([suffix])" : ""]", destination) as text|null
+			var/new_dest = sanitize_safe(input("Enter new destination tag", "Mulebot [suffix ? "([suffix])" : ""]", input_default(destination)) as text|null, MAX_LNAME_LEN)
 			refresh=1
 			if(new_dest)
 				set_destination(new_dest)
@@ -297,7 +297,7 @@
 
 		if("setid")
 			refresh=0
-			var/new_id = sanitize(copytext(input("Enter new bot ID", "Mulebot [suffix ? "([suffix])" : ""]", suffix) as text|null,1,MAX_NAME_LEN))
+			var/new_id = sanitize_safe(input("Enter new bot ID", "Mulebot [suffix ? "([suffix])" : ""]", input_default(suffix)) as text|null, MAX_LNAME_LEN)
 			refresh=1
 			if(new_id)
 				suffix = new_id
@@ -305,7 +305,7 @@
 
 		if("sethome")
 			refresh=0
-			var/new_home = input("Enter new home tag", "Mulebot [suffix ? "([suffix])" : ""]", home_destination) as text|null
+			var/new_home = sanitize_safe(input("Enter new home tag", "Mulebot [suffix ? "([suffix])" : ""]", input_default(home_destination)) as text|null, MAX_LNAME_LEN)
 			refresh=1
 			if(new_home)
 				home_destination = new_home

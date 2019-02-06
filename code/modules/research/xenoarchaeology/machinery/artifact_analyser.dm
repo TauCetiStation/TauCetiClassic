@@ -2,16 +2,16 @@
 /obj/machinery/artifact_analyser
 	name = "Anomaly Analyser"
 	desc = "Studies the emissions of anomalous materials to discover their uses."
-	icon = 'icons/obj/virology.dmi'
-	icon_state = "isolator"
+	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon_state = "xenoarch_console"
 	anchored = 1
-	density = 1
+	density = 0
 	var/scan_in_progress = 0
 	var/scan_num = 0
 	var/obj/scanned_obj
 	var/obj/machinery/artifact_scanpad/owned_scanner = null
 	var/scan_completion_time = 0
-	var/scan_duration = 120
+	var/scan_duration = 100
 	var/obj/scanned_object
 	var/report_num = 0
 
@@ -72,7 +72,7 @@
 			results = "Unable to locate scanned object. Ensure it was not moved in the process."
 		else
 			results = get_scan_info(scanned_object)
-
+		owned_scanner.icon_state = "xenoarch_scanner"
 		src.visible_message("<b>[name]</b> states, \"Scanning complete.\"")
 		var/obj/item/weapon/paper/P = new(src.loc)
 		P.name = "[src] report #[++report_num]"
@@ -85,7 +85,6 @@
 
 		if(scanned_object && istype(scanned_object, /obj/machinery/artifact))
 			var/obj/machinery/artifact/A = scanned_object
-			A.anchored = 0
 			A.being_used = 0
 
 /obj/machinery/artifact_analyser/Topic(href, href_list)
@@ -113,7 +112,6 @@
 					if(A.being_used)
 						artifact_in_use = 1
 					else
-						A.anchored = 1
 						A.being_used = 1
 
 				if(artifact_in_use)
@@ -123,10 +121,13 @@
 					scan_in_progress = 1
 					scan_completion_time = world.time + scan_duration
 					src.visible_message("<b>[name]</b> states, \"Scanning begun.\"")
+					owned_scanner.icon_state = "xenoarch_scanner_scanning"
+					flick("xenoarch_console_working", src)
 				break
 			if(!scanned_object)
 				src.visible_message("<b>[name]</b> states, \"Unable to isolate scan target.\"")
 	if(href_list["halt_scan"])
+		owned_scanner.icon_state = "xenoarch_scanner"
 		scan_in_progress = 0
 		src.visible_message("<b>[name]</b> states, \"Scanning halted.\"")
 
@@ -159,8 +160,9 @@
 		if(/obj/machinery/replicator)
 			return "Automated construction unit - Item appears to be able to synthesize synthetic items, some with simple internal circuitry. Method unknown, \
 			phasing suggested?"
-		if(/obj/structure/crystal)
-			return "Crystal formation - Pseudo organic crystalline matrix, unlikely to have formed naturally. No known technology exists to synthesize this exact composition."
+		if(/obj/machinery/power/crystal)
+			return "Crystal formation - Pseudo organic crystalline matrix, unlikely to have formed naturally. No known technology exists to synthesize this exact composition. \
+			Attention: energetic excitement is noticed. The appearance of current is possible. Connect the crystal to the network, using wrench and wires on it."
 		if(/obj/machinery/artifact)
 			//the fun one
 			var/obj/machinery/artifact/A = scanned_obj

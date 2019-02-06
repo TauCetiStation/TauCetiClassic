@@ -33,7 +33,7 @@ var/global/list/frozen_items = list()
 	dat += "<a href='?src=\ref[src];allitems=1'>Recover all objects</a>.<br>"
 	dat += "<a href='?src=\ref[src];crew=1'>Revive crew</a>.<br/><hr/>"
 
-	user << browse(dat, "window=cryopod_console")
+	user << browse(entity_ja(dat), "window=cryopod_console")
 	onclose(user, "cryopod_console")
 
 /obj/machinery/computer/cryopod/Topic(href, href_list)
@@ -50,7 +50,7 @@ var/global/list/frozen_items = list()
 			dat += "[person]<br/>"
 		dat += "<hr/>"
 
-		user << browse(dat, "window=cryolog")
+		user << browse(entity_ja(dat), "window=cryolog")
 
 	else if(href_list["item"])
 
@@ -143,7 +143,7 @@ var/global/list/frozen_items = list()
 		/obj/item/clothing/suit,
 		/obj/item/clothing/shoes/magboots,
 		/obj/item/blueprints,
-		/obj/item/clothing/head/helmet/space/
+		/obj/item/clothing/head/helmet/space
 	)
 
 /obj/machinery/cryopod/right
@@ -298,29 +298,29 @@ var/global/list/frozen_items = list()
 			if(do_after(user, 20, target = src))
 				if(!M || !grab || !grab.affecting)
 					return
-
-				M.loc = src
-
-				if(M.client)
-					M.client.perspective = EYE_PERSPECTIVE
-					M.client.eye = src
-
-				if(orient_right)
-					icon_state = "cryosleeper_right_cl"
-				else
-					icon_state = "cryosleeper_left_cl"
-
-				to_chat(M, "<span class='notice'>You feel cool air surround you. You go numb as your senses turn inward.</span>")
-				to_chat(M, "<span class='notice'><b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b></span>")
-				occupant = M
-				time_entered = world.time
-
+				insert(M)
 				// Book keeping!
 				log_admin("[key_name_admin(M)] has entered a stasis pod.")
 				message_admins("\blue [key_name_admin(M)] has entered a stasis pod.")
 
 				//Despawning occurs when process() is called with an occupant without a client.
 				add_fingerprint(M)
+
+/obj/machinery/cryopod/proc/insert(mob/M)
+	M.forceMove(src)
+	icon_state = "cryosleeper_[orient_right ? "right" : "left"]_cl"
+	to_chat(M, "<span class='notice'>You feel cool air surround you. You go numb as your senses turn inward.</span>")
+	to_chat(M, "<span class='notice'><b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b></span>")
+	occupant = M
+	time_entered = world.time
+	set_med_status("*SSD*")
+
+/obj/machinery/cryopod/proc/set_med_status(mes)
+	for(var/datum/data/record/R in data_core.general)
+		if(R.fields["name"] == occupant.real_name)
+			R.fields["p_stat"] = mes
+			PDA_Manifest.Cut()
+			break
 
 /obj/machinery/cryopod/verb/eject()
 	set name = "Eject Pod"
@@ -336,12 +336,6 @@ var/global/list/frozen_items = list()
 		  !allowed(usr))
 		to_chat(usr, "<span class='red'>You can't eject person from [src], since the preservation procedure has already begun</span>")
 		return
-
-	if(orient_right)
-		icon_state = "cryosleeper_right"
-	else
-		icon_state = "cryosleeper_left"
-
 	go_out()
 	add_fingerprint(usr)
 
@@ -362,47 +356,21 @@ var/global/list/frozen_items = list()
 		if(M.Victim == usr)
 			to_chat(usr, "You're too busy getting your life sucked out of you.")
 			return
-	if(usr.is_busy()) return
+	if(usr.is_busy())
+		return
 	visible_message("[usr] starts climbing into the cryo pod.", 3)
-
 	if(do_after(usr, 20, target = src))
-		if(!usr || !usr.client)
-			return
-
 		if(occupant)
 			to_chat(usr, "<span class='notice'><B>The cryo pod is in use.</B></span>")
 			return
-
-		usr.stop_pulling()
-		usr.client.perspective = EYE_PERSPECTIVE
-		usr.client.eye = src
-		usr.loc = src
-		occupant = usr
-
-		if(orient_right)
-			icon_state = "cryosleeper_right_cl"
-		else
-			icon_state = "cryosleeper_left_cl"
-
-		to_chat(usr, "<span class='notice'>You feel cool air surround you. You go numb as your senses turn inward.</span>")
-		to_chat(usr, "<span class='notice'><b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b></span>")
-		occupant = usr
-		time_entered = world.time
-
+		insert(usr)
 		add_fingerprint(usr)
 
 /obj/machinery/cryopod/proc/go_out()
-	if(occupant.client)
-		occupant.client.eye = occupant.client.mob
-		occupant.client.perspective = MOB_PERSPECTIVE
-
-	occupant.loc = get_turf(src)
+	occupant.forceMove(get_turf(src))
+	set_med_status("Active")
 	occupant = null
-
-	if(orient_right)
-		icon_state = "cryosleeper_right"
-	else
-		icon_state = "cryosleeper_left"
+	icon_state = "cryosleeper_[orient_right ? "right" : "left"]"
 
 
 //Attacks/effects.

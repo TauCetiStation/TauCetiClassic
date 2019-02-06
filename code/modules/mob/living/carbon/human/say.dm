@@ -13,7 +13,7 @@
 		to_chat(usr, "<span class='userdange'>You can't speak.</span>")
 		return
 
-	message =  trim(sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN)))
+	message =  sanitize(message)
 
 	if(stat == DEAD)
 		if(fake_death) //Our changeling with fake_death status must not speak in dead chat!!
@@ -56,23 +56,21 @@
 			if(ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
 				var/sm = sanitize(message)
-				for(var/mob/living/carbon/human/H in mob_list)
+				for(var/mob/living/carbon/human/H in human_list)
 					if(H.species.name != ABDUCTOR)
 						continue
-					else
-						if(user.team != H.team)
-							continue
-						else
-							to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
-							//return - technically you can add more aliens to a team
-				for(var/mob/M in dead_mob_list)
+					if(user.team != H.team)
+						continue
+					to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
+					//return - technically you can add more aliens to a team
+				for(var/mob/M in observer_list)
 					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
-					if(!isobserver(M) && (M.stat != DEAD))
-						to_chat(M, "<hr><span class='warning'>≈сли вы видите это сообщение, значит что-то сломалось. ѕожалуйста, свяжитесь со мной <b>SpaiR</b> на форуме (http://tauceti.ru/forums/index.php?action=profile;u=1929) или попросите кого-нибудь меня позвать. ѕожалуйста, <u>запомните</u> что произошло в раунде, эта информация очень <b>важна</b>. „тобы сообщение исчезло попросите админа достать вас из тела и поместить обратно или сами уйдите в обсерверы.</span><hr>")
 				log_say("Abductor: [name]/[key] : [sm]")
 				return ""
 
 	message = capitalize(trim(message))
+	if(iszombie(src))
+		message = zombie_talk(message)
 
 	var/ending = copytext(message, length(message))
 	if (speaking)
@@ -143,11 +141,12 @@
 			return
 		if("binary")
 			if(robot_talk_understand || binarycheck())
-				robot_talk(sanitize_plus_chat(message))
+				robot_talk(message)
 			return
 		if("changeling")
 			if(mind && mind.changeling)
-				var/n_message = sanitize_plus_chat(message)
+				var/n_message = message
+				log_say("Changeling Mind: [mind.changeling.changelingID]/[mind.name]/[key] : [n_message]")
 				for(var/mob/Changeling in mob_list)
 					if(Changeling.mind && Changeling.mind.changeling)
 						to_chat(Changeling, "<span class='changeling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
@@ -159,13 +158,18 @@
 			return
 		if("alientalk")
 			if(mind && mind.changeling)
-				var/n_message = sanitize_plus_chat(message)
+				var/n_message = message
 				for(var/M in mind.changeling.essences)
 					to_chat(M, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
-				for(var/datum/orbit/O in orbiters)
-					to_chat(O.orbiter, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
+
+				for(var/mob/M in observer_list)
+					if(!M.client)
+						continue //skip monkeys, leavers and new players
+					if(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
+						to_chat(M, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
+
 				to_chat(src, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
-				log_say("Changeling Mind: [mind.name]/[key] : [n_message]")
+				log_say("Changeling Mind: [mind.changeling.changelingID]/[mind.name]/[key] : [n_message]")
 			return
 		else
 			if(message_mode)
@@ -183,7 +187,7 @@
 		speech_sound = sound('sound/voice/shriek1.ogg')
 		sound_vol = 50
 
-	..(message, speaking, verb, alt_name, italics, message_range, used_radios, speech_sound, sound_vol, sanitize = 0)	//ohgod we should really be passing a datum here.
+	..(message, speaking, verb, alt_name, italics, message_range, used_radios, speech_sound, sound_vol, sanitize = FALSE, message_mode = message_mode)	//ohgod we should really be passing a datum here.
 
 /mob/living/carbon/human/say_understands(mob/other,datum/language/speaking = null)
 
@@ -267,7 +271,7 @@
 		handled = 1
 
 	if((HULK in mutations) && health >= 25 && length(message))
-		message = "[uppertext_plus(message)]!!!"
+		message = "[uppertext_(message)]!!!"
 		verb = pick("yells","roars","hollers")
 		handled = 1
 	if(slurring)
@@ -286,7 +290,7 @@
 			message = stutter(message)
 			verb = pick("stammers", "stutters")
 		if(prob(braindam))
-			message = uppertext_plus(message)
+			message = uppertext_(message)
 			verb = pick("yells like an idiot","says rather loudly")
 
 	returns[1] = message

@@ -4,6 +4,7 @@
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "utilitybelt"
 	item_state = "utility"
+	storage_slots = 7
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 	use_to_pickup = TRUE
@@ -70,7 +71,9 @@
 		"/obj/item/clothing/mask/surgical",
 		"/obj/item/clothing/gloves/latex",
 	    "/obj/item/weapon/reagent_containers/hypospray",
-	    "/obj/item/device/sensor_device"
+	    "/obj/item/device/sensor_device",
+	    "/obj/item/device/mass_spectrometer",
+	    "/obj/item/device/reagent_scanner"
 	    )
 /obj/item/weapon/storage/belt/medical/surg
 	name = "Surgery belt"
@@ -79,7 +82,6 @@
 	item_state = "medical"
 	storage_slots = 9
 	max_w_class = 3
-	max_combined_w_class = 21
 	can_hold = list(
 		"/obj/item/device/healthanalyzer",
 		"/obj/item/weapon/reagent_containers/glass/beaker",
@@ -122,7 +124,6 @@
 	item_state = "security"//Could likely use a better one.
 	storage_slots = 7
 	max_w_class = 3
-	max_combined_w_class = 21
 	can_hold = list(
 		"/obj/item/weapon/grenade/flashbang",
 		"/obj/item/weapon/reagent_containers/spray/pepper",
@@ -179,7 +180,6 @@
 	item_state = "swatbelt"
 	storage_slots = 9
 	max_w_class = 3
-	max_combined_w_class = 21
 	can_hold = list(
 		"/obj/item/weapon/grenade/flashbang",
 		"/obj/item/weapon/reagent_containers/spray/pepper",

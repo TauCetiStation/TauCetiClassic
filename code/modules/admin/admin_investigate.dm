@@ -20,7 +20,7 @@
 	var/F = investigate_subject2file(subject)
 	if(!F)
 		return
-	F << "<small>[time2text(world.timeofday,"hh:mm")] \ref[src] ([x],[y],[z])</small> || [src] [message]<br>"
+	F << "<small>[time2text(world.timeofday,"hh:mm")] \ref[src] ([x],[y],[z])</small> || [src] [entity_ja(message)]<br>"
 
 //ADMINVERBS
 /client/proc/investigate_show( subject in list("hrefs","notes","singulo","telesci","atmos") )
@@ -34,12 +34,12 @@
 			if(!F)
 				to_chat(src, "<font color='red'>Error: admin_investigate: [INVESTIGATE_DIR][subject] is an invalid path or cannot be accessed.</font>")
 				return
-			src << browse(F,"window=investigate[subject];size=800x300")
+			src << browse(entity_ja(file2text(F)),"window=investigate[subject];size=800x300")
 
 		if("hrefs")				//persistant logs and stuff
 			if(config && config.log_hrefs)
 				if(href_logfile)
-					src << browse(href_logfile,"window=investigate[subject];size=800x300")
+					src << browse(entity_ja(file2text(href_logfile)),"window=investigate[subject];size=800x300")
 				else
 					to_chat(src, "<font color='red'>Error: admin_investigate: No href logfile found.</font>")
 					return

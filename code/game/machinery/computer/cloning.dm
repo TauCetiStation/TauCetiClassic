@@ -195,7 +195,7 @@
 			dat += "<b><a href='byond://?src=\ref[src];menu=3'>No</a></b>"
 
 
-	user << browse(dat, "window=cloning")
+	user << browse(entity_ja(dat), "window=cloning")
 	onclose(user, "cloning")
 	return
 
@@ -377,6 +377,11 @@
 	R.name=R.dna.real_name
 	R.types=DNA2_BUF_UI|DNA2_BUF_UE|DNA2_BUF_SE
 	R.languages=subject.languages
+
+	R.quirks = list()
+	for(var/V in subject.roundstart_quirks)
+		var/datum/quirk/T = V
+		R.quirks += T.type
 
 	//Add an implant if needed
 	var/obj/item/weapon/implant/health/imp = locate(/obj/item/weapon/implant/health, subject)

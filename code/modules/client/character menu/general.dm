@@ -11,11 +11,6 @@
 	. += 						"<a href='?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a>"
 	. += 						"<br>(<a href='?_src_=prefs;preference=name;task=random'>Random Name</a>)"
 	. += 						"(<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a>)"
-	. += 						"<table width='100%' cellpadding='1' cellspacing='0'>"
-	. += 							"<td background='dossier_photos.png' style='background-repeat: no-repeat'>"
-	. += 							"<img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]>"
-	. += 							"</td>"
-	. += 						"</table>"
 	. += 						"<b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a>"
 	. += 						"<br><b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>"
 	. += 						"<br><b>Randomized Character Slot:</b> <a href='?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a>"
@@ -32,7 +27,6 @@
 	. += 						"[submenu_type=="body"?"<b>Body</b>":"<a href=\"byond://?src=\ref[user];preference=body\">Body</a>"] - "
 	. += 						"[submenu_type=="organs"?"<b>Organs</b>":"<a href=\"byond://?src=\ref[user];preference=organs\">Organs</a>"] - "
 	. += 						"[submenu_type=="appearance"?"<b>Appearance</b>":"<a href=\"byond://?src=\ref[user];preference=appearance\">Appearance</a>"] - "
-	. += 						"[submenu_type=="disabil_menu"?"<b>Disabilities</b>":"<a href=\"byond://?src=\ref[user];preference=disabil_menu\">Disabilities</a>"] - "
 	. += 						"[submenu_type=="gear"?"<b>Gear</b>":"<a href=\"byond://?src=\ref[user];preference=gear\">Gear</a>"]"
 	. += 						"</center>"
 	. += 						"<br>"
@@ -109,17 +103,6 @@
 			. += "<b>Body Color</b>"
 			. += "<br><a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin)]'><tr><td width='20' height='15'></td></tr></table></font>"
 
-		//Adjustment
-		if("disabil_menu")
-			. += "<b>Disabilities:</b>"
-			. += "<br>"
-			. += ShowDisabilityState(user,DISABILITY_NEARSIGHTED,"Needs Glasses")
-			. += ShowDisabilityState(user,DISABILITY_COUGHING,"Coughing")
-			. += ShowDisabilityState(user,DISABILITY_EPILEPTIC,"Seizures")
-			. += ShowDisabilityState(user,DISABILITY_TOURETTES,"Twitching")
-			. += ShowDisabilityState(user,DISABILITY_NERVOUS,"Nervousness")
-			. += ShowDisabilityState(user, DISABILITY_FATNESS, "Fatness")
-
 		//Gear
 		if("gear")
 			. += "<b>Gear:</b><br>"
@@ -159,16 +142,16 @@
 	else
 		. += 					"<br><b>Records:</b>"
 		. += 					"<br>Medical Records:"
-		. += 					" <a href=\"byond://?src=\ref[user];preference=records;task=med_record\">[length(med_record)>0?"[sanitize_popup(copytext(med_record, 1, 3))]...":"\[...\]"]</a>"
+		. += 					" <a href=\"byond://?src=\ref[user];preference=records;task=med_record\">[length(med_record)>0?"[copytext(med_record, 1, 3)]...":"\[...\]"]</a>"
 		. += 					"<br>Security Records:"
-		. += 					" <a href=\"byond://?src=\ref[user];preference=records;task=sec_record\">[length(sec_record)>0?"[sanitize_popup(copytext(sec_record, 1, 3))]...":"\[...\]"]</a>"
+		. += 					" <a href=\"byond://?src=\ref[user];preference=records;task=sec_record\">[length(sec_record)>0?"[copytext(sec_record, 1, 3)]...":"\[...\]"]</a>"
 		. += 					"<br>Employment Records:"
-		. += 					" <a href=\"byond://?src=\ref[user];preference=records;task=gen_record\">[length(gen_record)>0?"[sanitize_popup(copytext(gen_record, 1, 3))]...":"\[...\]"]</a>"
+		. += 					" <a href=\"byond://?src=\ref[user];preference=records;task=gen_record\">[length(gen_record)>0?"[copytext(gen_record, 1, 3)]...":"\[...\]"]</a>"
 
 	. += 						"<br><br>"
 
 	. += 						"<b>Flavor:</b>"
-	. += 						" <a href='byond://?src=\ref[user];preference=flavor_text;task=input'>[length(flavor_text)>0?"[sanitize_popup(copytext(flavor_text, 1, 3))]...":"\[...\]"]</a>"
+	. += 						" <a href='byond://?src=\ref[user];preference=flavor_text;task=input'>[length(flavor_text)>0?"[copytext(flavor_text, 1, 3)]...":"\[...\]"]</a>"
 	. += 					"</td>"
 	. += 				"</tr>"
 	. += 			"</table>"	//Backstory table end
@@ -177,33 +160,24 @@
 	. += "</table>"	//Main body table end
 
 
-/datum/preferences/proc/ShowDisabilityState(mob/user,flag,label)
-	return "[label]: <a href=\"?_src_=prefs;task=input;preference=disabilities;disability=[flag]\">[disabilities & flag ? "<b>Yes</b>" : "No"]</a><br>"
-
 /datum/preferences/proc/process_link_general(mob/user, list/href_list)
 	switch(href_list["preference"])
-		if("disabilities")
-			if(href_list["task"] == "input")
-				var/dflag=text2num(href_list["disability"])
-				if(dflag >= 0)
-					disabilities ^= text2num(href_list["disability"]) //MAGIC
-
 		if("records")
 			switch(href_list["task"])
 				if("med_record")
-					var/medmsg = sanitize(copytext(input(usr,"Set your medical notes here.","Medical Records",html_decode(revert_ja(med_record))) as message, 1, MAX_PAPER_MESSAGE_LEN), list("ÿ"=LETTER_255))
+					var/medmsg = sanitize(input(usr,"Set your medical notes here.","Medical Records",input_default(med_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 
 					if(medmsg != null)
 						med_record = medmsg
 
 				if("sec_record")
-					var/secmsg = sanitize(copytext(input(usr,"Set your security notes here.","Security Records",html_decode(revert_ja(sec_record))) as message, 1, MAX_PAPER_MESSAGE_LEN), list("ÿ"=LETTER_255))
+					var/secmsg = sanitize(input(usr,"Set your security notes here.","Security Records",input_default(sec_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 
 					if(secmsg != null)
 						sec_record = secmsg
 
 				if("gen_record")
-					var/genmsg = sanitize(copytext(input(usr,"Set your employment notes here.","Employment Records",html_decode(revert_ja(gen_record))) as message, 1, MAX_PAPER_MESSAGE_LEN), list("ÿ"=LETTER_255))
+					var/genmsg = sanitize(input(usr,"Set your employment notes here.","Employment Records",input_default(gen_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 
 					if(genmsg != null)
 						gen_record = genmsg
@@ -250,7 +224,7 @@
 		if("input")
 			switch(href_list["preference"])
 				if("name")
-					var/new_name = reject_bad_name( input(user, "Choose your character's name:", "Character Preference")  as text|null )
+					var/new_name = sanitize_name(input(user, "Choose your character's name:", "Character Preference")  as text|null)
 					if(new_name)
 						real_name = new_name
 					else
@@ -282,6 +256,7 @@
 						f_style = random_facial_hair_style(gender, species)
 						h_style = random_hair_style(gender, species)
 						ResetJobs()
+						ResetQuirks()
 						if(language && language != "None")
 							var/datum/language/lang = all_languages[language]
 							if(!(species in lang.allowed_species))
@@ -303,7 +278,7 @@
 						b_type = new_b_type
 
 				if("hair")
-					if(species == HUMAN || species == UNATHI || species == TAJARAN || species == SKRELL)
+					if(species in list(HUMAN, UNATHI, TAJARAN, SKRELL, IPC))
 						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as color|null
 						if(new_hair)
 							r_hair = hex2num(copytext(new_hair, 2, 4))
@@ -414,9 +389,9 @@
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = input(user, "Please enter a home system.")  as text|null
+						var/raw_choice = sanitize(input(user, "Please enter a home system.")  as text|null)
 						if(raw_choice)
-							home_system = sanitize(copytext(raw_choice,1,MAX_MESSAGE_LEN))
+							home_system = raw_choice
 						return
 					home_system = choice
 
@@ -425,9 +400,9 @@
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = input(user, "Please enter your current citizenship.", "Character Preference") as text|null
+						var/raw_choice = sanitize(input(user, "Please enter your current citizenship.", "Character Preference") as text|null)
 						if(raw_choice)
-							citizenship = sanitize(copytext(raw_choice,1,MAX_MESSAGE_LEN))
+							citizenship = raw_choice
 						return
 					citizenship = choice
 
@@ -436,9 +411,9 @@
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = input(user, "Please enter a faction.")  as text|null
+						var/raw_choice = sanitize(input(user, "Please enter a faction.")  as text|null)
 						if(raw_choice)
-							faction = sanitize(copytext(raw_choice,1,MAX_MESSAGE_LEN))
+							faction = raw_choice
 						return
 					faction = choice
 
@@ -447,14 +422,14 @@
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = input(user, "Please enter a religon.")  as text|null
+						var/raw_choice = sanitize(input(user, "Please enter a religon.")  as text|null)
 						if(raw_choice)
-							religion = sanitize(copytext(raw_choice,1,MAX_MESSAGE_LEN))
+							religion = raw_choice
 						return
 					religion = choice
 
 				if("flavor_text")
-					var/msg = sanitize(copytext(input(usr,"Set the flavor text in your 'examine' verb.","Flavor Text",html_decode(revert_ja(flavor_text))) as message, 1, MAX_MESSAGE_LEN))
+					var/msg = sanitize(input(usr,"Set the flavor text in your 'examine' verb.","Flavor Text", input_default(flavor_text)) as message)
 
 					if(msg != null)
 						flavor_text = msg
@@ -527,9 +502,6 @@
 					f_style = random_facial_hair_style(gender, species)
 					h_style = random_hair_style(gender, species)
 
-				if("disabilities")				//please note: current code only allows nearsightedness as a disability
-					disabilities = !disabilities//if you want to add actual disabilities, code that selects them should be here
-
 				if("randomslot")
 					randomslot = !randomslot
 
@@ -544,9 +516,6 @@
 
 				if("appearance")
 					submenu_type = "appearance"
-
-				if("disabil_menu")
-					submenu_type = "disabil_menu"
 
 				if("gear")
 					submenu_type = "gear"

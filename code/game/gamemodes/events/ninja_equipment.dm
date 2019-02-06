@@ -348,7 +348,7 @@ ________________________________________________________________________________
 			dat += "<h4><img src=sos_6.png> Detected PDAs:</h4>"
 			dat += "<ul>"
 			var/count = 0
-			for (var/obj/item/device/pda/P in world)
+			for (var/obj/item/device/pda/P in PDAs)
 				if (!P.owner||P.toff)
 					continue
 				dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
@@ -482,7 +482,7 @@ ________________________________________________________________________________
 	dat += "</body></html>"
 
 	//Setting the can>resize etc to 0 remove them from the drag bar but still allows the window to be draggable.
-	display_to << browse(dat,"window=spideros;size=400x444;border=1;can_resize=1;can_close=0;can_minimize=0")
+	display_to << browse(entity_ja(dat),"window=spideros;size=400x444;border=1;can_resize=1;can_close=0;can_minimize=0")
 
 //=======//SPIDEROS TOPIC PROC//=======//
 
@@ -535,8 +535,7 @@ ________________________________________________________________________________
 
 		if("Message")
 			var/obj/item/device/pda/P = locate(href_list["target"])
-			var/t = input(U, "Please enter untraceable message.") as text
-			t = sanitize(copytext(t, 1, MAX_MESSAGE_LEN))
+			var/t = sanitize(input(U, "Please enter untraceable message.") as text)
 			if(!t||U.stat||U.wear_suit!=src||!s_initialized)//Wow, another one of these. Man...
 				display_to << browse(null, "window=spideros")
 				return
@@ -560,7 +559,7 @@ ________________________________________________________________________________
 					if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
 						if(isnewplayer(M))
 							continue
-						M.show_message("<span class='game say'>PDA Message - <span class='name'>[U]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[sanitize_chat(t)]</span></span>")
+						M.show_message("<span class='game say'>PDA Message - <span class='name'>[U]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[t]</span></span>")
 
 				if (!P.message_silent)
 					playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
@@ -590,6 +589,8 @@ ________________________________________________________________________________
 				to_chat(U, "You feel a tiny prick and a sudden rush of substance in to your veins.")
 
 		if("Trigger Ability")
+			if(!(href_list["name"] in list("Phase Jaunt","Phase Shift","Energy Blade","Energy Star","Energy Net","EM Burst","Smoke Bomb","Adrenaline Boost")))
+				return
 			var/ability_name = href_list["name"]+href_list["cost"]//Adds the name and cost to create the full proc name.
 			var/proc_arguments//What arguments to later pass to the proc, if any.
 			var/targets[] = list()//To later check for.
@@ -1393,166 +1394,165 @@ It is possible to destroy the net by the occupant or someone else.
 	var/mob/living/affecting = null//Who it is currently affecting, if anyone.
 	var/mob/living/master = null//Who shot web. Will let this person know if the net was successful or failed.
 
-	proc
-		healthcheck()
-			if(health <=0)
-				density = 0
-				if(affecting)
-					var/mob/living/carbon/M = affecting
-					M.captured = 0 //Important.
-					M.anchored = initial(M.anchored) //Changes the mob's anchored status to the original one; this is not handled by the can_move proc.
-					for(var/mob/O in viewers(src, 3))
-						O.show_message(text("[] was recovered from the energy net!", M.name), 1, text("You hear a grunt."), 2)
-					//if(!isnull(master))//As long as they still exist.
-					//	master << "\red <b>ERROR</b>: \black unable to initiate transport protocol. Procedure terminated."
-				qdel(src)
-			return
-
-	process(var/mob/living/carbon/M as mob)
-		var/check = 60//30 seconds before teleportation. Could be extended I guess. - Extended to one minute
-		//var/mob_name = affecting.name//Since they will report as null if terminated before teleport.
-		//The person can still try and attack the net when inside.
-		while(!isnull(M)&&!isnull(src)&&check>0)//While M and net exist, and 60 seconds have not passed.
-			var/turf/T = get_turf(src)
-			if(M in T.contents)
-				check--
-				sleep(10)
-			else
-				check = 0
-				M.captured = 0 //Important.
-				M.anchored = initial(M.anchored) //Changes the mob's anchored status to the original one; this is not handled by the can_move proc.
-
-		if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
-			//if(!isnull(master))//As long as they still exist.
-			//	master << "\red <b>ERROR</b>: \black unable to locate \the [mob_name]. Procedure terminated."
-			qdel(src)//Get rid of the net.
-			return
-
-		if(!isnull(src))
-			M.captured = 0
-			M.anchored = initial(M.anchored)
-			qdel(src)
-		return
-
-		/*if(!isnull(src))//As long as both net and person exist.
-			//No need to check for countdown here since while() broke, it's implicit that it finished.
-
-			density = 0//Make the net pass-through.
-			invisibility = 101//Make the net invisible so all the animations can play out.
-			health = INFINITY//Make the net invincible so that an explosion/something else won't kill it while, spawn() is running.
-			for(var/obj/item/W in M)
-				if(istype(M,/mob/living/carbon/human))
-					if(W==M:w_uniform)	continue//So all they're left with are shoes and uniform.
-					if(W==M:shoes)	continue
-				M.drop_from_inventory(W)
-
-			spawn(0)
-				playsound(M.loc, 'sound/effects/sparks4.ogg', 50, 1)
-				anim(M.loc,M,'icons/mob/mob.dmi',,"phaseout",,M.dir)
-
-			if(holdingfacility.len)
-				M.loc = pick(holdingfacility)//Throw mob in to the holding facility.
-				spawn(0)
-					var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-					spark_system.set_up(5, 0, M.loc)
-					spark_system.start()
-					playsound(M.loc, 'sound/effects/phasein.ogg', 25, 1)
-					playsound(M.loc, 'sound/effects/sparks2.ogg', 50, 1)
-					anim(M.loc,M,'icons/mob/mob.dmi',,"phasein",,M.dir)
-					qdel(src)//Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
-			else
-				M.loc = null
-
-			to_chat(M, "\red You appear in a strange place!")
-
+/obj/effect/energy_net/proc/healthcheck()
+	if(health <=0)
+		density = 0
+		if(affecting)
+			var/mob/living/carbon/M = affecting
+			M.captured = 0 //Important.
+			M.anchored = initial(M.anchored) //Changes the mob's anchored status to the original one; this is not handled by the can_move proc.
 			for(var/mob/O in viewers(src, 3))
-				O.show_message(text("[] vanished!", M), 1, text("You hear sparks flying!"), 2)
+				O.show_message(text("[] was recovered from the energy net!", M.name), 1, text("You hear a grunt."), 2)
+			//if(!isnull(master))//As long as they still exist.
+			//	master << "\red <b>ERROR</b>: \black unable to initiate transport protocol. Procedure terminated."
+		qdel(src)
+	return
 
-			if(!isnull(master))//As long as they still exist.
-				to_chat(master, "\blue <b>SUCCESS</b>: \black transport procedure of \the [affecting] complete.")
-
+/obj/effect/energy_net/process(var/mob/living/carbon/M as mob)
+	var/check = 60//30 seconds before teleportation. Could be extended I guess. - Extended to one minute
+	//var/mob_name = affecting.name//Since they will report as null if terminated before teleport.
+	//The person can still try and attack the net when inside.
+	while(!isnull(M)&&!isnull(src)&&check>0)//While M and net exist, and 60 seconds have not passed.
+		var/turf/T = get_turf(src)
+		if(M in T.contents)
+			check--
+			sleep(10)
+		else
+			check = 0
 			M.captured = 0 //Important.
 			M.anchored = initial(M.anchored) //Changes the mob's anchored status to the original one; this is not handled by the can_move proc.
 
-		else//And they are free.
-			to_chat(M, "\blue You are free of the net!")
-		return*/
-
-	bullet_act(obj/item/projectile/Proj)
-		health -= Proj.damage
-		healthcheck()
-		return 0
-
-	ex_act(severity)
-		switch(severity)
-			if(1.0)
-				health-=50
-			if(2.0)
-				health-=50
-			if(3.0)
-				health-=prob(50)?50:25
-		healthcheck()
+	if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
+		//if(!isnull(master))//As long as they still exist.
+		//	master << "\red <b>ERROR</b>: \black unable to locate \the [mob_name]. Procedure terminated."
+		qdel(src)//Get rid of the net.
 		return
 
-	blob_act()
-		health-=50
-		healthcheck()
-		return
+	if(!isnull(src))
+		M.captured = 0
+		M.anchored = initial(M.anchored)
+		qdel(src)
+	return
 
-	meteorhit()
-		health-=50
-		healthcheck()
-		return
+	/*if(!isnull(src))//As long as both net and person exist.
+		//No need to check for countdown here since while() broke, it's implicit that it finished.
 
-	hitby(AM)
-		..()
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\red <B>[src] was hit by [AM].</B>"), 1)
-		var/tforce = 0
-		if(ismob(AM))
-			tforce = 10
+		density = 0//Make the net pass-through.
+		invisibility = 101//Make the net invisible so all the animations can play out.
+		health = INFINITY//Make the net invincible so that an explosion/something else won't kill it while, spawn() is running.
+		for(var/obj/item/W in M)
+			if(istype(M,/mob/living/carbon/human))
+				if(W==M:w_uniform)	continue//So all they're left with are shoes and uniform.
+				if(W==M:shoes)	continue
+			M.drop_from_inventory(W)
+
+		spawn(0)
+			playsound(M.loc, 'sound/effects/sparks4.ogg', 50, 1)
+			anim(M.loc,M,'icons/mob/mob.dmi',,"phaseout",,M.dir)
+
+		if(holdingfacility.len)
+			M.loc = pick(holdingfacility)//Throw mob in to the holding facility.
+			spawn(0)
+				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+				spark_system.set_up(5, 0, M.loc)
+				spark_system.start()
+				playsound(M.loc, 'sound/effects/phasein.ogg', 25, 1)
+				playsound(M.loc, 'sound/effects/sparks2.ogg', 50, 1)
+				anim(M.loc,M,'icons/mob/mob.dmi',,"phasein",,M.dir)
+				qdel(src)//Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
 		else
-			tforce = AM:throwforce
-		playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
-		health = max(0, health - tforce)
-		healthcheck()
-		..()
-		return
+			M.loc = null
 
-	attack_hand(mob/living/carbon/human/user)
-		if (HULK in user.mutations)
-			user.SetNextMove(CLICK_CD_MELEE)
-			to_chat(usr, text("\blue You easily destroy the energy net."))
-			for(var/mob/O in oviewers(src))
-				O.show_message(text("\red [] rips the energy net apart!", usr), 1)
+		to_chat(M, "\red You appear in a strange place!")
+
+		for(var/mob/O in viewers(src, 3))
+			O.show_message(text("[] vanished!", M), 1, text("You hear sparks flying!"), 2)
+
+		if(!isnull(master))//As long as they still exist.
+			to_chat(master, "\blue <b>SUCCESS</b>: \black transport procedure of \the [affecting] complete.")
+
+		M.captured = 0 //Important.
+		M.anchored = initial(M.anchored) //Changes the mob's anchored status to the original one; this is not handled by the can_move proc.
+
+	else//And they are free.
+		to_chat(M, "\blue You are free of the net!")
+	return*/
+
+/obj/effect/energy_net/bullet_act(obj/item/projectile/Proj)
+	health -= Proj.damage
+	healthcheck()
+	return 0
+
+/obj/effect/energy_net/ex_act(severity)
+	switch(severity)
+		if(1.0)
 			health-=50
-		healthcheck()
-		return
+		if(2.0)
+			health-=50
+		if(3.0)
+			health-=prob(50)?50:25
+	healthcheck()
+	return
 
-	attack_paw()
-		return attack_hand()
+/obj/effect/energy_net/blob_act()
+	health-=50
+	healthcheck()
+	return
 
-	attack_alien(mob/user)
-		user.do_attack_animation(src)
+/obj/effect/energy_net/meteorhit()
+	health-=50
+	healthcheck()
+	return
+
+/obj/effect/energy_net/hitby(AM)
+	..()
+	for(var/mob/O in viewers(src, null))
+		O.show_message(text("\red <B>[src] was hit by [AM].</B>"), 1)
+	var/tforce = 0
+	if(ismob(AM))
+		tforce = 10
+	else
+		tforce = AM:throwforce
+	playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
+	health = max(0, health - tforce)
+	healthcheck()
+	..()
+	return
+
+/obj/effect/energy_net/attack_hand(mob/living/carbon/human/user)
+	if (HULK in user.mutations)
 		user.SetNextMove(CLICK_CD_MELEE)
-		if (islarva(user) || isfacehugger(user))
-			return
-		to_chat(usr, text("\green You claw at the net."))
+		to_chat(usr, text("\blue You easily destroy the energy net."))
 		for(var/mob/O in oviewers(src))
-			O.show_message(text("\red [] claws at the energy net!", usr), 1)
-		playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
-		health -= rand(10, 20)
-		if(health <= 0)
-			to_chat(usr, text("\green You slice the energy net to pieces."))
-			for(var/mob/O in oviewers(src))
-				O.show_message(text("\red [] slices the energy net apart!", usr), 1)
-		healthcheck()
-		return
+			O.show_message(text("\red [] rips the energy net apart!", usr), 1)
+		health-=50
+	healthcheck()
+	return
 
-	attackby(obj/item/weapon/W, mob/user)
-		var/aforce = W.force
-		user.SetNextMove(CLICK_CD_MELEE)
-		health = max(0, health - aforce)
-		healthcheck()
-		..()
+/obj/effect/energy_net/attack_paw()
+	return attack_hand()
+
+/obj/effect/energy_net/attack_alien(mob/user)
+	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
+	if (islarva(user) || isfacehugger(user))
 		return
+	to_chat(usr, text("\green You claw at the net."))
+	for(var/mob/O in oviewers(src))
+		O.show_message(text("\red [] claws at the energy net!", usr), 1)
+	playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
+	health -= rand(10, 20)
+	if(health <= 0)
+		to_chat(usr, text("\green You slice the energy net to pieces."))
+		for(var/mob/O in oviewers(src))
+			O.show_message(text("\red [] slices the energy net apart!", usr), 1)
+	healthcheck()
+	return
+
+/obj/effect/energy_net/attackby(obj/item/weapon/W, mob/user)
+	var/aforce = W.force
+	user.SetNextMove(CLICK_CD_MELEE)
+	health = max(0, health - aforce)
+	healthcheck()
+	..()
+	return

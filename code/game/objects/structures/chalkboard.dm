@@ -59,7 +59,7 @@
 		to_chat(usr, "\blue You can't post it all on board!")
 		return
 
-	t = sanitize(t, list("\n"="\[br\]","ÿ"=LETTER_255))
+	t = sanitize(replacetext(t, "\n", "\[br\]"))
 
 	// check for exploits
 	for(var/bad in paper_blacklist)
@@ -124,7 +124,7 @@
 		if(CB_CONTENT)
 			desc = "Something is written out there, you start reading..."
 			desc += "<HR>"
-			desc +=	content
+			desc +=	"<span class='emojify'>[content]</span>"
 			desc += "<HR>"
 			icon_state = "board_text[rand(1, 5)]"
 

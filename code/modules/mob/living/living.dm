@@ -1,4 +1,9 @@
+/mob/living/atom_init()
+	. = ..()
+	living_list += src
+
 /mob/living/Destroy()
+	living_list -= src
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 
@@ -521,7 +526,7 @@
 	// remove the character from the list of the dead
 	if(stat == DEAD)
 		dead_mob_list -= src
-		living_mob_list += src
+		alive_mob_list += src
 		tod = null
 		timeofdeath = 0
 
@@ -543,7 +548,7 @@
 	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
 	BP.disfigured = FALSE
 
-	for (var/obj/item/weapon/organ/head/H in world) // damn son, where'd you get this?
+	for (var/obj/item/weapon/organ/head/H in organ_head_list) // damn son, where'd you get this?
 		if(H.brainmob)
 			if(H.brainmob.real_name == src.real_name)
 				if(H.brainmob.mind)
@@ -707,19 +712,22 @@
 				newdir = EAST
 		if((newdir in list(1, 2, 4, 8)) && (prob(50)))
 			newdir = turn(get_dir(T, M.loc), 180)
+		var/datum/dirt_cover/new_cover
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.species)
+				new_cover = new H.species.blood_color
+		if(!new_cover)
+			new_cover = new/datum/dirt_cover/red_blood
 		if(!blood_exists)
-			new /obj/effect/decal/cleanable/blood/trail_holder(M.loc)
+			var/obj/effect/decal/cleanable/blood/BL = new /obj/effect/decal/cleanable/blood/trail_holder(M.loc)
+			BL.basedatum = new_cover
+			BL.update_icon()
+		else
+			for(var/obj/effect/decal/cleanable/blood/trail_holder/TH in M.loc)
+				TH.basedatum.add_dirt(new_cover)
+				TH.update_icon()
 		for(var/obj/effect/decal/cleanable/blood/trail_holder/TH in M.loc)
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H.species)
-					if(TH.color != H.species.blood_color)
-						TH.basecolor = H.species.blood_color
-						TH.update_icon()
-			else
-				if(TH.color != initial(TH.basecolor))
-					TH.basecolor = initial(TH.basecolor)
-					TH.update_icon()
 			if(!TH.amount)
 				STOP_PROCESSING(SSobj, TH)
 				TH.name = initial(TH.name)
@@ -767,17 +775,6 @@
 			to_chat(src, "<span class='notice'>You struggle free of [H.loc].</span>")
 			H.forceMove(get_turf(H))
 		return
-
-	if(ishuman(usr) && (!usr.incapacitated()))
-		var/mob/living/carbon/human/D = usr
-		if(D.get_species() == DIONA)
-			var/choices = list()
-			for(var/V in contents)
-				if(istype(V, /mob/living/carbon/monkey/diona))
-					choices += V
-			var/mob/living/carbon/monkey/diona/V = input(D,"Who do wish you to expel from within?") in null|choices
-			to_chat(D, "<span class='notice'>You wriggle [V] out of your insides.</span>")
-			V.splitting(D)
 
 	//Resisting control by an alien mind.
 	if(istype(src.loc,/mob/living/simple_animal/borer))
@@ -1122,14 +1119,14 @@
 	floating = 0
 
 /mob/living/proc/attempt_harvest(obj/item/I, mob/user)
-	if(stat == DEAD && !isnull(butcher_results) && !ishuman(src)) //can we butcher it?
-		if(istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/butch))
-			if(user.is_busy()) return
-			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
-			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-			if(do_mob(user, src, 80))
-				harvest(user)
-			return TRUE
+	if(stat == DEAD && butcher_results && istype(buckled, /obj/structure/kitchenspike)) //can we butcher it? Mob must be buckled to a meatspike to butcher it
+		if(user.is_busy())
+			return
+		to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
+		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+		if(do_mob(user, src, 80))
+			harvest(user)
+		return TRUE
 
 /mob/living/proc/harvest(mob/user)
 	if(QDELETED(src))
@@ -1183,3 +1180,12 @@
 
 		to_chat(src, "<span class='notice'>You can taste [english_list(final_taste_list)].</span>")
 		lasttaste = world.time
+
+/mob/living/proc/get_nutrition()
+	// This proc gets nutrition value with all possible alters.
+	// E.g. see how in carbon nutriment, plant matter, meat reagents are accounted.
+	// The difference between this and just nutrition, is that this proc shows how much nutrition a mob has
+	// even counting in the nutriments that are not digested yet. You don't feel hunger if you are digesting
+	// food, so this proc is used in walk penalty, etc. But you don't see fat of a person if the person is just
+	// digesting the giant pizza they ate, so we don't use this in examine code.
+	return nutrition

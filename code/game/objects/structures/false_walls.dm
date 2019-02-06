@@ -8,7 +8,7 @@
 	icon = 'icons/turf/walls.dmi'
 	var/mineral = "metal"
 	var/opening = 0
-
+	var/block_air_zones = 1
 /obj/structure/falsewall/atom_init()
 	relativewall_neighbours()
 	. = ..()
@@ -28,6 +28,11 @@
 			W.relativewall()
 	return ..()
 
+/obj/structure/falsewall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	if(air_group) return !block_air_zones
+	if(istype(mover, /obj/effect/beam))
+		return !opacity
+	return !density
 
 /obj/structure/falsewall/relativewall()
 
@@ -64,6 +69,7 @@
 		src.density = 0
 		set_opacity(0)
 		opening = 0
+		update_nearby_tiles()
 	else
 		opening = 1
 		flick("[mineral]fwall_closing", src)
@@ -73,6 +79,7 @@
 		set_opacity(1)
 		src.relativewall()
 		opening = 0
+		update_nearby_tiles()
 
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	..()
@@ -189,6 +196,7 @@
 		density = 0
 		set_opacity(0)
 		opening = 0
+		update_nearby_tiles()
 	else
 		opening = 1
 		icon_state = "r_wall"
@@ -198,6 +206,7 @@
 		set_opacity(1)
 		relativewall()
 		opening = 0
+		update_nearby_tiles()
 
 /obj/structure/falserwall/relativewall()
 

@@ -91,7 +91,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 			return
 
 /obj/item/seeds/replicapod/proc/request_player()
-	for(var/mob/dead/observer/O in dead_mob_list)
+	for(var/mob/dead/observer/O in observer_list)
 		if(O.has_enabled_antagHUD && config.antag_hud_restricted)
 			continue
 		if(jobban_isbanned(O, ROLE_PLANT))
@@ -158,7 +158,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	to_chat(podman, "<B>You are now one of the Dionaea, a race of drifting interstellar plantlike creatures that sometimes share their seeds with human traders.</B>")
 	to_chat(podman, "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>")
 	if(!realName)
-		var/newname = input(podman,"Enter a name, or leave blank for the default name.", "Name change","") as text
+		var/newname = sanitize_safe(input(podman,"Enter a name, or leave blank for the default name.", "Name change","") as text, MAX_NAME_LEN)
 		if (newname != "")
 			podman.real_name = newname
 

@@ -1,9 +1,9 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /proc/invalidateCameraCache()
-	for(var/obj/machinery/computer/security/s in machines)
+	for(var/obj/machinery/computer/security/s in computer_list)
 		s.camera_cache = null
-	for(var/datum/alarm/A in world)
+	for(var/datum/alarm/A in datum_alarm_list)
 		A.cameras = null
 
 /obj/machinery/computer/security
@@ -31,7 +31,6 @@
 	return 1
 
 /obj/machinery/computer/security/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
-	if(src.z > ZLEVEL_EMPTY) return
 	if(stat & (NOPOWER|BROKEN)) return
 	if(user.stat) return
 
@@ -83,8 +82,6 @@
 		return
 
 	if(href_list["switchTo"])
-		if(src.z > 6)
-			return FALSE
 		if(usr.blinded)
 			return FALSE
 		var/obj/machinery/camera/C = locate(href_list["switchTo"]) in cameranet.cameras
@@ -92,8 +89,6 @@
 			return FALSE
 		switch_to_camera(usr, C)
 	else if(href_list["reset"])
-		if(src.z > 6)
-			return FALSE
 		if(usr.blinded)
 			return FALSE
 		reset_current()
@@ -103,9 +98,6 @@
 	return
 
 /obj/machinery/computer/security/attack_hand(mob/user)
-	if (src.z > ZLEVEL_EMPTY)
-		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
-		return
 	if (!network)
 		world.log << "A computer lacks a network at [x],[y],[z]."
 		return

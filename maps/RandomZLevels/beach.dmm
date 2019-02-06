@@ -1,73 +1,1329 @@
-"a" = (/turf/unsimulated/beach/sand{density = 1; opacity = 1},/area/awaymission/beach)
-"b" = (/obj/machinery/gateway{dir = 9},/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"c" = (/obj/machinery/gateway{dir = 1},/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"d" = (/obj/machinery/gateway{dir = 5},/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"e" = (/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"f" = (/obj/effect/overlay/palmtree_r,/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"g" = (/obj/machinery/gateway{dir = 8},/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"h" = (/obj/machinery/gateway/centeraway,/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"i" = (/obj/machinery/gateway{dir = 4},/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"j" = (/obj/effect/overlay/palmtree_l,/obj/effect/overlay/coconut,/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"k" = (/obj/machinery/gateway{dir = 10},/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"l" = (/obj/machinery/gateway,/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"m" = (/obj/machinery/gateway{dir = 6},/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"n" = (/turf/unsimulated/wall{ icon_state = "sandstone6"},/area/awaymission/beach)
-"o" = (/turf/unsimulated/wall{ icon_state = "sandstone12"},/area/awaymission/beach)
-"p" = (/turf/unsimulated/wall{ icon_state = "sandstone10"},/area/awaymission/beach)
-"q" = (/obj/structure/closet/athletic_mixed,/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"r" = (/obj/item/clothing/shoes/sandal,/obj/item/clothing/shoes/sandal,/obj/item/clothing/shoes/sandal,/obj/structure/closet/crate,/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"s" = (/turf/unsimulated/wall{ icon_state = "sandstone3"},/area/awaymission/beach)
-"t" = (/obj/structure/closet/gmcloset{icon_closed = "black"; icon_state = "black"; name = "formal wardrobe"},/turf/unsimulated/floor{ icon_state = "wood"},/area/awaymission/beach)
-"u" = (/obj/structure/closet/secure_closet/bar,/turf/unsimulated/floor{ icon_state = "wood"},/area/awaymission/beach)
-"v" = (/obj/structure/table/woodentable,/obj/item/weapon/book/manual/barman_recipes,/turf/unsimulated/floor{ icon_state = "wood"},/area/awaymission/beach)
-"w" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/drinks/shaker,/turf/unsimulated/floor{ icon_state = "wood"},/area/awaymission/beach)
-"x" = (/obj/structure/table/woodentable,/turf/unsimulated/floor{ icon_state = "wood"},/area/awaymission/beach)
-"y" = (/obj/structure/table/woodentable,/obj/item/clothing/glasses/sunglasses,/turf/unsimulated/floor{ icon_state = "wood"},/area/awaymission/beach)
-"z" = (/obj/machinery/vending/boozeomat{emagged = 1},/turf/unsimulated/floor{ icon_state = "wood"},/area/awaymission/beach)
-"A" = (/obj/machinery/vending/cigarette,/turf/unsimulated/floor{ icon_state = "wood"},/area/awaymission/beach)
-"B" = (/obj/machinery/vending/cola,/turf/unsimulated/floor{ icon_state = "wood"},/area/awaymission/beach)
-"C" = (/obj/machinery/vending/snack,/turf/unsimulated/floor{ icon_state = "wood"},/area/awaymission/beach)
-"D" = (/turf/unsimulated/wall{ icon_state = "sandstone1"},/area/awaymission/beach)
-"E" = (/turf/unsimulated/floor{ icon_state = "wood"},/area/awaymission/beach)
-"F" = (/obj/structure/mineral_door/wood{ icon_state = "wood"},/turf/unsimulated/floor{ icon_state = "wood"},/area/awaymission/beach)
-"G" = (/obj/effect/overlay/palmtree_l,/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"H" = (/turf/unsimulated/wall{ icon_state = "sandstone0"},/area/awaymission/beach)
-"I" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,/turf/unsimulated/floor{ icon_state = "wood"},/area/awaymission/beach)
-"J" = (/obj/item/weapon/beach_ball,/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"K" = (/obj/structure/stool,/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"L" = (/mob/living/simple_animal/crab,/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"M" = (/obj/effect/overlay/coconut,/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"N" = (/mob/living/simple_animal/crab/Coffee,/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"O" = (/obj/structure/stool/bed/chair,/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"P" = (/turf/unsimulated/beach/coastline{density = 1; opacity = 1},/area/awaymission/beach)
-"Q" = (/turf/unsimulated/beach/coastline,/area/awaymission/beach)
-"R" = (/turf/unsimulated/beach/water{density = 1; opacity = 1},/area/awaymission/beach)
-"S" = (/turf/unsimulated/beach/water,/area/awaymission/beach)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/beach/sand{
+	density = 1;
+	opacity = 1
+	},
+/area/awaymission/beach)
+"b" = (
+/obj/machinery/gateway{
+	dir = 9
+	},
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"c" = (
+/obj/machinery/gateway{
+	dir = 1
+	},
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"d" = (
+/obj/machinery/gateway{
+	dir = 5
+	},
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"e" = (
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"f" = (
+/obj/effect/overlay/palmtree_r,
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"g" = (
+/obj/machinery/gateway{
+	dir = 8
+	},
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"h" = (
+/obj/machinery/gateway/center{
+	name = "Beach Gateway",
+	active = 1
+	},
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"i" = (
+/obj/machinery/gateway{
+	dir = 4
+	},
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"j" = (
+/obj/effect/overlay/palmtree_l,
+/obj/effect/overlay/coconut,
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"k" = (
+/obj/machinery/gateway{
+	dir = 10
+	},
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"l" = (
+/obj/machinery/gateway,
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"m" = (
+/obj/machinery/gateway{
+	dir = 6
+	},
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"n" = (
+/turf/unsimulated/wall{
+	icon_state = "sandstone6"
+	},
+/area/awaymission/beach)
+"o" = (
+/turf/unsimulated/wall{
+	icon_state = "sandstone12"
+	},
+/area/awaymission/beach)
+"p" = (
+/turf/unsimulated/wall{
+	icon_state = "sandstone10"
+	},
+/area/awaymission/beach)
+"q" = (
+/obj/structure/closet/athletic_mixed,
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"r" = (
+/obj/item/clothing/shoes/sandal,
+/obj/item/clothing/shoes/sandal,
+/obj/item/clothing/shoes/sandal,
+/obj/structure/closet/crate,
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"s" = (
+/turf/unsimulated/wall{
+	icon_state = "sandstone3"
+	},
+/area/awaymission/beach)
+"t" = (
+/obj/structure/closet/gmcloset{
+	icon_closed = "black";
+	icon_state = "black";
+	name = "formal wardrobe"
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/awaymission/beach)
+"u" = (
+/obj/structure/closet/secure_closet/bar,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/awaymission/beach)
+"v" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/book/manual/barman_recipes,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/awaymission/beach)
+"w" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/drinks/shaker,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/awaymission/beach)
+"x" = (
+/obj/structure/table/woodentable,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/awaymission/beach)
+"y" = (
+/obj/structure/table/woodentable,
+/obj/item/clothing/glasses/sunglasses,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/awaymission/beach)
+"z" = (
+/obj/machinery/vending/boozeomat{
+	emagged = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/awaymission/beach)
+"A" = (
+/obj/machinery/vending/cigarette,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/awaymission/beach)
+"B" = (
+/obj/machinery/vending/cola,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/awaymission/beach)
+"C" = (
+/obj/machinery/vending/snack,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/awaymission/beach)
+"D" = (
+/turf/unsimulated/wall{
+	icon_state = "sandstone1"
+	},
+/area/awaymission/beach)
+"E" = (
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/awaymission/beach)
+"F" = (
+/obj/structure/mineral_door/wood{
+	icon_state = "wood"
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/awaymission/beach)
+"G" = (
+/obj/effect/overlay/palmtree_l,
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"H" = (
+/turf/unsimulated/wall{
+	icon_state = "sandstone0"
+	},
+/area/awaymission/beach)
+"I" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/awaymission/beach)
+"J" = (
+/obj/item/weapon/beach_ball,
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"K" = (
+/obj/structure/stool,
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"L" = (
+/mob/living/simple_animal/crab,
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"M" = (
+/obj/effect/overlay/coconut,
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"N" = (
+/mob/living/simple_animal/crab/Coffee,
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"O" = (
+/obj/structure/stool/bed/chair,
+/turf/unsimulated/beach/sand,
+/area/awaymission/beach)
+"P" = (
+/turf/unsimulated/beach/coastline{
+	density = 1;
+	opacity = 1
+	},
+/area/awaymission/beach)
+"Q" = (
+/turf/unsimulated/beach/coastline,
+/area/awaymission/beach)
+"R" = (
+/turf/unsimulated/beach/water{
+	density = 1;
+	opacity = 1
+	},
+/area/awaymission/beach)
+"S" = (
+/turf/unsimulated/beach/water,
+/area/awaymission/beach)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-abcdeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefea
-aghieeeejeeeeeeeeeeeeeeeeeeeeeeeeeeeeeea
-aklmeeeeeeeenoooooooooopeeqrqrqrqrqrqrqa
-aeeeeeeeeeeestuvwxyzABCseeeeeeeeeeeeeeea
-aeeeeeeeeeeeDEEEEEEEEEEseeeeeeeeeeeeeeea
-aeeeeeeeeeeeFEEEEEEEEEEseeeeeeeeeGeeeeea
-aefeeeeeeeeeHxxIxxxIxxxDeeeGeeJeeeeeeeea
-aeeeeeeeeeeeeKKKKKKKKKKeeeeeeeeeeeeeeeea
-aeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeea
-aeeLeeeeeeeeeeeeeeeeeeeeeeeeeeefeeeeeeea
-aeeeeeGMeeeeeeeeeeeeeeGeeeeeNeeeMeeeeefa
-aeeJeeeeeeLeeOeOeOeOeOeOeeeeeeeeeeOeOeea
-aeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeea
-PQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQP
-RSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSR
-RSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSR
-RSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSR
-RSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSR
-RSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSR
-RSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSR
-RSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSR
-RSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSR
-RSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSR
-RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+P
+R
+R
+R
+R
+R
+R
+R
+R
+R
+R
+"}
+(2,1,1) = {"
+a
+b
+g
+k
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(3,1,1) = {"
+a
+c
+h
+l
+e
+e
+e
+f
+e
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(4,1,1) = {"
+a
+d
+i
+m
+e
+e
+e
+e
+e
+e
+L
+e
+J
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(5,1,1) = {"
+a
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(6,1,1) = {"
+a
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(7,1,1) = {"
+a
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+G
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(8,1,1) = {"
+a
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+M
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(9,1,1) = {"
+a
+e
+j
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(10,1,1) = {"
+a
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(11,1,1) = {"
+a
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+L
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(12,1,1) = {"
+a
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(13,1,1) = {"
+a
+e
+e
+n
+s
+D
+F
+H
+e
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(14,1,1) = {"
+a
+e
+e
+o
+t
+E
+E
+x
+K
+e
+e
+e
+O
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(15,1,1) = {"
+a
+e
+e
+o
+u
+E
+E
+x
+K
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(16,1,1) = {"
+a
+e
+e
+o
+v
+E
+E
+I
+K
+e
+e
+e
+O
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(17,1,1) = {"
+a
+e
+e
+o
+w
+E
+E
+x
+K
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(18,1,1) = {"
+a
+e
+e
+o
+x
+E
+E
+x
+K
+e
+e
+e
+O
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(19,1,1) = {"
+a
+e
+e
+o
+y
+E
+E
+x
+K
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(20,1,1) = {"
+a
+e
+e
+o
+z
+E
+E
+I
+K
+e
+e
+e
+O
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(21,1,1) = {"
+a
+e
+e
+o
+A
+E
+E
+x
+K
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(22,1,1) = {"
+a
+e
+e
+o
+B
+E
+E
+x
+K
+e
+e
+e
+O
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(23,1,1) = {"
+a
+e
+e
+o
+C
+E
+E
+x
+K
+e
+e
+G
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(24,1,1) = {"
+a
+e
+e
+p
+s
+s
+s
+D
+e
+e
+e
+e
+O
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(25,1,1) = {"
+a
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(26,1,1) = {"
+a
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(27,1,1) = {"
+a
+e
+e
+q
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(28,1,1) = {"
+a
+e
+e
+r
+e
+e
+e
+G
+e
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(29,1,1) = {"
+a
+e
+e
+q
+e
+e
+e
+e
+e
+e
+e
+N
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(30,1,1) = {"
+a
+e
+e
+r
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(31,1,1) = {"
+a
+e
+e
+q
+e
+e
+e
+J
+e
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(32,1,1) = {"
+a
+e
+e
+r
+e
+e
+e
+e
+e
+e
+f
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(33,1,1) = {"
+a
+e
+e
+q
+e
+e
+e
+e
+e
+e
+e
+M
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(34,1,1) = {"
+a
+e
+e
+r
+e
+e
+G
+e
+e
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(35,1,1) = {"
+a
+e
+e
+q
+e
+e
+e
+e
+e
+e
+e
+e
+O
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(36,1,1) = {"
+a
+e
+e
+r
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(37,1,1) = {"
+a
+e
+e
+q
+e
+e
+e
+e
+e
+e
+e
+e
+O
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(38,1,1) = {"
+a
+f
+e
+r
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(39,1,1) = {"
+a
+e
+e
+q
+e
+e
+e
+e
+e
+e
+e
+f
+e
+e
+Q
+S
+S
+S
+S
+S
+S
+S
+S
+S
+R
+"}
+(40,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+P
+R
+R
+R
+R
+R
+R
+R
+R
+R
+R
 "}

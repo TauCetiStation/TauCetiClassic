@@ -16,9 +16,13 @@
 /obj/item/weapon/mop/atom_init()
 	create_reagents(5)
 	. = ..()
+	mop_list += src
 
+/obj/item/weapon/mop/Destroy()
+	mop_list -= src
+	return ..()
 
-obj/item/weapon/mop/proc/clean(turf/simulated/A)
+/obj/item/weapon/mop/proc/clean(turf/simulated/A)
 	if(reagents.has_reagent("water", 1))
 		A.clean_blood()
 		A.dirt = 0

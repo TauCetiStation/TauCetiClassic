@@ -7,6 +7,14 @@
 	circuit = /obj/item/weapon/circuitboard/stationalert
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
 
+/obj/machinery/computer/station_alert/atom_init()
+	. = ..()
+	station_alert_list += src
+
+/obj/machinery/computer/station_alert/Destroy()
+	station_alert_list -= src
+	return ..()
+
 /obj/machinery/computer/station_alert/ui_interact(mob/user)
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
 	dat += "<A HREF='?src=\ref[user];mach_close=alerts'>Close</A><br><br>"
@@ -27,7 +35,7 @@
 		else
 			dat += "-- All Systems Nominal<BR>\n"
 		dat += "<BR>\n"
-	user << browse(dat, "window=alerts")
+	user << browse(entity_ja(dat), "window=alerts")
 	onclose(user, "alerts")
 
 /obj/machinery/computer/station_alert/proc/triggerAlarm(class, area/A, O, alarmsource)

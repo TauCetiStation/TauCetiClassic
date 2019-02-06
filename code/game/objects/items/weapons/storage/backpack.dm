@@ -8,11 +8,11 @@
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
 	item_state = "backpack"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	slot_flags = SLOT_BACK	//ERROOOOO
 	action_button_name = "Storage"
-	max_w_class = 3
-	max_combined_w_class = 21
+	max_w_class = ITEM_SIZE_NORMAL
+	max_storage_space = DEFAULT_BACKPACK_STORAGE
 	var/opened = 0
 
 /obj/item/weapon/storage/backpack/ui_action_click()
@@ -33,13 +33,6 @@
 	..(user, slot)
 
 /*
-/obj/item/weapon/storage/backpack/dropped(mob/user)
-	if (loc == user && src.use_sound)
-		playsound(src.loc, src.use_sound, 50, 1, -5)
-	..(user)
-*/
-
-/*
  * Backpack Types
  */
 
@@ -48,9 +41,8 @@
 	desc = "A backpack that opens into a localized pocket of Blue Space."
 	origin_tech = "bluespace=4"
 	icon_state = "holdingpack"
-	max_w_class = 4
-	max_combined_w_class = 84
-	storage_slots = 21
+	max_w_class = ITEM_SIZE_LARGE
+	max_storage_space = 56
 
 /obj/item/weapon/storage/backpack/holding/attackby(obj/item/weapon/W, mob/user)
 	if(crit_fail)
@@ -84,10 +76,9 @@
 	desc = "Space Santa uses this to deliver toys to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
 	item_state = "giftbag"
-	w_class = 4.0
-	storage_slots = 20
-	max_w_class = 3
-	max_combined_w_class = 400 // can store a ton of shit!
+	w_class = ITEM_SIZE_LARGE
+	max_w_class = ITEM_SIZE_NORMAL
+	max_storage_space = 80 // can store a ton of shit!
 
 /obj/item/weapon/storage/backpack/cultpack
 	name = "trophy rack"
@@ -278,8 +269,8 @@
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
 	item_state = "satchel-flat"
-	w_class = 3 //Can fit in backpacks itself.
-	max_combined_w_class = 15
+	w_class = ITEM_SIZE_NORMAL //Can fit in backpacks itself.
+	max_storage_space = DEFAULT_BACKPACK_STORAGE - 10
 	level = 1
 	cant_hold = list(/obj/item/weapon/storage/backpack/satchel/flat) //muh recursive backpacks
 
@@ -304,8 +295,7 @@
 	icon_state = "duffle-syndie"
 	item_state = "duffle-syndie"
 	origin_tech = "syndicate=1"
-	max_combined_w_class = 30
-	storage_slots = 10
+	max_storage_space = DEFAULT_BACKPACK_STORAGE + 10
 	slowdown = 1
 
 /obj/item/weapon/storage/backpack/dufflebag/marinad
@@ -331,8 +321,7 @@
 	desc = "A suspicious looking dufflebag for holding surgery tools."
 	icon_state = "duffle-syndiemed"
 	item_state = "duffle-syndiemed"
-	max_combined_w_class = 40
-	storage_slots = 12
+	max_storage_space = DEFAULT_BACKPACK_STORAGE + 20
 
 /obj/item/weapon/storage/backpack/dufflebag/surgery/atom_init()
 	. = ..()

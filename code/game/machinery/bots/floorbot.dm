@@ -84,7 +84,7 @@
 			bmode = "Disabled"
 		dat += "<BR><BR>Bridge Mode : <A href='?src=\ref[src];operation=bridgemode'>[bmode]</A><BR>"
 
-	user << browse("<HEAD><TITLE>Repairbot v1.0 controls</TITLE></HEAD>[dat]", "window=autorepair")
+	user << browse("<HEAD><TITLE>Repairbot v1.0 controls</TITLE></HEAD>[entity_ja(dat)]", "window=autorepair")
 	onclose(user, "autorepair")
 
 
@@ -225,7 +225,7 @@
 
 	if(src.target && (src.target != null) && src.path.len == 0)
 		spawn(0)
-			if(!istype(src.target, /turf/))
+			if(!istype(src.target, /turf))
 				src.path = get_path_to(src, get_turf(src.target), /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = FALSE)
 			else
 				src.path = get_path_to(src, get_turf(src.target), /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = FALSE)
@@ -245,7 +245,7 @@
 			src.eattile(src.target)
 		else if(istype(src.target, /obj/item/stack/sheet/metal))
 			src.maketile(src.target)
-		else if(istype(src.target, /turf/) && emagged < 2)
+		else if(istype(src.target, /turf) && emagged < 2)
 			repair(src.target)
 		else if(emagged == 2 && istype(src.target,/turf/simulated/floor))
 			var/turf/simulated/floor/F = src.target
@@ -268,7 +268,7 @@
 
 
 /obj/machinery/bot/floorbot/proc/repair(turf/target)
-	if(istype(target, /turf/space/))
+	if(istype(target, /turf/space))
 		if(target.loc.name == "Space")
 			return
 	else if(!istype(target, /turf/simulated/floor))
@@ -277,7 +277,7 @@
 		return
 	src.anchored = 1
 	src.icon_state = "floorbot-c"
-	if(istype(target, /turf/space/))
+	if(istype(target, /turf/space))
 		visible_message("\red [src] begins to repair the hole")
 		var/obj/item/stack/tile/plasteel/T = new /obj/item/stack/tile/plasteel
 		src.repairing = 1
@@ -399,7 +399,7 @@
 		qdel(src)
 
 	else if (istype(W, /obj/item/weapon/pen))
-		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
+		var/t = sanitize_safe(input(user, "Enter new robot name", src.name, input_default(src.created_name)),MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && src.loc != usr)
@@ -418,7 +418,7 @@
 		user.drop_from_inventory(src)
 		qdel(src)
 	else if (istype(W, /obj/item/weapon/pen))
-		var/t = stripped_input(user, "Enter new robot name", src.name, src.created_name)
+		var/t = sanitize_safe(input(user, "Enter new robot name", src.name, input_default(src.created_name)), MAX_NAME_LEN)
 
 		if (!t)
 			return

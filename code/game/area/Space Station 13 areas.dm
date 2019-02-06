@@ -43,10 +43,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Arrival Shuttle"
 
 /area/shuttle/arrival/pre_game
-	name = "Tau Ceti Transfer Station 13"
+	name = "NTS Velocity"
 	icon_state = "shuttle2"
 
 /area/shuttle/arrival/transit
+	name = "Space"
 	icon_state = "shuttle"
 	parallax_movedir = EAST
 
@@ -396,8 +397,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //STATION13
 
 /area/atmos
- 	name = "Atmospherics"
- 	icon_state = "atmos"
+	name = "Atmospherics"
+	icon_state = "atmos"
 
 //Maintenance
 /area/maintenance
@@ -552,14 +553,25 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Kitchen"
 	icon_state = "kitchen"
 
+/area/crew_quarters/barbershop
+	name = "Barbershop"
+	icon_state = "barbershop"
+
 /area/crew_quarters/bar
 	name = "Bar"
 	icon_state = "bar"
 
+/area/crew_quarters/playroom
+	name = "Play Room"
+	icon_state = "fitness"
+
+/area/crew_quarters/theatre
+	name = "Theatre"
+	icon_state = "Theatre"
 
 /area/library
- 	name = "Library"
- 	icon_state = "library"
+	name = "Library"
+	icon_state = "library"
 
 
 /area/chapel/main
@@ -574,6 +586,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/lawoffice
 	name = "Internal Affairs"
 	icon_state = "law"
+
+/area/garden
+	name = "Garden"
+	icon_state = "garden"
 
 
 /area/holodeck
@@ -591,9 +607,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/holodeck/source_emptycourt
 	name = "Holodeck - Empty Court"
 
-/area/holodeck/source_boxingcourt
-	name = "Holodeck - Boxing Court"
-
 /area/holodeck/source_basketball
 	name = "Holodeck - Basketball Court"
 
@@ -608,8 +621,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Holodeck - Beach"
 	icon_state = "Holodeck" // Lazy.
 
-/area/holodeck/source_burntest
-	name = "Holodeck - Atmospheric Burn Test"
+/area/holodeck/source_school
+	name = "Holodeck - Anime School"
+
+/area/holodeck/source_spacechess
+	name = "Holodeck - Space Chess"
+
+/area/holodeck/source_firingrange
+	name = "Holodeck - Firing Range"
 
 /area/holodeck/source_wildlife
 	name = "Holodeck - Wildlife Simulation"
@@ -746,13 +765,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "medbay"
 	music = 'sound/ambience/signal.ogg'
 
-/area/medical/psych
-	name = "Psych Room"
+/area/medical/storage
+	name = "Medbay Storage"
+	icon_state = "medbay3"
+
+/area/medical/medbreak
+	name = "Medbay Breaktime Room"
 	icon_state = "medbay3"
 	music = 'sound/ambience/signal.ogg'
 
-/area/medical/medbreak
-	name = "Break Room"
+/area/medical/psych
+	name = "Psych Room"
 	icon_state = "medbay3"
 	music = 'sound/ambience/signal.ogg'
 
@@ -792,10 +815,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Operating Theatre 2"
 	icon_state = "surgery"
 
-/area/medical/surgerystorage
-	name = "Operating Storage"
-	icon_state = "surgery2"
-
 /area/medical/surgeryobs
 	name = "Operation Observation Room"
 	icon_state = "surgery"
@@ -814,6 +833,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/medical/sleeper
 	name = "Emergency Treatment Centre"
+	icon_state = "exam_room"
+
+/area/medical/checkpoint
+	name = "Medical Checkpoint"
 	icon_state = "exam_room"
 
 //Security
@@ -900,7 +923,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "recycleroffice"
 
 /area/quartermaster/miningbreaktime
-	name = "Breaktime room"
+	name = "Cargo Breaktime Room"
 	icon_state = "miningbreaktime"
 
 /area/quartermaster/miningoffice
@@ -952,6 +975,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/rnd/telesci
 	name = "Telescience Lab"
 	icon_state = "toxmisc"
+
+/area/rnd/scibreak
+	name = "Science Breaktime Room"
+	icon_state = "toxlab"
 
 /area/toxins/server
 	name = "Server Room"

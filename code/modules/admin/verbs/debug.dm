@@ -85,7 +85,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 					return
 
 				if("text")
-					lst[i] = input("Enter new text:","Text",null) as text
+					lst[i] = sanitize(input("Enter new text:","Text",null) as text)
 
 				if("num")
 					lst[i] = input("Enter new number:","Num",0) as num
@@ -208,7 +208,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			return 0
 	var/obj/item/device/paicard/card = new(T)
 	var/mob/living/silicon/pai/pai = new(card)
-	pai.name = input(choice, "Enter your pAI name:", "pAI Name", "Personal AI") as text
+	pai.name = sanitize_safe(input(choice, "Enter your pAI name:", "pAI Name", "Personal AI") as text, MAX_NAME_LEN)
 	pai.real_name = pai.name
 	pai.key = choice.key
 	card.setPersonality(pai)
@@ -388,6 +388,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Debug"
 	set name = "Load Junkyard"
 	SSjunkyard.populate_junkyard()
+
+	//todo: safe gate ref in map datum
+	for(var/obj/machinery/gateway/center/G in gateways_list)
+		if (G.name == "Junkyard Gateway")
+			G.toggleon()
+
 	log_admin("[key_name(src)] pupulated junkyard. SSjunkyard.populate_junkyard() called.")
 	message_admins("[key_name_admin(src)] pupulated junkyard. SSjunkyard.populate_junkyard() called.")
 	feedback_add_details("admin_verb","PPJYD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -617,7 +623,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"security officer",
 		"detective",
 		"doctor",
-		"emergency physician",
+		"paramedic",
 		"chemist",
 		"virologist",
 		"psychiatrist",
@@ -625,12 +631,13 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"atmos-tech",
 		"scientist",
 		"xenobiologist",
-		"xenoarcheologist",
+		"xenoarchaeologist",
 		"roboticist",
 		"geneticist",
 		"janitor",
 		"chef",
 		"bartender",
+		"barber",
 		"botanist",
 		"qm",
 		"cargo",
@@ -878,7 +885,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/centcom(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/white(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(M), slot_l_ear)
-			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/centcom/officer(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/centcomofficer(M), slot_head)
 
 			var/obj/item/device/pda/heads/pda = new(M)
 			pda.owner = M.real_name
@@ -904,7 +911,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/centcom(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/white(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(M), slot_l_ear)
-			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/centcom/captain(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/centcomcaptain(M), slot_head)
 
 			var/obj/item/device/pda/heads/pda = new(M)
 			pda.owner = M.real_name
@@ -1060,7 +1067,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			            access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor, access_construction, access_morgue,
 			            access_crematorium, access_kitchen, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
 			            access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
-			            access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway)
+			            access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_barber)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("hos")
@@ -1230,7 +1237,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access = list(access_medical, access_morgue, access_surgery)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
-		if("emergency physician")
+		if("paramedic")
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_med(M), slot_l_ear)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/fr_jacket(M), slot_wear_suit)
@@ -1238,12 +1245,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/device/pda/medical/pda = new(M)
 			pda.owner = M.real_name
-			pda.ownjob = "Emergency Physician"
+			pda.ownjob = "Paramedic"
 			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/med/W = new(M)
-			W.assignment = "Emergency Physician"
+			W.assignment = "Paramedic"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.access = list(access_medical, access_morgue, access_maint_tunnels, access_external_airlocks, access_security, access_engine_equip, access_research, access_mailsorting)
 			W.registered_name = M.real_name
@@ -1358,7 +1365,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
-		if("xenoarcheologist")
+		if("xenoarchaeologist")
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sci(M), slot_l_ear)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(M), slot_shoes)
@@ -1366,12 +1373,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/device/pda/science/pda = new(M)
 			pda.owner = M.real_name
-			pda.ownjob = "Xenoarcheologist"
+			pda.ownjob = "Xenoarchaeologist"
 			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/sci/W = new(M)
-			W.assignment = "Xenoarcheologist"
+			W.assignment = "Xenoarchaeologist"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.access = list(access_research, access_xenoarch)
 			W.registered_name = M.real_name
@@ -1482,6 +1489,24 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.assignment = "Bartender"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.access = list(access_bar)
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, slot_wear_id)
+		if("barber")
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_l_ear)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/barber(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/wcoat(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(M), slot_shoes)
+
+			var/obj/item/device/pda/barber/pda = new(M)
+			pda.owner = M.real_name
+			pda.ownjob = "Barber"
+			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+			M.equip_to_slot_or_del(pda, slot_belt)
+
+			var/obj/item/weapon/card/id/civ/W = new(M)
+			W.assignment = "Barber"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_barber)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("botanist")
@@ -1841,15 +1866,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Debug Mob Lists"
 	set desc = "For when you just gotta know."
 
-	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs", "Clients", "Joined Clients"))
+	switch(input("Which list?") in list("Players","Admins","Mobs","Alive Mobs","Dead Mobs", "Clients", "Joined Clients"))
 		if("Players")
 			to_chat(usr, jointext(player_list,","))
 		if("Admins")
 			to_chat(usr, jointext(admins,","))
 		if("Mobs")
 			to_chat(usr, jointext(mob_list,","))
-		if("Living Mobs")
-			to_chat(usr, jointext(living_mob_list,","))
+		if("Alive Mobs")
+			to_chat(usr, jointext(alive_mob_list,","))
 		if("Dead Mobs")
 			to_chat(usr, jointext(dead_mob_list,","))
 		if("Clients")

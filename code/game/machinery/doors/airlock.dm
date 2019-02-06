@@ -59,6 +59,7 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/atom_init(mapload, dir = null)
 	..()
+	airlock_list += src
 	wires = new(src)
 	if(glass && !inner_material)
 		inner_material = "glass"
@@ -69,12 +70,13 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/atom_init_late()
 	if(closeOtherId != null)
-		for (var/obj/machinery/door/airlock/A in machines)
+		for (var/obj/machinery/door/airlock/A in airlock_list)
 			if(A.closeOtherId == closeOtherId && A != src)
 				closeOther = A
 				break
 
 /obj/machinery/door/airlock/Destroy()
+	airlock_list -= src
 	QDEL_NULL(wires)
 	QDEL_NULL(electronics)
 	closeOther = null
@@ -350,7 +352,7 @@ var/list/airlock_overlays = list()
 			update_icon(AIRLOCK_CLOSING)
 		if("deny")
 			update_icon(AIRLOCK_DENY)
-			playsound(src, door_deni_sound, 50, 0, 3)
+			playsound(src, door_deni_sound, 40, 0, 3)
 			sleep(6)
 			update_icon(AIRLOCK_CLOSED)
 			icon_state = "closed"
@@ -476,7 +478,7 @@ var/list/airlock_overlays = list()
 			t1 += text("<A href='?src=\ref[];aiDisable=7'>Close door</a><br>\n", src)
 
 	t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
-	user << browse(t1, "window=airlock")
+	user << browse(entity_ja(t1), "window=airlock")
 	onclose(user, "airlock")
 
 
@@ -1012,7 +1014,7 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/do_open()
 	send_status_if_allowed()
-	if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock/) && !closeOther.density)
+	if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock) && !closeOther.density)
 		closeOther.close()
 	if(hasPower())
 		use_power(50)

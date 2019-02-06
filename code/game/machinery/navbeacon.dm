@@ -172,7 +172,7 @@
 		t += "<small><A href='byond://?src=\ref[src];add=1;'>(add new)</A></small><BR>"
 		t+= "<UL></TT>"
 
-	user << browse(t, "window=navbeacon")
+	user << browse(entity_ja(t), "window=navbeacon")
 	onclose(user, "navbeacon")
 
 /obj/machinery/navbeacon/Topic(href, href_list)
@@ -184,19 +184,19 @@
 		freq = sanitize_frequency(freq + text2num(href_list["freq"]))
 
 	else if(href_list["locedit"])
-		var/newloc = sanitize(copytext(input("Enter New Location", "Navigation Beacon", location) as text|null,1,MAX_MESSAGE_LEN))
+		var/newloc = sanitize_safe(input("Enter New Location", "Navigation Beacon", input_default(location)) as text|null)
 		if(newloc)
 			location = newloc
 
 	else if(href_list["edit"])
 		var/codekey = href_list["code"]
 
-		var/newkey = input("Enter Transponder Code Key", "Navigation Beacon", codekey) as text|null
+		var/newkey = sanitize_safe(input("Enter Transponder Code Key", "Navigation Beacon", input_default(codekey)) as text|null)
 		if(!newkey)
 			return FALSE
 
 		var/codeval = codes[codekey]
-		var/newval = input("Enter Transponder Code Value", "Navigation Beacon", codeval) as text|null
+		var/newval = sanitize_safe(input("Enter Transponder Code Value", "Navigation Beacon", input_default(codeval)) as text|null)
 		if(!newval)
 			return FALSE
 
@@ -210,11 +210,11 @@
 		codes.Remove(codekey)
 
 	else if(href_list["add"])
-		var/newkey = input("Enter New Transponder Code Key", "Navigation Beacon") as text|null
+		var/newkey = sanitize(input("Enter New Transponder Code Key", "Navigation Beacon") as text|null)
 		if(!newkey)
 			return FALSE
 
-		var/newval = input("Enter New Transponder Code Value", "Navigation Beacon") as text|null
+		var/newval = sanitize(input("Enter New Transponder Code Value", "Navigation Beacon") as text|null)
 		if(!newval)
 			return FALSE
 

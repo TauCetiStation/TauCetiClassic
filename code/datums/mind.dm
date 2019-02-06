@@ -128,7 +128,7 @@
 			output += "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
 
-	recipient << browse(output,"window=memory")
+	recipient << browse(entity_ja(output),"window=memory")
 
 /datum/mind/proc/edit_memory()
 	if(!ticker || !ticker.mode)
@@ -313,7 +313,7 @@
 			text += "<b>OPERATIVE</b>|<a href='?src=\ref[src];nuclear=clear'>nanotrasen</a>"
 			text += "<br><a href='?src=\ref[src];nuclear=lair'>To shuttle</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];nuclear=dressup'>dress up</a>."
 			var/code
-			for (var/obj/machinery/nuclearbomb/bombue in machines)
+			for (var/obj/machinery/nuclearbomb/bombue in poi_list)
 				if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
 					code = bombue.r_code
 					break
@@ -490,7 +490,7 @@
 
 	out += "<a href='?src=\ref[src];obj_announce=1'>Announce objectives</a><br><br>"
 
-	usr << browse(out, "window=edit_memory[src];size=400x500")
+	usr << browse(entity_ja(out), "window=edit_memory[src];size=400x500")
 
 /datum/mind/Topic(href, href_list)
 	if(!check_rights(R_ADMIN))
@@ -502,8 +502,9 @@
 		assigned_role = new_role
 
 	else if (href_list["memory_edit"])
-		var/new_memo = sanitize(copytext(input("Write new memory", "Memory", memory) as null|message,1,MAX_MESSAGE_LEN))
-		if (isnull(new_memo)) return
+		var/new_memo = sanitize(input("Write new memory", "Memory", input_default(memory)) as null|message, extra = FALSE)
+		if (new_memo)
+			return
 		memory = new_memo
 
 	else if (href_list["obj_edit"] || href_list["obj_add"])
@@ -613,7 +614,7 @@
 				new_objective.target_amount = target_number
 
 			if ("custom")
-				var/expl = sanitize(copytext(input("Custom objective:", "Objective", objective ? objective.explanation_text : "") as text|null,1,MAX_MESSAGE_LEN))
+				var/expl = sanitize(input("Custom objective:", "Objective", objective ? input_default(objective.explanation_text) : "") as text|null)
 				if (!expl) return
 				new_objective = new /datum/objective
 				new_objective.owner = src
@@ -1025,12 +1026,12 @@
 					to_chat(usr, "\red Equipping a syndicate failed!")
 			if("tellcode")
 				var/code
-				for (var/obj/machinery/nuclearbomb/bombue in machines)
+				for (var/obj/machinery/nuclearbomb/bombue in poi_list)
 					if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
 						code = bombue.r_code
 						break
 				if (code)
-					store_memory("<B>Syndicate Nuclear Bomb Code</B>: [code]", 0, 0)
+					store_memory("<B>Syndicate Nuclear Bomb Code</B>: [code]", 0)
 					to_chat(current, "The nuclear authorization code is: <B>[code]</B>")
 				else
 					to_chat(usr, "\red No valid nuke found!")
@@ -1285,34 +1286,34 @@
 
 	edit_memory()
 /*
-	proc/clear_memory(silent = 1)
-		var/datum/game_mode/current_mode = ticker.mode
+/datum/mind/proc/clear_memory(silent = 1)
+	var/datum/game_mode/current_mode = ticker.mode
 
-		// remove traitor uplinks
-		var/list/L = current.get_contents()
-		for (var/t in L)
-			if (istype(t, /obj/item/device/pda))
-				if (t:uplink) qdel(t:uplink)
-				t:uplink = null
-			else if (istype(t, /obj/item/device/radio))
-				if (t:traitorradio) qdel(t:traitorradio)
-				t:traitorradio = null
-				t:traitor_frequency = 0.0
-			else if (istype(t, /obj/item/weapon/SWF_uplink) || istype(t, /obj/item/weapon/syndicate_uplink))
-				if (t:origradio)
-					var/obj/item/device/radio/R = t:origradio
-					R.loc = current.loc
-					R.traitorradio = null
-					R.traitor_frequency = 0.0
-				qdel(t)
+	// remove traitor uplinks
+	var/list/L = current.get_contents()
+	for (var/t in L)
+		if (istype(t, /obj/item/device/pda))
+			if (t:uplink) qdel(t:uplink)
+			t:uplink = null
+		else if (istype(t, /obj/item/device/radio))
+			if (t:traitorradio) qdel(t:traitorradio)
+			t:traitorradio = null
+			t:traitor_frequency = 0.0
+		else if (istype(t, /obj/item/weapon/SWF_uplink) || istype(t, /obj/item/weapon/syndicate_uplink))
+			if (t:origradio)
+				var/obj/item/device/radio/R = t:origradio
+				R.loc = current.loc
+				R.traitorradio = null
+				R.traitor_frequency = 0.0
+			qdel(t)
 
-		// remove wizards spells
-		//If there are more special powers that need removal, they can be procced into here./N
-		current.spellremove(current)
+	// remove wizards spells
+	//If there are more special powers that need removal, they can be procced into here./N
+	current.spellremove(current)
 
-		// clear memory
-		memory = ""
-		special_role = null
+	// clear memory
+	memory = ""
+	special_role = null
 
 */
 
@@ -1687,7 +1688,7 @@
 	mind.assigned_role = "Armalis"
 	mind.special_role = "Vox Raider"
 
-mob/living/parasite/meme/mind_initialize() //Just in case
+/mob/living/parasite/meme/mind_initialize() //Just in case
 	..()
 	mind.assigned_role = "meme"
 

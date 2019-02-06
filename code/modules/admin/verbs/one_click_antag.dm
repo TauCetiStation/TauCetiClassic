@@ -1,4 +1,4 @@
-client/proc/one_click_antag()
+/client/proc/one_click_antag()
 	set name = "Create Antagonist"
 	set desc = "Auto-create an antagonist of your choice."
 	set category = "Admin"
@@ -31,7 +31,7 @@ client/proc/one_click_antag()
 		<a href='?src=\ref[src];makeAntag=10'>Make Deathsquad (Syndicate) (Requires Ghosts)</a><br>
 		"}
 */
-	usr << browse(dat, "window=oneclickantag;size=400x400")
+	usr << browse(entity_ja(dat), "window=oneclickantag;size=400x400")
 	return
 
 
@@ -299,7 +299,7 @@ client/proc/one_click_antag()
 							var/I = image('icons/mob/mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
 							synd_mind.current.client.images += I
 
-		for (var/obj/machinery/nuclearbomb/bomb in machines)
+		for (var/obj/machinery/nuclearbomb/bomb in poi_list)
 			bomb.r_code = nuke_code						// All the nukes are set to this code.
 
 	return 1
@@ -495,7 +495,7 @@ client/proc/one_click_antag()
 		var/max_raiders = 1
 		var/raiders = max_raiders
 		//Spawns vox raiders and equips them.
-		for (var/obj/effect/landmark/L in world)
+		for (var/obj/effect/landmark/L in landmarks_list)
 			if(L.name == "voxstart")
 				if(raiders<=0)
 					break
@@ -572,7 +572,7 @@ client/proc/one_click_antag()
 
 	return new_vox
 
-datum/admins/proc/makeAbductorTeam()
+/datum/admins/proc/makeAbductorTeam()
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
 

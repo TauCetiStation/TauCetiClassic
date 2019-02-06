@@ -134,7 +134,7 @@
 			/area/comms
 			)
 	if(!areas)
-		areas = teleportlocs
+		areas = teleportlocs.Copy()
 		for(var/i in areas)
 			if(is_type_in_list(areas[i], black_list_areas))
 				areas -= i
@@ -523,7 +523,7 @@
 	set popup_menu = 0
 	if(usr != intruder)
 		return
-	intruder << browse(get_stats_html(), "window=droppod")
+	intruder << browse(entity_ja(get_stats_html()), "window=droppod")
 	return
 
 /obj/structure/droppod/proc/get_stats_html()

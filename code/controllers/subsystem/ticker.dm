@@ -244,6 +244,9 @@ var/datum/subsystem/ticker/ticker
 
 		SSvote.started_time = world.time
 
+		//Print a list of antagonists to the server log
+		antagonist_announce()
+
 		/*var/admins_number = 0 //For slack maybe?
 		for(var/client/C)
 			if(C.holder)
@@ -369,7 +372,8 @@ var/datum/subsystem/ticker/ticker
 				captainless=0
 			if(player.mind.assigned_role != "MODE")
 				SSjob.EquipRank(player, player.mind.assigned_role, 0)
-				EquipCustomItems(player)
+			if(ishuman(player))
+				SSquirks.AssignQuirks(player, player.client, TRUE)
 	if(captainless)
 		for(var/mob/M in player_list)
 			if(!isnewplayer(M))
@@ -419,15 +423,9 @@ var/datum/subsystem/ticker/ticker
 	//Silicon laws report
 	var/ai_completions = "<h1>Round End Information</h1><HR>"
 
-	var/ai_or_borgs_in_round = 0
-	for (var/mob/living/silicon/silicon in mob_list)
-		if(silicon)
-			ai_or_borgs_in_round = 1
-			break
-
-	if(ai_or_borgs_in_round)
+	if(silicon_list.len)
 		ai_completions += "<H3>Silicons Laws</H3>"
-		for (var/mob/living/silicon/ai/aiPlayer in mob_list)
+		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
 			if(!aiPlayer)
 				continue
 			var/icon/flat = getFlatIcon(aiPlayer)
@@ -447,7 +445,7 @@ var/datum/subsystem/ticker/ticker
 
 		var/dronecount = 0
 
-		for (var/mob/living/silicon/robot/robo in mob_list)
+		for (var/mob/living/silicon/robot/robo in silicon_list)
 			if(!robo)
 				continue
 			if(istype(robo,/mob/living/silicon/robot/drone))
@@ -481,21 +479,7 @@ var/datum/subsystem/ticker/ticker
 			ai_completions += "[call(mode, handler)()]"
 
 	//Print a list of antagonists to the server log
-	var/list/total_antagonists = list()
-	//Look into all mobs in world, dead or alive
-	for(var/datum/mind/Mind in minds)
-		var/temprole = Mind.special_role
-		if(temprole)							//if they are an antagonist of some sort.
-			if(temprole in total_antagonists)	//If the role exists already, add the name to it
-				total_antagonists[temprole] += ", [Mind.name]([Mind.key])"
-			else
-				total_antagonists.Add(temprole) //If the role doesnt exist in the list, create it and add the mob
-				total_antagonists[temprole] += ": [Mind.name]([Mind.key])"
-
-	//Now print them all into the log!
-	log_game("Antagonists at round end were...")
-	for(var/i in total_antagonists)
-		log_game("[i]s[total_antagonists[i]].")
+	antagonist_announce()
 
 	if(SSjunkyard)
 		SSjunkyard.save_stats()

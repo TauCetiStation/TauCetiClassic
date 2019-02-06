@@ -29,6 +29,14 @@
 	var/leaping = 0
 	ventcrawler = 2
 
+/mob/living/carbon/alien/atom_init()
+	. = ..()
+	alien_list += src
+
+/mob/living/carbon/alien/Destroy()
+	alien_list -= src
+	return ..()
+
 /mob/living/carbon/alien/adjustToxLoss(amount)
 	storedPlasma = min(max(storedPlasma + amount,0),max_plasma) //upper limit of max_plasma, lower limit of 0
 	updatePlasmaDisplay()
@@ -154,7 +162,7 @@
 			var/sentinel = 0
 			var/hunter = 0
 
-			for(var/mob/living/carbon/alien/A in living_mob_list)
+			for(var/mob/living/carbon/alien/A in alien_list)
 				if(A.stat == DEAD)
 					continue
 				if(!A.key && A.brain_op_stage != 4)
@@ -180,8 +188,8 @@
 		else
 			var/no_queen = 1
 			var/mob/living/carbon/alien/queen
-			for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
-				if(!Q.key && Q.brain_op_stage != 4)
+			for(var/mob/living/carbon/alien/humanoid/queen/Q in queen_list)
+				if(Q.stat == DEAD || !Q.key && Q.brain_op_stage != 4)
 					continue
 				no_queen = 0
 				queen = Q
@@ -293,7 +301,7 @@ Hit Procs
 	<BR><HR><BR>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	<BR>"}
-	user << browse(dat, text("window=mob[name];size=340x480"))
+	user << browse(entity_ja(dat), text("window=mob[name];size=340x480"))
 	onclose(user, "mob[name]")
 	return
 
@@ -306,7 +314,7 @@ Des: Gives the client of the alien an image on each infected mob.
 ----------------------------------------*/
 /mob/living/carbon/alien/proc/AddInfectionImages()
 	if (client)
-		for (var/mob/living/C in mob_list)
+		for (var/mob/living/C in living_list)
 			if(C.status_flags & XENO_HOST)
 				var/obj/item/alien_embryo/A = locate() in C
 				var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")

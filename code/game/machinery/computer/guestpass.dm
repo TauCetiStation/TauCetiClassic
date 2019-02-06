@@ -8,12 +8,31 @@
 	light_color = "#0099ff"
 	customizable_view = FORDBIDDEN_VIEW
 
-	var/temp_access = list() //to prevent agent cards stealing access as permanent
-	var/expiration_time = 0
+	var/temp_access = list() // to prevent agent cards stealing access as permanent
 	var/reason = "NOT SPECIFIED"
 
+	var/expiration_time = 0
+	var/is_expired = 0
+
+/obj/item/weapon/card/id/guest/proc/count_until_expired()
+	var/time_until_remind = expiration_time - world.time
+	addtimer(CALLBACK(src, .proc/expire_warn), time_until_remind - 3 MINUTES)
+	addtimer(CALLBACK(src, .proc/expire), time_until_remind)
+	return
+
+/obj/item/weapon/card/id/guest/proc/expire_warn()
+	playsound(src, 'sound/machines/buzz-sigh.ogg', 20, 1)
+	flick("guest_warn", src)
+	return
+
+/obj/item/weapon/card/id/guest/proc/expire()
+	playsound(src, 'sound/machines/buzz-sigh.ogg', 20, 1)
+	is_expired = 1
+	icon_state = "guest_expired"
+	return
+
 /obj/item/weapon/card/id/guest/GetAccess()
-	if (world.time > expiration_time)
+	if(is_expired)
 		return access
 	else
 		return temp_access
@@ -21,7 +40,8 @@
 /obj/item/weapon/card/id/guest/examine(mob/user)
 	..()
 	if (world.time < expiration_time)
-		to_chat(user, "<span class='notice'>This pass expires at [worldtime2text(expiration_time)].</span>")
+		var/time_until_expiration = ceil((expiration_time - world.time) / 600) // Sould be in minutes.
+		to_chat(user, "<span class='notice'>This pass expires at [worldtime2text(expiration_time)].<br>There is [time_until_expiration] minutes left.</span>")
 	else
 		to_chat(user, "<span class='warning'>It expired at [worldtime2text(expiration_time)].</span>")
 
@@ -44,6 +64,7 @@
 /obj/machinery/computer/guestpass
 	name = "guest pass terminal"
 	icon_state = "guest"
+	desc = "It's a wall-mounted console that allows you to issue temporary access. Be careful when issuing guest passes. Maximum guest pass card time - one hour."
 	density = 0
 
 
@@ -95,7 +116,7 @@
 				dat += "<a href='?src=\ref[src];choice=access;access=[A]'>[area]</a><br>"
 		dat += "<br><a href='?src=\ref[src];action=issue'>Issue pass</a><br>"
 
-	user << browse(dat, "window=guestpass;size=400x520")
+	user << browse(entity_ja(dat), "window=guestpass;size=400x520")
 	onclose(user, "guestpass")
 
 
@@ -110,17 +131,17 @@
 	if (href_list["choice"])
 		switch(href_list["choice"])
 			if ("giv_name")
-				var/nam = sanitize(input("Person pass is issued to", "Name", giv_name) as text|null)
+				var/nam = sanitize(input("Person pass is issued to", "Name", input_default(giv_name)) as text|null)
 				if (nam)
 					giv_name = nam
 			if ("reason")
-				var/reas = sanitize(input("Reason why pass is issued", "Reason", reason) as text|null)
+				var/reas = sanitize(input("Reason why pass is issued", "Reason", input_default(reason)) as text|null)
 				if(reas)
 					reason = reas
 			if ("duration")
-				var/dur = input("Duration (in minutes) during which pass is valid (up to 30 minutes).", "Duration") as num|null
+				var/dur = input("Duration (in minutes) during which pass is valid (up to 60 minutes).", "Duration") as num|null
 				if (dur)
-					if (dur > 0 && dur <= 30)
+					if (dur > 0 && dur <= 60)
 						duration = dur
 					else
 						to_chat(usr, "<span class='warning'>Invalid duration.</span>")
@@ -157,7 +178,7 @@
 					dat += "[entry]<br><hr>"
 				//usr << "Printing the log, standby..."
 				//sleep(50)
-				var/obj/item/weapon/paper/P = new/obj/item/weapon/paper( loc )
+				var/obj/item/weapon/paper/P = new/obj/item/weapon/paper(loc)
 				P.name = "activity log"
 				P.info = dat
 
@@ -179,7 +200,12 @@
 					pass.expiration_time = world.time + duration*10*60
 					pass.reason = reason
 					pass.name = "guest pass #[number]"
+					pass.count_until_expired()
 				else
 					to_chat(usr, "\red Cannot issue pass without issuing ID.")
 
 	updateUsrDialog()
+
+/obj/machinery/computer/guestpass/dark // The darker sprite verison of a guest pass term. Did it just for mappers to use.
+	name = "guest pass terminal"
+	icon_state = "guest_dark"

@@ -214,7 +214,7 @@
 
 /datum/game_mode/abduction/proc/get_team_console(team)
 	var/obj/machinery/abductor/console/console
-	for(var/obj/machinery/abductor/console/c in machines)
+	for(var/obj/machinery/abductor/console/c in abductor_machinery_list)
 		if(c.team == team)
 			console = c
 			break
@@ -257,7 +257,7 @@
 			var/datum/objective/objective = team_objectives[team_number]
 			if (con.experiment.points >= objective.target_amount)
 				SSshuttle.incall(0.5)
-				captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+				captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
 				world << sound('sound/AI/shuttlecalled.ogg')
 				finished = 1
 				return ..()
@@ -336,6 +336,15 @@
 		text += "<BR><HR>"
 	return text
 
+// Machinery
+/obj/machinery/abductor/atom_init()
+	. = ..()
+	abductor_machinery_list += src
+
+/obj/machinery/abductor/Destroy()
+	abductor_machinery_list -= src
+	return ..()
+
 //Landmarks
 // TODO: Split into seperate landmarks for prettier ships
 /obj/effect/landmark/abductor
@@ -366,7 +375,7 @@
 /datum/objective/experiment/check_completion()
 	. = 0
 	var/ab_team = team
-	for(var/obj/machinery/abductor/experiment/E in machines)
+	for(var/obj/machinery/abductor/experiment/E in abductor_machinery_list)
 		if(E.team == ab_team)
 			if(E.points >= target_amount)
 				return 1
@@ -382,7 +391,7 @@
 	var/target = pick(list("pets","lights","monkeys","fruits","shoes","bars of soap"))
 	explanation_text += " [target]."
 
-datum/objective/abductee/capture
+/datum/objective/abductee/capture
 	explanation_text = "Capture"
 
 /datum/objective/abductee/capture/New()

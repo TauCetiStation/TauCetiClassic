@@ -10,15 +10,17 @@
 /datum/map_template/New(path = null, map = null, rename = null)
 	if(path)
 		mappath = path
-	if(mappath)
-		preload_size(mappath)
 	if(map)
 		mapfile = map
+	if(mappath)
+		preload_size(mappath)
+	else if(mapfile)
+		preload_size(mapfile)
 	if(rename)
 		name = rename
 
 /datum/map_template/proc/preload_size(path)
-	loaded_stuff = maploader.load_map(file(path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
+	loaded_stuff = maploader.load_map(get_file(), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
 	if(loaded_stuff && loaded_stuff.len)
 		var/list/bounds = loaded_stuff["bounds"]
 		if(bounds && bounds.len)
@@ -38,6 +40,7 @@
 
 	for(var/L in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
 	                   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
+		atoms += L
 		var/turf/B = L
 		for(var/A in B)
 			atoms += A

@@ -59,7 +59,7 @@
 			dat += "<br><br>Reconstruction in process, please wait.<br>"
 	dat += {" <A href='?src=\ref[user];mach_close=computer'>Close</A>"}
 
-	user << browse(dat, "window=computer;size=400x500")
+	user << browse(entity_ja(dat), "window=computer;size=400x500")
 	onclose(user, "computer")
 
 /obj/machinery/computer/aifixer/process()
@@ -85,7 +85,7 @@
 				src.occupier.stat = CONSCIOUS
 				src.occupier.lying = 0
 				dead_mob_list -= src.occupier
-				living_mob_list += src.occupier
+				alive_mob_list += src.occupier
 				src.overlays -= image('icons/obj/computer.dmi', "ai-fixer-404")
 				src.overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
 				src.occupier.add_ai_verbs()

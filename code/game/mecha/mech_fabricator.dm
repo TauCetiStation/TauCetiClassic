@@ -274,7 +274,7 @@
 	updateUsrDialog()
 	sleep(30) //only sleep if called by user
 
-	for(var/obj/machinery/computer/rdconsole/RDC in oview(5,src))
+	for(var/obj/machinery/computer/rdconsole/RDC in oview(7,src))
 		if(!RDC.sync)
 			continue
 		for(var/datum/tech/T in RDC.files.known_tech)
@@ -355,7 +355,7 @@
 				</table>
 				</body>
 				</html>"}
-	user << browse(dat, "window=mecha_fabricator;size=1000x430")
+	user << browse(entity_ja(dat), "window=mecha_fabricator;size=1000x430")
 	onclose(user, "mecha_fabricator")
 
 /obj/machinery/mecha_part_fabricator/Topic(href, href_list)
@@ -363,9 +363,9 @@
 	if(!.)
 		return
 
-	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
+	var/datum/topic_input/F = new /datum/topic_input(href,href_list)
 	if(href_list["part_set"])
-		var/tpart_set = filter.getStr("part_set")
+		var/tpart_set = F.getStr("part_set")
 		if(tpart_set)
 			if(tpart_set=="clear")
 				part_set = null
@@ -374,7 +374,7 @@
 				screen = "parts"
 
 	if(href_list["part"])
-		var/T = filter.getStr("part")
+		var/T = F.getStr("part")
 		for(var/datum/design/D in files.known_designs)
 			if(D.build_type & build_type)
 				if(D.id == T)
@@ -385,7 +385,7 @@
 					break
 
 	if(href_list["add_to_queue"])
-		var/T = filter.getStr("add_to_queue")
+		var/T = F.getStr("add_to_queue")
 		for(var/datum/design/D in files.known_designs)
 			if(D.build_type & build_type)
 				if(D.id == T)
@@ -394,11 +394,11 @@
 		return update_queue_on_page()
 
 	if(href_list["remove_from_queue"])
-		remove_from_queue(filter.getNum("remove_from_queue"))
+		remove_from_queue(F.getNum("remove_from_queue"))
 		return update_queue_on_page()
 
 	if(href_list["partset_to_queue"])
-		add_part_set_to_queue(filter.get("partset_to_queue"))
+		add_part_set_to_queue(F.get("partset_to_queue"))
 		return update_queue_on_page()
 
 	if(href_list["process_queue"])
@@ -413,8 +413,8 @@
 		screen = href_list["screen"]
 
 	if(href_list["queue_move"] && href_list["index"])
-		var/index = filter.getNum("index")
-		var/new_index = index + filter.getNum("queue_move")
+		var/index = F.getNum("index")
+		var/new_index = index + F.getNum("queue_move")
 		if(isnum(index) && isnum(new_index) && IsInteger(index) && IsInteger(new_index))
 			if(IsInRange(new_index,1,queue.len))
 				queue.Swap(index,new_index)
@@ -428,7 +428,7 @@
 		sync()
 
 	if(href_list["part_desc"])
-		var/T = filter.getStr("part_desc")
+		var/T = F.getStr("part_desc")
 		for(var/datum/design/D in files.known_designs)
 			if(D.build_type & build_type)
 				if(D.id == T)

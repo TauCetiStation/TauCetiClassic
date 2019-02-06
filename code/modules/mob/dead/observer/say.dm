@@ -1,5 +1,5 @@
 /mob/dead/observer/say(var/message)
-	message = sanitize(copytext(message, 1, MAX_MESSAGE_LEN))
+	message = sanitize(message)
 
 	if (!message)
 		return
@@ -8,7 +8,7 @@
 
 	if (src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
-			to_chat(src, "<span class='red'> You cannot talk in deadchat (muted).</span>")
+			to_chat(src, "<span class='alert'>You cannot talk in deadchat (muted).</span>")
 			return
 
 		if (src.client.handle_spam_prevention(message,MUTE_DEADCHAT))
@@ -18,7 +18,7 @@
 
 
 /mob/dead/observer/emote(act, type, message)
-	message = sanitize_simple(copytext(message, 1, MAX_MESSAGE_LEN))
+	message = sanitize(message)
 
 	if(!message)
 		return
@@ -30,7 +30,7 @@
 
 	if(src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
-			to_chat(src, "\red You cannot emote in deadchat (muted).")
+			to_chat(src, "<span class='alert'>You cannot emote in deadchat (muted).</span>")
 			return
 
 		if(src.client.handle_spam_prevention(message, MUTE_DEADCHAT))

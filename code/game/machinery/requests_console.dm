@@ -4,7 +4,6 @@
 var/req_console_assistance = list()
 var/req_console_supplies = list()
 var/req_console_information = list()
-var/list/obj/machinery/requests_console/allConsoles = list()
 
 /obj/machinery/requests_console
 	name = "Requests Console"
@@ -71,7 +70,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 /obj/machinery/requests_console/atom_init()
 	. = ..()
 	name = "[department] Requests Console"
-	allConsoles += src
+	requests_console_list += src
 	//req_console_departments += department
 	switch(departmentType)
 		if(1)
@@ -95,7 +94,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			req_console_information += department
 
 /obj/machinery/requests_console/Destroy()
-	allConsoles -= src
+	requests_console_list -= src
 	switch(departmentType)
 		if(1)
 			req_console_assistance -= department
@@ -165,7 +164,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				dat += text("<A href='?src=\ref[src];setScreen=0'>Continue</A><BR>")
 
 			if(8)	//view messages
-				for (var/obj/machinery/requests_console/Console in allConsoles)
+				for (var/obj/machinery/requests_console/Console in requests_console_list)
 					if (Console.department == department)
 						Console.newmessagepriority = 0
 						Console.icon_state = "req_comp0"
@@ -191,7 +190,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					dat += text("<b>Authentication accepted</b><BR><BR>")
 				else
 					dat += text("Swipe your card to authenticate yourself.<BR><BR>")
-				dat += text("<b>Message: </b>[sanitize_popup(message)] <A href='?src=\ref[src];writeAnnouncement=1'>Write</A><BR><BR>")
+				dat += text("<b>Message: </b>[message] <A href='?src=\ref[src];writeAnnouncement=1'>Write</A><BR><BR>")
 				if (announceAuth && message)
 					dat += text("<A href='?src=\ref[src];sendAnnouncement=1'>Announce</A><BR>");
 				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
@@ -215,7 +214,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				else
 					dat += text("Speaker <A href='?src=\ref[src];setSilent=1'>ON</A>")
 
-		user << browse("[dat]", "window=request_console")
+		user << browse("[entity_ja(dat)]", "window=request_console")
 		onclose(user, "req_console")
 
 /obj/machinery/requests_console/Topic(href, href_list)
@@ -226,7 +225,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	if(reject_bad_text(href_list["write"]))
 		dpt = ckey(href_list["write"]) //write contains the string of the receiving department's name
 
-		var/new_message = sanitize_alt(copytext(input(usr, "Write your message:", "Awaiting Input", ""),1,MAX_MESSAGE_LEN))
+		var/new_message = sanitize(input(usr, "Write your message:", "Awaiting Input", ""))
 		if(new_message)
 			message = new_message
 			screen = 9
@@ -243,7 +242,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			priority = -1
 
 	if(href_list["writeAnnouncement"])
-		var/new_message = sanitize(copytext(input(usr, "Write your message:", "Awaiting Input", ""),1,MAX_MESSAGE_LEN))
+		var/new_message = sanitize(input(usr, "Write your message:", "Awaiting Input", ""))
 		if(new_message)
 			message = new_message
 			switch(href_list["priority"])
@@ -279,7 +278,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		screen = 7 //if it's successful, this will get overrwritten (7 = unsufccessfull, 6 = successfull)
 		if (sending)
 			var/pass = 0
-			for (var/obj/machinery/message_server/MS in machines)
+			for (var/obj/machinery/message_server/MS in message_servers)
 				if(!MS.active)
 					continue
 				MS.send_rc_message(href_list["department"],department,log_msg,msgStamped,msgVerified,priority)
@@ -287,7 +286,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 			if(pass)
 
-				for (var/obj/machinery/requests_console/Console in allConsoles)
+				for (var/obj/machinery/requests_console/Console in requests_console_list)
 					if (ckey(Console.department) == ckey(href_list["department"]))
 
 						switch(priority)

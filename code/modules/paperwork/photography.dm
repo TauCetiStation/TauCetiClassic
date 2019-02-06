@@ -30,6 +30,7 @@
 	var/icon/img	//Big photo image
 	var/scribble	//Scribble on the back.
 	var/icon/tiny
+	var/list/photographed_names = list() // For occult purposes.
 
 /obj/item/weapon/photo/Destroy()
 	img = null
@@ -37,17 +38,31 @@
 	tiny = null
 	return ..()
 
+/obj/item/weapon/photo/burnpaper(obj/item/weapon/lighter/P, mob/user)
+	..()
+	for(var/A in photographed_names)
+		if(photographed_names[A] == /mob/dead/observer)
+			if(prob(10))
+				new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm(loc) // I mean, it is already dropped in the parent proc, so this is pretty safe to do.
+			break
+
 /obj/item/weapon/photo/attack_self(mob/user)
 	user.examinate(src)
 
 /obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user)
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
-		var/txt = sanitize_alt(copytext(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text, 1, 128))
-		//txt = copytext(txt, 1, 128)
+		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null) as text, 128)
 		if(loc == user && user.stat == CONSCIOUS)
 			scribble = txt
 	else if(istype(P, /obj/item/weapon/lighter))
 		burnpaper(P, user)
+	else if(istype(P, /obj/item/device/occult_scanner))
+		for(var/A in photographed_names)
+			if(photographed_names[A] == /mob/dead/observer)
+				var/obj/item/device/occult_scanner/OS = P
+				OS.scanned_type = /mob/dead/observer
+				to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
+				break
 	..()
 
 /obj/item/weapon/photo/examine()
@@ -60,11 +75,11 @@
 
 /obj/item/weapon/photo/proc/show(mob/user)
 	user << browse_rsc(img, "tmp_photo.png")
-	user << browse("<html><head><title>[sanitize_popup(name)]</title></head>" \
+	user << browse(entity_ja("<html><head><title>[name]</title></head>" \
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
 		+ "<img src='tmp_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
 		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]"\
-		+ "</body></html>", "window=book;size=192x[scribble ? 400 : 192]")
+		+ "</body></html>"), "window=book;size=192x[scribble ? 400 : 192]")
 	onclose(user, "[name]")
 	return
 
@@ -73,7 +88,7 @@
 	set category = "Object"
 	set src in usr
 
-	var/n_name = sanitize(copytext(input(usr, "What would you like to label the photo?", "Photo Labelling", null)  as text, 1, MAX_NAME_LEN))
+	var/n_name = sanitize_safe(input(usr, "What would you like to label the photo?", "Photo Labelling", null) as text, MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
 	if(( (loc == usr || (loc.loc && loc.loc == usr)) && usr.stat == CONSCIOUS))
 		name = "[(n_name ? text("[n_name]") : "photo")]"
@@ -95,6 +110,7 @@
 	icon_state = "album"
 	item_state = "briefcase"
 	can_hold = list("/obj/item/weapon/photo",)
+	max_storage_space = DEFAULT_BOX_STORAGE
 
 /obj/item/weapon/storage/photo_album/MouseDrop(obj/over_object as obj)
 
@@ -173,7 +189,12 @@
 		return
 	..()
 
-
+/obj/item/device/camera/spooky/attackby(obj/item/I, mob/user)
+	..()
+	if(istype(I, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = I
+		OS.scanned_type = src.type
+		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
 
 /obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center)
 	var/atoms[] = list()
@@ -223,6 +244,7 @@
 
 /obj/item/device/camera/proc/camera_get_mobs(turf/the_turf)
 	var/mob_detail
+	var/names_detail = list()
 	for(var/mob/M in the_turf)
 		if(M.invisibility)
 			if(see_ghosts && istype(M,/mob/dead/observer))
@@ -233,6 +255,7 @@
 					mob_detail = "You can see a g-g-g-g-ghooooost! "
 				else
 					mob_detail += "You can also see a g-g-g-g-ghooooost!"
+				names_detail[O.name] = O.type
 			else
 				continue
 
@@ -252,8 +275,9 @@
 				mob_detail = "You can see [L] on the photo[L.health < 75 ? " - [L] looks hurt":""].[holding ? " [holding]":"."]. "
 			else
 				mob_detail += "You can also see [L] on the photo[L.health < 75 ? " - [L] looks hurt":""].[holding ? " [holding]":"."]."
+			names_detail[M.name] = M.type
 
-	return mob_detail
+	return list("mob_detail" = mob_detail, "names_detail" = names_detail)
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || ismob(target.loc))
@@ -275,6 +299,7 @@
 
 /obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
 	var/mobs = ""
+	var/list/mob_names = list()
 	var/isAi = istype(user, /mob/living/silicon/ai)
 	var/list/seen
 	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
@@ -291,17 +316,19 @@
 			if(isAi && !cameranet.checkTurfVis(T))
 				continue
 			else
+				var/detail_list = camera_get_mobs(T)
 				turfs += T
-				mobs += camera_get_mobs(T)
+				mobs += detail_list["mob_detail"]
+				mob_names += detail_list["names_detail"]
 
 	var/icon/temp = get_base_photo_icon()
 	temp.Blend("#000", ICON_OVERLAY)
 	temp.Blend(camera_get_icon(turfs, target), ICON_OVERLAY)
 
-	var/datum/picture/P = createpicture(user, temp, mobs, flag)
+	var/datum/picture/P = createpicture(user, temp, mobs, mob_names, flag)
 	printpicture(user, P)
 
-/obj/item/device/camera/proc/createpicture(mob/user, icon/temp, mobs, flag)
+/obj/item/device/camera/proc/createpicture(mob/user, icon/temp, mobs, mob_names, flag)
 	var/icon/small_img = icon(temp)
 	var/icon/tiny_img = icon(temp)
 	var/icon/ic = icon('icons/obj/items.dmi',"photo")
@@ -317,6 +344,7 @@
 	P.fields["tiny"] = pc
 	P.fields["img"] = temp
 	P.fields["desc"] = mobs
+	P.fields["mob_names"] = mob_names // A list inside a list.
 	P.fields["pixel_x"] = rand(-10, 10)
 	P.fields["pixel_y"] = rand(-10, 10)
 
@@ -379,5 +407,6 @@
 	tiny = P.fields["tiny"]
 	img = P.fields["img"]
 	desc = P.fields["desc"]
+	photographed_names = P.fields["mob_names"]
 	pixel_x = P.fields["pixel_x"]
 	pixel_y = P.fields["pixel_y"]

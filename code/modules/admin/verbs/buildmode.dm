@@ -52,65 +52,67 @@
 /obj/effect/bmode/builddir
 	icon_state = "build"
 	screen_loc = "NORTH,WEST"
-	Click()
-		switch(dir)
-			if(NORTH)
-				dir = EAST
-			if(EAST)
-				dir = SOUTH
-			if(SOUTH)
-				dir = WEST
-			if(WEST)
-				dir = NORTHWEST
-			if(NORTHWEST)
-				dir = NORTH
-		return 1
+
+/obj/effect/bmode/builddir/Click()
+	switch(dir)
+		if(NORTH)
+			dir = EAST
+		if(EAST)
+			dir = SOUTH
+		if(SOUTH)
+			dir = WEST
+		if(WEST)
+			dir = NORTHWEST
+		if(NORTHWEST)
+			dir = NORTH
+	return 1
 
 /obj/effect/bmode/buildhelp
 	icon = 'icons/misc/buildmode.dmi'
 	icon_state = "buildhelp"
 	screen_loc = "NORTH,WEST+1"
-	Click()
-		switch(master.cl.buildmode)
-			if(1)
-				to_chat(usr, "\blue ***********************************************************")
-				to_chat(usr, "\blue Left Mouse Button        = Construct / Upgrade")
-				to_chat(usr, "\blue Right Mouse Button       = Deconstruct / Delete / Downgrade")
-				to_chat(usr, "\blue Left Mouse Button + ctrl = R-Window")
-				to_chat(usr, "\blue Left Mouse Button + alt  = Airlock")
-				to_chat(usr, "")
-				to_chat(usr, "\blue Use the button in the upper left corner to")
-				to_chat(usr, "\blue change the direction of built objects.")
-				to_chat(usr, "\blue ***********************************************************")
-			if(2)
-				to_chat(usr, "\blue ***********************************************************")
-				to_chat(usr, "\blue Right Mouse Button on buildmode button = Set object type")
-				to_chat(usr, "\blue Left Mouse Button on turf/obj          = Place objects")
-				to_chat(usr, "\blue Right Mouse Button                     = Delete objects")
-				to_chat(usr, "")
-				to_chat(usr, "\blue Use the button in the upper left corner to")
-				to_chat(usr, "\blue change the direction of built objects.")
-				to_chat(usr, "\blue ***********************************************************")
-			if(3)
-				to_chat(usr, "\blue ***********************************************************")
-				to_chat(usr, "\blue Right Mouse Button on buildmode button = Select var(type) & value")
-				to_chat(usr, "\blue Left Mouse Button on turf/obj/mob      = Set var(type) & value")
-				to_chat(usr, "\blue Right Mouse Button on turf/obj/mob     = Reset var's value")
-				to_chat(usr, "\blue ***********************************************************")
-			if(4)
-				to_chat(usr, "\blue ***********************************************************")
-				to_chat(usr, "\blue Left Mouse Button on turf/obj/mob      = Select")
-				to_chat(usr, "\blue Right Mouse Button on turf/obj/mob     = Throw")
-				to_chat(usr, "\blue ***********************************************************")
-		return 1
+
+/obj/effect/bmode/buildhelp/Click()
+	switch(master.cl.buildmode)
+		if(1)
+			to_chat(usr, "\blue ***********************************************************")
+			to_chat(usr, "\blue Left Mouse Button        = Construct / Upgrade")
+			to_chat(usr, "\blue Right Mouse Button       = Deconstruct / Delete / Downgrade")
+			to_chat(usr, "\blue Left Mouse Button + ctrl = R-Window")
+			to_chat(usr, "\blue Left Mouse Button + alt  = Airlock")
+			to_chat(usr, "")
+			to_chat(usr, "\blue Use the button in the upper left corner to")
+			to_chat(usr, "\blue change the direction of built objects.")
+			to_chat(usr, "\blue ***********************************************************")
+		if(2)
+			to_chat(usr, "\blue ***********************************************************")
+			to_chat(usr, "\blue Right Mouse Button on buildmode button = Set object type")
+			to_chat(usr, "\blue Left Mouse Button on turf/obj          = Place objects")
+			to_chat(usr, "\blue Right Mouse Button                     = Delete objects")
+			to_chat(usr, "")
+			to_chat(usr, "\blue Use the button in the upper left corner to")
+			to_chat(usr, "\blue change the direction of built objects.")
+			to_chat(usr, "\blue ***********************************************************")
+		if(3)
+			to_chat(usr, "\blue ***********************************************************")
+			to_chat(usr, "\blue Right Mouse Button on buildmode button = Select var(type) & value")
+			to_chat(usr, "\blue Left Mouse Button on turf/obj/mob      = Set var(type) & value")
+			to_chat(usr, "\blue Right Mouse Button on turf/obj/mob     = Reset var's value")
+			to_chat(usr, "\blue ***********************************************************")
+		if(4)
+			to_chat(usr, "\blue ***********************************************************")
+			to_chat(usr, "\blue Left Mouse Button on turf/obj/mob      = Select")
+			to_chat(usr, "\blue Right Mouse Button on turf/obj/mob     = Throw")
+			to_chat(usr, "\blue ***********************************************************")
+	return 1
 
 /obj/effect/bmode/buildquit
 	icon_state = "buildquit"
 	screen_loc = "NORTH,WEST+3"
 
-	Click()
-		togglebuildmode(master.cl.mob)
-		return 1
+/obj/effect/bmode/buildquit/Click()
+	togglebuildmode(master.cl.mob)
+	return 1
 
 /obj/effect/bmode/buildholder
 	density = 0
@@ -129,60 +131,60 @@
 	var/valueholder = "derp"
 	var/objholder = /obj/structure/closet
 
-	Click(location, control, params)
-		var/list/pa = params2list(params)
+/obj/effect/bmode/buildmode/Click(location, control, params)
+	var/list/pa = params2list(params)
 
-		if(pa.Find("left"))
-			switch(master.cl.buildmode)
-				if(1)
-					master.cl.buildmode = 2
-					src.icon_state = "buildmode2"
-				if(2)
-					master.cl.buildmode = 3
-					src.icon_state = "buildmode3"
-				if(3)
-					master.cl.buildmode = 4
-					src.icon_state = "buildmode4"
-				if(4)
-					master.cl.buildmode = 1
-					src.icon_state = "buildmode1"
+	if(pa.Find("left"))
+		switch(master.cl.buildmode)
+			if(1)
+				master.cl.buildmode = 2
+				src.icon_state = "buildmode2"
+			if(2)
+				master.cl.buildmode = 3
+				src.icon_state = "buildmode3"
+			if(3)
+				master.cl.buildmode = 4
+				src.icon_state = "buildmode4"
+			if(4)
+				master.cl.buildmode = 1
+				src.icon_state = "buildmode1"
 
-		else if(pa.Find("right"))
-			switch(master.cl.buildmode)
-				if(1)
-					return 1
-				if(2)
-					objholder = text2path(input(usr,"Enter typepath:" ,"Typepath","/obj/structure/closet"))
-					if(!ispath(objholder))
+	else if(pa.Find("right"))
+		switch(master.cl.buildmode)
+			if(1)
+				return 1
+			if(2)
+				objholder = text2path(input(usr,"Enter typepath:" ,"Typepath","/obj/structure/closet"))
+				if(!ispath(objholder))
+					objholder = /obj/structure/closet
+					alert("That path is not allowed.")
+				else
+					if(ispath(objholder,/mob) && !check_rights(R_DEBUG,0))
 						objholder = /obj/structure/closet
-						alert("That path is not allowed.")
-					else
-						if(ispath(objholder,/mob) && !check_rights(R_DEBUG,0))
-							objholder = /obj/structure/closet
-				if(3)
-					var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "icon", "icon_state")
-					var/list/fully_locked = list("resize", "resize_rev")
+			if(3)
+				var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "icon", "icon_state")
+				var/list/fully_locked = list("resize", "resize_rev")
 
-					master.buildmode.varholder = input(usr,"Enter variable name:" ,"Name", "name")
-					if(master.buildmode.varholder in fully_locked)
-						to_chat(usr, "\red It is forbidden to edit this variable.")
-						return
-					if(master.buildmode.varholder in locked && !check_rights(R_DEBUG,0))
-						return 1
-					var/thetype = input(usr,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference")
-					if(!thetype) return 1
-					switch(thetype)
-						if("text")
-							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value", "value") as text
-						if("number")
-							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value", 123) as num
-						if("mob-reference")
-							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as mob in mob_list
-						if("obj-reference")
-							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as obj in world
-						if("turf-reference")
-							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as turf in world
-    	return 1
+				master.buildmode.varholder = sanitize(input(usr,"Enter variable name:" ,"Name", "name"))
+				if(master.buildmode.varholder in fully_locked)
+					to_chat(usr, "\red It is forbidden to edit this variable.")
+					return
+				if(master.buildmode.varholder in locked && !check_rights(R_DEBUG,0))
+					return 1
+				var/thetype = input(usr,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference")
+				if(!thetype) return 1
+				switch(thetype)
+					if("text")
+						master.buildmode.valueholder = sanitize(input(usr,"Enter variable value:" ,"Value", "value") as text)
+					if("number")
+						master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value", 123) as num
+					if("mob-reference")
+						master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as mob in mob_list
+					if("obj-reference")
+						master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as obj in world
+					if("turf-reference")
+						master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as turf in world
+	return 1
 
 /proc/build_click(mob/user, buildmode, params, obj/object)
 	var/obj/effect/bmode/buildholder/holder = null

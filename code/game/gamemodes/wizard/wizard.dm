@@ -68,22 +68,23 @@
 			kill_objective.find_target()
 			wizard.objectives += kill_objective
 
-			if (!(locate(/datum/objective/escape) in wizard.objectives))
-				var/datum/objective/escape/escape_objective = new
-				escape_objective.owner = wizard
-				wizard.objectives += escape_objective
+			if (!(locate(/datum/objective/survive) in wizard.objectives))
+				var/datum/objective/survive/survive_objective = new
+				survive_objective.owner = wizard
+				wizard.objectives += survive_objective
+		
 		if(31 to 60)
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = wizard
 			steal_objective.find_target()
 			wizard.objectives += steal_objective
 
-			if (!(locate(/datum/objective/escape) in wizard.objectives))
-				var/datum/objective/escape/escape_objective = new
-				escape_objective.owner = wizard
-				wizard.objectives += escape_objective
+			if (!(locate(/datum/objective/survive) in wizard.objectives))
+				var/datum/objective/survive/survive_objective = new
+				survive_objective.owner = wizard
+				wizard.objectives += survive_objective
 
-		if(61 to 100)
+		if(61 to 99)
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = wizard
 			kill_objective.find_target()
@@ -113,7 +114,7 @@
 	var/wizard_name_second = pick(wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	spawn(0)
-		var/newname = sanitize(copytext(input(wizard_mob, "You are the Space Wizard. Would you like to change your name to something else?", "Name change", randomname) as null|text,1,MAX_NAME_LEN))
+		var/newname = sanitize_safe(input(wizard_mob, "You are the Space Wizard. Would you like to change your name to something else?", "Name change", randomname) as null|text, MAX_NAME_LEN)
 
 		if (!newname)
 			newname = randomname
@@ -122,6 +123,9 @@
 		wizard_mob.name = newname
 		if(wizard_mob.mind)
 			wizard_mob.mind.name = newname
+		if(istype(wizard_mob.dna, /datum/dna))
+			var/datum/dna/dna = wizard_mob.dna
+			dna.real_name = newname
 	return
 
 

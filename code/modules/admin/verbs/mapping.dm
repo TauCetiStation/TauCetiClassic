@@ -26,9 +26,9 @@ var/intercom_range_display_status = 0
 	icon = 'icons/480x480.dmi'
 	icon_state = "25percent"
 
-	New()
-		src.pixel_x = -224
-		src.pixel_y = -224
+/obj/effect/debugging/camera_range/New()
+	src.pixel_x = -224
+	src.pixel_y = -224
 
 /obj/effect/debugging/marker
 	icon = 'icons/turf/areas.dmi'
@@ -97,7 +97,7 @@ var/intercom_range_display_status = 0
 					output += "<li><font color='red'>Camera not connected to wall at \[[C1.x], [C1.y], [C1.z]\] ([C1.loc.loc]) Network: [C1.network]</color></li>"
 
 	output += "</ul>"
-	usr << browse(output,"window=airreport;size=1000x500")
+	usr << browse(entity_ja(output),"window=airreport;size=1000x500")
 	feedback_add_details("admin_verb","mCRP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/intercom_view()
@@ -256,16 +256,13 @@ var/list/debug_verbs = list (
 /client/proc/count_objects_on_z_level()
 	set category = "Mapping"
 	set name = "Count Objects On Level"
-	var/level = input("Which z-level?","Level?") as text
-	if(!level) return
-	var/num_level = text2num(level)
-	if(!num_level) return
-	if(!isnum(num_level)) return
+	var/num_level = input("Which z-level?","Level?") as null|num
+	if(!num_level)
+		return
 
-	var/type_text = input("Which type path?","Path?") as text
-	if(!type_text) return
-	var/type_path = text2path(type_text)
-	if(!type_path) return
+	var/type_path = text2path(input("Which type path?","Path?") as null|text)
+	if(!type_path)
+		return
 
 	var/count = 1
 

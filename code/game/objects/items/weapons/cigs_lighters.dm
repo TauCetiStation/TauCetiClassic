@@ -71,7 +71,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/lastHolder = null
 	var/smoketime = 300
 	var/chem_volume = 15
-	body_parts_covered = 0
+	var/nicotine_per_smoketime = 0.006
 
 /obj/item/clothing/mask/cigarette/atom_init()
 	. = ..()
@@ -164,26 +164,39 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(isliving(loc))
 		M.IgniteMob()	//Cigs can ignite mobs splashed with fuel
 	smoketime--
+	smoking_reagents()
 	if(smoketime < 1)
 		die()
 		return
 	if(location)
 		location.hotspot_expose(700, 5, src)
-	if(reagents && reagents.total_volume)	//	check if it has any reagents at all
-		if(iscarbon(loc) && (src == loc:wear_mask)) // if it's in the human/monkey mouth, transfer reagents to the mob
-			if(istype(loc, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = loc
-				if(H.species.flags[IS_SYNTHETIC])
-					return
-			var/mob/living/carbon/C = loc
-
-			if(prob(15)) // so it's not an instarape in case of acid
-				reagents.reaction(C, INGEST)
-			reagents.trans_to(C, REAGENTS_METABOLISM)
-		else // else just remove some of the reagents
-			reagents.remove_any(REAGENTS_METABOLISM)
 	return
 
+
+/obj/item/clothing/mask/cigarette/proc/smoking_reagents()
+	if(iscarbon(loc))
+		var/mob/living/carbon/C = loc
+		if(src == C.wear_mask)
+			if(C.stat == UNCONSCIOUS || C.paralysis)
+				if(prob(5))
+					C.drop_from_inventory(src, get_turf(C))
+					to_chat(C, "<span class='notice'>Your [name] fell out from your mouth.</span>")
+			if (C.stat != DEAD)
+				if(istype(loc, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = loc
+					if(H.species.flags[NO_BREATHE])
+						return
+				if(C.reagents.has_reagent("nicotine"))
+					C.reagents.add_reagent("nicotine", nicotine_per_smoketime)
+				else
+					C.reagents.add_reagent("nicotine", 0.2)
+				if(reagents.total_volume)
+					if(prob(15)) // so it's not an instarape in case of acid
+						reagents.reaction(C, INGEST)
+					reagents.trans_to(C, REAGENTS_METABOLISM)
+				return
+	if(reagents.total_volume)
+		reagents.remove_any(REAGENTS_METABOLISM)
 
 /obj/item/clothing/mask/cigarette/attack_self(mob/user)
 	if(lit == 1)
@@ -295,6 +308,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_on = "pipeon"  //Note - these are in masks.dmi
 	icon_off = "pipeoff"
 	smoketime = 100
+	nicotine_per_smoketime = 0.008
 
 /obj/item/clothing/mask/cigarette/pipe/light(flavor_text = "[usr] lights the [name].")
 	if(!src.lit)
@@ -312,6 +326,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/pipe/process()
 	var/turf/location = get_turf(src)
 	smoketime--
+	smoking_reagents()
 	if(smoketime < 1)
 		new /obj/effect/decal/cleanable/ash(location)
 		if(ismob(loc))

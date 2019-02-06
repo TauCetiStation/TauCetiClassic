@@ -274,9 +274,6 @@
 	item_state = "ce_helm"
 	item_color = "chief"
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
-	sprite_sheets = null
-	sprite_sheets_refit = list(SKRELL = 'icons/mob/species/skrell/helmet.dmi')
-	sprite_sheets_obj = list(SKRELL = 'icons/obj/clothing/species/skrell/hats.dmi')
 
 /obj/item/clothing/suit/space/rig/engineering/chief
 	icon_state = "rig-chief"
@@ -285,9 +282,6 @@
 	item_state = "ce_hardsuit"
 	slowdown = 1
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	sprite_sheets = null
-	sprite_sheets_refit = list(SKRELL = 'icons/mob/species/skrell/suit.dmi')
-	sprite_sheets_obj = list(SKRELL = 'icons/obj/clothing/species/skrell/suits.dmi')
 
 //Mining rig
 /obj/item/clothing/head/helmet/space/rig/mining
@@ -488,7 +482,22 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
 	armor = list(melee = 30, bullet = 5, laser = 10,energy = 5, bomb = 25, bio = 100, rad = 50)
 
-	//Security
+//CMO Rig
+/obj/item/clothing/head/helmet/space/rig/medical/cmo
+	name = "advanced medical hardsuit helmet"
+	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has minor radiation shielding."
+	icon_state = "rig0-cmo"
+	item_state = "medical_helm"
+	item_color = "cmo"
+
+/obj/item/clothing/suit/space/rig/medical/cmo
+	icon_state = "rig-cmo"
+	name = "advanced medical hardsuit"
+	desc = "A special suit that protects against hazardous, low pressure environments. Has minor radiation shielding."
+	item_state = "medical_hardsuit"
+	slowdown = 0.5
+
+//Security
 /obj/item/clothing/head/helmet/space/rig/security
 	name = "security hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
@@ -506,6 +515,21 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/melee/baton)
 	breach_threshold = 20
 	slowdown = 1.4
+
+//HoS Rig
+/obj/item/clothing/head/helmet/space/rig/security/hos
+	name = "advanced security hardsuit helmet"
+	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
+	icon_state = "rig0-hos"
+	item_state = "sec_helm"
+	item_color = "hos"
+
+/obj/item/clothing/suit/space/rig/security/hos
+	icon_state = "rig-hos"
+	name = "advanced security hardsuit"
+	desc = "A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
+	item_state = "sec_hardsuit"
+	slowdown = 0.7
 
 //Atmospherics Rig (BS12)
 /obj/item/clothing/head/helmet/space/rig/atmos

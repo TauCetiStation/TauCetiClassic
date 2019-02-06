@@ -23,6 +23,45 @@
 	m_amt = 10
 	var/colour = "black"	//what colour the ink is!
 
+/obj/item/weapon/pen/ghost
+	desc = "An expensive looking pen. You wonder, what is it's cost?"
+	colour = "purple"
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "fountainpen" //paththegreat: Eli Stevens
+	var/entity = ""
+
+/obj/item/weapon/pen/ghost/afterattack(atom/target, mob/user, proximity)
+	..()
+	if(!proximity || !entity)
+		return
+	var/list/phrases = list("Why did you do that, [user]?", "Do you not have anything better to do?", "Murder! Murder! MURDER!", "Did [target] deserve this?",
+	                        "Why are you doing this again?", "Don't, [user].", "Do not even think about such things!", "Do I deserve eternally witnessing your misery?",
+	                        "Why am I here?", "Can we go now?", "Listen, [target] doesn't have anything to do with this.", "Make it stooop.", "Call the arms!",
+	                        "Sound the alarms, all of them!", "Are you, [user], any better?", "You can always give up.", "Why even?")
+	to_chat(user, "<span class='bold'>[entity]</span> [pick("moans", "laments", "whines", "blubbers")], \"[pick(phrases)]\"")
+
+/obj/item/weapon/pen/ghost/attackby(obj/item/I, mob/user)
+	..()
+	if(istype(I, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = I
+		OS.scanned_type = src.type
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.getBrainLoss() >= 60 || user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")
+			if(entity && istype(I, /obj/item/weapon/nullrod))
+				entity = ""
+				to_chat(user, "<span class='warning'>[capitalize(src.name)] quivers and shakes, as it's entity leaves!</span>")
+			else if(istype(I, /obj/item/weapon/storage/bible))
+				var/obj/item/weapon/storage/bible/B = I
+				to_chat(user, "<span class='notice'>You feel a ceratin divine intelligence, as [capitalize(B.deity_name)] possesess \the [src].</span>")
+				entity = B.deity_name
+			else if(istype(I, /obj/item/weapon/photo))
+				var/obj/item/weapon/photo/P = I
+				for(var/A in P.photographed_names)
+					if(P.photographed_names[A] == /mob/dead/observer)
+						entity = A
+						to_chat(user, "<span class='notice'>You feel the [src] quiver, as another entity attempts to possess it.</span>")
+						break
 
 /obj/item/weapon/pen/blue
 	desc = "It's a normal blue ink pen."
@@ -138,13 +177,27 @@
 	var/signature = ""
 
 /obj/item/weapon/pen/chameleon/attack_self(mob/user)
-	signature = sanitize(input("Enter new signature. Leave blank for 'Anonymous'", "New Signature", signature))
+	signature = sanitize(input("Enter new signature. Leave blank for 'Anonymous'", "New Signature", input_default(signature)))
+
+/obj/item/weapon/pen/ghost/attack_self(mob/living/carbon/human/user)
+	if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")))
+		if(!entity)
+			to_chat(user, "<span class='notice'>You feel the [src] quiver, as another entity attempts to possess it.</span>")
+			var/list/choices = list()
+			for(var/mob/dead/observer/D in observer_list)
+				if(D.started_as_observer)
+					choices += D.name
+			if(choices.len)
+				entity = sanitize(pick(choices))
 
 /obj/item/weapon/pen/proc/get_signature(mob/user)
 	return (user && user.real_name) ? user.real_name : "Anonymous"
 
 /obj/item/weapon/pen/chameleon/get_signature(mob/user)
 	return signature ? signature : "Anonymous"
+
+/obj/item/weapon/pen/ghost/get_signature(mob/user)
+	return entity ? entity : (user && user.real_name) ? user.real_name : "Anonymous"
 
 /obj/item/weapon/pen/chameleon/verb/set_colour()
 	set name = "Change Pen Colour"

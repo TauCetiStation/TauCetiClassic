@@ -264,7 +264,7 @@
 		W.forceMove(get_turf(src))
 		W.layer = initial(W.layer)
 		W.plane = initial(W.plane)
-		W.appearance_flags = 0
+		W.appearance_flags = initial(W.appearance_flags)
 		W.dropped()
 		return FALSE
 

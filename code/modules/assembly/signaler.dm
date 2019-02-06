@@ -69,7 +69,7 @@ Code:
 <A href='byond://?src=\ref[src];code=5'>+</A><BR>
 [t1]
 </TT>"}
-	user << browse(dat, "window=radio")
+	user << browse(entity_ja(dat), "window=radio")
 	onclose(user, "radio")
 	return
 
@@ -127,7 +127,7 @@ Code:
 	return
 
 /*
-		for(var/obj/item/device/assembly/signaler/S in world)
+		for(var/obj/item/device/assembly/signaler/S in not_world)
 			if(!S)	continue
 			if(S == src)	continue
 			if((S.frequency == src.frequency) && (S.code == src.code))

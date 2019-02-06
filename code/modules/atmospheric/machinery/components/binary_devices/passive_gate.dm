@@ -52,6 +52,7 @@ Passive gate is similar to the regular pump except:
 		set_frequency(frequency)
 
 /obj/machinery/atmospherics/components/binary/passive_gate/update_icon()
+	..()
 	icon_state = (unlocked && flowing) ? "on" : "off"
 
 /obj/machinery/atmospherics/components/binary/passive_gate/update_underlays()

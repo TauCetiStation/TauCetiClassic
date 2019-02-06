@@ -51,7 +51,7 @@
 			<BR>
 			<B>No Patient Detected</B>
 			"}
-	user << browse(dat, "window=op")
+	user << browse(entity_ja(dat), "window=op")
 	onclose(user, "op")
 
 /obj/machinery/computer/operating/process()

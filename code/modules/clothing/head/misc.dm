@@ -63,8 +63,8 @@
 
 /obj/item/clothing/head/syndicatefake
 	name = "red space-helmet replica"
-	icon_state = "syndicate"
-	item_state = "syndicate"
+	icon_state = "syndicate-helm"
+	item_state = "syndicate-helm"
 	desc = "A plastic replica of a syndicate agent's space helmet, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	flags = BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
@@ -155,25 +155,6 @@
 	body_parts_covered = 0
 
 //stylish bs12 hats
-
-/obj/item/clothing/head/bowlerhat
-	name = "bowler hat"
-	icon_state = "bowler_hat"
-	item_state = "bowler_hat"
-	desc = "For the gentleman of distinction."
-	body_parts_covered = 0
-
-/obj/item/clothing/head/beaverhat
-	name = "beaver hat"
-	icon_state = "beaver_hat"
-	item_state = "beaver_hat"
-	desc = "Soft felt makes this hat both comfortable and elegant."
-
-/obj/item/clothing/head/boaterhat
-	name = "boater hat"
-	icon_state = "boater_hat"
-	item_state = "boater_hat"
-	desc = "The ultimate in summer fashion."
 
 /obj/item/clothing/head/feathertrilby
 	name = "\improper feather trilby"
@@ -370,21 +351,21 @@
 	icon_state = "beret_blue"
 
 /obj/item/clothing/head/beret/black
-	name = "blue beret"
+	name = "black beret"
 	desc = "Bonjour, but in black. Smells like baguette, pardon my French."
 	icon_state = "beret_black"
 
 /obj/item/clothing/head/beret/purple
-	name = "blue beret"
+	name = "purple beret"
 	desc = "Bonjour, but in purple. Smells like baguette, pardon my French."
 	icon_state = "beret_purple"
 
-/obj/item/clothing/head/beret/centcom/officer
+/obj/item/clothing/head/beret/centcomofficer
 	name = "officers beret"
 	desc = "A black beret adorned with the shield silver kite shield with an engraved sword of the NanoTrasen security forces, announcing to the world that the wearer is a defender of NanoTrasen."
 	icon_state = "centcomofficerberet"
 
-/obj/item/clothing/head/beret/centcom/captain
+/obj/item/clothing/head/beret/centcomcaptain
 	name = "captains beret"
 	desc = "A white beret adorned with the shield cobalt kite shield with an engraved sword of the NanoTrasen security forces, worn only by those captaining a vessel of the NanoTrasen Navy."
 	icon_state = "centcomcaptain"
@@ -393,3 +374,18 @@
 	name = "nimb"
 	desc = "Just a Nimb"
 	icon_state = "nimb"
+
+/obj/item/clothing/head/hooded/carp_hood
+	name = "carp hood"
+	desc = "A hood attached to a carp costume."
+	icon_state = "carp_casual"
+	body_parts_covered = HEAD
+	cold_protection = HEAD
+	flags_inv = BLOCKHAIR|HIDEEARS
+
+/obj/item/clothing/head/hooded/ian_hood
+	name = "corgi hood"
+	desc = "A hood that looks just like a corgi's head, it won't guarantee dog biscuits."
+	icon_state = "ian"
+	body_parts_covered = HEAD
+	flags_inv = BLOCKHAIR|HIDEEARS

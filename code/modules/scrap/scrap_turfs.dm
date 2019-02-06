@@ -1,5 +1,3 @@
-
-
 /obj/effect/scrap_pile_generator
 	name = "Gererates Scrap Pile"
 	icon_state = "rock"
@@ -37,8 +35,6 @@
 	for(var/turf/T in makesparse)
 		if(!locate(/obj/structure/scrap in T.contents))
 			new subtype(T)
-
-
 
 /turf/simulated/mineral/airfull
 	basetype = /turf/simulated/floor/plating/ironsand

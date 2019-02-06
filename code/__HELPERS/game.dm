@@ -276,39 +276,38 @@
 
 #define SIGN(X) ((X<0)?-1:1)
 
-proc
-	inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
-		var/turf/T
-		if(X1==X2)
-			if(Y1==Y2)
-				return 1 //Light cannot be blocked on same tile
-			else
-				var/s = SIGN(Y2-Y1)
-				Y1+=s
-				while(Y1!=Y2)
-					T=locate(X1,Y1,Z)
-					if(T.opacity)
-						return 0
-					Y1+=s
+/proc/inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
+	var/turf/T
+	if(X1==X2)
+		if(Y1==Y2)
+			return 1 //Light cannot be blocked on same tile
 		else
-			var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
-			var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
-			var/signX = SIGN(X2-X1)
-			var/signY = SIGN(Y2-Y1)
-			if(X1<X2)
-				b+=m
-			while(X1!=X2 || Y1!=Y2)
-				if(round(m*X1+b-Y1))
-					Y1+=signY //Line exits tile vertically
-				else
-					X1+=signX //Line exits tile horizontally
+			var/s = SIGN(Y2-Y1)
+			Y1+=s
+			while(Y1!=Y2)
 				T=locate(X1,Y1,Z)
 				if(T.opacity)
 					return 0
-		return 1
+				Y1+=s
+	else
+		var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
+		var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
+		var/signX = SIGN(X2-X1)
+		var/signY = SIGN(Y2-Y1)
+		if(X1<X2)
+			b+=m
+		while(X1!=X2 || Y1!=Y2)
+			if(round(m*X1+b-Y1))
+				Y1+=signY //Line exits tile vertically
+			else
+				X1+=signX //Line exits tile horizontally
+			T=locate(X1,Y1,Z)
+			if(T.opacity)
+				return 0
+	return 1
 #undef SIGN
 
-proc/isInSight(atom/A, atom/B)
+/proc/isInSight(atom/A, atom/B)
 	var/turf/Aturf = get_turf(A)
 	var/turf/Bturf = get_turf(B)
 
@@ -507,6 +506,35 @@ proc/isInSight(atom/A, atom/B)
 					Byond profile: <a href='[player_byond_profile]'>open</a>"}
 
 		message_admins(msg)
+
+// Better get_dir proc
+/proc/get_general_dir(atom/Loc1, atom/Loc2)
+	var/dir = get_dir(Loc1, Loc2)
+	switch(dir)
+		if(NORTH, EAST, SOUTH, WEST)
+			return dir
+
+		if(NORTHEAST, SOUTHWEST)
+			var/abs_x = abs(Loc2.x - Loc1.x)
+			var/abs_y = abs(Loc2.y - Loc1.y)
+
+			if(abs_y > (2*abs_x))
+				return turn(dir,45)
+			else if(abs_x > (2*abs_y))
+				return turn(dir,-45)
+			else
+				return dir
+
+		if(NORTHWEST, SOUTHEAST)
+			var/abs_x = abs(Loc2.x - Loc1.x)
+			var/abs_y = abs(Loc2.y - Loc1.y)
+
+			if(abs_y > (2*abs_x))
+				return turn(dir,-45)
+			else if(abs_x > (2*abs_y))
+				return turn(dir,45)
+			else
+				return dir
 
 //============VG PORTS============
 /proc/recursive_type_check(atom/O, type = /atom)

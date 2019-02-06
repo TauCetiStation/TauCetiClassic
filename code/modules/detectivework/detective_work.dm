@@ -1,9 +1,9 @@
 //CONTAINS: Suit fibers and Detective's Scanning Computer
 
-atom/var/list/suit_fibers
+/atom/var/list/suit_fibers
 
-atom/proc/add_fibers(mob/living/carbon/human/M)
-	if(M.gloves && istype(M.gloves,/obj/item/clothing/))
+/atom/proc/add_fibers(mob/living/carbon/human/M)
+	if(M.gloves && istype(M.gloves,/obj/item/clothing))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.transfer_blood) //bloodied gloves transfer blood to touched objects
 			if(add_blood(G.bloody_hands_mob)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
@@ -114,7 +114,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 			dat += {"<a href='?src=\ref[src];operation=database'>{Access Database}</a><br><br><tt>[scan_data]</tt>"}
 			if(scan_data && !scan_process)
 				dat += "<br><a href='?src=\ref[src];operation=erase'>{Erase Data}</a>"
-	user << browse(dat,"window=scanner")
+	user << browse(entity_ja(dat),"window=scanner")
 	onclose(user,"scanner")
 
 
@@ -202,7 +202,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 			if(files)
 				var/list/dossier = files[href_list["identifier"]]
 				if(href_list["ren"])
-					var/new_title = sanitize_alt(copytext(input("Rename to what?", "Dossier Editing", "Dossier [files.Find(href_list["identifier"])]") as null|text,1,MAX_MESSAGE_LEN))
+					var/new_title = sanitize(input("Rename to what?", "Dossier Editing", "Dossier [files.Find(href_list["identifier"])]") as null|text)
 					if(new_title)
 						dossier[2] = new_title
 					else
@@ -438,7 +438,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 			if(!files || !files[href_list["identifier"]])
 				temp = "ERROR: Record/Database not found!"
 			else
-				var/new_title = sanitize_alt(copytext(input("Rename to what?", "Dossier Editing", "Dossier [files.Find(href_list["identifier"])]") as null|text,1,MAX_MESSAGE_LEN))
+				var/new_title = sanitize(input("Rename to what?", "Dossier Editing", "Dossier [files.Find(href_list["identifier"])]") as null|text,1,MAX_MESSAGE_LEN)
 				if(new_title)
 					var/list/file = files[href_list["identifier"]]
 					file[2] = new_title

@@ -44,7 +44,7 @@
 	dat += text("Power output: [power_gen * power_output]<br>")
 	dat += text("Power current: [(powernet == null ? "Unconnected" : "[avail()]")]<br>")
 	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
-	user << browse("[dat]", "window=port_gen")
+	user << browse("[entity_ja(dat)]", "window=port_gen")
 	onclose(user, "port_gen")
 
 /obj/machinery/power/port_gen/riteg/is_operational_topic()
@@ -73,7 +73,7 @@
 	src.updateUsrDialog()
 
 
-obj/machinery/power/port_gen/riteg/proc/Pulse_radiation()
+/obj/machinery/power/port_gen/riteg/proc/Pulse_radiation()
 	for(var/mob/living/l in range(rad_range,src))
 		l.show_message("<span class=\"warning\">You feel warm</span>", 2)
 		var/rads = rad_cooef * sqrt( 1 / (get_dist(l, src) + 1) )

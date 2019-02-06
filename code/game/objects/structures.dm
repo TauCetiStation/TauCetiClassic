@@ -86,7 +86,13 @@
 	usr.visible_message("<span class='warning'>[user] starts climbing onto \the [src]!</span>")
 	climbers |= user
 
-	if(!do_after(user,50,target = user))
+	var/adjusted_climb_time = 50
+	if(user.restrained()) //climbing takes twice as long when restrained.
+		adjusted_climb_time *= 2
+	if(isalien(user))
+		adjusted_climb_time *= 0.25 //aliens are terrifyingly fast
+
+	if(!do_after(user, adjusted_climb_time, target = user))
 		climbers -= user
 		return
 
@@ -94,11 +100,14 @@
 		climbers -= user
 		return
 
+	on_climb(user)
+	climbers -= user
+
+/obj/structure/proc/on_climb(mob/living/user)
 	usr.forceMove(get_turf(src))
 
 	if (get_turf(user) == get_turf(src))
 		usr.visible_message("<span class='warning'>[user] climbs onto \the [src]!</span>")
-	climbers -= user
 
 /obj/structure/proc/structure_shaken()
 	for(var/mob/living/M in climbers)
@@ -147,7 +156,7 @@
 		return 0
 	if(!Adjacent(user))
 		return 0
-	if(user.restrained() || user.buckled)
+	if(user.buckled)
 		to_chat(user, "<span class='notice'>You need your hands and legs free for this.</span>")
 		return 0
 	if(user.stat || user.paralysis || user.sleeping || user.lying || user.weakened)

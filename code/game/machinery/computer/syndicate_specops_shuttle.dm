@@ -115,7 +115,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 			[syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "\n*The Syndicate Elite shuttle is already leaving.*<BR>\n<BR>":syndicate_elite_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Shuttle Offline</A><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Depart to [station_name]</A><BR>\n<BR>"]
 			\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
 
-	user << browse(dat, "window=computer;size=575x450")
+	user << browse(entity_ja(dat), "window=computer;size=575x450")
 	onclose(user, "computer")
 
 /obj/machinery/computer/syndicate_elite_shuttle/Topic(href, href_list)

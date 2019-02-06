@@ -26,17 +26,29 @@
 
 /obj/item/weapon/fossil/bone
 	name = "Fossilised bone"
-	icon_state = "bone"
+	icon_state = "bone1"
 	desc = "It's a fossilised bone."
+
+/obj/item/weapon/fossil/bone/atom_init()
+	. = ..()
+	icon_state = "bone[rand(1, 3)]"
 
 /obj/item/weapon/fossil/skull
 	name = "Fossilised skull"
 	icon_state = "skull"
 	desc = "It's a fossilised skull."
 
+/obj/item/weapon/fossil/skull/atom_init()
+	. = ..()
+	icon_state = "skull[rand(1, 3)]"
+
 /obj/item/weapon/fossil/skull/horned
 	icon_state = "hskull"
 	desc = "It's a fossilised, horned skull."
+
+/obj/item/weapon/fossil/skull/horned/atom_init()
+	. = ..()
+	icon_state = "horned_skull[rand(1, 2)]"
 
 /obj/item/weapon/fossil/skull/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/fossil/bone))
@@ -60,7 +72,7 @@
 
 /obj/skeleton/atom_init()
 	. = ..()
-	breq = rand(6) + 3
+	breq = rand(3) + 2
 	desc = "An incomplete skeleton, looks like it could use [src.breq-src.bnum] more bones."
 
 /obj/skeleton/attackby(obj/item/weapon/W, mob/user)
@@ -85,7 +97,7 @@
 		else
 			..()
 	else if(istype(W,/obj/item/weapon/pen))
-		plaque_contents = input("What would you like to write on the plaque:","Skeleton plaque","")
+		plaque_contents = sanitize(input("What would you like to write on the plaque:","Skeleton plaque",""))
 		user.visible_message("[user] writes something on the base of [src].","You relabel the plaque on the base of [bicon(src)] [src].")
 		if(src.contents.Find(/obj/item/weapon/fossil/skull/horned))
 			src.desc = "A creature made of [src.contents.len-1] assorted bones and a horned skull. The plaque reads \'[plaque_contents]\'."
@@ -100,6 +112,10 @@
 	icon_state = "shell"
 	desc = "It's a fossilised shell."
 
+/obj/item/weapon/fossil/shell/atom_init()
+	. = ..()
+	icon_state = "shell[rand(1, 2)]"
+
 /obj/item/weapon/fossil/plant
 	name = "Fossilised plant"
 	icon_state = "plant1"
@@ -108,4 +124,4 @@
 
 /obj/item/weapon/fossil/plant/atom_init()
 	. = ..()
-	icon_state = "plant[rand(1,4)]"
+	icon_state = "plant[rand(1, 4)]"

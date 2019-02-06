@@ -6,7 +6,7 @@
 	name = "locater device"
 	desc = "Used to scan and locate signals on a particular frequency according ."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "pinoff"	//pinonfar, pinonmedium, pinonclose, pinondirect, pinonnull
+	icon_state = "newpinoff"	//pinonfar, pinonmedium, pinonclose, pinondirect, pinonnull
 	item_state = "electronic"
 	var/frequency = 1459
 	var/scan_ticks = 0
@@ -25,16 +25,16 @@
 		dir = get_dir(src,target_radio)
 		switch(get_dist(src,target_radio))
 			if(0 to 3)
-				icon_state = "pinondirect"
+				icon_state = "newpinondirect"
 			if(4 to 10)
-				icon_state = "pinonclose"
+				icon_state = "newpinonclose"
 			if(11 to 30)
-				icon_state = "pinonmedium"
+				icon_state = "newpinonmedium"
 			if(31 to INFINITY)
-				icon_state = "pinonfar"
+				icon_state = "newpinonfar"
 	else
 		if(scan_ticks)
-			icon_state = "pinonnull"
+			icon_state = "newpinonnull"
 			scan_ticks++
 			if(prob(scan_ticks * 10))
 				spawn(0)
@@ -42,7 +42,7 @@
 					if(SSobj.processing.Find(src))
 						//scan radios in the world to try and find one
 						var/cur_dist = 999
-						for(var/obj/item/device/radio/beacon/R in world)
+						for(var/obj/item/device/radio/beacon/R in radio_beacon_list)
 							if(R.z == src.z && R.frequency == src.frequency)
 								var/check_dist = get_dist(src,R)
 								if(check_dist < cur_dist)
@@ -56,7 +56,7 @@
 						else
 							T.visible_message("[bicon(src)] [src] [pick("chirps","chirrups","cheeps")] sadly.")
 		else
-			icon_state = "pinoff"
+			icon_state = "newpinoff"
 
 /obj/item/device/beacon_locator/attack_self(mob/user)
 	return src.interact(user)
@@ -74,7 +74,7 @@
 				"}
 
 	dat += "<A href='?src=\ref[src];close=1'>Close</a><br>"
-	user << browse(dat,"window=locater;size=300x150")
+	user << browse(entity_ja(dat),"window=locater;size=300x150")
 	onclose(user, "locater")
 
 /obj/item/device/beacon_locator/Topic(href, href_list)

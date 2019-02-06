@@ -1,3 +1,11 @@
+/mob/living/carbon/atom_init()
+	. = ..()
+	carbon_list += src
+
+/mob/living/carbon/Destroy()
+	carbon_list -= src
+	return ..()
+
 /mob/living/carbon/Life()
 	..()
 
@@ -9,12 +17,12 @@
 	. = ..()
 	if(.)
 		handle_phantom_move(NewLoc, direct)
-		if(src.nutrition && src.stat != DEAD)
-			src.nutrition -= HUNGER_FACTOR/10
-			if(src.m_intent == "run")
-				src.nutrition -= HUNGER_FACTOR/10
-		if((FAT in src.mutations) && src.m_intent == "run" && src.bodytemperature <= 360)
-			src.bodytemperature += 2
+		if(nutrition && stat != DEAD)
+			nutrition -= metabolism_factor/100
+			if(m_intent == "run")
+				nutrition -= metabolism_factor/100
+		if((FAT in mutations) && m_intent == "run" && bodytemperature <= 360)
+			bodytemperature += 2
 
 		// Moving around increases germ_level faster
 		if(germ_level < GERM_LEVEL_MOVE_CAP && prob(8))
@@ -211,21 +219,23 @@
 					if(prob(30))
 						burndamage += halloss
 
-				if(brutedamage > 0)
-					status = "bruised"
-				if(brutedamage > 20)
-					status = "bleeding"
 				if(brutedamage > 40)
 					status = "mangled"
+				else if(brutedamage > 20)
+					status = "bleeding"
+				else if(brutedamage > 0)
+					status = "bruised"
+
 				if(brutedamage > 0 && burndamage > 0)
 					status += " and "
+
 				if(burndamage > 40)
 					status += "peeling away"
-
 				else if(burndamage > 10)
 					status += "blistered"
 				else if(burndamage > 0)
 					status += "numb"
+
 				if(BP.status & ORGAN_DESTROYED)
 					status = "MISSING!"
 				if(BP.status & ORGAN_MUTATED)
@@ -233,6 +243,10 @@
 				if(status == "")
 					status = "OK"
 				src.show_message(text("\t []My [] is [].", status == "OK" ? "\blue " : "\red ", BP.name,status), 1)
+
+			if(roundstart_quirks.len)
+				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
+
 			if(H.species && (H.species.name == SKELETON) && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
@@ -467,7 +481,7 @@
 	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	<BR>"}
-	user << browse(dat, text("window=mob[];size=325x500", name))
+	user << browse(entity_ja(dat), text("window=mob[];size=325x500", name))
 	onclose(user, "mob[name]")
 	return
 
@@ -664,3 +678,9 @@
 
 /mob/living/carbon/proc/can_eat(flags = 255) //I don't know how and why does it work
 	return TRUE
+
+/mob/living/carbon/proc/crawl_in_blood(obj/effect/decal/cleanable/blood/floor_blood)
+	return
+
+/mob/living/carbon/get_nutrition()
+	return nutrition + (reagents.get_reagent("nutriment") + reagents.get_reagent("plantmatter") + reagents.get_reagent("protein") + reagents.get_reagent("dairy")) * 2.5 // We multiply by this "magic" number, because all of these are equal to 2.5 nutrition.

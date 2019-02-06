@@ -11,7 +11,7 @@
 	active_power_usage = 100
 	pass_flags = PASSTABLE
 	var/obj/item/weapon/reagent_containers/beaker = null
-	var/global/list/allowed_items = list (
+	var/static/list/allowed_items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato  = "tomatojuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot  = "carrotjuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = "berryjuice",
@@ -97,7 +97,7 @@
 		dat += "<A href='?src=\ref[src];action=juice'>Turn on!<BR>"
 	if (beaker)
 		dat += "<A href='?src=\ref[src];action=detach'>Detach a beaker!<BR>"
-	user << browse("<HEAD><TITLE>Juicer</TITLE></HEAD><TT>[dat]</TT>", "window=juicer")
+	user << browse("<HEAD><TITLE>Juicer</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=juicer")
 	onclose(user, "juicer")
 
 

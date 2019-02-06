@@ -182,9 +182,10 @@ BLIND     // can't see anything
 	w_class = 2.0
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 0.9
-	var/wired = 0
+	var/wired = FALSE
 	var/obj/item/weapon/stock_parts/cell/cell = 0
-	var/clipped = 0
+	var/clipped = FALSE
+	var/protect_fingers = TRUE // Are we gonna get hurt when searching in the trash piles
 	body_parts_covered = ARMS
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
@@ -397,36 +398,47 @@ BLIND     // can't see anything
 			if (AC.slot == A.slot)
 				return FALSE
 
-/obj/item/clothing/under/proc/remove_accessory(mob/user, obj/item/clothing/accessory/A)
-	if(QDELETED(A) || !(A in accessories))
-		return
-
-	A.on_removed(user)
-	accessories -= A
-
-	if(istype(loc, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = loc
-		H.update_inv_w_uniform()
-		action_button_name = null
-
 /obj/item/clothing/under/verb/removetie()
 	set name = "Remove Accessory"
 	set category = "Object"
 	set src in usr
+	handle_accessories_removal()
 
-	if(!istype(usr, /mob/living))
+/obj/item/clothing/under/proc/handle_accessories_removal()
+	if(!isliving(usr))
 		return
 	if(usr.incapacitated())
 		return
-
+	if(!Adjacent(usr))
+		return
 	if(!accessories.len)
 		return
+	if(!istype(usr, /mob/living))
+		return
+
 	var/obj/item/clothing/accessory/A
 	if(accessories.len > 1)
 		A = input("Select an accessory to remove from [src]") as null|anything in accessories
 	else
 		A = accessories[1]
 	remove_accessory(usr, A)
+
+/obj/item/clothing/under/proc/remove_accessory(mob/user, obj/item/clothing/accessory/A)
+	if(QDELETED(A) || !(A in accessories))
+		return
+	if(!isliving(user))
+		return
+	if(user.incapacitated())
+		return
+	if(!Adjacent(user))
+		return
+	A.on_removed(user)
+	accessories -= A
+	to_chat(user, "<span class='notice'>You remove [A] from [src].</span>")
+	if(istype(loc, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = loc
+		H.update_inv_w_uniform()
+		action_button_name = null
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
 	if(I.sharp && !ishuman(loc)) //you can cut only clothes lying on the floor
@@ -456,6 +468,9 @@ BLIND     // can't see anything
 		return
 
 	..()
+
+/obj/item/clothing/under/AltClick()
+	handle_accessories_removal()
 
 /obj/item/clothing/under/attack_hand(mob/user)
 	//only forward to the attached accessory if the clothing is equipped (not in a storage)
@@ -510,7 +525,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/proc/set_sensors(mob/usr)
 	var/mob/M = usr
-	if (istype(M, /mob/dead/)) return
+	if (istype(M, /mob/dead)) return
 	if (usr.stat || usr.restrained()) return
 	if(has_sensor >= 2)
 		to_chat(usr, "The controls are locked.")

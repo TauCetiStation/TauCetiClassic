@@ -1,30 +1,3 @@
-/client/proc/library_debug_cat()
-	set category = "Debug"
-	set name = "Library: Catalog"
-	if(!check_rights(R_PERMISSIONS))	return
-
-	establish_old_db_connection()
-	if(!dbcon_old.IsConnected())
-		to_chat(usr, "BD POTRACHENO")
-		return
-
-	var/catalog = "<HEAD><TITLE>Book Inventory Management</TITLE></HEAD><BODY>\n"
-	catalog += "<table><tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>ID</td></tr>"
-
-	var/DBQuery/query = dbcon_old.NewQuery("SELECT id, author, title, category FROM library")
-	query.Execute()
-
-	while(query.NextRow())
-		var/id = query.item[1]
-		var/author = query.item[2]
-		var/title = query.item[3]
-		var/category = query.item[4]
-		catalog += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td>[id]</td></tr>"
-	catalog += "</table>"
-
-	usr << browse(catalog, "window=admlibrarycatalog")
-	onclose(usr, "library")
-
 /client/proc/library_debug_remove()
 	set category = "Debug"
 	set name = "Library: Remove by id"
@@ -83,4 +56,39 @@
 	var/book = "<HEAD><TITLE>[title], [author]</TITLE></HEAD><BODY>\n"
 	book += content
 
-	usr << browse(content, "window=content")
+	usr << browse(entity_ja(content), "window=content")
+
+/datum/admins/proc/library_recycle_bin()
+	set category = "Admin"
+	set name = "Library: Recycle bin"
+
+	establish_old_db_connection()
+	if(!dbcon_old.IsConnected())
+		to_chat(usr, "Database is not connected.")
+		return
+
+	if (!istype(src,/datum/admins))
+		src = usr.client.holder
+	if (!istype(src,/datum/admins))
+		to_chat(usr, "Error: you are not an admin!")
+		return
+
+	var/DBQuery/query = dbcon_old.NewQuery("SELECT id, title, author, ckey, deletereason FROM library WHERE deletereason IS NOT NULL")
+	if(!query.Execute())
+		return
+
+	var/catalog = "<HEAD><TITLE>Book Inventory Management</TITLE></HEAD><BODY>\n"
+	catalog += "<table border=1 rules=all frame=void cellspacing=0 cellpadding=3><HR><tr><td>ID</td><td>TITLE</td><td>AUTHOR</td><td>CKEY</td><td>REASON</td><td>OPTIONS</td></tr></HR>"
+	var/permitted = check_rights(R_PERMISSIONS,0)
+	while(query.NextRow())
+		var/id = query.item[1]
+		var/title = query.item[2]
+		var/author = query.item[3]
+		var/ckey = query.item[4]
+		var/reason = query.item[5]
+		catalog += "<tr><td>[id]</td><td>[title]</td><td>[author]</td><td>[ckey]</td><td>[reason]</td><td><a href='?src=\ref[src];readbook=[id]'>Read</a>[permitted ? "<BR><a href='?src=\ref[src];restorebook=[id]'>Restore</a><BR>" : null][permitted ? "<a href='?src=\ref[src];deletebook=[id]'>Delete</a><BR>" : null]</td></tr>"
+	catalog += "</table>"
+
+
+	usr << browse(entity_ja(catalog), "window=librecyclebin;size=500x500")
+	onclose(usr, "librecyclebin")
