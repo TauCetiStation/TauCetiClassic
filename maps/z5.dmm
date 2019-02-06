@@ -2666,6 +2666,13 @@
 	icon_state = "vault"
 	},
 /area/research_outpost/harvesting)
+"fj" = (
+/obj/item/device/radio/intercom{
+	pixel_y = 25
+	},
+/obj/machinery/computer/reconstitutor/animal,
+/turf/simulated/floor/engine,
+/area/research_outpost/outpost_misc_lab)
 "fk" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -3155,15 +3162,16 @@
 	},
 /area/research_outpost/hallway)
 "gr" = (
-/obj/structure/table/reinforced,
-/obj/item/clothing/glasses/science{
-	pixel_x = 2;
-	pixel_y = 6
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/obj/item/device/taperecorder,
-/obj/item/weapon/folder/purple,
-/turf/simulated/floor/engine,
-/area/research_outpost/outpost_misc_lab)
+/obj/machinery/door/firedoor,
+/obj/structure/transit_tube{
+	icon_state = "D-SW"
+	},
+/turf/simulated/floor/plating,
+/area/research_outpost/entry)
 "gs" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -3903,7 +3911,12 @@
 /turf/simulated/floor/plating,
 /area/mine/living_quarters)
 "ib" = (
-/obj/machinery/artifact_scanpad,
+/obj/structure/table/reinforced,
+/obj/item/clothing/glasses/science{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/device/taperecorder,
 /turf/simulated/floor/engine,
 /area/research_outpost/outpost_misc_lab)
 "ic" = (
@@ -4799,11 +4812,7 @@
 	},
 /area/research_outpost/tempstorage)
 "jD" = (
-/obj/item/device/radio/intercom{
-	pixel_y = 25
-	},
-/obj/structure/table/reinforced,
-/obj/machinery/artifact_analyser,
+/obj/machinery/clonepod,
 /turf/simulated/floor/engine,
 /area/research_outpost/outpost_misc_lab)
 "jE" = (
@@ -50070,7 +50079,7 @@ mo
 mo
 mo
 bL
-bL
+gr
 fx
 Kc
 bL
@@ -62664,7 +62673,7 @@ aa
 aa
 aF
 Ar
-gr
+ib
 fC
 fC
 Bp
@@ -62921,7 +62930,7 @@ aa
 aa
 aF
 Ar
-ib
+jD
 fC
 fC
 mB
@@ -63178,7 +63187,7 @@ aa
 aa
 aF
 Ar
-jD
+fj
 kV
 fC
 fC
