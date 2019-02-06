@@ -65,7 +65,6 @@
 			if("Vice Officer")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/vice	(H), slot_w_uniform)
 				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
-				H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(H), slot_glasses)
 			if("Paranormal Investigator")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/fluff/indiana	(H), slot_w_uniform)
 				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
