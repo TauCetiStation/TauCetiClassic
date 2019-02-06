@@ -217,12 +217,17 @@
 	if(!cooldown)
 		user.visible_message("<span class='notice'>[bicon(src)] \the [user] presses \the [src]</span>")
 		playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
+
 		var/laugh = pick(
 			'sound/voice/fake_laugh/laugh1.ogg',
 			'sound/voice/fake_laugh/laugh2.ogg',
 			'sound/voice/fake_laugh/laugh3.ogg',
 			)
-		playsound(src, laugh, 50, 1)
+
+		for(var/mob/M in viewers(user, null))
+			if(M.client && M.ear_deaf <= 0)
+				M << sound(laugh, volume = 50)
+
 		flick("laugh_button_down",src)
 		icon_state = "laugh_button_off"
 		cooldown = TRUE
