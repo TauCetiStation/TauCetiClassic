@@ -100,6 +100,8 @@
 		A.meteorhit(src)
 		var/turf/T = get_turf(A)
 		message_admins("<span class='warning'>[src] hit [A] in ([T.x], [T.y] ,[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>).</span>")
+		var/area/T_area = get_area(T)
+		log_game("[src] hit [A] ([T.x], [T.y] ,[T.z]) in [T_area].")
 		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
 	if(--src.hits <= 0)
 
@@ -135,8 +137,10 @@
 			qdel(src) //Dont blow up singularity containment if we get stuck there.
 
 	if(A)
-		var/turf/T = get_turf(A)
-		message_admins("<span class='warning'>[src] hit [A] in ([T.x], [T.y] ,[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>).</span>")
+		var/turf/F = get_turf(A)
+		message_admins("<span class='warning'>[src] hit [A] in ([F.x], [F.y] ,[F.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[F.x];Y=[F.y];Z=[F.z]'>JMP</a>).</span>")
+		var/area/T_area = get_area(F)
+		log_game("[src] hit [A] ([F.x], [F.y] ,[F.z]) in [T_area].")
 		for(var/mob/M in player_list)
 			var/turf/T = get_turf(M)
 			if(!T || T.z != src.z)
