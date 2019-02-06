@@ -67,7 +67,10 @@
 			var/atom/toplevelholder = holder
 			while(!istype(toplevelholder.loc, /turf))
 				toplevelholder = toplevelholder.loc
-			toplevelholder.visible_message("<span class='warning'>[bicon(toplevelholder)] [toplevelholder] [display_msg]</span>")
+			if(ishuman(toplevelholder)) // When utilizer works, the holder is human and we dont display his icon (costs too much)
+				toplevelholder.visible_message("<span class='warning'>[toplevelholder] [display_msg]</span>")
+			else
+				toplevelholder.visible_message("<span class='warning'>[bicon(toplevelholder)] [toplevelholder] [display_msg]</span>")
 
 /datum/artifact_effect/proc/DoEffectTouch(mob/user)
 /datum/artifact_effect/proc/DoEffectAura(atom/holder)
@@ -92,18 +95,18 @@
 
 	var/protected = 0
 
-	//anomaly suits give best protection, but excavation suits are almost as good
-	if(istype(H.wear_suit,/obj/item/clothing/suit/bio_suit/anomaly))
+	// particle protection suits give best protection, but science space suits are almost as good
+	if(istype(H.wear_suit, /obj/item/clothing/suit/bio_suit/particle_protection))
 		protected += 0.6
-	else if(istype(H.wear_suit,/obj/item/clothing/suit/space/anomaly)||istype(H.wear_suit,/obj/item/clothing/suit/space/globose/science))
+	else if(istype(H.wear_suit, /obj/item/clothing/suit/space/globose/science))
 		protected += 0.5
 
-	if(istype(H.head,/obj/item/clothing/head/bio_hood/anomaly))
+	if(istype(H.head, /obj/item/clothing/head/bio_hood/particle_protection))
 		protected += 0.3
-	else if(istype(H.head,/obj/item/clothing/head/helmet/space/anomaly)||istype(H.head,/obj/item/clothing/head/helmet/space/globose/science))
+	else if(istype(H.head, /obj/item/clothing/head/helmet/space/globose/science))
 		protected += 0.2
 
-	//latex gloves and science goggles also give a bit of bonus protection
+	// latex gloves and science goggles also give a bit of bonus protection
 	if(istype(H.gloves,/obj/item/clothing/gloves/latex))
 		protected += 0.1
 

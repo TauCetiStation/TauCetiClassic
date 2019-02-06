@@ -68,8 +68,10 @@
 			reconnect_scanner()
 		if(!owned_scanner)
 			results = "Error communicating with scanner."
+			playsound(src, 'sound/machines/buzz-two.ogg', 20, 1)
 		else if(!scanned_object || scanned_object.loc != owned_scanner.loc)
 			results = "Unable to locate scanned object. Ensure it was not moved in the process."
+			playsound(src, 'sound/machines/buzz-two.ogg', 20, 1)
 		else
 			results = get_scan_info(scanned_object)
 		owned_scanner.icon_state = "xenoarch_scanner"
@@ -82,6 +84,7 @@
 
 		var/obj/item/weapon/stamp/S = new
 		S.stamp_paper(P)
+		playsound(src, 'sound/items/polaroid1.ogg', 50, 1)
 
 		if(scanned_object && istype(scanned_object, /obj/machinery/artifact))
 			var/obj/machinery/artifact/A = scanned_object
@@ -89,6 +92,8 @@
 
 /obj/machinery/artifact_analyser/Topic(href, href_list)
 	if(href_list["close"])
+		var/keyboard = pick('sound/machines/keyboard1.ogg', 'sound/machines/keyboard1.ogg')
+		playsound(src, keyboard, 50, 1)
 		usr.unset_machine(src)
 		usr << browse(null, "window=artanalyser")
 		return FALSE
@@ -98,6 +103,8 @@
 		return
 
 	if(href_list["begin_scan"])
+		var/keyboard = pick('sound/machines/keyboard1.ogg', 'sound/machines/keyboard1.ogg')
+		playsound(src, keyboard, 50, 1)
 		if(!owned_scanner)
 			reconnect_scanner()
 		if(owned_scanner)
@@ -116,6 +123,7 @@
 
 				if(artifact_in_use)
 					src.visible_message("<b>[name]</b> states, \"Cannot harvest. Too much interference.\"")
+					playsound(src, 'sound/machines/buzz-two.ogg', 20, 1)
 				else
 					scanned_object = O
 					scan_in_progress = 1
@@ -127,13 +135,15 @@
 			if(!scanned_object)
 				src.visible_message("<b>[name]</b> states, \"Unable to isolate scan target.\"")
 	if(href_list["halt_scan"])
+		var/keyboard = pick('sound/machines/keyboard1.ogg', 'sound/machines/keyboard1.ogg')
+		playsound(src, keyboard, 50, 1)
 		owned_scanner.icon_state = "xenoarch_scanner"
 		scan_in_progress = 0
 		src.visible_message("<b>[name]</b> states, \"Scanning halted.\"")
 
 	updateDialog()
 
-//hardcoded responses, oh well
+// hardcoded responses, oh well
 /obj/machinery/artifact_analyser/proc/get_scan_info(obj/scanned_obj)
 	switch(scanned_obj.type)
 		if(/obj/machinery/auto_cloner)

@@ -357,18 +357,18 @@
 			item_type = new_item.name
 		if(26)
 			//energy gun
-			var/spawn_type = pick(\
-			/obj/item/weapon/gun/energy/sniperrifle/rails,\
-			/obj/item/weapon/gun/tesla/rifle,\
-			/obj/item/weapon/gun/energy/laser/scatter/alien,\
+			var/spawn_type = pick(
+			/obj/item/weapon/gun/energy/sniperrifle/rails,
+			/obj/item/weapon/gun/tesla/rifle,
+			/obj/item/weapon/gun/energy/laser/scatter/alien,
 			/obj/item/weapon/gun/energy/laser/selfcharging/alien)
-			if(spawn_type)
+			if(spawn_type && spawn_type != /obj/item/weapon/gun/tesla/rifle)
 				var/obj/item/weapon/gun/energy/new_gun = new spawn_type(src.loc)
 				new_item = new_gun
 
-				//5% chance to explode when first fired
-				//10% chance to have an unchargeable cell
-				//15% chance to gain a random amount of starting energy, otherwise start with an empty cell
+				// 5% chance to explode when first fired
+				// 10% chance to have an unchargeable cell
+				// 15% chance to gain a random amount of starting energy, otherwise start with an empty cell
 				if(prob(5))
 					new_gun.power_supply.rigged = 1
 				if(prob(10))
@@ -571,7 +571,7 @@
 
 		if(talkative)
 			new_item.talking_atom = new()
-			talking_atom.init(new_item)
+			new_item.talking_atom.init(new_item)
 
 		return INITIALIZE_HINT_QDEL
 
