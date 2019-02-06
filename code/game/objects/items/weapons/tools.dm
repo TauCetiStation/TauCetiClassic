@@ -18,7 +18,7 @@
 	name = "wrench"
 	desc = "A wrench with many common uses. Can be usually found in your hand."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "wrench"
+	icon_state = "wrench_map"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 5.0
@@ -27,6 +27,15 @@
 	m_amt = 150
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	var/random_color = TRUE
+
+/obj/item/weapon/wrench/atom_init(mapload, param_color)
+	. = ..()
+	if(random_color)
+		if(!param_color)
+			param_color = pick("black","red","green","blue","default")
+		icon_state = "wrench_[param_color]"
+		item_state = "wrench"	
 
 /obj/item/weapon/wrench/power
 	name = "Hand Drill"
@@ -39,6 +48,7 @@
 	throwforce = 8
 	attack_verb = list("drilled", "screwed", "jabbed")
 	action_button_name = "Change mode"
+	random_color = FALSE
 
 /obj/item/weapon/wrench/power/attack_self(mob/user)
 	playsound(user, 'sound/items/change_drill.ogg', 50, 1)
@@ -139,7 +149,7 @@
 	. = ..()
 	if(random_color)
 		if(!param_color)
-			param_color = pick("yellow","red","orange")
+			param_color = pick("yellow","red","green","black","blue")
 		icon_state = "cutters_[param_color]"
 		item_state = "cutters_[param_color]"
 

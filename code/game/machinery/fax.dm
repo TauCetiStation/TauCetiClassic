@@ -3,7 +3,7 @@ var/list/alldepartments = list("Central Command")
 
 /obj/machinery/faxmachine
 	name = "fax machine"
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "fax"
 	req_one_access = list(access_lawyer, access_heads)
 	anchored = 1
