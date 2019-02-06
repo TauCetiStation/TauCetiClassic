@@ -161,10 +161,12 @@
 	priority = 2
 	can_infect = FALSE
 
+	allowed_species = list(IPC)
+
 /datum/surgery_step/ipc_eye/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
 		return FALSE
-	if(!(target.species && target.species.flags[IS_SYNTHETIC]))
+	if(!target.species.flags[IS_SYNTHETIC])
 		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if(!BP)
@@ -181,9 +183,6 @@
 
 	min_duration = 90
 	max_duration = 110
-
-/datum/surgery_step/ipc_eye/screw_open/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..()
 
 /datum/surgery_step/ipc_eye/screw_open/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to unscrew [target]'s camera panels with \the [tool].",

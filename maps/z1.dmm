@@ -25156,7 +25156,7 @@
 	},
 /area/crew_quarters/kitchen)
 "aQZ" = (
-/obj/machinery/vending/snack,
+/obj/structure/closet/lasertag/blue,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "neutral"
@@ -26021,7 +26021,7 @@
 	},
 /area/storage/primary)
 "aSx" = (
-/obj/machinery/vending/cola,
+/obj/structure/closet/lasertag/red,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutral"
@@ -28450,12 +28450,6 @@
 	icon_state = "neutral"
 	},
 /area/crew_quarters/playroom)
-"aXa" = (
-/obj/structure/closet/lasertag/red,
-/turf/simulated/floor{
-	icon_state = "neutral"
-	},
-/area/crew_quarters/playroom)
 "aXb" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -28463,7 +28457,7 @@
 /turf/simulated/floor,
 /area/hallway/primary/central)
 "aXc" = (
-/obj/structure/closet/lasertag/blue,
+/obj/machinery/vending/junkfood,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "neutral"
@@ -104153,7 +104147,7 @@ aRd
 aSG
 aTW
 aVw
-aXa
+aWT
 aZi
 bdv
 bdZ

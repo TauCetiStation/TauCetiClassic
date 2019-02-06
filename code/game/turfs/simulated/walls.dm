@@ -11,7 +11,7 @@
 	var/damage_cap = 100 //Wall will break down to girders if damage reaches this point
 
 	var/damage_overlay
-	var/global/damage_overlays[8]
+	var/static/damage_overlays[8]
 
 	var/max_temperature = 2200 //K, walls will take damage if they're next to a fire hotter than this
 
