@@ -15,6 +15,9 @@
 	var blood_in_target = target.vessel.total_volume
 	var/obj/item/organ/external/BP = target.get_bodypart(BP_HEAD)
 	var bloodsuck_sound = sound('sound/effects/bloodsuck.ogg')
+	if(src.nutrition > NUTRITION_LEVEL_STARVING)
+		to_chat(src, "<span class='red'>I'm not hungry yet...</span>")
+		return
 	if(isalien(src) || blood_in_target <= 0 || target.species.flags[NO_BLOOD])
 		to_chat(src, "<span class='red'>There appears to be no blood in this prey...</span>")
 		return
@@ -26,10 +29,10 @@
 		return
 	if(last_special > world.time)
 		return
-	last_special = world.time + 600
 	src.visible_message("<span class='warning bold'>[src] moves their head next to [target]'s neck, seemingly looking for something!</span>")
 	log_game("[key_name(src)] prepares use bloodsuck on [key_name(target)]")
 	if(do_after(src, 5 SECONDS, target))
+		last_special = world.time + 30 SECONDS
 		src.visible_message("<span class='warning bold'>[src] suddenly extends their fangs and plunges them down into [target]'s neck!</span>")
 		message_admins("[key_name_admin(src)] start use bloodsuck on [key_name_admin(target)] with [blood_in_target] blood. [ADMIN_JMP(src)]")
 		for(var/i in 1 to 10)
@@ -39,7 +42,7 @@
 					M << playsound(src, bloodsuck_sound, 2, 0)
 				target.vessel.remove_reagent("blood", 8)
 				bloodsucked += 8
-				src.nutrition = min(src.nutrition + 30, 400 - (src.get_nutrition() - src.nutrition))
+				src.nutrition = min(src.nutrition + 30, NUTRITION_LEVEL_WELL_FED - (src.get_nutrition() - src.nutrition))
 			else
 				break
 		endblood = blood_in_target - bloodsucked
