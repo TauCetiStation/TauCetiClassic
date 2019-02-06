@@ -213,6 +213,7 @@
 	if(rights & R_SPAWN)       . += "[seperator]+SPAWN"
 	if(rights & R_WHITELIST)   . += "[seperator]+WHITELIST"
 	if(rights & R_EVENT)       . += "[seperator]+EVENT"
+	if(rights & R_LOG)		   . += "[seperator]+LOG"
 	return .
 
 /proc/ui_style2icon(ui_style)
