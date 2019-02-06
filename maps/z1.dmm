@@ -9917,9 +9917,6 @@
 	official = 1;
 	pixel_x = -32
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
 	},
@@ -11840,6 +11837,11 @@
 "asS" = (
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
+	},
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -25;
+	pixel_y = 0
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -17404,19 +17406,17 @@
 /turf/simulated/floor/plating,
 /area/maintenance/asmaint)
 "aCX" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/hallway/secondary/exit)
 "aCY" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "warning"
+	},
 /area/hallway/secondary/exit)
 "aCZ" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -18102,11 +18102,8 @@
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint)
 "aEk" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 2;
@@ -18117,9 +18114,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "red"
 	},
@@ -25753,10 +25748,8 @@
 	},
 /area/rnd/scibreak)
 "aRV" = (
-/obj/machinery/camera{
-	c_tag = "Escape Hallway";
-	dir = 4;
-	network = list("SS13")
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -27854,6 +27847,14 @@
 	},
 /turf/simulated/floor,
 /area/engine/chiefs_office)
+"aVI" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 2;
+	icon_state = "stairs_middle"
+	},
+/area/hallway/secondary/entry)
 "aVJ" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -27877,6 +27878,22 @@
 	},
 /turf/simulated/floor,
 /area/gateway)
+"aVL" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutralcorner"
+	},
+/area/hallway/secondary/entry)
+"aVM" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/turf/simulated/floor,
+/area/hallway/secondary/entry)
 "aVN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -27913,6 +27930,15 @@
 	},
 /turf/simulated/floor,
 /area/quartermaster/qm)
+"aVQ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "arrival"
+	},
+/area/hallway/secondary/entry)
 "aVR" = (
 /obj/machinery/camera{
 	c_tag = "Research Division North";
@@ -27961,6 +27987,19 @@
 	icon_state = "cafeteria"
 	},
 /area/crew_quarters/hor)
+"aVV" = (
+/obj/machinery/camera{
+	c_tag = "Arrival Dock's North";
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "arrival"
+	},
+/area/hallway/secondary/entry)
 "aVW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -28156,6 +28195,17 @@
 	icon_state = "grimy"
 	},
 /area/chapel/office)
+"aWp" = (
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 25;
+	pixel_y = 0
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "arrival"
+	},
+/area/hallway/secondary/entry)
 "aWq" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/bio_suit/anomaly,
@@ -28173,6 +28223,16 @@
 /turf/simulated/floor{
 	icon_state = "delivery";
 	name = "floor"
+	},
+/area/hallway/secondary/entry)
+"aWr" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "arrival"
 	},
 /area/hallway/secondary/entry)
 "aWs" = (
@@ -28354,6 +28414,17 @@
 	icon_state = "vault"
 	},
 /area/gateway)
+"aWM" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 28;
+	pixel_y = 0
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "arrival"
+	},
+/area/hallway/secondary/entry)
 "aWN" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
@@ -28403,6 +28474,19 @@
 	icon_state = "neutral"
 	},
 /area/crew_quarters/playroom)
+"aWS" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -23
+	},
+/turf/simulated/floor,
+/area/hallway/secondary/entry)
 "aWT" = (
 /turf/simulated/floor{
 	icon_state = "neutral"
@@ -28450,6 +28534,26 @@
 	icon_state = "neutral"
 	},
 /area/crew_quarters/playroom)
+"aWZ" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/hallway/secondary/entry)
+"aXa" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 2;
+	icon_state = "greencorner"
+	},
+/area/hallway/secondary/entry)
 "aXb" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -28474,6 +28578,15 @@
 	icon_state = "cafeteria"
 	},
 /area/rnd/scibreak)
+"aXe" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 2;
+	icon_state = "greencorner"
+	},
+/area/hallway/secondary/entry)
 "aXf" = (
 /turf/simulated/wall,
 /area/bridge/meeting_room)
@@ -28496,6 +28609,19 @@
 	icon_state = "cafeteria"
 	},
 /area/rnd/scibreak)
+"aXi" = (
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -23
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 2;
+	icon_state = "greencorner"
+	},
+/area/hallway/secondary/entry)
 "aXj" = (
 /obj/structure/flora/plant/random,
 /obj/machinery/light{
@@ -29196,10 +29322,10 @@
 	},
 /area/hallway/secondary/entry)
 "aYS" = (
-/turf/simulated/floor{
-	dir = 2;
-	icon_state = "stairs_middle"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
 	},
+/turf/simulated/floor,
 /area/hallway/secondary/entry)
 "aYU" = (
 /turf/simulated/floor{
@@ -29207,12 +29333,7 @@
 	},
 /area/hallway/secondary/entry)
 "aYW" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/hallway/secondary/entry)
 "aYX" = (
@@ -39184,13 +39305,21 @@
 	},
 /area/quartermaster/office)
 "bvg" = (
-/obj/machinery/camera{
-	c_tag = "Arrival Dock's North";
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4;
+	step_x = 0;
+	step_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/alarm{
+	frequency = 1600;
+	pixel_y = 26
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "arrival"
+	dir = 1;
+	icon_state = "warning"
 	},
 /area/hallway/secondary/entry)
 "bvh" = (
@@ -42963,16 +43092,17 @@
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint2)
 "bDi" = (
-/obj/machinery/firealarm{
+/obj/machinery/camera{
+	c_tag = "Escape Hallway";
 	dir = 4;
-	pixel_x = 24
+	network = list("SS13")
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "arrival"
+	dir = 8;
+	icon_state = "neutralcorner"
 	},
 /area/hallway/secondary/entry)
 "bDj" = (
@@ -45871,18 +46001,11 @@
 	},
 /area/hallway/secondary/entry)
 "bJH" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
 	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = 28;
-	pixel_y = 0
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "arrival"
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor,
 /area/hallway/secondary/entry)
 "bJI" = (
 /obj/machinery/hydroponics/constructable{
@@ -51780,25 +51903,17 @@
 	},
 /area/hallway/secondary/entry)
 "bWx" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutralcorner"
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor,
 /area/hallway/secondary/entry)
 "bWy" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 2;
-	icon_state = "greencorner"
+	icon_state = "escape"
 	},
 /area/hallway/secondary/entry)
 "bWz" = (
@@ -58481,16 +58596,14 @@
 	},
 /area/medical/checkpoint)
 "cmc" = (
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 25;
-	pixel_y = 0
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 2;
-	icon_state = "greencorner"
+	dir = 1;
+	icon_state = "warning"
 	},
-/area/hallway/secondary/entry)
+/area/hallway/secondary/exit)
 "cmd" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door_control{
@@ -91569,7 +91682,7 @@ aaa
 aaa
 aDy
 bMi
-aYW
+aWS
 apT
 aah
 icb
@@ -92069,7 +92182,7 @@ atS
 aOn
 apT
 apT
-aXT
+bvg
 apT
 aXZ
 aXZ
@@ -92603,7 +92716,7 @@ uDb
 aGj
 bQB
 ceI
-cmc
+bQB
 bQB
 bQB
 bQB
@@ -92846,19 +92959,19 @@ bdA
 bhc
 bkn
 blU
-blU
-blU
-blU
-blU
 bDc
 blU
 bJG
+blU
+blU
+blU
+bTo
 bMn
 bOy
 blU
 bTo
-bWx
-bQB
+aWZ
+aXe
 aNi
 aNi
 crc
@@ -93103,19 +93216,19 @@ aJT
 imb
 iDb
 jjb
+aVQ
 iab
+aVV
+aWp
+aWr
 iab
-bvg
-iab
-bDi
-iab
-bJH
+aWM
 iDb
 bOA
 bQB
 bTp
-bWy
-bQB
+aXa
+aXi
 aNi
 cme
 crd
@@ -93614,7 +93727,7 @@ aEb
 aYm
 bbd
 aGj
-bhd
+aEL
 aMZ
 blV
 bpU
@@ -95137,8 +95250,8 @@ apW
 apW
 hfb
 hQb
-hXb
-aCX
+cmc
+aVq
 aEk
 asP
 aGS
@@ -95394,8 +95507,8 @@ fbb
 aXX
 heb
 hvb
-hXb
 aCY
+aCX
 aEl
 aFz
 aGT
@@ -95927,7 +96040,7 @@ aEt
 aYP
 bbd
 atE
-aEL
+bhd
 aMZ
 ajV
 ala
@@ -97460,9 +97573,9 @@ aJL
 aLB
 aMU
 aly
-urb
-urb
 aRV
+urb
+bDi
 aTv
 urb
 aWv
@@ -97717,15 +97830,15 @@ aJL
 aLC
 aMU
 atE
-atE
-atE
-atE
-atE
-atE
-aWv
 aYS
-bbt
-aGj
+aYW
+bJH
+bWx
+bWx
+bWy
+aVI
+aVL
+aVM
 bhj
 bkB
 aPP
