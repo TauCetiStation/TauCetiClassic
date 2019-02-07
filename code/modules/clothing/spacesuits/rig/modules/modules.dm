@@ -4,6 +4,15 @@
 	var/product_type = "undefined"
 	var/charges = 0
 
+// Used to limit subtypes of the same module
+var/const/module_mount_other = 0
+var/const/module_mount_ai = 1
+var/const/module_mount_grenadelaunder = 2
+var/const/module_mount_shoulder_right = 3
+var/const/module_mount_shoulder_left = 4
+var/const/module_mount_injector = 5
+var/const/module_mount_chest = 6
+
 /obj/item/rig_module
 	name = "hardsuit upgrade"
 	desc = "It looks pretty sciency."
@@ -22,6 +31,7 @@
 	var/selectable                      // Set to 1 to be able to assign the device as primary system.
 	var/redundant                       // Set to 1 to ignore duplicate module checking when installing.
 	var/permanent                       // If set, the module can't be removed.
+	var/mount_type = module_mount_other
 
 	var/active                          // Basic module status
 	var/activate_on_start				// Set to TRUE for the device to automatically activate on suit equip
@@ -81,6 +91,63 @@
 		holder.installed_modules -= src
 	holder = null
 	. = ..()
+
+/obj/item/rig_module/examine()
+	. = ..()
+	switch(damage)
+		if(0)
+			to_chat(usr, "It is undamaged.")
+		if(1)
+			to_chat(usr, "It is badly damaged.")
+		if(2)
+			to_chat(usr, "It is almost completely destroyed.")
+
+/obj/item/rig_module/attackby(obj/item/W, mob/user)
+	if(istype(W,/obj/item/stack/nanopaste))
+		if(user.is_busy())
+			return
+
+		if(!damage)
+			to_chat(user, "There is no damage to mend.")
+			return
+
+		to_chat(user, "You start mending the damaged portions of \the [src]...")
+
+		if(!do_after(user, 30, target = src) || !W || !src)
+			return
+
+		var/obj/item/stack/nanopaste/paste = W
+		damage = 0
+		to_chat(user, "You mend the damage to [src] with [W].")
+		paste.use(1)
+		return
+
+	else if(iscoil(W))
+		if(user.is_busy())
+			return
+
+		switch(damage)
+			if(0)
+				to_chat(user, "There is no damage to mend.")
+				return
+			if(2)
+				to_chat(user, "There is no damage that you are capable of mending with such crude tools.")
+				return
+
+		var/obj/item/stack/cable_coil/cable = W
+		if(!cable.amount >= 5)
+			to_chat(user, "You need five units of cable to repair \the [src].")
+			return
+
+		to_chat(user, "You start mending the damaged portions of \the [src]...")
+		if(!do_after(user, 30, target = src) || !W || !src)
+			return
+
+		damage = 0
+		to_chat(user, "You mend the damage to [src] with [W].")
+		cable.use(5)
+		return
+	..()
 
 // Called when the module is installed into a suit.
 /obj/item/rig_module/proc/installed(var/obj/item/clothing/head/helmet/space/rig/new_holder)

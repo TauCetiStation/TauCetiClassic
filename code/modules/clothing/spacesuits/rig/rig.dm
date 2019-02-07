@@ -372,6 +372,20 @@
 			return module
 	return null
 
+/obj/item/clothing/suit/space/rig/proc/can_install(obj/item/rig_module/new_module)
+	if(new_module.redundant)
+		return TRUE
+
+	for(var/obj/item/rig_module/installed_mod in installed_modules)
+		if(installed_mod.type == new_module.type)
+			to_chat(usr, "The hardsuit already has a module of that class installed.")
+			return FALSE
+		if(installed_mod.mount_type == new_module.mount_type && new_module.mount_type != module_mount_other)
+			to_chat(usr, "The hardsuit already has [installed_mod.name] installed in that mount spot.")
+			return FALSE
+
+	return TRUE
+
 /obj/item/clothing/suit/space/rig/proc/take_hit(damage, source, is_emp = FALSE)
 
 	if(!installed_modules.len)
@@ -394,6 +408,8 @@
 		if(module.damage < 2)
 			valid_modules += module
 
+	if(!valid_modules.len)
+		return
 	var/obj/item/rig_module/dam_module = pick(valid_modules)
 
 	if(!dam_module)
@@ -440,6 +456,7 @@
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 80)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
 	siemens_coefficient = 0
+	initial_modules = list(/obj/item/rig_module/simple_ai)
 
 //Chief Engineer's rig
 /obj/item/clothing/head/helmet/space/rig/engineering/chief
@@ -457,6 +474,7 @@
 	item_state = "ce_hardsuit"
 	slowdown = 1
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/rcd, /obj/item/rig_module/nuclear_generator)
 
 //Mining rig
 /obj/item/clothing/head/helmet/space/rig/mining
@@ -474,6 +492,7 @@
 	item_state = "mining_hardsuit"
 	armor = list(melee = 90, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 20)
 	breach_threshold = 26
+	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/orescanner, /obj/item/rig_module/device/drill)
 
 
 //Syndicate rig
@@ -590,6 +609,7 @@
 	species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA, VOX)
 	action_button_name = "Toggle space suit mode"
 	var/combat_mode = FALSE
+	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair)
 
 /obj/item/clothing/suit/space/rig/syndi/update_icon(mob/user)
 	..()
@@ -639,6 +659,7 @@
 	slowdown = 1
 	unacidable = 1
 	armor = list(melee = 40, bullet = 33, laser = 33,energy = 33, bomb = 33, bio = 100, rad = 66)
+	initial_modules = list(/obj/item/rig_module/simple_ai)
 
 //Medical Rig
 /obj/item/clothing/head/helmet/space/rig/medical
@@ -656,6 +677,7 @@
 	item_state = "medical_hardsuit"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
 	armor = list(melee = 30, bullet = 5, laser = 10,energy = 5, bomb = 25, bio = 100, rad = 50)
+	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/healthscanner)
 
 //CMO Rig
 /obj/item/clothing/head/helmet/space/rig/medical/cmo
@@ -671,6 +693,7 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Has minor radiation shielding."
 	item_state = "medical_hardsuit"
 	slowdown = 0.5
+	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/med_teleport, /obj/item/rig_module/chem_dispenser/medical, /obj/item/rig_module/device/healthscanner)
 
 //Security
 /obj/item/clothing/head/helmet/space/rig/security
@@ -690,6 +713,7 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/melee/baton)
 	breach_threshold = 20
 	slowdown = 1.4
+	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash)
 
 //HoS Rig
 /obj/item/clothing/head/helmet/space/rig/security/hos
@@ -705,6 +729,7 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
 	item_state = "sec_hardsuit"
 	slowdown = 0.7
+	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/mounted/taser, /obj/item/rig_module/med_teleport, /obj/item/rig_module/chem_dispenser/combat, /obj/item/rig_module/grenade_launcher/flashbang)
 
 //Atmospherics Rig (BS12)
 /obj/item/clothing/head/helmet/space/rig/atmos
@@ -723,3 +748,4 @@
 	item_state = "atmos_hardsuit"
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 50)
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	initial_modules = list(/obj/item/rig_module/simple_ai)

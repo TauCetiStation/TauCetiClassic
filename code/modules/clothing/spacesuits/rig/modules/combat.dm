@@ -5,7 +5,7 @@
 	interface_name = "mounted flash"
 	interface_desc = "Disorientates your target by blinding them with a bright light."
 	device_type = /obj/item/device/flash
-	origin_tech = list(TECH_COMBAT = 2, TECH_MAGNET = 3, TECH_ENGINEERING = 5)
+	origin_tech = "combat=2"
 
 /obj/item/rig_module/grenade_launcher
 	name = "hardsuit mounted grenade launcher"
@@ -14,11 +14,13 @@
 	icon_state = "grenadelauncher"
 	suit_overlay = "grenade"
 	use_power_cost = 500
+	mount_type = module_mount_grenadelaunder
+	origin_tech = "combat=3"
 
 	interface_name = "integrated grenade launcher"
 	interface_desc = "Discharges loaded grenades against the wearer's location."
 
-	var/fire_force = 30
+	var/fire_force = 5
 	var/fire_distance = 10
 
 	charges = list(
@@ -60,6 +62,10 @@
 		return 0
 
 	var/mob/living/carbon/human/H = holder.wearer
+
+	if(damage > 0 && prob(50))
+		to_chat(holder.wearer, "<span class='warning'>[name] malfunctions and ignores your command!</span>")
+		return 1
 
 	if(!charge_selected)
 		to_chat(H, "<span class='danger'>You have not selected a grenade type.</span>")
@@ -108,16 +114,27 @@
 		list("metal foam grenade",   "metal foam grenade",   /obj/item/weapon/grenade/chem_grenade/metalfoam,  4),
 	)
 
+/obj/item/rig_module/grenade_launcher/flashbang
+	name = "hardsuit mounted flashbang grenade launcher"
+	interface_name = "flashbang grenade launcher"
+	desc = "A shoulder-mounted micro-explosive dispenser designed only to accept standard flashbang grenades."
+
+	charges = list(
+		list("flashbang",   "flashbang",   /obj/item/weapon/grenade/flashbang,  3),
+	)
+
 /obj/item/rig_module/mounted
-	name = "mounted laser rifle"
+	name = "hardsuit mounted laser rifle"
 	desc = "A shoulder-mounted battery-powered laser rifle mount."
 	selectable = TRUE
 	usable = FALSE
 	module_cooldown = 0
-	icon_state = "lcannon"
+	icon_state = "egun"
 	suit_overlay = "mounted-lascannon"
 	use_power_cost = 0
+	mount_type = module_mount_shoulder_left
 	var/recharge_speed = 50
+	origin_tech = "combat=4"
 
 	engage_string = "Configure"
 
@@ -131,10 +148,15 @@
 	if(gun)
 		gun = new gun(src)
 		gun.canremove = FALSE
+		gun.name = interface_name
 
 /obj/item/rig_module/mounted/engage(atom/target)
 	if(!..())
 		return 0
+
+	if(damage > 0 && prob(40))
+		to_chat(holder.wearer, "<span class='warning'>[name] malfunctions and ignores your command!</span>")
+		return 1
 
 	if(!target)
 		gun.attack_self(holder.wearer)
@@ -149,15 +171,16 @@
 	return passive_power_cost
 
 /obj/item/rig_module/mounted/taser
-	name = "mounted taser"
+	name = "hardsuit mounted taser"
 	desc = "A palm-mounted nonlethal energy projector."
 	icon_state = "taser"
 	suit_overlay = "mounted-taser"
 	use_power_cost = 0
+	mount_type = module_mount_shoulder_right
+	origin_tech = "combat=3"
 
 	usable = TRUE
 
 	interface_name = "mounted taser"
 	interface_desc = "A palm-mounted, cell-powered taser."
-	origin_tech = list(TECH_POWER = 5, TECH_COMBAT = 5, TECH_ENGINEERING = 6)
 	gun = /obj/item/weapon/gun/energy/taser

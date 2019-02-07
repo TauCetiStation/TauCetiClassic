@@ -15,7 +15,7 @@
 	interface_name = "health scanner"
 	interface_desc = "Shows an informative health readout when used on a subject."
 	use_power_cost = 100
-	origin_tech = list(TECH_MAGNET = 3, TECH_BIO = 3, TECH_ENGINEERING = 5)
+	origin_tech = "biotech=2;programming=2"
 	device_type = /obj/item/device/healthanalyzer
 
 /obj/item/rig_module/device/drill
@@ -26,7 +26,7 @@
 	interface_name = "mounted drill"
 	interface_desc = "A diamond-tipped industrial drill."
 	use_power_cost = 200
-	origin_tech = list(TECH_MATERIAL = 6, TECH_POWER = 4, TECH_ENGINEERING = 6)
+	origin_tech = "materials=5;powerstorage=3;engineering=3;programming=2"
 	device_type = /obj/item/weapon/pickaxe/drill/jackhammer // this one doesn't use energy
 
 /obj/item/rig_module/device/anomaly_scanner
@@ -40,7 +40,7 @@
 	usable = TRUE
 	selectable = FALSE
 	device_type = /obj/item/device/ano_scanner
-	origin_tech = list(TECH_BLUESPACE = 4, TECH_MAGNET = 4, TECH_ENGINEERING = 6)
+	origin_tech = "magnets=3;programming=2"
 
 /obj/item/rig_module/device/orescanner
 	name = "hardsuit ore scanner module"
@@ -53,7 +53,7 @@
 	selectable = FALSE
 	use_power_cost = 200
 	device_type = /obj/item/weapon/mining_scanner
-	origin_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 4, TECH_ENGINEERING = 6)
+	origin_tech = "magnets=2;programming=2;engineering=2"
 
 /obj/item/weapon/rcd/mounted/useResource(var/amount, var/mob/user)
 	var/cost = amount*70 //Arbitary number that hopefully gives it as many uses as a plain RCD.
@@ -86,7 +86,7 @@
 	usable = TRUE
 	engage_string = "Configure RCD"
 	use_power_cost = 0
-	origin_tech = list(TECH_MATERIAL = 6, TECH_MAGNET = 5, TECH_ENGINEERING = 7)
+	origin_tech = "magnets=5;programming=4;engineering=4;powerstorage=4"
 	device_type = /obj/item/weapon/rcd/mounted
 
 /obj/item/rig_module/device/atom_init()
@@ -125,6 +125,8 @@
 	selectable = FALSE
 	toggleable = FALSE
 	use_power_cost = 500
+	mount_type = module_mount_injector
+	origin_tech = "biotech=2;programming=3"
 
 	engage_string = "Inject"
 
@@ -241,26 +243,38 @@
 /obj/item/rig_module/chem_dispenser/combat
 	name = "hardsuit combat chemical injector"
 	desc = "A complex web of tubing and needles suitable for hardsuit use."
+	suit_overlay = null // hidden
 
 	charges = list(
 		list("tricordrazine", "tricordrazine", "tricordrazine",      30),
-		list("hyperzine",     "hyperzine",     "hyperzine",          30),
-		list("oxycodone",     "oxycodone",     "oxycodone", 		 30),
-		list("sugar",         "sugar",         "sugar", 			 80)
+		list("inaprovaline",  "inaprovaline",  "inaprovaline",       30),
+		list("tramadol",      "tramadol",      "tramadol", 		     30),
+		list("dexalin",       "dexalin",       "dexalin", 	     	 30),
 		)
 
 	interface_name = "combat chem dispenser"
 	interface_desc = "Dispenses loaded chemicals directly into the bloodstream."
 
 
-/obj/item/rig_module/chem_dispenser/injector
+/obj/item/rig_module/chem_dispenser/medical // starts almost empty but could be loaded with a lot of different chemicals
 	name = "hardsuit mounted chemical injector"
-	desc = "A complex web of tubing and a large needle suitable for hardsuit use."
-	usable = FALSE
-	selectable = TRUE
+	desc = "A complex web of tubing and needles suitable for hardsuit use."
 
-	interface_name = "mounted chem injector"
-	interface_desc = "Dispenses loaded chemicals via an arm-mounted injector."
+	charges = list(
+		list("tricordrazine", "tricordrazine", "tricordrazine",      30),
+		list("inaprovaline",  "inaprovaline",  "inaprovaline",       30),
+		list("tramadol",      "tramadol",      "tramadol", 		     30),
+		list("dexalin",       "dexalin",       "dexalin", 	     	 30),
+		list("dexalin plus",  "dexalin plus",  "dexalinp",           0),
+		list("dylovene",      "dylovene",      "anti_toxin",         0),
+		list("kelotane",      "kelotane",      "kelotane",           0),
+		list("dermaline",     "dermaline",     "dermaline",          0),
+		list("bicaridine",    "bicaridine",    "bicaridine",         0),
+		list("oxycodone",     "oxycodone",     "oxycodone",          0),
+		)
+
+	interface_name = "medical chem dispenser"
+	interface_desc = "Dispenses loaded chemicals directly into the bloodstream."
 
 /obj/item/rig_module/cooling_unit
 	name = "hardsuit mounted cooling unit"
@@ -301,7 +315,7 @@
 	selectable = FALSE
 	use_power_cost = 0
 	module_cooldown = 0
-	origin_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 4, TECH_ENGINEERING = 6)
+	origin_tech = "engineering=3;programming=3"
 
 	charges = list(
 		list("metal", "metal", "metal", 30),
@@ -381,9 +395,10 @@
 
 /obj/item/rig_module/med_teleport
 	name = "hardsuit medical teleport system"
-	origin_tech = list(TECH_MAGNET = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 5)
+	origin_tech = "programming=2;materials=2;bluespace=1"
 	interface_name = "automated medical teleport system"
 	interface_desc = "System capable of saving the suit owner. But only once"
+	icon_state = "teleporter"
 
 	var/preparing = FALSE
 	var/teleport_timer = 0
@@ -439,9 +454,12 @@
 /obj/item/rig_module/nuclear_generator
 	name = "hardsuit nuclear reactor module"
 	desc = "Looks like a small machine of doom"
-	origin_tech = list(TECH_MAGNET = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 5)
+	origin_tech = "programming=4;engineering=4;bluespace=4;powerstorage=4"
 	interface_name = "compact nuclear reactor"
 	interface_desc = "Passively generates energy. Becomes very unstable if damaged"
+	mount_type = module_mount_chest
+	icon_state = "nuclear"
+	suit_overlay = "nuclear"
 
 	passive_power_cost = -50
 	var/unstable = FALSE
@@ -458,7 +476,7 @@
 			if(holder.wearer)
 				holder.wearer.visible_message("<span class='warning'>The nuclear reactor inside [holder.wearer]'s [holder] is gloving red and looks very unstable</span>")
 				to_chat(holder.wearer, "<span class='danger'>\[DANGER\] Your [name] is unstable and will explode in about a minute, remove your suit immediately</span>")
-				message_admins("[key_name_admin(src)]'s [holder] has a damaged [name] that will explode in about a minute [ADMIN_JMP(src)]")
+				message_admins("[key_name_admin(holder.wearer)]'s [holder] has a damaged [name] that will explode in about a minute [ADMIN_JMP(src)]")
 			else
 				holder.visible_message("<span class='warning'>The nuclear reactor inside [holder] is gloving red and looks very unstable</span>")
 			unstable = TRUE

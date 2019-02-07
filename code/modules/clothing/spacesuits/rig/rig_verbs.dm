@@ -16,9 +16,6 @@
 	set category = "Hardsuit"
 	set src = usr.contents
 
-	//if(malfunction_check(usr))
-	//	return
-
 	if(!check_power_cost(usr, 0, 0, 0, 0))
 		return
 
@@ -52,11 +49,8 @@
 	set category = "Hardsuit"
 	set src = usr.contents
 
-	//if(malfunction_check(usr))
-	//	return
-
-	//if(!check_power_cost(usr, 0, 0, 0, 0))
-	//	return
+	if(!check_power_cost(usr, 0, 0, 0, 0))
+		return
 
 	if(!istype(wearer) || !wearer.wear_suit == src)
 		to_chat(usr, "<span class='warning'>The hardsuit is not being worn.</span>")
@@ -90,9 +84,6 @@
 	set category = "Hardsuit"
 	set src = usr.contents
 
-	//if(malfunction_check(usr))
-	//	return
-
 	if(!istype(wearer) || !wearer.wear_suit == src)
 		to_chat(usr, "<span class='warning'>The hardsuit is not being worn.</span>")
 		return
@@ -101,8 +92,8 @@
 		to_chat(usr, "<span class='warning'>The suit is not active.</span>")
 		return
 
-	//if(!check_power_cost(usr, 0, 0, 0, 0))
-	//	return
+	if(!check_power_cost(usr, 0, 0, 0, 0))
+		return
 
 	var/list/selectable = list()
 	for(var/obj/item/rig_module/module in installed_modules)

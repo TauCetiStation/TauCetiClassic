@@ -55,19 +55,16 @@
 		if(user.is_busy())
 			return
 
-		if(!installed_modules)
-			installed_modules = list()
-		if(installed_modules.len)
-			for(var/obj/item/rig_module/installed_mod in installed_modules)
-				if(!installed_mod.redundant && istype(installed_mod,W))
-					to_chat(user, "The hardsuit already has a module of that class installed.")
-					return 1
-
 		var/obj/item/rig_module/mod = W
+		if(!can_install(mod))
+			return
+
 		to_chat(user, "You begin installing \the [mod] into \the [src].")
 		if(!do_after(user, 40, target = src))
 			return
 		if(!user || !W)
+			return
+		if(!can_install(mod))
 			return
 		if(!user.unEquip(mod))
 			return

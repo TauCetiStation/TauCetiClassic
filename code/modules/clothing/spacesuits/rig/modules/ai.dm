@@ -1,10 +1,13 @@
 /obj/item/rig_module/simple_ai
 	name = "hardsuit automated diagnostic system"
-	origin_tech = list(TECH_MAGNET = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 5)
+	desc = "A system designed to help hardsuit users."
+	origin_tech = "programming=2"
 	interface_name = "automated diagnostic system"
 	interface_desc = "System that will tell you exactly how you gonna die."
 	toggleable = TRUE
 	activate_on_start = TRUE
+	mount_type = module_mount_ai
+	icon_state = "IIS"
 
 	var/list/nonimportant_messages = list()
 	var/list/important_messages = list()
@@ -39,7 +42,7 @@
 	var/list/energy_warnings = list(
 		list(0.5, "Warning: hardsuit power level below 50%", 'sound/rig/shortbeep.wav'),
 		list(0.3, "Warning: hardsuit power level below 30%", 'sound/rig/beep.wav'),
-		list(0.1, "Warning: hardsuit power level is critically low", 'sound/rig/loudbeep.wav'),
+		list(0.1, "Warning: hardsuit power level is critically low", 'sound/rig/loudbeep.wav'), // waste 10% of remaining power by showing this message, that's the way to go!
 		)
 
 /obj/item/rig_module/simple_ai/activate(forced = FALSE)
@@ -48,6 +51,7 @@
 	saved_rig_damage = 0
 	saved_power = 1
 	saved_stat = 0
+	restart_cooldown = 0
 
 	greet_user()
 
@@ -231,7 +235,7 @@
 
 /obj/item/rig_module/simple_ai/advanced
 	name = "hardsuit advanced diagnostic system"
-	origin_tech = list(TECH_MAGNET = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 5)
+	origin_tech = "programming=4"
 	interface_name = "advanced diagnostic system"
 	interface_desc = "System that might actually save you, wow."
 
