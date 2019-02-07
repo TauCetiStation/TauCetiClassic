@@ -146,11 +146,11 @@ robot_fabricator
 		return
 	cur_malf.ai_win()
 
-/datum/AI_Module/large/
+/datum/AI_Module/large
 	uses = 1
 	price = MALF_LARGE_MODULE_PRICE
 
-/datum/AI_Module/small/
+/datum/AI_Module/small
 	uses = 5
 	price = MALF_SMALL_MODULE_PRICE
 

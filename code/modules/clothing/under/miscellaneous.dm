@@ -331,7 +331,7 @@
 	body_parts_covered = LOWER_TORSO
 
 //dress
-/obj/item/clothing/under/dress/
+/obj/item/clothing/under/dress
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/under/dress/dress_fire
@@ -441,7 +441,7 @@
 	flags = ONESIZEFITSALL
 
 //wedding stuff
-/obj/item/clothing/under/wedding/
+/obj/item/clothing/under/wedding
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
 /obj/item/clothing/under/wedding/bride_orange

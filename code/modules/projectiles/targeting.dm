@@ -119,11 +119,10 @@
 				if(M) return M
 				Y1+=s
 	else
-		var
-			m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
-			b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
-			signX = SIGN(X2-X1)
-			signY = SIGN(Y2-Y1)
+		var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
+		var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
+		var/signX = SIGN(X2-X1)
+		var/signY = SIGN(Y2-Y1)
 		if(X1<X2) b+=m
 		while(1)
 			var/xvert = round(m*X1+b-Y1)
@@ -139,11 +138,11 @@
 
 
 //Targeting management procs
-/mob/var
-	list/targeted_by
-	last_move_intent = -100
-	last_target_click = -5
-	target_locked = null
+/mob
+	var/list/targeted_by
+	var/last_move_intent = -100
+	var/last_target_click = -5
+	var/target_locked = null
 
 /mob/living/proc/Targeted(obj/item/weapon/gun/I) //Self explanitory.
 	if(!I.target)
@@ -240,11 +239,11 @@
 					M.NotTargeted(G)
 
 //If you move out of range, it isn't going to still stay locked on you any more.
-/client/var
-	target_can_move = 0
-	target_can_run = 0
-	target_can_click = 0
-	gun_mode = 0
+/client
+	var/target_can_move = 0
+	var/target_can_run = 0
+	var/target_can_click = 0
+	var/gun_mode = 0
 
 //These are called by the on-screen buttons, adjusting what the victim can and cannot do.
 /client/proc/add_gun_icons()

@@ -1,4 +1,4 @@
-client/proc/one_click_antag()
+/client/proc/one_click_antag()
 	set name = "Create Antagonist"
 	set desc = "Auto-create an antagonist of your choice."
 	set category = "Admin"
@@ -572,7 +572,7 @@ client/proc/one_click_antag()
 
 	return new_vox
 
-datum/admins/proc/makeAbductorTeam()
+/datum/admins/proc/makeAbductorTeam()
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
 

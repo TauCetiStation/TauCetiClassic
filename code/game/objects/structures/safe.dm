@@ -161,15 +161,15 @@ FLOOR SAFES
 			to_chat(user, "Hold [I] in one of your hands while you manipulate the dial.")
 
 
-obj/structure/safe/blob_act()
+/obj/structure/safe/blob_act()
 	return
 
 
-obj/structure/safe/ex_act(severity)
+/obj/structure/safe/ex_act(severity)
 	return
 
 
-obj/structure/safe/meteorhit(obj/O)
+/obj/structure/safe/meteorhit(obj/O)
 	return
 
 

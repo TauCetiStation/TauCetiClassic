@@ -110,7 +110,7 @@
 		else
 			to_chat(user, "<span class='danger'>It's broken!</span>")
 			return 1
-	else if(istype(O, /obj/item/weapon/reagent_containers/spray/))
+	else if(istype(O, /obj/item/weapon/reagent_containers/spray))
 		var/obj/item/weapon/reagent_containers/spray/clean_spray = O
 		if(clean_spray.reagents.has_reagent("cleaner",clean_spray.amount_per_transfer_from_this))
 			clean_spray.reagents.remove_reagent("cleaner",clean_spray.amount_per_transfer_from_this,1)
@@ -129,7 +129,7 @@
 			to_chat(user, "<span class='danger'>You need more space cleaner!</span>")
 			return 1
 
-	else if(istype(O, /obj/item/weapon/soap/)) // If they're trying to clean it then let them
+	else if(istype(O, /obj/item/weapon/soap)) // If they're trying to clean it then let them
 		user.visible_message( \
 			"<span class='notice'>[user] starts to clean [src].</span>", \
 			"<span class='notice'>You start to clean [src].</span>" \

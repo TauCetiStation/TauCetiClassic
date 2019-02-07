@@ -64,58 +64,58 @@
 	var/num_territories = 1//Number of total valid territories for gang mode
 
 
-	proc/count(count_territories)
-		for(var/turf/T in block(locate(1, 1, ZLEVEL_STATION), locate(world.maxx, world.maxy, ZLEVEL_STATION)))
-			if(istype(T,/turf/simulated/floor))
-				var/turf/simulated/floor/F = T
-				if(!F.burnt)
-					src.floor += 12
-				else
-					src.floor += 1
-
-			if(istype(T, /turf/simulated/wall))
-				if(T.intact)
-					src.wall += 2
-				else
-					src.wall += 1
-
-			if(istype(T, /turf/simulated/wall/r_wall))
-				if(T.intact)
-					src.r_wall += 2
-				else
-					src.r_wall += 1
-
-			for(var/obj/O in T.contents)
-				if(istype(O, /obj/structure/window))
-					src.window += 1
-				else if(istype(O, /obj/structure/grille))
-					var/obj/structure/grille/G = O
-					if(!G.destroyed)
-						src.grille += 1
-				else if(istype(O, /obj/machinery/door))
-					src.door += 1
-				else if(istype(O, /obj/machinery))
-					src.mach += 1
-
-		if(count_territories)
-			var/list/valid_territories = list()
-			for(var/area/A in all_areas) //First, collect all area types on the station zlevel
-				if(A.z == ZLEVEL_STATION)
-					if(!(A.type in valid_territories) && A.valid_territory)
-						valid_territories |= A.type
-			if(valid_territories.len)
-				num_territories = valid_territories.len //Add them all up to make the total number of area types
+/datum/station_state/proc/count(count_territories)
+	for(var/turf/T in block(locate(1, 1, ZLEVEL_STATION), locate(world.maxx, world.maxy, ZLEVEL_STATION)))
+		if(istype(T,/turf/simulated/floor))
+			var/turf/simulated/floor/F = T
+			if(!F.burnt)
+				src.floor += 12
 			else
-				to_chat(world, "ERROR: NO VALID TERRITORIES")
+				src.floor += 1
 
-	proc/score(datum/station_state/result)
-		if(!result)	return 0
-		var/output = 0
-		output += (result.floor / max(floor,1))
-		output += (result.r_wall/ max(r_wall,1))
-		output += (result.wall / max(wall,1))
-		output += (result.window / max(window,1))
-		output += (result.door / max(door,1))
-		output += (result.grille / max(grille,1))
-		output += (result.mach / max(mach,1))
-		return (output/7)
+		if(istype(T, /turf/simulated/wall))
+			if(T.intact)
+				src.wall += 2
+			else
+				src.wall += 1
+
+		if(istype(T, /turf/simulated/wall/r_wall))
+			if(T.intact)
+				src.r_wall += 2
+			else
+				src.r_wall += 1
+
+		for(var/obj/O in T.contents)
+			if(istype(O, /obj/structure/window))
+				src.window += 1
+			else if(istype(O, /obj/structure/grille))
+				var/obj/structure/grille/G = O
+				if(!G.destroyed)
+					src.grille += 1
+			else if(istype(O, /obj/machinery/door))
+				src.door += 1
+			else if(istype(O, /obj/machinery))
+				src.mach += 1
+
+	if(count_territories)
+		var/list/valid_territories = list()
+		for(var/area/A in all_areas) //First, collect all area types on the station zlevel
+			if(A.z == ZLEVEL_STATION)
+				if(!(A.type in valid_territories) && A.valid_territory)
+					valid_territories |= A.type
+		if(valid_territories.len)
+			num_territories = valid_territories.len //Add them all up to make the total number of area types
+		else
+			to_chat(world, "ERROR: NO VALID TERRITORIES")
+
+/datum/station_state/proc/score(datum/station_state/result)
+	if(!result)	return 0
+	var/output = 0
+	output += (result.floor / max(floor,1))
+	output += (result.r_wall / max(r_wall,1))
+	output += (result.wall / max(wall,1))
+	output += (result.window / max(window,1))
+	output += (result.door / max(door,1))
+	output += (result.grille / max(grille,1))
+	output += (result.mach / max(mach,1))
+	return (output/7)

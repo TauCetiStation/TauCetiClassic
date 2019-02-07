@@ -308,7 +308,7 @@
 	if(target.species && target.species.flags[NO_PAIN])
 		target.custom_pain("You notice slight movement in your chest.",1)
 	else
-		target.custom_pain("The pain in your chest is living hell!",1)
+		target.custom_pain("The pain in your chest is a living hell!",1)
 	..()
 
 /datum/surgery_step/ribcage/fix_chest_internal_robot/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -398,10 +398,6 @@
 	target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	msg_admin_attack("[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-	var/obj/item/brain/P
-	target.organs -= P
-	target.organs_by_name -= O_BRAIN
-
 	target.chest_brain_op_stage = 2.0
 	target.death()
 
@@ -410,8 +406,9 @@
 	"<span class='warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
 	target.apply_damage(30, BRUTE, BP_CHEST, 1, DAM_SHARP)
 	if (ishuman(user))
-		user:bloody_body(target)
-		user:bloody_hands(target, 0)
+		var/mob/living/carbon/human/H = user
+		H.bloody_body(target)
+		H.bloody_hands(target, 0)
 //////////////////////////////////////////////////////////////////
 //				EXTRACTING IPC'S BRAIN							//
 //////////////////////////////////////////////////////////////////
@@ -471,11 +468,6 @@
 	target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	msg_admin_attack("[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-
-	var/obj/item/brain/B
-	target.organs -= B
-	target.organs_by_name -= O_BRAIN
-
 	var/obj/item/device/mmi/posibrain/P = new(target.loc)
 	P.transfer_identity(target)
 
@@ -507,16 +499,11 @@
 	user.visible_message("<span class='notice'>[user] fiddled in \the [tool] into [target].</span>",
 	"<span class='notice'>You fiddled in \the [tool] into [target].</span>")
 
-	var/obj/item/brain/B
-	target.organs += B
-	target.organs_by_name += O_BRAIN
-
 	var/obj/item/device/mmi/posibrain/PB = tool
-	if(PB.brainmob.mind)
+	if(PB.brainmob && PB.brainmob.mind)
 		PB.brainmob.mind.transfer_to(target)
 		target.dna = PB.brainmob.dna
 
-	tool.dropped()
 	qdel(tool)
 //////////////////////////////////////////////////////////////////
 //				RIBCAGE	ROBOTIC SURGERY							//
@@ -565,7 +552,6 @@
 	BP.createwound(CUT, 20)
 	BP.fracture()
 
-
 /datum/surgery_step/ipc_ribcage/pry_sec
 	allowed_tools = list(
 	/obj/item/weapon/crowbar = 100,
@@ -594,10 +580,6 @@
 	target.op_stage.ribcage = 2
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.open = 3
-
-	// Whoops!
-	if(prob(10))
-		BP.fracture()
 
 /datum/surgery_step/ipc_ribcage/pry_sec/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='warning'>[user]'s hand slips, breaking [target]'s security panel!</span>",
@@ -688,7 +670,7 @@
 /datum/surgery_step/ipc_ribcage/take_accumulator/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/internal/accum = target.organs_by_name[O_LIVER] // IPC's liver, as of now is an accumulator.
 	if(!locate(/obj/item/weapon/stock_parts/cell) in accum)
-		return
+		return FALSE
 	return ..() && target.op_stage.ribcage == 2
 
 /datum/surgery_step/ipc_ribcage/take_accumulator/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -709,10 +691,9 @@
 	user.visible_message("<span class='warning>[user]'s hand slips, scratching [target]'s accumulator with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, scratching [target]'s accumulator with \the [tool]!</span>")
 	var/obj/item/organ/internal/liver/ipc/A = target.organs_by_name[O_LIVER]
-	if(!A)
-		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-		BP.createwound(CUT, 20)
 	A.damage += 10
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	BP.createwound(CUT, 20)
 
 /datum/surgery_step/ipc_ribcage/put_accumulator
 	allowed_tools = list(
