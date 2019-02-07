@@ -54,5 +54,11 @@
 		src.attack_log += text("\[[time_stamp()]\] <font color='red'>Bloodsuck from [target.name] ([target.ckey]) [bloodsucked] of [blood_in_target] blood</font>")
 		BP.take_damage(5, null, DAM_SHARP, "Fangs")
 
-/datum/quirk/Hematophagus/on_spawn()
-    quirk_holder.verbs += /mob/living/carbon/human/proc/Bite
+/datum/quirk/Hematophagus/add()
+	quirk_holder.verbs += /mob/living/carbon/human/proc/Bite
+
+/datum/quirk/Hematophagus/remove()
+	quirk_holder.verbs -= /mob/living/carbon/human/proc/Bite
+
+/datum/quirk/Hematophagus/transfer_mob(mob/living/to_mob)
+	to_mob.verbs += /mob/living/carbon/human/proc/Bite
