@@ -73,9 +73,9 @@
 				return 1
 			else
 				var/bandg = pick(
-					'sound/misc/bandage.ogg',
-					'sound/misc/bandage2.ogg',
-					'sound/misc/bandage3.ogg',
+					'sound/items/bandage.ogg',
+					'sound/items/bandage2.ogg',
+					'sound/items/bandage3.ogg',
 					)
 				playsound(src, bandg, 15, 1)
 				user.visible_message("<span class='notice'>\The [user] starts treating [M]'s [BP.name].</span>", \
@@ -205,9 +205,9 @@
 				return 1
 			else
 				var/bandg = pick(
-					'sound/misc/bandage.ogg',
-					'sound/misc/bandage2.ogg',
-					'sound/misc/bandage3.ogg',
+					'sound/items/bandage.ogg',
+					'sound/items/bandage2.ogg',
+					'sound/items/bandage3.ogg',
 					)
 				playsound(src, bandg, 15, 1)
 				user.visible_message("<span class='notice'>\The [user] starts treating [M]'s [BP.name].</span>", \
