@@ -38,3 +38,9 @@
 #define PARALLAX_DELAY_DEFAULT world.tick_lag
 #define PARALLAX_DELAY_MED     1
 #define PARALLAX_DELAY_LOW     2
+
+// Hardsuit module activation method
+#define HARDSUIT_ACTIVATION_MIDDLE_CLICK     0
+#define HARDSUIT_ACTIVATION_ALT_CLICK        1
+#define HARDSUIT_ACTIVATION_CTRL_CLICK       2
+#define HARDSUIT_ACTIVATION_CTRL_SHIFT_CLICK 3

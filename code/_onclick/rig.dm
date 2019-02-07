@@ -1,6 +1,25 @@
+/mob/living/MiddleClickOn(atom/A)
+	if(client && client.prefs.hardsuit_activation == HARDSUIT_ACTIVATION_MIDDLE_CLICK)
+		if(HardsuitClickOn(A))
+			return TRUE
+	..()
+
 /mob/living/AltClickOn(atom/A)
-	if(HardsuitClickOn(A))
-		return
+	if(client && client.prefs.hardsuit_activation == HARDSUIT_ACTIVATION_ALT_CLICK)
+		if(HardsuitClickOn(A))
+			return TRUE
+	..()
+
+/mob/living/CtrlClickOn(atom/A)
+	if(client && client.prefs.hardsuit_activation == HARDSUIT_ACTIVATION_CTRL_CLICK)
+		if(HardsuitClickOn(A))
+			return TRUE
+	..()
+
+/mob/living/CtrlShiftClickOn(atom/A)
+	if(client && client.prefs.hardsuit_activation == HARDSUIT_ACTIVATION_CTRL_SHIFT_CLICK)
+		if(HardsuitClickOn(A))
+			return TRUE
 	..()
 
 /atom/proc/get_rig()
