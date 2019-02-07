@@ -171,7 +171,7 @@
 	heal_brute = 7
 
 /obj/item/stack/medical/bruise_pack/tajaran/update_icon()
-	return()
+	return
 
 /obj/item/stack/medical/ointment/tajaran
 	name = "\improper Messa's Tear petals"
