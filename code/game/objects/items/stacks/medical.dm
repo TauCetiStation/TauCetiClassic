@@ -182,7 +182,7 @@
 	heal_burn = 7
 
 /obj/item/stack/medical/ointment/tajaran/update_icon()
-	return()
+	return
 
 /obj/item/stack/medical/advanced/bruise_pack
 	name = "advanced trauma kit"
