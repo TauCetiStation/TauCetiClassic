@@ -59,6 +59,3 @@
 
 /datum/quirk/Hematophagus/remove()
 	quirk_holder.verbs -= /mob/living/carbon/human/proc/Bite
-
-/datum/quirk/Hematophagus/transfer_mob(mob/living/to_mob)
-	to_mob.verbs += /mob/living/carbon/human/proc/Bite
