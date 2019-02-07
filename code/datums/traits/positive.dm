@@ -23,7 +23,7 @@
 	if(blood_in_target <= 0 || target.species.flags[NO_BLOOD])
 		to_chat(src, "<span class='red'>There appears to be no blood in this prey...</span>")
 		return
-	if(isalien(src)
+	if(isalien(src))
 		return
 	if(target == src)
 		return
