@@ -28784,6 +28784,21 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/wall/r_wall,
 /area/crew_quarters/captain)
+"aXz" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -23;
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/hallway/secondary/entry)
 "aXA" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -28983,6 +28998,28 @@
 	},
 /turf/simulated/floor,
 /area/gateway)
+"aXV" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 2;
+	icon_state = "greencorner"
+	},
+/area/hallway/secondary/entry)
+"aXW" = (
+/obj/machinery/camera{
+	c_tag = "Arrival Dock's South 2";
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 2;
+	icon_state = "greencorner"
+	},
+/area/hallway/secondary/entry)
 "aXX" = (
 /turf/simulated/floor/plating,
 /area/hallway/secondary/exit)
@@ -30539,6 +30576,7 @@
 	pixel_x = 0;
 	pixel_y = 28
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutralcorner"
@@ -33263,6 +33301,9 @@
 /obj/machinery/atm{
 	pixel_x = 0;
 	pixel_y = -32
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 2;
@@ -66892,14 +66933,11 @@
 /turf/simulated/floor/plating/airless,
 /area/quartermaster/recycler)
 "cEp" = (
-/obj/machinery/camera{
-	c_tag = "Arrival Dock's South 2";
-	dir = 8
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
 	},
-/turf/simulated/floor{
-	dir = 2;
-	icon_state = "greencorner"
-	},
+/turf/simulated/floor,
 /area/hallway/secondary/entry)
 "cEq" = (
 /obj/structure/grille,
@@ -92460,10 +92498,10 @@ bWw
 bTo
 cdD
 blU
+aXz
 blU
 blU
-blU
-blU
+bDc
 blU
 blU
 bMn
@@ -92717,10 +92755,10 @@ aGj
 bQB
 ceI
 bQB
+aXV
 bQB
 bQB
-bQB
-cEp
+aXW
 bOA
 bQB
 ceI
@@ -93219,9 +93257,9 @@ jjb
 aVQ
 iab
 aVV
-aWp
-aWr
 iab
+aWr
+aWp
 aWM
 iDb
 bOA
@@ -93725,9 +93763,9 @@ aah
 aah
 aEb
 aYm
-bbd
-aGj
-aEL
+bbm
+aJW
+bBi
 aMZ
 blV
 bpU
@@ -93983,7 +94021,7 @@ aaa
 aEb
 aYo
 bbd
-aGj
+atE
 aEL
 bkr
 blX
@@ -94240,7 +94278,7 @@ aEb
 aEb
 aEb
 bbh
-aGj
+atE
 aEL
 bku
 bkR
@@ -94497,7 +94535,7 @@ dvb
 aro
 aHC
 bbd
-aGj
+atE
 aEL
 aMZ
 bmn
@@ -94754,7 +94792,7 @@ aEb
 aEb
 aEb
 bbd
-aGj
+atE
 aEL
 aMZ
 bmp
@@ -95010,9 +95048,9 @@ aGy
 aaa
 aEt
 aYx
-bbm
-aJW
-bBi
+bbd
+atE
+aEL
 bkr
 aQX
 baB
@@ -97324,7 +97362,7 @@ apT
 apT
 apT
 bbv
-bdC
+cEp
 bhh
 aGn
 aGn
