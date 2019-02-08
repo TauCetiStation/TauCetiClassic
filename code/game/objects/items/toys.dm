@@ -128,7 +128,7 @@
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 	flags =  CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	w_class = 3.0
 	g_amt = 10
 	m_amt = 10
@@ -354,7 +354,7 @@
 	icon_state = "katana"
 	item_state = "katana"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT | SLOT_BACK
+	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 	force = 5
 	throwforce = 5
 	w_class = 3
@@ -581,7 +581,7 @@
 	icon_state = "katana"
 	item_state = "katana"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT | SLOT_BACK
+	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 	force = 5
 	throwforce = 5
 	w_class = 3
@@ -594,7 +594,7 @@
 	desc = "This baby looks almost real. Wait, did it just burp?"
 	force = 5
 	w_class = 4.0
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 */
 
 //This should really be somewhere else but I don't know where. w/e
@@ -604,7 +604,7 @@
 	icon_state = "inflatable"
 	item_state = "inflatable"
 	icon = 'icons/obj/clothing/belts.dmi'
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 
 /*
  * Action Figures

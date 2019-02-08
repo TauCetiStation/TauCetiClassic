@@ -3,7 +3,7 @@
 	name = "holder"
 	desc = "You shouldn't ever see this."
 	icon = 'icons/obj/objects.dmi'
-	slot_flags = SLOT_HEAD
+	slot_flags = SLOT_FLAGS_HEAD
 
 /obj/item/weapon/holder/atom_init()
 	..()

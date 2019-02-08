@@ -198,7 +198,7 @@
 	icon_state = "scissors"
 	item_state = "scissors"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 6.0
 	throw_speed = 2
 	throw_range = 9

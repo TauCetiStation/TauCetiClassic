@@ -273,7 +273,7 @@
 			update_inv_wear_id()
 		if(slot_l_ear)
 			src.l_ear = W
-			if(l_ear.slot_flags & SLOT_TWOEARS)
+			if(l_ear.slot_flags & SLOT_FLAGS_TWOEARS)
 				var/obj/item/clothing/ears/offear/O = new(W)
 				O.loc = src
 				src.r_ear = O
@@ -284,7 +284,7 @@
 			update_inv_ears()
 		if(slot_r_ear)
 			src.r_ear = W
-			if(r_ear.slot_flags & SLOT_TWOEARS)
+			if(r_ear.slot_flags & SLOT_FLAGS_TWOEARS)
 				var/obj/item/clothing/ears/offear/O = new(W)
 				O.loc = src
 				src.l_ear = O
