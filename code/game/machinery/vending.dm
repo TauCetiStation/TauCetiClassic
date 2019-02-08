@@ -1045,7 +1045,7 @@
 	vend_delay = 15
 	vend_reply = "Thank you for using the ClothesMate!"
 	products = list(/obj/item/clothing/head/that=4,/obj/item/clothing/head/fedora=2,/obj/item/clothing/glasses/monocle=2,
-	/obj/item/clothing/suit/jacket=4, /obj/item/clothing/suit/jacket/puffer/vest=4, /obj/item/clothing/suit/jacket/puffer=4,
+	/obj/item/clothing/suit/jacket=4,/obj/item/clothing/head/chep=2, /obj/item/clothing/suit/jacket/puffer/vest=4, /obj/item/clothing/suit/jacket/puffer=4,
 	/obj/item/clothing/under/suit_jacket/navy=2,/obj/item/clothing/under/suit_jacket/really_black=2,/obj/item/clothing/under/suit_jacket/burgundy=2,
 	/obj/item/clothing/under/suit_jacket/charcoal=2, /obj/item/clothing/under/suit_jacket/white=2,/obj/item/clothing/under/kilt=2,/obj/item/clothing/under/overalls=2,
 	/obj/item/clothing/under/suit_jacket/really_black=4,/obj/item/clothing/under/suit_jacket/rouge =4,/obj/item/clothing/under/pants/jeans=6,/obj/item/clothing/under/pants/classicjeans=4,
@@ -1063,15 +1063,17 @@
 	/obj/item/clothing/suit/storage/miljacket_army=3,/obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger=2,/obj/item/clothing/suit/storage/miljacket_army/miljacket_navy=2,
 	/obj/item/clothing/suit/student_jacket=3,/obj/item/clothing/suit/shawl=2,/obj/item/clothing/suit/atlas_jacket=4,/obj/item/clothing/under/sukeban_pants=2,
 	/obj/item/clothing/under/sukeban_dress=2,/obj/item/clothing/suit/sukeban_coat=4,/obj/item/clothing/under/pinkpolo=3,/obj/item/clothing/under/pretty_dress=1,
-	/obj/item/clothing/under/dress/dress_summer=2,/obj/item/clothing/under/dress/dress_vintage=2,/obj/item/clothing/under/dress/dress_evening=2,/obj/item/clothing/under/dress/dress_party=2)
+	/obj/item/clothing/under/dress/dress_summer=2,/obj/item/clothing/under/dress/dress_vintage=2,/obj/item/clothing/under/dress/dress_evening=2,/obj/item/clothing/under/dress/dress_party=2,
+	/obj/item/clothing/glasses/aviator_orange=2, /obj/item/clothing/glasses/aviator_black=2, /obj/item/clothing/glasses/aviator_red=2, /obj/item/clothing/glasses/aviator_mirror=2,
+	/obj/item/clothing/glasses/jerusalem=2, /obj/item/clothing/glasses/threedglasses=2, /obj/item/clothing/glasses/gar=2)
 
-	contraband = list(/obj/item/clothing/under/syndicate/tacticool=2,/obj/item/clothing/mask/balaclava=2,/obj/item/clothing/head/ushanka=2,/obj/item/clothing/under/soviet=2,/obj/item/clothing/mask/gas/fawkes = 6)
+	contraband = list(/obj/item/clothing/under/syndicate/tacticool=4,/obj/item/clothing/mask/balaclava=4,/obj/item/clothing/head/shapka_ng=4, /obj/item/clothing/head/ushanka=2,/obj/item/clothing/under/soviet=2,/obj/item/clothing/mask/gas/fawkes = 6)
 
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=2,/obj/item/clothing/head/mailman=2,/obj/item/clothing/under/rank/mailman=2,/obj/item/clothing/suit/jacket/leather=2,
-	/obj/item/clothing/suit/jacket/leather/overcoat=2,/obj/item/clothing/under/pants/mustangjeans=2)
+	/obj/item/clothing/suit/jacket/leather/overcoat=2,/obj/item/clothing/under/pants/mustangjeans=2,/obj/item/clothing/glasses/sunglasses/gar=1,/obj/item/clothing/glasses/sunglasses=1)
 
 	prices = list(/obj/item/clothing/head/that=419,/obj/item/clothing/head/fedora=419,/obj/item/clothing/glasses/monocle=109,
-	/obj/item/clothing/suit/jacket=299, /obj/item/clothing/suit/jacket/puffer/vest=239, /obj/item/clothing/suit/jacket/puffer=219,
+	/obj/item/clothing/suit/jacket=299,/obj/item/clothing/head/chep=250, /obj/item/clothing/suit/jacket/puffer/vest=239, /obj/item/clothing/suit/jacket/puffer=219,
 	/obj/item/clothing/under/suit_jacket/navy=119,/obj/item/clothing/under/suit_jacket/really_black=119,/obj/item/clothing/under/suit_jacket/burgundy=119,
 	/obj/item/clothing/under/suit_jacket/charcoal=119, /obj/item/clothing/under/suit_jacket/white=119,/obj/item/clothing/under/kilt=85,/obj/item/clothing/under/overalls=85,
 	/obj/item/clothing/under/suit_jacket/really_black=142,/obj/item/clothing/under/suit_jacket/rouge =248,/obj/item/clothing/under/pants/jeans=142,
@@ -1089,7 +1091,9 @@
 	/obj/item/clothing/suit/storage/miljacket_army=655,/obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger=655,/obj/item/clothing/suit/storage/miljacket_army/miljacket_navy=655,
 	/obj/item/clothing/suit/student_jacket=459,/obj/item/clothing/suit/shawl=344,/obj/item/clothing/suit/atlas_jacket=250,/obj/item/clothing/under/sukeban_pants=366,
 	/obj/item/clothing/under/sukeban_dress=366,/obj/item/clothing/suit/sukeban_coat=579,/obj/item/clothing/under/pinkpolo=638,/obj/item/clothing/under/pretty_dress=564,
-	/obj/item/clothing/under/dress/dress_summer=332,/obj/item/clothing/under/dress/dress_vintage=465,/obj/item/clothing/under/dress/dress_evening=386,/obj/item/clothing/under/dress/dress_party=349)
+	/obj/item/clothing/under/dress/dress_summer=332,/obj/item/clothing/under/dress/dress_vintage=465,/obj/item/clothing/under/dress/dress_evening=386,/obj/item/clothing/under/dress/dress_party=349,
+    /obj/item/clothing/glasses/aviator_orange=150, /obj/item/clothing/glasses/aviator_black=175, /obj/item/clothing/glasses/aviator_red=223, /obj/item/clothing/glasses/aviator_mirror=243,
+	/obj/item/clothing/glasses/jerusalem=130, /obj/item/clothing/glasses/threedglasses=150, /obj/item/clothing/glasses/gar=250)
 
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
