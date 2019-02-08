@@ -59,10 +59,9 @@
 	return mat
 
 /datum/ColorMatrix/proc/SetSaturation(s, c = 1, b = null)
-	var
-		sr = (1 - s) * lumR
-		sg = (1 - s) * lumG
-		sb = (1 - s) * lumB
+	var/sr = (1 - s) * lumR
+	var/sg = (1 - s) * lumG
+	var/sb = (1 - s) * lumB
 
 	matrix = list(c * (sr + s), c * (sr),     c * (sr),
 				  c * (sg),     c * (sg + s), c * (sg),
