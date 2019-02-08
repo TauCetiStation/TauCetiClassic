@@ -59260,16 +59260,7 @@
 	},
 /area/aisat)
 "cnb" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/space,
 /area/aisat)
 "cnc" = (
 /obj/structure/cable{
@@ -59282,12 +59273,9 @@
 	},
 /area/aisat)
 "cnd" = (
+/obj/structure/lattice,
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
+/turf/space,
 /area/aisat)
 "cnf" = (
 /turf/simulated/floor{
@@ -59749,22 +59737,11 @@
 /turf/simulated/floor/plating,
 /area/storage/emergency)
 "cob" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 10
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	frequency = 1379;
-	id_tag = "satellite_aux_airlock";
-	layer = 3.3;
-	pixel_x = 0;
-	pixel_y = 25;
-	req_access_txt = "66";
-	tag_airpump = "satellite_aux_pump";
-	tag_chamber_sensor = "satellite_aux_sensor";
-	tag_exterior_door = "satellite_aux_outer";
-	tag_interior_door = "satellite_aux_inner"
-	},
-/turf/simulated/floor/plating,
+/obj/structure/lattice,
+/turf/space,
 /area/aisat)
 "coc" = (
 /obj/structure/cable{
@@ -67086,21 +67063,19 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/space)
 "cEt" = (
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
-	pixel_x = 0;
-	pixel_y = -32
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 0
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 4;
-	frequency = 1379;
-	id_tag = "satellite_aux_pump";
-	name = "Satellite Aux Large Air Vent"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
 	},
-/turf/simulated/floor/plating,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/aisat)
 "cEv" = (
 /obj/machinery/door/airlock/external{
@@ -67116,7 +67091,30 @@
 /turf/simulated/floor/plating,
 /area/engine/engineering)
 "cEw" = (
-/obj/machinery/atmospherics/pipe/manifold/visible,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1379;
+	id_tag = "satellite_aux_pump";
+	name = "Satellite Aux Large Air Vent"
+	},
+/obj/machinery/airlock_sensor{
+	frequency = 1379;
+	id_tag = "satellite_aux_sensor";
+	pixel_x = 0;
+	pixel_y = 25;
+	req_one_access_txt = "13;45;1"
+	},
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
+	pixel_x = 0;
+	pixel_y = -32
+	},
 /turf/simulated/floor/plating,
 /area/aisat)
 "cEy" = (
@@ -79776,21 +79774,20 @@
 	},
 /area/aisat)
 "tbb" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 4;
+/obj/machinery/embedded_controller/radio/airlock_controller{
 	frequency = 1379;
-	id_tag = "satellite_aux_pump";
-	name = "Satellite Aux Large Air Vent"
-	},
-/obj/machinery/airlock_sensor{
-	frequency = 1379;
-	id_tag = "satellite_aux_sensor";
+	id_tag = "satellite_aux_airlock";
+	layer = 3.3;
 	pixel_x = 0;
 	pixel_y = 25;
-	req_one_access_txt = "13;45;1"
+	req_access_txt = "66";
+	tag_airpump = "satellite_aux_pump";
+	tag_chamber_sensor = "satellite_aux_sensor";
+	tag_exterior_door = "satellite_aux_outer";
+	tag_interior_door = "satellite_aux_inner"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/aisat)
@@ -120244,8 +120241,8 @@ aaa
 aaa
 aaa
 aah
+cnb
 cmE
-cnd
 sYb
 cmE
 aaa
@@ -120501,9 +120498,9 @@ aaa
 aaa
 aaa
 aah
+cnb
 cCW
-tbb
-cEt
+cEw
 cCW
 aaa
 aaa
@@ -120758,9 +120755,9 @@ aaa
 aaa
 agn
 agm
+cnd
 cCW
-cob
-cEw
+tbb
 cCW
 cCW
 cCW
@@ -121015,8 +121012,8 @@ aaa
 aaa
 agn
 aah
+cob
 cCW
-cnd
 cFe
 cHK
 aXW
@@ -121272,7 +121269,7 @@ agm
 agn
 agn
 cym
-cnb
+cEt
 aVI
 cHJ
 aXV
