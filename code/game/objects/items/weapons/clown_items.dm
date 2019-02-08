@@ -225,8 +225,7 @@
 			)
 
 		for(var/mob/M in viewers(user, null))
-			if(M.client && M.ear_deaf <= 0)
-				M << sound(laugh, volume = 50)
+			M.playsound_local(null, laugh, 50, 2)
 
 		flick("laugh_button_down",src)
 		icon_state = "laugh_button_off"
