@@ -103,10 +103,9 @@
 /obj/structure/morgue/proc/open()
 	if (!connected)
 		playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		connected = new /obj/structure/m_tray( loc )
-		step(connected, dir)
-		connected.layer = BELOW_CONTAINERS_LAYER
 		var/turf/T = get_step(src, dir)
+		connected = new /obj/structure/m_tray(T)
+		connected.layer = BELOW_CONTAINERS_LAYER
 		if (T.contents.Find(connected))
 			connected.connected = src
 			icon_state = "morgue0"
