@@ -22,21 +22,30 @@
 
 // Give Random Bad Mutation to M
 /proc/randmutb(mob/living/M)
-	if(!M) return
+	if(!M)
+		return
+	if(M.stat == DEAD)
+		return
 	M.dna.check_integrity()
 	var/block = pick(GLASSESBLOCK,COUGHBLOCK,FAKEBLOCK,NERVOUSBLOCK,CLUMSYBLOCK,TWITCHBLOCK,HEADACHEBLOCK,BLINDBLOCK,DEAFBLOCK,HALLUCINATIONBLOCK)
 	M.dna.SetSEState(block, 1)
 
 // Give Random Good Mutation to M
 /proc/randmutg(mob/living/M)
-	if(!M) return
+	if(!M)
+		return
+	if(M.stat == DEAD)
+		return
 	M.dna.check_integrity()
 	var/block = pick(HULKBLOCK,XRAYBLOCK,FIREBLOCK,TELEBLOCK,NOBREATHBLOCK,REMOTEVIEWBLOCK,REGENERATEBLOCK,INCREASERUNBLOCK,REMOTETALKBLOCK,MORPHBLOCK,BLENDBLOCK,NOPRINTSBLOCK,SHOCKIMMUNITYBLOCK,SMALLSIZEBLOCK)
 	M.dna.SetSEState(block, 1)
 
 // Random Appearance Mutation
 /proc/randmuti(mob/living/M)
-	if(!M) return
+	if(!M)
+		return
+	if(M.stat == DEAD)
+		return
 	M.dna.check_integrity()
 	M.dna.SetUIValue(rand(1,DNA_UI_LENGTH),rand(1,4095))
 

@@ -171,8 +171,6 @@
 
 
 /datum/weather/rad_storm/impact(mob/living/L)
-	if(L.stat == DEAD)
-		return
 	var/resist = L.getarmor(null, "rad")
 	if(prob(40))
 		if(ishuman(L))
