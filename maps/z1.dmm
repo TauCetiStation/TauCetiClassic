@@ -29231,16 +29231,16 @@
 /turf/simulated/floor/plating,
 /area/aisat)
 "aYs" = (
-/obj/structure/transit_tube{
-	icon_state = "D-SW"
-	},
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 5
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/transit_tube{
+	icon_state = "D-SW"
+	},
 /turf/simulated/floor/plating,
-/area/aisat)
+/area/space)
 "aYt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor{
@@ -29558,6 +29558,14 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/wall,
 /area/storage/primary)
+"aZa" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/space)
 "aZb" = (
 /obj/machinery/disposal,
 /obj/machinery/alarm{
@@ -29581,6 +29589,15 @@
 	icon_state = "red"
 	},
 /area/security/main)
+"aZc" = (
+/obj/structure/transit_tube{
+	icon_state = "D-SW"
+	},
+/turf/simulated/floor/plating{
+	dir = 4;
+	icon_state = "warnplate"
+	},
+/area/aisat)
 "aZe" = (
 /obj/effect/landmark/start{
 	name = "Botanist"
@@ -120244,9 +120261,9 @@ aah
 cnb
 cmE
 sYb
-cmE
+cCW
 aaa
-cCq
+aYs
 aYr
 aYu
 cDu
@@ -120503,8 +120520,8 @@ cCW
 cEw
 cCW
 aaa
-aaa
-aYs
+aZa
+aZc
 cFA
 cGb
 cGy
