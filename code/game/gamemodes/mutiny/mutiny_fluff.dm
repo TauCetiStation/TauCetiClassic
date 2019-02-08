@@ -14,6 +14,7 @@
 			var/obj/item/weapon/paper/directive_x = new(fax.loc)
 			directive_x.name = "emergency action message"
 			directive_x.info = get_fax_body()
+			directive_x.update_icon()
 
 /datum/mutiny_fluff/proc/get_fax_body()
 	return {"

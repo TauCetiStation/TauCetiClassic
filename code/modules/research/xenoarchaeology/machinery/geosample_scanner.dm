@@ -315,6 +315,7 @@
 
 		P.info = "<b>[src] analysis report #[report_num]</b><br>"
 		P.info += "<b>Scanned item:</b> [scanned_item.name]<br><br>" + data
+		P.update_icon()
 		last_scan_data = P.info
 		P.loc = src.loc
 
