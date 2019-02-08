@@ -6,22 +6,22 @@
 	force = 0.0
 	throwforce = 0.0
 	w_class = ITEM_SIZE_TINY
-	var/string_attached
-	var/sides = 2
-	var/cooldown = 0
-	var/list/sideslist = list("heads","tails")
-	var/coinflip
 	var/cmineral = null
+	var/reagent = null
 	var/worth = 0
-	var/reagent = "iron"
+	var/string_attached
+	var/list/sideslist = list("heads","tails")
+	var/cooldown = 0
+	var/coinflip	
 
 /obj/item/weapon/coin/atom_init()
 	. = ..()
 	price = worth
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
-	create_reagents(4)
-	reagents.add_reagent(reagent, 4)
+	if(reagent) 
+		create_reagents(4)
+		reagents.add_reagent(reagent, 4)
 
 /obj/item/weapon/coin/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] contemplates suicide with \the [src]!</span>")
@@ -49,70 +49,61 @@
 	cmineral = "gold"
 	reagent = "gold"
 	icon_state = "coin_gold_heads"
-	worth = 250
-	materials = list(MAT_GOLD = MINERAL_MATERIAL_AMOUNT*0.2)
+	worth = 25
 
 /obj/item/weapon/coin/silver
 	name = COIN_SILVER
 	cmineral = "silver"
 	reagent = "silver"
 	icon_state = "coin_silver_heads"
-	worth = 100
-	materials = list(MAT_SILVER = MINERAL_MATERIAL_AMOUNT*0.2)
+	worth = 10
 
 /obj/item/weapon/coin/diamond
 	name = COIN_DIAMOND
 	cmineral = "diamond"
 	reagent = "carbon"
 	icon_state = "coin_diamond_heads"
-	worth = 1000
-	materials = list(MAT_DIAMOND = MINERAL_MATERIAL_AMOUNT*0.2)
+	worth = 100
 
 /obj/item/weapon/coin/iron
 	name = COIN_IRON
 	cmineral = "iron"
 	reagent = "iron"
 	icon_state = "coin_iron_heads"
-	worth = 10
-	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.2)
+	worth = 1
 
 /obj/item/weapon/coin/phoron
 	name = COIN_PHORON
 	cmineral = "phoron"
 	reagent = "phoron"
 	icon_state = "coin_phoron_heads"
-	worth = 400
-	materials = list(MAT_PHORON = MINERAL_MATERIAL_AMOUNT*0.2)
+	worth = 40
 
 /obj/item/weapon/coin/uranium
 	name = COIN_URANIUM
 	cmineral = "uranium"
 	reagent = "uranium"
 	icon_state = "coin_uranium_heads"
-	worth = 250
-	materials = list(MAT_URANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
+	worth = 25
 
 /obj/item/weapon/coin/bananium
 	name = COIN_BANANIUM
 	cmineral = "bananium"
 	reagent = "banana"
 	icon_state = "coin_bananium_heads"
-	worth = 2000
-	materials = list(MAT_BANANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
+	worth = 200
 
 /obj/item/weapon/coin/platinum
 	name = COIN_PLATINUM
 	cmineral = "platinum"
-	reagent = "silver" //have no idea
-	icon_state = "coin_adamantine_heads"
-	worth = 1000
+	icon_state = "coin_platinum_heads"
+	worth = 100
 
 /obj/item/weapon/coin/mythril
 	name = COIN_MYTHRIL
 	cmineral = "mythril"
-	reagent = "silver" //true silver
 	icon_state = "coin_mythril_heads"
-	worth = 3000
+	worth = 100
 
 /obj/item/weapon/coin/twoheaded
 	cmineral = "silver"
@@ -120,7 +111,6 @@
 	icon_state = "coin_silver_heads"
 	desc = "Hey, this coin's the same on both sides!"
 	sideslist = list("heads")
-	materials = list(MAT_SILVER = MINERAL_MATERIAL_AMOUNT*0.2)
 	worth = 10
 
 /obj/item/weapon/coin/attackby(obj/item/weapon/W, mob/user)
