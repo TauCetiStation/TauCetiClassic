@@ -70,10 +70,6 @@
 				if(damagetype & OXYLOSS)
 					adjustOxyLoss(175/damage_mod)
 
-				if(damagetype & MANUAL_SUICIDE)
-					suiciding = 0
-					return
-
 				//If something went wrong, just do normal oxyloss
 				if(!(damagetype | BRUTELOSS) && !(damagetype | FIRELOSS) && !(damagetype | TOXLOSS) && !(damagetype | OXYLOSS))
 					adjustOxyLoss(max(175 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))

@@ -30,7 +30,7 @@
 			price = 180
 		if(COIN_PHORON)
 			price = 220
-		if(COIN_PLATINUM||COIN_MYTHRIL)
+		if(COIN_PLATINUM, COIN_MYTHRIL)
 			price = 300
 		if(COIN_DIAMOND)
 			price = 350

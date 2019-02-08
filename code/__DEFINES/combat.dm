@@ -39,7 +39,6 @@
 #define FIRELOSS	2
 #define TOXLOSS 	4
 #define OXYLOSS 	8
-#define MANUAL_SUICIDE 16		//suicide_act will do the actual killing.
 
 //Bitflags defining which status effects could be or are inflicted on a mob
 #define CANSTUN		1
