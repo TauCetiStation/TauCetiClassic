@@ -462,7 +462,8 @@
 
 /mob/living/proc/revive()
 	rejuvenate()
-	buckled = initial(src.buckled)
+	if(buckled)
+		buckled.user_unbuckle_mob(src)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
 
@@ -543,10 +544,6 @@
 		mutations.Remove(HUSK)
 	regenerate_icons()
 	update_health_hud()
-
-	// unbuckle
-	if(buckled)
-		buckled.user_unbuckle_mob(src)
 
 /mob/living/carbon/human/rejuvenate()
 	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
