@@ -18,7 +18,6 @@ var/const/module_mount_chest = 6
 	desc = "It looks pretty sciency."
 	icon = 'icons/obj/rig_modules.dmi'
 	icon_state = "generic"
-	//matter = list(MATERIAL_STEEL = 20000, MATERIAL_PLASTIC = 30000, MATERIAL_GLASS = 5000)
 
 	var/damage = 0
 	var/obj/item/clothing/suit/space/rig/holder
@@ -53,10 +52,10 @@ var/const/module_mount_chest = 6
 	var/activate_string = "Activate"
 	var/deactivate_string = "Deactivate"
 
-	var/list/stat_rig_module/stat_modules = new()
+	var/list/stat_modules = new()
 
 /obj/item/rig_module/atom_init()
-	. =..()
+	. = ..()
 
 	if(charges && charges.len)
 		var/list/processed_charges = list()
@@ -77,11 +76,11 @@ var/const/module_mount_chest = 6
 	if(suit_overlay)
 		suit_overlay_image = image("icon" = 'icons/mob/rig_modules.dmi', "icon_state" = "[suit_overlay]")
 
-	stat_modules +=	new/stat_rig_module/activate(src)
-	stat_modules +=	new/stat_rig_module/deactivate(src)
-	stat_modules +=	new/stat_rig_module/engage(src)
-	stat_modules +=	new/stat_rig_module/select(src)
-	stat_modules +=	new/stat_rig_module/charge(src)
+	stat_modules +=	new /obj/stat_rig_module/activate(src)
+	stat_modules +=	new /obj/stat_rig_module/deactivate(src)
+	stat_modules +=	new /obj/stat_rig_module/engage(src)
+	stat_modules +=	new /obj/stat_rig_module/select(src)
+	stat_modules +=	new /obj/stat_rig_module/charge(src)
 
 /obj/item/rig_module/Destroy()
 	deactivate()
@@ -168,7 +167,7 @@ var/const/module_mount_chest = 6
 		to_chat(holder.wearer, "<span class='warning'>You cannot use the suit in this state.</span>")
 		return 0
 
-	if(!holder.check_power_cost(holder.wearer, use_power_cost, FALSE, src) )
+	if(!holder.check_power_cost(holder.wearer, use_power_cost, FALSE, src))
 		return 0
 
 	next_use = world.time + module_cooldown
@@ -218,26 +217,25 @@ var/const/module_mount_chest = 6
 		var/cell_status = R.cell ? "[R.cell.charge]/[R.cell.maxcharge]" : "ERROR"
 		stat("Suit charge", cell_status)
 		for(var/obj/item/rig_module/module in R.installed_modules)
-			for(var/stat_rig_module/SRM in module.stat_modules)
+			for(var/obj/stat_rig_module/SRM in module.stat_modules)
 				if(SRM.CanUse())
 					stat(SRM.module.interface_name,SRM)
 
-/stat_rig_module
-	parent_type = /atom/movable
+/obj/stat_rig_module
 	var/module_mode = ""
 	var/obj/item/rig_module/module
 
-/stat_rig_module/New(var/obj/item/rig_module/module)
+/obj/stat_rig_module/New(var/obj/item/rig_module/module)
 	..()
 	src.module = module
 
-/stat_rig_module/proc/AddHref(var/list/href_list)
+/obj/stat_rig_module/proc/AddHref(var/list/href_list)
 	return
 
-/stat_rig_module/proc/CanUse()
+/obj/stat_rig_module/proc/CanUse()
 	return 0
 
-/stat_rig_module/Click()
+/obj/stat_rig_module/Click()
 	if(CanUse())
 		var/list/href_list = list(
 							"interact_module" = module.holder.installed_modules.Find(module),
@@ -246,20 +244,20 @@ var/const/module_mount_chest = 6
 		AddHref(href_list)
 		module.holder.Topic(usr, href_list)
 
-/stat_rig_module/DblClick()
+/obj/stat_rig_module/DblClick()
 	return Click()
 
-/stat_rig_module/activate/New(var/obj/item/rig_module/module)
+/obj/stat_rig_module/activate/New(var/obj/item/rig_module/module)
 	..()
 	name = module.activate_string
 	if(module.active_power_cost)
 		name += " ([module.active_power_cost]A)"
 	module_mode = "activate"
 
-/stat_rig_module/activate/CanUse()
+/obj/stat_rig_module/activate/CanUse()
 	return module.toggleable && !module.active
 
-/stat_rig_module/deactivate/New(var/obj/item/rig_module/module)
+/obj/stat_rig_module/deactivate/New(var/obj/item/rig_module/module)
 	..()
 	name = module.deactivate_string
 	// Show cost despite being 0, if it means changing from an active cost.
@@ -268,36 +266,36 @@ var/const/module_mount_chest = 6
 
 	module_mode = "deactivate"
 
-/stat_rig_module/deactivate/CanUse()
+/obj/stat_rig_module/deactivate/CanUse()
 	return module.toggleable && module.active
 
-/stat_rig_module/engage/New(var/obj/item/rig_module/module)
+/obj/stat_rig_module/engage/New(var/obj/item/rig_module/module)
 	..()
 	name = module.engage_string
 	if(module.use_power_cost)
 		name += " ([module.use_power_cost]E)"
 	module_mode = "engage"
 
-/stat_rig_module/engage/CanUse()
+/obj/stat_rig_module/engage/CanUse()
 	return module.usable
 
-/stat_rig_module/select/New()
+/obj/stat_rig_module/select/New()
 	..()
 	name = "Select"
 	module_mode = "select"
 
-/stat_rig_module/select/CanUse()
+/obj/stat_rig_module/select/CanUse()
 	if(module.selectable)
 		name = module.holder.selected_module == module ? "Selected" : "Select"
 		return 1
 	return 0
 
-/stat_rig_module/charge/New()
+/obj/stat_rig_module/charge/New()
 	..()
 	name = "Change Charge"
 	module_mode = "select_charge_type"
 
-/stat_rig_module/charge/AddHref(var/list/href_list)
+/obj/stat_rig_module/charge/AddHref(var/list/href_list)
 	var/charge_index = module.charges.Find(module.charge_selected)
 	if(!charge_index)
 		charge_index = 0
@@ -306,7 +304,7 @@ var/const/module_mount_chest = 6
 
 	href_list["charge_type"] = module.charges[charge_index]
 
-/stat_rig_module/charge/CanUse()
+/obj/stat_rig_module/charge/CanUse()
 	if(module.charges && module.charges.len)
 		var/datum/rig_charge/charge = module.charges[module.charge_selected]
 		name = "[charge.display_name] ([charge.charges]C) - Change"
