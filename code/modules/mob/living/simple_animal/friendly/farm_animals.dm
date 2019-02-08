@@ -65,8 +65,8 @@
 	..()
 	src.visible_message("\red [src] gets an evil-looking gleam in their eye.")
 
-/mob/living/simple_animal/hostile/retaliate/goat/Move()
-	..()
+/mob/living/simple_animal/hostile/retaliate/goat/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	if(!stat)
 		if(locate(/obj/effect/spacevine) in loc)
 			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
@@ -144,8 +144,9 @@
 		else if(prob(15))
 			playsound(src, 'sound/voice/cowmoos.ogg', 50, 1, -3)
 
-/mob/living/simple_animal/cow/Move()
-	if(..() && prob(55))
+/mob/living/simple_animal/cow/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = .()
+	if(. && prob(55))
 		playsound(src, 'sound/misc/cowbell.ogg', 50, 1, -3)
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
