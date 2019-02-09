@@ -52,7 +52,7 @@ var/global/list/geoip_ckey_updated = list()
 			log_access(msg)
 			if(ticker.current_state > GAME_STATE_STARTUP && !(C.ckey in geoip_ckey_updated))
 				geoip_ckey_updated |= C.ckey
-				message_admins(msg)
+				message_admins(msg, R_LOG)
 
 /datum/geoip_data/proc/try_update_geoip(client/C, addr)
 	if(!C || !addr)

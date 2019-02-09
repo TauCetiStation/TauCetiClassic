@@ -7,7 +7,6 @@ var/list/admin_verbs_default = list(
 	/client/proc/cmd_mentor_check_new_players,
 	/datum/admins/proc/show_player_panel,	/*shows an interface for individual players, with various links (links require additional flags*/
 	/client/proc/player_panel,
-	/client/proc/debug_variables		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
@@ -85,6 +84,9 @@ var/list/admin_verbs_log = list(
 	/datum/admins/proc/view_atk_log,	/*shows the server combat-log, doesn't do anything presently*/
 	/client/proc/giveruntimelog,		/*allows us to give access to runtime logs to somebody*/
 	/client/proc/getserverlog,			/*allows us to fetch server logs (diary) for other days*/
+	)
+var/list/admin_verbs_variables = list(
+	/client/proc/debug_variables 		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel
@@ -304,6 +306,8 @@ var/list/admin_verbs_hideable = list(
 			verbs += admin_verbs_event
 		if(holder.rights & R_LOG)
 			verbs += admin_verbs_log
+		if(holder.rights & R_VAREDIT)
+			verbs += admin_verbs_variables
 
 		if(holder.rights & R_ADMIN)
 			control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
@@ -325,6 +329,7 @@ var/list/admin_verbs_hideable = list(
 		admin_verbs_spawn,
 		admin_verbs_event,
 		admin_verbs_log,
+		admin_verbs_variables,
 		/*Debug verbs added by "show debug verbs"*/
 		/client/proc/Cell,
 		/client/proc/do_not_use_these,
