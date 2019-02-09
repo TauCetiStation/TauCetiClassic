@@ -10,7 +10,7 @@ LINEN BINS
 	icon = 'icons/obj/bedsheets.dmi'
 	icon_state = "sheet"
 	item_state = "bedsheet"
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	layer = 4.0
 	throwforce = 1
 	throw_speed = 1

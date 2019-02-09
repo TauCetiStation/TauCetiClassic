@@ -114,6 +114,9 @@
 			else
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
 
+/obj/item/stack/medical/bruise_pack/update_icon()
+	icon_state = "[initial(icon_state)][amount]"
+
 /obj/item/stack/medical/ointment
 	name = "ointment"
 	desc = "Used to treat those nasty burns."
@@ -156,6 +159,9 @@
 			else
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
 
+/obj/item/stack/medical/ointment/update_icon()
+	icon_state = "[initial(icon_state)][amount]"
+
 /obj/item/stack/medical/bruise_pack/tajaran
 	name = "\improper S'rendarr's Hand leaf"
 	singular_name = "S'rendarr's Hand leaf"
@@ -164,6 +170,9 @@
 	icon_state = "shandp"
 	heal_brute = 7
 
+/obj/item/stack/medical/bruise_pack/tajaran/update_icon()
+	return
+
 /obj/item/stack/medical/ointment/tajaran
 	name = "\improper Messa's Tear petals"
 	singular_name = "Messa's Tear petals"
@@ -171,6 +180,9 @@
 	icon = 'icons/obj/harvest.dmi'
 	icon_state = "mtearp"
 	heal_burn = 7
+
+/obj/item/stack/medical/ointment/tajaran/update_icon()
+	return
 
 /obj/item/stack/medical/advanced/bruise_pack
 	name = "advanced trauma kit"

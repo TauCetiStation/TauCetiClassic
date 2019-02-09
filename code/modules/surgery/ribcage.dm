@@ -23,8 +23,10 @@
 	max_duration = 70
 
 /datum/surgery_step/ribcage/saw_ribcage/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	if(!..())
+		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	return ..() && target.op_stage.ribcage == 0 && BP.open >= 2
+	return target.op_stage.ribcage == 0 && BP.open >= 2
 
 /datum/surgery_step/ribcage/saw_ribcage/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to cut through [target]'s ribcage with \the [tool].", \
@@ -172,11 +174,7 @@
 	max_duration = 100
 
 /datum/surgery_step/ribcage/remove_embryo/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/embryo = 0
-	for(var/obj/item/alien_embryo/A in target)
-		embryo = 1
-		break
-	return ..() && embryo && target.op_stage.ribcage == 2
+	return (locate(/obj/item/alien_embryo) in target) && ..() && target.op_stage.ribcage == 2
 
 /datum/surgery_step/ribcage/remove_embryo/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/msg = "[user] starts to pull something out from [target]'s ribcage with \the [tool]."
@@ -207,13 +205,15 @@
 	max_duration = 90
 
 /datum/surgery_step/ribcage/fix_chest_internal/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/is_chest_organ_damaged = 0
+	if(!..())
+		return FALSE
+	if(target.op_stage.ribcage != 2)
+		return FALSE
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO.damage > 0)
-			is_chest_organ_damaged = 1
-			break
-	return ..() && is_chest_organ_damaged && target.op_stage.ribcage == 2
+			return TRUE
+	return FALSE
 
 /datum/surgery_step/ribcage/fix_chest_internal/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/tool_name = "\the [tool]"
@@ -290,13 +290,15 @@
 	max_duration = 90
 
 /datum/surgery_step/ribcage/fix_chest_internal_robot/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/is_chest_organ_damaged = FALSE
+	if(!..())
+		return FALSE
+	if(target.op_stage.ribcage != 2)
+		return FALSE
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO.damage > 0 && IO.robotic == 2)
-			is_chest_organ_damaged = TRUE
-			break
-	return ..() && is_chest_organ_damaged && target.op_stage.ribcage == 2
+			return TRUE
+	return FALSE
 
 /datum/surgery_step/ribcage/fix_chest_internal_robot/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
@@ -308,7 +310,7 @@
 	if(target.species && target.species.flags[NO_PAIN])
 		target.custom_pain("You notice slight movement in your chest.",1)
 	else
-		target.custom_pain("The pain in your chest is living hell!",1)
+		target.custom_pain("The pain in your chest is a living hell!",1)
 	..()
 
 /datum/surgery_step/ribcage/fix_chest_internal_robot/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -398,10 +400,6 @@
 	target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	msg_admin_attack("[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-	var/obj/item/brain/P
-	target.organs -= P
-	target.organs_by_name -= O_BRAIN
-
 	target.chest_brain_op_stage = 2.0
 	target.death()
 
@@ -410,8 +408,9 @@
 	"<span class='warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
 	target.apply_damage(30, BRUTE, BP_CHEST, 1, DAM_SHARP)
 	if (ishuman(user))
-		user:bloody_body(target)
-		user:bloody_hands(target, 0)
+		var/mob/living/carbon/human/H = user
+		H.bloody_body(target)
+		H.bloody_hands(target, 0)
 //////////////////////////////////////////////////////////////////
 //				EXTRACTING IPC'S BRAIN							//
 //////////////////////////////////////////////////////////////////
@@ -471,11 +470,6 @@
 	target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	msg_admin_attack("[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-
-	var/obj/item/brain/B
-	target.organs -= B
-	target.organs_by_name -= O_BRAIN
-
 	var/obj/item/device/mmi/posibrain/P = new(target.loc)
 	P.transfer_identity(target)
 
@@ -507,16 +501,11 @@
 	user.visible_message("<span class='notice'>[user] fiddled in \the [tool] into [target].</span>",
 	"<span class='notice'>You fiddled in \the [tool] into [target].</span>")
 
-	var/obj/item/brain/B
-	target.organs += B
-	target.organs_by_name += O_BRAIN
-
 	var/obj/item/device/mmi/posibrain/PB = tool
-	if(PB.brainmob.mind)
+	if(PB.brainmob && PB.brainmob.mind)
 		PB.brainmob.mind.transfer_to(target)
 		target.dna = PB.brainmob.dna
 
-	tool.dropped()
 	qdel(tool)
 //////////////////////////////////////////////////////////////////
 //				RIBCAGE	ROBOTIC SURGERY							//
@@ -528,8 +517,6 @@
 
 /datum/surgery_step/ipc_ribcage/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
-		return FALSE
-	if(!(target.species && target.species.flags[IS_SYNTHETIC]))
 		return FALSE
 	return target_zone == BP_CHEST
 
@@ -543,8 +530,10 @@
 	max_duration = 70
 
 /datum/surgery_step/ipc_ribcage/wrench_sec/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	if(!..())
+		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	return ..() && target.op_stage.ribcage == 0 && BP.open >= 2
+	return target.op_stage.ribcage == 0 && BP.open >= 2
 
 /datum/surgery_step/ipc_ribcage/wrench_sec/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to loosen bolts on [target]'s security panel with \the [tool].",
@@ -564,7 +553,6 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.createwound(CUT, 20)
 	BP.fracture()
-
 
 /datum/surgery_step/ipc_ribcage/pry_sec
 	allowed_tools = list(
@@ -594,10 +582,6 @@
 	target.op_stage.ribcage = 2
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.open = 3
-
-	// Whoops!
-	if(prob(10))
-		BP.fracture()
 
 /datum/surgery_step/ipc_ribcage/pry_sec/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='warning'>[user]'s hand slips, breaking [target]'s security panel!</span>",
@@ -686,10 +670,12 @@
 	max_duration = 80
 
 /datum/surgery_step/ipc_ribcage/take_accumulator/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	if(!..())
+		return FALSE
 	var/obj/item/organ/internal/accum = target.organs_by_name[O_LIVER] // IPC's liver, as of now is an accumulator.
 	if(!locate(/obj/item/weapon/stock_parts/cell) in accum)
-		return
-	return ..() && target.op_stage.ribcage == 2
+		return FALSE
+	return target.op_stage.ribcage == 2
 
 /datum/surgery_step/ipc_ribcage/take_accumulator/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts to unscrew [target]'s accumulator out with \the [tool].",
@@ -709,10 +695,9 @@
 	user.visible_message("<span class='warning>[user]'s hand slips, scratching [target]'s accumulator with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, scratching [target]'s accumulator with \the [tool]!</span>")
 	var/obj/item/organ/internal/liver/ipc/A = target.organs_by_name[O_LIVER]
-	if(!A)
-		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-		BP.createwound(CUT, 20)
 	A.damage += 10
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	BP.createwound(CUT, 20)
 
 /datum/surgery_step/ipc_ribcage/put_accumulator
 	allowed_tools = list(
@@ -723,10 +708,12 @@
 	max_duration = 70
 
 /datum/surgery_step/ipc_ribcage/put_accumulator/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	if(!..())
+		return FALSE
 	var/obj/item/organ/internal/accum = target.organs_by_name[O_LIVER] // IPC's liver, as of now is an accumulator.
 	if(locate(/obj/item/weapon/stock_parts/cell) in accum)
 		return
-	return ..() && target.op_stage.ribcage == 2
+	return target.op_stage.ribcage == 2
 
 /datum/surgery_step/ipc_ribcage/put_accumulator/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts putting in \the [tool] into [target]'s accumulator slot.",

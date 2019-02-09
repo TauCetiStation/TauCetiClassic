@@ -170,7 +170,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon = 'icons/obj/mining/hand_tools.dmi'
 	icon_state = "pickaxe"
 	flags = CONDUCT
-//	slot_flags = SLOT_BELT
+//	slot_flags = SLOT_FLAGS_BELT
 	force = 15.0
 	throwforce = 4.0
 	item_state = "pickaxe"
@@ -233,7 +233,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "shovel"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 8.0
 	throwforce = 4.0
 	item_state = "shovel"

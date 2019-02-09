@@ -326,8 +326,6 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/list/standing	= list()
 	if(dna)
 		switch(dna.mutantrace)
-			if("slime")
-				standing += image('icons/effects/genetics.dmi', null, "[dna.mutantrace][fat]_[gender]_[species.name]_s", -MUTANTRACE_LAYER)
 			if("golem" , "shadow")
 				standing += image('icons/effects/genetics.dmi', null, "[dna.mutantrace][fat]_[gender]_s", -MUTANTRACE_LAYER)
 

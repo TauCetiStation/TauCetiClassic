@@ -1682,6 +1682,7 @@
 		var/obj/item/weapon/paper/P = new
 		P.name = "[command_name()]- [customname]"
 		P.info = input
+		P.update_icon()
 
 		var/obj/item/weapon/stamp/centcomm/S = new
 		S.stamp_paper(P, use_stamp_by_message = TRUE)
