@@ -395,7 +395,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	m_amt = 50
 	g_amt = 20
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	item_state = "coil"
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"

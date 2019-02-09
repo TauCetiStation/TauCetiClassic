@@ -18,7 +18,7 @@
 	item_state = "analyzer"
 	w_class = ITEM_SIZE_NORMAL
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 20
