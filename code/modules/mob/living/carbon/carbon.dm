@@ -277,6 +277,21 @@
 					else
 						M.visible_message("<span class='notice'>[M] gently touches [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You gently touch [src] trying to wake [t_him] up!</span>")
+			else if(M.zone_sel.selecting == "r_arm" || M.zone_sel.selecting == "l_arm")
+				M.visible_message( "<span class='notice'>[M] shakes [src]'s hand.</span>", \
+								"<span class='notice'>You shake [src]'s hand.</span>", )
+			else if(M.zone_sel.selecting == "head")
+				M.visible_message("<span class='notice'>[M] pats [src] on the head.</span>", \
+								"<span class='notice'>You pat [src] on the head.</span>", )
+			else if(M.zone_sel.selecting == "mouth")
+				M.visible_message("<span class='notice'>[M] kisses [src] on the lips.</span>", \
+								"<span class='notice'>You kiss [src] on the lips.</span>", )
+			else if(M.zone_sel.selecting == "eyes")
+				M.visible_message("<span class='notice'>[M] looking into [src]'s eyes.</span>", \
+								"<span class='notice'>You look into [src]'s eyes.</span>", )
+			else if(M.zone_sel.selecting == "groin")
+				M.visible_message("<span class='notice'>[M] does something strange with [src] to make [t_him] feel better!</span>", \
+								"<span class='notice'>You do something strange with [src] to make [t_him] feel better!</span>", )
 			else
 				M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
 								"<span class='notice'>You hug [src] to make [t_him] feel better!</span>")
