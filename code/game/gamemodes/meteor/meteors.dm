@@ -136,7 +136,8 @@
 		if(--src.hits <= 0)
 			playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
 			qdel(src) // Dont blow up singularity containment if we get stuck there.
-	if(A && src)
+			return
+	if(A)
 		var/turf/F = get_turf(A)
 		var/area/T_area = get_area(F)
 		message_admins("<span class='warning'>[src] hit [A]  in [T_area] ([ADMIN_JMP(F)]).</span>")
