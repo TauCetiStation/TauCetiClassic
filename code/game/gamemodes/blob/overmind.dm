@@ -81,9 +81,11 @@
 			stat(null, "Core Health: [blob_core.health]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
 
-/mob/camera/blob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	. = FALSE
-	var/obj/effect/blob/B = locate() in range(3, NewLoc)
+/mob/camera/blob/Move(var/NewLoc, var/Dir = 0)
+	var/obj/effect/blob/B = locate() in range("3x3", NewLoc)
 	if(NewLoc && B)
 		loc = NewLoc
-		return TRUE
+	else
+		return 0
+
+

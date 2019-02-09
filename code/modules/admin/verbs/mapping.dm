@@ -34,8 +34,8 @@ var/intercom_range_display_status = 0
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "yellow"
 
-/obj/effect/debugging/marker/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	return FALSE
+/obj/effect/debugging/marker/Move()
+	return 0
 
 /client/proc/do_not_use_these()
 	set category = "Mapping"

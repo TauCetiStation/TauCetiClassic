@@ -226,7 +226,7 @@
 		qdel(targeted_by)
 	spawn(1) update_targeted()
 
-/mob/living/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/mob/living/Move(NewLoc, direct)
 	. = ..()
 	for(var/obj/item/weapon/gun/G in targeted_by) //Handle moving out of the gunner's view.
 		var/mob/living/M = G.loc

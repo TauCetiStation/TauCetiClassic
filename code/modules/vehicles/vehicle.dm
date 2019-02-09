@@ -37,18 +37,15 @@
 //-------------------------------------------
 // Standard procs
 //-------------------------------------------
-/obj/vehicle/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/obj/vehicle/Move()
 	if(can_move())
 		var/old_loc = get_turf(src)
 
 		var/init_anc = anchored
 		anchored = 0
-		. = ..()
-		if(!.)
+		if(!..())
 			anchored = init_anc
-			if(load && !istype(load, /datum/vehicle_dummy_load))
-				load.set_dir(dir)
-			return
+			return 0
 
 		set_dir(get_dir(old_loc, loc))
 		anchored = init_anc
@@ -58,8 +55,9 @@
 		if(load && !istype(load, /datum/vehicle_dummy_load))
 			load.Move(loc, dir)
 
+		return 1
 	else
-		return FALSE
+		return 0
 
 /obj/vehicle/proc/can_move()
 	if(world.time <= l_move_time + move_delay)

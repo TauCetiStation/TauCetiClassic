@@ -52,13 +52,13 @@
 	consume(user)
 	return 1
 
-/obj/singularity/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	if(current_size >= STAGE_FIVE || check_turfs_in(Dir))
+/obj/singularity/Move(atom/newloc, direct)
+	if(current_size >= STAGE_FIVE || check_turfs_in(direct))
 		last_failed_movement = 0//Reset this because we moved
 		return ..()
 	else
-		last_failed_movement = Dir
-		return FALSE
+		last_failed_movement = direct
+		return 0
 
 /obj/singularity/blob_act(severity)
 	return

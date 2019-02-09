@@ -149,8 +149,8 @@
 	animate(src, transform = M, pixel_y = offset_y, pixel_x = offset_x, time = 2, easing = EASE_IN|EASE_OUT)
 	handle_rotation()
 
-/obj/structure/stool/bed/chair/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	. = ..()
+/obj/structure/stool/bed/chair/Move(atom/newloc, direct)
+	..()
 	handle_rotation()
 
 /obj/structure/stool/bed/chair/barber
@@ -273,8 +273,8 @@
 	buckle_movable = 1
 	can_flipped = 1
 
-/obj/structure/stool/bed/chair/office/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	. = ..()
+/obj/structure/stool/bed/chair/office/Move()
+	..()
 	if(buckled_mob)
 		var/mob/living/occupant = buckled_mob
 		if (occupant && (src.loc != occupant.loc))

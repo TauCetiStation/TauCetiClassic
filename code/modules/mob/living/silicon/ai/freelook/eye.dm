@@ -43,8 +43,8 @@
 	return ..()
 
 // Movement code. Returns 0 to stop air movement from moving it.
-/mob/camera/Eye/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	return FALSE
+/mob/camera/Eye/Move()
+	return 0
 
 // Hide popout menu verbs
 /mob/camera/Eye/examinate(atom/A as mob|obj|turf in view())

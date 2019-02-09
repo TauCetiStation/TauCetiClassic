@@ -229,8 +229,8 @@
 		to_chat(user, "<span class='notice'>You'll need the keys in one of your hands to drive this [callme].</span>")
 
 
-/obj/structure/stool/bed/chair/janicart/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	. = ..()
+/obj/structure/stool/bed/chair/janicart/Move()
+	..()
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
 			buckled_mob.loc = loc

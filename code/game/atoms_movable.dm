@@ -43,53 +43,53 @@
 		pulledby.stop_pulling()
 	return ..()
 
-/atom/movable/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	if(!loc || !NewLoc || freeze_movement)
+/atom/movable/Move(atom/newloc, direct = 0)
+	if(!loc || !newloc || freeze_movement)
 		return FALSE
 
 	var/atom/oldloc = loc
 
-	if(loc != NewLoc)
-		if (!(Dir & (Dir - 1))) //Cardinal move
+	if(loc != newloc)
+		if (!(direct & (direct - 1))) //Cardinal move
 			. = ..()
 		else //Diagonal move, split it into cardinal moves
-			if (Dir & NORTH)
-				if (Dir & EAST)
+			if (direct & 1)
+				if (direct & 4)
 					if (step(src, NORTH))
 						. = step(src, EAST)
 					else if (step(src, EAST))
 						. = step(src, NORTH)
-				else if (Dir & WEST)
+				else if (direct & 8)
 					if (step(src, NORTH))
 						. = step(src, WEST)
 					else if (step(src, WEST))
 						. = step(src, NORTH)
-			else if (Dir & SOUTH)
-				if (Dir & EAST)
+			else if (direct & 2)
+				if (direct & 4)
 					if (step(src, SOUTH))
 						. = step(src, EAST)
 					else if (step(src, EAST))
 						. = step(src, SOUTH)
-				else if (Dir & WEST)
+				else if (direct & 8)
 					if (step(src, SOUTH))
 						. = step(src, WEST)
 					else if (step(src, WEST))
 						. = step(src, SOUTH)
 
-	if(!loc || (loc == oldloc && oldloc != NewLoc))
+	if(!loc || (loc == oldloc && oldloc != newloc))
 		last_move = 0
 		return FALSE
 
 	src.move_speed = world.time - src.l_move_time
 	src.l_move_time = world.time
 
-	last_move = Dir
+	last_move = direct
 
-	if(. && buckled_mob && !handle_buckled_mob_movement(loc,Dir)) //movement failed due to buckled mob
+	if(. && buckled_mob && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob
 		. = 0
 
 	if(.)
-		Moved(oldloc, Dir)
+		Moved(oldloc, direct)
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
 	if (!inertia_moving)

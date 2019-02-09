@@ -606,12 +606,12 @@
 
 	return
 
-/mob/living/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	if (buckled && buckled.loc != NewLoc)
+/mob/living/Move(atom/newloc, direct)
+	if (buckled && buckled.loc != newloc)
 		if (!buckled.anchored)
-			return buckled.Move(NewLoc, Dir)
+			return buckled.Move(newloc, direct)
 		else
-			return FALSE
+			return 0
 
 	if (restrained())
 		stop_pulling()

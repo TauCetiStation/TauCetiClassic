@@ -98,8 +98,8 @@
 			pedal(user)
 
 
-/obj/structure/stool/bed/chair/pedalgen/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	. = ..()
+/obj/structure/stool/bed/chair/pedalgen/Move()
+	..()
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
 			buckled_mob.loc = loc

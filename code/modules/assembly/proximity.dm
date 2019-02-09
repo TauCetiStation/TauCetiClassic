@@ -101,9 +101,10 @@
 		grenade.primed(scanning)
 	return
 
-/obj/item/device/assembly/prox_sensor/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	. = ..()
+/obj/item/device/assembly/prox_sensor/Move()
+	..()
 	sense()
+	return
 
 /obj/item/device/assembly/prox_sensor/interact(mob/user)//TODO: Change this to the wires thingy
 	if(!secured)

@@ -13,10 +13,10 @@
 	if(germ_level < GERM_LEVEL_AMBIENT && prob(80))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
 		germ_level++
 
-/mob/living/carbon/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
 	if(.)
-		handle_phantom_move(NewLoc, Dir)
+		handle_phantom_move(NewLoc, direct)
 		if(nutrition && stat != DEAD)
 			nutrition -= metabolism_factor/100
 			if(m_intent == "run")
