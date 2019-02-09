@@ -1190,6 +1190,5 @@
 	// digesting the giant pizza they ate, so we don't use this in examine code.
 	return nutrition
 
-
 /mob/living/proc/get_metabolism_factor()
 	return METABOLISM_FACTOR
