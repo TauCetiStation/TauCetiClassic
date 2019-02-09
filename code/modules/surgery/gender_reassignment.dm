@@ -6,7 +6,7 @@
 	priority = 2
 	can_infect = 0
 	blood_level = 1
-	disallowed_species = list(IPC, DIONA)
+	allowed_species = list("exclude", IPC, DIONA)
 
 /datum/surgery_step/gender_reassignment/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if (!ishuman(target))

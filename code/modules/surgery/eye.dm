@@ -156,8 +156,6 @@
 /datum/surgery_step/ipc_eye/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
 		return FALSE
-	if(!target.species.flags[IS_SYNTHETIC])
-		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if(!BP)
 		return FALSE

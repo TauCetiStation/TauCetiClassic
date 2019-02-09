@@ -279,7 +279,7 @@
 
 	min_duration = 110
 	max_duration = 160
-	disallowed_species = null
+	allowed_species = null
 
 /datum/surgery_step/generic/cut_limb/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if (target_zone == O_EYES) // there are specific steps for eye surgery
