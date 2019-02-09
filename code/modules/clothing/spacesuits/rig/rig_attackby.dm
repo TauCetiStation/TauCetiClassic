@@ -69,8 +69,6 @@
 		if(!user.unEquip(mod))
 			return
 		to_chat(user, "You install \the [mod] into \the [src].")
-		installed_modules |= mod
-		mod.forceMove(src)
 		mod.installed(src)
 		return 1
 
@@ -111,6 +109,7 @@
 					to_chat(user, "You detach \the [cell] from \the [src]'s battery mount.")
 					for(var/obj/item/rig_module/module in installed_modules)
 						module.deactivate()
+					cell.updateicon()
 					user.put_in_hands(cell)
 					cell = null
 				else

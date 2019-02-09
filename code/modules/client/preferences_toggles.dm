@@ -307,26 +307,3 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 	if (mob && mob.hud_used)
 		mob.hud_used.update_parallax_pref()
-
-/client/verb/set_hardsuit_module_activation_button()
-	set name = "Set Hardsuit Module Activation Key"
-	set category = "Preferences"
-	set desc = "Set hardsuit module activation key."
-
-	var/new_setting = input(src, "Select hardsuit module activation key:") as null|anything in list("Middle click", "Alt click", "Ctrl click", "Ctrl Shift click")
-	if(!new_setting)
-		return
-
-	switch(new_setting)
-		if("Middle click")
-			prefs.hardsuit_activation = HARDSUIT_ACTIVATION_MIDDLE_CLICK
-		if("Alt click")
-			prefs.hardsuit_activation = HARDSUIT_ACTIVATION_ALT_CLICK
-		if("Ctrl click")
-			prefs.hardsuit_activation = HARDSUIT_ACTIVATION_CTRL_CLICK
-		if("Ctrl Shift click")
-			prefs.hardsuit_activation = HARDSUIT_ACTIVATION_CTRL_SHIFT_CLICK
-
-	to_chat(src, "Hardsuit Module Activation Key: [new_setting].")
-	prefs.save_preferences()
-	feedback_add_details("admin_verb","HMAK")

@@ -114,7 +114,7 @@ Used In File(s): /code/modules/clothing/spacesuits/rig/rig.dm
 									{{if value.can_select == 1}}
 										<div class='inlineBlock'>
 											{{if value.name == data.primarysystem}}
-												<div class ='good boldText'>SELECTED</div>
+												{{:helper.link('DESELECT', 'circle-arrow-s', {'interact_module' : value.index, 'module_mode' : 'deselect'}, null)}}
 											{{else}}
 												{{:helper.link('Select', 'circle-arrow-s', {'interact_module' : value.index, 'module_mode' : 'select'}, null)}}
 											{{/if}}

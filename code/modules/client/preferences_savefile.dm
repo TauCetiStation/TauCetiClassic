@@ -122,7 +122,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]			>> parallax
 	S["parallax_theme"]		>> parallax_theme
 	S["ambientocclusion"]	>> ambientocclusion
-	S["hardsuit_activation"]>> hardsuit_activation
 
 	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
 	//try to fix any outdated data if necessary
@@ -144,7 +143,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
 	parallax_theme	= sanitize_text(parallax_theme, initial(parallax_theme))
 	ambientocclusion = sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
-	hardsuit_activation = sanitize_integer(hardsuit_activation, HARDSUIT_ACTIVATION_MIDDLE_CLICK, HARDSUIT_ACTIVATION_CTRL_SHIFT_CLICK, initial(hardsuit_activation))
 	if(!cid_list)
 		cid_list = list()
 	ignore_cid_warning = sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
@@ -180,7 +178,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]			<< parallax
 	S["parallax_theme"]		<< parallax_theme
 	S["ambientocclusion"]	<< ambientocclusion
-	S["hardsuit_activation"]<< hardsuit_activation
 	return 1
 
 /datum/preferences/proc/load_saved_character(dir)

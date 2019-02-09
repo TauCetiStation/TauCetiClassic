@@ -99,7 +99,7 @@
 	if(!..() || !device)
 		return 0
 
-	if(damage > 0 && prob(20))
+	if(damage > MODULE_NO_DAMAGE && prob(20))
 		to_chat(holder.wearer, "<span class='warning'>[name] malfunctions and ignores your command!</span>")
 		return 1
 
@@ -125,7 +125,7 @@
 	selectable = FALSE
 	toggleable = FALSE
 	use_power_cost = 500
-	mount_type = module_mount_injector
+	mount_type = MODULE_MOUNT_INJECTOR
 	origin_tech = "biotech=2;programming=3"
 
 	engage_string = "Inject"
@@ -206,7 +206,7 @@
 	var/mob/living/carbon/human/H = holder.wearer
 
 	var/datum/rig_charge/charge = charges[charge_selected]
-	if(damage > 0 && prob(40))
+	if(damage > MODULE_NO_DAMAGE && prob(40))
 		to_chat(H, "<span class='warning'>[name] malfunctions and injects wrong chemical!</span>")
 		charge = charges[pick(charges)]
 
@@ -259,6 +259,7 @@
 /obj/item/rig_module/chem_dispenser/medical // starts almost empty but could be loaded with a lot of different chemicals
 	name = "hardsuit mounted chemical injector"
 	desc = "A complex web of tubing and needles suitable for hardsuit use."
+	selectable = TRUE // Also can inject others
 
 	charges = list(
 		list("tricordrazine", "tricordrazine", "tricordrazine",      30),
@@ -271,6 +272,7 @@
 		list("dermaline",     "dermaline",     "dermaline",          0),
 		list("bicaridine",    "bicaridine",    "bicaridine",         0),
 		list("oxycodone",     "oxycodone",     "oxycodone",          0),
+		list("hyperzine",     "hyperzine",     "hyperzine",          0),
 		)
 
 	interface_name = "medical chem dispenser"
@@ -405,7 +407,7 @@
 
 /obj/item/rig_module/med_teleport/process()
 	var/mob/living/carbon/human/H = holder.wearer
-	if(!H || damage>=2)
+	if(!H || damage>=MODULE_DESTROYED)
 		preparing = FALSE
 		return
 
@@ -420,7 +422,7 @@
 			to_chat(H, "<span class='danger'>Automated medical teleport system attempts to teleport your body...</span>")
 
 		if(teleport_timer > 60)
-			if(damage > 0)
+			if(damage > MODULE_NO_DAMAGE)
 				if(prob(50))
 					to_chat(H, "<span class='danger'>Medical teleport system malfunctions and fails to teleport you</span>")
 					teleport_timer = 0
@@ -457,7 +459,7 @@
 	origin_tech = "programming=4;engineering=4;bluespace=4;powerstorage=4"
 	interface_name = "compact nuclear reactor"
 	interface_desc = "Passively generates energy. Becomes very unstable if damaged"
-	mount_type = module_mount_chest
+	mount_type = MODULE_MOUNT_CHEST
 	icon_state = "nuclear"
 	suit_overlay = "nuclear"
 
@@ -465,12 +467,12 @@
 	var/unstable = FALSE
 
 /obj/item/rig_module/nuclear_generator/process()
-	if(damage == 1 && prob(2))
+	if(damage == MODULE_DAMAGED && prob(2))
 		if(holder.wearer)
 			to_chat(holder.wearer, "<span class='warning'>Your damaged [name] irradiates you</span>")
 			holder.wearer.apply_effect(rand(5, 25), IRRADIATE, 0)
 
-	if(damage >= 2)
+	if(damage >= MODULE_DESTROYED)
 		if(!unstable)
 
 			if(holder.wearer)

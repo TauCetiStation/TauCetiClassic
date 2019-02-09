@@ -6,16 +6,17 @@
 	interface_desc = "System that will tell you exactly how you gonna die."
 	toggleable = TRUE
 	activate_on_start = TRUE
-	mount_type = module_mount_ai
+	mount_type = MODULE_MOUNT_AI
 	icon_state = "IIS"
 
 	var/list/nonimportant_messages = list()
 	var/list/important_messages = list()
 
-	var/saved_health
+	// Used for detecting when some values change. Used for warning showing.
+	var/saved_health // health of the rig user
 	var/saved_rig_damage
-	var/saved_power
-	var/saved_stat
+	var/saved_power // percentage of the cell charge
+	var/saved_stat // alive/dead detection
 
 	var/restart_cooldown = 0
 	var/tick = 0
@@ -56,7 +57,7 @@
 	greet_user()
 
 /obj/item/rig_module/simple_ai/process()
-	if(damage >= 2)
+	if(damage >= MODULE_DESTROYED)
 		return
 	var/mob/living/carbon/human/H = holder.wearer
 
@@ -184,7 +185,7 @@
 	if(dam_module == src) // this module is damaged
 		important_messages = list() // clearing the message queue
 		nonimportant_messages = list()
-		if(dam_module.damage >= 2)
+		if(dam_module.damage >= MODULE_DESTROYED)
 			rig_message(destroyed_message, message_class = "danger", sound = 'sound/rig/longbeep.wav')
 		else
 			rig_message(damage_message, message_class = "warning", sound = 'sound/rig/beep.wav')
@@ -192,7 +193,7 @@
 		rig_messages_process(holder.wearer)
 		return
 
-	if(dam_module.damage >= 2)
+	if(dam_module.damage >= MODULE_DESTROYED)
 		rig_message("The [source] has disabled your [dam_module.interface_name]!", message_class = "warning", sound = 'sound/rig/longbeep.wav')
 	else
 		rig_message("The [source] has damaged your [dam_module.interface_name]!", message_class = "warning", sound = 'sound/rig/beep.wav')
@@ -289,7 +290,7 @@
 	if(H.getBruteLoss() > 40)
 		if(try_inject(H, chem_disp, list("bicaridine", "tricordrazine")))
 			return
-	if(H.getHalLoss() > 50)
+	if(H.traumatic_shock > 40 || H.shock_stage > 40)
 		if(try_inject(H, chem_disp, list("oxycodone", "tramadol", "paracetamol")))
 			return
 	if(H.getToxLoss() > 20)
@@ -301,7 +302,10 @@
 		return TRUE
 
 	for(var/reagent in reagents)
-		if(H.reagents.get_reagent_amount(reagent) > 1)
+		if(!chem_disp.charges[reagent])
+			continue
+
+		if(H.reagents.get_reagent_amount(chem_disp.charges[reagent].product_type) > 1)
 			continue
 
 		if(chem_disp.use_charge(reagent, show_warnings = FALSE))

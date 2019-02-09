@@ -1,17 +1,32 @@
+/datum/action/module_select
+	name = "Select module"
+
+/datum/action/module_select/New(var/Target)
+	..()
+	if(istype(Target, /obj/item/rig_module))
+		var/obj/item/rig_module/module = Target
+		name = "Select [module.interface_name]"
+
+/datum/action/module_select/Trigger()
+	if(!Checks())
+		return
+
+	if(istype(target, /obj/item/rig_module))
+		var/obj/item/rig_module/module = target
+		if(module.holder)
+			if(module.holder.selected_module == module)
+				module.holder.selected_module = null
+				to_chat(owner, "<font color='blue'><b>Primary system is now: deselected.</b></font>")
+			else
+				module.holder.selected_module = module
+				to_chat(owner, "<font color='blue'><b>Primary system is now: [module.interface_name].</b></font>")
+			module.holder.update_selected_action()
+
 /datum/rig_charge
 	var/short_name = "undef"
 	var/display_name = "undefined"
 	var/product_type = "undefined"
 	var/charges = 0
-
-// Used to limit subtypes of the same module
-var/const/module_mount_other = 0
-var/const/module_mount_ai = 1
-var/const/module_mount_grenadelaunder = 2
-var/const/module_mount_shoulder_right = 3
-var/const/module_mount_shoulder_left = 4
-var/const/module_mount_injector = 5
-var/const/module_mount_chest = 6
 
 /obj/item/rig_module
 	name = "hardsuit upgrade"
@@ -19,7 +34,7 @@ var/const/module_mount_chest = 6
 	icon = 'icons/obj/rig_modules.dmi'
 	icon_state = "generic"
 
-	var/damage = 0
+	var/damage = MODULE_NO_DAMAGE
 	var/obj/item/clothing/suit/space/rig/holder
 
 	var/module_cooldown = 10
@@ -30,7 +45,7 @@ var/const/module_mount_chest = 6
 	var/selectable                      // Set to 1 to be able to assign the device as primary system.
 	var/redundant                       // Set to 1 to ignore duplicate module checking when installing.
 	var/permanent                       // If set, the module can't be removed.
-	var/mount_type = module_mount_other
+	var/mount_type = 0					// What mounts does this module use
 
 	var/active                          // Basic module status
 	var/activate_on_start				// Set to TRUE for the device to automatically activate on suit equip
@@ -94,11 +109,11 @@ var/const/module_mount_chest = 6
 /obj/item/rig_module/examine()
 	. = ..()
 	switch(damage)
-		if(0)
+		if(MODULE_NO_DAMAGE)
 			to_chat(usr, "It is undamaged.")
-		if(1)
+		if(MODULE_DAMAGED)
 			to_chat(usr, "It is badly damaged.")
-		if(2)
+		if(MODULE_DESTROYED)
 			to_chat(usr, "It is almost completely destroyed.")
 
 /obj/item/rig_module/attackby(obj/item/W, mob/user)
@@ -116,9 +131,9 @@ var/const/module_mount_chest = 6
 			return
 
 		var/obj/item/stack/nanopaste/paste = W
-		damage = 0
-		to_chat(user, "You mend the damage to [src] with [W].")
-		paste.use(1)
+		if(paste.use(1))
+			damage = MODULE_NO_DAMAGE
+			to_chat(user, "You mend the damage to [src] with [W].")
 		return
 
 	else if(iscoil(W))
@@ -126,10 +141,10 @@ var/const/module_mount_chest = 6
 			return
 
 		switch(damage)
-			if(0)
+			if(MODULE_NO_DAMAGE)
 				to_chat(user, "There is no damage to mend.")
 				return
-			if(2)
+			if(MODULE_DESTROYED)
 				to_chat(user, "There is no damage that you are capable of mending with such crude tools.")
 				return
 
@@ -142,20 +157,22 @@ var/const/module_mount_chest = 6
 		if(!do_after(user, 30, target = src) || !W || !src)
 			return
 
-		damage = 0
-		to_chat(user, "You mend the damage to [src] with [W].")
-		cable.use(5)
+		if(cable.use(5))
+			damage = MODULE_NO_DAMAGE
+			to_chat(user, "You mend the damage to [src] with [W].")
 		return
 	..()
 
 // Called when the module is installed into a suit.
 /obj/item/rig_module/proc/installed(var/obj/item/clothing/head/helmet/space/rig/new_holder)
 	holder = new_holder
+	holder.installed_modules += src
+	forceMove(holder)
 
 //Proc for one-use abilities like teleport.
 /obj/item/rig_module/proc/engage()
 
-	if(damage >= 2)
+	if(damage >= MODULE_DESTROYED)
 		to_chat(holder.wearer, "<span class='warning'>The [interface_name] is damaged beyond use!</span>")
 		return 0
 
@@ -163,11 +180,7 @@ var/const/module_mount_chest = 6
 		to_chat(holder.wearer, "<span class='warning'>You cannot use the [interface_name] again so soon.</span>")
 		return 0
 
-	if(holder.wearer.lying || holder.wearer.stat || holder.wearer.stunned || holder.wearer.paralysis || holder.wearer.weakened)
-		to_chat(holder.wearer, "<span class='warning'>You cannot use the suit in this state.</span>")
-		return 0
-
-	if(!holder.check_power_cost(holder.wearer, use_power_cost, FALSE, src))
+	if(!holder.try_use(holder.wearer, use_power_cost, use_unconcious = FALSE, use_stunned = FALSE))
 		return 0
 
 	next_use = world.time + module_cooldown
@@ -176,9 +189,13 @@ var/const/module_mount_chest = 6
 
 // Proc for toggling on active abilities.
 /obj/item/rig_module/proc/activate(forced = FALSE)
-
-	if(active || (!forced && !engage()) || (forced && (damage >= 2 || !holder.check_power_cost(holder.wearer, use_power_cost, TRUE, src))))
+	if(active)
 		return 0
+
+	if(!forced && !engage())
+		return 0
+	else if(forced && (damage >= MODULE_DESTROYED || !holder.try_use(holder.wearer, use_power_cost, use_unconcious = TRUE, use_stunned = TRUE)))
+		return 0 // forced skips some checks
 
 	active = TRUE
 

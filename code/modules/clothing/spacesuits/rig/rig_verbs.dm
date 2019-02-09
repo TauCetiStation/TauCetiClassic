@@ -10,14 +10,10 @@
 		ui_interact(usr)
 
 /obj/item/clothing/suit/space/rig/verb/select_module()
-
 	set name = "Select Module"
 	set desc = "Selects a module as your primary system."
 	set category = "Hardsuit"
 	set src = usr.contents
-
-	if(!check_power_cost(usr, 0, 0, 0, 0))
-		return
 
 	if(!istype(wearer) || !wearer.wear_suit == src)
 		to_chat(usr, "<span class='warning'>The hardsuit is not being worn.</span>")
@@ -37,10 +33,30 @@
 	if(!istype(module))
 		selected_module = null
 		to_chat(usr, "<font color='blue'><b>Primary system is now: deselected.</b></font>")
+		update_selected_action()
 		return
 
 	selected_module = module
 	to_chat(usr, "<font color='blue'><b>Primary system is now: [selected_module.interface_name].</b></font>")
+	update_selected_action()
+
+/obj/item/clothing/suit/space/rig/verb/deselect_module()
+	set name = "Deselect Module"
+	set desc = "Deselects active module."
+	set category = "Hardsuit"
+	set src = usr.contents
+
+	if(!istype(wearer) || !wearer.wear_suit == src)
+		to_chat(usr, "<span class='warning'>The hardsuit is not being worn.</span>")
+		return
+
+	if(offline)
+		to_chat(usr, "<span class='warning'>The suit is not active.</span>")
+		return
+
+	selected_module = null
+	to_chat(usr, "<font color='blue'><b>Primary system is now: deselected.</b></font>")
+	update_selected_action()
 
 /obj/item/clothing/suit/space/rig/verb/toggle_module()
 
@@ -48,9 +64,6 @@
 	set desc = "Toggle a system module."
 	set category = "Hardsuit"
 	set src = usr.contents
-
-	if(!check_power_cost(usr, 0, 0, 0, 0))
-		return
 
 	if(!istype(wearer) || !wearer.wear_suit == src)
 		to_chat(usr, "<span class='warning'>The hardsuit is not being worn.</span>")
@@ -90,9 +103,6 @@
 
 	if(offline)
 		to_chat(usr, "<span class='warning'>The suit is not active.</span>")
-		return
-
-	if(!check_power_cost(usr, 0, 0, 0, 0))
 		return
 
 	var/list/selectable = list()

@@ -14,7 +14,7 @@
 	icon_state = "grenadelauncher"
 	suit_overlay = "grenade"
 	use_power_cost = 500
-	mount_type = module_mount_grenadelaunder
+	mount_type = MODULE_MOUNT_GRENADELAUNCHER
 	origin_tech = "combat=3"
 
 	interface_name = "integrated grenade launcher"
@@ -63,7 +63,7 @@
 
 	var/mob/living/carbon/human/H = holder.wearer
 
-	if(damage > 0 && prob(50))
+	if(damage > MODULE_NO_DAMAGE && prob(50))
 		to_chat(holder.wearer, "<span class='warning'>[name] malfunctions and ignores your command!</span>")
 		return 1
 
@@ -132,7 +132,7 @@
 	icon_state = "egun"
 	suit_overlay = "mounted-lascannon"
 	use_power_cost = 0
-	mount_type = module_mount_shoulder_left
+	mount_type = MODULE_MOUNT_SHOULDER_LEFT
 	var/recharge_speed = 50
 	origin_tech = "combat=4"
 
@@ -154,7 +154,7 @@
 	if(!..())
 		return 0
 
-	if(damage > 0 && prob(40))
+	if(damage > MODULE_NO_DAMAGE && prob(40))
 		to_chat(holder.wearer, "<span class='warning'>[name] malfunctions and ignores your command!</span>")
 		return 1
 
@@ -176,7 +176,7 @@
 	icon_state = "taser"
 	suit_overlay = "mounted-taser"
 	use_power_cost = 0
-	mount_type = module_mount_shoulder_right
+	mount_type = MODULE_MOUNT_SHOULDER_RIGHT
 	origin_tech = "combat=3"
 
 	usable = TRUE

@@ -93,20 +93,6 @@
 	. += 					"<td width='45%'>Progress Bar:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=see_progbar'><b>[(toggles & SHOW_PROGBAR) ? "Yes" : "No"]</b></a></td>"
 	. += 				"</tr>"
-	. += 				"<tr>"
-	. += 					"<td width='45%'>Hardsuit Module Activation Key:</td>"
-	. += 					"<td><a href='?_src_=prefs;preference=hardsuit_key'><b>"
-	switch (hardsuit_activation)
-		if (HARDSUIT_ACTIVATION_MIDDLE_CLICK)
-			. += "Middle click"
-		if (HARDSUIT_ACTIVATION_ALT_CLICK)
-			. += "Alt click"
-		if (HARDSUIT_ACTIVATION_CTRL_CLICK)
-			. += "Ctrl click"
-		if (HARDSUIT_ACTIVATION_CTRL_SHIFT_CLICK)
-			. += "Ctrl Shift click"
-	. += 					"</b></a></td>"
-	. += 				"</tr>"
 	. += 			"</table>"
 	. += 		"</td>"
 	. += 	"</tr>"
@@ -214,6 +200,3 @@
 
 		if("see_progbar")
 			toggles ^= SHOW_PROGBAR
-
-		if("hardsuit_key")
-			hardsuit_activation = Wrap(hardsuit_activation + 1, HARDSUIT_ACTIVATION_MIDDLE_CLICK, HARDSUIT_ACTIVATION_CTRL_SHIFT_CLICK + 1)

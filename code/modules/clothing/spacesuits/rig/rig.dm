@@ -102,7 +102,6 @@
 	if(initial_modules && initial_modules.len)
 		for(var/path in initial_modules)
 			var/obj/item/rig_module/module = new path(src)
-			installed_modules += module
 			module.installed(src)
 
 	if(cell_type)
@@ -114,7 +113,7 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/clothing/suit/space/rig/proc/check_power_cost(var/mob/living/user, var/cost, var/use_unconcious, var/obj/item/rig_module/mod)
+/obj/item/clothing/suit/space/rig/proc/try_use(var/mob/living/user, var/cost, var/use_unconcious, var/use_stunned)
 
 	if(!istype(user))
 		return 0
@@ -124,8 +123,10 @@
 	var/mob/living/carbon/human/H = user
 	if(istype(H) && H.wear_suit != src)
 		fail_msg = "<span class='warning'>You must be wearing \the [src] to do this.</span>"
-	else if(!fail_msg && ((use_unconcious && user.stat > 1) || (!use_unconcious && user.stat)))
+	else if((use_unconcious && user.stat == DEAD) || (!use_unconcious && user.stat != CONSCIOUS))
 		fail_msg = "<span class='warning'>You are in no fit state to do that.</span>"
+	else if(!use_stunned && (user.lying || user.stunned || user.paralysis || user.weakened))
+		fail_msg = "<span class='warning'>You cannot use the suit in this state.</span>"
 	else if(!cell)
 		fail_msg = "<span class='warning'>There is no cell installed in the suit.</span>"
 	else if(cost && cell.charge < cost)
@@ -135,7 +136,8 @@
 		to_chat(user, "[fail_msg]")
 		return 0
 
-	cell.use(cost)
+	if(cost > 0)
+		return cell.use(cost)
 	return 1
 
 /obj/item/clothing/suit/space/rig/Topic(href,href_list)
@@ -158,6 +160,10 @@
 					module.engage()
 				if("select")
 					selected_module = module
+					update_selected_action()
+				if("deselect")
+					selected_module = null
+					update_selected_action()
 				if("select_charge_type")
 					module.charge_selected = href_list["charge_type"]
 		return 1
@@ -251,10 +257,33 @@
 
 		for(var/obj/item/rig_module/module in installed_modules)
 			cell.use(module.process())
-			if(!wearer) // module might uneqiup us
+			if(!wearer) // module might unequip us
 				break
 		cell.charge = min(cell.maxcharge, cell.charge)
 
+/obj/item/clothing/suit/space/rig/proc/give_actions(mob/living/carbon/human/H)
+	for(var/obj/item/rig_module/module in installed_modules)
+		if(module.selectable)
+			var/datum/action/module_select/action = new(module)
+			action.Grant(H)
+
+/obj/item/clothing/suit/space/rig/proc/remove_actions(mob/living/carbon/human/H)
+	for(var/datum/action/module_select/action in H.actions)
+		if(istype(action))
+			action.Remove(H)
+
+/obj/item/clothing/suit/space/rig/proc/update_selected_action()
+	if(!wearer)
+		return
+
+	var/mob/living/carbon/human/H = wearer
+	for(var/datum/action/module_select/action in H.actions)
+		if(istype(action))
+			if(selected_module == action.target) // highlight selected module
+				action.background_icon_state = "bg_spell"
+			else
+				action.background_icon_state = "bg_default"
+	H.update_action_buttons()
 
 /obj/item/clothing/suit/space/rig/equipped(mob/M, slot)
 	..()
@@ -266,6 +295,7 @@
 	if(slot == slot_wear_suit)
 		wearer = H
 		update_icon(wearer)
+		give_actions(wearer)
 
 	if(H.wear_suit != src)
 		return
@@ -295,6 +325,8 @@
 
 	if(old_wearer == user)
 		update_icon(user)
+		remove_actions(old_wearer)
+		selected_module = null
 
 /obj/item/clothing/suit/space/rig/verb/toggle_helmet()
 
@@ -380,7 +412,7 @@
 		if(installed_mod.type == new_module.type)
 			to_chat(usr, "The hardsuit already has a module of that class installed.")
 			return FALSE
-		if(installed_mod.mount_type == new_module.mount_type && new_module.mount_type != module_mount_other)
+		if(installed_mod.mount_type & new_module.mount_type)
 			to_chat(usr, "The hardsuit already has [installed_mod.name] installed in that mount spot.")
 			return FALSE
 
@@ -405,7 +437,7 @@
 
 	var/list/valid_modules = list()
 	for(var/obj/item/rig_module/module in installed_modules)
-		if(module.damage < 2)
+		if(module.damage < MODULE_DESTROYED)
 			valid_modules += module
 
 	if(!valid_modules.len)

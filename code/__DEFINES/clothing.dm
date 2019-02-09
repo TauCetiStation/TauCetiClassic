@@ -90,3 +90,16 @@
 #define REACTION_HIT_BY_BULLET 5
 #define REACTION_ATACKED 6
 #define REACTION_THROWITEM 7
+
+// Hardsuit mount places. Used to limit subtypes of the same module
+#define MODULE_MOUNT_AI 				1
+#define MODULE_MOUNT_GRENADELAUNCHER 	2
+#define MODULE_MOUNT_SHOULDER_RIGHT 	4
+#define MODULE_MOUNT_SHOULDER_LEFT 		8
+#define MODULE_MOUNT_INJECTOR 			16
+#define MODULE_MOUNT_CHEST 				32
+
+// Rig module damage levels
+#define MODULE_NO_DAMAGE 0
+#define MODULE_DAMAGED 1
+#define MODULE_DESTROYED 2
