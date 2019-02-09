@@ -1,4 +1,4 @@
-\/mob/living/atom_init()
+/mob/living/atom_init()
 	. = ..()
 	living_list += src
 
