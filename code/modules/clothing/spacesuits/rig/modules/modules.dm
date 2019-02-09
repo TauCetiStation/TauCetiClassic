@@ -218,7 +218,7 @@
 	return
 
 // Called by the hardsuit each rig process tick.
-/obj/item/rig_module/process()
+/obj/item/rig_module/proc/process_module()
 	if(active)
 		return active_power_cost
 	else

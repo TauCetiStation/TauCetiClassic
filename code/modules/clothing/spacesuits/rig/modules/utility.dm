@@ -289,7 +289,7 @@
 	var/max_cooling = 12
 	var/thermostat = T20C
 
-/obj/item/rig_module/cooling_unit/process()
+/obj/item/rig_module/cooling_unit/process_module()
 	if(!active)
 		return passive_power_cost
 
@@ -334,7 +334,7 @@
 
 	return 1
 
-/obj/item/rig_module/selfrepair/process()
+/obj/item/rig_module/selfrepair/process_module()
 	if(!active)
 		return passive_power_cost
 
@@ -405,7 +405,7 @@
 	var/preparing = FALSE
 	var/teleport_timer = 0
 
-/obj/item/rig_module/med_teleport/process()
+/obj/item/rig_module/med_teleport/process_module()
 	var/mob/living/carbon/human/H = holder.wearer
 	if(!H || damage>=MODULE_DESTROYED)
 		preparing = FALSE
@@ -466,7 +466,7 @@
 	passive_power_cost = -50
 	var/unstable = FALSE
 
-/obj/item/rig_module/nuclear_generator/process()
+/obj/item/rig_module/nuclear_generator/process_module()
 	if(damage == MODULE_DAMAGED && prob(2))
 		if(holder.wearer)
 			to_chat(holder.wearer, "<span class='warning'>Your damaged [name] irradiates you</span>")

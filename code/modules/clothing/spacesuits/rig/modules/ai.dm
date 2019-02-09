@@ -56,7 +56,7 @@
 
 	greet_user()
 
-/obj/item/rig_module/simple_ai/process()
+/obj/item/rig_module/simple_ai/process_module()
 	if(damage >= MODULE_DESTROYED)
 		return
 	var/mob/living/carbon/human/H = holder.wearer

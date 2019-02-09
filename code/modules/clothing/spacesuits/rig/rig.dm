@@ -256,7 +256,7 @@
 		cell.use(passive_energy_use)
 
 		for(var/obj/item/rig_module/module in installed_modules)
-			cell.use(module.process())
+			cell.use(module.process_module())
 			if(!wearer) // module might unequip us
 				break
 		cell.charge = min(cell.maxcharge, cell.charge)

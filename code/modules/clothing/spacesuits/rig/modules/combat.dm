@@ -165,7 +165,7 @@
 	gun.Fire(target,holder.wearer)
 	return 1
 
-/obj/item/rig_module/mounted/process()
+/obj/item/rig_module/mounted/process_module()
 	if(istype(gun) && gun.power_supply)
 		return gun.power_supply.give(recharge_speed)
 	return passive_power_cost
