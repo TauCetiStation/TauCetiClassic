@@ -1093,6 +1093,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/obj/item/weapon/paper/P = new
 	P.name = sent_name
 	P.info = sent_text
+	P.update_icon()
 
 	if(stamp_type)
 		var/obj/item/weapon/stamp/S = new stamp_type

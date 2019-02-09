@@ -1,5 +1,5 @@
 /obj/item/weapon/gun/magic/staff
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	icon_state = "staff"
 	w_class = 4
 

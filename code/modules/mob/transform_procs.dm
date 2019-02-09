@@ -186,9 +186,8 @@
 
 	O.Namepick()
 
-	spawn(0)//To prevent the proc from returning null.
-		qdel(src)
-	return O
+	. = O
+	qdel(src)
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()

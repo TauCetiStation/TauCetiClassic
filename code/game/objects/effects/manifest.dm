@@ -12,6 +12,7 @@
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( src.loc )
 	P.info = dat
 	P.name = "paper- 'Crew Manifest'"
+	P.update_icon()
 	//SN src = null
 	qdel(src)
 	return

@@ -283,6 +283,7 @@ What a mess.*/
 					P.info += "<B>General Record Lost!</B><BR>"
 				P.info += "</TT>"
 				P.name = "Employment Record ([active1.fields["name"]])"
+				P.update_icon()
 				printing = null
 //RECORD DELETE
 		if ("Delete All Records")

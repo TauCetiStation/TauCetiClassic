@@ -299,7 +299,7 @@
 	volume = 70
 	flags = OPENCONTAINER
 	body_parts_covered = HEAD
-	slot_flags = SLOT_HEAD
+	slot_flags = SLOT_FLAGS_HEAD
 
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/D, mob/user)
 	if(isprox(D))

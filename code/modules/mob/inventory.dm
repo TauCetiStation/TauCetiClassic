@@ -113,9 +113,6 @@ var/list/slot_equipment_priority = list(
 //as they handle all relevant stuff like adding it to the player's screen and updating their overlays.
 
 //Returns the thing in our active hand
-
-
-//Returns the thing in our active hand
 /mob/proc/get_active_hand()
 	if(hand)	return l_hand
 	else		return r_hand

@@ -46,22 +46,6 @@
 	"\red Your hand slips, smearing [tool] in the incision in [target]'s [BP.name]!")
 	BP.take_damage(5, 0)
 
-/datum/surgery_step/gender_reassignment
-	priority = 2
-	can_infect = 0
-	blood_level = 1
-
-/datum/surgery_step/gender_reassignment/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (!ishuman(target))
-		return 0
-	if (target_zone != BP_GROIN)
-		return 0
-	var/obj/item/organ/external/groin = target.get_bodypart(BP_GROIN)
-	if (!groin)
-		return 0
-	if (groin.open < 1)
-		return 0
-	return 1
 //////////////////////////////////////////////////////////////////
 //					GROIN ORGAN PATCHING						//
 //////////////////////////////////////////////////////////////////
@@ -96,13 +80,15 @@
 	max_duration = 90
 
 /datum/surgery_step/groin_organs/fixing/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	if(!..())
+		return FALSE
 	var/is_groin_organ_damaged = FALSE
 	var/obj/item/organ/external/groin/BP = target.get_bodypart(BP_GROIN)
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO.damage > 0)
 			is_groin_organ_damaged = TRUE
 			break
-	return ..() && is_groin_organ_damaged
+	return is_groin_organ_damaged
 
 /datum/surgery_step/groin_organs/fixing/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/tool_name = "\the [tool]"
@@ -177,17 +163,21 @@
 	/obj/item/weapon/wrench = 70
 	)
 
+	disallowed_species = list("exclude", IPC)
+
 	min_duration = 70
 	max_duration = 90
 
 /datum/surgery_step/groin_organs/fixing_robot/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	if(!..())
+		return FALSE
 	var/is_groin_organ_damaged = FALSE
 	var/obj/item/organ/external/groin/BP = target.get_bodypart(BP_GROIN)
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO.damage > 0 && IO.robotic == 2)
 			is_groin_organ_damaged = TRUE
 			break
-	return ..() && is_groin_organ_damaged
+	return is_groin_organ_damaged
 
 /datum/surgery_step/groin_organs/fixing_robot/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/groin/BP = target.get_bodypart(BP_GROIN)

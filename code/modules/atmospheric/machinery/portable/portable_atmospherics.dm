@@ -67,7 +67,7 @@
 	anchored = TRUE // Prevent movement
 	return TRUE
 
-/obj/machinery/portable_atmospherics/Move()
+/obj/machinery/portable_atmospherics/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
 	if(.)
 		disconnect()
