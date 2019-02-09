@@ -60,7 +60,7 @@
 	var/monkeyizing = null	//Carbon
 	var/other = 0.0
 	var/notransform = null	//Carbon
-	var/hand = 0
+	var/hand = 0            //active hand; 0 is right hand, 1 is left hand //todo: we need defines for this...
 	var/eye_blind = null	//Carbon
 	var/eye_blurry = null	//Carbon
 	var/ear_deaf = null		//Carbon
