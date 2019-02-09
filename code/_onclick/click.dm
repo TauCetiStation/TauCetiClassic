@@ -192,8 +192,7 @@
 /mob/proc/MiddleClickOn(atom/A)
 	return
 /mob/living/carbon/MiddleClickOn(atom/A)
-	if(!..()) // rig module might cancel this
-		swap_hand()
+	swap_hand()
 
 // In case of use break glass
 /*
