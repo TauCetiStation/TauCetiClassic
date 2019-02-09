@@ -6,7 +6,7 @@
 	icon = 'icons/obj/xenoarchaeology/finds.dmi'
 	icon_state = "pipboy3000"
 	item_state = "pipboy3000"
-	slot_flags = SLOT_BELT | SLOT_GLOVES
+	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_GLOVES
 	action_button_name = "Toggle Pip-Boy"
 	species_restricted = null
 	protect_fingers = FALSE

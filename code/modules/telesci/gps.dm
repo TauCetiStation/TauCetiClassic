@@ -5,7 +5,7 @@ var/list/GPS_list = list()
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
 	w_class = 2.0
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "programming=2;engineering=2"
 	var/gpstag = "COM0"
 	var/emped = 0

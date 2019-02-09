@@ -21,6 +21,7 @@
 	icon_state = "sampler_empty"
 	item_state = "sampler"
 	w_class = ITEM_SIZE_TINY
+	//slot_flags = SLOT_FLAGS_BELT
 	var/sampled_turf = ""
 	var/num_stored_bags = 10
 	var/obj/item/weapon/evidencebag/filled_bag

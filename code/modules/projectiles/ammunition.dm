@@ -5,7 +5,7 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "s-casing"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 1
 	w_class = 1.0
 	var/caliber = null							//Which kind of guns it can be loaded into
@@ -61,7 +61,7 @@
 	icon_state = "357"
 	icon = 'icons/obj/ammo.dmi'
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	item_state = "syringe_kit"
 	m_amt = 500
 	throwforce = 2

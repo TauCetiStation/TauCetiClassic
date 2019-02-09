@@ -6,7 +6,7 @@
 	item_state = "flashlight"
 	w_class = 2
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 50
 	g_amt = 20
 	action_button_name = "Toggle Flashlight"

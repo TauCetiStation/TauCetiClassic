@@ -246,6 +246,7 @@
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
 			intercept.name = "Cent. Com. Announcement"
 			intercept.info = message
+			intercept.update_icon()
 
 			comm.messagetitle.Add("Cent. Com. Announcement")
 			comm.messagetext.Add(message)

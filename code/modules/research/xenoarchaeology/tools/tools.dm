@@ -28,10 +28,10 @@
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "fossil_satchel"
 	item_state = "fossil_satchel"
-	slot_flags = SLOT_BELT | SLOT_POCKET
+	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_POCKET
 	w_class = ITEM_SIZE_NORMAL
 	storage_slots = 50
-	max_w_class = 3
+	max_w_class = ITEM_SIZE_NORMAL
 	can_hold = list(
  		"/obj/item/weapon/fossil",
  		"/obj/item/weapon/ore/strangerock")

@@ -10,6 +10,23 @@
 #define HIDEEYES	4	//APPLIES ONLY TO HELMETS/MASKS!! (eyes means glasses)
 #define HIDEFACE	8	//APPLIES ONLY TO HELMETS/MASKS!! Dictates whether we appear as unknown.
 
+//ITEM INVENTORY SLOT BITMASKS
+#define SLOT_FLAGS_OCLOTHING    (1<<0)
+#define SLOT_FLAGS_ICLOTHING    (1<<1)
+#define SLOT_FLAGS_GLOVES       (1<<2)
+#define SLOT_FLAGS_EYES         (1<<3)
+#define SLOT_FLAGS_EARS         (1<<4)
+#define SLOT_FLAGS_MASK         (1<<5)
+#define SLOT_FLAGS_HEAD         (1<<6)
+#define SLOT_FLAGS_FEET         (1<<7)
+#define SLOT_FLAGS_ID           (1<<8)
+#define SLOT_FLAGS_BELT         (1<<9)
+#define SLOT_FLAGS_BACK         (1<<10)
+#define SLOT_FLAGS_POCKET       (1<<11)    // This is to allow items with a w_class of 3 or 4 to fit in pockets.
+#define SLOT_FLAGS_DENYPOCKET   (1<<12)    // This is to deny items with a w_class of 2 or 1 to fit in pockets.
+#define SLOT_FLAGS_TWOEARS      (1<<13)
+#define SLOT_FLAGS_TIE          (1<<14)
+
 //slots
 #define slot_back        1
 #define slot_wear_mask   2

@@ -740,7 +740,7 @@
 	name = "bath towel"
 	icon_state = "bathtowel"
 	item_color = "bathtowel"
-	slot_flags = SLOT_HEAD | SLOT_ICLOTHING
+	slot_flags = SLOT_FLAGS_HEAD | SLOT_FLAGS_ICLOTHING
 
 /obj/item/clothing/under/bathtowel/equipped(mob/living/carbon/human/user, slot)
 	..()
