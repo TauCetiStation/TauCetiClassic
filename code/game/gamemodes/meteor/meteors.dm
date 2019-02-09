@@ -97,11 +97,11 @@
 
 /obj/effect/meteor/Bump(atom/A)
 	if(A)
-		A.meteorhit(src)
 		var/turf/T = get_turf(A)
 		var/area/T_area = get_area(T)
 		message_admins("<span class='warning'>[src] hit [A] in [T_area] ([ADMIN_JMP(T)]).</span>")
-		log_game("[src] hit [A] ([T.x], [T.y] ,[T.z]) in [T_area].")
+		log_game("[src] hit [A] ([T.x], [T.y], [T.z]) in [T_area].")
+		A.meteorhit(src)
 		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
 	if(--src.hits <= 0)
 
@@ -131,16 +131,16 @@
 /obj/effect/meteor/big/Bump(atom/A)
 	// Prevent meteors from blowing up the singularity's containment.
 	// Changing emitter and generator ex_act would result in them being bomb and C4 proof
-	if(!istype(A,/obj/machinery/power/emitter) && \
-		!istype(A,/obj/machinery/field_generator))
+	if(!istype(A, /obj/machinery/power/emitter) && \
+		!istype(A, /obj/machinery/field_generator))
 		if(--src.hits <= 0)
-			qdel(src) //Dont blow up singularity containment if we get stuck there.
-
-	if(A)
+			playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
+			qdel(src) // Dont blow up singularity containment if we get stuck there.
+	if(A && src)
 		var/turf/F = get_turf(A)
 		var/area/T_area = get_area(F)
 		message_admins("<span class='warning'>[src] hit [A]  in [T_area] ([ADMIN_JMP(F)]).</span>")
-		log_game("[src] hit [A] ([F.x], [F.y] ,[F.z]) in [T_area].")
+		log_game("[src] hit [A] ([F.x], [F.y], [F.z]) in [T_area].")
 		for(var/mob/M in player_list)
 			var/turf/T = get_turf(M)
 			if(!T || T.z != src.z)
