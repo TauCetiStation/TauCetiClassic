@@ -113,7 +113,7 @@
 	
 /obj/item/clothing/accessory/holy
     name = "holy cross"
-    desc = "Time to take the Jeirusalem!."
+    desc = "Time to take the Jeirusalem!"
     icon = 'icons/obj/clothing/ties.dmi'
     icon_state = "holycross"
     item_state = "" // no inhands
