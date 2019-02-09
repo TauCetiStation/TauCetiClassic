@@ -22,14 +22,14 @@
 /obj/item/clothing/head/chep
 	name = "Maid cap"
 	desc = "Smells like trooly cleaned house."
-	icon_state = "chepchik"
-	item_state = "chepchik"
+	icon_state = "chep"
+	item_state = "chep"
 	
-/obj/item/clothing/head/shapka_ng
+/obj/item/clothing/head/hat_tacticool
 	name = "tacticool hat"
 	desc = "Black synthcloth hat"
-	icon_state = "shps"
-	item_state = "shps"
+	icon_state = "tacticool_hat"
+	item_state = "tacticool_hat"
 	flags = BLOCKHAIR
 	siemens_coefficient = 2.0
 
