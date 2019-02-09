@@ -18,6 +18,21 @@
 	desc = "A powdered wig."
 	icon_state = "pwig"
 	item_state = "pwig"
+	
+/obj/item/clothing/head/chep
+	name = "Maid cap"
+	desc = "Smells like trooly cleaned house."
+	icon_state = "chepchik"
+	item_state = "chepchik"
+	
+/obj/item/clothing/head/shapka_ng
+	name = "tacticool hat"
+	desc = "Black synthcloth hat"
+	icon_state = "shps"
+	item_state = "shps"
+	flags = BLOCKHAIR
+	siemens_coefficient = 2.0
+
 
 /obj/item/clothing/head/that
 	name = "top-hat"
