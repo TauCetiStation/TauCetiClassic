@@ -27855,15 +27855,6 @@
 	},
 /turf/simulated/floor,
 /area/engine/chiefs_office)
-"aVI" = (
-/obj/machinery/atmospherics/pipe/simple/visible/cyan{
-	dir = 4
-	},
-/obj/structure/closet/fireaxecabinet{
-	pixel_y = 30
-	},
-/turf/simulated/floor,
-/area/atmos)
 "aVJ" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -38301,9 +38292,6 @@
 /area/maintenance/port)
 "bsV" = (
 /obj/machinery/vending/snack,
-/obj/structure/noticeboard{
-	pixel_y = 27
-	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkblue"
@@ -38831,10 +38819,10 @@
 	dir = 2
 	},
 /obj/item/weapon/storage/fancy/donut_box,
-/obj/structure/table/glass,
-/obj/structure/closet/fireaxecabinet{
-	pixel_y = 30
+/obj/structure/noticeboard{
+	pixel_y = 27
 	},
+/obj/structure/table/glass,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -41431,6 +41419,10 @@
 	},
 /area/bridge)
 "bzJ" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 5;
+	pixel_y = -32
+	},
 /obj/machinery/light_switch{
 	pixel_x = -6;
 	pixel_y = -22
@@ -41615,12 +41607,11 @@
 	},
 /area/hallway/primary/central)
 "bAg" = (
+/obj/structure/closet/fireaxecabinet{
+	pixel_y = -32
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 5;
-	pixel_y = -32
 	},
 /turf/simulated/floor{
 	dir = 2;
@@ -49732,6 +49723,9 @@
 	},
 /area/atmos)
 "bRQ" = (
+/obj/structure/closet/fireaxecabinet{
+	pixel_y = -32
+	},
 /obj/machinery/space_heater,
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/visible/red{
@@ -116295,7 +116289,7 @@ udb
 udb
 bVS
 bSV
-aVI
+bQQ
 bVD
 cwe
 bZv
