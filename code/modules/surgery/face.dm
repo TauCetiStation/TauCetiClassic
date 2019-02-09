@@ -159,7 +159,7 @@
 		return FALSE
 	return target_zone == O_MOUTH
 
-/datum/surgery_step/ipcgeneric/screw_face
+/datum/surgery_step/ipc_face/screw_face
 	allowed_tools = list(
 	/obj/item/weapon/screwdriver = 100,
 	/obj/item/weapon/scalpel = 75,
@@ -170,21 +170,21 @@
 	min_duration = 90
 	max_duration = 110
 
-/datum/surgery_step/ipcgeneric/screw_face/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc_face/screw_face/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	return ..() && target.op_stage.face == 0
 
-/datum/surgery_step/ipcgeneric/screw_face/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc_face/screw_face/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts to unscrew [target]'s screen with \the [tool].",
 	"You start to unscrew [target]'s screen with \the [tool].")
 	..()
 
-/datum/surgery_step/ipcgeneric/screw_face/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc_face/screw_face/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='notice'>[user] has loosen bolts on [target]'s screen with \the [tool].</span>",
 	"<span class='notice'>You have unscrewed [target]'s screen with \the [tool].</span>")
 	target.op_stage.face = 1
 	target.update_hair()
 
-/datum/surgery_step/ipcgeneric/screw_face/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc_face/screw_face/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s screen with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, scratching [target]'s screen with \the [tool]!</span>")
