@@ -4,7 +4,7 @@
 	if(istype(W))
 		if(isIAN(src))
 			switch(slot)
-				if(slot_head, slot_back)
+				if(SLOT_HEAD, SLOT_BACK)
 					to_chat(src, "<span class='notice'>You have no idea how humans do this.</span>")
 					return
 		if (istype(W, /obj/item/clothing))
@@ -20,9 +20,9 @@
 			equip_to_slot_if_possible(W, slot)
 
 /mob/proc/put_in_any_hand_if_possible(obj/item/W, del_on_fail = 0, disable_warning = 1, redraw_mob = 1)
-	if(equip_to_slot_if_possible(W, slot_l_hand, del_on_fail, disable_warning, redraw_mob))
+	if(equip_to_slot_if_possible(W, SLOT_L_HAND, del_on_fail, disable_warning, redraw_mob))
 		return 1
-	else if(equip_to_slot_if_possible(W, slot_r_hand, del_on_fail, disable_warning, redraw_mob))
+	else if(equip_to_slot_if_possible(W, SLOT_R_HAND, del_on_fail, disable_warning, redraw_mob))
 		return 1
 	return 0
 
@@ -55,22 +55,22 @@
 
 //The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
 var/list/slot_equipment_priority = list(
-	slot_back,
-	slot_wear_id,
-	slot_w_uniform,
-	slot_wear_suit,
-	slot_wear_mask,
-	slot_head,
-	slot_shoes,
-	slot_gloves,
-	slot_l_ear,
-	slot_r_ear,
-	slot_glasses,
-	slot_belt,
-	slot_s_store,
-	slot_tie,
-	slot_l_store,
-	slot_r_store
+	SLOT_BACK,
+	SLOT_WEAR_ID,
+	SLOT_W_UNIFORM,
+	SLOT_WEAR_SUIT,
+	SLOT_WEAR_MASK,
+	SLOT_HEAD,
+	SLOT_SHOES,
+	SLOT_GLOVES,
+	SLOT_L_EAR,
+	SLOT_R_EAR,
+	SLOT_GLASSES,
+	SLOT_BELT,
+	SLOT_S_STORE,
+	SLOT_TIE,
+	SLOT_L_STORE,
+	SLOT_R_STORE
 	)
 
 //puts the item "W" into an appropriate slot in a human's inventory
@@ -162,7 +162,7 @@ var/list/slot_equipment_priority = list(
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
 //		l_hand.screen_loc = ui_lhand
-		W.equipped(src,slot_l_hand)
+		W.equipped(src,SLOT_L_HAND)
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
 		update_inv_l_hand()
@@ -183,7 +183,7 @@ var/list/slot_equipment_priority = list(
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
 //		r_hand.screen_loc = ui_rhand
-		W.equipped(src,slot_r_hand)
+		W.equipped(src,SLOT_R_HAND)
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
 		update_inv_r_hand()
@@ -312,28 +312,28 @@ var/list/slot_equipment_priority = list(
 
 /mob/living/carbon/get_equipped_item(var/slot)
 	switch(slot)
-		if(slot_back) return back
-		if(slot_wear_mask) return wear_mask
-		if(slot_l_hand) return l_hand
-		if(slot_r_hand) return r_hand
+		if(SLOT_BACK) return back
+		if(SLOT_WEAR_MASK) return wear_mask
+		if(SLOT_L_HAND) return l_hand
+		if(SLOT_R_HAND) return r_hand
 	return null
 
 /mob/living/carbon/human/get_equipped_item(var/slot)
 	switch(slot)
-		if(slot_belt) return belt
-		if(slot_l_ear) return l_ear
-		if(slot_r_ear) return r_ear
-		if(slot_glasses) return glasses
-		if(slot_gloves) return gloves
-		if(slot_head) return head
-		if(slot_shoes) return shoes
-		if(slot_wear_id) return wear_id
-		if(slot_wear_suit) return wear_suit
-		if(slot_w_uniform) return w_uniform
-		if(slot_back) return back
-		if(slot_wear_mask) return wear_mask
-		if(slot_l_hand) return l_hand
-		if(slot_r_hand) return r_hand
+		if(SLOT_BELT) return belt
+		if(SLOT_L_EAR) return l_ear
+		if(SLOT_R_EAR) return r_ear
+		if(SLOT_GLASSES) return glasses
+		if(SLOT_GLOVES) return gloves
+		if(SLOT_HEAD) return head
+		if(SLOT_SHOES) return shoes
+		if(SLOT_WEAR_ID) return wear_id
+		if(SLOT_WEAR_SUIT) return wear_suit
+		if(SLOT_W_UNIFORM) return w_uniform
+		if(SLOT_BACK) return back
+		if(SLOT_WEAR_MASK) return wear_mask
+		if(SLOT_L_HAND) return l_hand
+		if(SLOT_R_HAND) return r_hand
 	return null
 
 /mob/proc/get_equipped_items()
@@ -431,8 +431,8 @@ var/list/slot_equipment_priority = list(
 
 /mob/proc/get_item_by_slot(slot_id)
 	switch(slot_id)
-		if(slot_l_hand)
+		if(SLOT_L_HAND)
 			return l_hand
-		if(slot_r_hand)
+		if(SLOT_R_HAND)
 			return r_hand
 	return null

@@ -19,5 +19,5 @@
 /datum/quirk/child_of_nature/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/head/bearpelt/B = new(H.loc)
-	if(!H.equip_to_slot_if_possible(B, slot_head, null, TRUE))
+	if(!H.equip_to_slot_if_possible(B, SLOT_HEAD, null, TRUE))
 		H.put_in_hands(B)

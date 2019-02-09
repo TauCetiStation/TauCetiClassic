@@ -18,29 +18,29 @@
 	if(!H)	return 0
 
 	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/captain(H), slot_back)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/cap(H), slot_back)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
+		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/captain(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/cap(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 
 	var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/captain(H)
 	if(H.age > 49)
 		var/obj/item/clothing/accessory/medal/gold/captain/new_medal = new
 		U.accessories += new_medal
 		new_medal.on_attached(U, H, TRUE)
-	H.equip_to_slot_or_del(U, slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/caphat(H), slot_head)
-	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(H), slot_glasses)
+	H.equip_to_slot_or_del(U, SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/caphat(H), SLOT_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(H), SLOT_GLASSES)
 
 	if(visualsOnly)
 		return
 
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(H), slot_l_ear)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/captain(H), slot_belt)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(H), SLOT_L_EAR)
+	H.equip_to_slot_or_del(new /obj/item/device/pda/captain(H), SLOT_BELT)
 	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H), slot_r_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H), SLOT_R_HAND)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H.back), slot_in_backpack)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H.back), SLOT_IN_BACKPACK)
 
 	var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)
 	L.inject(H)
@@ -79,20 +79,20 @@
 /datum/job/hop/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), slot_back)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_personnel(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
+		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_personnel(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), SLOT_SHOES)
 
 	if(visualsOnly)
 		return
 
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/hop(H), slot_l_ear)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/heads/hop(H), slot_belt)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/hop(H), SLOT_L_EAR)
+	H.equip_to_slot_or_del(new /obj/item/device/pda/heads/hop(H), SLOT_BELT)
 	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H), slot_r_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H), SLOT_R_HAND)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H.back), slot_in_backpack)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H.back), SLOT_IN_BACKPACK)
 
 	return TRUE
