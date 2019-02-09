@@ -51,7 +51,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggleprayers,			/*toggles prayers on/off*/
 //	/client/proc/toggle_hear_deadcast,	/*toggles whether we hear deadchat*/
 	/client/proc/toggle_hear_radio,		/*toggles whether we hear the radio*/
-	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
 	/client/proc/secrets,
 	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
 	/datum/admins/proc/togglelooc,		/*toggles looc on/off for everyone*/
@@ -84,6 +83,7 @@ var/list/admin_verbs_log = list(
 	/datum/admins/proc/view_atk_log,	/*shows the server combat-log, doesn't do anything presently*/
 	/client/proc/giveruntimelog,		/*allows us to give access to runtime logs to somebody*/
 	/client/proc/getserverlog,			/*allows us to fetch server logs (diary) for other days*/
+	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
 	)
 var/list/admin_verbs_variables = list(
 	/client/proc/debug_variables 		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
