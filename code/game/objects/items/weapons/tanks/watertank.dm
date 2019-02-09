@@ -2,7 +2,7 @@
 /obj/item/weapon/reagent_containers/watertank_backpack
 	name = "backpack water tank"
 	desc = "A S.U.N.S.H.I.N.E. brand watertank backpack with nozzle to water plants."
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "waterbackpack"
 	item_state = "waterbackpack"
@@ -49,7 +49,7 @@
 
 /obj/item/weapon/reagent_containers/watertank_backpack/equipped(mob/user, slot)
 	..()
-	if(slot != SLOT_BACK)
+	if(slot != slot_back)
 		remove_noz()
 
 /obj/item/weapon/reagent_containers/watertank_backpack/proc/remove_noz()

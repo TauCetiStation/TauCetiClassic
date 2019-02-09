@@ -1274,6 +1274,7 @@
 	name = "chow mein"
 	desc = "What is in this anyways?"
 	icon_state = "chinese1"
+	trash = /obj/item/trash/chinese1
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/chowmein/atom_init()
 	. = ..()
@@ -1285,6 +1286,7 @@
 	name = "Sweet & Sour Chicken Balls"
 	desc = "Is this chicken cooked? The odds are better than wok paper scissors."
 	icon_state = "chickenball"
+	trash = /obj/item/trash/snack_bowl
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball/atom_init()
 	. = ..()
@@ -1295,6 +1297,7 @@
 	name = "Admiral Yamamoto carp"
 	desc = "Tastes like chicken."
 	icon_state = "chinese2"
+	trash = /obj/item/trash/chinese2
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/tao/atom_init()
 	. = ..()
@@ -1306,6 +1309,7 @@
 	name = "chinese newdles"
 	desc = "Made fresh, weekly!"
 	icon_state = "chinese3"
+	trash = /obj/item/trash/chinese3
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/newdles/atom_init()
 	. = ..()
@@ -1316,6 +1320,7 @@
 	name = "fried rice"
 	desc = "A timeless classic."
 	icon_state = "chinese4"
+	trash = /obj/item/trash/chinese4
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/rice/atom_init()
 	. = ..()
@@ -4346,3 +4351,11 @@
 /obj/item/weapon/reagent_containers/food/snacks/ectoplasm/atom_init()
 	. = ..()
 	reagents.add_reagent("ectoplasm", 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/fries/cardboard
+	icon_state = "fries_cardboard"
+	trash = /obj/item/trash/fries
+
+/obj/item/weapon/reagent_containers/food/snacks/cheesyfries/cardboard
+	icon_state = "cheesyfries_cardboard"
+	trash = /obj/item/trash/fries

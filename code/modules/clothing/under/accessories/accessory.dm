@@ -5,7 +5,7 @@
 	icon_state = "bluetie"
 	item_state = "" // no inhands
 	item_color = "bluetie"
-	slot_flags = SLOT_TIE
+	slot_flags = SLOT_FLAGS_TIE
 	w_class = ITEM_SIZE_SMALL
 
 	var/slot = "decor"
@@ -165,7 +165,7 @@
 	desc = "This glowing blue badge marks the holder as THE LAW."
 	icon_state = "holobadge"
 	item_color = "holobadge"
-	slot_flags = SLOT_BELT | SLOT_TIE
+	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_TIE
 
 	var/emagged = FALSE // Emagging removes Sec check.
 	var/stored_name = null
@@ -173,7 +173,7 @@
 /obj/item/clothing/accessory/holobadge/cord
 	icon_state = "holobadge-cord"
 	item_color = "holobadge-cord"
-	slot_flags = SLOT_MASK | SLOT_TIE
+	slot_flags = SLOT_FLAGS_MASK | SLOT_FLAGS_TIE
 
 /obj/item/clothing/accessory/holobadge/attack_self(mob/user)
 	if(!stored_name)

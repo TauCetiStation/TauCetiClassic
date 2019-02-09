@@ -1,4 +1,4 @@
-#define ALLOWED_ID_OVERLAYS list("id","gold","silver","centcom","ert","ert-leader","syndicate","syndicate-command")//List of overlays in pda.dmi
+#define ALLOWED_ID_OVERLAYS list("id", "gold", "silver", "centcom", "ert", "ert-leader", "syndicate", "syndicate-command", "clown", "mime") // List of overlays in pda.dmi
 //The advanced pea-green monochrome lcd of tomorrow.
 
 /obj/item/device/pda
@@ -8,7 +8,7 @@
 	icon_state = "pda"
 	item_state = "electronic"
 	w_class = 2.0
-	slot_flags = SLOT_ID | SLOT_BELT
+	slot_flags = SLOT_FLAGS_ID | SLOT_FLAGS_BELT
 
 	//Main variables
 	var/owner = null

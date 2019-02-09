@@ -7,6 +7,7 @@
 #define TRAIT_TOURETTE            "tourette"
 #define TRAIT_NEARSIGHT           "nearsighted"
 #define TRAIT_NERVOUS             "nervous"
+#define TRAIT_MULTITASKING        "multitasking"
 #define TRAIT_HEMATOPHAGUS        "hematophagus"
 
 // common trait sources

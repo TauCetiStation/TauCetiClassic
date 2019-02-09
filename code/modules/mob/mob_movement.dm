@@ -283,20 +283,20 @@
 /mob/proc/SelfMove(turf/n, direct)
 	return Move(n, direct)
 
-/mob/Move(n,direct)
+/mob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	//Camera control: arrow keys.
 	if (machine && istype(machine, /obj/machinery/computer/security))
 		var/obj/machinery/computer/security/console = machine
 		var/turf/T = get_turf(console.current)
 		for(var/i;i<10;i++)
-			T = get_step(T,direct)
-		console.jump_on_click(src,T)
-		return
+			T = get_step(T, Dir)
+		console.jump_on_click(src, T)
+		return FALSE
 
 	if (pinned.len)
-		return
+		return FALSE
 
-	return ..(n,direct)
+	return ..()
 
 ///Process_Grab()
 ///Called by client/Move()

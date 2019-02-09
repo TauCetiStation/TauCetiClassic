@@ -49,6 +49,7 @@
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
 			intercept.name = "paper- [interceptname]"
 			intercept.info = intercepttext
+			intercept.update_icon()
 	return
 
 

@@ -141,15 +141,15 @@
 	return Move(get_step(src, direction))
 
 
-/obj/vehicle/space/spacebike/Move(var/turf/destination)
+/obj/vehicle/space/spacebike/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	//these things like space, not turf. Dragging shouldn't weigh you down.
-	if(istype(destination,/turf/space) || pulledby)
+	if(istype(NewLoc, /turf/space) || pulledby)
 		if(!space_speed)
-			return 0
+			return FALSE
 		move_delay = space_speed + slow_cooef
 	else
 		if(!land_speed)
-			return 0
+			return FALSE
 		move_delay = land_speed + slow_cooef
 	return ..()
 

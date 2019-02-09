@@ -79,6 +79,7 @@
 		P.info = "<b>[src] analysis report #[report_num]</b><br>"
 		P.info += "<br>"
 		P.info += "[bicon(scanned_object)] [results]"
+		P.update_icon()
 
 		var/obj/item/weapon/stamp/S = new
 		S.stamp_paper(P)

@@ -91,8 +91,9 @@
 	else
 		STOP_PROCESSING(SSobj, src)
 
-/obj/structure/reagent_dispensers/watertank/Move()
-	if (..() && modded)
+/obj/structure/reagent_dispensers/watertank/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
+	if (. && modded)
 		leak_water(1)
 
 /obj/structure/reagent_dispensers/watertank/proc/leak_water(amount)
@@ -203,8 +204,9 @@
 	..() //extend the zap
 	explode()
 
-/obj/structure/reagent_dispensers/fueltank/Move()
-	if (..() && modded)
+/obj/structure/reagent_dispensers/fueltank/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
+	if (. && modded)
 		leak_fuel(amount_per_transfer_from_this/10.0)
 
 /obj/structure/reagent_dispensers/fueltank/proc/leak_fuel(amount)

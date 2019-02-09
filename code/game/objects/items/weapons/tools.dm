@@ -20,7 +20,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "wrench"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
 	throwforce = 7.0
 	w_class = 2.0
@@ -56,7 +56,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "screwdriver_map"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
 	w_class = 1.0
 	throwforce = 5.0
@@ -123,7 +123,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "cutters_map"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 6.0
 	throw_speed = 2
 	throw_range = 9
@@ -182,7 +182,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "welder"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	action_button_name = "Switch Welding tool"
 
 	//Amount of OUCH when it's thrown
@@ -514,7 +514,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "crowbar"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
 	throwforce = 7.0
 	item_state = "crowbar"
