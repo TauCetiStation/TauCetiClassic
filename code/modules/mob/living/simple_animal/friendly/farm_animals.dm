@@ -145,7 +145,7 @@
 			playsound(src, 'sound/voice/cowmoos.ogg', 50, 1, -3)
 
 /mob/living/simple_animal/cow/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	. = .()
+	. = ..()
 	if(. && prob(55))
 		playsound(src, 'sound/misc/cowbell.ogg', 50, 1, -3)
 
