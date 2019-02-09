@@ -131,7 +131,7 @@
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scannerconsole"
 	anchored = 1
-	var/latestprint = 0
+	var/next_print = 0
 	var/storedinfo = null
 
 
@@ -361,23 +361,28 @@
 	if(!.)
 		return
 	if (href_list["print"])
-		if (src.latestprint + 100 < world.time) //10sec cooldown
-			src.latestprint = world.time
+		if (next_print < world.time) //10 sec cooldown
+			next_print = world.time + 10 SECONDS
 			to_chat(usr, "<span class='notice'>Printing... Please wait.</span>")
-			spawn(10)
-				var/obj/item/weapon/paper/P = new(loc)
-				var/mob/living/carbon/human/occupant = src.connected.occupant
-				var/t1 = "<B>[occupant ? occupant.name : "Unknown"]'s</B> advanced scanner report.<BR>"
-				t1 += "Station Time: <B>[worldtime2text()]</B><BR>"
-				switch(occupant.stat) // obvious, see what their status is
-					if(0)
-						t1 += "Status: <B>Conscious</B>"
-					if(1)
-						t1 += "Status: <B>Unconscious</B>"
-					else
-						t1 += "Status: <B>\red*dead*</B>"
-				t1 += storedinfo
-				P.info = t1
-				P.name = "[occupant.name]'s scanner report"
+			addtimer(INVOKE_ASYNC(src, .proc/print_scan, storedinfo), 1 SECOND)
 		else
 			to_chat(usr, "<span class='notice'>The console can't print that fast!</span>")
+
+/obj/machinery/body_scanconsole/proc/print_scan(additional_info)
+	var/obj/item/weapon/paper/P = new(loc)
+	if(!connected || !connected.occupant) // If while we were printing the occupant got out or our thingy did a boom.
+		return
+	var/mob/living/carbon/human/occupant = connected.occupant
+	var/t1 = "<B>[occupant ? occupant.name : "Unknown"]'s</B> advanced scanner report.<BR>"
+	t1 += "Station Time: <B>[worldtime2text()]</B><BR>"
+	switch(occupant.stat) // obvious, see what their status is
+		if(CONSCIOUS)
+			t1 += "Status: <B>Conscious</B>"
+		if(UNCONSCIOUS)
+			t1 += "Status: <B>Unconscious</B>"
+		else
+			t1 += "Status: <B>\red*dead*</B>"
+	t1 += additional_info
+	P.info = t1
+	P.name = "[occupant.name]'s scanner report"
+	P.update_icon()

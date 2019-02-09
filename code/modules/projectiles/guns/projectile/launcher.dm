@@ -6,7 +6,7 @@
 	item_state = "m79"
 	w_class = 4
 	force = 10
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "combat=5;materials=3"
 	recoil = 0 //extra kickback
 	mag_type = /obj/item/ammo_box/magazine/internal/m79

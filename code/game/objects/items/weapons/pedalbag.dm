@@ -4,7 +4,7 @@
 	icon_state = "backpack"
 	item_state = "backpack"
 	w_class = 4.0
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 
 /obj/item/weapon/pedalbag/verb/quick_empty()
 	set name = "Empty Prisoners"
