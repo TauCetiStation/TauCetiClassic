@@ -4,6 +4,7 @@
 /obj/machinery/bodyscanner
 	var/locked
 	name = "Body Scanner"
+	desc = "Used for a more detailed analysis of the patient."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scanner_0"
 	density = 1
@@ -364,6 +365,7 @@
 		if (next_print < world.time) //10 sec cooldown
 			next_print = world.time + 10 SECONDS
 			to_chat(usr, "<span class='notice'>Printing... Please wait.</span>")
+			playsound(src, 'sound/misc/medscan.ogg', 15, 1)
 			addtimer(CALLBACK(src, .proc/print_scan, storedinfo), 1 SECOND)
 		else
 			to_chat(usr, "<span class='notice'>The console can't print that fast!</span>")

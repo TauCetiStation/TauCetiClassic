@@ -193,6 +193,7 @@
 	desc = "Used to knock out the Bartender."
 	icon_state = "rolling_pin"
 	force = 8.0
+	hitsound = 'sound/effects/woodhit.ogg'
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 7
