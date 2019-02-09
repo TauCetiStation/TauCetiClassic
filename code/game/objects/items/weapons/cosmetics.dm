@@ -198,7 +198,7 @@
 	icon_state = "scissors"
 	item_state = "scissors"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 6.0
 	throw_speed = 2
 	throw_range = 9
@@ -219,7 +219,9 @@
 	var/static/list/scissors_icon_cache
 
 /obj/item/weapon/scissors/proc/calculate_hash(mob/living/carbon/human/H)
-	var/hash = "" + H.species.name + H.gender + num2text(H.r_eyes + H.g_eyes*256 + H.b_eyes*256*256,9) + "_" + num2text(H.r_hair + H.g_hair*256 + H.b_hair*256*256,9) + "_" + num2text(H.r_facial + H.g_facial*256 + H.b_facial*256*256,9) + "_" + num2text(H.r_skin + H.g_skin*256 + H.b_skin*256*256,9) + "_" + num2text(H.s_tone)
+	var/hair_hash = H.hair_painted ? num2text(H.dyed_r_hair + H.dyed_g_hair * 256 + H.dyed_b_hair * 256 * 256, 9) : num2text(H.r_hair + H.g_hair * 256 + H.b_hair * 256 * 256, 9)
+	var/facial_hash = H.facial_painted ? num2text(H.dyed_r_facial + H.dyed_g_facial * 256 + H.dyed_b_facial * 256 * 256, 9) : num2text(H.r_facial + H.g_facial * 256 + H.b_facial * 256 * 256, 9)
+	var/hash = "" + H.species.name + H.gender + num2text(H.r_eyes + H.g_eyes*256 + H.b_eyes*256*256,9) + "_" + hair_hash + "_" + facial_hash + "_" + num2text(H.r_skin + H.g_skin*256 + H.b_skin*256*256,9) + "_" + num2text(H.s_tone)
 	if(!isfacehair && selectedhairstyle)
 		hash+="_" + selectedhairstyle
 	else
@@ -242,13 +244,23 @@
 	mannequin.g_eyes = H.g_eyes
 	mannequin.b_eyes = H.b_eyes
 
-	mannequin.r_hair = H.r_hair
-	mannequin.g_hair = H.g_hair
-	mannequin.b_hair = H.b_hair
+	if(!H.hair_painted)
+		mannequin.r_hair = H.r_hair
+		mannequin.g_hair = H.g_hair
+		mannequin.b_hair = H.b_hair
+	else
+		mannequin.r_hair = H.dyed_r_hair
+		mannequin.g_hair = H.dyed_g_hair
+		mannequin.b_hair = H.dyed_b_hair
 
-	mannequin.r_facial = H.r_facial
-	mannequin.g_facial = H.g_facial
-	mannequin.b_facial = H.b_facial
+	if(!H.facial_painted)
+		mannequin.r_facial = H.r_facial
+		mannequin.g_facial = H.g_facial
+		mannequin.b_facial = H.b_facial
+	else
+		mannequin.r_facial = H.dyed_r_facial
+		mannequin.g_facial = H.dyed_g_facial
+		mannequin.b_facial = H.dyed_b_facial
 
 	mannequin.r_skin = H.r_skin
 	mannequin.g_skin = H.g_skin

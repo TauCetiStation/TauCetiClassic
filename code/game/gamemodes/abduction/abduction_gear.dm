@@ -277,7 +277,7 @@
 	var/list/all_items = M.GetAllContents()
 
 	for(var/obj/I in all_items)
-		if(istype(I,/obj/item/device/radio/))
+		if(istype(I,/obj/item/device/radio))
 			var/obj/item/device/radio/r = I
 			r.on = 0
 
@@ -394,7 +394,7 @@
 	icon_state = "wonderprodStun"
 	item_state = "wonderprod"
 	origin_tech = "materials=6;combat=5;biotech=7"
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 7
 	w_class = 3
 	action_button_name = "Toggle Mode"

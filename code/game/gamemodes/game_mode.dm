@@ -278,6 +278,7 @@ Implants;
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
 			intercept.name = "Cent. Com. Status Summary"
 			intercept.info = intercepttext
+			intercept.update_icon()
 
 			comm.messagetitle.Add("Cent. Com. Status Summary")
 			comm.messagetext.Add(intercepttext)
@@ -370,7 +371,7 @@ Implants;
 //////////////////////////
 //Reports player logouts//
 //////////////////////////
-proc/display_roundstart_logout_report()
+/proc/display_roundstart_logout_report()
 	var/msg = "\blue <b>Roundstart logout report\n\n"
 	for(var/mob/living/L in living_list)
 
@@ -424,7 +425,7 @@ proc/display_roundstart_logout_report()
 			to_chat(M, msg)
 
 
-proc/get_nt_opposed()
+/proc/get_nt_opposed()
 	var/list/dudes = list()
 	for(var/mob/living/carbon/human/man in human_list)
 		if(man.client)

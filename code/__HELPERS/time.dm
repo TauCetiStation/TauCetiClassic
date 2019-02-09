@@ -5,7 +5,7 @@
 #define MINUTES *600
 
 //Returns the world time in english
-proc/worldtime2text(time = world.time)
+/proc/worldtime2text(time = world.time)
 	return "[round(time / 36000)+12]:[(time / 600 % 60) < 10 ? add_zero(time / 600 % 60, 1) : time / 600 % 60]"
 
 /proc/time_stamp(format = "hh:mm:ss", wtime = world.timeofday)
@@ -42,7 +42,7 @@ var/last_round_duration = 0
 	return last_round_duration
 
 /* Preserving this so future generations can see how fucking retarded some people are
-proc/time_stamp()
+/proc/time_stamp()
 	var/hh = text2num(time2text(world.timeofday, "hh")) // Set the hour
 	var/mm = text2num(time2text(world.timeofday, "mm")) // Set the minute
 	var/ss = text2num(time2text(world.timeofday, "ss")) // Set the second
@@ -56,7 +56,7 @@ proc/time_stamp()
 */
 
 /* Returns 1 if it is the selected month and day */
-proc/isDay(month, day)
+/proc/isDay(month, day)
 	if(isnum(month) && isnum(day))
 		var/MM = text2num(time2text(world.timeofday, "MM")) // get the current month
 		var/DD = text2num(time2text(world.timeofday, "DD")) // get the current day

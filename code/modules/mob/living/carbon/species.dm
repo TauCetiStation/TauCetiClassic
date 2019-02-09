@@ -707,6 +707,11 @@
 	attack_verb = list("lash", "bludgeon")
 	damage = 5
 
+/datum/unarmed_attack/slime_glomp
+	attack_verb = list("glomp")
+	damage = 2
+	attack_sound = 'sound/effects/attackblob.ogg'
+
 /datum/unarmed_attack/claws
 	attack_verb = list("scratch", "claw")
 	attack_sound = 'sound/weapons/slice.ogg'
@@ -969,3 +974,13 @@
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
 	)
+
+/datum/species/slime
+	name = SLIME
+	icobase = 'icons/mob/human_races/r_slime.dmi'
+	deform = 'icons/mob/human_races/r_slime.dmi'
+
+	blood_color = /datum/dirt_cover/blue_blood
+	flesh_color = "#05fffb"
+	unarmed_type = /datum/unarmed_attack/slime_glomp
+	has_gendered_icons = FALSE

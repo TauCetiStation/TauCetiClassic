@@ -462,7 +462,8 @@
 
 /mob/living/proc/revive()
 	rejuvenate()
-	buckled = initial(src.buckled)
+	if(buckled)
+		buckled.user_unbuckle_mob(src)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
 
@@ -605,12 +606,12 @@
 
 	return
 
-/mob/living/Move(atom/newloc, direct)
-	if (buckled && buckled.loc != newloc)
+/mob/living/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	if (buckled && buckled.loc != NewLoc)
 		if (!buckled.anchored)
-			return buckled.Move(newloc, direct)
+			return buckled.Move(NewLoc, Dir)
 		else
-			return 0
+			return FALSE
 
 	if (restrained())
 		stop_pulling()

@@ -654,13 +654,13 @@
 /datum/reagent/paint/reaction_turf(turf/T, volume)
 	if(!istype(T) || istype(T, /turf/space))
 		return
-	if(color_weight < 15)
+	if(color_weight < 15 || volume < 5)
 		return
 	var/ind = "[initial(T.icon)][color]"
 	if(!cached_icons[ind])
 		var/icon/overlay = new/icon(initial(T.icon))
 		overlay.Blend(color, ICON_MULTIPLY)
-		overlay.SetIntensity(volume * color_weight * 0.1)
+		overlay.SetIntensity(color_weight * 0.1)
 		T.icon = overlay
 		cached_icons[ind] = T.icon
 	else
@@ -695,16 +695,26 @@
 				body_changes_occured = TRUE
 		else if(H.species && H.species.name in list(HUMAN, UNATHI, TAJARAN))
 			if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
-				H.dyed_r_hair = Clamp(round(H.r_hair * volume_coefficient + r_tweak), 0, 255)
-				H.dyed_g_hair = Clamp(round(H.g_hair * volume_coefficient + g_tweak), 0, 255)
-				H.dyed_b_hair = Clamp(round(H.b_hair * volume_coefficient + b_tweak), 0, 255)
-				H.hair_painted = TRUE
+				if(!H.hair_painted)
+					H.dyed_r_hair = Clamp(round(H.r_hair * volume_coefficient + r_tweak), 0, 255)
+					H.dyed_g_hair = Clamp(round(H.g_hair * volume_coefficient + g_tweak), 0, 255)
+					H.dyed_b_hair = Clamp(round(H.b_hair * volume_coefficient + b_tweak), 0, 255)
+					H.hair_painted = TRUE
+				else
+					H.dyed_r_hair = Clamp(round(H.dyed_r_hair * volume_coefficient + r_tweak), 0, 255)
+					H.dyed_g_hair = Clamp(round(H.dyed_g_hair * volume_coefficient + g_tweak), 0, 255)
+					H.dyed_b_hair = Clamp(round(H.dyed_b_hair * volume_coefficient + b_tweak), 0, 255)
 				hair_changes_occured = TRUE
 			if(!((H.wear_mask && (H.wear_mask.flags & HEADCOVERSMOUTH)) || (H.head && (H.head.flags & HEADCOVERSMOUTH))) && H.f_style != "Shaved")
-				H.dyed_r_facial = Clamp(round(H.dyed_r_facial * volume_coefficient + r_tweak), 0, 255)
-				H.dyed_g_facial = Clamp(round(H.dyed_g_facial * volume_coefficient + g_tweak), 0, 255)
-				H.dyed_b_facial = Clamp(round(H.dyed_b_facial * volume_coefficient + b_tweak), 0, 255)
-				H.facial_painted = TRUE
+				if(!H.facial_painted)
+					H.dyed_r_facial = Clamp(round(H.r_facial * volume_coefficient + r_tweak), 0, 255)
+					H.dyed_g_facial = Clamp(round(H.g_facial * volume_coefficient + g_tweak), 0, 255)
+					H.dyed_b_facial = Clamp(round(H.b_facial * volume_coefficient + b_tweak), 0, 255)
+					H.facial_painted = TRUE
+				else
+					H.dyed_r_facial = Clamp(round(H.dyed_r_facial * volume_coefficient + r_tweak), 0, 255)
+					H.dyed_g_facial = Clamp(round(H.dyed_g_facial * volume_coefficient + g_tweak), 0, 255)
+					H.dyed_b_facial = Clamp(round(H.dyed_b_facial * volume_coefficient + b_tweak), 0, 255)
 				hair_changes_occured = TRUE
 		if(!H.head && !H.wear_mask && H.h_style == "Bald" && H.f_style == "Shaved" && volume >= 5)
 			H.lip_style = "spray_face"

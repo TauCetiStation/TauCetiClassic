@@ -5,7 +5,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "pill_canister"
 /obj/random/meds/pills/item_to_spawn()
-		return pick(subtypesof(/obj/item/weapon/storage/pill_bottle/))
+		return pick(subtypesof(/obj/item/weapon/storage/pill_bottle))
 
 /obj/random/meds/medkit
 	name = "Random Medkit"

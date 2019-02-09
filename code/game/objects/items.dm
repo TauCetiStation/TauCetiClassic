@@ -272,24 +272,24 @@
 		return
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
-		if(istype(src, /obj/item/weapon/melee/))
+		if(istype(src, /obj/item/weapon/melee))
 			if(src.w_class < 4)
 				to_chat(user, "\red \The [src] is far too small for you to pick up.")
 				return
-		else if(istype(src, /obj/item/weapon/gun/))
+		else if(istype(src, /obj/item/weapon/gun))
 			if(prob(20))
 				user.say(pick(";RAAAAAAAARGH! WEAPON!", ";HNNNNNNNNNGGGGGGH! I HATE WEAPONS!!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGUUUUUNNNNHH!", ";AAAAAAARRRGH!" ))
 			user.visible_message("\blue [user] crushes \a [src] with hands.", "\blue You crush the [src].")
 			qdel(src)
 			//user << "\red \The [src] is far too small for you to pick up."
 			return
-		else if(istype(src, /obj/item/clothing/))
+		else if(istype(src, /obj/item/clothing))
 			if(prob(20))
 				to_chat(user, "\red [pick("You are not interested in [src].", "This is nothing.", "Humans stuff...", "A cat? A scary cat...",
 				"A Captain? Let's smash his skull! I don't like Captains!",
 				"Awww! Such lovely doggy! BUT I HATE DOGGIES!!", "A woman... A lying woman! I love womans! Fuck womans...")]")
 			return
-		else if(istype(src, /obj/item/weapon/book/))
+		else if(istype(src, /obj/item/weapon/book))
 			to_chat(user, "\red A book! I LOVE BOOKS!!")
 		else if(istype(src, /obj/item/weapon/reagent_containers/food))
 			if(prob(20))
@@ -483,31 +483,31 @@
 			if(slot_wear_mask)
 				if(H.wear_mask)
 					return 0
-				if( !(slot_flags & SLOT_MASK) )
+				if( !(slot_flags & SLOT_FLAGS_MASK) )
 					return 0
 				return 1
 			if(slot_back)
 				if(H.back)
 					return 0
-				if( !(slot_flags & SLOT_BACK) )
+				if( !(slot_flags & SLOT_FLAGS_BACK) )
 					return 0
 				return 1
 			if(slot_wear_suit)
 				if(H.wear_suit)
 					return 0
-				if( !(slot_flags & SLOT_OCLOTHING) )
+				if( !(slot_flags & SLOT_FLAGS_OCLOTHING) )
 					return 0
 				return 1
 			if(slot_gloves)
 				if(H.gloves)
 					return 0
-				if( !(slot_flags & SLOT_GLOVES) )
+				if( !(slot_flags & SLOT_FLAGS_GLOVES) )
 					return 0
 				return 1
 			if(slot_shoes)
 				if(H.shoes)
 					return 0
-				if( !(slot_flags & SLOT_FEET) )
+				if( !(slot_flags & SLOT_FLAGS_FEET) )
 					return 0
 				return 1
 			if(slot_belt)
@@ -517,19 +517,19 @@
 					if(!disable_warning)
 						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
 					return 0
-				if( !(slot_flags & SLOT_BELT) )
+				if( !(slot_flags & SLOT_FLAGS_BELT) )
 					return
 				return 1
 			if(slot_glasses)
 				if(H.glasses)
 					return 0
-				if( !(slot_flags & SLOT_EYES) )
+				if( !(slot_flags & SLOT_FLAGS_EYES) )
 					return 0
 				return 1
 			if(slot_head)
 				if(H.head)
 					return 0
-				if( !(slot_flags & SLOT_HEAD) )
+				if( !(slot_flags & SLOT_FLAGS_HEAD) )
 					return 0
 				return 1
 			if(slot_l_ear)
@@ -537,9 +537,9 @@
 					return 0
 				if( w_class < 2	)
 					return 1
-				if( !(slot_flags & SLOT_EARS) )
+				if( !(slot_flags & SLOT_FLAGS_EARS) )
 					return 0
-				if( (slot_flags & SLOT_TWOEARS) && H.r_ear )
+				if( (slot_flags & SLOT_FLAGS_TWOEARS) && H.r_ear )
 					return 0
 				return 1
 			if(slot_r_ear)
@@ -547,15 +547,15 @@
 					return 0
 				if( w_class < 2 )
 					return 1
-				if( !(slot_flags & SLOT_EARS) )
+				if( !(slot_flags & SLOT_FLAGS_EARS) )
 					return 0
-				if( (slot_flags & SLOT_TWOEARS) && H.l_ear )
+				if( (slot_flags & SLOT_FLAGS_TWOEARS) && H.l_ear )
 					return 0
 				return 1
 			if(slot_w_uniform)
 				if(H.w_uniform)
 					return 0
-				if( !(slot_flags & SLOT_ICLOTHING) )
+				if( !(slot_flags & SLOT_FLAGS_ICLOTHING) )
 					return 0
 				return 1
 			if(slot_wear_id)
@@ -565,7 +565,7 @@
 					if(!disable_warning)
 						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
 					return 0
-				if( !(slot_flags & SLOT_ID) )
+				if( !(slot_flags & SLOT_FLAGS_ID) )
 					return 0
 				return 1
 			if(slot_l_store)
@@ -575,9 +575,9 @@
 					if(!disable_warning)
 						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
 					return 0
-				if(slot_flags & SLOT_DENYPOCKET)
+				if(slot_flags & SLOT_FLAGS_DENYPOCKET)
 					return 0
-				if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
+				if( w_class <= 2 || (slot_flags & SLOT_FLAGS_POCKET) )
 					return 1
 			if(slot_r_store)
 				if(H.r_store)
@@ -586,9 +586,9 @@
 					if(!disable_warning)
 						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
 					return 0
-				if(slot_flags & SLOT_DENYPOCKET)
+				if(slot_flags & SLOT_FLAGS_DENYPOCKET)
 					return 0
-				if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
+				if( w_class <= 2 || (slot_flags & SLOT_FLAGS_POCKET) )
 					return 1
 				return 0
 			if(slot_s_store)
@@ -633,7 +633,7 @@
 					if (!disable_warning)
 						to_chat(H, "<span class='warning'>You already have an accessory of this type attached to your [uniform].</span>")
 					return FALSE
-				if( !(slot_flags & SLOT_TIE) )
+				if( !(slot_flags & SLOT_FLAGS_TIE) )
 					return FALSE
 				return TRUE
 		return 0 //Unsupported slot
@@ -654,13 +654,13 @@
 			if(slot_wear_mask)
 				if(MO.wear_mask)
 					return 0
-				if( !(slot_flags & SLOT_MASK) )
+				if( !(slot_flags & SLOT_FLAGS_MASK) )
 					return 0
 				return 1
 			if(slot_back)
 				if(MO.back)
 					return 0
-				if( !(slot_flags & SLOT_BACK) )
+				if( !(slot_flags & SLOT_FLAGS_BACK) )
 					return 0
 				return 1
 		return 0 //Unsupported slot
@@ -674,7 +674,7 @@
 					return FALSE
 				if(istype(src, /obj/item/clothing/mask/facehugger))
 					return TRUE
-				if( !(slot_flags & SLOT_HEAD) )
+				if( !(slot_flags & SLOT_FLAGS_HEAD) )
 					return FALSE
 				return TRUE
 			if(slot_mouth)
@@ -686,7 +686,7 @@
 					return FALSE
 				if(istype(src, /obj/item/weapon/handcuffs))
 					return TRUE
-				if( !(slot_flags & SLOT_ID) )
+				if( !(slot_flags & SLOT_FLAGS_ID) )
 					return FALSE
 				return TRUE
 			if(slot_back)
@@ -694,7 +694,7 @@
 					return FALSE
 				if(istype(src, /obj/item/clothing/suit/armor/vest))
 					return TRUE
-				if( !(slot_flags & SLOT_BACK) )
+				if( !(slot_flags & SLOT_FLAGS_BACK) )
 					return FALSE
 				return TRUE
 		return FALSE
@@ -745,7 +745,7 @@
 
 /obj/item/proc/get_loc_turf()
 	var/atom/L = loc
-	while(L && !istype(L, /turf/))
+	while(L && !istype(L, /turf))
 		L = L.loc
 	return loc
 

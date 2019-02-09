@@ -481,7 +481,7 @@ var/datum/subsystem/air/SSair
 	E.sleeping = FALSE
 
 	#ifdef ZASDBG
-	if(istype(E, /connection_edge/zone/))
+	if(istype(E, /connection_edge/zone))
 		var/connection_edge/zone/ZE = E
 		log_debug("ZASDBG: Active edge! Areas: [get_area(pick(ZE.A.contents))] / [get_area(pick(ZE.B.contents))]")
 	else

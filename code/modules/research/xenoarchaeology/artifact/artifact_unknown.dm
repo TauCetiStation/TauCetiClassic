@@ -279,7 +279,7 @@ var/list/valid_secondary_effect_types = list(\
 
 /obj/machinery/artifact/attackby(obj/item/weapon/W, mob/living/user)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(istype(W, /obj/item/weapon/reagent_containers/))
+	if(istype(W, /obj/item/weapon/reagent_containers))
 		if(W.reagents.has_reagent("hydrogen", 1) || W.reagents.has_reagent("water", 1))
 			if(my_effect.trigger == TRIGGER_WATER)
 				my_effect.ToggleActivate()
@@ -388,8 +388,8 @@ var/list/valid_secondary_effect_types = list(\
 				secondary_effect.ToggleActivate(0)
 	return
 
-/obj/machinery/artifact/Move()
-	..()
+/obj/machinery/artifact/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	if(my_effect)
 		my_effect.UpdateMove()
 	if(secondary_effect)

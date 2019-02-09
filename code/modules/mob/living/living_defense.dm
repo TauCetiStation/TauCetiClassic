@@ -49,7 +49,7 @@
 
 //this proc handles being hit by a thrown atom
 /mob/living/hitby(atom/movable/AM)//Standardization and logging -Sieve
-	if(istype(AM,/obj/))
+	if(istype(AM,/obj))
 		var/obj/O = AM
 		var/dtype = BRUTE
 		if(istype(O,/obj/item/weapon))

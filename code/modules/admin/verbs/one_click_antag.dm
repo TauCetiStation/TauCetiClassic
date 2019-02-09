@@ -1,4 +1,4 @@
-client/proc/one_click_antag()
+/client/proc/one_click_antag()
 	set name = "Create Antagonist"
 	set desc = "Auto-create an antagonist of your choice."
 	set category = "Admin"
@@ -265,10 +265,10 @@ client/proc/one_click_antag()
 		var/nuke_code = "[rand(10000, 99999)]"
 
 		if(nuke_spawn)
-			var/obj/item/weapon/paper/P = new
+			var/obj/item/weapon/paper/P = new(nuke_spawn.loc)
 			P.info = "Sadly, the Syndicate could not get you a nuclear bomb.  We have, however, acquired the arming code for the station's onboard nuke.  The nuclear authorization code is: <b>[nuke_code]</b>"
 			P.name = "nuclear bomb code and instructions"
-			P.loc = nuke_spawn.loc
+			P.update_icon()
 
 		if(closet_spawn)
 			new /obj/structure/closet/syndicate/nuclear(closet_spawn.loc)
@@ -572,7 +572,7 @@ client/proc/one_click_antag()
 
 	return new_vox
 
-datum/admins/proc/makeAbductorTeam()
+/datum/admins/proc/makeAbductorTeam()
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
 

@@ -9,7 +9,7 @@
 							/obj/item/stack/cable_coil = 2,
 							/obj/item/weapon/stock_parts/capacitor = 1)
 
-datum/design/pacman/scrap
+/datum/design/pacman/scrap
 	name = "Scrapman Circuit Board"
 	desc = "Scrapman Generator Board (PACMAN-type Generator)"
 	id = "scrapman"
@@ -30,4 +30,4 @@ datum/design/pacman/scrap
 	board_path = "/obj/item/weapon/circuitboard/pacman/scrap"
 
 /obj/machinery/power/port_gen/pacman/scrap/overheat()
-		explosion(src.loc, 1, 5, 2, -1)
+	explosion(src.loc, 1, 5, 2, -1)

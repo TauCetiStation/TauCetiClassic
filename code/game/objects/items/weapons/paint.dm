@@ -21,11 +21,9 @@ var/global/list/cached_icons = list()
 	if(!proximity)
 		return
 	if(istype(target) && reagents.total_volume > 5)
-		for(var/mob/O in viewers(user))
-			O.show_message("\red \The [target] has been splashed with something by [user]!", 1)
-		spawn(5)
-			reagents.reaction(target, TOUCH)
-			reagents.remove_any(5)
+		visible_message("<span class='notice'>[target] has been splashed by [user] with [src].</span>")
+		reagents.reaction(target, TOUCH)
+		reagents.remove_any(5)
 	else
 		return ..()
 
@@ -41,6 +39,9 @@ var/global/list/cached_icons = list()
 	var/mixedcolor = mix_color_from_reagents(reagents.reagent_list)
 	for(var/datum/reagent/paint/P in reagents.reagent_list)
 		P.color = mixedcolor
+		P.data["r_color"] = hex2num(copytext(mixedcolor, 2, 4))
+		P.data["g_color"] = hex2num(copytext(mixedcolor, 4, 6))
+		P.data["b_color"] = hex2num(copytext(mixedcolor, 6, 8))
 
 /obj/item/weapon/reagent_containers/glass/paint/red
 	icon_state = "paint_red"
@@ -125,28 +126,28 @@ var/global/list/cached_icons = list()
 	name = "any color"
 	icon_state = "paint_neutral"
 
-	attack_self(mob/user)
-		var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "black", "white")
-		if ((user.get_active_hand() != src || user.stat || user.restrained()))
-			return
-		switch(t1)
-			if("red")
-				color = "FF0000"
-			if("blue")
-				color = "0000FF"
-			if("green")
-				color = "00FF00"
-			if("yellow")
-				color = "FFFF00"
-			if("violet")
-				color = "FF00FF"
-			if("white")
-				color = "FFFFFF"
-			if("black")
-				color = "333333"
-		icon_state = "paint_[t1]"
-		add_fingerprint(user)
+/obj/item/weapon/paint/anycolor/attack_self(mob/user)
+	var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "black", "white")
+	if ((user.get_active_hand() != src || user.stat || user.restrained()))
 		return
+	switch(t1)
+		if("red")
+			color = "FF0000"
+		if("blue")
+			color = "0000FF"
+		if("green")
+			color = "00FF00"
+		if("yellow")
+			color = "FFFF00"
+		if("violet")
+			color = "FF00FF"
+		if("white")
+			color = "FFFFFF"
+		if("black")
+			color = "333333"
+	icon_state = "paint_[t1]"
+	add_fingerprint(user)
+	return
 
 
 /obj/item/weapon/paint/afterattack(turf/target, mob/user, proximity)
@@ -169,8 +170,8 @@ var/global/list/cached_icons = list()
 	name = "paint remover"
 	icon_state = "paint_neutral"
 
-	afterattack(turf/target, mob/user)
-		if(istype(target) && target.icon != initial(target.icon))
-			target.icon = initial(target.icon)
-		return
+/obj/item/weapon/paint/paint_remover/afterattack(turf/target, mob/user)
+	if(istype(target) && target.icon != initial(target.icon))
+		target.icon = initial(target.icon)
+	return
 */

@@ -151,7 +151,7 @@
 
 	if(is_bruised())
 		if(prob(2))
-			owner.emote("pain", 2, "coughs up blood!")
+			owner.emote("gasp", 2, "coughs up blood!")
 			owner.drip(10)
 		if(prob(4))
 			owner.emote("gasp", 2, "gasps for air!")

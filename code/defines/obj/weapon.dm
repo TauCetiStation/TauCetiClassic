@@ -89,9 +89,9 @@
 	desc = "A trap used to catch bears and other legged creatures."
 	var/armed = 0
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), "<span class='danger'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>")
-		return (BRUTELOSS)
+/obj/item/weapon/legcuffs/beartrap/suicide_act(mob/user)
+	to_chat(viewers(user), "<span class='danger'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>")
+	return (BRUTELOSS)
 
 /obj/item/weapon/legcuffs/beartrap/attack_self(mob/user)
 	..()
@@ -198,10 +198,10 @@
 	g_amt = 3750
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), pick("<span class='danger'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
-							"<span class='danger'>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</span>"))
-		return (BRUTELOSS)
+/obj/item/weapon/shard/suicide_act(mob/user)
+	to_chat(viewers(user), pick("<span class='danger'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='danger'>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</span>"))
+	return (BRUTELOSS)
 
 /obj/item/weapon/shard/attack(mob/living/carbon/M, mob/living/carbon/user)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
@@ -274,7 +274,7 @@
 	var/traitor_frequency = 0.0
 	var/obj/item/device/radio/origradio = null
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	item_state = "radio"
 	throwforce = 5
 	w_class = 2.0
@@ -377,9 +377,9 @@
 	m_amt = 40
 	attack_verb = list("whipped", "lashed", "disciplined", "tickled")
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
-		return (OXYLOSS)
+/obj/item/weapon/wire/suicide_act(mob/user)
+	to_chat(viewers(user), "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	return (OXYLOSS)
 
 /obj/item/weapon/module
 	icon = 'icons/obj/module.dmi'
@@ -465,7 +465,7 @@
 	throw_range = 3
 	w_class = 4.0
 	flags = NOSHIELD
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 

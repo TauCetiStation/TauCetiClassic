@@ -4,7 +4,7 @@
 	item_state = "buildpipe"
 	icon_state = "blank"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	var/part = null
 	var/sabotaged = 0 //Emagging limbs can have repercussions when installed as prosthetics.
 

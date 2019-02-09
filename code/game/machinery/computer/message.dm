@@ -37,7 +37,7 @@
 /obj/machinery/computer/message_monitor/attackby(obj/item/weapon/O, mob/living/user)
 	if(..())
 		return
-	if(istype(O,/obj/item/weapon/card/emag/))
+	if(istype(O,/obj/item/weapon/card/emag))
 		// Will create sparks and print out the console's password. You will then have to wait a while for the console to be back online.
 		// It'll take more time if there's more characters in the password..
 		if(!emag)
@@ -47,10 +47,10 @@
 				screen = 2
 				spark_system.set_up(5, 0, src)
 				src.spark_system.start()
-				var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey
-				MK.loc = src.loc
+				var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey(loc)
 				// Will help make emagging the console not so easy to get away with.
 				MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
+				MK.update_icon()
 				spawn(100*length(src.linkedServer.decryptkey)) UnmagConsole()
 				message = rebootmsg
 			else
