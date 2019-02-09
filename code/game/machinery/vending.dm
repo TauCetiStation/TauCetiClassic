@@ -1120,7 +1120,7 @@
 	product_ads = "Pray now!;Atheists are heretic;Everything 100% Holy;Thirsty? Wanna pray? Why without candles?"
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 10, /obj/item/weapon/storage/fancy/candle_box = 25, /obj/item/weapon/storage/fancy/candle_box/red = 25,/obj/item/clothing/accessory/holy = 5)
 	contraband = list(/obj/item/weapon/nullrod = 2)
-	prices = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 30, /obj/item/weapon/storage/fancy/candle_box = 50, /obj/item/weapon/storage/fancy/candle_box/red = 50, /obj/item/weapon/nullrod = 100,/obj/item/clothing/accessory/holy = 250)
+	prices = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 30, /obj/item/weapon/storage/fancy/candle_box = 50, /obj/item/weapon/storage/fancy/candle_box/red = 50, /obj/item/weapon/nullrod = 100, /obj/item/clothing/accessory/holy = 250)
 
 /obj/machinery/vending/eva
 	name = "Hardsuit Kits"
