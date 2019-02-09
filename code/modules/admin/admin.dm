@@ -3,11 +3,11 @@ var/global/BSACooldown = 0
 
 
 ////////////////////////////////
-/proc/message_admins(msg)
+proc/message_admins(msg, reg_flag = R_ADMIN)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
 	log_adminwarn(msg)
 	for(var/client/C in admins)
-		if(C.holder.rights & R_ADMIN)
+		if(C.holder.rights & reg_flag)
 			to_chat(C, msg)
 
 /proc/msg_admin_attack(text) //Toggleable Attack Messages
