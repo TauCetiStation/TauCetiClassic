@@ -206,7 +206,7 @@
 		START_PROCESSING(SSmachine, src)
 
 /obj/machinery/dominator/attack_alien(mob/living/user)
-	user.do_attack_animation(src)
+	user.do_attack_animation(src, ATTACK_EFFECT_CLAW)
 	user.SetNextMove(CLICK_CD_MELEE)
 	playsound(src, 'sound/effects/bang.ogg', 50, 1)
 	user.visible_message("<span class='danger'>[user] smashes against [src] with its claws.</span>",\

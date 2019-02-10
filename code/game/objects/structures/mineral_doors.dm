@@ -322,7 +322,7 @@
 
 /obj/structure/mineral_door/resin/attack_hand(mob/user)
 	if(isalienadult(user) && user.a_intent == "hurt")
-		user.do_attack_animation(src)
+		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 		user.SetNextMove(CLICK_CD_MELEE)
 		health -= rand(40, 60)
 		if(health <= 0)

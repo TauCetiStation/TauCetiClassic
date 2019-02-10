@@ -577,7 +577,7 @@ var/list/ai_verbs_default = list(
 	return
 
 /mob/living/silicon/ai/attack_animal(mob/living/simple_animal/M)
-	M.do_attack_animation(src)
+	M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else

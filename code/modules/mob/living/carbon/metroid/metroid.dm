@@ -301,6 +301,7 @@
 		else
 			damage = rand(1, 3)
 
+		M.do_attack_animation(src, ATTACK_EFFECT_SLIME)
 		adjustBruteLoss(damage)
 
 
@@ -395,7 +396,7 @@
 			return
 
 		else
-			M.do_attack_animation(src)
+			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			if(prob(30))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))

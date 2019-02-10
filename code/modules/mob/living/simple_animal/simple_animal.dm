@@ -253,7 +253,8 @@
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
 		if("hurt", "disarm")
-			M.do_attack_animation(src)
+			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+			playsound(loc, "punch", 25, 1, -1)
 			adjustBruteLoss(harm_intent_damage)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
@@ -329,6 +330,7 @@
 	else
 		damage = rand(5, 35)
 
+	M.do_attack_animation(src, ATTACK_EFFECT_SLIME)
 	adjustBruteLoss(damage)
 
 
@@ -450,3 +452,12 @@
 	message = capitalize(trim_left(message))
 
 	..(message, null, verb, sanitize = 0)
+
+/mob/living/simple_animal/do_attack_animation(atom/A, visual_effect_icon, used_item, no_effect)
+	if(!no_effect && !visual_effect_icon && melee_damage_upper)
+		if(melee_damage_upper < 10)
+			visual_effect_icon = ATTACK_EFFECT_PUNCH
+		else
+			visual_effect_icon = ATTACK_EFFECT_SMASH
+	..()
+

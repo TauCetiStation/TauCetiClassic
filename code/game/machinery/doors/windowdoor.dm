@@ -248,6 +248,7 @@
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
 	attack_generic(user, 25)
+	user.do_attack_animation(src, ATTACK_EFFECT_SLIME)
 
 /obj/machinery/door/window/attackby(obj/item/weapon/I, mob/user)
 

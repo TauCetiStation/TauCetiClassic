@@ -423,6 +423,13 @@
 	if (item)
 		src.visible_message("<span class='rose'>[src] has thrown [item].</span>")
 
+		if(istype(item, /obj/item))
+			var/obj/item/O = item
+			if(O.w_class >= ITEM_SIZE_NORMAL)
+				playsound(loc, 'sound/weapons/punchmiss.ogg', 50, 1, -1)
+
+		do_attack_animation(target, no_effect = 1)
+
 		newtonian_move(get_dir(target, src))
 
 		item.throw_at(target, item.throw_range, item.throw_speed, src)

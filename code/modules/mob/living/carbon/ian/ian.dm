@@ -379,7 +379,7 @@
 				return
 			un_equip_or_action(M, "CPR")
 		if ("hurt")
-			M.do_attack_animation(src)
+			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			if(is_armored(M, 35))
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				return
@@ -430,7 +430,7 @@
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			visible_message("<span class='warning'>[M] has grabbed [src] passively!</span>")
 		if("disarm")
-			M.do_attack_animation(src)
+			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
 			msg_admin_attack("[key_name(M)] disarmed [src.name] ([src.ckey])")
@@ -502,6 +502,7 @@
 		else
 			damage = rand(5, 35)
 
+		M.do_attack_animation(src, ATTACK_EFFECT_SLIME)
 		adjustBruteLoss(damage)
 
 		if(M.powerlevel > 0)
@@ -651,7 +652,7 @@
 			updatehealth()
 
 /mob/living/carbon/ian/attack_animal(mob/living/simple_animal/M)
-	M.do_attack_animation(src)
+	M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	if(!M.melee_damage_upper)
 		M.emote("[M.friendly] [src]")
 	else

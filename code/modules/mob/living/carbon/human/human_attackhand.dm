@@ -135,7 +135,7 @@
 			return 1
 
 		if("hurt")
-			M.do_attack_animation(src)
+			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			var/datum/unarmed_attack/attack = M.species.unarmed
 
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[pick(attack.attack_verb)]ed [src.name] ([src.ckey])</font>")
@@ -169,7 +169,7 @@
 
 
 		if("disarm")
-			M.do_attack_animation(src)
+			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
 

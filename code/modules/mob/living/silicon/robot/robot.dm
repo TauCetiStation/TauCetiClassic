@@ -811,7 +811,7 @@
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
 		if ("hurt")
-			M.do_attack_animation(src)
+			M.do_attack_animation(src, ATTACK_EFFECT_CLAW)
 			var/damage = rand(10, 20)
 			if (prob(90))
 
@@ -830,7 +830,7 @@
 
 		if ("disarm")
 			if(!(lying))
-				M.do_attack_animation(src)
+				M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 				if (rand(1,100) <= 85)
 					Stun(7)
 					step(src,get_dir(M,src))
@@ -868,6 +868,7 @@
 		else
 			damage = rand(5, 35)
 
+		M.do_attack_animation(src, ATTACK_EFFECT_SLIME)
 		damage = round(damage / 2) // borgs recieve half damage
 		adjustBruteLoss(damage)
 
@@ -907,7 +908,7 @@
 	return
 
 /mob/living/silicon/robot/attack_animal(mob/living/simple_animal/M)
-	M.do_attack_animation(src)
+	M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else

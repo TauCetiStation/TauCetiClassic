@@ -1533,7 +1533,7 @@ It is possible to destroy the net by the occupant or someone else.
 	return attack_hand()
 
 /obj/effect/energy_net/attack_alien(mob/user)
-	user.do_attack_animation(src)
+	user.do_attack_animation(src, ATTACK_EFFECT_CLAW)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if (islarva(user) || isfacehugger(user))
 		return

@@ -17,7 +17,7 @@
 
 /obj/structure/pbag/attack_hand(mob/user)
 	if(!anchored) return
-	user.do_attack_animation(src)
+	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	user.SetNextMove(CLICK_CD_MELEE)
 	hit(user)
 

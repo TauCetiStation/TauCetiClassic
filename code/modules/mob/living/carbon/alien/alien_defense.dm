@@ -57,14 +57,17 @@ This is what happens, when we attack aliens.
 
 		if ("hurt")
 			var/damage = rand(1, 9)
-			if (prob(90))
-				if (HULK in M.mutations)//HULK SMASH
+			if(prob(90))
+				if(HULK in M.mutations) // HULK SMASH
 					damage += 14
+					do_attack_animation(src, ATTACK_EFFECT_SMASH)
 					spawn(0)
 						Weaken(damage) // Why can a hulk knock an alien out but not knock out a human? Damage is robust enough.
 						step_away(src,M,15)
 						sleep(3)
 						step_away(src,M,15)
+				else
+					do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 				playsound(loc, "punch", 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
@@ -83,16 +86,18 @@ This is what happens, when we attack aliens.
 						O.show_message(text("\red <B>[] has attempted to punch []!</B>", M, src), 1)
 
 		if ("disarm")
-			if (!lying)
-				if (prob(5))//Very small chance to push an alien down.
+			if(!lying)
+				if(prob(5))//Very small chance to push an alien down.
 					Weaken(2)
+					do_attack_animation(src, ATTACK_EFFECT_DISARM)
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] has pushed down []!</B>", M, src), 1)
 				else
-					if (prob(50))
+					if(prob(50))
 						drop_item()
+						do_attack_animation(src, ATTACK_EFFECT_DISARM)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 						for(var/mob/O in viewers(src, null))
 							if ((O.client && !( O.blinded )))
@@ -124,6 +129,7 @@ This is what happens, when we attack aliens.
 			if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
 				return
 			if (health > 0)
+				do_attack_animation(src, ATTACK_EFFECT_BITE)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
@@ -140,6 +146,7 @@ This is what happens, when we attack aliens.
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
+		do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
@@ -201,6 +208,7 @@ This is what happens, when we attack aliens.
 		else
 			damage = rand(5, 35)
 
+		M.do_attack_animation(src, ATTACK_EFFECT_SLIME)
 		adjustBruteLoss(damage)
 
 		if(M.powerlevel > 0)

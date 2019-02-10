@@ -476,12 +476,12 @@
 	flicker(1)
 
 // Aliens smash the bulb but do not get electrocuted./N
-/obj/machinery/light/attack_alien(mob/living/carbon/alien/humanoid/user)//So larva don't go breaking light bulbs.
+/obj/machinery/light/attack_alien(mob/living/carbon/alien/humanoid/user) // So larva don't go breaking light bulbs.
 	if(status == LIGHT_EMPTY||status == LIGHT_BROKEN)
 		to_chat(user, "\green That object is useless to you.")
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
-		user.do_attack_animation(src)
+		user.do_attack_animation(src, ATTACK_EFFECT_CLAW)
 		user.SetNextMove(CLICK_CD_MELEE)
 		for(var/mob/M in viewers(src))
 			M.show_message("\red [user.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)

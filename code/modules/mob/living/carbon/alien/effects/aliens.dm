@@ -127,7 +127,7 @@
 	return
 
 /obj/effect/alien/resin/attack_hand(mob/user)
-	user.do_attack_animation(src)
+	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if (HULK in user.mutations)
 		to_chat(user, "\blue You easily destroy the [name].")
@@ -135,9 +135,9 @@
 			O.show_message("\red [user] destroys the [name]!", 1)
 		health = 0
 	else
-		to_chat(user, "\blue You claw at the [name].")
+		to_chat(user, "\blue You smash the [name].")
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [user] claws at the [name]!", 1)
+			O.show_message("\red [user] smashes the [name]!", 1)
 		health -= rand(5,10)
 	healthcheck()
 	return
@@ -146,7 +146,7 @@
 	return attack_hand()
 
 /obj/effect/alien/resin/attack_alien(mob/user)
-	user.do_attack_animation(src)
+	user.do_attack_animation(src, ATTACK_EFFECT_CLAW)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if (islarva(usr) || isfacehugger(usr))//Safety check for larva. /N
 		return

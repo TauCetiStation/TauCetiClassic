@@ -1021,61 +1021,11 @@
 /mob/living/proc/get_standard_pixel_y_offset(lying_current = 0)
 	return initial(pixel_y)
 
-//Attack animation port below
-/atom/movable/proc/do_attack_animation(atom/A, end_pixel_y)
-	var/pixel_x_diff = 0
-	var/pixel_y_diff = 0
-	var/final_pixel_y = initial(pixel_y)
-	if(end_pixel_y)
-		final_pixel_y = end_pixel_y
-	var/direction = get_dir(src, A)
-	switch(direction)
-		if(NORTH)
-			pixel_y_diff = 8
-		if(SOUTH)
-			pixel_y_diff = -8
-		if(EAST)
-			pixel_x_diff = 8
-		if(WEST)
-			pixel_x_diff = -8
-		if(NORTHEAST)
-			pixel_x_diff = 8
-			pixel_y_diff = 8
-		if(NORTHWEST)
-			pixel_x_diff = -8
-			pixel_y_diff = 8
-		if(SOUTHEAST)
-			pixel_x_diff = 8
-			pixel_y_diff = -8
-		if(SOUTHWEST)
-			pixel_x_diff = -8
-			pixel_y_diff = -8
-
-	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
-
-
-/mob/living/do_attack_animation(atom/A)
-	var/final_pixel_y = get_standard_pixel_y_offset(lying_current)
-	..(A, final_pixel_y)
-
-	//Show an image of the wielded weapon over the person who got dunked.
-	var/image/I
-	if(hand)
-		if(l_hand)
-			I = image(l_hand.icon,A,l_hand.icon_state,A.layer+1)
-	else
-		if(r_hand)
-			I = image(r_hand.icon,A,r_hand.icon_state,A.layer+1)
-	if(I)
-		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-		var/list/viewing = list()
-		for(var/mob/M in viewers(A))
-			if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
-				viewing |= M.client
-		flick_overlay(I,viewing,5)
-		I.pixel_z = 16 //lift it up...
-		animate(I, pixel_z = 0, alpha = 125, time = 3) //smash it down into them!
+/mob/living/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
+	if(!used_item)
+		used_item = get_active_hand()
+	..()
+	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
 
 /mob/living/Stat()
 	..()

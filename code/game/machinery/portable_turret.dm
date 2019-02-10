@@ -685,7 +685,7 @@ var/list/turret_icons
 
 
 /obj/machinery/porta_turret/attack_alien(mob/living/carbon/alien/humanoid/M)
-	M.do_attack_animation(src)
+	M.do_attack_animation(src, ATTACK_EFFECT_CLAW)
 	M.SetNextMove(CLICK_CD_MELEE)
 	if(!(stat & BROKEN))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)

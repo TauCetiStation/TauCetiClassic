@@ -14,7 +14,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.a_intent == "hurt")
-			H.do_attack_animation(src)
+			H.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			if(!H.gloves)
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
 				BP.take_damage(rand(0, 4))
@@ -60,7 +60,7 @@
 
 
 /obj/structure/mirror/attack_alien(mob/user)
-	user.do_attack_animation(src)
+	user.do_attack_animation(src, ATTACK_EFFECT_CLAW)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(islarva(user) || isfacehugger(user))
 		return
@@ -90,7 +90,7 @@
 	if(!isslimeadult(user))
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
+	user.do_attack_animation(src, ATTACK_EFFECT_SLIME)
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return

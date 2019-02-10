@@ -240,6 +240,7 @@
 
 /obj/structure/table/attack_paw(mob/user)
 	if(HULK in user.mutations)
+		user.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		visible_message("<span class='danger'>[user] smashes the [src] apart!</span>")
@@ -247,7 +248,7 @@
 
 
 /obj/structure/table/attack_alien(mob/user)
-	user.do_attack_animation(src)
+	user.do_attack_animation(src, ATTACK_EFFECT_CLAW)
 	user.SetNextMove(CLICK_CD_MELEE)
 	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
 	if(istype(src, /obj/structure/table/reinforced))
@@ -805,7 +806,7 @@
 /obj/structure/table/attack_hand(mob/user)
 	if(HULK in user.mutations)
 		user.SetNextMove(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
+		user.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		destroy()
@@ -813,13 +814,13 @@
 /obj/structure/rack/attack_paw(mob/user)
 	if(HULK in user.mutations)
 		user.SetNextMove(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
+		user.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		destroy()
 
 /obj/structure/rack/attack_alien(mob/user)
-	user.do_attack_animation(src)
+	user.do_attack_animation(src, ATTACK_EFFECT_CLAW)
 	user.SetNextMove(CLICK_CD_MELEE)
 	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
 	destroy()
@@ -828,7 +829,7 @@
 	if(user.environment_smash)
 		..()
 		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
-		user.do_attack_animation(src)
+		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		destroy()
 

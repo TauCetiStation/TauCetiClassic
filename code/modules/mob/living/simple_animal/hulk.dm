@@ -209,7 +209,7 @@
 		health -= P.agony / 10
 
 /mob/living/simple_animal/hulk/proc/attack_hulk(obj/machinery/door/D)
-	do_attack_animation(D)
+	do_attack_animation(D, ATTACK_EFFECT_SMASH)
 	SetNextMove(CLICK_CD_MELEE)
 
 	if(istype(D,/obj/machinery/door/airlock))

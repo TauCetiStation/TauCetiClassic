@@ -246,6 +246,7 @@
 			var/mob/living/simple_animal/hulk/Hulk = M
 			playsound(Hulk, 'sound/weapons/tablehit1.ogg', 50, 1)
 			Hulk.health -= rand(4,10)
+			M.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 		playsound(M.loc, 'sound/effects/grillehit.ogg', 50, 1)
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash == 3)
@@ -267,6 +268,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations) //#Z2 No more chances, just randomized damage and hurt intent
 		if(user.a_intent == "hurt")
+			user.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 			playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
 			to_chat(user, text("\blue You punch the wall."))
 			take_damage(rand(15, 50))

@@ -188,7 +188,7 @@
 		help_shake_act(M)
 	else
 		if ((M.a_intent == "hurt" && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
-			M.do_attack_animation(src)
+			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			if ((prob(75) && health > 0))
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
@@ -225,7 +225,7 @@
 					s.set_up(3, 1, src)
 					s.start()
 
-					M.do_attack_animation(src)
+					M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 					for(var/mob/O in viewers(src, null))
 						if (O.client)
 							O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall", 2)
@@ -239,7 +239,7 @@
 		get_scooped(M)
 	else
 		if (M.a_intent == "hurt")
-			M.do_attack_animation(src)
+			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			if ((prob(75) && health > 0))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
@@ -403,6 +403,7 @@
 		else
 			damage = rand(5, 35)
 
+		M.do_attack_animation(src, ATTACK_EFFECT_SLIME)
 		adjustBruteLoss(damage)
 
 		if(M.powerlevel > 0)
