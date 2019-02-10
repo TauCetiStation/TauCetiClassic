@@ -654,13 +654,13 @@
 /datum/reagent/paint/reaction_turf(turf/T, volume)
 	if(!istype(T) || istype(T, /turf/space))
 		return
-	if(color_weight < 15)
+	if(color_weight < 15 || volume < 5)
 		return
 	var/ind = "[initial(T.icon)][color]"
 	if(!cached_icons[ind])
 		var/icon/overlay = new/icon(initial(T.icon))
 		overlay.Blend(color, ICON_MULTIPLY)
-		overlay.SetIntensity(volume * color_weight * 0.1)
+		overlay.SetIntensity(color_weight * 0.1)
 		T.icon = overlay
 		cached_icons[ind] = T.icon
 	else

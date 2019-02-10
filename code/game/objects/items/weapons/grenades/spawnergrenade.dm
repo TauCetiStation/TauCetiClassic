@@ -9,23 +9,22 @@
 	var/spawner_type = null // must be an object path
 	var/deliveryamt = 1 // amount of type to deliver
 
-	prime()
+/obj/item/weapon/grenade/spawnergrenade/prime()
+	if(spawner_type && deliveryamt)
+		var/turf/T = get_turf(src)
+		playsound(T, 'sound/effects/phasein.ogg', 100, 1)
 
-		if(spawner_type && deliveryamt)
-			var/turf/T = get_turf(src)
-			playsound(T, 'sound/effects/phasein.ogg', 100, 1)
+		for(var/i=1, i<=deliveryamt, i++)
+			var/atom/movable/x = new spawner_type
+			x.loc = T
+			if(prob(50))
+				for(var/j = 1, j <= rand(1, 3), j++)
+					step(x, pick(NORTH,SOUTH,EAST,WEST))
 
-			for(var/i=1, i<=deliveryamt, i++)
-				var/atom/movable/x = new spawner_type
-				x.loc = T
-				if(prob(50))
-					for(var/j = 1, j <= rand(1, 3), j++)
-						step(x, pick(NORTH,SOUTH,EAST,WEST))
+			// Spawn some enemies
 
-				// Spawn some enemies
-
-		qdel(src)
-		return
+	qdel(src)
+	return
 
 /obj/item/weapon/grenade/spawnergrenade/manhacks
 	name = "manhack delivery grenade"

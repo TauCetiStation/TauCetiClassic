@@ -13,14 +13,14 @@
 	if(germ_level < GERM_LEVEL_AMBIENT && prob(80))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
 		germ_level++
 
-/mob/living/carbon/Move(NewLoc, direct)
+/mob/living/carbon/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
 	if(.)
-		handle_phantom_move(NewLoc, direct)
+		handle_phantom_move(NewLoc, Dir)
 		if(nutrition && stat != DEAD)
-			nutrition -= metabolism_factor/100
+			nutrition -= get_metabolism_factor() / 10
 			if(m_intent == "run")
-				nutrition -= metabolism_factor/100
+				nutrition -= get_metabolism_factor() / 10
 		if((FAT in mutations) && m_intent == "run" && bodytemperature <= 360)
 			bodytemperature += 2
 
@@ -734,3 +734,8 @@
 
 /mob/living/carbon/get_nutrition()
 	return nutrition + (reagents.get_reagent("nutriment") + reagents.get_reagent("plantmatter") + reagents.get_reagent("protein") + reagents.get_reagent("dairy")) * 2.5 // We multiply by this "magic" number, because all of these are equal to 2.5 nutrition.
+
+/mob/living/carbon/get_metabolism_factor()
+	. = metabolism_factor / 10 // I do not know why before it was divided by 10 but I decided to preserve it until future reworking. ~Luduk
+	if(has_trait(TRAIT_STRESS_EATER))
+		. *= getHalLoss() / 100 // 100 is our Crit-maximum.

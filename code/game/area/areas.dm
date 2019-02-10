@@ -11,7 +11,7 @@
 	layer = 10
 	mouse_opacity = 0
 
-	var/global/global_uid = 0
+	var/static/global_uid = 0
 	var/uid
 
 	var/parallax_movedir = 0

@@ -361,6 +361,7 @@ What a mess.*/
 				else
 					P.info += "<B>Security Record Lost!</B><BR>"
 				P.info += "</TT>"
+				P.update_icon()
 				printing = null
 				updateUsrDialog()
 //RECORD DELETE

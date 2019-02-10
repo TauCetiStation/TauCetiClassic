@@ -33,6 +33,7 @@ var/datum/subsystem/quirks/SSquirks
 	quirk_blacklist_species = list(
 		"Fatness" = list(DIONA, IPC),
 		"Child of Nature" = list(HUMAN, SKRELL, TAJARAN, UNATHI, IPC)
+		"Stress Eater" = list(DIONA, IPC)
 		)
 
 	..()

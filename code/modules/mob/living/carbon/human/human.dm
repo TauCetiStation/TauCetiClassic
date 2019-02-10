@@ -80,6 +80,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	spell_list += new /obj/effect/proc_holder/spell/targeted/collective_mind
 	spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor
 
+/mob/living/carbon/human/slime/atom_init(mapload)
+	. = ..(mapload, SLIME)
+
 /mob/living/carbon/human/atom_init(mapload, new_species)
 
 	dna = new
@@ -1369,7 +1372,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	if(species)
 		if(species.name == new_species)
-			return
+			return FALSE
 
 		if(species.language)
 			remove_language(species.language)
@@ -1406,9 +1409,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	full_prosthetic = null
 
 	if(species)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 // Unlike set_species(), this proc simply changes owner's specie and thats it.
 /mob/living/carbon/human/proc/set_species_soft(new_species)

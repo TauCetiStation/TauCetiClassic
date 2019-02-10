@@ -43,6 +43,7 @@
 				<hr>
 				<u>Additional Notes:</u>&nbsp;
 "}
+			P.update_icon()
 			dish.info = r
 			dish.analysed = 1
 			dish.loc = src.loc

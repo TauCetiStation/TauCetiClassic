@@ -282,7 +282,7 @@
 		M.reagents.metabolize(M) //this works even without a liver; it's intentional since the virus is metabolizing by itself
 	M.overeatduration = max(M.overeatduration - 2, 0)
 	var/lost_nutrition = 2
-	M.nutrition = max(M.nutrition - (lost_nutrition * M.metabolism_factor), 0) //Hunger depletes at 3x the normal speed
+	M.nutrition = max(M.nutrition - (lost_nutrition * M.get_metabolism_factor()), 0) //Hunger depletes at 2x the normal speed
 	if(prob(2))
 		to_chat(M, "<span class='notice'>You feel an odd gurgle in your stomach, as if it was working much faster than normal.</span>")
 	return 1
@@ -534,8 +534,9 @@
 	name = "Dead Ear Syndrome"
 	stage = 4
 	level = 7
-	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-		mob.ear_deaf += 20*/
+
+/datum/disease2/effect/deaf/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+	mob.ear_deaf += 20*/
 
 /datum/disease2/effect/monkey
 	name = "Monkism Syndrome"
@@ -660,22 +661,23 @@
 	name = "Longevity Syndrome"
 	stage = 4
 	level = 7
-	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-		if(istype(mob, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = mob
-			for (var/obj/item/organ/external/BP in H.bodyparts)
-				if (BP.status & ORGAN_BROKEN && prob(30))
-					BP.status ^= ORGAN_BROKEN
-		var/heal_amt = -5*holder.multiplier
-		mob.apply_damages(heal_amt,heal_amt,heal_amt,heal_amt)
 
-	deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-		if(istype(mob, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = mob
-			to_chat(H, "<span class='notice'>You suddenly feel hurt and old...</span>")
-			H.age += 8
-		var/backlash_amt = 5*holder.multiplier
-		mob.apply_damages(backlash_amt,backlash_amt,backlash_amt,backlash_amt)*/
+/datum/disease2/effect/immortal/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+	if(istype(mob, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = mob
+		for (var/obj/item/organ/external/BP in H.bodyparts)
+			if (BP.status & ORGAN_BROKEN && prob(30))
+				BP.status ^= ORGAN_BROKEN
+	var/heal_amt = -5*holder.multiplier
+	mob.apply_damages(heal_amt,heal_amt,heal_amt,heal_amt)
+
+/datum/disease2/effect/immortal/deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+	if(istype(mob, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = mob
+		to_chat(H, "<span class='notice'>You suddenly feel hurt and old...</span>")
+		H.age += 8
+	var/backlash_amt = 5*holder.multiplier
+	mob.apply_damages(backlash_amt,backlash_amt,backlash_amt,backlash_amt)*/
 
 ////////////////////////STAGE 3/////////////////////////////////
 
@@ -729,8 +731,9 @@
 	stage = 3
 	level = 6
 	maxm = 3
-	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-		shake_camera(mob,5*holder.multiplier)*/
+
+/datum/disease2/effect/shakey/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+	shake_camera(mob,5*holder.multiplier)*/
 
 /datum/disease2/effect/telepathic
 	name = "Telepathy Syndrome"
@@ -870,7 +873,8 @@
 	name = "DNA Degradation"
 	stage = 3
 	level = 3
-	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+
+/datum/disease2/effect/mutation/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 		mob.apply_damage(2, CLONE)*/
 
 
@@ -878,8 +882,9 @@
 	name = "Groaning Syndrome"
 	stage = 3
 	level = 2
-	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-		mob.say("*groan")*/
+
+/datum/disease2/effect/groan/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+	mob.say("*groan")*/
 ////////////////////////STAGE 2/////////////////////////////////
 
 /datum/disease2/effect/scream
@@ -1180,8 +1185,9 @@
 	name = "Flemmingtons"
 	stage = 1
 	level = 1
-	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-		to_chat(mob, "\red Mucous runs down the back of your throat.")*/
+
+/datum/disease2/effect/gunck/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+	to_chat(mob, "\red Mucous runs down the back of your throat.")*/
 
 /datum/disease2/effect/drool
 	name = "Drooling"
