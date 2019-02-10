@@ -1,11 +1,11 @@
-/obj/item/weapon/grenade/flashbang
+/obj/item/weapon/grenade/flashbang/
 	name = "flashbang"
 	icon_state = "flashbang"
 	item_state = "flashbang"
 	origin_tech = "materials=2;combat=1"
 	var/banglet = FALSE
 
-	prime()
+	/obj/item/weapon/grenade/flashbang/prime()
 		..()
 		for(var/obj/structure/closet/L in hear(7, get_turf(src)))
 			if(locate(/mob/living/carbon/, L))
@@ -101,7 +101,7 @@
 				to_chat(M, "\red Your ears start to ring!")
 		M.update_icons()
 
-/obj/effect/effect/smoke/flashbang
+/obj/effect/effect/smoke/flashbang/
 	name = "illumination"
 	time_to_live = 10
 	opacity = 0
@@ -110,17 +110,17 @@
 ////////////////////
 //Clusterbang
 ////////////////////
-/obj/item/weapon/grenade/clusterbuster
+/obj/item/weapon/grenade/clusterbuster/
 	desc = "Use of this weapon may constiute a war crime in your area, consult your local captain."
 	name = "clusterbang"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "clusterbang"
-	var/payload = /obj/item/weapon/grenade/flashbang/cluster
+	var/payload = /obj/item/weapon/grenade/flashbang/cluster/
 
-	prime()
-		update_icon()
-		var/numspawned = rand(4, 8)
-		var/again = 0
+/obj/item/weapon/grenade/clusterbuster/clusterbuster/prime()
+	update_icon()
+	var/numspawned = rand(4, 8)
+	var/again = 0
 
 	for(var/more = numspawned, more > 0, more--)
 		if(prob(35))
@@ -140,7 +140,7 @@
 //////////////////////
 //Clusterbang segment
 //////////////////////
-/obj/item/weapon/grenade/clusterbuster/segment
+/obj/item/weapon/grenade/clusterbuster/segment/
 	desc = "A smaller segment of a clusterbang. Better run."
 	name = "clusterbang segment"
 	icon = 'icons/obj/grenade.dmi'
@@ -154,10 +154,10 @@
 	walk_away(src,loc,rand(1,4))
 	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
 
-	prime()
-		new /obj/effect/payload_spawner(loc, payload, rand(4,8))
-		playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
-		qdel(src)
+/obj/item/weapon/grenade/clusterbuster/segment/prime()
+	new /obj/effect/payload_spawner(loc, payload, rand(4,8))
+	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+	qdel(src)
 
 //////////////////////////////////
 //The payload spawner effect
@@ -171,25 +171,25 @@
 		addtimer(CALLBACK(P, /obj/item/weapon/grenade.proc/prime), rand(15,60))
 	return INITIALIZE_HINT_QDEL
 
-/obj/item/weapon/grenade/flashbang/cluster
+/obj/item/weapon/grenade/flashbang/cluster/
 	icon_state = "flashbang_active"
 
-/obj/item/weapon/grenade/clusterbuster/emp
+/obj/item/weapon/grenade/clusterbuster/emp/
 	name = "Electromagnetic Storm"
-	payload = /obj/item/weapon/grenade/empgrenade
+	payload = /obj/item/weapon/grenade/empgrenade/
 
-/obj/item/weapon/grenade/clusterbuster/syndieminibomb
+/obj/item/weapon/grenade/clusterbuster/syndieminibomb/
 	name = "SyndiWrath"
-	payload = /obj/item/weapon/grenade/syndieminibomb
+	payload = /obj/item/weapon/grenade/syndieminibomb/
 
-/obj/item/weapon/grenade/clusterbuster/spawner_manhacks
+/obj/item/weapon/grenade/clusterbuster/spawner_manhacks/
 	name = "iViscerator"
-	payload = /obj/item/weapon/grenade/spawnergrenade/manhacks
+	payload = /obj/item/weapon/grenade/spawnergrenade/manhacks/
 
-/obj/item/weapon/grenade/clusterbuster/spawner_spesscarp
+/obj/item/weapon/grenade/clusterbuster/spawner_spesscarp/
 	name = "Invasion of the Space Carps"
-	payload = /obj/item/weapon/grenade/spawnergrenade/spesscarp
+	payload = /obj/item/weapon/grenade/spawnergrenade/spesscarp/
 
-/obj/item/weapon/grenade/clusterbuster/soap
+/obj/item/weapon/grenade/clusterbuster/soap/
 	name = "Slipocalypse"
-	payload = /obj/item/weapon/grenade/spawnergrenade/syndiesoap
+	payload = /obj/item/weapon/grenade/spawnergrenade/syndiesoap/
