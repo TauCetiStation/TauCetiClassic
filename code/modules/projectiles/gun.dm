@@ -5,7 +5,7 @@
 	icon_state = "detective"
 	item_state = "gun"
 	flags =  CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 2000
 	w_class = 3.0
 	throwforce = 5

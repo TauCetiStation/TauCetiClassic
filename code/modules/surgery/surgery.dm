@@ -6,8 +6,7 @@
 	// type path referencing tools that can be used for this step, and how well are they suited for it
 	var/list/allowed_tools = null
 	// type paths referencing mutantraces that this step applies to.
-	var/list/allowed_species = null
-	var/list/disallowed_species = list(IPC)
+	var/list/allowed_species = list("exclude", IPC)
 
 	// duration of the step
 	var/min_duration = 0
@@ -35,18 +34,11 @@
 		return TRUE
 
 	if(allowed_species)
-		for(var/species in allowed_species)
-			if("exclude" in allowed_species && target.species.name == species)
-				return FALSE
-			else if(target.species.name == species)
-				return TRUE
-
-	if(disallowed_species)
-		for(var/species in disallowed_species)
-			if("exclude" in disallowed_species && target.species.name == species)
-				return TRUE
-			else if(target.species.name == species)
-				return FALSE
+		var/exclusive = ("exclude" in allowed_species)
+		var/in_list = (target.get_species() in allowed_species)
+		if((exclusive || in_list) && !(exclusive && in_list))
+			return TRUE
+		return FALSE
 
 	return TRUE
 

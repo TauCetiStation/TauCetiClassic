@@ -34,7 +34,8 @@ var/datum/subsystem/quirks/SSquirks
 		"Fatness" = list(DIONA, IPC),
 		"Cough" = list(DIONA, IPC),
 		"Seizures" = list(DIONA, IPC),
-		"Sleepy" = list(IPC)
+		"Sleepy" = list(IPC),
+		"Stress Eater" = list(DIONA, IPC)
 		)
 
 	..()

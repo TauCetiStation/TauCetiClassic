@@ -86,7 +86,7 @@
 				if(5.0)
 					dat += "<CENTER><B>Virus Database</B></CENTER>"
 					/*	Advanced diseases is weak! Feeble! Glory to virus2!
-					for(var/Dt in typesof(/datum/disease/))
+					for(var/Dt in typesof(/datum/disease))
 						var/datum/disease/Dis = new Dt(0)
 						if(istype(Dis, /datum/disease/advance))
 							continue // TODO (tm): Add advance diseases to the virus database which no one uses.
@@ -495,6 +495,7 @@
 				else
 					P.info += "<B>Medical Record Lost!</B><BR>"
 				P.info += "</TT>"
+				P.update_icon()
 				src.printing = null
 
 	src.updateUsrDialog()

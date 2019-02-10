@@ -141,9 +141,9 @@
 	for (var/obj/effect/decal/cleanable/M in decal_cleanable)
 		if (M.z != ZLEVEL_STATION)
 			continue
-		if (istype(M, /obj/effect/decal/cleanable/blood/gibs/))
+		if (istype(M, /obj/effect/decal/cleanable/blood/gibs))
 			score["mess"] += 3
-		if (istype(M, /obj/effect/decal/cleanable/blood/))
+		if (istype(M, /obj/effect/decal/cleanable/blood))
 			score["mess"] += 1
 //		if (istype(M, /obj/effect/decal/cleanable/greenpuke)) score["mess"] += 1
 //		if (istype(M, /obj/effect/decal/cleanable/poop)) score["mess"] += 1 // What the literal fuck Paradise. Jesus christ no. - Iamgoofball
@@ -277,7 +277,7 @@
 				continue
 			var/turf/T = NUKE.loc
 			bombdat = T.loc
-			if (istype(T,/area/syndicate_station) || istype(T,/area/wizard_station) || istype(T,/area/solar/))
+			if (istype(T,/area/syndicate_station) || istype(T,/area/wizard_station) || istype(T,/area/solar))
 				nukedpenalty = 1000
 			else if (istype(T,/area/security/main) || istype(T,/area/security/brig) || istype(T,/area/security/armoury) || istype(T,/area/security/checkpoint))
 				nukedpenalty = 50000

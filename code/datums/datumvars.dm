@@ -1,6 +1,6 @@
 // reference: /client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
 
-datum/proc/on_varedit(modified_var) //called whenever a var is edited
+/datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	return
 
 /client/proc/debug_variables(datum/D in world)
@@ -419,7 +419,7 @@ body
 	if(usr.client != src || !holder)
 		return
 	if(href_list["Vars"])
-		if(!check_rights(R_DEBUG|R_ADMIN))
+		if(!check_rights(R_DEBUG|R_VAREDIT))
 			return
 		debug_variables(locate(href_list["Vars"]))
 

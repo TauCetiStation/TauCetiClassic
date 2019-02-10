@@ -183,7 +183,7 @@
 		p++
 	return t
 
-proc/slur(phrase)
+/proc/slur(phrase)
 	phrase = html_decode(phrase)
 	var/leng=lentext(phrase)
 	var/counter=lentext(phrase)
@@ -483,3 +483,9 @@ var/list/intents = list("help","disarm","grab","hurt")
 			to_chat(src, "<span class='warning'>Please wait while someone else will finish interacting with [target].</span>")
 		return TRUE
 	return FALSE
+
+/mob/proc/become_busy(_hand = 0)
+	busy_with_action = TRUE
+
+/mob/proc/become_not_busy(_hand = 0)
+	busy_with_action = FALSE

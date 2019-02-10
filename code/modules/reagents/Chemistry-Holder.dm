@@ -95,7 +95,7 @@ var/const/INGEST = 2
 	if(amount < 0) return
 	if(amount > 2000) return
 	var/datum/reagents/R
-	if(istype(target,/datum/reagents/))
+	if(istype(target,/datum/reagents))
 		R = target
 	else
 		if (!target.reagents || src.total_volume<=0)
@@ -212,7 +212,7 @@ var/const/INGEST = 2
 		var/datum/reagent/R = A
 		if(M && R)
 			var/mob/living/carbon/C = M //currently metabolism work only for carbon, there is no need to check mob type
-			var/remove_amount = R.custom_metabolism * C.metabolism_factor
+			var/remove_amount = R.custom_metabolism * C.get_metabolism_factor()
 			R.on_mob_life(M, alien)
 			remove_reagent(R.id, remove_amount)
 	update_total()

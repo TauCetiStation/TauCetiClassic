@@ -14,7 +14,7 @@
  *		Cigarette Box
  */
 
-/obj/item/weapon/storage/fancy/
+/obj/item/weapon/storage/fancy
 	icon = 'icons/obj/food.dmi'
 	icon_state = "donutbox6"
 	name = "donut box"
@@ -84,7 +84,7 @@
 	item_state = "candlebox"
 	storage_slots = 5
 	throwforce = 2
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	var/candle_type = "white"
 
 /obj/item/weapon/storage/fancy/candle_box/atom_init()
@@ -125,7 +125,7 @@
 	item_state = "black_candlebox5"
 	storage_slots = 5
 	throwforce = 2
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	var/cooldown = 0
 	var/teleporter_delay = 0
 
@@ -276,7 +276,7 @@
 	item_state = "cigpacket"
 	w_class = 1
 	throwforce = 2
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	storage_slots = 6
 	can_hold = list("/obj/item/clothing/mask/cigarette","/obj/item/weapon/lighter")
 	icon_type = "cigarette"

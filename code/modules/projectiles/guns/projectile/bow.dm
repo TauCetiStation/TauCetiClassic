@@ -44,7 +44,7 @@
 	item_state = "crossbow-solid"
 	w_class = 5.0
 	flags =  CONDUCT
-	slot_flags = SLOT_BELT | SLOT_BACK
+	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 
 	w_class = 3.0
 

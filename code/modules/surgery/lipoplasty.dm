@@ -24,8 +24,10 @@
 	max_duration = 150
 
 /datum/surgery_step/lipoplasty/cut_fat/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	if(!..())
+		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	return ..() && BP.open == 1 && target.op_stage.lipoplasty == 0
+	return BP.open == 1 && target.op_stage.lipoplasty == 0
 
 /datum/surgery_step/lipoplasty/cut_fat/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!target.has_trait(TRAIT_FAT))
@@ -68,8 +70,10 @@
 	max_duration = 85
 
 /datum/surgery_step/lipoplasty/remove_fat/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	if(!..())
+		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	return ..() && BP.open == 1 &&  target.op_stage.lipoplasty == 1
+	return BP.open == 1 &&  target.op_stage.lipoplasty == 1
 
 /datum/surgery_step/lipoplasty/remove_fat/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to extract [target]'s loose fat with \the [tool].", \

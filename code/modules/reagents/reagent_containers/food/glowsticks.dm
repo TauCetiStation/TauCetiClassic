@@ -7,7 +7,7 @@
 	icon_state = null
 	item_state = null
 	action_button_name = null	//just pull it manually, neckbeard.
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	light_power = 2
 	var/on = 0
 	var/colourName = null

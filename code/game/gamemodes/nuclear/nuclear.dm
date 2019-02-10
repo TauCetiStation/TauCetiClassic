@@ -197,6 +197,7 @@
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
+		P.update_icon()
 		if (ticker.mode.config_tag=="nuclear")
 			P.loc = synd_mind.current.loc
 		else

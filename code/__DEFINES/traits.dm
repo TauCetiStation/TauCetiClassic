@@ -8,6 +8,8 @@
 #define TRAIT_NEARSIGHT           "nearsighted"
 #define TRAIT_NERVOUS             "nervous"
 #define TRAIT_SLEEPY              "sleepy"
+#define TRAIT_STRESS_EATER        "stresseater"
+#define TRAIT_MULTITASKING        "multitasking"
 
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention

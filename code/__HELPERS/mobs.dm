@@ -1,4 +1,4 @@
-proc/random_hair_style(gender, species = HUMAN)
+/proc/random_hair_style(gender, species = HUMAN)
 	var/h_style = "Bald"
 
 	var/list/valid_hairstyles = list()
@@ -17,7 +17,7 @@ proc/random_hair_style(gender, species = HUMAN)
 
 	return h_style
 
-proc/random_facial_hair_style(gender, species = HUMAN)
+/proc/random_facial_hair_style(gender, species = HUMAN)
 	var/f_style = "Shaved"
 
 	var/list/valid_facialhairstyles = list()
@@ -37,11 +37,11 @@ proc/random_facial_hair_style(gender, species = HUMAN)
 
 		return f_style
 
-proc/random_name(gender, species = HUMAN)
+/proc/random_name(gender, species = HUMAN)
 	if(gender==FEMALE)	return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
 	else				return capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 
-proc/random_skin_tone()
+/proc/random_skin_tone()
 	switch(pick(60;"caucasian", 15;"afroamerican", 10;"african", 10;"latino", 5;"albino"))
 		if("caucasian")		. = -10
 		if("afroamerican")	. = -115
@@ -51,7 +51,7 @@ proc/random_skin_tone()
 		else				. = rand(-185,34)
 	return min(max( .+rand(-25, 25), -185),34)
 
-proc/skintone2racedescription(tone)
+/proc/skintone2racedescription(tone)
 	switch (tone)
 		if(30 to INFINITY)		return "albino"
 		if(20 to 30)			return "pale"
@@ -63,7 +63,7 @@ proc/skintone2racedescription(tone)
 		if(-INFINITY to -65)	return "black"
 		else					return "unknown"
 
-proc/age2agedescription(age)
+/proc/age2agedescription(age)
 	switch(age)
 		if(0 to 1)			return "infant"
 		if(1 to 3)			return "toddler"
@@ -76,7 +76,7 @@ proc/age2agedescription(age)
 		if(70 to INFINITY)	return "elderly"
 		else				return "unknown"
 
-proc/RoundHealth(health)
+/proc/RoundHealth(health)
 	switch(health)
 		if(100 to INFINITY)
 			return "health100"
@@ -125,7 +125,8 @@ proc/RoundHealth(health)
 	if(!user || !target)
 		return FALSE
 
-	user.busy_with_action = TRUE
+	var/busy_hand = user.hand
+	user.become_busy(_hand = busy_hand)
 
 	if(check_target_zone)
 		check_target_zone = user.zone_sel.selecting
@@ -154,22 +155,31 @@ proc/RoundHealth(health)
 			break
 		if(uninterruptible)
 			continue
-		if(user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
+		if(user.loc != user_loc || target.loc != target_loc || user.incapacitated() || user.lying )
 			. = FALSE
 			break
+		if(busy_hand)
+			if(user.l_hand != holding)
+				. = FALSE
+				break
+		else
+			if(user.r_hand != holding)
+				. = FALSE
+				break
 		if(check_target_zone && user.zone_sel.selecting != check_target_zone)
 			. = FALSE
 			break
 	if(progress)
 		qdel(progbar)
 	if(user)
-		user.busy_with_action = FALSE
+		user.become_not_busy(_hand = busy_hand)
 
 /proc/do_after(mob/user, delay, needhand = TRUE, atom/target = null, can_move = FALSE, progress = TRUE)
 	if(!user || target && QDELING(target))
 		return FALSE
 
-	user.busy_with_action = TRUE
+	var/busy_hand = user.hand
+	user.become_busy(_hand = busy_hand)
 
 	var/target_null = TRUE
 	var/atom/Tloc = null
@@ -222,12 +232,17 @@ proc/RoundHealth(health)
 			if(!holdingnull && QDELETED(holding))
 				. = FALSE
 				break
-			if(user.get_active_hand() != holding)
-				. = FALSE
-				break
+			if(user.hand != busy_hand)
+				if(user.get_inactive_hand() != holding)
+					. = FALSE
+					break
+			else
+				if(user.get_active_hand() != holding)
+					. = FALSE
+					break
 	if(progress)
 		qdel(progbar)
 	if(user)
-		user.busy_with_action = FALSE
+		user.become_not_busy(_hand = busy_hand)
 	if(target)
 		target.in_use_action = FALSE

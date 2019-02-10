@@ -127,7 +127,7 @@
 	var/mining_points = 0 //For redeeming at mining equipment lockers
 	var/access = list()
 	var/registered_name = "Unknown" // The name registered_name on the card
-	slot_flags = SLOT_ID
+	slot_flags = SLOT_FLAGS_ID
 	var/customizable_view = UNIVERSAL_VIEW
 	var/blood_type = "\[UNSET\]"
 	var/dna_hash = "\[UNSET\]"

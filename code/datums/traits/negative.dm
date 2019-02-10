@@ -119,3 +119,13 @@
 			show_mes = "<span class='warning'>You really need to get some sleep!</span>"
 		if(show_mes && prob(10))
 			to_chat(quirk_holder, show_mes)
+
+
+
+/datum/quirk/stress_eater
+	name = "Stress Eater"
+	desc = "You eat more when in pain."
+	value = -1
+	mob_trait = TRAIT_STRESS_EATER
+	gain_text = "<span class='danger'>You feel quenchless hunger when hurt.</span>"
+	lose_text = "<span class='notice'>You no longer feel the quenchless hunger when hurt.</span>"

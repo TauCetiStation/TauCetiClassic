@@ -1,7 +1,7 @@
 /obj/item/weapon/weldpack/M2_fuelback
 	name = "M2 Flamethrower backpack."
 	desc = "It smells like victory."
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 
 	icon = 'code/game/objects/WalterJ_Items_Pack/M2 FLAMETHROWER/WJ_M2_Flamethrower.dmi'
 	icon_custom = 'code/game/objects/WalterJ_Items_Pack/M2 FLAMETHROWER/WJ_M2_Flamethrower.dmi'
@@ -99,7 +99,7 @@
 		STOP_PROCESSING(SSobj, src)
 		return
 	var/turf/location = loc
-	if(istype(location, /mob/))
+	if(istype(location, /mob))
 		var/mob/M = location
 		if(M.l_hand == src || M.r_hand == src)
 			location = M.loc
