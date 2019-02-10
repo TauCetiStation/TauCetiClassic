@@ -171,7 +171,7 @@
 			return
 	//message_admins("Late Join Check")
 	if((character.client && (ROLE_TRAITOR in character.client.prefs.be_role)) && !jobban_isbanned(character, "Syndicate") \
-	 && !jobban_isbanned(character, ROLE_TRAITOR) && !role_available_in_minutes(character, ROLE_TRAITOR) && ismindshielded(character, FALSE))
+	 && !jobban_isbanned(character, ROLE_TRAITOR) && !role_available_in_minutes(character, ROLE_TRAITOR) && isloyal(character, FALSE))
 		//message_admins("Late Joiner has Be Syndicate")
 		//message_admins("Checking number of players")
 		var/playercount = 0

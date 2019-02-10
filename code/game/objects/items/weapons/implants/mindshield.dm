@@ -69,7 +69,7 @@
 		if (M.mind.special_role == "traitor" || M.mind.special_role == "Syndicate" || M.mind.special_role == "Ninja")
 			to_chat(M, "<span class='danger'>You were implanted implant of loyalty and now you must serve NT. Your old mission has not any matter.</span>")
 			for(var/datum/objective/objective in M.mind.objectives)
-				objective.hiden = 1
+				objective.hidden = 1
 		START_PROCESSING(SSobj, src)
 		to_chat(M, "NanoTrasen - is the best corporation in the whole Universe!")
 
