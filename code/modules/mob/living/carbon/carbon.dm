@@ -277,7 +277,7 @@
 					else
 						M.visible_message("<span class='notice'>[M] gently touches [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You gently touch [src] trying to wake [t_him] up!</span>")
-			switch(M.zone_sel.selecting)
+			else switch(M.zone_sel.selecting)
 				if(BP_R_ARM || BP_L_ARM)
 					M.visible_message( "<span class='notice'>[M] shakes [src]'s hand.</span>", \
 									"<span class='notice'>You shake [src]'s hand.</span>", )
