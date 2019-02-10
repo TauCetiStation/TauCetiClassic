@@ -26,6 +26,8 @@
 	faction = "cult"
 	var/list/construct_spells = list()
 
+	animalistic = FALSE
+
 /mob/living/simple_animal/construct/atom_init()
 	. = ..()
 	name = text("[initial(name)] ([rand(1, 1000)])")

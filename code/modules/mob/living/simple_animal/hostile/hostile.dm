@@ -102,25 +102,27 @@
 
 /mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
-		return 0
+		return FALSE
 	if(isliving(the_target) && search_objects < 2)
 		var/mob/living/L = the_target
 		if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
-			return 0
+			return FALSE
 		if(L.faction == src.faction && !attack_same || L.faction != src.faction && attack_same == 2 || L.faction != attack_faction && attack_faction)
-			return 0
+			return FALSE
 		if(L in friends)
-			return 0
-		return 1
+			return FALSE
+		if(animalistic && L.has_trait(TRAIT_NATURECHILD) && L.naturechild_check())
+			return FALSE
+		return TRUE
 	if(isobj(the_target))
 		if(the_target.type in wanted_objects)
-			return 1
+			return TRUE
 		if(istype(the_target, /obj/mecha) && search_objects < 2)
 			var/obj/mecha/M = the_target
 			if(M.occupant)//Just so we don't attack empty mechs
 				if(CanAttack(M.occupant))
-					return 1
-	return 0
+					return TRUE
+	return FALSE
 
 /mob/living/simple_animal/hostile/proc/GiveTarget(new_target)//Step 4, give us our selected target
 	target = new_target
