@@ -75,6 +75,7 @@
 #define ZOMBIE_TAJARAN "Zombie Tajaran"
 #define ZOMBIE_SKRELL  "Zombie Skrell"
 #define ZOMBIE_UNATHI  "Zombie Unathi"
+#define SLIME          "Slime"
 
 #define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
 
@@ -106,6 +107,9 @@
 #define TASTE_SENSITIVITY_SHARP 1.5
 #define TASTE_SENSITIVITY_DULL 0.75
 #define TASTE_SENSITIVITY_NO_TASTE 0
+
+// Roundstart "trait" system
+#define MAX_QUIRKS 6 // The maximum amount of quirks one character can have at roundstart
 
 //Ian can lick or sniff
 #define IAN_STANDARD 0

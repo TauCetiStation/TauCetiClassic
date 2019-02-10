@@ -58,7 +58,7 @@
 	desc = get_bluespace_scramble()
 
 /obj/structure/cellular_biomass/lair/bluespace/atom_init()
-	var/type = pick(subtypesof(/mob/living/simple_animal/hostile/cellular/bluespace/))
+	var/type = pick(subtypesof(/mob/living/simple_animal/hostile/cellular/bluespace))
 	new type(loc)
 	..()
 	return INITIALIZE_HINT_QDEL // glitches are self-replicating, no need for lair
@@ -70,7 +70,7 @@
 	icon_state = "creep_1"
 	random_icon_states = list("decal_1", "decal_2", "decal_3", "decal_4", "decal_5")
 
-/mob/living/simple_animal/hostile/cellular/bluespace/
+/mob/living/simple_animal/hostile/cellular/bluespace
 	name = "Moving Glitch"
 	desc = "It's impossible to deEF*E((F((F(CVP"
 	icon = 'code/game/gamemodes/events/cellular_biomass/bluespace_cellular.dmi'

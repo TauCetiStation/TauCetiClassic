@@ -146,7 +146,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 				to_chat(src, "Something strange's going on, something's wrong.")
 
 			/*if("feet")
-				if(H.shoes && istype(H.shoes, /obj/item/clothing/))
+				if(H.shoes && istype(H.shoes, /obj/item/clothing))
 					Cl = H.shoes
 					passed = prob(Cl.permeability_coefficient*100)
 					//

@@ -1,4 +1,9 @@
+/mob/living/atom_init()
+	. = ..()
+	living_list += src
+
 /mob/living/Destroy()
+	living_list -= src
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 
@@ -457,7 +462,8 @@
 
 /mob/living/proc/revive()
 	rejuvenate()
-	buckled = initial(src.buckled)
+	if(buckled)
+		buckled.user_unbuckle_mob(src)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
 
@@ -521,7 +527,7 @@
 	// remove the character from the list of the dead
 	if(stat == DEAD)
 		dead_mob_list -= src
-		living_mob_list += src
+		alive_mob_list += src
 		tod = null
 		timeofdeath = 0
 
@@ -543,7 +549,7 @@
 	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
 	BP.disfigured = FALSE
 
-	for (var/obj/item/weapon/organ/head/H in world) // damn son, where'd you get this?
+	for (var/obj/item/weapon/organ/head/H in organ_head_list) // damn son, where'd you get this?
 		if(H.brainmob)
 			if(H.brainmob.real_name == src.real_name)
 				if(H.brainmob.mind)
@@ -600,12 +606,12 @@
 
 	return
 
-/mob/living/Move(atom/newloc, direct)
-	if (buckled && buckled.loc != newloc)
+/mob/living/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	if (buckled && buckled.loc != NewLoc)
 		if (!buckled.anchored)
-			return buckled.Move(newloc, direct)
+			return buckled.Move(NewLoc, Dir)
 		else
-			return 0
+			return FALSE
 
 	if (restrained())
 		stop_pulling()
@@ -1184,3 +1190,6 @@
 	// food, so this proc is used in walk penalty, etc. But you don't see fat of a person if the person is just
 	// digesting the giant pizza they ate, so we don't use this in examine code.
 	return nutrition
+
+/mob/living/proc/get_metabolism_factor()
+	return METABOLISM_FACTOR

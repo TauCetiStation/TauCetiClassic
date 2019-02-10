@@ -65,7 +65,9 @@ What is the naming convention for planes or layers?
 #define PLANE_SPACE            -95
 #define PLANE_SPACE_PARALLAX   -90
 
-#define GAME_PLANE   0
+#define FLOOR_PLANE      -2
+#define GAME_PLANE       -1
+#define BLACKNESS_PLANE   0
 
 #define LIGHTING_PLANE         15
 #define LIGHTING_LAYER         15

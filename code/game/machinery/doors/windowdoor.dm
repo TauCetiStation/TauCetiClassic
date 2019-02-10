@@ -398,6 +398,13 @@
 	var/id = null
 	health = 300.0 //Stronger doors for prison (regular window door health is 200)
 
+/obj/machinery/door/window/brigdoor/atom_init()
+	. = ..()
+	brigdoor_list += src
+
+/obj/machinery/door/window/brigdoor/Destroy()
+	brigdoor_list -= src
+	return ..()
 
 /obj/machinery/door/window/northleft
 	dir = NORTH

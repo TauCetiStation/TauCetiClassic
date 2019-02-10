@@ -1,3 +1,18 @@
+/mob/living/carbon/human/getHalLoss()
+	if(species.flags[NO_PAIN])
+		return 0
+	return ..()
+
+/mob/living/carbon/human/setHalLoss()
+	if(species.flags[NO_PAIN])
+		return
+	..()
+
+/mob/living/carbon/human/adjustHalLoss()
+	if(species.flags[NO_PAIN])
+		return
+	..()
+
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
 
 	def_zone = check_zone(def_zone)
@@ -225,7 +240,7 @@
 		if( (!hit_dir || is_the_opposite_dir(dir, hit_dir)) && prob(I.Get_shield_chance() - round(damage / 3) ))
 			visible_message("<span class='userdanger'>[src] blocks [attack_text] with the [r_hand.name]!</span>")
 			return 1
-	if(wear_suit && istype(wear_suit, /obj/item/))
+	if(wear_suit && istype(wear_suit, /obj/item))
 		var/obj/item/I = wear_suit
 		if(prob(I.Get_shield_chance() - round(damage / 3) ))
 			visible_message("<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
@@ -393,7 +408,7 @@
 
 /mob/living/carbon/human/bloody_hands(mob/living/carbon/human/source, amount = 2)
 	if (gloves)
-		if(istype(gloves, /obj/item/clothing/gloves/))
+		if(istype(gloves, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/GL = gloves
 			GL.add_blood(source)
 			GL.transfer_blood = amount

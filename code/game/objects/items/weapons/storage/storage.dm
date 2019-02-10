@@ -24,11 +24,11 @@
 	var/foldable = null	// BubbleWrap - if set, can be folded (when empty) into a sheet of cardboard
 	var/use_sound = "rustle"	//sound played when used. null for no sound.
 
+	var/storage_ui_path = /datum/storage_ui/default
+	var/datum/storage_ui/storage_ui = null
 	//initializes the contents of the storage with some items based on an assoc list. The assoc key must be an item path,
 	//the assoc value can either be the quantity, or a list whose first value is the quantity and the rest are args.
 	var/list/startswith
-	var/datum/storage_ui/storage_ui = /datum/storage_ui/default
-
 /obj/item/weapon/storage/Destroy()
 	QDEL_NULL(storage_ui)
 	return ..()
@@ -388,7 +388,7 @@
 	if(isnull(max_storage_space) && !isnull(storage_slots))
 		max_storage_space = storage_slots*base_storage_cost(max_w_class)
 
-	storage_ui = new storage_ui(src)
+	storage_ui = new storage_ui_path(src)
 	prepare_ui()
 
 	if(startswith)
@@ -443,7 +443,7 @@
 
 /obj/item/weapon/storage/hear_talk(mob/M, text, verb, datum/language/speaking)
 	for (var/atom/A in src)
-		if(istype(A,/obj/))
+		if(istype(A,/obj))
 			var/obj/O = A
 			O.hear_talk(M, text, verb, speaking)
 

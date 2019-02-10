@@ -11,7 +11,7 @@
 	layer = 10
 	mouse_opacity = 0
 
-	var/global/global_uid = 0
+	var/static/global_uid = 0
 	var/uid
 
 	var/parallax_movedir = 0
@@ -123,13 +123,15 @@ var/list/ghostteleportlocs = list()
 						C.network.Remove("Power Alarms")
 					else
 						C.network.Add("Power Alarms")
-			for (var/mob/living/silicon/aiPlayer in player_list)
+			for (var/mob/living/silicon/aiPlayer in silicon_list)
+				if(!aiPlayer.client)
+					continue
 				if(aiPlayer.z == source.z)
 					if (state == 1)
 						aiPlayer.cancelAlarm("Power", src, source)
 					else
 						aiPlayer.triggerAlarm("Power", src, cameras, source)
-			for(var/obj/machinery/computer/station_alert/a in machines)
+			for(var/obj/machinery/computer/station_alert/a in station_alert_list)
 				if(a.z == source.z)
 					if(state == 1)
 						a.cancelAlarm("Power", src, source)
@@ -153,9 +155,11 @@ var/list/ghostteleportlocs = list()
 			for(var/area/RA in related)
 				for(var/obj/machinery/camera/C in RA)
 					C.network.Remove("Atmosphere Alarms")
-			for(var/mob/living/silicon/aiPlayer in player_list)
+			for(var/mob/living/silicon/aiPlayer in silicon_list)
+				if(!aiPlayer.client)
+					continue
 				aiPlayer.cancelAlarm("Atmosphere", src, src)
-			for(var/obj/machinery/computer/station_alert/a in machines)
+			for(var/obj/machinery/computer/station_alert/a in station_alert_list)
 				a.cancelAlarm("Atmosphere", src, src)
 
 		if (danger_level >= 2 && atmosalm < 2)
@@ -164,9 +168,11 @@ var/list/ghostteleportlocs = list()
 				for(var/obj/machinery/camera/C in RA)
 					cameras += C
 					C.network.Add("Atmosphere Alarms")
-			for(var/mob/living/silicon/aiPlayer in player_list)
+			for(var/mob/living/silicon/aiPlayer in silicon_list)
+				if(!aiPlayer.client)
+					continue
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
-			for(var/obj/machinery/computer/station_alert/a in machines)
+			for(var/obj/machinery/computer/station_alert/a in station_alert_list)
 				a.triggerAlarm("Atmosphere", src, cameras, src)
 			air_doors_close()
 
@@ -217,9 +223,11 @@ var/list/ghostteleportlocs = list()
 			for (var/obj/machinery/camera/C in RA)
 				cameras.Add(C)
 				C.network.Add("Fire Alarms")
-		for (var/mob/living/silicon/ai/aiPlayer in player_list)
+		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
+			if(!aiPlayer.client)
+				continue
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
-		for (var/obj/machinery/computer/station_alert/a in machines)
+		for (var/obj/machinery/computer/station_alert/a in station_alert_list)
 			a.triggerAlarm("Fire", src, cameras, src)
 
 /area/proc/firereset()
@@ -236,9 +244,11 @@ var/list/ghostteleportlocs = list()
 		for(var/area/RA in related)
 			for (var/obj/machinery/camera/C in RA)
 				C.network.Remove("Fire Alarms")
-		for (var/mob/living/silicon/ai/aiPlayer in player_list)
+		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
+			if(!aiPlayer.client)
+				continue
 			aiPlayer.cancelAlarm("Fire", src, src)
-		for (var/obj/machinery/computer/station_alert/a in machines)
+		for (var/obj/machinery/computer/station_alert/a in station_alert_list)
 			a.cancelAlarm("Fire", src, src)
 
 /area/proc/partyalert()
@@ -410,7 +420,7 @@ var/list/ghostteleportlocs = list()
 	if(istype(get_turf(mob), /turf/space)) // Can't fall onto nothing.
 		return
 
-	if(istype(mob,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
+	if(istype(mob,/mob/living/carbon/human))  // Only humans can wear magboots, so we give them a chance to.
 		var/mob/living/carbon/human/H = mob
 		if((istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP)))
 			return

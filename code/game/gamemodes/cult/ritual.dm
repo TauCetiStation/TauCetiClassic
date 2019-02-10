@@ -74,6 +74,9 @@ var/list/cult_datums = list()
 	for(var/mob/living/silicon/S in player_list) // we hold mobs in this lists only with clients
 		S.client.images += blood_overlay
 
+/obj/effect/rune/update_icon()
+	color = "#a10808"
+
 /obj/effect/rune/Destroy()
 	QDEL_NULL(power)
 	QDEL_NULL(blood_overlay)
@@ -413,7 +416,7 @@ var/list/cult_datums = list()
 		to_chat(user, "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of.\
 		Most of these are useless, though.")
 
-obj/item/weapon/book/tome/imbued/atom_init()
+/obj/item/weapon/book/tome/imbued/atom_init()
 	. = ..()
 	unlocked = TRUE
 	if(!cultwords["travel"])

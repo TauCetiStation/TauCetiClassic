@@ -80,6 +80,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	spell_list += new /obj/effect/proc_holder/spell/targeted/collective_mind
 	spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor
 
+/mob/living/carbon/human/slime/atom_init(mapload)
+	. = ..(mapload, SLIME)
+
 /mob/living/carbon/human/atom_init(mapload, new_species)
 
 	dna = new
@@ -112,6 +115,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	. = ..()
 
+	human_list += src
+
 	if(dna)
 		dna.real_name = real_name
 
@@ -122,6 +127,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	prev_gender = gender // Debug for plural genders
 	make_blood()
 	regenerate_icons()
+
+/mob/living/carbon/human/Destroy()
+	human_list -= src
+	return ..()
 
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
@@ -1125,7 +1134,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(!src_turf)
 		return
 
-	for(var/mob/living/carbon/M in world)
+	for(var/mob/living/carbon/M in carbon_list)
 		var/name = M.real_name
 		if(name in names)
 			namecounts[name]++
@@ -1153,7 +1162,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	else
 		T.show_message("\blue You hear a voice that seems to echo around the room: [say]")
 	usr.show_message("\blue You project your mind into [T.real_name]: [say]")
-	for(var/mob/dead/observer/G in world)
+	for(var/mob/dead/observer/G in observer_list)
 		G.show_message("<i>Telepathic message from <b>[src]</b> to <b>[T]</b>: [say]</i>")
 	log_say("Telepathic message from [key_name(src)] to [key_name(T)]: [say]")
 
@@ -1187,7 +1196,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	var/list/namecounts = list()
 	var/target = null	   //Chosen target.
 
-	for(var/mob/living/carbon/human/M in world) //#Z2 only carbon/human for now
+	for(var/mob/living/carbon/human/M in human_list) //#Z2 only carbon/human for now
 		var/name = M.real_name
 		if(!(REMOTE_TALK in src.mutations))
 			namecounts++
@@ -1286,14 +1295,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	verbs += /mob/living/carbon/human/proc/bloody_doodle
 	return 1 //we applied blood to the item
 
-/mob/living/carbon/human/clean_blood(var/clean_feet)
-	.=..()
-	if(clean_feet && !shoes && istype(feet_blood_DNA, /list) && feet_blood_DNA.len)
-		feet_dirt_color = null
-		feet_blood_DNA = null
-		update_inv_shoes()
-		return 1
-
 /mob/living/carbon/human/get_visible_implants(class = 0)
 
 	var/list/visible_implants = list()
@@ -1371,7 +1372,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	if(species)
 		if(species.name == new_species)
-			return
+			return FALSE
 
 		if(species.language)
 			remove_language(species.language)
@@ -1408,9 +1409,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	full_prosthetic = null
 
 	if(species)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 // Unlike set_species(), this proc simply changes owner's specie and thats it.
 /mob/living/carbon/human/proc/set_species_soft(new_species)

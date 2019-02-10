@@ -4,7 +4,7 @@
 	icon_state = "pai"
 	item_state = "electronic"
 	w_class = 2.0
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "programming=2"
 	var/obj/item/device/radio/radio
 	var/looking_for_personality = 0
@@ -12,9 +12,11 @@
 
 /obj/item/device/paicard/atom_init()
 	. = ..()
+	paicard_list += src
 	overlays += "pai-off"
 
 /obj/item/device/paicard/Destroy()
+	paicard_list -= src
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
 	if(!isnull(pai))
 		pai.death(0)

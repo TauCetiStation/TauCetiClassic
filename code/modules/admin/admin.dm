@@ -3,11 +3,11 @@ var/global/BSACooldown = 0
 
 
 ////////////////////////////////
-/proc/message_admins(msg)
+proc/message_admins(msg, reg_flag = R_ADMIN)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
 	log_adminwarn(msg)
 	for(var/client/C in admins)
-		if(C.holder.rights & R_ADMIN)
+		if(C.holder.rights & reg_flag)
 			to_chat(C, msg)
 
 /proc/msg_admin_attack(text) //Toggleable Attack Messages
@@ -1017,7 +1017,7 @@ var/global/BSACooldown = 0
 			return "Destroy the AI"
 		if(3)
 			var/count = 0
-			for(var/mob/living/carbon/monkey/Monkey in world)
+			for(var/mob/living/carbon/monkey/Monkey in not_world)
 				if(Monkey.z == ZLEVEL_STATION)
 					count++
 			return "Kill all [count] of the monkeys on the station"
@@ -1105,7 +1105,7 @@ var/global/BSACooldown = 0
 
 /datum/admins/proc/output_ai_laws()
 	var/ai_number = 0
-	for(var/mob/living/silicon/S in mob_list)
+	for(var/mob/living/silicon/S in silicon_list)
 		ai_number++
 		if(isAI(S))
 			to_chat(usr, "<b>AI [key_name(S, usr)]'s laws:</b>")

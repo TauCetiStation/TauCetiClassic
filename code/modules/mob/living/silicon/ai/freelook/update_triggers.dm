@@ -59,7 +59,7 @@
 // This might be laggy, comment it out if there are problems.
 /mob/living/silicon/robot/var/updating = 0
 
-/mob/living/silicon/robot/Move()
+/mob/living/silicon/robot/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	var/oldLoc = src.loc
 	. = ..()
 	if(.)

@@ -144,10 +144,10 @@
 		if(client)
 			log_emote("[name]/[key] : [message]")
 
-		for(var/mob/M in dead_mob_list)
-			if(!M.client || isnewplayer(M))
-				continue //skip monkeys, leavers and new players
-			if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
+		for(var/mob/M in observer_list)
+			if(!M.client)
+				continue //skip leavers
+			if((M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
 				M.show_message(message)
 
 		if (m_type & 1)

@@ -86,14 +86,14 @@
 	var/longtermpower = 10
 	var/update_state = -1
 	var/update_overlay = -1
-	var/global/status_overlays = 0
+	var/static/status_overlays = 0
 	var/updating_icon = 0
 	var/datum/wires/apc/wires = null
-	var/global/list/status_overlays_lock
-	var/global/list/status_overlays_charging
-	var/global/list/status_overlays_equipment
-	var/global/list/status_overlays_lighting
-	var/global/list/status_overlays_environ
+	var/static/list/status_overlays_lock
+	var/static/list/status_overlays_charging
+	var/static/list/status_overlays_equipment
+	var/static/list/status_overlays_lighting
+	var/static/list/status_overlays_environ
 
 /obj/machinery/power/apc/updateDialog()
 	if (stat & (BROKEN|MAINT))
@@ -102,7 +102,7 @@
 
 /obj/machinery/power/apc/atom_init(mapload, ndir, building = 0)
 	. = ..()
-
+	apc_list += src
 	wires = new(src)
 
 	// offset 24 pixels in direction of dir
@@ -127,6 +127,7 @@
 		addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/Destroy()
+	apc_list -= src
 	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
 			if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
