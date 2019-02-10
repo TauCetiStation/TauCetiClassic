@@ -507,7 +507,7 @@
 			handle_dreams()
 			adjustHalLoss(-3)
 			sleeping = max(sleeping-1, 0)
-      tiredness = max(0, tiredness - 5)
+			tiredness = max(0, tiredness - 5)
 			blinded = 1
 			stat = UNCONSCIOUS
 			if( prob(10) && health && !hal_crit )
