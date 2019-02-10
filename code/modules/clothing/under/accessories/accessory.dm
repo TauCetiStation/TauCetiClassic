@@ -114,9 +114,7 @@
 /obj/item/clothing/accessory/holy
     name = "holy cross"
     desc = "Time to take the Jerusalem!"
-    icon = 'icons/obj/clothing/ties.dmi'
     icon_state = "holycross"
-    item_state = "" // no inhands
     item_color = "holycross1"
 
 /obj/item/clothing/accessory/medal/conduct
