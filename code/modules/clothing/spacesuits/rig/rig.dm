@@ -112,6 +112,7 @@
 		var/old_wearer = wearer
 		wearer = null
 		update_overlays(old_wearer)
+		remove_actions(old_wearer)
 
 	selected_module = null
 	QDEL_NULL(cell)
