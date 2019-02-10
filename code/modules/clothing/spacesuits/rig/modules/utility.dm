@@ -55,7 +55,7 @@
 	device_type = /obj/item/weapon/mining_scanner
 	origin_tech = "magnets=2;programming=2;engineering=2"
 
-/obj/item/weapon/rcd/mounted/useResource(var/amount, var/mob/user)
+/obj/item/weapon/rcd/mounted/useResource(amount, mob/user)
 	var/cost = amount*70 //Arbitary number that hopefully gives it as many uses as a plain RCD.
 	if(istype(loc,/obj/item/rig_module))
 		var/obj/item/rig_module/module = loc
@@ -163,7 +163,7 @@
 		list("tricordrazine", "tricordrazine", "tricordrazine",     20)
 	)
 
-/obj/item/rig_module/chem_dispenser/accepts_item(var/obj/item/input_item, var/mob/living/user)
+/obj/item/rig_module/chem_dispenser/accepts_item(obj/item/input_item, mob/living/user)
 
 	if(!input_item.is_open_container())
 		return 0
@@ -380,7 +380,7 @@
 
 	return active_power_cost
 
-/obj/item/rig_module/selfrepair/accepts_item(var/obj/item/input_item, var/mob/living/user)
+/obj/item/rig_module/selfrepair/accepts_item(obj/item/input_item, mob/living/user)
 	var/mob/living/carbon/human/H = holder.wearer
 
 	if(istype(input_item, /obj/item/stack/sheet/metal) && istype(H) && user == H)

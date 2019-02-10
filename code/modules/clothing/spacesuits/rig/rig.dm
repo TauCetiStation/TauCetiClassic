@@ -107,13 +107,7 @@
 	if(cell_type)
 		cell = new cell_type(src)
 
-	START_PROCESSING(SSobj, src)
-
-/obj/item/clothing/suit/space/rig/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/clothing/suit/space/rig/proc/try_use(var/mob/living/user, var/cost, var/use_unconcious, var/use_stunned)
+/obj/item/clothing/suit/space/rig/proc/try_use(mob/living/user, cost, use_unconcious, use_stunned)
 
 	if(!istype(user))
 		return 0
@@ -163,6 +157,12 @@
 					update_selected_action()
 				if("deselect")
 					selected_module = null
+					update_selected_action()
+				if("toggle")
+					if(selected_module == module)
+						selected_module = null
+					else
+						selected_module = module
 					update_selected_action()
 				if("select_charge_type")
 					module.charge_selected = href_list["charge_type"]
@@ -286,23 +286,21 @@
 	H.update_action_buttons()
 
 /obj/item/clothing/suit/space/rig/equipped(mob/M, slot)
-	..()
-
 	var/mob/living/carbon/human/H = M
 
 	if(!istype(H)) return
 
 	if(slot == slot_wear_suit)
 		wearer = H
-		update_icon(wearer)
+		update_overlays(wearer)
 		give_actions(wearer)
 
 	if(H.wear_suit != src)
 		return
 
-/obj/item/clothing/suit/space/rig/dropped(mob/user)
-	. = ..()
+	START_PROCESSING(SSobj, src)
 
+/obj/item/clothing/suit/space/rig/dropped(mob/user)
 	var/old_wearer = wearer
 	wearer = null
 	var/mob/living/carbon/human/H
@@ -323,10 +321,12 @@
 				H.drop_from_inventory(boots)
 				boots.loc = src
 
-	if(old_wearer == user)
-		update_icon(user)
+	if(old_wearer == user) // we removed the rig
+		update_overlays(user)
 		remove_actions(old_wearer)
 		selected_module = null
+		STOP_PROCESSING(SSobj, src)
+		process() // process one last time so we can disable all modules and other stuff
 
 /obj/item/clothing/suit/space/rig/verb/toggle_helmet()
 
@@ -390,13 +390,13 @@
 	..()
 	to_chat(user, "Its mag-pulse traction system appears to be [magpulse ? "enabled" : "disabled"].")
 
-/obj/item/clothing/suit/space/rig/emp_act(severity_class)
+/obj/item/clothing/suit/space/rig/emp_act(severity)
 	//drain some charge
 	if(cell)
-		cell.emp_act(severity_class + 1)
+		cell.emp_act(severity + 1)
 
 	//possibly damage some modules
-	take_hit((100/severity_class), "electrical pulse", is_emp = TRUE)
+	take_hit((100/severity), "electrical pulse", is_emp = TRUE)
 
 /obj/item/clothing/suit/space/rig/proc/find_module(module_type)
 	for(var/obj/item/rig_module/module in installed_modules)
@@ -460,8 +460,7 @@
 			to_chat(wearer, "<span class='danger'>The [source] has damaged one of your rig modules</span>")
 	dam_module.deactivate()
 
-/obj/item/clothing/suit/space/rig/update_icon(mob/user)
-	. = ..()
+/obj/item/clothing/suit/space/rig/proc/update_overlays(mob/user)
 	var/equipped = (wearer == user)
 
 	for(var/obj/item/rig_module/module in installed_modules)

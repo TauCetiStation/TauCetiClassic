@@ -1,7 +1,7 @@
 /datum/action/module_select
 	name = "Select module"
 
-/datum/action/module_select/New(var/Target)
+/datum/action/module_select/New(Target)
 	..()
 	if(istype(Target, /obj/item/rig_module))
 		var/obj/item/rig_module/module = Target
@@ -91,11 +91,11 @@
 	if(suit_overlay)
 		suit_overlay_image = image("icon" = 'icons/mob/rig_modules.dmi', "icon_state" = "[suit_overlay]")
 
-	stat_modules +=	new /obj/stat_rig_module/activate(src)
-	stat_modules +=	new /obj/stat_rig_module/deactivate(src)
-	stat_modules +=	new /obj/stat_rig_module/engage(src)
-	stat_modules +=	new /obj/stat_rig_module/select(src)
-	stat_modules +=	new /obj/stat_rig_module/charge(src)
+	stat_modules +=	new /obj/stat_rig_module/activate(src, src)
+	stat_modules +=	new /obj/stat_rig_module/deactivate(src, src)
+	stat_modules +=	new /obj/stat_rig_module/engage(src, src)
+	stat_modules +=	new /obj/stat_rig_module/select(src, src)
+	stat_modules +=	new /obj/stat_rig_module/charge(src, src)
 
 /obj/item/rig_module/Destroy()
 	deactivate()
@@ -164,7 +164,7 @@
 	..()
 
 // Called when the module is installed into a suit.
-/obj/item/rig_module/proc/installed(var/obj/item/clothing/head/helmet/space/rig/new_holder)
+/obj/item/rig_module/proc/installed(obj/item/clothing/head/helmet/space/rig/new_holder)
 	holder = new_holder
 	holder.installed_modules += src
 	forceMove(holder)
@@ -226,7 +226,7 @@
 
 // Called by holder rigsuit attackby()
 // Checks if an item is usable with this module and handles it if it is
-/obj/item/rig_module/proc/accepts_item(var/obj/item/input_device)
+/obj/item/rig_module/proc/accepts_item(obj/item/input_device)
 	return 0
 
 /mob/proc/Rig_SetupStat(var/obj/item/clothing/suit/space/rig/R)
@@ -242,11 +242,11 @@
 	var/module_mode = ""
 	var/obj/item/rig_module/module
 
-/obj/stat_rig_module/New(var/obj/item/rig_module/module)
-	..()
+/obj/stat_rig_module/atom_init(mapload, obj/item/rig_module/module)
+	. = ..()
 	src.module = module
 
-/obj/stat_rig_module/proc/AddHref(var/list/href_list)
+/obj/stat_rig_module/proc/AddHref(list/href_list)
 	return
 
 /obj/stat_rig_module/proc/CanUse()
@@ -264,8 +264,8 @@
 /obj/stat_rig_module/DblClick()
 	return Click()
 
-/obj/stat_rig_module/activate/New(var/obj/item/rig_module/module)
-	..()
+/obj/stat_rig_module/activate/atom_init(mapload, obj/item/rig_module/module)
+	. = ..()
 	name = module.activate_string
 	if(module.active_power_cost)
 		name += " ([module.active_power_cost]A)"
@@ -274,8 +274,8 @@
 /obj/stat_rig_module/activate/CanUse()
 	return module.toggleable && !module.active
 
-/obj/stat_rig_module/deactivate/New(var/obj/item/rig_module/module)
-	..()
+/obj/stat_rig_module/deactivate/atom_init(mapload, obj/item/rig_module/module)
+	. = ..()
 	name = module.deactivate_string
 	// Show cost despite being 0, if it means changing from an active cost.
 	if(module.active_power_cost || module.passive_power_cost)
@@ -286,8 +286,8 @@
 /obj/stat_rig_module/deactivate/CanUse()
 	return module.toggleable && module.active
 
-/obj/stat_rig_module/engage/New(var/obj/item/rig_module/module)
-	..()
+/obj/stat_rig_module/engage/atom_init(mapload, obj/item/rig_module/module)
+	. = ..()
 	name = module.engage_string
 	if(module.use_power_cost)
 		name += " ([module.use_power_cost]E)"
@@ -296,10 +296,10 @@
 /obj/stat_rig_module/engage/CanUse()
 	return module.usable
 
-/obj/stat_rig_module/select/New()
-	..()
+/obj/stat_rig_module/select/atom_init(mapload, obj/item/rig_module/module)
+	. = ..()
 	name = "Select"
-	module_mode = "select"
+	module_mode = "toggle"
 
 /obj/stat_rig_module/select/CanUse()
 	if(module.selectable)
@@ -307,12 +307,12 @@
 		return 1
 	return 0
 
-/obj/stat_rig_module/charge/New()
-	..()
+/obj/stat_rig_module/charge/atom_init(mapload, obj/item/rig_module/module)
+	. = ..()
 	name = "Change Charge"
 	module_mode = "select_charge_type"
 
-/obj/stat_rig_module/charge/AddHref(var/list/href_list)
+/obj/stat_rig_module/charge/AddHref(list/href_list)
 	var/charge_index = module.charges.Find(module.charge_selected)
 	if(!charge_index)
 		charge_index = 0
