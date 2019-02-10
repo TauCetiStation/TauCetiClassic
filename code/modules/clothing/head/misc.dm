@@ -25,7 +25,7 @@
 	icon_state = "chep"
 	item_state = "chep"
 	
-/obj/item/clothing/head/hat_tacticool
+/obj/item/clothing/head/tacticool_hat
 	name = "tacticool hat"
 	desc = "Black synthcloth hat."
 	icon_state = "tacticool_hat"
