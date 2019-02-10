@@ -99,8 +99,7 @@
 
 /obj/item/rig_module/Destroy()
 	deactivate()
-	for(var/stat_module in stat_modules)
-		qdel(stat_module)
+	QDEL_LIST(stat_modules)
 	if(holder)
 		holder.installed_modules -= src
 	holder = null

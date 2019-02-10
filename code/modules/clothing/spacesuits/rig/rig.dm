@@ -107,6 +107,17 @@
 	if(cell_type)
 		cell = new cell_type(src)
 
+/obj/item/clothing/suit/space/rig/Destroy()
+	if(wearer) // remove overlays if rig gets deleted while wearing
+		var/old_wearer = wearer
+		wearer = null
+		update_overlays(old_wearer)
+
+	selected_module = null
+	QDEL_NULL(cell)
+	QDEL_LIST(installed_modules)
+	. = ..()
+
 /obj/item/clothing/suit/space/rig/proc/try_use(mob/living/user, cost, use_unconcious, use_stunned)
 
 	if(!istype(user))
@@ -321,8 +332,8 @@
 				H.drop_from_inventory(boots)
 				boots.loc = src
 
-	if(old_wearer == user) // we removed the rig
-		update_overlays(user)
+	if(old_wearer)
+		update_overlays(old_wearer)
 		remove_actions(old_wearer)
 		selected_module = null
 		STOP_PROCESSING(SSobj, src)
