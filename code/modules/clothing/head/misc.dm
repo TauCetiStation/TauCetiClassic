@@ -27,7 +27,7 @@
 	
 /obj/item/clothing/head/hat_tacticool
 	name = "tacticool hat"
-	desc = "Black synthcloth hat"
+	desc = "Black synthcloth hat."
 	icon_state = "tacticool_hat"
 	item_state = "tacticool_hat"
 	flags = BLOCKHAIR
