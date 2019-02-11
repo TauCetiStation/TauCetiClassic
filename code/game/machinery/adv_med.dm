@@ -62,6 +62,7 @@
 		return
 	add_fingerprint(user)
 	close_machine(G.affecting)
+	playsound(src, 'sound/machines/analysis.ogg', 40, 0)
 	qdel(G)
 
 /obj/machinery/bodyscanner/update_icon()
@@ -76,6 +77,7 @@
 		return
 	add_fingerprint(user)
 	close_machine(target)
+	playsound(src, 'sound/machines/analysis.ogg', 40, 0)
 
 /obj/machinery/bodyscanner/ex_act(severity)
 	var/should_destroy = FALSE
@@ -365,7 +367,7 @@
 		if (next_print < world.time) //10 sec cooldown
 			next_print = world.time + 10 SECONDS
 			to_chat(usr, "<span class='notice'>Printing... Please wait.</span>")
-			playsound(src, 'sound/misc/medscan.ogg', 12, 1)
+			playsound(src, 'sound/items/polaroid1.ogg', 20, 1)
 			addtimer(CALLBACK(src, .proc/print_scan, storedinfo), 1 SECOND)
 		else
 			to_chat(usr, "<span class='notice'>The console can't print that fast!</span>")

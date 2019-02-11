@@ -14,7 +14,7 @@
 /obj/item/weapon/banhammer/attack(mob/M, mob/user)
 	to_chat(M, "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>")
 	to_chat(user, "<font color='red'> You have <b>BANNED</b> [M]</font>")
-	M.playsound_local(M, 'sound/effects/adminhelp.ogg', 50, 1)
+	M.playsound_local(M, 'sound/effects/adminhelp.ogg', 50, 0)
 
 /*
  * Sword
