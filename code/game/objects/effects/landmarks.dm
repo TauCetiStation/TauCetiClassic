@@ -32,6 +32,9 @@
 		if("airtunnel_bottom")
 			airtunnel_bottom = y
 
+		if ("awaystart")
+			awaydestinations += src
+
 		if("monkey")
 			monkeystart += loc
 			return INITIALIZE_HINT_QDEL

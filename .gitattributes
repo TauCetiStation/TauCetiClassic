@@ -6,5 +6,5 @@
 # needs additional setup, see tools/dmitool/README.md
 *.dmi merge=merge-dmi
 
-# force changelog merging to use union
-html/changelog.html merge=union
+# line endings
+*.dm text eol=lf

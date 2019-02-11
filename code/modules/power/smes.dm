@@ -30,6 +30,7 @@
 
 /obj/machinery/power/smes/atom_init()
 	. = ..()
+	smes_list += src
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/smes(null)
 	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
@@ -71,6 +72,17 @@
 	if(!powernet)
 		connect_to_network()
 	update_icon()
+
+/obj/machinery/power/smes/Destroy()
+	smes_list -= src
+	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+		var/area/area = get_area(src)
+		message_admins("SMES deleted at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
+		log_game("SMES deleted at ([area.name])")
+		investigate_log("<font color='red'>deleted</font> at ([area.name])","singulo")
+	if(terminal)
+		disconnect_terminal()
+	return ..()
 
 /obj/machinery/power/smes/proc/update_cells()
 	for(var/obj/item/weapon/stock_parts/cell/cell in component_parts)
@@ -191,16 +203,6 @@
 
 /obj/machinery/power/smes/deconstruction()
 	update_cells()
-
-/obj/machinery/power/smes/Destroy()
-	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
-		var/area/area = get_area(src)
-		message_admins("SMES deleted at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
-		log_game("SMES deleted at ([area.name])")
-		investigate_log("<font color='red'>deleted</font> at ([area.name])","singulo")
-	if(terminal)
-		disconnect_terminal()
-	return ..()
 
 // create a terminal object pointing towards the SMES
 // wires will attach to this
@@ -460,9 +462,10 @@
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Magically produces power."
-	process()
-		charge = capacity
-		..()
+
+/obj/machinery/power/smes/magical/process()
+	charge = capacity
+	..()
 
 
 

@@ -1,5 +1,5 @@
-proc/createRandomZlevel()
-	if(awaydestinations.len)	//crude, but it saves another var!
+/proc/createRandomZlevel()
+	if(awaydestinations.len)	//crude, but it saves another var! //todo: need new var for this
 		return
 
 	var/list/potentialRandomZlevels = list()
@@ -41,11 +41,6 @@ proc/createRandomZlevel()
 		var/file = file(map)
 		if(isfile(file))
 			maploader.load_map(file)
-
-		for(var/obj/effect/landmark/L in landmarks_list)
-			if (L.name != "awaystart")
-				continue
-			awaydestinations.Add(L)
 
 		to_chat(world, "\red \b Away mission loaded.")
 

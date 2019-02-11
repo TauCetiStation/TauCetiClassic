@@ -674,14 +674,6 @@
 	name = "Blunt Bangs"
 	icon_state = "hair_bluntbangs"
 
-/datum/sprite_accessory/hair/whispybangshigh
-	name = "Whispy Bangish"
-	icon_state = "hair_whispybangshigh"
-
-/datum/sprite_accessory/hair/whispybangs
-	name = "Whispy Bangs"
-	icon_state = "hair_whispybangs"
-
 /datum/sprite_accessory/hair/combedbob
 	name = "Combed Bob"
 	icon_state = "hair_combedbob"
@@ -710,7 +702,137 @@
 	name = "Chub"
 	icon_state = "hair_chub"
 
+/datum/sprite_accessory/hair/ponytail6
+	name = "Ponytail female"
+	icon_state = "hair_ponytailf"
+	gender = FEMALE
 
+/datum/sprite_accessory/hair/wisp
+	name = "Wisp"
+	icon_state = "hair_wisp"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/halfshaved
+	name = "Half-Shaved Emo"
+	icon_state = "hair_halfshaved2"
+
+/datum/sprite_accessory/hair/longeralt2
+	name = "Long Hair Alt 2"
+	icon_state = "hair_longeralt2"
+
+/datum/sprite_accessory/hair/bun4
+	name = "Bun 4"
+	icon_state = "hair_bun4"
+
+/datum/sprite_accessory/hair/doublebun
+	name = "Double-Bun"
+	icon_state = "hair_doublebun"
+
+/datum/sprite_accessory/hair/rows
+	name = "Rows"
+	icon_state = "hair_rows1"
+
+/datum/sprite_accessory/hair/rows2
+	name = "Rows 2"
+	icon_state = "hair_rows2"
+
+/datum/sprite_accessory/hair/twintail
+	name = "Twintail"
+	icon_state = "hair_twintail"
+
+/datum/sprite_accessory/hair/coffeehouse
+	name = "Coffee House Cut"
+	icon_state = "hair_coffeehouse"
+	gender = MALE
+
+/datum/sprite_accessory/hair/veryshortovereye
+	name = "Overeye Very Short"
+	icon_state = "hair_veryshortovereye"
+
+/datum/sprite_accessory/hair/oxton
+	name = "Oxton"
+	icon_state = "hair_oxton"
+
+/datum/sprite_accessory/hair/zieglertail
+	name = "Zieglertail"
+	icon_state = "hair_ziegler"
+
+/datum/sprite_accessory/hair/fringeemo
+	name = "Emo Fringe"
+	icon_state = "hair_emofringe"
+
+/datum/sprite_accessory/hair/poofy2
+	name = "Poofy2"
+	icon_state = "hair_poofy2"
+
+/datum/sprite_accessory/hair/fringetail
+	name = "Fringetail"
+	icon_state = "hair_fringetail"
+
+/datum/sprite_accessory/hair/bun3
+	name = "Bun 3"
+	icon_state = "hair_bun3"
+
+/datum/sprite_accessory/hair/veryshortovereyealternate
+	name = "Overeye Very Short, Alternate"
+	icon_state = "hair_veryshortovereyealternate"
+
+/datum/sprite_accessory/hair/undercut2
+	name = "Undercut Swept Right"
+	icon_state = "hair_undercut2"
+	gender = MALE
+
+/datum/sprite_accessory/hair/spikyponytail
+	name = "Spiky Ponytail"
+	icon_state = "hair_spikyponytail"
+
+/datum/sprite_accessory/hair/grandebraid
+	name = "Grande Braid"
+	icon_state = "hair_grande"
+
+/datum/sprite_accessory/hair/fringetail
+	name = "Fringetail"
+	icon_state = "hair_fringetail"
+
+/datum/sprite_accessory/hair/rowbun
+	name = "Row Bun"
+	icon_state = "hair_rowbun"
+
+/datum/sprite_accessory/hair/rowdualbraid
+	name = "Row Dual Braid"
+	icon_state = "hair_rowdualtail"
+
+/datum/sprite_accessory/hair/rowbraid
+	name = "Row Braid"
+	icon_state = "hair_rowbraid"
+
+/datum/sprite_accessory/hair/regulationmohawk
+	name = "Regulation Mohawk"
+	icon_state = "hair_shavedmohawk"
+
+/datum/sprite_accessory/hair/topknot
+	name = "Topknot"
+	icon_state = "hair_topknot"
+
+/datum/sprite_accessory/hair/ronin
+	name = "Ronin"
+	icon_state = "hair_ronin"
+
+/datum/sprite_accessory/hair/bowlcut2
+	name = "Bowl 2"
+	icon_state = "hair_bowlcut2"
+
+/datum/sprite_accessory/hair/manbun
+	name = "Manbun"
+	icon_state = "hair_manbun"
+
+/datum/sprite_accessory/hair/country
+	name = "Country"
+	icon_state = "hair_country"
+
+/datum/sprite_accessory/hair/ougi
+	name = "Ougi"
+	icon_state = "hair_ougi"
 
 //datum/sprite_accessory/hair/modern
 //	name = "Modern"
@@ -728,7 +850,7 @@
 //	gender = FEMALE
 
 //datum/sprite_accessory/hair/quadcurls
-//	name = "Quadcurls "
+//	name = "Quadcurls"
 //	icon_state = "hair_quadcurls"
 //	gender = FEMALE
 
@@ -1166,6 +1288,86 @@
 /datum/sprite_accessory/hair/taj_ears_messylong
 	name = "Tajara Long Messy"
 	icon_state = "taj_hair_messylong"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_sidebraid
+	name = "Tajara Side Braid"
+	icon_state = "taj_hair_sidebraid"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_ribbons
+	name = "Tajara Ribbons"
+	icon_state = "taj_hair_ribbons"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_earrings
+	name = "Tajara Ear Rings"
+	icon_state = "taj_hair_earrings"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_combedback
+	name = "Tajara Combed Back"
+	icon_state = "taj_hair_combedback"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_tailedbangs
+	name = "Tajara Tailed Bangs"
+	icon_state = "taj_hair_tailedbangs"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_punk
+	name = "Tajara Punk"
+	icon_state = "taj_hair_punk"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_marmalade
+	name = "Tajara Marmalade"
+	icon_state = "taj_hair_marmalade"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_lynx
+	name = "Tajara Lynx"
+	icon_state = "taj_hair_lynx"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_longtail
+	name = "Tajara Long Tail"
+	icon_state = "taj_hair_longtail"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_shy
+	name = "Tajara Shy"
+	icon_state = "taj_hair_shy"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_metal
+	name = "Tajara Metal"
+	icon_state = "taj_hair_metal"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_ponytail
+	name = "Tajara Ponytail"
+	icon_state = "taj_hair_ponytail"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_overeye
+	name = "Tajara Over Eye"
+	icon_state = "taj_hair_overeye"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_tough
+	name = "Tajara Tough"
+	icon_state = "taj_hair_tough"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_cuttail
+	name = "Tajara Cut Tail"
+	icon_state = "taj_hair_cuttail"
+	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/taj_dreadlocks
+	name = "Tajara Dreadlocks"
+	icon_state = "taj_hair_dreadlocks"
 	species_allowed = list(TAJARAN)
 
 /datum/sprite_accessory/hair/vox_quills_short

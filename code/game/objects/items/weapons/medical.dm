@@ -15,34 +15,6 @@
 	reagents.add_reagent("oxycodone", 15)
 	reagents.add_reagent("anti_toxin", 25)
 
-//PILL
-/obj/item/weapon/reagent_containers/pill/dermaline
-	name = "Dermaline pill"
-	desc = "Used to treat burns."
-	icon_state = "pill11"
-
-/obj/item/weapon/reagent_containers/pill/dermaline/atom_init()
-	. = ..()
-	reagents.add_reagent("dermaline", 15)
-
-/obj/item/weapon/storage/pill_bottle/dermaline
-	name = "bottle of dermaline pills"
-	desc = "Contains pills used to treat burns."
-
-/obj/item/weapon/storage/pill_bottle/dermaline/atom_init()
-	. = ..()
-	for (var/i in 1 to 7)
-		new /obj/item/weapon/reagent_containers/pill/dermaline(src)
-
-/obj/item/weapon/storage/pill_bottle/bicaridine
-	name = "bottle of bicaridine pills"
-	desc = "Contains pills used to treat physical injures."
-
-/obj/item/weapon/storage/pill_bottle/bicaridine/atom_init()
-	. = ..()
-	for (var/i in 1 to 7)
-		new /obj/item/weapon/reagent_containers/pill/bicaridine(src)
-
 //FIRST-AID KIT
 /obj/item/weapon/storage/firstaid/tactical
 	name = "first-aid kit"
@@ -57,7 +29,7 @@
 	new /obj/item/weapon/reagent_containers/hypospray/combat(src)
 	new /obj/item/weapon/storage/pill_bottle/bicaridine(src)
 	new /obj/item/weapon/storage/pill_bottle/dermaline(src)
-	new /obj/item/weapon/storage/pill_bottle/antitox(src)
+	new /obj/item/weapon/storage/pill_bottle/dylovene(src)
 	new /obj/item/weapon/storage/pill_bottle/tramadol(src)
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
 	new /obj/item/device/healthanalyzer(src)
@@ -119,7 +91,7 @@
 
 	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/weapon/reagent_containers/pill/antitox(src)
+	new /obj/item/weapon/reagent_containers/pill/dylovene(src)
 	new /obj/item/weapon/reagent_containers/pill/dexalin(src)
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
 	new /obj/item/device/healthanalyzer(src)

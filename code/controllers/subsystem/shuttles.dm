@@ -103,7 +103,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				else
 					// turn off the star spawners
 					/*
-					for(var/obj/effect/starspawner/S in world)
+					for(var/obj/effect/starspawner/S in not_world)
 						S.spawning = 0
 					*/
 
@@ -134,9 +134,8 @@ var/datum/subsystem/shuttle/SSshuttle
 					if( prob(5) ) // 5% that they survive
 						start_location.move_contents_to(end_location, null, NORTH)
 
-					for(var/obj/machinery/door/D in machines)
-						if( get_area(D) == end_location )
-							D.open()
+					for(var/obj/machinery/door/D in end_location)
+						D.open()
 						CHECK_TICK
 
 					for(var/mob/M in end_location)
@@ -155,10 +154,9 @@ var/datum/subsystem/shuttle/SSshuttle
 					if( prob(5) ) // 5% that they survive
 						start_location.move_contents_to(end_location, null, NORTH)
 
-					for(var/obj/machinery/door/D in machines)
-						if( get_area(D) == end_location )
-							D.open()
-							CHECK_TICK
+					for(var/obj/machinery/door/D in end_location)
+						D.open()
+						CHECK_TICK
 
 					for(var/mob/M in end_location)
 						if(M.client)
@@ -176,9 +174,8 @@ var/datum/subsystem/shuttle/SSshuttle
 					if( prob(5) ) // 5% that they survive
 						start_location.move_contents_to(end_location, null, NORTH)
 
-					for(var/obj/machinery/door/D in machines)
-						if( get_area(D) == end_location )
-							D.open()
+					for(var/obj/machinery/door/D in end_location)
+						D.open()
 
 					for(var/mob/M in end_location)
 						if(M.client)
@@ -196,9 +193,8 @@ var/datum/subsystem/shuttle/SSshuttle
 					if( prob(5) ) // 5% that they survive
 						start_location.move_contents_to(end_location, null, EAST)
 
-					for(var/obj/machinery/door/D in machines)
-						if( get_area(D) == end_location )
-							D.open()
+					for(var/obj/machinery/door/D in end_location)
+						D.open()
 						CHECK_TICK
 
 					for(var/mob/M in end_location)
@@ -300,7 +296,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				// Turn on the star effects
 
 				/* // kinda buggy atm, i'll fix this later
-				for(var/obj/effect/starspawner/S in world)
+				for(var/obj/effect/starspawner/S in not_world)
 					if(!S.spawning)
 						spawn() S.startspawn()
 				*/

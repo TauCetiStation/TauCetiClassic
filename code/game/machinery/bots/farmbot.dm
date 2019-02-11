@@ -62,7 +62,7 @@
 	botcard.access = req_access
 
 	if ( !tank ) //Should be set as part of making it... but lets check anyway
-		tank = locate(/obj/structure/reagent_dispensers/watertank/) in contents
+		tank = locate(/obj/structure/reagent_dispensers/watertank) in contents
 	if ( !tank ) //An admin must have spawned the farmbot! Better give it a tank.
 		tank = new /obj/structure/reagent_dispensers/watertank(src)
 
@@ -85,7 +85,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/bot/farmbot/proc/get_total_ferts()
-	var total_fert = 0
+	var/total_fert = 0
 	for (var/obj/item/nutrient/fert in contents)
 		total_fert++
 	return total_fert
@@ -291,7 +291,7 @@
 			if (human.stat == DEAD)
 				continue
 
-			var list/options = list(FARMBOT_MODE_WEED)
+			var/list/options = list(FARMBOT_MODE_WEED)
 			if ( get_total_ferts() )
 				options.Add(FARMBOT_MODE_FERTILIZE)
 			if ( tank && tank.reagents.total_volume >= 1 )
@@ -307,7 +307,7 @@
 				mode = FARMBOT_MODE_REFILL
 				return 1
 		for ( var/obj/machinery/hydroponics/tray in view(7,src) )
-			var newMode = GetNeededMode(tray)
+			var/newMode = GetNeededMode(tray)
 			if ( newMode )
 				mode = newMode
 				target = tray
@@ -393,7 +393,7 @@
 		return 1
 
 	else // feed them plants~
-		var /obj/machinery/hydroponics/tray = target
+		var/obj/machinery/hydroponics/tray = target
 		tray.nutrilevel = 10
 		tray.yieldmod = fert.yieldmod
 		tray.mutmod = fert.mutmod
@@ -424,7 +424,7 @@
 
 		else // yayyy take that weeds~
 			var/attackVerb = pick("slashed", "sliced", "cut", "clawed")
-			var /mob/living/carbon/human/human = target
+			var/mob/living/carbon/human/human = target
 
 			src.visible_message("\red <B>[src] [attackVerb] [human]!</B>")
 			var/damage = 5
@@ -438,7 +438,7 @@
 		spawn(FARMBOT_ACTION_DELAY)
 			mode = 0
 
-		var /obj/machinery/hydroponics/tray = target
+		var/obj/machinery/hydroponics/tray = target
 		tray.weedlevel = 0
 		tray.update_icon()
 
@@ -453,7 +453,7 @@
 		icon_state = "farmbot[src.on]"
 
 	if ( emagged ) // warning, humans are thirsty!
-		var splashAmount = min(70,tank.reagents.total_volume)
+		var/splashAmount = min(70,tank.reagents.total_volume)
 		src.visible_message("\red [src] splashes [target] with a bucket of water!")
 		playsound(src.loc, 'sound/effects/slosh.ogg', 25, 1)
 		if ( prob(50) )
@@ -467,7 +467,7 @@
 		spawn(FARMBOT_EMAG_DELAY)
 			mode = 0
 	else
-		var /obj/machinery/hydroponics/tray = target
+		var/obj/machinery/hydroponics/tray = target
 		var/b_amount = tank.reagents.get_reagent_amount("water")
 		if(b_amount > 0 && tray.waterlevel < 100)
 			if(b_amount + tray.waterlevel > 100)

@@ -194,6 +194,55 @@
 			if("edit_reason")
 				whitelist_edit(target_ckey, role)
 
+	else if(href_list["custom_items"])
+		if(!check_rights(R_PERMISSIONS))
+			return
+
+		var/target_ckey = ckey(href_list["ckey"])
+		var/task = href_list["custom_items"]
+		var/index = href_list["index"]
+		if(!task)
+			return
+
+		switch(task)
+			if("add")
+				customs_items_add()
+			if("addckey")
+				customs_items_add(target_ckey)
+			if("history")
+				customs_items_history(target_ckey)
+			if("history_remove")
+				index = text2num(index)
+				customs_items_remove(target_ckey, index)
+			if("moderation_view")
+				var/itemname = href_list["itemname"]
+				editing_item_list[usr.ckey] = get_custom_item(target_ckey, itemname)
+				if(editing_item_list[usr.ckey])
+					edit_custom_item_panel(null, usr, readonly = TRUE, adminview = TRUE)
+			if("moderation_accept")
+				var/itemname = href_list["itemname"]
+				custom_item_premoderation_accept(target_ckey, itemname)
+				if(href_list["viewthis"])
+					customitemsview_panel(target_ckey)
+				else
+					customitemspremoderation_panel()
+			if("moderation_reject")
+				var/itemname = href_list["itemname"]
+
+				var/reason = sanitize(input("Write reason for item rejection or leave empty for no reason","Text") as null|text)
+
+				custom_item_premoderation_reject(target_ckey, itemname, reason)
+				if(href_list["viewthis"])
+					customitemsview_panel(target_ckey)
+				else
+					customitemspremoderation_panel()
+			if("moderation_viewbyckey")
+				var/viewckey = ckey(input("Enter player ckey","Text") as null|text)
+				if(viewckey)
+					customitemsview_panel(viewckey)
+			if("moderation_viewpremoderation")
+				customitemspremoderation_panel()
+
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -207,7 +256,7 @@
 				if ((!( ticker ) || SSshuttle.location))
 					return
 				SSshuttle.incall()
-				captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+				captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
 				world << sound('sound/AI/shuttlecalled.ogg')
 				log_admin("[key_name(usr)] called the Emergency Shuttle")
 				message_admins("\blue [key_name_admin(usr)] called the Emergency Shuttle to the station")
@@ -219,7 +268,7 @@
 				switch(SSshuttle.direction)
 					if(-1)
 						SSshuttle.incall()
-						captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+						captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
 						log_admin("[key_name(usr)] called the Emergency Shuttle")
 						message_admins("\blue [key_name_admin(usr)] called the Emergency Shuttle to the station")
 						make_maint_all_access(FALSE)
@@ -239,7 +288,7 @@
 
 		SSshuttle.settimeleft( input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", SSshuttle.timeleft() ) as num )
 		log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [SSshuttle.timeleft()]")
-		captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+		captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
 		message_admins("\blue [key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [SSshuttle.timeleft()]")
 		href_list["secretsadmin"] = "check_antagonist"
 
@@ -297,7 +346,7 @@
 				newmeme.clearHUD()
 
 				var/found = 0
-				for(var/mob/living/carbon/human/H in mob_list) if(H.client && !H.parasites.len)
+				for(var/mob/living/carbon/human/H in human_list) if(H.client && !H.parasites.len)
 					found = 1
 					newmeme.enter_host(H)
 
@@ -909,63 +958,75 @@
 		return 0 //we didn't do anything!
 
 	else if(href_list["geoip"])
-		var/mob/M = locate(href_list["geoip"])
-		if (ismob(M))
-			if(!M.client)
-				return
-			var/dat = "<html><head><title>GeoIP info</title></head>"
-			var/client/C = M.client
-			if(C.geoip.status != "updated" || C.geoip.status != "admin")
-				C.geoip.try_update_geoip(C, C.address)
-			dat += "<center><b>Ckey:</b> [M.ckey]</center>"
-			dat += "<b>Country:</b> [C.geoip.country]<br>"
-			dat += "<b>CountryCode:</b> [C.geoip.countryCode]<br>"
-			dat += "<b>Region:</b> [C.geoip.region]<br>"
-			dat += "<b>Region Name:</b> [C.geoip.regionName]<br>"
-			dat += "<b>City:</b> [C.geoip.city]<br>"
-			dat += "<b>Timezone:</b> [C.geoip.timezone]<br>"
-			dat += "<b>ISP:</b> [C.geoip.isp]<br>"
-			dat += "<b>Mobile:</b> [C.geoip.mobile]<br>"
-			dat += "<b>Proxy:</b> [C.geoip.proxy]<br>"
-			dat += "<b>IP:</b> [C.geoip.ip]<br>"
-			dat += "<hr><b>Status:</b> [C.geoip.status]"
-			usr << browse(entity_ja(dat), "window=geoip")
+		if(!check_rights(R_LOG))
+			return
+		else
+			var/mob/M = locate(href_list["geoip"])
+			if (ismob(M))
+				if(!M.client)
+					return
+				var/dat = "<html><head><title>GeoIP info</title></head>"
+				var/client/C = M.client
+				if(C.geoip.status != "updated" || C.geoip.status != "admin")
+					C.geoip.try_update_geoip(C, C.address)
+				dat += "<center><b>Ckey:</b> [M.ckey]</center>"
+				dat += "<b>Country:</b> [C.geoip.country]<br>"
+				dat += "<b>CountryCode:</b> [C.geoip.countryCode]<br>"
+				dat += "<b>Region:</b> [C.geoip.region]<br>"
+				dat += "<b>Region Name:</b> [C.geoip.regionName]<br>"
+				dat += "<b>City:</b> [C.geoip.city]<br>"
+				dat += "<b>Timezone:</b> [C.geoip.timezone]<br>"
+				dat += "<b>ISP:</b> [C.geoip.isp]<br>"
+				dat += "<b>Mobile:</b> [C.geoip.mobile]<br>"
+				dat += "<b>Proxy:</b> [C.geoip.proxy]<br>"
+				dat += "<b>IP:</b> [C.geoip.ip]<br>"
+				dat += "<hr><b>Status:</b> [C.geoip.status]"
+				usr << browse(entity_ja(dat), "window=geoip")
 
 	else if(href_list["cid_list"])
-		var/mob/M = locate(href_list["cid_list"])
-		if (ismob(M))
-			if(!M.client)
-				return
-			var/client/C = M.client
-			var/dat = "<html><head><title>[C.ckey] cid list</title></head>"
-			dat += "<center><b>Ckey:</b> [C.ckey] | <b>Ignore warning:</b> [C.prefs.ignore_cid_warning ? "yes" : "no"]</center>"
-			for(var/x in C.prefs.cid_list)
-				dat += "<b>computer_id:</b> [x] - <b>first seen:</b> [C.prefs.cid_list[x]["first_seen"]] - <b>last seen:</b> [C.prefs.cid_list[x]["last_seen"]]<br>"
-			usr << browse(entity_ja(dat), "window=[C.ckey]_cid_list")
+		if(!check_rights(R_LOG))
+			return
+		else
+			var/mob/M = locate(href_list["cid_list"])
+			if (ismob(M))
+				if(!M.client)
+					return
+				var/client/C = M.client
+				var/dat = "<html><head><title>[C.ckey] cid list</title></head>"
+				dat += "<center><b>Ckey:</b> [C.ckey] | <b>Ignore warning:</b> [C.prefs.ignore_cid_warning ? "yes" : "no"]</center>"
+				for(var/x in C.prefs.cid_list)
+					dat += "<b>computer_id:</b> [x] - <b>first seen:</b> [C.prefs.cid_list[x]["first_seen"]] - <b>last seen:</b> [C.prefs.cid_list[x]["last_seen"]]<br>"
+				usr << browse(entity_ja(dat), "window=[C.ckey]_cid_list")
 
 	else if(href_list["cid_ignore"])
-		var/mob/M = locate(href_list["cid_ignore"])
-		if (ismob(M))
-			if(!M.client)
-				return
-			var/client/C = M.client
-			C.prefs.ignore_cid_warning = !(C.prefs.ignore_cid_warning)
-			log_admin("[key_name(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
-			message_admins("[key_name_admin(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
+		if(!check_rights(R_LOG))
+			return
+		else
+			var/mob/M = locate(href_list["cid_ignore"])
+			if (ismob(M))
+				if(!M.client)
+					return
+				var/client/C = M.client
+				C.prefs.ignore_cid_warning = !(C.prefs.ignore_cid_warning)
+				log_admin("[key_name(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
+				message_admins("[key_name_admin(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
 
 	else if(href_list["related_accounts"])
-		var/mob/M = locate(href_list["related_accounts"])
-		if (ismob(M))
-			if(!M.client)
-				return
-			var/client/C = M.client
+		if(!check_rights(R_LOG))
+			return
+		else
+			var/mob/M = locate(href_list["related_accounts"])
+			if (ismob(M))
+				if(!M.client)
+					return
+				var/client/C = M.client
 
-			var/dat = "<html><head><title>[C.key] related accounts by IP and cid</title></head>"
-			dat += "<center><b>Ckey:</b> [C.ckey]</center><br>"
-			dat += "<b>IP:</b> [C.related_accounts_ip]<hr>"
-			dat += "<b>CID:</b> [C.related_accounts_cid]"
+				var/dat = "<html><head><title>[C.key] related accounts by IP and cid</title></head>"
+				dat += "<center><b>Ckey:</b> [C.ckey]</center><br>"
+				dat += "<b>IP:</b> [C.related_accounts_ip]<hr>"
+				dat += "<b>CID:</b> [C.related_accounts_cid]"
 
-			usr << browse(entity_ja(dat), "window=[C.ckey]_related_accounts")
+				usr << browse(entity_ja(dat), "window=[C.ckey]_related_accounts")
 
 	else if(href_list["boot2"])
 		var/mob/M = locate(href_list["boot2"])
@@ -1210,8 +1271,8 @@
 		M.loc = prison_cell
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/prisoner = M
-			prisoner.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(prisoner), slot_w_uniform)
-			prisoner.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(prisoner), slot_shoes)
+			prisoner.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(prisoner), SLOT_W_UNIFORM)
+			prisoner.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(prisoner), SLOT_SHOES)
 
 		to_chat(M, "\red You have been sent to the prison station!")
 		log_admin("[key_name(usr)] sent [key_name(M)] to the prison station.")
@@ -1312,8 +1373,8 @@
 
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/observer = M
-			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket(observer), slot_w_uniform)
-			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(observer), slot_shoes)
+			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket(observer), SLOT_W_UNIFORM)
+			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(observer), SLOT_SHOES)
 		M.Paralyse(5)
 		sleep(5)
 		M.loc = pick(tdomeobserve)
@@ -1526,9 +1587,9 @@
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human")
 			return
 
-		H.equip_to_slot_or_del( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), slot_l_hand )
+		H.equip_to_slot_or_del( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), SLOT_L_HAND )
 		if(!(istype(H.l_hand,/obj/item/weapon/reagent_containers/food/snacks/cookie)))
-			H.equip_to_slot_or_del( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), slot_r_hand )
+			H.equip_to_slot_or_del( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), SLOT_R_HAND )
 			if(!(istype(H.r_hand,/obj/item/weapon/reagent_containers/food/snacks/cookie)))
 				log_admin("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
 				message_admins("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
@@ -1633,6 +1694,7 @@
 		var/obj/item/weapon/paper/P = new
 		P.name = "[command_name()]- [customname]"
 		P.info = input
+		P.update_icon()
 
 		var/obj/item/weapon/stamp/centcomm/S = new
 		S.stamp_paper(P, use_stamp_by_message = TRUE)
@@ -1885,14 +1947,14 @@
 			if("monkey")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","M")
-				for(var/mob/living/carbon/human/H in mob_list)
+				for(var/mob/living/carbon/human/H in human_list)
 					spawn(0)
 						H.monkeyize()
 				ok = 1
 			if("corgi")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","M")
-				for(var/mob/living/carbon/human/H in mob_list)
+				for(var/mob/living/carbon/human/H in human_list)
 					spawn(0)
 						H.corgize()
 				ok = 1
@@ -1975,7 +2037,7 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","PW")
 				message_admins("\blue [key_name_admin(usr)] teleported all players to the prison station.")
-				for(var/mob/living/carbon/human/H in mob_list)
+				for(var/mob/living/carbon/human/H in human_list)
 					var/turf/loc = find_loc(H)
 					var/security = 0
 					if(loc.z > ZLEVEL_STATION || prisonwarped.Find(H))
@@ -1996,8 +2058,8 @@
 							H.drop_from_inventory(W)
 						//teleport person to cell
 						H.loc = pick(prisonwarp)
-						H.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(H), slot_w_uniform)
-						H.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(H), slot_shoes)
+						H.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(H), SLOT_W_UNIFORM)
+						H.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(H), SLOT_SHOES)
 					else
 						//teleport security person
 						H.loc = pick(prisonsecuritywarp)
@@ -2248,15 +2310,12 @@
 			if("friendai")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","FA")
-				for(var/mob/camera/Eye/ai/aE in mob_list)
+				for(var/mob/camera/Eye/ai/aE in ai_eyes_list)
 					aE.icon_state = "ai_friend"
-				for(var/obj/machinery/M in machines)
-					if(istype(M, /obj/machinery/ai_status_display))
-						var/obj/machinery/ai_status_display/A = M
-						A.emotion = "Friend Computer"
-					else if(istype(M, /obj/machinery/status_display))
-						var/obj/machinery/status_display/A = M
-						A.friendc = 1
+				for(var/obj/machinery/ai_status_display/A in ai_status_display_list)
+					A.emotion = "Friend Computer"
+				for(var/obj/machinery/status_display/A in status_display_list)
+					A.friendc = 1
 				message_admins("[key_name_admin(usr)] turned all AIs into best friends.")
 			if("floorlava")
 				SSweather.run_weather("the floor is lava", ZLEVEL_STATION)
@@ -2301,7 +2360,7 @@
 			if("eagles")//SCRAW
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","EgL")
-				for(var/obj/machinery/door/airlock/W in machines)
+				for(var/obj/machinery/door/airlock/W in airlock_list)
 					if(W.z == ZLEVEL_STATION && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
 						W.req_access = list()
 				message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
@@ -2310,7 +2369,7 @@
 			if("dorf")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","DF")
-				for(var/mob/living/carbon/human/B in mob_list)
+				for(var/mob/living/carbon/human/B in human_list)
 					B.f_style = "Dward Beard"
 					B.update_hair()
 				message_admins("[key_name_admin(usr)] activated dorf mode")
@@ -2357,13 +2416,13 @@
 				var/choice1 = input("Are you sure you want to cure all disease?") in list("Yes", "Cancel")
 				if(choice1 == "Yes")
 					message_admins("[key_name_admin(usr)] has cured all diseases.")
-					for(var/mob/living/carbon/M in mob_list)
+					for(var/mob/living/carbon/M in carbon_list)
 						if(M.virus2.len)
 							for(var/ID in M.virus2)
 								var/datum/disease2/disease/V = M.virus2[ID]
 								V.cure(M)
 
-					for(var/obj/effect/decal/cleanable/O in world)
+					for(var/obj/effect/decal/cleanable/O in decal_cleanable)
 						if(istype(O,/obj/effect/decal/cleanable/blood))
 							var/obj/effect/decal/cleanable/blood/B = O
 							if(B.virus2.len)
@@ -2427,7 +2486,7 @@
 			if("manifest")
 				var/dat = "<B>Showing Crew Manifest.</B><HR>"
 				dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
-				for(var/mob/living/carbon/human/H in mob_list)
+				for(var/mob/living/carbon/human/H in human_list)
 					if(H.ckey)
 						dat += text("<tr><td>[]</td><td>[]</td></tr>", H.name, H.get_assignment())
 				dat += "</table>"
@@ -2437,7 +2496,7 @@
 			if("DNA")
 				var/dat = "<B>Showing DNA from blood.</B><HR>"
 				dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
-				for(var/mob/living/carbon/human/H in mob_list)
+				for(var/mob/living/carbon/human/H in human_list)
 					if(H.dna && H.ckey)
 						dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.b_type]</td></tr>"
 				dat += "</table>"
@@ -2445,7 +2504,7 @@
 			if("fingerprints")
 				var/dat = "<B>Showing Fingerprints.</B><HR>"
 				dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
-				for(var/mob/living/carbon/human/H in mob_list)
+				for(var/mob/living/carbon/human/H in human_list)
 					if(H.ckey)
 						if(H.dna && H.dna.uni_identity)
 							dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"
@@ -2473,12 +2532,12 @@
 					dat += "No-one has done anything this round!"
 				usr << browse(entity_ja(dat), "window=admin_log")
 			if("maint_access_brig")
-				for(var/obj/machinery/door/airlock/maintenance/M in machines)
+				for(var/obj/machinery/door/airlock/maintenance/M in airlock_list)
 					if (access_maint_tunnels in M.req_access)
 						M.req_access = list(access_brig)
 				message_admins("[key_name_admin(usr)] made all maint doors brig access-only.")
 			if("maint_access_engiebrig")
-				for(var/obj/machinery/door/airlock/maintenance/M in machines)
+				for(var/obj/machinery/door/airlock/maintenance/M in airlock_list)
 					if (access_maint_tunnels in M.req_access)
 						M.req_access = list()
 						M.req_one_access = list(access_brig,access_engine)
@@ -2774,10 +2833,6 @@
 		library_recycle_bin()
 		log_admin("[key_name_admin(usr)] restored [title] from the recycle bin")
 		message_admins("[key_name_admin(usr)] removed [title] from the library database")
-
-	else if(href_list["populate_inactive_customitems"])
-		if(check_rights(R_ADMIN|R_SERVER))
-			populate_inactive_customitems_list(src.owner)
 
 	else if(href_list["vsc"])
 		if(check_rights(R_ADMIN|R_SERVER))

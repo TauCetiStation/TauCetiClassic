@@ -11,7 +11,7 @@
 	var/mob_met_factor = 1
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		mob_met_factor = C.metabolism_factor
+		mob_met_factor = C.get_metabolism_factor()
 	if(volume > last_volume)
 		var/to_add = rand(0, volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor
 		M.reagents.add_reagent("nutriment", ((volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor) - to_add)
@@ -31,8 +31,8 @@
 	id = "nutriment"
 	description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
 	reagent_state = SOLID
-	nutriment_factor = 1 // 1 nutriment reagent should be 2.5 nutrition, see custom metabolism below.
-	custom_metabolism = FOOD_METABOLISM
+	nutriment_factor = 2 // 1 nutriment reagent is 2.5 nutrition actually, which is confusing, but it works.
+	custom_metabolism = FOOD_METABOLISM * 2 // It's balanced so you gain the nutrition, but slightly faster.
 	color = "#664330" // rgb: 102, 67, 48
 	taste_message = "bland food"
 

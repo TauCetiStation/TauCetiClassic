@@ -5,11 +5,17 @@
 	amount = 5
 	max_amount = 5
 	w_class = ITEM_SIZE_TINY
-	full_w_class = ITEM_SIZE_TINY
+	full_w_class = ITEM_SIZE_SMALL
 	throw_speed = 4
 	throw_range = 20
 	var/heal_brute = 0
 	var/heal_burn = 0
+
+/obj/item/stack/medical/update_weight()
+	if(amount < 3)
+		w_class = initial(w_class)
+	else
+		w_class = full_w_class
 
 /obj/item/stack/medical/attack(mob/living/carbon/M, mob/user, def_zone)
 	if(!istype(M))
@@ -108,6 +114,9 @@
 			else
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
 
+/obj/item/stack/medical/bruise_pack/update_icon()
+	icon_state = "[initial(icon_state)][amount]"
+
 /obj/item/stack/medical/ointment
 	name = "ointment"
 	desc = "Used to treat those nasty burns."
@@ -150,6 +159,9 @@
 			else
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
 
+/obj/item/stack/medical/ointment/update_icon()
+	icon_state = "[initial(icon_state)][amount]"
+
 /obj/item/stack/medical/bruise_pack/tajaran
 	name = "\improper S'rendarr's Hand leaf"
 	singular_name = "S'rendarr's Hand leaf"
@@ -158,6 +170,9 @@
 	icon_state = "shandp"
 	heal_brute = 7
 
+/obj/item/stack/medical/bruise_pack/tajaran/update_icon()
+	return
+
 /obj/item/stack/medical/ointment/tajaran
 	name = "\improper Messa's Tear petals"
 	singular_name = "Messa's Tear petals"
@@ -165,6 +180,9 @@
 	icon = 'icons/obj/harvest.dmi'
 	icon_state = "mtearp"
 	heal_burn = 7
+
+/obj/item/stack/medical/ointment/tajaran/update_icon()
+	return
 
 /obj/item/stack/medical/advanced/bruise_pack
 	name = "advanced trauma kit"
@@ -287,6 +305,8 @@
 	icon_state = "splint"
 	amount = 5
 	max_amount = 5
+	w_class = ITEM_SIZE_SMALL
+	full_w_class = ITEM_SIZE_SMALL
 
 /obj/item/stack/medical/splint/attack(mob/living/carbon/M, mob/user, def_zone)
 	if(..())

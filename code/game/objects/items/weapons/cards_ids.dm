@@ -127,7 +127,7 @@
 	var/mining_points = 0 //For redeeming at mining equipment lockers
 	var/access = list()
 	var/registered_name = "Unknown" // The name registered_name on the card
-	slot_flags = SLOT_ID
+	slot_flags = SLOT_FLAGS_ID
 	var/customizable_view = UNIVERSAL_VIEW
 	var/blood_type = "\[UNSET\]"
 	var/dna_hash = "\[UNSET\]"
@@ -217,6 +217,12 @@
 	desc = "A card issued to security staff."
 	icon_state = "sec"
 	item_state = "sec_id"
+
+/obj/item/weapon/card/id/int
+	name = "identification card"
+	desc = "A card issued to internal affairs agent."
+	icon_state = "int"
+	item_state = "int_id"
 
 /obj/item/weapon/card/id/secGold
 	name = "identification card"
@@ -329,13 +335,13 @@
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user)
 	if(!src.registered_name)
 		//Stop giving the players unsanitized unputs! You are giving ways for players to intentionally crash clients! -Nodrak
-		var t = sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", input_default(ishuman(user) ? user.real_name : user.name)))
+		var/t = sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", input_default(ishuman(user) ? user.real_name : user.name)))
 		if(!t) //Same as mob/dead/new_player/prefrences.dm
 			alert("Invalid name.")
 			return
 		src.registered_name = t
 
-		var u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Agent"))
+		var/u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Agent"))
 		if(!u)
 			alert("Invalid assignment.")
 			src.registered_name = ""
@@ -350,13 +356,13 @@
 
 		switch(alert("Would you like to display the ID, change its look, or retitle it?","Choose.","Rename", "Change look","Show"))
 			if("Rename")
-				var t = sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", input_default(ishuman(user) ? user.real_name : user.name)))
+				var/t = sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", input_default(ishuman(user) ? user.real_name : user.name)))
 				if(!t) //Same as mob/dead/new_player/prefrences.dm
 					alert("Invalid name.")
 					return
 				src.registered_name = t
 
-				var u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Test Subject"))
+				var/u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Test Subject"))
 				if(!u)
 					alert("Invalid assignment.")
 					return

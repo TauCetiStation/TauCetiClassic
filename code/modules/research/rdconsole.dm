@@ -119,7 +119,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 //Have it automatically push research to the centcomm server so wild griffins can't fuck up R&D's work --NEO
 /obj/machinery/computer/rdconsole/proc/griefProtection()
-	for(var/obj/machinery/r_n_d/server/centcom/C in machines)
+	for(var/obj/machinery/r_n_d/server/centcom/C in rnd_server_list)
 		for(var/datum/tech/T in files.known_tech)
 			C.files.AddTech2Known(T)
 		for(var/datum/design/D in files.known_designs)
@@ -131,7 +131,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	. = ..()
 	files = new /datum/research(src) //Setup the research data holder.
 	if(!id)
-		for(var/obj/machinery/r_n_d/server/centcom/S in machines)
+		for(var/obj/machinery/r_n_d/server/centcom/S in rnd_server_list)
 			S.atom_init()
 			break
 
@@ -144,7 +144,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	griefProtection()
 */
 
-/obj/machinery/computer/rdconsole/attackby(obj/item/weapon/D, mob/user)
+/obj/machinery/computer/rdconsole/attackby(obj/item/D, mob/user)
 	//Loading a disk into it.
 	if(istype(D, /obj/item/weapon/disk))
 		if(t_disk || d_disk)
@@ -167,6 +167,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		emagged = 1
 		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "\blue You you disable the security protocols")
+	else if(istype(D, /obj/item/device/multitool))
+		var/obj/item/device/multitool/M = D
+		M.buffer = src
+		to_chat(user, "<span class='notice'>You save the data in the [D.name]'s buffer.</span>")
 	else
 		//The construction/deconstruction of the console code.
 		..()
@@ -314,7 +318,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			griefProtection() //Putting this here because I dont trust the sync process
 			spawn(30)
 				if(src)
-					for(var/obj/machinery/r_n_d/server/S in machines)
+					for(var/obj/machinery/r_n_d/server/S in rnd_server_list)
 						var/server_processed = 0
 						if(S.disabled)
 							continue
@@ -354,7 +358,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				var/amount=text2num(href_list["amount"])
 				amount = max(1, min(10, amount))
 				for(var/M in being_built.materials)
-					power += round(being_built.materials[M] * amount/ 5)
+					power += round(being_built.materials[M] * amount / 5)
 				power = max(2000, power)
 				screen = 0.3
 				if(linked_lathe.busy)
@@ -632,12 +636,26 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		if(1.1) //Research viewer
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=1.11'>Print</A><BR>"
 			dat += "<h3>Current Research Levels:</h3><BR><div class='statusDisplay'>"
 			for(var/datum/tech/T in files.known_tech)
 				dat += "[T.name]<BR>"
 				dat +=  "* Level: [T.level]<BR>"
 				dat +=  "* Summary: [T.desc]<HR>"
 			dat += "</div>"
+
+		if(1.11)
+			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
+			var/t1
+			for(var/datum/tech/T in files.known_tech)
+				t1 += "[T.name]<BR>"
+				t1 +=  "* Level: [T.level]<BR>"
+				t1 +=  "* Summary: [T.desc]<HR>"
+			t1 += "</div>"
+			P.info = t1
+			P.update_icon()
+			screen = 1.0
+			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
 
 		if(1.2) //Technology Disk Menu
 

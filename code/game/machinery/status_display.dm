@@ -44,9 +44,11 @@
 
 /obj/machinery/status_display/atom_init()
 	. = ..()
+	status_display_list += src
 	radio_controller.add_object(src, frequency)
 
 /obj/machinery/status_display/Destroy()
+	status_display_list -= src
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
 	return ..()
@@ -221,6 +223,13 @@
 
 	var/emotion = "Neutral"
 
+/obj/machinery/ai_status_display/atom_init()
+	. = ..()
+	ai_status_display_list += src
+
+/obj/machinery/ai_status_display/Destroy()
+	ai_status_display_list -= src
+	return ..()
 
 /obj/machinery/ai_status_display/process()
 	if(stat & NOPOWER)
@@ -287,7 +296,7 @@
 	overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
 
 #undef CHARS_PER_LINE
-#undef FOND_SIZE
+#undef FONT_SIZE
 #undef FONT_COLOR
 #undef FONT_STYLE
 #undef SCROLL_SPEED

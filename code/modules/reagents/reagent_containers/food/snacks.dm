@@ -47,27 +47,28 @@
 
 	if(!CanEat(user, M, src, "eat")) return	//tc code
 
-	if(istype(M, /mob/living/carbon))
-		var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
-		if(M == user)								//If you're eating it yourself
-			if(istype(M,/mob/living/carbon/human))
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		var/fullness = C.get_nutrition()
+		if(C == user)								//If you're eating it yourself
+			if(ishuman(C))
 				var/mob/living/carbon/human/H = M
 				if(H.species.flags[IS_SYNTHETIC])
 					to_chat(H, "<span class='rose'>You have a monitor for a head, where do you think you're going to put that?</span>")
 					return
 			if (fullness <= 50)
-				to_chat(M, "<span class='rose'>You hungrily chew out a piece of [src] and gobble it!</span>")
+				to_chat(C, "<span class='rose'>You hungrily chew out a piece of [src] and gobble it!</span>")
 			if (fullness > 50 && fullness <= 150)
-				to_chat(M, "<span class='notice'>You hungrily begin to eat [src].</span>")
+				to_chat(C, "<span class='notice'>You hungrily begin to eat [src].</span>")
 			if (fullness > 150 && fullness <= 350)
-				to_chat(M, "<span class='notice'>You take a bite of [src].</span>")
+				to_chat(C, "<span class='notice'>You take a bite of [src].</span>")
 			if (fullness > 350 && fullness <= 550)
-				to_chat(M, "<span class='notice'>You unwillingly chew a bit of [src].</span>")
+				to_chat(C, "<span class='notice'>You unwillingly chew a bit of [src].</span>")
 			if (fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
-				to_chat(M, "<span class='rose'>You cannot force any more of [src] to go down your throat.</span>")
+				to_chat(C, "<span class='rose'>You cannot force any more of [src] to go down your throat.</span>")
 				return 0
 		else
-			if(istype(M,/mob/living/carbon/human))
+			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.species.flags[IS_SYNTHETIC])
 					to_chat(H, "<span class='rose'>They have a monitor for a head, where do you think you're going to put that?</span>")
@@ -1273,6 +1274,7 @@
 	name = "chow mein"
 	desc = "What is in this anyways?"
 	icon_state = "chinese1"
+	trash = /obj/item/trash/chinese1
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/chowmein/atom_init()
 	. = ..()
@@ -1284,6 +1286,7 @@
 	name = "Sweet & Sour Chicken Balls"
 	desc = "Is this chicken cooked? The odds are better than wok paper scissors."
 	icon_state = "chickenball"
+	trash = /obj/item/trash/snack_bowl
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball/atom_init()
 	. = ..()
@@ -1294,6 +1297,7 @@
 	name = "Admiral Yamamoto carp"
 	desc = "Tastes like chicken."
 	icon_state = "chinese2"
+	trash = /obj/item/trash/chinese2
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/tao/atom_init()
 	. = ..()
@@ -1305,6 +1309,7 @@
 	name = "chinese newdles"
 	desc = "Made fresh, weekly!"
 	icon_state = "chinese3"
+	trash = /obj/item/trash/chinese3
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/newdles/atom_init()
 	. = ..()
@@ -1315,6 +1320,7 @@
 	name = "fried rice"
 	desc = "A timeless classic."
 	icon_state = "chinese4"
+	trash = /obj/item/trash/chinese4
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/rice/atom_init()
 	. = ..()
@@ -2992,7 +2998,7 @@
 	update_icon()
 
 /obj/item/pizzabox/attackby( obj/item/I, mob/user )
-	if( istype(I, /obj/item/pizzabox/) )
+	if( istype(I, /obj/item/pizzabox) )
 		var/obj/item/pizzabox/box = I
 
 		if( !box.open && !src.open )
@@ -3020,7 +3026,7 @@
 
 		return
 
-	if( istype(I, /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/) ) // Long ass fucking object name
+	if( istype(I, /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza) ) // Long ass fucking object name
 
 		if( src.open )
 			user.drop_item()
@@ -3034,7 +3040,7 @@
 			to_chat(user, "<span class='rose'>You try to push the [I] through the lid but it doesn't work!</span>")
 		return
 
-	if( istype(I, /obj/item/weapon/pen/) )
+	if( istype(I, /obj/item/weapon/pen) )
 
 		if( src.open )
 			return
@@ -4345,3 +4351,11 @@
 /obj/item/weapon/reagent_containers/food/snacks/ectoplasm/atom_init()
 	. = ..()
 	reagents.add_reagent("ectoplasm", 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/fries/cardboard
+	icon_state = "fries_cardboard"
+	trash = /obj/item/trash/fries
+
+/obj/item/weapon/reagent_containers/food/snacks/cheesyfries/cardboard
+	icon_state = "cheesyfries_cardboard"
+	trash = /obj/item/trash/fries

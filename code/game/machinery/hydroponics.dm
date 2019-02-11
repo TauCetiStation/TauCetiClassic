@@ -317,10 +317,10 @@
 	return
 
 
-obj/machinery/hydroponics/proc/hardmutate() // Strongly mutates the current seed.
+/obj/machinery/hydroponics/proc/hardmutate() // Strongly mutates the current seed.
 	mutate(4, 10, 2, 4, 50)
 
-obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
+/obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	if(!planted || dead)
 		return
 
@@ -421,20 +421,20 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 			qdel(reagent_source)
 		else
 			reagent_source.reagents.trans_to(S,reagent_source.amount_per_transfer_from_this)
-			if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe/))
+			if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe))
 				var/obj/item/weapon/reagent_containers/syringe/syr = reagent_source
 				visible_message("<span class='notice'>[user] injects [target] with [syr].</span>")
 				if(syr.reagents.total_volume <= 0)
 					syr.mode = 0
 					syr.update_icon()
-			else if(istype(reagent_source, /obj/item/weapon/reagent_containers/spray/))
+			else if(istype(reagent_source, /obj/item/weapon/reagent_containers/spray))
 				visible_message("<span class='notice'>[user] sprays [target] with [reagent_source].</span>")
 				playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 			else if(reagent_source.amount_per_transfer_from_this) // Droppers, cans, beakers, what have you.
 				visible_message("<span class='notice'>[user] uses [reagent_source] on [target].</span>")
 
 			// Beakers, bottles, buckets, etc.  Can't use is_open_container though.
-			if(istype(reagent_source, /obj/item/weapon/reagent_containers/glass/))
+			if(istype(reagent_source, /obj/item/weapon/reagent_containers/glass))
 				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 
 		// There needs to be a good amount of mutagen to actually work
@@ -609,7 +609,7 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 		update_icon()
 		return TRUE
 
-	else if ( istype(O, /obj/item/seeds/) )
+	else if ( istype(O, /obj/item/seeds) )
 		if(!planted)
 			user.remove_from_mob(O)
 			to_chat(user, "You plant the [O.name]")
@@ -891,7 +891,7 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 /obj/machinery/hydroponics/proc/update_tray(mob/user = usr)
 	harvest = FALSE
 	lastproduce = age
-	if(istype(myseed,/obj/item/seeds/replicapod/))
+	if(istype(myseed,/obj/item/seeds/replicapod))
 		to_chat(user, "<span class='notice'>You harvest from the [myseed.plantname].</span>")
 	else if(myseed.getYield() <= 0)
 		to_chat(user, "<span class='warning'>You fail to harvest anything useful!</span>")

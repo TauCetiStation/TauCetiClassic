@@ -351,6 +351,9 @@
 		return
 	if(isessence(usr) || isrobot(usr))
 		return
+	var/obj/item/weapon/W = O
+	if(!W.canremove || W.flags & NODROP)
+		return
 	user.drop_item()
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
@@ -391,6 +394,8 @@
 		return
 
 	if(isrobot(user))
+		return
+	if(!W.canremove || W.flags & NODROP)
 		return
 
 	if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W,/obj/item/weapon/twohanded/dualsaber))
@@ -440,7 +445,7 @@
 	T = locate() in get_step(src.loc,direction)
 	if (!T || T.flipped)
 		return 1
-	if (istype(T,/obj/structure/table/reinforced/))
+	if (istype(T,/obj/structure/table/reinforced))
 		var/obj/structure/table/reinforced/R = T
 		if (R.status == 2)
 			return 0
@@ -759,6 +764,9 @@
 		return
 	if(isrobot(user) || isessence(user))
 		return
+	var/obj/item/weapon/W = O
+	if(!W.canremove || W.flags & NODROP)
+		return
 	user.drop_item()
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
@@ -783,6 +791,8 @@
 			destroy()
 			return
 	if(isrobot(user))
+		return
+	if(!W.canremove || W.flags & NODROP)
 		return
 	user.drop_item()
 	if(W && W.loc)	W.loc = src.loc

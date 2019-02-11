@@ -52,9 +52,13 @@
 
 		var/obj/item/stack/sheet/rglass/RG = new (user.loc)
 		RG.add_fingerprint(user)
-		var/replace = user.get_inactive_hand() == src
-		if(QDELETED(src) && replace)
-			user.put_in_hands(RG)
+		for(var/obj/item/stack/sheet/rglass/G in user.loc)
+			if(G==RG)
+				continue
+			if(G.get_amount() >= G.max_amount)
+				continue
+			G.attackby(RG, user)
+			to_chat(usr, "You add the reinforced glass to the stack. It now contains [RG.get_amount()] sheets.")
 	else
 		return ..()
 
@@ -250,11 +254,11 @@
 			if(QDELETED(src) || src.loc != user)
 				return 1
 
-			if(isturf(user.loc) && locate(/obj/structure/windoor_assembly/, user.loc))
+			if(isturf(user.loc) && locate(/obj/structure/windoor_assembly, user.loc))
 				to_chat(user, "\red There is already a windoor assembly in that location.")
 				return 1
 
-			if(isturf(user.loc) && locate(/obj/machinery/door/window/, user.loc))
+			if(isturf(user.loc) && locate(/obj/machinery/door/window, user.loc))
 				to_chat(user, "\red There is already a windoor in that location.")
 				return 1
 
@@ -328,7 +332,7 @@
 			return
 	return ..()
 
-/obj/item/weapon/shard/Crossed(AM as mob|obj)
+/obj/item/weapon/shard/Crossed(atom/movable/AM)
 	if(ismob(AM))
 		var/mob/M = AM
 		to_chat(M, "\red <B>You step in the broken glass!</B>")
@@ -342,12 +346,16 @@
 			if(H.wear_suit && (H.wear_suit.body_parts_covered & LEGS) && H.wear_suit.flags & THICKMATERIAL)
 				return
 
+			if(H.species.flags[NO_MINORCUTS])
+				return
+
 			if(!H.shoes)
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
 				if(BP.status & ORGAN_ROBOT)
 					return
-				H.Weaken(3)
 				BP.take_damage(5, 0)
+				if(!H.species.flags[NO_PAIN])
+					H.Weaken(3)
 				H.updatehealth()
 	..()
 

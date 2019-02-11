@@ -71,6 +71,8 @@
 	if(opened)
 		if(isrobot(user))
 			return
+		if(!W.canremove || W.flags & NODROP)
+			return
 		user.drop_item()
 		if(W)
 			W.forceMove(src.loc)

@@ -130,7 +130,7 @@
 				target.remove_from_mob(W)
 				W.add_fingerprint(source)
 			else
-				if ((istype(item, /obj/item) && item.slot_flags & SLOT_BACK ))
+				if ((istype(item, /obj/item) && item.slot_flags & SLOT_FLAGS_BACK ))
 					source.drop_item()
 					loc = target
 					item.layer = ABOVE_HUD_LAYER
@@ -181,30 +181,30 @@
 		u_equip(W)
 
 	switch(slot)
-		if(slot_back)
+		if(SLOT_BACK)
 			src.back = W
 			equip_to_slot_if_possible(W,slot,0,1)
 			update_inv_back(redraw_mob)
-		if(slot_wear_mask)
+		if(SLOT_WEAR_MASK)
 			src.wear_mask = W
 			equip_to_slot_if_possible(W,slot,0,1)
 			update_inv_wear_mask(redraw_mob)
-		if(slot_handcuffed)
+		if(SLOT_HANDCUFFED)
 			src.handcuffed = W
 			update_inv_handcuffed(redraw_mob)
-		if(slot_legcuffed)
+		if(SLOT_LEGCUFFED)
 			src.legcuffed = W
 			equip_to_slot_if_possible(W,slot,0,1)
 			update_inv_legcuffed(redraw_mob)
-		if(slot_l_hand)
+		if(SLOT_L_HAND)
 			src.l_hand = W
 			equip_to_slot_if_possible(W,slot,0,1)
 			update_inv_l_hand(redraw_mob)
-		if(slot_r_hand)
+		if(SLOT_R_HAND)
 			src.r_hand = W
 			equip_to_slot_if_possible(W,slot,0,1)
 			update_inv_r_hand(redraw_mob)
-		if(slot_in_backpack)
+		if(SLOT_IN_BACKPACK)
 			W.forceMove(src.back)
 		else
 			to_chat(usr, "<span class='red'>You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>")

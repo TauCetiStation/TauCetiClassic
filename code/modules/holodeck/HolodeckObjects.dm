@@ -20,7 +20,7 @@
 			var/turf/simulated/floor/FF = get_step(src,direction)
 			FF.update_icon() //so siding get updated properly
 
-turf/simulated/floor/holofloor/update_icon()
+/turf/simulated/floor/holofloor/update_icon()
 	if(icon_state in icons_to_ignore_at_floor_init)
 		return
 	else
@@ -73,7 +73,7 @@ turf/simulated/floor/holofloor/update_icon()
 
 	..()
 
-/obj/structure/table/woodentable/holotable
+/obj/structure/table/holotable/wooden
 	name = "table"
 	desc = "A square piece of wood standing on four wooden legs. It can not move."
 	icon = 'icons/obj/tables.dmi'
@@ -185,7 +185,7 @@ turf/simulated/floor/holofloor/update_icon()
 		visible_message("[src] fades away as it shatters!")
 	qdel(src)
 
-obj/structure/stool/bed/chair/holochair
+/obj/structure/stool/bed/chair/holochair
 	icon_state = "chair_g"
 
 /obj/structure/stool/bed/chair/holochair/attackby(obj/item/weapon/W, mob/user)

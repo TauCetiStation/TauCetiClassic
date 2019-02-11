@@ -35,6 +35,36 @@
 	var/stat_msg1
 	var/stat_msg2
 
+/obj/machinery/computer/communications/atom_init()
+	. = ..()
+	communications_list += src
+
+/obj/machinery/computer/communications/Destroy()
+	communications_list -= src
+
+	for(var/obj/machinery/computer/communications/commconsole in communications_list)
+		if(istype(commconsole.loc, /turf))
+			return ..()
+
+	for(var/obj/item/weapon/circuitboard/communications/commboard in circuitboard_communications_list)
+		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
+			return ..()
+
+	for(var/mob/living/silicon/ai/shuttlecaller in ai_list)
+		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
+			return ..()
+
+	if(sent_strike_team)
+		return ..()
+
+	SSshuttle.incall(2)
+	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
+	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
+	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
+	world << sound('sound/AI/shuttlecalled.ogg')
+
+	return ..()
+
 /obj/machinery/computer/communications/process()
 	if(..())
 		if(state != STATE_STATUSDISPLAY)
@@ -260,7 +290,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/computer/communications/attackby(obj/I, mob/user)
-	if(istype(I,/obj/item/weapon/card/emag/))
+	if(istype(I,/obj/item/weapon/card/emag))
 		src.emagged = 1
 		to_chat(user, "You scramble the communication routing circuits!")
 	else
@@ -273,9 +303,8 @@
 		return
 
 	var/dat = "<head><title>Communications Console</title></head><body>"
-	if (SSshuttle.online && SSshuttle.location==0)
-		var/timeleft = SSshuttle.timeleft()
-		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [timeleft / 60 % 60]:[add_zero(num2text(timeleft % 60), 2)]<BR>"
+	if (SSshuttle.online && SSshuttle.location == 0)
+		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [shuttleeta2text()]<BR>"
 
 	if (issilicon(user))
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
@@ -435,7 +464,7 @@
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-	captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
 	world << sound('sound/AI/shuttlecalled.ogg')
 
 	make_maint_all_access(FALSE)
@@ -476,7 +505,7 @@
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-	captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+	captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
 
 	return
 
@@ -520,54 +549,3 @@
 			status_signal.data["picture_state"] = data1
 
 	frequency.post_signal(src, status_signal)
-
-
-/obj/machinery/computer/communications/Destroy()
-
-	for(var/obj/machinery/computer/communications/commconsole in machines)
-		if(istype(commconsole.loc, /turf) && commconsole != src)
-			return ..()
-
-	for(var/obj/item/weapon/circuitboard/communications/commboard in machines)
-		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
-			return ..()
-
-	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
-		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
-			return ..()
-
-	if(sent_strike_team)
-		return ..()
-
-	SSshuttle.incall(2)
-	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
-	world << sound('sound/AI/shuttlecalled.ogg')
-
-	return ..()
-
-/obj/item/weapon/circuitboard/communications/Destroy()
-
-	for(var/obj/machinery/computer/communications/commconsole in machines)
-		if(istype(commconsole.loc,/turf))
-			return ..()
-
-	for(var/obj/item/weapon/circuitboard/communications/commboard in machines)
-		if((istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage)) && commboard != src)
-			return ..()
-
-	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
-		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
-			return ..()
-
-	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || sent_strike_team)
-		return ..()
-
-	SSshuttle.incall(2)
-	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
-	world << sound('sound/AI/shuttlecalled.ogg')
-
-	return ..()

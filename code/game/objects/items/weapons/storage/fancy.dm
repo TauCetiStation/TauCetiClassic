@@ -14,7 +14,7 @@
  *		Cigarette Box
  */
 
-/obj/item/weapon/storage/fancy/
+/obj/item/weapon/storage/fancy
 	icon = 'icons/obj/food.dmi'
 	icon_state = "donutbox6"
 	name = "donut box"
@@ -64,7 +64,6 @@
 	icon_type = "egg"
 	name = "egg box"
 	storage_slots = 12
-	max_combined_w_class = 24
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/egg")
 
 /obj/item/weapon/storage/fancy/egg_box/atom_init()
@@ -77,32 +76,56 @@
  */
 
 /obj/item/weapon/storage/fancy/candle_box
-	name = "candle pack"
-	desc = "A pack of red candles."
+	name = "white candle pack"
+	desc = "A pack of white candles."
 	icon = 'icons/obj/candle.dmi'
-	icon_state = "candlebox5"
+	icon_state = "candlebox"
 	icon_type = "candle"
-	item_state = "candlebox5"
+	item_state = "candlebox"
 	storage_slots = 5
 	throwforce = 2
-	slot_flags = SLOT_BELT
-
+	slot_flags = SLOT_FLAGS_BELT
+	var/candle_type = "white"
 
 /obj/item/weapon/storage/fancy/candle_box/atom_init()
 	. = ..()
-	for (var/i in 1 to storage_slots)
-		new /obj/item/candle(src)
+	if(candle_type == "white")
+		for (var/i in 1 to storage_slots)
+			new /obj/item/candle(src)
+	if(candle_type == "red")
+		for (var/i in 1 to storage_slots)
+			new /obj/item/candle/red(src)
+	update_icon()
+
+/obj/item/weapon/storage/fancy/candle_box/update_icon()
+	var/list/candle_overlays = list()
+	var/candle_position = 0
+	for(var/obj/item/candle/C in contents)
+		candle_position ++
+		var/candle_color = "red_"
+		if(C.name == "white candle")
+			candle_color = "white_"
+		if(C.name == "black candle")
+			candle_color = "black_"
+		candle_overlays += image('icons/obj/candle.dmi', "[candle_color][candle_position]")
+	overlays = candle_overlays
+	return
+
+/obj/item/weapon/storage/fancy/candle_box/red
+	name = "red candle pack"
+	desc = "A pack of red candles."
+	candle_type = "red"
 
 /obj/item/weapon/storage/fancy/black_candle_box
-	name = "candle pack"
+	name = "black candle pack"
 	desc = "A pack of black candles."
 	icon = 'icons/obj/candle.dmi'
-	icon_state = "gcandlebox5"
-	icon_type = "gcandle"
-	item_state = "gcandlebox5"
+	icon_state = "black_candlebox5"
+	icon_type = "black_candle"
+	item_state = "black_candlebox5"
 	storage_slots = 5
 	throwforce = 2
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	var/cooldown = 0
 	var/teleporter_delay = 0
 
@@ -253,7 +276,7 @@
 	item_state = "cigpacket"
 	w_class = 1
 	throwforce = 2
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	storage_slots = 6
 	can_hold = list("/obj/item/clothing/mask/cigarette","/obj/item/weapon/lighter")
 	icon_type = "cigarette"
@@ -286,7 +309,7 @@
 				var/obj/item/clothing/mask/cigarette/C = I
 				has_cigarette = 1
 				contents.Remove(C)
-				user.equip_to_slot_if_possible(C, slot_wear_mask)
+				user.equip_to_slot_if_possible(C, SLOT_WEAR_MASK)
 				to_chat(user, "<span class='notice'>You take a cigarette out of the pack.</span>")
 				update_icon()
 				break
@@ -343,7 +366,6 @@
 	item_state = "syringe_kit"
 	max_w_class = 3
 	can_hold = list("/obj/item/weapon/reagent_containers/glass/beaker/vial")
-	max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
 	storage_slots = 6
 	req_access = list(access_virology)
 

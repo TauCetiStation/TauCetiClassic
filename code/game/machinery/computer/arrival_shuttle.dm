@@ -82,12 +82,13 @@ var/lastMove = 0
 
 	toArea.parallax_movedir = WEST
 	fromArea.move_contents_to(toArea, null, WEST)
+	location = 1
 	shake_mobs(toArea)
 
-	location = 1
 	curr_location = toArea
 	fromArea = toArea
 	toArea = destArea
+
 	sleep(ARRIVAL_SHUTTLE_MOVE_TIME)
 	curr_location.parallax_slowdown()
 	sleep(PARALLAX_LOOP_TIME)
@@ -95,9 +96,9 @@ var/lastMove = 0
 	fromArea.move_contents_to(toArea, null, WEST)
 	radio.autosay(arrival_note, "Arrivals Alert System")
 
+	location = destLocation
 	shake_mobs(toArea)
 
-	location = destLocation
 	curr_location = destArea
 	moving = 0
 	open_doors(toArea, location)
@@ -124,12 +125,15 @@ var/lastMove = 0
 /obj/machinery/computer/arrival_shuttle/proc/shake_mobs(area/A)
 	for(var/mob/M in A)
 		if(M.client)
+			if(location == 1)
+				if(M.ear_deaf <= 0 || istype(M, /mob/dead/observer))
+					M << sound('sound/effects/shuttle_flying.ogg', volume = 50)
 			spawn(0)
 				if(M.buckled)
 					shake_camera(M, 2, 1)
 				else
 					shake_camera(M, 4, 2)
-		M.Weaken(4)
+					M.Weaken(4)
 		if(isliving(M) && !M.buckled)
 			var/mob/living/L = M
 			if(isturf(L.loc))
@@ -158,7 +162,7 @@ var/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle/ui_interact(user)
 	var/dat = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];move=1'>Send</A></b></center><br>"
-	user << browse("[entity_ja(dat)]", "window=researchshuttle;size=200x100")
+	user << browse("[entity_ja(dat)]", "window=researchshuttle;size=200x130")
 
 /obj/machinery/computer/arrival_shuttle/Topic(href, href_list)
 	. = ..()
@@ -181,7 +185,7 @@ var/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle/dock/ui_interact(user)
 	var/dat1 = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];back=1'>Send back</A></b></center><br>"
-	user << browse("[entity_ja(dat1)]", "window=researchshuttle;size=200x100")
+	user << browse("[entity_ja(dat1)]", "window=researchshuttle;size=200x130")
 
 /obj/machinery/computer/arrival_shuttle/dock/Topic(href, href_list)
 	. = ..()

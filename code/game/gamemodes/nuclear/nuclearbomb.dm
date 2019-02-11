@@ -31,11 +31,12 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/atom_init()
 	. = ..()
-	poi_list |= src
+	poi_list += src
 	r_code = "[rand(10000, 99999.0)]"//Creates a random code upon object spawn.
 	wires = new(src)
 
 /obj/machinery/nuclearbomb/Destroy()
+	poi_list -= src
 	QDEL_NULL(wires)
 	QDEL_NULL(auth)
 	return ..()
@@ -527,7 +528,7 @@ var/bomb_set
 
 /obj/item/weapon/disk/nuclear/atom_init()
 	. = ..()
-	poi_list |= src
+	poi_list += src
 	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/disk/nuclear/process()

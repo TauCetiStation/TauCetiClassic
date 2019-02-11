@@ -18,6 +18,21 @@
 	desc = "A powdered wig."
 	icon_state = "pwig"
 	item_state = "pwig"
+	
+/obj/item/clothing/head/chep
+	name = "Maid cap"
+	desc = "Smells like trooly cleaned house."
+	icon_state = "chep"
+	item_state = "chep"
+	
+/obj/item/clothing/head/tacticool_hat
+	name = "tacticool hat"
+	desc = "Black synthcloth hat."
+	icon_state = "tacticool_hat"
+	item_state = "tacticool_hat"
+	flags = BLOCKHAIR
+	siemens_coefficient = 2.0
+
 
 /obj/item/clothing/head/that
 	name = "top-hat"
@@ -155,25 +170,6 @@
 	body_parts_covered = 0
 
 //stylish bs12 hats
-
-/obj/item/clothing/head/bowlerhat
-	name = "bowler hat"
-	icon_state = "bowler_hat"
-	item_state = "bowler_hat"
-	desc = "For the gentleman of distinction."
-	body_parts_covered = 0
-
-/obj/item/clothing/head/beaverhat
-	name = "beaver hat"
-	icon_state = "beaver_hat"
-	item_state = "beaver_hat"
-	desc = "Soft felt makes this hat both comfortable and elegant."
-
-/obj/item/clothing/head/boaterhat
-	name = "boater hat"
-	icon_state = "boater_hat"
-	item_state = "boater_hat"
-	desc = "The ultimate in summer fashion."
 
 /obj/item/clothing/head/feathertrilby
 	name = "\improper feather trilby"
@@ -379,12 +375,12 @@
 	desc = "Bonjour, but in purple. Smells like baguette, pardon my French."
 	icon_state = "beret_purple"
 
-/obj/item/clothing/head/beret/centcom/officer
+/obj/item/clothing/head/beret/centcomofficer
 	name = "officers beret"
 	desc = "A black beret adorned with the shield silver kite shield with an engraved sword of the NanoTrasen security forces, announcing to the world that the wearer is a defender of NanoTrasen."
 	icon_state = "centcomofficerberet"
 
-/obj/item/clothing/head/beret/centcom/captain
+/obj/item/clothing/head/beret/centcomcaptain
 	name = "captains beret"
 	desc = "A white beret adorned with the shield cobalt kite shield with an engraved sword of the NanoTrasen security forces, worn only by those captaining a vessel of the NanoTrasen Navy."
 	icon_state = "centcomcaptain"

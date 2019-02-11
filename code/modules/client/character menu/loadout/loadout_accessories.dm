@@ -1,6 +1,6 @@
 /datum/gear/accessory
 	subtype_path = /datum/gear/accessory
-	slot = slot_wear_mask
+	slot = SLOT_WEAR_MASK
 	sort_category = "Accessories"
 
 /datum/gear/accessory/scarf

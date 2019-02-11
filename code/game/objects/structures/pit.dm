@@ -219,7 +219,7 @@
 //Grave jetsons items
 
 
-obj/item/weapon/gun/energy/laser/retro/jetsons
+/obj/item/weapon/gun/energy/laser/retro/jetsons
 	name ="unwanted laser"
 	icon_state = "jetsons"
 	item_state = "jetsons"
@@ -228,7 +228,7 @@ obj/item/weapon/gun/energy/laser/retro/jetsons
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice/jetsons)
 
 
-obj/item/weapon/gun/energy/laser/retro/jetsons/update_icon()
+/obj/item/weapon/gun/energy/laser/retro/jetsons/update_icon()
 	return 0
 
 /obj/item/ammo_casing/energy/laser/practice/jetsons

@@ -1,4 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aaa" = (
+/obj/structure/sign/velocity_overlay/reklama{
+	desc = "Now It?s Pepsi for Those Who Think Young";
+	icon_state = "pepsi";
+	name = "\improper billboard"
+	},
+/turf/unsimulated/wall,
+/area/centcom/arrival)
 "aab" = (
 /obj/effect/step_trigger/thrower{
 	affect_ghosts = 1;
@@ -266,7 +274,8 @@
 /area/shuttle/arrival/pre_game)
 "acV" = (
 /obj/structure/object_wall/wagon{
-	icon_state = "6,4"
+	icon_state = "6,4";
+	opacity = 0
 	},
 /turf/space,
 /area/shuttle/arrival/pre_game)
@@ -349,7 +358,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "6,0";
 	name = "shuttle wall";
-	opacity = 1
+	opacity = 0
 	},
 /turf/space,
 /area/shuttle/arrival/pre_game)
@@ -5246,8 +5255,12 @@
 	},
 /area/centcom/arrival)
 "atI" = (
+/obj/structure/urinal{
+	pixel_y = 32
+	},
 /obj/machinery/light{
-	dir = 1
+	dir = 8;
+	icon_state = "tube1"
 	},
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -5426,6 +5439,14 @@
 /turf/space,
 /area/shuttle/transport1/centcom)
 "aum" = (
+/obj/structure/sign/velocity_overlay/reklama/pda_x{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/arrival)
+"aun" = (
 /obj/structure/closet/emcloset{
 	pixel_x = -7
 	},
@@ -5434,25 +5455,24 @@
 	icon_state = "tube1"
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/arrival)
-"aun" = (
-/turf/unsimulated/floor{
-	dir = 9;
+	dir = 1;
 	icon_state = "green"
 	},
 /area/centcom/arrival)
 "aup" = (
+/obj/structure/sign/velocity_overlay/reklama/soda_ad{
+	pixel_x = -28;
+	pixel_y = -20
+	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "green"
+	icon_state = "floor"
 	},
 /area/centcom/arrival)
 "auq" = (
 /obj/machinery/vending/snack,
 /turf/unsimulated/floor{
-	icon_state = "floor"
+	dir = 5;
+	icon_state = "green"
 	},
 /area/centcom/arrival)
 "aur" = (
@@ -7692,8 +7712,8 @@
 /obj/item/weapon/storage/pill_bottle/bicaridine,
 /obj/item/weapon/storage/pill_bottle/dermaline,
 /obj/item/weapon/storage/pill_bottle/dermaline,
-/obj/item/weapon/storage/pill_bottle/antitox,
-/obj/item/weapon/storage/pill_bottle/antitox,
+/obj/item/weapon/storage/pill_bottle/dylovene,
+/obj/item/weapon/storage/pill_bottle/dylovene,
 /obj/item/weapon/storage/pill_bottle/tramadol,
 /obj/item/weapon/storage/pill_bottle/tramadol,
 /obj/item/weapon/storage/box/autoinjectors,
@@ -7781,8 +7801,8 @@
 /obj/item/weapon/storage/pill_bottle/bicaridine,
 /obj/item/weapon/storage/pill_bottle/dermaline,
 /obj/item/weapon/storage/pill_bottle/dermaline,
-/obj/item/weapon/storage/pill_bottle/antitox,
-/obj/item/weapon/storage/pill_bottle/antitox,
+/obj/item/weapon/storage/pill_bottle/dylovene,
+/obj/item/weapon/storage/pill_bottle/dylovene,
 /obj/item/weapon/storage/pill_bottle/tramadol,
 /obj/item/weapon/storage/pill_bottle/tramadol,
 /obj/item/weapon/storage/box/autoinjectors,
@@ -7813,8 +7833,8 @@
 /obj/item/weapon/storage/pill_bottle/bicaridine,
 /obj/item/weapon/storage/pill_bottle/dermaline,
 /obj/item/weapon/storage/pill_bottle/dermaline,
-/obj/item/weapon/storage/pill_bottle/antitox,
-/obj/item/weapon/storage/pill_bottle/antitox,
+/obj/item/weapon/storage/pill_bottle/dylovene,
+/obj/item/weapon/storage/pill_bottle/dylovene,
 /obj/item/weapon/storage/pill_bottle/tramadol,
 /obj/item/weapon/storage/pill_bottle/tramadol,
 /obj/item/weapon/storage/box/autoinjectors,
@@ -15795,7 +15815,7 @@
 /area/wizard_station)
 "bax" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -15899,7 +15919,7 @@
 	},
 /area/wizard_station)
 "baK" = (
-/obj/structure/mineral_door/iron,
+/obj/structure/mineral_door/metal,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
@@ -17516,6 +17536,14 @@
 	icon_state = "brown"
 	},
 /area/centcom/arrival)
+"cab" = (
+/obj/effect/landmark/start{
+	name = "Fallback-Start"
+	},
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/centcom/arrival)
 "cbb" = (
 /turf/unsimulated/floor{
 	dir = 5;
@@ -19077,7 +19105,9 @@
 	},
 /area/shuttle/officer/velocity)
 "fjb" = (
-/obj/machinery/door/unpowered/shuttle/officer,
+/obj/machinery/door/unpowered/shuttle/officer{
+	dock_tag = "arrival_officer"
+	},
 /turf/simulated/shuttle/floor/shuttle_new{
 	dir = 8;
 	icon_state = "vel_f01"
@@ -22905,7 +22935,7 @@
 /area/wizard_station)
 "nOb" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/book/manual/robotics_cyborgs,
+/obj/item/weapon/book/manual/wiki/guide_to_robotics,
 /turf/unsimulated/floor{
 	icon_state = "cult";
 	name = "plating"
@@ -23560,7 +23590,7 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/shuttle/floor4,
 /area/shuttle/escape/centcom)
 "pub" = (
@@ -70038,7 +70068,7 @@ aaM
 aaM
 aaM
 aaM
-aeD
+aaM
 aoo
 aoo
 avA
@@ -70054,8 +70084,8 @@ auy
 aoo
 aoo
 aoo
-aaM
-aaM
+aoo
+aoo
 aaM
 aaM
 aeD
@@ -70292,12 +70322,12 @@ aqM
 asP
 aoo
 aaM
+aaM
+aaM
+aaM
+aaM
 aoo
-aoo
-aoo
-aoo
-aoo
-arZ
+aum
 arZ
 avT
 avB
@@ -70308,10 +70338,10 @@ avT
 arZ
 arZ
 arZ
+aup
 avB
 arZ
-aoo
-aoo
+ayk
 aoo
 aoo
 aoo
@@ -70550,10 +70580,10 @@ aoo
 aoo
 aaM
 aoo
-atH
-atq
 aoo
-aum
+aoo
+aoo
+aoo
 arZ
 avC
 avh
@@ -70567,8 +70597,8 @@ avC
 avh
 auO
 arZ
-avB
-ayk
+arZ
+arZ
 aoo
 asA
 asA
@@ -70807,7 +70837,7 @@ aoo
 aaM
 aaM
 aoo
-atH
+atI
 atq
 aoo
 aun
@@ -71064,7 +71094,7 @@ aoo
 ate
 aoo
 aoo
-atI
+atH
 atq
 auc
 dFb
@@ -71319,12 +71349,12 @@ asq
 asB
 aoo
 atf
-atq
+cab
 atx
 atq
 atq
 aoo
-aup
+dFb
 arZ
 arZ
 arZ
@@ -71848,7 +71878,7 @@ awm
 aoo
 aoo
 awm
-aoo
+aaa
 eHb
 eHb
 aoo

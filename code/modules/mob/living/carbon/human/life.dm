@@ -67,7 +67,7 @@
 			breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
 
 		else //Still give containing object the chance to interact
-			if(istype(loc, /obj/))
+			if(istype(loc, /obj))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
@@ -121,6 +121,10 @@
 	//Updates the number of stored chemicals for powers and essentials
 	handle_changeling()
 
+	//Species-specific update.
+	if(species)
+		species.on_life(src)
+
 	pulse = handle_pulse()
 
 	// Grabbing
@@ -158,7 +162,7 @@
 		return ONE_ATMOSPHERE - pressure_difference
 
 /mob/living/carbon/human/proc/handle_disabilities()
-	if (disabilities & EPILEPSY)
+	if (disabilities & EPILEPSY || has_trait(TRAIT_EPILEPSY))
 		if ((prob(1) && paralysis < 1))
 			to_chat(src, "\red You have a seizure!")
 			for(var/mob/O in viewers(src, null))
@@ -167,13 +171,13 @@
 				O.show_message(text("\red <B>[src] starts having a seizure!"), 1)
 			Paralyse(10)
 			make_jittery(1000)
-	if (disabilities & COUGHING)
+	if (disabilities & COUGHING || has_trait(TRAIT_COUGH))
 		if ((prob(5) && paralysis <= 1))
 			drop_item()
 			spawn( 0 )
 				emote("cough")
 				return
-	if (disabilities & TOURETTES)
+	if (disabilities & TOURETTES || has_trait(TRAIT_TOURETTE))
 		speech_problem_flag = 1
 		if ((prob(10) && paralysis <= 1))
 			Stun(10)
@@ -191,7 +195,7 @@
 				pixel_x = old_x
 				pixel_y = old_y
 				return
-	if (disabilities & NERVOUS)
+	if (disabilities & NERVOUS || has_trait(TRAIT_NERVOUS))
 		speech_problem_flag = 1
 		if (prob(10))
 			stuttering = max(10, stuttering)
@@ -349,7 +353,7 @@
 		losebreath--
 		if (prob(10)) //Gasp per 10 ticks? Sounds about right.
 			spawn emote("gasp")
-		if(istype(loc, /obj/))
+		if(istype(loc, /obj))
 			var/obj/location_as_object = loc
 			location_as_object.handle_internal_lifeform(src, 0)
 	else
@@ -413,7 +417,7 @@
 							break // If they breathe in the nasty stuff once, no need to continue checking
 
 		else //Still give containing object the chance to interact
-			if(istype(loc, /obj/))
+			if(istype(loc, /obj))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
@@ -1013,7 +1017,7 @@
 
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(FAT in mutations)
-		if(overeatduration < 100)
+		if(!has_trait(TRAIT_FAT) && overeatduration < 100)
 			to_chat(src, "\blue You feel fit again!")
 			mutations.Remove(FAT)
 			update_body()
@@ -1022,18 +1026,19 @@
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 	else
-		if(overeatduration > 500 && !species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
-			mutations.Add(FAT)
-			update_body()
-			update_mutantrace()
-			update_mutations()
-			update_inv_w_uniform()
-			update_inv_wear_suit()
+		if(has_trait(TRAIT_FAT) || overeatduration > 500)
+			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
+				mutations.Add(FAT)
+				update_body()
+				update_mutantrace()
+				update_mutations()
+				update_inv_w_uniform()
+				update_inv_wear_suit()
 
 
 	// nutrition decrease
 	if (nutrition > 0 && stat != DEAD)
-		nutrition = max(0, nutrition - metabolism_factor/10)
+		nutrition = max(0, nutrition - get_metabolism_factor() / 10)
 
 	if (nutrition > 450)
 		if(overeatduration < 600) //capped so people don't take forever to unfat
@@ -1169,7 +1174,7 @@
 
 
 		//Eyes
-		if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
+		if(sdisabilities & BLIND || has_trait(TRAIT_BLIND))	//disabled-blind, doesn't get better on its own
 			blinded = 1
 		else if(eye_blind)			//blindness, heals slowly over time
 			eye_blind = max(eye_blind-1,0)
@@ -1181,7 +1186,7 @@
 			eye_blurry = max(eye_blurry-1, 0)
 
 		//Ears
-		if(sdisabilities & DEAF)	//disabled-deaf, doesn't get better on its own
+		if(sdisabilities & DEAF || has_trait(TRAIT_DEAF))	//disabled-deaf, doesn't get better on its own
 			ear_deaf = max(ear_deaf, 1)
 		else if(ear_deaf)			//deafness, heals slowly over time
 			ear_deaf = max(ear_deaf-1, 0)
@@ -1439,7 +1444,7 @@
 					if(icon_num)
 						healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]")
 
-		switch(nutrition)
+		switch(get_nutrition())
 			if(NUTRITION_LEVEL_FULL to INFINITY)
 				throw_alert("nutrition","fat")
 			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
@@ -1461,7 +1466,7 @@
 		var/nearsighted = 0
 		var/impaired    = 0
 
-		if(disabilities & NEARSIGHTED)
+		if(disabilities & NEARSIGHTED || has_trait(TRAIT_NEARSIGHT))
 			nearsighted = 1
 
 		if(glasses)
@@ -1576,9 +1581,9 @@
 	if(bodytemperature > 406)
 		for(var/datum/disease/D in viruses)
 			D.cure()
-		for (var/ID in virus2)
-			var/datum/disease2/disease/V = virus2[ID]
-			V.cure(src)
+		//for (var/ID in virus2) //disabled because of symptom that randomly ignites a mob, which triggers this
+		//	var/datum/disease2/disease/V = virus2[ID]
+		//	V.cure(src)
 	if(life_tick % 3) //don't spam checks over all objects in view every tick.
 		for(var/obj/effect/decal/cleanable/O in view(1,src))
 			if(istype(O,/obj/effect/decal/cleanable/blood))
@@ -1586,14 +1591,16 @@
 				if(B && B.virus2 && B.virus2.len)
 					for (var/ID in B.virus2)
 						var/datum/disease2/disease/V = B.virus2[ID]
-						infect_virus2(src,V.getcopy())
+						if(V.spreadtype == "Contact")
+							infect_virus2(src,V.getcopy())
 
 			else if(istype(O,/obj/effect/decal/cleanable/mucus))
 				var/obj/effect/decal/cleanable/mucus/M = O
 				if(M && M.virus2 && M.virus2.len)
 					for (var/ID in M.virus2)
 						var/datum/disease2/disease/V = M.virus2[ID]
-						infect_virus2(src,V.getcopy())
+						if(V.spreadtype == "Contact")
+							infect_virus2(src,V.getcopy())
 
 
 	if(virus2.len)
@@ -1769,7 +1776,7 @@
 		else if(status_flags & XENO_HOST)
 			holder.icon_state = "hudxeno"
 			holder2.icon_state = "hudxeno"
-		else if(foundVirus)
+		else if(foundVirus || iszombie(src))
 			holder.icon_state = "hudill"
 		else if(has_brain_worms())
 			var/mob/living/simple_animal/borer/B = has_brain_worms()

@@ -19,6 +19,13 @@
 	var/y_last
 	var/same_pos_count
 
+/obj/machinery/bot/atom_init()
+	. = ..()
+	bots_list += src
+
+/obj/machinery/bot/Destroy()
+	bots_list -= src
+	return ..()
 
 /obj/machinery/bot/proc/turn_on()
 	if(stat)	return 0

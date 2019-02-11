@@ -6,6 +6,14 @@
 	var/code = "electronic"
 	origin_tech = "bluespace=1"
 
+/obj/item/device/radio/beacon/atom_init()
+	. = ..()
+	radio_beacon_list += src
+
+/obj/item/device/radio/beacon/Destroy()
+	radio_beacon_list -= src
+	return ..()
+
 /obj/item/device/radio/beacon/hear_talk()
 	return
 
@@ -27,10 +35,9 @@
 	return
 
 
-/obj/item/device/radio/beacon/bacon //Probably a better way of doing this, I'm lazy.
-	proc/digest_delay()
-		spawn(600)
-			qdel(src)
+/obj/item/device/radio/beacon/bacon/proc/digest_delay() //Probably a better way of doing this, I'm lazy.
+	spawn(600)
+		qdel(src)
 
 
 // SINGULO BEACON SPAWNER
@@ -57,9 +64,19 @@
 	item_state = "signaler"
 	origin_tech = "bluespace=1"
 
+/obj/item/device/beacon/medical/atom_init()
+	. = ..()
+	beacon_medical_list += src
+
+
+/obj/item/device/beacon/medical/Destroy()
+	beacon_medical_list -= src
+	return ..()
+
 /obj/item/weapon/medical/teleporter
 	name = "Body Teleporter"
 	desc = "A device used for teleporting injured(critical) or dead people."
+	w_class = ITEM_SIZE_SMALL
 	gender = PLURAL
 	icon = 'icons/obj/device.dmi'
 	icon_state = "medicon"
@@ -77,7 +94,7 @@
 		return
 	var/found = 0
 	var/target_beacon
-	for(var/obj/item/device/beacon/medical/medical in world)
+	for(var/obj/item/device/beacon/medical/medical in beacon_medical_list)
 		if(medical)
 			if(isturf(medical.loc))
 				var/area/A = get_area(medical)

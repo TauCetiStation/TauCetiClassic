@@ -5,7 +5,7 @@
 	item_state = "analyzer"
 	w_class = 2.0
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 20
@@ -55,7 +55,7 @@
 	if(!M.client)	return
 	var/client/C = M.client
 	var/icon/hudMineral = 'icons/obj/mining/geoscanner.dmi'
-	for(var/turf/simulated/mineral/rock in view(get_turf(M)))
+	for(var/turf/simulated/mineral/rock in RANGE_TURFS(7, (get_turf(M))))
 		if(!C) return
 
 		if(rock.finds && rock.finds.len || rock.artifact_find)

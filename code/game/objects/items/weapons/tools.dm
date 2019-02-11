@@ -17,10 +17,10 @@
 /obj/item/weapon/wrench
 	name = "wrench"
 	desc = "A wrench with many common uses. Can be usually found in your hand."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "wrench"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
 	throwforce = 7.0
 	w_class = 2.0
@@ -53,10 +53,10 @@
 /obj/item/weapon/screwdriver
 	name = "screwdriver"
 	desc = "You can be totally screwwy with this."
-	icon = 'icons/obj/items.dmi'
-	icon_state = null
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "screwdriver_map"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
 	w_class = 1.0
 	throwforce = 5.0
@@ -65,15 +65,16 @@
 	g_amt = 0
 	m_amt = 75
 	attack_verb = list("stabbed")
+	var/random_color = TRUE
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), pick("<span class='danger'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
-							"<span class='danger'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
-		return(BRUTELOSS)
+/obj/item/weapon/screwdriver/suicide_act(mob/user)
+	to_chat(viewers(user), pick("<span class='danger'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='danger'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
+	return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/atom_init(mapload, param_color)
 	. = ..()
-	if(!icon_state)
+	if(random_color)
 		if(!param_color)
 			param_color = pick("red", "blue", "purple", "brown", "green", "cyan", "yellow")
 		icon_state = "screwdriver_[param_color]"
@@ -105,6 +106,7 @@
 	attack_verb = list("drilled", "screwed", "jabbed","whacked")
 	hitsound = 'sound/items/drill_hit.ogg'
 	action_button_name = "Change mode"
+	random_color = FALSE
 
 /obj/item/weapon/screwdriver/power/attack_self(mob/user)
 	playsound(user, 'sound/items/change_drill.ogg', 50, 1)
@@ -118,10 +120,10 @@
 /obj/item/weapon/wirecutters
 	name = "wirecutters"
 	desc = "This cuts wires."
-	icon = 'icons/obj/items.dmi'
-	icon_state = null
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "cutters_map"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 6.0
 	throw_speed = 2
 	throw_range = 9
@@ -131,12 +133,13 @@
 	attack_verb = list("pinched", "nipped")
 	sharp = 1
 	edge = 1
+	var/random_color = TRUE
 
 /obj/item/weapon/wirecutters/atom_init(mapload, param_color)
 	. = ..()
-	if(!icon_state)
+	if(random_color)
 		if(!param_color)
-			param_color = pick("yellow","red")
+			param_color = pick("yellow","red","orange")
 		icon_state = "cutters_[param_color]"
 		item_state = "cutters_[param_color]"
 
@@ -156,12 +159,13 @@
 /obj/item/weapon/wirecutters/power
 	name = "Jaws of Life"
 	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a cutting head."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "jaws_cutter"
 	item_state = "jawsoflife"
 	origin_tech = "materials=2;engineering=2"
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
 	action_button_name = "Change mode"
+	random_color = FALSE
 
 /obj/item/weapon/wirecutters/power/attack_self(mob/user)
 	playsound(user, 'sound/items/change_jaws.ogg', 50, 1)
@@ -175,10 +179,10 @@
  */
 /obj/item/weapon/weldingtool
 	name = "welding tool"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "welder"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	action_button_name = "Switch Welding tool"
 
 	//Amount of OUCH when it's thrown
@@ -275,7 +279,7 @@
 				src.icon_state = initial(src.icon_state) + "1"
 			if(prob(5))
 				remove_fuel(1)
-			light_color = "#dbe2ff"
+			light_color = LIGHT_COLOR_FIRE
 			set_light(2)
 
 		//If you're actually actively welding, use fuel faster.
@@ -288,7 +292,7 @@
 	//I'm not sure what this does. I assume it has to do with starting fires...
 	//...but it doesnt check to see if the welder is on or not.
 	var/turf/location = src.loc
-	if(istype(location, /mob/))
+	if(istype(location, /mob))
 		var/mob/M = location
 		if(M.l_hand == src || M.r_hand == src)
 			location = get_turf(M)
@@ -465,7 +469,7 @@
 
 /obj/item/weapon/weldingtool/largetank
 	name = "Industrial Welding Tool"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "indwelder"
 	max_fuel = 40
 	m_amt = 70
@@ -474,7 +478,7 @@
 
 /obj/item/weapon/weldingtool/hugetank
 	name = "Upgraded Welding Tool"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "hugewelder"
 	max_fuel = 80
 	w_class = 3.0
@@ -484,7 +488,7 @@
 
 /obj/item/weapon/weldingtool/experimental
 	name = "Experimental Welding Tool"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "expwelder"
 	max_fuel = 40
 	w_class = 3.0
@@ -507,10 +511,10 @@
 /obj/item/weapon/crowbar
 	name = "crowbar"
 	desc = "Used to remove floors and to pry open doors."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "crowbar"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
 	throwforce = 7.0
 	item_state = "crowbar"
@@ -520,7 +524,6 @@
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 
 /obj/item/weapon/crowbar/red
-	icon = 'icons/obj/items.dmi'
 	icon_state = "red_crowbar"
 	item_state = "crowbar_red"
 

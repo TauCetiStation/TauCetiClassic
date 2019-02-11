@@ -198,7 +198,7 @@ var/global/list/image/splatter_cache=list()
 	var/image/giblets = new(base_icon, "[icon_state]_flesh", dir)
 	giblets.color = fleshcolor
 	var/icon/blood = new(base_icon,"[icon_state]",dir)
-	blood.Blend(basedatum.color,ICON_MULTIPLY)
+	blood.Blend(basedatum.color, ICON_MULTIPLY)
 
 	icon = blood
 	overlays.Cut()

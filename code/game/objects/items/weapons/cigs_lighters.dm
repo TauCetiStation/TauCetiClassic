@@ -72,7 +72,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/smoketime = 300
 	var/chem_volume = 15
 	var/nicotine_per_smoketime = 0.006
-	body_parts_covered = 0
 
 /obj/item/clothing/mask/cigarette/atom_init()
 	. = ..()
@@ -405,7 +404,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	w_class = 1
 	throwforce = 4
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	attack_verb = list("burnt", "singed")
 	var/lit = 0
 

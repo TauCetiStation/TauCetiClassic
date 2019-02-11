@@ -180,7 +180,7 @@ Implant Specifics:<BR>"}
 		return
 
 	var/need_gib = null
-	if(istype(imp_in, /mob/))
+	if(istype(imp_in, /mob))
 		var/mob/T = imp_in
 		message_admins("Explosive implant triggered in [T] ([T.key]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>) ")
 		log_game("Explosive implant triggered in [T] ([T.key]).")
@@ -494,7 +494,6 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	///////////////////////////////////////////////////////////
 /obj/item/weapon/storage/internal/imp
 	name = "bluespace pocket"
-	max_combined_w_class = 6
 	max_w_class = 3
 	storage_slots = 2
 	cant_hold = list(/obj/item/weapon/disk/nuclear)

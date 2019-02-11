@@ -439,9 +439,9 @@ This is facehugger Attach procs
 
 	if(iscarbon(L))
 		var/mob/living/carbon/target = L
-		var/target_slot = slot_wear_mask
+		var/target_slot = SLOT_WEAR_MASK
 		if(isIAN(L))
-			target_slot = slot_head
+			target_slot = SLOT_HEAD
 		target.equip_to_slot(src, target_slot)
 		if(ismonkey(L)) // wtf is there in monkeys equip proc, that they need this?! ~zve
 			target.contents += src // Monkey sanity check - Snapshot

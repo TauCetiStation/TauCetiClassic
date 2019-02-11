@@ -6,9 +6,9 @@
 	item_state = "pneumatic"
 	w_class = 5.0
 	flags =  CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	max_w_class = 3
-	max_combined_w_class = 20
+	storage_slots = 7
 
 	var/obj/item/weapon/tank/tank = null                // Tank of gas for use in firing the cannon.
 	var/obj/item/weapon/storage/tank_container          // Something to hold the tank item so we don't accidentally fire it.

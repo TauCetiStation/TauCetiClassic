@@ -2103,7 +2103,7 @@
 	},
 /area/awaymission/labs/gateway)
 "fq" = (
-/obj/machinery/gateway/centeraway,
+/obj/machinery/gateway/center,
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "fr" = (
@@ -7661,7 +7661,7 @@
 /area/awaymission/labs/command)
 "qP" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/floor{
 	icon_state = "wood"
 	},
@@ -8523,7 +8523,7 @@
 /area/awaymission/labs/security)
 "sV" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/floor,
 /area/awaymission/labs/security)
 "sW" = (
@@ -9235,7 +9235,7 @@
 "uI" = (
 /obj/structure/table,
 /obj/item/weapon/folder/red,
-/obj/item/weapon/book/manual/security_space_law{
+/obj/item/weapon/book/manual/wiki/security_space_law{
 	pixel_x = -3;
 	pixel_y = 5
 	},

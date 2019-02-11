@@ -14,8 +14,7 @@
 
 /obj/item/clothing/under/chameleon/atom_init()
 	. = ..()
-	var/blocked = list(/obj/item/clothing/under/chameleon, /obj/item/clothing/under/cloud,
-		/obj/item/clothing/under/golem, /obj/item/clothing/under/gimmick)//Prevent infinite loops and bad jumpsuits.
+	var/blocked = list(/obj/item/clothing/under/chameleon, /obj/item/clothing/under/golem, /obj/item/clothing/under/gimmick)//Prevent infinite loops and bad jumpsuits.
 	for(var/U in typesof(/obj/item/clothing/under)-blocked)
 		var/obj/item/clothing/under/V = new U
 		clothing_choices[V.name] = U
@@ -133,7 +132,7 @@
 /obj/item/clothing/suit/chameleon/atom_init()
 	. = ..()
 	var/blocked = list(/obj/item/clothing/suit/chameleon, /obj/item/clothing/suit/space/space_ninja,
-		/obj/item/clothing/suit/space/golem, /obj/item/clothing/suit/suit, /obj/item/clothing/suit/cyborg_suit, /obj/item/clothing/suit/justice,
+		/obj/item/clothing/suit/space/golem, /obj/item/clothing/suit/cyborg_suit, /obj/item/clothing/suit/justice,
 		/obj/item/clothing/suit/greatcoat)//Prevent infinite loops and bad suits.
 	for(var/U in typesof(/obj/item/clothing/suit)-blocked)
 		var/obj/item/clothing/suit/V = new U
@@ -471,7 +470,7 @@
 /obj/item/weapon/gun/projectile/chameleon/atom_init()
 	. = ..()
 	var/blocked = list(/obj/item/weapon/gun/projectile/chameleon)
-	for(var/U in typesof(/obj/item/weapon/gun/)-blocked)
+	for(var/U in typesof(/obj/item/weapon/gun)-blocked)
 		var/obj/item/weapon/gun/V = new U
 		gun_choices[V.name] = U
 

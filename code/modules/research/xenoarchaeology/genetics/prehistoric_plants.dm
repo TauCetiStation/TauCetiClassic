@@ -216,3 +216,48 @@
 	reagents.add_reagent("synaptizine", potency * 2)
 	reagents.add_reagent("nutriment", potency)
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/seeds/blackberry
+	name = "pack of black berry seeds"
+	desc = "Strange black spherical organic formations, glowing in the dark"
+	icon_state = "seed-alien5"
+	mypath = "/obj/item/seeds/blackberry"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_ancients.dmi'
+	species = "blackberry"
+	plantname = "black berry nest"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/blackberry"
+	lifespan = 20
+	endurance = 18
+	maturation = 7
+	production = 3
+	yield = 3
+	potency = 3
+	growthstages = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/blackberry
+	name = "black egg"
+	desc = "A strange looking black fruit, shimmering in the light"
+	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon_state = "blackberryfruit"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/blackberry/atom_init(mapload, potency)
+	. = ..()
+	reagents.add_reagent("pwine", 3)
+	reagents.add_reagent("nutriment", 5)
+	bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/blackberry/throw_impact(atom/hit_atom)
+	..()
+	var/obj/effect/decal/cleanable/new_smudge
+	new_smudge = new /obj/effect/decal/cleanable/egg_smudge(loc)
+	new_smudge.icon_state = "smashed_blackberry"
+	reagents.reaction(hit_atom, TOUCH)
+	visible_message("<span class='rose'>\The [src.name] has been squashed.</span>", "<span class='rose'>You hear a smack.</span>")
+	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1, -3)
+	new /obj/effect/spider/spiderling(src.loc)
+	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/blackberry/On_Consume(usr)
+	var/nasty_text = pick("Oh god! Tastes horrible!", "Damn, [src] tastes awful!", "Disgusting! Why did I even put it in my mouth?", "Ew! [src] tastes like rubber with liquid trash")
+	to_chat(usr, "<span class='rose'>[nasty_text]</span>")
+	..()

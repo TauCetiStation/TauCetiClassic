@@ -61,7 +61,7 @@
 	..()
 	return INITIALIZE_HINT_QDEL //glitches are self-replicating, no need for lair
 
-/mob/living/simple_animal/hostile/cellular/necro/
+/mob/living/simple_animal/hostile/cellular/necro
 	name = "Twisted creature"
 	desc = "This thing is fast!"
 	icon = 'code/game/gamemodes/events/cellular_biomass/necromorphs.dmi'

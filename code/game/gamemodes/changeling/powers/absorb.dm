@@ -26,7 +26,7 @@
 	var/mob/living/carbon/target = G.affecting
 	return changeling.can_absorb_dna(user,target)
 
-/obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/user)
+/obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/living/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	var/mob/living/carbon/human/target = G.affecting
@@ -58,7 +58,7 @@
 
 	changeling.absorb_dna(target)
 
-	if(user.nutrition < 400) user.nutrition = min((user.nutrition + target.nutrition), 400)
+	if(user.get_nutrition() < 400) user.nutrition = min((user.nutrition + target.nutrition), 400)
 	//Steal all of their languages!
 	for(var/language in target.languages)
 		if(!(language in changeling.absorbed_languages))

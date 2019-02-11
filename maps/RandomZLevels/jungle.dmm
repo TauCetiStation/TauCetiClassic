@@ -822,7 +822,9 @@
 /turf/unsimulated/floor,
 /area/jungle)
 "dc" = (
-/obj/machinery/gateway/centeraway,
+/obj/machinery/gateway/center{
+	name = "Jungle Gateway"
+	},
 /turf/unsimulated/floor,
 /area/jungle)
 "dd" = (

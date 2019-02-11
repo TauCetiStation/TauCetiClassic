@@ -1,14 +1,14 @@
 /datum/gear/suit
 	display_name = "Apron, blue"
 	path = /obj/item/clothing/suit/apron
-	slot = slot_wear_suit
+	slot = SLOT_WEAR_SUIT
 	sort_category = "Suits and Overwear"
 	cost = 2
 
 /datum/gear/under
 	display_name = "Black tango dress"
 	path = /obj/item/clothing/under/blacktango
-	slot = slot_w_uniform
+	slot = SLOT_W_UNIFORM
 	sort_category = "Suits and Overwear"
 	cost = 1
 
@@ -141,7 +141,7 @@
 /datum/gear/under/pants/New()
 	..()
 	var/list/pants = list()
-	for(var/pant in typesof(/obj/item/clothing/under/pants))
+	for(var/pant in subtypesof(/obj/item/clothing/under/pants))
 		var/obj/item/clothing/under/pants/pant_type = pant
 		pants[initial(pant_type.name)] = pant_type
 	gear_tweaks += new/datum/gear_tweak/path(sortAssoc(pants))
@@ -190,3 +190,16 @@
 	m65s["ranger"] = /obj/item/clothing/under/pants/milipants_army/ranger
 	m65s["navy"] = /obj/item/clothing/under/pants/milipants_army/navy
 	gear_tweaks += new/datum/gear_tweak/path(m65s)
+
+/datum/gear/suit/color_shirt
+	display_name = "Colored shirt selection"
+	path = /obj/item/clothing/suit/blueshirt
+
+/datum/gear/suit/color_shirt/New()
+	..()
+	var/shirt = list()
+	shirt["blue"] = /obj/item/clothing/suit/blueshirt
+	shirt["orange"] = /obj/item/clothing/suit/chemshirt
+	shirt["purple"] = /obj/item/clothing/suit/roundshirt
+	shirt["grey"] = /obj/item/clothing/suit/catshirt
+	gear_tweaks += new/datum/gear_tweak/path(shirt)

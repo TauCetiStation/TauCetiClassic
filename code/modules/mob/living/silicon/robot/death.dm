@@ -14,7 +14,7 @@
 	flick("gibbed-r", animation)
 	robogibs(loc, viruses)
 
-	living_mob_list -= src
+	alive_mob_list -= src
 	dead_mob_list -= src
 	spawn(15)
 		if(animation)	qdel(animation)

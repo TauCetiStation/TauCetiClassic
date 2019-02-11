@@ -68,7 +68,7 @@
 			return
 		if (!use(2))
 			return
-		var/obj/structure/grille/F = new /obj/structure/grille/ ( usr.loc )
+		var/obj/structure/grille/F = new /obj/structure/grille( usr.loc )
 		to_chat(usr, "<span class='notice'>You assemble a grille.</span>")
 		F.add_fingerprint(usr)
 	return

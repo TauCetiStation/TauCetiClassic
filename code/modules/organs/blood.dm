@@ -106,8 +106,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			// There currently is a strange bug here. If the mob is not below -100 health
 			// when death() is called, apparently they will be just fine, and this way it'll
 			// spam deathgasp. Adjusting toxloss ensures the mob will stay dead.
-			toxloss += 300 // just to be safe!
-			death()
+			if(!iszombie(src)) //zombies dont care about blood
+				toxloss += 300 // just to be safe!
+				death()
 
 	// Without enough blood you slowly go hungry.
 	if(blood_volume < BLOOD_VOLUME_SAFE)
@@ -413,13 +414,12 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					return D
 	return res
 
-proc/blood_incompatible(donor,receiver)
+/proc/blood_incompatible(donor,receiver)
 	if(!donor || !receiver) return 0
-	var
-		donor_antigen = copytext(donor,1,lentext(donor))
-		receiver_antigen = copytext(receiver,1,lentext(receiver))
-		donor_rh = (findtext(donor,"+")>0)
-		receiver_rh = (findtext(receiver,"+")>0)
+	var/donor_antigen = copytext(donor,1,lentext(donor))
+	var/receiver_antigen = copytext(receiver,1,lentext(receiver))
+	var/donor_rh = (findtext(donor,"+")>0)
+	var/receiver_rh = (findtext(receiver,"+")>0)
 	if(donor_rh && !receiver_rh) return 1
 	switch(receiver_antigen)
 		if("A")

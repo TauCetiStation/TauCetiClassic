@@ -13,7 +13,7 @@
 	throw_range = 1
 	throw_speed = 1
 	layer = 3.9
-	slot_flags = SLOT_HEAD
+	slot_flags = SLOT_FLAGS_HEAD
 	body_parts_covered = HEAD
 	attack_verb = list("bapped")
 
@@ -92,22 +92,27 @@
 	set category = "Object"
 	set src in usr
 
+
 	if((CLUMSY in usr.mutations) && prob(50))
-		to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
+		var/mob/living/carbon/human/H = usr
+		if(istype(H) && !H.species.flags[NO_MINORCUTS])
+			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
 		return
 	var/n_name = sanitize_safe(input(usr, "What would you like to label the paper?", "Paper Labelling", null) as text, MAX_NAME_LEN)
 	if((loc == usr && usr.stat == CONSCIOUS))
 		name = "[(n_name ? text("[n_name]") : "paper")]"
 	add_fingerprint(usr)
-	return
 
 /obj/item/weapon/paper/verb/crumple()
 	set name = "Crump paper"
 	set category = "Object"
 	set src in usr
 
+
 	if((CLUMSY in usr.mutations) && prob(50))
-		to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
+		var/mob/living/carbon/human/H = usr
+		if(istype(H) && !H.species.flags[NO_MINORCUTS])
+			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
 		return
 	if(!(crumpled==1))
 		crumpled = 1
@@ -121,7 +126,6 @@
 
 	playsound(src, 'sound/items/crumple.ogg', 15, 1, 1)
 	add_fingerprint(usr)
-	return
 
 /obj/item/weapon/paper/afterattack(atom/target, mob/user, proximity)
 	if(!proximity) return
@@ -431,7 +435,7 @@
 		if((!in_range(src, usr) && loc != usr && !( istype(loc, /obj/item/weapon/clipboard) ) && loc.loc != usr && usr.get_active_hand() != i)) // Some check to see if he's allowed to write
 			return
 
-		var last_fields_value = fields
+		var/last_fields_value = fields
 
 		t = replacetext(t, "\n", "<BR>")
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
@@ -478,7 +482,8 @@
 				to_chat(user, "<span class='notice'>Take off the carbon copy first.</span>")
 				add_fingerprint(user)
 				return
-		var/obj/item/weapon/paper_bundle/B = new(src.loc)
+		var/old_loc = loc
+		var/obj/item/weapon/paper_bundle/B = new(loc)
 		if (name != "paper")
 			B.name = name
 		else if (P.name != "paper" && P.name != "photo")
@@ -509,7 +514,7 @@
 			else if (h_user.head == src)
 				h_user.u_equip(src)
 				h_user.put_in_hands(B)
-			else if (!istype(src.loc, /turf))
+			else if (!istype(loc, /turf))
 				src.loc = get_turf(h_user)
 				if(h_user.client)	h_user.client.screen -= src
 				h_user.put_in_hands(B)
@@ -518,6 +523,9 @@
 		P.loc = B
 		B.amount++
 		B.update_icon()
+		if (istype(old_loc, /obj/item/weapon/storage))
+			var/obj/item/weapon/storage/s = old_loc
+			s.update_ui_after_item_removal()
 
 	else if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		if ( istype(P, /obj/item/weapon/pen/robopen) && P:mode == 2 )

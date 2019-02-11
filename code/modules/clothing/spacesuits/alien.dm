@@ -163,7 +163,7 @@
 
 /obj/item/clothing/suit/space/vox/stealth/equipped(mob/user, slot)
 	..()
-	if(slot == slot_wear_suit)
+	if(slot == SLOT_WEAR_SUIT)
 		wearer = user
 
 /obj/item/clothing/suit/space/vox/stealth/dropped(mob/user)

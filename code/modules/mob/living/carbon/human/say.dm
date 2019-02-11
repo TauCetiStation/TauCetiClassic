@@ -56,23 +56,21 @@
 			if(ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
 				var/sm = sanitize(message)
-				for(var/mob/living/carbon/human/H in mob_list)
+				for(var/mob/living/carbon/human/H in human_list)
 					if(H.species.name != ABDUCTOR)
 						continue
-					else
-						if(user.team != H.team)
-							continue
-						else
-							to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
-							//return - technically you can add more aliens to a team
-				for(var/mob/M in dead_mob_list)
+					if(user.team != H.team)
+						continue
+					to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
+					//return - technically you can add more aliens to a team
+				for(var/mob/M in observer_list)
 					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
-					if(!isobserver(M) && (M.stat != DEAD))
-						to_chat(M, "<hr><span class='warning'>≈сли вы видите это сообщение, значит что-то сломалось. ѕожалуйста, свяжитесь со мной <b>SpaiR</b> на форуме (http://tauceti.ru/forums/index.php?action=profile;u=1929) или попросите кого-нибудь меня позвать. ѕожалуйста, <u>запомните</u> что произошло в раунде, эта информация очень <b>важна</b>. „тобы сообщение исчезло попросите админа достать вас из тела и поместить обратно или сами уйдите в обсерверы.</span><hr>")
 				log_say("Abductor: [name]/[key] : [sm]")
 				return ""
 
 	message = capitalize(trim(message))
+	if(iszombie(src))
+		message = zombie_talk(message)
 
 	var/ending = copytext(message, length(message))
 	if (speaking)
@@ -164,10 +162,10 @@
 				for(var/M in mind.changeling.essences)
 					to_chat(M, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
 
-				for(var/mob/M in dead_mob_list)
-					if(!M.client || isnewplayer(M))
+				for(var/mob/M in observer_list)
+					if(!M.client)
 						continue //skip monkeys, leavers and new players
-					if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
+					if(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 						to_chat(M, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
 
 				to_chat(src, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")

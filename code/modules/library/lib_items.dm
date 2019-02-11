@@ -87,9 +87,12 @@
 
 /obj/structure/bookcase/manuals/medical/atom_init()
 	. = ..()
-	new /obj/item/weapon/book/manual/medical_cloning(src)
+	new /obj/item/weapon/book/manual/wiki/medical_surgery(src)
+	new /obj/item/weapon/book/manual/wiki/medical_genetics(src)
+	new /obj/item/weapon/book/manual/wiki/medical_virology(src)
+	new /obj/item/weapon/book/manual/wiki/medical_chemistry(src)
 	for (var/i in 1 to 3)
-		new /obj/item/weapon/book/manual/medical_diagnostics_manual(src)
+		new /obj/item/weapon/book/manual/wiki/medical_guide_to_medicine(src)
 	update_icon()
 
 
@@ -98,13 +101,14 @@
 
 /obj/structure/bookcase/manuals/engineering/atom_init()
 	. = ..()
-	new /obj/item/weapon/book/manual/engineering_construction(src)
-	new /obj/item/weapon/book/manual/engineering_particle_accelerator(src)
-	new /obj/item/weapon/book/manual/engineering_hacking(src)
-	new /obj/item/weapon/book/manual/engineering_guide(src)
-	new /obj/item/weapon/book/manual/atmospipes(src)
-	new /obj/item/weapon/book/manual/engineering_singularity_safety(src)
-	new /obj/item/weapon/book/manual/evaguide(src)
+	new /obj/item/weapon/book/manual/wiki/basic_engineering(src)
+	new /obj/item/weapon/book/manual/wiki/construction(src)
+	new /obj/item/weapon/book/manual/wiki/atmospipes(src)
+	new /obj/item/weapon/book/manual/wiki/supermatter_engine(src)
+	new /obj/item/weapon/book/manual/wiki/engineering_hacking(src)
+	new /obj/item/weapon/book/manual/wiki/engineering_singularity(src)
+	new /obj/item/weapon/book/manual/wiki/engineering_solars(src)
+	new /obj/item/weapon/book/manual/wiki/engineering_tesla(src)
 	update_icon()
 
 
@@ -113,9 +117,26 @@
 
 /obj/structure/bookcase/manuals/research_and_development/atom_init()
 	. = ..()
-	new /obj/item/weapon/book/manual/research_and_development(src)
+	new /obj/item/weapon/book/manual/wiki/research_and_development(src)
+	new /obj/item/weapon/book/manual/wiki/guide_to_robotics(src)
+	new /obj/item/weapon/book/manual/wiki/guide_to_toxins(src)
+	new /obj/item/weapon/book/manual/wiki/guide_to_xenobiology(src)
+	new /obj/item/weapon/book/manual/wiki/guide_to_exosuits(src)
+	new /obj/item/weapon/book/manual/wiki/guide_to_telescience(src)
 	update_icon()
 
+/obj/structure/bookcase/manuals/security
+	name = "Law and Order bookcase"
+
+/obj/structure/bookcase/manuals/security/atom_init()
+	. = ..()
+	for (var/i in 1 to 3)
+		new /obj/item/weapon/book/manual/wiki/security_space_law(src)
+	for (var/i in 1 to 2)
+		new /obj/item/weapon/book/manual/wiki/sop(src)
+	new /obj/item/weapon/book/manual/detective(src)
+	new /obj/item/weapon/book/manual/wiki/lsop(src)
+	update_icon()
 
 /*
  * Book
@@ -134,6 +155,7 @@
 	var/unique = 0   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 	var/title		 // The real name of the book.
 	var/carved = 0	 // Has the book been hollowed out for use as a secret storage item?
+	var/window_size
 	var/obj/item/store	//What's in the book?
 
 /obj/item/weapon/book/attack_self(mob/user)
@@ -147,7 +169,7 @@
 			to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
 			return
 	if(src.dat)
-		user << browse(entity_ja("<TT><I>Penned by [author].</I></TT> <BR>[dat]"), "window=book")
+		user << browse(entity_ja("<TT><I>Penned by [author].</I></TT> <BR>[dat]"), "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
 		onclose(user, "book")
 	else
@@ -259,26 +281,26 @@
 	var/obj/item/weapon/book/book	 //  Currently scanned book
 	var/mode = 0 					// 0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
 
-	attack_self(mob/user)
-		mode += 1
-		if(mode > 3)
-			mode = 0
-		to_chat(user, "[src] Status Display:")
-		var/modedesc
-		switch(mode)
-			if(0)
-				modedesc = "Scan book to local buffer."
-			if(1)
-				modedesc = "Scan book to local buffer and set associated computer buffer to match."
-			if(2)
-				modedesc = "Scan book to local buffer, attempt to check in scanned book."
-			if(3)
-				modedesc = "Scan book to local buffer, attempt to add book to general inventory."
-			else
-				modedesc = "ERROR!"
-		to_chat(user, " - Mode [mode] : [modedesc]")
-		if(src.computer)
-			to_chat(user, "<font color=green>Computer has been associated with this unit.</font>")
+/obj/item/weapon/barcodescanner/attack_self(mob/user)
+	mode += 1
+	if(mode > 3)
+		mode = 0
+	to_chat(user, "[src] Status Display:")
+	var/modedesc
+	switch(mode)
+		if(0)
+			modedesc = "Scan book to local buffer."
+		if(1)
+			modedesc = "Scan book to local buffer and set associated computer buffer to match."
+		if(2)
+			modedesc = "Scan book to local buffer, attempt to check in scanned book."
+		if(3)
+			modedesc = "Scan book to local buffer, attempt to add book to general inventory."
 		else
-			to_chat(user, "<font color=red>No associated computer found. Only local scans will function properly.</font>")
-		to_chat(user, "\n")
+			modedesc = "ERROR!"
+	to_chat(user, " - Mode [mode] : [modedesc]")
+	if(src.computer)
+		to_chat(user, "<font color=green>Computer has been associated with this unit.</font>")
+	else
+		to_chat(user, "<font color=red>No associated computer found. Only local scans will function properly.</font>")
+	to_chat(user, "\n")

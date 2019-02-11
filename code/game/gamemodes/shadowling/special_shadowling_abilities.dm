@@ -141,7 +141,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				to_chat(M, "<span class='userdanger'>An immense pressure slams you onto the ground!</span>")
 			to_chat(world, "<font size=5><span class='shadowling'><b>\"VYSHA NERADA YEKHEZET U'RUU!!\"</font></span>")
 			world << 'sound/hallucinations/veryfar_noise.ogg'
-			for(var/obj/machinery/power/apc/A in world)
+			for(var/obj/machinery/power/apc/A in apc_list)
 				A.overload_lighting()
 			var/mob/A = new /mob/living/simple_animal/ascendant_shadowling(usr.loc)
 			A.spell_list = list()
@@ -161,7 +161,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			sleep(50)
 			if(!ticker.mode.shadowling_ascended)
 				SSshuttle.incall(0.3)
-				captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+				captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
 				world << sound('sound/AI/shuttlecalled.ogg')
 			ticker.mode.shadowling_ascended = 1
 			qdel(usr)

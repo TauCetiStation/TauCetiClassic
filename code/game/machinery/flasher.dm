@@ -13,6 +13,14 @@
 	var/base_state = "mflash"
 	anchored = TRUE
 
+/obj/machinery/flasher/atom_init()
+	. = ..()
+	flasher_list += src
+
+/obj/machinery/flasher/Destroy()
+	flasher_list -= src
+	return ..()
+
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
@@ -131,7 +139,7 @@
 	active = 1
 	icon_state = "launcheract"
 
-	for(var/obj/machinery/flasher/M in machines)
+	for(var/obj/machinery/flasher/M in flasher_list)
 		if(M.id == id)
 			spawn()
 				M.flash()

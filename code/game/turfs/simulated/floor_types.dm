@@ -203,6 +203,12 @@
 	. = ..()
 	overlays += image("icon"='icons/misc/beach.dmi',"icon_state"="water5","layer"=MOB_LAYER+0.1)
 
+/turf/simulated/floor/beach/water/break_tile()
+	return
+
+/turf/simulated/floor/beach/water/burn_tile()
+	return
+
 /turf/simulated/floor/grass
 	name = "Grass patch"
 	icon_state = "grass1"
@@ -221,9 +227,50 @@
 			FF.update_icon() //so siding get updated properly
 
 /turf/simulated/floor/carpet
-	name = "Carpet"
+	name = "carpet"
 	icon_state = "carpet"
 	floor_type = /obj/item/stack/tile/carpet
+	icon = 'icons/turf/carpets.dmi'
+
+/turf/simulated/floor/carpet/black
+	name = "black carpet"
+	icon_state = "blackcarpet"
+	floor_type = /obj/item/stack/tile/carpet/black
+
+/turf/simulated/floor/carpet/purple
+	name = "purple carpet"
+	icon_state = "purplecarpet"
+	floor_type = /obj/item/stack/tile/carpet/purple
+
+/turf/simulated/floor/carpet/orange
+	name = "orange carpet"
+	icon_state = "orangecarpet"
+	floor_type = /obj/item/stack/tile/carpet/orange
+
+/turf/simulated/floor/carpet/green
+	name = "green carpet"
+	icon_state = "greencarpet"
+	floor_type = /obj/item/stack/tile/carpet/green
+
+/turf/simulated/floor/carpet/blue
+	name = "blue carpet"
+	icon_state = "bluecarpet"
+	floor_type = /obj/item/stack/tile/carpet/blue
+
+/turf/simulated/floor/carpet/blue2
+	name = "blue carpet"
+	icon_state = "blue2carpet"
+	floor_type = /obj/item/stack/tile/carpet/blue2
+
+/turf/simulated/floor/carpet/red
+	name = "red carpet"
+	icon_state = "redcarpet"
+	floor_type = /obj/item/stack/tile/carpet/red
+
+/turf/simulated/floor/carpet/cyan
+	name = "cyan carpet"
+	icon_state = "cyancarpet"
+	floor_type = /obj/item/stack/tile/carpet/cyan
 
 /turf/simulated/floor/carpet/atom_init()
 	if(!icon_state)

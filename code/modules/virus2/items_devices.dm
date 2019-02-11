@@ -9,12 +9,12 @@
 	flags = CONDUCT
 
 /obj/item/device/antibody_scanner/attack(mob/M, mob/user)
-	if(!istype(M,/mob/living/carbon/))
+	if(!istype(M,/mob/living/carbon))
 		report("Scan aborted: Incompatible target.", user)
 		return
 
 	var/mob/living/carbon/C = M
-	if (istype(C,/mob/living/carbon/human/))
+	if (istype(C,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = C
 		if(H.species && H.species.flags[NO_BLOOD])
 			report("Scan aborted: The target does not have blood.", user)
@@ -40,7 +40,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-b"
 	var/datum/disease2/disease/virus2 = null
-	var/growth = 0
+	//var/growth = 0
 	var/info = 0
 	var/analysed = 0
 
@@ -51,7 +51,7 @@
 	. = ..()
 	virus2 = new /datum/disease2/disease
 	virus2.makerandom()
-	growth = rand(5, 50)
+	//growth = 100//rand(5, 50)
 
 /obj/item/weapon/virusdish/attackby(obj/item/weapon/W,mob/living/carbon/user)
 	if(istype(W,/obj/item/weapon/hand_labeler) || istype(W,/obj/item/weapon/reagent_containers/syringe))

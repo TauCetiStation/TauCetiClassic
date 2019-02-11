@@ -198,6 +198,30 @@
 	icon_state = "nerdshirt"
 	item_state = "nerdshirt"
 
+/obj/item/clothing/suit/blueshirt
+	name = "blue shirt"
+	desc = "A blue shirt with some strange symbols. Look out for aliens!"
+	icon_state = "blueshirt"
+	item_state = "blueshirt"
+
+/obj/item/clothing/suit/chemshirt
+	name = "chemistry shirt"
+	desc = "A nice orange shirt made from a special fabric that hides any reagent stains. Has a drawn beaker with some glowy acid inside. Wanna cook?"
+	icon_state = "chemshirt"
+	item_state = "chemshirt"
+
+/obj/item/clothing/suit/roundshirt
+	name = "science shirt"
+	desc = "A purple, sciency t-shirt with a picture of a burning star. Save the Earth! Oh wait, already too late for that"
+	icon_state = "roundshirt"
+	item_state = "roundshirt"
+
+/obj/item/clothing/suit/catshirt
+	name = "cat shirt"
+	desc = "Very comfy, grey t-shirt with a picture of a cute kitty. And the best part: any cat or tajaran hair blends into the design very well!"
+	icon_state = "catshirt"
+	item_state = "catshirt"
+
 /obj/item/clothing/suit/jacket
 	name = "bomber jacket"
 	desc = "Aviators not included."
@@ -236,28 +260,6 @@
 	cold_protection = UPPER_TORSO|LOWER_TORSO
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0)
 
-//Blue suit jacket toggle
-/obj/item/clothing/suit/suit/verb/toggle()
-	set name = "Toggle Jacket Buttons"
-	set category = "Object"
-	set src in usr
-
-	if(!usr.canmove || usr.stat || usr.restrained())
-		return 0
-
-	if(src.icon_state == "suitjacket_blue_open")
-		src.icon_state = "suitjacket_blue"
-		src.item_state = "suitjacket_blue"
-		to_chat(usr, "You button up the suit jacket.")
-	else if(src.icon_state == "suitjacket_blue")
-		src.icon_state = "suitjacket_blue_open"
-		src.item_state = "suitjacket_blue_open"
-		to_chat(usr, "You unbutton the suit jacket.")
-	else
-		to_chat(usr, "You button-up some imaginary buttons on your [src].")
-		return
-	usr.update_inv_wear_suit()
-
 //pyjamas
 //originally intended to be pinstripes >.>
 
@@ -283,18 +285,6 @@
 	icon_state = "leathercoat"
 	item_state = "leathercoat"
 
-/obj/item/clothing/suit/browncoat
-	name = "brown leather coat"
-	desc = "A long, brown leather coat."
-	icon_state = "browncoat"
-	item_state = "browncoat"
-
-/obj/item/clothing/suit/neocoat
-	name = "black coat"
-	desc = "A flowing, black coat."
-	icon_state = "neocoat"
-	item_state = "neocoat"
-
 /obj/item/clothing/suit/serifcoat
 	name = "serif coat"
 	desc = "A old coat"
@@ -308,28 +298,28 @@
 /obj/item/clothing/under/stripper/stripper_pink
 	name = "pink swimsuit"
 	desc = "A rather skimpy pink swimsuit."
-	icon_state = "stripper_p_under"
+	icon_state = "stripper_p"
 	item_color = "stripper_p"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/stripper/stripper_green
 	name = "green swimsuit"
 	desc = "A rather skimpy green swimsuit."
-	icon_state = "stripper_g_under"
+	icon_state = "stripper_g"
 	item_color = "stripper_g"
 	siemens_coefficient = 1
 
-/obj/item/clothing/suit/stripper/stripper_pink
+/obj/item/clothing/suit/stripper_pink
 	name = "pink skimpy dress"
 	desc = "A rather skimpy pink dress."
-	icon_state = "stripper_p_over"
+	icon_state = "stripper_p"
 	item_state = "stripper_p"
 	siemens_coefficient = 1
 
-/obj/item/clothing/suit/stripper/stripper_green
+/obj/item/clothing/suit/stripper_green
 	name = "green skimpy dress"
 	desc = "A rather skimpy green dress."
-	icon_state = "stripper_g_over"
+	icon_state = "stripper_g"
 	item_state = "stripper_g"
 	siemens_coefficient = 1
 
@@ -349,7 +339,7 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 2.0
 //swimsuit
-/obj/item/clothing/under/swimsuit/
+/obj/item/clothing/under/swimsuit
 	siemens_coefficient = 1
 	body_parts_covered = 0
 

@@ -7,7 +7,7 @@ RCD
 /obj/item/weapon/rcd
 	name = "rapid-construction-device (RCD)"
 	desc = "A device used to rapidly build walls/floor."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
 	opacity = 0
 	density = 0
@@ -32,12 +32,14 @@ RCD
 
 /obj/item/weapon/rcd/atom_init()
 	. = ..()
+	rcd_list += src
 	desc = "A RCD. It currently holds [matter]/30 matter-units."
 	spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
 /obj/item/weapon/rcd/Destroy()
+	rcd_list -= src
 	qdel(spark_system)
 	spark_system = null
 	return ..()

@@ -31,7 +31,7 @@ Des: Removes all infection images from aliens and places an infection image on a
 			for(var/image/I in alien.client.images)
 				if(dd_hasprefix_case(I.icon_state, "infected"))
 					qdel(I)
-			for(var/mob/living/L in mob_list)
+			for(var/mob/living/L in living_list)
 				if(iscorgi(L) || iscarbon(L))
 					if(L.status_flags & XENO_HOST)
 						var/I = image('icons/mob/alien.dmi', loc = L, icon_state = "infected[stage]")
@@ -43,7 +43,7 @@ Des: Checks if the passed mob (C) is infected with the alien egg, then gives eac
 ----------------------------------------*/
 /obj/item/alien_embryo/proc/AddInfectionImages(mob/living/C)
 	if(C)
-		for(var/mob/living/carbon/alien/alien in player_list)
+		for(var/mob/living/carbon/alien/alien in alien_list)
 			if(alien.client)
 				if(C.status_flags & XENO_HOST)
 					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[stage]")
@@ -56,7 +56,7 @@ Des: Removes the alien infection image from all aliens in the world located in p
 
 /obj/item/alien_embryo/proc/RemoveInfectionImages(mob/living/C)
 	if(C)
-		for(var/mob/living/carbon/alien/alien in player_list)
+		for(var/mob/living/carbon/alien/alien in alien_list)
 			if(alien.client)
 				for(var/image/I in alien.client.images)
 					if(I.loc == C)

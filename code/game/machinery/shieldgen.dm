@@ -318,7 +318,7 @@
 	icon_state = "Shield_Gen"
 	anchored = FALSE
 	density = TRUE
-	req_access = list(access_teleporter)
+	req_access = list(access_teleporter, access_xenoarch)
 	flags = CONDUCT
 	use_power = 0
 	var/active = FALSE

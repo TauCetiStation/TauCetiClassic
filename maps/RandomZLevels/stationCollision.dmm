@@ -2814,7 +2814,7 @@
 /area/awaymission/arrivalblock)
 "ha" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/item/weapon/melee/baton,
 /obj/item/clothing/head/helmet/warden,
 /turf/simulated/floor{
@@ -3959,9 +3959,7 @@
 	icon_state = "0-2";
 	pixel_y = 1
 	},
-/obj/machinery/gateway/centeraway{
-	calibrated = 0
-	},
+/obj/machinery/gateway/center,
 /turf/simulated/floor,
 /area/awaymission/gateroom)
 "kp" = (

@@ -7,6 +7,7 @@
 	w_class = 3.0
 	var/mob/affecting = null
 	var/deity_name = "Christ"
+	max_storage_space = DEFAULT_BOX_STORAGE
 
 /obj/item/weapon/storage/bible/booze
 	name = "bible"

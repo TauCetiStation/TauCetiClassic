@@ -252,3 +252,26 @@
 	desc = "A common collar with gold covering"
 	icon_state = "collar2"
 	body_parts_covered = 0
+
+/obj/item/clothing/mask/ecig
+	name = "electronic cigarette"
+	desc = "An electronic cigarette. Most of the relief of a real cigarette with none of the side effects. Often used by smokers who are trying to quit the habit."
+	icon_state = "ecig"
+	item_state = "ecig"
+	throw_speed = 0.5
+	w_class = 1
+	body_parts_covered = null
+	var/last_time_used = 0
+
+/obj/item/clothing/mask/ecig/attack_self(mob/user)
+	if(world.time > last_time_used + 20)
+		if(icon_state == "ecig")
+			icon_state = "ecig_on"
+			item_state = "ecig_on"
+			to_chat(user, "<span class='notice'>You turn the [src] on</span>")
+		else
+			icon_state = "ecig"
+			item_state = "ecig"
+			to_chat(user, "<span class='notice'>You turn the [src] off</span>")
+		last_time_used = world.time
+	return
