@@ -4,7 +4,6 @@
 
 // ===
 /area
-	level = null
 	name = "Space"
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "unknown"
@@ -26,7 +25,6 @@
 
 	var/eject = null
 
-	var/debug = 0
 	var/powerupdate = 10	//We give everything 10 ticks to settle out it's power usage.
 	var/requires_power = 1
 	var/always_unpowered = 0	//this gets overriden to 1 for space in area/New()
@@ -34,7 +32,7 @@
 	var/power_equip = 1
 	var/power_light = 1
 	var/power_environ = 1
-	var/music = null
+
 	var/used_equip = 0
 	var/used_light = 0
 	var/used_environ = 0
@@ -44,7 +42,6 @@
 
 	var/has_gravity = 1
 	var/obj/machinery/power/apc/apc = null
-	var/no_air = null
 	var/area/master				// master area used for power calcluations
 								// (original area before splitting due to sd_DAL)
 	var/list/related			// the other areas of the same type as this
