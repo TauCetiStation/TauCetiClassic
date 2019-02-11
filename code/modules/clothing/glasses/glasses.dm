@@ -211,7 +211,7 @@
 	var/colored_before = FALSE
 
 /obj/item/clothing/glasses/sunglasses/blindfold/white/equipped(mob/living/carbon/human/user, slot)
-	if(ishuman(user) && slot == slot_glasses)
+	if(ishuman(user) && slot == SLOT_GLASSES)
 		update_icon(user)
 	..()
 

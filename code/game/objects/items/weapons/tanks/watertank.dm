@@ -49,7 +49,7 @@
 
 /obj/item/weapon/reagent_containers/watertank_backpack/equipped(mob/user, slot)
 	..()
-	if(slot != slot_back)
+	if(slot != SLOT_BACK)
 		remove_noz()
 
 /obj/item/weapon/reagent_containers/watertank_backpack/proc/remove_noz()

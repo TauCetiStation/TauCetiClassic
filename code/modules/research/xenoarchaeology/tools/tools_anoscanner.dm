@@ -96,7 +96,7 @@
 
 /obj/item/device/wave_scanner_backpack/equipped(mob/user, slot)
 	..()
-	if(slot != slot_back)
+	if(slot != SLOT_BACK)
 		remove_processor()
 
 /obj/item/device/wave_scanner_backpack/proc/remove_processor()

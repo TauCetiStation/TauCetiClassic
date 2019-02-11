@@ -1,14 +1,14 @@
 /datum/gear/suit
 	display_name = "Apron, blue"
 	path = /obj/item/clothing/suit/apron
-	slot = slot_wear_suit
+	slot = SLOT_WEAR_SUIT
 	sort_category = "Suits and Overwear"
 	cost = 2
 
 /datum/gear/under
 	display_name = "Black tango dress"
 	path = /obj/item/clothing/under/blacktango
-	slot = slot_w_uniform
+	slot = SLOT_W_UNIFORM
 	sort_category = "Suits and Overwear"
 	cost = 1
 

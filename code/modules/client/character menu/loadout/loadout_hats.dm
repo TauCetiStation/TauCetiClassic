@@ -1,7 +1,7 @@
 /datum/gear/head
 	display_name = "bandana"
 	path = /obj/item/clothing/head/bandana
-	slot = slot_head
+	slot = SLOT_HEAD
 	sort_category = "Hats and Headwear"
 
 /datum/gear/head/cap

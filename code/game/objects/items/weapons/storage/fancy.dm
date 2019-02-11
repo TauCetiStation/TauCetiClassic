@@ -309,7 +309,7 @@
 				var/obj/item/clothing/mask/cigarette/C = I
 				has_cigarette = 1
 				contents.Remove(C)
-				user.equip_to_slot_if_possible(C, slot_wear_mask)
+				user.equip_to_slot_if_possible(C, SLOT_WEAR_MASK)
 				to_chat(user, "<span class='notice'>You take a cigarette out of the pack.</span>")
 				update_icon()
 				break

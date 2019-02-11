@@ -125,37 +125,37 @@ var/global/sent_strike_team = 0
 
 /mob/living/carbon/human/proc/equip_death_commando(leader_selected = 0)
 
-	equip_to_slot_or_del(new /obj/item/device/radio/headset/deathsquad(src), slot_l_ear)
+	equip_to_slot_or_del(new /obj/item/device/radio/headset/deathsquad(src), SLOT_L_EAR)
 	if (leader_selected == 0)
-		equip_to_slot_or_del(new /obj/item/clothing/under/color/green(src), slot_w_uniform)
+		equip_to_slot_or_del(new /obj/item/clothing/under/color/green(src), SLOT_W_UNIFORM)
 	else
-		equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(src), slot_w_uniform)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(src), slot_shoes)
-	equip_to_slot_or_del(new /obj/item/clothing/suit/armor/swat(src), slot_wear_suit)
-	equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(src), slot_gloves)
-	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/deathsquad(src), slot_head)
-	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/swat(src), slot_wear_mask)
-	equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal(src), slot_glasses)
+		equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(src), SLOT_W_UNIFORM)
+	equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(src), SLOT_SHOES)
+	equip_to_slot_or_del(new /obj/item/clothing/suit/armor/swat(src), SLOT_WEAR_SUIT)
+	equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(src), SLOT_GLOVES)
+	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/deathsquad(src), SLOT_HEAD)
+	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/swat(src), SLOT_WEAR_MASK)
+	equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal(src), SLOT_GLASSES)
 
-	equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(src), slot_back)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/box(src), slot_in_backpack)
+	equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(src), SLOT_BACK)
+	equip_to_slot_or_del(new /obj/item/weapon/storage/box(src), SLOT_IN_BACKPACK)
 
-	equip_to_slot_or_del(new /obj/item/ammo_box/a357(src), slot_in_backpack)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/box/flashbangs(src), slot_in_backpack)
-	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_in_backpack)
+	equip_to_slot_or_del(new /obj/item/ammo_box/a357(src), SLOT_IN_BACKPACK)
+	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(src), SLOT_IN_BACKPACK)
+	equip_to_slot_or_del(new /obj/item/weapon/storage/box/flashbangs(src), SLOT_IN_BACKPACK)
+	equip_to_slot_or_del(new /obj/item/device/flashlight(src), SLOT_IN_BACKPACK)
 	if (!leader_selected)
-		equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_in_backpack)
+		equip_to_slot_or_del(new /obj/item/weapon/plastique(src), SLOT_IN_BACKPACK)
 	else
-		equip_to_slot_or_del(new /obj/item/weapon/pinpointer(src), slot_in_backpack)
-		equip_to_slot_or_del(new /obj/item/weapon/disk/nuclear(src), slot_in_backpack)
+		equip_to_slot_or_del(new /obj/item/weapon/pinpointer(src), SLOT_IN_BACKPACK)
+		equip_to_slot_or_del(new /obj/item/weapon/disk/nuclear(src), SLOT_IN_BACKPACK)
 
-	equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword(src), slot_l_store)
-	equip_to_slot_or_del(new /obj/item/weapon/grenade/flashbang(src), slot_r_store)
-	equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(src), slot_s_store)
-	equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/revolver/mateba(src), slot_belt)
+	equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword(src), SLOT_L_STORE)
+	equip_to_slot_or_del(new /obj/item/weapon/grenade/flashbang(src), SLOT_R_STORE)
+	equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(src), SLOT_S_STORE)
+	equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/revolver/mateba(src), SLOT_BELT)
 
-	equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle(src), slot_r_hand)
+	equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle(src), SLOT_R_HAND)
 
 
 	var/obj/item/weapon/implant/mindshield/loyalty/L = new(src)
@@ -171,6 +171,6 @@ var/global/sent_strike_team = 0
 	W.access += list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)//Let's add their alloted CentCom access.
 	W.assignment = "Death Commando"
 	W.registered_name = real_name
-	equip_to_slot_or_del(W, slot_wear_id)
+	equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
 	return 1
