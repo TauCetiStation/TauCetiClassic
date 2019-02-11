@@ -241,7 +241,7 @@
 	isSwitchingStates = 1
 	//playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
 	flick(opening_state,src)
-	sleep(9)
+	sleep(10)
 	density = 0
 	opacity = 0
 	state = 1
@@ -252,7 +252,7 @@
 	isSwitchingStates = 1
 	//playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
 	flick(closing_state,src)
-	sleep(9)
+	sleep(10)
 	density = 1
 	opacity = 0
 	state = 0
