@@ -62,11 +62,11 @@
 		if(!src.loc)
 			on = 0
 		else
-			var/area/A = src.loc.loc
-			if(!A || !isarea(A) || !A.master)
+			var/area/A = get_area(src)
+			if(!A)
 				on = 0
 			else
-				on = A.master.powered(EQUIP) // set "on" to the power status
+				on = A.powered(EQUIP) // set "on" to the power status
 
 		if(!on)
 			icon_state = "intercom-p"

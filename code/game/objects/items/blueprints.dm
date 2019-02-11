@@ -79,7 +79,6 @@ move an amendment</a> to the drawing.</p>
 /obj/item/blueprints/proc/get_area()
 	var/turf/T = get_turf_loc(usr)
 	var/area/A = T.loc
-	A = A.master
 	return A
 
 /obj/item/blueprints/proc/get_area_type(area/A = get_area())
@@ -125,9 +124,7 @@ move an amendment</a> to the drawing.</p>
 	var/area/A = new
 	A.name = str
 	A.tag="[A.type]_[md5(str)]" // without this dynamic light system ruin everithing
-	//var/ma
-	//ma = A.master ? "[A.master]" : "(null)"
-	//world << "DEBUG: create_area: <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"
+	//world << "DEBUG: create_area: <br>A.name=[A.name]<br>A.tag=[A.tag]"
 	A.power_equip = 0
 	A.power_light = 0
 	A.power_environ = 0
@@ -137,8 +134,7 @@ move an amendment</a> to the drawing.</p>
 	A.always_unpowered = 0
 
 	spawn(5)
-		//ma = A.master ? "[A.master]" : "(null)"
-		//world << "DEBUG: create_area(5): <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"
+		//world << "DEBUG: create_area(5): <br>A.name=[A.name]<br>A.tag=[A.tag]"
 		interact()
 	return
 

@@ -62,7 +62,7 @@
 	user.SetNextMove(CLICK_CD_INTERACT)
 	playsound(src, 'sound/items/buttonclick.ogg', 20, 1, 1)
 
-	for(var/area/A in area.master.related)
+	for(var/area/A in area.related)
 		A.lightswitch = on
 		A.updateicon()
 
@@ -70,7 +70,7 @@
 			L.on = on
 			L.updateicon()
 
-	area.master.power_change()
+	area.power_change()
 
 /obj/machinery/light_switch/power_change()
 

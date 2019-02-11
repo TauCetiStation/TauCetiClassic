@@ -42,8 +42,6 @@
 
 	var/has_gravity = 1
 	var/obj/machinery/power/apc/apc = null
-	var/area/master				// master area used for power calcluations
-								// (original area before splitting due to sd_DAL)
 	var/list/related			// the other areas of the same type as this
 	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
 	var/air_doors_activated = 0
@@ -86,7 +84,6 @@ var/list/ghostteleportlocs = list()
 /area/New() // not ready for transfer, problems with alarms raises if this part moved into init (requires more time)
 	icon_state = ""
 	layer = 10
-	master = src
 	uid = ++global_uid
 	related = list(src)
 	all_areas += src
@@ -182,9 +179,9 @@ var/list/ghostteleportlocs = list()
 	return 0
 
 /area/proc/air_doors_close()
-	if(!src.master.air_doors_activated)
-		src.master.air_doors_activated = 1
-		for(var/obj/machinery/door/firedoor/E in src.master.all_doors)
+	if(!air_doors_activated)
+		air_doors_activated = 1
+		for(var/obj/machinery/door/firedoor/E in all_doors)
 			if(!E.blocked)
 				if(E.operating)
 					E.nextstate = CLOSED
@@ -192,9 +189,9 @@ var/list/ghostteleportlocs = list()
 					INVOKE_ASYNC(E, /obj/machinery/door/firedoor.proc/close)
 
 /area/proc/air_doors_open()
-	if(src.master.air_doors_activated)
-		src.master.air_doors_activated = 0
-		for(var/obj/machinery/door/firedoor/E in src.master.all_doors)
+	if(air_doors_activated)
+		air_doors_activated = 0
+		for(var/obj/machinery/door/firedoor/E in all_doors)
 			if(!E.blocked)
 				if(E.operating)
 					E.nextstate = OPEN
@@ -206,8 +203,7 @@ var/list/ghostteleportlocs = list()
 	if(name == "Space") //no fire alarms in space
 		return
 	if( !fire )
-		fire = 1
-		master.fire = 1		//used for firedoor checks
+		fire = 1 // used for firedoor checks
 		mouse_opacity = 0
 		for(var/obj/machinery/door/firedoor/D in all_doors)
 			if(!D.blocked)
@@ -229,8 +225,7 @@ var/list/ghostteleportlocs = list()
 
 /area/proc/firereset()
 	if(fire)
-		fire = 0
-		master.fire = 0		//used for firedoor checks
+		fire = 0 // used for firedoor checks
 		mouse_opacity = 0
 		for(var/obj/machinery/door/firedoor/D in all_doors)
 			if(!D.blocked)
@@ -275,23 +270,23 @@ var/list/ghostteleportlocs = list()
 
 
 /area/proc/powered(chan)		// return true if the area has power to given channel
-	if(!master.requires_power)
+	if(!requires_power)
 		return 1
-	if(master.always_unpowered)
+	if(always_unpowered)
 		return 0
 	switch(chan)
 		if(EQUIP)
-			return master.power_equip
+			return power_equip
 		if(LIGHT)
-			return master.power_light
+			return power_light
 		if(ENVIRON)
-			return master.power_environ
+			return power_environ
 
 	return 0
 
 // called when power status changes
 /area/proc/power_change()
-	master.powerupdate = 2
+	powerupdate = 2
 	for(var/area/RA in related)
 		for(var/obj/machinery/M in RA)	// for each machine in the area
 			M.power_change()				// reverify power status (to update icons etc.)
@@ -302,19 +297,19 @@ var/list/ghostteleportlocs = list()
 	var/used = 0
 	switch(chan)
 		if(LIGHT)
-			used += master.used_light
+			used += used_light
 		if(EQUIP)
-			used += master.used_equip
+			used += used_equip
 		if(ENVIRON)
-			used += master.used_environ
+			used += used_environ
 		if(TOTAL)
-			used += master.used_light + master.used_equip + master.used_environ
+			used += used_light + used_equip + used_environ
 		if(STATIC_EQUIP)
-			used += master.static_equip
+			used += static_equip
 		if(STATIC_LIGHT)
-			used += master.static_light
+			used += static_light
 		if(STATIC_ENVIRON)
-			used += master.static_environ
+			used += static_environ
 	return used
 
 /area/proc/addStaticPower(value, powerchannel)
@@ -327,19 +322,19 @@ var/list/ghostteleportlocs = list()
 			static_environ += value
 
 /area/proc/clear_usage()
-	master.used_equip = 0
-	master.used_light = 0
-	master.used_environ = 0
+	used_equip = 0
+	used_light = 0
+	used_environ = 0
 
 /area/proc/use_power(var/amount, var/chan)
 
 	switch(chan)
 		if(EQUIP)
-			master.used_equip += amount
+			used_equip += amount
 		if(LIGHT)
-			master.used_light += amount
+			used_light += amount
 		if(ENVIRON)
-			master.used_environ += amount
+			used_environ += amount
 
 
 /area/Entered(A)
