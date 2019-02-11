@@ -18,9 +18,9 @@
 	if(.)
 		handle_phantom_move(NewLoc, Dir)
 		if(nutrition && stat != DEAD)
-			nutrition -= get_metabolism_factor() / 10
+			nutrition -= get_metabolism_factor() / 100
 			if(m_intent == "run")
-				nutrition -= get_metabolism_factor() / 10
+				nutrition -= get_metabolism_factor() / 100
 		if((FAT in mutations) && m_intent == "run" && bodytemperature <= 360)
 			bodytemperature += 2
 
@@ -660,6 +660,56 @@
 /mob/living/carbon/proc/bloody_body(mob/living/source)
 	return
 
+/mob/living/carbon/is_nude(maximum_coverage = 0, pos_slots = list(src.head, src.shoes, src.neck, src.mouth))
+	// We for some reason assume that the creature wearing human clothes has human-like anatomy. Mind-boggling, huh?
+	var/percentage_covered = 0
+
+	var/head_covered = FALSE
+	var/face_covered = FALSE
+	var/eyes_covered = FALSE
+	var/mouth_covered = FALSE
+	var/chest_covered = FALSE
+	var/groin_covered = FALSE
+	var/legs_covered = 0
+	var/arms_covered = 0
+
+	for(var/obj/item/I in pos_slots)
+		if(!eyes_covered && ((I.flags & (GLASSESCOVERSEYES|MASKCOVERSEYES|HEADCOVERSEYES)) || I.flags_inv & HIDEEYES)) // All of them refer to the same value, but for reader's sake...
+			percentage_covered += EYES_COVERAGE
+			eyes_covered = TRUE
+		if(!mouth_covered && ((I.flags & (MASKCOVERSMOUTH|HEADCOVERSMOUTH)) || I.flags_inv & HIDEMASK))
+			percentage_covered += MOUTH_COVERAGE
+			mouth_covered = TRUE
+		if(!face_covered && (I.flags_inv & HIDEFACE))
+			percentage_covered += FACE_COVERAGE
+			face_covered = TRUE
+		if(!head_covered && (I.body_parts_covered & HEAD))
+			percentage_covered += HEAD_COVERAGE
+			head_covered = TRUE
+		if(!chest_covered && (I.body_parts_covered & UPPER_TORSO))
+			percentage_covered += CHEST_COVERAGE
+			chest_covered = TRUE
+		if(!groin_covered && (I.body_parts_covered & LOWER_TORSO))
+			percentage_covered += GROIN_COVERAGE
+			groin_covered = TRUE
+		if(legs_covered < 2 && (I.body_parts_covered & LEG_LEFT))
+			percentage_covered += LEGS_COVERAGE
+			legs_covered++
+		if(legs_covered < 2 && (I.body_parts_covered & LEG_RIGHT)) // Because one thing can cover both and we need to check seperately and asdosadas
+			percentage_covered += LEGS_COVERAGE
+			legs_covered++
+		if(arms_covered < 2 && (I.body_parts_covered & ARM_LEFT))
+			percentage_covered += ARMS_COVERAGE
+			arms_covered++
+		if(arms_covered < 2 && (I.body_parts_covered & ARM_RIGHT))
+			percentage_covered += ARMS_COVERAGE
+			arms_covered++
+
+	return percentage_covered <= maximum_coverage
+
+/mob/living/carbon/naturechild_check()
+	return is_nude(maximum_coverage = 20) && !istype(head, /obj/item/clothing/head/bearpelt) && !istype(head, /obj/item/weapon/holder)
+
 /mob/living/carbon/proc/handle_phantom_move(NewLoc, direct)
 	if(!mind || !mind.changeling || length(mind.changeling.essences) < 1)
 		return
@@ -686,6 +736,6 @@
 	return nutrition + (reagents.get_reagent("nutriment") + reagents.get_reagent("plantmatter") + reagents.get_reagent("protein") + reagents.get_reagent("dairy")) * 2.5 // We multiply by this "magic" number, because all of these are equal to 2.5 nutrition.
 
 /mob/living/carbon/get_metabolism_factor()
-	. = metabolism_factor / 10 // I do not know why before it was divided by 10 but I decided to preserve it until future reworking. ~Luduk
+	. = metabolism_factor // I do not know why before it was divided by 10 but I decided to preserve it until future reworking. ~Luduk
 	if(has_trait(TRAIT_STRESS_EATER))
-		. *= getHalLoss() / 100 // 100 is our Crit-maximum.
+		. *= getHalLoss() / 10 // 100 is our Crit-maximum.

@@ -96,7 +96,6 @@
 	name = "Sleepy"
 	desc = "You get tired when you don't sleep."
 	value = -1
-	mob_trait = TRAIT_SLEEPY
 	gain_text = "<span class='danger'>You feel like you're getting tired.</span>"
 	lose_text = "<span class='notice'>You feel as if you never need to sleep again.</span>"
 

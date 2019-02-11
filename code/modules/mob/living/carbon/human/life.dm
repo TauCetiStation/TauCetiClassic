@@ -1038,7 +1038,7 @@
 
 	// nutrition decrease
 	if (nutrition > 0 && stat != DEAD)
-		nutrition = max(0, nutrition - get_metabolism_factor())
+		nutrition = max(0, nutrition - get_metabolism_factor() / 10)
 
 	if (nutrition > 450)
 		if(overeatduration < 600) //capped so people don't take forever to unfat

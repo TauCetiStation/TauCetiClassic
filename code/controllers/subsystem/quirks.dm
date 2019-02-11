@@ -35,6 +35,7 @@ var/datum/subsystem/quirks/SSquirks
 		"Cough" = list(DIONA, IPC),
 		"Seizures" = list(DIONA, IPC),
 		"Sleepy" = list(IPC),
+		"Child of Nature" = list(HUMAN, SKRELL, TAJARAN, UNATHI, IPC),
 		"Stress Eater" = list(DIONA, IPC)
 		)
 
