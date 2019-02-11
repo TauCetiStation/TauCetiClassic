@@ -1,3 +1,18 @@
+/mob/living/carbon/human/getHalLoss()
+	if(species.flags[NO_PAIN])
+		return 0
+	return ..()
+
+/mob/living/carbon/human/setHalLoss()
+	if(species.flags[NO_PAIN])
+		return
+	..()
+
+/mob/living/carbon/human/adjustHalLoss()
+	if(species.flags[NO_PAIN])
+		return
+	..()
+
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
 
 	def_zone = check_zone(def_zone)

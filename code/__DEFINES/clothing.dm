@@ -28,32 +28,31 @@
 #define SLOT_FLAGS_TIE          (1<<14)
 
 //slots
-#define slot_back        1
-#define slot_wear_mask   2
-#define slot_handcuffed  3
-#define slot_l_hand      4
-#define slot_r_hand      5
-#define slot_belt        6
-#define slot_wear_id     7
-#define slot_l_ear       8
-#define slot_glasses     9
-#define slot_gloves      10
-#define slot_head        11
-#define slot_shoes       12
-#define slot_wear_suit   13
-#define slot_w_uniform   14
-#define slot_l_store     15
-#define slot_r_store     16
-#define slot_s_store     17
-#define slot_in_backpack 18
-#define slot_legcuffed   19
-#define slot_r_ear       20
-#define slot_legs        21
-#define slot_tie         22
+#define SLOT_BACK          1
+#define SLOT_WEAR_MASK     2
+#define SLOT_HANDCUFFED    3
+#define SLOT_L_HAND        4
+#define SLOT_R_HAND        5
+#define SLOT_BELT          6
+#define SLOT_WEAR_ID       7
+#define SLOT_L_EAR         8
+#define SLOT_GLASSES       9
+#define SLOT_GLOVES        10
+#define SLOT_HEAD          11
+#define SLOT_SHOES         12
+#define SLOT_WEAR_SUIT     13
+#define SLOT_W_UNIFORM     14
+#define SLOT_L_STORE       15
+#define SLOT_R_STORE       16
+#define SLOT_S_STORE       17
+#define SLOT_IN_BACKPACK   18
+#define SLOT_LEGCUFFED     19
+#define SLOT_R_EAR         20
+#define SLOT_TIE           21
 
 //Sol translation for dog slots.
-#define slot_mouth slot_wear_mask  // 2
-#define slot_neck  slot_handcuffed // 3 (Ian actually is a cat! ~if you know what i mean)
+#define SLOT_MOUTH SLOT_WEAR_MASK  // 2
+#define SLOT_NECK  SLOT_HANDCUFFED // 3 (Ian actually is a cat! ~if you know what i mean)
 
 //Cant seem to find a mob bitflags area other than the powers one
 
@@ -70,6 +69,16 @@
 #define ARM_RIGHT		1024
 #define ARMS			1536
 #define FULL_BODY		1663
+
+// How much coverage(in percents) of each clothing part covers our body(aproximately)
+#define HEAD_COVERAGE    5
+#define FACE_COVERAGE    2
+#define EYES_COVERAGE    2
+#define MOUTH_COVERAGE   1
+#define CHEST_COVERAGE   30
+#define GROIN_COVERAGE   20
+#define ARMS_COVERAGE    10
+#define LEGS_COVERAGE    10
 
 // bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
 // Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()
