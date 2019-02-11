@@ -156,8 +156,7 @@ move an amendment</a> to the drawing.</p>
 		to_chat(usr, "\red Text too long.")
 		return
 	set_area_machinery_title(A,str,prevname)
-	for(var/area/RA in A.related)
-		RA.name = str
+	A.name = str
 	to_chat(usr, "\blue You set the area '[prevname]' title to '[str]'.")
 	interact()
 	return
@@ -167,17 +166,17 @@ move an amendment</a> to the drawing.</p>
 /obj/item/blueprints/proc/set_area_machinery_title(area/A,title,oldtitle)
 	if (!oldtitle) // or replacetext goes to infinite loop
 		return
-	for(var/area/RA in A.related)
-		for(var/obj/machinery/alarm/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/power/apc/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/atmospherics/components/unary/vent_pump/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/door/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
+
+	for(var/obj/machinery/alarm/M in src)
+		M.name = replacetext(M.name,oldtitle,title)
+	for(var/obj/machinery/power/apc/M in src)
+		M.name = replacetext(M.name,oldtitle,title)
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/M in src)
+		M.name = replacetext(M.name,oldtitle,title)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/M in src)
+		M.name = replacetext(M.name,oldtitle,title)
+	for(var/obj/machinery/door/M in src)
+		M.name = replacetext(M.name,oldtitle,title)
 	//TODO: much much more. Unnamed airlocks, cameras, etc.
 
 /obj/item/blueprints/proc/check_tile_is_border(turf/T2,dir)

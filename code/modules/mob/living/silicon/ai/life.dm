@@ -132,11 +132,10 @@
 						var/PRP //like ERP with the code, at least this stuff is no more 4x sametext
 						for (PRP=1, PRP<=4, PRP++)
 							var/area/AIarea = get_area(src)
-							for(var/area/A in AIarea.related)
-								for (var/obj/machinery/power/apc/APC in A)
-									if (!(APC.stat & BROKEN))
-										theAPC = APC
-										break
+							for (var/obj/machinery/power/apc/APC in AIarea)
+								if (!(APC.stat & BROKEN))
+									theAPC = APC
+									break
 							if(!theAPC)
 								switch(PRP)
 									if (1)
