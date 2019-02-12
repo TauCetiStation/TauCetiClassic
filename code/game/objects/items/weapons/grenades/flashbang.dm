@@ -30,7 +30,7 @@
 	playsound(src.loc, 'sound/effects/bang.ogg', 50, 1, 5)
 
 //Checking for protections
-	var/eye_safety = FALSE
+	var/eye_safety = 0
 	var/ear_safety = 0
 	if(iscarbon(M))
 		eye_safety = M.eyecheck()
@@ -43,7 +43,7 @@
 				ear_safety += 1
 
 //Flashing everyone
-	if(!eye_safety)
+	if(eye_safety<1)
 		M.flash_eyes()
 		M.Stun(2)
 		M.Weaken(10)
