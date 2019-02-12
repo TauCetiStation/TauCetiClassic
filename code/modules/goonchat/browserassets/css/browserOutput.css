@@ -306,6 +306,10 @@ h1.alert, h2.alert	{color: #000000;}
 .deadsay				{color: #5c00e6;}
 .newscaster				{color: #800000;}
 
+.binarysay    			{color: #20c20e; background-color: #000000; display: block;}
+.binarysay a  			{color: #00ff00;}
+.binarysay a:active, .binarysay a:visited {color: #88ff88;}
+
 /* Game Messages */
 .attack					{color: #ff0000;}
 .moderate				{color: #CC0000;}
