@@ -84,7 +84,7 @@ var/list/editing_item_oldname_list = list()
 
 	dat += "<table cellspacing='0' width='100%'>"
 	dat += "<tr>"
-	dat += "<td>Type</td>"
+	dat += "<td width=110>Type</td>"
 	dat += "<td>[readonly?"<b>[editing_item.item_type]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_type=1'>[editing_item.item_type]</a>"]</td>"
 	dat += "</tr>"
 	dat += "<tr>"
@@ -104,6 +104,14 @@ var/list/editing_item_oldname_list = list()
 	dat += "<td>Icon name</td>"
 	dat += "<td>[readonly?"<b>[editing_item.icon_state]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_iconname=1'>[editing_item.icon_state]</a>"]</td>"
 	dat += "</tr>"
+	dat += "<tr>"
+	dat += "<td>Sprite author<a class='small' href='?_src_=prefs;preference=fluff;author_info=1'>\[?\]</a></td>"
+	dat += "<td>[readonly?"<b>[editing_item.sprite_author ? editing_item.sprite_author : "no author"]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_author=1'>[editing_item.sprite_author ? editing_item.sprite_author : "no author"]</a>"]</td>"
+	dat += "</tr>"
+	dat += "<tr>"
+	dat += "<td>OOC Info<a class='small' href='?_src_=prefs;preference=fluff;ooc_info=1'>\[?\]</a></td>"
+	dat += "<td>[readonly?"<b>[editing_item.info ? editing_item.info : "no info"]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_oocinfo=1'>[editing_item.info ? editing_item.info : "no info"]</a>"]</td>"
+	dat += "</tr>"
 	dat += "</table></div>"
 
 	if(!readonly)
@@ -116,7 +124,7 @@ var/list/editing_item_oldname_list = list()
 		dat += " <a class='small' href='?_src_=prefs;preference=fluff;download=1'>Download icon</a>"
 
 	dat += "</body></html>"
-	user << browse(entity_ja(dat), "window=edit_custom_item;size=400x500;can_minimize=0;can_maximize=0;can_resize=0")
+	user << browse(entity_ja(dat), "window=edit_custom_item;size=400x600;can_minimize=0;can_maximize=0;can_resize=0")
 
 /datum/preferences/proc/process_link_fluff(mob/user, list/href_list)
 	var/datum/custom_item/editing_item = editing_item_list[user.client.ckey]
@@ -197,6 +205,44 @@ var/list/editing_item_oldname_list = list()
 		edit_custom_item_panel(src, user)
 		return
 
+	if(href_list["author_info"])
+		alert(user, "If you are submitting sprites from another build or made by another person you must first ask their permission and then give them credit by putting their name here", "Info", "OK")
+		return
+
+	if(href_list["change_author"])
+		var/new_sprite_author = sanitize(input("Enter sprite author:", "Text")  as text|null)
+		if(!editing_item)
+			return
+
+		if(!new_sprite_author)
+			editing_item.sprite_author = null
+		else if(length(new_sprite_author) > 100)
+			return
+		else
+			editing_item.sprite_author = new_sprite_author
+
+		edit_custom_item_panel(src, user)
+		return
+
+	if(href_list["ooc_info"])
+		alert(user, "Not shown ingame. You may put here anything that you think is important about your item. Will only be visible here to you and premoderation admins", "Info", "OK")
+		return
+
+	if(href_list["change_oocinfo"])
+		var/new_ooc_info = sanitize(input("Enter item ooc information:", "Text")  as text|null)
+		if(!editing_item)
+			return
+
+		if(!new_ooc_info)
+			editing_item.info = null
+		else if(length(new_ooc_info) > 500)
+			return
+		else
+			editing_item.info = new_ooc_info
+
+		edit_custom_item_panel(src, user)
+		return
+
 	if(href_list["submit"])
 		if(!editing_item || !editing_item.icon || !editing_item.icon_state)
 			return
@@ -246,6 +292,7 @@ var/list/editing_item_oldname_list = list()
 			return
 
 		usr << ftp(editing_item.icon)
+		return
 
 	if(href_list["upload_icon"])
 		var/new_item_icon = input("Pick icon:","Icon") as null|icon

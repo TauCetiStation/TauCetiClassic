@@ -397,7 +397,7 @@
 	desc = "This glowing blue badge marks the holder as THE LAW."
 	icon_state = "holobadge"
 	item_color = "holobadge"
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 
 	var/emagged = 0 //Emagging removes Sec check.
 	var/stored_name = null
@@ -405,7 +405,7 @@
 /obj/item/clothing/tie/holobadge/cord
 	icon_state = "holobadge-cord"
 	item_color = "holobadge-cord"
-	slot_flags = SLOT_MASK
+	slot_flags = SLOT_FLAGS_MASK
 
 /obj/item/clothing/tie/holobadge/attack_self(mob/user)
 	if(!stored_name)

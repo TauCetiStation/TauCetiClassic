@@ -8,7 +8,7 @@
 	throw_speed = 4
 	throw_range = 20
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	active = 0
 	det_time = 50
 	var/range = 3

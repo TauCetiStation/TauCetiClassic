@@ -10,7 +10,7 @@
 	w_class = 3.0
 	item_state = "electronic"
 	flags = CONDUCT | NOBLUDGEON
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 
 /obj/item/device/detective_scanner/attackby(obj/item/weapon/f_card/W, mob/user)
 	..()

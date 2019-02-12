@@ -495,6 +495,7 @@
 				else
 					P.info += "<B>Medical Record Lost!</B><BR>"
 				P.info += "</TT>"
+				P.update_icon()
 				src.printing = null
 
 	src.updateUsrDialog()

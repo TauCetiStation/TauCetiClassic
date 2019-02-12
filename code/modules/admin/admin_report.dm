@@ -3,26 +3,25 @@
 // they can only be read by admins and moderators.
 
 // a single admin report
-/datum/admin_report/var
-	ID     // the ID of the report
-	body   // the content of the report
-	author // key of the author
-	date   // date on which this was created
-	done   // whether this was handled
+/datum/admin_report
+	var/ID     // the ID of the report
+	var/body   // the content of the report
+	var/author // key of the author
+	var/date   // date on which this was created
+	var/done   // whether this was handled
 
-	offender_key // store the key of the offender
-	offender_cid // store the cid of the offender
+	var/offender_key // store the key of the offender
+	var/offender_cid // store the cid of the offender
 
-/datum/report_topic_handler
-	Topic(href,href_list)
-		..()
-		var/client/C = locate(href_list["client"])
-		if(href_list["action"] == "show_reports")
-			C.display_admin_reports()
-		else if(href_list["action"] == "remove")
-			C.mark_report_done(text2num(href_list["ID"]))
-		else if(href_list["action"] == "edit")
-			C.edit_report(text2num(href_list["ID"]))
+/datum/report_topic_handler/Topic(href,href_list)
+	..()
+	var/client/C = locate(href_list["client"])
+	if(href_list["action"] == "show_reports")
+		C.display_admin_reports()
+	else if(href_list["action"] == "remove")
+		C.mark_report_done(text2num(href_list["ID"]))
+	else if(href_list["action"] == "edit")
+		C.edit_report(text2num(href_list["ID"]))
 
 var/datum/report_topic_handler/report_topic_handler
 

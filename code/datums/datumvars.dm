@@ -419,7 +419,7 @@ body
 	if(usr.client != src || !holder)
 		return
 	if(href_list["Vars"])
-		if(!check_rights(R_DEBUG|R_ADMIN))
+		if(!check_rights(R_DEBUG|R_VAREDIT))
 			return
 		debug_variables(locate(href_list["Vars"]))
 

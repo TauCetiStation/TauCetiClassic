@@ -8,7 +8,7 @@
 /obj/machinery/shield_gen
 	name = "shield generator"
 	desc = "Machine that generates an impenetrable field of energy when activated."
-	icon = 'code/modules/shieldgen/shielding.dmi'
+	icon = 'icons/obj/machines/shielding.dmi'
 	icon_state = "generator0"
 	var/active = 0
 	var/field_radius = 3

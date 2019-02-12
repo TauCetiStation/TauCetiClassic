@@ -4,9 +4,9 @@
 		"Transfer their payrolls to the station account.",
 		"Terminate their employment.")
 
-	proc/is_alien(mob/M)
-		var/species = M.get_species()
-		return species == TAJARAN || species == UNATHI
+/datum/directive/terminations/alien_fraud/proc/is_alien(mob/M)
+	var/species = M.get_species()
+	return species == TAJARAN || species == UNATHI
 
 /datum/directive/terminations/alien_fraud/get_crew_to_terminate()
 	var/list/aliens[0]

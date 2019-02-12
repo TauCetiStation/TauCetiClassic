@@ -29,7 +29,7 @@ Pipelines + Other Objects -> Pipe network
 	var/icon_connect_type = "" //"-supply" or "-scrubbers"
 
 	var/pipe_color
-	var/global/datum/pipe_icon_manager/icon_manager
+	var/static/datum/pipe_icon_manager/icon_manager
 
 	var/device_type = 0
 	var/list/obj/machinery/atmospherics/nodes
