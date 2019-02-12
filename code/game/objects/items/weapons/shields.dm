@@ -78,6 +78,7 @@
 	throw_speed = 3
 	throw_range = 4
 	block_chance = 50
+	w_class = 3
 	var/active = 0
 
 /obj/item/weapon/shield/riot/tele/Get_shield_chance()
