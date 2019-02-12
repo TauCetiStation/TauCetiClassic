@@ -82,25 +82,18 @@
 		this_item.add_fingerprint(who)
 		who.visible_message(message)
 	else
-		if(where == "CPR")
-			if(!cpr_time)
-				return
-			cpr_time = FALSE
-			who.visible_message("<span class='danger'>[who] is trying perform CPR on [src]!</span>")
+		var/obj/item/slot_ref = get_slot_ref(where)
+		if(slot_ref)
+			who.visible_message(text("<span class='danger'>[] is trying to take off \a [] from []'s []!</span>", who, slot_ref, src, lowertext(where)))
+			slot_ref.add_fingerprint(who)
 		else
-			var/obj/item/slot_ref = get_slot_ref(where)
-			if(slot_ref)
-				who.visible_message(text("<span class='danger'>[] is trying to take off \a [] from []'s []!</span>", who, slot_ref, src, lowertext(where)))
-				slot_ref.add_fingerprint(who)
-			else
-				who.isHandsBusy = FALSE //invalid slot
-				return
+			who.isHandsBusy = FALSE //invalid slot
+			return
 
 	if(do_after(who, HUMAN_STRIP_DELAY, target = src))
 		do_un_equip_or_action(who, where, this_item)
 
 	who.isHandsBusy = FALSE
-	cpr_time = TRUE
 
 /mob/living/carbon/ian/proc/do_un_equip_or_action(mob/living/who, where, obj/item/this_item)
 	if(!who || !where)
@@ -123,14 +116,6 @@
 			who.attack_log += text("\[[time_stamp()]\] <font color='red'>Removed [src.name]'s ([src.ckey]) [where] ([slot_ref])</font>")
 	else
 		switch(where)
-			if("CPR")
-				if(src.health > config.health_threshold_dead && src.health < config.health_threshold_crit)
-					var/suff = min(src.getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
-					src.adjustOxyLoss(-suff)
-					src.updatehealth()
-					who.visible_message("<span class='warning'>[who] performs CPR on [src]!</span>")
-					to_chat(src, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
-					to_chat(who, "<span class='warning'>Repeat at least every 7 seconds.</span>")
 			if("dnainjector")
 				var/obj/item/weapon/dnainjector/S = this_item
 				if(!istype(S))

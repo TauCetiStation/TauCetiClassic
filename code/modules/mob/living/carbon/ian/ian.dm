@@ -371,13 +371,7 @@
 			if(health >= config.health_threshold_crit)
 				help_shake_act(M)
 				return
-			if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
-				to_chat(M, "<span class='notice'>Remove your mask!</span>")
-				return
-			if(head && (head.flags & HEADCOVERSMOUTH))
-				to_chat(M, "<span class='notice'>Remove his [head]!</span>")
-				return
-			un_equip_or_action(M, "CPR")
+			INVOKE_ASYNC(src, .proc/perform_cpr, M)
 		if ("hurt")
 			M.do_attack_animation(src)
 			if(is_armored(M, 35))

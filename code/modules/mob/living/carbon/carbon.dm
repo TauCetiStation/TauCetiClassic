@@ -740,3 +740,42 @@
 
 /mob/living/carbon/get_metabolism_factor()
 	. = metabolism_factor
+
+
+/mob/living/carbon/proc/perform_cpr(mob/living/carbon/human/user) // don't forget to INVOKE_ASYNC this proc if sleep is a problem.
+	if(!ishuman(src) && !isIAN(src))
+		return
+	if(user.is_busy(src))
+		return
+
+	visible_message("<span class='danger'>[user] is trying perform CPR on [src]!</span>")
+
+	if(do_mob(user, src, HUMAN_STRIP_DELAY))
+		 // yes, we check this after the action, allowing player to try this even if it looks wrong (for fun).
+		if(user.species && user.species.flags[NO_BREATHE])
+			to_chat(user, "<span class='notice bold'>Your species can not perform CPR!</span>")
+			return
+		if((user.head && (user.head.flags & HEADCOVERSMOUTH)) || (user.wear_mask && (user.wear_mask.flags & MASKCOVERSMOUTH)))
+			to_chat(user, "<span class='notice bold'>Remove your mask!</span>")
+			return
+
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(H.species && H.species.flags[NO_BREATHE])
+				to_chat(user, "<span class='notice bold'>You can not perform CPR on these species!</span>")
+				return
+			if(wear_mask && wear_mask.flags & MASKCOVERSMOUTH)
+				to_chat(user, "<span class='notice bold'>Remove [p_their()] [wear_mask]!</span>")
+				return
+
+		if(head && head.flags & HEADCOVERSMOUTH)
+			to_chat(user, "<span class='notice bold'>Remove [p_their()] [head]!</span>")
+			return
+
+		if (health > config.health_threshold_dead && health < config.health_threshold_crit)
+			var/suff = min(getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
+			adjustOxyLoss(-suff)
+			updatehealth()
+			visible_message("<span class='warning'>[user] performs CPR on [src]!</span>")
+			to_chat(src, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
+			to_chat(user, "<span class='warning'>Repeat at least every 7 seconds.</span>")

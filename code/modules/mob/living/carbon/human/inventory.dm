@@ -618,11 +618,6 @@
 					if(I.on_found(source))
 						return
 				message = "<span class='danger'>[source] is trying to empty [target]'s pockets.</span>"
-			if("CPR")
-				if (!target.cpr_time)
-					qdel(src)
-				target.cpr_time = 0
-				message = "<span class='danger'>[source] is trying perform CPR on [target]!</span>"
 			if("id")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their ID ([target.wear_id]) removed by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) ID ([target.wear_id])</font>")
@@ -671,7 +666,6 @@ The else statement is for equipping stuff to empty slots.
 It can still be worn/put on as normal.
 */
 /obj/effect/equip_e/human/done()	//TODO: And rewrite this :< ~Carn
-	target.cpr_time = 1
 	if(isanimal(source)) return //animals cannot strip people, except Ian, hes a cat, cats no no animal!
 	if(!source || !target) return		//Target or source no longer exist
 	if(source.loc != s_loc) return		//source has moved
@@ -786,15 +780,6 @@ It can still be worn/put on as normal.
 					if(W.bandaged)
 						W.bandaged = 0
 			target.update_bandage()
-		if("CPR")
-			if ((target.health > config.health_threshold_dead && target.health < config.health_threshold_crit))
-				var/suff = min(target.getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
-				target.adjustOxyLoss(-suff)
-				target.updatehealth()
-				for(var/mob/O in viewers(source, null))
-					O.show_message("<span class='warning'>[source] performs CPR on [target]!</span>", 1)
-				to_chat(target, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
-				to_chat(source, "<span class='warning'>Repeat at least every 7 seconds.</span>")
 		if("dnainjector")
 			var/obj/item/weapon/dnainjector/S = item
 			if(S)
