@@ -946,6 +946,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 ///eyecheck()
 ///Returns a number between -1 to 2
 /mob/living/carbon/human/eyecheck()
+	if(blinded)
+		return 2
 	var/number = 0
 	if(istype(src.head, /obj/item/clothing/head/welding))
 		if(!src.head:up)
