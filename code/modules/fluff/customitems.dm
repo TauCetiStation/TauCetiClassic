@@ -69,7 +69,7 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	if(supporter)
 		ammount += 1
 
-	if(holder)
+	if(ckey in admin_datums)
 		ammount += 1
 
 	if(player_ingame_age >= config.customitem_slot_by_time)

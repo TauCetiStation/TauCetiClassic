@@ -1110,11 +1110,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	send2slack_custommsg("Fax message was created by [key_name_admin(usr)] and sent to [department]: [sent_text]")
 
 /client/proc/add_player_age()
-	set category = "Debug"
+	set category = "Server"
 	set name = "Increase player age"
 	set desc = "Allow a new player to skip the job time restrictions."
 
-	if(!check_rights(R_DEBUG))
+	if(!check_rights(R_VAREDIT))
 		return
 
 	if(!config.use_ingame_minutes_restriction_for_jobs)
@@ -1125,10 +1125,19 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!target)
 		return
 
-	if(target.player_ingame_age < config.add_player_age_value)
-		log_admin("[key_name(usr)] increased [key_name(target)] in-game age from [target.player_ingame_age] to [config.add_player_age_value]")
-		message_admins("[key_name_admin(usr)] increased [key_name_admin(target)] in-game age from [target.player_ingame_age] to [config.add_player_age_value]")
+	var/value = config.add_player_age_value
+	if(check_rights(R_PERMISSIONS,0) && alert("As +PERMISSIONS user you can set custom value. Set custom?", "Custom age?", "Yes", "No") == "Yes")
+		value = input("Enter custom in-game age value") as num|null
 
-		target.player_ingame_age = config.add_player_age_value
+	if(!value)
+		return
+
+	if(target.player_ingame_age < value)
+		notes_add(target.ckey, "PLAYERAGE: increased in-game age from [target.player_ingame_age] to [value]", src)
+
+		log_admin("[key_name(usr)] increased [key_name(target)] in-game age from [target.player_ingame_age] to [value]")
+		message_admins("[key_name_admin(usr)] increased [key_name_admin(target)] in-game age from [target.player_ingame_age] to [value]")
+
+		target.player_ingame_age = value
 	else
-		to_chat(src, "This player already has more minutes than [config.add_player_age_value]!")
+		to_chat(src, "This player already has more minutes than [value]!")
