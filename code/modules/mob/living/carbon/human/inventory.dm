@@ -410,37 +410,35 @@
 			if("mask")
 				if (!( target.wear_mask ))
 					qdel(src)
+					return
 			if("l_hand")
 				if (!( target.l_hand ))
 					qdel(src)
+					return
 			if("r_hand")
 				if (!( target.r_hand ))
 					qdel(src)
+					return
 			if("suit")
 				if (!( target.wear_suit ))
 					qdel(src)
+					return
 			if("uniform")
 				if (!( target.w_uniform ))
 					qdel(src)
+					return
 			if("back")
 				if (!( target.back ))
 					qdel(src)
-			if("syringe")
-				return
-			if("pill")
-				return
-			if("fuel")
-				return
-			if("drink")
-				return
-			if("dnainjector")
-				return
+					return
 			if("handcuff")
 				if (!( target.handcuffed ))
 					qdel(src)
+					return
 			if("id")
 				if ((!( target.wear_id ) || !( target.w_uniform )))
 					qdel(src)
+					return
 			if("splints")
 				var/count = 0
 				for(var/bodypart_name in list(BP_L_LEG , BP_R_LEG , BP_L_ARM , BP_R_ARM))
@@ -454,15 +452,18 @@
 			if("sensor")
 				if (! target.w_uniform )
 					qdel(src)
+					return
 			if("internal")
 				if ((!( (istype(target.wear_mask, /obj/item/clothing/mask) && (istype(target.back, /obj/item/weapon/tank) || istype(target.belt, /obj/item/weapon/tank) || istype(target.s_store, /obj/item/weapon/tank)) && !( target.internal )) ) && !( target.internal )))
 					qdel(src)
+					return
 
-	var/list/L = list( "syringe", "pill", "drink", "dnainjector", "fuel", "sensor", "internal", "tie")
+	var/list/L = list("sensor", "internal", "tie")
 	if ((item && !( L.Find(place) )))
 		if(isrobot(source)) //#Z2
 			if(place != "handcuff")
 				qdel(src)
+				return
 			for(var/mob/O in viewers(target, null))
 				O.show_message("<span class='danger'>[source] is trying to put \a [item] on [target]</span>", 1)
 		else
@@ -479,14 +480,6 @@
 	else
 		var/message=null
 		switch(place)
-			if("syringe")
-				message = "<span class='danger'>[source] is trying to inject [target]!</span>"
-			if("pill")
-				message = "<span class='danger'>[source] is trying to force [target] to swallow [item]!</span>"
-			if("drink")
-				message = "<span class='danger'>[source] is trying to force [target] to swallow a gulp of [item]!</span>"
-			if("dnainjector")
-				message = "<span class='danger'>[source] is trying to inject [target] with the [item]!</span>"
 			if("mask")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had their mask removed by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) mask</font>")
@@ -780,21 +773,6 @@ It can still be worn/put on as normal.
 					if(W.bandaged)
 						W.bandaged = 0
 			target.update_bandage()
-		if("dnainjector")
-			var/obj/item/weapon/dnainjector/S = item
-			if(S)
-				S.add_fingerprint(source)
-				if (!( istype(S, /obj/item/weapon/dnainjector) ))
-					S.inuse = 0
-					qdel(src)
-				S.inject(target, source)
-				if (S.s_time >= world.time + 30)
-					S.inuse = 0
-					qdel(src)
-				S.s_time = world.time
-				for(var/mob/O in viewers(source, null))
-					O.show_message("<span class='warning'>[source] injects [target] with the DNA Injector!</span>", 1)
-				S.inuse = 0
 		if("pockets")
 			slot_to_process = SLOT_L_STORE
 			if (target.l_store)

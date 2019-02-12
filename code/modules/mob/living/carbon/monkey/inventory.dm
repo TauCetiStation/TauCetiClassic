@@ -30,10 +30,8 @@
 
 	if (item)
 		if(isrobot(source) && place != "handcuff")
-			var/list/L = list( "syringe", "pill", "drink", "dnainjector", "fuel")
-			if(!(L.Find(place)))
-				qdel(src)
-				return
+			qdel(src)
+			return
 		for(var/mob/O in viewers(target, null))
 			if ((O.client && !( O.blinded )))
 				O.show_message(text("<span class='danger'>[] is trying to put a [] on [].</span>", source, item, target), 1)
