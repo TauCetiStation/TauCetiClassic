@@ -68,9 +68,8 @@
 	if(!who || !where || isanimal(who))
 		return
 
-	if(who.isHandsBusy)
+	if(who.is_busy(src))
 		return
-	who.isHandsBusy = TRUE
 
 	if(!Adjacent(who))
 		return
@@ -85,13 +84,10 @@
 			who.visible_message(text("<span class='danger'>[] is trying to take off \a [] from []'s []!</span>", who, slot_ref, src, lowertext(where)))
 			slot_ref.add_fingerprint(who)
 		else
-			who.isHandsBusy = FALSE //invalid slot
 			return
 
 	if(do_after(who, HUMAN_STRIP_DELAY, target = src))
 		do_un_equip_or_action(who, where, this_item)
-
-	who.isHandsBusy = FALSE
 
 /mob/living/carbon/ian/proc/do_un_equip_or_action(mob/living/who, where, obj/item/this_item)
 	if(!who || !where)
