@@ -14,14 +14,15 @@
 	w_class = 3
 
 /obj/item/clothing/head/helmet/warden
-	name = "warden's hat"
+	name = "warden's helmet"
 	desc = "It's a special helmet issued to the Warden of a security force. Protects the head from impacts."
 	icon_state = "helmet_warden"
 
 /obj/item/clothing/head/helmet/HoS
-	name = "head of security hat"
+	name = "head of security's hat"
 	desc = "The hat of the Head of Security. For showing the officers who's in charge."
-	icon_state = "hoscap"
+	icon_state = "hoshat"
+	item_state = "hoshat"
 	flags = HEADCOVERSEYES
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 	flags_inv = HIDEEARS
@@ -73,12 +74,14 @@
 	name = "bulletproof helmet"
 	desc = "A bulletproof security helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
 	icon_state = "bulletproof"
+	flags = HEADCOVERSEYES | THICKMATERIAL | HEADCOVERSMOUTH	// cause sprite has a drawn mask
 
 /obj/item/clothing/head/helmet/laserproof
 	name = "ablative helmet"
 	desc = "A ablative security helmet that excels in protecting the wearer against energy and laser projectiles."
 	icon_state = "laserproof"
 	armor = list(melee = 10, bullet = 10, laser = 45,energy = 55, bomb = 0, bio = 0, rad = 0)
+	flags = HEADCOVERSEYES | THICKMATERIAL | HEADCOVERSMOUTH	// cause sprite has a drawn mask
 	siemens_coefficient = 0
 
 	var/hit_reflect_chance = 40
