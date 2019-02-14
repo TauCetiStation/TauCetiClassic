@@ -103,6 +103,15 @@
 	reagents.remove_reagent("water",amount)
 	spawn_fluid(loc, amount * 50)
 
+/obj/structure/reagent_dispensers/watertank/huge
+	name = "huge watertank"
+	desc = "A huge watertank, with an enoromous volume!"
+	icon_state = "watertankhuge"
+
+/obj/structure/reagent_dispensers/watertank/huge/atom_init()
+	. = ..()
+	reagents.add_reagent("water",3000)
+
 /obj/structure/reagent_dispensers/fueltank
 	name = "fueltank"
 	desc = "A fueltank."
