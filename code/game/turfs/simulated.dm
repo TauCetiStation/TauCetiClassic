@@ -66,6 +66,9 @@
 				if(istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
 					if(prob(25))
 						footstepsound = "clownstep"
+					animate(H, pixel_z = 4, time = 0)
+					animate(pixel_z = 0, transform = turn(matrix(), pick(-14, 0, 14)), time=2)
+					animate(pixel_z = 0, transform = matrix(), time = 0)
 				if(H.shoes.wet)
 					footstepsound = 'sound/effects/waterstep.ogg'
 
