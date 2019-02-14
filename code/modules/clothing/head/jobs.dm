@@ -64,7 +64,7 @@
 	desc = "A peaked cap with the security insignia emblazoned on it. For officers that are really miss the army."
 	icon_state = "sec_peakedcap"
 	item_state = "sec_peakedcap"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
 
