@@ -8,12 +8,13 @@
 
 /obj/item/inflatable/attack_self(mob/user)
 	if(user.is_busy()) return
+	playsound(loc, 'sound/items/zip.ogg', 60, 1)
 	user.visible_message(
 		"<span class='notice'>[user] starts inflating \the [src]...</span>",
 		"<span class='notice'>You start inflating \the [src]...</span>"
 	)
 	if(do_after(user, 40, target = user))
-		playsound(loc, 'sound/items/zip.ogg', 75, 1)
+		playsound(loc, 'sound/items/zip.ogg', 60, 1)
 		user.visible_message(
 			"<span class='notice'>[user] inflated \the [src].</span>",
 			"<span class='notice'>You inflate \the [src].</span>"

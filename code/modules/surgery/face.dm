@@ -27,8 +27,7 @@
 	max_duration = 110
 
 /datum/surgery_step/generic/cut_face/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
-	return ..() && target_zone == O_MOUTH && target.op_stage.face == 0
+	return ..() && target.op_stage.face == 0
 
 /datum/surgery_step/generic/cut_face/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts to cut open [target]'s face and neck with \the [tool].", \
@@ -60,7 +59,6 @@
 	max_duration = 90
 
 /datum/surgery_step/face/mend_vocal/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
 	return ..() && target.op_stage.face == 1
 
 /datum/surgery_step/face/mend_vocal/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -89,7 +87,6 @@
 	max_duration = 100
 
 /datum/surgery_step/face/fix_face/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
 	return ..() && target.op_stage.face == 2
 
 /datum/surgery_step/face/fix_face/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -120,7 +117,6 @@
 	max_duration = 100
 
 /datum/surgery_step/face/cauterize/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
 	return ..() && target.op_stage.face > 0
 
 /datum/surgery_step/face/cauterize/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -157,14 +153,13 @@
 /datum/surgery_step/ipc_face/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
 		return FALSE
-	if(!(target.species && target.species.flags[IS_SYNTHETIC]))
-		return FALSE
+
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if (!BP)
 		return FALSE
 	return target_zone == O_MOUTH
 
-/datum/surgery_step/ipcgeneric/screw_face
+/datum/surgery_step/ipc_face/screw_face
 	allowed_tools = list(
 	/obj/item/weapon/screwdriver = 100,
 	/obj/item/weapon/scalpel = 75,
@@ -175,25 +170,21 @@
 	min_duration = 90
 	max_duration = 110
 
-/datum/surgery_step/ipcgeneric/screw_face/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))
-		return FALSE
-	if(!(target.species && target.species.flags[IS_SYNTHETIC]))
-		return FALSE
-	return ..() && target_zone == O_MOUTH && target.op_stage.face == 0
+/datum/surgery_step/ipc_face/screw_face/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	return ..() && target.op_stage.face == 0
 
-/datum/surgery_step/ipcgeneric/screw_face/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc_face/screw_face/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts to unscrew [target]'s screen with \the [tool].",
 	"You start to unscrew [target]'s screen with \the [tool].")
 	..()
 
-/datum/surgery_step/ipcgeneric/screw_face/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc_face/screw_face/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='notice'>[user] has loosen bolts on [target]'s screen with \the [tool].</span>",
 	"<span class='notice'>You have unscrewed [target]'s screen with \the [tool].</span>")
 	target.op_stage.face = 1
 	target.update_hair()
 
-/datum/surgery_step/ipcgeneric/screw_face/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc_face/screw_face/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s screen with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, scratching [target]'s screen with \the [tool]!</span>")

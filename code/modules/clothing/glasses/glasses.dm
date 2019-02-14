@@ -4,7 +4,7 @@
 	icon = 'icons/obj/clothing/glasses.dmi'
 	//w_class = 2.0
 	//flags = GLASSESCOVERSEYES
-	//slot_flags = SLOT_EYES
+	//slot_flags = SLOT_FLAGS_EYES
 	//var/vision_flags = 0
 	//var/darkness_view = 0//Base human is 2
 	//var/invisa_view = 0
@@ -211,7 +211,7 @@
 	var/colored_before = FALSE
 
 /obj/item/clothing/glasses/sunglasses/blindfold/white/equipped(mob/living/carbon/human/user, slot)
-	if(ishuman(user) && slot == slot_glasses)
+	if(ishuman(user) && slot == SLOT_GLASSES)
 		update_icon(user)
 	..()
 

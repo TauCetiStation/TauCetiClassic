@@ -180,7 +180,7 @@
 	w_class = 2
 	item_state = "electronic"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 3000
 	g_amt = 1300
 	origin_tech = "materials=1;engineering=1"

@@ -1309,7 +1309,7 @@
 	icon_state = "weedspray"
 	item_state = "spray"
 	flags = OPENCONTAINER | NOBLUDGEON
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 4
 	w_class = 2.0
 	throw_speed = 2
@@ -1328,7 +1328,7 @@
 	icon_state = "pestspray"
 	item_state = "spraycan"
 	flags = OPENCONTAINER | NOBLUDGEON
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 4
 	w_class = 2.0
 	throw_speed = 2

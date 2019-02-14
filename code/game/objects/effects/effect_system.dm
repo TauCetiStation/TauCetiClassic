@@ -24,16 +24,17 @@ would spawn and follow the beaker, even if it is carried or thrown.
 		reagents.delete()
 	return ..()
 
-/obj/effect/effect/water/Move(turf/newloc)
+/obj/effect/effect/water/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	//var/turf/T = src.loc
 	//if (istype(T, /turf))
 	//	T.firelevel = 0 //TODO: FIX
 	if (--src.life < 1)
-		//SN src = null
 		qdel(src)
-	if(newloc.density)
-		return 0
-	.=..()
+	if(isatom(NewLoc))
+		var/atom/A = NewLoc
+		if(A.density) // this is required to prevent bump with dense turf to stop reaction, which may lead to unintended water-leaking behavior.
+			return FALSE
+	return ..()
 
 /obj/effect/effect/water/Bump(atom/A)
 	if(reagents)
@@ -139,12 +140,11 @@ steam.start() -- spawns the effect
 		T.hotspot_expose(1000,100)
 	return	..()
 
-/obj/effect/effect/sparks/Move()
-	..()
+/obj/effect/effect/sparks/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	var/turf/T = src.loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
-	return
 
 /datum/effect/effect/system/spark_spread
 	var/total_sparks = 0 // To stop it being spammed and lagging!
@@ -228,8 +228,8 @@ steam.start() -- spawns the effect
 /obj/effect/effect/smoke/bad
 	time_to_live = 200
 
-/obj/effect/effect/smoke/bad/Move()
-	..()
+/obj/effect/effect/smoke/bad/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	for(var/mob/living/carbon/M in get_turf(src))
 		affect(M)
 
@@ -256,8 +256,8 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/smoke/sleepy
 
-/obj/effect/effect/smoke/sleepy/Move()
-	..()
+/obj/effect/effect/smoke/sleepy/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	for(var/mob/living/carbon/M in get_turf(src))
 		affect(M)
 
@@ -281,8 +281,8 @@ steam.start() -- spawns the effect
 	name = "mustard gas"
 	icon_state = "mustard"
 
-/obj/effect/effect/smoke/mustard/Move()
-	..()
+/obj/effect/effect/smoke/mustard/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	for(var/mob/living/carbon/human/R in get_turf(src))
 		affect(R)
 

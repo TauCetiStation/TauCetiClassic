@@ -38,8 +38,9 @@
 #define R_SPAWN			4096
 #define R_WHITELIST		8192
 #define R_EVENT			16384
+#define R_LOG			32768
 
-#define R_MAXPERMISSION 16384 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
+#define R_MAXPERMISSION 32768 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 
 #define R_HOST			65535
 

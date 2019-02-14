@@ -81,12 +81,11 @@
 	..()
 	return
 
-/obj/item/device/assembly/infra/Move()
+/obj/item/device/assembly/infra/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	var/t = dir
-	..()
+	. = ..()
 	dir = t
 	qdel(first)
-	return
 
 /obj/item/device/assembly/infra/holder_movement()
 	if(!holder)

@@ -113,7 +113,7 @@
 	sharp = 1
 	edge = 1
 	w_class = 4.0
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	force_unwielded = 10
 	force_wielded = 40
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
