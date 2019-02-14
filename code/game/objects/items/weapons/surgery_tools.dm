@@ -69,10 +69,10 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), pick("\red <b>[user] is pressing the [src.name] to \his temple and activating it! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is pressing [src.name] to \his chest and activating it! It looks like \he's trying to commit suicide.</b>"))
-		return (BRUTELOSS)
+/obj/item/weapon/surgicaldrill/suicide_act(mob/user)
+	to_chat(viewers(user), pick("\red <b>[user] is pressing the [src.name] to \his temple and activating it! It looks like \he's trying to commit suicide.</b>", \
+						"\red <b>[user] is pressing [src.name] to \his chest and activating it! It looks like \he's trying to commit suicide.</b>"))
+	return (BRUTELOSS)
 
 /*
  * Scalpel
@@ -95,11 +95,11 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>"))
-		return (BRUTELOSS)
+/obj/item/weapon/scalpel/suicide_act(mob/user)
+	to_chat(viewers(user), pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
+						"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
+						"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>"))
+	return (BRUTELOSS)
 
 /*
  * Researchable Scalpels

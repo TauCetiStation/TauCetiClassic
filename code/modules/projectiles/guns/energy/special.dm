@@ -6,7 +6,7 @@
 	origin_tech = "combat=2;magnets=4"
 	w_class = 4.0
 	flags =  CONDUCT
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 
 /obj/item/weapon/gun/energy/ionrifle/isHandgun()
@@ -142,15 +142,15 @@
 	item_state = "focus"
 	projectile_type = "/obj/item/projectile/forcebolt"
 
-	attack_self(mob/living/user)
-		if(projectile_type == "/obj/item/projectile/forcebolt")
-			charge_cost = 200
-			to_chat(user, "\red The [src.name] will now strike a small area.")
-			projectile_type = "/obj/item/projectile/forcebolt/strong"
-		else
-			charge_cost = 100
-			to_chat(user, "\red The [src.name] will now strike only a single person.")
-			projectile_type = "/obj/item/projectile/forcebolt"
+/obj/item/weapon/gun/energy/staff/focus/attack_self(mob/living/user)
+	if(projectile_type == "/obj/item/projectile/forcebolt")
+		charge_cost = 200
+		to_chat(user, "\red The [src.name] will now strike a small area.")
+		projectile_type = "/obj/item/projectile/forcebolt/strong"
+	else
+		charge_cost = 100
+		to_chat(user, "\red The [src.name] will now strike only a single person.")
+		projectile_type = "/obj/item/projectile/forcebolt"
 	*/
 
 /obj/item/weapon/gun/energy/toxgun
@@ -169,7 +169,7 @@
 	item_state = "w2500e"
 	origin_tech = "combat=6;materials=5;powerstorage=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/sniper)
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	fire_delay = 35
 	w_class = 4.0
 	var/zoom = 0

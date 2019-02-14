@@ -12,7 +12,7 @@
 	volume = 30
 	possible_transfer_amounts = null
 	flags = OPENCONTAINER
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user)
 	return src.attack_hand(user)

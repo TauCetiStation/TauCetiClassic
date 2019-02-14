@@ -6,7 +6,7 @@
 	density = TRUE
 	anchored = TRUE
 
-	var/active = TRUE  // on away missions you should activate gateway from start, or place "awaystart" landmarks somewhere
+	var/active = FALSE  // on away missions you should activate gateway from start, or place "awaystart" landmarks somewhere
 	var/hacked = FALSE
 	var/static/obj/transit_loc = null
 
@@ -96,7 +96,7 @@
 		return
 
 	if(!destination)
-		to_chat(user, "<span class='notice'>Warning: No destination found, recalibration required.</span>")
+		to_chat(user, "<span class='notice'>Warning: No destination found, recalibration required. You can calibrate Gateway with multitool.</span>")
 
 	for(var/obj/machinery/gateway/G in linked)
 		G.active = TRUE
@@ -121,7 +121,7 @@
 
 /obj/machinery/gateway/center/proc/calibrate(user)
 	if(hacked)
-		to_chat(user, "<span class='bold warning'>Error: Recalibration failed.</span>.")
+		to_chat(user, "<span class='bold warning'>Error: Recalibration is not possible.</span>.")
 		return
 	var/list/destinations_choice = list()
 	for(var/obj/machinery/gateway/center/G in gateways_list)
@@ -168,7 +168,7 @@
 		return
 
 	if(!destination)
-		to_chat(M, "<span class='warning'>Error: No destination set, calibration required.</span>")
+		to_chat(M, "<span class='warning'>Error: No destination set, calibration required. You can calibrate Gateway with multitool.</span>")
 		return
 
 	if(block_exile_implant && iscarbon(M))
@@ -229,17 +229,17 @@
 
 /obj/machinery/gateway/center/station/process()
 	..()
-	if(active && !config.gateway_enabled)
+	if(active && !hacked && !config.gateway_enabled)
 		toggleoff()
 
 /obj/machinery/gateway/center/station/calibrate(user)
-	if(!config.gateway_enabled)
+	if(!hacked && !config.gateway_enabled)
 		to_chat(user, "<span class='warning'>Error: Remote activation required, make a request to the CentComm for this.</span>")
 		return
 	..()
 
 /obj/machinery/gateway/center/station/toggleon(mob/user)
-	if(!config.gateway_enabled)
+	if(!hacked && !config.gateway_enabled)
 		to_chat(user, "<span class='warning'>Error: Remote activation required, make a request to the CentComm for this.</span>")
 		return
 	..()

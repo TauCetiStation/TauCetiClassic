@@ -5,7 +5,7 @@
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	storage_slots = 7
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 	use_to_pickup = TRUE
 

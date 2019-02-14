@@ -45,6 +45,7 @@
 	R.info += "3. Give the EFTPOS device to your customer, he/she must finish the transaction by swiping their ID card or a charge card with enough funds.<br>"
 	R.info += "4. If everything is done correctly, the money will be transferred. To unlock the device you will have to reset the EFTPOS device.<br>"
 
+	R.update_icon()
 
 	//stamp the paper
 	var/obj/item/weapon/stamp/centcomm/S = new
@@ -60,6 +61,8 @@
 	R.info = "<b>[eftpos_name] reference</b><br><br>"
 	R.info += "Access code: [access_code]<br><br>"
 	R.info += "<b>Do not lose or misplace this code.</b><br>"
+
+	R.update_icon()
 
 	//stamp the paper
 	var/obj/item/weapon/stamp/centcomm/S = new

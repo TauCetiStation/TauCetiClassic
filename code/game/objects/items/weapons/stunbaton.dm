@@ -3,7 +3,7 @@
 	desc = "A stun baton for incapacitating people with."
 	icon_state = "stunbaton"
 	item_state = "baton"
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 10
 	throwforce = 7
 	w_class = 3
@@ -14,9 +14,9 @@
 
 	origin_tech = "combat=2"
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), "\red <b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b>")
-		return (FIRELOSS)
+/obj/item/weapon/melee/baton/suicide_act(mob/user)
+	to_chat(viewers(user), "\red <b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b>")
+	return (FIRELOSS)
 
 /obj/item/weapon/melee/baton/update_icon()
 	if(status)

@@ -71,7 +71,7 @@
 
 					body += "</td><td align='center'>";
 
-					body += "<font size='2'><b>"+job+" "+name+"</b><br><b>Real name "+real_name+"</b><br><b>Played by "+key+" ("+ip+")</b></font>"
+					body += "<font size='2'><b>"+job+" "+name+"</b><br><b>Real name "+real_name+"</b><br><b>Played by "+key+" </b></font>"
 
 					body += "</td><td align='center'>";
 

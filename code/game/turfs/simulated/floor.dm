@@ -44,23 +44,23 @@ var/list/wood_icons = list("wood","wood-broken")
 	var/floor_type = /obj/item/stack/tile/plasteel
 	var/lightfloor_state // for light floors, this is the state of the tile. 0-7, 0x4 is on-bit - use the helper procs below
 
-	proc/get_lightfloor_state()
-		return lightfloor_state & LIGHTFLOOR_STATE_BITS
+/turf/simulated/floor/proc/get_lightfloor_state()
+	return lightfloor_state & LIGHTFLOOR_STATE_BITS
 
-	proc/get_lightfloor_on()
-		return lightfloor_state & LIGHTFLOOR_ON_BIT
+/turf/simulated/floor/proc/get_lightfloor_on()
+	return lightfloor_state & LIGHTFLOOR_ON_BIT
 
-	proc/set_lightfloor_state(n)
-		lightfloor_state = get_lightfloor_on() | (n & LIGHTFLOOR_STATE_BITS)
+/turf/simulated/floor/proc/set_lightfloor_state(n)
+	lightfloor_state = get_lightfloor_on() | (n & LIGHTFLOOR_STATE_BITS)
 
-	proc/set_lightfloor_on(n)
-		if(n)
-			lightfloor_state |= LIGHTFLOOR_ON_BIT
-		else
-			lightfloor_state &= ~LIGHTFLOOR_ON_BIT
+/turf/simulated/floor/proc/set_lightfloor_on(n)
+	if(n)
+		lightfloor_state |= LIGHTFLOOR_ON_BIT
+	else
+		lightfloor_state &= ~LIGHTFLOOR_ON_BIT
 
-	proc/toggle_lightfloor_on()
-		lightfloor_state ^= LIGHTFLOOR_ON_BIT
+/turf/simulated/floor/proc/toggle_lightfloor_on()
+	lightfloor_state ^= LIGHTFLOOR_ON_BIT
 
 /turf/simulated/floor/atom_init()
 	. = ..()

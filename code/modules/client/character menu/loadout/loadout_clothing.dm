@@ -1,14 +1,14 @@
 /datum/gear/suit
 	display_name = "Apron, blue"
 	path = /obj/item/clothing/suit/apron
-	slot = slot_wear_suit
+	slot = SLOT_WEAR_SUIT
 	sort_category = "Suits and Overwear"
 	cost = 2
 
 /datum/gear/under
 	display_name = "Black tango dress"
 	path = /obj/item/clothing/under/blacktango
-	slot = slot_w_uniform
+	slot = SLOT_W_UNIFORM
 	sort_category = "Suits and Overwear"
 	cost = 1
 
@@ -141,7 +141,7 @@
 /datum/gear/under/pants/New()
 	..()
 	var/list/pants = list()
-	for(var/pant in typesof(/obj/item/clothing/under/pants))
+	for(var/pant in subtypesof(/obj/item/clothing/under/pants))
 		var/obj/item/clothing/under/pants/pant_type = pant
 		pants[initial(pant_type.name)] = pant_type
 	gear_tweaks += new/datum/gear_tweak/path(sortAssoc(pants))

@@ -892,11 +892,11 @@
 					var/obj/item/weapon/book/tome/T = new(H)
 
 					var/list/slots = list (
-						"backpack" = slot_in_backpack,
-						"left pocket" = slot_l_store,
-						"right pocket" = slot_r_store,
-						"left hand" = slot_l_hand,
-						"right hand" = slot_r_hand,
+						"backpack" = SLOT_IN_BACKPACK,
+						"left pocket" = SLOT_L_STORE,
+						"right pocket" = SLOT_R_STORE,
+						"left hand" = SLOT_L_HAND,
+						"right hand" = SLOT_R_HAND,
 					)
 					var/where = H.equip_in_one_of_slots(T, slots)
 					if (!where)
@@ -1286,34 +1286,34 @@
 
 	edit_memory()
 /*
-	proc/clear_memory(silent = 1)
-		var/datum/game_mode/current_mode = ticker.mode
+/datum/mind/proc/clear_memory(silent = 1)
+	var/datum/game_mode/current_mode = ticker.mode
 
-		// remove traitor uplinks
-		var/list/L = current.get_contents()
-		for (var/t in L)
-			if (istype(t, /obj/item/device/pda))
-				if (t:uplink) qdel(t:uplink)
-				t:uplink = null
-			else if (istype(t, /obj/item/device/radio))
-				if (t:traitorradio) qdel(t:traitorradio)
-				t:traitorradio = null
-				t:traitor_frequency = 0.0
-			else if (istype(t, /obj/item/weapon/SWF_uplink) || istype(t, /obj/item/weapon/syndicate_uplink))
-				if (t:origradio)
-					var/obj/item/device/radio/R = t:origradio
-					R.loc = current.loc
-					R.traitorradio = null
-					R.traitor_frequency = 0.0
-				qdel(t)
+	// remove traitor uplinks
+	var/list/L = current.get_contents()
+	for (var/t in L)
+		if (istype(t, /obj/item/device/pda))
+			if (t:uplink) qdel(t:uplink)
+			t:uplink = null
+		else if (istype(t, /obj/item/device/radio))
+			if (t:traitorradio) qdel(t:traitorradio)
+			t:traitorradio = null
+			t:traitor_frequency = 0.0
+		else if (istype(t, /obj/item/weapon/SWF_uplink) || istype(t, /obj/item/weapon/syndicate_uplink))
+			if (t:origradio)
+				var/obj/item/device/radio/R = t:origradio
+				R.loc = current.loc
+				R.traitorradio = null
+				R.traitor_frequency = 0.0
+			qdel(t)
 
-		// remove wizards spells
-		//If there are more special powers that need removal, they can be procced into here./N
-		current.spellremove(current)
+	// remove wizards spells
+	//If there are more special powers that need removal, they can be procced into here./N
+	current.spellremove(current)
 
-		// clear memory
-		memory = ""
-		special_role = null
+	// clear memory
+	memory = ""
+	special_role = null
 
 */
 
@@ -1430,11 +1430,11 @@
 		var/obj/item/weapon/book/tome/T = new(H)
 
 		var/list/slots = list (
-			"backpack" = slot_in_backpack,
-			"left pocket" = slot_l_store,
-			"right pocket" = slot_r_store,
-			"left hand" = slot_l_hand,
-			"right hand" = slot_r_hand,
+			"backpack" = SLOT_IN_BACKPACK,
+			"left pocket" = SLOT_L_STORE,
+			"right pocket" = SLOT_R_STORE,
+			"left hand" = SLOT_L_HAND,
+			"right hand" = SLOT_R_HAND,
 		)
 		var/where = H.equip_in_one_of_slots(T, slots)
 		if (!where)

@@ -3,23 +3,23 @@
 	name = "banhammer"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "toyhammer"
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 0
 	w_class = 2.0
 	throw_speed = 7
 	throw_range = 15
 	attack_verb = list("banned")
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), "\red <b>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</b>")
-		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
+/obj/item/weapon/banhammer/suicide_act(mob/user)
+	to_chat(viewers(user), "\red <b>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</b>")
+	return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 /obj/item/weapon/nullrod
 	name = "null rod"
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of paranormal phenomenae."
 	icon_state = "nullrod"
 	item_state = "nullrod"
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 15
 	throw_speed = 1
 	throw_range = 4
@@ -106,7 +106,7 @@
 	icon_state = "claymore"
 	item_state = "claymore"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 40
 	throwforce = 10
 	sharp = 1
@@ -114,12 +114,12 @@
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-	Get_shield_chance()
-		return 50
+/obj/item/weapon/claymore/Get_shield_chance()
+	return 50
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), "\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>")
-		return(BRUTELOSS)
+/obj/item/weapon/claymore/suicide_act(mob/user)
+	to_chat(viewers(user), "\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>")
+	return(BRUTELOSS)
 
 /obj/item/weapon/claymore/light
 	force = 20
@@ -135,7 +135,7 @@
 	icon_state = "katana"
 	item_state = "katana"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT | SLOT_BACK
+	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 	force = 40
 	throwforce = 10
 	sharp = 1
@@ -143,9 +143,9 @@
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), "\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
-		return(BRUTELOSS)
+/obj/item/weapon/katana/suicide_act(mob/user)
+	to_chat(viewers(user), "\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
+	return(BRUTELOSS)
 
 /obj/item/weapon/katana/Get_shield_chance()
 		return 50
