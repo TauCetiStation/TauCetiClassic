@@ -179,7 +179,7 @@
  */
 /obj/item/weapon/weldingtool
 	name = "welding tool"
-	desc = "Perfect, this item can alloy something."
+	desc = "Apply the hot spot to metal."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "welder"
 	flags = CONDUCT
