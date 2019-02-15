@@ -113,8 +113,28 @@
 	ticker.mode.remove_gangster(src,0,1)
 	remove_objectives()
 
-/datum/mind/proc/remove_all_antag() //For the Lazy amongst us.
+/datum/mind/proc/remove_traitor()
+	ticker.mode.traitors -= src
+	special_role = null
+	if(isAI(current))
+		var/mob/living/silicon/ai/A = current
+		A.set_zeroth_law("")
+		A.show_laws()
+
+/datum/mind/proc/remove_nuclear()
+	ticker.mode.syndicates -= src
+	ticker.mode.update_synd_icons_removed(src)
+	special_role = null
+	for(var/datum/objective/nuclear/O in objectives)
+		objectives -= O
+	current.faction = "neutral"
+
+/datum/mind/proc/remove_all_antag() // For the Lazy amongst us. Is actually currently unused. ~Luduk.
 	remove_gang()
+	remove_traitor()
+	remove_nuclear()
+
+	remove_objectives()
 
 /datum/mind/proc/show_memory(mob/recipient)
 	var/output = "<B>[current.real_name]'s Memory</B><HR>"
@@ -125,9 +145,8 @@
 
 		var/obj_count = 1
 		for(var/datum/objective/objective in objectives)
-			if(objective.hidden == 0)
-				output += "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-				obj_count++
+			output += "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+			obj_count++
 
 	recipient << browse(entity_ja(output),"window=memory")
 
@@ -983,13 +1002,8 @@
 		switch(href_list["nuclear"])
 			if("clear")
 				if(src in ticker.mode.syndicates)
-					ticker.mode.syndicates -= src
-					ticker.mode.update_synd_icons_removed(src)
-					special_role = null
-					for (var/datum/objective/nuclear/O in objectives)
-						objectives-=O
+					remove_nuclear()
 					to_chat(current, "\red <FONT size = 3><B>You have been brainwashed! You are no longer a syndicate operative!</B></FONT>")
-					current.faction = "neutral"
 					log_admin("[key_name_admin(usr)] has de-nuke op'ed [current].")
 			if("nuclear")
 				if(!(src in ticker.mode.syndicates))
@@ -1042,15 +1056,9 @@
 		switch(href_list["traitor"])
 			if("clear")
 				if(src in ticker.mode.traitors)
-					ticker.mode.traitors -= src
-					special_role = null
+					remove_traitor()
 					to_chat(current, "\red <FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT>")
 					log_admin("[key_name_admin(usr)] has de-traitor'ed [current].")
-					if(isAI(current))
-						var/mob/living/silicon/ai/A = current
-						A.set_zeroth_law("")
-						A.show_laws()
-
 
 			if("traitor")
 				if(!(src in ticker.mode.traitors))
