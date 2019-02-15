@@ -76,6 +76,9 @@ var/list/admin_verbs_admin = list(
 	/client/proc/aooc,
 	/client/proc/change_security_level,
 	/client/proc/empty_ai_core_toggle_latejoin,
+	/client/proc/list_traders,
+	/client/proc/add_trader,
+	/client/proc/remove_trader,
 	/client/proc/send_fax_message
 	)
 var/list/admin_verbs_log = list(

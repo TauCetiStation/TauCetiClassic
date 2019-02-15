@@ -48,6 +48,8 @@ var/const/MIME				=(1<<12)
 var/const/ASSISTANT			=(1<<13)
 var/const/RECYCLER			=(1<<14)
 var/const/BARBER			=(1<<15)
+var/const/MERCHANT			=(1<<16)
+
 
 var/list/assistant_occupations = list(
 )

@@ -1023,6 +1023,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "DJ Station Solars"
 	icon_state = "DJ"
 
+//MERCHANT STATION
+
+/area/merchantstation
+	name = "Merchant Station"
+	icon_state = "DJ"
 
 //DERELICT
 

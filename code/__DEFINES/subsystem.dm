@@ -32,6 +32,7 @@
 #define SS_INIT_DEFAULT   0
 #define SS_INIT_AIR      -1
 #define SS_INIT_ASSETS   -2
+#define SS_INIT_TRADE    -3
 
 
 #define SS_PRIORITY_TICKER     200
@@ -48,6 +49,7 @@
 #define SS_PRIORITY_AIR        20
 #define SS_PRIORITY_FLUIDS     20
 #define SS_PRIORITY_GARBAGE    15
+#define SS_PRIORITY_TRADE      10
 #define SS_PRIORITY_SUN        3
 
 
@@ -65,6 +67,7 @@
 #define SS_WAIT_AIR        10
 #define SS_WAIT_QUIRKS     10
 #define SS_WAIT_DEFAULT    20
+#define SS_WAIT_TRADE      600
 #define SS_WAIT_SUN        600
 
 

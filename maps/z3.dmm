@@ -26,9 +26,38 @@
 	icon_state = "swall_s10"
 	},
 /area/derelict/ship)
+"af" = (
+/turf/simulated/shuttle/wall{
+	dir = 9;
+	icon_state = "wall3"
+	},
+/area/space)
+"ag" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "heater1"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"ah" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "burst_r"
+	},
+/turf/space,
+/area/space)
 "ai" = (
 /obj/structure/scrap_cube,
 /turf/space,
+/area/space)
+"aj" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall12"
+	},
 /area/space)
 "ak" = (
 /turf/simulated/shuttle/wall{
@@ -36,18 +65,43 @@
 	icon_state = "swall13"
 	},
 /area/derelict/ship)
+"al" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall11"
+	},
+/area/space)
 "am" = (
 /turf/simulated/shuttle/wall{
 	dir = 2;
 	icon_state = "swall11"
 	},
 /area/derelict/ship)
+"an" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/space)
+"ao" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 60
+	},
+/turf/simulated/floor,
+/area/space)
 "ap" = (
 /turf/simulated/shuttle/wall{
 	dir = 2;
 	icon_state = "swall15"
 	},
 /area/derelict/ship)
+"aq" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall3"
+	},
+/area/space)
 "ar" = (
 /turf/simulated/shuttle/wall{
 	dir = 2;
@@ -65,18 +119,98 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/derelict/ship)
+"at" = (
+/obj/machinery/door/airlock/external,
+/turf/simulated/floor,
+/area/space)
+"au" = (
+/turf/simulated/shuttle/wall{
+	dir = 6;
+	icon_state = "diagonalWall3"
+	},
+/area/space)
 "av" = (
 /turf/simulated/shuttle/wall{
 	dir = 2;
 	icon_state = "swall7"
 	},
 /area/derelict/ship)
+"aw" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swallc3"
+	},
+/area/space)
+"ax" = (
+/turf/simulated/floor,
+/area/space)
+"ay" = (
+/obj/structure/table/reinforced,
+/turf/simulated/floor,
+/area/space)
+"az" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swallc3"
+	},
+/area/space)
+"aA" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall7"
+	},
+/area/space)
+"aB" = (
+/turf/simulated/shuttle/wall{
+	dir = 9;
+	icon_state = "diagonalWall3"
+	},
+/area/space)
+"aC" = (
+/turf/simulated/shuttle/wall{
+	dir = 10;
+	icon_state = "wall3"
+	},
+/area/space)
+"aD" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "burst_l"
+	},
+/turf/space,
+/area/space)
 "aE" = (
 /turf/simulated/shuttle/wall{
 	dir = 2;
 	icon_state = "swall3"
 	},
 /area/derelict/ship)
+"aF" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "heater1"
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aG" = (
+/obj/machinery/door/airlock/hatch,
+/turf/simulated/floor,
+/area/space)
+"aH" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall3"
+	},
+/area/space)
+"aI" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swallc2"
+	},
+/area/space)
 "aJ" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4;
@@ -84,10 +218,68 @@
 	},
 /turf/space,
 /area/derelict/ship)
+"aK" = (
+/obj/machinery/door/airlock/glass,
+/turf/simulated/floor,
+/area/space)
+"aL" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "swallc3"
+	},
+/area/space)
+"aM" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall14"
+	},
+/area/space)
+"aN" = (
+/turf/simulated/wall,
+/area/merchantstation)
+"aO" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 60
+	},
+/turf/simulated/floor,
+/area/merchantstation)
+"aP" = (
+/turf/simulated/floor,
+/area/merchantstation)
+"aQ" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/merchantstation)
+"aR" = (
+/obj/effect/landmark/start{
+	name = "Merchant"
+	},
+/turf/simulated/floor,
+/area/merchantstation)
 "aS" = (
 /obj/structure/lattice,
 /turf/space,
 /area/space)
+"aT" = (
+/obj/machinery/computer/merchant,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor,
+/area/merchantstation)
+"aU" = (
+/obj/machinery/merchant_pad,
+/turf/simulated/floor,
+/area/merchantstation)
+"aV" = (
+/obj/item/device/price_scanner,
+/turf/simulated/floor,
+/area/merchantstation)
 "aX" = (
 /turf/simulated/shuttle/wall{
 	dir = 2;
@@ -15985,13 +16177,13 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aq
+aq
+aq
+aq
+aq
+aq
+aq
 aa
 aa
 aa
@@ -16229,6 +16421,11 @@ aa
 aa
 aa
 aa
+aX
+ao
+ao
+ao
+bu
 aa
 aa
 aa
@@ -16237,18 +16434,13 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aq
+ax
+ax
+ax
+ax
+ax
+aq
 aa
 aa
 aa
@@ -16485,6 +16677,13 @@ aa
 aa
 aa
 aa
+aX
+aw
+ax
+ax
+ax
+az
+bu
 aa
 aa
 aa
@@ -16492,20 +16691,13 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aq
+ax
+ax
+ax
+ax
+ax
+aq
 aa
 aa
 aa
@@ -16742,6 +16934,13 @@ aa
 aa
 aa
 aa
+aj
+ax
+ax
+ax
+ax
+ax
+aj
 aa
 aa
 aa
@@ -16749,20 +16948,13 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aq
+ax
+ax
+ax
+ax
+ax
+aq
 aa
 aa
 aa
@@ -16999,30 +17191,30 @@ aa
 aa
 aa
 aa
+al
+an
+an
+ax
+an
+an
+aA
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aD
+aD
+aD
+aq
+ax
+ax
+ax
+ax
+ax
+aq
+aD
+aD
+aD
 aa
 aa
 aa
@@ -17256,31 +17448,31 @@ aa
 aa
 aa
 aa
+an
+ax
+ax
+ax
+ax
+ax
+an
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aq
+aF
+aF
+aF
+aq
+ax
+ax
+ax
+ax
+ax
+aq
+aF
+aF
+aF
+aq
 aa
 aa
 aa
@@ -17512,32 +17704,32 @@ aa
 aa
 aa
 aa
+af
+an
+ax
+ax
+ax
+ax
+ax
+an
+aC
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aq
+ax
+ax
+ax
+aG
+ax
+ax
+ax
+ax
+ax
+aG
+ax
+ax
+ax
+aq
 aa
 aa
 aa
@@ -17769,32 +17961,32 @@ aa
 aa
 aa
 aa
+ag
+an
+ax
+ax
+ax
+ax
+ax
+an
+ag
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+au
+aq
+ax
+ax
+aq
+aq
+aq
+aG
+aq
+aq
+aq
+ax
+ax
+aq
+aB
 aa
 aa
 aa
@@ -18026,31 +18218,31 @@ aa
 aa
 aa
 aa
+ah
+an
+ax
+ax
+ax
+ax
+ax
+an
+ah
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+au
+aq
+ax
+aq
+ay
+ax
+ax
+ax
+ay
+aq
+ax
+aq
+aB
 aa
 aa
 aa
@@ -18284,29 +18476,29 @@ aa
 aa
 aa
 aa
+al
+an
+an
+ax
+an
+an
+aA
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+au
+aq
+aq
+ay
+ax
+ay
+ax
+ay
+aq
+aq
+aB
 aa
 aa
 aa
@@ -18541,28 +18733,28 @@ aa
 aa
 aa
 aa
+aj
+ax
+ax
+ax
+ax
+ax
+aj
 aa
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+au
+aq
+aq
+ax
+ay
+ax
+aq
+aq
+aB
 aa
 aa
 aa
@@ -18798,6 +18990,13 @@ aa
 aa
 aa
 aa
+ao
+ay
+ax
+ax
+ax
+ay
+ao
 aa
 aa
 aa
@@ -18805,20 +19004,13 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aj
+ay
+ax
+ay
+ax
+ay
+aj
 aa
 aa
 aa
@@ -19055,6 +19247,13 @@ aa
 aa
 aa
 aa
+ao
+ay
+ax
+ay
+ax
+ay
+ao
 aa
 aa
 aa
@@ -19062,20 +19261,13 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ao
+ay
+ax
+ay
+ax
+ay
+ao
 aa
 aa
 aa
@@ -19312,6 +19504,13 @@ aa
 aa
 aa
 aa
+aj
+ax
+ax
+ay
+ax
+ax
+aj
 aa
 aa
 aa
@@ -19319,32 +19518,25 @@ aa
 aa
 aa
 aa
+ao
+ay
+ax
+ax
+ax
+ay
+ao
 aa
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aN
+aN
+aN
+aN
+aN
+aN
 aa
 aa
 aa
@@ -19569,6 +19761,13 @@ aa
 aa
 aa
 aa
+ao
+ay
+ax
+ay
+ax
+ay
+ao
 aa
 aa
 aa
@@ -19576,32 +19775,25 @@ aa
 aa
 aa
 aa
+aY
+aH
+ao
+aK
+ao
+aH
+aM
 aa
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aN
+aP
+aQ
+aP
+aP
+aN
 aa
 aa
 aa
@@ -19826,6 +20018,13 @@ aa
 aa
 aa
 aa
+ao
+ay
+ax
+ax
+ax
+ay
+ao
 aa
 aa
 aa
@@ -19833,32 +20032,25 @@ aa
 aa
 aa
 aa
+at
+ax
+ax
+ax
+ax
+ax
+at
 aa
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aO
+aP
+aR
+aP
+aP
+aO
 aa
 aa
 aa
@@ -20083,6 +20275,13 @@ aa
 aa
 aa
 aa
+aj
+ax
+ax
+ax
+ax
+ax
+aj
 aa
 aa
 aa
@@ -20090,32 +20289,25 @@ aa
 aa
 aa
 aa
+at
+ax
+ax
+ax
+ax
+ax
+at
 aa
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aO
+aP
+aP
+aR
+aP
+aO
 aa
 aa
 aa
@@ -20340,6 +20532,13 @@ aa
 aa
 aa
 aa
+aq
+ao
+at
+aq
+at
+ao
+aq
 aa
 aa
 aa
@@ -20347,32 +20546,25 @@ aa
 aa
 aa
 aa
+aY
+aH
+aH
+aK
+aH
+aH
+aM
 aa
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aO
+aP
+aR
+aP
+aV
+aO
 aa
 aa
 aa
@@ -20597,6 +20789,13 @@ aa
 aa
 aa
 aa
+aq
+ax
+ax
+aq
+ax
+ax
+aq
 aa
 aa
 aa
@@ -20604,32 +20803,25 @@ aa
 aa
 aa
 aa
+ao
+ax
+ax
+ax
+ax
+ax
+ao
 aa
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aN
+aP
+aT
+aU
+aP
+aN
 aa
 aa
 aa
@@ -20854,6 +21046,13 @@ aa
 aa
 aa
 aa
+at
+ax
+ax
+ao
+ax
+ax
+at
 aa
 aa
 aa
@@ -20861,32 +21060,25 @@ aa
 aa
 aa
 aa
+ao
+ax
+ax
+ax
+ax
+ax
+ao
 aa
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aN
+aN
+aN
+aN
+aN
+aN
 aa
 aa
 aa
@@ -21111,6 +21303,13 @@ aa
 aa
 aa
 aa
+aq
+ax
+ax
+aq
+ax
+ax
+aq
 aa
 aa
 aa
@@ -21118,20 +21317,13 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ba
+aI
+ax
+ax
+ax
+aL
+bw
 aa
 aa
 aa
@@ -21368,6 +21560,13 @@ aa
 aa
 aa
 aa
+au
+aq
+aq
+aq
+aq
+aq
+aB
 aa
 aa
 aa
@@ -21376,18 +21575,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ba
+ao
+ao
+ao
+bw
 aa
 aa
 aa
