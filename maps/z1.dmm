@@ -28949,6 +28949,17 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/wall/r_wall,
 /area/crew_quarters/captain)
+"aXz" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/transit_tube{
+	icon_state = "D-SW"
+	},
+/turf/simulated/floor/plating,
+/area/aisat)
 "aXA" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -29170,6 +29181,14 @@
 "aXX" = (
 /turf/simulated/floor/plating,
 /area/hallway/secondary/exit)
+"aXY" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/aisat)
 "aXZ" = (
 /turf/space,
 /area/shuttle/transport1/station)
@@ -30107,6 +30126,22 @@
 	},
 /turf/simulated/floor,
 /area/engine/engineering)
+"aZK" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 1
+	},
+/obj/machinery/door/window{
+	name = "AI Satellite";
+	req_access_txt = "66"
+	},
+/turf/simulated/floor/plating{
+	dir = 6;
+	icon_state = "warnplate"
+	},
+/area/aisat)
 "aZL" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -30604,6 +30639,19 @@
 	},
 /turf/simulated/floor/carpet,
 /area/library)
+"baI" = (
+/obj/machinery/door/window{
+	name = "AI Satellite";
+	req_access_txt = "66"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/aisat)
 "baJ" = (
 /obj/structure/table/glass,
 /obj/effect/decal/cleanable/cobweb2,
@@ -30612,6 +30660,17 @@
 	icon_state = "chapel"
 	},
 /area/chapel/main)
+"baK" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/structure/transit_tube{
+	icon_state = "NW-SE"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/aisat)
 "baL" = (
 /obj/machinery/door/airlock/command{
 	icon_state = "closed";
@@ -30628,6 +30687,15 @@
 	},
 /turf/simulated/floor,
 /area/gateway)
+"baM" = (
+/obj/structure/transit_tube{
+	icon_state = "D-SW"
+	},
+/turf/simulated/floor/plating{
+	dir = 4;
+	icon_state = "warnplate"
+	},
+/area/aisat)
 "baN" = (
 /obj/structure/window/reinforced{
 	dir = 5
@@ -30654,6 +30722,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/engine/engineering)
+"baQ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/aisat)
 "baR" = (
 /obj/machinery/computer/mine_sci_shuttle,
 /turf/simulated/floor{
@@ -30825,6 +30899,20 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/port)
+"bbg" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/aisat)
 "bbh" = (
 /obj/machinery/status_display{
 	layer = 4;
@@ -30854,6 +30942,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/medical/chemistry)
+"bbj" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/turf/space,
+/area/space)
 "bbk" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -31152,6 +31250,17 @@
 	},
 /turf/simulated/floor,
 /area/hallway/primary/starboard)
+"bbN" = (
+/obj/structure/transit_tube{
+	icon_state = "D-NE"
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/aisat)
 "bbO" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -31205,6 +31314,19 @@
 	icon_state = "white"
 	},
 /area/rnd/lab)
+"bbT" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/aisat)
 "bbU" = (
 /obj/machinery/power/apc{
 	dir = 2;
@@ -31263,6 +31385,19 @@
 	icon_state = "whitebluecorner"
 	},
 /area/rnd/hallway)
+"bbZ" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/aisat)
 "bca" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -31319,6 +31454,21 @@
 	},
 /turf/simulated/floor,
 /area/hallway/primary/port)
+"bcf" = (
+/obj/machinery/door/airlock/hatch{
+	name = "MiniSat Antechamber";
+	req_one_access_txt = "66"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/turret_protected/aisat)
 "bcg" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -31398,6 +31548,25 @@
 	icon_state = "whitepurplecorner"
 	},
 /area/rnd/hallway)
+"bcp" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "MiniSat East";
+	dir = 4;
+	network = list("MiniSat")
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/aisat)
 "bcq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
@@ -31445,6 +31614,16 @@
 	icon_state = "whitebluecorner"
 	},
 /area/medical/genetics)
+"bcv" = (
+/obj/structure/lattice,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/turf/space,
+/area/space)
 "bcw" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -31471,6 +31650,36 @@
 	icon_state = "floorgrime"
 	},
 /area/quartermaster/storage)
+"bcz" = (
+/obj/machinery/door/airlock/hatch{
+	name = "MiniSat Antechamber";
+	req_one_access_txt = "66"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/turret_protected/aisat)
+"bcA" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/aisat)
 "bcB" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
@@ -31514,6 +31723,26 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/quartermaster/office)
+"bcG" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/turf/space,
+/area/space)
+"bcH" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/turf/space,
+/area/space)
 "bcI" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
@@ -31540,6 +31769,20 @@
 "bcK" = (
 /turf/simulated/wall,
 /area/quartermaster/office)
+"bcL" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/aisat)
 "bcM" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -31548,6 +31791,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/port)
+"bcN" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/turf/space,
+/area/space)
 "bcO" = (
 /turf/simulated/wall/r_wall,
 /area/bridge/meeting_room)
@@ -31560,6 +31813,20 @@
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/bridge/meeting_room)
+"bcQ" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/aisat)
 "bcR" = (
 /obj/item/weapon/folder/blue,
 /obj/structure/table/woodentable,
@@ -31765,6 +32032,16 @@
 	icon_state = "delivery"
 	},
 /area/medical/storage)
+"bdl" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/turf/space,
+/area/space)
 "bdm" = (
 /obj/structure/table/woodentable,
 /obj/machinery/power/apc{
@@ -31918,6 +32195,20 @@
 	},
 /turf/simulated/floor,
 /area/hallway/secondary/entry)
+"bdD" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/aisat)
 "bdE" = (
 /turf/simulated/floor/carpet{
 	icon_state = "carpetsymbol"
@@ -38172,12 +38463,29 @@
 	},
 /area/medical/genetics)
 "brB" = (
-/obj/structure/transit_tube{
-	icon_state = "D-NE"
+/obj/machinery/light/small{
+	dir = 1
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1379;
+	id_tag = "satellite_aux_pump";
+	name = "Satellite Aux Large Air Vent"
+	},
+/obj/machinery/airlock_sensor{
+	frequency = 1379;
+	id_tag = "satellite_aux_sensor";
+	pixel_x = 0;
+	pixel_y = 25;
+	req_one_access_txt = "13;45;1"
+	},
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
+	pixel_x = 0;
+	pixel_y = -32
 	},
 /turf/simulated/floor/plating,
 /area/aisat)
@@ -53901,24 +54209,8 @@
 /turf/simulated/floor/plating,
 /area/maintenance/asmaint)
 "cal" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "MiniSat East";
-	dir = 4;
-	network = list("MiniSat")
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume{
-	icon_state = "map_dp_vent_out";
-	use_power = 1
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/obj/machinery/atmospherics/pipe/simple/visible,
+/turf/simulated/wall/r_wall,
 /area/aisat)
 "cam" = (
 /obj/machinery/door/firedoor,
@@ -54654,44 +54946,43 @@
 /turf/simulated/floor/plating,
 /area/storage/emergency)
 "cbM" = (
-/obj/machinery/door/airlock/hatch{
-	name = "MiniSat Antechamber";
-	req_one_access_txt = "66"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/turret_protected/aisat)
+/area/aisat)
 "cbN" = (
-/obj/machinery/door/airlock/hatch{
-	name = "MiniSat Antechamber";
-	req_one_access_txt = "66"
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 10
+	},
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "satellite_aux_airlock";
+	name = "interior access button";
+	pixel_x = -20;
+	pixel_y = -20;
+	req_access_txt = "66"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/turret_protected/aisat)
+/area/aisat)
 "cbO" = (
 /obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume{
-	icon_state = "map_dp_vent_out";
-	use_power = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 9
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -54699,13 +54990,17 @@
 /area/aisat)
 "cbP" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 0
-	},
-/obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/space,
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/visible,
+/turf/simulated/floor/plating{
+	dir = 4;
+	icon_state = "warnplate"
+	},
 /area/aisat)
 "cbR" = (
 /obj/structure/table/woodentable,
@@ -66041,25 +66336,13 @@
 /turf/simulated/floor/wood,
 /area/library)
 "cBN" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 0
+/obj/structure/window/reinforced,
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
 	},
-/obj/machinery/camera{
-	c_tag = "MiniSat North";
-	dir = 1;
-	network = list("MiniSat")
-	},
-/obj/machinery/light/small,
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume{
-	dir = 4;
-	icon_state = "map_dp_vent_out";
-	use_power = 1
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/aisat)
+/turf/space,
+/area/space)
 "cBO" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Medbay Maintenance";
@@ -67963,25 +68246,25 @@
 /area/turret_protected/ai)
 "cGl" = (
 /obj/structure/window/reinforced{
-	dir = 4
+	dir = 1;
+	pixel_y = 0
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/aisat)
 "cGm" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 0
+/obj/structure/window/reinforced,
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
 	},
-/obj/machinery/door/window{
-	dir = 4;
-	name = "AI Satellite";
-	req_access_txt = "66"
-	},
-/turf/simulated/floor/plating,
-/area/aisat)
+/turf/space,
+/area/space)
 "cGn" = (
 /obj/structure/closet,
 /turf/simulated/floor/plating,
@@ -68556,12 +68839,13 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/engine/engineering)
 "cHK" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 0
+/obj/structure/window/reinforced,
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
 	},
-/turf/simulated/floor/plating,
-/area/aisat)
+/turf/space,
+/area/space)
 "cHL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -69164,13 +69448,17 @@
 	},
 /area/engine/engineering)
 "cJq" = (
-/obj/structure/window/reinforced,
-/obj/machinery/door/window{
-	dir = 4;
-	name = "AI Satellite";
-	req_access_txt = "66"
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 0
 	},
-/turf/simulated/floor/plating,
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/aisat)
 "cJr" = (
 /obj/machinery/access_button{
@@ -69334,8 +69622,22 @@
 	},
 /area/medical/surgery2)
 "cJV" = (
-/obj/structure/window/reinforced,
-/turf/simulated/floor/plating,
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 0
+	},
+/obj/machinery/camera{
+	c_tag = "MiniSat North";
+	dir = 1;
+	network = list("MiniSat")
+	},
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/aisat)
 "cJW" = (
 /obj/structure/stool,
@@ -69711,19 +70013,15 @@
 /area/maintenance/asmaint)
 "cKW" = (
 /obj/structure/window/reinforced{
-	dir = 4
+	dir = 1;
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
 	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/door/window{
-	name = "AI Satellite";
-	req_access_txt = "66"
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -70162,24 +70460,17 @@
 /turf/space,
 /area/shuttle/escape_pod5/station)
 "cMa" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/structure/transit_tube{
-	icon_state = "NW-SE"
-	},
-/turf/simulated/floor/plating,
+/obj/structure/sign/warning/securearea,
+/turf/simulated/wall/r_wall,
 /area/aisat)
 "cMb" = (
-/obj/structure/transit_tube{
-	icon_state = "D-SW"
-	},
-/obj/structure/grille,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/window/reinforced{
-	dir = 5
+	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/aisat)
 "cMe" = (
 /obj/structure/cable{
@@ -70311,13 +70602,17 @@
 /turf/simulated/floor/plating,
 /area/maintenance/aft)
 "cMx" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 0
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	icon_state = "closed";
+	id_tag = "satellite_aux_outer";
+	locked = 1;
+	name = "Satellite External Access";
+	req_access = null;
+	req_access_txt = "13";
+	req_one_access_txt = "11;24"
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/plating,
 /area/aisat)
 "cMz" = (
 /obj/structure/sink{
@@ -79802,20 +80097,36 @@
 	},
 /area/engine/engineering)
 "tab" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	icon_state = "closed";
+	id_tag = "satellite_aux_inner";
+	locked = 1;
+	name = "Satellite External Access";
+	req_access = null;
+	req_access_txt = "13";
+	req_one_access_txt = "11;24"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 1
 	},
+/turf/simulated/floor/plating,
 /area/aisat)
 "tbb" = (
-/obj/machinery/door/airlock/external{
-	name = "MiniSat External Access";
-	req_access_txt = "66;13"
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	frequency = 1379;
+	id_tag = "satellite_aux_airlock";
+	layer = 3.3;
+	pixel_x = 0;
+	pixel_y = 25;
+	req_access_txt = "66";
+	tag_airpump = "satellite_aux_pump";
+	tag_chamber_sensor = "satellite_aux_sensor";
+	tag_exterior_door = "satellite_aux_outer";
+	tag_interior_door = "satellite_aux_inner"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/aisat)
@@ -120275,13 +120586,13 @@ aaa
 aaa
 aah
 aaa
-aaa
-bWt
-aaa
-aaa
-cCq
 cMa
-brB
+cMx
+cCW
+aaa
+aXz
+baK
+bbN
 cDu
 cDu
 cDu
@@ -120532,12 +120843,12 @@ aaa
 aaa
 aah
 aaa
+cCW
+brB
+cCW
 aaa
-cHK
-cJV
-aaa
-aaa
-cMb
+aXY
+baM
 cFA
 cGb
 cGy
@@ -120788,10 +121099,10 @@ aaa
 aaa
 agn
 agm
-agm
+cAd
 cCW
 tbb
-tbb
+cCW
 cCW
 cCW
 cmL
@@ -121046,16 +121357,16 @@ aaa
 agn
 aah
 cBm
-cEC
-cGm
-cJq
-cEC
-cGX
-cMx
-cnc
+cCW
+tab
+cal
+cbP
+aZK
+baQ
+bbT
 cnR
 cEJ
-cbP
+cEE
 cEC
 cEC
 cEC
@@ -121302,14 +121613,14 @@ agm
 agn
 agn
 cym
-cyr
-cyY
-cGl
-cGl
-cyY
 cKW
+cMb
+cbN
+cbM
+cbO
+baI
 csH
-tab
+bbZ
 cnM
 csH
 cpG
@@ -121823,8 +122134,8 @@ aaa
 aaa
 cEY
 ozb
-cbN
-cbM
+bcf
+bcz
 cEY
 cBx
 cBx
@@ -121839,9 +122150,9 @@ cEC
 cBm
 cEC
 cEC
-cEC
-cBm
-cEC
+bcH
+bcN
+bdl
 cEC
 cEC
 aaa
@@ -122096,9 +122407,9 @@ cyY
 crQ
 cyY
 cyY
-cyY
-cbO
-cyY
+bcL
+bcQ
+bdD
 cyY
 ctn
 czy
@@ -123863,8 +124174,8 @@ aaa
 aaa
 aaa
 agn
-cGQ
-cyt
+cBN
+cGl
 czy
 aaa
 cCW
@@ -124120,8 +124431,8 @@ aah
 aah
 aah
 agm
-cym
-cBN
+cHK
+cJV
 cCW
 cCW
 cCW
@@ -124377,8 +124688,8 @@ aaa
 aaa
 aaa
 agn
-cGQ
-cyt
+cGm
+cJq
 czy
 aaa
 cCW
@@ -126705,9 +127016,9 @@ cyY
 cmz
 cyY
 cyY
-cyY
-cal
-cyY
+bbg
+bcp
+bcA
 cyY
 cyY
 cmz
@@ -126962,9 +127273,9 @@ cEL
 cFH
 cEL
 cEL
-cEL
-cFH
-cEL
+bbj
+bcv
+bcG
 cEL
 cEL
 cHl
