@@ -278,6 +278,7 @@ Implants;
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
 			intercept.name = "Cent. Com. Status Summary"
 			intercept.info = intercepttext
+			intercept.update_icon()
 
 			comm.messagetitle.Add("Cent. Com. Status Summary")
 			comm.messagetext.Add(intercepttext)

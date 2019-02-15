@@ -73,7 +73,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "baton"
 	item_state = "classic_baton"
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 10
 
 /obj/item/weapon/melee/classic_baton/attack(mob/M, mob/living/user)
@@ -121,7 +121,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "telebaton_0"
 	item_state = null
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	w_class = 2
 	force = 3
 	var/on = 0
@@ -134,7 +134,7 @@
 		"\red You extend the baton.",\
 		"You hear an ominous click.")
 		icon_state = "telebaton_1"
-		item_state = "nullrod"
+		item_state = "telebaton"
 		w_class = 3
 		force = 15//quite robust
 		attack_verb = list("smacked", "struck", "slapped")

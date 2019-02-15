@@ -9,7 +9,7 @@
 	icon_state = "backpack"
 	item_state = "backpack"
 	w_class = ITEM_SIZE_LARGE
-	slot_flags = SLOT_BACK	//ERROOOOO
+	slot_flags = SLOT_FLAGS_BACK	//ERROOOOO
 	action_button_name = "Storage"
 	max_w_class = ITEM_SIZE_NORMAL
 	max_storage_space = DEFAULT_BACKPACK_STORAGE
@@ -28,7 +28,7 @@
 	return ..()
 
 /obj/item/weapon/storage/backpack/equipped(mob/user, slot)
-	if (slot == slot_back && src.use_sound)
+	if (slot == SLOT_BACK && src.use_sound)
 		playsound(src.loc, src.use_sound, 50, 1, -5)
 	..(user, slot)
 

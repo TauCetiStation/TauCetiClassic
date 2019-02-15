@@ -6,7 +6,7 @@
 	priority = 2
 	can_infect = 0
 	blood_level = 1
-	disallowed_species = list(IPC, DIONA)
+	allowed_species = list("exclude", IPC, DIONA)
 
 /datum/surgery_step/gender_reassignment/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if (!ishuman(target))
@@ -29,11 +29,6 @@
 
 	min_duration = 110
 	max_duration = 150
-
-/datum/surgery_step/gender_reassignment/reshape_genitals/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	return ..() && BP.open == 1
 
 /datum/surgery_step/gender_reassignment/reshape_genitals/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(target.gender == FEMALE)

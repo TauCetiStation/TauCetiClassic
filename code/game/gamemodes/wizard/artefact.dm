@@ -68,12 +68,12 @@
 		H.remove_from_mob(I)
 
 	var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionaire)
-	H.equip_to_slot_or_del(new hat(H), slot_head)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), slot_shoes)
+	H.equip_to_slot_or_del(new hat(H), SLOT_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), SLOT_SHOES)
 	H.put_in_any_hand_if_possible(new /obj/item/weapon/shield/riot/roman(H))
 	H.put_in_any_hand_if_possible(new /obj/item/weapon/claymore/light(H))
-	H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/spear(H), slot_back)
+	H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/spear(H), SLOT_BACK)
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -151,7 +151,7 @@
 		wizard_name = wizard.name
 	if(M.mind.special_role == "traitor")
 		to_chat(M, "<span class='notice'>You succeed in getting those precious powers from that fool. Now it's time to show [master] what you are realy after.</span>")
-	else  	
+	else
 		to_chat(M, "<span class='notice'>You are [master]'s apprentice! You are bound by magic contract to follow their orders and help them in accomplishing their goals.</span>")
 	switch(type)
 		if("destruction")
@@ -188,7 +188,7 @@
 			new_objective.owner = M.mind
 			new_objective.target = wizard
 			M.mind.objectives += new_objective
-		else	
+		else
 			var/datum/objective/protect/new_objective = new /datum/objective/protect
 			new_objective.explanation_text = "Protect [wizard.current.real_name], the wizard."
 			new_objective.owner = M.mind
@@ -201,14 +201,14 @@
 /obj/item/weapon/contract/proc/equip_apprentice(mob/living/carbon/human/target)
 	for(var/obj/item/I in target)
 		target.remove_from_mob(I)
-	target.equip_to_slot_or_del(new /obj/item/device/radio/headset(target), slot_l_ear)
-	target.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(target), slot_w_uniform)
-	target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(target), slot_shoes)
-	target.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(target), slot_wear_suit)
-	target.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(target), slot_head)
-	target.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(target), slot_back)
-	target.equip_to_slot_or_del(new /obj/item/weapon/storage/box(target), slot_in_backpack)
-	target.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(target), slot_r_store)
+	target.equip_to_slot_or_del(new /obj/item/device/radio/headset(target), SLOT_L_EAR)
+	target.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(target), SLOT_W_UNIFORM)
+	target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(target), SLOT_SHOES)
+	target.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(target), SLOT_WEAR_SUIT)
+	target.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(target), SLOT_HEAD)
+	target.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(target), SLOT_BACK)
+	target.equip_to_slot_or_del(new /obj/item/weapon/storage/box(target), SLOT_IN_BACKPACK)
+	target.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(target), SLOT_R_STORE)
 
 #undef SCHOOL_DESTRUCTION
 #undef SCHOOL_BLUESPACE

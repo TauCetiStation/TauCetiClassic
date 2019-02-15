@@ -41,7 +41,7 @@
 	newtraitor.mind.special_role = "Syndicate"
 	newtraitor.hud_updateflag |= 1 << SPECIALROLE_HUD
 	ticker.mode.forge_syndicate_objectives(newtraitor.mind)
-	newtraitor.equip_or_collect(new /obj/item/device/encryptionkey/syndicate(newtraitor), slot_r_store)
+	newtraitor.equip_or_collect(new /obj/item/device/encryptionkey/syndicate(newtraitor), SLOT_R_STORE)
 	to_chat(newtraitor, "<span class='notice'> Your current objectives:</span>")
 	var/obj_count = 1
 	for(var/datum/objective/objective in newtraitor.mind.objectives)

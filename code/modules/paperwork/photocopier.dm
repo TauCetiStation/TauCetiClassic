@@ -231,6 +231,7 @@
 		img.pixel_y = copy.offset_y[i]
 		P.overlays += img
 	P.updateinfolinks()
+	P.update_icon()
 	toner--
 	return P
 

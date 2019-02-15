@@ -84,7 +84,7 @@
 	item_state = "candlebox"
 	storage_slots = 5
 	throwforce = 2
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	var/candle_type = "white"
 
 /obj/item/weapon/storage/fancy/candle_box/atom_init()
@@ -125,7 +125,7 @@
 	item_state = "black_candlebox5"
 	storage_slots = 5
 	throwforce = 2
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	var/cooldown = 0
 	var/teleporter_delay = 0
 
@@ -276,7 +276,7 @@
 	item_state = "cigpacket"
 	w_class = 1
 	throwforce = 2
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	storage_slots = 6
 	can_hold = list("/obj/item/clothing/mask/cigarette","/obj/item/weapon/lighter")
 	icon_type = "cigarette"
@@ -309,7 +309,7 @@
 				var/obj/item/clothing/mask/cigarette/C = I
 				has_cigarette = 1
 				contents.Remove(C)
-				user.equip_to_slot_if_possible(C, slot_wear_mask)
+				user.equip_to_slot_if_possible(C, SLOT_WEAR_MASK)
 				to_chat(user, "<span class='notice'>You take a cigarette out of the pack.</span>")
 				update_icon()
 				break
