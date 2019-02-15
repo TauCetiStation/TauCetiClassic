@@ -844,7 +844,7 @@
 	item_state = "altair_locket"
 	item_color = "altair_locket"
 	w_class = 2
-	slot_flags = SLOT_MASK | SLOT_TIE
+	slot_flags = SLOT_FLAGS_MASK | SLOT_FLAGS_TIE
 
 ////// Silver locket - Konaa Hirano - Konaa_Hirano
 
@@ -856,7 +856,7 @@
 	item_state = "konaahirano"
 	item_color = "konaahirano"
 	w_class = 2
-	slot_flags = SLOT_MASK | SLOT_TIE
+	slot_flags = SLOT_FLAGS_MASK | SLOT_FLAGS_TIE
 	var/obj/item/held //Item inside locket.
 
 /obj/item/clothing/accessory/fluff/konaa_hirano/attack_self(mob/user)
@@ -885,7 +885,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "nasir_khayyam_1"
 	w_class = 2
-	slot_flags = SLOT_MASK | SLOT_TIE
+	slot_flags = SLOT_FLAGS_MASK | SLOT_FLAGS_TIE
 
 ////// Emerald necklace - Ty Foster - Nega
 
@@ -903,7 +903,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "michael_guess_1"
 	w_class = 2
-	slot_flags = SLOT_MASK | SLOT_TIE
+	slot_flags = SLOT_FLAGS_MASK | SLOT_FLAGS_TIE
 	body_parts_covered = 0
 
 //////////// Shoes ////////////

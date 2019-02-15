@@ -5,26 +5,26 @@ var/global/raider_tick = 1
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(src)
 	R.set_frequency(SYND_FREQ) //Same frequency as the syndicate team in Nuke mode.
-	equip_to_slot_or_del(R, slot_l_ear)
+	equip_to_slot_or_del(R, SLOT_L_EAR)
 
 	switch(raider_tick)
 		if(1) // Aye Cap'n!
-			equip_to_slot_or_del(new /obj/item/clothing/under/pirate(src), slot_w_uniform)
-			equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(src), slot_shoes)
-			equip_to_slot_or_del(new /obj/item/clothing/suit/space/pirate(src), slot_wear_suit)
-			equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/pirate(src), slot_head)
-			equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(src), slot_glasses)
-			equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(src), slot_r_hand)
-			equip_to_slot_or_del(new /obj/item/weapon/extraction_pack(src), slot_l_hand)
+			equip_to_slot_or_del(new /obj/item/clothing/under/pirate(src), SLOT_W_UNIFORM)
+			equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(src), SLOT_SHOES)
+			equip_to_slot_or_del(new /obj/item/clothing/suit/space/pirate(src), SLOT_WEAR_SUIT)
+			equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/pirate(src), SLOT_HEAD)
+			equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(src), SLOT_GLASSES)
+			equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(src), SLOT_R_HAND)
+			equip_to_slot_or_del(new /obj/item/weapon/extraction_pack(src), SLOT_L_HAND)
 		if(2) // Piretezzz
-			equip_to_slot_or_del(new /obj/item/clothing/under/pirate(src), slot_w_uniform)
-			equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(src), slot_shoes)
-			equip_to_slot_or_del(new /obj/item/clothing/head/bandana(src), slot_head)
-			//equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(src), slot_glasses)
-			equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(src), slot_r_hand)
+			equip_to_slot_or_del(new /obj/item/clothing/under/pirate(src), SLOT_W_UNIFORM)
+			equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(src), SLOT_SHOES)
+			equip_to_slot_or_del(new /obj/item/clothing/head/bandana(src), SLOT_HEAD)
+			//equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(src), SLOT_GLASSES)
+			equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(src), SLOT_R_HAND)
 
-	equip_to_slot_or_del(new /obj/item/device/price_tool(src), slot_l_store)
-	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_r_store)
+	equip_to_slot_or_del(new /obj/item/device/price_tool(src), SLOT_L_STORE)
+	equip_to_slot_or_del(new /obj/item/device/flashlight(src), SLOT_R_STORE)
 
 	var/obj/item/weapon/card/id/syndicate/C = new(src)
 	C.name = "[real_name]'s Legitimate Human ID Card"
@@ -36,7 +36,7 @@ var/global/raider_tick = 1
 	var/obj/item/weapon/storage/wallet/W = new(src)
 	W.handle_item_insertion(C)
 	spawn_money(rand(50,150)*10,W)
-	equip_to_slot_or_del(W, slot_wear_id)
+	equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
 	raider_tick = 2
 	return 1*/

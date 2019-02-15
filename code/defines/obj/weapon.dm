@@ -274,7 +274,7 @@
 	var/traitor_frequency = 0.0
 	var/obj/item/device/radio/origradio = null
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	item_state = "radio"
 	throwforce = 5
 	w_class = 2.0
@@ -465,7 +465,7 @@
 	throw_range = 3
 	w_class = 4.0
 	flags = NOSHIELD
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 

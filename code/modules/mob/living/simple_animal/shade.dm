@@ -28,6 +28,7 @@
 	faction = "cult"
 	status_flags = CANPUSH
 
+	animalistic = FALSE
 
 /mob/living/simple_animal/shade/Life()
 	..()

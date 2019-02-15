@@ -6,7 +6,7 @@
 	origin_tech = "combat=2;magnets=4"
 	w_class = 4.0
 	flags =  CONDUCT
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 
 /obj/item/weapon/gun/energy/ionrifle/isHandgun()
@@ -169,7 +169,7 @@
 	item_state = "w2500e"
 	origin_tech = "combat=6;materials=5;powerstorage=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/sniper)
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	fire_delay = 35
 	w_class = 4.0
 	var/zoom = 0

@@ -41,8 +41,8 @@
 		qdel(src)
 	return
 
-/obj/effect/effect/sleep_smoke/Move()
-	..()
+/obj/effect/effect/sleep_smoke/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	for(var/mob/living/carbon/M in get_turf(src))
 		if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
 //		if (M.wear_suit, /obj/item/clothing/suit/wizrobe && (M.hat, /obj/item/clothing/head/wizard) && (M.shoes, /obj/item/clothing/shoes/sandal))  // I'll work on it later

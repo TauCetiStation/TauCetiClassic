@@ -35,6 +35,8 @@
 	faction = "syndicate"
 	status_flags = CANPUSH
 
+	animalistic = FALSE
+
 /mob/living/simple_animal/hostile/syndicate/death()
 	..()
 	if(corpse)

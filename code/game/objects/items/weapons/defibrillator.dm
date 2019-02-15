@@ -9,7 +9,7 @@
 	icon = 'icons/obj/defibrillator.dmi'
 	icon_state = "defibunit"
 	item_state = "defibunit"
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	force = 5
 	throwforce = 6
 	w_class = ITEM_SIZE_LARGE
@@ -144,9 +144,9 @@
 		return FALSE //not equipped
 
 	var/mob/living/carbon/human/H = loc
-	if((slot_flags & SLOT_BACK) && H.back == src)
+	if((slot_flags & SLOT_FLAGS_BACK) && H.back == src)
 		return TRUE
-	if((slot_flags & SLOT_BELT) && H.belt == src)
+	if((slot_flags & SLOT_FLAGS_BELT) && H.belt == src)
 		return TRUE
 	return FALSE
 
@@ -177,7 +177,7 @@
 	icon_state = "defibcompact"
 	item_state = "defibcompact"
 	w_class = ITEM_SIZE_NORMAL
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = list("biotech" = 3, "powerstorage" = 2)
 	charge_time = 1 SECONDS
 

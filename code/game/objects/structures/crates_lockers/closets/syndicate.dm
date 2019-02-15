@@ -45,6 +45,7 @@
 		var/obj/item/weapon/paper/P = new(src)
 		P.name = "IOU"
 		P.info = "Sorry man, we needed the money so we sold your stash. It's ok, we'll double our money for sure this time!"
+		P.update_icon()
 
 	//Metal (common ore)
 	if(pickednum >= 2) // WEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE~

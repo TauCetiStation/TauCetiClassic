@@ -161,7 +161,7 @@
 	var/obj/item/weapon/paper/P = new(usr.loc)
 	P.name = "Autopsy Data ([target_name])"
 	P.info = "<tt>[scan_data]</tt>"
-	P.icon_state = "paper_words"
+	P.update_icon()
 
 	if(istype(usr,/mob/living/carbon))
 		// place the item in the usr's hand if possible
