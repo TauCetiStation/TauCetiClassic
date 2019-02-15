@@ -66,10 +66,20 @@
 /obj/item/weapon/implant/mindshield/loyalty/implanted(mob/M)
 	. = ..()
 	if(.)
-		if (M.mind.special_role == "traitor" || M.mind.special_role == "Syndicate" || M.mind.special_role == "Ninja")
-			to_chat(M, "<span class='danger'>You were implanted implant of loyalty and now you must serve NT. Your old mission has not any matter.</span>")
-			for(var/datum/objective/objective in M.mind.objectives)
-				objective.hidden = 1
+		if(M.mind)
+			var/cleared_role = TRUE
+			switch(M.mind.special_role)
+				if("traitor")
+					M.mind.remove_traitor()
+				if("Syndicate")
+					M.mind.remove_nuclear()
+				else
+					cleared_role = FALSE
+			if(cleared_role)
+				// M.mind.remove_objectives() Uncomment this if you're feeling suicidal, and inable to see player's objectives.
+				to_chat(M, "<span class='danger'>You were implanted with [src] and now you must serve NT. Your old mission doesn't matter now.</span>")
+				ticker.reconverted_antags[M.key] = M.mind
+
 		START_PROCESSING(SSobj, src)
 		to_chat(M, "NanoTrasen - is the best corporation in the whole Universe!")
 
