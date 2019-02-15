@@ -29095,12 +29095,12 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 1
+	},
 /obj/machinery/door/window{
 	name = "AI Satellite";
 	req_access_txt = "66"
-	},
-/obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 1
 	},
 /turf/simulated/floor/plating{
 	dir = 6;
@@ -29240,7 +29240,7 @@
 	icon_state = "D-SW"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/aisat)
 "aYt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor{
@@ -29565,7 +29565,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/space)
+/area/aisat)
 "aZb" = (
 /obj/machinery/disposal,
 /obj/machinery/alarm{
@@ -59276,9 +59276,6 @@
 	icon_state = "dark"
 	},
 /area/aisat)
-"cnb" = (
-/turf/space,
-/area/aisat)
 "cnc" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -59288,11 +59285,6 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/aisat)
-"cnd" = (
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/space,
 /area/aisat)
 "cnf" = (
 /turf/simulated/floor{
@@ -59753,13 +59745,6 @@
 /obj/structure/disposalpipe/junction,
 /turf/simulated/floor/plating,
 /area/storage/emergency)
-"cob" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/lattice,
-/turf/space,
-/area/aisat)
 "coc" = (
 /obj/structure/cable{
 	d2 = 2;
@@ -68194,16 +68179,6 @@
 	icon_state = "wood-broken5"
 	},
 /area/maintenance/aft)
-"cGS" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 0
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/space,
-/area/aisat)
 "cGT" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/fire/firefighter,
@@ -120258,7 +120233,7 @@ aaa
 aaa
 aaa
 aah
-cnb
+aaa
 cmE
 sYb
 cCW
@@ -120515,7 +120490,7 @@ aaa
 aaa
 aaa
 aah
-cnb
+aaa
 cCW
 cEw
 cCW
@@ -120772,7 +120747,7 @@ aaa
 aaa
 agn
 agm
-cnd
+cAd
 cCW
 tbb
 cCW
@@ -121029,7 +121004,7 @@ aaa
 aaa
 agn
 aah
-cob
+cBm
 cCW
 cFe
 cHK
@@ -121039,7 +121014,7 @@ aYt
 aYw
 cnR
 cEJ
-cGS
+cEE
 cEC
 cEC
 cEC
