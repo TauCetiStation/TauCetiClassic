@@ -63,7 +63,7 @@
 
 				var/footstepsound = "footsteps"
 
-				if(istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
+				if(!(H.crawling || H.crawl_getup) && istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
 					if(prob(25))
 						footstepsound = "clownstep"
 					animate(H, pixel_z = 4, time = 0)
