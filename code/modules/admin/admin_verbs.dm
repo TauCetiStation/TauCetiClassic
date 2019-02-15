@@ -76,7 +76,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/aooc,
 	/client/proc/change_security_level,
 	/client/proc/empty_ai_core_toggle_latejoin,
-	/client/proc/send_fax_message
+	/client/proc/send_fax_message,
+	/client/proc/debug_variables 		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
 	)
 var/list/admin_verbs_log = list(
 	/datum/admins/proc/view_txt_log,	/*shows the server log (diary) for today*/
