@@ -110,6 +110,7 @@
 	name = "fire axe"
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	force = 5
+	hitsound = 'sound/weapons/desceration.ogg'
 	sharp = 1
 	edge = 1
 	w_class = 4.0
@@ -261,11 +262,13 @@
 
 /obj/item/weapon/twohanded/dualsaber/unwield()
 	set_light(0)
+	hitsound = initial(hitsound)
 	w_class = initial(w_class)
 	return ..()
 
 /obj/item/weapon/twohanded/dualsaber/wield()
 	set_light(2)
+	hitsound = 'sound/weapons/blade1.ogg'
 	w_class = 5
 	return ..()
 
