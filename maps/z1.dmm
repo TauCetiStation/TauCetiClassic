@@ -80141,6 +80141,11 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
+/obj/machinery/camera{
+	c_tag = "MiniSat Exterior";
+	dir = 2;
+	network = list("MiniSat")
+	},
 /turf/simulated/floor/plating,
 /area/aisat)
 "tcb" = (
