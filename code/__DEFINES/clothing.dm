@@ -2,13 +2,13 @@
 //Make sure to update check_obscured_slots() if you add more.
 #define HIDEGLOVES        (1<<0)
 #define HIDESUITSTORAGE   (1<<1)
-#define HIDEJUMPSUIT      (1<<2)	// these first four are only used in exterior suits
+#define HIDEJUMPSUIT      (1<<2)	// These first four are only used in exterior suits.
 #define HIDESHOES         (1<<3)
-#define HIDEMASK          (1<<4)	// these last six are only used in masks and headgear.
-#define HIDEEARS          (1<<5)	// (ears means headsets and such)
-#define HIDEEYES          (1<<6)	// Whether eyes and glasses are hidden
-#define HIDEFACE          (1<<7)	// Whether we appear as unknown.
-#define HIDETAIL          (1<<8)
+#define HIDEMASK          (1<<4)	// these four are only used in masks and headgear,
+#define HIDEEARS          (1<<5)	// (ears means headsets and such),
+#define HIDEEYES          (1<<6)	// whether eyes and glasses are hidden,
+#define HIDEFACE          (1<<7)	// whether we appear as unknown.
+#define HIDETAIL          (1<<8)	// Exterior suits - to hide tail when wearing space suit or something similar.
 
 //ITEM INVENTORY SLOT BITMASKS
 #define SLOT_FLAGS_OCLOTHING    (1<<0)
