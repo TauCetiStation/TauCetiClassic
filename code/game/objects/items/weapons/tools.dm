@@ -179,6 +179,7 @@
  */
 /obj/item/weapon/weldingtool
 	name = "welding tool"
+	desc = "Apply the hot spot to the metal."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "welder"
 	flags = CONDUCT
@@ -262,6 +263,7 @@
 	switch(welding)
 		//If off
 		if(0)
+			hitsound = initial(hitsound)
 			if(src.icon_state != "welder") //Check that the sprite is correct, if it isnt, it means toggle() was not called
 				src.force = 3
 				src.damtype = "brute"
@@ -273,6 +275,7 @@
 			return
 		//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
+			hitsound = 'sound/items/Welder2.ogg'
 			if(src.icon_state != "welder1") //Check that the sprite is correct, if it isnt, it means toggle() was not called
 				src.force = 15
 				src.damtype = "fire"

@@ -11,6 +11,7 @@ var/list/fracture_sound = list('sound/effects/bonebreak1.ogg','sound/effects/bon
 //var/list/gun_sound = list('sound/weapons/Gunshot.ogg', 'sound/weapons/Gunshot2.ogg','sound/weapons/Gunshot3.ogg','sound/weapons/Gunshot4.ogg')
 //var/list/footsteps_sound = list('sound/effects/footsteps.ogg','sound/effects/footsteps2.ogg')
 var/list/footsteps_sound = list('sound/effects/tile1.wav','sound/effects/tile2.wav','sound/effects/tile3.wav','sound/effects/tile4.wav')
+var/list/bandg_sound = list('sound/items/bandage.ogg','sound/items/bandage2.ogg','sound/items/bandage3.ogg')
 
 /proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global)
 
@@ -126,5 +127,6 @@ var/const/FALLOFF_SOUNDS = 0.5
 			if ("hiss") soundin = pick(hiss_sound)
 			if ("pageturn") soundin = pick(page_sound)
 			if ("fracture") soundin = pick(fracture_sound)
+			if ("bandg") soundin = pick(bandg_sound)
 			//if ("gunshot") soundin = pick(gun_sound)
 	return soundin

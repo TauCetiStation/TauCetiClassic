@@ -6,6 +6,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	force = 10
+	hitsound = 'sound/weapons/captainwhip.ogg'
 	throwforce = 7
 	w_class = 3
 	origin_tech = "combat=4"

@@ -52,6 +52,7 @@
 #include "code\__DEFINES\subsystem.dm"
 #include "code\__DEFINES\tick.dm"
 #include "code\__DEFINES\traits.dm"
+#include "code\__DEFINES\varedit.dm"
 #include "code\__DEFINES\zas.dm"
 #include "code\__HELPERS\atmospherics.dm"
 #include "code\__HELPERS\cmp.dm"
