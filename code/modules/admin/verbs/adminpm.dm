@@ -113,7 +113,7 @@
 	var/recieve_message = ""
 
 	if(((src in mentors) || holder) && !C.holder)
-		recieve_message = ("<font color='[recieve_color]' size='3'><b>-- [sanitize("Нажмите на имя [recieve_pm_type]'а для ответа")] --</b></font>\n")
+		recieve_message = "<font color='[recieve_color]' size='3'><b>-- [sanitize("Нажмите на имя [recieve_pm_type]'а для ответа")] --</b></font>\n"
 		if(C.adminhelped)
 			to_chat(C, recieve_message)
 			C.adminhelped = 0
