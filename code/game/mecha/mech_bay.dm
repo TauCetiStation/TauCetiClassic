@@ -11,7 +11,6 @@
 
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
-	desc = "Charges exosuits. It consumes a lot of energy when working."
 	density = 1
 	anchored = 1
 	dir = 4

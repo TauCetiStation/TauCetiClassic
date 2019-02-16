@@ -158,12 +158,12 @@
 		if(user.loc != user_loc || target.loc != target_loc || user.incapacitated() || user.lying )
 			. = FALSE
 			break
-		if(user.hand != busy_hand)
-			if(user.get_inactive_hand() != holding)
+		if(busy_hand)
+			if(user.l_hand != holding)
 				. = FALSE
 				break
 		else
-			if(user.get_active_hand() != holding)
+			if(user.r_hand != holding)
 				. = FALSE
 				break
 		if(check_target_zone && user.zone_sel.selecting != check_target_zone)

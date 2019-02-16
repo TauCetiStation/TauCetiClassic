@@ -31634,12 +31634,28 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/aisat)
 "bcA" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 1
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	frequency = 1379;
+	id_tag = "satellite_aux_airlock";
+	layer = 3.3;
+	pixel_x = 0;
+	pixel_y = 25;
+	req_access_txt = "66";
+	tag_airpump = "satellite_aux_pump";
+	tag_chamber_sensor = "satellite_aux_sensor";
+	tag_exterior_door = "satellite_aux_outer";
+	tag_interior_door = "satellite_aux_inner"
 	},
-/turf/simulated/floor,
-/area/hallway/secondary/entry)
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "MiniSat Exterior";
+	dir = 2;
+	network = list("MiniSat")
+	},
+/turf/simulated/floor/plating,
+/area/aisat)
 "bcB" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
@@ -80126,23 +80142,12 @@
 	},
 /area/aisat)
 "tbb" = (
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	frequency = 1379;
-	id_tag = "satellite_aux_airlock";
-	layer = 3.3;
-	pixel_x = 0;
-	pixel_y = 25;
-	req_access_txt = "66";
-	tag_airpump = "satellite_aux_pump";
-	tag_chamber_sensor = "satellite_aux_sensor";
-	tag_exterior_door = "satellite_aux_outer";
-	tag_interior_door = "satellite_aux_inner"
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/aisat)
+/turf/simulated/floor,
+/area/hallway/secondary/entry)
 "tcb" = (
 /obj/item/weapon/storage/box/beakers{
 	pixel_x = 2;
@@ -97899,7 +97904,7 @@ apT
 apT
 apT
 bhh
-bcA
+tbb
 aXY
 aGn
 aGn
@@ -121114,7 +121119,7 @@ agn
 agm
 cAd
 cCW
-tbb
+bcA
 cCW
 cCW
 cCW

@@ -54,7 +54,6 @@
 		user.drop_item()
 		G.loc = src
 		charging = G
-		playsound(src, 'sound/items/insert_key.ogg', 25, 1)
 		use_power = 2
 		update_icon()
 	else if(istype(G, /obj/item/weapon/wrench))
@@ -85,7 +84,6 @@
 		charging.update_icon()
 		charging.loc = loc
 		charging = null
-		playsound(src, 'sound/items/insert_key.ogg', 25, 1)
 		use_power = 1
 		update_icon()
 

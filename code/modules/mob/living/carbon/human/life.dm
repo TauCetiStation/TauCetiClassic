@@ -1038,10 +1038,7 @@
 
 	// nutrition decrease
 	if (nutrition > 0 && stat != DEAD)
-		var/met_factor = get_metabolism_factor()
-		nutrition = max(0, nutrition - met_factor * 0.1)
-		if(has_trait(TRAIT_STRESS_EATER))
-			nutrition = max(0, nutrition - met_factor * getHalLoss() * 0.01)
+		nutrition = max(0, nutrition - get_metabolism_factor() / 10)
 
 	if (nutrition > 450)
 		if(overeatduration < 600) //capped so people don't take forever to unfat

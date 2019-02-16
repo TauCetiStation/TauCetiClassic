@@ -162,14 +162,15 @@
 					if(ispath(objholder,/mob) && !check_rights(R_DEBUG,0))
 						objholder = /obj/structure/closet
 			if(3)
+				var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "icon", "icon_state")
+				var/list/fully_locked = list("resize", "resize_rev")
+
 				master.buildmode.varholder = sanitize(input(usr,"Enter variable name:" ,"Name", "name"))
-				if(master.buildmode.varholder in VE_MASS_FULLY_LOCKED)
-					to_chat(usr, "<span class='warning'>It is forbidden to edit this variable.</span>")
+				if(master.buildmode.varholder in fully_locked)
+					to_chat(usr, "\red It is forbidden to edit this variable.")
 					return
-				if((master.buildmode.varholder in VE_MASS_DEBUG) && !check_rights(R_DEBUG))
-					return
-				if((master.buildmode.varholder in VE_MASS_ICONS) && !check_rights(R_DEBUG|R_EVENT))
-					return
+				if(master.buildmode.varholder in locked && !check_rights(R_DEBUG,0))
+					return 1
 				var/thetype = input(usr,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference")
 				if(!thetype) return 1
 				switch(thetype)
