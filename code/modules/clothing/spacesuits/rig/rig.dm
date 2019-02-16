@@ -87,7 +87,7 @@
 
 	var/mob/living/carbon/human/wearer // The person currently wearing the rig.
 	var/offline = 1
-	var/passive_energy_use = 10
+	var/passive_energy_use = 5
 
 	var/interface_title = "Hardsuit Controller"
 	var/interface_path = "hardsuit.tmpl"
@@ -306,6 +306,11 @@
 		wearer = H
 		update_overlays(wearer)
 		give_actions(wearer)
+
+		if(!offline) // so rigs without cell are slow
+			slowdown = initial(slowdown)
+		else
+			slowdown = offline_slowdown
 
 	if(H.wear_suit != src)
 		return
@@ -653,6 +658,7 @@
 	action_button_name = "Toggle space suit mode"
 	var/combat_mode = FALSE
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair)
+	cell_type = /obj/item/weapon/stock_parts/cell/super
 
 /obj/item/clothing/suit/space/rig/syndi/update_icon(mob/user)
 	..()

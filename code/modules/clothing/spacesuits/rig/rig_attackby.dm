@@ -102,6 +102,8 @@
 		var/to_remove = input("Which would you like to modify?") as null|anything in current_mounts
 		if(!to_remove)
 			return
+		if(!Adjacent(user))
+			return
 
 		switch(to_remove)
 			if("cell")
