@@ -9,6 +9,7 @@
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60
+	hitsound = 'sound/effects/stamp.ogg' //taken from Baystation build
 	item_color = "cargo"
 	attack_verb = list("stamped")
 	var/stamp_by_message = ""

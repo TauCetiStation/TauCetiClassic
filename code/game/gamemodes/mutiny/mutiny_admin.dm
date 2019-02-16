@@ -1,4 +1,4 @@
-/datum/game_mode/mutiny/proc/check_antagonists_ui(admins)
+/datum/game_mode/mutiny/proc/check_antagonists_ui(datum/admins/admins)
 	var/turf/captains_key_loc = captains_key ? captains_key.get_loc_turf() : "Lost or Destroyed"
 	var/turf/secondary_key_loc = secondary_key ? secondary_key.get_loc_turf() : "Lost or Destroyed"
 	var/remaining_objectives = current_directive.get_remaining_orders()

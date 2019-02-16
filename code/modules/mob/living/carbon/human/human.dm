@@ -80,6 +80,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	spell_list += new /obj/effect/proc_holder/spell/targeted/collective_mind
 	spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor
 
+/mob/living/carbon/human/slime/atom_init(mapload)
+	. = ..(mapload, SLIME)
+
 /mob/living/carbon/human/atom_init(mapload, new_species)
 
 	dna = new
@@ -943,6 +946,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 ///eyecheck()
 ///Returns a number between -1 to 2
 /mob/living/carbon/human/eyecheck()
+	if(blinded)
+		return 2
 	var/number = 0
 	if(istype(src.head, /obj/item/clothing/head/welding))
 		if(!src.head:up)
@@ -1369,7 +1374,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	if(species)
 		if(species.name == new_species)
-			return
+			return FALSE
 
 		if(species.language)
 			remove_language(species.language)
@@ -1406,9 +1411,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	full_prosthetic = null
 
 	if(species)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 // Unlike set_species(), this proc simply changes owner's specie and thats it.
 /mob/living/carbon/human/proc/set_species_soft(new_species)
@@ -1725,6 +1730,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(shoes && (shoes.flags & NOSLIP))
 		return FALSE
 	return ..(slipped_on,stun_duration, weaken_duration)
+
+/mob/living/carbon/human/is_nude(maximum_coverage = 0, pos_slots = list(src.head, src.shoes, src.neck, src.mouth, src.wear_suit, src.w_uniform, src.belt, src.gloves, src.glasses)) // Expands our pos_slots arg.
+	return ..()
 
 //Turns a mob black, flashes a skeleton overlay
 //Just like a cartoon!

@@ -30,7 +30,7 @@
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "fossil_satchel"
 	item_state = "fossil_satchel"
-	slot_flags = SLOT_BELT | SLOT_POCKET
+	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_POCKET
 	w_class = 3
 	storage_slots = 50
 	max_w_class = 3

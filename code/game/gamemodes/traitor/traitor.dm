@@ -325,9 +325,9 @@
 	for(var/datum/objective/dehead/D in traitor_mob.mind.objectives)
 		var/obj/item/device/biocan/B = new (traitor_mob.loc)
 		var/list/slots = list (
-		"backpack" = slot_in_backpack,
-		"left hand" = slot_l_hand,
-		"right hand" = slot_r_hand,
+		"backpack" = SLOT_IN_BACKPACK,
+		"left hand" = SLOT_L_HAND,
+		"right hand" = SLOT_R_HAND,
 		)
 		var/where = traitor_mob.equip_in_one_of_slots(B, slots)
 		traitor_mob.update_icons()

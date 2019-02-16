@@ -99,3 +99,6 @@
 	var/robolimb_count = 0 // Number of robot limbs.
 	var/sightglassesmod = null
 	var/datum/personal_crafting/handcrafting
+
+	var/busy_left_hand = FALSE // See ambidextrous quirk and is_busy() override.
+	var/busy_right_hand = FALSE

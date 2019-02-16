@@ -892,11 +892,11 @@
 					var/obj/item/weapon/book/tome/T = new(H)
 
 					var/list/slots = list (
-						"backpack" = slot_in_backpack,
-						"left pocket" = slot_l_store,
-						"right pocket" = slot_r_store,
-						"left hand" = slot_l_hand,
-						"right hand" = slot_r_hand,
+						"backpack" = SLOT_IN_BACKPACK,
+						"left pocket" = SLOT_L_STORE,
+						"right pocket" = SLOT_R_STORE,
+						"left hand" = SLOT_L_HAND,
+						"right hand" = SLOT_R_HAND,
 					)
 					var/where = H.equip_in_one_of_slots(T, slots)
 					if (!where)
@@ -1430,11 +1430,11 @@
 		var/obj/item/weapon/book/tome/T = new(H)
 
 		var/list/slots = list (
-			"backpack" = slot_in_backpack,
-			"left pocket" = slot_l_store,
-			"right pocket" = slot_r_store,
-			"left hand" = slot_l_hand,
-			"right hand" = slot_r_hand,
+			"backpack" = SLOT_IN_BACKPACK,
+			"left pocket" = SLOT_L_STORE,
+			"right pocket" = SLOT_R_STORE,
+			"left hand" = SLOT_L_HAND,
+			"right hand" = SLOT_R_HAND,
 		)
 		var/where = H.equip_in_one_of_slots(T, slots)
 		if (!where)

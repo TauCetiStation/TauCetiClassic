@@ -5,11 +5,11 @@
 	item_state = "l6closednomag"
 	w_class = 5
 	force = 10
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "combat=8;materials=2;syndicate=8"
 	recoil = 3 //extra kickback
 	mag_type = /obj/item/ammo_box/magazine/internal/heavyrifle
-	fire_sound = 'sound/weapons/heavysniper_shot.ogg'
+	fire_sound = 'sound/weapons/cannon.ogg'
 	var/bolt_open = 0
 
 /obj/item/weapon/gun/projectile/heavyrifle/isHandgun()

@@ -8,7 +8,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "riot"
 	flags = CONDUCT
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	force = 5.0
 	throwforce = 5.0
 	throw_speed = 1
@@ -78,6 +78,7 @@
 	throw_speed = 3
 	throw_range = 4
 	block_chance = 50
+	w_class = ITEM_SIZE_NORMAL
 	var/active = 0
 
 /obj/item/weapon/shield/riot/tele/Get_shield_chance()
@@ -95,7 +96,7 @@
 		throwforce = 5
 		throw_speed = 2
 		w_class = 4
-		slot_flags = SLOT_BACK
+		slot_flags = SLOT_FLAGS_BACK
 		to_chat(user, "<span class='notice'>You extend \the [src].</span>")
 	else
 		force = 3

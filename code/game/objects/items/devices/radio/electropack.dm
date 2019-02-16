@@ -5,7 +5,7 @@
 	item_state = "electropack"
 	frequency = 1449
 	flags = CONDUCT
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	w_class = 5.0
 	g_amt = 2500
 	m_amt = 10000
