@@ -14,6 +14,7 @@
 /obj/item/weapon/banhammer/attack(mob/M, mob/user)
 	to_chat(M, "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>")
 	to_chat(user, "<font color='red'> You have <b>BANNED</b> [M]</font>")
+	M.playsound_local(M, 'sound/effects/adminhelp.ogg', 50, 0)
 
 /*
  * Sword
@@ -37,6 +38,7 @@
 	active = !active
 	if (active)
 		force = 30
+		hitsound = 'sound/weapons/blade1.ogg'
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass1"
 		else
@@ -47,6 +49,7 @@
 
 	else
 		force = 3
+		hitsound = initial(hitsound)
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass0"
 		else

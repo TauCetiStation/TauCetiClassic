@@ -18,6 +18,7 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "donutbox6"
 	name = "donut box"
+	desc = "Very tasty donuts. Security staff will rate them."
 	var/icon_type = "donut"
 
 /obj/item/weapon/storage/fancy/update_icon(itemremoved = 0)

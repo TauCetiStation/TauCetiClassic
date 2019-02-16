@@ -289,6 +289,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
 	force = 3.0
+	hitsound = 'sound/effects/magic.ogg'
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
