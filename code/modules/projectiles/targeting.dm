@@ -29,7 +29,7 @@
 	return ..()
 
 /obj/item/weapon/gun/equipped(mob/user, slot)
-	if (slot != slot_l_hand && slot != slot_r_hand)
+	if (slot != SLOT_L_HAND && slot != SLOT_R_HAND)
 		stop_aim()
 		if (user.client)
 			user.client.remove_gun_icons()

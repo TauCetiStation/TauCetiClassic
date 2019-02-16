@@ -8,11 +8,13 @@
 	set name = "View Variables"
 	//set src in world
 
-
 	if(!usr.client || !usr.client.holder)
-		to_chat(usr, "\red You need to be an administrator to access this.")
+		to_chat(usr, "<span class='warning'>You need to be an administrator to access this.</span>")
 		return
 
+	if(!check_rights(R_DEBUG|R_VAREDIT|R_LOG)) // Since client.holder still doesn't mean we have permissions...
+		to_chat(usr, "<span class='warning'>You need to be an administrator to access this.</span>")
+		return
 
 	var/title = ""
 	var/body = ""
@@ -419,12 +421,12 @@ body
 	if(usr.client != src || !holder)
 		return
 	if(href_list["Vars"])
-		if(!check_rights(R_DEBUG|R_ADMIN))
+		if(!check_rights(R_DEBUG|R_VAREDIT))
 			return
 		debug_variables(locate(href_list["Vars"]))
 
 	else if(href_list["view_flags"])
-		if(!check_rights(R_DEBUG|R_ADMIN))
+		if(!check_rights(R_DEBUG|R_VAREDIT|R_LOG))
 			return
 		view_flags_variables(href_list["view_flags"])
 
