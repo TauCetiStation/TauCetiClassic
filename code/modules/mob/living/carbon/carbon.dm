@@ -18,9 +18,12 @@
 	if(.)
 		handle_phantom_move(NewLoc, Dir)
 		if(nutrition && stat != DEAD)
-			nutrition -= get_metabolism_factor() / 100
+			var/met_factor = get_metabolism_factor()
+			nutrition -= met_factor * 0.01
+			if(has_trait(TRAIT_STRESS_EATER))
+				nutrition -= met_factor * getHalLoss() * (m_intent == "run" ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
 			if(m_intent == "run")
-				nutrition -= get_metabolism_factor() / 100
+				nutrition -= met_factor * 0.01
 		if((FAT in mutations) && m_intent == "run" && bodytemperature <= 360)
 			bodytemperature += 2
 
@@ -736,6 +739,4 @@
 	return nutrition + (reagents.get_reagent("nutriment") + reagents.get_reagent("plantmatter") + reagents.get_reagent("protein") + reagents.get_reagent("dairy")) * 2.5 // We multiply by this "magic" number, because all of these are equal to 2.5 nutrition.
 
 /mob/living/carbon/get_metabolism_factor()
-	. = metabolism_factor // I do not know why before it was divided by 10 but I decided to preserve it until future reworking. ~Luduk
-	if(has_trait(TRAIT_STRESS_EATER))
-		. *= getHalLoss() / 10 // 100 is our Crit-maximum.
+	. = metabolism_factor
