@@ -173,8 +173,9 @@
 	..()
 	M.heal_bodypart_damage(0,3 * REM)
 	if(volume >= overdose && HUSK in M.mutations)
-		M.mutations.Remove(HUSK)
-		M.regenerate_icons()
+		var/mob/living/carbon/human/H = M
+		H.mutations.Remove(HUSK)
+		H.update_body()
 
 /datum/reagent/dexalin
 	name = "Dexalin"
