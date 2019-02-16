@@ -285,11 +285,11 @@
 					M.visible_message("<span class='notice'>[M] pats [src] on the head.</span>", \
 									"<span class='notice'>You pat [src] on the head.</span>", )
 				if(O_EYES)
-					M.visible_message("<span class='notice'>[M] looking into [src]'s eyes.</span>", \
+					M.visible_message("<span class='notice'>[M] looks into [src]'s eyes.</span>", \
 									"<span class='notice'>You look into [src]'s eyes.</span>", )
 				if(BP_GROIN)
-					M.visible_message("<span class='notice'>[M] does something strange with [src] to make [t_him] feel better!</span>", \
-									"<span class='notice'>You do something strange with [src] to make [t_him] feel better!</span>", )
+					M.visible_message("<span class='notice'>[M] does something to [src] to make [t_him] feel better!</span>", \
+									"<span class='notice'>You do something to [src] to make [t_him] feel better!</span>", )
 				else
 					M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
 									"<span class='notice'>You hug [src] to make [t_him] feel better!</span>")
