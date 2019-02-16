@@ -203,6 +203,11 @@
 		opening = 0
 		update_nearby_tiles()
 	else
+		var/turf/T = get_turf(src)
+		for(var/obj/O in T.contents)
+			if(O.density)
+				to_chat(user, "<span class='notice'>It won't budge!</span>")
+				return
 		opening = 1
 		icon_state = "r_wall"
 		flick("frwall_closing", src)
