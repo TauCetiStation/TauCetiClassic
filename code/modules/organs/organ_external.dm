@@ -1321,9 +1321,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 		name = "[H.real_name]'s head"
 
-		H.stat = DEAD
 		H.death()
-		brainmob.stat = DEAD
 		brainmob.death()
 		if(brainmob && brainmob.mind && brainmob.mind.changeling) //cuz fuck runtimes
 			var/datum/changeling/Host = brainmob.mind.changeling
