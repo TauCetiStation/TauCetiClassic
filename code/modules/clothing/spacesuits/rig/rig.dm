@@ -302,7 +302,7 @@
 
 	if(!istype(H)) return
 
-	if(slot == slot_wear_suit)
+	if(slot == SLOT_WEAR_SUIT)
 		wearer = H
 		update_overlays(wearer)
 		give_actions(wearer)
