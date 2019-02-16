@@ -172,6 +172,9 @@
 /datum/reagent/dermaline/on_general_digest(mob/living/M)
 	..()
 	M.heal_bodypart_damage(0,3 * REM)
+	if(volume >= overdose && HUSK in M.mutations)
+		M.mutations.Remove(HUSK)
+		M.regenerate_icons()
 
 /datum/reagent/dexalin
 	name = "Dexalin"
