@@ -326,6 +326,8 @@
 					user.remove_from_mob(src)
 			else
 				user.remove_from_mob(src)
+		else
+			user.remove_from_mob(src)
 	else
 		if(isliving(src.loc))
 			return
