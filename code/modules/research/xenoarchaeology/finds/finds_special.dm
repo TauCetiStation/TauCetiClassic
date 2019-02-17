@@ -340,7 +340,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 
 /obj/item/weapon/gun/projectile/revolver/organic/attack_self(mob/living/user)
 	if(get_ammo() < magazine.max_ammo)
-		if(isType(user, mob/living/carbon/human/H))
+		if(isType(user, /mob/living/carbon/human))
 			to_chat(user,"<span class='notice'><font color='blue'>You examined the [name] but you didn’t find how to reload it, and suddenly </font> <font color='red'> [name] bites you!</font></span>")
 			user.visible_message("<span class='userdanger'>[name] bite the [user]!</span>")
 			var/thirst = magazine.max_ammo - get_ammo()
