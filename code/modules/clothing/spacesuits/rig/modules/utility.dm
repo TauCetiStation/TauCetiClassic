@@ -366,14 +366,14 @@
 		charge.charges -= chargeuse
 		holder.repair_breaches(BRUTE, chargeuse, H, stop_messages = TRUE)
 
-		active_power_cost = chargeuse * 200
+		active_power_cost = chargeuse * 150
 	else if(holder.burn_damage && charge.charges > 0)
 		var/chargeuse = min(charge.charges, 3)
 
 		charge.charges -= chargeuse
 		holder.repair_breaches(BURN, chargeuse, H, stop_messages = TRUE)
 
-		active_power_cost = chargeuse * 200
+		active_power_cost = chargeuse * 150
 	else
 		deactivate()
 		to_chat(H, "<span class='danger'>Not enough materials to continue self-repair</span>")

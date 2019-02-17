@@ -125,14 +125,14 @@
 		message_class = message[2]
 		message_sound = message[3]
 		important_messages -= important_messages[1]
-		power_waste += 100
+		power_waste += 10 // beeping to the user shouldn't use much energy
 	else if(nonimportant_messages.len > 0)
 		var/list/message = nonimportant_messages[1]
 		message_text = message[1]
 		message_class = message[2]
 		message_sound = message[3]
 		nonimportant_messages -= list(message)
-		power_waste += 100
+		power_waste += 10
 	else
 		return power_waste
 

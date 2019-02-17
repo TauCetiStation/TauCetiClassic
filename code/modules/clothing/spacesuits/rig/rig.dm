@@ -87,7 +87,8 @@
 
 	var/mob/living/carbon/human/wearer // The person currently wearing the rig.
 	var/offline = 1
-	var/passive_energy_use = 5
+	var/passive_energy_use = 1
+	var/move_energy_use = 1
 
 	var/interface_title = "Hardsuit Controller"
 	var/interface_path = "hardsuit.tmpl"
@@ -118,6 +119,16 @@
 	QDEL_NULL(cell)
 	QDEL_LIST(installed_modules)
 	. = ..()
+
+/mob/living/carbon/proc/handle_rig_move(NewLoc, Dir)
+	if(!ishuman(src))
+		return
+	var/mob/living/carbon/human/H = src
+	var/obj/item/clothing/suit/space/rig/rig = H.wear_suit
+	if(!istype(rig))
+		return
+	if(!rig.offline)
+		rig.cell.use(rig.move_energy_use)
 
 /obj/item/clothing/suit/space/rig/proc/try_use(mob/living/user, cost, use_unconcious, use_stunned)
 
