@@ -775,11 +775,11 @@
 				to_chat(user, "<span class='notice bold'>You can not perform CPR on these species!</span>")
 				return
 			if(wear_mask && wear_mask.flags & MASKCOVERSMOUTH)
-				to_chat(user, "<span class='notice bold'>Remove [p_their()] [wear_mask]!</span>")
+				to_chat(user, "<span class='notice bold'>Remove [src] [wear_mask]!</span>")
 				return
 
 		if(head && head.flags & HEADCOVERSMOUTH)
-			to_chat(user, "<span class='notice bold'>Remove [p_their()] [head]!</span>")
+			to_chat(user, "<span class='notice bold'>Remove [src] [head]!</span>")
 			return
 
 		if (health > config.health_threshold_dead && health < config.health_threshold_crit)
@@ -802,7 +802,7 @@
 
 		if(item_to_add && get_slot_ref(slot))
 			if(item_to_add.w_class > ITEM_SIZE_SMALL)
-				to_chat(usr, "<span class='red'>[p_they(TRUE)] [p_are()] already wearing something. You need empty hand to take that off (or holding small item).</span>")
+				to_chat(usr, "<span class='red'>[src] is already wearing something. You need empty hand to take that off (or holding small item).</span>")
 				return
 			item_to_add = null
 
