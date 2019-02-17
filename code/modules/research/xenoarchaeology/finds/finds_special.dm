@@ -291,18 +291,14 @@ var/list/bad_messages = list("Never take me off, please!",\
 	icon_state = "peacemaker"
 	cooldown_low = 10
 	cooldown_high = 30
-	uses = -1
+	uses = 1
 
 /obj/item/gland/device/Inject(mob/living/carbon/human/target)
 	..()
 	Start()
 
 /obj/item/gland/device/activate()
-	var/turf/T = get_turf(host)
-	for(var/mob/living/simple_animal/hostile/M in orange(6,T))
-		if(!M.friends.Find(host))
-			M.friends.Add(host)
-			M.faction = "neutral"
+	host.faction = "mining"
 
 /obj/item/gland/device/examine(mob/user)
 	..()
