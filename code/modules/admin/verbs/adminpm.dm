@@ -113,7 +113,10 @@
 	var/recieve_message = ""
 
 	if(((src in mentors) || holder) && !C.holder)
-		recieve_message = "<font color='[recieve_color]' size='3'><b>-- [sanitize("Нажмите на имя [recieve_pm_type]'а для ответа")] --</b></font>\n"
+		if(config.rus_language)
+			recieve_message = "<font color='[recieve_color]' size='3'><b>-- Нажмите на им[JA_PLACEHOLDER] [recieve_pm_type]'а дл[JA_PLACEHOLDER] ответа --</b></font>\n"
+		else
+			recieve_message = "<font color='[recieve_color]' size='3'><b>-- Click the [recieve_pm_type]'s name to reply --</b></font>\n"
 		if(C.adminhelped)
 			to_chat(C, recieve_message)
 			C.adminhelped = 0
