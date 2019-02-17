@@ -258,7 +258,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 	volume = 15
 
 /obj/item/weapon/reagent_containers/hypospray/nanosyringe/atom_init()
-	. = ..()
+	..()
 	START_PROCESSING(SSobj, src)
 	reagents.add_reagent("mednanobots", 5)
 	flags &= ~OPENCONTAINER
@@ -293,8 +293,8 @@ var/list/bad_messages = list("Never take me off, please!",\
 	cooldown_high = 30
 	uses = -1
 
-/obj/item/gland/Inject(mob/living/carbon/human/target)
-	. = ..()
+/obj/item/gland/device/Inject(mob/living/carbon/human/target)
+	..()
 	Start()
 
 /obj/item/gland/device/activate()
