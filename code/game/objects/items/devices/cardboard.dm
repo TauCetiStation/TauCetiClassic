@@ -108,7 +108,7 @@
 			desc = "A cardboard cutout of a wizard."
 			icon_state = "cutout_wizard"
 		if("Shadowling")
-			name = "[pick("U'ruan", "Y`shej", "Nex", "Hel-uae", "Noaey'gief", "Mii`mahza", "Amerziox", "Gyrg-mylin", "Kanet'pruunance", "Vigistaezian")]"
+			name = pick(possibleShadowlingNames)
 			desc = "A cardboard cutout of a shadowling."
 			icon_state = "cutout_shadowling"
 		if("Xenomorph")
