@@ -248,3 +248,106 @@ var/list/bad_messages = list("Never take me off, please!",\
 		last_time_used = world.time
 	else
 		to_chat(user, "<span class='notice'><font color='red'>[bicon(src)]Device blinks faintly.</font></span>")
+
+/obj/item/weapon/reagent_containers/hypospray/nanosyringe
+	name = "alien med syringe"
+	desc = "Strong syringe made of steel and produce medical nanobots"
+	icon = 'icons/obj/xenoarchaeology.dmi'
+	item_state = "nanosyringe"
+	icon_state = "nanosyringe"
+	volume = 15
+
+/obj/item/weapon/reagent_containers/hypospray/nanosyringe/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+	reagents.add_reagent("mednanobots", 5)
+	flags &= ~OPENCONTAINER
+	update_icon()
+
+/obj/item/weapon/reagent_containers/hypospray/nanosyringe/process()
+	reagents.add_reagent("mednanobots", 0.1)
+	update_icon()
+
+/obj/item/weapon/reagent_containers/hypospray/nanosyringe/attack(mob/M, mob/user)
+	..()
+	update_icon()
+
+/obj/item/weapon/reagent_containers/hypospray/nanosyringe/update_icon()
+	if(reagents.total_volume >= 1 && reagents.total_volume < 5)
+		icon_state = "[initial(icon_state)]1"
+	else if (reagents.total_volume >= 5 && reagents.total_volume < 10)
+		icon_state = "[initial(icon_state)]5"
+	else if (reagents.total_volume >= 10 && reagents.total_volume < 15)
+		icon_state = "[initial(icon_state)]10"
+	else if (reagents.total_volume >= 15)
+		icon_state = "[initial(icon_state)]15"
+	else
+		icon_state = "[initial(icon_state)]0"
+
+/obj/item/gland/device
+	name = "peacemaker externel device"
+	desc = "Experimental device what was created for miners, so they can survive in hostile fauna."
+	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon_state = "peacemaker"
+	cooldown_low = 10
+	cooldown_high = 30
+	uses = -1
+
+/obj/item/gland/Inject(mob/living/carbon/human/target)
+	. = ..()
+	Start()
+
+/obj/item/gland/device/activate()
+	var/turf/T = get_turf(host)
+	for(var/mob/living/simple_animal/hostile/M in orange(6,T))
+		M.friends.Add(host)
+		M.faction = "neutral"
+
+/obj/item/gland/device/examine(mob/user)
+	..()
+	if(user.job == "Xenobiologist" || user.job == "Medical Doctor" || user.job == "Chief Medical Officer" || user.job == "Research Director")
+		to_chat(user,"<span class='notice'><font color='blue'>After examined [name], you realise that [name] made to be placed into living creature.</font></span>")
+
+/obj/item/ammo_casing/organic
+	desc = "A .Organic bullet casing."
+	caliber = "Organic"
+	projectile_type = "/obj/item/projectile/bullet/revbullet"
+
+/obj/item/ammo_box/magazine/internal/cylinder/organic
+	name = "organic revolver cylinder"
+	desc = "It's have it's own cylinder!"
+	ammo_type = /obj/item/ammo_casing/organic
+	caliber = "Organic"
+	max_ammo = 12
+
+/obj/item/weapon/gun/projectile/revolver/organic
+	name = "organic revolver"
+	desc = "Revolver made with organic parts, it's a living weapon."
+	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon_state = "revolver_organic"
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/organic
+
+/obj/item/weapon/gun/projectile/revolver/organic/chamber_round()
+	if (chambered || !magazine)
+		return
+	else if (magazine.ammo_count())
+		chambered = magazine.get_round(0)
+	return
+
+/obj/item/weapon/gun/projectile/revolver/organic/attack_self(mob/living/user)
+	if(get_ammo() < magazine.max_ammo)
+		to_chat(user,"<span class='notice'><font color='blue'>You examined the [name] but you didn’t find how to reload it, and suddenly </font> <font color='red'> [name] bites you!</font></span>")
+		user.visible_message("<span class='userdanger'>[name] bite the [user]!</span>")
+		var/thirst = magazine.max_ammo - get_ammo()
+		var/mob/living/carbon/human/H = user
+		var/obj/item/organ/external/arm = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
+		arm.take_damage(thirst)
+		H.nutrition -= rand(thirst * 2,thirst * 5)
+		var/obj/item/ammo_box/magazine/internal/cylinder/organic/ammo = new /obj/item/ammo_box/magazine/internal/cylinder/organic
+		magazine.attackby(ammo, user, 1)
+		chamber_round()
+		qdel(ammo)
+/obj/item/weapon/gun/projectile/revolver/organic/examine(mob/user)
+	..()
+	if(user.job == "Xenobiologist" || user.job == "Research Director")
+		to_chat(user,"<span class='notice'><font color='blue'>You start to examine a [name], and you suddenly realise, [name] it's living weapon with own fire system that consume host body and host nutrition.</font></span>")

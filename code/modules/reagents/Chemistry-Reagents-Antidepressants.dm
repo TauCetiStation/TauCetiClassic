@@ -8,6 +8,7 @@
 	color = "#bf80bf"
 	custom_metabolism = 0.01
 	data = 0
+	var/C = 0
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/antidepressant/methylphenidate/on_general_digest(mob/living/M)
@@ -15,10 +16,16 @@
 	if(volume <= 0.1 && data != -1)
 		data = -1
 		to_chat(M, "<span class='warning'>You lose focus..</span>")
+		if (C)
+			C = 0
+			M.mutations.Add(CLUMSY)
 	else
 		if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 			data = world.time
 			to_chat(M, "<span class='notice'>Your mind feels focused and undivided.</span>")
+			if(CLUMSY in M.mutations)
+				C = 1
+				M.mutations.Remove(CLUMSY)
 
 /datum/chemical_reaction/methylphenidate
 	name = "Methylphenidate"

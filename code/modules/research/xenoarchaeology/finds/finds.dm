@@ -100,7 +100,7 @@
 	if(new_item_type)
 		find_type = new_item_type
 	else
-		find_type = rand(1,36)	//update this when you add new find types
+		find_type = rand(1,40)	//update this when you add new find types
 
 	var/item_type = "object"
 	icon_state = "unknown[rand(1,4)]"
@@ -510,6 +510,32 @@
 			item_type = "strange device"
 			new_item = new /obj/item/weapon/strangetool(src.loc)
 			additional_desc = "This device is made of metal, emits a strange purple formation of unknown origin."
+			apply_image_decorations = 0
+			apply_material_decorations = 0
+		if(37)
+			apply_prefix = 0
+			item_type = "unknown device"
+			new_item = new /obj/item/weapon/lazarus_injector/alien(src.loc)
+			new_item.desc = "device, made of unknown materials, contain unknown purple liquid inside."
+			apply_image_decorations = 0
+			apply_material_decorations = 0
+		if(38)
+			apply_prefix = 0
+			item_type = "steel syringe"
+			new_item.desc = "strong syringe made of unknown material and containe green liquid inside"
+			new_item = new /obj/item/weapon/reagent_containers/hypospray/nanosyringe(src.loc)
+			apply_image_decorations = 0
+			apply_material_decorations = 0
+		if(39)
+			apply_prefix = 0
+			new_item = new /obj/item/gland/device(src.loc)
+			new_item.desc = "Metal device with green screen."
+			apply_image_decorations = 0
+			apply_material_decorations = 0
+		if(40)
+			apply_prefix = 0
+			new_item = new /obj/item/weapon/gun/projectile/revolver/organic(src.loc)
+			new_item.desc = "What has happened with this revolver?"
 			apply_image_decorations = 0
 			apply_material_decorations = 0
 	var/decorations = ""

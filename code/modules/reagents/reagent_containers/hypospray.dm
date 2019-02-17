@@ -41,6 +41,12 @@
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/cmo //We need "another" hypo for CMO
+	name = "advenced hypospray"
+	item_state = "Ahypo"
+	icon_state = "Ahypo"
+	volume = 50
+	possible_transfer_amounts = list(5,10)
+
 
 /obj/item/weapon/reagent_containers/hypospray/cmo/atom_init()
 	. = ..()

@@ -750,8 +750,78 @@
 			to_chat(mob, "<span class='warning'>[pick("You panic hearing so much random words.", "You can't understand what is going on with your head.")]</span>")
 		if(3)
 			mob.dna.check_integrity()
-			mob.dna.SetSEState(REMOTETALKBLOCK,1)
+			if(mob.dna.GetSEState(REMOTETALKBLOCK)!= 1)
+				mob.dna.SetSEState(REMOTETALKBLOCK,1)
 			domutcheck(mob, null)
+
+/datum/disease2/effect/telepathic/deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+	mob.dna.SetSEState(REMOTETALKBLOCK,0)
+
+/datum/disease2/effect/telekenesis
+	name = "Psychokinesis Syndrome"
+	desc = "The virus mutate host brain, giving host the psychic ability that allowing a person to influence a physical system without physical interaction."
+	level = 4
+	max_stage = 3
+	cooldown = 60
+
+/datum/disease2/effect/telekenesis/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+	switch(holder.stage)
+		if(1)
+			to_chat(mob, "<span class='notice'>[pick("You feel smarter.", "You feel more intellectual.", "Something is not right.")]</span>")
+		if(2)
+			to_chat(mob, "<span class='warning'>[pick("Your brain starts to throb.", "You can't understand what is going on with your brain.")]</span>")
+		if(3)
+			mob.dna.check_integrity()
+			if(mob.dna.GetSEState(TELEBLOCK)!= 1)
+				mob.dna.SetSEState(TELEBLOCK,1)
+			if(!(TK in mob.mutations))
+				mob.mutations.Add(TK)
+			domutcheck(mob, null)
+
+/datum/disease2/effect/telekenesis/deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+	mob.dna.SetSEState(TELEBLOCK,0)
+	mob.mutations.Remove(TK)
+
+/datum/disease2/effect/clown
+	name = "Clown Syndrome"
+	desc = "The virus damages the DNA of the host, creating an ugly creature, that was rejected by the humanity."
+	level = 3
+	max_stage = 2
+	cooldown = 40
+
+/datum/disease2/effect/clown/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder)
+	var/obj/item/clothing/mask/HONK = new /obj/item/clothing/mask/gas/clown_hat(usr)
+	var/mob/living/carbon/human/H = mob
+	HONK.canremove = 0
+	switch(holder.stage)
+		if(1)
+			to_chat(mob, "<span class='warning'>[pick("You feel lightheaded.","You feel coordination problems.","Something is not right.")]")
+			if(!(CLUMSY in mob.mutations))
+				mob.mutations.Add(CLUMSY)
+		if(2)
+			to_chat(mob, "<span class='warning'>[pick("You feel your true clownish nature.", "You want to make some jokes.")]</span>")
+			if(!istype(mob.wear_mask, HONK))
+				mob.visible_message("<span class='danger'>Clown mask bursts thru [mob]'s face!</span>")
+				mob.drop_from_inventory(mob.wear_mask)
+				mob.equip_to_slot_if_possible(HONK, slot_wear_mask)
+				H.speech_problem_flag = 1
+
+/datum/disease2/effect/clown/deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+	var/mob/living/carbon/human/H = mob
+	mob.mutations.Remove(CLUMSY)
+	H.speech_problem_flag = 0
+	mob.wear_mask.canremove = 1
+	mob.drop_from_inventory(mob.wear_mask)
+
+/datum/disease2/effect/concentration
+	name = "Concentration Syndrome"
+	desc = "The virus start to produce Methylphenidate in the host body, making the host more concentrated."
+	level = 1
+	max_stage = 1
+	cooldown = 40
+
+/datum/disease2/effect/concentration/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder)
+	mob.reagents.add_reagent("methylphenidate", 2)
 
 /datum/disease2/effect/mind
 	name = "Lazy Mind Syndrome"

@@ -221,6 +221,11 @@
 	item_state = "clown_hat"
 	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
+/obj/item/clothing/mask/gas/clown_hat/speechModification(message)
+	if(!canremove)
+		message = pick("HOOOOONK!", "HONK!", "HONK! HONK!")
+	return message
+
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy-clown wig and mask"
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
