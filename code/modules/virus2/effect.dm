@@ -803,7 +803,7 @@
 				mob.visible_message("<span class='danger'>Clown mask bursts thru [mob]'s face!</span>")
 				mob.drop_from_inventory(mob.wear_mask)
 				mob.equip_to_slot_if_possible(HONK, SLOT_WEAR_MASK)
-				if(isType(mob, mob/living/carbon/human))
+				if(isType(mob, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = mob
 					H.speech_problem_flag = 1
 
@@ -811,7 +811,7 @@
 	mob.mutations.Remove(CLUMSY)
 	mob.wear_mask.canremove = 1
 	mob.drop_from_inventory(mob.wear_mask)
-	if(isType(mob, mob/living/carbon/human))
+	if(isType(mob, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = mob
 		H.speech_problem_flag = 0
 
