@@ -340,17 +340,20 @@ var/list/bad_messages = list("Never take me off, please!",\
 
 /obj/item/weapon/gun/projectile/revolver/organic/attack_self(mob/living/user)
 	if(get_ammo() < magazine.max_ammo)
-		to_chat(user,"<span class='notice'><font color='blue'>You examined the [name] but you didnt find how to reload it, and suddenly </font> <font color='red'> [name] bites you!</font></span>")
-		user.visible_message("<span class='userdanger'>[name] bite the [user]!</span>")
-		var/thirst = magazine.max_ammo - get_ammo()
-		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/external/arm = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
-		arm.take_damage(thirst * 1.5)
-		H.nutrition -= rand(thirst * 2,thirst * 5)
-		var/obj/item/ammo_box/magazine/internal/cylinder/organic/ammo = new /obj/item/ammo_box/magazine/internal/cylinder/organic
-		magazine.attackby(ammo, user, 1)
-		chamber_round()
-		qdel(ammo)
+		if(isType(user, mob/living/carbon/human/H))
+		`	to_chat(user,"<span class='notice'><font color='blue'>You examined the [name] but you didn’t find how to reload it, and suddenly </font> <font color='red'> [name] bites you!</font></span>")
+			user.visible_message("<span class='userdanger'>[name] bite the [user]!</span>")
+			var/thirst = magazine.max_ammo - get_ammo()
+			var/mob/living/carbon/human/H = user
+			var/obj/item/organ/external/arm = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
+			arm.take_damage(thirst)
+			H.nutrition -= rand(thirst * 2,thirst * 5)
+			var/obj/item/ammo_box/magazine/internal/cylinder/organic/ammo = new /obj/item/ammo_box/magazine/internal/cylinder/organic
+			magazine.attackby(ammo, user, 1)
+			chamber_round()
+			qdel(ammo)
+		else
+			to_chat(user,"<span class='userdanger'>[name] start staring at you, menacing.</span>")
 /obj/item/weapon/gun/projectile/revolver/organic/examine(mob/user)
 	..()
 	if(user.job == "Xenobiologist" || user.job == "Research Director")
