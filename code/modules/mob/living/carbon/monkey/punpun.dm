@@ -13,7 +13,7 @@
 /mob/living/carbon/monkey/punpun/atom_init()
 	Read_Memory()
 	if(relic_mask)
-		equip_to_slot_or_del(new relic_mask, slot_wear_mask)
+		equip_to_slot_or_del(new relic_mask, SLOT_WEAR_MASK)
 	if(ancestor_name)
 		name = ancestor_name
 		if(ancestor_chain > 1)

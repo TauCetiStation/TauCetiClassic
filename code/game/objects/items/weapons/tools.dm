@@ -20,7 +20,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "wrench_map"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
 	throwforce = 7.0
 	w_class = 2.0
@@ -66,7 +66,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "screwdriver_map"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
 	w_class = 1.0
 	throwforce = 5.0
@@ -133,7 +133,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "cutters_map"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 6.0
 	throw_speed = 2
 	throw_range = 9
@@ -189,10 +189,11 @@
  */
 /obj/item/weapon/weldingtool
 	name = "welding tool"
+	desc = "Apply the hot spot to the metal."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "welder"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	action_button_name = "Switch Welding tool"
 
 	//Amount of OUCH when it's thrown
@@ -272,6 +273,7 @@
 	switch(welding)
 		//If off
 		if(0)
+			hitsound = initial(hitsound)
 			if(src.icon_state != "welder") //Check that the sprite is correct, if it isnt, it means toggle() was not called
 				src.force = 3
 				src.damtype = "brute"
@@ -283,6 +285,7 @@
 			return
 		//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
+			hitsound = 'sound/items/Welder2.ogg'
 			if(src.icon_state != "welder1") //Check that the sprite is correct, if it isnt, it means toggle() was not called
 				src.force = 15
 				src.damtype = "fire"
@@ -524,7 +527,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "crowbar"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
 	throwforce = 7.0
 	item_state = "crowbar"

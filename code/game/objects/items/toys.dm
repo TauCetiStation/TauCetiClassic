@@ -128,7 +128,7 @@
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 	flags =  CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	w_class = 3.0
 	g_amt = 10
 	m_amt = 10
@@ -354,7 +354,7 @@
 	icon_state = "katana"
 	item_state = "katana"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT | SLOT_BACK
+	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 	force = 5
 	throwforce = 5
 	w_class = 3
@@ -581,7 +581,7 @@
 	icon_state = "katana"
 	item_state = "katana"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT | SLOT_BACK
+	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 	force = 5
 	throwforce = 5
 	w_class = 3
@@ -594,7 +594,7 @@
 	desc = "This baby looks almost real. Wait, did it just burp?"
 	force = 5
 	w_class = 4.0
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 */
 
 //This should really be somewhere else but I don't know where. w/e
@@ -604,7 +604,7 @@
 	icon_state = "inflatable"
 	item_state = "inflatable"
 	icon = 'icons/obj/clothing/belts.dmi'
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 
 /*
  * Action Figures
@@ -1049,7 +1049,7 @@ Owl & Griffin toys
 		return
 	var/mob/living/carbon/human/cardUser = usr
 	if(href_list["pick"])
-		if (cardUser.get_item_by_slot(slot_l_hand) == src || cardUser.get_item_by_slot(slot_r_hand) == src)
+		if (cardUser.get_item_by_slot(SLOT_L_HAND) == src || cardUser.get_item_by_slot(SLOT_R_HAND) == src)
 			var/choice = href_list["pick"]
 			var/obj/item/toy/singlecard/C = new/obj/item/toy/singlecard(cardUser.loc)
 			src.currenthand -= choice
@@ -1116,7 +1116,7 @@ Owl & Griffin toys
 	..()
 	if(src in user && ishuman(user))
 		var/mob/living/carbon/human/cardUser = user
-		if(cardUser.get_item_by_slot(slot_l_hand) == src || cardUser.get_item_by_slot(slot_r_hand) == src)
+		if(cardUser.get_item_by_slot(SLOT_L_HAND) == src || cardUser.get_item_by_slot(SLOT_R_HAND) == src)
 			cardUser.visible_message("<span class='notice'>[cardUser] checks \his card.</span>", "<span class='notice'>The card reads: [src.cardname]</span>")
 		else
 			to_chat(cardUser, "<span class='notice'>You need to have the card in your hand to check it.</span>")

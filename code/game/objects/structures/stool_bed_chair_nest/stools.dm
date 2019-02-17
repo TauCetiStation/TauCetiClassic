@@ -70,6 +70,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "stool"
 	force = 10
+	hitsound = 'sound/items/chair_fall.ogg'
 	throwforce = 10
 	w_class = 5.0
 	var/obj/structure/stool/origin_stool = null

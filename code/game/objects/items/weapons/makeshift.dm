@@ -5,7 +5,7 @@
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 10
 	w_class = 4.0
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	force_unwielded = 10
 	force_wielded = 18 // Was 13, Buffed - RR
 	throwforce = 15

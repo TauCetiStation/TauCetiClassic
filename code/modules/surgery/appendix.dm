@@ -31,7 +31,6 @@
 	max_duration = 90
 
 /datum/surgery_step/appendectomy/cut_appendix/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
 	return ..() && target.op_stage.appendix == 0
 
 /datum/surgery_step/appendectomy/cut_appendix/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -62,7 +61,6 @@
 	max_duration = 80
 
 /datum/surgery_step/appendectomy/remove_appendix/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
 	return ..() && target.op_stage.appendix == 1
 
 /datum/surgery_step/appendectomy/remove_appendix/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

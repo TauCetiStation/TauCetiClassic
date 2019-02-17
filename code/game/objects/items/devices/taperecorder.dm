@@ -206,6 +206,7 @@
 		t1 += "[storedinfo[i]]<BR>"
 	P.info = t1
 	P.name = "Transcript"
+	P.update_icon()
 	canprint = 0
 	sleep(300)
 	canprint = 1

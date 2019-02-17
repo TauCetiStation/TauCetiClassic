@@ -176,13 +176,13 @@
 /mob/living/carbon/ian/proc/get_slot_id(slot)
 	switch(slot)
 		if("Head")
-			return slot_head
+			return SLOT_HEAD
 		if("Mouth")
-			return slot_mouth
+			return SLOT_MOUTH
 		if("Neck")
-			return slot_neck
+			return SLOT_NECK
 		if("Back")
-			return slot_back
+			return SLOT_BACK
 
 /mob/living/carbon/ian/equip_to_slot(obj/item/W, slot, redraw_mob = 1)
 	if(!slot)
@@ -199,23 +199,23 @@
 	W.loc = src
 
 	switch(slot)
-		if(slot_head)
+		if(SLOT_HEAD)
 			if(istype(W, /obj/item/clothing/mask/facehugger))
 				facehugger = TRUE
 			head = W
 			W.equipped(src, slot)
 			update_inv_head()
-		if(slot_mouth)
+		if(SLOT_MOUTH)
 			mouth = W
 			W.equipped(src, slot)
 			update_inv_mouth()
-		if(slot_neck)
+		if(SLOT_NECK)
 			if(istype(W, /obj/item/weapon/handcuffs))
 				handcuffed = W
 			neck = W
 			W.equipped(src, slot)
 			update_inv_neck()
-		if(slot_back)
+		if(SLOT_BACK)
 			back = W
 			W.equipped(src, slot)
 			update_inv_back()
@@ -241,7 +241,7 @@
 		W.layer = ABOVE_HUD_LAYER
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
-		W.equipped(src,slot_mouth)
+		W.equipped(src,SLOT_MOUTH)
 		if(client)
 			client.screen |= W
 		if(pulling == W)

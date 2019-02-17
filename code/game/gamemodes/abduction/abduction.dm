@@ -207,10 +207,10 @@
 	var/radio_freq = SYND_FREQ
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate/alt(agent)
 	R.set_frequency(radio_freq)
-	agent.equip_to_slot_or_del(R, slot_l_ear)
-	agent.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(agent), slot_shoes)
-	agent.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(agent), slot_w_uniform) //they're greys gettit
-	agent.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(agent), slot_back)
+	agent.equip_to_slot_or_del(R, SLOT_L_EAR)
+	agent.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(agent), SLOT_SHOES)
+	agent.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(agent), SLOT_W_UNIFORM) //they're greys gettit
+	agent.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(agent), SLOT_BACK)
 
 /datum/game_mode/abduction/proc/get_team_console(team)
 	var/obj/machinery/abductor/console/console
@@ -228,11 +228,11 @@
 	var/obj/item/clothing/suit/armor/abductor/vest/V = new /obj/item/clothing/suit/armor/abductor/vest(agent)
 	if(console!=null)
 		console.vest = V
-	agent.equip_to_slot_or_del(V, slot_wear_suit)
-	agent.equip_to_slot_or_del(new /obj/item/weapon/abductor_baton(agent), slot_in_backpack)
-	agent.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/decloner/alien(agent), slot_belt)
-	agent.equip_to_slot_or_del(new /obj/item/device/abductor/silencer(agent), slot_in_backpack)
-	agent.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/abductor(agent), slot_head)
+	agent.equip_to_slot_or_del(V, SLOT_WEAR_SUIT)
+	agent.equip_to_slot_or_del(new /obj/item/weapon/abductor_baton(agent), SLOT_IN_BACKPACK)
+	agent.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/decloner/alien(agent), SLOT_BELT)
+	agent.equip_to_slot_or_del(new /obj/item/device/abductor/silencer(agent), SLOT_IN_BACKPACK)
+	agent.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/abductor(agent), SLOT_HEAD)
 
 /datum/game_mode/abduction/proc/equip_scientist(mob/living/carbon/human/scientist,team_number)
 	if(!team_number)
@@ -243,7 +243,7 @@
 	if(console!=null)
 		console.gizmo = G
 		G.console = console
-	scientist.equip_to_slot_or_del(G, slot_in_backpack)
+	scientist.equip_to_slot_or_del(G, SLOT_IN_BACKPACK)
 	var/obj/item/weapon/implant/abductor/beamplant = new /obj/item/weapon/implant/abductor(scientist)
 	beamplant.imp_in = scientist
 	beamplant.implanted = 1
