@@ -308,10 +308,14 @@ var/list/bad_messages = list("Never take me off, please!",\
 	if(user.job == "Xenobiologist" || user.job == "Medical Doctor" || user.job == "Chief Medical Officer" || user.job == "Research Director")
 		to_chat(user,"<span class='notice'><font color='blue'>After examined [name], you realise that [name] made to be placed into living creature.</font></span>")
 
+/obj/item/projectile/bullet/organic
+	damage = 30
+	stoping_power = 3
+	
 /obj/item/ammo_casing/organic
 	desc = "a Organic bullet casing."
 	caliber = "Organic"
-	projectile_type = "/obj/item/projectile/bullet/revbullet"
+	projectile_type = "/obj/item/projectile/bullet/organic"
 
 /obj/item/ammo_box/magazine/internal/cylinder/organic
 	name = "organic revolver cylinder"
@@ -336,12 +340,12 @@ var/list/bad_messages = list("Never take me off, please!",\
 
 /obj/item/weapon/gun/projectile/revolver/organic/attack_self(mob/living/user)
 	if(get_ammo() < magazine.max_ammo)
-		to_chat(user,"<span class='notice'><font color='blue'>You examined the [name] but you didn’t find how to reload it, and suddenly </font> <font color='red'> [name] bites you!</font></span>")
+		to_chat(user,"<span class='notice'><font color='blue'>You examined the [name] but you didnÂ’t find how to reload it, and suddenly </font> <font color='red'> [name] bites you!</font></span>")
 		user.visible_message("<span class='userdanger'>[name] bite the [user]!</span>")
 		var/thirst = magazine.max_ammo - get_ammo()
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/external/arm = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
-		arm.take_damage(thirst)
+		arm.take_damage(thirst * 1.5)
 		H.nutrition -= rand(thirst * 2,thirst * 5)
 		var/obj/item/ammo_box/magazine/internal/cylinder/organic/ammo = new /obj/item/ammo_box/magazine/internal/cylinder/organic
 		magazine.attackby(ammo, user, 1)
