@@ -756,6 +756,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			show_inv(usr)
 
 	if (href_list["bandages"] && usr.CanUseTopicInventory(src))
+		if(stat == DEAD)
+			to_chat(usr, "<span class='notice'>There is no point in doing so with the dead body.</span>")
+			return
+
 		var/list/wounds
 
 		for(var/obj/item/organ/external/BP in bodyparts)
