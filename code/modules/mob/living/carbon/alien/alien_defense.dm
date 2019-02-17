@@ -208,7 +208,7 @@ This is what happens, when we attack aliens.
 		else
 			damage = rand(5, 35)
 
-		M.do_attack_animation(src, ATTACK_EFFECT_SLIME)
+		M.do_attack_animation(src)
 		adjustBruteLoss(damage)
 
 		if(M.powerlevel > 0)

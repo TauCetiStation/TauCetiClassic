@@ -63,7 +63,7 @@
 /obj/structure/grille/attack_slime(mob/user)
 	if(!istype(user, /mob/living/carbon/slime/adult))	return
 	user.SetNextMove(CLICK_CD_MELEE)
-	user.do_attack_animation(src, ATTACK_EFFECT_SLIME)
+	user.do_attack_animation(src)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] smashes against [src].</span>", \
 						 "<span class='warning'>You smash against [src].</span>", \

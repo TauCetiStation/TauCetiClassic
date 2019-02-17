@@ -17,7 +17,6 @@
 		V.attack_reaction(src, REACTION_ATACKED, M)
 
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
-		M.do_attack_animation(src)
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
 			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
@@ -44,9 +43,11 @@
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 					s.set_up(3, 1, target)
 					s.start()
+					M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 					return 1
 				else
 					to_chat(M, "\red Not enough charge! ")
+					M.do_attack_animation(src, no_effect = 1)
 					visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
 				return
 
@@ -65,7 +66,7 @@
 				damage += 5
 
 			playsound(loc, "punch", 25, 1, -1)
-
+			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			visible_message("\red <B>[M] has punched [src]!</B>")
 
 			apply_damage(damage, HALLOSS, BP, armor_block)
@@ -103,6 +104,7 @@
 				O.t_loc = loc
 				O.place = "CPR"
 				requests += O
+				M.do_attack_animation(src, no_effect = 1)
 				spawn(0)
 					O.process()
 				return 1
@@ -130,6 +132,7 @@
 			G.synch()
 			LAssailant = M
 
+			M.do_attack_animation(src, ATTACK_EFFECT_GRAB)
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			visible_message("<span class='warning'>[M] has grabbed [src] passively!</span>")
 			return 1

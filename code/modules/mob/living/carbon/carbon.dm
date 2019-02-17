@@ -281,6 +281,7 @@
 				M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
 								"<span class='notice'>You hug [src] to make [t_him] feel better!</span>")
 
+			M.do_attack_animation(src, ATTACK_EFFECT_HELP)
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
 			AdjustWeakened(-3)
@@ -426,7 +427,7 @@
 		if(istype(item, /obj/item))
 			var/obj/item/O = item
 			if(O.w_class >= ITEM_SIZE_NORMAL)
-				playsound(loc, 'sound/weapons/punchmiss.ogg', 50, 1, -1)
+				playsound(loc, 'sound/weapons/punchmiss.ogg', 20, 1, -1)
 
 		do_attack_animation(target, no_effect = 1)
 

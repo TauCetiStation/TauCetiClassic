@@ -301,7 +301,7 @@
 		else
 			damage = rand(1, 3)
 
-		M.do_attack_animation(src, ATTACK_EFFECT_SLIME)
+		M.do_attack_animation(src)
 		adjustBruteLoss(damage)
 
 
@@ -1131,3 +1131,10 @@
 		return
 	else
 		..()
+
+/mob/living/carbon/slime/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, slime_color)
+	if(!no_effect && !visual_effect_icon)
+		visual_effect_icon = ATTACK_EFFECT_SLIME
+	if(!slime_color)
+		slime_color = src.colour
+	..()

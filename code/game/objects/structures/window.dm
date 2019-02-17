@@ -164,19 +164,18 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
-		user.do_attack_animation(src, no_effect = 1) // no_effect cause overlays are colored under the glass
+		user.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 		take_damage(rand(15,25), "generic")
 	else if(user.dna && user.dna.mutantrace == "adamantine")
-		user.do_attack_animation(src, no_effect = 1) // no_effect cause overlays are colored under the glass
+		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 		take_damage(rand(15,25), "generic")
 	else if (user.a_intent == "hurt")
-		user.do_attack_animation(src, no_effect = 1) // no_effect cause overlays are colored under the glass
+		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
 		user.visible_message("<span class='danger'>[usr.name] bangs against the [src.name]!</span>", \
 							"<span class='danger'>You bang against the [src.name]!</span>", \
 							"You hear a banging sound.")
 	else
-		user.do_attack_animation(src, no_effect = 1) // no_effect cause overlays are colored under the glass
 		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
 		user.visible_message("[usr.name] knocks on the [src.name].", \
 							"You knock on the [src.name].", \
@@ -195,7 +194,7 @@
 		take_damage(damage, "generic")
 	else
 		visible_message("<span class='notice'>\The [user] bonks \the [src] harmlessly.</span>")
-	user.do_attack_animation(src,  no_effect = 1) // no_effect cause overlays are colored under the glass
+	user.do_attack_animation(src)
 	return 1
 
 

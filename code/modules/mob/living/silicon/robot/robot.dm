@@ -868,7 +868,7 @@
 		else
 			damage = rand(5, 35)
 
-		M.do_attack_animation(src, ATTACK_EFFECT_SLIME)
+		M.do_attack_animation(src)
 		damage = round(damage / 2) // borgs recieve half damage
 		adjustBruteLoss(damage)
 

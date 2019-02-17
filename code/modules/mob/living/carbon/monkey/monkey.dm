@@ -188,12 +188,12 @@
 		help_shake_act(M)
 	else
 		if ((M.a_intent == "hurt" && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
-			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			if ((prob(75) && health > 0))
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					O.show_message("\red <B>[M.name] has bit [name]!</B>", 1)
 				var/damage = rand(1, 5)
+				M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 				adjustBruteLoss(damage)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 				for(var/datum/disease/D in M.viruses)
@@ -236,16 +236,17 @@
 
 	if (M.a_intent == "help")
 		help_shake_act(M)
+		M.do_attack_animation(src, ATTACK_EFFECT_HELP)
 		get_scooped(M)
 	else
 		if (M.a_intent == "hurt")
-			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			if ((prob(75) && health > 0))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has punched [name]!</B>", M), 1)
 
 				playsound(loc, "punch", 25, 1, -1)
+				M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 				var/damage = rand(5, 10)
 				if (prob(40))
 					damage = rand(10, 15)
@@ -276,12 +277,13 @@
 				G.synch()
 
 				LAssailant = M
-
+				M.do_attack_animation(src, ATTACK_EFFECT_GRAB)
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					O.show_message(text("\red [] has grabbed [name] passively!", M), 1)
 			else
 				if (!( paralysis ))
+					M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 					if (prob(25))
 						Paralyse(2)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
@@ -314,6 +316,7 @@
 		if ("hurt")
 			if ((prob(95) && health > 0))
 				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+				M.do_attack_animation(src, ATTACK_EFFECT_CLAW)
 				var/damage = rand(15, 30)
 				if (damage >= 25)
 					damage = rand(20, 40)
@@ -352,6 +355,7 @@
 
 		if ("disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+			M.do_attack_animation(src, ATTACK_EFFECT_CLAW)
 			var/damage = 5
 			if(prob(95))
 				Weaken(15)
@@ -380,6 +384,7 @@
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
+		M.do_attack_animation(src)
 		updatehealth()
 
 
@@ -391,7 +396,6 @@
 	if(M.Victim) return // can't attack while eating!
 
 	if (health > -100)
-
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
 				O.show_message(text("\red <B>The [M.name] glomps []!</B>", src), 1)
@@ -403,7 +407,7 @@
 		else
 			damage = rand(5, 35)
 
-		M.do_attack_animation(src, ATTACK_EFFECT_SLIME)
+		M.do_attack_animation(src)
 		adjustBruteLoss(damage)
 
 		if(M.powerlevel > 0)

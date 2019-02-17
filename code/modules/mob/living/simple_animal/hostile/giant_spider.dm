@@ -93,6 +93,11 @@
 					stop_automated_movement = 0
 					walk(src,0)
 
+/mob/living/simple_animal/hostile/giant_spider/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
+	if(!no_effect)
+		visual_effect_icon = ATTACK_EFFECT_BITE
+	..()
+
 /mob/living/simple_animal/hostile/giant_spider/nurse/proc/GiveUp(C)
 	spawn(100)
 		if(busy == MOVING_TO_TARGET)

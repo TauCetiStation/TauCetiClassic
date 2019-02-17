@@ -90,7 +90,7 @@
 	if(!isslimeadult(user))
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
-	user.do_attack_animation(src, ATTACK_EFFECT_SLIME)
+	user.do_attack_animation(src)
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return

@@ -30,6 +30,7 @@
 	Animals & All Unspecified
 */
 /atom/proc/attack_animal(mob/user)
+	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE) // animals only punching things.
 
 /mob/living/simple_animal/UnarmedAttack(atom/A)

@@ -117,7 +117,7 @@
 	if(!isslimeadult(user))
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
-	user.do_attack_animation(src, ATTACK_EFFECT_SLIME)
+	user.do_attack_animation(src)
 	attack_generic(user, rand(10, 15))
 
 

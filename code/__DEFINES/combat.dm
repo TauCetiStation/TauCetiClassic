@@ -23,6 +23,8 @@
 #define DROWSY    "drowsy"
 
 // Attack visual effects
+#define ATTACK_EFFECT_HELP		"help"
+#define ATTACK_EFFECT_GRAB		"grab"
 #define ATTACK_EFFECT_PUNCH		"punch"
 #define ATTACK_EFFECT_BITE		"bite"
 #define ATTACK_EFFECT_SMASH		"smash"

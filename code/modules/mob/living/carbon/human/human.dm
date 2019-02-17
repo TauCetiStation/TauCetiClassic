@@ -318,7 +318,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
 		var/armor_block = run_armor_check(BP, "melee")
 
-		M.do_attack_animation(src, ATTACK_EFFECT_SLIME)
+		M.do_attack_animation(src)
 		apply_damage(damage, BRUTE, BP, armor_block)
 
 

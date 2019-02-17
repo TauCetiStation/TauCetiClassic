@@ -331,9 +331,9 @@
 		return 1
 	return ..()
 
-/atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
+/atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, slime_color)
 	if(!no_effect && (visual_effect_icon || used_item))
-		do_item_attack_animation(A, visual_effect_icon, used_item)
+		do_item_attack_animation(A, visual_effect_icon, used_item, slime_color)
 
 	if(A == src)
 		return // don't do an animation if attacking self
@@ -358,33 +358,81 @@
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, transform = M, time = 2)
 	animate(src, pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, transform = OM, time = 2)
 
-/atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item)
+/atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, slime_color)
 	var/image/I
+	var/ticks_visible = 5 // 5 ticks/half a second
+	var/ticks_animate = 3
+	var/alpha_animate = 125
 	if(visual_effect_icon)
 		I = image('icons/effects/effects.dmi', A, visual_effect_icon, A.layer + 0.1)
+		ticks_visible = 6
+		ticks_animate = 4
+		alpha_animate = 255
+		if(slime_color)
+			switch(slime_color)
+				if("grey")
+					I.color = COLOR_GRAY
+				if("purple")
+					I.color = COLOR_PURPLE
+				if("metal")
+					I.color = COLOR_GRAY40
+				if("orange")
+					I.color = COLOR_ORANGE
+				if("blue")
+					I.color = COLOR_BLUE
+				if("dark blue")
+					I.color = COLOR_DEEP_SKY_BLUE
+				if("dark purple")
+					I.color = "#6B2B63"
+				if("yellow")
+					I.color = COLOR_YELLOW
+				if("silver")
+					I.color = COLOR_GRAY
+				if("pink")
+					I.color = COLOR_PINK
+				if("red")
+					I.color = COLOR_RED
+				if("gold")
+					I.color = COLOR_YELLOW
+				if("green")
+					I.color = COLOR_GREEN
+				if("light pink")
+					I.color = "#FF87FF"
+				if("oil")
+					I.color = COLOR_BLACK
+				if("black")
+					I.color = COLOR_BLACK
+				if("adamantine")
+					I.color = "#269999"
+				if("bluespace")
+					I.color = COLOR_WHITE
 	else if(used_item)
 		I = image(icon = used_item, loc = A, layer = A.layer + 0.1)
-		I.plane = GAME_PLANE
 
 		// Scale the icon.
 		I.transform *= 0.75
-		// The icon should not rotate.
-		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	// The icon should not rotate.
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 
-		// Set the direction of the icon animation.
-		var/direction = get_dir(src, A)
-		if(direction & NORTH)
-			I.pixel_y = -16
-		else if(direction & SOUTH)
-			I.pixel_y = 16
+	// Set the direction of the icon animation.
+	I.plane = GAME_PLANE
+	var/direction = get_dir(src, A)
+	if(direction & NORTH)
+		I.pixel_y = -16
+		I.dir = NORTH
+	else if(direction & SOUTH)
+		I.pixel_y = 16
+		I.dir = SOUTH
+	if(direction & EAST)
+		I.pixel_x = -16
+		I.dir = EAST
+	else if(direction & WEST)
+		I.pixel_x = 16
+		I.dir = WEST
 
-		if(direction & EAST)
-			I.pixel_x = -16
-		else if(direction & WEST)
-			I.pixel_x = 16
-
-		if(!direction) // Attacked self?!
-			I.pixel_z = 16
+	if(!direction) // Attacked self?!
+		I.pixel_z = 16
+		I.dir = SOUTH
 
 	if(!I)
 		return
@@ -392,7 +440,7 @@
 	for(var/mob/M in viewers(A))
 		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
 			viewing += M.client
-	flick_overlay(I, viewing, 5) // 5 ticks/half a second
+	flick_overlay(I, viewing, ticks_visible)
 
 	// And animate the attack!
-	animate(I, alpha = 125, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
+	animate(I, alpha = alpha_animate, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = ticks_animate)
