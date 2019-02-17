@@ -300,8 +300,9 @@ var/list/bad_messages = list("Never take me off, please!",\
 /obj/item/gland/device/activate()
 	var/turf/T = get_turf(host)
 	for(var/mob/living/simple_animal/hostile/M in orange(6,T))
-		M.friends.Add(host)
-		M.faction = "neutral"
+		if(!M.friends.Find(host))
+			M.friends.Add(host)
+			M.faction = "neutral"
 
 /obj/item/gland/device/examine(mob/user)
 	..()
