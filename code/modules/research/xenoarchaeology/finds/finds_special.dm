@@ -309,7 +309,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 		to_chat(user,"<span class='notice'><font color='blue'>After examined [name], you realise that [name] made to be placed into living creature.</font></span>")
 
 /obj/item/ammo_casing/organic
-	desc = "A .Organic bullet casing."
+	desc = "a Organic bullet casing."
 	caliber = "Organic"
 	projectile_type = "/obj/item/projectile/bullet/revbullet"
 
