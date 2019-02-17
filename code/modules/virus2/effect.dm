@@ -791,7 +791,6 @@
 
 /datum/disease2/effect/clown/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder)
 	var/obj/item/clothing/mask/HONK = new /obj/item/clothing/mask/gas/clown_hat(usr)
-	var/mob/living/carbon/human/H = mob
 	HONK.canremove = 0
 	switch(holder.stage)
 		if(1)
@@ -804,14 +803,17 @@
 				mob.visible_message("<span class='danger'>Clown mask bursts thru [mob]'s face!</span>")
 				mob.drop_from_inventory(mob.wear_mask)
 				mob.equip_to_slot_if_possible(HONK, SLOT_WEAR_MASK)
-				H.speech_problem_flag = 1
+				if(isType(mob, mob/living/carbon/human))
+					var/mob/living/carbon/human/H = mob
+					H.speech_problem_flag = 1
 
 /datum/disease2/effect/clown/deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	var/mob/living/carbon/human/H = mob
 	mob.mutations.Remove(CLUMSY)
-	H.speech_problem_flag = 0
 	mob.wear_mask.canremove = 1
 	mob.drop_from_inventory(mob.wear_mask)
+	if(isType(mob, mob/living/carbon/human))
+		var/mob/living/carbon/human/H = mob
+		H.speech_problem_flag = 0
 
 /datum/disease2/effect/concentration
 	name = "Concentration Syndrome"
