@@ -803,7 +803,7 @@
 			if(!istype(mob.wear_mask, HONK))
 				mob.visible_message("<span class='danger'>Clown mask bursts thru [mob]'s face!</span>")
 				mob.drop_from_inventory(mob.wear_mask)
-				mob.equip_to_slot_if_possible(HONK, slot_wear_mask)
+				mob.equip_to_slot_if_possible(HONK, SLOT_WEAR_MASK)
 				H.speech_problem_flag = 1
 
 /datum/disease2/effect/clown/deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
