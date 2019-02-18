@@ -289,15 +289,9 @@ var/list/bad_messages = list("Never take me off, please!",\
 	desc = "Experimental device what was created for miners, so they can survive in hostile fauna."
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "peacemaker"
-	cooldown_low = 10
-	cooldown_high = 30
-	uses = 1
 
 /obj/item/gland/device/Inject(mob/living/carbon/human/target)
 	..()
-	Start()
-
-/obj/item/gland/device/activate()
 	host.faction = "mining"
 
 /obj/item/gland/device/examine(mob/user)
@@ -345,10 +339,9 @@ var/list/bad_messages = list("Never take me off, please!",\
 			var/obj/item/organ/external/arm = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
 			arm.take_damage(thirst)
 			H.nutrition -= rand(thirst * 2,thirst * 5)
-			var/obj/item/ammo_box/magazine/internal/cylinder/organic/ammo = new /obj/item/ammo_box/magazine/internal/cylinder/organic
-			magazine.attackby(ammo, user, 1)
+			for(var/i in 1 to thirst)
+				magazine.give_round(new magazine.ammo_type)
 			chamber_round()
-			qdel(ammo)
 		else
 			to_chat(user,"<span class='userdanger'>[name] start staring at you, menacing.</span>")
 /obj/item/weapon/gun/projectile/revolver/organic/examine(mob/user)
