@@ -254,6 +254,10 @@
 	else if(!client && brain_op_stage != 4 && stat != DEAD)
 		msg += "[t_He] [t_has] suddenly fallen asleep.\n"
 
+	if(l_hand && (l_hand == /obj/item/weapon/changeling_whip || l_hand == /obj/item/weapon/shield/changeling || l_hand == /obj/item/weapon/melee/arm_blade || l_hand == /obj/item/weapon/changeling_hammer))
+		msg += "<span class='warning'>[t_He] [t_has] [l_hand] instead of his left arm!</span>\n"
+	if(r_hand && (r_hand == /obj/item/weapon/changeling_whip || r_hand == /obj/item/weapon/shield/changeling || r_hand == /obj/item/weapon/melee/arm_blade || r_hand == /obj/item/weapon/changeling_hammer))
+		msg += "<span class='warning'>[t_He] [t_has] [l_hand] instead of his right arm!</span>\n"
 	var/list/wound_flavor_text = list()
 	var/list/is_destroyed = list()
 	var/list/is_bleeding = list()

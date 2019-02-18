@@ -379,6 +379,45 @@ var/list/slot_equipment_priority = list(
 
 	return items
 
+/mob/proc/get_worn_items()
+	return null
+
+/mob/living/carbon/get_worn_items()
+	var/list/items = list()
+
+	if(back)
+		items += back
+	if(wear_mask)
+		items += wear_mask
+
+	return items
+
+/mob/living/carbon/human/get_worn_items()
+	var/list/items = ..()
+
+	if(belt)
+		items += belt
+	if(l_ear)
+		items += l_ear
+	if(r_ear)
+		items += r_ear
+	if(glasses)
+		items += glasses
+	if(gloves)
+		items += gloves
+	if(head)
+		items += head
+	if(shoes)
+		items += shoes
+	if(wear_id)
+		items += wear_id
+	if(wear_suit)
+		items += wear_suit
+	if(w_uniform)
+		items += w_uniform
+
+	return items
+
 //Create delay for equipping
 /mob/proc/delay_clothing_u_equip(obj/item/clothing/C) // Bone White - delays unequipping by parameter.  Requires W to be /obj/item/clothing/
 
