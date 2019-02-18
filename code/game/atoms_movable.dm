@@ -365,7 +365,10 @@
 	var/alpha_animate = 125
 	if(visual_effect_icon)
 		I = image('icons/effects/effects.dmi', A, visual_effect_icon, A.layer + 0.1)
-		ticks_visible = 6
+		if(visual_effect_icon == ATTACK_EFFECT_GRAB)
+			ticks_visible = 8
+		else
+			ticks_visible = 6
 		ticks_animate = 4
 		alpha_animate = 255
 		if(slime_color)
