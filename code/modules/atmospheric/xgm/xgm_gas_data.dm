@@ -48,6 +48,7 @@
 		gas_data.molar_mass[gas.id] = gas.molar_mass
 		if(gas.tile_overlay)
 			gas_data.tile_overlay[gas.id] = image('icons/effects/tile_effects.dmi', gas.tile_overlay, FLY_LAYER)
+			gas_data.tile_overlay[gas.id].plane = GAME_PLANE
 		if(gas.overlay_limit)
 			gas_data.overlay_limit[gas.id] = gas.overlay_limit
 		gas_data.flags[gas.id] = gas.flags

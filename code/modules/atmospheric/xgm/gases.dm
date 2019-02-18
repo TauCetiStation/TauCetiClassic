@@ -42,7 +42,7 @@
 	specific_heat = 40	// J/(mol*K)
 	molar_mass = 0.044	// kg/mol. N2O
 
-	tile_overlay = "sleeping_agent"
+	tile_overlay = "nitrous_oxide"
 	overlay_limit = 1
 	flags = XGM_GAS_OXIDIZER //N2O is a powerful oxidizer
 	dangerous = TRUE
@@ -64,6 +64,7 @@
 
 /datum/xgm_gas/hydrogen/tritium
 	id = "tritium"
+	tile_overlay = "tritium"
 	name = "Tritium"
 
 /datum/xgm_gas/helium
@@ -78,6 +79,7 @@
 /datum/xgm_gas/vapor
 	id = "watervapor"
 	name = "Water Vapor"
+	tile_overlay = "water_vapor"
 
 	specific_heat = 30	// J/(mol*K)
 	molar_mass = 0.020	// kg/mol
