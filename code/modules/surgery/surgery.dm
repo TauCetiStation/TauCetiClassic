@@ -111,12 +111,13 @@
 		//check if tool is right or close enough and if this step is possible
 		if( S.tool_quality(tool) && S.can_use(user, M, user.zone_sel.selecting, tool) && S.is_valid_mutantrace(M))
 			M.op_stage.in_progress += target_zone						//begin step and...
-			S.begin_step(user, M, user.zone_sel.selecting, tool)		//...start on it
+			var/saved_body_zone = user.zone_sel.selecting
+			S.begin_step(user, M, saved_body_zone, tool)		//...start on it
 			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
-			if( prob(S.tool_quality(tool)) &&  do_mob(user, M, rand(S.min_duration, S.max_duration)))
-				S.end_step(user, M, user.zone_sel.selecting, tool)		//finish successfully
+			if(prob(S.tool_quality(tool)) &&  do_mob(user, M, rand(S.min_duration, S.max_duration)) && user.zone_sel.selecting && saved_body_zone == user.zone_sel.selecting)
+				S.end_step(user, M, saved_body_zone, tool)		//finish successfully
 			else if((tool in user.contents) && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
-				S.fail_step(user, M, user.zone_sel.selecting, tool)		//malpractice~
+				S.fail_step(user, M, saved_body_zone, tool)		//malpractice~
 			else	// this failing silently was a pain.
 				to_chat(user, "\red You must remain close to your patient to conduct surgery.")
 			M.op_stage.in_progress -= target_zone						//end step
