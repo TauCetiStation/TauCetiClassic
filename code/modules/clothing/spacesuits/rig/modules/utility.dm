@@ -7,6 +7,7 @@
 
 	var/device_type
 	var/obj/item/device
+	var/need_adjacent = TRUE
 
 /obj/item/rig_module/device/healthscanner
 	name = "hardsuit health scanner module"
@@ -25,7 +26,7 @@
 	suit_overlay = "mounted-drill"
 	interface_name = "mounted drill"
 	interface_desc = "A diamond-tipped industrial drill."
-	use_power_cost = 200
+	use_power_cost = 100 // normal drills use 15 energy, we mine 3 turfs at a time
 	origin_tech = "materials=5;powerstorage=3;engineering=3;programming=2"
 	device_type = /obj/item/weapon/pickaxe/drill/jackhammer // this one doesn't use energy
 
@@ -112,10 +113,12 @@
 		return 1
 
 	var/turf/T = get_turf(target)
-	if(istype(T) && !T.Adjacent(get_turf(src)))
+	if(need_adjacent && istype(T) && !T.Adjacent(get_turf(src)))
 		return 0
 
-	var/resolved = target.attackby(device,holder.wearer)
+	var/resolved
+	if(need_adjacent) // so we don't telepathically bash the target
+		resolved = target.attackby(device,holder.wearer)
 	if(!resolved && device && target)
 		device.afterattack(target,holder.wearer,1)
 	return 1
@@ -194,6 +197,7 @@
 		to_chat(user, "<font color='blue'>You transfer [total_transferred] units into the suit reservoir.</font>")
 	else
 		to_chat(user, "<span class='danger'>None of the reagents seem suitable.</span>")
+		return 0
 	return 1
 
 /obj/item/rig_module/chem_dispenser/engage(atom/target)
@@ -284,13 +288,14 @@
 
 /obj/item/rig_module/cooling_unit
 	name = "hardsuit mounted cooling unit"
+	icon_state = "cloak"
 	toggleable = TRUE
-	origin_tech = list(TECH_MAGNET = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 5)
+	origin_tech = "engineering=3;programming=3"
 	interface_name = "mounted cooling unit"
 	interface_desc = "A heat sink with a liquid cooled radiator."
 	module_cooldown = 0 SECONDS //no cd because its critical for a life-support module
-	var/charge_consumption = 50
-	var/max_cooling = 12
+	var/charge_consumption = 200
+	var/max_cooling = 30 // uses way more energy, cools better
 	var/thermostat = T20C
 
 /obj/item/rig_module/cooling_unit/process_module()
@@ -499,3 +504,117 @@
 		if(holder)
 			holder.installed_modules -= src
 		qdel(src)
+
+/obj/item/weapon/extinguisher/mounted
+	max_water = 100
+
+/obj/item/rig_module/device/extinguisher
+	name = "hardsuit fire extinguisher"
+	desc = "Hardsuit mounted fire extinguisher designed to work in hazardous environments."
+	icon_state = "extinguisher"
+	interface_name = "fire extinguisher"
+	interface_desc = "Hardsuit mounted fire extinguisher."
+	use_power_cost = 20
+	module_cooldown = 5
+	origin_tech = "materials=1;engineering=1;programming=2"
+	device_type = /obj/item/weapon/extinguisher/mounted
+	need_adjacent = FALSE
+
+	charges = list(
+		list("water", "water", "water", 0), // syncs with the extinguisher
+	)
+	charge_selected = 0
+
+/obj/item/rig_module/device/extinguisher/atom_init()
+	. = ..()
+	if(device)
+		var/obj/item/weapon/extinguisher/ext = device
+		ext.safety = FALSE
+		charges["water"].charges = ext.reagents.total_volume
+
+/obj/item/rig_module/device/extinguisher/engage(atom/target)
+	. = ..()
+	if(device)
+		addtimer(CALLBACK(src, .proc/update_water_ammount), 5) // because extinguisher uses spawns
+
+/obj/item/rig_module/device/extinguisher/proc/update_water_ammount()
+	if(device)
+		var/obj/item/weapon/extinguisher/ext = device
+		charges["water"].charges = ext.reagents.total_volume
+
+/obj/item/rig_module/metalfoam_spray
+	name = "hardsuit metal foam spray"
+	desc = "Hardsuit mounted metal foam spray designed to quickly patch holes."
+	icon_state = "metalfoam_spray"
+	interface_name = "metal foam spray"
+	interface_desc = "Hardsuit mounted metal foam spray designed to quickly patch holes."
+	use_power_cost = 100
+	module_cooldown = 5
+	origin_tech = "materials=2;engineering=2;programming=2"
+	usable = FALSE
+	selectable = TRUE
+	toggleable = FALSE
+	var/per_use = 5
+	var/spray_ammount = 0 // 0 does 1x1 tile
+	var/max_volume = 100
+
+	charges = list(
+		list("foaming agent", "foaming agent", "foaming agent", 40),
+	)
+	charge_selected = 0
+
+/obj/item/rig_module/metalfoam_spray/engage(atom/target)
+	if(!..())
+		return 0
+
+	if(damage > MODULE_NO_DAMAGE && prob(50))
+		to_chat(holder.wearer, "<span class='warning'>[name] malfunctions and ignores your command!</span>")
+		return 1
+
+	if(!target)
+		return 0
+
+	if(charges["foaming agent"].charges <= 0)
+		to_chat(holder.wearer, "<span class='warning'>[interface_name] is empty</span>")
+		return 0
+
+	var/turf/T = get_turf(target)
+	if(!istype(T))
+		return 0
+
+	charges["foaming agent"].charges = max(charges["foaming agent"].charges - per_use, 0)
+	playsound(loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+	INVOKE_ASYNC(src, .proc/spray_at, T)
+
+	return 1
+
+/obj/item/rig_module/metalfoam_spray/proc/spray_at(turf/T)
+	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(src))
+	D.icon += "#989DA0"
+
+	step_towards(D, T)
+	sleep(5)
+	var/datum/effect/effect/system/foam_spread/s = new()
+	s.set_up(spray_ammount, D.loc, metalfoam = 1)
+	s.start()
+	qdel(D)
+
+/obj/item/rig_module/metalfoam_spray/accepts_item(obj/item/input_item, mob/living/user)
+
+	if(!input_item.is_open_container())
+		return 0
+
+	if(!input_item.reagents || !input_item.reagents.total_volume)
+		return 0
+
+	var/datum/rig_charge/charge = charges["foaming agent"]
+
+	var/total_transferred = min(input_item.reagents.get_reagent_amount("foaming_agent"), max_volume - charge.charges)
+	if(total_transferred <= 0)
+		return 0
+
+	charge.charges += total_transferred
+	input_item.reagents.remove_reagent("foaming_agent", total_transferred)
+
+	to_chat(user, "<font color='blue'>You transfer [total_transferred] units into the [interface_name].</font>")
+	return 1

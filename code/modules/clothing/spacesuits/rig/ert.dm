@@ -52,7 +52,7 @@
 	item_state = "suit-command"
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 55, bomb = 50, bio = 100, rad = 60)
 	breach_threshold = 28
-	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/mounted/taser, /obj/item/rig_module/grenade_launcher/flashbang)
+	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/mounted/taser, /obj/item/rig_module/grenade_launcher/flashbang, /obj/item/rig_module/cooling_unit)
 
 //Security
 /obj/item/clothing/head/helmet/space/rig/ert/security
@@ -87,6 +87,7 @@
 	icon_state = "ert_engineer"
 	siemens_coefficient = 0
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 75)
+	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/metalfoam_spray)
 
 //Medical
 /obj/item/clothing/head/helmet/space/rig/ert/medical

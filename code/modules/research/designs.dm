@@ -2729,3 +2729,30 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_GOLD = 6000, MAT_URANIUM = 4000)
 	build_path = /obj/item/rig_module/nuclear_generator
+
+/datum/design/rigcoolingunit
+	name = "Hardsuit Mounted Cooling Unit"
+	desc = "A heat sink with a liquid cooled radiator."
+	id = "rigcoolingunit"
+	req_tech = list("engineering" = 3, "programming" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_DIAMOND = 200)
+	build_path = /obj/item/rig_module/cooling_unit
+
+/datum/design/rigextinguisher
+	name = "Hardsuit Fire Extinguisher"
+	desc = "Hardsuit mounted fire extinguisher designed to work in hazardous environments."
+	id = "rigextinguisher"
+	req_tech = list("materials" = 2, "engineering" = 2, "programming" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
+	build_path = /obj/item/rig_module/device/extinguisher
+
+/datum/design/rigmetalfoamspray
+	name = "Hardsuit Metal Foam Spray"
+	desc = "Hardsuit mounted metal foam spray designed to quickly patch holes."
+	id = "rigmetalfoamspray"
+	req_tech = list("materials" = 3, "engineering" = 3, "programming" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000)
+	build_path = /obj/item/rig_module/metalfoam_spray
