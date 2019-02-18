@@ -12,7 +12,7 @@
 	var/burning = null
 	var/hitsound = null
 	var/wet = 0
-	var/w_class = 3.0
+	var/w_class = ITEM_SIZE_NORMAL
 	var/can_embed = 1
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
@@ -273,7 +273,7 @@
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
 		if(istype(src, /obj/item/weapon/melee))
-			if(src.w_class < 4)
+			if(src.w_class < ITEM_SIZE_LARGE)
 				to_chat(user, "\red \The [src] is far too small for you to pick up.")
 				return
 		else if(istype(src, /obj/item/weapon/gun))
@@ -294,7 +294,7 @@
 		else if(istype(src, /obj/item/weapon/reagent_containers/food))
 			if(prob(20))
 				to_chat(user, "\red I LOVE FOOD!!")
-		else if(src.w_class < 4)
+		else if(src.w_class < ITEM_SIZE_LARGE)
 			to_chat(user, "\red \The [src] is far too small for you to pick up.")
 			return
 
@@ -347,7 +347,7 @@
 	if(isalien(user)) // -- TLE
 		var/mob/living/carbon/alien/A = user
 
-		if(!A.has_fine_manipulation || w_class >= 4)
+		if(!A.has_fine_manipulation || w_class >= ITEM_SIZE_LARGE)
 			if(src in A.contents) // To stop Aliens having items stuck in their pockets
 				A.drop_from_inventory(src)
 			to_chat(user, "Your claws aren't capable of such fine manipulation.")
@@ -535,7 +535,7 @@
 			if(SLOT_L_EAR)
 				if(H.l_ear)
 					return 0
-				if( w_class < 2	)
+				if(w_class < ITEM_SIZE_SMALL)
 					return 1
 				if( !(slot_flags & SLOT_FLAGS_EARS) )
 					return 0
@@ -545,7 +545,7 @@
 			if(SLOT_R_EAR)
 				if(H.r_ear)
 					return 0
-				if( w_class < 2 )
+				if(w_class < ITEM_SIZE_SMALL)
 					return 1
 				if( !(slot_flags & SLOT_FLAGS_EARS) )
 					return 0
@@ -577,7 +577,7 @@
 					return 0
 				if(slot_flags & SLOT_FLAGS_DENYPOCKET)
 					return 0
-				if( w_class <= 2 || (slot_flags & SLOT_FLAGS_POCKET) )
+				if( w_class <= ITEM_SIZE_SMALL || (slot_flags & SLOT_FLAGS_POCKET) )
 					return 1
 			if(SLOT_R_STORE)
 				if(H.r_store)
@@ -588,7 +588,7 @@
 					return 0
 				if(slot_flags & SLOT_FLAGS_DENYPOCKET)
 					return 0
-				if( w_class <= 2 || (slot_flags & SLOT_FLAGS_POCKET) )
+				if( w_class <= ITEM_SIZE_SMALL || (slot_flags & SLOT_FLAGS_POCKET) )
 					return 1
 				return 0
 			if(SLOT_S_STORE)

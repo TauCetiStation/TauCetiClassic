@@ -396,7 +396,7 @@
 	origin_tech = "materials=6;combat=5;biotech=7"
 	slot_flags = SLOT_FLAGS_BELT
 	force = 7
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	action_button_name = "Toggle Mode"
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)

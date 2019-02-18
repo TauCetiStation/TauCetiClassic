@@ -20,7 +20,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "sampler0"
 	item_state = "sampler"
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	//slot_flags = SLOT_FLAGS_BELT
 	var/sampled_turf = ""
 	var/num_stored_bags = 10

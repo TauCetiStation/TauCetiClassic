@@ -581,7 +581,7 @@
 		if (((stat & BROKEN) || malfhack) \
 				&& !opened \
 				&& W.force >= 5 \
-				&& W.w_class >= 3.0 \
+				&& W.w_class >= ITEM_SIZE_NORMAL \
 				&& prob(20) )
 			opened = 2
 			user.visible_message("\red The APC cover was knocked down with the [W.name] by [user.name]!", \

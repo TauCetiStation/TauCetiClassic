@@ -2242,7 +2242,7 @@ other types of metals and chemistry for reagents).
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	m_amt = 30
 	g_amt = 10
 	var/datum/design/blueprint
