@@ -58,6 +58,8 @@
 	if(prob(33) || old)
 		make_old()
 
+/obj/item/stack/medical/bruise_pack/rags/update_icon()
+	return
 
 //////SHITTY BONFIRE PORT///////
 

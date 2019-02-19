@@ -250,7 +250,7 @@
 		filling.icon += mix_color_from_reagents(reagents.reagent_list)
 		overlays += filling
 
-/obj/item/weapon/reagent_containers/syringe/proc/infect_limb(mob/living/carbon/target, mob/living/carbon/user)
+/obj/item/weapon/reagent_containers/syringe/proc/infect_limb(mob/living/carbon/user, mob/living/carbon/target)
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		var/target_zone = user.zone_sel.selecting

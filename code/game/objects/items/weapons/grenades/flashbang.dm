@@ -3,7 +3,7 @@
 	icon_state = "flashbang"
 	item_state = "flashbang"
 	origin_tech = "materials=2;combat=1"
-	var/banglet = 0
+	var/banglet = FALSE
 
 /obj/item/weapon/grenade/flashbang/prime()
 	..()
@@ -43,7 +43,7 @@
 				ear_safety += 1
 
 //Flashing everyone
-	if(eye_safety < 1)
+	if(eye_safety<1)
 		M.flash_eyes()
 		M.Stun(2)
 		M.Weaken(10)
@@ -52,7 +52,9 @@
 
 //Now applying sound
 	if((get_dist(M, T) <= 2 || src.loc == M.loc || src.loc == M))
-		if(ear_safety > 0)
+		if(ear_safety > 1)
+			M.Stun(1.5)
+		else if(ear_safety > 0)
 			M.Stun(2)
 			M.Weaken(1)
 		else
@@ -100,7 +102,7 @@
 /obj/effect/effect/smoke/flashbang
 	name = "illumination"
 	time_to_live = 10
-	opacity = 0
+	opacity = FALSE
 	icon_state = "sparks"
 
 ////////////////////
@@ -138,7 +140,7 @@
 	. = ..()
 	icon_state = "clusterbang_segment_active"
 	payload = payload_type
-	active = 1
+	active = TRUE
 	walk_away(src,loc,rand(1,4))
 	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
 

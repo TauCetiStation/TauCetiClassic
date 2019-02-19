@@ -1,14 +1,3 @@
-var/list/forbidden_varedit_object_types = list(
-		/datum/admins,                     //Admins editing their own admin-power object? Yup, sounds like a good idea.
-		/datum/configuration,
-		/obj/machinery/blackbox_recorder,  //Prevents people messing with feedback gathering
-		/datum/feedback_variable,          //Prevents people messing with feedback gathering
-		/datum/timedevent,                 //Nope.avi
-		/datum/craft_or_build,
-		/datum/stack_recipe,
-		/datum/events,
-	)
-
 /client/proc/cmd_modify_ticker_variables()
 	set category = "Debug"
 	set name = "Edit Ticker Variables"
@@ -271,12 +260,7 @@ var/list/forbidden_varedit_object_types = list(
 /client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
 	if(!check_rights(R_VAREDIT))	return
 
-	var/list/icons_modifying = list("resize")
-	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "mutantrace", "player_ingame_age", "summon_type", "AI_Interact")
-	var/list/typechange_locked = list("player_next_age_tick","player_ingame_age")
-	var/list/fully_locked = list("holder", "player_next_age_tick", "resize_rev", "step_x", "step_y")
-
-	if(is_type_in_list(O, forbidden_varedit_object_types))
+	if(is_type_in_list(O, VE_PROTECTED_TYPES))
 		to_chat(usr, "\red It is forbidden to edit this object's variables.")
 		return
 
@@ -289,17 +273,14 @@ var/list/forbidden_varedit_object_types = list(
 			to_chat(src, "A variable with this name ([param_var_name]) doesn't exist in this atom ([O])")
 			return
 
-		if(param_var_name in fully_locked)
+		if(param_var_name in VE_FULLY_LOCKED)
 			to_chat(usr, "\red It is forbidden to edit this variable.")
 			return
 
-		if(!autodetect_class && (param_var_name in typechange_locked))
+		if((param_var_name in VE_DEBUG) && !check_rights(R_DEBUG))
 			return
 
-		if((param_var_name in locked) && !check_rights(R_DEBUG))
-			return
-
-		if((param_var_name in icons_modifying) && !check_rights(R_DEBUG|R_EVENT))
+		if((param_var_name in VE_ICONS) && !check_rights(R_DEBUG|R_EVENT))
 			return
 
 		variable = param_var_name
@@ -356,7 +337,7 @@ var/list/forbidden_varedit_object_types = list(
 		if(!variable)	return
 		var_value = O.vars[variable]
 
-		if(variable == "holder" || (variable in locked))
+		if(variable == "holder" || (variable in VE_DEBUG))
 			if(!check_rights(R_DEBUG))	return
 
 	if(!autodetect_class)

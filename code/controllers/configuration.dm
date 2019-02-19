@@ -139,6 +139,8 @@
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 	var/use_ingame_minutes_restriction_for_jobs = 0 //Do jobs use in-game minutes instead account age for restrictions?
+	
+	var/add_player_age_value = 4000 //default minuts added with admin "Increase player age" button
 
 	var/byond_version_min = 0
 	var/byond_version_recommend = 0
@@ -243,6 +245,9 @@
 
 				if ("use_ingame_minutes_restriction_for_jobs")
 					config.use_ingame_minutes_restriction_for_jobs = 1
+
+				if ("add_player_age_value")
+					config.add_player_age_value = text2num(value)
 
 				if ("log_ooc")
 					config.log_ooc = 1
