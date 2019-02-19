@@ -290,9 +290,15 @@
 		if(module.selectable)
 			var/datum/action/module_select/action = new(module)
 			action.Grant(H)
+		if(module.show_toggle_button)
+			var/datum/action/module_toggle/action = new(module)
+			action.Grant(H)
 
 /obj/item/clothing/suit/space/rig/proc/remove_actions(mob/living/carbon/human/H)
 	for(var/datum/action/module_select/action in H.actions)
+		if(istype(action))
+			action.Remove(H)
+	for(var/datum/action/module_toggle/action in H.actions)
 		if(istype(action))
 			action.Remove(H)
 
@@ -307,6 +313,23 @@
 				action.background_icon_state = "bg_spell"
 			else
 				action.background_icon_state = "bg_default"
+	H.update_action_buttons()
+
+/obj/item/clothing/suit/space/rig/proc/update_activated_actions()
+	if(!wearer)
+		return
+
+	var/mob/living/carbon/human/H = wearer
+	for(var/datum/action/module_toggle/action in H.actions)
+		if(istype(action))
+			var/obj/item/rig_module/module = action.target
+			if(istype(module))
+				if(module.active) // highlight active modules
+					action.background_icon_state = "bg_active"
+					action.name = module.deactivate_string
+				else
+					action.background_icon_state = "bg_default"
+					action.name = module.activate_string
 	H.update_action_buttons()
 
 /obj/item/clothing/suit/space/rig/equipped(mob/M, slot)

@@ -22,6 +22,27 @@
 				to_chat(owner, "<font color='blue'><b>Primary system is now: [module.interface_name].</b></font>")
 			module.holder.update_selected_action()
 
+/datum/action/module_toggle
+	name = "Toggle module"
+
+/datum/action/module_toggle/New(Target)
+	..()
+	if(istype(Target, /obj/item/rig_module))
+		var/obj/item/rig_module/module = Target
+		name = "[module.activate_string]"
+
+/datum/action/module_toggle/Trigger()
+	if(!Checks())
+		return
+
+	if(istype(target, /obj/item/rig_module))
+		var/obj/item/rig_module/module = target
+		if(module.holder)
+			if(module.active) // activate and deactivate will update action icons
+				module.deactivate()
+			else if(!module.holder.offline)
+				module.activate()
+
 /datum/rig_charge
 	var/short_name = "undef"
 	var/display_name = "undefined"
@@ -41,6 +62,7 @@
 	var/next_use = 0
 
 	var/toggleable                      // Set to 1 for the device to show up as an active effect.
+	var/show_toggle_button              // Set to TRUE for the device to show toggle button
 	var/usable                          // Set to 1 for the device to have an on-use effect.
 	var/selectable                      // Set to 1 to be able to assign the device as primary system.
 	var/redundant                       // Set to 1 to ignore duplicate module checking when installing.
@@ -198,6 +220,9 @@
 
 	active = TRUE
 
+	if(show_toggle_button)
+		holder.update_activated_actions()
+
 	return 1
 
 // Proc for toggling off active abilities.
@@ -207,6 +232,9 @@
 		return 0
 
 	active = FALSE
+
+	if(show_toggle_button)
+		holder.update_activated_actions()
 
 	return 1
 

@@ -300,6 +300,9 @@
 	interface_name = "mounted cooling unit"
 	interface_desc = "A heat sink with a liquid cooled radiator."
 	module_cooldown = 0 SECONDS //no cd because its critical for a life-support module
+	show_toggle_button = TRUE
+	activate_string = "Begin cooling"
+	deactivate_string = "Stop cooling"
 	var/charge_consumption = 200
 	var/max_cooling = 30 // uses way more energy, cools better
 	var/thermostat = T20C
@@ -322,7 +325,7 @@
 /obj/item/rig_module/selfrepair
 	name = "hardsuit self-repair module"
 	desc = "A somewhat complicated looking complex full of tools."
-	icon_state = "scanner"
+	icon_state = "selfrepair"
 	interface_name = "self-repair module"
 	interface_desc = "A module capable of repairing stuctural rig damage on the spot."
 	activate_string = "Begin repair"
@@ -330,6 +333,7 @@
 	toggleable = TRUE
 	usable = FALSE
 	selectable = FALSE
+	show_toggle_button = TRUE
 	use_power_cost = 0
 	module_cooldown = 0
 	origin_tech = "engineering=3;programming=3"
