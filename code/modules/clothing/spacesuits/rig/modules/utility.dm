@@ -101,7 +101,7 @@
 		device.g_amt = 0
 
 /obj/item/rig_module/device/engage(atom/target)
-	if(istype(holder.wearer.loc, /obj/mecha))
+	if(!isturf(holder.wearer.loc) && target)
 		return 0
 
 	if(!..() || !device)
@@ -204,7 +204,7 @@
 	return 1
 
 /obj/item/rig_module/chem_dispenser/engage(atom/target)
-	if(istype(holder.wearer.loc, /obj/mecha))
+	if(!isturf(holder.wearer.loc) && target)
 		return 0
 
 	if(!..())
@@ -570,7 +570,7 @@
 	charge_selected = 0
 
 /obj/item/rig_module/metalfoam_spray/engage(atom/target)
-	if(istype(holder.wearer.loc, /obj/mecha))
+	if(!isturf(holder.wearer.loc) && target)
 		return 0
 
 	if(!..())

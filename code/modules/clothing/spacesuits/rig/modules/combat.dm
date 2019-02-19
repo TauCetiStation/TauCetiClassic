@@ -54,7 +54,7 @@
 	return 1
 
 /obj/item/rig_module/grenade_launcher/engage(atom/target)
-	if(istype(holder.wearer.loc, /obj/mecha))
+	if(!isturf(holder.wearer.loc) && target)
 		return 0
 
 	if(!..())
@@ -153,7 +153,7 @@
 		gun.name = interface_name
 
 /obj/item/rig_module/mounted/engage(atom/target)
-	if(istype(holder.wearer.loc, /obj/mecha))
+	if(!isturf(holder.wearer.loc) && target)
 		return 0
 
 	if(!..())
