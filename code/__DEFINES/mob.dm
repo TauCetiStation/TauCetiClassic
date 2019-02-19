@@ -121,3 +121,5 @@
 #define CLICK_CD_INTERACT 4
 #define CLICK_CD_RAPID 2
 #define CLICK_CD_AI 9
+#define CLICK_CD_GRAB 40
+#define CLICK_CD_ACTION 20 // used in grab actions

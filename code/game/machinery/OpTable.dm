@@ -137,10 +137,11 @@
 		return
 
 	if (istype(W, /obj/item/weapon/grab))
-		if(iscarbon(W:affecting))
-			take_victim(W:affecting,usr)
+		var/obj/item/weapon/grab/G = W
+		if(iscarbon(G.affecting))
+			take_victim(G.affecting, usr)
 			user.SetNextMove(CLICK_CD_MELEE)
-			qdel(W)
+			qdel(G)
 			return
 	user.drop_item()
 	if(W && W.loc)

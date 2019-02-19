@@ -5,8 +5,8 @@
 #define GRAB_PASSIVE	1
 #define GRAB_AGGRESSIVE	2
 #define GRAB_NECK		3
-#define GRAB_UPGRADING	4
-#define GRAB_KILL		5*/
+#define GRAB_KILL		4*/
+#define GRAB_UPGRADING	5
 #define GRAB_EMBRYO		6
 #define GRAB_IMPREGNATE	7
 #define GRAB_DONE		8
@@ -30,7 +30,7 @@ This is modified grab mechanic for facehugger
 				FH.put_in_active_hand(G)
 
 				grabbed_by += G
-				G.last_upgrade = world.time - 20
+				FH.SetNextMove(CLICK_CD_ACTION)
 				G.synch()
 				LAssailant = FH
 
@@ -49,7 +49,7 @@ This is modified grab mechanic for facehugger
 				FH.put_in_active_hand(G)
 
 				grabbed_by += G
-				G.last_upgrade = world.time - 20
+				FH.SetNextMove(CLICK_CD_ACTION)
 				G.synch()
 				LAssailant = FH
 
@@ -68,7 +68,7 @@ This is modified grab mechanic for facehugger
 				FH.put_in_active_hand(G)
 
 				grabbed_by += G
-				G.last_upgrade = world.time - 20
+				FH.SetNextMove(CLICK_CD_ACTION)
 				G.synch()
 				LAssailant = FH
 
@@ -537,8 +537,6 @@ When we finish, facehugger's player will be transfered inside embryo.
 	var/mob/assailant = null
 	var/state = GRAB_PASSIVE
 
-	var/last_upgrade = 0
-
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
@@ -550,11 +548,20 @@ When we finish, facehugger's player will be transfered inside embryo.
 	assailant = loc
 	affecting = victim
 
+	assailant.SetNextMove(CLICK_CD_ACTION)
+
 	hud = new /obj/screen/fh_grab(src)
 	hud.icon = 'icons/mob/screen1_xeno.dmi'
 	hud.icon_state = "leap"
 	hud.name = "Leap at face"
 	hud.master = src
+
+	assailant.put_in_active_hand(src)
+	affecting.grabbed_by += src
+
+	synch()
+	affecting.LAssailant = assailant
+	assailant.visible_message("<span class='red'>[assailant] atempts to leap at [affecting] face!</span>")
 
 /obj/item/weapon/fh_grab/Destroy()
 	QDEL_NULL(hud)
@@ -607,8 +614,6 @@ When we finish, facehugger's player will be transfered inside embryo.
 		return
 	if(assailant.lying)
 		return
-	if(world.time < (last_upgrade + UPGRADE_COOLDOWN))
-		return
 	if(istype(assailant.loc, /turf))
 		state = GRAB_PASSIVE
 
@@ -639,7 +644,8 @@ When we finish, facehugger's player will be transfered inside embryo.
 		qdel(src)
 		return
 
-	last_upgrade = world.time
+	assailant.SetNextMove(CLICK_CD_GRAB)
+
 	if(state == GRAB_PASSIVE)
 		assailant.visible_message("<span class='warning'>[assailant] leaps at [affecting] face!</span>")
 		var/mob/living/carbon/alien/facehugger/FH = assailant
@@ -740,3 +746,12 @@ When we finish, facehugger's player will be transfered inside embryo.
 	if(M == affecting)
 		s_click(hud)
 		return
+
+#undef UPGRADE_TAIL_TIMER
+
+#undef GRAB_UPGRADING
+#undef GRAB_EMBRYO
+#undef GRAB_IMPREGNATE
+#undef GRAB_DONE
+
+#undef BITE_COOLDOWN

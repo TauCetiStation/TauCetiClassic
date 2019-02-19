@@ -1649,30 +1649,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			L.Weaken(5)
 			sleep(2) // Runtime prevention (infinite bump() calls on hulks)
 			step_towards(src, L)
-
-			if(restrained()) //You can leap when you hands are cuffed, but you can't grab
-				return
-
-			var/use_hand = "left"
-			if(l_hand)
-				if(r_hand)
-					to_chat(src, "<span class='warning'>You need to have one hand free to grab someone.</span>")
-					return
-				else
-					use_hand = "right"
-
-			visible_message("<span class='warning'><b>\The [src]</b> seizes [L] aggressively!</span>")
-
-			var/obj/item/weapon/grab/G = new(src, L)
-			if(use_hand == "left")
-				l_hand = G
-			else
-				r_hand = G
-
-			G.state = GRAB_AGGRESSIVE
-			G.icon_state = "grabbed1"
-			G.synch()
-			L.grabbed_by += G
+			Grab(L, GRAB_AGGRESSIVE)
 
 	else if(A.density)
 		visible_message("<span class='danger'>[src] smashes into [A]!</span>", "<span class='danger'>You smashes into [A]!</span>")

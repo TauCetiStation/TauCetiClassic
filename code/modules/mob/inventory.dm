@@ -306,6 +306,12 @@ var/list/slot_equipment_priority = list(
 		I.dropped(src)
 	return 1
 
+/mob/proc/get_hand_slots()
+	return list(l_hand, r_hand)
+
+/mob/living/carbon/ian/get_hand_slots()
+	return list(mouth)
+
 //Returns the item equipped to the specified slot, if any.
 /mob/proc/get_equipped_item(var/slot)
 	return null

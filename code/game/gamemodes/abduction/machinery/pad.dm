@@ -46,20 +46,9 @@
 	if(target)
 
 		//prevent from teleporting victim though the grab on neck
-		if(istype(target.get_active_hand(), /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = target.get_active_hand()
+		for(var/obj/item/weapon/grab/G in target.GetGrabs())
 			if(G.state >= GRAB_PASSIVE)
-				if(istype(target.l_hand, G))
-					target.drop_l_hand()
-				else
-					target.drop_r_hand()
-		if(istype(target.get_inactive_hand(), /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = target.get_inactive_hand()
-			if(G.state >= GRAB_PASSIVE)
-				if(istype(target.l_hand, G))
-					target.drop_l_hand()
-				else
-					target.drop_r_hand()
+				qdel(G)
 		target.forceMove(loc)
 
 /obj/machinery/abductor/pad/proc/Send()
