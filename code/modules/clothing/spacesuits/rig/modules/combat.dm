@@ -136,6 +136,7 @@
 	use_power_cost = 0
 	mount_type = MODULE_MOUNT_SHOULDER_LEFT
 	var/recharge_speed = 50
+	var/charge_override = 400
 	origin_tech = "combat=4"
 
 	engage_string = "Configure"
@@ -151,6 +152,9 @@
 		gun = new gun(src)
 		gun.canremove = FALSE
 		gun.name = interface_name
+		if(charge_override)
+			gun.power_supply.maxcharge = charge_override
+			gun.power_supply.charge = charge_override
 
 /obj/item/rig_module/mounted/engage(atom/target)
 	if(!isturf(holder.wearer.loc) && target)
