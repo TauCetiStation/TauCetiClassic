@@ -292,6 +292,17 @@
 	interface_name = "medical chem dispenser"
 	interface_desc = "Dispenses loaded chemicals directly into the bloodstream."
 
+/obj/item/rig_module/chem_dispenser/medical/ert
+	charges = list(
+		list("tricordrazine", "tricordrazine", "tricordrazine",      30),
+		list("inaprovaline",  "inaprovaline",  "inaprovaline",       30),
+		list("tramadol",      "tramadol",      "tramadol", 		     30),
+		list("dexalin plus",  "dexalin plus",  "dexalinp",           30),
+		list("dylovene",      "dylovene",      "anti_toxin",         30),
+		list("kelotane",      "kelotane",      "kelotane",           30),
+		list("bicaridine",    "bicaridine",    "bicaridine",         30),
+		)
+
 /obj/item/rig_module/cooling_unit
 	name = "hardsuit mounted cooling unit"
 	icon_state = "cloak"
