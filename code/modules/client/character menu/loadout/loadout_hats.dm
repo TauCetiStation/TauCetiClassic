@@ -60,12 +60,12 @@
 
 /datum/gear/head/beret
 	display_name = "Beret selection"
-	path = /obj/item/clothing/head/beret/red
+	path = /obj/item/clothing/head/beret
 
 /datum/gear/head/beret/New()
 	..()
 	var/berets = list()
-	berets["red"] = /obj/item/clothing/head/beret/red
+	berets["red"] = /obj/item/clothing/head/beret
 	berets["blue"] = /obj/item/clothing/head/beret/blue
 	berets["black"] = /obj/item/clothing/head/beret/black
 	berets["purple"] = /obj/item/clothing/head/beret/purple

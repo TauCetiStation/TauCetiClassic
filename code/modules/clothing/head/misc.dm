@@ -18,13 +18,13 @@
 	desc = "A powdered wig."
 	icon_state = "pwig"
 	item_state = "pwig"
-	
+
 /obj/item/clothing/head/chep
 	name = "Maid cap"
 	desc = "Smells like trooly cleaned house."
 	icon_state = "chep"
 	item_state = "chep"
-	
+
 /obj/item/clothing/head/tacticool_hat
 	name = "tacticool hat"
 	desc = "Black synthcloth hat."
@@ -354,11 +354,6 @@
 /obj/item/clothing/head/chaplain_hood/green
 	name = "green hood"
 	icon_state = "green_hood"
-
-/obj/item/clothing/head/beret/red
-	name = "red beret"
-	desc = "Bonjour, but in red. Smells like baguette, pardon my French."
-	icon_state = "beret_red"
 
 /obj/item/clothing/head/beret/blue
 	name = "blue beret"
