@@ -1004,11 +1004,13 @@ Owl & Griffin toys
 		else if(istype(over_object, /obj/screen))
 			switch(over_object.name)
 				if("r_hand")
-					M.u_equip(src)
+					if(!M.unEquip(src))
+						return
 					M.put_in_r_hand(src)
 					to_chat(usr, "<span class='notice'>You pick up the deck.</span>")
 				if("l_hand")
-					M.u_equip(src)
+					if(!M.unEquip(src))
+						return
 					M.put_in_l_hand(src)
 					to_chat(usr, "<span class='notice'>You pick up the deck.</span>")
 	else
