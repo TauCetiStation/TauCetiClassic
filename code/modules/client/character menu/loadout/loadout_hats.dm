@@ -65,7 +65,7 @@
 /datum/gear/head/beret/New()
 	..()
 	var/berets = list()
-	berets["red"] = /obj/item/clothing/head/beret
+	berets["red"] = /obj/item/clothing/head/beret/red
 	berets["blue"] = /obj/item/clothing/head/beret/blue
 	berets["black"] = /obj/item/clothing/head/beret/black
 	berets["purple"] = /obj/item/clothing/head/beret/purple

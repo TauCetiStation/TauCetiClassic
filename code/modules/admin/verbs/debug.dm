@@ -1670,7 +1670,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/device/pda/mime(M), SLOT_BELT)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/white(M), SLOT_GLOVES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/mime(M), SLOT_WEAR_MASK)
-			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret(M), SLOT_HEAD)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/red(M), SLOT_HEAD)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/suspenders(M), SLOT_WEAR_SUIT)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(M.back), SLOT_IN_BACKPACK)
 			M.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(M), SLOT_IN_BACKPACK)
