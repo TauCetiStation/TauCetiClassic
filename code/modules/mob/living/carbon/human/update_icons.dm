@@ -451,14 +451,14 @@ Please contact me on #coderbus IRC. ~Carn x
 			if(U.flags & ONESIZEFITSALL)
 				standing.icon	= 'icons/mob/uniform_fat.dmi'
 			else
-				to_chat(src, "\red You burst out of \the [U]!")
-				drop_from_inventory(U)
+				to_chat(src, "<span class='warning'>You burst out of \the [U]!</span>")
+				drop_from_inventory(U,  get_turf(src))
 				return
 
 	else
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
 		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//
-			drop_from_inventory(thing)
+			drop_from_inventory(thing, get_turf(src))
 
 	apply_overlay(UNIFORM_LAYER)
 
@@ -687,8 +687,8 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		if(FAT in mutations)
 			if(!(wear_suit.flags & ONESIZEFITSALL))
-				to_chat(src, "\red You burst out of \the [wear_suit]!")
-				drop_from_inventory(wear_suit)
+				to_chat(src, "<span class='warning'> You burst out of \the [wear_suit]!</span>")
+				drop_from_inventory(wear_suit, get_turf(src))
 				return
 
 		if(istype(wear_suit,/obj/item/clothing/suit/wintercoat))
