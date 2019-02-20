@@ -29,6 +29,8 @@
 	var/action_button_name //It is also the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. If it's not set, there'll be no button.
 	var/action_button_is_hands_free = 0 //If 1, bypass the restrained, lying, and stunned checks action buttons normally test for
 
+	var/slot_equipped = 0 // Where this item currently equipped in player inventory (slot_id) (should not be manually edited ever).
+
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
 	var/item_color = null
@@ -307,19 +309,25 @@
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
 		if(!src.canremove)
 			return
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
-				var/obj/item/clothing/suit/V = H.wear_suit
-				V.attack_reaction(H, REACTION_ITEM_TAKEOFF)
-			if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
-				if(!user.delay_clothing_u_equip(src))
-					return 0
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			if(slot_equipped && (slot_equipped in C.check_obscured_slots()))
+				to_chat(C, "<span class='warning'>You can't reach that! Something is covering it.</span>")
+				return
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+					var/obj/item/clothing/suit/V = H.wear_suit
+					V.attack_reaction(H, REACTION_ITEM_TAKEOFF)
+				if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
+					if(!user.delay_clothing_u_equip(src))
+						return 0
+				else
+					user.remove_from_mob(src)
 			else
 				user.remove_from_mob(src)
 		else
 			user.remove_from_mob(src)
-
 	else
 		if(isliving(src.loc))
 			return
@@ -447,10 +455,10 @@
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
 //Set disable_warning to 1 if you wish it to not give you outputs.
-/obj/item/proc/mob_can_equip(M, slot, disable_warning = 0)
+/obj/item/proc/mob_can_equip(mob/M, slot, disable_warning = 0)
 	if(!slot)
 		return FALSE
-	if(!M)
+	if(QDELETED(M))
 		return FALSE
 
 	if(ishuman(M))
@@ -535,21 +543,21 @@
 			if(SLOT_L_EAR)
 				if(H.l_ear)
 					return 0
-				if(w_class < ITEM_SIZE_SMALL)
+				if( (slot_flags & SLOT_FLAGS_TWOEARS) && H.r_ear )
+					return 0
+				if( w_class < ITEM_SIZE_SMALL	)
 					return 1
 				if( !(slot_flags & SLOT_FLAGS_EARS) )
-					return 0
-				if( (slot_flags & SLOT_FLAGS_TWOEARS) && H.r_ear )
 					return 0
 				return 1
 			if(SLOT_R_EAR)
 				if(H.r_ear)
 					return 0
-				if(w_class < ITEM_SIZE_SMALL)
+				if( (slot_flags & SLOT_FLAGS_TWOEARS) && H.l_ear )
+					return 0
+				if( w_class < ITEM_SIZE_SMALL )
 					return 1
 				if( !(slot_flags & SLOT_FLAGS_EARS) )
-					return 0
-				if( (slot_flags & SLOT_FLAGS_TWOEARS) && H.l_ear )
 					return 0
 				return 1
 			if(SLOT_W_UNIFORM)
@@ -661,6 +669,12 @@
 				if(MO.back)
 					return 0
 				if( !(slot_flags & SLOT_FLAGS_BACK) )
+					return 0
+				return 1
+			if(SLOT_HANDCUFFED)
+				if(MO.handcuffed)
+					return 0
+				if(!istype(src, /obj/item/weapon/handcuffs))
 					return 0
 				return 1
 		return 0 //Unsupported slot

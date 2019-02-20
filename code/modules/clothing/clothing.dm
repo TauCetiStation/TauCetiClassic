@@ -92,7 +92,7 @@
 //Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears
 	name = "ears"
-	w_class = ITEM_SIZE_TINY
+	w_class = ITEM_SIZE_NORMAL
 	throwforce = 2
 	slot_flags = SLOT_FLAGS_EARS
 
@@ -112,16 +112,18 @@
 		return
 
 	var/obj/item/clothing/ears/O
-	if(slot_flags & SLOT_FLAGS_TWOEARS )
+	if(slot_flags & SLOT_FLAGS_TWOEARS)
 		O = (H.l_ear == src ? H.r_ear : H.l_ear)
-		user.u_equip(O)
+		if(!user.unEquip(O))
+			return
 		if(!istype(src,/obj/item/clothing/ears/offear))
 			qdel(O)
 			O = src
 	else
 		O = src
 
-	user.u_equip(src)
+	if(!user.unEquip(src))
+		return
 
 	if (O)
 		user.put_in_hands(O)
