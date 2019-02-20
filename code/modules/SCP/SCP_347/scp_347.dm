@@ -30,8 +30,8 @@
 	universal_speak = TRUE
 	universal_understand = TRUE
 	gender = FEMALE
-	equip_to_slot_or_del(new /obj/item/clothing/under/sundress(src), slot_w_uniform)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/heels/alternate(src), slot_shoes)
+	equip_to_slot_or_del(new /obj/item/clothing/under/sundress(src), SLOT_W_UNIFORM)
+	equip_to_slot_or_del(new /obj/item/clothing/shoes/heels/alternate(src), SLOT_SHOES)
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/scp347_swallowitem(src))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/scp347_picklock(src))
 

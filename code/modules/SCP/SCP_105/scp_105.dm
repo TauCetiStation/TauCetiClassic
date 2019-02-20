@@ -1,5 +1,5 @@
 /obj/item/device/camera/scp105
-	name = "Iris' camera"
+	name = "Iris's camera"
 	icon = 'code/modules/SCP/SCP_105/SCP.dmi'
 	desc = "A polaroid camera. 10 photos left."
 	icon_state = "scp105b"
@@ -112,9 +112,9 @@
 	b_hair = 141
 	h_style = "Longer Fringe"
 
-	equip_to_slot_or_del(new /obj/item/clothing/under/tourist(src), slot_w_uniform)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/black(src), slot_shoes)
-	equip_to_slot_or_del(new /obj/item/device/camera/scp105(src), slot_belt)
+	equip_to_slot_or_del(new /obj/item/clothing/under/tourist(src), SLOT_W_UNIFORM)
+	equip_to_slot_or_del(new /obj/item/clothing/shoes/black(src), SLOT_SHOES)
+	equip_to_slot_or_del(new /obj/item/device/camera/scp105(src), SLOT_BELT)
 	update_body()
 	update_hair()
 

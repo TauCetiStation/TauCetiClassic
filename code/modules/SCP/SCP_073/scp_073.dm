@@ -32,8 +32,8 @@
 	universal_understand = TRUE
 
 	underwear = 5
-	equip_to_slot_or_del(new /obj/item/clothing/under/shorts/black(src), slot_w_uniform)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(src), slot_shoes)
+	equip_to_slot_or_del(new /obj/item/clothing/under/shorts/black(src), SLOT_W_UNIFORM)
+	equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(src),SLOT_SHOES)
 	update_body()
 
 

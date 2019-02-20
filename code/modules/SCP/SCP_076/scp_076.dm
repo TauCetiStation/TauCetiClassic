@@ -37,9 +37,9 @@
 	universal_speak = TRUE
 	universal_understand = TRUE
 
-	equip_to_slot_or_del(new /obj/item/clothing/under/scp076_pants(src), slot_w_uniform)
-	equip_to_slot_or_del(new /obj/item/clothing/suit/scp076_mantle(src), slot_wear_suit)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(src), slot_shoes)
+	equip_to_slot_or_del(new /obj/item/clothing/under/scp076_pants(src), SLOT_W_UNIFORM)
+	equip_to_slot_or_del(new /obj/item/clothing/suit/scp076_mantle(src), SLOT_WEAR_SUIT)
+	equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(src), SLOT_SHOES)
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/scp076_sword)
 
 

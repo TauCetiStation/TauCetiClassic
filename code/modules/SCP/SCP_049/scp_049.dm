@@ -1,5 +1,3 @@
-#define isscp049(A) istype(A, /mob/living/carbon/human/scp049)
-
 /datum/unarmed_attack/scp049_claws
 	attack_verb = list("scratch", "claw", "slash")
 	attack_sound = 'sound/weapons/slice.ogg'
@@ -96,7 +94,7 @@
 
 	var/mob/living/carbon/human/target = G.affecting
 	if(G.affecting.stat != DEAD)
-		for(var/stage = 1, stage<=3, stage++)
+		for(var/state in 1 to 3)
 			switch(stage)
 				if(1)
 					user.visible_message("<span class='warning'>[user] puts his hand on [target]'s forehead!</span>")
@@ -125,7 +123,7 @@
 				user.visible_message("<span class='danger'>[user] finishes his surgery!</span>")
 				continue
 
-		if(!do_mob(user, target, 150))
+		if(!do_mob(user, target, 15 SECONDS))
 			to_chat(user, "<span class='warning'>I was interrupted!</span>")
 			return
 
