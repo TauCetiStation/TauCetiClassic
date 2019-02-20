@@ -31874,6 +31874,29 @@
 	icon_state = "delivery"
 	},
 /area/medical/storage)
+"bdl" = (
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	frequency = 1379;
+	id_tag = "satellite_aux_airlock";
+	layer = 3.3;
+	pixel_x = 0;
+	pixel_y = 25;
+	req_access_txt = "66";
+	tag_airpump = "satellite_aux_pump";
+	tag_chamber_sensor = "satellite_aux_sensor";
+	tag_exterior_door = "satellite_aux_outer";
+	tag_interior_door = "satellite_aux_inner"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "MiniSat Exterior";
+	dir = 2;
+	network = list("MiniSat")
+	},
+/turf/simulated/floor/plating,
+/area/aisat)
 "bdm" = (
 /obj/structure/table/woodentable,
 /obj/machinery/power/apc{
@@ -79987,22 +80010,16 @@
 	},
 /area/aisat)
 "tbb" = (
-/obj/machinery/embedded_controller/radio/airlock_controller{
+/obj/machinery/access_button{
+	command = "cycle_exterior";
 	frequency = 1379;
-	id_tag = "satellite_aux_airlock";
-	layer = 3.3;
-	pixel_x = 0;
-	pixel_y = 25;
-	req_access_txt = "66";
-	tag_airpump = "satellite_aux_pump";
-	tag_chamber_sensor = "satellite_aux_sensor";
-	tag_exterior_door = "satellite_aux_outer";
-	tag_interior_door = "satellite_aux_inner"
+	master_tag = "satellite_aux_airlock";
+	name = "exterior access button";
+	pixel_x = 20;
+	pixel_y = -20;
+	req_access_txt = "66"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless/catwalk,
 /area/aisat)
 "tcb" = (
 /obj/item/weapon/storage/box/beakers{
@@ -120204,7 +120221,7 @@ aaa
 aah
 aaa
 aaa
-bWt
+tbb
 aaa
 cCq
 cDi
@@ -120975,7 +120992,7 @@ agn
 agm
 cAd
 cCW
-tbb
+bdl
 cCW
 cCW
 cCW
