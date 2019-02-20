@@ -59,7 +59,7 @@
 	name = "mini energy-crossbow"
 	desc = "A weapon favored by many of the syndicates stealth specialists."
 	icon_state = "crossbow"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	item_state = "crossbow"
 	m_amt = 2000
 	origin_tech = "combat=2;magnets=2;syndicate=5"
@@ -94,6 +94,6 @@
 /obj/item/weapon/gun/energy/crossbow/largecrossbow
 	name = "Energy Crossbow"
 	desc = "A weapon favored by syndicate infiltration teams."
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	force = 10
 	m_amt = 200000

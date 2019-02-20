@@ -3,7 +3,7 @@
 	desc = "Useful for sweeping alleys."
 	icon_state = "shotgun"
 	item_state = "shotgun"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
@@ -66,14 +66,14 @@
 	icon_state = "cshotgun"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shotcom
-	w_class = 5
+	w_class = ITEM_SIZE_HUGE
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel
 	name = "double-barreled shotgun"
 	desc = "A true classic."
 	icon_state = "dshotgun"
 	item_state = "shotgun"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
@@ -110,7 +110,7 @@
 			return
 		if(!user.is_busy() && do_after(user, 30, target = src))	//SHIT IS STEALTHY EYYYYY
 			icon_state = "sawnshotgun[open ? "-o" : ""]"
-			w_class = 3.0
+			w_class = ITEM_SIZE_NORMAL
 			item_state = "gun"
 			slot_flags &= ~SLOT_FLAGS_BACK	//you can't sling it on your back
 			slot_flags |= SLOT_FLAGS_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
@@ -169,7 +169,7 @@
 	item_state = "repeater"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/repeater
-	w_class = 5
+	w_class = ITEM_SIZE_HUGE
 	slot_flags = 0
 
 /obj/item/weapon/gun/projectile/shotgun/repeater/attack_self(mob/living/user)
@@ -199,7 +199,7 @@
 	item_state = "bolt-action"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/a3006_clip
-	w_class = 5
+	w_class = ITEM_SIZE_HUGE
 	slot_flags = 0
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action/pump(mob/M)

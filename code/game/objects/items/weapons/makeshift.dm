@@ -4,7 +4,7 @@
 	name = "spear"
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 10
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	slot_flags = SLOT_FLAGS_BACK
 	force_unwielded = 10
 	force_wielded = 18 // Was 13, Buffed - RR
@@ -182,6 +182,6 @@
 	flags = CONDUCT
 	force = 9
 	throwforce = 10
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	m_amt = 1875
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")

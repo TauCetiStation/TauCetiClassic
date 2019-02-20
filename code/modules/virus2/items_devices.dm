@@ -4,7 +4,7 @@
 	name = "\improper Antibody Scanner"
 	desc = "Scans living beings for antibodies in their blood."
 	icon_state = "health"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	item_state = "electronic"
 	flags = CONDUCT
 
