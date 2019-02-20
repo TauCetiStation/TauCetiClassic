@@ -93,6 +93,9 @@
 	poi_list -= src
 	go_out()
 	poi_list.Remove(src)
+	for(var/obj/item/clothing/CL in contents)
+		CL.loc = get_turf(src)
+		visible_message("[CL] falls out \the [src].")
 	for(var/mob/M in src)
 		M.loc = get_turf(src)
 		M.loc.Entered(M)
@@ -516,6 +519,9 @@
 /obj/mecha/proc/destroy()
 	go_out()
 	var/turf/T = get_turf(src)
+	for(var/obj/item/clothing/CL in contents)
+		CL.loc = T
+		visible_message("[CL] falls out \the [src].")
 	if(wreckage)
 		var/obj/effect/decal/mecha_wreckage/WR = new wreckage(T)
 		WR.reliability = rand(33) + 15
@@ -1175,6 +1181,9 @@
 		src.occupant = null
 		src.icon_state = src.reset_icon()+"-open"
 		src.dir = dir_in
+	for(var/obj/item/clothing/CL in contents)
+		CL.loc = get_turf(src)
+		visible_message("[CL] falls out \the [src].")
 	return
 
 /////////////////////////
