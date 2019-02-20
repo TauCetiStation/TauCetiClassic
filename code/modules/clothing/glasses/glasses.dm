@@ -2,7 +2,7 @@
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
-	//w_class = 2.0
+	//w_class = ITEM_SIZE_SMALL
 	//flags = GLASSESCOVERSEYES
 	//slot_flags = SLOT_FLAGS_EYES
 	//var/vision_flags = 0

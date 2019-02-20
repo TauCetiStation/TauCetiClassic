@@ -1,7 +1,7 @@
 /obj/item/weapon/grenade/iedcasing
 	name = "improvised explosive"
 	desc = "A weak, improvised incendiary device."
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/makeshift.dmi'
 	icon_state = "improvised_grenade"
 	item_state = "flashbang"

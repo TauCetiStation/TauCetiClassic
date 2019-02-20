@@ -6,7 +6,7 @@
 	item_state = "staff"
 	fire_sound = 'sound/weapons/emitter.ogg'
 	flags =  CONDUCT
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 	var/max_charges = 3
 	var/charges = 0
 	var/recharge_rate = 14

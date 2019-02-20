@@ -624,7 +624,7 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey slime extract"
 	force = 1.0
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	throwforce = 1.0
 	throw_speed = 3
 	throw_range = 6
@@ -909,7 +909,7 @@
 	desc = "A golem's thick outter shell."
 	icon_state = "golem"
 	item_state = "golem"
-	w_class = 4//bulky item
+	w_class = ITEM_SIZE_LARGE//bulky item
 	allowed = null
 
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -1047,7 +1047,7 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "slime extract"
 	force = 1.0
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	throwforce = 1.0
 	throw_speed = 3
 	throw_range = 6

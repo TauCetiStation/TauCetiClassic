@@ -188,7 +188,7 @@
 			istype(W, /obj/item/weapon/shard) \
 		)
 		inaccurate = 1
-	else if(W.w_class <= 2 && istype(src,/obj/item/weapon/reagent_containers/food/snacks/sliceable))
+	else if(W.w_class <= ITEM_SIZE_SMALL && istype(src,/obj/item/weapon/reagent_containers/food/snacks/sliceable))
 		if(!iscarbon(user))
 			return 1
 		to_chat(user, "<span class='rose'>You slip [W] inside [src].</span>")

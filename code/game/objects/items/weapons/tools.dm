@@ -23,7 +23,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
 	throwforce = 7.0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	m_amt = 150
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
@@ -58,7 +58,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -127,7 +127,7 @@
 	force = 6.0
 	throw_speed = 2
 	throw_range = 9
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	m_amt = 80
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("pinched", "nipped")
@@ -191,7 +191,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 
 	//Cost to make in the autolathe
 	m_amt = 70
@@ -484,7 +484,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "hugewelder"
 	max_fuel = 80
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	m_amt = 70
 	g_amt = 120
 	origin_tech = "engineering=3"
@@ -494,7 +494,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "expwelder"
 	max_fuel = 40
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	m_amt = 70
 	g_amt = 120
 	origin_tech = "materials=4;engineering=4;bluespace=2;phorontech=3"
@@ -521,7 +521,7 @@
 	force = 5.0
 	throwforce = 7.0
 	item_state = "crowbar"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	m_amt = 50
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
