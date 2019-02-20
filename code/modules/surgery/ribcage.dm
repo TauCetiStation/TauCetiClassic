@@ -420,7 +420,6 @@
 	/obj/item/weapon/kitchenknife = 75,
 	/obj/item/weapon/shard = 50
 	)
-	allowed_species = list(IPC)
 
 	min_duration = 80
 	max_duration = 100
