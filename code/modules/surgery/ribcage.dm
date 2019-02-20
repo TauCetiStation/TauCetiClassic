@@ -284,7 +284,7 @@
 	/obj/item/weapon/bonegel = 30,
 	/obj/item/weapon/wrench = 70
 	)
-	allowed_species = list(IPC)
+	allowed_species = null
 
 	min_duration = 70
 	max_duration = 90
