@@ -45,14 +45,6 @@
 	flags = HEADCOVERSEYES|BLOCKHAIR
 	siemens_coefficient = 0.9
 
-//Mime
-/obj/item/clothing/head/beret
-	name = "red beret"
-	desc = "A beret, an artists favorite headwear."
-	icon_state = "beret_red"
-	siemens_coefficient = 0.9
-	body_parts_covered = 0
-
 //Security
 /obj/item/clothing/head/beret/sec
 	name = "officer's beret"

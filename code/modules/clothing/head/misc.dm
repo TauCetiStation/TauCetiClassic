@@ -299,11 +299,6 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
 
-/obj/item/clothing/head/beret/rosa
-	name = "white beret"
-	icon_state = "rosas_hat"
-	item_state = "helmet"
-
 /obj/item/clothing/head/sombrero
 	name = "sombrero"
 	icon_state = "sombrero"
@@ -354,31 +349,6 @@
 /obj/item/clothing/head/chaplain_hood/green
 	name = "green hood"
 	icon_state = "green_hood"
-
-/obj/item/clothing/head/beret/blue
-	name = "blue beret"
-	desc = "Bonjour, but in blue. Smells like baguette, pardon my French."
-	icon_state = "beret_blue"
-
-/obj/item/clothing/head/beret/black
-	name = "black beret"
-	desc = "Bonjour, but in black. Smells like baguette, pardon my French."
-	icon_state = "beret_black"
-
-/obj/item/clothing/head/beret/purple
-	name = "purple beret"
-	desc = "Bonjour, but in purple. Smells like baguette, pardon my French."
-	icon_state = "beret_purple"
-
-/obj/item/clothing/head/beret/centcomofficer
-	name = "officers beret"
-	desc = "A black beret adorned with the shield silver kite shield with an engraved sword of the NanoTrasen security forces, announcing to the world that the wearer is a defender of NanoTrasen."
-	icon_state = "centcomofficerberet"
-
-/obj/item/clothing/head/beret/centcomcaptain
-	name = "captains beret"
-	desc = "A white beret adorned with the shield cobalt kite shield with an engraved sword of the NanoTrasen security forces, worn only by those captaining a vessel of the NanoTrasen Navy."
-	icon_state = "centcomcaptain"
 
 /obj/item/clothing/head/angel_nimb
 	name = "nimb"
