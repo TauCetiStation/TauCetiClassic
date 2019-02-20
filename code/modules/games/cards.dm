@@ -7,7 +7,7 @@
 	desc = "A simple deck of playing cards."
 	icon = 'icons/obj/playing_cards.dmi'
 	icon_state = "deck"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 
 	var/list/cards = list()
 
@@ -144,7 +144,7 @@
 	desc = "Some playing cards."
 	icon = 'icons/obj/playing_cards.dmi'
 	icon_state = "empty"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 	var/concealed = 0
 	var/list/cards = list()

@@ -399,7 +399,7 @@
 	desc = "A token to redeem a piece of equipment. Use it on a mining equipment locker."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_voucher"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 
 /**********************Mining Point Card**********************/
@@ -435,7 +435,7 @@
 	icon_state = "Jaunter"
 	item_state = "electronic"
 	throwforce = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 3
 	throw_range = 5
 	origin_tech = "bluespace=2"
@@ -510,7 +510,7 @@
 	icon_state = "resonator"
 	item_state = "resonator"
 	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vaccuum."
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	force = 10
 	throwforce = 10
 	var/cooldown = 0
@@ -748,7 +748,7 @@
 	icon_state = "lazarus_hypo"
 	item_state = "hypo"
 	throwforce = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 3
 	throw_range = 5
 	var/loaded = 1
@@ -792,7 +792,7 @@
 	icon_state = "patcher"
 	item_state = "patcher"
 	throwforce = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 3
 	throw_range = 5
 	var/loaded = 1

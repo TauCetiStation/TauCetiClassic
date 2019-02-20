@@ -601,15 +601,6 @@
 
 
 /mob/living/carbon/slime/show_inv(mob/user)
-
-	user.set_machine(src)
-	var/dat = {"
-	<B><HR><FONT size=3>[name]</FONT></B>
-	<BR><HR><BR>
-	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
-	<BR>"}
-	user << browse(entity_ja(dat), text("window=mob[name];size=340x480"))
-	onclose(user, "mob[name]")
 	return
 
 /mob/living/carbon/slime/updatehealth()
@@ -633,7 +624,7 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey slime extract"
 	force = 1.0
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	throwforce = 1.0
 	throw_speed = 3
 	throw_range = 6
@@ -918,7 +909,7 @@
 	desc = "A golem's thick outter shell."
 	icon_state = "golem"
 	item_state = "golem"
-	w_class = 4//bulky item
+	w_class = ITEM_SIZE_LARGE//bulky item
 	allowed = null
 
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -1056,7 +1047,7 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "slime extract"
 	force = 1.0
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	throwforce = 1.0
 	throw_speed = 3
 	throw_range = 6

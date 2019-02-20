@@ -7,6 +7,8 @@
 var/list/blacklisted_builds = list(
 	"1407" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
 	"1408" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
+	"1428" = "bug causing right-click menus to show too many verbs that's been fixed in version 1429",
+	"1434" = "bug turf images weren't reapplied properly when moving around the map",
 	)
 
 	/*
@@ -203,7 +205,7 @@ var/list/blacklisted_builds = list(
 		if(config.byond_version_recommend && byond_version < config.byond_version_recommend)
 			to_chat(src, "<span class='warning bold'>Your version of Byond is less that recommended. Update to the [config.byond_version_recommend] for better experiense.</span>")
 
-		if((byond_version >= 512 && (!byond_build || byond_build < 1386)) || num2text(byond_build) in blacklisted_builds)
+		if((byond_version >= 512 && (!byond_build || byond_build < 1421)) || num2text(byond_build) in blacklisted_builds)
 			to_chat(src, "<span class='warning bold'>You are using the inappropriate Byond version. Update to the latest Byond version or install another from http://www.byond.com/download/build/ for playing on our server.</span>")
 			message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a inappropriate byond version: [byond_version].[byond_build]. Connection rejected.</span>")
 			log_access("Failed Login: [key] [computer_id] [address] - inappropriate byond version: [byond_version].[byond_build])")
@@ -439,6 +441,12 @@ var/list/blacklisted_builds = list(
 
 #undef TOPIC_SPAM_DELAY
 #undef UPLOAD_LIMIT
+
+/client/Click(atom/object, atom/location, control, params)
+	var/list/modifiers = params2list(params)
+	if(modifiers["drag"])
+		return
+	..()
 
 //checks if a client is afk
 //3000 frames = 5 minutes
