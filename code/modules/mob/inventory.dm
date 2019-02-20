@@ -368,6 +368,9 @@ var/list/slot_equipment_priority = list(
 	if(!istype(C))
 		return 0
 
+	if(usr.is_busy())
+		return
+
 	if(C.equipping) // Item is already being (un)equipped
 		return 0
 
@@ -389,6 +392,9 @@ var/list/slot_equipment_priority = list(
 		if(H.wear_suit)
 			to_chat(H, "<span class='red'>You need to take off [H.wear_suit.name] first.</span>")
 			return
+
+	if(usr.is_busy())
+		return
 
 	if(C.equipping) // Item is already being equipped
 		return 0
