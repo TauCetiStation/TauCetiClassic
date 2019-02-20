@@ -7,6 +7,11 @@
 				if(SLOT_HEAD, SLOT_BACK)
 					to_chat(src, "<span class='notice'>You have no idea how humans do this.</span>")
 					return
+		if(iscarbon(src))
+			var/mob/living/carbon/C = src
+			if(slot in C.check_obscured_slots())
+				to_chat(C, "<span class='warning'>You can't reach that! Something is covering it.</span>")
+				return
 		if (istype(W, /obj/item/clothing))
 			var/obj/item/clothing/C = W
 			if(C.rig_restrict_helmet)
@@ -161,6 +166,7 @@ var/list/slot_equipment_priority = list(
 		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
+		W.slot_equipped = SLOT_L_HAND
 //		l_hand.screen_loc = ui_lhand
 		W.equipped(src,SLOT_L_HAND)
 		if(client)	client.screen |= W
@@ -182,6 +188,7 @@ var/list/slot_equipment_priority = list(
 		W.layer = ABOVE_HUD_LAYER
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
+		W.slot_equipped = SLOT_R_HAND
 //		r_hand.screen_loc = ui_rhand
 		W.equipped(src,SLOT_R_HAND)
 		if(client)	client.screen |= W
@@ -217,6 +224,7 @@ var/list/slot_equipment_priority = list(
 		W.plane = initial(W.plane)
 		W.appearance_flags = initial(W.appearance_flags)
 		W.dropped()
+		W.slot_equipped = initial(W.slot_equipped)
 		return 0
 
 // Removes an item from inventory and places it in the target atom
@@ -277,15 +285,19 @@ var/list/slot_equipment_priority = list(
 	return
 
 //This differs from remove_from_mob() in that it checks canremove first.
-/mob/proc/unEquip(obj/item/I, force = 0) //Force overrides NODROP for things like wizarditis and admin undress.
+/mob/proc/unEquip(obj/item/I, force = FALSE) //Force overrides NODROP for things like wizarditis and admin undress.
 	if(!I) //If there's nothing to drop, the drop is automatically successful.
-		return 1
+		return TRUE
 
-	if(!I.canremove && !force)
-		return 0
+	if(!force)
+		if(!I.canremove)
+			return FALSE
+		if(I.slot_equipped && (I.slot_equipped in check_obscured_slots()))
+			to_chat(src, "<span class='warning'>You can't reach that! Something is covering it.</span>")
+			return FALSE
 
 	drop_from_inventory(I)
-	return 1
+	return TRUE
 
 // Attemps to remove an object on a mob. Will drop item to ground or move into target.
 /mob/proc/remove_from_mob(obj/O, atom/target)
@@ -304,6 +316,7 @@ var/list/slot_equipment_priority = list(
 		else
 			I.forceMove(loc)
 		I.dropped(src)
+		I.slot_equipped = initial(I.slot_equipped)
 	return 1
 
 //Returns the item equipped to the specified slot, if any.
@@ -378,6 +391,97 @@ var/list/slot_equipment_priority = list(
 		items += w_uniform
 
 	return items
+
+/mob/proc/check_obscured_slots()
+	return
+
+/mob/living/carbon/check_obscured_slots()
+	var/list/obscured = list()
+	var/hidden_slots = NONE
+
+	for(var/obj/item/I in get_equipped_items() - list(l_hand, r_hand))
+		hidden_slots |= I.flags_inv
+
+	if(hidden_slots & HIDEMASK)
+		obscured |= SLOT_WEAR_MASK
+	if(hidden_slots & HIDEEYES)
+		obscured |= SLOT_GLASSES
+	if(hidden_slots & HIDEEARS)
+		obscured |= SLOT_EARS
+		obscured |= SLOT_L_EAR
+		obscured |= SLOT_R_EAR
+	if(hidden_slots & HIDEGLOVES)
+		obscured |= SLOT_GLOVES
+	if(hidden_slots & HIDEJUMPSUIT)
+		obscured |= SLOT_W_UNIFORM
+	if(hidden_slots & HIDESHOES)
+		obscured |= SLOT_SHOES
+	if(hidden_slots & HIDESUITSTORAGE)
+		obscured |= SLOT_S_STORE
+
+	return obscured
+
+/mob/proc/slot_id_to_name(slot)
+	switch(slot)
+		if(SLOT_BACK)
+			return "back"
+		if(SLOT_WEAR_MASK)
+			return "mask"
+		if(SLOT_HANDCUFFED)
+			return "hands"
+		if(SLOT_L_HAND)
+			return "left hand"
+		if(SLOT_R_HAND)
+			return "right hand"
+		if(SLOT_BELT)
+			return "belt"
+		if(SLOT_WEAR_ID)
+			return "suit"
+		if(SLOT_L_EAR)
+			return "left ear"
+		if(SLOT_R_EAR)
+			return "right ear"
+		if(SLOT_GLASSES)
+			return "glasses"
+		if(SLOT_GLOVES)
+			return "gloves"
+		if(SLOT_HEAD)
+			return "head"
+		if(SLOT_SHOES)
+			return "shoes"
+		if(SLOT_WEAR_SUIT)
+			return "exosuit"
+		if(SLOT_W_UNIFORM)
+			return "uniform"
+		if(SLOT_L_STORE)
+			return "left pocket"
+		if(SLOT_R_STORE)
+			return "right pocket"
+		if(SLOT_S_STORE)
+			return "suit storage"
+		if(SLOT_IN_BACKPACK)
+			return "backpack"
+		if(SLOT_LEGCUFFED)
+			return "legs"
+		if(SLOT_TIE)
+			return "suit"
+		if(SLOT_EARS)
+			return "ears"
+		else
+			return "error=[slot]"
+
+/mob/living/carbon/ian/slot_id_to_name(slot)
+	if(slot == SLOT_NECK)
+		return "neck"
+	else
+		return ..()
+
+/mob/proc/CanUseTopicInventory(mob/target)
+	if(!canmove || !in_range(src, target) || isdrone(src) || incapacitated() || !Adjacent(target))
+		return FALSE
+
+	if(ishuman(src) || isrobot(src) || ismonkey(src) || isIAN(src) || isalienadult(src))
+		return TRUE
 
 //Create delay for equipping
 /mob/proc/delay_clothing_u_equip(obj/item/clothing/C) // Bone White - delays unequipping by parameter.  Requires W to be /obj/item/clothing/

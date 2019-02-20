@@ -8,7 +8,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	item_state = "locator"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/device/gps/attack_self(mob/user)
 	var/turf/T = get_turf(src)
@@ -20,7 +20,7 @@
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "measuring"
 	item_state = "measuring"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 
 //todo: dig site tape
 
@@ -31,9 +31,9 @@
 	icon_state = "fossil_satchel"
 	item_state = "fossil_satchel"
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_POCKET
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	storage_slots = 50
-	max_w_class = 3
+	max_w_class = ITEM_SIZE_NORMAL
 	can_hold = list(
  		"/obj/item/weapon/fossil",
  		"/obj/item/weapon/ore/strangerock")
@@ -50,7 +50,7 @@
 	drill_sound = 'sound/weapons/thudswoosh.ogg'
 	drill_verb = "drilling"
 	force = 15.0
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	attack_verb = list("drills")
 	hitsound = 'sound/weapons/circsawhit.ogg'
 

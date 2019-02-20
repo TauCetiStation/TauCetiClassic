@@ -379,7 +379,7 @@
 	//world << "[href] ; [href_list[href]]"
 
 	for(var/area/A in all_areas)
-		A.master.powerupdate = 3
+		A.powerupdate = 3
 
 	if( href_list["cmode"] )
 		chargemode = !chargemode

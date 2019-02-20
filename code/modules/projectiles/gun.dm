@@ -7,7 +7,7 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 2000
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 5

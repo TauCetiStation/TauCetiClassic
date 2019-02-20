@@ -4,7 +4,7 @@
 	icon_state = "voice0"
 	item_state = "flashbang"	//looks exactly like a flash (and nothing like a flashbang)
 	action_button_name = "Toggle Hailer"
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	flags = CONDUCT
 
 	var/spamcheck = 0

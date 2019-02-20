@@ -72,7 +72,7 @@
 	force = 10
 	hitsound = 'sound/items/chair_fall.ogg'
 	throwforce = 10
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 	var/obj/structure/stool/origin_stool = null
 
 /obj/item/weapon/stool/throw_at()

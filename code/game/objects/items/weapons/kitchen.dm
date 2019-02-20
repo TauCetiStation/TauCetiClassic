@@ -18,7 +18,7 @@
  */
 /obj/item/weapon/kitchen/utensil
 	force = 0
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
@@ -125,7 +125,7 @@
 	sharp = 1
 	edge = 1
 	force = 10.0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 6.0
 	throw_speed = 3
 	throw_range = 6
@@ -149,7 +149,7 @@
 	desc = "The bluntest of blades."
 	icon_state = "pknife"
 	force = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 0
 
 /obj/item/weapon/kitchenknife/ritual
@@ -168,7 +168,7 @@
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
 	flags = CONDUCT
 	force = 15.0
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	throwforce = 8.0
 	throw_speed = 3
 	throw_range = 6
@@ -197,7 +197,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 7
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
 
 /obj/item/weapon/kitchen/rollingpin/attack(mob/living/M, mob/living/user)
@@ -243,7 +243,7 @@
 	desc = "A metal tray to lay food on."
 	throwforce = 12.0
 	throw_range = 5
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	flags = CONDUCT
 	m_amt = 3000
 	/* // NOPE
@@ -262,9 +262,9 @@
 	var/miscfood_amt = 0
 	*/
 	var/list/carrying = list() // List of things on the tray. - Doohl
-	var/max_carry = 10 // w_class = 1 -- takes up 1
-					   // w_class = 2 -- takes up 3
-					   // w_class = 3 -- takes up 5
+	var/max_carry = 10 // w_class = ITEM_SIZE_TINY -- takes up 1
+					   // w_class = ITEM_SIZE_SMALL -- takes up 3
+					   // w_class = ITEM_SIZE_NORMAL -- takes up 5
 
 /obj/item/weapon/tray/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 
@@ -469,7 +469,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 3
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
 
 /obj/item/weapon/kitchen/mould/bear
