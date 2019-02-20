@@ -95,7 +95,7 @@
 	var/mob/living/carbon/human/target = G.affecting
 	if(G.affecting.stat != DEAD)
 		for(var/state in 1 to 3)
-			switch(stage)
+			switch(state)
 				if(1)
 					user.visible_message("<span class='warning'>[user] puts his hand on [target]'s forehead!</span>")
 				if(2)
