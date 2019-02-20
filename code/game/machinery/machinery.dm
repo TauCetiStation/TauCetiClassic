@@ -275,7 +275,7 @@ Class Procs:
 	add_fingerprint(usr)
 
 	var/area/A = get_area(src)
-	A.master.powerupdate = 1
+	A.powerupdate = 1
 
 	return TRUE
 
@@ -340,7 +340,7 @@ Class Procs:
 		return 1
 
 	var/area/A = get_area(src)
-	A.master.powerupdate = 1 // <- wtf is this var and its comments...
+	A.powerupdate = 1 // <- wtf is this var and its comments...
 
 	interact(user)
 	return 0

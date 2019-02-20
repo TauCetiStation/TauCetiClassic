@@ -83,7 +83,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] can't hold any more signs.</span>")
 
-	else if(mybag)
+	else if(mybag && !istype(I, /obj/item/weapon/reagent_containers/glass/bucket))
 		mybag.attackby(I, user)
 
 /obj/structure/janitorialcart/on_reagent_change()
@@ -293,4 +293,4 @@
 	desc = "A keyring with a small steel key, and a pink fob reading \"Pussy Wagon\"."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "keys"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY

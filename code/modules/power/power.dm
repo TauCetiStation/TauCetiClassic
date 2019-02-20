@@ -61,23 +61,23 @@
 	if(!use_power)
 		return 1
 
-	var/area/A = src.loc.loc		// make sure it's in an area
-	if(!A || !isarea(A) || !A.master)
+	var/area/A = get_area(src)		// make sure it's in an area
+	if(!A)
 		return 0					// if not, then not powered
 	if(chan == -1)
 		chan = power_channel
-	return A.master.powered(chan)	// return power status of the area
+	return A.powered(chan)	// return power status of the area
 
 // increment the power usage stats for an area
 /obj/machinery/proc/use_power(amount, chan = -1, autocalled = 0) // defaults to power_channel
 	var/area/A = get_area(src)		// make sure it's in an area
-	if(!A || !isarea(A) || !A.master)
+	if(!A)
 		return
 	if(chan == -1)
 		chan = power_channel
-	A.master.use_power(amount, chan)
+	A.use_power(amount, chan)
 	if(!autocalled)
-		A.master.powerupdate = 2	// Decremented by 2 each GC tick, since it's not auto power change we're going to update power twice.
+		A.powerupdate = 2	// Decremented by 2 each GC tick, since it's not auto power change we're going to update power twice.
 	return 1
 
 /obj/machinery/proc/addStaticPower(value, powerchannel)

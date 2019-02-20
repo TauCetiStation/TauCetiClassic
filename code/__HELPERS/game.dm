@@ -21,19 +21,11 @@
 		return 1
 	return 0
 
-/proc/get_area_master(const/O)
-	var/area/A = get_area(O)
-
-	if (isarea(A))
+/proc/get_area(atom/A)
+	if(isarea(A))
 		return A
-
-/proc/get_area(O)
-	if(isarea(O))
-		return O
-	var/turf/loc = get_turf(O)
-	if(loc)
-		var/area/res = loc.loc
-		. = res
+	var/turf/T = get_turf(A)
+	return T ? T.loc : null
 
 /proc/get_area_name(N) //get area by its name
 	for(var/area/A in all_areas)
@@ -322,11 +314,11 @@
 
 /proc/mobs_in_area(area/the_area, client_needed=0, moblist=mob_list)
 	var/list/mobs_found[0]
-	var/area/our_area = get_area_master(the_area)
+	var/area/our_area = get_area(the_area)
 	for(var/mob/M in moblist)
 		if(client_needed && !M.client)
 			continue
-		if(our_area != get_area_master(M))
+		if(our_area != get_area(M))
 			continue
 		mobs_found += M
 	return mobs_found

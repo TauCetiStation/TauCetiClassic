@@ -581,7 +581,7 @@
 		if (((stat & BROKEN) || malfhack) \
 				&& !opened \
 				&& W.force >= 5 \
-				&& W.w_class >= 3.0 \
+				&& W.w_class >= ITEM_SIZE_NORMAL \
 				&& prob(20) )
 			opened = 2
 			user.visible_message("\red The APC cover was knocked down with the [W.name] by [user.name]!", \
@@ -1216,11 +1216,10 @@
 /obj/machinery/power/apc/proc/break_lights(skip_sound_and_sparks)
 	set waitfor = FALSE
 
-	for(var/area/A in area.related)
-		for(var/obj/machinery/light/L in A)
-			L.on = 1
-			L.broken(skip_sound_and_sparks)
-			stoplag()
+	for(var/obj/machinery/light/L in area)
+		L.on = 1
+		L.broken(skip_sound_and_sparks)
+		stoplag()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
 	if(!prob(prb))

@@ -20,6 +20,8 @@
 		new /obj/item/clothing/mask/bandana/red(src)
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/head/beret/sec(src)
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/head/sec_peakedcap(src)
 	#ifdef NEWYEARCONTENT
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/head/santa(src)
@@ -135,8 +137,8 @@
 
 /obj/structure/closet/wardrobe/atmospherics_yellow
 	name = "atmospherics wardrobe"
-	icon_state = "yellow"
-	icon_closed = "yellow"
+	icon_state = "atmos"
+	icon_closed = "atmos"
 
 /obj/structure/closet/wardrobe/atmospherics_yellow/PopulateContents()
 	for (var/i in 1 to 3)
