@@ -812,7 +812,7 @@
 	var/pow_chan
 	if(A)
 		for(var/c in use_channels)
-			if(A.master && A.master.powered(c))
+			if(A.powered(c))
 				pow_chan = c
 				break
 	return pow_chan
@@ -832,15 +832,6 @@
 	if(!chassis) return
 	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='?src=\ref[src];toggle_relay=1'>[pr_energy_relay.active()?"Dea":"A"]ctivate</a>"
 
-/*	proc/dynusepower(amount)
-		if(!equip_ready) //enabled
-			var/area/A = get_area(chassis)
-			var/pow_chan = get_power_channel(A)
-			if(pow_chan)
-				A.master.use_power(amount*coeff, pow_chan)
-				return 1
-		return chassis.dynusepower(amount)*/
-
 /datum/global_iterator/mecha_energy_relay/process(var/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/ER)
 	if(!ER.chassis || ER.chassis.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
 		stop()
@@ -857,13 +848,13 @@
 		if(A)
 			var/pow_chan
 			for(var/c in list(EQUIP,ENVIRON,LIGHT))
-				if(A.master.powered(c))
+				if(A.powered(c))
 					pow_chan = c
 					break
 			if(pow_chan)
 				var/delta = min(12, ER.chassis.cell.maxcharge-cur_charge)
 				ER.chassis.give_power(delta)
-				A.master.use_power(delta*ER.coeff, pow_chan)
+				A.use_power(delta*ER.coeff, pow_chan)
 	return
 
 

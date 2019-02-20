@@ -17,7 +17,7 @@
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 
 
 /obj/item/weapon/grab/atom_init(mapload, mob/victim)

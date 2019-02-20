@@ -18,6 +18,7 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "donutbox6"
 	name = "donut box"
+	desc = "Very tasty donuts. Security staff will rate them."
 	var/icon_type = "donut"
 
 /obj/item/weapon/storage/fancy/update_icon(itemremoved = 0)
@@ -187,7 +188,7 @@
 	desc = "A box of crayons for all your rune drawing needs."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	storage_slots = 6
 	icon_type = "crayon"
 	can_hold = list(
@@ -230,7 +231,7 @@
 	desc = "A box of glowsticks (Do not eat)."
 	icon = 'icons/obj/glowsticks.dmi'
 	icon_state = "sticksbox"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	storage_slots = 5
 	icon_type = "glowstick"
 	can_hold = list(
@@ -274,7 +275,7 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigpacket"
 	item_state = "cigpacket"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	throwforce = 2
 	slot_flags = SLOT_FLAGS_BELT
 	storage_slots = 6
@@ -364,7 +365,7 @@
 	icon = 'icons/obj/vialbox.dmi'
 	icon_state = "vialbox0"
 	item_state = "syringe_kit"
-	max_w_class = 3
+	max_w_class = ITEM_SIZE_NORMAL
 	can_hold = list("/obj/item/weapon/reagent_containers/glass/beaker/vial")
 	storage_slots = 6
 	req_access = list(access_virology)

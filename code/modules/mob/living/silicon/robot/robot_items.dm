@@ -211,7 +211,7 @@
 	excavation_amount = 15
 	drill_sound = 'sound/items/Crowbar.ogg'
 	drill_verb = "clearing"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/weapon/pickaxe/cyb/attack_self(mob/user)
 	var/ampr = copytext(reject_bad_text(input(user,"Excavation depth?","Set excavation depth","")),1,MAX_NAME_LEN)
