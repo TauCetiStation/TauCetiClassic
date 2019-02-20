@@ -3,7 +3,7 @@
 	desc = "Talk through this."
 	icon_state = "intercom"
 	anchored = 1
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	canhear_range = 2
 	flags = CONDUCT | NOBLOODY
 	var/number = 0

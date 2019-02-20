@@ -8,7 +8,7 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
 	force = 16
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0

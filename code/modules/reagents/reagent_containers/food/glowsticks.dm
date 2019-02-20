@@ -2,7 +2,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/glowstick
 	name = "glowstick"
 	desc = ""
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/glowsticks.dmi'
 	icon_state = null
 	item_state = null

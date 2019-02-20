@@ -65,9 +65,8 @@
 /mob/living/carbon/ian/UnarmedAttack(atom/A)
 	..()
 	if(ian_action)
-		if(isHandsBusy)
+		if(is_busy(A))
 			return
-		isHandsBusy = TRUE
 
 		face_atom(A)
 /*
@@ -78,7 +77,6 @@
 		switch(ian_action)
 			if(IAN_LICK)
 				if(!do_after(src, 15, target = A))
-					isHandsBusy = FALSE
 					return
 
 				var/message = "<span class='notice'>[src] licks [A].</span>"
@@ -126,7 +124,6 @@
 				if(A == src) //Resets current smell in memory.
 					nose_memory = null
 					to_chat(src, "<span class='notice'>Dropped current smell.</span>")
-					isHandsBusy = FALSE
 					return
 
 				if(isturf(A)) //Visualize smells in X range around us.
@@ -135,11 +132,9 @@
 					else
 						visible_message("<span class='notice'>[src] sniffs around.</span>")
 						sniff_around()
-					isHandsBusy = FALSE
 					return
 
 				if(!do_after(src, 10, target = A))
-					isHandsBusy = FALSE
 					return
 
 				var/smell
@@ -192,7 +187,6 @@
 
 				visible_message("<span class='notice'>[src] sniffs [A].</span>")
 
-		isHandsBusy = FALSE
 /*
 	TONGUE
 	NOSE
@@ -371,13 +365,7 @@
 			if(health >= config.health_threshold_crit)
 				help_shake_act(M)
 				return
-			if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
-				to_chat(M, "<span class='notice'>Remove your mask!</span>")
-				return
-			if(head && (head.flags & HEADCOVERSMOUTH))
-				to_chat(M, "<span class='notice'>Remove his [head]!</span>")
-				return
-			un_equip_or_action(M, "CPR")
+			INVOKE_ASYNC(src, .proc/perform_cpr, M)
 		if ("hurt")
 			M.do_attack_animation(src)
 			if(is_armored(M, 35))
