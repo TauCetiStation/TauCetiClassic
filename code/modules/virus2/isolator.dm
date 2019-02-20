@@ -225,4 +225,5 @@
 				<u>Additional Notes:</u>&nbsp;
 "}
 
+	P.update_icon()
 	state("The nearby computer prints out a report.")

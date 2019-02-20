@@ -441,8 +441,8 @@
 	icon_state = "matchbox"
 	item_state = "zippo"
 	storage_slots = 10
-	w_class = 1
-	slot_flags = SLOT_BELT
+	w_class = ITEM_SIZE_TINY
+	slot_flags = SLOT_FLAGS_BELT
 	can_hold = list("/obj/item/weapon/match")
 
 /obj/item/weapon/storage/box/matches/atom_init()

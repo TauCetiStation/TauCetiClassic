@@ -662,7 +662,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	force = 2
 	throwforce = 5
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	var/status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/switchcount = 0	// number of times switched
@@ -683,7 +683,7 @@
 	brightness_power = 3
 
 /obj/item/weapon/light/tube/large
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	name = "large light tube"
 	brightness_range = 15
 	brightness_power = 4

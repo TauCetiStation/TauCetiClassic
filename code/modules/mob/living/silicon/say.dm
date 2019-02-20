@@ -205,12 +205,12 @@
 	var/verb = say_quote(message)
 
 
-	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[verb], \"[message]\"</span></span></i>"
+	var/rendered = "<i><span class='binarysay'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[verb], \"[message]\"</span></span></i>"
 
 	for (var/mob/living/S in alive_mob_list)
 		if(S.robot_talk_understand && (S.robot_talk_understand == robot_talk_understand)) // This SHOULD catch everything caught by the one below, but I'm not going to change it.
 			if(istype(S , /mob/living/silicon/ai))
-				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(src.name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
+				var/renderedAI = "<i><span class='binarysay'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(src.name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
 				S.show_message(renderedAI, 2)
 			else
 				var/mob/living/silicon/robot/borg = S
@@ -224,7 +224,7 @@
 
 		else if (S.binarycheck())
 			if(istype(S , /mob/living/silicon/ai))
-				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(src.name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
+				var/renderedAI = "<i><span class='binarysay'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(src.name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
 				S.show_message(renderedAI, 2)
 			else
 				S.show_message(rendered, 2)
@@ -241,12 +241,12 @@
 		verb = "beeps"
 		message_beep = "beep beep beep"
 
-		rendered = "<i><span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[verb], \"[message_beep]\"</span></span></i>"
+		rendered = "<i><span class='binarysay'><span class='name'>[voice_name]</span> <span class='message'>[verb], \"[message_beep]\"</span></span></i>"
 
 		for (var/mob/M in heard)
 			M.show_message(rendered, 2)
 
-	rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[verb], \"[message]\"</span></span></i>"
+	rendered = "<i><span class='binarysay'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[verb], \"[message]\"</span></span></i>"
 
 	for (var/mob/M in observer_list)
 		M.show_message(rendered, 2)

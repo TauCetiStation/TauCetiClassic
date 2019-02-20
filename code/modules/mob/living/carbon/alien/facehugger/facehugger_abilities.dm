@@ -119,7 +119,7 @@ This is chestburster mechanic for damaging
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 
 
 /obj/item/weapon/larva_bite/atom_init(mapload, mob/victim)
@@ -355,7 +355,7 @@ This is facehugger Attach procs
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "facehugger"
 	item_state = "facehugger"
-	w_class = 1 //note: can be picked up by aliens unlike most other items of w_class below 4
+	w_class = ITEM_SIZE_TINY //note: can be picked up by aliens unlike most other items of w_class below 4
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | MASKINTERNALS
 	body_parts_covered = FACE|EYES
 	throw_range = 5
@@ -439,9 +439,9 @@ This is facehugger Attach procs
 
 	if(iscarbon(L))
 		var/mob/living/carbon/target = L
-		var/target_slot = slot_wear_mask
+		var/target_slot = SLOT_WEAR_MASK
 		if(isIAN(L))
-			target_slot = slot_head
+			target_slot = SLOT_HEAD
 		target.equip_to_slot(src, target_slot)
 		if(ismonkey(L)) // wtf is there in monkeys equip proc, that they need this?! ~zve
 			target.contents += src // Monkey sanity check - Snapshot
@@ -542,7 +542,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 
 
 /obj/item/weapon/fh_grab/atom_init(mapload, mob/victim)

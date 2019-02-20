@@ -5,9 +5,9 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "s-casing"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 1
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	var/caliber = null							//Which kind of guns it can be loaded into
 	var/projectile_type = null					//The bullet type to create when New() is called
 	var/obj/item/projectile/BB = null 			//The loaded bullet
@@ -61,11 +61,11 @@
 	icon_state = "357"
 	icon = 'icons/obj/ammo.dmi'
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	item_state = "syringe_kit"
 	m_amt = 500
 	throwforce = 2
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 4
 	throw_range = 10
 	var/list/stored_ammo = list()

@@ -7,8 +7,8 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
 	item_state = "electronic"
-	w_class = 2.0
-	slot_flags = SLOT_ID | SLOT_BELT
+	w_class = ITEM_SIZE_SMALL
+	slot_flags = SLOT_FLAGS_ID | SLOT_FLAGS_BELT
 
 	//Main variables
 	var/owner = null

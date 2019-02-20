@@ -34,6 +34,8 @@
 
 	faction = "pirate"
 
+	animalistic = FALSE
+
 /mob/living/simple_animal/hostile/pirate/ranged
 	name = "Pirate Gunner"
 	icon_state = "pirateranged"

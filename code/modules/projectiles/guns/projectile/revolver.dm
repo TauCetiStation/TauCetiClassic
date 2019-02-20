@@ -242,8 +242,8 @@
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off
 	icon_state = "sawnshotgun"
-	w_class = 3.0
-	slot_flags = SLOT_BELT
+	w_class = ITEM_SIZE_NORMAL
+	slot_flags = SLOT_FLAGS_BELT
 	name = "sawn-off shotgun"
 	desc = "Omar's coming!"
 	short = 1

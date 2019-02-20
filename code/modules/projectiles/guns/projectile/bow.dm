@@ -6,7 +6,7 @@
 	icon_state = "bolt"
 	item_state = "bolt"
 	throwforce = 8
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	sharp = 1
 	edge = 0
 
@@ -42,11 +42,11 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow-solid"
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 	flags =  CONDUCT
-	slot_flags = SLOT_BELT | SLOT_BACK
+	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 
 	var/tension = 0                       // Current draw on the bow.
 	var/max_tension = 5                   // Highest possible tension.

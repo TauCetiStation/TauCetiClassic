@@ -204,6 +204,13 @@ function output(message, flag) {
 		opts.lastPang = Date.now();
 	}
 
+	var atBottom = false;
+
+	var bodyHeight = $('body').height();
+	var messagesHeight = $messages.outerHeight();
+	var scrollPos = $('body,html').scrollTop();
+	var compensateScroll = 0;
+
 	//fix cyrillic characters displaying for most non-CP1251 clients (breaks some other things, but for russian server not so important)
 	var message2 = "";
 	for (var i = 0; i < message.length; i++) {
@@ -219,42 +226,6 @@ function output(message, flag) {
 
 	//also replace for 0xFF char
 	message = message.replace(/¶/g, "я");
-
-	//Scroll stuff (todo: why we handle this before messageCombining?)
-	var atBottom = false;
-
-	var bodyHeight = $('body').height();
-	var messagesHeight = $messages.outerHeight();
-	var scrollPos = $('body,html').scrollTop();
-
-	//Should we snap the output to the bottom?
-	if (bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance) {
-		atBottom = true;
-		if ($('#newMessages').length) {
-			$('#newMessages').remove();
-		}
-	//If not, put the new messages box in
-	} else {
-		if ($('#newMessages').length) {
-			var messages = $('#newMessages .number').text();
-			messages = parseInt(messages);
-			messages++;
-			$('#newMessages .number').text(messages);
-			if (messages == 2) {
-				$('#newMessages .messageWord').append('s');
-			}
-		} else {
-			$messages.after('<a href="#" id="newMessages"><span class="number">1</span> new <span class="messageWord">message</span> <i class="icon-double-angle-down"></i></a>');
-		}
-	}
-
-	opts.messageCount++;
-
-	//Pop the top message off if history limit reached
-	if (opts.messageCount >= opts.messageLimit) {
-		$messages.children('div.entry:first-child').remove();
-		opts.messageCount--; //I guess the count should only ever equal the limit
-	}
 
 	// Create the element - if combining is off, we use it, and if it's on, we
 	// might discard it bug need to check its text content. Some messages vary
@@ -283,7 +254,6 @@ function output(message, flag) {
 					"font-size": "0.7em"
 				}, 100);
 			});
-			opts.messageCount--;
 			handled = true;
 		}
 	}
@@ -294,6 +264,9 @@ function output(message, flag) {
 
 		$last_message = trimmed_message;
 		$messages[0].appendChild(entry);
+		
+		opts.messageCount++;
+
 		$(entry).find("img.icon").error(iconError);
 
 		var to_linkify = $(entry).find(".linkify");
@@ -315,8 +288,39 @@ function output(message, flag) {
 		}
 	}
 
+	//Should we snap the output to the bottom?
+	if (bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance) {
+		atBottom = true;
+		if ($('#newMessages').length) {
+			$('#newMessages').remove();
+		}
+	//If not, put the new messages box in
+	} else {
+		if ($('#newMessages').length) {
+			var messages = $('#newMessages .number').text();
+			messages = parseInt(messages);
+			messages++;
+			$('#newMessages .number').text(messages);
+			if (messages == 2) {
+				$('#newMessages .messageWord').append('s');
+			}
+		} else {
+			$messages.after('<a href="#" id="newMessages"><span class="number">1</span> new <span class="messageWord">message</span> <i class="icon-double-angle-down"></i></a>');
+		}
+	}
+
+	//Pop the top message off if history limit reached
+	if (opts.messageCount >= opts.messageLimit) {
+		var $firstMsg = $messages.children('div.entry:first-child');
+		compensateScroll = $firstMsg.outerHeight();
+		$firstMsg.remove();
+		opts.messageCount--;
+	}
+
 	if (atBottom) {
 		$('body,html').scrollTop($messages.outerHeight());
+	} else if(compensateScroll) {
+		$('body,html').scrollTop(scrollPos - compensateScroll);
 	}
 }
 
@@ -849,22 +853,16 @@ $(function() {
 	});
 
 	$('#decreaseLineHeight').click(function(e) {
-		var Heightline = parseFloat($("body").css('line-height'));
-		var Sizefont = parseFloat($("body").css('font-size'));
-		var lineheightvar = Heightline / Sizefont;
-		lineheightvar -= 0.1;
-		lineheightvar = lineheightvar.toFixed(1);
+		var lineheightvar = parseInt($("body").css('line-height'));
+		lineheightvar = (lineheightvar - 1) + "px";
 		$("body").css({'line-height': lineheightvar});
 		setCookie('lineheight', lineheightvar, 365);
 		output('<span class="internal boldnshit">Line height set to '+lineheightvar+'</span>', 'internal');
 	});
 
 	$('#increaseLineHeight').click(function(e) {
-		var Heightline = parseFloat($("body").css('line-height'));
-		var Sizefont = parseFloat($("body").css('font-size'));
-		var lineheightvar = Heightline / Sizefont;
-		lineheightvar += 0.1;
-		lineheightvar = lineheightvar.toFixed(1);
+		var lineheightvar = parseInt($("body").css('line-height'));
+		lineheightvar = (lineheightvar + 1) + "px";
 		$("body").css({'line-height': lineheightvar});
 		setCookie('lineheight', lineheightvar, 365);
 		output('<span class="internal boldnshit">Line height set to '+lineheightvar+'</span>', 'internal');

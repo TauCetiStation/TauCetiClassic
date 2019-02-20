@@ -100,7 +100,7 @@
 	icon_state = "black"
 	item_state = "bl_suit"
 	item_color = "black"
-	w_class = 4//bulky item
+	w_class = ITEM_SIZE_LARGE//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -740,12 +740,12 @@
 	name = "bath towel"
 	icon_state = "bathtowel"
 	item_color = "bathtowel"
-	slot_flags = SLOT_HEAD | SLOT_ICLOTHING
+	slot_flags = SLOT_FLAGS_HEAD | SLOT_FLAGS_ICLOTHING
 
 /obj/item/clothing/under/bathtowel/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if(slot == slot_w_uniform)
+	if(slot == SLOT_W_UNIFORM)
 		body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	else if(slot == slot_head)
+	else if(slot == SLOT_HEAD)
 		body_parts_covered = HEAD
 

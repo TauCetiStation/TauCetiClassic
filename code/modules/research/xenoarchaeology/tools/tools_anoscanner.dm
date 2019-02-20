@@ -7,8 +7,8 @@
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "flashgun"
 	item_state = "lampgreen"
-	w_class = 2.0
-	slot_flags = SLOT_BELT
+	w_class = ITEM_SIZE_SMALL
+	slot_flags = SLOT_FLAGS_BELT
 	var/nearest_artifact_id = "unknown"
 	var/nearest_artifact_distance = -1
 	var/last_scan_time = 0
@@ -56,7 +56,7 @@
 /obj/item/device/wave_scanner_backpack
 	name = "wave scanner backpack"
 	desc = "Brand new NanoTrasen wave scanner, designed to search and analyze exotic waves."
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "wave_scanner"
 	item_state = "wave_scanner"

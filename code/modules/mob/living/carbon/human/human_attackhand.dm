@@ -82,29 +82,8 @@
 
 	switch(M.a_intent)
 		if("help")
-			if(health < config.health_threshold_crit && health > config.health_threshold_dead)
-				if(M.species && M.species.flags[NO_BREATHE])
-					to_chat(M, "<span class='notice bold'>Your species can not perform CPR!</span>")
-					return FALSE
-				if(species && species.flags[NO_BREATHE])
-					to_chat(M, "<span class='notice bold'>You can not perform CPR on these species!</span>")
-					return FALSE
-				if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
-					to_chat(M, "<span class='notice bold'>Remove your mask!</span>")
-					return FALSE
-				if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
-					to_chat(M, "<span class='notice bold'>Remove his mask!</span>")
-					return FALSE
-
-				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
-				O.source = M
-				O.target = src
-				O.s_loc = M.loc
-				O.t_loc = loc
-				O.place = "CPR"
-				requests += O
-				spawn(0)
-					O.process()
+			if(health > config.health_threshold_dead && health < config.health_threshold_crit)
+				INVOKE_ASYNC(src, .proc/perform_cpr, M)
 				return 1
 			else if(!(M == src && apply_pressure(M, M.zone_sel.selecting)))
 				help_shake_act(M)
