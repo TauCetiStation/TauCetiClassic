@@ -84,7 +84,7 @@
 			desc = "A cardboard cutout of a clown. You get the feeling that it should be in a corner."
 			icon_state = "cutout_clown"
 		if("Mime")
-			name = pick(clown_names)
+			name = "[pick(first_names_male)] [pick(last_names)]"
 			desc = "...(A cardboard cutout of a mime.)"
 			icon_state = "cutout_mime"
 		if("Traitor")
@@ -94,7 +94,7 @@
 		if("Nuke Op")
 			name = "[pick("Unknown", "COMMS", "Telecomms", "AI", "stealthy op", "STEALTH", "sneakybeaky", "MEDIC", "Medic")]"
 			desc = "A cardboard cutout of a nuclear operative."
-			icon_state = "cutout_fluke"
+			icon_state = "[pick("cutout_flukecombat", "cutout_flukespace")]"
 		if("Cultist")
 			name = "Unknown"
 			desc = "A cardboard cutout of a cultist."
@@ -108,7 +108,7 @@
 			desc = "A cardboard cutout of a wizard."
 			icon_state = "cutout_wizard"
 		if("Shadowling")
-			name = "Unknown"
+			name = pick(possibleShadowlingNames)
 			desc = "A cardboard cutout of a shadowling."
 			icon_state = "cutout_shadowling"
 		if("Xenomorph")
