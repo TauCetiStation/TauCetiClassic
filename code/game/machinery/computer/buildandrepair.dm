@@ -79,7 +79,34 @@
 
 /obj/item/weapon/circuitboard/communications/atom_init()
 	. = ..()
+	circuitboard_communications_list += src
 	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/circuitboard/communications/Destroy()
+	circuitboard_communications_list -= src
+
+	for(var/obj/machinery/computer/communications/commconsole in communications_list)
+		if(istype(commconsole.loc,/turf))
+			return ..()
+
+	for(var/obj/item/weapon/circuitboard/communications/commboard in circuitboard_communications_list)
+		if((istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage)))
+			return ..()
+
+	for(var/mob/living/silicon/ai/shuttlecaller in ai_list)
+		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
+			return ..()
+
+	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || sent_strike_team)
+		return ..()
+
+	SSshuttle.incall(2)
+	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
+	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
+	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
+	world << sound('sound/AI/shuttlecalled.ogg')
+
+	return ..()
 
 /obj/item/weapon/circuitboard/communications/process()
 	cooldown = max(cooldown - 1, 0)

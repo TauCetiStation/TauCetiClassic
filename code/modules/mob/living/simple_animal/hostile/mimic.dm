@@ -35,6 +35,8 @@
 	faction = "mimic"
 	move_to_delay = 8
 
+	animalistic = FALSE
+
 /mob/living/simple_animal/hostile/mimic/FindTarget()
 	. = ..()
 	if(.)

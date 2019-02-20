@@ -470,7 +470,7 @@
 /obj/item/weapon/gun/projectile/chameleon/atom_init()
 	. = ..()
 	var/blocked = list(/obj/item/weapon/gun/projectile/chameleon)
-	for(var/U in typesof(/obj/item/weapon/gun/)-blocked)
+	for(var/U in typesof(/obj/item/weapon/gun)-blocked)
 		var/obj/item/weapon/gun/V = new U
 		gun_choices[V.name] = U
 

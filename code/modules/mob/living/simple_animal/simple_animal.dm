@@ -54,6 +54,8 @@
 
 	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
+	var/animalistic = TRUE // Determines whether the being here is an animal or nah.
+
 /mob/living/simple_animal/updatehealth()
 	return
 
@@ -64,7 +66,7 @@
 		if(health > 0)
 			icon_state = icon_living
 			dead_mob_list -= src
-			living_mob_list += src
+			alive_mob_list += src
 			stat = CONSCIOUS
 			density = 1
 		return 0
@@ -419,16 +421,18 @@
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
-		return 0
+		return FALSE
 	if (isliving(the_target))
 		var/mob/living/L = the_target
 		if(L.stat != CONSCIOUS)
-			return 0
+			return FALSE
+		if(animalistic && L.has_trait(TRAIT_NATURECHILD) && L.naturechild_check())
+			return FALSE
 	if (istype(the_target, /obj/mecha))
 		var/obj/mecha/M = the_target
 		if (M.occupant)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /mob/living/simple_animal/say(var/message)
 	if(stat)

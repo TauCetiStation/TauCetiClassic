@@ -75,6 +75,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		new /obj/item/ammo_casing/shotgun/dart(), \
 		new /obj/item/ammo_casing/shotgun/buckshot(), \
 		new /obj/item/device/harmonica(), \
+		new /obj/item/weapon/bell()
 	)
 
 /obj/machinery/autolathe

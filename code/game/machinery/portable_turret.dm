@@ -14,6 +14,7 @@
 
 /obj/machinery/porta_turret
 	name = "turret"
+	desc = "Covered with a strong alloy of metals. Able to shoot."
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turretCover"
 	anchored = TRUE

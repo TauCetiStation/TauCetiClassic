@@ -5,11 +5,21 @@
 	var/b_hair = 0
 	var/h_style = "Bald"
 
+	var/dyed_r_hair = 0
+	var/dyed_g_hair = 0
+	var/dyed_b_hair = 0
+	var/hair_painted = FALSE
+
 	//Facial hair colour and style
 	var/r_facial = 0
 	var/g_facial = 0
 	var/b_facial = 0
 	var/f_style = "Shaved"
+
+	var/dyed_r_facial = 0
+	var/dyed_g_facial = 0
+	var/dyed_b_facial = 0
+	var/facial_painted = FALSE
 
 	//Eye colour
 	var/r_eyes = 0
@@ -89,3 +99,6 @@
 	var/robolimb_count = 0 // Number of robot limbs.
 	var/sightglassesmod = null
 	var/datum/personal_crafting/handcrafting
+
+	var/busy_left_hand = FALSE // See ambidextrous quirk and is_busy() override.
+	var/busy_right_hand = FALSE

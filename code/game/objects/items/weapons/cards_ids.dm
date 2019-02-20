@@ -127,7 +127,7 @@
 	var/mining_points = 0 //For redeeming at mining equipment lockers
 	var/access = list()
 	var/registered_name = "Unknown" // The name registered_name on the card
-	slot_flags = SLOT_ID
+	slot_flags = SLOT_FLAGS_ID
 	var/customizable_view = UNIVERSAL_VIEW
 	var/blood_type = "\[UNSET\]"
 	var/dna_hash = "\[UNSET\]"
@@ -217,6 +217,12 @@
 	desc = "A card issued to security staff."
 	icon_state = "sec"
 	item_state = "sec_id"
+
+/obj/item/weapon/card/id/int
+	name = "identification card"
+	desc = "A card issued to internal affairs agent."
+	icon_state = "int"
+	item_state = "int_id"
 
 /obj/item/weapon/card/id/secGold
 	name = "identification card"

@@ -13,7 +13,7 @@
 	throw_range = 1
 	throw_speed = 1
 	layer = 3.9
-	slot_flags = SLOT_HEAD
+	slot_flags = SLOT_FLAGS_HEAD
 	body_parts_covered = HEAD
 	attack_verb = list("bapped")
 
@@ -92,22 +92,27 @@
 	set category = "Object"
 	set src in usr
 
+
 	if((CLUMSY in usr.mutations) && prob(50))
-		to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
+		var/mob/living/carbon/human/H = usr
+		if(istype(H) && !H.species.flags[NO_MINORCUTS])
+			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
 		return
 	var/n_name = sanitize_safe(input(usr, "What would you like to label the paper?", "Paper Labelling", null) as text, MAX_NAME_LEN)
 	if((loc == usr && usr.stat == CONSCIOUS))
 		name = "[(n_name ? text("[n_name]") : "paper")]"
 	add_fingerprint(usr)
-	return
 
 /obj/item/weapon/paper/verb/crumple()
 	set name = "Crump paper"
 	set category = "Object"
 	set src in usr
 
+
 	if((CLUMSY in usr.mutations) && prob(50))
-		to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
+		var/mob/living/carbon/human/H = usr
+		if(istype(H) && !H.species.flags[NO_MINORCUTS])
+			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
 		return
 	if(!(crumpled==1))
 		crumpled = 1
@@ -121,7 +126,6 @@
 
 	playsound(src, 'sound/items/crumple.ogg', 15, 1, 1)
 	add_fingerprint(usr)
-	return
 
 /obj/item/weapon/paper/afterattack(atom/target, mob/user, proximity)
 	if(!proximity) return

@@ -204,4 +204,5 @@
 	<u>Additional Notes:</u> <field>
 "}
 
+	P.update_icon()
 	state("The nearby computer prints out a pathology report.")

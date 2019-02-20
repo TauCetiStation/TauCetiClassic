@@ -236,7 +236,7 @@
 /obj/item/weapon/storage/box/autoinjector/stimpack
 	name = "stimpack value kit"
 	desc = "A box with several stimpack autoinjectors for the economical miner."
-	icon_state = "grey_survival_box"
+	icon_state = "box"
 
 /obj/item/weapon/storage/box/autoinjector/stimpack/atom_init()
 	. = ..()
@@ -442,7 +442,7 @@
 	item_state = "zippo"
 	storage_slots = 10
 	w_class = 1
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	can_hold = list("/obj/item/weapon/match")
 
 /obj/item/weapon/storage/box/matches/atom_init()

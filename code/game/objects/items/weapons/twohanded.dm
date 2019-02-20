@@ -110,10 +110,11 @@
 	name = "fire axe"
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	force = 5
+	hitsound = 'sound/weapons/desceration.ogg'
 	sharp = 1
 	edge = 1
 	w_class = 4.0
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	force_unwielded = 10
 	force_wielded = 40
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
@@ -168,20 +169,20 @@
 	item_color = pick("red", "blue", "green", "purple","yellow","pink","black")
 	switch(item_color)
 		if("red")
-			light_color = "#ff0000"
+			light_color = COLOR_RED
 		if("blue")
-			light_color = "#0000b2"
+			light_color = COLOR_BLUE
 		if("green")
-			light_color = "#00ff00"
+			light_color = COLOR_GREEN
 		if("purple")
-			light_color = "#551a8b"
+			light_color = COLOR_PURPLE
 			light_power = 2
 		if("yellow")
-			light_color = "#ffff00"
+			light_color = COLOR_YELLOW
 		if("pink")
-			light_color = "#ff00ff"
+			light_color = COLOR_PINK
 		if("black")
-			light_color = "#aeaeae"
+			light_color = COLOR_GRAY
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()
 	if(wielded)
@@ -261,11 +262,13 @@
 
 /obj/item/weapon/twohanded/dualsaber/unwield()
 	set_light(0)
+	hitsound = initial(hitsound)
 	w_class = initial(w_class)
 	return ..()
 
 /obj/item/weapon/twohanded/dualsaber/wield()
 	set_light(2)
+	hitsound = 'sound/weapons/blade1.ogg'
 	w_class = 5
 	return ..()
 

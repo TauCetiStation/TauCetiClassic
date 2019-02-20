@@ -1,5 +1,6 @@
 /proc/ext_python(script, args, scriptsprefix = 1)
 	if(!config.python_path)
+		warning("Python path is undefined, see config.python_path")
 		return
 	
 	if(scriptsprefix) script = "scripts/" + script
@@ -8,5 +9,5 @@
 		script = replacetext(script, "/", "\\")
 
 	var/command = config.python_path + " " + script + " " + args
-	
-	return shell(command)
+
+	return world.shelleo(command)
