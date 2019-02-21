@@ -136,7 +136,7 @@
 	allowed_tools = list(
 	/obj/item/robot_parts = 100,
 	/obj/item/weapon/organ/head/posi = 100)
-	allowed_species = list(IPC)
+	allowed_species = null
 
 	min_duration = 80
 	max_duration = 100
