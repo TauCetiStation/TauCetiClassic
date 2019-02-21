@@ -12,6 +12,9 @@
 
 	action_button_name = "Toggle Flash"
 
+	light_color = LIGHT_COLOR_WHITE
+	light_power = FLASH_LIGHT_POWER
+
 	var/times_used = 0 //Number of times it's been used.
 	var/broken = 0     //Is the flash burnt out?
 	var/last_used = 0 //last world.time it was used.
@@ -56,6 +59,7 @@
 	//It will never break on the first use.
 	switch(times_used)
 		if(0 to 5)
+			flash_lighting_fx(FLASH_LIGHT_RANGE, light_power, light_color)
 			last_used = world.time
 			if(prob(times_used))	//if you use it 5 times in a minute it has a 10% chance to break!
 				broken = 1
