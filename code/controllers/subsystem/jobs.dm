@@ -487,6 +487,11 @@ var/datum/subsystem/job/SSjob
 						new /obj/item/weapon/storage/box/survival(BPK)
 						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 
+	// Happy Valentines day!
+	if(Holiday == "Valentine's Day")
+		for(var/obj/item/weapon/storage/backpack/BACKP in H)
+			new /obj/item/weapon/storage/fancy/heart_box(BACKP)
+
 	//Give custom items
 	give_custom_items(H, job)
 

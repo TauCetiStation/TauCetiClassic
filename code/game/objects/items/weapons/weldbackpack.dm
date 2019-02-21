@@ -4,7 +4,7 @@
 	slot_flags = SLOT_FLAGS_BACK
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "welderpack"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	var/max_fuel = 350
 
 /obj/item/weapon/weldpack/atom_init()

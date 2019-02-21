@@ -115,7 +115,8 @@
 /obj/item/clothing/head/collectable/HoS
 	name = "collectable HoS hat"
 	desc = "Now you can beat prisoners, set silly sentences and arrest for no reason too!"
-	icon_state = "hoscap"
+	icon_state = "hoshat"
+	item_state = "hoshat"
 	body_parts_covered = 0
 
 /obj/item/clothing/head/collectable/thunderdome

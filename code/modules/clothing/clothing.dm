@@ -92,7 +92,7 @@
 //Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears
 	name = "ears"
-	w_class = 1.0
+	w_class = ITEM_SIZE_NORMAL
 	throwforce = 2
 	slot_flags = SLOT_FLAGS_EARS
 
@@ -112,16 +112,18 @@
 		return
 
 	var/obj/item/clothing/ears/O
-	if(slot_flags & SLOT_FLAGS_TWOEARS )
+	if(slot_flags & SLOT_FLAGS_TWOEARS)
 		O = (H.l_ear == src ? H.r_ear : H.l_ear)
-		user.u_equip(O)
+		if(!user.unEquip(O))
+			return
 		if(!istype(src,/obj/item/clothing/ears/offear))
 			qdel(O)
 			O = src
 	else
 		O = src
 
-	user.u_equip(src)
+	if(!user.unEquip(src))
+		return
 
 	if (O)
 		user.put_in_hands(O)
@@ -132,7 +134,7 @@
 
 /obj/item/clothing/ears/offear
 	name = "Other ear"
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 	icon = 'icons/mob/screen1_Midnight.dmi'
 	icon_state = "block"
 	slot_flags = SLOT_FLAGS_EARS | SLOT_FLAGS_TWOEARS
@@ -157,7 +159,7 @@
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	flags = GLASSESCOVERSEYES
 	slot_flags = SLOT_FLAGS_EYES
 	var/vision_flags = 0
@@ -179,7 +181,7 @@ BLIND     // can't see anything
 /obj/item/clothing/gloves
 	name = "gloves"
 	gender = PLURAL //Carn: for grammarically correct text-parsing
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 0.9
 	var/wired = FALSE
@@ -212,7 +214,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/hats.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_FLAGS_HEAD
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/head.dmi')
 	var/blockTracking = 0
 
@@ -282,7 +284,7 @@ BLIND     // can't see anything
 	slot_flags = SLOT_FLAGS_OCLOTHING
 	var/blood_overlay_type = "suit"
 	siemens_coefficient = 0.9
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/suit.dmi')
 
 /obj/item/clothing/proc/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
@@ -313,7 +315,7 @@ BLIND     // can't see anything
 	desc = "A suit that protects against low pressure environments. \"NSS EXODUS\" is written in large block letters on the back."
 	icon_state = "space"
 	item_state = "s_suit"
-	w_class = 4//bulky item
+	w_class = ITEM_SIZE_LARGE//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	flags = THICKMATERIAL | PHORONGUARD
@@ -368,7 +370,7 @@ BLIND     // can't see anything
 	permeability_coefficient = 0.90
 	slot_flags = SLOT_FLAGS_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/sensor_mode = 0
 		/*

@@ -6,7 +6,7 @@
 	item_state = ""	//no inhands
 	item_color = "bluetie"
 	slot_flags = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	var/obj/item/clothing/under/has_suit = null		//the suit the tie may be attached to
 	var/image/inv_overlay = null	//overlay used when attached to clothing.
 
@@ -458,7 +458,7 @@
 
 /obj/item/clothing/tie/storage/knifeharness/atom_init()
 	. = ..()
-	hold.max_combined_w_class = 4
+	hold.max_combined_w_class = ITEM_SIZE_LARGE
 	hold.can_hold = list("/obj/item/weapon/hatchet/unathiknife",\
 	"/obj/item/weapon/kitchenknife/plastic",\
 	"/obj/item/weapon/kitchenknife",\
