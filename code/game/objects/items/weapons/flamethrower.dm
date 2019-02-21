@@ -9,7 +9,7 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	m_amt = 500
 	origin_tech = "combat=1;phorontech=1"
 	var/status = 0

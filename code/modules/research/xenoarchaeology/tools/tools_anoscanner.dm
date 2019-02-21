@@ -7,7 +7,7 @@
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "flashgun"
 	item_state = "lampgreen"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	var/nearest_artifact_id = "unknown"
 	var/nearest_artifact_distance = -1

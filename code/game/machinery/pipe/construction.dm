@@ -747,7 +747,7 @@ Buildable meters
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "meter"
 	item_state = "buildpipe"
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 
 /obj/item/pipe_meter/attackby(obj/item/weapon/W, mob/user)
 	..()

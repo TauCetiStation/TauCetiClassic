@@ -4,7 +4,7 @@
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = ""
 	flags = CONDUCT
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	m_amt = 100
 	g_amt = 0
 	w_amt = 0
