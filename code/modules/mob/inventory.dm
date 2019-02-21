@@ -80,14 +80,23 @@ var/list/slot_equipment_priority = list(
 
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
-/mob/proc/equip_to_appropriate_slot(obj/item/W)
-	if(!istype(W)) return 0
+/mob/proc/equip_to_appropriate_slot(obj/item/W, check_obscured = FALSE)
+	if(!istype(W))
+		return FALSE
+
+	var/list/obscured
+
+	if(check_obscured)
+		obscured = check_obscured_slots()
 
 	for(var/slot in slot_equipment_priority)
-		if(equip_to_slot_if_possible(W, slot, del_on_fail=0, disable_warning=1, redraw_mob=1))
-			return 1
+		if (slot in obscured)
+			continue
 
-	return 0
+		if (equip_to_slot_if_possible(W, slot, FALSE, TRUE, TRUE))
+			return TRUE
+
+	return FALSE
 
 // Convinience proc.  Collects crap that fails to equip either onto the mob's back, or drops it.
 // Used in job equipping so shit doesn't pile up at the start loc.
