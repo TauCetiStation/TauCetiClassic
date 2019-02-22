@@ -54,3 +54,4 @@
 	anchored = TRUE
 	var/id = null
 	var/active = FALSE
+	var/range = 7

@@ -523,11 +523,10 @@
 	return
 
 /obj/structure/window/reinforced/polarized
-	name = "electrochromic window"
 	desc = "Adjusts its tint with voltage. Might take a few good hits to shatter it."
+	name = "electrochromic window"
 	icon_state = "fwindow"
 	basestate = "fwindow"
-	maxhealth = 80
 	var/id
 
 /obj/structure/window/reinforced/polarized/proc/toggle()
@@ -550,11 +549,10 @@
 	active = !active
 	update_icon()
 
-	for(var/obj/structure/window/reinforced/polarized/W)
+	for(var/obj/structure/window/reinforced/polarized/W in range(src,range))
 		if (W.id == src.id || !W.id)
-			spawn(0)
-				W.toggle()
-				return
+			INVOKE_ASYNC(W, /obj/structure/window/reinforced/polarized.proc/toggle)
+			return
 
 /obj/machinery/windowtint/power_change()
 	..()
