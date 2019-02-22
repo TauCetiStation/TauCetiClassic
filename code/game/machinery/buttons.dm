@@ -45,3 +45,12 @@
 	var/area/area = null
 	var/otherarea = null
 	var/id = 1
+
+/obj/machinery/windowtint
+	desc = "A remote control switch for polarized windows."
+	name = "window tint control"
+	icon = 'icons/obj/power.dmi'
+	icon_state = "light0"
+	anchored = TRUE
+	var/id = null
+	var/active = FALSE
