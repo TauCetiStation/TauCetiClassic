@@ -47,8 +47,8 @@
 	var/id = 1
 
 /obj/machinery/windowtint
-	desc = "A remote control switch for polarized windows."
 	name = "window tint control"
+	desc = "A remote control switch for polarized windows."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light0"
 	anchored = TRUE

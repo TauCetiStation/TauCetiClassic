@@ -523,8 +523,8 @@
 	return
 
 /obj/structure/window/reinforced/polarized
-	desc = "Adjusts its tint with voltage. Might take a few good hits to shatter it."
 	name = "electrochromic window"
+	desc = "Adjusts its tint with voltage. Might take a few good hits to shatter it."
 	icon_state = "fwindow"
 	basestate = "fwindow"
 	var/id
