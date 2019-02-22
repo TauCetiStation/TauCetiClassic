@@ -35,6 +35,7 @@
 	wreckage = /obj/effect/decal/mecha_wreckage/t_34
 	internal_damage_threshold = 35
 	max_equip = 4
+	layer = BELOW_MOB_LAYER
 	step_energy_drain = 5
 
 /obj/mecha/combat/t_34/eject()
