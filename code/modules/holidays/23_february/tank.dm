@@ -38,17 +38,11 @@
 	layer = BELOW_MOB_LAYER
 	step_energy_drain = 5
 
-/obj/mecha/combat/t_34/eject()
-	. = ..()
-	if(!opened)
-		return
-
 /obj/mecha/combat/t_34/atom_init()
 	. = ..()
 
 	pixel_x = -10
 	pixel_y = -15
-	icon_state = "tank"
 
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine(src)
 	ME.attach(src)
