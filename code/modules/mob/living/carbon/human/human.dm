@@ -1855,11 +1855,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			return 1
 	return 0
 
-/mob/living/carbon/human/slip(slipped_on, stun_duration=4, weaken_duration=2)
-	if(shoes && (shoes.flags & NOSLIP))
-		return FALSE
-	return ..(slipped_on,stun_duration, weaken_duration)
-
 /mob/living/carbon/human/is_nude(maximum_coverage = 0, pos_slots = list(src.head, src.shoes, src.neck, src.mouth, src.wear_suit, src.w_uniform, src.belt, src.gloves, src.glasses)) // Expands our pos_slots arg.
 	return ..()
 

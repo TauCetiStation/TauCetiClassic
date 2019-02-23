@@ -4,6 +4,12 @@
 
 Loosely adapted from /vg/. This is an entity component system for adding behaviours to datums when inheritance doesn't quite cut it. By using signals and events instead of direct inheritance, you can inject behaviours without hacky overloads. It requires a different method of thinking, but is not hard to use correctly. If a behaviour can have application across more than one thing. Make it generic, make it a component. Atom/mob/obj event? Give it a signal, and forward it's arguments with a `SendSignal()` call. Now every component that want's to can also know about this happening.
 
+### In the code
+
+#### Slippery things
+
+At the time of this writing, every object that is slippery overrides atom/Crossed does some checks, then slips the mob. Instead of all those Crossed overrides they could add a slippery component to all these objects. And have the checks in one proc that is run by the Crossed event
+
 ## API
 
 ### Defines

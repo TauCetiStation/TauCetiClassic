@@ -502,6 +502,9 @@
 //This proc is called on the location of an atom when the atom is Destroy()'d
 /atom/proc/handle_atom_del(atom/A)
 
+/atom/Entered(atom/movable/AM, atom/oldLoc)
+	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
+
 // Byond seemingly calls stat, each tick.
 // Calling things each tick can get expensive real quick.
 // So we slow this down a little.
@@ -523,3 +526,56 @@
 
 	if(changed)
 		animate(src, transform = ntransform, time = 2, easing = EASE_IN|EASE_OUT)
+
+/atom/proc/handle_slip(mob/living/carbon/C, weaken_amount, obj/O, lube)
+	return
+
+/turf/simulated/handle_slip(mob/living/carbon/C, weaken_amount, obj/O, lube)
+	if(has_gravity(src))
+		var/obj/buckled_obj
+		if(C.buckled)
+			buckled_obj = C.buckled
+			if(!(lube & GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
+				return FALSE
+		else
+			if((C.lying && !C.crawling) || !(C.status_flags & CANWEAKEN)) // can't slip unbuckled mob if they're lying or can't fall.
+				return FALSE
+			if(C.m_intent == MOVE_INTENT_WALK && (lube & NO_SLIP_WHEN_WALKING))
+				return FALSE
+		if(!(lube & SLIDE_ICE))
+			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
+			playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
+
+		var/olddir = C.dir
+
+		if(!(lube & SLIDE_ICE))
+			C.Weaken(weaken_amount)
+			C.stop_pulling()
+		else
+			C.Weaken(2)
+
+		if(buckled_obj)
+			buckled_obj.unbuckle_mob(C)
+			lube |= SLIDE_ICE
+
+		if(lube & SLIDE)
+			step(C, olddir)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 1)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 2)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 3)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 4)
+			C.take_bodypart_damage(2) // Was 5 -- TLE
+		else if(lube & SLIDE_ICE)
+			var/has_NOSLIP = FALSE
+			if(ishuman(C))
+				var/mob/living/carbon/human/H = C
+				if((istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags & NOSLIP) || (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP))
+					has_NOSLIP = TRUE
+			if (C.m_intent == MOVE_INTENT_RUN && !has_NOSLIP && prob(30))
+				step(C, olddir)
+			else
+				C.inertia_dir = 0
+		return TRUE
+
+/turf/space/handle_slip()
+	return

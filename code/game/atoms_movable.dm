@@ -43,6 +43,12 @@
 		pulledby.stop_pulling()
 	return ..()
 
+// Previously known as HasEntered()
+// This is automatically called when something enters your square
+//oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
+/atom/movable/Crossed(atom/movable/AM, oldloc)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
+
 /atom/movable/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if(!loc || !NewLoc || freeze_movement)
 		return FALSE
