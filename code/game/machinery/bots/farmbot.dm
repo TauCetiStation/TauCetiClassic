@@ -564,8 +564,7 @@
 	else if((isprox(W)) && (src.build_step == 3))
 		src.build_step++
 		to_chat(user, "You complete the Farmbot! Beep boop.")
-		var/obj/machinery/bot/farmbot/S = new /obj/machinery/bot/farmbot
-		S.loc = get_turf(src)
+		var/obj/machinery/bot/farmbot/S = new /obj/machinery/bot/farmbot(get_turf(src))
 		S.name = src.created_name
 		user.remove_from_mob(W)
 		qdel(W)
