@@ -664,7 +664,7 @@ steam.start() -- spawns the effect
 
 	if (istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
-		G.affecting.loc = src.loc
+		G.affecting.forceMove(loc)
 		for(var/mob/O in viewers(src))
 			if (O.client)
 				to_chat(O, "\red [G.assailant] smashes [G.affecting] through the foamed metal wall.")

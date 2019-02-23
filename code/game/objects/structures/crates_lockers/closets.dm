@@ -187,7 +187,8 @@
 /obj/structure/closet/attackby(obj/item/weapon/W, mob/user)
 	if(src.opened)
 		if(istype(W, /obj/item/weapon/grab))
-			src.MouseDrop_T(W:affecting, user)      //act like they were dragged onto the closet
+			var/obj/item/weapon/grab/G = W
+			MouseDrop_T(G.affecting, user)      //act like they were dragged onto the closet
 		if(istype(W,/obj/item/tk_grab))
 			return 0
 		if(istype(W, /obj/item/weapon/weldingtool))

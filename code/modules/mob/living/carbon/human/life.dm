@@ -127,10 +127,6 @@
 
 	pulse = handle_pulse()
 
-	// Grabbing
-	for(var/obj/item/weapon/grab/G in src)
-		G.process()
-
 
 //Much like get_heat_protection(), this returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 /mob/living/carbon/human/proc/get_pressure_protection(pressure_check = STOPS_PRESSUREDMAGE)
