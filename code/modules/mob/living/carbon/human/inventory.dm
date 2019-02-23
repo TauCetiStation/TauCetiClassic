@@ -24,7 +24,7 @@
 					delay_clothing_equip_to_slot_if_possible(J, SLOT_WEAR_SUIT)
 					return 0
 
-		if(H.equip_to_appropriate_slot(I))
+		if(H.equip_to_appropriate_slot(I, TRUE))
 			if(hand)
 				update_inv_l_hand()
 			else
