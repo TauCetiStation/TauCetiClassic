@@ -128,7 +128,9 @@ var/global/list/frozen_items = list()
 
 	var/orient_right = null      // Flips the sprite.
 	var/time_till_despawn = 9000 // 15 minutes-ish safe period before being despawned.
+	var/inactivity_delay = 12000 // 20 minutes till pod becomes active
 	var/time_entered = 0         // Used to keep track of the safe period.
+	var/active = FALSE
 	var/obj/item/device/radio/intercom/announce //
 
 	// These items are preserved when the process() despawn proc occurs.
@@ -155,10 +157,18 @@ var/global/list/frozen_items = list()
 	announce = new /obj/item/device/radio/intercom(src)
 
 	if(orient_right)
-		icon_state = "cryosleeper_right"
+		icon_state = "cryosleeper_right[active ? "" : "_cl"]"
 	else
-		icon_state = "cryosleeper_left"
+		icon_state = "cryosleeper_left[active ? "" : "_cl"]"
 	. = ..()
+	if(!active)
+		spawn(inactivity_delay)
+			if(!QDELETED(src))
+				active = TRUE
+				if(orient_right)
+					icon_state = "cryosleeper_right"
+				else
+					icon_state = "cryosleeper_left"
 
 //Lifted from Unity stasis.dm and refactored. ~Zuhayr
 /obj/machinery/cryopod/process()
@@ -276,6 +286,10 @@ var/global/list/frozen_items = list()
 			to_chat(user, "<span class='notice'>The cryo pod is in use.</span>")
 			return
 
+		if(!active)
+			to_chat(user, "<span class='notice'>The cryo pod is not ready/</span>")
+			return
+
 		if(!ismob(grab.affecting))
 			return
 
@@ -313,7 +327,7 @@ var/global/list/frozen_items = list()
 	to_chat(M, "<span class='notice'><b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b></span>")
 	occupant = M
 	time_entered = world.time
-	set_med_status("*SSD*")
+	set_med_status("*Inactive*")
 
 /obj/machinery/cryopod/proc/set_med_status(mes)
 	for(var/datum/data/record/R in data_core.general)
@@ -350,6 +364,10 @@ var/global/list/frozen_items = list()
 
 	if(occupant)
 		to_chat(usr, "<span class='notice'><B>The cryo pod is in use.</B></span>")
+		return
+
+	if(!active)
+		to_chat(usr, "<span class='notice'>The cryo pod is not ready/</span>")
 		return
 
 	for(var/mob/living/carbon/slime/M in range(1, usr))
