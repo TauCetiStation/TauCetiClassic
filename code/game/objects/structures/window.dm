@@ -551,8 +551,7 @@
 
 	for(var/obj/structure/window/reinforced/polarized/W in range(src,range))
 		if (W.id == src.id || !W.id)
-			INVOKE_ASYNC(W, /obj/structure/window/reinforced/polarized.proc/toggle)
-			return
+			W.toggle()
 
 /obj/machinery/windowtint/power_change()
 	..()
