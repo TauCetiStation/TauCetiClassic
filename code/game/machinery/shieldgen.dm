@@ -537,7 +537,7 @@
 		name = "energy shield"
 		desc = "An energy shield."
 		icon = 'icons/effects/effects.dmi'
-		icon_state = "shield"
+		icon_state = "energyshield"
 		anchored = 1
 		density = 1
 		layer = INFRONT_MOB_LAYER
