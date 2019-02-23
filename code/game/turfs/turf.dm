@@ -138,6 +138,13 @@
 			return
 	return
 
+/turf/Exited(atom/movable/Obj, atom/newloc)
+	. = ..()
+
+	if (Obj && Obj.opacity)
+		recalc_atom_opacity() // Make sure to do this before reconsider_lights(), incase we're on instant updates.
+		reconsider_lights()
+
 /turf/proc/adjacent_fire_act(turf/simulated/floor/source, temperature, volume)
 	return
 

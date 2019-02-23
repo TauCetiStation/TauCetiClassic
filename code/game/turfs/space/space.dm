@@ -34,7 +34,7 @@
 			if(istype(t, /turf/space))
 				//let's NOT update this that much pls
 				continue
-			set_light(2)
+			set_light(2, 2)
 			return
 		set_light(0)
 
