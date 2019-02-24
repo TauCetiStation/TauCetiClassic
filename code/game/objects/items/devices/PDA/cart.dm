@@ -195,7 +195,7 @@
 	access_atmos = 1
 
 /obj/item/weapon/cartridge/syndicate
-	name = "Detomatix Cartridge"
+	name = "cartridge"
 	icon_state = "cart"
 	access_remote_door = 1
 	access_detonate_pda = 1

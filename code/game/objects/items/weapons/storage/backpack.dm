@@ -265,7 +265,7 @@
 	item_state = "mimepack"
 
 /obj/item/weapon/storage/backpack/satchel/flat
-	name = "smuggler's satchel"
+	name = "satchel"
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
 	item_state = "satchel-flat"

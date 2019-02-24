@@ -66,6 +66,21 @@
 	add_fingerprint(user)
 	return
 
+/obj/item/weapon/melee/energy/sword/toy
+	name = "toy sword"
+	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
+
+/obj/item/weapon/melee/energy/sword/toy/get_examine_name(mob/user)
+	if(active && (is_security(user) || user.get_active_hand() == src || user.get_inactive_hand() == src))
+		return "energy sword"
+	else
+		return ..()
+
+/obj/item/weapon/melee/energy/sword/toy/get_examine_desc(mob/user)
+	if(active && (is_security(user) || user.get_active_hand() == src || user.get_inactive_hand() == src))
+		return "An energy sword. May the force be within you."
+	else
+		return ..()
 
 /*
  * Classic Baton

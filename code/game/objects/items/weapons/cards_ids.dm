@@ -54,15 +54,31 @@
  */
 
 /obj/item/weapon/card/emag_broken
-	desc = "It's a card with a magnetic strip attached to some circuitry. It looks too busted to be used for anything but salvage."
-	name = "broken cryptographic sequencer"
+	desc = "An identification card with circuitry attached to it."
+	name = "identification card with circuits"
 	icon_state = "emag"
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
 
+/obj/item/weapon/card/emag_broken/get_examine_name(mob/user)
+	if(ishuman(user) && user.mind && user.mind.special_role)
+		return "broken cryptographic sequencer"
+	else if((is_engineer(user) || is_scientist(user)) && (user.get_active_hand() == src || user.get_inactive_hand() == src)) // They actually don't know it's broken.
+		return "cryptographic sequencer"
+	else
+		return ..()
+
+/obj/item/weapon/card/emag_broken/get_examine_desc(mob/user)
+	if(ishuman(user) && user.mind && user.mind.special_role)
+		return "It's a card with a magnetic strip attached to some circuitry. It looks too busted to be used for anything but salvage."
+	else if((is_engineer(user) || is_scientist(user)) && (user.get_active_hand() == src || user.get_inactive_hand() == src)) // They actually don't know it's broken.
+		return "It's a card with a magnetic strip attached to some circuitry."
+	else
+		return ..()
+
 /obj/item/weapon/card/emag
-	desc = "It's a card with a magnetic strip attached to some circuitry."
-	name = "cryptographic sequencer"
+	desc = "An identification card with circuitry attached to it."
+	name = "identification card with circuits"
 	icon_state = "emag"
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
@@ -101,6 +117,21 @@
 		/obj/machinery/mecha_part_fabricator
 		)
 
+/obj/item/weapon/card/emag/get_examine_name(mob/user)
+	if(ishuman(user) && user.mind && user.mind.special_role)
+		return "cryptographic sequencer"
+	else if((is_engineer(user) || is_scientist(user)) && (user.get_active_hand() == src || user.get_inactive_hand() == src)) // They actually don't know it's broken.
+		return "cryptographic sequencer"
+	else
+		return ..()
+
+/obj/item/weapon/card/emag/get_examine_desc(mob/user)
+	if(ishuman(user) && user.mind && user.mind.special_role)
+		return "It's a card with a magnetic strip attached to some circuitry."
+	else if((is_engineer(user) || is_scientist(user)) && (user.get_active_hand() == src || user.get_inactive_hand() == src)) // They actually don't know it's broken.
+		return "It's a card with a magnetic strip attached to some circuitry."
+	else
+		return ..()
 
 /obj/item/weapon/card/emag/afterattack(obj/item/weapon/O, mob/user)
 

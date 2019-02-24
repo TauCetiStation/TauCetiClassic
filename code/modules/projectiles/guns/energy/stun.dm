@@ -56,8 +56,8 @@
 	select_fire(user)
 
 /obj/item/weapon/gun/energy/crossbow
-	name = "mini energy-crossbow"
-	desc = "A weapon favored by many of the syndicates stealth specialists."
+	name = "foam dart crossbow"
+	desc = "A weapon favored by many overactive children. Ages 8 and up."
 	icon_state = "crossbow"
 	w_class = ITEM_SIZE_SMALL
 	item_state = "crossbow"
@@ -77,6 +77,30 @@
 /obj/item/weapon/gun/energy/crossbow/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
+
+
+/obj/item/weapon/gun/energy/crossbow/get_examine_name(mob/user)
+	if(user.get_active_hand() == src || user.get_inactive_hand() == src)
+		if(is_scientist(user) || is_engineer(user))
+			return "mini energy crossbow"
+		else
+			return "weird dart crossbow"
+	else if(is_security(user))
+		return "weird dart crossbow"
+	else
+		return ..()
+
+
+/obj/item/weapon/gun/energy/crossbow/get_examine_desc(mob/user)
+	if(user.get_active_hand() == src || user.get_inactive_hand() == src)
+		if(is_scientist(user) || is_engineer(user))
+			return "An energy weapon containing a radiation emitter to create hurtful impulses."
+		else
+			return "A weapon favored by many overactive children. Ages 8 and up. Or is it?"
+	else if(is_security(user))
+		return "A weapon favored by many of the syndicates stealth specialists."
+	else
+		return ..()
 
 
 /obj/item/weapon/gun/energy/crossbow/process()

@@ -1,6 +1,6 @@
 /obj/item/weapon/melee/powerfist
-	name = "power-fist"
-	desc = "A metal gauntlet with a piston-powered ram ontop for that extra 'ompfh' in your punch."
+	name = "glove-contraption"
+	desc = "A piston taped onto a glove."
 	icon_state = "powerfist"
 	item_state = "powerfist"
 	flags = CONDUCT
@@ -13,6 +13,20 @@
 	var/fisto_setting = 1
 	var/gasperfist = 3
 	var/obj/item/weapon/tank/tank = null //Tank used for the gauntlet's piston-ram.
+
+
+/obj/item/weapon/melee/powerfist/get_examine_name(mob/user)
+	if(is_engineer(user) && (user.get_active_hand() == src || user.get_inactive_hand() == src))
+		return "power-fist"
+	else
+		return ..()
+
+
+/obj/item/weapon/melee/powerfist/get_examine_desc(mob/user)
+	if(is_engineer(user) && (user.get_active_hand() == src || user.get_inactive_hand() == src))
+		return "A metal gauntlet with a piston-powered ram ontop for that extra 'ompfh' in your punch."
+	else
+		return ..()
 
 
 /obj/item/weapon/melee/powerfist/examine(mob/user)
