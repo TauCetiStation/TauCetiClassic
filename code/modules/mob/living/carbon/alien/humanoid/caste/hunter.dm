@@ -155,6 +155,7 @@ var/lastUsing = 0
 	pounce_cooldown = FALSE
 
 #undef MAX_ALIEN_LEAP_DIST
+#undef LEAP_COOLDOWN
 
 /mob/living/carbon/alien/humanoid/hunter/movement_delay()
 	return(-1 + move_delay_add + config.alien_delay)
