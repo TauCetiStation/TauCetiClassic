@@ -84,7 +84,7 @@
 		return
 
 var/lastUsing = 0
-#define LEAP_COOLDOWN 50
+#define LEAP_COOLDOWN 40
 /mob/living/carbon/alien/humanoid/hunter/ClickOn(atom/A, params)
 	if(lastUsing + LEAP_COOLDOWN > world.time)
 		to_chat(usr, "It isn't ready to use.")
