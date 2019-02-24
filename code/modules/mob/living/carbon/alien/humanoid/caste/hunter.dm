@@ -83,13 +83,18 @@
 	else
 		return
 
-
+var/lastUsing = 0
+#define LEAP_COOLDOWN 50
 /mob/living/carbon/alien/humanoid/hunter/ClickOn(atom/A, params)
-	face_atom(A)
-	if(leap_on_click)
-		leap_at(A)
+	if(lastUsing + LEAP_COOLDOWN > world.time)
+		to_chat(usr, "It isn't ready to use.")
 	else
-		..()
+		face_atom(A)
+		if(leap_on_click)
+			leap_at(A)
+			lastUsing = world.time
+		else
+			..()
 
 
 #define MAX_ALIEN_LEAP_DIST 7
