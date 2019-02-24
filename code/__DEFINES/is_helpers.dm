@@ -107,3 +107,10 @@
 #define issignaler(O) (istype(O, /obj/item/device/assembly/signaler))
 
 #define istimer(O) (istype(O, /obj/item/device/assembly/timer))
+
+// "Job" checks. Replace with skill-values if they exist. ~Luduk
+#define is_security(O) (ishuman(O) && O.job in list("Security Officer", "Head of Security", "Detective", "Warden", "Captain"))
+
+#define is_scientist(O) (ishuman(O) && O.job in list("Scientist", "Xenoarchaeologist", "Xenobiologist", "Roboticist", "Research Director"))
+
+#define is_engineer(O) (ishuman(O) && O.job in list("Station Engineer", "Atmospheric Technician", "Chief Engineer"))

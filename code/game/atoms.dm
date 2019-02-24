@@ -213,12 +213,13 @@
 
 /atom/proc/examine(mob/user, distance = -1)
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
-	var/f_name = "\a [src]."
+	var/f_name = "\a [get_examine_name(user)]."
 	if(dirt_overlay) //Oil and blood puddles got 'blood_color = NULL', however they got 'color' instead
 		f_name = "<span class='danger'>\a [dirt_description()]!</span>"
 	to_chat(user, "[bicon(src)] That's [f_name]")
-	if(desc)
-		to_chat(user, desc)
+	var/ex_desc = get_examine_desc(user)
+	if(ex_desc)
+		to_chat(user, ex_desc)
 	// *****RM
 	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
@@ -233,6 +234,12 @@
 			to_chat(user, "Nothing.")
 
 	return distance == -1 || isobserver(user) || (get_dist(src, user) <= distance)
+
+/atom/proc/get_examine_name(mob/user)
+	return name
+
+/atom/proc/get_examine_desc(mob/user)
+	return desc
 
 /atom/proc/dirt_description()
 	if(dirt_overlay)
