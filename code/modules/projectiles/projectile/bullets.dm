@@ -28,6 +28,10 @@
 	name = "pellet"
 	damage = 20
 
+/obj/item/projectile/bullet/pellet/tiny
+	name = "pellet"
+	damage = 10
+
 /obj/item/projectile/bullet/weakbullet/beanbag		//because beanbags are not bullets
 	name = "beanbag"
 	agony = 95
@@ -158,6 +162,10 @@
 	agony = 60
 	embed = 0
 	sharp = 0
+
+/obj/item/projectile/bullet/a762x39
+	damage = 20
+	embed = 0
 
 /obj/item/projectile/bullet/a762
 	damage = 50

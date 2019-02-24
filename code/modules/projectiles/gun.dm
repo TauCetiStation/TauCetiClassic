@@ -30,6 +30,7 @@
 						// 1 for one bullet after tarrget moves and aim is lowered
 	var/fire_delay = 6
 	var/last_fired = 0
+	var/projectiles_per_shot = 1
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
@@ -127,20 +128,25 @@
 		if (world.time % 3) //to prevent spam
 			to_chat(user, "<span class='warning'>[src] is not ready to fire again!</span>")
 		return
+
+
 	if(chambered)
-		if(point_blank)
-			user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
-			chambered.BB.damage *= 1.3
-		if(!chambered.fire(target, user, params, , silenced))
-			shoot_with_empty_chamber(user)
-		else
-			shoot_live_shot(user)
+		for(var/i = 1 to projectiles_per_shot)
+			if(point_blank)
+				user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
+				chambered.BB.damage *= 1.3
+			if(!chambered.fire(target, user, params, , silenced))
+				shoot_with_empty_chamber(user)
+				break
+			else
+				shoot_live_shot(user)
+				process_chamber()
+				user.newtonian_move(get_dir(target, user))
+			if(projectiles_per_shot > 1)
+				sleep(1)
 	else
 		shoot_with_empty_chamber(user)
-	process_chamber()
-	user.newtonian_move(get_dir(target, user))
 	update_icon()
-
 	if(user.hand)
 		user.update_inv_l_hand()
 	else

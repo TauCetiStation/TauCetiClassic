@@ -92,10 +92,22 @@
 	projectile_type = "/obj/item/projectile/energy/dart"
 	m_amt = 12500
 
+/obj/item/ammo_casing/shotgun/weakbuckshot
+	name = "16g shell"
+	desc = "A 16 gauge shell"
+	projectile_type = "/obj/item/projectile/bullet/pellet/tiny"
+	pellets = 5
+	variance = 0.4
+
 /obj/item/ammo_casing/a762
 	desc = "A 7.62mm bullet casing."
 	caliber = "a762"
 	projectile_type = "/obj/item/projectile/bullet/a762"
+
+/obj/item/ammo_casing/a762x39
+	desc = "A 7.62x39mm bullet casing."
+	caliber = "a762"
+	projectile_type = "/obj/item/projectile/bullet/a762x39"
 
 /obj/item/ammo_casing/a145
 	desc = "A 14.5mm shell."

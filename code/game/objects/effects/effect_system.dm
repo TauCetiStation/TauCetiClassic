@@ -150,8 +150,6 @@ steam.start() -- spawns the effect
 	var/total_sparks = 0 // To stop it being spammed and lagging!
 
 /datum/effect/effect/system/spark_spread/set_up(n = 3, c = 0, loca)
-	if(n > 10)
-		n = 10
 	number = n
 	cardinals = c
 	if(istype(loca, /turf))
@@ -301,6 +299,32 @@ steam.start() -- spawns the effect
 	R.updatehealth()
 	return
 
+
+/obj/effect/effect/smoke/electric
+	name = "electric smoke"
+	icon_state = "smoke"
+
+
+
+/obj/effect/effect/smoke/electric/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
+	for(var/atom/R in get_turf(src))
+		if(iscarbon(R))
+			var/mob/living/carbon/H = R
+			H.electrocute_act(30)
+		if(issilicon(R))
+			R.emp_act(3)
+
+
+/obj/effect/effect/smoke/electric/Crossed(atom/movable/AM)
+	. = ..()
+	if(istype(AM,/mob/living/carbon))
+		var/mob/living/carbon/H = AM
+		H.electrocute_act(30)
+	if(istype(AM,/mob/living/silicon))
+		AM.emp_act(3)
+
+
 /////////////////////////////////////////////
 // Smoke spread
 /////////////////////////////////////////////
@@ -355,6 +379,10 @@ steam.start() -- spawns the effect
 
 /datum/effect/effect/system/smoke_spread/mustard
 	smoke_type = /obj/effect/effect/smoke/mustard
+
+/datum/effect/effect/system/smoke_spread/electric
+	smoke_type = /obj/effect/effect/smoke/electric
+
 
 
 /////////////////////////////////////////////

@@ -92,6 +92,7 @@
 	max_ammo = 6
 	multiload = 0
 
+
 /obj/item/ammo_box/magazine/internal/cylinder/flaregun
 	name = "Flare gun cylinder"
 	desc = "Oh god, this shouldn't be here."
@@ -135,6 +136,14 @@
 	caliber = "9mm"
 	max_ammo = 8
 	multiple_sprites = 2
+
+/obj/item/ammo_box/magazine/g16
+	name = "magazine (16-Gauge Special)"
+	icon = 'icons/obj/ammo.dmi'
+	icon_state = "75"
+	ammo_type = /obj/item/ammo_casing/shotgun/weakbuckshot
+	caliber = "shotgun"
+	max_ammo = 6
 
 /obj/item/ammo_box/magazine/m9mmr_2
 	name = "magazine (9mm rubber)"
@@ -272,6 +281,16 @@
 /obj/item/ammo_box/magazine/m762/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),10)]"
+
+
+/obj/item/ammo_box/magazine/m762x39
+	name = "magazine (7.62x39mm)"
+	icon_state = "a74mm-0"
+	origin_tech = "combat=2"
+	ammo_type = /obj/item/ammo_casing/a762x39
+	caliber = "a762"
+	max_ammo = 24
+
 
 /obj/item/ammo_box/magazine/chameleon
 	name = "magazine (.45)"

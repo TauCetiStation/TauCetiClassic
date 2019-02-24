@@ -125,12 +125,30 @@
 	cost = 7
 	uplink_types = list("nuclear") */
 
+
+/datum/uplink_item/dangerous/mozambique
+	name = "SA-3 Mozambique"
+	desc = "A triple-barreled shotgun pistol. Uses 16g ammunition in 6-round magazines."
+	item = /obj/item/weapon/gun/projectile/automatic/mozambique
+	cost = 10
+	uplink_types = list("nuclear")
+
+
 /datum/uplink_item/dangerous/bulldog
 	name = "V15 Bulldog shotgun"
 	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Uses various 12g magazines."
 	item = /obj/item/weapon/gun/projectile/automatic/bulldog
 	cost = 16
 	uplink_types = list("nuclear")
+
+
+/datum/uplink_item/dangerous/hemlok
+	name = "M1A3 Hemlok BF-R"
+	desc = "A high caliber burst-fire rifle. Unloads three bullets on one trigger pull. Uses 7.62x39mm in 24-round magazines."
+	item = /obj/item/weapon/gun/projectile/automatic/hemlok
+	cost = 16
+	uplink_types = list("nuclear")
+
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
@@ -195,6 +213,13 @@
 	desc = "A box that contains an EMP grenades. Useful to disrupt communication and silicon lifeforms."
 	item = /obj/item/weapon/storage/box/emps
 	cost = 5
+
+/datum/uplink_item/dangerous/electricsmoke
+	name = "Electric Smoke Grenade"
+	desc = "A grenade that deploys a cloud of electric smoke, which will cause malfunctions in electronics and electrocute organic beings ancaught inside."
+	item = /obj/item/weapon/grenade/electric
+	cost = 6
+	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/syndicate_minibomb
 	name = "Syndicate Minibomb"
@@ -270,6 +295,14 @@
 	item = /obj/item/ammo_box/a357
 	cost = 3
 
+/datum/uplink_item/ammo/mozambique
+	name = "Ammo-16g Special"
+	desc = "Magazine for use in Mozambique pistol"
+	item = /obj/item/ammo_box/magazine/g16
+	cost = 3
+	uplink_types = list("nuclear")
+
+
 /datum/uplink_item/ammo/smg
 	name = "Ammo-.45 ACP"
 	desc = "A 20-round .45 ACP magazine for use in the C-20r submachine gun. These rounds have a short stunning effect and medium impact damage."
@@ -318,6 +351,14 @@
 	item = /obj/item/ammo_box/magazine/m762
 	cost = 14
 	uplink_types = list("nuclear")
+
+/datum/uplink_item/ammo/hemlok
+	name = "Ammo-7.62x39mm"
+	desc = "A 24-round magazine of 7.62x39mm ammunition for use in the Hemlok BF-R"
+	item = /obj/item/ammo_box/magazine/m762x39
+	cost = 8
+	uplink_types = list("nuclear")
+
 
 /datum/uplink_item/ammo/heavyrifle
 	name = "A 14.5mm shell."

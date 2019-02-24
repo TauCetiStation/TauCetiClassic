@@ -15,15 +15,8 @@
 
 /obj/item/weapon/grenade/smokebomb/prime()
 	playsound(src, 'sound/effects/smoke.ogg', 50, 1, -3)
-	smoke.set_up(10, 0, usr.loc)
-	spawn(0)
-		smoke.start()
-		sleep(10)
-		smoke.start()
-		sleep(10)
-		smoke.start()
-		sleep(10)
-		smoke.start()
+	smoke.set_up(40, 0, usr.loc)
+	smoke.start()
 
 	for(var/obj/effect/blob/B in view(8,src))
 		var/damage = round(30/(get_dist(B,src)+1))

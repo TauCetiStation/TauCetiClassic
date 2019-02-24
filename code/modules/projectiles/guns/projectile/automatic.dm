@@ -86,6 +86,23 @@
 	icon_state = "c20r[chambered ? "" : "-e"]"
 	return
 
+/obj/item/weapon/gun/projectile/automatic/hemlok
+	name = "M1A3 Hemlok BF-R"
+	desc = "The factory issue Hemlok fires a three-round burst. Uses 7.62x39mm rounds"
+	icon_state = "arifle"
+	w_class = ITEM_SIZE_NORMAL
+	origin_tech = "combat=5;materials=2;syndicate=8"
+	mag_type = /obj/item/ammo_box/magazine/m762x39
+	fire_sound = 'sound/weapons/guns/hemlok.ogg'
+	projectiles_per_shot = 3
+
+
+/obj/item/weapon/gun/projectile/automatic/hemlok/update_icon()
+	..()
+	icon_state = "[initial(icon_state)][magazine ? "" : "-empty"]"
+	return
+
+
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "\improper L6 SAW"
 	desc = "A heavily modified light machine gun with a tactical plasteel frame resting on a rather traditionally-made ballistic weapon. Has 'Aussec Armoury - 2531' engraved on the reciever, as well as '7.62x51mm'."
