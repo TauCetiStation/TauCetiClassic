@@ -137,7 +137,7 @@
 
 // Phoron. The oil of 26 century. The reason why you are here.
 /datum/export/stack/phoron
-	cost = 300
+	cost = 350
 	export_types = list(/obj/item/stack/sheet/mineral/phoron)
 	message = "of phoron"
 
@@ -148,7 +148,7 @@
 
 // Refined scrap. The coal of 26 century. The reason why you are here.
 /datum/export/stack/scrap
-	cost = 300
+	cost = 250
 	export_types = list(/obj/item/stack/sheet/refined_scrap)
 	message = "of scrap"
 
