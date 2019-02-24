@@ -20,6 +20,7 @@
 	var/recharged = 0
 	var/recharge_delay = 15
 	var/hackedcheck = 0
+	var/need_chem_understand = 1
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
 	"sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron",
 	"copper","mercury","radium","water","ethanol","sugar","sacid","tungsten")
@@ -109,10 +110,18 @@
 		data["beakerMaxVolume"] = null
 
 	var/chemicals[0]
-	for (var/re in dispensable_reagents)
-		var/datum/reagent/temp = chemical_reagents_list[re]
-		if(temp)
-			chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("dispense" = temp.id)))) // list in a list because Byond merges the first list...
+	var/dispensable_reagents_chuffle = shuffle(dispensable_reagents)
+	if(is_knowledge_chem(user) || !isliving(user) || !need_chem_understand)
+		for (var/re in dispensable_reagents)
+			var/datum/reagent/temp = chemical_reagents_list[re]
+			if(temp)
+				chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("dispense" = temp.id)))) // list in a list because Byond merges the first list...
+	else
+		for (var/re in dispensable_reagents_chuffle)
+			var/datum/reagent/temp = chemical_reagents_list[re]
+			if(temp)
+				chemicals.Add(list(list("title" = temp.chem_name, "id" = temp.id, "commands" = list("dispense" = temp.id))))
+
 	data["chemicals"] = chemicals
 
 	// update the ui if it exists, returns null if no ui is passed/found
@@ -277,6 +286,7 @@
 	energy = 100
 	accept_glass = 1
 	max_energy = 100
+	need_chem_understand = 0
 	dispensable_reagents = list("water","ice","coffee","cream","tea","icetea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","limejuice","watermelonjuice")
 
 	/obj/machinery/chem_dispenser/soda/attackby(obj/item/weapon/B, mob/user)
@@ -306,6 +316,7 @@
 	energy = 100
 	accept_glass = 1
 	max_energy = 100
+	need_chem_understand = 0
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
 	dispensable_reagents = list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequilla","vermouth","cognac","ale","mead")
 

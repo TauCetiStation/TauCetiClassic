@@ -3,6 +3,7 @@
 /datum/reagent/tungsten
 	name = "Tungsten"
 	id = "tungsten"
+	chem_name = "W"
 	description = "A chemical element, and a strong oxidising agent."
 	reagent_state = SOLID
 	color = "#DCDCDC"  // rgb: 220, 220, 220, silver

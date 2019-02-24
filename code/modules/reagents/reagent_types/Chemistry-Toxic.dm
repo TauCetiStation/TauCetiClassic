@@ -375,6 +375,7 @@
 /datum/reagent/toxin/acid
 	name = "Sulphuric acid"
 	id = "sacid"
+	chem_name = "H2SO4"
 	description = "A very corrosive mineral acid with the molecular formula H2SO4."
 	reagent_state = LIQUID
 	color = "#DB5008" // rgb: 219, 80, 8

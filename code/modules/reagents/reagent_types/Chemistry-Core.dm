@@ -1,6 +1,7 @@
 /datum/reagent/water
 	name = "Water"
 	id = "water"
+	chem_name = "H2O"
 	description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 	reagent_state = LIQUID
 	color = "#0064c8" // rgb: 0, 100, 200
@@ -82,6 +83,7 @@
 /datum/reagent/water/holywater // May not be a "core" reagent, but I decided to keep the subtypes near  their parents.
 	name = "Holy Water"
 	id = "holywater"
+	chem_name = "H2HOLYSPIRIT"
 	description = "An ashen-obsidian-water mix, this solution will alter certain sections of the brain's rationality."
 	color = "#e0e8ef" // rgb: 224, 232, 239
 
@@ -139,6 +141,7 @@
 /datum/reagent/water/unholywater
 	name = "Unholy Water"
 	id = "unholywater"
+	chem_name = "H2UNHOLYSPIRIT"
 	description = "A corpsen-ectoplasmic-water mix, this solution could alter concepts of reality itself."
 	data = 1
 	color = "#C80064" // rgb: 200,0, 100
@@ -215,6 +218,7 @@
 /datum/reagent/oxygen
 	name = "Oxygen"
 	id = "oxygen"
+	chem_name = "O2"
 	description = "A colorless, odorless gas."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
@@ -230,6 +234,7 @@
 /datum/reagent/copper
 	name = "Copper"
 	id = "copper"
+	chem_name = "Cu"
 	description = "A highly ductile metal."
 	color = "#6E3B08" // rgb: 110, 59, 8
 	taste_message = null
@@ -238,6 +243,7 @@
 /datum/reagent/nitrogen
 	name = "Nitrogen"
 	id = "nitrogen"
+	chem_name = "N2"
 	description = "A colorless, odorless, tasteless gas."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
@@ -262,6 +268,7 @@
 /datum/reagent/hydrogen
 	name = "Hydrogen"
 	id = "hydrogen"
+	chem_name = "H2"
 	description = "A colorless, odorless, nonmetallic, tasteless, highly combustible diatomic gas."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
@@ -271,6 +278,7 @@
 /datum/reagent/potassium
 	name = "Potassium"
 	id = "potassium"
+	chem_name = "K"
 	description = "A soft, low-melting solid that can easily be cut with a knife. Reacts violently with water."
 	reagent_state = SOLID
 	color = "#A0A0A0" // rgb: 160, 160, 160
@@ -280,6 +288,7 @@
 /datum/reagent/mercury
 	name = "Mercury"
 	id = "mercury"
+	chem_name = "Hg"
 	description = "A chemical element."
 	reagent_state = LIQUID
 	color = "#484848" // rgb: 72, 72, 72
@@ -298,6 +307,7 @@
 /datum/reagent/sulfur
 	name = "Sulfur"
 	id = "sulfur"
+	chem_name = "S"
 	description = "A chemical element with a pungent smell."
 	reagent_state = SOLID
 	color = "#BF8C00" // rgb: 191, 140, 0
@@ -307,6 +317,7 @@
 /datum/reagent/carbon
 	name = "Carbon"
 	id = "carbon"
+	chem_name = "C"
 	description = "A chemical element, the builing block of life."
 	reagent_state = SOLID
 	color = "#1C1300" // rgb: 30, 20, 0
@@ -326,6 +337,7 @@
 /datum/reagent/chlorine
 	name = "Chlorine"
 	id = "chlorine"
+	chem_name = "Cl2"
 	description = "A chemical element with a characteristic odour."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
@@ -339,6 +351,7 @@
 /datum/reagent/fluorine
 	name = "Fluorine"
 	id = "fluorine"
+	chem_name = "F2"
 	description = "A highly-reactive chemical element."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
@@ -352,6 +365,7 @@
 /datum/reagent/sodium
 	name = "Sodium"
 	id = "sodium"
+	chem_name = "Na"
 	description = "A chemical element, readily reacts with water."
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
@@ -361,6 +375,7 @@
 /datum/reagent/phosphorus
 	name = "Phosphorus"
 	id = "phosphorus"
+	chem_name = "P"
 	description = "A chemical element, the backbone of biological energy carriers."
 	reagent_state = SOLID
 	color = "#832828" // rgb: 131, 40, 40
@@ -379,6 +394,7 @@
 /datum/reagent/lithium
 	name = "Lithium"
 	id = "lithium"
+	chem_name = "Li"
 	description = "A chemical element, used as antidepressant."
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
@@ -396,6 +412,7 @@
 /datum/reagent/sugar
 	name = "Sugar"
 	id = "sugar"
+	chem_name = "C12H22O11"
 	description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255, 255, 255
@@ -408,6 +425,7 @@
 /datum/reagent/radium
 	name = "Radium"
 	id = "radium"
+	chem_name = "Ra"
 	description = "Radium is an alkaline earth metal. It is extremely radioactive."
 	reagent_state = SOLID
 	color = "#C7C7C7" // rgb: 199,199,199
@@ -443,6 +461,7 @@
 /datum/reagent/iron
 	name = "Iron"
 	id = "iron"
+	chem_name = "Fe"
 	description = "Pure iron is a metal."
 	reagent_state = SOLID
 	color = "#C8A5DC" // rgb: 200, 165, 220
@@ -452,6 +471,7 @@
 /datum/reagent/gold
 	name = "Gold"
 	id = "gold"
+	chem_name = "Au"
 	description = "Gold is a dense, soft, shiny metal and the most malleable and ductile metal known."
 	reagent_state = SOLID
 	color = "#F7C430" // rgb: 247, 196, 48
@@ -460,6 +480,7 @@
 /datum/reagent/silver
 	name = "Silver"
 	id = "silver"
+	chem_name = "Ag"
 	description = "A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal."
 	reagent_state = SOLID
 	color = "#D0D0D0" // rgb: 208, 208, 208
@@ -468,6 +489,7 @@
 /datum/reagent/uranium
 	name ="Uranium"
 	id = "uranium"
+	chem_name = "U"
 	description = "A silvery-white metallic chemical element in the actinide series, weakly radioactive."
 	reagent_state = SOLID
 	color = "#B8B8C0" // rgb: 184, 184, 192
@@ -488,6 +510,7 @@
 /datum/reagent/aluminum
 	name = "Aluminum"
 	id = "aluminum"
+	chem_name = "Al"
 	description = "A silvery white and ductile member of the boron group of chemical elements."
 	reagent_state = SOLID
 	color = "#A8A8A8" // rgb: 168, 168, 168
@@ -496,6 +519,7 @@
 /datum/reagent/silicon
 	name = "Silicon"
 	id = "silicon"
+	chem_name = "Si"
 	description = "A tetravalent metalloid, silicon is less reactive than its chemical analog carbon."
 	reagent_state = SOLID
 	color = "#A8A8A8" // rgb: 168, 168, 168

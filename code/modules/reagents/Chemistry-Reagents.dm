@@ -13,6 +13,7 @@
 /datum/reagent
 	var/name = "Reagent"
 	var/id = "reagent"
+	var/chem_name = ""
 	var/description = ""
 	var/datum/reagents/holder = null
 	var/reagent_state = SOLID

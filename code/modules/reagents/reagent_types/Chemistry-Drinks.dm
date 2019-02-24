@@ -607,6 +607,7 @@
 /datum/reagent/consumable/ethanol
 	name = "Ethanol" //Parent class for all alcoholic reagents.
 	id = "ethanol"
+	chem_name = "C2H5OH"
 	description = "A well-known alcohol with a variety of applications."
 	reagent_state = LIQUID
 	nutriment_factor = 0 //So alcohol can fill you up! If they want to.

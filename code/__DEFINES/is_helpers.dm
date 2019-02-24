@@ -107,3 +107,9 @@
 #define issignaler(O) (istype(O, /obj/item/device/assembly/signaler))
 
 #define istimer(O) (istype(O, /obj/item/device/assembly/timer))
+
+// KNOWLEDGE
+
+#define is_knowledge_chem(A) (ishuman(A) && A.job in list("Chemist", "Chief Medical Officer", "Research Director", "Scientist", "Xenoarchaeologist"))
+
+

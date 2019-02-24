@@ -192,6 +192,7 @@
 /datum/reagent/fuel
 	name = "Welding fuel"
 	id = "fuel"
+	chem_name = "Welding fuel"
 	description = "Required for welders. Flamable."
 	reagent_state = LIQUID
 	color = "#660000" // rgb: 102, 0, 0
@@ -350,6 +351,7 @@
 /datum/reagent/ammonia
 	name = "Ammonia"
 	id = "ammonia"
+	chem_name = "NH3"
 	description = "A caustic substance commonly used in fertilizer or household cleaners."
 	reagent_state = GAS
 	color = "#404030" // rgb: 64, 64, 48
@@ -365,6 +367,7 @@
 /datum/reagent/diethylamine
 	name = "Diethylamine"
 	id = "diethylamine"
+	chem_name = "C4H11N"
 	description = "A secondary amine, mildly corrosive."
 	reagent_state = LIQUID
 	color = "#604030" // rgb: 96, 64, 48
