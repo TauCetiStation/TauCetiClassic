@@ -3,7 +3,7 @@
 /obj/item/clothing/gloves/pipboy
 	name = "pip-boy 3000"
 	desc = "It's a strange looking device with a screen. Seems like it's worn on the arm. This thing clearly has seen better days."
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/finds.dmi'
 	icon_state = "pipboy3000"
 	item_state = "pipboy3000"
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_GLOVES
