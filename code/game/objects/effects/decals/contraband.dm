@@ -102,7 +102,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	var/official = FALSE
 
 /obj/item/weapon/poster/contraband
-	name = "contraband poster"
+	name = "poster"
 	desc = "This poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its vulgar themes have marked it as contraband aboard Nanotrasen space facilities."
 	icon = 'icons/obj/contraband.dmi'
 	icon_state = "rolled_poster"
