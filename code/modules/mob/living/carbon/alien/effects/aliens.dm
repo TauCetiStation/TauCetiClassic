@@ -191,7 +191,7 @@
 
 	anchored = 1
 	density = 0
-	layer = 2.5
+	layer = 2.4
 	plane = FLOOR_PLANE
 
 	var/health = 15
@@ -202,7 +202,7 @@
 	icon_state = "weednode"
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
-	layer = 2.5
+	layer = 2.4
 	light_range = 0
 	var/node_range = NODERANGE
 	light_color = "#24C1FF"
