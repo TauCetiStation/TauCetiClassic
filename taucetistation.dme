@@ -1271,6 +1271,7 @@
 #include "code\modules\locations\shuttles\computer.dm"
 #include "code\modules\locations\shuttles\floor.dm"
 #include "code\modules\locations\shuttles\Intercom.dm"
+#include "code\modules\locations\shuttles\merchant_shuttle.dm"
 #include "code\modules\locations\shuttles\mine_sci_shuttle.dm"
 #include "code\modules\locations\shuttles\object_wall.dm"
 #include "code\modules\locations\shuttles\officer_shuttle.dm"

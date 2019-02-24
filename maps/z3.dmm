@@ -33,27 +33,26 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/merchantstation)
+/area/merchantship/base)
 "ag" = (
-/obj/machinery/door/airlock/external,
-/turf/simulated/floor,
-/area/merchantstation)
-"ah" = (
 /obj/structure/table/reinforced,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/merchantstation)
+/area/merchantship/base)
+"ah" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall3"
+	},
+/area/merchantship/base)
 "ai" = (
 /obj/structure/scrap_cube,
 /turf/space,
 /area/space)
 "aj" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "swall3"
-	},
-/area/merchantstation)
+/turf/simulated/floor,
+/area/merchantship/base)
 "ak" = (
 /turf/simulated/shuttle/wall{
 	dir = 2;
@@ -65,7 +64,7 @@
 	dir = 4;
 	icon_state = "swallc2"
 	},
-/area/merchantstation)
+/area/merchantship/base)
 "am" = (
 /turf/simulated/shuttle/wall{
 	dir = 2;
@@ -89,14 +88,11 @@
 	},
 /area/derelict/ship)
 "aq" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/merchantstation)
+/area/merchantship/base)
 "ar" = (
 /turf/simulated/shuttle/wall{
 	dir = 2;
@@ -116,20 +112,21 @@
 /area/derelict/ship)
 "at" = (
 /obj/machinery/light{
-	dir = 4;
-	light_power = 0.9;
-	light_range = 8
+	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
-/area/merchantstation)
+/area/merchantship/base)
 "au" = (
-/obj/machinery/door/airlock/glass,
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 60
 	},
-/area/merchantstation)
+/turf/simulated/floor,
+/area/merchantship/base)
 "av" = (
 /turf/simulated/shuttle/wall{
 	dir = 2;
@@ -137,12 +134,15 @@
 	},
 /area/derelict/ship)
 "aw" = (
-/obj/machinery/light,
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+/obj/machinery/light{
+	dir = 4;
+	light_power = 0.9;
+	light_range = 8
 	},
-/area/merchantstation)
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/merchantship/base)
 "ax" = (
 /turf/simulated/floor/wood,
 /area/merchantstation)
@@ -150,11 +150,11 @@
 /turf/simulated/mineral,
 /area/merchantstation)
 "az" = (
-/obj/machinery/light,
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/machinery/light{
+	dir = 8
 	},
-/area/merchantstation)
+/turf/simulated/floor,
+/area/merchantship/base)
 "aA" = (
 /turf/simulated/mineral,
 /area/space)
@@ -163,20 +163,20 @@
 	dir = 4;
 	icon_state = "wall3"
 	},
-/area/merchantstation)
+/area/merchantship/base)
 "aC" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "diagonalWall3"
 	},
-/area/merchantstation)
+/area/merchantship/base)
 "aD" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8;
 	icon_state = "burst_l"
 	},
 /turf/space,
-/area/merchantstation)
+/area/merchantship/base)
 "aE" = (
 /turf/simulated/shuttle/wall{
 	dir = 2;
@@ -192,18 +192,17 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/merchantstation)
+/area/merchantship/base)
 "aG" = (
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/merchantstation)
 "aH" = (
-/obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/merchantstation)
+/area/merchantship/base)
 "aI" = (
 /obj/machinery/light{
 	dir = 4;
@@ -220,27 +219,23 @@
 /turf/space,
 /area/derelict/ship)
 "aK" = (
+/obj/machinery/light/small,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/merchantship/base)
+"aL" = (
 /obj/machinery/door/airlock/hatch,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/merchantstation)
-"aL" = (
+/area/merchantship/base)
+"aM" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
 	icon_state = "swall12"
 	},
-/area/merchantstation)
-"aM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/merchantstation)
+/area/merchantship/base)
 "aN" = (
 /turf/simulated/wall,
 /area/merchantstation)
@@ -256,11 +251,15 @@
 /turf/simulated/floor,
 /area/merchantstation)
 "aQ" = (
-/obj/machinery/light{
-	dir = 8
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 60
 	},
-/turf/simulated/floor,
-/area/merchantstation)
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/merchantship/base)
 "aR" = (
 /obj/effect/landmark/start{
 	name = "Merchant"
@@ -276,23 +275,23 @@
 	dir = 2;
 	icon_state = "swall14"
 	},
-/area/merchantstation)
+/area/merchantship/base)
 "aU" = (
 /obj/machinery/merchant_pad,
 /turf/simulated/floor,
 /area/merchantstation)
 "aV" = (
+/obj/machinery/door/airlock/external{
+	locked = 1
+	},
+/turf/simulated/floor,
+/area/merchantship/base)
+"aW" = (
 /turf/simulated/shuttle/wall{
 	dir = 2;
 	icon_state = "swall_s10"
 	},
-/area/merchantstation)
-"aW" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "swallc3"
-	},
-/area/merchantstation)
+/area/merchantship/base)
 "aX" = (
 /turf/simulated/shuttle/wall{
 	dir = 2;
@@ -334,11 +333,11 @@
 	},
 /area/derelict/ship)
 "bd" = (
-/turf/simulated/shuttle/wall{
-	dir = 2;
-	icon_state = "swall_s9"
+/obj/machinery/door/airlock/glass,
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
-/area/merchantstation)
+/area/merchantship/base)
 "be" = (
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -380,11 +379,9 @@
 	},
 /area/space)
 "bk" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "swall14"
-	},
-/area/merchantstation)
+/obj/machinery/computer/merchant_shuttle,
+/turf/simulated/floor,
+/area/merchantship/base)
 "bl" = (
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -440,13 +437,12 @@
 	},
 /area/space)
 "bt" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
-/area/merchantstation)
+/area/merchantship/base)
 "bu" = (
 /turf/simulated/shuttle/wall{
 	dir = 2;
@@ -466,11 +462,11 @@
 	},
 /area/space)
 "bx" = (
-/turf/simulated/shuttle/wall{
-	dir = 9;
-	icon_state = "diagonalWall3"
+/obj/machinery/light,
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
-/area/merchantstation)
+/area/merchantship/base)
 "by" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -873,6 +869,73 @@
 /obj/structure/table,
 /obj/item/weapon/bedsheet,
 /turf/simulated/floor/plating,
+/area/merchantstation)
+"cK" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "swallc3"
+	},
+/area/merchantship/base)
+"cL" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_s9"
+	},
+/area/merchantship/base)
+"cM" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall14"
+	},
+/area/merchantship/base)
+"cN" = (
+/obj/machinery/door/airlock/external,
+/turf/simulated/floor,
+/area/merchantship/base)
+"cO" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/merchantship/base)
+"cP" = (
+/turf/simulated/shuttle/wall{
+	dir = 9;
+	icon_state = "diagonalWall3"
+	},
+/area/merchantship/base)
+"cQ" = (
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
+	name = "KEEP CLEAR: DOCKING AREA"
+	},
+/turf/simulated/wall,
+/area/merchantstation)
+"cR" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "arrival_merchant";
+	locked = 0
+	},
+/turf/simulated/floor/plating,
+/area/merchantstation/dock)
+"cS" = (
+/turf/simulated/floor/plating,
+/area/merchantstation/dock)
+"cT" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/merchantstation/dock)
+"cU" = (
+/obj/machinery/door/airlock/external,
+/turf/simulated/floor/plating,
+/area/merchantstation/dock)
+"cV" = (
+/obj/machinery/computer/merchant_shuttle,
+/turf/simulated/floor,
 /area/merchantstation)
 "db" = (
 /obj/effect/decal/cleanable/vomit,
@@ -14542,14 +14605,14 @@ aa
 aa
 aa
 aa
+aB
+aB
+aB
+aB
+aB
+aB
+aB
 aa
-aB
-aB
-aB
-aB
-aB
-aB
-aB
 aa
 aa
 aa
@@ -14799,14 +14862,14 @@ aa
 aa
 aa
 aa
+aB
+aH
+aH
+aH
+aH
+aH
+aB
 aa
-aB
-aG
-aG
-aG
-aG
-aG
-aB
 aa
 aa
 aa
@@ -15056,14 +15119,14 @@ aa
 aa
 aa
 aa
+aB
+aH
+aH
+aH
+aH
+aH
+aB
 aa
-aB
-aG
-aG
-aG
-aG
-aG
-aB
 aa
 aa
 aa
@@ -15313,14 +15376,14 @@ aa
 aa
 aa
 aa
-aa
 aB
 af
-aG
-aG
-aG
-az
+aH
+aH
+aH
+bx
 aB
+aa
 aa
 aa
 aa
@@ -15567,20 +15630,20 @@ aa
 aa
 aa
 aa
+aD
+aD
+aD
+aB
+aH
+aH
+aH
+aH
+aH
+aB
+aD
+aD
+aD
 aa
-aD
-aD
-aD
-aB
-aG
-aG
-aG
-aG
-aG
-aB
-aD
-aD
-aD
 aa
 aa
 bS
@@ -15823,22 +15886,22 @@ aa
 aa
 aa
 aa
+aB
+aF
+aF
+aF
+aB
+aH
+aH
+aH
+aH
+aH
+aB
+aF
+aF
+aF
+aB
 aa
-aB
-aF
-aF
-aF
-aB
-aG
-aG
-aG
-aG
-aG
-aB
-aF
-aF
-aF
-aB
 aa
 bS
 aS
@@ -16080,22 +16143,22 @@ aa
 aa
 aa
 aa
+aB
+aH
+aH
+aH
+aL
+aH
+aH
+aH
+aH
+aH
+aL
+aH
+aH
+aH
+aB
 aa
-aB
-aG
-aG
-aG
-aK
-aG
-aG
-aG
-aG
-aG
-aK
-aG
-aG
-aG
-aB
 aa
 aa
 aa
@@ -16337,22 +16400,22 @@ aa
 aa
 aa
 aa
-aa
 aC
 aB
-aG
 aH
-aB
-aB
-aB
 aK
 aB
 aB
 aB
-bt
-aG
+aL
 aB
-bx
+aB
+aB
+cO
+aH
+aB
+cP
+aa
 aa
 aa
 aa
@@ -16595,20 +16658,20 @@ aa
 aa
 aa
 aa
-aa
 aC
 aB
-aG
+aH
 aB
-ah
-ao
-ao
-ao
-ah
+ag
+aq
+aq
+aq
+ag
 aB
-aG
+aH
 aB
-bx
+cP
+aa
 aa
 aa
 aa
@@ -16853,18 +16916,18 @@ aa
 aa
 aa
 aa
-aa
 aC
 aB
 aB
-ah
-ao
-ah
-ao
-ah
+ag
+aq
+ag
+aq
+ag
 aB
 aB
-bx
+cP
+aa
 aa
 aa
 aa
@@ -17111,16 +17174,16 @@ aa
 aa
 aa
 aa
-aa
 aC
 aB
 aB
-aq
-ah
-aw
+at
+ag
+bt
 aB
 aB
-bx
+cP
+aa
 aa
 aa
 aa
@@ -17369,14 +17432,14 @@ aa
 aa
 aa
 aa
+aM
+ag
+aq
+ag
+aq
+ag
+aM
 aa
-aL
-ah
-ao
-ah
-ao
-ah
-aL
 aa
 aa
 aa
@@ -17626,14 +17689,14 @@ aa
 aa
 aa
 aa
+aQ
+ag
+aq
+ag
+aq
+ag
+aQ
 aa
-aM
-ah
-ao
-ah
-ao
-ah
-aM
 aS
 aN
 aN
@@ -17883,14 +17946,14 @@ aa
 aa
 aa
 aa
+aQ
+ag
+aq
+aq
+aq
+ag
+aQ
 aa
-aM
-ah
-ao
-ao
-ao
-ah
-aM
 aS
 aO
 bI
@@ -18140,14 +18203,14 @@ aa
 aa
 aa
 aa
-aa
 aT
-aj
-aO
+ah
 au
-aO
-aj
-bk
+bd
+au
+ah
+cM
+cQ
 aN
 aN
 bJ
@@ -18397,16 +18460,16 @@ aA
 aa
 aa
 aa
-aa
-ag
-aG
-aG
-aG
-aG
-aG
-ag
-ag
-aP
+aV
+aH
+aH
+aH
+aH
+aH
+cN
+cR
+cS
+cU
 aP
 aP
 aP
@@ -18654,16 +18717,16 @@ aA
 aa
 aa
 aa
-aa
-ag
-aG
-at
-aG
-at
-aG
-ag
-ag
-aP
+aV
+aH
+aw
+aH
+aw
+aH
+cN
+cR
+cT
+cU
 aP
 aP
 aP
@@ -18911,14 +18974,14 @@ aA
 aa
 aa
 aa
-aa
 aT
-aj
-aj
-au
-aj
-aj
-bk
+ah
+ah
+bd
+ah
+ah
+cM
+cQ
 aN
 aN
 aP
@@ -19168,14 +19231,14 @@ aa
 aa
 aa
 aa
+aQ
+aj
+az
+aj
+az
+aj
+aQ
 aa
-aM
-aP
-aQ
-aP
-aQ
-aP
-aM
 aS
 aO
 bK
@@ -19425,14 +19488,14 @@ aa
 aa
 aa
 aa
+aQ
+aj
+aj
+aj
+aj
+aj
+aQ
 aa
-aM
-aP
-aP
-aP
-aP
-aP
-aM
 aS
 aO
 aP
@@ -19682,14 +19745,14 @@ aa
 aa
 aa
 aa
-aa
-aV
-al
-aP
-aP
-aP
 aW
-bd
+al
+aj
+bk
+aj
+cK
+cL
+aa
 aS
 aO
 aP
@@ -19940,12 +20003,12 @@ aa
 aS
 aa
 aa
+aW
+aQ
+aQ
+aQ
+cL
 aa
-aV
-aM
-aM
-aM
-bd
 aa
 aS
 aO
@@ -25605,7 +25668,7 @@ aa
 aO
 aP
 aP
-aP
+cV
 aP
 aP
 aO

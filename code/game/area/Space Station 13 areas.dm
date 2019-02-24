@@ -1011,6 +1011,21 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Merchant Station"
 	icon_state = "DJ"
 
+/area/merchantstation/dock
+	icon_state = "DJ"
+
+/area/merchantship/base
+	name = "Merchant Ship"
+	icon_state = "shuttle"
+
+/area/merchantship/station
+	name = "Merchant Ship"
+	icon_state = "shuttle"
+
+/area/merchantstation/station_dock
+	name = "Merchant Shuttle Dock"
+	icon_state = "DJ"
+
 //DERELICT
 
 /area/derelict

@@ -36,6 +36,7 @@
 
 /obj/machinery/computer/merchant/atom_init()
 	. = ..()
+	bank = rand(10000, 30000)
 
 /obj/machinery/computer/merchant/proc/get_merchant(var/num)
 	if(num > SStrade.traders.len)

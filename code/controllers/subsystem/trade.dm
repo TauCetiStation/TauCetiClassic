@@ -14,8 +14,10 @@ var/datum/subsystem/trade/SStrade
 	NEW_SS_GLOBAL(SStrade)
 
 /datum/subsystem/trade/Initialize(timeofday)
-	for(var/i in 1 to rand(1,3))
-		generate_trader(1)
+	for(var/i in 1 to rand(2,3))
+		generate_trader(TRUE)
+	for(var/i in 1 to rand(2,3))
+		generate_trader(FALSE)
 	. = ..()
 
 /datum/subsystem/trade/stat_entry(msg)
