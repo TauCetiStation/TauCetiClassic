@@ -86,11 +86,7 @@
 /obj/item/projectile/changeling_whip/proc/end_whipping(atom/movable/T)
 	if(in_range(T, host) && !host.get_inactive_hand() && !host.lying)
 		if(iscarbon(T))
-			var/obj/item/weapon/grab/G = new(host,T)
-			host.put_in_inactive_hand(G)
-			G.state = GRAB_AGGRESSIVE
-			G.icon_state = "grabbed1"
-			G.synch()
+			host.Grab(T, GRAB_AGGRESSIVE, FALSE)
 		else if(istype(T, /obj/item))
 			host.put_in_inactive_hand(T)
 

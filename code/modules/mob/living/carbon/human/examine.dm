@@ -107,6 +107,7 @@
 		else
 			msg += "[t_He] [t_has] [bicon(back)] \a [back] on [t_his] back.\n"
 
+	var/static/list/changeling_weapons = list(/obj/item/weapon/changeling_whip, /obj/item/weapon/shield/changeling, /obj/item/weapon/melee/arm_blade, /obj/item/weapon/changeling_hammer)
 	//left hand
 	if(l_hand && !(l_hand.flags&ABSTRACT))
 		if(l_hand.dirt_overlay)
@@ -115,6 +116,8 @@
 			msg += "<span class='wet'>[t_He] [t_is] holding [bicon(l_hand)] [l_hand.gender==PLURAL?"some":"a"] wet [l_hand.name] in [t_his] left hand!</span>\n"
 		else
 			msg += "[t_He] [t_is] holding [bicon(l_hand)] \a [l_hand] in [t_his] left hand.\n"
+	else if(l_hand && (l_hand.type in changeling_weapons))
+		msg += "<span class='warning'>[t_He] [t_has] [bicon(l_hand)] \a [l_hand] instead of his left arm!</span>\n"
 
 	//right hand
 	if(r_hand && !(r_hand.flags&ABSTRACT))
@@ -124,6 +127,8 @@
 			msg += "<span class='wet'>[t_He] [t_is] holding [bicon(r_hand)] [r_hand.gender==PLURAL?"some":"a"] wet [r_hand.name] in [t_his] right hand!</span>\n"
 		else
 			msg += "[t_He] [t_is] holding [bicon(r_hand)] \a [r_hand] in [t_his] right hand.\n"
+	else if(r_hand && (r_hand.type in changeling_weapons))
+		msg += "<span class='warning'>[t_He] [t_has] [bicon(r_hand)] \a [r_hand] instead of his right arm!</span>\n"
 
 	//gloves
 	if(gloves && !skipgloves)

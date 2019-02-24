@@ -300,11 +300,15 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	collapse = 1
 	updateimage()
 
-/proc/fake_blood(mob/target)
+/proc/fake_blood(mob/living/carbon/human/target)
 	var/obj/effect/overlay/O = new/obj/effect/overlay(target.loc)
-	O.name = "blood"
-	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
-	to_chat(target, I)
+
+	var/datum/dirt_cover/D = new target.species.blood_color
+	O.name = D.name
+	O.color = D.color
+
+	var/image/I = image('icons/effects/blood.dmi',O,"mfloor[rand(1,7)]",O.dir,1)
+	target << I
 	spawn(300)
 		qdel(O)
 	return

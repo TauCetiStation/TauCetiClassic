@@ -7,7 +7,6 @@
 	icon = "ICON FILENAME" 			(defaults to areas.dmi)
 	icon_state = "NAME OF ICON" 	(defaults to "unknown" (blank))
 	requires_power = 0 				(defaults to 1)
-	music = "music/music.ogg"		(defaults to "music/music.ogg")
 
 NOTE: there are two lists of areas in the end of this file: centcom and station itself. Please maintain these lists valid. --rastaf0
 
@@ -57,7 +56,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/shuttle/escape
 	name = "Emergency Shuttle"
-	music = "music/escape.ogg"
 
 /area/shuttle/escape/station
 	name = "Emergency Shuttle Station"
@@ -74,7 +72,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/shuttle/escape_pod1
 	name = "Escape Pod One"
-	music = "music/escape.ogg"
 
 /area/shuttle/escape_pod1/station
 	icon_state = "shuttle2"
@@ -88,7 +85,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/shuttle/escape_pod2
 	name = "Escape Pod Two"
-	music = "music/escape.ogg"
 
 /area/shuttle/escape_pod2/station
 	icon_state = "shuttle2"
@@ -102,7 +98,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/shuttle/escape_pod3
 	name = "Escape Pod Three"
-	music = "music/escape.ogg"
 
 /area/shuttle/escape_pod3/station
 	icon_state = "shuttle2"
@@ -116,7 +111,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/shuttle/escape_pod5 //Pod 4 was lost to meteors
 	name = "Escape Pod Five"
-	music = "music/escape.ogg"
 
 /area/shuttle/escape_pod5/station
 	icon_state = "shuttle2"
@@ -130,7 +124,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/shuttle/mining
 	name = "Mining Shuttle"
-	music = "music/escape.ogg"
 
 /area/shuttle/mining/station
 	icon_state = "shuttle2"
@@ -182,7 +175,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/shuttle/research
 	name = "Research Shuttle"
-	music = "music/escape.ogg"
 	icon_state = "shuttle"
 
 /area/shuttle/vox/station
@@ -483,12 +475,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/bridge
 	name = "Bridge"
 	icon_state = "bridge"
-	music = "signal"
 
 /area/bridge/meeting_room
 	name = "Heads of Staff Meeting Room"
 	icon_state = "bridge"
-	music = null
 
 /area/crew_quarters/captain
 	name = "Captain's Office"
@@ -734,17 +724,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/teleporter
 	name = "Teleporter"
 	icon_state = "teleporter"
-	music = "signal"
 
 /area/gateway
 	name = "Gateway"
 	icon_state = "teleporter"
-	music = "signal"
 
 /area/AIsattele
 	name = "AI Satellite Teleporter Room"
 	icon_state = "teleporter"
-	music = "signal"
 
 //MedBay
 
@@ -755,7 +742,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Medbay is a large area, these additional areas help level out APC load.
 /area/medical/hallway
 	icon_state = "medbay2"
-	music = 'sound/ambience/signal.ogg'
 
 /area/medical/hallway/outbranch
 	icon_state = "medbay3"
@@ -763,7 +749,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/reception
 	name = "Medbay Reception"
 	icon_state = "medbay"
-	music = 'sound/ambience/signal.ogg'
 
 /area/medical/storage
 	name = "Medbay Storage"
@@ -772,12 +757,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/medbreak
 	name = "Medbay Breaktime Room"
 	icon_state = "medbay3"
-	music = 'sound/ambience/signal.ogg'
 
 /area/medical/psych
 	name = "Psych Room"
 	icon_state = "medbay3"
-	music = 'sound/ambience/signal.ogg'
 
 /area/medical/patients_rooms
 	name = "Patient's Rooms"
@@ -983,7 +966,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/toxins/server
 	name = "Server Room"
 	icon_state = "server"
-	music = 'sound/ambience/server.ogg'
 
 
 //Storage

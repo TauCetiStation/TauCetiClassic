@@ -123,11 +123,11 @@
 
 /datum/game_mode/mutiny/proc/get_equipment_slots()
 	return list(
-		"left pocket" = slot_l_store,
-		"right pocket" = slot_r_store,
-		"backpack" = slot_in_backpack,
-		"left hand" = slot_l_hand,
-		"right hand" = slot_r_hand)
+		"left pocket" = SLOT_L_STORE,
+		"right pocket" = SLOT_R_STORE,
+		"backpack" = SLOT_IN_BACKPACK,
+		"left hand" = SLOT_L_HAND,
+		"right hand" = SLOT_R_HAND)
 
 /datum/game_mode/mutiny/proc/equip_head_loyalist()
 	equip_head(head_loyalist, "loyalist", /mob/living/carbon/human/proc/recruit_loyalist)

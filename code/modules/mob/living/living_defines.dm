@@ -46,8 +46,6 @@
 	var/tesla_ignore = FALSE
 	var/list/butcher_results = null
 
-	var/isHandsBusy = FALSE
-
 	var/list/recent_tastes = list()
 	var/lasttaste = 0 // Prevent tastes spam
 

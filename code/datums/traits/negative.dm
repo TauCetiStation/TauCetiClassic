@@ -11,7 +11,7 @@
 /datum/quirk/blindness/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/sunglasses/blindfold/white/B = new
-	if(!H.equip_to_slot_if_possible(B, slot_glasses, null, TRUE)) //if you can't put it on the user's eyes, put it in their hands.
+	if(!H.equip_to_slot_if_possible(B, SLOT_GLASSES, null, TRUE)) //if you can't put it on the user's eyes, put it in their hands.
 		H.put_in_hands(B)
 
 
@@ -77,7 +77,7 @@
 /datum/quirk/nearsighted/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/regular/G = new
-	if(!H.equip_to_slot_if_possible(G, slot_glasses, null, TRUE))
+	if(!H.equip_to_slot_if_possible(G, SLOT_GLASSES, null, TRUE))
 		H.put_in_hands(G)
 
 

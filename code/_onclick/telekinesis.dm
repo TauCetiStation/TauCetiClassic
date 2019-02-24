@@ -67,7 +67,7 @@ var/const/tk_maxrange = 15
 	icon_state = "2"
 	flags = NOBLUDGEON | ABSTRACT
 	//item_state = null
-	w_class = 10.0
+	w_class = ITEM_SIZE_NO_CONTAINER
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 
@@ -87,7 +87,7 @@ var/const/tk_maxrange = 15
 
 	//stops TK grabs being equipped anywhere but into hands
 /obj/item/tk_grab/equipped(mob/user, slot)
-	if( (slot == slot_l_hand) || (slot== slot_r_hand) )	return
+	if( (slot == SLOT_L_HAND) || (slot == SLOT_R_HAND) )	return
 	qdel(src)
 	return
 

@@ -2,7 +2,7 @@
 	name = "silenced pistol"
 	desc = "A small, quiet,  easily concealable gun. Uses .45 rounds."
 	icon_state = "silenced_pistol"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	silenced = 1
 	origin_tech = "combat=2;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/sm45
@@ -155,7 +155,7 @@
 	name = "\improper Stechkin pistol"
 	desc = "A small, easily concealable gun. Uses 9mm rounds."
 	icon_state = "pistol"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	silenced = 0
 	origin_tech = "combat=2;materials=2;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/m9mm
@@ -184,7 +184,7 @@
 	name = "\improper Colt M1911"
 	icon_state = "colt"
 	item_state = "colt"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	mag_type = /obj/item/ammo_box/magazine/c45r
 	var/mag_type2 = /obj/item/ammo_box/magazine/c45m
 	fire_sound = 'sound/weapons/guns/colt1911_shot.ogg'

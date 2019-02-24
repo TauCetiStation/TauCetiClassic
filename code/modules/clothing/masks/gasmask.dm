@@ -6,7 +6,7 @@
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = FACE|EYES
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	item_state = "gas_mask_tc"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
@@ -26,7 +26,7 @@
 	action_button_name = "Toggle Welding Mask"
 	siemens_coefficient = 0.9
 	body_parts_covered = FACE|EYES
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	var/up = 0
 
 /obj/item/clothing/mask/gas/welding/attack_self()

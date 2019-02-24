@@ -46,7 +46,7 @@
 	var/list/uplink_types = list() //Empty list means that the object will be available in all types of uplinks. Alias you will need to state its type.
 
 
-/datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
+/datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U, mob/user)
 	if(item)
 		U.uses -= max(cost, 0)
 		feedback_add_details("traitor_uplink_items_bought", "[item]")
@@ -70,7 +70,7 @@
 		if(cost > U.uses)
 			return 0
 
-		var/obj/I = spawn_item(get_turf(user), U)
+		var/obj/I = spawn_item(get_turf(user), U, user)
 		if(!I)
 			return 0
 		var/icon/tempimage = icon(I.icon, I.icon_state)
@@ -716,7 +716,7 @@
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 0
 
-/datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U)
+/datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U, mob/user)
 
 	var/list/buyable_items = get_uplink_items(U)
 	var/list/possible_items = list()
@@ -734,3 +734,5 @@
 		U.uses -= max(0, I.cost)
 		feedback_add_details("traitor_uplink_items_bought","RN")
 		return new I.item(loc)
+	else
+		to_chat(user, "<span class='warning'>There is no available items you could buy for [U.uses] TK.</span>")

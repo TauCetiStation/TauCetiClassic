@@ -256,13 +256,13 @@
 			else
 				user.remove_from_mob(I)
 
-		user.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling, slot_w_uniform)
-		user.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling, slot_shoes)
-		user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling, slot_wear_suit)
-		user.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling, slot_head)
-		user.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling, slot_gloves)
-		user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling, slot_wear_mask)
-		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling, slot_glasses)
+		user.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling, SLOT_W_UNIFORM)
+		user.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling, SLOT_SHOES)
+		user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling, SLOT_WEAR_SUIT)
+		user.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling, SLOT_HEAD)
+		user.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling, SLOT_GLOVES)
+		user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling, SLOT_WEAR_MASK)
+		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling, SLOT_GLASSES)
 		var/mob/living/carbon/human/H = usr
 		H.set_species(SHADOWLING)
 		H.dna.mutantrace = "shadowling"

@@ -284,7 +284,7 @@
 	/obj/item/weapon/bonegel = 30,
 	/obj/item/weapon/wrench = 70
 	)
-	allowed_species = list(IPC)
+	allowed_species = null
 
 	min_duration = 70
 	max_duration = 90
@@ -420,7 +420,6 @@
 	/obj/item/weapon/kitchenknife = 75,
 	/obj/item/weapon/shard = 50
 	)
-	allowed_species = list(IPC)
 
 	min_duration = 80
 	max_duration = 100

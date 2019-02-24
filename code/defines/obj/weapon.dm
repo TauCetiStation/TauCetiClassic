@@ -8,7 +8,7 @@
 	throwforce = 2.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("called", "rang")
 	hitsound = 'sound/weapons/ring.ogg'
 
@@ -22,7 +22,7 @@
 	anchored = 0.0
 	var/matter = 0
 	var/mode = 1
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/weapon/corncob
 	name = "corn cob"
@@ -30,7 +30,7 @@
 	icon = 'icons/obj/harvest.dmi'
 	icon_state = "corncob"
 	item_state = "corncob"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
@@ -41,7 +41,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "c_tube"
 	throwforce = 1
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 4
 	throw_range = 5
 
@@ -55,7 +55,7 @@
 	flags = CONDUCT
 	force = 5.0
 	throwforce = 7.0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	m_amt = 50
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
@@ -67,7 +67,7 @@
 	var/size = 3.0
 	var/obj/item/gift = null
 	item_state = "gift"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 
 /obj/item/weapon/legcuffs
 	name = "legcuffs"
@@ -77,7 +77,7 @@
 	icon_state = "handcuff"
 	flags = CONDUCT
 	throwforce = 0
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "materials=1"
 	var/breakouttime = 300	//Deciseconds = 30s = 0.5 minute
 
@@ -168,7 +168,7 @@
 	throwforce = 3.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("warned", "cautioned", "smashed")
 
 /obj/item/weapon/caution/cone
@@ -191,7 +191,7 @@
 	sharp = 1
 	edge = 1
 	desc = "Could probably be used as ... a throwing weapon?"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	force = 5.0
 	throwforce = 8.0
 	item_state = "shard-glass"
@@ -235,7 +235,7 @@
 	var/mob/currentUser = null
 	var/obj/item/device/radio/origradio = null
 	flags = CONDUCT | ONBELT
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	item_state = "radio"
 	throw_speed = 4
 	throw_range = 20
@@ -277,7 +277,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	item_state = "radio"
 	throwforce = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100
@@ -289,10 +289,11 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
 	force = 3.0
+	hitsound = 'sound/effects/magic.ogg'
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	flags = NOSHIELD
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 
@@ -319,7 +320,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	flags = NOSHIELD
 
 /obj/item/weapon/table_parts
@@ -384,7 +385,7 @@
 /obj/item/weapon/module
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	item_state = "electronic"
 	flags = CONDUCT
 	var/mtype = 1						// 1=electronic 2=hardware
@@ -422,7 +423,7 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "meat"
 	flags = CONDUCT
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	origin_tech = "biotech=2"
 
 /obj/item/weapon/hatchet
@@ -434,7 +435,7 @@
 	force = 12.0
 	sharp = 1
 	edge = 1
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 15.0
 	throw_speed = 4
 	throw_range = 4
@@ -463,7 +464,7 @@
 	edge = 1
 	throw_speed = 1
 	throw_range = 3
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	flags = NOSHIELD
 	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "materials=2;combat=2"
@@ -484,7 +485,7 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigarpacket"
 	item_state = "cigarpacket"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	throwforce = 2
 	var/cigarcount = 6
 	flags = ONBELT */
@@ -505,7 +506,7 @@
 	icon_state = "plastic-explosive0"
 	item_state = "plasticx"
 	flags = NOBLUDGEON
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	origin_tech = "syndicate=2"
 	var/timer = 10
 	var/atom/target = null
@@ -517,7 +518,7 @@
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "RPED"
 	item_state = "RPED"
-	w_class = 5
+	w_class = ITEM_SIZE_HUGE
 	can_hold = list("/obj/item/weapon/stock_parts")
 	storage_slots = 50
 	use_to_pickup = 1
@@ -525,7 +526,7 @@
 	allow_quick_empty = 1
 	collection_mode = 1
 	display_contents_with_number = 1
-	max_w_class = 3
+	max_w_class = ITEM_SIZE_NORMAL
 	var/works_from_distance = 0
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
@@ -542,9 +543,9 @@
 	desc = "A version of the RPED that allows for replacement of parts and scanning from a distance, along with higher capacity for parts."
 	icon_state = "BS_RPED"
 	item_state = "BS_RPED"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	storage_slots = 400
-	max_w_class = 3
+	max_w_class = ITEM_SIZE_NORMAL
 	works_from_distance = 1
 	pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/PSHOOM.ogg'
 	alt_sound = 'sound/items/PSHOOM_2.ogg'
@@ -565,7 +566,7 @@
 	name = "stock part"
 	desc = "What?"
 	icon = 'icons/obj/stock_parts.dmi'
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	var/rating = 1
 
 /obj/item/weapon/stock_parts/atom_init()
