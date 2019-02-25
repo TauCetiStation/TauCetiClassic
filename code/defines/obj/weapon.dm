@@ -27,7 +27,7 @@
 /obj/item/weapon/corncob
 	name = "corn cob"
 	desc = "A reminder of meals gone by."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "corncob"
 	item_state = "corncob"
 	w_class = ITEM_SIZE_SMALL
