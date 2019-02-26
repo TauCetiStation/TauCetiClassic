@@ -105,3 +105,10 @@
 	cost = 15 // 1.5 metal, 1 glass -> 12.5 credits, +2.5 credits
 	unit_name = "compressed matter cardridge"
 	export_types = list(/obj/item/weapon/rcd_ammo)
+
+// Kitchen utensils
+
+/datum/export/knife
+	cost = 20
+	unit_name = "kitchen knife"
+	export_types = list(/obj/item/weapon/kitchenknife)

@@ -60,7 +60,7 @@
 	else
 		teleport_place = T
 	var/list/returned = list()
-	for(var/obj/item/weapon/grab/G in list(U.get_active_hand(), U.get_inactive_hand()))
+	for(var/obj/item/weapon/grab/G in U.GetGrabs())
 		returned += G.affecting
 		G.affecting.forceMove(teleport_place)
 	if(length(returned))

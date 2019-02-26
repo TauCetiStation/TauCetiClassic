@@ -10,6 +10,7 @@
 #define T20C 293.15	// 20degC
 #define TCMB 2.7	// -270.3degC
 
+#define CEILING(x, y) ( -round(-(x) / (y)) * (y) )
 #define ceil(x) (-round(-(x)))
 
 #define Clamp(CLVALUE,CLMIN,CLMAX) ( max( (CLMIN), min((CLVALUE), (CLMAX)) ) )

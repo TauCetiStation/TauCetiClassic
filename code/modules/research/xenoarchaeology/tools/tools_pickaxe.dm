@@ -4,7 +4,7 @@
 
 /obj/item/weapon/pickaxe/brush
 	name = "brush"
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "pick_brush"
 	item_state = "syringe_0"
 	digspeed = 20
@@ -16,7 +16,7 @@
 
 /obj/item/weapon/pickaxe/one_pick
 	name = "1/6 pick"
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "pick1"
 	item_state = "syringe_0"
 	digspeed = 20
@@ -28,7 +28,7 @@
 
 /obj/item/weapon/pickaxe/two_pick
 	name = "1/3 pick"
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "pick2"
 	item_state = "syringe_0"
 	digspeed = 20
@@ -40,7 +40,7 @@
 
 /obj/item/weapon/pickaxe/three_pick
 	name = "1/2 pick"
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "pick3"
 	item_state = "syringe_0"
 	digspeed = 20
@@ -52,7 +52,7 @@
 
 /obj/item/weapon/pickaxe/four_pick
 	name = "2/3 pick"
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "pick4"
 	item_state = "syringe_0"
 	digspeed = 20
@@ -64,7 +64,7 @@
 
 /obj/item/weapon/pickaxe/five_pick
 	name = "5/6 pick"
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "pick5"
 	item_state = "syringe_0"
 	digspeed = 20
@@ -76,7 +76,7 @@
 
 /obj/item/weapon/pickaxe/six_pick
 	name = "1/1 pick"
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "pick6"
 	item_state = "syringe_0"
 	digspeed = 20
@@ -88,7 +88,7 @@
 
 /obj/item/weapon/pickaxe/hand
 	name = "hand pickaxe"
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "pick_hand"
 	item_state = "syringe_0"
 	digspeed = 30
