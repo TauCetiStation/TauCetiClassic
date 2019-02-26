@@ -1443,7 +1443,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(blood_DNA[M.dna.unique_enzymes])
 		return 0 //already bloodied with this blood. Cannot add more.
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-	hand_dirt_color = new/datum/dirt_cover/(dirt_overlay)
+	hand_dirt_datum = new(dirt_overlay)
 
 	src.update_inv_gloves()	//handles bloody hands overlays and updating
 	verbs += /mob/living/carbon/human/proc/bloody_doodle
@@ -1632,7 +1632,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			to_chat(src, "<span class='warning'>You ran out of blood to write with!</span>")
 
 		var/obj/effect/decal/cleanable/blood/writing/W = new(T)
-		W.basedatum = new/datum/dirt_cover(hand_dirt_color)
+		W.basedatum = new(hand_dirt_datum)
 		W.update_icon()
 		W.message = message
 		W.add_fingerprint(src)

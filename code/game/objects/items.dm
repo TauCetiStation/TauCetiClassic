@@ -856,9 +856,6 @@
 	if (!..())
 		return 0
 
-	//if we haven't made our blood_overlay already
-	//add_dirt_cover(new M.species.blood_color)
-
 	if(blood_DNA[M.dna.unique_enzymes])
 		return 0 //already bloodied with this blood. Cannot add more.
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
