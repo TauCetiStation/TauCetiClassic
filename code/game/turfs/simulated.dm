@@ -161,7 +161,7 @@
 
 	//Species-specific blood.
 	if(M.species)
-		newblood.basedatum = new M.species.blood_color
+		newblood.basedatum = new(M.species.blood_datum)
 	else
 		newblood.basedatum = new/datum/dirt_cover/red_blood()
 
@@ -188,7 +188,7 @@
 
 		//Species-specific blood.
 		if(H.species)
-			this.basedatum = new/datum/dirt_cover(H.species.blood_color)
+			this.basedatum = new(H.species.blood_datum)
 		else
 			this.basedatum = new/datum/dirt_cover/red_blood()
 		this.update_icon()
