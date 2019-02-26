@@ -218,6 +218,8 @@ var/world_topic_spam_protect_time = world.timeofday
 
 /world/Reboot(reason)
 
+	world.log << "Runtimes count: [total_runtimes]. Runtimes skip count: [total_runtimes_skipped]."
+
 	// Bad initializations log.
 	var/initlog = SSatoms.InitLog()
 	if(initlog)
