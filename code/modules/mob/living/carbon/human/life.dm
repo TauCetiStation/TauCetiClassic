@@ -1022,7 +1022,7 @@
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 	else
-		if(has_trait(TRAIT_FAT) || overeatduration > 500)
+		if(isturf(loc) && (has_trait(TRAIT_FAT) || overeatduration > 500))
 			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
 				mutations.Add(FAT)
 				update_body()
