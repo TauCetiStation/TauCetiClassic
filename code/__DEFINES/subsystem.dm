@@ -44,7 +44,6 @@
 #define SS_PRIORITY_ORBIT      35
 #define SS_PRIORITY_SPACEDRIFT 30
 #define SS_PRIORITY_THROWING   25
-#define SS_PRIORITY_LIGHTING   25
 #define SS_PRIORITY_AIR        20
 #define SS_PRIORITY_FLUIDS     20
 #define SS_PRIORITY_GARBAGE    15
@@ -53,7 +52,7 @@
 
 #define SS_WAIT_THROWING   1
 #define SS_WAIT_TIMER      1
-#define SS_WAIT_LIGHTING   1
+#define SS_WAIT_LIGHTING   2
 #define SS_WAIT_PARALAX    2
 #define SS_WAIT_ORBIT      2
 #define SS_WAIT_FLUIDS     3

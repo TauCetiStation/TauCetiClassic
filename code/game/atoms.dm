@@ -88,9 +88,7 @@
 
 	LAZYCLEARLIST(overlays)
 
-	if(light)
-		light.destroy()
-		light = null
+	QDEL_NULL(light)
 
 	return ..()
 

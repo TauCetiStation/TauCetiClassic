@@ -240,6 +240,8 @@ var/world_topic_spam_protect_time = world.timeofday
 			dellog += "\tTime Spent Hard Deleting: [I.hard_delete_time]ms"
 		if (I.slept_destroy)
 			dellog += "\tSleeps: [I.slept_destroy]"
+		if (I.no_respect_force)
+			dellog += "\tIgnored force: [I.no_respect_force] times"
 		if (I.no_hint)
 			dellog += "\tNo hint: [I.no_hint] times"
 	world.log << dellog.Join("\n")
