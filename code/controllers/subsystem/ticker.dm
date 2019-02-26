@@ -214,7 +214,6 @@ var/datum/subsystem/ticker/ticker
 		src.mode.announce()
 
 	current_state = GAME_STATE_PLAYING
-	world.log << "Game start took [(world.timeofday - init_start)/10]s"
 	round_start_time = world.time
 
 	setup_economy()
@@ -230,6 +229,8 @@ var/datum/subsystem/ticker/ticker
 	Master.RoundStart()
 
 	slack_roundstart()
+
+	world.log << "Game start took [(world.timeofday - init_start)/10]s"
 
 	to_chat(world, "<FONT color='blue'><B>Enjoy the game!</B></FONT>")
 	world << sound('sound/AI/welcome.ogg')
