@@ -126,8 +126,8 @@
 	..()
 
 	// If an opaque movable atom moves around we need to potentially update visibility.
-	if(AM.opacity)
-		has_opaque_atom = TRUE // Make sure to do this before reconsider_lights(), incase we're on instant updates. Guaranteed to be on in this case.
+	if (AM && AM.opacity)
+		recalc_atom_opacity() // Make sure to do this before reconsider_lights(), incase we're on instant updates.
 		reconsider_lights()
 
 	var/objects = 0
@@ -139,6 +139,13 @@
 				O.HasProximity(AM, 1)
 			return
 	return
+
+/turf/Exited(atom/movable/Obj, atom/newloc)
+	. = ..()
+
+	if (Obj && Obj.opacity)
+		recalc_atom_opacity() // Make sure to do this before reconsider_lights(), incase we're on instant updates.
+		reconsider_lights()
 
 /turf/proc/adjacent_fire_act(turf/simulated/floor/source, temperature, volume)
 	return
@@ -197,9 +204,9 @@
 	// Running procs do NOT get stopped due to this.
 	var/old_opacity = opacity
 	var/old_dynamic_lighting = dynamic_lighting
-	var/list/old_affecting_lights = affecting_lights
-	var/old_lighting_overlay = lighting_overlay // Not even a need to cast this, honestly.
-	var/list/old_lighting_corners = corners
+	var/old_affecting_lights = affecting_lights
+	var/old_lighting_object = lighting_object
+	var/old_corners = corners
 
 	var/old_basetype = basetype
 	var/old_flooded = flooded
@@ -268,30 +275,23 @@
 
 	W.levelupdate()
 
+	basetype = old_basetype
+
 	if(SSlighting.initialized)
-		lighting_overlay = old_lighting_overlay
+		recalc_atom_opacity()
+		lighting_object = old_lighting_object
 		affecting_lights = old_affecting_lights
-		corners = old_lighting_corners
-		basetype = old_basetype
-
-		for(var/atom/A in contents)
-			if(A.light)
-				A.light.force_update = 1
-
-		for(var/i = 1 to 4)//Generate more light corners when needed. If removed - pitch black shuttles will come for your soul!
-			if(corners[i]) // Already have a corner on this direction.
-				continue
-			corners[i] = new/datum/lighting_corner(src, LIGHTING_CORNER_DIAGONAL[i])
-
-		if((old_opacity != opacity) || (dynamic_lighting != old_dynamic_lighting) || force_lighting_update)
+		corners = old_corners
+		if (old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
 			reconsider_lights()
-		if(dynamic_lighting != old_dynamic_lighting)
-			if(dynamic_lighting)
+
+		if (dynamic_lighting != old_dynamic_lighting)
+			if (IS_DYNAMIC_LIGHTING(src))
 				lighting_build_overlay()
 			else
 				lighting_clear_overlay()
 
-		for(var/turf/space/S in RANGE_TURFS(1, src))
+		for(var/turf/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 			S.update_starlight()
 
 	if(F)

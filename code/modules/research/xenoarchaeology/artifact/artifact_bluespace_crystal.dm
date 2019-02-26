@@ -1,7 +1,7 @@
 /obj/machinery/artifact/bluespace_crystal
 	name = "bluespace crystal"
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "ano120"
+	icon = 'icons/obj/xenoarchaeology/artifacts.dmi'
+	icon_state = "artifact_13"
 	icon_num = 0
 	density = 1
 	being_used = 0
@@ -15,11 +15,11 @@
 
 /obj/machinery/artifact/bluespace_crystal/atom_init()
 	. = ..()
-	health = rand(150,300)
+	health = rand(150, 300)
 	my_effect = new /datum/artifact_effect/tesla(src)
-	my_effect.trigger = 13 //TRIGGER_NEAR
+	my_effect.trigger = TRIGGER_VIEW // TRIGGER_NEAR
 	desc = "A blue strange crystal"
-	icon_num = 12
+	icon_num = ARTIFACT_CRYSTAL_BLUE
 	set_light(4)
 
 /obj/machinery/artifact/bluespace_crystal/tesla_act(power)

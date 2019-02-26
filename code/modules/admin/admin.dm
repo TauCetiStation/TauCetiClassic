@@ -58,7 +58,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		<b>GeoIP:</b> <A href='?src=\ref[src];geoip=\ref[M]'>Get</A> |
 		<b>List of CIDs:</b> <A href='?src=\ref[src];cid_list=\ref[M]'>Get</A> (<A href='?src=\ref[src];cid_ignore=\ref[M]'>Ignore Warning</A>)<br>
 		<b>Related accounts by IP and cid</b>: <A href='?src=\ref[src];related_accounts=\ref[M]'>Get</A><br>
-		<b>BYOND profile: <A target='_blank' href='http://byond.com/members/[M.ckey]'>[M.ckey]</A><br><br>
+		<b>BYOND profile</b>: <A target='_blank' href='http://byond.com/members/[M.ckey]'>[M.ckey]</A><br><br>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
 		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
 		<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> |

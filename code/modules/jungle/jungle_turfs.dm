@@ -7,7 +7,6 @@
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "grass1"
 	var/icon_spawn_state = "grass1"
-	luminosity = 3
 
 /turf/unsimulated/jungle/atom_init()
 	. = ..()

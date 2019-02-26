@@ -539,6 +539,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "\improper Emergency Shelter"
 	icon_state = "away"
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	has_gravity = 1
 
 /obj/item/weapon/survivalcapsule
@@ -740,7 +741,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_on = "donkvendor"
 	icon_off = "donkvendor"
 	icon_panel = "donkvendor-panel"
-	luminosity = 5
+	light_range = 5
 	max_n_of_items = 10
 	pixel_y = -4
 	active_power_usage = 0
@@ -763,7 +764,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/machinery/smartfridge/survival_pod/atom_init()
 	..()
-	set_light(luminosity)
+	set_light(light_range)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/smartfridge/survival_pod/atom_init_late()

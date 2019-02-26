@@ -160,13 +160,11 @@
 	if(stat)
 		return 0
 	on = 1
-	luminosity = initial(luminosity)
 	update_icon()
 	return 1
 
 /obj/vehicle/proc/turn_off()
 	on = 0
-	luminosity = 0
 	update_icon()
 
 /obj/vehicle/proc/explode()

@@ -1572,7 +1572,7 @@
 	//0.1% chance of playing a scary sound to someone who's in complete darkness
 	if(isturf(loc) && rand(1,1000) == 1)
 		var/turf/T = loc
-		if(T.lighting_overlay && T.lighting_overlay.luminosity == 0)
+		if(T.get_lumcount() < 0.1)
 			playsound_local(src,pick(scarySounds),50, 1, -1)
 
 /mob/living/carbon/human/proc/handle_virus_updates()

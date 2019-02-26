@@ -122,9 +122,12 @@ steam.start() -- spawns the effect
 /obj/effect/effect/sparks
 	name = "sparks"
 	icon_state = "sparks"
+	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	light_power = 1.3
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	light_color = LIGHT_COLOR_FIRE
 	var/amount = 6.0
-	anchored = 1.0
-	mouse_opacity = 0
 
 /obj/effect/effect/sparks/atom_init()
 	. = ..()
@@ -132,7 +135,7 @@ steam.start() -- spawns the effect
 	var/turf/T = loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
-	QDEL_IN(src, 100)
+	QDEL_IN(src, 20)
 
 /obj/effect/effect/sparks/Destroy()
 	var/turf/T = src.loc
@@ -177,7 +180,6 @@ steam.start() -- spawns the effect
 			for(i=0, i<pick(1,2,3), i++)
 				sleep(5)
 				step(sparks,direction)
-			addtimer(CALLBACK(src, .proc/delete_sparks, sparks), 20)
 
 /datum/effect/effect/system/spark_spread/proc/delete_sparks(obj/effect/effect/sparks/sparks)
 	if(sparks)
@@ -194,9 +196,10 @@ steam.start() -- spawns the effect
 /obj/effect/effect/smoke
 	name = "smoke"
 	icon_state = "smoke"
-	opacity = 1
-	anchored = 0.0
-	mouse_opacity = 0
+	opacity = FALSE
+	anchored = FALSE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	layer = FLY_LAYER
 	var/amount = 6.0
 	var/time_to_live = 100
 
@@ -207,6 +210,7 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/smoke/atom_init()
 	. = ..()
+	set_opacity(TRUE)
 	QDEL_IN(src, time_to_live)
 
 /obj/effect/effect/smoke/Crossed(mob/living/carbon/M as mob )
@@ -596,15 +600,16 @@ steam.start() -- spawns the effect
 /obj/structure/foamedmetal
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "metalfoam"
-	density = 1
-	opacity = 0
-	anchored = 1
+	density = TRUE
+	opacity = FALSE
+	anchored = TRUE
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	var/metal = 1		// 1=aluminum, 2=iron
 
 /obj/structure/foamedmetal/atom_init()
 	. = ..()
+	set_opacity(TRUE)
 	update_nearby_tiles(1)
 
 
