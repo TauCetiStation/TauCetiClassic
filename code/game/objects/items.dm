@@ -844,7 +844,7 @@
 
 /obj/item/add_dirt_cover()
 	if(!blood_overlay)
-		generate_dirt_cover()
+		generate_blood_overlay()
 	..()
 	if(dirt_overlay)
 		if(blood_overlay.color != dirt_overlay.color)
@@ -865,7 +865,7 @@
 	return 1 //we applied blood to the item
 
 var/global/list/items_blood_overlay_by_type = list()
-/obj/item/proc/generate_dirt_cover()
+/obj/item/proc/generate_blood_overlay()
 	if(blood_overlay)
 		return
 

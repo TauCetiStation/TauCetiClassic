@@ -126,8 +126,8 @@
 	if(prob(35))
 		contaminate()
 	if(prob(75))
-		generate_dirt_cover()
-		add_dirt_cover(pick(subtypesof(/datum/dirt_cover)))
+		generate_blood_overlay()
+		add_dirt_cover(pick(global.all_dirt_covers))
 	..()
 
 
