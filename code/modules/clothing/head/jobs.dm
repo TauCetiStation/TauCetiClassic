@@ -69,6 +69,15 @@
 	desc = "A beret with the gold security insignia emblazoned on it. Shows who has the longest baton on the station."
 	icon_state = "beret_hos"
 
+/obj/item/clothing/head/HoS
+	name = "head of security hat"
+	desc = "The hat of the Head of Security. For showing the officers who's in charge."
+	icon_state = "hoscap"
+	flags = HEADCOVERSEYES
+	flags_inv = HIDEEARS
+	body_parts_covered = 0
+	siemens_coefficient = 0.8
+
 //Engineering
 /obj/item/clothing/head/beret/eng
 	name = "engineering beret"
