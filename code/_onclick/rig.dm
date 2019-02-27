@@ -1,4 +1,4 @@
-/mob/proc/HardsuitClickOn(var/atom/A)
+/mob/proc/HardsuitClickOn(atom/A)
 	if(!ishuman(src) || next_move >= world.time)
 		return FALSE
 	var/mob/living/carbon/human/H = src
