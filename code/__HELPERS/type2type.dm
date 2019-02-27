@@ -98,7 +98,7 @@
 
 //Splits the text of a file at seperator and returns them in a list.
 /proc/file2list(filename, seperator="\n")
-	return splittext(return_file_text(filename),seperator)
+	return splittext(trim(return_file_text(filename)),seperator)
 
 
 //Turns a direction into text

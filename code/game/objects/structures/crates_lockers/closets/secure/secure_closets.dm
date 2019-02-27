@@ -66,7 +66,8 @@
 	if(src.opened)
 		if(istype(W, /obj/item/weapon/grab))
 			if(src.large)
-				src.MouseDrop_T(W:affecting, user)	//act like they were dragged onto the closet
+				var/obj/item/weapon/grab/G = W
+				MouseDrop_T(G.affecting, user)	//act like they were dragged onto the closet
 			else
 				to_chat(user, "<span class='notice'>The locker is too small to stuff [W:affecting] into!</span>")
 		if(isrobot(user))

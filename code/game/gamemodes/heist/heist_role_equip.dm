@@ -108,7 +108,7 @@ var/global/raider_tick = 1
 /obj/item/weapon/storage/backpack/santabag/pirate
 	name = "Loot bag"
 	desc = "Just another ordinary bag."
-	max_w_class = 3
+	max_w_class = ITEM_SIZE_NORMAL
 
 /obj/item/weapon/grenade/monsternade
 	name = "pocketnade"
@@ -143,7 +143,7 @@ var/global/raider_tick = 1
 	icon_state = "hacktool"
 	flags = CONDUCT
 	force = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 5.0
 	throw_range = 15
 	throw_speed = 3

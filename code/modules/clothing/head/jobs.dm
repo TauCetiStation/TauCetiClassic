@@ -45,7 +45,6 @@
 	flags = HEADCOVERSEYES|BLOCKHAIR
 	siemens_coefficient = 0.9
 
-
 //Security
 /obj/item/clothing/head/HoS
 	name = "head of security hat"

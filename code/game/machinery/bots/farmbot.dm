@@ -509,7 +509,7 @@
 	icon_state = "water_arm"
 	var/build_step = 0
 	var/created_name = "Farmbot" //To preserve the name if it's a unique farmbot I guess
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/weapon/farmbot_arm_assembly/atom_init()
 	..()
@@ -564,8 +564,7 @@
 	else if((isprox(W)) && (src.build_step == 3))
 		src.build_step++
 		to_chat(user, "You complete the Farmbot! Beep boop.")
-		var/obj/machinery/bot/farmbot/S = new /obj/machinery/bot/farmbot
-		S.loc = get_turf(src)
+		var/obj/machinery/bot/farmbot/S = new /obj/machinery/bot/farmbot(get_turf(src))
 		S.name = src.created_name
 		user.remove_from_mob(W)
 		qdel(W)

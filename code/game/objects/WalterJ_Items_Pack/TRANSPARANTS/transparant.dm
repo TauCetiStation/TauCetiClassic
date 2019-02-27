@@ -7,7 +7,7 @@
 	desc = "Nothing."
 	var/not_bloody_state
 	force = 8
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	throwforce = 5
 //	flags = NOSHIELD
 		//var/protest_text

@@ -20,7 +20,7 @@
 	name = "first-aid kit"
 	icon_state = "bezerk"
 	desc = "I hope you've got insurance."
-	max_w_class = 3
+	max_w_class = ITEM_SIZE_NORMAL
 
 /obj/item/weapon/storage/firstaid/tactical/atom_init()
 	. = ..()
@@ -38,8 +38,8 @@
 	name = "Combat first-aid small kit"
 	icon_state = "first_aid_kit_com"
 	desc = "A small kit of auto injectors with drugs placed in his pocket. It`s combat version"
-	max_w_class = 2
-	w_class = 2
+	max_w_class = ITEM_SIZE_SMALL
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat/atom_init()
 	. = ..()
@@ -59,8 +59,8 @@
 	name = "Space first-aid small kit"
 	icon_state = "first_aid_kit_sp"
 	desc = "A small kit of auto injectors with drugs placed in his pocket. It`s space version"
-	max_w_class = 2
-	w_class = 2
+	max_w_class = ITEM_SIZE_SMALL
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space/atom_init()
 	. = ..()
@@ -80,8 +80,8 @@
 	name = "Civilan first-aid small kit"
 	icon_state = "first_aid_kit_civilan"
 	desc = "A small cheap kit with medical items."
-	max_w_class = 2
-	w_class = 2
+	max_w_class = ITEM_SIZE_SMALL
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/atom_init()
 	. = ..()
