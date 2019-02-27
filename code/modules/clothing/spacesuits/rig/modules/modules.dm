@@ -138,7 +138,7 @@
 			to_chat(usr, "It is almost completely destroyed.")
 
 /obj/item/rig_module/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/stack/nanopaste))
+	if(istype(W, /obj/item/stack/nanopaste))
 		if(user.is_busy())
 			return
 
