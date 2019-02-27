@@ -3964,10 +3964,7 @@
 "agD" = (
 /obj/structure/table,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/paper{
-	info = "4 Deployable Barriers<br>3 Portable Flashers + Wrench <br>3 Sets of Riot Armor <br>3 Bulletproof Vests <br>3 Ablative Vests <br>1 Bomb Suit <br>1 Biohazard Suit <br>1 Chemical Implant Kit <br>1 Tracking Implant Kit <br>1 Loyalty Implant Kit <br>1 Death Alarm Implant Kit <br>1 Box of Spare Handcuffs <br>1 Box of flashbangs <br>1 Box of spare R.O.B.U.S.T. cartridges <br>3 Riot shields <br>3 Stun Batons <br>3 Energy Guns <br>3 Laser Rifles <br>2 Ion Rifles <br>6 Security Masks <br>1 Grenade Launcher <br>2 Boxes of teargas grenades";
-	name = "Armory Inventory"
-	},
+/obj/item/weapon/paper/brig_arsenal,
 /obj/item/toy/cards{
 	layer = 4.1
 	},
