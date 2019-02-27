@@ -4109,14 +4109,7 @@
 "agD" = (
 /obj/structure/table,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/paper{
-	info = "<ul>6 Deployable Barriers<br>4 Portable Flashers<br>3 Riot Sets:<small><ul><li>Riot Shield<li>Stun Baton<li>Riot Shield<li>Stun Baton</ul></small>3 Marine Sets:<small><ul><li>Marine Jumpsuit<li>Marine Armor<li>Marine Helmet<li>Work Boots<li>Combat Belt<li>Balaclava<li>Tactical Hud<li>Marine Headset<li>Marine Gloves<li>Marine Dufflebag</ul></small>3 Bulletproof Helmets<br>3 Bulletproof Vests<br>3 Ablative Helmets <br>3 Ablative Vests <br>1 Bomb Suit <br>1 Biohazard Suit<br>6 Security Masks<br>3 SIGI p250 Pistols<br>6 Magazines (9mm rubber)</ul>";
-	name = "Armory Inventory"
-	},
-/obj/item/weapon/paper{
-	info = "<ul>3 Energy Guns<br>3 Laser Rifles<br>2 Ion Rifles<br>2 L10-c Carbines<br>1 Grenade Launcher<br>1 M79 Grenade Launcher<br>2 Shotguns<br>6 Magazines (9mm)<br>2 Shotgun Shell Boxes (beanbag, 20 shells)<br>1 m79 Grenade Box (40x46 rubber, 7 rounds)<br>1 Chemical Implant Kit<br>1 Tracking Implant Kit<br>1 Mind Shield Implant Kit<br>1 Death Alarm Implant Kit<br>1 Box of Flashbangs<br>2 Boxes of teargas grenades<br>1 Space Security Set:<small><ul><li>Security Hardsuit<li>Security Hardsuit Helmet<li>Magboots<li>Breath Mask</ul></small></ul>";
-	name = "Secure Armory Inventory"
-	},
+/obj/item/weapon/paper/brig_arsenal,
 /obj/item/toy/cards{
 	layer = 4.1
 	},
