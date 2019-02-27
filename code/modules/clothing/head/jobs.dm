@@ -54,21 +54,6 @@
 	body_parts_covered = 0
 
 //Security
-/obj/item/clothing/head/beret/sec
-	name = "officer's beret"
-	desc = "A beret with the security insignia emblazoned on it. For officers that are more inclined towards style than safety."
-	icon_state = "beret_badge"
-
-/obj/item/clothing/head/beret/sec/warden
-	name = "warden's beret"
-	desc = "A beret with the copper security insignia emblazoned on it. For wardens that are more inclined towards style than safety."
-	icon_state = "beret_warden"
-
-/obj/item/clothing/head/beret/sec/hos
-	name = "head of security's beret"
-	desc = "A beret with the gold security insignia emblazoned on it. Shows who has the longest baton on the station."
-	icon_state = "beret_hos"
-
 /obj/item/clothing/head/HoS
 	name = "head of security hat"
 	desc = "The hat of the Head of Security. For showing the officers who's in charge."
