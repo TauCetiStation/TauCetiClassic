@@ -280,9 +280,22 @@
 					else
 						M.visible_message("<span class='notice'>[M] gently touches [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You gently touch [src] trying to wake [t_him] up!</span>")
-			else
-				M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
-								"<span class='notice'>You hug [src] to make [t_him] feel better!</span>")
+			else switch(M.zone_sel.selecting)
+				if(BP_R_ARM || BP_L_ARM)
+					M.visible_message( "<span class='notice'>[M] shakes [src]'s hand.</span>", \
+									"<span class='notice'>You shake [src]'s hand.</span>", )
+				if(BP_HEAD)
+					M.visible_message("<span class='notice'>[M] pats [src] on the head.</span>", \
+									"<span class='notice'>You pat [src] on the head.</span>", )
+				if(O_EYES)
+					M.visible_message("<span class='notice'>[M] looks into [src]'s eyes.</span>", \
+									"<span class='notice'>You look into [src]'s eyes.</span>", )
+				if(BP_GROIN)
+					M.visible_message("<span class='notice'>[M] does something to [src] to make [t_him] feel better!</span>", \
+									"<span class='notice'>You do something to [src] to make [t_him] feel better!</span>", )
+				else
+					M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
+									"<span class='notice'>You hug [src] to make [t_him] feel better!</span>")
 
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
@@ -469,24 +482,34 @@
 
 	return
 
-/mob/living/carbon/show_inv(mob/living/carbon/user)
+/mob/living/carbon/show_inv(mob/user)
 	user.set_machine(src)
-	var/dat = {"
-	<B><HR><FONT size=3>[name]</FONT></B>
-	<BR><HR>
-	<BR><B>Head(Mask):</B> <A href='?src=\ref[src];item=mask'>[(wear_mask && !(wear_mask.flags&ABSTRACT))	? wear_mask	: "Nothing"]</A>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[(l_hand && !(l_hand.flags&ABSTRACT))		? l_hand	: "Nothing"]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand && !(r_hand.flags&ABSTRACT))		? r_hand	: "Nothing"]</A>
-	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
-	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
-	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
-	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
-	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
-	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
-	<BR>"}
-	user << browse(entity_ja(dat), text("window=mob[];size=325x500", name))
-	onclose(user, "mob[name]")
-	return
+	var/list/dat = list()
+
+	dat += "<table>"
+	dat += "<tr><td><B>Left Hand:</B></td><td><A href='?src=\ref[src];item=[SLOT_L_HAND]'>[(l_hand && !(l_hand.flags & ABSTRACT)) ? l_hand : "<font color=grey>Empty</font>"]</a></td></tr>"
+	dat += "<tr><td><B>Right Hand:</B></td><td><A href='?src=\ref[src];item=[SLOT_R_HAND]'>[(r_hand && !(r_hand.flags & ABSTRACT)) ? r_hand : "<font color=grey>Empty</font>"]</a></td></tr>"
+	dat += "<tr><td>&nbsp;</td></tr>"
+
+	dat += "<tr><td><B>Back:</B></td><td><A href='?src=\ref[src];item=[SLOT_BACK]'>[(back && !(back.flags & ABSTRACT)) ? back : "<font color=grey>Empty</font>"]</A>"
+	if(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank))
+		dat += "&nbsp;<A href='?src=\ref[src];internal=[SLOT_BACK]'>[internal ? "Disable Internals" : "Set Internals"]</A>"
+	dat += "</td></tr>"
+
+	dat += "<tr><td><B>Mask:</B></td><td><A href='?src=\ref[src];item=[SLOT_WEAR_MASK]'>[(wear_mask && !(wear_mask.flags & ABSTRACT)) ? wear_mask : "<font color=grey>Empty</font>"]</A></td></tr>"
+
+	if(handcuffed)
+		dat += "<tr><td><B>Handcuffed:</B></td><td><A href='?src=\ref[src];item=[SLOT_HANDCUFFED]'>Remove</A></td></tr>"
+	if(legcuffed)
+		dat += "<tr><td><B>Legcuffed:</B></td><td><A href='?src=\ref[src];item=[SLOT_LEGCUFFED]'>Remove</A></td></tr>"
+
+	dat += {"</table>
+	<A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
+	"}
+
+	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 440, 500)
+	popup.set_content(dat.Join())
+	popup.open()
 
 //generates realistic-ish pulse output based on preset levels
 /mob/living/carbon/proc/get_pulse(method)	//method 0 is for hands, 1 is for machines, more accurate
@@ -740,3 +763,96 @@
 
 /mob/living/carbon/get_metabolism_factor()
 	. = metabolism_factor
+
+
+/mob/living/carbon/proc/perform_cpr(mob/living/carbon/human/user) // don't forget to INVOKE_ASYNC this proc if sleep is a problem.
+	if(!ishuman(src) && !isIAN(src))
+		return
+	if(user.is_busy(src))
+		return
+
+	visible_message("<span class='danger'>[user] is trying perform CPR on [src]!</span>")
+
+	if(do_mob(user, src, HUMAN_STRIP_DELAY))
+		 // yes, we check this after the action, allowing player to try this even if it looks wrong (for fun).
+		if(user.species && user.species.flags[NO_BREATHE])
+			to_chat(user, "<span class='notice bold'>Your species can not perform CPR!</span>")
+			return
+		if((user.head && (user.head.flags & HEADCOVERSMOUTH)) || (user.wear_mask && (user.wear_mask.flags & MASKCOVERSMOUTH)))
+			to_chat(user, "<span class='notice bold'>Remove your mask!</span>")
+			return
+
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(H.species && H.species.flags[NO_BREATHE])
+				to_chat(user, "<span class='notice bold'>You can not perform CPR on these species!</span>")
+				return
+			if(wear_mask && wear_mask.flags & MASKCOVERSMOUTH)
+				to_chat(user, "<span class='notice bold'>Remove [src] [wear_mask]!</span>")
+				return
+
+		if(head && head.flags & HEADCOVERSMOUTH)
+			to_chat(user, "<span class='notice bold'>Remove [src] [head]!</span>")
+			return
+
+		if (health > config.health_threshold_dead && health < config.health_threshold_crit)
+			var/suff = min(getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
+			adjustOxyLoss(-suff)
+			updatehealth()
+			visible_message("<span class='warning'>[user] performs CPR on [src]!</span>")
+			to_chat(src, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
+			to_chat(user, "<span class='warning'>Repeat at least every 7 seconds.</span>")
+
+/mob/living/carbon/Topic(href, href_list)
+	..()
+
+	if (href_list["item"] && usr.CanUseTopicInventory(src))
+		var/slot = text2num(href_list["item"])
+		var/obj/item/item_to_add = usr.get_active_hand()
+
+		if(item_to_add && (item_to_add.flags & (ABSTRACT | DROPDEL)))
+			item_to_add = null
+
+		if(item_to_add && get_slot_ref(slot))
+			if(item_to_add.w_class > ITEM_SIZE_SMALL)
+				to_chat(usr, "<span class='red'>[src] is already wearing something. You need empty hand to take that off (or holding small item).</span>")
+				return
+			item_to_add = null
+
+		stripPanelUnEquip(usr, slot, item_to_add)
+
+		if(usr.machine == src && in_range(src, usr))
+			show_inv(usr)
+		else
+			usr << browse(null, "window=mob\ref[src]")
+
+	if (href_list["internal"] && usr.CanUseTopicInventory(src))
+		var/slot = text2num(href_list["internal"])
+		var/obj/item/weapon/tank/ITEM = get_equipped_item(slot)
+		if(ITEM && istype(ITEM) && wear_mask && (wear_mask.flags & MASKINTERNALS))
+			visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>")
+
+			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
+				var/gas_log_string = ""
+				if (internal)
+					internal.add_fingerprint(usr)
+					internal = null
+					if (internals)
+						internals.icon_state = "internal0"
+				else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
+					internal = ITEM
+					internal.add_fingerprint(usr)
+					if (internals)
+						internals.icon_state = "internal1"
+
+					if(ITEM.air_contents && LAZYLEN(ITEM.air_contents.gas))
+						gas_log_string = " (gases:"
+						for(var/G in ITEM.air_contents.gas)
+							gas_log_string += " - [G]=[ITEM.air_contents.gas[G]]"
+						gas_log_string += ")"
+					else
+						gas_log_string = " (gases: empty)"
+
+				visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>")
+				attack_log += text("\[[time_stamp()]\] <font color='orange'>Had their internals [internal ? "open" : "close"] by [usr.name] ([usr.ckey])[gas_log_string]</font>")
+				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>[internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name][gas_log_string]</font>")

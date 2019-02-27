@@ -104,6 +104,13 @@ Pipelines + Other Objects -> Pipe network
 	if(target.initialize_directions & get_dir(target,src))
 		return 1
 
+/obj/machinery/atmospherics/proc/has_free_nodes()
+	var/connections_count = 0
+	for(DEVICE_TYPE_LOOP)
+		if(NODE_I)
+			connections_count++
+	return (connections_count != device_type)
+
 /obj/machinery/atmospherics/proc/pipeline_expansion()
 	return nodes
 

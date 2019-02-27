@@ -555,9 +555,9 @@ var/datum/subsystem/shuttle/SSshuttle
 			continue
 		var/contcount
 		for(var/atom/A in T.contents)
-			if(istype(A,/atom/movable/lighting_overlay))
+			if(!A.simulated)
 				continue
-			if(istype(A,/obj/machinery/light))
+			if(istype(A, /obj/machinery/light))
 				continue
 			contcount++
 		if(contcount)

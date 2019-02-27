@@ -461,7 +461,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 #undef SAFE_PERP
 
 /proc/IsAdminGhost(mob/user)
-	if(!user) // Are they a mob? Auto interface updates call this with a null src
+	if(!istype(user)) // Are they a mob? Auto interface updates call this with a null src
 		return
 	if(!user.client) // Do they have a client?
 		return

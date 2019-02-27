@@ -45,11 +45,12 @@
 	flags = HEADCOVERSEYES|BLOCKHAIR
 	siemens_coefficient = 0.9
 
-//Mime
-/obj/item/clothing/head/beret
-	name = "beret"
-	desc = "A beret, an artists favorite headwear."
-	icon_state = "beret"
+/obj/item/clothing/head/hos_peakedcap
+	name = "head of security's peaked cap"
+	desc = "The peaked cap of the Head of Security. I heard you, criminal scum. Now go to GOOLAG."
+	icon_state = "hos_peakedcap"
+	item_state = "hos_peakedcap"
+	w_class = ITEM_SIZE_SMALL
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
 
