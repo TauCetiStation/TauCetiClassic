@@ -75,6 +75,15 @@
 	desc = "A beret with the engineering insignia emblazoned on it. For engineers that are more inclined towards style than safety."
 	icon_state = "e_beret_badge"
 
+/obj/item/clothing/head/HoS
+	name = "head of security hat"
+	desc = "The hat of the Head of Security. For showing the officers who's in charge."
+	icon_state = "hoscap"
+	flags = HEADCOVERSEYES
+	flags_inv = HIDEEARS
+	body_parts_covered = 0
+	siemens_coefficient = 0.8
+
 //Medical
 /obj/item/clothing/head/surgery
 	name = "surgical cap"

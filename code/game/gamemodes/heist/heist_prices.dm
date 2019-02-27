@@ -95,7 +95,7 @@
 
 /obj/item/clothing/head/helmet/price = 3000
 /obj/item/clothing/head/helmet/gladiator/price = 432
-/obj/item/clothing/head/helmet/HoS/dermal/price = 12888
+/obj/item/clothing/head/helmet/dermal/price = 12888
 /obj/item/clothing/head/helmet/cap/price = 3866
 /obj/item/clothing/head/helmet/helmet_of_justice/price = 9166
 /obj/item/clothing/head/helmet/space/price = 8700
