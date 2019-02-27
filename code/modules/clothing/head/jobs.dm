@@ -49,7 +49,8 @@
 /obj/item/clothing/head/HoS
 	name = "head of security hat"
 	desc = "The hat of the Head of Security. For showing the officers who's in charge."
-	icon_state = "hoscap"
+	icon_state = "hoshat"
+	item_state = "hoshat"
 	flags = HEADCOVERSEYES
 	flags_inv = HIDEEARS
 	body_parts_covered = 0

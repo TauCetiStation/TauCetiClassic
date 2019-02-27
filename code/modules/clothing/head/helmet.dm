@@ -63,7 +63,7 @@
 			C.name = "dermaled [C.name]"
 			to_chat(user, "<span class='info'>You strengthen [C], improving its resistance.</span>")
 			user.drop_item()
-			loc = C
+			src.forceMove(C)
 			C.verbs += /obj/item/clothing/head/proc/remove_dermal
 		else
 			to_chat(user, "<span class='warning'>You can't improve [C] any further!</span>")
@@ -74,13 +74,12 @@
 	set category = "Object"
 	set name = "Remove dermal"
 	set src in usr
-	var/obj/item/clothing/head/helmet/dermal/D
-	for(D in src)
-		src.contents -= D
-		usr.put_in_hands(D)
-		src.verbs -= /obj/item/clothing/head/proc/remove_dermal
-		src.name  = D.item_old_name
-		src.armor = D.item_old_armor
+	var/obj/item/clothing/head/helmet/dermal/D = locate() in src
+	src.contents -= D
+	usr.put_in_hands(D)
+	src.verbs -= /obj/item/clothing/head/proc/remove_dermal
+	src.name  = D.item_old_name
+	src.armor = D.item_old_armor
 
 
 /obj/item/clothing/head/helmet/riot
