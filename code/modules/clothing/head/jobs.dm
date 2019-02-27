@@ -45,13 +45,6 @@
 	flags = HEADCOVERSEYES|BLOCKHAIR
 	siemens_coefficient = 0.9
 
-//Mime
-/obj/item/clothing/head/beret
-	name = "beret"
-	desc = "A beret, an artists favorite headwear."
-	icon_state = "beret"
-	siemens_coefficient = 0.9
-	body_parts_covered = 0
 
 //Security
 /obj/item/clothing/head/HoS
@@ -63,11 +56,14 @@
 	body_parts_covered = 0
 	siemens_coefficient = 0.8
 
-//Engineering
-/obj/item/clothing/head/beret/eng
-	name = "engineering beret"
-	desc = "A beret with the engineering insignia emblazoned on it. For engineers that are more inclined towards style than safety."
-	icon_state = "e_beret_badge"
+/obj/item/clothing/head/hos_peakedcap
+	name = "head of security's peaked cap"
+	desc = "The peaked cap of the Head of Security. I heard you, criminal scum. Now go to GOOLAG."
+	icon_state = "hos_peakedcap"
+	item_state = "hos_peakedcap"
+	w_class = ITEM_SIZE_SMALL
+	siemens_coefficient = 0.9
+	body_parts_covered = 0
 
 //Medical
 /obj/item/clothing/head/surgery
@@ -87,4 +83,3 @@
 /obj/item/clothing/head/surgery/green
 	desc = "A cap surgeons wear during operations. Keeps their hair from tickling your internal organs. This one is dark green."
 	icon_state = "surgcap_green"
-
