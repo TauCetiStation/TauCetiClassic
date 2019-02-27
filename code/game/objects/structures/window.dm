@@ -293,7 +293,7 @@
 			playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 			shatter()
 
-	else if(istype(W, /obj/item/stack/cable_coil) && reinf && state == 0 && !istype(src, /obj/structure/window/reinforced/polarized) && is_fulltile())
+	else if(istype(W, /obj/item/stack/cable_coil) && reinf && state == 0 && !istype(src, /obj/structure/window/reinforced/polarized) && !is_fulltile())
 		var/obj/item/stack/cable_coil/C = W
 		if (C.use(1))
 			playsound(src.loc, 'sound/effects/sparks1.ogg', 75, 1)
