@@ -292,6 +292,23 @@
 		if(C.use_charge(user))
 			playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 			shatter()
+
+	else if(istype(W, /obj/item/stack/cable_coil) && reinf && state == 0 && !istype(src, /obj/structure/window/reinforced/polarized))
+		var/obj/item/stack/cable_coil/C = W
+		if (C.use(1))
+			playsound(src.loc, 'sound/effects/sparks1.ogg', 75, 1)
+			user.visible_message( \
+				"<span class='notice'>\The [user] begins to wire \the [src] for electrochromic tinting.</span>",
+				"<span class='notice'>You begin to wire \the [src] for electrochromic tinting.</span>",
+				"You hear sparks.")
+			if(do_after(user, 20 * C.toolspeed, src) && state == 0)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				var/obj/structure/window/reinforced/polarized/P = new(loc, dir)
+				P.health = health
+				P.state = state
+				P.anchored = anchored
+				qdel(src)
+
 	else
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			take_damage(W.force)
@@ -560,3 +577,19 @@
 
 /obj/machinery/windowtint/update_icon()
 	icon_state = "light[active]"
+
+/obj/machinery/windowtint/attackby(obj/item/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/device/multitool))
+		var/t = sanitize(input(user, "Enter an ID for \the [src].", src.name, null), MAX_NAME_LEN)
+		src.id = t
+		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")
+		return
+	. = ..()
+
+/obj/structure/window/reinforced/polarized/attackby(obj/item/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/device/multitool) && !anchored) // Only allow programming if unanchored!
+		var/t = sanitize(input(user, "Enter the ID for the window.", src.name, null), MAX_NAME_LEN)
+		src.id = t
+		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")
+		return TRUE
+	. = ..()
