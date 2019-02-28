@@ -6,7 +6,7 @@
 	desc = "These seeds grow into telriis grass. Not recommended for consumption by sentient species."
 	icon_state = "seed-alien1"
 	mypath = "/obj/item/seeds/telriis"
-	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_ancients.dmi'
+	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "telriis"
 	plantname = "Telriis grass"
 	productname = "/obj/item/weapon/telriis_clump"
@@ -22,7 +22,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/telriis_clump
 	name = "telriis grass"
 	desc = "A clump of telriis grass, not recommended for consumption by sentients."
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	icon_state = "telriisclump"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/telriis_clump/atom_init(mapload, potency)
@@ -37,7 +37,7 @@
 	desc = "These seeds grow into Thaa'dra lichen. Likes the cold."
 	icon_state = "seed-alien3"
 	mypath = "/obj/item/seeds/thaadra"
-	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_ancients.dmi'
+	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "thaadra"
 	plantname = "Thaa'dra lichen"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/thaadra"
@@ -53,7 +53,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom
 	name = "thaa'dra bloom"
 	desc = "Looks chewy, might be good to eat."
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	icon_state = "thaadrabloom"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom/atom_init(mapload, potency)
@@ -68,7 +68,7 @@
 	desc = "These seeds grow into jurl'mah reeds, which produce large syrupy pods."
 	icon_state = "seed-alien3"
 	mypath = "/obj/item/seeds/jurlmah"
-	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_ancients.dmi'
+	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "jurlmah"
 	plantname = "jurl'mah reeds"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/jurlmah"
@@ -83,7 +83,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/jurlmah
 	name = "jurl'mah pod"
 	desc = "Bulbous and veiny, it appears to pulse slightly as you look at it."
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	icon_state = "jurlmahpod"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/jurlmah/atom_init(mapload, potency)
@@ -98,7 +98,7 @@
 	desc = "Grows into a straight, dark plant with small round fruit."
 	icon_state = "seed-alien3"
 	mypath = "/obj/item/seeds/amauri"
-	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_ancients.dmi'
+	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "amauri"
 	plantname = "amauri plant"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/amauri"
@@ -113,7 +113,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/amauri
 	name = "amauri fruit"
 	desc = "It is small, round and hard. Its skin is a thick dark purple."
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	icon_state = "amaurifruit"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/amauri/atom_init(mapload, potency)
@@ -129,7 +129,7 @@
 	desc = "Grows into a bright, wavy plant with many small fruits."
 	icon_state = "seed-alien2"
 	mypath = "/obj/item/seeds/gelthi"
-	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_ancients.dmi'
+	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "gelthi"
 	plantname = "gelthi plant"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/gelthi"
@@ -144,7 +144,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/gelthi
 	name = "gelthi berries"
 	desc = "They feel fluffy and slightly warm to the touch."
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	icon_state = "gelthiberries"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/gelthi/atom_init(mapload, potency)
@@ -161,7 +161,7 @@
 	desc = "The vale bush is often depicted in ancient heiroglyphs and is similar to cherry blossoms."
 	icon_state = "seed-alien2"
 	mypath = "/obj/item/seeds/vale"
-	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_ancients.dmi'
+	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "vale"
 	plantname = "vale bush"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/vale"
@@ -176,7 +176,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/vale
 	name = "vale leaves"
 	desc = "Small, curly leaves covered in a soft pale fur."
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	icon_state = "valeleaves"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/vale/atom_init(mapload, potency)
@@ -192,7 +192,7 @@
 	desc = "A spiky blue vine with large fruit resembling pig ears."
 	icon_state = "seed-alien3"
 	mypath = "/obj/item/seeds/surik"
-	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_ancients.dmi'
+	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "surik"
 	plantname = "surik vine"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/surik"
@@ -207,7 +207,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/surik
 	name = "surik fruit"
 	desc = "Multiple layers of blue skin peeling away to reveal a spongey core, vaguely resembling an ear."
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	icon_state = "surikfruit"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/surik/atom_init(mapload, potency)
@@ -222,7 +222,7 @@
 	desc = "Strange black spherical organic formations, glowing in the dark"
 	icon_state = "seed-alien5"
 	mypath = "/obj/item/seeds/blackberry"
-	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_ancients.dmi'
+	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "blackberry"
 	plantname = "black berry nest"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/blackberry"
@@ -237,7 +237,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/blackberry
 	name = "black egg"
 	desc = "A strange looking black fruit, shimmering in the light"
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	icon_state = "blackberryfruit"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/blackberry/atom_init(mapload, potency)

@@ -69,9 +69,14 @@
 #define	PIPE_COLOR_BLACK	"#444444"
 #define	PIPE_COLOR_ORANGE	"#b95a00"
 
-#define LIGHT_COLOR_FIRE       "#FAA019" // Warm orange color, leaning strongly towards yellow. rgb(250, 160, 25)
-#define LIGHT_COLOR_FLARE      "#F93C2F" // Bright, non-saturated red. Leaning slightly towards pink for visibility. rgb(250, 100, 75)
-#define LIGHT_COLOR_GHOST_CANDLE      "#a2fad1" // Used by ghost candles. rgb(162, 250, 209)
+//Some defines to generalise colours used in lighting.
+//Important note on colors. Colors can end up significantly different from the basic html picture, especially when saturated
+#define LIGHT_COLOR_WHITE      "#FFFFFF"
+
+//These ones aren't a direct colour like the ones above, because nothing would fit
+#define LIGHT_COLOR_FIRE         "#FAA019" //Warm orange color, leaning strongly towards yellow. rgb(250, 160, 25)
+#define LIGHT_COLOR_FLARE        "#FA644B" //Bright, non-saturated red. Leaning slightly towards pink for visibility. rgb(250, 100, 75)
+#define LIGHT_COLOR_GHOST_CANDLE "#a2fad1" // Used by ghost candles. rgb(162, 250, 209)
 
 //Human organ color mods
 #define HULK_SKIN_TONE rgb(48, 224, 40) // human

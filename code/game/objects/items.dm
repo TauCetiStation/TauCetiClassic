@@ -844,7 +844,7 @@
 
 /obj/item/add_dirt_cover()
 	if(!blood_overlay)
-		generate_dirt_cover()
+		generate_blood_overlay()
 	..()
 	if(dirt_overlay)
 		if(blood_overlay.color != dirt_overlay.color)
@@ -856,16 +856,13 @@
 	if (!..())
 		return 0
 
-	//if we haven't made our blood_overlay already
-	//add_dirt_cover(new M.species.blood_color)
-
 	if(blood_DNA[M.dna.unique_enzymes])
 		return 0 //already bloodied with this blood. Cannot add more.
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	return 1 //we applied blood to the item
 
 var/global/list/items_blood_overlay_by_type = list()
-/obj/item/proc/generate_dirt_cover()
+/obj/item/proc/generate_blood_overlay()
 	if(blood_overlay)
 		return
 

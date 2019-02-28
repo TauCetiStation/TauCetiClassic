@@ -13,7 +13,6 @@
 	var/area/area = null
 	var/otherarea = null
 	var/static/image/overlay
-	//	luminosity = 1
 
 /obj/machinery/light_switch/atom_init()
 	..()

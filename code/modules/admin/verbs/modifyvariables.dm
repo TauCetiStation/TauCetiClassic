@@ -452,18 +452,52 @@
 			return .(O.vars[variable])
 
 		if("text")
-			var/var_new = sanitize(input("Enter new text:", "Text", O.vars[variable])) as null|text
-			if(isnull(var_new))
-				return
-			O.vars[variable] = var_new
-
+			switch(variable)
+				if("light_color")
+					var/var_new = input("Select new color:", "Color", O.vars[variable]) as null|color
+					if(isnull(var_new))
+						return
+					O.set_light(l_color = var_new)
+				else
+					var/var_new = sanitize(input("Enter new text:", "Text", O.vars[variable])) as null|text
+					if(isnull(var_new))
+						return
+					O.vars[variable] = var_new
 		if("num")
 			switch(variable)
+				if("opacity")
+					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
+					if(isnull(var_new))
+						return
+					O.set_opacity(var_new)
 				if("light_range")
 					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
 					if(isnull(var_new))
 						return
 					O.set_light(var_new)
+				if("light_power")
+					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
+					if(isnull(var_new))
+						return
+					O.set_light(l_power = var_new)
+				if("dynamic_lighting")
+					if(!isarea(O) && !isturf(O))
+						to_chat(usr, "This can only be used on instances of type /area and /turf")
+						return
+					var/var_new = alert("dynamic_lighting", ,
+						"DYNAMIC_LIGHTING_DISABLED", "DYNAMIC_LIGHTING_ENABLED", "DYNAMIC_LIGHTING_FORCED"
+						)
+					switch(var_new)
+						if("DYNAMIC_LIGHTING_DISABLED")
+							var_new = DYNAMIC_LIGHTING_DISABLED
+						if("DYNAMIC_LIGHTING_ENABLED")
+							var_new = DYNAMIC_LIGHTING_ENABLED
+						if("DYNAMIC_LIGHTING_FORCED")
+							var_new = DYNAMIC_LIGHTING_FORCED
+					if(isnull(var_new))
+						return
+					var/area/A = O
+					A.set_dynamic_lighting(var_new)
 				if("player_ingame_age")
 					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
 					if(isnull(var_new) || var_new < 0)

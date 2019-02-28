@@ -717,7 +717,7 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H.species)
-				new_cover = new H.species.blood_color
+				new_cover = new(H.species.blood_datum)
 		if(!new_cover)
 			new_cover = new/datum/dirt_cover/red_blood
 		if(!blood_exists)

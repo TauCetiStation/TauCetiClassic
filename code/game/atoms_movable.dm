@@ -24,12 +24,8 @@
 	var/freeze_movement = FALSE
 
 /atom/movable/Destroy()
-	//If we have opacity, make sure to tell (potentially) affected light sources.
+
 	var/turf/T = loc
-	if(opacity && istype(T))
-		opacity = 0
-		T.recalc_atom_opacity()
-		T.reconsider_lights()
 
 	unbuckle_mob()
 
@@ -41,7 +37,15 @@
 	invisibility = 101
 	if(pulledby)
 		pulledby.stop_pulling()
-	return ..()
+
+	. = ..()
+
+	// If we have opacity, make sure to tell (potentially) affected light sources.
+	if (opacity && istype(T))
+		var/old_has_opaque_atom = T.has_opaque_atom
+		T.recalc_atom_opacity()
+		if (old_has_opaque_atom != T.has_opaque_atom)
+			T.reconsider_lights()
 
 /atom/movable/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if(!loc || !NewLoc || freeze_movement)
