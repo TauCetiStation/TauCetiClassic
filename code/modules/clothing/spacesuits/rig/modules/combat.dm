@@ -23,11 +23,11 @@
 	var/fire_force = 5
 	var/fire_distance = 10
 
-	charges = list(
-		list("flashbang",   "flashbang",   /obj/item/weapon/grenade/flashbang,  3),
-		list("smoke bomb",  "smoke bomb",  /obj/item/weapon/grenade/smokebomb,  3),
-		list("EMP grenade", "EMP grenade", /obj/item/weapon/grenade/empgrenade, 3),
-		)
+/obj/item/rig_module/grenade_launcher/init_charges()
+	charges = list()
+	charges["flashbang"]   = new /datum/rig_charge("flashbang",   /obj/item/weapon/grenade/flashbang,  3)
+	charges["smoke bomb"]  = new /datum/rig_charge("smoke bomb",  /obj/item/weapon/grenade/smokebomb,  3)
+	charges["EMP grenade"] = new /datum/rig_charge("EMP grenade", /obj/item/weapon/grenade/empgrenade, 3)
 
 /obj/item/rig_module/grenade_launcher/accepts_item(obj/item/input_device, mob/living/user)
 
@@ -94,36 +94,36 @@
 	interface_name = "cleaning grenade launcher"
 	desc = "A shoulder-mounted micro-explosive dispenser designed only to accept standard cleaning foam grenades."
 
-	charges = list(
-		list("cleaning grenade", "cleaning grenade",  /obj/item/weapon/grenade/chem_grenade/cleaner, 9),
-		)
+/obj/item/rig_module/grenade_launcher/cleaner/init_charges()
+	charges = list()
+	charges["cleaning grenade"] = new /datum/rig_charge("cleaning grenade", /obj/item/weapon/grenade/chem_grenade/cleaner, 9)
 
 /obj/item/rig_module/grenade_launcher/smoke
 	name = "hardsuit mounted smoke grenade launcher"
 	interface_name = "smoke grenade launcher"
 	desc = "A shoulder-mounted micro-explosive dispenser designed only to accept standard smoke grenades."
 
-	charges = list(
-		list("smoke bomb", "smoke bomb", /obj/item/weapon/grenade/smokebomb, 6),
-	)
+/obj/item/rig_module/grenade_launcher/smoke/init_charges()
+	charges = list()
+	charges["smoke bomb"] = new /datum/rig_charge("smoke bomb", /obj/item/weapon/grenade/smokebomb, 6)
 
 /obj/item/rig_module/grenade_launcher/mfoam
 	name = "hardsuit mounted foam grenade launcher"
 	interface_name = "foam grenade launcher"
 	desc = "A shoulder-mounted micro-explosive dispenser designed only to accept standard metal foam grenades."
 
-	charges = list(
-		list("metal foam grenade", "metal foam grenade", /obj/item/weapon/grenade/chem_grenade/metalfoam, 4),
-	)
+/obj/item/rig_module/grenade_launcher/mfoam/init_charges()
+	charges = list()
+	charges["metal foam grenade"] = new /datum/rig_charge("metal foam grenade", /obj/item/weapon/grenade/chem_grenade/metalfoam, 4)
 
 /obj/item/rig_module/grenade_launcher/flashbang
 	name = "hardsuit mounted flashbang grenade launcher"
 	interface_name = "flashbang grenade launcher"
 	desc = "A shoulder-mounted micro-explosive dispenser designed only to accept standard flashbang grenades."
 
-	charges = list(
-		list("flashbang", "flashbang", /obj/item/weapon/grenade/flashbang, 3),
-	)
+/obj/item/rig_module/grenade_launcher/flashbang/init_charges()
+	charges = list()
+	charges["flashbang"] = new /datum/rig_charge("flashbang", /obj/item/weapon/grenade/flashbang, 3)
 
 /obj/item/rig_module/mounted
 	name = "hardsuit mounted laser rifle"

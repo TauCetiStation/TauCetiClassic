@@ -1,53 +1,12 @@
-/datum/action/module_select
-	name = "Select module"
-
-/datum/action/module_select/New(Target)
-	..()
-	if(istype(Target, /obj/item/rig_module))
-		var/obj/item/rig_module/module = Target
-		name = "Select [module.interface_name]"
-
-/datum/action/module_select/Trigger()
-	if(!Checks())
-		return
-
-	if(istype(target, /obj/item/rig_module))
-		var/obj/item/rig_module/module = target
-		if(module.holder)
-			if(module.holder.selected_module == module)
-				module.holder.selected_module = null
-				to_chat(owner, "<span class='bold notice'>Primary system is now: deselected.</span>")
-			else
-				module.holder.selected_module = module
-				to_chat(owner, "<span class='bold notice'>Primary system is now: [module.interface_name].</span>")
-			module.holder.update_selected_action()
-
-/datum/action/module_toggle
-	name = "Toggle module"
-
-/datum/action/module_toggle/New(Target)
-	..()
-	if(istype(Target, /obj/item/rig_module))
-		var/obj/item/rig_module/module = Target
-		name = "[module.activate_string]"
-
-/datum/action/module_toggle/Trigger()
-	if(!Checks())
-		return
-
-	if(istype(target, /obj/item/rig_module))
-		var/obj/item/rig_module/module = target
-		if(module.holder)
-			if(module.active) // activate and deactivate will update action icons
-				module.deactivate()
-			else if(!module.holder.offline)
-				module.activate()
-
 /datum/rig_charge
-	var/short_name = "undef"
-	var/display_name = "undefined"
-	var/product_type = "undefined"
-	var/charges = 0
+	var/display_name = "undefined" // shown to the user
+	var/product_type = "undefined" // some internal information like type of the grenade or chemical
+	var/charges = 0 // how much left
+
+/datum/rig_charge/New(Display_Name, Product_Type, Charges)
+	display_name = Display_Name
+	product_type = Product_Type
+	charges = Charges
 
 /obj/item/rig_module
 	name = "hardsuit upgrade"
@@ -70,13 +29,13 @@
 	var/mount_type = 0					// What mounts does this module use
 
 	var/active                          // Basic module status
-	var/activate_on_start				// Set to TRUE for the device to automatically activate on suit equip
+	var/activate_on_start               // Set to TRUE for the device to automatically activate on suit equip
 
 	var/use_power_cost = 0              // Power used when single-use ability called.
 	var/active_power_cost = 0           // Power used when turned on.
 	var/passive_power_cost = 0          // Power used when turned off.
 
-	var/list/charges                    // Associative list of charge types and remaining numbers.
+	var/list/charges                    // Associative list of charge types and remaining numbers. Starting charges are filled only inside init_charges() proc
 	var/charge_selected                 // Currently selected option used for charge dispensing.
 
 	var/suit_overlay
@@ -89,26 +48,14 @@
 	var/activate_string = "Activate"
 	var/deactivate_string = "Deactivate"
 
-	var/list/stat_modules = new()
+	var/list/stat_modules = new() // buttons for the stat menu
 
 /obj/item/rig_module/atom_init()
 	. = ..()
 
-	if(charges && charges.len)
-		var/list/processed_charges = list()
-		for(var/list/charge in charges)
-			var/datum/rig_charge/charge_dat = new
-
-			charge_dat.short_name   = charge[1]
-			charge_dat.display_name = charge[2]
-			charge_dat.product_type = charge[3]
-			charge_dat.charges      = charge[4]
-
-			if(!charge_selected)
-				charge_selected = charge_dat.short_name
-			processed_charges[charge_dat.short_name] = charge_dat
-
-		charges = processed_charges
+	init_charges()
+	if(charges && charges.len) // auto-select the first charge
+		charge_selected = charges[1]
 
 	if(suit_overlay)
 		suit_overlay_image = image("icon" = 'icons/mob/rig_modules.dmi', "icon_state" = "[suit_overlay]")
@@ -250,6 +197,10 @@
 		return active_power_cost
 	else
 		return passive_power_cost
+
+// Called at the module init, used to fill module charges if needed
+/obj/item/rig_module/proc/init_charges()
+	return
 
 // Called by holder rigsuit attackby()
 // Checks if an item is usable with this module and handles it if it is

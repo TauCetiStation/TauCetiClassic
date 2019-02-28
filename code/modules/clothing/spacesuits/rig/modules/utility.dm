@@ -143,31 +143,31 @@
 	interface_name = "integrated chemical dispenser"
 	interface_desc = "Dispenses loaded chemicals directly into the wearer's bloodstream."
 
-	charges = list(
-		list("dexalin plus",  "dexalin plus",  "dexalinp",          80),
-		list("dylovene",    "dylovene",        "anti_toxin",        80),
-		list("hyronalin",     "hyronalin",     "hyronalin",         80),
-		list("spaceacillin",   "spaceacillin", "spaceacillin",      80),
-		list("tramadol",      "tramadol",      "tramadol",          80),
-		list("tricordrazine", "tricordrazine", "tricordrazine",     80)
-		)
-
 	var/max_reagent_volume = 80 //Used when refilling.
+
+/obj/item/rig_module/chem_dispenser/init_charges()
+	charges = list()
+	charges["dexalin plus"]  = new /datum/rig_charge("dexalin plus",  "dexalinp",      80)
+	charges["dylovene"]      = new /datum/rig_charge("dylovene",      "anti_toxin",    80)
+	charges["hyronalin"]     = new /datum/rig_charge("hyronalin",     "hyronalin",     80)
+	charges["spaceacillin"]  = new /datum/rig_charge("spaceacillin",  "spaceacillin",  80)
+	charges["tramadol"]      = new /datum/rig_charge("tramadol",      "tramadol",      80)
+	charges["tricordrazine"] = new /datum/rig_charge("tricordrazine", "tricordrazine", 80)
 
 /obj/item/rig_module/chem_dispenser/ninja
 	interface_desc = "Dispenses loaded chemicals directly into the wearer's bloodstream. This variant is made to be extremely light and flexible."
 
+/obj/item/rig_module/chem_dispenser/ninja/init_charges()
 	//just over a syringe worth of each. Want more? Go refill. Gives the ninja another reason to have to show their face.
-	charges = list(
-		list("dexalin plus",  "dexalin plus",  "dexalinp",          20),
-		list("dylovene",    "dylovene",        "anti_toxin",        20),
-		list("sugar",       "sugar",           "sugar", 			80),
-		list("hyronalin",     "hyronalin",     "hyronalin",         20),
-		list("radium",        "radium",        "radium",            20),
-		list("spaceacillin",   "spaceacillin", "spaceacillin",      20),
-		list("tramadol",      "tramadol",      "tramadol",          20),
-		list("tricordrazine", "tricordrazine", "tricordrazine",     20)
-	)
+	charges = list()
+	charges["dexalin plus"]  = new /datum/rig_charge("dexalin plus",  "dexalinp",      20)
+	charges["dylovene"]      = new /datum/rig_charge("dylovene",      "anti_toxin",    20)
+	charges["sugar"]         = new /datum/rig_charge("sugar",         "sugar",         80)
+	charges["hyronalin"]     = new /datum/rig_charge("hyronalin",     "hyronalin",     20)
+	charges["radium"]        = new /datum/rig_charge("radium",        "radium",        20)
+	charges["spaceacillin"]  = new /datum/rig_charge("spaceacillin",  "spaceacillin",  20)
+	charges["tramadol"]      = new /datum/rig_charge("tramadol",      "tramadol",      20)
+	charges["tricordrazine"] = new /datum/rig_charge("tricordrazine", "tricordrazine", 20)
 
 /obj/item/rig_module/chem_dispenser/accepts_item(obj/item/input_item, mob/living/user)
 
@@ -259,49 +259,51 @@
 	desc = "A complex web of tubing and needles suitable for hardsuit use."
 	suit_overlay = null // hidden
 
-	charges = list(
-		list("tricordrazine", "tricordrazine", "tricordrazine",      30),
-		list("inaprovaline",  "inaprovaline",  "inaprovaline",       30),
-		list("tramadol",      "tramadol",      "tramadol", 		     30),
-		list("dexalin",       "dexalin",       "dexalin", 	     	 30),
-		)
-
 	interface_name = "combat chem dispenser"
 	interface_desc = "Dispenses loaded chemicals directly into the bloodstream."
 
+/obj/item/rig_module/chem_dispenser/combat/init_charges()
+	charges = list()
+	charges["tricordrazine"] = new /datum/rig_charge("tricordrazine", "tricordrazine", 30)
+	charges["inaprovaline"]  = new /datum/rig_charge("inaprovaline",  "inaprovaline",  30)
+	charges["tramadol"]      = new /datum/rig_charge("tramadol",      "tramadol",      30)
+	charges["dexalin"]       = new /datum/rig_charge("dexalin",       "dexalin",       30)
 
-/obj/item/rig_module/chem_dispenser/medical // starts almost empty but could be loaded with a lot of different chemicals
+/obj/item/rig_module/chem_dispenser/medical
 	name = "hardsuit mounted chemical injector"
 	desc = "A complex web of tubing and needles suitable for hardsuit use."
 	selectable = TRUE // Also can inject others
 
-	charges = list(
-		list("tricordrazine", "tricordrazine", "tricordrazine",      30),
-		list("inaprovaline",  "inaprovaline",  "inaprovaline",       30),
-		list("tramadol",      "tramadol",      "tramadol", 		     30),
-		list("dexalin",       "dexalin",       "dexalin", 	     	 30),
-		list("dexalin plus",  "dexalin plus",  "dexalinp",           0),
-		list("dylovene",      "dylovene",      "anti_toxin",         0),
-		list("kelotane",      "kelotane",      "kelotane",           0),
-		list("dermaline",     "dermaline",     "dermaline",          0),
-		list("bicaridine",    "bicaridine",    "bicaridine",         0),
-		list("oxycodone",     "oxycodone",     "oxycodone",          0),
-		list("hyperzine",     "hyperzine",     "hyperzine",          0),
-		)
-
 	interface_name = "medical chem dispenser"
 	interface_desc = "Dispenses loaded chemicals directly into the bloodstream."
 
-/obj/item/rig_module/chem_dispenser/medical/ert
-	charges = list(
-		list("tricordrazine", "tricordrazine", "tricordrazine",      30),
-		list("inaprovaline",  "inaprovaline",  "inaprovaline",       30),
-		list("tramadol",      "tramadol",      "tramadol", 		     30),
-		list("dexalin plus",  "dexalin plus",  "dexalinp",           30),
-		list("dylovene",      "dylovene",      "anti_toxin",         30),
-		list("kelotane",      "kelotane",      "kelotane",           30),
-		list("bicaridine",    "bicaridine",    "bicaridine",         30),
-		)
+/obj/item/rig_module/chem_dispenser/medical/init_charges()
+	// starts almost empty but could be loaded with a lot of different chemicals
+	charges = list()
+	charges["tricordrazine"] = new /datum/rig_charge("tricordrazine", "tricordrazine", 30)
+	charges["inaprovaline"]  = new /datum/rig_charge("inaprovaline",  "inaprovaline",  30)
+	charges["tramadol"]      = new /datum/rig_charge("tramadol",      "tramadol",      30)
+	charges["dexalin"]       = new /datum/rig_charge("dexalin",       "dexalin",       30)
+	charges["dexalin plus"]  = new /datum/rig_charge("dexalin plus",  "dexalinp",      0)
+	charges["dylovene"]      = new /datum/rig_charge("dylovene",      "anti_toxin",    0)
+	charges["kelotane"]      = new /datum/rig_charge("kelotane",      "kelotane",      0)
+	charges["dermaline"]     = new /datum/rig_charge("dermaline",     "dermaline",     0)
+	charges["bicaridine"]    = new /datum/rig_charge("bicaridine",    "bicaridine",    0)
+	charges["oxycodone"]     = new /datum/rig_charge("oxycodone",     "oxycodone",     0)
+	charges["hyperzine"]     = new /datum/rig_charge("hyperzine",     "hyperzine",     0)
+
+/obj/item/rig_module/chem_dispenser/medical/ert // variant for the medical ert rigs
+	name = "hardsuit mounted chemical injector"
+
+/obj/item/rig_module/chem_dispenser/medical/ert/init_charges()
+	charges = list()
+	charges["tricordrazine"] = new /datum/rig_charge("tricordrazine", "tricordrazine", 30)
+	charges["inaprovaline"]  = new /datum/rig_charge("inaprovaline",  "inaprovaline",  30)
+	charges["tramadol"]      = new /datum/rig_charge("tramadol",      "tramadol",      30)
+	charges["dexalin plus"]  = new /datum/rig_charge("dexalin plus",  "dexalinp",      30)
+	charges["dylovene"]      = new /datum/rig_charge("dylovene",      "anti_toxin",    30)
+	charges["kelotane"]      = new /datum/rig_charge("kelotane",      "kelotane",      30)
+	charges["bicaridine"]    = new /datum/rig_charge("bicaridine",    "bicaridine",    30)
 
 /obj/item/rig_module/cooling_unit
 	name = "hardsuit mounted cooling unit"
@@ -349,10 +351,9 @@
 	module_cooldown = 0
 	origin_tech = "engineering=3;programming=3"
 
-	charges = list(
-		list("metal", "metal", "metal", 30),
-	)
-	charge_selected = 0
+/obj/item/rig_module/selfrepair/init_charges()
+	charges = list()
+	charges["metal"] = new /datum/rig_charge("metal", "metal", 30)
 
 /obj/item/rig_module/selfrepair/activate(forced = FALSE)
 	if(!..())
@@ -375,11 +376,7 @@
 		to_chat(H, "<span class='notice'>Self-repair is completed</span>")
 		return passive_power_cost
 
-	if(!charge_selected)
-		deactivate()
-		return 0
-
-	var/datum/rig_charge/charge = charges[charge_selected]
+	var/datum/rig_charge/charge = charges["metal"]
 
 	if(!charge)
 		deactivate()
@@ -541,10 +538,9 @@
 	device_type = /obj/item/weapon/extinguisher/mounted
 	need_adjacent = FALSE
 
-	charges = list(
-		list("water", "water", "water", 0), // syncs with the extinguisher
-	)
-	charge_selected = 0
+/obj/item/rig_module/device/extinguisher/init_charges()
+	charges = list()
+	charges["water"] = new /datum/rig_charge("water", "water", 0) // syncs with the extinguisher
 
 /obj/item/rig_module/device/extinguisher/atom_init()
 	. = ..()
@@ -579,10 +575,9 @@
 	var/spray_ammount = 0 // 0 does 1x1 tile
 	var/max_volume = 100
 
-	charges = list(
-		list("foaming agent", "foaming agent", "foaming agent", 40),
-	)
-	charge_selected = 0
+/obj/item/rig_module/metalfoam_spray/init_charges()
+	charges = list()
+	charges["foaming agent"] = new /datum/rig_charge("foaming agent", "foaming agent", 40)
 
 /obj/item/rig_module/metalfoam_spray/engage(atom/target)
 	if(!isturf(holder.wearer.loc) && target)
