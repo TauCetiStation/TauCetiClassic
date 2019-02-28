@@ -402,7 +402,7 @@
 		helmet.canremove = 1
 		H.drop_from_inventory(helmet)
 		helmet.loc = src
-		to_chat(H, "\blue You retract your hardsuit helmet.")
+		to_chat(H, "<span class='notice'>You retract your hardsuit helmet.</span>")
 
 	else if(H.equip_to_slot_if_possible(helmet, SLOT_HEAD))
 		helmet.canremove = 0

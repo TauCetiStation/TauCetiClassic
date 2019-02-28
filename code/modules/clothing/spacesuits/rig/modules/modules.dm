@@ -16,10 +16,10 @@
 		if(module.holder)
 			if(module.holder.selected_module == module)
 				module.holder.selected_module = null
-				to_chat(owner, "<font color='blue'><b>Primary system is now: deselected.</b></font>")
+				to_chat(owner, "<span class='bold notice'>Primary system is now: deselected.</span>")
 			else
 				module.holder.selected_module = module
-				to_chat(owner, "<font color='blue'><b>Primary system is now: [module.interface_name].</b></font>")
+				to_chat(owner, "<span class='bold notice'>Primary system is now: [module.interface_name].</span>")
 			module.holder.update_selected_action()
 
 /datum/action/module_toggle

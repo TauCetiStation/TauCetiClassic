@@ -1,3 +1,13 @@
+/datum/rig_message
+	var/text // what will be shown to the user
+	var/class // css class like warning or notice
+	var/sound // optional sound
+
+/datum/rig_message/New(Text, Class, Sound)
+	text = Text
+	class = Class
+	sound = Sound
+
 /obj/item/rig_module/simple_ai
 	name = "hardsuit automated diagnostic system"
 	desc = "A system designed to help hardsuit users."
@@ -9,12 +19,11 @@
 	mount_type = MODULE_MOUNT_AI
 	icon_state = "IIS"
 
-	var/list/nonimportant_messages = list()
-	var/list/important_messages = list()
+	var/list/message_queue = list() // associative list of /datum/rig_message
 
 	// Used for detecting when some values change. Used for warning showing.
 	var/saved_health // health of the rig user
-	var/saved_rig_damage
+	var/saved_rig_damage // how damaged is the rig
 	var/saved_power // percentage of the cell charge
 	var/saved_stat // alive/dead detection
 
@@ -27,7 +36,7 @@
 	var/destroyed_message = "CRITICAL DAMAGE: AUTOMATIC DIAGNOSTIC SYSTEM IS SHUTTING DOWN"
 
 	var/list/health_warnings = list(
-		list(80, "Vital signs are dropping", 'sound/rig/shortbeep.wav'), // health, message, sound
+		list(90, "Vital signs are dropping", 'sound/rig/shortbeep.wav'), // health, message, sound
 		list(40, "Vital signs are dropping. Evacuate area", 'sound/rig/shortbeep.wav'),
 		list(0, "Warning: Vital signs critical. Seek medical attention", 'sound/rig/beep.wav'),
 		list(-20, "Warning: Vital signs critical. Seek medical attention immediately", 'sound/rig/longbeep.wav'),
@@ -43,7 +52,7 @@
 	var/list/energy_warnings = list(
 		list(0.5, "Warning: hardsuit power level below 50%", 'sound/rig/shortbeep.wav'),
 		list(0.3, "Warning: hardsuit power level below 30%", 'sound/rig/beep.wav'),
-		list(0.1, "Warning: hardsuit power level is critically low", 'sound/rig/loudbeep.wav'), // waste 10% of remaining power by showing this message, that's the way to go!
+		list(0.1, "Warning: hardsuit power level is critically low", 'sound/rig/loudbeep.wav'),
 		)
 
 /obj/item/rig_module/simple_ai/activate(forced = FALSE)
@@ -115,43 +124,29 @@
 	saved_power = current_power
 
 /obj/item/rig_module/simple_ai/proc/rig_messages_process(mob/living/carbon/human/H)
-	var/power_waste = 0
-	var/message_text
-	var/message_class
-	var/message_sound
-	if(important_messages.len > 0)
-		var/list/message = important_messages[important_messages[1]]
-		message_text = message[1]
-		message_class = message[2]
-		message_sound = message[3]
-		important_messages -= important_messages[1]
-		power_waste += 10 // beeping to the user shouldn't use much energy
-	else if(nonimportant_messages.len > 0)
-		var/list/message = nonimportant_messages[1]
-		message_text = message[1]
-		message_class = message[2]
-		message_sound = message[3]
-		nonimportant_messages -= list(message)
-		power_waste += 10
-	else
-		return power_waste
+	if(!message_queue.len)
+		return 0
 
-	if(damage)
-		message_text = stars(message_text, rand(50,100))
-	to_chat(H, "<span class='notice'>\[[voice_name]\]</span> <span class='[message_class]'>[message_text]</span>")
-	if(message_sound)
-		H.playsound_local(src, message_sound, 50)
+	var/power_waste = 0
+
+	var/datum/rig_message/message = message_queue[message_queue[1]] // take the first message
+	message_queue -= message_queue[1] // remove it from the queue
+	power_waste += 10 // beeping to the user shouldn't use much energy
+
+	if(damage) // if we are damaged show the message badly
+		message.text = stars(message.text, rand(50,100))
+	to_chat(H, "<span class='notice'>\[[voice_name]\]</span> <span class='[message.class]'>[message.text]</span>")
+	if(message.sound)
+		H.playsound_local(src, message.sound, 50)
 
 	return power_waste
 
-// does some basic queue and priority managment
-/obj/item/rig_module/simple_ai/proc/rig_message(text, message_class = "notice", message_type = null, sound = null)
-	if(!message_type)
-		nonimportant_messages += list(list(text, message_class, sound))
-	else
-		important_messages[message_type] = list(text, message_class, sound)
+// does some basic queue and priority managment. message_type is used to override messages with the same type so we don't get 2 messages about the same thing. Like "module X damaged" and then "module X destroyed" at the next second
+/obj/item/rig_module/simple_ai/proc/rig_message(text, message_class = "notice", message_type, sound = null)
+	message_queue[message_type] = new /datum/rig_message(text, message_class, sound)
 	return TRUE
 
+// decides if value has moved to a new category so we need to show warning to the rig user
 /obj/item/rig_module/simple_ai/proc/get_warning(old_value, new_value, list/values, descending = TRUE)
 	var/old_warning = null
 	var/new_warning = null
@@ -182,21 +177,20 @@
 	return null
 
 /obj/item/rig_module/simple_ai/proc/handle_module_damage(source, obj/item/rig_module/dam_module)
-	if(dam_module == src) // this module is damaged
-		important_messages = list() // clearing the message queue
-		nonimportant_messages = list()
+	if(dam_module == src) // ai module is damaged, we need to forget about old messages and show to the user that we broke
+		message_queue = list() // clearing the message queue
 		if(dam_module.damage >= MODULE_DESTROYED)
-			rig_message(destroyed_message, message_class = "danger", sound = 'sound/rig/longbeep.wav')
+			rig_message(destroyed_message, message_class = "danger", message_type = "[dam_module.name]", sound = 'sound/rig/longbeep.wav')
 		else
-			rig_message(damage_message, message_class = "warning", sound = 'sound/rig/beep.wav')
+			rig_message(damage_message, message_class = "warning", message_type = "[dam_module.name]", sound = 'sound/rig/beep.wav')
 			restart_cooldown = 10
 		rig_messages_process(holder.wearer)
 		return
 
 	if(dam_module.damage >= MODULE_DESTROYED)
-		rig_message("The [source] has disabled your [dam_module.interface_name]!", message_class = "warning", sound = 'sound/rig/longbeep.wav')
+		rig_message("The [source] has disabled your [dam_module.interface_name]!", message_class = "warning", message_type = "[dam_module.name]", sound = 'sound/rig/longbeep.wav')
 	else
-		rig_message("The [source] has damaged your [dam_module.interface_name]!", message_class = "warning", sound = 'sound/rig/beep.wav')
+		rig_message("The [source] has damaged your [dam_module.interface_name]!", message_class = "warning", message_type = "[dam_module.name]", sound = 'sound/rig/beep.wav')
 
 /datum/rig_aivoice
 	var/name = "ADS"
@@ -259,8 +253,6 @@
 
 	for (var/i in 1 to energy_warnings.len)
 		energy_warnings[i][2] = voice.energy_warnings[i]
-
-	qdel(voice)
 
 /obj/item/rig_module/simple_ai/advanced/atom_init()
 	. = ..()
