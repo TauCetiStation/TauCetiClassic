@@ -46,9 +46,9 @@
 	var/destroyed_message = "CRITICAL DAMAGE: AUTOMATIC DIAGNOSTIC SYSTEM IS SHUTTING DOWN"
 
 	// these are lists of /datum/rig_warning
-	var/list/datum/rig_message/health_warnings
-	var/list/datum/rig_message/breach_warnings
-	var/list/datum/rig_message/energy_warnings
+	var/list/health_warnings
+	var/list/breach_warnings
+	var/list/energy_warnings
 
 /obj/item/rig_module/simple_ai/atom_init()
 	. = ..()
