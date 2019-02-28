@@ -8,6 +8,16 @@
 	class = Class
 	sound = Sound
 
+/datum/rig_warning
+	var/value // at what value should we display this warning
+	var/message // text of the warning shown to the user
+	var/sound // what sound should the suit play to the user
+
+/datum/rig_warning/New(Value, Message, Sound)
+	value = Value
+	message = Message
+	sound = Sound
+
 /obj/item/rig_module/simple_ai
 	name = "hardsuit automated diagnostic system"
 	desc = "A system designed to help hardsuit users."
@@ -35,24 +45,31 @@
 	var/damage_message = "ERROR: automatic diagnostic system is restarting"
 	var/destroyed_message = "CRITICAL DAMAGE: AUTOMATIC DIAGNOSTIC SYSTEM IS SHUTTING DOWN"
 
-	var/list/health_warnings = list(
-		list(90, "Vital signs are dropping", 'sound/rig/shortbeep.wav'), // health, message, sound
-		list(40, "Vital signs are dropping. Evacuate area", 'sound/rig/shortbeep.wav'),
-		list(0, "Warning: Vital signs critical. Seek medical attention", 'sound/rig/beep.wav'),
-		list(-20, "Warning: Vital signs critical. Seek medical attention immediately", 'sound/rig/longbeep.wav'),
-		list(-50, "Emergency. User death imminent", 'sound/rig/longbeep.wav'),
+	// these are lists of /datum/rig_warning
+	var/list/datum/rig_message/health_warnings
+	var/list/datum/rig_message/breach_warnings
+	var/list/datum/rig_message/energy_warnings
+
+/obj/item/rig_module/simple_ai/atom_init()
+	. = ..()
+	health_warnings = list(
+		new /datum/rig_warning(90,  "Vital signs are dropping",                                          'sound/rig/shortbeep.wav'), // health, message, sound
+		new /datum/rig_warning(40,  "Vital signs are dropping. Evacuate area",                           'sound/rig/shortbeep.wav'),
+		new /datum/rig_warning(0,   "Warning: Vital signs critical. Seek medical attention",             'sound/rig/beep.wav'),
+		new /datum/rig_warning(-20, "Warning: Vital signs critical. Seek medical attention immediately", 'sound/rig/longbeep.wav'),
+		new /datum/rig_warning(-50, "Emergency. User death imminent",                                    'sound/rig/longbeep.wav'),
 		)
 
-	var/list/breach_warnings = list(
-		list(3, "Minor breaches detected", 'sound/rig/shortbeep.wav'),
-		list(6, "Severe breaches detected. Evacuate low preasure area", 'sound/rig/beep.wav'),
-		list(8, "Warning: Critical breaches detected. Evacuate low preasure area immediately", 'sound/rig/longbeep.wav'),
+	breach_warnings = list(
+		new /datum/rig_warning(3, "Minor breaches detected",                                                     'sound/rig/shortbeep.wav'),
+		new /datum/rig_warning(6, "Severe breaches detected. Evacuate low preasure area",                        'sound/rig/beep.wav'),
+		new /datum/rig_warning(8, "Warning: Critical breaches detected. Evacuate low preasure area immediately", 'sound/rig/longbeep.wav'),
 		)
 
-	var/list/energy_warnings = list(
-		list(0.5, "Warning: hardsuit power level below 50%", 'sound/rig/shortbeep.wav'),
-		list(0.3, "Warning: hardsuit power level below 30%", 'sound/rig/beep.wav'),
-		list(0.1, "Warning: hardsuit power level is critically low", 'sound/rig/loudbeep.wav'),
+	energy_warnings = list(
+		new /datum/rig_warning(0.5, "Warning: hardsuit power level below 50%",         'sound/rig/shortbeep.wav'),
+		new /datum/rig_warning(0.3, "Warning: hardsuit power level below 30%",         'sound/rig/beep.wav'),
+		new /datum/rig_warning(0.1, "Warning: hardsuit power level is critically low", 'sound/rig/loudbeep.wav'),
 		)
 
 /obj/item/rig_module/simple_ai/activate(forced = FALSE)
@@ -103,24 +120,24 @@
 
 /obj/item/rig_module/simple_ai/proc/process_warnings(mob/living/carbon/human/H)
 	var/current_health = H.health
-	var/health_warning = get_warning(saved_health, current_health, health_warnings)
+	var/datum/rig_warning/health_warning = get_warning(saved_health, current_health, health_warnings)
 	if(health_warning)
-		rig_message(health_warning[2], message_class = "warning", message_type = "health", sound = health_warning[3])
+		rig_message(health_warning.message, message_class = "warning", message_type = "health", sound = health_warning.sound)
 	saved_health = current_health
 
 	var/current_rig_damage = holder.damage
-	var/rig_damage_warning = get_warning(saved_rig_damage, current_rig_damage, breach_warnings, descending = FALSE)
+	var/datum/rig_warning/rig_damage_warning = get_warning(saved_rig_damage, current_rig_damage, breach_warnings, descending = FALSE)
 	if(rig_damage_warning)
-		rig_message(rig_damage_warning[2], message_class = "warning", message_type = "breaches", sound = rig_damage_warning[3])
+		rig_message(rig_damage_warning.message, message_class = "warning", message_type = "breaches", sound = rig_damage_warning.sound)
 		on_rigdamage(H, current_rig_damage)
 	saved_rig_damage = current_rig_damage
 
 	var/current_power = 1
 	if(holder.cell)
 		current_power = holder.cell.charge / holder.cell.maxcharge
-	var/rig_power_warning = get_warning(saved_power, current_power, energy_warnings)
+	var/datum/rig_warning/rig_power_warning = get_warning(saved_power, current_power, energy_warnings)
 	if(rig_power_warning)
-		rig_message(rig_power_warning[2], message_class = "warning", message_type = "power", sound = rig_power_warning[3])
+		rig_message(rig_power_warning.message, message_class = "warning", message_type = "power", sound = rig_power_warning.sound)
 	saved_power = current_power
 
 /obj/item/rig_module/simple_ai/proc/rig_messages_process(mob/living/carbon/human/H)
@@ -152,18 +169,17 @@
 	var/new_warning = null
 
 	if(descending)
-		for(var/list/value in values)
-			if(old_value <= value[1])
-				old_warning = value
-			if(new_value <= value[1])
-				new_warning = value
+		for(var/datum/rig_warning/warning in values)
+			if(old_value <= warning.value)
+				old_warning = warning
+			if(new_value <= warning.value)
+				new_warning = warning
 	else
-		for(var/list/value in values)
-			if(old_value >= value[1])
-				old_warning = value
-			if(new_value >= value[1])
-				new_warning = value
-
+		for(var/datum/rig_warning/warning in values)
+			if(old_value >= warning.value)
+				old_warning = warning
+			if(new_value >= warning.value)
+				new_warning = warning
 
 	if(!new_warning)
 		return null
@@ -246,13 +262,13 @@
 	destroyed_message = voice.destroyed_message
 
 	for (var/i in 1 to health_warnings.len)
-		health_warnings[i][2] = voice.health_warnings[i]
+		health_warnings[i].message = voice.health_warnings[i]
 
 	for (var/i in 1 to breach_warnings.len)
-		breach_warnings[i][2] = voice.breach_warnings[i]
+		breach_warnings[i].message = voice.breach_warnings[i]
 
 	for (var/i in 1 to energy_warnings.len)
-		energy_warnings[i][2] = voice.energy_warnings[i]
+		energy_warnings[i].message = voice.energy_warnings[i]
 
 /obj/item/rig_module/simple_ai/advanced/atom_init()
 	. = ..()
