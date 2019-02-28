@@ -408,7 +408,7 @@
 
 	if(istype(input_item, /obj/item/stack/sheet/metal) && istype(H) && user == H)
 		var/obj/item/stack/sheet/metal/metal = input_item
-		var/datum/rig_charge/charge = charges[charges[1]]
+		var/datum/rig_charge/charge = charges["metal"]
 
 		var/total_used = 30
 		total_used = min(total_used, 30 - charge.charges)
