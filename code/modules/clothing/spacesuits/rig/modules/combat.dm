@@ -32,7 +32,7 @@
 /obj/item/rig_module/grenade_launcher/accepts_item(obj/item/input_device, mob/living/user)
 
 	if(!istype(input_device) || !istype(user))
-		return 0
+		return FALSE
 
 	var/datum/rig_charge/accepted_item
 	for(var/charge in charges)
