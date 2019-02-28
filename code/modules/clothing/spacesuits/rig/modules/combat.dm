@@ -42,7 +42,7 @@
 			break
 
 	if(!accepted_item)
-		return 0
+		return FALSE
 
 	if(accepted_item.charges >= 5)
 		to_chat(user, "<span class='danger'>Another grenade of that type will not fit into the module.</span>")
