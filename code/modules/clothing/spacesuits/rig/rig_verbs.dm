@@ -97,7 +97,7 @@
 	set category = "Hardsuit"
 	set src = usr.contents
 
-	if(!istype(wearer) || !wearer.wear_suit == src)
+	if(!istype(wearer) || wearer.wear_suit != src)
 		to_chat(usr, "<span class='warning'>The hardsuit is not being worn.</span>")
 		return
 

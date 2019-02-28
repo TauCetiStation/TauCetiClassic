@@ -46,41 +46,41 @@
 
 	if(accepted_item.charges >= 5)
 		to_chat(user, "<span class='danger'>Another grenade of that type will not fit into the module.</span>")
-		return 0
+		return FALSE
 
 	to_chat(user, "<font color='blue'><b>You slot \the [input_device] into the suit module.</b></font>")
 	qdel(input_device)
 	accepted_item.charges++
-	return 1
+	return TRUE
 
 /obj/item/rig_module/grenade_launcher/engage(atom/target)
 	if(!isturf(holder.wearer.loc) && target)
-		return 0
+		return FALSE
 
 	if(!..())
-		return 0
+		return FALSE
 
 	if(!target)
-		return 0
+		return FALSE
 
 	var/mob/living/carbon/human/H = holder.wearer
 
 	if(damage > MODULE_NO_DAMAGE && prob(50))
 		to_chat(holder.wearer, "<span class='warning'>[name] malfunctions and ignores your command!</span>")
-		return 1
+		return TRUE
 
 	if(!charge_selected)
 		to_chat(H, "<span class='danger'>You have not selected a grenade type.</span>")
-		return 0
+		return FALSE
 
 	var/datum/rig_charge/charge = charges[charge_selected]
 
 	if(!charge)
-		return 0
+		return FALSE
 
 	if(charge.charges <= 0)
 		to_chat(H, "<span class='danger'>Insufficient grenades!</span>")
-		return 0
+		return FALSE
 
 	charge.charges--
 	var/obj/item/weapon/grenade/new_grenade = new charge.product_type(get_turf(H))
@@ -95,7 +95,7 @@
 	desc = "A shoulder-mounted micro-explosive dispenser designed only to accept standard cleaning foam grenades."
 
 	charges = list(
-		list("cleaning grenade",   "cleaning grenade",   /obj/item/weapon/grenade/chem_grenade/cleaner,  9),
+		list("cleaning grenade", "cleaning grenade",  /obj/item/weapon/grenade/chem_grenade/cleaner, 9),
 		)
 
 /obj/item/rig_module/grenade_launcher/smoke
@@ -104,7 +104,7 @@
 	desc = "A shoulder-mounted micro-explosive dispenser designed only to accept standard smoke grenades."
 
 	charges = list(
-		list("smoke bomb",   "smoke bomb",   /obj/item/weapon/grenade/smokebomb,  6),
+		list("smoke bomb", "smoke bomb", /obj/item/weapon/grenade/smokebomb, 6),
 	)
 
 /obj/item/rig_module/grenade_launcher/mfoam
@@ -113,7 +113,7 @@
 	desc = "A shoulder-mounted micro-explosive dispenser designed only to accept standard metal foam grenades."
 
 	charges = list(
-		list("metal foam grenade",   "metal foam grenade",   /obj/item/weapon/grenade/chem_grenade/metalfoam,  4),
+		list("metal foam grenade", "metal foam grenade", /obj/item/weapon/grenade/chem_grenade/metalfoam, 4),
 	)
 
 /obj/item/rig_module/grenade_launcher/flashbang
@@ -122,7 +122,7 @@
 	desc = "A shoulder-mounted micro-explosive dispenser designed only to accept standard flashbang grenades."
 
 	charges = list(
-		list("flashbang",   "flashbang",   /obj/item/weapon/grenade/flashbang,  3),
+		list("flashbang", "flashbang", /obj/item/weapon/grenade/flashbang, 3),
 	)
 
 /obj/item/rig_module/mounted
@@ -158,21 +158,21 @@
 
 /obj/item/rig_module/mounted/engage(atom/target)
 	if(!isturf(holder.wearer.loc) && target)
-		return 0
+		return FALSE
 
 	if(!..())
-		return 0
+		return FALSE
 
 	if(damage > MODULE_NO_DAMAGE && prob(40))
 		to_chat(holder.wearer, "<span class='warning'>[name] malfunctions and ignores your command!</span>")
-		return 1
+		return TRUE
 
 	if(!target)
 		gun.attack_self(holder.wearer)
 		return
 
 	gun.Fire(target,holder.wearer)
-	return 1
+	return TRUE
 
 /obj/item/rig_module/mounted/process_module()
 	if(istype(gun) && gun.power_supply)

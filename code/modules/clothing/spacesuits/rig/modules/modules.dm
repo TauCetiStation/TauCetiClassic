@@ -256,7 +256,7 @@
 /obj/item/rig_module/proc/accepts_item(obj/item/input_device)
 	return 0
 
-/mob/proc/Rig_SetupStat(var/obj/item/clothing/suit/space/rig/R)
+/mob/proc/Rig_SetupStat(obj/item/clothing/suit/space/rig/R)
 	if(R && R.installed_modules.len && !R.offline && statpanel("Hardsuit Modules"))
 		var/cell_status = R.cell ? "[R.cell.charge]/[R.cell.maxcharge]" : "ERROR"
 		stat("Suit charge", cell_status)
