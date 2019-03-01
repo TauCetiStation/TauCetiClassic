@@ -116,6 +116,7 @@
 /datum/mind/proc/remove_traitor()
 	ticker.mode.traitors -= src
 	special_role = null
+	remove_objectives()
 	if(isAI(current))
 		var/mob/living/silicon/ai/A = current
 		A.set_zeroth_law("")
@@ -125,8 +126,7 @@
 	ticker.mode.syndicates -= src
 	ticker.mode.update_synd_icons_removed(src)
 	special_role = null
-	for(var/datum/objective/nuclear/O in objectives)
-		objectives -= O
+	remove_objectives()
 	current.faction = "neutral"
 
 /datum/mind/proc/remove_all_antag() // For the Lazy amongst us. Is actually currently unused. ~Luduk.
