@@ -254,10 +254,13 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 
 	if(isnull(D.gc_destroyed))
+		if (SEND_SIGNAL(D, COMSIG_PARENT_PREQDELETED, force)) // Give the components a chance to prevent their parent from being deleted
+			return
 		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
 		var/start_time = world.time
 		var/start_tick = world.tick_usage
 		var/hint = D.Destroy(arglist(args.Copy(2))) // Let our friend know they're about to get fucked up.
+		SEND_SIGNAL(D, COMSIG_PARENT_QDELETED, force, hint) // Let the (remaining) components know about the result of Destroy
 		if(world.time != start_time)
 			I.slept_destroy++
 		else
@@ -310,8 +313,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 // Default implementation of clean-up code.
 // This should be overridden to remove all references pointing to the object being destroyed.
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
+// TODO: Move this and all datum var definitions into code/datums/datum.dm
 /datum/proc/Destroy(force = FALSE, ...)
 	tag = null
+
 	var/list/timers = active_timers
 	active_timers = null
 	for(var/thing in timers)
@@ -319,6 +324,39 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		if (timer.spent)
 			continue
 		qdel(timer)
+
+	//BEGIN: ECS SHIT
+	signal_enabled = FALSE
+
+	var/list/dc = datum_components
+	if(dc)
+		var/all_components = dc[/datum/component]
+		if(length(all_components))
+			for(var/I in all_components)
+				var/datum/component/C = I
+				qdel(C, FALSE, TRUE)
+		else
+			var/datum/component/C = all_components
+			qdel(C, FALSE, TRUE)
+		dc.Cut()
+
+	var/list/lookup = comp_lookup
+	if(lookup)
+		for(var/sig in lookup)
+			var/list/comps = lookup[sig]
+			if(length(comps))
+				for(var/i in comps)
+					var/datum/component/comp = i
+					comp.UnregisterSignal(src, sig)
+			else
+				var/datum/component/comp = comps
+				comp.UnregisterSignal(src, sig)
+		comp_lookup = lookup = null
+
+	for(var/target in signal_procs)
+		UnregisterSignal(target, signal_procs[target])
+	//END: ECS SHIT
+
 	return QDEL_HINT_QUEUE
 
 /datum/var/gc_destroyed //Time when this object was destroyed.

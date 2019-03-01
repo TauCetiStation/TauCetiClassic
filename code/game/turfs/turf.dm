@@ -42,7 +42,9 @@
 
 	return INITIALIZE_HINT_NORMAL
 
-/turf/Destroy()
+/turf/Destroy(force)
+	if(!force)
+		return QDEL_HINT_LETMELIVE // No qdelling turfs until proper method in ChangeTurf() proc as it is in other code bases.
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 
@@ -188,6 +190,10 @@
 /turf/proc/ChangeTurf(path, force_lighting_update, list/arguments = list())
 	if (!path)
 		return
+
+	if (path == type)
+		return src
+
 	/*if(istype(src, path))
 		stack_trace("Warning: [src]([type]) changeTurf called for same turf!")
 		return*/
@@ -222,6 +228,39 @@
 			S.zone.rebuild()
 
 	arguments.Insert(0, src)
+
+	//BEGIN: ECS SHIT (UNTIL SOMEONE MAKES POSSIBLE TO USE QDEL IN THIS PROC FOR TURFS)
+	signal_enabled = FALSE
+
+	var/list/dc = datum_components
+	if(dc)
+		var/all_components = dc[/datum/component]
+		if(length(all_components))
+			for(var/I in all_components)
+				var/datum/component/C = I
+				qdel(C, FALSE, TRUE)
+		else
+			var/datum/component/C = all_components
+			qdel(C, FALSE, TRUE)
+		dc.Cut()
+
+	var/list/lookup = comp_lookup
+	if(lookup)
+		for(var/sig in lookup)
+			var/list/comps = lookup[sig]
+			if(length(comps))
+				for(var/i in comps)
+					var/datum/component/comp = i
+					comp.UnregisterSignal(src, sig)
+			else
+				var/datum/component/comp = comps
+				comp.UnregisterSignal(src, sig)
+		comp_lookup = lookup = null
+
+	for(var/target in signal_procs)
+		UnregisterSignal(target, signal_procs[target])
+	//END: ECS SHIT
+
 	var/turf/W = new path(arglist(arguments))
 
 	W.has_resources = has_resources

@@ -474,10 +474,15 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/foam/atom_init(mapload, ismetal = 0)
 	. = ..()
-	icon_state = "[ismetal ? "m":""]foam"
 	metal = ismetal
+	MakeSlippery()
+	icon_state = "[metal ? "m" : ""]foam"
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
 	addtimer(CALLBACK(src, .proc/disolve_stage, 1), 3 + metal * 3)
+
+/obj/effect/effect/foam/proc/MakeSlippery()
+	if(!metal)
+		AddComponent(/datum/component/slippery, 5)
 
 /obj/effect/effect/foam/proc/disolve_stage(stage)
 	switch(stage)
@@ -540,23 +545,6 @@ steam.start() -- spawns the effect
 	if(!metal && prob(max(0, exposed_temperature - 475)))
 		flick("[icon_state]-disolve", src)
 		QDEL_IN(src, 5)
-
-/obj/effect/effect/foam/Crossed(var/atom/movable/AM)
-	if(metal)
-		return
-
-	if (istype(AM, /mob/living/carbon))
-		var/mob/M =	AM
-		if (istype(M, /mob/living/carbon/human) && (istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP) )
-			return
-		if( istype(M, /mob/living/carbon/human) && (istype(M:wear_suit, /obj/item/clothing/suit/space/rig) && M:wear_suit.flags&NOSLIP)	)
-			return
-
-		M.stop_pulling()
-		to_chat(M, "\blue You slipped on the foam!")
-		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-		M.Stun(5)
-		M.Weaken(2)
 
 
 /datum/effect/effect/system/foam_spread

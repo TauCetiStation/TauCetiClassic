@@ -20,9 +20,9 @@
 	throw_speed = 4
 	throw_range = 20
 
-/obj/item/weapon/bananapeel/Crossed(mob/living/carbon/C)
-	if(istype(C))
-		C.slip("the [src]", 4, 2)
+/obj/item/weapon/bananapeel/atom_init()
+	. = ..()
+	AddComponent(/datum/component/slippery, 4)
 
 /*
  * Soap
@@ -38,6 +38,10 @@
 	throw_speed = 4
 	throw_range = 20
 
+/obj/item/weapon/soap/atom_init()
+	. = ..()
+	AddComponent(/datum/component/slippery, 4)
+
 /obj/item/weapon/soap/nanotrasen
 	desc = "A Nanotrasen brand bar of soap. Smells of phoron."
 	icon_state = "soapnt"
@@ -49,10 +53,6 @@
 /obj/item/weapon/soap/syndie
 	desc = "An untrustworthy bar of soap. Smells of fear."
 	icon_state = "soapsyndie"
-
-/obj/item/weapon/soap/Crossed(mob/living/carbon/C) //EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
-	if(istype(C))
-		C.slip("the [src]", 4, 2)
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user, proximity)
 	if(!proximity) return

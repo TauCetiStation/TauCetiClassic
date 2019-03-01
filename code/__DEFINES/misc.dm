@@ -168,7 +168,8 @@
 #define ASSEMBLY_WIRED         1
 #define ASSEMBLY_NEAR_FINISHED 2
 
-//Wet floor states/severity
+//Wet floor type bitflags. Stronger ones should be higher in number.
+#define DRY_FLOOR 0
 #define WATER_FLOOR 1
 #define LUBE_FLOOR  2
 

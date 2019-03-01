@@ -47,6 +47,12 @@
 		if (old_has_opaque_atom != T.has_opaque_atom)
 			T.reconsider_lights()
 
+// Previously known as HasEntered()
+// This is automatically called when something enters your square
+//oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
+/atom/movable/Crossed(atom/movable/AM, oldloc)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
+
 /atom/movable/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if(!loc || !NewLoc || freeze_movement)
 		return FALSE
@@ -130,14 +136,15 @@
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
 
-		if(oldloc && !same_loc)
-			oldloc.Exited(src, destination)
-			if(old_area)
-				old_area.Exited(src, destination)
-
 		loc = destination
 
 		if(!same_loc)
+			if(oldloc)
+				oldloc.Exited(src, destination)
+				if(old_area && old_area != destarea)
+					old_area.Exited(src, destination)
+			for(var/atom/movable/AM in oldloc)
+				AM.Uncrossed(src)
 			destination.Entered(src, oldloc)
 			if(destarea && old_area != destarea)
 				destarea.Entered(src, oldloc)
@@ -145,7 +152,7 @@
 			for(var/atom/movable/AM in destination)
 				if(AM == src)
 					continue
-				AM.Crossed(src)
+				AM.Crossed(src, oldloc)
 
 		Moved(oldloc, 0)
 		return TRUE
