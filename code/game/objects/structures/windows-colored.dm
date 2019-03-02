@@ -123,7 +123,6 @@ var/global/wcDw
 		/area/medical/surgeryobs,
 		/area/medical/surgery,
 		/area/medical/surgery2,
-		/area/medical/hallway/outbranch,
 		/area/medical/virology,
 		/area/hydroponics,
 		/area/research_outpost/maintstore1,
