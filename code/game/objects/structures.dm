@@ -3,6 +3,19 @@
 	var/climbable
 	var/list/climbers = list()
 
+/obj/structure/atom_init()
+	. = ..()
+	if(smooth)
+		queue_smooth(src)
+		queue_smooth_neighbors(src)
+	if(climbable)
+		verbs += /obj/structure/proc/climb_on
+
+/obj/structure/Destroy()
+	if(smooth)
+		queue_smooth_neighbors(src)
+	return ..()
+
 /obj/structure/blob_act()
 	if(prob(50))
 		qdel(src)
@@ -27,11 +40,6 @@
 
 /obj/structure/meteorhit(obj/O)
 	qdel(src)
-
-/obj/structure/atom_init()
-	. = ..()
-	if(climbable)
-		verbs += /obj/structure/proc/climb_on
 
 /obj/structure/proc/climb_on()
 

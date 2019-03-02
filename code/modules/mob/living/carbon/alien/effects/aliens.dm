@@ -72,6 +72,20 @@
 	T.thermal_conductivity = initial(T.thermal_conductivity)
 	return ..()
 
+/obj/effect/alien/resin/proc/relativewall_neighbours()
+	for(var/obj/effect/alien/resin/W in range(src, 1))
+		W.relativewall()
+		W.update_icon()
+
+/obj/effect/alien/resin/proc/relativewall()
+	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
+
+	for(var/obj/effect/alien/resin/W in orange(src, 1))
+		if(abs(x - W.x) - abs(y - W.y)) //doesn't count diagonal walls
+			junction |= get_dir(src, W)
+	var/obj/effect/alien/resin/resin = src
+	resin.icon_state = "[resin.resintype][junction]"
+
 /obj/effect/alien/resin/proc/healthcheck()
 	if(health <=0)
 		density = 0

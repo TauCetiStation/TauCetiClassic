@@ -31,6 +31,9 @@
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
 
+	if(smooth)
+		queue_smooth(src)
+
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 
@@ -276,6 +279,8 @@
 	W.levelupdate()
 
 	basetype = old_basetype
+
+	queue_smooth_neighbors(W)
 
 	if(SSlighting.initialized)
 		recalc_atom_opacity()
