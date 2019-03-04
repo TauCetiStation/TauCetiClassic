@@ -254,11 +254,4 @@ var/list/bad_messages = list("Never take me off, please!",
 	else
 		visible_message("<span class='notice'><font color='red'>[bicon(src)] Device blinks faintly.</font></span>")
 
-/obj/item/clothing/glasses/hud/mining/ancient
-	name = "Ancient Mining Hud MK II"
-	desc = "This is an alien hud used for mining many years ago, with builded bioscanner inside."
-	icon = 'icons/obj/xenoarchaeology/finds.dmi'
-	icon_custom = 'icons/mob/eyes.dmi'
-	icon_state = "HUDmining"
-	item_state = "HUDmining"
-	vision_flags = SEE_MOBS
+
