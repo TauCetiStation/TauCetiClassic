@@ -102,7 +102,7 @@
 		var/to_remove = input("Which would you like to modify?") as null|anything in current_mounts
 		if(!to_remove)
 			return
-		if(!Adjacent(user))
+		if(!Adjacent(user) || wearer)
 			return
 
 		switch(to_remove)
@@ -130,6 +130,8 @@
 
 				var/removal_choice = input("Which module would you like to remove?") as null|anything in possible_removals
 				if(!removal_choice)
+					return
+				if(!Adjacent(user) || wearer)
 					return
 
 				var/obj/item/rig_module/removed = possible_removals[removal_choice]
