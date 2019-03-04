@@ -100,7 +100,7 @@
 	if(new_item_type)
 		find_type = new_item_type
 	else
-		find_type = rand(1,37) // update this when you add new find types
+		find_type = rand(1,36) // update this when you add new find types
 
 	var/item_type = "object"
 	icon_state = "unknown[rand(1,4)]"
@@ -329,11 +329,10 @@
 			item_type = new_item.name
 			apply_material_decorations = 0
 		if(22)
-			if(prob(50))
-				new_item = new /obj/item/weapon/shard(src.loc)
-			else
-				new_item = new /obj/item/weapon/shard/phoron(src.loc)
 			apply_prefix = 0
+			new_item = new /obj/item/clothing/glasses/hud/mining/ancient(src.loc)
+			new_item.name = pick("strange looking hud", "strange looking glasses")
+			new_item.desc = "It glows faintly."
 			apply_image_decorations = 0
 			apply_material_decorations = 0
 		if(23)
@@ -510,12 +509,6 @@
 			item_type = "strange device"
 			new_item = new /obj/item/weapon/strangetool(src.loc)
 			additional_desc = "This device is made of metal, emits a strange purple formation of unknown origin."
-			apply_image_decorations = 0
-			apply_material_decorations = 0
-		if(37)
-			apply_prefix = 0
-			new_item = new /obj/item/clothing/glasses/hud/mining/ancient(src.loc)
-			new_item.desc = "Strange looking hud."
 			apply_image_decorations = 0
 			apply_material_decorations = 0
 
