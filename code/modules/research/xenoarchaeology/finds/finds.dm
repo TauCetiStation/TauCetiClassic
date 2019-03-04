@@ -512,6 +512,13 @@
 			additional_desc = "This device is made of metal, emits a strange purple formation of unknown origin."
 			apply_image_decorations = 0
 			apply_material_decorations = 0
+		if(37)
+			apply_prefix = 0
+			new_item = new /obj/item/clothing/glasses/hud/mining/ancient(src.loc)
+			new_item.desc = "Strange looking hud."
+			apply_image_decorations = 0
+			apply_material_decorations = 0
+
 	var/decorations = ""
 	if(apply_material_decorations)
 		source_material = pick("cordite","quadrinium","steel","titanium","aluminium","ferritic-alloy","plasteel","duranium")
