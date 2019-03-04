@@ -253,5 +253,3 @@ var/list/bad_messages = list("Never take me off, please!",
 		last_time_used = world.time
 	else
 		visible_message("<span class='notice'><font color='red'>[bicon(src)] Device blinks faintly.</font></span>")
-
-
