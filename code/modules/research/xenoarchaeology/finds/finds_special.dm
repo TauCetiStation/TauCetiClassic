@@ -262,4 +262,3 @@ var/list/bad_messages = list("Never take me off, please!",
 	icon_state = "HUDmining"
 	item_state = "HUDmining"
 	vision_flags = SEE_MOBS
-	invisa_view = 3
