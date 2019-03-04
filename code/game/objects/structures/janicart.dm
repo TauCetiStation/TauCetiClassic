@@ -83,7 +83,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] can't hold any more signs.</span>")
 
-	else if(mybag)
+	else if(mybag && !istype(I, /obj/item/weapon/reagent_containers/glass/bucket))
 		mybag.attackby(I, user)
 
 /obj/structure/janitorialcart/on_reagent_change()

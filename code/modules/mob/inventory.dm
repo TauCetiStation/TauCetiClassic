@@ -80,14 +80,23 @@ var/list/slot_equipment_priority = list(
 
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
-/mob/proc/equip_to_appropriate_slot(obj/item/W)
-	if(!istype(W)) return 0
+/mob/proc/equip_to_appropriate_slot(obj/item/W, check_obscured = FALSE)
+	if(!istype(W))
+		return FALSE
+
+	var/list/obscured
+
+	if(check_obscured)
+		obscured = check_obscured_slots()
 
 	for(var/slot in slot_equipment_priority)
-		if(equip_to_slot_if_possible(W, slot, del_on_fail=0, disable_warning=1, redraw_mob=1))
-			return 1
+		if (slot in obscured)
+			continue
 
-	return 0
+		if (equip_to_slot_if_possible(W, slot, FALSE, TRUE, TRUE))
+			return TRUE
+
+	return FALSE
 
 // Convinience proc.  Collects crap that fails to equip either onto the mob's back, or drops it.
 // Used in job equipping so shit doesn't pile up at the start loc.
@@ -161,7 +170,7 @@ var/list/slot_equipment_priority = list(
 	if(!istype(W))		return 0
 	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
 	if(!l_hand)
-		W.loc = src		//TODO: move to equipped?
+		W.forceMove(src)		//TODO: move to equipped?
 		l_hand = W
 		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
 		W.plane = ABOVE_HUD_PLANE
@@ -183,7 +192,7 @@ var/list/slot_equipment_priority = list(
 	if(!istype(W))		return 0
 	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
 	if(!r_hand)
-		W.loc = src
+		W.forceMove(src)
 		r_hand = W
 		W.layer = ABOVE_HUD_LAYER
 		W.plane = ABOVE_HUD_PLANE
@@ -318,6 +327,12 @@ var/list/slot_equipment_priority = list(
 		I.dropped(src)
 		I.slot_equipped = initial(I.slot_equipped)
 	return 1
+
+/mob/proc/get_hand_slots()
+	return list(l_hand, r_hand)
+
+/mob/living/carbon/ian/get_hand_slots()
+	return list(mouth)
 
 //Returns the item equipped to the specified slot, if any.
 /mob/proc/get_equipped_item(var/slot)
@@ -486,28 +501,27 @@ var/list/slot_equipment_priority = list(
 //Create delay for equipping
 /mob/proc/delay_clothing_u_equip(obj/item/clothing/C) // Bone White - delays unequipping by parameter.  Requires W to be /obj/item/clothing/
 
-	if(!istype(C)) return 0
+	if(!istype(C))
+		return 0
 
-	if(C.equipping) return 0 // Item is already being (un)equipped
+	if(usr.is_busy())
+		return
 
-	var/tempX = usr.x
-	var/tempY = usr.y
+	if(C.equipping) // Item is already being (un)equipped
+		return 0
+
 	to_chat(usr, "<span class='notice'>You start unequipping the [C].</span>")
 	C.equipping = 1
-	var/equip_time = round(C.equip_time/10)
-	var/i
-	for(i=1; i<=equip_time; i++)
-		sleep (10) // Check if they've moved every 10 time units
-		if ((tempX != usr.x) || (tempY != usr.y))
-			to_chat(src, "<span class='red'>\The [C] is too fiddly to unequip whilst moving.</span>")
-			C.equipping = 0
-			return 0
-	remove_from_mob(C)
-	to_chat(usr, "<span class='notice'>You have finished unequipping the [C].</span>")
+	if(do_after(usr, C.equip_time, target = C))
+		remove_from_mob(C)
+		to_chat(usr, "<span class='notice'>You have finished unequipping the [C].</span>")
+	else
+		to_chat(src, "<span class='red'>\The [C] is too fiddly to unequip whilst moving.</span>")
 	C.equipping = 0
 
 /mob/proc/delay_clothing_equip_to_slot_if_possible(obj/item/clothing/C, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, delay_time = 0)
-	if(!istype(C)) return 0
+	if(!istype(C))
+		return 0
 
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
@@ -515,22 +529,19 @@ var/list/slot_equipment_priority = list(
 			to_chat(H, "<span class='red'>You need to take off [H.wear_suit.name] first.</span>")
 			return
 
-	if(C.equipping) return 0 // Item is already being equipped
+	if(usr.is_busy())
+		return
 
-	var/tempX = usr.x
-	var/tempY = usr.y
+	if(C.equipping) // Item is already being equipped
+		return 0
+
 	to_chat(usr, "<span class='notice'>You start equipping the [C].</span>")
 	C.equipping = 1
-	var/equip_time = round(C.equip_time/10)
-	var/i
-	for(i=1; i<=equip_time; i++)
-		sleep (10) // Check if they've moved every 10 time units
-		if ((tempX != usr.x) || (tempY != usr.y))
-			to_chat(src, "<span class='red'>\The [C] is too fiddly to fasten whilst moving.</span>")
-			C.equipping = 0
-			return 0
-	equip_to_slot_if_possible(C, slot)
-	to_chat(usr, "<span class='notice'>You have finished equipping the [C].</span>")
+	if(do_after(usr, C.equip_time, target = C))
+		equip_to_slot_if_possible(C, slot)
+		to_chat(usr, "<span class='notice'>You have finished equipping the [C].</span>")
+	else
+		to_chat(src, "<span class='red'>\The [C] is too fiddly to fasten whilst moving.</span>")
 	C.equipping = 0
 
 /mob/proc/get_item_by_slot(slot_id)

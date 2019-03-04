@@ -139,11 +139,6 @@ var/list/blacklisted_builds = list(
 	if(connection != "seeker")					//Invalid connection type.
 		return null
 
-	if(IsGuestKey(key))
-		alert(src,"This server doesn't allow guest accounts to play. Please go to http://www.byond.com/ and register for a key.","Guest","OK")
-		qdel(src)
-		return
-
 	// Change the way they should download resources.
 	if(config.resource_urls)
 		src.preload_rsc = pick(config.resource_urls)

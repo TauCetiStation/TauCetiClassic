@@ -93,12 +93,6 @@
 #define shuttle_time_in_station 1800 // 3 minutes in the station
 #define shuttle_time_to_arrive 6000 // 10 minutes to arrive
 
-#define FOR_DVIEW(type, range, center, invis_flags) \
-	dview_mob.loc = center; \
-	dview_mob.see_invisible = invis_flags; \
-	for(type in view(range, dview_mob))
-#define END_FOR_DVIEW dview_mob.loc = null
-
 //defines
 #define RESIZE_DEFAULT_SIZE 1
 
@@ -174,7 +168,8 @@
 #define ASSEMBLY_WIRED         1
 #define ASSEMBLY_NEAR_FINISHED 2
 
-//Wet floor states/severity
+//Wet floor type bitflags. Stronger ones should be higher in number.
+#define DRY_FLOOR 0
 #define WATER_FLOOR 1
 #define LUBE_FLOOR  2
 

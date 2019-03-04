@@ -82,7 +82,7 @@
 	var/xylophone = 0 //For the spoooooooky xylophone cooldown
 
 	var/mob/remoteview_target = null
-	var/datum/dirt_cover/hand_dirt_color
+	var/datum/dirt_cover/hand_dirt_datum
 
 	// Organs regenerating variables.
 	var/regenerating_organ_time = 0

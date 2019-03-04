@@ -121,3 +121,14 @@
 #define CLICK_CD_INTERACT 4
 #define CLICK_CD_RAPID 2
 #define CLICK_CD_AI 9
+#define CLICK_CD_GRAB 40
+#define CLICK_CD_ACTION 20 // used in grab actions
+
+#define NO_SLIP_WHEN_WALKING (1<<0)
+#define SLIDE                (1<<1)
+#define GALOSHES_DONT_HELP   (1<<2)
+#define SLIDE_ICE            (1<<3)
+
+//movement intent defines for the m_intent var
+#define MOVE_INTENT_WALK "walk"
+#define MOVE_INTENT_RUN  "run"
