@@ -123,7 +123,7 @@
 		dat += text("<A href='?src=\ref[src];choose=platinum'>Choose</A>")
 	dat += text("<br><font color='#bc8585'><b>Hydrogen inserted: </b>[amt_hydrogen]</font> ")
 	if (chosen == "hydrogen")
-		dat += text("chosen")	
+		dat += text("chosen")
 	else
 		dat += text("<A href='?src=\ref[src];choose=hydrogen'>Choose</A>")
 
@@ -237,7 +237,7 @@
 							M = locate(/obj/item/weapon/moneybag, output.loc)
 						else
 							M = new/obj/item/weapon/moneybag(output.loc)
-						new /obj/item/weapon/coin/clown(M)
+						new /obj/item/weapon/coin/bananium(M)
 						amt_clown -= 20
 						coinsToProduce--
 						newCoins++
@@ -266,7 +266,7 @@
 						coinsToProduce--
 						newCoins++
 						src.updateUsrDialog()
-						sleep(5)		
+						sleep(5)
 			icon_state = "coinpress0"
 			processing = 0
 			coinsToProduce = temp_coins
