@@ -261,7 +261,7 @@ var/list/finds_as_strings = list(
 #undef ARCHAEO_CLAYMORE
 #undef ARCHAEO_CULTROBES
 #undef ARCHAEO_SOULSTONE
-#undef ARCHAEO_SHARD
+#undef ARCHAEO_MINER_HUD
 #undef ARCHAEO_RODS
 #undef ARCHAEO_STOCKPARTS
 #undef ARCHAEO_KATANA
