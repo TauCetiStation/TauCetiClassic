@@ -1029,12 +1029,13 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/structure/closet/wardrobe/tactical,
 /obj/machinery/door/window/brigdoor{
 	dir = 2;
 	name = "Weapons locker";
+	req_access = null;
 	req_access_txt = "3"
 	},
-/obj/structure/closet/wardrobe/tactical,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -1083,6 +1084,7 @@
 /obj/machinery/door/window/brigdoor{
 	dir = 2;
 	name = "Weapons locker";
+	req_access = null;
 	req_access_txt = "3"
 	},
 /obj/structure/closet/wardrobe/tactical,
@@ -1125,12 +1127,13 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/structure/closet/wardrobe/tactical,
 /obj/machinery/door/window/brigdoor{
 	dir = 2;
 	name = "Weapons locker";
+	req_access = null;
 	req_access_txt = "3"
 	},
-/obj/structure/closet/wardrobe/tactical,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -7101,9 +7104,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/disposalpipe/junction{
-	dir = 4;
-	icon_state = "pipe-j1"
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -8740,7 +8742,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "redcorner"
@@ -9654,27 +9655,12 @@
 /turf/simulated/floor/carpet/red,
 /area/security/detectives_office)
 "apE" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/structure/table/woodentable,
+/obj/machinery/computer/forensic_scanning/detective{
+	req_access = null
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/cable,
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
-	},
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor/plating,
-/area/security/brig)
+/turf/simulated/floor/wood,
+/area/security/vacantoffice)
 "apF" = (
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave{
@@ -10290,7 +10276,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "redcorner"
@@ -10337,7 +10322,6 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "redcorner"
@@ -10439,10 +10423,6 @@
 /area/shuttle/mining/station)
 "aqT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor,
-/area/security/lobby)
-"aqU" = (
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/security/lobby)
 "aqV" = (
@@ -10714,6 +10694,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 20
 	},
+/obj/structure/closet/emcloset,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redcorner"
@@ -11182,6 +11163,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint)
 "asn" = (
@@ -11196,7 +11180,6 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -12219,10 +12202,6 @@
 	icon_state = "whitepurplecorner"
 	},
 /area/rnd/xenobiology)
-"auk" = (
-/obj/structure/disposalpipe/segment,
-/turf/simulated/wall/r_wall,
-/area/security/lobby)
 "aul" = (
 /turf/simulated/wall/r_wall,
 /area/maintenance/auxsolarstarboard)
@@ -12520,12 +12499,15 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
+	},
+/obj/structure/disposalpipe/junction{
+	dir = 1;
+	icon_state = "pipe-j1"
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint)
@@ -12635,7 +12617,8 @@
 	},
 /area/maintenance/aft)
 "avi" = (
-/obj/structure/closet/emcloset,
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "red"
@@ -12896,6 +12879,7 @@
 	dir = 4;
 	pixel_x = -22
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "cautioncorner"
@@ -28265,10 +28249,22 @@
 	},
 /area/hallway/secondary/entry)
 "aYi" = (
-/obj/structure/table/woodentable,
-/obj/machinery/computer/forensic_scanning/detective,
-/turf/simulated/floor/wood,
-/area/security/vacantoffice)
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/fpmaint)
 "aYj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -42878,6 +42874,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -68799,15 +68799,22 @@
 	},
 /area/security/forensic_office)
 "dgb" = (
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "redcorner"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/area/hallway/primary/fore)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/fpmaint)
 "dhb" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_escape";
@@ -75788,7 +75795,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "red"
@@ -76242,7 +76248,6 @@
 /turf/simulated/floor/plating,
 /area/security/brig)
 "qDb" = (
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "redcorner"
@@ -105324,7 +105329,7 @@ aOX
 beb
 aWW
 bhr
-aYi
+apE
 boS
 brl
 btN
@@ -105813,7 +105818,7 @@ aqf
 agO
 agO
 agO
-avI
+dgb
 alZ
 atN
 agO
@@ -106070,7 +106075,7 @@ adJ
 adJ
 arw
 agO
-asj
+aYi
 cfP
 cgt
 cgt
@@ -110684,17 +110689,17 @@ aiU
 ajp
 all
 anM
-apE
+alh
 pVb
 aqE
 aqH
 qDb
-aqU
-aqU
-aqU
+amo
+amo
+amo
 aso
-auk
-dgb
+aqX
+ary
 arx
 aws
 aef
