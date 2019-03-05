@@ -13848,6 +13848,7 @@
 /area/rnd/hallway)
 "axD" = (
 /obj/structure/rack,
+/obj/item/device/suit_cooling_unit,
 /obj/item/clothing/suit/bio_suit/anomaly,
 /obj/item/clothing/head/bio_hood/anomaly,
 /obj/item/clothing/mask/breath,
