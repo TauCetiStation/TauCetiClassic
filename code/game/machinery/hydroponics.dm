@@ -7,7 +7,6 @@
 	density = TRUE
 	anchored = 1
 	interact_offline = TRUE
-	pixel_y = 8
 
 	var/waterlevel = 100             //The amount of water in the tray (max 100)
 	var/maxwater = 100               //The maximum amount of water in the tray

@@ -2,7 +2,7 @@
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
 	icon_state = "0"
-	dynamic_lighting = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
@@ -29,10 +29,14 @@
 	return QDEL_HINT_LETMELIVE
 
 /turf/space/proc/update_starlight()
-	for(var/turf/simulated/T in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-		set_light(2,2)
-		return
-	set_light(0)
+	if(config.starlight)
+		for(var/t in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+			if(istype(t, /turf/space))
+				//let's NOT update this that much pls
+				continue
+			set_light(2, 2)
+			return
+		set_light(0)
 
 /turf/space/attack_paw(mob/user)
 	return src.attack_hand(user)

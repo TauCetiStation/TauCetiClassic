@@ -82,56 +82,15 @@
 
 	switch(M.a_intent)
 		if("help")
-			if(health < config.health_threshold_crit && health > config.health_threshold_dead)
-				if(M.species && M.species.flags[NO_BREATHE])
-					to_chat(M, "<span class='notice bold'>Your species can not perform CPR!</span>")
-					return FALSE
-				if(species && species.flags[NO_BREATHE])
-					to_chat(M, "<span class='notice bold'>You can not perform CPR on these species!</span>")
-					return FALSE
-				if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
-					to_chat(M, "<span class='notice bold'>Remove your mask!</span>")
-					return FALSE
-				if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
-					to_chat(M, "<span class='notice bold'>Remove his mask!</span>")
-					return FALSE
-
-				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
-				O.source = M
-				O.target = src
-				O.s_loc = M.loc
-				O.t_loc = loc
-				O.place = "CPR"
-				requests += O
-				spawn(0)
-					O.process()
+			if(health > config.health_threshold_dead && health < config.health_threshold_crit)
+				INVOKE_ASYNC(src, .proc/perform_cpr, M)
 				return 1
 			else if(!(M == src && apply_pressure(M, M.zone_sel.selecting)))
 				help_shake_act(M)
 				return 1
 
 		if("grab")
-			if(M == src || anchored || M.lying)
-				return 0
-			for(var/obj/item/weapon/grab/G in src.grabbed_by)
-				if(G.assailant == M)
-					to_chat(M, "<span class='notice'>You already grabbed [src].</span>")
-					return
-			if(w_uniform)
-				w_uniform.add_fingerprint(M)
-
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
-			if(buckled)
-				to_chat(M, "<span class='notice'>You cannot grab [src], \he is buckled in!</span>")
-			if(!G)	//the grab will delete itself in New if affecting is anchored
-				return
-			M.put_in_active_hand(G)
-			grabbed_by += G
-			G.synch()
-			LAssailant = M
-
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			visible_message("<span class='warning'>[M] has grabbed [src] passively!</span>")
+			M.Grab(src)
 			return 1
 
 		if("hurt")
@@ -220,20 +179,11 @@
 					stop_pulling()
 
 				//BubbleWrap: Disarming also breaks a grab - this will also stop someone being choked, won't it?
-				if(istype(l_hand, /obj/item/weapon/grab))
-					var/obj/item/weapon/grab/lgrab = l_hand
-					if(lgrab.affecting)
-						visible_message("\red <b>[M] has broken [src]'s grip on [lgrab.affecting]!</B>")
+				for(var/obj/item/weapon/grab/G in GetGrabs())
+					if(G.affecting)
+						visible_message("\red <b>[M] has broken [src]'s grip on [G.affecting]!</B>")
 						talked = 1
-					spawn(1)
-						qdel(lgrab)
-				if(istype(r_hand, /obj/item/weapon/grab))
-					var/obj/item/weapon/grab/rgrab = r_hand
-					if(rgrab.affecting)
-						visible_message("\red <b>[M] has broken [src]'s grip on [rgrab.affecting]!</B>")
-						talked = 1
-					spawn(1)
-						qdel(rgrab)
+					qdel(G)
 				//End BubbleWrap
 
 				if(!talked)	//BubbleWrap

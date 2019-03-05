@@ -1,5 +1,6 @@
 /obj/machinery/portable_atmospherics/canister
 	name = "canister: \[CAUTION\]"
+	desc = "Canister with fairly high gas pressure."
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "yellow"
 

@@ -62,12 +62,12 @@
 	export_types = list(/obj/machinery/field_generator)
 
 /datum/export/large/collector
-	cost = 600
+	cost = 250
 	unit_name = "collector"
 	export_types = list(/obj/machinery/power/rad_collector)
 
 /datum/export/large/collector/pa
-	cost = 300
+	cost = 450
 	unit_name = "particle accelerator part"
 	export_types = list(/obj/structure/particle_accelerator)
 

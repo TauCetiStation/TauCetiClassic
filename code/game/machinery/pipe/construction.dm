@@ -410,6 +410,17 @@ Buildable meters
 		if((M.initialize_directions & pipe_dir) && M.check_connect_types_construction(M, src))	// matches at least one direction on either type of pipe & same connection type
 			to_chat(user, "<span class='warning'>There is already a pipe of the same type at this location.</span>")
 			return TRUE
+
+	for(var/D in cardinal)
+		if(D & pipe_dir)
+			var/turf/T = get_step(src, D)
+			if(T)
+				var/dir_to_pipe = get_dir(T, src)
+				for(var/obj/machinery/atmospherics/M in T)
+					if((M.initialize_directions & dir_to_pipe) && M.check_connect_types_construction(M, src) && !M.has_free_nodes())	// blocks construction if that leads to connection conflicts.
+						to_chat(user, "<span class='warning'>[M] has no free nodes.</span>")
+						return TRUE
+
 	// no conflicts found
 
 	//TODO: Move all of this stuff into the various pipe constructors.
@@ -747,7 +758,7 @@ Buildable meters
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "meter"
 	item_state = "buildpipe"
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 
 /obj/item/pipe_meter/attackby(obj/item/weapon/W, mob/user)
 	..()

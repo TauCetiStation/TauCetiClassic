@@ -147,6 +147,7 @@
 		modded = !modded
 		if (modded)
 			leak_fuel(amount_per_transfer_from_this)
+		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [src.x], [src.y], [src.z] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 	if (istype(W,/obj/item/device/assembly_holder))
 		if (rig)
 			to_chat(user, "\red There is another device in the way.")

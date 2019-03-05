@@ -6,8 +6,9 @@
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	force = 10
+	hitsound = 'sound/weapons/captainwhip.ogg'
 	throwforce = 7
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=4"
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 
@@ -22,5 +23,5 @@
 	item_state = "ice_pick"
 	force = 15
 	throwforce = 10
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("stabbed", "jabbed", "iced,")

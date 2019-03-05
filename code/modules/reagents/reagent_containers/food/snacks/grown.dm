@@ -19,7 +19,7 @@
 	var/yield = 0
 	var/potency = -1
 	var/plant_type = 0
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/atom_init(mapload, newpotency)
 	if (!isnull(newpotency))

@@ -91,7 +91,7 @@
 
 ///////////OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 	icon_state = "offhand"
 	name = "offhand"
 	flags = ABSTRACT
@@ -110,9 +110,10 @@
 	name = "fire axe"
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	force = 5
+	hitsound = 'sound/weapons/desceration.ogg'
 	sharp = 1
 	edge = 1
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	slot_flags = SLOT_FLAGS_BACK
 	force_unwielded = 10
 	force_wielded = 40
@@ -147,7 +148,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	item_color = "green"
 	force_unwielded = 3
 	force_wielded = 45
@@ -261,12 +262,14 @@
 
 /obj/item/weapon/twohanded/dualsaber/unwield()
 	set_light(0)
+	hitsound = initial(hitsound)
 	w_class = initial(w_class)
 	return ..()
 
 /obj/item/weapon/twohanded/dualsaber/wield()
 	set_light(2)
-	w_class = 5
+	hitsound = 'sound/weapons/blade1.ogg'
+	w_class = ITEM_SIZE_HUGE
 	return ..()
 
 #undef DUALSABER_BLOCK_CHANCE_MODIFIER
