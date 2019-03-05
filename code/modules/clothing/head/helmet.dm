@@ -44,26 +44,17 @@
 	if(proximity_flag && istype(target, /obj/item/clothing/head) && !istype(target, /obj/item/clothing/head/helmet/space))
 		var/obj/item/clothing/C = target
 		var/list/current_armor = C.armor
-		if(current_armor["melee"] < 80 || current_armor["bullet"] < 60 || current_armor["laser"] < 50 || current_armor["energy"] < 10 || current_armor["bomb"] < 25 || current_armor["bio"] < 10)
+		if(current_armor["melee"] == 0 && current_armor["bullet"] == 0 && current_armor["laser"] == 0 && current_armor["energy"] == 0 && current_armor["bomb"] == 0 && current_armor["bio"] == 0)
 			src.item_old_name = C.name
-
-			src.item_old_armor["melee"]  = current_armor["melee"]
-			src.item_old_armor["bullet"] = current_armor["bullet"]
-			src.item_old_armor["laser"]  = current_armor["laser"]
-			src.item_old_armor["energy"] = current_armor["energy"]
-			src.item_old_armor["bomb"]   = current_armor["bomb"]
-			src.item_old_armor["bio"]    = current_armor["bio"]
-
-			current_armor["melee"]  = max(80,current_armor["melee"])
-			current_armor["bullet"] = max(60,current_armor["bullet"])
-			current_armor["laser"]  = max(50,current_armor["laser"])
-			current_armor["energy"] = max(10,current_armor["energy"])
-			current_armor["bomb"]   = max(25,current_armor["bomb"])
-			current_armor["bio"]    = max(10,current_armor["bio"])
+			current_armor["melee"]  = armor["melee"]
+			current_armor["bullet"] = armor["bullet"]
+			current_armor["laser"]  = armor["laser"]
+			current_armor["energy"] = armor["energy"]
+			current_armor["bomb"]   = armor["bomb"]
+			current_armor["bio"]    = armor["bio"]
 			C.name = "dermaled [C.name]"
 			to_chat(user, "<span class='info'>You strengthen [C], improving its resistance.</span>")
-			user.drop_item()
-			src.forceMove(C)
+			usr.drop_from_inventory(src, C)
 			C.verbs += /obj/item/clothing/head/proc/remove_dermal
 		else
 			to_chat(user, "<span class='warning'>You can't improve [C] any further!</span>")
@@ -79,7 +70,7 @@
 	usr.put_in_hands(D)
 	src.verbs -= /obj/item/clothing/head/proc/remove_dermal
 	src.name  = D.item_old_name
-	src.armor = D.item_old_armor
+	src.armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 
 
 /obj/item/clothing/head/helmet/riot
