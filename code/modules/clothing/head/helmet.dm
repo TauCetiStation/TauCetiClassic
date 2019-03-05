@@ -66,7 +66,6 @@
 	set name = "Remove dermal"
 	set src in usr
 	var/obj/item/clothing/head/helmet/dermal/D = locate() in src
-	src.contents -= D
 	usr.put_in_hands(D)
 	src.verbs -= /obj/item/clothing/head/proc/remove_dermal
 	src.name  = D.item_old_name
