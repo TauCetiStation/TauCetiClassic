@@ -86,7 +86,7 @@
 	var/obj/item/active_device = null                 // Currently deployed device, if any.
 
 	var/mob/living/carbon/human/wearer // The person currently wearing the rig.
-	var/offline = 1
+	var/offline = TRUE
 	var/passive_energy_use = 1
 	var/move_energy_use = 1
 
@@ -133,7 +133,7 @@
 /obj/item/clothing/suit/space/rig/proc/try_use(mob/living/user, cost, use_unconcious, use_stunned)
 
 	if(!istype(user))
-		return 0
+		return FALSE
 
 	var/fail_msg
 
@@ -151,16 +151,16 @@
 
 	if(fail_msg)
 		to_chat(user, "[fail_msg]")
-		return 0
+		return FALSE
 
 	if(cost > 0)
 		return cell.use(cost)
-	return 1
+	return TRUE
 
 /obj/item/clothing/suit/space/rig/Topic(href,href_list)
 	var/mob/living/carbon/human/user = usr
 	if(offline || !istype(user) || user.wear_suit != src)
-		return 0
+		return FALSE
 
 	if(href_list["interact_module"])
 
@@ -189,8 +189,8 @@
 					update_selected_action()
 				if("select_charge_type")
 					module.charge_selected = href_list["charge_type"]
-		return 1
-	return 1
+		return TRUE
+	return TRUE
 
 /obj/item/clothing/suit/space/rig/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	if(!user)
@@ -255,8 +255,8 @@
 	var/go_offline = (!istype(wearer) || loc != wearer || wearer.wear_suit != src || !cell || cell.charge <= 0)
 	if(offline != go_offline)
 		offline = go_offline
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/clothing/suit/space/rig/process()
 	var/changed = update_offline()
@@ -335,7 +335,8 @@
 /obj/item/clothing/suit/space/rig/equipped(mob/M, slot)
 	var/mob/living/carbon/human/H = M
 
-	if(!istype(H)) return
+	if(!istype(H))
+		return
 
 	if(slot == SLOT_WEAR_SUIT)
 		wearer = H

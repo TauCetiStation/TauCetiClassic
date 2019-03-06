@@ -63,8 +63,8 @@
 		if(module.holder && module.holder.cell)
 			if(module.holder.cell.charge >= cost)
 				module.holder.cell.use(cost)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /obj/item/weapon/rcd/mounted/checkResource(amount, mob/user)
 	var/cost = amount*70
@@ -72,8 +72,8 @@
 		var/obj/item/rig_module/module = loc
 		if(module.holder && module.holder.cell)
 			if(module.holder.cell.charge >= cost)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /obj/item/weapon/rcd/mounted/attackby()
 	return
@@ -102,29 +102,29 @@
 
 /obj/item/rig_module/device/engage(atom/target)
 	if(!isturf(holder.wearer.loc) && target)
-		return 0
+		return FALSE
 
 	if(!..() || !device)
-		return 0
+		return FALSE
 
 	if(damage > MODULE_NO_DAMAGE && prob(20))
 		to_chat(holder.wearer, "<span class='warning'>[name] malfunctions and ignores your command!</span>")
-		return 1
+		return TRUE
 
 	if(!target)
 		device.attack_self(holder.wearer)
-		return 1
+		return TRUE
 
 	var/turf/T = get_turf(target)
 	if(need_adjacent && istype(T) && !T.Adjacent(get_turf(src)))
-		return 0
+		return FALSE
 
 	var/resolved
 	if(need_adjacent) // so we don't telepathically bash the target
 		resolved = target.attackby(device,holder.wearer)
 	if(!resolved && device && target)
 		device.afterattack(target,holder.wearer,1)
-	return 1
+	return TRUE
 
 /obj/item/rig_module/chem_dispenser
 	name = "hardsuit mounted chemical dispenser"
@@ -172,11 +172,11 @@
 /obj/item/rig_module/chem_dispenser/accepts_item(obj/item/input_item, mob/living/user)
 
 	if(!input_item.is_open_container())
-		return 0
+		return FALSE
 
 	if(!input_item.reagents || !input_item.reagents.total_volume)
 		to_chat(user, "\The [input_item] is empty.")
-		return 0
+		return FALSE
 
 	// Magical chemical filtration system, do not question it.
 	var/total_transferred = 0
@@ -200,19 +200,19 @@
 		to_chat(user, "<font color='blue'>You transfer [total_transferred] units into the suit reservoir.</font>")
 	else
 		to_chat(user, "<span class='danger'>None of the reagents seem suitable.</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/item/rig_module/chem_dispenser/engage(atom/target)
 	if(!isturf(holder.wearer.loc) && target)
-		return 0
+		return FALSE
 
 	if(!..())
-		return 0
+		return FALSE
 
 	if(!charge_selected)
 		to_chat(holder.wearer, "<span class='danger'>You have not selected a chemical type.</span>")
-		return 0
+		return FALSE
 
 	return use_charge(charge_selected, target)
 
@@ -357,13 +357,13 @@
 
 /obj/item/rig_module/selfrepair/activate(forced = FALSE)
 	if(!..())
-		return 0
+		return FALSE
 
 	var/mob/living/carbon/human/H = holder.wearer
 
 	to_chat(H, "<span class='notice'>Starting self-repair sequence</span>")
 
-	return 1
+	return TRUE
 
 /obj/item/rig_module/selfrepair/process_module()
 	if(!active)
@@ -380,7 +380,7 @@
 
 	if(!charge)
 		deactivate()
-		return 0
+		return FALSE
 
 	active_power_cost = passive_power_cost
 	if(holder.brute_damage && charge.charges > 0)
@@ -418,9 +418,9 @@
 		charge.charges += total_used
 		if(total_used)
 			to_chat(user, "<font color='notice'>You transfer [total_used] of metal lists into the suit reservoir.</font>")
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 /obj/item/rig_module/med_teleport
 	name = "hardsuit medical teleport system"
@@ -581,31 +581,31 @@
 
 /obj/item/rig_module/metalfoam_spray/engage(atom/target)
 	if(!isturf(holder.wearer.loc) && target)
-		return 0
+		return FALSE
 
 	if(!..())
-		return 0
+		return FALSE
 
 	if(damage > MODULE_NO_DAMAGE && prob(50))
 		to_chat(holder.wearer, "<span class='warning'>[name] malfunctions and ignores your command!</span>")
-		return 1
+		return TRUE
 
 	if(!target)
-		return 0
+		return FALSE
 
 	if(charges["foaming agent"].charges <= 0)
 		to_chat(holder.wearer, "<span class='warning'>[interface_name] is empty</span>")
-		return 0
+		return FALSE
 
 	var/turf/T = get_turf(target)
 	if(!istype(T))
-		return 0
+		return FALSE
 
 	charges["foaming agent"].charges = max(charges["foaming agent"].charges - per_use, 0)
 	playsound(loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 	INVOKE_ASYNC(src, .proc/spray_at, T)
 
-	return 1
+	return TRUE
 
 /obj/item/rig_module/metalfoam_spray/proc/spray_at(turf/T)
 	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(src))
@@ -621,19 +621,19 @@
 /obj/item/rig_module/metalfoam_spray/accepts_item(obj/item/input_item, mob/living/user)
 
 	if(!input_item.is_open_container())
-		return 0
+		return FALSE
 
 	if(!input_item.reagents || !input_item.reagents.total_volume)
-		return 0
+		return FALSE
 
 	var/datum/rig_charge/charge = charges["foaming agent"]
 
 	var/total_transferred = min(input_item.reagents.get_reagent_amount("foaming_agent"), max_volume - charge.charges)
 	if(total_transferred <= 0)
-		return 0
+		return FALSE
 
 	charge.charges += total_transferred
 	input_item.reagents.remove_reagent("foaming_agent", total_transferred)
 
 	to_chat(user, "<font color='blue'>You transfer [total_transferred] units into the [interface_name].</font>")
-	return 1
+	return TRUE

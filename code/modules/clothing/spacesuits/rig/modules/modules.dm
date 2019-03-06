@@ -20,13 +20,13 @@
 	var/module_cooldown = 10
 	var/next_use = 0
 
-	var/toggleable                      // Set to 1 for the device to show up as an active effect.
+	var/toggleable                      // Set to TRUE for the device to show up as an active effect.
 	var/show_toggle_button              // Set to TRUE for the device to show toggle button
-	var/usable                          // Set to 1 for the device to have an on-use effect.
-	var/selectable                      // Set to 1 to be able to assign the device as primary system.
-	var/redundant                       // Set to 1 to ignore duplicate module checking when installing.
+	var/usable                          // Set to TRUE for the device to have an on-use effect.
+	var/selectable                      // Set to TRUE to be able to assign the device as primary system.
+	var/redundant                       // Set to TRUE to ignore duplicate module checking when installing.
 	var/permanent                       // If set, the module can't be removed.
-	var/mount_type = 0					// What mounts does this module use
+	var/mount_type = 0                  // What mounts does this module use
 
 	var/active                          // Basic module status
 	var/activate_on_start               // Set to TRUE for the device to automatically activate on suit equip
@@ -142,48 +142,48 @@
 
 	if(damage >= MODULE_DESTROYED)
 		to_chat(holder.wearer, "<span class='warning'>The [interface_name] is damaged beyond use!</span>")
-		return 0
+		return FALSE
 
 	if(world.time < next_use)
 		to_chat(holder.wearer, "<span class='warning'>You cannot use the [interface_name] again so soon.</span>")
-		return 0
+		return FALSE
 
 	if(!holder.try_use(holder.wearer, use_power_cost, use_unconcious = FALSE, use_stunned = FALSE))
-		return 0
+		return FALSE
 
 	next_use = world.time + module_cooldown
 
-	return 1
+	return TRUE
 
 // Proc for toggling on active abilities.
 /obj/item/rig_module/proc/activate(forced = FALSE)
 	if(active)
-		return 0
+		return FALSE
 
 	if(!forced && !engage())
-		return 0
+		return FALSE
 	else if(forced && (damage >= MODULE_DESTROYED || !holder.try_use(holder.wearer, use_power_cost, use_unconcious = TRUE, use_stunned = TRUE)))
-		return 0 // forced skips some checks
+		return FALSE // forced skips some checks
 
 	active = TRUE
 
 	if(show_toggle_button)
 		holder.update_activated_actions()
 
-	return 1
+	return TRUE
 
 // Proc for toggling off active abilities.
 /obj/item/rig_module/proc/deactivate()
 
 	if(!active)
-		return 0
+		return FALSE
 
 	active = FALSE
 
 	if(show_toggle_button)
 		holder.update_activated_actions()
 
-	return 1
+	return TRUE
 
 // Called when the module is uninstalled from a suit.
 /obj/item/rig_module/proc/removed()
@@ -205,7 +205,7 @@
 // Called by holder rigsuit attackby()
 // Checks if an item is usable with this module and handles it if it is
 /obj/item/rig_module/proc/accepts_item(obj/item/input_device)
-	return 0
+	return FALSE
 
 /mob/proc/Rig_SetupStat(obj/item/clothing/suit/space/rig/R)
 	if(R && R.installed_modules.len && !R.offline && statpanel("Hardsuit Modules"))
@@ -228,14 +228,14 @@
 	return
 
 /obj/stat_rig_module/proc/CanUse()
-	return 0
+	return FALSE
 
 /obj/stat_rig_module/Click()
 	if(CanUse())
 		var/list/href_list = list(
-							"interact_module" = module.holder.installed_modules.Find(module),
-							"module_mode" = module_mode
-							)
+			"interact_module" = module.holder.installed_modules.Find(module),
+			"module_mode" = module_mode
+			)
 		AddHref(href_list)
 		module.holder.Topic(usr, href_list)
 

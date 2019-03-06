@@ -48,7 +48,7 @@
 		to_chat(user, "<span class='danger'>Another grenade of that type will not fit into the module.</span>")
 		return FALSE
 
-	to_chat(user, "<font color='blue'><b>You slot \the [input_device] into the suit module.</b></font>")
+	to_chat(user, "<span class='bold notice'>You slot \the [input_device] into the suit module.</span>")
 	qdel(input_device)
 	accepted_item.charges++
 	return TRUE
