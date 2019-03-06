@@ -162,6 +162,13 @@
 		equip_traitor(traitor.current)
 	return
 
+/datum/game_mode/proc/remove_traitor(datum/mind/M)
+	traitors -= M
+	M.special_role = null
+	if(isAI(M.current))
+		var/mob/living/silicon/ai/A = M.current
+		A.set_zeroth_law("")
+		A.show_laws()
 
 /datum/game_mode/traitor/declare_completion()
 	..()

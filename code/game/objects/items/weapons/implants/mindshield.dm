@@ -70,9 +70,11 @@
 			var/cleared_role = TRUE
 			switch(M.mind.special_role)
 				if("traitor")
-					M.mind.remove_traitor()
+					ticker.mode.remove_traitor(M.mind)
+					M.mind.remove_objectives()
 				if("Syndicate")
-					M.mind.remove_nuclear()
+					ticker.mode.remove_nuclear(M.mind)
+					M.mind.remove_objectives()
 				else
 					cleared_role = FALSE
 			if(cleared_role)

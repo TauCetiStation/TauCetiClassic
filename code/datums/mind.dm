@@ -99,8 +99,7 @@
 	memory += "[new_text]<BR>"
 
 /*
-	Removes antag type's references from a mind.
-	objectives, uplinks, powers etc are all handled.
+	Removes antag objectives
 */
 
 /datum/mind/proc/remove_objectives()
@@ -108,33 +107,6 @@
 		for(var/datum/objective/O in objectives)
 			objectives -= O
 			qdel(O)
-
-/datum/mind/proc/remove_gang()
-	ticker.mode.remove_gangster(src,0,1)
-	remove_objectives()
-
-/datum/mind/proc/remove_traitor()
-	ticker.mode.traitors -= src
-	special_role = null
-	remove_objectives()
-	if(isAI(current))
-		var/mob/living/silicon/ai/A = current
-		A.set_zeroth_law("")
-		A.show_laws()
-
-/datum/mind/proc/remove_nuclear()
-	ticker.mode.syndicates -= src
-	ticker.mode.update_synd_icons_removed(src)
-	special_role = null
-	remove_objectives()
-	current.faction = "neutral"
-
-/datum/mind/proc/remove_all_antag() // For the Lazy amongst us. Is actually currently unused. ~Luduk.
-	remove_gang()
-	remove_traitor()
-	remove_nuclear()
-
-	remove_objectives()
 
 /datum/mind/proc/show_memory(mob/recipient)
 	var/output = "<B>[current.real_name]'s Memory</B><HR>"
@@ -814,7 +786,8 @@
 
 		switch(href_list["gang"])
 			if("clear")
-				remove_gang()
+				ticker.mode.remove_gangster(src,0,1)
+				remove_objectives()
 				message_admins("[key_name_admin(usr)] has de-gang'ed [current].")
 				log_admin("[key_name(usr)] has de-gang'ed [current].")
 
@@ -1002,7 +975,7 @@
 		switch(href_list["nuclear"])
 			if("clear")
 				if(src in ticker.mode.syndicates)
-					remove_nuclear()
+					ticker.mode.remove_nuclear(src)
 					to_chat(current, "\red <FONT size = 3><B>You have been brainwashed! You are no longer a syndicate operative!</B></FONT>")
 					log_admin("[key_name_admin(usr)] has de-nuke op'ed [current].")
 			if("nuclear")
@@ -1056,7 +1029,7 @@
 		switch(href_list["traitor"])
 			if("clear")
 				if(src in ticker.mode.traitors)
-					remove_traitor()
+					ticker.mode.remove_traitor(src)
 					to_chat(current, "\red <FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT>")
 					log_admin("[key_name_admin(usr)] has de-traitor'ed [current].")
 
