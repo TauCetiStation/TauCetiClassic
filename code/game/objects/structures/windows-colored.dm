@@ -23,7 +23,7 @@ var/global/wcDw
 	var/list/purple = list("#ba62b1", "#Ba3fad", "#a54f9e", "#b549d1")
 	var/list/brown = list("#9e5312", "#99761e", "#a56b00", "#d87f2b")
 	var/list/green = list("#aed18b", "#7bce23", "#5a9619", "#709348")
-	var/list/blue = list("#8dbdd7", "#299bd8", "#1e719e", "#2bb8ff")
+	var/list/blue = list("#054166", "#5995ba", "#1e719e", "#7cb8dd")
 
 	wcRed = pick(red)
 	wcPurple = pick(purple)
@@ -144,7 +144,8 @@ var/global/wcDw
 		/area/medical/surgery,
 		/area/medical/surgery2,
 		/area/medical/storage,
-		/area/medical/chemistry
+		/area/medical/chemistry,
+		/area/medical/sleeper
 		)
 
 	for(var/A in wsBlueList)
