@@ -202,9 +202,9 @@
 			if(config.rus_language)//TODO:CYRILLIC dictionary?
 				switch(pick(1,2,3))
 					if(1)
-						say(pick("àçàçàà!", "ß íå ñìàëãåé!", "ÕÎÑ ÕÓÅÑÎÑ!", "[pick("", "åáó÷èé òðåéòîð")] [pick("ìîðãàí", "ìîðãóí", "ìîðãåí", "ìðîãóí")] [pick("äæåìåñ", "äæàìåñ", "äæàåìåñ")] ãðåôîíåò ìèíÿ øïàñèò;å!!!", "òè ìîæûø äàòü ìíå [pick("òèëèïàòèþ","õàëêó","ýïèëëåïñèþ")]?", "ÕÀ÷ó ñòàòü áîðãîì!", "ÏÎÇÎâèòå äåòåêòèâà!", "Õî÷ó ñòàòü ìàðòûøêîé!", "ÕÂÀÒÅÒ ÃÐÈÔÎÍÅÒÜ ÌÈÍß!!!!", "ØÀÒÎË!"))
+						say(pick(CYRILLIC_BRAINDAMAG_1))
 					if(2)
-						say(pick("Êàê ìèí[JA_PLACEHOLDER]òü ðóêè?","åáó÷èå ôóððè!", "Ïîäåáèë", "Ïðîêë[JA_PLACEHOLDER]òûå òðàïû!", "ëîëêà!", "âæææææææææ!!!", "äæåô ñêâààààä!", "ÁÐÀÍÄÅÍÁÓÐÃ!", "ÁÓÄÀÏÅØÒ!", "ÏÀÓÓÓÓÓÊ!!!!", "ÏÓÊÀÍ ÁÎÌÁÀÍÓË!", "ÏÓØÊÀ", "ÐÅÂÀ ÏÎÖÎÍÛ", "Ïàòè íà õîïà!"))
+						say(pick(CYRILLIC_BRAINDAMAG_2))
 					if(3)
 						emote("drool")
 			else
@@ -1022,7 +1022,7 @@
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 	else
-		if(has_trait(TRAIT_FAT) || overeatduration > 500)
+		if((has_trait(TRAIT_FAT) || overeatduration > 500) && isturf(loc))
 			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
 				mutations.Add(FAT)
 				update_body()
