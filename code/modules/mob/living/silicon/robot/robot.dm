@@ -797,18 +797,7 @@
 					O.show_message(text("\blue [M] caresses [src]'s plating with its scythe-like arm."), 1)
 
 		if ("grab")
-			if (M == src || anchored || M.lying)
-				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
-
-			M.put_in_active_hand(G)
-
-			grabbed_by += G
-			G.synch()
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
+			M.Grab(src)
 
 		if ("hurt")
 			M.do_attack_animation(src)
@@ -1174,7 +1163,7 @@
 	radio.interact(src)//Just use the radio's Topic() instead of bullshit special-snowflake code
 
 
-/mob/living/silicon/robot/Move(a, b, flag)
+/mob/living/silicon/robot/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 
 	. = ..()
 
@@ -1210,7 +1199,6 @@
 								cleaned_human.update_inv_shoes()
 							cleaned_human.clean_blood(1)
 							to_chat(cleaned_human, "\red [src] cleans your face!")
-		return
 
 /mob/living/silicon/robot/proc/self_destruct()
 	gib()

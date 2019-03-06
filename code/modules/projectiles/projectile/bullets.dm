@@ -203,7 +203,7 @@
 	name = "flare"
 	icon_state= "bolter"
 	damage = 5
-	luminosity = 8
+	light_range = 8
 
 /obj/item/projectile/bullet/flare/on_hit(atom/target, blocked = 0)
 	if(istype(target, /mob/living/carbon))

@@ -462,7 +462,8 @@
 
 /mob/living/proc/revive()
 	rejuvenate()
-	buckled = initial(src.buckled)
+	if(buckled)
+		buckled.user_unbuckle_mob(src)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
 
@@ -605,12 +606,12 @@
 
 	return
 
-/mob/living/Move(atom/newloc, direct)
-	if (buckled && buckled.loc != newloc)
+/mob/living/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	if (buckled && buckled.loc != NewLoc)
 		if (!buckled.anchored)
-			return buckled.Move(newloc, direct)
+			return buckled.Move(NewLoc, Dir)
 		else
-			return 0
+			return FALSE
 
 	if (restrained())
 		stop_pulling()
@@ -716,7 +717,7 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H.species)
-				new_cover = new H.species.blood_color
+				new_cover = new(H.species.blood_datum)
 		if(!new_cover)
 			new_cover = new/datum/dirt_cover/red_blood
 		if(!blood_exists)
@@ -1001,9 +1002,6 @@
 /mob/living/proc/has_eyes()
 	return 1
 
-/mob/living/proc/slip(slipped_on, stun_duration=4, weaken_duration=2)
-	return FALSE
-
 //-TG Port for smooth standing/lying animations
 /mob/living/proc/get_standard_pixel_x_offset(lying_current = 0)
 	return initial(pixel_x)
@@ -1172,6 +1170,13 @@
 		to_chat(src, "<span class='notice'>You can taste [english_list(final_taste_list)].</span>")
 		lasttaste = world.time
 
+// This proc returns TRUE if less than given percentage is not covered.
+/mob/living/proc/is_nude(maximum_coverage = 0)
+	return TRUE // For all intents and purposes we are nude asf.
+
+/mob/living/proc/naturechild_check()
+	return TRUE
+
 /mob/living/proc/get_nutrition()
 	// This proc gets nutrition value with all possible alters.
 	// E.g. see how in carbon nutriment, plant matter, meat reagents are accounted.
@@ -1180,3 +1185,6 @@
 	// food, so this proc is used in walk penalty, etc. But you don't see fat of a person if the person is just
 	// digesting the giant pizza they ate, so we don't use this in examine code.
 	return nutrition
+
+/mob/living/proc/get_metabolism_factor()
+	return METABOLISM_FACTOR

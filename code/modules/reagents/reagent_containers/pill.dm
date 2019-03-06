@@ -8,7 +8,7 @@
 	icon_state = null
 	item_state = "pill"
 	possible_transfer_amounts = null
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	volume = 50
 
 /obj/item/weapon/reagent_containers/pill/atom_init()
@@ -227,7 +227,7 @@
 
 /obj/item/weapon/reagent_containers/pill/dexalin_plus/atom_init()
 	. = ..()
-	reagents.add_reagent("dexalin_plus", 10)
+	reagents.add_reagent("dexalinp", 10)
 
 /obj/item/weapon/reagent_containers/pill/bicaridine
 	name = "Bicaridine pill (20u)"

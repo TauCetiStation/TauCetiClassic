@@ -3,9 +3,9 @@
 	icon = 'icons/obj/mining/geoscanner.dmi'
 	icon_state = "geoscanner"
 	item_state = "analyzer"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 20

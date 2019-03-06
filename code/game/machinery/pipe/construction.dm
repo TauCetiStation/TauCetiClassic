@@ -307,8 +307,8 @@ Buildable meters
 	else if (pipe_type in list (PIPE_MANIFOLD4W, PIPE_SUPPLY_MANIFOLD4W, PIPE_SCRUBBERS_MANIFOLD4W, PIPE_FUEL_MANIFOLD4W))
 		set_dir(SOUTH)
 
-/obj/item/pipe/Move()
-	..()
+/obj/item/pipe/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	if ((pipe_type in list (PIPE_SIMPLE_BENT, PIPE_SUPPLY_BENT, PIPE_SCRUBBERS_BENT, PIPE_HE_BENT, PIPE_FUEL_BENT)) && (dir in cardinal))
 		set_dir(dir|turn(dir, 90))
 	else if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_SUPPLY_STRAIGHT, PIPE_SCRUBBERS_STRAIGHT, PIPE_UNIVERSAL, PIPE_HE_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE, PIPE_SVALVE, PIPE_FUEL_STRAIGHT))
@@ -410,6 +410,17 @@ Buildable meters
 		if((M.initialize_directions & pipe_dir) && M.check_connect_types_construction(M, src))	// matches at least one direction on either type of pipe & same connection type
 			to_chat(user, "<span class='warning'>There is already a pipe of the same type at this location.</span>")
 			return TRUE
+
+	for(var/D in cardinal)
+		if(D & pipe_dir)
+			var/turf/T = get_step(src, D)
+			if(T)
+				var/dir_to_pipe = get_dir(T, src)
+				for(var/obj/machinery/atmospherics/M in T)
+					if((M.initialize_directions & dir_to_pipe) && M.check_connect_types_construction(M, src) && !M.has_free_nodes())	// blocks construction if that leads to connection conflicts.
+						to_chat(user, "<span class='warning'>[M] has no free nodes.</span>")
+						return TRUE
+
 	// no conflicts found
 
 	//TODO: Move all of this stuff into the various pipe constructors.
@@ -747,7 +758,7 @@ Buildable meters
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "meter"
 	item_state = "buildpipe"
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 
 /obj/item/pipe_meter/attackby(obj/item/weapon/W, mob/user)
 	..()

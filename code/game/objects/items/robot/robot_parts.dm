@@ -4,7 +4,7 @@
 	item_state = "buildpipe"
 	icon_state = "blank"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	var/part = null
 	var/sabotaged = 0 //Emagging limbs can have repercussions when installed as prosthetics.
 
@@ -58,7 +58,7 @@
 	var/obj/item/robot_parts/chest/chest = null
 	var/obj/item/robot_parts/head/head = null
 	var/created_name = ""
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/robot_parts/robot_suit/atom_init()
 	. = ..()
@@ -127,7 +127,7 @@
 		user.drop_item()
 		W.loc = src
 		l_leg = W
-		w_class = 4
+		w_class = ITEM_SIZE_LARGE
 		update_icon()
 		return
 
@@ -137,7 +137,7 @@
 		user.drop_item()
 		W.loc = src
 		r_leg = W
-		w_class = 4
+		w_class = ITEM_SIZE_LARGE
 		update_icon()
 		return
 
@@ -147,7 +147,7 @@
 		user.drop_item()
 		W.loc = src
 		l_arm = W
-		w_class = 4
+		w_class = ITEM_SIZE_LARGE
 		update_icon()
 		return
 
@@ -157,7 +157,7 @@
 		user.drop_item()
 		W.loc = src
 		r_arm = W
-		w_class = 4
+		w_class = ITEM_SIZE_LARGE
 		update_icon()
 		return
 
@@ -168,7 +168,7 @@
 			user.drop_item()
 			W.loc = src
 			chest = W
-			w_class = 4
+			w_class = ITEM_SIZE_LARGE
 			update_icon()
 		else if(!W:wires)
 			to_chat(user, "<span class='info'>You need to attach wires to it first!</span>")
@@ -183,7 +183,7 @@
 			user.drop_item()
 			W.loc = src
 			head = W
-			w_class = 4
+			w_class = ITEM_SIZE_LARGE
 			update_icon()
 		else
 			to_chat(user, "<span class='info'>You need to attach a flash to it first!</span>")

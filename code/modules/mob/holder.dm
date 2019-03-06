@@ -3,7 +3,7 @@
 	name = "holder"
 	desc = "You shouldn't ever see this."
 	icon = 'icons/obj/objects.dmi'
-	slot_flags = SLOT_HEAD
+	slot_flags = SLOT_FLAGS_HEAD
 
 /obj/item/weapon/holder/atom_init()
 	..()
@@ -83,7 +83,7 @@
 	name = "mouse"
 	desc = "It's a small rodent."
 	icon_state = "mouse_gray"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 /obj/item/weapon/holder/mouse/gray
 	icon_state = "mouse_gray"

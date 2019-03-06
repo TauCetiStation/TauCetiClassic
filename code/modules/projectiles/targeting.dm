@@ -29,7 +29,7 @@
 	return ..()
 
 /obj/item/weapon/gun/equipped(mob/user, slot)
-	if (slot != slot_l_hand && slot != slot_r_hand)
+	if (slot != SLOT_L_HAND && slot != SLOT_R_HAND)
 		stop_aim()
 		if (user.client)
 			user.client.remove_gun_icons()
@@ -226,7 +226,7 @@
 		qdel(targeted_by)
 	spawn(1) update_targeted()
 
-/mob/living/Move(NewLoc, direct)
+/mob/living/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
 	for(var/obj/item/weapon/gun/G in targeted_by) //Handle moving out of the gunner's view.
 		var/mob/living/M = G.loc

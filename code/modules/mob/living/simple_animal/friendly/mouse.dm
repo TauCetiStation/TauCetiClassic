@@ -123,7 +123,7 @@
 
 //make mice fit under tables etc? this was hacky, and not working
 /*
-/mob/living/simple_animal/mouse/Move(var/dir)
+/mob/living/simple_animal/mouse/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 
 	var/turf/target_turf = get_step(src,dir)
 	//CanReachThrough(src.loc, target_turf, src)
@@ -131,7 +131,7 @@
 	if(target_turf.ZCanPass(get_turf(src),1))
 		can_fit_under = 1
 
-	..(dir)
+	. = ..()
 	if(can_fit_under)
 		src.loc = target_turf
 	for(var/d in cardinal)

@@ -83,7 +83,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] can't hold any more signs.</span>")
 
-	else if(mybag)
+	else if(mybag && !istype(I, /obj/item/weapon/reagent_containers/glass/bucket))
 		mybag.attackby(I, user)
 
 /obj/structure/janitorialcart/on_reagent_change()
@@ -229,8 +229,8 @@
 		to_chat(user, "<span class='notice'>You'll need the keys in one of your hands to drive this [callme].</span>")
 
 
-/obj/structure/stool/bed/chair/janicart/Move()
-	..()
+/obj/structure/stool/bed/chair/janicart/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
 			buckled_mob.loc = loc
@@ -293,4 +293,4 @@
 	desc = "A keyring with a small steel key, and a pink fob reading \"Pussy Wagon\"."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "keys"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY

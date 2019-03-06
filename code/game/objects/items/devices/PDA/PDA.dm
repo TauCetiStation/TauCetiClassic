@@ -7,8 +7,8 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
 	item_state = "electronic"
-	w_class = 2.0
-	slot_flags = SLOT_ID | SLOT_BELT
+	w_class = ITEM_SIZE_SMALL
+	slot_flags = SLOT_FLAGS_ID | SLOT_FLAGS_BELT
 
 	//Main variables
 	var/owner = null
@@ -114,6 +114,16 @@
 	icon_state = "pda-clown"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
+
+/obj/item/device/pda/clown/atom_init()
+	. = ..()
+	AddComponent(/datum/component/slippery, 4, NONE, CALLBACK(src, .proc/AfterSlip))
+
+/obj/item/device/pda/clown/proc/AfterSlip(mob/living/carbon/human/M)
+	if (istype(M) && (M.real_name != owner))
+		var/obj/item/weapon/cartridge/clown/cart = cartridge
+		if(istype(cart) && cart.charges < 5)
+			cart.charges++
 
 /obj/item/device/pda/mime
 	default_cartridge = /obj/item/weapon/cartridge/mime
@@ -1253,11 +1263,6 @@
 		T.hotspot_expose(700,125)
 		explosion(T, 0, 0, 1, rand(1,2))
 	return
-
-/obj/item/device/pda/clown/Crossed(mob/living/carbon/C) //Clown PDA is slippery.
-	if(istype(C))
-		if (C.slip("the PDA", 4, 2) && ishuman(C) && src.cartridge.charges < 5)
-			cartridge.charges++
 
 /obj/item/device/pda/proc/available_pdas()
 	var/list/names = list()

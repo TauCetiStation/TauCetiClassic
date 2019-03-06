@@ -1,42 +1,59 @@
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
-#define HIDEGLOVES		1	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDESUITSTORAGE	2	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDEJUMPSUIT	4	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDESHOES		8	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDETAIL 		16	//APPLIES ONLY TO THE EXTERIOR SUIT!!
+//Make sure to update check_obscured_slots() if you add more.
+#define HIDEGLOVES        (1<<0)
+#define HIDESUITSTORAGE   (1<<1)
+#define HIDEJUMPSUIT      (1<<2)	// These first four are only used in exterior suits.
+#define HIDESHOES         (1<<3)
+#define HIDEMASK          (1<<4)	// these four are only used in masks and headgear,
+#define HIDEEARS          (1<<5)	// (ears means headsets and such),
+#define HIDEEYES          (1<<6)	// whether eyes and glasses are hidden,
+#define HIDEFACE          (1<<7)	// whether we appear as unknown.
+#define HIDETAIL          (1<<8)	// Exterior suits - to hide tail when wearing space suit or something similar.
 
-#define HIDEMASK	1	//APPLIES ONLY TO HELMETS/MASKS!!
-#define HIDEEARS	2	//APPLIES ONLY TO HELMETS/MASKS!! (ears means headsets and such)
-#define HIDEEYES	4	//APPLIES ONLY TO HELMETS/MASKS!! (eyes means glasses)
-#define HIDEFACE	8	//APPLIES ONLY TO HELMETS/MASKS!! Dictates whether we appear as unknown.
+//ITEM INVENTORY SLOT BITMASKS
+#define SLOT_FLAGS_OCLOTHING    (1<<0)
+#define SLOT_FLAGS_ICLOTHING    (1<<1)
+#define SLOT_FLAGS_GLOVES       (1<<2)
+#define SLOT_FLAGS_EYES         (1<<3)
+#define SLOT_FLAGS_EARS         (1<<4)
+#define SLOT_FLAGS_MASK         (1<<5)
+#define SLOT_FLAGS_HEAD         (1<<6)
+#define SLOT_FLAGS_FEET         (1<<7)
+#define SLOT_FLAGS_ID           (1<<8)
+#define SLOT_FLAGS_BELT         (1<<9)
+#define SLOT_FLAGS_BACK         (1<<10)
+#define SLOT_FLAGS_POCKET       (1<<11)    // This is to allow items with a w_class of 3 or 4 to fit in pockets.
+#define SLOT_FLAGS_DENYPOCKET   (1<<12)    // This is to deny items with a w_class of 2 or 1 to fit in pockets.
+#define SLOT_FLAGS_TWOEARS      (1<<13)
+#define SLOT_FLAGS_TIE          (1<<14)
 
 //slots
-#define slot_back        1
-#define slot_wear_mask   2
-#define slot_handcuffed  3
-#define slot_l_hand      4
-#define slot_r_hand      5
-#define slot_belt        6
-#define slot_wear_id     7
-#define slot_l_ear       8
-#define slot_glasses     9
-#define slot_gloves      10
-#define slot_head        11
-#define slot_shoes       12
-#define slot_wear_suit   13
-#define slot_w_uniform   14
-#define slot_l_store     15
-#define slot_r_store     16
-#define slot_s_store     17
-#define slot_in_backpack 18
-#define slot_legcuffed   19
-#define slot_r_ear       20
-#define slot_legs        21
-#define slot_tie         22
+#define SLOT_BACK          1
+#define SLOT_WEAR_MASK     2
+#define SLOT_HANDCUFFED    3
+#define SLOT_L_HAND        4
+#define SLOT_R_HAND        5
+#define SLOT_BELT          6
+#define SLOT_WEAR_ID       7
+#define SLOT_L_EAR         8
+#define SLOT_R_EAR         9
+#define SLOT_GLASSES       10
+#define SLOT_GLOVES        11
+#define SLOT_HEAD          12
+#define SLOT_SHOES         13
+#define SLOT_WEAR_SUIT     14
+#define SLOT_W_UNIFORM     15
+#define SLOT_L_STORE       16
+#define SLOT_R_STORE       17
+#define SLOT_S_STORE       18
+#define SLOT_IN_BACKPACK   19
+#define SLOT_LEGCUFFED     20
+#define SLOT_TIE           21
+#define SLOT_EARS          22 // Used in obscured checks
 
 //Sol translation for dog slots.
-#define slot_mouth slot_wear_mask  // 2
-#define slot_neck  slot_handcuffed // 3 (Ian actually is a cat! ~if you know what i mean)
+#define SLOT_MOUTH SLOT_WEAR_MASK  // 2
+#define SLOT_NECK  SLOT_HANDCUFFED // 3 (Ian actually is a cat! ~if you know what i mean)
 
 //Cant seem to find a mob bitflags area other than the powers one
 
@@ -53,6 +70,16 @@
 #define ARM_RIGHT		1024
 #define ARMS			1536
 #define FULL_BODY		1663
+
+// How much coverage(in percents) of each clothing part covers our body(aproximately)
+#define HEAD_COVERAGE    5
+#define FACE_COVERAGE    2
+#define EYES_COVERAGE    2
+#define MOUTH_COVERAGE   1
+#define CHEST_COVERAGE   30
+#define GROIN_COVERAGE   20
+#define ARMS_COVERAGE    10
+#define LEGS_COVERAGE    10
 
 // bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
 // Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()

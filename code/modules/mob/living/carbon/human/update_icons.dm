@@ -173,8 +173,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_damage_overlay(BP.limb_layer)
 	if(species.damage_mask && !(BP.status & ORGAN_DESTROYED))
 		var/image/standing = image("icon" = 'icons/mob/human_races/damage_overlays.dmi', "icon_state" = "[BP.body_zone]_[BP.damage_state]", "layer" = -DAMAGE_LAYER)
-		var/datum/dirt_cover/mob = new species.blood_color()
-		standing.color = mob.color
+		standing.color = species.blood_datum.color
 		overlays_damage[BP.limb_layer] = standing
 		apply_damage_overlay(BP.limb_layer)
 
@@ -326,8 +325,6 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/list/standing	= list()
 	if(dna)
 		switch(dna.mutantrace)
-			if("slime")
-				standing += image('icons/effects/genetics.dmi', null, "[dna.mutantrace][fat]_[gender]_[species.name]_s", -MUTANTRACE_LAYER)
 			if("golem" , "shadow")
 				standing += image('icons/effects/genetics.dmi', null, "[dna.mutantrace][fat]_[gender]_s", -MUTANTRACE_LAYER)
 
@@ -505,7 +502,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	else
 		if(blood_DNA)
 			var/image/bloodsies	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
-			bloodsies.color = hand_dirt_color.color
+			bloodsies.color = hand_dirt_datum.color
 			overlays_standing[GLOVES_LAYER]	= bloodsies
 
 	apply_overlay(GLOVES_LAYER)

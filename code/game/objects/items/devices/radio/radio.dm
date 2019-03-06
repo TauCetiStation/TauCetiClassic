@@ -27,10 +27,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	var/grid = FALSE // protect from EMP
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throw_speed = 2
 	throw_range = 9
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	g_amt = 25
 	m_amt = 75
 	var/const/FREQ_LISTENING = 1
@@ -830,7 +830,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio_grid
 	name = "Shielded grid"
 	desc = "A metal grid, attached to circuit to protect it from emitting."
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "radio_grid"
 

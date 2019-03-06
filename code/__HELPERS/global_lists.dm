@@ -32,6 +32,7 @@
 	sort_surgeries()
 
 	init_subtypes(/datum/crafting_recipe, crafting_recipes)
+	init_subtypes(/datum/dirt_cover, global.all_dirt_covers)
 
 	//Medical side effects. List all effects by their names
 	for(var/T in subtypesof(/datum/medical_effect))

@@ -82,7 +82,7 @@
 	var/xylophone = 0 //For the spoooooooky xylophone cooldown
 
 	var/mob/remoteview_target = null
-	var/datum/dirt_cover/hand_dirt_color
+	var/datum/dirt_cover/hand_dirt_datum
 
 	// Organs regenerating variables.
 	var/regenerating_organ_time = 0
@@ -99,3 +99,6 @@
 	var/robolimb_count = 0 // Number of robot limbs.
 	var/sightglassesmod = null
 	var/datum/personal_crafting/handcrafting
+
+	var/busy_left_hand = FALSE // See ambidextrous quirk and is_busy() override.
+	var/busy_right_hand = FALSE

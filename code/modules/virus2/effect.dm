@@ -282,7 +282,7 @@
 		M.reagents.metabolize(M) //this works even without a liver; it's intentional since the virus is metabolizing by itself
 	M.overeatduration = max(M.overeatduration - 2, 0)
 	var/lost_nutrition = 2
-	M.nutrition = max(M.nutrition - (lost_nutrition * M.metabolism_factor), 0) //Hunger depletes at 3x the normal speed
+	M.nutrition = max(M.nutrition - (lost_nutrition * M.get_metabolism_factor()), 0) //Hunger depletes at 2x the normal speed
 	if(prob(2))
 		to_chat(M, "<span class='notice'>You feel an odd gurgle in your stomach, as if it was working much faster than normal.</span>")
 	return 1
