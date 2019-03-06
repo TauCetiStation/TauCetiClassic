@@ -4,7 +4,7 @@
 	var/cost = 1 // Per dose delivered.
 	var/dose_size = 15
 
-	var/unlockable=0
+	var/unlockable = FALSE
 
 /datum/borer_chem/New()
 	if(!id)
@@ -74,13 +74,13 @@
 //	unlockable=1
 
 /datum/borer_chem/head/unlockable
-	unlockable=1
+	unlockable = TRUE
 /datum/borer_chem/chest/unlockable
-	unlockable=1
+	unlockable = TRUE
 /datum/borer_chem/arm/unlockable
-	unlockable=1
+	unlockable = TRUE
 /datum/borer_chem/leg/unlockable
-	unlockable=1
+	unlockable = TRUE
 
 /datum/borer_chem/head/unlockable/space_drugs
 	id = "space_drugs"
@@ -128,4 +128,8 @@
 
 /datum/borer_chem/leg/unlockable/synaptizine
 	id = "synaptizine"
+	cost = 2
+
+/datum/borer_chem/leg/unlockable/hyperzine
+	id = "hyperzine"
 	cost = 2

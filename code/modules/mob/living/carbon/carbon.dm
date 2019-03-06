@@ -549,9 +549,14 @@
 	set name = "Release Control"
 	set desc = "Release control of your host's body."
 
-	do_release_control(0)
+	do_release_control(FALSE)
 
-/mob/living/carbon/proc/do_release_control(var/rptext = 1)
+/mob/living/carbon/proc/do_release_control(rpt)
+	var/rptext
+	if(!rpt)
+		rptext = rpt
+	else
+		rptext = TRUE
 	var/mob/living/simple_animal/borer/B = has_brain_worms()
 
 	if(!B)
@@ -588,7 +593,7 @@
 		to_chat(B.host_brain, "<span class='danger'><FONT size=3>Horrific, burning agony lances through you, ripping a soundless scream from your trapped mind!</FONT></span>")
 
 //Check for brain worms in given limb.
-/mob/proc/has_brain_worms(var/host_region = BP_HEAD)
+/mob/proc/has_brain_worms(host_region = BP_HEAD)
 	for(var/I in contents)
 		if(isborer(I))
 			var/mob/living/simple_animal/borer/B = I

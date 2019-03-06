@@ -3,12 +3,13 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/borer_egg
 	name = "borer egg"
-	desc = "A small, gelatinous egg."
+	desc = "A small, gelatinous egg"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "borer egg-growing"
 	bitesize = 12
 	var/grown = FALSE
 	var/hatching = FALSE // So we don't spam ghosts.
+	var/hatched = FALSE
 	var/child_prefix_index = 1
 	var/last_ping_time = 0
 	var/ping_cooldown = 50
@@ -17,9 +18,12 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/borer_egg/atom_init()
-	.=..()
+	..()
 	last_ping_time = world.time
 	reagents.add_reagent("protein", 4)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/reagent_containers/food/snacks/borer_egg/atom_init_late()
 	spawn(rand(1200,1500))//the egg takes a while to "ripen"
 		Grow()
 
@@ -35,7 +39,6 @@
 	icon_state = "borer egg-triggered"
 	hatching = TRUE
 	src.visible_message("<span class='notice'>The [name] pulsates and quivers, looks like it will hatch soon!</span>")
-	//recruiter.request_player()
 	request_player()
 	sleep(300)
 	if(borer_candidates != null && borer_candidates.len)
@@ -46,7 +49,10 @@
 		B.transfer_personality(C)
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 		borer_candidates.Remove(C)
-		qdel(src)
+		hatching = FALSE
+		hatched = TRUE
+		icon_state = "borer egg-hatched"
+		desc += " looks like it already hatched"
 	else
 		borer_candidates = list()
 		src.visible_message("<span class='notice'>\The [name] calms down.</span>")
@@ -66,13 +72,7 @@
 	if(meets_conditions)
 		src.Hatch()
 
-/obj/item/weapon/reagent_containers/food/snacks/borer_egg/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype( W, /obj/item/toy/crayon ))
-		return
-	else
-		..()
-
-/obj/item/weapon/reagent_containers/food/snacks/borer_egg/attack_ghost(var/mob/dead/observer/O)
+/obj/item/weapon/reagent_containers/food/snacks/borer_egg/attack_ghost(mob/dead/observer/O)
 	if(last_ping_time + ping_cooldown <= world.time)
 		visible_message(message = "<span class='notice'>\The [src] wriggles vigorously.</span>")
 		last_ping_time = world.time
@@ -94,14 +94,15 @@
 				question(C)
 
 /obj/item/weapon/reagent_containers/food/snacks/borer_egg/proc/question(client/C)
-	spawn(0)
-		if(!C)	return
-		var/response = alert(C, "A cortical borer is hatching. Do you wish to play as one?", "Cortical borer request", "Ignore this egg", "Yes", "Never for this round")
-		if(response == "Yes")
-			borer_candidates.Add(C)
-		else if (response == "Never for this round")
-			C.prefs.ignore_question += "borer"
-		else if (response == "Ignore this egg")
-			borer_ignore.Add(C)
+	//spawn(0)
+	if(!C)
+		return
+	var/response = alert(C, "A cortical borer is hatching. Do you wish to play as one?", "Cortical borer request", "Ignore this egg", "Yes", "Never for this round")
+	if(response == "Yes")
+		borer_candidates.Add(C)
+	else if (response == "Never for this round")
+		C.prefs.ignore_question += "borer"
+	else if (response == "Ignore this egg")
+		borer_ignore.Add(C)
 
 #undef BORER_EGG_RERECRUITE_DELAY

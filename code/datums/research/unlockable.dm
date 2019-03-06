@@ -1,59 +1,58 @@
 /datum/unlockable
 	var/id = "" // Used in prerequisites.
-	var/name=""
-	var/desc=""
-	var/cost=0 // Cost to unlock
-	var/cost_units=""
-	var/time=0 // Time to unlock
-	var/unlocked=0
-	//var/remove_on_detach=1
+	var/name = ""
+	var/desc = ""
+	var/cost = 0 // Cost to unlock
+	var/cost_units = ""
+	var/time = 0 // Time to unlock
+	var/unlocked = FALSE
 
-	var/list/prerequisites=list() //these must be unlocked for the unlockable to be accessible
-	var/list/antirequisites=list() //these must NOT be unlocked for the unlockable to be accessible
+	var/list/prerequisites = list() //these must be unlocked for the unlockable to be accessible
+	var/list/antirequisites = list() //these must NOT be unlocked for the unlockable to be accessible
 	var/datum/research_tree/tree
 
 // CALL BEFORE USING ANY OTHER PROCS.
-/datum/unlockable/proc/set_context(var/datum/research_tree/T)
+/datum/unlockable/proc/set_context(datum/research_tree/T)
 	tree = T
 
 /datum/unlockable/proc/check_prerequisites()
-	if(prerequisites.len>0)
+	if(prerequisites.len > 0)
 		for(var/prereq in prerequisites)
 			if(!(prereq in tree.unlocked))
-				return 0
-	return 1
+				return FALSE
+	return TRUE
 
 /datum/unlockable/proc/check_antirequisites()
-	if(antirequisites.len>0)
+	if(antirequisites.len > 0)
 		for(var/antireq in antirequisites)
 			if(antireq in tree.unlocked)
-				return 0
-	return 1
+				return FALSE
+	return TRUE
 
 // INTERNAL: Begin unlocking process.
 /datum/unlockable/proc/unlock()
 	if(tree.unlocking)
-		return 0
+		return FALSE
 
 	begin_unlock()
 
 	// Lock tree
-	tree.unlocking=1
+	tree.unlocking = TRUE
 	if(unlock_check())
 		sleep(time) // do_after has too many human-specific checks that don't work on a glorified datum.
 		            //  We don't have hands, and we can't control if the host moves.
 		if(unlock_check())
 			unlock_action()
 			end_unlock()
-			unlocked=1
-	tree.unlocking=0
-	return 1
+			unlocked = TRUE
+	tree.unlocking = FALSE
+	return TRUE
 
 // INTERNAL: Relock
 /datum/unlockable/proc/relock()
-	unlocked=0
+	unlocked = FALSE
 	relock_action()
-	return 1
+	return TRUE
 
 // Do this, then wait and unlock.
 /datum/unlockable/proc/begin_unlock()
@@ -74,6 +73,9 @@
 		<th>
 			[cost][cost_units]
 		</th>
+		<th>
+			[time / 10]
+		</th>
 	</tr>
 	<tr>
 		<td colspan="3">[desc]</td>
@@ -84,7 +86,7 @@
  * @returns Can unlock
  */
 /datum/unlockable/proc/unlock_check()
-	return 0
+	return FALSE
 
 /**
  * What to do when unlocked.

@@ -785,17 +785,17 @@
 			"<span class='danger'>You attempt to remember who you are and how the heck did you get here (this will probably take a while).</span>")
 		to_chat(B.host, "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>")
 
-		spawn(rand(350,450)+B.host.brainloss)
+		spawn(rand(350, 450) + B.host.brainloss)
 
 			if(!B || !B.controlling)
 				return
 
-			B.host.adjustBrainLoss(rand(5,10))
+			B.host.adjustBrainLoss(rand(5, 10))
 			to_chat(src, "<span class='danger'>With an immense exertion of will, you regain control of your body!</span>")
 			to_chat(B.host, "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>")
 
 			var/mob/living/carbon/C = B.host
-			C.do_release_control(0) // Was detach().
+			C.do_release_control(0)
 
 			return
 

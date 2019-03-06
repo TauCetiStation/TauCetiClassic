@@ -6,16 +6,20 @@
 	var/list/usable_unlocks = list()
 	var/list/avail_unlocks = list()
 	var/list/unlocked = list()
-	var/unlocking=0
+	var/unlocking = FALSE
 
 /datum/research_tree/proc/get_avail_unlocks()
 	CRASH("SOME GIT CALLED /datum/research_tree/get_avail_unlocks()! Check for ..() in [type]/get_avail_unlocks()!")
 	return list()
 
 // CALL EXTERNALLY ONLY: Sets context.
-/datum/research_tree/proc/get(var/id, var/only_usable=0)
-	var/list/all_unlocks
+/datum/research_tree/proc/get(id_in, only_usable)
+	var/id = id_in
+	var/ou = FALSE
 	if(only_usable)
+		ou = TRUE
+	var/list/all_unlocks
+	if(ou)
 		all_unlocks = usable_unlocks
 	else
 		all_unlocks = avail_unlocks
@@ -33,8 +37,8 @@
 			continue
 		U.set_context(src)
 		if(!U.unlocked && U.can_buy(src) && U.check_prerequisites(src) && U.check_antirequisites(src))
-			usable_unlocks[U.id]="\ref[U]"
-		avail_unlocks[U.id]="\ref[U]"
+			usable_unlocks[U.id] = "\ref[U]"
+		avail_unlocks[U.id] = "\ref[U]"
 
 /datum/research_tree/proc/start_table()
 	return "<table class=\"prettytable\"><thead><th>Name</th><th>Cost</th><th>Time</th></thead>"
@@ -42,13 +46,13 @@
 /datum/research_tree/proc/end_table()
 	return "</table>"
 
-/datum/research_tree/proc/display(var/mob/user)
-//	testing("Entering display...")
+/datum/research_tree/proc/display(mob/user_in)
+	var/mob/user = user_in
 	var/html = "<h2>[title]</h2><p>[blurb]</p>"
 	html += start_table()
 	load_usable_unlocks()
 	for(var/id in usable_unlocks)
-		var/datum/unlockable/U=locate(usable_unlocks[id])
+		var/datum/unlockable/U = locate(usable_unlocks[id])
 		U.set_context(src)
 		html += U.toTableRow(src,user)
 	html += end_table()
@@ -57,7 +61,8 @@
 	popup.set_content(html)
 	popup.open()
 
-/datum/research_tree/proc/close(var/mob/user)
+/datum/research_tree/proc/close(mob/user_in)
+	var/mob/user = user_in
 	user << browse(null,"window=\ref[src]_research")
 
 /datum/research_tree/Topic(href, href_list)

@@ -2,8 +2,8 @@
 	name = "host brain"
 	real_name = "host brain"
 
-/mob/living/captive_brain/say(var/message)
-
+/mob/living/captive_brain/say(m)
+	var/message = m
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "<span class='warning'>You cannot speak in IC (muted).</span>")

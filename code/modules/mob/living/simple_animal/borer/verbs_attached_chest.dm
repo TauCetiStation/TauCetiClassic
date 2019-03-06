@@ -1,25 +1,26 @@
-/obj/item/verbs/borer/attached_chest/verb/borer_speak(var/message as text)
+/obj/item/verbs/borer/attached_chest/verb/borer_speak(message as text)
 	set category = "Alien"
 	set name = "Borer Speak"
 	set desc = "Communicate with your brethren."
 
 	if(!message)
 		return
+	var/msg = message
 
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-	message = capitalize(message)
+	msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+	msg = capitalize(msg)
 
-	var/mob/living/simple_animal/borer/B=loc
+	var/mob/living/simple_animal/borer/B = loc
 	if(!istype(B))
 		return
-	B.borer_speak(message)
+	B.borer_speak(msg)
 
 /obj/item/verbs/borer/attached_chest/verb/evolve()
 	set category = "Alien"
 	set name = "Evolve"
 	set desc = "Upgrade yourself or your host."
 
-	var/mob/living/simple_animal/borer/B=loc
+	var/mob/living/simple_animal/borer/B = loc
 	if(!istype(B))
 		return
 	B.evolve()
@@ -29,7 +30,7 @@
 	set name = "Secrete Chemicals"
 	set desc = "Push some chemicals into your host's bloodstream."
 
-	var/mob/living/simple_animal/borer/B=loc
+	var/mob/living/simple_animal/borer/B = loc
 	if(!istype(B))
 		return
 	B.secrete_chemicals()
@@ -39,7 +40,7 @@
 	set name = "Abandon Host"
 	set desc = "Slither out of your host."
 
-	var/mob/living/simple_animal/borer/B=loc
+	var/mob/living/simple_animal/borer/B = loc
 	if(!istype(B))
 		return
 	B.abandon_host()
@@ -49,7 +50,7 @@
 	set name = "Advanced Host Analysis"
 	set desc = "An in-depth check of the host's physical status."
 
-	var/mob/living/simple_animal/borer/B=loc
+	var/mob/living/simple_animal/borer/B = loc
 	if(!istype(B))
 		return
 	B.advanced_analyze_host()
@@ -81,8 +82,6 @@
 		"health" = H.health,
 		"virus_present" = H.virus2.len,
 		"rads" = H.radiation,
-		//"radtick" = H.rad_tick,
-		//"radstage" = H.get_rad_stage(),
 		"cloneloss" = H.getCloneLoss(),
 		"brainloss" = H.getBrainLoss(),
 		"paralysis" = H.paralysis,
@@ -274,105 +273,3 @@
 	if(occ["sdisabilities"] & NEARSIGHTED)
 		dat += text("<font color='red'>Retinal misalignment detected.</font><BR>")
 	return dat
-
-/*/obj/item/verbs/borer/attached_chest/brute_resist/verb/brute_resist()
-	set category = "Alien"
-	set name = "Brute Damage Resistance"
-	set desc = "Expend chemicals constantly in order to mitigate brute damage done to your host."
-
-	var/mob/living/simple_animal/borer/B=loc
-	if(!istype(B))
-		return
-	B.brute_resist()
-
-/mob/living/simple_animal/borer/proc/brute_resist()
-	set category = "Alien"
-	set name = "Brute Damage Resistance"
-	set desc = "Expend chemicals constantly in order to mitigate brute damage done to your host."
-
-	var/damage_reduction = 0.25
-
-	if(!check_can_do(0))
-		return
-
-	if(channeling && !channeling_brute_resist)
-		to_chat(src, "<span class='warning'>You can't do this while your focus is directed elsewhere.</span>")
-		return
-	else if(channeling)
-		to_chat(src, "You cease your efforts to elevate your host's physical damage resistance.")
-		channeling = 0
-		channeling_brute_resist = 0
-	else if(chemicals < 5)
-		to_chat(src, "<span class='warning'>You don't have enough chemicals stored to do this.</span>")
-		return
-	else
-		to_chat(src, "You begin to focus your efforts on elevating your host's resistance to physical damage.")
-		channeling = 1
-		channeling_brute_resist = 1
-		host.brute_damage_modifier -= damage_reduction
-		spawn()
-			var/time_spent_channeling = 0
-			while(chemicals >=5 && channeling && channeling_brute_resist)
-				chemicals -= 5
-				time_spent_channeling++
-				sleep(10)
-			host.brute_damage_modifier += damage_reduction
-			channeling = 0
-			channeling_brute_resist = 0
-			var/showmessage = 0
-			if(chemicals < 5)
-				to_chat(src, "<span class='warning'>You lose consciousness as the last of your chemicals are expended.</span>")
-			else
-				showmessage = 1
-			passout(time_spent_channeling, showmessage)
-
-/obj/item/verbs/borer/attached_chest/burn_resist/verb/burn_resist()
-	set category = "Alien"
-	set name = "Burn Damage Resistance"
-	set desc = "Expend chemicals constantly in order to mitigate burn damage done to your host."
-
-	var/mob/living/simple_animal/borer/B=loc
-	if(!istype(B))
-		return
-	B.burn_resist()
-
-/mob/living/simple_animal/borer/proc/burn_resist()
-	set category = "Alien"
-	set name = "Burn Damage Resistance"
-	set desc = "Expend chemicals constantly in order to mitigate burn damage done to your host."
-
-	var/damage_reduction = 0.25
-
-	if(!check_can_do(0))
-		return
-
-	if(channeling && !channeling_burn_resist)
-		to_chat(src, "<span class='warning'>You can't do this while your focus is directed elsewhere.</span>")
-		return
-	else if(channeling)
-		to_chat(src, "You cease your efforts to elevate your host's physical damage resistance.")
-		channeling = 0
-		channeling_burn_resist = 0
-	else if(chemicals < 5)
-		to_chat(src, "<span class='warning'>You don't have enough chemicals stored to do this.</span>")
-		return
-	else
-		to_chat(src, "You begin to focus your efforts on elevating your host's resistance to physical damage.")
-		channeling = 1
-		channeling_burn_resist = 1
-		host.burn_damage_modifier -= damage_reduction
-		spawn()
-			var/time_spent_channeling = 0
-			while(chemicals >=5 && channeling && channeling_burn_resist)
-				chemicals -= 5
-				time_spent_channeling++
-				sleep(10)
-			host.burn_damage_modifier += damage_reduction
-			channeling = 0
-			channeling_burn_resist = 0
-			var/showmessage = 0
-			if(chemicals < 5)
-				to_chat(src, "<span class='warning'>You lose consciousness as the last of your chemicals are expended.</span>")
-			else
-				showmessage = 1
-			passout(time_spent_channeling, showmessage)*/
