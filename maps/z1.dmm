@@ -126,10 +126,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/recharger,
-/obj/item/weapon/paper{
-	info = "Directions:<br><i>First you'll want to make sure there is a target stake in the center of the magnetic platform. Next, take an aluminum target from the crates back there and slip it into the stake. Make sure it clicks! Next, there should be a control console mounted on the wall somewhere in the room.<br><br> This control console dictates the behaviors of the magnetic platform, which can move your firing target around to simulate real-world combat situations. From here, you can turn off the magnets or adjust their electromagnetic levels and magnetic fields. The electricity level dictates the strength of the pull - you will usually want this to be the same value as the speed. The magnetic field level dictates how far the magnetic pull reaches.<br><br>Speed and path are the next two settings. Speed is associated with how fast the machine loops through the designated path. Paths dictate where the magnetic field will be centered at what times. There should be a pre-fabricated path input already. You can enable moving to observe how the path affects the way the stake moves. To script your own path, look at the following key:</i><br><br>N: North<br>S: South<br>E: East<br>W: West<br>C: Center<br>R: Random (results may vary)<br>; or &: separators. They are not necessary but can make the path string better visible.";
-	name = "Firing Range Instructions"
-	},
+/obj/item/weapon/paper/firing_range,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -3967,10 +3964,7 @@
 "agD" = (
 /obj/structure/table,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/paper{
-	info = "4 Deployable Barriers<br>3 Portable Flashers + Wrench <br>3 Sets of Riot Armor <br>3 Bulletproof Vests <br>3 Ablative Vests <br>1 Bomb Suit <br>1 Biohazard Suit <br>1 Chemical Implant Kit <br>1 Tracking Implant Kit <br>1 Loyalty Implant Kit <br>1 Death Alarm Implant Kit <br>1 Box of Spare Handcuffs <br>1 Box of flashbangs <br>1 Box of spare R.O.B.U.S.T. cartridges <br>3 Riot shields <br>3 Stun Batons <br>3 Energy Guns <br>3 Laser Rifles <br>2 Ion Rifles <br>6 Security Masks <br>1 Grenade Launcher <br>2 Boxes of teargas grenades";
-	name = "Armory Inventory"
-	},
+/obj/item/weapon/paper/brig_arsenal,
 /obj/item/toy/cards{
 	layer = 4.1
 	},
