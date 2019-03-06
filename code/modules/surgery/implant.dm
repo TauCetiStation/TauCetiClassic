@@ -210,7 +210,7 @@
 				var/mob/living/simple_animal/borer/worm = obj
 				if(worm.controlling)
 					target.release_control()
-				worm.detatch()
+				worm.detach()
 
 			if(obj)
 				obj.loc = get_turf(target)

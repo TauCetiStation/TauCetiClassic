@@ -531,19 +531,22 @@
 
 //Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()
-
 	set category = "Alien"
 	set name = "Release Control"
 	set desc = "Release control of your host's body."
 
+	do_release_control(0)
+
+/mob/living/carbon/proc/do_release_control(var/rptext = 1)
 	var/mob/living/simple_animal/borer/B = has_brain_worms()
 
 	if(!B)
 		return
 
 	if(B.controlling)
-		to_chat(src, "<span class='danger'>You withdraw your probosci, releasing control of [B.host_brain].</span>")
-		to_chat(B.host_brain, "<span class='danger'>Your vision swims as the alien parasite releases control of your body.</span>")
+		if(rptext)
+			to_chat(src, "<span class='danger'>You withdraw your probosci, releasing control of [B.host_brain]</span>")
+			to_chat(B.host_brain, "<span class='danger'>Your vision swims as the alien parasite releases control of your body.</span>")
 		B.ckey = ckey
 		B.controlling = 0
 	if(B.host_brain.ckey)
@@ -554,7 +557,6 @@
 
 	verbs -= /mob/living/carbon/proc/release_control
 	verbs -= /mob/living/carbon/proc/punish_host
-	verbs -= /mob/living/carbon/proc/spawn_larvae
 
 //Brain slug proc for tormenting the host.
 /mob/living/carbon/proc/punish_host()
@@ -571,37 +573,21 @@
 		to_chat(src, "<span class='danger'>You send a punishing spike of psychic agony lancing into your host's brain.</span>")
 		to_chat(B.host_brain, "<span class='danger'><FONT size=3>Horrific, burning agony lances through you, ripping a soundless scream from your trapped mind!</FONT></span>")
 
-//Check for brain worms in head.
-/mob/proc/has_brain_worms()
-
+//Check for brain worms in given limb.
+/mob/proc/has_brain_worms(var/host_region = BP_HEAD)
 	for(var/I in contents)
-		if(istype(I,/mob/living/simple_animal/borer))
-			return I
+		if(isborer(I))
+			var/mob/living/simple_animal/borer/B = I
+			if(B.hostlimb == host_region)
+				return B
+	return FALSE
 
-	return 0
-
-/mob/living/carbon/proc/spawn_larvae()
-	set category = "Alien"
-	set name = "Reproduce"
-	set desc = "Spawn several young."
-
-	var/mob/living/simple_animal/borer/B = has_brain_worms()
-
-	if(!B)
-		return
-
-	if(B.chemicals >= 100)
-		to_chat(src, "<span class='danger'>Your host twitches and quivers as you rapdly excrete several larvae from your sluglike body.</span>")
-		visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>")
-		B.chemicals -= 100
-
-		new /obj/effect/decal/cleanable/vomit(get_turf(src))
-		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
-		new /mob/living/simple_animal/borer(get_turf(src))
-
-	else
-		to_chat(src, "<span class='info'>You do not have enough chemicals stored to reproduce.</span>")
-		return
+/mob/proc/get_brain_worms()
+	var/list/borers_in_mob = list()
+	for(var/I in contents)
+		if(isborer(I))
+			borers_in_mob.Add(I)
+	return borers_in_mob
 
 /mob/living/carbon/proc/uncuff()
 	if(handcuffed)

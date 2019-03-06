@@ -149,6 +149,8 @@
 		larva_hud()
 	else if(isalien(mymob))
 		alien_hud()
+	else if(isborer(mymob))
+		borer_hud()
 	else if(isAI(mymob))
 		ai_hud()
 	else if(isrobot(mymob))

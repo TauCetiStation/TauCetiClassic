@@ -136,3 +136,38 @@
 	popup.set_content(dat)
 	popup.open()
 
+/datum/hud/proc/borer_hud()
+
+	src.adding = list()
+	src.other = list()
+	//var/obj/screen/using
+
+	mymob.healths = new /obj/screen()
+	//mymob.healths = getFromPool(/obj/abstract/screen)
+	mymob.healths.icon = 'icons/mob/screen1_borer.dmi'
+	mymob.healths.icon_state = "borer_health0"
+	mymob.healths.name = "health"
+	mymob.healths.screen_loc = ui_alien_health
+
+
+
+	mymob.zone_sel = new /obj/screen/zone_sel()
+	mymob.zone_sel.overlays.Cut()
+	mymob.zone_sel.overlays += image("icon" = 'icons/mob/zone_sel.dmi', "icon_state" = text("[]", mymob.zone_sel.selecting))
+
+	mymob.client.screen = list()
+
+	//mymob.client.screen += list( mymob.zone_sel, mymob.healths, mymob.pullin) //, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list(mymob.healths, mymob.zone_sel)
+	mymob.client.screen += src.adding + src.other
+	mymob.client.screen += mymob.client.void
+
+
+
+
+	//mymob.zone_sel.icon = 'icons/mob/screen1_borer.dmi'
+	//mymob.zone_sel.overlays.len = 0
+	//mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
+
+	//mymob.client.reset_screen()
+

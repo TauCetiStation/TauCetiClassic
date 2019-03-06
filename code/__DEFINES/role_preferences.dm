@@ -13,6 +13,8 @@
 #define ROLE_PAI               "pAI"
 #define ROLE_CULTIST           "Cultist"
 #define ROLE_BLOB              "Blob"
+#define ROLE_BORER             "Cortical Borer"
+
 #define ROLE_NINJA             "Ninja"
 #define ROLE_RAIDER            "Raider"
 #define ROLE_PLANT             "Diona"
@@ -36,6 +38,7 @@ var/global/list/special_roles = list(
 	ROLE_PAI,
 	ROLE_CULTIST,
 	ROLE_BLOB ,
+	ROLE_BORER,
 	ROLE_NINJA,
 	ROLE_RAIDER,
 	ROLE_PLANT,

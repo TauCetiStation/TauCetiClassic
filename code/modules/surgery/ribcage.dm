@@ -392,7 +392,7 @@
 	var/mob/living/simple_animal/borer/borer = target.has_brain_worms()
 
 	if(borer)
-		borer.detatch()
+		borer.detach()
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
