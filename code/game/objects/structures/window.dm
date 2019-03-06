@@ -293,22 +293,6 @@
 			playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 			shatter()
 
-	else if(istype(W, /obj/item/stack/cable_coil) && reinf && state == 0 && !istype(src, /obj/structure/window/reinforced/polarized) && !is_fulltile())
-		var/obj/item/stack/cable_coil/C = W
-		if (C.use(1))
-			playsound(src.loc, 'sound/effects/sparks1.ogg', 75, 1)
-			user.visible_message( \
-				"<span class='notice'>\The [user] begins to wire \the [src] for electrochromic tinting.</span>",
-				"<span class='notice'>You begin to wire \the [src] for electrochromic tinting.</span>",
-				"You hear sparks.")
-			if(do_after(user, 20 * C.toolspeed, src) && state == 0)
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				var/obj/structure/window/reinforced/polarized/P = new(loc, dir)
-				P.health = health
-				P.state = state
-				P.anchored = anchored
-				qdel(src)
-
 	else
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			take_damage(W.force)
@@ -548,10 +532,10 @@
 
 /obj/structure/window/reinforced/polarized/proc/toggle()
 	if(opacity)
-		animate(src, color="#FFFFFF", time=5)
+		icon_state = "fwindow"
 		set_opacity(0)
 	else
-		animate(src, color="#222222", time=5)
+		icon_state = "twindowold"
 		set_opacity(1)
 
 /obj/machinery/windowtint/attack_hand(mob/user as mob)
