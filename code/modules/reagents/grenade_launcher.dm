@@ -51,7 +51,7 @@
 	message_admins("[key_name_admin(user)] fired a grenade ([F.name]) from a grenade launcher ([src.name]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 	log_game("[key_name_admin(user)] used a grenade ([src.name]).")
 	F.active = 1
-	F.icon_state = initial(icon_state) + "_active"
+	F.icon_state = initial(F.icon_state) + "_active"
 	playsound(user.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 	spawn(15)
 		F.prime()

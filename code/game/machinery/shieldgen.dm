@@ -318,7 +318,7 @@
 	icon_state = "Shield_Gen"
 	anchored = FALSE
 	density = TRUE
-	req_access = list(access_teleporter, access_xenoarch)
+	req_access = list(access_research)
 	flags = CONDUCT
 	use_power = 0
 	var/active = FALSE
@@ -534,14 +534,16 @@
 
 //////////////Containment Field START
 /obj/machinery/shieldwall
-		name = "Shield"
+		name = "energy shield"
 		desc = "An energy shield."
 		icon = 'icons/effects/effects.dmi'
-		icon_state = "shieldwall"
+		icon_state = "energyshield"
 		anchored = 1
 		density = 1
+		layer = INFRONT_MOB_LAYER
 		unacidable = 1
 		light_range = 3
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		var/needs_power = 0
 		var/active = 1
 //		var/power = 10
@@ -621,9 +623,34 @@
 	if(air_group || (height==0)) return 1
 
 	if(istype(mover) && mover.checkpass(PASSGLASS))
-		return prob(20)
+		if(prob(20))
+			if(istype(mover, /obj/item/projectile))
+				var/obj/item/projectile/P = mover
+				visible_message("<span class='warning'><b>\The [P.name] flies through the \the [src.name].</b><span>")
+				P.damage -= 10
+			return TRUE
+		else
+			if(istype(mover, /obj/item/projectile))
+				visible_message("<span class='warning'>\The [mover] hits the \the [src.name].<span>")
+			return FALSE
 	else
-		if (istype(mover, /obj/item/projectile))
-			return prob(10)
+		if(istype(mover, /obj/item/projectile))
+			var/obj/item/projectile/P = mover
+			if(P.damage > 15)
+				if(prob(10))
+					visible_message("<span class='warning'><b>\The [P.name] flies through the \the [src.name].<span></b>")
+					P.damage -= 10
+					return TRUE
+				else
+					visible_message("<span class='warning'>\The [P.name] hits the \the [src.name].<span>")
+					return FALSE
+			else
+				if(prob(5))
+					visible_message("<span class='warning'><b>\The [P.name] flies through the \the [src.name].</b><span>")
+					P.damage -= P.damage / 2
+					return TRUE
+				else
+					visible_message("<span class='warning'>\The [P.name] hits the \the [src.name].<span>")
+					return FALSE
 		else
 			return !src.density

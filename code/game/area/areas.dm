@@ -98,8 +98,17 @@ var/list/ghostteleportlocs = list()
 
 	. = ..()
 
-	if(dynamic_lighting)
-		luminosity = FALSE
+	if(requires_power)
+		luminosity = 0
+	else
+		if(dynamic_lighting == DYNAMIC_LIGHTING_FORCED)
+			dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+			luminosity = 0
+		else if(dynamic_lighting != DYNAMIC_LIGHTING_IFSTARLIGHT)
+			dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	if(dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
+		dynamic_lighting = config.starlight ? DYNAMIC_LIGHTING_ENABLED : DYNAMIC_LIGHTING_DISABLED
+
 
 	power_change() // all machines set to current power level, also updates lighting icon
 

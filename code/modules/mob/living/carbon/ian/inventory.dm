@@ -168,7 +168,7 @@
 			name = "Hoppy"
 			emote_see = list("twitches its nose", "hops around a bit")
 			desc = "This is hoppy. It's a corgi-...urmm... bunny rabbit"
-		if(/obj/item/clothing/head/beret, /obj/item/clothing/head/collectable/beret)
+		if(/obj/item/clothing/head/beret/red, /obj/item/clothing/head/collectable/beret)
 			name = "Yann"
 			desc = "Mon dieu! C'est un chien!"
 			speak = list("le woof!", "le bark!", "JAPPE!!")

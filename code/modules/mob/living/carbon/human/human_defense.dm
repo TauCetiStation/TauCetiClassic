@@ -450,7 +450,7 @@
 	if(!BP || (BP.status & ORGAN_DESTROYED))
 		return NOLIMB
 
-	var/list/items = get_equipped_items()
+	var/list/items = get_equipped_items() - list(l_hand, r_hand)
 	for(var/obj/item/clothing/C in items)
 		if((C.flags & THICKMATERIAL) && (C.body_parts_covered & BP.body_part))
 			if(C.flags & PHORONGUARD) // this means, clothes has injection port or smthing like that.

@@ -5,6 +5,8 @@
 	desc = "A wall-mounted flashbulb device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
+	light_color = LIGHT_COLOR_WHITE
+	light_power = FLASH_LIGHT_POWER
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/disable = FALSE
@@ -34,11 +36,9 @@
 	if ( powered() )
 		stat &= ~NOPOWER
 		icon_state = "[base_state]1"
-//		src.sd_SetLuminosity(2)
 	else
 		stat |= ~NOPOWER
 		icon_state = "[base_state]1-p"
-//		src.sd_SetLuminosity(0)
 
 //Don't want to render prison breaks impossible
 /obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user)
@@ -67,6 +67,7 @@
 
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	flick("[base_state]_flash", src)
+	flash_lighting_fx(FLASH_LIGHT_RANGE, light_power, light_color)
 	src.last_flash = world.time
 	use_power(1000)
 
