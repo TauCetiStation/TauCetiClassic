@@ -126,6 +126,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/recharger,
+/obj/item/weapon/paper/firing_range,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
