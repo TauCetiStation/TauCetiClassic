@@ -64,11 +64,13 @@
 	return
 
 
-/datum/unlockable/proc/toTableRow(var/datum/research_tree/tree, var/mob/user)
+/datum/unlockable/proc/toTableRow(datum/research_tree/tree, mob/user)
+	var/datum/research_tree/T = tree
+	var/mob/U = user
 	return {"
 	<tr>
 		<th>
-			<a href="?src=\ref[tree];user=\ref[user];unlock=[id]">[name]</a>
+			<a href="?src=\ref[T];user=\ref[U];unlock=[id]">[name]</a>
 		</th>
 		<th>
 			[cost][cost_units]

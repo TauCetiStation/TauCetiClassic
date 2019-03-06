@@ -109,7 +109,8 @@
 	return host_data
 
 
-/mob/living/simple_animal/borer/proc/format_host_data(var/list/occ)
+/mob/living/simple_animal/borer/proc/format_host_data(list/occ_in)
+	var/list/occ = occ_in
 	var/dat = "<font color='blue'><b>Host Statistics:</b></font><br>"
 	var/aux
 
@@ -130,7 +131,7 @@
 	dat += text("[]\tGenetic Tissue Damage %: []</font><br>", (occ["cloneloss"] < 1 ?"<font color='blue'>" : "<font color='red'>"), occ["cloneloss"])
 	dat += text("[]\tApprox. Brain Damage %: []</font><br>", (occ["brainloss"] < 1 ?"<font color='blue'>" : "<font color='red'>"), occ["brainloss"])
 	dat += text("Paralysis Summary %: [] ([] seconds left!)<br>", occ["paralysis"], round(occ["paralysis"] / 4))
-	dat += text("Body Temperature: [occ["bodytemp"]-T0C]&deg;C ([occ["bodytemp"]*1.8-459.67]&deg;F)<br><HR>")
+	dat += text("Body Temperature: [occ["bodytemp"] - T0C]&deg;C ([occ["bodytemp"]*1.8 - 459.67]&deg;F)<br><HR>")
 
 	if(occ["borer_present_head"])
 		var/mob/living/simple_animal/borer/B = occ["borer_present_head"]
