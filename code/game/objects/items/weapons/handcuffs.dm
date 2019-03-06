@@ -5,9 +5,9 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "handcuff"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 2
 	throw_range = 5
 	m_amt = 500
@@ -39,44 +39,36 @@
 		to_chat(user, "\red You need to have a firm grip on [C] before you can put \the [src] on!")
 
 /obj/item/weapon/handcuffs/proc/place_handcuffs(mob/living/carbon/target, mob/user)
-	playsound(src.loc, cuff_sound, 30, 1, -2)
-
-	if (ishuman(target))
-		var/mob/living/carbon/human/H = target
-		H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to handcuff [H.name] ([H.ckey])</font>")
-		msg_admin_attack("[key_name(user)] attempted to handcuff [key_name(H)]")
-
-		var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
-		O.source = user
-		O.target = H
-		O.item = user.get_active_hand()
-		O.s_loc = user.loc
-		O.t_loc = H.loc
-		O.place = "handcuff"
-		H.requests += O
-		spawn( 0 )
-			feedback_add_details("handcuffs","H")
-			O.process()
+	if(user.is_busy(target))
 		return
 
-	if (ismonkey(target))
-		var/mob/living/carbon/monkey/M = target
-		var/obj/effect/equip_e/monkey/O = new /obj/effect/equip_e/monkey(  )
-		O.source = user
-		O.target = M
-		O.item = user.get_active_hand()
-		O.s_loc = user.loc
-		O.t_loc = M.loc
-		O.place = "handcuff"
-		M.requests += O
-		spawn( 0 )
-			O.process()
-		return
+	playsound(src, cuff_sound, 30, 1, -2)
 
-	if (isIAN(target))
-		var/mob/living/carbon/ian/IAN = target
-		IAN.un_equip_or_action(user, "Neck", user.get_active_hand())
+	if (ishuman(target) || isIAN(target) || ismonkey(target))
+		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")
+		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to handcuff [target.name] ([target.ckey])</font>")
+		msg_admin_attack("[key_name(user)] attempted to handcuff [key_name(target)]")
+
+		if(do_mob(user, target, HUMAN_STRIP_DELAY) && mob_can_equip(target, SLOT_HANDCUFFED))
+			if(!isrobot(user) && !isIAN(user) && user != target)
+				var/grabbing = FALSE
+				for (var/obj/item/weapon/grab/G in target.grabbed_by)
+					if (G.loc == user && G.state >= GRAB_AGGRESSIVE)
+						grabbing = TRUE
+						break
+				if (!grabbing)
+					to_chat(user, "<span class='warning'>Your grasp was broken before you could restrain [target]!</span>")
+					return
+
+			var/obj/item/weapon/handcuffs/cuffs = src
+			if(!dispenser)
+				user.remove_from_mob(cuffs)
+			else
+				cuffs = new type
+
+			target.equip_to_slot(cuffs, SLOT_HANDCUFFED, TRUE)
+			target.attack_log += "\[[time_stamp()]\] <font color='orange'>[user.name] ([user.ckey]) placed on our [target.slot_id_to_name(SLOT_HANDCUFFED)] ([cuffs])</font>"
+			user.attack_log += "\[[time_stamp()]\] <font color='red'>Placed on [target.name]'s ([target.ckey]) [target.slot_id_to_name(SLOT_HANDCUFFED)] ([cuffs])</font>"
 
 /obj/item/weapon/handcuffs/cable
 	name = "cable restraints"
@@ -113,17 +105,5 @@
 	dispenser = 1
 
 /obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
-	if(ishuman(C))
-		var/mob/living/carbon/human/target = C
-		if(!target.can_use_two_hands(FALSE))
-			return
 	if(!C.handcuffed)
-		var/turf/p_loc = user.loc
-		var/turf/p_loc_m = C.loc
-		playsound(src.loc, cuff_sound, 30, 1, -2)
-		user.visible_message("\red <B>[user] is trying to put handcuffs on [C]!</B>")
-		spawn(30)
-			if(!C)	return
-			if(p_loc == user.loc && p_loc_m == C.loc)
-				C.handcuffed = new /obj/item/weapon/handcuffs(C)
-				C.update_inv_handcuffed()
+		place_handcuffs(C, user)

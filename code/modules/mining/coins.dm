@@ -5,7 +5,7 @@
 	flags = CONDUCT
 	force = 0.0
 	throwforce = 0.0
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	var/string_attached
 	var/sides = 2
 

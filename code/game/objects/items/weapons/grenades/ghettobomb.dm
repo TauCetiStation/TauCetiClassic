@@ -1,14 +1,14 @@
 /obj/item/weapon/grenade/iedcasing
 	name = "improvised explosive"
 	desc = "A weak, improvised incendiary device."
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/makeshift.dmi'
 	icon_state = "improvised_grenade"
 	item_state = "flashbang"
 	throw_speed = 4
 	throw_range = 20
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	active = 0
 	det_time = 50
 	var/range = 3

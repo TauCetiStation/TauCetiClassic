@@ -139,7 +139,7 @@
 		helmet.loc = src
 		to_chat(H, "\blue You retract your hardsuit helmet.")
 
-	else if(H.equip_to_slot_if_possible(helmet, slot_head))
+	else if(H.equip_to_slot_if_possible(helmet, SLOT_HEAD))
 		helmet.canremove = 0
 		to_chat(H, "<span class='notice'>You deploy your hardsuit helmet, sealing you off from the world.</span>")
 		return
@@ -318,7 +318,7 @@
 
 /obj/item/clothing/head/helmet/space/rig/syndi/equipped(mob/user, slot)
 	. = ..()
-	if(slot == slot_head)
+	if(slot == SLOT_HEAD)
 		equipped_on_head = TRUE
 		update_icon(user)
 
@@ -337,14 +337,15 @@
 		set_light(0)
 
 /obj/item/clothing/head/helmet/space/rig/syndi/update_icon(mob/user)
-	user.overlays -= lamp
-	if(equipped_on_head && camera && (on || combat_mode))
-		lamp = image(icon = 'icons/mob/nuclear_helm_overlays.dmi', icon_state = "terror[combat_mode ? "_combat" : ""]_glow", layer = ABOVE_LIGHTING_LAYER)
-		lamp.plane = LIGHTING_PLANE + 1
-		lamp.alpha = on ? 255 : 127
-		user.overlays += lamp
 	icon_state = "rig[on]-syndie[combat_mode ? "-combat" : ""]"
-	user.update_inv_head()
+	if(user)
+		user.overlays -= lamp
+		if(equipped_on_head && camera && (on || combat_mode))
+			lamp = image(icon = 'icons/mob/nuclear_helm_overlays.dmi', icon_state = "terror[combat_mode ? "_combat" : ""]_glow", layer = ABOVE_LIGHTING_LAYER)
+			lamp.plane = LIGHTING_PLANE + 1
+			lamp.alpha = on ? 255 : 127
+			user.overlays += lamp
+		user.update_inv_head()
 
 /obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
 	if(camera)

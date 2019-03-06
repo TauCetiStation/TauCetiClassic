@@ -2,11 +2,11 @@
 /obj/machinery/artifact_analyser
 	name = "Anomaly Analyser"
 	desc = "Studies the emissions of anomalous materials to discover their uses."
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/machinery.dmi'
 	icon_state = "xenoarch_console"
-	anchored = 1
-	density = 0
-	var/scan_in_progress = 0
+	anchored = TRUE
+	density = FALSE
+	var/scan_in_progress = FALSE
 	var/scan_num = 0
 	var/obj/scanned_obj
 	var/obj/machinery/artifact_scanpad/owned_scanner = null
@@ -58,18 +58,20 @@
 
 /obj/machinery/artifact_analyser/process()
 	if(scan_in_progress && world.time > scan_completion_time)
-		//finish scanning
-		scan_in_progress = 0
+		// finish scanning
+		scan_in_progress = FALSE
 		updateDialog()
 
-		//print results
+		// print results
 		var/results = ""
 		if(!owned_scanner)
 			reconnect_scanner()
 		if(!owned_scanner)
 			results = "Error communicating with scanner."
+			playsound(src, 'sound/machines/buzz-two.ogg', 20, 1)
 		else if(!scanned_object || scanned_object.loc != owned_scanner.loc)
 			results = "Unable to locate scanned object. Ensure it was not moved in the process."
+			playsound(src, 'sound/machines/buzz-two.ogg', 20, 1)
 		else
 			results = get_scan_info(scanned_object)
 		owned_scanner.icon_state = "xenoarch_scanner"
@@ -79,9 +81,11 @@
 		P.info = "<b>[src] analysis report #[report_num]</b><br>"
 		P.info += "<br>"
 		P.info += "[bicon(scanned_object)] [results]"
+		P.update_icon()
 
 		var/obj/item/weapon/stamp/S = new
 		S.stamp_paper(P)
+		playsound(src, 'sound/items/polaroid1.ogg', 50, 1)
 
 		if(scanned_object && istype(scanned_object, /obj/machinery/artifact))
 			var/obj/machinery/artifact/A = scanned_object
@@ -89,6 +93,8 @@
 
 /obj/machinery/artifact_analyser/Topic(href, href_list)
 	if(href_list["close"])
+		var/keyboard = pick('sound/machines/keyboard1.ogg', 'sound/machines/keyboard1.ogg')
+		playsound(src, keyboard, 50, 1)
 		usr.unset_machine(src)
 		usr << browse(null, "window=artanalyser")
 		return FALSE
@@ -98,6 +104,8 @@
 		return
 
 	if(href_list["begin_scan"])
+		var/keyboard = pick('sound/machines/keyboard1.ogg', 'sound/machines/keyboard1.ogg')
+		playsound(src, keyboard, 50, 1)
 		if(!owned_scanner)
 			reconnect_scanner()
 		if(owned_scanner)
@@ -116,6 +124,7 @@
 
 				if(artifact_in_use)
 					src.visible_message("<b>[name]</b> states, \"Cannot harvest. Too much interference.\"")
+					playsound(src, 'sound/machines/buzz-two.ogg', 20, 1)
 				else
 					scanned_object = O
 					scan_in_progress = 1
@@ -127,13 +136,15 @@
 			if(!scanned_object)
 				src.visible_message("<b>[name]</b> states, \"Unable to isolate scan target.\"")
 	if(href_list["halt_scan"])
+		var/keyboard = pick('sound/machines/keyboard1.ogg', 'sound/machines/keyboard1.ogg')
+		playsound(src, keyboard, 50, 1)
 		owned_scanner.icon_state = "xenoarch_scanner"
 		scan_in_progress = 0
 		src.visible_message("<b>[name]</b> states, \"Scanning halted.\"")
 
 	updateDialog()
 
-//hardcoded responses, oh well
+// hardcoded responses, oh well
 /obj/machinery/artifact_analyser/proc/get_scan_info(obj/scanned_obj)
 	switch(scanned_obj.type)
 		if(/obj/machinery/auto_cloner)
@@ -162,15 +173,15 @@
 			phasing suggested?"
 		if(/obj/machinery/power/crystal)
 			return "Crystal formation - Pseudo organic crystalline matrix, unlikely to have formed naturally. No known technology exists to synthesize this exact composition. \
-			Attention: energetic excitement is noticed. The appearance of current is possible. Connect the crystal to the network, using wrench and wires on it."
+			Attention: energetic excitement is noticed. The appearance of current is possible. Connect the crystal to the network, using wrench and wires on it. Make sure there is a cable underneath."
 		if(/obj/machinery/artifact)
-			//the fun one
+			// the fun one
 			var/obj/machinery/artifact/A = scanned_obj
 			var/out = "Anomalous alien device - Composed of an unknown alloy, "
 
-			//primary effect
+			// primary effect
 			if(A.my_effect)
-				//what kind of effect the artifact has
+				// what kind of effect the artifact has
 				switch(A.my_effect.effect_type)
 					if(1)
 						out += "concentrated energy emissions"
@@ -190,7 +201,7 @@
 						out += "low level energy emissions"
 				out += " have been detected "
 
-				//how the artifact does it's effect
+				// how the artifact does it's effect
 				switch(A.my_effect.effect)
 					if(1)
 						out += " emitting in an ambient energy field."
@@ -208,13 +219,13 @@
 				else
 					out += " Unable to determine any data about activation trigger."
 
-			//secondary:
+			// secondary:
 			if(A.secondary_effect && A.secondary_effect.activated)
-				//sciencey words go!
+				// sciencey words go!
 				out += "<br><br>Warning, internal scans indicate ongoing [pick("subluminous","subcutaneous","superstructural")] activity operating \
 				independantly from primary systems. Auxiliary activity involves "
 
-				//what kind of effect the artifact has
+				// what kind of effect the artifact has
 				switch(A.secondary_effect.effect_type)
 					if(1)
 						out += "concentrated energy emissions"
@@ -233,7 +244,7 @@
 					else
 						out += "low level radiation"
 
-				//how the artifact does it's effect
+				// how the artifact does it's effect
 				switch(A.secondary_effect.effect)
 					if(1)
 						out += " emitting in an ambient energy field."
@@ -255,5 +266,5 @@
 					out += " Unable to determine any data about activation trigger."
 			return out
 		else
-			//it was an ordinary item
+			// it was an ordinary item
 			return "[scanned_obj.name] - Mundane application, composed of carbo-ferritic alloy composite."

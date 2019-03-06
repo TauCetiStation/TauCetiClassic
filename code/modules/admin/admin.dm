@@ -3,11 +3,11 @@ var/global/BSACooldown = 0
 
 
 ////////////////////////////////
-/proc/message_admins(msg)
+proc/message_admins(msg, reg_flag = R_ADMIN)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
 	log_adminwarn(msg)
 	for(var/client/C in admins)
-		if(C.holder.rights & R_ADMIN)
+		if(C.holder.rights & reg_flag)
 			to_chat(C, msg)
 
 /proc/msg_admin_attack(text) //Toggleable Attack Messages
@@ -57,7 +57,8 @@ var/global/BSACooldown = 0
 		<b>Mob type</b> = [M.type]<br><br>
 		<b>GeoIP:</b> <A href='?src=\ref[src];geoip=\ref[M]'>Get</A> |
 		<b>List of CIDs:</b> <A href='?src=\ref[src];cid_list=\ref[M]'>Get</A> (<A href='?src=\ref[src];cid_ignore=\ref[M]'>Ignore Warning</A>)<br>
-		<b>Related accounts by IP and cid</b>: <A href='?src=\ref[src];related_accounts=\ref[M]'>Get</A><br><br>
+		<b>Related accounts by IP and cid</b>: <A href='?src=\ref[src];related_accounts=\ref[M]'>Get</A><br>
+		<b>BYOND profile</b>: <A target='_blank' href='http://byond.com/members/[M.ckey]'>[M.ckey]</A><br><br>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
 		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
 		<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> |
@@ -720,7 +721,7 @@ var/global/BSACooldown = 0
 	var/message = sanitize(input("Global message to send:", "Admin Announce", null, null)  as message, 500, extra = 0)
 
 	if(message)
-		to_chat(world, "<b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n <span class='tabulated italic emojify linkify'>[message]</span>")
+		to_chat(world, "<span class='admin_announce'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n <span class='italic emojify linkify'>[message]</span></span>")
 		log_admin("Announce: [key_name(usr)] : [message]")
 		feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

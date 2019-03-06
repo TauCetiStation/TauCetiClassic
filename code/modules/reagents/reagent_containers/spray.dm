@@ -5,7 +5,7 @@
 	icon_state = "cleaner"
 	item_state = "cleaner"
 	flags = OPENCONTAINER | NOBLUDGEON
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
 	w_class = ITEM_SIZE_SMALL
 	throw_speed = 2
@@ -346,7 +346,7 @@
 /obj/item/weapon/reagent_containers/spray/waterflower
 	name = "water flower"
 	desc = "A seemingly innocent sunflower...with a twist."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
 	item_state = "sunflower"
 	amount_per_transfer_from_this = 1
@@ -365,7 +365,7 @@
 	icon_state = "chemsprayer"
 	item_state = "chemsprayer"
 	throwforce = 3
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	possible_transfer_amounts = null
 	volume = 600
 	origin_tech = "combat=3;materials=3;engineering=3"

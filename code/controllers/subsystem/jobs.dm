@@ -379,7 +379,7 @@ var/datum/subsystem/job/SSjob
 						// This is a miserable way to fix the loadout overwrite bug, but the alternative requires
 						// adding an arg to a bunch of different procs. Will look into it after this merge. ~ Z
 						metadata = H.client.prefs.gear[G.display_name]
-						if(G.slot == slot_wear_mask || G.slot == slot_wear_suit || G.slot == slot_head)
+						if(G.slot == SLOT_WEAR_MASK || G.slot == SLOT_WEAR_SUIT || G.slot == SLOT_HEAD)
 							custom_equip_leftovers += thing
 						else if(H.equip_to_slot_or_del(G.spawn_item(H, metadata), G.slot))
 							to_chat(H, "<span class='notice'>Equipping you with \the [thing]!</span>")
@@ -473,19 +473,24 @@ var/datum/subsystem/job/SSjob
 			else
 				switch(H.backbag) //BS12 EDIT
 					if(1)
-						H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
+						H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), SLOT_R_HAND)
 					if(2)
 						var/obj/item/weapon/storage/backpack/BPK = new(H)
 						new /obj/item/weapon/storage/box/survival(BPK)
-						H.equip_to_slot_or_del(BPK, slot_back,1)
+						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 					if(3)
 						var/obj/item/weapon/storage/backpack/satchel/norm/BPK = new(H)
 						new /obj/item/weapon/storage/box/survival(BPK)
-						H.equip_to_slot_or_del(BPK, slot_back,1)
+						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 					if(4)
 						var/obj/item/weapon/storage/backpack/satchel/BPK = new(H)
 						new /obj/item/weapon/storage/box/survival(BPK)
-						H.equip_to_slot_or_del(BPK, slot_back,1)
+						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
+
+	// Happy Valentines day!
+	if(Holiday == "Valentine's Day")
+		for(var/obj/item/weapon/storage/backpack/BACKP in H)
+			new /obj/item/weapon/storage/fancy/heart_box(BACKP)
 
 	//Give custom items
 	give_custom_items(H, job)
@@ -515,7 +520,7 @@ var/datum/subsystem/job/SSjob
 		to_chat(H, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
 
 	spawnId(H, rank, alt_title)
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_l_ear)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), SLOT_L_EAR)
 
 //		H.update_icons()
 
@@ -552,9 +557,9 @@ var/datum/subsystem/job/SSjob
 		if(H.mind && H.mind.initial_account)
 			C.associated_account_number = H.mind.initial_account.account_number
 
-		H.equip_to_slot_or_del(C, slot_wear_id)
+		H.equip_to_slot_or_del(C, SLOT_WEAR_ID)
 
-	H.equip_to_slot_or_del(new /obj/item/device/pda(H), slot_belt)
+	H.equip_to_slot_or_del(new /obj/item/device/pda(H), SLOT_BELT)
 	if(locate(/obj/item/device/pda,H))
 		var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
 		pda.owner = H.real_name

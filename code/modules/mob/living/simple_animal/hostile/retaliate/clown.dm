@@ -38,6 +38,8 @@
 	cold_damage_per_tick = 10	//same as heat_damage_per_tick, only if the bodytemperature it's lower than minbodytemp
 	unsuitable_atoms_damage = 10
 
+	animalistic = FALSE
+
 /mob/living/simple_animal/hostile/clown //Here's CopyPasta!!
 	name = "Clown"
 	desc = "Here's clownny!"

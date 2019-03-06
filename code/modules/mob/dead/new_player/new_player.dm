@@ -448,8 +448,8 @@ commented cause polls are kinda broken now, needs refactoring */
 
 	src << browse(entity_ja(dat), "window=manifest;size=370x420;can_close=1")
 
-/mob/dead/new_player/Move()
-	return 0
+/mob/dead/new_player/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	return FALSE
 
 /mob/dead/new_player/proc/close_spawn_windows()
 	src << browse(null, "window=latechoices") //closes late choices window

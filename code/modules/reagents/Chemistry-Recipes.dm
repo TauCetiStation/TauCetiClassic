@@ -384,6 +384,12 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(2, 1, location)
 	s.start()
+
+	var/range = created_volume / 3
+	if(isatom(holder.my_atom))
+		var/atom/A = holder.my_atom
+		A.flash_lighting_fx(_range = (range + 2), _reset_lighting = FALSE)
+
 	for(var/mob/living/carbon/M in viewers(world.view, location))
 		switch(get_dist(M, location))
 			if(0 to 3)

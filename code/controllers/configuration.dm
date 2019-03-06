@@ -140,6 +140,8 @@
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 	var/use_ingame_minutes_restriction_for_jobs = 0 //Do jobs use in-game minutes instead account age for restrictions?
 
+	var/add_player_age_value = 4000 //default minuts added with admin "Increase player age" button
+
 	var/byond_version_min = 0
 	var/byond_version_recommend = 0
 
@@ -176,6 +178,7 @@
 	var/obj/effect/statclick/statclick
 
 	var/craft_recipes_visibility = FALSE // If false, then users won't see crafting recipes in personal crafting menu until they have all required components and then it will show up.
+	var/starlight = FALSE	// Whether space turfs have ambient light or not
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -243,6 +246,9 @@
 
 				if ("use_ingame_minutes_restriction_for_jobs")
 					config.use_ingame_minutes_restriction_for_jobs = 1
+
+				if ("add_player_age_value")
+					config.add_player_age_value = text2num(value)
 
 				if ("log_ooc")
 					config.log_ooc = 1
@@ -643,6 +649,8 @@
 					config.organ_regeneration_multiplier = value / 100
 				if("craft_recipes_visibility")
 					config.craft_recipes_visibility = TRUE
+				if("starlight")
+					config.starlight = TRUE
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 

@@ -1,6 +1,6 @@
-
 /obj/mecha/working/hoverpod
 	name = "hover pod"
+	icon = 'icons/obj/xenoarchaeology/mecha.dmi'
 	icon_state = "engineering_pod"
 	desc = "Stubby and round, it has a human sized access hatch on the top."
 	wreckage = /obj/effect/decal/mecha_wreckage/hoverpod

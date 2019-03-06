@@ -24,16 +24,17 @@ would spawn and follow the beaker, even if it is carried or thrown.
 		reagents.delete()
 	return ..()
 
-/obj/effect/effect/water/Move(turf/newloc)
+/obj/effect/effect/water/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	//var/turf/T = src.loc
 	//if (istype(T, /turf))
 	//	T.firelevel = 0 //TODO: FIX
 	if (--src.life < 1)
-		//SN src = null
 		qdel(src)
-	if(newloc.density)
-		return 0
-	.=..()
+	if(isatom(NewLoc))
+		var/atom/A = NewLoc
+		if(A.density) // this is required to prevent bump with dense turf to stop reaction, which may lead to unintended water-leaking behavior.
+			return FALSE
+	return ..()
 
 /obj/effect/effect/water/Bump(atom/A)
 	if(reagents)
@@ -121,9 +122,12 @@ steam.start() -- spawns the effect
 /obj/effect/effect/sparks
 	name = "sparks"
 	icon_state = "sparks"
+	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	light_power = 1.3
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	light_color = LIGHT_COLOR_FIRE
 	var/amount = 6.0
-	anchored = 1.0
-	mouse_opacity = 0
 
 /obj/effect/effect/sparks/atom_init()
 	. = ..()
@@ -131,7 +135,7 @@ steam.start() -- spawns the effect
 	var/turf/T = loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
-	QDEL_IN(src, 100)
+	QDEL_IN(src, 20)
 
 /obj/effect/effect/sparks/Destroy()
 	var/turf/T = src.loc
@@ -139,12 +143,11 @@ steam.start() -- spawns the effect
 		T.hotspot_expose(1000,100)
 	return	..()
 
-/obj/effect/effect/sparks/Move()
-	..()
+/obj/effect/effect/sparks/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	var/turf/T = src.loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
-	return
 
 /datum/effect/effect/system/spark_spread
 	var/total_sparks = 0 // To stop it being spammed and lagging!
@@ -177,7 +180,6 @@ steam.start() -- spawns the effect
 			for(i=0, i<pick(1,2,3), i++)
 				sleep(5)
 				step(sparks,direction)
-			addtimer(CALLBACK(src, .proc/delete_sparks, sparks), 20)
 
 /datum/effect/effect/system/spark_spread/proc/delete_sparks(obj/effect/effect/sparks/sparks)
 	if(sparks)
@@ -194,9 +196,10 @@ steam.start() -- spawns the effect
 /obj/effect/effect/smoke
 	name = "smoke"
 	icon_state = "smoke"
-	opacity = 1
-	anchored = 0.0
-	mouse_opacity = 0
+	opacity = FALSE
+	anchored = FALSE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	layer = FLY_LAYER
 	var/amount = 6.0
 	var/time_to_live = 100
 
@@ -207,6 +210,7 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/smoke/atom_init()
 	. = ..()
+	set_opacity(TRUE)
 	QDEL_IN(src, time_to_live)
 
 /obj/effect/effect/smoke/Crossed(mob/living/carbon/M as mob )
@@ -228,8 +232,8 @@ steam.start() -- spawns the effect
 /obj/effect/effect/smoke/bad
 	time_to_live = 200
 
-/obj/effect/effect/smoke/bad/Move()
-	..()
+/obj/effect/effect/smoke/bad/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	for(var/mob/living/carbon/M in get_turf(src))
 		affect(M)
 
@@ -256,8 +260,8 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/smoke/sleepy
 
-/obj/effect/effect/smoke/sleepy/Move()
-	..()
+/obj/effect/effect/smoke/sleepy/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	for(var/mob/living/carbon/M in get_turf(src))
 		affect(M)
 
@@ -281,8 +285,8 @@ steam.start() -- spawns the effect
 	name = "mustard gas"
 	icon_state = "mustard"
 
-/obj/effect/effect/smoke/mustard/Move()
-	..()
+/obj/effect/effect/smoke/mustard/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	for(var/mob/living/carbon/human/R in get_turf(src))
 		affect(R)
 
@@ -470,10 +474,15 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/foam/atom_init(mapload, ismetal = 0)
 	. = ..()
-	icon_state = "[ismetal ? "m":""]foam"
 	metal = ismetal
+	MakeSlippery()
+	icon_state = "[metal ? "m" : ""]foam"
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
 	addtimer(CALLBACK(src, .proc/disolve_stage, 1), 3 + metal * 3)
+
+/obj/effect/effect/foam/proc/MakeSlippery()
+	if(!metal)
+		AddComponent(/datum/component/slippery, 5)
 
 /obj/effect/effect/foam/proc/disolve_stage(stage)
 	switch(stage)
@@ -537,23 +546,6 @@ steam.start() -- spawns the effect
 		flick("[icon_state]-disolve", src)
 		QDEL_IN(src, 5)
 
-/obj/effect/effect/foam/Crossed(var/atom/movable/AM)
-	if(metal)
-		return
-
-	if (istype(AM, /mob/living/carbon))
-		var/mob/M =	AM
-		if (istype(M, /mob/living/carbon/human) && (istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP) )
-			return
-		if( istype(M, /mob/living/carbon/human) && (istype(M:wear_suit, /obj/item/clothing/suit/space/rig) && M:wear_suit.flags&NOSLIP)	)
-			return
-
-		M.stop_pulling()
-		to_chat(M, "\blue You slipped on the foam!")
-		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-		M.Stun(5)
-		M.Weaken(2)
-
 
 /datum/effect/effect/system/foam_spread
 	var/amount = 5				// the size of the foam spread.
@@ -608,15 +600,16 @@ steam.start() -- spawns the effect
 /obj/structure/foamedmetal
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "metalfoam"
-	density = 1
-	opacity = 0
-	anchored = 1
+	density = TRUE
+	opacity = FALSE
+	anchored = TRUE
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	var/metal = 1		// 1=aluminum, 2=iron
 
 /obj/structure/foamedmetal/atom_init()
 	. = ..()
+	set_opacity(TRUE)
 	update_nearby_tiles(1)
 
 
@@ -664,7 +657,7 @@ steam.start() -- spawns the effect
 
 	if (istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
-		G.affecting.loc = src.loc
+		G.affecting.forceMove(loc)
 		for(var/mob/O in viewers(src))
 			if (O.client)
 				to_chat(O, "\red [G.assailant] smashes [G.affecting] through the foamed metal wall.")

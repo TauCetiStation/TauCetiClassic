@@ -1,3 +1,18 @@
+/mob/living/carbon/human/getHalLoss()
+	if(species.flags[NO_PAIN])
+		return 0
+	return ..()
+
+/mob/living/carbon/human/setHalLoss()
+	if(species.flags[NO_PAIN])
+		return
+	..()
+
+/mob/living/carbon/human/adjustHalLoss()
+	if(species.flags[NO_PAIN])
+		return
+	..()
+
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
 
 	def_zone = check_zone(def_zone)
@@ -435,7 +450,7 @@
 	if(!BP || (BP.status & ORGAN_DESTROYED))
 		return NOLIMB
 
-	var/list/items = get_equipped_items()
+	var/list/items = get_equipped_items() - list(l_hand, r_hand)
 	for(var/obj/item/clothing/C in items)
 		if((C.flags & THICKMATERIAL) && (C.body_parts_covered & BP.body_part))
 			if(C.flags & PHORONGUARD) // this means, clothes has injection port or smthing like that.

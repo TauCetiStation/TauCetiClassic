@@ -461,7 +461,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 #undef SAFE_PERP
 
 /proc/IsAdminGhost(mob/user)
-	if(!user) // Are they a mob? Auto interface updates call this with a null src
+	if(!istype(user)) // Are they a mob? Auto interface updates call this with a null src
 		return
 	if(!user.client) // Do they have a client?
 		return
@@ -483,3 +483,9 @@ var/list/intents = list("help","disarm","grab","hurt")
 			to_chat(src, "<span class='warning'>Please wait while someone else will finish interacting with [target].</span>")
 		return TRUE
 	return FALSE
+
+/mob/proc/become_busy(_hand = 0)
+	busy_with_action = TRUE
+
+/mob/proc/become_not_busy(_hand = 0)
+	busy_with_action = FALSE

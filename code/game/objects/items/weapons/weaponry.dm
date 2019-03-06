@@ -3,9 +3,9 @@
 	name = "banhammer"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "toyhammer"
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 7
 	throw_range = 15
 	attack_verb = list("banned")
@@ -19,14 +19,14 @@
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of paranormal phenomenae."
 	icon_state = "nullrod"
 	item_state = "nullrod"
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 15
 	throw_speed = 1
 	throw_range = 4
 	throwforce = 10
 	light_color = "#4c4cff"
 	light_power = 3
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	var/last_process = 0
 	var/datum/cult/reveal/power
 	var/static/list/scum
@@ -106,12 +106,12 @@
 	icon_state = "claymore"
 	item_state = "claymore"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 40
 	throwforce = 10
 	sharp = 1
 	edge = 1
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/claymore/Get_shield_chance()
@@ -135,12 +135,12 @@
 	icon_state = "katana"
 	item_state = "katana"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT | SLOT_BACK
+	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 	force = 40
 	throwforce = 10
 	sharp = 1
 	edge = 1
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/katana/suicide_act(mob/user)
@@ -163,7 +163,7 @@
 	item_state = "harpoon"
 	force = 20
 	throwforce = 15
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	attack_verb = list("jabbed","stabbed","ripped")
 
 /obj/item/weapon/switchblade
@@ -172,7 +172,7 @@
 	desc = "A sharp, concealable, spring-loaded knife."
 	flags = CONDUCT
 	force = 20
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 15
 	throw_speed = 3
 	throw_range = 6
@@ -187,14 +187,14 @@
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	if(extended)
 		force = 20
-		w_class = 3
+		w_class = ITEM_SIZE_NORMAL
 		throwforce = 15
 		icon_state = "switchblade_ext"
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
 	else
 		force = 1
-		w_class = 2
+		w_class = ITEM_SIZE_SMALL
 		throwforce = 5
 		icon_state = "switchblade"
 		attack_verb = list("stubbed", "poked")

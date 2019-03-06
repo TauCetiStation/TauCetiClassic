@@ -47,10 +47,10 @@
 				screen = 2
 				spark_system.set_up(5, 0, src)
 				src.spark_system.start()
-				var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey
-				MK.loc = src.loc
+				var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey(loc)
 				// Will help make emagging the console not so easy to get away with.
 				MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
+				MK.update_icon()
 				spawn(100*length(src.linkedServer.decryptkey)) UnmagConsole()
 				message = rebootmsg
 			else

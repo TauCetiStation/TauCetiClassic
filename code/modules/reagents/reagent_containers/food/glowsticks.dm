@@ -2,12 +2,12 @@
 /obj/item/weapon/reagent_containers/food/snacks/glowstick
 	name = "glowstick"
 	desc = ""
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/glowsticks.dmi'
 	icon_state = null
 	item_state = null
 	action_button_name = null	//just pull it manually, neckbeard.
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	light_power = 2
 	var/on = 0
 	var/colourName = null

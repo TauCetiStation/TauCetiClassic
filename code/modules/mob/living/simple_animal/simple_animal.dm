@@ -54,6 +54,8 @@
 
 	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
+	var/animalistic = TRUE // Determines whether the being here is an animal or nah.
+
 /mob/living/simple_animal/updatehealth()
 	return
 
@@ -235,22 +237,7 @@
 						O.show_message("\blue [M] [response_help] [src]")
 
 		if("grab")
-			if (M == src || anchored || M.lying)
-				return
-			if (!(status_flags & CANPUSH))
-				return
-
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
-
-			M.put_in_active_hand(G)
-
-			grabbed_by += G
-			G.synch()
-			LAssailant = M
-
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
+			M.Grab(src)
 
 		if("hurt", "disarm")
 			M.do_attack_animation(src)
@@ -271,23 +258,7 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
 		if ("grab")
-			if(M == src || anchored || M.lying)
-				return
-			if(!(status_flags & CANPUSH))
-				return
-
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
-
-			M.put_in_active_hand(G)
-
-			grabbed_by += G
-			G.synch()
-			LAssailant = M
-
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
+			M.Grab(src)
 
 		if("hurt", "disarm")
 			var/damage = rand(15, 30)
@@ -419,16 +390,18 @@
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
-		return 0
+		return FALSE
 	if (isliving(the_target))
 		var/mob/living/L = the_target
 		if(L.stat != CONSCIOUS)
-			return 0
+			return FALSE
+		if(animalistic && L.has_trait(TRAIT_NATURECHILD) && L.naturechild_check())
+			return FALSE
 	if (istype(the_target, /obj/mecha))
 		var/obj/mecha/M = the_target
 		if (M.occupant)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /mob/living/simple_animal/say(var/message)
 	if(stat)

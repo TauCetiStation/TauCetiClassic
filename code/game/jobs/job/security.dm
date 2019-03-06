@@ -22,28 +22,28 @@
 /datum/job/hos/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), slot_back)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), slot_back)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
+		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	if(H.gender == FEMALE)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security_fem(H), slot_w_uniform)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security_fem(H), SLOT_W_UNIFORM)
 	else
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
-	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(H), slot_glasses)
-	H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(H), slot_s_store)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), SLOT_GLOVES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(H), SLOT_GLASSES)
+	H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(H), SLOT_S_STORE)
 
 	if(visualsOnly)
 		return
 
-	H.equip_to_slot_or_del(new /obj/item/device/flash(H), slot_r_store)
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/hos(H), slot_l_ear)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/heads/hos(H), slot_belt)
+	H.equip_to_slot_or_del(new /obj/item/device/flash(H), SLOT_R_STORE)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/hos(H), SLOT_L_EAR)
+	H.equip_to_slot_or_del(new /obj/item/device/pda/heads/hos(H), SLOT_BELT)
 	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_l_store)
+		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), SLOT_L_STORE)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
+		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), SLOT_IN_BACKPACK)
 	var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)
 	L.inject(H)
 	START_PROCESSING(SSobj, L)
@@ -68,27 +68,27 @@
 /datum/job/warden/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), slot_back)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), slot_back)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
+		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	if(H.gender == FEMALE)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden_fem(H), slot_w_uniform)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden_fem(H), SLOT_W_UNIFORM)
 	else
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
-	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(H), slot_glasses)
-	H.equip_to_slot_or_del(new /obj/item/device/flash(H), slot_l_store)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), SLOT_GLOVES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(H), SLOT_GLASSES)
+	H.equip_to_slot_or_del(new /obj/item/device/flash(H), SLOT_L_STORE)
 
 	if(visualsOnly)
 		return
 
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_l_ear)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/warden(H), slot_belt)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), SLOT_L_EAR)
+	H.equip_to_slot_or_del(new /obj/item/device/pda/warden(H), SLOT_BELT)
 	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_l_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), SLOT_L_HAND)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
+		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), SLOT_IN_BACKPACK)
 
 	var/obj/item/weapon/implant/mindshield/L = new(H)
 	L.inject(H)
@@ -114,27 +114,27 @@
 /datum/job/detective/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), slot_back)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/det(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/det_suit(H), slot_wear_suit)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/det_hat(H), slot_head)
-	H.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(H), slot_l_store)
+		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/det(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), SLOT_GLOVES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/det_suit(H), SLOT_WEAR_SUIT)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/det_hat(H), SLOT_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(H), SLOT_L_STORE)
 
 	if(visualsOnly)
 		return
 
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_l_ear)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/detective(H), slot_belt)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), SLOT_L_EAR)
+	H.equip_to_slot_or_del(new /obj/item/device/pda/detective(H), SLOT_BELT)
 	if(H.backbag == 1)//Why cant some of these things spawn in his office?
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/evidence(H), slot_l_hand)
-		H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), slot_r_store)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/evidence(H), SLOT_L_HAND)
+		H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), SLOT_R_STORE)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/evidence(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), slot_in_backpack)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/evidence(H), SLOT_IN_BACKPACK)
+		H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), SLOT_IN_BACKPACK)
 
 	return TRUE
 
@@ -157,23 +157,23 @@
 /datum/job/officer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), slot_back)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), slot_back)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_s_store)
-	H.equip_to_slot_or_del(new /obj/item/device/flash(H), slot_l_store)
+		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), SLOT_S_STORE)
+	H.equip_to_slot_or_del(new /obj/item/device/flash(H), SLOT_L_STORE)
 
 	if(visualsOnly)
 		return
 
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_l_ear)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/security(H), slot_belt)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), SLOT_L_EAR)
+	H.equip_to_slot_or_del(new /obj/item/device/pda/security(H), SLOT_BELT)
 	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_l_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), SLOT_L_HAND)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
+		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), SLOT_IN_BACKPACK)
 
 	var/obj/item/weapon/implant/mindshield/L = new(H)
 	L.inject(H)
@@ -197,24 +197,24 @@
 /datum/job/forensic/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), slot_back)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/forensic_technician(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/red(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/forensics/red(H), slot_wear_suit)
+		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/forensic_technician(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/red(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), SLOT_GLOVES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/forensics/red(H), SLOT_WEAR_SUIT)
 
 	if(visualsOnly)
 		return
 
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_l_ear)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/forensic(H), slot_belt)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), SLOT_L_EAR)
+	H.equip_to_slot_or_del(new /obj/item/device/pda/forensic(H), SLOT_BELT)
 	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/evidence(H), slot_l_hand)
-		H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), slot_r_store)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/evidence(H), SLOT_L_HAND)
+		H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), SLOT_R_STORE)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/evidence(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), slot_in_backpack)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/evidence(H), SLOT_IN_BACKPACK)
+		H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), SLOT_IN_BACKPACK)
 
 	return TRUE

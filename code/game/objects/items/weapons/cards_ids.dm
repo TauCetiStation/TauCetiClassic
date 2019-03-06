@@ -13,7 +13,7 @@
 	name = "card"
 	desc = "Does card things."
 	icon = 'icons/obj/card.dmi'
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	var/associated_account_number = 0
 
 	var/list/files = list(  )
@@ -127,7 +127,7 @@
 	var/mining_points = 0 //For redeeming at mining equipment lockers
 	var/access = list()
 	var/registered_name = "Unknown" // The name registered_name on the card
-	slot_flags = SLOT_ID
+	slot_flags = SLOT_FLAGS_ID
 	var/customizable_view = UNIVERSAL_VIEW
 	var/blood_type = "\[UNSET\]"
 	var/dna_hash = "\[UNSET\]"

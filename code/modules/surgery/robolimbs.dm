@@ -136,7 +136,7 @@
 	allowed_tools = list(
 	/obj/item/robot_parts = 100,
 	/obj/item/weapon/organ/head/posi = 100)
-	allowed_species = list(IPC)
+	allowed_species = null
 
 	min_duration = 80
 	max_duration = 100
@@ -192,8 +192,6 @@
 
 /datum/surgery_step/ipc_limb/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
-		return FALSE
-	if(!(target.species && target.species.flags[IS_SYNTHETIC]))
 		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if (!BP)

@@ -7,10 +7,12 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
 	anchored = TRUE
+	idle_power_usage = 20
+	power_channel = LIGHT
 	var/on = TRUE
 	var/area/area = null
 	var/otherarea = null
-	//	luminosity = 1
+	var/static/image/overlay
 
 /obj/machinery/light_switch/atom_init()
 	..()
@@ -22,7 +24,8 @@
 	if(otherarea)
 		area = locate(text2path("/area/[otherarea]"))
 
-	if(!name)
+
+	if(name == initial(name))
 		name = "light switch ([area.name])"
 
 	on = area.lightswitch
@@ -31,13 +34,18 @@
 
 
 /obj/machinery/light_switch/proc/updateicon()
-	if(stat & NOPOWER)
+	if(!overlay)
+		overlay = image(icon, "light1-overlay")
+		overlay.plane = LIGHTING_PLANE + 1
+
+	overlays.Cut()
+	if(stat & (NOPOWER|BROKEN))
 		icon_state = "light-p"
+		set_light(0)
 	else
-		if(on)
-			icon_state = "light1"
-		else
-			icon_state = "light0"
+		icon_state = "light[on]"
+		overlay.icon_state = "light[on]-overlay"
+		overlays += overlay
 
 /obj/machinery/light_switch/examine(mob/user)
 	..()
@@ -53,15 +61,14 @@
 	user.SetNextMove(CLICK_CD_INTERACT)
 	playsound(src, 'sound/items/buttonclick.ogg', 20, 1, 1)
 
-	for(var/area/A in area.master.related)
-		A.lightswitch = on
-		A.updateicon()
+	area.lightswitch = on
+	area.updateicon()
 
-		for(var/obj/machinery/light_switch/L in A)
-			L.on = on
-			L.updateicon()
+	for(var/obj/machinery/light_switch/L in area)
+		L.on = on
+		L.updateicon()
 
-	area.master.power_change()
+	area.power_change()
 
 /obj/machinery/light_switch/power_change()
 

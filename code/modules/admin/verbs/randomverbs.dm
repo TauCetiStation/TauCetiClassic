@@ -35,8 +35,8 @@
 		M.loc = pick(prisonwarp)
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/prisoner = M
-			prisoner.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(prisoner), slot_w_uniform)
-			prisoner.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(prisoner), slot_shoes)
+			prisoner.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(prisoner), SLOT_W_UNIFORM)
+			prisoner.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(prisoner), SLOT_SHOES)
 		spawn(50)
 			to_chat(M, "\red You have been sent to the prison station!")
 		log_admin("[key_name(usr)] sent [key_name(M)] to the prison station.")
@@ -688,7 +688,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		log_admin("[key_name(usr)] deleted [O] at ([O.x],[O.y],[O.z])")
 		message_admins("[key_name_admin(usr)] deleted [O] at ([O.x],[O.y],[O.z])")
 		feedback_add_details("admin_verb","DEL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		qdel(O)
+		if(isturf(O))
+			var/turf/T = O
+			T.ChangeTurf(T.basetype)
+		else
+			qdel(O)
 
 /client/proc/cmd_admin_list_open_jobs()
 	set category = "Admin"
@@ -1093,6 +1097,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/obj/item/weapon/paper/P = new
 	P.name = sent_name
 	P.info = sent_text
+	P.update_icon()
 
 	if(stamp_type)
 		var/obj/item/weapon/stamp/S = new stamp_type
@@ -1107,3 +1112,36 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	feedback_add_details("admin_verb","FAXMESS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	message_admins("Fax message was created by [key_name_admin(usr)] and sent to [department]")
 	send2slack_custommsg("Fax message was created by [key_name_admin(usr)] and sent to [department]: [sent_text]")
+
+/client/proc/add_player_age()
+	set category = "Server"
+	set name = "Increase player age"
+	set desc = "Allow a new player to skip the job time restrictions."
+
+	if(!check_rights(R_VAREDIT))
+		return
+
+	if(!config.use_ingame_minutes_restriction_for_jobs)
+		return
+
+	var/client/target = input("Select player to increase his in-game age to [config.add_player_age_value] minutes") as null|anything in clients
+
+	if(!target)
+		return
+
+	var/value = config.add_player_age_value
+	if(check_rights(R_PERMISSIONS,0) && alert("As +PERMISSIONS user you can set custom value. Set custom?", "Custom age?", "Yes", "No") == "Yes")
+		value = input("Enter custom in-game age value") as num|null
+
+	if(!value)
+		return
+
+	if(target.player_ingame_age < value)
+		notes_add(target.ckey, "PLAYERAGE: increased in-game age from [target.player_ingame_age] to [value]", src)
+
+		log_admin("[key_name(usr)] increased [key_name(target)] in-game age from [target.player_ingame_age] to [value]")
+		message_admins("[key_name_admin(usr)] increased [key_name_admin(target)] in-game age from [target.player_ingame_age] to [value]")
+
+		target.player_ingame_age = value
+	else
+		to_chat(src, "This player already has more minutes than [value]!")

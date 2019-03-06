@@ -394,9 +394,9 @@
 	icon_state = "wonderprodStun"
 	item_state = "wonderprod"
 	origin_tech = "materials=6;combat=5;biotech=7"
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 7
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	action_button_name = "Toggle Mode"
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
@@ -611,19 +611,7 @@
 	if(!istype(C))
 		return
 	C.SetNextMove(CLICK_CD_MELEE)
-
-	if(istype(C.get_active_hand(),/obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = C.get_active_hand()
-		if(istype(C.l_hand, G))
-			C.drop_l_hand()
-		else
-			C.drop_r_hand()
-	if(istype(C.get_inactive_hand(),/obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = C.get_inactive_hand()
-		if(istype(C.l_hand, G))
-			C.drop_l_hand()
-		else
-			C.drop_r_hand()
+	C.StopGrabs()
 
 	holding = !holding
 
