@@ -30,9 +30,9 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			var/turf/simulated/floor/F
 			var/turf/shadowturf = get_turf(usr)
 			for(F in orange(1, usr))
-				new /obj/effect/alien/resin/wall/shadowling(F)
+				new /obj/structure/alien/resin/wall/shadowling(F)
 			//for(var/obj/structure/alien/resin/wall/shadowling/R in shadowturf) //extremely hacky
-			for(var/obj/effect/alien/resin/wall/shadowling/R in shadowturf)
+			for(var/obj/structure/alien/resin/wall/shadowling/R in shadowturf)
 				qdel(R)
 				//new /obj/structure/alien/weeds/node(shadowturf) //Dim lighting in the chrysalis -- removes itself with the chrysalis
 				new /obj/structure/alien/weeds/node(shadowturf)
@@ -65,7 +65,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 
 			to_chat(usr, "<i><b><font size=3>YOU LIVE!!!</i></b></font>")
 
-			for(var/obj/effect/alien/resin/wall/shadowling/W in orange(usr, 1))
+			for(var/obj/structure/alien/resin/wall/shadowling/W in orange(usr, 1))
 				playsound(W, 'sound/effects/splat.ogg', 50, 1)
 				qdel(W)
 			for(var/obj/structure/alien/weeds/node/N in shadowturf)
