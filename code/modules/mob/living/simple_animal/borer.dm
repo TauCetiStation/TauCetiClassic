@@ -28,8 +28,8 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	icon_dead = "brainslug_dead"
 	speed = 6
 	min_oxy = 16
-	minbodytemp = 223		//Below -50 Degrees Celcius
-	maxbodytemp = 323	//Above 50 Degrees Celcius
+	minbodytemp = 223 // Below -50 Degrees Celcius
+	maxbodytemp = 323 // Above 50 Degrees Celcius
 	layer = MOB_LAYER
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 1)
 	density = FALSE
@@ -125,7 +125,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 			if(chemicals < 250 && !channeling)
 				chemicals++
 			if(controlling && host.key)
-				if(prob(5))
+				if(prob(2))
 					host.adjustBrainLoss(rand(1,2))
 
 				if(prob(host.brainloss / 20))
@@ -423,7 +423,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 		to_chat(src, "<span class='danger'>You twitch your probosci.</span>")
 		to_chat(host, "<span class='danger'>You feel something twitch in your head, and get a horrible headache!</span>")
 		chemicals -= 30
-		host.adjustBrainLoss(15)
+		host.adjustBrainLoss(10)
 	else
 		to_chat(src, "<span class='info'>You do not have enough chemicals stored.</span>")
 		return()
