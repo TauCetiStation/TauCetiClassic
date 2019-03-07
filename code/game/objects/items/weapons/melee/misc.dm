@@ -25,3 +25,19 @@
 	throwforce = 10
 	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("stabbed", "jabbed", "iced,")
+
+/obj/item/weapon/combat_knife
+	name = "combat knife"
+	desc = "Small blade used for cutting, stabbing and killing if you've lost your primary weapon."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "combatknife"
+	item_state = "combatknife"
+	flags = CONDUCT
+	force = 10
+	sharp = 1
+	edge = 1
+	w_class = 2.0
+	throwforce = 10
+	m_amt = 7500
+	origin_tech = "materials=2;combat=2"
+	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced")
