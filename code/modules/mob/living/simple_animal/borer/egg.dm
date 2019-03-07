@@ -48,7 +48,7 @@
 	src.visible_message("<span class='notice'>The [name] pulsates and quivers, looks like it will hatch soon!</span>")
 	request_player()
 	sleep(300)
-	if(borer_candidates != null && borer_candidates.len)
+	if(borer_candidates.len)
 		var/client/C = pick(borer_candidates)
 		var/turf/T = get_turf(src)
 		src.visible_message("<span class='notice'>\The [name] bursts open!</span>")
@@ -57,13 +57,13 @@
 		if(is_neutered)
 			B.make_neutered()
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
-		borer_candidates.Remove(C)
 		hatching = FALSE
 		hatched = TRUE
 		icon_state = "borer egg-hatched"
 		name = "neutered borer"
 		desc += " looks like it already hatched"
 		to_chat(B, "<span class='info'>You have been conditioned to be as helpful to your host as possible, forcing you to never intentionally harm them.</span>")
+		borer_candidates.Remove(C)
 	else
 		borer_candidates = list()
 		src.visible_message("<span class='notice'>\The [name] calms down.</span>")
@@ -98,11 +98,10 @@
 			continue
 		if(O.client)
 			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find("borer") && (ROLE_BORER in C.prefs.be_role) && !borer_ignore.Find(C))
+			if(!C.prefs.ignore_question.Find("borer") && (ROLE_BORER in C.prefs.be_role) && !borer_ignore.Find(C) && !borer_candidates.Find(C))
 				question(C)
 
 /obj/item/weapon/reagent_containers/food/snacks/borer_egg/proc/question(client/C)
-	//spawn(0)
 	if(!C)
 		return
 	var/response = alert(C, "A cortical borer is hatching. Do you wish to play as one?", "Cortical borer request", "Ignore this egg", "Yes", "Never for this round")

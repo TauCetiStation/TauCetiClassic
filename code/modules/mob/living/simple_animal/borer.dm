@@ -20,7 +20,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	desc = "A small, quivering sluglike creature"
 	speak_emote = list("chirrups")
 	emote_hear = list("chirrups")
-	response_help  = "pokes the"
+	response_help  = "pets the"
 	response_disarm = "prods the"
 	response_harm   = "stomps on the"
 	icon_state = "brainslug"
@@ -46,7 +46,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 
 	var/chemicals = 10                      // Chemicals used for reproduction and spitting neurotoxin.
 	var/mob/living/carbon/human/host        // Human host for the brain worm.
-	var/hostlimb = null						// Which limb of the host is inhabited by the borer.
+	var/hostlimb = null                      // Which limb of the host is inhabited by the borer.
 	var/truename                            // Name used for brainworm-speak.
 	var/mob/living/captive_brain/host_brain // Used for swapping control of the body back and forth.
 	var/controlling                         // Used in human death check.
@@ -71,7 +71,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	var/list/borer_avail_unlocks_arm = list()
 	var/list/borer_avail_unlocks_leg = list()
 
-	var/channeling = FALSE //For abilities that require constant expenditure of chemicals.
+	var/channeling = FALSE // For abilities that require constant expenditure of chemicals.
 	var/channeling_night_vision = FALSE
 	var/channeling_bone_sword = FALSE
 	var/channeling_bone_shield = FALSE
@@ -98,7 +98,6 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	update_verbs(BORER_MODE_DETACHED)
 
 	research = new (src)
-
 	for(var/ultype in borer_unlock_types_head)
 		var/datum/unlockable/borer/head/U = new ultype()
 		if(U.id != "")
@@ -125,13 +124,12 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 				health += 0.5
 			if(chemicals < 250 && !channeling)
 				chemicals++
-			if(controlling)
+			if(controlling && host.key)
 				if(prob(5))
 					host.adjustBrainLoss(rand(1,2))
 
 				if(prob(host.brainloss / 20))
-					host.say("*[pick(list("blink", "blink_r", "choke", "aflap", "drool", "twitch", "twitch_s", "gasp"))]")
-
+					host.say("*[pick(list("blink", "choke", "drool", "twitch", "gasp"))]")
 	if(client)
 		regular_hud_updates()
 
@@ -374,10 +372,13 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	var/mob/living/carbon/C = host
 	if(istype(C, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = C
-		if(H.bodyparts_by_name[BP_HEAD].implants.Find(/obj/item/weapon/implant/mindshield) || H.bodyparts_by_name[BP_HEAD].implants.Find(/obj/item/weapon/implant/mindshield/loyalty))
-			to_chat(src, "<span class='info'>...But you feel something pushing back from the host's mind.</span>")
-			to_chat(host, "<span class='info'>You feel a slight tingling sensation coming from the inside of your head.</span>")
-			delay_mult = 1.5
+		if(H.bodyparts_by_name[BP_HEAD].implants.len)
+			var/bad_implants = list(/obj/item/weapon/implant/mindshield/loyalty, /obj/item/weapon/implant/mindshield)
+			for(var/I in H.bodyparts_by_name[BP_HEAD].implants)
+				if(is_type_in_list(I, bad_implants))
+					to_chat(src, "<span class='info'>...But you feel something pushing back from the host's mind.</span>")
+					to_chat(host, "<span class='info'>You feel a slight tingling sensation coming from the inside of your head.</span>")
+					delay_mult = 1.5
 
 	chemicals -= 150
 	spawn((300 + (host.brainloss * 5)) * delay_mult)
@@ -934,15 +935,16 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 
 
 /mob/living/simple_animal/borer/attack_ghost(mob/dead/observer/O)
+	var/deathtime = world.time - src.timeofdeath
 	if(!(src.key))
-		if(O.can_reenter_corpse)
+		if(deathtime >= 6000)
 			var/response = alert(O,"Do you want to take it over?","This borer has no soul","Yes","No")
 			if(response == "Yes")
 				if(!(src.key))
 					src.transfer_personality(O.client)
 				else if(src.key)
 					to_chat(src, "<span class='notice'>Somebody jumped your claim on this borer and is already controlling it. Try another </span>")
-		else if(!(O.can_reenter_corpse))
+		else
 			to_chat(O,"<span class='notice'>While the borer may be mindless, you have recently ghosted and thus are not allowed to take over for now.</span>")
 
 /mob/living/simple_animal/borer/proc/passout(wait_time, send_message)
