@@ -416,3 +416,4 @@
 	new /obj/item/clothing/glasses/sunglasses/sechud/tactical(src)
 	new /obj/item/weapon/storage/belt/security/tactical(src)
 	new /obj/item/clothing/shoes/workboots(src)
+	new /obj/item/weapon/combat_knife(src)
