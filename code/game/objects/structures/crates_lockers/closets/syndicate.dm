@@ -17,7 +17,7 @@
 	new /obj/item/clothing/gloves/combat(src)
 	new /obj/item/clothing/accessory/storage/syndi_vest(src)
 	new /obj/item/clothing/mask/gas/syndicate(src)
-
+	new /obj/item/weapon/combat_knife(src)
 
 /obj/structure/closet/syndicate/nuclear
 	desc = "It's a storage unit for nuclear-operative gear."
