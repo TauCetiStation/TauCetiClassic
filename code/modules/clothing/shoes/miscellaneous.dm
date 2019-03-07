@@ -22,6 +22,7 @@
 	icon_state = "swat"
 	item_state = "wjboots"
 	flags = NOSLIP
+	can_hold_knife = 1
 	siemens_coefficient = 0.6
 	clipped_status = CLIPPABLE
 
@@ -31,6 +32,7 @@
 	icon_state = "swat"
 	item_state = "wjboots"
 	flags = NOSLIP
+	can_hold_knife = 1
 	siemens_coefficient = 0.6
 	clipped_status = CLIPPABLE
 
@@ -44,6 +46,7 @@
 	desc = "When you REALLY want to turn up the heat<br>They have the toe caps cut off of them."
 	icon_state = "swat_cut"
 	clipped_status = CLIPPED
+	can_hold_knife = 1
 	species_restricted = list("exclude", DIONA, VOX)
 
 /obj/item/clothing/shoes/space_ninja
@@ -108,6 +111,7 @@
 	item_color = "hosred"
 	siemens_coefficient = 0.7
 	clipped_status = CLIPPABLE
+	can_hold_knife = 1
 
 /obj/item/clothing/shoes/cult
 	name = "boots"
@@ -116,6 +120,7 @@
 	item_state = "cult"
 	item_color = "cult"
 	siemens_coefficient = 0.7
+	can_hold_knife = 1
 
 	cold_protection = LEGS
 	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
@@ -173,6 +178,7 @@
 	name = "western boots"
 	icon_state = "western_boots"
 	item_color = "western_boots"
+	can_hold_knife = 1
 
 /obj/item/clothing/shoes/magboots/syndie
 	desc = "Light-weighted magnetic boots that have a custom syndicate paintjob for use in combat."
@@ -187,6 +193,7 @@
 	item_color = "workboots"
 	item_state = "b_shoes"  // need sprites for this
 	clipped_status = CLIPPABLE
+	can_hold_knife = 1
 
 /obj/item/clothing/shoes/roman
 	name = "roman sandals"
