@@ -20,8 +20,7 @@
 		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)
-	if(src)
-		usr.DblClickOn(src,params)
+	return
 
 /*
 	Standard mob ClickOn()

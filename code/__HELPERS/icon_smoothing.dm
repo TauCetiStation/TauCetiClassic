@@ -1,15 +1,17 @@
 
-//generic (by snowflake) tile smoothing code; smooth your icons with this!
+//generic (by snowflake) tile smoothing code; smooth your icons with this (modified for TauCetiClassic)!
 /*
-	Each tile is divided in 4 corners, each corner has an appearance associated to it; the tile is then overlayed by these 4 appearances
-	To use this, just set your atom's 'smooth' var to 1. If your atom can be moved/unanchored, set its 'can_be_unanchored' var to 1.
+	Main difference between tgstation's smoothing and this modified version, as each tile is no more devided in 4 corners,
+	Instead of overlays, single fulltile icon generated in the process which is similar to baystation's smoothing (why? overlays put more stress into client's renderer).
+	To use this, just set your atom's 'smooth' var to SMOOTH_TRUE (see other defines for that var for more control).
+	If your atom can be moved/unanchored, set its 'can_be_unanchored' var to TRUE.
 	If you don't want your atom's icon to smooth with anything but atoms of the same type, set the list 'canSmoothWith' to null;
 	Otherwise, put all types you want the atom icon to smooth with in 'canSmoothWith' INCLUDING THE TYPE OF THE ATOM ITSELF.
 
-	Each atom has its own icon file with all the possible corner states. See 'smooth_wall.dmi' for a template.
+	Each atom has its own source icon file with which is used in the process to generate proper icon states. See 'icons\turf\smooth_example\' folder for templates.
 
 	DIAGONAL SMOOTHING INSTRUCTIONS
-	To make your atom smooth diagonally you need all the proper icon states (see 'smooth_wall.dmi' for a template) and
+	To make your atom smooth diagonally you need all the proper icon states (see 'smooth_wall_diagonal.dmi' for a template) and
 	to add the 'SMOOTH_DIAGONAL' flag to the atom's smooth var (in addition to either SMOOTH_TRUE or SMOOTH_MORE).
 
 	For turfs, what appears under the diagonal corners depends on the turf that was in the same position previously: if you make a wall on
@@ -20,8 +22,10 @@
 	A non null 'fixed_underlay' list var will skip copying the previous turf appearance and always use the list. If the list is
 	not set properly, the underlay will default to regular floor plating.
 
-	To see an example of a diagonal wall, see '/turf/closed/wall/mineral/titanium' and its subtypes.
+	To see an example of a diagonal wall, see 'no example >:|' and its subtypes.
 */
+
+//#define MANUAL_ICON_SMOOTH // uncomment this if you want manual mode enabled for debugging or whatever (look for ChooseDMI() verb in command tab when running server).
 
 //Redefinitions of the diagonal directions so they can be stored in one var without conflicts
 #define N_NORTH       (1<<1)
@@ -47,7 +51,7 @@
 
 /atom/var/smooth = SMOOTH_FALSE
 /atom/var/list/canSmoothWith = null // TYPE PATHS I CAN SMOOTH WITH~~~~~ If this is null and atom is smooth, it smooths only with itself
-/atom/var/icon/smooth_icon_initial
+/atom/var/icon/smooth_icon_initial // don't touch this, value assigned automatically in the process.
 /atom/movable/var/can_be_unanchored = FALSE
 /turf/var/list/fixed_underlay = null
 
@@ -122,34 +126,46 @@
 		else
 			cardinal_smooth(A, adjacencies)
 
-/atom/proc/diagonal_smooth(adjacencies)
+/atom/proc/diagonal_smooth(adjacencies, read_values = FALSE)
+	var/diagonal_states
+
 	switch(adjacencies)
 		if(N_NORTH|N_WEST)
-			smooth_set_icon(adjacencies, list("d-se","d-se-0"))
+			diagonal_states = list("d-se","d-se-0")
 		if(N_NORTH|N_EAST)
-			smooth_set_icon(adjacencies, list("d-sw","d-sw-0"))
+			diagonal_states = list("d-sw","d-sw-0")
 		if(N_SOUTH|N_WEST)
-			smooth_set_icon(adjacencies, list("d-ne","d-ne-0"))
+			diagonal_states = list("d-ne","d-ne-0")
 		if(N_SOUTH|N_EAST)
-			smooth_set_icon(adjacencies, list("d-nw","d-nw-0"))
-
+			diagonal_states = list("d-nw","d-nw-0")
 		if(N_NORTH|N_WEST|N_NORTHWEST)
-			smooth_set_icon(adjacencies, list("d-se","d-se-1"))
+			diagonal_states = list("d-se","d-se-1")
 		if(N_NORTH|N_EAST|N_NORTHEAST)
-			smooth_set_icon(adjacencies, list("d-sw","d-sw-1"))
+			diagonal_states = list("d-sw","d-sw-1")
 		if(N_SOUTH|N_WEST|N_SOUTHWEST)
-			smooth_set_icon(adjacencies, list("d-ne","d-ne-1"))
+			diagonal_states = list("d-ne","d-ne-1")
 		if(N_SOUTH|N_EAST|N_SOUTHEAST)
-			smooth_set_icon(adjacencies, list("d-nw","d-nw-1"))
-
+			diagonal_states = list("d-nw","d-nw-1")
 		else
-			cardinal_smooth(src, adjacencies)
-			return
+			if(!read_values)
+				cardinal_smooth(src, adjacencies)
+				return // important (removing this will break underlays).
+			else
+				return cardinal_smooth(null, adjacencies)
 
-	//icon_state = ""
+	if(diagonal_states)
+		if(!read_values)
+			smooth_set_icon(adjacencies, diagonal_states)
+		else
+			return diagonal_states
+
+	return adjacencies
 
 //only walls should have a need to handle underlays
-/turf/simulated/wall/diagonal_smooth(adjacencies)
+/turf/simulated/wall/diagonal_smooth(adjacencies, read_values = FALSE)
+	if(read_values)
+		return ..()
+
 	adjacencies = reverse_ndir(..())
 	if(adjacencies)
 		var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, plane = FLOOR_PLANE)
@@ -181,7 +197,6 @@
 
 
 /proc/cardinal_smooth(atom/A, adjacencies)
-	//A.icon_state = "[adjacencies]"
 	//NW CORNER
 	var/nw = "1-i"
 	if((adjacencies & N_NORTH) && (adjacencies & N_WEST))
@@ -234,7 +249,10 @@
 		else if(adjacencies & N_EAST)
 			se = "4-e"
 
-	A.smooth_set_icon(adjacencies, list(nw, ne, sw, se))
+	if(A)
+		A.smooth_set_icon(adjacencies, list(nw, ne, sw, se))
+	else
+		return list(nw, ne, sw, se)
 
 /proc/find_type_in_direction(atom/source, direction)
 	var/turf/target_turf = get_step(source, direction)
@@ -291,23 +309,19 @@
 					queue_smooth(A)
 
 /atom/proc/smooth_set_icon(adjacencies, list/parts)
+#ifdef MANUAL_ICON_SMOOTH
+	return
+#endif
+
 	if(!smooth_icon_initial)
 		smooth_icon_initial = icon
-	var/cache_string = get_icon_smooth_cached_string(adjacencies)
+	var/cache_string = "["[type]"]"
 	if(!global.baked_smooth_icons[cache_string])
-		var/icon/I = new('icons/effects/32x32.dmi', "[adjacencies]")
-		for(var/i in parts)
-			I.Blend(icon(smooth_icon_initial, i), ICON_OVERLAY)
+		var/icon/I = SliceNDice(smooth_icon_initial)
 		global.baked_smooth_icons[cache_string] = I
 
 	icon = global.baked_smooth_icons[cache_string]
 	icon_state = "[adjacencies]"
-
-/atom/proc/get_icon_smooth_cached_string(adjacencies)
-	return "[adjacencies]["[type]"]"
-
-/atom/proc/clear_smooth_icon()
-	icon = smooth_icon_initial
 
 /proc/reverse_ndir(ndir)
 	switch(ndir)
@@ -361,17 +375,38 @@
 	SSicon_smooth.smooth_queue += A
 	SSicon_smooth.can_fire = 1
 	A.smooth |= SMOOTH_QUEUED
-/*
-//Example smooth wall
-/turf/simulated/wall/smooth
-	name = "smooth wall"
-	icon = 'icons/turf/smooth_wall.dmi'
-	icon_state = "smooth"
-	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL|SMOOTH_BORDER
-	canSmoothWith = null
-*/
+
 /turf/proc/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = icon
 	underlay_appearance.icon_state = icon_state
 	underlay_appearance.dir = adjacency_dir
 	return TRUE
+
+/turf/space/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/space.dmi'
+	underlay_appearance.icon_state = SPACE_ICON_STATE
+	underlay_appearance.plane = PLANE_SPACE
+	return TRUE
+
+/turf/simulated/wall/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	return FALSE
+
+/turf/simulated/floor/carpet/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	return FALSE
+
+/turf/simulated/mineral/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	if(basetype)
+		underlay_appearance.icon = initial(basetype.icon)
+		underlay_appearance.icon_state = initial(basetype.icon_state)
+		return TRUE
+	return ..()
+
+/*
+//Example smooth wall
+/turf/simulated/wall/smooth
+	name = "smooth wall"
+	icon = 'icons/turf/smooth_example/smooth_wall_diagonal.dmi'
+	icon_state = "smooth"
+	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL|SMOOTH_BORDER
+	canSmoothWith = null
+*/

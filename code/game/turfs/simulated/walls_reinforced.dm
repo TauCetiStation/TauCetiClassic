@@ -1,8 +1,7 @@
 /turf/simulated/wall/r_wall
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to seperate rooms."
-	icon = 'icons/turf/walls/reinforced_wall.dmi'
-	icon_state = "r_wall"
+	icon = 'icons/turf/walls/has_false_walls/reinforced_wall.dmi'
 	opacity = 1
 	density = 1
 
@@ -349,7 +348,6 @@
 /turf/simulated/wall/r_wall/update_icon()
 	if(d_state != INTACT)
 		smooth = SMOOTH_FALSE
-		clear_smooth_icon()
 		icon_state = "r_wall-[d_state]"
 	else
 		smooth = SMOOTH_TRUE

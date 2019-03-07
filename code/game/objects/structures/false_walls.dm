@@ -4,8 +4,8 @@
 /obj/structure/falsewall
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
-	icon = 'icons/turf/walls/wall.dmi'
-	icon_state = "wall"
+	icon = 'icons/turf/walls/has_false_walls/wall.dmi'
+	icon_state = "box"
 	anchored = TRUE
 	density = TRUE
 	opacity = TRUE
@@ -55,11 +55,12 @@
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	if(opening)
 		if(density)
-			clear_smooth_icon()
-			icon_state = "fwall_opening"
+			flick("fwall_opening", src)
+			icon_state = "fwall_open"
 			smooth = SMOOTH_FALSE
 		else
-			icon_state = "fwall_closing"
+			flick("fwall_closing", src)
+			icon_state = initial(icon_state)
 	else
 		if(density)
 			icon_state = initial(icon_state)
@@ -126,8 +127,7 @@
 /obj/structure/falsewall/reinforced
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to seperate rooms."
-	icon = 'icons/turf/walls/reinforced_wall.dmi'
-	icon_state = "r_wall"
+	icon = 'icons/turf/walls/has_false_walls/reinforced_wall.dmi'
 	walltype = /turf/simulated/wall/r_wall
 
 /*
@@ -137,8 +137,7 @@
 /obj/structure/falsewall/uranium
 	name = "uranium wall"
 	desc = "A wall with uranium plating. This is probably a bad idea."
-	icon = 'icons/turf/walls/uranium_wall.dmi'
-	icon_state = "uranium"
+	icon = 'icons/turf/walls/has_false_walls/uranium_wall.dmi'
 	walltype = /turf/simulated/wall/mineral/uranium
 	canSmoothWith = list(/obj/structure/falsewall/uranium, /turf/simulated/wall/mineral/uranium)
 
@@ -171,47 +170,41 @@
 /obj/structure/falsewall/gold
 	name = "gold wall"
 	desc = "A wall with gold plating. Swag!"
-	icon = 'icons/turf/walls/gold_wall.dmi'
-	icon_state = "gold"
+	icon = 'icons/turf/walls/has_false_walls/gold_wall.dmi'
 	walltype = /turf/simulated/wall/mineral/gold
 	canSmoothWith = list(/obj/structure/falsewall/gold, /turf/simulated/wall/mineral/gold)
 
 /obj/structure/falsewall/silver
 	name = "silver wall"
 	desc = "A wall with silver plating. Shiny."
-	icon = 'icons/turf/walls/silver_wall.dmi'
-	icon_state = "silver"
+	icon = 'icons/turf/walls/has_false_walls/silver_wall.dmi'
 	walltype = /turf/simulated/wall/mineral/silver
 	canSmoothWith = list(/obj/structure/falsewall/silver, /turf/simulated/wall/mineral/silver)
 
 /obj/structure/falsewall/diamond
 	name = "diamond wall"
 	desc = "A wall with diamond plating. You monster."
-	icon = 'icons/turf/walls/diamond_wall.dmi'
-	icon_state = "diamond"
+	icon = 'icons/turf/walls/has_false_walls/diamond_wall.dmi'
 	walltype = /turf/simulated/wall/mineral/diamond
 	canSmoothWith = list(/obj/structure/falsewall/diamond, /turf/simulated/wall/mineral/diamond)
 
 /obj/structure/falsewall/bananium
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
-	icon = 'icons/turf/walls/bananium_wall.dmi'
-	icon_state = "bananium"
+	icon = 'icons/turf/walls/has_false_walls/bananium_wall.dmi'
 	walltype = /turf/simulated/wall/mineral/bananium
 	canSmoothWith = list(/obj/structure/falsewall/bananium, /turf/simulated/wall/mineral/bananium)
 
 /obj/structure/falsewall/sandstone
 	name = "sandstone wall"
 	desc = "A wall with sandstone plating."
-	icon = 'icons/turf/walls/sandstone_wall.dmi'
-	icon_state = "sandstone"
+	icon = 'icons/turf/walls/has_false_walls/sandstone_wall.dmi'
 	walltype = /turf/simulated/wall/mineral/sandstone
 	canSmoothWith = list(/obj/structure/falsewall/sandstone, /turf/simulated/wall/mineral/sandstone)
 
 /obj/structure/falsewall/phoron
 	name = "phoron wall"
 	desc = "A wall with phoron plating. This is definately a bad idea."
-	icon = 'icons/turf/walls/phoron_wall.dmi'
-	icon_state = "phoron"
+	icon = 'icons/turf/walls/has_false_walls/phoron_wall.dmi'
 	walltype = /turf/simulated/wall/mineral/phoron
 	canSmoothWith = list(/obj/structure/falsewall/phoron, /turf/simulated/wall/mineral/phoron)
