@@ -315,7 +315,7 @@ BLIND     // can't see anything
 		user.drop_item()
 		I.forceMove(src)
 		playsound(get_turf(src), 'sound/weapons/knifein.ogg', 25)
-		verbs |= /obj/item/clothing/shoes/proc/draw_knife
+		verbs += /obj/item/clothing/shoes/proc/draw_knife
 	else
 		return ..()
 
