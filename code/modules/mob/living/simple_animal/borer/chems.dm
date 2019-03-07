@@ -70,9 +70,6 @@
 // unlockables
 ////////////////////////////
 
-//datum/borer_chem/unlockable
-//	unlockable=1
-
 /datum/borer_chem/head/unlockable
 	unlockable = TRUE
 /datum/borer_chem/chest/unlockable

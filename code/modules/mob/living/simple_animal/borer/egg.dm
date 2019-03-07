@@ -79,9 +79,6 @@
 	else
 		to_chat(O, "The egg is recovering. Try again in a few moments.")
 
-/obj/item/weapon/reagent_containers/food/snacks/borer_egg/Destroy()
-	..()
-
 /obj/item/weapon/reagent_containers/food/snacks/borer_egg/proc/request_player()
 	for(var/mob/dead/observer/O in player_list)
 		if(jobban_isbanned(O, "Syndicate") || jobban_isbanned(O, ROLE_BORER))

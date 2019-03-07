@@ -4,7 +4,7 @@
 	set name = "Infest"
 	set desc = "Infest a suitable humanoid host."
 
-	var/mob/living/simple_animal/borer/B=loc
+	var/mob/living/simple_animal/borer/B = loc
 	if(!istype(B))
 		return
 	B.infest()
@@ -14,7 +14,7 @@
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Alien"
 
-	var/mob/living/simple_animal/borer/B=loc
+	var/mob/living/simple_animal/borer/B = loc
 	if(!istype(B))
 		return
 	B.hide()

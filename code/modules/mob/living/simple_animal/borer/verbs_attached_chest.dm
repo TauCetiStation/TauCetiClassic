@@ -5,8 +5,8 @@
 
 	if(!message)
 		return
-	var/msg = message
 
+	var/msg = message
 	msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 	msg = capitalize(msg)
 
@@ -60,7 +60,7 @@
 	set desc = "An in-depth check of the host's physical status."
 	set category = "Alien"
 
-	if(!check_can_do())
+	if(!check_can_do(TRUE))
 		return
 
 	to_chat(src, "<span class='info'>You listen to the song of your host's nervous system, hunting for discordant notes...</span>")

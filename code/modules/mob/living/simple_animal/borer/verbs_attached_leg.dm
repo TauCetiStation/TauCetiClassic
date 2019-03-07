@@ -5,8 +5,8 @@
 
 	if(!message)
 		return
-	var/msg = message
 
+	var/msg = message
 	msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 	msg = capitalize(msg)
 

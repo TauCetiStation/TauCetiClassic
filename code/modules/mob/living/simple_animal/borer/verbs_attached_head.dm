@@ -5,8 +5,8 @@
 
 	if(!message)
 		return
-	var/msg = message
 
+	var/msg = message
 	msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 	msg = capitalize(msg)
 
@@ -80,7 +80,7 @@
 	set name = "Night Vision"
 	set desc = "Expend chemicals constantly in order to convert visual data from your host's eyes into the infrared spectrum."
 
-	if(!check_can_do(0))
+	if(!check_can_do(FALSE))
 		return
 
 	if(channeling && !channeling_night_vision)

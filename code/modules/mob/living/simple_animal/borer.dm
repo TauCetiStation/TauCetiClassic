@@ -160,7 +160,11 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	else
 		clear_fullscreen("damage")
 
-/mob/living/simple_animal/borer/proc/update_verbs(var/mode,var/monkey_host=FALSE)
+/mob/living/simple_animal/borer/proc/update_verbs(mode_in,monkey_host_in)
+	var/mode = mode_in
+	var/monkey_host = FALSE
+	if(monkey_host_in)
+		monkey_host = TRUE
 	if(verb_holders.len>0)
 		for(var/VH in verb_holders)
 			qdel(VH)
@@ -340,7 +344,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	set name = "Assume Control"
 	set desc = "Fully connect to the brain of your host. This can ruin a relationship between you and your host, so be careful."
 
-	if(!check_can_do())
+	if(!check_can_do(TRUE))
 		return
 
 	if(hostlimb != BP_HEAD)
@@ -394,7 +398,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	set name = "Retard Host"
 	set desc = "Give the host a bit of brain damage. Can be healed with alkysine."
 
-	if(!check_can_do())
+	if(!check_can_do(TRUE))
 		return
 	if(chemicals >= 30)
 		to_chat(src, "<span class='danger'>You twitch your probosci.</span>")
@@ -411,7 +415,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	set name = "Evolve"
 	set desc = "Upgrade yourself or your host."
 
-	if(!check_can_do())
+	if(!check_can_do(TRUE))
 		return
 
 	research.display(src)
@@ -421,7 +425,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	set name = "Secrete Chemicals"
 	set desc = "Push some chemicals into your host's bloodstream."
 
-	if(!check_can_do())
+	if(!check_can_do(TRUE))
 		return
 
 	var/chem_name = input("Select a chemical to secrete.", "Chemicals") as null|anything in avail_chems
@@ -888,7 +892,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	set desc = "See if there's anything within the blood of your host."
 	set category = "Alien"
 
-	if(!check_can_do())
+	if(!check_can_do(TRUE))
 		return
 
 	to_chat(src, "<span class='info'>You taste the blood of your host, and process it for abnormalities.</span>")
@@ -909,12 +913,15 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 
 /mob/living/simple_animal/borer/attack_ghost(mob/dead/observer/O)
 	if(!(src.key))
-		var/response = alert(O,"Do you want to take it over?","This borer has no soul","Yes","No")
-		if(response == "Yes")
-			if(!(src.key))
-				src.transfer_personality(O.client)
-			else if(src.key)
-				to_chat(src, "<span class='notice'>Somebody jumped your claim on this borer and is already controlling it. Try another </span>")
+		if(O.can_reenter_corpse)
+			var/response = alert(O,"Do you want to take it over?","This borer has no soul","Yes","No")
+			if(response == "Yes")
+				if(!(src.key))
+					src.transfer_personality(O.client)
+				else if(src.key)
+					to_chat(src, "<span class='notice'>Somebody jumped your claim on this borer and is already controlling it. Try another </span>")
+		else if(!(O.can_reenter_corpse))
+			to_chat(O,"<span class='notice'>While the borer may be mindless, you have recently ghosted and thus are not allowed to take over for now.</span>")
 
 /mob/living/simple_animal/borer/proc/passout(wait_time, send_message)
 	var/wtime = 0
@@ -929,7 +936,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 		stat = CONSCIOUS
 		to_chat(src, "<span class='notice'>You have regained consciousness.</span>")
 
-/mob/living/simple_animal/borer/proc/check_can_do(check_channeling = TRUE)
+/mob/living/simple_animal/borer/proc/check_can_do(check_channeling)
 	if(!host)
 		to_chat(src, "<span class='warning'>You are not inside a host body.</span>")
 		return FALSE
@@ -961,6 +968,6 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 
 	return TRUE
 
-/mob/living/simple_animal/borer/start_pulling(atom/movable/AM)//Prevents mouse from pulling things
+/mob/living/simple_animal/borer/start_pulling(atom/movable/AM) // Prevents mouse from pulling things
 	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
 	return

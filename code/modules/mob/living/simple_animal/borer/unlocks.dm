@@ -19,7 +19,7 @@
 
 /datum/unlockable/borer
 	cost_units = "C"
-	var/remove_on_detach = 1
+	var/remove_on_detach = TRUE
 	var/mob/living/simple_animal/borer/borer
 
 /datum/unlockable/borer/head
@@ -63,7 +63,7 @@
 // CHEMS!
 /datum/unlockable/borer/head/chem_unlock
 	var/chem_type = null
-	remove_on_detach = 0 // Borer-side, so we don't lose it.
+	remove_on_detach = FALSE // Borer-side, so we don't lose it.
 
 /datum/unlockable/borer/head/chem_unlock/unlock_action()
 	var/datum/borer_chem/C = new chem_type()
@@ -110,7 +110,7 @@
 
 /datum/unlockable/borer/chest/chem_unlock
 	var/chem_type = null
-	remove_on_detach = 0 // Borer-side, so we don't lose it.
+	remove_on_detach = FALSE // Borer-side, so we don't lose it.
 
 /datum/unlockable/borer/chest/chem_unlock/unlock_action()
 	var/datum/borer_chem/C = new chem_type()
@@ -166,7 +166,7 @@
 
 /datum/unlockable/borer/arm/chem_unlock
 	var/chem_type = null
-	remove_on_detach = 0 // Borer-side, so we don't lose it.
+	remove_on_detach = FALSE // Borer-side, so we don't lose it.
 
 /datum/unlockable/borer/arm/chem_unlock/unlock_action()
 	var/datum/borer_chem/C = new chem_type()
@@ -187,7 +187,7 @@
 
 /datum/unlockable/borer/leg/chem_unlock
 	var/chem_type = null
-	remove_on_detach = 0 // Borer-side, so we don't lose it.
+	remove_on_detach = FALSE // Borer-side, so we don't lose it.
 
 /datum/unlockable/borer/leg/chem_unlock/unlock_action()
 	var/datum/borer_chem/C = new chem_type()
@@ -218,7 +218,7 @@
 /datum/unlockable/borer/head/gene_unlock
 	var/gene_name = null // Name of gene
 	var/activate = 1     // 0 = deactivate on unlock
-	remove_on_detach = 1
+	remove_on_detach = TRUE
 
 /datum/unlockable/borer/head/gene_unlock/unlock_action()
 	// This is inefficient, but OK because it doesn't happen often.
@@ -236,7 +236,7 @@
 
 /datum/unlockable/borer/head/gene_unlock/relock_action()
 	// This is inefficient, but OK because it doesn't happen often.
-	for(var/block=1; block < DNA_SE_LENGTH; block++)
+	for(var/block = 1; block < DNA_SE_LENGTH; block++)
 		if(assigned_blocks[block] == gene_name)
 //			testing("  Found [assigned_blocks[block]] ([block])")
 			var/mob/living/carbon/host = borer.host
@@ -251,13 +251,12 @@
 /datum/unlockable/borer/chest/gene_unlock
 	var/gene_name = null // Name of gene
 	var/activate = 1     // 0 = deactivate on unlock
-	remove_on_detach = 1
+	remove_on_detach = FALSE
 
 /datum/unlockable/borer/chest/gene_unlock/unlock_action()
 	// This is inefficient, but OK because it doesn't happen often.
-	for(var/block=1; block < DNA_SE_LENGTH; block++)
+	for(var/block = 1; block < DNA_SE_LENGTH; block++)
 		if(assigned_blocks[block] == gene_name)
-//			testing("  Found [assigned_blocks[block]] ([block])")
 			var/mob/living/carbon/host = borer.host
 			if(host && host.dna)
 				host.dna.SetSEState(block, activate)
@@ -269,9 +268,8 @@
 
 /datum/unlockable/borer/chest/gene_unlock/relock_action()
 	// This is inefficient, but OK because it doesn't happen often.
-	for(var/block=1; block < DNA_SE_LENGTH; block++)
+	for(var/block = 1; block < DNA_SE_LENGTH; block++)
 		if(assigned_blocks[block] == gene_name)
-//			testing("  Found [assigned_blocks[block]] ([block])")
 			var/mob/living/carbon/host = borer.host
 			if(host && host.dna)
 				host.dna.SetSEState(block, !activate)
@@ -304,11 +302,11 @@
 /datum/unlockable/borer/arm/gene_unlock
 	var/gene_name = null // Name of gene
 	var/activate = 1     // 0 = deactivate on unlock
-	remove_on_detach = 1
+	remove_on_detach = TRUE
 
 /datum/unlockable/borer/arm/gene_unlock/unlock_action()
 	// This is inefficient, but OK because it doesn't happen often.
-	for(var/block=1; block < DNA_SE_LENGTH; block++)
+	for(var/block = 1; block < DNA_SE_LENGTH; block++)
 		if(assigned_blocks[block] == gene_name)
 			var/mob/living/carbon/host = borer.host
 			if(host && host.dna)
@@ -321,23 +319,14 @@
 
 /datum/unlockable/borer/arm/gene_unlock/relock_action()
 	// This is inefficient, but OK because it doesn't happen often.
-	for(var/block=1;block<DNA_SE_LENGTH;block++)
+	for(var/block = 1; block < DNA_SE_LENGTH; block++)
 		if(assigned_blocks[block] == gene_name)
-			var/mob/living/carbon/host=borer.host
+			var/mob/living/carbon/host= borer.host
 			if(host && host.dna)
-				host.dna.SetSEState(block,!activate)
-				domutcheck(host,null,MUTCHK_FORCED)
+				host.dna.SetSEState(block, !activate)
+				domutcheck(host, null, MUTCHK_FORCED)
 				host.update_mutations()
 				break
-
-/datum/unlockable/borer/arm/gene_unlock/strong
-	id = "strong"
-	name = "Increase Strength"
-	desc = "Improves your host's musculature, increasing your host's strength."
-	cost = 200
-	time = 1 MINUTES
-	gene_name = "STRONG"
-	prerequisites = list("bone_sword")
 
 /datum/unlockable/borer/arm/gene_unlock/regeneration
 	id = "regeneration"
@@ -346,7 +335,7 @@
 	cost = 200
 	time = 1 MINUTES
 	gene_name = "REGENERATE"
-	prerequisites = list("em_pulse")
+	prerequisites = list("bone_shield")
 
 /datum/unlockable/borer/arm/gene_unlock/shock_immunity
 	id = "shock_immunity"
@@ -362,13 +351,13 @@
 /datum/unlockable/borer/leg/gene_unlock
 	var/gene_name = null // Name of gene
 	var/activate = 1     // 0 = deactivate on unlock
-	remove_on_detach = 1
+	remove_on_detach = TRUE
 
 /datum/unlockable/borer/leg/gene_unlock/unlock_action()
 	// This is inefficient, but OK because it doesn't happen often.
-	for(var/block=1;block<DNA_SE_LENGTH;block++)
+	for(var/block = 1; block < DNA_SE_LENGTH; block++)
 		if(assigned_blocks[block] == gene_name)
-			var/mob/living/carbon/host=borer.host
+			var/mob/living/carbon/host = borer.host
 			if(host && host.dna)
 				host.dna.SetSEState(block,activate)
 				domutcheck(host,null,MUTCHK_FORCED)
@@ -379,12 +368,12 @@
 
 /datum/unlockable/borer/leg/gene_unlock/relock_action()
 	// This is inefficient, but OK because it doesn't happen often.
-	for(var/block=1;block<DNA_SE_LENGTH;block++)
+	for(var/block = 1; block < DNA_SE_LENGTH; block++)
 		if(assigned_blocks[block] == gene_name)
-			var/mob/living/carbon/host=borer.host
+			var/mob/living/carbon/host = borer.host
 			if(host && host.dna)
-				host.dna.SetSEState(block,!activate)
-				domutcheck(host,null,MUTCHK_FORCED)
+				host.dna.SetSEState(block, !activate)
+				domutcheck(host, null, MUTCHK_FORCED)
 				host.update_mutations()
 				break
 
@@ -409,9 +398,9 @@
 // VERBS
 /datum/unlockable/borer/head/verb_unlock
 	var/verb_type = null // USE VERB HOLDERS OR SHIT *WILL* BREAK.
-	var/give_when_attached = 0
-	var/give_when_detached = 0
-	remove_on_detach = 0 // Borer-side, so we don't lose it.
+	var/give_when_attached = FALSE
+	var/give_when_detached = FALSE
+	remove_on_detach = FALSE // Borer-side, so we don't lose it.
 
 /datum/unlockable/borer/head/verb_unlock/unlock_action()
 	if(give_when_attached)
@@ -432,10 +421,10 @@
 	id="taste_blood"
 	name = "Taste Blood"
 	desc = "Gain the ability to check your host's blood for chemicals."
-	cost=50
-	time=5 SECONDS
+	cost = 50
+	time = 5 SECONDS
 	verb_type = /obj/item/verbs/borer/attached/taste_blood
-	give_when_attached = 1
+	give_when_attached = TRUE
 
 
 /obj/item/verbs/borer/attached/taste_blood/verb/taste_blood()
@@ -455,15 +444,15 @@
 	cost = 200
 	time = 1.5 MINUTES
 	verb_type = /obj/item/verbs/borer/attached_head/night_vision
-	give_when_attached = 1
+	give_when_attached = TRUE
 
 //////////Chest Verbs///////////////////
 
 /datum/unlockable/borer/chest/verb_unlock
 	var/verb_type = null // USE VERB HOLDERS OR SHIT *WILL* BREAK.
-	var/give_when_attached = 0
-	var/give_when_detached = 0
-	remove_on_detach = 0 // Borer-side, so we don't lose it.
+	var/give_when_attached = FALSE
+	var/give_when_detached = FALSE
+	remove_on_detach = FALSE // Borer-side, so we don't lose it.
 
 /datum/unlockable/borer/chest/verb_unlock/unlock_action()
 	if(give_when_attached)
@@ -487,15 +476,15 @@
 	cost = 50
 	time = 5 SECONDS
 	verb_type = /obj/item/verbs/borer/attached/taste_blood
-	give_when_attached = 1
+	give_when_attached = TRUE
 
 /////////Arm Verbs///////////////////////
 
 /datum/unlockable/borer/arm/verb_unlock
 	var/verb_type = null // USE VERB HOLDERS OR SHIT *WILL* BREAK.
-	var/give_when_attached = 0
-	var/give_when_detached = 0
-	remove_on_detach = 0 // Borer-side, so we don't lose it.
+	var/give_when_attached = FALSE
+	var/give_when_detached = FALSE
+	remove_on_detach = FALSE // Borer-side, so we don't lose it.
 
 /datum/unlockable/borer/arm/verb_unlock/unlock_action()
 	if(give_when_attached)
@@ -519,27 +508,37 @@
 	cost = 50
 	time = 5 SECONDS
 	verb_type = /obj/item/verbs/borer/attached/taste_blood
-	give_when_attached = 1
+	give_when_attached = TRUE
 
 /datum/unlockable/borer/arm/verb_unlock/bone_sword
 	id="bone_sword"
 	name = "Bone Sword"
 	desc = "Learn how to expend chemicals constantly in order to form a large blade of bone for your host. Learning this will lock you into the Offense tree."
+	cost = 100
+	time = 30 SECONDS
+	verb_type = /obj/item/verbs/borer/attached_arm/bone_sword
+	give_when_attached = TRUE
+	antirequisites = list("repair_bone", "bone_shield")
+
+/datum/unlockable/borer/arm/verb_unlock/bone_shield
+	id="bone_shield"
+	name = "Bone Shield"
+	desc = "Learn how to expend chemicals constantly in order to form a large shield of bone for your host. Learning this will lock you into the Defense tree."
 	cost=100
 	time=30 SECONDS
-	verb_type = /obj/item/verbs/borer/attached_arm/bone_sword
+	verb_type = /obj/item/verbs/borer/attached_arm/bone_shield
 	give_when_attached=1
-	antirequisites = list("repair_bone")
+	antirequisites=list("bone_sword","repair_bone")
 
 /datum/unlockable/borer/arm/verb_unlock/em_pulse
 	id="em_pulse"
 	name = "Electromagnetic Pulse"
-	desc = "Learn how to expend a great deal of chemicals to produce a small electromagnetic pulse. Learning this will lead you to Regeneration."
+	desc = "Learn how to expend a great deal of chemicals to produce a small electromagnetic pulse."
 	cost = 150
 	time = 60 SECONDS
 	verb_type = /obj/item/verbs/borer/attached_arm/em_pulse
-	give_when_attached = 1
-	antirequisites = list("bone_sword", "repair_bone")
+	give_when_attached = TRUE
+	prerequisites = list("bone_shield")
 
 /datum/unlockable/borer/arm/verb_unlock/repair_bone
 	id="repair_bone"
@@ -548,16 +547,16 @@
 	cost = 50
 	time = 10 SECONDS
 	verb_type = /obj/item/verbs/borer/attached_arm/repair_bone
-	give_when_attached = 1
-	antirequisites=list("bone_sword")
+	give_when_attached = TRUE
+	antirequisites=list("bone_sword", "bone_shield")
 
 ////////////Leg Verbs////////////////////////////
 
 /datum/unlockable/borer/leg/verb_unlock
 	var/verb_type = null // USE VERB HOLDERS OR SHIT *WILL* BREAK.
-	var/give_when_attached = 0
-	var/give_when_detached = 0
-	remove_on_detach = 0 // Borer-side, so we don't lose it.
+	var/give_when_attached = FALSE
+	var/give_when_detached = FALSE
+	remove_on_detach = FALSE // Borer-side, so we don't lose it.
 
 /datum/unlockable/borer/leg/verb_unlock/unlock_action()
 	if(give_when_attached)
@@ -581,4 +580,4 @@
 	cost = 50
 	time = 5 SECONDS
 	verb_type = /obj/item/verbs/borer/attached/taste_blood
-	give_when_attached = 1
+	give_when_attached = TRUE
