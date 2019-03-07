@@ -289,10 +289,9 @@ BLIND     // can't see anything
 	if(usr.put_in_hands(holding))
 		usr.visible_message("<span class='warning'>\The [usr] pulls \the [holding] out of \the [src]!</span>")
 		holding = null
-		playsound(get_turf(src), 'sound/weapons/knifeout.ogg', 25)
+		playsound((src), 'sound/weapons/knifeout.ogg', 25)
 	else
 		to_chat(usr, "<span class='warning'>Your need an empty, unbroken hand to do that.</span>")
-		holding.forceMove(src)
 
 	if(!holding)
 		verbs -= /obj/item/clothing/shoes/proc/draw_knife
@@ -314,9 +313,8 @@ BLIND     // can't see anything
 			return
 		holding = I
 		user.visible_message("<span class='notice'>\The [user] shoves \the [I] into \the [src].</span>")
-		user.drop_item()
 		I.forceMove(src)
-		playsound(get_turf(src), 'sound/weapons/knifein.ogg', 25)
+		playsound((src), 'sound/weapons/knifein.ogg', 25)
 		verbs += /obj/item/clothing/shoes/proc/draw_knife
 	else
 		return ..()
