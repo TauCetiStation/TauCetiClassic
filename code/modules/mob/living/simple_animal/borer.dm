@@ -254,7 +254,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	if(!message)
 		return
 
-	if (stat == 2)
+	if (stat == DEAD)
 		return say_dead(message)
 
 	if (stat)

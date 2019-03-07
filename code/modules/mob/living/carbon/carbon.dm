@@ -554,7 +554,7 @@
 /mob/living/carbon/proc/do_release_control(rpt)
 	var/rptext
 	if(!rpt)
-		rptext = rpt
+		rptext = FALSE
 	else
 		rptext = TRUE
 	var/mob/living/simple_animal/borer/B = has_brain_worms()
