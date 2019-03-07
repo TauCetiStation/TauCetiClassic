@@ -227,7 +227,7 @@
 		if(e.implants.len)
 			var/unknown_body = 0
 			for(var/I in e.implants)
-				if(is_type_in_list(I,known_implants))
+				if(is_type_in_list(I, known_implants))
 					imp += "[I] implanted:"
 				else if(!istype(I, /mob/living/simple_animal/borer))
 					unknown_body++

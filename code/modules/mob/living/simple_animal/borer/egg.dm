@@ -15,7 +15,14 @@
 	var/ping_cooldown = 50
 	var/list/borer_candidates = list()
 	var/list/borer_ignore = list()
+	var/is_neutered = FALSE
 
+/obj/item/weapon/reagent_containers/food/snacks/borer_egg/neutered
+
+/obj/item/weapon/reagent_containers/food/snacks/borer_egg/neutered/atom_init()
+	.=..()
+	is_neutered = TRUE
+	desc += ". This one in particular seems harmless"
 
 /obj/item/weapon/reagent_containers/food/snacks/borer_egg/atom_init()
 	..()
@@ -47,12 +54,16 @@
 		src.visible_message("<span class='notice'>\The [name] bursts open!</span>")
 		var/mob/living/simple_animal/borer/B = new /mob/living/simple_animal/borer(T, child_prefix_index)
 		B.transfer_personality(C)
+		if(is_neutered)
+			B.make_neutered()
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 		borer_candidates.Remove(C)
 		hatching = FALSE
 		hatched = TRUE
 		icon_state = "borer egg-hatched"
+		name = "neutered borer"
 		desc += " looks like it already hatched"
+		to_chat(B, "<span class='info'>You have been conditioned to be as helpful to your host as possible, forcing you to never intentionally harm them.</span>")
 	else
 		borer_candidates = list()
 		src.visible_message("<span class='notice'>\The [name] calms down.</span>")

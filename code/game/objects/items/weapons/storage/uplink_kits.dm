@@ -177,6 +177,13 @@
 	for (var/i in 1 to 5)
 		new /obj/item/weapon/throwing_star(src)
 	make_exact_fit()
+/obj/item/weapon/storage/box/syndie_kit/borer
+	name = "box (W)"
+
+/obj/item/weapon/storage/box/syndie_kit/borer/atom_init()
+	. = ..()
+	new /obj/item/weapon/reagent_containers/food/snacks/borer_egg/neutered(src)
+	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/cutouts
 	name = "box (G)"

@@ -17,7 +17,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 /mob/living/simple_animal/borer
 	name = "borer"
 	real_name = "borer"
-	desc = "A small, quivering sluglike creature."
+	desc = "A small, quivering sluglike creature"
 	speak_emote = list("chirrups")
 	emote_hear = list("chirrups")
 	response_help  = "pokes the"
@@ -32,14 +32,14 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	maxbodytemp = 323	//Above 50 Degrees Celcius
 	layer = MOB_LAYER
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 1)
-	density = 0
+	density = FALSE
 	a_intent = "harm"
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	attacktext = "nips"
 	friendly = "prods"
-	wander = 0
+	wander = FALSE
 	pass_flags = PASSTABLE
-	universal_understand = 1
+	universal_understand = TRUE
 	ventcrawler = 2
 
 	var/busy = FALSE // So we aren't trying to lay many eggs at once.
@@ -78,6 +78,10 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 
 	var/static/list/name_prefixes = list("Primary", "Secondary", "Tertiary", "Quaternary", "Quinary", "Senary", "Septenary", "Octonary", "Nonary", "Denary")
 	var/name_prefix_index = 1
+
+	var/can_assume_control = TRUE
+	var/can_lay_eggs = TRUE
+	var/can_damage_host_brain = TRUE
 
 /mob/living/simple_animal/borer/whisper()
 	return FALSE
@@ -130,6 +134,12 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 
 	if(client)
 		regular_hud_updates()
+
+/mob/living/simple_animal/borer/proc/make_neutered()
+	can_assume_control = FALSE
+	can_lay_eggs = FALSE
+	can_damage_host_brain = FALSE
+	desc += ", it seems friendly"
 
 /mob/living/simple_animal/borer/regular_hud_updates()
 	var/severity = 0
@@ -344,15 +354,19 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	set name = "Assume Control"
 	set desc = "Fully connect to the brain of your host. This can ruin a relationship between you and your host, so be careful."
 
+	if(!can_assume_control)
+		to_chat(src, "<span class='info'>You are conditioned not to assume control of your host's mind.</span>")
+		return
+
 	if(!check_can_do(TRUE))
 		return
 
 	if(hostlimb != BP_HEAD)
-		to_chat(src, "You are not attached to your host's brain.")
+		to_chat(src, "<span class='info'>You are not attached to your host's brain.</span>")
 		return
 
 	if(chemicals <= 150)
-		to_chat(src, "You do not have enough chemicals stored.")
+		to_chat(src, "<span class='info'>You do not have enough chemicals stored.</span>")
 		return
 
 	var/delay_mult = 1
@@ -397,6 +411,10 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	set category = "Alien"
 	set name = "Retard Host"
 	set desc = "Give the host a bit of brain damage. Can be healed with alkysine."
+
+	if(!can_damage_host_brain)
+		to_chat(src, "<span class='info'>You are conditioned not to damage your host.</span>")
+		return
 
 	if(!check_can_do(TRUE))
 		return
@@ -840,6 +858,10 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	set desc = "Spawn offspring in the form of an egg."
 	set category = "Alien"
 
+	if(!can_lay_eggs)
+		to_chat(src, "<span class='info'>You are conditioned not to reproduce.</span>")
+		return
+
 	if(stat == UNCONSCIOUS)
 		to_chat(src, "<span class='warning'>You cannot reproduce while unconscious.</span>")
 		return
@@ -883,9 +905,9 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 		src.mind.assigned_role = "Borer"
 		// tl;dr
 		to_chat(src, "<span class='danger'>You are a Borer!</span>")
-		to_chat(src, "<span class='info'>You are a small slug-like symbiote that attaches to your host's body.  Your only goals are to survive and procreate. However, there are those who would like to destroy you, and hosts don't take kindly to jerks.  Being as helpful to your host as possible is the best option for survival.</span>")
-		to_chat(src, "<span class='info'>Borers can speak with other borers over the Cortical Link.  To do so, release control and use <code>say \";message\"</code>.  To communicate with your host only, speak normally.</span>")
-		to_chat(src, "<span class='info'><b>New:</b> To get new abilities for you and your host, use <em>Evolve</em> to unlock things.  Borers work with their host to achieve their goals.</span>")
+		to_chat(src, "<span class='info'>You are a small slug-like parasyte that attaches to your host's body.  Your only goals are to survive and procreate. However, there are those who would like to destroy you, and most hosts don't like to cooperate.  Being helpful to your host could be your best option for survival.</span>")
+		to_chat(src, "<span class='info'>Borers can speak with other borers over the Cortical Link.  To do so, release control and use <code>say \";message\"</code>.  To communicate with your host only, speak normally. Your chemicals regenerate only while in a host.</span>")
+		to_chat(src, "<span class='info'><b>New:</b> To get new abilities for you and your host, use <em>Evolve</em> to unlock things.</span>")
 
 /mob/living/simple_animal/borer/proc/taste_blood()
 	set name = "Taste Blood"

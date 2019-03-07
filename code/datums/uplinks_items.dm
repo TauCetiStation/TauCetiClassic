@@ -239,6 +239,12 @@
 	item = /obj/item/weapon/antag_spawner/borg_tele
 	cost = 36
 
+/datum/uplink_item/dangerous/borer
+	name = "Cortical Borer Egg"
+	desc = "A box that contains a cortical borer egg, it will hatch in about four minutes. It has been conditioned not to harm their hosts. "
+	item = /obj/item/weapon/storage/box/syndie_kit/borer
+	cost = 10
+
 //for refunding the syndieborg teleporter
 /datum/uplink_item/dangerous/syndieborg/spawn_item()
 	var/obj/item/weapon/antag_spawner/borg_tele/T = ..()
