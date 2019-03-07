@@ -273,6 +273,54 @@ BLIND     // can't see anything
 /obj/item/proc/negates_gravity()
 	return 0
 
+//Knifes into shoes
+
+/obj/item/clothing/shoes/proc/draw_knife()
+	set name = "Draw Boot Knife"
+	set desc = "Pull out your boot knife."
+	set category = "IC"
+	set src in usr
+
+	if(usr.incapacitated())
+		return
+
+	if(usr.put_in_hands(holding))
+		usr.visible_message("<span class='warning'>\The [usr] pulls \the [holding] out of \the [src]!</span>")
+		holding = null
+		playsound(get_turf(src), 'sound/weapons/knifeout.ogg', 25)
+	else
+		to_chat(usr, "<span class='warning'>Your need an empty, unbroken hand to do that.</span>")
+		holding.forceMove(src)
+
+	if(!holding)
+		verbs -= /obj/item/clothing/shoes/proc/draw_knife
+
+	return
+
+/obj/item/clothing/shoes/attack_hand(var/mob/living/M)
+	if(can_hold_knife && holding && src.loc == M)
+		draw_knife()
+		return
+	..()
+
+/obj/item/clothing/shoes/attackby(var/obj/item/I, var/mob/user)
+	if(can_hold_knife && is_type_in_list(I, list(/obj/item/weapon/shard, /obj/item/weapon/combat_knife)))
+		if(holding)
+			to_chat(user, "<span class='warning'>\The [src] is already holding \a [holding].</span>")
+			return
+		if(!user.unEquip(I, src))
+			return
+		holding = I
+		user.visible_message("<span class='notice'>\The [user] shoves \the [I] into \the [src].</span>")
+		user.drop_item()
+		I.forceMove(src)
+		playsound(get_turf(src), 'sound/weapons/knifein.ogg', 25)
+		verbs |= /obj/item/clothing/shoes/proc/draw_knife
+	else
+		return ..()
+
+
+
 //Suit
 /obj/item/clothing/suit
 	icon = 'icons/obj/clothing/suits.dmi'
