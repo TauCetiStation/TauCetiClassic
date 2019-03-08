@@ -7,54 +7,36 @@
 			I.water_act(total_depth)
 
 /obj/effect/fluid/Crossed(mob/living/carbon/C)
+	if(fluid_amount > FLUID_SHALLOW)
+		return
 	if(!istype(C))
 		return
-	if(C.lying && !C.crawling)
-		return
-	if(ishuman(C))
-		if(fluid_amount < FLUID_SHALLOW)
-			if(prob(2))
-				if(C.m_intent == "run")
-					var/mob/living/carbon/human/H = C
-					if(istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags & NOSLIP)
-						return
-					if(istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP)
-						return
-					var/list/inv_contents = list()
-					for(var/obj/item/I in H.contents)
-						if(istype(I, /obj/item/weapon/implant))
-							continue
-						inv_contents += I
-					if(inv_contents.len)
-						for(var/n = 3, n > 0, n--)
-							var/obj/item/I = pick(inv_contents)
-							I.make_wet()
 
-				C.stop_pulling()
-				to_chat(C, "<span class='notice'>You slipped on the wet floor!</span>")
-				playsound(loc, 'sound/misc/slip.ogg', 50, 1, -3)
-				C.Stun(5)
-				C.Weaken(2)
-			else
+	if(prob(2))
+		if(C.m_intent == "run")
+			if(ishuman(C))
 				var/mob/living/carbon/human/H = C
-				if(istype(H.shoes, /obj/item/clothing/shoes) && !H.buckled)
-					var/obj/item/clothing/shoes/O = H.shoes
-					O.footstep = -1
-				if(H.legstep >= 1)
-					playsound(loc, "waterstep", 60, 1, -3)
-					H.legstep = 0
-				else
-					H.legstep++
-		else
-			var/mob/living/carbon/human/H = C
-			if(istype(H.shoes, /obj/item/clothing/shoes) && !H.buckled)
-				var/obj/item/clothing/shoes/O = H.shoes
-				O.footstep = -1
-			if(H.legstep >= 2)
-				playsound(loc, "swimming", 70, 1, -3)
-				H.legstep = 0
-			else
-				H.legstep++
+				if(istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags & NOSLIP)
+					return
+				if(istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP)
+					return
+				var/list/inv_contents = list()
+				for(var/obj/item/I in H.contents)
+					if(istype(I, /obj/item/weapon/implant))
+						continue
+					inv_contents += I
+				if(inv_contents.len)
+					for(var/n = 3, n > 0, n--)
+						var/obj/item/I = pick(inv_contents)
+						I.make_wet()
+
+			C.stop_pulling()
+			to_chat(C, "<span class='notice'>You slipped on the wet floor!</span>")
+			playsound(loc, 'sound/misc/slip.ogg', 50, 1, -3)
+			C.Stun(5)
+			C.Weaken(2)
+	else
+		playsound(loc, 'sound/effects/waterstep.ogg', 50, 1, -3)
 
 	if(prob(5))
 		if(ishuman(C))
