@@ -284,6 +284,7 @@
 			icon_state = "[base_state]"
 			if(on)
 				overlay.icon_state = "[base_state]-overlay"
+				overlay.color = brightness_color
 				overlays += overlay
 		if(LIGHT_EMPTY)
 			icon_state = "[base_state]-empty"
