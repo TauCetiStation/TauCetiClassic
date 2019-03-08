@@ -299,7 +299,7 @@ BLIND     // can't see anything
 	return
 
 /obj/item/clothing/shoes/attack_hand(var/mob/living/M)
-	if(can_hold_knife && holding && src.loc == M)
+	if(holding && src.loc == M)
 		draw_knife()
 		return
 	..()
