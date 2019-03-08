@@ -4,7 +4,7 @@
 	icon_state = "paint sprayer"
 	item_state = "paint sprayer"
 
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 
 	m_amt = 50
 	g_amt = 50

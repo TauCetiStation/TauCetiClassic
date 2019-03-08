@@ -797,18 +797,7 @@
 					O.show_message(text("\blue [M] caresses [src]'s plating with its scythe-like arm."), 1)
 
 		if ("grab")
-			if (M == src || anchored || M.lying)
-				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
-
-			M.put_in_active_hand(G)
-
-			grabbed_by += G
-			G.synch()
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
+			M.Grab(src)
 
 		if ("hurt")
 			M.do_attack_animation(src)
