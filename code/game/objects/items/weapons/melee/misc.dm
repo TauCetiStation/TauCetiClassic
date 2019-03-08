@@ -36,7 +36,7 @@
 	force = 10
 	sharp = 1
 	edge = 1
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 10
 	m_amt = 7500
 	origin_tech = "materials=2;combat=2"
