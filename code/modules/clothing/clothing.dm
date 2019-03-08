@@ -298,13 +298,13 @@ BLIND     // can't see anything
 
 	return
 
-/obj/item/clothing/shoes/attack_hand(var/mob/living/M)
+/obj/item/clothing/shoes/attack_hand(/mob/living/M)
 	if(holding && src.loc == M)
 		draw_knife()
 		return
 	..()
 
-/obj/item/clothing/shoes/attackby(var/obj/item/I, var/mob/user)
+/obj/item/clothing/shoes/attackby(/obj/item/I,/mob/user)
 	if(can_hold_knife && is_type_in_list(I, list(/obj/item/weapon/shard, /obj/item/weapon/combat_knife)))
 		if(holding)
 			to_chat(user, "<span class='warning'>\The [src] is already holding \a [holding].</span>")
