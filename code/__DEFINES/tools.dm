@@ -1,0 +1,1 @@
+#define MIN_TOOL_SOUND_DELAY 20

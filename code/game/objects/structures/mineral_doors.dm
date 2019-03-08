@@ -106,7 +106,7 @@
 			return
 		var/obj/item/weapon/pickaxe/digTool = W
 		to_chat(user, "<span class='notice'>You start digging the [name].</span>")
-		if(do_after(user, digTool.digspeed, target = src))
+		if(do_after(user, digTool.toolspeed, target = src))
 			to_chat(user, "<span class='notice'>You finished digging!</span>")
 			Dismantle()
 
@@ -183,7 +183,7 @@
 		if(!WT.isOn())
 			to_chat(user, "<span class='warning'>The welding tool needs to be on to start this task!</span>")
 			return
-		if(WT.remove_fuel(0, user))
+		if(WT.use(0, user))
 			playsound(src, 'sound/items/Welder2.ogg', 100, 1)
 			to_chat(user, "<span class='notice'>You start dissassembling the [name] to the metal sheets.</span>")
 			if(do_after(user, 60, target = src))
@@ -233,7 +233,7 @@
 /obj/structure/mineral_door/transparent/phoron/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0, user))
+		if(WT.use(0, user))
 			TemperatureAct(100)
 	..()
 

@@ -614,7 +614,7 @@ var/list/wood_icons = list("wood","wood-broken")
 		var/obj/item/weapon/weldingtool/welder = C
 		if(welder.isOn() && (is_plating()))
 			if(broken || burnt)
-				if(welder.remove_fuel(0,user))
+				if(welder.use(0,user))
 					to_chat(user, "\red You fix some dents on the broken plating.")
 					playsound(src, 'sound/items/Welder.ogg', 80, 1)
 					icon_state = "plating"

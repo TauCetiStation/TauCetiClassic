@@ -206,7 +206,7 @@
 	name = "cyborg pickaxe"
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "pick_hand"
-	digspeed = 30
+	toolspeed = 30
 	desc = "A smaller, more precise version of the pickaxe (30 centimetre excavation depth)."
 	excavation_amount = 15
 	drill_sound = 'sound/items/Crowbar.ogg'

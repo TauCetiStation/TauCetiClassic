@@ -690,7 +690,7 @@
 	if (istype(W, /obj/item/weapon/weldingtool))
 		if(user.is_busy()) return FALSE
 		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0, user))
+		if(WT.use(0, user))
 			if(src.status == 2)
 				to_chat(user, "\blue Now weakening the reinforced table")
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)

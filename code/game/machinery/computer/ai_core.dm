@@ -28,7 +28,7 @@
 				if(user.is_busy(src)) return
 				playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 				if(do_after(user, 20, target = src))
-					if(!src || !WT.remove_fuel(0, user)) return
+					if(!src || !WT.use(0, user)) return
 					to_chat(user, "\blue You deconstruct the frame.")
 					new /obj/item/stack/sheet/plasteel( loc, 4)
 					qdel(src)

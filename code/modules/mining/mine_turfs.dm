@@ -176,7 +176,7 @@
 			return
 
 		var/obj/item/weapon/pickaxe/P = W
-		if(last_act + P.digspeed > world.time)//prevents message spam
+		if(last_act + P.toolspeed > world.time)//prevents message spam
 			return
 		last_act = world.time
 
@@ -214,7 +214,7 @@
 				if(prob(50))
 					artifact_debris()
 
-		if(!user.is_busy() && do_after(user,P.digspeed, target = src))
+		if(!user.is_busy(src) && do_after(user, P.toolspeed, target = src))
 			to_chat(user, "<span class='notice'>You finish [P.drill_verb] the rock.</span>")
 
 			if(istype(P,/obj/item/weapon/pickaxe/drill/jackhammer))	//Jackhammer will just dig 3 tiles in dir of user

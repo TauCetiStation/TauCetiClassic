@@ -247,7 +247,7 @@
 
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		if( WT.remove_fuel(0,user) )
+		if( WT.use(0,user) )
 			var/turf/T = get_turf(src)
 			T.ChangeTurf(/turf/simulated/wall/r_wall)
 			T = get_turf(src)

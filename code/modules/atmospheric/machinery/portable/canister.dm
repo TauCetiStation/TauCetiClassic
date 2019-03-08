@@ -282,7 +282,7 @@ update_flag
 		if(user.is_busy()) return
 		var/obj/item/weapon/weldingtool/WT = W
 		if(stat & BROKEN)
-			if(!WT.remove_fuel(0, user))
+			if(!WT.use(0, user))
 				return
 			playsound(src, 'sound/items/Welder2.ogg', 40, 1)
 			to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")

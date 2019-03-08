@@ -41,7 +41,7 @@
 
 	if(istype(W, /obj/item/weapon/weldingtool) && ((glass_material && !glass_only) || mineral || !anchored))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0, user))
+		if(WT.use(0, user))
 			if(user.is_busy()) return
 			playsound(src, 'sound/items/Welder2.ogg', 50, 1)
 			if(glass_material)

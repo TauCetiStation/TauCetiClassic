@@ -799,7 +799,7 @@ var/list/turret_icons
 				if(user.is_busy(src)) return
 				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
 				if(do_after(user, 20, src))
-					if(!src || !WT.remove_fuel(5, user)) return
+					if(!src || !WT.use(5, user)) return
 					build_step = 1
 					to_chat(user, "You remove the turret's interior metal armor.")
 					new /obj/item/stack/sheet/metal(loc, 2)
@@ -873,7 +873,7 @@ var/list/turret_icons
 				if(user.is_busy(src)) return
 				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
 				if(do_after(user, 30, src))
-					if(!src || !WT.remove_fuel(5, user))
+					if(!src || !WT.use(5, user))
 						return
 					build_step = 8
 					to_chat(user, "<span class='notice'>You weld the turret's armor down.</span>")

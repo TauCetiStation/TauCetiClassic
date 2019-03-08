@@ -29,7 +29,7 @@
 			to_chat(user, "<span class='warning'>You need at least two rods to do this!</span>")
 			return
 
-		if(WT.remove_fuel(0, user))
+		if(WT.use(0, user))
 			var/obj/item/stack/sheet/metal/new_item = new(usr.loc, , TRUE)
 			user.visible_message(
 				"[user.name] shaped [src] into metal with the welding tool.",

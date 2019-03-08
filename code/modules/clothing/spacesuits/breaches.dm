@@ -207,7 +207,7 @@ var/global/list/breach_burn_descriptors = list(
 
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(!WT.remove_fuel(5))
+		if(!WT.use(5))
 			to_chat(user, "\red You need more welding fuel to repair this suit.")
 			return
 

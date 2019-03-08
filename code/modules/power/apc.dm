@@ -536,7 +536,7 @@
 		to_chat(user, "You start welding the APC frame...")
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 		if(do_after(user, 50, target = src))
-			if(!src || !WT.remove_fuel(3, user)) return
+			if(!src || !WT.use(3, user)) return
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message(\

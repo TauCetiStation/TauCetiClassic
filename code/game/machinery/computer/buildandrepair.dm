@@ -386,7 +386,7 @@
 					src.state = 1
 			if(istype(P, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = P
-				if(!WT.remove_fuel(0, user))
+				if(!WT.use(0, user))
 					to_chat(user, "The welding tool must be on to complete this task.")
 					return
 				if(user.is_busy(src)) return

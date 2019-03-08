@@ -57,7 +57,7 @@
 	else if(!anchored && istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = C
 		if(user.is_busy(src)) return
-		if(WT.remove_fuel(0, user))
+		if(WT.use(0, user))
 			user.visible_message("<span class='warning'>[user] dissassembles \the [src].</span>",
 			"You start to dissassemble \the [src].")
 			if(do_after(user, 40, target = src))

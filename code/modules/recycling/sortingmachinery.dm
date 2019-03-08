@@ -297,7 +297,7 @@
 			return
 	else if(istype(I,/obj/item/weapon/weldingtool) && c_mode==1 && !user.is_busy())
 		var/obj/item/weapon/weldingtool/W = I
-		if(W.remove_fuel(0,user))
+		if(W.use(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			to_chat(user, "You start slicing the floorweld off the delivery chute.")
 			if(do_after(user,20,target = src))

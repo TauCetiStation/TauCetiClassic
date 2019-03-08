@@ -5,7 +5,7 @@
 /datum/construction/reversible/mecha/custom_action(index, diff, atom/used_atom, mob/user)
 	if(istype(used_atom, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = used_atom
-		if (W.remove_fuel(3, user))
+		if (W.use(3, user))
 			playsound(holder, 'sound/items/Welder2.ogg', 50, 1)
 			return 1
 		else

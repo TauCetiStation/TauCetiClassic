@@ -28,7 +28,7 @@
 	if ( istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(WT.remove_fuel(0, user))
+		if(WT.use(0, user))
 			new /obj/item/stack/sheet/glass/phoronglass(user.loc, , TRUE)
 			qdel(src)
 

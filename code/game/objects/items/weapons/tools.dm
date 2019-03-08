@@ -281,7 +281,7 @@
 				src.damtype = "fire"
 				src.icon_state = initial(src.icon_state) + "1"
 			if(prob(5))
-				remove_fuel(1)
+				use(1)
 			light_color = LIGHT_COLOR_FIRE
 			set_light(2)
 
@@ -289,7 +289,7 @@
 		//Is this actually used or set anywhere? - Nodrak
 		if(2)
 			if(prob(75))
-				remove_fuel(1)
+				use(1)
 
 
 	//I'm not sure what this does. I assume it has to do with starting fires...
@@ -318,7 +318,7 @@
 		tank.explode()
 		return
 	if (src.welding)
-		remove_fuel(1)
+		use(1)
 		var/turf/location = get_turf(user)
 		if (istype(location, /turf))
 			location.hotspot_expose(700, 50, src)
@@ -347,11 +347,11 @@
 
 
 //Removes fuel from the welding tool. If a mob is passed, it will perform an eyecheck on the mob. This should probably be renamed to use()
-/obj/item/weapon/weldingtool/proc/remove_fuel(amount = 1, mob/M = null)
+/obj/item/weapon/weldingtool/use(used = 1, mob/M = null)
 	if(!welding || !check_fuel())
 		return 0
-	if(get_fuel() >= amount)
-		reagents.remove_reagent("fuel", amount)
+	if(get_fuel() >= used)
+		reagents.remove_reagent("fuel", used)
 		check_fuel()
 		if(M)
 			eyecheck(M)
@@ -370,7 +370,7 @@
 /obj/item/weapon/weldingtool/proc/setWelding(temp_welding)
 	//If we're turning it on
 	if(temp_welding > 0)
-		if (remove_fuel(1))
+		if (use(1))
 			to_chat(usr, "<span class='info'>The [src] switches on.</span>")
 			src.force = 15
 			src.damtype = "fire"
@@ -402,7 +402,7 @@
 	if(!usr) return
 	src.welding = !( src.welding )
 	if (src.welding)
-		if (remove_fuel(1))
+		if (use(1))
 			to_chat(usr, "<span class='notice'>You switch the [src] on.</span>")
 			src.force = 15
 			src.damtype = "fire"

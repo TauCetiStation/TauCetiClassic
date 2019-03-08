@@ -195,7 +195,7 @@
 /obj/item/stack/proc/is_cyborg()
 	return istype(loc, /obj/item/weapon/robot_module) || istype(loc, /mob/living/silicon)
 
-/obj/item/stack/proc/use(used, transfer = FALSE)
+/obj/item/stack/use(used, transfer = FALSE)
 	if(zero_amount())
 		return FALSE
 	if(amount < used)

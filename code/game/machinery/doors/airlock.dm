@@ -879,7 +879,7 @@ var/list/airlock_overlays = list()
 
 	if(istype(C, /obj/item/weapon/weldingtool) && !(operating > 0) && density)
 		var/obj/item/weapon/weldingtool/W = C
-		if(W.remove_fuel(0,user))
+		if(W.use(0,user))
 			welded = !welded
 			update_icon()
 			return
