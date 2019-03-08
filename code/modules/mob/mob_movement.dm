@@ -130,7 +130,7 @@
 
 	if(isobserver(mob))	return mob.Move(n,direct)
 
-	if(moving)	return 0
+	if(moving || mob.throwing)	return 0
 
 	if(world.time < move_delay)	return
 
@@ -159,8 +159,7 @@
 					if(s.zoom)
 						s.zoom()
 
-	if(Process_Grab())
-		return
+	Process_Grab()
 
 	if(istype(mob.buckled, /obj/vehicle))
 		//manually set move_delay for vehicles so we don't inherit any mob movement penalties
@@ -265,7 +264,7 @@
 		else
 			. = mob.SelfMove(n, direct)
 
-		for (var/obj/item/weapon/grab/G in mob)
+		for (var/obj/item/weapon/grab/G in mob.GetGrabs())
 			if (G.state == GRAB_NECK)
 				mob.set_dir(reverse_dir[direct])
 			G.adjust_position()
@@ -297,16 +296,6 @@
 		return FALSE
 
 	return ..()
-
-///Process_Grab()
-///Called by client/Move()
-///Checks to see if you are grabbing anything and if moving will affect your grab.
-/client/proc/Process_Grab()
-	for(var/obj/item/weapon/grab/G in list(mob.l_hand, mob.r_hand))
-		if(G.state == GRAB_KILL) //no wandering across the station/asteroid while choking someone
-			mob.visible_message("<span class='warning'>[mob] lost \his tight grip on [G.affecting]'s neck!</span>")
-			G.hud.icon_state = "kill"
-			G.state = GRAB_NECK
 
 ///Process_Incorpmove
 ///Called by client/Move()
@@ -414,6 +403,23 @@
 
 /mob/proc/mob_negates_gravity()
 	return 0
+
+
+/mob/proc/slip(weaken_duration, obj/slipped_on, lube)
+	return FALSE
+
+/mob/living/carbon/slip(weaken_duration, obj/slipped_on, lube)
+	return loc.handle_slip(src, weaken_duration, slipped_on, lube)
+
+/mob/living/carbon/slime/slip()
+	return FALSE
+
+/mob/living/carbon/human/slip(weaken_duration, obj/slipped_on, lube)
+	if(!(lube & GALOSHES_DONT_HELP))
+		if(shoes && (shoes.flags & NOSLIP))
+			return FALSE
+	return ..()
+
 
 /mob/proc/update_gravity()
 	return

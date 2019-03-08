@@ -10,9 +10,6 @@ var/global/normal_ooc_colour = "#002eb8"
 		return
 
 	if(!mob)	return
-	if(IsGuestKey(key))
-		to_chat(src, "Guests may not use OOC.")
-		return
 
 	msg = sanitize(msg)
 	if(!msg)	return
@@ -115,9 +112,6 @@ var/global/normal_ooc_colour = "#002eb8"
 		return
 
 	if(!mob)	return
-	if(IsGuestKey(key))
-		to_chat(src, "Guests may not use OOC.")
-		return
 
 	msg = sanitize(msg)
 	if(!msg)	return

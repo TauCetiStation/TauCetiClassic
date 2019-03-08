@@ -2,7 +2,7 @@
 	name = "submachine gun"
 	desc = "A lightweight, fast firing gun. Uses 9mm rounds."
 	icon_state = "saber"	//ugly
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/msmg9mm
 	var/alarmed = 0
@@ -24,7 +24,7 @@
 	desc = "A lightweight, fast firing gun, for when you want someone dead. Uses 9mm rounds."
 	icon_state = "mac"
 	item_state = "mac"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/uzim9mm
 
@@ -39,7 +39,7 @@
 	desc = "A lightweight, compact bullpup SMG. Uses .45 ACP rounds in medium-capacity magazines and has a threaded barrel for silencers. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
 	icon_state = "c20r"
 	item_state = "c20r"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/m12mm
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
@@ -91,7 +91,7 @@
 	desc = "A heavily modified light machine gun with a tactical plasteel frame resting on a rather traditionally-made ballistic weapon. Has 'Aussec Armoury - 2531' engraved on the reciever, as well as '7.62x51mm'."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
-	w_class = 5
+	w_class = ITEM_SIZE_HUGE
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/m762
@@ -203,7 +203,7 @@
 	desc = "Based on the classic 'Chicago Typewriter'."
 	icon_state = "tommygun"
 	item_state = "shotgun"
-	w_class = 5
+	w_class = ITEM_SIZE_HUGE
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
@@ -228,7 +228,7 @@
 	desc = "A basic energy-based carbine with fast rate of fire."
 	icon_state = "l10-car"
 	item_state = "l10-car"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	origin_tech = "combat=3;magnets=2"
 	mag_type = /obj/item/ammo_box/magazine/l10mag
 	fire_sound = 'sound/weapons/guns/l10c-shot.ogg'
@@ -310,7 +310,7 @@
 	desc = "C-5 submachine gun - cheap and light. Uses 9mm ammo."
 	icon_state = "c5"
 	item_state = "c5"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/c5_9mm
 	fire_sound = 'sound/weapons/guns/c5_shot.wav'
@@ -330,7 +330,7 @@
 	desc = "L13 personal defense weapon - for combat security operations. Uses .38 ammo."
 	icon_state = "l13"
 	item_state = "l13"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/l13_38
 	fire_sound = 'sound/weapons/guns/l13_shot.ogg'
@@ -363,7 +363,7 @@
 	desc = "Browning Automatic Rifle."
 	icon_state = "bar"
 	item_state = "bar"
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/m3006
 	fire_sound = 'sound/weapons/gunshot3.wav'
@@ -372,7 +372,7 @@
 	name = "Luger P08"
 	desc = "A small, easily concealable gun. Uses 9mm rounds."
 	icon_state = "p08"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	origin_tech = "combat=2;materials=2;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/m9pmm
 
@@ -412,7 +412,7 @@
 	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Compatible only with specialized magazines."
 	icon_state = "bulldog"
 	item_state = "bulldog"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/Gunshot.ogg'
@@ -446,7 +446,7 @@
 	desc = ""
 	icon_state = "a28"
 	item_state = "a28"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m556
 	fire_sound = 'sound/weapons/Gunshot.ogg'
@@ -466,7 +466,7 @@
 	name = "A74 assault rifle"
 	desc = "Stradi and Practican Maid Bai Spess soviets corporation, bazed he original design of 20 centuriyu fin about baars and vodka vile patrimonial it, saunds of balalaika place minvile, yuzes 7.74 caliber"
 	mag_type = /obj/item/ammo_box/magazine/a74mm
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	icon_state = "a74"
 	item_state = "a74"
 	origin_tech = "combat=5;materials=4;syndicate=6"

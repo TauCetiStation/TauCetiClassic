@@ -183,7 +183,6 @@
 
 /obj/effect/blob/normal
 	icon_state = "blob"
-	luminosity = 0
 	health = 21
 
 /obj/effect/blob/normal/update_icon()

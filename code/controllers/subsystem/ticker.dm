@@ -144,6 +144,8 @@ var/datum/subsystem/ticker/ticker
 						send2slack_service("An admin has delayed the round end")
 
 /datum/subsystem/ticker/proc/setup()
+	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
+	var/init_start = world.timeofday
 	//Create and announce mode
 	if(master_mode=="secret" || master_mode=="bs12" || master_mode=="tau classic")
 		hide_mode = 1
@@ -227,6 +229,8 @@ var/datum/subsystem/ticker/ticker
 	Master.RoundStart()
 
 	slack_roundstart()
+
+	world.log << "Game start took [(world.timeofday - init_start)/10]s"
 
 	to_chat(world, "<FONT color='blue'><B>Enjoy the game!</B></FONT>")
 	world << sound('sound/AI/welcome.ogg')
