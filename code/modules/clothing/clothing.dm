@@ -240,7 +240,7 @@ BLIND     // can't see anything
 	body_parts_covered = LEGS
 	slot_flags = SLOT_FLAGS_FEET
 	var/clipped_status = NO_CLIPPING
-	var/can_hold_knife
+	var/can_hold_knife = FALSE
 	var/obj/item/holding
 
 	permeability_coefficient = 0.50
