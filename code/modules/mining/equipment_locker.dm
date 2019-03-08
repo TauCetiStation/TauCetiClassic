@@ -499,7 +499,7 @@
 							L.adjustToxLoss(-3)
 							var/turf/T = get_turf(L)
 							T.add_vomit_floor(L)
-							playsound(L, 'sound/effects/splat.ogg', 50, 1)
+							playsound(L, 'sound/effects/vomit1.ogg', 80, 0)
 
 
 /**********************Resonator**********************/

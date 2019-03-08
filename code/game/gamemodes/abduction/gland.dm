@@ -79,7 +79,7 @@
 
 	var/turf/pos = get_turf(host)
 	pos.add_vomit_floor(host)
-	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+	playsound(pos, 'sound/effects/vomit1.ogg', 80, 0)
 
 	new/mob/living/simple_animal/slime(pos)
 

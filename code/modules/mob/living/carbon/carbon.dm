@@ -610,7 +610,7 @@
 		B.chemicals -= 100
 
 		new /obj/effect/decal/cleanable/vomit(get_turf(src))
-		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(loc, 'sound/effects/vomit1.ogg', 80, 0)
 		new /mob/living/simple_animal/borer(get_turf(src))
 
 	else
