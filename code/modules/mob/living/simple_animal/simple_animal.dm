@@ -157,6 +157,8 @@
 	return 1
 
 /mob/living/simple_animal/proc/handle_automated_speech()
+	if(!(rand(0,200) < speak_chance))
+		return
 
 	if(!speak_chance || !(speak.len || emote_hear.len || emote_see.len))
 		return
@@ -172,20 +174,19 @@
 			break
 
 	if(someone_in_earshot)
-		if(rand(0,200) < speak_chance)
-			var/mode = pick(
-			speak.len;      1,
-			emote_hear.len; 2,
-			emote_see.len;  3
-			)
+		var/mode = pick(
+		speak.len;      1,
+		emote_hear.len; 2,
+		emote_see.len;  3
+		)
 
-			switch(mode)
-				if(1)
-					say(pick(speak))
-				if(2)
-					emote(pick(emote_hear), 2)
-				if(3)
-					emote(pick(emote_see), 1)
+		switch(mode)
+			if(1)
+				say(pick(speak))
+			if(2)
+				emote(pick(emote_hear), 2)
+			if(3)
+				emote(pick(emote_see), 1)
 
 /mob/living/simple_animal/gib()
 	if(icon_gib)
