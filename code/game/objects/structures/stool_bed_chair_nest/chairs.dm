@@ -284,7 +284,8 @@
 						Bump(O)
 			else
 				unbuckle_mob()
-	playsound(src, 'sound/effects/roll.ogg', 100, 1)			
+	else if(has_gravity(src))
+		playsound(src, 'sound/effects/roll.ogg', 100, 1)		
 	handle_rotation()
 
 /obj/structure/stool/bed/chair/office/Bump(atom/A)
