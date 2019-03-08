@@ -316,8 +316,8 @@ var/list/airlock_overlays = list()
 		old_filling_overlay = filling_overlay
 	if(lights_overlay != old_lights_overlay)
 		if(lights_overlay)
-			lights_overlay.layer = LIGHTING_LAYER + 1
-			lights_overlay.plane = LIGHTING_PLANE + 1
+			lights_overlay.layer = ABOVE_LIGHTING_LAYER
+			lights_overlay.plane = ABOVE_LIGHTING_PLANE
 		overlays -= old_lights_overlay
 		overlays += lights_overlay
 		old_lights_overlay = lights_overlay
@@ -331,8 +331,8 @@ var/list/airlock_overlays = list()
 		old_weld_overlay = weld_overlay
 	if(sparks_overlay != old_sparks_overlay)
 		if(sparks_overlay)
-			sparks_overlay.layer = LIGHTING_LAYER + 1
-			sparks_overlay.plane = LIGHTING_PLANE + 1
+			sparks_overlay.layer = ABOVE_LIGHTING_LAYER
+			sparks_overlay.plane = ABOVE_LIGHTING_PLANE
 		overlays -= old_sparks_overlay
 		overlays += sparks_overlay
 		old_sparks_overlay = sparks_overlay
@@ -1150,8 +1150,8 @@ var/list/airlock_overlays = list()
 
 /obj/structure/door_scrap/atom_init()
 	. = ..()
-	var/image/fire_overlay = image("icon"='icons/effects/effects.dmi', "icon_state"="s_fire", "layer" = (LIGHTING_LAYER + 1))
-	fire_overlay.plane = LIGHTING_PLANE + 1
+	var/image/fire_overlay = image("icon"='icons/effects/effects.dmi', "icon_state"="s_fire", "layer" = (ABOVE_LIGHTING_LAYER))
+	fire_overlay.plane = ABOVE_LIGHTING_PLANE
 	overlays += fire_overlay
 	START_PROCESSING(SSobj, src)
 

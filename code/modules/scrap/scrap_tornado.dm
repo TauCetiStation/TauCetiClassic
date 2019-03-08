@@ -6,8 +6,8 @@
 	color = "#666666"
 	alpha = 200
 	current_size = STAGE_TWO
-//	layer = LIGHTING_LAYER + 1
-//	plane = LIGHTING_PLANE + 1
+//	layer = ABOVE_LIGHTING_LAYER
+//	plane = ABOVE_LIGHTING_PLANE
 	pixel_x = -64
 	pixel_y = -64
 	move_self = 1
