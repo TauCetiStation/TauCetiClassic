@@ -129,6 +129,7 @@
 		else
 			if (occupant && (src.loc != occupant.loc))
 				src.loc = occupant.loc // Failsafe to make sure the wheelchair stays beneath the occupant after driving
+	playsound(src, 'sound/effects/roll.ogg', 75, 1)
 	handle_rotation()
 
 /obj/structure/stool/bed/chair/wheelchair/attack_hand(mob/living/user)

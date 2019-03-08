@@ -257,7 +257,7 @@
 							target.adjustBruteLoss(15)
 							if(target.stat)
 								forgetCurrentTarget()
-								playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+								playsound(loc, "law", 50, 0)
 
 				else								// not next to perp
 					var/turf/olddist = get_dist(src, target)
@@ -329,7 +329,7 @@
 						mob_carbon.handcuffed = new /obj/item/weapon/handcuffs(target)
 						mob_carbon.update_inv_handcuffed()	//update the handcuffs overlay
 				forgetCurrentTarget()
-				playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+				playsound(loc, "law", 50, 0)
 			else if(mode == SECBOT_ARREST)
 				anchored = FALSE
 				mode = SECBOT_HUNT
@@ -577,7 +577,7 @@
 			target = L
 			oldtarget_name = L.name
 			speak("Level [threatlevel] infraction alert!")
-			playsound(loc, pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg'), 50, 0)
+			playsound(loc, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, 0)
 			visible_message("<b>[src]</b> points at [L.name]!")
 			mode = SECBOT_HUNT
 			process() // ensure bot quickly responds to a perp
