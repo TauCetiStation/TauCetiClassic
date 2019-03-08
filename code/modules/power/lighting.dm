@@ -191,7 +191,7 @@
 	name = "light fixture"
 	icon = 'icons/obj/lighting.dmi'
 	var/base_state = "tube"		// base description and icon_state
-	icon_state = "tube1"
+	icon_state = "tube"
 	desc = "A lighting fixture."
 	anchored = 1
 	layer = 5  					// They were appearing under mobs which is a little weird - Ostaf
@@ -200,8 +200,8 @@
 	active_power_usage = 20
 	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	interact_offline = TRUE
-	var/on = 0					// 1 if on, 0 if off
-	var/on_gs = 0
+	var/on = FALSE	// true if on, false if off
+	var/on_gs = FALSE
 	var/static_power_used = 0
 	var/brightness_range = 7	// luminosity when on, also used in power calculation
 	var/brightness_power = 2
@@ -212,25 +212,26 @@
 	var/fitting = "tube"
 	var/switchcount = 0			// count of number of times switched on/off
 								// this is used to calc the probability the light burns out
+	var/static/image/overlay
 
 	var/rigged = 0				// true if rigged to explode
 
 // the smaller bulb light fixture
 
 /obj/machinery/light/small
-	icon_state = "bulb1"
+	icon_state = "bulb"
 	base_state = "bulb"
 	fitting = "bulb"
 	brightness_range = 4
-	brightness_power = 2
-	brightness_color = "#a0a080"
+	brightness_power = 0.9
+	brightness_color = "#ffffcc"
 	desc = "A small lighting fixture."
 	light_type = /obj/item/weapon/light/bulb
 
 /obj/machinery/light/small/emergency
 	brightness_range = 6
 	brightness_power = 2
-	brightness_color = "#da0205"
+	brightness_color = "#ff6363"
 
 /obj/machinery/light/spot
 	name = "spotlight"
@@ -274,10 +275,16 @@
 	return ..()
 
 /obj/machinery/light/update_icon()
-
+	if(!overlay)
+		overlay = image(icon, "[base_state]-overlay")
+		overlay.plane = ABOVE_LIGHTING_PLANE
+	overlays.Cut()
 	switch(status)		// set icon_states
 		if(LIGHT_OK)
-			icon_state = "[base_state][on]"
+			icon_state = "[base_state]"
+			if(on)
+				overlay.icon_state = "[base_state]-overlay"
+				overlays += overlay
 		if(LIGHT_EMPTY)
 			icon_state = "[base_state]-empty"
 			on = 0
