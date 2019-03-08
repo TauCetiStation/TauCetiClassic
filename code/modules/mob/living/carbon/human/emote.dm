@@ -210,7 +210,6 @@
 				if (!muzzled)
 					if(auto)
 						if(message == "coughs up blood!")
-							message = "<B>[src]</B> [message]"
 							if(world.time-lastSoundEmote >= 30)
 								if(gender == FEMALE)
 									playsound(src, 'sound/misc/fbcough.ogg', 100, 0)
@@ -218,8 +217,7 @@
 									playsound(src, 'sound/misc/mbcough.ogg', 90, 0)
 								m_type = 2
 								lastSoundEmote = world.time
-					else
-						message = "<B>[src]</B> [message ? message : "gasps!"]"
+					message = "<B>[src]</B> [message ? message : "gasps!"]"
 				else
 					message = "<B>[src]</B> makes a noise."
 					m_type = 2
