@@ -92,7 +92,7 @@
 	var/my_master = 0
 	var/my_golems = list()
 
-	var/lastScream = 0 // Prevent scream spam in some situations
+	var/lastSoundEmote = 0 // Prevent sound emotes spam in some situations
 	var/name_override //For temporary visible name changes
 
 	var/full_prosthetic    // We are a robutt.
@@ -102,3 +102,5 @@
 
 	var/busy_left_hand = FALSE // See ambidextrous quirk and is_busy() override.
 	var/busy_right_hand = FALSE
+
+	var/legstep = 0 // For counting steps without shoes; var/footstep analog

@@ -60,15 +60,12 @@
 			//Footstep sound
 			if(istype(H:shoes, /obj/item/clothing/shoes) && !H.buckled)
 				var/obj/item/clothing/shoes/O = H.shoes
-
 				var/footstepsound = "footsteps"
-
 				if(istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
 					if(prob(25))
 						footstepsound = "clownstep"
 				if(H.shoes.wet)
 					footstepsound = 'sound/effects/waterstep.ogg'
-
 				if(H.m_intent == "run")
 					if(O.footstep >= 2)
 						O.footstep = 0
@@ -76,7 +73,8 @@
 					else
 						O.footstep++
 				else
-					playsound(src, footstepsound, 20, 1)
+					if(O.footstep >= 0)
+						playsound(src, footstepsound, 20, 1)
 
 		// Tracking blood
 		var/list/bloodDNA = null

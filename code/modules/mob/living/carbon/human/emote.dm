@@ -208,10 +208,20 @@
 				m_type = 1
 			else
 				if (!muzzled)
-					message = "<B>[src]</B> [message ? message : "gasps!"]"
-					m_type = 2
+					if(auto)
+						if(message == "coughs up blood!")
+							message = "<B>[src]</B> [message]"
+							if(world.time-lastSoundEmote >= 30)
+								if(gender == FEMALE)
+									playsound(src, 'sound/misc/fbcough.ogg', 100, 0)
+								else
+									playsound(src, 'sound/misc/mbcough.ogg', 90, 0)
+								m_type = 2
+								lastSoundEmote = world.time
+					else
+						message = "<B>[src]</B> [message ? message : "gasps!"]"
 				else
-					message = "<B>[src]</B> makes a weak noise."
+					message = "<B>[src]</B> makes a noise."
 					m_type = 2
 
 			cloud_emote = "cloud-gasp"
@@ -553,7 +563,7 @@
 				if(virus_scream || !(species && species.flags[NO_PAIN]))
 					if (!muzzled)
 						if (auto)
-							if(world.time-lastScream >= 30)//prevent scream spam with things like poly spray
+							if(world.time-lastSoundEmote >= 30)//prevent scream spam with things like poly spray
 								message = "<B>[src]</B> screams in agony!"
 								var/list/screamSound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg', 'sound/misc/wilhelm.ogg', 'sound/misc/goofy.ogg')
 								if (gender == FEMALE) //Females have their own screams. Trannys be damned.
@@ -561,7 +571,7 @@
 								var/scream = pick(screamSound)//AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
 								playsound(get_turf(src), scream, 50, 0)
 								m_type = 2
-								lastScream = world.time
+								lastSoundEmote = world.time
 						else
 							if(!message)
 								message = "<B>[src]</B> screams!"
