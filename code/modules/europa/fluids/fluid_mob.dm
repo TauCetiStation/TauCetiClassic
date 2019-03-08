@@ -37,7 +37,7 @@
 				C.Weaken(2)
 			else
 				var/mob/living/carbon/human/H = C
-				if(istype(H:shoes, /obj/item/clothing/shoes) && !H.buckled)
+				if(istype(H.shoes, /obj/item/clothing/shoes) && !H.buckled)
 					var/obj/item/clothing/shoes/O = H.shoes
 					O.footstep = -1
 				if(H.legstep >= 1)
@@ -47,14 +47,21 @@
 					H.legstep++
 		else
 			var/mob/living/carbon/human/H = C
-			if(istype(H:shoes, /obj/item/clothing/shoes) && !H.buckled)
+			if(istype(H.shoes, /obj/item/clothing/shoes) && !H.buckled)
 				var/obj/item/clothing/shoes/O = H.shoes
-				O.footstep = 0
+				O.footstep = -1
 			if(H.legstep >= 2)
 				playsound(loc, "swimming", 70, 1, -3)
 				H.legstep = 0
 			else
 				H.legstep++
+
+	if(prob(5))
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if(istype(H.shoes, /obj/item/clothing/shoes))
+				var/obj/item/clothing/shoes/S = H.shoes
+				S.make_wet()
 
 /obj/effect/fluid/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj, /obj/item/projectile/energy/electrode) || istype(Proj, /obj/item/projectile/beam/stun))
