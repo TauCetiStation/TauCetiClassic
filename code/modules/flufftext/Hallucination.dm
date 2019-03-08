@@ -303,7 +303,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /proc/fake_blood(mob/living/carbon/human/target)
 	var/obj/effect/overlay/O = new/obj/effect/overlay(target.loc)
 
-	var/datum/dirt_cover/D = new target.species.blood_color
+	var/datum/dirt_cover/D = new(target.species.blood_datum)
 	O.name = D.name
 	O.color = D.color
 

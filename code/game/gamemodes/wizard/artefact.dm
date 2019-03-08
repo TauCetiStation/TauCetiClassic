@@ -11,7 +11,7 @@
 	icon_state = "necrostone"
 	item_state = "electronic"
 	origin_tech = "bluespace=4;materials=4"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	var/list/spooky_scaries = list()
 	var/unlimited = 0
 
@@ -80,7 +80,7 @@
 /obj/item/weapon/contract
 	name = "contract"
 	desc = "A magic contract previously signed by an apprentice. In exchange for instruction in the magical arts, they are bound to answer your call for aid."
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
 	var/datum/mind/wizard

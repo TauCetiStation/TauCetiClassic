@@ -127,10 +127,6 @@
 
 	pulse = handle_pulse()
 
-	// Grabbing
-	for(var/obj/item/weapon/grab/G in src)
-		G.process()
-
 
 //Much like get_heat_protection(), this returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 /mob/living/carbon/human/proc/get_pressure_protection(pressure_check = STOPS_PRESSUREDMAGE)
@@ -206,9 +202,9 @@
 			if(config.rus_language)//TODO:CYRILLIC dictionary?
 				switch(pick(1,2,3))
 					if(1)
-						say(pick("àçàçàà!", "ß íå ñìàëãåé!", "ÕÎÑ ÕÓÅÑÎÑ!", "[pick("", "åáó÷èé òðåéòîð")] [pick("ìîðãàí", "ìîðãóí", "ìîðãåí", "ìðîãóí")] [pick("äæåìåñ", "äæàìåñ", "äæàåìåñ")] ãðåôîíåò ìèíÿ øïàñèò;å!!!", "òè ìîæûø äàòü ìíå [pick("òèëèïàòèþ","õàëêó","ýïèëëåïñèþ")]?", "ÕÀ÷ó ñòàòü áîðãîì!", "ÏÎÇÎâèòå äåòåêòèâà!", "Õî÷ó ñòàòü ìàðòûøêîé!", "ÕÂÀÒÅÒ ÃÐÈÔÎÍÅÒÜ ÌÈÍß!!!!", "ØÀÒÎË!"))
+						say(pick(CYRILLIC_BRAINDAMAG_1))
 					if(2)
-						say(pick("Êàê ìèí[JA_PLACEHOLDER]òü ðóêè?","åáó÷èå ôóððè!", "Ïîäåáèë", "Ïðîêë[JA_PLACEHOLDER]òûå òðàïû!", "ëîëêà!", "âæææææææææ!!!", "äæåô ñêâààààä!", "ÁÐÀÍÄÅÍÁÓÐÃ!", "ÁÓÄÀÏÅØÒ!", "ÏÀÓÓÓÓÓÊ!!!!", "ÏÓÊÀÍ ÁÎÌÁÀÍÓË!", "ÏÓØÊÀ", "ÐÅÂÀ ÏÎÖÎÍÛ", "Ïàòè íà õîïà!"))
+						say(pick(CYRILLIC_BRAINDAMAG_2))
 					if(3)
 						emote("drool")
 			else
@@ -1026,7 +1022,7 @@
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 	else
-		if(has_trait(TRAIT_FAT) || overeatduration > 500)
+		if((has_trait(TRAIT_FAT) || overeatduration > 500) && isturf(loc))
 			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
 				mutations.Add(FAT)
 				update_body()
@@ -1576,7 +1572,7 @@
 	//0.1% chance of playing a scary sound to someone who's in complete darkness
 	if(isturf(loc) && rand(1,1000) == 1)
 		var/turf/T = loc
-		if(T.lighting_overlay && T.lighting_overlay.luminosity == 0)
+		if(T.get_lumcount() < 0.1)
 			playsound_local(src,pick(scarySounds),50, 1, -1)
 
 /mob/living/carbon/human/proc/handle_virus_updates()

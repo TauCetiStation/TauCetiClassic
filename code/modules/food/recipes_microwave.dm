@@ -124,7 +124,7 @@
 /datum/recipe/microwave/mimeburger
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/bun,
-		/obj/item/clothing/head/beret
+		/obj/item/clothing/head/beret/red
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/mimeburger
 

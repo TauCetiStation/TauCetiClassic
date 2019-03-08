@@ -25,7 +25,7 @@
 	body_parts_covered = HEAD|FACE|EYES
 	action_button_name = "Flip Welding Mask"
 	siemens_coefficient = 0.9
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/clothing/head/welding/attack_self()
 	toggle()
@@ -129,7 +129,7 @@
 	body_parts_covered = HEAD|EYES
 	var/brightness_on = 2 //luminosity when on
 	var/on = 0
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/clothing/head/pumpkinhead/attack_self(mob/user)
 	if(!isturf(user.loc))

@@ -427,7 +427,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/white(H), SLOT_GLOVES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/mime(H), SLOT_WEAR_MASK)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret(H), SLOT_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/red(H), SLOT_HEAD)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/suspenders(H), SLOT_WEAR_SUIT)
 
 	if(visualsOnly)

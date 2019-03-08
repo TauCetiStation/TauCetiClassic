@@ -60,7 +60,7 @@
 
 /datum/gear/head/beret
 	display_name = "Beret selection"
-	path = /obj/item/clothing/head/beret/red
+	path = /obj/item/clothing/head/beret
 
 /datum/gear/head/beret/New()
 	..()
