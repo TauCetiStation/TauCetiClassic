@@ -26,7 +26,7 @@
 	var/list/selectable = list()
 	for(var/obj/item/rig_module/module in installed_modules)
 		if(module.selectable)
-			selectable |= module
+			selectable += module
 
 	var/obj/item/rig_module/module = input("Which module do you wish to select?") as null|anything in selectable
 
@@ -76,7 +76,7 @@
 	var/list/selectable = list()
 	for(var/obj/item/rig_module/module in installed_modules)
 		if(module.toggleable)
-			selectable |= module
+			selectable += module
 
 	var/obj/item/rig_module/module = input("Which module do you wish to toggle?") as null|anything in selectable
 
@@ -108,7 +108,7 @@
 	var/list/selectable = list()
 	for(var/obj/item/rig_module/module in installed_modules)
 		if(module.usable)
-			selectable |= module
+			selectable += module
 
 	var/obj/item/rig_module/module = input("Which module do you wish to engage?") as null|anything in selectable
 
