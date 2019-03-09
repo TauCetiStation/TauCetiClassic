@@ -48,7 +48,7 @@
 	var/activate_string = "Activate"
 	var/deactivate_string = "Deactivate"
 
-	var/list/stat_modules = new() // buttons for the stat menu
+	var/list/stat_modules = list() // buttons for the stat menu
 
 /obj/item/rig_module/atom_init()
 	. = ..()
