@@ -262,14 +262,18 @@
 	damage_message = voice.damage_message
 	destroyed_message = voice.destroyed_message
 
+	// replacing default rig lines with lines from a custom voice, without changing anything else
 	for (var/i in 1 to health_warnings.len)
-		health_warnings[i].message = voice.health_warnings[i]
+		var/datum/rig_warning/RW = health_warnings[i]
+		RW.message = voice.health_warnings[i]
 
 	for (var/i in 1 to breach_warnings.len)
-		breach_warnings[i].message = voice.breach_warnings[i]
+		var/datum/rig_warning/RW = breach_warnings[i]
+		RW.message = voice.breach_warnings[i]
 
 	for (var/i in 1 to energy_warnings.len)
-		energy_warnings[i].message = voice.energy_warnings[i]
+		var/datum/rig_warning/RW = energy_warnings[i]
+		RW.message = voice.energy_warnings[i]
 
 /obj/item/rig_module/simple_ai/advanced/atom_init()
 	. = ..()
