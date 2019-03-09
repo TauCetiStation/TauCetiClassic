@@ -35,13 +35,13 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 			can_fire = FALSE
 
 /datum/subsystem/icon_smooth/Initialize()
-	smooth_zlevel(1, TRUE)
-	smooth_zlevel(2, TRUE)
+	smooth_zlevel(ZLEVEL_STATION, TRUE)
+	smooth_zlevel(ZLEVEL_CENTCOM, TRUE)
 	var/queue = smooth_queue
 	smooth_queue = list()
 	for(var/V in queue)
 		var/atom/A = V
-		if(!A || A.z <= 2)
+		if(!A || A.z <= ZLEVEL_CENTCOM)
 			continue
 		smooth_icon(A)
 		CHECK_TICK
