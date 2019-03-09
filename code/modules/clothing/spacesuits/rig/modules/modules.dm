@@ -240,7 +240,7 @@
 		module.holder.Topic(usr, href_list)
 
 /obj/stat_rig_module/DblClick()
-	return Click()
+	return
 
 /obj/stat_rig_module/activate/atom_init(mapload, obj/item/rig_module/module)
 	. = ..()
