@@ -194,7 +194,7 @@
 
 /obj/item/rig_module/simple_ai/proc/handle_module_damage(source, obj/item/rig_module/dam_module)
 	if(dam_module == src) // ai module is damaged, we need to forget about old messages and show to the user that we broke
-		message_queue = list() // clearing the message queue
+		message_queue.Cut() // clearing the message queue
 		if(dam_module.damage >= MODULE_DESTROYED)
 			rig_message(destroyed_message, message_class = "danger", message_type = "[dam_module.name]", sound = 'sound/rig/longbeep.wav')
 		else
