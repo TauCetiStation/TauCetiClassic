@@ -175,7 +175,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	if(istype(wear_suit, /obj/item/clothing/suit/space/rig/))
 		var/obj/item/clothing/suit/space/rig/rig = wear_suit
-		Rig_SetupStat(rig)
+		rig_setup_stat(rig)
 
 /mob/living/carbon/human/ex_act(severity)
 	if(!blinded)

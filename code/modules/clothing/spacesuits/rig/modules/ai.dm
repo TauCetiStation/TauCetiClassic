@@ -146,8 +146,9 @@
 
 	var/power_waste = 0
 
-	var/datum/rig_message/message = message_queue[message_queue[1]] // take the first message
-	message_queue -= message_queue[1] // remove it from the queue
+	var/message_type = message_queue[1] // type of the first message in the queue
+	var/datum/rig_message/message = message_queue[message_type] // take the first message
+	message_queue -= message_type // remove it from the queue
 	power_waste += 10 // beeping to the user shouldn't use much energy
 
 	if(damage) // if we are damaged show the message badly
