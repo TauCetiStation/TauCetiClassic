@@ -20,8 +20,8 @@
 	interface_name = "integrated grenade launcher"
 	interface_desc = "Discharges loaded grenades against the wearer's location."
 
-	var/fire_force = 5
-	var/fire_distance = 10
+	var/fire_range = 5
+	var/fire_speed = 2
 
 /obj/item/rig_module/grenade_launcher/init_charges()
 	charges = list()
@@ -87,7 +87,7 @@
 	H.visible_message("<span class='danger'>[H] launches \a [new_grenade]!</span>")
 	msg_admin_attack("fired a grenade ([new_grenade.name]) from a rigsuit grenade launcher.")
 	new_grenade.activate(H)
-	new_grenade.throw_at(target,fire_force,fire_distance)
+	new_grenade.throw_at(target,fire_range,fire_speed)
 
 /obj/item/rig_module/grenade_launcher/cleaner
 	name = "hardsuit mounted cleaning grenade launcher"
