@@ -27308,8 +27308,6 @@
 /area/rnd/xenobiology)
 "aWq" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/bio_suit/anomaly,
-/obj/item/clothing/head/bio_hood/anomaly,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/glasses/science,
 /obj/item/clothing/gloves/latex,
@@ -27320,6 +27318,8 @@
 	name = "Research Equipment";
 	req_access_txt = "65"
 	},
+/obj/item/clothing/suit/bio_suit/particle_protection,
+/obj/item/clothing/head/bio_hood/particle_protection,
 /turf/simulated/floor{
 	icon_state = "delivery";
 	name = "floor"
@@ -28045,8 +28045,6 @@
 /area/library)
 "aXO" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/bio_suit/anomaly,
-/obj/item/clothing/head/bio_hood/anomaly,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/glasses/science,
 /obj/item/clothing/gloves/latex,
@@ -28055,6 +28053,8 @@
 	name = "Research Equipment";
 	req_access_txt = "65"
 	},
+/obj/item/clothing/suit/bio_suit/particle_protection,
+/obj/item/clothing/head/bio_hood/particle_protection,
 /turf/simulated/floor{
 	icon_state = "delivery";
 	name = "floor"
