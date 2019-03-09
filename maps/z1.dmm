@@ -38639,9 +38639,9 @@
 "bvr" = (
 /obj/structure/closet/crate,
 /obj/item/toy/prize/honk,
-/obj/item/weapon/coin/clown,
-/obj/item/weapon/coin/clown,
-/obj/item/weapon/coin/clown,
+/obj/item/weapon/coin/bananium,
+/obj/item/weapon/coin/bananium,
+/obj/item/weapon/coin/bananium,
 /turf/simulated/floor/plating,
 /area/maintenance/aft)
 "bvt" = (
