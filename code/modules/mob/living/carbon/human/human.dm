@@ -173,6 +173,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	CHANGELING_STATPANEL_POWERS(null)
 
+	if(istype(wear_suit, /obj/item/clothing/suit/space/rig/))
+		var/obj/item/clothing/suit/space/rig/rig = wear_suit
+		rig_setup_stat(rig)
+
 /mob/living/carbon/human/ex_act(severity)
 	if(!blinded)
 		flash_eyes()
