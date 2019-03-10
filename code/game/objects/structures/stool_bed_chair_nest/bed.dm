@@ -79,7 +79,7 @@
 		return 0
 	return ..()
 
-/obj/structure/stool/bed/roller/Move(NewLoc)
+/obj/structure/stool/bed/roller/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
 	if(has_gravity(src))
 		playsound(src, 'sound/effects/roll.ogg', 100, 1)
