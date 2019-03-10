@@ -315,7 +315,7 @@ BLIND     // can't see anything
 		holding = I
 		user.visible_message("<span class='notice'>\The [user] shoves \the [I] into \the [src].</span>")
 		I.forceMove(src)
-		playsound((src), 'sound/weapons/knifein.ogg', 25)
+		playsound(src, 'sound/weapons/knifein.ogg', 25)
 		verbs += /obj/item/clothing/shoes/proc/draw_knife
 	else
 		return ..()
