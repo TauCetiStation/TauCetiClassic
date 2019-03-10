@@ -3,7 +3,7 @@
 
 /datum/artifact_effect/tesla/New(var/atom/location)
 	..()
-	effecttype = "shock"
+	effect_name = "shock"
 	effect_type = 8
 	effect = EFFECT_PULSE
 	chargelevel = 0

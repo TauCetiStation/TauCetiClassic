@@ -1,6 +1,6 @@
 
 /datum/artifact_effect/robohurt
-	effecttype = "robohurt"
+	effect_name = "robohurt"
 
 /datum/artifact_effect/robohurt/New()
 	..()

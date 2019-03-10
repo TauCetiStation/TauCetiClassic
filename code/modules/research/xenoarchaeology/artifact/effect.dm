@@ -1,7 +1,7 @@
 
 //override procs in children as necessary
 /datum/artifact_effect
-	var/effecttype = "unknown"		//purely used for admin checks ingame, not needed any more
+	var/effect_name = "unknown" // purely used for admin checks ingame
 	var/effect = EFFECT_TOUCH
 	var/effectrange = 4
 	var/trigger = TRIGGER_TOUCH
@@ -10,40 +10,31 @@
 	var/chargelevel = 0
 	var/chargelevelmax = 10
 	var/artifact_id = ""
-	var/effect_type = 0
-
-//0 = Unknown / none detectable
-//1 = Concentrated energy
-//2 = Intermittent psionic wavefront
-//3 = Electromagnetic energy
-//4 = Particle field
-//5 = Organically reactive exotic particles
-//6 = Interdimensional/bluespace? phasing
-//7 = Atomic synthesis
+	var/effect_type = EFFECT_UNKNOWN
 
 /datum/artifact_effect/New(var/atom/location)
 	..()
 	holder = location
-	effect = rand(0,MAX_EFFECT)
-	trigger = rand(0,MAX_TRIGGER)
+	effect = rand(0, MAX_EFFECT)
+	trigger = rand(0, MAX_TRIGGER)
 
-	//this will be replaced by the excavation code later, but it's here just in case
+	// this will be replaced by the excavation code later, but it's here just in case
 	artifact_id = "[pick("kappa", "sigma", "antaeres", "beta", "omicron", "iota", "epsilon", "omega", "gamma", "delta", "tau", "alpha")]-[rand(100, 999)]"
 
-	//random charge time and distance
-	switch(pick(100;1, 50;2, 25;3))
+	// random charge time and distance
+	switch(pick(80;1, 50;2, 25;3))
 		if(1)
-			//short range, short charge time
-			chargelevelmax = rand(3, 20)
+			// short range, short charge time
+			chargelevelmax = rand(3, 18)
 			effectrange = rand(1, 3)
 		if(2)
-			//medium range, medium charge time
-			chargelevelmax = rand(15, 40)
-			effectrange = rand(5, 15)
+			// medium range, medium charge time
+			chargelevelmax = rand(15, 30)
+			effectrange = rand(5, 7)
 		if(3)
-			//large range, long charge time
-			chargelevelmax = rand(20, 120)
-			effectrange = rand(20, 200)
+			// large range, long charge time
+			chargelevelmax = rand(20, 40)
+			effectrange = rand(7, 9)
 
 /datum/artifact_effect/proc/ToggleActivate(reveal_toggle = 1)
 	//so that other stuff happens first

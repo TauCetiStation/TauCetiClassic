@@ -35,3 +35,13 @@
 #define ARTIFACT_CRYSTAL_GREEN 11
 #define ARTIFACT_CRYSTAL_PURPLE 12
 #define ARTIFACT_CRYSTAL_BLUE 13
+
+// Artifact effect_type
+#define EFFECT_UNKNOWN 0 // Unknown / none detectable
+#define EFFECT_ENERGY 1 // Concentrated energy
+#define EFFECT_PSIONIC 2 // Intermittent psionic wavefront
+#define EFFECT_ELECTRO 3 // Electromagnetic energy
+#define EFFECT_PARTICLE 4 // Particle field
+#define EFFECT_ORGANIC 5 // Organically reactive exotic particles
+#define EFFECT_BLUESPACE 6 // Interdimensional/bluespace? phasing
+#define EFFECT_SYNTH 7 // Atomic synthesis

@@ -1,6 +1,6 @@
 
 /datum/artifact_effect/goodfeeling
-	effecttype = "goodfeeling"
+	effect_name = "goodfeeling"
 	effect_type = 2
 	var/list/messages = list("You feel good.",\
 		"Everything seems to be going alright",\

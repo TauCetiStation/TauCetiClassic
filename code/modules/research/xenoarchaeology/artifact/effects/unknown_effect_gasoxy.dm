@@ -1,6 +1,6 @@
 
 /datum/artifact_effect/gasoxy
-	effecttype = "gasoxy"
+	effect_name = "gasoxy"
 	var/max_pressure
 
 /datum/artifact_effect/gasoxy/New()

@@ -1,6 +1,6 @@
 
 /datum/artifact_effect/teleport
-	effecttype = "teleport"
+	effect_name = "teleport"
 	effect_type = 6
 
 /datum/artifact_effect/teleport/DoEffectTouch(mob/user)

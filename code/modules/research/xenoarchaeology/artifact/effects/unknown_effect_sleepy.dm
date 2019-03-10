@@ -1,7 +1,7 @@
 
 //todo
 /datum/artifact_effect/sleepy
-	effecttype = "sleepy"
+	effect_name = "sleepy"
 
 /datum/artifact_effect/sleepy/New()
 	..()

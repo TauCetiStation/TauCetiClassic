@@ -38,6 +38,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/jumptokey,				/*allows us to jump to the location of a mob with a certain ckey*/
 	/client/proc/jumptomob,				/*allows us to jump to a specific mob*/
 	/client/proc/jumptoturf,			/*allows us to jump to a specific turf*/
+	/client/proc/artifact_control_panel,	/*allows us to change the artifact's variables*/
 	/client/proc/admin_call_shuttle,	/*allows us to call the emergency shuttle*/
 	/client/proc/admin_cancel_shuttle,	/*allows us to cancel the emergency shuttle, sending it back to centcomm*/
 	/client/proc/cmd_admin_direct_narrate,	/*send text directly to a player with no padding. Useful for narratives and fluff-text*/
@@ -1135,3 +1136,17 @@ var/centcom_barriers_stat = 1
 /obj/structure/centcom_barrier/Destroy()
 	centcom_barrier_list -= src
 	return ..()
+
+//////////////////////////////
+// Artifact check proc
+//////////////////////////////
+/client/proc/artifact_control_panel(obj/machinery/artifact/A in world)
+	set name = "Artifact Control Panel"
+	set category = "Admin"
+	if(!src.holder)
+		to_chat(src, "Only administrators may use this command.")
+		return
+	var/dat = "<HEAD><TITLE>Artifact Control Panel</TITLE></HEAD><BODY>\n"
+	usr << browse(entity_ja(dat), "window=artifactcontrolpanel;size=500x500")
+	onclose(usr, "artifactcontrolpanel")
+	return

@@ -1,6 +1,6 @@
 
 /datum/artifact_effect/radiate
-	effecttype = "radiate"
+	effect_name = "radiate"
 	var/radiation_amount
 
 /datum/artifact_effect/radiate/New()

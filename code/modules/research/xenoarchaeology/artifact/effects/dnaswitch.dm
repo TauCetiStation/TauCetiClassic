@@ -1,7 +1,7 @@
 
 //todo
 /datum/artifact_effect/dnaswitch
-	effecttype = "dnaswitch"
+	effect_name = "dnaswitch"
 	effect_type = 5
 	var/severity
 

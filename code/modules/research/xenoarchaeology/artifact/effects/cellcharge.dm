@@ -1,7 +1,7 @@
 
 //todo
 /datum/artifact_effect/cellcharge
-	effecttype = "cellcharge"
+	effect_name = "cellcharge"
 	effect_type = 3
 
 /datum/artifact_effect/cellcharge/DoEffectTouch(mob/user)
