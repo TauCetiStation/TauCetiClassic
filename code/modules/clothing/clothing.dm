@@ -297,7 +297,6 @@ BLIND     // can't see anything
 	if(!holding)
 		verbs -= /obj/item/clothing/shoes/proc/draw_knife
 
-	return
 
 /obj/item/clothing/shoes/attack_hand(mob/living/M)
 	if(holding && src.loc == M)
