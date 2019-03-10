@@ -291,7 +291,8 @@ BLIND     // can't see anything
 		holding = null
 		playsound((src), 'sound/weapons/knifeout.ogg', 25)
 	else
-		to_chat(usr, "<span class='warning'>Your need an empty, unbroken hand to do that.</span>")
+		to_chat(usr, "<span class='warning'>You need your hands free to hold \the [holding]!</span>")
+		holding = null
 
 	if(!holding)
 		verbs -= /obj/item/clothing/shoes/proc/draw_knife
