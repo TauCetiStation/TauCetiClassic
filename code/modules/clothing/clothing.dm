@@ -289,7 +289,7 @@ BLIND     // can't see anything
 	if(usr.put_in_hands(holding))
 		usr.visible_message("<span class='warning'>\The [usr] pulls \the [holding] out of \the [src]!</span>")
 		holding = null
-		playsound((src), 'sound/weapons/knifeout.ogg', 25)
+		playsound(src, 'sound/weapons/knifeout.ogg', 25)
 	else
 		to_chat(usr, "<span class='warning'>You need your hands free to hold \the [holding]!</span>")
 		holding = null
