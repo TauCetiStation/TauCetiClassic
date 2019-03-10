@@ -140,7 +140,7 @@
 	icon_state = "chemical1"
 	icon_closed = "chemical"
 	icon_locked = "chemical1"
-	icon_opened = "chemicalopen"
+	icon_opened = "medicalopen"
 	icon_broken = "chemicalbroken"
 	icon_off = "chemicaloff"
 	req_access = list(access_chemistry)
