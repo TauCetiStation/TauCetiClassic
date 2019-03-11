@@ -198,6 +198,7 @@
 	return
 
 /obj/item/Destroy()
+	QDEL_NULL(action)
 	flags &= ~DROPDEL // prevent recursive dels
 	if(ismob(loc))
 		var/mob/m = loc

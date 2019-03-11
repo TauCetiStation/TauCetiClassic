@@ -9,13 +9,15 @@
 	plane = FLOOR_PLANE
 	//	flags = CONDUCT
 
-/obj/structure/lattice/atom_init()
+/obj/structure/lattice/atom_init(mapload)
 	. = ..()
 	if(!istype(loc, /turf/space))
 		return INITIALIZE_HINT_QDEL
 	for(var/obj/structure/lattice/LAT in loc)
 		if(LAT != src)
-			qdel(LAT)
+			if(mapload)
+				warning("Found stacked lattice at [COORD(src)] while initializing map.")
+			QDEL_IN(LAT, 0)
 	icon = 'icons/obj/smoothlattice.dmi'
 	icon_state = "latticeblank"
 	updateOverlays()

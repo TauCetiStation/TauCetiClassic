@@ -78,6 +78,10 @@
 /obj/item/weapon/stool/throw_at()
 	return
 
+/obj/item/weapon/stool/atom_init()
+	. = ..()
+	flags |= DROPDEL
+
 /obj/item/weapon/stool/Destroy()
 	if(origin_stool)
 		qdel(origin_stool)
@@ -92,7 +96,7 @@
 	if(origin_stool)
 		origin_stool.loc = src.loc
 		origin_stool = null
-	qdel(src)
+	..()
 
 /obj/item/weapon/stool/attack(mob/M, mob/user)
 	if (prob(5) && isliving(M))
