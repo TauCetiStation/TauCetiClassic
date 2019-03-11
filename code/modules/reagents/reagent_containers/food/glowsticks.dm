@@ -67,7 +67,6 @@
 		if(M == usr)
 			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
 		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
-		usr.drop_from_inventory(src)	//so icons update :[
 		qdel(src)
 	return
 
@@ -166,10 +165,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/Destroy()
-	if(contents)
-		for(var/atom/movable/something in contents)
-			something.loc = get_turf(src)
-	STOP_PROCESSING(SSobj, src)
+	liquid_fuel = null // as long as this is in reagent_list, no need to qdel, will be handled by parent's reagent cleaning process.
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/attack_animal(mob/M)
