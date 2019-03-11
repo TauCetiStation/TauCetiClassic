@@ -26028,20 +26028,11 @@
 /turf/simulated/floor,
 /area/gateway)
 "aTZ" = (
-/obj/machinery/door/airlock/medical{
-	name = "Cooling Room";
-	req_access = 5;
-	req_access_txt = "5"
+/obj/effect/landmark/start{
+	name = "Research Assistant"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/medical/cryo)
+/turf/simulated/floor,
+/area/hallway/primary/starboard)
 "aUa" = (
 /obj/machinery/computer/med_data,
 /turf/simulated/floor{
@@ -33297,6 +33288,17 @@
 	icon_state = "browncorner"
 	},
 /area/hallway/primary/port)
+"bhw" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/effect/landmark/start{
+	name = "Technical Assistant"
+	},
+/turf/simulated/floor,
+/area/hallway/primary/aft)
 "bhx" = (
 /obj/item/weapon/storage/fancy/donut_box,
 /obj/structure/table/woodentable,
@@ -33312,6 +33314,22 @@
 /obj/structure/closet/crate,
 /turf/simulated/floor/plating,
 /area/maintenance/science)
+"bhA" = (
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Engineering";
+	name = "Engineering Security Doors";
+	opacity = 0
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Engineering";
+	req_access = "71";
+	req_one_access_txt = null
+	},
+/turf/simulated/floor,
+/area/engine/break_room)
 "bhB" = (
 /obj/item/weapon/storage/box,
 /turf/simulated/floor/plating,
@@ -33333,6 +33351,29 @@
 	icon_state = "delivery"
 	},
 /area/rnd/hallway)
+"bhD" = (
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Engineering";
+	name = "Engineering Security Doors";
+	opacity = 0
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Engineering";
+	req_access = "71";
+	req_one_access_txt = null
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor,
+/area/engine/break_room)
 "bhE" = (
 /obj/machinery/flasher{
 	id = "AI";
@@ -38534,7 +38575,7 @@
 	},
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medical Supplies";
-	req_access_txt = "5"
+	req_access_txt = "72"
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -44565,14 +44606,13 @@
 	},
 /area/crew_quarters/bar)
 "bHP" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Medbay Maintenance";
-	req_access_txt = "5"
+/obj/effect/landmark/start{
+	name = "Medical Intern"
 	},
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/medical/storage)
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/medical/reception)
 "bHQ" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -45045,27 +45085,30 @@
 	},
 /area/assembly/robotics)
 "bIR" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "atmos";
-	name = "Atmos Blast Door";
-	opacity = 0
+/obj/item/weapon/folder/white,
+/obj/item/device/radio/headset/headset_medsci,
+/obj/item/device/flashlight/pen,
+/obj/item/device/flashlight/pen{
+	pixel_x = 4;
+	pixel_y = 3
 	},
-/obj/machinery/door/window/northleft{
-	dir = 4;
-	icon_state = "left";
-	name = "Engineering Desk";
-	req_access_txt = "32"
+/obj/structure/table/glass,
+/obj/item/device/radio/intercom{
+	broadcasting = 0;
+	dir = 2;
+	freerange = 0;
+	frequency = 1485;
+	listening = 1;
+	name = "Station Intercom (Medbay)";
+	pixel_x = -28
 	},
-/obj/item/weapon/bell,
+/obj/item/device/healthanalyzer,
+/obj/item/device/healthanalyzer,
 /turf/simulated/floor{
-	icon_state = "delivery";
-	name = "floor"
+	dir = 5;
+	icon_state = "vault"
 	},
-/area/engine/break_room)
+/area/medical/genetics)
 "bIS" = (
 /turf/simulated/wall,
 /area/medical/storage)
@@ -46223,6 +46266,9 @@
 	},
 /area/hallway/primary/starboard)
 "bLM" = (
+/obj/effect/landmark/start{
+	name = "Research Assistant"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "purple"
@@ -49528,25 +49574,20 @@
 	},
 /area/atmos)
 "bTc" = (
+/obj/machinery/door/airlock/medical{
+	name = "Cooling Room";
+	req_access = 72;
+	req_access_txt = "72"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "atmos";
-	name = "Atmos Blast Door";
-	opacity = 0
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
 	},
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Engineering";
-	req_one_access_txt = "11;24"
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/red{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor,
-/area/engine/break_room)
+/area/medical/cryo)
 "bTd" = (
 /obj/effect/decal/cleanable/spiderling_remains,
 /obj/structure/disposalpipe/segment{
@@ -49931,16 +49972,14 @@
 /turf/simulated/floor/plating,
 /area/maintenance/engineering)
 "bUb" = (
-/obj/machinery/door/window/northleft{
-	dir = 4;
-	icon_state = "left";
-	name = "Engineering Moniter Station";
-	req_access_txt = "32"
+/obj/machinery/door/airlock/maintenance{
+	name = "Medbay Maintenance";
+	req_access_txt = "72"
 	},
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/engine/break_room)
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/medical/storage)
 "bUc" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -50573,13 +50612,16 @@
 	},
 /area/hallway/primary/aft)
 "bVG" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/door/window/northleft{
+	dir = 4;
+	icon_state = "left";
+	name = "Engineering Moniter Station";
+	req_access_txt = "71"
 	},
-/turf/simulated/floor,
-/area/hallway/primary/aft)
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/engine/break_room)
 "bVH" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -50599,17 +50641,26 @@
 /turf/simulated/wall/r_wall,
 /area/atmos)
 "bVJ" = (
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Engineering";
-	req_one_access_txt = "11;24"
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "atmos";
+	name = "Atmos Blast Door";
+	opacity = 0
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/door/window/northleft{
+	dir = 4;
+	icon_state = "left";
+	name = "Engineering Desk";
+	req_access_txt = "71"
 	},
-/turf/simulated/floor,
+/obj/item/weapon/bell,
+/turf/simulated/floor{
+	icon_state = "delivery";
+	name = "floor"
+	},
 /area/engine/break_room)
 "bVK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -51457,10 +51508,13 @@
 /turf/simulated/floor/plating,
 /area/maintenance/engineering)
 "bXy" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/start{
+	name = "Technical Assistant"
 	},
 /turf/simulated/floor,
 /area/hallway/primary/aft)
@@ -51968,18 +52022,24 @@
 /turf/simulated/floor,
 /area/atmos)
 "bYR" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
-	id = "Engineering";
-	name = "Engineering Security Doors";
+	id = "atmos";
+	name = "Atmos Blast Door";
 	opacity = 0
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
-	req_one_access_txt = "11;24"
+	req_access = "71";
+	req_one_access_txt = "null"
 	},
+/obj/machinery/atmospherics/pipe/simple/visible/red{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/engine/break_room)
 "bYS" = (
@@ -52272,25 +52332,17 @@
 /turf/simulated/floor/plating,
 /area/maintenance/engineering)
 "bZQ" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "Engineering";
-	name = "Engineering Security Doors";
-	opacity = 0
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
-	req_one_access_txt = "11;24"
+	req_access = "71";
+	req_one_access_txt = null
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/engine/break_room)
 "bZR" = (
@@ -52494,6 +52546,7 @@
 	pixel_x = -8;
 	pixel_y = 10
 	},
+/obj/item/device/healthanalyzer,
 /turf/simulated/floor/wood,
 /area/medical/psych)
 "cap" = (
@@ -72878,28 +72931,11 @@
 	},
 /area/hallway/primary/central)
 "kGb" = (
-/obj/item/weapon/folder/white,
-/obj/item/device/radio/headset/headset_medsci,
-/obj/item/device/flashlight/pen,
-/obj/item/device/flashlight/pen{
-	pixel_x = 4;
-	pixel_y = 3
+/obj/effect/landmark/start{
+	name = "Security Cadet"
 	},
-/obj/structure/table/glass,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 2;
-	freerange = 0;
-	frequency = 1485;
-	listening = 1;
-	name = "Station Intercom (Medbay)";
-	pixel_x = -28
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/medical/genetics)
+/turf/simulated/floor,
+/area/security/lobby)
 "kHb" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 1
@@ -109772,7 +109808,7 @@ ajX
 amQ
 alc
 aqy
-amo
+kGb
 amU
 aqT
 anU
@@ -110113,7 +110149,7 @@ bFY
 bUT
 bVE
 bWX
-bXy
+bhw
 bYm
 bYN
 bZt
@@ -110286,7 +110322,7 @@ ajX
 amQ
 alc
 aqy
-amo
+kGb
 amo
 amo
 amo
@@ -110368,7 +110404,7 @@ cAH
 cAH
 cAH
 cFL
-bVG
+bXy
 clt
 cos
 cGJ
@@ -110615,7 +110651,7 @@ bSP
 bSP
 bHv
 bHR
-bIR
+bVJ
 bHR
 mvb
 cCo
@@ -110870,7 +110906,7 @@ bJe
 bEY
 bSP
 bSP
-bUb
+bVG
 bVv
 bWF
 bYh
@@ -110882,7 +110918,7 @@ bRJ
 bTe
 nbb
 bVb
-bVJ
+bZQ
 bXb
 clx
 clx
@@ -111136,7 +111172,7 @@ bOY
 bPJ
 bQJ
 bRI
-bTc
+bYR
 ncb
 bUX
 bVH
@@ -111145,7 +111181,7 @@ cly
 cmF
 bUd
 nxb
-bYR
+bhA
 bUd
 bUd
 ctd
@@ -111402,7 +111438,7 @@ bXB
 bXc
 bXc
 nyb
-bZQ
+bhD
 bXc
 bXc
 cbZ
@@ -112430,7 +112466,7 @@ bUd
 bUd
 bUd
 nxb
-bYR
+bhA
 bUd
 bUd
 bUd
@@ -115234,7 +115270,7 @@ aIB
 bQc
 aVI
 bbE
-bHP
+bUb
 bIB
 bIB
 boa
@@ -117031,7 +117067,7 @@ bKI
 bkV
 bkV
 bkV
-aTZ
+bTc
 bkV
 bLF
 bkd
@@ -117267,7 +117303,7 @@ bCr
 bFN
 bIj
 bLL
-bcb
+aTZ
 bbG
 cpX
 bjk
@@ -117529,7 +117565,7 @@ bbH
 cpX
 cvH
 nAb
-bkH
+bHP
 ejb
 gMb
 dxb
@@ -118043,7 +118079,7 @@ bbM
 cpX
 ctJ
 bkH
-bkH
+bHP
 jQb
 bGO
 cbb
@@ -120103,7 +120139,7 @@ cvx
 ucb
 bqm
 hBb
-kGb
+bIR
 kpb
 cGB
 mWb
