@@ -68,6 +68,8 @@
 /var/const/access_detective = 68
 /var/const/access_barber = 69
 /var/const/access_paramedic = 70
+/var/const/access_engineering_lobby = 71
+/var/const/access_medbay_storage = 72
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -238,7 +240,7 @@
 	            access_hydroponics, access_library, access_lawyer, access_virology, access_psychiatrist, access_cmo, access_qm, access_clown, access_mime, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-	            access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_minisat, access_recycler, access_detective, access_barber, access_paramedic)
+	            access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_minisat, access_recycler, access_detective, access_barber, access_paramedic, access_medbay_storage, access_engineering_lobby)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_creed, access_cent_captain)
@@ -253,11 +255,11 @@
 		if(1) //security
 			return list(access_sec_doors, access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos, access_detective)
 		if(2) //medbay
-			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_psychiatrist, access_virology, access_surgery, access_cmo, access_paramedic)
+			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_psychiatrist, access_virology, access_surgery, access_cmo, access_paramedic, access_medbay_storage)
 		if(3) //research
 			return list(access_research, access_tox, access_tox_storage, access_robotics, access_xenobiology, access_xenoarch, access_minisat, access_rd)
 		if(4) //engineering and maintenance
-			return list(access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_minisat, access_ce)
+			return list(access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_minisat, access_ce, access_engineering_lobby)
 		if(5) //command
 			return list(access_heads, access_RC_announce, access_keycard_auth, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_tcomsat, access_gateway, access_all_personal_lockers, access_heads_vault, access_hop, access_captain)
 		if(6) //station general
@@ -427,6 +429,11 @@
 			return "Barber"
 		if(access_paramedic)
 			return "Paramedic"
+		if(access_engineering_lobby)
+			return "Engineering Department"
+		if(access_medbay_storage)
+			return "Medbay Storage"
+
 
 /proc/get_centcom_access_desc(A)
 	switch(A)
@@ -515,7 +522,7 @@
 
 	return "Unknown"
 
-/proc/FindNameFromID(mob/living/carbon/human/H)
+proc/FindNameFromID(mob/living/carbon/human/H)
 	ASSERT(istype(H))
 	var/obj/item/weapon/card/id/C = H.get_active_hand()
 	if( istype(C) || istype(C, /obj/item/device/pda) )
@@ -544,7 +551,7 @@
 		if(ID)
 			return ID.registered_name
 
-/proc/get_all_job_icons() //For all existing HUD icons
+proc/get_all_job_icons() //For all existing HUD icons
 	return joblist + list("Prisoner")
 
 /obj/proc/GetJobName() //Used in secHUD icon generation
