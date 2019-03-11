@@ -411,41 +411,45 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance
 	valid_territory = 0
 
-/area/maintenance/fpmaint
+/area/maintenance/eva
 	name = "EVA Maintenance"
 	icon_state = "fpmaint"
 
-/area/maintenance/fsmaint
+/area/maintenance/dormitory
 	name = "Dormitory Maintenance"
 	icon_state = "fsmaint"
 
-/area/maintenance/fsmaint2
+/area/maintenance/chapel
 	name = "Chapel Maintenance"
 	icon_state = "fsmaint"
 
-/area/maintenance/asmaint
+/area/maintenance/medbay
 	name = "Medbay Maintenance"
 	icon_state = "asmaint"
 
-/area/maintenance/asmaint2
+/area/maintenance/science
 	name = "Science Maintenance"
 	icon_state = "asmaint"
 
-/area/maintenance/maintcentral
+/area/maintenance/bridge
 	name = "Bridge Maintenance"
 	icon_state = "maintcentral"
 
-/area/maintenance/port
+/area/maintenance/cargo
 	name = "Cargo Maintenance"
 	icon_state = "pmaint"
 
-/area/maintenance/aft
+/area/maintenance/engineering
 	name = "Engineering Maintenance"
 	icon_state = "amaint"
 
 /area/maintenance/incinerator
 	name = "Incinerator"
 	icon_state = "disposal"
+
+/area/maintenance/atmos
+	name = "Atmospherics Maintenance"
+	icon_state = "amaint"
 
 /area/maintenance/disposal
 	name = "Waste Disposal"
@@ -758,9 +762,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Medbay is a large area, these additional areas help level out APC load.
 /area/medical/hallway
 	icon_state = "medbay2"
-
-/area/medical/hallway/outbranch
-	icon_state = "medbay3"
 
 /area/medical/reception
 	name = "Medbay Reception"

@@ -112,8 +112,7 @@ LINEN BINS
 	item_color = "brown"
 
 /obj/item/weapon/bedsheet/psych
-	icon = 'icons/obj/items.dmi'
-	icon_state = "sheetbrown"
+	icon_state = "sheetpsych"
 	item_color = "brown"
 
 /obj/item/weapon/bedsheet/centcom

@@ -116,7 +116,7 @@
 	if (building == 0)
 		init()
 	else
-		area = loc.loc:master
+		area = get_area(src)
 		area.apc = src
 		opened = 1
 		operating = 0

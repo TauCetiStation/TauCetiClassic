@@ -479,6 +479,8 @@
 	desc = "One of the older meson scanner models retrofitted to perform like its modern counterparts."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "book_berner_1"
+	off_state = "book_berner_1_off"
+	item_state = "glasses"
 
 /obj/item/clothing/glasses/fluff/uzenwa_sissra_1 //sparklysheep: Uzenwa Sissra
 	name = "Scanning Goggles"
