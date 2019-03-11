@@ -82,7 +82,7 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 #ifdef MANUAL_ICON_SMOOTH
 	var/create_false_wall_animations = alert(usr, "Generate false wall animation states?", "Confirmation", "Yes", "No") == "Yes" ? TRUE : FALSE
 #else
-	var/create_false_wall_animations = findtext(dmifile, "has_false_walls") ? TRUE : FALSE
+	var/create_false_wall_animations = findtext("[dmifile]", "has_false_walls") ? TRUE : FALSE
 #endif
 
 	for(var/state in states) // exclude states that doesn't exist
