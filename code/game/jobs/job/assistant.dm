@@ -8,8 +8,7 @@
 	supervisors = "absolutely everyone"
 	selection_color = "#dddddd"
 	access = list()			//See /datum/job/assistant/get_access()
-	alt_titles = list("Technical Assistant","Medical Intern","Research Assistant","Security Cadet",
-	"Lawyer","Mecha Operator","Private Eye","Reporter","Security Cadet","Waiter","Vice Officer","Paranormal Investigator")
+	alt_titles = list("Lawyer","Mecha Operator","Private Eye","Reporter","Waiter","Vice Officer","Paranormal Investigator")
 
 /datum/job/assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)
@@ -22,15 +21,6 @@
 
 	if (H.mind.role_alt_title)
 		switch(H.mind.role_alt_title)
-			if("Technical Assistant")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/color/yellow(H), SLOT_W_UNIFORM)
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/yellow(H), SLOT_SHOES)
-			if("Medical Intern")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/lightblue(H), SLOT_W_UNIFORM)
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/blue(H), SLOT_SHOES)
-			if("Research Assistant")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist_new(H), SLOT_W_UNIFORM)
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), SLOT_SHOES)
 			if("Lawyer")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/bluesuit(H), SLOT_W_UNIFORM)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/lawyer/bluejacket(H), SLOT_WEAR_SUIT)
@@ -52,9 +42,6 @@
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/black(H), SLOT_W_UNIFORM)
 				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
 				H.equip_to_slot_or_del(new /obj/item/device/pda/reporter(H), SLOT_BELT)
-			if("Security Cadet")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cadet(H), SLOT_W_UNIFORM)
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), SLOT_SHOES)
 			if("Test Subject")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/fluff/jane_sidsuit(H), SLOT_W_UNIFORM)
 				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)

@@ -218,3 +218,46 @@
 		H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), SLOT_IN_BACKPACK)
 
 	return TRUE
+
+
+/datum/job/cadet
+	title = "Security Cadet"
+	flag = CADET
+	department_flag = ENGSEC
+	faction = "Station"
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "the head of security"
+	selection_color = "#ffeeee"
+	idtype = /obj/item/weapon/card/id/sec
+	access = list(access_sec_doors, access_maint_tunnels)
+	minimal_player_age = 2
+	minimal_player_ingame_minutes = 520
+	restricted_species = list(DIONA, TAJARAN, IPC)
+
+/datum/job/cadet/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!H)
+		return 0
+	switch(H.backbag)
+		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cadet(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/weapon/book/manual/wiki/security_space_law, SLOT_R_HAND)
+
+	if(visualsOnly)
+		return
+
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), SLOT_L_EAR)
+	H.equip_to_slot_or_del(new /obj/item/device/pda(H), SLOT_BELT)
+	if(H.backbag == 1)
+		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), SLOT_L_HAND)
+	else
+		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), SLOT_IN_BACKPACK)
+		H.equip_to_slot_or_del(new /obj/item/device/flash(H), SLOT_L_STORE)
+
+	var/obj/item/weapon/implant/mindshield/L = new(H)
+	L.inject(H)
+
+	return TRUE

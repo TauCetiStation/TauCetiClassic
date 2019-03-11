@@ -111,6 +111,41 @@
 
 	return TRUE
 
+
+/datum/job/technical_assistant
+	title = "Technical Assistant"
+	flag = TECHNICASSISTANT
+	department_flag = ENGSEC
+	faction = "Station"
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "the chief engineer"
+	selection_color = "#fff5cc"
+	idtype = /obj/item/weapon/card/id/eng
+	access = list(access_engineering_lobby, access_construction)
+	minimal_player_age = 1
+	minimal_player_ingame_minutes = 200
+	restricted_species = list(IPC)
+
+/datum/job/technical_assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!H)
+		return 0
+	switch(H.backbag)
+		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), SLOT_BACK)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), SLOT_BACK)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/color/yellow(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/yellow(H), SLOT_SHOES)
+
+	if(visualsOnly)
+		return
+
+	H.equip_to_slot_or_del(new /obj/item/device/pda, SLOT_BELT)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(H), SLOT_L_EAR)
+
+	return TRUE
+
+
 /proc/get_airlock_wires_identification()
 	var/list/wire_list = same_wires[/obj/machinery/door/airlock]
 	var/list/wire_functions_list = list(
