@@ -139,20 +139,19 @@
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			if(reagents.total_volume)
 				var/datum/reagent/my_reagent = locate(/datum/reagent/luminophore) in reagents.reagent_list
-				var/datum/reagents/list_regs = new /datum/reagents
+				var/list/list_regs = list()
 				var/datum/reagent/luminold = new /datum/reagent/luminophore_temp
 				luminold.volume = my_reagent.volume
 				luminold.color = my_reagent.color
-				list_regs.reagent_list += luminold
+				list_regs += luminold
 
 				reagents.trans_to(M, reagents.total_volume)
 
 				var/datum/reagent/luminnew = locate(/datum/reagent/luminophore) in M.reagents.reagent_list
 				if(luminnew.color == "#ffffff")
 					luminnew.color = luminold.color
-				list_regs.reagent_list += luminnew
-				var/mixedcolor = mix_color_from_reagents(list_regs.reagent_list)
-				qdel(list_regs)
+				list_regs += luminnew
+				var/mixedcolor = mix_color_from_reagents(list_regs)
 				qdel(luminold)
 				luminnew.color = mixedcolor
 				On_Consume(M)
