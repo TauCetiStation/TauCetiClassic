@@ -12,7 +12,8 @@
 	access = list(
 		access_medical, access_morgue, access_paramedic, access_genetics, access_heads,
 		access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-		access_keycard_auth, access_sec_doors, access_psychiatrist, access_maint_tunnels
+		access_keycard_auth, access_sec_doors, access_psychiatrist, access_maint_tunnels,
+		access_medbay_storage
 	)
 	minimal_player_age = 10
 	minimal_player_ingame_minutes = 2400
@@ -49,7 +50,7 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
-	access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels)
+	access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels, access_medbay_storage)
 	alt_titles = list("Surgeon", "Nurse")
 	minimal_player_ingame_minutes = 960
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
@@ -109,7 +110,7 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
-	access = list(access_medical, access_morgue, access_paramedic, access_maint_tunnels, access_external_airlocks, access_sec_doors, access_engine_equip, access_research, access_mailsorting)
+	access = list(access_medical, access_morgue, access_paramedic, access_maint_tunnels, access_external_airlocks, access_sec_doors, access_engine_equip, access_research, access_mailsorting, access_medbay_storage)
 	minimal_player_ingame_minutes = 1500 //they have too much access, so you have to play more to unlock it
 	restricted_species = list(IPC, DIONA)
 
@@ -145,7 +146,7 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
-	access = list(access_medical, access_chemistry)
+	access = list(access_medical, access_chemistry, access_medbay_storage)
 	alt_titles = list("Pharmacist")
 	minimal_player_ingame_minutes = 960
 
