@@ -215,9 +215,9 @@
 									playsound(src, 'sound/misc/fbcough.ogg', 100, 0)
 								else
 									playsound(src, 'sound/misc/mbcough.ogg', 90, 0)
-								m_type = 2
 								lastSoundEmote = world.time
 					message = "<B>[src]</B> [message ? message : "gasps!"]"
+					m_type = 2
 				else
 					message = "<B>[src]</B> makes a noise."
 					m_type = 2
