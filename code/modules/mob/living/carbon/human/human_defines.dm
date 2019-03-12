@@ -102,5 +102,3 @@
 
 	var/busy_left_hand = FALSE // See ambidextrous quirk and is_busy() override.
 	var/busy_right_hand = FALSE
-
-	var/legstep = 0 // For counting steps without shoes; var/footstep analog
