@@ -889,3 +889,9 @@ var/global/list/items_blood_overlay_by_type = list()
 	var/obj/item/I = get_active_hand()
 	if(I && !I.abstract)
 		I.showoff(src)
+
+/obj/item/proc/update_inv_mob()
+	if(!slot_equipped || !ismob(loc))
+		return
+	var/mob/M = loc
+	M.update_inv_item(src)
