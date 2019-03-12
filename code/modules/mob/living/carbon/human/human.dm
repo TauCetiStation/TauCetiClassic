@@ -1177,7 +1177,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				Stun(5)
 
 				src.visible_message("<span class='warning'>[src] throws up!","<spawn class='warning'>You throw up!</span>")
-				playsound(loc, 'sound/effects/vomit1.ogg', 80, 0)
+				playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 				var/turf/location = loc
 				if (istype(location, /turf/simulated))
