@@ -89,21 +89,18 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(config.ghost_interaction)
-		src.dir = turn(src.dir, 90)
-		handle_rotation()
+	if(!config.ghost_interaction && isobserver(usr))
 		return
-	else
-		if(ismouse(usr))
-			return
-		if(!usr || !isturf(usr.loc))
-			return
-		if(usr.incapacitated())
-			return
+	if(ismouse(usr))
+		return
+	if(!usr || !isturf(usr.loc))
+		return
+	if(usr.incapacitated())
+		return
 
-		src.dir = turn(src.dir, 90)
-		handle_rotation()
-		return
+	src.dir = turn(src.dir, 90)
+	handle_rotation()
+	return
 
 /obj/structure/stool/bed/chair/post_buckle_mob(mob/living/M)
 	. = ..()
