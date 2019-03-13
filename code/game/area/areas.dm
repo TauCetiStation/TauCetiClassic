@@ -26,7 +26,6 @@
 
 	var/eject = null
 
-	var/debug = 0
 	var/powerupdate = 10	//We give everything 10 ticks to settle out it's power usage.
 	var/requires_power = 1
 	var/always_unpowered = 0	//this gets overriden to 1 for space in area/New()
@@ -34,7 +33,7 @@
 	var/power_equip = 1
 	var/power_light = 1
 	var/power_environ = 1
-	var/music = null
+
 	var/used_equip = 0
 	var/used_light = 0
 	var/used_environ = 0
@@ -44,10 +43,6 @@
 
 	var/has_gravity = 1
 	var/obj/machinery/power/apc/apc = null
-	var/no_air = null
-	var/area/master				// master area used for power calcluations
-								// (original area before splitting due to sd_DAL)
-	var/list/related			// the other areas of the same type as this
 	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
 	var/air_doors_activated = 0
 
@@ -89,9 +84,7 @@ var/list/ghostteleportlocs = list()
 /area/New() // not ready for transfer, problems with alarms raises if this part moved into init (requires more time)
 	icon_state = ""
 	layer = 10
-	master = src
 	uid = ++global_uid
-	related = list(src)
 	all_areas += src
 
 	if(!requires_power)
@@ -105,8 +98,17 @@ var/list/ghostteleportlocs = list()
 
 	. = ..()
 
-	if(dynamic_lighting)
-		luminosity = FALSE
+	if(requires_power)
+		luminosity = 0
+	else
+		if(dynamic_lighting == DYNAMIC_LIGHTING_FORCED)
+			dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+			luminosity = 0
+		else if(dynamic_lighting != DYNAMIC_LIGHTING_IFSTARLIGHT)
+			dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	if(dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
+		dynamic_lighting = config.starlight ? DYNAMIC_LIGHTING_ENABLED : DYNAMIC_LIGHTING_DISABLED
+
 
 	power_change() // all machines set to current power level, also updates lighting icon
 
@@ -116,13 +118,12 @@ var/list/ghostteleportlocs = list()
 		poweralm = state
 		if(istype(source))	//Only report power alarms on the z-level where the source is located.
 			var/list/cameras = list()
-			for (var/area/RA in related)
-				for (var/obj/machinery/camera/C in RA)
-					cameras += C
-					if(state == 1)
-						C.network.Remove("Power Alarms")
-					else
-						C.network.Add("Power Alarms")
+			for (var/obj/machinery/camera/C in src)
+				cameras += C
+				if(state == 1)
+					C.network.Remove("Power Alarms")
+				else
+					C.network.Add("Power Alarms")
 			for (var/mob/living/silicon/aiPlayer in silicon_list)
 				if(!aiPlayer.client)
 					continue
@@ -141,10 +142,9 @@ var/list/ghostteleportlocs = list()
 
 /area/proc/atmosalert(danger_level)
 	//Check all the alarms before lowering atmosalm. Raising is perfectly fine.
-	for (var/area/RA in related)
-		for (var/obj/machinery/alarm/AA in RA)
-			if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
-				danger_level = max(danger_level, AA.danger_level)
+	for (var/obj/machinery/alarm/AA in src)
+		if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
+			danger_level = max(danger_level, AA.danger_level)
 
 	if(danger_level != atmosalm)
 		if (danger_level < 1 && atmosalm >= 1)
@@ -152,9 +152,8 @@ var/list/ghostteleportlocs = list()
 			air_doors_open()
 
 		if (danger_level < 2 && atmosalm >= 2)
-			for(var/area/RA in related)
-				for(var/obj/machinery/camera/C in RA)
-					C.network.Remove("Atmosphere Alarms")
+			for(var/obj/machinery/camera/C in src)
+				C.network.Remove("Atmosphere Alarms")
 			for(var/mob/living/silicon/aiPlayer in silicon_list)
 				if(!aiPlayer.client)
 					continue
@@ -164,10 +163,9 @@ var/list/ghostteleportlocs = list()
 
 		if (danger_level >= 2 && atmosalm < 2)
 			var/list/cameras = list()
-			for(var/area/RA in related)
-				for(var/obj/machinery/camera/C in RA)
-					cameras += C
-					C.network.Add("Atmosphere Alarms")
+			for(var/obj/machinery/camera/C in src)
+				cameras += C
+				C.network.Add("Atmosphere Alarms")
 			for(var/mob/living/silicon/aiPlayer in silicon_list)
 				if(!aiPlayer.client)
 					continue
@@ -177,17 +175,16 @@ var/list/ghostteleportlocs = list()
 			air_doors_close()
 
 		atmosalm = danger_level
-		for(var/area/RA in related)
-			for (var/obj/machinery/alarm/AA in RA)
-				AA.update_icon()
+		for (var/obj/machinery/alarm/AA in src)
+			AA.update_icon()
 
 		return 1
 	return 0
 
 /area/proc/air_doors_close()
-	if(!src.master.air_doors_activated)
-		src.master.air_doors_activated = 1
-		for(var/obj/machinery/door/firedoor/E in src.master.all_doors)
+	if(!air_doors_activated)
+		air_doors_activated = 1
+		for(var/obj/machinery/door/firedoor/E in all_doors)
 			if(!E.blocked)
 				if(E.operating)
 					E.nextstate = CLOSED
@@ -195,9 +192,9 @@ var/list/ghostteleportlocs = list()
 					INVOKE_ASYNC(E, /obj/machinery/door/firedoor.proc/close)
 
 /area/proc/air_doors_open()
-	if(src.master.air_doors_activated)
-		src.master.air_doors_activated = 0
-		for(var/obj/machinery/door/firedoor/E in src.master.all_doors)
+	if(air_doors_activated)
+		air_doors_activated = 0
+		for(var/obj/machinery/door/firedoor/E in all_doors)
 			if(!E.blocked)
 				if(E.operating)
 					E.nextstate = OPEN
@@ -209,8 +206,7 @@ var/list/ghostteleportlocs = list()
 	if(name == "Space") //no fire alarms in space
 		return
 	if( !fire )
-		fire = 1
-		master.fire = 1		//used for firedoor checks
+		fire = 1 // used for firedoor checks
 		mouse_opacity = 0
 		for(var/obj/machinery/door/firedoor/D in all_doors)
 			if(!D.blocked)
@@ -219,10 +215,9 @@ var/list/ghostteleportlocs = list()
 				else if(!D.density)
 					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/close)
 		var/list/cameras = list()
-		for(var/area/RA in related)
-			for (var/obj/machinery/camera/C in RA)
-				cameras.Add(C)
-				C.network.Add("Fire Alarms")
+		for (var/obj/machinery/camera/C in src)
+			cameras.Add(C)
+			C.network.Add("Fire Alarms")
 		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
 			if(!aiPlayer.client)
 				continue
@@ -232,8 +227,7 @@ var/list/ghostteleportlocs = list()
 
 /area/proc/firereset()
 	if(fire)
-		fire = 0
-		master.fire = 0		//used for firedoor checks
+		fire = 0 // used for firedoor checks
 		mouse_opacity = 0
 		for(var/obj/machinery/door/firedoor/D in all_doors)
 			if(!D.blocked)
@@ -241,9 +235,8 @@ var/list/ghostteleportlocs = list()
 					D.nextstate = OPEN
 				else if(D.density)
 					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/open)
-		for(var/area/RA in related)
-			for (var/obj/machinery/camera/C in RA)
-				C.network.Remove("Fire Alarms")
+		for (var/obj/machinery/camera/C in src)
+			C.network.Remove("Fire Alarms")
 		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
 			if(!aiPlayer.client)
 				continue
@@ -278,46 +271,45 @@ var/list/ghostteleportlocs = list()
 
 
 /area/proc/powered(chan)		// return true if the area has power to given channel
-	if(!master.requires_power)
+	if(!requires_power)
 		return 1
-	if(master.always_unpowered)
+	if(always_unpowered)
 		return 0
 	switch(chan)
 		if(EQUIP)
-			return master.power_equip
+			return power_equip
 		if(LIGHT)
-			return master.power_light
+			return power_light
 		if(ENVIRON)
-			return master.power_environ
+			return power_environ
 
 	return 0
 
 // called when power status changes
 /area/proc/power_change()
-	master.powerupdate = 2
-	for(var/area/RA in related)
-		for(var/obj/machinery/M in RA)	// for each machine in the area
-			M.power_change()				// reverify power status (to update icons etc.)
-		if (fire || eject || party)
-			RA.updateicon()
+	powerupdate = 2
+	for(var/obj/machinery/M in src)	// for each machine in the area
+		M.power_change()				// reverify power status (to update icons etc.)
+	if (fire || eject || party)
+		updateicon()
 
 /area/proc/usage(chan)
 	var/used = 0
 	switch(chan)
 		if(LIGHT)
-			used += master.used_light
+			used += used_light
 		if(EQUIP)
-			used += master.used_equip
+			used += used_equip
 		if(ENVIRON)
-			used += master.used_environ
+			used += used_environ
 		if(TOTAL)
-			used += master.used_light + master.used_equip + master.used_environ
+			used += used_light + used_equip + used_environ
 		if(STATIC_EQUIP)
-			used += master.static_equip
+			used += static_equip
 		if(STATIC_LIGHT)
-			used += master.static_light
+			used += static_light
 		if(STATIC_ENVIRON)
-			used += master.static_environ
+			used += static_environ
 	return used
 
 /area/proc/addStaticPower(value, powerchannel)
@@ -330,19 +322,19 @@ var/list/ghostteleportlocs = list()
 			static_environ += value
 
 /area/proc/clear_usage()
-	master.used_equip = 0
-	master.used_light = 0
-	master.used_environ = 0
+	used_equip = 0
+	used_light = 0
+	used_environ = 0
 
 /area/proc/use_power(var/amount, var/chan)
 
 	switch(chan)
 		if(EQUIP)
-			master.used_equip += amount
+			used_equip += amount
 		if(LIGHT)
-			master.used_light += amount
+			used_light += amount
 		if(ENVIRON)
-			master.used_environ += amount
+			used_environ += amount
 
 
 /area/Entered(A)
@@ -408,13 +400,9 @@ var/list/ghostteleportlocs = list()
 /area/proc/gravitychange(gravitystate = 0, area/A)
 
 	A.has_gravity = gravitystate
-
-	for(var/area/SubA in A.related)
-		SubA.has_gravity = gravitystate
-
-		if(gravitystate)
-			for(var/mob/living/carbon/human/M in SubA)
-				thunk(M)
+	if(gravitystate)
+		for(var/mob/living/carbon/human/M in A)
+			thunk(M)
 
 /area/proc/thunk(mob)
 	if(istype(get_turf(mob), /turf/space)) // Can't fall onto nothing.

@@ -13,7 +13,7 @@
 	name = "card"
 	desc = "Does card things."
 	icon = 'icons/obj/card.dmi'
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	var/associated_account_number = 0
 
 	var/list/files = list(  )

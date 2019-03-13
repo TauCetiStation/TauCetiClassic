@@ -72,6 +72,8 @@
 	if(modifiers["ctrl"])
 		CtrlClickOn(A)
 		return
+	if(HardsuitClickOn(A))
+		return
 
 	if(stat || paralysis || stunned || weakened)
 		return

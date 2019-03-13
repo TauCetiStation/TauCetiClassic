@@ -18,15 +18,24 @@
 	name = "wrench"
 	desc = "A wrench with many common uses. Can be usually found in your hand."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "wrench"
+	icon_state = "wrench_map"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
 	throwforce = 7.0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	m_amt = 150
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	var/random_color = TRUE
+
+/obj/item/weapon/wrench/atom_init(mapload, param_color)
+	. = ..()
+	if(random_color)
+		if(!param_color)
+			param_color = pick("black","red","green","blue","default")
+		icon_state = "wrench_[param_color]"
+		item_state = "wrench"	
 
 /obj/item/weapon/wrench/power
 	name = "Hand Drill"
@@ -39,6 +48,7 @@
 	throwforce = 8
 	attack_verb = list("drilled", "screwed", "jabbed")
 	action_button_name = "Change mode"
+	random_color = FALSE
 
 /obj/item/weapon/wrench/power/attack_self(mob/user)
 	playsound(user, 'sound/items/change_drill.ogg', 50, 1)
@@ -58,7 +68,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -127,7 +137,7 @@
 	force = 6.0
 	throw_speed = 2
 	throw_range = 9
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	m_amt = 80
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("pinched", "nipped")
@@ -139,7 +149,7 @@
 	. = ..()
 	if(random_color)
 		if(!param_color)
-			param_color = pick("yellow","red","orange")
+			param_color = pick("yellow","red","green","black","blue")
 		icon_state = "cutters_[param_color]"
 		item_state = "cutters_[param_color]"
 
@@ -191,7 +201,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 
 	//Cost to make in the autolathe
 	m_amt = 70
@@ -484,7 +494,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "hugewelder"
 	max_fuel = 80
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	m_amt = 70
 	g_amt = 120
 	origin_tech = "engineering=3"
@@ -494,7 +504,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "expwelder"
 	max_fuel = 40
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	m_amt = 70
 	g_amt = 120
 	origin_tech = "materials=4;engineering=4;bluespace=2;phorontech=3"
@@ -521,7 +531,7 @@
 	force = 5.0
 	throwforce = 7.0
 	item_state = "crowbar"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	m_amt = 50
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")

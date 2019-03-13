@@ -167,7 +167,7 @@
 		if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
 			if(target.anchored) return
 			V.show_message("<span class='red'>[usr] starts stuffing [target.name] into the disposal.</span>", 3)
-	if(user.is_busy() || !do_after(usr, 20, target = usr))
+	if(user.is_busy() || !do_after(usr, 20, target = src))
 		return
 	if(target_loc != target.loc)
 		return
