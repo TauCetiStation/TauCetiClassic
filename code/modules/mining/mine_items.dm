@@ -496,7 +496,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/projectile/kinetic/atom_init()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))
-		return
+		return INITIALIZE_HINT_QDEL
 	var/datum/gas_mixture/environment = proj_turf.return_air()
 	var/pressure = environment.return_pressure()
 	if(pressure < 50)

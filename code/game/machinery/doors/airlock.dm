@@ -153,6 +153,8 @@ var/list/airlock_overlays = list()
 			var/cont = TRUE
 			while (cont)
 				sleep(10)
+				if(QDELETED(src))
+					return
 				cont = FALSE
 				if(secondsMainPowerLost > 0)
 					if(!isWireCut(AIRLOCK_WIRE_MAIN_POWER1) && !isWireCut(AIRLOCK_WIRE_MAIN_POWER2))

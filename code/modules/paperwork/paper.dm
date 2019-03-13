@@ -175,8 +175,10 @@
 	if(def_zone == O_EYES)
 		user.visible_message("<span class='notice'>You show the paper to [M]. </span>", \
 			"<span class='notice'> [user] holds up a paper and shows it to [M]. </span>")
-		to_chat(M, examine())
-
+		if(crumpled == 1)
+			to_chat(M, "<span class='notice'>You can't read anything until it crumpled.</span>")
+			return
+		show_content(M)
 	else if(def_zone == O_MOUTH) // lipstick wiping
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M

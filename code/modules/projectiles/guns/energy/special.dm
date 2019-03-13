@@ -195,7 +195,13 @@
 	return
 
 /obj/item/weapon/gun/energy/sniperrifle/dropped(mob/user)
-	user.client.view = world.view
+	if(zoom)
+		if(user.client)
+			user.client.view = world.view
+		if(user.hud_used)
+			user.hud_used.show_hud(HUD_STYLE_STANDARD)
+		zoom = 0
+	..()
 
 /*
 This is called from
