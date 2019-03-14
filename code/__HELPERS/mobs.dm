@@ -178,7 +178,7 @@
 	if(target)
 		target.in_use_action = FALSE
 
-/proc/do_after(mob/user, delay, needhand = TRUE, atom/target = null, can_move = FALSE, progress = TRUE)
+/proc/do_after(mob/user, delay, needhand = TRUE, atom/target = null, can_move = FALSE, progress = TRUE, datum/callback/extra_checks = null)
 	if(!user || target && QDELING(target))
 		return FALSE
 
@@ -227,6 +227,9 @@
 			break
 
 		if(Uloc && (user.loc != Uloc) || Tloc && (Tloc != target.loc))
+			. = FALSE
+			break
+		if(extra_checks && !extra_checks.Invoke())
 			. = FALSE
 			break
 

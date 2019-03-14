@@ -27,6 +27,7 @@
 	m_amt = 150
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	usesound = 'sound/items/Ratchet.ogg'
 	var/random_color = TRUE
 
 /obj/item/weapon/wrench/atom_init(mapload, param_color)
@@ -35,7 +36,7 @@
 		if(!param_color)
 			param_color = pick("black","red","green","blue","default")
 		icon_state = "wrench_[param_color]"
-		item_state = "wrench"	
+		item_state = "wrench"
 
 /obj/item/weapon/wrench/power
 	name = "Hand Drill"
@@ -75,7 +76,9 @@
 	g_amt = 0
 	m_amt = 75
 	attack_verb = list("stabbed")
+	usesound = 'sound/items/Screwdriver.ogg'
 	var/random_color = TRUE
+
 
 /obj/item/weapon/screwdriver/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='danger'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
@@ -143,6 +146,7 @@
 	attack_verb = list("pinched", "nipped")
 	sharp = 1
 	edge = 1
+	usesound = 'sound/items/Wirecutter.ogg'
 	var/random_color = TRUE
 
 /obj/item/weapon/wirecutters/atom_init(mapload, param_color)
@@ -195,6 +199,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	action_button_name = "Switch Welding tool"
+	usesound = 'sound/items/Welder2.ogg'
 
 	//Amount of OUCH when it's thrown
 	force = 3.0
@@ -535,6 +540,7 @@
 	m_amt = 50
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
+	usesound = 'sound/items/Crowbar.ogg'
 
 /obj/item/weapon/crowbar/red
 	icon_state = "red_crowbar"

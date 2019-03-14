@@ -41,36 +41,35 @@
 
 	if(istype(W, /obj/item/weapon/weldingtool) && ((glass_material && !glass_only) || mineral || !anchored))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.use(0, user))
-			if(user.is_busy()) return
-			playsound(src, 'sound/items/Welder2.ogg', 50, 1)
-			if(glass_material)
-				user.visible_message("[user] welds the glass panel out of the airlock assembly.", "You start to weld the glass panel out of the airlock assembly.")
-				if(do_after(user, 40, target = src))
-					if(!src || !WT.isOn())
-						return
-					to_chat(user, "<span class='notice'>You welded the glass panel out!</span>")
-					new /obj/item/stack/sheet/rglass(loc)
-					set_glass(FALSE)
+		if(!WT.tool_start_check(user, amount=0))
+			return
+		if(glass_material)
+			user.visible_message("[user] welds the glass panel out of the airlock assembly.", "You start to weld the glass panel out of the airlock assembly.")
+			if(WT.use_tool(src, user, 40, volume = 50))
+				if(!src || !WT.isOn())
+					return
+				to_chat(user, "<span class='notice'>You welded the glass panel out!</span>")
+				new /obj/item/stack/sheet/rglass(loc)
+				set_glass(FALSE)
 
-			else if(mineral)
-				user.visible_message("[user] welds the [mineral] plating off the airlock assembly.", "You start to weld the [mineral] plating off the airlock assembly.")
-				if(do_after(user, 40, target = src))
-					if(!src || !WT.isOn())
-						return
-					to_chat(user, "<span class='notice'>You welded the [mineral] plating off!</span>")
-					var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-					new M(loc, 2)
-					change_mineral_airlock_type()
+		else if(mineral)
+			user.visible_message("[user] welds the [mineral] plating off the airlock assembly.", "You start to weld the [mineral] plating off the airlock assembly.")
+			if(WT.use_tool(src, user, 40, volume = 50))
+				if(!src || !WT.isOn())
+					return
+				to_chat(user, "<span class='notice'>You welded the [mineral] plating off!</span>")
+				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
+				new M(loc, 2)
+				change_mineral_airlock_type()
 
-			else if(!anchored)
-				user.visible_message("[user] dissassembles the airlock assembly.", "You start to dissassemble the airlock assembly.")
-				if(do_after(user, 40, target = src))
-					if(!src || !WT.isOn())
-						return
-					to_chat(user, "<span class='notice'>You dissasembled the airlock assembly!</span>")
-					new /obj/item/stack/sheet/metal(loc, 4)
-					qdel (src)
+		else if(!anchored)
+			user.visible_message("[user] dissassembles the airlock assembly.", "You start to dissassemble the airlock assembly.")
+			if(WT.use_tool(src, user, 40, volume = 50))
+				if(!src || !WT.isOn())
+					return
+				to_chat(user, "<span class='notice'>You dissasembled the airlock assembly!</span>")
+				new /obj/item/stack/sheet/metal(loc, 4)
+				qdel (src)
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel.</span>")
 			return

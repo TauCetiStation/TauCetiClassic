@@ -11,6 +11,7 @@
 	var/burn_point = null
 	var/burning = null
 	var/hitsound = null
+	var/usesound = null
 	var/wet = 0
 	var/w_class = ITEM_SIZE_NORMAL
 	var/can_embed = 1
@@ -57,7 +58,6 @@
 	)
 	var/uncleanable = 0
 	var/toolspeed = 1
-	var/usesound = ""
 
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
