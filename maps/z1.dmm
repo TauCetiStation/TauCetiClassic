@@ -7852,7 +7852,7 @@
 	},
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
-/area/maintenance/engineering)
+/area/storage/emergency2)
 "amA" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/book/manual/wiki/security_space_law,
@@ -15756,13 +15756,8 @@
 	name = "North Technical Storage"
 	})
 "aAR" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/maintenance/disposal)
+/turf/simulated/wall,
+/area/storage/emergency2)
 "aAS" = (
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg1"
@@ -16475,12 +16470,19 @@
 	},
 /area/ai_monitored/storage/eva)
 "aBW" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
-/obj/machinery/space_heater,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Cargo Maintenance APC";
+	pixel_x = -24;
+	pixel_y = -1
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/maintenance/disposal)
+/area/maintenance/cargo)
 "aBX" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -33555,6 +33557,14 @@
 	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain)
+"bhO" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/cargo)
 "bhP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -33570,6 +33580,18 @@
 	icon_state = "greencorner"
 	},
 /area/hallway/primary/starboard)
+"bhR" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/rack,
+/obj/item/stack/rods{
+	amount = 23
+	},
+/obj/item/stack/cable_coil/red,
+/obj/random/tools/tech_supply,
+/turf/simulated/floor/plating,
+/area/maintenance/cargo)
 "bhS" = (
 /obj/machinery/camera{
 	c_tag = "Research Division West";
@@ -33592,6 +33614,13 @@
 	icon_state = "white"
 	},
 /area/rnd/hallway)
+"bhU" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/space_heater,
+/turf/simulated/floor/plating,
+/area/maintenance/cargo)
 "bhV" = (
 /obj/machinery/status_display{
 	layer = 4;
@@ -36005,7 +36034,7 @@
 	name = "blobstart"
 	},
 /turf/simulated/floor/plating,
-/area/maintenance/engineering)
+/area/storage/emergency2)
 "bnI" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -37543,7 +37572,7 @@
 "brt" = (
 /obj/item/latexballon,
 /turf/simulated/floor/plating,
-/area/maintenance/engineering)
+/area/storage/emergency2)
 "bru" = (
 /obj/machinery/alarm/server{
 	dir = 4;
@@ -70488,19 +70517,23 @@
 /turf/simulated/floor,
 /area/engine/break_room)
 "fYb" = (
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
+/obj/structure/rack,
+/obj/item/weapon/tank/oxygen,
+/obj/item/weapon/tank/oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/device/flashlight,
+/obj/item/device/flashlight,
+/obj/item/weapon/storage/box/lights/mixed,
+/obj/item/weapon/extinguisher,
 /obj/machinery/power/apc{
-	dir = 8;
-	name = "Cargo Maintenance APC";
-	pixel_x = -24;
-	pixel_y = -1
+	dir = 2;
+	name = "Port Emergency Storage APC";
+	pixel_y = -24
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/simulated/floor/plating,
-/area/maintenance/disposal)
+/area/storage/emergency2)
 "fZb" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -71302,17 +71335,9 @@
 	},
 /area/rnd/xenobiology)
 "hAb" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/rack,
-/obj/item/stack/rods{
-	amount = 23
-	},
-/obj/item/stack/cable_coil/red,
-/obj/random/tools/tech_supply,
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
-/area/maintenance/disposal)
+/area/storage/emergency2)
 "hBb" = (
 /obj/item/weapon/storage/box/bodybags{
 	pixel_x = -1;
@@ -78304,7 +78329,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/maintenance/engineering)
+/area/storage/emergency2)
 "uLb" = (
 /obj/structure/disposalpipe/sortjunction{
 	dir = 8;
@@ -78313,7 +78338,7 @@
 	sortType = "QM Office"
 	},
 /turf/simulated/wall,
-/area/maintenance/engineering)
+/area/storage/emergency2)
 "uMb" = (
 /obj/structure/closet/crate/freezer,
 /obj/machinery/alarm{
@@ -78362,7 +78387,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
-/area/maintenance/engineering)
+/area/storage/emergency2)
 "uRb" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -78372,17 +78397,13 @@
 /turf/simulated/floor/plating,
 /area/maintenance/engineering)
 "uSb" = (
-/obj/machinery/door/airlock{
-	name = "Port Emergency Storage"
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/maintenance/engineering)
+/area/storage/emergency2)
 "uUb" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -78404,23 +78425,17 @@
 	},
 /area/quartermaster/office)
 "uWb" = (
-/obj/structure/rack,
-/obj/item/weapon/tank/oxygen,
-/obj/item/weapon/tank/oxygen,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
-/obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/extinguisher,
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "Port Emergency Storage APC";
-	pixel_y = -24
+/obj/machinery/door/airlock{
+	name = "Port Emergency Storage"
 	},
-/obj/structure/cable,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/maintenance/engineering)
+/area/storage/emergency2)
 "uYb" = (
 /obj/machinery/camera{
 	c_tag = "Cargo Bay Storage";
@@ -93520,8 +93535,8 @@ cIW
 cKI
 aSM
 dQb
-fYb
-hAb
+aBW
+bhR
 bio
 aqV
 bio
@@ -93777,8 +93792,8 @@ cIX
 cKL
 aSM
 dQb
-aAR
-aBW
+bhO
+bhU
 bio
 beG
 bio
@@ -101985,8 +102000,8 @@ bkY
 bDp
 amz
 uQb
-uWb
-bIZ
+fYb
+aAR
 brt
 bNk
 bfB
@@ -102241,10 +102256,10 @@ aSd
 bnE
 bDp
 uKb
-uRb
-bLf
-bIZ
-bIZ
+uSb
+hAb
+aAR
+aAR
 bNk
 bQj
 bUu
@@ -102498,9 +102513,9 @@ baX
 blD
 bfb
 uLb
-uSb
-bIZ
-bIZ
+uWb
+aAR
+aAR
 chX
 bNk
 bNk
@@ -130238,9 +130253,9 @@ hPb
 aup
 aaa
 aaa
-aah
 aaa
-aah
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -130495,9 +130510,9 @@ aTV
 aup
 aaa
 aaa
-aah
 aaa
-aah
+aaa
+aaa
 aaa
 aaa
 aaa
