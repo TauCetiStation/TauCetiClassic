@@ -39,9 +39,11 @@ var/list/airlock_overlays = list()
 	var/shockedby = list()
 	var/close_timer_id = null
 	var/datum/wires/airlock/wires = null
+	var/obj/item/note //Any papers pinned to the airlock
 
 	var/inner_material = null //material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi' //Used for papers and photos pinned to the airlock
 
 	var/image/old_frame_overlay //keep those in order to prevent unnecessary updating
 	var/image/old_filling_overlay
@@ -49,9 +51,10 @@ var/list/airlock_overlays = list()
 	var/image/old_panel_overlay
 	var/image/old_weld_overlay
 	var/image/old_sparks_overlay
+	var/image/old_note_overlay
 
-	door_open_sound          = 'sound/machines/airlock/airlockToggle.ogg'
-	door_close_sound         = 'sound/machines/airlock/airlockToggle.ogg'
+	door_open_sound          = 'sound/machines/airlock/airlock_open.ogg'
+	door_close_sound         = 'sound/machines/airlock/airlock_close.ogg'
 	var/door_deni_sound      = 'sound/machines/airlock/airlockDenied.ogg'
 	var/door_bolt_up_sound   = 'sound/machines/airlock/airlockBoltsUp.ogg'
 	var/door_bolt_down_sound = 'sound/machines/airlock/airlockBoltsDown.ogg'
@@ -79,8 +82,14 @@ var/list/airlock_overlays = list()
 	airlock_list -= src
 	QDEL_NULL(wires)
 	QDEL_NULL(electronics)
+	qdel(note)
 	closeOther = null
 	return ..()
+
+/obj/machinery/door/airlock/handle_atom_del(atom/A)
+	if(A == note)
+		note = null
+		update_icon()
 
 /obj/machinery/door/airlock/process()
 	if(secondsElectrified > 0)
@@ -234,6 +243,8 @@ var/list/airlock_overlays = list()
 	var/image/panel_overlay
 	var/image/weld_overlay
 	var/image/sparks_overlay
+	var/image/note_overlay
+	var/notetype = note_type()
 
 	switch(state)
 		if(AIRLOCK_CLOSED)
@@ -251,6 +262,8 @@ var/list/airlock_overlays = list()
 					lights_overlay = get_airlock_overlay("lights_bolts", overlays_file)
 				else if(emergency)
 					lights_overlay = get_airlock_overlay("lights_emergency", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay(notetype, note_overlay_file)
 
 		if(AIRLOCK_DENY)
 			frame_overlay = get_airlock_overlay("closed", icon)
@@ -263,6 +276,8 @@ var/list/airlock_overlays = list()
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
 			lights_overlay = get_airlock_overlay("lights_denied", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay(notetype, note_overlay_file)
 
 		if(AIRLOCK_EMAG)
 			frame_overlay = get_airlock_overlay("closed", icon)
@@ -275,6 +290,8 @@ var/list/airlock_overlays = list()
 				panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay(notetype, note_overlay_file)
 
 		if(AIRLOCK_CLOSING)
 			frame_overlay = get_airlock_overlay("closing", icon)
@@ -286,6 +303,8 @@ var/list/airlock_overlays = list()
 				lights_overlay = get_airlock_overlay("lights_closing", overlays_file)
 			if(p_open)
 				panel_overlay = get_airlock_overlay("panel_closing", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay("[notetype]_closing", note_overlay_file)
 
 		if(AIRLOCK_OPEN)
 			frame_overlay = get_airlock_overlay("open", icon)
@@ -295,6 +314,8 @@ var/list/airlock_overlays = list()
 				filling_overlay = get_airlock_overlay("fill_open", icon)
 			if(p_open)
 				panel_overlay = get_airlock_overlay("panel_open", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay("[notetype]_open", note_overlay_file)
 
 		if(AIRLOCK_OPENING)
 			frame_overlay = get_airlock_overlay("opening", icon)
@@ -306,6 +327,8 @@ var/list/airlock_overlays = list()
 				lights_overlay = get_airlock_overlay("lights_opening", overlays_file)
 			if(p_open)
 				panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay("[notetype]_opening", note_overlay_file)
 
 	// Doesn't used overlays.Cut() for performance reasons.
 	if(frame_overlay != old_frame_overlay)
@@ -338,6 +361,10 @@ var/list/airlock_overlays = list()
 		overlays -= old_sparks_overlay
 		overlays += sparks_overlay
 		old_sparks_overlay = sparks_overlay
+	if(note_overlay != old_note_overlay)
+		overlays -= old_note_overlay
+		overlays += note_overlay
+		old_note_overlay = note_overlay
 
 /proc/get_airlock_overlay(icon_state, icon_file)
 	var/iconkey = "[icon_state][icon_file]"
@@ -358,6 +385,15 @@ var/list/airlock_overlays = list()
 			sleep(6)
 			update_icon(AIRLOCK_CLOSED)
 			icon_state = "closed"
+
+/obj/machinery/door/airlock/examine(mob/user)
+	..()
+	if(note)
+		if(!in_range(user, src))
+			to_chat(user, "There's a [note.name] pinned to the front. You can't read it from here.")
+		else
+			to_chat(user, "There's a [note.name] pinned to the front...")
+			note.examine(user)
 
 /obj/machinery/door/airlock/attack_ghost(mob/user)
 	//Separate interface for ghosts.
@@ -891,6 +927,12 @@ var/list/airlock_overlays = list()
 		p_open = !p_open
 		update_icon()
 	else if(istype(C, /obj/item/weapon/wirecutters))
+		if(note)
+			user.visible_message("<span class='notice'>[user] cuts down [note] from [src].</span>", "<span class='notice'>You remove [note] from [src].</span>")
+			//C.play_tool_sound(src)
+			note.forceMove(get_turf(user))
+			note = null
+			update_icon()
 		return attack_hand(user)
 	else if(istype(C, /obj/item/device/multitool))
 		return attack_hand(user)
@@ -968,6 +1010,15 @@ var/list/airlock_overlays = list()
 				else
 					spawn(0)	close(1)
 
+	else if(istype(C, /obj/item/weapon/paper) || istype(C, /obj/item/weapon/photo))
+		if(note)
+			to_chat(user, "<span class='warning'>There's already something pinned to this airlock! Use wirecutters to remove it.</span>")
+			return
+		user.visible_message("<span class='notice'>[user] pins [C] to [src].</span>", "<span class='notice'>You pin [C] to [src].</span>")
+		user.drop_from_inventory(C, src)
+		note = C
+		update_icon()
+				
 	else if(istype(C, /obj/item/weapon/airlock_painter)) 		//airlock painter
 		change_paintjob(C, user)
 	else
@@ -1123,6 +1174,14 @@ var/list/airlock_overlays = list()
 			icon          = 'icons/obj/doors/airlocks/highsec/highsec.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
 	update_icon()
+
+/obj/machinery/door/airlock/proc/note_type() //Returns a string representing the type of note pinned to this airlock
+	if(!note)
+		return
+	else if(istype(note, /obj/item/weapon/paper))
+		return "note"
+	else if(istype(note, /obj/item/weapon/photo))
+		return "photo"
 
 /obj/structure/door_scrap
 	name = "Door Scrap"
