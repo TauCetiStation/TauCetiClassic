@@ -75,9 +75,8 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/weapon/crowbar) && state == 0 && anchored )
-		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 		to_chat(user, "\blue Now dislodging the girder")
-		if(do_after(user, 40,target = src))
+		if(W.use_tool(src, user, 40, volume = 100))
 			if(!src) return
 			to_chat(user, "\blue You dislodged the girder!")
 			new/obj/structure/girder/displaced( src.loc )

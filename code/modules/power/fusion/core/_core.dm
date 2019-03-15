@@ -116,20 +116,20 @@ var/list/fusion_cores = list()
 		return
 
 	else if(iswrench(W))
-		anchored = !anchored
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-		user.SetNextMove(CLICK_CD_INTERACT)
-		if(anchored)
-			connect_to_network()
-			user.visible_message("[user.name] secures [src.name] to the floor.", \
-				"You secure the [src.name] to the floor.", \
-				"You hear a ratchet")
-		else
-			disconnect_from_network()
-			user.visible_message("[user.name] unsecures [src.name] from the floor.", \
-				"You unsecure the [src.name] from the floor.", \
-				"You hear a ratchet")
-		return
+		if(W.use_tool(src, user, 20, volume = 75))
+			anchored = !anchored
+			user.SetNextMove(CLICK_CD_INTERACT)
+			if(anchored)
+				connect_to_network()
+				user.visible_message("[user.name] secures [src.name] to the floor.", \
+					"You secure the [src.name] to the floor.", \
+					"You hear a ratchet")
+			else
+				disconnect_from_network()
+				user.visible_message("[user.name] unsecures [src.name] from the floor.", \
+					"You unsecure the [src.name] from the floor.", \
+					"You hear a ratchet")
+			return
 
 	return ..()
 

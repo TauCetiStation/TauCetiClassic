@@ -47,6 +47,7 @@
 	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
 	force = 8 //might or might not be too high, subject to change
 	throwforce = 8
+	toolspeed = 0.7
 	attack_verb = list("drilled", "screwed", "jabbed")
 	action_button_name = "Change mode"
 	random_color = FALSE
@@ -116,6 +117,7 @@
 	throwforce = 8
 	throw_speed = 2
 	throw_range = 3//it's heavier than a screw driver/wrench, so it does more damage, but can't be thrown as far
+	toolspeed = 0.7
 	attack_verb = list("drilled", "screwed", "jabbed","whacked")
 	hitsound = 'sound/items/drill_hit.ogg'
 	action_button_name = "Change mode"
@@ -179,6 +181,7 @@
 	origin_tech = "materials=2;engineering=2"
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
 	action_button_name = "Change mode"
+	toolspeed = 0.7
 	random_color = FALSE
 
 /obj/item/weapon/wirecutters/power/attack_self(mob/user)
@@ -512,6 +515,7 @@
 	w_class = ITEM_SIZE_NORMAL
 	m_amt = 70
 	g_amt = 120
+	toolspeed = 0.5
 	origin_tech = "materials=4;engineering=4;bluespace=2;phorontech=3"
 	var/next_refuel_tick = 0
 
@@ -554,6 +558,7 @@
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
 	origin_tech = "materials=2;engineering=2"
 	force = 15
+	toolspeed = 0.7
 	action_button_name = "Change mode"
 
 /obj/item/weapon/crowbar/power/attack_self(mob/user)

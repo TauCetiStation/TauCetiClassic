@@ -175,9 +175,9 @@ var/list/alldepartments = list("Central Command")
 			scan = idcard
 
 	else if(istype(O, /obj/item/weapon/wrench))
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		anchored = !anchored
-		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
+		if(O.use_tool(src, user, 20, volume = 50))
+			anchored = !anchored
+			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 	return
 
 /proc/centcomm_fax(mob/sender, obj/item/weapon/paper/P)

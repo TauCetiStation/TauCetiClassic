@@ -62,9 +62,9 @@
 			to_chat(user, "\red Remove the cell first!")
 			return
 
-		anchored = !anchored
-		to_chat(user, "You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground")
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+		if(W.use_tool(src, user, 20, volume = 75))
+			anchored = !anchored
+			to_chat(user, "You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground")
 
 /obj/machinery/cell_charger/attack_hand(mob/user)
 	. = ..()

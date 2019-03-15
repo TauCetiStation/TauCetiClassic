@@ -128,11 +128,9 @@
 				electronics = AE
 
 	else if(istype(W, /obj/item/weapon/crowbar) && state == ASSEMBLY_NEAR_FINISHED)
-		if(user.is_busy()) return
-		playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove the electronics from the airlock assembly.")
+		if(W.use_tool(src, user, 40, volume = 100))
 
-		if(do_after(user, 40, target = src))
 			if(!src)
 				return
 			to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
