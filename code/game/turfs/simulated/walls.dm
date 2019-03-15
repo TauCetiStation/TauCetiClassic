@@ -2,6 +2,8 @@
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
 	icon = 'icons/turf/walls.dmi'
+	plane = GAME_PLANE
+
 	var/mineral = "metal"
 	var/rotting = 0
 
@@ -9,7 +11,7 @@
 	var/damage_cap = 100 //Wall will break down to girders if damage reaches this point
 
 	var/damage_overlay
-	var/global/damage_overlays[8]
+	var/static/damage_overlays[8]
 
 	var/max_temperature = 2200 //K, walls will take damage if they're next to a fire hotter than this
 
@@ -294,7 +296,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(rotting)
-		if(istype(W, /obj/item/weapon/weldingtool))
+		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0,user))
 				to_chat(user, "<span class='notice'>You burn away the fungi with \the [WT].</span>")
@@ -310,7 +312,7 @@
 
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
-		if(istype(W, /obj/item/weapon/weldingtool))
+		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0,user))
 				thermitemelt(user)
@@ -334,7 +336,7 @@
 	var/turf/T = user.loc	//get user's location for delay checks
 
 	//DECONSTRUCTION
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		if(user.is_busy()) return
 
 		var/response = "Dismantle"

@@ -335,7 +335,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //When a borg is activated, it can choose which AI it wants to be slaved to
 /proc/active_ais()
 	. = list()
-	for(var/mob/living/silicon/ai/A in living_mob_list)
+	for(var/mob/living/silicon/ai/A in ai_list)
 		if(A.stat == DEAD)
 			continue
 		if(A.control_disabled == 1)
@@ -385,7 +385,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if (M.real_name && M.real_name != M.name)
 			name += " \[[M.real_name]\]"
 		if (M.stat == DEAD)
-			if(istype(M, /mob/dead/observer/))
+			if(istype(M, /mob/dead/observer))
 				name += " \[ghost\]"
 			else
 				name += " \[dead\]"
@@ -518,7 +518,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/get_turf_loc(atom/movable/M) //gets the location of the turf that the atom is on, or what the atom is in is on, etc
 	//in case they're in a closet or sleeper or something
 	var/atom/loc = M.loc
-	while(!istype(loc, /turf/))
+	while(!istype(loc, /turf))
 		loc = loc.loc
 	return loc
 
@@ -575,12 +575,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/between(low, middle, high)
 	return max(min(middle, high), low)
 
-proc/arctan(x)
+/proc/arctan(x)
 	var/y=arcsin(x/sqrt(1+x*x))
 	return y
 
 //returns random gauss number
-proc/GaussRand(sigma)
+/proc/GaussRand(sigma)
   var/x,y,rsq
   do
     x=2*rand()-1
@@ -590,10 +590,10 @@ proc/GaussRand(sigma)
   return sigma*y*sqrt(-2*log(rsq)/rsq)
 
 //returns random gauss number, rounded to 'roundto'
-proc/GaussRandRound(sigma,roundto)
+/proc/GaussRandRound(sigma,roundto)
 	return round(GaussRand(sigma),roundto)
 
-proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,direction)
+/proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,direction)
 //This proc throws up either an icon or an animation for a specified amount of time.
 //The variables should be apparent enough.
 	var/atom/movable/overlay/animation = new(location)
@@ -838,7 +838,8 @@ proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,dire
 							X.name = "wall"
 							qdel(O) // prevents multiple shuttle corners from stacking
 							continue
-						if(!istype(O,/obj)) continue
+						if(!istype(O,/obj) || !O.simulated)
+							continue
 						O.loc = X
 						if (length(O.client_mobs_in_contents))
 							O.update_parallax_contents()
@@ -863,7 +864,7 @@ proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,dire
 					continue moving
 
 
-proc/DuplicateObject(obj/original, perfectcopy = 0 , sameloc = 0)
+/proc/DuplicateObject(obj/original, perfectcopy = 0 , sameloc = 0)
 	if(!original)
 		return null
 
@@ -1024,16 +1025,16 @@ proc/DuplicateObject(obj/original, perfectcopy = 0 , sameloc = 0)
 
 
 
-proc/get_cardinal_dir(atom/A, atom/B)
+/proc/get_cardinal_dir(atom/A, atom/B)
 	var/dx = abs(B.x - A.x)
 	var/dy = abs(B.y - A.y)
 	return get_dir(A, B) & (rand() * (dx+dy) < dy ? 3 : 12)
 
 //chances are 1:value. anyprob(1) will always return true
-proc/anyprob(value)
+/proc/anyprob(value)
 	return (rand(1,value)==value)
 
-proc/view_or_range(distance = world.view , center = usr , type)
+/proc/view_or_range(distance = world.view , center = usr , type)
 	switch(type)
 		if("view")
 			. = view(distance,center)
@@ -1041,7 +1042,7 @@ proc/view_or_range(distance = world.view , center = usr , type)
 			. = range(distance,center)
 	return
 
-proc/oview_or_orange(distance = world.view , center = usr , type)
+/proc/oview_or_orange(distance = world.view , center = usr , type)
 	switch(type)
 		if("view")
 			. = oview(distance,center)
@@ -1049,11 +1050,10 @@ proc/oview_or_orange(distance = world.view , center = usr , type)
 			. = orange(distance,center)
 	return
 
-proc/get_mob_with_client_list()
+/proc/get_mob_with_client_list()
 	var/list/mobs = list()
-	for(var/mob/M in mob_list)
-		if (M.client)
-			mobs += M
+	for(var/mob/M in player_list)
+		mobs += M
 	return mobs
 
 
@@ -1069,6 +1069,49 @@ proc/get_mob_with_client_list()
 			return "right leg"
 		else
 			return zone
+
+/*
+ Gets the turf this atom's *ICON* appears to inhabit
+ It takes into account:
+ * Pixel_x/y
+ * Matrix x/y
+ NOTE: if your atom has non-standard bounds then this proc
+ will handle it, but:
+ * if the bounds are even, then there are an even amount of "middle" turfs, the one to the EAST, NORTH, or BOTH is picked
+ (this may seem bad, but you're atleast as close to the center of the atom as possible, better than byond's default loc being all the way off)
+ * if the bounds are odd, the true middle turf of the atom is returned
+*/
+/proc/get_turf_pixel(atom/AM)
+	if(!istype(AM))
+		return
+
+	//Find AM's matrix so we can use it's X/Y pixel shifts
+	var/matrix/M = matrix(AM.transform)
+
+	var/pixel_x_offset = AM.pixel_x + M.get_x_shift()
+	var/pixel_y_offset = AM.pixel_y + M.get_y_shift()
+
+	//Irregular objects
+	var/icon/AMicon = icon(AM.icon, AM.icon_state)
+	var/AMiconheight = AMicon.Height()
+	var/AMiconwidth = AMicon.Width()
+	if(AMiconheight != world.icon_size || AMiconwidth != world.icon_size)
+		pixel_x_offset += ((AMiconwidth / world.icon_size) - 1) * (world.icon_size * 0.5)
+		pixel_y_offset += ((AMiconheight / world.icon_size) - 1) * (world.icon_size * 0.5)
+
+	//DY and DX
+	var/rough_x = round(round(pixel_x_offset, world.icon_size) / world.icon_size)
+	var/rough_y = round(round(pixel_y_offset, world.icon_size) / world.icon_size)
+
+	//Find coordinates
+	var/turf/T = get_turf(AM) //use AM's turfs, as it's coords are the same as AM's AND AM's coords are lost if it is inside another atom
+	if(!T)
+		return null
+	var/final_x = T.x + rough_x
+	var/final_y = T.y + rough_y
+
+	if(final_x || final_y)
+		return locate(final_x, final_y, T.z)
 
 /proc/get(atom/loc, type)
 	while(loc)
@@ -1096,48 +1139,8 @@ var/global/list/common_tools = list(
 		return 1
 	return 0
 
-/proc/iswrench(O)
-	if(istype(O, /obj/item/weapon/wrench))
-		return 1
-	return 0
-
-/proc/iswelder(O)
-	if(istype(O, /obj/item/weapon/weldingtool))
-		return 1
-	return 0
-
-/proc/iscoil(O)
-	if(istype(O, /obj/item/stack/cable_coil))
-		return 1
-	return 0
-
-/proc/iswirecutter(O)
-	if(istype(O, /obj/item/weapon/wirecutters))
-		return 1
-	return 0
-
-/proc/isscrewdriver(O)
-	if(istype(O, /obj/item/weapon/screwdriver))
-		return 1
-	return 0
-
-/proc/ismultitool(O)
-	if(istype(O, /obj/item/device/multitool))
-		return 1
-	return 0
-
-/proc/iscrowbar(O)
-	if(istype(O, /obj/item/weapon/crowbar))
-		return 1
-	return 0
-
-/proc/iswire(O) // coil, wire... whats the difference here?
-	if(istype(O, /obj/item/stack/cable_coil))
-		return 1
-	return 0
-
 /proc/is_hot(obj/item/W)
-	if(istype(W,/obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.isOn())
 			return 3800
@@ -1242,7 +1245,7 @@ var/global/list/common_tools = list(
 	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat)) && prob(95) || 	\
 	(locate(/obj/structure/stool/bed/roller, M.loc) && 	\
 	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat)) && prob(75) || 	\
-	(locate(/obj/structure/table/, M.loc) && 	\
+	(locate(/obj/structure/table, M.loc) && 	\
 	(M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(66))
 
 /proc/reverse_direction(dir)
@@ -1606,3 +1609,11 @@ var/list/WALLITEMS = typecacheof(list(
 	else if(hol_dir == WEST && (hit_dir in list(EAST, NORTHEAST, SOUTHEAST)))
 		return TRUE
 	return FALSE
+
+/proc/num2sign(numeric)
+	if(numeric > 0)
+		return 1
+	else if(numeric < 0)
+		return -1
+	else
+		return 0

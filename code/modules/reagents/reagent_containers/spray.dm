@@ -5,7 +5,7 @@
 	icon_state = "cleaner"
 	item_state = "cleaner"
 	flags = OPENCONTAINER | NOBLUDGEON
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
 	w_class = ITEM_SIZE_SMALL
 	throw_speed = 2
@@ -88,7 +88,7 @@
 	reagents.trans_to(D, amount_per_transfer_from_this, 1/spray_size)
 	D.icon += mix_color_from_reagents(D.reagents.reagent_list)
 
-	for(var/i in 0 to spray_size_current)
+	for(var/i in 1 to spray_size_current)
 		step_towards(D, A)
 		D.reagents.reaction(get_turf(D))
 		for(var/atom/T in get_turf(D))
@@ -260,7 +260,7 @@
 /obj/item/weapon/reagent_containers/spray/thurible/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(!lit && safety) // You can't lit the fuel when the cap's off, cause then it wouldn't start to burn.
-		if(istype(W, /obj/item/weapon/weldingtool))
+		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.isOn())
 				light(user, "casually lights")
@@ -346,7 +346,7 @@
 /obj/item/weapon/reagent_containers/spray/waterflower
 	name = "water flower"
 	desc = "A seemingly innocent sunflower...with a twist."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
 	item_state = "sunflower"
 	amount_per_transfer_from_this = 1
@@ -365,7 +365,7 @@
 	icon_state = "chemsprayer"
 	item_state = "chemsprayer"
 	throwforce = 3
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	possible_transfer_amounts = null
 	volume = 600
 	origin_tech = "combat=3;materials=3;engineering=3"

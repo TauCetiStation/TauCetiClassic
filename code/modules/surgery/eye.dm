@@ -26,10 +26,6 @@
 	min_duration = 90
 	max_duration = 110
 
-/datum/surgery_step/eye/cut_open/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
-	return ..()
-
 /datum/surgery_step/eye/cut_open/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts to separate the corneas on [target]'s eyes with \the [tool].", \
 	"You start to separate the corneas on [target]'s eyes with \the [tool].")
@@ -60,7 +56,6 @@
 	max_duration = 40
 
 /datum/surgery_step/eye/lift_eyes/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
 	return ..() && target.op_stage.eyes == 1
 
 /datum/surgery_step/eye/lift_eyes/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -94,7 +89,6 @@
 	max_duration = 100
 
 /datum/surgery_step/eye/mend_eyes/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
 	return ..() && target.op_stage.eyes == 2
 
 /datum/surgery_step/eye/mend_eyes/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -125,10 +119,6 @@
 
 	min_duration = 70
 	max_duration = 100
-
-/datum/surgery_step/eye/cauterize/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
-	return ..()
 
 /datum/surgery_step/eye/cauterize/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] is beginning to cauterize the incision around [target]'s eyes with \the [tool]." , \
@@ -161,10 +151,10 @@
 	priority = 2
 	can_infect = FALSE
 
+	allowed_species = list(IPC)
+
 /datum/surgery_step/ipc_eye/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
-		return FALSE
-	if(!(target.species && target.species.flags[IS_SYNTHETIC]))
 		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if(!BP)
@@ -181,9 +171,6 @@
 
 	min_duration = 90
 	max_duration = 110
-
-/datum/surgery_step/ipc_eye/screw_open/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..()
 
 /datum/surgery_step/ipc_eye/screw_open/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to unscrew [target]'s camera panels with \the [tool].",
@@ -239,7 +226,7 @@
 	if(istype(tool, /obj/item/stack/nanopaste) || istype(tool, /obj/item/weapon/bonegel))
 		target.apply_damage(6, BURN, BP, null)
 
-	else if(istype(tool, /obj/item/weapon/wrench))
+	else if(iswrench(tool))
 		target.apply_damage(12, BRUTE, BP, null)
 		BP.createwound(CUT, 5)
 
@@ -258,9 +245,6 @@
 
 	min_duration = 70
 	max_duration = 100
-
-/datum/surgery_step/ipc_eye/close_shut/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..()
 
 /datum/surgery_step/ipc_eye/close_shut/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] is beginning to lock [target]'s camera panels with \the [tool]." ,

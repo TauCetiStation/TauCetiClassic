@@ -6,7 +6,7 @@
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = FACE|EYES
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	item_state = "gas_mask_tc"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
@@ -26,7 +26,7 @@
 	action_button_name = "Toggle Welding Mask"
 	siemens_coefficient = 0.9
 	body_parts_covered = FACE|EYES
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	var/up = 0
 
 /obj/item/clothing/mask/gas/welding/attack_self()
@@ -68,7 +68,7 @@
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | BLOCKHAIR
 
 /obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		switch(aggressiveness)
 			if(1)
 				to_chat(user, "\blue You set the restrictor to the middle position.")
@@ -81,7 +81,7 @@
 				aggressiveness = 1
 			if(4)
 				to_chat(user, "\red You adjust the restrictor but nothing happens, probably because its broken.")
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(iswirecutter(W))
 		if(aggressiveness != 4)
 			to_chat(user, "\red You broke it!")
 			aggressiveness = 4
@@ -219,17 +219,20 @@
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
 	icon_state = "clown"
 	item_state = "clown_hat"
+	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy-clown wig and mask"
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
+	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
 	desc = "The traditional mime's mask. It has an eerie facial posture."
 	icon_state = "mime"
+	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
 /obj/item/clothing/mask/gas/fawkes //--getup1
 	name = "strange mask"
@@ -247,6 +250,7 @@
 	name = "sexy mime mask"
 	desc = "A traditional female mime's mask."
 	icon_state = "sexymime"
+	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
 /obj/item/clothing/mask/gas/death_commando
 	name = "death commando mask"

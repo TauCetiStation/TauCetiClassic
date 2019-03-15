@@ -49,9 +49,6 @@
 #define GAME_STATE_PLAYING		3
 #define GAME_STATE_FINISHED		4
 
-//Object specific defines
-#define CANDLE_LUM 3 //For how bright candles are
-
 //Security levels
 #define SEC_LEVEL_GREEN	0
 #define SEC_LEVEL_BLUE	1
@@ -90,28 +87,11 @@
 #define MAX_STACK_AMOUNT_GLASS	50
 #define MAX_STACK_AMOUNT_RODS	60
 
-//some colors
-#define COLOR_RED 		"#FF0000"
-#define COLOR_GREEN 	"#00FF00"
-#define COLOR_BLUE 		"#0000FF"
-#define COLOR_CYAN 		"#00FFFF"
-#define COLOR_PINK 		"#FF00FF"
-#define COLOR_YELLOW 	"#FFFF00"
-#define COLOR_ORANGE 	"#FF9900"
-#define COLOR_WHITE 	"#FFFFFF"
-#define COLOR_GRAY      "#808080"
-
 //some arbitrary defines to be used by self-pruning global lists. (see master_controller)
 #define PROCESS_KILL 26	//Used to trigger removal from a processing list
 
 #define shuttle_time_in_station 1800 // 3 minutes in the station
 #define shuttle_time_to_arrive 6000 // 10 minutes to arrive
-
-#define FOR_DVIEW(type, range, center, invis_flags) \
-	dview_mob.loc = center; \
-	dview_mob.see_invisible = invis_flags; \
-	for(type in view(range, dview_mob))
-#define END_FOR_DVIEW dview_mob.loc = null
 
 //defines
 #define RESIZE_DEFAULT_SIZE 1
@@ -130,7 +110,6 @@
 #define MAT_PLASTIC		"$plastic"
 #define MAT_BANANIUM	"$bananium"
 
-#define COIN_STANDARD "Coin"
 #define COIN_GOLD "Gold coin"
 #define COIN_SILVER "Silver coin"
 #define COIN_DIAMOND "Diamond coin"
@@ -139,6 +118,7 @@
 #define COIN_URANIUM "Uranium coin"
 #define COIN_BANANIUM "Bananium coin"
 #define COIN_PLATINUM "Platunum coin"
+#define COIN_MYTHRIL "Mythril coin"
 
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
@@ -188,7 +168,8 @@
 #define ASSEMBLY_WIRED         1
 #define ASSEMBLY_NEAR_FINISHED 2
 
-//Wet floor states/severity
+//Wet floor type bitflags. Stronger ones should be higher in number.
+#define DRY_FLOOR 0
 #define WATER_FLOOR 1
 #define LUBE_FLOOR  2
 
@@ -202,3 +183,20 @@
 
 //Error handler defines
 #define ERROR_USEFUL_LEN 2
+
+//Filters
+#define AMBIENT_OCCLUSION filter(type = "drop_shadow", x = 0, y = -2, size = 4, border = 4, color = "#04080FAA")
+
+#define CLIENT_FROM_VAR(I) (ismob(I) ? I:client : (istype(I, /client) ? I : (istype(I, /datum/mind) ? I:current?:client : null)))
+
+#define ENTITY_TAB "&nbsp;&nbsp;&nbsp;&nbsp;"
+
+//world/proc/shelleo
+#define SHELLEO_ERRORLEVEL 1
+#define SHELLEO_STDOUT 2
+#define SHELLEO_STDERR 3
+
+//https://secure.byond.com/docs/ref/info.html#/atom/var/mouse_opacity
+#define MOUSE_OPACITY_TRANSPARENT   0
+#define MOUSE_OPACITY_ICON          1
+#define MOUSE_OPACITY_OPAQUE        2

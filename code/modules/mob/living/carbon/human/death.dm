@@ -19,7 +19,7 @@
 
 	flick("gibbed-h", animation)
 	if(species)
-		hgibs(loc, viruses, dna, species.flesh_color, species.blood_color)
+		hgibs(loc, viruses, dna, species.flesh_color, species.blood_datum)
 	else
 		hgibs(loc, viruses, dna)
 

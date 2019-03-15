@@ -4,9 +4,9 @@
 	icon_state = "ionrifle"
 	item_state = "ionrifle"
 	origin_tech = "combat=2;magnets=4"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	flags =  CONDUCT
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 
 /obj/item/weapon/gun/energy/ionrifle/isHandgun()
@@ -90,7 +90,7 @@
 	desc = "For the love of god, make sure you're aiming this the right way!"
 	icon_state = "riotgun"
 	item_state = "c20r"
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
 	cell_type = "/obj/item/weapon/stock_parts/cell/potato"
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
@@ -126,7 +126,7 @@
 	item_state = "pen"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 /obj/item/weapon/gun/energy/mindflayer
 	name = "mind flayer"
@@ -134,7 +134,7 @@
 	icon_state = "xray"
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
 /*
-obj/item/weapon/gun/energy/staff/focus
+/obj/item/weapon/gun/energy/staff/focus
 	name = "mental focus"
 	desc = "An artefact that channels the will of the user into destructive bolts of force. If you aren't careful with it, you might poke someone's brain out."
 	icon = 'icons/obj/wizard.dmi'
@@ -142,22 +142,22 @@ obj/item/weapon/gun/energy/staff/focus
 	item_state = "focus"
 	projectile_type = "/obj/item/projectile/forcebolt"
 
-	attack_self(mob/living/user)
-		if(projectile_type == "/obj/item/projectile/forcebolt")
-			charge_cost = 200
-			to_chat(user, "\red The [src.name] will now strike a small area.")
-			projectile_type = "/obj/item/projectile/forcebolt/strong"
-		else
-			charge_cost = 100
-			to_chat(user, "\red The [src.name] will now strike only a single person.")
-			projectile_type = "/obj/item/projectile/forcebolt"
+/obj/item/weapon/gun/energy/staff/focus/attack_self(mob/living/user)
+	if(projectile_type == "/obj/item/projectile/forcebolt")
+		charge_cost = 200
+		to_chat(user, "\red The [src.name] will now strike a small area.")
+		projectile_type = "/obj/item/projectile/forcebolt/strong"
+	else
+		charge_cost = 100
+		to_chat(user, "\red The [src.name] will now strike only a single person.")
+		projectile_type = "/obj/item/projectile/forcebolt"
 	*/
 
 /obj/item/weapon/gun/energy/toxgun
 	name = "phoron pistol"
 	desc = "A specialized firearm designed to fire lethal bolts of phoron."
 	icon_state = "toxgun"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=5;phorontech=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/toxin)
 
@@ -169,9 +169,9 @@ obj/item/weapon/gun/energy/staff/focus
 	item_state = "w2500e"
 	origin_tech = "combat=6;materials=5;powerstorage=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/sniper)
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	fire_delay = 35
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	var/zoom = 0
 
 /obj/item/weapon/gun/energy/sniperrifle/atom_init()
@@ -195,7 +195,13 @@ obj/item/weapon/gun/energy/staff/focus
 	return
 
 /obj/item/weapon/gun/energy/sniperrifle/dropped(mob/user)
-	user.client.view = world.view
+	if(zoom)
+		if(user.client)
+			user.client.view = world.view
+		if(user.hud_used)
+			user.hud_used.show_hud(HUD_STYLE_STANDARD)
+		zoom = 0
+	..()
 
 /*
 This is called from
@@ -242,7 +248,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	origin_tech = null
 	ammo_type = list(/obj/item/ammo_casing/energy/rails)
 	fire_delay = 20
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 
 //Tesla Cannon
 /obj/item/weapon/gun/tesla
@@ -251,7 +257,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "tesla"
 	item_state = "tesla"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	origin_tech = "combat=5;materials=5;powerstorage=5;magnets=5;engineering=5"
 	var/charge = 0
 	var/charging = FALSE
@@ -359,6 +365,6 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "arctesla"
 	item_state = "arctesla"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = null
 	spinspeed = 0.5

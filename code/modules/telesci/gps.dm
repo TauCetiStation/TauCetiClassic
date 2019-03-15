@@ -4,8 +4,8 @@ var/list/GPS_list = list()
 	desc = "Helping lost spacemen find their way through the planets since 2016."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
-	w_class = 2.0
-	slot_flags = SLOT_BELT
+	w_class = ITEM_SIZE_SMALL
+	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "programming=2;engineering=2"
 	var/gpstag = "COM0"
 	var/emped = 0

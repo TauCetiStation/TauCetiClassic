@@ -3,7 +3,7 @@
 	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "engineering=4;materials=4;bluespace=2;programming=4"
 
 	var/searching = 0
@@ -16,82 +16,82 @@
 	var/ping_cd = 0//attack_ghost cooldown
 
 
-	attack_self(mob/user)
-		if(brainmob && !brainmob.key && searching == 0)
-			//Start the process of searching for a new user.
-			to_chat(user, "\blue You carefully locate the manual activation switch and start the positronic brain's boot process.")
-			icon_state = "posibrain-searching"
-			src.searching = 1
-			src.request_player()
-			addtimer(CALLBACK(src, .proc/reset_search), 600)
+/obj/item/device/mmi/posibrain/attack_self(mob/user)
+	if(brainmob && !brainmob.key && searching == 0)
+		//Start the process of searching for a new user.
+		to_chat(user, "\blue You carefully locate the manual activation switch and start the positronic brain's boot process.")
+		icon_state = "posibrain-searching"
+		src.searching = 1
+		src.request_player()
+		addtimer(CALLBACK(src, .proc/reset_search), 600)
 
-	proc/request_player()
-		for(var/mob/dead/observer/O in player_list)
-			if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
-				continue
-			if(jobban_isbanned(O, ROLE_PAI))
-				continue
-			if(role_available_in_minutes(O, ROLE_PAI))
-				continue
-			if(O.client)
-				var/client/C = O.client
-				if(!C.prefs.ignore_question.Find("posibrain") && (ROLE_PAI in C.prefs.be_role))
-					INVOKE_ASYNC(src, .proc/question, C)
+/obj/item/device/mmi/posibrain/proc/request_player()
+	for(var/mob/dead/observer/O in player_list)
+		if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
+			continue
+		if(jobban_isbanned(O, ROLE_PAI))
+			continue
+		if(role_available_in_minutes(O, ROLE_PAI))
+			continue
+		if(O.client)
+			var/client/C = O.client
+			if(!C.prefs.ignore_question.Find("posibrain") && (ROLE_PAI in C.prefs.be_role))
+				INVOKE_ASYNC(src, .proc/question, C)
 
-	proc/question(client/C)
-		if(!C)	return
-		var/response = alert(C, "Someone is requesting a personality for a positronic brain. Would you like to play as one?", "Positronic brain request", "No", "Yes", "Never for this round")
-		if(!C || brainmob.key || 0 == searching)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
-		if(response == "Yes")
-			transfer_personality(C.mob)
-		else if (response == "Never for this round")
-			C.prefs.ignore_question += "posibrain"
+/obj/item/device/mmi/posibrain/proc/question(client/C)
+	if(!C)	return
+	var/response = alert(C, "Someone is requesting a personality for a positronic brain. Would you like to play as one?", "Positronic brain request", "No", "Yes", "Never for this round")
+	if(!C || brainmob.key || 0 == searching)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
+	if(response == "Yes")
+		transfer_personality(C.mob)
+	else if (response == "Never for this round")
+		C.prefs.ignore_question += "posibrain"
 
 
-	transfer_identity(mob/living/carbon/H)
-		name = "positronic brain ([H])"
-		brainmob.name = H.real_name
-		brainmob.real_name = H.real_name
-		brainmob.dna = H.dna
-		brainmob.timeofhostdeath = H.timeofdeath
-		brainmob.stat = CONSCIOUS
-		if(brainmob.mind)
-			brainmob.mind.assigned_role = "Positronic Brain"
-		if(H.mind)
-			H.mind.transfer_to(brainmob)
-		to_chat(brainmob, "\blue You feel slightly disoriented. That's normal when you're just a metal cube.")
-		icon_state = "posibrain-occupied"
-		return
+/obj/item/device/mmi/posibrain/transfer_identity(mob/living/carbon/H)
+	name = "positronic brain ([H])"
+	brainmob.name = H.real_name
+	brainmob.real_name = H.real_name
+	brainmob.dna = H.dna
+	brainmob.timeofhostdeath = H.timeofdeath
+	brainmob.stat = CONSCIOUS
+	if(brainmob.mind)
+		brainmob.mind.assigned_role = "Positronic Brain"
+	if(H.mind)
+		H.mind.transfer_to(brainmob)
+	to_chat(brainmob, "\blue You feel slightly disoriented. That's normal when you're just a metal cube.")
+	icon_state = "posibrain-occupied"
+	return
 
-	proc/transfer_personality(mob/candidate)
+/obj/item/device/mmi/posibrain/proc/transfer_personality(mob/candidate)
 
-		src.searching = 0
-		src.brainmob.mind = candidate.mind
-		//src.brainmob.key = candidate.key
-		src.brainmob.ckey = candidate.ckey
-		src.name = "positronic brain ([src.brainmob.name])"
+	src.searching = 0
+	src.brainmob.mind = candidate.mind
+	//src.brainmob.key = candidate.key
+	src.brainmob.ckey = candidate.ckey
+	src.name = "positronic brain ([src.brainmob.name])"
 
-		to_chat(src.brainmob, "<b>You are a positronic brain, brought into existence on [station_name()].</b>")
-		to_chat(src.brainmob, "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>")
-		to_chat(src.brainmob, "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>")
-		to_chat(src.brainmob, "<b>Use say :b to speak to other artificial intelligences.</b>")
-		src.brainmob.mind.assigned_role = "Positronic Brain"
+	to_chat(src.brainmob, "<b>You are a positronic brain, brought into existence on [station_name()].</b>")
+	to_chat(src.brainmob, "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>")
+	to_chat(src.brainmob, "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>")
+	to_chat(src.brainmob, "<b>Use say :b to speak to other artificial intelligences.</b>")
+	src.brainmob.mind.assigned_role = "Positronic Brain"
 
-		var/turf/T = get_turf_or_move(src.loc)
-		for (var/mob/M in viewers(T))
-			M.show_message("\blue The positronic brain chimes quietly.")
-		icon_state = "posibrain-occupied"
+	var/turf/T = get_turf_or_move(src.loc)
+	for (var/mob/M in viewers(T))
+		M.show_message("\blue The positronic brain chimes quietly.")
+	icon_state = "posibrain-occupied"
 
-	proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
+/obj/item/device/mmi/posibrain/proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
 
-		if(src.brainmob && src.brainmob.key) return
+	if(src.brainmob && src.brainmob.key) return
 
-		src.searching = 0
-		icon_state = "posibrain"
+	src.searching = 0
+	icon_state = "posibrain"
 
-		var/turf/T = get_turf_or_move(src.loc)
-		for (var/mob/M in viewers(T))
-			M.show_message("\blue The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?")
+	var/turf/T = get_turf_or_move(src.loc)
+	for (var/mob/M in viewers(T))
+		M.show_message("\blue The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?")
 
 /obj/item/device/mmi/posibrain/examine(mob/user)
 	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n[desc]\n"

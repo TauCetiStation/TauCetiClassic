@@ -192,6 +192,8 @@
 	anchored = 1
 	density = 0
 	layer = 2.5
+	plane = FLOOR_PLANE
+
 	var/health = 15
 	var/obj/structure/alien/weeds/node/linked_node = null
 	var/static/list/weedImageCache
@@ -305,7 +307,7 @@
 	var/damage = W.force / 4.0
 	user.SetNextMove(CLICK_CD_MELEE)
 
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 
 		if(WT.remove_fuel(0, user))
@@ -522,7 +524,7 @@
 	var/damage = W.force / 4.0
 	user.SetNextMove(CLICK_CD_MELEE)
 
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 
 		if(WT.remove_fuel(0, user))

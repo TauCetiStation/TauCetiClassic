@@ -144,6 +144,8 @@ var/datum/subsystem/ticker/ticker
 						send2slack_service("An admin has delayed the round end")
 
 /datum/subsystem/ticker/proc/setup()
+	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
+	var/init_start = world.timeofday
 	//Create and announce mode
 	if(master_mode=="secret" || master_mode=="bs12" || master_mode=="tau classic")
 		hide_mode = 1
@@ -227,6 +229,8 @@ var/datum/subsystem/ticker/ticker
 	Master.RoundStart()
 
 	slack_roundstart()
+
+	world.log << "Game start took [(world.timeofday - init_start)/10]s"
 
 	to_chat(world, "<FONT color='blue'><B>Enjoy the game!</B></FONT>")
 	world << sound('sound/AI/welcome.ogg')
@@ -372,7 +376,8 @@ var/datum/subsystem/ticker/ticker
 				captainless=0
 			if(player.mind.assigned_role != "MODE")
 				SSjob.EquipRank(player, player.mind.assigned_role, 0)
-				EquipCustomItems(player)
+			if(ishuman(player))
+				SSquirks.AssignQuirks(player, player.client, TRUE)
 	if(captainless)
 		for(var/mob/M in player_list)
 			if(!isnewplayer(M))
@@ -422,15 +427,9 @@ var/datum/subsystem/ticker/ticker
 	//Silicon laws report
 	var/ai_completions = "<h1>Round End Information</h1><HR>"
 
-	var/ai_or_borgs_in_round = 0
-	for (var/mob/living/silicon/silicon in mob_list)
-		if(silicon)
-			ai_or_borgs_in_round = 1
-			break
-
-	if(ai_or_borgs_in_round)
+	if(silicon_list.len)
 		ai_completions += "<H3>Silicons Laws</H3>"
-		for (var/mob/living/silicon/ai/aiPlayer in mob_list)
+		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
 			if(!aiPlayer)
 				continue
 			var/icon/flat = getFlatIcon(aiPlayer)
@@ -450,7 +449,7 @@ var/datum/subsystem/ticker/ticker
 
 		var/dronecount = 0
 
-		for (var/mob/living/silicon/robot/robo in mob_list)
+		for (var/mob/living/silicon/robot/robo in silicon_list)
 			if(!robo)
 				continue
 			if(istype(robo,/mob/living/silicon/robot/drone))

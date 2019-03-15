@@ -19,7 +19,7 @@
 	var/yield = 0
 	var/potency = -1
 	var/plant_type = 0
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/atom_init(mapload, newpotency)
 	if (!isnull(newpotency))
@@ -178,7 +178,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if(istype(W, /obj/item/stack/cable_coil))
+	if(iscoil(W))
 		var/obj/item/stack/cable_coil/C = W
 		if(C.use(5))
 			to_chat(user, "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>")

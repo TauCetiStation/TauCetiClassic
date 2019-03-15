@@ -144,11 +144,11 @@
 	var/obj/item/toy/crayon/spraycan/R = new(mob)
 
 	var/list/slots = list (
-		"backpack" = slot_in_backpack,
-		"left pocket" = slot_l_store,
-		"right pocket" = slot_r_store,
-		"left hand" = slot_l_hand,
-		"right hand" = slot_r_hand,
+		"backpack" = SLOT_IN_BACKPACK,
+		"left pocket" = SLOT_L_STORE,
+		"right pocket" = SLOT_R_STORE,
+		"left hand" = SLOT_L_HAND,
+		"right hand" = SLOT_R_HAND,
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots)
 	mob.equip_in_one_of_slots(R,slots)
@@ -381,11 +381,11 @@
 			feedback_set_details("round_end_result","loss - rev heads killed")
 			completion_text += "<br><FONT size = 3, color='red'><B>The heads of staff managed to stop the revolution!</B></FONT>"
 	var/num_revs = 0
-	for(var/mob/living/carbon/mob in living_mob_list)
+	for(var/mob/living/carbon/mob in alive_mob_list)
 		if(mob.mind)
 			if(mob.mind in head_revolutionaries || mob.mind in revolutionaries)
 				num_revs++
-	completion_text += "<BR>[TAB]Command's Approval Rating: <B>[100 - round((num_revs/living_mob_list.len)*100, 0.1)]%</B>" // % of loyal crew
+	completion_text += "<BR>[TAB]Command's Approval Rating: <B>[100 - round((num_revs/alive_mob_list.len)*100, 0.1)]%</B>" // % of loyal crew
 	..()
 	return 1
 

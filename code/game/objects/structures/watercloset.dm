@@ -45,7 +45,7 @@
 	icon_state = "toilet[open][cistern]"
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(iscrowbar(I))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
@@ -82,10 +82,10 @@
 				to_chat(user, "<span class='notice'>You need a tighter grip.</span>")
 
 	if(cistern)
-		if(I.w_class > 3)
+		if(I.w_class > ITEM_SIZE_NORMAL)
 			to_chat(user, "<span class='notice'>\The [I] does not fit.</span>")
 			return
-		if(w_items + I.w_class > 5)
+		if(w_items + I.w_class > ITEM_SIZE_HUGE)
 			to_chat(user, "<span class='notice'>The cistern is full.</span>")
 			return
 		user.drop_item()
@@ -317,7 +317,7 @@
 /obj/machinery/shower/attackby(obj/item/I, mob/user)
 	if(I.type == /obj/item/device/analyzer) // istype?
 		to_chat(user, "<span class='notice'>The water temperature seems to be [watertemp].</span>")
-	else if(istype(I, /obj/item/weapon/wrench))
+	else if(iswrench(I))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I].</span>")
 		if(do_after(user, 50, target = src))
@@ -483,6 +483,16 @@
 				H.shoes.make_wet(1) //<= wet
 				if(H.shoes.clean_blood())
 					H.update_inv_shoes()
+			else
+				var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
+				var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
+				var/no_legs = FALSE
+				if((!l_foot || (l_foot && (l_foot.status & ORGAN_DESTROYED))) && (!r_foot || (r_foot && (r_foot.status & ORGAN_DESTROYED))))
+					no_legs = TRUE
+				if(!no_legs)
+					H.feet_blood_DNA = null
+					H.feet_dirt_color = null
+					H.update_inv_shoes()
 			if(H.wear_mask && washmask)
 				H.wear_mask.make_wet(1) //<= wet
 				if(H.wear_mask.clean_blood())
@@ -501,7 +511,7 @@
 				H.belt.make_wet(1) //<= wet
 				if(H.belt.clean_blood())
 					H.update_inv_belt()
-			H.clean_blood(washshoes)
+			H.clean_blood()
 		else
 			if(M.wear_mask)						//if the mob is not human, it cleans the mask without asking for bitflags
 				if(M.wear_mask.clean_blood())

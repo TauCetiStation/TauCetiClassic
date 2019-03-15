@@ -119,11 +119,7 @@ var/global/list/image/splatter_cache=list()
 			user.blood_DNA = list()
 		user.blood_DNA |= blood_DNA.Copy()
 		user.bloody_hands += taken
-		user.hand_dirt_color = new/datum/dirt_cover(basedatum)
-		if(user.hand_dirt_color)
-			user.hand_dirt_color.add_dirt(basedatum)
-		else
-			user.hand_dirt_color = new/datum/dirt_cover(basedatum)
+		user.hand_dirt_datum = new(basedatum)
 		user.update_inv_gloves()
 		user.verbs += /mob/living/carbon/human/proc/bloody_doodle
 
@@ -198,7 +194,7 @@ var/global/list/image/splatter_cache=list()
 	var/image/giblets = new(base_icon, "[icon_state]_flesh", dir)
 	giblets.color = fleshcolor
 	var/icon/blood = new(base_icon,"[icon_state]",dir)
-	blood.Blend(basedatum.color,ICON_MULTIPLY)
+	blood.Blend(basedatum.color, ICON_MULTIPLY)
 
 	icon = blood
 	overlays.Cut()

@@ -73,7 +73,7 @@
 
 /obj/structure/reagent_dispensers/watertank/attackby(obj/item/weapon/W, mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if (istype(W,/obj/item/weapon/wrench))
+	if (iswrench(W))
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
 		modded = modded ? 0 : 1
@@ -91,8 +91,9 @@
 	else
 		STOP_PROCESSING(SSobj, src)
 
-/obj/structure/reagent_dispensers/watertank/Move()
-	if (..() && modded)
+/obj/structure/reagent_dispensers/watertank/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
+	if (. && modded)
 		leak_water(1)
 
 /obj/structure/reagent_dispensers/watertank/proc/leak_water(amount)
@@ -139,13 +140,14 @@
 			overlays = new/list()
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W,/obj/item/weapon/wrench))
+	if (iswrench(W))
 		user.SetNextMove(CLICK_CD_RAPID)
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
 		modded = !modded
 		if (modded)
 			leak_fuel(amount_per_transfer_from_this)
+		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [src.x], [src.y], [src.z] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 	if (istype(W,/obj/item/device/assembly_holder))
 		if (rig)
 			to_chat(user, "\red There is another device in the way.")
@@ -203,8 +205,9 @@
 	..() //extend the zap
 	explode()
 
-/obj/structure/reagent_dispensers/fueltank/Move()
-	if (..() && modded)
+/obj/structure/reagent_dispensers/fueltank/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
+	if (. && modded)
 		leak_fuel(amount_per_transfer_from_this/10.0)
 
 /obj/structure/reagent_dispensers/fueltank/proc/leak_fuel(amount)

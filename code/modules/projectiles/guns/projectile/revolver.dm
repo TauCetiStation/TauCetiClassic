@@ -84,7 +84,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/detective/attackby(obj/item/A, mob/user)
 	..()
-	if(istype(A, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(A))
 		if(magazine.caliber == "38")
 			to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src].</span>")
 			if(magazine.ammo_count())
@@ -242,8 +242,8 @@
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off
 	icon_state = "sawnshotgun"
-	w_class = 3.0
-	slot_flags = SLOT_BELT
+	w_class = ITEM_SIZE_NORMAL
+	slot_flags = SLOT_FLAGS_BELT
 	name = "sawn-off shotgun"
 	desc = "Omar's coming!"
 	short = 1

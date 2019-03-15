@@ -1,3 +1,4 @@
+
 //////////////////////////////////////////////
 ////////////Santa suit & hat//////////////////
 //////////////////////////////////////////////
@@ -27,11 +28,15 @@
 			return 1
 	return 0
 
-/obj/item/clothing/suit/wintercoat/attack_self() //Refactored function for using coat's hood by clicking on it
+/obj/item/clothing/suit/wintercoat/attack_self() // Refactored function for using coat's hood by clicking on it
 
 	if(!can_use(usr))
 		return 0
-
+	if(ishuman(usr))
+		var/mob/living/carbon/human/C = usr
+		if(C.head)
+			to_chat(C, "<span class='warning'>You're wearing something on your head!</span>")
+			return
 	src.hooded = !src.hooded
 
 	if(!src.hooded)
@@ -40,10 +45,9 @@
 	else
 		src.icon_state = "[initial(icon_state)]_t"
 		to_chat(usr, "You toggle on [src]'s hood.")
-
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
-		H.update_hair(0)	//only human type has hair
+		H.update_hair(0) // only human type has hair
 	usr.update_inv_head(0)
 	usr.update_inv_wear_suit()
 
@@ -157,7 +161,7 @@
 		to_chat(user, "You lower the ear flaps on the ushanka.")
 
 /obj/item/clothing/head/santa
-	name = "Ded moroz hat"
+	name = "christmas hat"
 	desc = "Perfect for hot winter in Siberia, da?"
 	icon = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
@@ -165,3 +169,13 @@
 	item_state = "santa"
 	flags_inv = HIDEEARS
 	cold_protection = HEAD
+
+/obj/item/clothing/under/sexy_santa
+	name = "sexy santa suit"
+	desc = "Prepare to jingle all the bells."
+	icon_state = "sexy_santa"
+	item_state = "sexy_santa"
+	item_color = "sexy_santa"
+	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 10, rad = 0)

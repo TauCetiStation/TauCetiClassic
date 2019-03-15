@@ -1,4 +1,4 @@
-//device to take core samples from mineral turfs - used for various types of analysis
+// device to take core samples from mineral turfs - used for various types of analysis
 
 /obj/item/weapon/storage/box/samplebags
 	name = "sample bag box"
@@ -17,11 +17,11 @@
 /obj/item/device/core_sampler
 	name = "core sampler"
 	desc = "Used to extract geological core samples."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "sampler0"
+	icon = 'icons/obj/xenoarchaeology/tools.dmi'
+	icon_state = "sampler_empty"
 	item_state = "sampler"
-	w_class = 1.0
-	//slot_flags = SLOT_BELT
+	w_class = ITEM_SIZE_TINY
+	//slot_flags = SLOT_FLAGS_BELT
 	var/sampled_turf = ""
 	var/num_stored_bags = 10
 	var/obj/item/weapon/evidencebag/filled_bag
@@ -34,13 +34,13 @@
 /obj/item/device/core_sampler/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/evidencebag))
 		if(W.contents.len)
-			to_chat(user, "\red This bag has something inside it!")
+			to_chat(user, "<span class='warning'>This bag has something inside it!</span>")
 		else if(num_stored_bags < 10)
 			qdel(W)
 			num_stored_bags += 1
-			to_chat(user, "\blue You insert the [W] into the core sampler.")
+			to_chat(user, "<span class='notice'>You insert the [W] into the core sampler.</span>")
 		else
-			to_chat(user, "\red The core sampler can not fit any more bags!")
+			to_chat(user, "<span class='warning'>The core sampler can not fit any more bags!</span>")
 	else
 		return ..()
 
@@ -56,13 +56,13 @@
 
 	if(geo_data)
 		if(filled_bag)
-			to_chat(user, "\red The core sampler is full!")
+			to_chat(user, "<span class='warning'>The core sampler is full!</span>")
 		else if(num_stored_bags < 1)
-			to_chat(user, "\red The core sampler is out of sample bags!")
+			to_chat(user, "<span class='warning'>The core sampler is out of sample bags!</span>")
 		else
-			icon_state = "sampler1"
+			icon_state = "sampler"
 
-			//put in a rock sliver
+			// put in a rock sliver
 			var/obj/item/weapon/rocksliver/R = new
 			R.geological_data = geo_data
 
@@ -71,13 +71,13 @@
 			filled_bag.put_item_in(R)
 			num_stored_bags--
 
-			to_chat(user, "\blue You take a core sample of the [item_to_sample].")
+			to_chat(user, "<span class='notice'>You take a core sample of the [item_to_sample].</span>")
 	else
-		to_chat(user, "\red You are unable to take a sample of [item_to_sample].")
+		to_chat(user, "<span class='warning'>You are unable to take a sample of [item_to_sample].</span>")
 
 /obj/item/device/core_sampler/attack_self()
 	if(filled_bag)
-		to_chat(usr, "\blue You eject the full sample bag.")
+		to_chat(usr, "<span class='notice'>You eject the full sample bag.</span>")
 		var/success = 0
 		if(istype(src.loc, /mob))
 			var/mob/M = src.loc
@@ -85,6 +85,7 @@
 		if(!success)
 			filled_bag.loc = get_turf(src)
 		filled_bag = null
-		icon_state = "sampler0"
+		icon_state = "sampler_empty"
+		item_state = "sampler"
 	else
-		to_chat(usr, "\red The core sampler is empty.")
+		to_chat(usr, "<span class='warning'>The core sampler is empty.</span>")

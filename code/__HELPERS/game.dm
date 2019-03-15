@@ -21,19 +21,11 @@
 		return 1
 	return 0
 
-/proc/get_area_master(const/O)
-	var/area/A = get_area(O)
-
-	if (isarea(A))
+/proc/get_area(atom/A)
+	if(isarea(A))
 		return A
-
-/proc/get_area(O)
-	if(isarea(O))
-		return O
-	var/turf/loc = get_turf(O)
-	if(loc)
-		var/area/res = loc.loc
-		. = res
+	var/turf/T = get_turf(A)
+	return T ? T.loc : null
 
 /proc/get_area_name(N) //get area by its name
 	for(var/area/A in all_areas)
@@ -276,39 +268,38 @@
 
 #define SIGN(X) ((X<0)?-1:1)
 
-proc
-	inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
-		var/turf/T
-		if(X1==X2)
-			if(Y1==Y2)
-				return 1 //Light cannot be blocked on same tile
-			else
-				var/s = SIGN(Y2-Y1)
-				Y1+=s
-				while(Y1!=Y2)
-					T=locate(X1,Y1,Z)
-					if(T.opacity)
-						return 0
-					Y1+=s
+/proc/inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
+	var/turf/T
+	if(X1==X2)
+		if(Y1==Y2)
+			return 1 //Light cannot be blocked on same tile
 		else
-			var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
-			var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
-			var/signX = SIGN(X2-X1)
-			var/signY = SIGN(Y2-Y1)
-			if(X1<X2)
-				b+=m
-			while(X1!=X2 || Y1!=Y2)
-				if(round(m*X1+b-Y1))
-					Y1+=signY //Line exits tile vertically
-				else
-					X1+=signX //Line exits tile horizontally
+			var/s = SIGN(Y2-Y1)
+			Y1+=s
+			while(Y1!=Y2)
 				T=locate(X1,Y1,Z)
 				if(T.opacity)
 					return 0
-		return 1
+				Y1+=s
+	else
+		var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
+		var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
+		var/signX = SIGN(X2-X1)
+		var/signY = SIGN(Y2-Y1)
+		if(X1<X2)
+			b+=m
+		while(X1!=X2 || Y1!=Y2)
+			if(round(m*X1+b-Y1))
+				Y1+=signY //Line exits tile vertically
+			else
+				X1+=signX //Line exits tile horizontally
+			T=locate(X1,Y1,Z)
+			if(T.opacity)
+				return 0
+	return 1
 #undef SIGN
 
-proc/isInSight(atom/A, atom/B)
+/proc/isInSight(atom/A, atom/B)
 	var/turf/Aturf = get_turf(A)
 	var/turf/Bturf = get_turf(B)
 
@@ -323,11 +314,11 @@ proc/isInSight(atom/A, atom/B)
 
 /proc/mobs_in_area(area/the_area, client_needed=0, moblist=mob_list)
 	var/list/mobs_found[0]
-	var/area/our_area = get_area_master(the_area)
+	var/area/our_area = get_area(the_area)
 	for(var/mob/M in moblist)
 		if(client_needed && !M.client)
 			continue
-		if(our_area != get_area_master(M))
+		if(our_area != get_area(M))
 			continue
 		mobs_found += M
 	return mobs_found
@@ -498,15 +489,23 @@ proc/isInSight(atom/A, atom/B)
 		return
 	if(M.client.holder)
 		return
-	if(M.client.player_age == 0)
-		var/player_assigned_role = (M.mind.assigned_role ? " ([M.mind.assigned_role])" : "")
-		var/player_byond_profile = "http://www.byond.com/members/[M.ckey]"
 
-		var/msg = {"New player notify
+	var/player_assigned_role = (M.mind.assigned_role ? " ([M.mind.assigned_role])" : "")
+	var/player_byond_profile = "http://www.byond.com/members/[M.ckey]"
+	if(M.client.player_age == 0)
+		var/adminmsg = {"New player notify
 					Player '[M.ckey]' joined to the game as [M.mind.name][player_assigned_role] [ADMIN_FLW(M)] [ADMIN_PP(M)] [ADMIN_VV(M)]
 					Byond profile: <a href='[player_byond_profile]'>open</a>"}
 
-		message_admins(msg)
+		message_admins(adminmsg)
+
+	if((isnum(M.client.player_age) && M.client.player_age < 5) || M.client.player_ingame_age < 600) //less than 5 days on server OR less than 10 hours in game
+		var/mentormsg = {"New player notify
+					Player '[M.key]' joined to the game as [M.mind.name][player_assigned_role] (<a href='byond://?_src_=usr;track=\ref[M]'>FLW</a>)
+					Days on server: [M.client.player_age]; Minutes played: [M.client.player_ingame_age < 120 ? "<span class='alert'>[M.client.player_ingame_age]</span>" : M.client.player_ingame_age]
+					Byond profile: <a href='[player_byond_profile]'>open</a> (can be experienced player from another server)"}
+
+		message_mentors(mentormsg, 1)
 
 // Better get_dir proc
 /proc/get_general_dir(atom/Loc1, atom/Loc2)

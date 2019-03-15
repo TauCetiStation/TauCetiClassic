@@ -9,7 +9,7 @@
  */
 
 
-obj/structure/windoor_assembly
+/obj/structure/windoor_assembly
 	icon = 'icons/obj/doors/windoor.dmi'
 
 	name = "Windoor Assembly"
@@ -27,12 +27,12 @@ obj/structure/windoor_assembly
 	var/secure = 0		//Whether or not this creates a secure windoor
 	var/state = "01"	//How far the door assembly has progressed
 
-obj/structure/windoor_assembly/atom_init(mapload, dir = NORTH)
+/obj/structure/windoor_assembly/atom_init(mapload, dir = NORTH)
 	. = ..()
 	src.ini_dir = src.dir
 	update_nearby_tiles(need_rebuild = 1)
 
-obj/structure/windoor_assembly/Destroy()
+/obj/structure/windoor_assembly/Destroy()
 	density = 0
 	update_nearby_tiles()
 	return ..()
@@ -63,7 +63,7 @@ obj/structure/windoor_assembly/Destroy()
 	if(user.is_busy()) return
 	switch(state)
 		if("01")
-			if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
+			if(iswelder(W) && !anchored )
 				var/obj/item/weapon/weldingtool/WT = W
 				if (WT.remove_fuel(0,user))
 					user.visible_message("[user] dissassembles the windoor assembly.", "You start to dissassemble the windoor assembly.")
@@ -81,7 +81,7 @@ obj/structure/windoor_assembly/Destroy()
 					return
 
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
-			if(istype(W, /obj/item/weapon/wrench) && !anchored)
+			if(iswrench(W) && !anchored)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 				user.visible_message("[user] secures the windoor assembly to the floor.", "You start to secure the windoor assembly to the floor.")
 
@@ -96,7 +96,7 @@ obj/structure/windoor_assembly/Destroy()
 						src.name = "Anchored Windoor Assembly"
 
 			//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
-			else if(istype(W, /obj/item/weapon/wrench) && anchored)
+			else if(iswrench(W) && anchored)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 				user.visible_message("[user] unsecures the windoor assembly to the floor.", "You start to unsecure the windoor assembly to the floor.")
 
@@ -130,7 +130,7 @@ obj/structure/windoor_assembly/Destroy()
 						src.name = "Secure Windoor Assembly"
 
 			//Adding cable to the assembly. Step 5 complete.
-			else if(istype(W, /obj/item/stack/cable_coil) && anchored)
+			else if(iscoil(W) && anchored)
 				user.visible_message("[user] wires the windoor assembly.", "You start to wire the windoor assembly.")
 
 				if(do_after(user, 40, target = src))
@@ -151,7 +151,7 @@ obj/structure/windoor_assembly/Destroy()
 		if("02")
 
 			//Removing wire from the assembly. Step 5 undone.
-			if(istype(W, /obj/item/weapon/wirecutters) && !src.electronics)
+			if(iswirecutter(W) && !src.electronics)
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 				user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
 
@@ -187,7 +187,7 @@ obj/structure/windoor_assembly/Destroy()
 						AE.loc = src.loc
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
-			else if(istype(W, /obj/item/weapon/screwdriver))
+			else if(isscrewdriver(W))
 				if(!electronics)
 					return
 
@@ -214,7 +214,7 @@ obj/structure/windoor_assembly/Destroy()
 
 
 			//Crowbar to complete the assembly, Step 7 complete.
-			else if(istype(W, /obj/item/weapon/crowbar))
+			else if(iscrowbar(W))
 				if(!src.electronics)
 					to_chat(usr, "\red The assembly is missing electronics.")
 					return

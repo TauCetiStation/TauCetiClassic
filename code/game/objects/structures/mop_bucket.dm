@@ -11,6 +11,11 @@
 /obj/structure/mopbucket/atom_init()
 	create_reagents(100)
 	. = ..()
+	mopbucket_list += src
+
+/obj/structure/mopbucket/Destroy()
+	mopbucket_list -= src
+	return ..()
 
 
 /obj/structure/mopbucket/examine(mob/user)

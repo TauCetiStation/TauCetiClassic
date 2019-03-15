@@ -5,7 +5,7 @@
 	icon_state = "airbag"
 	item_state = "syringe_kit"
 	w_class = ITEM_SIZE_SMALL
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 
 /obj/item/airbag/proc/deploy(mob/user)
 	user.drop_from_inventory(src, get_turf(src))

@@ -45,7 +45,7 @@
 	if(href_list["copy"])
 		if(copy)
 			for(var/i = 1 to copies)
-				if(toner > 0)
+				if(toner > 0 && copy)
 					copy(copy)
 					sleep(15)
 				else
@@ -53,14 +53,14 @@
 			updateUsrDialog()
 		else if(photocopy)
 			for(var/i = 1 to copies)
-				if(toner > 0)
+				if(toner > 0 && photocopy)
 					photocopy(photocopy)
 					sleep(15)
 				else
 					break
 		else if(bundle)
 			for(var/i = 1 to copies)
-				if(toner <= 0)
+				if(toner <= 0 || !bundle)
 					break
 				var/obj/item/weapon/paper_bundle/p = new /obj/item/weapon/paper_bundle (src)
 				var/j = 0
@@ -124,7 +124,6 @@
 			else
 				p.desc += " - Copied by [tempAI.name]"
 			toner -= 5
-			sleep(15)
 
 	updateUsrDialog()
 
@@ -166,7 +165,7 @@
 			updateUsrDialog()
 		else
 			to_chat(user, "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>")
-	else if(istype(O, /obj/item/weapon/wrench))
+	else if(iswrench(O))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
@@ -231,6 +230,7 @@
 		img.pixel_y = copy.offset_y[i]
 		P.overlays += img
 	P.updateinfolinks()
+	P.update_icon()
 	toner--
 	return P
 

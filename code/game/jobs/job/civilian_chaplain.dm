@@ -16,14 +16,14 @@
 /datum/job/chaplain/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible(H) //BS12 EDIT
-	H.equip_to_slot_or_del(B, slot_l_hand)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
+	H.equip_to_slot_or_del(B, SLOT_L_HAND)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
 
 	if(visualsOnly)
 		return
 
-	H.equip_to_slot_or_del(new /obj/item/device/pda/chaplain(H), slot_belt)
+	H.equip_to_slot_or_del(new /obj/item/device/pda/chaplain(H), SLOT_BELT)
 
 	spawn(0)
 		var/religion_name = "Christianity"

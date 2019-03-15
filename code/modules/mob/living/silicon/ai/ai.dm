@@ -1,7 +1,6 @@
 #define AI_CHECK_WIRELESS 1
 #define AI_CHECK_RADIO 2
 
-var/list/ai_list = list()
 var/list/ai_verbs_default = list(
 //	/mob/living/silicon/ai/proc/ai_recall_shuttle,
 	/mob/living/silicon/ai/proc/ai_goto_location,
@@ -99,7 +98,7 @@ var/list/ai_verbs_default = list(
 	var/pickedName = null
 	while(!pickedName)
 		pickedName = pick(ai_names)
-		for (var/mob/living/silicon/ai/A in mob_list)
+		for (var/mob/living/silicon/ai/A in ai_list)
 			if (A.real_name == pickedName && possibleNames.len > 1) //fixing the theoretically possible infinite loop
 				possibleNames -= pickedName
 				pickedName = null
@@ -367,7 +366,7 @@ var/list/ai_verbs_default = list(
 
 	// hack to display shuttle timer
 	if(SSshuttle.online)
-		var/obj/machinery/computer/communications/C = locate() in machines
+		var/obj/machinery/computer/communications/C = locate() in communications_list
 		if(C)
 			C.post_status("shuttle")
 
@@ -501,7 +500,7 @@ var/list/ai_verbs_default = list(
 		statelaws()
 
 	if (href_list["track"])
-		var/mob/target = locate(href_list["track"]) in mob_list
+		var/mob/target = locate(href_list["track"]) in living_list
 		if(target && (!istype(target, /mob/living/carbon/human) || html_decode(href_list["trackname"]) == target:get_face_name()))
 			ai_actual_track(target)
 		else
@@ -509,8 +508,8 @@ var/list/ai_verbs_default = list(
 			return
 
 	else if (href_list["faketrack"])
-		var/mob/target = locate(href_list["track"]) in mob_list
-		var/mob/living/silicon/ai/A = locate(href_list["track2"]) in mob_list
+		var/mob/target = locate(href_list["track"]) in living_list
+		var/mob/living/silicon/ai/A = locate(href_list["track2"]) in ai_list
 		if(A && target)
 
 			A.cameraFollow = target
@@ -838,7 +837,7 @@ var/list/ai_verbs_default = list(
 
 
 /mob/living/silicon/ai/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		if(user.is_busy()) return
 		if(anchored)
 			user.visible_message("\blue \The [user] starts to unbolt \the [src] from the plating...")

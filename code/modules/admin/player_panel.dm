@@ -71,7 +71,7 @@
 
 					body += "</td><td align='center'>";
 
-					body += "<font size='2'><b>"+job+" "+name+"</b><br><b>Real name "+real_name+"</b><br><b>Played by "+key+" ("+ip+")</b></font>"
+					body += "<font size='2'><b>"+job+" "+name+"</b><br><b>Real name "+real_name+"</b><br><b>Played by "+key+" </b></font>"
 
 					body += "</td><td align='center'>";
 
@@ -510,7 +510,7 @@
 			dat += "<br><tr><td><B>Enthrall Progress(Must be alive):</B></td><td></td></tr>"
 			var/thrall = 0
 			var/mob/Count
-			for(Count in living_mob_list)
+			for(Count in alive_mob_list)
 				if(is_thrall(Count))
 					thrall++
 			dat += "<tr><td>[thrall] of 15</td></tr>"

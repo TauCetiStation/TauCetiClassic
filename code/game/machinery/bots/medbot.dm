@@ -56,7 +56,7 @@
 	var/build_step = 0
 	var/created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
 	var/skin = null //Same as medbot, set to tox or ointment for the respective kits.
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/weapon/firstaid_arm_assembly/atom_init()
 	..()
@@ -209,7 +209,7 @@
 
 	else
 		..()
-		if (health < maxhealth && !istype(W, /obj/item/weapon/screwdriver) && W.force)
+		if (health < maxhealth && !isscrewdriver(W) && W.force)
 			step_to(src, (get_step_away(src,user)))
 
 /obj/machinery/bot/medbot/Emag(mob/user)
@@ -486,7 +486,7 @@
 		if (!istype(D, /obj/machinery/door/firedoor) && D.check_access(src.botcard) && !istype(D,/obj/machinery/door/poddoor))
 			D.open()
 			src.frustration = 0
-	else if ((istype(M, /mob/living/)) && (!src.anchored))
+	else if ((istype(M, /mob/living)) && (!src.anchored))
 		src.loc = M.loc
 		src.frustration = 0
 	return

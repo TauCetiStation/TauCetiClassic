@@ -50,7 +50,7 @@
 	broadcast() // Bzzt
 /*
 /obj/machinery/media/transmitter/broadcast/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
+	if(ismultitool(W))
 		attack_hand(user)
 		return 1
 
@@ -58,7 +58,7 @@
 	// You need a multitool to use this, or be silicon
 	if(!issilicon(user) && !isobserver(user))
 		// istype returns false if the value is null
-		if(!istype(user.get_active_hand(), /obj/item/device/multitool))
+		if(!ismultitool(user.get_active_hand()))
 			return
 
 	if(stat & (BROKEN|NOPOWER))

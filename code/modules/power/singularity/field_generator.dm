@@ -103,7 +103,7 @@ field_generator power level display
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
 	if(active != FG_OFFLINE)
 		to_chat(user, "<span class='red'>The [src] needs to be off.</span>")
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(iswrench(W))
 		switch(state)
 			if(FG_UNSECURED)
 				state = FG_SECURED
@@ -123,7 +123,7 @@ field_generator power level display
 				anchored = FALSE
 			if(FG_WELDED)
 				to_chat(user, "<span class='red'>The [src] needs to be unwelded from the floor.</span>")
-	else if(istype(W, /obj/item/weapon/weldingtool))
+	else if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		switch(state)
 			if(FG_UNSECURED)
@@ -329,7 +329,7 @@ field_generator power level display
 
 /obj/machinery/field_generator/proc/warn_admins()
 	var/temp = TRUE //stops spam
-	for(var/obj/singularity/O in machines)
+	for(var/obj/singularity/O in poi_list)
 		if(O.last_warning && temp)
 			if((world.time - O.last_warning) > 50) //to stop message-spam
 				temp = FALSE

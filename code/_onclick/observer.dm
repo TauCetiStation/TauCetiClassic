@@ -86,15 +86,9 @@
 	if(target)
 		user.loc = get_turf(target)
 
-/obj/machinery/gateway/centerstation/attack_ghost(mob/user)
-	if(awaygate)
-		user.loc = awaygate.loc
-	else
-		to_chat(user, "[src] has no destination.")
-
-/obj/machinery/gateway/centeraway/attack_ghost(mob/user)
-	if(stationgate)
-		user.loc = stationgate.loc
+/obj/machinery/gateway/center/attack_ghost(mob/user)
+	if(destination)
+		user.loc = destination.loc
 	else
 		to_chat(user, "[src] has no destination.")
 

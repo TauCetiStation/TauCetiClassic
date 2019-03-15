@@ -18,8 +18,7 @@
 	name = "jungle"
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "area"
-	dynamic_lighting = 0
-	luminosity = 1
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 //randomly spawns, will create paths around the map
 /obj/effect/landmark/path_waypoint
@@ -273,7 +272,7 @@
 			cur_turf = get_step(cur_turf, cur_dir)
 
 			//if we're not a jungle turf, get back to what we were doing
-			if(!istype(cur_turf, /turf/unsimulated/jungle/))
+			if(!istype(cur_turf, /turf/unsimulated/jungle))
 				cur_dir = get_dir(cur_turf, target_turf)
 				cur_turf = get_step(cur_turf, cur_dir)
 				continue

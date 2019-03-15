@@ -110,7 +110,7 @@ Class Procs:
 	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
 	var/uid
 	var/manual = 0
-	var/global/gl_uid = 1
+	var/static/gl_uid = 1
 	var/panel_open = 0
 	var/state_open = 0
 	var/mob/living/occupant = null
@@ -275,7 +275,7 @@ Class Procs:
 	add_fingerprint(usr)
 
 	var/area/A = get_area(src)
-	A.master.powerupdate = 1
+	A.powerupdate = 1
 
 	return TRUE
 
@@ -333,14 +333,15 @@ Class Procs:
 	if(hasvar(src, "wires"))              // Lets close wires window if panel is closed.
 		var/datum/wires/DW = vars["wires"] // Wires and machinery that uses this feature actually should be refactored.
 		if(istype(DW) && !DW.can_use(user)) // Many of them do not use panel_open var.
-			DW.Topic("close=1", list("close"="1"))
+			user << browse(null, "window=wires")
+			user.unset_machine(src)
 	if((allowed_checks & ALLOWED_CHECK_A_HAND) && !emagged && !allowed(user))
 		allowed_fail(user)
 		to_chat(user, "<span class='warning'>Access Denied.</span>")
 		return 1
 
 	var/area/A = get_area(src)
-	A.master.powerupdate = 1 // <- wtf is this var and its comments...
+	A.powerupdate = 1 // <- wtf is this var and its comments...
 
 	interact(user)
 	return 0
