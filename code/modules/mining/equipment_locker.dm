@@ -494,12 +494,27 @@
 					shake_camera(L, 20, 1)
 					spawn(20)
 						if(L)
-							L.visible_message("<span class='danger'>[L.name] vomits from travelling through the [src.name]!</span>", "<span class='userdanger'>You throw up from travelling through the [src.name]!</span>")
+							var/mob/living/carbon/human/H = L
+							if(istype(H.head, /obj/item/clothing/head/helmet/space))
+								L.visible_message("<B>[H.name]</B> <span class='danger'>vomits from travelling through the [src.name]!</span>","<span class='warning'>You threw up in your helmet from travelling through the [src.name]! Damn it, what could be worse!</span>")
+								H.losebreath += 25
+								H.eye_blurry = max(2, H.eye_blurry)
+								if(H.gender == FEMALE)
+									H.vomitsound = "sound/misc/frigvomit.ogg"
+								else
+									H.vomitsound = "sound/misc/mrigvomit.ogg"
+							else
+								H.visible_message("<B>[H.name]</B> <span class='danger'>vomits from travelling through the [src.name]!</span>", "<span class='warning'>You throw up from travelling through the [src.name]!</span>")
+								if(H.gender == FEMALE)
+									H.vomitsound = "femalevomit"
+								else
+									H.vomitsound = "malevomit"
+							var/turf/T = get_turf(L)
+							if(istype(T, /turf/simulated))
+								T.add_vomit_floor(host)
+							playsound(L.loc, H.vomitsound, 90, 0)
 							L.nutrition -= 20
 							L.adjustToxLoss(-3)
-							var/turf/T = get_turf(L)
-							T.add_vomit_floor(L)
-							playsound(L, 'sound/effects/splat.ogg', 50, 1)
 
 
 /**********************Resonator**********************/

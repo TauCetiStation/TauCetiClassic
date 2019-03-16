@@ -606,13 +606,33 @@
 
 	if(B.chemicals >= 100)
 		to_chat(src, "<span class='danger'>Your host twitches and quivers as you rapdly excrete several larvae from your sluglike body.</span>")
-		visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>")
+		visible_message("<B>[src]</B> <span class='danger'>heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>")
 		B.chemicals -= 100
-
-		new /obj/effect/decal/cleanable/vomit(get_turf(src))
-		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
+		var/turf/T = get_turf(src)
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(istype(H.head, /obj/item/clothing/head/helmet/space))
+				src.visible_message("<B>[src]</B> <span class='danger'>throws up in their helmet! Something's coming out of their suit's air vents</span>","<span class='warning'>You threw up in your helmet and you feel a disturbance in your respiratory system, it seems something inside. DAMN IT, what could be worse!</span>")
+				src.losebreath += 25
+				H.eye_blurry = max(2, H.eye_blurry)
+				if(H.gender == FEMALE)
+					H.vomitsound = "sound/misc/frigvomit.ogg"
+				else
+					H.vomitsound = "sound/misc/mrigvomit.ogg"
+			else
+				H.visible_message("<B>[src]</B> <span class='danger'>heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>","<span class='warning'>You throw up!</span>")
+				if(H.gender == FEMALE)
+					H.vomitsound = "femalevomit"
+				else
+					H.vomitsound = "malevomit"
+				if(istype(T, /turf/simulated))
+					T.add_vomit_floor(src)
+		else
+			playsound("sound/effects/splat.ogg", 100, 1)
+			if(istype(T, /turf/simulated))
+				T.add_vomit_floor(src)
+			src.visible_message("<B>[src]</B> <span class='danger'>heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>","<span class='warning'>You throw up!</span>")
 		new /mob/living/simple_animal/borer(get_turf(src))
-
 	else
 		to_chat(src, "<span class='info'>You do not have enough chemicals stored to reproduce.</span>")
 		return
