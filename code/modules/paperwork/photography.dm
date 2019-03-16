@@ -340,8 +340,8 @@
 	var/icon/pc = icon('icons/obj/bureaucracy.dmi', "photo")
 	small_img.Scale(8, 8)
 	tiny_img.Scale(4, 4)
-	ic.Blend(small_img,ICON_OVERLAY, 10, 13)
-	pc.Blend(tiny_img,ICON_OVERLAY, 13, 13)
+	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
+	pc.Blend(tiny_img,ICON_OVERLAY, 12, 19)
 
 	var/datum/picture/P = new()
 	P.fields["author"] = user
