@@ -78,7 +78,6 @@
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
 	var/debug= 0
 	var/autoflag= 0		// 0 = off, 1= eqp and lights off, 2 = eqp off, 3 = all on.
-//	luminosity = 1
 	var/has_electronics = 0 // 0 - none, 1 - plugged in, 2 - secured by screwdriver
 	var/overload = 1 //used for the Blackout malf module
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
@@ -117,7 +116,7 @@
 	if (building == 0)
 		init()
 	else
-		area = loc.loc:master
+		area = get_area(src)
 		area.apc = src
 		opened = 1
 		operating = 0

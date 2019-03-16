@@ -24,13 +24,11 @@
 	light_color = "#ff0000"
 	light_power = 2
 	light_range = 6
-//	luminosity = 5
 
 /obj/structure/cult/tome
 	name = "Desk"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."
 	icon_state = "tomealtar"
-//	luminosity = 5
 
 //sprites for this no longer exist	-Pete
 //(they were stolen from another game anyway)

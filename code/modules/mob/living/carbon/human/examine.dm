@@ -138,8 +138,8 @@
 			msg += "<span class='wet'>[t_He] [t_has] [bicon(gloves)] [gloves.gender==PLURAL?"some":"a"] wet [gloves.name] on [t_his] hands!</span>\n"
 		else
 			msg += "[t_He] [t_has] [bicon(gloves)] \a [gloves] on [t_his] hands.\n"
-	else if(hand_dirt_color)
-		msg += "<span class='warning'>[t_He] [t_has] [hand_dirt_color.name]-stained hands!</span>\n"
+	else if(hand_dirt_datum)
+		msg += "<span class='warning'>[t_He] [t_has] [hand_dirt_datum.name]-stained hands!</span>\n"
 
 	//handcuffed?
 	if(handcuffed)

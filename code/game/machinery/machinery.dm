@@ -333,7 +333,8 @@ Class Procs:
 	if(hasvar(src, "wires"))              // Lets close wires window if panel is closed.
 		var/datum/wires/DW = vars["wires"] // Wires and machinery that uses this feature actually should be refactored.
 		if(istype(DW) && !DW.can_use(user)) // Many of them do not use panel_open var.
-			DW.Topic("close=1", list("close"="1"))
+			user << browse(null, "window=wires")
+			user.unset_machine(src)
 	if((allowed_checks & ALLOWED_CHECK_A_HAND) && !emagged && !allowed(user))
 		allowed_fail(user)
 		to_chat(user, "<span class='warning'>Access Denied.</span>")

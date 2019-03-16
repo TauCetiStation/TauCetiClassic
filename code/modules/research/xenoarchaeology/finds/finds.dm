@@ -329,11 +329,10 @@
 			item_type = new_item.name
 			apply_material_decorations = 0
 		if(22)
-			if(prob(50))
-				new_item = new /obj/item/weapon/shard(src.loc)
-			else
-				new_item = new /obj/item/weapon/shard/phoron(src.loc)
 			apply_prefix = 0
+			new_item = new /obj/item/clothing/glasses/hud/mining/ancient(src.loc)
+			new_item.name = pick("strange looking hud", "strange looking glasses")
+			new_item.desc = "It glows faintly."
 			apply_image_decorations = 0
 			apply_material_decorations = 0
 		if(23)
@@ -512,6 +511,7 @@
 			additional_desc = "This device is made of metal, emits a strange purple formation of unknown origin."
 			apply_image_decorations = 0
 			apply_material_decorations = 0
+
 	var/decorations = ""
 	if(apply_material_decorations)
 		source_material = pick("cordite","quadrinium","steel","titanium","aluminium","ferritic-alloy","plasteel","duranium")

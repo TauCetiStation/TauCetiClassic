@@ -37,6 +37,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/shuttle
 	requires_power = 0
 	valid_territory = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
@@ -64,6 +65,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/shuttle/escape/centcom
 	name = "Emergency Shuttle Centcom"
 	icon_state = "shuttle"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/shuttle/escape/transit // the area to pass through for 3 minute transit
 	name = "Emergency Shuttle Transit"
@@ -181,12 +183,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Vox Skipjack"
 	icon_state = "yellow"
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/start            // will be unused once kurper gets his login interface patch done
 	name = "start area"
 	icon_state = "start"
 	requires_power = 0
-	dynamic_lighting = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	has_gravity = 1
 
 // === end remove
@@ -202,6 +205,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Centcom"
 	icon_state = "centcom"
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/centcom/control
 	name = "Centcom Control"
@@ -243,6 +247,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Syndicate Mothership"
 	icon_state = "syndie-ship"
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/syndicate_mothership/control
 	name = "Syndicate Control Room"
@@ -275,6 +280,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Thunderdome"
 	icon_state = "thunder"
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/tdome/tdome1
 	name = "Thunderdome (Team 1)"
@@ -300,6 +306,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Syndicate Station"
 	icon_state = "yellow"
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/syndicate_station/start
 	name = "Syndicate Forward Operating Base"
@@ -342,42 +349,50 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Abductor Ship"
 	icon_state = "yellow"
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/wizard_station
 	name = "Wizard's Den"
 	icon_state = "yellow"
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/vox_station/transit
 	name = "hyperspace"
 	icon_state = "shuttle"
 	requires_power = 0
 	parallax_movedir = NORTH
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/vox_station/southwest_solars
 	name = "Aft port solars"
 	icon_state = "southwest"
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/vox_station/northwest_solars
 	name = "Fore port solars"
 	icon_state = "northwest"
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/vox_station/northeast_solars
 	name = "Fore starboard solars"
 	icon_state = "northeast"
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/vox_station/southeast_solars
 	name = "Aft starboard solars"
 	icon_state = "southeast"
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/vox_station/mining
 	name = "Nearby mining asteroid"
 	icon_state = "north"
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 
 //PRISON
@@ -396,41 +411,45 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance
 	valid_territory = 0
 
-/area/maintenance/fpmaint
+/area/maintenance/eva
 	name = "EVA Maintenance"
 	icon_state = "fpmaint"
 
-/area/maintenance/fsmaint
+/area/maintenance/dormitory
 	name = "Dormitory Maintenance"
 	icon_state = "fsmaint"
 
-/area/maintenance/fsmaint2
+/area/maintenance/chapel
 	name = "Chapel Maintenance"
 	icon_state = "fsmaint"
 
-/area/maintenance/asmaint
+/area/maintenance/medbay
 	name = "Medbay Maintenance"
 	icon_state = "asmaint"
 
-/area/maintenance/asmaint2
+/area/maintenance/science
 	name = "Science Maintenance"
 	icon_state = "asmaint"
 
-/area/maintenance/maintcentral
+/area/maintenance/bridge
 	name = "Bridge Maintenance"
 	icon_state = "maintcentral"
 
-/area/maintenance/port
+/area/maintenance/cargo
 	name = "Cargo Maintenance"
 	icon_state = "pmaint"
 
-/area/maintenance/aft
+/area/maintenance/engineering
 	name = "Engineering Maintenance"
 	icon_state = "amaint"
 
 /area/maintenance/incinerator
 	name = "Incinerator"
 	icon_state = "disposal"
+
+/area/maintenance/atmos
+	name = "Atmospherics Maintenance"
+	icon_state = "amaint"
 
 /area/maintenance/disposal
 	name = "Waste Disposal"
@@ -585,7 +604,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/holodeck
 	name = "Holodeck"
 	icon_state = "Holodeck"
-	dynamic_lighting = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /area/holodeck/alphadeck
 	name = "Holodeck Alpha"
@@ -669,6 +688,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/solar
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
 	valid_territory = 0
 
 /area/solar/auxport
@@ -742,9 +762,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Medbay is a large area, these additional areas help level out APC load.
 /area/medical/hallway
 	icon_state = "medbay2"
-
-/area/medical/hallway/outbranch
-	icon_state = "medbay3"
 
 /area/medical/reception
 	name = "Medbay Reception"
@@ -1133,6 +1150,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/awaymission
 	name = "Strange Location"
 	icon_state = "away"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/awaymission/example
 	name = "Strange Station"
@@ -1253,7 +1271,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/awaymission/beach
 	name = "Beach"
 	icon_state = "null"
-	dynamic_lighting = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	requires_power = 0
 	var/sound/mysound = null
 /* hello copypasta of area/beach (this idea with this area is Eeeeuuuuuwwww)
@@ -1370,7 +1388,7 @@ var/list/the_station_areas = list (
 /area/beach
 	name = "Keelin's private beach"
 	icon_state = "null"
-	dynamic_lighting = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	requires_power = 0
 	var/sound/mysound = null
 /* hello copypasta of area/away_mission/beach

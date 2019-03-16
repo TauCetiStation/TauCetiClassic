@@ -173,6 +173,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	CHANGELING_STATPANEL_POWERS(null)
 
+	if(istype(wear_suit, /obj/item/clothing/suit/space/rig/))
+		var/obj/item/clothing/suit/space/rig/rig = wear_suit
+		rig_setup_stat(rig)
+
 /mob/living/carbon/human/ex_act(severity)
 	if(!blinded)
 		flash_eyes()
@@ -1443,7 +1447,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(blood_DNA[M.dna.unique_enzymes])
 		return 0 //already bloodied with this blood. Cannot add more.
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-	hand_dirt_color = new/datum/dirt_cover/(dirt_overlay)
+	hand_dirt_datum = new(dirt_overlay)
 
 	src.update_inv_gloves()	//handles bloody hands overlays and updating
 	verbs += /mob/living/carbon/human/proc/bloody_doodle
@@ -1632,7 +1636,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			to_chat(src, "<span class='warning'>You ran out of blood to write with!</span>")
 
 		var/obj/effect/decal/cleanable/blood/writing/W = new(T)
-		W.basedatum = new/datum/dirt_cover(hand_dirt_color)
+		W.basedatum = new(hand_dirt_datum)
 		W.update_icon()
 		W.message = message
 		W.add_fingerprint(src)
@@ -1854,11 +1858,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(istype(IO))
 			return 1
 	return 0
-
-/mob/living/carbon/human/slip(slipped_on, stun_duration=4, weaken_duration=2)
-	if(shoes && (shoes.flags & NOSLIP))
-		return FALSE
-	return ..(slipped_on,stun_duration, weaken_duration)
 
 /mob/living/carbon/human/is_nude(maximum_coverage = 0, pos_slots = list(src.head, src.shoes, src.neck, src.mouth, src.wear_suit, src.w_uniform, src.belt, src.gloves, src.glasses)) // Expands our pos_slots arg.
 	return ..()

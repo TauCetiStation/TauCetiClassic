@@ -511,7 +511,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	name = "50 wooden planks"
 	contains = list(/obj/item/stack/sheet/wood)
 	amount = 50
-	cost = 1000
+	cost = 1500
 	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Wooden planks crate"
 	group = "Engineering"
@@ -620,7 +620,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	name = "Emitter crate"
 	contains = list(/obj/machinery/power/emitter,
 					/obj/machinery/power/emitter)
-	cost = 1000
+	cost = 1500
 	crate_type = /obj/structure/closet/crate/secure/engisec
 	crate_name = "Emitter crate"
 	access = access_ce
@@ -636,6 +636,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 /datum/supply_pack/engine/sing_gen
 	name = "Singularity Generator crate"
 	contains = list(/obj/machinery/the_singularitygen)
+	cost = 2000
 	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Singularity Generator crate"
 

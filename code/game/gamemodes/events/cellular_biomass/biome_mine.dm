@@ -50,7 +50,6 @@
 /obj/structure/cellular_biomass/core/mine/atom_init()
 	. = ..()
 	icon_state = "core"
-	set_light(luminosity)
 
 /obj/structure/cellular_biomass/lair/mine/atom_init(mapload)
 	icon_state = "lair"

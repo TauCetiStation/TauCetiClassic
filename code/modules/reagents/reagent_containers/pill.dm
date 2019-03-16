@@ -227,7 +227,7 @@
 
 /obj/item/weapon/reagent_containers/pill/dexalin_plus/atom_init()
 	. = ..()
-	reagents.add_reagent("dexalin_plus", 10)
+	reagents.add_reagent("dexalinp", 10)
 
 /obj/item/weapon/reagent_containers/pill/bicaridine
 	name = "Bicaridine pill (20u)"
