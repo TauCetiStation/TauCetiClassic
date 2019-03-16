@@ -157,36 +157,28 @@
 	return 1
 
 /mob/living/simple_animal/proc/handle_automated_speech()
-	if(!(rand(0,200) < speak_chance))
-		return
-
 	if(!speak_chance || !(speak.len || emote_hear.len || emote_see.len))
 		return
 
 	if(client && !(ckey == null))
 		return
 
-	// All we're doing here is seeing if there's any CLIENTS nearby.
-	var/someone_in_earshot = FALSE
-	for(var/mob/M in get_hearers_in_view(7, src))
-		if(M.client)
-			someone_in_earshot = TRUE
-			break
+	if(!(rand(0,200) < speak_chance))
+		return
 
-	if(someone_in_earshot)
-		var/mode = pick(
-		speak.len;      1,
-		emote_hear.len; 2,
-		emote_see.len;  3
-		)
+	var/mode = pick(
+	speak.len;      1,
+	emote_hear.len; 2,
+	emote_see.len;  3
+	)
 
-		switch(mode)
-			if(1)
-				say(pick(speak))
-			if(2)
-				emote(pick(emote_hear), 2)
-			if(3)
-				emote(pick(emote_see), 1)
+	switch(mode)
+		if(1)
+			say(pick(speak))
+		if(2)
+			emote(pick(emote_hear), 2)
+		if(3)
+			emote(pick(emote_see), 1)
 
 /mob/living/simple_animal/gib()
 	if(icon_gib)
@@ -195,7 +187,6 @@
 		for(var/path in butcher_results)
 			for(var/i = 0 to butcher_results[path])
 				new path(loc)
-	sleep(3) // wait for the animation to play
 	..()
 
 /mob/living/simple_animal/emote(act, type, desc)
