@@ -287,7 +287,7 @@
 	if(M.Victim)
 		return // can't attack while eating!
 
-	visible_message("<span class='warning'><B>The [M.name] glomps [src]!</B></span>")
+	visible_message("<span class='danger'>The [M.name] glomps [src]!</span>")
 
 	var/damage = rand(1, 3)
 
