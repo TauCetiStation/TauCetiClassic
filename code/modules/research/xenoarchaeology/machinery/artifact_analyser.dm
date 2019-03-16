@@ -123,7 +123,7 @@
 						A.being_used = 1
 
 				if(artifact_in_use)
-					src.visible_message("<b>[name]</b> states, \"Cannot harvest. Too much interference.\"")
+					src.visible_message("<b>[name]</b> states, \"Cannot scan. Too much interference.\"")
 					playsound(src, 'sound/machines/buzz-two.ogg', 20, 1)
 				else
 					scanned_object = O
@@ -176,97 +176,18 @@
 		if(/obj/machinery/power/crystal)
 			return "Crystal formation - Pseudo organic crystalline matrix, unlikely to have formed naturally. No known technology exists to synthesize this exact composition. \
 			Attention: energetic excitement is noticed. The appearance of current is possible. Connect the crystal to the network, using wrench and wires on it. Make sure there is a cable underneath."
-		if(/obj/machinery/artifact)
-			// the fun one
+		if(/obj/machinery/artifact) // a fun one
 			var/obj/machinery/artifact/A = scanned_obj
-			var/out = "Anomalous alien device - Composed of an unknown alloy, "
+			var/out = "Anomalous alien device - composed of an unknown alloy.<br><br>"
 
-			// primary effect
 			if(A.my_effect)
-				// what kind of effect the artifact has
-				switch(A.my_effect.effect_type)
-					if(1)
-						out += "concentrated energy emissions"
-					if(2)
-						out += "intermittent psionic wavefront"
-					if(3)
-						out += "electromagnetic energy"
-					if(4)
-						out += "high frequency particles"
-					if(5)
-						out += "organically reactive exotic particles"
-					if(6)
-						out += "interdimensional/bluespace? phasing"
-					if(7)
-						out += "atomic synthesis"
-					else
-						out += "low level energy emissions"
-				out += " have been detected "
+				out += A.my_effect.getDescription()
 
-				// how the artifact does it's effect
-				switch(A.my_effect.effect)
-					if(1)
-						out += " emitting in an ambient energy field."
-					if(2)
-						out += " emitting in periodic bursts."
-					else
-						out += " interspersed throughout substructure and shell."
-
-				if(A.my_effect.trigger >= 0 && A.my_effect.trigger <= 4)
-					out += " Activation index involves physical interaction with artifact surface."
-				else if(A.my_effect.trigger >= 5 && A.my_effect.trigger <= 8)
-					out += " Activation index involves energetic interaction with artifact surface."
-				else if(A.my_effect.trigger >= 9 && A.my_effect.trigger <= 12)
-					out += " Activation index involves precise local atmospheric conditions."
-				else
-					out += " Unable to determine any data about activation trigger."
-
-			// secondary:
 			if(A.secondary_effect && A.secondary_effect.activated)
-				// sciencey words go!
-				out += "<br><br>Warning, internal scans indicate ongoing [pick("subluminous","subcutaneous","superstructural")] activity operating \
-				independantly from primary systems. Auxiliary activity involves "
+				out += "<br><br>Internal scans indicate ongoing secondary activity operating independently from primary systems.<br><br>"
+				out += A.secondary_effect.getDescription()
 
-				// what kind of effect the artifact has
-				switch(A.secondary_effect.effect_type)
-					if(1)
-						out += "concentrated energy emissions"
-					if(2)
-						out += "intermittent psionic wavefront"
-					if(3)
-						out += "electromagnetic energy"
-					if(4)
-						out += "high frequency particles"
-					if(5)
-						out += "organically reactive exotic particles"
-					if(6)
-						out += "interdimensional/bluespace? phasing"
-					if(7)
-						out += "atomic synthesis"
-					else
-						out += "low level radiation"
-
-				// how the artifact does it's effect
-				switch(A.secondary_effect.effect)
-					if(1)
-						out += " emitting in an ambient energy field."
-					if(2)
-						out += " emitting in periodic bursts."
-					else
-						out += " interspersed throughout substructure and shell."
-
-				if(A.secondary_effect.trigger >= 0 && A.secondary_effect.trigger <= 4)
-					out += " Activation index involves physical interaction with artifact surface, but subsystems indicate \
-					anomalous interference with standard attempts at triggering."
-				else if(A.secondary_effect.trigger >= 5 && A.secondary_effect.trigger <= 8)
-					out += " Activation index involves energetic interaction with artifact surface, but subsystems indicate \
-					anomalous interference with standard attempts at triggering."
-				else if(A.secondary_effect.trigger >= 9 && A.secondary_effect.trigger <= 12)
-					out += " Activation index involves precise local atmospheric conditions, but subsystems indicate \
-					anomalous interference with standard attempts at triggering."
-				else
-					out += " Unable to determine any data about activation trigger."
 			return out
 		else
 			// it was an ordinary item
-			return "[scanned_obj.name] - Mundane application, composed of carbo-ferritic alloy composite."
+			return "[scanned_obj.name] - Mundane application."

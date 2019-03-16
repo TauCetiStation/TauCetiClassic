@@ -1,6 +1,6 @@
 
 /datum/artifact_effect/heal
-	effect_name = "heal"
+	effect_name = "Heal"
 	effect_type = 5
 
 /datum/artifact_effect/heal/DoEffectTouch(mob/toucher)

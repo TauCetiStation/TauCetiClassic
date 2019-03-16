@@ -1,6 +1,6 @@
 
 /datum/artifact_effect/stun
-	effect_name = "stun"
+	effect_name = "Stun"
 
 /datum/artifact_effect/stun/New()
 	..()

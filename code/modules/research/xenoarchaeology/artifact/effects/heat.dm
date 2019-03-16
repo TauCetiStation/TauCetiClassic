@@ -1,7 +1,7 @@
 
 //inverse of /datum/artifact_effect/cold, the two effects split up for neatness' sake
 /datum/artifact_effect/heat
-	effect_name = "heat"
+	effect_name = "Heat"
 	var/target_temp
 
 /datum/artifact_effect/heat/New()

@@ -1,6 +1,6 @@
 
 /datum/artifact_effect/gasnitro
-	effect_name = "gasnitro"
+	effect_name = "Gas Nitro"
 	var/max_pressure
 	var/target_percentage
 

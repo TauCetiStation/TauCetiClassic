@@ -88,6 +88,7 @@ var/list/blacklisted_builds = list(
 		if("usr")		hsrc = mob
 		if("prefs")		return prefs.process_link(usr,href_list)
 		if("vars")		return view_var_Topic(href,href_list,hsrc)
+		if("artifacts")	return artifacts_Topic(href, href_list, hsrc)
 
 	switch(href_list["action"])
 		if ("openLink")

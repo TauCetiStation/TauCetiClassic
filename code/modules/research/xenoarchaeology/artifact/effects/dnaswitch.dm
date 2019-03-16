@@ -1,7 +1,7 @@
 
 //todo
 /datum/artifact_effect/dnaswitch
-	effect_name = "dnaswitch"
+	effect_name = "Dna Switch"
 	effect_type = 5
 	var/severity
 
@@ -15,12 +15,12 @@
 /datum/artifact_effect/dnaswitch/DoEffectTouch(mob/toucher)
 	var/weakness = GetAnomalySusceptibility(toucher)
 	if(ishuman(toucher) && prob(weakness * 100))
-		to_chat(toucher, pick("\green You feel a little different.",\
-		"\green You feel very strange.",\
-		"\green Your stomach churns.",\
-		"\green Your skin feels loose.",\
-		"\green You feel a stabbing pain in your head.",\
-		"\green You feel a tingling sensation in your chest.",\
+		to_chat(toucher, pick("\green You feel a little different.",
+		"\green You feel very strange.",
+		"\green Your stomach churns.",
+		"\green Your skin feels loose.",
+		"\green You feel a stabbing pain in your head.",
+		"\green You feel a tingling sensation in your chest.",
 		"\green Your entire body vibrates."))
 		if(prob(75))
 			scramble(1, toucher, weakness * severity)
@@ -35,12 +35,12 @@
 			var/weakness = GetAnomalySusceptibility(H)
 			if(prob(weakness * 100))
 				if(prob(30))
-					to_chat(H, pick("\green You feel a little different.",\
-					"\green You feel very strange.",\
-					"\green Your stomach churns.",\
-					"\green Your skin feels loose.",\
-					"\green You feel a stabbing pain in your head.",\
-					"\green You feel a tingling sensation in your chest.",\
+					to_chat(H, pick("\green You feel a little different.",
+					"\green You feel very strange.",
+					"\green Your stomach churns.",
+					"\green Your skin feels loose.",
+					"\green You feel a stabbing pain in your head.",
+					"\green You feel a tingling sensation in your chest.",
 					"\green Your entire body vibrates."))
 				if(prob(50))
 					scramble(1, H, weakness * severity)
@@ -54,12 +54,12 @@
 			var/weakness = GetAnomalySusceptibility(H)
 			if(prob(weakness * 100))
 				if(prob(75))
-					to_chat(H, pick("\green You feel a little different.",\
-					"\green You feel very strange.",\
-					"\green Your stomach churns.",\
-					"\green Your skin feels loose.",\
-					"\green You feel a stabbing pain in your head.",\
-					"\green You feel a tingling sensation in your chest.",\
+					to_chat(H, pick("\green You feel a little different.",
+					"\green You feel very strange.",
+					"\green Your stomach churns.",
+					"\green Your skin feels loose.",
+					"\green You feel a stabbing pain in your head.",
+					"\green You feel a tingling sensation in your chest.",
 					"\green Your entire body vibrates."))
 				if(prob(25))
 					if(prob(75))

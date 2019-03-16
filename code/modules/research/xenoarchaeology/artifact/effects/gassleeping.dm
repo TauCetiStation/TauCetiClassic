@@ -1,6 +1,6 @@
 
 /datum/artifact_effect/gassleeping
-	effect_name = "gassleeping"
+	effect_name = "Gas Sleeping"
 	var/max_pressure
 	var/target_percentage
 

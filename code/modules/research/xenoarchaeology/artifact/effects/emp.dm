@@ -1,6 +1,6 @@
 
 /datum/artifact_effect/emp
-	effect_name = "emp"
+	effect_name = "EMP"
 	effect_type = 3
 
 /datum/artifact_effect/emp/New()

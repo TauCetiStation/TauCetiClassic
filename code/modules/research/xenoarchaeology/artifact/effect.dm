@@ -22,11 +22,11 @@
 	artifact_id = "[pick("kappa", "sigma", "antaeres", "beta", "omicron", "iota", "epsilon", "omega", "gamma", "delta", "tau", "alpha")]-[rand(100, 999)]"
 
 	// random charge time and distance
-	switch(pick(80;1, 50;2, 25;3))
+	switch(pick(15;1, 70;2, 15;3))
 		if(1)
 			// short range, short charge time
-			chargelevelmax = rand(3, 18)
-			effectrange = rand(1, 3)
+			chargelevelmax = rand(10, 15)
+			effectrange = rand(3, 4)
 		if(2)
 			// medium range, medium charge time
 			chargelevelmax = rand(15, 30)
@@ -34,10 +34,10 @@
 		if(3)
 			// large range, long charge time
 			chargelevelmax = rand(20, 40)
-			effectrange = rand(7, 9)
+			effectrange = rand(7, 10)
 
 /datum/artifact_effect/proc/ToggleActivate(reveal_toggle = 1)
-	//so that other stuff happens first
+	// so that other stuff happens first
 	spawn(0)
 		if(activated)
 			activated = FALSE
@@ -46,10 +46,7 @@
 		if(reveal_toggle && holder)
 			if(istype(holder, /obj/machinery/artifact))
 				var/obj/machinery/artifact/A = holder
-				var/check_activity = null
-				if(activated)
-					check_activity = "_active"
-				A.icon_state = "artifact_[A.icon_num][check_activity]"
+				A.update_icon()
 			var/display_msg
 			if(activated)
 				display_msg = pick("momentarily glows brightly!", "distorts slightly for a moment!", "flickers slightly!", "vibrates!", "shimmers slightly for a moment!")
@@ -64,6 +61,7 @@
 				toplevelholder.visible_message("<span class='warning'>[bicon(toplevelholder)] [toplevelholder] [display_msg]</span>")
 
 /datum/artifact_effect/proc/DoEffectTouch(mob/user)
+/datum/artifact_effect/proc/DoEffectItemImpact(obj/item/subjected_item)
 /datum/artifact_effect/proc/DoEffectAura(atom/holder)
 /datum/artifact_effect/proc/DoEffectPulse(atom/holder)
 /datum/artifact_effect/proc/UpdateMove()
@@ -78,6 +76,50 @@
 		else if(effect == EFFECT_PULSE && chargelevel >= chargelevelmax)
 			chargelevel = 0
 			DoEffectPulse()
+
+/datum/artifact_effect/proc/getDescription()
+	. = "<b>"
+	switch(effect_type)
+		if(EFFECT_ENERGY)
+			. += "Concentrated energy emissions"
+		if(EFFECT_PSIONIC)
+			. += "Intermittent psionic wavefront"
+		if(EFFECT_ELECTRO)
+			. += "Electromagnetic energy"
+		if(EFFECT_PARTICLE)
+			. += "High frequency particles"
+		if(EFFECT_ORGANIC)
+			. += "Organically reactive exotic particles"
+		if(EFFECT_BLUESPACE)
+			. += "Interdimensional/bluespace? phasing"
+		if(EFFECT_SYNTH)
+			. += "Atomic synthesis"
+		else
+			. += "Low level energy emissions"
+
+	. += "</b> have been detected <b>"
+
+	switch(effect)
+		if(EFFECT_TOUCH)
+			. += "interspersed throughout substructure and shell."
+		if(EFFECT_AURA)
+			. += "emitting in an ambient energy field."
+		if(EFFECT_PULSE)
+			. += "emitting in periodic bursts."
+		else
+			. += "emitting in an unknown way."
+
+	. += "</b>"
+
+	switch(trigger)
+		if(TRIGGER_TOUCH, TRIGGER_WATER, TRIGGER_ACID, TRIGGER_VOLATILE, TRIGGER_TOXIN)
+			. += " Activation index involves <b>physical interaction</b> with artifact surface."
+		if(TRIGGER_FORCE, TRIGGER_ENERGY, TRIGGER_HEAT, TRIGGER_COLD)
+			. += " Activation index involves <b>energetic interaction</b> with artifact surface."
+		if(TRIGGER_PHORON, TRIGGER_OXY, TRIGGER_CO2, TRIGGER_NITRO)
+			. += " Activation index involves <b>precise local atmospheric conditions</b>."
+		else
+			. += " Unable to determine any data about activation trigger."
 
 // returns 0..1, with 1 being no protection and 0 being fully protected
 /proc/GetAnomalySusceptibility(mob/living/carbon/human/H)

@@ -56,6 +56,7 @@ var/global/list/gateways_list = list()
 var/global/list/conveyor_switch_list = list()
 var/global/list/rnd_server_list = list()
 var/global/list/PDAs = list()
+var/global/list/artifact_list = list()
 
 var/global/list/all_areas = list()
 var/global/list/machines = list()

@@ -1,16 +1,13 @@
 
 /datum/artifact_effect/gasco2
-	effect_name = "gasco2"
+	effect_name = "Gas CO2"
 	var/max_pressure
 	var/target_percentage
-
-/datum/artifact_effect/heat/New()
-	..()
-	effect_type = pick(6,7)
 
 /datum/artifact_effect/gasco2/New()
 	..()
 	effect = pick(EFFECT_TOUCH, EFFECT_AURA)
+	effect_type = pick(6,7)
 	max_pressure = rand(115,1000)
 
 /datum/artifact_effect/gasco2/DoEffectTouch(mob/user)

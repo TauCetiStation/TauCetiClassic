@@ -153,6 +153,7 @@ var/list/admin_verbs_server = list(
 	/client/proc/nanomapgen_DumpImage
 	)
 var/list/admin_verbs_debug = list(
+	/client/proc/artifact_control_panel,
 	/client/proc/restart_controller,
 	/client/proc/getruntimelog,                     /*allows us to access runtime logs to somebody*/
 	/client/proc/cmd_admin_list_open_jobs,
@@ -1137,16 +1138,10 @@ var/centcom_barriers_stat = 1
 	centcom_barrier_list -= src
 	return ..()
 
-//////////////////////////////
-// Artifact check proc
-//////////////////////////////
-/client/proc/artifact_control_panel(obj/machinery/artifact/A in world)
+/client/proc/artifact_control_panel()
 	set name = "Artifact Control Panel"
-	set category = "Admin"
-	if(!src.holder)
-		to_chat(src, "Only administrators may use this command.")
-		return
-	var/dat = "<HEAD><TITLE>Artifact Control Panel</TITLE></HEAD><BODY>\n"
-	usr << browse(entity_ja(dat), "window=artifactcontrolpanel;size=500x500")
-	onclose(usr, "artifactcontrolpanel")
+	set category = "Debug"
+	if(holder)
+		holder.artifact_control_panel()
+	feedback_add_details("admin_verb","ACP") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

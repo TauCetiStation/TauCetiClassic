@@ -1,54 +1,18 @@
-
-
-/*
-//sleeping gas appears to be bugged, currently
-var/list/valid_primary_effect_types = list(\
-	/datum/artifact_effect/cellcharge,\
-	/datum/artifact_effect/celldrain,\
-	/datum/artifact_effect/forcefield,\
-	/datum/artifact_effect/gasoxy,\
-	/datum/artifact_effect/gasplasma,\
-/*	/datum/artifact_effect/gassleeping,\*/
-	/datum/artifact_effect/heal,\
-	/datum/artifact_effect/hurt,\
-	/datum/artifact_effect/emp,\
-	/datum/artifact_effect/teleport,\
-	/datum/artifact_effect/robohurt,\
-	/datum/artifact_effect/roboheal)
-
-var/list/valid_secondary_effect_types = list(\
-	/datum/artifact_effect/cold,\
-	/datum/artifact_effect/badfeeling,\
-	/datum/artifact_effect/cellcharge,\
-	/datum/artifact_effect/celldrain,\
-	/datum/artifact_effect/dnaswitch,\
-	/datum/artifact_effect/emp,\
-	/datum/artifact_effect/gasco2,\
-	/datum/artifact_effect/gasnitro,\
-	/datum/artifact_effect/gasoxy,\
-	/datum/artifact_effect/gasphoron,\
-/*	/datum/artifact_effect/gassleeping,\*/
-	/datum/artifact_effect/goodfeeling,\
-	/datum/artifact_effect/heal,\
-	/datum/artifact_effect/hurt,\
-	/datum/artifact_effect/radiate,\
-	/datum/artifact_effect/roboheal,\
-	/datum/artifact_effect/robohurt,\
-	/datum/artifact_effect/sleepy,\
-	/datum/artifact_effect/stun,\
-	/datum/artifact_effect/teleport)
-	*/
-
 /obj/machinery/artifact
 	name = "alien artifact"
 	desc = "A large alien device."
+
 	icon = 'icons/obj/xenoarchaeology/artifacts.dmi'
 	icon_state = "artifact_1"
-	interact_offline = TRUE
 	var/icon_num = 0
+	var/icon_secured = FALSE // Are we changing the icon_state in update_icon() proc. Used by artifact_control_panel.dm to create customized artifacts
+
 	density = 1
+	interact_offline = TRUE
+
 	var/datum/artifact_effect/my_effect
 	var/datum/artifact_effect/secondary_effect
+
 	var/being_used = 0
 	var/need_inicial = 1
 	var/scan_radius = 3
@@ -60,14 +24,14 @@ var/list/valid_secondary_effect_types = list(\
 
 	// setup primary effect - these are the main ones (mixed)
 	if(need_inicial == 1)
-		var/effecttype = pick(typesof(/datum/artifact_effect) - /datum/artifact_effect)
+		var/effecttype = pick(valid_primary_effect_types)
 		my_effect = new effecttype(src)
 
-		// 75% chance to have a secondary stealthy (and mostly bad) effect
-		if(prob(75))
-			effecttype = pick(typesof(/datum/artifact_effect) - /datum/artifact_effect)
+		// 50% chance to have a secondary stealthy effect
+		if(prob(50))
+			effecttype = pick(valid_secondary_effect_types)
 			secondary_effect = new effecttype(src)
-			if(prob(75))
+			if(prob(50))
 				secondary_effect.ToggleActivate(0)
 
 		icon_num = pick(ARTIFACT_WIZARD_LARGE,
@@ -81,46 +45,54 @@ var/list/valid_secondary_effect_types = list(\
 						ARTIFACT_VENTS,
 						ARTIFACT_FLOATING,
 						ARTIFACT_CRYSTAL_GREEN) // 12th and 13th are just types of crystals, please ignore them at THAT point
+		switch(icon_num)
+			if(ARTIFACT_COMPUTER)
+				name = "alien computer"
+				desc = "It is covered in strange markings."
+				if(prob(75))
+					my_effect.trigger = TRIGGER_TOUCH
 
-		if(icon_num == ARTIFACT_COMPUTER)
-			name = "alien computer"
-			desc = "It is covered in strange markings."
-			if(prob(75))
-				my_effect.trigger = TRIGGER_TOUCH
+			if(ARTIFACT_PILLAR)
+				name = "alien device"
+				desc = "A large pillar, made of strange shiny metal."
 
-		else if(icon_num == ARTIFACT_VENTS)
-			desc = "A large alien device, there appear to be some kind of vents in the side."
-			if(prob(50))
-				my_effect.trigger = pick(	TRIGGER_ENERGY,
-											TRIGGER_HEAT,
-											TRIGGER_COLD,
-											TRIGGER_PHORON,
-											TRIGGER_OXY,
-											TRIGGER_CO2,
-											TRIGGER_NITRO,
-											TRIGGER_VIEW)
+			if(ARTIFACT_VENTS)
+				name = "alien device"
+				desc = "A large alien device, there appear to be some kind of vents in the side."
+				if(prob(50))
+					my_effect.trigger = pick(	TRIGGER_ENERGY,
+												TRIGGER_HEAT,
+												TRIGGER_COLD,
+												TRIGGER_PHORON,
+												TRIGGER_OXY,
+												TRIGGER_CO2,
+												TRIGGER_NITRO,
+												TRIGGER_VIEW)
 
-		else if(icon_num == ARTIFACT_FLOATING)
-			name = "strange metal object"
-			desc = "A large object made of tough green-shaded alien metal."
-			if(prob(25))
-				my_effect.trigger = pick(	TRIGGER_WATER,
-											TRIGGER_ACID,
-											TRIGGER_VOLATILE,
-											TRIGGER_TOXIN)
+			if(ARTIFACT_FLOATING)
+				name = "strange metal object"
+				desc = "A large object made of tough green-shaded alien metal."
+				if(prob(25))
+					my_effect.trigger = pick(	TRIGGER_WATER,
+												TRIGGER_ACID,
+												TRIGGER_VOLATILE,
+												TRIGGER_TOXIN)
 
-		else if(icon_num == ARTIFACT_CRYSTAL_GREEN)
-			icon_num = pick(ARTIFACT_CRYSTAL_GREEN, ARTIFACT_CRYSTAL_PURPLE, ARTIFACT_CRYSTAL_BLUE) // now we pick a color
-			name = "large crystal"
-			desc = pick("It shines faintly as it catches the light.",
-			"It appears to have a faint inner glow.",
-			"It seems to draw you inward as you look it at.",
-			"Something twinkles faintly as you look at it.",
-			"It's mesmerizing to behold.")
-			if(prob(50))
-				my_effect.trigger = TRIGGER_ENERGY
+			if(ARTIFACT_CRYSTAL_GREEN)
+				icon_num = pick(ARTIFACT_CRYSTAL_GREEN, ARTIFACT_CRYSTAL_PURPLE, ARTIFACT_CRYSTAL_BLUE) // now we pick a color
+				name = "large crystal"
+				desc = pick("It shines faintly as it catches the light.",
+				"It appears to have a faint inner glow.",
+				"It seems to draw you inward as you look it at.",
+				"Something twinkles faintly as you look at it.",
+				"It's mesmerizing to behold.")
+				if(prob(50))
+					my_effect.trigger = TRIGGER_ENERGY
 
-		icon_state = "artifact_[icon_num]"
+		update_icon()
+
+	if(!istype(src, /obj/machinery/artifact/bluespace_crystal))
+		artifact_list += src // used by artifact_control_panel.dm so we dont need any bluespace crystals here
 
 /obj/machinery/artifact/process()
 
@@ -286,82 +258,99 @@ var/list/valid_secondary_effect_types = list(\
 	if(secondary_effect && secondary_effect.effect == EFFECT_TOUCH && secondary_effect.activated)
 		secondary_effect.DoEffectTouch(user)
 
-/obj/machinery/artifact/attackby(obj/item/weapon/W, mob/living/user)
+/obj/machinery/artifact/attackby(obj/item/I, mob/living/user)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(istype(W, /obj/item/weapon/reagent_containers))
-		if(W.reagents.has_reagent("hydrogen", 1) || W.reagents.has_reagent("water", 1))
+
+	if(istype(I, /obj/item/weapon/reagent_containers))
+		if(I.reagents.has_reagent("hydrogen", 1) || I.reagents.has_reagent("water", 1))
 			if(my_effect.trigger == TRIGGER_WATER)
 				my_effect.ToggleActivate()
 			if(secondary_effect && secondary_effect.trigger == TRIGGER_WATER && prob(25))
 				secondary_effect.ToggleActivate(0)
-		else if(W.reagents.has_reagent("acid", 1) || W.reagents.has_reagent("pacid", 1) || W.reagents.has_reagent("diethylamine", 1))
+
+		else if(I.reagents.has_reagent("acid", 1) || I.reagents.has_reagent("pacid", 1) || I.reagents.has_reagent("diethylamine", 1))
 			if(my_effect.trigger == TRIGGER_ACID)
 				my_effect.ToggleActivate()
 			if(secondary_effect && secondary_effect.trigger == TRIGGER_ACID && prob(25))
 				secondary_effect.ToggleActivate(0)
-		else if(W.reagents.has_reagent("phoron", 1) || W.reagents.has_reagent("thermite", 1))
+
+		else if(I.reagents.has_reagent("phoron", 1) || I.reagents.has_reagent("thermite", 1))
 			if(my_effect.trigger == TRIGGER_VOLATILE)
 				my_effect.ToggleActivate()
 			if(secondary_effect && secondary_effect.trigger == TRIGGER_VOLATILE && prob(25))
 				secondary_effect.ToggleActivate(0)
-		else if(W.reagents.has_reagent("toxin", 1) || W.reagents.has_reagent("cyanide", 1) || W.reagents.has_reagent("amanitin", 1) || W.reagents.has_reagent("neurotoxin", 1))
+
+		else if(I.reagents.has_reagent("toxin", 1) || I.reagents.has_reagent("cyanide", 1) || I.reagents.has_reagent("amanitin", 1) || I.reagents.has_reagent("neurotoxin", 1))
 			if(my_effect.trigger == TRIGGER_TOXIN)
 				my_effect.ToggleActivate()
 			if(secondary_effect && secondary_effect.trigger == TRIGGER_TOXIN && prob(25))
 				secondary_effect.ToggleActivate(0)
-	else if(istype(W,/obj/item/weapon/melee/baton) && W:status ||\
-			istype(W,/obj/item/weapon/melee/energy) ||\
-			istype(W,/obj/item/weapon/melee/cultblade) ||\
-			istype(W,/obj/item/weapon/card/emag) ||\
-			istype(W,/obj/item/device/multitool))
 
-		if (my_effect.trigger == TRIGGER_ENERGY)
+	else if(istype(I,/obj/item/weapon/melee/baton) && I:status ||\
+			istype(I,/obj/item/weapon/melee/energy) ||\
+			istype(I,/obj/item/weapon/melee/cultblade) ||\
+			istype(I,/obj/item/weapon/card/emag) ||\
+			istype(I,/obj/item/device/multitool))
+
+		if(my_effect.trigger == TRIGGER_ENERGY)
 			my_effect.ToggleActivate()
 		if(secondary_effect && secondary_effect.trigger == TRIGGER_ENERGY && prob(25))
 			secondary_effect.ToggleActivate(0)
 
-	else if (istype(W,/obj/item/weapon/match) && W:lit ||\
-			istype(W,/obj/item/weapon/weldingtool) && W:welding ||\
-			istype(W,/obj/item/weapon/lighter) && W:lit)
+	else if(istype(I,/obj/item/weapon/match) && I:lit ||\
+			istype(I,/obj/item/weapon/weldingtool) && I:welding ||\
+			istype(I,/obj/item/weapon/lighter) && I:lit)
 		if(my_effect.trigger == TRIGGER_HEAT)
 			my_effect.ToggleActivate()
 		if(secondary_effect && secondary_effect.trigger == TRIGGER_HEAT && prob(25))
 			secondary_effect.ToggleActivate(0)
 	else
+
 		..()
-		if (my_effect.trigger == TRIGGER_FORCE && W.force >= 10)
+
+		if(my_effect.trigger == TRIGGER_FORCE && I.force >= 10)
 			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_FORCE && prob(25))
+		if(secondary_effect && secondary_effect.trigger == TRIGGER_FORCE && prob(25) && I.force >= 10)
 			secondary_effect.ToggleActivate(0)
+
+		if(my_effect.effect == EFFECT_TOUCH && my_effect.activated && I)
+			my_effect.DoEffectItemImpact(I)
+		if(secondary_effect && secondary_effect.effect == EFFECT_TOUCH && secondary_effect.activated && I)
+			secondary_effect.DoEffectItemImpact(I)
 
 /obj/machinery/artifact/Bumped(M)
 	..()
-	if(istype(M,/obj))
+	if(istype(M, /obj))
 		if(M:throwforce >= 10)
 			if(my_effect.trigger == TRIGGER_FORCE)
 				my_effect.ToggleActivate()
 			if(secondary_effect && secondary_effect.trigger == TRIGGER_FORCE && prob(25))
 				secondary_effect.ToggleActivate(0)
-	else if(ishuman(M) && !istype(M:gloves,/obj/item/clothing/gloves))
-		var/warn = 0
+	else if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(!istype(H.gloves, /obj/item/clothing/gloves) && !(H.wear_suit && H.wear_suit.body_parts_covered & ARMS))
 
-		if (my_effect.trigger == TRIGGER_TOUCH && prob(50))
-			my_effect.ToggleActivate()
-			warn = 1
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_TOUCH && prob(25))
-			secondary_effect.ToggleActivate(0)
-			warn = 1
+			var/warn = 0
 
-		if (my_effect.effect == EFFECT_TOUCH && prob(50))
-			my_effect.DoEffectTouch(M)
-			warn = 1
-		if(secondary_effect && secondary_effect.effect == EFFECT_TOUCH && secondary_effect.activated && prob(50))
-			secondary_effect.DoEffectTouch(M)
-			warn = 1
+			if(my_effect.trigger == TRIGGER_TOUCH && prob(50))
+				my_effect.ToggleActivate()
+				warn = 1
 
-		if(warn)
-			to_chat(M, "<b>You accidentally touch [src].<b>")
-	..()
+			if(secondary_effect && secondary_effect.trigger == TRIGGER_TOUCH && prob(25))
+				secondary_effect.ToggleActivate(0)
+				warn = 1
+
+			if(my_effect.effect == EFFECT_TOUCH && my_effect.activated && prob(50))
+				my_effect.DoEffectTouch(M)
+				warn = 1
+
+			if(secondary_effect && secondary_effect.effect == EFFECT_TOUCH && secondary_effect.activated && prob(50))
+				secondary_effect.DoEffectTouch(M)
+				warn = 1
+
+			if(warn)
+				to_chat(M, "<b>You accidentally touch [src].<b>")
+		..()
 
 /obj/machinery/artifact/bullet_act(obj/item/projectile/P)
 	if(istype(P,/obj/item/projectile/bullet) ||\
@@ -381,9 +370,10 @@ var/list/valid_secondary_effect_types = list(\
 
 /obj/machinery/artifact/ex_act(severity)
 	switch(severity)
-		if(1.0) qdel(src)
+		if(1.0)
+			qdel(src)
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 			else
 				if(my_effect.trigger == TRIGGER_FORCE || my_effect.trigger == TRIGGER_HEAT)
@@ -391,7 +381,7 @@ var/list/valid_secondary_effect_types = list(\
 				if(secondary_effect && (secondary_effect.trigger == TRIGGER_FORCE || secondary_effect.trigger == TRIGGER_HEAT) && prob(25))
 					secondary_effect.ToggleActivate(0)
 		if(3.0)
-			if (my_effect.trigger == TRIGGER_FORCE || my_effect.trigger == TRIGGER_HEAT)
+			if(my_effect.trigger == TRIGGER_FORCE || my_effect.trigger == TRIGGER_HEAT)
 				my_effect.ToggleActivate()
 			if(secondary_effect && (secondary_effect.trigger == TRIGGER_FORCE || secondary_effect.trigger == TRIGGER_HEAT) && prob(25))
 				secondary_effect.ToggleActivate(0)
@@ -403,3 +393,17 @@ var/list/valid_secondary_effect_types = list(\
 		my_effect.UpdateMove()
 	if(secondary_effect)
 		secondary_effect.UpdateMove()
+
+/obj/machinery/artifact/Destroy()
+	. = ..()
+	if(src in artifact_list)
+		artifact_list -= src
+
+/obj/machinery/artifact/update_icon()
+	if(icon_secured)
+		return
+	var/check_activity = null
+	if(my_effect && my_effect.activated)
+		check_activity = "_active"
+	icon_state = "artifact_[icon_num][check_activity]"
+	return
