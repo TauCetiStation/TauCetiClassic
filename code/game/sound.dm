@@ -1,17 +1,40 @@
-var/list/shatter_sound = list('sound/effects/Glassbr1.ogg','sound/effects/Glassbr2.ogg','sound/effects/Glassbr3.ogg')
-var/list/explosion_sound = list('sound/effects/Explosion1.ogg','sound/effects/Explosion2.ogg')
-var/list/spark_sound = list('sound/effects/sparks1.ogg','sound/effects/sparks2.ogg','sound/effects/sparks3.ogg','sound/effects/sparks4.ogg')
-var/list/rustle_sound = list('sound/effects/rustle1.ogg','sound/effects/rustle2.ogg','sound/effects/rustle3.ogg','sound/effects/rustle4.ogg','sound/effects/rustle5.ogg')
-var/list/punch_sound = list('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg')
-var/list/clown_sound = list('sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg')
-var/list/swing_hit_sound = list('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
-var/list/hiss_sound = list('sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg')
-var/list/page_sound = list('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
-var/list/fracture_sound = list('sound/effects/bonebreak1.ogg','sound/effects/bonebreak2.ogg','sound/effects/bonebreak3.ogg','sound/effects/bonebreak4.ogg')
-//var/list/gun_sound = list('sound/weapons/Gunshot.ogg', 'sound/weapons/Gunshot2.ogg','sound/weapons/Gunshot3.ogg','sound/weapons/Gunshot4.ogg')
-//var/list/footsteps_sound = list('sound/effects/footsteps.ogg','sound/effects/footsteps2.ogg')
-var/list/footsteps_sound = list('sound/effects/tile1.wav','sound/effects/tile2.wav','sound/effects/tile3.wav','sound/effects/tile4.wav')
-var/list/bandg_sound = list('sound/items/bandage.ogg','sound/items/bandage2.ogg','sound/items/bandage3.ogg')
+var/list/shatter_sound     = list('sound/effects/Glassbr1.ogg',   'sound/effects/Glassbr2.ogg',   'sound/effects/Glassbr3.ogg')
+
+var/list/explosion_sound   = list('sound/effects/Explosion1.ogg', 'sound/effects/Explosion2.ogg')
+
+var/list/spark_sound       = list('sound/effects/sparks1.ogg',    'sound/effects/sparks2.ogg',    'sound/effects/sparks3.ogg',    'sound/effects/sparks4.ogg')
+
+var/list/rustle_sound      = list('sound/effects/rustle1.ogg',    'sound/effects/rustle2.ogg',    'sound/effects/rustle3.ogg',    'sound/effects/rustle4.ogg', 'sound/effects/rustle5.ogg')
+
+var/list/bodyfall_sound    = list('sound/effects/bodyfall1.ogg',  'sound/effects/bodyfall2.ogg',  'sound/effects/bodyfall3.ogg',  'sound/effects/bodyfall4.ogg')
+
+var/list/punch_sound       = list('sound/weapons/punch1.ogg',     'sound/weapons/punch2.ogg',     'sound/weapons/punch3.ogg',     'sound/weapons/punch4.ogg')
+
+var/list/clown_sound       = list('sound/effects/clownstep1.ogg', 'sound/effects/clownstep2.ogg')
+
+var/list/swing_hit_sound   = list('sound/weapons/genhit1.ogg',    'sound/weapons/genhit2.ogg',    'sound/weapons/genhit3.ogg')
+
+var/list/hiss_sound        = list('sound/voice/hiss1.ogg',        'sound/voice/hiss2.ogg',        'sound/voice/hiss3.ogg',        'sound/voice/hiss4.ogg')
+
+var/list/page_sound        = list('sound/effects/pageturn1.ogg',  'sound/effects/pageturn2.ogg',  'sound/effects/pageturn3.ogg')
+
+var/list/fracture_sound    = list('sound/effects/bonebreak1.ogg', 'sound/effects/bonebreak2.ogg', 'sound/effects/bonebreak3.ogg', 'sound/effects/bonebreak4.ogg')
+
+//var/list/gun_sound       = list('sound/weapons/Gunshot.ogg',    'sound/weapons/Gunshot2.ogg',   'sound/weapons/Gunshot3.ogg',   'sound/weapons/Gunshot4.ogg')
+
+//var/list/footsteps_sound = list('sound/effects/footsteps.ogg',  'sound/effects/footsteps2.ogg')
+
+var/list/footsteps_sound   = list('sound/effects/tile1.wav',      'sound/effects/tile2.wav',      'sound/effects/tile3.wav',      'sound/effects/tile4.wav')
+
+var/list/bandg_sound       = list('sound/items/bandage.ogg',      'sound/items/bandage2.ogg',     'sound/items/bandage3.ogg')
+
+var/list/rigbreath_sound   = list('sound/misc/rigbreath1.ogg',    'sound/misc/rigbreath2.ogg',    'sound/misc/rigbreath3.ogg')
+
+var/list/breathmask_sound  = list('sound/misc/breathmask1.ogg',   'sound/misc/breathmask2.ogg')
+
+var/list/femalevomit_sound = list('sound/misc/fvomit1.ogg',       'sound/misc/fvomit2.ogg')
+
+var/list/malevomit_sound   = list('sound/misc/mvomit1.ogg',       'sound/misc/mvomit2.ogg')
 
 /proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global)
 
@@ -115,18 +138,22 @@ var/const/FALLOFF_SOUNDS = 0.5
 /proc/get_sfx(soundin)
 	if(istext(soundin))
 		switch(soundin)
-			if ("footsteps") soundin = pick(footsteps_sound)
-			if ("shatter") soundin = pick(shatter_sound)
-			if ("explosion") soundin = pick(explosion_sound)
-			if ("sparks") soundin = pick(spark_sound)
-			if ("rustle") soundin = pick(rustle_sound)
-			if ("bodyfall") soundin = pick('sound/effects/bodyfall1.ogg','sound/effects/bodyfall2.ogg','sound/effects/bodyfall3.ogg','sound/effects/bodyfall4.ogg')
-			if ("punch") soundin = pick(punch_sound)
-			if ("clownstep") soundin = pick(clown_sound)
-			if ("swing_hit") soundin = pick(swing_hit_sound)
-			if ("hiss") soundin = pick(hiss_sound)
-			if ("pageturn") soundin = pick(page_sound)
-			if ("fracture") soundin = pick(fracture_sound)
-			if ("bandg") soundin = pick(bandg_sound)
-			//if ("gunshot") soundin = pick(gun_sound)
+			if ("footsteps")   soundin = pick (footsteps_sound)
+			if ("shatter")     soundin = pick (shatter_sound)
+			if ("explosion")   soundin = pick (explosion_sound)
+			if ("sparks")      soundin = pick (spark_sound)
+			if ("rustle")      soundin = pick (rustle_sound)
+			if ("bodyfall")    soundin = pick (bodyfall_sound)
+			if ("punch")       soundin = pick (punch_sound)
+			if ("clownstep")   soundin = pick (clown_sound)
+			if ("swing_hit")   soundin = pick (swing_hit_sound)
+			if ("hiss")        soundin = pick (hiss_sound)
+			if ("pageturn")    soundin = pick (page_sound)
+			if ("fracture")    soundin = pick (fracture_sound)
+			if ("bandg")       soundin = pick (bandg_sound)
+			if ("rigbreath")   soundin = pick (rigbreath_sound)
+			if ("breathmask")  soundin = pick (breathmask_sound)
+			if ("malevomit")   soundin = pick (malevomit_sound)
+			if ("femalevomit") soundin = pick (femalevomit_sound)
+			//if ("gunshot")   soundin = pick (gun_sound)
 	return soundin
