@@ -53,7 +53,7 @@
 			qdel(src)
 			return
 
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(do_after(user, 20, target = src) && WT && WT.isOn())
 			user.SetNextMove(CLICK_CD_INTERACT)

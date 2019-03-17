@@ -168,7 +168,7 @@
 		if(default_unfasten_wrench(user, W, time = 60))
 			return
 
-		if(istype(W, /obj/item/weapon/crowbar))
+		if(iscrowbar(W))
 			default_deconstruction_crowbar(W)
 
 	if (istype(W, /obj/item/weapon/card/emag))
@@ -176,7 +176,7 @@
 		to_chat(user, "You short out the product lock on [src]")
 		return
 
-	else if(istype(W, /obj/item/weapon/screwdriver) && anchored)
+	else if(isscrewdriver(W) && anchored)
 		src.panel_open = !src.panel_open
 		to_chat(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
 		src.overlays.Cut()
@@ -195,7 +195,7 @@
 		to_chat(user, "\blue You insert the [W] into the [src]")
 		return
 
-	else if(istype(W, /obj/item/weapon/wrench))	//unwrenching vendomats
+	else if(iswrench(W))	//unwrenching vendomats
 		var/turf/T = user.loc
 		if(user.is_busy(src)) return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")

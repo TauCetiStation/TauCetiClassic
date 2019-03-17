@@ -237,14 +237,14 @@
 		user.drop_item()
 		var/obj/item/device/radio_grid/new_grid = W
 		new_grid.attach(src)
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(iswirecutter(W))
 		if(!grid)
 			to_chat(user, "<span class='userdanger'>Nothing to cut here!</span>")
 			return
 		to_chat(user, "<span class='notice'>You pop out Shielded grid from [src]!</span>")
 		var/obj/item/device/radio_grid/new_grid = new(get_turf(loc))
 		new_grid.dettach(src)
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(W))
 		if(!keyslot1 && !keyslot2)
 			to_chat(user, "<span class='notice'>This headset doesn't have any encryption keys!  How useless...</span>")
 			return

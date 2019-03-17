@@ -213,7 +213,7 @@
 	return !slicing && wielded && prob(reflect_chance) && is_the_opposite_dir(hol_dir, hit_dir)
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/device/multitool))
+	if(ismultitool(W))
 		if(!hacked)
 			hacked = 1
 			to_chat(user,"<span class='warning'>2XRNBW_ENGAGE</span>")
