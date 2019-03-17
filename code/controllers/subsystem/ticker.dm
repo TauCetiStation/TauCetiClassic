@@ -502,6 +502,13 @@ var/datum/subsystem/ticker/ticker
 
 	return text
 
+/datum/subsystem/ticker/proc/start_now()
+	if(ticker.current_state != GAME_STATE_PREGAME)
+		return FALSE
+	ticker.can_fire = TRUE
+	ticker.timeLeft = 0
+	return TRUE
+
 /world/proc/has_round_started()
 	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
 		return TRUE
