@@ -382,6 +382,12 @@
 							filtered.gas[g] = breath.gas[g] * G.gas_filter_strength
 							breath.gas[g] -= filtered.gas[g]
 
+					if(istype(wear_mask, /obj/item/clothing/mask/gas/vox))
+						for(var/g in  list("oxygen"))
+							if(breath.gas[g])
+								filtered.gas[g] = breath.gas[g] * G.gas_filter_strength
+								breath.gas[g] -= filtered.gas[g]
+
 					breath.update_values()
 					filtered.update_values()
 

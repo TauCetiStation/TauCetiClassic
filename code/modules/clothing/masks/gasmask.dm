@@ -280,3 +280,12 @@
 	. = ..()
 	var/color = pick("orange", "blue")
 	icon_state = "gas_mask_[color]"
+
+/obj/item/clothing/mask/gas/vox
+	name = "vox breath mask"
+	desc = "A weirdly-shaped breath mask."
+	icon_state = "voxmask"
+	item_state = "voxmask"
+	permeability_coefficient = 0.01
+	species_restricted = list(VOX , VOX_ARMALIS)
+	sprite_sheets = list(VOX_ARMALIS = 'icons/mob/species/armalis/mask.dmi')
