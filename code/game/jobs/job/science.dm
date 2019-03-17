@@ -35,6 +35,8 @@
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+	if(H.age > 49)
+		H.equip_to_slot_or_del(new /obj/item/clothing/accessory/medal/nobel_science(H), SLOT_R_HAND)
 
 	return TRUE
 
