@@ -110,9 +110,9 @@
 /obj/item/weapon/picture_frame/update_icon()
 	overlays.Cut()
 	if(displayed)
-		overlays |= getFlatIcon(displayed)
+		overlays |= displayed.icon
 	if(frame_glass)
-		overlays |= icon('icons/obj/bureaucracy.dmi',"glass_frame_item")
+		overlays |= icon('icons/obj/bureaucracy.dmi',"glass_frame")
 
 /obj/item/weapon/picture_frame/afterattack(atom/target, mob/user, proximity)
 	var/turf/T = target
@@ -166,7 +166,7 @@
 	. = ..()
 	if(building)
 		pixel_x = (ndir & 3)? 0 : (ndir == 4 ? 28 : -28)
-		pixel_y = (ndir & 3)? (ndir == 1 ? 28 : -28) : 0
+		pixel_y = (ndir & 3)? (ndir == 1 ? 28 : -30) : 0
 	update_icon()
 
 /obj/structure/picture_frame/wooden
@@ -373,13 +373,7 @@
 	else
 		icon_state = initial(icon_state)
 	if(framed)
-		var/icon/P = getFlatIcon(framed)
-		if(dir == SOUTH)
-			P.Turn(180)
-			P.Shift(NORTH, 1)
-		overlays |= P
+		overlays |= framed.icon
 
 	if(frame_glass)
-		var/image/I = image('icons/obj/bureaucracy.dmi', "glass_frame")
-		I.dir = dir
-		overlays |= I
+		overlays |= image('icons/obj/bureaucracy.dmi', "glass_frame")
