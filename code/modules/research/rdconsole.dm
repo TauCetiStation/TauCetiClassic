@@ -167,7 +167,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		emagged = 1
 		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "\blue You you disable the security protocols")
-	else if(istype(D, /obj/item/device/multitool))
+	else if(ismultitool(D))
 		var/obj/item/device/multitool/M = D
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You save the data in the [D.name]'s buffer.</span>")

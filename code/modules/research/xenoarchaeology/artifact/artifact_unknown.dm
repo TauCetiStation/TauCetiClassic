@@ -290,15 +290,16 @@
 			istype(I,/obj/item/weapon/melee/energy) ||\
 			istype(I,/obj/item/weapon/melee/cultblade) ||\
 			istype(I,/obj/item/weapon/card/emag) ||\
-			istype(I,/obj/item/device/multitool))
+			ismultitool(I))
 
 		if(my_effect.trigger == TRIGGER_ENERGY)
 			my_effect.ToggleActivate()
 		if(secondary_effect && secondary_effect.trigger == TRIGGER_ENERGY && prob(25))
 			secondary_effect.ToggleActivate(0)
 
+
 	else if(istype(I,/obj/item/weapon/match) && I:lit ||\
-			istype(I,/obj/item/weapon/weldingtool) && I:welding ||\
+			iswelder(I) && I:welding ||\
 			istype(I,/obj/item/weapon/lighter) && I:lit)
 		if(my_effect.trigger == TRIGGER_HEAT)
 			my_effect.ToggleActivate()

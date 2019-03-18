@@ -107,7 +107,7 @@
 	return ..()
 
 /obj/machinery/meter/attackby(obj/item/weapon/W, mob/user)
-	if (!istype(W, /obj/item/weapon/wrench))
+	if (!iswrench(W))
 		return ..()
 	if(user.is_busy()) return
 	playsound(src, 'sound/items/Ratchet.ogg', 50, 1)

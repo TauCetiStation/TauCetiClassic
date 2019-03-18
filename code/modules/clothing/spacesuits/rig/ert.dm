@@ -34,6 +34,8 @@
 	slowdown = 1
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 60)
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	max_mounted_devices = 6
+	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash)
 
 //Commander
 /obj/item/clothing/head/helmet/space/rig/ert/commander
@@ -51,6 +53,7 @@
 	item_state = "suit-command"
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 55, bomb = 50, bio = 100, rad = 60)
 	breach_threshold = 28
+	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/mounted/taser, /obj/item/rig_module/mounted, /obj/item/rig_module/grenade_launcher/flashbang, /obj/item/rig_module/cooling_unit)
 
 //Security
 /obj/item/clothing/head/helmet/space/rig/ert/security
@@ -69,6 +72,7 @@
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 30, bomb = 65, bio = 100, rad = 10)
 	breach_threshold = 25
 	slowdown = 1.4
+	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/mounted/taser)
 
 //Engineer
 /obj/item/clothing/head/helmet/space/rig/ert/engineer
@@ -85,6 +89,7 @@
 	icon_state = "ert_engineer"
 	siemens_coefficient = 0
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 75)
+	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/device/rcd, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit)
 
 //Medical
 /obj/item/clothing/head/helmet/space/rig/ert/medical
@@ -98,3 +103,4 @@
 	desc = "A suit worn by medical members of a NanoTrasen Emergency Response Team. Has white highlights. Armoured and space ready."
 	icon_state = "ert_medical"
 	slowdown = 0.8
+	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/device/healthscanner, /obj/item/rig_module/chem_dispenser/medical/ert)

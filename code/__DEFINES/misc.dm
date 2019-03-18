@@ -110,7 +110,6 @@
 #define MAT_PLASTIC		"$plastic"
 #define MAT_BANANIUM	"$bananium"
 
-#define COIN_STANDARD "Coin"
 #define COIN_GOLD "Gold coin"
 #define COIN_SILVER "Silver coin"
 #define COIN_DIAMOND "Diamond coin"
@@ -119,6 +118,7 @@
 #define COIN_URANIUM "Uranium coin"
 #define COIN_BANANIUM "Bananium coin"
 #define COIN_PLATINUM "Platunum coin"
+#define COIN_MYTHRIL "Mythril coin"
 
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc

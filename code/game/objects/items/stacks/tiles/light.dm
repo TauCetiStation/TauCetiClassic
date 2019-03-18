@@ -28,7 +28,7 @@
 
 /obj/item/stack/tile/light/attackby(obj/item/O, mob/user)
 	..()
-	if(istype(O,/obj/item/weapon/crowbar))
+	if(iscrowbar(O))
 		if(!use(1))
 			return
 		new/obj/item/stack/sheet/metal(user.loc)

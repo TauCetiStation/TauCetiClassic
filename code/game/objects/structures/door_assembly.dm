@@ -39,7 +39,7 @@
 		created_name = t
 		return
 
-	if(istype(W, /obj/item/weapon/weldingtool) && ((glass_material && !glass_only) || mineral || !anchored))
+	if(iswelder(W) && ((glass_material && !glass_only) || mineral || !anchored))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			if(user.is_busy()) return
@@ -75,7 +75,7 @@
 			to_chat(user, "<span class='notice'>You need more welding fuel.</span>")
 			return
 
-	else if(istype(W, /obj/item/weapon/wrench) && state == ASSEMBLY_SECURED)
+	else if(iswrench(W) && state == ASSEMBLY_SECURED)
 		playsound(src, 'sound/items/Ratchet.ogg', 100, 1)
 		if(user.is_busy()) return
 		if(anchored)
@@ -89,7 +89,7 @@
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secured the airlock assembly!</span>")
 			anchored = !anchored
 
-	else if(istype(W, /obj/item/stack/cable_coil) && state == ASSEMBLY_SECURED && anchored )
+	else if(iscoil(W) && state == ASSEMBLY_SECURED && anchored )
 		if(user.is_busy()) return
 		var/obj/item/stack/cable_coil/coil = W
 		user.visible_message("[user] wires the airlock assembly.", "You start to wire the airlock assembly.")
@@ -101,7 +101,7 @@
 			state = ASSEMBLY_WIRED
 			to_chat(user, "<span class='notice'>You wire the airlock!</span>")
 
-	else if(istype(W, /obj/item/weapon/wirecutters) && state == ASSEMBLY_WIRED)
+	else if(iswirecutter(W) && state == ASSEMBLY_WIRED)
 		if(user.is_busy()) return
 		playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
 		user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
@@ -128,7 +128,7 @@
 				state = ASSEMBLY_NEAR_FINISHED
 				electronics = AE
 
-	else if(istype(W, /obj/item/weapon/crowbar) && state == ASSEMBLY_NEAR_FINISHED)
+	else if(iscrowbar(W) && state == ASSEMBLY_NEAR_FINISHED)
 		if(user.is_busy()) return
 		playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove the electronics from the airlock assembly.")
@@ -181,7 +181,7 @@
 				else
 					to_chat(user, "<span class='notice'>You can't add [S] to the [src].</span>")
 
-	else if(istype(W, /obj/item/weapon/screwdriver) && state == ASSEMBLY_NEAR_FINISHED )
+	else if(isscrewdriver(W) && state == ASSEMBLY_NEAR_FINISHED )
 		if(user.is_busy()) return
 		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 		to_chat(user, "<span class='notice'>Now finishing the airlock.</span>")

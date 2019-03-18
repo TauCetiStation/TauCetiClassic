@@ -161,7 +161,7 @@ var/global/loopModeNames=list(
 			user.visible_message("\red [user.name] slides something into the [src.name]'s card-reader.","\red You short out the [src.name].")
 			update_icon()
 			update_music()
-	else if(istype(W,/obj/item/weapon/wrench))
+	else if(iswrench(W))
 		if(user.is_busy()) return
 		var/un = !anchored ? "" : "un"
 		user.visible_message("\blue [user.name] begins [un]locking \the [src.name]'s casters.","\blue You begin [un]locking \the [src.name]'s casters.")

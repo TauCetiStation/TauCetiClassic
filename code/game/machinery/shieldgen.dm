@@ -250,7 +250,7 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		update_icon()
 
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(W))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		if(is_open)
 			to_chat(user, "\blue You close the panel.")
@@ -259,7 +259,7 @@
 			to_chat(user, "\blue You open the panel and expose the wiring.")
 			is_open = 1
 
-	else if(istype(W, /obj/item/stack/cable_coil) && malfunction && is_open)
+	else if(iscoil(W) && malfunction && is_open)
 		var/obj/item/stack/cable_coil/coil = W
 		if(user.is_busy(src)) return
 		to_chat(user, "\blue You begin to replace the wires.")
@@ -273,7 +273,7 @@
 			to_chat(user, "\blue You repair the [src]!")
 			update_icon()
 
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(iswrench(W))
 		if(locked)
 			to_chat(user, "The bolts are covered, unlocking this would retract the covers.")
 			return
@@ -469,7 +469,7 @@
 
 
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		if(active)
 			to_chat(user, "Turn off the field generator first.")
 			return
