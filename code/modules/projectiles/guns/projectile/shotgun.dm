@@ -101,13 +101,15 @@
 			to_chat(user, "<span class='notice'>You can't load shell while [src] is closed!</span>")
 	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
 		if(short) return
-		to_chat(user, "<span class='notice'>You begin to shorten the barrel of \the [src].</span>")
 		if(get_ammo())
+			if(can_fire())
+				to_chat(user, "<span class='notice'>You try to shorten the barrel of \the [src].</span>")
+				playsound(user, fire_sound, 50, 1)
+				user.visible_message("<span class='danger'>The shotgun goes off!</span>", "<span class='danger'>The shotgun goes off in your face!</span>")
 			afterattack(user, user)	//will this work?
 			afterattack(user, user)	//it will. we call it twice, for twice the FUN
-			playsound(user, fire_sound, 50, 1)
-			user.visible_message("<span class='danger'>The shotgun goes off!</span>", "<span class='danger'>The shotgun goes off in your face!</span>")
 			return
+		to_chat(user, "<span class='notice'>You begin to shorten the barrel of \the [src].</span>")
 		if(!user.is_busy() && do_after(user, 30, target = src))	//SHIT IS STEALTHY EYYYYY
 			icon_state = "sawnshotgun[open ? "-o" : ""]"
 			w_class = ITEM_SIZE_NORMAL
