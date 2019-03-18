@@ -53,8 +53,8 @@ var/list/airlock_overlays = list()
 	var/image/old_sparks_overlay
 	var/image/old_note_overlay
 
-	door_open_sound          = 'sound/machines/airlock/airlock_open.ogg'
-	door_close_sound         = 'sound/machines/airlock/airlock_close.ogg'
+	door_open_sound          = 'sound/machines/airlock/airlockOpen.ogg'
+	door_close_sound         = 'sound/machines/airlock/airlockClose.ogg'
 	var/door_deni_sound      = 'sound/machines/airlock/airlockDenied.ogg'
 	var/door_bolt_up_sound   = 'sound/machines/airlock/airlockBoltsUp.ogg'
 	var/door_bolt_down_sound = 'sound/machines/airlock/airlockBoltsDown.ogg'
@@ -82,7 +82,7 @@ var/list/airlock_overlays = list()
 	airlock_list -= src
 	QDEL_NULL(wires)
 	QDEL_NULL(electronics)
-	qdel(note)
+	QDEL_NULL(note)
 	closeOther = null
 	return ..()
 
@@ -929,7 +929,6 @@ var/list/airlock_overlays = list()
 	else if(istype(C, /obj/item/weapon/wirecutters))
 		if(note)
 			user.visible_message("<span class='notice'>[user] cuts down [note] from [src].</span>", "<span class='notice'>You remove [note] from [src].</span>")
-			//C.play_tool_sound(src)
 			note.forceMove(get_turf(user))
 			note = null
 			update_icon()
