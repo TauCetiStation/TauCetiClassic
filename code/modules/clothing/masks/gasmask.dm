@@ -286,6 +286,10 @@
 	desc = "A weirdly-shaped breath mask."
 	icon_state = "voxmask"
 	item_state = "voxmask"
-	permeability_coefficient = 0.01
+	flags = MASKCOVERSMOUTH | MASKINTERNALS | BLOCK_GAS_SMOKE_EFFECT
+	flags_inv = 0
+	body_parts_covered = 0
+	w_class = ITEM_SIZE_SMALL
+	gas_transfer_coefficient = 0.10
 	species_restricted = list(VOX , VOX_ARMALIS)
 	sprite_sheets = list(VOX_ARMALIS = 'icons/mob/species/armalis/mask.dmi')
