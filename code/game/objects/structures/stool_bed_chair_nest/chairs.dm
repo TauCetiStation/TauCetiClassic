@@ -211,7 +211,7 @@
 	desc = "Old is never too old to not be in fashion."
 
 /obj/structure/stool/bed/chair/wood/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/wood(loc)

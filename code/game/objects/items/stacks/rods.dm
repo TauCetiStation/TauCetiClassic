@@ -22,7 +22,7 @@
 
 /obj/item/stack/rods/attackby(obj/item/W, mob/user)
 	..()
-	if (istype(W, /obj/item/weapon/weldingtool))
+	if (iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 
 		if(get_amount() < 2)

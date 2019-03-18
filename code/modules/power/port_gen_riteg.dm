@@ -17,7 +17,7 @@
 
 	else if(!active)
 
-		if(istype(O, /obj/item/weapon/wrench))
+		if(iswrench(O))
 
 			if(!anchored && !isinspace())
 				connect_to_network()
