@@ -93,7 +93,7 @@
 					vomitsound = "malevomit"
 				if(istype(pos, /turf/simulated))
 					pos.add_vomit_floor(host)
-				playsound(loc, vomitsound, 90, 0)
+				playsound(H.loc, vomitsound, 90, 0)
 		else
 			playsound(C.loc, 'sound/effects/splat.ogg', 100, 1)
 			if(istype(pos, /turf/simulated))

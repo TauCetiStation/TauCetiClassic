@@ -1184,9 +1184,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 					losebreath += 15
 					eye_blurry = max(2, eye_blurry)
 					if(gender == FEMALE)
-						playsound(loc, 'sound/misc/frigvomit.ogg', 90, 0)
+						playsound(src.loc, 'sound/misc/frigvomit.ogg', 90, 0)
 					else
-						playsound(loc, 'sound/misc/mrigvomit.ogg', 90, 0)
+						playsound(src.loc, 'sound/misc/mrigvomit.ogg', 90, 0)
 				else
 					var/vomitsound = ""
 					src.visible_message("<B>[src]</B> <span class='danger'>throws up!</span>","<span class='warning'>You throw up!</span>")
@@ -1196,7 +1196,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 						vomitsound = "femalevomit"
 					else
 						vomitsound = "malevomit"
-					playsound(loc, vomitsound, 90, 0)
+					playsound(src.loc, vomitsound, 90, 0)
 				nutrition -= 40
 				adjustToxLoss(-3)
 				if(world.time-lastvomit >= 350) //wait 35 seconds before next volley

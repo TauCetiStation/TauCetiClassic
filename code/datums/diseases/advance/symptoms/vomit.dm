@@ -57,9 +57,9 @@ Bonus
 				H.losebreath += 15
 				H.eye_blurry = max(2, H.eye_blurry)
 				if(H.gender == FEMALE)
-					playsound(H.loc, "sound/misc/frigvomit.ogg", 90, 0)
+					playsound(H.loc, 'sound/misc/frigvomit.ogg', 90, 0)
 				else
-					playsound(H.loc, "sound/misc/mrigvomit.ogg", 90, 0)
+					playsound(H.loc, 'sound/misc/mrigvomit.ogg', 90, 0)
 			else
 				var/vomitsound = ""
 				H.visible_message("<B>[H.name]</B> <span class='danger'>throws up!</span>","<span class='warning'>You throw up!</span>")
