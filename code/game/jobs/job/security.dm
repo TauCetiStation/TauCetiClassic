@@ -34,7 +34,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(H), SLOT_GLASSES)
 	H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(H), SLOT_S_STORE)
 	if(H.age > 49)
-		H.equip_to_slot_or_del(new /obj/item/clothing/accessory/medal/silver/security(H), SLOT_R_HAND)
+		H.equip_to_slot_or_del(new /obj/item/clothing/accessory/medal/silver/security(H), SLOT_L_HAND)
 
 	if(visualsOnly)
 		return
