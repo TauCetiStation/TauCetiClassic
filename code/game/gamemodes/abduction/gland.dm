@@ -95,7 +95,7 @@
 					pos.add_vomit_floor(host)
 				playsound(loc, vomitsound, 90, 0)
 		else
-			playsound('sound/effects/splat.ogg', 100, 1)
+			playsound(C.loc, 'sound/effects/splat.ogg', 100, 1)
 			if(istype(pos, /turf/simulated))
 				pos.add_vomit_floor(host)
 			host.visible_message("<B>[host]</B> <span class='danger'>throws up something slimy!</span>","<span class='warning'>You throw up something slimy! DISGUSTING!</span>")

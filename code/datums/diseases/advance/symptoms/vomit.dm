@@ -126,9 +126,9 @@ Bonus
 				H.losebreath += 15
 				H.eye_blurry = max(2, H.eye_blurry)
 				if(H.gender == FEMALE)
-					playsound(H.loc, "sound/misc/frigvomit.ogg", 90, 0)
+					playsound(H.loc, 'sound/misc/frigvomit.ogg', 90, 0)
 				else
-					playsound(H.loc, "sound/misc/mrigvomit.ogg", 90, 0)
+					playsound(H.loc, 'sound/misc/mrigvomit.ogg', 90, 0)
 			else
 				var/vomitsound = ""
 				H.visible_message("<B>[H.name]</B> <span class='danger'>throws up BLOOD!</span>","<span class='warning'>You throw up BLOOD!</span>")
@@ -140,7 +140,7 @@ Bonus
 					pos.add_vomit_floor(M)
 				playsound(H.loc, vomitsound, 90, 0)
 		else
-			playsound("sound/effects/splat.ogg", 100, 1)
+			playsound(C.loc, 'sound/effects/splat.ogg', 100, 1)
 			if(istype(pos, /turf/simulated))
 				pos.add_vomit_floor(M)
 			C.visible_message("<B>[C.name]</B> <span class='danger'>throws up BLOOD!</span>","<span class='warning'>You throw up BLOOD!</span>")

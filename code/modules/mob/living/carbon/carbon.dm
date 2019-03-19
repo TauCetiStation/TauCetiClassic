@@ -630,7 +630,7 @@
 					T.add_vomit_floor(src)
 				playsound(H.loc, vomitsound, 90, 0)
 		else
-			playsound('sound/effects/splat.ogg', 100, 1)
+			playsound(src.loc, 'sound/effects/splat.ogg', 100, 1)
 			if(istype(T, /turf/simulated))
 				T.add_vomit_floor(src)
 			src.visible_message("<B>[src]</B> <span class='danger'>heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>","<span class='warning'>You throw up!</span>")
