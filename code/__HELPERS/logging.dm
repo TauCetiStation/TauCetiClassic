@@ -24,6 +24,9 @@
 /proc/testing(msg)
 	world.log << "## TESTING: [msg][log_end]"
 
+/proc/info(msg)
+	world.log << "## INFO: [msg][log_end]"
+
 /proc/log_admin(text)
 	admin_log.Add(text)
 	if (config.log_admin)
