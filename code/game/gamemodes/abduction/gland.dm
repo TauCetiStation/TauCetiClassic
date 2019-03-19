@@ -81,20 +81,21 @@
 				H.losebreath += 25
 				H.eye_blurry = max(2, H.eye_blurry)
 				if(H.gender == FEMALE)
-					H.vomitsound = "sound/misc/frigvomit.ogg"
+					playsound(H.loc, 'sound/misc/frigvomit.ogg', 90, 0)
 				else
-					H.vomitsound = "sound/misc/mrigvomit.ogg"
+					playsound(H.loc, 'sound/misc/mrigvomit.ogg', 90, 0)
 			else
+				var/vomitsound = ""
 				H.visible_message("<B>[host]</B> <span class='danger'>throws up something slimy!</span>","<span class='warning'>You throw up something slimy! DISGUSTING!</span>")
 				if(H.gender == FEMALE)
-					H.vomitsound = "femalevomit"
+					vomitsound = "femalevomit"
 				else
-					H.vomitsound = "malevomit"
+					vomitsound = "malevomit"
 				if(istype(pos, /turf/simulated))
 					pos.add_vomit_floor(host)
-			playsound(H.loc, H.vomitsound, 90, 0)
+				playsound(loc, vomitsound, 90, 0)
 		else
-			playsound("sound/effects/splat.ogg", 100, 1)
+			playsound('sound/effects/splat.ogg', 100, 1)
 			if(istype(pos, /turf/simulated))
 				pos.add_vomit_floor(host)
 			host.visible_message("<B>[host]</B> <span class='danger'>throws up something slimy!</span>","<span class='warning'>You throw up something slimy! DISGUSTING!</span>")

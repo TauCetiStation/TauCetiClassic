@@ -8,7 +8,6 @@
 	var/datum/species/species //Contains icon generation and language information, set during New().
 	var/dog_owner
 	var/heart_beat = 0
-	var/vomitsound = ""
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
 	var/scientist = 0	//Vars used in abductors checks and etc. Should be here because in species datums it changes globaly.
@@ -1171,32 +1170,36 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	if(!lastpuke)
 		lastpuke = 1
+		var/lastvomit = world.time
 		src.visible_message("<B>[src]</B> looks kinda like unhealthy.","<span class='warning'>You feel nauseous...</span>")
-		spawn(150)	//15 seconds until second warning
+		if(world.time-lastvomit >= 150) //15 seconds until second warning
+			lastvomit = world.time
 			to_chat(src, "<span class='warning'>You feel like you are about to throw up!</span>")
-			spawn(100)	//and you have 10 more for mad dash to the bucket
+			if(lastvomit-world.time >=100) //and you have 10 more for mad dash to the bucket
+				lastvomit = world.time
 				Stun(5)
+				var/turf/location = loc
 				if(istype(src.head, /obj/item/clothing/head/helmet/space))
 					src.visible_message("<B>[src]</B> <span class='danger'>throws up in their helmet!</span>","<span class='warning'>You threw up in your helmet, damn it, what could be worse!</span>")
 					losebreath += 15
 					eye_blurry = max(2, eye_blurry)
 					if(gender == FEMALE)
-						vomitsound = "sound/misc/frigvomit.ogg"
+						playsound(loc, 'sound/misc/frigvomit.ogg', 90, 0)
 					else
-						vomitsound = "sound/misc/mrigvomit.ogg"
+						playsound(loc, 'sound/misc/mrigvomit.ogg', 90, 0)
 				else
+					var/vomitsound = ""
 					src.visible_message("<B>[src]</B> <span class='danger'>throws up!</span>","<span class='warning'>You throw up!</span>")
-					var/turf/location = loc
 					if(istype(location, /turf/simulated))
 						location.add_vomit_floor(src, 1)
 					if(gender == FEMALE)
 						vomitsound = "femalevomit"
 					else
 						vomitsound = "malevomit"
-				playsound(loc, vomitsound, 90, 0)
+					playsound(loc, vomitsound, 90, 0)
 				nutrition -= 40
 				adjustToxLoss(-3)
-				spawn(350)	//wait 35 seconds before next volley
+				if(world.time-lastvomit >= 350) //wait 35 seconds before next volley
 					lastpuke = 0
 
 /mob/living/carbon/human/proc/morph()

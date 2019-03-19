@@ -616,19 +616,21 @@
 				src.losebreath += 25
 				H.eye_blurry = max(2, H.eye_blurry)
 				if(H.gender == FEMALE)
-					H.vomitsound = "sound/misc/frigvomit.ogg"
+					playsound(H.loc, 'sound/misc/frigvomit.ogg', 90, 0)
 				else
-					H.vomitsound = "sound/misc/mrigvomit.ogg"
+					playsound(H.loc, 'sound/misc/mrigvomit.ogg', 90, 0)
 			else
+				var/vomitsound = ""
 				H.visible_message("<B>[src]</B> <span class='danger'>heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>","<span class='warning'>You throw up!</span>")
 				if(H.gender == FEMALE)
-					H.vomitsound = "femalevomit"
+					vomitsound = "femalevomit"
 				else
-					H.vomitsound = "malevomit"
+					vomitsound = "malevomit"
 				if(istype(T, /turf/simulated))
 					T.add_vomit_floor(src)
+				playsound(H.loc, vomitsound, 90, 0)
 		else
-			playsound("sound/effects/splat.ogg", 100, 1)
+			playsound('sound/effects/splat.ogg', 100, 1)
 			if(istype(T, /turf/simulated))
 				T.add_vomit_floor(src)
 			src.visible_message("<B>[src]</B> <span class='danger'>heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>","<span class='warning'>You throw up!</span>")
