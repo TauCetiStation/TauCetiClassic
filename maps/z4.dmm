@@ -1016,10 +1016,6 @@
 /area/derelict/bridge/access)
 "cz" = (
 /obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
@@ -1057,14 +1053,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/plating/airless,
 /area/solar/derelict_starboard)
-"cD" = (
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	name = "Worn-out APC";
-	pixel_y = -24
-	},
-/turf/simulated/floor,
-/area/derelict/bridge/access)
 "cE" = (
 /turf/simulated/floor/plating,
 /area/derelict/bridge/access)
@@ -51305,7 +51293,7 @@ aa
 cp
 cv
 cz
-cD
+cs
 cp
 cp
 cK
