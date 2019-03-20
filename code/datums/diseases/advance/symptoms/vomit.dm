@@ -71,7 +71,7 @@ Bonus
 					pos.add_vomit_floor(M)
 				playsound(H.loc, vomitsound, 90, 0)
 		else
-			playsound("sound/effects/splat.ogg", 100, 1)
+			playsound(C.loc, 'sound/effects/splat.ogg', 100, 1)
 			if(istype(pos, /turf/simulated))
 				pos.add_vomit_floor(M)
 			C.visible_message("<B>[C.name]</B> <span class='danger'>throws up!</span>","<span class='warning'>You throw up!</span>")
@@ -116,7 +116,6 @@ Bonus
 
 	var/turf/simulated/pos = get_turf(M)
 	pos.add_blood_floor(M)
-	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(ishuman(C))
@@ -140,7 +139,7 @@ Bonus
 					pos.add_vomit_floor(M)
 				playsound(H.loc, vomitsound, 90, 0)
 		else
-			playsound(C.loc, 'sound/effects/splat.ogg', 100, 1)
+			playsound(C.loc, 'sound/effects/splat.ogg', 90, 1)
 			if(istype(pos, /turf/simulated))
 				pos.add_vomit_floor(M)
 			C.visible_message("<B>[C.name]</B> <span class='danger'>throws up BLOOD!</span>","<span class='warning'>You throw up BLOOD!</span>")

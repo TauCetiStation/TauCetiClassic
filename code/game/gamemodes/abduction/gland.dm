@@ -75,7 +75,7 @@
 	if(iscarbon(host))
 		var/mob/living/carbon/C = host
 		if(ishuman(C))
-			var/mob/living/carbon/human/H
+			var/mob/living/carbon/human/H = C
 			if(istype(H.head, /obj/item/clothing/head/helmet/space))
 				host.visible_message("<B>[host]</B> <span class='danger'>throws up in their helmet! Something's pouring out of their suit's air vents.</span>","<span class='warning'>You threw up something slimy in your helmet and you feel a disturbance in your respiratory system, it seems something inside. DAMN IT, what could be worse!</span>")
 				H.losebreath += 25
@@ -86,7 +86,7 @@
 					playsound(H.loc, 'sound/misc/mrigvomit.ogg', 90, 0)
 			else
 				var/vomitsound = ""
-				H.visible_message("<B>[host]</B> <span class='danger'>throws up something slimy!</span>","<span class='warning'>You throw up something slimy! DISGUSTING!</span>")
+				host.visible_message("<B>[host]</B> <span class='danger'>throws up something slimy!</span>","<span class='warning'>You throw up something slimy! DISGUSTING!</span>")
 				if(H.gender == FEMALE)
 					vomitsound = "femalevomit"
 				else

@@ -1170,13 +1170,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	if(!lastpuke)
 		lastpuke = 1
-		var/lastvomit = world.time
 		src.visible_message("<B>[src]</B> looks kinda like unhealthy.","<span class='warning'>You feel nauseous...</span>")
-		if(world.time-lastvomit >= 150) //15 seconds until second warning
-			lastvomit = world.time
+		spawn(150) //15 seconds until second warning
 			to_chat(src, "<span class='warning'>You feel like you are about to throw up!</span>")
-			if(lastvomit-world.time >=100) //and you have 10 more for mad dash to the bucket
-				lastvomit = world.time
+			spawn(100) //and you have 10 more for mad dash to the bucket
 				Stun(5)
 				var/turf/location = loc
 				if(istype(src.head, /obj/item/clothing/head/helmet/space))
@@ -1199,7 +1196,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 					playsound(src.loc, vomitsound, 90, 0)
 				nutrition -= 40
 				adjustToxLoss(-3)
-				if(world.time-lastvomit >= 350) //wait 35 seconds before next volley
+				spawn(350) //wait 35 seconds before next volley
 					lastpuke = 0
 
 /mob/living/carbon/human/proc/morph()

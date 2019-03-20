@@ -500,9 +500,9 @@
 								H.losebreath += 25
 								H.eye_blurry = max(2, H.eye_blurry)
 								if(H.gender == FEMALE)
-									playsound(H.loc, 'sound/misc/frigvomit.ogg', 90, 0)
+									playsound(L.loc, 'sound/misc/frigvomit.ogg', 90, 0)
 								else
-									playsound(H.loc, 'sound/misc/mrigvomit.ogg', 90, 0)
+									playsound(L.loc, 'sound/misc/mrigvomit.ogg', 90, 0)
 							else
 								var/vomitsound = ""
 								H.visible_message("<B>[H.name]</B> <span class='danger'>vomits from travelling through the [src.name]!</span>", "<span class='warning'>You throw up from travelling through the [src.name]!</span>")
@@ -513,7 +513,7 @@
 									playsound(L.loc, vomitsound, 90, 0)
 							var/turf/T = get_turf(L)
 							if(istype(T, /turf/simulated))
-								T.add_vomit_floor(host)
+								T.add_vomit_floor(L)
 							L.nutrition -= 20
 							L.adjustToxLoss(-3)
 
