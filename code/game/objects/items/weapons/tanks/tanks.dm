@@ -157,24 +157,24 @@
 					to_chat(usr, "\blue You close the tank release valve.")
 					if (location.internals)
 						location.internals.icon_state = "internal0"
-					internalsound = "sound/misc/internaloff.ogg"
-					if(ishuman(location)) // Ian can also go out in a vacuum with a space helmet, but he can't wear a spacesuit
+					internalsound = 'sound/misc/internaloff.ogg'
+					if(ishuman(location)) // Because only human can wear a spacesuit
 						var/mob/living/carbon/human/H = location
 						if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
-							internalsound = "sound/misc/riginternaloff.ogg"
-					playsound(src, internalsound, 100, 0)
+							internalsound = 'sound/misc/riginternaloff.ogg'
+					playsound(loc, internalsound, 100, 0)
 				else
 					if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
 						location.internal = src
 						to_chat(usr, "\blue You open \the [src] valve.")
 						if (location.internals)
 							location.internals.icon_state = "internal1"
-						internalsound = "sound/misc/internalon.ogg"
-						if(ishuman(location)) // Ian else can also go out in a vacuum with a space helmet, but he can't wear a spacesuit
+						internalsound = 'sound/misc/internalon.ogg'
+						if(ishuman(location)) // Because only human can wear a spacesuit
 							var/mob/living/carbon/human/H = location
 							if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
-								internalsound = "sound/misc/riginternalon.ogg"
-						playsound(src, internalsound, 100, 0)
+								internalsound = 'sound/misc/riginternalon.ogg'
+						playsound(loc, internalsound, 100, 0)
 					else
 						to_chat(usr, "\blue You need something to connect to \the [src].")
 				internal_switch = world.time + 16
@@ -202,22 +202,6 @@
 	var/tank_pressure = air_contents.return_pressure()
 	if(tank_pressure < distribute_pressure)
 		distribute_pressure = tank_pressure
-
-// breath sounds
-	if(distribute_pressure >= 16) // It is strange to see a man choking and at the same time breathing normally because of the breath sounds. In addition, it prevents sound spam
-		if(istype(loc, /mob/living/carbon))
-			var/breathsound
-			var/mob/living/carbon/C = loc
-			if(istype(C.wear_mask, /obj/item/clothing/mask))
-				breathsound = "breathmask"
-			if(istype(C.wear_mask, /obj/item/clothing/mask/gas))
-				breathsound = "sound/misc/gasmaskbreath.ogg"
-			if(ishuman(C)) // Ian can also go out in a vacuum with a space helmet, but he can't wear a spacesuit
-				var/mob/living/carbon/human/H = C
-				if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
-					breathsound = "rigbreath"
-			playsound(src, breathsound, 100, 0)
-
 	var/moles_needed = distribute_pressure*volume_to_return/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 	return remove_air(moles_needed)
 
