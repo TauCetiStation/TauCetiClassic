@@ -51,7 +51,7 @@
 	icon_state = "marinad"
 	item_state = "marinad_armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	slowdown = 1
+	slowdown = 0
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 60, bomb = 40, bio = 0, rad = 0)
 /obj/item/clothing/suit/armor/vest/warden
 	name = "Warden's jacket"
