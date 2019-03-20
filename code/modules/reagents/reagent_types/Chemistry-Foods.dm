@@ -231,7 +231,7 @@
 	description = "A special oil that noticably chills the body. Extracted from Ice Peppers."
 	reagent_state = LIQUID
 	color = "#B31008" // rgb: 139, 166, 233
-	taste_message = "<font color='lightblue'>cold</span>"
+	taste_message = "<font color='lightblue'>cold</font>"
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/frostoil/on_general_digest(mob/living/M)

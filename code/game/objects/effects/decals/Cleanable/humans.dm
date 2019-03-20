@@ -160,7 +160,7 @@ var/global/list/image/splatter_cache=list()
 
 /obj/effect/decal/cleanable/blood/writing/examine(mob/user)
 	..()
-	to_chat(user, "It reads: <font color='[basedatum.color]'>\"[message]\"<font>")
+	to_chat(user, "It reads: <font color='[basedatum.color]'>\"[message]\"</font>")
 
 /obj/effect/decal/cleanable/blood/trail_holder
 	name = "blood"

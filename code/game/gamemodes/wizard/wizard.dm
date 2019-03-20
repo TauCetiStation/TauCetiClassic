@@ -139,7 +139,7 @@
 			to_chat(wizard.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 	else
-		to_chat(wizard.current, "<span class='info'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
+		to_chat(wizard.current, "<span class='info'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 	return
 
 
@@ -214,7 +214,7 @@
 	for(var/datum/mind/wizard in wizards)
 		if(wizard.current.stat == DEAD || finished)
 			feedback_set_details("round_end_result","loss - wizard killed")
-			prefinal_text = "<FONT size = 3>Wizard <b>[wizard.name]</b><i> ([wizard.key])</I> has been <font color='red'><b>killed</b></font by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</FONT><BR>"
+			prefinal_text = "<FONT size = 3>Wizard <b>[wizard.name]</b><i> ([wizard.key])</i> has been <font color='red'><b>killed</b></font> by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</FONT><BR>"
 		else
 			var/failed = 0
 			for(var/datum/objective/objective in wizard.objectives)

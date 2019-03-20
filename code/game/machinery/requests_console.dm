@@ -260,7 +260,7 @@ var/req_console_information = list()
 			return FALSE
 		for(var/mob/M in player_list)
 			if(!isnewplayer(M))
-				to_chat(M, "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>")
+				to_chat(M, "<b><font size='3'><font color='red'>[department] announcement:</font> [message]</font></b>")
 		announceAuth = 0
 		message = ""
 		screen = 0
@@ -318,7 +318,7 @@ var/req_console_information = list()
 									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
 									for (var/mob/O in hearers(4, Console.loc))
 										O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'Message from [department]'"))
-								Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[message]"
+								Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></B><BR>[message]"
 
 						screen = 6
 						Console.set_light(2)

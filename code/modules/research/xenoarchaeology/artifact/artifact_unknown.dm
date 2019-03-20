@@ -272,7 +272,7 @@ var/list/valid_secondary_effect_types = list(\
 			return
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(my_effect.trigger == TRIGGER_TOUCH)
-		to_chat(user, "<b>You touch [src].<b>")
+		to_chat(user, "<b>You touch [src].</b>")
 		my_effect.ToggleActivate()
 	else
 		to_chat(user, "<b>You touch [src],</b> [pick("but nothing of note happens", "but nothing happens", "but nothing interesting happens", "but you notice nothing different", "but nothing seems to have happened")].")
@@ -360,7 +360,7 @@ var/list/valid_secondary_effect_types = list(\
 			warn = 1
 
 		if(warn)
-			to_chat(M, "<b>You accidentally touch [src].<b>")
+			to_chat(M, "<b>You accidentally touch [src].</b>")
 	..()
 
 /obj/machinery/artifact/bullet_act(obj/item/projectile/P)

@@ -187,7 +187,7 @@
 	if(open && !locked)
 		if(user)
 			to_chat(user, "<span class='warning'>You short out [src]'s target assessment circuits.</span>")
-		audible_message("<span class='userdanger'><B>[src] buzzes oddly!</span>")
+		audible_message("<span class='userdanger'>[src] buzzes oddly!</span>")
 		target = null
 		if(user)
 			oldtarget_name = user.name

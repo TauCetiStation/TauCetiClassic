@@ -39,7 +39,7 @@
 		if(quirk_conflict)
 			. += "<tr style='vertical-align:top'><td width=15%><b>[quirk_name]</b></td>"
 			. += "<td nowrap style='vertical-align:top'><font color='red'><b>LOCKED</b></font></td>"
-			. += "<td><font size=2><font color='red'>[lock_reason]</font></td>"
+			. += "<td><font size=2><font color='red'>[lock_reason]</font></font></td>"
 		else
 			. += "<tr style='vertical-align:top'><td width=15%><a href='?_src_=prefs;preference=quirk;task=update;quirk=[quirk_name]' style='color: [has_quirk ? "silver" : font_color];'><b>[quirk_name]</b></a></td>"
 			. += "<td nowrap style='vertical-align:top'>[quirk_cost] pts.</a></td>"

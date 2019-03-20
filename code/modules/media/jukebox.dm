@@ -266,7 +266,7 @@ var/global/loopModeNames=list(
 		media_url = song.url
 		media_start_time = world.time
 		visible_message("<span class='notice'>[bicon(src)] \The [src] begins to play [song.display()].</span>","<em>You hear music.</em>")
-		//visible_message("<span class='notice'>[bicon(src)] \The [src] warbles: [song.length/10]s @ [song.url]</notice>")
+		//visible_message("<span class='notice'>[bicon(src)] \The [src] warbles: [song.length/10]s @ [song.url]</span>")
 	else
 		media_url=""
 		media_start_time = 0

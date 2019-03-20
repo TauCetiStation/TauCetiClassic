@@ -174,6 +174,7 @@ function run_code_tests {
     run_test_fail "ensure code, nanoui templates, icons has no empty files" "find code/ nano/templates/ icons/ -empty -type f | grep -w 'code\|nano\|icons'"
     run_test_fail "no invalid spans" "grep -En \"<\s*span\s+class\s*=\s*('[^'>]+|[^'>]+')\s*>\" **/*.dm"
     run_test "indentation check" "awk -f tools/indentation.awk **/*.dm"
+    run_test "check tags" "python2 tools/TagMatcher/tag-matcher.py ."
 }
 
 function run_byond_tests {
