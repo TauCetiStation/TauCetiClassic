@@ -222,7 +222,6 @@
 
 	brute_mod = 0.80
 	burn_mod = 0.90
-	speed_mod = 0.7
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
