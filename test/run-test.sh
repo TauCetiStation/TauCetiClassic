@@ -163,6 +163,16 @@ function find_code {
     fi
 }
 
+function run_code_tests {
+    msg "*** running code tests ***"
+    find_code_deps
+    pip install --user PyYaml -q
+    pip install --user beautifulsoup4 -q
+    shopt -s globstar
+    run_test_fail "ensure code, nanoui templates, icons unique" "find code/ nano/templates/ icons/ -type f -exec md5sum {} + | sort | uniq -D -w 32 | grep -w 'code\|nano\|icons'"
+    run_test_fail "ensure code, nanoui templates, icons has no empty files" "find code/ nano/templates/ icons/ -empty -type f | grep -w 'code\|nano\|icons'"
+}
+
 function run_byond_tests {
     msg "*** running map tests ***"
     find_byond_deps
@@ -178,6 +188,7 @@ function run_byond_tests {
 }
 
 function run_all_tests {
+    run_code_tests
     run_byond_tests
 }
 
