@@ -63,7 +63,8 @@
 			for(var/x in list(l_hand, r_hand))
 				var/obj/item/O = x
 				if(O && !(O.flags & ABSTRACT) && O.w_class >= ITEM_SIZE_NORMAL)
-					tally += 0.5 * (O.w_class - 2) // (3 = 0.5) || (4 = 1) || (5 = 1.5)
+					if (!istype(O, /obj/item/weapon/shield/riot))
+						tally += 0.5 * (O.w_class - 2) // (3 = 0.5) || (4 = 1) || (5 = 1.5)
 
 		if(buckled) // so, if we buckled we have large debuff
 			tally += 5.5
