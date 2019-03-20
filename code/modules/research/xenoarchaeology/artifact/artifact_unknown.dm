@@ -8,7 +8,7 @@ var/list/valid_primary_effect_types = list(\
 	/datum/artifact_effect/forcefield,\
 	/datum/artifact_effect/gasoxy,\
 	/datum/artifact_effect/gasplasma,\
-/*	/datum/artifact_effect/gassleeping,\*/
+//	/datum/artifact_effect/gassleeping,\
 	/datum/artifact_effect/heal,\
 	/datum/artifact_effect/hurt,\
 	/datum/artifact_effect/emp,\
@@ -27,7 +27,7 @@ var/list/valid_secondary_effect_types = list(\
 	/datum/artifact_effect/gasnitro,\
 	/datum/artifact_effect/gasoxy,\
 	/datum/artifact_effect/gasphoron,\
-/*	/datum/artifact_effect/gassleeping,\*/
+//	/datum/artifact_effect/gassleeping,\
 	/datum/artifact_effect/goodfeeling,\
 	/datum/artifact_effect/heal,\
 	/datum/artifact_effect/hurt,\
