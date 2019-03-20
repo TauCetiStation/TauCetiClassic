@@ -117,7 +117,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	return FALSE
 
 /obj/fire
-	//Icon for fire on turfs.
+	// Icon for fire on turfs.
 
 	anchored = TRUE
 	mouse_opacity = 0
@@ -126,7 +126,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
-	light_color = "#ED9200"
+	light_color = LIGHT_COLOR_FIRE
 	layer = OBJ_LAYER
 
 	var/firelevel = 1 //Calculated by gas_mixture.calculate_firelevel()

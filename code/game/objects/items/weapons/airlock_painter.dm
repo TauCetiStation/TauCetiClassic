@@ -4,14 +4,14 @@
 	icon_state = "paint sprayer"
 	item_state = "paint sprayer"
 
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 
 	m_amt = 50
 	g_amt = 50
 	origin_tech = "engineering=1"
 
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 
 	var/static/list/modes // used to dye pipes, contains pipe colors.
 	var/obj/item/device/toner/ink

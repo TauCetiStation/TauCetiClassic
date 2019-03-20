@@ -67,7 +67,7 @@
 	anchored = TRUE // Prevent movement
 	return TRUE
 
-/obj/machinery/portable_atmospherics/Move()
+/obj/machinery/portable_atmospherics/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
 	if(.)
 		disconnect()
@@ -99,7 +99,7 @@
 			T.forceMove(src)
 			holding = T
 			update_icon()
-	else if (istype(W, /obj/item/weapon/wrench))
+	else if (iswrench(W))
 		if(!(stat & BROKEN))
 			if(connected_port)
 				disconnect()
@@ -111,7 +111,7 @@
 					"<span class='italics'>You hear a ratchet.</span>")
 				update_icon()
 			else
-				var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector/) in loc
+				var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
 				if(!possible_port)
 					to_chat(user, "<span class='notice'>Nothing happens.</span>")
 					return
@@ -162,7 +162,7 @@
 		C.forceMove(src)
 		user.visible_message("<span class='notice'>[user] opens the panel on [src] and inserts [C].</span>", "<span class='notice'>You open the panel on [src] and insert [C].</span>")
 		power_change()
-	else if(istype(I, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(I))
 		if(!cell)
 			to_chat(user, "<span class='warning'>There is no power cell installed.</span>")
 			return

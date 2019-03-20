@@ -75,6 +75,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		new /obj/item/ammo_casing/shotgun/dart(), \
 		new /obj/item/ammo_casing/shotgun/buckshot(), \
 		new /obj/item/device/harmonica(), \
+		new /obj/item/weapon/bell()
 	)
 
 /obj/machinery/autolathe
@@ -213,7 +214,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		return
 
 	if (panel_open)
-		if(istype(I, /obj/item/weapon/crowbar))
+		if(iscrowbar(I))
 			if(m_amount >= 3750)
 				new /obj/item/stack/sheet/metal(loc, round(m_amount / 3750))
 			if(g_amount >= 3750)

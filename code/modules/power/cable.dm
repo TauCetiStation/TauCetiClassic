@@ -115,7 +115,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(T.intact)
 		return
 
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(iswirecutter(W))
 
 		if (shock(user, 50))
 			return
@@ -135,11 +135,11 @@ By design, d1 is the smallest direction and d2 is the highest
 		return	// not needed, but for clarity
 
 
-	else if(istype(W, /obj/item/stack/cable_coil))
+	else if(iscoil(W))
 		var/obj/item/stack/cable_coil/coil = W
 		coil.cable_join(src, user)
 
-	else if(istype(W, /obj/item/device/multitool))
+	else if(ismultitool(W))
 
 		if(powernet && (powernet.avail > 0))		// is it powered?
 			to_chat(user, "<span class='alert'>[powernet.avail]W in power network.</span>")
@@ -395,7 +395,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	m_amt = 50
 	g_amt = 20
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	item_state = "coil"
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
@@ -461,24 +461,6 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		icon_state = "coil"
 		name = "cable coil"
-
-/obj/item/stack/cable_coil/verb/make_restraint()
-	set name = "Make Cable Restraints"
-	set category = "Object"
-	var/mob/M = usr
-
-	if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
-		if(!istype(usr.loc,/turf))
-			return
-		if(!src.use(15))
-			to_chat(usr, "<span class='warning'>You need at least 15 lengths to make restraints!</span>")
-			return
-		var/obj/item/weapon/handcuffs/cable/B = new /obj/item/weapon/handcuffs/cable(usr.loc)
-		B.color = color
-		to_chat(usr, "<span class='notice'>You wind some cable together to make some restraints.</span>")
-	else
-		to_chat(usr, "<span class='notice'>You cannot do that.</span>")
-	..()
 
 ///////////////////////////////////////////////
 // Cable laying procedures

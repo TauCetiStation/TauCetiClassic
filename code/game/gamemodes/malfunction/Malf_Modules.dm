@@ -146,11 +146,11 @@ robot_fabricator
 		return
 	cur_malf.ai_win()
 
-/datum/AI_Module/large/
+/datum/AI_Module/large
 	uses = 1
 	price = MALF_LARGE_MODULE_PRICE
 
-/datum/AI_Module/small/
+/datum/AI_Module/small
 	uses = 5
 	price = MALF_SMALL_MODULE_PRICE
 
@@ -160,7 +160,9 @@ robot_fabricator
 	need_only_once = TRUE
 
 /datum/AI_Module/large/fireproof_core/BuyedNewHandle()
-	for(var/mob/living/silicon/ai/ai in player_list)
+	for(var/mob/living/silicon/ai/ai in ai_list)
+		if(!ai.client)
+			continue
 		ai.fire_res_on_core = TRUE
 	to_chat(owner, "<span class='notice'>Core fireproofed.</span>")
 
@@ -188,9 +190,9 @@ robot_fabricator
 	var/datum/AI_Module/large/disable_rcd/rcdmod = current_modules["RCD disable"]
 	if(rcdmod.uses)
 		rcdmod.uses--
-		for(var/obj/item/weapon/rcd/rcd in world)
+		for(var/obj/item/weapon/rcd/rcd in rcd_list)
 			rcd.disabled = TRUE
-		for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in world)
+		for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in mecha_rcd_list)
 			rcd.disabled = TRUE
 		to_chat(src, "<span class='notice'>RCD-disabling pulse emitted.</span>")
 	else
@@ -207,7 +209,7 @@ robot_fabricator
 	var/datum/AI_Module/small/disable_dr/drmod = current_modules["DR disable"]
 	if(drmod.uses)
 		drmod.uses--
-		for(var/obj/item/device/remote_device/dr in world)
+		for(var/obj/item/device/remote_device/dr in remote_device_list)
 			dr.disabled = TRUE
 		to_chat(src, "<span class='notice'>DR-disabling pulse emitted.</span>")
 	else
@@ -286,7 +288,7 @@ robot_fabricator
 		to_chat(src, "<span class='red'>[blackout.module_name] module activation failed. Out of uses.</span>")
 		return
 	blackout.uses--
-	for(var/obj/machinery/power/apc/apc in machines)
+	for(var/obj/machinery/power/apc/apc in apc_list)
 		if(prob(30 * apc.overload))
 			apc.overload_lighting()
 		else

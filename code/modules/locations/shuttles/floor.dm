@@ -27,5 +27,5 @@
 	icon = 'code/modules/locations/shuttles/space.dmi'
 	icon_state = "1swall_s"
 
-	New()
-		icon_state = "[rand(1,4)]swall_s"
+/turf/space/shuttle/New()
+	icon_state = "[rand(1,4)]swall_s"

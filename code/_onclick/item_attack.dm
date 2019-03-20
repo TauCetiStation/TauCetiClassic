@@ -47,10 +47,11 @@
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
 		if (do_surgery(M,user,src))
 			return 0
+
 	// Knifing
 	if(edge)
 		for(var/obj/item/weapon/grab/G in M.grabbed_by)
-			if(G.assailant == user && G.state >= GRAB_NECK && world.time >= (G.last_action + 20) && def_zone == BP_HEAD)
+			if(G.assailant == user && G.state >= GRAB_NECK && def_zone == BP_HEAD)
 				var/protected = 0
 				if(ishuman(M))
 					var/mob/living/carbon/human/AH = M
@@ -65,7 +66,7 @@
 					M.adjustOxyLoss(60) // Brain lacks oxygen immediately, pass out
 					playsound(loc, 'sound/effects/throat_cutting.ogg', 50, 1, 1)
 					flick(G.hud.icon_state, G.hud)
-					G.last_action = world.time
+					user.SetNextMove(CLICK_CD_ACTION)
 					user.visible_message("<span class='danger'>[user] slit [M]'s throat open with \the [name]!</span>")
 					user.attack_log += "\[[time_stamp()]\]<font color='red'> Knifed [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
 					M.attack_log += "\[[time_stamp()]\]<font color='orange'> Got knifed by [user.name] ([user.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"

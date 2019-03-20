@@ -120,7 +120,7 @@
 	icon_state = "0-2";
 	pixel_y = 1
 	},
-/obj/machinery/gateway/centeraway,
+/obj/machinery/gateway/center,
 /turf/simulated/floor,
 /area/awaymission/example)
 "ap" = (

@@ -287,7 +287,7 @@
 		return
 
 	if(!(flags & NODECONSTRUCT))
-		if(istype(I, /obj/item/weapon/screwdriver))
+		if(isscrewdriver(I))
 			if(src.density || src.operating == 1)
 				to_chat(user, "<span class='warning'>You need to open the [src.name] to access the maintenance panel.</span>")
 				return
@@ -296,7 +296,7 @@
 			to_chat(user, "<span class='notice'>You [p_open ? "open":"close"] the maintenance panel of the [src.name].</span>")
 			return
 
-		if(istype(I, /obj/item/weapon/crowbar))
+		if(iscrowbar(I))
 			if(p_open && !src.density)
 				if(user.is_busy(src)) return
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
@@ -351,7 +351,7 @@
 
 
 	//If windoor is unpowered, crowbar, fireaxe and armblade can force it.
-	if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
+	if(iscrowbar(I) || istype(I, /obj/item/weapon/twohanded/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
 		if(!hasPower())
 			user.SetNextMove(CLICK_CD_INTERACT)
 			if(density)
@@ -398,6 +398,13 @@
 	var/id = null
 	health = 300.0 //Stronger doors for prison (regular window door health is 200)
 
+/obj/machinery/door/window/brigdoor/atom_init()
+	. = ..()
+	brigdoor_list += src
+
+/obj/machinery/door/window/brigdoor/Destroy()
+	brigdoor_list -= src
+	return ..()
 
 /obj/machinery/door/window/northleft
 	dir = NORTH

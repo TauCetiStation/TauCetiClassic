@@ -42,6 +42,8 @@
 	var/mob/living/original_body
 	var/health_regen = 1
 
+	animalistic = FALSE
+
 /mob/living/simple_animal/hulk/human
 	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/hulk_jump,
 						/obj/effect/proc_holder/spell/aoe_turf/hulk_dash,

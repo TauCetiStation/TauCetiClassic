@@ -13,14 +13,14 @@
 /obj/structure/AIcore/attackby(obj/item/P, mob/user)
 	switch(state)
 		if(0)
-			if(istype(P, /obj/item/weapon/wrench))
+			if(iswrench(P))
 				if(user.is_busy(src)) return
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20, target = src))
 					to_chat(user, "\blue You wrench the frame into place.")
 					anchored = 1
 					state = 1
-			if(istype(P, /obj/item/weapon/weldingtool))
+			if(iswelder(P))
 				var/obj/item/weapon/weldingtool/WT = P
 				if(!WT.isOn())
 					to_chat(user, "The welder must be on for this task.")
@@ -33,7 +33,7 @@
 					new /obj/item/stack/sheet/plasteel( loc, 4)
 					qdel(src)
 		if(1)
-			if(istype(P, /obj/item/weapon/wrench))
+			if(iswrench(P))
 				if(user.is_busy(src)) return
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20, target = src))
@@ -47,12 +47,12 @@
 				circuit = P
 				user.drop_item()
 				P.loc = src
-			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
+			if(isscrewdriver(P) && circuit)
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				to_chat(user, "\blue You screw the circuit board into place.")
 				state = 2
 				icon_state = "2"
-			if(istype(P, /obj/item/weapon/crowbar) && circuit)
+			if(iscrowbar(P) && circuit)
 				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 				to_chat(user, "\blue You remove the circuit board.")
 				state = 1
@@ -60,12 +60,12 @@
 				circuit.loc = loc
 				circuit = null
 		if(2)
-			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
+			if(isscrewdriver(P) && circuit)
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				to_chat(user, "\blue You unfasten the circuit board.")
 				state = 1
 				icon_state = "1"
-			if(istype(P, /obj/item/stack/cable_coil))
+			if(iscoil(P))
 				var/obj/item/stack/cable_coil/C = P
 				if(user.is_busy(src)) return
 				if(C.get_amount() >= 5)
@@ -76,7 +76,7 @@
 							state = 3
 							icon_state = "3"
 		if(3)
-			if(istype(P, /obj/item/weapon/wirecutters))
+			if(iswirecutter(P))
 				if (brain)
 					to_chat(user, "Get that brain out of there first")
 				else
@@ -143,7 +143,7 @@
 				to_chat(usr, "Added [P].")
 				icon_state = "3b"
 
-			if(istype(P, /obj/item/weapon/crowbar) && brain)
+			if(iscrowbar(P) && brain)
 				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 				to_chat(user, "\blue You remove the brain.")
 				brain.loc = loc
@@ -151,7 +151,7 @@
 				icon_state = "3"
 
 		if(4)
-			if(istype(P, /obj/item/weapon/crowbar))
+			if(iscrowbar(P))
 				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 				to_chat(user, "\blue You remove the glass panel.")
 				state = 3
@@ -162,7 +162,7 @@
 				new /obj/item/stack/sheet/rglass( loc, 2 )
 				return
 
-			if(istype(P, /obj/item/weapon/screwdriver))
+			if(isscrewdriver(P))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				to_chat(user, "\blue You connect the monitor.")
 				if(!brain)
@@ -184,15 +184,22 @@
 	anchored = 1
 	state = 20//So it doesn't interact based on the above. Not really necessary.
 
+/obj/structure/AIcore/deactivated/atom_init()
+	. = ..()
+	aicore_deactivated_list += src
+
+/obj/structure/AIcore/deactivated/Destroy()
+	aicore_deactivated_list -= src
+	if(empty_playable_ai_cores.Find(src))
+		empty_playable_ai_cores -= src
+	return ..()
+
 /obj/structure/AIcore/deactivated/attackby(obj/item/device/aicard/A, mob/user)
 	if(istype(A, /obj/item/device/aicard))//Is it?
 		A.transfer_ai("INACTIVE","AICARD",src,user)
 	return
 
-/obj/structure/AIcore/deactivated/Destroy()
-	if(empty_playable_ai_cores.Find(src))
-		empty_playable_ai_cores -= src
-	return ..()
+
 
 /*
 This is a good place for AI-related object verbs so I'm sticking it here.
@@ -404,7 +411,7 @@ That prevents a few funky behaviors.
 	set category = "Admin"
 
 	var/list/cores = list()
-	for(var/obj/structure/AIcore/deactivated/D in world)
+	for(var/obj/structure/AIcore/deactivated/D in aicore_deactivated_list)
 		cores["[D] ([D.loc.loc])"] = D
 
 	var/id = input("Which core?", "Toggle AI Core Latejoin", null) as null|anything in cores

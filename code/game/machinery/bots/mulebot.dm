@@ -78,7 +78,7 @@
 
 /obj/machinery/bot/mulebot/atom_init_late()
 	var/count = 0
-	for(var/obj/machinery/bot/mulebot/other in machines)
+	for(var/obj/machinery/bot/mulebot/other in bots_list)
 		count++
 	if(!suffix)
 		suffix = "#[count]"
@@ -109,7 +109,7 @@
 		C.loc = src
 		cell = C
 		updateDialog()
-	else if(istype(I,/obj/item/weapon/screwdriver))
+	else if(isscrewdriver(I))
 		if(locked)
 			to_chat(user, "\blue The maintenance hatch cannot be opened or closed while the controls are locked.")
 			return
@@ -126,7 +126,7 @@
 		updateDialog()
 	else if(is_wire_tool(I))
 		wires.interact(user)
-	else if (istype(I, /obj/item/weapon/wrench))
+	else if (iswrench(I))
 		if (src.health < maxhealth)
 			src.health = min(maxhealth, src.health+25)
 			user.visible_message(

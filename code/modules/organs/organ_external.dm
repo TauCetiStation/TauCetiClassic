@@ -17,7 +17,6 @@
 	// Appearance vars.
 	var/body_part = null              // Part flag
 	var/body_zone = null              // Unique identifier of this limb.
-	var/icon_position = 0             // Used in mob overlay layering calculations.
 
 	// Wound and structural data.
 	var/wound_update_accuracy = 1     // how often wounds should be updated, a higher number means less often
@@ -256,11 +255,6 @@ This function completely restores a damaged organ to perfect condition.
 			implants -= implanted_object
 
 	owner.updatehealth()
-
-/obj/item/organ/external/head/rejuvenate()
-	..()
-	owner.client.perspective = MOB_PERSPECTIVE
-	owner.client.eye = owner // Deheading species that do not need a head causes them to view the world from a perspective of their head.
 
 /obj/item/organ/external/proc/createwound(type = CUT, damage)
 	if(damage == 0)
@@ -722,7 +716,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			else
 				gore = new /obj/effect/decal/cleanable/blood/gibs(get_turf(owner))
 				gore.fleshcolor = owner.species.flesh_color
-				gore.basedatum =  new/datum/dirt_cover(owner.species.blood_color)
+				gore.basedatum =  new(owner.species.blood_datum)
 				gore.update_icon()
 
 			gore.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), throw_speed)
@@ -929,30 +923,72 @@ Note that amputating the affected organ does in fact remove the infection from t
 			return 1
 	return 0
 
+/obj/item/organ/external/proc/apply_body_color(mutable_appearance/MA)
+	if(status & ORGAN_DEAD)
+		MA.color = NECROSIS_COLOR_MOD
+	else if (owner.species.flags[HAS_SKIN_COLOR])
+		if(!(HULK in owner.mutations))
+			MA.color = RGB_CONTRAST(owner.r_skin, owner.g_skin, owner.b_skin)
+		else
+			MA.color = HULK_SKIN_COLOR
+	else if(owner.species.flags[HAS_SKIN_TONE])
+		if(!(HULK in owner.mutations))
+			MA.color = RGB_CONTRAST(owner.s_tone, owner.s_tone, owner.s_tone)
+		else
+			MA.color = HULK_SKIN_TONE
+	return MA
+
 /obj/item/organ/external/get_icon(icon/race_icon, icon/deform_icon, gender = "", fat = "")
-	if(!owner.species.has_gendered_icons)
+	if (!owner)
+		return
+
+	if (!owner.species.has_gendered_icons)
 		gender = ""
 
-	if (status & ORGAN_ROBOT && !(owner.species && owner.species.flags[IS_SYNTHETIC]))
-		return new /icon('icons/mob/human_races/robotic.dmi', "[body_zone][gender ? "_[gender]" : ""]")
+	if (status & ORGAN_ROBOT && !owner.species.flags[IS_SYNTHETIC])
+		. = mutable_appearance('icons/mob/human_races/robotic.dmi', "[body_zone][gender ? "_[gender]" : ""]")
+	else if ((HUSK in owner.mutations) && !owner.species.flags[IS_SYNTHETIC])
+		return mutable_appearance('icons/mob/human_races/husk.dmi', "[body_zone]")
+	else if (status & ORGAN_MUTATED)
+		. = mutable_appearance(deform_icon, "[body_zone][gender ? "_[gender]" : ""][fat ? "_[fat]" : ""]")
+	else
+		. = mutable_appearance(race_icon, "[body_zone][gender ? "_[gender]" : ""][fat ? "_[fat]" : ""]")
 
-	if (status & ORGAN_MUTATED)
-		return new /icon(deform_icon, "[body_zone][gender ? "_[gender]" : ""][fat ? "_[fat]" : ""]")
+	apply_body_color(.)
 
-	return new /icon(race_icon, "[body_zone][gender ? "_[gender]" : ""][fat ? "_[fat]" : ""]")
-
-/obj/item/organ/external/head/get_icon(icon/race_icon, icon/deform_icon)
+/obj/item/organ/external/head/get_icon(icon/race_icon, icon/deform_icon, gender = "")
 	if (!owner)
-		return ..()
+		return
 
-	var/g = ""
-	if(owner.species.has_gendered_icons)
-		g = owner.gender == FEMALE ? "_f" : "_m"
+	if ((HUSK in owner.mutations) && !owner.species.flags[IS_SYNTHETIC])
+		return mutable_appearance('icons/mob/human_races/husk.dmi', "[body_zone]")
+
+	if (!owner.species.has_gendered_icons)
+		gender = ""
+
+	. = list()
 
 	if(status & ORGAN_MUTATED)
-		. = new /icon(deform_icon, "[body_zone][g]")
+		. += apply_body_color(mutable_appearance(deform_icon, "[body_zone][gender ? "_[gender]" : ""]"))
 	else
-		. = new /icon(race_icon, "[body_zone][g]")
+		. += apply_body_color(mutable_appearance(race_icon, "[body_zone][gender ? "_[gender]" : ""]"))
+
+	//Eyes
+	if(owner.species.eyes)
+		var/mutable_appearance/img_eyes_s = mutable_appearance('icons/mob/human_face.dmi', owner.species.eyes)
+		if(!(HULK in owner.mutations))
+			img_eyes_s.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
+		else
+			img_eyes_s.color = "#ff0000"
+		. += img_eyes_s
+
+	//Mouth	(lipstick!)
+	if(owner.lip_style && owner.species.flags[HAS_LIPS]) // skeletons are allowed to wear lipstick no matter what you think, agouri.
+		var/mutable_appearance/lips = mutable_appearance('icons/mob/human_face.dmi', "lips_[owner.lip_style]_s")
+		lips.color = owner.lip_color
+		. += lips
+
+
 
 /obj/item/organ/external/proc/is_usable()
 	return !(status & (ORGAN_DESTROYED|ORGAN_MUTATED|ORGAN_DEAD))
@@ -974,10 +1010,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(is_broken())
 		owner.drop_from_inventory(c_hand)
 		var/emote_scream = pick("screams in pain and", "lets out a sharp cry and", "cries out and")
-		owner.emote("me", 1, "[(owner.species && owner.species.flags[NO_PAIN]) ? "" : emote_scream ] drops what they were holding in their [hand_name]!")
+		owner.emote("pain", 1, "[(owner.species && owner.species.flags[NO_PAIN]) ? "" : emote_scream ] drops what they were holding in their [hand_name]!")
 	if(is_malfunctioning())
 		owner.drop_from_inventory(c_hand)
-		owner.emote("me", 1, "drops what they were holding, their [hand_name] malfunctioning!")
+		owner.emote("pain", 1, "drops what they were holding, their [hand_name] malfunctioning!")
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, owner)
 		spark_system.attach(owner)
@@ -1128,7 +1164,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	body_zone = BP_L_LEG
 	parent_bodypart = BP_GROIN
 	limb_layer = LIMB_L_LEG_LAYER
-	icon_position = LEFT
 	regen_bodypart_penalty = 75
 
 	arterial_bleed_severity = 0.75
@@ -1145,7 +1180,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	body_zone = BP_R_LEG
 	parent_bodypart = BP_GROIN
 	limb_layer = LIMB_R_LEG_LAYER
-	icon_position = RIGHT
 	regen_bodypart_penalty = 75
 
 	arterial_bleed_severity = 0.75
@@ -1254,6 +1288,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(istype(H))
 		src.icon_state = H.gender == MALE? "head_m" : "head_f"
 	. = ..()
+	organ_head_list += src
 	//Add (facial) hair.
 	if(H.f_style)
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.f_style]
@@ -1300,10 +1335,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 	else
 		H.h_style = "Bald"
 		H.f_style = "Shaved"
-		H.client.perspective = EYE_PERSPECTIVE
-		H.client.eye = src
 	H.update_body()
 	H.update_hair()
+
+/obj/item/weapon/organ/head/Destroy()
+	organ_head_list -= src
+	return ..()
 
 /obj/item/weapon/organ/head/proc/transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
 	brainmob = new(src)

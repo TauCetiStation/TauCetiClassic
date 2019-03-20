@@ -11,7 +11,7 @@
 	layer = 4.1
 
 /obj/item/device/flashlight/lamp/fir/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))	//unwrenching vendomats
+	if(iswrench(W))	//unwrenching vendomats
 		var/turf/T = user.loc
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)

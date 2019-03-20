@@ -63,7 +63,8 @@
 	var/list/flags = list()       // Various specific features.
 	var/list/abilities = list()	// For species-derived or admin-given powers
 
-	var/datum/dirt_cover/blood_color = /datum/dirt_cover/red_blood //Red.
+	var/blood_datum_path = /datum/dirt_cover/red_blood //Red.
+	var/datum/dirt_cover/blood_datum // this will contain reference and should only be used as read only.
 	var/flesh_color = "#FFC896" //Pink.
 	var/base_color      //Used when setting species.
 
@@ -116,6 +117,7 @@
 	var/has_gendered_icons = TRUE // if TRUE = use icon_state with _f or _m for respective gender (see get_icon() external organ proc).
 
 /datum/species/New()
+	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
 
 	if(!has_organ[O_HEART])
@@ -175,9 +177,9 @@
 		SK = new /obj/item/weapon/storage/box/survival(H)
 
 	if(H.backbag == 1)
-		H.equip_to_slot_or_del(SK, slot_r_hand)
+		H.equip_to_slot_or_del(SK, SLOT_R_HAND)
 	else
-		H.equip_to_slot_or_del(SK, slot_in_backpack)
+		H.equip_to_slot_or_del(SK, SLOT_IN_BACKPACK)
 
 /datum/species/proc/on_life(mob/living/carbon/human/H)
 	return
@@ -228,6 +230,7 @@
 	,HAS_UNDERWEAR = TRUE
 	,HAS_TAIL = TRUE
 	,HAS_SKIN_COLOR = TRUE
+	,NO_MINORCUTS = TRUE
 	)
 
 	flesh_color = "#34AF10"
@@ -235,7 +238,7 @@
 
 /datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	..()
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), slot_shoes, 1)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
 /datum/species/unathi/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_unathi_digest(M)
@@ -281,7 +284,7 @@
 
 /datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	..()
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), slot_shoes, 1)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
 /datum/species/tajaran/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_tajaran_digest(M)
@@ -316,7 +319,7 @@
 		)
 
 	eyes = "skrell_eyes"
-	blood_color = /datum/dirt_cover/purple_blood
+	blood_datum_path = /datum/dirt_cover/purple_blood
 	flesh_color = "#8CD7A3"
 
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
@@ -347,7 +350,7 @@
 		NO_SCAN = TRUE
 	)
 
-	blood_color = /datum/dirt_cover/blue_blood
+	blood_datum_path = /datum/dirt_cover/blue_blood
 	flesh_color = "#808D11"
 
 	sprite_sheets = list(
@@ -359,12 +362,12 @@
 		)
 
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/vox(src), slot_wear_mask)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/vox(src), SLOT_WEAR_MASK)
 	if(!H.r_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), slot_r_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), SLOT_R_HAND)
 		H.internal = H.r_hand
 	else if(!H.l_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), slot_l_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), SLOT_L_HAND)
 		H.internal = H.l_hand
 	H.internals.icon_state = "internal1"
 
@@ -423,7 +426,7 @@
 	brute_mod = 0.2
 	burn_mod = 0.2
 
-	eyes = "blank_eyes"
+	eyes = null
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
 
@@ -434,7 +437,7 @@
 	,NO_PAIN = TRUE
 	)
 
-	blood_color = /datum/dirt_cover/blue_blood
+	blood_datum_path = /datum/dirt_cover/blue_blood
 	flesh_color = "#808D11"
 	tail = "armalis_tail"
 	icon_template = 'icons/mob/human_races/r_armalis.dmi'
@@ -472,7 +475,7 @@
 	burn_mod = 1.3
 	speed_mod = 7
 
-	restricted_inventory_slots = list(slot_wear_mask, slot_glasses, slot_gloves, slot_shoes) // These are trees. Not people. Deal with the fact that they don't have these.
+	// restricted_inventory_slots = list(SLOT_WEAR_MASK, SLOT_GLASSES, SLOT_GLOVES, SLOT_SHOES) // These are trees. Not people. Deal with the fact that they don't have these. P.S. I may return to this one day ~Luduk.
 
 	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
 	butcher_drops = list(/obj/item/stack/sheet/wood = 5)
@@ -508,7 +511,7 @@
 		O_KIDNEYS = /obj/item/organ/internal/kidneys/diona
 		)
 
-	blood_color = /datum/dirt_cover/green_blood
+	blood_datum_path = /datum/dirt_cover/green_blood
 	flesh_color = "#907E4A"
 
 	has_gendered_icons = FALSE
@@ -540,9 +543,9 @@
 
 /datum/species/diona/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/diona_survival(H), slot_r_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/diona_survival(H), SLOT_R_HAND)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/diona_survival(H), slot_in_backpack)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/diona_survival(H), SLOT_IN_BACKPACK)
 
 /datum/species/diona/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_diona_digest(M)
@@ -571,7 +574,7 @@
 	dietflags = 0		//IPCs can't eat, so no diet
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 
-	eyes = "blank_eyes"
+	eyes = null
 
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
@@ -602,6 +605,7 @@
 	,VIRUS_IMMUNE = TRUE
 	,BIOHAZZARD_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
+	,NO_MINORCUTS = TRUE
 	)
 
 	has_bodypart = list(
@@ -623,14 +627,14 @@
 		,O_KIDNEYS = /obj/item/organ/internal/kidneys/ipc
 		)
 
-	blood_color = /datum/dirt_cover/oil
+	blood_datum_path = /datum/dirt_cover/oil
 	flesh_color = "#575757"
 
 /datum/species/machine/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ipc_survival(H), slot_r_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ipc_survival(H), SLOT_R_HAND)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ipc_survival(H), slot_in_backpack)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ipc_survival(H), SLOT_IN_BACKPACK)
 
 /datum/species/abductor
 	name = ABDUCTOR
@@ -647,7 +651,7 @@
 	,VIRUS_IMMUNE = TRUE
 	)
 
-	blood_color = /datum/dirt_cover/gray_blood
+	blood_datum_path = /datum/dirt_cover/gray_blood
 
 /datum/species/abductor/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -705,6 +709,11 @@
 	attack_verb = list("lash", "bludgeon")
 	damage = 5
 
+/datum/unarmed_attack/slime_glomp
+	attack_verb = list("glomp")
+	damage = 2
+	attack_sound = 'sound/effects/attackblob.ogg'
+
 /datum/unarmed_attack/claws
 	attack_verb = list("scratch", "claw")
 	attack_sound = 'sound/weapons/slice.ogg'
@@ -738,12 +747,12 @@
 	heat_level_2 = 3000
 	heat_level_3 = 4000
 
-	blood_color = /datum/dirt_cover/black_blood
+	blood_datum_path = /datum/dirt_cover/black_blood
 	darksight = 8
 
 	butcher_drops = list() // They are just shadows. Why should they drop anything?
 
-	restricted_inventory_slots = list(slot_belt, slot_wear_id, slot_l_ear, slot_r_ear, slot_back, slot_l_store, slot_r_store)
+	restricted_inventory_slots = list(SLOT_BELT, SLOT_WEAR_ID, SLOT_L_EAR, SLOT_R_EAR, SLOT_BACK, SLOT_L_STORE, SLOT_R_STORE)
 
 	has_organ = list(O_HEART = /obj/item/organ/internal/heart) // A huge buff to be honest.
 
@@ -754,6 +763,8 @@
 	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
+	,NO_SCAN = TRUE
+	,NO_MINORCUTS = TRUE
 	)
 
 	burn_mod = 2
@@ -783,7 +794,7 @@
 	brain_mod = 0
 	speed_mod = 2
 
-	blood_color = /datum/dirt_cover/adamant_blood
+	blood_datum_path = /datum/dirt_cover/adamant_blood
 	flesh_color = "#137E8F"
 
 	butcher_drops = list(/obj/item/weapon/ore/diamond = 1, /obj/item/weapon/ore/slag = 3)
@@ -797,7 +808,8 @@
 		RAD_IMMUNE = TRUE,
 		VIRUS_IMMUNE = TRUE,
 		BIOHAZZARD_IMMUNE = TRUE,
-		NO_FINGERPRINT = TRUE
+		NO_FINGERPRINT = TRUE,
+		NO_MINORCUTS = TRUE
 		)
 
 	has_organ = list(
@@ -815,12 +827,12 @@
 		if(x)
 			H.remove_from_mob(x)
 
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/golem, slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/golem, slot_head)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/golem, slot_wear_suit)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem, slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem, slot_wear_mask)
-	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem, slot_gloves)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/golem, SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/golem, SLOT_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/golem, SLOT_WEAR_SUIT)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem, SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem, SLOT_WEAR_MASK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem, SLOT_GLOVES)
 
 	return ..()
 
@@ -856,6 +868,7 @@
 
 	icobase = 'icons/mob/human_races/r_zombie.dmi'
 	deform = 'icons/mob/human_races/r_zombie.dmi'
+	has_gendered_icons = FALSE
 
 	flags = list(
 	NO_BREATHE = TRUE
@@ -883,8 +896,8 @@
 	H.drop_l_hand()
 	H.drop_r_hand()
 
-	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, slot_l_hand)
-	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, slot_r_hand)
+	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, SLOT_L_HAND)
+	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, SLOT_R_HAND)
 
 	add_zombie(H)
 
@@ -936,7 +949,7 @@
 	deform = 'icons/mob/human_races/r_zombie_skrell.dmi'
 
 	eyes = "skrell_eyes"
-	blood_color = /datum/dirt_cover/purple_blood
+	blood_datum_path = /datum/dirt_cover/purple_blood
 	flesh_color = "#8CD7A3"
 	base_color = "#000000"
 
@@ -964,3 +977,13 @@
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
 	)
+
+/datum/species/slime
+	name = SLIME
+	icobase = 'icons/mob/human_races/r_slime.dmi'
+	deform = 'icons/mob/human_races/r_slime.dmi'
+
+	blood_datum_path = /datum/dirt_cover/blue_blood
+	flesh_color = "#05fffb"
+	unarmed_type = /datum/unarmed_attack/slime_glomp
+	has_gendered_icons = FALSE

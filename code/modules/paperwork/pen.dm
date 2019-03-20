@@ -15,9 +15,9 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "pen"
 	item_state = "pen"
-	slot_flags = SLOT_BELT | SLOT_EARS
+	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_EARS
 	throwforce = 0
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 10
@@ -84,7 +84,7 @@
 /obj/item/weapon/pen/sleepypen
 	desc = "It's a black ink pen with a sharp point and a carefully engraved \"Waffle Co.\""
 	flags = OPENCONTAINER
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "materials=2;syndicate=5"
 
 
@@ -111,7 +111,7 @@
  */
  /obj/item/weapon/pen/paralysis
 	flags = OPENCONTAINER
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "materials=2;syndicate=5"
 
 
@@ -152,7 +152,7 @@
 	else
 		on = 1
 		force = 18
-		w_class = 3
+		w_class = ITEM_SIZE_NORMAL
 		edge = 1
 		name = "energy dagger"
 		hitsound = 'sound/weapons/blade1.ogg'
@@ -184,7 +184,7 @@
 		if(!entity)
 			to_chat(user, "<span class='notice'>You feel the [src] quiver, as another entity attempts to possess it.</span>")
 			var/list/choices = list()
-			for(var/mob/dead/observer/D in dead_mob_list)
+			for(var/mob/dead/observer/D in observer_list)
 				if(D.started_as_observer)
 					choices += D.name
 			if(choices.len)

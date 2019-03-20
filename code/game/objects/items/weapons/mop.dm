@@ -7,7 +7,7 @@
 	throwforce = 10.0
 	throw_speed = 5
 	throw_range = 10
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	attack_verb = list("mopped", "bashed", "bludgeoned", "whacked")
 	var/mopping = 0
 	var/mopcount = 0
@@ -16,9 +16,13 @@
 /obj/item/weapon/mop/atom_init()
 	create_reagents(5)
 	. = ..()
+	mop_list += src
 
+/obj/item/weapon/mop/Destroy()
+	mop_list -= src
+	return ..()
 
-obj/item/weapon/mop/proc/clean(turf/simulated/A)
+/obj/item/weapon/mop/proc/clean(turf/simulated/A)
 	if(reagents.has_reagent("water", 1))
 		A.clean_blood()
 		A.dirt = 0

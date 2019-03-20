@@ -4,7 +4,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "laser"
 	item_state = null	//so the human update icon uses the icon_state instead.
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	m_amt = 2000
 	origin_tech = "combat=3;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser)
@@ -51,7 +51,7 @@
 	chambered.newshot()
 	return
 
-obj/item/weapon/gun/energy/laser/retro
+/obj/item/weapon/gun/energy/laser/retro
 	name ="retro laser"
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
@@ -113,9 +113,9 @@ obj/item/weapon/gun/energy/laser/retro
 	desc = "A laser gun equipped with a refraction kit that spreads bolts."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
 
-	attack_self(mob/living/user)
-		select_fire(user)
-		update_icon()
+/obj/item/weapon/gun/energy/laser/scatter/attack_self(mob/living/user)
+	select_fire(user)
+	update_icon()
 
 /obj/item/weapon/gun/energy/laser/scatter/alien
 	name = "scatter laser rife"

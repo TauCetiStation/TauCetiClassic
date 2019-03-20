@@ -66,15 +66,20 @@
 		icon_state = "[mineral]fwall_open"
 		flick("[mineral]fwall_opening", src)
 		sleep(15)
-		src.density = 0
+		src.density = FALSE
 		set_opacity(0)
 		opening = 0
 		update_nearby_tiles()
 	else
+		var/turf/T = get_turf(src)
+		for(var/obj/O in T.contents)
+			if(O.density)
+				to_chat(user, "<span class='notice'>It won't budge!</span>")
+				return
 		opening = 1
 		flick("[mineral]fwall_closing", src)
 		icon_state = "[mineral]0"
-		density = 1
+		density = TRUE
 		sleep(15)
 		set_opacity(1)
 		src.relativewall()
@@ -100,7 +105,7 @@
 		if(T.density)
 			to_chat(user, "\red The wall is blocked!")
 			return
-		if(istype(W, /obj/item/weapon/screwdriver))
+		if(isscrewdriver(W))
 			user.visible_message("[user] tightens some bolts on the wall.", "You tighten the bolts on the wall.")
 			if(!mineral || mineral == "metal")
 				T.ChangeTurf(/turf/simulated/wall)
@@ -108,7 +113,7 @@
 				T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
 			qdel(src)
 
-		if( istype(W, /obj/item/weapon/weldingtool) )
+		if( iswelder(W) )
 			var/obj/item/weapon/weldingtool/WT = W
 			if( WT.welding )
 				if(!mineral)
@@ -172,7 +177,7 @@
 	desc = "A huge chunk of reinforced metal used to seperate rooms."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "r_wall"
-	density = 1
+	density = TRUE
 	opacity = 1
 	anchored = 1
 	var/mineral = "metal"
@@ -193,15 +198,20 @@
 		icon_state = "frwall_open"
 		flick("frwall_opening", src)
 		sleep(15)
-		density = 0
+		density = FALSE
 		set_opacity(0)
 		opening = 0
 		update_nearby_tiles()
 	else
+		var/turf/T = get_turf(src)
+		for(var/obj/O in T.contents)
+			if(O.density)
+				to_chat(user, "<span class='notice'>It won't budge!</span>")
+				return
 		opening = 1
 		icon_state = "r_wall"
 		flick("frwall_closing", src)
-		density = 1
+		density = TRUE
 		sleep(15)
 		set_opacity(1)
 		relativewall()
@@ -239,13 +249,13 @@
 		return
 	user.SetNextMove(CLICK_CD_INTERACT)
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		var/turf/T = get_turf(src)
 		user.visible_message("[user] tightens some bolts on the r wall.", "You tighten the bolts on the wall.")
 		T.ChangeTurf(/turf/simulated/wall/r_wall)
 		qdel(src)
 
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if( WT.remove_fuel(0,user) )
 			var/turf/T = get_turf(src)

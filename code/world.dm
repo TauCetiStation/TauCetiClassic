@@ -14,7 +14,6 @@
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
 	diary = file("data/logs/[date_string].log")
 	diary << "[log_end]\n[log_end]\nStarting up. [time2text(world.timeofday, "hh:mm.ss")][log_end]\n---------------------[log_end]"
-	changelog_hash = md5('html/changelog.html')
 
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND"
@@ -26,6 +25,7 @@
 	load_mode()
 	load_last_mode()
 	load_motd()
+	load_test_merge()
 	load_admins()
 	load_mentors()
 	if(config.allow_donators)
@@ -37,15 +37,15 @@
 	LoadBans()
 	investigate_reset()
 
+	spawn
+		changelog_hash = trim(get_webpage(config.changelog_hash_link))
+
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)
 		// dumb and hardcoded but I don't care~
 		config.server_name += " #[(world.port % 1000) / 100]"
 
 	if(config && config.log_runtime)
 		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")
-
-	var/custom_items_file = file2text("config/custom_items.txt")
-	custom_items = splittext(custom_items_file, "\n")
 
 	slack_startup()
 
@@ -74,8 +74,6 @@
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
 
 	. = ..()
-
-	sleep_offline = 1
 
 	spawn(3000)		//so we aren't adding to the round-start lag
 		if(config.kick_inactive)
@@ -220,6 +218,8 @@ var/world_topic_spam_protect_time = world.timeofday
 
 /world/Reboot(reason)
 
+	world.log << "Runtimes count: [total_runtimes]. Runtimes skip count: [total_runtimes_skipped]."
+
 	// Bad initializations log.
 	var/initlog = SSatoms.InitLog()
 	if(initlog)
@@ -242,6 +242,8 @@ var/world_topic_spam_protect_time = world.timeofday
 			dellog += "\tTime Spent Hard Deleting: [I.hard_delete_time]ms"
 		if (I.slept_destroy)
 			dellog += "\tSleeps: [I.slept_destroy]"
+		if (I.no_respect_force)
+			dellog += "\tIgnored force: [I.no_respect_force] times"
 		if (I.no_hint)
 			dellog += "\tNo hint: [I.no_hint] times"
 	world.log << dellog.Join("\n")
@@ -302,6 +304,13 @@ var/world_topic_spam_protect_time = world.timeofday
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
 
+/world/proc/load_test_merge()
+	if(fexists("test_merge.txt"))
+		join_test_merge = "<strong>Test merged PRs:</strong> "
+		var/list/prs = splittext(trim(file2text("test_merge.txt")), " ")
+		for(var/pr in prs)
+			join_test_merge += "<a href='[config.repository_link]/pull/[pr]'>#[pr]</a> "
+
 /world/proc/load_donators()
 	var/L = file2list("config/donators.txt")
 	for(var/line in L)
@@ -317,7 +326,6 @@ var/world_topic_spam_protect_time = world.timeofday
 	config.load("config/config.txt")
 	config.load("config/game_options.txt","game_options")
 	config.loadsql("config/dbconfig.txt")
-	config.loadforumsql("config/forumdbconfig.txt")
 	// apply some settings from config..
 	abandon_allowed = config.respawn
 
@@ -385,7 +393,7 @@ var/world_topic_spam_protect_time = world.timeofday
 var/failed_db_connections = 0
 var/failed_old_db_connections = 0
 
-proc/setup_database_connection()
+/proc/setup_database_connection()
 
 	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
 		return 0
@@ -410,7 +418,7 @@ proc/setup_database_connection()
 	return .
 
 //This proc ensures that the connection to the feedback database (global variable dbcon) is established
-proc/establish_db_connection()
+/proc/establish_db_connection()
 	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)
 		return 0
 
@@ -420,7 +428,7 @@ proc/establish_db_connection()
 		return 1
 
 //These two procs are for the old database, while it's being phased out. See the tgstation.sql file in the SQL folder for more information.
-proc/setup_old_database_connection()
+/proc/setup_old_database_connection()
 
 	if(failed_old_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
 		return 0
@@ -445,7 +453,7 @@ proc/setup_old_database_connection()
 	return .
 
 //This proc ensures that the connection to the feedback database (global variable dbcon) is established
-proc/establish_old_db_connection()
+/proc/establish_old_db_connection()
 	if(failed_old_db_connections > FAILED_DB_CONNECTION_CUTOFF)
 		return 0
 

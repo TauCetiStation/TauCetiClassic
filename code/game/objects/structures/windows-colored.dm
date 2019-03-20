@@ -23,7 +23,7 @@ var/global/wcDw
 	var/list/purple = list("#ba62b1", "#Ba3fad", "#a54f9e", "#b549d1")
 	var/list/brown = list("#9e5312", "#99761e", "#a56b00", "#d87f2b")
 	var/list/green = list("#aed18b", "#7bce23", "#5a9619", "#709348")
-	var/list/blue = list("#8dbdd7", "#299bd8", "#1e719e", "#2bb8ff")
+	var/list/blue = list("#054166", "#5995ba", "#1e719e", "#7cb8dd")
 
 	wcRed = pick(red)
 	wcPurple = pick(purple)
@@ -82,7 +82,8 @@ var/global/wcDw
 		/area/research_outpost/entry,
 		/area/research_outpost/longtermstorage,
 		/area/research_outpost/tempstorage,
-		/area/research_outpost/maintstore2
+		/area/research_outpost/maintstore2,
+		/area/medical/genetics
 		)
 
 	for(var/A in wsPurpleList)
@@ -113,17 +114,8 @@ var/global/wcDw
 		for(var/obj/machinery/door/window/D in locate(A))
 			D.color = wcBrown
 
-	//GREEN (Some of Medbay areas and Hydro)
+	//GREEN (Virology and Hydro areas)
 	var/wsGreenList = list(
-		/area/medical/psych,
-		/area/medical/patients_rooms,
-		/area/medical/patient_a,
-		/area/medical/patient_b,
-		/area/medical/medbreak,
-		/area/medical/surgeryobs,
-		/area/medical/surgery,
-		/area/medical/surgery2,
-		/area/medical/hallway/outbranch,
 		/area/medical/virology,
 		/area/hydroponics,
 		/area/research_outpost/maintstore1,
@@ -142,8 +134,18 @@ var/global/wcDw
 		/area/medical/morgue,
 		/area/medical/hallway,
 		/area/medical/genetics_cloning,
-		/area/medical/genetics,
-		/area/medical/cmo
+		/area/medical/cmo,
+		/area/medical/psych,
+		/area/medical/patients_rooms,
+		/area/medical/patient_a,
+		/area/medical/patient_b,
+		/area/medical/medbreak,
+		/area/medical/surgeryobs,
+		/area/medical/surgery,
+		/area/medical/surgery2,
+		/area/medical/storage,
+		/area/medical/chemistry,
+		/area/medical/sleeper
 		)
 
 	for(var/A in wsBlueList)

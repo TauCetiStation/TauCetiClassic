@@ -1,4 +1,4 @@
-/mob/living/simple_animal/hostile/asteroid/
+/mob/living/simple_animal/hostile/asteroid
 	vision_range = 2
 	min_oxy = 0
 	max_oxy = 0
@@ -460,7 +460,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_hide"
 	flags = NOBLUDGEON
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	layer = 4
 
 /obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)

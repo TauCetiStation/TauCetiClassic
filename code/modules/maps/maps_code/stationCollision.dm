@@ -192,7 +192,7 @@ var/sc_safecode5 = "[rand(0,9)]"
 	if (istype(A,/mob/living))
 		var/mob/living/L = A
 		L.gib()
-	else if(istype(A,/obj/))
+	else if(istype(A,/obj))
 		var/obj/O = A
 		O.ex_act(1.0)
 		if(O) del(O)

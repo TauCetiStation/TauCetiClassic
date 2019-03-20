@@ -127,7 +127,7 @@ var/lastMove = 0
 		if(M.client)
 			if(location == 1)
 				if(M.ear_deaf <= 0 || istype(M, /mob/dead/observer))
-					M << sound('sound/effects/shuttle_flying.ogg')
+					M << sound('sound/effects/shuttle_flying.ogg', volume = 50)
 			spawn(0)
 				if(M.buckled)
 					shake_camera(M, 2, 1)
@@ -162,7 +162,7 @@ var/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle/ui_interact(user)
 	var/dat = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];move=1'>Send</A></b></center><br>"
-	user << browse("[entity_ja(dat)]", "window=researchshuttle;size=200x100")
+	user << browse("[entity_ja(dat)]", "window=researchshuttle;size=200x130")
 
 /obj/machinery/computer/arrival_shuttle/Topic(href, href_list)
 	. = ..()
@@ -185,7 +185,7 @@ var/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle/dock/ui_interact(user)
 	var/dat1 = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];back=1'>Send back</A></b></center><br>"
-	user << browse("[entity_ja(dat1)]", "window=researchshuttle;size=200x100")
+	user << browse("[entity_ja(dat1)]", "window=researchshuttle;size=200x130")
 
 /obj/machinery/computer/arrival_shuttle/dock/Topic(href, href_list)
 	. = ..()

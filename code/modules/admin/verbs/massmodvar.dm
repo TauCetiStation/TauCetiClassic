@@ -26,11 +26,7 @@
 /client/proc/massmodify_variables(atom/O, var_name = "", method = 0)
 	if(!check_rights(R_VAREDIT))	return
 
-	var/list/icons_modifying = list("icon", "icon_state", "resize")
-	var/list/locked = list("vars", "summon_type")
-	var/list/fully_locked = list("holder", "key", "ckey", "client", "player_next_age_tick", "player_ingame_age", "resize_rev")
-
-	if(is_type_in_list(O, forbidden_varedit_object_types))
+	if(is_type_in_list(O, VE_PROTECTED_TYPES))
 		to_chat(usr, "\red It is forbidden to edit this object's variables.")
 		return
 
@@ -54,14 +50,14 @@
 	var/var_value = O.vars[variable]
 	var/dir
 
-	if(variable in fully_locked)
+	if(variable in VE_MASS_FULLY_LOCKED)
 		to_chat(usr, "\red It is forbidden to edit this variable.")
 		return
 
-	if((variable in locked) && !check_rights(R_DEBUG))
+	if((variable in VE_MASS_DEBUG) && !check_rights(R_DEBUG))
 		return
 
-	if((variable in icons_modifying) && !check_rights(R_DEBUG|R_EVENT))
+	if((variable in VE_MASS_ICONS) && !check_rights(R_DEBUG|R_EVENT))
 		return
 
 	if(isnull(var_value))
@@ -225,48 +221,90 @@
 			return .(O.vars[variable])
 
 		if("text")
-			var/new_value = input("Enter new text:", "Text", O.vars[variable]) as text|null
-			if(isnull(new_value))
-				return
-			O.vars[variable] = new_value
+			var/new_value
+
+			if(variable == "light_color")
+				var/var_new = input("Select new color:", "Color", O.vars[variable]) as null|color
+				if(isnull(var_new))
+					return
+			else
+				new_value = input("Enter new text:", "Text", O.vars[variable]) as text|null
+				if(isnull(new_value))
+					return
+				O.vars[variable] = new_value
 
 			if(method)
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
 						if(istype(M, O.type))
-							M.vars[variable] = O.vars[variable]
+							if(variable == "light_color")
+								M.set_light(l_color = new_value)
+							else
+								M.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
 						if(istype(A, O.type))
-							A.vars[variable] = O.vars[variable]
+							if(variable == "light_color")
+								A.set_light(l_color = new_value)
+							else
+								A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
 						if(istype(A, O.type))
-							A.vars[variable] = O.vars[variable]
+							if(variable == "light_color")
+								A.set_light(l_color = new_value)
+							else
+								A.vars[variable] = O.vars[variable]
 			else
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
 						if(M.type == O.type)
-							M.vars[variable] = O.vars[variable]
+							if(variable == "light_color")
+								M.set_light(l_color = new_value)
+							else
+								M.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
 						if(A.type == O.type)
-							A.vars[variable] = O.vars[variable]
+							if(variable == "light_color")
+								A.set_light(l_color = new_value)
+							else
+								A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
 						if(A.type == O.type)
-							A.vars[variable] = O.vars[variable]
+							if(variable == "light_color")
+								A.set_light(l_color = new_value)
+							else
+								A.vars[variable] = O.vars[variable]
 
 		if("num")
-			var/new_value = input("Enter new number:","Num", O.vars[variable]) as num|null
+			var/new_value
+
+			if(variable == "dynamic_lighting")
+				new_value = alert("dynamic_lighting", ,
+					"DYNAMIC_LIGHTING_DISABLED", "DYNAMIC_LIGHTING_ENABLED", "DYNAMIC_LIGHTING_FORCED"
+					)
+				switch(new_value)
+					if("DYNAMIC_LIGHTING_DISABLED")
+						new_value = DYNAMIC_LIGHTING_DISABLED
+					if("DYNAMIC_LIGHTING_ENABLED")
+						new_value = DYNAMIC_LIGHTING_ENABLED
+					if("DYNAMIC_LIGHTING_FORCED")
+						new_value = DYNAMIC_LIGHTING_FORCED
+			else
+				new_value = input("Enter new number:","Num", O.vars[variable]) as num|null
+
 			if(isnull(new_value))
 				return
 
-			if(variable=="resize")
+			if(variable in list("opacity", "light_range", "light_power", "dynamic_lighting"))
+				// do nothing, as we shouldn't set O.vars[variable] = new_value before procs.
+			else if(variable=="resize")
 				if(new_value == 0)
 					to_chat(usr, "<b>Resize coefficient can't be equal 0</b>")
 					return
@@ -282,8 +320,12 @@
 					for(var/mob/M in mob_list)
 						if(istype(M, O.type))
 							switch(variable)
+								if("opacity")
+									M.set_opacity(new_value)
 								if("light_range")
 									M.set_light(new_value)
+								if("light_power")
+									M.set_light(l_power = new_value)
 								if("resize")
 									M.vars[variable] = new_value
 									M.update_transform()
@@ -295,8 +337,12 @@
 					for(var/obj/A in world)
 						if(istype(A, O.type))
 							switch(variable)
+								if("opacity")
+									A.set_opacity(new_value)
 								if("light_range")
 									A.set_light(new_value)
+								if("light_power")
+									A.set_light(l_power = new_value)
 								if("resize")
 									A.vars[variable] = new_value
 									A.update_transform()
@@ -308,13 +354,29 @@
 					for(var/turf/A in world)
 						if(istype(A, O.type))
 							switch(variable)
+								if("opacity")
+									A.set_opacity(new_value)
 								if("light_range")
 									A.set_light(new_value)
+								if("light_power")
+									A.set_light(l_power = new_value)
+								if("dynamic_lighting")
+									A.set_dynamic_lighting(new_value)
 								if("resize")
 									A.vars[variable] = new_value
 									A.update_transform()
 								else
 									A.vars[variable] = O.vars[variable]
+						CHECK_TICK
+
+				else if(istype(O, /area))
+					for(var/area/A in world)
+						if(istype(A, O.type))
+							switch(variable)
+								if("opacity")
+									A.set_opacity(new_value)
+								if("dynamic_lighting")
+									A.set_dynamic_lighting(new_value)
 						CHECK_TICK
 
 			else
@@ -322,8 +384,12 @@
 					for(var/mob/M in mob_list)
 						if(M.type == O.type)
 							switch(variable)
+								if("opacity")
+									M.set_opacity(new_value)
 								if("light_range")
 									M.set_light(new_value)
+								if("light_power")
+									M.set_light(l_power = new_value)
 								if("resize")
 									M.vars[variable] = new_value
 									M.update_transform()
@@ -335,8 +401,12 @@
 					for(var/obj/A in world)
 						if(A.type == O.type)
 							switch(variable)
+								if("opacity")
+									A.set_opacity(new_value)
 								if("light_range")
 									A.set_light(new_value)
+								if("light_power")
+									A.set_light(l_power = new_value)
 								if("resize")
 									A.vars[variable] = new_value
 									A.update_transform()
@@ -348,13 +418,29 @@
 					for(var/turf/A in world)
 						if(A.type == O.type)
 							switch(variable)
+								if("opacity")
+									A.set_opacity(new_value)
 								if("light_range")
 									A.set_light(new_value)
+								if("light_power")
+									A.set_light(l_power = new_value)
+								if("dynamic_lighting")
+									A.set_dynamic_lighting(new_value)
 								if("resize")
 									A.vars[variable] = new_value
 									A.update_transform()
 								else
 									A.vars[variable] = O.vars[variable]
+						CHECK_TICK
+
+				else if(istype(O, /area))
+					for(var/area/A in world)
+						if(A.type == O.type)
+							switch(variable)
+								if("opacity")
+									A.set_opacity(new_value)
+								if("dynamic_lighting")
+									A.set_dynamic_lighting(new_value)
 						CHECK_TICK
 
 		if("type")

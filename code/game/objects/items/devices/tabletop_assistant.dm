@@ -18,7 +18,7 @@
 	item_state = "analyzer"
 	w_class = ITEM_SIZE_NORMAL
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 20
@@ -194,6 +194,7 @@
 		var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
 		P.info = result_log
 		P.name = "Dice Roll Log"
+		P.update_icon()
 		report_time = world.time + 100 // Ten seconds delay.
 	if(href_list["diceclearresult"])
 		result_log = ""
@@ -274,6 +275,7 @@
 						var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
 						P.info = output_message
 						P.name = "Missing Cards Report"
+						P.update_icon()
 						report_time = world.time + 100 // 10 seconds delay.
 					if(CARD_PICK_MODE)
 						if(C.cards.len == 0)

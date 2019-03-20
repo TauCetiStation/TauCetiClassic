@@ -81,6 +81,15 @@
 		hex = text("0[]", hex)
 	return hex
 
+/proc/numlist2hex(list/numlist)
+	var/hex = "#"
+	for(var/col_num in 1 to 3)
+		var/col_hex = num2hex(numlist[col_num])
+		while(length(col_hex) < 2)
+			col_hex = text("0[]", col_hex) // Takes care of leading zeroes.
+		hex += col_hex
+	return hex
+
 /proc/text2numlist(text, delimiter="\n")
 	var/list/num_list = list()
 	for(var/x in splittext(text, delimiter))
@@ -89,7 +98,7 @@
 
 //Splits the text of a file at seperator and returns them in a list.
 /proc/file2list(filename, seperator="\n")
-	return splittext(return_file_text(filename),seperator)
+	return splittext(trim(return_file_text(filename)),seperator)
 
 
 //Turns a direction into text
@@ -204,6 +213,7 @@
 	if(rights & R_SPAWN)       . += "[seperator]+SPAWN"
 	if(rights & R_WHITELIST)   . += "[seperator]+WHITELIST"
 	if(rights & R_EVENT)       . += "[seperator]+EVENT"
+	if(rights & R_LOG)		   . += "[seperator]+LOG"
 	return .
 
 /proc/ui_style2icon(ui_style)
@@ -254,3 +264,18 @@
 				. += i
 				A -= values[i]
 				break
+
+/proc/type2parent(child)
+	var/string_type = "[child]"
+	var/last_slash = findlasttext(string_type, "/")
+	if(last_slash == 1)
+		switch(child)
+			if(/datum)
+				return null
+			if(/obj || /mob)
+				return /atom/movable
+			if(/area || /turf)
+				return /atom
+			else
+				return /datum
+	return text2path(copytext(string_type, 1, last_slash))

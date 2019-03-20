@@ -45,7 +45,7 @@
 
 //LOOK AT THIS - ..()??
 /*/mob/living/simple_animal/crab/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/weapon/wirecutters))
+	if(iswirecutter(O))
 		if(prob(50))
 			to_chat(user, "\red \b This kills the crab.")
 			health -= 20
@@ -142,7 +142,7 @@
 						/obj/item/clothing/head/collectable/kitty,
 						/obj/item/clothing/head/rabbitears,
 						/obj/item/clothing/head/collectable/rabbitears,
-						/obj/item/clothing/head/beret,
+						/obj/item/clothing/head/beret/red,
 						/obj/item/clothing/head/collectable/beret,
 						/obj/item/clothing/head/det_hat,
 						/obj/item/clothing/head/nursehat,
@@ -187,7 +187,7 @@
 							name = "Hoppy"
 							emote_see = list("twitches its nose", "hops around a bit")
 							desc = "This is hoppy. It's a corgi-...urmm... bunny rabbit"
-						if(/obj/item/clothing/head/beret, /obj/item/clothing/head/collectable/beret)
+						if(/obj/item/clothing/head/beret/red, /obj/item/clothing/head/collectable/beret)
 							name = "Yann"
 							desc = "Mon dieu! C'est un chien!"
 							speak = list("le woof!", "le bark!", "JAPPE!!")

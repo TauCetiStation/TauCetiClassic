@@ -1,21 +1,17 @@
 
-
-
-//endless reagents!
+// endless reagents!
 /obj/item/weapon/reagent_containers/glass/replenishing
 	var/spawning_id
 
 /obj/item/weapon/reagent_containers/glass/replenishing/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	spawning_id = pick("blood","holywater","unholywater","lube","stoxin","ethanol","ice","glycerol","fuel","cleaner")
+	spawning_id = pick("blood", "holywater", "unholywater", "lube", "stoxin", "beer", "glycerol", "fuel", "cleaner")
 
 /obj/item/weapon/reagent_containers/glass/replenishing/process()
 	reagents.add_reagent(spawning_id, 0.3)
 
-
-
-//a talking gas mask!
+// a talking gas mask!
 /obj/item/clothing/mask/gas/poltergeist
 	var/list/heard_talk = list()
 	var/last_twitch = 0
@@ -25,18 +21,18 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-var/list/bad_messages = list("Never take me off, please!",\
-		"They all want to wear me... But I'm yours!",\
-		"They're all want to take me from you! Bastards!",\
-		"We are one",\
-		"I want to be only yours!",\
+var/list/bad_messages = list("Never take me off, please!",
+		"They all want to wear me... But I'm yours!",
+		"They're all want to take me from you! Bastards!",
+		"We are one",
+		"I want to be only yours!",
 		"Help me!")
 
 /obj/item/clothing/mask/gas/poltergeist/process(/mob/living/H)
 	if(heard_talk.len && istype(src.loc, /mob/living) && prob(20))
 		var/mob/living/M = src.loc
 		M.say(pick(heard_talk))
-	if(istype(src.loc, /mob/living) && prob(20))
+	if(istype(src.loc, /mob/living) && prob(2))
 		var/mob/living/M = src.loc
 		to_chat(M, "A strange voice goes through your head: <b><font color='red' size='[num2text(rand(1,3))]'><b>[pick(bad_messages)]</b></font>")
 
@@ -50,12 +46,12 @@ var/list/bad_messages = list("Never take me off, please!",\
 
 
 
-//a vampiric statuette
-//todo: cult integration
+// a vampiric statuette
+// todo: cult integration
 /obj/item/weapon/vampiric
 	name = "statuette"
 	icon_state = "statuette"
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/finds.dmi'
 	var/charges = 0
 	var/list/nearby_mobs = list()
 	var/last_bloodcall = 0
@@ -70,7 +66,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/vampiric/process()
-	//see if we've identified anyone nearby
+	// see if we've identified anyone nearby
 	if(world.time - last_bloodcall > bloodcall_interval && nearby_mobs.len)
 		var/mob/living/carbon/human/M = pop(nearby_mobs)
 		if(M in view(7,src) && M.health > 20)
@@ -78,7 +74,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 				bloodcall(M)
 				nearby_mobs.Add(M)
 
-	//suck up some blood to gain power
+	// suck up some blood to gain power
 	if(world.time - last_eat > eat_interval)
 		var/obj/effect/decal/cleanable/blood/B = locate() in range(2,src)
 		if(B)
@@ -90,7 +86,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 				charges += 1
 				playsound(src.loc, 'sound/effects/splat.ogg', 50, 1, -3)
 
-	//use up stored charges
+	// use up stored charges
 	if(charges >= 10)
 		charges -= 10
 		new /obj/effect/spider/eggcluster(pick(view(1,src)))
@@ -110,10 +106,10 @@ var/list/bad_messages = list("Never take me off, please!",\
 
 	if(charges >= 0.1)
 		if(prob(5))
-			src.visible_message("\red [bicon(src)] [src]'s eyes glow ruby red for a moment!")
+			src.visible_message("<span class='warning'>[bicon(src)] [src]'s eyes glow ruby red for a moment!</span>")
 			charges -= 0.1
 
-	//check on our shadow wights
+	// check on our shadow wights
 	if(shadow_wights.len)
 		wight_check_index++
 		if(wight_check_index > shadow_wights.len)
@@ -140,14 +136,14 @@ var/list/bad_messages = list("Never take me off, please!",\
 
 		var/target = pick(BP_CHEST , BP_GROIN , BP_HEAD , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG)
 		M.apply_damage(rand(5, 10), BRUTE, target)
-		to_chat(M, "\red The skin on your [parse_zone(target)] feels like it's ripping apart, and a stream of blood flies out.")
+		to_chat(M, "<span class='warning'>The skin on your [parse_zone(target)] feels like it's ripping apart, and a stream of blood flies out.</span>")
 		var/obj/effect/decal/cleanable/blood/splatter/animated/B = new(M.loc)
 		B.target_turf = pick(range(1, src))
 		B.blood_DNA = list()
 		B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 		M.vessel.remove_reagent("blood",rand(25,50))
 
-//animated blood 2 SPOOKY
+// animated blood 2 SPOOKY
 /obj/effect/decal/cleanable/blood/splatter/animated
 	var/turf/target_turf
 	var/loc_last_process
@@ -164,7 +160,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 			target_turf = null
 		loc_last_process = src.loc
 
-		//leave some drips behind
+		// leave some drips behind
 		if(prob(50))
 			var/obj/effect/decal/cleanable/blood/drip/D = new(src.loc)
 			D.blood_DNA = src.blood_DNA.Copy()
@@ -215,38 +211,45 @@ var/list/bad_messages = list("Never take me off, please!",\
 	to_chat(obstacle, "\red You feel a chill run down your spine!")
 
 
-//healing tool
+ // healing tool
 /obj/item/weapon/strangetool
 	name = "strange device"
 	desc = "This device is made of metal, emits a strange purple formation of unknown origin."
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/finds.dmi'
 	icon_state = "strange_tool"
 	var/last_time_used = 0
 
+/obj/item/weapon/strangetool/attack(mob/M, mob/user, def_zone)
+	emmit_healing(M)
+
 /obj/item/weapon/strangetool/attack_self(mob/user)
+	emmit_healing(user)
+
+/obj/item/weapon/strangetool/proc/emmit_healing(mob/M)
 	if(last_time_used + 50 < world.time)
-		to_chat(user, "<span class='notice'><font color='purple'>Divice blinks brightly.</font></span>")
-		if(iscarbon(user))
-			var/mob/living/carbon/C = user
-			to_chat(C, "\blue You feel a soothing energy invigorate you.")
-			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
+		visible_message("<span class='notice'><font color='purple'>[bicon(src)]Device blinks brightly.</font></span>")
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			to_chat(C, "<span class='notice'><font color='blue'>You feel a soothing energy invigorate you.</font></span>")
+			if(ishuman(C))
+				var/mob/living/carbon/human/H = C
 				for(var/obj/item/organ/external/BP in H.bodyparts)
-					BP.heal_damage(rand(20,30),rand(20,30))
-				H.vessel.add_reagent("blood",5)
-				H.nutrition += rand(30,55)
-				H.adjustBrainLoss(rand(-10,-25))
-				H.radiation -= min(H.radiation, rand(20,30))
+					BP.heal_damage(rand(20,30), rand(20,30))
+				H.vessel.add_reagent("blood", 5)
+				H.nutrition += rand(30, 40)
+				H.adjustBrainLoss(rand(-10, -25))
+				H.radiation -= min(H.radiation, rand(20, 30))
 				H.bodytemperature = initial(H.bodytemperature)
 				spawn(1)
 					H.fixblood()
-			//
-			C.adjustOxyLoss(rand(-40,-20))
-			C.adjustToxLoss(rand(-40,-20))
-			C.adjustBruteLoss(rand(-40,-20))
-			C.adjustFireLoss(rand(-40,-20))
-			//
+
+			C.adjustOxyLoss(rand(-40, -20))
+			C.adjustToxLoss(rand(-40, -20))
+			C.adjustBruteLoss(rand(-40, -20))
+			C.adjustFireLoss(rand(-40, -20))
+
 			C.regenerate_icons()
+
 		last_time_used = world.time
 	else
-		to_chat(user, "<span class='notice'><font color='red'>Divice blinks faintly.</font></span>")
+		visible_message("<span class='notice'><font color='red'>[bicon(src)] Device blinks faintly.</font></span>")

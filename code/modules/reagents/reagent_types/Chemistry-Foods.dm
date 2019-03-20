@@ -11,7 +11,7 @@
 	var/mob_met_factor = 1
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		mob_met_factor = C.metabolism_factor
+		mob_met_factor = C.get_metabolism_factor()
 	if(volume > last_volume)
 		var/to_add = rand(0, volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor
 		M.reagents.add_reagent("nutriment", ((volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor) - to_add)

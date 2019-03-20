@@ -22,7 +22,7 @@
 	var/sheets_refunded = 2
 
 /obj/item/light_fixture_frame/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 		user.SetNextMove(CLICK_CD_RAPID)
 		qdel(src)
@@ -99,7 +99,7 @@
 /obj/machinery/light_construct/attackby(obj/item/weapon/W, mob/user)
 	src.add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		if (src.stage == 1)
 			if(user.is_busy()) return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -119,7 +119,7 @@
 			to_chat(usr, "You have to unscrew the case first.")
 			return
 
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(iswirecutter(W))
 		if (src.stage != 2)
 			return
 		src.stage = 1
@@ -134,7 +134,7 @@
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		return
 
-	if(istype(W, /obj/item/stack/cable_coil))
+	if(iscoil(W))
 		if (src.stage != 1)
 			return
 		var/obj/item/stack/cable_coil/coil = W
@@ -150,7 +150,7 @@
 			"You add wires to [src].")
 		return
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		if (src.stage == 2)
 			switch(fixture_type)
 				if ("tube")
@@ -419,7 +419,7 @@
 
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
-		if(istype(W, /obj/item/weapon/screwdriver)) //If it's a screwdriver open it.
+		if(isscrewdriver(W)) //If it's a screwdriver open it.
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			user.visible_message("[user.name] opens [src]'s casing.", \
 				"You open [src]'s casing.", "You hear a noise.")
@@ -454,7 +454,7 @@
 // true if area has power and lightswitch is on
 /obj/machinery/light/proc/has_power()
 	var/area/A = src.loc.loc
-	return A.master.lightswitch && A.master.power_light
+	return A.lightswitch && A.power_light
 
 /obj/machinery/light/proc/flicker(amount = rand(10, 20))
 	if(flickering) return
@@ -633,7 +633,7 @@
 
 // called when area power state changes
 /obj/machinery/light/power_change()
-	var/area/A = get_area_master(src)
+	var/area/A = get_area(src)
 	if(A) seton(A.lightswitch && A.power_light)
 
 // called when on fire
@@ -662,7 +662,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	force = 2
 	throwforce = 5
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	var/status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/switchcount = 0	// number of times switched
@@ -683,7 +683,7 @@
 	brightness_power = 3
 
 /obj/item/weapon/light/tube/large
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	name = "large light tube"
 	brightness_range = 15
 	brightness_power = 4
