@@ -325,7 +325,7 @@ var/list/cult_runes = list()
 		for(var/obj/item/organ/external/BP in H.bodyparts)
 			if(BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED | ORGAN_DESTROYED | ORGAN_DEAD | ORGAN_ARTERY_CUT))
 				BP.rejuvenate()
-				to_chat(user, "<span class=cult'>You were honored by Nar-Sie. You can feel his power in your [BP]</span>")
+				to_chat(user, "<span class='cult'>You were honored by Nar-Sie. You can feel his power in your [BP]</span>")
 				break
 	user.heal_overall_damage(1.2 * drain, drain)
 
