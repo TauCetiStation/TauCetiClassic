@@ -13180,11 +13180,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/rnd/xenobiology)
-"awb" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/space,
-/area/space)
 "awc" = (
 /obj/structure/grille{
 	density = 0;
@@ -101445,7 +101440,7 @@ aah
 aah
 aah
 aah
-awb
+aah
 awz
 awh
 awh
