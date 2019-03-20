@@ -207,7 +207,7 @@
 	deform = 'icons/mob/human_races/r_def_lizard.dmi'
 	language = "Sinta'unathi"
 	tail = "sogtail"
-	unarmed_type = /datum/unarmed_attack/claws
+	unarmed_type = /datum/unarmed_attack/claws/unathi
 	dietflags = DIET_MEAT | DIET_DAIRY
 	primitive = /mob/living/carbon/monkey/unathi
 	darksight = 3
@@ -720,6 +720,9 @@
 	damage = 5
 	sharp = 1
 	edge = 1
+
+/datum/unarmed_attack/claws/unathi
+	damage = 3
 
 /datum/unarmed_attack/claws/armalis
 	attack_verb = list("slash", "claw")
