@@ -2600,9 +2600,7 @@
 /area/security/main)
 "aek" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -12904,9 +12902,7 @@
 /area/rnd/xenobiology)
 "avD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -14294,9 +14290,7 @@
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -14426,9 +14420,7 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -14443,9 +14435,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -14612,9 +14602,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -14688,9 +14676,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -14941,9 +14927,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -15583,9 +15567,7 @@
 /area/maintenance/dormitory)
 "aAB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -28164,9 +28146,7 @@
 /area/hallway/secondary/entry)
 "aXT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -31187,17 +31167,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/hallway/secondary/entry)
-"bdC" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
-	},
-/turf/simulated/floor,
-/area/hallway/secondary/entry)
 "bdD" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/fire/firefighter,
@@ -31228,9 +31197,7 @@
 /area/maintenance/engineering)
 "bdG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -35860,9 +35827,7 @@
 	},
 /obj/structure/cable{
 	d2 = 8;
-	icon_state = "0-8";
-	step_x = 0;
-	step_y = 0
+	icon_state = "0-8"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -39106,9 +39071,7 @@
 /area/quartermaster/office)
 "bvg" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -39367,9 +39330,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -39402,9 +39363,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -39424,9 +39383,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -39450,9 +39407,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -39515,9 +39470,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -39545,9 +39498,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -44503,9 +44454,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -44523,9 +44472,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -44838,9 +44785,7 @@
 	},
 /obj/structure/cable{
 	d2 = 8;
-	icon_state = "0-8";
-	step_x = 0;
-	step_y = 0
+	icon_state = "0-8"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -47465,9 +47410,7 @@
 	req_one_access_txt = "65;48"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -49340,9 +49283,7 @@
 /area/rnd/hallway)
 "bSl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -51110,9 +51051,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/hydroponics)
@@ -51127,9 +51066,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -51150,9 +51087,7 @@
 /area/hydroponics)
 "bWE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -61631,9 +61566,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/cargo)
@@ -61642,9 +61575,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
@@ -62650,9 +62581,7 @@
 /area/hydroponics)
 "cyo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 2;
@@ -64339,9 +64268,7 @@
 "cCb" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 2;
@@ -64389,9 +64316,7 @@
 /area/engine/singularity)
 "cCf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -64524,9 +64449,7 @@
 /area/engine/singularity)
 "cCt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 2;
@@ -64661,9 +64584,7 @@
 /area/turret_protected/ai)
 "cCJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 2;
@@ -65595,9 +65516,7 @@
 /area/hydroponics)
 "cFh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/machinery/vending/hydronutrients,
 /turf/simulated/floor,
@@ -65797,9 +65716,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -65817,9 +65734,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -67140,9 +67055,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -69166,9 +69079,7 @@
 /area/hallway/secondary/entry)
 "dHb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -69202,9 +69113,7 @@
 /area/quartermaster/qm)
 "dKb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -69277,9 +69186,7 @@
 /area/security/armoury)
 "dQb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -73780,9 +73687,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -75205,9 +75110,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -75684,9 +75587,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -75920,9 +75821,7 @@
 /area/crew_quarters/barbershop)
 "pZb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -75951,9 +75850,7 @@
 	},
 /obj/random/tools/tech_supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -76892,9 +76789,7 @@
 /area/medical/virology)
 "rIb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -76906,9 +76801,7 @@
 /area/medical/virology)
 "rJb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -76920,9 +76813,7 @@
 /area/medical/virology)
 "rKb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -76939,9 +76830,7 @@
 /area/medical/virology)
 "rLb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -76965,9 +76854,7 @@
 "rNb" = (
 /obj/structure/stool,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -77358,9 +77245,7 @@
 /area/medical/medbreak)
 "sCb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -77376,9 +77261,7 @@
 /area/medical/virology)
 "sDb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -77425,9 +77308,7 @@
 /area/medical/virology)
 "sIb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -77505,9 +77386,7 @@
 /area/medical/virology)
 "sPb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -77523,9 +77402,7 @@
 /area/medical/virology)
 "sQb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -77953,9 +77830,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 2;
@@ -77967,9 +77842,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/item/device/radio/intercom{
 	pixel_y = -28
@@ -77981,9 +77854,7 @@
 /area/hallway/secondary/exit)
 "tHb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/hallway/secondary/exit)
@@ -78693,9 +78564,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -78717,9 +78586,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -95044,7 +94911,7 @@ aaa
 aEb
 cEG
 bbt
-bdC
+aGj
 aEL
 aGn
 bmR
@@ -95558,7 +95425,7 @@ urb
 aWv
 aYR
 bbt
-bdC
+aGj
 bhi
 aGn
 bmS
