@@ -174,7 +174,7 @@ var/list/alldepartments = list("Central Command")
 			idcard.loc = src
 			scan = idcard
 
-	else if(istype(O, /obj/item/weapon/wrench))
+	else if(iswrench(O))
 		if(O.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")

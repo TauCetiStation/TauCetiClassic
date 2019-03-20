@@ -96,7 +96,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] already has a cell installed.</span>")
 
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(W))
 		if(cell)
 			var/obj/item/C = cell
 			C.loc = get_turf(user)
@@ -247,7 +247,7 @@
 			fail_msg = "<span class='notice'>You need at least three rods to complete this task.</span>"
 			success_msg = "<span class='notice'>You assemble a backbone of rods around the wooden stock.</span>"
 
-		else if(istype(W, /obj/item/stack/cable_coil) && (buildstate in list(2, 4)))
+		else if(iscoil(W) && (buildstate in list(2, 4)))
 			amount_to_use = 5
 			fail_msg = "<span class='notice'>You need at least five segments of cable coil to complete this task."
 			if(buildstate == 2)
@@ -268,7 +268,7 @@
 			else
 				to_chat(user, fail_msg)
 
-	else if(istype(W, /obj/item/weapon/weldingtool))
+	else if(iswelder(W))
 		if(buildstate == 1)
 			var/obj/item/weapon/weldingtool/T = W
 			if(T.use(0, user))
@@ -279,7 +279,7 @@
 			buildstate++
 			update_icon()
 
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(W))
 		if(buildstate == 5)
 			to_chat(user, "<span class='notice'>You secure the crossbow's various parts.")
 			new /obj/item/weapon/crossbow(get_turf(src))

@@ -383,7 +383,7 @@
 			qdel(W)
 			return
 
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		if(user.is_busy()) return
 		to_chat(user, "\blue Now disassembling table")
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -685,7 +685,7 @@
 		return ..()
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/weldingtool))
+	if (iswelder(W))
 		if(user.is_busy()) return FALSE
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.use(0, user))
@@ -706,7 +706,7 @@
 			return FALSE
 		return TRUE
 
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		if(src.status == 2)
 			return TRUE
 
@@ -771,7 +771,7 @@
 	return
 
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		new /obj/item/weapon/rack_parts( src.loc )
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		qdel(src)

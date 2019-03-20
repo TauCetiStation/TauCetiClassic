@@ -190,7 +190,7 @@
 
 	var/obj/structure/disposalpipe/CP = locate() in T
 	if(ptype>=6 && ptype <= 8) // Disposal or outlet
-		if (!(istype(I, /obj/item/weapon/wrench) && anchored))
+		if (!(iswrench(I) && anchored))
 			if(CP) // There's something there
 				if(!istype(CP,/obj/structure/disposalpipe/trunk))
 					to_chat(user, "The [nicetype] requires a trunk underneath it in order to work.")
@@ -209,7 +209,7 @@
 				return
 
 
-	if(istype(I, /obj/item/weapon/wrench))
+	if(iswrench(I))
 		if(anchored)
 			anchored = 0
 			if(ispipe)
@@ -229,7 +229,7 @@
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		update()
 
-	else if(istype(I, /obj/item/weapon/weldingtool))
+	else if(iswelder(I))
 		if(anchored)
 			if(user.is_busy()) return
 			var/obj/item/weapon/weldingtool/W = I

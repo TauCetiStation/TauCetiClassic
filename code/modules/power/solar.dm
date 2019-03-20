@@ -316,7 +316,7 @@
 	return
 
 /obj/machinery/power/solar_control/attackby(I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		if(user.is_busy()) return
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20, target = src))

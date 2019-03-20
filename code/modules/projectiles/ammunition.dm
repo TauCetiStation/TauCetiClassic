@@ -34,7 +34,7 @@
 	return
 
 /obj/item/ammo_casing/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		if(BB)
 			if(initial(BB.name) == "bullet")
 				var/label_text = sanitize_safe(input(user, "Inscribe some text into \the [initial(BB.name)]","Inscription"), MAX_NAME_LEN)

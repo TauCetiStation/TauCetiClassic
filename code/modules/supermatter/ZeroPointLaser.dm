@@ -117,7 +117,7 @@
 
 /obj/machinery/zero_point_emitter/attackby(obj/item/W, mob/user)
 
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		if(active)
 			to_chat(user, "Turn off the [src] first.")
 			return
@@ -140,7 +140,7 @@
 				to_chat(user, "\red The [src.name] needs to be unwelded from the floor.")
 		return
 
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(active)
 			to_chat(user, "Turn off the [src] first.")

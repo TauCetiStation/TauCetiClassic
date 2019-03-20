@@ -36,16 +36,16 @@
 
 /obj/effect/decal/mecha_wreckage/attackby(obj/item/weapon/W, mob/user)
 	var/salvage_with = ""
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.use(3,user))
 			salvage_with = "welder"
 		else
 			to_chat(user, "\blue You need more welding fuel to complete this task.")
 			return
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(iswirecutter(W))
 		salvage_with = "wirecutter"
-	if(istype(W, /obj/item/weapon/crowbar))
+	if(iscrowbar(W))
 		salvage_with = "crowbar"
 	if(!salvage_with)
 		..()

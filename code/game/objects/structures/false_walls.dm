@@ -105,7 +105,7 @@
 		if(T.density)
 			to_chat(user, "\red The wall is blocked!")
 			return
-		if(istype(W, /obj/item/weapon/screwdriver))
+		if(isscrewdriver(W))
 			user.visible_message("[user] tightens some bolts on the wall.", "You tighten the bolts on the wall.")
 			if(!mineral || mineral == "metal")
 				T.ChangeTurf(/turf/simulated/wall)
@@ -113,7 +113,7 @@
 				T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
 			qdel(src)
 
-		if( istype(W, /obj/item/weapon/weldingtool) )
+		if( iswelder(W) )
 			var/obj/item/weapon/weldingtool/WT = W
 			if( WT.welding )
 				if(!mineral)
@@ -249,13 +249,13 @@
 		return
 	user.SetNextMove(CLICK_CD_INTERACT)
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		var/turf/T = get_turf(src)
 		user.visible_message("[user] tightens some bolts on the r wall.", "You tighten the bolts on the wall.")
 		T.ChangeTurf(/turf/simulated/wall/r_wall)
 		qdel(src)
 
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if( WT.use(0,user) )
 			var/turf/T = get_turf(src)

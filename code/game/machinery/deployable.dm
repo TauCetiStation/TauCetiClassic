@@ -198,7 +198,7 @@ for reference:
 			s.start()
 			visible_message("\red BZZzZZzZZzZT")
 			return
-	else if (istype(W, /obj/item/weapon/wrench))
+	else if (iswrench(W))
 		if(W.use_tool(src, user, 20, volume = 75))
 			user.SetNextMove(CLICK_CD_INTERACT)
 			if (src.health < src.maxhealth)

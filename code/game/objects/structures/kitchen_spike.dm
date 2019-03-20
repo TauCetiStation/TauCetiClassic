@@ -36,7 +36,7 @@
 	return attack_hand(user)
 
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(iscrowbar(I))
 		if(!src.buckled_mob)
 			if(I.use_tool(src, user, 20, volume = 100))
 				to_chat(user, "<span class='notice'>You pry the spikes out of the frame.</span>")

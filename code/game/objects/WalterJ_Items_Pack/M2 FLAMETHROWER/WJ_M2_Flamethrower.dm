@@ -11,7 +11,7 @@
 	var/obj/item/weapon/flamethrower_M2/Connected_Flamethrower = null
 
 /obj/item/weapon/weldpack/M2_fuelback/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/T = W
 		if(T.welding)
 			message_admins("[key_name_admin(user)] triggered a flamethrower back explosion. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")

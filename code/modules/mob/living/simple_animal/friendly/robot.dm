@@ -70,7 +70,7 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		act_emag = user.name	   // Emag user saved
 		Emag(user)
-	else if(istype(W, /obj/item/device/multitool))
+	else if(ismultitool(W))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/computer/rdconsole))
 			rdconsole = M.buffer

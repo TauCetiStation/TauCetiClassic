@@ -307,7 +307,7 @@
 	var/damage = W.force / 4.0
 	user.SetNextMove(CLICK_CD_MELEE)
 
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 
 		if(WT.use(0, user))
@@ -524,7 +524,7 @@
 	var/damage = W.force / 4.0
 	user.SetNextMove(CLICK_CD_MELEE)
 
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 
 		if(WT.use(0, user))

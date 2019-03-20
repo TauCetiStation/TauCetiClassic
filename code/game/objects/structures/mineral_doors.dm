@@ -110,7 +110,7 @@
 			to_chat(user, "<span class='notice'>You finished digging!</span>")
 			Dismantle()
 
-	else if(istype(W, /obj/item/weapon/wrench) && !istype(src, /obj/structure/mineral_door/resin))
+	else if(iswrench(W) && !istype(src, /obj/structure/mineral_door/resin))
 		if(user.is_busy())
 			return
 		playsound(src, 'sound/items/Ratchet.ogg', 100, 1)
@@ -176,7 +176,7 @@
 	sheetType = /obj/item/stack/sheet/metal
 
 /obj/structure/mineral_door/metal/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		if(user.is_busy())
 			return
 		var/obj/item/weapon/weldingtool/WT = W
@@ -231,7 +231,7 @@
 	sheetType = /obj/item/stack/sheet/mineral/phoron
 
 /obj/structure/mineral_door/transparent/phoron/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.use(0, user))
 			TemperatureAct(100)

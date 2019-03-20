@@ -102,7 +102,7 @@
 
 
 /obj/machinery/bot/secbot/ed209/beingAttacked(obj/item/weapon/W, mob/user)
-	if(!istype(W, /obj/item/weapon/screwdriver) && W.force && !target)
+	if(!isscrewdriver(W) && W.force && !target)
 		target = user
 		mode = SECBOT_HUNT
 		if(lasercolor)//To make up for the fact that lasertag bots don't hunt
@@ -411,7 +411,7 @@
 				icon_state = "[lasercolor]ed209_shell"
 
 		if(3)
-			if(istype(W, /obj/item/weapon/weldingtool))
+			if(iswelder(W))
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.use(0,user))
 					build_step++
@@ -438,7 +438,7 @@
 				icon_state = "[lasercolor]ed209_prox"
 
 		if(6)
-			if(istype(W, /obj/item/stack/cable_coil))
+			if(iscoil(W))
 				var/obj/item/stack/cable_coil/coil = W
 				if(user.is_busy(src)) return
 				to_chat(user, "<span class='notice'>You start to wire [src]...</span>")
@@ -472,7 +472,7 @@
 			qdel(W)
 
 		if(8)
-			if(istype(W, /obj/item/weapon/screwdriver))
+			if(isscrewdriver(W))
 				if(user.is_busy(src)) return
 				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				to_chat(user, "<span class='notice'>Now attaching the gun to the frame...</span>")

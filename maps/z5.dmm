@@ -166,6 +166,9 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurple"
@@ -4456,9 +4459,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -6892,10 +6892,8 @@
 /obj/structure/transit_tube{
 	icon_state = "D-SE"
 	},
-/turf/simulated/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
-/area/mine/unexplored)
+/turf/simulated/wall/r_wall,
+/area/research_outpost/maintstore2)
 "nB" = (
 /obj/structure/transit_tube{
 	icon_state = "W-NE"
@@ -60200,8 +60198,8 @@ ma
 ma
 oU
 oU
-oU
-pN
+nA
+qi
 on
 pC
 an
@@ -60457,8 +60455,8 @@ mS
 nq
 Dg
 ma
-rE
-qL
+pN
+on
 an
 pC
 pC
@@ -60714,8 +60712,8 @@ mT
 ok
 Dg
 ma
-rE
 qL
+rE
 pC
 pC
 pC
@@ -60971,8 +60969,8 @@ mT
 ok
 Dg
 ma
-nA
-pO
+qL
+rE
 an
 an
 an
@@ -61228,8 +61226,8 @@ mb
 pm
 Dg
 oV
-qi
-gi
+pO
+ac
 ac
 qP
 ac

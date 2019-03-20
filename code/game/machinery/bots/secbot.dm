@@ -170,7 +170,7 @@
 
 
 /obj/machinery/bot/secbot/proc/beingAttacked(obj/item/weapon/W, mob/user)
-	if(!istype(W, /obj/item/weapon/screwdriver) && W.force && !target)
+	if(!isscrewdriver(W) && W.force && !target)
 		target = user
 		mode = SECBOT_HUNT
 
@@ -660,7 +660,7 @@
 
 /obj/item/weapon/secbot_assembly/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if(istype(W, /obj/item/weapon/weldingtool) && !build_step)
+	if(iswelder(W) && !build_step)
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.use(0, user))
 			build_step++

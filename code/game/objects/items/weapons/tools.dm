@@ -239,7 +239,7 @@
 
 
 /obj/item/weapon/weldingtool/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		if(welding)
 			to_chat(user, "<span class='rose'>Stop welding first!</span>")
 			return

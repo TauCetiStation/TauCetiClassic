@@ -33,7 +33,7 @@
 
 
 /obj/item/target/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/weapon/weldingtool))
+	if (iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.use(0, user))
 			overlays.Cut()
