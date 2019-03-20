@@ -27,9 +27,6 @@
 #                           is incremented and a warning is emitted.
 # - run_test_fail:          Exactly as run_test, but considers failure of the
 #                           command to be a successful test.
-# - run_test_ci:            Gates run_test to only run test when being run on a
-#                           CI platform. This is used to gate tests that are
-#                           destructive in some manner.
 # - exec_test:              Called by run_test{,fail}, actually executes the
 #                           test and returns its resulti.
 # - check_fail:             Called at the end of the run, prints final report
@@ -58,9 +55,6 @@ FAILED=0
 FAILED_BYNAME=()
 # Global counter of passed tests
 PASSED=0
-
-# Version of Node to install for tgui
-NODE_VERSION=4
 
 function msg {
     echo -e "\t\e[34mtest\e[0m: $*"
@@ -173,11 +167,6 @@ function run_byond_tests {
     msg "*** running map tests ***"
     find_byond_deps
     cp config/example/* config/
-    if [[ "$CI" == "true" ]]; then
-        msg "installing BYOND"
-        ./install-byond.sh || exit 1
-        source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
-    fi
     run_test "build map unit tests" "scripts/dm.sh -DUNIT_TEST taucetistation.dme"
     run_test "check no warnings in build" "grep ', 0 warnings' build_log.txt"
     run_test "run unit tests" "DreamDaemon taucetistation.dmb -invisible -trusted -core 2>&1 | tee log.txt"
