@@ -357,16 +357,13 @@ var/list/turret_icons
 				"<span class='warning'>[user] begins [anchored ? "un" : ""]securing the turret.</span>", \
 				"<span class='notice'>You begin [anchored ? "un" : ""]securing the turret.</span>" \
 			)
-
-		if(do_after(user, 50, src))
+		if(I.use_tool(src, user, 50, volume = 100))
 			//This code handles moving the turret around. After all, it's a portable turret!
 			if(!anchored)
-				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 				anchored = TRUE
 				update_icon()
 				to_chat(user, "<span class='notice'>You secure the exterior bolts on the turret.</span>")
 			else
-				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 				anchored = FALSE
 				to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
 				update_icon()
@@ -750,11 +747,11 @@ var/list/turret_icons
 	switch(build_step)
 		if(0)	//first step
 			if(iswrench(I) && !anchored)
-				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
-				to_chat(user, "<span class='notice'>You secure the external bolts.</span>")
-				anchored = TRUE
-				build_step = 1
-				return
+				if(I.use_tool(src, user, 20, volume = 100))
+					to_chat(user, "<span class='notice'>You secure the external bolts.</span>")
+					anchored = TRUE
+					build_step = 1
+					return
 
 			else if(iscrowbar(I) && !anchored)
 				playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
@@ -775,19 +772,19 @@ var/list/turret_icons
 				return
 
 			else if(iswrench(I))
-				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
-				to_chat(user, "<span class='notice'>You unfasten the external bolts.</span>")
-				anchored = FALSE
-				build_step = 0
-				return
+				if(I.use_tool(src, user, 20, volume = 75))
+					to_chat(user, "<span class='notice'>You unfasten the external bolts.</span>")
+					anchored = FALSE
+					build_step = 0
+					return
 
 
 		if(2)
 			if(iswrench(I))
-				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
-				to_chat(user, "<span class='notice'>You bolt the metal armor into place.</span>")
-				build_step = 3
-				return
+				if(I.use_tool(src, user, 20, volume = 100))
+					to_chat(user, "<span class='notice'>You bolt the metal armor into place.</span>")
+					build_step = 3
+					return
 
 			else if(iswelder(I))
 				var/obj/item/weapon/weldingtool/WT = I
@@ -822,10 +819,10 @@ var/list/turret_icons
 				return
 
 			else if(iswrench(I))
-				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
-				to_chat(user, "<span class='notice'>You remove the turret's metal armor bolts.</span>")
-				build_step = 2
-				return
+				if(I.use_tool(src, user, 20, volume = 100))
+					to_chat(user, "<span class='notice'>You remove the turret's metal armor bolts.</span>")
+					build_step = 2
+					return
 
 		if(4)
 			if(isprox(I))

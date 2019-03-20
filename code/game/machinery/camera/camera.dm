@@ -337,9 +337,8 @@
 	if(user.is_busy(src)) return
 	// Do after stuff here
 	to_chat(user, "<span class='notice'>You start to weld the [src]..</span>")
-	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
-	if(do_after(user, 100, target = src))
+	if(WT.use_tool(src, user, 100, volume = 50))
 		if(!WT.isOn())
 			return 0
 		return 1

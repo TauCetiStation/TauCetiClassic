@@ -14,7 +14,7 @@
 	else
 		icon_state = "door_construction"
 
-/obj/structure/firedoor_assembly/attackby(C, mob/user)
+/obj/structure/firedoor_assembly/attackby(obj/item/C, mob/user)
 	if(iscoil(C) && !wired && anchored)
 		var/obj/item/stack/cable_coil/cable = C
 		if (cable.get_amount() < 1)
@@ -49,11 +49,11 @@
 		else
 			to_chat(user, "<span class='warning'>You must secure \the [src] first!</span>")
 	else if(iswrench(C))
-		anchored = !anchored
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		user.visible_message("<span class='warning'>[user] has [anchored ? "" : "un" ]secured \the [src]!</span>",
-							  "You have [anchored ? "" : "un" ]secured \the [src]!")
-		update_icon()
+		if(C.use_tool(src, user, 20, volume = 50))
+			anchored = !anchored
+			user.visible_message("<span class='warning'>[user] has [anchored ? "" : "un" ]secured \the [src]!</span>",
+								 "You have [anchored ? "" : "un" ]secured \the [src]!")
+			update_icon()
 	else if(!anchored && iswelder(C))
 		var/obj/item/weapon/weldingtool/WT = C
 		if(user.is_busy(src)) return

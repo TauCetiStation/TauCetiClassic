@@ -62,9 +62,9 @@
 				update_icon()
 	else
 		if(iswrench(O))
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			anchored = !anchored
-			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
+			if(O.use_tool(src, user, 20, volume = 50))
+				anchored = !anchored
+				to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 
 
 /obj/machinery/pdapainter/attack_hand(mob/user)

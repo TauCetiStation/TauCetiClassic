@@ -442,7 +442,7 @@
 				var/obj/item/stack/cable_coil/coil = W
 				if(user.is_busy(src)) return
 				to_chat(user, "<span class='notice'>You start to wire [src]...</span>")
-				if(do_after(user, 40, target = src))
+				if(W.use_tool(src, user, 40, volume = 50))
 					if(build_step == 6 && coil.use(1))
 						build_step++
 						to_chat(user, "<span class='notice'>You wire the ED-209 assembly.</span>")

@@ -684,15 +684,13 @@
 		if(anchored == 2)
 			to_chat(user, "Unscrew the hoses first!")
 			return
-
-		if(!anchored && !isinspace())
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			anchored = 1
-			to_chat(user, "You wrench [src] in place.")
-		else if(anchored)
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			anchored = 0
-			to_chat(user, "You unwrench [src].")
+		if(O.use_tool(src, user, 20, volume = 50))
+			if(!anchored && !isinspace())
+				anchored = 1
+				to_chat(user, "You wrench [src] in place.")
+			else if(anchored)
+				anchored = 0
+				to_chat(user, "You unwrench [src].")
 
 	else if(iswirecutter(O) && unwrenchable)
 

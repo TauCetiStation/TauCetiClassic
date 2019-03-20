@@ -1133,14 +1133,14 @@ var/list/airlock_overlays = list()
 	//light_color = "#cc0000"
 
 
-/obj/structure/door_scrap/attackby(obj/O, mob/user)
+/obj/structure/door_scrap/attackby(obj/item/O, mob/user)
 	if(iswrench(O))
 		if(ticker >= 300)
-			playsound(user.loc, 'sound/items/Ratchet.ogg', 50)
-			user.visible_message("[user] has disassemble these scrap...")
-			new /obj/item/stack/sheet/metal(loc)
-			new /obj/item/stack/sheet/metal(loc)
-			qdel(src)
+			if(O.use_tool(src, user, 20, volume = 75))
+				user.visible_message("[user] has disassemble these scrap...")
+				new /obj/item/stack/sheet/metal(loc)
+				new /obj/item/stack/sheet/metal(loc)
+				qdel(src)
 		else
 			to_chat(user,"<span=userdanger>This is too hot to dismantle it</span>")
 			if(prob(10))

@@ -899,7 +899,7 @@ Code shamelessly copied from apc_frame
 	flags = CONDUCT
 
 /obj/item/alarm_frame/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
+	if(iswrench(W))
 		if(W.use_tool(src, user, 20, volume = 50))
 			user.SetNextMove(CLICK_CD_RAPID)
 			new /obj/item/stack/sheet/metal(loc, 2)
@@ -1210,7 +1210,7 @@ Code shamelessly copied from apc_frame
 	flags = CONDUCT
 
 /obj/item/firealarm_frame/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
+	if(iswrench(W))
 		if(W.use_tool(src, user, 20, volume = 50))
 			user.SetNextMove(CLICK_CD_RAPID)
 			new /obj/item/stack/sheet/metal(loc, 2)
