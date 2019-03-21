@@ -17,7 +17,7 @@
 			score["deadcrew"] += 1
 		if (I.job == "Clown")
 			for(var/thing in I.attack_log)
-				if(findtext(thing, "<font color='orange'>"))
+				if(findtext(thing, "<font color='orange'>")) //</font>
 					score["clownabuse"]++
 
 	var/area/escape_zone = locate(/area/shuttle/escape/centcom)

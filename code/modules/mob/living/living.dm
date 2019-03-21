@@ -938,7 +938,7 @@
 							return
 						for(var/mob/O in viewers(CM))
 							O.show_message(text("<span class='danger'>[] manages to break the legcuffs!</span>", CM), 1)
-						to_chat(CM, "<span class='notice'>You successfully break your legcuffs.")
+						to_chat(CM, "<span class='notice'>You successfully break your legcuffs.</span>")
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						qdel(CM.legcuffed)
 						CM.legcuffed = null

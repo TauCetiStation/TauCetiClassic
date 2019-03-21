@@ -83,7 +83,7 @@
 /obj/effect/anomaly/flux
 	name = "flux wave anomaly"
 	icon_state = "flux2"
-	light_color = "#FFE194"
+	light_color = "#ffe194"
 
 /obj/effect/anomaly/flux/atom_init()
 	. = ..()
@@ -95,7 +95,7 @@
 	name = "bluespace anomaly"
 	icon_state = "bluespace"
 	density = 1
-	light_color = "#009EFF"
+	light_color = "#009eff"
 
 /obj/effect/anomaly/bluespace/atom_init()
 	. = ..()

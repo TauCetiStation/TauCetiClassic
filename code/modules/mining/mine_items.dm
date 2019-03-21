@@ -473,7 +473,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if(!silenced)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else
-		to_chat(usr, "<span class='warning'>You silently charge [src].<span>")
+		to_chat(usr, "<span class='warning'>You silently charge [src].</span>")
 	recent_reload = 1
 	update_icon()
 	return
@@ -813,8 +813,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 					item_quants[O.name]++
 				else
 					item_quants[O.name] = 1
-				user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].", \
-									 "<span class='notice'>You add \the [O] to \the [src].")
+				user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
+									 "<span class='notice'>You add \the [O] to \the [src].</span>")
 				nanomanager.update_uis(src)
 				return
 

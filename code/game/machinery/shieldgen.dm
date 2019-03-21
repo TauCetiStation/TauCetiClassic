@@ -626,31 +626,31 @@
 		if(prob(20))
 			if(istype(mover, /obj/item/projectile))
 				var/obj/item/projectile/P = mover
-				visible_message("<span class='warning'><b>\The [P.name] flies through the \the [src.name].</b><span>")
+				visible_message("<span class='warning'><b>\The [P.name] flies through the \the [src.name].</b></span>")
 				P.damage -= 10
 			return TRUE
 		else
 			if(istype(mover, /obj/item/projectile))
-				visible_message("<span class='warning'>\The [mover] hits the \the [src.name].<span>")
+				visible_message("<span class='warning'>\The [mover] hits the \the [src.name].</span>")
 			return FALSE
 	else
 		if(istype(mover, /obj/item/projectile))
 			var/obj/item/projectile/P = mover
 			if(P.damage > 15)
 				if(prob(10))
-					visible_message("<span class='warning'><b>\The [P.name] flies through the \the [src.name].<span></b>")
+					visible_message("<span class='warning'><b>\The [P.name] flies through the \the [src.name].</span></b>")
 					P.damage -= 10
 					return TRUE
 				else
-					visible_message("<span class='warning'>\The [P.name] hits the \the [src.name].<span>")
+					visible_message("<span class='warning'>\The [P.name] hits the \the [src.name].</span>")
 					return FALSE
 			else
 				if(prob(5))
-					visible_message("<span class='warning'><b>\The [P.name] flies through the \the [src.name].</b><span>")
+					visible_message("<span class='warning'><b>\The [P.name] flies through the \the [src.name].</b></span>")
 					P.damage -= P.damage / 2
 					return TRUE
 				else
-					visible_message("<span class='warning'>\The [P.name] hits the \the [src.name].<span>")
+					visible_message("<span class='warning'>\The [P.name] hits the \the [src.name].</span>")
 					return FALSE
 		else
 			return !src.density

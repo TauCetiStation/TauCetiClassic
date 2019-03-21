@@ -114,10 +114,6 @@
 	pixel_x = (tdir & 3)? 0 : (tdir == 4 ? 24 : -24)
 	pixel_y = (tdir & 3)? (tdir == 1 ? 24 : -24) : 0
 	if (building == 0)
-		if(mapload)
-			var/area/A = get_area(src)
-			if(A.apc)
-				warning("Found more than one APC in \"[A]\"([A.type]) - [COORD(A.apc)] and [COORD(src)] while initializing map.")
 		init()
 	else
 		area = get_area(src)

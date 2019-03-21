@@ -195,7 +195,7 @@
 /turf/simulated/floor/beach/water
 	name = "Water"
 	icon_state = "water"
-	light_color = "#00BFFF"
+	light_color = "#00bfff"
 	light_power = 2
 	light_range = 2
 

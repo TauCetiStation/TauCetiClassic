@@ -325,23 +325,23 @@
 
 	Spell.charge_max = initial(Spell.charge_max) * power_of_spell // 20 - 140 (2:20)
 
-	var/level_info = "<span class='notice'><b>level [power_of_spell]</b> [src] now"
+	var/level_info = "<b>level [power_of_spell]</b> [src] now"
 	switch(power_of_spell)
 		if(2 to 3)
-			to_chat(user, "[level_info] <b>heals</b>.</span>")
+			to_chat(user, "<span class='notice'>[level_info] <b>heals</b>.</span>")
 		if(4)
-			to_chat(user, "[level_info] <b>cures</b> any <b>virus</b>.</span>")
+			to_chat(user, "<span class='notice'>[level_info] <b>cures</b> any <b>virus</b>.</span>")
 		if(5)
-			to_chat(user, "[level_info] <b>cleans</b> from any <b>mutations</b>.</span>")
+			to_chat(user, "<span class='notice'>[level_info] <b>cleans</b> from any <b>mutations</b>.</span>")
 		if(6)
 			touch_spell = FALSE
 			name = "healing ball"
 			invoke = "In Vas Mani"
-			to_chat(user, "[level_info] <b>heals</b> and can be <b>thrown</b></span>")
+			to_chat(user, "<span class='notice'>[level_info] <b>heals</b> and can be <b>thrown</b></span>")
 		if(7)
 			name = "regeneration healing ball"
 			invoke = "In Vas An Mani"
-			to_chat(user, "[level_info] <b>regenerates limbs</b> but heals a lot less and can be <b>thrown</b></span>")
+			to_chat(user, "<span class='notice'>[level_info] <b>regenerates limbs</b> but heals a lot less and can be <b>thrown</b></span>")
 
 /obj/item/weapon/magic/heal_touch/update_icon()
 	icon_state = initial(icon_state) + "[power_of_spell]"

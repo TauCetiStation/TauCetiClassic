@@ -166,7 +166,7 @@
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M)
 	..()
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-	src.visible_message("\red <B>The [src.name] has been attacked by \the [M].")
+	src.visible_message("<span class='danger'>The [src.name] has been attacked by \the [M].</span>")
 	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 	if(!damage) // Avoid divide by zero errors
 		return

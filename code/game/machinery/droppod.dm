@@ -598,7 +598,7 @@
 				<div class='wr'>
 				<div class='header'>Storage</div>
 				<div class='links'>
-				<a href='?src=\ref[src];eject_items=1'>Eject Items</span><br>
+				<a href='?src=\ref[src];eject_items=1'>Eject Items<br>
 				[Stored_Nuclear ? "<a href='?src=\ref[src];nuclear=1'>Eject Nuclear</a><br>" : null]</a><br>
 				[second_intruder ? "<a href='?src=\ref[src];eject_passenger=1'>Eject Passenger</a><br>" : null]</a><br>
 				</div>

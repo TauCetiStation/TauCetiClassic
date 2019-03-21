@@ -2050,8 +2050,7 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/stock_parts/scanning_module{
-	pixel_y = -3;
-	step_y = 0
+	pixel_y = -3
 	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"

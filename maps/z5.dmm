@@ -1057,8 +1057,7 @@
 "cu" = (
 /obj/structure/table,
 /obj/machinery/bunsen_burner{
-	pixel_y = 2;
-	step_y = 0
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -2636,8 +2635,7 @@
 	},
 /obj/item/weapon/particles_battery{
 	pixel_x = 3;
-	pixel_y = 3;
-	step_x = 0
+	pixel_y = 3
 	},
 /obj/item/weapon/particles_battery,
 /obj/item/weapon/particles_battery,
@@ -2735,9 +2733,7 @@
 	},
 /obj/structure/cable{
 	d2 = 8;
-	icon_state = "0-8";
-	step_x = 0;
-	step_y = 0
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/outpost_misc_lab)
@@ -3559,9 +3555,7 @@
 	},
 /obj/structure/cable{
 	d2 = 8;
-	icon_state = "0-8";
-	step_x = 0;
-	step_y = 0
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/outpost_misc_lab)
