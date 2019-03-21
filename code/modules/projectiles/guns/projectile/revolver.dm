@@ -84,7 +84,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/detective/attackby(obj/item/A, mob/user)
 	..()
-	if(istype(A, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(A))
 		if(magazine.caliber == "38")
 			to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src].</span>")
 			if(magazine.ammo_count())

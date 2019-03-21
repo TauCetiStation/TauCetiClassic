@@ -469,7 +469,7 @@
 	H.apply_effect(4, STUTTER, 0)
 	H.electrocute_act(burn_damage_amt*2, src, def_zone = target_zone)
 
-	user.visible_message("[user] shocks [H] with [src].", "You shock [H] with [src].</span>", "You hear electricity zaps flesh.")
+	user.visible_message("[user] shocks [H] with [src].", "<span class='warning'>You shock [H] with [src].</span>", "You hear electricity zaps flesh.")
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Electrocuted [H.name] ([H.ckey]) with [src.name]</font>"
 	msg_admin_attack("[user.name] ([user.ckey]) used [src.name] to electrocute [H.name] ([H.ckey]) [ADMIN_FLW(user)]")
 

@@ -510,9 +510,14 @@
 	return
 
 /proc/cancel_call_proc(mob/user)
-	if ((!( ticker ) || SSshuttle.location || SSshuttle.direction == 0 || SSshuttle.timeleft() < 300))
+	if ((!( ticker ) || SSshuttle.location || SSshuttle.direction == 0))
+		to_chat(user, "The console is not responding.")
 		return
-	if((ticker.mode.name == "blob")||(ticker.mode.name == "meteor"))
+	if(SSshuttle.timeleft() < 300)
+		to_chat(user, "Shuttle is close and it's too late for cancellation.")
+		return
+	if((ticker.mode.name == "blob")||(ticker.mode.name == "meteor"))//why??
+		to_chat(user, "The console is not responding.")
 		return
 
 	if(SSshuttle.direction != -1 && SSshuttle.online) //check that shuttle isn't already heading to centcomm

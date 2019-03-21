@@ -30,7 +30,7 @@
 		return
 
 	if (isrobot(usr) || locked)
-		if(istype(O, /obj/item/device/multitool))
+		if(ismultitool(O))
 			to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
 			playsound(user, 'sound/machines/lockreset.ogg', 50, 1)
 			if (do_after(user, 50, target = src))
@@ -83,7 +83,7 @@
 	else
 		if(smashed)
 			return
-		if(istype(O, /obj/item/device/multitool))
+		if(ismultitool(O))
 			if(localopened)
 				localopened = FALSE
 				icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)

@@ -147,6 +147,8 @@
 // hardcoded responses, oh well
 /obj/machinery/artifact_analyser/proc/get_scan_info(obj/scanned_obj)
 	switch(scanned_obj.type)
+		if(/obj/item/clothing/glasses/hud/mining/ancient)
+			return "A heads-up display that scans the rocks in view and provides some data about their composition."
 		if(/obj/machinery/auto_cloner)
 			return "Automated cloning pod - appears to rely on organic nanomachines with a self perpetuating \
 			ecosystem involving self cannibalism and a symbiotic relationship with the contained liquid.<br><br>\

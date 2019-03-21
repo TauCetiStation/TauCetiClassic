@@ -42,7 +42,7 @@
 	heat_capacity = 325000
 
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
-	if(istype(C, /obj/item/weapon/wrench))
+	if(iswrench(C))
 		if(user.is_busy()) return
 		to_chat(user, "\blue Removing rods...")
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
@@ -181,7 +181,7 @@
 /turf/simulated/floor/beach/water
 	name = "Water"
 	icon_state = "water"
-	light_color = "#00BFFF"
+	light_color = "#00bfff"
 	light_power = 2
 	light_range = 2
 
@@ -334,13 +334,13 @@
 
 
 /turf/simulated/floor/plating/airless/catwalk/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(C))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		ReplaceWithLattice()
 		playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
 		return
 
-	if(istype(C, /obj/item/stack/cable_coil))
+	if(iscoil(C))
 		var/obj/item/stack/cable_coil/coil = C
 		coil.turf_place(src, user)
 

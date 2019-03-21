@@ -45,7 +45,7 @@
 	icon_state = "toilet[open][cistern]"
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(iscrowbar(I))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
@@ -317,7 +317,7 @@
 /obj/machinery/shower/attackby(obj/item/I, mob/user)
 	if(I.type == /obj/item/device/analyzer) // istype?
 		to_chat(user, "<span class='notice'>The water temperature seems to be [watertemp].</span>")
-	else if(istype(I, /obj/item/weapon/wrench))
+	else if(iswrench(I))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I].</span>")
 		if(do_after(user, 50, target = src))
@@ -373,11 +373,11 @@
 							station_account.transaction_log.Add(T)
 
 							is_payed = 60
-							to_chat(usr, "[bicon(src)]Thank you, happy washing time and don't turn me off accidently or i will take your precious credits again! Teehee.</span>")
+							to_chat(usr, "[bicon(src)]<span class='notice'>Thank you, happy washing time and don't turn me off accidently or i will take your precious credits again! Teehee.</span>")
 						else
 							to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
 		else
-			to_chat(usr, "[bicon(src)]Is payed, you may turn it on now.</span>")
+			to_chat(usr, "[bicon(src)]<span class='notice'>Is payed, you may turn it on now.</span>")
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
 	overlays.Cut()					//once it's been on for a while, in addition to handling the water overlay.

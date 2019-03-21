@@ -130,7 +130,7 @@
 
 	if(isobserver(mob))	return mob.Move(n,direct)
 
-	if(moving)	return 0
+	if(moving || mob.throwing)	return 0
 
 	if(world.time < move_delay)	return
 

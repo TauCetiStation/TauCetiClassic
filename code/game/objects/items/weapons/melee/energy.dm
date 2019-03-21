@@ -55,7 +55,7 @@
 		qdel(W)
 		qdel(src)
 		user.put_in_hands(newSaber)
-	if(istype(W, /obj/item/device/multitool))
+	if(ismultitool(W))
 		if(!hacked)
 			hacked = 1
 			to_chat(user,"<span class='warning'>RNBW_ENGAGE</span>")

@@ -9,12 +9,12 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	usr.verbs -= /mob/living/carbon/human/proc/shadowling_hatch
 	switch(alert("Are you sure you want to hatch? You cannot undo this!",,"Yes","No"))
 		if("No")
-			to_chat(usr, "<span class='warning'>You decide against hatching for now.")
+			to_chat(usr, "<span class='warning'>You decide against hatching for now.</span>")
 			usr.verbs += /mob/living/carbon/human/proc/shadowling_hatch
 			return
 		if("Yes")
 			if(!istype(usr.loc, /turf))
-				to_chat(usr, "<span class='warning'>You can't hatch here.")
+				to_chat(usr, "<span class='warning'>You can't hatch here.</span>")
 				usr.verbs += /mob/living/carbon/human/proc/shadowling_hatch
 				return
 			usr.notransform = 1
@@ -91,12 +91,12 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	usr.verbs -= /mob/living/carbon/human/proc/shadowling_ascendance
 	switch(alert("It is time to ascend. Are you completely sure about this? You cannot undo this!",,"Yes","No"))
 		if("No")
-			to_chat(usr, "<span class='warning'>You decide against ascending for now.")
+			to_chat(usr, "<span class='warning'>You decide against ascending for now.</span>")
 			usr.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
 			return
 		if("Yes")
 			if(!istype(usr.loc, /turf))
-				to_chat(usr, "<span class='warning'>You can't evolve here.")
+				to_chat(usr, "<span class='warning'>You can't evolve here.</span>")
 				usr.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
 				return
 			usr.notransform = 1

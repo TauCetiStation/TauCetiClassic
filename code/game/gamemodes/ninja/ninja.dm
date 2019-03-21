@@ -83,7 +83,7 @@
 		if(!config.objectives_disabled)
 			forge_ninja_objectives(ninja)
 		else
-			to_chat(ninja.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
+			to_chat(ninja.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 		var/mob/living/carbon/human/N = ninja.current
 		N.internal = N.s_store
 		N.internals.icon_state = "internal1"

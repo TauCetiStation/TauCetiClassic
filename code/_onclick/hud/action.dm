@@ -29,6 +29,8 @@
 /datum/action/Destroy()
 	if(owner)
 		Remove(owner)
+	target = null
+	return ..()
 
 /datum/action/proc/Grant(mob/living/T)
 	if(owner)

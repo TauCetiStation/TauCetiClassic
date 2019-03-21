@@ -261,14 +261,14 @@
 
 /obj/structure/alien/weeds/attackby(obj/item/weapon/W, mob/user)
 	if(W.attack_verb.len)
-		visible_message("\red <B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
+		visible_message("<span class='danger'>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]</span>")
 	else
-		visible_message("\red <B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]")
+		visible_message("<span class='danger'>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]</span>")
 
 	var/damage = W.force / 4.0
 	user.SetNextMove(CLICK_CD_MELEE)
 
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 
 		if(WT.remove_fuel(0, user))
@@ -311,7 +311,7 @@
 	desc = "Blue bioluminescence shines from beneath the surface."
 	layer = 2.5
 	light_range = 0
-	light_color = "#24C1FF"
+	light_color = "#24c1ff"
 
 	var/node_range = 3
 
@@ -496,13 +496,13 @@
 	if(health <= 0)
 		return
 	if(W.attack_verb.len)
-		src.visible_message("\red <B>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
+		src.visible_message("<span class='danger'>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]</span>")
 	else
-		src.visible_message("\red <B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]")
+		src.visible_message("<span class='danger'>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]</span>")
 	var/damage = W.force / 4.0
 	user.SetNextMove(CLICK_CD_MELEE)
 
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 
 		if(WT.remove_fuel(0, user))
@@ -540,7 +540,7 @@
 /obj/structure/alien/air_plant/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	set_light(2, 1, "#24C1FF")
+	set_light(2, 1, "#24c1ff")
 
 /obj/structure/alien/air_plant/process()
 	if(prob(25))
@@ -556,8 +556,8 @@
 		if(pressure < WARNING_LOW_PRESSURE)
 			if(light_color != "#ff6224")
 				set_light(2, 1, "#ff6224")
-		else if(light_color != "#24C1FF")
-			set_light(2, 1, "#24C1FF")
+		else if(light_color != "#24c1ff")
+			set_light(2, 1, "#24c1ff")
 
 		//actually restoring air
 		if(pressure < (ONE_ATMOSPHERE*0.90))//it's pretty sloppy, but never mind

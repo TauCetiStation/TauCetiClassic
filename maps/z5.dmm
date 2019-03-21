@@ -166,6 +166,9 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurple"
@@ -1054,8 +1057,7 @@
 "cu" = (
 /obj/structure/table,
 /obj/machinery/bunsen_burner{
-	pixel_y = 2;
-	step_y = 0
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -2633,8 +2635,7 @@
 	},
 /obj/item/weapon/particles_battery{
 	pixel_x = 3;
-	pixel_y = 3;
-	step_x = 0
+	pixel_y = 3
 	},
 /obj/item/weapon/particles_battery,
 /obj/item/weapon/particles_battery,
@@ -2732,9 +2733,7 @@
 	},
 /obj/structure/cable{
 	d2 = 8;
-	icon_state = "0-8";
-	step_x = 0;
-	step_y = 0
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/outpost_misc_lab)
@@ -3212,17 +3211,11 @@
 	},
 /area/research_outpost/anomaly)
 "gp" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Outpost Hallways APC";
-	pixel_x = 24;
-	pixel_y = 0
-	},
 /obj/structure/cable{
+	d1 = 1;
 	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "1-2"
 	},
-/obj/structure/cable,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -3562,9 +3555,7 @@
 	},
 /obj/structure/cable{
 	d2 = 8;
-	icon_state = "0-8";
-	step_x = 0;
-	step_y = 0
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/outpost_misc_lab)
@@ -4455,9 +4446,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
-	},
-/obj/machinery/light{
-	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -6439,6 +6427,7 @@
 /area/research_outpost/iso1)
 "mI" = (
 /obj/structure/table,
+/obj/item/device/suit_cooling_unit,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/inflatable/door,
 /obj/item/inflatable,
@@ -6891,10 +6880,8 @@
 /obj/structure/transit_tube{
 	icon_state = "D-SE"
 	},
-/turf/simulated/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
-/area/mine/unexplored)
+/turf/simulated/wall/r_wall,
+/area/research_outpost/maintstore2)
 "nB" = (
 /obj/structure/transit_tube{
 	icon_state = "W-NE"
@@ -60199,8 +60186,8 @@ ma
 ma
 oU
 oU
-oU
-pN
+nA
+qi
 on
 pC
 an
@@ -60456,8 +60443,8 @@ mS
 nq
 Dg
 ma
-rE
-qL
+pN
+on
 an
 pC
 pC
@@ -60713,8 +60700,8 @@ mT
 ok
 Dg
 ma
-rE
 qL
+rE
 pC
 pC
 pC
@@ -60970,8 +60957,8 @@ mT
 ok
 Dg
 ma
-nA
-pO
+qL
+rE
 an
 an
 an
@@ -61227,8 +61214,8 @@ mb
 pm
 Dg
 oV
-qi
-gi
+pO
+ac
 ac
 qP
 ac

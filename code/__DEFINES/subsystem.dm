@@ -33,6 +33,7 @@
 #define SS_INIT_AIR           -1
 #define SS_INIT_ASSETS        -2
 #define SS_INIT_ICON_SMOOTH   -5
+#define SS_INIT_UNIT_TESTS -100
 
 
 #define SS_PRIORITY_TICKER       200
@@ -67,6 +68,7 @@
 #define SS_WAIT_AIR          10
 #define SS_WAIT_QUIRKS       10
 #define SS_WAIT_DEFAULT      20
+#define SS_WAIT_UNIT_TESTS   20
 #define SS_WAIT_SUN         600
 
 

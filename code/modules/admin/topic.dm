@@ -2460,7 +2460,7 @@
 				else
 					to_chat(usr, "<span class='userdanger'>You are staying on incorrect turf.</span>")
 			if("list_bombers")
-				var/dat = "<B>Bombing List<HR>"
+				var/dat = "<B>Bombing List</B><HR>"
 				for(var/l in bombers)
 					dat += text("[l]<BR>")
 				usr << browse(entity_ja(dat), "window=bombers")

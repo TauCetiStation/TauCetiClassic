@@ -80,12 +80,12 @@
 		if(T.density)
 			to_chat(user, "<span class='warning'>The wall is blocked!</span>")
 			return
-		if(istype(W, /obj/item/weapon/screwdriver))
+		if(isscrewdriver(W))
 			user.visible_message("[user] tightens some bolts on the wall.", "You tighten the bolts on the wall.")
 			T.ChangeTurf(walltype)
 			qdel(src)
 
-		if( istype(W, /obj/item/weapon/weldingtool) )
+		if( iswelder(W) )
 			var/obj/item/weapon/weldingtool/WT = W
 			if( WT.welding )
 				T.ChangeTurf(walltype)

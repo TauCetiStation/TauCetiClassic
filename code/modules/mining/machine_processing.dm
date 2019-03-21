@@ -49,22 +49,22 @@
 		if(!machine.ores_stored[ore] && !show_all_ores)
 			continue
 
-		dat += "<tr><td width = 40><b>[capitalize(ore)]</b></td><td width = 30>[machine.ores_stored[ore]]</td><td width = 100><font color='"
+		dat += "<tr><td width = 40><b>[capitalize(ore)]</b></td><td width = 30>[machine.ores_stored[ore]]</td><td width = 100>"
 		if(machine.ores_processing[ore])
 			switch(machine.ores_processing[ore])
 				if(0)
-					dat += "red'>not processing"
+					dat += "<font color='red'>not processing</font>"
 				if(1)
-					dat += "orange'>smelting"
+					dat += "<font color='orange'>smelting</font>"
 				if(2)
-					dat += "yellow'>compressing"
+					dat += "<font color='yellow'>compressing</font>"
 				if(3)
-					dat += "gray'>alloying"
+					dat += "<font color='gray'>alloying</font>"
 				if(4)
-					dat += "green'>drop"
+					dat += "<font color='green'>drop</font>"
 		else
-			dat += "red'>not processing"
-		dat += "</font></td><td width = 30><a href='?src=\ref[src];toggle_smelting=[ore]'>\[change\]</a></td></tr>"
+			dat += "<font color='red'>not processing</font>"
+		dat += "</td><td width = 30><a href='?src=\ref[src];toggle_smelting=[ore]'>\[change\]</a></td></tr>"
 
 	dat += "</table><hr>"
 
