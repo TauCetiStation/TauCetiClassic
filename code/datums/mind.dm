@@ -99,8 +99,7 @@
 	memory += "[new_text]<BR>"
 
 /*
-	Removes antag type's references from a mind.
-	objectives, uplinks, powers etc are all handled.
+	Removes antag objectives
 */
 
 /datum/mind/proc/remove_objectives()
@@ -108,13 +107,6 @@
 		for(var/datum/objective/O in objectives)
 			objectives -= O
 			qdel(O)
-
-/datum/mind/proc/remove_gang()
-	ticker.mode.remove_gangster(src,0,1)
-	remove_objectives()
-
-/datum/mind/proc/remove_all_antag() //For the Lazy amongst us.
-	remove_gang()
 
 /datum/mind/proc/show_memory(mob/recipient)
 	var/output = "<B>[current.real_name]'s Memory</B><HR>"
@@ -794,7 +786,8 @@
 
 		switch(href_list["gang"])
 			if("clear")
-				remove_gang()
+				ticker.mode.remove_gangster(src,0,1)
+				remove_objectives()
 				message_admins("[key_name_admin(usr)] has de-gang'ed [current].")
 				log_admin("[key_name(usr)] has de-gang'ed [current].")
 
@@ -982,13 +975,8 @@
 		switch(href_list["nuclear"])
 			if("clear")
 				if(src in ticker.mode.syndicates)
-					ticker.mode.syndicates -= src
-					ticker.mode.update_synd_icons_removed(src)
-					special_role = null
-					for (var/datum/objective/nuclear/O in objectives)
-						objectives-=O
+					ticker.mode.remove_nuclear(src)
 					to_chat(current, "\red <FONT size = 3><B>You have been brainwashed! You are no longer a syndicate operative!</B></FONT>")
-					current.faction = "neutral"
 					log_admin("[key_name_admin(usr)] has de-nuke op'ed [current].")
 			if("nuclear")
 				if(!(src in ticker.mode.syndicates))
@@ -1041,15 +1029,9 @@
 		switch(href_list["traitor"])
 			if("clear")
 				if(src in ticker.mode.traitors)
-					ticker.mode.traitors -= src
-					special_role = null
+					ticker.mode.remove_traitor(src)
 					to_chat(current, "\red <FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT>")
 					log_admin("[key_name_admin(usr)] has de-traitor'ed [current].")
-					if(isAI(current))
-						var/mob/living/silicon/ai/A = current
-						A.set_zeroth_law("")
-						A.show_laws()
-
 
 			if("traitor")
 				if(!(src in ticker.mode.traitors))
