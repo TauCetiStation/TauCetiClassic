@@ -174,9 +174,9 @@ function run_code_tests {
     run_test_fail "ensure code, nanoui templates, icons unique" "find code/ nano/templates/ icons/ -type f -exec md5sum {} + | sort | uniq -D -w 32 | grep -w 'code\|nano\|icons'"
     run_test_fail "ensure code, nanoui templates, icons has no empty files" "find code/ nano/templates/ icons/ -empty -type f | grep -w 'code\|nano\|icons'"
     run_test_fail "no invalid spans" "grep -En \"<\s*span\s+class\s*=\s*('[^'>]+|[^'>]+')\s*>\" **/*.dm"
-    run_test "indentation check" "awk -f tools/indentation.awk **/*.dm"
-    run_test "check tags" "python2 tools/TagMatcher/tag-matcher.py ."
-    run_test "check color hex" "python3 tools/ColorHexChecker/color-hex-checker.py ."
+    run_test "indentation check" "awk -f scripts/indentation.awk **/*.dm"
+    run_test "check tags" "python2 scripts/tag-matcher.py ."
+    run_test "check color hex" "python3 scripts/color-hex-checker.py ."
 }
 
 function run_byond_tests {
