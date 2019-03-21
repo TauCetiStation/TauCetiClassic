@@ -109,7 +109,7 @@ var/list/hrefs = list(
 						hsb.req_access += A
 
 				hsb.loc = usr.loc
-				to_chat(usr, "<b>Sandbox:  Created an airlock.")
+				to_chat(usr, "<b>Sandbox:</b>  Created an airlock.")
 			if("hsbcanister")
 				var/list/hsbcanisters = typesof(/obj/machinery/portable_atmospherics/canister) - /obj/machinery/portable_atmospherics/canister
 				var/hsbcanister = input(usr, "Choose a canister to spawn.", "Sandbox:") in hsbcanisters + "Cancel"

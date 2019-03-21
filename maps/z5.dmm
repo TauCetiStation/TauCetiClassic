@@ -1057,8 +1057,7 @@
 "cu" = (
 /obj/structure/table,
 /obj/machinery/bunsen_burner{
-	pixel_y = 2;
-	step_y = 0
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -2636,8 +2635,7 @@
 	},
 /obj/item/weapon/particles_battery{
 	pixel_x = 3;
-	pixel_y = 3;
-	step_x = 0
+	pixel_y = 3
 	},
 /obj/item/weapon/particles_battery,
 /obj/item/weapon/particles_battery,
@@ -2735,9 +2733,7 @@
 	},
 /obj/structure/cable{
 	d2 = 8;
-	icon_state = "0-8";
-	step_x = 0;
-	step_y = 0
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/outpost_misc_lab)
@@ -3215,17 +3211,11 @@
 	},
 /area/research_outpost/anomaly)
 "gp" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Outpost Hallways APC";
-	pixel_x = 24;
-	pixel_y = 0
-	},
 /obj/structure/cable{
+	d1 = 1;
 	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "1-2"
 	},
-/obj/structure/cable,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -3565,9 +3555,7 @@
 	},
 /obj/structure/cable{
 	d2 = 8;
-	icon_state = "0-8";
-	step_x = 0;
-	step_y = 0
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/outpost_misc_lab)

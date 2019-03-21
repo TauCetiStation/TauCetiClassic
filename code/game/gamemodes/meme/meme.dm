@@ -240,11 +240,11 @@
 			memewin = 0
 
 		if(memewin)
-			text += "<B>The meme was successful!<B>"
+			text += "<B>The meme was successful!</B>"
 			feedback_add_details("meme_success","SUCCESS")
 			score["roleswon"]++
 		else
-			text += "<B>The meme has failed!<B>"
+			text += "<B>The meme has failed!</B>"
 			feedback_add_details("meme_success","FAIL")
 		text += "<BR><HR>"
 	return text

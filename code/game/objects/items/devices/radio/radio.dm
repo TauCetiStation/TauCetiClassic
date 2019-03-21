@@ -478,7 +478,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				heard_voice += R
 
 		if (length(heard_masked) || length(heard_normal) || length(heard_voice) || length(heard_garbled))
-			var/part_a = "<span class='radio'><span class='name'>"
+
 			//var/part_b = "</span><b> [bicon(src)]\[[format_frequency(frequency)]\]</b> <span class='message'>"
 			var/freq_text
 			switch(display_freq)
@@ -501,15 +501,18 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			if(!freq_text)
 				freq_text = format_frequency(display_freq)
 
-			var/part_b = "</span><b> [bicon(src)]\[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
-			var/part_c = "</span></span>"
+			var/part_a_span = "radio"
 
 			if (display_freq==SYND_FREQ)
-				part_a = "<span class='syndradio'><span class='name'>"
+				part_a_span = "syndradio"
 			else if (display_freq==COMM_FREQ)
-				part_a = "<span class='comradio'><span class='name'>"
+				part_a_span = "comradio"
 			else if (display_freq in DEPT_FREQS)
-				part_a = "<span class='deptradio'><span class='name'>"
+				part_a_span = "deptradio"
+
+			var/part_a = "<span class='[part_a_span]'><span class='name'>"
+			var/part_b = "</span><b> [bicon(src)]\[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
+			var/part_c = "</span></span>"
 
 			var/quotedmsg = M.say_quote(message)
 

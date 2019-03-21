@@ -42,7 +42,7 @@
 			flip_time = 60	//6 sec with
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(!flipped)
-			user.visible_message("<span class='notice'>[usr] flips \the [src] down.</span>","<span class='notice'>You flips \the [src] down.")
+			user.visible_message("<span class='notice'>[usr] flips \the [src] down.</span>","<span class='notice'>You flips \the [src] down.</span>")
 			flip()
 			if(buckled_mob && !buckled_mob.restrained())
 				var/mob/living/L = buckled_mob
@@ -50,7 +50,7 @@
 				L.apply_effect(2, WEAKEN, 0)
 				L.apply_damage(3, BRUTE, BP_HEAD)
 		else if(!user.is_busy() && do_after(user, flip_time, target = usr))
-			user.visible_message("<span class='notice'>[user] flips \the [src] up.</span>","<span class='notice'>You flips \the [src] up.")
+			user.visible_message("<span class='notice'>[user] flips \the [src] up.</span>","<span class='notice'>You flips \the [src] up.</span>")
 			flip()
 	else
 		..()

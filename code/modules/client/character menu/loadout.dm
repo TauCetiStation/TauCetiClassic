@@ -11,10 +11,10 @@
 					type_blacklist += G.subtype_path
 				total_cost += G.cost
 
-	var/fcolor =  "#3366CC"
+	var/fcolor =  "#3366cc"
 	var/max_cost = user.client.supporter ? MAX_GEAR_COST_SUPPORTER : MAX_GEAR_COST
 	if(total_cost < max_cost)
-		fcolor = "#E67300"
+		fcolor = "#e67300"
 	. += "<table align='center' width='570px'>"
 	. += "<tr><td colspan=3><center><b><font color='[fcolor]'>[total_cost]/[max_cost]</font> loadout points spent.</b> \[<a href='?_src_=prefs;preference=loadout;clear_loadout=1'>Clear Loadout</a>\]</center></td></tr>"
 	. += "<tr><td colspan=3><center><b>"

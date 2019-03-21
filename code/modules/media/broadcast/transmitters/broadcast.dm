@@ -4,7 +4,7 @@
 
 	icon = 'icons/obj/machines/broadcast.dmi'
 	icon_state = "broadcaster"
-	light_color="#4285F4"
+	light_color="#4285f4"
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 1000

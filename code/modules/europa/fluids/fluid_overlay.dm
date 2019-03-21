@@ -7,7 +7,7 @@
 	mouse_opacity = 0
 	layer = FLY_LAYER
 	alpha = 0
-	color = "#66D1FF"
+	color = "#66d1ff"
 
 	var/temperature = T20C
 	var/fluid_amount = 0     // Declared in stubs/fluid.dm
@@ -52,7 +52,7 @@
 
 /obj/effect/fluid/mapped
 	alpha = 125
-	color = "#66D1FF"
+	color = "#66d1ff"
 	icon_state = "shallow_still"
 
 /obj/effect/fluid/mapped/atom_init()

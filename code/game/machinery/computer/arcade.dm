@@ -148,10 +148,11 @@
 	dat += "<br><center><h3>[src.temp]</h3></center>"
 	dat += "<br><center>Health: [src.player_hp] | Magic: [src.player_mp] | Enemy Health: [src.enemy_hp]</center>"
 
+	dat += "<center><b>"
 	if (src.gameover)
-		dat += "<center><b><a href='byond://?src=\ref[src];newgame=1'>New Game</a>"
+		dat += "<a href='byond://?src=\ref[src];newgame=1'>New Game</a>"
 	else
-		dat += "<center><b><a href='byond://?src=\ref[src];attack=1'>Attack</a> | "
+		dat += "<a href='byond://?src=\ref[src];attack=1'>Attack</a> | "
 		dat += "<a href='byond://?src=\ref[src];heal=1'>Heal</a> | "
 		dat += "<a href='byond://?src=\ref[src];charge=1'>Recharge Power</a>"
 

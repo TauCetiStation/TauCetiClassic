@@ -17,7 +17,7 @@
 			score["deadcrew"] += 1
 		if (I.job == "Clown")
 			for(var/thing in I.attack_log)
-				if(findtext(thing, "<font color='orange'>"))
+				if(findtext(thing, "<font color='orange'>")) //</font>
 					score["clownabuse"]++
 
 	var/area/escape_zone = locate(/area/shuttle/escape/centcom)
@@ -151,6 +151,10 @@
 		if (istype(M, /obj/effect/decal/cleanable/vomit))
 			score["mess"] += 1
 
+	// How many antags did we reconvert using loyalty implant.
+	for(var/reconverted in ticker.reconverted_antags)
+		score["rec_antags"]++
+
 	//Research Levels
 	var/research_levels = 0
 	for(var/obj/machinery/r_n_d/server/core/C in rnd_server_list)
@@ -197,6 +201,8 @@
 		score["crewscore"] += arrestpoints
 		score["crewscore"] += killpoints
 		score["crewscore"] -= comdeadpts
+
+	score["crewscore"] += score["rec_antags"] * 500
 
 	// Good Things
 	score["crewscore"] += shipping
@@ -349,6 +355,7 @@
 	<B>Ultra-Clean Station:</B> [score["mess"] ? "No" : "Yes"] ([score["messbonus"] * 3000] Points)<BR><BR>
 	<U>THE BAD:</U><BR>
 	<B>Roles successful:</B> [score["roleswon"]] (-[score["roleswon"] * 250] Points)<BR>
+	<B>Antags reconverted:</B> [score["rec_antags"]] ([score["rec_antags"] * 500] Points)<BR>
 	<B>Dead Bodies on Station:</B> [score["deadcrew"]] (-[score["deadcrew"] * 250] Points)<BR>
 	<B>Uncleaned Messes:</B> [score["mess"]] (-[score["mess"]] Points)<BR>
 	<B>Station Power Issues:</B> [score["powerloss"]] (-[score["powerloss"] * 30] Points)<BR>

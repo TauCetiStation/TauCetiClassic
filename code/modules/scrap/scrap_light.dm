@@ -96,7 +96,7 @@
 		R.use(1)
 		can_buckle = TRUE
 		buckle_require_restraints = TRUE
-		to_chat(user, "<span class='italics'>You add a rod to \the [src].")
+		to_chat(user, "<i>You add a rod to \the [src].</i>")
 		var/image/stake = image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_rod")
 		stake.pixel_y = 16
 		stake.layer = 5
@@ -105,7 +105,7 @@
 			//if("Grill")
 			//	R.use(1)
 			//	grill = TRUE
-			//	to_chat(user, "<span class='italics'>You add a grill to \the [src].")
+			//	to_chat(user, "<i>You add a grill to \the [src].</i>")
 			//	overlays += image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_grill")
 			//else
 			//	return ..()
