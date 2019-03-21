@@ -33,7 +33,7 @@
 				quirk_cost *= -1 //invert it back, since we'd be regaining this amount
 		if(quirk_cost > 0)
 			quirk_cost = "+[quirk_cost]"
-		var/font_color = "#4949B5"
+		var/font_color = "#4949b5"
 		if(initial(T.value) != 0)
 			font_color = initial(T.value) > 0 ? "#007400" : "#690000"
 		if(quirk_conflict)

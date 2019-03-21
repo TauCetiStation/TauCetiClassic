@@ -79,7 +79,7 @@
 	name = "Sprinkles"
 	id = "sprinkles"
 	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
-	color = "#FF00FF" // rgb: 255, 0, 255
+	color = "#ff00ff" // rgb: 255, 0, 255
 	taste_message = "sweetness"
 
 /datum/reagent/consumable/sprinkles/on_general_digest(mob/living/M)
@@ -91,7 +91,7 @@
 	name = "Cream filling"
 	id = "syndicream"
 	description = "Delicious cream filling of a mysterious origin. Tastes criminally good."
-	color = "#AB7878" // rgb: 171, 120, 120
+	color = "#ab7878" // rgb: 171, 120, 120
 
 /datum/reagent/consumable/syndicream/on_general_digest(mob/living/M)
 	..()
@@ -129,7 +129,7 @@
 	description = "This is what you rub all over yourself to pretend to be a ghost."
 	reagent_state = LIQUID
 	nutriment_factor = 2
-	color = "#F5EAEA" // rgb: 245, 234, 234
+	color = "#f5eaea" // rgb: 245, 234, 234
 	taste_message = "flour"
 	diet_flags = DIET_PLANT
 
@@ -138,7 +138,7 @@
 	id = "capsaicin"
 	description = "This is what makes chilis hot."
 	reagent_state = LIQUID
-	color = "#B31008" // rgb: 179, 16, 8
+	color = "#b31008" // rgb: 179, 16, 8
 	taste_message = "<span class='warning'>HOTNESS</span>"
 
 /datum/reagent/consumable/capsaicin/on_general_digest(mob/living/M)
@@ -167,7 +167,7 @@
 	id = "condensedcapsaicin"
 	description = "A chemical agent used for self-defense and in police work."
 	reagent_state = LIQUID
-	color = "#B31008" // rgb: 179, 16, 8
+	color = "#b31008" // rgb: 179, 16, 8
 	taste_message = "<span class='userdanger'>PURE FIRE</span>"
 
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, volume)
@@ -230,7 +230,7 @@
 	id = "frostoil"
 	description = "A special oil that noticably chills the body. Extracted from Ice Peppers."
 	reagent_state = LIQUID
-	color = "#B31008" // rgb: 139, 166, 233
+	color = "#b31008" // rgb: 139, 166, 233
 	taste_message = "<font color='lightblue'>cold</font>"
 	diet_flags = DIET_PLANT
 
@@ -253,7 +253,7 @@
 	id = "sodiumchloride"
 	description = "A salt made of sodium chloride. Commonly used to season food."
 	reagent_state = SOLID
-	color = "#FFFFFF" // rgb: 255,255,255
+	color = "#ffffff" // rgb: 255,255,255
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "salt"
 
@@ -295,7 +295,7 @@
 	name = "Psilocybin"
 	id = "psilocybin"
 	description = "A strong psycotropic derived from certain species of mushroom."
-	color = "#E700E7" // rgb: 231, 0, 231
+	color = "#e700e7" // rgb: 231, 0, 231
 	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = FOOD_METABOLISM * 0.5
 	restrict_species = list(IPC, DIONA)
@@ -358,7 +358,7 @@
 	id = "enzyme"
 	description = "A universal enzyme used in the preperation of certain chemicals and foods."
 	reagent_state = LIQUID
-	color = "#365E30" // rgb: 54, 94, 48
+	color = "#365e30" // rgb: 54, 94, 48
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
@@ -404,7 +404,7 @@
 	description = "Enjoy the great taste of nothing."
 	reagent_state = SOLID
 	nutriment_factor = 2
-	color = "#FFFFFF" // rgb: 0, 0, 0
+	color = "#ffffff" // rgb: 0, 0, 0
 	taste_message = "rice"
 	diet_flags = DIET_PLANT
 
@@ -414,7 +414,7 @@
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	reagent_state = LIQUID
 	nutriment_factor = 2
-	color = "#801E28" // rgb: 128, 30, 40
+	color = "#801e28" // rgb: 128, 30, 40
 	taste_message = "cherry jelly"
 	diet_flags = DIET_PLANT
 
@@ -423,7 +423,7 @@
 	id = "egg"
 	description = "A runny and viscous mixture of clear and yellow fluids."
 	reagent_state = LIQUID
-	color = "#F0C814"
+	color = "#f0c814"
 	taste_message = "eggs"
 	diet_flags = DIET_MEAT
 
@@ -432,7 +432,7 @@
 	id = "cheese"
 	description = "Some cheese. Pour it out to make it solid."
 	reagent_state = SOLID
-	color = "#FFFF00"
+	color = "#ffff00"
 	taste_message = "cheese"
 	diet_flags = DIET_DAIRY
 
@@ -450,6 +450,6 @@
 	id = "bread"
 	description = "Bread! Yep, bread."
 	reagent_state = SOLID
-	color = "#9C5013"
+	color = "#9c5013"
 	taste_message = "bread"
 	diet_flags = DIET_PLANT

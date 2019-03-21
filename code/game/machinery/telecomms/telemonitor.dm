@@ -20,7 +20,7 @@
 	var/temp = ""				// temporary feedback messages
 	circuit = /obj/item/weapon/circuitboard/comm_monitor
 
-	light_color = "#50AB00"
+	light_color = "#50ab00"
 
 /obj/machinery/computer/telecomms/monitor/attack_hand(mob/user)
 	return

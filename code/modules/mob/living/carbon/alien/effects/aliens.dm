@@ -205,7 +205,7 @@
 	layer = 2.5
 	light_range = 0
 	var/node_range = NODERANGE
-	light_color = "#24C1FF"
+	light_color = "#24c1ff"
 
 /obj/structure/alien/weeds/node/atom_init(mapload)
 	. = ..(mapload, src)
@@ -561,7 +561,7 @@
 
 /obj/effect/alien/air_plant/atom_init()
 	START_PROCESSING(SSobj, src)
-	set_light(2, 1, "#24C1FF")
+	set_light(2, 1, "#24c1ff")
 
 /obj/effect/alien/air_plant/process()
 	if(prob(25))
@@ -577,8 +577,8 @@
 		if(pressure < WARNING_LOW_PRESSURE)
 			if(light_color != "#ff6224")
 				set_light(2, 1, "#ff6224")
-		else if(light_color != "#24C1FF")
-			set_light(2, 1, "#24C1FF")
+		else if(light_color != "#24c1ff")
+			set_light(2, 1, "#24c1ff")
 
 		//actually restoring air
 		if(pressure < (ONE_ATMOSPHERE*0.90))//it's pretty sloppy, but never mind

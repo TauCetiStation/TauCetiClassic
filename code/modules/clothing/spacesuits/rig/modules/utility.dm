@@ -609,7 +609,7 @@
 
 /obj/item/rig_module/metalfoam_spray/proc/spray_at(turf/T)
 	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(src))
-	D.icon += "#989DA0"
+	D.icon += "#989da0"
 
 	step_towards(D, T)
 	sleep(5)

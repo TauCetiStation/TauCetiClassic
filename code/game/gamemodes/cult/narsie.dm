@@ -33,7 +33,7 @@
 	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32
 	pixel_y = -32
-	color = "#9C3636"
+	color = "#9c3636"
 
 /obj/effect/effect/sleep_smoke/atom_init()
 	. = ..()

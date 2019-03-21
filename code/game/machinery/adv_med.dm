@@ -9,7 +9,7 @@
 	icon_state = "body_scanner_0"
 	density = 1
 	anchored = 1
-	light_color = "#00FF00"
+	light_color = "#00ff00"
 
 /obj/machinery/bodyscanner/power_change()
 	..()

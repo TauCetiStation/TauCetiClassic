@@ -41,7 +41,7 @@ var/global/normal_ooc_colour = "#002eb8"
 
 	var/display_colour = normal_ooc_colour
 	if(holder && !holder.fakekey)
-		display_colour = "#704F80"
+		display_colour = "#704f80"
 		if(holder.rights & R_DEBUG && !(holder.rights & R_ADMIN))
 			display_colour = "#1b521f"	//dark green
 		else if(holder.rights & R_ADMIN)
@@ -92,7 +92,7 @@ var/global/normal_ooc_colour = "#002eb8"
 /client/verb/set_name_ooc()
 	set name = "Set Name OOC Colour"
 	set category = "OOC"
-	
+
 	if(!supporter)
 		to_chat(usr, "<span class='warning'>This is only for [config.donate_info_url ? "<a href='[config.donate_info_url]'>supporters</a>" : "supporters"][config.allow_byond_membership ? " <a href='http://www.byond.com/membership'>and Byond Members</a>" : ""].</span>")
 		return

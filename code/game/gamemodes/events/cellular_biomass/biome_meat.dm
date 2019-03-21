@@ -26,7 +26,7 @@
 	name = "Cellular horror"
 	desc = "You don't whant to know what is this..."
 	icon = 'code/game/gamemodes/events/cellular_biomass/meatland_cellular.dmi'
-	light_color = "#710F8C"
+	light_color = "#710f8c"
 
 /obj/effect/decal/cleanable/cellular/meat
 	name = "horror"
