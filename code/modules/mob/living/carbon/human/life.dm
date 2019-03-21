@@ -376,10 +376,7 @@
 				if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
 					var/obj/item/clothing/mask/gas/G = wear_mask
 					var/datum/gas_mixture/filtered = new
-					var/gas_list = list("phoron", "sleeping_agent")
-					if(istype(wear_mask, /obj/item/clothing/mask/gas/vox))
-						gas_list = list("phoron", "sleeping_agent", "oxygen")
-					for(var/g in  gas_list)
+					for(var/g in  G.filter)
 						if(breath.gas[g])
 							filtered.gas[g] = breath.gas[g] * G.gas_filter_strength
 							breath.gas[g] -= filtered.gas[g]

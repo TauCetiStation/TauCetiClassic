@@ -12,6 +12,7 @@
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.9
 	var/gas_filter_strength = 1			//For gas mask filters
+	var/filter = list("phoron", "sleeping_agent")
 
 // **** Welding gas mask ****
 
@@ -291,5 +292,6 @@
 	body_parts_covered = 0
 	w_class = ITEM_SIZE_SMALL
 	gas_transfer_coefficient = 0.10
+	filter = list("phoron", "sleeping_agent", "oxygen")
 	species_restricted = list(VOX , VOX_ARMALIS)
 	sprite_sheets = list(VOX_ARMALIS = 'icons/mob/species/armalis/mask.dmi')
