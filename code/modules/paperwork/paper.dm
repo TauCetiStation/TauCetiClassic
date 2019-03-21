@@ -189,7 +189,7 @@
 			else if(!user.is_busy())
 				user.visible_message("<span class='warning'>[user] begins to wipe [H]'s lipstick off with \the [src].</span>", \
 								 	 "<span class='notice'>You begin to wipe off [H]'s lipstick.</span>")
-				if(do_after(user, 10, target = H))	//user needs to keep their active hand, H does not.
+				if(use_tool(H, user, 10, volume = 50))	//user needs to keep their active hand, H does not.
 					user.visible_message("<span class='notice'>[user] wipes [H]'s lipstick off with \the [src].</span>", \
 										 "<span class='notice'>You wipe off [H]'s lipstick.</span>")
 					H.lip_style = null
@@ -393,7 +393,7 @@
 		user.visible_message("[class][user] holds \the [P] up to \the [src], it looks like \he's trying to burn it!</span>", \
 		"[class]You hold \the [P] up to \the [src], burning it slowly.</span>")
 
-		if(do_after(user, 20, TRUE, P, TRUE))
+		if(P.use_tool(P, user, 20, volume = 50))
 			if((get_dist(src, user) > 1) || !P.lit)
 				return
 			user.visible_message("[class][user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>", \

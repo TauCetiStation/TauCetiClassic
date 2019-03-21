@@ -43,7 +43,7 @@
 		to_chat(user, "<span class='notice'>You need to take that [A] off before cleaning it.</span>")
 	else if(istype(A) && src in user)
 		user.visible_message("[user] starts to wipe down [A] with [src]!")
-		if(do_after(user,30,target = A))
+		if(use_tool(A, user, 30, volume = 50))
 			user.visible_message("[user] finishes wiping off the [A]!")
 			A.clean_blood()
 	return

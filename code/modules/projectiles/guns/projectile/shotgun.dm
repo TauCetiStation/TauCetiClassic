@@ -108,7 +108,7 @@
 			playsound(user, fire_sound, 50, 1)
 			user.visible_message("<span class='danger'>The shotgun goes off!</span>", "<span class='danger'>The shotgun goes off in your face!</span>")
 			return
-		if(!user.is_busy() && do_after(user, 30, target = src))	//SHIT IS STEALTHY EYYYYY
+		if(!user.is_busy() && A.use_tool(src, user, 30, volume = 50))
 			icon_state = "sawnshotgun[open ? "-o" : ""]"
 			w_class = ITEM_SIZE_NORMAL
 			item_state = "gun"

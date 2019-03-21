@@ -383,7 +383,7 @@ var/list/cult_datums = list()
 	to_chat(user, "<span class='danger'> You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the\
 	ritual that binds your life essence with the dark arcane energies flowing through the surrounding world.</span>")
 	user.take_overall_damage((rand(9) + 1) / 10) // 0.1 to 1.0 damage
-	if((unlocked || do_after(user, 50, target = user)) && user.get_active_hand() == src)
+	if((unlocked || use_tool(user, user, 50, volume = 50)) && user.get_active_hand() == src)
 		var/obj/effect/rune/R = new /obj/effect/rune(user.loc)
 		if(w1 == cultwords["travel"])
 			if(w2 == cultwords["self"])

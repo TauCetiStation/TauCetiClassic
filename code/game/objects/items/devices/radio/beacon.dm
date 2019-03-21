@@ -110,12 +110,12 @@
 	if(H.health >= config.health_threshold_crit)
 		to_chat(user, "\blue [H.name] is in good condition.")
 		return
-	if(user.is_busy()) return
+	if(user.is_busy(src)) return
 	to_chat(user, "Planting...")
 
 	user.visible_message("\red [user.name] is trying to plant some kind of device on [target.name]!")
 
-	if(do_after(user, 50, target = target) && in_range(user, H))
+	if(use_tool(target, user, 50) && in_range(user, H))
 		user.drop_item()
 		target = H
 		loc = null

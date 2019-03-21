@@ -86,7 +86,7 @@
 
 /obj/item/rig_module/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/nanopaste))
-		if(user.is_busy())
+		if(user.is_busy(src))
 			return
 
 		if(!damage)
@@ -95,7 +95,7 @@
 
 		to_chat(user, "You start mending the damaged portions of \the [src]...")
 
-		if(!do_after(user, 30, target = src) || !W || !src)
+		if(!W.use_tool(src, user, 30, volume = 50) || !W || !src)
 			return
 
 		var/obj/item/stack/nanopaste/paste = W
@@ -122,7 +122,7 @@
 			return
 
 		to_chat(user, "You start mending the damaged portions of \the [src]...")
-		if(!do_after(user, 30, target = src) || !W || !src)
+		if(!cable.use_tool(src, user, 30, volume = 50) || !W || !src)
 			return
 
 		if(cable.use(5))

@@ -43,7 +43,7 @@
 
 /obj/item/weapon/ore/strangerock/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/pickaxe/brush))
-		if(do_after(user, 20, target = src) && W)
+		if(W.use_tool(src, user, 20, volume = 50) && W)
 			if(inside)
 				inside.forceMove(get_turf(src))
 				visible_message("<span class='notice'>\The [src] is brushed away revealing \the [inside].</span>")
@@ -55,7 +55,7 @@
 
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(do_after(user, 20, target = src) && WT && WT.isOn())
+		if(WT.use_tool(src, user, 20, volume = 50) && WT && WT.isOn())
 			user.SetNextMove(CLICK_CD_INTERACT)
 			if(WT.isOn())
 				if(WT.get_fuel() >= 4)

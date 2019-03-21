@@ -40,7 +40,7 @@
 	. = ..()
 	if(user.is_busy())
 		return
-	if(do_after(user, 5, target = src))
+	if(use_tool(src, user, 5, volume = 50))
 		toggle()
 
 /obj/item/decoration/garland/verb/toggle()

@@ -326,7 +326,7 @@ var/list/turret_icons
 			//try and salvage its components
 			if(user.is_busy()) return
 			to_chat(user, "<span class='notice'>You begin prying the metal coverings off.</span>")
-			if(do_after(user, 20, src))
+			if(I.use_tool(src, user, 20, volume = 50))
 				if(prob(70))
 					to_chat(user, "<span class='notice'>You remove the turret and salvage some components.</span>")
 					if(t_gun)
@@ -794,8 +794,7 @@ var/list/turret_icons
 					to_chat(user, "<span class='notice'>You need more fuel to complete this task.</span>")
 					return
 				if(user.is_busy(src)) return
-				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
-				if(do_after(user, 20, src))
+				if(I.use_tool(src, user, 20, volume = 50))
 					if(!src || !WT.use(5, user)) return
 					build_step = 1
 					to_chat(user, "You remove the turret's interior metal armor.")
@@ -868,8 +867,7 @@ var/list/turret_icons
 				if(WT.get_fuel() < 5)
 					to_chat(user, "<span class='notice'>You need more fuel to complete this task.</span>")
 				if(user.is_busy(src)) return
-				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
-				if(do_after(user, 30, src))
+				if(WT.use_tool(src, user, 30, volume = 50))
 					if(!src || !WT.use(5, user))
 						return
 					build_step = 8

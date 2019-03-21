@@ -129,25 +129,23 @@ field_generator power level display
 			if(FG_UNSECURED)
 				to_chat(user, "<span class='red'>The [src] needs to be wrenched to the floor.</span>")
 			if(FG_SECURED)
-				if (!user.is_busy() && WT.use(0, user))
-					playsound(src, 'sound/items/Welder2.ogg', 50, 1)
+				if(!user.is_busy() && WT.use(0, user))
 					user.visible_message(
 						"<span class='notice'>[user.name] starts to weld the [src.name] to the floor.</span>",
 						"<span class='notice'>You start to weld the [src] to the floor.</span>",
 						"<span class='notice'>You hear welding.</span>")
-					if (do_after(user, 20, target = src))
+					if(WT.use_tool(src, user, 20, volume = 50))
 						if(!src || !WT.isOn())
 							return
 						state = FG_WELDED
 						to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
 			if(FG_WELDED)
 				if (!user.is_busy() && WT.use(0, user))
-					playsound(src, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message(
 						"<span class='notice'>[user.name] starts to cut the [src.name] free from the floor.</span>",
 						"<span class='notice'>You start to cut the [src] free from the floor.</span>",
 						"<span class='notice'>You hear welding.</span>")
-					if (do_after(user, 20, target = src))
+					if (WT.use_tool(src, user, 20, volume = 50))
 						if(!src || !WT.isOn())
 							return
 						state = FG_SECURED

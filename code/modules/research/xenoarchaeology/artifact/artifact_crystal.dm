@@ -51,7 +51,7 @@
 				"<span class='notice'>[user] starts cutting off the wiring of the [src].</span>",
 				"<span class='notice'>You start cutting off the wiring of the [src].</span>"
 			)
-			if (!user.is_busy(src) && do_after(user, 20,target = src))
+			if (!user.is_busy(src) && W.use_tool(src, user, 20, volume = 50))
 				user.visible_message(
 					"<span class='notice'>[user] cuts off the wiring of the [src].</span>",
 					"<span class='notice'>You cut off the wiring of the [src].</span>"
@@ -72,7 +72,7 @@
 				"<span class='notice'>[user] starts putting the wiring all over the [src].</span>",
 				"<span class='notice'>You start putting the wiring all over the [src].</span>"
 			)
-			if (!user.is_busy(src) && do_after(user, 20,target = src))
+			if (!user.is_busy(src) && W.use_tool(src, user, 20, volume = 50))
 				user.visible_message(
 					"<span class='notice'>[user] puts the wiring all over the [src].</span>",
 					"<span class='notice'>You put the wiring all over the [src].</span>"

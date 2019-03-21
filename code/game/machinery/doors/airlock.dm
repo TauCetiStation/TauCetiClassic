@@ -857,7 +857,7 @@ var/list/airlock_overlays = list()
 	if(!no_window)
 		updateUsrDialog()
 
-/obj/machinery/door/airlock/attackby(C, mob/user)
+/obj/machinery/door/airlock/attackby(obj/item/C, mob/user)
 
 	if(istype(C,/obj/item/weapon/changeling_hammer) && !operating && density) // yeah, hammer ignore electrify
 		var/obj/item/weapon/changeling_hammer/W = C
@@ -907,9 +907,8 @@ var/list/airlock_overlays = list()
 			beingcrowbarred = 0
 		if( beingcrowbarred && (operating == -1 || density && welded && operating != 1 && p_open && !hasPower() && !locked) )
 			if(user.is_busy(src)) return
-			playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
-			if(do_after(user,40,target = src))
+			if(C.use_tool(src, user, 40, volume = 100))
 				to_chat(user, "\blue You removed the airlock electronics!")
 
 				var/obj/structure/door_assembly/da = new assembly_type(loc)

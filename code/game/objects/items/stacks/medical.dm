@@ -336,7 +336,7 @@
 			user.visible_message("<span class='danger'>[user] starts to apply \the [src] to their [limb].</span>", \
 								"<span class='danger'>You start to apply \the [src] to your [limb].</span>", \
 								"<span class='danger'>You hear something being wrapped.</span>")
-		if(!user.is_busy() && do_after(user, 50, target = M))
+		if(!user.is_busy() && use_tool(M, user, 50))
 			if(!use(1))
 				to_chat(user, "<span class='danger'>You need more splints's to do this.</span>")
 				return

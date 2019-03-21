@@ -474,9 +474,8 @@
 		if(8)
 			if(isscrewdriver(W))
 				if(user.is_busy(src)) return
-				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				to_chat(user, "<span class='notice'>Now attaching the gun to the frame...</span>")
-				if(do_after(user, 40, target = src))
+				if(W.use_tool(src, user, 40, volume = 100))
 					if(build_step == 8)
 						build_step++
 						name = "armed [name]"

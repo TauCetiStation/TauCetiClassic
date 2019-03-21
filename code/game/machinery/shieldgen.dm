@@ -264,7 +264,7 @@
 		if(user.is_busy(src)) return
 		to_chat(user, "\blue You begin to replace the wires.")
 		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
-		if(do_after(user, 30, target = src))
+		if(coil.use_tool(src, user, 30, volume = 50))
 			if(QDELETED(src) || !coil.use(1))
 				return
 

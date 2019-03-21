@@ -831,8 +831,7 @@
 				if(user.is_busy())
 					return
 				to_chat(user, "You start prying out the circuit.")
-				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-				if(do_after(user,20,target = src))
+				if(W.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "You pry out the circuit!")
 					var/obj/item/weapon/airalarm_electronics/circuit = new /obj/item/weapon/airalarm_electronics()
 					circuit.loc = user.loc
@@ -1018,8 +1017,7 @@ FIRE ALARM
 
 				else if(iscrowbar(W))
 					to_chat(user, "You start prying out the circuit.")
-					playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-					if(do_after(user,20,target = src))
+					if(W.use_tool(src, user, 20, volume = 50))
 						to_chat(user, "You pry out the circuit!")
 						var/obj/item/weapon/firealarm_electronics/circuit = new /obj/item/weapon/firealarm_electronics()
 						circuit.loc = user.loc

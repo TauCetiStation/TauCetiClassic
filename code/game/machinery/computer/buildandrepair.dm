@@ -457,8 +457,7 @@
 				var/obj/item/stack/sheet/glass/G = P
 				if(G.get_amount() >= 2)
 					if(user.is_busy(src)) return
-					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20, target = src))
+					if(G.use_tool(src, user, 20, volume = 50))
 						if(G.use(2))
 							to_chat(user, "\blue You put in the glass panel.")
 							src.state = 4

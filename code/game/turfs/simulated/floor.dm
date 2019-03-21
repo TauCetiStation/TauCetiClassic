@@ -544,9 +544,10 @@ var/list/wood_icons = list("wood","wood-broken")
 		var/obj/item/stack/rods/R = C
 		if (is_plating())
 			if (R.get_amount() >= 2)
-				if(user.is_busy()) return
+				if(user.is_busy(src))
+					return
 				to_chat(user, "\blue Reinforcing the floor...")
-				if(do_after(user, 30, target = src) && R.use(2) && is_plating())
+				if(R.use_tool(src, user, 30, amount = 2, volume = 50) && is_plating())
 					ChangeTurf(/turf/simulated/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
 					return

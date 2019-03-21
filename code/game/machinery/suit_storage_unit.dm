@@ -494,7 +494,7 @@
 			return
 		if(user.is_busy()) return
 		visible_message("[user] starts putting [G.affecting.name] into the Suit Storage Unit.", 3)
-		if(do_after(user, 20, target = src))
+		if(I.use_tool(src, user, 20, volume = 50))
 			if(!G || !G.affecting) return //derpcheck
 			var/mob/M = G.affecting
 			if (M.client)

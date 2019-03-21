@@ -93,7 +93,7 @@
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 	playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 
-	if(do_after(user, 40, null, src))
+	if(W.use_tool(src, user, 40, volume = 50))
 		user.visible_message(
 			"<span class='notice'>\The [user] unfastens \the [src].</span>",
 			"<span class='notice'>You have unfastened \the [src].</span>",

@@ -279,14 +279,14 @@ update_flag
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user)
 	if(user.a_intent != I_HURT && iswelder(W))
-		if(user.is_busy()) return
+		if(user.is_busy(src))
+			return
 		var/obj/item/weapon/weldingtool/WT = W
 		if(stat & BROKEN)
 			if(!WT.use(0, user))
 				return
-			playsound(src, 'sound/items/Welder2.ogg', 40, 1)
 			to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
-			if(do_after(user, 30, target = src))
+			if(WT.use_tool(src, user, 30, volume = 40))
 				deconstruct(TRUE)
 		else
 			to_chat(user, "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>")

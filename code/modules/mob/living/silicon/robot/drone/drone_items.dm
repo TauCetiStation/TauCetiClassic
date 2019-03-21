@@ -219,7 +219,7 @@
 			if(user.is_busy()) return
 			to_chat(D, "\red You begin decompiling the other drone.")
 
-			if(!do_after(D,50,target = M))
+			if(!use_tool(M, D, 50, volume = 50))
 				to_chat(D, "\red You need to remain still while decompiling such a large object.")
 				return
 

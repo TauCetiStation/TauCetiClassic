@@ -418,10 +418,11 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if (!istype(target, /turf/simulated/mineral))
 		to_chat(user, "<span class='notice'>You can't plant [src] on [target.name].</span>")
 		return
-	if(user.is_busy()) return
+	if(user.is_busy(src))
+		return
 	to_chat(user, "<span class='notice'>Planting explosives...</span>")
 
-	if(do_after(user, 50, target = target) && in_range(user, target))
+	if(use_tool(target, user, 50, volume = 50) && in_range(user, target))
 		user.drop_item()
 		target = target
 		loc = null
@@ -795,9 +796,10 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/machinery/smartfridge/survival_pod/attackby(obj/item/O, mob/user)
 	if(is_type_in_typecache(O,forbidden_tools))
 		if(iswrench(O))
-			if(user.is_busy()) return
+			if(user.is_busy(src))
+				return
 			to_chat(user, "\blue You start to disassemble the storage unit...")
-			if(do_after(user,20,target = src))
+			if(O.use_tool(src, user, 20, volume = 50))
 				if(!src)
 					return
 				qdel(src)

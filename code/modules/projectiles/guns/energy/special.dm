@@ -262,7 +262,6 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	var/charge = 0
 	var/charging = FALSE
 	var/cooldown = FALSE
-	var/spinspeed = 1
 
 /obj/item/weapon/gun/tesla/atom_init()
 	. = ..()
@@ -270,7 +269,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 /obj/item/weapon/gun/tesla/proc/charge(mob/living/user)
 	set waitfor = FALSE
-	if(do_after(user, 40 * spinspeed, target = src))
+	if(use_tool(src, user, 40))
 		if(charging && charge < 3)
 			charge++
 			playsound(loc, "sparks", 75, 1, -1)
@@ -367,4 +366,4 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	item_state = "arctesla"
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = null
-	spinspeed = 0.5
+	toolspeed = 0.5

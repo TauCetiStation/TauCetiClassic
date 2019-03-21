@@ -389,10 +389,10 @@
 			if (terminal)
 				to_chat(user, "\red Disconnect wires first.")
 				return
-			if(user.is_busy()) return
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			if(user.is_busy(src))
+				return
 			to_chat(user, "You are trying to remove the power control board...")//lpeters - fixed grammar issues
-			if(do_after(user, 50, target = src))
+			if(W.use_tool(src, user, 50, volume = 50))
 				has_electronics = 0
 				if ((stat & BROKEN) || malfhack)
 					user.visible_message(\
@@ -482,9 +482,10 @@
 		else if(stat & (BROKEN|MAINT))
 			to_chat(user, "Nothing happens.")
 		else
-			if(user.is_busy()) return
+			if(user.is_busy(src))
+				return
 			flick("apc-spark", src)
-			if (do_after(user,6,target = src))
+			if(W.use_tool(src, user, 6, volume = 50))
 				if(prob(50))
 					emagged = 1
 					locked = 0
@@ -502,8 +503,7 @@
 			return
 		if(user.is_busy()) return
 		to_chat(user, "You start adding cables to the APC frame...")
-		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 20, target = src) && C.get_amount() >= 10)
+		if(C.use_tool(src, user, 20, volume = 50) && C.get_amount() >= 10)
 			var/turf/T = get_turf_loc(src)
 			var/obj/structure/cable/N = T.get_cable_node()
 			if (prob(50) && electrocute_mob(usr, N, N))
@@ -522,8 +522,7 @@
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
 		if(user.is_busy()) return
 		to_chat(user, "You trying to insert the power control board into the frame...")
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 10, target = src))
+		if(W.use_tool(src, user, 10, volume = 50))
 			has_electronics = 1
 			to_chat(user, "You place the power control board inside the frame.")
 			qdel(W)
@@ -537,8 +536,7 @@
 			to_chat(user, "\blue You need more welding fuel to complete this task.")
 			return
 		to_chat(user, "You start welding the APC frame...")
-		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-		if(do_after(user, 50, target = src))
+		if(WT.use_tool(src, user, 50, volume = 50))
 			if(!src || !WT.use(3, user)) return
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
@@ -569,7 +567,7 @@
 			return
 		if(user.is_busy()) return
 		to_chat(user, "You begin to replace the damaged APC frame...")
-		if(do_after(user, 50, target = src))
+		if(W.use_tool(src, user, 50, volume = 50))
 			user.visible_message(\
 				"\red [user.name] has replaced the damaged APC frame with new one.",\
 				"You replace the damaged APC frame with new one.")

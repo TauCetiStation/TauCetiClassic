@@ -234,9 +234,8 @@
 			if(user.is_busy()) return
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.use(0,user))
-				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 				to_chat(user, "Welding the [nicetype] in place.")
-				if(do_after(user, 20, target = src))
+				if(W.use_tool(src, user, 20, volume = 50))
 					if(!src || !W.isOn()) return
 					to_chat(user, "The [nicetype] has been welded in place!")
 					update() // TODO: Make this neat

@@ -177,9 +177,10 @@
 		STOP_PROCESSING(SSobj, src)
 		wearer.alpha = 255
 	else if(!deactive)
-		if(wearer.is_busy()) return
+		if(wearer.is_busy(src))
+			return
 		to_chat(wearer, "<span class='notice'>Turning on stealth mode...</span>")
-		if(do_after(wearer, 40, target = wearer))
+		if(use_tool(wearer, wearer, 40))
 			if(!istype(wearer) || wearer.wear_suit != src)
 				return
 			if(is_damaged())

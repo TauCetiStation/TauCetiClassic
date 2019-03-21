@@ -119,8 +119,7 @@
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(isscrewdriver(I) && circuit && !(flags&NODECONSTRUCT))
 		if(user.is_busy(src)) return
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20, target = src))
+		if(I.use_tool(src, user, 20, volume = 50))
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 			A.circuit = circuit
 			A.anchored = 1

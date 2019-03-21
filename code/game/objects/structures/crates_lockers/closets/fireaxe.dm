@@ -90,7 +90,7 @@
 				addtimer(CALLBACK(src, .proc/update_icon), 10)
 			else
 				to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
-				if (do_after(user, 50, target = src))
+				if(O.use_tool(src, user, 50, volume = 50))
 					locked = TRUE
 					to_chat(user, "<span class='notice'>You re-enable the locking modules.</span>")
 					playsound(user, 'sound/machines/lockenable.ogg', 50, 1)
