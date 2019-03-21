@@ -139,8 +139,6 @@ function find_code_deps {
     need_cmd awk
     need_cmd md5sum
     need_cmd python2
-    need_cmd python3
-    need_cmd pip
 }
 
 function find_byond_deps {
@@ -166,8 +164,6 @@ function find_code {
 function run_code_tests {
     msg "*** running code tests ***"
     find_code_deps
-    pip install --user PyYaml -q
-    pip install --user beautifulsoup4 -q
     shopt -s globstar
     run_test_fail "maps contain no step_[xy]" "grep -n 'step_[xy]' maps/**/*.dmm"
     run_test_fail "maps contain no tag" "grep -n '\<tag =' maps/**/*.dmm"
@@ -176,7 +172,7 @@ function run_code_tests {
     run_test_fail "no invalid spans" "grep -En \"<\s*span\s+class\s*=\s*('[^'>]+|[^'>]+')\s*>\" **/*.dm"
     run_test "indentation check" "awk -f scripts/indentation.awk **/*.dm"
     run_test "check tags" "python2 scripts/tag-matcher.py ."
-    run_test "check color hex" "python3 scripts/color-hex-checker.py ."
+    run_test "check color hex" "python2 scripts/color-hex-checker.py ."
 }
 
 function run_byond_tests {
