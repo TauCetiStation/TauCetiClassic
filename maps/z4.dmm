@@ -971,11 +971,6 @@
 "cs" = (
 /turf/simulated/floor,
 /area/derelict/bridge/access)
-"ct" = (
-/obj/structure/rack,
-/obj/item/weapon/melee/classic_baton,
-/turf/simulated/floor,
-/area/derelict/bridge/access)
 "cu" = (
 /obj/structure/rack,
 /obj/machinery/light/small{
@@ -50520,7 +50515,7 @@ aa
 aa
 aa
 cp
-ct
+cv
 cx
 cw
 cH
