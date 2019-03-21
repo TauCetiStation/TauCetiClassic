@@ -1790,6 +1790,7 @@
 
 		var/paths = list()
 		var/removed_paths = list()
+		var/max_paths_length = 5
 
 		for(var/dirty_path in dirty_paths)
 			var/path = text2path(dirty_path)
@@ -1811,13 +1812,15 @@
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
 					continue
+			else if(ispath(path, /turf))
+				max_paths_length = 1
 			paths += path
 
 		if(!paths)
 			alert("The path list you sent is empty")
 			return
-		if(length(paths) > 5)
-			alert("Select fewer object types, (max 5)")
+		if(length(paths) > max_paths_length)
+			alert("Select fewer object types, (max [max_paths_length])")
 			return
 		else if(length(removed_paths))
 			alert("Removed:\n" + jointext(removed_paths, "\n"))
@@ -1867,6 +1870,7 @@
 
 
 		if(target)
+			var/stop_main_loop = FALSE
 			for (var/path in paths)
 				for (var/i = 0; i < number; i++)
 					if(where == "dropped")
@@ -1876,6 +1880,9 @@
 						var/turf/N = O.ChangeTurf(path)
 						if(N && obj_name)
 							N.name = obj_name
+						number = 1 // this is not for this loop, but for the logs part down below.
+						stop_main_loop = TRUE
+						break // there is no point in spawning more than one turf.
 					else
 						var/atom/O = new path(target)
 						if(O)
@@ -1896,6 +1903,8 @@
 										I.loc = R.module
 										R.module.rebuild()
 										R.activate_module(I)
+				if(stop_main_loop)
+					break
 
 		if (number == 1)
 			log_admin("[key_name(usr)] created a [english_list(paths)]")

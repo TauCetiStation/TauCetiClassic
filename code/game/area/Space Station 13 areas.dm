@@ -39,6 +39,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	valid_territory = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
+/area/shuttle/atom_init()
+	if(!canSmoothWithAreas)
+		canSmoothWithAreas = type
+	. = ..()
+
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
 

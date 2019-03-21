@@ -7249,7 +7249,7 @@
 	},
 /area/mine/abandoned)
 "oq" = (
-/obj/effect/alien/resin/wall,
+/obj/structure/alien/resin/wall,
 /turf/simulated/floor/airless{
 	icon_state = "floorgrime"
 	},
@@ -8298,7 +8298,7 @@
 	},
 /area/mine/abandoned)
 "qC" = (
-/obj/effect/alien/resin/wall,
+/obj/structure/alien/resin/wall,
 /turf/simulated/floor,
 /area/mine/abandoned)
 "qD" = (
@@ -8618,7 +8618,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mine/abandoned)
 "rr" = (
-/obj/effect/alien{
+/obj/structure/alien{
 	desc = "It looks like a weird egg";
 	icon_state = "egg";
 	name = "egg"
