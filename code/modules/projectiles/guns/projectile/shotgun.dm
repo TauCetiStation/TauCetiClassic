@@ -102,10 +102,12 @@
 	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
 		if(short) return
 		if(get_ammo())
-			if(can_fire())
-				to_chat(user, "<span class='notice'>You try to shorten the barrel of \the [src].</span>")
+			to_chat(user, "<span class='notice'>You try to shorten the barrel of \the [src].</span>")
+			if(chambered.BB)
 				playsound(user, fire_sound, 50, 1)
 				user.visible_message("<span class='danger'>The shotgun goes off!</span>", "<span class='danger'>The shotgun goes off in your face!</span>")
+			else
+				to_chat(user, "<span class='danger'>You hear a clicking sound and thank God that bullet casing was empty.</span>")
 			afterattack(user, user)	//will this work?
 			afterattack(user, user)	//it will. we call it twice, for twice the FUN
 			return
