@@ -10,7 +10,7 @@
 
 {
 	if ( comma != 1 ) { # No comma/'list('/etc at the end of the previous line
-		if ( $0 ~ /^[\t ]+\/[^/*]/ ) { # Current line's first non-whitespace character is a slash, followed by something that is not another slash or an asterisk
+		if ( $0 ~ /^[\t ]+\/[^\/*]/ ) { # Current line's first non-whitespace character is a slash, followed by something that is not another slash or an asterisk
 			print FILENAME, ":", FNR, ":", $0
 			fail = 1
 		}
