@@ -1,4 +1,4 @@
-icon_deny = "blood2deny"icon_deny = "blood2deny"/datum/data/vending_product
+/datum/data/vending_product
 	var/product_name = "generic"
 	var/product_path = null
 	var/amount = 0
