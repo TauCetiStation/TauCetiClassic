@@ -68,10 +68,10 @@
 				if(C.get_amount() < 5)
 					to_chat(user, "<span class='warning'>You need five length of cable to wire the frame!</span>")
 					return
-				if(user.is_busy()) return
-				playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+				if(user.is_busy(src))
+					return
 				to_chat(user, "<span class='notice'>You start to add cables to the frame.</span>")
-				if(do_after(user, 20/P.toolspeed, target = src))
+				if(P.use_tool(src, user, 20, target = src, volume = 50))
 					if(state == 1)
 						if(!C.use(5))
 							return
@@ -81,11 +81,11 @@
 						icon_state = "box_1"
 
 			else if(isscrewdriver(P) && !anchored)
-				if(user.is_busy()) return
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				if(user.is_busy(src))
+					return
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
-				if(do_after(user, 40/P.toolspeed, target = src))
+				if(P.use_tool(src, user, 40, volume = 50))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
 						var/obj/item/stack/sheet/metal/M = new (loc, 5)

@@ -10,7 +10,8 @@
 		return
 	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/machinery/nuclearbomb))
 		return
-	if(user.is_busy()) return
+	if(user.is_busy())
+		return
 	to_chat(user, "Planting explosives...")
 	if(ismob(target))
 		var/mob/living/M = target
@@ -21,7 +22,7 @@
 		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target.name]</font>"
 		msg_admin_attack("[user.real_name] ([user.ckey]) [ADMIN_FLW(user)] tried planting [name] on [target.name] [ADMIN_JMP(target)]")
 
-	if(do_after(user, 50, target = target) && in_range(user, target))
+	if(use_tool(target, user, 50, volume = 50) && in_range(user, target))
 		user.drop_item()
 		target = target
 		loc = null

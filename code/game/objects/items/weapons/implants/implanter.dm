@@ -23,7 +23,7 @@
 
 	user.visible_message("<span class ='userdanger'>[user] is attemping to implant [M].</span>")
 
-	if(M == user || (!user.is_busy() && do_after(user, 50, target = M)))
+	if(M == user || (!user.is_busy() && use_tool(M, user, 50, volume = 50)))
 		if(src && imp)
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'> Implanted with [src.name] ([src.imp.name])  by [user.name] ([user.ckey])</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] ([src.imp.name]) to implant [M.name] ([M.ckey])</font>")

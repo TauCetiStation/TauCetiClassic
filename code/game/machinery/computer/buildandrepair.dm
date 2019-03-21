@@ -390,7 +390,7 @@
 					to_chat(user, "The welding tool must be on to complete this task.")
 					return
 				if(user.is_busy(src))
-				return
+					return
 				if(WT.use_tool(src, user, 20, volume = 50))
 					if(!src || !WT.isOn())
 						return

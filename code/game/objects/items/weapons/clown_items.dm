@@ -83,7 +83,7 @@
 			user.visible_message("<span class='notice'>\the [user] starts to clean \his [body_part_name] out with soap.</span>")
 		else
 			user.visible_message("<span class='notice'>\the [user] starts to clean \the [target]'s [body_part_name] out with soap.</span>")
-		if(do_after(user, 15, target = H) && src)
+		if(use_tool(target, user, 15, volume = 50))
 			switch(body_part_name)
 				if("mouth")
 					H.lip_style = null

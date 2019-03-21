@@ -5,7 +5,7 @@
 	icon_state = "excavationdrill0"
 	item_state = "excavationdrill"
 	excavation_amount = 0.5
-	toolspeed = 30
+	toolspeed = 0.6
 	desc = "Basic archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision. The tip is adjustable from 1 to 30 cms."
 	drill_sound = 'sound/weapons/thudswoosh.ogg'
 	drill_verb = "drilling"
@@ -47,7 +47,7 @@
 	name = "diamond excavation drill"
 	icon_state = "Dexcavationdrill0"
 	item_state = "Dexcavationdrill"
-	toolspeed = 15
+	toolspeed = 0.3
 	desc = "Advanced archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision. The diamond tip is adjustable from 1 to 100 cms."
 
 /obj/item/weapon/pickaxe/excavationdrill/adv/attack_self(mob/user)

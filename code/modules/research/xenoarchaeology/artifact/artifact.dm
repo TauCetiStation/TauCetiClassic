@@ -78,13 +78,13 @@
 	if (istype(W, /obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/P = W
 
-		if(last_act + P.toolspeed > world.time)//prevents message spam
+		if(last_act + 50 * P.toolspeed > world.time)//prevents message spam
 			return
 		last_act = world.time
 
 		to_chat(user, "<span class='warning'>You start [P.drill_verb] [src].</span>")
 
-		if(!do_after(user,P.toolspeed,target = src))
+		if(!W.use_tool(src, user, 50, volume = 100))
 			return
 
 		to_chat(user, "<span class='notice'>You finish [P.drill_verb] [src].</span>")
