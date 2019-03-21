@@ -88,7 +88,7 @@
 
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
-	desc = "A suit of armor with heavy padding to protect against melee attacks. Looks like it might impair movement."
+	desc = "A suit of armor with heavy padding to protect against melee attacks."
 	icon_state = "riot"
 	item_state = "swat_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
