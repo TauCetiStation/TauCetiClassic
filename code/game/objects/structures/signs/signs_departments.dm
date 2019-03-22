@@ -63,13 +63,13 @@
 /obj/structure/sign/departments/medbay
 	name = "\improper MEDBAY"
 	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here."
-	icon_state = "greencross"
+	icon_state = "bluecross"
 
 /obj/structure/sign/departments/medbay/alt
-	icon_state = "greencross2"
+	icon_state = "bluecross2"
 
 /obj/structure/sign/departments/medbay/old
-	icon_state = "greencross4"
+	icon_state = "bluecross4"
 
 /obj/structure/sign/departments/medbay/lifestar
 	name = "\improper LIFESTAR"

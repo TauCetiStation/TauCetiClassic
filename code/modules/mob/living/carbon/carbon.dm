@@ -31,6 +31,8 @@
 		if(germ_level < GERM_LEVEL_MOVE_CAP && prob(8))
 			germ_level++
 
+		handle_rig_move(NewLoc, Dir)
+
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(isessence(user))
 		user.setMoveCooldown(1)

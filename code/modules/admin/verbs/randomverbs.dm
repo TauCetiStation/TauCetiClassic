@@ -293,7 +293,7 @@ Ccomp's first proc.
 	var/list/mobs = list()
 	var/list/ghosts = list()
 	var/list/sortmob = sortAtom(observer_list)                           // get the mob list.
-	/var/any=0
+	var/any = 0
 	for(var/mob/dead/observer/M in sortmob)
 		mobs.Add(M)                                             //filter it where it's only ghosts
 		any = 1                                                 //if no ghosts show up, any will just be 0
@@ -1032,7 +1032,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("Admin [key_name_admin(usr)] has forced the players to have random appearances.")
 
 	if(notifyplayers == "Yes")
-		to_chat(world, "\blue <b>Admin [usr.key] has forced the players to have completely random identities!")
+		to_chat(world, "<span class='notice'><b>Admin [usr.key] has forced the players to have completely random identities!</b></span>")
 
 	to_chat(usr, "<i>Remember: you can always disable the randomness by using the verb again, assuming the round hasn't started yet</i>.")
 

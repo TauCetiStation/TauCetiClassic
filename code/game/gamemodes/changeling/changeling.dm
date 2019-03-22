@@ -120,7 +120,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	to_chat(changeling.current, "<b>\red Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</b>")
 
 	if(config.objectives_disabled)
-		to_chat(changeling.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
+		to_chat(changeling.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 
 	if (!config.objectives_disabled)
 		to_chat(changeling.current, "<B>You must complete the following tasks:</B>")
@@ -171,7 +171,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	for(var/datum/mind/changeling in changelings)
 		if(changeling.current.stat == DEAD)
 			feedback_set_details("round_end_result","loss - changeling killed")
-			prefinal_text = "<FONT size = 3>Changeling <b>[changeling.changeling.changelingID]</b><i> ([changeling.key])</I> has been <font color='red'><b>killed</b></font by the crew! The Thing failed again...</FONT><BR>"
+			prefinal_text = "<FONT size = 3>Changeling <b>[changeling.changeling.changelingID]</b><i> ([changeling.key])</i> has been <font color='red'><b>killed</b></font> by the crew! The Thing failed again...</FONT><BR>"
 		else
 			var/failed = 0
 			for(var/datum/objective/objective in changeling.objectives)

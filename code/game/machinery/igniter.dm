@@ -61,7 +61,7 @@
 /obj/machinery/sparker/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	if (istype(W, /obj/item/weapon/screwdriver))
+	if (isscrewdriver(W))
 		add_fingerprint(user)
 		src.disable = !src.disable
 		user.SetNextMove(CLICK_CD_INTERACT)
