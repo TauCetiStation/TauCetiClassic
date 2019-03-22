@@ -1,12 +1,19 @@
-
+// This is the power crystal, that basically generates lots of power when it is:
+// 1) Wrenched down to the floor turf where the cable ends
+// 2) Has wired = 1 (click on it with the cable to enable and with cutters to disable)
+//
+// TO DO:
+// * More interaction.
+// * Change the power supply method making it less complex.
+//
 /obj/machinery/power/crystal
 	name = "large crystal"
-	icon = 'icons/obj/xenoarchaeology.dmi'
-	icon_state = ""
+	icon = 'icons/obj/xenoarchaeology/artifacts.dmi'
+	icon_state = "artifact_11"
 	density = TRUE
 	anchored = FALSE
 
-	var/power_produced = 100000
+	var/power_produced = 50000
 	var/working = FALSE
 
 	var/wired = FALSE
@@ -18,14 +25,14 @@
 	if(anchored)
 		connect_to_network()
 
-	icon_custom_crystal = pick("ano70", "ano80")
+	icon_custom_crystal = pick("artifact_11", "artifact_12", "artifact_13")
 	icon_state = icon_custom_crystal
 
-	desc = pick(\
-	"It shines faintly as it catches the light.",\
-	"It appears to have a faint inner glow.",\
-	"It seems to draw you inward as you look it at.",\
-	"Something twinkles faintly as you look at it.",\
+	desc = pick(
+	"It shines faintly as it catches the light.",
+	"It appears to have a faint inner glow.",
+	"It seems to draw you inward as you look it at.",
+	"Something twinkles faintly as you look at it.",
 	"It's mesmerizing to behold.")
 
 /obj/machinery/power/crystal/attackby(obj/item/W, mob/user)
@@ -38,16 +45,16 @@
 		update_crystal()
 		return
 
-	if(istype(W, /obj/item/weapon/wirecutters)) // If we want to remove the wiring
+	if(iswirecutter(W)) // If we want to remove the wiring
 		if(wired)
-			user.visible_message( \
-				"<span class='notice'>[user] starts cutting off the wiring of the [src].</span>", \
-				"<span class='notice'>You start cutting off the wiring of the [src].</span>" \
+			user.visible_message(
+				"<span class='notice'>[user] starts cutting off the wiring of the [src].</span>",
+				"<span class='notice'>You start cutting off the wiring of the [src].</span>"
 			)
-			if (!user.is_busy(src) && do_after(user,20,target = src))
-				user.visible_message( \
-					"<span class='notice'>[user] cuts off the wiring of the [src].</span>", \
-					"<span class='notice'>You cut off the wiring of the [src].</span>" \
+			if (!user.is_busy(src) && do_after(user, 20,target = src))
+				user.visible_message(
+					"<span class='notice'>[user] cuts off the wiring of the [src].</span>",
+					"<span class='notice'>You cut off the wiring of the [src].</span>"
 				)
 				wired = FALSE
 				update_crystal()
@@ -55,15 +62,23 @@
 		else
 			to_chat(user, "<span class='red'>There is currently no wiring on the [src].</span>")
 			return
-	if(istype(W, /obj/item/stack/cable_coil))
+	if(iscoil(W)) // If we want to put the wiring
 		if(!wired)
 			var/obj/item/stack/cable_coil/CC = W
 			if(!CC.use(2))
 				to_chat(user, "<span class='red'>There's not enough wire to finish the task.</span>")
 				return
-			wired = TRUE
-			update_crystal()
-			to_chat(user, "<span class='notice'>You put the wires all across the [src]</span>")
+			user.visible_message(
+				"<span class='notice'>[user] starts putting the wiring all over the [src].</span>",
+				"<span class='notice'>You start putting the wiring all over the [src].</span>"
+			)
+			if (!user.is_busy(src) && do_after(user, 20,target = src))
+				user.visible_message(
+					"<span class='notice'>[user] puts the wiring all over the [src].</span>",
+					"<span class='notice'>You put the wiring all over the [src].</span>"
+				)
+				wired = TRUE
+				update_crystal()
 			return
 		else
 			to_chat(user, "<span class='red'>The [src] is already wired.</span>")
@@ -98,13 +113,13 @@
 
 /obj/machinery/power/crystal/proc/update_crystal()
 	if(wired && anchored)
-		icon_state = "[icon_custom_crystal]_powered"
+		icon_state = "[icon_custom_crystal]_active"
 		generate_power()
 	else
 		icon_state = icon_custom_crystal
 		generate_power_stop()
 	if(wired)
-		src.overlays += image('icons/obj/xenoarchaeology.dmi', "crystal_overlay")
+		src.overlays += image('icons/obj/xenoarchaeology/artifacts.dmi', "crystal_overlay")
 	else
 		overlays.Cut()
 	return
@@ -112,7 +127,7 @@
 // laser_act
 /obj/machinery/power/crystal/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-		visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
+		visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>",
 						"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
 		// Find a turf near or on the original location to bounce to
 		if(P.starting)

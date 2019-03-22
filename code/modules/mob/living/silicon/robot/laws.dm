@@ -16,7 +16,7 @@
 				photosync()
 				to_chat(src, "<b>Laws synced with AI, be sure to note any changes.</b>")
 				if(mind && mind.special_role == "traitor" && mind.original == src)
-					to_chat(src, "<b>Remember, your AI does NOT share or know about your law 0.")
+					to_chat(src, "<b>Remember, your AI does NOT share or know about your law 0.</b>")
 		else
 			to_chat(src, "<b>No AI selected to sync laws with, disabling lawsync protocol.</b>")
 			lawupdate = 0

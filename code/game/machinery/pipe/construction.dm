@@ -392,7 +392,7 @@ Buildable meters
 /obj/item/pipe/attackby(obj/item/weapon/W, mob/user)
 	..()
 	//*
-	if (!istype(W, /obj/item/weapon/wrench))
+	if (!iswrench(W))
 		return ..()
 	if (!isturf(loc))
 		return TRUE
@@ -410,6 +410,17 @@ Buildable meters
 		if((M.initialize_directions & pipe_dir) && M.check_connect_types_construction(M, src))	// matches at least one direction on either type of pipe & same connection type
 			to_chat(user, "<span class='warning'>There is already a pipe of the same type at this location.</span>")
 			return TRUE
+
+	for(var/D in cardinal)
+		if(D & pipe_dir)
+			var/turf/T = get_step(src, D)
+			if(T)
+				var/dir_to_pipe = get_dir(T, src)
+				for(var/obj/machinery/atmospherics/M in T)
+					if((M.initialize_directions & dir_to_pipe) && M.check_connect_types_construction(M, src) && !M.has_free_nodes())	// blocks construction if that leads to connection conflicts.
+						to_chat(user, "<span class='warning'>[M] has no free nodes.</span>")
+						return TRUE
+
 	// no conflicts found
 
 	//TODO: Move all of this stuff into the various pipe constructors.
@@ -752,7 +763,7 @@ Buildable meters
 /obj/item/pipe_meter/attackby(obj/item/weapon/W, mob/user)
 	..()
 
-	if (!istype(W, /obj/item/weapon/wrench))
+	if (!iswrench(W))
 		return ..()
 	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
 		to_chat(user, "<span class='warning'>You need to fasten it to a pipe</span>")

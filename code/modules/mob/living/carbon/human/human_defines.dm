@@ -82,7 +82,7 @@
 	var/xylophone = 0 //For the spoooooooky xylophone cooldown
 
 	var/mob/remoteview_target = null
-	var/datum/dirt_cover/hand_dirt_color
+	var/datum/dirt_cover/hand_dirt_datum
 
 	// Organs regenerating variables.
 	var/regenerating_organ_time = 0
@@ -92,7 +92,7 @@
 	var/my_master = 0
 	var/my_golems = list()
 
-	var/lastScream = 0 // Prevent scream spam in some situations
+	var/lastSoundEmote = 0 // Prevent sound emotes spam in some situations
 	var/name_override //For temporary visible name changes
 
 	var/full_prosthetic    // We are a robutt.

@@ -140,9 +140,11 @@ move an amendment</a> to the drawing.</p>
 
 
 /obj/item/blueprints/proc/move_turfs_to_area(list/turf/turfs, area/A)
-	A.contents.Add(turfs)
-		//oldarea.contents.Remove(usr.loc) // not needed
-		//T.loc = A //error: cannot change constant value
+	for(var/i in 1 to turfs.len)
+		var/turf/thing = turfs[i]
+		var/area/old_area = thing.loc
+		A.contents += thing
+		thing.change_area(old_area, A)
 
 
 /obj/item/blueprints/proc/edit_area()
@@ -202,8 +204,6 @@ move an amendment</a> to the drawing.</p>
 	if (locate(/obj/machinery/door) in T2)
 		return BORDER_2NDTILE
 	if (locate(/obj/structure/falsewall) in T2)
-		return BORDER_2NDTILE
-	if (locate(/obj/structure/falserwall) in T2)
 		return BORDER_2NDTILE
 	if (locate(/obj/structure/mineral_door) in T2)
 		return BORDER_2NDTILE

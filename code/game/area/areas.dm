@@ -46,6 +46,8 @@
 	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
 	var/air_doors_activated = 0
 
+	var/list/canSmoothWithAreas //typecache to limit the areas that atoms in this area can smooth with
+
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -95,11 +97,21 @@ var/list/ghostteleportlocs = list()
 	..()
 
 /area/atom_init()
+	canSmoothWithAreas = typecacheof(canSmoothWithAreas)
 
 	. = ..()
 
-	if(dynamic_lighting)
-		luminosity = FALSE
+	if(requires_power)
+		luminosity = 0
+	else
+		if(dynamic_lighting == DYNAMIC_LIGHTING_FORCED)
+			dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+			luminosity = 0
+		else if(dynamic_lighting != DYNAMIC_LIGHTING_IFSTARLIGHT)
+			dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	if(dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
+		dynamic_lighting = config.starlight ? DYNAMIC_LIGHTING_ENABLED : DYNAMIC_LIGHTING_DISABLED
+
 
 	power_change() // all machines set to current power level, also updates lighting icon
 

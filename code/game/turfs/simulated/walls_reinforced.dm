@@ -1,17 +1,16 @@
 /turf/simulated/wall/r_wall
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to seperate rooms."
-	icon_state = "r_wall"
+	icon = 'icons/turf/walls/has_false_walls/reinforced_wall.dmi'
 	opacity = 1
 	density = 1
 
 	damage_cap = 200
 	max_temperature = 20000
 
-	walltype = "rwall"
 	sheet_type = /obj/item/stack/sheet/plasteel
 
-	var/d_state = 0
+	var/d_state = INTACT
 
 /turf/simulated/wall/r_wall/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -55,7 +54,7 @@
 	if(user.is_busy()) return
 
 	if(rotting)
-		if(istype(W, /obj/item/weapon/weldingtool))
+		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0,user))
 				to_chat(user, "<span class='notice'>You burn away the fungi with \the [WT].</span>")
@@ -71,7 +70,7 @@
 
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
-		if(istype(W, /obj/item/weapon/weldingtool))
+		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0,user))
 				thermitemelt(user)
@@ -96,7 +95,7 @@
 		to_chat(user, "<span class='notice'>This wall is too thick to slice through. You will need to find a different path.</span>")
 		return
 
-	if(damage && istype(W, /obj/item/weapon/weldingtool))
+	if(damage && iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
 			to_chat(user, "<span class='notice'>You start repairing the damage to [src].</span>")
@@ -113,17 +112,17 @@
 
 	//DECONSTRUCTION
 	switch(d_state)
-		if(0)
-			if (istype(W, /obj/item/weapon/wirecutters))
+		if(INTACT)
+			if (iswirecutter(W))
 				playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
-				src.d_state = 1
-				src.icon_state = "r_wall-1"
+				d_state = SUPPORT_LINES
+				update_icon()
 				new /obj/item/stack/rods(src)
 				to_chat(user, "<span class='notice'>You cut the outer grille.</span>")
 				return
 
-		if(1)
-			if (istype(W, /obj/item/weapon/screwdriver))
+		if(SUPPORT_LINES)
+			if (isscrewdriver(W))
 				to_chat(user, "<span class='notice'>You begin removing the support lines.</span>")
 				playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 
@@ -131,9 +130,9 @@
 					if(!istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T)
 						return
 
-					if(d_state == 1 && user.loc == T && user.get_active_hand() == W)
-						src.d_state = 2
-						src.icon_state = "r_wall-2"
+					if(d_state == SUPPORT_LINES && user.loc == T && user.get_active_hand() == W)
+						d_state = COVER
+						update_icon()
 						to_chat(user, "<span class='notice'>You remove the support lines.</span>")
 				return
 
@@ -142,14 +141,13 @@
 				var/obj/item/stack/O = W
 				if(!O.use(1))
 					return
-				src.d_state = 0
-				src.icon_state = "r_wall"
-				relativewall_neighbours()	//call smoothwall stuff
+				d_state = INTACT
+				update_icon()
 				to_chat(user, "<span class='notice'>You replace the outer grille.</span>")
 				return
 
-		if(2)
-			if(istype(W, /obj/item/weapon/weldingtool))
+		if(COVER)
+			if(iswelder(W))
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.remove_fuel(0,user))
 
@@ -160,9 +158,9 @@
 						if(!istype(src, /turf/simulated/wall/r_wall) || !user || !WT || !WT.isOn() || !T)
 							return
 
-						if(d_state == 2 && user.loc == T && user.get_active_hand() == WT)
-							src.d_state = 3
-							src.icon_state = "r_wall-3"
+						if(d_state == COVER && user.loc == T && user.get_active_hand() == WT)
+							d_state = CUT_COVER
+							update_icon()
 							to_chat(user, "<span class='notice'>You press firmly on the cover, dislodging it.</span>")
 				else
 					to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
@@ -177,14 +175,14 @@
 					if(!istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T)
 						return
 
-					if(d_state == 2 && user.loc == T && user.get_active_hand() == W)
-						src.d_state = 3
-						src.icon_state = "r_wall-3"
+					if(d_state == COVER && user.loc == T && user.get_active_hand() == W)
+						d_state = CUT_COVER
+						update_icon()
 						to_chat(user, "<span class='notice'>You press firmly on the cover, dislodging it.</span>")
 				return
 
-		if(3)
-			if (istype(W, /obj/item/weapon/crowbar))
+		if(CUT_COVER)
+			if (iscrowbar(W))
 
 				to_chat(user, "<span class='notice'>You struggle to pry off the cover.</span>")
 				playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
@@ -193,14 +191,14 @@
 					if(!istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T)
 						return
 
-					if(d_state == 3 && user.loc == T && user.get_active_hand() == W)
-						src.d_state = 4
-						src.icon_state = "r_wall-4"
+					if(d_state == CUT_COVER && user.loc == T && user.get_active_hand() == W)
+						d_state = ANCHOR_BOLTS
+						update_icon()
 						to_chat(user, "<span class='notice'>You pry off the cover.</span>")
 				return
 
-		if(4)
-			if (istype(W, /obj/item/weapon/wrench))
+		if(ANCHOR_BOLTS)
+			if (iswrench(W))
 
 				to_chat(user, "<span class='notice'>You start loosening the anchoring bolts which secure the support rods to their frame.</span>")
 				playsound(src, 'sound/items/Ratchet.ogg', 100, 1)
@@ -209,14 +207,14 @@
 					if(!istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T)
 						return
 
-					if(d_state == 4 && user.loc == T && user.get_active_hand() == W)
-						src.d_state = 5
-						src.icon_state = "r_wall-5"
+					if(d_state == ANCHOR_BOLTS && user.loc == T && user.get_active_hand() == W)
+						d_state = SUPPORT_RODS
+						update_icon()
 						to_chat(user, "<span class='notice'>You remove the bolts anchoring the support rods.</span>")
 				return
 
-		if(5)
-			if(istype(W, /obj/item/weapon/weldingtool))
+		if(SUPPORT_RODS)
+			if(iswelder(W))
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.remove_fuel(0,user))
 
@@ -227,9 +225,9 @@
 						if(!istype(src, /turf/simulated/wall/r_wall) || !user || !WT || !WT.isOn() || !T)
 							return
 
-						if(d_state == 5 && user.loc == T && user.get_active_hand() == WT)
-							src.d_state = 6
-							src.icon_state = "r_wall-6"
+						if(d_state == SUPPORT_RODS && user.loc == T && user.get_active_hand() == WT)
+							d_state = SHEATH
+							update_icon()
 							new /obj/item/stack/rods(src)
 							to_chat(user, "<span class='notice'>The support rods drop out as you cut them loose from the frame.</span>")
 				else
@@ -245,15 +243,15 @@
 					if(!istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T)
 						return
 
-					if(d_state == 5 && user.loc == T && user.get_active_hand() == W)
-						src.d_state = 6
-						src.icon_state = "r_wall-6"
+					if(d_state == SUPPORT_RODS && user.loc == T && user.get_active_hand() == W)
+						d_state = SHEATH
+						update_icon()
 						new /obj/item/stack/rods(src)
 						to_chat(user, "<span class='notice'>The support rods drop out as you cut them loose from the frame.</span>")
 				return
 
-		if(6)
-			if(istype(W, /obj/item/weapon/crowbar))
+		if(SHEATH)
+			if(iscrowbar(W))
 
 				to_chat(user, "<span class='notice'>You struggle to pry off the outer sheath.</span>")
 				playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
@@ -262,7 +260,7 @@
 					if(!istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T)
 						return
 
-					if(user.loc == T && user.get_active_hand() == W)
+					if(d_state == SHEATH && user.loc == T && user.get_active_hand() == W)
 						to_chat(user, "<span class='notice'>You pry off the outer sheath.</span>")
 						dismantle_wall()
 				return
@@ -303,9 +301,9 @@
 			if(user.loc == T && user.get_active_hand() == MS && d_state)
 				if(!MS.use(1))
 					return
-				src.d_state = 0
-				src.icon_state = "r_wall"
-				relativewall_neighbours()	//call smoothwall stuff
+				d_state = INTACT
+				update_icon()
+				queue_smooth(src)	//call smoothwall stuff
 				to_chat(user, "<span class='notice'>You repair the last of the damage.</span>")
 
 	//APC
@@ -346,6 +344,15 @@
 	else if(!d_state)
 		return attack_hand(user)
 	return
+
+/turf/simulated/wall/r_wall/update_icon()
+	if(d_state != INTACT)
+		smooth = SMOOTH_FALSE
+		icon_state = "r_wall-[d_state]"
+	else
+		smooth = SMOOTH_TRUE
+		queue_smooth_neighbors(src)
+		queue_smooth(src)
 
 /turf/simulated/wall/r_wall/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)

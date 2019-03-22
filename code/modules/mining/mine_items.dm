@@ -307,7 +307,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	return
 
 /obj/item/weapon/pickaxe/drill/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		if(state==0)
 			state = 1
 			to_chat(user, "<span class='notice'>You open maintenance panel.</span>")
@@ -473,7 +473,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if(!silenced)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else
-		to_chat(usr, "<span class='warning'>You silently charge [src].<span>")
+		to_chat(usr, "<span class='warning'>You silently charge [src].</span>")
 	recent_reload = 1
 	update_icon()
 	return
@@ -496,7 +496,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/projectile/kinetic/atom_init()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))
-		return
+		return INITIALIZE_HINT_QDEL
 	var/datum/gas_mixture/environment = proj_turf.return_air()
 	var/pressure = environment.return_pressure()
 	if(pressure < 50)
@@ -539,6 +539,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "\improper Emergency Shelter"
 	icon_state = "away"
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	has_gravity = 1
 
 /obj/item/weapon/survivalcapsule
@@ -713,7 +714,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	pixel_y = -32
 
 /obj/item/device/gps/computer/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
+	if(iswrench(W) && !(flags&NODECONSTRUCT))
 		if(user.is_busy()) return
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
@@ -740,7 +741,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_on = "donkvendor"
 	icon_off = "donkvendor"
 	icon_panel = "donkvendor-panel"
-	luminosity = 5
+	light_range = 5
 	max_n_of_items = 10
 	pixel_y = -4
 	active_power_usage = 0
@@ -763,7 +764,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/machinery/smartfridge/survival_pod/atom_init()
 	..()
-	set_light(luminosity)
+	set_light(light_range)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/smartfridge/survival_pod/atom_init_late()
@@ -793,7 +794,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/machinery/smartfridge/survival_pod/attackby(obj/item/O, mob/user)
 	if(is_type_in_typecache(O,forbidden_tools))
-		if(istype(O,/obj/item/weapon/wrench))
+		if(iswrench(O))
 			if(user.is_busy()) return
 			to_chat(user, "\blue You start to disassemble the storage unit...")
 			if(do_after(user,20,target = src))
@@ -812,8 +813,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 					item_quants[O.name]++
 				else
 					item_quants[O.name] = 1
-				user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].", \
-									 "<span class='notice'>You add \the [O] to \the [src].")
+				user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
+									 "<span class='notice'>You add \the [O] to \the [src].</span>")
 				nanomanager.update_uis(src)
 				return
 
@@ -829,7 +830,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	density = 1
 
 /obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
+	if(iswrench(W) && !(flags&NODECONSTRUCT))
 		if(user.is_busy()) return
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \

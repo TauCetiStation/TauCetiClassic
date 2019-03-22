@@ -375,9 +375,7 @@
 					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 					return
 			else
-				if(world.time < (G.last_action + UPGRADE_COOLDOWN))
-					return
-				G.affecting.loc = src.loc
+				G.affecting.forceMove(loc)
 				G.affecting.Weaken(5)
 				visible_message("<span class='danger'>[G.assailant] puts [G.affecting] on \the [src].</span>")
 				M.attack_log += "\[[time_stamp()]\] <font color='orange'>Was laied by [A.name] on \the [src]([A.ckey])</font>"
@@ -385,7 +383,7 @@
 			qdel(W)
 			return
 
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		if(user.is_busy()) return
 		to_chat(user, "\blue Now disassembling table")
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -687,7 +685,7 @@
 		return ..()
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/weldingtool))
+	if (iswelder(W))
 		if(user.is_busy()) return FALSE
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
@@ -708,7 +706,7 @@
 			return FALSE
 		return TRUE
 
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		if(src.status == 2)
 			return TRUE
 
@@ -773,7 +771,7 @@
 	return
 
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		new /obj/item/weapon/rack_parts( src.loc )
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		qdel(src)

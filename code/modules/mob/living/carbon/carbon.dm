@@ -31,6 +31,8 @@
 		if(germ_level < GERM_LEVEL_MOVE_CAP && prob(8))
 			germ_level++
 
+		handle_rig_move(NewLoc, Dir)
+
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(isessence(user))
 		user.setMoveCooldown(1)
@@ -280,9 +282,22 @@
 					else
 						M.visible_message("<span class='notice'>[M] gently touches [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You gently touch [src] trying to wake [t_him] up!</span>")
-			else
-				M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
-								"<span class='notice'>You hug [src] to make [t_him] feel better!</span>")
+			else switch(M.zone_sel.selecting)
+				if(BP_R_ARM || BP_L_ARM)
+					M.visible_message( "<span class='notice'>[M] shakes [src]'s hand.</span>", \
+									"<span class='notice'>You shake [src]'s hand.</span>", )
+				if(BP_HEAD)
+					M.visible_message("<span class='notice'>[M] pats [src] on the head.</span>", \
+									"<span class='notice'>You pat [src] on the head.</span>", )
+				if(O_EYES)
+					M.visible_message("<span class='notice'>[M] looks into [src]'s eyes.</span>", \
+									"<span class='notice'>You look into [src]'s eyes.</span>", )
+				if(BP_GROIN)
+					M.visible_message("<span class='notice'>[M] does something to [src] to make [t_him] feel better!</span>", \
+									"<span class='notice'>You do something to [src] to make [t_him] feel better!</span>", )
+				else
+					M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
+									"<span class='notice'>You hug [src] to make [t_him] feel better!</span>")
 
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
@@ -529,18 +544,6 @@
 		return
 	if(alert(src, "You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
 		sleeping = 20 //Short nap
-
-/mob/living/carbon/slip(slipped_on, stun_duration=4, weaken_duration=2)
-	if(buckled || sleeping || weakened || paralysis || stunned || resting || crawling)
-		return FALSE
-	stop_pulling()
-	to_chat(src, "<span class='warning'>You slipped on [slipped_on]!</span>")
-	playsound(loc, 'sound/misc/slip.ogg', 50, 1, -3)
-	if (stun_duration > 0)
-		Stun(stun_duration)
-	if(weaken_duration > 0)
-		Weaken(weaken_duration)
-	return TRUE
 
 //Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()

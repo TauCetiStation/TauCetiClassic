@@ -173,6 +173,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	CHANGELING_STATPANEL_POWERS(null)
 
+	if(istype(wear_suit, /obj/item/clothing/suit/space/rig/))
+		var/obj/item/clothing/suit/space/rig/rig = wear_suit
+		rig_setup_stat(rig)
+
 /mob/living/carbon/human/ex_act(severity)
 	if(!blinded)
 		flash_eyes()
@@ -768,7 +772,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 					LAZYADD(wounds, W)
 
 		if(wounds)
-			visible_message("<span class='danger'>[usr] is trying to remove [src]'s bandages!")
+			visible_message("<span class='danger'>[usr] is trying to remove [src]'s bandages!</span>")
 			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
 				for(var/datum/wound/W in wounds)
 					if(W.bandaged)
@@ -786,7 +790,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				LAZYADD(splints, BP)
 
 		if(splints)
-			visible_message("<span class='danger'>[usr] is trying to remove [src]'s splints!")
+			visible_message("<span class='danger'>[usr] is trying to remove [src]'s splints!</span>")
 			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
 				for(var/obj/item/organ/external/BP in splints)
 					if (BP.status & ORGAN_SPLINTED)
@@ -1443,7 +1447,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(blood_DNA[M.dna.unique_enzymes])
 		return 0 //already bloodied with this blood. Cannot add more.
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-	hand_dirt_color = new/datum/dirt_cover/(dirt_overlay)
+	hand_dirt_datum = new(dirt_overlay)
 
 	src.update_inv_gloves()	//handles bloody hands overlays and updating
 	verbs += /mob/living/carbon/human/proc/bloody_doodle
@@ -1632,7 +1636,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			to_chat(src, "<span class='warning'>You ran out of blood to write with!</span>")
 
 		var/obj/effect/decal/cleanable/blood/writing/W = new(T)
-		W.basedatum = new/datum/dirt_cover(hand_dirt_color)
+		W.basedatum = new(hand_dirt_datum)
 		W.update_icon()
 		W.message = message
 		W.add_fingerprint(src)
@@ -1801,30 +1805,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			L.Weaken(5)
 			sleep(2) // Runtime prevention (infinite bump() calls on hulks)
 			step_towards(src, L)
-
-			if(restrained()) //You can leap when you hands are cuffed, but you can't grab
-				return
-
-			var/use_hand = "left"
-			if(l_hand)
-				if(r_hand)
-					to_chat(src, "<span class='warning'>You need to have one hand free to grab someone.</span>")
-					return
-				else
-					use_hand = "right"
-
-			visible_message("<span class='warning'><b>\The [src]</b> seizes [L] aggressively!</span>")
-
-			var/obj/item/weapon/grab/G = new(src, L)
-			if(use_hand == "left")
-				l_hand = G
-			else
-				r_hand = G
-
-			G.state = GRAB_AGGRESSIVE
-			G.icon_state = "grabbed1"
-			G.synch()
-			L.grabbed_by += G
+			Grab(L, GRAB_AGGRESSIVE)
 
 	else if(A.density)
 		visible_message("<span class='danger'>[src] smashes into [A]!</span>", "<span class='danger'>You smashes into [A]!</span>")
@@ -1877,11 +1858,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(istype(IO))
 			return 1
 	return 0
-
-/mob/living/carbon/human/slip(slipped_on, stun_duration=4, weaken_duration=2)
-	if(shoes && (shoes.flags & NOSLIP))
-		return FALSE
-	return ..(slipped_on,stun_duration, weaken_duration)
 
 /mob/living/carbon/human/is_nude(maximum_coverage = 0, pos_slots = list(src.head, src.shoes, src.neck, src.mouth, src.wear_suit, src.w_uniform, src.belt, src.gloves, src.glasses)) // Expands our pos_slots arg.
 	return ..()

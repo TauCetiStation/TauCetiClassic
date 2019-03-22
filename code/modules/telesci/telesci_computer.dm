@@ -95,7 +95,7 @@
 			user.drop_from_inventory(W)
 			W.loc = src
 			user.visible_message("<span class='notice'>[user] inserts [W] into \the [src]'s GPS device slot.</span>")
-	else if(istype(W, /obj/item/device/multitool))
+	else if(ismultitool(W))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/telepad))
 			if(telepad)

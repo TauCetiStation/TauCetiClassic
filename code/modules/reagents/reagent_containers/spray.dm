@@ -260,7 +260,7 @@
 /obj/item/weapon/reagent_containers/spray/thurible/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(!lit && safety) // You can't lit the fuel when the cap's off, cause then it wouldn't start to burn.
-		if(istype(W, /obj/item/weapon/weldingtool))
+		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.isOn())
 				light(user, "casually lights")
@@ -346,7 +346,7 @@
 /obj/item/weapon/reagent_containers/spray/waterflower
 	name = "water flower"
 	desc = "A seemingly innocent sunflower...with a twist."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
 	item_state = "sunflower"
 	amount_per_transfer_from_this = 1

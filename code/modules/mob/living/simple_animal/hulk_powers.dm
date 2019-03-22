@@ -307,7 +307,7 @@
 		return
 
 	if (istype(usr.loc,/turf))
-		usr.visible_message("<font size='4' color='red'><b>[usr.name] prepares a heavy attack!</b>")
+		usr.visible_message("<font size='4' color='red'><b>[usr.name] prepares a heavy attack!</b></font>")
 		//for(var/i=0, i<30, i++)
 		//	usr.canmove = 0
 		//	usr.anchored = 1
@@ -512,8 +512,6 @@
 	if (usr.lying || usr.stunned || usr.stat)
 		to_chat(usr, "\red You can't right now!")
 		return
-
-	//user.visible_message("<span class='danger'>[user] spits!", "<span class='alertalien'>You spit.</span>")
 
 	var/turf/T = usr.loc
 	var/turf/U = get_step(usr, usr.dir) // Get the tile infront of the move, based on their direction

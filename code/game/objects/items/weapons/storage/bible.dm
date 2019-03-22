@@ -32,7 +32,7 @@
 				to_chat(user, "<span class='warning'>You curse [A].</span>")
 				A.reagents.add_reagent("unholywater",water2convert)
 			else if(icon_state == "bible" && prob(10))
-				to_chat(user, "<span clas='notice'>You have just created wine!")
+				to_chat(user, "<span clas='notice'>You have just created wine!</span>")
 				A.reagents.add_reagent("wine",water2convert)
 			else
 				to_chat(user, "<span class='notice'>You bless [A].</span>")

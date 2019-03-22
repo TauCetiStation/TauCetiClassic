@@ -371,7 +371,7 @@
 	icon_state = "crayonred"
 	w_class = ITEM_SIZE_TINY
 	attack_verb = list("attacked", "coloured")
-	var/colour = "#FF0000" //RGB
+	var/colour = "#ff0000" //RGB
 	var/shadeColour = "#220000" //RGB
 	var/uses = 30 //0 for unlimited uses
 	var/instant = 0
@@ -424,7 +424,7 @@
 /obj/item/toy/waterflower
 	name = "Water Flower"
 	desc = "A seemingly innocent sunflower...with a twist."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
 	item_state = "sunflower"
 	var/empty = 0

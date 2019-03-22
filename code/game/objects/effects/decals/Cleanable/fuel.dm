@@ -9,7 +9,7 @@
 
 /obj/effect/decal/cleanable/liquid_fuel/atom_init(mapload, amt = 1)
 	amount = amt
-	..()
+	. = ..()
 
 	//Be absorbed by any other liquid fuel in the tile.
 	for(var/obj/effect/decal/cleanable/liquid_fuel/other in loc)
