@@ -233,6 +233,11 @@ var/global/list/image/splatter_cache=list()
 				if (step_to(src, get_step(src, direction), 0))
 					break
 
+/obj/effect/decal/cleanable/blood/gibs/Crossed(mob/living/L)
+	if(istype(L) && has_gravity(loc))
+		playsound(loc, 'sound/effects/gib_step.ogg', 50, 1)
+	. = ..()
+
 
 /obj/effect/decal/cleanable/mucus
 	name = "mucus"

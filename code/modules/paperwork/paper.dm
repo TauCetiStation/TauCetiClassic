@@ -550,6 +550,7 @@
 		var/obj/item/weapon/stamp/S = P
 		S.stamp_paper(src)
 
+		playsound(src, 'sound/effects/stamp.ogg', 50, 1)
 		visible_message("<span class='notice'>[user] stamp the paper.</span>", "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
 	else if(istype(P, /obj/item/weapon/lighter))
