@@ -818,7 +818,7 @@
 /mob/living/carbon/Topic(href, href_list)
 	..()
 
-	if (href_list["item"] && usr.CanUseTopicInventory(src) && !usr.is_busy())
+	if (href_list["item"] && usr.CanUseTopicInventory(src))
 		var/slot = text2num(href_list["item"])
 		var/obj/item/item_to_add = usr.get_active_hand()
 
@@ -838,7 +838,7 @@
 		else
 			usr << browse(null, "window=mob\ref[src]")
 
-	if (href_list["internal"] && usr.CanUseTopicInventory(src) && !usr.is_busy())
+	if (href_list["internal"] && usr.CanUseTopicInventory(src))
 		var/slot = text2num(href_list["internal"])
 		var/obj/item/weapon/tank/ITEM = get_equipped_item(slot)
 		if(ITEM && istype(ITEM) && wear_mask && (wear_mask.flags & MASKINTERNALS))
