@@ -512,8 +512,7 @@
 									vomitsound = "malevomit"
 									playsound(L.loc, vomitsound, 90, 0)
 							var/turf/T = get_turf(L)
-							if(istype(T, /turf/simulated))
-								T.add_vomit_floor(L)
+							T.add_vomit_floor(L)
 							L.nutrition -= 20
 							L.adjustToxLoss(-3)
 

@@ -96,9 +96,8 @@
 				playsound(H.loc, vomitsound, 90, 0)
 		else
 			playsound(C.loc, 'sound/effects/splat.ogg', 100, 1)
-			if(istype(pos, /turf/simulated))
-				pos.add_vomit_floor(host)
 			host.visible_message("<B>[host]</B> <span class='danger'>throws up something slimy!</span>","<span class='warning'>You throw up something slimy! DISGUSTING!</span>")
+	pos.add_vomit_floor(host)
 	host.nutrition -= 20
 	host.adjustToxLoss(-3)
 	new/mob/living/simple_animal/slime(pos)

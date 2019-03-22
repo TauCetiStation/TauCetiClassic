@@ -441,7 +441,7 @@
 	return 1
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
-	if( istype(src, /turf/simulated) )
+	if(istype(src, /turf/simulated) && !istype(M.head, /obj/item/clothing/head/helmet/space))
 		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
 
 		// Make toxins vomit look different

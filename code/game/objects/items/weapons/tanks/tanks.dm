@@ -148,36 +148,37 @@
 		src.distribute_pressure = min(max(round(src.distribute_pressure), 0), TANK_MAX_RELEASE_PRESSURE)
 	if (href_list["stat"])
 		if(iscarbon(loc))
-			if(internal_switch < world.time)
-				var/internalsound
-				var/mob/living/carbon/location = loc
-				if(location.internal == src)
-					location.internal = null
-					location.internals.icon_state = "internal0"
-					to_chat(usr, "\blue You close the tank release valve.")
-					if (location.internals)
-						location.internals.icon_state = "internal0"
-					internalsound = 'sound/misc/internaloff.ogg'
-					if(ishuman(location)) // Because only human can wear a spacesuit
-						var/mob/living/carbon/human/H = location
+			if(internal_switch > world.time)
+				return
+			var/internalsound
+			var/mob/living/carbon/C = loc
+			if(C.internal == src)
+				C.internal = null
+				C.internals.icon_state = "internal0"
+				to_chat(usr, "\blue You close the tank release valve.")
+				if (C.internals)
+					C.internals.icon_state = "internal0"
+				internalsound = 'sound/misc/internaloff.ogg'
+				if(ishuman(C)) // Because only human can wear a spacesuit
+					var/mob/living/carbon/human/H = C
+					if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
+						internalsound = 'sound/misc/riginternaloff.ogg'
+				playsound(loc, internalsound, 100, 0)
+			else
+				if(C.wear_mask && (C.wear_mask.flags & MASKINTERNALS))
+					C.internal = src
+					to_chat(usr, "\blue You open \the [src] valve.")
+					if (C.internals)
+						C.internals.icon_state = "internal1"
+					internalsound = 'sound/misc/internalon.ogg'
+					if(ishuman(C)) // Because only human can wear a spacesuit
+						var/mob/living/carbon/human/H = C
 						if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
-							internalsound = 'sound/misc/riginternaloff.ogg'
+							internalsound = 'sound/misc/riginternalon.ogg'
 					playsound(loc, internalsound, 100, 0)
 				else
-					if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
-						location.internal = src
-						to_chat(usr, "\blue You open \the [src] valve.")
-						if (location.internals)
-							location.internals.icon_state = "internal1"
-						internalsound = 'sound/misc/internalon.ogg'
-						if(ishuman(location)) // Because only human can wear a spacesuit
-							var/mob/living/carbon/human/H = location
-							if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
-								internalsound = 'sound/misc/riginternalon.ogg'
-						playsound(loc, internalsound, 100, 0)
-					else
-						to_chat(usr, "\blue You need something to connect to \the [src].")
-				internal_switch = world.time + 16
+					to_chat(usr, "\blue You need something to connect to \the [src].")
+			internal_switch = world.time + 16
 
 	src.add_fingerprint(usr)
 	return 1
