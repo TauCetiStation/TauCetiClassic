@@ -711,24 +711,13 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/Topic(href, href_list)
 
-	if (href_list["lookitem"])
-		var/obj/item/I = locate(href_list["lookitem"])
-		usr.examinate(I)
-
-	if (href_list["lookmob"])
-		var/mob/M = locate(href_list["lookmob"])
-		usr.examinate(M)
-
-	if(usr.is_busy())		// <===   ^ ^ ^ ^ because you CAN look at something while you're busy
-		return
-
 	if (href_list["item"])
 		var/slot = text2num(href_list["item"])
 		if(slot in check_obscured_slots())
 			to_chat(usr, "<span class='warning'>You can't reach that! Something is covering it.</span>")
 			return
 
-	if(href_list["pockets"] && usr.CanUseTopicInventory(src))
+	if(href_list["pockets"] && usr.CanUseTopicInventory(src) && !usr.is_busy())
 		var/pocket_side = href_list["pockets"]
 		var/pocket_id = (pocket_side == "right" ? SLOT_R_STORE : SLOT_L_STORE)
 		var/obj/item/pocket_item = (pocket_id == SLOT_R_STORE ? r_store : l_store)
@@ -766,7 +755,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(usr.machine == src && in_range(src, usr))
 			show_inv(usr)
 
-	if (href_list["bandages"] && usr.CanUseTopicInventory(src))
+	if (href_list["bandages"] && usr.CanUseTopicInventory(src) && !usr.is_busy())
 		if(stat == DEAD)
 			to_chat(usr, "<span class='notice'>There is no point in doing so with the dead body.</span>")
 			return
@@ -788,7 +777,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				attack_log += "\[[time_stamp()]\] <font color='orange'>Had their bandages removed by [usr.name] ([usr.ckey]).</font>"
 				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Removed [name]'s ([ckey]) bandages.</font>"
 
-	if (href_list["splints"] && usr.CanUseTopicInventory(src))
+	if (href_list["splints"] && usr.CanUseTopicInventory(src) && !usr.is_busy())
 		var/list/splints
 
 		for(var/bodypart_name in list(BP_L_LEG , BP_R_LEG , BP_L_ARM , BP_R_ARM))
@@ -807,7 +796,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				attack_log += "\[[time_stamp()]\] <font color='orange'>Had their splints removed by [usr.name] ([usr.ckey]).</font>"
 				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Removed [name]'s ([ckey]) splints.</font>"
 
-	if (href_list["sensor"] && usr.CanUseTopicInventory(src))
+	if (href_list["sensor"] && usr.CanUseTopicInventory(src) && !usr.is_busy())
 		if(istype(w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/S = w_uniform
 			visible_message("<span class='danger'>[usr] is trying to set [src]'s suit sensors!</span>")
@@ -819,7 +808,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 					attack_log += text("\[[time_stamp()]\] <font color='orange'>Had their sensors toggled by [usr.name] ([usr.ckey]) mode=([S.sensor_mode]).</font>")
 					usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Toggled [name]'s ([ckey]) sensors mode=([S.sensor_mode]).</font>")
 
-	if (href_list["accessory"] && href_list["suit_accessory"] && usr.CanUseTopicInventory(src))
+	if (href_list["accessory"] && href_list["suit_accessory"] && usr.CanUseTopicInventory(src) && !usr.is_busy())
 		var/obj/item/clothing/accessory/A = href_list["accessory"]
 		var/obj/item/clothing/under/S = href_list["suit_accessory"]
 		if(istype(A) && istype(S))
@@ -1095,6 +1084,13 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 									var/mob/living/silicon/robot/U = usr
 									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.modtype] [U.braintype]) on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]<BR>[t1]")
 
+	if (href_list["lookitem"])
+		var/obj/item/I = locate(href_list["lookitem"])
+		usr.examinate(I)
+
+	if (href_list["lookmob"])
+		var/mob/M = locate(href_list["lookmob"])
+		usr.examinate(M)
 	..()
 	return
 
