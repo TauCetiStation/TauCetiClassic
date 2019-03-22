@@ -41,7 +41,7 @@
 				if(H.species.name in species_restricted)
 					wearable = 1
 
-			if(!wearable && (slot != 15 && slot != 16)) //Pockets.
+			if(!wearable && (slot != SLOT_L_STORE && slot != SLOT_R_STORE)) //Pockets.
 				to_chat(M, "\red Your species cannot wear [src].")
 				return 0
 
