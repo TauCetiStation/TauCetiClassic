@@ -711,6 +711,17 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/Topic(href, href_list)
 
+	if (href_list["lookitem"])
+		var/obj/item/I = locate(href_list["lookitem"])
+		usr.examinate(I)
+
+	if (href_list["lookmob"])
+		var/mob/M = locate(href_list["lookmob"])
+		usr.examinate(M)
+
+	if(usr.is_busy())		// <===   ^ ^ ^ ^ because you CAN look at something while you're busy
+		return
+
 	if (href_list["item"])
 		var/slot = text2num(href_list["item"])
 		if(slot in check_obscured_slots())
@@ -1084,13 +1095,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 									var/mob/living/silicon/robot/U = usr
 									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.modtype] [U.braintype]) on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]<BR>[t1]")
 
-	if (href_list["lookitem"])
-		var/obj/item/I = locate(href_list["lookitem"])
-		usr.examinate(I)
-
-	if (href_list["lookmob"])
-		var/mob/M = locate(href_list["lookmob"])
-		usr.examinate(M)
 	..()
 	return
 

@@ -816,6 +816,8 @@
 /mob/living/carbon/Topic(href, href_list)
 	..()
 
+	if(usr.is_busy())
+		return
 	if (href_list["item"] && usr.CanUseTopicInventory(src))
 		var/slot = text2num(href_list["item"])
 		var/obj/item/item_to_add = usr.get_active_hand()
