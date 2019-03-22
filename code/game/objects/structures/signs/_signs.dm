@@ -13,7 +13,7 @@
 	icon_state = "backing"
 
 /obj/structure/sign/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench) && buildable_sign)
+	if(iswrench(W) && buildable_sign)
 		if(user.is_busy())
 			return
 		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>",
@@ -115,7 +115,7 @@
 		return ..()
 
 /obj/item/sign_backing/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/weldingtool))
+	if (iswelder(W))
 		playsound(loc, 'sound/items/welder.ogg', 50, 1)
 		new /obj/item/stack/sheet/mineral/plastic(user.loc, 2)
 		qdel(src)

@@ -822,7 +822,7 @@ The _flatIcons list is a cache for generated icon files.
 	return composite
 
 /proc/adjust_brightness(color, value)
-	if (!color) return "#FFFFFF"
+	if (!color) return "#ffffff"
 	if (!value) return color
 
 	var/list/RGB = ReadRGB(color)

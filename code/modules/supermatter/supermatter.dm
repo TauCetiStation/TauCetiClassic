@@ -38,7 +38,7 @@
 	var/emergency_alert = "CRYSTAL DELAMINATION IMMINENT."
 	var/explosion_point = 1000
 
-	light_color = "#8A8A00"
+	light_color = "#8a8a00"
 
 	var/emergency_issued = 0
 

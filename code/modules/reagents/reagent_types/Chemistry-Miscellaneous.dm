@@ -222,7 +222,7 @@
 	id = "cleaner"
 	description = "A compound used to clean things. Now with 50% more sodium hypochlorite!"
 	reagent_state = LIQUID
-	color = "#A5F0EE" // rgb: 165, 240, 238
+	color = "#a5f0ee" // rgb: 165, 240, 238
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "floor cleaner"
 
@@ -294,7 +294,7 @@
 	id = "xenomicrobes"
 	description = "Microbes with an entirely alien cellular structure."
 	reagent_state = LIQUID
-	color = "#535E66" // rgb: 83, 94, 102
+	color = "#535e66" // rgb: 83, 94, 102
 	taste_message = "something alien"
 
 /datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, volume)
@@ -307,7 +307,7 @@
 	id = "fluorosurfactant"
 	description = "A perfluoronated sulfonic acid that forms a foam when mixed with water."
 	reagent_state = LIQUID
-	color = "#9E6B38" // rgb: 158, 107, 56
+	color = "#9e6b38" // rgb: 158, 107, 56
 	taste_message = null
 
 /datum/reagent/foaming_agent// Metal foaming agent. This is lithium hydride. Add other recipes (e.g. LiH + H2O -> LiOH + H2) eventually.
@@ -315,7 +315,7 @@
 	id = "foaming_agent"
 	description = "A agent that yields metallic foam when mixed with light metal and a strong acid."
 	reagent_state = SOLID
-	color = "#664B63" // rgb: 102, 75, 99
+	color = "#664b63" // rgb: 102, 75, 99
 	taste_message = null
 
 /datum/reagent/nicotine
@@ -359,7 +359,7 @@
 	name = "Ultra Glue"
 	id = "glue"
 	description = "An extremely powerful bonding agent."
-	color = "#FFFFCC" // rgb: 255, 255, 204
+	color = "#ffffcc" // rgb: 255, 255, 204
 	taste_message = null
 
 /datum/reagent/diethylamine
@@ -437,7 +437,7 @@
 	id = "nanites"
 	description = "Microscopic construction robots."
 	reagent_state = LIQUID
-	color = "#535E66" // rgb: 83, 94, 102
+	color = "#535e66" // rgb: 83, 94, 102
 	taste_message = "nanomachines, son"
 
 /datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, volume)
@@ -450,7 +450,7 @@
 	id = "nanites2"
 	description = "Friendly microscopic construction robots."
 	reagent_state = LIQUID
-	color = "#535E66" //rgb: 83, 94, 102
+	color = "#535e66" //rgb: 83, 94, 102
 	taste_message = "nanomachines, son"
 
 /datum/reagent/nanobots
@@ -458,7 +458,7 @@
 	id = "nanobots"
 	description = "Microscopic robots intended for use in humans. Must be loaded with further chemicals to be useful."
 	reagent_state = LIQUID
-	color = "#3E3959" //rgb: 62, 57, 89
+	color = "#3e3959" //rgb: 62, 57, 89
 	taste_message = "nanomachines, son"
 
 //Great healing powers. Metabolizes extremely slowly, but gets used up when it heals damage.
@@ -608,30 +608,30 @@
 /datum/reagent/paint/red
 	name = "Red Paint"
 	id = "paint_red"
-	color = "#FE191A"
+	color = "#fe191a"
 	data = list("r_color"=254,"g_color"=25,"b_color"=26)
 
 /datum/reagent/paint/green
 	name = "Green Paint"
-	color = "#18A31A"
+	color = "#18a31a"
 	id = "paint_green"
 	data = list("r_color"=24,"g_color"=163,"b_color"=26)
 
 /datum/reagent/paint/blue
 	name = "Blue Paint"
-	color = "#247CFF"
+	color = "#247cff"
 	id = "paint_blue"
 	data = list("r_color"=36,"g_color"=124,"b_color"=255)
 
 /datum/reagent/paint/yellow
 	name = "Yellow Paint"
-	color = "#FDFE7D"
+	color = "#fdfe7d"
 	id = "paint_yellow"
 	data = list("r_color"=253,"g_color"=254,"b_color"=125)
 
 /datum/reagent/paint/violet
 	name = "Violet Paint"
-	color = "#CC0099"
+	color = "#cc0099"
 	id = "paint_violet"
 	data = list("r_color"=253,"g_color"=254,"b_color"=125)
 
@@ -643,7 +643,7 @@
 
 /datum/reagent/paint/white
 	name = "White Paint"
-	color = "#F0F8FF"
+	color = "#f0f8ff"
 	id = "paint_white"
 	data = list("r_color"=240,"g_color"=248,"b_color"=255)
 
@@ -786,7 +786,7 @@
 	description = "A compound used to dye hair. Any hair."
 	data = list("r_color"=255,"g_color"=255,"b_color"=255)
 	reagent_state = LIQUID
-	color = "#FFFFFF" // to see rgb just look into data!
+	color = "#ffffff" // to see rgb just look into data!
 	color_weight = 10
 	taste_message = "liquid colour"
 
@@ -798,19 +798,19 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	name = "Red Hair Dye"
 	id = "redhairdye"
 	data = list("r_color"=255,"g_color"=0,"b_color"=0)
-	color = "#FF0000"
+	color = "#ff0000"
 
 /datum/reagent/paint/hair_dye/green
 	name = "Green Hair Dye"
 	id = "greenhairdye"
 	data = list("r_color"=0,"g_color"=255,"b_color"=0)
-	color = "#00FF00"
+	color = "#00ff00"
 
 /datum/reagent/paint/hair_dye/blue
 	name = "Blue Hair Dye"
 	id = "bluehairdye"
 	data = list("r_color"=0,"g_color"=0,"b_color"=255)
-	color = "#0000FF"
+	color = "#0000ff"
 
 /datum/reagent/paint/hair_dye/black
 	name = "Black Hair Dye"
@@ -828,7 +828,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	name = "Blond Hair Dye"
 	id = "blondhairdye"
 	data = list("r_color"=255,"g_color"=225,"b_color"=135)
-	color = "#FFE187"
+	color = "#ffe187"
 
 /datum/reagent/paint/hair_dye/custom
 	name = "Custom Hair Dye"
@@ -840,7 +840,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	data = list("bald_head_list"=list("Bald", "Balding Hair", "Skinhead", "Unathi Horns", "Tajaran Ears"),"shaved_face_list"=list("Shaved"),"allowed_races"=list(HUMAN, UNATHI, TAJARAN))
 	description = "A substance for the bald. Renews hair. Apply to head or groin."
 	reagent_state = LIQUID
-	color = "#EFC769" // rgb: 239, 199, 105
+	color = "#efc769" // rgb: 239, 199, 105
 	taste_message = "hairs inside me"
 
 /datum/reagent/hair_growth_accelerator/reaction_mob(mob/M, method = TOUCH, volume)
@@ -885,7 +885,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	reagent_state = LIQUID
 	taste_message = "spooky ghosts"
 	data = 1
-	color = "#FFA8E4" // rgb: 255, 168, 228
+	color = "#ffa8e4" // rgb: 255, 168, 228
 
 /datum/reagent/ectoplasm/on_general_digest(mob/living/M)
 	..()

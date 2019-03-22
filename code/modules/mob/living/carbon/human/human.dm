@@ -173,6 +173,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	CHANGELING_STATPANEL_POWERS(null)
 
+	if(istype(wear_suit, /obj/item/clothing/suit/space/rig/))
+		var/obj/item/clothing/suit/space/rig/rig = wear_suit
+		rig_setup_stat(rig)
+
 /mob/living/carbon/human/ex_act(severity)
 	if(!blinded)
 		flash_eyes()
@@ -768,7 +772,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 					LAZYADD(wounds, W)
 
 		if(wounds)
-			visible_message("<span class='danger'>[usr] is trying to remove [src]'s bandages!")
+			visible_message("<span class='danger'>[usr] is trying to remove [src]'s bandages!</span>")
 			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
 				for(var/datum/wound/W in wounds)
 					if(W.bandaged)
@@ -786,7 +790,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				LAZYADD(splints, BP)
 
 		if(splints)
-			visible_message("<span class='danger'>[usr] is trying to remove [src]'s splints!")
+			visible_message("<span class='danger'>[usr] is trying to remove [src]'s splints!</span>")
 			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
 				for(var/obj/item/organ/external/BP in splints)
 					if (BP.status & ORGAN_SPLINTED)

@@ -110,7 +110,7 @@
 	name = "fire axe"
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	force = 5
-	hitsound = 'sound/weapons/desceration.ogg'
+	hitsound = "desceration"
 	sharp = 1
 	edge = 1
 	w_class = ITEM_SIZE_LARGE
@@ -213,7 +213,7 @@
 	return !slicing && wielded && prob(reflect_chance) && is_the_opposite_dir(hol_dir, hit_dir)
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/device/multitool))
+	if(ismultitool(W))
 		if(!hacked)
 			hacked = 1
 			to_chat(user,"<span class='warning'>2XRNBW_ENGAGE</span>")

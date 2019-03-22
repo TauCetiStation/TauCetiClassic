@@ -9,12 +9,11 @@
 
 /* Cable directions (d1 and d2)
 
-
-  9   1   5
-	\ | /
-  8 - 0 - 4
-	/ | \
-  10  2   6
+>  9   1   5
+>    \ | /
+>  8 - 0 - 4
+>    / | \
+>  10  2   6
 
 If d1 = 0 and d2 = 0, there's no cable
 If d1 = 0 and d2 = dir, it's a O-X cable, getting from the center of the tile to dir (knot cable)
@@ -115,7 +114,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(T.intact)
 		return
 
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(iswirecutter(W))
 
 		if (shock(user, 50))
 			return
@@ -135,11 +134,11 @@ By design, d1 is the smallest direction and d2 is the highest
 		return	// not needed, but for clarity
 
 
-	else if(istype(W, /obj/item/stack/cable_coil))
+	else if(iscoil(W))
 		var/obj/item/stack/cable_coil/coil = W
 		coil.cable_join(src, user)
 
-	else if(istype(W, /obj/item/device/multitool))
+	else if(ismultitool(W))
 
 		if(powernet && (powernet.avail > 0))		// is it powered?
 			to_chat(user, "<span class='alert'>[powernet.avail]W in power network.</span>")

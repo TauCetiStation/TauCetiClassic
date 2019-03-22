@@ -44,7 +44,8 @@
 		/obj/machinery/smartfridge,
 		/obj/machinery/biogenerator,
 		/obj/machinery/hydroponics,
-		/obj/machinery/constructable_frame)
+		/obj/machinery/constructable_frame,
+		/obj/item/clothing/suit/space/rig)
 
 /obj/item/weapon/reagent_containers/glass/atom_init()
 	. = ..()
@@ -308,7 +309,7 @@
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 		user.drop_from_inventory(src)
 		qdel(src)
-	if (istype(D, /obj/item/weapon/weldingtool))
+	if (iswelder(D))
 		var/obj/item/weapon/weldingtool/WT = D
 		if(WT.remove_fuel(0,user))
 			user.remove_from_mob(src)

@@ -1,7 +1,8 @@
 /turf/simulated/wall
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
-	icon = 'icons/turf/walls.dmi'
+	icon = 'icons/turf/walls/has_false_walls/wall.dmi'
+	icon_state = "box"
 	plane = GAME_PLANE
 
 	var/mineral = "metal"
@@ -22,8 +23,15 @@
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
 
-	var/walltype = "metal"
 	var/sheet_type = /obj/item/stack/sheet/metal
+
+	canSmoothWith = list(
+		/turf/simulated/wall,
+		/turf/simulated/wall/r_wall,
+		/obj/structure/falsewall,
+		/obj/structure/falsewall/reinforced,
+		)
+	smooth = SMOOTH_TRUE
 
 /turf/simulated/wall/Destroy()
 	for(var/obj/effect/E in src)
@@ -36,8 +44,7 @@
 	for(var/obj/effect/E in src)
 		if(E.name == "Wallrot")
 			qdel(E)
-	. = ..()
-	relativewall_neighbours()
+	return ..()
 
 //Appearance
 
@@ -296,7 +303,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(rotting)
-		if(istype(W, /obj/item/weapon/weldingtool))
+		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0,user))
 				to_chat(user, "<span class='notice'>You burn away the fungi with \the [WT].</span>")
@@ -312,7 +319,7 @@
 
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
-		if(istype(W, /obj/item/weapon/weldingtool))
+		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0,user))
 				thermitemelt(user)
@@ -336,7 +343,7 @@
 	var/turf/T = user.loc	//get user's location for delay checks
 
 	//DECONSTRUCTION
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		if(user.is_busy()) return
 
 		var/response = "Dismantle"

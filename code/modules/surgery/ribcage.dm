@@ -330,7 +330,7 @@
 		if(istype(tool, /obj/item/stack/nanopaste) || istype(tool, /obj/item/weapon/bonegel))
 			target.apply_damage(6, BURN, BP, null)
 
-		else if(istype(tool, /obj/item/weapon/wrench))
+		else if(iswrench(tool))
 			target.apply_damage(12, BRUTE, BP, null)
 			BP.createwound(CUT, 5)
 
@@ -365,7 +365,7 @@
 	target.chest_brain_op_stage = 1
 
 /datum/surgery_step/ribcage/cut_diona_brain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='warning>[user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>",
+	user.visible_message("<span class='warning'>[user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
 	target.apply_damage(50, BRUTE, BP_CHEST, 1, DAM_SHARP)
 
@@ -438,7 +438,7 @@
 	target.chest_brain_op_stage = 1
 
 /datum/surgery_step/ipc_ribcage/cut_posibrain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='warning>[user]'s hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>",
+	user.visible_message("<span class='warning'>[user]'s hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>")
 	target.apply_damage(50, BRUTE, BP_CHEST, 1, DAM_SHARP)
 
@@ -691,7 +691,7 @@
 		to_chat(target, "<span class='warning italics'>%SHUTTING DOWN%</span>")
 
 /datum/surgery_step/ipc_ribcage/take_accumulator/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='warning>[user]'s hand slips, scratching [target]'s accumulator with \the [tool]!</span>",
+	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s accumulator with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, scratching [target]'s accumulator with \the [tool]!</span>")
 	var/obj/item/organ/internal/liver/ipc/A = target.organs_by_name[O_LIVER]
 	A.damage += 10

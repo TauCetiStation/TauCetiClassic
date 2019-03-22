@@ -175,8 +175,10 @@
 	if(def_zone == O_EYES)
 		user.visible_message("<span class='notice'>You show the paper to [M]. </span>", \
 			"<span class='notice'> [user] holds up a paper and shows it to [M]. </span>")
-		to_chat(M, examine())
-
+		if(crumpled == 1)
+			to_chat(M, "<span class='notice'>You can't read anything until it crumpled.</span>")
+			return
+		show_content(M)
 	else if(def_zone == O_MOUTH) // lipstick wiping
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -344,7 +346,7 @@
 //Count the fields
 	var/laststart = 1
 	while(1)
-		var/i = findtext(t, "<span class=\"paper_field\">", laststart)
+		var/i = findtext(t, "<span class=\"paper_field\">", laststart) //</span>
 		if(i==0)
 			break
 		laststart = i+1
@@ -384,18 +386,18 @@
 		return
 
 	if(P.lit && !user.restrained() && !user.is_busy())
-		var/class = "<span class='red'>"
+		var/class = "red"
 		if(istype(P, /obj/item/weapon/lighter/zippo))
-			class = "<span class='rose'>"
+			class = "rose"
 
-		user.visible_message("[class][user] holds \the [P] up to \the [src], it looks like \he's trying to burn it!</span>", \
-		"[class]You hold \the [P] up to \the [src], burning it slowly.</span>")
+		user.visible_message("<span class='[class]'>[user] holds \the [P] up to \the [src], it looks like \he's trying to burn it!</span>", \
+		"<span class='[class]'>You hold \the [P] up to \the [src], burning it slowly.</span>")
 
 		if(do_after(user, 20, TRUE, P, TRUE))
 			if((get_dist(src, user) > 1) || !P.lit)
 				return
-			user.visible_message("[class][user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>", \
-			"[class]You burn right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>")
+			user.visible_message("<span class='[class]'>[user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>", \
+			"<span class='[class]'>You burn right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>")
 
 			if(user.get_inactive_hand() == src)
 				user.drop_from_inventory(src)
@@ -548,6 +550,7 @@
 		var/obj/item/weapon/stamp/S = P
 		S.stamp_paper(src)
 
+		playsound(src, 'sound/effects/stamp.ogg', 50, 1)
 		visible_message("<span class='notice'>[user] stamp the paper.</span>", "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
 	else if(istype(P, /obj/item/weapon/lighter))

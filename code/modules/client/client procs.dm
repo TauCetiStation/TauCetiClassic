@@ -485,7 +485,7 @@ var/list/blacklisted_builds = list(
 	set category = "OOC"
 	set desc = "Closes all opened NanoUI."
 
-	to_chat(src, "<span class='notice'>You forcibly close any opened NanoUI interfaces.")
+	to_chat(src, "<span class='notice'>You forcibly close any opened NanoUI interfaces.</span>")
 	nanomanager.close_user_uis(usr)
 
 /client/proc/show_character_previews(mutable_appearance/MA)

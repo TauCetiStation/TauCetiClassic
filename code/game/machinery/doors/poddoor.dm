@@ -32,7 +32,7 @@
 
 /obj/machinery/door/poddoor/attackby(obj/item/weapon/C, mob/user)
 	add_fingerprint(user)
-	if(istype(C, /obj/item/weapon/crowbar) || (istype(C, /obj/item/weapon/twohanded/fireaxe) && C:wielded))
+	if(iscrowbar(C) || (istype(C, /obj/item/weapon/twohanded/fireaxe) && C:wielded))
 		if(!hasPower())
 			open(TRUE)
 

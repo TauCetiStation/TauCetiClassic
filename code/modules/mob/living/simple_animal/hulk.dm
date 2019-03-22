@@ -235,7 +235,7 @@
 
 /mob/living/proc/hulk_scream(obj/target, chance)
 	if(prob(chance))
-		visible_message("<span class='userdanger'>[src] has punched \the <B>[target]!</span>",\
+		visible_message("<span class='userdanger'>[src] has punched \the [target]!</span>",\
 		"<span class='userdanger'>You punch the [target]!</span>",\
 		"<span class='userdanger'>You feel some weird vibration!</span>")
 		playsound(loc, 'sound/effects/grillehit.ogg', 50, 1)
