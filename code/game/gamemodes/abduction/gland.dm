@@ -71,36 +71,11 @@
 /obj/item/gland/slime/activate()
 	to_chat(host, "<span class='warning'>You feel nauseous!</span>")
 
-	var/turf/pos = get_turf(host)
-	if(iscarbon(host))
-		var/mob/living/carbon/C = host
-		if(ishuman(C))
-			var/mob/living/carbon/human/H = C
-			if(istype(H.head, /obj/item/clothing/head/helmet/space))
-				host.visible_message("<B>[host]</B> <span class='danger'>throws up in their helmet! Something's pouring out of their suit's air vents.</span>","<span class='warning'>You threw up something slimy in your helmet and you feel a disturbance in your respiratory system, it seems something inside. DAMN IT, what could be worse!</span>")
-				H.losebreath += 25
-				H.eye_blurry = max(2, H.eye_blurry)
-				if(H.gender == FEMALE)
-					playsound(H.loc, 'sound/misc/frigvomit.ogg', 90, 0)
-				else
-					playsound(H.loc, 'sound/misc/mrigvomit.ogg', 90, 0)
-			else
-				var/vomitsound = ""
-				host.visible_message("<B>[host]</B> <span class='danger'>throws up something slimy!</span>","<span class='warning'>You throw up something slimy! DISGUSTING!</span>")
-				if(H.gender == FEMALE)
-					vomitsound = "femalevomit"
-				else
-					vomitsound = "malevomit"
-				if(istype(pos, /turf/simulated))
-					pos.add_vomit_floor(host)
-				playsound(H.loc, vomitsound, 90, 0)
-		else
-			playsound(C.loc, 'sound/effects/splat.ogg', 100, 1)
-			host.visible_message("<B>[host]</B> <span class='danger'>throws up something slimy!</span>","<span class='warning'>You throw up something slimy! DISGUSTING!</span>")
-	pos.add_vomit_floor(host)
+	var/turf/T = get_turf(host)
+	T.add_vomit_floor(host)
 	host.nutrition -= 20
 	host.adjustToxLoss(-3)
-	new/mob/living/simple_animal/slime(pos)
+	new/mob/living/simple_animal/slime(T)
 
 
 //SLIME BOOM

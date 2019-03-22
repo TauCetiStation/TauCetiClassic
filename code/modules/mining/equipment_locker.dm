@@ -494,23 +494,6 @@
 					shake_camera(L, 20, 1)
 					spawn(20)
 						if(L)
-							var/mob/living/carbon/human/H = L
-							if(istype(H.head, /obj/item/clothing/head/helmet/space))
-								L.visible_message("<B>[H.name]</B> <span class='danger'>vomits from travelling through the [src.name]!</span>","<span class='warning'>You threw up in your helmet from travelling through the [src.name]! Damn it, what could be worse!</span>")
-								H.losebreath += 25
-								H.eye_blurry = max(2, H.eye_blurry)
-								if(H.gender == FEMALE)
-									playsound(L.loc, 'sound/misc/frigvomit.ogg', 90, 0)
-								else
-									playsound(L.loc, 'sound/misc/mrigvomit.ogg', 90, 0)
-							else
-								var/vomitsound = ""
-								H.visible_message("<B>[H.name]</B> <span class='danger'>vomits from travelling through the [src.name]!</span>", "<span class='warning'>You throw up from travelling through the [src.name]!</span>")
-								if(H.gender == FEMALE)
-									vomitsound = "femalevomit"
-								else
-									vomitsound = "malevomit"
-									playsound(L.loc, vomitsound, 90, 0)
 							var/turf/T = get_turf(L)
 							T.add_vomit_floor(L)
 							L.nutrition -= 20

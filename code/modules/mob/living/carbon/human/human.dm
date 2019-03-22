@@ -1180,22 +1180,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			spawn(100) //and you have 10 more for mad dash to the bucket
 				Stun(5)
 				var/turf/T = loc
-				if(istype(src.head, /obj/item/clothing/head/helmet/space))
-					src.visible_message("<B>[src]</B> <span class='danger'>throws up in their helmet!</span>","<span class='warning'>You threw up in your helmet, damn it, what could be worse!</span>")
-					losebreath += 15
-					eye_blurry = max(2, eye_blurry)
-					if(gender == FEMALE)
-						playsound(src.loc, 'sound/misc/frigvomit.ogg', 90, 0)
-					else
-						playsound(src.loc, 'sound/misc/mrigvomit.ogg', 90, 0)
-				else
-					var/vomitsound = ""
-					src.visible_message("<B>[src]</B> <span class='danger'>throws up!</span>","<span class='warning'>You throw up!</span>")
-					if(gender == FEMALE)
-						vomitsound = "femalevomit"
-					else
-						vomitsound = "malevomit"
-					playsound(src.loc, vomitsound, 90, 0)
 				T.add_vomit_floor(src, 1)
 				nutrition -= 40
 				adjustToxLoss(-3)
