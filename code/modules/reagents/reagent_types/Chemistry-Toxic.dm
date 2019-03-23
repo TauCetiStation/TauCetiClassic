@@ -605,7 +605,7 @@
 
 				if(1 to 10)
 					sleep(2 SECONDS) //20 sec total
-					var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG, BP_CHEST, BP_GROIN, BP_HEAD)]
+					var/obj/item/organ/external/BP = H.get_bodypart(pick(BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG, BP_CHEST, BP_GROIN, BP_HEAD))
 					BP.take_damage(13)
 					if(prob(25))
 						to_chat(H, "<span class='warning'>Your flesh is starting to melt!</span>")
