@@ -638,7 +638,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 					stat(null, "ETA-[shuttleeta2text()]")
 
 	if(client && client.holder)
-		if((client.holder.rights & R_ADMIN))
+		if(statpanel("Tickets"))
+			global.ahelp_tickets.stat_entry()
+		if(client.holder.rights & R_ADMIN)
 			if(statpanel("MC"))
 				stat("CPU:", "[world.cpu]")
 				if(client.holder.rights & R_DEBUG)

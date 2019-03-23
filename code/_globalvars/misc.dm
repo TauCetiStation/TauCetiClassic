@@ -1,6 +1,8 @@
 var/global/obj/effect/overlay/plmaster = null
 var/global/obj/effect/overlay/slmaster = null
 
+var/global/timezoneOffset = 0 // The difference betwen midnight (of the host computer) and 0 world.ticks.
+
 // nanomanager, the manager for Nano UIs
 var/datum/nanomanager/nanomanager = new()
 
