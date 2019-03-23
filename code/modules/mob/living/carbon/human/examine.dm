@@ -315,26 +315,27 @@
 					var/list/flavor_text = list()
 					var/list/no_exclude = list("gaping wound", "big gaping wound", "massive wound", "large bruise",\
 					"huge bruise", "massive bruise", "severe burn", "large burn", "deep burn", "carbonised area")
+					var/span_flavor = "<span class='warning'>"
 					for(var/wound in wound_descriptors)
 						switch(wound_descriptors[wound])
 							if(1)
 								if(!flavor_text.len)
-									flavor_text += "<span class='warning'>[t_He] has[prob(10) && !(wound in no_exclude)  ? " what might be" : ""] a [wound]"
+									flavor_text += "[span_flavor][t_He] has[prob(10) && !(wound in no_exclude)  ? " what might be" : ""] a [wound]"
 								else
 									flavor_text += "[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a [wound]"
 							if(2)
 								if(!flavor_text.len)
-									flavor_text += "<span class='warning'>[t_He] has[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a pair of [wound]s"
+									flavor_text += "[span_flavor][t_He] has[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a pair of [wound]s"
 								else
 									flavor_text += "[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a pair of [wound]s"
 							if(3 to 5)
 								if(!flavor_text.len)
-									flavor_text += "<span class='warning'>[t_He] has several [wound]s"
+									flavor_text += "[span_flavor][t_He] has several [wound]s"
 								else
 									flavor_text += " several [wound]s"
 							if(6 to INFINITY)
 								if(!flavor_text.len)
-									flavor_text += "<span class='warning'>[t_He] has a bunch of [wound]s"
+									flavor_text += "[span_flavor][t_He] has a bunch of [wound]s"
 								else
 									flavor_text += " a ton of [wound]\s"
 					var/flavor_text_string = ""

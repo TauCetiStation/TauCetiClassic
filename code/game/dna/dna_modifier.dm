@@ -177,7 +177,7 @@
 	if(exchange_parts(user, I))
 		return
 
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(iscrowbar(I))
 		if(panel_open)
 			for(var/obj/O in contents) // in case there is something in the scanner
 				O.loc = loc

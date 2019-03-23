@@ -68,7 +68,7 @@
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | BLOCKHAIR
 
 /obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		switch(aggressiveness)
 			if(1)
 				to_chat(user, "\blue You set the restrictor to the middle position.")
@@ -81,7 +81,7 @@
 				aggressiveness = 1
 			if(4)
 				to_chat(user, "\red You adjust the restrictor but nothing happens, probably because its broken.")
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(iswirecutter(W))
 		if(aggressiveness != 4)
 			to_chat(user, "\red You broke it!")
 			aggressiveness = 4

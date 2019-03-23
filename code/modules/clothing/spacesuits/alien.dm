@@ -200,7 +200,7 @@
 
 /obj/item/clothing/suit/space/vox/stealth/proc/overload()
 	wearer.visible_message(
-	"<span class='warning'>[wearer] appears from nowhere!",
+	"<span class='warning'>[wearer] appears from nowhere!</span>",
 	"<span class='warning'>Your stealth got overloaded and no longer can sustain itself!</span>"
 	)
 	var/datum/effect/effect/system/spark_spread/s = new

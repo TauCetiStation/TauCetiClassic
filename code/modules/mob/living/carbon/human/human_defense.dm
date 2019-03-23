@@ -88,7 +88,7 @@
 				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
 				if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
 					if(C.flags & THICKMATERIAL )
-						visible_message("<span class='userdanger'> <B>The [P.name] gets absorbed by [src]'s [C.name]!</span>")
+						visible_message("<span class='userdanger'>The [P.name] gets absorbed by [src]'s [C.name]!</span>")
 						qdel(P)
 						return
 

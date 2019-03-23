@@ -363,7 +363,7 @@
 		return
 
 	if(usr.lying)
-		to_chat(usr, "<span class='notice'>You can't interact with this while lying.")
+		to_chat(usr, "<span class='notice'>You can't interact with this while lying.</span>")
 		return
 
 	switch(href_list["action"])

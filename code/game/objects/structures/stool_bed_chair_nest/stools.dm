@@ -31,7 +31,7 @@
 		qdel(src)
 
 /obj/structure/stool/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench) && !(flags & NODECONSTRUCT))
+	if(iswrench(W) && !(flags & NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		new /obj/item/stack/sheet/metal(loc)
 		qdel(src)

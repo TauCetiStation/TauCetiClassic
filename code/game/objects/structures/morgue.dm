@@ -108,14 +108,16 @@
 				if(ismob(A))
 					var/mob/M = A
 					M.instant_vision_update(1,src)
-		playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/effects/roll.ogg', 10, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', 25, 1)
 		qdel(connected)
 		connected = null
 		update()
 
 /obj/structure/morgue/proc/open()
 	if (!connected)
-		playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', 25, 1)
+		playsound(src, 'sound/effects/roll.ogg', 10, 1)
 		connected = new /obj/structure/m_tray( loc )
 		step(connected, dir)
 		connected.layer = BELOW_CONTAINERS_LAYER

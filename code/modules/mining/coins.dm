@@ -11,13 +11,13 @@
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
 	var/cooldown = 0
-	var/coinflip	
+	var/coinflip
 
 /obj/item/weapon/coin/atom_init()
 	. = ..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
-	if(reagent) 
+	if(reagent)
 		create_reagents(4)
 		reagents.add_reagent(reagent, 4)
 
@@ -81,7 +81,7 @@
 	sideslist = list("heads")
 
 /obj/item/weapon/coin/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/stack/cable_coil) )
+	if(iscoil(W) )
 		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)
 			to_chat(user, "<span class='warning'>There already is a string attached to this coin!</span>")
@@ -97,7 +97,7 @@
 			to_chat(user, "<span class='warning'>You need one length of cable to attach a string to the coin!</span>")
 			return
 
-	else if(istype(W,/obj/item/weapon/wirecutters) )
+	else if(iswirecutter(W) )
 		if(!string_attached)
 			..()
 			return

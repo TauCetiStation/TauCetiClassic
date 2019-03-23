@@ -109,7 +109,7 @@
 /*
  * Parapens
  */
- /obj/item/weapon/pen/paralysis
+/obj/item/weapon/pen/paralysis
 	flags = OPENCONTAINER
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "materials=2;syndicate=5"
