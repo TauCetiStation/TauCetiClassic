@@ -6,6 +6,8 @@
 	layer = 3.2//Just above doors
 	anchored = 1.0
 	flags = ON_BORDER
+	can_be_unanchored = TRUE
+
 	var/maxhealth = 14.0
 	var/health
 	var/ini_dir = null

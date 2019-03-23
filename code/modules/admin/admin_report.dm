@@ -158,7 +158,7 @@ var/datum/report_topic_handler/report_topic_handler
 
 /client/proc/edit_report(ID as num)
 	if(!src.holder || src.holder.level < 0)
-		to_chat(src, "<b>You tried to modify the news, but you're not an admin!")
+		to_chat(src, "<b>You tried to modify the news, but you're not an admin!</b>")
 		return
 
 	var/savefile/Reports = new("data/reports.sav")

@@ -1114,6 +1114,36 @@
 	icon_state = "ipc_eyes"
 	species_allowed = list(IPC)
 
+/datum/sprite_accessory/hair/ipc_color_array
+	name = "colored IPC screen with an eye"
+	icon_state = "ipc_color_array"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+
+/datum/sprite_accessory/hair/ipc_television
+	name = "TV IPC screen"
+	icon_state = "ipc_television"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+
+/datum/sprite_accessory/hair/ipc_color_array_horizontal
+	name = "horizontal colored IPC screen"
+	icon_state = "ipc_color_array_horizontal"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+
+/datum/sprite_accessory/hair/ipc_color_array_vertical
+	name = "vertical colored IPC screen"
+	icon_state = "ipc_color_array_vertical"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+
+/datum/sprite_accessory/hair/ipc_miami
+	name = "miami IPC screen"
+	icon_state = "ipc_miami"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+
 /datum/sprite_accessory/hair/unathi_warrior_horns
 	name = "Warrior Horns"
 	icon_state = "una_warrior_horns"

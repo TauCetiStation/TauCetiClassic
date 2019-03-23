@@ -39,6 +39,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	valid_territory = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
+/area/shuttle/atom_init()
+	if(!canSmoothWithAreas)
+		canSmoothWithAreas = type
+	. = ..()
+
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
 
@@ -1377,9 +1382,9 @@ var/list/the_station_areas = list (
 	/area/rnd,
 	/area/storage,
 	/area/construction,
-	/area/ai_monitored/storage/eva, //do not try to simplify to "/area/ai_monitored" --rastaf0
+	/area/ai_monitored/storage/eva, //do not try to simplify to "/area/ai_monitored" --rastaf0,
 	/area/ai_monitored/storage/secure,
-	/area/turret_protected/ai_upload, //do not try to simplify to "/area/turret_protected" --rastaf0
+	/area/turret_protected/ai_upload, //do not try to simplify to "/area/turret_protected" --rastaf0,
 	/area/turret_protected/ai
 )
 

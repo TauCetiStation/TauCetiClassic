@@ -110,7 +110,7 @@
 	name = "fire axe"
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	force = 5
-	hitsound = 'sound/weapons/desceration.ogg'
+	hitsound = "desceration"
 	sharp = 1
 	edge = 1
 	w_class = ITEM_SIZE_LARGE

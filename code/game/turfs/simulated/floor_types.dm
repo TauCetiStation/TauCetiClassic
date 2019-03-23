@@ -35,20 +35,6 @@
 	name = "sand"
 	icon_state = "asteroid"
 
-/turf/simulated/floor/vault
-	icon_state = "rockvault"
-
-/turf/simulated/floor/vault/atom_init(mapload, type)
-	. = ..()
-	icon_state = "[type]vault"
-
-/turf/simulated/wall/vault
-	icon_state = "rockvault"
-
-/turf/simulated/wall/vault/atom_init(mapload, type)
-	. = ..()
-	icon_state = "[type]vault"
-
 /turf/simulated/floor/engine
 	name = "reinforced floor"
 	icon_state = "engine"
@@ -195,7 +181,7 @@
 /turf/simulated/floor/beach/water
 	name = "Water"
 	icon_state = "water"
-	light_color = "#00BFFF"
+	light_color = "#00bfff"
 	light_power = 2
 	light_range = 2
 

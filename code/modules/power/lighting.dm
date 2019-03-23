@@ -295,6 +295,7 @@
 	if(on)
 		if(light_range != brightness_range || light_power != brightness_power || light_color != brightness_color)
 			switchcount++
+			playsound(src.loc, 'sound/machines/lightson.ogg', 75)
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
 

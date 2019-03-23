@@ -125,7 +125,7 @@
 				src.beacon_freq = freq * 10
 		if("screw")
 			src.screwloose = !src.screwloose
-			to_chat(usr, "<span class='notice>You twiddle the screw.</span>")
+			to_chat(usr, "<span class='notice'>You twiddle the screw.</span>")
 		if("oddbutton")
 			src.oddbutton = !src.oddbutton
 			to_chat(usr, "<span class='notice'>You press the weird button.</span>")

@@ -33,6 +33,8 @@ var/datum/subsystem/ticker/ticker
 	var/list/factions = list()				// list of all factions
 	var/list/availablefactions = list()		// list of factions with openings
 
+	var/list/reconverted_antags = list()
+
 	var/delay_end = 0						//if set to nonzero, the round will not restart on it's own
 
 	var/triai = 0							//Global holder for Triumvirate
@@ -501,6 +503,13 @@ var/datum/subsystem/ticker/ticker
 		text += {"<br><img src="logo_[tempstate].png"> [winner]"}
 
 	return text
+
+/datum/subsystem/ticker/proc/start_now()
+	if(ticker.current_state != GAME_STATE_PREGAME)
+		return FALSE
+	ticker.can_fire = TRUE
+	ticker.timeLeft = 0
+	return TRUE
 
 /world/proc/has_round_started()
 	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)

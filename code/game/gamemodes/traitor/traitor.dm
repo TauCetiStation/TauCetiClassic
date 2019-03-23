@@ -162,6 +162,13 @@
 		equip_traitor(traitor.current)
 	return
 
+/datum/game_mode/proc/remove_traitor(datum/mind/M)
+	traitors -= M
+	M.special_role = null
+	if(isAI(M.current))
+		var/mob/living/silicon/ai/A = M.current
+		A.set_zeroth_law("")
+		A.show_laws()
 
 /datum/game_mode/traitor/declare_completion()
 	..()
@@ -241,6 +248,11 @@
 						text += "<br>[entry]"
 				else
 					text += "<br>The traitor was a smooth operator this round (did not purchase any uplink items)."
+		text += "<BR><HR>"
+	if(ticker.reconverted_antags.len)
+		for(var/reconverted in ticker.reconverted_antags)
+			text += printplayerwithicon(ticker.reconverted_antags[reconverted])
+			text += "<br> Has been deconverted, and is now a [pick("loyal", "effective", "nominal")] [pick("dog", "pig", "underdog", "servant")] of [pick("corporation", "NanoTrasen")]"
 		text += "<BR><HR>"
 	return text
 

@@ -110,7 +110,7 @@
 					if(!S.use(2))
 						return
 					to_chat(user, "\blue You create a false wall! Push on it to open or close the passage.")
-					new /obj/structure/falserwall (src.loc)
+					new /obj/structure/falsewall/reinforced(loc)
 					qdel(src)
 				else
 					if (src.icon_state == "reinforced") //I cant believe someone would actually write this line of code...

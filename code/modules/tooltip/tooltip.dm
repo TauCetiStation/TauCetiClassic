@@ -8,17 +8,17 @@ Configuration:
 - Set control to the correct skin element (remember to actually place the skin element)
 - Set file to the correct path for the .html file (remember to actually place the html file)
 - Attach the datum to the user client on login, e.g.
-	/client/New()
-		src.tooltips = new /datum/tooltip(src)
+/client/New()
+	src.tooltips = new /datum/tooltip(src)
 
 Usage:
 - Define mouse event procs on your (probably HUD) object and simply call the show and hide procs respectively:
-	/obj/screen/hud
-		MouseEntered(location, control, params)
-			usr.client.tooltip.show(params, title = src.name, content = src.desc)
+/obj/screen/hud
+	MouseEntered(location, control, params)
+		usr.client.tooltip.show(params, title = src.name, content = src.desc)
 
-		MouseExited()
-			usr.client.tooltip.hide()
+	MouseExited()
+		usr.client.tooltip.hide()
 
 Customization:
 - Theming can be done by passing the theme var to show() and using css in the html file to change the look

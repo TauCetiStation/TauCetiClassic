@@ -82,7 +82,7 @@
 
 	else if(is_wire_tool(I) && open_panel)
 		if(degutted)
-			to_chat(user, "<span class='notice'>The wires aren't connected to anything!<span>")
+			to_chat(user, "<span class='notice'>The wires aren't connected to anything!</span>")
 		else
 			wires.interact(user)
 

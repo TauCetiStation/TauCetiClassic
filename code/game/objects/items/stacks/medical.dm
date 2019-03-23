@@ -351,7 +351,7 @@
 										"<span class='danger'>You successfully apply \the [src] to your [limb].</span>", \
 										"<span class='danger'>You hear something being wrapped.</span>")
 				else
-					user.visible_message("<span class='danger'>[user] fumbles \the [src].", \
+					user.visible_message("<span class='danger'>[user] fumbles \the [src].</span>", \
 										"<span class='danger'>You fumble \the [src].</span>", \
 										"<span class='danger'>You hear something being wrapped.</span>")
 					return

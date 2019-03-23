@@ -249,16 +249,16 @@
 
 		else if(iscoil(W) && (buildstate in list(2, 4)))
 			amount_to_use = 5
-			fail_msg = "<span class='notice'>You need at least five segments of cable coil to complete this task."
+			fail_msg = "<span class='notice'>You need at least five segments of cable coil to complete this task.</span>"
 			if(buildstate == 2)
-				success_msg = "<span class='notice'>You wire a crude cell mount into the top of the crossbow."
+				success_msg = "<span class='notice'>You wire a crude cell mount into the top of the crossbow.</span>"
 			else
-				success_msg = "<span class='notice'>You string a steel cable across the crossbow's lath."
+				success_msg = "<span class='notice'>You string a steel cable across the crossbow's lath.</span>"
 
 		else if(istype(W, /obj/item/stack/sheet/mineral/plastic) && buildstate == 3)
 			amount_to_use = 3
-			fail_msg = "<span class='notice'>You need at least three plastic sheets to complete this task."
-			success_msg = "<span class='notice'>You assemble and install a heavy plastic lath onto the crossbow."
+			fail_msg = "<span class='notice'>You need at least three plastic sheets to complete this task.</span>"
+			success_msg = "<span class='notice'>You assemble and install a heavy plastic lath onto the crossbow.</span>"
 
 		if(amount_to_use) // if this is null, then tool we are trying to use is wrong.
 			if(S.use(amount_to_use))
@@ -275,13 +275,13 @@
 				if(!T.isOn())
 					return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				to_chat(user, "<span class='notice'>You weld the rods into place.")
+				to_chat(user, "<span class='notice'>You weld the rods into place.</span>")
 			buildstate++
 			update_icon()
 
 	else if(isscrewdriver(W))
 		if(buildstate == 5)
-			to_chat(user, "<span class='notice'>You secure the crossbow's various parts.")
+			to_chat(user, "<span class='notice'>You secure the crossbow's various parts.</span>")
 			new /obj/item/weapon/crossbow(get_turf(src))
 			qdel(src)
 

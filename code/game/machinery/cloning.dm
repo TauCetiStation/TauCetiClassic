@@ -25,7 +25,7 @@
 	var/biomass = CLONE_BIOMASS * 3
 	var/speed_coeff
 	var/efficiency
-	light_color = "#00FF00"
+	light_color = "#00ff00"
 
 /obj/machinery/clonepod/atom_init()
 	. = ..()

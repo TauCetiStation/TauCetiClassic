@@ -263,7 +263,7 @@
 		var/obj/item/weapon/changeling_hammer/W = I
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(W.use_charge(user, 6))
-			visible_message("<span class='danger'>[user]</B> has punched [src]!</span>")
+			visible_message("<span class='red'><B>[user]</B> has punched [src]!</span>")
 			playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 			shatter()
 		return
