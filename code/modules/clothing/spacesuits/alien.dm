@@ -180,7 +180,7 @@
 		if(wearer.is_busy(src))
 			return
 		to_chat(wearer, "<span class='notice'>Turning on stealth mode...</span>")
-		if(use_tool(wearer, wearer, 40))
+		if(do_after(wearer, 40, target = wearer))
 			if(!istype(wearer) || wearer.wear_suit != src)
 				return
 			if(is_damaged())

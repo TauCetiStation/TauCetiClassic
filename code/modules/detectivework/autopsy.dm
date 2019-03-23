@@ -186,7 +186,7 @@
 
 	if(!can_operate(M))
 		return
-	if(use_tool(M, user, 15, volume = 50))
+	if(do_after(user,15,target = M))
 		if(target_name != M.name)
 			target_name = M.name
 			src.wdata = list()

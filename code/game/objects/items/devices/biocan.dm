@@ -17,7 +17,7 @@
 	set src in view(0)
 
 	to_chat(usr, "<span class='notice'>You began to carefully extract [headobj] from the can.</span>")
-	if(!usr.is_busy(src) && use_tool(src, usr, 20))
+	if(!usr.is_busy() && do_after(usr,20))
 		if(headobj)
 			to_chat(usr, "<span class='notice'>You have successfully extracted [headobj].</span>")
 			if(brainmob)

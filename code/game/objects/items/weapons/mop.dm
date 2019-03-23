@@ -42,7 +42,7 @@
 		if(user.is_busy(A)) return
 		user.visible_message("<span class='warning'>[user] begins to clean \the [get_turf(A)].</span>")
 
-		if(use_tool(A, user, 40, volume = 50))
+		if(do_after(user, 40, target = A))
 			if(A)
 				clean(get_turf(A))
 			to_chat(user, "<span class='notice'>You have finished mopping!</span>")

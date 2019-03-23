@@ -121,7 +121,7 @@
 			return
 		if(instant)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
-		if(instant > 0 || (!user.is_busy(src) && use_tool(target, user, 50)))
+		if(instant > 0 || (!user.is_busy(src) && do_after(user, 50, target = target)))
 
 			//Gang functions
 			if(gangID)

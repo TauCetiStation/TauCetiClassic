@@ -35,7 +35,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 				extract_time = 50
 			else
 				extract_time = w_class * 20 // 3 = 6 seconds, 4 = 8 seconds, 5 = 10 seconds.
-		if(use_tool(A, user, extract_time))
+		if(do_after(user, extract_time, target=A))
 			if(A.anchored)
 				return
 			to_chat(user, "<span class='notice'>You attach the pack to [A] and activate it.</span>")

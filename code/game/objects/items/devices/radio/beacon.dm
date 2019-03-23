@@ -115,7 +115,7 @@
 
 	user.visible_message("\red [user.name] is trying to plant some kind of device on [target.name]!")
 
-	if(use_tool(target, user, 50) && in_range(user, H))
+	if(do_after(user, 50, target = target) && in_range(user, H))
 		user.drop_item()
 		target = H
 		loc = null

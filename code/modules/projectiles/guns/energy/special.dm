@@ -269,7 +269,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 /obj/item/weapon/gun/tesla/proc/charge(mob/living/user)
 	set waitfor = FALSE
-	if(use_tool(src, user, 40))
+	if(do_after(user, 40 * toolspeed, target = src))
 		if(charging && charge < 3)
 			charge++
 			playsound(loc, "sparks", 75, 1, -1)

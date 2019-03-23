@@ -58,7 +58,7 @@
 		else if(!user.is_busy())
 			user.visible_message("<span class='warning'>[user] begins to do [H]'s lips with \the [src].</span>", \
 								 "<span class='notice'>You begin to apply \the [src].</span>")
-			if(use_tool(H, user, 20, volume = 50))	//user needs to keep their active hand, H does not.
+			if(do_after(user, 20, target = H))	//user needs to keep their active hand, H does not.
 				user.visible_message("<span class='notice'>[user] does [H]'s lips with \the [src].</span>", \
 									 "<span class='notice'>You apply \the [src].</span>")
 				H.lip_style = "lipstick"
@@ -82,7 +82,7 @@
 			else if(!user.is_busy())
 				user.visible_message("<span class='warning'>[user] begins to wipe [H]'s lipstick off with \the [src].</span>", \
 								 	 "<span class='notice'>You begin to wipe off [H]'s lipstick.</span>")
-				if(use_tool(H, user, 10, volume = 50))	//user needs to keep their active hand, H does not.
+				if(do_after(user, 10, target = H))	//user needs to keep their active hand, H does not.
 					user.visible_message("<span class='notice'>[user] wipes [H]'s lipstick off with \the [src].</span>", \
 										 "<span class='notice'>You wipe off [H]'s lipstick.</span>")
 					H.lip_style = null
@@ -128,11 +128,10 @@
 				return
 
 			if(H == user) //shaving yourself
-				if(user.is_busy(H))
-					return
+				if(user.is_busy()) return
 				user.visible_message("[user] starts to shave their facial hair with [src].", \
 									 "<span class='notice'>You take a moment to shave your facial hair with [src]...</span>")
-				if(use_tool(H, user, 50, volume = 50))
+				if(do_after(user, 50, target = H))
 					user.visible_message("[user] shaves his facial hair clean with [src].", \
 										 "<span class='notice'>You finish shaving with [src]. Fast and clean!</span>")
 					shave(H, def_zone)
@@ -140,7 +139,7 @@
 				var/turf/H_loc = H.loc
 				user.visible_message("<span class='warning'>[user] tries to shave [H]'s facial hair with [src].</span>", \
 									 "<span class='notice'>You start shaving [H]'s facial hair...</span>")
-				if(use_tool(H, user, 50, volume = 50))
+				if(do_after(user, 50, target = H))
 					if(H_loc == H.loc)
 						user.visible_message("<span class='warning'>[user] shaves off [H]'s facial hair with [src].</span>", \
 											 "<span class='notice'>You shave [H]'s facial hair clean off.</span>")
@@ -161,7 +160,7 @@
 				if(user.is_busy()) return
 				user.visible_message("[user] starts to shave their head with [src].", \
 									 "<span class='notice'>You start to shave your head with [src]...</span>")
-				if(use_tool(H, user, 50, volume = 50))
+				if(do_after(user, 50, target = H))
 					user.visible_message("[user] shaves his head with [src].", \
 										 "<span class='notice'>You finish shaving with [src].</span>")
 					shave(H, def_zone)
@@ -169,7 +168,7 @@
 				var/turf/H_loc = H.loc
 				user.visible_message("<span class='warning'>[user] tries to shave [H]'s head with [src]!</span>", \
 									 "<span class='notice'>You start shaving [H]'s head...</span>")
-				if(use_tool(H, user, 50, volume = 50))
+				if(do_after(user, 50, target = H))
 					if(H_loc == H.loc)
 						user.visible_message("<span class='warning'>[user] shaves [H]'s head bald with [src]!</span>", \
 											 "<span class='notice'>You shave [H]'s head bald.</span>")
@@ -384,7 +383,7 @@
 	if(isfacehair)
 		barber.visible_message("<span class='notice'>[barber] starts cutting [barbertarget]'s facial hair with [src]!</span>", \
 							   "<span class='notice'>You start cutting [barbertarget]'s facial hair with [src], this might take a minute...</span>")
-		if(use_tool(barbertarget, barber, 100, volume = 50))
+		if(do_after(barber, 100, target = barbertarget))
 			barbertarget.f_style = selectedhairstyle
 			barbertarget.update_hair()
 			barber.visible_message("<span class='notice'>[barber] finished cutting [barbertarget]'s facial hair</span>", \
@@ -392,7 +391,7 @@
 	else
 		barber.visible_message("<span class='notice'>[barber] starts cutting [barbertarget]'s hair with [src]!</span>", \
 							   "<span class='notice'>You start cutting [barbertarget]'s hair with [src], this might take a minute...</span>")
-		if(use_tool(barbertarget, barber, 100, volume = 50))
+		if(do_after(barber, 100, target = barbertarget))
 			barbertarget.h_style = selectedhairstyle
 			barbertarget.update_hair()
 			barber.visible_message("<span class='notice'>[barber] finished cutting [barbertarget]'s hair</span>", \
