@@ -490,7 +490,7 @@
 			if(isliving(M))
 				var/mob/living/L = M
 				L.Weaken(3)
-				if(ishuman(L))
+				if(ishuman(L) && !(istype(L, /mob/living/carbon/human/golem) || istype(L, /mob/living/carbon/human/machine) || istype(L, /mob/living/carbon/human/abductor) || istype(L, /mob/living/carbon/human/shadowling)))
 					shake_camera(L, 20, 1)
 					spawn(20)
 						if(L)
