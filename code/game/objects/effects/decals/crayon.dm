@@ -7,7 +7,7 @@
 
 var/list/crayon_overlay_cache = list()
 
-/obj/effect/decal/cleanable/crayon/atom_init(mapload, main = "#FFFFFF", shade = "#000000", type = "rune", e_name = "rune", override_color = 0)
+/obj/effect/decal/cleanable/crayon/atom_init(mapload, main = "#ffffff", shade = "#000000", type = "rune", e_name = "rune", override_color = 0)
 	. = ..()
 
 	name = e_name
@@ -56,13 +56,13 @@ var/list/crayon_overlay_cache = list()
 
 	if(type == "A")
 		gang = type
-		color = "#00B7EF"
+		color = "#00b7ef"
 		icon_state = gang_name("A")
 		ticker.mode.A_territory_new |= list(territory.type = territory.name)
 		ticker.mode.A_territory_lost -= territory.type
 	else if(type == "B")
 		gang = type
-		color = "#DA0000"
+		color = "#da0000"
 		icon_state = gang_name("B")
 		ticker.mode.B_territory_new |= list(territory.type = territory.name)
 		ticker.mode.B_territory_lost -= territory.type

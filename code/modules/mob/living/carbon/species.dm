@@ -63,8 +63,9 @@
 	var/list/flags = list()       // Various specific features.
 	var/list/abilities = list()	// For species-derived or admin-given powers
 
-	var/datum/dirt_cover/blood_color = /datum/dirt_cover/red_blood //Red.
-	var/flesh_color = "#FFC896" //Pink.
+	var/blood_datum_path = /datum/dirt_cover/red_blood //Red.
+	var/datum/dirt_cover/blood_datum // this will contain reference and should only be used as read only.
+	var/flesh_color = "#ffc896" //Pink.
 	var/base_color      //Used when setting species.
 
 	//Used in icon caching.
@@ -116,6 +117,7 @@
 	var/has_gendered_icons = TRUE // if TRUE = use icon_state with _f or _m for respective gender (see get_icon() external organ proc).
 
 /datum/species/New()
+	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
 
 	if(!has_organ[O_HEART])
@@ -231,7 +233,7 @@
 	,NO_MINORCUTS = TRUE
 	)
 
-	flesh_color = "#34AF10"
+	flesh_color = "#34af10"
 	base_color = "#066000"
 
 /datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J)
@@ -277,7 +279,7 @@
 	,HAS_HAIR = TRUE
 	)
 
-	flesh_color = "#AFA59E"
+	flesh_color = "#afa59e"
 	base_color = "#333333"
 
 /datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J)
@@ -317,8 +319,8 @@
 		)
 
 	eyes = "skrell_eyes"
-	blood_color = /datum/dirt_cover/purple_blood
-	flesh_color = "#8CD7A3"
+	blood_datum_path = /datum/dirt_cover/purple_blood
+	flesh_color = "#8cd7a3"
 
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
@@ -348,8 +350,8 @@
 		NO_SCAN = TRUE
 	)
 
-	blood_color = /datum/dirt_cover/blue_blood
-	flesh_color = "#808D11"
+	blood_datum_path = /datum/dirt_cover/blue_blood
+	flesh_color = "#808d11"
 
 	sprite_sheets = list(
 		"suit" = 'icons/mob/species/vox/suit.dmi',
@@ -435,8 +437,8 @@
 	,NO_PAIN = TRUE
 	)
 
-	blood_color = /datum/dirt_cover/blue_blood
-	flesh_color = "#808D11"
+	blood_datum_path = /datum/dirt_cover/blue_blood
+	flesh_color = "#808d11"
 	tail = "armalis_tail"
 	icon_template = 'icons/mob/human_races/r_armalis.dmi'
 
@@ -509,8 +511,8 @@
 		O_KIDNEYS = /obj/item/organ/internal/kidneys/diona
 		)
 
-	blood_color = /datum/dirt_cover/green_blood
-	flesh_color = "#907E4A"
+	blood_datum_path = /datum/dirt_cover/green_blood
+	flesh_color = "#907e4a"
 
 	has_gendered_icons = FALSE
 
@@ -625,7 +627,7 @@
 		,O_KIDNEYS = /obj/item/organ/internal/kidneys/ipc
 		)
 
-	blood_color = /datum/dirt_cover/oil
+	blood_datum_path = /datum/dirt_cover/oil
 	flesh_color = "#575757"
 
 /datum/species/machine/after_job_equip(mob/living/carbon/human/H, datum/job/J)
@@ -649,7 +651,7 @@
 	,VIRUS_IMMUNE = TRUE
 	)
 
-	blood_color = /datum/dirt_cover/gray_blood
+	blood_datum_path = /datum/dirt_cover/gray_blood
 
 /datum/species/abductor/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -745,7 +747,7 @@
 	heat_level_2 = 3000
 	heat_level_3 = 4000
 
-	blood_color = /datum/dirt_cover/black_blood
+	blood_datum_path = /datum/dirt_cover/black_blood
 	darksight = 8
 
 	butcher_drops = list() // They are just shadows. Why should they drop anything?
@@ -761,7 +763,8 @@
 	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
-	,NO_MINORCUTS
+	,NO_SCAN = TRUE
+	,NO_MINORCUTS = TRUE
 	)
 
 	burn_mod = 2
@@ -791,8 +794,8 @@
 	brain_mod = 0
 	speed_mod = 2
 
-	blood_color = /datum/dirt_cover/adamant_blood
-	flesh_color = "#137E8F"
+	blood_datum_path = /datum/dirt_cover/adamant_blood
+	flesh_color = "#137e8f"
 
 	butcher_drops = list(/obj/item/weapon/ore/diamond = 1, /obj/item/weapon/ore/slag = 3)
 
@@ -926,7 +929,7 @@
 
 	tail = "zombie_tajtail"
 
-	flesh_color = "#AFA59E"
+	flesh_color = "#afa59e"
 	base_color = "#000000"
 
 	flags = list(
@@ -946,8 +949,8 @@
 	deform = 'icons/mob/human_races/r_zombie_skrell.dmi'
 
 	eyes = "skrell_eyes"
-	blood_color = /datum/dirt_cover/purple_blood
-	flesh_color = "#8CD7A3"
+	blood_datum_path = /datum/dirt_cover/purple_blood
+	flesh_color = "#8cd7a3"
 	base_color = "#000000"
 
 /datum/species/zombie/unathi
@@ -962,7 +965,7 @@
 
 	tail = "zombie_sogtail"
 
-	flesh_color = "#34AF10"
+	flesh_color = "#34af10"
 	base_color = "#000000"
 
 	flags = list(
@@ -980,7 +983,7 @@
 	icobase = 'icons/mob/human_races/r_slime.dmi'
 	deform = 'icons/mob/human_races/r_slime.dmi'
 
-	blood_color = /datum/dirt_cover/blue_blood
+	blood_datum_path = /datum/dirt_cover/blue_blood
 	flesh_color = "#05fffb"
 	unarmed_type = /datum/unarmed_attack/slime_glomp
 	has_gendered_icons = FALSE

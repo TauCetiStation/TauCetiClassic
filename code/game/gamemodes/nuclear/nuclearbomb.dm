@@ -52,7 +52,7 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon/O, mob/user)
 
-	if (istype(O, /obj/item/weapon/screwdriver))
+	if (isscrewdriver(O))
 		src.add_fingerprint(user)
 		if (removal_stage == 5)
 			if (src.opened == 0)
@@ -99,7 +99,7 @@ var/bomb_set
 	if (src.anchored)
 		switch(removal_stage)
 			if(0)
-				if(istype(O,/obj/item/weapon/weldingtool))
+				if(iswelder(O))
 
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
@@ -117,7 +117,7 @@ var/bomb_set
 				return
 
 			if(1)
-				if(istype(O,/obj/item/weapon/crowbar))
+				if(iscrowbar(O))
 					user.visible_message("[user] starts smashing [src].", "You start forcing open the covers with [O]...")
 					if(user.is_busy())
 						return
@@ -128,7 +128,7 @@ var/bomb_set
 				return
 
 			if(2)
-				if(istype(O,/obj/item/weapon/weldingtool))
+				if(iswelder(O))
 
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
@@ -146,7 +146,7 @@ var/bomb_set
 				return
 
 			if(3)
-				if(istype(O,/obj/item/weapon/wrench))
+				if(iswrench(O))
 					if(user.is_busy())
 						return
 					user.visible_message("[user] begins poking inside [src].", "You begin unwrenching bolts...")
@@ -158,7 +158,7 @@ var/bomb_set
 				return
 
 			if(4)
-				if(istype(O,/obj/item/weapon/crowbar))
+				if(iscrowbar(O))
 					if(user.is_busy())
 						return
 					user.visible_message("[user] begings hitting [src].", "You begin forcing open last safety layer...")
@@ -170,7 +170,7 @@ var/bomb_set
 						removal_stage = 5
 				return
 			/*if(0)
-				if(istype(O,/obj/item/weapon/weldingtool))
+				if(iswelder(O))
 
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
@@ -187,7 +187,7 @@ var/bomb_set
 				return
 
 			if(1)
-				if(istype(O,/obj/item/weapon/crowbar))
+				if(iscrowbar(O))
 					user.visible_message("[user] starts forcing open the bolt covers on [src].", "You start forcing open the anchoring bolt covers with [O]...")
 
 					if(do_after(user,15))
@@ -197,7 +197,7 @@ var/bomb_set
 				return
 
 			if(2)
-				if(istype(O,/obj/item/weapon/weldingtool))
+				if(iswelder(O))
 
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
@@ -214,7 +214,7 @@ var/bomb_set
 				return
 
 			if(3)
-				if(istype(O,/obj/item/weapon/wrench))
+				if(iswrench(O))
 
 					user.visible_message("[user] begins unwrenching the anchoring bolts on [src].", "You begin unwrenching the anchoring bolts...")
 
@@ -225,7 +225,7 @@ var/bomb_set
 				return
 
 			if(4)
-				if(istype(O,/obj/item/weapon/crowbar))
+				if(iscrowbar(O))
 
 					user.visible_message("[user] begins lifting [src] off of the anchors.", "You begin lifting the device off the anchors...")
 
@@ -517,7 +517,7 @@ var/bomb_set
 //==========DAT FUKKEN DISK===============
 /obj/item/weapon/disk
 	icon = 'icons/obj/items.dmi'
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	item_state = "card-id"
 	icon_state = "datadisk0"
 

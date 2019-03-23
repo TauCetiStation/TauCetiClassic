@@ -72,6 +72,8 @@
 	if(modifiers["ctrl"])
 		CtrlClickOn(A)
 		return
+	if(HardsuitClickOn(A))
+		return
 
 	if(stat || paralysis || stunned || weakened)
 		return
@@ -143,9 +145,9 @@
 			else
 				RangedAttack(A, params)
 
-// Default behavior: ignore double clicks, consider them normal clicks instead
+// Default behavior: ignore double clicks (don't add normal clicks, as it will do three clicks instead of two with double).
 /mob/proc/DblClickOn(atom/A, params)
-	ClickOn(A,params)
+	return
 
 
 //	Translates into attack_hand, etc.

@@ -31,8 +31,7 @@
 /obj/structure/cellular_biomass/core/bluespace
 	name = "Glitch"
 	icon = 'code/game/gamemodes/events/cellular_biomass/bluespace_cellular.dmi'
-	luminosity = 4
-	light_color = "#00FFFF"
+	light_color = "#00ffff"
 
 /obj/effect/decal/cleanable/cellular/bluespace
 	name = "Glitch"
@@ -54,7 +53,6 @@
 /obj/structure/cellular_biomass/core/bluespace/atom_init()
 	. = ..()
 	icon_state = "light_1"
-	set_light(luminosity)
 	desc = get_bluespace_scramble()
 
 /obj/structure/cellular_biomass/lair/bluespace/atom_init()

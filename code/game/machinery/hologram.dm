@@ -106,6 +106,7 @@ var/const/HOLOPAD_MODE = 0
 	if(!(stat & NOPOWER) && user.eyeobj.loc == src.loc)//If the projector has power and client eye is on it.
 		if(!hologram)//If there is not already a hologram.
 			create_holo(user)//Create one.
+			playsound(src, 'sound/machines/holopadon.ogg', 100, 0)
 
 			if(user.holohack)
 				change_holo_to_carp(user)
@@ -178,7 +179,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 				else if (HOLOPAD_MODE == 1)
 					var/area/holo_area = get_area(src)
 					var/area/eye_area = get_area(master.eyeobj)
-					if(eye_area in holo_area.master.related)
+					if(eye_area == holo_area)
 						return 1
 
 		clear_holo()//If not, we want to get rid of the hologram.

@@ -75,6 +75,10 @@
 
 	. = ..()
 
+#ifdef UNIT_TEST
+	log_unit_test("Unit Tests Enabled. This will destroy the world when testing is complete.")
+#endif
+
 	spawn(3000)		//so we aren't adding to the round-start lag
 		if(config.kick_inactive)
 			KickInactiveClients()
@@ -218,6 +222,8 @@ var/world_topic_spam_protect_time = world.timeofday
 
 /world/Reboot(reason)
 
+	world.log << "Runtimes count: [total_runtimes]. Runtimes skip count: [total_runtimes_skipped]."
+
 	// Bad initializations log.
 	var/initlog = SSatoms.InitLog()
 	if(initlog)
@@ -240,6 +246,8 @@ var/world_topic_spam_protect_time = world.timeofday
 			dellog += "\tTime Spent Hard Deleting: [I.hard_delete_time]ms"
 		if (I.slept_destroy)
 			dellog += "\tSleeps: [I.slept_destroy]"
+		if (I.no_respect_force)
+			dellog += "\tIgnored force: [I.no_respect_force] times"
 		if (I.no_hint)
 			dellog += "\tNo hint: [I.no_hint] times"
 	world.log << dellog.Join("\n")

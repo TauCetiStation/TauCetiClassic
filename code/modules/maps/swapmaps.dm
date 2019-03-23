@@ -416,11 +416,11 @@
 	return locate(x2,y2,z)
 
 /*
-	Build procs: Take 2 turfs as corners, plus an item type.
-	An item may be like:
+Build procs: Take 2 turfs as corners, plus an item type.
+An item may be like:
 
-	/turf/wall
-	/obj/fence{icon_state="iron"}
+/turf/wall
+/obj/fence{icon_state="iron"}
  */
 /swapmap/proc/BuildFilledRectangle(turf/T1,turf/T2,item)
 	if(!Contains(T1) || !Contains(T2)) return

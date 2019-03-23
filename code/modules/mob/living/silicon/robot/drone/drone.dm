@@ -151,7 +151,7 @@
 		to_chat(user, "\red The maintenance drone chassis not compatible with \the [W].")
 		return
 
-	else if (istype(W, /obj/item/weapon/crowbar))
+	else if (iscrowbar(W))
 		to_chat(user, "The machine is hermetically sealed. You can't open the case.")
 		return
 
@@ -340,7 +340,7 @@
 		..()
 	else if(istype(AM,/obj/item))
 		var/obj/item/O = AM
-		if(O.w_class > 2)
+		if(O.w_class > ITEM_SIZE_SMALL)
 			to_chat(src, "<span class='warning'>You are too small to pull that.</span>")
 			return
 		else

@@ -110,7 +110,7 @@
 		updateUsrDialog()
 		return
 	if(panel_open)
-		if(istype(W, /obj/item/weapon/crowbar))
+		if(iscrowbar(W))
 			empty_content()
 			default_deconstruction_crowbar(W)
 		return 1
@@ -352,7 +352,7 @@
 		updateUsrDialog()
 		return
 	if(panel_open)
-		if(istype(I, /obj/item/weapon/crowbar))
+		if(iscrowbar(I))
 			default_deconstruction_crowbar(I)
 		return 1
 	..()
@@ -399,7 +399,7 @@
 	desc = "A token to redeem a piece of equipment. Use it on a mining equipment locker."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_voucher"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 
 /**********************Mining Point Card**********************/
@@ -435,7 +435,7 @@
 	icon_state = "Jaunter"
 	item_state = "electronic"
 	throwforce = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 3
 	throw_range = 5
 	origin_tech = "bluespace=2"
@@ -510,7 +510,7 @@
 	icon_state = "resonator"
 	item_state = "resonator"
 	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vaccuum."
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	force = 10
 	throwforce = 10
 	var/cooldown = 0
@@ -643,7 +643,7 @@
 						  /obj/item/weapon/ore/clown)
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/weldingtool))
+	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/W = I
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(W.welding && !stat)
@@ -748,7 +748,7 @@
 	icon_state = "lazarus_hypo"
 	item_state = "hypo"
 	throwforce = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 3
 	throw_range = 5
 	var/loaded = 1
@@ -792,7 +792,7 @@
 	icon_state = "patcher"
 	item_state = "patcher"
 	throwforce = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 3
 	throw_range = 5
 	var/loaded = 1
@@ -802,22 +802,34 @@
 		return
 	if(istype(O, /obj/item/clothing/suit/space))
 		var/obj/item/clothing/suit/space/C = O
-		if(C.breaches.len)
-			C.breaches.Cut()
-			C.damage = 0
-			C.brute_damage = 0
-			C.burn_damage = 0
-			C.name = C.base_name
-			loaded = 0
-			user.visible_message("<span class='notice'>[user] fix [O] with [src].</span>")
-			playsound(src,'sound/effects/refill.ogg',50,1)
-			icon_state = "patcher_empty"
-			return
-		else
-			to_chat(user, "<span class='info'>[O] absolutely intact.</span>")
-			return
+		fix_spacesuit(C, user)
 	else
 		..()
+
+/obj/item/weapon/patcher/attack(mob/living/M, mob/living/user)
+	if(!loaded)
+		return
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(istype(H.wear_suit, /obj/item/clothing/suit/space))
+			var/obj/item/clothing/suit/space/C = H.wear_suit
+			fix_spacesuit(C, user)
+
+/obj/item/weapon/patcher/proc/fix_spacesuit(obj/item/clothing/suit/space/C, mob/living/user)
+	if(C.breaches.len)
+		C.breaches.Cut()
+		C.damage = 0
+		C.brute_damage = 0
+		C.burn_damage = 0
+		C.name = C.base_name
+		loaded = 0
+		user.visible_message("<span class='notice'>[user] fixes [C] with [src].</span>")
+		playsound(src,'sound/effects/refill.ogg',50,1)
+		icon_state = "patcher_empty"
+		return TRUE
+	else
+		to_chat(user, "<span class='info'>[C] is absolutely intact.</span>")
+		return FALSE
 
 /obj/item/weapon/patcher/examine(mob/user)
 	..()

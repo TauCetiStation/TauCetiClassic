@@ -153,6 +153,8 @@ var/list/airlock_overlays = list()
 			var/cont = TRUE
 			while (cont)
 				sleep(10)
+				if(QDELETED(src))
+					return
 				cont = FALSE
 				if(secondsMainPowerLost > 0)
 					if(!isWireCut(AIRLOCK_WIRE_MAIN_POWER1) && !isWireCut(AIRLOCK_WIRE_MAIN_POWER2))
@@ -877,7 +879,7 @@ var/list/airlock_overlays = list()
 
 	add_fingerprint(user)
 
-	if(istype(C, /obj/item/weapon/weldingtool) && !(operating > 0) && density)
+	if(iswelder(C) && !(operating > 0) && density)
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.remove_fuel(0,user))
 			welded = !welded
@@ -885,21 +887,21 @@ var/list/airlock_overlays = list()
 			return
 		else
 			return
-	else if(istype(C, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(C))
 		p_open = !p_open
 		update_icon()
-	else if(istype(C, /obj/item/weapon/wirecutters))
+	else if(iswirecutter(C))
 		return attack_hand(user)
-	else if(istype(C, /obj/item/device/multitool))
+	else if(ismultitool(C))
 		return attack_hand(user)
 	else if(istype(C, /obj/item/device/assembly/signaler))
 		return attack_hand(user)
 	else if(istype(C, /obj/item/weapon/pai_cable))	// -- TLE
 		var/obj/item/weapon/pai_cable/cable = C
 		cable.plugin(src, user)
-	else if(istype(C, /obj/item/weapon/crowbar) || istype(C, /obj/item/weapon/twohanded/fireaxe) )
+	else if(iscrowbar(C) || istype(C, /obj/item/weapon/twohanded/fireaxe) )
 		var/beingcrowbarred = null
-		if(istype(C, /obj/item/weapon/crowbar) )
+		if(iscrowbar(C) )
 			beingcrowbarred = 1 //derp, Agouri
 		else
 			beingcrowbarred = 0
@@ -1132,7 +1134,7 @@ var/list/airlock_overlays = list()
 
 
 /obj/structure/door_scrap/attackby(obj/O, mob/user)
-	if(istype(O,/obj/item/weapon/wrench))
+	if(iswrench(O))
 		if(ticker >= 300)
 			playsound(user.loc, 'sound/items/Ratchet.ogg', 50)
 			user.visible_message("[user] has disassemble these scrap...")

@@ -66,7 +66,8 @@
 	if(src.opened)
 		if(istype(W, /obj/item/weapon/grab))
 			if(src.large)
-				src.MouseDrop_T(W:affecting, user)	//act like they were dragged onto the closet
+				var/obj/item/weapon/grab/G = W
+				MouseDrop_T(G.affecting, user)	//act like they were dragged onto the closet
 			else
 				to_chat(user, "<span class='notice'>The locker is too small to stuff [W:affecting] into!</span>")
 		if(isrobot(user))
@@ -92,7 +93,7 @@
 		else
 			for(var/mob/O in viewers(user, 3))
 				O.show_message("<span class='warning'>The locker has been broken by [user] with an electromagnetic card!</span>", 1, "You hear a faint electrical spark.", 2)
-	else if(istype(W,/obj/item/weapon/packageWrap) || istype(W,/obj/item/weapon/weldingtool))
+	else if(istype(W,/obj/item/weapon/packageWrap) || iswelder(W))
 		return ..(W,user)
 	else
 		togglelock(user)

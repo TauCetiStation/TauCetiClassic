@@ -11,7 +11,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	item_state = "white_candle"
 
 	var/candle_color
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 	var/wax = 0
 	var/lit = FALSE
@@ -63,7 +63,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 
 /obj/item/candle/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.isOn()) // Badasses dont get blinded by lighting their candle with a welding tool
 			light("<span class='warning'>[user] casually lights the [name] with [W].</span>")

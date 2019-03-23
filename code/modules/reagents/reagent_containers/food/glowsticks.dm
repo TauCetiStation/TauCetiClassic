@@ -2,7 +2,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/glowstick
 	name = "glowstick"
 	desc = ""
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/glowsticks.dmi'
 	icon_state = null
 	item_state = null
@@ -67,7 +67,6 @@
 		if(M == usr)
 			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
 		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
-		usr.drop_from_inventory(src)	//so icons update :[
 		qdel(src)
 	return
 
@@ -139,20 +138,19 @@
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			if(reagents.total_volume)
 				var/datum/reagent/my_reagent = locate(/datum/reagent/luminophore) in reagents.reagent_list
-				var/datum/reagents/list_regs = new /datum/reagents
+				var/list/list_regs = list()
 				var/datum/reagent/luminold = new /datum/reagent/luminophore_temp
 				luminold.volume = my_reagent.volume
 				luminold.color = my_reagent.color
-				list_regs.reagent_list += luminold
+				list_regs += luminold
 
 				reagents.trans_to(M, reagents.total_volume)
 
 				var/datum/reagent/luminnew = locate(/datum/reagent/luminophore) in M.reagents.reagent_list
 				if(luminnew.color == "#ffffff")
 					luminnew.color = luminold.color
-				list_regs.reagent_list += luminnew
-				var/mixedcolor = mix_color_from_reagents(list_regs.reagent_list)
-				qdel(list_regs)
+				list_regs += luminnew
+				var/mixedcolor = mix_color_from_reagents(list_regs)
 				qdel(luminold)
 				luminnew.color = mixedcolor
 				On_Consume(M)
@@ -167,10 +165,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/Destroy()
-	if(contents)
-		for(var/atom/movable/something in contents)
-			something.loc = get_turf(src)
-	STOP_PROCESSING(SSobj, src)
+	liquid_fuel = null // as long as this is in reagent_list, no need to qdel, will be handled by parent's reagent cleaning process.
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/attack_animal(mob/M)
@@ -193,28 +188,28 @@
 ////////////////G L O W S T I C K - C O L O R S////////////////
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/green
 	colourName = "green"
-	light_color = "#88EBC3"
-	filling_color = "#88EBC3"
+	light_color = "#88ebc3"
+	filling_color = "#88ebc3"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/red
 	colourName = "red"
-	light_color = "#EA0052"
-	filling_color = "#EA0052"
+	light_color = "#ea0052"
+	filling_color = "#ea0052"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/blue
 	colourName = "blue"
-	light_color = "#24C1FF"
-	filling_color = "#24C1FF"
+	light_color = "#24c1ff"
+	filling_color = "#24c1ff"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow
 	colourName = "yellow"
-	light_color = "#FFFA18"
-	filling_color = "#FFFA18"
+	light_color = "#fffa18"
+	filling_color = "#fffa18"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/orange
 	colourName = "orange"
-	light_color = "#FF9318"
-	filling_color = "#FF9318"
+	light_color = "#ff9318"
+	filling_color = "#ff9318"
 
 
 ///////////////////// POWER GLOWSTICK //////////////////////
@@ -239,25 +234,25 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/green
 	colourName = "green"
-	light_color = "#88EBC3"
-	filling_color = "#88EBC3"
+	light_color = "#88ebc3"
+	filling_color = "#88ebc3"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/red
 	colourName = "red"
-	light_color = "#EA0052"
-	filling_color = "#EA0052"
+	light_color = "#ea0052"
+	filling_color = "#ea0052"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/blue
 	colourName = "blue"
-	light_color = "#24C1FF"
-	filling_color = "#24C1FF"
+	light_color = "#24c1ff"
+	filling_color = "#24c1ff"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/yellow
 	colourName = "yellow"
-	light_color = "#FFFA18"
-	filling_color = "#FFFA18"
+	light_color = "#fffa18"
+	filling_color = "#fffa18"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/orange
 	colourName = "orange"
-	light_color = "#FF9318"
-	filling_color = "#FF9318"
+	light_color = "#ff9318"
+	filling_color = "#ff9318"

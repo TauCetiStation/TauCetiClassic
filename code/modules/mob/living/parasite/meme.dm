@@ -372,7 +372,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 		host.druggy = max(host.druggy, 50)
 		host.slurring = max(host.slurring, 10)
 
-		to_chat(usr, "<b>You stimulate [host.name]'s brain, injecting waves of endorphines and dopamine into the tissue. They should now forget all their worries, particularly relating to you, for around a minute.")
+		to_chat(usr, "<b>You stimulate [host.name]'s brain, injecting waves of endorphines and dopamine into the tissue. They should now forget all their worries, particularly relating to you, for around a minute.</b>")
 
 		to_chat(host, "\red You are feeling wonderful! Your head is numb and drowsy, and you can't help forgetting all the worries in the world.")
 
@@ -434,7 +434,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 	src.exit_host()
 	src.enter_host(target)
 
-	to_chat(usr, "<b>You successfully jumped to [target].")
+	to_chat(usr, "<b>You successfully jumped to [target].</b>")
 	log_admin("[src.key] has jumped to [target]")
 	message_admins("[src.key] has jumped to [target] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
@@ -474,7 +474,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 	src.exit_host()
 	src.enter_host(target)
 
-	to_chat(usr, "<b>You successfully jumped to [target].")
+	to_chat(usr, "<b>You successfully jumped to [target].</b>")
 	log_admin("[src.key] has jumped to [target]")
 	message_admins("[src.key] has jumped to [target] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
@@ -501,7 +501,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 	src.exit_host()
 	src.enter_host(target)
 
-	to_chat(usr, "<b>You successfully jumped to [target].")
+	to_chat(usr, "<b>You successfully jumped to [target].</b>")
 
 	log_admin("[src.key] has jumped to [target]")
 	message_admins("[src.key] has jumped to [target] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
@@ -523,7 +523,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 
 	src.indoctrinated.Add(host)
 
-	to_chat(usr, "<b>You successfully indoctrinated [host].")
+	to_chat(usr, "<b>You successfully indoctrinated [host].</b>")
 	to_chat(host, "\red Your head feels a bit roomier..")
 
 	log_admin("[src.key] has attuned [host]")
@@ -543,7 +543,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 	if(!use_points(500))
 		return
 
-	to_chat(usr, "<b>You inject drugs into [host].")
+	to_chat(usr, "<b>You inject drugs into [host].</b>")
 	to_chat(host, "\red You feel your body strengthen and your pain subside..")
 	host.analgesic = 60
 	while(host.analgesic > 0)

@@ -53,11 +53,12 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		<a href='?src=\ref[src];traitor=\ref[M]'>TP</a> -
 		<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a> -
 		<a href='?src=\ref[src];subtlemessage=\ref[M]'>SM</a> -
-		<a href='?src=\ref[src];adminplayerobservefollow=\ref[M]'>FLW</a>\] </b><br>
+		<a href='?src=\ref[src];adminplayerobservefollow=\ref[M]'>FLW</a>\] <br>
 		<b>Mob type</b> = [M.type]<br><br>
 		<b>GeoIP:</b> <A href='?src=\ref[src];geoip=\ref[M]'>Get</A> |
 		<b>List of CIDs:</b> <A href='?src=\ref[src];cid_list=\ref[M]'>Get</A> (<A href='?src=\ref[src];cid_ignore=\ref[M]'>Ignore Warning</A>)<br>
-		<b>Related accounts by IP and cid</b>: <A href='?src=\ref[src];related_accounts=\ref[M]'>Get</A><br><br>
+		<b>Related accounts by IP and cid</b>: <A href='?src=\ref[src];related_accounts=\ref[M]'>Get</A><br>
+		<b>BYOND profile</b>: <A target='_blank' href='http://byond.com/members/[M.ckey]'>[M.ckey]</A><br><br>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
 		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
 		<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> |
@@ -320,7 +321,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		if(0)
 			dat += {"Welcome to the admin newscaster.<BR> Here you can add, edit and censor every newspiece on the network.
 				<BR>Feed channels and stories entered through here will be uneditable and handled as official news by the rest of the units.
-				<BR>Note that this panel allows full freedom over the news network, there are no constrictions except the few basic ones. Don't break things!</FONT>
+				<BR>Note that this panel allows full freedom over the news network, there are no constrictions except the few basic ones. Don't break things!
 			"}
 			if(news_network.wanted_issue)
 				dat+= "<HR><A href='?src=\ref[src];ac_view_wanted=1'>Read Wanted Issue</A>"
@@ -405,7 +406,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			if(src.admincaster_feed_channel.censored)
 				dat+={"
 					<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>
-					No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>
+					No further feed story additions are allowed while the D-Notice is in effect.<BR><BR>
 				"}
 			else
 				if( isemptylist(src.admincaster_feed_channel.messages) )
@@ -472,7 +473,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			if(src.admincaster_feed_channel.censored)
 				dat+={"
 					<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>
-					No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>
+					No further feed story additions are allowed while the D-Notice is in effect.<BR><BR>
 				"}
 			else
 				if( isemptylist(src.admincaster_feed_channel.messages) )
@@ -720,7 +721,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	var/message = sanitize(input("Global message to send:", "Admin Announce", null, null)  as message, 500, extra = 0)
 
 	if(message)
-		to_chat(world, "<b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n <span class='tabulated italic emojify linkify'>[message]</span>")
+		to_chat(world, "<span class='admin_announce'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n <span class='italic emojify linkify'>[message]</span></span>")
 		log_admin("Announce: [key_name(usr)] : [message]")
 		feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -786,17 +787,18 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set category = "Server"
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
-	if(ticker.current_state == GAME_STATE_PREGAME)
-		ticker.can_fire = 1
-		ticker.timeLeft = 0
+
+	if(ticker.current_state < GAME_STATE_PREGAME)
+		to_chat(usr, "<span class='warning'>Error: Start Now: Game is in startup, please wait until it has finished.</span>")
+		return 0
+
+	if(ticker.start_now())
 		log_admin("[usr.key] has started the game.")
 		message_admins("<font color='blue'>[usr.key] has started the game.</font>")
 		feedback_add_details("admin_verb","SN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return 1
-	else if (ticker.current_state == GAME_STATE_STARTUP)
-		to_chat(usr, "<font color='red'>Error: Start Now: Game is in startup, please wait until it has finished.</font>")
 	else
-		to_chat(usr, "<font color='red'>Error: Start Now: Game has already started.</font>")
+		to_chat(usr, "<span class='warning'>Error: Start Now: Game has already started.</span>")
 
 	return 0
 

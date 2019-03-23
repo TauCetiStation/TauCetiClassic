@@ -79,15 +79,19 @@
 		return 0
 	return ..()
 
+/obj/structure/stool/bed/roller/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
+	if(has_gravity(src))
+		playsound(src, 'sound/effects/roll.ogg', 100, 1)
+	
 /obj/item/roller
 	name = "roller bed"
 	desc = "A collapsed roller bed that can be carried around."
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "folded"
-	w_class = 4 // Can't be put in backpacks. Oh well.
+	w_class = ITEM_SIZE_LARGE // Can't be put in backpacks. Oh well.
 	var/type_bed = /obj/structure/stool/bed/roller
 	var/type_holder = /obj/item/roller_holder
-
 
 /obj/item/roller/attack_self(mob/user)
 	var/obj/structure/stool/bed/roller/R = new type_bed(user.loc)

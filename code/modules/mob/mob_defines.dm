@@ -98,7 +98,6 @@
 	var/name_archive //For admin things like possession
 
 	var/timeofdeath = 0.0//Living
-	var/cpr_time = 1.0//Carbon
 
 
 	var/bodytemperature = BODYTEMP_NORMAL	//98.7 F

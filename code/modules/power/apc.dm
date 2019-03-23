@@ -78,7 +78,6 @@
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
 	var/debug= 0
 	var/autoflag= 0		// 0 = off, 1= eqp and lights off, 2 = eqp off, 3 = all on.
-//	luminosity = 1
 	var/has_electronics = 0 // 0 - none, 1 - plugged in, 2 - secured by screwdriver
 	var/overload = 1 //used for the Blackout malf module
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
@@ -117,7 +116,7 @@
 	if (building == 0)
 		init()
 	else
-		area = loc.loc:master
+		area = get_area(src)
 		area.apc = src
 		opened = 1
 		operating = 0
@@ -381,7 +380,7 @@
 	if (issilicon(user) && get_dist(src,user)>1)
 		return src.attack_hand(user)
 	src.add_fingerprint(user)
-	if (istype(W, /obj/item/weapon/crowbar) && opened)
+	if (iscrowbar(W) && opened)
 		if(has_electronics == 1)
 			if (terminal)
 				to_chat(user, "\red Disconnect wires first.")
@@ -405,7 +404,7 @@
 		else if (opened!=2) //cover isn't removed
 			opened = 0
 			update_icon()
-	else if (istype(W, /obj/item/weapon/crowbar) && !((stat & BROKEN) || malfhack) )
+	else if (iscrowbar(W) && !((stat & BROKEN) || malfhack) )
 		if(coverlocked && !(stat & MAINT))
 			to_chat(user, "\red The cover is locked and cannot be opened.")
 			return
@@ -428,7 +427,7 @@
 				"You insert the power cell.")
 			chargecount = 0
 			update_icon()
-	else if	(istype(W, /obj/item/weapon/screwdriver))	// haxing
+	else if	(isscrewdriver(W))	// haxing
 		if(opened)
 			if (cell)
 				to_chat(user, "\red Close the APC first.")//Less hints more mystery!
@@ -489,7 +488,7 @@
 					update_icon()
 				else
 					to_chat(user, "You fail to [ locked ? "unlock" : "lock"] the APC interface.")
-	else if (istype(W, /obj/item/stack/cable_coil) && !terminal && opened && has_electronics != 2)
+	else if (iscoil(W) && !terminal && opened && has_electronics != 2)
 		if (src.loc:intact)
 			to_chat(user, "\red You must remove the floor plating in front of the APC first.")
 			return
@@ -514,7 +513,7 @@
 				"You add cables to the APC frame.")
 			make_terminal()
 			terminal.connect_to_network()
-	else if (istype(W, /obj/item/weapon/wirecutters) && terminal && opened && has_electronics!=2)
+	else if (iswirecutter(W) && terminal && opened && has_electronics!=2)
 		terminal.dismantle(user)
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
 		if(user.is_busy()) return
@@ -527,7 +526,7 @@
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && ((stat & BROKEN) || malfhack))
 		to_chat(user, "\red You cannot put the board inside, the frame is damaged.")
 		return
-	else if (istype(W, /obj/item/weapon/weldingtool) && opened && has_electronics==0 && !terminal)
+	else if (iswelder(W) && opened && has_electronics==0 && !terminal)
 		if(user.is_busy()) return
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.get_fuel() < 3)
@@ -581,7 +580,7 @@
 		if (((stat & BROKEN) || malfhack) \
 				&& !opened \
 				&& W.force >= 5 \
-				&& W.w_class >= 3.0 \
+				&& W.w_class >= ITEM_SIZE_NORMAL \
 				&& prob(20) )
 			opened = 2
 			user.visible_message("\red The APC cover was knocked down with the [W.name] by [user.name]!", \
@@ -1216,11 +1215,10 @@
 /obj/machinery/power/apc/proc/break_lights(skip_sound_and_sparks)
 	set waitfor = FALSE
 
-	for(var/area/A in area.related)
-		for(var/obj/machinery/light/L in A)
-			L.on = 1
-			L.broken(skip_sound_and_sparks)
-			stoplag()
+	for(var/obj/machinery/light/L in area)
+		L.on = 1
+		L.broken(skip_sound_and_sparks)
+		stoplag()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
 	if(!prob(prb))

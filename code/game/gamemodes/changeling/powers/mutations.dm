@@ -23,7 +23,7 @@
 		return
 	user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>",
 	 "<span class='notice'>We assimilate the [weapon_name_simple] from our body.</span>",
-	 "<span class='warning>You hear organic matter ripping and tearing!</span>")
+	 "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 	return ..(user, target)
 
 /obj/effect/proc_holder/changeling/weapon/sting_action(mob/user)
@@ -113,7 +113,7 @@
 	item_state = "arm_blade"
 	flags = ABSTRACT | DROPDEL
 	canremove = 0
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 	force = 25
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
@@ -125,7 +125,7 @@
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 
 /obj/item/weapon/melee/arm_blade/dropped(mob/user)
-	visible_message("<span class='warning'>With a sickening crunch, [user] reforms his blade into an arm!</span>", "<span class='notice'>We assimilate the blade back into our body.</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
+	visible_message("<span class='warning'>With a sickening crunch, [user] reforms his blade into an arm!</span>", "<span class='notice'>We assimilate the blade back into our body.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 	qdel(src)
 
 /obj/item/weapon/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
@@ -198,7 +198,7 @@
 			visible_message(
 				"<span class='warning'>With a sickening crunch, [H] reforms his shield into an arm!</span>",
 				"<span class='notice'>We assimilate our shield into our body</span>",
-				"<span class='warning>You hear organic matter ripping and tearing!</span>"
+				"<span class='warning'>You hear organic matter ripping and tearing!</span>"
 				)
 		qdel(src)
 		return 0

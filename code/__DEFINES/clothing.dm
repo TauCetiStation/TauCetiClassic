@@ -1,14 +1,14 @@
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
-#define HIDEGLOVES		1	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDESUITSTORAGE	2	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDEJUMPSUIT	4	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDESHOES		8	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDETAIL 		16	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-
-#define HIDEMASK	1	//APPLIES ONLY TO HELMETS/MASKS!!
-#define HIDEEARS	2	//APPLIES ONLY TO HELMETS/MASKS!! (ears means headsets and such)
-#define HIDEEYES	4	//APPLIES ONLY TO HELMETS/MASKS!! (eyes means glasses)
-#define HIDEFACE	8	//APPLIES ONLY TO HELMETS/MASKS!! Dictates whether we appear as unknown.
+//Make sure to update check_obscured_slots() if you add more.
+#define HIDEGLOVES        (1<<0)
+#define HIDESUITSTORAGE   (1<<1)
+#define HIDEJUMPSUIT      (1<<2)	// These first four are only used in exterior suits.
+#define HIDESHOES         (1<<3)
+#define HIDEMASK          (1<<4)	// these four are only used in masks and headgear,
+#define HIDEEARS          (1<<5)	// (ears means headsets and such),
+#define HIDEEYES          (1<<6)	// whether eyes and glasses are hidden,
+#define HIDEFACE          (1<<7)	// whether we appear as unknown.
+#define HIDETAIL          (1<<8)	// Exterior suits - to hide tail when wearing space suit or something similar.
 
 //ITEM INVENTORY SLOT BITMASKS
 #define SLOT_FLAGS_OCLOTHING    (1<<0)
@@ -36,19 +36,20 @@
 #define SLOT_BELT          6
 #define SLOT_WEAR_ID       7
 #define SLOT_L_EAR         8
-#define SLOT_GLASSES       9
-#define SLOT_GLOVES        10
-#define SLOT_HEAD          11
-#define SLOT_SHOES         12
-#define SLOT_WEAR_SUIT     13
-#define SLOT_W_UNIFORM     14
-#define SLOT_L_STORE       15
-#define SLOT_R_STORE       16
-#define SLOT_S_STORE       17
-#define SLOT_IN_BACKPACK   18
-#define SLOT_LEGCUFFED     19
-#define SLOT_R_EAR         20
+#define SLOT_R_EAR         9
+#define SLOT_GLASSES       10
+#define SLOT_GLOVES        11
+#define SLOT_HEAD          12
+#define SLOT_SHOES         13
+#define SLOT_WEAR_SUIT     14
+#define SLOT_W_UNIFORM     15
+#define SLOT_L_STORE       16
+#define SLOT_R_STORE       17
+#define SLOT_S_STORE       18
+#define SLOT_IN_BACKPACK   19
+#define SLOT_LEGCUFFED     20
 #define SLOT_TIE           21
+#define SLOT_EARS          22 // Used in obscured checks
 
 //Sol translation for dog slots.
 #define SLOT_MOUTH SLOT_WEAR_MASK  // 2
@@ -116,3 +117,16 @@
 #define REACTION_HIT_BY_BULLET 5
 #define REACTION_ATACKED 6
 #define REACTION_THROWITEM 7
+
+// Hardsuit mount places. Used to limit subtypes of the same module
+#define MODULE_MOUNT_AI 				1
+#define MODULE_MOUNT_GRENADELAUNCHER 	2
+#define MODULE_MOUNT_SHOULDER_RIGHT 	4
+#define MODULE_MOUNT_SHOULDER_LEFT 		8
+#define MODULE_MOUNT_INJECTOR 			16
+#define MODULE_MOUNT_CHEST 				32
+
+// Rig module damage levels
+#define MODULE_NO_DAMAGE 0
+#define MODULE_DAMAGED 1
+#define MODULE_DESTROYED 2

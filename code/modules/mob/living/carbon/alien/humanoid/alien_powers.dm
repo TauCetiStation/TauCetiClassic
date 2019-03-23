@@ -273,7 +273,7 @@ Doesn't work on other aliens/AI.*/
 	set desc = "Secrete tough malleable resin."
 	set category = "Alien"
 
-	if((locate(/obj/effect/alien/air_plant) in get_turf(src)) || (locate(/obj/effect/alien/egg) in get_turf(src)) || (locate(/obj/structure/mineral_door/resin) in get_turf(src)) || (locate( /obj/effect/alien/resin/wall) in get_turf(src)) || (locate(/obj/effect/alien/resin/membrane) in get_turf(src)) || (locate(/obj/structure/stool/bed/nest) in get_turf(src)))
+	if((locate(/obj/structure/alien/air_plant) in get_turf(src)) || (locate(/obj/structure/alien/egg) in get_turf(src)) || (locate(/obj/structure/mineral_door/resin) in get_turf(src)) || (locate( /obj/structure/alien/resin/wall) in get_turf(src)) || (locate(/obj/structure/alien/resin/membrane) in get_turf(src)) || (locate(/obj/structure/stool/bed/nest) in get_turf(src)))
 		to_chat (src, "There is already a structure there.")
 		return
 
@@ -288,9 +288,9 @@ Doesn't work on other aliens/AI.*/
 			if("resin door")
 				new /obj/structure/mineral_door/resin(loc)
 			if("resin wall")
-				new /obj/effect/alien/resin/wall(loc)
+				new /obj/structure/alien/resin/wall(loc)
 			if("resin membrane")
-				new /obj/effect/alien/resin/membrane(loc)
+				new /obj/structure/alien/resin/membrane(loc)
 			if("resin nest")
 				new /obj/structure/stool/bed/nest(loc)
 	return
@@ -320,5 +320,5 @@ Doesn't work on other aliens/AI.*/
 		adjustToxLoss(-250)
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] has planted some alien weeds!</B>"), 1)
-		new /obj/effect/alien/air_plant(loc)
+		new /obj/structure/alien/air_plant(loc)
 	return

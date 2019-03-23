@@ -7,7 +7,7 @@
 	sharp = 1
 	edge = 0
 	throwforce = 5
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "metal-rod"
 	item_state = "bolt"

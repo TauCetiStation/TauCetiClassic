@@ -4,7 +4,7 @@
 	singular_name = "metal rod"
 	icon_state = "rods"
 	flags = CONDUCT
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	force = 9.0
 	throwforce = 15.0
 	throw_speed = 5
@@ -22,7 +22,7 @@
 
 /obj/item/stack/rods/attackby(obj/item/W, mob/user)
 	..()
-	if (istype(W, /obj/item/weapon/weldingtool))
+	if (iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 
 		if(get_amount() < 2)

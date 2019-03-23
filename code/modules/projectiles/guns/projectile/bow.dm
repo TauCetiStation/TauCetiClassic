@@ -6,7 +6,7 @@
 	icon_state = "bolt"
 	item_state = "bolt"
 	throwforce = 8
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	sharp = 1
 	edge = 0
 
@@ -42,11 +42,11 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow-solid"
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 
 	var/tension = 0                       // Current draw on the bow.
 	var/max_tension = 5                   // Highest possible tension.
@@ -96,7 +96,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] already has a cell installed.</span>")
 
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(W))
 		if(cell)
 			var/obj/item/C = cell
 			C.loc = get_turf(user)
@@ -247,18 +247,18 @@
 			fail_msg = "<span class='notice'>You need at least three rods to complete this task.</span>"
 			success_msg = "<span class='notice'>You assemble a backbone of rods around the wooden stock.</span>"
 
-		else if(istype(W, /obj/item/stack/cable_coil) && (buildstate in list(2, 4)))
+		else if(iscoil(W) && (buildstate in list(2, 4)))
 			amount_to_use = 5
-			fail_msg = "<span class='notice'>You need at least five segments of cable coil to complete this task."
+			fail_msg = "<span class='notice'>You need at least five segments of cable coil to complete this task.</span>"
 			if(buildstate == 2)
-				success_msg = "<span class='notice'>You wire a crude cell mount into the top of the crossbow."
+				success_msg = "<span class='notice'>You wire a crude cell mount into the top of the crossbow.</span>"
 			else
-				success_msg = "<span class='notice'>You string a steel cable across the crossbow's lath."
+				success_msg = "<span class='notice'>You string a steel cable across the crossbow's lath.</span>"
 
 		else if(istype(W, /obj/item/stack/sheet/mineral/plastic) && buildstate == 3)
 			amount_to_use = 3
-			fail_msg = "<span class='notice'>You need at least three plastic sheets to complete this task."
-			success_msg = "<span class='notice'>You assemble and install a heavy plastic lath onto the crossbow."
+			fail_msg = "<span class='notice'>You need at least three plastic sheets to complete this task.</span>"
+			success_msg = "<span class='notice'>You assemble and install a heavy plastic lath onto the crossbow.</span>"
 
 		if(amount_to_use) // if this is null, then tool we are trying to use is wrong.
 			if(S.use(amount_to_use))
@@ -268,20 +268,20 @@
 			else
 				to_chat(user, fail_msg)
 
-	else if(istype(W, /obj/item/weapon/weldingtool))
+	else if(iswelder(W))
 		if(buildstate == 1)
 			var/obj/item/weapon/weldingtool/T = W
 			if(T.remove_fuel(0, user))
 				if(!T.isOn())
 					return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				to_chat(user, "<span class='notice'>You weld the rods into place.")
+				to_chat(user, "<span class='notice'>You weld the rods into place.</span>")
 			buildstate++
 			update_icon()
 
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(W))
 		if(buildstate == 5)
-			to_chat(user, "<span class='notice'>You secure the crossbow's various parts.")
+			to_chat(user, "<span class='notice'>You secure the crossbow's various parts.</span>")
 			new /obj/item/weapon/crossbow(get_turf(src))
 			qdel(src)
 
