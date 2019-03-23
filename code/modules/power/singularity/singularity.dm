@@ -34,7 +34,7 @@
 		QDEL_IN(src, temp)
 	..()
 	START_PROCESSING(SSobj, src)
-	poi_list |= src
+	poi_list += src
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/singularity/atom_init_late()
@@ -45,20 +45,20 @@
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	poi_list.Remove(src)
+	poi_list -= src
 	return ..()
 
 /obj/singularity/attack_hand(mob/user)
 	consume(user)
 	return 1
 
-/obj/singularity/Move(atom/newloc, direct)
-	if(current_size >= STAGE_FIVE || check_turfs_in(direct))
+/obj/singularity/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	if(current_size >= STAGE_FIVE || check_turfs_in(Dir))
 		last_failed_movement = 0//Reset this because we moved
 		return ..()
 	else
-		last_failed_movement = direct
-		return 0
+		last_failed_movement = Dir
+		return FALSE
 
 /obj/singularity/blob_act(severity)
 	return

@@ -38,7 +38,7 @@
 	var/emergency_alert = "CRYSTAL DELAMINATION IMMINENT."
 	var/explosion_point = 1000
 
-	light_color = "#8A8A00"
+	light_color = "#8a8a00"
 
 	var/emergency_issued = 0
 
@@ -59,19 +59,19 @@
 
 	var/obj/item/device/radio/radio
 
-	shard //Small subtype, less efficient and more sensitive, but less boom.
-		name = "Supermatter Shard"
-		desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure. \red You get headaches just from looking at it."
-		icon_state = "darkmatter_shard"
-		base_icon_state = "darkmatter_shard"
+/obj/machinery/power/supermatter/shard //Small subtype, less efficient and more sensitive, but less boom.
+	name = "Supermatter Shard"
+	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure. \red You get headaches just from looking at it."
+	icon_state = "darkmatter_shard"
+	base_icon_state = "darkmatter_shard"
 
-		warning_point = 50
-		emergency_point = 500
-		explosion_point = 900
+	warning_point = 50
+	emergency_point = 500
+	explosion_point = 900
 
-		gasefficency = 0.125
+	gasefficency = 0.125
 
-		explosion_power = 3 //3,6,9,12? Or is that too small?
+	explosion_power = 3 //3,6,9,12? Or is that too small?
 
 
 /obj/machinery/power/supermatter/atom_init()
@@ -84,9 +84,9 @@
 	. = ..()
 
 /obj/machinery/power/supermatter/proc/explode()
-		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
-		qdel(src)
-		return
+	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
+	qdel(src)
+	return
 
 /obj/machinery/power/supermatter/process()
 
@@ -119,7 +119,7 @@
 				lastwarning = world.timeofday
 
 		if(damage > explosion_point)
-			for(var/mob/living/mob in living_mob_list)
+			for(var/mob/living/mob in alive_mob_list)
 				if(istype(mob, /mob/living/carbon/human))
 					//Hilariously enough, running into a closet should make you get hit the hardest.
 					mob:hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )

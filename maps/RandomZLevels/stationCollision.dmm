@@ -2050,8 +2050,7 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/stock_parts/scanning_module{
-	pixel_y = -3;
-	step_y = 0
+	pixel_y = -3
 	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
@@ -3959,9 +3958,7 @@
 	icon_state = "0-2";
 	pixel_y = 1
 	},
-/obj/machinery/gateway/centeraway{
-	calibrated = 0
-	},
+/obj/machinery/gateway/center,
 /turf/simulated/floor,
 /area/awaymission/gateroom)
 "kp" = (

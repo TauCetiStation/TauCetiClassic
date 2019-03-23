@@ -19,14 +19,14 @@
 
 	var/callshuttle = 0
 
-	for(var/obj/machinery/computer/communications/commconsole in world)
+	for(var/obj/machinery/computer/communications/commconsole in communications_list)
 		if(commconsole.z == ZLEVEL_CENTCOMM)
 			continue
 		if(istype(commconsole.loc,/turf))
 			break
 		callshuttle++
 
-	for(var/obj/item/weapon/circuitboard/communications/commboard in world)
+	for(var/obj/item/weapon/circuitboard/communications/commboard in circuitboard_communications_list)
 		if(commboard.z == ZLEVEL_CENTCOMM)
 			continue
 		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
@@ -54,7 +54,7 @@
 		spawn(10)
 			explosion(src.loc, 3, 6, 12, 15)
 
-	for(var/obj/machinery/ai_status_display/O in world) //change status
+	for(var/obj/machinery/ai_status_display/O in ai_status_display_list) //change status
 		spawn( 0 )
 		O.mode = 2
 		if (istype(loc, /obj/item/device/aicard))

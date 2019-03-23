@@ -24,8 +24,11 @@
 	var/foldable = null	// BubbleWrap - if set, can be folded (when empty) into a sheet of cardboard
 	var/use_sound = "rustle"	//sound played when used. null for no sound.
 
-	var/datum/storage_ui/storage_ui = /datum/storage_ui/default
-
+	var/storage_ui_path = /datum/storage_ui/default
+	var/datum/storage_ui/storage_ui = null
+	//initializes the contents of the storage with some items based on an assoc list. The assoc key must be an item path,
+	//the assoc value can either be the quantity, or a list whose first value is the quantity and the rest are args.
+	var/list/startswith
 /obj/item/weapon/storage/Destroy()
 	QDEL_NULL(storage_ui)
 	return ..()
@@ -207,7 +210,7 @@
 					to_chat(usr, "<span class='notice'>You put \the [W] into [src].</span>")
 				else if (M in range(1)) //If someone is standing close enough, they can tell what it is...
 					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
-				else if (W && W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
+				else if (W && W.w_class >= ITEM_SIZE_NORMAL) //Otherwise they can only see large or normal items from a distance...
 					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
 		if(crit_fail && prob(25))
 			remove_from_storage(W, get_turf(src))
@@ -385,8 +388,22 @@
 	if(isnull(max_storage_space) && !isnull(storage_slots))
 		max_storage_space = storage_slots*base_storage_cost(max_w_class)
 
-	storage_ui = new storage_ui(src)
+	storage_ui = new storage_ui_path(src)
 	prepare_ui()
+
+	if(startswith)
+		for(var/item_path in startswith)
+			var/list/data = startswith[item_path]
+			if(islist(data))
+				var/qty = data[1]
+				var/list/argsl = data.Copy()
+				argsl[1] = src
+				for(var/i in 1 to qty)
+					new item_path(arglist(argsl))
+			else
+				for(var/i in 1 to (isnull(data)? 1 : data))
+					new item_path(src)
+		update_icon()
 
 /obj/item/weapon/storage/emp_act(severity)
 	if(!istype(src.loc, /mob/living))
@@ -426,7 +443,7 @@
 
 /obj/item/weapon/storage/hear_talk(mob/M, text, verb, datum/language/speaking)
 	for (var/atom/A in src)
-		if(istype(A,/obj/))
+		if(istype(A,/obj))
 			var/obj/O = A
 			O.hear_talk(M, text, verb, speaking)
 

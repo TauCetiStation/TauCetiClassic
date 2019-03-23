@@ -16,8 +16,13 @@
 
 /obj/machinery/door/poddoor/atom_init()
 	. = ..()
+	poddoor_list += src
 	if(density)
 		layer = base_layer + PODDOOR_CLOSED_MOD
+
+/obj/machinery/door/poddoor/Destroy()
+	poddoor_list -= src
+	return ..()
 
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(!density)
@@ -27,7 +32,7 @@
 
 /obj/machinery/door/poddoor/attackby(obj/item/weapon/C, mob/user)
 	add_fingerprint(user)
-	if(istype(C, /obj/item/weapon/crowbar) || (istype(C, /obj/item/weapon/twohanded/fireaxe) && C:wielded))
+	if(iscrowbar(C) || (istype(C, /obj/item/weapon/twohanded/fireaxe) && C:wielded))
 		if(!hasPower())
 			open(TRUE)
 

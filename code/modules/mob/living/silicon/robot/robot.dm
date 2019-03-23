@@ -354,7 +354,7 @@
 	newname = sanitize_safe(input(src,"You are a robot. Enter a name, or leave blank for the default name.", "Name change","") as text, MAX_NAME_LEN)
 	if (newname)
 		custom_name = newname
-		
+
 		updatename()
 		updateicon()
 
@@ -549,7 +549,7 @@
 
 				return
 
-	if (istype(W, /obj/item/weapon/weldingtool))
+	if (iswelder(W))
 		if (src == user)
 			to_chat(user, "<span class='warning'>You lack the reach to be able to repair yourself.</span>")
 			return
@@ -569,7 +569,7 @@
 			to_chat(user, "Need more welding fuel!")
 			return
 
-	else if(istype(W, /obj/item/stack/cable_coil) && (wiresexposed || istype(src,/mob/living/silicon/robot/drone)))
+	else if(iscoil(W) && (wiresexposed || istype(src,/mob/living/silicon/robot/drone)))
 		if (!getFireLoss())
 			to_chat(user, "Nothing to fix here!")
 			return
@@ -582,7 +582,7 @@
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\red [user] has fixed some of the burnt wires on [src]!"), 1)
 
-	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
+	else if (iscrowbar(W))	// crowbar means open or close the cover
 		if(opened)
 			if(cell)
 				to_chat(user, "You close the cover.")
@@ -659,23 +659,23 @@
 			C.brute_damage = 0
 			C.electronics_damage = 0
 
-	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool))
+	else if (iswirecutter(W) || ismultitool(W))
 		if (!wires.interact(user))
 			to_chat(user, "You can't reach the wiring.")
 
-	else if(istype(W, /obj/item/weapon/screwdriver) && opened && !cell)	// haxing
+	else if(isscrewdriver(W) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
 		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 		updateicon()
 
-	else if(istype(W, /obj/item/weapon/screwdriver) && opened && cell)	// radio
+	else if(isscrewdriver(W) && opened && cell)	// radio
 		if(radio)
 			radio.attackby(W,user)//Push it to the radio to let it handle everything
 		else
 			to_chat(user, "Unable to locate a radio.")
 		updateicon()
 
-	else if(istype(W, /obj/item/device/encryptionkey/) && opened)
+	else if(istype(W, /obj/item/device/encryptionkey) && opened)
 		if(radio)//sanityyyyyy
 			radio.attackby(W,user)//GTFO, you have your own procs
 		else
@@ -758,7 +758,7 @@
 					to_chat(src, "Hack attempt detected.")
 			return
 
-	else if(istype(W, /obj/item/borg/upgrade/))
+	else if(istype(W, /obj/item/borg/upgrade))
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
 			to_chat(usr, "You must access the borgs internals!")
@@ -797,18 +797,7 @@
 					O.show_message(text("\blue [M] caresses [src]'s plating with its scythe-like arm."), 1)
 
 		if ("grab")
-			if (M == src || anchored || M.lying)
-				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
-
-			M.put_in_active_hand(G)
-
-			grabbed_by += G
-			G.synch()
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
+			M.Grab(src)
 
 		if ("hurt")
 			M.do_attack_animation(src)
@@ -1174,7 +1163,7 @@
 	radio.interact(src)//Just use the radio's Topic() instead of bullshit special-snowflake code
 
 
-/mob/living/silicon/robot/Move(a, b, flag)
+/mob/living/silicon/robot/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 
 	. = ..()
 
@@ -1210,7 +1199,6 @@
 								cleaned_human.update_inv_shoes()
 							cleaned_human.clean_blood(1)
 							to_chat(cleaned_human, "\red [src] cleans your face!")
-		return
 
 /mob/living/silicon/robot/proc/self_destruct()
 	gib()

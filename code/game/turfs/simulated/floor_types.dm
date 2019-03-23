@@ -35,20 +35,6 @@
 	name = "sand"
 	icon_state = "asteroid"
 
-/turf/simulated/floor/vault
-	icon_state = "rockvault"
-
-/turf/simulated/floor/vault/atom_init(mapload, type)
-	. = ..()
-	icon_state = "[type]vault"
-
-/turf/simulated/wall/vault
-	icon_state = "rockvault"
-
-/turf/simulated/wall/vault/atom_init(mapload, type)
-	. = ..()
-	icon_state = "[type]vault"
-
 /turf/simulated/floor/engine
 	name = "reinforced floor"
 	icon_state = "engine"
@@ -56,7 +42,7 @@
 	heat_capacity = 325000
 
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
-	if(istype(C, /obj/item/weapon/wrench))
+	if(iswrench(C))
 		if(user.is_busy()) return
 		to_chat(user, "\blue Removing rods...")
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
@@ -195,7 +181,7 @@
 /turf/simulated/floor/beach/water
 	name = "Water"
 	icon_state = "water"
-	light_color = "#00BFFF"
+	light_color = "#00bfff"
 	light_power = 2
 	light_range = 2
 
@@ -227,9 +213,50 @@
 			FF.update_icon() //so siding get updated properly
 
 /turf/simulated/floor/carpet
-	name = "Carpet"
+	name = "carpet"
 	icon_state = "carpet"
 	floor_type = /obj/item/stack/tile/carpet
+	icon = 'icons/turf/carpets.dmi'
+
+/turf/simulated/floor/carpet/black
+	name = "black carpet"
+	icon_state = "blackcarpet"
+	floor_type = /obj/item/stack/tile/carpet/black
+
+/turf/simulated/floor/carpet/purple
+	name = "purple carpet"
+	icon_state = "purplecarpet"
+	floor_type = /obj/item/stack/tile/carpet/purple
+
+/turf/simulated/floor/carpet/orange
+	name = "orange carpet"
+	icon_state = "orangecarpet"
+	floor_type = /obj/item/stack/tile/carpet/orange
+
+/turf/simulated/floor/carpet/green
+	name = "green carpet"
+	icon_state = "greencarpet"
+	floor_type = /obj/item/stack/tile/carpet/green
+
+/turf/simulated/floor/carpet/blue
+	name = "blue carpet"
+	icon_state = "bluecarpet"
+	floor_type = /obj/item/stack/tile/carpet/blue
+
+/turf/simulated/floor/carpet/blue2
+	name = "blue carpet"
+	icon_state = "blue2carpet"
+	floor_type = /obj/item/stack/tile/carpet/blue2
+
+/turf/simulated/floor/carpet/red
+	name = "red carpet"
+	icon_state = "redcarpet"
+	floor_type = /obj/item/stack/tile/carpet/red
+
+/turf/simulated/floor/carpet/cyan
+	name = "cyan carpet"
+	icon_state = "cyancarpet"
+	floor_type = /obj/item/stack/tile/carpet/cyan
 
 /turf/simulated/floor/carpet/atom_init()
 	if(!icon_state)
@@ -307,13 +334,13 @@
 
 
 /turf/simulated/floor/plating/airless/catwalk/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(C))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		ReplaceWithLattice()
 		playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
 		return
 
-	if(istype(C, /obj/item/stack/cable_coil))
+	if(iscoil(C))
 		var/obj/item/stack/cable_coil/coil = C
 		coil.turf_place(src, user)
 

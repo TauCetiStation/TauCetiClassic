@@ -1,0 +1,76 @@
+{
+    "definitions": [
+        {
+            "type": "/area",
+            "parent": "/atom",
+            "subtypes": [],
+            "vars": {
+                "alpha": 0
+            }
+        },
+        {
+            "type": "/obj/effect/landmark",
+            "parent": "/obj/effect",
+            "subtypes": [],
+            "vars": {
+                "alpha": 0
+            }
+        },
+        {
+            "type": "/turf/simulated/floor/plating",
+            "parent": "/turf/simulated/floor",
+            "subtypes": [],
+            "vars": {
+                "layer": 1.98
+            }
+        },
+        {
+            "type": "/obj/machinery/navbeacon",
+            "parent": "/obj/machinery",
+            "subtypes": [],
+            "vars": {
+                "layer": 1.988
+            }
+        },
+        {
+            "type": "/obj/structure/disposalpipe",
+            "parent": "/obj/structure",
+            "subtypes": [],
+            "vars": {
+                "layer": 1.99
+            }
+        },
+        {
+            "type": "/obj/machinery/atmospherics/pipe/simple/hidden",
+            "parent": "/obj/machinery/atmospherics/pipe/simple",
+            "subtypes": [],
+            "vars": {
+                "layer": 1.999
+            }
+        },
+        {
+            "type": "/obj/machinery/atmospherics/pipe/manifold/hidden",
+            "parent": "/obj/machinery/atmospherics/pipe/manifold",
+            "subtypes": [],
+            "vars": {
+                "layer": 1.999
+            }
+        },
+		{
+            "type": "/obj/machinery/atmospherics/pipe/manifold4w/hidden",
+            "parent": "/obj/machinery/atmospherics/pipe/manifold4w",
+            "subtypes": [],
+            "vars": {
+                "layer": 1.999
+            }
+        },
+        {
+            "type": "/obj/structure/cable",
+            "parent": "/obj/structure",
+            "subtypes": [],
+            "vars": {
+                "layer": 1.9999
+            }
+        }
+    ]
+}

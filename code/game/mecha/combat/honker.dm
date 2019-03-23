@@ -128,7 +128,7 @@
 		return
 	var/output = "<b>Honk-ON-Systems:</b><div style=\"margin-left: 15px;\">"
 	for(var/obj/item/mecha_parts/mecha_equipment/MT in equipment)
-		output += "[selected==MT?"<b id='\ref[MT]'>":"<a id='\ref[MT]' href='?src=\ref[src];select_equip=\ref[MT]'>"][MT.get_equip_info()][selected==MT?"</b>":"</a>"]<br>"
+		output += "[selected==MT?"<b><span id='\ref[MT]'>":"<a id='\ref[MT]' href='?src=\ref[src];select_equip=\ref[MT]'>"][MT.get_equip_info()][selected==MT?"</span></b>":"</a>"]<br>"
 	output += "</div>"
 	return output
 
@@ -144,7 +144,7 @@
 			squeak = 0
 	return result
 
-obj/mecha/combat/honker/Topic(href, href_list)
+/obj/mecha/combat/honker/Topic(href, href_list)
 	..()
 	if (href_list["play_sound"])
 		switch(href_list["play_sound"])
@@ -152,7 +152,7 @@ obj/mecha/combat/honker/Topic(href, href_list)
 				playsound(src, 'sound/misc/sadtrombone.ogg', 50)
 	return
 
-proc/rand_hex_color()
+/proc/rand_hex_color()
 	var/list/colors = list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f")
 	var/color=""
 	for (var/i=0;i<6;i++)

@@ -132,6 +132,8 @@
 	if(!istype(T))
 		return
 
+	..()
+
 	var/obj/machinery/atmospherics/node = NODE1
 
 	if(!T.is_plating() && node && node.level == PIPE_HIDDEN_LEVEL && istype(node, /obj/machinery/atmospherics/pipe))
@@ -356,7 +358,7 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		if(user.is_busy()) return
 
 		var/obj/item/weapon/weldingtool/WT = W

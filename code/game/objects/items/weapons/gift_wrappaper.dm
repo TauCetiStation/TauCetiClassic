@@ -18,7 +18,7 @@
 	. = ..()
 	pixel_x = rand(-10,10)
 	pixel_y = rand(-10,10)
-	if(w_class > 0 && w_class < 4)
+	if(w_class < ITEM_SIZE_LARGE)
 		icon_state = "gift[w_class]"
 	else
 		icon_state = "gift[pick(1, 2, 3)]"
@@ -45,7 +45,7 @@
 /obj/effect/spresent/attackby(obj/item/weapon/W, mob/user)
 	..()
 
-	if (!istype(W, /obj/item/weapon/wirecutters))
+	if (!iswirecutter(W))
 		to_chat(user, "\blue I need wirecutters for that.")
 		return
 
@@ -137,8 +137,8 @@
 	..()
 	if (!( locate(/obj/structure/table, src.loc) ))
 		to_chat(user, "\blue You MUST put the paper on a table!")
-	if (W.w_class < 4)
-		if ((istype(user.l_hand, /obj/item/weapon/wirecutters) || istype(user.r_hand, /obj/item/weapon/wirecutters) || istype(user.l_hand, /obj/item/weapon/scissors) || istype(user.r_hand, /obj/item/weapon/scissors)))
+	if (W.w_class < ITEM_SIZE_LARGE)
+		if (iswirecutter(user.l_hand) || iswirecutter(user.r_hand) || istype(user.l_hand, /obj/item/weapon/scissors) || istype(user.r_hand, /obj/item/weapon/scissors))
 			var/a_used = 2 ** (src.w_class - 1)
 			if (src.amount < a_used)
 				to_chat(user, "\blue You need more paper!")

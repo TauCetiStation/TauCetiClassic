@@ -23,7 +23,7 @@
 		for (var/obj/item/weapon/gun/G in contents)
 			if (istype(G, /obj/item/weapon/gun/energy))
 				lazors++
-			if (istype(G, /obj/item/weapon/gun/projectile/))
+			if (istype(G, /obj/item/weapon/gun/projectile))
 				shottas++
 		if (lazors || shottas)
 			for (var/i = 0 to 2)

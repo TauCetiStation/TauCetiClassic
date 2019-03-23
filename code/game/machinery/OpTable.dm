@@ -102,7 +102,7 @@
 	if (C == user)
 		user.visible_message("<span class='rose'>[user] climbs on the operating table.</span>","<span class='notice'>You climb on the operating table.</span>")
 	else
-		visible_message("<span class='notice'>[C] has been laid on the operating table by [user].</span>", 3)
+		visible_message("<span class='notice'>[C] has been laid on the operating table by [user].</span>")
 	if (C.client)
 		C.client.perspective = EYE_PERSPECTIVE
 		C.client.eye = src
@@ -137,10 +137,11 @@
 		return
 
 	if (istype(W, /obj/item/weapon/grab))
-		if(iscarbon(W:affecting))
-			take_victim(W:affecting,usr)
+		var/obj/item/weapon/grab/G = W
+		if(iscarbon(G.affecting))
+			take_victim(G.affecting, usr)
 			user.SetNextMove(CLICK_CD_MELEE)
-			qdel(W)
+			qdel(G)
 			return
 	user.drop_item()
 	if(W && W.loc)

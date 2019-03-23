@@ -17,7 +17,7 @@
 	var/broadcasting = null
 	var/listening = 1.0
 	flags = CONDUCT
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
@@ -60,7 +60,7 @@ Frequency:
 			if (sr)
 				src.temp += "<B>Located Beacons:</B><BR>"
 
-				for(var/obj/item/device/radio/beacon/W in world)
+				for(var/obj/item/device/radio/beacon/W in radio_beacon_list)
 					if (W.frequency == src.frequency)
 						var/turf/tr = get_turf(W)
 						if (tr.z == sr.z && tr)
@@ -78,7 +78,7 @@ Frequency:
 							src.temp += "[W.code]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
-				for (var/obj/item/weapon/implant/tracking/W in world)
+				for (var/obj/item/weapon/implant/tracking/W in implant_list)
 					if (!W.implanted || !(istype(W.loc,/obj/item/organ/external) || ismob(W.loc)))
 						continue
 					else
@@ -129,20 +129,25 @@ Frequency:
 	icon_state = "hand_tele"
 	item_state = "electronic"
 	throwforce = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
 	origin_tech = "magnets=1;bluespace=3"
 
 /obj/item/weapon/hand_tele/attack_self(mob/user)
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
+		return
 	var/turf/current_location = get_turf(user)//What turf is the user on?
 	if(!current_location||current_location.z==2||current_location.z>=7)//If turf was not found or they're on z level 2 or >7 which does not currently exist.
 		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
 		return
 	var/list/L = list(  )
-	for(var/obj/machinery/computer/teleporter/com in machines)
+	for(var/obj/machinery/computer/teleporter/com in teleporter_list)
 		if(com.target)
+			if(com.target.z == ZLEVEL_CENTCOMM)
+				continue
 			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)
 				L["[com.id] (Active)"] = com.target
 			else
@@ -158,7 +163,7 @@ Frequency:
 	if ((user.get_active_hand() != src || user.stat || user.restrained()))
 		return
 	var/count = 0	//num of portals from this teleport in world
-	for(var/obj/effect/portal/PO in world)
+	for(var/obj/effect/portal/PO in portal_list)
 		if(PO.creator == src)	count++
 	if(count >= 3)
 		user.show_message("<span class='notice'>\The [src] is recharging!</span>")

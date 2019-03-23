@@ -15,12 +15,17 @@
 
 /obj/machinery/computer/atom_init(mapload, obj/item/weapon/circuitboard/C)
 	. = ..()
+	computer_list += src
 	if(C && istype(C))
 		circuit = C
 	else
 		if(circuit)
 			circuit = new circuit(null)
 	power_change()
+
+/obj/machinery/computer/Destroy()
+	computer_list -= src
+	return ..()
 
 /obj/machinery/computer/process()
 	if(stat & (NOPOWER|BROKEN))
@@ -112,7 +117,7 @@
 
 /obj/machinery/computer/attackby(obj/item/I, mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(istype(I, /obj/item/weapon/screwdriver) && circuit && !(flags&NODECONSTRUCT))
+	if(isscrewdriver(I) && circuit && !(flags&NODECONSTRUCT))
 		if(user.is_busy(src)) return
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
@@ -123,12 +128,12 @@
 			for (var/obj/C in src)
 				C.loc = src.loc
 			if (src.stat & BROKEN)
-				to_chat(user, "\blue The broken glass falls out.")
+				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				new /obj/item/weapon/shard( src.loc )
 				A.state = 3
 				A.icon_state = "3"
 			else
-				to_chat(user, "\blue You disconnect the monitor.")
+				to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 				set_light(0)
 				A.state = 4
 				A.icon_state = "4"
@@ -141,11 +146,11 @@
 			if(stat & (BROKEN))
 				return 1
 			if(H.a_intent == "hurt")
-				H.visible_message("\red [H.name] smashes [src] with \his mighty arms!")
+				H.visible_message("<span class='danger'>[H.name] smashes [src] with \his mighty arms!</span>")
 				set_broken()
 				return 1
 			else
-				H.visible_message("\red [H.name] stares cluelessly at [src] and drools.")
+				H.visible_message("<span class='danger'>[H.name] stares cluelessly at [src] and drools.</span>")
 				return 1
 	. = ..()
 
@@ -154,13 +159,13 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
 		if(prob(10))
-			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with /his paws.</span>",\
-			"<span class='danger'>You smash the [src.name] with your paws.</span>",\
+			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with \his paws.</span>",
+			"<span class='danger'>You smash the [src.name] with your paws.</span>",
 			"<span class='danger'>You hear a smashing sound.</span>")
 			set_broken()
 			return
-	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with /his paws.</span>",\
-	"<span class='danger'>You smash against the [src.name] with your paws.</span>",\
+	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with \his paws.</span>",
+	"<span class='danger'>You smash against the [src.name] with your paws.</span>",
 	"<span class='danger'>You hear a clicking sound.</span>")
 
 /obj/machinery/computer/attack_alien(mob/user)
@@ -171,11 +176,11 @@
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(prob(80))
-			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with /his claws.</span>",\
-			"<span class='danger'>You smash the [src.name] with your claws.</span>",\
+			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with \his claws.</span>",
+			"<span class='danger'>You smash the [src.name] with your claws.</span>",
 			"<span class='danger'>You hear a smashing sound.</span>")
 			set_broken()
 			return
-	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with /his claws.</span>",\
-	"<span class='danger'>You smash against the [src.name] with your claws.</span>",\
+	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with \his claws.</span>",
+	"<span class='danger'>You smash against the [src.name] with your claws.</span>",
 	"<span class='danger'>You hear a clicking sound.</span>")

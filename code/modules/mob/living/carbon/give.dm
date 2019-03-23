@@ -20,6 +20,10 @@
 	if(I.flags & (ABSTRACT | DROPDEL))
 		to_chat(usr, "<span class='red'>You can't give this to [name]</span>")
 		return
+	if(HULK in src.mutations)
+		if(I.w_class < ITEM_SIZE_LARGE)
+			to_chat(usr, "<span class='red'>[I] is too small for [name] to hold.</span>")
+			return
 	if(!src.get_active_hand() || !src.get_inactive_hand())
 		switch(alert(src,"[usr] wants to give you \a [I]?",,"Yes","No"))
 			if("Yes")

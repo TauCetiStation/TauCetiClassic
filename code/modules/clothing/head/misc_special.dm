@@ -25,7 +25,7 @@
 	body_parts_covered = HEAD|FACE|EYES
 	action_button_name = "Flip Welding Mask"
 	siemens_coefficient = 0.9
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/clothing/head/welding/attack_self()
 	toggle()
@@ -129,18 +129,18 @@
 	body_parts_covered = HEAD|EYES
 	var/brightness_on = 2 //luminosity when on
 	var/on = 0
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 
-	attack_self(mob/user)
-		if(!isturf(user.loc))
-			to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
-			return
-		on = !on
-		icon_state = "hardhat[on]_[item_color]"
-		item_state = "hardhat[on]_[item_color]"
+/obj/item/clothing/head/pumpkinhead/attack_self(mob/user)
+	if(!isturf(user.loc))
+		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
+		return
+	on = !on
+	icon_state = "hardhat[on]_[item_color]"
+	item_state = "hardhat[on]_[item_color]"
 
-		if(on)	set_light(brightness_on)
-		else	set_light(0)
+	if(on)	set_light(brightness_on)
+	else	set_light(0)
 
 /*
  * Kitty ears
@@ -154,14 +154,14 @@
 	var/icon/mob2
 	siemens_coefficient = 1.5
 
-	update_icon(mob/living/carbon/human/user)
-		if(!istype(user)) return
-		mob = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty")
-		mob2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty2")
-		mob.Blend(rgb(user.r_hair, user.g_hair, user.b_hair), ICON_ADD)
-		mob2.Blend(rgb(user.r_hair, user.g_hair, user.b_hair), ICON_ADD)
+/obj/item/clothing/head/kitty/update_icon(mob/living/carbon/human/user)
+	if(!istype(user)) return
+	mob = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty")
+	mob2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty2")
+	mob.Blend(rgb(user.r_hair, user.g_hair, user.b_hair), ICON_ADD)
+	mob2.Blend(rgb(user.r_hair, user.g_hair, user.b_hair), ICON_ADD)
 
-		var/icon/earbit = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner")
-		var/icon/earbit2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner2")
-		mob.Blend(earbit, ICON_OVERLAY)
-		mob2.Blend(earbit2, ICON_OVERLAY)
+	var/icon/earbit = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner")
+	var/icon/earbit2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner2")
+	mob.Blend(earbit, ICON_OVERLAY)
+	mob2.Blend(earbit2, ICON_OVERLAY)

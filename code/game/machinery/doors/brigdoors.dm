@@ -41,11 +41,11 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/door_timer/atom_init_late()
-	for(var/obj/machinery/door/window/brigdoor/M in machines)
+	for(var/obj/machinery/door/window/brigdoor/M in brigdoor_list)
 		if (M.id == id)
 			targets += M
 
-	for(var/obj/machinery/flasher/F in machines)
+	for(var/obj/machinery/flasher/F in flasher_list)
 		if(F.id == id)
 			targets += F
 

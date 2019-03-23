@@ -16,7 +16,7 @@
 /proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
 	for(var/mob/dead/observer/O in player_list)
 		if(O.client)
-			to_chat(O, "<span class='ghostalert'>[message]<span>")
+			to_chat(O, "<span class='ghostalert'>[message]</span>")
 			if(ghost_sound)
 				O << sound(ghost_sound)
 
@@ -33,7 +33,7 @@
 	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32
 	pixel_y = -32
-	color = "#9C3636"
+	color = "#9c3636"
 
 /obj/effect/effect/sleep_smoke/atom_init()
 	. = ..()
@@ -41,8 +41,8 @@
 		qdel(src)
 	return
 
-/obj/effect/effect/sleep_smoke/Move()
-	..()
+/obj/effect/effect/sleep_smoke/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	for(var/mob/living/carbon/M in get_turf(src))
 		if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
 //		if (M.wear_suit, /obj/item/clothing/suit/wizrobe && (M.hat, /obj/item/clothing/head/wizard) && (M.shoes, /obj/item/clothing/shoes/sandal))  // I'll work on it later
@@ -83,7 +83,7 @@
 		n = 20
 	number = n
 	cardinals = c
-	if(istype(loca, /turf/))
+	if(istype(loca, /turf))
 		location = loca
 	else
 		location = get_turf(loca)
@@ -249,7 +249,7 @@
 /obj/singularity/narsie/proc/pickcultist() //Narsie rewards his cultists with being devoured first, then picks a ghost to follow. --NEO
 	var/list/cultists = list()
 	var/list/noncultists = list()
-	for(var/mob/living/carbon/food in living_mob_list) //we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
+	for(var/mob/living/carbon/food in alive_mob_list) //we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
 		var/turf/pos = get_turf(food)
 		if(pos.z != src.z)
 			continue
@@ -269,7 +269,7 @@
 			return
 
 	//no living humans, follow a ghost instead.
-	for(var/mob/dead/observer/ghost in player_list)
+	for(var/mob/dead/observer/ghost in observer_list)
 		if(!ghost.client)
 			continue
 		var/turf/pos = get_turf(ghost)

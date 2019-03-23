@@ -5,7 +5,7 @@
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "weldingmask"
 /obj/random/cloth/masks/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/mask/) - subtypesof(/obj/item/clothing/mask/cigarette) - list(/obj/item/clothing/mask/gas/death_commando, /obj/item/clothing/mask/facehugger/toy, /obj/item/clothing/mask/facehugger, /obj/item/clothing/mask/gas/shadowling, /obj/item/clothing/mask/ecig, /obj/item/clothing/mask/scarf/ninja, /obj/item/clothing/mask/gas/voice, /obj/item/clothing/mask/gas/voice/space_ninja, /obj/item/clothing/mask/facehugger/lamarr, /obj/item/clothing/mask/facehugger/toy, /obj/item/clothing/mask/gas/golem))
+	return pick(subtypesof(/obj/item/clothing/mask) - subtypesof(/obj/item/clothing/mask/cigarette) - list(/obj/item/clothing/mask/gas/death_commando, /obj/item/clothing/mask/facehugger/toy, /obj/item/clothing/mask/facehugger, /obj/item/clothing/mask/gas/shadowling, /obj/item/clothing/mask/ecig, /obj/item/clothing/mask/scarf/ninja, /obj/item/clothing/mask/gas/voice, /obj/item/clothing/mask/gas/voice/space_ninja, /obj/item/clothing/mask/facehugger/lamarr, /obj/item/clothing/mask/facehugger/toy, /obj/item/clothing/mask/gas/golem))
 
 /obj/random/cloth/armor
 	name = "random armor"
@@ -172,9 +172,6 @@
 			prob(8);/obj/item/weapon/storage/belt/archaeology\
 			)
 
-
-
-
 /obj/random/cloth/randomhead
 	name = "random head"
 	desc = "This is a random head."
@@ -218,3 +215,29 @@
 					prob(10);/obj/random/cloth/masks,\
 					prob(4);/obj/random/cloth/storage\
 				)
+
+
+/obj/random/cloth/ny_random_cloth
+	name = "random new year cloth"
+	desc = "This is a random new year cloth."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "giftbag2"
+
+/obj/random/cloth/ny_random_cloth/item_to_spawn()
+	return pick(\
+				prob(12);/obj/item/clothing/head/helmet/space/santahat,\
+				prob(12);/obj/item/clothing/suit/space/santa,\
+				prob(12);/obj/item/clothing/shoes/winterboots,\
+				prob(3);/obj/item/clothing/suit/wintercoat,\
+				prob(3);/obj/item/clothing/suit/storage/labcoat/winterlabcoat,\
+				prob(1);/obj/item/clothing/suit/wintercoat/security,\
+				prob(1);/obj/item/clothing/suit/wintercoat/engineering/atmos,\
+				prob(1);/obj/item/clothing/suit/wintercoat/engineering,\
+				prob(1);/obj/item/clothing/suit/wintercoat/science,\
+				prob(1);/obj/item/clothing/suit/wintercoat/medical,\
+				prob(1);/obj/item/clothing/suit/wintercoat/cargo,\
+				prob(1);/obj/item/clothing/suit/wintercoat/hydro,\
+				prob(1);/obj/item/clothing/suit/wintercoat/captain,\
+				prob(12);/obj/item/weapon/storage/backpack/santabag,\
+			)
+

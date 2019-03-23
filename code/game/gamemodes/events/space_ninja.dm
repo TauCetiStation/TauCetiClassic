@@ -357,7 +357,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 			if(!ninja_mind.objectives.len||!mission_set)//If they somehow did not get an objective at this point, time to destroy the station.
 				var/nuke_code
 				var/temp_code
-				for(var/obj/machinery/nuclearbomb/N in machines)
+				for(var/obj/machinery/nuclearbomb/N in poi_list)
 					temp_code = text2num(N.r_code)
 					if(temp_code)//if it's actually a number. It won't convert any non-numericals.
 						nuke_code = N.r_code
@@ -534,20 +534,20 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		qdel(gloves)
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
-	equip_to_slot_or_del(R, slot_l_ear)
+	equip_to_slot_or_del(R, SLOT_L_EAR)
 	if(gender==FEMALE)
-		equip_to_slot_or_del(new /obj/item/clothing/under/color/blackf(src), slot_w_uniform)
+		equip_to_slot_or_del(new /obj/item/clothing/under/color/blackf(src), SLOT_W_UNIFORM)
 	else
-		equip_to_slot_or_del(new /obj/item/clothing/under/color/black(src), slot_w_uniform)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/space_ninja(src), slot_shoes)
-	equip_to_slot_or_del(new /obj/item/clothing/suit/space/space_ninja(src), slot_wear_suit)
-	equip_to_slot_or_del(new /obj/item/clothing/gloves/space_ninja(src), slot_gloves)
-	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/space_ninja(src), slot_head)
-	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/voice/space_ninja(src), slot_wear_mask)
-	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_belt)
-	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_r_store)
-	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_l_store)
-	equip_to_slot_or_del(new /obj/item/weapon/tank/oxygen(src), slot_s_store)
+		equip_to_slot_or_del(new /obj/item/clothing/under/color/black(src), SLOT_W_UNIFORM)
+	equip_to_slot_or_del(new /obj/item/clothing/shoes/space_ninja(src), SLOT_SHOES)
+	equip_to_slot_or_del(new /obj/item/clothing/suit/space/space_ninja(src), SLOT_WEAR_SUIT)
+	equip_to_slot_or_del(new /obj/item/clothing/gloves/space_ninja(src), SLOT_GLOVES)
+	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/space_ninja(src), SLOT_HEAD)
+	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/voice/space_ninja(src), SLOT_WEAR_MASK)
+	equip_to_slot_or_del(new /obj/item/device/flashlight(src), SLOT_BELT)
+	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), SLOT_R_STORE)
+	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), SLOT_L_STORE)
+	equip_to_slot_or_del(new /obj/item/weapon/tank/oxygen(src), SLOT_S_STORE)
 	var/obj/item/weapon/implant/dexplosive/L = new(src)
 	L.imp_in = src
 	L.implanted = TRUE
@@ -912,7 +912,7 @@ Most of these are at various points of incomplete.
 	usr:proc_holder_list += A_C
 	usr:proc_holder_list += B_C
 
-mob/verb/remove_object_panel()
+/mob/verb/remove_object_panel()
 	set name = "Remove AI Ninja Verbs Debug"
 	set category = "Ninja Debug"
 	var/obj/effect/proc_holder/ai_return_control/A = locate() in src

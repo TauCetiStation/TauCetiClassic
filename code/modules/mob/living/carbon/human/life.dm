@@ -67,7 +67,7 @@
 			breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
 
 		else //Still give containing object the chance to interact
-			if(istype(loc, /obj/))
+			if(istype(loc, /obj))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
@@ -127,10 +127,6 @@
 
 	pulse = handle_pulse()
 
-	// Grabbing
-	for(var/obj/item/weapon/grab/G in src)
-		G.process()
-
 
 //Much like get_heat_protection(), this returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 /mob/living/carbon/human/proc/get_pressure_protection(pressure_check = STOPS_PRESSUREDMAGE)
@@ -162,22 +158,22 @@
 		return ONE_ATMOSPHERE - pressure_difference
 
 /mob/living/carbon/human/proc/handle_disabilities()
-	if (disabilities & EPILEPSY)
+	if (disabilities & EPILEPSY || has_trait(TRAIT_EPILEPSY))
 		if ((prob(1) && paralysis < 1))
 			to_chat(src, "\red You have a seizure!")
 			for(var/mob/O in viewers(src, null))
 				if(O == src)
 					continue
-				O.show_message(text("\red <B>[src] starts having a seizure!"), 1)
+				O.show_message(text("<span class='danger'>[src] starts having a seizure!</span>"), 1)
 			Paralyse(10)
 			make_jittery(1000)
-	if (disabilities & COUGHING)
+	if (disabilities & COUGHING || has_trait(TRAIT_COUGH))
 		if ((prob(5) && paralysis <= 1))
 			drop_item()
 			spawn( 0 )
 				emote("cough")
 				return
-	if (disabilities & TOURETTES)
+	if (disabilities & TOURETTES || has_trait(TRAIT_TOURETTE))
 		speech_problem_flag = 1
 		if ((prob(10) && paralysis <= 1))
 			Stun(10)
@@ -195,7 +191,7 @@
 				pixel_x = old_x
 				pixel_y = old_y
 				return
-	if (disabilities & NERVOUS)
+	if (disabilities & NERVOUS || has_trait(TRAIT_NERVOUS))
 		speech_problem_flag = 1
 		if (prob(10))
 			stuttering = max(10, stuttering)
@@ -206,9 +202,9 @@
 			if(config.rus_language)//TODO:CYRILLIC dictionary?
 				switch(pick(1,2,3))
 					if(1)
-						say(pick("àçàçàà!", "ß íå ñìàëãåé!", "ÕÎÑ ÕÓÅÑÎÑ!", "[pick("", "åáó÷èé òðåéòîð")] [pick("ìîðãàí", "ìîðãóí", "ìîðãåí", "ìðîãóí")] [pick("äæåìåñ", "äæàìåñ", "äæàåìåñ")] ãðåôîíåò ìèíÿ øïàñèò;å!!!", "òè ìîæûø äàòü ìíå [pick("òèëèïàòèþ","õàëêó","ýïèëëåïñèþ")]?", "ÕÀ÷ó ñòàòü áîðãîì!", "ÏÎÇÎâèòå äåòåêòèâà!", "Õî÷ó ñòàòü ìàðòûøêîé!", "ÕÂÀÒÅÒ ÃÐÈÔÎÍÅÒÜ ÌÈÍß!!!!", "ØÀÒÎË!"))
+						say(pick(CYRILLIC_BRAINDAMAG_1))
 					if(2)
-						say(pick("Êàê ìèí[JA_PLACEHOLDER]òü ðóêè?","åáó÷èå ôóððè!", "Ïîäåáèë", "Ïðîêë[JA_PLACEHOLDER]òûå òðàïû!", "ëîëêà!", "âæææææææææ!!!", "äæåô ñêâààààä!", "ÁÐÀÍÄÅÍÁÓÐÃ!", "ÁÓÄÀÏÅØÒ!", "ÏÀÓÓÓÓÓÊ!!!!", "ÏÓÊÀÍ ÁÎÌÁÀÍÓË!", "ÏÓØÊÀ", "ÐÅÂÀ ÏÎÖÎÍÛ", "Ïàòè íà õîïà!"))
+						say(pick(CYRILLIC_BRAINDAMAG_2))
 					if(3)
 						emote("drool")
 			else
@@ -353,7 +349,7 @@
 		losebreath--
 		if (prob(10)) //Gasp per 10 ticks? Sounds about right.
 			spawn emote("gasp")
-		if(istype(loc, /obj/))
+		if(istype(loc, /obj))
 			var/obj/location_as_object = loc
 			location_as_object.handle_internal_lifeform(src, 0)
 	else
@@ -417,7 +413,7 @@
 							break // If they breathe in the nasty stuff once, no need to continue checking
 
 		else //Still give containing object the chance to interact
-			if(istype(loc, /obj/))
+			if(istype(loc, /obj))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
@@ -1017,7 +1013,7 @@
 
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(FAT in mutations)
-		if(overeatduration < 100)
+		if(!has_trait(TRAIT_FAT) && overeatduration < 100)
 			to_chat(src, "\blue You feel fit again!")
 			mutations.Remove(FAT)
 			update_body()
@@ -1026,18 +1022,22 @@
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 	else
-		if(overeatduration > 500 && !species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
-			mutations.Add(FAT)
-			update_body()
-			update_mutantrace()
-			update_mutations()
-			update_inv_w_uniform()
-			update_inv_wear_suit()
+		if((has_trait(TRAIT_FAT) || overeatduration > 500) && isturf(loc))
+			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
+				mutations.Add(FAT)
+				update_body()
+				update_mutantrace()
+				update_mutations()
+				update_inv_w_uniform()
+				update_inv_wear_suit()
 
 
 	// nutrition decrease
 	if (nutrition > 0 && stat != DEAD)
-		nutrition = max(0, nutrition - metabolism_factor/10)
+		var/met_factor = get_metabolism_factor()
+		nutrition = max(0, nutrition - met_factor * 0.1)
+		if(has_trait(TRAIT_STRESS_EATER))
+			nutrition = max(0, nutrition - met_factor * getHalLoss() * 0.01)
 
 	if (nutrition > 450)
 		if(overeatduration < 600) //capped so people don't take forever to unfat
@@ -1173,7 +1173,7 @@
 
 
 		//Eyes
-		if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
+		if(sdisabilities & BLIND || has_trait(TRAIT_BLIND))	//disabled-blind, doesn't get better on its own
 			blinded = 1
 		else if(eye_blind)			//blindness, heals slowly over time
 			eye_blind = max(eye_blind-1,0)
@@ -1185,7 +1185,7 @@
 			eye_blurry = max(eye_blurry-1, 0)
 
 		//Ears
-		if(sdisabilities & DEAF)	//disabled-deaf, doesn't get better on its own
+		if(sdisabilities & DEAF || has_trait(TRAIT_DEAF))	//disabled-deaf, doesn't get better on its own
 			ear_deaf = max(ear_deaf, 1)
 		else if(ear_deaf)			//deafness, heals slowly over time
 			ear_deaf = max(ear_deaf-1, 0)
@@ -1465,7 +1465,7 @@
 		var/nearsighted = 0
 		var/impaired    = 0
 
-		if(disabilities & NEARSIGHTED)
+		if(disabilities & NEARSIGHTED || has_trait(TRAIT_NEARSIGHT))
 			nearsighted = 1
 
 		if(glasses)
@@ -1572,7 +1572,7 @@
 	//0.1% chance of playing a scary sound to someone who's in complete darkness
 	if(isturf(loc) && rand(1,1000) == 1)
 		var/turf/T = loc
-		if(T.lighting_overlay && T.lighting_overlay.luminosity == 0)
+		if(T.get_lumcount() < 0.1)
 			playsound_local(src,pick(scarySounds),50, 1, -1)
 
 /mob/living/carbon/human/proc/handle_virus_updates()
@@ -1657,7 +1657,7 @@
 		return
 
 	if(shock_stage == 10)
-		to_chat(src, "<font color='red'><b>"+pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!"))
+		to_chat(src, "<span class='danger'>[pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")]</span>")
 
 	if(shock_stage >= 30)
 		if(shock_stage == 30) emote("me",1,"is having trouble keeping their eyes open.")
@@ -1665,22 +1665,22 @@
 		stuttering = max(stuttering, 5)
 
 	if(shock_stage == 40)
-		to_chat(src, "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!"))
+		to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 
 	if (shock_stage >= 60)
 		if(shock_stage == 60) emote("me",1,"'s body becomes limp.")
 		if (prob(2))
-			to_chat(src, "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!"))
+			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 			Weaken(20)
 
 	if(shock_stage >= 80)
 		if (prob(5))
-			to_chat(src, "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!"))
+			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 			Weaken(20)
 
 	if(shock_stage >= 120)
 		if (prob(2))
-			to_chat(src, "<font color='red'><b>"+pick("You black out!", "You feel like you could die any moment now.", "You're about to lose consciousness."))
+			to_chat(src, "<span class='danger'>[pick("You black out!", "You feel like you could die any moment now.", "You're about to lose consciousness.")]</span>")
 			Paralyse(5)
 
 	if(shock_stage == 150)

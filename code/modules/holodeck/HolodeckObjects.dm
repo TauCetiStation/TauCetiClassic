@@ -20,7 +20,7 @@
 			var/turf/simulated/floor/FF = get_step(src,direction)
 			FF.update_icon() //so siding get updated properly
 
-turf/simulated/floor/holofloor/update_icon()
+/turf/simulated/floor/holofloor/update_icon()
 	if(icon_state in icons_to_ignore_at_floor_init)
 		return
 	else
@@ -64,7 +64,7 @@ turf/simulated/floor/holofloor/update_icon()
 
 
 /obj/structure/table/holotable/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		to_chat(user, "It's a holotable!  There are no bolts!")
 		return
 
@@ -122,11 +122,11 @@ turf/simulated/floor/holofloor/update_icon()
 
 	if(W.flags & NOBLUDGEON) return
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		to_chat(user, ("<span class='notice'>It's a holowindow, you can't unfasten it!</span>"))
-	else if(istype(W, /obj/item/weapon/crowbar) && reinf && state <= 1)
+	else if(iscrowbar(W) && reinf && state <= 1)
 		to_chat(user, ("<span class='notice'>It's a holowindow, you can't pry it!</span>"))
-	else if(istype(W, /obj/item/weapon/wrench) && !anchored && (!state || !reinf))
+	else if(iswrench(W) && !anchored && (!state || !reinf))
 		to_chat(user, ("<span class='notice'>It's a holowindow, you can't dismantle it!</span>"))
 	else
 		if(W.damtype == BRUTE || W.damtype == BURN)
@@ -185,11 +185,11 @@ turf/simulated/floor/holofloor/update_icon()
 		visible_message("[src] fades away as it shatters!")
 	qdel(src)
 
-obj/structure/stool/bed/chair/holochair
+/obj/structure/stool/bed/chair/holochair
 	icon_state = "chair_g"
 
 /obj/structure/stool/bed/chair/holochair/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		to_chat(user, ("<span class='notice'>It's a holochair, you can't dismantle it!</span>"))
 	return
 
@@ -203,7 +203,7 @@ obj/structure/stool/bed/chair/holochair
 	throw_speed = 1
 	throw_range = 5
 	throwforce = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	flags = NOSHIELD | NOBLOODY
 	var/active = 0
 
@@ -236,13 +236,13 @@ obj/structure/stool/bed/chair/holochair
 	if (active)
 		force = 30
 		icon_state = "sword[item_color]"
-		w_class = 4
+		w_class = ITEM_SIZE_LARGE
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 	else
 		force = 3
 		icon_state = "sword0"
-		w_class = 2
+		w_class = ITEM_SIZE_SMALL
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
@@ -262,7 +262,7 @@ obj/structure/stool/bed/chair/holochair
 	name = "basketball"
 	item_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
-	w_class = 4 //Stops people from hiding it in their bags/pockets
+	w_class = ITEM_SIZE_LARGE //Stops people from hiding it in their bags/pockets
 
 /obj/structure/holohoop
 	name = "basketball hoop"
@@ -386,7 +386,7 @@ obj/structure/stool/bed/chair/holochair
 	return
 
 /obj/structure/rack/holorack/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		to_chat(user, "It's a holorack!  You can't unwrench it!")
 		return
 

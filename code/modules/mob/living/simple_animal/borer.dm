@@ -301,7 +301,7 @@
 
 		detatch()
 
-mob/living/simple_animal/borer/proc/detatch()
+/mob/living/simple_animal/borer/proc/detatch()
 
 	if(!host) return
 
@@ -419,7 +419,7 @@ mob/living/simple_animal/borer/proc/detatch()
 		to_chat(src, text("\blue You have stopped hiding."))
 
 //Procs for grabbing players.
-mob/living/simple_animal/borer/proc/request_player()
+/mob/living/simple_animal/borer/proc/request_player()
 	for(var/mob/dead/observer/O in player_list)
 		if(jobban_isbanned(O, "Syndicate") || jobban_isbanned(O, ROLE_ALIEN))
 			continue
@@ -430,7 +430,7 @@ mob/living/simple_animal/borer/proc/request_player()
 			if(!C.prefs.ignore_question.Find("borer") && (ROLE_ALIEN in C.prefs.be_role))
 				question(C)
 
-mob/living/simple_animal/borer/proc/question(client/C)
+/mob/living/simple_animal/borer/proc/question(client/C)
 	spawn(0)
 		if(!C)	return
 		var/response = alert(C, "A cortical borer needs a player. Are you interested?", "Cortical borer request", "No", "Yes", "Never for this round")
@@ -441,7 +441,7 @@ mob/living/simple_animal/borer/proc/question(client/C)
 		else if (response == "Never for this round")
 			C.prefs.ignore_question += "borer"
 
-mob/living/simple_animal/borer/proc/transfer_personality(client/candidate)
+/mob/living/simple_animal/borer/proc/transfer_personality(client/candidate)
 
 	if(!candidate)
 		return

@@ -3,7 +3,7 @@
 #define LIST "list"
 #define ENTRY "entry"
 
-/obj/machinery/disease2/isolator/
+/obj/machinery/disease2/isolator
 	name = "Pathogenic Isolator"
 	density = 1
 	anchored = 1
@@ -225,4 +225,5 @@
 				<u>Additional Notes:</u>&nbsp;
 "}
 
+	P.update_icon()
 	state("The nearby computer prints out a report.")

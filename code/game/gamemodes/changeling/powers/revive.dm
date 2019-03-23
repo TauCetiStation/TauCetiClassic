@@ -8,7 +8,7 @@
 	user.mind.changeling.purchasedpowers -= src
 	if(user.stat == DEAD)
 		dead_mob_list -= user
-		living_mob_list += user
+		alive_mob_list += user
 	if(HUSK in user.mutations)
 		user.mutations.Remove(HUSK)
 	user.fake_death = 0

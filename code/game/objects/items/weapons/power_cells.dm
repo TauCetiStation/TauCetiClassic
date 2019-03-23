@@ -9,7 +9,7 @@
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	var/charge = 0	// note %age conveted to actual charge in New
 	var/maxcharge = 1000
 	m_amt = 700
@@ -115,7 +115,7 @@
 	name = "potato battery"
 	desc = "A rechargable starch based power cell."
 	origin_tech = "powerstorage=1"
-	icon = 'icons/obj/power.dmi' //'icons/obj/harvest.dmi'
+	icon = 'icons/obj/power.dmi' //'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "potato_cell" //"potato_battery"
 	charge = 100
 	maxcharge = 300
@@ -128,8 +128,8 @@
 	name = "charged slime core"
 	desc = "A yellow slime core infused with phoron, it crackles with power."
 	origin_tech = "powerstorage=2;biotech=4"
-	icon = 'icons/mob/slimes.dmi' //'icons/obj/harvest.dmi'
-	icon_state = "yellow slime extract" //"potato_battery"
+	icon = 'icons/mob/slimes.dmi'
+	icon_state = "yellow slime extract"
 	maxcharge = 10000
 	maxcharge = 10000
 	m_amt = 0

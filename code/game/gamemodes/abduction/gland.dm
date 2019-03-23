@@ -1,4 +1,4 @@
-/obj/item/gland/
+/obj/item/gland
 	name = "fleshy mass"
 	desc = "Eww!"
 	icon = 'icons/obj/abductor.dmi'
@@ -53,7 +53,7 @@
 	uses = -1
 	icon_state = "health"
 
-obj/item/gland/heals/activate()
+/obj/item/gland/heals/activate()
 	to_chat(host, "<span class='notice'>You feel curiously revitalized.</span>")
 	host.adjustBruteLoss(-25)
 	host.adjustOxyLoss(-25)
@@ -68,7 +68,7 @@ obj/item/gland/heals/activate()
 	uses = -1
 	icon_state = "slime"
 
-obj/item/gland/slime/activate()
+/obj/item/gland/slime/activate()
 	to_chat(host, "<span class='warning'>You feel nauseous!</span>")
 
 	host.visible_message("<span class='danger'>[host] vomits on the floor!</span>", \

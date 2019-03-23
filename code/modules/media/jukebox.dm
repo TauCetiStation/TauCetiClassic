@@ -22,34 +22,34 @@
 
 	var/emagged = 0
 
-	New(var/list/json)
-		title  = json["title"]
-		artist = json["artist"]
-		album  = json["album"]
+/datum/song_info/New(var/list/json)
+	title  = json["title"]
+	artist = json["artist"]
+	album  = json["album"]
 
-		url    = json["url"]
+	url    = json["url"]
 
-		length = text2num(json["length"])
+	length = text2num(json["length"])
 
-	proc/display()
-		var/str="\"[title]\""
-		if(artist!="")
-			str += ", by [artist]"
-		if(album!="")
-			str += ", from '[album]'"
-		return str
+/datum/song_info/proc/display()
+	var/str="\"[title]\""
+	if(artist!="")
+		str += ", by [artist]"
+	if(album!="")
+		str += ", from '[album]'"
+	return str
 
-	proc/displaytitle()
-		if(artist==""&&title=="")
-			return "\[NO TAGS\]"
-		var/str=""
-		if(artist!="")
-			str += "[artist] - "
-		if(title!="")
-			str += "\"[title]\""
-		else
-			str += "Untitled"
-		return str
+/datum/song_info/proc/displaytitle()
+	if(artist==""&&title=="")
+		return "\[NO TAGS\]"
+	var/str=""
+	if(artist!="")
+		str += "[artist] - "
+	if(title!="")
+		str += "\"[title]\""
+	else
+		str += "Untitled"
+	return str
 
 
 var/global/loopModeNames=list(
@@ -65,7 +65,6 @@ var/global/loopModeNames=list(
 	density = 1
 
 	anchored = 1
-	luminosity = 4 // Why was this 16
 	playing = 0
 
 	var/loop_mode = JUKEMODE_SHUFFLE
@@ -162,7 +161,7 @@ var/global/loopModeNames=list(
 			user.visible_message("\red [user.name] slides something into the [src.name]'s card-reader.","\red You short out the [src.name].")
 			update_icon()
 			update_music()
-	else if(istype(W,/obj/item/weapon/wrench))
+	else if(iswrench(W))
 		if(user.is_busy()) return
 		var/un = !anchored ? "" : "un"
 		user.visible_message("\blue [user.name] begins [un]locking \the [src.name]'s casters.","\blue You begin [un]locking \the [src.name]'s casters.")
@@ -267,7 +266,7 @@ var/global/loopModeNames=list(
 		media_url = song.url
 		media_start_time = world.time
 		visible_message("<span class='notice'>[bicon(src)] \The [src] begins to play [song.display()].</span>","<em>You hear music.</em>")
-		//visible_message("<span class='notice'>[bicon(src)] \The [src] warbles: [song.length/10]s @ [song.url]</notice>")
+		//visible_message("<span class='notice'>[bicon(src)] \The [src] warbles: [song.length/10]s @ [song.url]</span>")
 	else
 		media_url=""
 		media_start_time = 0

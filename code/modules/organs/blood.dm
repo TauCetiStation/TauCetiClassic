@@ -188,7 +188,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 //Makes a blood drop, leaking certain amount of blood from the mob
 /mob/living/carbon/human/proc/drip(amt, tar = src, ddir)
 	if(remove_blood(amt))
-		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, basedatum = species.blood_color)
+		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, basedatum = species.blood_datum)
 		return amt
 	return 0
 
@@ -225,7 +225,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		return B
 
 	// Update appearance.
-	B.basedatum = new basedatum() // source.data["blood_colour"] <- leaving this pointer, could be important for later.
+	B.basedatum = new(basedatum) // source.data["blood_colour"] <- leaving this pointer, could be important for later.
 	B.update_icon()
 	if(spray_dir)
 		B.icon_state = "squirt"
@@ -414,13 +414,12 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					return D
 	return res
 
-proc/blood_incompatible(donor,receiver)
+/proc/blood_incompatible(donor,receiver)
 	if(!donor || !receiver) return 0
-	var
-		donor_antigen = copytext(donor,1,lentext(donor))
-		receiver_antigen = copytext(receiver,1,lentext(receiver))
-		donor_rh = (findtext(donor,"+")>0)
-		receiver_rh = (findtext(receiver,"+")>0)
+	var/donor_antigen = copytext(donor,1,lentext(donor))
+	var/receiver_antigen = copytext(receiver,1,lentext(receiver))
+	var/donor_rh = (findtext(donor,"+")>0)
+	var/receiver_rh = (findtext(receiver,"+")>0)
 	if(donor_rh && !receiver_rh) return 1
 	switch(receiver_antigen)
 		if("A")

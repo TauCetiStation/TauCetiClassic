@@ -9,7 +9,7 @@
 	icon_state = "backpack"
 	item_state = "backpack"
 	w_class = ITEM_SIZE_LARGE
-	slot_flags = SLOT_BACK	//ERROOOOO
+	slot_flags = SLOT_FLAGS_BACK	//ERROOOOO
 	action_button_name = "Storage"
 	max_w_class = ITEM_SIZE_NORMAL
 	max_storage_space = DEFAULT_BACKPACK_STORAGE
@@ -28,7 +28,7 @@
 	return ..()
 
 /obj/item/weapon/storage/backpack/equipped(mob/user, slot)
-	if (slot == slot_back && src.use_sound)
+	if (slot == SLOT_BACK && src.use_sound)
 		playsound(src.loc, src.use_sound, 50, 1, -5)
 	..(user, slot)
 
@@ -46,10 +46,10 @@
 
 /obj/item/weapon/storage/backpack/holding/attackby(obj/item/weapon/W, mob/user)
 	if(crit_fail)
-		to_chat(user, "<spam class='red'>The Bluespace generator isn't working.</span>")
+		to_chat(user, "<span class='red'>The Bluespace generator isn't working.</span>")
 		return
 	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
-		to_chat(user, "<spam class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
+		to_chat(user, "<span class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
 		qdel(W)
 		return
 	..()
@@ -58,9 +58,9 @@
 	if (prob(src.reliability))
 		return 1 //No failure
 	if (prob(src.reliability))
-		to_chat(user, "<spam class='red'>The Bluespace portal resists your attempt to add another item.</span>")//light failure
+		to_chat(user, "<span class='red'>The Bluespace portal resists your attempt to add another item.</span>")//light failure
 	else
-		to_chat(user, "<spam class='red'>The Bluespace generator malfunctions!</span>")
+		to_chat(user, "<span class='red'>The Bluespace generator malfunctions!</span>")
 		for (var/obj/O in src.contents) //it broke, delete what was in it
 			qdel(O)
 		crit_fail = 1

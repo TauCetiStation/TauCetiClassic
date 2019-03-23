@@ -113,7 +113,10 @@
 	var/recieve_message = ""
 
 	if(((src in mentors) || holder) && !C.holder)
-		recieve_message = "<font color='[recieve_color]' size='3'><b>-- Click the [recieve_pm_type]'s name to reply --</b></font>\n"
+		if(config.rus_language)
+			recieve_message = "<font color='[recieve_color]' size='3'><b>-- Нажмите на им[JA_PLACEHOLDER] [recieve_pm_type]'а дл[JA_PLACEHOLDER] ответа --</b></font>\n"
+		else
+			recieve_message = "<font color='[recieve_color]' size='3'><b>-- Click the [recieve_pm_type]'s name to reply --</b></font>\n"
 		if(C.adminhelped)
 			to_chat(C, recieve_message)
 			C.adminhelped = 0
@@ -131,9 +134,9 @@
 						adminhelp(reply)													//sender has left, adminhelp instead
 				return
 
-	recieve_message = "<font color='[recieve_color]'>[recieve_pm_type] PM from-<b>[get_options_bar(src, C.holder ? 1 : 0, C.holder ? 1 : 0, 1)]</b>: [msg]</font>"
+	recieve_message = "<font color='[recieve_color]'>[recieve_pm_type] PM from-<b>[get_options_bar(src, C.holder ? 1 : 0, C.holder ? 1 : 0, 1)]</b>: <span class='emojify linkify'>[msg]</span></font>"
 	to_chat(C, recieve_message)
-	to_chat(src, "<font color='blue'>[send_pm_type]PM to-<b>[get_options_bar(C, holder ? 1 : 0, holder ? 1 : 0, 1)]</b>: [msg]</font>")
+	to_chat(src, "<font color='blue'>[send_pm_type]PM to-<b>[get_options_bar(C, holder ? 1 : 0, holder ? 1 : 0, 1)]</b>: <span class='emojify linkify'>[msg]</span></font>")
 
 	//play the recieving admin the adminhelp sound (if they have them enabled)
 	//non-admins shouldn't be able to disable this
@@ -149,12 +152,12 @@
 		if(X == C || X == src)
 			continue
 		if(X.key != key && X.key != C.key && X.holder.rights & R_ADMIN)
-			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [msg]</font>")//inform X
+			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> <span class='emojify linkify'>[msg]</span></font>")//inform X
 	for(var/client/X in mentors)
 		if(X == C || X == src)
 			continue
 		if(X.key != key && X.key != C.key && !C.holder && !src.holder)
-			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0, 0)]-&gt;[key_name(C, X, 0, 0)]:</B> \blue [msg]</font>")//inform X
+			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0, 0)]-&gt;[key_name(C, X, 0, 0)]:</B> <span class='emojify linkify'>[msg]</span></font>")//inform X
 
 /client/proc/cmd_admin_irc_pm()
 	if(prefs.muted & MUTE_ADMINHELP)

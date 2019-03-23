@@ -67,6 +67,8 @@
 	if(M.mind)
 		M.mind.transfer_to(O)	//transfer our mind to the cute little monkey
 
+	M.transfer_trait_datums(O)
+
 	if (connected) //inside dna thing
 		var/obj/machinery/dna_scannernew/C = connected
 		O.loc = C
@@ -142,6 +144,8 @@
 
 	if(M.mind)
 		M.mind.transfer_to(O)	//transfer our mind to the human
+
+	Mo.transfer_trait_datums(O)
 
 	if (connected) //inside dna thing
 		var/obj/machinery/dna_scannernew/C = connected

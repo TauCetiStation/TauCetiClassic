@@ -43,14 +43,15 @@
 		s.start()
 
 /mob/living/simple_animal/det5/proc/print() //proc print det5 robot
-    var/obj/item/weapon/paper/O = new /obj/item/weapon/paper(get_turf(src))
-    var/dat
-    for(var/datum/tech/T in rdconsole.files.known_tech)
-        dat += "[T.name]<BR>"
-        dat +=  "* Level: [T.level]<BR>"
-        dat +=  "* Summary: [T.desc]<HR>"
-    dat += "</div>"
-    O.info = dat
+	var/obj/item/weapon/paper/O = new /obj/item/weapon/paper(get_turf(src))
+	var/dat
+	for(var/datum/tech/T in rdconsole.files.known_tech)
+		dat += "[T.name]<BR>"
+		dat +=  "* Level: [T.level]<BR>"
+		dat +=  "* Summary: [T.desc]<HR>"
+	dat += "</div>"
+	O.info = dat
+	O.update_icon()
 
 /mob/living/simple_animal/det5/death()
 	..()
@@ -69,7 +70,7 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		act_emag = user.name	   // Emag user saved
 		Emag(user)
-	else if(istype(W, /obj/item/device/multitool))
+	else if(ismultitool(W))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/computer/rdconsole))
 			rdconsole = M.buffer

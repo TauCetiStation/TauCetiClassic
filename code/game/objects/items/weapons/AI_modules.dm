@@ -14,7 +14,7 @@ AI MODULES
 	desc = "An AI Module for transmitting encrypted instructions to the AI."
 	flags = CONDUCT
 	force = 5.0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 15
@@ -46,7 +46,7 @@ AI MODULES
 			src.transmitInstructions(comp.current, usr)
 			to_chat(comp.current, "These are your laws now:")
 			comp.current.show_laws()
-			for(var/mob/living/silicon/robot/R in mob_list)
+			for(var/mob/living/silicon/robot/R in silicon_list)
 				if(R.lawupdate && (R.connected_ai == comp.current))
 					to_chat(R, "These are your laws now:")
 					R.show_laws()

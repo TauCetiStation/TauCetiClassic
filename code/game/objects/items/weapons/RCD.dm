@@ -17,7 +17,7 @@ RCD
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	m_amt = 50000
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
@@ -32,12 +32,14 @@ RCD
 
 /obj/item/weapon/rcd/atom_init()
 	. = ..()
+	rcd_list += src
 	desc = "A RCD. It currently holds [matter]/30 matter-units."
 	spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
 /obj/item/weapon/rcd/Destroy()
+	rcd_list -= src
 	qdel(spark_system)
 	spark_system = null
 	return ..()

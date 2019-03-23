@@ -4,7 +4,7 @@
 	icon = 'icons/obj/biocan.dmi'
 	icon_state = "biocan"
 	origin_tech = "biotech=3;materials=3;magnets=3"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	appearance_flags = KEEP_TOGETHER | TILE_BOUND
 	var/obj/item/weapon/organ/head/headobj = null
 	var/image/display_headobj = null
@@ -25,7 +25,7 @@
 				brainmob.loc = headobj
 				headobj.brainmob = brainmob
 				brainmob.timeofhostdeath = world.time
-				living_mob_list -= brainmob
+				alive_mob_list -= brainmob
 				brainmob = null
 			headobj.forceMove(get_turf(src))
 			headobj = null
@@ -59,7 +59,7 @@
 				brainmob.container = src
 				brainmob.stat = CONSCIOUS
 				dead_mob_list -= brainmob
-				living_mob_list += brainmob
+				alive_mob_list += brainmob
 			display_headobj = new (src)
 			display_headobj.appearance = W.appearance
 			display_headobj.transform = matrix()
@@ -77,7 +77,7 @@
 	user.visible_message("<span class='red'>\The [src.name] contents has been splashed over the floor. </span>")
 	if(headobj)
 		if(brainmob)
-			living_mob_list -= headobj.brainmob
+			alive_mob_list -= headobj.brainmob
 			brainmob.ghostize(can_reenter_corpse = FALSE)
 			brainmob.loc = headobj
 			brainmob.container = headobj
@@ -93,7 +93,7 @@
 	visible_message("<span class='red'>\The [src.name] has been shattered. </span>")
 	if(headobj)
 		if(brainmob)
-			living_mob_list -= headobj.brainmob
+			alive_mob_list -= headobj.brainmob
 			brainmob.ghostize(can_reenter_corpse = FALSE)
 			brainmob.loc = headobj
 			brainmob.container = headobj

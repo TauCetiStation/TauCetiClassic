@@ -5,6 +5,6 @@
 	spawn(10)
 		explosion(loc, 3, 6, 12, 15)
 
-	for(var/obj/machinery/ai_status_display/O in machines) //change status
+	for(var/obj/machinery/ai_status_display/O in ai_status_display_list) //change status
 		O.mode = 2
 	return ..(gibbed)

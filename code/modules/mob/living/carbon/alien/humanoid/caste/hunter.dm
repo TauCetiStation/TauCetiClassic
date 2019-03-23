@@ -18,12 +18,11 @@
 	real_name = name
 	. = ..()
 
-/mob/living/carbon/alien/humanoid/hunter
-	handle_environment()
-		if(m_intent == "run" || resting)
-			..()
-		else
-			adjustToxLoss(-heal_rate)
+/mob/living/carbon/alien/humanoid/hunter/handle_environment()
+	if(m_intent == "run" || resting)
+		..()
+	else
+		adjustToxLoss(-heal_rate)
 
 /mob/living/carbon/alien/humanoid/hunter/handle_hud_icons_health()
 	if (healths)
@@ -86,8 +85,7 @@
 
 
 /mob/living/carbon/alien/humanoid/hunter/ClickOn(atom/A, params)
-	face_atom(A)
-	if(leap_on_click)
+	if(next_move <= world.time && leap_on_click)
 		leap_at(A)
 	else
 		..()
@@ -100,7 +98,7 @@
 	if(buckled)
 		to_chat(src, "<span class='alertalien'>You cannot leap in your current state.</span>")
 		return
-		
+
 	if(pounce_cooldown)
 		to_chat(src, "<span class='alertalien'>You are too fatigued to pounce right now!</span>")
 		return
@@ -116,12 +114,14 @@
 		return
 
 	else //Maybe uses plasma in the future, although that wouldn't make any sense...
+		face_atom(A)
 		stop_pulling()
 		leaping = TRUE
 		update_icons()
-		throw_at(A, MAX_ALIEN_LEAP_DIST, 2, spin = FALSE, diagonals_first = TRUE, callback = CALLBACK(src, .leap_end))
+		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, spin = FALSE, diagonals_first = TRUE, callback = CALLBACK(src, .leap_end))
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_end()
+	SetNextMove(CLICK_CD_MELEE) // so we can't click again right after leaping.
 	leaping = FALSE
 	update_icons()
 

@@ -5,7 +5,7 @@
 	desc = "Used to upload laws to the AI."
 	icon_state = "command"
 	circuit = /obj/item/weapon/circuitboard/aiupload
-	light_color = "#FFFFFF"
+	light_color = "#ffffff"
 	var/mob/living/silicon/ai/current = null
 	var/opened = FALSE
 

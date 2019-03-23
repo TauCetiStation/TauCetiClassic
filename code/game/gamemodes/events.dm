@@ -56,7 +56,7 @@
 			world << sound('sound/AI/spanomalies.ogg')
 			var/list/turfs = new
 			var/turf/picked
-			for(var/turf/simulated/floor/T in world)
+			for(var/turf/simulated/floor/T in not_world)
 				if(T.z == ZLEVEL_STATION)
 					turfs += T
 			for(var/turf/simulated/floor/T in turfs)
@@ -104,7 +104,7 @@
 */
 
 /proc/appendicitis()
-	for(var/mob/living/carbon/human/H in living_mob_list)
+	for(var/mob/living/carbon/human/H in human_list)
 		var/foundAlready = 0 // don't infect someone that already has the virus
 		for(var/datum/disease/D in H.viruses)
 			foundAlready = 1
@@ -145,7 +145,7 @@
 //				virus_type = /datum/disease/t_virus
 			if("pierrot's throat")
 				virus_type = /datum/disease/pierrot_throat
-	for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
+	for(var/mob/living/carbon/human/H in shuffle(human_list))
 
 		var/foundAlready = 0 // don't infect someone that already has the virus
 		var/turf/T = get_turf(H)
@@ -222,28 +222,23 @@
 
 /proc/high_radiation_event()
 
-	for(var/mob/living/carbon/human/H in living_mob_list)
+	for(var/mob/living/carbon/human/H in human_list)
 		var/turf/T = get_turf(H)
-		if(!T)
+		if(!T || T.z != ZLEVEL_STATION || H.stat == DEAD)
 			continue
-		if(T.z != ZLEVEL_STATION)
-			continue
-		if(istype(H,/mob/living/carbon/human))
-			H.apply_effect((rand(15,75)),IRRADIATE,0)
-			if (prob(5))
-				H.apply_effect((rand(90,150)),IRRADIATE,0)
-			if (prob(25))
-				if (prob(75))
-					randmutb(H)
-					domutcheck(H,null,MUTCHK_FORCED)
-				else
-					randmutg(H)
-					domutcheck(H,null,MUTCHK_FORCED)
-	for(var/mob/living/carbon/monkey/M in living_mob_list)
+		H.apply_effect((rand(15,75)),IRRADIATE,0)
+		if (prob(5))
+			H.apply_effect((rand(90,150)),IRRADIATE,0)
+		if (prob(25))
+			if (prob(75))
+				randmutb(H)
+				domutcheck(H,null,MUTCHK_FORCED)
+			else
+				randmutg(H)
+				domutcheck(H,null,MUTCHK_FORCED)
+	for(var/mob/living/carbon/monkey/M in monkey_list)
 		var/turf/T = get_turf(M)
-		if(!T)
-			continue
-		if(T.z != ZLEVEL_STATION)
+		if(!T || T.z != ZLEVEL_STATION || M.stat == DEAD)
 			continue
 		M.apply_effect((rand(15,75)),IRRADIATE,0)
 	sleep(100)
@@ -327,7 +322,7 @@
 				apc.overload_lighting()
 
 	else
-		for(var/obj/machinery/power/apc/apc in machines)
+		for(var/obj/machinery/power/apc/apc in apc_list)
 			apc.overload_lighting()
 
 	return
@@ -340,7 +335,7 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 */
 
 	//AI laws
-	for(var/mob/living/silicon/ai/M in living_mob_list)
+	for(var/mob/living/silicon/ai/M in ai_list)
 		if(M.stat != DEAD && M.see_in_dark != 0)
 			var/who2 = pick("ALIENS", "BEARS", "CLOWNS", "XENOS", "PETES", "BOMBS", "FETISHES", "WIZARDS", "SYNDICATE AGENTS", "CENTCOM OFFICERS", "SPACE PIRATES", "TRAITORS", "MONKEYS",  "BEES", "CARP", "CRABS", "EELS", "BANDITS", "LIGHTS")
 			var/what2 = pick("BOLTERS", "STAVES", "DICE", "SINGULARITIES", "TOOLBOXES", "NETTLES", "AIRLOCKS", "CLOTHES", "WEAPONS", "MEDKITS", "BOMBS", "CANISTERS", "CHAIRS", "BBQ GRILLS", "ID CARDS", "CAPTAINS")
@@ -438,6 +433,6 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 					M.add_ion_law("THE STATION IS [who2pref] [who2]")
 
 	if(botEmagChance)
-		for(var/obj/machinery/bot/bot in machines)
+		for(var/obj/machinery/bot/bot in bots_list)
 			if(prob(botEmagChance))
 				bot.Emag()

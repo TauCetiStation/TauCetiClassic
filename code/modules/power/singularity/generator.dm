@@ -1,5 +1,5 @@
 /////SINGULARITY SPAWNER
-/obj/machinery/the_singularitygen/
+/obj/machinery/the_singularitygen
 	name = "Gravitational Singularity Generator"
 	desc = "An Odd Device which produces a Gravitational Singularity when set up."
 	icon = 'icons/obj/singularity.dmi'
@@ -17,7 +17,7 @@
 		if(src) qdel(src)
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		anchored = !anchored
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 		if(anchored)
