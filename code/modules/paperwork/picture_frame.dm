@@ -12,6 +12,10 @@
 	var/frame_type = /obj/structure/picture_frame/wooden
 	var/frame_glass = FALSE
 
+/obj/item/weapon/picture_frame/Destroy()
+	. = ..()
+	displayed = null
+
 /obj/item/weapon/picture_frame/wooden
 	name = "wooden picture frame"
 	frame_type = /obj/structure/picture_frame/wooden
@@ -168,6 +172,10 @@
 		pixel_x = (ndir & 3)? 0 : (ndir == 4 ? 28 : -28)
 		pixel_y = (ndir & 3)? (ndir == 1 ? 28 : -30) : 0
 	update_icon()
+
+/obj/structure/picture_frame/Destroy()
+	. = ..()
+	framed = null
 
 /obj/structure/picture_frame/wooden
 	name = "wooden picture frame"
