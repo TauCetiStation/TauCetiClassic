@@ -122,6 +122,7 @@
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
+			transfer_fingerprints_to(A)
 			A.circuit = circuit
 			A.anchored = 1
 			circuit = null
