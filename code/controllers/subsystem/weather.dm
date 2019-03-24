@@ -16,7 +16,7 @@ var/datum/subsystem/weather/SSweather
 		var/datum/weather/W = V
 		if(W.aesthetic)
 			continue
-		for(var/mob/living/L in mob_list)
+		for(var/mob/living/L in living_list)
 			if(W.can_impact(L))
 				W.impact(L)
 		if(W.additional_action)

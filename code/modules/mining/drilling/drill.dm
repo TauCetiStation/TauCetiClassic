@@ -373,7 +373,7 @@
 
 /obj/machinery/mining/drill/proc/cut_hand(mob/user)
 	if(!ishuman(user)) // no hand no cut
-		to_chat(user, "<span class='danger'> You feel, that [src] want to cut your arm")
+		to_chat(user, "<span class='danger'>You feel, that [src] want to cut your arm</span>")
 		return 0
 
 	var/mob/living/carbon/human/H = user
@@ -383,7 +383,7 @@
 		return
 
 	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, "melee")/2, 1)
-	to_chat(H, "<span class='danger'> You feel, that [src] try to cut your [BP]!")
+	to_chat(H, "<span class='danger'>You feel, that [src] try to cut your [BP]!</span>")
 
 	if(BP.status & ORGAN_DESTROYED)
 		return
@@ -391,7 +391,7 @@
 	BP = BP.parent
 
 	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, "melee")/2, 1)
-	to_chat(H, "<span class='danger'> You feel, that [src] try to cut your [BP]!")
+	to_chat(H, "<span class='danger'>You feel, that [src] try to cut your [BP]!</span>")
 
 /obj/machinery/mining/drill/update_icon()
 	if(need_player_check)

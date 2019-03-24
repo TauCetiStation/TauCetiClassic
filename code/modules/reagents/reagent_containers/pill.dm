@@ -8,7 +8,7 @@
 	icon_state = null
 	item_state = "pill"
 	possible_transfer_amounts = null
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	volume = 50
 
 /obj/item/weapon/reagent_containers/pill/atom_init()
@@ -94,12 +94,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 //Pills
-/obj/item/weapon/reagent_containers/pill/antitox
-	name = "Anti-toxins pill"
+/obj/item/weapon/reagent_containers/pill/dylovene
+	name = "Anti-toxins pill (25u)"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill17"
 
-/obj/item/weapon/reagent_containers/pill/antitox/atom_init()
+/obj/item/weapon/reagent_containers/pill/dylovene/atom_init()
 	. = ..()
 	reagents.add_reagent("anti_toxin", 25)
 
@@ -107,6 +107,15 @@
 	name = "Toxins pill"
 	desc = "Highly toxic."
 	icon_state = "pill5"
+
+/obj/item/weapon/reagent_containers/pill/dermaline
+	name = "Dermaline pill (15u)"
+	desc = "Used to treat burns."
+	icon_state = "pill11"
+
+/obj/item/weapon/reagent_containers/pill/dermaline/atom_init()
+	. = ..()
+	reagents.add_reagent("dermaline", 15)
 
 /obj/item/weapon/reagent_containers/pill/tox/atom_init()
 	. = ..()
@@ -131,7 +140,7 @@
 	reagents.add_reagent("adminordrazine", 50)
 
 /obj/item/weapon/reagent_containers/pill/stox
-	name = "Sleeping pill"
+	name = "Sleeping pill (15u)"
 	desc = "Commonly used to treat insomnia."
 	icon_state = "pill8"
 
@@ -140,7 +149,7 @@
 	reagents.add_reagent("stoxin", 15)
 
 /obj/item/weapon/reagent_containers/pill/kelotane
-	name = "Kelotane pill"
+	name = "Kelotane pill (15u)"
 	desc = "Used to treat burns."
 	icon_state = "pill11"
 
@@ -149,7 +158,7 @@
 	reagents.add_reagent("kelotane", 15)
 
 /obj/item/weapon/reagent_containers/pill/paracetamol
-	name = "Paracetamol pill"
+	name = "Paracetamol pill (15u)"
 	desc = "Tylenol! A painkiller for the ages. Chewables!"
 	icon_state = "pill8"
 
@@ -158,7 +167,7 @@
 	reagents.add_reagent("paracetamol", 15)
 
 /obj/item/weapon/reagent_containers/pill/tramadol
-	name = "Tramadol pill"
+	name = "Tramadol pill (15u)"
 	desc = "A simple painkiller."
 	icon_state = "pill8"
 
@@ -166,9 +175,8 @@
 	. = ..()
 	reagents.add_reagent("tramadol", 15)
 
-
 /obj/item/weapon/reagent_containers/pill/methylphenidate
-	name = "Methylphenidate pill"
+	name = "Methylphenidate pill (15u)"
 	desc = "Improves the ability to concentrate."
 	icon_state = "pill8"
 
@@ -177,7 +185,7 @@
 	reagents.add_reagent("methylphenidate", 15)
 
 /obj/item/weapon/reagent_containers/pill/citalopram
-	name = "Citalopram pill"
+	name = "Citalopram pill (15u)"
 	desc = "Mild anti-depressant."
 	icon_state = "pill8"
 
@@ -185,9 +193,17 @@
 	. = ..()
 	reagents.add_reagent("citalopram", 15)
 
+/obj/item/weapon/reagent_containers/pill/paroxetine
+	name = "Paroxetine (10u)"
+	desc = "Before you swallow a bullet: try swallowing this!"
+	icon_state = "pill4"
+
+/obj/item/weapon/reagent_containers/pill/paroxetine/atom_init()
+	. = ..()
+	reagents.add_reagent("paroxetine", 10)
 
 /obj/item/weapon/reagent_containers/pill/inaprovaline
-	name = "Inaprovaline pill"
+	name = "Inaprovaline pill (30u)"
 	desc = "Used to stabilize patients."
 	icon_state = "pill20"
 
@@ -196,7 +212,7 @@
 	reagents.add_reagent("inaprovaline", 30)
 
 /obj/item/weapon/reagent_containers/pill/dexalin
-	name = "Dexalin pill"
+	name = "Dexalin pill (15u)"
 	desc = "Used to treat oxygen deprivation."
 	icon_state = "pill16"
 
@@ -204,8 +220,17 @@
 	. = ..()
 	reagents.add_reagent("dexalin", 15)
 
+/obj/item/weapon/reagent_containers/pill/dexalin_plus
+	name = "Dexalin plus pill (10u)"
+	desc = "Used to treat extreme oxygen deprivation."
+	icon_state = "pill16"
+
+/obj/item/weapon/reagent_containers/pill/dexalin_plus/atom_init()
+	. = ..()
+	reagents.add_reagent("dexalinp", 10)
+
 /obj/item/weapon/reagent_containers/pill/bicaridine
-	name = "Bicaridine pill"
+	name = "Bicaridine pill (20u)"
 	desc = "Used to treat physical injuries."
 	icon_state = "pill18"
 
@@ -235,10 +260,36 @@
 	reagents.add_reagent("hyperzine", 5)
 
 /obj/item/weapon/reagent_containers/pill/lipozine
-	name = "Lipozine"
+	name = "Lipozine (15u)"
 	desc = "When you mistake whith maffin"
 	icon_state = "pill18"
 
 /obj/item/weapon/reagent_containers/pill/lipozine/atom_init()
 	. = ..()
 	reagents.add_reagent("lipozine", 15)
+
+/obj/item/weapon/reagent_containers/pill/spaceacillin
+	name = "Spaceacillin (10u)"
+	desc = "Contains antiviral agents."
+	icon_state = "pill3"
+
+/obj/item/weapon/reagent_containers/pill/spaceacillin/atom_init()
+	. = ..()
+	reagents.add_reagent("spaceacillin", 15)
+
+/obj/item/weapon/reagent_containers/pill/hyronalin
+	name = "Hyronalin (7u)"
+	desc = "Used to treat radiation poisoning."
+	icon_state = "pill1"
+/obj/item/weapon/reagent_containers/pill/hyronalin/atom_init()
+	. = ..()
+	reagents.add_reagent("hyronalin", 7)
+
+/obj/item/weapon/reagent_containers/pill/antirad
+	name = "AntiRad"
+	desc = "Used to treat radiation poisoning."
+	icon_state = "yellow"
+/obj/item/weapon/reagent_containers/pill/antirad/atom_init()
+	. = ..()
+	reagents.add_reagent("hyronalin", 5)
+	reagents.add_reagent("anti_toxin", 10)

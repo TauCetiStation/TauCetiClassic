@@ -2,37 +2,37 @@
 
 /area/jungle/temple_one
 	name = "temple"
-	dynamic_lighting = 1
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "temple1"
 
 /area/jungle/temple_two
 	name = "temple"
-	dynamic_lighting = 1
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "temple2"
 
 /area/jungle/temple_three
 	name = "temple"
-	dynamic_lighting = 1
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "temple3"
 
 /area/jungle/temple_four
 	name = "temple"
-	dynamic_lighting = 1
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "temple4"
 
 /area/jungle/temple_five
 	name = "temple"
-	dynamic_lighting = 1
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "temple5"
 
 /area/jungle/temple_six
 	name = "temple"
-	dynamic_lighting = 1
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "temple6"
 

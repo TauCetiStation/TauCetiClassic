@@ -48,7 +48,7 @@
 	item_state = "electronic"
 
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "magnets=3;materials=2"
 
 	var/max_uses = 20

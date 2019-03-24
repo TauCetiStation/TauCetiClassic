@@ -116,7 +116,7 @@
 	add_avail(lastgen)
 
 /obj/machinery/power/generator/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		anchored = !anchored
 		to_chat(user, "\blue You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor.")
 		use_power = anchored

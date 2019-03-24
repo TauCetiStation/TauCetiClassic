@@ -5,9 +5,9 @@
 	icon_state = "detective"
 	item_state = "gun"
 	flags =  CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 2000
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 5
@@ -81,7 +81,7 @@
 	else
 		Fire(A,user,params) //Otherwise, fire normally.
 
-/obj/item/weapon/gun/proc/Fire(atom/target, mob/living/user, params, reflex = 0)//TODO: go over this
+/obj/item/weapon/gun/proc/Fire(atom/target, mob/living/user, params, reflex = 0, point_blank = FALSE)//TODO: go over this
 	//Exclude lasertag guns from the CLUMSY check.
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
@@ -128,14 +128,17 @@
 			to_chat(user, "<span class='warning'>[src] is not ready to fire again!</span>")
 		return
 	if(chambered)
+		if(point_blank)
+			user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
+			chambered.BB.damage *= 1.3
 		if(!chambered.fire(target, user, params, , silenced))
 			shoot_with_empty_chamber(user)
 		else
 			shoot_live_shot(user)
+			user.newtonian_move(get_dir(target, user))
 	else
 		shoot_with_empty_chamber(user)
 	process_chamber()
-	user.newtonian_move(get_dir(target, user))
 	update_icon()
 
 	if(user.hand)
@@ -211,9 +214,7 @@
 	if (can_fire())
 		//Point blank shooting if on harm intent or target we were targeting.
 		if(user.a_intent == "hurt")
-			user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [M]!</b></span>")
-			chambered.BB.damage *= 1.3
-			Fire(M,user)
+			Fire(M, user, null, null, TRUE)
 			return
 		else if(target && M in target)
 			Fire(M,user) ///Otherwise, shoot!

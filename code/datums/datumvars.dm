@@ -1,6 +1,6 @@
 // reference: /client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
 
-datum/proc/on_varedit(modified_var) //called whenever a var is edited
+/datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	return
 
 /client/proc/debug_variables(datum/D in world)
@@ -8,11 +8,13 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	set name = "View Variables"
 	//set src in world
 
-
 	if(!usr.client || !usr.client.holder)
-		to_chat(usr, "\red You need to be an administrator to access this.")
+		to_chat(usr, "<span class='warning'>You need to be an administrator to access this.</span>")
 		return
 
+	if(!check_rights(R_DEBUG|R_VAREDIT|R_LOG)) // Since client.holder still doesn't mean we have permissions...
+		to_chat(usr, "<span class='warning'>You need to be an administrator to access this.</span>")
+		return
 
 	var/title = ""
 	var/body = ""
@@ -180,12 +182,12 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 			body += "<br><font size='1'><a href='?_src_=vars;datumedit=\ref[D];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='?_src_=vars;datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
 			body += {"
 			<br><font size='1'>
-			BRUTE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brute'>[M.getBruteLoss()]</a>
-			FIRE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=fire'>[M.getFireLoss()]</a>
-			TOXIN:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=toxin'>[M.getToxLoss()]</a>
-			OXY:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
-			CLONE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=clone'>[M.getCloneLoss()]</a>
-			BRAIN:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brain'>[M.getBrainLoss()]</a>
+			BRUTE:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brute'>[M.getBruteLoss()]</a>
+			FIRE:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=fire'>[M.getFireLoss()]</a>
+			TOXIN:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=toxin'>[M.getToxLoss()]</a>
+			OXY:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
+			CLONE:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=clone'>[M.getCloneLoss()]</a>
+			BRAIN:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brain'>[M.getBrainLoss()]</a>
 			</font>
 
 
@@ -419,12 +421,12 @@ body
 	if(usr.client != src || !holder)
 		return
 	if(href_list["Vars"])
-		if(!check_rights(R_DEBUG|R_ADMIN))
+		if(!check_rights(R_DEBUG|R_VAREDIT))
 			return
 		debug_variables(locate(href_list["Vars"]))
 
 	else if(href_list["view_flags"])
-		if(!check_rights(R_DEBUG|R_ADMIN))
+		if(!check_rights(R_DEBUG|R_VAREDIT|R_LOG))
 			return
 		view_flags_variables(href_list["view_flags"])
 

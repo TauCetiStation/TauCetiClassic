@@ -91,7 +91,7 @@
 	name = "package wrapper"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "deliveryPaper"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	var/amount = 25.0
 
 
@@ -120,11 +120,11 @@
 				if(user.client)
 					user.client.screen -= O
 			P.w_class = O.w_class
-			if(P.w_class <= 1.0)
+			if(P.w_class <= ITEM_SIZE_TINY)
 				P.icon_state = "deliverycrate1"
-			else if (P.w_class <= 2.0)
+			else if (P.w_class <= ITEM_SIZE_SMALL)
 				P.icon_state = "deliverycrate2"
-			else if (P.w_class <= 3.0)
+			else if (P.w_class <= ITEM_SIZE_NORMAL)
 				P.icon_state = "deliverycrate3"
 			else
 				P.icon_state = "deliverycrate4"
@@ -177,10 +177,10 @@
 	icon_state = "dest_tagger"
 	var/currTag = 0
 
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	item_state = "electronic"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 3000
 	g_amt = 1300
 	origin_tech = "materials=1;engineering=1"
@@ -284,7 +284,7 @@
 	if(!I || !user)
 		return
 
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		if(c_mode==0)
 			c_mode=1
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
@@ -295,7 +295,7 @@
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			to_chat(user, "You attach the screws around the power connection.")
 			return
-	else if(istype(I,/obj/item/weapon/weldingtool) && c_mode==1 && !user.is_busy())
+	else if(iswelder(I) && c_mode==1 && !user.is_busy())
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)

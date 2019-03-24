@@ -176,7 +176,7 @@
 		if(exchange_parts(user, O))
 			return
 
-		if(istype(O, /obj/item/weapon/wrench))
+		if(iswrench(O))
 
 			if(!anchored && !isinspace())
 				connect_to_network()
@@ -189,14 +189,14 @@
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
-		else if(istype(O, /obj/item/weapon/screwdriver))
+		else if(isscrewdriver(O))
 			panel_open = !panel_open
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if(panel_open)
 				to_chat(user, "<span class='notice'>You open the access panel.</span>")
 			else
 				to_chat(user, "<span class='notice'>You close the access panel.</span>")
-		else if(istype(O, /obj/item/weapon/crowbar) && panel_open)
+		else if(iscrowbar(O) && panel_open)
 			default_deconstruction_crowbar(O)
 
 /obj/machinery/power/port_gen/pacman/ui_interact(mob/user)
@@ -264,8 +264,9 @@
 	power_gen = 15000
 	time_per_sheet = 65
 	board_path = "/obj/item/weapon/circuitboard/pacman/super"
-	overheat()
-		explosion(src.loc, 3, 3, 3, -1)
+
+/obj/machinery/power/port_gen/pacman/super/overheat()
+	explosion(src.loc, 3, 3, 3, -1)
 
 /obj/machinery/power/port_gen/pacman/mrs
 	name = "M.R.S.P.A.C.M.A.N.-type Portable Generator"
@@ -276,5 +277,6 @@
 	power_gen = 40000
 	time_per_sheet = 80
 	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"
-	overheat()
-		explosion(src.loc, 4, 4, 4, -1)
+
+/obj/machinery/power/port_gen/pacman/mrs/overheat()
+	explosion(src.loc, 4, 4, 4, -1)

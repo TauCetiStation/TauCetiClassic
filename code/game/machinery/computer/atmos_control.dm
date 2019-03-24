@@ -25,18 +25,18 @@
 	if(current)
 		dat += specific()
 	else
-		for(var/obj/machinery/alarm/alarm in machines)
+		for(var/obj/machinery/alarm/alarm in alarm_list)
 			if(alarm.hidden_from_console)
 				continue
 			dat += "<a href='?src=\ref[src]&alarm=\ref[alarm]'>"
 			switch(max(alarm.danger_level, alarm.alarm_area.atmosalm))
 				if (0)
-					dat += "<font color=green>"
+					dat += "<font color=green>[alarm]</font>"
 				if (1)
-					dat += "<font color=blue>"
+					dat += "<font color=blue>[alarm]</font>"
 				if (2)
-					dat += "<font color=red>"
-			dat += "[alarm]</font></a><br/>"
+					dat += "<font color=red>[alarm]</font>"
+			dat += "</a><br/>"
 	user << browse(entity_ja(dat), "window=atmoscontrol")
 
 /obj/machinery/computer/atmoscontrol/attackby(obj/item/I, mob/user)

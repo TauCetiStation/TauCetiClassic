@@ -4,15 +4,15 @@
 	icon = 'code/modules/holidays/new_year/presents.dmi'
 	icon_state = "gift1"
 
-	var/bad_chance = 5	//Chance of having bad gift
+	var/bad_chance = 0	//Chance of having bad gift
 	var/list/gifts = list(/obj/item/weapon/reagent_containers/food/snacks/cookie	  = 3,
 						/obj/item/weapon/reagent_containers/food/snacks/chocolatebar  = 3,
 						/obj/item/clothing/head/santahat				= 3,
 						/obj/item/weapon/poster/contraband				= 2,
 						/obj/item/weapon/poster/legit					= 2,
 						/obj/item/weapon/storage/box/snappops			= 2,
-						/obj/item/clothing/accessory/holster/waist			= 2,
-						/obj/item/clothing/accessory/medal/gold				= 2,
+						/obj/item/clothing/accessory/holster/waist		= 2,
+						/obj/item/clothing/accessory/medal/gold			= 2,
 						/obj/item/toy/blink								= 2,
 						/obj/item/clothing/under/syndicate/tacticool	= 2,
 						/obj/item/toy/sword								= 2,
@@ -84,7 +84,11 @@
 						/obj/item/toy/prize/poly/polysec				= 1,
 						/obj/item/toy/prize/poly/polycompanion			= 1,
 						/obj/item/toy/prize/poly/polygold				= 1,
-						/obj/item/toy/prize/poly/polyspecial			= 1
+						/obj/item/toy/prize/poly/polyspecial			= 1,
+						/obj/item/toy/eight_ball						= 2,
+						/obj/item/toy/eight_ball/conch					= 2,
+						/obj/item/toy/carpplushie						= 4,
+						/obj/random/plushie								= 15
 						)
 
 /obj/item/weapon/present/atom_init()
@@ -94,22 +98,19 @@
 	pixel_y = rand(-6,6)
 
 /obj/item/weapon/present/attack_self(mob/user, key)
-	var/p_warns							//player warns
-	var/giftselect = pickweight(gifts)	//almost random pick from gift list
+	var/giftselect = pickweight(gifts)	// almost random pick from gift list
 	var/present
-	var/client/C = user.client
 
-	//Checks for warnbans and increase chance of bad gift
-	if(C.prefs.warnbans)
-		p_warns = C.prefs.warnbans
-		bad_chance = p_warns * 20	//5 warnbans = 100% bad chance
-
+	// Checks for jobbans and increase chance of bad gift
+	for(var/datum/job/job in SSjob.occupations)
+		if(jobban_isbanned(user, job.title))
+			bad_chance += 5
 	user.drop_item()
 	user.visible_message("<span class='notice'>[user] carefully open [src].</span>","<span class='notice'>You carefully open [src].</span>")
 	playsound(src, 'sound/items/crumple.ogg', 40, 1, 1)
 
-	//For absolutely bad players we have special presents ;D
-	if(bad_chance >= 100)
+	// For absolutely bad players we have special presents ;D
+	if(bad_chance >= 20)
 		new /obj/item/weapon/ore/coal/special(src.loc)
 		new /obj/item/weapon/ore/coal/special(src.loc)
 		new /obj/item/weapon/ore/coal/special(src.loc)
@@ -135,9 +136,8 @@
 
 /obj/item/weapon/present/special/attack_self(mob/user, key)
 	. = ..()
-	//Free whitelist adding. It could be OP, but it's fucking New Year, why not?
-	var/client/C = user.client
-	if(!C.prefs.warnbans)
+	// Free whitelist adding. It could be OP, but it's fucking New Year, why not?
+	if(!bad_chance)
 		if(prob(1))
 			whitelist_gift()
 

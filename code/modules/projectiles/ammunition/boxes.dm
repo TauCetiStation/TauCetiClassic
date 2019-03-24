@@ -191,7 +191,7 @@
 	name = "shotgun shells box (buckshot)"
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "12gbuckshot"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 	max_ammo = 20

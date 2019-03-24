@@ -4,7 +4,7 @@
 	id = "coolant"
 	description = "Industrial cooling substance."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#c8a5dc" // rgb: 200, 165, 220
 
 /datum/chemical_reaction/coolant
 	name = "Coolant"
@@ -16,7 +16,7 @@
 /obj/structure/reagent_dispensers/coolanttank
 	name = "coolant tank"
 	desc = "A tank of industrial coolant."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/xenoarchaeology/machinery.dmi'
 	icon_state = "coolanttank"
 	amount_per_transfer_from_this = 10
 

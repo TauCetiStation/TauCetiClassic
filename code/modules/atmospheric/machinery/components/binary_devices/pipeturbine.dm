@@ -69,7 +69,7 @@
 		overlays += image('icons/obj/pipeturbine.dmi', "hi-turb")
 
 /obj/machinery/atmospherics/components/pipeturbine/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 		anchored = !anchored
 		user.visible_message(
@@ -161,7 +161,7 @@
 
 
 /obj/machinery/power/turbinemotor/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		anchored = !anchored
 		turbine = null
 		to_chat(user, "<span class='notice'>You [anchored ? "secure" : "unsecure"] the bolts holding \the [src] to the floor.</span>")

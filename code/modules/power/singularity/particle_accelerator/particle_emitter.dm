@@ -39,10 +39,13 @@
 		switch(strength)
 			if(0)
 				A = new/obj/effect/accelerated_particle/weak(T, dir)
+				playsound(src, 'sound/machines/cyclotron.ogg', 30, 0)
 			if(1)
 				A = new/obj/effect/accelerated_particle(T, dir)
+				playsound(src, 'sound/machines/cyclotron.ogg', 70, 0)
 			if(2)
 				A = new/obj/effect/accelerated_particle/strong(T, dir)
+				playsound(src, 'sound/machines/cyclotron.ogg', 100, 0)
 		if(A)
 			A.dir = src.dir
 			return 1

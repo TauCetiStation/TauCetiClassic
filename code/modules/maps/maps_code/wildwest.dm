@@ -93,7 +93,7 @@
 			if("Peace")
 				user << "<B>Whatever alien sentience that the Wish Granter possesses is satisfied with your wish. There is a distant wailing as the last of the Faithless begin to die, then silence.</B>"
 				user << "You feel as if you just narrowly avoided a terrible fate..."
-				for(var/mob/living/simple_animal/hostile/faithless/F in living_mob_list)
+				for(var/mob/living/simple_animal/hostile/faithless/F in alive_mob_list)
 					F.health = -10
 					F.stat = DEAD
 					F.icon_state = "faithless_dead"
@@ -108,7 +108,7 @@
 	density = 1
 	anchored = 1
 	layer = 3
-	icon = 'icons/mob/critter.dmi'
+	icon = 'icons/mob/animal.dmi'
 	icon_state = "blob"
 	var/triggered = 0
 
@@ -158,7 +158,7 @@
 	spawn(rand(800,1200))
 		if(C.stat == DEAD)
 			dead_mob_list -= C
-			living_mob_list += C
+			alive_mob_list += C
 		C.stat = CONSCIOUS
 		C.tod = null
 		C.setToxLoss(0)

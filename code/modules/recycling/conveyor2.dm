@@ -117,7 +117,7 @@
 
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(iscrowbar(I))
 		if(!(stat & BROKEN))
 			var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
 			C.id = id
@@ -126,7 +126,7 @@
 		to_chat(user, "<span class='notice'>You remove the conveyor belt.</span>")
 		qdel(src)
 		return
-	if(istype(I, /obj/item/weapon/wrench))
+	if(iswrench(I))
 		if(!(stat & BROKEN))
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			dir = turn(dir,-45)
@@ -216,6 +216,7 @@
 
 /obj/machinery/conveyor_switch/atom_init(mapload, newid)
 	..()
+	conveyor_switch_list += src
 	if(!id)
 		id = newid
 	update()
@@ -226,6 +227,10 @@
 	for(var/obj/machinery/conveyor/C in machines)
 		if(C.id == id)
 			conveyors += C
+
+/obj/machinery/conveyor_switch/Destroy()
+	conveyor_switch_list -= src
+	return ..()
 
 // update the icon depending on the position
 
@@ -275,13 +280,13 @@
 	update()
 
 	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in machines)
+	for(var/obj/machinery/conveyor_switch/S in conveyor_switch_list)
 		if(S.id == src.id)
 			S.position = position
 			S.update()
 
 /obj/machinery/conveyor_switch/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(iscrowbar(I))
 		var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
 		C.id = id
 		transfer_fingerprints_to(C)
@@ -302,7 +307,7 @@
 	icon_state = "conveyor0"
 	name = "conveyor belt assembly"
 	desc = "A conveyor belt assembly."
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 	var/id = "" //inherited by the belt
 
 /obj/item/conveyor_construct/attackby(obj/item/I, mob/user)
@@ -329,7 +334,7 @@
 	desc = "A conveyor control switch assembly."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 	var/id = "" //inherited by the switch
 
 /obj/item/conveyor_switch_construct/atom_init()

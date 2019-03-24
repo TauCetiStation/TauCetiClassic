@@ -490,7 +490,7 @@
 /area/awaymission/BMPship1)
 "bB" = (
 /obj/machinery/gateway/centeraway{
-	calibrated = 0
+	name = "Black Market Gateway"
 	},
 /obj/structure/cable{
 	d2 = 4;

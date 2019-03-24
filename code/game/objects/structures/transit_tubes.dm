@@ -512,7 +512,7 @@
 //  but it is probably safer to assume the existence of, and
 //  rely on, a sufficiently smart compiler/optimizer.
 /obj/structure/transit_tube/proc/parse_dirs(text)
-	var/global/list/direction_table = list()
+	var/static/list/direction_table = list()
 
 	if(text in direction_table)
 		return direction_table[text]

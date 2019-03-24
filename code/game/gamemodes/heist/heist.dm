@@ -10,7 +10,7 @@
 	name = "obj loot"
 	icon_state = "x3"
 
-/datum/game_mode/
+/datum/game_mode
 	var/list/datum/mind/raiders = list()  //Antags.
 
 /datum/game_mode/heist
@@ -249,7 +249,7 @@
 	..()
 	return 1
 
-datum/game_mode/proc/auto_declare_completion_heist()
+/datum/game_mode/proc/auto_declare_completion_heist()
 	var/text =""
 	if(raiders.len)
 		var/loot_savefile = "data/pirate_loot.sav" //loot statistics

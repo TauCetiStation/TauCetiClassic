@@ -1,5 +1,6 @@
 /obj/machinery/portable_atmospherics/canister
 	name = "canister: \[CAUTION\]"
+	desc = "Canister with fairly high gas pressure."
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "yellow"
 
@@ -277,7 +278,7 @@ update_flag
 	qdel(src)
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user)
-	if(user.a_intent != I_HURT && istype(W, /obj/item/weapon/weldingtool))
+	if(user.a_intent != I_HURT && iswelder(W))
 		if(user.is_busy()) return
 		var/obj/item/weapon/weldingtool/WT = W
 		if(stat & BROKEN)
@@ -291,7 +292,7 @@ update_flag
 			to_chat(user, "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>")
 		return 1
 
-	if(!istype(W, /obj/item/weapon/wrench) && !istype(W, /obj/item/weapon/tank) && !istype(W, /obj/item/device/analyzer) && !istype(W, /obj/item/device/pda))
+	if(!iswrench(W) && !istype(W, /obj/item/weapon/tank) && !istype(W, /obj/item/device/analyzer) && !istype(W, /obj/item/device/pda))
 		visible_message("\red [user] hits the [src] with a [W]!")
 		src.add_fingerprint(user)
 		investigate_log("was smacked with \a [W] by [key_name(user)].", INVESTIGATE_ATMOS)

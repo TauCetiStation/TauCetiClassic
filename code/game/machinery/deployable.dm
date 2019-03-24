@@ -160,7 +160,7 @@ for reference:
 	icon_state = "barrier[locked]"
 
 /obj/machinery/deployable/barrier/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/card/id/))
+	if (istype(W, /obj/item/weapon/card/id))
 		if (src.allowed(user))
 			if	(src.emagged < 2.0)
 				src.locked = !src.locked
@@ -198,7 +198,7 @@ for reference:
 			s.start()
 			visible_message("\red BZZzZZzZZzZT")
 			return
-	else if (istype(W, /obj/item/weapon/wrench))
+	else if (iswrench(W))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if (src.health < src.maxhealth)
 			src.health = src.maxhealth
@@ -265,7 +265,7 @@ for reference:
 	visible_message("\red <B>[src] blows apart!</B>")
 	var/turf/Tsec = get_turf(src)
 
-/*	var/obj/item/stack/rods/ =*/
+/*	var/obj/item/stack/rods =*/
 	new /obj/item/stack/rods(Tsec)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()

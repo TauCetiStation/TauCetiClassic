@@ -23,7 +23,7 @@
 	new /obj/item/clothing/head/helmet/space/sk(src)
 	new /obj/item/clothing/suit/space/sk(src)
 
-	switch (pickweight(list("small" = 55, "aid" = 25, "tank" = 10, "both" = 10, "nothing" = 4, "delete" = 1)))
+	switch (pickweight(list("small" = 55, "aid" = 25, "tank" = 10, "both" = 10, "nothing" = 4)))
 		if ("small")
 			for (var/i in 1 to 2)
 				new /obj/item/weapon/tank/emergency_oxygen(src)
@@ -43,11 +43,7 @@
 			new /obj/item/clothing/mask/breath(src)
 			new /obj/item/weapon/storage/firstaid/o2(src)
 		if ("nothing")
-			// doot
-
-		// teehee - Ah, tg coders...
-		if ("delete")
-			qdel(src)
+			return
 
 		//If you want to re-add fire, just add "fire" = 15 to the pick list.
 		/*if ("fire")

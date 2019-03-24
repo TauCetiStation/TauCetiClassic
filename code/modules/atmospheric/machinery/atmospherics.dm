@@ -29,7 +29,7 @@ Pipelines + Other Objects -> Pipe network
 	var/icon_connect_type = "" //"-supply" or "-scrubbers"
 
 	var/pipe_color
-	var/global/datum/pipe_icon_manager/icon_manager
+	var/static/datum/pipe_icon_manager/icon_manager
 
 	var/device_type = 0
 	var/list/obj/machinery/atmospherics/nodes
@@ -104,6 +104,13 @@ Pipelines + Other Objects -> Pipe network
 	if(target.initialize_directions & get_dir(target,src))
 		return 1
 
+/obj/machinery/atmospherics/proc/has_free_nodes()
+	var/connections_count = 0
+	for(DEVICE_TYPE_LOOP)
+		if(NODE_I)
+			connections_count++
+	return (connections_count != device_type)
+
 /obj/machinery/atmospherics/proc/pipeline_expansion()
 	return nodes
 
@@ -144,7 +151,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/analyzer))
 		return
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(iswrench(W))
 		if(user.is_busy()) return
 		if(can_unwrench(user))
 			var/turf/T = get_turf(src)
@@ -246,7 +253,7 @@ Pipelines + Other Objects -> Pipe network
 	else
 		return FALSE
 
-obj/machinery/atmospherics/proc/check_connect_types(obj/machinery/atmospherics/atmos1, obj/machinery/atmospherics/atmos2)
+/obj/machinery/atmospherics/proc/check_connect_types(obj/machinery/atmospherics/atmos1, obj/machinery/atmospherics/atmos2)
 	return (atmos1.connect_types & atmos2.connect_types)
 
 /obj/machinery/atmospherics/proc/check_connect_types_construction(obj/machinery/atmospherics/atmos1, obj/item/pipe/pipe2)

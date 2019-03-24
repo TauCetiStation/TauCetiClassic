@@ -19,7 +19,7 @@
 	m_amt = 10000
 	g_amt = 5000
 	flags = CONDUCT
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	origin_tech = "materials=1;biotech=1"
 
 /*
@@ -33,7 +33,7 @@
 	m_amt = 5000
 	g_amt = 2500
 	flags = CONDUCT
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
 
@@ -48,7 +48,7 @@
 	m_amt = 5000
 	g_amt = 2500
 	flags = CONDUCT
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
 
@@ -65,14 +65,14 @@
 	g_amt = 10000
 	flags = CONDUCT
 	force = 15.0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), pick("\red <b>[user] is pressing the [src.name] to \his temple and activating it! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is pressing [src.name] to \his chest and activating it! It looks like \he's trying to commit suicide.</b>"))
-		return (BRUTELOSS)
+/obj/item/weapon/surgicaldrill/suicide_act(mob/user)
+	to_chat(viewers(user), pick("\red <b>[user] is pressing the [src.name] to \his temple and activating it! It looks like \he's trying to commit suicide.</b>", \
+						"\red <b>[user] is pressing [src.name] to \his chest and activating it! It looks like \he's trying to commit suicide.</b>"))
+	return (BRUTELOSS)
 
 /*
  * Scalpel
@@ -86,7 +86,7 @@
 	force = 10.0
 	sharp = 1
 	edge = 1
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -95,11 +95,11 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>"))
-		return (BRUTELOSS)
+/obj/item/weapon/scalpel/suicide_act(mob/user)
+	to_chat(viewers(user), pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
+						"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
+						"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>"))
+	return (BRUTELOSS)
 
 /*
  * Researchable Scalpels
@@ -137,11 +137,11 @@
 	name = "circular saw"
 	desc = "For heavy duty cutting."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "saw3"
+	icon_state = "saw"
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	flags = CONDUCT
 	force = 15.0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 9.0
 	throw_speed = 3
 	throw_range = 5
@@ -158,7 +158,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "bone-gel"
 	force = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 1.0
 
 /obj/item/weapon/FixOVein
@@ -168,7 +168,7 @@
 	force = 0
 	throwforce = 1.0
 	origin_tech = "materials=1;biotech=3"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	var/usage_amount = 10
 
 /obj/item/weapon/bonesetter
@@ -179,5 +179,5 @@
 	throwforce = 9.0
 	throw_speed = 3
 	throw_range = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("attacked", "hit", "bludgeoned")

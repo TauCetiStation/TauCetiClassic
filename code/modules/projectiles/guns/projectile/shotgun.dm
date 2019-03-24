@@ -3,10 +3,10 @@
 	desc = "Useful for sweeping alleys."
 	icon_state = "shotgun"
 	item_state = "shotgun"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	force = 10
 	flags =  CONDUCT
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
 	var/recentpump = 0 // to prevent spammage
@@ -66,17 +66,17 @@
 	icon_state = "cshotgun"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shotcom
-	w_class = 5
+	w_class = ITEM_SIZE_HUGE
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel
 	name = "double-barreled shotgun"
 	desc = "A true classic."
 	icon_state = "dshotgun"
 	item_state = "shotgun"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	force = 10
 	flags =  CONDUCT
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "combat=3;materials=1"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 	var/open = 0
@@ -101,19 +101,23 @@
 			to_chat(user, "<span class='notice'>You can't load shell while [src] is closed!</span>")
 	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
 		if(short) return
-		to_chat(user, "<span class='notice'>You begin to shorten the barrel of \the [src].</span>")
 		if(get_ammo())
+			to_chat(user, "<span class='notice'>You try to shorten the barrel of \the [src].</span>")
+			if(chambered.BB)
+				playsound(user, fire_sound, 50, 1)
+				user.visible_message("<span class='danger'>The shotgun goes off!</span>", "<span class='danger'>The shotgun goes off in your face!</span>")
+			else
+				to_chat(user, "<span class='danger'>You hear a clicking sound and thank God that bullet casing was empty.</span>")
 			afterattack(user, user)	//will this work?
 			afterattack(user, user)	//it will. we call it twice, for twice the FUN
-			playsound(user, fire_sound, 50, 1)
-			user.visible_message("<span class='danger'>The shotgun goes off!</span>", "<span class='danger'>The shotgun goes off in your face!</span>")
 			return
+		to_chat(user, "<span class='notice'>You begin to shorten the barrel of \the [src].</span>")
 		if(!user.is_busy() && do_after(user, 30, target = src))	//SHIT IS STEALTHY EYYYYY
 			icon_state = "sawnshotgun[open ? "-o" : ""]"
-			w_class = 3.0
+			w_class = ITEM_SIZE_NORMAL
 			item_state = "gun"
-			slot_flags &= ~SLOT_BACK	//you can't sling it on your back
-			slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
+			slot_flags &= ~SLOT_FLAGS_BACK	//you can't sling it on your back
+			slot_flags |= SLOT_FLAGS_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 			to_chat(user, "<span class='warning'>You shorten the barrel of \the [src]!</span>")
 			name = "sawn-off shotgun"
 			desc = "Omar's coming!"
@@ -169,7 +173,7 @@
 	item_state = "repeater"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/repeater
-	w_class = 5
+	w_class = ITEM_SIZE_HUGE
 	slot_flags = 0
 
 /obj/item/weapon/gun/projectile/shotgun/repeater/attack_self(mob/living/user)
@@ -199,7 +203,7 @@
 	item_state = "bolt-action"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/a3006_clip
-	w_class = 5
+	w_class = ITEM_SIZE_HUGE
 	slot_flags = 0
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action/pump(mob/M)

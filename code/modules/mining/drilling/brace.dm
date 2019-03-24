@@ -26,7 +26,7 @@
 	if(default_deconstruction_crowbar(W, 1))
 		return
 
-	if(istype(W,/obj/item/weapon/wrench))
+	if(iswrench(W))
 
 		if(istype(get_turf(src), /turf/space))
 			to_chat(user, "<span class='notice'>You can't anchor something to empty space. Idiot.</span>")

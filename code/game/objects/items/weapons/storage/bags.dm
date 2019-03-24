@@ -22,7 +22,7 @@
 	allow_quick_empty = 1
 	display_contents_with_number = 0 // UNStABLE AS FuCK, turn on when it stops crashing clients
 	use_to_pickup = 1
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 
 // -----------------------------
 //           Book bag
@@ -134,7 +134,7 @@
 	desc = "This little bugger can be used to store and transport ores."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "satchel"
-	slot_flags = SLOT_BELT | SLOT_POCKET
+	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_POCKET
 	w_class = ITEM_SIZE_NORMAL
 	max_storage_space = 100
 	can_hold = list("/obj/item/weapon/ore", "/obj/item/bluespace_crystal")

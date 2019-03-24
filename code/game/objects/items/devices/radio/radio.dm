@@ -27,10 +27,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	var/grid = FALSE // protect from EMP
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throw_speed = 2
 	throw_range = 9
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	g_amt = 25
 	m_amt = 75
 	var/const/FREQ_LISTENING = 1
@@ -40,10 +40,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/datum/radio_frequency/radio_connection
 	var/list/datum/radio_frequency/secure_radio_connections = new
 
-	proc/set_frequency(new_frequency)
-		radio_controller.remove_object(src, frequency)
-		frequency = new_frequency
-		radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
+/obj/item/device/radio/proc/set_frequency(new_frequency)
+	radio_controller.remove_object(src, frequency)
+	frequency = new_frequency
+	radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
 
 /obj/item/device/radio/atom_init()
 	. = ..()
@@ -478,7 +478,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				heard_voice += R
 
 		if (length(heard_masked) || length(heard_normal) || length(heard_voice) || length(heard_garbled))
-			var/part_a = "<span class='radio'><span class='name'>"
+
 			//var/part_b = "</span><b> [bicon(src)]\[[format_frequency(frequency)]\]</b> <span class='message'>"
 			var/freq_text
 			switch(display_freq)
@@ -501,15 +501,18 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			if(!freq_text)
 				freq_text = format_frequency(display_freq)
 
-			var/part_b = "</span><b> [bicon(src)]\[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
-			var/part_c = "</span></span>"
+			var/part_a_span = "radio"
 
 			if (display_freq==SYND_FREQ)
-				part_a = "<span class='syndradio'><span class='name'>"
+				part_a_span = "syndradio"
 			else if (display_freq==COMM_FREQ)
-				part_a = "<span class='comradio'><span class='name'>"
+				part_a_span = "comradio"
 			else if (display_freq in DEPT_FREQS)
-				part_a = "<span class='deptradio'><span class='name'>"
+				part_a_span = "deptradio"
+
+			var/part_a = "<span class='[part_a_span]'><span class='name'>"
+			var/part_b = "</span><b> [bicon(src)]\[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
+			var/part_c = "</span></span>"
 
 			var/quotedmsg = M.say_quote(message)
 
@@ -661,14 +664,14 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		user.drop_item()
 		var/obj/item/device/radio_grid/new_grid = W
 		new_grid.attach(src)
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(iswirecutter(W))
 		if(!grid)
 			to_chat(user, "<span class='userdanger'>Nothing to cut here!</span>")
 			return
 		to_chat(user, "<span class='notice'>You pop out Shielded grid from [src]!</span>")
 		var/obj/item/device/radio_grid/new_grid = new(get_turf(loc))
 		new_grid.dettach(src)
-	else if (istype(W, /obj/item/weapon/screwdriver))
+	else if (isscrewdriver(W))
 		b_stat = !b_stat
 		add_fingerprint(user)
 		playsound(user, 'sound/items/Screwdriver.ogg', 50, 1)
@@ -702,10 +705,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/borg/attackby(obj/item/weapon/W, mob/user)
 //	..()
 	user.set_machine(src)
-	if (!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey/ ))))
+	if (!( isscrewdriver(W) || (istype(W, /obj/item/device/encryptionkey))))
 		return
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		if(keyslot)
 
 
@@ -726,7 +729,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		else
 			to_chat(user, "This radio doesn't have any encryption keys!")
 
-	if(istype(W, /obj/item/device/encryptionkey/))
+	if(istype(W, /obj/item/device/encryptionkey))
 		if(keyslot)
 			to_chat(user, "The radio can't hold another key!")
 			return
@@ -830,7 +833,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio_grid
 	name = "Shielded grid"
 	desc = "A metal grid, attached to circuit to protect it from emitting."
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "radio_grid"
 

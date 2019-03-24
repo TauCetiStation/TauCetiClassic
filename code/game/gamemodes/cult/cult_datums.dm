@@ -325,7 +325,7 @@ var/list/cult_runes = list()
 		for(var/obj/item/organ/external/BP in H.bodyparts)
 			if(BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED | ORGAN_DESTROYED | ORGAN_DEAD | ORGAN_ARTERY_CUT))
 				BP.rejuvenate()
-				to_chat(user, "<span class=cult'>You were honored by Nar-Sie. You can feel his power in your [BP]</span>")
+				to_chat(user, "<span class='cult'>You were honored by Nar-Sie. You can feel his power in your [BP]</span>")
 				break
 	user.heal_overall_damage(1.2 * drain, drain)
 
@@ -481,10 +481,10 @@ var/list/cult_runes = list()
 			return
 	if(ghost.can_reenter_corpse)
 		if(holder.loc != ajourned.loc)
-			to_chat(ghost, "<span class='cult'>The astral cord that ties your body and your spirit has been severed!</span")
+			to_chat(ghost, "<span class='cult'>The astral cord that ties your body and your spirit has been severed!</span>")
 			ghost.can_reenter_corpse = FALSE
 	else if(holder.loc == ajourned.loc)
-		to_chat(ghost, "<span class='cult'>The astral cord has been restored!</span")
+		to_chat(ghost, "<span class='cult'>The astral cord has been restored!</span>")
 		ghost.can_reenter_corpse = TRUE
 	if(cooldown < world.time)
 		cooldown = world.time + 100
@@ -1038,13 +1038,13 @@ var/list/cult_runes = list()
 		to_chat(user, "<span class='warning'>You cant swap minds with yourself.</span>")
 		return FALSE
 	else if(!(target.type in compatible_mobs))
-		to_chat(user, "<span class='warning'>Their mind isn't compatible with yours.")
+		to_chat(user, "<span class='warning'>Their mind isn't compatible with yours.</span>")
 		return FALSE
 	else if(target.stat == DEAD)
 		to_chat(user, "<span class='warning'>Swapping your mind with a dead body is a bad idea, isn't it?</span>")
 		return FALSE
 	else if(!target.mind || !target.key)
-		to_chat(user, "<span class='warning'>He is catatonic, even our magic cant affect him.")
+		to_chat(user, "<span class='warning'>He is catatonic, even our magic cant affect him.</span>")
 		return FALSE
 	else if(brainswapping)
 		to_chat(user, "<span class='warning'>Someone is already conducting a ritual here.</span>")
@@ -1067,10 +1067,10 @@ var/list/cult_runes = list()
 	holder_reaction(user)
 	user.visible_message("<span class='userdanger'>The rune disappears with a flash of red light, and a set of armor appears on [user]...</span>", \
 	"<span class='userdanger'>You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.</span>")
-	user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
-	user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
-	user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
-	user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
+	user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), SLOT_HEAD)
+	user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), SLOT_WEAR_SUIT)
+	user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), SLOT_SHOES)
+	user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), SLOT_BACK)
 	user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
 	playsound(holder, 'sound/magic/cult_equip.ogg', 100, 2)
 	qdel(holder)

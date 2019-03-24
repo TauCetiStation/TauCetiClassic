@@ -1,10 +1,10 @@
 /obj/item/device/flashlight/flare/torch
 	name = "torch"
 	desc = "A torch fashioned from some rags and a plank."
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	icon_state = "torch"
 	item_state = "torch"
-	light_color = "#E25822"
+	light_color = LIGHT_COLOR_FIRE
 	on_damage = 10
 	slot_flags = null
 	action_button_name = null
@@ -58,6 +58,8 @@
 	if(prob(33) || old)
 		make_old()
 
+/obj/item/stack/medical/bruise_pack/rags/update_icon()
+	return
 
 //////SHITTY BONFIRE PORT///////
 
@@ -67,7 +69,7 @@
 	desc = "For grilling, broiling, charring, smoking, heating, roasting, toasting, simmering, searing, melting, and occasionally burning things."
 	icon = 'icons/obj/structures/scrap/bonfire.dmi'
 	icon_state = "bonfire"
-	light_color = "#E25822"
+	light_color = LIGHT_COLOR_FIRE
 	density = FALSE
 	anchored = TRUE
 	buckle_lying = 0
@@ -94,7 +96,7 @@
 		R.use(1)
 		can_buckle = TRUE
 		buckle_require_restraints = TRUE
-		to_chat(user, "<span class='italics'>You add a rod to \the [src].")
+		to_chat(user, "<i>You add a rod to \the [src].</i>")
 		var/image/stake = image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_rod")
 		stake.pixel_y = 16
 		stake.layer = 5
@@ -103,7 +105,7 @@
 			//if("Grill")
 			//	R.use(1)
 			//	grill = TRUE
-			//	to_chat(user, "<span class='italics'>You add a grill to \the [src].")
+			//	to_chat(user, "<i>You add a grill to \the [src].</i>")
 			//	overlays += image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_grill")
 			//else
 			//	return ..()

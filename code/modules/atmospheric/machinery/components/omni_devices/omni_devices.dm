@@ -48,6 +48,7 @@
 	build_icons()
 
 /obj/machinery/atmospherics/components/omni/update_icon()
+	..()
 	if(stat & NOPOWER)
 		overlays = overlays_off
 	else if(error_check())
@@ -74,7 +75,7 @@
 	return TRUE
 
 /obj/machinery/atmospherics/components/omni/attackby(obj/item/weapon/W, mob/user)
-	if(!istype(W, /obj/item/weapon/wrench))
+	if(!iswrench(W))
 		return ..()
 
 	var/int_pressure = 0

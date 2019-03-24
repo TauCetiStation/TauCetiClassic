@@ -1,3 +1,12 @@
+///Process_Grab()
+///Called by client/Move()
+///Checks to see if you are grabbing anything and if moving will affect your grab.
+/client/proc/Process_Grab()
+	for(var/obj/item/weapon/grab/G in mob.GetGrabs())
+		if(G.state == GRAB_KILL) //no wandering across the station/asteroid while choking someone
+			mob.visible_message("<span class='warning'>[mob] lost \his tight grip on [G.affecting]'s neck!</span>")
+			G.set_state(GRAB_NECK)
+
 /obj/item/weapon/grab
 	name = "grab"
 	icon = 'icons/mob/screen1.dmi'
@@ -6,10 +15,9 @@
 	var/obj/screen/grab/hud = null
 	var/mob/living/affecting = null
 	var/mob/living/carbon/human/assailant = null
-	var/state = GRAB_PASSIVE
+	var/state = GRAB_NONE
 
 	var/allow_upgrade = 1
-	var/last_action = 0
 	var/last_hit_zone = 0
 	var/force_down //determines if the affecting mob will be pinned to the ground
 	var/dancing //determines if assailant and affecting keep looking at each other. Basically a wrestling position
@@ -17,23 +25,61 @@
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 
+/mob/proc/Grab(atom/movable/target, force_state, show_warnings = TRUE)
+	if(QDELETED(src) || QDELETED(target))
+		return
+	if(lying || target == src || target.anchored)
+		return
+	if(!isturf(target.loc) || restrained())
+		return
+	for(var/obj/item/weapon/grab/G in GetGrabs())
+		if(G.affecting == target)
+			if(show_warnings)
+				to_chat(src, "<span class='warning'>You already grabbed [target]</span>")
+			return
+	if(!target.Adjacent(src))
+		return
+	if(get_active_hand() && get_inactive_hand())
+		if(show_warnings)
+			to_chat(src, "<span class='warning'>You are holding too many stuff already.</span>")
+		return
+	if(ismob(target))
+		var/mob/M = target
+		if(!(M.status_flags & CANPUSH))
+			return
+		if(M.buckled)
+			if(show_warnings)
+				to_chat(src, "<span class='notice'>You cannot grab [M], \he is buckled in!</span>")
+			return
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.w_uniform)
+				H.w_uniform.add_fingerprint(src)
+			if(H.pull_damage())
+				if(show_warnings)
+					to_chat(src, "<span class='danger'>Grabbing \the [H] in their current condition would probably be a bad idea.</span>")
+		M.inertia_dir = 0
 
-/obj/item/weapon/grab/atom_init(mapload, mob/victim)
+	new /obj/item/weapon/grab(src, target, force_state)
+
+/obj/item/weapon/grab/atom_init(mapload, mob/victim, initial_state = GRAB_PASSIVE)
 	. = ..()
 	assailant = loc
 	affecting = victim
 
 	if(affecting.anchored)
 		return INITIALIZE_HINT_QDEL
-	last_action = world.time - 10
 
 	hud = new /obj/screen/grab(src)
-	hud.icon_state = "reinforce"
-	icon_state = "grabbed"
-	hud.name = "reinforce grab"
 	hud.master = src
+
+	victim.grabbed_by += src
+	victim.LAssailant = assailant
+
+	set_state(initial_state)
+	assailant.put_in_hands(src)
 
 	//check if assailant is grabbed by victim as well
 	if(assailant.grabbed_by)
@@ -42,7 +88,16 @@
 				G.dancing = 1
 				G.adjust_position()
 				dancing = 1
-	adjust_position()
+
+	synch()
+	playsound(victim, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+
+	if(state == GRAB_PASSIVE)
+		assailant.visible_message("<span class='red'>[assailant] has grabbed [affecting] passively!</span>")
+	else if(state == GRAB_AGGRESSIVE)
+		visible_message("<span class='warning'><b>\The [assailant]</b> seizes [affecting] aggressively!</span>")
+
+	START_PROCESSING(SSobj, src)
 
 //Used by throw code to hand over the mob, instead of throwing the grab. The grab is then deleted by the throw code.
 /obj/item/weapon/grab/proc/throw_held()
@@ -65,6 +120,35 @@
 		else
 			qdel(src)
 
+/obj/item/weapon/grab/proc/set_state(_state)
+	assailant.SetNextMove(CLICK_CD_GRAB)
+
+	if(_state != state)
+		state = _state
+		switch(state)
+			if(GRAB_PASSIVE)
+				hud.name = "reinforce grab ([affecting])"
+				hud.icon_state = "reinforce"
+				icon_state = "grabbed"
+			if(GRAB_AGGRESSIVE)
+				hud.icon_state = "reinforce1"
+				icon_state = "grabbed1"
+			if(GRAB_NECK)
+				hud.name = "kill ([affecting])"
+				hud.icon_state = "kill"
+				icon_state = "grabbed+1"
+			if(GRAB_KILL)
+				hud.icon_state = "kill1"
+		adjust_position()
+
+/mob/proc/StopGrabs()
+	for(var/obj/item/weapon/grab/G in get_hand_slots())
+		qdel(G)
+
+/mob/proc/GetGrabs()
+	. = list()
+	for(var/obj/item/weapon/grab/G in get_hand_slots())
+		. += G
 
 /obj/item/weapon/grab/process()
 	confirm()
@@ -186,7 +270,7 @@
 				assailant.set_dir(get_dir(assailant, affecting))
 		if(GRAB_AGGRESSIVE)
 			shift = 12
-		if(GRAB_NECK, GRAB_UPGRADING)
+		if(GRAB_NECK)
 			shift = -10
 			adir = assailant.dir
 			affecting.set_dir(assailant.dir)
@@ -213,17 +297,11 @@
 		return
 	if(!assailant)
 		return
-	if(state == GRAB_UPGRADING)
-		return
 	if(assailant.next_move > world.time)
-		return
-	if(world.time < (last_action + UPGRADE_COOLDOWN))
 		return
 	if(!assailant.canmove || assailant.lying)
 		qdel(src)
 		return
-
-	last_action = world.time
 
 	if(state < GRAB_AGGRESSIVE)
 		if(!allow_upgrade)
@@ -237,46 +315,36 @@
 			step_to(assailant, affecting)
 			assailant.set_dir(EAST) //face the victim
 			affecting.set_dir(SOUTH) //face up
-		state = GRAB_AGGRESSIVE
-		icon_state = "grabbed1"
-		hud.icon_state = "reinforce1"
+		set_state(GRAB_AGGRESSIVE)
 
 	else if(state < GRAB_NECK)
 		if(isslime(affecting))
 			to_chat(assailant, "<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>")
 			return
-
 		assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
-		state = GRAB_NECK
-		icon_state = "grabbed+1"
 		assailant.set_dir(get_dir(assailant, affecting))
 		affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has had their neck grabbed by [assailant.name] ([assailant.ckey])</font>"
 		assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Grabbed the neck of [affecting.name] ([affecting.ckey])</font>"
 		msg_admin_attack("[key_name(assailant)] grabbed the neck of [key_name(affecting)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[assailant.x];Y=[assailant.y];Z=[assailant.z]'>JMP</A>)")
-		hud.icon_state = "kill"
-		hud.name = "kill"
 		affecting.Stun(10) //10 ticks of ensured grab
+		set_state(GRAB_NECK)
 
-	else if(state < GRAB_UPGRADING)
+	else if(state < GRAB_KILL)
 		if(ishuman(affecting))
 			var/mob/living/carbon/human/AH = affecting
 			if(AH.is_in_space_suit())
 				to_chat(assailant, "<span class='notice'>You can't strangle him, because space helmet covers [affecting]'s neck.</span>")
 				return
-		assailant.visible_message("<span class='danger'>[assailant] starts to tighten \his grip on [affecting]'s neck!</span>")
-		hud.icon_state = "kill1"
 
-		state = GRAB_KILL
 		assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
 		affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been strangled (kill intent) by [assailant.name] ([assailant.ckey])</font>"
 		assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>"
 		msg_admin_attack("[key_name(assailant)] strangled (kill intent) [key_name(affecting)]")
 
-		assailant.next_move = world.time + 10
 		affecting.losebreath += 1
 		affecting.set_dir(WEST)
-	adjust_position()
 
+		set_state(GRAB_KILL)
 
 //This is used to make sure the victim hasn't managed to yackety sax away before using the grab.
 /obj/item/weapon/grab/proc/confirm()
@@ -299,14 +367,11 @@
 	if(!affecting)
 		return
 
-	if(world.time < (last_action + 20))
-		return
-
 	if(!M.Adjacent(user))
 		qdel(src)
 		return
 
-	last_action = world.time
+	assailant.SetNextMove(CLICK_CD_ACTION)
 
 	if(M == affecting)
 		if(ishuman(M))

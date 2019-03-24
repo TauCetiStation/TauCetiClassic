@@ -5,7 +5,7 @@
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi_empty"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "biotech=3"
 
 	req_access = list(access_robotics)
@@ -31,7 +31,7 @@
 		brainmob.container = src
 		brainmob.stat = CONSCIOUS
 		dead_mob_list -= brainmob//Update dem lists
-		living_mob_list += brainmob
+		alive_mob_list += brainmob
 
 		name = "Man-Machine Interface: [brainmob.real_name]"
 		icon_state = "mmi_full"
@@ -94,7 +94,7 @@
 		var/obj/item/brain/brain = new(user.loc)
 		brainmob.container = null//Reset brainmob mmi var.
 		brainmob.loc = brain//Throw mob into brain.
-		living_mob_list -= brainmob//Get outta here
+		alive_mob_list -= brainmob//Get outta here
 		brain.brainmob = brainmob//Set the brain to use the brainmob
 		brainmob = null
 		qdel(brainmob)

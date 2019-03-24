@@ -69,6 +69,7 @@
 	new /obj/item/clothing/under/rank/nursesuit (src)
 	new /obj/item/clothing/head/nursehat (src)
 	new /obj/item/clothing/under/rank/medical(src)
+	new /obj/item/clothing/under/rank/medical/skirt(src)
 	new /obj/item/clothing/under/rank/nurse(src)
 	new /obj/item/clothing/under/rank/orderly(src)
 	new /obj/item/clothing/suit/storage/labcoat(src)
@@ -112,6 +113,7 @@
 	new /obj/item/device/remote_device/chief_medical_officer(src)
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/under/rank/chief_medical_officer(src)
+	new /obj/item/clothing/under/rank/chief_medical_officer/skirt(src)
 	new /obj/item/clothing/suit/storage/labcoat/cmo(src)
 	new /obj/item/weapon/cartridge/cmo(src)
 	new /obj/item/clothing/gloves/latex/nitrile(src)
@@ -135,12 +137,12 @@
 /obj/structure/closet/secure_closet/chemical
 	name = "Chemical Closet"
 	desc = "Store dangerous chemicals in here."
-	icon_state = "medical1"
-	icon_closed = "medical"
-	icon_locked = "medical1"
+	icon_state = "chemical1"
+	icon_closed = "chemical"
+	icon_locked = "chemical1"
 	icon_opened = "medicalopen"
-	icon_broken = "medicalbroken"
-	icon_off = "medicaloff"
+	icon_broken = "chemicalbroken"
+	icon_off = "chemicaloff"
 	req_access = list(access_chemistry)
 
 /obj/structure/closet/secure_closet/chemical/PopulateContents()

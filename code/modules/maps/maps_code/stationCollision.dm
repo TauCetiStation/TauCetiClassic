@@ -18,23 +18,23 @@
 /*
  * Areas
  */
- //Gateroom gets its own APC specifically for the gate
- /area/awaymission/gateroom
+//Gateroom gets its own APC specifically for the gate
+/area/awaymission/gateroom
 
- //Library, medbay, storage room
- /area/awaymission/southblock
+//Library, medbay, storage room
+/area/awaymission/southblock
 
- //Arrivals, security, hydroponics, shuttles (since they dont move, they dont need specific areas)
- /area/awaymission/arrivalblock
+//Arrivals, security, hydroponics, shuttles (since they dont move, they dont need specific areas)
+/area/awaymission/arrivalblock
 
- //Crew quarters, cafeteria, chapel
- /area/awaymission/midblock
+//Crew quarters, cafeteria, chapel
+/area/awaymission/midblock
 
- //engineering, bridge (not really north but it doesnt really need its own APC)
- /area/awaymission/northblock
+//engineering, bridge (not really north but it doesnt really need its own APC)
+/area/awaymission/northblock
 
- //That massive research room
- /area/awaymission/research
+//That massive research room
+/area/awaymission/research
 
 //Syndicate shuttle
 /area/awaymission/syndishuttle
@@ -192,7 +192,7 @@ var/sc_safecode5 = "[rand(0,9)]"
 	if (istype(A,/mob/living))
 		var/mob/living/L = A
 		L.gib()
-	else if(istype(A,/obj/))
+	else if(istype(A,/obj))
 		var/obj/O = A
 		O.ex_act(1.0)
 		if(O) del(O)

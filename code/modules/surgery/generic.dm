@@ -279,6 +279,7 @@
 
 	min_duration = 110
 	max_duration = 160
+	allowed_species = null
 
 /datum/surgery_step/generic/cut_limb/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if (target_zone == O_EYES) // there are specific steps for eye surgery
@@ -290,7 +291,6 @@
 		return 0
 	if (BP.status & ORGAN_DESTROYED)
 		return 0
-	disallowed_species = null
 	return target_zone != BP_CHEST && target_zone != BP_GROIN && target_zone != BP_HEAD
 
 /datum/surgery_step/generic/cut_limb/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -325,8 +325,6 @@
 	if(target_zone == O_EYES)	//there are specific steps for eye surgery
 		return FALSE
 	if(!ishuman(target))
-		return FALSE
-	if(!(target.species && target.species.flags[IS_SYNTHETIC]))
 		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if(BP == null)
