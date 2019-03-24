@@ -175,9 +175,8 @@ var/list/alldepartments = list("Central Command")
 			scan = idcard
 
 	else if(iswrench(O))
-		if(O.use_tool(src, user, 20, volume = 50))
-			anchored = !anchored
-			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
+		anchored = !anchored
+		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 	return
 
 /proc/centcomm_fax(mob/sender, obj/item/weapon/paper/P)

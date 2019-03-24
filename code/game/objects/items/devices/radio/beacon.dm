@@ -110,7 +110,7 @@
 	if(H.health >= config.health_threshold_crit)
 		to_chat(user, "\blue [H.name] is in good condition.")
 		return
-	if(user.is_busy(src)) return
+	if(user.is_busy()) return
 	to_chat(user, "Planting...")
 
 	user.visible_message("\red [user.name] is trying to plant some kind of device on [target.name]!")

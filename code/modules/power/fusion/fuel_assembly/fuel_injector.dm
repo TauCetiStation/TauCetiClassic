@@ -71,13 +71,13 @@ var/list/fuel_injectors = list()
 		if(injecting)
 			to_chat(user, "<span class='warning'>Shut \the [src] off first!</span>")
 			return
-		if(W.use_tool(src, user, 20, volume = 75))
-			anchored = !anchored
-			if(anchored)
-				user.visible_message("\The [user] secures \the [src] to the floor.")
-			else
-				user.visible_message("\The [user] unsecures \the [src] from the floor.")
-			return
+		anchored = !anchored
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+		if(anchored)
+			user.visible_message("\The [user] secures \the [src] to the floor.")
+		else
+			user.visible_message("\The [user] unsecures \the [src] from the floor.")
+		return
 
 	return ..()
 

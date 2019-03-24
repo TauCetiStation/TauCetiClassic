@@ -179,7 +179,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	toolspeed = 1 //moving the delay to an item var so R&D can make improved picks. --NEO
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
-	var/drill_sound = 'sound/weapons/Genhit.ogg'
+	usesound = 'sound/weapons/Genhit.ogg'
 	var/drill_verb = "picking"
 	sharp = 1
 
@@ -279,7 +279,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	w_class = ITEM_SIZE_LARGE
 	m_amt = 3750
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
-	drill_sound = 'sound/items/drill.ogg'
+	usesound = 'sound/items/drill.ogg'
 	hitsound = 'sound/items/drill_hit.ogg'
 	drill_verb = "drill"
 	toolspeed = 0.6

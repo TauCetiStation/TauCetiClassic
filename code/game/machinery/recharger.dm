@@ -61,9 +61,9 @@
 		if(charging)
 			to_chat(user, "\red Remove the weapon first!")
 			return
-		if(G.use_tool(src, user, 20, volume = 75))
-			anchored = !anchored
-			to_chat(user, "You [anchored ? "attached" : "detached"] the recharger.")
+		anchored = !anchored
+		to_chat(user, "You [anchored ? "attached" : "detached"] the recharger.")
+		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 	if (anchored && !charging)
 		if(default_deconstruction_screwdriver(user, istype(src, /obj/machinery/recharger/wallcharger) ? "wrechargeropen" : "rechargeropen", istype(src, /obj/machinery/recharger/wallcharger) ? "wrecharger0" : "recharger0", G))
 			return

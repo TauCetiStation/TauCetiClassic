@@ -110,7 +110,7 @@
 		if(target.anchored)
 			return
 		visible_message("<span class='red'>[usr] starts stuffing [target.name] into the MMI.</span>", 3)
-	if(user.is_busy() || !use_tool(usr, usr, 20, volume = 50))
+	if(user.is_busy() || !do_after(usr, 20, target = usr))
 		return
 	if(target == user)
 		visible_message("<span class='red'>[user.name] climbs into the MMI.</span>","<span class='notice'>You climb into the MMI.</span>")

@@ -28,13 +28,12 @@
 		if(0)
 			// State 0
 			if(iswrench(W) && isturf(src.loc))
-				if(W.use_tool(src, user, 20, volume = 75))
-					to_chat(user, "You wrench the assembly into place.")
-					anchored = 1
-					state = 1
-					update_icon()
-					auto_turn()
-					return
+				to_chat(user, "You wrench the assembly into place.")
+				anchored = 1
+				state = 1
+				update_icon()
+				auto_turn()
+				return
 
 		if(1)
 			// State 1
@@ -46,12 +45,11 @@
 				return
 
 			else if(iswrench(W))
-				if(W.use_tool(src, user, 20, volume = 50))
-					to_chat(user, "You unattach the assembly from it's place.")
-					anchored = 0
-					update_icon()
-					state = 0
-					return
+				to_chat(user, "You unattach the assembly from it's place.")
+				anchored = 0
+				update_icon()
+				state = 0
+				return
 
 		if(2)
 			// State 2

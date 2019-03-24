@@ -847,13 +847,11 @@
 				return
 
 			else if(iswrench(W))
-				if(user.is_busy())
-					return
 				to_chat(user, "You remove the fire alarm assembly from the wall!")
-				if(W.use_tool(src, user, 20, volume = 50))
-					var/obj/item/alarm_frame/frame = new /obj/item/alarm_frame()
-					frame.loc = user.loc
-					qdel(src)
+				var/obj/item/alarm_frame/frame = new /obj/item/alarm_frame()
+				frame.loc = user.loc
+				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+				qdel(src)
 
 	return ..()
 
@@ -899,11 +897,10 @@ Code shamelessly copied from apc_frame
 
 /obj/item/alarm_frame/attackby(obj/item/weapon/W, mob/user)
 	if(iswrench(W))
-		if(W.use_tool(src, user, 20, volume = 50))
-			user.SetNextMove(CLICK_CD_RAPID)
-			new /obj/item/stack/sheet/metal(loc, 2)
-			qdel(src)
-			return
+		user.SetNextMove(CLICK_CD_RAPID)
+		new /obj/item/stack/sheet/metal(loc, 2)
+		qdel(src)
+		return
 	..()
 
 /obj/item/alarm_frame/proc/try_build(turf/on_wall)
@@ -1035,11 +1032,10 @@ FIRE ALARM
 					if(user.is_busy())
 						return
 					to_chat(user, "You remove the fire alarm assembly from the wall!")
-					if(W.use_tool(src, user, 20, volume = 50))
-						var/obj/item/firealarm_frame/frame = new /obj/item/firealarm_frame()
-						frame.loc = user.loc
-						playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-						qdel(src)
+					var/obj/item/firealarm_frame/frame = new /obj/item/firealarm_frame()
+					frame.loc = user.loc
+					playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+					qdel(src)
 		return
 
 	alarm()
@@ -1209,11 +1205,10 @@ Code shamelessly copied from apc_frame
 
 /obj/item/firealarm_frame/attackby(obj/item/weapon/W, mob/user)
 	if(iswrench(W))
-		if(W.use_tool(src, user, 20, volume = 50))
-			user.SetNextMove(CLICK_CD_RAPID)
-			new /obj/item/stack/sheet/metal(loc, 2)
-			qdel(src)
-			return
+		user.SetNextMove(CLICK_CD_RAPID)
+		new /obj/item/stack/sheet/metal(loc, 2)
+		qdel(src)
+		return
 	..()
 
 /obj/item/firealarm_frame/proc/try_build(turf/on_wall)

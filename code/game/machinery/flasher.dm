@@ -115,18 +115,17 @@
 
 /obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user)
 	if (iswrench(W))
-		if(W.use_tool(src, user, 20, volume = 50))
-			add_fingerprint(user)
-			src.anchored = !src.anchored
-			user.SetNextMove(CLICK_CD_INTERACT)
+		add_fingerprint(user)
+		src.anchored = !src.anchored
+		user.SetNextMove(CLICK_CD_INTERACT)
 
-			if (!src.anchored)
-				user.show_message(text("\red [src] can now be moved."))
-				src.overlays.Cut()
+		if (!src.anchored)
+			user.show_message(text("\red [src] can now be moved."))
+			src.overlays.Cut()
 
-			else if (src.anchored)
-				user.show_message(text("\red [src] is now secured."))
-				src.overlays += "[base_state]-s"
+		else if (src.anchored)
+			user.show_message(text("\red [src] is now secured."))
+			src.overlays += "[base_state]-s"
 
 /obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user)
 	return attack_hand(user)

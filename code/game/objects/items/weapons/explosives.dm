@@ -10,8 +10,7 @@
 		return
 	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/machinery/nuclearbomb))
 		return
-	if(user.is_busy())
-		return
+	if(user.is_busy()) return
 	to_chat(user, "Planting explosives...")
 	if(ismob(target))
 		var/mob/living/M = target

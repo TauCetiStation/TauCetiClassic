@@ -71,7 +71,7 @@
 		if(user.is_busy()) return
 		var/obj/item/device/measuring_tape/P = W
 		user.visible_message("<span class='notice'>[user] extends [P] towards [src].</span>","<span class='notice'>You extend [P] towards [src].</span>")
-		if(P.use_tool(src, user, 40, volume = 50))
+		if(P.use_tool(src, user, 40))
 			to_chat(user, "<span class='notice'>[bicon(P)] [src] has been excavated to a depth of [2*src.excavation_level]cm.</span>")
 		return
 

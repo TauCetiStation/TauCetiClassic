@@ -128,13 +128,13 @@
 		wires.interact(user)
 	else if (iswrench(I))
 		if (src.health < maxhealth)
-			if(I.use_tool(src, user, 20, volume = 50))
-				src.health = min(maxhealth, src.health+25)
-				user.visible_message("\red [user] repairs [src]!",
-									 "\blue You repair [src]!")
+			src.health = min(maxhealth, src.health+25)
+			user.visible_message(
+				"\red [user] repairs [src]!",
+				"\blue You repair [src]!"
+			)
 		else
 			to_chat(user, "\blue [src] does not need a repair!")
-
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1+I.force * 2))
 			unload(0)

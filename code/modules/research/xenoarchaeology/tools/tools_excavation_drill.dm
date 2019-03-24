@@ -7,7 +7,7 @@
 	excavation_amount = 0.5
 	toolspeed = 0.6
 	desc = "Basic archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision. The tip is adjustable from 1 to 30 cms."
-	drill_sound = 'sound/weapons/thudswoosh.ogg'
+	usesound = 'sound/weapons/thudswoosh.ogg'
 	drill_verb = "drilling"
 	force = 15.0
 	w_class = ITEM_SIZE_NORMAL

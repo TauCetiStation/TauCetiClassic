@@ -216,16 +216,14 @@
 
 	if(!anchored && isturf(loc))
 		if(iswrench(W))
-			if(W.use_tool(src, user, 20, volume = 75))
-				anchored = 1
-				user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>")
-				return 1
+			anchored = 1
+			user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>")
+			return 1
 	else
 		if(iswrench(W))
-			if(W.use_tool(src, user, 20, volume = 75))
-				anchored = 0
-				user.visible_message("<span class='notice'>[user] unwrenches the solar assembly from it's place.</span>")
-				return 1
+			anchored = 0
+			user.visible_message("<span class='notice'>[user] unwrenches the solar assembly from it's place.</span>")
+			return 1
 
 		if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
 			var/obj/item/stack/sheet/S = W

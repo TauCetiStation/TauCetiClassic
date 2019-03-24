@@ -38,6 +38,7 @@
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user)
 	if(iscrowbar(I))
 		if(!src.buckled_mob)
+			if(user.is_busy()) return
 			if(I.use_tool(src, user, 20, volume = 100))
 				to_chat(user, "<span class='notice'>You pry the spikes out of the frame.</span>")
 				new /obj/item/stack/rods(loc, 4)

@@ -199,20 +199,19 @@ for reference:
 			visible_message("\red BZZzZZzZZzZT")
 			return
 	else if (iswrench(W))
-		if(W.use_tool(src, user, 20, volume = 75))
-			user.SetNextMove(CLICK_CD_INTERACT)
-			if (src.health < src.maxhealth)
-				src.health = src.maxhealth
-				src.emagged = 0
-				src.req_access = list(access_security)
-				visible_message("\red [user] repairs \the [src]!")
-				return
-			else if (src.emagged > 0)
-				src.emagged = 0
-				src.req_access = list(access_security)
-				visible_message("\red [user] repairs \the [src]!")
-				return
+		user.SetNextMove(CLICK_CD_INTERACT)
+		if (src.health < src.maxhealth)
+			src.health = src.maxhealth
+			src.emagged = 0
+			src.req_access = list(access_security)
+			visible_message("\red [user] repairs \the [src]!")
 			return
+		else if (src.emagged > 0)
+			src.emagged = 0
+			src.req_access = list(access_security)
+			visible_message("\red [user] repairs \the [src]!")
+			return
+		return
 	else
 		user.SetNextMove(CLICK_CD_MELEE)
 		switch(W.damtype)

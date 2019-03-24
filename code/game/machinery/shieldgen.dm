@@ -277,17 +277,16 @@
 		if(locked)
 			to_chat(user, "The bolts are covered, unlocking this would retract the covers.")
 			return
-		if(W.use_tool(src, user, 20, volume = 100))
-			if(anchored)
-				to_chat(user, "\blue You unsecure the [src] from the floor!")
-				if(active)
-					to_chat(user, "\blue The [src] shuts off!")
-					src.shields_down()
-				anchored = 0
-			else
-				if(istype(get_turf(src), /turf/space)) return //No wrenching these in space!
-				to_chat(user, "\blue You secure the [src] to the floor!")
-				anchored = 1
+		if(anchored)
+			to_chat(user, "\blue You unsecure the [src] from the floor!")
+			if(active)
+				to_chat(user, "\blue The [src] shuts off!")
+				src.shields_down()
+			anchored = 0
+		else
+			if(istype(get_turf(src), /turf/space)) return //No wrenching these in space!
+			to_chat(user, "\blue You secure the [src] to the floor!")
+			anchored = 1
 
 
 	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
@@ -472,18 +471,19 @@
 		if(active)
 			to_chat(user, "Turn off the field generator first.")
 			return
-		else if(W.use_tool(src, user, 20, volume = 75))
-			if(state == 0)
-				state = 1
-				to_chat(user, "You secure the external reinforcing bolts to the floor.")
-				src.anchored = 1
-				return
+		if(state == 0)
+			state = 1
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			to_chat(user, "You secure the external reinforcing bolts to the floor.")
+			src.anchored = 1
+			return
 
-			else if(state == 1)
-				state = 0
-				to_chat(user, "You undo the external reinforcing bolts.")
-				src.anchored = 0
-				return
+		else if(state == 1)
+			state = 0
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			to_chat(user, "You undo the external reinforcing bolts.")
+			src.anchored = 0
+			return
 
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user))

@@ -59,16 +59,14 @@
 			if(!isturf(src.loc) || istype(src.loc, /turf/space))
 				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it</span>")
 			else
-				if(I.use_tool(src, user, 20, volume = 50))
-					to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor</span>")
-					anchored = 1
-					if(active)
-						to_chat(user, "<span class='notice'>The bolts lock in place</span>")
+				to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor</span>")
+				anchored = 1
+				if(active)
+					to_chat(user, "<span class='notice'>The bolts lock in place</span>")
 		else
 			if(!active)
-				if(I.use_tool(src, user, 20, volume = 50))
-					to_chat(user, "<span class='notice'>You wrench the bomb from the floor</span>")
-					anchored = 0
+				to_chat(user, "<span class='notice'>You wrench the bomb from the floor</span>")
+				anchored = 0
 			else
 				to_chat(user, "<span class='warning'>The bolts are locked down!</span>")
 
