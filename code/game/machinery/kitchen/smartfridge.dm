@@ -178,7 +178,7 @@
 
 	default_deconstruction_crowbar(O)
 
-	if(istype(O, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(O))
 		panel_open = !panel_open
 		to_chat(user, "You [panel_open ? "open" : "close"] the maintenance panel.")
 		overlays.Cut()

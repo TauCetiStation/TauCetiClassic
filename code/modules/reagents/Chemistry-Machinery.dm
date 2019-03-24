@@ -259,7 +259,7 @@
 		return
 
 	if(panel_open)
-		if(istype(I, /obj/item/weapon/crowbar))
+		if(iscrowbar(I))
 			if(beaker)
 				var/obj/item/weapon/reagent_containers/glass/B = beaker
 				B.loc = loc
@@ -281,7 +281,7 @@
 
 	/obj/machinery/chem_dispenser/soda/attackby(obj/item/weapon/B, mob/user)
 		..()
-		if(istype(B, /obj/item/device/multitool))
+		if(ismultitool(B))
 			if(hackedcheck == 0)
 				to_chat(user, "You change the mode from 'McNano' to 'Pizza King'.")
 				dispensable_reagents += list("thirteenloko","grapesoda")
@@ -294,7 +294,7 @@
 				hackedcheck = 0
 				return
 
-		else if(istype(B, /obj/item/weapon/wrench))
+		else if(iswrench(B))
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
@@ -312,7 +312,7 @@
 	/obj/machinery/chem_dispenser/beer/attackby(obj/item/weapon/B, mob/user)
 		..()
 
-		if(istype(B, /obj/item/device/multitool))
+		if(ismultitool(B))
 			if(hackedcheck == 0)
 				to_chat(user, "You disable the 'nanotrasen-are-cheap-bastards' lock, enabling hidden and very expensive boozes.")
 				dispensable_reagents += list("goldschlager","patron","watermelonjuice","berryjuice")
@@ -325,7 +325,7 @@
 				hackedcheck = 0
 				return
 
-		else if(istype(B, /obj/item/weapon/wrench))
+		else if(iswrench(B))
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
@@ -739,7 +739,7 @@
 		return
 
 	if(panel_open)
-		if(istype(B, /obj/item/weapon/crowbar))
+		if(iscrowbar(B))
 			default_deconstruction_crowbar(B)
 			return 1
 		else
@@ -1001,7 +1001,7 @@
 		src.updateUsrDialog()
 		icon_state = "mixer1"
 
-	else if(istype(I, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(I))
 		if(src.beaker)
 			beaker.loc = get_turf(src)
 		..()
@@ -1092,7 +1092,7 @@
 	if(default_unfasten_wrench(user, O))
 		return
 
-	if(istype(O, /obj/item/weapon/wrench))
+	if(iswrench(O))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")

@@ -55,7 +55,7 @@
 	if(user.is_busy()) return
 
 	if(rotting)
-		if(istype(W, /obj/item/weapon/weldingtool))
+		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0,user))
 				to_chat(user, "<span class='notice'>You burn away the fungi with \the [WT].</span>")
@@ -71,7 +71,7 @@
 
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
-		if(istype(W, /obj/item/weapon/weldingtool))
+		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0,user))
 				thermitemelt(user)
@@ -96,7 +96,7 @@
 		to_chat(user, "<span class='notice'>This wall is too thick to slice through. You will need to find a different path.</span>")
 		return
 
-	if(damage && istype(W, /obj/item/weapon/weldingtool))
+	if(damage && iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
 			to_chat(user, "<span class='notice'>You start repairing the damage to [src].</span>")
@@ -114,7 +114,7 @@
 	//DECONSTRUCTION
 	switch(d_state)
 		if(0)
-			if (istype(W, /obj/item/weapon/wirecutters))
+			if (iswirecutter(W))
 				playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
 				src.d_state = 1
 				src.icon_state = "r_wall-1"
@@ -123,7 +123,7 @@
 				return
 
 		if(1)
-			if (istype(W, /obj/item/weapon/screwdriver))
+			if (isscrewdriver(W))
 				to_chat(user, "<span class='notice'>You begin removing the support lines.</span>")
 				playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 
@@ -149,7 +149,7 @@
 				return
 
 		if(2)
-			if(istype(W, /obj/item/weapon/weldingtool))
+			if(iswelder(W))
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.remove_fuel(0,user))
 
@@ -184,7 +184,7 @@
 				return
 
 		if(3)
-			if (istype(W, /obj/item/weapon/crowbar))
+			if (iscrowbar(W))
 
 				to_chat(user, "<span class='notice'>You struggle to pry off the cover.</span>")
 				playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
@@ -200,7 +200,7 @@
 				return
 
 		if(4)
-			if (istype(W, /obj/item/weapon/wrench))
+			if (iswrench(W))
 
 				to_chat(user, "<span class='notice'>You start loosening the anchoring bolts which secure the support rods to their frame.</span>")
 				playsound(src, 'sound/items/Ratchet.ogg', 100, 1)
@@ -216,7 +216,7 @@
 				return
 
 		if(5)
-			if(istype(W, /obj/item/weapon/weldingtool))
+			if(iswelder(W))
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.remove_fuel(0,user))
 
@@ -253,7 +253,7 @@
 				return
 
 		if(6)
-			if(istype(W, /obj/item/weapon/crowbar))
+			if(iscrowbar(W))
 
 				to_chat(user, "<span class='notice'>You struggle to pry off the outer sheath.</span>")
 				playsound(src, 'sound/items/Crowbar.ogg', 100, 1)

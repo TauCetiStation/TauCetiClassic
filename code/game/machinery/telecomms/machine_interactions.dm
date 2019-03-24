@@ -18,37 +18,37 @@
 /obj/machinery/telecomms/attackby(obj/item/P, mob/user)
 
 	// Using a multitool lets you access the receiver's interface
-	if(istype(P, /obj/item/device/multitool))
+	if(ismultitool(P))
 		attack_hand(user)
 
 	switch(construct_op)
 		if(0)
-			if(istype(P, /obj/item/weapon/screwdriver))
+			if(isscrewdriver(P))
 				to_chat(user, "<span class='notice'>You unfasten the bolts.</span>")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				construct_op ++
 		if(1)
-			if(istype(P, /obj/item/weapon/screwdriver))
+			if(isscrewdriver(P))
 				to_chat(user, "<span class='notice'>You fasten the bolts.</span>")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				construct_op --
-			if(istype(P, /obj/item/weapon/wrench))
+			if(iswrench(P))
 				to_chat(user, "<span class='notice'>You dislodge the external plating.</span>")
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				construct_op ++
 		if(2)
-			if(istype(P, /obj/item/weapon/wrench))
+			if(iswrench(P))
 				to_chat(user, "<span class='notice'>You secure the external plating.</span>")
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				construct_op --
-			if(istype(P, /obj/item/weapon/wirecutters))
+			if(iswirecutter(P))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				construct_op ++
 				new /obj/item/stack/cable_coil/red(user.loc, 5)
 				stat |= BROKEN // the machine's been borked!
 		if(3)
-			if(istype(P, /obj/item/stack/cable_coil))
+			if(iscoil(P))
 				var/obj/item/stack/cable_coil/A = P
 				if(!A.use(5))
 					to_chat(user, "<span class='danger'>You need more cable to do that.</span>")
@@ -58,7 +58,7 @@
 				construct_op --
 				stat &= ~BROKEN // the machine's not borked anymore!
 
-			else if(istype(P, /obj/item/weapon/crowbar) && !user.is_busy(src))
+			else if(iscrowbar(P) && !user.is_busy(src))
 				to_chat(user, "<span class='notice'>You begin prying out the circuit board and components...</span>")
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user,60,target = src))
@@ -80,7 +80,7 @@
 						for(var/I in C.req_components)
 							for(var/i = 1, i <= C.req_components[I], i++)
 								newpath = text2path(I)
-								if(istype(newpath, /obj/item/stack/cable_coil))
+								if(iscoil(newpath))
 									new newpath(loc, 1)
 								else
 									new newpath(loc)
@@ -98,7 +98,7 @@
 	// You need a multitool to use this, or be silicon/ghost
 	if(!issilicon(user) && !isobserver(user))
 		// istype returns false if the value is null
-		if(!istype(user.get_active_hand(), /obj/item/device/multitool))
+		if(!ismultitool(user.get_active_hand()))
 			return
 
 	var/obj/item/device/multitool/P = get_multitool(user)
@@ -183,13 +183,13 @@
 
 	var/obj/item/device/multitool/P = null
 	// Let's double check
-	if(!issilicon(user) && !isobserver(user) && istype(user.get_active_hand(), /obj/item/device/multitool))
+	if(!issilicon(user) && !isobserver(user) && ismultitool(user.get_active_hand()))
 		P = user.get_active_hand()
 	else if(isAI(user))
 		var/mob/living/silicon/ai/U = user
 		P = U.aiMulti
 	else if(isrobot(user) && in_range(user, src))
-		if(istype(user.get_active_hand(), /obj/item/device/multitool))
+		if(ismultitool(user.get_active_hand()))
 			P = user.get_active_hand()
 	else if(isobserver(user))
 		var/mob/dead/observer/O = user
@@ -275,7 +275,7 @@
 
 /obj/machinery/telecomms/Topic(href, href_list)
 	if(!issilicon(usr) && !isobserver(usr))
-		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
+		if(!ismultitool(usr.get_active_hand()))
 			return FALSE
 
 	. = ..()

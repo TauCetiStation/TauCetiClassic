@@ -661,14 +661,14 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		user.drop_item()
 		var/obj/item/device/radio_grid/new_grid = W
 		new_grid.attach(src)
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(iswirecutter(W))
 		if(!grid)
 			to_chat(user, "<span class='userdanger'>Nothing to cut here!</span>")
 			return
 		to_chat(user, "<span class='notice'>You pop out Shielded grid from [src]!</span>")
 		var/obj/item/device/radio_grid/new_grid = new(get_turf(loc))
 		new_grid.dettach(src)
-	else if (istype(W, /obj/item/weapon/screwdriver))
+	else if (isscrewdriver(W))
 		b_stat = !b_stat
 		add_fingerprint(user)
 		playsound(user, 'sound/items/Screwdriver.ogg', 50, 1)
@@ -702,10 +702,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/borg/attackby(obj/item/weapon/W, mob/user)
 //	..()
 	user.set_machine(src)
-	if (!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey))))
+	if (!( isscrewdriver(W) || (istype(W, /obj/item/device/encryptionkey))))
 		return
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		if(keyslot)
 
 

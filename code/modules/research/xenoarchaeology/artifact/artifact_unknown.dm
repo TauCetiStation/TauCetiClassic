@@ -313,7 +313,7 @@ var/list/valid_secondary_effect_types = list(\
 			istype(W,/obj/item/weapon/melee/energy) ||\
 			istype(W,/obj/item/weapon/melee/cultblade) ||\
 			istype(W,/obj/item/weapon/card/emag) ||\
-			istype(W,/obj/item/device/multitool))
+			ismultitool(W))
 
 		if (my_effect.trigger == TRIGGER_ENERGY)
 			my_effect.ToggleActivate()
@@ -321,7 +321,7 @@ var/list/valid_secondary_effect_types = list(\
 			secondary_effect.ToggleActivate(0)
 
 	else if (istype(W,/obj/item/weapon/match) && W:lit ||\
-			istype(W,/obj/item/weapon/weldingtool) && W:welding ||\
+			iswelder(W) && W:welding ||\
 			istype(W,/obj/item/weapon/lighter) && W:lit)
 		if(my_effect.trigger == TRIGGER_HEAT)
 			my_effect.ToggleActivate()

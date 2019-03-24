@@ -140,7 +140,7 @@
 
 
 	//building and linking a terminal
-	if(istype(I, /obj/item/stack/cable_coil))
+	if(iscoil(I))
 		var/dir = get_dir(user,src)
 		if(dir & (dir-1))//we don't want diagonal click
 			return
@@ -187,7 +187,7 @@
 		return
 
 	//disassembling the terminal
-	if(istype(I, /obj/item/weapon/wirecutters) && terminal && panel_open)
+	if(iswirecutter(I) && terminal && panel_open)
 		terminal.dismantle(user)
 
 	//crowbarring it !

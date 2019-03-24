@@ -131,7 +131,7 @@
 	if(exchange_parts(user, I))
 		return
 	if (panel_open)
-		if(istype(I, /obj/item/weapon/crowbar))
+		if(iscrowbar(I))
 			griefProtection()
 			default_deconstruction_crowbar(I)
 			return 1

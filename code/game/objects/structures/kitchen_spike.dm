@@ -36,7 +36,7 @@
 	return attack_hand(user)
 
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(iscrowbar(I))
 		if(!src.buckled_mob)
 			if(user.is_busy()) return
 			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
