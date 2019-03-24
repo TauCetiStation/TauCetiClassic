@@ -291,7 +291,7 @@
 							var/mob/living/carbon/human/H = C
 							if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
 								internalsound = 'sound/misc/riginternaloff.ogg'
-						playsound(C.loc, internalsound, 100, 0)
+						playsound(C.loc, internalsound, 85, 0, -5)
 						if(C.internals)
 							C.internals.icon_state = "internal0"
 					else
@@ -372,7 +372,7 @@
 										var/mob/living/carbon/human/H = C
 										if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
 											internalsound = 'sound/misc/riginternalon.ogg'
-									playsound(C.loc, internalsound, 100, 0)
+									playsound(C.loc, internalsound, 85, 0, -5)
 
 								if(C.internal)
 									if(C.internals)

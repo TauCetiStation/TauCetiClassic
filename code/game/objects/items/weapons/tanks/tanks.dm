@@ -163,7 +163,7 @@
 					var/mob/living/carbon/human/H = C
 					if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
 						internalsound = 'sound/misc/riginternaloff.ogg'
-				playsound(loc, internalsound, 100, 0)
+				playsound(loc, internalsound, 85, 0, -5)
 			else
 				if(C.wear_mask && (C.wear_mask.flags & MASKINTERNALS))
 					C.internal = src
@@ -175,7 +175,7 @@
 						var/mob/living/carbon/human/H = C
 						if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
 							internalsound = 'sound/misc/riginternalon.ogg'
-					playsound(loc, internalsound, 100, 0)
+					playsound(loc, internalsound, 85, 0, -5)
 				else
 					to_chat(usr, "\blue You need something to connect to \the [src].")
 			internal_switch = world.time + 16
