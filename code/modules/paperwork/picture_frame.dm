@@ -44,7 +44,7 @@
 		else
 			new /obj/item/stack/sheet/metal(src.loc)
 		for(var/obj/C in contents)
-			C.loc = get_turf(src)
+			C.forceMove(get_turf(src))
 		qdel(src)
 		return
 	if(istype(I, /obj/item/stack/sheet/glass))
@@ -127,7 +127,7 @@
 	var/ndir = get_dir(user, T)
 	if(!(ndir in cardinal))
 		return
-	user.visible_message("<span class='notice'>[user] hangs [src] to \the [T].</span>", \
+	user.visible_message("<span class='notice'>[user] hangs [src] to \the [T].</span>",
 						 "<span class='notice'>You hang [src] to \the [T].</span>")
 	if(frame_type == /obj/structure/picture_frame/wooden)
 		var/obj/structure/picture_frame/wooden/PF = new /obj/structure/picture_frame/wooden(get_turf(user), ndir, 1)
@@ -270,7 +270,7 @@
 				if(frame_type == /obj/structure/picture_frame/metal)
 					new /obj/item/stack/sheet/metal(get_turf(src))
 				for(var/obj/I in contents)
-					I.loc = get_turf(src)
+					I.forceMove(get_turf(src))
 				qdel(src)
 		..()
 
@@ -282,7 +282,7 @@
 			to_chat(user,"<span class='warning'>It is screwed to the wall.</span>")
 			return
 		if(do_after(user, 8, target = src))
-			user.visible_message("<span class='notice'>[user] takes off \the [src] from the wall.</span>", \
+			user.visible_message("<span class='notice'>[user] takes off \the [src] from the wall.</span>",
 								 "<span class='notice'>You take off \the [src] from the wall.</span>")
 			if(frame_type == /obj/structure/picture_frame/wooden)
 				var/obj/item/weapon/picture_frame/F = new /obj/item/weapon/picture_frame/wooden(get_turf(user))
@@ -322,7 +322,7 @@
 					to_chat(M,"<span class='warning'>It is screwed to the wall.</span>")
 					return
 				if(do_after(M, 8, target = src))
-					M.visible_message("<span class='notice'>[M] takes off \the [src] from the wall.</span>", \
+					M.visible_message("<span class='notice'>[M] takes off \the [src] from the wall.</span>",
 									 "<span class='notice'>You take off \the [src] from the wall.</span>")
 					if(frame_type == /obj/structure/picture_frame/wooden)
 						var/obj/item/weapon/picture_frame/F = new /obj/item/weapon/picture_frame/wooden(get_turf(M))
