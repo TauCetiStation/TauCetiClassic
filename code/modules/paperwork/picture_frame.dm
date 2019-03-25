@@ -72,8 +72,8 @@
 
 /obj/item/weapon/picture_frame/attack_hand(mob/user)
 	if(user.r_hand == src || user.l_hand == src)
-		if(contents.len)
-			var/obj/item/I = pick(contents)
+		if(displayed)
+			var/obj/item/I = displayed
 			user.put_in_hands(I)
 			to_chat(user,"<span class='notice'>You carefully remove the photo from \the [src].</span>")
 			displayed = null
@@ -266,7 +266,7 @@
 			if(health <= 0)
 				visible_message("<span class='warning'>[user] smashed [src] apart!</span>")
 				if(frame_type == /obj/structure/picture_frame/wooden)
-					new /obj/item/stack/sheet/metal(get_turf(src))
+					new /obj/item/stack/sheet/wood(get_turf(src))
 				if(frame_type == /obj/structure/picture_frame/metal)
 					new /obj/item/stack/sheet/metal(get_turf(src))
 				for(var/obj/I in contents)
@@ -284,30 +284,17 @@
 		if(do_after(user, 8, target = src))
 			user.visible_message("<span class='notice'>[user] takes off \the [src] from the wall.</span>",
 								 "<span class='notice'>You take off \the [src] from the wall.</span>")
-			if(frame_type == /obj/structure/picture_frame/wooden)
-				var/obj/item/weapon/picture_frame/F = new /obj/item/weapon/picture_frame/wooden(get_turf(user))
-				if(framed)
-					F.displayed = framed
-				if(frame_glass)
-					F.frame_glass = TRUE
-				if(contents.len)
-					for(var/obj/I in contents)
-						I.forceMove(F)
-				F.update_icon()
-				if(!issilicon(user))
-					user.put_in_hands(F)
-			if(frame_type == /obj/structure/picture_frame/metal)
-				var/obj/item/weapon/picture_frame/F = new /obj/item/weapon/picture_frame/metal(get_turf(user))
-				if(framed)
-					F.displayed = framed
-				if(frame_glass)
-					F.frame_glass = TRUE
-				if(contents.len)
-					for(var/obj/I in contents)
-						I.forceMove(F)
-				F.update_icon()
-				if(!issilicon(user))
-					user.put_in_hands(F)
+			var/obj/item/weapon/picture_frame/F = new frame_type(get_turf(user))
+			if(framed)
+				F.displayed = framed
+			if(frame_glass)
+				F.frame_glass = TRUE
+			if(contents.len)
+				for(var/obj/I in contents)
+					I.forceMove(F)
+			F.update_icon()
+			if(!issilicon(user))
+				user.put_in_hands(F)
 			qdel(src)
 		return
 
@@ -324,53 +311,33 @@
 				if(do_after(M, 8, target = src))
 					M.visible_message("<span class='notice'>[M] takes off \the [src] from the wall.</span>",
 									 "<span class='notice'>You take off \the [src] from the wall.</span>")
-					if(frame_type == /obj/structure/picture_frame/wooden)
-						var/obj/item/weapon/picture_frame/F = new /obj/item/weapon/picture_frame/wooden(get_turf(M))
-						if(framed)
-							F.displayed = framed
-						if(frame_glass)
-							F.frame_glass = TRUE
-						if(contents.len)
-							for(var/obj/I in contents)
-								I.forceMove(F)
-						F.update_icon()
-						if(!issilicon(M))
-							M.put_in_hands(F)
-					if(frame_type == /obj/structure/picture_frame/metal)
-						var/obj/item/weapon/picture_frame/F = new /obj/item/weapon/picture_frame/metal(get_turf(M))
-						if(framed)
-							F.displayed = framed
-						if(frame_glass)
-							F.frame_glass = TRUE
-						if(contents.len)
-							for(var/obj/I in contents)
-								I.forceMove(F)
-						F.update_icon()
-						if(!issilicon(M))
-							M.put_in_hands(F)
+					var/obj/item/weapon/picture_frame/F = new frame_type(get_turf(M))
+					if(framed)
+						F.displayed = framed
+					if(frame_glass)
+						F.frame_glass = TRUE
+					if(framed)
+						var/item/I = framed
+						I.forceMove(F)
+					F.update_icon()
+					if(!issilicon(M))
+						M.put_in_hands(F)
 					qdel(src)
 					return
-			switch(over_object.name)
-				if("r_hand")
-					if(contents.len)
-						var/obj/item/I = pick(contents)
-						I.loc = get_turf(M)
-						M.put_in_r_hand(I)
-						to_chat(M,"<span class='notice'>You carefully remove the photo from \the [src].</span>")
-						framed = null
-						update_icon()
-					else
-						to_chat(M,"<span class='notice'>There is no photo inside the \the [src].</span>")
-				if("l_hand")
-					if(contents.len)
-						var/obj/item/I = pick(contents)
-						I.loc = get_turf(M)
-						M.put_in_l_hand(I)
-						to_chat(M,"<span class='notice'>You carefully remove the photo from \the [src].</span>")
-						framed = null
-						update_icon()
-					else
-						to_chat(M,"<span class='notice'>There is no photo inside the \the [src].</span>")
+			if(over_object.name in list("r_hand", "l_hand"))
+				if(framed)
+					var/obj/item/I = framed
+					framed = null
+					to_chat(M,"<span class='notice'>You carefully remove the photo from \the [src].</span>")
+					update_icon()
+					switch(over_object.name)
+						if("r_hand")
+							M.put_in_r_hand(I)
+						if("l_hand")
+							M.put_in_l_hand(I)
+				else
+					to_chat(M,"<span class='notice'>There is no photo inside the \the [src].</span>")
+
 			src.add_fingerprint(usr)
 	return
 
