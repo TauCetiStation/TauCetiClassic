@@ -54,7 +54,7 @@ robot_fabricator
 	if(temp)
 		dat = "[temp]<BR><BR><A href='byond://?src=\ref[src];clear=1'>Clear</A>"
 	else if(processing_time <= 0)
-		dat = "<B> No processing time is left available. No more modules are able to be chosen at this time."
+		dat = "<B> No processing time is left available. No more modules are able to be chosen at this time.</B>"
 	else
 		dat = "<B>Select use of processing time: (currently [processing_time] left.)</B><BR>"
 		dat += "<HR>"

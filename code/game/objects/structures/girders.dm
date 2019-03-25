@@ -27,7 +27,7 @@
 		if(C.use_charge(user, 1) && prob(40))
 			playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 			qdel(src)
-	else if(istype(W, /obj/item/weapon/wrench) && state == 0)
+	else if(iswrench(W) && state == 0)
 		if(anchored && !istype(src,/obj/structure/girder/displaced))
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			to_chat(user, "\blue Now disassembling the girder")
@@ -57,7 +57,7 @@
 		new /obj/item/stack/sheet/metal(get_turf(src))
 		qdel(src)
 
-	else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 && istype(src,/obj/structure/girder/reinforced))
+	else if(isscrewdriver(W) && state == 2 && istype(src,/obj/structure/girder/reinforced))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		to_chat(user, "\blue Now unsecuring support struts")
 		if(do_after(user,40,target = src))
@@ -65,7 +65,7 @@
 			to_chat(user, "\blue You unsecured the support struts!")
 			state = 1
 
-	else if(istype(W, /obj/item/weapon/wirecutters) && istype(src,/obj/structure/girder/reinforced) && state == 1)
+	else if(iswirecutter(W) && istype(src,/obj/structure/girder/reinforced) && state == 1)
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		to_chat(user, "\blue Now removing support struts")
 		if(do_after(user,40,target = src))
@@ -74,7 +74,7 @@
 			new/obj/structure/girder( src.loc )
 			qdel(src)
 
-	else if(istype(W, /obj/item/weapon/crowbar) && state == 0 && anchored )
+	else if(iscrowbar(W) && state == 0 && anchored )
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 		to_chat(user, "\blue Now dislodging the girder")
 		if(do_after(user, 40,target = src))
@@ -115,7 +115,7 @@
 					if(!S.use(2))
 						return
 					to_chat(user, "\blue You create a false wall! Push on it to open or close the passage.")
-					new /obj/structure/falserwall (src.loc)
+					new /obj/structure/falsewall/reinforced(loc)
 					qdel(src)
 				else
 					if (src.icon_state == "reinforced") //I cant believe someone would actually write this line of code...
@@ -237,7 +237,7 @@
 
 /obj/structure/cultgirder/attackby(obj/item/W, mob/user)
 	if(user.is_busy()) return
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		to_chat(user, "\blue Now disassembling the girder")
 		if(do_after(user,40,target = src))

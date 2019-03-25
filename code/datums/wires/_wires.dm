@@ -47,9 +47,9 @@
 #define MAX_FLAG 65535
 
 /proc/is_wire_tool(obj/item/I)
-	if(istype(I, /obj/item/device/multitool))
+	if(ismultitool(I))
 		return TRUE
-	if(istype(I, /obj/item/weapon/wirecutters))
+	if(iswirecutter(I))
 		return TRUE
 	if(istype(I, /obj/item/device/assembly/signaler))
 		return TRUE
@@ -191,14 +191,14 @@ var/list/same_wires = list()
 			holder.add_hiddenprint(L)
 
 			if(href_list["cut"]) // Toggles the cut/mend status
-				if(istype(I, /obj/item/weapon/wirecutters))
+				if(iswirecutter(I))
 					var/color = href_list["cut"]
 					cut_wire_color(color)
 				else
 					to_chat(L, "<span class='warning'>You need wirecutters!</span>")
 
 			else if(href_list["pulse"])
-				if(istype(I, /obj/item/device/multitool))
+				if(ismultitool(I))
 					var/color = href_list["pulse"]
 					pulse_color(color)
 				else

@@ -20,7 +20,7 @@
 #define VE_DEBUG \
 	list("vars", "virus", "viruses", "mutantrace", "summon_type", "AI_Interact", "key", "ckey", "client")
 #define VE_FULLY_LOCKED \
-	list("holder", "player_next_age_tick", "player_ingame_age", "resize_rev", "step_x", "step_y")
+	list("holder", "player_next_age_tick", "player_ingame_age", "resize_rev", "step_x", "step_y", "smooth_icon_initial")
 
 
 /* massmodify protected */
@@ -30,4 +30,4 @@
 #define VE_MASS_DEBUG \
 	list("vars", "virus", "viruses", "mutantrace", "summon_type", "AI_Interact")
 #define VE_MASS_FULLY_LOCKED \
-	list("holder", "player_next_age_tick", "player_ingame_age", "resize_rev", "step_x", "step_y", "key", "ckey", "client")
+	list("holder", "player_next_age_tick", "player_ingame_age", "resize_rev", "step_x", "step_y", "key", "ckey", "client", "smooth_icon_initial")

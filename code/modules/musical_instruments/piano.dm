@@ -26,7 +26,7 @@
 	MP.interact(user)
 
 /obj/structure/device/piano/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/weapon/wrench))
+	if(iswrench(O))
 		if(user.is_busy()) return
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 

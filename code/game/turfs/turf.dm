@@ -1,7 +1,7 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
 	level = 1.0
-	var/basetype = /turf/space
+	var/turf/basetype = /turf/space
 	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 	var/intact = 1
 
@@ -30,6 +30,9 @@
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
+
+	if(smooth)
+		queue_smooth(src)
 
 	for(var/atom/movable/AM in src)
 		Entered(AM)
@@ -276,6 +279,8 @@
 	W.levelupdate()
 
 	basetype = old_basetype
+
+	queue_smooth_neighbors(W)
 
 	if(SSlighting.initialized)
 		recalc_atom_opacity()
