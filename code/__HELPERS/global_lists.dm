@@ -59,7 +59,8 @@
 		rkey++
 		var/datum/species/S = new T
 		S.race_key = rkey //Used in mob icon caching.
-		all_species[S.name] = S
+		if(S != /datum/species/zombie) // To prevent some grief shit
+			all_species[S.name] = S
 
 		if(S.flags[IS_WHITELISTED])
 			whitelisted_species += S.name
