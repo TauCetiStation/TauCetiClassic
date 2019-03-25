@@ -317,7 +317,7 @@
 					if(frame_glass)
 						F.frame_glass = TRUE
 					if(framed)
-						var/item/I = framed
+						var/obj/item/I = framed
 						I.forceMove(F)
 					F.update_icon()
 					if(!issilicon(M))
