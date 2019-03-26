@@ -472,5 +472,6 @@
 			if(isscrewdriver(P))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				to_chat(user, "\blue You connect the monitor.")
-				new src.circuit.build_path (src.loc, circuit)
+				var/obj/machinery/computer/new_computer = new src.circuit.build_path (src.loc, circuit)
+				transfer_fingerprints_to(new_computer)
 				qdel(src)
