@@ -1117,6 +1117,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/head/ipc
 	vital = FALSE
 
+/obj/item/organ/external/head/slime
+	vital = FALSE
+
 /obj/item/organ/external/l_arm
 	name = "left arm"
 	artery_name = "basilic vein"
