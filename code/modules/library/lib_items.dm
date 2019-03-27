@@ -135,7 +135,6 @@
 	for (var/i in 1 to 2)
 		new /obj/item/weapon/book/manual/wiki/sop(src)
 	new /obj/item/weapon/book/manual/detective(src)
-	new /obj/item/weapon/book/manual/wiki/lsop(src)
 	update_icon()
 
 /*
