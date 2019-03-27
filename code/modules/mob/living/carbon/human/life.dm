@@ -210,9 +210,9 @@
 			else
 				switch(pick(1,2,3))
 					if(1)
-						say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#"))
+						say(pick("азазаа!", "Я не смалгей!", "ХОС ХУЕСОС!", "[pick("", "ебучий трейтор")] [pick("морган", "моргун", "морген", "мрогун")] [pick("джемес", "джамес", "джаемес")] грефонет миня шпасит;е!!!", "ти можыш дать мне [pick("тилипатию","халку","эпиллепсию")]?", "ХАчу стать боргом!", "ПОЗОвите детектива!", "Хочу стать мартышкой!", "ХВАТЕТ ГРИФОНЕТЬ МИНЯ!!!!", "ШАТОЛ!"))
 					if(2)
-						say(pick("FUS RO DAH","fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom", "PACKETS!!!"))
+						say(pick("Как мин[JA_PLACEHOLDER]ть руки?","ебучие фурри!", "Подебил", "Прокл[JA_PLACEHOLDER]тые трапы!", "лолка!", "вжжжжжжжжж!!!", "джеф скваааад!", "БРАНДЕНБУРГ!", "БУДАПЕШТ!", "ПАУУУУУК!!!!", "ПУКАН БОМБАНУЛ!", "ПУШКА", "РЕВА ПОЦОНЫ", "Пати на хопа!"))
 					if(3)
 						emote("drool")
 
