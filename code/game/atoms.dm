@@ -459,22 +459,22 @@
 				this.stop_light()
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
+		var/vomitsound = ""
 		if(istype(H.head, /obj/item/clothing/head/helmet/space))
 			H.visible_message("<B>[H.name]</B> <span class='danger'>throws up in their helmet!</span>","<span class='warning'>You threw up in your helmet, damn it, what could be worse!</span>")
 			if(H.gender == FEMALE)
-				playsound(H.loc, 'sound/misc/frigvomit.ogg', 90, 0)
+				vomitsound = "frigvomit"
 			else
-				playsound(H.loc, 'sound/misc/mrigvomit.ogg', 90, 0)
+				vomitsound = "mrigvomit"
 			H.eye_blurry = max(2, H.eye_blurry)
 			H.losebreath += 20
 		else
-			var/vomitsound = ""
 			H.visible_message("<B>[H.name]</B> <span class='danger'>throws up!</span>","<span class='warning'>You throw up!</span>")
 			if(H.gender == FEMALE)
 				vomitsound = "femalevomit"
 			else
 				vomitsound = "malevomit"
-			playsound(H.loc, vomitsound, 90, 0)
+		playsound(H.loc, vomitsound, 100, 0)
 	else
 		playsound(C.loc, 'sound/effects/splat.ogg', 100, 1)
 		C.visible_message("<B>[C.name]</B> <span class='danger'>throws up!</span>","<span class='warning'>You throw up!</span>")
