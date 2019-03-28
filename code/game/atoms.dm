@@ -441,6 +441,10 @@
 	return 1
 
 /atom/proc/add_vomit_floor(mob/living/carbon/C, toxvomit = 0)
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if(H.species.name in list(IPC, GOLEM, SHADOWLING, ABDUCTOR))
+			return // no sounds and no vomit for those who can't vomit
 	if(istype(src, /turf/simulated) && !istype(C.head, /obj/item/clothing/head/helmet/space))
 		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
 
