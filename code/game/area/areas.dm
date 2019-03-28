@@ -394,7 +394,7 @@ var/list/ghostteleportlocs = list()
 		if(!L.client.played)
 			L << sound(sound, repeat = 0, wait = 0, volume = 25, channel = 1)
 			L.client.played = TRUE
-			addtimer(CALLBACK(src, .proc/set_played_false, L), 600)
+			addtimer(CALLBACK(src, .proc/set_played_false, L), 300)
 
 /area/proc/set_played_false(mob/living/L)
 	if(L && L.client)
