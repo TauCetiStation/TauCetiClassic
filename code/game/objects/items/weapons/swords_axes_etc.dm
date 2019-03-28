@@ -186,7 +186,7 @@
 			var/mob/living/carbon/human/H = target
 			playsound(src.loc, "swing_hit", 50, 1, -1)
 			user.do_attack_animation(H)
-			H.halloss += 25
+			H.adjustHalLoss(25)
 			H.visible_message("<span class='warning'> [user] harmless hit [H] with a telebaton</span>")
 			user.attack_log += "\[[time_stamp()]\]<font color='red'> harmless hit [H.name] ([H.ckey]) with [src.name]</font>"
 			H.attack_log += "\[[time_stamp()]\]<font color='orange'> harmless hited [user.name] ([user.ckey]) with [src.name]</font>"
