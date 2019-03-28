@@ -1859,6 +1859,7 @@
 #include "code\modules\virus2\isolator.dm"
 #include "code\modules\virus2\items_devices.dm"
 #include "code\modules\zwater\wet_stuff.dm"
+#include "code\unit_tests\chemistry_tests.dm"
 #include "code\unit_tests\power_tests.dm"
 #include "code\unit_tests\subsystem_tests.dm"
 #include "code\unit_tests\unit_test.dm"
