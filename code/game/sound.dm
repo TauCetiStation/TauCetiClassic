@@ -138,7 +138,7 @@ var/const/FALLOFF_SOUNDS = 0.5
 			if ("breathmask")
 				soundin = pick('sound/misc/breathmask1.ogg','sound/misc/breathmask2.ogg')
 			if ("gasmaskbreath")
-				soundin = pick('sound/misc/gasmaskbreath.ogg')
+				soundin = 'sound/misc/gasmaskbreath.ogg'
 			if ("malevomit")
 				soundin = pick('sound/misc/mvomit1.ogg','sound/misc/mvomit2.ogg')
 			if ("femalevomit")
