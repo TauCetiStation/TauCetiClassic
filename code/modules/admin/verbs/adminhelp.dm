@@ -115,7 +115,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 
 /obj/effect/statclick/ticket_list/atom_init(mapload, name, state)
 	current_state = state
-	..()
+	. = ..()
 
 /obj/effect/statclick/ticket_list/Click()
 	global.ahelp_tickets.BrowseTickets(current_state)
