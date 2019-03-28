@@ -445,24 +445,6 @@
 		var/mob/living/carbon/human/H = C
 		if(H.species.name in list(IPC, GOLEM, SHADOWLING, ABDUCTOR))
 			return // no sounds and no vomit for those who can't vomit
-	if(istype(src, /turf/simulated) && !istype(C.head, /obj/item/clothing/head/helmet/space))
-		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
-
-		// Make toxins vomit look different
-		if(toxvomit)
-			var/datum/reagents/R = C.reagents
-			if(!locate(/datum/reagent/luminophore) in R.reagent_list)
-				this.icon_state = "vomittox_[pick(1,4)]"
-			else
-				this.icon_state = "vomittox_nc_[pick(1,4)]"
-				this.alpha = 127
-				var/datum/reagent/new_color = locate(/datum/reagent/luminophore) in R.reagent_list
-				this.color = new_color.color
-				this.light_color = this.color
-				this.set_light(3)
-				this.stop_light()
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
 		var/vomitsound = ""
 		if(istype(H.head, /obj/item/clothing/head/helmet/space))
 			H.visible_message("<B>[H.name]</B> <span class='danger'>throws up in their helmet!</span>","<span class='warning'>You threw up in your helmet, damn it, what could be worse!</span>")
@@ -482,6 +464,22 @@
 	else
 		playsound(C.loc, 'sound/effects/splat.ogg', 100, 1)
 		C.visible_message("<B>[C.name]</B> <span class='danger'>throws up!</span>","<span class='warning'>You throw up!</span>")
+
+	if(istype(src, /turf/simulated) && !istype(C.head, /obj/item/clothing/head/helmet/space))
+		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
+		// Make toxins vomit look different
+		if(toxvomit)
+			var/datum/reagents/R = C.reagents
+			if(!locate(/datum/reagent/luminophore) in R.reagent_list)
+				this.icon_state = "vomittox_[pick(1,4)]"
+			else
+				this.icon_state = "vomittox_nc_[pick(1,4)]"
+				this.alpha = 127
+				var/datum/reagent/new_color = locate(/datum/reagent/luminophore) in R.reagent_list
+				this.color = new_color.color
+				this.light_color = this.color
+				this.set_light(3)
+				this.stop_light()
 
 /atom/proc/clean_blood()
 	src.germ_level = 0
