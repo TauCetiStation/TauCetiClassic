@@ -97,6 +97,13 @@ var/datum/subsystem/shuttle/SSshuttle
 					stop_parallax = locate(/area/shuttle/escape_pod5/transit)
 					stop_parallax.parallax_slowdown()
 				if(timeleft > 0)
+					if(timeleft < 118)
+						var/area/start_location = locate(/area/shuttle/escape/transit)
+						for(var/mob/M in start_location)
+							if(M.client)
+								if(M.ear_deaf <= 0 || istype(M, /mob/dead/observer))
+									if(timeleft%2 == 0)
+										M << sound('sound/effects/escape_shuttle/es_flying.ogg', volume = 50)
 					return 0
 
 				/* --- Shuttle has arrived at Centrcal Command --- */
@@ -115,18 +122,19 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					start_location.move_contents_to(end_location, null, NORTH)
 
-					dock_act(end_location, "shuttle_escape")
-
 					for(var/mob/M in end_location)
 						if(M.client)
-							if(M.buckled)
-								shake_camera(M, 4, 1) // buckled, not a lot of shaking
-							else
-								shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+							if(M.ear_deaf <= 0 || istype(M, /mob/dead/observer))
+								M << sound('sound/effects/escape_shuttle/es_cc_docking.ogg', volume = 90)
+						if(M.buckled)
+							shake_camera(M, 4, 1) // buckled, not a lot of shaking
+						else
+							shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
 						if(istype(M, /mob/living/carbon))
 							if(!M.buckled)
 								M.Weaken(5)
 						CHECK_TICK
+					dock_act(end_location, "shuttle_escape")
 
 							//pods
 					start_location = locate(/area/shuttle/escape_pod1/transit)
@@ -224,6 +232,12 @@ var/datum/subsystem/shuttle/SSshuttle
 				fake_recall = 0
 				return 0
 
+			else if(timeleft == 22)
+				var/area/escape_hallway = locate(/area/hallway/secondary/exit)
+				for(var/obj/effect/landmark/sound_source/SS in escape_hallway)
+					playsound(SS.loc, 'sound/effects/escape_shuttle/es_ss_docking.ogg', 50, 0, -2, voluminosity = FALSE)
+				return 0
+
 					/* --- Shuttle has docked with the station - begin countdown to transit --- */
 			else if(timeleft <= 0)
 				location = SHUTTLE_AT_STATION
@@ -285,11 +299,19 @@ var/datum/subsystem/shuttle/SSshuttle
 				undock_act(/area/shuttle/escape/station, "shuttle_escape")
 				undock_act(/area/hallway/secondary/exit, "arrival_escape")
 
-			if(timeleft>0)
+			else if(timeleft == 14)
+				var/area/pre_location = locate(/area/shuttle/escape/station)
+				for(var/mob/M in pre_location)
+					if(M.client)
+						if(M.ear_deaf <= 0 || istype(M, /mob/dead/observer))
+							M << sound('sound/effects/escape_shuttle/es_undocking.ogg', volume = 90, channel = 64)
+				return 0																			// ^ in 25% of cases it plays two sounds with a small delay for some unknown reasons,
+
+			else if(timeleft > 0)
 				return 0
 
 			/* --- Shuttle leaves the station, enters transit --- */
-			else
+			else if(timeleft <= 0)
 				//if(alert == 1)
 				//	captain_announce("Departing...")
 				//	sleep(100)
@@ -315,6 +337,8 @@ var/datum/subsystem/shuttle/SSshuttle
 				// Some aesthetic turbulance shaking
 				for(var/mob/M in end_location)
 					if(M.client)
+						if(M.ear_deaf <= 0 || istype(M, /mob/dead/observer))
+							M << sound('sound/effects/escape_shuttle/es_acceleration.ogg', volume = 60)
 						if(M.buckled)
 							shake_camera(M, 4, 1) // buckled, not a lot of shaking
 						else
