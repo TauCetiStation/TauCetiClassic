@@ -39,6 +39,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	// When TRUE, these vars allow exporting emagged/contraband items, and add some special interactions to existing exports.
 	var/contraband = FALSE
 	var/hacked = FALSE
+	var/last_es_sound = 0
 	var/centcom_message = ""
 		//control
 	var/ordernum
@@ -100,10 +101,8 @@ var/datum/subsystem/shuttle/SSshuttle
 					if(timeleft < 118)
 						var/area/start_location = locate(/area/shuttle/escape/transit)
 						for(var/mob/M in start_location)
-							if(M.client)
-								if(M.ear_deaf <= 0 || istype(M, /mob/dead/observer))
-									if(timeleft%2 == 0)
-										M << sound('sound/effects/escape_shuttle/es_flying.ogg', volume = 50)
+							if(timeleft%2 == 0)
+								M.playsound_local(M, 'sound/effects/escape_shuttle/es_flying.ogg', 40)
 					return 0
 
 				/* --- Shuttle has arrived at Centrcal Command --- */
@@ -123,13 +122,12 @@ var/datum/subsystem/shuttle/SSshuttle
 					start_location.move_contents_to(end_location, null, NORTH)
 
 					for(var/mob/M in end_location)
+						M.playsound_local(M, 'sound/effects/escape_shuttle/es_cc_docking.ogg', 70)
 						if(M.client)
-							if(M.ear_deaf <= 0 || istype(M, /mob/dead/observer))
-								M << sound('sound/effects/escape_shuttle/es_cc_docking.ogg', volume = 90)
-						if(M.buckled)
-							shake_camera(M, 4, 1) // buckled, not a lot of shaking
-						else
-							shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+							if(M.buckled)
+								shake_camera(M, 4, 1) // buckled, not a lot of shaking
+							else
+								shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
 						if(istype(M, /mob/living/carbon))
 							if(!M.buckled)
 								M.Weaken(5)
@@ -233,9 +231,11 @@ var/datum/subsystem/shuttle/SSshuttle
 				return 0
 
 			else if(timeleft == 22)
-				var/area/escape_hallway = locate(/area/hallway/secondary/exit)
-				for(var/obj/effect/landmark/sound_source/SS in escape_hallway)
-					playsound(SS.loc, 'sound/effects/escape_shuttle/es_ss_docking.ogg', 50, 0, -2, voluminosity = FALSE)
+				if(last_es_sound < world.time)
+					var/area/escape_hallway = locate(/area/hallway/secondary/exit)
+					for(var/obj/effect/landmark/sound_source/shuttle_docking/SD in escape_hallway)
+						playsound(SD.loc, 'sound/effects/escape_shuttle/es_ss_docking.ogg', 50, 0, -2, voluminosity = FALSE)
+					last_es_sound = world.time + 10
 				return 0
 
 					/* --- Shuttle has docked with the station - begin countdown to transit --- */
@@ -299,19 +299,19 @@ var/datum/subsystem/shuttle/SSshuttle
 				undock_act(/area/shuttle/escape/station, "shuttle_escape")
 				undock_act(/area/hallway/secondary/exit, "arrival_escape")
 
-			else if(timeleft == 14)
-				var/area/pre_location = locate(/area/shuttle/escape/station)
-				for(var/mob/M in pre_location)
-					if(M.client)
-						if(M.ear_deaf <= 0 || istype(M, /mob/dead/observer))
-							M << sound('sound/effects/escape_shuttle/es_undocking.ogg', volume = 90, channel = 64)
-				return 0																			// ^ in 25% of cases it plays two sounds with a small delay for some unknown reasons,
-
-			else if(timeleft > 0)
+			if(timeleft > 0)
+				if(timeleft == 13)
+					if(last_es_sound < world.time)
+						var/area/pre_location = locate(/area/shuttle/escape/station)
+						for(var/mob/M in pre_location)
+							M.playsound_local(M, 'sound/effects/escape_shuttle/es_undocking.ogg', 70)
+						last_es_sound = world.time + 10
+					else
+						to_chat(world, "anti-sound-spam check is ON")
 				return 0
 
 			/* --- Shuttle leaves the station, enters transit --- */
-			else if(timeleft <= 0)
+			else
 				//if(alert == 1)
 				//	captain_announce("Departing...")
 				//	sleep(100)
@@ -336,9 +336,8 @@ var/datum/subsystem/shuttle/SSshuttle
 
 				// Some aesthetic turbulance shaking
 				for(var/mob/M in end_location)
+					M.playsound_local(M, 'sound/effects/escape_shuttle/es_acceleration.ogg', 50)
 					if(M.client)
-						if(M.ear_deaf <= 0 || istype(M, /mob/dead/observer))
-							M << sound('sound/effects/escape_shuttle/es_acceleration.ogg', volume = 60)
 						if(M.buckled)
 							shake_camera(M, 4, 1) // buckled, not a lot of shaking
 						else

@@ -13177,7 +13177,7 @@
 /turf/simulated/floor/engine,
 /area/rnd/xenobiology)
 "awb" = (
-/obj/effect/landmark/sound_source,
+/obj/effect/landmark/sound_source/shuttle_docking,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
