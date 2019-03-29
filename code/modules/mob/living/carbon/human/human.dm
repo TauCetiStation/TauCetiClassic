@@ -1169,8 +1169,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/proc/vomit()
 
-	if(species.flags[IS_SYNTHETIC])
-		return //Machines don't throw up.
+	if(species.flags[NO_VOMIT])
+		return // Machines, golems, shadowlings and abductors don't throw up.
 
 	if(!lastpuke)
 		lastpuke = 1

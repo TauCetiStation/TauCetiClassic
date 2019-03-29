@@ -443,8 +443,8 @@
 /atom/proc/add_vomit_floor(mob/living/carbon/C, toxvomit = 0)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(H.species.name in list(IPC, GOLEM, SHADOWLING, ABDUCTOR))
-			return // no sounds and no vomit for those who can't vomit
+		if(H.species.flags[NO_VOMIT])
+			return // Machines, golems, shadowlings and abductors don't throw up.
 		var/vomitsound = ""
 		if(istype(H.head, /obj/item/clothing/head/helmet/space))
 			H.visible_message("<B>[H.name]</B> <span class='danger'>throws up in their helmet!</span>","<span class='warning'>You threw up in your helmet, damn it, what could be worse!</span>")
