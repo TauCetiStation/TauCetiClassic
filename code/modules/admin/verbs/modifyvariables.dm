@@ -1,13 +1,3 @@
-/client/proc/cmd_modify_ticker_variables()
-	set category = "Debug"
-	set name = "Edit Ticker Variables"
-
-	if (ticker == null)
-		to_chat(src, "Game hasn't started yet.")
-	else
-		src.modify_variables(ticker)
-		feedback_add_details("admin_verb","ETV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/proc/mod_list_add_ass() //haha
 
 	var/class = "text"
@@ -292,6 +282,11 @@
 				to_chat(usr, "Unable to determine variable type.")
 				class = null
 				autodetect_class = null
+
+			else if (variable in global.bitfields)
+				to_chat(usr, "Variable appears to be <b>BITFIELD</b>.")
+				class = "bitfield"
+
 			else if(isnum(var_value))
 				to_chat(usr, "Variable appears to be <b>NUM</b>.")
 				class = "num"
@@ -346,6 +341,10 @@
 		var/default
 		if(isnull(var_value))
 			to_chat(usr, "Unable to determine variable type.")
+
+		else if (variable in global.bitfields)
+			to_chat(usr, "Variable appears to be <b>BITFIELD</b>.")
+			class = "bitfield"
 
 		else if(isnum(var_value))
 			to_chat(usr, "Variable appears to be <b>NUM</b>.")
@@ -405,10 +404,10 @@
 				to_chat(usr, "If a direction, direction is: [dir]")
 
 		if(src.holder && src.holder.marked_datum)
-			class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
+			class = input("What kind of variable?","Variable Type",default) as null|anything in list("text", "bitfield",
 				"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default","marked datum ([holder.marked_datum.type])")
 		else
-			class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
+			class = input("What kind of variable?","Variable Type",default) as null|anything in list("text", "bitfield",
 				"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default")
 
 		if(!class)
@@ -548,6 +547,11 @@
 
 		if("mob reference")
 			var/var_new = input("Select reference:","Reference",O.vars[variable]) as null|mob in world
+			if(var_new==null) return
+			O.vars[variable] = var_new
+
+		if("bitfield")
+			var/var_new = input_bitfield(usr, "Editing bitfield: [variable]", variable, O.vars[variable], null, 400)
 			if(var_new==null) return
 			O.vars[variable] = var_new
 
