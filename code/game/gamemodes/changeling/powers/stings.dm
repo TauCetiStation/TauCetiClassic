@@ -77,8 +77,8 @@
 				return 1
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
-		var/result = H.check_thickmaterial(BP) || H.isSynthetic(BP_CHEST)
+		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/result = H.check_thickmaterial(BP) || H.isSynthetic(user.zone_sel.selecting)
 		if(result)
 			if(result == NOLIMB)
 				to_chat(user, "<span class='warning'>We missed! [target.name] has no [BP.name]!</span>")
@@ -242,22 +242,6 @@
 	target.eye_blind = 20
 	target.eye_blurry = 40
 	feedback_add_details("changeling_powers","BS")
-	return 1
-
-/obj/effect/proc_holder/changeling/sting/paralysis
-	name = "Paralysis Sting"
-	helptext = "Temporarily paralyse the target."
-	desc = "We silently sting a human, paralyzing them for a short time."
-	sting_icon = "sting_paralyse"
-	chemical_cost = 40
-	genomecost = 8
-
-/obj/effect/proc_holder/changeling/sting/paralysis/sting_action(mob/user, mob/living/carbon/target)
-	if(sting_fail(user,target))
-		return 0
-	to_chat(target, "<span class='danger'>Your muscles begin to painfully tighten.</span>")
-	target.Weaken(20)
-	feedback_add_details("changeling_powers","PS")
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/unfat
