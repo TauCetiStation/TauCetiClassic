@@ -39,7 +39,6 @@ var/datum/subsystem/shuttle/SSshuttle
 	// When TRUE, these vars allow exporting emagged/contraband items, and add some special interactions to existing exports.
 	var/contraband = FALSE
 	var/hacked = FALSE
-	var/last_es_sound = 0
 	var/centcom_message = ""
 		//control
 	var/ordernum
@@ -82,6 +81,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/timeleft = timeleft()
 	if(timeleft > 1e5)		// midnight rollover protection
 		timeleft = 0
+	var/static/last_es_sound = 0
 	switch(location)
 		if(SHUTTLE_IN_TRANSIT)
 			/* --- Shuttle is in transit to Central Command from SS13 --- */
@@ -102,7 +102,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						var/area/start_location = locate(/area/shuttle/escape/transit)
 						for(var/mob/M in start_location)
 							if(timeleft%2 == 0)
-								M.playsound_local(M, 'sound/effects/escape_shuttle/es_flying.ogg', 40)
+								M.playsound_local(, 'sound/effects/escape_shuttle/es_flying.ogg', 40)
 					return 0
 
 				/* --- Shuttle has arrived at Centrcal Command --- */
@@ -122,7 +122,7 @@ var/datum/subsystem/shuttle/SSshuttle
 					start_location.move_contents_to(end_location, null, NORTH)
 
 					for(var/mob/M in end_location)
-						M.playsound_local(M, 'sound/effects/escape_shuttle/es_cc_docking.ogg', 70)
+						M.playsound_local(, 'sound/effects/escape_shuttle/es_cc_docking.ogg', 70)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -304,10 +304,8 @@ var/datum/subsystem/shuttle/SSshuttle
 					if(last_es_sound < world.time)
 						var/area/pre_location = locate(/area/shuttle/escape/station)
 						for(var/mob/M in pre_location)
-							M.playsound_local(M, 'sound/effects/escape_shuttle/es_undocking.ogg', 70)
+							M.playsound_local(, 'sound/effects/escape_shuttle/es_undocking.ogg', 70)
 						last_es_sound = world.time + 10
-					else
-						to_chat(world, "anti-sound-spam check is ON")
 				return 0
 
 			/* --- Shuttle leaves the station, enters transit --- */
@@ -336,7 +334,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 				// Some aesthetic turbulance shaking
 				for(var/mob/M in end_location)
-					M.playsound_local(M, 'sound/effects/escape_shuttle/es_acceleration.ogg', 50)
+					M.playsound_local(, 'sound/effects/escape_shuttle/es_acceleration.ogg', 50)
 					if(M.client)
 						if(M.buckled)
 							shake_camera(M, 4, 1) // buckled, not a lot of shaking
