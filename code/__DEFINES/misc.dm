@@ -200,3 +200,7 @@
 #define MOUSE_OPACITY_TRANSPARENT   0
 #define MOUSE_OPACITY_ICON          1
 #define MOUSE_OPACITY_OPAQUE        2
+
+// Used in browser.dm for common.css style.
+#define CSS_THEME_LIGHT "theme_light"
+#define CSS_THEME_DARK "theme_dark"

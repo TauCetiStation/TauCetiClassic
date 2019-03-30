@@ -5,6 +5,7 @@
 	var/width = 0
 	var/height = 0
 	var/atom/ref = null
+	var/theme = CSS_THEME_DARK
 	var/window_options = "focus=0;can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;" // window option is set using window_id
 	var/stylesheets[0]
 	var/scripts[0]
@@ -15,7 +16,7 @@
 	var/content = ""
 
 
-/datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref = null)
+/datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref, ntheme)
 
 	user = nuser
 	window_id = nwindow_id
@@ -27,6 +28,8 @@
 		height = nheight
 	if (nref)
 		ref = nref
+	if (ntheme)
+		theme = ntheme
 	add_stylesheet("common", 'html/browser/common.css') // this CSS sheet is common to all UIs
 
 /datum/browser/proc/add_head_content(nhead_content)
@@ -74,7 +77,7 @@
 	<head>
 		[head_content]
 	</head>
-	<body scroll=auto>
+	<body scroll=auto class='[theme]'>
 		<div class='uiWrapper'>
 			[title ? "<div class='uiTitleWrapper'><div [title_attributes]><tt>[title]</tt></div></div>" : ""]
 			<div class='uiContent'>

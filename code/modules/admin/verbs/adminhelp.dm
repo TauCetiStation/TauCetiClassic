@@ -68,7 +68,9 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		var/datum/admin_help/AH = I
 		dat += "<span class='adminnotice'><span class='adminhelp'>Ticket #[AH.id]</span>: <A href='?_src_=holder;ahelp=\ref[AH];ahelp_action=ticket'>[AH.initiator_key_name]: [AH.name]</A></span><br>"
 
-	usr << browse(entity_ja(dat.Join()), "window=ahelp_list[state];size=600x480")
+	var/datum/browser/popup = new(usr, "ahelp_list[state]", null, 600, 480, null, CSS_THEME_LIGHT)
+	popup.set_content(dat.Join())
+	popup.open()
 
 //Tickets statpanel
 /datum/admin_help_tickets/proc/stat_entry()
@@ -387,7 +389,9 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	for(var/I in _interactions)
 		dat += "[I]<br>"
 
-	usr << browse(entity_ja(dat.Join()), "window=ahelp[id];size=620x480")
+	var/datum/browser/popup = new(usr, "ahelp[id]", null, 620, 480, null, CSS_THEME_LIGHT)
+	popup.set_content(dat.Join())
+	popup.open()
 
 //takes msg which was sanitized with sanitize() proc, returns correct text for stat display.
 /datum/admin_help/proc/sanitize_stat(msg)
