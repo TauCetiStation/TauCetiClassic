@@ -229,7 +229,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				if(last_es_sound < world.time)
 					var/area/escape_hallway = locate(/area/hallway/secondary/exit)
 					for(var/obj/effect/landmark/sound_source/shuttle_docking/SD in escape_hallway)
-						playsound(SD.loc, 'sound/effects/escape_shuttle/es_ss_docking.ogg', 50, 0, -2, voluminosity = FALSE)
+						playsound(SD.loc, 'sound/effects/escape_shuttle/es_ss_docking.ogg', 100, 0, -2, voluminosity = FALSE)
 					last_es_sound = world.time + 10
 				return 0
 
