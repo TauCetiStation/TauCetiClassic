@@ -117,7 +117,7 @@ var/datum/subsystem/shuttle/SSshuttle
 					start_location.move_contents_to(end_location, null, NORTH)
 
 					for(var/mob/M in end_location)
-						M.playsound_local(, 'sound/effects/escape_shuttle/es_cc_docking.ogg', 70)
+						M.playsound_local(null, 'sound/effects/escape_shuttle/es_cc_docking.ogg', 70)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -299,7 +299,7 @@ var/datum/subsystem/shuttle/SSshuttle
 					if(last_es_sound < world.time)
 						var/area/pre_location = locate(/area/shuttle/escape/station)
 						for(var/mob/M in pre_location)
-							M.playsound_local(, 'sound/effects/escape_shuttle/es_undocking.ogg', 70)
+							M.playsound_local(null, 'sound/effects/escape_shuttle/es_undocking.ogg', 70)
 						last_es_sound = world.time + 10
 				return 0
 
@@ -329,7 +329,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 				// Some aesthetic turbulance shaking
 				for(var/mob/M in end_location)
-					M.playsound_local(, 'sound/effects/escape_shuttle/es_acceleration.ogg', 50)
+					M.playsound_local(null, 'sound/effects/escape_shuttle/es_acceleration.ogg', 50)
 					if(M.client)
 						if(M.buckled)
 							shake_camera(M, 4, 1) // buckled, not a lot of shaking
