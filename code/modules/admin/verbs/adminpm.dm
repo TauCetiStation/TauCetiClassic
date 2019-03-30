@@ -77,11 +77,13 @@
 	if(istype(whom, /client))
 		recipient = whom
 
+	msg = sanitize(msg)
+
 	if(!recipient)
 		if(holder)
 			to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 			if(msg)
-				to_chat(src, msg)
+				to_chat(src, "Returned message: [msg]") // this just returns original msg back, so you can copy and paste again or whatever.
 			return
 		else if(msg) // you want to continue if there's no message instead of returning now
 			current_ticket.MessageNoRecipient(msg)
@@ -89,8 +91,7 @@
 
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
-		msg = input(src,"Message:", "Private message to [key_name(recipient, 0, holder ? 1 : 0, holder ? 1 : 0)]") as message|null
-		msg = sanitize(msg)
+		msg = sanitize(input(src,"Message:", "Private message to [key_name(recipient, 0, holder ? 1 : 0, holder ? 1 : 0)]") as message|null)
 		if(!msg)
 			return
 
@@ -101,6 +102,7 @@
 		if(!recipient)
 			if(holder)
 				to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
+				to_chat(src, "Returned message: [msg]")
 			else
 				current_ticket.MessageNoRecipient(msg)
 			return

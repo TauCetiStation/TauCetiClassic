@@ -151,7 +151,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 //is_bwoink is TRUE if this ticket was started by an admin PM
 /datum/admin_help/New(msg, client/C, is_bwoink)
 	//clean the input msg
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 	if(!msg || !C || !C.mob)
 		qdel(src)
 		return
@@ -483,8 +483,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	if(handle_spam_prevention(msg, MUTE_ADMINHELP))
 		return
 
-	msg = trim(msg)
-
+	msg = sanitize(msg)
 	if(!msg)
 		return
 
