@@ -139,7 +139,7 @@
 			to_chat(recipient, "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
 			to_chat(recipient, "<font color='red'>Admin PM from-<b>[key_name(src, recipient, 0)]</b>: <span class='emojify linkify'>[msg]</span></font>")
 			if(config.rus_language)
-				to_chat(recipient, "<font color='red'><i>Íàæìèòå íà èì[JA_PLACEHOLDER] àäìèíèñòðàòîðà äë[JA_PLACEHOLDER] îòâåòà.</i></font>")
+				to_chat(recipient, "<font color='red'><i>[CYRILLIC_AHELPCLICKNAME]</i></font>")
 			else
 				to_chat(recipient, "<font color='red'><i>Click on the administrator's name to reply.</i></font>")
 			to_chat(src, "<font color='blue'>Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='emojify linkify'>[msg]</span></font>")
