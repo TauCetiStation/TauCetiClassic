@@ -98,11 +98,6 @@ var/datum/subsystem/shuttle/SSshuttle
 					stop_parallax = locate(/area/shuttle/escape_pod5/transit)
 					stop_parallax.parallax_slowdown()
 				if(timeleft > 0)
-					if(timeleft < 118)
-						var/area/start_location = locate(/area/shuttle/escape/transit)
-						for(var/mob/M in start_location)
-							if(timeleft%2 == 0)
-								M.playsound_local(, 'sound/effects/escape_shuttle/es_flying.ogg', 40)
 					return 0
 
 				/* --- Shuttle has arrived at Centrcal Command --- */
