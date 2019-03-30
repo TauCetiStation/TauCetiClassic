@@ -137,7 +137,7 @@
 			to_chat(recipient, "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
 			to_chat(recipient, "<font color='red'>Admin PM from-<b>[key_name(src, recipient, 0)]</b>: <span class='emojify linkify'>[msg]</span></font>")
 			if(config.rus_language)
-				to_chat(recipient, "<font color='red'><i>Нажмите на им[JA_PLACEHOLDER] администратора дл[JA_PLACEHOLDER] ответа.</i></font>")
+				to_chat(recipient, "<font color='red'><i>ГЌГ Г¦Г¬ГЁГІГҐ Г­Г  ГЁГ¬[JA_PLACEHOLDER] Г Г¤Г¬ГЁГ­ГЁГ±ГІГ°Г ГІГ®Г°Г  Г¤Г«[JA_PLACEHOLDER] Г®ГІГўГҐГІГ .</i></font>")
 			else
 				to_chat(recipient, "<font color='red'><i>Click on the administrator's name to reply.</i></font>")
 			to_chat(src, "<font color='blue'>Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='emojify linkify'>[msg]</span></font>")
@@ -153,7 +153,7 @@
 
 	send2slack_logs("[key_name(src)]->[key_name(recipient)]",  msg, "(PM)")
 	window_flash(recipient)
-	log_admin_private("PM: [key_name(src)]->[key_name(recipient)]: [msg]")
+	log_admin_private("[key_name(src)]->[key_name(recipient)]: [msg]")
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/X in global.admins)
 		if(X.key != key && X.key != recipient.key) //check client/X is an admin and isn't the sender or recipient
