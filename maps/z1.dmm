@@ -48664,9 +48664,8 @@
 	req_access = list(55)
 	},
 /obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
+	step_x = 0;
+	step_y = 0
 	},
 /turf/simulated/floor/engine,
 /area/rnd/misc_lab)
