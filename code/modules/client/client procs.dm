@@ -64,7 +64,10 @@ var/list/blacklisted_builds = list(
 			var/mob/M = C
 			C = M.client
 		if(href_list["ahelp_reply"])
-			cmd_ahelp_reply(C, href_list["ahelp_reply"])
+			cmd_ahelp_reply(C, text2num(href_list["ahelp_reply"]))
+			return
+		if(href_list["mentor_pm"])
+			cmd_mentor_pm(C)
 			return
 		cmd_admin_pm(C,null)
 		return

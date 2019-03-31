@@ -38,7 +38,7 @@
 				admin_number_afk++
 			if(X.prefs.toggles & SOUND_ADMINHELP)
 				X << 'sound/effects/adminhelp.ogg'
-			to_chat(X, "<font color=blue><b><font color=[colour]>[prefix]: </font>[get_options_bar(mob, 2, 1, 1, MHELP_REPLY)][ai_found ? " (<A HREF='?_src_=holder;adminchecklaws=[ref_mob]'>CL</A>)" : ""]:</b> <span class='emojify linkify'>[msg]</span></font>")
+			to_chat(X, "<font color=blue><b><font color=[colour]>[prefix]: </font>[get_options_bar(mob, 2, 1, 1, MHELP_REPLY, TRUE)][ai_found ? " (<A HREF='?_src_=holder;adminchecklaws=[ref_mob]'>CL</A>)" : ""]:</b> <span class='emojify linkify'>[msg]</span></font>")
 
 	var/mentor_number_afk = 0
 	var/jump = null
@@ -48,7 +48,7 @@
 		if(isobserver(X.mob))
 			jump = "(<A HREF='?src=\ref[X.mob];ghostplayerobservejump=[ref_mob]'>JMP</A>) "
 		X << 'sound/effects/adminhelp.ogg'
-		to_chat(X, "<font color=blue><b><font color=[colour]>[prefix]: </font>[key_name(src, 1, 0, 0, MHELP_REPLY)][jump]:</b> <span class='emojify linkify'>[msg]</span></font>")
+		to_chat(X, "<font color=blue><b><font color=[colour]>[prefix]: </font>[key_name(src, 1, 0, 0, MHELP_REPLY, TRUE)][jump]:</b> <span class='emojify linkify'>[msg]</span></font>")
 
 	mentorhelped = TRUE //Determines if they get the message to reply by clicking the name.
 
