@@ -306,7 +306,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		var/msg = "Ticket [TicketHref("#[id]")] closed by [key_name]."
 		message_admins(msg)
 		log_admin_private(msg)
-		send2slack_logs("Ticket #[id]", "Closed by [key_name].", "(AHELP)")
+		send2slack_logs("Ticket #[id]", "Closed by [key_name(usr)].", "(AHELP)")
 
 //Mark open ticket as resolved/legitimate, returns ahelp verb
 /datum/admin_help/proc/Resolve(key_name = key_name_admin(usr), silent = FALSE)
@@ -324,7 +324,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		var/msg = "Ticket [TicketHref("#[id]")] resolved by [key_name]"
 		message_admins(msg)
 		log_admin_private(msg)
-		send2slack_logs("Ticket #[id]", "Resolved by [key_name].", "(AHELP)")
+		send2slack_logs("Ticket #[id]", "Resolved by [key_name(usr)].", "(AHELP)")
 
 //Close and return ahelp verb, use if ticket is incoherent
 /datum/admin_help/proc/Reject(key_name = key_name_admin(usr))
@@ -343,7 +343,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	var/msg = "Ticket [TicketHref("#[id]")] rejected by [key_name]"
 	message_admins(msg)
 	log_admin_private(msg)
-	send2slack_logs("Ticket #[id]", "Rejected by [key_name].", "(AHELP)")
+	send2slack_logs("Ticket #[id]", "Rejected by [key_name(usr)].", "(AHELP)")
 	AddInteraction("Rejected by [key_name].")
 	Close(silent = TRUE)
 
@@ -362,7 +362,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	msg = "Ticket [TicketHref("#[id]")] marked as IC by [key_name]"
 	message_admins(msg)
 	log_admin_private(msg)
-	send2slack_logs("Ticket #[id]", "Marked as IC issue by [key_name].", "(AHELP)")
+	send2slack_logs("Ticket #[id]", "Marked as IC issue by [key_name(usr)].", "(AHELP)")
 	AddInteraction("Marked as IC issue by [key_name]")
 	Resolve(silent = TRUE)
 
