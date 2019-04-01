@@ -1,12 +1,12 @@
 <!--
-Более подробно про оформление ПРовможно прочитать тут: https://github.com/TauCetiStation/TauCetiClassic/wiki/Styling-of-Pull-Requests-for-Dummies
+Более подробно про оформление ПР-ов можно прочитать тут: https://github.com/TauCetiStation/TauCetiClassic/wiki/Styling-of-Pull-Requests-for-Dummies
 -->
 
 ## Описание изменений
 
 <!--
 Опишите изменения данного ПР-а.
-Если есть связные ишью (issues), или другие ПРы - укажите их тут, для автоматического закрытя ишью сделует использовать ключевые слова https://help.github.com/en/articles/closing-issues-using-keywords
+Если есть связные ишью (issues), или другие ПРы - укажите их тут, для автоматического закрытия ишью следует использовать ключевые слова https://help.github.com/en/articles/closing-issues-using-keywords
 Если есть связное форумное обсуждение на тему изменений - укажите ссылку на эту тему.
 -->
 
@@ -27,7 +27,7 @@
 ## Чеинжлог
 
 <!-- Опциональный пункт!
-Если это что-то, о чём следует сообщить игрокам - опишите по форме (https://github.com/TauCetiStation/TauCetiClassic/wiki/Styling-of-Pull-Requests-for-Dummies#Changelog) свои изменения для игрового чеинжлога, они будут отбраженны на специальной страничке http://changelog.taucetistation.org
+Если это что-то, о чём следует сообщить игрокам - опишите по форме (https://github.com/TauCetiStation/TauCetiClassic/wiki/Styling-of-Pull-Requests-for-Dummies#Changelog) свои изменения для игрового чеинжлога, они будут отображены на специальной страничке http://changelog.taucetistation.org
 
 Список классификаторов для быстрого копирования: bugfix, rscadd, rscdel, image, sound, spellcheck, tweak, balance, map, performance, experiment
   
