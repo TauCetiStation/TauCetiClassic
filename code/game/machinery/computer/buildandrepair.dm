@@ -457,11 +457,10 @@
 				var/obj/item/stack/sheet/glass/G = P
 				if(G.get_amount() >= 2)
 					if(user.is_busy(src)) return
-					if(G.use_tool(src, user, 20, volume = 50))
-						if(G.use(2))
-							to_chat(user, "\blue You put in the glass panel.")
-							src.state = 4
-							src.icon_state = "4"
+					if(G.use_tool(src, user, 20, amount = 2, volume = 50))
+						to_chat(user, "\blue You put in the glass panel.")
+						src.state = 4
+						src.icon_state = "4"
 		if(4)
 			if(iscrowbar(P))
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)

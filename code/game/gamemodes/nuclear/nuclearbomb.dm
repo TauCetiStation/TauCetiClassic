@@ -110,8 +110,8 @@ var/bomb_set
 						return
 					user.visible_message("[user] starts cutting thru something on [src] like \he knows what to do.", "With [O] you start cutting thru first layer...")
 
-					if(O.use_tool(src, user, 150, volume = 50))
-						if(!src || !user || !WT.use(5, user)) return
+					if(O.use_tool(src, user, 150, amount = 5, volume = 50))
+						if(!src || !user) return
 						user.visible_message("[user] finishes cutting something on [src].", "You cut thru first layer.")
 						removal_stage = 1
 				return
@@ -139,8 +139,8 @@ var/bomb_set
 						return
 					user.visible_message("[user] starts cutting something on [src].. Again.", "You start cutting apart the safety plate with [O]...")
 
-					if(O.use_tool(src, user, 100, volume = 50))
-						if(!src || !user || !WT.use(5, user)) return
+					if(O.use_tool(src, user, 100, amount = 5, volume = 50))
+						if(!src || !user) return
 						user.visible_message("[user] finishes cutting something on [src].", "You cut apart the safety plate.")
 						removal_stage = 3
 				return
