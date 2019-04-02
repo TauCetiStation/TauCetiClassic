@@ -163,7 +163,7 @@
 
 /obj/structure/picture_frame/Destroy()
 	. = ..()
-	framed = null
+	QDEL_NULL(framed)
 
 /obj/structure/picture_frame/wooden
 	name = "wooden picture frame"
