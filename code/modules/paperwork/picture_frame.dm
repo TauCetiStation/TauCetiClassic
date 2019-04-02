@@ -51,7 +51,7 @@
 		if(!frame_glass)
 			frame_glass = TRUE
 			playsound(src, 'sound/effects/glassknock.ogg', 50, 1)
-			to_chat(user,"<span class='notice'>You insert the glass into \the [src].</span>")
+			to_chat(user, "<span class='notice'>You insert the glass into \the [src].</span>")
 			var/obj/item/stack/sheet/glass/G = I
 			G.use(1)
 			update_icon()
