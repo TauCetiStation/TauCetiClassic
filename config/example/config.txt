@@ -251,6 +251,9 @@ REQ_CULT_GHOSTWRITER 6
 ## 2 - for first day
 ANTIGRIEF_ALARM_LEVEL 1
 
+## Uncomment for
+#PROXY_AUTOBAN
+
 ## Uncomment to provide special actions for people from /config/donators.txt
 #ALLOW_DONATORS
 
