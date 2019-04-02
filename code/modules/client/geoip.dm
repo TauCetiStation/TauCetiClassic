@@ -40,7 +40,7 @@ var/global/list/proxy_whitelist = list()
 				proxy = "<span style='color: red'>true</span>"
 
 			if(config.proxy_autoban)
-				var/reason = "No proxy allowed"
+				var/reason = "Your IP was detected as proxy. No proxy allowed on server."
 				AddBan(C.ckey, C.computer_id, reason, "taukitty", 0, 0, C.mob.lastKnownIP)
 				to_chat(C, "<span class='danger'><BIG><B>You have been banned by Tau Kitty.\nReason: [reason].</B></BIG></span>")
 				to_chat(C, "<span class='red'>This is a permanent ban.</span>")
