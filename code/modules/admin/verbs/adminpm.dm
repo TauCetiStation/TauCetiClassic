@@ -77,8 +77,6 @@
 	if(istype(whom, /client))
 		recipient = whom
 
-	msg = sanitize(msg)
-
 	if(!recipient)
 		if(holder)
 			to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
