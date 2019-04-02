@@ -129,28 +129,16 @@
 		return
 	user.visible_message("<span class='notice'>[user] hangs [src] to \the [T].</span>",
 						 "<span class='notice'>You hang [src] to \the [T].</span>")
-	if(frame_type == /obj/structure/picture_frame/wooden)
-		var/obj/structure/picture_frame/wooden/PF = new /obj/structure/picture_frame/wooden(get_turf(user), ndir, 1)
-		if(displayed)
-			PF.framed = displayed
-		if(contents.len)
-			for(var/obj/I in contents)
-				I.forceMove(PF)
-		if(frame_glass)
-			PF.frame_glass = TRUE
-		PF.dir = ndir
-		PF.update_icon()
-	if(frame_type == /obj/structure/picture_frame/metal)
-		var/obj/structure/picture_frame/metal/PF = new /obj/structure/picture_frame/metal(get_turf(user), ndir, 1)
-		if(displayed)
-			PF.framed = displayed
-		if(contents.len)
-			for(var/obj/I in contents)
-				I.forceMove(PF)
-		if(frame_glass)
-			PF.frame_glass = TRUE
-		PF.dir = ndir
-		PF.update_icon()
+	var/obj/structure/picture_frame/wooden/PF = new frame_type(get_turf(user), ndir, 1)
+	if(displayed)
+		PF.framed = displayed
+	if(contents.len)
+		for(var/obj/I in contents)
+			I.forceMove(PF)
+	if(frame_glass)
+		PF.frame_glass = TRUE
+	PF.dir = ndir
+	PF.update_icon()
 	qdel(src)
 	return
 
