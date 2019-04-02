@@ -35,7 +35,7 @@
 			displayed = Photo
 			update_icon()
 		else
-			to_chat(user,"<span class='notice'>\The [src] already contains a photo.</span>")
+			to_chat(user, "<span class='notice'>\The [src] already contains a photo.</span>")
 		return
 	if(istype(I, /obj/item/weapon/wrench))
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
