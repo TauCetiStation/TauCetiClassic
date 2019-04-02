@@ -191,7 +191,7 @@
 				if("Screw the glass out")
 					playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 					frame_glass = FALSE
-					to_chat(user,"<span class='notice'>You screw the glass out of \the [src].</span>")
+					to_chat(user, "<span class='notice'>You screw the glass out of \the [src].</span>")
 					new /obj/item/stack/sheet/glass(get_turf(src))
 					update_icon()
 					return
