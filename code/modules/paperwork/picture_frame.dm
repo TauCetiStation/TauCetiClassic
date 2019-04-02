@@ -14,7 +14,7 @@
 
 /obj/item/weapon/picture_frame/Destroy()
 	. = ..()
-	displayed = null
+	QDEL_NULL(displayed)
 
 /obj/item/weapon/picture_frame/wooden
 	name = "wooden picture frame"
