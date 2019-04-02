@@ -66,7 +66,7 @@
 			new /obj/item/stack/sheet/glass(get_turf(src))
 			update_icon()
 		else
-			to_chat(user,"<span class='notice'>There is no glass to screw out in \the [src].</span>")
+			to_chat(user, "<span class='notice'>There is no glass to screw out in \the [src].</span>")
 		return
 	..()
 
