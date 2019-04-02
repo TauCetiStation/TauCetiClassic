@@ -11,11 +11,6 @@
 /proc/time_stamp(format = "hh:mm:ss", wtime = world.timeofday)
 	return time2text(wtime, format)
 
-/proc/gameTimestamp(format = "hh:mm:ss", wtime=null)
-	if(!wtime)
-		wtime = world.time
-	return time2text(wtime - global.timezoneOffset, format)
-
 /proc/shuttleeta2text()
 	var/timeleft = SSshuttle.timeleft()
 	if(timeleft < 0)

@@ -53,7 +53,6 @@
 	data_core = new /obj/effect/datacore()
 	paiController = new /datum/paiController()
 	ahelp_tickets = new
-	global.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
 	spawn(10)
 		Master.Setup()
