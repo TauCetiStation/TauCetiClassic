@@ -439,7 +439,6 @@
 
 		if(6)
 			if(iscoil(W))
-				var/obj/item/stack/cable_coil/coil = W
 				if(user.is_busy(src)) return
 				to_chat(user, "<span class='notice'>You start to wire [src]...</span>")
 				if(W.use_tool(src, user, 40, amount = 1, volume = 50))
