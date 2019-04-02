@@ -231,7 +231,7 @@
 			framed = Photo
 			update_icon()
 		else
-			to_chat(user,"<span class='notice'>\The [src] already contains a photo.</span>")
+			to_chat(user, "<span class='notice'>\The [src] already contains a photo.</span>")
 		return
 	else
 		if(frame_glass && O.force > 3)
