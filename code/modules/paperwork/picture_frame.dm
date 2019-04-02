@@ -56,7 +56,7 @@
 			G.use(1)
 			update_icon()
 		else
-			to_chat(user,"<span class='notice'>There is already a glass in \the [src].</span>")
+			to_chat(user, "<span class='notice'>There is already a glass in \the [src].</span>")
 		return
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(frame_glass)
