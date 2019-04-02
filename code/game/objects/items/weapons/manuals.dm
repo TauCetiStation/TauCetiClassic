@@ -123,7 +123,7 @@
 /obj/item/weapon/book/manual/wiki/medical_genetics
 	name = "Wonders of Genetics"
 	icon_state ="bookGenetics"
-	item_state ="book4"
+	item_state ="book7"
 	author = "NanoTrasen"
 	title = "Wonders of Genetics"
 	wiki_page = "Guide_to_Genetics"
@@ -220,14 +220,6 @@
 	author = "NanoTrasen"
 	title = "Standard Operating Procedure"
 	wiki_page = "Standard_Operating_Procedure"
-
-/obj/item/weapon/book/manual/wiki/lsop
-	name = "Legal Standard Operating Procedure"
-	icon_state = "bookLSOP"
-	item_state = "book9"
-	author = "NanoTrasen"
-	title = "Legal Standard Operating Procedure"
-	wiki_page = "Legal_Standard_Operating_Procedure"
 
 /obj/item/weapon/book/manual/detective
 	name = "The Film Noir: Proper Procedures for Investigations"
@@ -355,7 +347,7 @@
 /obj/item/weapon/book/manual/nuclear
 	name = "Fission Mailed: Nuclear Sabotage 101"
 	icon_state ="bookNuclear"
-	item_state = "book"
+	item_state = "book10"
 	author = "Syndicate"
 	title = "Fission Mailed: Nuclear Sabotage 101"
 
