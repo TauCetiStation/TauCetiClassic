@@ -134,8 +134,10 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	var/stat_name // name that is displayed in stat panel (because of byond until 513 unicode).
 	var/state = AHELP_ACTIVE
 
-	var/opened_at
+	var/opened_at // ticks
 	var/closed_at
+	var/opened_at_server // timeofday
+	var/closed_at_server
 
 	var/client/initiator	//semi-misnomer, it's the person who ahelped/was bwoinked
 	var/initiator_ckey
@@ -160,6 +162,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 
 	id = ++ticket_counter
 	opened_at = world.time
+	opened_at_server = world.timeofday
 
 	name = msg
 	stat_name = sanitize_stat(msg)
@@ -274,6 +277,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	global.ahelp_tickets.resolved_tickets -= src
 	state = AHELP_ACTIVE
 	closed_at = null
+	closed_at_server = null
 	if(initiator)
 		initiator.current_ticket = src
 
@@ -289,6 +293,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	if(state != AHELP_ACTIVE)
 		return
 	closed_at = world.time
+	closed_at_server = world.timeofday
 	QDEL_NULL(statclick)
 	global.ahelp_tickets.active_tickets -= src
 	if(initiator && initiator.current_ticket == src)
@@ -384,9 +389,9 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	dat += "</b>[global.TAB][TicketHref("Refresh", ref_src)][global.TAB][TicketHref("Re-Title", ref_src, "retitle")]"
 	if(state != AHELP_ACTIVE)
 		dat += "[global.TAB][TicketHref("Reopen", ref_src, "reopen")]"
-	dat += "<br><br>Opened at: [time_stamp()] (Approx [DisplayTimeText(world.time - opened_at)] ago)"
-	if(closed_at)
-		dat += "<br>Closed at: [time_stamp()] (Approx [DisplayTimeText(world.time - closed_at)] ago)"
+	dat += "<br><br>Opened at: [time_stamp(wtime = opened_at_server)] (Approx [DisplayTimeText(world.time - opened_at)] ago)"
+	if(closed_at && closed_at_server)
+		dat += "<br>Closed at: [time_stamp(wtime = closed_at_server)] (Approx [DisplayTimeText(world.time - closed_at)] ago)"
 	dat += "<br><br>"
 	if(initiator)
 		dat += "<b>Actions:</b> [FullMonty(ref_src)]<br>"
