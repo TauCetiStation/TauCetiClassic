@@ -11,6 +11,7 @@
 	throw_range = 20
 	m_amt = 1875
 	max_amount = 60
+	usesound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("hit", "bludgeoned", "whacked")
 
 /obj/item/stack/rods/update_icon()

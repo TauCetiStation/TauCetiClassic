@@ -398,7 +398,6 @@ By design, d1 is the smallest direction and d2 is the highest
 	item_state = "coil"
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
-	usesound = 'sound/items/Deconstruct.ogg'
 	full_w_class = ITEM_SIZE_SMALL
 
 /obj/item/stack/cable_coil/cyborg

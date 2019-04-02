@@ -11,6 +11,7 @@
 /obj/item/stack
 	gender = PLURAL
 	origin_tech = "materials=1"
+	usesound = 'sound/items/Deconstruct.ogg'
 
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
