@@ -221,7 +221,7 @@
 			G.use(1)
 			update_icon()
 		else
-			to_chat(user,"<span class='notice'>There is already a glass in \the [src].</span>")
+			to_chat(user, "<span class='notice'>There is already a glass in \the [src].</span>")
 		return
 	else if(istype(O, /obj/item/weapon/photo))
 		if(!framed)
