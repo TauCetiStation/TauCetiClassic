@@ -221,15 +221,6 @@
 	title = "Standard Operating Procedure"
 	wiki_page = "Standard_Operating_Procedure"
 
-/* LSOP is no more...
-/obj/item/weapon/book/manual/wiki/lsop
-	name = "Legal Standard Operating Procedure"
-	icon_state = "bookLSOP"
-	item_state = "book9"
-	author = "NanoTrasen"
-	title = "Legal Standard Operating Procedure"
-	wiki_page = "Legal_Standard_Operating_Procedure"*/
-
 /obj/item/weapon/book/manual/detective
 	name = "The Film Noir: Proper Procedures for Investigations"
 	icon_state ="bookDetective"
