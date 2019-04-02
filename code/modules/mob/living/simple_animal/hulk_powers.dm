@@ -633,6 +633,34 @@
 	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses hulk_lazor</font>"
 	msg_admin_attack("[key_name(usr)] uses hulk_lazor")
 
+/obj/effect/proc_holder/spell/aoe_turf/HulkHONK
+	name = "HulkHONK"
+	desc = ""
+	panel = "Hulk"
+	charge_max = 150
+	clothes_req = 0
+	range = 2
+
+/obj/effect/proc_holder/spell/aoe_turf/HulkHONK/cast(list/target)
+	if (usr.lying || usr.stunned || usr.stat)
+		to_chat(usr, "\red You can't right now!")
+		return
+	playsound(usr.loc, 'sound/items/AirHorn.ogg',100, 1)
+	msg_admin_attack("[key_name(usr)] uses HulkHONK")
+	for(var/mob/living/carbon/M in ohearers(2))
+		if(CLUMSY in M.mutations)
+			M.health +=20
+		else
+			if(istype(M, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = M
+				if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
+					continue
+				M.stuttering += 1
+				M.ear_deaf += 1
+				M.Weaken(1)
+				M.make_jittery(500)
+		return
+
 /obj/item/weapon/organ/attack_animal(mob/user)
 	..()
 	if(istype(user, /mob/living/simple_animal/hulk))

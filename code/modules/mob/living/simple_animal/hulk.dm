@@ -94,6 +94,8 @@
 	attack_sound =  'sound/items/bikehorn.ogg'
 	health_regen = 5
 
+	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/HulkHONK)
+
 /mob/living/simple_animal/hulk/atom_init()
 	..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
