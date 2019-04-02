@@ -75,7 +75,7 @@
 		if(displayed)
 			var/obj/item/I = displayed
 			user.put_in_hands(I)
-			to_chat(user,"<span class='notice'>You carefully remove the photo from \the [src].</span>")
+			to_chat(user, "<span class='notice'>You carefully remove the photo from \the [src].</span>")
 			displayed = null
 			update_icon()
 			return
