@@ -393,8 +393,10 @@
 		user.visible_message("<span class='[class]'>[user] holds \the [P] up to \the [src], it looks like \he's trying to burn it!</span>", \
 		"<span class='[class]'>You hold \the [P] up to \the [src], burning it slowly.</span>")
 
+		icon_state = "paper_onfire"
 		if(P.use_tool(P, user, 20, volume = 50))
 			if((get_dist(src, user) > 1) || !P.lit)
+				update_icon()
 				return
 			user.visible_message("<span class='[class]'>[user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>", \
 			"<span class='[class]'>You burn right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>")
@@ -406,6 +408,7 @@
 			qdel(src)
 
 		else
+			update_icon()
 			to_chat(user, "<span class='warning'>You must hold \the [P] steady to burn \the [src].</span>")
 
 

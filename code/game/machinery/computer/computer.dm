@@ -121,6 +121,7 @@
 		if(user.is_busy(src)) return
 		if(I.use_tool(src, user, 20, volume = 50))
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
+			transfer_fingerprints_to(A)
 			A.circuit = circuit
 			A.anchored = 1
 			circuit = null
