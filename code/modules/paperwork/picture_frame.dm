@@ -267,7 +267,7 @@
 		framed.show(user)
 	else
 		if(screwed)
-			to_chat(user,"<span class='warning'>It is screwed to the wall.</span>")
+			to_chat(user, "<span class='warning'>It is screwed to the wall.</span>")
 			return
 		if(do_after(user, 8, target = src))
 			user.visible_message("<span class='notice'>[user] takes off \the [src] from the wall.</span>",
