@@ -34,6 +34,7 @@
 		load_whitelist()
 	if(config.usealienwhitelist)
 		load_whitelistSQL()
+	load_proxy_whitelist()
 	LoadBans()
 	investigate_reset()
 
