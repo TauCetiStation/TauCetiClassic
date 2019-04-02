@@ -150,7 +150,7 @@ var/bomb_set
 					if(user.is_busy())
 						return
 					user.visible_message("[user] begins poking inside [src].", "You begin unwrenching bolts...")
-					if(O.use_tool(src, user, 75))
+					if(O.use_tool(src, user, 75, volume = 50))
 						if(!src || !user) return
 						user.visible_message("[user] begins poking inside [src].", "You unwrench bolts.")
 						removal_stage = 4
