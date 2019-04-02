@@ -89,7 +89,7 @@
 	melee_damage_upper = 5
 	attacktext = "brutally HONK "
 
-	speed = 2
+	speed = 4
 
 	attack_sound =  'sound/items/bikehorn.ogg'
 	health_regen = 5
