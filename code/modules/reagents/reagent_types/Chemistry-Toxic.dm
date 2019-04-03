@@ -591,6 +591,7 @@
 	reagent_state = LIQUID
 	color = "#13bc5e" // rgb: 19, 188, 94
 	overdose = REAGENTS_OVERDOSE
+	custom_metabolism = 0.02
 
 /datum/reagent/slimetoxin/on_general_digest(mob/living/M)
 	..()
@@ -598,36 +599,41 @@
 		var/mob/living/carbon/human/H = M
 		if(H.species.name == SLIME)
 			return
-		holder.del_reagent(id)
-		to_chat(H, "<span class='warning'>You feel different, somehow...</span>")
-		for(var/slime_progress in 1 to 31)
-			switch(slime_progress)
-
-				if(1 to 10)
-					sleep(2 SECONDS) //20 sec total
-					var/obj/item/organ/external/BP = H.get_bodypart(pick(BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG, BP_CHEST, BP_GROIN, BP_HEAD))
-					BP.take_damage(13)
+		data++
+		switch(data)
+			if(1)
+				to_chat(H, "<span class='warning'>You feel different, somehow...</span>")
+			if(1 to 10)
+				var/obj/item/organ/external/BP = H.get_bodypart(pick(H.species.has_bodypart))
+				if(!(BP.status & (ORGAN_DESTROYED | ORGAN_ROBOT)))
+					BP.take_damage(10)
 					if(prob(25))
 						to_chat(H, "<span class='warning'>Your flesh is starting to melt!</span>")
 						H.emote("scream",,, 1)
-						BP.status = ORGAN_ARTERY_CUT
-
-				if(10 to 20)
-					sleep(4 SECONDS) //40 sec total
-					var/obj/item/organ/internal/BP = H.organs_by_name[pick(O_EYES, O_HEART, O_LUNGS, O_BRAIN, O_LIVER, O_KIDNEYS)]
-					BP.take_damage(20, silent = 1)
-					if(prob(25))
-						to_chat(H, "<span class='warning'>You feel unbearable pain inside you!</span>")
-						H.emote("scream",,, 1)
-
-				if(31)
-					sleep(25 SECONDS)
-					if(H.set_species(SLIME))
-						to_chat(H, "<span class='warning'>Your flesh mutates and you feel free!</span>")
-						H.dna.mutantrace = "slime"
-						H.update_mutantrace()
-
-		H.revive()
+						BP.sever_artery()
+			if(11 to 20)
+				var/obj/item/organ/internal/BP = H.organs_by_name[pick(H.species.has_organ)]
+				BP.take_damage(5)
+				if(prob(25))
+					to_chat(H, "<span class='warning'>You feel unbearable pain inside you!</span>")
+					H.emote("scream",,, 1)
+			if(30)
+				if(H.set_species(SLIME))
+					to_chat(H, "<span class='warning'>Your flesh mutates and you feel free!</span>")
+					H.dna.mutantrace = "slime"
+					H.update_mutantrace()
+					for(var/obj/item/organ/external/BP in H.bodyparts)
+						if(BP.status & ORGAN_ROBOT)
+							BP.status = ORGAN_ROBOT
+						else if(BP.status & ORGAN_DESTROYED)
+							BP.status = ORGAN_DESTROYED
+						else
+							BP.status = 0
+					for(var/obj/item/organ/internal/BP in H.species.has_organ)
+						BP.rejuvenate()
+			if(31 to 50)
+				M.heal_bodypart_damage(0,5)
+				M.adjustOxyLoss(-2 * REM)
 
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
