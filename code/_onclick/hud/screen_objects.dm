@@ -14,6 +14,7 @@
 	unacidable = 1
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 	var/gun_click_time = -100 //I'm lazy.
+	var/internal_switch = 0 // Cooldown for internal switching
 	appearance_flags = APPEARANCE_UI
 
 /obj/screen/Destroy()
@@ -279,89 +280,108 @@
 			if(iscarbon(usr))
 				var/mob/living/carbon/C = usr
 				if(!C.stat && !C.stunned && !C.paralysis && !C.restrained())
+					if(internal_switch > world.time)
+						return
+					var/internalsound
 					if(C.internal)
 						C.internal = null
 						to_chat(C, "<span class='notice'>No longer running on internals.</span>")
+						internalsound = 'sound/misc/internaloff.ogg'
+						if(ishuman(C))
+							var/mob/living/carbon/human/H = C
+							if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
+								internalsound = 'sound/misc/riginternaloff.ogg'
+						playsound(C.loc, internalsound, 85, 0, -5)
 						if(C.internals)
 							C.internals.icon_state = "internal0"
 					else
 						if(!istype(C.wear_mask, /obj/item/clothing/mask))
 							to_chat(C, "<span class='notice'>You are not wearing a mask.</span>")
+							internal_switch = world.time + 8
 							return 1
 						else
-							var/list/nicename = null
-							var/list/tankcheck = null
-							var/breathes = "oxygen"    //default, we'll check later
-							var/list/contents = list()
+							if(C.wear_mask.flags & MASKINTERNALS)
+								var/list/nicename = null
+								var/list/tankcheck = null
+								var/breathes = "oxygen"    //default, we'll check later
+								var/list/contents = list()
 
-							if(ishuman(C))
-								var/mob/living/carbon/human/H = C
-								breathes = H.species.breath_type
-								nicename = list ("suit", "back", "belt", "right hand", "left hand", "left pocket", "right pocket")
-								tankcheck = list (H.s_store, C.back, H.belt, C.r_hand, C.l_hand, H.l_store, H.r_store)
-
-							else
-
-								nicename = list("Right Hand", "Left Hand", "Back")
-								tankcheck = list(C.r_hand, C.l_hand, C.back)
-
-							for(var/i=1, i<tankcheck.len+1, ++i)
-								if(istype(tankcheck[i], /obj/item/weapon/tank))
-									var/obj/item/weapon/tank/t = tankcheck[i]
-									if (!isnull(t.manipulated_by) && t.manipulated_by != C.real_name && findtext(t.desc,breathes))
-										contents.Add(t.air_contents.total_moles)	//Someone messed with the tank and put unknown gasses
-										continue					//in it, so we're going to believe the tank is what it says it is
-									switch(breathes)
-																		//These tanks we're sure of their contents
-										if("nitrogen") 							//So we're a bit more picky about them.
-
-											if(t.air_contents.gas["nitrogen"] && !t.air_contents.gas["oxygen"])
-												contents.Add(t.air_contents.gas["nitrogen"])
-											else
-												contents.Add(0)
-
-										if ("oxygen")
-											if(t.air_contents.gas["oxygen"] && !t.air_contents.gas["phoron"])
-												contents.Add(t.air_contents.gas["oxygen"])
-											else
-												contents.Add(0)
-
-										// No races breath this, but never know about downstream servers.
-										if ("carbon dioxide")
-											if(t.air_contents.gas["carbon_dioxide"] && !t.air_contents.gas["phoron"])
-												contents.Add(t.air_contents.gas["carbon_dioxide"])
-											else
-												contents.Add(0)
-
+								if(ishuman(C))
+									var/mob/living/carbon/human/H = C
+									breathes = H.species.breath_type
+									nicename = list ("suit", "back", "belt", "right hand", "left hand", "left pocket", "right pocket")
+									tankcheck = list (H.s_store, C.back, H.belt, C.r_hand, C.l_hand, H.l_store, H.r_store)
 
 								else
-									//no tank so we set contents to 0
-									contents.Add(0)
 
-							//Alright now we know the contents of the tanks so we have to pick the best one.
+									nicename = list("Right Hand", "Left Hand", "Back")
+									tankcheck = list(C.r_hand, C.l_hand, C.back)
 
-							var/best = 0
-							var/bestcontents = 0
-							for(var/i=1, i <  contents.len + 1 , ++i)
-								if(!contents[i])
-									continue
-								if(contents[i] > bestcontents)
-									best = i
-									bestcontents = contents[i]
+								for(var/i=1, i<tankcheck.len+1, ++i)
+									if(istype(tankcheck[i], /obj/item/weapon/tank))
+										var/obj/item/weapon/tank/t = tankcheck[i]
+										if (!isnull(t.manipulated_by) && t.manipulated_by != C.real_name && findtext(t.desc,breathes))
+											contents.Add(t.air_contents.total_moles)	//Someone messed with the tank and put unknown gasses
+											continue					//in it, so we're going to believe the tank is what it says it is
+										switch(breathes)
+																			//These tanks we're sure of their contents
+											if("nitrogen") 							//So we're a bit more picky about them.
+
+												if(t.air_contents.gas["nitrogen"] && !t.air_contents.gas["oxygen"])
+													contents.Add(t.air_contents.gas["nitrogen"])
+												else
+													contents.Add(0)
+
+											if ("oxygen")
+												if(t.air_contents.gas["oxygen"] && !t.air_contents.gas["phoron"])
+													contents.Add(t.air_contents.gas["oxygen"])
+												else
+													contents.Add(0)
+
+											// No races breath this, but never know about downstream servers.
+											if ("carbon dioxide")
+												if(t.air_contents.gas["carbon_dioxide"] && !t.air_contents.gas["phoron"])
+													contents.Add(t.air_contents.gas["carbon_dioxide"])
+												else
+													contents.Add(0)
 
 
-							//We've determined the best container now we set it as our internals
+									else
+										//no tank so we set contents to 0
+										contents.Add(0)
 
-							if(best)
-								to_chat(C, "<span class='notice'>You are now running on internals from [tankcheck[best]] on your [nicename[best]].</span>")
-								C.internal = tankcheck[best]
+								//Alright now we know the contents of the tanks so we have to pick the best one.
+
+								var/best = 0
+								var/bestcontents = 0
+								for(var/i=1, i <  contents.len + 1 , ++i)
+									if(!contents[i])
+										continue
+									if(contents[i] > bestcontents)
+										best = i
+										bestcontents = contents[i]
 
 
-							if(C.internal)
-								if(C.internals)
-									C.internals.icon_state = "internal1"
+								//We've determined the best container now we set it as our internals
+
+								if(best)
+									to_chat(C, "<span class='notice'>You are now running on internals from [tankcheck[best]] on your [nicename[best]].</span>")
+									C.internal = tankcheck[best]
+									internalsound = 'sound/misc/internalon.ogg'
+									if(ishuman(C))
+										var/mob/living/carbon/human/H = C
+										if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
+											internalsound = 'sound/misc/riginternalon.ogg'
+									playsound(C.loc, internalsound, 85, 0, -5)
+
+								if(C.internal)
+									if(C.internals)
+										C.internals.icon_state = "internal1"
+								else
+									to_chat(C, "<span class='notice'>You don't have a[breathes=="oxygen" ? "n oxygen" : addtext(" ",breathes)] tank.</span>")
 							else
-								to_chat(C, "<span class='notice'>You don't have a[breathes=="oxygen" ? "n oxygen" : addtext(" ",breathes)] tank.</span>")
+								to_chat(C, "<span class='notice'>This mask doesn't support breathing through the tanks.</span>")
+					internal_switch = world.time + 16
 		if("act_intent")
 			usr.a_intent_change("right")
 		if("help")

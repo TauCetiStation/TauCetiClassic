@@ -110,7 +110,7 @@
 		updateUsrDialog()
 		return
 	if(panel_open)
-		if(istype(W, /obj/item/weapon/crowbar))
+		if(iscrowbar(W))
 			empty_content()
 			default_deconstruction_crowbar(W)
 		return 1
@@ -352,7 +352,7 @@
 		updateUsrDialog()
 		return
 	if(panel_open)
-		if(istype(I, /obj/item/weapon/crowbar))
+		if(iscrowbar(I))
 			default_deconstruction_crowbar(I)
 		return 1
 	..()
@@ -490,16 +490,13 @@
 			if(isliving(M))
 				var/mob/living/L = M
 				L.Weaken(3)
-				if(ishuman(L))
-					shake_camera(L, 20, 1)
-					spawn(20)
-						if(L)
-							L.visible_message("<span class='danger'>[L.name] vomits from travelling through the [src.name]!</span>", "<span class='userdanger'>You throw up from travelling through the [src.name]!</span>")
-							L.nutrition -= 20
-							L.adjustToxLoss(-3)
-							var/turf/T = get_turf(L)
-							T.add_vomit_floor(L)
-							playsound(L, 'sound/effects/splat.ogg', 50, 1)
+				shake_camera(L, 20, 1)
+				spawn(20)
+					if(L)
+						var/turf/T = get_turf(L)
+						T.add_vomit_floor(L)
+						L.nutrition -= 20
+						L.adjustToxLoss(-3)
 
 
 /**********************Resonator**********************/
@@ -643,7 +640,7 @@
 						  /obj/item/weapon/ore/clown)
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/weldingtool))
+	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/W = I
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(W.welding && !stat)

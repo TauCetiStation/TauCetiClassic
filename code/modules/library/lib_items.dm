@@ -135,7 +135,6 @@
 	for (var/i in 1 to 2)
 		new /obj/item/weapon/book/manual/wiki/sop(src)
 	new /obj/item/weapon/book/manual/detective(src)
-	new /obj/item/weapon/book/manual/wiki/lsop(src)
 	update_icon()
 
 /*
@@ -249,7 +248,7 @@
 							return
 					scanner.computer.inventory.Add(src)
 					to_chat(user, "[W]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'")
-	else if(istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/wirecutters))
+	else if(istype(W, /obj/item/weapon/kitchenknife) || iswirecutter(W))
 		if(carved)	return
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin to carve out [title].</span>")

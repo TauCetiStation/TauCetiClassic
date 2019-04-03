@@ -208,6 +208,7 @@ var/global/chicken_count = 0
 	icon_state = "chicken"
 	icon_living = "chicken"
 	icon_dead = "chicken_dead"
+	icon_move = "chicken_move"
 	speak = list("Cluck!","BWAAAAARK BWAK BWAK BWAK!","Bwaak bwak.")
 	speak_emote = list("clucks","croons")
 	emote_hear = list("clucks")
@@ -224,10 +225,11 @@ var/global/chicken_count = 0
 /mob/living/simple_animal/chicken/atom_init()
 	. = ..()
 	if(!body_color)
-		body_color = pick( list("brown","black","white") )
+		body_color = pick(list("brown", "black", "white"))
 	icon_state = "chicken_[body_color]"
 	icon_living = "chicken_[body_color]"
 	icon_dead = "chicken_[body_color]_dead"
+	icon_move = "chicken_[body_color]_move"
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 	chicken_count += 1

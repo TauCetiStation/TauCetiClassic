@@ -35,7 +35,7 @@
 		if(!param_color)
 			param_color = pick("black","red","green","blue","default")
 		icon_state = "wrench_[param_color]"
-		item_state = "wrench"	
+		item_state = "wrench"
 
 /obj/item/weapon/wrench/power
 	name = "Hand Drill"
@@ -231,7 +231,7 @@
 
 
 /obj/item/weapon/weldingtool/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		if(welding)
 			to_chat(user, "<span class='rose'>Stop welding first!</span>")
 			return
@@ -317,7 +317,7 @@
 	if(!proximity) return
 	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && !src.welding)
 		O.reagents.trans_to(src, max_fuel)
-		to_chat(user, "<span class='notice'>Welder refueled")
+		to_chat(user, "<span class='notice'>Welder refueled</span>")
 		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 		return
 	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)

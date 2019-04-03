@@ -45,7 +45,7 @@
 		update_crystal()
 		return
 
-	if(istype(W, /obj/item/weapon/wirecutters)) // If we want to remove the wiring
+	if(iswirecutter(W)) // If we want to remove the wiring
 		if(wired)
 			user.visible_message(
 				"<span class='notice'>[user] starts cutting off the wiring of the [src].</span>",
@@ -62,7 +62,7 @@
 		else
 			to_chat(user, "<span class='red'>There is currently no wiring on the [src].</span>")
 			return
-	if(istype(W, /obj/item/stack/cable_coil)) // If we want to put the wiring
+	if(iscoil(W)) // If we want to put the wiring
 		if(!wired)
 			var/obj/item/stack/cable_coil/CC = W
 			if(!CC.use(2))

@@ -64,6 +64,33 @@
 		if(S.flags[IS_WHITELISTED])
 			whitelisted_species += S.name
 
+	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
+	global.chemical_reagents_list = list()
+	for(var/path in subtypesof(/datum/reagent))
+		var/datum/reagent/D = new path()
+		global.chemical_reagents_list[D.id] = D
+
+	//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
+	// It is filtered into multiple lists within a list.
+	// For example:
+	// chemical_reaction_list["phoron"] is a list of all reactions relating to phoron
+	global.chemical_reactions_list = list()
+	for(var/path in subtypesof(/datum/chemical_reaction))
+
+		var/datum/chemical_reaction/D = new path()
+		var/list/reaction_ids = list()
+
+		if(D.required_reagents && D.required_reagents.len)
+			for(var/reaction in D.required_reagents)
+				reaction_ids += reaction
+
+		// Create filters based on each reagent id in the required reagents list
+		for(var/id in reaction_ids)
+			if(!global.chemical_reactions_list[id])
+				global.chemical_reactions_list[id] = list()
+			global.chemical_reactions_list[id] += D
+			break // Don't bother adding ourselves to other reagent ids, it is redundant.
+
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()
 

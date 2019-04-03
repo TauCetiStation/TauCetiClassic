@@ -50,7 +50,7 @@ var/can_call_ert
 			to_chat(usr, "An emergency response team has already been sent.")
 			return */
 		if(jobban_isbanned(usr, "Syndicate") || jobban_isbanned(usr, ROLE_ERT) || jobban_isbanned(usr, "Security Officer"))
-			to_chat(usr, "<font color=red><b>You are jobbanned from the emergency reponse team!")
+			to_chat(usr, "<span class='danger'>You are jobbanned from the emergency reponse team!</span>")
 			return
 
 		var/available_in_minutes = role_available_in_minutes(usr, ROLE_ERT)
@@ -76,11 +76,11 @@ var/can_call_ert
 			create_random_account_and_store_in_mind(new_commando)
 
 			to_chat(new_commando, "\blue You are [!leader_selected?"a member":"the <B>LEADER</B>"] of an Emergency Response Team, a type of military division, under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem.")
-			to_chat(new_commando, "<b>You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready.")
+			to_chat(new_commando, "<b>You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready.</b>")
 			if(!leader_selected)
 				to_chat(new_commando, "<b>As member of the Emergency Response Team, you answer only to your leader and CentComm officials.</b>")
 			else
-				to_chat(new_commando, "<b>As leader of the Emergency Response Team, you answer only to CentComm, and have authority to override the Captain where it is necessary to achieve your mission goals. It is recommended that you attempt to cooperate with the captain where possible, however.")
+				to_chat(new_commando, "<b>As leader of the Emergency Response Team, you answer only to CentComm, and have authority to override the Captain where it is necessary to achieve your mission goals. It is recommended that you attempt to cooperate with the captain where possible, however.</b>")
 			return
 
 	else

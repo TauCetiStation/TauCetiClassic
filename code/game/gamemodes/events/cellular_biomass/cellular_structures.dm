@@ -103,7 +103,7 @@
 /obj/structure/cellular_biomass/core
 	layer = 3
 	health = 120
-	light_color = "#710F8C"
+	light_color = "#710f8c"
 	light_range = 3
 	icon_state = "light_1"
 

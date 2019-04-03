@@ -164,7 +164,7 @@
 			for(var/mob/O in viewers(src, null))
 				if(O == src)
 					continue
-				O.show_message(text("\red <B>[src] starts having a seizure!"), 1)
+				O.show_message(text("<span class='danger'>[src] starts having a seizure!</span>"), 1)
 			Paralyse(10)
 			make_jittery(1000)
 	if (disabilities & COUGHING || has_trait(TRAIT_COUGH))
@@ -182,7 +182,10 @@
 					if(1)
 						emote("twitch")
 					if(2 to 3)
-						say("[pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
+						if(config.rus_language)
+							say(pick(TRAIT_TOURETTE))
+						else
+							say(pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS"))
 				var/old_x = pixel_x
 				var/old_y = pixel_y
 				pixel_x += rand(-2,2)
@@ -376,8 +379,7 @@
 				if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
 					var/obj/item/clothing/mask/gas/G = wear_mask
 					var/datum/gas_mixture/filtered = new
-
-					for(var/g in  list("phoron", "sleeping_agent"))
+					for(var/g in  G.filter)
 						if(breath.gas[g])
 							filtered.gas[g] = breath.gas[g] * G.gas_filter_strength
 							breath.gas[g] -= filtered.gas[g]
@@ -429,7 +431,6 @@
 				for(var/mob/living/carbon/M in view(1,src))
 					src.spread_disease_to(M)
 
-
 /mob/living/carbon/human/proc/get_breath_from_internal(volume_needed)
 	if(internal)
 		if (!contents.Find(internal))
@@ -437,6 +438,16 @@
 		if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
 			internal = null
 		if(internal)
+					//internal breath sounds
+			if(internal.distribute_pressure >= 16)
+				var/breathsound = ""
+				if(istype(wear_mask, /obj/item/clothing/mask))
+					breathsound = "breathmask"
+				if(istype(wear_mask, /obj/item/clothing/mask/gas))
+					breathsound = "gasmaskbreath"
+				if(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space))
+					breathsound = "rigbreath"
+				playsound(src, breathsound, 80, 0, -6)
 			return internal.remove_air_volume(volume_needed)
 		else if(internals)
 			internals.icon_state = "internal0"
@@ -1657,7 +1668,7 @@
 		return
 
 	if(shock_stage == 10)
-		to_chat(src, "<font color='red'><b>"+pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!"))
+		to_chat(src, "<span class='danger'>[pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")]</span>")
 
 	if(shock_stage >= 30)
 		if(shock_stage == 30) emote("me",1,"is having trouble keeping their eyes open.")
@@ -1665,22 +1676,22 @@
 		stuttering = max(stuttering, 5)
 
 	if(shock_stage == 40)
-		to_chat(src, "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!"))
+		to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 
 	if (shock_stage >= 60)
 		if(shock_stage == 60) emote("me",1,"'s body becomes limp.")
 		if (prob(2))
-			to_chat(src, "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!"))
+			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 			Weaken(20)
 
 	if(shock_stage >= 80)
 		if (prob(5))
-			to_chat(src, "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!"))
+			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 			Weaken(20)
 
 	if(shock_stage >= 120)
 		if (prob(2))
-			to_chat(src, "<font color='red'><b>"+pick("You black out!", "You feel like you could die any moment now.", "You're about to lose consciousness."))
+			to_chat(src, "<span class='danger'>[pick("You black out!", "You feel like you could die any moment now.", "You're about to lose consciousness.")]</span>")
 			Paralyse(5)
 
 	if(shock_stage == 150)

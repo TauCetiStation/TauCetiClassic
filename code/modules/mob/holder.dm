@@ -94,6 +94,12 @@
 /obj/item/weapon/holder/mouse/brown
 	icon_state = "mouse_brown"
 
+/obj/item/weapon/holder/lizard
+	name = "lizard"
+	desc = "A cute tiny lizard."
+	icon_state = "lizard"
+	w_class = ITEM_SIZE_TINY
+
 /obj/item/weapon/holder/monkey
 	name = "monkey"
 	desc = "It's a monkey. Ook."

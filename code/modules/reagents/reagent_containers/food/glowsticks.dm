@@ -188,28 +188,28 @@
 ////////////////G L O W S T I C K - C O L O R S////////////////
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/green
 	colourName = "green"
-	light_color = "#88EBC3"
-	filling_color = "#88EBC3"
+	light_color = "#88ebc3"
+	filling_color = "#88ebc3"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/red
 	colourName = "red"
-	light_color = "#EA0052"
-	filling_color = "#EA0052"
+	light_color = "#ea0052"
+	filling_color = "#ea0052"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/blue
 	colourName = "blue"
-	light_color = "#24C1FF"
-	filling_color = "#24C1FF"
+	light_color = "#24c1ff"
+	filling_color = "#24c1ff"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow
 	colourName = "yellow"
-	light_color = "#FFFA18"
-	filling_color = "#FFFA18"
+	light_color = "#fffa18"
+	filling_color = "#fffa18"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/orange
 	colourName = "orange"
-	light_color = "#FF9318"
-	filling_color = "#FF9318"
+	light_color = "#ff9318"
+	filling_color = "#ff9318"
 
 
 ///////////////////// POWER GLOWSTICK //////////////////////
@@ -234,25 +234,25 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/green
 	colourName = "green"
-	light_color = "#88EBC3"
-	filling_color = "#88EBC3"
+	light_color = "#88ebc3"
+	filling_color = "#88ebc3"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/red
 	colourName = "red"
-	light_color = "#EA0052"
-	filling_color = "#EA0052"
+	light_color = "#ea0052"
+	filling_color = "#ea0052"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/blue
 	colourName = "blue"
-	light_color = "#24C1FF"
-	filling_color = "#24C1FF"
+	light_color = "#24c1ff"
+	filling_color = "#24c1ff"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/yellow
 	colourName = "yellow"
-	light_color = "#FFFA18"
-	filling_color = "#FFFA18"
+	light_color = "#fffa18"
+	filling_color = "#fffa18"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/orange
 	colourName = "orange"
-	light_color = "#FF9318"
-	filling_color = "#FF9318"
+	light_color = "#ff9318"
+	filling_color = "#ff9318"

@@ -6,6 +6,8 @@
 	layer = 3.2//Just above doors
 	anchored = 1.0
 	flags = ON_BORDER
+	can_be_unanchored = TRUE
+
 	var/maxhealth = 14.0
 	var/health
 	var/ini_dir = null
@@ -229,7 +231,7 @@
 	if(istype(W, /obj/item/weapon/airlock_painter))
 		change_paintjob(W, user)
 
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(W))
 		if(reinf && state >= 1)
 			state = 3 - state
 			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
@@ -247,7 +249,7 @@
 			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			to_chat(user, (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>"))
 
-	else if(istype(W, /obj/item/weapon/crowbar) && reinf && state <= 1)
+	else if(iscrowbar(W) && reinf && state <= 1)
 		state = 1 - state
 		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
 		to_chat(user, (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>"))
@@ -563,7 +565,7 @@
 	icon_state = "light[active]"
 
 /obj/machinery/windowtint/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/device/multitool))
+	if(ismultitool(W))
 		var/t = sanitize(input(user, "Enter an ID for \the [src].", src.name, null), MAX_NAME_LEN)
 		src.id = t
 		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")
@@ -571,7 +573,7 @@
 	. = ..()
 
 /obj/structure/window/reinforced/polarized/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/device/multitool) && !anchored) // Only allow programming if unanchored!
+	if(ismultitool(W) && !anchored) // Only allow programming if unanchored!
 		var/t = sanitize(input(user, "Enter the ID for the window.", src.name, null), MAX_NAME_LEN)
 		src.id = t
 		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")

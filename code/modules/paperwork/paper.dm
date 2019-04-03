@@ -346,7 +346,7 @@
 //Count the fields
 	var/laststart = 1
 	while(1)
-		var/i = findtext(t, "<span class=\"paper_field\">", laststart)
+		var/i = findtext(t, "<span class=\"paper_field\">", laststart) //</span>
 		if(i==0)
 			break
 		laststart = i+1
@@ -386,18 +386,20 @@
 		return
 
 	if(P.lit && !user.restrained() && !user.is_busy())
-		var/class = "<span class='red'>"
+		var/class = "red"
 		if(istype(P, /obj/item/weapon/lighter/zippo))
-			class = "<span class='rose'>"
+			class = "rose"
 
-		user.visible_message("[class][user] holds \the [P] up to \the [src], it looks like \he's trying to burn it!</span>", \
-		"[class]You hold \the [P] up to \the [src], burning it slowly.</span>")
+		user.visible_message("<span class='[class]'>[user] holds \the [P] up to \the [src], it looks like \he's trying to burn it!</span>", \
+		"<span class='[class]'>You hold \the [P] up to \the [src], burning it slowly.</span>")
 
+		icon_state = "paper_onfire"
 		if(do_after(user, 20, TRUE, P, TRUE))
 			if((get_dist(src, user) > 1) || !P.lit)
+				update_icon()
 				return
-			user.visible_message("[class][user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>", \
-			"[class]You burn right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>")
+			user.visible_message("<span class='[class]'>[user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>", \
+			"<span class='[class]'>You burn right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>")
 
 			if(user.get_inactive_hand() == src)
 				user.drop_from_inventory(src)
@@ -406,6 +408,7 @@
 			qdel(src)
 
 		else
+			update_icon()
 			to_chat(user, "<span class='warning'>You must hold \the [P] steady to burn \the [src].</span>")
 
 
@@ -550,6 +553,7 @@
 		var/obj/item/weapon/stamp/S = P
 		S.stamp_paper(src)
 
+		playsound(src, 'sound/effects/stamp.ogg', 50, 1)
 		visible_message("<span class='notice'>[user] stamp the paper.</span>", "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
 	else if(istype(P, /obj/item/weapon/lighter))

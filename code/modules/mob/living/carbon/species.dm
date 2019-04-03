@@ -65,7 +65,7 @@
 
 	var/blood_datum_path = /datum/dirt_cover/red_blood //Red.
 	var/datum/dirt_cover/blood_datum // this will contain reference and should only be used as read only.
-	var/flesh_color = "#FFC896" //Pink.
+	var/flesh_color = "#ffc896" //Pink.
 	var/base_color      //Used when setting species.
 
 	//Used in icon caching.
@@ -233,7 +233,7 @@
 	,NO_MINORCUTS = TRUE
 	)
 
-	flesh_color = "#34AF10"
+	flesh_color = "#34af10"
 	base_color = "#066000"
 
 /datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J)
@@ -279,7 +279,7 @@
 	,HAS_HAIR = TRUE
 	)
 
-	flesh_color = "#AFA59E"
+	flesh_color = "#afa59e"
 	base_color = "#333333"
 
 /datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J)
@@ -320,7 +320,7 @@
 
 	eyes = "skrell_eyes"
 	blood_datum_path = /datum/dirt_cover/purple_blood
-	flesh_color = "#8CD7A3"
+	flesh_color = "#8cd7a3"
 
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
@@ -351,7 +351,7 @@
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
-	flesh_color = "#808D11"
+	flesh_color = "#808d11"
 
 	sprite_sheets = list(
 		"suit" = 'icons/mob/species/vox/suit.dmi',
@@ -362,7 +362,7 @@
 		)
 
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/vox(src), SLOT_WEAR_MASK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
 	if(!H.r_hand)
 		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), SLOT_R_HAND)
 		H.internal = H.r_hand
@@ -438,7 +438,7 @@
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
-	flesh_color = "#808D11"
+	flesh_color = "#808d11"
 	tail = "armalis_tail"
 	icon_template = 'icons/mob/human_races/r_armalis.dmi'
 
@@ -512,7 +512,7 @@
 		)
 
 	blood_datum_path = /datum/dirt_cover/green_blood
-	flesh_color = "#907E4A"
+	flesh_color = "#907e4a"
 
 	has_gendered_icons = FALSE
 
@@ -606,6 +606,7 @@
 	,BIOHAZZARD_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
 	,NO_MINORCUTS = TRUE
+	,NO_VOMIT = TRUE
 	)
 
 	has_bodypart = list(
@@ -649,6 +650,7 @@
 	,NO_BLOOD = TRUE
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,NO_VOMIT = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/gray_blood
@@ -765,6 +767,7 @@
 	,NO_FINGERPRINT = TRUE
 	,NO_SCAN = TRUE
 	,NO_MINORCUTS = TRUE
+	,NO_VOMIT = TRUE
 	)
 
 	burn_mod = 2
@@ -795,7 +798,7 @@
 	speed_mod = 2
 
 	blood_datum_path = /datum/dirt_cover/adamant_blood
-	flesh_color = "#137E8F"
+	flesh_color = "#137e8f"
 
 	butcher_drops = list(/obj/item/weapon/ore/diamond = 1, /obj/item/weapon/ore/slag = 3)
 
@@ -808,6 +811,7 @@
 		RAD_IMMUNE = TRUE,
 		VIRUS_IMMUNE = TRUE,
 		BIOHAZZARD_IMMUNE = TRUE,
+		NO_VOMIT = TRUE,
 		NO_FINGERPRINT = TRUE,
 		NO_MINORCUTS = TRUE
 		)
@@ -929,7 +933,7 @@
 
 	tail = "zombie_tajtail"
 
-	flesh_color = "#AFA59E"
+	flesh_color = "#afa59e"
 	base_color = "#000000"
 
 	flags = list(
@@ -950,7 +954,7 @@
 
 	eyes = "skrell_eyes"
 	blood_datum_path = /datum/dirt_cover/purple_blood
-	flesh_color = "#8CD7A3"
+	flesh_color = "#8cd7a3"
 	base_color = "#000000"
 
 /datum/species/zombie/unathi
@@ -965,7 +969,7 @@
 
 	tail = "zombie_sogtail"
 
-	flesh_color = "#34AF10"
+	flesh_color = "#34af10"
 	base_color = "#000000"
 
 	flags = list(

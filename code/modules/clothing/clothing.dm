@@ -41,7 +41,7 @@
 				if(H.species.name in species_restricted)
 					wearable = 1
 
-			if(!wearable && (slot != 15 && slot != 16)) //Pockets.
+			if(!wearable && (slot != SLOT_L_STORE && slot != SLOT_R_STORE)) //Pockets.
 				to_chat(M, "\red Your species cannot wear [src].")
 				return 0
 
@@ -249,7 +249,7 @@ BLIND     // can't see anything
 
 //Cutting shoes
 /obj/item/clothing/shoes/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/weapon/scalpel))
+	if(iswirecutter(W) || istype(W, /obj/item/weapon/scalpel))
 		switch(clipped_status)
 			if(CLIPPABLE)
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)

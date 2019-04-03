@@ -4,7 +4,7 @@
 	icon_state = "pod-off"
 
 	layer = ABOVE_WINDOW_LAYER
-	light_color = "#FFFFFF"
+	light_color = "#ffffff"
 	density = TRUE
 	anchored = TRUE
 	state_open = 0

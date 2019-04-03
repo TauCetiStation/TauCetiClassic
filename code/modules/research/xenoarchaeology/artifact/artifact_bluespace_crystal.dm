@@ -7,10 +7,9 @@
 	being_used = 0
 	need_inicial = 0
 	anchored = 1
-	light_color = "#24C1FF"
+	light_color = "#24c1ff"
 	var/health = 200
 	var/anomaly_spawn_list = list ("gravitational anomaly" = 1, "flux wave anomaly" = 1, "bluespace anomaly" = 6, "pyroclastic anomaly" = 1, "vortex anomaly" = 1,)
-//	filling_color = "#24C1FF"
 
 
 /obj/machinery/artifact/bluespace_crystal/atom_init()

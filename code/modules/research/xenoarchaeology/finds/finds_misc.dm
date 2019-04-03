@@ -25,7 +25,7 @@
 
 /obj/item/weapon/shard/phoron/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if ( istype(W, /obj/item/weapon/weldingtool))
+	if ( iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(WT.remove_fuel(0, user))

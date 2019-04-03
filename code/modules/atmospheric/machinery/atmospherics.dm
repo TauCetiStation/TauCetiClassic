@@ -151,7 +151,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/analyzer))
 		return
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(iswrench(W))
 		if(user.is_busy()) return
 		if(can_unwrench(user))
 			var/turf/T = get_turf(src)
