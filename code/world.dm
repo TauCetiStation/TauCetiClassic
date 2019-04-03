@@ -34,6 +34,7 @@
 		load_whitelist()
 	if(config.usealienwhitelist)
 		load_whitelistSQL()
+	load_proxy_whitelist()
 	LoadBans()
 	investigate_reset()
 
@@ -316,6 +317,8 @@ var/world_topic_spam_protect_time = world.timeofday
 			join_test_merge += "<a href='[config.repository_link]/pull/[pr]'>#[pr]</a> "
 
 /world/proc/load_donators()
+	if(!fexists("config/donators.txt"))
+		return
 	var/L = file2list("config/donators.txt")
 	for(var/line in L)
 		if(!length(line))
@@ -323,6 +326,17 @@ var/world_topic_spam_protect_time = world.timeofday
 		if(copytext(line,1,2) == "#")
 			continue
 		donators.Add(ckey(line))
+
+/world/proc/load_proxy_whitelist()
+	if(!fexists("config/proxy_whitelist.txt"))
+		return
+	var/L = file2list("config/proxy_whitelist.txt")
+	for(var/line in L)
+		if(!length(line))
+			continue
+		if(copytext(line,1,2) == "#")
+			continue
+		proxy_whitelist.Add(ckey(line))
 
 
 /world/proc/load_configuration()
