@@ -5,7 +5,7 @@
 	config_tag = "rp-revolution"
 	role_type = ROLE_REV
 	required_players = 4
-	required_players_secret = 15
+	required_players_secret = 25
 	required_enemies = 2
 	recommended_enemies = 2
 

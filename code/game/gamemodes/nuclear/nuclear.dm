@@ -8,7 +8,7 @@
 	config_tag = "nuclear"
 	role_type = ROLE_OPERATIVE
 	required_players = 15
-	required_players_secret = 15
+	required_players_secret = 30
 	required_enemies = 1
 	recommended_enemies = 5
 

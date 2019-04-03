@@ -68,7 +68,7 @@ Made by Xhuis
 	config_tag = "shadowling"
 	role_type = ROLE_SHADOWLING
 	required_players = 30
-	required_players_secret = 15
+	required_players_secret = 30
 	required_enemies = 2
 	recommended_enemies = 2
 
