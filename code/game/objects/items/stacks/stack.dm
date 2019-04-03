@@ -211,6 +211,20 @@
 
 	return TRUE
 
+/obj/item/stack/tool_use_check(mob/living/user, amount)
+	if(get_amount() < amount)
+		if(singular_name)
+			if(amount > 1)
+				to_chat(user, "<span class='warning'>You need at least [amount] [singular_name]\s to do this!</span>")
+			else
+				to_chat(user, "<span class='warning'>You need at least [amount] [singular_name] to do this!</span>")
+		else
+			to_chat(user, "<span class='warning'>You need at least [amount] to do this!</span>")
+
+		return FALSE
+
+	return TRUE
+
 /obj/item/proc/use_multi(mob/user, list/res_list)
 	. = TRUE
 	for(var/x in res_list)
