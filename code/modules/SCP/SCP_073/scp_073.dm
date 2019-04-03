@@ -13,6 +13,7 @@
 	HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
 	,HAS_HAIR = TRUE
+	,VIRUS_IMMUNE = TRUE
 	)
 
 	brute_mod = 0.5
