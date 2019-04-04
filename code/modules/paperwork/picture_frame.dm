@@ -131,10 +131,10 @@
 						 "<span class='notice'>You hang [src] to \the [T].</span>")
 	var/obj/structure/picture_frame/wooden/PF = new frame_type(get_turf(user), ndir, 1)
 	if(displayed)
-		PF.framed = displayed
-	if(contents.len)
-		for(var/obj/I in contents)
-			I.forceMove(PF)
+		var/obj/item/I = displayed
+		displayed = null
+		I.forceMove(PF)
+		PF.framed = I
 	if(frame_glass)
 		PF.frame_glass = TRUE
 	PF.dir = ndir
@@ -148,7 +148,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "wooden_frame"
 	var/obj/item/weapon/photo/framed
-	var/frame_type = /obj/structure/picture_frame/wooden
+	var/frame_type = /obj/item/weapon/picture_frame/wooden
 	var/health = 50
 	var/frame_glass = FALSE
 	var/glass_health = 10
@@ -167,12 +167,12 @@
 
 /obj/structure/picture_frame/wooden
 	name = "wooden picture frame"
-	frame_type = /obj/structure/picture_frame/wooden
+	frame_type = /obj/item/weapon/picture_frame/wooden
 
 /obj/structure/picture_frame/metal
 	name = "metal picture frame"
 	icon_state = "metal_frame"
-	frame_type = /obj/structure/picture_frame/metal
+	frame_type = /obj/item/weapon/picture_frame/metal
 	health = 100
 
 /obj/structure/picture_frame/examine(mob/user)
@@ -253,12 +253,14 @@
 					health -= O.force * 0.75
 			if(health <= 0)
 				visible_message("<span class='warning'>[user] smashed [src] apart!</span>")
-				if(frame_type == /obj/structure/picture_frame/wooden)
+				if(frame_type == /obj/item/weapon/picture_frame/wooden)
 					new /obj/item/stack/sheet/wood(get_turf(src))
-				if(frame_type == /obj/structure/picture_frame/metal)
+				if(frame_type == /obj/item/weapon/picture_frame/metal)
 					new /obj/item/stack/sheet/metal(get_turf(src))
-				for(var/obj/I in contents)
-					I.forceMove(get_turf(src))
+				if(framed)
+					var/obj/item/I = framed
+					framed = null
+					I.loc = get_turf(src)
 				qdel(src)
 		..()
 
@@ -274,12 +276,12 @@
 								 "<span class='notice'>You take off \the [src] from the wall.</span>")
 			var/obj/item/weapon/picture_frame/F = new frame_type(get_turf(user))
 			if(framed)
-				F.displayed = framed
+				var/obj/item/I = framed
+				framed = null
+				I.forceMove(F)
+				F.displayed = I
 			if(frame_glass)
 				F.frame_glass = TRUE
-			if(contents.len)
-				for(var/obj/I in contents)
-					I.forceMove(F)
 			F.update_icon()
 			if(!issilicon(user))
 				user.put_in_hands(F)
@@ -301,12 +303,12 @@
 									 "<span class='notice'>You take off \the [src] from the wall.</span>")
 					var/obj/item/weapon/picture_frame/F = new frame_type(get_turf(M))
 					if(framed)
-						F.displayed = framed
+						var/obj/item/I = framed
+						framed = null
+						I.forceMove(F)
+						F.displayed = I
 					if(frame_glass)
 						F.frame_glass = TRUE
-					if(framed)
-						var/obj/item/I = framed
-						I.forceMove(F)
 					F.update_icon()
 					if(!issilicon(M))
 						M.put_in_hands(F)
