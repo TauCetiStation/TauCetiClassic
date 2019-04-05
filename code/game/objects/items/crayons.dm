@@ -188,7 +188,7 @@
 	desc = "A piece of regular white chalk. What else did you expect to see?"
 	icon_state = "chalk"
 	colour = "#ffffff"
-	shadeColour = "#CECECE"
+	shadeColour = "#cecece"
 	colourName = "white"
 
 /obj/item/toy/crayon/mime
