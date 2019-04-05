@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 21
+#define SAVEFILE_VERSION_MAX 22
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -81,6 +81,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["negative_quirks"] << negative_quirks
 		S["neutral_quirks"] << neutral_quirks
 
+	if(current_version < 22)
+		for(var/job in list(/datum/job/research_assistant, /datum/job/cadet, /datum/job/intern, /datum/job/technical_assistant))
+			var/datum/job/J = new job
+			SetJobDepartment(J, 0)
+		player_alt_titles -= list("Technical Assistant", "Medical Intern", "Research Assistant", "Security Cadet")
 
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
