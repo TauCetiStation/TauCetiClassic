@@ -187,7 +187,7 @@
 	name = "box of crayons"
 	desc = "A box of crayons for all your rune drawing needs."
 	icon = 'icons/obj/crayons.dmi'
-	icon_state = "crayonbox"
+	icon_state = "crayonbox_preview"
 	w_class = ITEM_SIZE_SMALL
 	storage_slots = 6
 	icon_type = "crayon"
