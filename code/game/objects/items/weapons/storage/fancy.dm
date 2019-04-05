@@ -211,15 +211,21 @@
 	for(var/obj/item/toy/crayon/crayon in contents)
 		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
 
+/obj/item/weapon/storage/fancy/crayons/update_icon()
+	var/list/crayon_overlays = list()
+	var/crayon_position = 0
+	for(var/obj/item/toy/crayon/C in contents)
+		var/image/I = image('icons/obj/crayons.dmi', "[C.colourName]")
+		I.pixel_x += crayon_position * 2
+		crayon_position ++
+		crayon_overlays += I
+	overlays = crayon_overlays
+	return
+
 /obj/item/weapon/storage/fancy/crayons/attackby(obj/item/toy/crayon/W, mob/user)
-	if(istype(W))
-		switch(W.colourName)
-			if("mime")
-				to_chat(user, "This crayon is too sad to be contained in this box.")
-				return
-			if("rainbow")
-				to_chat(user, "This crayon is too powerful to be contained in this box.")
-				return
+	if(istype(W, /obj/item/toy/crayon/chalk) || istype(W, /obj/item/toy/crayon/spraycan))
+		to_chat(user, "\The [W] is too bulky to be contained in [src].")
+		return
 	..()
 
 /*
