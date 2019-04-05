@@ -275,6 +275,7 @@
 	for (var/i in 1 to 2)
 		new /obj/item/ammo_box/magazine/c45r(src)
 	new /obj/item/taperoll/police(src)
+	new /obj/item/toy/crayon/chalk(src)
 	new /obj/item/weapon/gun/projectile/automatic/colt1911(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
 
@@ -368,3 +369,4 @@
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/detective_scanner(src)
 	new /obj/item/taperoll/police(src)
+	new /obj/item/toy/crayon/chalk(src)

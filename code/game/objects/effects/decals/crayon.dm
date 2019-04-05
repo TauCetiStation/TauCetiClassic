@@ -37,11 +37,6 @@ var/list/crayon_overlay_cache = list()
 		color = main
 	add_hiddenprint(usr)
 
-
-
-
-
-
 /obj/effect/decal/cleanable/crayon/gang
 	layer = 3.6 //Harder to hide
 	var/gang
