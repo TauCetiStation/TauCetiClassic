@@ -225,7 +225,7 @@
 		else
 			M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 			//if(!fake)
-				//msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [firer.type] [ADMIN_JMP(M)] [ADMIN_FLW(M)]") //BS12 EDIT ALG
+				//msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(M)] [ADMIN_FLW(M)]") //BS12 EDIT ALG
 
 
 	if(istype(A,/turf))
