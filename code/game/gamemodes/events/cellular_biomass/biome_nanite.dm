@@ -105,9 +105,9 @@
 		visible_message("<b>[src]</b> on impact duplicates!")
 		var/mob/living/simple_animal/newnanite = new /mob/living/simple_animal/hostile/cellular/nanite/melee(src.loc)
 		health = health / 2
-		maxHealth = maxHealth/2
+		maxHealth = maxHealth / 2
 		newnanite.health = health
-		newnanite.maxHealth = maxHealth/2
+		newnanite.maxHealth = maxHealth / 2
 
 /mob/living/simple_animal/hostile/cellular/nanite/ranged/Life()
 	..()
@@ -122,9 +122,9 @@
 		visible_message("<b>[src]</b> on impact duplicates!")
 		var/mob/living/simple_animal/newnanite = new /mob/living/simple_animal/hostile/cellular/nanite/ranged(src.loc)
 		health = health / 2
-		maxHealth = maxHealth/2
+		maxHealth = maxHealth / 2
 		newnanite.health = health
-		newnanite.maxHealth = maxHealth/2
+		newnanite.maxHealth = maxHealth / 2
 
 /mob/living/simple_animal/hostile/cellular/nanite/eng/Life()
 	..()
@@ -138,9 +138,9 @@
 		visible_message("<b>[src]</b> on impact duplicates!")
 		var/mob/living/simple_animal/newnanite = new /mob/living/simple_animal/hostile/cellular/nanite/eng(src.loc)
 		health = health / 2
-		maxHealth = maxHealth/2
+		maxHealth = maxHealth / 2
 		newnanite.health = health
-		newnanite.maxHealth = maxHealth/2
+		newnanite.maxHealth = maxHealth / 2
 	if(prob(3))
 		if(prob(50))
 			new /mob/living/simple_animal/hostile/cellular/nanite/ranged(src.loc)
