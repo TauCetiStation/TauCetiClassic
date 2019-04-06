@@ -101,7 +101,7 @@
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
-	if(health<=maxHealth/2)
+	if(health<=maxHealth / 2)
 		visible_message("<b>[src]</b> on impact duplicates!")
 		var/mob/living/simple_animal/newnanite = new /mob/living/simple_animal/hostile/cellular/nanite/melee(src.loc)
 		health = health / 2
