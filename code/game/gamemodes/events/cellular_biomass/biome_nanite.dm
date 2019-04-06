@@ -13,25 +13,24 @@
 	name = "Nanomachine cluster"
 	desc = "They look so ... hungry"
 	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
-	plane = -2
 
 /obj/structure/cellular_biomass/grass/nanite
 	name = "Wave of nanomachines"
 	desc = "it pulsates..."
 	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
-	plane = -2
+	plane = FLOOR_PLANE
 
 /obj/structure/cellular_biomass/lair/nanite
 	name = "Wave of nanomachines lair"
 	desc = "They look so ... hungry"
 	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
-	plane = -2
+	plane = FLOOR_PLANE
 
 /obj/structure/cellular_biomass/core/nanite
 	name = "Nanomachine cluster"
 	desc = "They look so ... hungry"
 	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
-	plane = -2
+	plane = FLOOR_PLANE
 	light_color = "#8ae6ff"
 	light_range = 3
 
@@ -64,6 +63,19 @@
 	melee_damage_upper = 10
 	melee_damage_lower = 5
 	speed = 3
+	min_oxy = 0
+	max_oxy = 0
+	min_tox = 0
+	max_tox = 0
+	min_co2 = 0
+	max_co2 = 0
+	min_n2 = 0
+	max_n2 = 0
+	minbodytemp = 0
+	var/combohit = 0
+	var/nanite_to_spawn
+	var/mob/living/simple_animal/hostile/cellular/nanite/eng/nanite_parent = null
+	var/health_trigger = null
 
 /mob/living/simple_animal/hostile/cellular/nanite/melee
 	icon_state = "nanitemob_1"
@@ -74,7 +86,7 @@
 	melee_damage_upper = 10
 	melee_damage_lower = 5
 	speed = 3
-	var/mob/living/simple_animal/hostile/cellular/nanite/ranged/K = 0
+	nanite_to_spawn = /mob/living/simple_animal/hostile/cellular/nanite/melee
 
 /mob/living/simple_animal/hostile/cellular/nanite/ranged
 	icon_state = "nanitemob_2"
@@ -85,7 +97,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 25
 	speed = 1
-	var/mob/living/simple_animal/hostile/cellular/nanite/ranged/K = 0
+	nanite_to_spawn = /mob/living/simple_animal/hostile/cellular/nanite/ranged
 
 /mob/living/simple_animal/hostile/cellular/nanite/eng
 	icon_state = "nanitemob_3"
@@ -99,8 +111,11 @@
 	light_power = 3
 	light_range = 1.5
 	light_color = "#00cc10"
+	nanite_to_spawn = /mob/living/simple_animal/hostile/cellular/nanite/eng
+	anchored = 1
+	a_intent = "harm"
 
-/mob/living/simple_animal/hostile/cellular/nanite/melee/Life()
+/mob/living/simple_animal/hostile/cellular/nanite/Life()
 	..()
 	if(health <= 0)
 		return
@@ -109,72 +124,44 @@
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
-	if(health<=maxHealth / 2)
+	if(health <= maxHealth / 2)
 		visible_message("<b>[src]</b> on impact duplicates!")
-		var/mob/living/simple_animal/newnanite = new /mob/living/simple_animal/hostile/cellular/nanite/melee(src.loc)
-		health = health / 2
+		var/mob/living/simple_animal/hostile/cellular/nanite/newnanite = new nanite_to_spawn(src.loc)
+		health = health
 		maxHealth = maxHealth / 2
 		newnanite.health = health
 		newnanite.maxHealth = maxHealth / 2
-
-/mob/living/simple_animal/hostile/cellular/nanite/ranged/Life()
-	..()
-	if(health <= 0)
-		return
-	// spark for no reason
-	if(prob(5))
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(3, 1, src)
-		s.start()
-	if(health<=maxHealth / 2)
-		visible_message("<b>[src]</b> on impact duplicates!")
-		var/mob/living/simple_animal/newnanite = new /mob/living/simple_animal/hostile/cellular/nanite/ranged(src.loc)
-		health = health / 2
-		maxHealth = maxHealth / 2
-		newnanite.health = health
-		newnanite.maxHealth = maxHealth / 2
+		newnanite.nanite_parent = nanite_parent
+	if(nanite_parent != null)
+		if(nanite_parent.health < health_trigger)
+			stop_automated_movement = 1
+			walk_to(src,nanite_parent.loc,0,2)
+			if(nanite_parent.loc in oview(src, 2))
+				health_trigger = nanite_parent.health
+				stop_automated_movement = 0
+				walk(src, 0)
 
 /mob/living/simple_animal/hostile/cellular/nanite/eng/Life()
 	..()
-	if(health <= 0)
-		return
-	if(prob(5))
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(3, 1, src)
-		s.start()
-	if(health<=maxHealth / 2)
-		visible_message("<b>[src]</b> on impact duplicates!")
-		var/mob/living/simple_animal/newnanite = new /mob/living/simple_animal/hostile/cellular/nanite/eng(src.loc)
-		health = health / 2
-		maxHealth = maxHealth / 2
-		newnanite.health = health
-		newnanite.maxHealth = maxHealth / 2
 	if(prob(3))
 		if(prob(50))
-			new /mob/living/simple_animal/hostile/cellular/nanite/ranged(src.loc)
+			var/mob/living/simple_animal/hostile/cellular/nanite/ranged/S = new /mob/living/simple_animal/hostile/cellular/nanite/ranged(src.loc)
+			S.nanite_parent = src
+			S.health_trigger = health
 		else
-			new /mob/living/simple_animal/hostile/cellular/nanite/melee(src.loc)
+			var/mob/living/simple_animal/hostile/cellular/nanite/melee/S = new /mob/living/simple_animal/hostile/cellular/nanite/melee(src.loc)
+			S.nanite_parent = src
+			S.health_trigger = health
 
-/mob/living/simple_animal/hostile/cellular/nanite/ranged/AttackingTarget()
+/mob/living/simple_animal/hostile/cellular/nanite/AttackingTarget()
 	..()
 	var/mob/living/L = target
 	if(ismonkey(L))
-		K += 1
-		if(K == 4)
+		combohit += 1
+		if(combohit == 4)
 			var/mob/living/simple_animal/hostile/cyber_horror/N = new /mob/living/simple_animal/hostile/cyber_horror(L.loc)
 			N.faction = "nanite"
-			K = 0
-			L.gib()
-
-/mob/living/simple_animal/hostile/cellular/nanite/melee/AttackingTarget()
-	..()
-	var/mob/living/L = target
-	if(ismonkey(L))
-		K += 1
-		if(K == 4)
-			var/mob/living/simple_animal/hostile/cyber_horror/N = new /mob/living/simple_animal/hostile/cyber_horror(L.loc)
-			N.faction = "nanite"
-			K = 0
+			combohit = 0
 			L.gib()
 
 /mob/living/simple_animal/hostile/cellular/nanite/emp_act(severity)
