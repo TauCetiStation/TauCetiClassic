@@ -126,7 +126,7 @@ var/global/list/scrap_base_cache = list()
 	if(ismob(AM))
 		var/mob/M = AM
 		playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
-		if(ishuman(M))
+		if(ishuman(M) && !M.buckled)
 			var/mob/living/carbon/human/H = M
 			if(H.species.flags[IS_SYNTHETIC])
 				return
