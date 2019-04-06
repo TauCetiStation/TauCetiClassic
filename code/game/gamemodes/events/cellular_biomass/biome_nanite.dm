@@ -89,6 +89,11 @@
 	nanite_to_spawn = /mob/living/simple_animal/hostile/cellular/nanite/melee
 
 /mob/living/simple_animal/hostile/cellular/nanite/ranged
+	ranged = 1
+	projectiletype = /obj/item/projectile/bullet/midbullet
+	projectilesound = 'sound/weapons/armbomb.ogg'
+	retreat_distance = 6
+	minimum_distance = 6
 	icon_state = "nanitemob_2"
 	icon_living = "nanitemob_2"
 	icon_dead = "nanitemobdead_2"
@@ -103,6 +108,7 @@
 	icon_state = "nanitemob_3"
 	icon_living = "nanitemob_3"
 	icon_dead = "nanitemobdead_3"
+	retreat_distance = 6
 	maxHealth = 120
 	health = 120
 	melee_damage_upper = 50
@@ -144,7 +150,7 @@
 /mob/living/simple_animal/hostile/cellular/nanite/eng/Life()
 	..()
 	if(prob(3))
-		if(prob(50))
+		if(prob(25))
 			var/mob/living/simple_animal/hostile/cellular/nanite/ranged/S = new /mob/living/simple_animal/hostile/cellular/nanite/ranged(src.loc)
 			S.nanite_parent = src
 			S.health_trigger = health
