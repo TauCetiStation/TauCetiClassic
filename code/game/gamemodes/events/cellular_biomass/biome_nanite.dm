@@ -7,25 +7,30 @@
 	cores_type = /obj/structure/cellular_biomass/core/nanite
 	faction = "nanite"
 
+
 /obj/structure/cellular_biomass/wall/nanite
 	name = "Nanomachine cluster"
 	desc = "They look so ... hungry"
 	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
+	plane = -2
 
 /obj/structure/cellular_biomass/grass/nanite
 	name = "Wave of nanomachines"
 	desc = "it pulsates..."
 	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
+	plane = -2
 
 /obj/structure/cellular_biomass/lair/nanite
 	name = "Wave of nanomachines lair"
 	desc = "They look so ... hungry"
 	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
+	plane = -2
 
 /obj/structure/cellular_biomass/core/nanite
 	name = "Nanomachine cluster"
 	desc = "They look so ... hungry"
 	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
+	plane = -2
 	light_color = "#8ae6ff"
 	light_range = 3
 
@@ -68,6 +73,7 @@
 	melee_damage_upper = 10
 	melee_damage_lower = 5
 	speed = 3
+	var/mob/living/simple_animal/hostile/cellular/nanite/ranged/K = 0
 
 /mob/living/simple_animal/hostile/cellular/nanite/ranged
 	icon_state = "nanitemob_2"
@@ -78,6 +84,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 25
 	speed = 1
+	var/mob/living/simple_animal/hostile/cellular/nanite/ranged/K = 0
 
 /mob/living/simple_animal/hostile/cellular/nanite/eng
 	icon_state = "nanitemob_3"
@@ -146,6 +153,26 @@
 			new /mob/living/simple_animal/hostile/cellular/nanite/ranged(src.loc)
 		else
 			new /mob/living/simple_animal/hostile/cellular/nanite/melee(src.loc)
+
+/mob/living/simple_animal/hostile/cellular/nanite/ranged/AttackingTarget()
+	..()
+	var/mob/living/L = target
+	if(ismonkey(L))
+		K += 1
+		if(K == 4)
+			var/mob/living/simple_animal/hostile/cyber_horror/N = new /mob/living/simple_animal/hostile/cyber_horror(L.loc)
+			N.faction = "nanite"
+			L.gib()
+
+/mob/living/simple_animal/hostile/cellular/nanite/melee/AttackingTarget()
+	..()
+	var/mob/living/L = target
+	if(ismonkey(L))
+		K += 1
+		if(K == 4)
+			var/mob/living/simple_animal/hostile/cyber_horror/N = new /mob/living/simple_animal/hostile/cyber_horror(L.loc)
+			N.faction = "nanite"
+			L.gib()
 
 /mob/living/simple_animal/hostile/cellular/nanite/emp_act(severity)
 	death()
