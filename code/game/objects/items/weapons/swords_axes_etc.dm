@@ -128,7 +128,7 @@
 	w_class = ITEM_SIZE_SMALL
 	force = 3
 	var/on = 0
-	var/safety = 0
+	var/safety = FALSE
 
 /obj/item/weapon/melee/telebaton/verb/toggle_safety()
 	set category = "Object"
@@ -136,10 +136,7 @@
 	set desc = "Toggle safety telebaton. Safety causes holouron, not physical"
 
 	safety = !safety
-	if(!safety)
-		to_chat(usr, "<span class='notice'>Telebaton in not safe mode</span>")
-	else
-		to_chat(usr, "<span class='notice'>Telebaton in safe mode</span>")
+	to_chat(usr, "<span class='notice'>Telebaton in [safety ? "safe" : "unsafe" ] mode</span>")
 
 /obj/item/weapon/melee/telebaton/attack_self(mob/user)
 	on = !on
@@ -195,7 +192,7 @@
 			return
 		if(safety && ishuman(target))
 			var/mob/living/carbon/human/H = target
-			playsound(src.loc, "swing_hit", 50, 1, -1)
+			playsound(src, "swing_hit", 50, 1, -1)
 			user.do_attack_animation(H)
 			H.adjustHalLoss(25)
 			H.visible_message("<span class='warning'> [user] harmless hit [H] with a telebaton</span>")
