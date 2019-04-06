@@ -380,6 +380,7 @@
 #include "code\game\gamemodes\events\cellular_biomass\biome_bluespace.dm"
 #include "code\game\gamemodes\events\cellular_biomass\biome_meat.dm"
 #include "code\game\gamemodes\events\cellular_biomass\biome_mine.dm"
+#include "code\game\gamemodes\events\cellular_biomass\biome_nanite.dm"
 #include "code\game\gamemodes\events\cellular_biomass\biome_necro.dm"
 #include "code\game\gamemodes\events\cellular_biomass\cellular_controller_generic.dm"
 #include "code\game\gamemodes\events\cellular_biomass\cellular_lair.dm"
