@@ -7,7 +7,7 @@
 	impact_area = findEventArea()
 
 /datum/event/anomaly/anomaly_grav/announce()
-	command_alert("Gravitational anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
+	command_alert("Gravitational anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert", "gravanom")
 
 /datum/event/anomaly/anomaly_grav/start()
 	var/turf/T = pick(get_area_turfs(impact_area))

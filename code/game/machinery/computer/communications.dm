@@ -60,8 +60,7 @@
 	SSshuttle.incall(2)
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
-	world << sound('sound/AI/shuttlecalled.ogg')
+	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.",,, "escalled")
 
 	return ..()
 
@@ -464,8 +463,7 @@
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
-	world << sound('sound/AI/shuttlecalled.ogg')
+	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.",,, "escalled")
 
 	make_maint_all_access(FALSE)
 
@@ -505,7 +503,7 @@
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-	captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
+	captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.",,, "cscalled")
 
 	return
 

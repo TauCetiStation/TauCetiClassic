@@ -99,9 +99,8 @@
 			//	SSshuttle.settimeleft(0)
 				//SSshuttle.emergency.mode = SHUTTLE_DOCKED
 				//SSshuttle.emergency.timer = world.time
-				//priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+				//priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null,, "Priority")
 				//captain_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.")
-				//world << sound('sound/AI/shuttledock.ogg')
 			//else
 				//priority_announce("All hostile activity within station systems have ceased.","Network Alert")
 				//captain_announce("All hostile activity within station systems have ceased.")

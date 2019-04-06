@@ -69,10 +69,15 @@
 							"[prob(50)?"The crew":random_player] is [prob(50)?"less":"more"] intelligent than average. Point out every action and statement which supports this",
 							"There will be a mandatory tea break every 30 minutes, with a duration of 5 minutes. Anyone caught working during a tea break must be sent a formal, but fairly polite, complaint about their actions, in writing.")
 	var/law = pick(laws)
+	var/static/last_istorm_sound = 0
 
 	for (var/mob/living/silicon/ai/target in ai_list)
 		if(target.mind.special_role == "traitor")
 			continue
+		if(last_istorm_sound < world.time)
+			to_chat(target, "<b>&@&%**ATTENT^$N. THE AI SYSTEM IS OVERLOADED.</b>")
+			target.playsound_local(null, 'sound/AI/ionstorm.ogg', 40, environment = -1, echo = null)
+			last_istorm_sound = world.time + 100
 		to_chat(target, "\red <b>You have detected a change in your laws information:</b>")
 		to_chat(target, law)
 		target.add_ion_law(law)
@@ -86,4 +91,4 @@
 /datum/event/ionstorm/end()
 	spawn(rand(5000,8000))
 		if(prob(50))
-			command_alert("It has come to our attention that the station passed through an ion storm.  Please monitor all electronic equipment for malfunctions.", "Anomaly Alert")
+			command_alert("It has come to our attention that the station passed through an ion storm. Please monitor all electronic equipment for malfunctions.", "Anomaly Alert")

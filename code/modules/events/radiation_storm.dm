@@ -7,7 +7,6 @@
 
 
 /datum/event/radiation_storm/start()
-	world << sound('sound/AI/radiation.ogg')
-	command_alert("High levels of radiation detected near the station. Please evacuate into one of the shielded maintenance tunnels.", "Anomaly Alert")
+	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange. The entire crew of the station is recommended to find shelter in the technical tunnels of the station. ", "Anomaly Alert", "radiation")
 	make_maint_all_access(FALSE)
 	SSweather.run_weather("radiation storm",ZLEVEL_STATION)

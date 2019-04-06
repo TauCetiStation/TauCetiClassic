@@ -266,10 +266,9 @@ var/datum/subsystem/shuttle/SSshuttle
 
 				settimeleft(SHUTTLELEAVETIME)
 				if(alert == 0)
-					captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.")
-					world << sound('sound/AI/shuttledock.ogg')
+					captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.",,, "esdocked")
 				else
-					captain_announce("The scheduled Crew Transfer Shuttle has docked with the station. It will depart in approximately [round(timeleft()/60,1)] minutes.")
+					captain_announce("The scheduled Crew Transfer Shuttle has docked with the station. It will depart in approximately [round(timeleft()/60,1)] minutes.",,, "csdocked")
 
 				send2slack_service("the shuttle has docked with the station")
 
@@ -403,9 +402,9 @@ var/datum/subsystem/shuttle/SSshuttle
 									M.Weaken(5)
 						CHECK_TICK
 
-					captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
+					captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.",,, "esleft")
 				else
-					captain_announce("The Crew Transfer Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
+					captain_announce("The Crew Transfer Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.",,, "csleft")
 
 				return 1
 
@@ -613,13 +612,12 @@ var/datum/subsystem/shuttle/SSshuttle
 		if(alert == 0)
 			if(timeleft >= get_shuttle_arrive_time())
 				return
-			captain_announce("The emergency shuttle has been recalled.")
-			world << sound('sound/AI/shuttlerecalled.ogg')
+			captain_announce("The emergency shuttle has been recalled.",,, "esrecalled")
 			setdirection(-1)
 			online = 1
 			return
 		else //makes it possible to send shuttle back.
-			captain_announce("The shuttle has been recalled.")
+			captain_announce("The shuttle has been recalled.",,, "csrecalled")
 			setdirection(-1)
 			online = 1
 			alert = 0 // set alert back to 0 after an admin recall

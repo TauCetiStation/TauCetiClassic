@@ -8,8 +8,7 @@
 	severity = rand(2, 4)
 
 /datum/event/viral_outbreak/announce()
-	command_alert("Confirmed outbreak of level 7 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-	world << sound('sound/AI/outbreak7.ogg')
+	command_alert("Confirmed outbreak of level 7 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", "outbreak7")
 
 /datum/event/viral_outbreak/start()
 	var/list/candidates = list()	//list of candidate keys

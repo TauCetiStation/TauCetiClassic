@@ -282,12 +282,11 @@ Implants;
 
 			comm.messagetitle.Add("Cent. Com. Status Summary")
 			comm.messagetext.Add(intercepttext)
-	world << sound('sound/AI/commandreport.ogg')
-
-/*	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
-			M << sound('sound/AI/intercept.ogg')
+			M.playsound_local(null, 'sound/AI/commandreport.ogg', 60, environment = -1, echo = null, channel = 802, wait = 1)
+
+/*	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 	if(security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)*/
 

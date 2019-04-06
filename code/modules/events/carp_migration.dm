@@ -9,7 +9,7 @@
 	endWhen = rand(600,1200)
 
 /datum/event/carp_migration/announce()
-	command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
+	command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert", "carps")
 
 /datum/event/carp_migration/start()
 	for(var/obj/effect/landmark/C in landmarks_list)
@@ -18,7 +18,7 @@
 				spawned_carp.Add(new /mob/living/simple_animal/hostile/carp(C.loc))
 			else
 				spawned_carp.Add(new /mob/living/simple_animal/hostile/carp/megacarp(C.loc))
-			
+
 
 /datum/event/carp_migration/end()
 	for(var/mob/living/simple_animal/hostile/carp/C in spawned_carp)

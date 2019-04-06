@@ -30,7 +30,7 @@
 		msg = "Contact has been lost with a combat drone wing operating out of the NMV Icarus. If any are sighted in the area, approach with caution."
 	else
 		msg = "Unidentified hackers have targetted a combat drone wing deployed from the NMV Icarus. If any are sighted in the area, approach with caution."
-	command_alert(msg, "Rogue drone alert")
+	command_alert(msg, "Rogue drone alert", "icaruslost")
 
 /datum/event/rogue_drone/tick()
 	return

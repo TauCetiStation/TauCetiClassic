@@ -6,10 +6,7 @@
 
 		if(pick_turfs.len)
 			//All ready. Announce that bad juju is afoot.
-			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
-			for(var/mob/M in player_list)
-				if(!isnewplayer(M))
-					M << sound('sound/AI/spanomalies.ogg')
+			command_alert("Space-time anomalies detected on the station. It is recommended to avoid suspicious things or phenomena. There is no additional data.", "Anomaly Alert", "wormholes")
 
 			//prob(20) can be approximated to 1 wormhole every 5 turfs!
 			//admittedly less random but totally worth it >_<

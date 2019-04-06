@@ -47,8 +47,7 @@
 		SSshuttle.incall(2)
 		log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 		message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-		captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
-		world << sound('sound/AI/shuttlecalled.ogg')
+		captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.",,, "escalled")
 
 	if(explosive)
 		spawn(10)

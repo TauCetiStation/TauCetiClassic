@@ -154,7 +154,6 @@
 	weather_color = "green"
 	weather_overlay = "ash_storm"
 	weather_alpha = 40
-	weather_sound = 'sound/AI/radiation.ogg'
 	overlay_layer = 2.1
 	end_duration = 100
 	end_message = "<span class='notice'>The air seems to be cooling off again.</span>"
@@ -187,7 +186,7 @@
 /datum/weather/rad_storm/end()
 	if(..())
 		return
-	command_alert("The station has passed the radiation belt. Please report to medbay if you experience any unusual symptoms. Maintenance will lose all access again shortly.", "Anomaly Alert")
+	command_alert("The station has passed the radiation belt. Please report to medbay if you experience any unusual symptoms. Maintenance will lose all access again shortly.", "Anomaly Alert", "radpassed")
 	if(timer_maint_revoke_id)
 		deltimer(timer_maint_revoke_id)
 		timer_maint_revoke_id = 0

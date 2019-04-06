@@ -89,19 +89,16 @@
 
 	if(apcs >= (INTERCEPT_APCS + 3) && AI_malf_revealed < 1)
 		AI_malf_revealed = 1
-		world << sound('sound/AI/commandreport.ogg')
-		captain_announce("Caution, [station_name]. We have detected abnormal behaviour in your network. It seems someone is trying to hack your electronic systems. We will update you when we have more information.", "Network Monitoring")
+		captain_announce("Caution, [station_name]. We have detected abnormal behaviour in your network. It seems someone is trying to hack your electronic systems. We will update you when we have more information.", "Network Monitoring",, "malf1")
 	else if(apcs >= (INTERCEPT_APCS + 5) && AI_malf_revealed < 2)
 		AI_malf_revealed = 2
-		world << sound('sound/AI/commandreport.ogg')
-		captain_announce("We started tracing the intruder. Whoever is doing this, they seem to be on the station itself. We suggest checking all network control terminals. We will keep you updated on the situation.", "Network Monitoring")
+		captain_announce("We started tracing the intruder. Whoever is doing this, they seem to be on the station itself. We suggest checking all network control terminals. We will keep you updated on the situation.", "Network Monitoring",, "aimalf2")
 	else if(apcs >= (INTERCEPT_APCS + 7) && AI_malf_revealed < 3)
 		AI_malf_revealed = 3
-		world << sound('sound/AI/commandreport.ogg')
-		captain_announce("This is highly abnormal and somewhat concerning. The intruder is too fast, he is evading our traces. No man could be this fast...", "Network Monitoring")
+		captain_announce("This is highly abnormal and somewhat concerning. The intruder is too fast, he is evading our traces. No man could be this fast...", "Network Monitoring",, "aimalf3")
 	else if(apcs >= (INTERCEPT_APCS + 9) && AI_malf_revealed < 4)
 		AI_malf_revealed = 4
-		captain_announce("We have traced the intrude#, it seem& t( e yo3r AI s7stem, it &# *#ck@ng th$ sel$ destru$t mechani&m, stop i# bef*@!)$#&&@@  <CONNECTION LOST>", "Network Monitoring")
+		captain_announce("We have traced the intrude#, it seem& t( e yo3r AI s7stem, it &# *#ck@ng th$ sel$ destru$t mechani&m, stop i# bef*@!)$#&&@@  <CONNECTION LOST>", "Network Monitoring",, "aimalf4")
 		takeover()
 
 
@@ -175,7 +172,7 @@
 
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
-			M << sound('sound/AI/aimalf.ogg')
+			M.playsound_local(null, 'sound/AI/aimalf.ogg', 80, environment = -1, echo = null, channel = 802, wait = 1)
 
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/set_security_level, "delta"), 50)
 
