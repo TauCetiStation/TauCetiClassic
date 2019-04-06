@@ -282,3 +282,6 @@ CHANGELOG_HASH_LINK https://changelog.taucetistation.org/hash.txt
 
 ## Repository link
 REPOSITORY_LINK https://github.com/TauCetiStation/TauCetiClassic
+
+## Registration panic bunker won't allow user with registration date less than that. (format: year-month-day)
+# REGISTRATION_PANIC_BUNKER_AGE 2000-1-1

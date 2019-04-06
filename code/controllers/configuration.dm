@@ -64,6 +64,8 @@
 	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 
+	var/registration_panic_bunker_age = null
+
 	var/cult_ghostwriter = 1               //Allows ghosts to write in blood in cult rounds...
 	var/cult_ghostwriter_req_cultists = 10 //...so long as this many cultists are active.
 
@@ -609,6 +611,9 @@
 
 				if("repository_link")
 					config.repository_link = value
+
+				if("registration_panic_bunker_age")
+					config.registration_panic_bunker_age = value
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")

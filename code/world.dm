@@ -21,6 +21,7 @@
 	make_datum_references_lists() //initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
 	load_configuration()
+	load_regisration_panic_bunker()
 	load_stealth_keys()
 	load_mode()
 	load_last_mode()
@@ -315,6 +316,25 @@ var/world_topic_spam_protect_time = world.timeofday
 		var/list/prs = splittext(trim(file2text("test_merge.txt")), " ")
 		for(var/pr in prs)
 			join_test_merge += "<a href='[config.repository_link]/pull/[pr]'>#[pr]</a> "
+
+/world/proc/load_regisration_panic_bunker()
+	if(config.registration_panic_bunker_age)
+		log_game("Round with active panic bunker! Enabled by configuration")
+		message_admins("Registration panic bunker is active! It was enabled by configuration.")
+		return
+
+	if(fexists("data/regisration_panic_bunker.sav"))
+		var/savefile/S = new /savefile("data/regisration_panic_bunker.sav")
+		var/active_until = text2num(S["active_until"])
+
+		if(active_until <= world.realtime)
+			fdel("data/regisration_panic_bunker.sav")
+		else
+			config.registration_panic_bunker_age = S["panic_age"]
+			var/enabled_by = S["enabled_by"]
+			var/active_hours_left = num2text((active_until - world.realtime) / 36000, 1)
+			log_game("Round with active panic bunker! Enabled by: [enabled_by]. Active hours left: [active_hours_left]")
+			message_admins("Registration panic bunker is active! It was enabled by [enabled_by] and will be active for [active_hours_left] hours.")
 
 /world/proc/load_donators()
 	if(!fexists("config/donators.txt"))
