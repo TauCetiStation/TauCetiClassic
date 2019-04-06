@@ -19,6 +19,9 @@
 				to_chat(world, "<font size=4 color='red'>Attention! Security level lowered to green</font>")
 				to_chat(world, "<font color='red'>[config.alert_desc_green]</font>")
 				security_level = SEC_LEVEL_GREEN
+				for(var/mob/M in player_list)
+					if(!isnewplayer(M))
+						M.playsound_local(null, 'sound/AI/downtogreen.ogg', 60, environment = -1, echo = null, channel = 802, wait = 1)
 				for(var/obj/machinery/firealarm/FA in firealarm_list)
 					if(FA.z == ZLEVEL_STATION || FA.z == ZLEVEL_ASTEROID)
 						FA.overlays = list()
@@ -27,8 +30,14 @@
 				if(security_level < SEC_LEVEL_BLUE)
 					to_chat(world, "<font size=4 color='red'>Attention! Security level elevated to blue</font>")
 					to_chat(world, "<font color='red'>[config.alert_desc_blue_upto]</font>")
+					for(var/mob/M in player_list)
+						if(!isnewplayer(M))
+							M.playsound_local(null, 'sound/AI/blue.ogg', 60, environment = -1, echo = null, channel = 802, wait = 1)
 				else
 					to_chat(world, "<font size=4 color='red'>Attention! Security level lowered to blue</font>")
+					for(var/mob/M in player_list)
+						if(!isnewplayer(M))
+							M.playsound_local(null, 'sound/AI/downtoblue.ogg', 60, environment = -1, echo = null, channel = 802, wait = 1)
 					to_chat(world, "<font color='red'>[config.alert_desc_blue_downto]</font>")
 				security_level = SEC_LEVEL_BLUE
 				for(var/obj/machinery/firealarm/FA in firealarm_list)
@@ -39,9 +48,15 @@
 				if(security_level < SEC_LEVEL_RED)
 					to_chat(world, "<font size=4 color='red'>Attention! Code red!</font>")
 					to_chat(world, "<font color='red'>[config.alert_desc_red_upto]</font>")
+					for(var/mob/M in player_list)
+						if(!isnewplayer(M))
+							M.playsound_local(null, 'sound/AI/red.ogg', 60, environment = -1, echo = null, channel = 802, wait = 1)
 				else
 					to_chat(world, "<font size=4 color='red'>Attention! Code red!</font>")
 					to_chat(world, "<font color='red'>[config.alert_desc_red_downto]</font>")
+					for(var/mob/M in player_list)
+						if(!isnewplayer(M))
+							M.playsound_local(null, 'sound/AI/downtored.ogg', 60, environment = -1, echo = null, channel = 802, wait = 1)
 				security_level = SEC_LEVEL_RED
 
 				var/obj/machinery/computer/communications/CC = locate() in communications_list
@@ -57,6 +72,9 @@
 				to_chat(world, "<font size=4 color='red'>Attention! Delta security level reached!</font>")
 				to_chat(world, "<font color='red'>[config.alert_desc_delta]</font>")
 				security_level = SEC_LEVEL_DELTA
+				for(var/mob/M in player_list)
+					if(!isnewplayer(M))
+						M.playsound_local(null, 'sound/AI/delta.ogg', 60, environment = -1, echo = null, channel = 802, wait = 1)
 				for(var/obj/machinery/firealarm/FA in firealarm_list)
 					if(FA.z == ZLEVEL_STATION || FA.z == ZLEVEL_ASTEROID)
 						FA.overlays = list()

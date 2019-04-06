@@ -1,4 +1,4 @@
-/proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global)
+/proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global, wait = 0, environment = -1, echo)
 
 	soundin = get_sfx(soundin) // same sound for everyone
 
@@ -20,21 +20,23 @@
 			var/turf/T = get_turf(M)
 
 			if(T && T.z == turf_source.z)
-				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, is_global)
+				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, is_global, wait, environment, echo)
 
 var/const/FALLOFF_SOUNDS = 0.5
 
-/mob/proc/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global)
+/mob/proc/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global, wait = 0, environment = -1, echo)
 	if(!src.client || ear_deaf > 0)
 		return FALSE
 	soundin = get_sfx(soundin)
 
 	var/sound/S = sound(soundin)
-	S.wait = 0 //No queue
+	//S.wait = 0 //No queue
 	//S.channel = 0 //Any channel
-	S.channel = channel
+	S.wait = wait
+	S.channel = channel // Note. Channel 802 is busy with sound of automatic AI announcements
 	S.volume = vol
-	S.environment = -1
+	S.environment = environment
+	S.echo = echo
 	if (vary)
 		if(frequency)
 			S.frequency = frequency
@@ -98,7 +100,7 @@ var/const/FALLOFF_SOUNDS = 0.5
 
 /proc/get_sfx(soundin)
 	if(istext(soundin))
-		switch(soundin)
+		switch(soundin) // Note. All lists of sounds of automatic AI announcements are located in *command_alert.dm*, *captain_announce.dm* and *security_levels.dm* files
 			if ("shatter")
 				soundin = pick('sound/effects/glassbr1.ogg','sound/effects/glassbr2.ogg','sound/effects/glassbr3.ogg')
 			if ("explosion")
@@ -129,7 +131,7 @@ var/const/FALLOFF_SOUNDS = 0.5
 				soundin = pick('sound/voice/beepsky/god.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/secureday.ogg', 'sound/voice/beepsky/radio.ogg', 'sound/voice/beepsky/insult.ogg', 'sound/voice/beepsky/creep.ogg')
 			if("bandg")
 				soundin = pick('sound/items/bandage.ogg', 'sound/items/bandage2.ogg', 'sound/items/bandage3.ogg')
-			if ("fracture") 
+			if ("fracture")
 				soundin = pick('sound/effects/bonebreak1.ogg', 'sound/effects/bonebreak2.ogg', 'sound/effects/bonebreak3.ogg', 'sound/effects/bonebreak4.ogg')
 			if ("footsteps")
 				soundin = pick('sound/effects/tile1.wav', 'sound/effects/tile2.wav', 'sound/effects/tile3.wav', 'sound/effects/tile4.wav')
