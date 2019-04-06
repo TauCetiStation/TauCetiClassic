@@ -143,9 +143,9 @@
 		newnanite.maxHealth=maxHealth/2
 	if(prob(3))
 		if(prob(50))
-			var/mob/living/simple_animal/newnanite = new /mob/living/simple_animal/hostile/cellular/nanite/ranged(src.loc)
+			new /mob/living/simple_animal/hostile/cellular/nanite/ranged(src.loc)
 		else
-			var/mob/living/simple_animal/newnanite = new /mob/living/simple_animal/hostile/cellular/nanite/melee(src.loc)
+			new /mob/living/simple_animal/hostile/cellular/nanite/melee(src.loc)
 
 /mob/living/simple_animal/hostile/cellular/nanite/emp_act(severity)
 	death()
