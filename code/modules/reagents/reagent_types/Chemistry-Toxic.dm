@@ -596,7 +596,7 @@
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.set_species(SLIME, 1))
+		if(H.set_species(SLIME))
 			to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
 			H.dna.mutantrace = "slime"
 			H.update_mutantrace()

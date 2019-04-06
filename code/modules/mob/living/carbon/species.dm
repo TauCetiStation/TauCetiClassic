@@ -711,7 +711,6 @@
 
 /datum/unarmed_attack/slime_glomp
 	attack_verb = list("glomp")
-	damage = 2
 	attack_sound = 'sound/effects/attackblob.ogg'
 
 /datum/unarmed_attack/claws
@@ -994,28 +993,10 @@
 
 	flags = list(
 	 NO_BREATHE = TRUE
-	,HAS_LIPS = TRUE
-	,HAS_UNDERWEAR = TRUE
 	,NO_SCAN = TRUE
 	,NO_PAIN = TRUE
-	,RAD_ABSORB = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,RAD_IMMUNE = TRUE
+	,VIRUS_IMMUNE = TRUE
 	)
-
-	has_bodypart = list(
-		 BP_CHEST  = /obj/item/organ/external/chest
-		,BP_GROIN  = /obj/item/organ/external/groin
-		,BP_HEAD   = /obj/item/organ/external/head/slime
-		,BP_L_ARM  = /obj/item/organ/external/l_arm
-		,BP_R_ARM  = /obj/item/organ/external/r_arm
-		,BP_L_LEG  = /obj/item/organ/external/l_leg
-		,BP_R_LEG  = /obj/item/organ/external/r_leg
-		)
-
-	has_organ = list(
-		 O_HEART   = null
-		,O_BRAIN   = /obj/item/organ/internal/brain/slime,
-		,O_EYES    = null
-		,O_LUNGS   = null
-		,O_LIVER   = null
-		,O_KIDNEYS = null
-		)
