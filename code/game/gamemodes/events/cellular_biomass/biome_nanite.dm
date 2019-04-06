@@ -5,6 +5,7 @@
 	insides_type = /obj/structure/cellular_biomass/grass/nanite
 	living_type = /obj/structure/cellular_biomass/lair/nanite
 	cores_type = /obj/structure/cellular_biomass/core/nanite
+	landmarks_type = null
 	faction = "nanite"
 
 
@@ -108,7 +109,7 @@
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
-	if(health<=maxHealth / 2)
+	if(health<=maxHealth/2)
 		visible_message("<b>[src]</b> on impact duplicates!")
 		var/mob/living/simple_animal/newnanite = new /mob/living/simple_animal/hostile/cellular/nanite/melee(src.loc)
 		health = health / 2
@@ -162,6 +163,7 @@
 		if(K == 4)
 			var/mob/living/simple_animal/hostile/cyber_horror/N = new /mob/living/simple_animal/hostile/cyber_horror(L.loc)
 			N.faction = "nanite"
+			K = 0
 			L.gib()
 
 /mob/living/simple_animal/hostile/cellular/nanite/melee/AttackingTarget()
@@ -172,6 +174,7 @@
 		if(K == 4)
 			var/mob/living/simple_animal/hostile/cyber_horror/N = new /mob/living/simple_animal/hostile/cyber_horror(L.loc)
 			N.faction = "nanite"
+			K = 0
 			L.gib()
 
 /mob/living/simple_animal/hostile/cellular/nanite/emp_act(severity)
@@ -179,7 +182,7 @@
 
 /mob/living/simple_animal/hostile/cellular/nanite/death()
 	..()
-	if(prob(80))
+	if(prob(60))
 		visible_message("<b>[src]</b> blows apart!")
 		new /obj/effect/gibspawner/robot(src.loc)
 	qdel(src)
