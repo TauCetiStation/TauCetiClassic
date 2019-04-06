@@ -26,7 +26,7 @@
 	name = "Nanomachine cluster"
 	desc = "They look so ... hungry"
 	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
-	light_color = "#8AE6FF"
+	light_color = "#8ae6ff"
 	light_range = 3
 
 /obj/structure/cellular_biomass/wall/nanite/atom_init()
@@ -90,7 +90,7 @@
 	freeze_movement = TRUE
 	light_power = 3
 	light_range = 1.5
-	light_color = "#00CC10"
+	light_color = "#00cc10"
 
 /mob/living/simple_animal/hostile/cellular/nanite/melee/Life()
 	..()
