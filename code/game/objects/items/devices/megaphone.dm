@@ -21,7 +21,8 @@
 	if(!ishuman(user))
 		to_chat(user, "\red You don't know how to use this!")
 		return
-	if(user.silent || isabductor(user))
+	if(user.silent || isabductor(user) || user.has_trait(TRAIT_MUTE))
+		to_chat(user, "<span class='userdange'>You can't speak.</span>")
 		return
 	if(spamcheck)
 		to_chat(user, "\red \The [src] needs to recharge!")
