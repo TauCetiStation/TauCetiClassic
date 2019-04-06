@@ -1,10 +1,10 @@
 /obj/effect/cellular_biomass_controller/nanite
-	grow_speed = 4           //lower this value to speed up growth. 1 will process without cooldown.
-	core_grow_chance = 5     //chance to spawn light core
-	walls_type =     /obj/structure/cellular_biomass/wall/nanite
-	insides_type =   /obj/structure/cellular_biomass/grass/nanite
-	living_type =     /obj/structure/cellular_biomass/lair/nanite
-	cores_type =     /obj/structure/cellular_biomass/core/nanite
+	grow_speed = 4  //lower this value to speed up growth. 1 will process without cooldown.
+	core_grow_chance = 5  //chance to spawn light core
+	walls_type = /obj/structure/cellular_biomass/wall/nanite
+	insides_type = /obj/structure/cellular_biomass/grass/nanite
+	living_type = /obj/structure/cellular_biomass/lair/nanite
+	cores_type = /obj/structure/cellular_biomass/core/nanite
 	faction = "nanite"
 
 /obj/structure/cellular_biomass/wall/nanite
