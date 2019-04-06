@@ -310,7 +310,7 @@
 
 /obj/structure/closet/secure_closet/courtroom
 	name = "Courtroom Locker"
-	req_access = list(access_court)
+	req_access = list(access_security)
 
 /obj/structure/closet/secure_closet/courtroom/PopulateContents()
 	new /obj/item/clothing/shoes/brown(src)
