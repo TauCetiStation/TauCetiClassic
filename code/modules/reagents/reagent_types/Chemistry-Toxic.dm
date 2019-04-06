@@ -603,7 +603,7 @@
 		switch(data)
 			if(1)
 				to_chat(H, "<span class='warning'>You feel different, somehow...</span>")
-			if(1 to 10)
+			if(2 to 11)
 				var/obj/item/organ/external/BP = H.get_bodypart(pick(H.species.has_bodypart))
 				if(!(BP.status & (ORGAN_DESTROYED | ORGAN_ROBOT)))
 					BP.take_damage(10)
@@ -611,7 +611,7 @@
 						to_chat(H, "<span class='warning'>Your flesh is starting to melt!</span>")
 						H.emote("scream",,, 1)
 						BP.sever_artery()
-			if(11 to 20)
+			if(12 to 21)
 				var/obj/item/organ/internal/BP = H.organs_by_name[pick(H.species.has_organ)]
 				BP.take_damage(5)
 				if(prob(25))
