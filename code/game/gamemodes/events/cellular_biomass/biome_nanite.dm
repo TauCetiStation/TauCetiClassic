@@ -123,7 +123,7 @@
 	nanite_to_spawn = /mob/living/simple_animal/hostile/cellular/nanite/eng
 	anchored = 1
 	a_intent = "harm"
-	var/cap_spawn = 10
+	var/cap_spawn = 15
 	var/spawned = 0
 	var/chance_spawn = 15
 
@@ -138,24 +138,25 @@
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
-		if(health <= maxHealth / 2)
-			visible_message("<b>[src]</b> on impact duplicates!")
-			var/mob/living/simple_animal/hostile/cellular/nanite/newnanite = new nanite_to_spawn(src.loc)
-			health = health
-			maxHealth = maxHealth / 2
-			newnanite.health = health
-			newnanite.maxHealth = maxHealth / 2
-			newnanite.nanite_parent = nanite_parent
-			newnanite.target = target
-			newnanite.clon = TRUE
-		if(nanite_parent != null)
-			if(nanite_parent.health < health_trigger)
-				stop_automated_movement = 1
-				walk_to(src,nanite_parent.loc,0,2)
-				if(nanite_parent.loc in oview(src, 2))
-					health_trigger = nanite_parent.health
-					stop_automated_movement = 0
-					walk(src, 0)
+		if(!istype(src, /mob/living/simple_animal/hostile/cellular/nanite/eng))
+			if(health <= maxHealth / 2)
+				visible_message("<b>[src]</b> on impact duplicates!")
+				var/mob/living/simple_animal/hostile/cellular/nanite/newnanite = new nanite_to_spawn(src.loc)
+				health = health
+				maxHealth = maxHealth / 2
+				newnanite.health = health
+				newnanite.maxHealth = maxHealth / 2
+				newnanite.nanite_parent = nanite_parent
+				newnanite.target = target
+				newnanite.clon = TRUE
+			if(nanite_parent != null)
+				if(nanite_parent.health < health_trigger)
+					stop_automated_movement = 1
+					walk_to(src,nanite_parent.loc,0,2)
+					if(nanite_parent.loc in oview(src, 2))
+						health_trigger = nanite_parent.health
+						stop_automated_movement = 0
+						walk(src, 0)
 
 /mob/living/simple_animal/hostile/cellular/nanite/eng/Life()
 	..()
