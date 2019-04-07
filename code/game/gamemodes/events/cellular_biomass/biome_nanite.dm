@@ -1,11 +1,12 @@
 /obj/effect/cellular_biomass_controller/nanite
-	grow_speed = 4  //lower this value to speed up growth. 1 will process without cooldown.
+	grow_speed = 6  //lower this value to speed up growth. 1 will process without cooldown.
 	core_grow_chance = 5  //chance to spawn light core
 	walls_type = /obj/structure/cellular_biomass/wall/nanite
 	insides_type = /obj/structure/cellular_biomass/grass/nanite
 	living_type = /obj/structure/cellular_biomass/lair/nanite
 	cores_type = /obj/structure/cellular_biomass/core/nanite
 	landmarks_type = null
+	health = 150
 	faction = "nanite"
 
 
@@ -13,6 +14,7 @@
 	name = "Nanomachine cluster"
 	desc = "They look so ... hungry"
 	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
+	health = 150
 
 /obj/structure/cellular_biomass/grass/nanite
 	name = "Wave of nanomachines"
@@ -33,6 +35,7 @@
 	plane = FLOOR_PLANE
 	light_color = "#8ae6ff"
 	light_range = 3
+	health = 150
 
 /obj/structure/cellular_biomass/wall/nanite/atom_init()
 	. = ..()
@@ -85,13 +88,13 @@
 	health = 120
 	melee_damage_upper = 10
 	melee_damage_lower = 5
-	speed = 3
+	speed = 4
 	nanite_to_spawn = /mob/living/simple_animal/hostile/cellular/nanite/melee
 
 /mob/living/simple_animal/hostile/cellular/nanite/ranged
 	ranged = 1
 	projectiletype = /obj/item/projectile/bullet/midbullet
-	projectilesound = 'sound/weapons/armbomb.ogg'
+	projectilesound = 'sound/weapons/Gunshot_silenced.ogg'
 	retreat_distance = 6
 	minimum_distance = 6
 	icon_state = "nanitemob_2"
@@ -101,7 +104,7 @@
 	maxHealth = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 25
-	speed = 1
+	speed = 3
 	nanite_to_spawn = /mob/living/simple_animal/hostile/cellular/nanite/ranged
 
 /mob/living/simple_animal/hostile/cellular/nanite/eng
@@ -120,6 +123,9 @@
 	nanite_to_spawn = /mob/living/simple_animal/hostile/cellular/nanite/eng
 	anchored = 1
 	a_intent = "harm"
+	var/cap_spawn = 10
+	var/spawned = 0
+	var/chance_spawn = 3
 
 /mob/living/simple_animal/hostile/cellular/nanite/Life()
 	..()
@@ -149,15 +155,17 @@
 
 /mob/living/simple_animal/hostile/cellular/nanite/eng/Life()
 	..()
-	if(prob(3))
-		if(prob(25))
-			var/mob/living/simple_animal/hostile/cellular/nanite/ranged/S = new /mob/living/simple_animal/hostile/cellular/nanite/ranged(src.loc)
-			S.nanite_parent = src
-			S.health_trigger = health
-		else
-			var/mob/living/simple_animal/hostile/cellular/nanite/melee/S = new /mob/living/simple_animal/hostile/cellular/nanite/melee(src.loc)
-			S.nanite_parent = src
-			S.health_trigger = health
+	if(spawned <= cap_spawn)
+		if(prob(chance_spawn))
+			if(prob(25))
+				var/mob/living/simple_animal/hostile/cellular/nanite/ranged/S = new /mob/living/simple_animal/hostile/cellular/nanite/ranged(src.loc)
+				S.nanite_parent = src
+				S.health_trigger = health
+			else
+				var/mob/living/simple_animal/hostile/cellular/nanite/melee/S = new /mob/living/simple_animal/hostile/cellular/nanite/melee(src.loc)
+				S.nanite_parent = src
+				S.health_trigger = health
+			spawned++
 
 /mob/living/simple_animal/hostile/cellular/nanite/AttackingTarget()
 	..()
