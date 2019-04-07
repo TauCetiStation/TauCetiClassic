@@ -260,7 +260,7 @@
 				if(framed)
 					var/obj/item/I = framed
 					framed = null
-					I.loc = get_turf(src)
+					I.forceMove(get_turf(src))
 				qdel(src)
 		..()
 
