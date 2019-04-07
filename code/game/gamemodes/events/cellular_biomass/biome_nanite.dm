@@ -57,7 +57,7 @@
 	desc = "A sanity-destroying otherthing."
 	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
 	speak_emote = list("gibbers")
-	attacktext = "bites into"
+	attacktext = " bites into"
 	attack_sound = 'sound/weapons/circsawhit.ogg'
 	faction = "nanite"
 	maxHealth = 60
