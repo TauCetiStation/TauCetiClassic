@@ -51,7 +51,7 @@
 
 	overlays_list += image('icons/obj/makeshift.dmi', "can_grenade_igniter")
 
-	var/image/I = image('icons/obj/makeshift.dmi', "can_grenade_wired")
+	var/mutable_appearance/I = mutable_appearance('icons/obj/makeshift.dmi', "can_grenade_wired")
 	if(wire_color)
 		I.color = wire_color
 	overlays_list += I
@@ -98,7 +98,7 @@
 
 	var/list/overlays_list = list()
 
-	var/image/I = image('icons/obj/makeshift.dmi', "can_grenade_rag_wired")
+	var/mutable_appearance/I = mutable_appearance('icons/obj/makeshift.dmi', "can_grenade_rag_wired")
 	if(wire_color)
 		I.color = wire_color
 	overlays_list += I
