@@ -154,7 +154,7 @@
 
 /mob/living/simple_animal/hostile/cellular/nanite/eng/Life()
 	..()
-	if(spawned <= cap_spawn)
+	if(spawned < cap_spawn)
 		if(prob(chance_spawn))
 			if(prob(25))
 				var/mob/living/simple_animal/hostile/cellular/nanite/ranged/S = new /mob/living/simple_animal/hostile/cellular/nanite/ranged(src.loc)
