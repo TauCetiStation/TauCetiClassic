@@ -1,25 +1,28 @@
 // For proc witch normalize something
 
-proc/normalize_color(inphex)
+/proc/normalize_color(inphex) //normalize hex color and convert hex2num and num2hex
 
-	var/rhex[2]
-	var/ghex[2]
-	var/bhex[2]
-	var/r[2]
-	var/g[2]
-	var/b[2]
-	var/rgb[3]
-	var/final_hex
+	var/rhex[2] //HEX r bloc
+	var/ghex[2] //HEX g bloc
+	var/bhex[2] //HEX b bloc
+	var/r[2] //num r bloc
+	var/g[2] //num g bloc
+	var/b[2] //num b bloc
+	var/rgb[3] //Complete RGB num
+	var/final_hex //Returned normalize HEX
 
 	if(!inphex)
 		return
 
+	//Copytext inphex (input hex color)
 	rhex[1] = copytext(inphex, 2,3)
 	rhex[2] = copytext(inphex, 3,4)
 	ghex[1] = copytext(inphex, 4,5)
 	ghex[2] = copytext(inphex, 5,6)
 	bhex[1] = copytext(inphex, 6,7)
 	bhex[2] = copytext(inphex, 7,8)
+
+	//Converted hex2num
 
 	for(var/i = 1, i < 3, i++)
 		switch(rhex[i])
@@ -72,6 +75,7 @@ proc/normalize_color(inphex)
 	rgb[2] = g[1] * 16 + g[2]
 	rgb[3] = b[1] * 16 + b[2]
 
+	//Normalize color when RGB color shade is not less than the sum 180
 	if((rgb[1] + rgb[2] +rgb[3]) < 180)
 		if(rgb[1] < 60)
 			rgb[1] += 60
@@ -80,12 +84,15 @@ proc/normalize_color(inphex)
 		if(rgb[3] < 60)
 			rgb[3] += 60
 
-	var/rbuff
-	var/gbuff
-	var/bbuff
-	var/rhexn[2]
-	var/ghexn[2]
-	var/bhexn[2]
+	var/rbuff //1st red normalize num block
+	var/gbuff //1st green normalize num block
+	var/bbuff //1st blue normalize num block
+	var/rhexn[2] //Red hex normalize block
+	var/ghexn[2] //Green hex normalize block
+	var/bhexn[2] // Blue hex nornalize block
+
+	//Converted num2hex
+
 	while(rgb[1] >= 16)
 		rgb[1] -= 16
 		rbuff++
@@ -187,6 +194,7 @@ proc/normalize_color(inphex)
 	if(!bhexn[2])
 		bhexn[2] = num2text(rgb[3])
 
+	//Set complete normalize hex color
 	final_hex = "#" + rhexn[1] + rhexn[2] + ghexn[1] + ghexn[2] + bhexn[1] + bhexn[2]
 
 	return final_hex
