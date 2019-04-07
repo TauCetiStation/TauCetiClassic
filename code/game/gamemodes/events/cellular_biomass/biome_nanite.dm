@@ -143,6 +143,7 @@
 		newnanite.health = health
 		newnanite.maxHealth = maxHealth / 2
 		newnanite.nanite_parent = nanite_parent
+		newnanite.target = target
 	if(nanite_parent != null)
 		if(nanite_parent.health < health_trigger)
 			stop_automated_movement = 1
@@ -183,8 +184,7 @@
 /mob/living/simple_animal/hostile/cellular/nanite/death()
 	..()
 	src.nanite_parent.spawned--
-	if(prob(60))
-		visible_message("<b>[src]</b> blows apart!")
-		new /obj/effect/gibspawner/robot(src.loc)
+	visible_message("<b>[src]</b> blows apart!")
+	new /obj/effect/gibspawner/robot(src.loc)
 	qdel(src)
 	return
