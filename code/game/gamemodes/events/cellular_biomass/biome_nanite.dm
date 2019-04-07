@@ -78,6 +78,7 @@
 	var/nanite_to_spawn
 	var/mob/living/simple_animal/hostile/cellular/nanite/eng/nanite_parent = null
 	var/health_trigger = null
+	var/clon = FALSE
 
 /mob/living/simple_animal/hostile/cellular/nanite/melee
 	icon_state = "nanitemob_1"
@@ -129,29 +130,32 @@
 /mob/living/simple_animal/hostile/cellular/nanite/Life()
 	..()
 	if(health <= 0)
+		qdel(src)
 		return
+	else
 	// spark for no reason
-	if(prob(5))
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(3, 1, src)
-		s.start()
-	if(health <= maxHealth / 2)
-		visible_message("<b>[src]</b> on impact duplicates!")
-		var/mob/living/simple_animal/hostile/cellular/nanite/newnanite = new nanite_to_spawn(src.loc)
-		health = health
-		maxHealth = maxHealth / 2
-		newnanite.health = health
-		newnanite.maxHealth = maxHealth / 2
-		newnanite.nanite_parent = nanite_parent
-		newnanite.target = target
-	if(nanite_parent != null)
-		if(nanite_parent.health < health_trigger)
-			stop_automated_movement = 1
-			walk_to(src,nanite_parent.loc,0,2)
-			if(nanite_parent.loc in oview(src, 2))
-				health_trigger = nanite_parent.health
-				stop_automated_movement = 0
-				walk(src, 0)
+		if(prob(5))
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			s.set_up(3, 1, src)
+			s.start()
+		if(health <= maxHealth / 2)
+			visible_message("<b>[src]</b> on impact duplicates!")
+			var/mob/living/simple_animal/hostile/cellular/nanite/newnanite = new nanite_to_spawn(src.loc)
+			health = health
+			maxHealth = maxHealth / 2
+			newnanite.health = health
+			newnanite.maxHealth = maxHealth / 2
+			newnanite.nanite_parent = nanite_parent
+			newnanite.target = target
+			newnanite.clon = TRUE
+		if(nanite_parent != null)
+			if(nanite_parent.health < health_trigger)
+				stop_automated_movement = 1
+				walk_to(src,nanite_parent.loc,0,2)
+				if(nanite_parent.loc in oview(src, 2))
+					health_trigger = nanite_parent.health
+					stop_automated_movement = 0
+					walk(src, 0)
 
 /mob/living/simple_animal/hostile/cellular/nanite/eng/Life()
 	..()
@@ -183,8 +187,9 @@
 
 /mob/living/simple_animal/hostile/cellular/nanite/death()
 	..()
-	src.nanite_parent.spawned--
 	visible_message("<b>[src]</b> blows apart!")
 	new /obj/effect/gibspawner/robot(src.loc)
+	if(!clon)
+		src.nanite_parent.spawned--
 	qdel(src)
 	return
