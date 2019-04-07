@@ -6,6 +6,8 @@
 	living_type = /obj/structure/cellular_biomass/lair/nanite
 	cores_type = /obj/structure/cellular_biomass/core/nanite
 	landmarks_type = null
+	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
+	icon_state = "nanite_nanite"
 	faction = "nanite"
 
 
