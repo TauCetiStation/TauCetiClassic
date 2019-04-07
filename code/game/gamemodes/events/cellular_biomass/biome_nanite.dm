@@ -182,6 +182,7 @@
 
 /mob/living/simple_animal/hostile/cellular/nanite/death()
 	..()
+	src.nanite_parent.spawned--
 	if(prob(60))
 		visible_message("<b>[src]</b> blows apart!")
 		new /obj/effect/gibspawner/robot(src.loc)
