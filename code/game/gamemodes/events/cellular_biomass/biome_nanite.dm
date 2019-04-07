@@ -124,7 +124,7 @@
 	a_intent = "harm"
 	var/cap_spawn = 10
 	var/spawned = 0
-	var/chance_spawn = 3
+	var/chance_spawn = 15
 
 /mob/living/simple_animal/hostile/cellular/nanite/Life()
 	..()
