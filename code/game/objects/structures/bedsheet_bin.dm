@@ -28,6 +28,25 @@ LINEN BINS
 	add_fingerprint(user)
 	return
 
+/obj/item/weapon/bedsheet/verb/tear_to_rags()
+	set src in oview(1)
+	set name = "Tear to rags"
+	set desc = "Makes three rags"
+	set category = "Object"
+
+	if(usr.stat != CONSCIOUS)
+		return
+
+	if(!ishuman(usr))
+		to_chat(usr, "<span class='notice'>You try, but you can't.</span>")
+		return
+
+	usr.visible_message("<span class='notice'>[usr] starts tearing \the [src] into rags</span>", "<span class='notice'>You start tearing \the [src] into rags</span>")
+	if(do_after(usr, 40, target = src))
+		new /obj/item/weapon/reagent_containers/glass/rag(src.loc)
+		new /obj/item/weapon/reagent_containers/glass/rag(src.loc)
+		new /obj/item/weapon/reagent_containers/glass/rag(src.loc)
+		qdel(src)
 
 /obj/item/weapon/bedsheet/blue
 	icon_state = "sheetblue"

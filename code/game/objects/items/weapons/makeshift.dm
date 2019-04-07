@@ -41,7 +41,7 @@
 	item_state = "prod"
 	var/obj/item/weapon/stock_parts/cell/bcell = null
 	var/stunforce = 5
-	var/hitcost = 2500
+	var/hitcost = 2000
 	force = 3
 	throwforce = 5
 	var/status = 0
@@ -95,11 +95,15 @@
 
 /obj/item/weapon/melee/cattleprod/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
+		var/obj/item/weapon/stock_parts/cell/C = W
+		if(C.maxcharge < hitcost)
+			to_chat(user, "<span class='notice'>[C]'s maximum capacity seems too small to be useful.</span>")
+			return
 		if(!bcell)
 			user.drop_item()
 			W.loc = src
 			bcell = W
-			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
+			to_chat(user, "<span class='notice'>You install a cell in \the [src].</span>")
 			update_icon()
 		else
 			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")

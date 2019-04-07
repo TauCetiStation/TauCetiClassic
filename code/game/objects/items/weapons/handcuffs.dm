@@ -77,6 +77,11 @@
 	breakouttime = 300 //Deciseconds = 30s
 	cuff_sound = 'sound/weapons/cablecuff.ogg'
 
+/obj/item/weapon/handcuffs/cable/CheckParts(list/parts_list)
+	..()
+	for(var/obj/item/stack/cable_coil/C in contents)
+		color = C.color
+
 /obj/item/weapon/handcuffs/cable/red
 	color = "#dd0000"
 

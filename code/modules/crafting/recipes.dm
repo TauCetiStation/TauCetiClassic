@@ -7,20 +7,30 @@
 	var/time = 30                   // time in deciseconds
 	var/parts[] = list()            // type paths of items that will be placed in the result
 	var/chem_catalysts[] = list()   // like tools but for reagents
-	var/category = CAT_NONE         // where it shows up in the crafting UI
-	var/subcategory = CAT_NONE
+//	var/category = CAT_NONE         // where it shows up in the crafting UI
+//	var/subcategory = CAT_NONE
 
-/datum/crafting_recipe/IED
-	name = "IED"
-	result = /obj/item/weapon/grenade/iedcasing
+/datum/crafting_recipe/can_grenade_igniter
+	name = "Can Grenade (igniter)"
+	result = /obj/item/weapon/grenade/cancasing
 	reqs = list(/datum/reagent/fuel = 50,
 				/obj/item/stack/cable_coil = 1,
 				/obj/item/device/assembly/igniter = 1,
 				/obj/item/weapon/reagent_containers/food/drinks/cans = 1)
-	parts = list(/obj/item/weapon/reagent_containers/food/drinks/cans = 1)
-	time = 15
-	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+	parts = list(/obj/item/weapon/reagent_containers/food/drinks/cans = 1,
+				/obj/item/stack/cable_coil = 1)
+	time = 40
+
+/datum/crafting_recipe/can_grenade_rag
+	name = "Can Grenade (rag)"
+	result = /obj/item/weapon/grenade/cancasing/rag
+	reqs = list(/datum/reagent/fuel = 50,
+				/obj/item/stack/cable_coil = 1,
+				/obj/item/weapon/reagent_containers/glass/rag = 1,
+				/obj/item/weapon/reagent_containers/food/drinks/cans = 1)
+	parts = list(/obj/item/weapon/reagent_containers/food/drinks/cans = 1,
+				/obj/item/stack/cable_coil = 1)
+	time = 30
 
 /datum/crafting_recipe/wirerod
 	name = "Wirerod"
@@ -28,7 +38,6 @@
 	reqs = list(/obj/item/weapon/handcuffs/cable = 1,
 				/obj/item/stack/rods = 1)
 	time = 20
-	category = CAT_ASSEMBLY
 
 /datum/crafting_recipe/spear
 	name = "Spear"
@@ -36,8 +45,6 @@
 	reqs = list(/obj/item/weapon/wirerod = 1,
 				/obj/item/weapon/shard = 1)
 	time = 40
-	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/stunprod
 	name = "Stunprod"
@@ -45,17 +52,13 @@
 	reqs = list(/obj/item/weapon/wirerod = 1,
 				/obj/item/weapon/wirecutters = 1)
 	time = 40
-	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/bola
 	name = "Bola"
 	result = /obj/item/weapon/legcuffs/bola
 	reqs = list(/obj/item/weapon/handcuffs/cable = 1,
 				/obj/item/stack/sheet/metal = 6)
-	time = 20//15 faster than crafting them by hand!
-	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+	time = 20 // 15 faster than crafting them by hand!
 
 /datum/crafting_recipe/toysword
 	name = "Toy Sword"
@@ -63,10 +66,9 @@
 				/obj/item/stack/cable_coil = 1,
 				/obj/item/stack/sheet/mineral/plastic = 4)
 	result = /obj/item/toy/sword
-	category = CAT_MISC
 
 /datum/crafting_recipe/cable_restraints
 	name = "Cable Restraints"
 	reqs = list(/obj/item/stack/cable_coil = 15)
 	result = /obj/item/weapon/handcuffs/cable
-	category = CAT_MISC
+	parts = list(/obj/item/stack/cable_coil = 1)

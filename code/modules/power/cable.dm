@@ -657,5 +657,13 @@ By design, d1 is the smallest direction and d2 is the highest
 	color = COLOR_RED
 
 /obj/item/stack/cable_coil/random/atom_init()
-	color = pick(COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_CYAN, COLOR_PINK, COLOR_YELLOW, COLOR_ORANGE, COLOR_WHITE, COLOR_GRAY)
-	. = ..()
+	..()
+	var/new_type = pick(/obj/item/stack/cable_coil/yellow,
+						/obj/item/stack/cable_coil/blue,
+						/obj/item/stack/cable_coil/green,
+						/obj/item/stack/cable_coil/pink,
+						/obj/item/stack/cable_coil/orange,
+						/obj/item/stack/cable_coil/cyan,
+						/obj/item/stack/cable_coil/red)
+	new new_type(loc)
+	return INITIALIZE_HINT_QDEL
