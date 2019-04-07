@@ -215,10 +215,8 @@
 	var/list/crayon_overlays = list()
 	var/crayon_position = 0
 	for(var/obj/item/toy/crayon/C in contents)
-		var/image/I = image('icons/obj/crayons.dmi', "[C.colourName]")
-		I.pixel_x += crayon_position * 2
-		crayon_position ++
-		crayon_overlays += I
+		crayon_position++
+		crayon_overlays += mutable_appearance(icon = 'icons/obj/crayons.dmi', icon_state = "[C.colourName]", pixel_x = crayon_position * 2)
 	overlays = crayon_overlays
 	return
 

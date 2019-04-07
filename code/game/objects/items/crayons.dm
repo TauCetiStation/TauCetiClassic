@@ -15,7 +15,7 @@
 	var/edible = 1
 
 /obj/item/toy/crayon/suicide_act(mob/user)
-	to_chat(viewers(user), "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>")
+	to_chat(viewers(user), "<span class='danger'><b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b></span>")
 	return (BRUTELOSS|OXYLOSS)
 
 /obj/item/toy/crayon/attack(mob/living/carbon/M, mob/user)
@@ -26,13 +26,12 @@
 		if(!uses)
 			to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
 			qdel(src)
-	else if(istype(M, /mob/living/carbon/human) && M.lying)
+	else if(ishuman(M) && M.lying)
 		to_chat(user, "You start outlining [M.name].")
 		if(do_after(user, 40, target = M))
 			to_chat(user, "You finish outlining [M.name].")
 			new /obj/effect/decal/cleanable/crayon(M.loc, colour, shadeColour, "outline", "body outline")
-			if(uses)
-				uses--
+			if(uses--)
 				if(!uses)
 					to_chat(user, "<span class='warning'>You used up your [src.name]!</span>")
 					qdel(src)
@@ -47,8 +46,8 @@
 		occupying_gang = gang_name("B")
 	if(occupying_gang)
 		to_chat(user, "<span class='danger'>[territory] has already been tagged by the [occupying_gang] gang! You must get rid of or spray over the old tag first!</span>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity)
