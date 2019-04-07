@@ -6,7 +6,6 @@
 	living_type = /obj/structure/cellular_biomass/lair/nanite
 	cores_type = /obj/structure/cellular_biomass/core/nanite
 	landmarks_type = null
-	health = 150
 	faction = "nanite"
 
 
