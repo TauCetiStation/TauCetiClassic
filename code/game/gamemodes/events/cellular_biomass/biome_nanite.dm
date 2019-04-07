@@ -123,7 +123,7 @@
 	nanite_to_spawn = /mob/living/simple_animal/hostile/cellular/nanite/eng
 	anchored = 1
 	a_intent = "harm"
-	var/cap_spawn = 15
+	var/cap_spawn = 8
 	var/spawned = 0
 	var/chance_spawn = 15
 
