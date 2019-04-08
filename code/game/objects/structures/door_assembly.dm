@@ -64,9 +64,6 @@
 				to_chat(user, "<span class='notice'>You dissasembled the airlock assembly!</span>")
 				new /obj/item/stack/sheet/metal(loc, 4)
 				qdel (src)
-		else
-			to_chat(user, "<span class='notice'>You need more welding fuel.</span>")
-			return
 
 	else if(iswrench(W) && state == ASSEMBLY_SECURED)
 		playsound(src, 'sound/items/Ratchet.ogg', 100, 1)
