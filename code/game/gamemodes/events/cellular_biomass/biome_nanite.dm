@@ -159,7 +159,7 @@
 			if(nanite_parent != null)
 				if(nanite_parent.health < health_trigger)
 					stop_automated_movement = TRUE
-					walk_to(src,nanite_parent.loc,0,2)
+					walk_to(src, nanite_parent.loc,0,2)
 					if(nanite_parent.loc in oview(src, 2))
 						health_trigger = nanite_parent.health
 						stop_automated_movement = FALSE
