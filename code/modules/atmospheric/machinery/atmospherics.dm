@@ -172,7 +172,7 @@ Pipelines + Other Objects -> Pipe network
 				to_chat(user, "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>")
 				unsafe_wrenching = TRUE //Oh dear oh dear
 
-			if (W.use_tool(src, user, 20, volume = 50) && !QDELETED(src))
+			if (W.use_tool(src, user, 20, volume = 50))
 				user.visible_message(
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src].</span>",

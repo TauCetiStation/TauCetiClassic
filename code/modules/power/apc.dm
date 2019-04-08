@@ -532,8 +532,7 @@
 			to_chat(user, "\blue You need more welding fuel to complete this task.")
 			return
 		to_chat(user, "You start welding the APC frame...")
-		if(WT.use_tool(src, user, 50, volume = 50))
-			if(!src || !WT.use(3, user)) return
+		if(WT.use_tool(src, user, 50, amount = 3, volume = 50))
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message(\

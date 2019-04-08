@@ -111,7 +111,6 @@ var/bomb_set
 					user.visible_message("[user] starts cutting thru something on [src] like \he knows what to do.", "With [O] you start cutting thru first layer...")
 
 					if(O.use_tool(src, user, 150, amount = 5, volume = 50))
-						if(!src || !user) return
 						user.visible_message("[user] finishes cutting something on [src].", "You cut thru first layer.")
 						removal_stage = 1
 				return
@@ -122,7 +121,6 @@ var/bomb_set
 					if(user.is_busy())
 						return
 					if(O.use_tool(src, user, 50, volume = 50))
-						if(!src || !user) return
 						user.visible_message("[user] finishes smashing [src].", "You force open covers.")
 						removal_stage = 2
 				return
@@ -140,7 +138,6 @@ var/bomb_set
 					user.visible_message("[user] starts cutting something on [src].. Again.", "You start cutting apart the safety plate with [O]...")
 
 					if(O.use_tool(src, user, 100, amount = 5, volume = 50))
-						if(!src || !user) return
 						user.visible_message("[user] finishes cutting something on [src].", "You cut apart the safety plate.")
 						removal_stage = 3
 				return
@@ -151,7 +148,6 @@ var/bomb_set
 						return
 					user.visible_message("[user] begins poking inside [src].", "You begin unwrenching bolts...")
 					if(O.use_tool(src, user, 75, volume = 50))
-						if(!src || !user) return
 						user.visible_message("[user] begins poking inside [src].", "You unwrench bolts.")
 						removal_stage = 4
 				return
@@ -163,7 +159,6 @@ var/bomb_set
 					user.visible_message("[user] begings hitting [src].", "You begin forcing open last safety layer...")
 
 					if(O.use_tool(src, user, 75, volume = 50))
-						if(!src || !user) return
 						user.visible_message("[user] finishes hitting [src].", "You can now get inside the [src]. Use screwdriver to open control panel")
 						//anchored = 0
 						removal_stage = 5

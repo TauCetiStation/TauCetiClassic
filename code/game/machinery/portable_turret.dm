@@ -794,8 +794,7 @@ var/list/turret_icons
 					to_chat(user, "<span class='notice'>You need more fuel to complete this task.</span>")
 					return
 				if(user.is_busy(src)) return
-				if(I.use_tool(src, user, 20, volume = 50))
-					if(!src || !WT.use(5, user)) return
+				if(I.use_tool(src, user, 20, amount = 5, volume = 50))
 					build_step = 1
 					to_chat(user, "You remove the turret's interior metal armor.")
 					new /obj/item/stack/sheet/metal(loc, 2)
@@ -867,9 +866,7 @@ var/list/turret_icons
 				if(WT.get_fuel() < 5)
 					to_chat(user, "<span class='notice'>You need more fuel to complete this task.</span>")
 				if(user.is_busy(src)) return
-				if(WT.use_tool(src, user, 30, volume = 50))
-					if(!src || !WT.use(5, user))
-						return
+				if(WT.use_tool(src, user, 30, amount = 5, volume = 50))
 					build_step = 8
 					to_chat(user, "<span class='notice'>You weld the turret's armor down.</span>")
 

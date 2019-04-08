@@ -27,8 +27,6 @@
 					return
 				if(user.is_busy(src)) return
 				if(WT.use_tool(src, user, 20, amount = 0, volume = 50))
-					if(!src)
-						return
 					to_chat(user, "\blue You deconstruct the frame.")
 					new /obj/item/stack/sheet/plasteel( loc, 4)
 					qdel(src)

@@ -800,8 +800,6 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 				return
 			to_chat(user, "\blue You start to disassemble the storage unit...")
 			if(O.use_tool(src, user, 20, volume = 50))
-				if(!src)
-					return
 				qdel(src)
 			return
 		if(accept_check(O))

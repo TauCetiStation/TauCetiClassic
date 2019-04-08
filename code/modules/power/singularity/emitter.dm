@@ -216,7 +216,6 @@
 						"You start to weld the [src] to the floor.", \
 						"You hear welding")
 					if (WT.use_tool(src, user, 20, volume = 50))
-						if(!src || !WT.isOn()) return
 						state = 2
 						to_chat(user, "You weld the [src] to the floor.")
 						connect_to_network()
@@ -229,7 +228,6 @@
 						"You start to cut the [src] free from the floor.", \
 						"You hear welding")
 					if (WT.use_tool(src, user, 20, volume = 50))
-						if(!src || !WT.isOn()) return
 						state = 1
 						to_chat(user, "You cut the [src] free from the floor.")
 						disconnect_from_network()

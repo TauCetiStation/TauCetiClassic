@@ -84,7 +84,6 @@
 				to_chat(user, "You start slicing the floorweld off the disposal unit.")
 
 				if(W.use_tool(src, user, 20, volume = 100))
-					if(!src || !W.isOn()) return
 					to_chat(user, "You sliced the floorweld off the disposal unit.")
 					var/obj/structure/disposalconstruct/C = new (src.loc)
 					src.transfer_fingerprints_to(C)
@@ -1377,7 +1376,6 @@
 		if(W.use(0,user))
 			to_chat(user, "You start slicing the floorweld off the disposal outlet.")
 			if(W.use_tool(src, user, 20, volume = 100))
-				if(!src || !W.isOn()) return
 				to_chat(user, "You sliced the floorweld off the disposal outlet.")
 				var/obj/structure/disposalconstruct/C = new (src.loc)
 				src.transfer_fingerprints_to(C)

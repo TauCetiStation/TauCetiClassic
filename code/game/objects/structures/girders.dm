@@ -94,9 +94,7 @@
 					if(S.get_amount() < 2)
 						return ..()
 					to_chat(user, "\blue Now adding plating...")
-					if(S.use_tool(src, user, 40, volume = 100))
-						if(QDELETED(src) || QDELETED(S) || !S.use(2))
-							return
+					if(S.use_tool(src, user, 40, amount = 2, volume = 100))
 						to_chat(user, "\blue You added the plating!")
 						var/turf/Tsrc = get_turf(src)
 						Tsrc.ChangeTurf(/turf/simulated/wall)
@@ -117,9 +115,7 @@
 						if(S.get_amount() < 1)
 							return ..()
 						to_chat(user, "\blue Now finalising reinforced wall.")
-						if(S.use_tool(src, user, 50, volume = 100))
-							if(QDELETED(src) || QDELETED(S) || !S.use(1))
-								return
+						if(S.use_tool(src, user, 50, amount = 1, volume = 100))
 							to_chat(user, "\blue Wall fully reinforced!")
 							var/turf/Tsrc = get_turf(src)
 							Tsrc.ChangeTurf(/turf/simulated/wall/r_wall)
@@ -131,9 +127,7 @@
 						if(S.get_amount() < 1)
 							return ..()
 						to_chat(user, "\blue Now reinforcing girders")
-						if(S.use_tool(src, user, 60, volume = 100))
-							if(QDELETED(src) || QDELETED(S) || !S.use(1))
-								return
+						if(S.use_tool(src, user, 60, amount = 1, volume = 100))
 							to_chat(user, "\blue Girders reinforced!")
 							new/obj/structure/girder/reinforced( src.loc )
 							qdel(src)
@@ -152,9 +146,7 @@
 				if(S.get_amount() < 2)
 					return ..()
 				to_chat(user, "\blue Now adding plating...")
-				if(S.use_tool(src, user, 40, volume = 100))
-					if(QDELETED(src) || QDELETED(S) || !S.use(2))
-						return
+				if(S.use_tool(src, user, 40, amount = 2, volume = 100))
 					to_chat(user, "\blue You added the plating!")
 					var/turf/Tsrc = get_turf(src)
 					Tsrc.ChangeTurf(text2path("/turf/simulated/wall/mineral/[M]"))

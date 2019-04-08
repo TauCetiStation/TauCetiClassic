@@ -692,13 +692,11 @@
 			if(src.status == 2)
 				to_chat(user, "\blue Now weakening the reinforced table")
 				if(WT.use_tool(src, user, 50, volume = 50))
-					if(!src || !WT.isOn()) return
 					to_chat(user, "\blue Table weakened")
 					src.status = 1
 			else
 				to_chat(user, "\blue Now strengthening the reinforced table")
 				if(WT.use_tool(src, user, 50, volume = 50))
-					if(!src || !WT.isOn()) return
 					to_chat(user, "\blue Table strengthened")
 					src.status = 2
 			return FALSE

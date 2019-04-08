@@ -82,7 +82,7 @@
 			if(iswrench(W) && !anchored)
 				user.visible_message("[user] secures the windoor assembly to the floor.", "You start to secure the windoor assembly to the floor.")
 				if(W.use_tool(src, user, 40, volume = 100))
-					if(!src || src.anchored)
+					if(src.anchored)
 						return
 					to_chat(user, "\blue You've secured the windoor assembly!")
 					src.anchored = 1
@@ -95,7 +95,7 @@
 			else if(iswrench(W) && anchored)
 				user.visible_message("[user] unsecures the windoor assembly to the floor.", "You start to unsecure the windoor assembly to the floor.")
 				if(W.use_tool(src, user, 40, volume = 100))
-					if(!src || !src.anchored)
+					if(!src.anchored)
 						return
 					to_chat(user, "\blue You've unsecured the windoor assembly!")
 					src.anchored = 0
@@ -111,8 +111,8 @@
 					to_chat(user, "\red You need more rods to do this.")
 					return
 				to_chat(user, "\blue You start to reinforce the windoor with rods.")
-				if(W.use_tool(src, user, 40, volume = 100))
-					if(QDELETED(src) || !secure || !R.use(4))
+				if(W.use_tool(src, user, 40, amount = 4, volume = 100))
+					if(!secure)
 						return
 
 					to_chat(user, "\blue You reinforce the windoor.")
@@ -124,12 +124,10 @@
 
 			//Adding cable to the assembly. Step 5 complete.
 			else if(iscoil(W) && anchored)
+				var/obj/item/stack/cable_coil/CC = W
 				user.visible_message("[user] wires the windoor assembly.", "You start to wire the windoor assembly.")
-				if(W.use_tool(src, user, 40, volume = 100))
-					if(!src || !src.anchored || src.state != "01")
-						return
-					var/obj/item/stack/cable_coil/CC = W
-					if(!CC.use(1))
+				if(CC.use_tool(src, user, 40, amount = 1, volume = 100))
+					if(!src.anchored || src.state != "01")
 						return
 					to_chat(user, "\blue You wire the windoor!")
 					src.state = "02"
@@ -146,7 +144,7 @@
 			if(iswirecutter(W) && !src.electronics)
 				user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
 				if(W.use_tool(src, user, 40, volume = 100))
-					if(!src || src.state != "02")
+					if(src.state != "02")
 						return
 
 					to_chat(user, "\blue You cut the windoor wires.!")
@@ -165,7 +163,7 @@
 					user.drop_item()
 					AE.loc = src
 					if(W.use_tool(src, user, 40, volume = 100))
-						if(!src || src.electronics)
+						if(src.electronics)
 							AE.loc = src.loc
 							return
 						to_chat(user, "<span class='notice'>You've installed the airlock electronics!</span>")
@@ -180,7 +178,7 @@
 					return
 				user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to uninstall electronics from the airlock assembly.")
 				if(W.use_tool(src, user, 40, volume = 100))
-					if(!src || !electronics)
+					if(!electronics)
 						return
 					to_chat(user, "\blue You've removed the airlock electronics!")
 					var/obj/item/weapon/airlock_electronics/ae = electronics
@@ -206,8 +204,7 @@
 				usr << browse(null, "window=windoor_access")
 				user.visible_message("[user] pries the windoor into the frame.", "You start prying the windoor into the frame.")
 				if(W.use_tool(src, user, 40, volume = 100))
-
-					if(!src.loc || !src.electronics)
+					if(!src.electronics)
 						return
 
 					density = 1 //Shouldn't matter but just incase

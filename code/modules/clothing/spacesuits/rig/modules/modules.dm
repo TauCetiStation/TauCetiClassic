@@ -95,7 +95,7 @@
 
 		to_chat(user, "You start mending the damaged portions of \the [src]...")
 
-		if(!W.use_tool(src, user, 30, volume = 50) || !W || !src)
+		if(!W.use_tool(src, user, 30, volume = 50))
 			return
 
 		var/obj/item/stack/nanopaste/paste = W
@@ -122,10 +122,7 @@
 			return
 
 		to_chat(user, "You start mending the damaged portions of \the [src]...")
-		if(!cable.use_tool(src, user, 30, volume = 50) || !W || !src)
-			return
-
-		if(cable.use(5))
+		if(cable.use_tool(src, user, 30, amount = 5, volume = 50))
 			damage = MODULE_NO_DAMAGE
 			to_chat(user, "You mend the damage to [src] with [W].")
 		return
