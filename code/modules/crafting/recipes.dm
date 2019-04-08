@@ -26,7 +26,7 @@
 	result = /obj/item/weapon/grenade/cancasing/rag
 	reqs = list(/datum/reagent/fuel = 50,
 				/obj/item/stack/cable_coil = 1,
-				/obj/item/weapon/reagent_containers/glass/rag = 1,
+				/obj/item/stack/medical/bruise_pack/rags = 1,
 				/obj/item/weapon/reagent_containers/food/drinks/cans = 1)
 	parts = list(/obj/item/weapon/reagent_containers/food/drinks/cans = 1,
 				/obj/item/stack/cable_coil = 1)

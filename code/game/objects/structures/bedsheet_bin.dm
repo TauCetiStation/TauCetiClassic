@@ -43,9 +43,8 @@ LINEN BINS
 
 	usr.visible_message("<span class='notice'>[usr] starts tearing \the [src] into rags</span>", "<span class='notice'>You start tearing \the [src] into rags</span>")
 	if(do_after(usr, 40, target = src))
-		new /obj/item/weapon/reagent_containers/glass/rag(src.loc)
-		new /obj/item/weapon/reagent_containers/glass/rag(src.loc)
-		new /obj/item/weapon/reagent_containers/glass/rag(src.loc)
+		var/obj/item/stack/medical/bruise_pack/rags/R = new /obj/item/stack/medical/bruise_pack/rags(src.loc)
+		R.amount = 3
 		qdel(src)
 
 /obj/item/weapon/bedsheet/blue
