@@ -199,6 +199,11 @@
 	spell_type = /obj/effect/proc_holder/spell/targeted/barnyardcurse
 	log_name = "BC"
 
+/datum/spellbook_entry/gnomecurse
+	name = "Gift of the Gnome"
+	spell_type = /obj/effect/proc_holder/spell/targeted/gnomecurse
+	log_name = "GC"
+
 /datum/spellbook_entry/lighting_shock
 	name = "Lighting Shock"
 	spell_type = /obj/effect/proc_holder/spell/targeted/lighting_shock

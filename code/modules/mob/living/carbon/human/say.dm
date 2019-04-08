@@ -265,6 +265,15 @@
 	if(sdisabilities & MUTE)
 		message = ""
 		handled = 1
+	if(gnomed)
+		handled = 1
+		if((message_mode != "changeling") && prob(40))
+			if(prob(80))
+				message = pick("A-HA-HA-HA!", "U-HU-HU-HU!", "I'm a GN-NOME!", "I'm a GnOme!", "Don't GnoMe me!", "I'm gnot a gnoblin!", "You've been GNOMED!")
+			else
+				message =  "[message]... But i'm A GNOME!"
+			verb = pick("yells like an idiot", "says rather loudly")
+
 	if(wear_mask)
 		if(message_mode != "changeling")
 			message = wear_mask.speechModification(message)
