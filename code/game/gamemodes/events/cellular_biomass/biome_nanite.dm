@@ -5,9 +5,7 @@
 	insides_type = /obj/structure/cellular_biomass/grass/nanite
 	living_type = /obj/structure/cellular_biomass/lair/nanite
 	cores_type = /obj/structure/cellular_biomass/core/nanite
-	landmarks_type = null
-	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
-	icon_state = "nanite_nanite"
+	landmarks_type = /obj/structure/cellular_biomass/cleanable/nanite
 	faction = "nanite"
 
 
@@ -38,6 +36,11 @@
 	light_range = 3
 	health = 150
 
+/obj/structure/cellular_biomass/cleanable/nanite
+	name = "Wave of nanomachines lair"
+	desc = "They look so ... hungry"
+	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
+
 /obj/structure/cellular_biomass/wall/nanite/atom_init()
 	. = ..()
 	icon_state = "nanitewall_1"
@@ -49,6 +52,10 @@
 /obj/structure/cellular_biomass/core/nanite/atom_init()
 	. = ..()
 	icon_state = "nanite_[pick(1,2)]"
+
+/obj/structure/cellular_biomass/cleanable/nanite/atom_init()
+	. = ..()
+	icon_state = "nanitemobdead_[pick(1,2)]"
 
 /obj/structure/cellular_biomass/lair/nanite/atom_init(mapload)
 	icon_state = "lair"
@@ -77,10 +84,10 @@
 	max_n2 = 0
 	minbodytemp = 0
 	var/combohit = 0
-	var/nanite_to_spawn
-	var/mob/living/simple_animal/hostile/cellular/nanite/eng/nanite_parent = null
+	var/mob/living/simple_animal/hostile/cellular/nanite/eng/nanite_parent
 	var/health_trigger = null
 	var/clon = FALSE
+	var/cloning = TRUE
 
 /mob/living/simple_animal/hostile/cellular/nanite/melee
 	icon_state = "nanitemob_1"
@@ -91,10 +98,9 @@
 	melee_damage_upper = 10
 	melee_damage_lower = 5
 	speed = 4
-	nanite_to_spawn = /mob/living/simple_animal/hostile/cellular/nanite/melee
 
 /mob/living/simple_animal/hostile/cellular/nanite/ranged
-	ranged = 1
+	ranged = TRUE
 	projectiletype = /obj/item/projectile/bullet/midbullet
 	projectilesound = 'sound/weapons/Gunshot_silenced.ogg'
 	retreat_distance = 6
@@ -107,7 +113,6 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 25
 	speed = 3
-	nanite_to_spawn = /mob/living/simple_animal/hostile/cellular/nanite/ranged
 
 /mob/living/simple_animal/hostile/cellular/nanite/eng
 	icon_state = "nanitemob_3"
@@ -122,12 +127,12 @@
 	light_power = 3
 	light_range = 1.5
 	light_color = "#00cc10"
-	nanite_to_spawn = /mob/living/simple_animal/hostile/cellular/nanite/eng
-	anchored = 1
+	anchored = TRUE
 	a_intent = "harm"
 	var/cap_spawn = 8
 	var/spawned = 0
 	var/chance_spawn = 15
+	cloning = FALSE
 
 /mob/living/simple_animal/hostile/cellular/nanite/Life()
 	..()
@@ -140,10 +145,10 @@
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
-		if(!istype(src, /mob/living/simple_animal/hostile/cellular/nanite/eng))
-			if(health <= maxHealth / 2)
+		if(cloning == TRUE)
+			if(health < maxHealth / 2)
 				visible_message("<b>[src]</b> on impact duplicates!")
-				var/mob/living/simple_animal/hostile/cellular/nanite/newnanite = new nanite_to_spawn(src.loc)
+				var/mob/living/simple_animal/hostile/cellular/nanite/newnanite = new type(src.loc)
 				health = health
 				maxHealth = maxHealth / 2
 				newnanite.health = health
@@ -153,34 +158,30 @@
 				newnanite.clon = TRUE
 			if(nanite_parent != null)
 				if(nanite_parent.health < health_trigger)
-					stop_automated_movement = 1
+					stop_automated_movement = TRUE
 					walk_to(src,nanite_parent.loc,0,2)
 					if(nanite_parent.loc in oview(src, 2))
 						health_trigger = nanite_parent.health
-						stop_automated_movement = 0
+						stop_automated_movement = FALSE
 						walk(src, 0)
 
 /mob/living/simple_animal/hostile/cellular/nanite/eng/Life()
 	..()
 	if(spawned < cap_spawn)
 		if(prob(chance_spawn))
-			if(prob(25))
-				var/mob/living/simple_animal/hostile/cellular/nanite/ranged/S = new /mob/living/simple_animal/hostile/cellular/nanite/ranged(src.loc)
-				S.nanite_parent = src
-				S.health_trigger = health
-			else
-				var/mob/living/simple_animal/hostile/cellular/nanite/melee/S = new /mob/living/simple_animal/hostile/cellular/nanite/melee(src.loc)
-				S.nanite_parent = src
-				S.health_trigger = health
+			var/type_to_spawn = prob(25) ? /mob/living/simple_animal/hostile/cellular/nanite/ranged : /mob/living/simple_animal/hostile/cellular/nanite/melee
+			var/mob/living/simple_animal/hostile/cellular/nanite/S = new type_to_spawn(src.loc)
+			S.nanite_parent = src
+			S.health_trigger = health
 			spawned++
 
 /mob/living/simple_animal/hostile/cellular/nanite/AttackingTarget()
 	..()
-	var/mob/living/L = target
+	var/mob/L = target
 	if(ismonkey(L))
 		combohit += 1
 		if(combohit == 4)
-			var/mob/living/simple_animal/hostile/cyber_horror/N = new /mob/living/simple_animal/hostile/cyber_horror(L.loc)
+			var/mob/living/simple_animal/hostile/cyber_horror/N = new(L.loc)
 			N.faction = "nanite"
 			combohit = 0
 			L.gib()
@@ -194,5 +195,5 @@
 	new /obj/effect/gibspawner/robot(src.loc)
 	if(!clon)
 		src.nanite_parent.spawned--
-	qdel(src)
+	src.Destroy()
 	return
