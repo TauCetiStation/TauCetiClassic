@@ -41,7 +41,7 @@
 		return
 
 	H.speech_problem_flag = 1
-	H.gnomed = 400
+	H.gnomed = rand(300, 600)
 
 	playsound(H, 'sound/magic/GNOMED.ogg', 100, 1)
 
