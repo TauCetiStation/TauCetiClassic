@@ -178,9 +178,6 @@
 		if(user.is_busy())
 			return
 		var/obj/item/weapon/weldingtool/WT = W
-		if(!WT.isOn())
-			to_chat(user, "<span class='warning'>The welding tool needs to be on to start this task!</span>")
-			return
 		if(WT.use(0, user))
 			to_chat(user, "<span class='notice'>You start dissassembling the [name] to the metal sheets.</span>")
 			if(WT.use_tool(src, user, 60, volume = 100))

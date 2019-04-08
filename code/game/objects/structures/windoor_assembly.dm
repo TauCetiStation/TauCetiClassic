@@ -68,7 +68,6 @@
 				if (WT.use(0,user))
 					user.visible_message("[user] dissassembles the windoor assembly.", "You start to dissassemble the windoor assembly.")
 					if(WT.use_tool(src, user, 40, volume = 50))
-						if(!src || !WT.isOn()) return
 						to_chat(user, "\blue You dissasembled the windoor assembly!")
 						new /obj/item/stack/sheet/rglass(loc, 5)
 						if(secure)

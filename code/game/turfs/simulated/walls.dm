@@ -355,14 +355,14 @@
 		if(WT.use(0,user))
 			if(response == "Repair")
 				to_chat(user, "<span class='notice'>You start repairing the damage to [src].</span>")
-				if(WT.use_tool(src, user, max(5, damage / 5), volume = 100) && WT && WT.isOn())
+				if(WT.use_tool(src, user, max(5, damage / 5), volume = 100))
 					to_chat(user, "<span class='notice'>You finish repairing the damage to [src].</span>")
 					take_damage(-damage)
 
 			else if(response == "Dismantle")
 				to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
 				if(WT.use_tool(src, user, 100, volume = 100))
-					if(!istype(src, /turf/simulated/wall) || !user || !WT || !WT.isOn() || !T)
+					if(!istype(src, /turf/simulated/wall) || !T)
 						return
 
 					if(user.loc == T && user.get_active_hand() == WT)

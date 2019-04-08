@@ -918,7 +918,6 @@
 			// check if anything changed over 2 seconds
 			to_chat(user, "You start slicing the disposal pipe.")
 			if(W.use_tool(src, user, 30, volume = 100))
-				if(!W.isOn()) return
 				to_chat(user, "<span class='notice'>You sliced the disposal pipe.</span>")
 				welded()
 			else
@@ -1254,7 +1253,6 @@
 		if(W.use(0,user))
 			to_chat(user, "You start slicing the disposal pipe.")
 			if(W.use_tool(src, user, 30, volume = 100))
-				if(!W.isOn()) return
 				to_chat(user, "<span class='notice'>You sliced the disposal pipe.</span>")
 				welded()
 			else
