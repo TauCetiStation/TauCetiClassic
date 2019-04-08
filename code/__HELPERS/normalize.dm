@@ -1,4 +1,4 @@
-// For proc witch normalize something
+// For proc which normalize something
 
 /proc/normalize_color(inphex) //normalize hex color and convert hex2num and num2hex
 
