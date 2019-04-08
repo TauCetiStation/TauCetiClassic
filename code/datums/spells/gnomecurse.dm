@@ -66,9 +66,6 @@
 
 	H.visible_message("<span class='danger'>[H] bursts into flames, and becomes a gnome!</span>",
 						   "<span class='danger'>Suddenly you feel like you've been GNOMED!</span>")
-	var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
-	smoke.set_up(3, 0, H.loc)
-	smoke.start()
 
 // A GNOMED costume
 /obj/item/clothing/mask/gnome_beard
