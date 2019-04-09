@@ -659,7 +659,6 @@
 				M.ear_deaf += 1
 				M.Weaken(1)
 				M.make_jittery(500)
-		return
 
 /obj/item/weapon/organ/attack_animal(mob/user)
 	..()
