@@ -13,7 +13,7 @@
 	name = "Nanomachine cluster"
 	desc = "They look so ... hungry"
 	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
-	health = 150
+	health = 100
 
 /obj/structure/cellular_biomass/grass/nanite
 	name = "Wave of nanomachines"
@@ -34,7 +34,7 @@
 	plane = FLOOR_PLANE
 	light_color = "#8ae6ff"
 	light_range = 3
-	health = 150
+	health = 100
 
 /obj/structure/cellular_biomass/cleanable/nanite
 	name = "Wave of nanomachines lair"
