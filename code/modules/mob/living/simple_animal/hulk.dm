@@ -87,7 +87,7 @@
 	health = 800
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	attacktext = "brutally HONK "
+	attacktext = "brutally HONK"
 
 	speed = 4
 
