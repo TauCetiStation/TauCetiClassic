@@ -221,7 +221,10 @@
 		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 
 	if(SMALLSIZE in mutations)
-		msg += "[t_He] [t_is] small halfling!\n"
+		if(gnome)
+			msg += "[t_He] [t_is] a gnome!\n"
+		else
+			msg += "[t_He] [t_is] a small halfling!\n"
 
 	var/distance = get_dist(user,src)
 	if(istype(user, /mob/dead/observer) || user.stat == DEAD) // ghosts can see anything

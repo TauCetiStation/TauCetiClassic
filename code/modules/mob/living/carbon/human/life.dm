@@ -223,6 +223,7 @@
 		if(gnomed) // if he's dead he's gnomed foreva-a-ah
 			if(prob(6))
 				say(pick("A-HA-HA-HA!", "U-HU-HU-HU!", "IM A GNOME", "I'm a GnOme!", "Don't GnoMe me!", "I'm gnot a gnoblin!", "You've been GNOMED!"))
+				playsound(src, 'sound/magic/GNOMED.ogg', 100, 1)
 			gnomed--
 			if(gnomed <= 0)
 				to_chat(src, "<span class='notice'>You are no longer gnomed!</span>")
@@ -235,10 +236,18 @@
 					w_uniform.canremove = TRUE
 				if(wear_suit)
 					remove_from_mob(wear_suit)
-				var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
+				var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 				smoke.set_up(3, 0, src.loc)
 				smoke.start()
-				playsound(src, 'sound/magic/cult_revive.ogg', 100, 1)
+				playsound(src, 'sound/magic/cult_revive.ogg', 90, 1)
+				if(SMALLSIZE in mutations)
+					var/datum/dna2/record/buf = new /datum/dna2/record
+					buf.dna = new
+					buf.types = 4
+					buf.dna.ResetSE()
+					buf.dna.SetSEValue(SMALLSIZEBLOCK, 0x001)
+					dna.SetSEValue(SMALLSIZEBLOCK, buf.dna.GetSEValue(SMALLSIZEBLOCK))
+					domutcheck(src, null, SMALLSIZEBLOCK!=null, 1)
 
 		var/rn = rand(0, 200)
 		if(getBrainLoss() >= 5)

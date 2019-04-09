@@ -273,6 +273,7 @@
 			else
 				message =  "[message]... But i'm A GNOME!"
 			verb = pick("yells like an idiot", "says rather loudly")
+			playsound(src, 'sound/magic/GNOMED.ogg', 90, 1)
 
 	if(wear_mask)
 		if(message_mode != "changeling")
