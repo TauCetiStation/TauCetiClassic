@@ -637,19 +637,24 @@
 	name = "HulkHONK"
 	desc = ""
 	panel = "Hulk"
-	charge_max = 150
+	charge_max = 250
 	clothes_req = 0
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/HulkHONK/cast(list/target)
 	if (usr.lying || usr.stunned || usr.stat)
-		to_chat(usr, "\red You can't right now!")
+		to_chat(usr, "<span class='red'> You can't right now!</span>")
 		return
-	playsound(usr.loc, 'sound/items/AirHorn.ogg',100, 1)
+	playsound(usr, 'sound/items/AirHorn.ogg',100, 1)
+	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses HulkHONK</font>"
 	msg_admin_attack("[key_name(usr)] uses HulkHONK")
 	for(var/mob/living/carbon/M in ohearers(2))
 		if(CLUMSY in M.mutations)
-			M.health +=20
+			M.heal_bodypart_damage(10, 10)
+			M.adjustToxLoss(-10)
+			M.adjustOxyLoss(-10)
+			M.AdjustWeakened(-1)
+			M.AdjustStunned(-1)
 		else
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M

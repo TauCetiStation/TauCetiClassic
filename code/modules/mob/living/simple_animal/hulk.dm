@@ -83,16 +83,16 @@
 	icon = 'icons/mob/GyperHonk.dmi'
 	icon_state = "Clowan"
 	icon_living = "Clowan"
-	maxHealth = 800
-	health = 800
+	maxHealth = 400
+	health = 400
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	attacktext = "brutally HONK "
+	attacktext = "brutally HONK"
 
 	speed = 4
 
 	attack_sound =  'sound/items/bikehorn.ogg'
-	health_regen = 5
+	health_regen = 3
 
 	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/HulkHONK)
 
