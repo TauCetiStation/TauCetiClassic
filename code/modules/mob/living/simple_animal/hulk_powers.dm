@@ -643,7 +643,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/HulkHONK/cast(list/target)
 	if (usr.lying || usr.stunned || usr.stat)
-		to_chat(usr, "\red You can't right now!")
+		to_chat(usr, "<span class='red'>You can't right now!</span>")
 		return
 	playsound(usr, 'sound/items/AirHorn.ogg',100, 1)
 	msg_admin_attack("[key_name(usr)] uses HulkHONK")
