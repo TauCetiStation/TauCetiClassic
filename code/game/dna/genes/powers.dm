@@ -248,7 +248,7 @@
 	var/mob/living/simple_animal/hulk/Monster
 	if(CLUMSY in M.mutations)
 		Monster = new /mob/living/simple_animal/hulk/Clowan(get_turf(M))
-	else if(istype(M, /mob/living/carbon/human/unathi) || prob(19))
+	else if(M.species.name == UNATHI || prob(19))
 		Monster = new /mob/living/simple_animal/hulk/unathi(get_turf(M))
 	else
 		Monster = new /mob/living/simple_animal/hulk/human(get_turf(M))
