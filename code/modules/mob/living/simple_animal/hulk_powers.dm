@@ -645,7 +645,7 @@
 	if (usr.lying || usr.stunned || usr.stat)
 		to_chat(usr, "\red You can't right now!")
 		return
-	playsound(usr.loc, 'sound/items/AirHorn.ogg',100, 1)
+	playsound(usr, 'sound/items/AirHorn.ogg',100, 1)
 	msg_admin_attack("[key_name(usr)] uses HulkHONK")
 	for(var/mob/living/carbon/M in ohearers(2))
 		if(CLUMSY in M.mutations)
