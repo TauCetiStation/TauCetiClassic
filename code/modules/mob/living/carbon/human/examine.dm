@@ -221,7 +221,7 @@
 		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 
 	if(SMALLSIZE in mutations)
-		if(gnome)
+		if(gnomed)
 			msg += "[t_He] [t_is] a gnome!\n"
 		else
 			msg += "[t_He] [t_is] a small halfling!\n"
