@@ -189,6 +189,10 @@
 /mob/living/simple_animal/hostile/cellular/nanite/emp_act(severity)
 	death()
 
+/mob/living/simple_animal/hostile/cellular/nanite/Destroy()
+	nanite_parent = null
+	return
+
 /mob/living/simple_animal/hostile/cellular/nanite/death()
 	..()
 	visible_message("<b>[src]</b> blows apart!")
