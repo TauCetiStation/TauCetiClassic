@@ -82,7 +82,7 @@
 					their = "your"
 				user.visible_message("<span class='notice'>[user] places [src] against [M]'s [target_zone] and starts listen attentively.</span>",
 									"<span class='notice'>You place [src] against [their] [target_zone] and start to listen attentively.</span>")
-				if(do_after(user, 15, target = M) && src)
+				if(do_after(user, 25, target = M) && src)
 					var/pulse_status = "pulse"
 					var/pulse_strength = "hear a weak"
 					var/chest_inspected = FALSE
@@ -120,7 +120,7 @@
 						to_chat(user, "<span class='notice'> You [pulse_strength] [pulse_status].</span> [chest_inspected]")
 					else
 						to_chat(user, "<span class='warning'> You [pulse_strength] [pulse_status].</span> [chest_inspected]")
-					return
+				return
 	return ..(M, user)
 
 
