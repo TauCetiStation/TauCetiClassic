@@ -115,7 +115,7 @@
 					user.visible_message("<span class='notice'>[user] ends up listening to [M]'s [target_zone].</span>",
 										"<span class='notice'>You finish listening to [M]'s [target_zone].</span>")
 					if(!chest_inspected)
-						to_chat(user, "<span class='notice'> You [pulse_strength] [pulse_status].")
+						to_chat(user, "<span class='notice'> You [pulse_strength] [pulse_status].</span>")
 					else if(pulse_strength == "hear a healthy")
 						to_chat(user, "<span class='notice'> You [pulse_strength] [pulse_status].</span> [chest_inspected]")
 					else
