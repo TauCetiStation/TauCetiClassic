@@ -16,7 +16,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	var/obj/effect/statclick/ticket_list/cstatclick = new(null, null, AHELP_CLOSED)
 	var/obj/effect/statclick/ticket_list/rstatclick = new(null, null, AHELP_RESOLVED)
 
-	var/last_slap_mention_used = 0 // This acts as cooldown for sending @here to discord.
+	var/next_slap_mention_time = 0 // This acts as cooldown for sending @here to discord.
 
 /datum/admin_help_tickets/Destroy()
 	QDEL_LIST(active_tickets)
@@ -567,8 +567,8 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		else
 			final = "[msg] - All admins stealthed\[[english_list(stealthmins)]\], AFK\[[english_list(afkmins)]\], or lacks +BAN\[[english_list(powerlessmins)]\]! Total: [allmins.len] "
 
-		if(world.time > ahelp_tickets.last_slap_mention_used)
-			ahelp_tickets.last_slap_mention_used = world.time + 30 MINUTES
+		if(world.time > ahelp_tickets.next_slap_mention_time)
+			ahelp_tickets.next_slap_mention_time = world.time + 30 MINUTES
 			send2slack_admincall("@here adminhelp from *[source]*:", final)
 		else
 			send2slack_admincall("adminhelp from *[source]*:", final)
