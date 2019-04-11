@@ -80,6 +80,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	new/datum/stack_recipe("apc frame", /obj/item/apc_frame, 2),
 	new/datum/stack_recipe("air alarm frame", /obj/item/alarm_frame, 2),
 	new/datum/stack_recipe("fire alarm frame", /obj/item/firealarm_frame, 2),
+	new/datum/stack_recipe("door control frame", /obj/item/door_control_frame, 1),
 	null,
 	new/datum/stack_recipe("metal door", /obj/structure/mineral_door/metal, 20, one_per_turf = TRUE, on_floor = TRUE)
 )

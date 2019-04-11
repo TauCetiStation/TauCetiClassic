@@ -35,6 +35,8 @@
 	if(iscrowbar(C) || (istype(C, /obj/item/weapon/twohanded/fireaxe) && C:wielded))
 		if(!hasPower())
 			open(TRUE)
+	if(ismultitool(C) && hasPower() && !density)
+		to_chat(user, "<span class='notice'>The identification code of the [name] is:</span> <span class='warning'>[id]</span>")
 
 /obj/machinery/door/poddoor/normal_open_checks()
 	if(hasPower())
