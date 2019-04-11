@@ -66,7 +66,6 @@
 				qdel (src)
 
 	else if(iswrench(W) && state == ASSEMBLY_SECURED)
-		playsound(src, 'sound/items/Ratchet.ogg', 100, 1)
 		if(user.is_busy()) return
 		if(anchored)
 			user.visible_message("[user] unsecures the airlock assembly from the floor.", "You start to unsecure the airlock assembly from the floor.")
