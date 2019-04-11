@@ -407,11 +407,10 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 
 //takes msg which was sanitized with sanitize() proc, returns correct text for stat display.
 /datum/admin_help/proc/sanitize_stat(msg)
+	msg = replacetext(msg, JA_PLACEHOLDER, JA_CHARACTER)
 	var/string = ""
-	for(var/t in splittext(replacetext(msg, JA_PLACEHOLDER, JA_CHARACTER), regex("[.]", "g")))
-		if(!t)
-			continue
-		string += "&#[text2ascii(t)];"
+	for (var/i in 1 to length(msg))
+		string += "&#[text2ascii(copytext(msg,i,i+1))];"
 	return string
 
 /datum/admin_help/proc/Retitle()
