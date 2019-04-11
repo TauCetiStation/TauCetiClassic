@@ -1,4 +1,3 @@
-/client/var/adminhelptimerid = 0	//a timer id for returning the ahelp verb
 /client/var/datum/admin_help/current_ticket	//the current ticket the (usually) not-admin client is dealing with
 
 //
@@ -17,6 +16,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	var/obj/effect/statclick/ticket_list/rstatclick = new(null, null, AHELP_RESOLVED)
 
 	var/next_slap_mention_time = 0 // This acts as cooldown for sending @here to discord.
+	var/list/ckey_cooldown_holder = list()
 
 /datum/admin_help_tickets/Destroy()
 	QDEL_LIST(active_tickets)
@@ -208,10 +208,9 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		send2slack_admincall("[initiator_ckey] | Ticket #[id]: Answered by [key_name(usr)]")
 	_interactions += "[time_stamp()]: [formatted_message]"
 
-//Removes the ahelp verb and returns it after 2 minutes
+//Adds a cooldown to the user's ahelp verb.
 /datum/admin_help/proc/TimeoutVerb()
-	initiator.verbs -= /client/verb/adminhelp
-	initiator.adminhelptimerid = addtimer(CALLBACK(initiator, /client/proc/giveadminhelpverb), 1200, TIMER_STOPPABLE) //2 minute cooldown of admin helps
+	ahelp_tickets.ckey_cooldown_holder[initiator_ckey] = world.time + 2 MINUTES //2 minute cooldown of admin helps
 
 //private
 /datum/admin_help/proc/FullMonty(ref_src)
@@ -470,45 +469,53 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 // CLIENT PROCS
 //
 
+/client/proc/is_ahelp_cooldown()
+	var/ahelp_cooldown_timeleft = ahelp_tickets.ckey_cooldown_holder[ckey]
+	if(ahelp_cooldown_timeleft && world.time < ahelp_cooldown_timeleft)
+		to_chat(src, "<span class='notice'>You cannot use \"Adminhelp\" so often. Please wait another [round((ahelp_cooldown_timeleft - world.time) / 10, 1)] seconds.</span>")
+		return TRUE
+	else
+		return FALSE
+
 /client/proc/giveadminhelpverb()
-	verbs += /client/verb/adminhelp
-	deltimer(adminhelptimerid)
-	adminhelptimerid = 0
+	ahelp_tickets.ckey_cooldown_holder[ckey] = 0
 
-// Used for methods where input via arg doesn't work
-/client/proc/get_adminhelp()
-	var/msg = input(src, "Please describe your problem concisely and an admin will help as soon as they're able.", "Adminhelp contents") as text|null
-	adminhelp(msg)
-
-/client/verb/adminhelp(msg as text)
+/client/verb/adminhelp()
 	set category = "Admin"
 	set name = "Adminhelp"
 
 	if(global.say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		to_chat(src, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
 	//handle muting and automuting
 	if(prefs.muted & MUTE_ADMINHELP)
 		to_chat(src, "<span class='danger'>Error: Admin-PM: You cannot send adminhelps (Muted).</span>")
 		return
-	if(handle_spam_prevention(msg, MUTE_ADMINHELP))
+
+	if(is_ahelp_cooldown())
 		return
 
-	msg = sanitize(msg)
+	var/msg = sanitize(input(src, "Please describe your problem concisely and an admin will help as soon as they're able.", "Adminhelp contents") as message|null)
 	if(!msg)
 		return
 
+	if(is_ahelp_cooldown())
+		return
+
+	if(handle_spam_prevention(msg, MUTE_ADMINHELP))
+		return
+
 	if(current_ticket)
-		if(alert(usr, "You already have a ticket open. Is this for the same issue?",,"Yes","No") != "No")
+		if(alert(src, "You already have a ticket open. Is this for the same issue?",,"Yes","No") != "No")
 			if(current_ticket)
 				current_ticket.MessageNoRecipient(msg)
 				current_ticket.TimeoutVerb()
 				return
 			else
-				to_chat(usr, "<span class='warning'>Ticket not found, creating new one...</span>")
+				to_chat(src, "<span class='warning'>Ticket not found, creating new one...</span>")
 		else
-			current_ticket.AddInteraction("[key_name_admin(usr)] opened a new ticket.")
+			current_ticket.AddInteraction("[key_name_admin(src)] opened a new ticket.")
 			current_ticket.Close()
 
 	new /datum/admin_help(msg, src, FALSE)
