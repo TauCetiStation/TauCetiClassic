@@ -46,7 +46,7 @@
 	if(src in mentors)
 		message_mentors("[key_name(src, 0, 0, 0)] has started replying to [key_name(C, 0, 0, 0)]'s help request.")
 	message_admins("[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s help request.")
-	var/msg = sanitize(input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as message|null)
+	var/msg = sanitize(input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null)
 	if (!msg)
 		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name(C, 0, 0)]'s help request.")
 		if(src in mentors)
@@ -89,7 +89,7 @@
 
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
-		msg = sanitize(input(src,"Message:", "Private message to [key_name(recipient, 0, holder ? 1 : 0, holder ? 1 : 0)]") as message|null)
+		msg = sanitize(input(src,"Message:", "Private message to [key_name(recipient, 0, holder ? 1 : 0, holder ? 1 : 0)]") as text|null)
 		if(!msg)
 			return
 
