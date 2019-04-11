@@ -128,15 +128,6 @@
 	w_class = ITEM_SIZE_SMALL
 	force = 3
 	var/on = 0
-	var/safety = FALSE
-
-/obj/item/weapon/melee/telebaton/verb/toggle_safety()
-	set category = "Object"
-	set name = "Toggle safety telebaton"
-	set desc = "Toggle safety telebaton. Safety causes holouron, not physical"
-
-	safety = !safety
-	to_chat(usr, "<span class='notice'>Telebaton in [safety ? "safe" : "unsafe" ] mode</span>")
 
 /obj/item/weapon/melee/telebaton/attack_self(mob/user)
 	on = !on
@@ -190,7 +181,7 @@
 			else
 				user.take_bodypart_damage(2 * force)
 			return
-		if(safety && ishuman(target))
+		if(user.a_intent == "help" && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			playsound(src, "swing_hit", 50, 1, -1)
 			user.do_attack_animation(H)
