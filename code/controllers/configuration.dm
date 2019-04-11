@@ -167,6 +167,7 @@
 	var/slack_team = 0
 	var/antigrief_alarm_level = 1
 	var/check_randomizer = 0
+	var/proxy_autoban = 0
 
 	var/allow_donators = 0
 	var/allow_byond_membership = 0
@@ -584,6 +585,9 @@
 
 				if("check_randomizer")
 					config.check_randomizer = value
+
+				if("proxy_autoban")
+					config.proxy_autoban = 1
 
 				if("allow_donators")
 					config.allow_donators = 1
