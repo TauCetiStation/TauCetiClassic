@@ -656,14 +656,13 @@
 			M.AdjustWeakened(-1)
 			M.AdjustStunned(-1)
 		else
-			if(istype(M, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
-					continue
-				M.stuttering += 1
-				M.ear_deaf += 1
-				M.Weaken(1)
-				M.make_jittery(500)
+			var/mob/living/carbon/human/H = M
+			if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
+				continue
+			M.stuttering += 2
+			M.ear_deaf += 2
+			M.Weaken(2)
+			M.make_jittery(500)
 
 
 /obj/item/weapon/organ/attack_animal(mob/user)
