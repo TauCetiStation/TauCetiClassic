@@ -190,6 +190,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		//send it to slack if nobody is on and tell us how many were on
 		var/admin_number_present = send2slack_adminless_only(initiator_ckey, "Ticket #[id]: [name]")
 		log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
+		send2slack_logs("Ticket #[id] created", "[key_name(initiator)]: [name]", "(AHELP)")
 		if(admin_number_present <= 0)
 			to_chat(C, "<span class='notice'>No active admins are online, your adminhelp was sent to the admin chat.</span>")
 			heard_by_no_admins = TRUE
