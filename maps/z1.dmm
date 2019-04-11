@@ -30821,7 +30821,7 @@
 "bcT" = (
 /obj/structure/table,
 /obj/item/weapon/aiModule/asimov,
-/obj/item/weapon/aiModule/freeformcore,
+/obj/item/weapon/aiModule/freeform/core,
 /obj/machinery/door/window{
 	base_state = "right";
 	dir = 4;
