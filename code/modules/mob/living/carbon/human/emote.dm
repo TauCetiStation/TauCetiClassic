@@ -580,9 +580,10 @@
 				if(virus_scream || !(species && species.flags[NO_PAIN]))
 					if (!muzzled)
 						if (auto)
-							if(has_trait(TRAIT_MUTE))
+							if(has_trait(TRAIT_MUTE) && world.time-lastSoundEmote >= 30)
 								message = "<B>[src]</B> twists their face into an agonised expression!"
 								m_type = 1
+								lastSoundEmote = world.time
 							else if(world.time-lastSoundEmote >= 30)//prevent scream spam with things like poly spray
 								message = "<B>[src]</B> screams in agony!"
 								var/list/screamSound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg', 'sound/misc/wilhelm.ogg', 'sound/misc/goofy.ogg')
