@@ -99,13 +99,13 @@
 								var/obj/item/organ/internal/lungs/L = M.organs_by_name[O_LUNGS]
 								if(L)
 									if(L.is_bruised())
-										chest_inspected = "<span class='warning'>\The [M]'s [L.name] sound bruised!</span>"
+										chest_inspected = "<span class='warning'>You can hear noises and wheezing, \the [M]'s [L.name] may be bruised!</span>"
 									else if(L.germ_level > INFECTION_LEVEL_ONE)
 										chest_inspected = "<span class='warning'>\The [M]'s [L.name] sound like he got respitory tract infection!</span>"
 									else
 										chest_inspected = "<span class='notice'>\The [M]'s [L.name] sound normal.</span>"
 								else
-									chest_inspected = "<span class='notice'>You can't hear any respiration.</span>"
+									chest_inspected = "<span class='notice'>You don't hear [M] breathing.</span>"
 							if(O_EYES, O_MOUTH)
 								pulse_strength = "cannot hear"
 								pulse_status = "anything"
