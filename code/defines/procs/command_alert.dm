@@ -13,7 +13,7 @@
 				if("radpassed")
 					announce_sound = 'sound/AI/radpassed.ogg'
 				if("radiation")
-					announce_sound = 'sound/AI/radiation.ogg'
+					announce_sound = pick('sound/AI/radiation1.ogg', 'sound/AI/radiation2.ogg', 'sound/AI/radiation3.ogg')
 				if("noert")
 					announce_sound = 'sound/AI/noert.ogg'
 				if("yesert")
@@ -37,9 +37,9 @@
 				if("outbreak7")
 					announce_sound = 'sound/AI/outbreak7.ogg'
 				if("outbreak5")
-					announce_sound = 'sound/AI/outbreak5.ogg'
+					announce_sound = pick('sound/AI/outbreak5_1.ogg', 'sound/AI/outbreak5_2.ogg')
 				if("lifesigns")
-					announce_sound = 'sound/AI/lifesigns.ogg'
+					announce_sound = pick('sound/AI/lifesigns1.ogg', 'sound/AI/lifesigns2.ogg', 'sound/AI/lifesigns3.ogg')
 				if("greytide")
 					announce_sound = 'sound/AI/greytide.ogg'
 				if("rampbrand")
@@ -51,7 +51,7 @@
 				if("istorm")
 					announce_sound = 'sound/AI/i-storm.ogg'
 				if("poweroff")
-					announce_sound = 'sound/AI/poweroff.ogg'
+					announce_sound = pick('sound/AI/poweroff1.ogg', 'sound/AI/poweroff2.ogg')
 				if("poweron")
 					announce_sound = 'sound/AI/poweron.ogg'
 				if("gravoff")
