@@ -23,7 +23,7 @@
 	var/list/obj/machinery/door/airlock/airlocks_buffer = list()
 	var/list/obj/machinery/door/poddoor/poddoors_buffer = list()
 
-obj/item/device/multitool/verb/clear_buffer()
+/obj/item/device/multitool/verb/clear_buffer()
 	set category = "Object"
 	set name = "Clear buffer"
 	if(airlocks_buffer.len || poddoors_buffer.len)

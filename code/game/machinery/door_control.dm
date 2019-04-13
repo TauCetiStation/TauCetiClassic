@@ -28,7 +28,7 @@
 	var/const/max_connections = 16
 
 /obj/machinery/door_control/atom_init(mapload, dir, building = FALSE)
-	..()
+	. = ..()
 	if(building)
 		if(loc)
 			src.loc = loc
@@ -97,7 +97,7 @@
 					req_one_access = list()
 					if(locked)
 						locked = FALSE
-					playsound(src.loc, "sparks", 100, 1)
+					playsound(src, "sparks", 100, 1)
 					return
 				else if(isscrewdriver(W))
 					if(locked && !issilicon(user) && !(stat & NOPOWER))
@@ -142,7 +142,7 @@
 						return
 				else if(iswirecutter(W))
 					to_chat(user, "You remove wires from the door control frame.")
-					playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
+					playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
 					new /obj/item/stack/cable_coil/random(loc, 1)
 					connected_airlocks = list()
 					connected_poddoors = list()
@@ -170,9 +170,9 @@
 				return
 			else if(iswrench(W))
 				to_chat(user, "You remove the door control assembly from the wall!")
-				var/obj/item/door_control_frame/frame = new /obj/item/door_control_frame()
+				var/obj/item/door_control_frame/frame = new
 				frame.loc = user.loc
-				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 				qdel(src)
 				return
 	return
