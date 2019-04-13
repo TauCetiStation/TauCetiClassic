@@ -15,7 +15,6 @@
 	var/id = null
 	var/list/obj/machinery/door/airlock/connected_airlocks = list()
 	var/list/obj/machinery/door/poddoor/connected_poddoors = list()
-	var/desiredstate = 0 // Zero is closed, 1 is open.
 	var/normaldoorcontrol = 1
 	var/range = 10
 	var/specialfunctions = OPEN
@@ -259,20 +258,31 @@
 		var/obj/item/device/multitool/M = usr.get_active_hand()
 		if(!M.airlocks_buffer.len && !M.poddoors_buffer.len)
 			to_chat(usr, "<span class='warning'>The multitool's buffer is empty</span>")
-		else if(M.airlocks_buffer.len > (max_connections - connected_airlocks.len))
-			to_chat(usr, "<span class='warning'>This device can't control this number of airlocks</span>")
-		else if(M.poddoors_buffer.len > (max_connections - connected_poddoors.len))
-			to_chat(usr, "<span class='warning'>This device can't control this number of poddoors</span>")
+			return
+		var/loaded_airlocks = FALSE
+		var/loaded_poddoors = FALSE
+		if((M.airlocks_buffer.len > (max_connections - connected_airlocks.len)) && M.airlocks_buffer.len)
+			to_chat(usr, "<span class='warning'>This device can't control this number of airlocks!</span>")
 		else
 			for(var/A in M.airlocks_buffer)
 				if(!(A in connected_airlocks))
 					connected_airlocks += A
+					loaded_airlocks = TRUE
 			M.airlocks_buffer = list()
+		if((M.poddoors_buffer.len > (max_connections - connected_poddoors.len)) && M.poddoors_buffer.len)
+			to_chat(usr, "<span class='warning'>This device can't control this number of poddoors!</span>")
+		else
 			for(var/P in M.poddoors_buffer)
 				if(!(P in connected_poddoors))
 					connected_poddoors += P
+					loaded_poddoors = TRUE
 			M.poddoors_buffer = list()
-			to_chat(usr, "<span class='notice'>You load data.</span>")
+		if(loaded_poddoors && loaded_airlocks)
+			to_chat(usr, "<span class='notice'>You load the airlocks' and poddors' data.</span>")
+		else if(loaded_poddoors)
+			to_chat(usr, "<span class='notice'>You load the poddors' data.</span>")
+		else if(loaded_airlocks)
+			to_chat(usr, "<span class='notice'>You load the airlocks' data.</span>")
 	if(href_list["copy"])
 		if(!connected_airlocks.len && !connected_poddoors.len)
 			to_chat(usr, "<span class='warning'>There's no door data recorded.</span>")
@@ -372,7 +382,6 @@
 					P.close()
 					return
 
-	desiredstate = !desiredstate
 	spawn(15)
 		update_icon()
 
