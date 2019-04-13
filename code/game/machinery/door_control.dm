@@ -172,7 +172,7 @@
 				to_chat(user, "You remove the door control assembly from the wall!")
 				var/obj/item/door_control_frame/frame = new /obj/item/door_control_frame()
 				frame.loc = user.loc
-				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 				qdel(src)
 				return
 	return
