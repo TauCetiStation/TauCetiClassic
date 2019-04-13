@@ -97,7 +97,7 @@
 					req_one_access = list()
 					if(locked)
 						locked = FALSE
-					playsound(src.loc, "sparks", 100, 1)
+					playsound(src, "sparks", 100, 1)
 					return
 				else if(isscrewdriver(W))
 					if(locked && !issilicon(user) && !(stat & NOPOWER))
