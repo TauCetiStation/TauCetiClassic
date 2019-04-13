@@ -181,7 +181,7 @@
 			else
 				user.take_bodypart_damage(2 * force)
 			return
-		if(user.a_intent == "help" && ishuman(target))
+		if(user.a_intent == "I_HELP" && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			playsound(src, "swing_hit", 50, 1, -1)
 			user.do_attack_animation(H)
