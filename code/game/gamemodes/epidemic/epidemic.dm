@@ -68,7 +68,7 @@
 
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
-			M.playsound_local(null, 'sound/AI/commandreport.ogg', 60, environment = -1, echo = null, channel = 802, wait = 1)
+			M.playsound_local(null, 'sound/AI/commandreport.ogg', 50, environment = -1, echo = null, channel = 802, wait = 1)
 
 	// add an extra law to the AI to make sure it cooperates with the heads
 	var/extra_law = "Crew authorized to know of pathogen [virus_name]'s existence are: Heads of command, any crew member with loyalty implant. Do not allow unauthorized personnel to gain knowledge of [virus_name]. Aid authorized personnel in quarantining and neutrlizing the outbreak. This law overrides all other laws."
@@ -93,7 +93,7 @@
 			comm.messagetext.Add(intercepttext)
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
-			M.playsound_local(null, 'sound/AI/commandreport.ogg', 60, environment = -1, echo = null, channel = 802, wait = 1)
+			M.playsound_local(null, 'sound/AI/commandreport.ogg', 50, environment = -1, echo = null, channel = 802, wait = 1)
 
 
 /datum/game_mode/epidemic/post_setup()

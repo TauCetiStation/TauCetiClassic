@@ -64,4 +64,4 @@
 					announce_sound = 'sound/AI/icarus.ogg'
 				if("fungi")
 					announce_sound = 'sound/AI/fungi.ogg'
-			M.playsound_local(null, announce_sound, 60, environment = -1, echo = null, channel = 802, wait = 1)
+			M.playsound_local(null, announce_sound, 50, environment = -1, echo = null, channel = 802, wait = 1)
