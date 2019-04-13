@@ -1,9 +1,8 @@
 #define DOOR_CONTROL_COMPLETE 1
 #define DOOR_CONTROL_WITHOUT_WIRES 0
-#define DOOR_CONTROL_MAX_CONNECTIONS 16
 
 /obj/machinery/door_control
-	name = "Remote Door Control"
+	name = "remote door control"
 	desc = "It controls doors, remotely."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl0"
@@ -26,6 +25,7 @@
 	var/door_control_access = null
 	var/accesses_showed = FALSE
 	var/modes_showed = FALSE
+	var/const/max_connections = 16
 
 /obj/machinery/door_control/atom_init(mapload, dir, building = FALSE)
 	..()
@@ -259,9 +259,9 @@
 		var/obj/item/device/multitool/M = usr.get_active_hand()
 		if(!M.airlocks_buffer.len && !M.poddoors_buffer.len)
 			to_chat(usr, "<span class='warning'>The multitool's buffer is empty</span>")
-		else if(M.airlocks_buffer.len > (DOOR_CONTROL_MAX_CONNECTIONS - connected_airlocks.len))
+		else if(M.airlocks_buffer.len > (max_connections - connected_airlocks.len))
 			to_chat(usr, "<span class='warning'>This device can't control this number of airlocks</span>")
-		else if(M.poddoors_buffer.len > (DOOR_CONTROL_MAX_CONNECTIONS - connected_poddoors.len))
+		else if(M.poddoors_buffer.len > (max_connections - connected_poddoors.len))
 			to_chat(usr, "<span class='warning'>This device can't control this number of poddoors</span>")
 		else
 			for(var/A in M.airlocks_buffer)
@@ -382,7 +382,7 @@
 
 
 /obj/item/door_control_frame
-	name = "Door Control frame"
+	name = "door control frame"
 	desc = "Used for building Door Controls."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl_assembly0"
@@ -458,3 +458,6 @@
 
 	icon_state = "launcherbtt"
 	active = 0
+
+#undef DOOR_CONTROL_COMPLETE
+#undef DOOR_CONTROL_WITHOUT_WIRES

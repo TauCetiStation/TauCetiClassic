@@ -18,6 +18,7 @@
 	m_amt = 50
 	g_amt = 20
 	origin_tech = "magnets=1;engineering=1"
+	var/const/buffer_limit = 16
 	var/obj/machinery/telecomms/buffer // simple machine buffer for device linkage
 	var/list/obj/machinery/door/airlock/airlocks_buffer = list()
 	var/list/obj/machinery/door/poddoor/poddoors_buffer = list()

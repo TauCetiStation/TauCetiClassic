@@ -230,7 +230,7 @@ var/list/same_wires = list()
 				var/obj/item/device/multitool/M = I
 				if(holder in M.airlocks_buffer)
 					to_chat(L, "<span class='warning'>This airlock is already in the buffer!</span>")
-				else if(M.airlocks_buffer.len >= 16)
+				else if(M.airlocks_buffer.len >= M.buffer_limit)
 					to_chat(L, "<span class='warning'>The multitool's buffer is full!</span>")
 				else
 					M.airlocks_buffer += holder

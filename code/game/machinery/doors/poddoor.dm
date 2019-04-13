@@ -39,7 +39,7 @@
 		var/obj/item/device/multitool/M = C
 		if(src in M.poddoors_buffer)
 			to_chat(user, "<span class='warning'>This poddoor is already in the buffer!</span>")
-		else if(M.poddoors_buffer.len >= 8)
+		else if(M.poddoors_buffer.len >= M.buffer_limit)
 			to_chat(user, "<span class='warning'>The multitool's buffer is full!</span>")
 		else
 			M.poddoors_buffer += src
