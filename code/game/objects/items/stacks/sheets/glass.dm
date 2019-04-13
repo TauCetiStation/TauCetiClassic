@@ -349,6 +349,9 @@
 			if(H.species.flags[NO_MINORCUTS])
 				return
 
+			if(H.buckled)
+				return
+
 			if(!H.shoes)
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
 				if(BP.status & ORGAN_ROBOT)

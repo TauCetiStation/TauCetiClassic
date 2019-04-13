@@ -205,9 +205,9 @@
 			if(config.rus_language)//TODO:CYRILLIC dictionary?
 				switch(pick(1,2,3))
 					if(1)
-						say(pick(CYRILLIC_BRAINDAMAG_1))
+						say(pick(CYRILLIC_BRAINDAMAGE_1))
 					if(2)
-						say(pick(CYRILLIC_BRAINDAMAG_2))
+						say(pick(CYRILLIC_BRAINDAMAGE_2))
 					if(3)
 						emote("drool")
 			else

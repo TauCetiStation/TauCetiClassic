@@ -28,7 +28,7 @@
 		var/mob/living/carbon/human/H = target
 		switch(type)
 			if("feet")
-				if(!H.shoes)
+				if(!H.shoes && !H.buckled)
 					BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
 					H.Weaken(3)
 			if(BP_L_ARM, BP_R_ARM)

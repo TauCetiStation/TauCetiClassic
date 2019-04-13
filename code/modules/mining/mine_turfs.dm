@@ -1,11 +1,8 @@
 /**********************Mineral deposits**************************/
-
-
-
 /turf/simulated/mineral
 	name = "Rock"
 	icon = 'icons/turf/asteroid.dmi'
-	icon_state = "rock_nochance"
+	icon_state = "rock"
 	oxygen = 0
 	nitrogen = 0
 	opacity = 1
