@@ -28,7 +28,7 @@
 	var/modes_showed = FALSE
 
 /obj/machinery/door_control/atom_init(mapload, dir, building = FALSE)
-	..()
+	. = ..()
 	if(building)
 		if(loc)
 			src.loc = loc
