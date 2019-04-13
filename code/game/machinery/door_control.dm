@@ -199,35 +199,35 @@
 		setup_menu += "<b><a href='?src=\ref[src];show_modes=1'>Show airlock control mode setup</a></b><br>"
 	else
 		setup_menu += "<b><a href='?src=\ref[src];show_modes=1'>Hide airlock control mode setup</a></b><ul>"
-		if(specialfunctions & OPEN)
-			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=1'>Open</a></b></li>"
+		if(specialfunctions == OPEN)
+			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=[OPEN]'>Open</a></b></li>"
 		else
-			setup_menu += "<li><a href='?src=\ref[src];mode=1'>Open</a></li>"
+			setup_menu += "<li><a href='?src=\ref[src];mode=[OPEN]'>Open</a></li>"
 
-		if(specialfunctions & BOLTS)
-			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=4'>Toggle bolts</a></b></li>"
+		if(specialfunctions == BOLTS)
+			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=[BOLTS]'>Toggle bolts</a></b></li>"
 		else
-			setup_menu += "<li><a href='?src=\ref[src];mode=4'>Toggle bolts</a></li>"
+			setup_menu += "<li><a href='?src=\ref[src];mode=[BOLTS]'>Toggle bolts</a></li>"
 
-		if(specialfunctions & SHOCK)
-			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=8'>Electrify</a></b></li>"
+		if(specialfunctions == SHOCK)
+			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=[SHOCK]'>Electrify</a></b></li>"
 		else
-			setup_menu += "<li><a href='?src=\ref[src];mode=8'>Electrify</a></li>"
+			setup_menu += "<li><a href='?src=\ref[src];mode=[SHOCK]'>Electrify</a></li>"
 
-		if(specialfunctions & OPEN_BOLTS)
-			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=32'>Open and toggle bolts</a></b></li>"
+		if(specialfunctions == (OPEN | BOLTS))
+			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=[OPEN | BOLTS]'>Open and toggle bolts</a></b></li>"
 		else
-			setup_menu += "<li><a href='?src=\ref[src];mode=32'>Open and toggle bolts</a></li>"
+			setup_menu += "<li><a href='?src=\ref[src];mode=[OPEN | BOLTS]'>Open and toggle bolts</a></li>"
 
-		if(specialfunctions & BOLTS_SHOCK)
-			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=64'>Toggle bolts and electrify</a></b></li>"
+		if(specialfunctions == (BOLTS | SHOCK))
+			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=[BOLTS | SHOCK]'>Toggle bolts and electrify</a></b></li>"
 		else
-			setup_menu += "<li><a href='?src=\ref[src];mode=64'>Toggle bolts and electrify</a></li>"
+			setup_menu += "<li><a href='?src=\ref[src];mode=[BOLTS | SHOCK]'>Toggle bolts and electrify</a></li>"
 
-		if(specialfunctions & OPEN_BOLTS_SHOCK)
-			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=128'>Open, toggle bolts and electrify</a></b></li>"
+		if(specialfunctions == (OPEN | BOLTS | SHOCK))
+			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=[OPEN | BOLTS | SHOCK]'>Open, toggle bolts and electrify</a></b></li>"
 		else
-			setup_menu += "<li><a href='?src=\ref[src];mode=128'>Open, toggle bolts and electrify</a></li>"
+			setup_menu += "<li><a href='?src=\ref[src];mode=[OPEN | BOLTS | SHOCK]'>Open, toggle bolts and electrify</a></li>"
 
 		setup_menu += "</ul>"
 
@@ -316,7 +316,7 @@
 	if(connected_airlocks)
 		for(var/obj/machinery/door/airlock/A in connected_airlocks)
 			if(!A.isAllPowerCut() && A.hasPower())
-				if(specialfunctions & OPEN)
+				if(specialfunctions == OPEN)
 					if(A.density)
 						spawn(0)
 							A.open()
@@ -325,17 +325,17 @@
 						spawn(0)
 							A.close()
 							return
-				else if(specialfunctions & BOLTS)
+				else if(specialfunctions == BOLTS)
 					if(A.locked)
 						A.unbolt()
 					else
 						A.bolt()
-				else if(specialfunctions & SHOCK)
+				else if(specialfunctions == SHOCK)
 					if(A.secondsElectrified)
 						A.secondsElectrified = 0
 					else
 						A.secondsElectrified = -1
-				else if(specialfunctions & OPEN_BOLTS)
+				else if(specialfunctions == (OPEN | BOLTS))
 					if(A.density)
 						spawn(0)
 							A.unbolt()
@@ -348,14 +348,14 @@
 							A.close()
 							A.bolt()
 							return
-				else if(specialfunctions & BOLTS_SHOCK)
+				else if(specialfunctions == (BOLTS | SHOCK))
 					if(A.locked)
 						A.unbolt()
 						A.secondsElectrified = 0
 					else
 						A.bolt()
 						A.secondsElectrified = -1
-				else if(specialfunctions & OPEN_BOLTS_SHOCK)
+				else if(specialfunctions == (OPEN | BOLTS | SHOCK))
 					if(A.density)
 						spawn(0)
 							A.unbolt()

@@ -78,9 +78,6 @@
 #define BOLTS    4
 #define SHOCK    8
 #define SAFE    16
-#define OPEN_BOLTS 32
-#define BOLTS_SHOCK 64
-#define OPEN_BOLTS_SHOCK 128
 
 //flags for pass_flags
 #define PASSTABLE    1
