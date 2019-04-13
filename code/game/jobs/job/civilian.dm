@@ -340,7 +340,7 @@
 	supervisors = "The Central Command"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/int
-	access = list(access_lawyer, access_court, access_sec_doors, access_medical, access_research, access_mailsorting, access_engine, access_engine_equip)
+	access = list(access_lawyer, access_sec_doors, access_medical, access_research, access_mailsorting, access_engine, access_engine_equip)
 	minimal_player_ingame_minutes = 1560
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
