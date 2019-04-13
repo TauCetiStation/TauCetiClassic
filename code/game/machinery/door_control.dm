@@ -142,7 +142,7 @@
 						return
 				else if(iswirecutter(W))
 					to_chat(user, "You remove wires from the door control frame.")
-					playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
+					playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
 					new /obj/item/stack/cable_coil/random(loc, 1)
 					connected_airlocks = list()
 					connected_poddoors = list()
