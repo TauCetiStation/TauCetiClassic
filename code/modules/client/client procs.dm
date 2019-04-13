@@ -152,12 +152,10 @@ var/list/blacklisted_builds = list(
 
 	//Admin Authorisation
 	holder = admin_datums[ckey]
-	var/deadminned = FALSE
 	if(holder)
 		holder.owner = src
 		admins += src
 		if(holder.deadminned)
-			deadminned = TRUE
 			holder.disassociate()
 			verbs += /client/proc/readmin_self
 
@@ -211,12 +209,14 @@ var/list/blacklisted_builds = list(
 				return
 
 		if(config.registration_panic_bunker_age)
-			if(!holder && !deadminned && !(src in mentors) && is_blocked_by_regisration_panic_bunker())
+			if(!(src in admin_datums) && !(src in mentors) && is_blocked_by_regisration_panic_bunker())
 				to_chat(src, "<span class='danger'>Sorry, but server is currently accepting only users with registration date before [config.registration_panic_bunker_age]. Try to connect later.</span>")
 				message_admins("<span class='adminnotice'>[key_name(src)] has been blocked by panic bunker. Connection rejected.</span>")
 				log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
 				qdel(src)
 				return
+			if(holder)
+				to_chat("<span class='adminnotice'>Round with registration panic bunker! Panic age: [config.registration_panic_bunker_age]</span>")
 
 	if(custom_event_msg && custom_event_msg != "")
 		to_chat(src, "<h1 class='alert'>Custom Event</h1>")

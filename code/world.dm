@@ -319,8 +319,7 @@ var/world_topic_spam_protect_time = world.timeofday
 
 /world/proc/load_regisration_panic_bunker()
 	if(config.registration_panic_bunker_age)
-		log_game("Round with active panic bunker! Enabled by configuration")
-		message_admins("Registration panic bunker is active! It was enabled by configuration.")
+		log_game("Round with registration panic bunker! Panic age: [config.registration_panic_bunker_age]. Enabled by configuration. No active hours limit")
 		return
 
 	if(fexists("data/regisration_panic_bunker.sav"))
@@ -333,8 +332,7 @@ var/world_topic_spam_protect_time = world.timeofday
 			config.registration_panic_bunker_age = S["panic_age"]
 			var/enabled_by = S["enabled_by"]
 			var/active_hours_left = num2text((active_until - world.realtime) / 36000, 1)
-			log_game("Round with active panic bunker! Enabled by: [enabled_by]. Active hours left: [active_hours_left]")
-			message_admins("Registration panic bunker is active! It was enabled by [enabled_by] and will be active for [active_hours_left] hours.")
+			log_game("Round with registration panic bunker! Panic age: [config.registration_panic_bunker_age]. Enabled by [enabled_by]. Active hours left: [active_hours_left]")
 
 /world/proc/load_donators()
 	if(!fexists("config/donators.txt"))
