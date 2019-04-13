@@ -31,10 +31,10 @@
 		if(do_after(user, 40, target = M))
 			to_chat(user, "You finish outlining [M.name].")
 			new /obj/effect/decal/cleanable/crayon(M.loc, colour, shadeColour, "outline", "body outline")
-			if(uses--)
-				if(!uses)
-					to_chat(user, "<span class='warning'>You used up your [src.name]!</span>")
-					qdel(src)
+			uses--
+			if(!uses)
+				to_chat(user, "<span class='warning'>You used up your [src.name]!</span>")
+				qdel(src)
 	else
 		..()
 
