@@ -224,6 +224,20 @@ var/list/same_wires = list()
 			// Update Window
 			interact(usr)
 
+		if(href_list["buffer"] && istype(holder, /obj/machinery/door/airlock))
+			var/obj/item/I = L.get_active_hand()
+			if(ismultitool(I))
+				var/obj/item/device/multitool/M = I
+				if(holder in M.airlocks_buffer)
+					to_chat(L, "<span class='warning'>This airlock is already in the buffer!</span>")
+				else if(M.airlocks_buffer.len >= 16)
+					to_chat(L, "<span class='warning'>The multitool's buffer is full!</span>")
+				else
+					M.airlocks_buffer += holder
+					to_chat(L, "<span class='notice'>You save this airlock to the buffer of your multitool.</span>")
+			else
+				to_chat(L, "<span class='warning'>You need a multitool!</span>")
+
 
 
 

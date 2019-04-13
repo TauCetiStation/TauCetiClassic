@@ -36,7 +36,15 @@
 		if(!hasPower())
 			open(TRUE)
 	if(ismultitool(C) && hasPower() && !density)
-		to_chat(user, "<span class='notice'>The identification code of the [name] is:</span> <span class='warning'>[id]</span>")
+		var/obj/item/device/multitool/M = C
+		if(src in M.poddoors_buffer)
+			to_chat(user, "<span class='warning'>This poddoor is already in the buffer!</span>")
+		else if(M.poddoors_buffer.len >= 8)
+			to_chat(user, "<span class='warning'>The multitool's buffer is full!</span>")
+		else
+			M.poddoors_buffer += src
+			to_chat(user, "<span class='notice'>You add this poddoor to the buffer of your multitool.</span>")
+
 
 /obj/machinery/door/poddoor/normal_open_checks()
 	if(hasPower())

@@ -19,3 +19,15 @@
 	g_amt = 20
 	origin_tech = "magnets=1;engineering=1"
 	var/obj/machinery/telecomms/buffer // simple machine buffer for device linkage
+	var/list/obj/machinery/door/airlock/airlocks_buffer = list()
+	var/list/obj/machinery/door/poddoor/poddoors_buffer = list()
+
+obj/item/device/multitool/verb/clear_buffer()
+	set category = "Object"
+	set name = "Clear buffer"
+	if(airlocks_buffer.len || poddoors_buffer.len)
+		airlocks_buffer = list()
+		poddoors_buffer = list()
+		to_chat(usr, "<span class='notice'>You clear the buffer of your multitool</span>")
+	else
+		to_chat(usr, "<span class='notice'>The buffer if empty</span>")

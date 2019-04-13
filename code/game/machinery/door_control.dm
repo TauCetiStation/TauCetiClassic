@@ -1,5 +1,6 @@
-#define COMPLETE 1
-#define WITHOUT_WIRES 0
+#define DOOR_CONTROL_COMPLETE 1
+#define DOOR_CONTROL_WITHOUT_WIRES 0
+#define DOOR_CONTROL_MAX_CONNECTIONS 16
 
 /obj/machinery/door_control
 	name = "Remote Door Control"
@@ -12,38 +13,51 @@
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
-	var/id = "none" //most of doors have this variable empty, so if this variable is empty here, the default button will be able to open all of these doors.
-	var/range = 10
-	var/normaldoorcontrol = FALSE
+	var/id = null
+	var/list/obj/machinery/door/airlock/connected_airlocks = list()
+	var/list/obj/machinery/door/poddoor/connected_poddoors = list()
 	var/desiredstate = 0 // Zero is closed, 1 is open.
-	var/specialfunctions = 1
+	var/normaldoorcontrol = 1
+	var/range = 10
+	var/specialfunctions = OPEN
 	var/wiresexposed = FALSE
 	var/locked = TRUE
-	var/buildstage = COMPLETE
+	var/buildstage = DOOR_CONTROL_COMPLETE
 	var/door_control_access = null
+	var/accesses_showed = FALSE
+	var/modes_showed = FALSE
 
 /obj/machinery/door_control/atom_init(mapload, dir, building = FALSE)
-	. = ..()
+	..()
 	if(building)
 		if(loc)
 			src.loc = loc
-		buildstage = WITHOUT_WIRES
+		buildstage = DOOR_CONTROL_WITHOUT_WIRES
 		wiresexposed = TRUE
 		locked = FALSE
-		id = "none"
 		req_access_txt = num2text(access_engine)
 		pixel_x = (dir & 3) ? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3) ? (dir == 1 ? -24 : 24) : 0
 		icon_state = "doorctrl_assembly0"
 		return
+	else
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/door_control/atom_init_late()
+	for(var/obj/machinery/door/airlock/A in airlock_list)
+		if(A.id_tag == src.id)
+			connected_airlocks += A
+	for(var/obj/machinery/door/poddoor/P in poddoor_list)
+		if(P.id == src.id)
+			connected_poddoors += P
 
 /obj/machinery/door_control/update_icon()
 	switch(buildstage)
-		if(COMPLETE)
+		if(DOOR_CONTROL_COMPLETE)
 			if(!wiresexposed)
 				if(overlays)
 					overlays.Cut()
-				if(stat & NOPOWER || id == "none")
+				if(stat & NOPOWER || (!connected_poddoors.len && !connected_airlocks.len))
 					icon_state = "doorctrl-p"
 					return
 				else
@@ -55,13 +69,13 @@
 					overlays.Cut()
 				if(stat & NOPOWER)
 					return
-				else if(id != "none")
+				else if(connected_poddoors.len || connected_airlocks.len)
 					overlays += image('icons/obj/stationobjs.dmi', "doorctrl_assembly-is_id")
 					return
 				else
 					overlays += image('icons/obj/stationobjs.dmi', "doorctrl_assembly-no_id")
 					return
-		if(WITHOUT_WIRES)
+		if(DOOR_CONTROL_WITHOUT_WIRES)
 			if(overlays)
 				overlays.Cut()
 			icon_state = "doorctrl_assembly0"
@@ -73,7 +87,7 @@
 
 /obj/machinery/door_control/attackby(obj/item/weapon/W, mob/user)
 	switch(buildstage)
-		if(COMPLETE)
+		if(DOOR_CONTROL_COMPLETE)
 			if(!wiresexposed)
 				if(istype(W, /obj/item/device/detective_scanner))
 					return
@@ -93,6 +107,8 @@
 					door_control_access = req_access_txt
 					req_access_txt = num2text(access_engine)
 					req_access = null
+					accesses_showed = FALSE
+					modes_showed = FALSE
 					update_icon()
 					return
 				else if(istype(W, /obj/item/weapon/card/id))
@@ -102,7 +118,7 @@
 						to_chat(user, "You [locked ? "lock" : "unlock"] the pannel")
 						return
 					else
-						to_chat(usr, "<span class='warning'>Access Denied.</span>")
+						to_chat(user, "<span class='warning'>Access Denied.</span>")
 						return
 				else
 					return src.attack_hand(user)
@@ -116,15 +132,9 @@
 					locked = TRUE
 					update_icon()
 					return
-				else if(ismultitool(W))
+				else if(ismultitool(W) && !(stat & NOPOWER))
 					if(allowed(usr))
-						var/t = sanitize_safe(input(user, "Enter the identification code for the Door Control.", name, id), 20)
-						if(!t)
-							return
-						if(!in_range(src, usr))
-							return
-						id = t
-						set_door_control_access(user)
+						set_up_door_control(user)
 						update_icon()
 						return
 					else
@@ -134,25 +144,27 @@
 					to_chat(user, "You remove wires from the door control frame.")
 					playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
 					new /obj/item/stack/cable_coil/random(loc, 1)
-					id = "none"
+					connected_airlocks = list()
+					connected_poddoors = list()
+					specialfunctions = OPEN
+					accesses_showed = FALSE
+					modes_showed = FALSE
 					door_control_access = null
-					buildstage = WITHOUT_WIRES
+					buildstage = DOOR_CONTROL_WITHOUT_WIRES
 					update_icon()
 					return
 				return
-		if(WITHOUT_WIRES)
+		if(DOOR_CONTROL_WITHOUT_WIRES)
 			if(iscoil(W))
 				var/obj/item/stack/cable_coil/coil = W
 				coil.use(1)
 				to_chat(user, "You wire the door control frame.")
-				buildstage = COMPLETE
+				buildstage = DOOR_CONTROL_COMPLETE
 				update_icon()
 				return
 			else if(istype(W, /obj/item/weapon/pen))
 				var/t = sanitize_safe(input(user, "Enter the name for the Door Control.", name, name), MAX_LNAME_LEN)
-				if(!t)
-					return
-				if(!in_range(src, usr))
+				if(!in_range(src, user))
 					return
 				name = t
 				return
@@ -165,28 +177,123 @@
 				return
 	return
 
-/obj/machinery/door_control/proc/set_door_control_access(mob/user)
-	var/accesses_setup = text("<B>Access control</B><BR>\n")
-	accesses_setup +="<A HREF='?src=\ref[src];none=1'>None</A><BR>"
-	var/list/accesses = get_all_accesses()
-	for (var/acc in accesses)
-		var/acc_desc = get_access_desc(acc)
-		if(acc_desc)
-			accesses_setup += "<A HREF='?src=\ref[src];access=[acc]'>[acc_desc]</A><BR>"
-	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[entity_ja(accesses_setup)]</TT>", "window=door_control")
+/obj/machinery/door_control/proc/set_up_door_control(mob/user)
+	var/setup_menu = text("<b>Door Control Setup</b><hr>")
+	if(!accesses_showed)
+		setup_menu += "<b><a href='?src=\ref[src];show_accesses=1'>Show access restrictions setup</a></b><br>"
+	else
+		setup_menu += "<b><a href='?src=\ref[src];show_accesses=1'>Hide access restrictions setup</a></b><ul>"
+		if(!door_control_access)
+			setup_menu +="<li><b><a style='color: green' href='?src=\ref[src];none=1'>None</a></b></li>"
+		else
+			setup_menu +="<li><a href='?src=\ref[src];none=1'>None</a></li>"
+		var/list/accesses = get_all_accesses()
+		for (var/acc in accesses)
+			var/acc_desc = get_access_desc(acc)
+			if(acc_desc)
+				if(acc == text2num(door_control_access))
+					setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];access=[acc]'>[acc_desc]</a></b></li>"
+				else
+					setup_menu += "<li><a href='?src=\ref[src];access=[acc]'>[acc_desc]</a></li>"
+		setup_menu += "</ul>"
+	if(!modes_showed)
+		setup_menu += "<b><a href='?src=\ref[src];show_modes=1'>Show airlock control mode setup</a></b><br>"
+	else
+		setup_menu += "<b><a href='?src=\ref[src];show_modes=1'>Hide airlock control mode setup</a></b><ul>"
+		if(specialfunctions & OPEN)
+			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=1'>Open</a></b></li>"
+		else
+			setup_menu += "<li><a href='?src=\ref[src];mode=1'>Open</a></li>"
+
+		if(specialfunctions & BOLTS)
+			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=4'>Toggle bolts</a></b></li>"
+		else
+			setup_menu += "<li><a href='?src=\ref[src];mode=4'>Toggle bolts</a></li>"
+
+		if(specialfunctions & SHOCK)
+			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=8'>Electrify</a></b></li>"
+		else
+			setup_menu += "<li><a href='?src=\ref[src];mode=8'>Electrify</a></li>"
+
+		if(specialfunctions & OPEN_BOLTS)
+			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=32'>Open and toggle bolts</a></b></li>"
+		else
+			setup_menu += "<li><a href='?src=\ref[src];mode=32'>Open and toggle bolts</a></li>"
+
+		if(specialfunctions & BOLTS_SHOCK)
+			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=64'>Toggle bolts and electrify</a></b></li>"
+		else
+			setup_menu += "<li><a href='?src=\ref[src];mode=64'>Toggle bolts and electrify</a></li>"
+
+		if(specialfunctions & OPEN_BOLTS_SHOCK)
+			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=128'>Open, toggle bolts and electrify</a></b></li>"
+		else
+			setup_menu += "<li><a href='?src=\ref[src];mode=128'>Open, toggle bolts and electrify</a></li>"
+
+		setup_menu += "</ul>"
+
+	setup_menu += "<b><a href='?src=\ref[src];load=1'>Load data from the multitool</a></b><br>"
+	setup_menu += "<b><a href='?src=\ref[src];copy=1'>Copy data to the multitool</a></b><br>"
+	setup_menu += "<b><a href='?src=\ref[src];clear=1'>Clear data</a></b><br>"
+	user << browse("<head><title>[src]</title></head><tt>[entity_ja(setup_menu)]</tt>", "window=door_control")
 	onclose(user, "door_control")
 
 /obj/machinery/door_control/Topic(href, href_list)
 	..()
+	if(!ismultitool(usr.get_active_hand()))
+		to_chat(usr, "<span class='warning'>You need a multitool!</span>")
+		return
+	if(href_list["show_accesses"])
+		accesses_showed = !accesses_showed
+	if(href_list["show_modes"])
+		modes_showed = !modes_showed
 	if(href_list["access"])
-		door_control_access = (href_list["access"])
+		door_control_access = href_list["access"]
 		usr << browse(null, "window=door_control")
 	if(href_list["none"])
 		door_control_access = null
 		usr << browse(null, "window=door_control")
+	if(href_list["mode"])
+		specialfunctions = text2num(href_list["mode"])
+	if(href_list["load"])
+		var/obj/item/device/multitool/M = usr.get_active_hand()
+		if(!M.airlocks_buffer.len && !M.poddoors_buffer.len)
+			to_chat(usr, "<span class='warning'>The multitool's buffer is empty</span>")
+		else if(M.airlocks_buffer.len > (DOOR_CONTROL_MAX_CONNECTIONS - connected_airlocks.len))
+			to_chat(usr, "<span class='warning'>This device can't control this number of airlocks</span>")
+		else if(M.poddoors_buffer.len > (DOOR_CONTROL_MAX_CONNECTIONS - connected_poddoors.len))
+			to_chat(usr, "<span class='warning'>This device can't control this number of poddoors</span>")
+		else
+			for(var/A in M.airlocks_buffer)
+				if(!(A in connected_airlocks))
+					connected_airlocks += A
+			M.airlocks_buffer = list()
+			for(var/P in M.poddoors_buffer)
+				if(!(P in connected_poddoors))
+					connected_poddoors += P
+			M.poddoors_buffer = list()
+			to_chat(usr, "<span class='notice'>You load data.</span>")
+	if(href_list["copy"])
+		if(!connected_airlocks.len && !connected_poddoors.len)
+			to_chat(usr, "<span class='warning'>There's no door data recorded.</span>")
+		else
+			var/obj/item/device/multitool/M = usr.get_active_hand()
+			M.airlocks_buffer = connected_airlocks
+			M.poddoors_buffer = connected_poddoors
+			to_chat(usr, "<span class='notice'>You copy data.</span>")
+	if(href_list["clear"])
+		if(!connected_airlocks.len && !connected_poddoors.len)
+			to_chat(usr, "<span class='warning'>There's no door data recorded.</span>")
+		else
+			connected_airlocks = list()
+			connected_poddoors = list()
+			specialfunctions = OPEN
+			to_chat(usr, "<span class='notice'>You clear data.</span>")
+	update_icon()
+	set_up_door_control(usr)
 
 /obj/machinery/door_control/attack_hand(mob/user)
-	if(buildstage != COMPLETE || wiresexposed || id == "none")
+	if(buildstage != DOOR_CONTROL_COMPLETE || wiresexposed || (!connected_poddoors.len && !connected_airlocks.len))
 		return
 	. = ..()
 	if(.)
@@ -196,46 +303,73 @@
 	use_power(5)
 	icon_state = "doorctrl1"
 
-	for(var/obj/machinery/door/airlock/D in range(range))
-		if(D.id_tag == src.id)
-			if(specialfunctions & OPEN)
-				if (D.density)
-					spawn(0)
-						D.open()
-						return
-				else
-					spawn(0)
-						D.close()
-						return
-			if(desiredstate == 1)
-				if(specialfunctions & IDSCAN)
-					D.aiDisabledIdScanner = 1
-				if(specialfunctions & BOLTS)
-					D.bolt()
-				if(specialfunctions & SHOCK)
-					D.secondsElectrified = -1
-				if(specialfunctions & SAFE)
-					D.safe = 0
-			else
-				if(specialfunctions & IDSCAN)
-					D.aiDisabledIdScanner = 0
-				if(specialfunctions & BOLTS)
-					if(!D.isAllPowerCut() && D.hasPower())
-						D.unbolt()
-				if(specialfunctions & SHOCK)
-					D.secondsElectrified = 0
-				if(specialfunctions & SAFE)
-					D.safe = 1
+	if(connected_airlocks)
+		for(var/obj/machinery/door/airlock/A in connected_airlocks)
+			if(!A.isAllPowerCut() && A.hasPower())
+				if(specialfunctions & OPEN)
+					if(A.density)
+						spawn(0)
+							A.open()
+							return
+					else
+						spawn(0)
+							A.close()
+							return
+				else if(specialfunctions & BOLTS)
+					if(A.locked)
+						A.unbolt()
+					else
+						A.bolt()
+				else if(specialfunctions & SHOCK)
+					if(A.secondsElectrified)
+						A.secondsElectrified = 0
+					else
+						A.secondsElectrified = -1
+				else if(specialfunctions & OPEN_BOLTS)
+					if(A.density)
+						spawn(0)
+							A.unbolt()
+							A.open()
+							A.bolt()
+							return
+					else
+						spawn(0)
+							A.unbolt()
+							A.close()
+							A.bolt()
+							return
+				else if(specialfunctions & BOLTS_SHOCK)
+					if(A.locked)
+						A.unbolt()
+						A.secondsElectrified = 0
+					else
+						A.bolt()
+						A.secondsElectrified = -1
+				else if(specialfunctions & OPEN_BOLTS_SHOCK)
+					if(A.density)
+						spawn(0)
+							A.unbolt()
+							A.open()
+							A.bolt()
+							A.secondsElectrified = 0
+							return
+					else
+						spawn(0)
+							A.unbolt()
+							A.close()
+							A.bolt()
+							A.secondsElectrified = -1
+							return
 
-	for(var/obj/machinery/door/poddoor/M in poddoor_list)
-		if (M.id == src.id)
-			if (M.density)
-				spawn( 0 )
-					M.open()
+	if(connected_poddoors)
+		for(var/obj/machinery/door/poddoor/P in connected_poddoors)
+			if(P.density)
+				spawn(0)
+					P.open()
 					return
 			else
-				spawn( 0 )
-					M.close()
+				spawn(0)
+					P.close()
 					return
 
 	desiredstate = !desiredstate
