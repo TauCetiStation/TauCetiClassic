@@ -50,6 +50,25 @@
 	item_state = "unathi_helm_cheap"
 	item_color = "unathi_helm_cheap"
 
+	action_button_name = "Toggle Helmet Light"
+	var/brightness_on = 4 //luminosity when on
+	var/on = 0
+
+/obj/item/clothing/head/helmet/space/unathi/helmet_cheap/attack_self(mob/user)
+	if(!isturf(user.loc))
+		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
+		return
+	on = !on
+	icon_state = "unathi_helm_cheap[on ? "-light" : ""]"
+	usr.update_inv_head()
+
+	if(on)	set_light(brightness_on)
+	else	set_light(0)
+
+	if(istype(user,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		H.update_inv_head()
+
 /obj/item/clothing/suit/space/unathi
 	armor = list(melee = 40, bullet = 30, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 50)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
