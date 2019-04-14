@@ -39,7 +39,7 @@
 		return
 	else
 		req_access = list()
-		if(!text2num(req_access_txt))
+		if(text2num(req_access_txt))
 			req_access += text2num(req_access_txt)
 			req_access_txt = null
 		return INITIALIZE_HINT_LATELOAD
