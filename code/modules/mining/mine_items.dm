@@ -471,7 +471,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 	power_supply.give(500)
 	if(!silenced)
-		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+		playsound(src.loc, 'sound/weapons/guns/kenetic_reload.ogg', 60, 1)
 	else
 		to_chat(usr, "<span class='warning'>You silently charge [src].</span>")
 	recent_reload = 1
@@ -482,7 +482,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	projectile_type = /obj/item/projectile/kinetic
 	select_name = "kinetic"
 	e_cost = 500
-	fire_sound = 'sound/weapons/Kenetic_accel.ogg'
+	fire_sound = 'sound/weapons/guns/Kenetic_accel.ogg'
 
 /obj/item/projectile/kinetic
 	name = "kinetic force"

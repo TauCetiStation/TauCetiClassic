@@ -31,7 +31,7 @@
 		AC.loc = get_turf(src) //Eject casing onto ground.
 		AC.SpinAnimation(10, 1) //next gen special effects
 		spawn(3) //next gen sound effects
-			playsound(src.loc, 'sound/weapons/shell_drop.ogg', 50, 1)
+			playsound(src.loc, 'sound/weapons/guns/shell_drop.ogg', 50, 1)
 	if(empty_chamber)
 		chambered = null
 	if(no_casing)

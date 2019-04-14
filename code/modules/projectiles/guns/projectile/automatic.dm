@@ -42,7 +42,7 @@
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/m12mm
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 
 
 /obj/item/weapon/gun/projectile/automatic/c20r/atom_init()
@@ -52,7 +52,7 @@
 /obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target, mob/living/user, flag)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', 40, 1)
 		update_icon()
 		alarmed = 1
 	return
@@ -95,7 +95,7 @@
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/m762
-	fire_sound = 'sound/weapons/gunshot3.wav'
+	fire_sound = 'sound/weapons/guns/Gunshot2.wav'
 	var/cover_open = 0
 	var/wielded = 0
 
@@ -207,7 +207,7 @@
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 	//can_suppress = 0
  	//burst_size = 4
  	//fire_delay = 1
@@ -231,7 +231,7 @@
 	w_class = ITEM_SIZE_LARGE
 	origin_tech = "combat=3;magnets=2"
 	mag_type = /obj/item/ammo_box/magazine/l10mag
-	fire_sound = 'sound/weapons/guns/l10c-shot.ogg'
+	fire_sound = 'sound/weapons/guns/gunpulse_l10c.ogg'
 	recoil = 0
 	energy_gun = 1
 
@@ -249,7 +249,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l10c/attack_self(mob/user)
 	if(magazine && magazine.ammo_count())
-		playsound(user, 'sound/weapons/guns/l10c-unload.ogg', 70, 1)
+		playsound(user, 'sound/weapons/guns/reload_l10c_unload.ogg', 70, 1)
 	if(chambered)
 		var/obj/item/ammo_casing/AC = chambered //Find chambered round
 		qdel(AC)
@@ -275,7 +275,7 @@
 			magazine.loc = src
 			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 			if(AM.ammo_count())
-				playsound(user, 'sound/weapons/guns/l10c-load.ogg', 70, 1)
+				playsound(user, 'sound/weapons/guns/reload_l10c_load.ogg', 70, 1)
 			chamber_round()
 			A.update_icon()
 			update_icon(user)
@@ -313,7 +313,7 @@
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/c5_9mm
-	fire_sound = 'sound/weapons/guns/c5_shot.wav'
+	fire_sound = 'sound/weapons/guns/gunshot_c5.wav'
 
 /obj/item/weapon/gun/projectile/automatic/c5/update_icon(mob/M)
 	icon_state = "c5[magazine ? "" : "-e"]"
@@ -333,7 +333,7 @@
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/l13_38
-	fire_sound = 'sound/weapons/guns/l13_shot.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_l13.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/l13/update_icon(mob/M)
 	icon_state = "l13[magazine ? "" : "-e"]"
@@ -353,7 +353,7 @@
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/tommygun/isHandgun()
 	return 0
@@ -366,7 +366,7 @@
 	w_class = ITEM_SIZE_HUGE
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/m3006
-	fire_sound = 'sound/weapons/gunshot3.wav'
+	fire_sound = 'sound/weapons/guns/Gunshot2.wav'
 
 /obj/item/weapon/gun/projectile/automatic/luger
 	name = "Luger P08"
@@ -415,7 +415,7 @@
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
-	fire_sound = 'sound/weapons/Gunshot.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/atom_init()
 	. = ..()
@@ -436,7 +436,7 @@
 /obj/item/weapon/gun/projectile/automatic/bulldog/afterattack(atom/target, mob/living/user, flag)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', 40, 1)
 		update_icon()
 		alarmed = 1
 	return
@@ -449,7 +449,7 @@
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m556
-	fire_sound = 'sound/weapons/Gunshot.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/a28/atom_init()
 	. = ..()
@@ -470,7 +470,7 @@
 	icon_state = "a74"
 	item_state = "a74"
 	origin_tech = "combat=5;materials=4;syndicate=6"
-	fire_sound = 'sound/weapons/guns/ak74_fire.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_ak74.ogg'
 	var/icon/mag_icon = icon('icons/obj/gun.dmi',"mag-a74")
 
 /obj/item/weapon/gun/projectile/automatic/a74/atom_init()
@@ -487,10 +487,10 @@
 
 /obj/item/weapon/gun/projectile/automatic/a74/attack_self(mob/user)
 	if(..())
-		playsound(user, 'sound/weapons/guns/ak74_reload.ogg', 50, 1)
+		playsound(user, 'sound/weapons/guns/reload_ak74.ogg', 50, 1)
 	update_icon()
 
 /obj/item/weapon/gun/projectile/automatic/a74/attackby(obj/item/A, mob/user)
 	if(..())
-		playsound(user, 'sound/weapons/guns/ak74_reload.ogg', 50, 1)
+		playsound(user, 'sound/weapons/guns/reload_ak74.ogg', 50, 1)
 	update_icon()

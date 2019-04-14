@@ -16,7 +16,7 @@
 	attack_verb = list("struck", "hit", "bashed")
 	action_button_name = "Switch Gun"
 	var/obj/item/ammo_casing/chambered = null
-	var/fire_sound = 'sound/weapons/Gunshot.ogg'
+	var/fire_sound = 'sound/weapons/guns/Gunshot.ogg'
 	var/silenced = 0
 	var/recoil = 0
 	var/clumsy_check = 1
@@ -51,7 +51,7 @@
 
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user)
 	to_chat(user, "<span class='warning'>*click*</span>")
-	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+	playsound(user, 'sound/weapons/guns/empty.ogg', 100, 1)
 	return
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
@@ -59,9 +59,9 @@
 		shake_camera(user, recoil + 1, recoil)
 
 	if(silenced)
-		playsound(user, fire_sound, 10, 1)
+		playsound(user, fire_sound, 40, 1, -5)
 	else
-		playsound(user, fire_sound, 50, 0)
+		playsound(user, fire_sound, 50, 1)
 		user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
 
 /obj/item/weapon/gun/emp_act(severity)
@@ -156,10 +156,10 @@
 /obj/item/weapon/gun/proc/click_empty(mob/user = null)
 	if (user)
 		user.visible_message("*click click*", "<span class='red'><b>*click*</b></span>")
-		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+		playsound(user, 'sound/weapons/guns/empty.ogg', 100, 1)
 	else
 		src.visible_message("*click click*")
-		playsound(src.loc, 'sound/weapons/empty.ogg', 100, 1)
+		playsound(src.loc, 'sound/weapons/guns/empty.ogg', 100, 1)
 
 /obj/item/weapon/gun/proc/isHandgun()
 	return 1

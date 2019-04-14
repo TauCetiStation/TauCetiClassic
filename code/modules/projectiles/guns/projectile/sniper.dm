@@ -9,7 +9,7 @@
 	origin_tech = "combat=8;materials=2;syndicate=8"
 	recoil = 3 //extra kickback
 	mag_type = /obj/item/ammo_box/magazine/internal/heavyrifle
-	fire_sound = 'sound/weapons/cannon.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_cannon.ogg'
 	var/bolt_open = 0
 
 /obj/item/weapon/gun/projectile/heavyrifle/isHandgun()
@@ -33,7 +33,7 @@
 	var/num_loaded = magazine.attackby(A, user, 1)
 	if(num_loaded)
 		user.SetNextMove(CLICK_CD_INTERACT)
-		playsound(src.loc, 'sound/weapons/heavybolt_in.ogg', 50, 1)
+		playsound(src.loc, 'sound/weapons/guns/heavybolt_in.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
 		var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
 		chambered = AC
@@ -43,10 +43,10 @@
 /obj/item/weapon/gun/projectile/heavyrifle/attack_self(mob/user)
 	bolt_open = !bolt_open
 	if(bolt_open)
-		playsound(src.loc, 'sound/weapons/heavybolt_out.ogg', 50, 1)
+		playsound(src.loc, 'sound/weapons/guns/heavybolt_out.ogg', 50, 1)
 		if(chambered)
 			spawn(3)
-				playsound(src.loc, 'sound/weapons/shell_drop.ogg', 50, 1)
+				playsound(src.loc, 'sound/weapons/guns/shell_drop.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You work the bolt open, ejecting [chambered]!</span>")
 			chambered.loc = get_turf(src)//Eject casing
 			chambered.SpinAnimation(5, 1)
@@ -55,7 +55,7 @@
 			to_chat(user, "<span class='notice'>You work the bolt open.</span>")
 
 	else
-		playsound(src.loc, 'sound/weapons/heavybolt_reload.ogg', 50, 1)
+		playsound(src.loc, 'sound/weapons/guns/heavybolt_reload.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>You work the bolt closed.</span>")
 		bolt_open = 0
 	add_fingerprint(user)

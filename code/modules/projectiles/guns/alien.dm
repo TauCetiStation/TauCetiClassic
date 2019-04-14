@@ -47,6 +47,7 @@
 /obj/item/weapon/spikethrower/process()
 
 	if(spikes < max_spikes && world.time > last_regen + spike_gen_time)
+		playsound(src, 'sound/weapons/guns/reload_newspike.ogg', 70, 1, -5)
 		spikes++
 		last_regen = world.time
 		update_icon()
@@ -106,6 +107,7 @@
 		return
 
 	if(spikes <= 0)
+		playsound(src, 'sound/weapons/guns/outofspikes.ogg', 60, 1, -6)
 		to_chat(user, "\red The weapon has nothing to fire!")
 		return
 
@@ -115,6 +117,7 @@
 		spikes--
 
 	user.visible_message("\red [user] fires [src]!", "\red You fire [src]!")
+	playsound(src, 'sound/weapons/guns/gunshot_spikethrower.ogg', 90, 1, -5)
 	spike.loc = get_turf(src)
 	spike.throw_at(target, 10, fire_force, user)
 	spike = null

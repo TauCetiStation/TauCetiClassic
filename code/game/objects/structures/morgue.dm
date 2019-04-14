@@ -95,7 +95,7 @@
 
 	if (has_clonable_bodies())
 		if(beeper)
-			playsound(src, 'sound/weapons/smg_empty_alarm.ogg', 50, 0)
+			playsound(src, 'sound/weapons/guns/empty_alarm.ogg', 50, 0)
 		icon_state = "morgue3"
 	else
 		update()

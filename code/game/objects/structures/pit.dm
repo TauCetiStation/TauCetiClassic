@@ -234,7 +234,7 @@
 /obj/item/ammo_casing/energy/laser/practice/jetsons
 	projectile_type = /obj/item/projectile/beam/practice/jetsons
 	select_name = "practice_jetsons"
-	fire_sound = 'sound/weapons/Laser2.ogg'
+	fire_sound = 'sound/weapons/guns/gunpulse_laser2.ogg'
 
 /obj/item/projectile/beam/practice/jetsons
 	name = "laser"

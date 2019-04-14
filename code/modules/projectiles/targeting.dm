@@ -156,7 +156,7 @@
 	else
 		return
 	for(var/mob/living/K in viewers(usr))
-		K << 'sound/weapons/TargetOn.ogg'
+		K << 'sound/weapons/guns/TargetOn.ogg'
 
 	if(!targeted_by) targeted_by = list()
 	targeted_by += I
@@ -213,7 +213,7 @@
 /mob/living/proc/NotTargeted(obj/item/weapon/gun/I)
 	if(!I.silenced)
 		for(var/mob/living/M in viewers(src))
-			M << 'sound/weapons/TargetOff.ogg'
+			M << 'sound/weapons/guns/TargetOff.ogg'
 	targeted_by -= I
 	I.target.Remove(src) //De-target them
 	if(!I.target.len)

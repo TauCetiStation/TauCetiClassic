@@ -621,7 +621,7 @@
 		return
 
 	var/obj/item/projectile/beam/A = new /obj/item/projectile/beam(usr.loc)
-	playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
+	playsound(usr.loc, 'sound/weapons/guns/gunpulse_taser2.ogg', 75, 1)
 	A.original = U
 	A.current = U
 	A.starting = T

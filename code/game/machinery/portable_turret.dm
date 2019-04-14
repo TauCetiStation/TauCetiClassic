@@ -176,10 +176,10 @@
 			reqpower = 200
 
 		if(/obj/item/weapon/gun/energy/gun)
-			eshot_sound = 'sound/weapons/Laser.ogg'
+			eshot_sound = 'sound/weapons/guns/gunpulse_laser.ogg'
 
 		if(/obj/item/weapon/gun/energy/gun/nuclear)
-			eshot_sound = 'sound/weapons/Laser.ogg'
+			eshot_sound = 'sound/weapons/guns/gunpulse_laser.ogg'
 
 var/list/turret_icons
 
