@@ -102,7 +102,7 @@
 					return
 				else if(isscrewdriver(W))
 					if(locked && !issilicon(user) && !(stat & NOPOWER))
-						to_chat(user, "<span class='warning'>The panel is locked</spawn>")
+						to_chat(user, "<span class='warning'>The panel is locked</span>")
 						return
 					wiresexposed = TRUE
 					door_control_access = req_access[1]
