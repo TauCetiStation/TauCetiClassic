@@ -812,6 +812,14 @@
 	slowdown = 1.4
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash)
+	item_color = "sec"
+	action_button_name = "Toggle Chase Lights"
+	var/chase_lights_enabled = 0
+
+/obj/item/clothing/suit/space/rig/security/attack_self(mob/user)
+	chase_lights_enabled = !chase_lights_enabled
+	icon_state = "rig-[item_color][chase_lights_enabled ? "-led" : ""]"
+	usr.update_inv_wear_suit()
 
 //HoS Rig
 /obj/item/clothing/head/helmet/space/rig/security/hos
@@ -829,6 +837,7 @@
 	slowdown = 0.7
 	max_mounted_devices = 6
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/mounted/taser, /obj/item/rig_module/med_teleport, /obj/item/rig_module/chem_dispenser/combat, /obj/item/rig_module/grenade_launcher/flashbang)
+	item_color = "hos"
 
 //Atmospherics Rig (BS12)
 /obj/item/clothing/head/helmet/space/rig/atmos
