@@ -16,7 +16,7 @@
 	var/list/obj/machinery/door/airlock/connected_airlocks = list()
 	var/list/obj/machinery/door/poddoor/connected_poddoors = list()
 	var/normaldoorcontrol = 1
-	var/range = 10
+	var/range = 20
 	var/specialfunctions = OPEN
 	var/wiresexposed = FALSE
 	var/locked = TRUE
@@ -29,8 +29,6 @@
 /obj/machinery/door_control/atom_init(mapload, dir, building = FALSE)
 	. = ..()
 	if(building)
-		if(loc)
-			src.loc = loc
 		buildstage = DOOR_CONTROL_WITHOUT_WIRES
 		wiresexposed = TRUE
 		locked = FALSE
@@ -41,7 +39,7 @@
 		return
 	else
 		req_access = list()
-		if(req_access_txt)
+		if(text2num(req_access_txt))
 			req_access += text2num(req_access_txt)
 			req_access_txt = null
 		return INITIALIZE_HINT_LATELOAD
@@ -53,6 +51,11 @@
 	for(var/obj/machinery/door/poddoor/P in poddoor_list)
 		if(P.id == src.id)
 			connected_poddoors += P
+
+/obj/machinery/door_control/Destroy()
+	connected_airlocks.Cut()
+	connected_poddoors.Cut()
+	return ..()
 
 /obj/machinery/door_control/update_icon()
 	overlays.Cut()
@@ -99,7 +102,7 @@
 					return
 				else if(isscrewdriver(W))
 					if(locked && !issilicon(user) && !(stat & NOPOWER))
-						to_chat(user, "The panel is locked")
+						to_chat(user, "<span class='warning'>The panel is locked</spawn>")
 						return
 					wiresexposed = TRUE
 					door_control_access = req_access[1]
@@ -108,11 +111,11 @@
 					modes_showed = FALSE
 					update_icon()
 					return
-				else if(istype(W, /obj/item/weapon/card/id))
+				else if(istype(W, /obj/item/weapon/card/id) && !(stat & NOPOWER))
 					var/obj/item/weapon/card/id/card = W
 					if(access_engine in card.access)
 						locked = !locked
-						to_chat(user, "You [locked ? "lock" : "unlock"] the pannel")
+						to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the pannel</span>")
 						return
 					else
 						to_chat(user, "<span class='warning'>Access Denied.</span>")
@@ -258,21 +261,29 @@
 			return
 		var/loaded_airlocks = FALSE
 		var/loaded_poddoors = FALSE
+		var/airlocks_out_of_range = FALSE
+		var/poddoors_out_of_range = FALSE
 		if((M.airlocks_buffer.len > (max_connections - connected_airlocks.len)) && M.airlocks_buffer.len)
 			to_chat(usr, "<span class='warning'>This device can't control this number of airlocks!</span>")
 		else
 			for(var/A in M.airlocks_buffer)
 				if(!(A in connected_airlocks))
-					connected_airlocks += A
-					loaded_airlocks = TRUE
+					if(get_dist(src, A) > range)
+						airlocks_out_of_range = TRUE
+					else
+						connected_airlocks += A
+						loaded_airlocks = TRUE
 			M.airlocks_buffer.Cut()
 		if((M.poddoors_buffer.len > (max_connections - connected_poddoors.len)) && M.poddoors_buffer.len)
 			to_chat(usr, "<span class='warning'>This device can't control this number of poddoors!</span>")
 		else
 			for(var/P in M.poddoors_buffer)
 				if(!(P in connected_poddoors))
-					connected_poddoors += P
-					loaded_poddoors = TRUE
+					if(get_dist(src, P) > range)
+						poddoors_out_of_range = TRUE
+					else
+						connected_poddoors += P
+						loaded_poddoors = TRUE
 			M.poddoors_buffer.Cut()
 		if(loaded_poddoors && loaded_airlocks)
 			to_chat(usr, "<span class='notice'>You load the airlocks' and poddors' data.</span>")
@@ -280,6 +291,10 @@
 			to_chat(usr, "<span class='notice'>You load the poddors' data.</span>")
 		else if(loaded_airlocks)
 			to_chat(usr, "<span class='notice'>You load the airlocks' data.</span>")
+		if(airlocks_out_of_range)
+			to_chat(usr, "<span class='warning'>Some airlocks are out of range!</span>")
+		if(poddoors_out_of_range)
+			to_chat(usr, "<span class='warning'>Some poddoors are out of range!</span>")
 	if(href_list["copy"])
 		if(!connected_airlocks.len && !connected_poddoors.len)
 			to_chat(usr, "<span class='warning'>There's no door data recorded.</span>")
@@ -397,14 +412,14 @@
 	var/turf/loc = get_turf_loc(usr)
 	var/area/A = get_area(src)
 	if (!istype(loc, /turf/simulated/floor))
-		to_chat(usr, "\red Door Control cannot be placed on this spot.")
+		to_chat(usr, "<span class='warning'>Door Control cannot be placed on this spot.</span>")
 		return
-	if (A.requires_power == 0 || A.name == "Space")
-		to_chat(usr, "\red Door Control cannot be placed in this area.")
+	if (A.requires_power == 0 || istype(A, /area/space))
+		to_chat(usr, "<span class='warning'>Door Control cannot be placed in this area.</span>")
 		return
 
 	if(gotwallitem(loc, ndir))
-		to_chat(usr, "\red There's already an item on this wall!")
+		to_chat(usr, "<span class='warning'>There's already an item on this wall!</span>")
 		return
 
 	new /obj/machinery/door_control(loc, ndir, TRUE)
