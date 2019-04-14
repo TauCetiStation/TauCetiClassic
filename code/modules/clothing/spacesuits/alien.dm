@@ -81,7 +81,7 @@
 	desc = "A cheap NT knock-off of a Unathi battle-rig. Looks like a fish, moves like a fish, steers like a cow."
 	icon_state = "rig-unathi-cheap"
 	item_state = "rig-unathi-cheap"
-	slowdown = 3
+	slowdown = 0.5
 
 /obj/item/clothing/head/helmet/space/unathi/breacher
 	name = "breacher helm"
