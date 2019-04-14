@@ -54,6 +54,8 @@
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
 
+	light_color = "#00ffff"
+
 /obj/item/clothing/head/helmet/space/unathi/helmet_cheap/attack_self(mob/user)
 	if(!isturf(user.loc))
 		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
