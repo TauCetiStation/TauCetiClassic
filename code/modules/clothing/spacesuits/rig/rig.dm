@@ -15,7 +15,7 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
 	//Species-specific stuff.
-	species_restricted = list("exclude", UNATHI, TAJARAN, SKRELL, DIONA, VOX)
+	species_restricted = list("exclude", SKRELL, DIONA, VOX)
 	sprite_sheets_refit = list(
 		UNATHI = 'icons/mob/species/unathi/helmet.dmi',
 		TAJARAN = 'icons/mob/species/tajaran/helmet.dmi',
