@@ -27,8 +27,8 @@
 	set category = "Object"
 	set name = "Clear buffer"
 	if(airlocks_buffer.len || poddoors_buffer.len)
-		airlocks_buffer = list()
-		poddoors_buffer = list()
+		airlocks_buffer.Cut()
+		poddoors_buffer.Cut()
 		to_chat(usr, "<span class='notice'>You clear the buffer of your multitool</span>")
 	else
 		to_chat(usr, "<span class='notice'>The buffer if empty</span>")

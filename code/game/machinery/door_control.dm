@@ -34,12 +34,16 @@
 		buildstage = DOOR_CONTROL_WITHOUT_WIRES
 		wiresexposed = TRUE
 		locked = FALSE
-		req_access_txt = num2text(access_engine)
+		req_access = list(access_engine)
 		pixel_x = (dir & 3) ? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3) ? (dir == 1 ? -24 : 24) : 0
 		icon_state = "doorctrl_assembly0"
 		return
 	else
+		req_access = list()
+		if(req_access_txt)
+			req_access += text2num(req_access_txt)
+			req_access_txt = null
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/door_control/atom_init_late()
@@ -51,11 +55,10 @@
 			connected_poddoors += P
 
 /obj/machinery/door_control/update_icon()
+	overlays.Cut()
 	switch(buildstage)
 		if(DOOR_CONTROL_COMPLETE)
 			if(!wiresexposed)
-				if(overlays)
-					overlays.Cut()
 				if(stat & NOPOWER || (!connected_poddoors.len && !connected_airlocks.len))
 					icon_state = "doorctrl-p"
 					return
@@ -64,8 +67,6 @@
 					return
 			else
 				icon_state = "doorctrl_assembly1"
-				if(overlays)
-					overlays.Cut()
 				if(stat & NOPOWER)
 					return
 				else if(connected_poddoors.len || connected_airlocks.len)
@@ -75,8 +76,6 @@
 					overlays += image('icons/obj/stationobjs.dmi', "doorctrl_assembly-no_id")
 					return
 		if(DOOR_CONTROL_WITHOUT_WIRES)
-			if(overlays)
-				overlays.Cut()
 			icon_state = "doorctrl_assembly0"
 			return
 
@@ -91,9 +90,9 @@
 				if(istype(W, /obj/item/device/detective_scanner))
 					return
 				else if(istype(W, /obj/item/weapon/card/emag))
-					req_access = list()
+					req_access.Cut()
 					user.SetNextMove(CLICK_CD_INTERACT)
-					req_one_access = list()
+					req_one_access.Cut()
 					if(locked)
 						locked = FALSE
 					playsound(src, "sparks", 100, 1)
@@ -103,9 +102,8 @@
 						to_chat(user, "The panel is locked")
 						return
 					wiresexposed = TRUE
-					door_control_access = req_access_txt
-					req_access_txt = num2text(access_engine)
-					req_access = null
+					door_control_access = req_access[1]
+					req_access = list(access_engine)
 					accesses_showed = FALSE
 					modes_showed = FALSE
 					update_icon()
@@ -124,10 +122,9 @@
 			else
 				if(isscrewdriver(W))
 					wiresexposed = FALSE
-					req_access_txt = null
-					req_access = null
+					req_access.Cut()
 					if(door_control_access)
-						req_access_txt = door_control_access
+						req_access += door_control_access
 					locked = TRUE
 					update_icon()
 					return
@@ -143,8 +140,8 @@
 					to_chat(user, "You remove wires from the door control frame.")
 					playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
 					new /obj/item/stack/cable_coil/random(loc, 1)
-					connected_airlocks = list()
-					connected_poddoors = list()
+					connected_airlocks.Cut()
+					connected_poddoors.Cut()
 					specialfunctions = OPEN
 					accesses_showed = FALSE
 					modes_showed = FALSE
@@ -190,7 +187,7 @@
 		for (var/acc in accesses)
 			var/acc_desc = get_access_desc(acc)
 			if(acc_desc)
-				if(acc == text2num(door_control_access))
+				if(acc == door_control_access)
 					setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];access=[acc]'>[acc_desc]</a></b></li>"
 				else
 					setup_menu += "<li><a href='?src=\ref[src];access=[acc]'>[acc_desc]</a></li>"
@@ -247,7 +244,7 @@
 	if(href_list["show_modes"])
 		modes_showed = !modes_showed
 	if(href_list["access"])
-		door_control_access = href_list["access"]
+		door_control_access = text2num(href_list["access"])
 		usr << browse(null, "window=door_control")
 	if(href_list["none"])
 		door_control_access = null
@@ -268,7 +265,7 @@
 				if(!(A in connected_airlocks))
 					connected_airlocks += A
 					loaded_airlocks = TRUE
-			M.airlocks_buffer = list()
+			M.airlocks_buffer.Cut()
 		if((M.poddoors_buffer.len > (max_connections - connected_poddoors.len)) && M.poddoors_buffer.len)
 			to_chat(usr, "<span class='warning'>This device can't control this number of poddoors!</span>")
 		else
@@ -276,7 +273,7 @@
 				if(!(P in connected_poddoors))
 					connected_poddoors += P
 					loaded_poddoors = TRUE
-			M.poddoors_buffer = list()
+			M.poddoors_buffer.Cut()
 		if(loaded_poddoors && loaded_airlocks)
 			to_chat(usr, "<span class='notice'>You load the airlocks' and poddors' data.</span>")
 		else if(loaded_poddoors)
@@ -295,8 +292,8 @@
 		if(!connected_airlocks.len && !connected_poddoors.len)
 			to_chat(usr, "<span class='warning'>There's no door data recorded.</span>")
 		else
-			connected_airlocks = list()
-			connected_poddoors = list()
+			connected_airlocks.Cut()
+			connected_poddoors.Cut()
 			specialfunctions = OPEN
 			to_chat(usr, "<span class='notice'>You clear data.</span>")
 	update_icon()
