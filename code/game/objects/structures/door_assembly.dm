@@ -19,8 +19,6 @@
 	var/glass_only       = FALSE   // For something like multitile airlock, where there is only one type.
 	var/created_name     = null
 
-	var/id_tag = null
-
 /obj/structure/door_assembly/atom_init()
 	. = ..()
 	update_state()
@@ -140,7 +138,6 @@
 				return
 			to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
 			state = ASSEMBLY_WIRED
-			id_tag = null
 			var/obj/item/weapon/airlock_electronics/AE
 			if (!electronics)
 				AE = new /obj/item/weapon/airlock_electronics(loc)
@@ -184,16 +181,7 @@
 				else
 					to_chat(user, "<span class='notice'>You can't add [S] to the [src].</span>")
 
-	else if(ismultitool(W) && state == ASSEMBLY_NEAR_FINISHED)
-		if(user.is_busy()) return
-		var/t = sanitize_safe(input(user, "Enter the identification code for the [src]", name, id_tag), 20)
-		if(!t)
-			return
-		if(!in_range(src, usr))
-			return
-		id_tag = t
-
-	else if(isscrewdriver(W) && state == ASSEMBLY_NEAR_FINISHED)
+	else if(isscrewdriver(W) && state == ASSEMBLY_NEAR_FINISHED )
 		if(user.is_busy()) return
 		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 		to_chat(user, "<span class='notice'>Now finishing the airlock.</span>")
@@ -209,7 +197,6 @@
 				door = new airlock_type(loc, dir)
 			door.assembly_type = type
 			door.electronics = electronics
-			door.id_tag = id_tag
 			if(electronics.one_access)
 				door.req_access = null
 				door.req_one_access = electronics.conf_access
