@@ -312,78 +312,65 @@
 	playsound(src, 'sound/items/buttonswitch.ogg', 20, 1, 1)
 	use_power(5)
 	icon_state = "doorctrl1"
-
-	if(connected_airlocks)
+	if(connected_airlocks.len)
 		for(var/obj/machinery/door/airlock/A in connected_airlocks)
-			if(!A.isAllPowerCut() && A.hasPower())
-				if(specialfunctions == OPEN)
-					if(A.density)
-						spawn(0)
-							A.open()
-							return
-					else
-						spawn(0)
-							A.close()
-							return
-				else if(specialfunctions == BOLTS)
-					if(A.locked)
-						A.unbolt()
-					else
-						A.bolt()
-				else if(specialfunctions == SHOCK)
-					if(A.secondsElectrified)
-						A.secondsElectrified = 0
-					else
-						A.secondsElectrified = -1
-				else if(specialfunctions == (OPEN | BOLTS))
-					if(A.density)
-						spawn(0)
-							A.unbolt()
-							A.open()
-							A.bolt()
-							return
-					else
-						spawn(0)
-							A.unbolt()
-							A.close()
-							A.bolt()
-							return
-				else if(specialfunctions == (BOLTS | SHOCK))
-					if(A.locked)
-						A.unbolt()
-						A.secondsElectrified = 0
-					else
-						A.bolt()
-						A.secondsElectrified = -1
-				else if(specialfunctions == (OPEN | BOLTS | SHOCK))
-					if(A.density)
-						spawn(0)
-							A.unbolt()
-							A.open()
-							A.bolt()
-							A.secondsElectrified = 0
-							return
-					else
-						spawn(0)
-							A.unbolt()
-							A.close()
-							A.bolt()
-							A.secondsElectrified = -1
-							return
-
-	if(connected_poddoors)
+			INVOKE_ASYNC(src, .obj/machinery/door_control/proc/toggle_airlock, A)
+	if(connected_poddoors.len)
 		for(var/obj/machinery/door/poddoor/P in connected_poddoors)
-			if(P.density)
-				spawn(0)
-					P.open()
-					return
-			else
-				spawn(0)
-					P.close()
-					return
+			INVOKE_ASYNC(src, .obj/machinery/door_control/proc/toggle_poddoor, P)
+	addtimer(CALLBACK(src, .update_icon), 15)
 
-	spawn(15)
-		update_icon()
+/obj/machinery/door_control/proc/toggle_airlock(obj/machinery/door/airlock/A)
+	if(!A.isAllPowerCut() && A.hasPower())
+		if(specialfunctions == OPEN)
+			if(A.density)
+				A.open()
+			else
+				A.close()
+		else if(specialfunctions == BOLTS)
+			if(A.locked)
+				A.unbolt()
+			else
+				A.bolt()
+		else if(specialfunctions == SHOCK)
+			if(A.secondsElectrified)
+				A.secondsElectrified = 0
+			else
+				A.secondsElectrified = -1
+		else if(specialfunctions == (OPEN | BOLTS))
+			if(A.density)
+				A.unbolt()
+				A.open()
+				A.bolt()
+			else
+				A.unbolt()
+				A.close()
+				A.bolt()
+		else if(specialfunctions == (BOLTS | SHOCK))
+			if(A.locked)
+				A.unbolt()
+				A.secondsElectrified = 0
+			else
+				A.bolt()
+				A.secondsElectrified = -1
+		else if(specialfunctions == (OPEN | BOLTS | SHOCK))
+			if(A.density)
+				A.unbolt()
+				A.open()
+				A.bolt()
+				A.secondsElectrified = 0
+			else
+				A.unbolt()
+				A.close()
+				A.bolt()
+				A.secondsElectrified = -1
+
+/obj/machinery/door_control/proc/toggle_poddoor(obj/machinery/door/poddoor/P)
+	if(P.density)
+		P.open()
+	else
+		P.close()
+
 
 /obj/machinery/door_control/power_change()
 	..()
