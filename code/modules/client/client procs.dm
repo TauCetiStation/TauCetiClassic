@@ -213,6 +213,16 @@ var/list/blacklisted_builds = list(
 				qdel(src)
 				return
 
+		if(config.registration_panic_bunker_age)
+			if(!(src in admin_datums) && !(src in mentors) && is_blocked_by_regisration_panic_bunker())
+				to_chat(src, "<span class='danger'>Sorry, but server is currently accepting only users with registration date before [config.registration_panic_bunker_age]. Try to connect later.</span>")
+				message_admins("<span class='adminnotice'>[key_name(src)] has been blocked by panic bunker. Connection rejected.</span>")
+				log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
+				qdel(src)
+				return
+			if(holder)
+				to_chat("<span class='adminnotice'>Round with registration panic bunker! Panic age: [config.registration_panic_bunker_age]</span>")
+
 	if(custom_event_msg && custom_event_msg != "")
 		to_chat(src, "<h1 class='alert'>Custom Event</h1>")
 		to_chat(src, "<h2 class='alert'>A custom event is taking place. OOC Info:</h2>")
@@ -514,3 +524,24 @@ var/list/blacklisted_builds = list(
 		screen -= S
 		qdel(S)
 	char_render_holders = null
+
+/client/proc/is_blocked_by_regisration_panic_bunker()
+	var/regex/joined_date_regex = regex("joined = \"(\\d+)-(\\d+)-(\\d+)\"")
+	var/regex/bunker_date_regex = regex("(\\d+)-(\\d+)-(\\d+)")
+	var/user_page = get_webpage("http://www.byond.com/members/[ckey]?format=text")
+
+	if (!user_page)
+		return
+
+	joined_date_regex.Find(user_page)
+	bunker_date_regex.Find(config.registration_panic_bunker_age)
+
+	var/user_year = text2num(joined_date_regex.group[1])
+	var/user_month = text2num(joined_date_regex.group[2])
+	var/user_day = text2num(joined_date_regex.group[3])
+
+	var/bunker_year = text2num(bunker_date_regex.group[1])
+	var/bunker_month = text2num(bunker_date_regex.group[2])
+	var/bunker_day = text2num(bunker_date_regex.group[3])
+
+	return (user_year > bunker_year) || (user_year == bunker_year && user_month > bunker_month) || (user_year == bunker_year && user_month == bunker_month && user_day > bunker_day)
