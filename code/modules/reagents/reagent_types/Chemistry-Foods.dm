@@ -376,7 +376,7 @@
 	id = "hot_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 10
+	nutriment_factor = 5
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "ramen"
 
@@ -390,7 +390,7 @@
 	id = "hell_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 10
+	nutriment_factor = 7
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "SPICY ramen"
 
