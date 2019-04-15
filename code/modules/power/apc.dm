@@ -111,8 +111,8 @@
 	tdir = dir		// to fix Vars bug
 	dir = SOUTH
 
-	pixel_x = (tdir & 3)? 0 : (tdir == 4 ? 24 : -24)
-	pixel_y = (tdir & 3)? (tdir == 1 ? 24 : -24) : 0
+	pixel_x = (tdir & 3)? 0 : (tdir == 4 ? 27 : -27)
+	pixel_y = (tdir & 3)? (tdir == 1 ? 27 : -27) : 0
 	if (building == 0)
 		init()
 	else
