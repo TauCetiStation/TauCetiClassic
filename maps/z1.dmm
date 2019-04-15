@@ -40139,6 +40139,7 @@
 "bxw" = (
 /obj/structure/table,
 /obj/item/weapon/phone,
+/obj/item/clothing/accessory/stethoscope,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteblue"
