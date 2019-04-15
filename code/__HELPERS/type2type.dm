@@ -51,7 +51,7 @@
 		return
 	
 	var/hex = ""
-	if ( num )
+	if (num)
 		var/i = 0
 		while(16 ** i < num)
 			i++
