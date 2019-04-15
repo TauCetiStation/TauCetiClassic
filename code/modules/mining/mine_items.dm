@@ -176,10 +176,10 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	item_state = "pickaxe"
 	w_class = ITEM_SIZE_LARGE
 	m_amt = 3750 //one sheet, but where can you make them?
-	var/digspeed = 50 //moving the delay to an item var so R&D can make improved picks. --NEO
+	toolspeed = 1 //moving the delay to an item var so R&D can make improved picks. --NEO
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
-	var/drill_sound = 'sound/weapons/Genhit.ogg'
+	usesound = 'sound/weapons/Genhit.ogg'
 	var/drill_verb = "picking"
 	sharp = 1
 
@@ -194,7 +194,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "silver pickaxe"
 	icon_state = "spickaxe"
 	item_state = "spickaxe"
-	digspeed = 45
+	toolspeed = 0.9
 	origin_tech = "materials=3"
 	desc = "This makes no metallurgic sense."
 
@@ -202,7 +202,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "golden pickaxe"
 	icon_state = "gpickaxe"
 	item_state = "gpickaxe"
-	digspeed = 45
+	toolspeed = 0.9
 	origin_tech = "materials=4"
 	desc = "This makes no metallurgic sense."
 
@@ -212,7 +212,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	item_state = "plasmacutter"
 	w_class = ITEM_SIZE_NORMAL //it is smaller than the pickaxe
 	damtype = "fire"
-	digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
+	toolspeed = 0.4 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
 	origin_tech = "materials=4;phorontech=3;engineering=3"
 	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	drill_verb = "cutting"
@@ -221,7 +221,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "diamond pickaxe"
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
-	digspeed = 10
+	toolspeed = 0.2
 	origin_tech = "materials=6;engineering=4"
 	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
 
@@ -279,10 +279,10 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	w_class = ITEM_SIZE_LARGE
 	m_amt = 3750
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
-	drill_sound = 'sound/items/drill.ogg'
+	usesound = 'sound/items/drill.ogg'
 	hitsound = 'sound/items/drill_hit.ogg'
 	drill_verb = "drill"
-	digspeed = 30
+	toolspeed = 0.6
 	var/drill_cost = 15
 	var/state = 0
 	var/obj/item/weapon/stock_parts/cell/power_supply
@@ -359,7 +359,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
-	digspeed = 40 //Drills 3 tiles in front of user
+	toolspeed = 0.8 //Drills 3 tiles in front of user
 	origin_tech = "materials=3;powerstorage=2;engineering=2"
 	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 	drill_verb = "hammering"
@@ -370,7 +370,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/pickaxe/drill/diamond_drill //When people ask about the badass leader of the mining tools, they are talking about ME!
 	name = "diamond mining drill"
 	icon_state = "diamond_drill"
-	digspeed = 15 //Digs through walls, girders, and can dig up sand
+	toolspeed = 0.3 //Digs through walls, girders, and can dig up sand
 	origin_tech = "materials=6;powerstorage=4;engineering=5"
 	desc = "Yours is the drill that will pierce the heavens!"
 	drill_verb = "drilling"
@@ -380,7 +380,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "cyborg mining drill"
 	icon_state = "diamond_drill"
 	item_state = "jackhammer"
-	digspeed = 20
+	toolspeed = 0.4
 	desc = ""
 	drill_verb = "drilling"
 
@@ -418,7 +418,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if (!istype(target, /turf/simulated/mineral))
 		to_chat(user, "<span class='notice'>You can't plant [src] on [target.name].</span>")
 		return
-	if(user.is_busy()) return
+	if(user.is_busy(src))
+		return
 	to_chat(user, "<span class='notice'>Planting explosives...</span>")
 
 	if(do_after(user, 50, target = target) && in_range(user, target))
@@ -715,11 +716,11 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/device/gps/computer/attackby(obj/item/weapon/W, mob/user, params)
 	if(iswrench(W) && !(flags&NODECONSTRUCT))
-		if(user.is_busy()) return
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(user.is_busy(src))
+			return
 		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
 						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
-		if(do_after(user, 20/W.toolspeed, target = src))
+		if(W.use_tool(src, user, 20, volume = 50))
 			new /obj/item/device/gps(src.loc)
 			qdel(src)
 			return ..()
@@ -795,11 +796,10 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/machinery/smartfridge/survival_pod/attackby(obj/item/O, mob/user)
 	if(is_type_in_typecache(O,forbidden_tools))
 		if(iswrench(O))
-			if(user.is_busy()) return
+			if(user.is_busy(src))
+				return
 			to_chat(user, "\blue You start to disassemble the storage unit...")
-			if(do_after(user,20,target = src))
-				if(!src)
-					return
+			if(O.use_tool(src, user, 20, volume = 50))
 				qdel(src)
 			return
 		if(accept_check(O))
@@ -831,11 +831,12 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
 	if(iswrench(W) && !(flags&NODECONSTRUCT))
-		if(user.is_busy()) return
+		if(user.is_busy(src))
+			return
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
 						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
-		if(do_after(user, 20/W.toolspeed, target = src))
+		if(W.use_tool(src, user, 20, volume = 50))
 			if(src.name == "environmental regulation system")
 				new /obj/item/weapon/tank/air(src.loc)
 			qdel(src)

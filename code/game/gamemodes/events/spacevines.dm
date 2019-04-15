@@ -38,7 +38,7 @@
 			if(istype(W, /obj/item/weapon/melee/energy/sword)) qdel(src)
 			else if(iswelder(W))
 				var/obj/item/weapon/weldingtool/WT = W
-				if(WT.remove_fuel(0, user)) qdel(src)
+				if(WT.use(0, user)) qdel(src)
 			else
 				user_unbuckle_mob(user)
 				return

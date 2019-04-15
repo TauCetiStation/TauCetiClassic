@@ -197,12 +197,13 @@
 
 	else if(iswrench(W))	//unwrenching vendomats
 		var/turf/T = user.loc
-		if(user.is_busy(src)) return
+		if(user.is_busy(src))
+			return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 40, target = src))
-			if( !istype(src, /obj/machinery/vending) || !user || !W || !T )	return
-			if( user.loc == T && user.get_active_hand() == W )
+		if(W.use_tool(src, user, 20, volume = 50))
+			if(!istype(src, /obj/machinery/vending) || !user || !W || !T)
+				return
+			if(user.loc == T && user.get_active_hand() == W)
 				anchored = !anchored
 				to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 				if (!(src.anchored & powered()))

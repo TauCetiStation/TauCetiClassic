@@ -394,7 +394,7 @@
 		"<span class='[class]'>You hold \the [P] up to \the [src], burning it slowly.</span>")
 
 		icon_state = "paper_onfire"
-		if(do_after(user, 20, TRUE, P, TRUE))
+		if(P.use_tool(P, user, 20, volume = 50))
 			if((get_dist(src, user) > 1) || !P.lit)
 				update_icon()
 				return

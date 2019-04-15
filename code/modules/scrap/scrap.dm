@@ -253,7 +253,7 @@ var/global/list/scrap_base_cache = list()
 		do_dig = 50
 	if(do_dig  && !user.is_busy())
 		user.do_attack_animation(src)
-		if(do_after(user, do_dig, target = src))
+		if(W.use_tool(src, user, do_dig))
 			visible_message("<span class='notice'>\The [user] [pick(ways)] \the [src].</span>")
 			shuffle_loot()
 			dig_out_lump(user.loc, 0)

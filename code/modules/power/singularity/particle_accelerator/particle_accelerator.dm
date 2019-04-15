@@ -207,7 +207,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	return 0
 
 
-/obj/structure/particle_accelerator/proc/process_tool_hit(obj/O, mob/user)
+/obj/structure/particle_accelerator/proc/process_tool_hit(obj/item/O, mob/user)
 	if(!(O) || !(user))
 		return 0
 	if(!ismob(user) || !isobj(O))
@@ -217,18 +217,18 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)
 			if(iswrench(O))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				src.anchored = 1
-				user.visible_message("[user.name] secures the [src.name] to the floor.", \
-					"You secure the external bolts.")
-				temp_state++
+				if(O.use_tool(src, user, 20, volume = 75))
+					src.anchored = 1
+					user.visible_message("[user.name] secures the [src.name] to the floor.", \
+						"You secure the external bolts.")
+					temp_state++
 		if(1)
 			if(iswrench(O))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				src.anchored = 0
-				user.visible_message("[user.name] detaches the [src.name] from the floor.", \
-					"You remove the external bolts.")
-				temp_state--
+				if(O.use_tool(src, user, 20, volume = 75))
+					src.anchored = 0
+					user.visible_message("[user.name] detaches the [src.name] from the floor.", \
+						"You remove the external bolts.")
+					temp_state--
 			else if(iscoil(O))
 				var/obj/item/stack/cable_coil/C = O
 				if(C.use(1))
@@ -359,7 +359,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	return 0
 
 
-/obj/machinery/particle_accelerator/proc/process_tool_hit(obj/O, mob/user)
+/obj/machinery/particle_accelerator/proc/process_tool_hit(obj/item/O, mob/user)
 	if(!(O) || !(user))
 		return 0
 	if(!ismob(user) || !isobj(O))
@@ -368,18 +368,18 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)
 			if(iswrench(O))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				src.anchored = 1
-				user.visible_message("[user.name] secures the [src.name] to the floor.", \
-					"You secure the external bolts.")
-				temp_state++
+				if(O.use_tool(src, user, 20, volume = 75))
+					src.anchored = 1
+					user.visible_message("[user.name] secures the [src.name] to the floor.", \
+						"You secure the external bolts.")
+					temp_state++
 		if(1)
 			if(iswrench(O))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				src.anchored = 0
-				user.visible_message("[user.name] detaches the [src.name] from the floor.", \
-					"You remove the external bolts.")
-				temp_state--
+				if(O.use_tool(src, user, 20, volume = 75))
+					src.anchored = 0
+					user.visible_message("[user.name] detaches the [src.name] from the floor.", \
+						"You remove the external bolts.")
+					temp_state--
 			else if(iscoil(O))
 				if(O:use(1))
 					user.visible_message("[user.name] adds wires to the [src.name].", \

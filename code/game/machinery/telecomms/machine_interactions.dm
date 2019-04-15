@@ -60,8 +60,7 @@
 
 			else if(iscrowbar(P) && !user.is_busy(src))
 				to_chat(user, "<span class='notice'>You begin prying out the circuit board and components...</span>")
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				if(do_after(user,60,target = src))
+				if(P.use_tool(src, user, 60, volume = 50))
 					to_chat(user, "<span class='notice'>You finish prying out the components.</span>")
 
 					// Drop all the component stuff

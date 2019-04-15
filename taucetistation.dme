@@ -53,6 +53,7 @@
 #include "code\__DEFINES\stat.dm"
 #include "code\__DEFINES\subsystem.dm"
 #include "code\__DEFINES\tick.dm"
+#include "code\__DEFINES\tools.dm"
 #include "code\__DEFINES\traits.dm"
 #include "code\__DEFINES\varedit.dm"
 #include "code\__DEFINES\xenoarchaeology.dm"

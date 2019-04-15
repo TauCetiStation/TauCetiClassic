@@ -166,9 +166,7 @@
 		if(user.is_busy()) return
 
 		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
-		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-
-		if(do_after(user, 20, target = src) && C.get_amount() >= 10)
+		if(I.use_tool(src, user, 20, volume = 50) && C.get_amount() >= 10)
 			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
 			if (prob(50) && electrocute_mob(usr, N, N)) //animate the electrocution if uncautious and unlucky
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

@@ -39,8 +39,7 @@
 	if(iscrowbar(I))
 		if(!src.buckled_mob)
 			if(user.is_busy()) return
-			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
-			if(do_after(user, 20, target = src))
+			if(I.use_tool(src, user, 20, volume = 100))
 				to_chat(user, "<span class='notice'>You pry the spikes out of the frame.</span>")
 				new /obj/item/stack/rods(loc, 4)
 				var/obj/F = new /obj/structure/kitchenspike_frame(src.loc,)
