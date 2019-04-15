@@ -64,7 +64,10 @@ var/list/blacklisted_builds = list(
 			var/mob/M = C
 			C = M.client
 		if(href_list["ahelp_reply"])
-			cmd_ahelp_reply(C)
+			cmd_ahelp_reply(C, text2num(href_list["ahelp_reply"]))
+			return
+		if(href_list["mentor_pm"])
+			cmd_mentor_pm(C)
 			return
 		cmd_admin_pm(C,null)
 		return
@@ -149,6 +152,8 @@ var/list/blacklisted_builds = list(
 
 	clients += src
 	directory[ckey] = src
+
+	global.ahelp_tickets.ClientLogin(src)
 
 	//Admin Authorisation
 	holder = admin_datums[ckey]
@@ -262,6 +267,7 @@ var/list/blacklisted_builds = list(
 	if(holder)
 		holder.owner = null
 		admins -= src
+	global.ahelp_tickets.ClientLogout(src)
 	directory -= ckey
 	mentors -= src
 	clients -= src

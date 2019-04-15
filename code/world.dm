@@ -53,6 +53,7 @@
 	radio_controller = new /datum/controller/radio()
 	data_core = new /obj/effect/datacore()
 	paiController = new /datum/paiController()
+	ahelp_tickets = new
 
 	spawn(10)
 		Master.Setup()
