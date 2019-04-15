@@ -35,6 +35,7 @@
 		to_chat(usr, "<span class='notice'>The buffer if empty</span>")
 
 /obj/item/device/multitool/Destroy()
-	airlocks_buffer.Cut()
-	poddoors_buffer.Cut()
-	buffer = null
+	QDEL_LIST(airlocks_buffer)
+	QDEL_LIST(poddoors_buffer)
+	QDEL_NULL(buffer)
+	return ..()
