@@ -45,10 +45,10 @@
 	scripts[name] = file
 
 /datum/browser/proc/set_content(ncontent)
-	content = entity_ja(ncontent)
+	content = ncontent
 
 /datum/browser/proc/add_content(ncontent)
-	content += entity_ja(ncontent)
+	content += ncontent
 
 /datum/browser/proc/get_header()
 	var/key
