@@ -53,8 +53,8 @@
 			connected_poddoors += P
 
 /obj/machinery/door_control/Destroy()
-	QDEL_LIST(connected_airlocks)
-	QDEL_LIST(connected_poddoors)
+	connected_airlocks.Cut()
+	connected_poddoors.Cut()
 	return ..()
 
 /obj/machinery/door_control/update_icon()
