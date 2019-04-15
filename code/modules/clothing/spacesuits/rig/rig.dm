@@ -812,6 +812,17 @@
 	slowdown = 1.4
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash)
+<<<<<<< HEAD
+=======
+	item_color = "sec"
+	action_button_name = "Toggle Chase Lights"
+	var/chase_lights_enabled = 0
+
+/obj/item/clothing/suit/space/rig/security/attack_self(mob/user)
+	chase_lights_enabled = !chase_lights_enabled
+	icon_state = "rig-[item_color][chase_lights_enabled ? "-led" : ""]"
+	user.update_inv_wear_suit()
+>>>>>>> 1fc66905de... Fixes
 
 //HoS Rig
 /obj/item/clothing/head/helmet/space/rig/security/hos
