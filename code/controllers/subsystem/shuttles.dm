@@ -81,6 +81,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/timeleft = timeleft()
 	if(timeleft > 1e5)		// midnight rollover protection
 		timeleft = 0
+	var/static/last_es_sound = 0
 	switch(location)
 		if(SHUTTLE_IN_TRANSIT)
 			/* --- Shuttle is in transit to Central Command from SS13 --- */
@@ -115,9 +116,8 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					start_location.move_contents_to(end_location, null, NORTH)
 
-					dock_act(end_location, "shuttle_escape")
-
 					for(var/mob/M in end_location)
+						M.playsound_local(null, 'sound/effects/escape_shuttle/es_cc_docking.ogg', 70)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -127,6 +127,7 @@ var/datum/subsystem/shuttle/SSshuttle
 							if(!M.buckled)
 								M.Weaken(5)
 						CHECK_TICK
+					dock_act(end_location, "shuttle_escape")
 
 							//pods
 					start_location = locate(/area/shuttle/escape_pod1/transit)
@@ -224,6 +225,14 @@ var/datum/subsystem/shuttle/SSshuttle
 				fake_recall = 0
 				return 0
 
+			else if(timeleft == 22)
+				if(last_es_sound < world.time)
+					var/area/escape_hallway = locate(/area/hallway/secondary/exit)
+					for(var/obj/effect/landmark/sound_source/shuttle_docking/SD in escape_hallway)
+						playsound(SD.loc, 'sound/effects/escape_shuttle/es_ss_docking.ogg', 100, 0, -2, voluminosity = FALSE)
+					last_es_sound = world.time + 10
+				return 0
+
 					/* --- Shuttle has docked with the station - begin countdown to transit --- */
 			else if(timeleft <= 0)
 				location = SHUTTLE_AT_STATION
@@ -285,7 +294,13 @@ var/datum/subsystem/shuttle/SSshuttle
 				undock_act(/area/shuttle/escape/station, "shuttle_escape")
 				undock_act(/area/hallway/secondary/exit, "arrival_escape")
 
-			if(timeleft>0)
+			if(timeleft > 0)
+				if(timeleft == 13)
+					if(last_es_sound < world.time)
+						var/area/pre_location = locate(/area/shuttle/escape/station)
+						for(var/mob/M in pre_location)
+							M.playsound_local(null, 'sound/effects/escape_shuttle/es_undocking.ogg', 70)
+						last_es_sound = world.time + 10
 				return 0
 
 			/* --- Shuttle leaves the station, enters transit --- */
@@ -314,6 +329,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 				// Some aesthetic turbulance shaking
 				for(var/mob/M in end_location)
+					M.playsound_local(null, 'sound/effects/escape_shuttle/es_acceleration.ogg', 50)
 					if(M.client)
 						if(M.buckled)
 							shake_camera(M, 4, 1) // buckled, not a lot of shaking
