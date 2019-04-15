@@ -821,7 +821,7 @@
 /obj/item/clothing/suit/space/rig/security/attack_self(mob/user)
 	chase_lights_enabled = !chase_lights_enabled
 	icon_state = "rig-[item_color][chase_lights_enabled ? "-led" : ""]"
-	usr.update_inv_wear_suit()
+	user.update_inv_wear_suit()
 
 //HoS Rig
 /obj/item/clothing/head/helmet/space/rig/security/hos
