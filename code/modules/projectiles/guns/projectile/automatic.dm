@@ -393,6 +393,7 @@
 	name = "Robot SMG"
 	icon_state = "borg_smg"
 	mag_type = /obj/item/ammo_box/magazine/borg45
+	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/borg/update_icon()
 	return
@@ -402,6 +403,7 @@
 		magazine.loc = get_turf(src.loc)
 		magazine.update_icon()
 		magazine = null
+		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', 60, 1)
 		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
 	else
 		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
@@ -485,12 +487,6 @@
 	else
 		item_state = "[initial(icon_state)]-e"
 
-/obj/item/weapon/gun/projectile/automatic/a74/attack_self(mob/user)
-	if(..())
-		playsound(user, 'sound/weapons/guns/reload_ak74.ogg', 50, 1)
-	update_icon()
-
 /obj/item/weapon/gun/projectile/automatic/a74/attackby(obj/item/A, mob/user)
-	if(..())
-		playsound(user, 'sound/weapons/guns/reload_ak74.ogg', 50, 1)
-	update_icon()
+	playsound(user, 'sound/weapons/guns/reload_ak74.ogg', 50, 1)
+	..()

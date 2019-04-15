@@ -59,6 +59,7 @@
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src
+			playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', 60, 1)
 			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 			chamber_round()
 			A.update_icon()
@@ -79,6 +80,7 @@
 		magazine.update_icon()
 		magazine = null
 		update_icon()
+		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', 60, 1)
 		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
 		return 1
 	else

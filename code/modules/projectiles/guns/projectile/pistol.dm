@@ -43,35 +43,15 @@
 	return
 
 /obj/item/weapon/gun/projectile/sigi/attack_self(mob/user)
-	if (magazine)
-		magazine.loc = get_turf(src.loc)
-		user.put_in_hands(magazine)
-		magazine.update_icon()
-		magazine = null
-		overlays -= mag
-		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
-		playsound(src.loc, 'sound/weapons/guns/reload_pistol.ogg', 50, 1, 1)
-	else
-		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
-	return
+	overlays -= mag
+	..()
 
 /obj/item/weapon/gun/projectile/sigi/attackby(obj/item/A, mob/user)
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if ((!magazine && (istype(AM, mag_type) || istype(AM, mag_type2))))
-			user.remove_from_mob(AM)
-			magazine = AM
-			magazine.loc = src
 			overlays += mag
-			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
-			chamber_round()
-			A.update_icon()
-			update_icon()
-			playsound(src.loc, 'sound/weapons/guns/reload_pistol.ogg', 50, 1, 1)
-			return 1
-		else if (magazine)
-			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
-	return 0
+			..()
 
 /obj/item/weapon/gun/projectile/automatic/silenced/isHandgun()
 	return 1
@@ -105,22 +85,6 @@
 		return
 	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
 	return
-
-/obj/item/weapon/gun/projectile/automatic/deagle/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
-		var/obj/item/ammo_box/magazine/AM = A
-		if (!magazine && istype(AM, mag_type))
-			user.remove_from_mob(AM)
-			magazine = AM
-			magazine.loc = src
-			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
-			chamber_round()
-			A.update_icon()
-			update_icon(1)
-			return 1
-		else if (magazine)
-			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
-	return 0
 
 /obj/item/weapon/gun/projectile/automatic/deagle/gold
 	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
@@ -205,22 +169,6 @@
 	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/colt1911/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
-		var/obj/item/ammo_box/magazine/AM = A
-		if (!magazine && (istype(AM, mag_type) || istype(AM, mag_type2)))
-			user.remove_from_mob(AM)
-			magazine = AM
-			magazine.loc = src
-			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
-			chamber_round()
-			A.update_icon()
-			update_icon(1)
-			return 1
-		else if (magazine)
-			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
-	return 0
-
 /obj/item/weapon/gun/projectile/sec_pistol
 	name = "\improper pistol"
 	desc = "AT-7 .45 caliber pistol."
@@ -249,22 +197,6 @@
 		return
 	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
 	return
-
-/obj/item/weapon/gun/projectile/sec_pistol/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
-		var/obj/item/ammo_box/magazine/AM = A
-		if (!magazine && istype(AM, mag_type))
-			user.remove_from_mob(AM)
-			magazine = AM
-			magazine.loc = src
-			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
-			chamber_round()
-			A.update_icon()
-			update_icon(1)
-			return 1
-		else if (magazine)
-			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
-	return 0
 
 /obj/item/weapon/gun/projectile/sec_pistol/acm38
 	name = "\improper pistol"
