@@ -486,7 +486,3 @@
 		item_state = "[initial(icon_state)]"
 	else
 		item_state = "[initial(icon_state)]-e"
-
-/obj/item/weapon/gun/projectile/automatic/a74/attackby(obj/item/A, mob/user)
-	playsound(user, 'sound/weapons/guns/reload_ak74.ogg', 50, 1)
-	..()

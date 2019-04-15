@@ -8,6 +8,7 @@
 	fire_delay = 0
 	recoil = 1
 	var/mag_type = /obj/item/ammo_box/magazine/m9mm //Removes the need for max_ammo and caliber info
+	var/mag_type2
 	var/obj/item/ammo_box/magazine/magazine
 	var/energy_gun = 0 //Used in examine, if 1 - no ammo count.
 
@@ -55,7 +56,7 @@
 /obj/item/weapon/gun/projectile/attackby(obj/item/A, mob/user)
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
-		if (!magazine && istype(AM, mag_type))
+		if (!magazine && (istype(AM, mag_type) || (istype(AM, mag_type2) && mag_type != null)))
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src

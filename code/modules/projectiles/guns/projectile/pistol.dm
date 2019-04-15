@@ -15,7 +15,7 @@
 	item_state = "sigi250"
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/m9mmr_2
-	var/mag_type2 = /obj/item/ammo_box/magazine/m9mm_2
+	mag_type2 = /obj/item/ammo_box/magazine/m9mm_2
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 
 	var/mag = null
@@ -150,7 +150,7 @@
 	item_state = "colt"
 	w_class = ITEM_SIZE_SMALL
 	mag_type = /obj/item/ammo_box/magazine/c45r
-	var/mag_type2 = /obj/item/ammo_box/magazine/c45m
+	mag_type2 = /obj/item/ammo_box/magazine/c45m
 	fire_sound = 'sound/weapons/guns/gunshot_colt1911.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/colt1911/isHandgun()
