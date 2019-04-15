@@ -38,3 +38,4 @@
 	airlocks_buffer.Cut()
 	poddoors_buffer.Cut()
 	buffer = null
+	return ..()
