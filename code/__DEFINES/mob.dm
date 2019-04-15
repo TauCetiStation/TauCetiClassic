@@ -108,6 +108,23 @@
 #define TASTE_SENSITIVITY_DULL 0.75
 #define TASTE_SENSITIVITY_NO_TASTE 0
 
+//I just took it from Paradise. I need this. For now.
+#define STATUS_UPDATE_HEALTH 1
+#define STATUS_UPDATE_STAT 2
+#define STATUS_UPDATE_CANMOVE 4
+#define STATUS_UPDATE_STAMINA 8
+#define STATUS_UPDATE_BLIND 16
+#define STATUS_UPDATE_BLURRY 32
+#define STATUS_UPDATE_NEARSIGHTED 64
+#define STATUS_UPDATE_DRUGGY 128
+
+
+#define STATUS_UPDATE_NONE 0
+#define STATUS_UPDATE_ALL (~0)
+#define INVISIBILITY_ABSTRACT 101
+#define UNHEALING_EAR_DAMAGE 100
+
+
 // Roundstart "trait" system
 #define MAX_QUIRKS 6 // The maximum amount of quirks one character can have at roundstart
 

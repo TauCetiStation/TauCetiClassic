@@ -101,6 +101,71 @@
 /datum/reagent/proc/on_update(atom/A)
 	return
 
+/*// Called every time reagent containers process.
+/datum/reagent/proc/on_tick(data)
+	return
+
+// Called when the reagent container is hit by an explosion
+/datum/reagent/proc/on_ex_act(severity)
+	return
+*/
+
+// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects
+/datum/reagent/proc/overdose_process(mob/living/M, severity)
+	var/effect = rand(1, 100) - severity
+	var/update_flags = STATUS_UPDATE_NONE
+	if(effect <= 8)
+		update_flags |= (M.adjustToxLoss(severity, FALSE) ? STATUS_UPDATE_HEALTH : STATUS_UPDATE_NONE)
+	return list(effect, update_flags)
+
+/datum/reagent/proc/overdose_start(mob/living/M)
+	return
+
+/datum/reagent/proc/addiction_act_stage1(mob/living/M)
+	return STATUS_UPDATE_NONE
+
+/datum/reagent/proc/addiction_act_stage2(mob/living/M)
+	if(prob(8))
+		M.emote("shiver")
+	if(prob(8))
+		M.emote("sneeze")
+	if(prob(4))
+		to_chat(M, "<span class='notice'>You feel a dull headache.</span>")
+	return STATUS_UPDATE_NONE
+
+/datum/reagent/proc/addiction_act_stage3(mob/living/M)
+	if(prob(8))
+		M.emote("twitch_s")
+	if(prob(8))
+		M.emote("shiver")
+	if(prob(4))
+		to_chat(M, "<span class='warning'>You begin craving [name]!</span>")
+	return STATUS_UPDATE_NONE
+
+/datum/reagent/proc/addiction_act_stage4(mob/living/M)
+	if(prob(8))
+		M.emote("twitch")
+	if(prob(4))
+		to_chat(M, "<span class='warning'>You have the strong urge for some [name]!</span>")
+	if(prob(4))
+		to_chat(M, "<span class='warning'>You REALLY crave some [name]!</span>")
+	return STATUS_UPDATE_NONE
+
+/datum/reagent/proc/addiction_act_stage5(mob/living/M)
+	var/update_flags = STATUS_UPDATE_NONE
+	if(prob(8))
+		M.emote("twitch")
+	if(prob(6))
+		to_chat(M, "<span class='warning'>Your stomach lurches painfully!</span>")
+		M.visible_message("<span class='warning'>[M] gags and retches!</span>")
+		update_flags |= M.Stun(rand(2,4), FALSE)
+		update_flags |= M.Weaken(rand(2,4), FALSE)
+	if(prob(5))
+		to_chat(M, "<span class='warning'>You feel like you can't live without [name]!</span>")
+	if(prob(5))
+		to_chat(M, "<span class='warning'>You would DIE for some [name] right now!</span>")
+	return update_flags
+
 /// Everything under now does. end EUGH
 
 /datum/reagent/proc/check_digesting(mob/living/M, alien)
