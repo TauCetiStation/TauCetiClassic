@@ -105,7 +105,8 @@
 						to_chat(user, "<span class='warning'>The panel is locked</span>")
 						return
 					wiresexposed = TRUE
-					door_control_access = req_access[1]
+					if(req_access.len)
+						door_control_access = req_access[1]
 					req_access = list(access_engine)
 					accesses_showed = FALSE
 					modes_showed = FALSE
