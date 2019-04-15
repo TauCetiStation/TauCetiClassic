@@ -59,7 +59,7 @@
 		shake_camera(user, recoil + 1, recoil)
 
 	if(silenced)
-		playsound(user, fire_sound, 40, 1, -5)
+		playsound(user, fire_sound, 30, 1, -4)
 	else
 		playsound(user, fire_sound, 50, 1)
 		user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")

@@ -45,7 +45,7 @@
 	icon_state = "shotgun_tg"
 
 /obj/item/weapon/gun/projectile/shotgun/proc/pump(mob/M)
-	playsound(M, pick('sound/weapons/guns/shotgun_pump1.ogg', 'sound/weapons/guns/shotgun_pump2.ogg', 'sound/weapons/guns/shotgun_pump3.ogg'), 60, 1)
+	playsound(M, pick('sound/weapons/guns/shotgun_pump1.ogg', 'sound/weapons/guns/shotgun_pump2.ogg', 'sound/weapons/guns/shotgun_pump3.ogg'), 60, 0)
 	pumped = 0
 	if(chambered)//We have a shell in the chamber
 		chambered.loc = get_turf(src)//Eject casing
