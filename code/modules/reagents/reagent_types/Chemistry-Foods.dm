@@ -80,7 +80,7 @@
 	id = "sprinkles"
 	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
 	color = "#ff00ff" // rgb: 255, 0, 255
-	taste_message = "sweetness"
+	taste_message = "crunchy sweetness"
 
 /datum/reagent/consumable/sprinkles/on_general_digest(mob/living/M)
 	..()
@@ -255,7 +255,14 @@
 	reagent_state = SOLID
 	color = "#ffffff" // rgb: 255,255,255
 	overdose = REAGENTS_OVERDOSE
+	taste_strength = 2
 	taste_message = "salt"
+
+/datum/reagent/consumable/sodiumchloride/overdose_process(mob/living/M, severity)
+	var/update_flags = STATUS_UPDATE_NONE
+	if(prob(70))
+		update_flags |= M.adjustBrainLoss(1, FALSE)
+	return ..() | update_flags
 
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
@@ -275,6 +282,15 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "cocoa"
 	diet_flags = DIET_PLANT
+
+/datum/reagent/consumable/vanilla
+	name = "Vanilla Powder"
+	id = "vanilla"
+	description = "A fatty, bitter paste made from vanilla pods."
+	reagent_state = SOLID
+	nutriment_factor = 10
+	color = "#FFFACD"
+	taste_message = "bitter vanilla"
 
 /datum/reagent/consumable/hot_coco
 	name = "Hot Chocolate"
@@ -390,7 +406,7 @@
 	id = "hell_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 7
+	nutriment_factor = 5
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "SPICY ramen"
 
@@ -418,6 +434,15 @@
 	taste_message = "cherry jelly"
 	diet_flags = DIET_PLANT
 
+/datum/reagent/consumable/bluecherryjelly
+	name = "Blue Cherry Jelly"
+	id = "bluecherryjelly"
+	description = "Blue and tastier kind of cherry jelly."
+	reagent_state = LIQUID
+	color = "#00F0FF"
+	taste_message = "the blues"
+	diet_flags = DIET_PLANT
+
 /datum/reagent/consumable/egg
 	name = "Egg"
 	id = "egg"
@@ -426,6 +451,143 @@
 	color = "#f0c814"
 	taste_message = "eggs"
 	diet_flags = DIET_MEAT
+
+/datum/reagent/consumable/egg/on_general_digest(mob/living/M)
+	..()
+	if(prob(3))
+		M.reagents.add_reagent("cholesterol", rand(1,2))
+
+/datum/reagent/consumable/corn_starch
+	name = "Corn Starch"
+	id = "corn_starch"
+	description = "The powdered starch of maize, derived from the kernel's endosperm. Used as a thickener for gravies and puddings."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	taste_message = "flour"
+
+/datum/reagent/consumable/corn_syrup
+	name = "Corn Syrup"
+	id = "corn_syrup"
+	description = "A sweet syrup derived from corn starch that has had its starches converted into maltose and other sugars."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	taste_message = "cheap sugar substitute"
+
+/datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/M)
+	..()
+	M.reagents.add_reagent("sugar", 1.2)
+
+/datum/reagent/consumable/vhfcs
+	name = "Very-high-fructose corn syrup"
+	id = "vhfcs"
+	description = "An incredibly sweet syrup, created from corn syrup treated with enzymes to convert its sugars into fructose."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	taste_message = "diabetes"
+
+/datum/reagent/consumable/vhfcs/on_mob_life(mob/living/M)
+	..()
+	M.reagents.add_reagent("sugar", 1.2)
+
+/datum/reagent/consumable/honey
+	name = "Honey"
+	id = "honey"
+	description = "A golden yellow syrup, loaded with sugary sweetness."
+	reagent_state = LIQUID
+	color = "#ffff00"
+	nutriment_factor = 15
+	taste_message = "honey sweetness"
+
+/datum/reagent/consumable/honey/on_mob_life(mob/living/M)
+	..()
+	M.reagents.add_reagent("sugar", 3)
+	if(prob(20))
+		M.heal_bodypart_damage(1, 1)
+
+/datum/reagent/consumable/onion
+	name = "Concentrated Onion Juice"
+	id = "onionjuice"
+	description = "A strong tasting substance that can induce partial blindness."
+	color = "#c0c9a0"
+	taste_message = "pungency"
+
+/datum/reagent/consumable/onion/reaction_mob(mob/living/M, method = TOUCH, volume)
+	if(!isliving(M))
+		return
+	if(method == TOUCH)
+		if(ishuman(M))
+			var/mob/living/carbon/human/victim = M
+			var/mouth_covered = 0
+			var/eyes_covered = 0
+			var/obj/item/safe_thing = null
+			if(victim.wear_mask)
+				if (victim.wear_mask.flags & MASKCOVERSEYES)
+					eyes_covered = 1
+					safe_thing = victim.wear_mask
+				if (victim.wear_mask.flags & MASKCOVERSMOUTH)
+					mouth_covered = 1
+					safe_thing = victim.wear_mask
+			if(victim.head)
+				if (victim.head.flags & MASKCOVERSEYES)
+					eyes_covered = 1
+					safe_thing = victim.head
+				if (victim.head.flags & MASKCOVERSMOUTH)
+					mouth_covered = 1
+					safe_thing = victim.head
+				if(victim.glasses)
+					eyes_covered = 1
+				if (!safe_thing)
+					safe_thing = victim.glasses
+			if(!mouth_covered && !eyes_covered)
+				to_chat(M, "<span class = 'notice'>Your eye sockets feel wet.</span>")
+			else
+				if(!M.eye_blurry)
+					to_chat(M, "<span class = 'warning'>Tears well up in your eyes!</span>")
+				victim.eye_blind = max(M.eye_blind, 2)
+				victim.eye_blurry = max(M.eye_blurry, 5)
+	..()
+
+
+/datum/reagent/consumable/chocolate
+	name = "Chocolate"
+	id = "chocolate"
+	description = "Chocolate is a delightful product derived from the seeds of the theobroma cacao tree."
+	reagent_state = LIQUID
+	nutriment_factor = 5
+	color = "#2E2418"
+	taste_message = "chocolate"
+
+/datum/reagent/consumable/chocolate/on_mob_life(mob/living/M)
+	..()
+	M.reagents.add_reagent("sugar", 1)
+
+/datum/reagent/consumable/porktonium
+	name = "Porktonium"
+	id = "porktonium"
+	description = "A highly-radioactive pork byproduct first discovered in hotdogs."
+	reagent_state = LIQUID
+	color = "#AB5D5D"
+	custom_metabolism = 0.2
+	overdose = 90
+	taste_message = "bacon"
+
+/datum/reagent/consumable/porktonium/overdose_process(mob/living/M, severity)
+	if(prob(15))
+		M.reagents.add_reagent("cholesterol", rand(1,3))
+	if(prob(8))
+		M.reagents.add_reagent("radium", 15)
+		M.reagents.add_reagent("cyanide", 10)
+	return list(0, STATUS_UPDATE_NONE)
+
+/datum/reagent/consumable/chicken_soup
+	name = "Chicken soup"
+	id = "chicken_soup"
+	description = "An old household remedy for mild illnesses."
+	reagent_state = LIQUID
+	color = "#B4B400"
+	custom_metabolism = 0.2
+	nutriment_factor = 5
+	taste_message = "broth"
 
 /datum/reagent/consumable/cheese
 	name = "Cheese"
@@ -436,7 +598,43 @@
 	taste_message = "cheese"
 	diet_flags = DIET_DAIRY
 
-/datum/reagent/consumable/beans
+/datum/reagent/consumable/cheese/on_mob_life(mob/living/M)
+	..()
+	if(prob(3))
+		M.reagents.add_reagent("cholesterol", rand(1,2))
+
+/datum/reagent/consumable/fake_cheese
+	name = "Cheese substitute"
+	id = "fake_cheese"
+	description = "A cheese-like substance derived loosely from actual cheese."
+	reagent_state = LIQUID
+	color = "#B2B139"
+	overdose = 50
+	taste_message = "cheese?"
+
+/datum/reagent/consumable/fake_cheese/overdose_process(mob/living/M, severity)
+	var/update_flags = STATUS_UPDATE_NONE
+	if(prob(8))
+		to_chat(M, "<span class='warning'>You feel something squirming in your stomach. Your thoughts turn to cheese and you begin to sweat.</span>")
+		update_flags |= M.adjustToxLoss(rand(1,2), FALSE)
+	return list(0, update_flags)
+
+/datum/reagent/consumable/weird_cheese
+	name = "Weird cheese"
+	id = "weird_cheese"
+	description = "Hell, I don't even know if this IS cheese. Whatever it is, it ain't normal. If you want to, pour it out to make it solid."
+	reagent_state = SOLID
+	color = "#50FF00"
+	addiction_chance = 5
+	taste_message = "cheeeeeese...?"
+
+/datum/reagent/consumable/weird_cheese/on_mob_life(mob/living/M)
+	..()
+	if(prob(5))
+		M.reagents.add_reagent("cholesterol", rand(1,3))
+
+
+datum/reagent/consumable/beans
 	name = "Refried beans"
 	id = "beans"
 	description = "A dish made of mashed beans cooked with lard."
@@ -453,3 +651,274 @@
 	color = "#9c5013"
 	taste_message = "bread"
 	diet_flags = DIET_PLANT
+
+/datum/reagent/consumable/soybeanoil
+	name = "Space-soybean oil"
+	id = "soybeanoil"
+	description = "An oil derived from extra-terrestrial soybeans."
+	reagent_state = LIQUID
+	color = "#B1B0B0"
+	taste_message = "oil"
+
+/datum/reagent/consumable/soybeanoil/on_mob_life(mob/living/M)
+	..()
+	if(prob(10))
+		M.reagents.add_reagent("cholesterol", rand(1,3))
+	if(prob(8))
+		M.reagents.add_reagent("porktonium", 5)
+
+/datum/reagent/consumable/hydrogenated_soybeanoil
+	name = "Partially hydrogenated space-soybean oil"
+	id = "hydrogenated_soybeanoil"
+	description = "An oil derived from extra-terrestrial soybeans, with additional hydrogen atoms added to convert it into a saturated form."
+	reagent_state = LIQUID
+	color = "#B1B0B0"
+	custom_metabolism = 0.2
+	overdose = 50
+	taste_message = "oil"
+
+/datum/reagent/consumable/hydrogenated_soybeanoil/on_mob_life(mob/living/M)
+	..()
+	if(prob(15))
+		M.reagents.add_reagent("cholesterol", rand(1,3))
+	if(prob(8))
+		M.reagents.add_reagent("porktonium", 5)
+	if(volume >= 75)
+		custom_metabolism = 0.4
+	else
+		custom_metabolism = 0.2
+
+
+/datum/reagent/consumable/hydrogenated_soybeanoil/overdose_process(mob/living/M, severity)
+	var/update_flags = STATUS_UPDATE_NONE
+	if(prob(33))
+		to_chat(M, "<span class='warning'>You feel horribly weak.</span>")
+	if(prob(10))
+		to_chat(M, "<span class='warning'>You cannot breathe!</span>")
+		update_flags |= M.adjustOxyLoss(5, FALSE)
+	if(prob(5))
+		to_chat(M, "<span class='warning'>You feel a sharp pain in your chest!</span>")
+		update_flags |= M.adjustOxyLoss(25, FALSE)
+		update_flags |= M.Stun(5, FALSE)
+		update_flags |= M.Paralyse(10, FALSE)
+	return list(0, update_flags)
+
+/datum/reagent/consumable/meatslurry
+	name = "Meat Slurry"
+	id = "meatslurry"
+	description = "A paste comprised of highly-processed organic material. Uncomfortably similar to deviled ham spread."
+	reagent_state = LIQUID
+	color = "#EBD7D7"
+	taste_message = "meat?"
+	diet_flags = DIET_MEAT
+
+/datum/reagent/consumable/meatslurry/on_mob_life(mob/living/M)
+	..()
+	if(prob(4))
+		M.reagents.add_reagent("cholesterol", rand(1,3))
+
+/datum/reagent/consumable/mashedpotatoes
+	name = "Mashed potatoes"
+	id = "mashedpotatoes"
+	description = "A starchy food paste made from boiled potatoes."
+	reagent_state = SOLID
+	color = "#D6D9C1"
+	taste_message = "potatoes"
+	diet_flags = DIET_PLANT
+
+/datum/reagent/consumable/gravy
+	name = "Gravy"
+	id = "gravy"
+	description = "A savory sauce made from a simple meat-dripping roux and milk."
+	reagent_state = LIQUID
+	color = "#B4641B"
+	taste_message = "gravy"
+	diet_flags = DIET_MEAT
+
+/datum/reagent/consumable/beff
+	name = "Beff"
+	id = "beff"
+	description = "An advanced blend of mechanically-recovered meat and textured synthesized protein product notable for its unusual crystalline grain when sliced."
+	reagent_state = SOLID
+	color = "#AC7E67"
+	taste_message = "meat"
+	diet_flags = DIET_MEAT
+
+/datum/reagent/consumable/beff/on_mob_life(mob/living/M)
+	..()
+	if(prob(5))
+		M.reagents.add_reagent("cholesterol", rand(1,3))
+	if(prob(8))
+		M.reagents.add_reagent(pick("blood", "corn_syrup", "synthflesh", "hydrogenated_soybeanoil", "porktonium", "toxic_slurry"), 0.8)
+	else if(prob(6))
+		to_chat(M, "<span class='warning'>[pick("You feel ill.","Your stomach churns.","You feel queasy.","You feel sick.")]</span>")
+		M.emote(pick("groan","moan"))
+
+
+/datum/reagent/consumable/pepperoni
+	name = "Pepperoni"
+	id = "pepperoni"
+	description = "An Italian-American variety of salami usually made from beef and pork"
+	reagent_state = SOLID
+	color = "#AC7E67"
+	taste_message = "pepperoni"
+	diet_flags = DIET_MEAT
+
+/datum/reagent/consumable/pepperoni/reaction_mob(mob/living/M, method=TOUCH, volume)
+	if(method == TOUCH)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+
+			if(H.wear_mask)
+				to_chat(H, "<span class='warning'>The pepperoni bounces off your mask!</span>")
+				return
+
+			if(H.head)
+				to_chat(H, "<span class='warning'>Your mask protects you from the errant pepperoni!</span>")
+				return
+
+			if(prob(50))
+				M.adjustBruteLoss(1)
+				playsound(M, 'sound/effects/woodhit.ogg', 50, 1)
+				to_chat(M, "<span class='warning'>A slice of pepperoni slaps you!</span>")
+			else
+				M.emote("burp")
+				to_chat(M, "<span class='warning'>My goodness, that was tasty!</span>")
+
+///Food Related, but non-nutritious
+
+/datum/reagent/questionmark // food poisoning
+	name = "????"
+	id = "????"
+	description = "A gross and unidentifiable substance."
+	reagent_state = LIQUID
+	color = "#63DE63"
+	taste_message = "burned food"
+
+/datum/reagent/questionmark/reaction_mob(mob/living/M, method=TOUCH, volume)
+	if(method == INGEST)
+		M.Stun(2, FALSE)
+		M.Weaken(2, FALSE)
+		M.update_canmove()
+		to_chat(M, "<span class='danger'>Ugh! Eating that was a terrible idea!</span>")
+
+/datum/reagent/msg
+	name = "Monosodium glutamate"
+	id = "msg"
+	description = "Monosodium Glutamate is a sodium salt known chiefly for its use as a controversial flavor enhancer."
+	reagent_state = LIQUID
+	color = "#F5F5F5"
+	custom_metabolism = 0.2
+	taste_message = "excellent cuisine"
+	taste_strength = 4
+
+/datum/reagent/msg/on_mob_life(mob/living/M)
+	var/update_flags = STATUS_UPDATE_NONE
+	if(prob(5))
+		if(prob(10))
+			update_flags |= M.adjustToxLoss(rand(2.4), FALSE)
+		if(prob(7))
+			to_chat(M, "<span class='warning'>A horrible migraine overpowers you.</span>")
+			update_flags |= M.Stun(rand(2,5), FALSE)
+	return ..() | update_flags
+
+/datum/reagent/cholesterol
+	name = "cholesterol"
+	id = "cholesterol"
+	description = "Pure cholesterol. Probably not very good for you."
+	reagent_state = LIQUID
+	color = "#FFFAC8"
+	taste_message = "heart attack"
+
+/datum/reagent/cholesterol/on_mob_life(mob/living/M)
+	..()
+	if(volume >= 25 && prob(volume*0.15))
+		to_chat(M, "<span class='warning'>Your chest feels [pick("weird","uncomfortable","nasty","gross","odd","unusual","warm")]!</span>")
+		M.adjustToxLoss(rand(1,2), FALSE)
+	else if(volume >= 45 && prob(volume*0.08))
+		to_chat(M, "<span class='warning'>Your chest [pick("hurts","stings","aches","burns")]!</span>")
+		M.adjustToxLoss(rand(2,4), FALSE)
+		M.Stun(1, FALSE)
+	else if(volume >= 150 && prob(volume*0.01))
+		to_chat(M, "<span class='warning'>Your chest is burning with pain!</span>")
+		M.Stun(1, FALSE)
+		M.Weaken(1, FALSE)
+		//M.ForceContractDisease(new /datum/disease/critical/heart_failure(0))
+
+
+/datum/reagent/fungus
+	name = "Space fungus"
+	id = "fungus"
+	description = "Scrapings of some unknown fungus found growing on the station walls."
+	reagent_state = LIQUID
+	color = "#C87D28"
+	taste_message = "mold"
+
+/datum/reagent/fungus/reaction_mob(mob/living/M, method=TOUCH, volume)
+	if(method == INGEST)
+		var/ranchance = rand(1,10)
+		if(ranchance == 1)
+			to_chat(M, "<span class='warning'>You feel very sick.</span>")
+			M.reagents.add_reagent("toxin", rand(1,5))
+		else if(ranchance <= 5)
+			to_chat(M, "<span class='warning'>That tasted absolutely FOUL.</span>")
+			//M.ForceContractDisease(new /datum/disease/food_poisoning(0))
+		else
+			to_chat(M, "<span class='warning'>Yuck!</span>")
+
+/*datum/reagent/ectoplasm
+	name = "Ectoplasm"
+	id = "ectoplasm"
+	description = "A bizarre gelatinous substance supposedly derived from ghosts."
+	reagent_state = LIQUID
+	color = "#8EAE7B"
+	process_flags = ORGANIC | SYNTHETIC		//Because apparently ghosts in the shell
+	taste_message = "spooks"
+
+/datum/reagent/ectoplasm/on_mob_life(mob/living/M)
+	var/spooky_message = pick("You notice something moving out of the corner of your eye, but nothing is there...", "Your eyes twitch, you feel like something you can't see is here...", "You've got the heebie-jeebies.", "You feel uneasy.", "You shudder as if cold...", "You feel something gliding across your back...")
+	if(prob(8))
+		to_chat(M, "<span class='warning'>[spooky_message]</span>")
+	return ..()
+
+/datum/reagent/ectoplasm/reaction_mob(mob/living/M, method=TOUCH, volume)
+	if(method == INGEST)
+		var/spooky_eat = pick("Ugh, why did you eat that? Your mouth feels haunted. Haunted with bad flavors.", "Ugh, why did you eat that? It has the texture of ham aspic.  From the 1950s.  Left out in the sun.", "Ugh, why did you eat that? It tastes like a ghost fart.", "Ugh, why did you eat that? It tastes like flavor died.")
+		to_chat(M, "<span class='warning'>[spooky_eat]</span>")
+
+/datum/reagent/ectoplasm/reaction_turf(turf/T, volume)
+	if(volume >= 10 && !isspaceturf(T))
+		new /obj/item/reagent_containers/food/snacks/ectoplasm(T)
+
+/datum/reagent/consumable/bread/reaction_turf(turf/T, volume)
+	if(volume >= 5 && !isspaceturf(T))
+		new /obj/item/reagent_containers/food/snacks/breadslice(T)*/
+
+		///Vomit///
+
+/datum/reagent/vomit
+	name = "Vomit"
+	id = "vomit"
+	description = "Looks like someone lost their lunch. And then collected it. Yuck."
+	reagent_state = LIQUID
+	color = "#FFFF00"
+	taste_message = "puke"
+
+/datum/reagent/vomit/reaction_turf(turf/simulated/T, volume)
+	if(volume >= 5 )
+		new /obj/effect/decal/cleanable/vomit(T)
+		playsound(T, 'sound/effects/splat.ogg', 50, 1, -3)
+
+/datum/reagent/greenvomit
+	name = "Green vomit"
+	id = "green_vomit"
+	description = "Whoa, that can't be natural. That's horrible."
+	reagent_state = LIQUID
+	color = "#78FF74"
+	taste_message = "puke"
+
+/datum/reagent/greenvomit/reaction_turf(turf/simulated/T, volume)
+	if(volume >= 5)
+		new /obj/effect/decal/cleanable/vomit/green(T)
+		playsound(T, 'sound/effects/splat.ogg', 50, 1, -3)
+

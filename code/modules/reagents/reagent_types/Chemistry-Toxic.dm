@@ -711,3 +711,18 @@
 		M.drowsyness = max(M.drowsyness, 3)
 	if(prob(10))
 		M.emote("drool")
+
+/datum/reagent/toxic_slurry
+	name = "Toxic Slurry"
+	id = "toxic_slurry"
+	description = "A filthy, carcinogenic sludge produced by the Slurrypod plant."
+	reagent_state = LIQUID
+	color = "#00C81E"
+
+/datum/reagent/toxic_slurry/on_mob_life(mob/living/M)
+	..()
+	if(prob(10))
+		M.adjustToxLoss(rand(2.4))
+	if(prob(7))
+		to_chat(M, "<span class='danger'>A horrible migraine overpowers you.</span>")
+		M.Stun(rand(2,5))

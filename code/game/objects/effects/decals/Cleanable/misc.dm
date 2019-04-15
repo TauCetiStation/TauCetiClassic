@@ -102,6 +102,13 @@
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
 	var/list/viruses = list()
 
+/obj/effect/decal/cleanable/vomit/green
+	name = "green vomit"
+	desc = "It's all gummy. Ew."
+	icon_state = "gvomit_1"
+	random_icon_states = list("gvomit_1", "gvomit_2", "gvomit_3", "gvomit_4")
+	//scoop_reagents = list("green_vomit" = 5)
+
 /obj/effect/decal/cleanable/vomit/Destroy()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
@@ -112,6 +119,7 @@
 	sleep(rand(150,300))
 	if(!src) return
 	set_light(0)
+
 
 /obj/effect/decal/cleanable/tomato_smudge
 	name = "tomato smudge"

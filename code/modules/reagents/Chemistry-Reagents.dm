@@ -25,11 +25,20 @@
 	var/taste_message = "bitterness" //life's bitter by default. Cool points for using a span class for when you're tasting <span class='userdanger'>LIQUID FUCKING DEATH</span>
 	var/list/restrict_species = list(IPC) // Species that simply can not digest this reagent.
 
+	var/addiction_chance = 0
+	var/addiction_stage = 1
+	var/last_addiction_dose = 0
+	var/overdosed = FALSE // You fucked up and this is now triggering it's overdose effects, purge that shit quick.
+	//var/current_cycle = 1
 	var/overdose = 0
 	var/overdose_dam = 1
 	//var/list/viruses = list()
 	var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
 	var/color_weight = 1
+	//var/shock_reduction = 0
+	//var/heart_rate_increase = 0
+	//var/heart_rate_decrease = 0
+	//var/heart_rate_stop = 0
 
 /datum/reagent/proc/reaction_mob(mob/M, method=TOUCH, volume) //By default we have a chance to transfer some
 	if(!istype(M, /mob/living))
