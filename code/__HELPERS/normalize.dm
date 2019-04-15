@@ -25,14 +25,7 @@
 	rh_color = num2hex(rn_color)
 	gh_color = num2hex(gn_color)
 	bh_color = num2hex(bn_color)
-
-	if(rh_color == "0")
-		rh_color = "00"
-	if(gh_color == "0")
-		gh_color = "00"
-	if(bh_color == "0")
-		bh_color = "00"
-
+	
 	//Set complete normalize hex color
 	final_hex = "#" + rh_color + gh_color + bh_color
 	return final_hex
