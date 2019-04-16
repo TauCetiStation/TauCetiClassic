@@ -117,45 +117,15 @@
 					target.desc = "[target.desc]<br><span class='rose'>It has [src] on it</span>"*/ // It will be implemented later on.
 
 /obj/item/weapon/reagent_containers/food/condiment/on_reagent_change()
-	if(reagents.reagent_list.len == 0 && empty_icon)
+	if(!reagents.reagent_list.len && empty_icon)
 		icon_state = empty_icon
 		return
 
-	if(reagents.reagent_list.len > 0) // So here we change the desc if condiment contains multiple reagents
-		switch(reagents.get_master_reagent_id())
-			if("sodiumchloride")
-				return
-			if("blackpepper")
-				return
-			if("ketchup")
-				return
-			if("capsaicin")
-				return
-			if("enzyme")
-				return
-			if("soysauce")
-				return
-			if("frostoil")
-				return
-			if("sodiumchloride")
-				return
-			if("rice")
-				return
-			if("blackpepper")
-				return
-			if("cornoil")
-				return
-			if("flour")
-				return
-			if("sugar")
-				return
-			if("honey")
-				return
-			else
-				if (reagents.reagent_list.len == 1)
-					desc = "Looks like it is [reagents.get_master_reagent_name()], but you are not sure."
-				else
-					desc = "A mixture of various condiments. [reagents.get_master_reagent_name()] is one of them."
+	if(reagents) // So here we change the desc if condiment contains multiple reagents
+		if(reagents.reagent_list.len == 1)
+			desc = "Looks like it is [reagents.get_master_reagent_name()], but you are not sure."
+		else if(reagents.reagent_list.len > 0)
+			desc = "A mixture of various condiments. [reagents.get_master_reagent_name()] is one of them."
 
 ///////////////////
 //Condiment Shelf//
@@ -178,9 +148,10 @@
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		new /obj/item/stack/sheet/wood(src.loc)
 		qdel(src)
-
-	if(istype(O, /obj/item/weapon/reagent_containers/food/condiment))
+		return
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/condiment))
 		to_chat(user, "<span class='rose'>You need to place it onto the wall first!</span>")
+		return
 	else
 		..()
 
@@ -225,8 +196,8 @@
 			if(contents.len < 6)
 				I.loc = src
 	if(building)
-		pixel_x = (ndir & 3)? 0 : (ndir == 4 ? 32 : -32)
-		pixel_y = (ndir & 3)? (ndir == 1 ? 32 : -32) : 0
+		pixel_x = (ndir & 3)? 0 : (ndir == EAST ? 32 : -32)
+		pixel_y = (ndir & 3)? (ndir == NORTH ? 32 : -32) : 0
 	update_icon()
 
 /obj/structure/condiment_shelf/attackby(obj/O, mob/user)
@@ -238,7 +209,7 @@
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			new /obj/item/weapon/condiment_shelf(src.loc)
 			for(var/obj/item/I in contents)
-				I.loc = get_turf(src)
+				I.forceMove(get_turf(src))
 			qdel(src)
 		return
 
