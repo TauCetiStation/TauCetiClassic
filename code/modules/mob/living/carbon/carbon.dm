@@ -18,15 +18,20 @@
 	if(.)
 		handle_phantom_move(NewLoc, Dir)
 		if(nutrition && stat != DEAD)
-			nutrition -= metabolism_factor/100
+			var/met_factor = get_metabolism_factor()
+			nutrition -= met_factor * 0.01
+			if(has_trait(TRAIT_STRESS_EATER))
+				nutrition -= met_factor * getHalLoss() * (m_intent == "run" ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
 			if(m_intent == "run")
-				nutrition -= metabolism_factor/100
+				nutrition -= met_factor * 0.01
 		if((FAT in mutations) && m_intent == "run" && bodytemperature <= 360)
 			bodytemperature += 2
 
 		// Moving around increases germ_level faster
 		if(germ_level < GERM_LEVEL_MOVE_CAP && prob(8))
 			germ_level++
+
+		handle_rig_move(NewLoc, Dir)
 
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(isessence(user))
@@ -277,9 +282,22 @@
 					else
 						M.visible_message("<span class='notice'>[M] gently touches [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You gently touch [src] trying to wake [t_him] up!</span>")
-			else
-				M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
-								"<span class='notice'>You hug [src] to make [t_him] feel better!</span>")
+			else switch(M.zone_sel.selecting)
+				if(BP_R_ARM || BP_L_ARM)
+					M.visible_message( "<span class='notice'>[M] shakes [src]'s hand.</span>", \
+									"<span class='notice'>You shake [src]'s hand.</span>", )
+				if(BP_HEAD)
+					M.visible_message("<span class='notice'>[M] pats [src] on the head.</span>", \
+									"<span class='notice'>You pat [src] on the head.</span>", )
+				if(O_EYES)
+					M.visible_message("<span class='notice'>[M] looks into [src]'s eyes.</span>", \
+									"<span class='notice'>You look into [src]'s eyes.</span>", )
+				if(BP_GROIN)
+					M.visible_message("<span class='notice'>[M] does something to [src] to make [t_him] feel better!</span>", \
+									"<span class='notice'>You do something to [src] to make [t_him] feel better!</span>", )
+				else
+					M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
+									"<span class='notice'>You hug [src] to make [t_him] feel better!</span>")
 
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
@@ -466,24 +484,34 @@
 
 	return
 
-/mob/living/carbon/show_inv(mob/living/carbon/user)
+/mob/living/carbon/show_inv(mob/user)
 	user.set_machine(src)
-	var/dat = {"
-	<B><HR><FONT size=3>[name]</FONT></B>
-	<BR><HR>
-	<BR><B>Head(Mask):</B> <A href='?src=\ref[src];item=mask'>[(wear_mask && !(wear_mask.flags&ABSTRACT))	? wear_mask	: "Nothing"]</A>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[(l_hand && !(l_hand.flags&ABSTRACT))		? l_hand	: "Nothing"]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand && !(r_hand.flags&ABSTRACT))		? r_hand	: "Nothing"]</A>
-	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
-	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
-	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
-	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
-	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
-	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
-	<BR>"}
-	user << browse(entity_ja(dat), text("window=mob[];size=325x500", name))
-	onclose(user, "mob[name]")
-	return
+	var/list/dat = list()
+
+	dat += "<table>"
+	dat += "<tr><td><B>Left Hand:</B></td><td><A href='?src=\ref[src];item=[SLOT_L_HAND]'>[(l_hand && !(l_hand.flags & ABSTRACT)) ? l_hand : "<font color=grey>Empty</font>"]</a></td></tr>"
+	dat += "<tr><td><B>Right Hand:</B></td><td><A href='?src=\ref[src];item=[SLOT_R_HAND]'>[(r_hand && !(r_hand.flags & ABSTRACT)) ? r_hand : "<font color=grey>Empty</font>"]</a></td></tr>"
+	dat += "<tr><td>&nbsp;</td></tr>"
+
+	dat += "<tr><td><B>Back:</B></td><td><A href='?src=\ref[src];item=[SLOT_BACK]'>[(back && !(back.flags & ABSTRACT)) ? back : "<font color=grey>Empty</font>"]</A>"
+	if(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank))
+		dat += "&nbsp;<A href='?src=\ref[src];internal=[SLOT_BACK]'>[internal ? "Disable Internals" : "Set Internals"]</A>"
+	dat += "</td></tr>"
+
+	dat += "<tr><td><B>Mask:</B></td><td><A href='?src=\ref[src];item=[SLOT_WEAR_MASK]'>[(wear_mask && !(wear_mask.flags & ABSTRACT)) ? wear_mask : "<font color=grey>Empty</font>"]</A></td></tr>"
+
+	if(handcuffed)
+		dat += "<tr><td><B>Handcuffed:</B></td><td><A href='?src=\ref[src];item=[SLOT_HANDCUFFED]'>Remove</A></td></tr>"
+	if(legcuffed)
+		dat += "<tr><td><B>Legcuffed:</B></td><td><A href='?src=\ref[src];item=[SLOT_LEGCUFFED]'>Remove</A></td></tr>"
+
+	dat += {"</table>
+	<A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
+	"}
+
+	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 440, 500)
+	popup.set_content(dat.Join())
+	popup.open()
 
 //generates realistic-ish pulse output based on preset levels
 /mob/living/carbon/proc/get_pulse(method)	//method 0 is for hands, 1 is for machines, more accurate
@@ -516,18 +544,6 @@
 		return
 	if(alert(src, "You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
 		sleeping = 20 //Short nap
-
-/mob/living/carbon/slip(slipped_on, stun_duration=4, weaken_duration=2)
-	if(buckled || sleeping || weakened || paralysis || stunned || resting || crawling)
-		return FALSE
-	stop_pulling()
-	to_chat(src, "<span class='warning'>You slipped on [slipped_on]!</span>")
-	playsound(loc, 'sound/misc/slip.ogg', 50, 1, -3)
-	if (stun_duration > 0)
-		Stun(stun_duration)
-	if(weaken_duration > 0)
-		Weaken(weaken_duration)
-	return TRUE
 
 //Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()
@@ -592,13 +608,10 @@
 
 	if(B.chemicals >= 100)
 		to_chat(src, "<span class='danger'>Your host twitches and quivers as you rapdly excrete several larvae from your sluglike body.</span>")
-		visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>")
 		B.chemicals -= 100
-
-		new /obj/effect/decal/cleanable/vomit(get_turf(src))
-		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
+		var/turf/T = get_turf(src)
+		T.add_vomit_floor(src)
 		new /mob/living/simple_animal/borer(get_turf(src))
-
 	else
 		to_chat(src, "<span class='info'>You do not have enough chemicals stored to reproduce.</span>")
 		return
@@ -660,6 +673,56 @@
 /mob/living/carbon/proc/bloody_body(mob/living/source)
 	return
 
+/mob/living/carbon/is_nude(maximum_coverage = 0, pos_slots = list(src.head, src.shoes, src.neck, src.mouth))
+	// We for some reason assume that the creature wearing human clothes has human-like anatomy. Mind-boggling, huh?
+	var/percentage_covered = 0
+
+	var/head_covered = FALSE
+	var/face_covered = FALSE
+	var/eyes_covered = FALSE
+	var/mouth_covered = FALSE
+	var/chest_covered = FALSE
+	var/groin_covered = FALSE
+	var/legs_covered = 0
+	var/arms_covered = 0
+
+	for(var/obj/item/I in pos_slots)
+		if(!eyes_covered && ((I.flags & (GLASSESCOVERSEYES|MASKCOVERSEYES|HEADCOVERSEYES)) || I.flags_inv & HIDEEYES)) // All of them refer to the same value, but for reader's sake...
+			percentage_covered += EYES_COVERAGE
+			eyes_covered = TRUE
+		if(!mouth_covered && ((I.flags & (MASKCOVERSMOUTH|HEADCOVERSMOUTH)) || I.flags_inv & HIDEMASK))
+			percentage_covered += MOUTH_COVERAGE
+			mouth_covered = TRUE
+		if(!face_covered && (I.flags_inv & HIDEFACE))
+			percentage_covered += FACE_COVERAGE
+			face_covered = TRUE
+		if(!head_covered && (I.body_parts_covered & HEAD))
+			percentage_covered += HEAD_COVERAGE
+			head_covered = TRUE
+		if(!chest_covered && (I.body_parts_covered & UPPER_TORSO))
+			percentage_covered += CHEST_COVERAGE
+			chest_covered = TRUE
+		if(!groin_covered && (I.body_parts_covered & LOWER_TORSO))
+			percentage_covered += GROIN_COVERAGE
+			groin_covered = TRUE
+		if(legs_covered < 2 && (I.body_parts_covered & LEG_LEFT))
+			percentage_covered += LEGS_COVERAGE
+			legs_covered++
+		if(legs_covered < 2 && (I.body_parts_covered & LEG_RIGHT)) // Because one thing can cover both and we need to check seperately and asdosadas
+			percentage_covered += LEGS_COVERAGE
+			legs_covered++
+		if(arms_covered < 2 && (I.body_parts_covered & ARM_LEFT))
+			percentage_covered += ARMS_COVERAGE
+			arms_covered++
+		if(arms_covered < 2 && (I.body_parts_covered & ARM_RIGHT))
+			percentage_covered += ARMS_COVERAGE
+			arms_covered++
+
+	return percentage_covered <= maximum_coverage
+
+/mob/living/carbon/naturechild_check()
+	return is_nude(maximum_coverage = 20) && !istype(head, /obj/item/clothing/head/bearpelt) && !istype(head, /obj/item/weapon/holder)
+
 /mob/living/carbon/proc/handle_phantom_move(NewLoc, direct)
 	if(!mind || !mind.changeling || length(mind.changeling.essences) < 1)
 		return
@@ -684,3 +747,113 @@
 
 /mob/living/carbon/get_nutrition()
 	return nutrition + (reagents.get_reagent("nutriment") + reagents.get_reagent("plantmatter") + reagents.get_reagent("protein") + reagents.get_reagent("dairy")) * 2.5 // We multiply by this "magic" number, because all of these are equal to 2.5 nutrition.
+
+/mob/living/carbon/get_metabolism_factor()
+	. = metabolism_factor
+
+
+/mob/living/carbon/proc/perform_cpr(mob/living/carbon/human/user) // don't forget to INVOKE_ASYNC this proc if sleep is a problem.
+	if(!ishuman(src) && !isIAN(src))
+		return
+	if(user.is_busy(src))
+		return
+
+	visible_message("<span class='danger'>[user] is trying perform CPR on [src]!</span>")
+
+	if(do_mob(user, src, HUMAN_STRIP_DELAY))
+		 // yes, we check this after the action, allowing player to try this even if it looks wrong (for fun).
+		if(user.species && user.species.flags[NO_BREATHE])
+			to_chat(user, "<span class='notice bold'>Your species can not perform CPR!</span>")
+			return
+		if((user.head && (user.head.flags & HEADCOVERSMOUTH)) || (user.wear_mask && (user.wear_mask.flags & MASKCOVERSMOUTH)))
+			to_chat(user, "<span class='notice bold'>Remove your mask!</span>")
+			return
+
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(H.species && H.species.flags[NO_BREATHE])
+				to_chat(user, "<span class='notice bold'>You can not perform CPR on these species!</span>")
+				return
+			if(wear_mask && wear_mask.flags & MASKCOVERSMOUTH)
+				to_chat(user, "<span class='notice bold'>Remove [src] [wear_mask]!</span>")
+				return
+
+		if(head && head.flags & HEADCOVERSMOUTH)
+			to_chat(user, "<span class='notice bold'>Remove [src] [head]!</span>")
+			return
+
+		if (health > config.health_threshold_dead && health < config.health_threshold_crit)
+			var/suff = min(getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
+			adjustOxyLoss(-suff)
+			updatehealth()
+			visible_message("<span class='warning'>[user] performs CPR on [src]!</span>")
+			to_chat(src, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
+			to_chat(user, "<span class='warning'>Repeat at least every 7 seconds.</span>")
+
+/mob/living/carbon/Topic(href, href_list)
+	..()
+
+	if (href_list["item"] && usr.CanUseTopicInventory(src))
+		var/slot = text2num(href_list["item"])
+		var/obj/item/item_to_add = usr.get_active_hand()
+
+		if(item_to_add && (item_to_add.flags & (ABSTRACT | DROPDEL)))
+			item_to_add = null
+
+		if(item_to_add && get_slot_ref(slot))
+			if(item_to_add.w_class > ITEM_SIZE_SMALL)
+				to_chat(usr, "<span class='red'>[src] is already wearing something. You need empty hand to take that off (or holding small item).</span>")
+				return
+			item_to_add = null
+
+		stripPanelUnEquip(usr, slot, item_to_add)
+
+		if(usr.machine == src && in_range(src, usr))
+			show_inv(usr)
+		else
+			usr << browse(null, "window=mob\ref[src]")
+
+	if (href_list["internal"] && usr.CanUseTopicInventory(src))
+		var/slot = text2num(href_list["internal"])
+		var/obj/item/weapon/tank/ITEM = get_equipped_item(slot)
+		if(ITEM && istype(ITEM) && wear_mask && (wear_mask.flags & MASKINTERNALS))
+			visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>")
+
+			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
+				var/mob/living/carbon/C = src
+				var/gas_log_string = ""
+				var/internalsound
+				if (internal)
+					internal.add_fingerprint(usr)
+					internal = null
+					if (internals)
+						internals.icon_state = "internal0"
+					internalsound = 'sound/misc/internaloff.ogg'
+					if(ishuman(C)) // Because only human can wear a spacesuit
+						var/mob/living/carbon/human/H = C
+						if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
+							internalsound = 'sound/misc/riginternaloff.ogg'
+					playsound(src, internalsound, 85, 0, -5)
+				else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
+					internal = ITEM
+					internal.add_fingerprint(usr)
+					if (internals)
+						internals.icon_state = "internal1"
+					internalsound = 'sound/misc/internalon.ogg'
+					if(ishuman(C)) // Because only human can wear a spacesuit
+						var/mob/living/carbon/human/H = C
+						if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
+							internalsound = 'sound/misc/riginternalon.ogg'
+					playsound(src, internalsound, 85, 0, -5)
+
+					if(ITEM.air_contents && LAZYLEN(ITEM.air_contents.gas))
+						gas_log_string = " (gases:"
+						for(var/G in ITEM.air_contents.gas)
+							gas_log_string += " - [G]=[ITEM.air_contents.gas[G]]"
+						gas_log_string += ")"
+					else
+						gas_log_string = " (gases: empty)"
+
+				visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>")
+				attack_log += text("\[[time_stamp()]\] <font color='orange'>Had their internals [internal ? "open" : "close"] by [usr.name] ([usr.ckey])[gas_log_string]</font>")
+				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>[internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name][gas_log_string]</font>")

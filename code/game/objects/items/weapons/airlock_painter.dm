@@ -4,7 +4,7 @@
 	icon_state = "paint sprayer"
 	item_state = "paint sprayer"
 
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 
 	m_amt = 50
 	g_amt = 50
@@ -28,8 +28,8 @@
 
 	//This proc doesn't just check if the painter can be used, but also uses it.
 	//Only call this if you are certain that the painter will be used right after this check!
-/obj/item/weapon/airlock_painter/proc/use(mob/user, cost)
-	if(can_use(user, cost))
+/obj/item/weapon/airlock_painter/use(cost)
+	if(can_use(usr, cost))
 		ink.charges -= cost
 		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1)
 		return 1

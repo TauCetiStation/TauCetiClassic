@@ -2242,7 +2242,7 @@ other types of metals and chemistry for reagents).
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	m_amt = 30
 	g_amt = 10
 	var/datum/design/blueprint
@@ -2581,3 +2581,178 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
 	build_path = /obj/item/weapon/holosign_creator
+
+/////////////////////////////////////////
+//////////////Rig Modules////////////////
+/////////////////////////////////////////
+
+/datum/design/rigsimpleai
+	name = "Hardsuit Automated Diagnostic System"
+	desc = "A system designed to help hardsuit users."
+	id = "rigsimpleai"
+	req_tech = list("programming" = 3, "biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
+	build_path = /obj/item/rig_module/simple_ai
+
+/datum/design/rigadvancedai
+	name = "Hardsuit Advanced Diagnostic System"
+	desc = "A system designed to help hardsuit users."
+	id = "rigadvancedai"
+	req_tech = list("programming" = 5, "biotech" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000, MAT_GOLD = 500)
+	build_path = /obj/item/rig_module/simple_ai/advanced
+
+/datum/design/rigflash
+	name = "Hardsuit Mounted Flash"
+	desc = "You are the law."
+	id = "rigflash"
+	req_tech = list("combat" = 3, "programming" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 1000)
+	build_path = /obj/item/rig_module/device/flash
+
+/datum/design/riggrenadelauncherflashbang
+	name = "Hardsuit Mounted Flashbang Grenade Launcher"
+	desc = "A shoulder-mounted micro-explosive dispenser designed only to accept standard flashbang grenades."
+	id = "riggrenadelauncherflashbang"
+	req_tech = list("combat" = 4, "programming" = 3, "materials" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_GOLD = 4000, MAT_SILVER = 2000)
+	build_path = /obj/item/rig_module/grenade_launcher/flashbang
+
+/datum/design/rigmountedlaserrifle
+	name = "Hardsuit Mounted Laser Rifle"
+	desc = "A shoulder-mounted battery-powered laser rifle mount."
+	id = "rigmountedlaserrifle"
+	req_tech = list("combat" = 5, "programming" = 4, "materials" = 6, "magnets" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 12500, MAT_GOLD = 6000, MAT_SILVER = 4500, MAT_DIAMOND = 500, MAT_URANIUM = 1000)
+	build_path = /obj/item/rig_module/mounted
+
+/datum/design/rigmountedtaser
+	name = "Hardsuit Mounted Taser"
+	desc = "A palm-mounted nonlethal energy projector."
+	id = "rigmountedtaser"
+	req_tech = list("combat" = 4, "programming" = 3, "materials" = 4, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 6000, MAT_SILVER = 500)
+	build_path = /obj/item/rig_module/mounted/taser
+
+/datum/design/righealthscanner
+	name = "Hardsuit Health Scanner Module"
+	desc = "A hardsuit-mounted health scanner."
+	id = "righealthscanner"
+	req_tech = list("biotech" = 2, "programming" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 100)
+	build_path = /obj/item/rig_module/device/healthscanner
+
+/datum/design/rigdrill
+	name = "Hardsuit Drill Mount"
+	desc = "A very heavy diamond-tipped drill."
+	id = "rigdrill"
+	req_tech = list("materials" = 6, "powerstorage" = 4, "engineering" = 4, "programming" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 2000, MAT_DIAMOND = 2000)
+	build_path = /obj/item/rig_module/device/drill
+
+/datum/design/riganomalyscanner
+	name = "Hardsuit Anomaly Scanner Module"
+	desc = "You think it's called an Elder Sarsparilla or something."
+	id = "riganomalyscanner"
+	req_tech = list("magnets" = 4, "programming" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
+	build_path = /obj/item/rig_module/device/anomaly_scanner
+
+/datum/design/rigorescanner
+	name = "Hardsuit Ore Scanner Module"
+	desc = "A clunky old ore scanner."
+	id = "rigorescanner"
+	req_tech = list("magnets" = 3, "programming" = 2, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	build_path = /obj/item/rig_module/device/orescanner
+
+/datum/design/rigrcd
+	name = "Hardsuit RCD Mount"
+	desc = "A cell-powered rapid construction device for a hardsuit."
+	id = "rigrcd"
+	req_tech = list("magnets" = 6, "programming" = 5, "engineering" = 5, "powerstorage" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_GLASS = 4000, MAT_GOLD = 4000, MAT_SILVER = 2000, MAT_DIAMOND = 1000)
+	build_path = /obj/item/rig_module/device/rcd
+
+/datum/design/rigcombatinjector
+	name = "Hardsuit Combat Chemical Injector"
+	desc = "A complex web of tubing and needles suitable for hardsuit use."
+	id = "rigcombatinjector"
+	req_tech = list("combat" = 2, "biotech" = 3, "programming" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000, MAT_GOLD = 500, MAT_SILVER = 500)
+	build_path = /obj/item/rig_module/chem_dispenser/combat
+
+/datum/design/rigmedicalinjector
+	name = "Hardsuit Medical Chemical Injector"
+	desc = "A complex web of tubing and needles suitable for hardsuit use."
+	id = "rigmedicalinjector"
+	req_tech = list("combat" = 3, "biotech" = 5, "programming" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 4000, MAT_GOLD = 1000, MAT_SILVER = 1000)
+	build_path = /obj/item/rig_module/chem_dispenser/medical
+
+/datum/design/rigselfrepair
+	name = "Hardsuit Self-Repair Module"
+	desc = "A somewhat complicated looking complex full of tools."
+	id = "rigselfrepair"
+	req_tech = list("engineering" = 3, "programming" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 20000, MAT_GLASS = 2000, MAT_GOLD = 1000)
+	build_path = /obj/item/rig_module/selfrepair
+
+/datum/design/rigmedteleport
+	name = "Hardsuit Medical Teleport System"
+	desc = "System capable of saving the suit owner."
+	id = "rigmedteleport"
+	req_tech = list("programming" = 3, "materials" = 3, "bluespace" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 4000, MAT_GOLD = 2000, MAT_DIAMOND = 500)
+	build_path = /obj/item/rig_module/med_teleport
+
+/datum/design/rignuclearreactor
+	name = "Hardsuit Nuclear Reactor Module"
+	desc = "Passively generates energy. Becomes very unstable if damaged."
+	id = "rignuclearreactor"
+	req_tech = list("programming" = 5, "engineering" = 5, "bluespace" = 5, "powerstorage" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_GOLD = 6000, MAT_URANIUM = 4000)
+	build_path = /obj/item/rig_module/nuclear_generator
+
+/datum/design/rigcoolingunit
+	name = "Hardsuit Mounted Cooling Unit"
+	desc = "A heat sink with a liquid cooled radiator."
+	id = "rigcoolingunit"
+	req_tech = list("engineering" = 3, "programming" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_DIAMOND = 200)
+	build_path = /obj/item/rig_module/cooling_unit
+
+/datum/design/rigextinguisher
+	name = "Hardsuit Fire Extinguisher"
+	desc = "Hardsuit mounted fire extinguisher designed to work in hazardous environments."
+	id = "rigextinguisher"
+	req_tech = list("materials" = 2, "engineering" = 2, "programming" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
+	build_path = /obj/item/rig_module/device/extinguisher
+
+/datum/design/rigmetalfoamspray
+	name = "Hardsuit Metal Foam Spray"
+	desc = "Hardsuit mounted metal foam spray designed to quickly patch holes."
+	id = "rigmetalfoamspray"
+	req_tech = list("materials" = 3, "engineering" = 3, "programming" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000)
+	build_path = /obj/item/rig_module/metalfoam_spray

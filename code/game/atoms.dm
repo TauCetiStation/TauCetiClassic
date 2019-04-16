@@ -88,9 +88,7 @@
 
 	LAZYCLEARLIST(overlays)
 
-	if(light)
-		light.destroy()
-		light = null
+	QDEL_NULL(light)
 
 	return ..()
 
@@ -431,11 +429,7 @@
 	M.check_dna()
 	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
-	add_dirt_cover(new M.species.blood_color)
-//	blood_color = "#A10808"
-//	if (M.species)
-//		blood_color = M.species.blood_color
-	return
+	add_dirt_cover(M.species.blood_datum)
 
 /atom/proc/add_dirt_cover(dirt_datum)
 	if(flags & NOBLOODY) return 0
@@ -446,13 +440,36 @@
 		dirt_overlay.add_dirt(dirt_datum)
 	return 1
 
-/atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
-	if( istype(src, /turf/simulated) )
-		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
+/atom/proc/add_vomit_floor(mob/living/carbon/C, toxvomit = 0)
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if(H.species.flags[NO_VOMIT])
+			return // Machines, golems, shadowlings and abductors don't throw up.
+		var/vomitsound = ""
+		if(istype(H.head, /obj/item/clothing/head/helmet/space))
+			H.visible_message("<B>[H.name]</B> <span class='danger'>throws up in their helmet!</span>","<span class='warning'>You threw up in your helmet, damn it, what could be worse!</span>")
+			if(H.gender == FEMALE)
+				vomitsound = "frigvomit"
+			else
+				vomitsound = "mrigvomit"
+			H.eye_blurry = max(2, H.eye_blurry)
+			H.losebreath += 20
+		else
+			H.visible_message("<B>[H.name]</B> <span class='danger'>throws up!</span>","<span class='warning'>You throw up!</span>")
+			if(H.gender == FEMALE)
+				vomitsound = "femalevomit"
+			else
+				vomitsound = "malevomit"
+		playsound(H.loc, vomitsound, 100, 0)
+	else
+		playsound(C.loc, 'sound/effects/splat.ogg', 100, 1)
+		C.visible_message("<B>[C.name]</B> <span class='danger'>throws up!</span>","<span class='warning'>You throw up!</span>")
 
+	if(istype(src, /turf/simulated) && !istype(C.head, /obj/item/clothing/head/helmet/space))
+		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
 		// Make toxins vomit look different
 		if(toxvomit)
-			var/datum/reagents/R = M.reagents
+			var/datum/reagents/R = C.reagents
 			if(!locate(/datum/reagent/luminophore) in R.reagent_list)
 				this.icon_state = "vomittox_[pick(1,4)]"
 			else
@@ -463,7 +480,6 @@
 				this.light_color = this.color
 				this.set_light(3)
 				this.stop_light()
-
 
 /atom/proc/clean_blood()
 	src.germ_level = 0
@@ -502,6 +518,9 @@
 //This proc is called on the location of an atom when the atom is Destroy()'d
 /atom/proc/handle_atom_del(atom/A)
 
+/atom/Entered(atom/movable/AM, atom/oldLoc)
+	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
+
 // Byond seemingly calls stat, each tick.
 // Calling things each tick can get expensive real quick.
 // So we slow this down a little.
@@ -523,3 +542,56 @@
 
 	if(changed)
 		animate(src, transform = ntransform, time = 2, easing = EASE_IN|EASE_OUT)
+
+/atom/proc/handle_slip(mob/living/carbon/C, weaken_amount, obj/O, lube)
+	return
+
+/turf/simulated/handle_slip(mob/living/carbon/C, weaken_amount, obj/O, lube)
+	if(has_gravity(src))
+		var/obj/buckled_obj
+		if(C.buckled)
+			buckled_obj = C.buckled
+			if(!(lube & GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
+				return FALSE
+		else
+			if((C.lying && !C.crawling) || !(C.status_flags & CANWEAKEN)) // can't slip unbuckled mob if they're lying or can't fall.
+				return FALSE
+			if(C.m_intent == MOVE_INTENT_WALK && (lube & NO_SLIP_WHEN_WALKING))
+				return FALSE
+		if(!(lube & SLIDE_ICE))
+			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
+			playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
+
+		var/olddir = C.dir
+
+		if(!(lube & SLIDE_ICE))
+			C.Weaken(weaken_amount)
+			C.stop_pulling()
+		else
+			C.Weaken(2)
+
+		if(buckled_obj)
+			buckled_obj.unbuckle_mob(C)
+			lube |= SLIDE_ICE
+
+		if(lube & SLIDE)
+			step(C, olddir)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 1)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 2)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 3)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 4)
+			C.take_bodypart_damage(2) // Was 5 -- TLE
+		else if(lube & SLIDE_ICE)
+			var/has_NOSLIP = FALSE
+			if(ishuman(C))
+				var/mob/living/carbon/human/H = C
+				if((istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags & NOSLIP) || (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP))
+					has_NOSLIP = TRUE
+			if (C.m_intent == MOVE_INTENT_RUN && !has_NOSLIP && prob(30))
+				step(C, olddir)
+			else
+				C.inertia_dir = 0
+		return TRUE
+
+/turf/space/handle_slip()
+	return

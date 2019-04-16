@@ -5,7 +5,7 @@
 	name = "power sink"
 	icon_state = "powersink0"
 	item_state = "electronic"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	flags = CONDUCT
 	throwforce = 5
 	throw_speed = 1
@@ -22,7 +22,7 @@
 	var/obj/structure/cable/attached		// the attached cable
 
 /obj/item/device/powersink/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		if(mode == 0)
 			var/turf/T = loc
 			if(isturf(T) && !T.intact)

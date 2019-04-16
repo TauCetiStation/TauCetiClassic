@@ -77,7 +77,7 @@
 			. += "Disabled"
 		else
 			. += "High"
-	. += 					"</a></td>"
+	. += 					"</a></b></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
 	. += 					"<td width='45%'>Ambient Occlusion:</td>"

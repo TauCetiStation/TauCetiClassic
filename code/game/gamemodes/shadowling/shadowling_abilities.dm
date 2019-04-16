@@ -256,13 +256,13 @@
 			else
 				user.remove_from_mob(I)
 
-		user.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling, slot_w_uniform)
-		user.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling, slot_shoes)
-		user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling, slot_wear_suit)
-		user.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling, slot_head)
-		user.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling, slot_gloves)
-		user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling, slot_wear_mask)
-		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling, slot_glasses)
+		user.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling, SLOT_W_UNIFORM)
+		user.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling, SLOT_SHOES)
+		user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling, SLOT_WEAR_SUIT)
+		user.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling, SLOT_HEAD)
+		user.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling, SLOT_GLOVES)
+		user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling, SLOT_WEAR_MASK)
+		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling, SLOT_GLASSES)
 		var/mob/living/carbon/human/H = usr
 		H.set_species(SHADOWLING)
 		H.dna.mutantrace = "shadowling"
@@ -312,7 +312,7 @@
 
 		if(thralls >= 7 && !screech_acquired)
 			screech_acquired = 1
-			to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Sonic Screech</b> ability. This ability will shatter nearby windows and deafen enemies, plus stunning silicon lifeforms.</span>")
+			to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Sonic Screech</b> ability. This ability will shatter nearby windows and deafen enemies, plus stunning silicon lifeforms.</i></span>")
 			user.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech
 
 		if(thralls >= 9 && !reviveThrallAcquired)
@@ -325,7 +325,7 @@
 			to_chat(user, "<span class='shadowling'>You do not have the power to ascend. You require [victory_threshold] thralls, but only [thralls] living thralls are present.</span>")
 
 		else if(thralls >= victory_threshold)
-			to_chat(usr, "<span class='shadowling'><b>You are now powerful enough to ascend. Use the Ascendance ability when you are ready. <i>This will kill all of your thralls.</i></span>")
+			to_chat(usr, "<span class='shadowling'><b>You are now powerful enough to ascend. Use the Ascendance ability when you are ready. <i>This will kill all of your thralls.</i></b></span>")
 			to_chat(usr, "<span class='shadowling'><b>You may find Ascendance in the Shadowling Evolution tab.</b></span>")
 			for(M in alive_mob_list)
 				if(is_shadow(M))
@@ -522,7 +522,7 @@
 
 	for(var/mob/boom in targets)
 		if(is_shadow_or_thrall(boom))
-			to_chat(usr, "<span class='warning'>Making an ally explode seems unwise.<span>")
+			to_chat(usr, "<span class='warning'>Making an ally explode seems unwise.</span>")
 			charge_counter = charge_max
 			return
 		usr.visible_message("<span class='danger'>[usr]'s eyes flare as they gesture at [boom]!</span>", \
@@ -558,7 +558,7 @@
 
 	for(var/mob/living/carbon/human/target in targets)
 		if(is_shadow_or_thrall(target))
-			to_chat(usr, "<span class='warning'>You cannot enthrall an ally.<span>")
+			to_chat(usr, "<span class='warning'>You cannot enthrall an ally.</span>")
 			charge_counter = charge_max
 			return
 		if(!target.ckey)
@@ -679,4 +679,4 @@
 		var/text = sanitize(input(user, "What do you want to say to everything on and near [world.name]?.", "Transmit to World", ""))
 		if(!text)
 			return
-		to_chat(world, "<font size=4><span class='shadowling'><b>\"[sanitize(text)]\"</font></span>")
+		to_chat(world, "<font size=4><span class='shadowling'><b>\"[sanitize(text)]\"</b></font></span>")

@@ -126,7 +126,8 @@
 	info << infos
 
 	message_admins("[admin ? key_name_admin(admin) : "Adminbot"] has edited [key]'s notes.")
-	log_admin("[admin ? key_name(admin) : "Adminbot"]] has edited [key]'s notes.")
+	log_admin("[admin ? key_name(admin) : "Adminbot"] has edited [key]'s notes.")
+	admin_ticket_log(ckey(key), "<font color='green'>[admin ? key_name(admin) : "Adminbot"] has edited [ckey(key)]'s notes: [note]</font>")
 
 	del(info) // savefile, so NOT qdel
 

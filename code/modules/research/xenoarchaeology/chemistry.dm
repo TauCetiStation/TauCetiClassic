@@ -5,42 +5,42 @@
 	id = "tungsten"
 	description = "A chemical element, and a strong oxidising agent."
 	reagent_state = SOLID
-	color = "#DCDCDC"  // rgb: 220, 220, 220, silver
+	color = "#dcdcdc"  // rgb: 220, 220, 220, silver
 
 /datum/reagent/lithiumsodiumtungstate
 	name = "Lithium Sodium Tungstate"
 	id = "lithiumsodiumtungstate"
 	description = "A reducing agent for geological compounds."
 	reagent_state = LIQUID
-	color = "#C0C0C0"  // rgb: 192, 192, 192, darker silver
+	color = "#c0c0c0"  // rgb: 192, 192, 192, darker silver
 
 /datum/reagent/ground_rock
 	name = "Ground Rock"
 	id = "ground_rock"
 	description = "A fine dust made of ground up rock."
 	reagent_state = SOLID
-	color = "#A0522D"   //rgb: 160, 82, 45, brown
+	color = "#a0522d"   //rgb: 160, 82, 45, brown
 
 /datum/reagent/density_separated_sample
 	name = "Density separated sample"
 	id = "density_separated_sample"
 	description = "A watery paste used in chemical analysis, there are some chunks floating in it."
 	reagent_state = LIQUID
-	color = "#DEB887"   //rgb: 222, 184, 135, light brown
+	color = "#deb887"   //rgb: 222, 184, 135, light brown
 
 /datum/reagent/analysis_sample
 	name = "Analysis liquid"
 	id = "analysis_sample"
 	description = "A watery paste used in chemical analysis."
 	reagent_state = LIQUID
-	color = "#F5FFFA"   //rgb: 245, 255, 250, almost white
+	color = "#f5fffa"   //rgb: 245, 255, 250, almost white
 
 /datum/reagent/chemical_waste
 	name = "Chemical Waste"
 	id = "chemical_waste"
 	description = "A viscous, toxic liquid left over from many chemical processes."
 	reagent_state = LIQUID
-	color = "#ADFF2F"   //rgb: 173, 255, 47, toxic green
+	color = "#adff2f"   //rgb: 173, 255, 47, toxic green
 
 /datum/chemical_reaction/lithiumsodiumtungstate	//LiNa2WO4, not the easiest chem to mix
 	name = "Lithium Sodium Tungstate"
@@ -73,7 +73,7 @@
 	icon_state = "solution_tray"
 	m_amt = 0
 	g_amt = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	amount_per_transfer_from_this = 1
 	possible_transfer_amounts = list(1, 2)
 	volume = 2

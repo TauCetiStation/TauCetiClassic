@@ -8,7 +8,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	var/created_name = "Cleanbot"
 
 
@@ -125,7 +125,7 @@
 				src.beacon_freq = freq * 10
 		if("screw")
 			src.screwloose = !src.screwloose
-			to_chat(usr, "<span class='notice>You twiddle the screw.</span>")
+			to_chat(usr, "<span class='notice'>You twiddle the screw.</span>")
 		if("oddbutton")
 			src.oddbutton = !src.oddbutton
 			to_chat(usr, "<span class='notice'>You press the weird button.</span>")

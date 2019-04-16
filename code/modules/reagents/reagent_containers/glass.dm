@@ -44,7 +44,8 @@
 		/obj/machinery/smartfridge,
 		/obj/machinery/biogenerator,
 		/obj/machinery/hydroponics,
-		/obj/machinery/constructable_frame)
+		/obj/machinery/constructable_frame,
+		/obj/item/clothing/suit/space/rig)
 
 /obj/item/weapon/reagent_containers/glass/atom_init()
 	. = ..()
@@ -115,6 +116,7 @@
 
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class = 'notice'>You transfer [trans] units of the solution to [target].</span>")
+		playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', 15, 1) // Sound taken from "Eris" build
 
 	//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
 	else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
@@ -292,7 +294,7 @@
 	item_state = "bucket"
 	m_amt = 200
 	g_amt = 0
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,50,70)
 	volume = 70
@@ -307,9 +309,9 @@
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 		user.drop_from_inventory(src)
 		qdel(src)
-	if (istype(D, /obj/item/weapon/weldingtool))
+	if (iswelder(D))
 		var/obj/item/weapon/weldingtool/WT = D
-		if(WT.remove_fuel(0,user))
+		if(WT.use(0,user))
 			user.remove_from_mob(src)
 			var/obj/item/clothing/head/helmet/battlebucket/BBucket = new(usr.loc)
 			loc.visible_message("<span class = 'rose'>[src] is shaped into [BBucket] by [user.name] with the weldingtool.</span>", blind_message = "<span class = 'rose'>You hear welding.</span>")

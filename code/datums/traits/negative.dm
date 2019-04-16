@@ -11,7 +11,7 @@
 /datum/quirk/blindness/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/sunglasses/blindfold/white/B = new
-	if(!H.equip_to_slot_if_possible(B, slot_glasses, null, TRUE)) //if you can't put it on the user's eyes, put it in their hands.
+	if(!H.equip_to_slot_if_possible(B, SLOT_GLASSES, null, TRUE)) //if you can't put it on the user's eyes, put it in their hands.
 		H.put_in_hands(B)
 
 
@@ -77,7 +77,7 @@
 /datum/quirk/nearsighted/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/regular/G = new
-	if(!H.equip_to_slot_if_possible(G, slot_glasses, null, TRUE))
+	if(!H.equip_to_slot_if_possible(G, SLOT_GLASSES, null, TRUE))
 		H.put_in_hands(G)
 
 
@@ -89,3 +89,23 @@
 	mob_trait = TRAIT_NERVOUS
 	gain_text = "<span class='danger'>You feel nervous!</span>"
 	lose_text = "<span class='notice'>You feel less yourself less nervous.</span>"
+
+
+
+/datum/quirk/stress_eater
+	name = "Stress Eater"
+	desc = "You eat more when in pain."
+	value = -1
+	mob_trait = TRAIT_STRESS_EATER
+	gain_text = "<span class='danger'>You feel quenchless hunger when hurt.</span>"
+	lose_text = "<span class='notice'>You no longer feel the quenchless hunger when hurt.</span>"
+
+
+
+/datum/quirk/mute
+	name = "Mute"
+	desc = "You are completely and incurably mute."
+	value = -2
+	mob_trait = TRAIT_MUTE
+	gain_text = "<span class='danger'>Your voicebox feels wrong somehow.</span>"
+	lose_text = "<span class='notice'>Your voicebox appears to work now.</span>"

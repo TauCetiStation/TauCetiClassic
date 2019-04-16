@@ -45,11 +45,11 @@
 	icon_state = "toilet[open][cistern]"
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(iscrowbar(I))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
-		if(do_after(user, 30, target = src))
+		if(I.use_tool(src, user, 30, volume = 0))
 			user.visible_message("<span class='notice'>[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!</span>", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "You hear grinding porcelain.")
 			cistern = !cistern
 			update_icon()
@@ -82,10 +82,10 @@
 				to_chat(user, "<span class='notice'>You need a tighter grip.</span>")
 
 	if(cistern)
-		if(I.w_class > 3)
+		if(I.w_class > ITEM_SIZE_NORMAL)
 			to_chat(user, "<span class='notice'>\The [I] does not fit.</span>")
 			return
-		if(w_items + I.w_class > 5)
+		if(w_items + I.w_class > ITEM_SIZE_HUGE)
 			to_chat(user, "<span class='notice'>The cistern is full.</span>")
 			return
 		user.drop_item()
@@ -317,10 +317,10 @@
 /obj/machinery/shower/attackby(obj/item/I, mob/user)
 	if(I.type == /obj/item/device/analyzer) // istype?
 		to_chat(user, "<span class='notice'>The water temperature seems to be [watertemp].</span>")
-	else if(istype(I, /obj/item/weapon/wrench))
+	else if(iswrench(I))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I].</span>")
-		if(do_after(user, 50, target = src))
+		if(I.use_tool(src, user, 50, volume = 100))
 			switch(watertemp)
 				if("normal")
 					watertemp = "freezing"
@@ -373,11 +373,11 @@
 							station_account.transaction_log.Add(T)
 
 							is_payed = 60
-							to_chat(usr, "[bicon(src)]Thank you, happy washing time and don't turn me off accidently or i will take your precious credits again! Teehee.</span>")
+							to_chat(usr, "[bicon(src)]<span class='notice'>Thank you, happy washing time and don't turn me off accidently or i will take your precious credits again! Teehee.</span>")
 						else
 							to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
 		else
-			to_chat(usr, "[bicon(src)]Is payed, you may turn it on now.</span>")
+			to_chat(usr, "[bicon(src)]<span class='notice'>Is payed, you may turn it on now.</span>")
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
 	overlays.Cut()					//once it's been on for a while, in addition to handling the water overlay.

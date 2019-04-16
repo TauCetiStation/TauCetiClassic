@@ -132,6 +132,7 @@
 	for(var/area/A in areas_added)		//Checks if there are fire alarms in any areas associated with that firedoor
 		if(A.fire || A.air_doors_activated)
 			alarmed = 1
+			break
 
 	var/answer = alert(user, "Would you like to [density ? "open" : "close"] this [src.name]?[ alarmed && density ? "\nNote that by doing so, you acknowledge any damages from opening this\n[src.name] as being your own fault, and you will be held accountable under the law." : ""]",\
 	"\The [src]", "Yes, [density ? "open" : "close"]", "No")
@@ -157,6 +158,7 @@
 			for(var/area/A in areas_added)		//Just in case a fire alarm is turned off while the firedoor is going through an autoclose cycle
 				if(A.fire || A.air_doors_activated)
 					alarmed = 1
+					break
 			if(alarmed)
 				nextstate = CLOSED
 				close()
@@ -165,9 +167,9 @@
 	add_fingerprint(user)
 	if(operating)
 		return//Already doing something.
-	if(istype(C, /obj/item/weapon/weldingtool))
+	if(iswelder(C))
 		var/obj/item/weapon/weldingtool/W = C
-		if(W.remove_fuel(0, user))
+		if(W.use(0, user))
 			blocked = !blocked
 			user.visible_message("\red \The [user] [blocked ? "welds" : "unwelds"] \the [src] with \a [W].",\
 			"You [blocked ? "weld" : "unweld"] \the [src] with \the [W].",\
@@ -176,22 +178,21 @@
 			update_icon()
 			return
 
-	if(density && istype(C, /obj/item/weapon/screwdriver))
+	if(density && isscrewdriver(C))
 		hatch_open = !hatch_open
 		user.visible_message("<span class='danger'>[user] has [hatch_open ? "opened" : "closed"] \the [src] maintenance hatch.</span>",
 									"You have [hatch_open ? "opened" : "closed"] the [src] maintenance hatch.")
 		update_icon()
 		return
 
-	if(blocked && istype(C, /obj/item/weapon/crowbar))
+	if(blocked && iscrowbar(C))
 		if(!hatch_open)
 			to_chat(user, "<span class='danger'>You must open the maintenance hatch first!</span>")
 		else if(!user.is_busy(src))
 			user.visible_message("<span class='danger'>[user] is removing the electronics from \the [src].</span>",
 									"You start to remove the electronics from [src].")
-			if(do_after(user,30,target = src))
+			if(C.use_tool(src, user, 30, volume = 100))
 				if(blocked && density && hatch_open)
-					playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user.visible_message("<span class='danger'>[user] has removed the electronics from \the [src].</span>",
 										"You have removed the electronics from [src].")
 
@@ -209,11 +210,11 @@
 		to_chat(user, "\red \The [src] is welded solid!")
 		return
 
-	if( istype(C, /obj/item/weapon/crowbar) || ( istype(C,/obj/item/weapon/twohanded/fireaxe) && C:wielded == 1 ) )
+	if( iscrowbar(C) || ( istype(C,/obj/item/weapon/twohanded/fireaxe) && C:wielded == 1 ) )
 		if(operating)
 			return
 
-		if( blocked && istype(C, /obj/item/weapon/crowbar) )
+		if( blocked && iscrowbar(C) )
 			user.visible_message("\red \The [user] pries at \the [src] with \a [C], but \the [src] is welded in place!",\
 			"You try to pry \the [src] [density ? "open" : "closed"], but it is welded in place!",\
 			"You hear someone struggle and metal straining.")
@@ -222,8 +223,8 @@
 		user.visible_message("\red \The [user] starts to force \the [src] [density ? "open" : "closed"] with \a [C]!",\
 				"You start forcing \the [src] [density ? "open" : "closed"] with \the [C]!",\
 				"You hear metal strain.")
-		if(do_after(user,30,target = src))
-			if( istype(C, /obj/item/weapon/crowbar) )
+		if(C.use_tool(src, user, 30, volume = 50))
+			if( iscrowbar(C) )
 				if( stat & (BROKEN|NOPOWER) || !density)
 					user.visible_message("\red \The [user] forces \the [src] [density ? "open" : "closed"] with \a [C]!",\
 					"You force \the [src] [density ? "open" : "closed"] with \the [C]!",\

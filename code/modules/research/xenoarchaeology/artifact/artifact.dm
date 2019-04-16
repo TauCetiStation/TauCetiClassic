@@ -71,20 +71,20 @@
 		if(user.is_busy()) return
 		var/obj/item/device/measuring_tape/P = W
 		user.visible_message("<span class='notice'>[user] extends [P] towards [src].</span>","<span class='notice'>You extend [P] towards [src].</span>")
-		if(do_after(user,40,target = src))
+		if(P.use_tool(src, user, 40))
 			to_chat(user, "<span class='notice'>[bicon(P)] [src] has been excavated to a depth of [2*src.excavation_level]cm.</span>")
 		return
 
 	if (istype(W, /obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/P = W
 
-		if(last_act + P.digspeed > world.time)//prevents message spam
+		if(last_act + 50 * P.toolspeed > world.time)//prevents message spam
 			return
 		last_act = world.time
 
 		to_chat(user, "<span class='warning'>You start [P.drill_verb] [src].</span>")
 
-		if(!do_after(user,P.digspeed,target = src))
+		if(!W.use_tool(src, user, 50, volume = 100))
 			return
 
 		to_chat(user, "<span class='notice'>You finish [P.drill_verb] [src].</span>")

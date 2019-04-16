@@ -275,7 +275,7 @@ Class Procs:
 	add_fingerprint(usr)
 
 	var/area/A = get_area(src)
-	A.master.powerupdate = 1
+	A.powerupdate = 1
 
 	return TRUE
 
@@ -333,14 +333,15 @@ Class Procs:
 	if(hasvar(src, "wires"))              // Lets close wires window if panel is closed.
 		var/datum/wires/DW = vars["wires"] // Wires and machinery that uses this feature actually should be refactored.
 		if(istype(DW) && !DW.can_use(user)) // Many of them do not use panel_open var.
-			DW.Topic("close=1", list("close"="1"))
+			user << browse(null, "window=wires")
+			user.unset_machine(src)
 	if((allowed_checks & ALLOWED_CHECK_A_HAND) && !emagged && !allowed(user))
 		allowed_fail(user)
 		to_chat(user, "<span class='warning'>Access Denied.</span>")
 		return 1
 
 	var/area/A = get_area(src)
-	A.master.powerupdate = 1 // <- wtf is this var and its comments...
+	A.powerupdate = 1 // <- wtf is this var and its comments...
 
 	interact(user)
 	return 0
@@ -405,8 +406,7 @@ Class Procs:
 	if(istype(W) &&  !(flags & NODECONSTRUCT))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>")
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, time/W.toolspeed, target = src))
+		if(W.use_tool(src, user, time, volume = 50))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 			anchored = !anchored
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)

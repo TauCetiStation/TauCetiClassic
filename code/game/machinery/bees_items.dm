@@ -4,7 +4,7 @@
 	desc = "Place her into an apiary so she can get busy."
 	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "seed-kudzu"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 /obj/item/weapon/bee_net
 	name = "bee net"
@@ -12,7 +12,7 @@
 	icon = 'icons/obj/apiary_bees_etc.dmi'
 	icon_state = "bee_net"
 	item_state = "bedsheet"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	var/caught_bees = 0
 
 /obj/item/weapon/bee_net/attack_self(mob/user)
@@ -59,7 +59,7 @@
 	icon = 'icons/obj/apiary_bees_etc.dmi'
 	icon_state = "apiary_item"
 	item_state = "giftbag"
-	w_class = 5
+	w_class = ITEM_SIZE_HUGE
 
 /obj/item/beezeez
 	name = "bottle of BeezEez"
@@ -87,4 +87,4 @@
 	name = "Honey"
 	id = "honey"
 	description = "A golden yellow syrup, loaded with sugary sweetness."
-	color = "#FFFF00"
+	color = "#ffff00"

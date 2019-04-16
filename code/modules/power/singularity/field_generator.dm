@@ -72,6 +72,7 @@ field_generator power level display
 			warming_up = 3
 			start_fields()
 			update_icon()
+			playsound(src, 'sound/machines/cfieldstart.ogg', 100, 0)
 		var_edit_start = FALSE
 
 	if(active == FG_ONLINE)
@@ -94,6 +95,7 @@ field_generator power level display
 					"<span class='notice'>You turn on the [src].</span>",
 					"<span class='notice'>You hear heavy droning.</span>")
 				turn_on()
+				playsound(src, 'sound/machines/cfieldbeforestart.ogg', 100, 0)
 				investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
 	else
 		to_chat(user, "<span class='notice'>The [src] needs to be firmly secured to the floor first.</span>")
@@ -103,7 +105,7 @@ field_generator power level display
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
 	if(active != FG_OFFLINE)
 		to_chat(user, "<span class='red'>The [src] needs to be off.</span>")
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(iswrench(W))
 		switch(state)
 			if(FG_UNSECURED)
 				state = FG_SECURED
@@ -123,33 +125,27 @@ field_generator power level display
 				anchored = FALSE
 			if(FG_WELDED)
 				to_chat(user, "<span class='red'>The [src] needs to be unwelded from the floor.</span>")
-	else if(istype(W, /obj/item/weapon/weldingtool))
+	else if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		switch(state)
 			if(FG_UNSECURED)
 				to_chat(user, "<span class='red'>The [src] needs to be wrenched to the floor.</span>")
 			if(FG_SECURED)
-				if (!user.is_busy() && WT.remove_fuel(0, user))
-					playsound(src, 'sound/items/Welder2.ogg', 50, 1)
+				if(!user.is_busy() && WT.use(0, user))
 					user.visible_message(
 						"<span class='notice'>[user.name] starts to weld the [src.name] to the floor.</span>",
 						"<span class='notice'>You start to weld the [src] to the floor.</span>",
 						"<span class='notice'>You hear welding.</span>")
-					if (do_after(user, 20, target = src))
-						if(!src || !WT.isOn())
-							return
+					if(WT.use_tool(src, user, 20, volume = 50))
 						state = FG_WELDED
 						to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
 			if(FG_WELDED)
-				if (!user.is_busy() && WT.remove_fuel(0, user))
-					playsound(src, 'sound/items/Welder2.ogg', 50, 1)
+				if (!user.is_busy() && WT.use(0, user))
 					user.visible_message(
 						"<span class='notice'>[user.name] starts to cut the [src.name] free from the floor.</span>",
 						"<span class='notice'>You start to cut the [src] free from the floor.</span>",
 						"<span class='notice'>You hear welding.</span>")
-					if (do_after(user, 20, target = src))
-						if(!src || !WT.isOn())
-							return
+					if (WT.use_tool(src, user, 20, volume = 50))
 						state = FG_SECURED
 						to_chat(user, "<span class='notice'>You cut the [src] free from the floor.</span>")
 	else
@@ -202,6 +198,7 @@ field_generator power level display
 		update_icon()
 		if(warming_up >= 3)
 			start_fields()
+			playsound(src, 'sound/machines/cfieldstart.ogg', 100, 1)
 
 /obj/machinery/field_generator/proc/calc_power()
 	if(var_power)
@@ -213,6 +210,7 @@ field_generator power level display
 	if(!draw_power(round(power_draw / 2, 1)))
 		visible_message("<span class='warning'>The [src] shuts down!</span>")
 		turn_off()
+		playsound(src, 'sound/machines/cfieldfail.ogg', 100, 0)
 		investigate_log("ran out of power and <font color='red'>deactivated</font>","singulo")
 		power = 0
 

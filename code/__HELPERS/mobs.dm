@@ -121,12 +121,14 @@
 //helper for inverting armor blocked values into a multiplier
 #define blocked_mult(blocked) max(1 - (blocked / 100), 0)
 
-/proc/do_mob(mob/user , mob/target, time = 30, check_target_zone = FALSE, uninterruptible = FALSE, progress = TRUE)
+/proc/do_mob(mob/user , mob/target, time = 30, check_target_zone = FALSE, uninterruptible = FALSE, progress = TRUE, datum/callback/extra_checks = null)
 	if(!user || !target)
 		return FALSE
 
 	var/busy_hand = user.hand
 	user.become_busy(_hand = busy_hand)
+
+	target.in_use_action = TRUE
 
 	if(check_target_zone)
 		check_target_zone = user.zone_sel.selecting
@@ -155,15 +157,15 @@
 			break
 		if(uninterruptible)
 			continue
-		if(user.loc != user_loc || target.loc != target_loc || user.incapacitated() || user.lying )
+		if(user.loc != user_loc || target.loc != target_loc || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
 			. = FALSE
 			break
-		if(busy_hand)
-			if(user.l_hand != holding)
+		if(user.hand != busy_hand)
+			if(user.get_inactive_hand() != holding)
 				. = FALSE
 				break
 		else
-			if(user.r_hand != holding)
+			if(user.get_active_hand() != holding)
 				. = FALSE
 				break
 		if(check_target_zone && user.zone_sel.selecting != check_target_zone)
@@ -173,8 +175,10 @@
 		qdel(progbar)
 	if(user)
 		user.become_not_busy(_hand = busy_hand)
+	if(target)
+		target.in_use_action = FALSE
 
-/proc/do_after(mob/user, delay, needhand = TRUE, atom/target = null, can_move = FALSE, progress = TRUE)
+/proc/do_after(mob/user, delay, needhand = TRUE, atom/target = null, can_move = FALSE, progress = TRUE, datum/callback/extra_checks = null)
 	if(!user || target && QDELING(target))
 		return FALSE
 
@@ -223,6 +227,9 @@
 			break
 
 		if(Uloc && (user.loc != Uloc) || Tloc && (Tloc != target.loc))
+			. = FALSE
+			break
+		if(extra_checks && !extra_checks.Invoke())
 			. = FALSE
 			break
 

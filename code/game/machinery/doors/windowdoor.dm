@@ -263,7 +263,7 @@
 		var/obj/item/weapon/changeling_hammer/W = I
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(W.use_charge(user, 6))
-			visible_message("<span class='danger'>[user]</B> has punched [src]!</span>")
+			visible_message("<span class='red'><B>[user]</B> has punched [src]!</span>")
 			playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 			shatter()
 		return
@@ -287,7 +287,7 @@
 		return
 
 	if(!(flags & NODECONSTRUCT))
-		if(istype(I, /obj/item/weapon/screwdriver))
+		if(isscrewdriver(I))
 			if(src.density || src.operating == 1)
 				to_chat(user, "<span class='warning'>You need to open the [src.name] to access the maintenance panel.</span>")
 				return
@@ -296,13 +296,12 @@
 			to_chat(user, "<span class='notice'>You [p_open ? "open":"close"] the maintenance panel of the [src.name].</span>")
 			return
 
-		if(istype(I, /obj/item/weapon/crowbar))
+		if(iscrowbar(I))
 			if(p_open && !src.density)
 				if(user.is_busy(src)) return
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 				user.visible_message("<span class='warning'>[user] removes the electronics from the [src.name].</span>", \
 									 "You start to remove electronics from the [src.name].")
-				if(do_after(user,40,target=src))
+				if(I.use_tool(src, user, 40, volume = 100))
 					if(src.p_open && !src.density && src.loc)
 						var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
 						switch(base_state)
@@ -351,7 +350,7 @@
 
 
 	//If windoor is unpowered, crowbar, fireaxe and armblade can force it.
-	if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
+	if(iscrowbar(I) || istype(I, /obj/item/weapon/twohanded/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
 		if(!hasPower())
 			user.SetNextMove(CLICK_CD_INTERACT)
 			if(density)

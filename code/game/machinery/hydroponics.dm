@@ -7,7 +7,6 @@
 	density = TRUE
 	anchored = 1
 	interact_offline = TRUE
-	pixel_y = 8
 
 	var/waterlevel = 100             //The amount of water in the tray (max 100)
 	var/maxwater = 100               //The maximum amount of water in the tray
@@ -75,7 +74,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(iscrowbar(I))
 		if(anchored == 2)
 			to_chat(user, "Unscrew the hoses first!")
 			return
@@ -681,7 +680,7 @@
 			S.handle_item_insertion(G, 1)
 			score["stuffharvested"]++
 
-	else if(istype(O, /obj/item/weapon/wrench) && unwrenchable)
+	else if(iswrench(O) && unwrenchable)
 		if(anchored == 2)
 			to_chat(user, "Unscrew the hoses first!")
 			return
@@ -695,7 +694,7 @@
 			anchored = 0
 			to_chat(user, "You unwrench [src].")
 
-	else if(istype(O, /obj/item/weapon/wirecutters) && unwrenchable)
+	else if(iswirecutter(O) && unwrenchable)
 
 		if(anchored)
 			if(anchored == 2)

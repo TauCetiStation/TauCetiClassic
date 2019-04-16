@@ -196,7 +196,7 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "sp_base"
 	item_state = "electropack"
-	w_class = 4 // Pretty big!
+	w_class = ITEM_SIZE_LARGE // Pretty big!
 	anchored = 0
 	var/tracker = 0
 	var/glass_type = null
@@ -218,13 +218,11 @@
 		if(iswrench(W))
 			anchored = 1
 			user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>")
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			return 1
 	else
 		if(iswrench(W))
 			anchored = 0
 			user.visible_message("<span class='notice'>[user] unwrenches the solar assembly from it's place.</span>")
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			return 1
 
 		if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
@@ -316,7 +314,7 @@
 	return
 
 /obj/machinery/power/solar_control/attackby(I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		if(user.is_busy()) return
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20, target = src))

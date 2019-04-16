@@ -15,7 +15,7 @@ LINEN BINS
 	throwforce = 1
 	throw_speed = 1
 	throw_range = 2
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	item_color = "white"
 
 
@@ -112,8 +112,7 @@ LINEN BINS
 	item_color = "brown"
 
 /obj/item/weapon/bedsheet/psych
-	icon = 'icons/obj/items.dmi'
-	icon_state = "sheetbrown"
+	icon_state = "sheetpsych"
 	item_color = "brown"
 
 /obj/item/weapon/bedsheet/centcom
@@ -184,7 +183,7 @@ LINEN BINS
 		sheets.Add(I)
 		amount++
 		to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
-	else if(amount && !hidden && I.w_class < 4)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
+	else if(amount && !hidden && I.w_class < ITEM_SIZE_LARGE)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
 		user.drop_item()
 		I.loc = src
 		hidden = I

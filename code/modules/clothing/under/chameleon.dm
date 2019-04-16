@@ -23,9 +23,10 @@
 	name = "psychedelic"
 	desc = "Groovy!"
 	icon_state = "psyche"
+	item_state = "psyche"
 	item_color = "psyche"
 	update_icon()
-	usr.update_inv_w_uniform()
+	update_inv_mob()
 
 /obj/item/clothing/under/chameleon/verb/change()
 	set name = "Change Jumpsuit Appearance"
@@ -54,8 +55,7 @@
 	item_state = A.item_state
 	item_color = A.item_color
 	body_parts_covered = A.body_parts_covered
-	if(usr)
-		usr.update_inv_w_uniform()	//so our overlays update.
+	update_inv_mob()
 
 //*****************
 //**Chameleon Hat**
@@ -83,9 +83,10 @@
 	name = "grey cap"
 	desc = "It's a baseball hat in a tasteful grey colour."
 	icon_state = "greysoft"
+	item_state = "greysoft"
 	item_color = "grey"
 	update_icon()
-	usr.update_inv_head()
+	update_inv_mob()
 
 /obj/item/clothing/head/chameleon/verb/change()
 	set name = "Change Hat/Helmet Appearance"
@@ -114,8 +115,7 @@
 	item_color = A.item_color
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
-	if(usr)
-		usr.update_inv_head()	//so our overlays update.
+	update_inv_mob()
 
 //******************
 //**Chameleon Suit**
@@ -142,9 +142,10 @@
 	name = "armor"
 	desc = "An armored vest that protects against some damage."
 	icon_state = "armor"
+	item_state = "armor"
 	item_color = "armor"
 	update_icon()
-	usr.update_inv_wear_suit()
+	update_inv_mob()
 
 /obj/item/clothing/suit/chameleon/verb/change()
 	set name = "Change Exosuit Appearance"
@@ -173,8 +174,7 @@
 	item_color = A.item_color
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
-	if(usr)
-		usr.update_inv_wear_suit()	//so our overlays update.
+	update_inv_mob()
 
 //*******************
 //**Chameleon Shoes**
@@ -182,7 +182,7 @@
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
 	icon_state = "black"
-	item_state = "black"
+	item_state = "bl_shoes"
 	item_color = "black"
 	desc = "They're comfy black shoes, with clever cloaking technology built in. It seems to have a small dial on the back of each shoe."
 	origin_tech = "syndicate=3"
@@ -200,10 +200,10 @@
 	name = "black shoes"
 	desc = "A pair of black shoes."
 	icon_state = "black"
-	item_state = "black"
+	item_state = "bl_shoes"
 	item_color = "black"
 	update_icon()
-	usr.update_inv_shoes()
+	update_inv_mob()
 
 /obj/item/clothing/shoes/chameleon/verb/change()
 	set name = "Change Footwear Appearance"
@@ -230,8 +230,7 @@
 	icon_state = A.icon_state
 	item_state = A.item_state
 	item_color = A.item_color
-	if(usr)
-		usr.update_inv_shoes()	//so our overlays update.
+	update_inv_mob()
 
 //**********************
 //**Chameleon Backpack**
@@ -257,7 +256,7 @@
 	icon_state = "backpack"
 	item_state = "backpack"
 	update_icon()
-	usr.update_inv_back()
+	update_inv_mob()
 
 /obj/item/weapon/storage/backpack/chameleon/verb/change()
 	set name = "Change Backpack Appearance"
@@ -284,8 +283,7 @@
 	icon_state = A.icon_state
 	item_state = A.item_state
 	item_color = A.item_color
-	if(usr)
-		usr.update_inv_back()	//so our overlays update.
+	update_inv_mob()
 
 //********************
 //**Chameleon Gloves**
@@ -311,9 +309,10 @@
 	name = "black gloves"
 	desc = "It looks like a pair of gloves, but it seems to have a small dial inside."
 	icon_state = "black"
+	item_state = "bgloves"
 	item_color = "brown"
 	update_icon()
-	usr.update_inv_gloves()
+	update_inv_mob()
 
 /obj/item/clothing/gloves/chameleon/verb/change()
 	set name = "Change Gloves Appearance"
@@ -341,8 +340,7 @@
 	item_state = A.item_state
 	item_color = A.item_color
 	flags_inv = A.flags_inv
-	if(usr)
-		usr.update_inv_gloves()	//so our overlays update.
+	update_inv_mob()
 
 //******************
 //**Chameleon Mask**
@@ -370,7 +368,7 @@
 	item_state = "gas_mask_tc"
 	icon_state = "gas_mask_tc"
 	update_icon()
-	usr.update_inv_wear_mask()
+	update_inv_mob()
 
 /obj/item/clothing/mask/chameleon/verb/change()
 	set name = "Change Mask Appearance"
@@ -398,8 +396,7 @@
 	item_state = A.item_state
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
-	if(usr)
-		usr.update_inv_wear_mask()	//so our overlays update.
+	update_inv_mob()
 
 //*********************
 //**Chameleon Glasses**
@@ -424,8 +421,9 @@
 	name = "optical meson scanner"
 	desc = "It's a set of mesons."
 	icon_state = "meson"
+	item_state = "glasses"
 	update_icon()
-	usr.update_inv_glasses()
+	update_inv_mob()
 
 /obj/item/clothing/glasses/chameleon/verb/change()
 	set name = "Change Glasses Appearance"
@@ -452,8 +450,7 @@
 	icon_state = A.icon_state
 	item_state = A.item_state
 	flags_inv = A.flags_inv
-	if(usr)
-		usr.update_inv_glasses()	//so our overlays update.
+	update_inv_mob()
 
 //*****************
 //**Chameleon Gun**
@@ -462,7 +459,8 @@
 	name = "desert eagle"
 	desc = "A fake Desert Eagle with a dial on the side to change the gun's disguise."
 	icon_state = "deagle"
-	w_class = 3.0
+	item_state = "deagle"
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=2;materials=2;syndicate=3"
 	mag_type = /obj/item/ammo_box/magazine/chameleon
 	var/list/gun_choices = list()
@@ -478,9 +476,9 @@
 	name = "desert eagle"
 	desc = "It's a desert eagle."
 	icon_state = "deagle"
+	item_state = "deagle"
 	update_icon()
-	usr.update_inv_r_hand()
-	usr.update_inv_l_hand()
+	update_inv_mob()
 
 /obj/item/weapon/gun/projectile/chameleon/verb/change()
 	set name = "Change Gun Appearance"
@@ -507,6 +505,4 @@
 	icon_state = A.icon_state
 	item_state = A.item_state
 	flags_inv = A.flags_inv
-	if(usr)
-		usr.update_inv_r_hand()
-		usr.update_inv_l_hand()	//so our overlays update.
+	update_inv_mob()

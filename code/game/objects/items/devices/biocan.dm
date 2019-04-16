@@ -4,7 +4,7 @@
 	icon = 'icons/obj/biocan.dmi'
 	icon_state = "biocan"
 	origin_tech = "biotech=3;materials=3;magnets=3"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	appearance_flags = KEEP_TOGETHER | TILE_BOUND
 	var/obj/item/weapon/organ/head/headobj = null
 	var/image/display_headobj = null

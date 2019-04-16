@@ -72,6 +72,7 @@
 				to_chat(user, "<span class='warning'>The wounds on [M]'s [BP.name] have already been bandaged.</span>")
 				return 1
 			else
+				playsound(src, "bandg", 15, 1)
 				user.visible_message("<span class='notice'>\The [user] starts treating [M]'s [BP.name].</span>", \
 									"<span class='notice'>You start treating [M]'s [BP.name].</span>")
 
@@ -166,7 +167,7 @@
 	name = "\improper S'rendarr's Hand leaf"
 	singular_name = "S'rendarr's Hand leaf"
 	desc = "A poultice made of soft leaves that is rubbed on bruises."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "shandp"
 	heal_brute = 7
 
@@ -177,7 +178,7 @@
 	name = "\improper Messa's Tear petals"
 	singular_name = "Messa's Tear petals"
 	desc = "A poultice made of cold, blue petals that is rubbed on burns."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "mtearp"
 	heal_burn = 7
 
@@ -210,6 +211,7 @@
 				to_chat(user, "<span class='warning'>The wounds on [M]'s [BP.name] have already been treated.</span>")
 				return 1
 			else
+				playsound(src, "bandg", 15, 1)
 				user.visible_message("<span class='notice'>\The [user] starts treating [M]'s [BP.name].</span>", \
 									"<span class='notice'>You start treating [M]'s [BP.name].</span>")
 
@@ -349,7 +351,7 @@
 										"<span class='danger'>You successfully apply \the [src] to your [limb].</span>", \
 										"<span class='danger'>You hear something being wrapped.</span>")
 				else
-					user.visible_message("<span class='danger'>[user] fumbles \the [src].", \
+					user.visible_message("<span class='danger'>[user] fumbles \the [src].</span>", \
 										"<span class='danger'>You fumble \the [src].</span>", \
 										"<span class='danger'>You hear something being wrapped.</span>")
 					return

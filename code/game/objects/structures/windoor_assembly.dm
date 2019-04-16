@@ -63,14 +63,11 @@
 	if(user.is_busy()) return
 	switch(state)
 		if("01")
-			if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
+			if(iswelder(W) && !anchored )
 				var/obj/item/weapon/weldingtool/WT = W
-				if (WT.remove_fuel(0,user))
+				if (WT.use(0,user))
 					user.visible_message("[user] dissassembles the windoor assembly.", "You start to dissassemble the windoor assembly.")
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
-
-					if(do_after(user, 40, target = src))
-						if(!src || !WT.isOn()) return
+					if(WT.use_tool(src, user, 40, volume = 50))
 						to_chat(user, "\blue You dissasembled the windoor assembly!")
 						new /obj/item/stack/sheet/rglass(loc, 5)
 						if(secure)
@@ -81,12 +78,10 @@
 					return
 
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
-			if(istype(W, /obj/item/weapon/wrench) && !anchored)
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			if(iswrench(W) && !anchored)
 				user.visible_message("[user] secures the windoor assembly to the floor.", "You start to secure the windoor assembly to the floor.")
-
-				if(do_after(user, 40, target = src))
-					if(!src || src.anchored)
+				if(W.use_tool(src, user, 40, volume = 100))
+					if(src.anchored)
 						return
 					to_chat(user, "\blue You've secured the windoor assembly!")
 					src.anchored = 1
@@ -96,12 +91,10 @@
 						src.name = "Anchored Windoor Assembly"
 
 			//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
-			else if(istype(W, /obj/item/weapon/wrench) && anchored)
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			else if(iswrench(W) && anchored)
 				user.visible_message("[user] unsecures the windoor assembly to the floor.", "You start to unsecure the windoor assembly to the floor.")
-
-				if(do_after(user, 40, target = src))
-					if(!src || !src.anchored)
+				if(W.use_tool(src, user, 40, volume = 100))
+					if(!src.anchored)
 						return
 					to_chat(user, "\blue You've unsecured the windoor assembly!")
 					src.anchored = 0
@@ -117,9 +110,8 @@
 					to_chat(user, "\red You need more rods to do this.")
 					return
 				to_chat(user, "\blue You start to reinforce the windoor with rods.")
-
-				if(do_after(user,40, target = src))
-					if(QDELETED(src) || !secure || !R.use(4))
+				if(W.use_tool(src, user, 40, amount = 4, volume = 100))
+					if(!secure)
 						return
 
 					to_chat(user, "\blue You reinforce the windoor.")
@@ -130,14 +122,11 @@
 						src.name = "Secure Windoor Assembly"
 
 			//Adding cable to the assembly. Step 5 complete.
-			else if(istype(W, /obj/item/stack/cable_coil) && anchored)
+			else if(iscoil(W) && anchored)
+				var/obj/item/stack/cable_coil/CC = W
 				user.visible_message("[user] wires the windoor assembly.", "You start to wire the windoor assembly.")
-
-				if(do_after(user, 40, target = src))
-					if(!src || !src.anchored || src.state != "01")
-						return
-					var/obj/item/stack/cable_coil/CC = W
-					if(!CC.use(1))
+				if(CC.use_tool(src, user, 40, amount = 1, volume = 100))
+					if(!src.anchored || src.state != "01")
 						return
 					to_chat(user, "\blue You wire the windoor!")
 					src.state = "02"
@@ -151,12 +140,10 @@
 		if("02")
 
 			//Removing wire from the assembly. Step 5 undone.
-			if(istype(W, /obj/item/weapon/wirecutters) && !src.electronics)
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+			if(iswirecutter(W) && !src.electronics)
 				user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
-
-				if(do_after(user, 40, target = src))
-					if(!src || src.state != "02")
+				if(W.use_tool(src, user, 40, volume = 100))
+					if(src.state != "02")
 						return
 
 					to_chat(user, "\blue You cut the windoor wires.!")
@@ -171,13 +158,11 @@
 			else if(istype(W, /obj/item/weapon/airlock_electronics))
 				var/obj/item/weapon/airlock_electronics/AE = W
 				if(!AE.broken)
-					playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 					user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
 					user.drop_item()
 					AE.loc = src
-
-					if(do_after(user, 40, target = src))
-						if(!src || src.electronics)
+					if(W.use_tool(src, user, 40, volume = 100))
+						if(src.electronics)
 							AE.loc = src.loc
 							return
 						to_chat(user, "<span class='notice'>You've installed the airlock electronics!</span>")
@@ -187,15 +172,12 @@
 						AE.loc = src.loc
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
-			else if(istype(W, /obj/item/weapon/screwdriver))
+			else if(isscrewdriver(W))
 				if(!electronics)
 					return
-
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to uninstall electronics from the airlock assembly.")
-
-				if(do_after(user, 40, target = src))
-					if(!src || !electronics)
+				if(W.use_tool(src, user, 40, volume = 100))
+					if(!electronics)
 						return
 					to_chat(user, "\blue You've removed the airlock electronics!")
 					var/obj/item/weapon/airlock_electronics/ae = electronics
@@ -214,17 +196,14 @@
 
 
 			//Crowbar to complete the assembly, Step 7 complete.
-			else if(istype(W, /obj/item/weapon/crowbar))
+			else if(iscrowbar(W))
 				if(!src.electronics)
 					to_chat(usr, "\red The assembly is missing electronics.")
 					return
 				usr << browse(null, "window=windoor_access")
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 				user.visible_message("[user] pries the windoor into the frame.", "You start prying the windoor into the frame.")
-
-				if(do_after(user, 40, target = src))
-
-					if(!src.loc || !src.electronics)
+				if(W.use_tool(src, user, 40, volume = 100))
+					if(!src.electronics)
 						return
 
 					density = 1 //Shouldn't matter but just incase

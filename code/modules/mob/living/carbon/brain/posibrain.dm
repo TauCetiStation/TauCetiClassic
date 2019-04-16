@@ -3,7 +3,7 @@
 	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "engineering=4;materials=4;bluespace=2;programming=4"
 
 	var/searching = 0
@@ -94,14 +94,13 @@
 		M.show_message("\blue The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?")
 
 /obj/item/device/mmi/posibrain/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n[desc]\n"
-	msg += "<span class='warning'>"
+	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n[desc]</span>\n"
 
 	if(src.brainmob && src.brainmob.key)
 		switch(src.brainmob.stat)
 			if(CONSCIOUS)
 				if(!src.brainmob.client)
-					msg += "It appears to be in stand-by mode.\n" //afk
+					msg += "<span class='warning'>It appears to be in stand-by mode.</span>\n" //afk
 			if(UNCONSCIOUS)
 				msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
 			if(DEAD)

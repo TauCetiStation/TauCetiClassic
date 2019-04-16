@@ -6,7 +6,7 @@
 	desc = "A die with six sides. Basic and servicable."
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "d6"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	var/sides = 6
 	var/result
 	var/accursed_type = /obj/item/weapon/dice/ghost
@@ -229,13 +229,13 @@
 		visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
 
 /obj/item/weapon/dice/d4/Crossed(var/mob/living/carbon/human/H)
-	if(istype(H) && !H.shoes && !H.species.flags[NO_MINORCUTS])
+	if(istype(H) && !H.shoes && !H.species.flags[NO_MINORCUTS] && !H.buckled)
 		to_chat(H, "<span class='userdanger'>You step on the D4!</span>")
 		H.apply_damage(4, BRUTE, pick(BP_L_LEG , BP_R_LEG))
 		H.Weaken(3)
 
 /obj/item/weapon/dice/ghost/d4/Crossed(var/mob/living/carbon/human/H)
-	if(istype(H) && !H.shoes && !H.species.flags[NO_MINORCUTS])
+	if(istype(H) && !H.shoes && !H.species.flags[NO_MINORCUTS] && !H.buckled)
 		to_chat(H, "<span class='userdanger'>You really regret stepping on the accursed D4!</span>")
 		H.apply_damage(4, BRUTE, pick(BP_L_LEG , BP_R_LEG))
 		H.Weaken(3)

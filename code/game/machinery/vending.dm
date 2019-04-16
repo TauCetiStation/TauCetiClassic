@@ -168,7 +168,7 @@
 		if(default_unfasten_wrench(user, W, time = 60))
 			return
 
-		if(istype(W, /obj/item/weapon/crowbar))
+		if(iscrowbar(W))
 			default_deconstruction_crowbar(W)
 
 	if (istype(W, /obj/item/weapon/card/emag))
@@ -176,7 +176,7 @@
 		to_chat(user, "You short out the product lock on [src]")
 		return
 
-	else if(istype(W, /obj/item/weapon/screwdriver) && anchored)
+	else if(isscrewdriver(W) && anchored)
 		src.panel_open = !src.panel_open
 		to_chat(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
 		src.overlays.Cut()
@@ -195,14 +195,15 @@
 		to_chat(user, "\blue You insert the [W] into the [src]")
 		return
 
-	else if(istype(W, /obj/item/weapon/wrench))	//unwrenching vendomats
+	else if(iswrench(W))	//unwrenching vendomats
 		var/turf/T = user.loc
-		if(user.is_busy(src)) return
+		if(user.is_busy(src))
+			return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 40, target = src))
-			if( !istype(src, /obj/machinery/vending) || !user || !W || !T )	return
-			if( user.loc == T && user.get_active_hand() == W )
+		if(W.use_tool(src, user, 20, volume = 50))
+			if(!istype(src, /obj/machinery/vending) || !user || !W || !T)
+				return
+			if(user.loc == T && user.get_active_hand() == W)
 				anchored = !anchored
 				to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 				if (!(src.anchored & powered()))
@@ -538,7 +539,7 @@
 		return
 
 	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
+		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span>",2)
 	return
 
 /obj/machinery/vending/power_change()
@@ -1045,7 +1046,7 @@
 	vend_delay = 15
 	vend_reply = "Thank you for using the ClothesMate!"
 	products = list(/obj/item/clothing/head/that=4,/obj/item/clothing/head/fedora=2,/obj/item/clothing/glasses/monocle=2,
-	/obj/item/clothing/suit/jacket=4, /obj/item/clothing/suit/jacket/puffer/vest=4, /obj/item/clothing/suit/jacket/puffer=4,
+	/obj/item/clothing/suit/jacket=4,/obj/item/clothing/head/chep=2, /obj/item/clothing/suit/jacket/puffer/vest=4, /obj/item/clothing/suit/jacket/puffer=4,
 	/obj/item/clothing/under/suit_jacket/navy=2,/obj/item/clothing/under/suit_jacket/really_black=2,/obj/item/clothing/under/suit_jacket/burgundy=2,
 	/obj/item/clothing/under/suit_jacket/charcoal=2, /obj/item/clothing/under/suit_jacket/white=2,/obj/item/clothing/under/kilt=2,/obj/item/clothing/under/overalls=2,
 	/obj/item/clothing/under/suit_jacket/really_black=4,/obj/item/clothing/under/suit_jacket/rouge =4,/obj/item/clothing/under/pants/jeans=6,/obj/item/clothing/under/pants/classicjeans=4,
@@ -1063,15 +1064,17 @@
 	/obj/item/clothing/suit/storage/miljacket_army=3,/obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger=2,/obj/item/clothing/suit/storage/miljacket_army/miljacket_navy=2,
 	/obj/item/clothing/suit/student_jacket=3,/obj/item/clothing/suit/shawl=2,/obj/item/clothing/suit/atlas_jacket=4,/obj/item/clothing/under/sukeban_pants=2,
 	/obj/item/clothing/under/sukeban_dress=2,/obj/item/clothing/suit/sukeban_coat=4,/obj/item/clothing/under/pinkpolo=3,/obj/item/clothing/under/pretty_dress=1,
-	/obj/item/clothing/under/dress/dress_summer=2,/obj/item/clothing/under/dress/dress_vintage=2,/obj/item/clothing/under/dress/dress_evening=2,/obj/item/clothing/under/dress/dress_party=2)
+	/obj/item/clothing/under/dress/dress_summer=2,/obj/item/clothing/under/dress/dress_vintage=2,/obj/item/clothing/under/dress/dress_evening=2,/obj/item/clothing/under/dress/dress_party=2,
+	/obj/item/clothing/glasses/aviator_orange=2, /obj/item/clothing/glasses/aviator_black=2, /obj/item/clothing/glasses/aviator_red=2, /obj/item/clothing/glasses/aviator_mirror=2,
+	/obj/item/clothing/glasses/jerusalem=2, /obj/item/clothing/glasses/threedglasses=2, /obj/item/clothing/glasses/gar=2)
 
-	contraband = list(/obj/item/clothing/under/syndicate/tacticool=2,/obj/item/clothing/mask/balaclava=2,/obj/item/clothing/head/ushanka=2,/obj/item/clothing/under/soviet=2,/obj/item/clothing/mask/gas/fawkes = 6)
+	contraband = list(/obj/item/clothing/under/syndicate/tacticool=4,/obj/item/clothing/mask/balaclava=4,/obj/item/clothing/head/tacticool_hat=4, /obj/item/clothing/head/ushanka=2,/obj/item/clothing/under/soviet=2,/obj/item/clothing/mask/gas/fawkes = 6)
 
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=2,/obj/item/clothing/head/mailman=2,/obj/item/clothing/under/rank/mailman=2,/obj/item/clothing/suit/jacket/leather=2,
-	/obj/item/clothing/suit/jacket/leather/overcoat=2,/obj/item/clothing/under/pants/mustangjeans=2)
+	/obj/item/clothing/suit/jacket/leather/overcoat=2,/obj/item/clothing/under/pants/mustangjeans=2,/obj/item/clothing/glasses/sunglasses/gar=1,/obj/item/clothing/glasses/sunglasses=1)
 
 	prices = list(/obj/item/clothing/head/that=419,/obj/item/clothing/head/fedora=419,/obj/item/clothing/glasses/monocle=109,
-	/obj/item/clothing/suit/jacket=299, /obj/item/clothing/suit/jacket/puffer/vest=239, /obj/item/clothing/suit/jacket/puffer=219,
+	/obj/item/clothing/suit/jacket=299,/obj/item/clothing/head/chep=250, /obj/item/clothing/suit/jacket/puffer/vest=239, /obj/item/clothing/suit/jacket/puffer=219,
 	/obj/item/clothing/under/suit_jacket/navy=119,/obj/item/clothing/under/suit_jacket/really_black=119,/obj/item/clothing/under/suit_jacket/burgundy=119,
 	/obj/item/clothing/under/suit_jacket/charcoal=119, /obj/item/clothing/under/suit_jacket/white=119,/obj/item/clothing/under/kilt=85,/obj/item/clothing/under/overalls=85,
 	/obj/item/clothing/under/suit_jacket/really_black=142,/obj/item/clothing/under/suit_jacket/rouge =248,/obj/item/clothing/under/pants/jeans=142,
@@ -1089,7 +1092,9 @@
 	/obj/item/clothing/suit/storage/miljacket_army=655,/obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger=655,/obj/item/clothing/suit/storage/miljacket_army/miljacket_navy=655,
 	/obj/item/clothing/suit/student_jacket=459,/obj/item/clothing/suit/shawl=344,/obj/item/clothing/suit/atlas_jacket=250,/obj/item/clothing/under/sukeban_pants=366,
 	/obj/item/clothing/under/sukeban_dress=366,/obj/item/clothing/suit/sukeban_coat=579,/obj/item/clothing/under/pinkpolo=638,/obj/item/clothing/under/pretty_dress=564,
-	/obj/item/clothing/under/dress/dress_summer=332,/obj/item/clothing/under/dress/dress_vintage=465,/obj/item/clothing/under/dress/dress_evening=386,/obj/item/clothing/under/dress/dress_party=349)
+	/obj/item/clothing/under/dress/dress_summer=332,/obj/item/clothing/under/dress/dress_vintage=465,/obj/item/clothing/under/dress/dress_evening=386,/obj/item/clothing/under/dress/dress_party=349,
+    /obj/item/clothing/glasses/aviator_orange=150, /obj/item/clothing/glasses/aviator_black=175, /obj/item/clothing/glasses/aviator_red=223, /obj/item/clothing/glasses/aviator_mirror=243,
+	/obj/item/clothing/glasses/jerusalem=130, /obj/item/clothing/glasses/threedglasses=150, /obj/item/clothing/glasses/gar=250)
 
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
@@ -1098,8 +1103,8 @@
 	name = "Blood'O'Matic"
 	desc = "Human blood dispenser. With internal freezer. Brought to you by EmpireV corp."
 	icon_state = "blood2"
+	icon_deny = "blood2-deny"
 	light_color = "#ffc0c0"
-	icon_deny = "blood2deny"
 	product_ads = "Go and grab some blood!;I'm hope you are not bloody vampire.;Only from nice virgins!;Natural liquids!;This stuff saves lives."
 	//req_access_txt = "5"
 	products = list(/obj/item/weapon/reagent_containers/blood/APlus = 7, /obj/item/weapon/reagent_containers/blood/AMinus = 4,
@@ -1114,9 +1119,9 @@
 	icon_state = "holy"
 	product_slogans = "HolyVend: Select your Religion today"
 	product_ads = "Pray now!;Atheists are heretic;Everything 100% Holy;Thirsty? Wanna pray? Why without candles?"
-	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 10, /obj/item/weapon/storage/fancy/candle_box = 25, /obj/item/weapon/storage/fancy/candle_box/red = 25,)
+	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 10, /obj/item/weapon/storage/fancy/candle_box = 25, /obj/item/weapon/storage/fancy/candle_box/red = 25, /obj/item/clothing/accessory/holy = 5)
 	contraband = list(/obj/item/weapon/nullrod = 2)
-	prices = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 30, /obj/item/weapon/storage/fancy/candle_box = 50, /obj/item/weapon/storage/fancy/candle_box/red = 50, /obj/item/weapon/nullrod = 100)
+	prices = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 30, /obj/item/weapon/storage/fancy/candle_box = 50, /obj/item/weapon/storage/fancy/candle_box/red = 50, /obj/item/weapon/nullrod = 100, /obj/item/clothing/accessory/holy = 250)
 
 /obj/machinery/vending/eva
 	name = "Hardsuit Kits"

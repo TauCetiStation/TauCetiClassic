@@ -1,3 +1,18 @@
+/mob/living/carbon/human/getHalLoss()
+	if(species.flags[NO_PAIN])
+		return 0
+	return ..()
+
+/mob/living/carbon/human/setHalLoss()
+	if(species.flags[NO_PAIN])
+		return
+	..()
+
+/mob/living/carbon/human/adjustHalLoss()
+	if(species.flags[NO_PAIN])
+		return
+	..()
+
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
 
 	def_zone = check_zone(def_zone)
@@ -73,7 +88,7 @@
 				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
 				if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
 					if(C.flags & THICKMATERIAL )
-						visible_message("<span class='userdanger'> <B>The [P.name] gets absorbed by [src]'s [C.name]!</span>")
+						visible_message("<span class='userdanger'>The [P.name] gets absorbed by [src]'s [C.name]!</span>")
 						qdel(P)
 						return
 
@@ -435,7 +450,7 @@
 	if(!BP || (BP.status & ORGAN_DESTROYED))
 		return NOLIMB
 
-	var/list/items = get_equipped_items()
+	var/list/items = get_equipped_items() - list(l_hand, r_hand)
 	for(var/obj/item/clothing/C in items)
 		if((C.flags & THICKMATERIAL) && (C.body_parts_covered & BP.body_part))
 			if(C.flags & PHORONGUARD) // this means, clothes has injection port or smthing like that.
@@ -453,5 +468,9 @@
 	var/obj/item/clothing/suit/space/SS = wear_suit
 	var/reduction_dam = (100 - SS.breach_threshold) / 100
 	var/penetrated_dam = max(0, min(50, (damage * reduction_dam) / 1.5)) // - SS.damage)) - Consider uncommenting this if suits seem too hardy on dev.
+
+	if(istype(SS, /obj/item/clothing/suit/space/rig))
+		var/obj/item/clothing/suit/space/rig/rig = SS
+		rig.take_hit(damage)
 
 	if(penetrated_dam) SS.create_breaches(damtype, penetrated_dam)

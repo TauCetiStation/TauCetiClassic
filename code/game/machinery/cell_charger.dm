@@ -57,7 +57,7 @@
 			user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
 			chargelevel = -1
 		updateicon()
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(iswrench(W))
 		if(charging)
 			to_chat(user, "\red Remove the cell first!")
 			return

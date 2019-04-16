@@ -12,7 +12,7 @@
 	var/scanning = 0
 
 /obj/machinery/computer/diseasesplicer/attackby(obj/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		return ..(I,user)
 
 	if(istype(I,/obj/item/weapon/virusdish))

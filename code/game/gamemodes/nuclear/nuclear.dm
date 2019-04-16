@@ -203,7 +203,7 @@
 		else
 			var/mob/living/carbon/human/H = synd_mind.current
 			P.loc = H.loc
-			H.equip_to_slot_or_del(P, slot_r_store, 0)
+			H.equip_to_slot_or_del(P, SLOT_R_STORE, 0)
 			H.update_icons()
 
 	else
@@ -231,9 +231,15 @@
 			to_chat(syndicate.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 	else
-		to_chat(syndicate.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
+		to_chat(syndicate.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 	return
 
+/datum/game_mode/proc/remove_nuclear(mob/M)
+	syndicates -= M
+	update_synd_icons_removed(src)
+	M.mind.special_role = null
+	M.mind.remove_objectives()
+	M.mind.current.faction = "neutral"
 
 /datum/game_mode/proc/random_radio_frequency()
 	return 1337 // WHY??? -- Doohl
@@ -244,37 +250,37 @@
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(synd_mob)
 	R.set_frequency(radio_freq)
-	synd_mob.equip_to_slot_or_del(R, slot_l_ear)
+	synd_mob.equip_to_slot_or_del(R, SLOT_L_EAR)
 
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(synd_mob), slot_w_uniform)
+	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(synd_mob), SLOT_W_UNIFORM)
 	if(synd_mob.backbag == 2)
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(synd_mob), slot_back)
+		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(synd_mob), SLOT_BACK)
 	if(synd_mob.backbag == 3)
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(synd_mob), slot_back)
+		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(synd_mob), SLOT_BACK)
 	if(synd_mob.backbag == 4)
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(synd_mob), slot_back)
-	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m12mm(synd_mob), slot_in_backpack)
-	synd_mob.equip_to_slot_or_del(new /obj/item/device/radio/uplink(synd_mob), slot_in_backpack)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), slot_in_backpack)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/c20r(synd_mob), slot_belt)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(synd_mob.back), slot_in_backpack)
+		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(synd_mob), SLOT_BACK)
+	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m12mm(synd_mob), SLOT_IN_BACKPACK)
+	synd_mob.equip_to_slot_or_del(new /obj/item/device/radio/uplink(synd_mob), SLOT_IN_BACKPACK)
+	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), SLOT_IN_BACKPACK)
+	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/c20r(synd_mob), SLOT_BELT)
+	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(synd_mob.back), SLOT_IN_BACKPACK)
 	if(boss)
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate/commander(synd_mob), slot_wear_id)
+		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate/commander(synd_mob), SLOT_WEAR_ID)
 	else
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate/nuker(synd_mob), slot_wear_id)
+		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate/nuker(synd_mob), SLOT_WEAR_ID)
 
 	switch(synd_mob.get_species())
 		if(UNATHI)
-			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/unathi(synd_mob), slot_in_backpack)
-			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/cut(synd_mob), slot_shoes)
+			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/unathi(synd_mob), SLOT_IN_BACKPACK)
+			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/cut(synd_mob), SLOT_SHOES)
 		if(TAJARAN)
-			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/tajaran(synd_mob), slot_in_backpack)
-			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/cut(synd_mob), slot_shoes)
+			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/tajaran(synd_mob), SLOT_IN_BACKPACK)
+			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/cut(synd_mob), SLOT_SHOES)
 		if(SKRELL)
-			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/skrell(synd_mob), slot_in_backpack)
-			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(synd_mob), slot_shoes)
+			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/skrell(synd_mob), SLOT_IN_BACKPACK)
+			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(synd_mob), SLOT_SHOES)
 		else
-			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(synd_mob), slot_shoes)
+			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(synd_mob), SLOT_SHOES)
 
 	var/obj/item/weapon/implant/dexplosive/E = new/obj/item/weapon/implant/dexplosive(synd_mob)
 	E.imp_in = synd_mob

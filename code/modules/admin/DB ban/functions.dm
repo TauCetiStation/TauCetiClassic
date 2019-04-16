@@ -80,11 +80,17 @@
 
 	reason = sql_sanitize_text(reason)
 
+	var/msg = "[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[sanitize(reason)]\" to the ban database."
+
+	var/datum/admin_help/AH = admin_ticket_log(ckey, msg)
+	if((bantype == BANTYPE_PERMA || bantype == BANTYPE_TEMP) && AH) // not sure if only for perma.
+		AH.Resolve()
+
 	var/sql = "INSERT INTO erro_ban (`id`,`bantime`,`serverip`,`bantype`,`reason`,`job`,`duration`,`rounds`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], [(rounds)?"[rounds]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
 	var/DBQuery/query_insert = dbcon.NewQuery(sql)
 	query_insert.Execute()
 	to_chat(usr, "\blue Ban saved to database.")
-	message_admins("[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[sanitize(reason)]\" to the ban database.")
+	message_admins(msg)
 	send2slack_logs(key_name(usr), text("has added a [] for [] [] [] with the reason: [] to the ban database.", bantype_str, ckey, (job ? "([job])" : ""), (duration > 0 ? "([duration] minutes)" : ""), text("[sanitize(reason)]")), "(BAN)")
 
 
@@ -436,9 +442,9 @@
 					if("TEMPBAN")
 						typedesc = "<b>TEMPBAN</b><br><font size='2'>([duration] minutes [(unbanned) ? "" : "(<a href=\"byond://?src=\ref[src];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]</font>"
 					if("JOB_PERMABAN")
-						typedesc = "<b>JOBBAN</b><br><font size='2'>([job])"
+						typedesc = "<b>JOBBAN</b><br><font size='2'>([job])</font>"
 					if("JOB_TEMPBAN")
-						typedesc = "<b>TEMP JOBBAN</b><br><font size='2'>([job])<br>([duration] minutes<br>Expires [expiration]"
+						typedesc = "<b>TEMP JOBBAN</b><br><font size='2'>([job])<br>([duration] minutes<br>Expires [expiration]</font>"
 
 				output += "<tr bgcolor='[dcolor]'>"
 				output += "<td align='center'>[typedesc]</td>"

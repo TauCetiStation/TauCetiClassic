@@ -1,7 +1,8 @@
 /turf/simulated/wall
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
-	icon = 'icons/turf/walls.dmi'
+	icon = 'icons/turf/walls/has_false_walls/wall.dmi'
+	icon_state = "box"
 	plane = GAME_PLANE
 
 	var/mineral = "metal"
@@ -22,8 +23,15 @@
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
 
-	var/walltype = "metal"
 	var/sheet_type = /obj/item/stack/sheet/metal
+
+	canSmoothWith = list(
+		/turf/simulated/wall,
+		/turf/simulated/wall/r_wall,
+		/obj/structure/falsewall,
+		/obj/structure/falsewall/reinforced,
+		)
+	smooth = SMOOTH_TRUE
 
 /turf/simulated/wall/Destroy()
 	for(var/obj/effect/E in src)
@@ -36,8 +44,7 @@
 	for(var/obj/effect/E in src)
 		if(E.name == "Wallrot")
 			qdel(E)
-	. = ..()
-	relativewall_neighbours()
+	return ..()
 
 //Appearance
 
@@ -296,9 +303,9 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(rotting)
-		if(istype(W, /obj/item/weapon/weldingtool))
+		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
-			if(WT.remove_fuel(0,user))
+			if(WT.use(0,user))
 				to_chat(user, "<span class='notice'>You burn away the fungi with \the [WT].</span>")
 				playsound(src, 'sound/items/Welder.ogg', 10, 1)
 				for(var/obj/effect/E in src) if(E.name == "Wallrot")
@@ -312,9 +319,9 @@
 
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
-		if(istype(W, /obj/item/weapon/weldingtool))
+		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
-			if(WT.remove_fuel(0,user))
+			if(WT.use(0,user))
 				thermitemelt(user)
 				return
 
@@ -336,7 +343,7 @@
 	var/turf/T = user.loc	//get user's location for delay checks
 
 	//DECONSTRUCTION
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		if(user.is_busy()) return
 
 		var/response = "Dismantle"
@@ -345,20 +352,17 @@
 
 		var/obj/item/weapon/weldingtool/WT = W
 
-		if(WT.remove_fuel(0,user))
+		if(WT.use(0,user))
 			if(response == "Repair")
 				to_chat(user, "<span class='notice'>You start repairing the damage to [src].</span>")
-				playsound(src, 'sound/items/Welder.ogg', 100, 1)
-				if(do_after(user, max(5, damage / 5), target = src) && WT && WT.isOn())
+				if(WT.use_tool(src, user, max(5, damage / 5), volume = 100))
 					to_chat(user, "<span class='notice'>You finish repairing the damage to [src].</span>")
 					take_damage(-damage)
 
 			else if(response == "Dismantle")
 				to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
-				playsound(src, 'sound/items/Welder.ogg', 100, 1)
-
-				if(do_after(user,100, target = src))
-					if(!istype(src, /turf/simulated/wall) || !user || !WT || !WT.isOn() || !T)
+				if(WT.use_tool(src, user, 100, volume = 100))
+					if(!istype(src, /turf/simulated/wall) || !T)
 						return
 
 					if(user.loc == T && user.get_active_hand() == WT)
@@ -370,12 +374,10 @@
 			return
 
 	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-		if(user.is_busy()) return
-
+		if(user.is_busy(src))
+			return
 		to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
-		playsound(src, 'sound/items/Welder.ogg', 100, 1)
-
-		if(do_after(user,60,target = src))
+		if(W.use_tool(src, user, 60, volume = 100))
 			if(mineral == "diamond")//Oh look, it's tougher
 				sleep(60)
 			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)
@@ -390,11 +392,10 @@
 
 	//DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
-		if(user.is_busy()) return
-
+		if(user.is_busy(src))
+			return
 		to_chat(user, "<span class='notice'>You begin to drill though the wall.</span>")
-
-		if(do_after(user,60,target = src))
+		if(W.use_tool(src, user, 60, volume = 50))
 			if(mineral == "diamond")
 				sleep(60)
 			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)
@@ -414,8 +415,7 @@
 		EB.spark_system.start()
 		to_chat(user, "<span class='notice'>You stab \the [EB] into the wall and begin to slice it apart.</span>")
 		playsound(src, "sparks", 50, 1)
-
-		if(do_after(user,70,target = src))
+		if(W.use_tool(src, user, 70))
 			if(mineral == "diamond")
 				sleep(70)
 			if(!istype(src, /turf/simulated/wall) || !user || !EB || !T)

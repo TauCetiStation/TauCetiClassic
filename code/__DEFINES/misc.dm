@@ -93,12 +93,6 @@
 #define shuttle_time_in_station 1800 // 3 minutes in the station
 #define shuttle_time_to_arrive 6000 // 10 minutes to arrive
 
-#define FOR_DVIEW(type, range, center, invis_flags) \
-	dview_mob.loc = center; \
-	dview_mob.see_invisible = invis_flags; \
-	for(type in view(range, dview_mob))
-#define END_FOR_DVIEW dview_mob.loc = null
-
 //defines
 #define RESIZE_DEFAULT_SIZE 1
 
@@ -116,7 +110,6 @@
 #define MAT_PLASTIC		"$plastic"
 #define MAT_BANANIUM	"$bananium"
 
-#define COIN_STANDARD "Coin"
 #define COIN_GOLD "Gold coin"
 #define COIN_SILVER "Silver coin"
 #define COIN_DIAMOND "Diamond coin"
@@ -125,6 +118,7 @@
 #define COIN_URANIUM "Uranium coin"
 #define COIN_BANANIUM "Bananium coin"
 #define COIN_PLATINUM "Platunum coin"
+#define COIN_MYTHRIL "Mythril coin"
 
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
@@ -174,7 +168,8 @@
 #define ASSEMBLY_WIRED         1
 #define ASSEMBLY_NEAR_FINISHED 2
 
-//Wet floor states/severity
+//Wet floor type bitflags. Stronger ones should be higher in number.
+#define DRY_FLOOR 0
 #define WATER_FLOOR 1
 #define LUBE_FLOOR  2
 
@@ -205,3 +200,7 @@
 #define MOUSE_OPACITY_TRANSPARENT   0
 #define MOUSE_OPACITY_ICON          1
 #define MOUSE_OPACITY_OPAQUE        2
+
+// Used in browser.dm for common.css style.
+#define CSS_THEME_LIGHT "theme_light"
+#define CSS_THEME_DARK "theme_dark"

@@ -140,7 +140,7 @@
 
 
 	//building and linking a terminal
-	if(istype(I, /obj/item/stack/cable_coil))
+	if(iscoil(I))
 		var/dir = get_dir(user,src)
 		if(dir & (dir-1))//we don't want diagonal click
 			return
@@ -166,9 +166,7 @@
 		if(user.is_busy()) return
 
 		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
-		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-
-		if(do_after(user, 20, target = src) && C.get_amount() >= 10)
+		if(I.use_tool(src, user, 20, volume = 50) && C.get_amount() >= 10)
 			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
 			if (prob(50) && electrocute_mob(usr, N, N)) //animate the electrocution if uncautious and unlucky
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -187,7 +185,7 @@
 		return
 
 	//disassembling the terminal
-	if(istype(I, /obj/item/weapon/wirecutters) && terminal && panel_open)
+	if(iswirecutter(I) && terminal && panel_open)
 		terminal.dismantle(user)
 
 	//crowbarring it !
@@ -379,7 +377,7 @@
 	//world << "[href] ; [href_list[href]]"
 
 	for(var/area/A in all_areas)
-		A.master.powerupdate = 3
+		A.powerupdate = 3
 
 	if( href_list["cmode"] )
 		chargemode = !chargemode
@@ -410,7 +408,7 @@
 				output = input(usr, "Enter new output level (0-[max_output])", "SMES Output Power Control", output) as num
 		output = max(0, min(max_output, output))	// clamp to range
 
-	investigate_log("input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
+	investigate_log("input/output; [chargelevel>output ? "<font color='green'>[chargelevel]/[output]</font>" : "<font color='red'>[chargelevel]/[output]</font>"] | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
 
 
 /obj/machinery/power/smes/proc/ion_act()

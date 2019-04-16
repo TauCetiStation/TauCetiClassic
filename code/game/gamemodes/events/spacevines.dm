@@ -36,9 +36,9 @@
 
 		else //weapons with subtypes
 			if(istype(W, /obj/item/weapon/melee/energy/sword)) qdel(src)
-			else if(istype(W, /obj/item/weapon/weldingtool))
+			else if(iswelder(W))
 				var/obj/item/weapon/weldingtool/WT = W
-				if(WT.remove_fuel(0, user)) qdel(src)
+				if(WT.use(0, user)) qdel(src)
 			else
 				user_unbuckle_mob(user)
 				return
@@ -165,7 +165,7 @@
 	var/dogrowth = 1
 	if (!istype(Vspread, /turf/simulated/floor)) dogrowth = 0
 	for(var/obj/O in Vspread)
-		if (istype(O, /obj/structure/window) || istype(O, /obj/effect/forcefield) || istype(O, /obj/effect/blob) || istype(O, /obj/effect/alien/weeds) || istype(O, /obj/effect/spacevine)) dogrowth = 0
+		if (istype(O, /obj/structure/window) || istype(O, /obj/effect/forcefield) || istype(O, /obj/effect/blob) || istype(O, /obj/structure/alien/weeds) || istype(O, /obj/effect/spacevine)) dogrowth = 0
 		if (istype(O, /obj/machinery/door))
 			if(O:p_open == 0 && prob(50)) O:open()
 			else dogrowth = 0
@@ -215,10 +215,9 @@
 		var/list/turf/simulated/floor/turfs = list() //list of all the empty floor turfs in the hallway areas
 		for(var/areapath in typesof(/area/hallway))
 			var/area/A = locate(areapath)
-			for(var/area/B in A.related)
-				for(var/turf/simulated/floor/F in B.contents)
-					if(!F.contents.len)
-						turfs += F
+			for(var/turf/simulated/floor/F in A.contents)
+				if(!F.contents.len)
+					turfs += F
 
 		if(turfs.len) //Pick a turf to spawn at if we can
 			var/turf/simulated/floor/T = pick(turfs)

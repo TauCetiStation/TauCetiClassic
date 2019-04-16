@@ -109,7 +109,7 @@
 		dat+= "<font color ='grey'>The panel is ridden with controls, button and meters, labeled in strange signs and symbols that <BR>you cannot understand. Probably the manufactoring world's language.<BR> Among other things, a few controls catch your eye.<BR><BR>"
 		dat+= text("<font color ='black'>A small dial with a \"ë\" symbol embroidded on it. It's pointing towards a gauge that reads []</font>.<BR> <font color='blue'><A href='?src=\ref[];toggleUV=1'> Turn towards []</A><BR>",(src.issuperUV ? "15nm" : "185nm"),src,(src.issuperUV ? "185nm" : "15nm") )
 		dat+= text("<font color ='black'>A thick old-style button, with 2 grimy LED lights next to it. The [] LED is on.</font><BR><font color ='blue'><A href='?src=\ref[];togglesafeties=1'>Press button</a></font>",(src.safetieson? "<font color='green'><B>GREEN</B></font>" : "<font color='red'><B>RED</B></font>"),src)
-		dat+= text("<HR><BR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close panel</A>", user)
+		dat+= text("<HR><BR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close panel</A></font></font>", user)
 		//user << browse(entity_ja(dat), "window=ssu_m_panel;size=400x500")
 		//onclose(user, "ssu_m_panel")
 	else if(src.isUV) //The thing is running its cauterisation cycle. You have to wait.
@@ -143,7 +143,7 @@
 				dat+= text(" - <A href='?src=\ref[];toggle_lock=1'><font color ='orange'>*[] Unit*</A></font><HR>",src,(src.islocked ? "Unlock" : "Lock") )
 			dat+= text("Unit status: []",(src.islocked? "<font color ='red'><B>**LOCKED**</B></font><BR>" : "<font color ='green'><B>**UNLOCKED**</B></font><BR>") )
 			dat+= text("<A href='?src=\ref[];start_UV=1'>Start Disinfection cycle</A><BR>",src)
-			dat += text("<BR><BR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close control panel</A>", user)
+			dat += text("<BR><BR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close control panel</A></font>", user)
 			//user << browse(entity_ja(dat), "window=Suit Storage Unit;size=400x500")
 			//onclose(user, "Suit Storage Unit")
 		else //Ohhhh shit it's dirty or broken! Let's inform the guy.
@@ -472,7 +472,7 @@
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user)
 	if(!src.ispowered)
 		return
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		src.panelopen = !src.panelopen
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		to_chat(user, text("<font color='blue'>You [] the unit's maintenance panel.</font>",(src.panelopen ? "open up" : "close") ))
@@ -494,7 +494,7 @@
 			return
 		if(user.is_busy()) return
 		visible_message("[user] starts putting [G.affecting.name] into the Suit Storage Unit.", 3)
-		if(do_after(user, 20, target = src))
+		if(I.use_tool(src, user, 20, volume = 50))
 			if(!G || !G.affecting) return //derpcheck
 			var/mob/M = G.affecting
 			if (M.client)

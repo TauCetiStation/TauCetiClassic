@@ -3,27 +3,35 @@
 	icon_state = "flashbang"
 	item_state = "flashbang"
 	origin_tech = "materials=2;combat=1"
-	var/banglet = 0
+	var/banglet = FALSE
+	var/flashbang_range = 7 //how many tiles away the mob will be stunned.
 
 /obj/item/weapon/grenade/flashbang/prime()
 	..()
-	for(var/obj/structure/closet/L in hear(7, get_turf(src)))
-		if(locate(/mob/living/carbon, L))
+
+	var/flashbang_turf = get_turf(src)
+	if(!flashbang_turf)
+		return
+
+	var/datum/effect/effect/system/spark_spread/S = new
+	S.set_up(rand(5, 9), FALSE, src)
+	S.start()
+	new /obj/effect/dummy/lighting_obj(flashbang_turf, LIGHT_COLOR_WHITE, (flashbang_range + 2), 4, 2)
+
+	for(var/obj/structure/closet/L in hear(flashbang_range, flashbang_turf))
+		if(locate(/mob/living/carbon) in L)
 			for(var/mob/living/carbon/M in L)
-				bang(get_turf(src), M)
+				bang(flashbang_turf, M)
 
+	for(var/mob/living/carbon/M in hear(flashbang_range, flashbang_turf))
+		bang(flashbang_turf, M)
 
-	for(var/mob/living/carbon/M in hear(7, get_turf(src)))
-		bang(get_turf(src), M)
-
-	for(var/obj/effect/blob/B in hear(8,get_turf(src)))       		//Blob damage here
-		var/damage = round(30/(get_dist(B,get_turf(src))+1))
+	for(var/obj/effect/blob/B in hear(flashbang_range + 1, flashbang_turf))       		//Blob damage here
+		var/damage = round(30 / (get_dist(B, flashbang_turf) + 1))
 		B.health -= damage
 		B.update_icon()
 
-	new/obj/effect/effect/smoke/flashbang(src.loc)
 	qdel(src)
-	return
 
 /obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/carbon/M)						// Added a new proc called 'bang' that takes a location and a person to be banged.
 	to_chat(M, "\red <B>BANG</B>")
@@ -43,7 +51,7 @@
 				ear_safety += 1
 
 //Flashing everyone
-	if(eye_safety < 1)
+	if(eye_safety<1)
 		M.flash_eyes()
 		M.Stun(2)
 		M.Weaken(10)
@@ -52,7 +60,9 @@
 
 //Now applying sound
 	if((get_dist(M, T) <= 2 || src.loc == M.loc || src.loc == M))
-		if(ear_safety > 0)
+		if(ear_safety > 1)
+			M.Stun(1.5)
+		else if(ear_safety > 0)
 			M.Stun(2)
 			M.Weaken(1)
 		else
@@ -97,12 +107,6 @@
 			to_chat(M, "\red Your ears start to ring!")
 	M.update_icons()
 
-/obj/effect/effect/smoke/flashbang
-	name = "illumination"
-	time_to_live = 10
-	opacity = 0
-	icon_state = "sparks"
-
 ////////////////////
 //Clusterbang
 ////////////////////
@@ -138,7 +142,7 @@
 	. = ..()
 	icon_state = "clusterbang_segment_active"
 	payload = payload_type
-	active = 1
+	active = TRUE
 	walk_away(src,loc,rand(1,4))
 	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
 

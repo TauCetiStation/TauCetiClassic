@@ -63,15 +63,15 @@
 				to_chat(user, "<span class='warning'>The frame needs wiring first!</span>")
 				return
 
-			else if(istype(P, /obj/item/stack/cable_coil))
+			else if(iscoil(P))
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() < 5)
 					to_chat(user, "<span class='warning'>You need five length of cable to wire the frame!</span>")
 					return
-				if(user.is_busy()) return
-				playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+				if(user.is_busy(src))
+					return
 				to_chat(user, "<span class='notice'>You start to add cables to the frame.</span>")
-				if(do_after(user, 20/P.toolspeed, target = src))
+				if(P.use_tool(src, user, 20, target = src, volume = 50))
 					if(state == 1)
 						if(!C.use(5))
 							return
@@ -80,32 +80,32 @@
 						state = 2
 						icon_state = "box_1"
 
-			else if(istype(P, /obj/item/weapon/screwdriver) && !anchored)
-				if(user.is_busy()) return
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			else if(isscrewdriver(P) && !anchored)
+				if(user.is_busy(src))
+					return
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
-				if(do_after(user, 40/P.toolspeed, target = src))
+				if(P.use_tool(src, user, 40, volume = 50))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
 						var/obj/item/stack/sheet/metal/M = new (loc, 5)
 						M.add_fingerprint(user)
 						qdel(src)
 
-			else if(istype(P, /obj/item/weapon/wrench))
-				if(user.is_busy()) return
+			else if(iswrench(P))
+				if(user.is_busy())
+					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				if(do_after(user, 40/P.toolspeed, target = src))
+				if(P.use_tool(src, user, 40, volume = 75))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 						anchored = !anchored
 		if(2)
-			if(istype(P, /obj/item/weapon/wrench))
-				if(user.is_busy()) return
+			if(iswrench(P))
+				if(user.is_busy())
+					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				if(do_after(user, 40/P.toolspeed, target = src))
+				if(P.use_tool(src, user, 40, volume = 75))
 					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 					anchored = !anchored
 
@@ -129,7 +129,7 @@
 					update_req_desc()
 				else
 					to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
-			if(istype(P, /obj/item/weapon/wirecutters))
+			if(iswirecutter(P))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 1
@@ -137,7 +137,7 @@
 				new /obj/item/stack/cable_coil/red(loc, 5)
 
 		if(3)
-			if(istype(P, /obj/item/weapon/crowbar))
+			if(iscrowbar(P))
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				state = 2
 				circuit.loc = src.loc
@@ -154,7 +154,7 @@
 				components = null
 				icon_state = "box_1"
 
-			if(istype(P, /obj/item/weapon/screwdriver))
+			if(isscrewdriver(P))
 				var/component_check = 1
 				for(var/R in req_components)
 					if(req_components[R] > 0)
@@ -163,6 +163,7 @@
 				if(component_check)
 					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc)
+					transfer_fingerprints_to(new_machine)
 					new_machine.construction()
 					for(var/obj/O in new_machine.component_parts)
 						qdel(O)
@@ -205,7 +206,7 @@
 			if(istype(P, /obj/item) && get_req_components_amt())
 				for(var/I in req_components)
 					if(istype(P, I) && (req_components[I] > 0))
-						if(istype(P, /obj/item/stack/cable_coil))
+						if(iscoil(P))
 							var/obj/item/stack/cable_coil/CP = P
 							var/cable_color = CP.item_color
 							if(CP.use(1))
@@ -243,7 +244,7 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/vending_refill/boozeomat = 3)
 
 /obj/item/weapon/circuitboard/vendor/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		var/list/names = list(/obj/machinery/vending/boozeomat = "Booze-O-Mat",
 							/obj/machinery/vending/coffee = "Getmore Chocolate Corp",
 							/obj/machinery/vending/snack = "Hot Drinks",

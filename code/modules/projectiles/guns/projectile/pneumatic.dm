@@ -4,10 +4,10 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "pneumatic"
 	item_state = "pneumatic"
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
-	max_w_class = 3
+	max_w_class = ITEM_SIZE_NORMAL
 	storage_slots = 7
 
 	var/obj/item/weapon/tank/tank = null                // Tank of gas for use in firing the cannon.
@@ -197,10 +197,10 @@
 			buildstate++
 			update_icon()
 			return
-	else if(istype(W,/obj/item/weapon/weldingtool))
+	else if(iswelder(W))
 		if(buildstate == 1)
 			var/obj/item/weapon/weldingtool/T = W
-			if(T.remove_fuel(0,user))
+			if(T.use(0,user))
 				if(!src || !T.isOn()) return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 				to_chat(user, "\blue You weld the pipe into place.")
@@ -208,7 +208,7 @@
 				update_icon()
 		if(buildstate == 3)
 			var/obj/item/weapon/weldingtool/T = W
-			if(T.remove_fuel(0,user))
+			if(T.use(0,user))
 				if(!src || !T.isOn()) return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 				to_chat(user, "\blue You weld the metal chassis together.")
@@ -216,7 +216,7 @@
 				update_icon()
 		if(buildstate == 5)
 			var/obj/item/weapon/weldingtool/T = W
-			if(T.remove_fuel(0,user))
+			if(T.use(0,user))
 				if(!src || !T.isOn()) return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 				to_chat(user, "\blue You weld the valve into place.")

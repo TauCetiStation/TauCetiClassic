@@ -40,7 +40,6 @@
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
 	var/continous_rounds = 1			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 	var/allow_Metadata = 1				// Metadata is supported.
-	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 	var/fps = 20
 	var/socket_talk	= 0					// use socket_talk to communicate with other processes
 	var/list/resource_urls = null
@@ -63,6 +62,8 @@
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
+
+	var/registration_panic_bunker_age = null
 
 	var/cult_ghostwriter = 1               //Allows ghosts to write in blood in cult rounds...
 	var/cult_ghostwriter_req_cultists = 10 //...so long as this many cultists are active.
@@ -140,6 +141,8 @@
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 	var/use_ingame_minutes_restriction_for_jobs = 0 //Do jobs use in-game minutes instead account age for restrictions?
 
+	var/add_player_age_value = 4000 //default minuts added with admin "Increase player age" button
+
 	var/byond_version_min = 0
 	var/byond_version_recommend = 0
 
@@ -165,6 +168,7 @@
 	var/slack_team = 0
 	var/antigrief_alarm_level = 1
 	var/check_randomizer = 0
+	var/proxy_autoban = 0
 
 	var/allow_donators = 0
 	var/allow_byond_membership = 0
@@ -176,6 +180,7 @@
 	var/obj/effect/statclick/statclick
 
 	var/craft_recipes_visibility = FALSE // If false, then users won't see crafting recipes in personal crafting menu until they have all required components and then it will show up.
+	var/starlight = FALSE	// Whether space turfs have ambient light or not
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -243,6 +248,9 @@
 
 				if ("use_ingame_minutes_restriction_for_jobs")
 					config.use_ingame_minutes_restriction_for_jobs = 1
+
+				if ("add_player_age_value")
+					config.add_player_age_value = text2num(value)
 
 				if ("log_ooc")
 					config.log_ooc = 1
@@ -448,9 +456,6 @@
 				if("forbid_singulo_possession")
 					forbid_singulo_possession = 1
 
-				if("popup_admin_pm")
-					config.popup_admin_pm = 1
-
 				if("allow_holidays")
 					Holiday = 1
 
@@ -579,6 +584,9 @@
 				if("check_randomizer")
 					config.check_randomizer = value
 
+				if("proxy_autoban")
+					config.proxy_autoban = 1
+
 				if("allow_donators")
 					config.allow_donators = 1
 
@@ -599,6 +607,9 @@
 
 				if("repository_link")
 					config.repository_link = value
+
+				if("registration_panic_bunker_age")
+					config.registration_panic_bunker_age = value
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
@@ -643,6 +654,8 @@
 					config.organ_regeneration_multiplier = value / 100
 				if("craft_recipes_visibility")
 					config.craft_recipes_visibility = TRUE
+				if("starlight")
+					config.starlight = TRUE
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 

@@ -1,7 +1,7 @@
 /obj/item/device/suit_cooling_unit
 	name = "portable suit cooling unit"
 	desc = "A portable heat sink and liquid cooled radiator that can be hooked up to a space suit's existing temperature controls to provide industrial levels of cooling."
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 	icon = 'icons/obj/device.dmi'
 	icon_state = "suitcooler0"
 	slot_flags = SLOT_FLAGS_BACK	//you can carry it on your back if you want, but it won't do anything unless attached to suit storage
@@ -131,7 +131,7 @@
 			to_chat(user, "You switch on the [src].")
 
 /obj/item/device/suit_cooling_unit/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/screwdriver))
+	if (isscrewdriver(W))
 		if(cover_open)
 			cover_open = 0
 			to_chat(user, "You screw the panel into place.")

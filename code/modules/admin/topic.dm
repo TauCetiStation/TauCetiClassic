@@ -10,6 +10,22 @@
 		check_antagonists()
 		return
 
+	if(href_list["ahelp"])
+		if(!check_rights(R_ADMIN, TRUE))
+			return
+
+		var/ahelp_ref = href_list["ahelp"]
+		var/datum/admin_help/AH = locate(ahelp_ref)
+		if(AH)
+			AH.Action(href_list["ahelp_action"])
+		else
+			to_chat(usr, "Ticket [ahelp_ref] has been deleted!")
+		return
+
+	if(href_list["ahelp_tickets"])
+		global.ahelp_tickets.BrowseTickets(text2num(href_list["ahelp_tickets"]))
+		return
+
 //	if(href_list["stickyban"])
 //		stickyban(href_list["stickyban"],href_list)
 
@@ -958,63 +974,75 @@
 		return 0 //we didn't do anything!
 
 	else if(href_list["geoip"])
-		var/mob/M = locate(href_list["geoip"])
-		if (ismob(M))
-			if(!M.client)
-				return
-			var/dat = "<html><head><title>GeoIP info</title></head>"
-			var/client/C = M.client
-			if(C.geoip.status != "updated" || C.geoip.status != "admin")
-				C.geoip.try_update_geoip(C, C.address)
-			dat += "<center><b>Ckey:</b> [M.ckey]</center>"
-			dat += "<b>Country:</b> [C.geoip.country]<br>"
-			dat += "<b>CountryCode:</b> [C.geoip.countryCode]<br>"
-			dat += "<b>Region:</b> [C.geoip.region]<br>"
-			dat += "<b>Region Name:</b> [C.geoip.regionName]<br>"
-			dat += "<b>City:</b> [C.geoip.city]<br>"
-			dat += "<b>Timezone:</b> [C.geoip.timezone]<br>"
-			dat += "<b>ISP:</b> [C.geoip.isp]<br>"
-			dat += "<b>Mobile:</b> [C.geoip.mobile]<br>"
-			dat += "<b>Proxy:</b> [C.geoip.proxy]<br>"
-			dat += "<b>IP:</b> [C.geoip.ip]<br>"
-			dat += "<hr><b>Status:</b> [C.geoip.status]"
-			usr << browse(entity_ja(dat), "window=geoip")
+		if(!check_rights(R_LOG))
+			return
+		else
+			var/mob/M = locate(href_list["geoip"])
+			if (ismob(M))
+				if(!M.client)
+					return
+				var/dat = "<html><head><title>GeoIP info</title></head>"
+				var/client/C = M.client
+				if(C.geoip.status != "updated" || C.geoip.status != "admin")
+					C.geoip.try_update_geoip(C, C.address)
+				dat += "<center><b>Ckey:</b> [M.ckey]</center>"
+				dat += "<b>Country:</b> [C.geoip.country]<br>"
+				dat += "<b>CountryCode:</b> [C.geoip.countryCode]<br>"
+				dat += "<b>Region:</b> [C.geoip.region]<br>"
+				dat += "<b>Region Name:</b> [C.geoip.regionName]<br>"
+				dat += "<b>City:</b> [C.geoip.city]<br>"
+				dat += "<b>Timezone:</b> [C.geoip.timezone]<br>"
+				dat += "<b>ISP:</b> [C.geoip.isp]<br>"
+				dat += "<b>Mobile:</b> [C.geoip.mobile]<br>"
+				dat += "<b>Proxy:</b> [C.geoip.proxy]<br>"
+				dat += "<b>IP:</b> [C.geoip.ip]<br>"
+				dat += "<hr><b>Status:</b> [C.geoip.status]"
+				usr << browse(entity_ja(dat), "window=geoip")
 
 	else if(href_list["cid_list"])
-		var/mob/M = locate(href_list["cid_list"])
-		if (ismob(M))
-			if(!M.client)
-				return
-			var/client/C = M.client
-			var/dat = "<html><head><title>[C.ckey] cid list</title></head>"
-			dat += "<center><b>Ckey:</b> [C.ckey] | <b>Ignore warning:</b> [C.prefs.ignore_cid_warning ? "yes" : "no"]</center>"
-			for(var/x in C.prefs.cid_list)
-				dat += "<b>computer_id:</b> [x] - <b>first seen:</b> [C.prefs.cid_list[x]["first_seen"]] - <b>last seen:</b> [C.prefs.cid_list[x]["last_seen"]]<br>"
-			usr << browse(entity_ja(dat), "window=[C.ckey]_cid_list")
+		if(!check_rights(R_LOG))
+			return
+		else
+			var/mob/M = locate(href_list["cid_list"])
+			if (ismob(M))
+				if(!M.client)
+					return
+				var/client/C = M.client
+				var/dat = "<html><head><title>[C.ckey] cid list</title></head>"
+				dat += "<center><b>Ckey:</b> [C.ckey] | <b>Ignore warning:</b> [C.prefs.ignore_cid_warning ? "yes" : "no"]</center>"
+				for(var/x in C.prefs.cid_list)
+					dat += "<b>computer_id:</b> [x] - <b>first seen:</b> [C.prefs.cid_list[x]["first_seen"]] - <b>last seen:</b> [C.prefs.cid_list[x]["last_seen"]]<br>"
+				usr << browse(entity_ja(dat), "window=[C.ckey]_cid_list")
 
 	else if(href_list["cid_ignore"])
-		var/mob/M = locate(href_list["cid_ignore"])
-		if (ismob(M))
-			if(!M.client)
-				return
-			var/client/C = M.client
-			C.prefs.ignore_cid_warning = !(C.prefs.ignore_cid_warning)
-			log_admin("[key_name(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
-			message_admins("[key_name_admin(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
+		if(!check_rights(R_LOG))
+			return
+		else
+			var/mob/M = locate(href_list["cid_ignore"])
+			if (ismob(M))
+				if(!M.client)
+					return
+				var/client/C = M.client
+				C.prefs.ignore_cid_warning = !(C.prefs.ignore_cid_warning)
+				log_admin("[key_name(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
+				message_admins("[key_name_admin(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
 
 	else if(href_list["related_accounts"])
-		var/mob/M = locate(href_list["related_accounts"])
-		if (ismob(M))
-			if(!M.client)
-				return
-			var/client/C = M.client
+		if(!check_rights(R_LOG))
+			return
+		else
+			var/mob/M = locate(href_list["related_accounts"])
+			if (ismob(M))
+				if(!M.client)
+					return
+				var/client/C = M.client
 
-			var/dat = "<html><head><title>[C.key] related accounts by IP and cid</title></head>"
-			dat += "<center><b>Ckey:</b> [C.ckey]</center><br>"
-			dat += "<b>IP:</b> [C.related_accounts_ip]<hr>"
-			dat += "<b>CID:</b> [C.related_accounts_cid]"
+				var/dat = "<html><head><title>[C.key] related accounts by IP and cid</title></head>"
+				dat += "<center><b>Ckey:</b> [C.ckey]</center><br>"
+				dat += "<b>IP:</b> [C.related_accounts_ip]<hr>"
+				dat += "<b>CID:</b> [C.related_accounts_cid]"
 
-			usr << browse(entity_ja(dat), "window=[C.ckey]_related_accounts")
+				usr << browse(entity_ja(dat), "window=[C.ckey]_related_accounts")
 
 	else if(href_list["boot2"])
 		var/mob/M = locate(href_list["boot2"])
@@ -1259,8 +1287,8 @@
 		M.loc = prison_cell
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/prisoner = M
-			prisoner.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(prisoner), slot_w_uniform)
-			prisoner.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(prisoner), slot_shoes)
+			prisoner.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(prisoner), SLOT_W_UNIFORM)
+			prisoner.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(prisoner), SLOT_SHOES)
 
 		to_chat(M, "\red You have been sent to the prison station!")
 		log_admin("[key_name(usr)] sent [key_name(M)] to the prison station.")
@@ -1361,8 +1389,8 @@
 
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/observer = M
-			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket(observer), slot_w_uniform)
-			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(observer), slot_shoes)
+			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket(observer), SLOT_W_UNIFORM)
+			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(observer), SLOT_SHOES)
 		M.Paralyse(5)
 		sleep(5)
 		M.loc = pick(tdomeobserve)
@@ -1575,9 +1603,9 @@
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human")
 			return
 
-		H.equip_to_slot_or_del( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), slot_l_hand )
+		H.equip_to_slot_or_del( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), SLOT_L_HAND )
 		if(!(istype(H.l_hand,/obj/item/weapon/reagent_containers/food/snacks/cookie)))
-			H.equip_to_slot_or_del( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), slot_r_hand )
+			H.equip_to_slot_or_del( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), SLOT_R_HAND )
 			if(!(istype(H.r_hand,/obj/item/weapon/reagent_containers/food/snacks/cookie)))
 				log_admin("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
 				message_admins("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
@@ -1589,7 +1617,8 @@
 		log_admin("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
 		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
 		feedback_inc("admin_cookies_spawned",1)
-		to_chat(H, "\blue Your prayers have been answered!! You received the <b>best cookie</b>!")
+		to_chat(H, "<span class='adminnotice'>Your prayers have been answered!! You received the <b>best cookie</b>!</span>")
+		SEND_SOUND(H, sound('sound/effects/pray_chaplain.ogg'))
 
 	else if(href_list["BlueSpaceArtillery"])
 		if(!check_rights(R_ADMIN|R_FUN))
@@ -1778,6 +1807,7 @@
 
 		var/paths = list()
 		var/removed_paths = list()
+		var/max_paths_length = 5
 
 		for(var/dirty_path in dirty_paths)
 			var/path = text2path(dirty_path)
@@ -1799,13 +1829,15 @@
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
 					continue
+			else if(ispath(path, /turf))
+				max_paths_length = 1
 			paths += path
 
 		if(!paths)
 			alert("The path list you sent is empty")
 			return
-		if(length(paths) > 5)
-			alert("Select fewer object types, (max 5)")
+		if(length(paths) > max_paths_length)
+			alert("Select fewer object types, (max [max_paths_length])")
 			return
 		else if(length(removed_paths))
 			alert("Removed:\n" + jointext(removed_paths, "\n"))
@@ -1855,6 +1887,7 @@
 
 
 		if(target)
+			var/stop_main_loop = FALSE
 			for (var/path in paths)
 				for (var/i = 0; i < number; i++)
 					if(where == "dropped")
@@ -1864,6 +1897,9 @@
 						var/turf/N = O.ChangeTurf(path)
 						if(N && obj_name)
 							N.name = obj_name
+						number = 1 // this is not for this loop, but for the logs part down below.
+						stop_main_loop = TRUE
+						break // there is no point in spawning more than one turf.
 					else
 						var/atom/O = new path(target)
 						if(O)
@@ -1884,6 +1920,8 @@
 										I.loc = R.module
 										R.module.rebuild()
 										R.activate_module(I)
+				if(stop_main_loop)
+					break
 
 		if (number == 1)
 			log_admin("[key_name(usr)] created a [english_list(paths)]")
@@ -2046,8 +2084,8 @@
 							H.drop_from_inventory(W)
 						//teleport person to cell
 						H.loc = pick(prisonwarp)
-						H.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(H), slot_w_uniform)
-						H.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(H), slot_shoes)
+						H.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(H), SLOT_W_UNIFORM)
+						H.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(H), SLOT_SHOES)
 					else
 						//teleport security person
 						H.loc = pick(prisonsecuritywarp)
@@ -2439,7 +2477,7 @@
 				else
 					to_chat(usr, "<span class='userdanger'>You are staying on incorrect turf.</span>")
 			if("list_bombers")
-				var/dat = "<B>Bombing List<HR>"
+				var/dat = "<B>Bombing List</B><HR>"
 				for(var/l in bombers)
 					dat += text("[l]<BR>")
 				usr << browse(entity_ja(dat), "window=bombers")

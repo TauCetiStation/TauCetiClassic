@@ -117,11 +117,11 @@
 
 /obj/machinery/computer/attackby(obj/item/I, mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(istype(I, /obj/item/weapon/screwdriver) && circuit && !(flags&NODECONSTRUCT))
+	if(isscrewdriver(I) && circuit && !(flags&NODECONSTRUCT))
 		if(user.is_busy(src)) return
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20, target = src))
+		if(I.use_tool(src, user, 20, volume = 50))
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
+			transfer_fingerprints_to(A)
 			A.circuit = circuit
 			A.anchored = 1
 			circuit = null

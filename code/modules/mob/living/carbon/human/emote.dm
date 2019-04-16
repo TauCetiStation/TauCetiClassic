@@ -61,7 +61,7 @@
 			if (input2 == "Visible")
 				m_type = 1
 			else if (input2 == "Hearable")
-				if (src.miming)
+				if (src.miming || has_trait(TRAIT_MUTE))
 					return
 				m_type = 2
 			else
@@ -104,8 +104,8 @@
 			m_type = 1
 
 		if ("choke")
-			if(miming)
-				message = "<B>[src]</B> clutches his throat desperately!"
+			if(miming || has_trait(TRAIT_MUTE))
+				message = "<B>[src]</B> clutches their throat desperately!"
 				m_type = 1
 			else
 				if (!muzzled)
@@ -144,7 +144,7 @@
 			m_type = 1
 
 		if ("chuckle")
-			if(miming)
+			if(miming || has_trait(TRAIT_MUTE))
 				message = "<B>[src]</B> appears to chuckle."
 				m_type = 1
 			else
@@ -171,7 +171,7 @@
 			m_type = 1
 
 		if ("cough")
-			if(miming)
+			if(miming || has_trait(TRAIT_MUTE))
 				message = "<B>[src]</B> appears to cough!"
 				m_type = 1
 			else
@@ -203,15 +203,26 @@
 			m_type = 1
 
 		if ("gasp")
-			if(miming)
+			if(has_trait(TRAIT_MUTE))
+				message = "<B>[src]</B> sucks in air violently!"
+				m_type = 1
+			else if(miming)
 				message = "<B>[src]</B> appears to be gasping!"
 				m_type = 1
 			else
 				if (!muzzled)
+					if(auto)
+						if(message == "coughs up blood!")
+							if(world.time-lastSoundEmote >= 30)
+								if(gender == FEMALE)
+									playsound(src, 'sound/misc/fbcough.ogg', 100, 0)
+								else
+									playsound(src, 'sound/misc/mbcough.ogg', 90, 0)
+								lastSoundEmote = world.time
 					message = "<B>[src]</B> [message ? message : "gasps!"]"
 					m_type = 2
 				else
-					message = "<B>[src]</B> makes a weak noise."
+					message = "<B>[src]</B> makes a noise."
 					m_type = 2
 
 			cloud_emote = "cloud-gasp"
@@ -221,7 +232,7 @@
 			m_type = 1
 
 		if ("giggle")
-			if(miming)
+			if(miming || has_trait(TRAIT_MUTE))
 				message = "<B>[src]</B> giggles silently!"
 				m_type = 1
 			else
@@ -284,7 +295,7 @@
 			m_type = 1
 
 		if ("cry")
-			if(miming)
+			if(miming || has_trait(TRAIT_MUTE))
 				message = "<B>[src]</B> cries."
 				m_type = 1
 			else
@@ -296,7 +307,7 @@
 					m_type = 2
 
 		if ("sigh")
-			if(miming)
+			if(miming || has_trait(TRAIT_MUTE))
 				message = "<B>[src]</B> sighs."
 				m_type = 1
 			else
@@ -308,7 +319,10 @@
 					m_type = 2
 
 		if ("laugh")
-			if(miming)
+			if(has_trait(TRAIT_MUTE))
+				message = "<B>[src]</B> laughs silently."
+				m_type = 1
+			else if(miming)
 				message = "<B>[src]</B> acts out a laugh."
 				m_type = 1
 			else
@@ -320,16 +334,23 @@
 					m_type = 2
 
 		if ("mumble")
-			message = "<B>[src]</B> mumbles!"
-			m_type = 2
-			if(miming)
+			if(has_trait(TRAIT_MUTE))
+				message = "<B>[src]</B> makes an annoyed face!"
 				m_type = 1
+			else
+				message = "<B>[src]</B> mumbles!"
+				m_type = 2
+				if(miming)
+					m_type = 1
 
 		if ("grumble")
 			if(miming)
 				message = "<B>[src]</B> grumbles!"
 				m_type = 1
-			if (!muzzled)
+			else if(has_trait(TRAIT_MUTE))
+				message = "<B>[src]</B> makes an annoyed face!"
+				m_type = 1
+			else if (!muzzled)
 				message = "<B>[src]</B> grumbles!"
 				m_type = 2
 			else
@@ -339,6 +360,9 @@
 		if ("groan")
 			if(miming)
 				message = "<B>[src]</B> appears to groan!"
+				m_type = 1
+			else if(has_trait(TRAIT_MUTE))
+				message = "<B>[src]</B> makes a very annoyed face!"
 				m_type = 1
 			else
 				if (!muzzled)
@@ -352,6 +376,9 @@
 			if(miming)
 				message = "<B>[src]</B> appears to moan!"
 				m_type = 1
+			else if(has_trait(TRAIT_MUTE))
+				message = "<B>[src]</B> moans silently!"
+				m_type = 1
 			else
 				message = "<B>[src]</B> moans!"
 				m_type = 2
@@ -363,7 +390,7 @@
 			if (!M)
 				param = null
 			else
-				if(miming)
+				if(miming || has_trait(TRAIT_MUTE))
 					message = "<B>[src]</B> takes a drag from a cigarette and blows \"[M]\" out in smoke."
 					m_type = 1
 				else
@@ -426,7 +453,7 @@
 			m_type = 1
 
 		if ("sneeze")
-			if (miming)
+			if (miming || has_trait(TRAIT_MUTE))
 				message = "<B>[src]</B> sneezes."
 				m_type = 1
 			else
@@ -440,11 +467,11 @@
 		if ("sniff")
 			message = "<B>[src]</B> sniffs."
 			m_type = 2
-			if(miming)
+			if(miming || has_trait(TRAIT_MUTE))
 				m_type = 1
 
 		if ("snore")
-			if (miming)
+			if (miming || has_trait(TRAIT_MUTE))
 				message = "<B>[src]</B> sleeps soundly."
 				m_type = 1
 			else
@@ -456,7 +483,7 @@
 					m_type = 2
 
 		if ("whimper")
-			if (miming)
+			if (miming || has_trait(TRAIT_MUTE))
 				message = "<B>[src]</B> appears hurt."
 				m_type = 1
 			else
@@ -475,7 +502,7 @@
 			if (!muzzled)
 				message = "<B>[src]</B> yawns."
 				m_type = 2
-				if(miming)
+				if(miming || has_trait(TRAIT_MUTE))
 					m_type = 1
 
 		if ("collapse")
@@ -553,7 +580,11 @@
 				if(virus_scream || !(species && species.flags[NO_PAIN]))
 					if (!muzzled)
 						if (auto)
-							if(world.time-lastScream >= 30)//prevent scream spam with things like poly spray
+							if(has_trait(TRAIT_MUTE) && world.time-lastSoundEmote >= 30)
+								message = "<B>[src]</B> twists their face into an agonised expression!"
+								m_type = 1
+								lastSoundEmote = world.time
+							else if(world.time-lastSoundEmote >= 30)//prevent scream spam with things like poly spray
 								message = "<B>[src]</B> screams in agony!"
 								var/list/screamSound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg', 'sound/misc/wilhelm.ogg', 'sound/misc/goofy.ogg')
 								if (gender == FEMALE) //Females have their own screams. Trannys be damned.
@@ -561,14 +592,21 @@
 								var/scream = pick(screamSound)//AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
 								playsound(get_turf(src), scream, 50, 0)
 								m_type = 2
-								lastScream = world.time
+								lastSoundEmote = world.time
 						else
 							if(!message)
 								message = "<B>[src]</B> screams!"
 							m_type = 2
+							if(has_trait(TRAIT_MUTE))
+								message = "<B>[src]</B> opens their mouth like a fish gasping for air!"
+								m_type = 1
 					else
-						message = "<B>[src]</B> makes a very loud noise."
-						m_type = 2
+						if(has_trait(TRAIT_MUTE))
+							message = "<B>[src]</B> makes a very hurt expression!"
+							m_type = 1
+						else
+							message = "<B>[src]</B> makes a very loud noise."
+							m_type = 2
 
 			cloud_emote = "cloud-scream"
 

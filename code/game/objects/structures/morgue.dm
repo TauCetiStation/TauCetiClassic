@@ -16,24 +16,35 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
 	dir = EAST
-	density = 1
-	var/obj/structure/m_tray/connected = null
+	density = TRUE
 	anchored = 1.0
-	var/check_delay = 0
 
-/obj/structure/morgue/atom_init()
-	START_PROCESSING(SSobj, src)
+	var/obj/structure/m_tray/connected = null
+	var/check_delay = 0
+	var/beeper = TRUE // currently cooldown for sound is included with check_delay.
 
 /obj/structure/morgue/Destroy()
-	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(connected)
 	return ..()
 
+/obj/structure/morgue/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The speaker is [beeper ? "enabled" : "disabled"]. Alt-click to toggle it.</span>")
+
+/obj/structure/morgue/AltClick(mob/user)
+	..()
+	if(!CanUseTopic(user) || !user.IsAdvancedToolUser())
+		return
+	beeper = !beeper
+	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "on" : "off"].</span>")
+
 /obj/structure/morgue/proc/update()
 	if (connected)
+		STOP_PROCESSING(SSobj, src)
 		icon_state = "morgue0"
 	else
 		if (contents.len)
+			START_PROCESSING(SSobj, src)
 			icon_state = "morgue2"
 		else
 			icon_state = "morgue1"
@@ -67,7 +78,7 @@
 		return FALSE
 
 	for(var/mob/living/carbon/human/H in compiled)
-		if((H.brain_op_stage == 4.0) || H.suiciding || !H.ckey)
+		if(H.stat != DEAD || (NOCLONE in H.mutations) || H.species.flags[NO_SCAN] || H.brain_op_stage == 4.0 || H.suiciding || !H.ckey || !H.mind)
 			continue
 
 		return TRUE
@@ -83,6 +94,8 @@
 		return //nothing inside
 
 	if (has_clonable_bodies())
+		if(beeper)
+			playsound(src, 'sound/weapons/smg_empty_alarm.ogg', 50, 0)
 		icon_state = "morgue3"
 	else
 		update()
@@ -95,14 +108,16 @@
 				if(ismob(A))
 					var/mob/M = A
 					M.instant_vision_update(1,src)
-		playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/effects/roll.ogg', 10, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', 25, 1)
 		qdel(connected)
 		connected = null
 		update()
 
 /obj/structure/morgue/proc/open()
 	if (!connected)
-		playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', 25, 1)
+		playsound(src, 'sound/effects/roll.ogg', 10, 1)
 		connected = new /obj/structure/m_tray( loc )
 		step(connected, dir)
 		connected.layer = BELOW_CONTAINERS_LAYER

@@ -10,7 +10,14 @@
 #define T20C 293.15	// 20degC
 #define TCMB 2.7	// -270.3degC
 
+#define CEILING(x, y) ( -round(-(x) / (y)) * (y) )
 #define ceil(x) (-round(-(x)))
+
+// round() acts like floor(x, 1) by default but can't handle other values
+#define FLOOR(x, y) ( round((x) / (y)) * (y) )
+
+// Real modulus that handles decimals
+#define MODULUS(x, y) ( (x) - (y) * round((x) / (y)) )
 
 #define Clamp(CLVALUE,CLMIN,CLMAX) ( max( (CLMIN), min((CLVALUE), (CLMAX)) ) )
 #define CLAMP01(x) (Clamp(x, 0, 1))

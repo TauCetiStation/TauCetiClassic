@@ -78,7 +78,6 @@
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
 	var/debug= 0
 	var/autoflag= 0		// 0 = off, 1= eqp and lights off, 2 = eqp off, 3 = all on.
-//	luminosity = 1
 	var/has_electronics = 0 // 0 - none, 1 - plugged in, 2 - secured by screwdriver
 	var/overload = 1 //used for the Blackout malf module
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
@@ -112,12 +111,12 @@
 	tdir = dir		// to fix Vars bug
 	dir = SOUTH
 
-	pixel_x = (tdir & 3)? 0 : (tdir == 4 ? 24 : -24)
-	pixel_y = (tdir & 3)? (tdir == 1 ? 24 : -24) : 0
+	pixel_x = (tdir & 3)? 0 : (tdir == 4 ? 27 : -27)
+	pixel_y = (tdir & 3)? (tdir == 1 ? 27 : -27) : 0
 	if (building == 0)
 		init()
 	else
-		area = loc.loc:master
+		area = get_area(src)
 		area.apc = src
 		opened = 1
 		operating = 0
@@ -381,15 +380,15 @@
 	if (issilicon(user) && get_dist(src,user)>1)
 		return src.attack_hand(user)
 	src.add_fingerprint(user)
-	if (istype(W, /obj/item/weapon/crowbar) && opened)
+	if (iscrowbar(W) && opened)
 		if(has_electronics == 1)
 			if (terminal)
 				to_chat(user, "\red Disconnect wires first.")
 				return
-			if(user.is_busy()) return
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			if(user.is_busy(src))
+				return
 			to_chat(user, "You are trying to remove the power control board...")//lpeters - fixed grammar issues
-			if(do_after(user, 50, target = src))
+			if(W.use_tool(src, user, 50, volume = 50))
 				has_electronics = 0
 				if ((stat & BROKEN) || malfhack)
 					user.visible_message(\
@@ -405,7 +404,7 @@
 		else if (opened!=2) //cover isn't removed
 			opened = 0
 			update_icon()
-	else if (istype(W, /obj/item/weapon/crowbar) && !((stat & BROKEN) || malfhack) )
+	else if (iscrowbar(W) && !((stat & BROKEN) || malfhack) )
 		if(coverlocked && !(stat & MAINT))
 			to_chat(user, "\red The cover is locked and cannot be opened.")
 			return
@@ -428,7 +427,7 @@
 				"You insert the power cell.")
 			chargecount = 0
 			update_icon()
-	else if	(istype(W, /obj/item/weapon/screwdriver))	// haxing
+	else if	(isscrewdriver(W))	// haxing
 		if(opened)
 			if (cell)
 				to_chat(user, "\red Close the APC first.")//Less hints more mystery!
@@ -479,9 +478,10 @@
 		else if(stat & (BROKEN|MAINT))
 			to_chat(user, "Nothing happens.")
 		else
-			if(user.is_busy()) return
+			if(user.is_busy(src))
+				return
 			flick("apc-spark", src)
-			if (do_after(user,6,target = src))
+			if(W.use_tool(src, user, 6, volume = 50))
 				if(prob(50))
 					emagged = 1
 					locked = 0
@@ -489,7 +489,7 @@
 					update_icon()
 				else
 					to_chat(user, "You fail to [ locked ? "unlock" : "lock"] the APC interface.")
-	else if (istype(W, /obj/item/stack/cable_coil) && !terminal && opened && has_electronics != 2)
+	else if (iscoil(W) && !terminal && opened && has_electronics != 2)
 		if (src.loc:intact)
 			to_chat(user, "\red You must remove the floor plating in front of the APC first.")
 			return
@@ -499,8 +499,7 @@
 			return
 		if(user.is_busy()) return
 		to_chat(user, "You start adding cables to the APC frame...")
-		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 20, target = src) && C.get_amount() >= 10)
+		if(C.use_tool(src, user, 20, volume = 50) && C.get_amount() >= 10)
 			var/turf/T = get_turf_loc(src)
 			var/obj/structure/cable/N = T.get_cable_node()
 			if (prob(50) && electrocute_mob(usr, N, N))
@@ -514,29 +513,26 @@
 				"You add cables to the APC frame.")
 			make_terminal()
 			terminal.connect_to_network()
-	else if (istype(W, /obj/item/weapon/wirecutters) && terminal && opened && has_electronics!=2)
+	else if (iswirecutter(W) && terminal && opened && has_electronics!=2)
 		terminal.dismantle(user)
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
 		if(user.is_busy()) return
 		to_chat(user, "You trying to insert the power control board into the frame...")
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 10, target = src))
+		if(W.use_tool(src, user, 10, volume = 50))
 			has_electronics = 1
 			to_chat(user, "You place the power control board inside the frame.")
 			qdel(W)
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && ((stat & BROKEN) || malfhack))
 		to_chat(user, "\red You cannot put the board inside, the frame is damaged.")
 		return
-	else if (istype(W, /obj/item/weapon/weldingtool) && opened && has_electronics==0 && !terminal)
+	else if (iswelder(W) && opened && has_electronics==0 && !terminal)
 		if(user.is_busy()) return
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.get_fuel() < 3)
 			to_chat(user, "\blue You need more welding fuel to complete this task.")
 			return
 		to_chat(user, "You start welding the APC frame...")
-		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-		if(do_after(user, 50, target = src))
-			if(!src || !WT.remove_fuel(3, user)) return
+		if(WT.use_tool(src, user, 50, amount = 3, volume = 50))
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message(\
@@ -566,7 +562,7 @@
 			return
 		if(user.is_busy()) return
 		to_chat(user, "You begin to replace the damaged APC frame...")
-		if(do_after(user, 50, target = src))
+		if(W.use_tool(src, user, 50, volume = 50))
 			user.visible_message(\
 				"\red [user.name] has replaced the damaged APC frame with new one.",\
 				"You replace the damaged APC frame with new one.")
@@ -581,7 +577,7 @@
 		if (((stat & BROKEN) || malfhack) \
 				&& !opened \
 				&& W.force >= 5 \
-				&& W.w_class >= 3.0 \
+				&& W.w_class >= ITEM_SIZE_NORMAL \
 				&& prob(20) )
 			opened = 2
 			user.visible_message("\red The APC cover was knocked down with the [W.name] by [user.name]!", \
@@ -1216,11 +1212,10 @@
 /obj/machinery/power/apc/proc/break_lights(skip_sound_and_sparks)
 	set waitfor = FALSE
 
-	for(var/area/A in area.related)
-		for(var/obj/machinery/light/L in A)
-			L.on = 1
-			L.broken(skip_sound_and_sparks)
-			stoplag()
+	for(var/obj/machinery/light/L in area)
+		L.on = 1
+		L.broken(skip_sound_and_sparks)
+		stoplag()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
 	if(!prob(prb))

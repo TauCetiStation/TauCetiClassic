@@ -837,11 +837,11 @@ var/list/ai_verbs_default = list(
 
 
 /mob/living/silicon/ai/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		if(user.is_busy()) return
 		if(anchored)
 			user.visible_message("\blue \The [user] starts to unbolt \the [src] from the plating...")
-			if(!do_after(user,40,target = src))
+			if(!W.use_tool(src, user, 40, volume = 50))
 				user.visible_message("\blue \The [user] decides not to unbolt \the [src].")
 				return
 			user.visible_message("\blue \The [user] finishes unfastening \the [src]!")
@@ -849,7 +849,7 @@ var/list/ai_verbs_default = list(
 			return
 		else
 			user.visible_message("\blue \The [user] starts to bolt \the [src] to the plating...")
-			if(!do_after(user,40,target = src))
+			if(!W.use_tool(src, user, 40, volume = 50))
 				user.visible_message("\blue \The [user] decides not to bolt \the [src].")
 				return
 			user.visible_message("\blue \The [user] finishes fastening down \the [src]!")

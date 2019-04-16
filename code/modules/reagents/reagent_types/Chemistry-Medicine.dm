@@ -116,7 +116,7 @@
 	id = "sterilizine"
 	description = "Sterilizes wounds in preparation for surgery."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#c8a5dc" // rgb: 200, 165, 220
 
 	//makes you squeaky clean
 /datum/reagent/sterilizine/reaction_mob(mob/living/M, method=TOUCH, volume)
@@ -134,7 +134,7 @@
 	id = "leporazine"
 	description = "Leporazine can be use to stabilize an individuals body temperature."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#c8a5dc" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
@@ -172,6 +172,10 @@
 /datum/reagent/dermaline/on_general_digest(mob/living/M)
 	..()
 	M.heal_bodypart_damage(0,3 * REM)
+	if(volume >= overdose && HUSK in M.mutations && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.mutations.Remove(HUSK)
+		H.update_body()
 
 /datum/reagent/dexalin
 	name = "Dexalin"
@@ -258,7 +262,7 @@
 	id = "adminordrazine"
 	description = "It's magic. We don't have to explain it."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#c8a5dc" // rgb: 200, 165, 220
 	taste_message = "admin abuse"
 
 /datum/reagent/adminordrazine/on_general_digest(mob/living/M)
@@ -376,7 +380,7 @@
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
 		if(istype(IO))
-			if(IO.damage > 0)
+			if(IO.damage > 0 && IO.robotic < 2)
 				IO.damage = max(IO.damage - 1, 0)
 
 /datum/reagent/peridaxon
@@ -396,7 +400,7 @@
 
 		//Peridaxon is hard enough to get, it's probably fair to make this all organs
 		for(var/obj/item/organ/internal/IO in H.organs)
-			if(IO.damage > 0)
+			if(IO.damage > 0 && IO.robotic < 2)
 				IO.damage = max(IO.damage - 0.20, 0)
 
 /datum/reagent/kyphotorin
@@ -522,7 +526,7 @@
 	id = "spaceacillin"
 	description = "An all-purpose antiviral agent."
 	reagent_state = LIQUID
-	color = "#FFFFFF" // rgb: 200, 165, 220
+	color = "#ffffff" // rgb: 200, 165, 220
 	custom_metabolism = 0.01
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
@@ -573,7 +577,7 @@
 	description = "A chemical compound that causes a powerful fat-burning reaction."
 	reagent_state = LIQUID
 	nutriment_factor = 10 * REAGENTS_METABOLISM
-	color = "#BBEDA4" // rgb: 187, 237, 164
+	color = "#bbeda4" // rgb: 187, 237, 164
 	overdose = REAGENTS_OVERDOSE
 
 /datum/reagent/lipozine/on_general_digest(mob/living/M)

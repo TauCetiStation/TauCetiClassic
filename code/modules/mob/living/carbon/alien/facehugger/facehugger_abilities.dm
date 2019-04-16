@@ -5,8 +5,8 @@
 #define GRAB_PASSIVE	1
 #define GRAB_AGGRESSIVE	2
 #define GRAB_NECK		3
-#define GRAB_UPGRADING	4
-#define GRAB_KILL		5*/
+#define GRAB_KILL		4*/
+#define GRAB_UPGRADING	5
 #define GRAB_EMBRYO		6
 #define GRAB_IMPREGNATE	7
 #define GRAB_DONE		8
@@ -30,7 +30,7 @@ This is modified grab mechanic for facehugger
 				FH.put_in_active_hand(G)
 
 				grabbed_by += G
-				G.last_upgrade = world.time - 20
+				FH.SetNextMove(CLICK_CD_ACTION)
 				G.synch()
 				LAssailant = FH
 
@@ -49,7 +49,7 @@ This is modified grab mechanic for facehugger
 				FH.put_in_active_hand(G)
 
 				grabbed_by += G
-				G.last_upgrade = world.time - 20
+				FH.SetNextMove(CLICK_CD_ACTION)
 				G.synch()
 				LAssailant = FH
 
@@ -68,7 +68,7 @@ This is modified grab mechanic for facehugger
 				FH.put_in_active_hand(G)
 
 				grabbed_by += G
-				G.last_upgrade = world.time - 20
+				FH.SetNextMove(CLICK_CD_ACTION)
 				G.synch()
 				LAssailant = FH
 
@@ -119,7 +119,7 @@ This is chestburster mechanic for damaging
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 
 
 /obj/item/weapon/larva_bite/atom_init(mapload, mob/victim)
@@ -355,7 +355,7 @@ This is facehugger Attach procs
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "facehugger"
 	item_state = "facehugger"
-	w_class = 1 //note: can be picked up by aliens unlike most other items of w_class below 4
+	w_class = ITEM_SIZE_TINY //note: can be picked up by aliens unlike most other items of w_class below 4
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | MASKINTERNALS
 	body_parts_covered = FACE|EYES
 	throw_range = 5
@@ -439,9 +439,9 @@ This is facehugger Attach procs
 
 	if(iscarbon(L))
 		var/mob/living/carbon/target = L
-		var/target_slot = slot_wear_mask
+		var/target_slot = SLOT_WEAR_MASK
 		if(isIAN(L))
-			target_slot = slot_head
+			target_slot = SLOT_HEAD
 		target.equip_to_slot(src, target_slot)
 		if(ismonkey(L)) // wtf is there in monkeys equip proc, that they need this?! ~zve
 			target.contents += src // Monkey sanity check - Snapshot
@@ -537,12 +537,10 @@ When we finish, facehugger's player will be transfered inside embryo.
 	var/mob/assailant = null
 	var/state = GRAB_PASSIVE
 
-	var/last_upgrade = 0
-
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 
 
 /obj/item/weapon/fh_grab/atom_init(mapload, mob/victim)
@@ -550,11 +548,20 @@ When we finish, facehugger's player will be transfered inside embryo.
 	assailant = loc
 	affecting = victim
 
+	assailant.SetNextMove(CLICK_CD_ACTION)
+
 	hud = new /obj/screen/fh_grab(src)
 	hud.icon = 'icons/mob/screen1_xeno.dmi'
 	hud.icon_state = "leap"
 	hud.name = "Leap at face"
 	hud.master = src
+
+	assailant.put_in_active_hand(src)
+	affecting.grabbed_by += src
+
+	synch()
+	affecting.LAssailant = assailant
+	assailant.visible_message("<span class='red'>[assailant] atempts to leap at [affecting] face!</span>")
 
 /obj/item/weapon/fh_grab/Destroy()
 	QDEL_NULL(hud)
@@ -607,8 +614,6 @@ When we finish, facehugger's player will be transfered inside embryo.
 		return
 	if(assailant.lying)
 		return
-	if(world.time < (last_upgrade + UPGRADE_COOLDOWN))
-		return
 	if(istype(assailant.loc, /turf))
 		state = GRAB_PASSIVE
 
@@ -639,7 +644,8 @@ When we finish, facehugger's player will be transfered inside embryo.
 		qdel(src)
 		return
 
-	last_upgrade = world.time
+	assailant.SetNextMove(CLICK_CD_GRAB)
+
 	if(state == GRAB_PASSIVE)
 		assailant.visible_message("<span class='warning'>[assailant] leaps at [affecting] face!</span>")
 		var/mob/living/carbon/alien/facehugger/FH = assailant
@@ -740,3 +746,12 @@ When we finish, facehugger's player will be transfered inside embryo.
 	if(M == affecting)
 		s_click(hud)
 		return
+
+#undef UPGRADE_TAIL_TIMER
+
+#undef GRAB_UPGRADING
+#undef GRAB_EMBRYO
+#undef GRAB_IMPREGNATE
+#undef GRAB_DONE
+
+#undef BITE_COOLDOWN

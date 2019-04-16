@@ -102,7 +102,7 @@
 		if(!config.objectives_disabled)
 			memoize_cult_objectives(cult_mind)
 		else
-			to_chat(cult_mind.current, "<span class ='blue'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
+			to_chat(cult_mind.current, "<span class ='blue'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 		cult_mind.special_role = "Cultist"
 	update_all_cult_icons()
 
@@ -140,11 +140,11 @@
 
 	var/obj/item/weapon/paper/talisman/supply/T = new(mob)
 	var/list/slots = list (
-		"backpack" = slot_in_backpack,
-		"left pocket" = slot_l_store,
-		"right pocket" = slot_r_store,
-		"left hand" = slot_l_hand,
-		"right hand" = slot_r_hand,
+		"backpack" = SLOT_IN_BACKPACK,
+		"left pocket" = SLOT_L_STORE,
+		"right pocket" = SLOT_R_STORE,
+		"left hand" = SLOT_L_HAND,
+		"right hand" = SLOT_R_HAND,
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots)
 	if (!where)

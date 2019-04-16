@@ -110,6 +110,7 @@
 	new /obj/item/clothing/head/helmet/HoS(src)
 	new /obj/item/clothing/head/helmet/HoS/dermal(src)
 	new	/obj/item/clothing/head/beret/sec/hos(src)
+	new /obj/item/clothing/head/hos_peakedcap(src)
 	new /obj/item/device/remote_device/head_of_security(src)
 	new /obj/item/clothing/under/rank/head_of_security_fem(src)
 	new /obj/item/clothing/suit/armor/hos(src)
@@ -274,6 +275,7 @@
 	for (var/i in 1 to 2)
 		new /obj/item/ammo_box/magazine/c45r(src)
 	new /obj/item/taperoll/police(src)
+	new /obj/item/toy/crayon/chalk(src)
 	new /obj/item/weapon/gun/projectile/automatic/colt1911(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
 
@@ -309,7 +311,7 @@
 
 /obj/structure/closet/secure_closet/courtroom
 	name = "Courtroom Locker"
-	req_access = list(access_court)
+	req_access = list(access_security)
 
 /obj/structure/closet/secure_closet/courtroom/PopulateContents()
 	new /obj/item/clothing/shoes/brown(src)
@@ -367,3 +369,4 @@
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/detective_scanner(src)
 	new /obj/item/taperoll/police(src)
+	new /obj/item/toy/crayon/chalk(src)

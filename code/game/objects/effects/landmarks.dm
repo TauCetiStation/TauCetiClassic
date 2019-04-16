@@ -71,6 +71,12 @@
 			ninjastart += loc
 			return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/sound_source
+	name = "Sound Source"
+
+/obj/effect/landmark/sound_source/shuttle_docking
+	name = "Shuttle Docking"
+
 /obj/effect/landmark/start
 	name = "start"
 	icon = 'icons/mob/screen1.dmi'
@@ -154,7 +160,7 @@
 /obj/effect/landmark/costume/maid/atom_init()
 	..()
 	new /obj/item/clothing/under/blackskirt(loc)
-	var/CHOICE = pick( /obj/item/clothing/head/beret , /obj/item/clothing/head/rabbitears )
+	var/CHOICE = pick(/obj/item/clothing/head/chep, /obj/item/clothing/head/rabbitears)
 	new CHOICE(loc)
 	new /obj/item/clothing/glasses/sunglasses/blindfold(loc)
 	return INITIALIZE_HINT_QDEL
@@ -178,7 +184,7 @@
 /obj/effect/landmark/costume/highlander/atom_init()
 	..()
 	new /obj/item/clothing/under/kilt(loc)
-	new /obj/item/clothing/head/beret(loc)
+	new /obj/item/clothing/head/beret/red(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/costume/prig/atom_init()

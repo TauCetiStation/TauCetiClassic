@@ -153,6 +153,8 @@ var/list/airlock_overlays = list()
 			var/cont = TRUE
 			while (cont)
 				sleep(10)
+				if(QDELETED(src))
+					return
 				cont = FALSE
 				if(secondsMainPowerLost > 0)
 					if(!isWireCut(AIRLOCK_WIRE_MAIN_POWER1) && !isWireCut(AIRLOCK_WIRE_MAIN_POWER2))
@@ -855,7 +857,7 @@ var/list/airlock_overlays = list()
 	if(!no_window)
 		updateUsrDialog()
 
-/obj/machinery/door/airlock/attackby(C, mob/user)
+/obj/machinery/door/airlock/attackby(obj/item/C, mob/user)
 
 	if(istype(C,/obj/item/weapon/changeling_hammer) && !operating && density) // yeah, hammer ignore electrify
 		var/obj/item/weapon/changeling_hammer/W = C
@@ -877,37 +879,36 @@ var/list/airlock_overlays = list()
 
 	add_fingerprint(user)
 
-	if(istype(C, /obj/item/weapon/weldingtool) && !(operating > 0) && density)
+	if(iswelder(C) && !(operating > 0) && density)
 		var/obj/item/weapon/weldingtool/W = C
-		if(W.remove_fuel(0,user))
+		if(W.use(0,user))
 			welded = !welded
 			update_icon()
 			return
 		else
 			return
-	else if(istype(C, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(C))
 		p_open = !p_open
 		update_icon()
-	else if(istype(C, /obj/item/weapon/wirecutters))
+	else if(iswirecutter(C))
 		return attack_hand(user)
-	else if(istype(C, /obj/item/device/multitool))
+	else if(ismultitool(C))
 		return attack_hand(user)
 	else if(istype(C, /obj/item/device/assembly/signaler))
 		return attack_hand(user)
 	else if(istype(C, /obj/item/weapon/pai_cable))	// -- TLE
 		var/obj/item/weapon/pai_cable/cable = C
 		cable.plugin(src, user)
-	else if(istype(C, /obj/item/weapon/crowbar) || istype(C, /obj/item/weapon/twohanded/fireaxe) )
+	else if(iscrowbar(C) || istype(C, /obj/item/weapon/twohanded/fireaxe) )
 		var/beingcrowbarred = null
-		if(istype(C, /obj/item/weapon/crowbar) )
+		if(iscrowbar(C) )
 			beingcrowbarred = 1 //derp, Agouri
 		else
 			beingcrowbarred = 0
 		if( beingcrowbarred && (operating == -1 || density && welded && operating != 1 && p_open && !hasPower() && !locked) )
 			if(user.is_busy(src)) return
-			playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
-			if(do_after(user,40,target = src))
+			if(C.use_tool(src, user, 40, volume = 100))
 				to_chat(user, "\blue You removed the airlock electronics!")
 
 				var/obj/structure/door_assembly/da = new assembly_type(loc)
@@ -1131,10 +1132,9 @@ var/list/airlock_overlays = list()
 	//light_color = "#cc0000"
 
 
-/obj/structure/door_scrap/attackby(obj/O, mob/user)
-	if(istype(O,/obj/item/weapon/wrench))
+/obj/structure/door_scrap/attackby(obj/item/O, mob/user)
+	if(iswrench(O))
 		if(ticker >= 300)
-			playsound(user.loc, 'sound/items/Ratchet.ogg', 50)
 			user.visible_message("[user] has disassemble these scrap...")
 			new /obj/item/stack/sheet/metal(loc)
 			new /obj/item/stack/sheet/metal(loc)

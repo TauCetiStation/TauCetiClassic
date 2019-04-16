@@ -115,3 +115,19 @@
 #define isfloorturf(A) (istype(A, /turf/simulated/floor))
 
 #define iswallturf(A) (istype(A, /turf/simulated/wall))
+
+// TOOLS HELPERS
+
+#define iswrench(A) istype(A, /obj/item/weapon/wrench)
+
+#define iswelder(A) istype(A, /obj/item/weapon/weldingtool)
+
+#define iswirecutter(A) istype(A, /obj/item/weapon/wirecutters)
+
+#define isscrewdriver(A) istype(A, /obj/item/weapon/screwdriver)
+
+#define iscrowbar(A) istype(A, /obj/item/weapon/crowbar)
+
+#define ismultitool(A) istype(A, /obj/item/device/multitool)
+
+#define iscoil(A) istype(A, /obj/item/stack/cable_coil)

@@ -9,7 +9,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	throwforce = 0
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	throw_range = 1
 	throw_speed = 1
 	layer = 3.9
@@ -175,8 +175,10 @@
 	if(def_zone == O_EYES)
 		user.visible_message("<span class='notice'>You show the paper to [M]. </span>", \
 			"<span class='notice'> [user] holds up a paper and shows it to [M]. </span>")
-		to_chat(M, examine())
-
+		if(crumpled == 1)
+			to_chat(M, "<span class='notice'>You can't read anything until it crumpled.</span>")
+			return
+		show_content(M)
 	else if(def_zone == O_MOUTH) // lipstick wiping
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -344,7 +346,7 @@
 //Count the fields
 	var/laststart = 1
 	while(1)
-		var/i = findtext(t, "<span class=\"paper_field\">", laststart)
+		var/i = findtext(t, "<span class=\"paper_field\">", laststart) //</span>
 		if(i==0)
 			break
 		laststart = i+1
@@ -384,18 +386,20 @@
 		return
 
 	if(P.lit && !user.restrained() && !user.is_busy())
-		var/class = "<span class='red'>"
+		var/class = "red"
 		if(istype(P, /obj/item/weapon/lighter/zippo))
-			class = "<span class='rose'>"
+			class = "rose"
 
-		user.visible_message("[class][user] holds \the [P] up to \the [src], it looks like \he's trying to burn it!</span>", \
-		"[class]You hold \the [P] up to \the [src], burning it slowly.</span>")
+		user.visible_message("<span class='[class]'>[user] holds \the [P] up to \the [src], it looks like \he's trying to burn it!</span>", \
+		"<span class='[class]'>You hold \the [P] up to \the [src], burning it slowly.</span>")
 
-		if(do_after(user, 20, TRUE, P, TRUE))
+		icon_state = "paper_onfire"
+		if(P.use_tool(P, user, 20, volume = 50))
 			if((get_dist(src, user) > 1) || !P.lit)
+				update_icon()
 				return
-			user.visible_message("[class][user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>", \
-			"[class]You burn right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>")
+			user.visible_message("<span class='[class]'>[user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>", \
+			"<span class='[class]'>You burn right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>")
 
 			if(user.get_inactive_hand() == src)
 				user.drop_from_inventory(src)
@@ -404,6 +408,7 @@
 			qdel(src)
 
 		else
+			update_icon()
 			to_chat(user, "<span class='warning'>You must hold \the [P] steady to burn \the [src].</span>")
 
 
@@ -548,6 +553,7 @@
 		var/obj/item/weapon/stamp/S = P
 		S.stamp_paper(src)
 
+		playsound(src, 'sound/effects/stamp.ogg', 50, 1)
 		visible_message("<span class='notice'>[user] stamp the paper.</span>", "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
 	else if(istype(P, /obj/item/weapon/lighter))
@@ -622,3 +628,11 @@
 
 	update_icon()
 	updateinfolinks()
+
+/obj/item/weapon/paper/brig_arsenal
+	name = "Armory Inventory"
+	info = "<b>Armory Inventory:</b><ul>6 Deployable Barriers<br>4 Portable Flashers<br>3 Riot Sets:<small><ul><li>Riot Shield<li>Stun Baton<li>Riot Shield<li>Stun Baton</ul></small>3 Marine Sets:<small><ul><li>Marine Jumpsuit<li>Marine Armor<li>Marine Helmet<li>Work Boots<li>Combat Belt<li>Balaclava<li>Tactical Hud<li>Marine Headset<li>Marine Gloves<li>Marine Dufflebag</ul></small>3 Bulletproof Helmets<br>3 Bulletproof Vests<br>3 Ablative Helmets <br>3 Ablative Vests <br>1 Bomb Suit <br>1 Biohazard Suit<br>6 Security Masks<br>3 SIGI p250 Pistols<br>6 Magazines (9mm rubber)</ul><b>Secure Armory Inventory:</b><ul>3 Energy Guns<br>3 Laser Rifles<br>2 Ion Rifles<br>2 L10-c Carbines<br>1 Grenade Launcher<br>1 M79 Grenade Launcher<br>2 Shotguns<br>6 Magazines (9mm)<br>2 Shotgun Shell Boxes (beanbag, 20 shells)<br>1 m79 Grenade Box (40x46 rubber, 7 rounds)<br>1 Chemical Implant Kit<br>1 Tracking Implant Kit<br>1 Mind Shield Implant Kit<br>1 Death Alarm Implant Kit<br>1 Box of Flashbangs<br>2 Boxes of teargas grenades<br>1 Space Security Set:<small><ul><li>Security Hardsuit<li>Security Hardsuit Helmet<li>Magboots<li>Breath Mask</ul></small></ul>"
+
+/obj/item/weapon/paper/firing_range
+	name = "Firing Range Instructions"
+	info = "Directions:<br><i>First you'll want to make sure there is a target stake in the center of the magnetic platform. Next, take an aluminum target from the crates back there and slip it into the stake. Make sure it clicks! Next, there should be a control console mounted on the wall somewhere in the room.<br><br> This control console dictates the behaviors of the magnetic platform, which can move your firing target around to simulate real-world combat situations. From here, you can turn off the magnets or adjust their electromagnetic levels and magnetic fields. The electricity level dictates the strength of the pull - you will usually want this to be the same value as the speed. The magnetic field level dictates how far the magnetic pull reaches.<br><br>Speed and path are the next two settings. Speed is associated with how fast the machine loops through the designated path. Paths dictate where the magnetic field will be centered at what times. There should be a pre-fabricated path input already. You can enable moving to observe how the path affects the way the stake moves. To script your own path, look at the following key:</i><br><br>N: North<br>S: South<br>E: East<br>W: West<br>C: Center<br>R: Random (results may vary)<br>; or &: separators. They are not necessary but can make the path string better visible."

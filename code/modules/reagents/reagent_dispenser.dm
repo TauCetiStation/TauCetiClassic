@@ -73,7 +73,7 @@
 
 /obj/structure/reagent_dispensers/watertank/attackby(obj/item/weapon/W, mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if (istype(W,/obj/item/weapon/wrench))
+	if (iswrench(W))
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
 		modded = modded ? 0 : 1
@@ -140,20 +140,21 @@
 			overlays = new/list()
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W,/obj/item/weapon/wrench))
+	if (iswrench(W))
 		user.SetNextMove(CLICK_CD_RAPID)
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
 		modded = !modded
 		if (modded)
 			leak_fuel(amount_per_transfer_from_this)
+		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [src.x], [src.y], [src.z] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 	if (istype(W,/obj/item/device/assembly_holder))
 		if (rig)
 			to_chat(user, "\red There is another device in the way.")
 			return ..()
 		if(user.is_busy()) return
 		user.visible_message("[user] begins rigging [W] to \the [src].", "You begin rigging [W] to \the [src]")
-		if(do_after(user, 20, target = src))
+		if(W.use_tool(src, user, 20))
 			user.visible_message("\blue [user] rigs [W] to \the [src].", "\blue  You rig [W] to \the [src]")
 
 			var/obj/item/device/assembly_holder/H = W

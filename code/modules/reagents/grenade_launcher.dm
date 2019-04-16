@@ -3,13 +3,14 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "riotgun"
 	item_state = "riotgun"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	throw_speed = 2
 	throw_range = 10
 	force = 5.0
 	var/list/grenades = new/list()
 	var/max_grenades = 3
 	m_amt = 2000
+	slot_flags = SLOT_FLAGS_BACK
 
 /obj/item/weapon/gun/grenadelauncher/examine(mob/user)
 	..()
@@ -51,7 +52,7 @@
 	message_admins("[key_name_admin(user)] fired a grenade ([F.name]) from a grenade launcher ([src.name]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 	log_game("[key_name_admin(user)] used a grenade ([src.name]).")
 	F.active = 1
-	F.icon_state = initial(icon_state) + "_active"
+	F.icon_state = initial(F.icon_state) + "_active"
 	playsound(user.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 	spawn(15)
 		F.prime()

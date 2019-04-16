@@ -6,7 +6,7 @@
 	icon = 'icons/obj/tank.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 
 	force = 5.0
 	throwforce = 10.0
@@ -17,6 +17,7 @@
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
 	var/volume = 70
+	var/internal_switch = 0
 	var/manipulated_by = null		//Used by _onclick/hud/screen_objects.dm internals to determine if someone has messed with our tank or not.
 						//If they have and we haven't scanned it with the PDA or gas analyzer then we might just breath whatever they put in it.
 /obj/item/weapon/tank/atom_init()
@@ -116,7 +117,6 @@
 		var/mob/living/carbon/location = loc
 		if(location.internal == src || (location.wear_mask && (location.wear_mask.flags & MASKINTERNALS)))
 			data["maskConnected"] = 1
-
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
@@ -147,22 +147,38 @@
 			src.distribute_pressure += cp
 		src.distribute_pressure = min(max(round(src.distribute_pressure), 0), TANK_MAX_RELEASE_PRESSURE)
 	if (href_list["stat"])
-		if(istype(loc,/mob/living/carbon))
-			var/mob/living/carbon/location = loc
-			if(location.internal == src)
-				location.internal = null
-				location.internals.icon_state = "internal0"
+		if(iscarbon(loc))
+			if(internal_switch > world.time)
+				return
+			var/internalsound
+			var/mob/living/carbon/C = loc
+			if(C.internal == src)
+				C.internal = null
+				C.internals.icon_state = "internal0"
 				to_chat(usr, "\blue You close the tank release valve.")
-				if (location.internals)
-					location.internals.icon_state = "internal0"
+				if (C.internals)
+					C.internals.icon_state = "internal0"
+				internalsound = 'sound/misc/internaloff.ogg'
+				if(ishuman(C)) // Because only human can wear a spacesuit
+					var/mob/living/carbon/human/H = C
+					if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
+						internalsound = 'sound/misc/riginternaloff.ogg'
+				playsound(loc, internalsound, 85, 0, -5)
 			else
-				if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
-					location.internal = src
+				if(C.wear_mask && (C.wear_mask.flags & MASKINTERNALS))
+					C.internal = src
 					to_chat(usr, "\blue You open \the [src] valve.")
-					if (location.internals)
-						location.internals.icon_state = "internal1"
+					if (C.internals)
+						C.internals.icon_state = "internal1"
+					internalsound = 'sound/misc/internalon.ogg'
+					if(ishuman(C)) // Because only human can wear a spacesuit
+						var/mob/living/carbon/human/H = C
+						if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
+							internalsound = 'sound/misc/riginternalon.ogg'
+					playsound(loc, internalsound, 85, 0, -5)
 				else
 					to_chat(usr, "\blue You need something to connect to \the [src].")
+			internal_switch = world.time + 16
 
 	src.add_fingerprint(usr)
 	return 1
@@ -187,9 +203,7 @@
 	var/tank_pressure = air_contents.return_pressure()
 	if(tank_pressure < distribute_pressure)
 		distribute_pressure = tank_pressure
-
 	var/moles_needed = distribute_pressure*volume_to_return/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
 	return remove_air(moles_needed)
 
 /obj/item/weapon/tank/process()

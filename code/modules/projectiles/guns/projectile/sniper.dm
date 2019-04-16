@@ -3,13 +3,13 @@
 	desc = "A portable anti-armour rifle. Originally designed to used against armoured exosuits, it is capable of punching through windows with ease. Fires armor piercing 14.5mm shells."
 	icon_state = "heavyrifle"
 	item_state = "l6closednomag"
-	w_class = 5
+	w_class = ITEM_SIZE_HUGE
 	force = 10
 	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "combat=8;materials=2;syndicate=8"
 	recoil = 3 //extra kickback
 	mag_type = /obj/item/ammo_box/magazine/internal/heavyrifle
-	fire_sound = 'sound/weapons/heavysniper_shot.ogg'
+	fire_sound = 'sound/weapons/cannon.ogg'
 	var/bolt_open = 0
 
 /obj/item/weapon/gun/projectile/heavyrifle/isHandgun()

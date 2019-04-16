@@ -13,7 +13,7 @@
 /obj/item/weapon/circuitboard
 	density = 0
 	anchored = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	name = "Circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
@@ -277,7 +277,7 @@
 		hacked = TRUE
 		contraband_enabled = TRUE
 		return
-	else if(istype(I,/obj/item/device/multitool))
+	else if(ismultitool(I))
 		var/catastasis = src.contraband_enabled
 		var/opposite_catastasis
 		if(catastasis)
@@ -299,7 +299,7 @@
 	return
 
 /obj/item/weapon/circuitboard/libraryconsole/attackby(obj/item/I, mob/user)
-	if(istype(I,/obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
 			name = "circuit board (Library Visitor Console)"
 			build_path = /obj/machinery/computer/libraryconsole
@@ -327,7 +327,7 @@
 			to_chat(user, "\blue You [locked ? "" : "un"]lock the circuit controls.")
 		else
 			to_chat(user, "\red Access denied.")
-	else if(istype(I,/obj/item/device/multitool))
+	else if(ismultitool(I))
 		if(locked)
 			to_chat(user, "\red Circuit controls are locked.")
 			return
@@ -345,7 +345,7 @@
 	return
 
 /obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I, mob/user)
-	if(istype(I,/obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		user.visible_message("\blue \the [user] adjusts the jumper on the [src]'s access protocol pins.", "\blue You adjust the jumper on the access protocol pins.")
 		switch(src.build_path)
 
@@ -377,30 +377,26 @@
 /obj/structure/computerframe/attackby(obj/item/P, mob/user)
 	switch(state)
 		if(0)
-			if(istype(P, /obj/item/weapon/wrench))
-				if(user.is_busy(src)) return
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20, target = src))
+			if(iswrench(P))
+				if(user.is_busy(src))
+					return
+				if(P.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "\blue You wrench the frame into place.")
 					src.anchored = 1
 					src.state = 1
-			if(istype(P, /obj/item/weapon/weldingtool))
+			if(iswelder(P))
 				var/obj/item/weapon/weldingtool/WT = P
-				if(!WT.remove_fuel(0, user))
-					to_chat(user, "The welding tool must be on to complete this task.")
+				if(user.is_busy(src))
 					return
-				if(user.is_busy(src)) return
-				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if(do_after(user, 20, target = src))
-					if(!src || !WT.isOn()) return
+				if(WT.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "\blue You deconstruct the frame.")
 					new /obj/item/stack/sheet/metal( src.loc, 5 )
 					qdel(src)
 		if(1)
-			if(istype(P, /obj/item/weapon/wrench))
-				if(user.is_busy(src)) return
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20, target = src))
+			if(iswrench(P))
+				if(user.is_busy(src))
+					return
+				if(P.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "\blue You unfasten the frame.")
 					src.anchored = 0
 					src.state = 0
@@ -416,12 +412,12 @@
 					P.loc = null
 				else
 					to_chat(user, "\red This frame does not accept circuit boards of this type!")
-			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
+			if(isscrewdriver(P) && circuit)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				to_chat(user, "\blue You screw the circuit board into place.")
 				src.state = 2
 				src.icon_state = "2"
-			if(istype(P, /obj/item/weapon/crowbar) && circuit)
+			if(iscrowbar(P) && circuit)
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				to_chat(user, "\blue You remove the circuit board.")
 				src.state = 1
@@ -429,23 +425,23 @@
 				circuit.loc = src.loc
 				src.circuit = null
 		if(2)
-			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
+			if(isscrewdriver(P) && circuit)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				to_chat(user, "\blue You unfasten the circuit board.")
 				src.state = 1
 				src.icon_state = "1"
-			if(istype(P, /obj/item/stack/cable_coil))
+			if(iscoil(P))
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() >= 5)
-					if(user.is_busy(src)) return
+					if(user.is_busy(src))
+						return
 					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20, target = src))
-						if(C.use(5))
-							to_chat(user, "\blue You add cables to the frame.")
-							src.state = 3
-							src.icon_state = "3"
+					if(C.use_tool(src, user, 20, amount = 5, volume = 50))
+						to_chat(user, "\blue You add cables to the frame.")
+						src.state = 3
+						src.icon_state = "3"
 		if(3)
-			if(istype(P, /obj/item/weapon/wirecutters))
+			if(iswirecutter(P))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				to_chat(user, "\blue You remove the cables.")
 				src.state = 2
@@ -456,21 +452,20 @@
 				var/obj/item/stack/sheet/glass/G = P
 				if(G.get_amount() >= 2)
 					if(user.is_busy(src)) return
-					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20, target = src))
-						if(G.use(2))
-							to_chat(user, "\blue You put in the glass panel.")
-							src.state = 4
-							src.icon_state = "4"
+					if(G.use_tool(src, user, 20, amount = 2, volume = 50))
+						to_chat(user, "\blue You put in the glass panel.")
+						src.state = 4
+						src.icon_state = "4"
 		if(4)
-			if(istype(P, /obj/item/weapon/crowbar))
+			if(iscrowbar(P))
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				to_chat(user, "\blue You remove the glass panel.")
 				src.state = 3
 				src.icon_state = "3"
 				new /obj/item/stack/sheet/glass( src.loc, 2 )
-			if(istype(P, /obj/item/weapon/screwdriver))
+			if(isscrewdriver(P))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				to_chat(user, "\blue You connect the monitor.")
-				new src.circuit.build_path (src.loc, circuit)
+				var/obj/machinery/computer/new_computer = new src.circuit.build_path (src.loc, circuit)
+				transfer_fingerprints_to(new_computer)
 				qdel(src)

@@ -3,6 +3,7 @@
  *		Camera
  *		Camera Film
  *		Photos
+ *		Picture Frames
  *		Photo Albums
  */
 
@@ -15,7 +16,7 @@
 	desc = "A camera film cartridge. Insert it into a camera to reload it."
 	icon_state = "film"
 	item_state = "electropack"
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 
 
 /********
@@ -26,7 +27,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "photo"
 	item_state = "paper"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	var/icon/img	//Big photo image
 	var/scribble	//Scribble on the back.
 	var/icon/tiny
@@ -147,10 +148,11 @@
 	desc = "A polaroid camera. 10 photos left."
 	icon_state = "camera"
 	item_state = "electropack"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 2000
+	var/flash_enabled = TRUE
 	var/pictures_max = 10
 	var/pictures_left = 10
 	var/on = 1
@@ -298,6 +300,9 @@
 	on = 1
 
 /obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
+	if(flash_enabled)
+		flash_lighting_fx(8, light_power, light_color)
+
 	var/mobs = ""
 	var/list/mob_names = list()
 	var/isAi = istype(user, /mob/living/silicon/ai)
@@ -335,7 +340,7 @@
 	var/icon/pc = icon('icons/obj/bureaucracy.dmi', "photo")
 	small_img.Scale(8, 8)
 	tiny_img.Scale(4, 4)
-	ic.Blend(small_img,ICON_OVERLAY, 10, 13)
+	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
 	pc.Blend(tiny_img,ICON_OVERLAY, 12, 19)
 
 	var/datum/picture/P = new()

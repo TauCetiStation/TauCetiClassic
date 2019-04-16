@@ -658,7 +658,7 @@
 				to_chat(user, "\red Invalid ID: Access denied.")
 		else
 			to_chat(user, "\red Maintenance protocols disabled by operator.")
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(iswrench(W))
 		if(state==1)
 			state = 2
 			to_chat(user, "You undo the securing bolts.")
@@ -666,7 +666,7 @@
 			state = 1
 			to_chat(user, "You tighten the securing bolts.")
 		return
-	else if(istype(W, /obj/item/weapon/crowbar))
+	else if(iscrowbar(W))
 		if(state==2)
 			state = 3
 			to_chat(user, "You open the hatch to the power unit")
@@ -674,7 +674,7 @@
 			state=2
 			to_chat(user, "You close the hatch to the power unit")
 		return
-	else if(istype(W, /obj/item/stack/cable_coil))
+	else if(iscoil(W))
 		if(state == 3 && hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
 			var/obj/item/stack/cable_coil/CC = W
 			if(!CC.use(2))
@@ -683,7 +683,7 @@
 			clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
 			to_chat(user, "You replace the fused wires.")
 		return
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(W))
 		if(hasInternalDamage(MECHA_INT_TEMP_CONTROL))
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
 			to_chat(user, "You repair the damaged temperature controller.")
@@ -710,10 +710,10 @@
 				to_chat(user, "There's already a powercell installed.")
 		return
 
-	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "hurt")
+	else if(iswelder(W) && user.a_intent != "hurt")
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_MELEE)
-		if (WT.remove_fuel(0,user))
+		if (WT.use(0,user))
 			if (hasInternalDamage(MECHA_INT_TANK_BREACH))
 				clearInternalDamage(MECHA_INT_TANK_BREACH)
 				to_chat(user, "\blue You repair the damaged gas tank.")

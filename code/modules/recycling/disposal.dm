@@ -60,7 +60,7 @@
 		return
 	src.add_fingerprint(user)
 	if(mode<=0) // It's off
-		if(istype(I, /obj/item/weapon/screwdriver))
+		if(isscrewdriver(I))
 			if(contents.len > 0)
 				to_chat(user, "Eject the items first!")
 				return
@@ -74,18 +74,16 @@
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				to_chat(user, "You attach the screws around the power connection.")
 				return
-		else if(istype(I,/obj/item/weapon/weldingtool) && mode==-1)
+		else if(iswelder(I) && mode==-1)
 			if(contents.len > 0)
 				to_chat(user, "<span class='warning'>Eject the items first!</span>")
 				return
 			if(user.is_busy()) return
 			var/obj/item/weapon/weldingtool/W = I
-			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+			if(W.use(0,user))
 				to_chat(user, "You start slicing the floorweld off the disposal unit.")
 
-				if(do_after(user,20, target = src))
-					if(!src || !W.isOn()) return
+				if(W.use_tool(src, user, 20, volume = 100))
 					to_chat(user, "You sliced the floorweld off the disposal unit.")
 					var/obj/structure/disposalconstruct/C = new (src.loc)
 					src.transfer_fingerprints_to(C)
@@ -120,7 +118,7 @@
 			if(user.is_busy()) return
 			for (var/mob/V in viewers(usr))
 				V.show_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>", 3)
-			if(do_after(usr, 20, target = src))
+			if(G.use_tool(src, usr, 20))
 				GM.loc = src
 				GM.instant_vision_update(1,src)
 				for (var/mob/C in viewers(src))
@@ -167,7 +165,7 @@
 		if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
 			if(target.anchored) return
 			V.show_message("<span class='red'>[usr] starts stuffing [target.name] into the disposal.</span>", 3)
-	if(user.is_busy() || !do_after(usr, 20, target = usr))
+	if(user.is_busy() || !do_after(usr, 20, target = src))
 		return
 	if(target_loc != target.loc)
 		return
@@ -913,15 +911,13 @@
 		return		// prevent interaction with T-scanner revealed pipes
 	src.add_fingerprint(user)
 	if(user.is_busy()) return
-	if(istype(I, /obj/item/weapon/weldingtool))
+	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/W = I
 
-		if(W.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+		if(W.use(0,user))
 			// check if anything changed over 2 seconds
 			to_chat(user, "You start slicing the disposal pipe.")
-			if(do_after(user, 30, target = src))
-				if(!W.isOn()) return
+			if(W.use_tool(src, user, 30, volume = 100))
 				to_chat(user, "<span class='notice'>You sliced the disposal pipe.</span>")
 				welded()
 			else
@@ -1251,15 +1247,12 @@
 	if(T.intact)
 		return		// prevent interaction with T-scanner revealed pipes
 	src.add_fingerprint(user)
-	if(istype(I, /obj/item/weapon/weldingtool))
+	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/W = I
 		if(user.is_busy()) return
-		if(W.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-			// check if anything changed over 2 seconds
+		if(W.use(0,user))
 			to_chat(user, "You start slicing the disposal pipe.")
-			if(do_after(user, 30, target = src))
-				if(!W.isOn()) return
+			if(W.use_tool(src, user, 30, volume = 100))
 				to_chat(user, "<span class='notice'>You sliced the disposal pipe.</span>")
 				welded()
 			else
@@ -1365,7 +1358,7 @@
 	if(!I || !user)
 		return
 	src.add_fingerprint(user)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		if(mode==0)
 			mode=1
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
@@ -1376,13 +1369,11 @@
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			to_chat(user, "You attach the screws around the power connection.")
 			return
-	else if(istype(I,/obj/item/weapon/weldingtool) && mode==1 && !user.is_busy())
+	else if(iswelder(I) && mode==1 && !user.is_busy())
 		var/obj/item/weapon/weldingtool/W = I
-		if(W.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+		if(W.use(0,user))
 			to_chat(user, "You start slicing the floorweld off the disposal outlet.")
-			if(do_after(user,20,target = src))
-				if(!src || !W.isOn()) return
+			if(W.use_tool(src, user, 20, volume = 100))
 				to_chat(user, "You sliced the floorweld off the disposal outlet.")
 				var/obj/structure/disposalconstruct/C = new (src.loc)
 				src.transfer_fingerprints_to(C)

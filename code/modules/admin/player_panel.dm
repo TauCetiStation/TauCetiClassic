@@ -71,7 +71,7 @@
 
 					body += "</td><td align='center'>";
 
-					body += "<font size='2'><b>"+job+" "+name+"</b><br><b>Real name "+real_name+"</b><br><b>Played by "+key+" ("+ip+")</b></font>"
+					body += "<font size='2'><b>"+job+" "+name+"</b><br><b>Real name "+real_name+"</b><br><b>Played by "+key+" </b></font>"
 
 					body += "</td><td align='center'>";
 
@@ -295,7 +295,7 @@
 						<a id='link[i]'
 						onmouseover='expand("item[i]","[M_job]","[M_name]","[M_rname]","--unused--","[M_key]","[M.lastKnownIP]",[is_antagonist],"\ref[M]")'
 						>
-						<b id='search[i]'>[M_name] - [M_rname] - [M_key] ([M_job])</b>
+						<span id='search[i]'><b>[M_name] - [M_rname] - [M_key] ([M_job])</b></span>
 						</a>
 						<br><span id='item[i]'></span>
 					</td>

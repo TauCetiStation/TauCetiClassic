@@ -18,6 +18,7 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "donutbox6"
 	name = "donut box"
+	desc = "Very tasty donuts. Security staff will rate them."
 	var/icon_type = "donut"
 
 /obj/item/weapon/storage/fancy/update_icon(itemremoved = 0)
@@ -186,8 +187,8 @@
 	name = "box of crayons"
 	desc = "A box of crayons for all your rune drawing needs."
 	icon = 'icons/obj/crayons.dmi'
-	icon_state = "crayonbox"
-	w_class = 2.0
+	icon_state = "crayonbox_preview"
+	w_class = ITEM_SIZE_SMALL
 	storage_slots = 6
 	icon_type = "crayon"
 	can_hold = list(
@@ -210,15 +211,21 @@
 	for(var/obj/item/toy/crayon/crayon in contents)
 		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
 
+/obj/item/weapon/storage/fancy/crayons/update_icon()
+	var/list/crayon_overlays = list()
+	var/crayon_position = 0
+	for(var/obj/item/toy/crayon/C in contents)
+		var/mutable_appearance/I = mutable_appearance('icons/obj/crayons.dmi', "[C.colourName]")
+		I.pixel_x += crayon_position * 2
+		crayon_position++
+		crayon_overlays += I
+	overlays = crayon_overlays
+	return
+
 /obj/item/weapon/storage/fancy/crayons/attackby(obj/item/toy/crayon/W, mob/user)
-	if(istype(W))
-		switch(W.colourName)
-			if("mime")
-				to_chat(user, "This crayon is too sad to be contained in this box.")
-				return
-			if("rainbow")
-				to_chat(user, "This crayon is too powerful to be contained in this box.")
-				return
+	if(istype(W, /obj/item/toy/crayon/chalk) || istype(W, /obj/item/toy/crayon/spraycan))
+		to_chat(user, "\The [W] is too bulky to be contained in [src].")
+		return
 	..()
 
 /*
@@ -230,7 +237,7 @@
 	desc = "A box of glowsticks (Do not eat)."
 	icon = 'icons/obj/glowsticks.dmi'
 	icon_state = "sticksbox"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	storage_slots = 5
 	icon_type = "glowstick"
 	can_hold = list(
@@ -274,7 +281,7 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigpacket"
 	item_state = "cigpacket"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	throwforce = 2
 	slot_flags = SLOT_FLAGS_BELT
 	storage_slots = 6
@@ -309,7 +316,7 @@
 				var/obj/item/clothing/mask/cigarette/C = I
 				has_cigarette = 1
 				contents.Remove(C)
-				user.equip_to_slot_if_possible(C, slot_wear_mask)
+				user.equip_to_slot_if_possible(C, SLOT_WEAR_MASK)
 				to_chat(user, "<span class='notice'>You take a cigarette out of the pack.</span>")
 				update_icon()
 				break
@@ -364,7 +371,7 @@
 	icon = 'icons/obj/vialbox.dmi'
 	icon_state = "vialbox0"
 	item_state = "syringe_kit"
-	max_w_class = 3
+	max_w_class = ITEM_SIZE_NORMAL
 	can_hold = list("/obj/item/weapon/reagent_containers/glass/beaker/vial")
 	storage_slots = 6
 	req_access = list(access_virology)

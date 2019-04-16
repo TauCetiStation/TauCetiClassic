@@ -82,10 +82,10 @@
 		src.update_icon()
 		return 1
 
-	if (istype(O, /obj/item/weapon/weldingtool))
+	if (iswelder(O))
 		var/obj/item/weapon/weldingtool/WT = O
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if (WT.remove_fuel(0))
+		if (WT.use(0))
 			if(health < maxHealth)
 				health += pick(1,1,1,2,2,3)
 				if(health > maxHealth)
@@ -279,7 +279,7 @@
 
 	var/list/items = list()
 	for(var/obj/item/I in view(1,src))
-		if(I.loc != src && I.w_class <= 2)
+		if(I.loc != src && I.w_class <= ITEM_SIZE_SMALL)
 			items.Add(I)
 
 	var/obj/selection = input("Select an item.", "Pickup") in items

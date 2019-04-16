@@ -11,6 +11,7 @@
 /obj/item/stack
 	gender = PLURAL
 	origin_tech = "materials=1"
+	usesound = 'sound/items/Deconstruct.ogg'
 
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
@@ -167,7 +168,8 @@
 			usr << browse(null, "window=stack")
 			return
 		if (R.time)
-			if(usr.is_busy()) return
+			if(usr.is_busy())
+				return
 			to_chat(usr, "\blue Building [R.title] ...")
 			if (!do_after(usr, R.time, target = usr))
 				return
@@ -195,7 +197,7 @@
 /obj/item/stack/proc/is_cyborg()
 	return istype(loc, /obj/item/weapon/robot_module) || istype(loc, /mob/living/silicon)
 
-/obj/item/stack/proc/use(used, transfer = FALSE)
+/obj/item/stack/use(used, transfer = FALSE)
 	if(zero_amount())
 		return FALSE
 	if(amount < used)
@@ -206,6 +208,20 @@
 	if(!zero_amount())
 		update_weight()
 		update_icon()
+
+	return TRUE
+
+/obj/item/stack/tool_use_check(mob/living/user, amount)
+	if(get_amount() < amount)
+		if(singular_name)
+			if(amount > 1)
+				to_chat(user, "<span class='warning'>You need at least [amount] [singular_name]\s to do this!</span>")
+			else
+				to_chat(user, "<span class='warning'>You need at least [amount] [singular_name] to do this!</span>")
+		else
+			to_chat(user, "<span class='warning'>You need at least [amount] to do this!</span>")
+
+		return FALSE
 
 	return TRUE
 

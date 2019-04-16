@@ -61,7 +61,7 @@
 /obj/machinery/sparker/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	if (istype(W, /obj/item/weapon/screwdriver))
+	if (isscrewdriver(W))
 		add_fingerprint(user)
 		src.disable = !src.disable
 		user.SetNextMove(CLICK_CD_INTERACT)
@@ -122,6 +122,8 @@
 
 	active = 1
 	icon_state = "launcheract"
+	message_admins("Ignition switch was activated at ([x],[y],[z]) [ADMIN_JMP(src)] Last touched by: [key_name(usr)]")
+	log_game("Ignition switch was activated at ([x],[y],[z]) Last touched by: [key_name(usr)]")
 
 	for(var/obj/machinery/sparker/M in machines)
 		if (M.id == id)

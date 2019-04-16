@@ -250,7 +250,7 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		update_icon()
 
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(W))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		if(is_open)
 			to_chat(user, "\blue You close the panel.")
@@ -259,26 +259,22 @@
 			to_chat(user, "\blue You open the panel and expose the wiring.")
 			is_open = 1
 
-	else if(istype(W, /obj/item/stack/cable_coil) && malfunction && is_open)
+	else if(iscoil(W) && malfunction && is_open)
 		var/obj/item/stack/cable_coil/coil = W
 		if(user.is_busy(src)) return
 		to_chat(user, "\blue You begin to replace the wires.")
 		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
-		if(do_after(user, 30, target = src))
-			if(QDELETED(src) || !coil.use(1))
-				return
-
+		if(coil.use_tool(src, user, 30, amount = 1, volume = 50))
 			health = max_health
 			malfunction = 0
 			to_chat(user, "\blue You repair the [src]!")
 			update_icon()
 
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(iswrench(W))
 		if(locked)
 			to_chat(user, "The bolts are covered, unlocking this would retract the covers.")
 			return
 		if(anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			to_chat(user, "\blue You unsecure the [src] from the floor!")
 			if(active)
 				to_chat(user, "\blue The [src] shuts off!")
@@ -286,7 +282,6 @@
 			anchored = 0
 		else
 			if(istype(get_turf(src), /turf/space)) return //No wrenching these in space!
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			to_chat(user, "\blue You secure the [src] to the floor!")
 			anchored = 1
 
@@ -318,7 +313,7 @@
 	icon_state = "Shield_Gen"
 	anchored = FALSE
 	density = TRUE
-	req_access = list(access_teleporter, access_xenoarch)
+	req_access = list(access_research)
 	flags = CONDUCT
 	use_power = 0
 	var/active = FALSE
@@ -469,12 +464,11 @@
 
 
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		if(active)
 			to_chat(user, "Turn off the field generator first.")
 			return
-
-		else if(state == 0)
+		if(state == 0)
 			state = 1
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			to_chat(user, "You secure the external reinforcing bolts to the floor.")
@@ -534,14 +528,16 @@
 
 //////////////Containment Field START
 /obj/machinery/shieldwall
-		name = "Shield"
+		name = "energy shield"
 		desc = "An energy shield."
 		icon = 'icons/effects/effects.dmi'
-		icon_state = "shieldwall"
+		icon_state = "energyshield"
 		anchored = 1
 		density = 1
+		layer = INFRONT_MOB_LAYER
 		unacidable = 1
 		light_range = 3
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		var/needs_power = 0
 		var/active = 1
 //		var/power = 10
@@ -621,9 +617,34 @@
 	if(air_group || (height==0)) return 1
 
 	if(istype(mover) && mover.checkpass(PASSGLASS))
-		return prob(20)
+		if(prob(20))
+			if(istype(mover, /obj/item/projectile))
+				var/obj/item/projectile/P = mover
+				visible_message("<span class='warning'><b>\The [P.name] flies through the \the [src.name].</b></span>")
+				P.damage -= 10
+			return TRUE
+		else
+			if(istype(mover, /obj/item/projectile))
+				visible_message("<span class='warning'>\The [mover] hits the \the [src.name].</span>")
+			return FALSE
 	else
-		if (istype(mover, /obj/item/projectile))
-			return prob(10)
+		if(istype(mover, /obj/item/projectile))
+			var/obj/item/projectile/P = mover
+			if(P.damage > 15)
+				if(prob(10))
+					visible_message("<span class='warning'><b>\The [P.name] flies through the \the [src.name].</span></b>")
+					P.damage -= 10
+					return TRUE
+				else
+					visible_message("<span class='warning'>\The [P.name] hits the \the [src.name].</span>")
+					return FALSE
+			else
+				if(prob(5))
+					visible_message("<span class='warning'><b>\The [P.name] flies through the \the [src.name].</b></span>")
+					P.damage -= P.damage / 2
+					return TRUE
+				else
+					visible_message("<span class='warning'>\The [P.name] hits the \the [src.name].</span>")
+					return FALSE
 		else
 			return !src.density

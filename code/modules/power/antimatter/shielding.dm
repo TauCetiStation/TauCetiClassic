@@ -205,7 +205,7 @@
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "box"
 	item_state = "electronic"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	flags = CONDUCT
 	throwforce = 5
 	throw_speed = 1
@@ -214,7 +214,7 @@
 	w_amt = 2000
 
 /obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/device/multitool) && istype(src.loc,/turf))
+	if(ismultitool(I) && istype(src.loc,/turf))
 		new/obj/machinery/am_shielding(src.loc)
 		qdel(src)
 		return
