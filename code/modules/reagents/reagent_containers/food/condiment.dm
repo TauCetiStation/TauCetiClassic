@@ -240,12 +240,12 @@
 			for(var/obj/item/I in contents)
 				I.loc = get_turf(src)
 			qdel(src)
-			return
+		return
 
 	if(O.type in can_be_placed)
 		if(contents.len < 6)
 			user.drop_item()
-			O.loc = src
+			O.forceMove(src)
 			update_icon()
 		else
 			to_chat(user, "<span class='rose'>\The [src] is full!</span>")
@@ -256,13 +256,12 @@
 	if(contents.len)
 		var/obj/item/weapon/reagent_containers/food/condiment/choice = input("Which condiment would you like to remove from the shelf?") in contents as obj|null
 		if(choice)
-			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr) || usr.incapacitated())
 				return
 			if(ishuman(user))
-				if(!user.get_active_hand())
-					user.put_in_hands(choice)
+				user.put_in_hands(choice)
 			else
-				choice.loc = get_turf(src)
+				choice.forceMove(get_turf(src))
 			update_icon()
 
 /obj/structure/condiment_shelf/ex_act(severity)
@@ -274,8 +273,9 @@
 			return
 		if(2.0)
 			for(var/obj/item/weapon/reagent_containers/food/condiment/b in contents)
-				if (prob(50)) b.loc = (get_turf(src))
-				else del(b)
+				if(prob(50))
+					 b.forceMove(get_turf(src))
+				else qdel(b)
 			qdel(src)
 			return
 		if(3.0)
