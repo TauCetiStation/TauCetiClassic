@@ -132,7 +132,7 @@
 	new /obj/item/weapon/melee/baton(src)
 	new /obj/item/clothing/accessory/holster/waist(src)
 	new /obj/item/weapon/melee/telebaton(src)
-	new /obj/item/weapon/gun/energy/gun(src)
+	new /obj/item/weapon/gun/energy/gun/bison(src)
 	new /obj/item/device/flashlight/flare(src)
 	new /obj/item/clothing/under/rank/head_of_security/turtleneck(src)
 	new /obj/item/device/flashlight/seclite(src)
