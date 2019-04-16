@@ -15,6 +15,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
 	anchored = 1
+	scoop_reagents = list("ash" = 10)
 
 /obj/effect/decal/cleanable/ash/attack_hand(mob/user)
 	to_chat(user, "<span class='notice'>[src] sifts through your fingers.</span>")
@@ -50,6 +51,7 @@
 	layer = 2
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "flour"
+	no_scoop = FALSE
 
 /obj/effect/decal/cleanable/greenglow
 	name = "glowing goo"
@@ -101,13 +103,15 @@
 	icon_state = "vomit_1"
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
 	var/list/viruses = list()
+	no_clear = TRUE
+	scoop_reagents = list("vomit" = 5)
 
 /obj/effect/decal/cleanable/vomit/green
 	name = "green vomit"
 	desc = "It's all gummy. Ew."
 	icon_state = "gvomit_1"
 	random_icon_states = list("gvomit_1", "gvomit_2", "gvomit_3", "gvomit_4")
-	//scoop_reagents = list("green_vomit" = 5)
+	scoop_reagents = list("green_vomit" = 5)
 
 /obj/effect/decal/cleanable/vomit/Destroy()
 	for(var/datum/disease/D in viruses)
@@ -147,6 +151,17 @@
 	layer = 2
 	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("smashed_pie")
+
+/obj/effect/decal/cleanable/fungus
+	name = "space fungus"
+	desc = "A fungal growth. Looks pretty nasty."
+	density = 0
+	anchored = 1
+	layer = 2
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "flour"
+	color = "#D5820B"
+	scoop_reagents = list("fungus" = 10)
 
 /obj/effect/decal/cleanable/toilet_paint
 	name = "lettering"
