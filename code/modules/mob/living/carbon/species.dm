@@ -362,7 +362,7 @@
 		)
 
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/vox(src), SLOT_WEAR_MASK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
 	if(!H.r_hand)
 		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), SLOT_R_HAND)
 		H.internal = H.r_hand
@@ -606,6 +606,7 @@
 	,BIOHAZZARD_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
 	,NO_MINORCUTS = TRUE
+	,NO_VOMIT = TRUE
 	)
 
 	has_bodypart = list(
@@ -649,6 +650,7 @@
 	,NO_BLOOD = TRUE
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,NO_VOMIT = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/gray_blood
@@ -711,7 +713,6 @@
 
 /datum/unarmed_attack/slime_glomp
 	attack_verb = list("glomp")
-	damage = 2
 	attack_sound = 'sound/effects/attackblob.ogg'
 
 /datum/unarmed_attack/claws
@@ -765,6 +766,7 @@
 	,NO_FINGERPRINT = TRUE
 	,NO_SCAN = TRUE
 	,NO_MINORCUTS = TRUE
+	,NO_VOMIT = TRUE
 	)
 
 	burn_mod = 2
@@ -808,6 +810,7 @@
 		RAD_IMMUNE = TRUE,
 		VIRUS_IMMUNE = TRUE,
 		BIOHAZZARD_IMMUNE = TRUE,
+		NO_VOMIT = TRUE,
 		NO_FINGERPRINT = TRUE,
 		NO_MINORCUTS = TRUE
 		)
@@ -987,3 +990,17 @@
 	flesh_color = "#05fffb"
 	unarmed_type = /datum/unarmed_attack/slime_glomp
 	has_gendered_icons = FALSE
+
+	cold_level_1 = 280
+	cold_level_2 = 230
+	cold_level_3 = 150
+
+	flags = list(
+	 NO_BREATHE = TRUE
+	,NO_SCAN = TRUE
+	,NO_PAIN = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,RAD_IMMUNE = TRUE
+	,VIRUS_IMMUNE = TRUE
+	)

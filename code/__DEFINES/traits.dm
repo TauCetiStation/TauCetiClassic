@@ -10,6 +10,7 @@
 #define TRAIT_STRESS_EATER        "stresseater"
 #define TRAIT_MULTITASKING        "multitasking"
 #define TRAIT_NATURECHILD         "child_of_nature"
+#define TRAIT_MUTE                "mute"
 
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention

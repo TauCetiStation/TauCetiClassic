@@ -47,7 +47,7 @@ for reference:
 	access_virology = 39
 	access_cmo = 40
 	access_qm = 41
-	access_court = 42
+	FREE SPACE = 42
 	access_clown = 43
 	access_mime = 44
 
@@ -71,7 +71,7 @@ for reference:
 		if (src.health < src.maxhealth)
 			if(user.is_busy()) return
 			visible_message("\red [user] begins to repair \the [src]!")
-			if(do_after(user,20,target = src))
+			if(W.use_tool(src, user, 20, volume = 50))
 				src.health = src.maxhealth
 				W:use(1)
 				visible_message("\red [user] repairs \the [src]!")

@@ -264,10 +264,7 @@
 		if(user.is_busy(src)) return
 		to_chat(user, "\blue You begin to replace the wires.")
 		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
-		if(do_after(user, 30, target = src))
-			if(QDELETED(src) || !coil.use(1))
-				return
-
+		if(coil.use_tool(src, user, 30, amount = 1, volume = 50))
 			health = max_health
 			malfunction = 0
 			to_chat(user, "\blue You repair the [src]!")
@@ -278,7 +275,6 @@
 			to_chat(user, "The bolts are covered, unlocking this would retract the covers.")
 			return
 		if(anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			to_chat(user, "\blue You unsecure the [src] from the floor!")
 			if(active)
 				to_chat(user, "\blue The [src] shuts off!")
@@ -286,7 +282,6 @@
 			anchored = 0
 		else
 			if(istype(get_turf(src), /turf/space)) return //No wrenching these in space!
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			to_chat(user, "\blue You secure the [src] to the floor!")
 			anchored = 1
 
@@ -473,8 +468,7 @@
 		if(active)
 			to_chat(user, "Turn off the field generator first.")
 			return
-
-		else if(state == 0)
+		if(state == 0)
 			state = 1
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			to_chat(user, "You secure the external reinforcing bolts to the floor.")

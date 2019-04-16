@@ -105,7 +105,7 @@
 		if(ishuman(AM))
 			if(isturf(src.loc))
 				var/mob/living/carbon/H = AM
-				if(H.m_intent == "run")
+				if(H.m_intent == "run" && !H.buckled)
 					armed = 0
 					H.legcuffed = src
 					src.loc = H
@@ -388,6 +388,7 @@
 	w_class = ITEM_SIZE_SMALL
 	item_state = "electronic"
 	flags = CONDUCT
+	usesound = 'sound/items/Deconstruct.ogg'
 	var/mtype = 1						// 1=electronic 2=hardware
 
 /obj/item/weapon/module/card_reader

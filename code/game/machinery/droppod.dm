@@ -415,7 +415,7 @@
 	else if(iswelder(O))
 		var/obj/item/weapon/weldingtool/WT = O
 		user.SetNextMove(CLICK_CD_MELEE)
-		if(obj_integrity < max_integrity && WT.remove_fuel(0, user))
+		if(obj_integrity < max_integrity && WT.use(0, user))
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			obj_integrity = min(obj_integrity + 10, max_integrity)
 			visible_message("<span class='notice'>[user] has repaired some dents on [src]!</span>")

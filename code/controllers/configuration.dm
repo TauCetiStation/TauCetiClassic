@@ -40,7 +40,6 @@
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
 	var/continous_rounds = 1			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 	var/allow_Metadata = 1				// Metadata is supported.
-	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 	var/fps = 20
 	var/socket_talk	= 0					// use socket_talk to communicate with other processes
 	var/list/resource_urls = null
@@ -63,6 +62,8 @@
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
+
+	var/registration_panic_bunker_age = null
 
 	var/cult_ghostwriter = 1               //Allows ghosts to write in blood in cult rounds...
 	var/cult_ghostwriter_req_cultists = 10 //...so long as this many cultists are active.
@@ -167,6 +168,7 @@
 	var/slack_team = 0
 	var/antigrief_alarm_level = 1
 	var/check_randomizer = 0
+	var/proxy_autoban = 0
 
 	var/allow_donators = 0
 	var/allow_byond_membership = 0
@@ -454,9 +456,6 @@
 				if("forbid_singulo_possession")
 					forbid_singulo_possession = 1
 
-				if("popup_admin_pm")
-					config.popup_admin_pm = 1
-
 				if("allow_holidays")
 					Holiday = 1
 
@@ -585,6 +584,9 @@
 				if("check_randomizer")
 					config.check_randomizer = value
 
+				if("proxy_autoban")
+					config.proxy_autoban = 1
+
 				if("allow_donators")
 					config.allow_donators = 1
 
@@ -605,6 +607,9 @@
 
 				if("repository_link")
 					config.repository_link = value
+
+				if("registration_panic_bunker_age")
+					config.registration_panic_bunker_age = value
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")

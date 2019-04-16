@@ -35,19 +35,3 @@
 	icon_state = "medical"
 	item_state = "medical"
 	permeability_coefficient = 0.01
-
-/obj/item/clothing/mask/breath/vox
-	desc = "A weirdly-shaped breath mask."
-	name = "vox breath mask"
-	icon_state = "voxmask"
-	item_state = "voxmask"
-	permeability_coefficient = 0.01
-	species_restricted = list(VOX , VOX_ARMALIS)
-	sprite_sheets = list(
-		VOX_ARMALIS = 'icons/mob/species/armalis/mask.dmi'
-		)
-
-/obj/item/clothing/mask/breath/vox/attack_self()
-
-	to_chat(usr, "You can't really adjust this mask - it's moulded to your beak!")
-	return

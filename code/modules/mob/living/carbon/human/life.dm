@@ -182,7 +182,10 @@
 					if(1)
 						emote("twitch")
 					if(2 to 3)
-						say("[pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
+						if(config.rus_language)
+							say(pick(TRAIT_TOURETTE))
+						else
+							say(pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS"))
 				var/old_x = pixel_x
 				var/old_y = pixel_y
 				pixel_x += rand(-2,2)
@@ -202,9 +205,9 @@
 			if(config.rus_language)//TODO:CYRILLIC dictionary?
 				switch(pick(1,2,3))
 					if(1)
-						say(pick(CYRILLIC_BRAINDAMAG_1))
+						say(pick(CYRILLIC_BRAINDAMAGE_1))
 					if(2)
-						say(pick(CYRILLIC_BRAINDAMAG_2))
+						say(pick(CYRILLIC_BRAINDAMAGE_2))
 					if(3)
 						emote("drool")
 			else
@@ -376,8 +379,7 @@
 				if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
 					var/obj/item/clothing/mask/gas/G = wear_mask
 					var/datum/gas_mixture/filtered = new
-
-					for(var/g in  list("phoron", "sleeping_agent"))
+					for(var/g in  G.filter)
 						if(breath.gas[g])
 							filtered.gas[g] = breath.gas[g] * G.gas_filter_strength
 							breath.gas[g] -= filtered.gas[g]
@@ -429,7 +431,6 @@
 				for(var/mob/living/carbon/M in view(1,src))
 					src.spread_disease_to(M)
 
-
 /mob/living/carbon/human/proc/get_breath_from_internal(volume_needed)
 	if(internal)
 		if (!contents.Find(internal))
@@ -437,6 +438,16 @@
 		if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
 			internal = null
 		if(internal)
+					//internal breath sounds
+			if(internal.distribute_pressure >= 16)
+				var/breathsound = ""
+				if(istype(wear_mask, /obj/item/clothing/mask))
+					breathsound = "breathmask"
+				if(istype(wear_mask, /obj/item/clothing/mask/gas))
+					breathsound = "gasmaskbreath"
+				if(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space))
+					breathsound = "rigbreath"
+				playsound(src, breathsound, 80, 0, -6)
 			return internal.remove_air_volume(volume_needed)
 		else if(internals)
 			internals.icon_state = "internal0"

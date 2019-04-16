@@ -8,6 +8,7 @@
 	m_amt = 2000
 	origin_tech = "combat=3;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser)
+	slot_flags = SLOT_FLAGS_BACK
 
 /obj/item/weapon/gun/energy/laser/atom_init()
 	. = ..()

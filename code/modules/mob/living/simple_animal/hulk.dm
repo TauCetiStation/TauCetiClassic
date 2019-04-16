@@ -76,6 +76,26 @@
 							)
 	health_regen = 3
 
+/mob/living/simple_animal/hulk/Clowan
+	name = "Champion of Honk"
+	real_name = "Champion of Honk"
+	desc = ""
+	icon = 'icons/mob/GyperHonk.dmi'
+	icon_state = "Clowan"
+	icon_living = "Clowan"
+	maxHealth = 400
+	health = 400
+	melee_damage_lower = 5
+	melee_damage_upper = 5
+	attacktext = "brutally HONK"
+
+	speed = 4
+
+	attack_sound =  'sound/items/bikehorn.ogg'
+	health_regen = 3
+
+	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/HulkHONK)
+
 /mob/living/simple_animal/hulk/atom_init()
 	..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
