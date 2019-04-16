@@ -274,7 +274,7 @@
 		if(2.0)
 			for(var/obj/item/weapon/reagent_containers/food/condiment/b in contents)
 				if(prob(50))
-					 b.forceMove(get_turf(src))
+					b.forceMove(get_turf(src))
 				else qdel(b)
 			qdel(src)
 			return

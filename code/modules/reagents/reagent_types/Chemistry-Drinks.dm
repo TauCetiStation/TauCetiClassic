@@ -469,7 +469,7 @@
 	id = "Honey"
 	description = "A golden yellow syrup, loaded with sugary sweetness."
 	reagent_state = LIQUID
-	color = "#FEAE00"
+	color = "#feae00"
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	taste_message = "honey"
 
