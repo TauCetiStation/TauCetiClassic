@@ -31,16 +31,13 @@
 
 /obj/item/weapon/grenade/cancasing/CheckParts(list/parts_list)
 	..()
-	store_data()
-	update_icon()
-
-/obj/item/weapon/grenade/cancasing/proc/store_data()
 	for(var/obj/item/I in contents)
 		if(istype(I, /obj/item/weapon/reagent_containers/food/drinks/cans))
 			can_icon = I.icon
 			can_icon_state = I.icon_state
 		else if(istype(I, /obj/item/stack/cable_coil))
 			wire_color = I.color
+	update_icon()
 
 /obj/item/weapon/grenade/cancasing/update_icon()
 	if(can_icon && can_icon_state)
