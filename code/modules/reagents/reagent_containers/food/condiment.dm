@@ -206,17 +206,17 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	var/list/can_be_placed = list(/obj/item/weapon/reagent_containers/food/condiment, // Stuff that we can put on the shelf
-					/obj/item/weapon/reagent_containers/food/condiment/sugar,
-					/obj/item/weapon/reagent_containers/food/condiment/rice,
-					/obj/item/weapon/reagent_containers/food/condiment/soysauce,
-					/obj/item/weapon/reagent_containers/food/condiment/hotsauce,
-					/obj/item/weapon/reagent_containers/food/condiment/ketchup,
-					/obj/item/weapon/reagent_containers/food/condiment/coldsauce,
-					/obj/item/weapon/reagent_containers/food/condiment/cornoil,
-					/obj/item/weapon/reagent_containers/food/condiment/enzyme,
-					/obj/item/weapon/reagent_containers/food/condiment/saltshaker,
-					/obj/item/weapon/reagent_containers/food/condiment/peppermill,)
+	var/list/can_be_placed = list(/obj/item/weapon/reagent_containers/food/condiment,
+								/obj/item/weapon/reagent_containers/food/condiment/sugar,
+								/obj/item/weapon/reagent_containers/food/condiment/rice,
+								/obj/item/weapon/reagent_containers/food/condiment/soysauce,
+								/obj/item/weapon/reagent_containers/food/condiment/hotsauce,
+								/obj/item/weapon/reagent_containers/food/condiment/ketchup,
+								/obj/item/weapon/reagent_containers/food/condiment/coldsauce,
+								/obj/item/weapon/reagent_containers/food/condiment/cornoil,
+								/obj/item/weapon/reagent_containers/food/condiment/enzyme,
+								/obj/item/weapon/reagent_containers/food/condiment/saltshaker,
+								/obj/item/weapon/reagent_containers/food/condiment/peppermill)
 
 /obj/structure/condiment_shelf/atom_init(mapload, ndir, building = 0)
 	. = ..()
