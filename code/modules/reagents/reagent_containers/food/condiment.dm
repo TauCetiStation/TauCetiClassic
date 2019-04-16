@@ -219,7 +219,7 @@
 					/obj/item/weapon/reagent_containers/food/condiment/peppermill,)
 
 /obj/structure/condiment_shelf/atom_init(mapload, ndir, building = 0)
-	..()
+	. = ..()
 	for(var/obj/item/I in loc)
 		if(I.type in can_be_placed)
 			if(contents.len < 6)
