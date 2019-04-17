@@ -191,10 +191,11 @@
 
 /obj/structure/condiment_shelf/atom_init(mapload, ndir, building = 0)
 	. = ..()
-	for(var/obj/item/I in loc)
-		if(I.type in can_be_placed)
-			if(contents.len < 6)
-				I.loc = src
+	if(mapload)
+		for(var/obj/item/I in loc)
+			if(I.type in can_be_placed)
+				if(contents.len < 6)
+					I.loc = src
 	if(building)
 		pixel_x = (ndir & 3)? 0 : (ndir == EAST ? 32 : -32)
 		pixel_y = (ndir & 3)? (ndir == NORTH ? 32 : -32) : 0
