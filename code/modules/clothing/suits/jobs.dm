@@ -81,6 +81,12 @@
 /obj/item/clothing/suit/storage/det_suit/black
 	icon_state = "detective2"
 
+/obj/item/clothing/suit/storage/det_suit/noir_trenchcoat
+	name = "noir trenchcoat"
+	desc = "A hard-boiled private investigator's grey trenchcoat."
+	icon_state = "detective_trenchcoat"
+	item_state = "detective_trenchcoat"
+
 //Forensics
 /obj/item/clothing/suit/storage/forensics
 	name = "jacket"

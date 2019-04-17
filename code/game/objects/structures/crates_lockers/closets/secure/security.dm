@@ -264,6 +264,8 @@
 	new /obj/item/clothing/suit/storage/det_suit(src)
 	new /obj/item/clothing/suit/storage/det_suit/black(src)
 	new /obj/item/clothing/suit/storage/det_suit/max_payne(src)
+	new /obj/item/clothing/suit/storage/det_suit/noir_trenchcoat(src)
+	new /obj/item/clothing/accessory/tie/black(src)
 	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/head/det_hat(src)
 	new /obj/item/clothing/head/det_hat/black(src)

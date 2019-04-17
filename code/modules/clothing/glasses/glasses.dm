@@ -353,3 +353,20 @@
 	icon_state = "supergar"
 	item_state = "supergar"
 	toggleable = 0
+
+/obj/item/clothing/glasses/sunglasses/noir
+	name = "noir sunglasses"
+	desc = "Somehow these seem even more out-of-date than normal sunglasses."
+	action_button_name = "Toggle Noir"
+
+/obj/item/clothing/glasses/sunglasses/noir/attack_self(mob/user)
+	toggle_noir()
+
+/obj/item/clothing/glasses/sunglasses/noir/verb/toggle_noir()
+	set name = "Toggle Noir"
+	set category = "Object"
+
+	if(usr.incapacitated())
+		return
+	active = !active
+	to_chat(usr, "<span class='notice'>You toggle the Noire Mode [active ? "on" : "off"]. Let the investigation begin.</span>")
