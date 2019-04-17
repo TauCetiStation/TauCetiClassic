@@ -13,8 +13,8 @@
 	var/last_viewed_group = "categories"
 	var/reqtime = 0 //Cooldown for requisitions - Quarxink
 	var/safety_warning = "For safety reasons the automated supply shuttle \
-		cannot transport live organisms, classified nuclear weaponry or \
-		homing beacons."
+		cannot transport live organisms, classified nuclear weaponry, \
+		homing beacons or active wormholes."
 
 /obj/machinery/computer/cargo/request
 	name = "Supply request console"

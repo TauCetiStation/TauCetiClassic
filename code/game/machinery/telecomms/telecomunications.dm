@@ -538,7 +538,7 @@
 
 			if(traffic > 0)
 				totaltraffic += traffic // add current traffic to total traffic
-
+/*
 			//Is this a test signal? Bypass logging
 			if(signal.data["type"] != 4)
 
@@ -583,7 +583,7 @@
 				// Give the log a name
 				var/identifier = num2text( rand(-1000,1000) + world.time )
 				log.name = "data packet ([md5(identifier)])"
-
+*/
 			var/can_send = relay_information(signal, "/obj/machinery/telecomms/hub")
 			if(!can_send)
 				relay_information(signal, "/obj/machinery/telecomms/broadcaster")
