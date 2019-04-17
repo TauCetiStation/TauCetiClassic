@@ -172,7 +172,7 @@
 
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
-			M.playsound_local(null, 'sound/AI/aimalf.ogg', 80, environment = -1, echo = null, channel = 802, wait = 1)
+			M.playsound_local(null, 'sound/AI/aimalf.ogg', 80, channel = 802, wait = 1, is_global = 1)
 
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/set_security_level, "delta"), 50)
 
