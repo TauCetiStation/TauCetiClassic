@@ -369,4 +369,4 @@
 	if(usr.incapacitated())
 		return
 	active = !active
-	to_chat(usr, "<span class='notice'>You toggle the Noire Mode [active ? "on" : "off"]. Let the investigation begin.</span>")
+	to_chat(usr, "<span class='notice'>You toggle the Noire Mode [active ? "on. Let the investigation begin." : "off."]</span>")
