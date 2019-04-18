@@ -1,5 +1,6 @@
-/proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global, voluminosity = TRUE)
-
+/proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global, voluminosity = TRUE, separate = FALSE)
+// voluminosity = is that 3d sound?
+// separate = separate sound volume for its source and for others?
 	soundin = get_sfx(soundin) // same sound for everyone
 
 	if(isarea(source))
@@ -13,6 +14,9 @@
 	for (var/P in player_list)
 		var/mob/M = P
 		if(!M || !M.client)
+			continue
+		if((M == source) && separate)
+			M.playsound_local(null, soundin, vol /= 2, vary, frequency, falloff, channel)
 			continue
 
 		var/distance = get_dist(M, turf_source)
@@ -82,6 +86,9 @@ var/const/FALLOFF_SOUNDS = 0.5
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 	if(!is_global)
 		S.environment = 2
+	if(src.stat == UNCONSCIOUS || src.sleeping > 0) // unconscious people will hear illegible sounds
+		S.volume /= 3
+		S.environment = 10
 	src << S
 
 /mob/living/parasite/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global)
