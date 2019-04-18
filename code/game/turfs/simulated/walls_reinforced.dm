@@ -56,7 +56,7 @@
 	if(rotting)
 		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
-			if(WT.remove_fuel(0,user))
+			if(WT.use(0,user))
 				to_chat(user, "<span class='notice'>You burn away the fungi with \the [WT].</span>")
 				playsound(src, 'sound/items/Welder.ogg', 10, 1)
 				for(var/obj/effect/E in src) if(E.name == "Wallrot")
@@ -72,7 +72,7 @@
 	if(thermite)
 		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
-			if(WT.remove_fuel(0,user))
+			if(WT.use(0,user))
 				thermitemelt(user)
 				return
 
@@ -97,10 +97,9 @@
 
 	if(damage && iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0,user))
+		if(WT.use(0,user))
 			to_chat(user, "<span class='notice'>You start repairing the damage to [src].</span>")
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
-			if(do_after(user, max(5, damage / 5), target = src) && WT && WT.isOn())
+			if(W.use_tool(src, user, max(5, damage / 5), volume = 100))
 				to_chat(user, "<span class='notice'>You finish repairing the damage to [src].</span>")
 				take_damage(-damage)
 			return
@@ -126,8 +125,8 @@
 				to_chat(user, "<span class='notice'>You begin removing the support lines.</span>")
 				playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 
-				if(do_after(user,40,target = src))
-					if(!istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T)
+				if(W.use_tool(src, user, 40, volume = 100))
+					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
 					if(d_state == SUPPORT_LINES && user.loc == T && user.get_active_hand() == W)
@@ -149,13 +148,11 @@
 		if(COVER)
 			if(iswelder(W))
 				var/obj/item/weapon/weldingtool/WT = W
-				if(WT.remove_fuel(0,user))
+				if(WT.use(0,user))
 
 					to_chat(user, "<span class='notice'>You begin slicing through the metal cover.</span>")
-					playsound(src, 'sound/items/Welder.ogg', 100, 1)
-
-					if(do_after(user,60,target = src))
-						if(!istype(src, /turf/simulated/wall/r_wall) || !user || !WT || !WT.isOn() || !T)
+					if(WT.use_tool(src, user, 60, volume = 100))
+						if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 							return
 
 						if(d_state == COVER && user.loc == T && user.get_active_hand() == WT)
@@ -167,12 +164,9 @@
 				return
 
 			if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-
 				to_chat(user, "<span class='notice'>You begin slicing through the metal cover.</span>")
-				playsound(src, 'sound/items/Welder.ogg', 100, 1)
-
-				if(do_after(user,60,target = src))
-					if(!istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T)
+				if(W.use_tool(src, user, 60, volume = 100))
+					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
 					if(d_state == COVER && user.loc == T && user.get_active_hand() == W)
@@ -183,12 +177,9 @@
 
 		if(CUT_COVER)
 			if (iscrowbar(W))
-
 				to_chat(user, "<span class='notice'>You struggle to pry off the cover.</span>")
-				playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
-
-				if(do_after(user,100,target = src))
-					if(!istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T)
+				if(W.use_tool(src, user, 100, volume = 100))
+					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
 					if(d_state == CUT_COVER && user.loc == T && user.get_active_hand() == W)
@@ -201,10 +192,8 @@
 			if (iswrench(W))
 
 				to_chat(user, "<span class='notice'>You start loosening the anchoring bolts which secure the support rods to their frame.</span>")
-				playsound(src, 'sound/items/Ratchet.ogg', 100, 1)
-
-				if(do_after(user,40,target = src))
-					if(!istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T)
+				if(W.use_tool(src, user, 40, volume = 100))
+					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
 					if(d_state == ANCHOR_BOLTS && user.loc == T && user.get_active_hand() == W)
@@ -216,13 +205,11 @@
 		if(SUPPORT_RODS)
 			if(iswelder(W))
 				var/obj/item/weapon/weldingtool/WT = W
-				if(WT.remove_fuel(0,user))
+				if(WT.use(0,user))
 
 					to_chat(user, "<span class='notice'>You begin slicing through the support rods.</span>")
-					playsound(src, 'sound/items/Welder.ogg', 100, 1)
-
-					if(do_after(user,100,target = src))
-						if(!istype(src, /turf/simulated/wall/r_wall) || !user || !WT || !WT.isOn() || !T)
+					if(W.use_tool(src, user, 100, volume = 100))
+						if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 							return
 
 						if(d_state == SUPPORT_RODS && user.loc == T && user.get_active_hand() == WT)
@@ -237,10 +224,8 @@
 			if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 
 				to_chat(user, "<span class='notice'>You begin slicing through the support rods.</span>")
-				playsound(src, 'sound/items/Welder.ogg', 100, 1)
-
-				if(do_after(user,70,target = src))
-					if(!istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T)
+				if(W.use_tool(src, user, 70, volume = 100))
+					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
 					if(d_state == SUPPORT_RODS && user.loc == T && user.get_active_hand() == W)
@@ -254,10 +239,8 @@
 			if(iscrowbar(W))
 
 				to_chat(user, "<span class='notice'>You struggle to pry off the outer sheath.</span>")
-				playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
-
-				if(do_after(user,100,target = src))
-					if(!istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T)
+				if(W.use_tool(src, user, 100, volume  = 100))
+					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
 					if(d_state == SHEATH && user.loc == T && user.get_active_hand() == W)
@@ -280,8 +263,8 @@
 
 		to_chat(user, "<span class='notice'>You begin to drill though the wall.</span>")
 
-		if(do_after(user,200,target = src))
-			if(!istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T)
+		if(W.use_tool(src, user, 200, volume = 50))
+			if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 				return
 
 			if(user.loc == T && user.get_active_hand() == W)
@@ -294,8 +277,8 @@
 
 		to_chat(user, "<span class='notice'>You begin patching-up the wall with \a [MS].</span>")
 
-		if(do_after(user,(max(20*d_state,100)),target = src))	//time taken to repair is proportional to the damage! (max 10 seconds)
-			if(!istype(src, /turf/simulated/wall/r_wall) || !user || !MS || !T)
+		if(W.use_tool(src, user, (max(20*d_state,100)), volume = 100))	//time taken to repair is proportional to the damage! (max 10 seconds)
+			if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 				return
 
 			if(user.loc == T && user.get_active_hand() == MS && d_state)

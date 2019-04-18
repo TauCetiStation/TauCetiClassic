@@ -70,7 +70,7 @@
 		else
 			to_chat(user, "\blue You begin to dislodge the dead apiary from the tray.")
 		if(user.is_busy()) return
-		if(do_after(user, 50, target = src))
+		if(O.use_tool(src, user, 50, volume = 50))
 			new hydrotray_type(src.loc)
 			new /obj/item/apiary(src.loc)
 			to_chat(user, "\red You dislodge the apiary from the tray.")
@@ -92,7 +92,7 @@
 			else
 				if(user.is_busy()) return
 				to_chat(user, "\blue You begin to harvest the honey.")
-			if(do_after(user,50,target = src))
+			if(O.use_tool(src, user, 50, volume = 50))
 				G.reagents.add_reagent("honey",harvestable_honey)
 				harvestable_honey = 0
 				to_chat(user, "\blue You successfully harvest the honey.")

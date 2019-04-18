@@ -20,7 +20,7 @@
 	return 100.0*charge/maxcharge
 
 // use power from a cell, returns the amount actually used
-/obj/item/weapon/stock_parts/cell/proc/use(amount)
+/obj/item/weapon/stock_parts/cell/use(amount)
 	if(rigged && amount > 0)
 		explode()
 		return 0

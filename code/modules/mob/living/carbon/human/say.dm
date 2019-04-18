@@ -9,7 +9,7 @@
 			return
 
 	//Meme stuff
-	if((!speech_allowed && usr == src) || miming)
+	if((!speech_allowed && usr == src) || ((miming || has_trait(TRAIT_MUTE)) && !(copytext(message, 1, 2) == "*")))
 		to_chat(usr, "<span class='userdange'>You can't speak.</span>")
 		return
 

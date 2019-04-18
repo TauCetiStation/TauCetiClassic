@@ -378,29 +378,25 @@
 	switch(state)
 		if(0)
 			if(iswrench(P))
-				if(user.is_busy(src)) return
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20, target = src))
+				if(user.is_busy(src))
+					return
+				if(P.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "\blue You wrench the frame into place.")
 					src.anchored = 1
 					src.state = 1
 			if(iswelder(P))
 				var/obj/item/weapon/weldingtool/WT = P
-				if(!WT.remove_fuel(0, user))
-					to_chat(user, "The welding tool must be on to complete this task.")
+				if(user.is_busy(src))
 					return
-				if(user.is_busy(src)) return
-				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if(do_after(user, 20, target = src))
-					if(!src || !WT.isOn()) return
+				if(WT.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "\blue You deconstruct the frame.")
 					new /obj/item/stack/sheet/metal( src.loc, 5 )
 					qdel(src)
 		if(1)
 			if(iswrench(P))
-				if(user.is_busy(src)) return
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20, target = src))
+				if(user.is_busy(src))
+					return
+				if(P.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "\blue You unfasten the frame.")
 					src.anchored = 0
 					src.state = 0
@@ -437,13 +433,13 @@
 			if(iscoil(P))
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() >= 5)
-					if(user.is_busy(src)) return
+					if(user.is_busy(src))
+						return
 					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20, target = src))
-						if(C.use(5))
-							to_chat(user, "\blue You add cables to the frame.")
-							src.state = 3
-							src.icon_state = "3"
+					if(C.use_tool(src, user, 20, amount = 5, volume = 50))
+						to_chat(user, "\blue You add cables to the frame.")
+						src.state = 3
+						src.icon_state = "3"
 		if(3)
 			if(iswirecutter(P))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
@@ -456,12 +452,10 @@
 				var/obj/item/stack/sheet/glass/G = P
 				if(G.get_amount() >= 2)
 					if(user.is_busy(src)) return
-					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20, target = src))
-						if(G.use(2))
-							to_chat(user, "\blue You put in the glass panel.")
-							src.state = 4
-							src.icon_state = "4"
+					if(G.use_tool(src, user, 20, amount = 2, volume = 50))
+						to_chat(user, "\blue You put in the glass panel.")
+						src.state = 4
+						src.icon_state = "4"
 		if(4)
 			if(iscrowbar(P))
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)

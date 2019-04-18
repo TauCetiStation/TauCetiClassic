@@ -111,8 +111,9 @@
 			afterattack(user, user)	//will this work?
 			afterattack(user, user)	//it will. we call it twice, for twice the FUN
 			return
+
 		to_chat(user, "<span class='notice'>You begin to shorten the barrel of \the [src].</span>")
-		if(!user.is_busy() && do_after(user, 30, target = src))	//SHIT IS STEALTHY EYYYYY
+		if(!user.is_busy() && A.use_tool(src, user, 30, volume = 50))
 			icon_state = "sawnshotgun[open ? "-o" : ""]"
 			w_class = ITEM_SIZE_NORMAL
 			item_state = "gun"

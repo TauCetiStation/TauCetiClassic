@@ -245,15 +245,13 @@
 		var/obj/machinery/dna_scannernew/DSN = M.loc
 		DSN.occupant = null
 		DSN.icon_state = "scanner_0"
-
 	var/mob/living/simple_animal/hulk/Monster
-	if(istype(M, /mob/living/carbon/human/unathi))
+	if(CLUMSY in M.mutations)
+		Monster = new /mob/living/simple_animal/hulk/Clowan(get_turf(M))
+	else if(M.get_species() == UNATHI || prob(19))
 		Monster = new /mob/living/simple_animal/hulk/unathi(get_turf(M))
 	else
-		if(prob(19))
-			Monster = new /mob/living/simple_animal/hulk/unathi(get_turf(M))
-		else
-			Monster = new /mob/living/simple_animal/hulk/human(get_turf(M))
+		Monster = new /mob/living/simple_animal/hulk/human(get_turf(M))
 
 	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
 	smoke.set_up(10, 0, M.loc)

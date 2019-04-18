@@ -53,10 +53,7 @@
 				return
 			if(user.is_busy()) return
 			to_chat(user, "\blue You begin to build a catwalk.")
-			if(do_after(user,30,target = src))
-				if(!R.use(2))
-					return
-				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+			if(R.use_tool(src, user, 30, amount = 2, volume = 50))
 				to_chat(user, "\blue You build a catwalk!")
 				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
 				qdel(L)

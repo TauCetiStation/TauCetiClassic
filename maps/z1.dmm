@@ -13177,21 +13177,11 @@
 /turf/simulated/floor/engine,
 /area/rnd/xenobiology)
 "awb" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "Engineering";
-	name = "Engineering Security Doors";
-	opacity = 0
+/obj/effect/landmark/sound_source/shuttle_docking,
+/turf/simulated/floor{
+	icon_state = "delivery"
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Engineering";
-	req_access = "71";
-	req_one_access_txt = null
-	},
-/turf/simulated/floor,
-/area/engine/break_room)
+/area/hallway/secondary/exit)
 "awc" = (
 /obj/structure/grille{
 	density = 0;
@@ -33665,6 +33655,22 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/engine/break_room)
+"bhZ" = (
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Engineering";
+	name = "Engineering Security Doors";
+	opacity = 0
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Engineering";
+	req_access = "71";
+	req_one_access_txt = null
+	},
+/turf/simulated/floor,
+/area/engine/break_room)
 "bia" = (
 /obj/machinery/door/window/southright{
 	dir = 8;
@@ -40180,6 +40186,7 @@
 "bxw" = (
 /obj/structure/table,
 /obj/item/weapon/phone,
+/obj/item/clothing/accessory/stethoscope,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteblue"
@@ -48709,11 +48716,7 @@
 /obj/machinery/shieldwallgen{
 	req_access = list(55)
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
-	},
+/obj/structure/cable,
 /turf/simulated/floor/engine,
 /area/rnd/misc_lab)
 "bQY" = (
@@ -94414,7 +94417,7 @@ aaa
 aah
 aaa
 asP
-hvb
+awb
 hXb
 tFb
 tRb
@@ -111195,7 +111198,7 @@ cly
 cmF
 bUd
 nxb
-awb
+bhZ
 bUd
 bUd
 ctd
@@ -112480,7 +112483,7 @@ bUd
 bUd
 bUd
 nxb
-awb
+bhZ
 bUd
 bUd
 bUd
