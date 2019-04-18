@@ -82,9 +82,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["neutral_quirks"] << neutral_quirks
 
 	if(current_version < 22)
-		for(var/job in list(/datum/job/research_assistant, /datum/job/cadet, /datum/job/intern, /datum/job/technical_assistant))
-			var/datum/job/J = new job
-			SetJobDepartment(J, 0)
 		player_alt_titles -= list("Technical Assistant", "Medical Intern", "Research Assistant", "Security Cadet")
 
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
