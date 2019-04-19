@@ -568,6 +568,9 @@
 	add_fingerprint(U)
 	U.set_machine(src)
 
+	if(href_list)
+		playsound(src, "pda", 15, 0)
+
 	switch(href_list["choice"])
 
 //BASIC FUNCTIONS===================================

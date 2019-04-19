@@ -23,6 +23,13 @@
 			circuit = new circuit(null)
 	power_change()
 
+/obj/machinery/computer/Topic(href, href_list)
+	. = ..()
+	if(!.)
+		return
+	if(href_list)
+		playsound(src, "keyboard", 50, 0)
+
 /obj/machinery/computer/Destroy()
 	computer_list -= src
 	return ..()
