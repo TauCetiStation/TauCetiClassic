@@ -12,6 +12,7 @@
 
 	var/light_range_on = 1.5
 	var/light_power_on = 3
+	var/last_keyboard_sound = 0 // prevents keyboard sounds spam
 
 /obj/machinery/computer/atom_init(mapload, obj/item/weapon/circuitboard/C)
 	. = ..()
@@ -27,8 +28,9 @@
 	. = ..()
 	if(!.)
 		return
-	if(href_list)
+	if(href_list && (last_keyboard_sound <= world.time))
 		playsound(src, "keyboard", 50, 0)
+		last_keyboard_sound = world.time + 8
 
 /obj/machinery/computer/Destroy()
 	computer_list -= src
