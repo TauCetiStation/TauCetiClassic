@@ -69,23 +69,29 @@
 
 //Detective
 /obj/item/clothing/suit/storage/det_suit
-	name = "coat"
+	name = "brown coat"
 	desc = "An 18th-century multi-purpose trenchcoat. Someone who wears this means serious business."
-	icon_state = "detective"
+	icon_state = "detective_brown"
 	item_state = "det_suit"
 	blood_overlay_type = "coat"
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
 	body_parts_covered = UPPER_TORSO|ARMS
 	armor = list(melee = 50, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 
+/obj/item/clothing/suit/storage/det_suit/grey
+	name = "grey coat"
+	icon_state = "detective_grey"
+
 /obj/item/clothing/suit/storage/det_suit/black
-	icon_state = "detective2"
+	name = "black coat"
+	desc = "An 20th-century multi-purpose trenchcoat. Someone who wears this means serious business."
+	icon_state = "maxcoat"
 
 /obj/item/clothing/suit/storage/det_suit/noir_trenchcoat
-	name = "noir trenchcoat"
-	desc = "A hard-boiled private investigator's grey trenchcoat."
-	icon_state = "detective_trenchcoat"
-	item_state = "detective_trenchcoat"
+	name = "dark grey trenchcoat"
+	desc = "A hard-boiled private investigator's dark grey trenchcoat."
+	icon_state = "trenchcoat_darkgrey"
+	item_state = "trenchcoat_darkgrey"
 
 //Forensics
 /obj/item/clothing/suit/storage/forensics
