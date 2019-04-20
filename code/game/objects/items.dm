@@ -88,9 +88,8 @@ var/global/list/burnable = list(/obj/item/weapon/paper,
 						/obj/item/weapon/paper_bundle,
 						/obj/item/weapon/photo,
 						/obj/item/apiary,
-//						/obj/item/clothing, < This is too hard to control, sadly. And also onmob sprites :(
-						/obj/item/decoration, // burn, christmas, burn!
-						/obj/item/device/violin, // stop, mime, STOP
+						/obj/item/decoration,
+						/obj/item/device/violin,
 						/obj/item/weapon/bedsheet,
 						/obj/item/pizzabox,
 						/obj/item/stack/medical/bruise_pack/rags,
