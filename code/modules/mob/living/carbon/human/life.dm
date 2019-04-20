@@ -223,7 +223,7 @@
 		if(gnomed) // if he's dead he's gnomed foreva-a-ah
 			if(prob(6))
 				say(pick("A-HA-HA-HA!", "U-HU-HU-HU!", "IM A GNOME", "I'm a GnOme!", "Don't GnoMe me!", "I'm gnot a gnoblin!", "You've been GNOMED!"))
-				playsound(src, 'sound/magic/GNOMED.ogg', 100, 1)
+				playsound(src, 'sound/magic/GNOMED.ogg', 50, 1)
 			gnomed--
 			if(gnomed <= 0)
 				to_chat(src, "<span class='notice'>You are no longer gnomed!</span>")
@@ -242,7 +242,7 @@
 				playsound(src, 'sound/magic/cult_revive.ogg', 90, 1)
 				if(SMALLSIZE in mutations)
 					dna.SetSEState(SMALLSIZEBLOCK, 0)
-					domutcheck(src)
+					domutcheck(src, null)
 
 		var/rn = rand(0, 200)
 		if(getBrainLoss() >= 5)

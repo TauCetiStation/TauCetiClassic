@@ -65,7 +65,7 @@
 
 	if(!(NOCLONE in H.mutations)) // prevents drained people from having their DNA change
 		H.dna.SetSEState(SMALLSIZEBLOCK, 1)
-		domutcheck(H)
+		domutcheck(H, null)
 
 	H.flash_eyes()
 
