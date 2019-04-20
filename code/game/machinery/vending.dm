@@ -1252,7 +1252,9 @@
 					/obj/item/clothing/accessory/tie/red = 2, /obj/item/clothing/shoes/brown = 2,
 					/obj/item/clothing/shoes/black = 2, /obj/item/clothing/accessory/holster/armpit = 1,
 					/obj/item/taperoll/police = 2, /obj/item/toy/crayon/chalk = 2,
-					/obj/item/device/detective_scanner = 1, /obj/item/weapon/storage/box/evidence = 2)
+					/obj/item/device/detective_scanner = 1, /obj/item/weapon/storage/box/evidence = 2,
+					/obj/item/weapon/storage/fancy/cigarettes = 10, /obj/item/weapon/storage/fancy/cigarettes/menthol = 5, /obj/item/weapon/storage/box/matches = 10)
+	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 30, /obj/item/weapon/storage/fancy/cigarettes/menthol = 40, /obj/item/weapon/storage/box/matches = 10)
 	product_slogans = "The cheaper the crook, the gaudier the patter.;Dead men are heavier than broken hearts.;Life is a bucket of shit with a barbed wire handle.;After all, you’re only an immortal until someone manages to kill you. After that, you were just long-lived.;The rain fell like dead bullets.;Though I often run out of courage and good sense, stubbornness keeps me going."
 	product_ads = "Keep your mind too open, and you never know what might walk in.;After all, you’re only an immortal until someone manages to kill you. After that, you were just long-lived.;If you don't trust anyone, they can't let you down.;Wait. You've got principles? We'll have to update your file.;I always feel most alive when everything else is dying all around me."
 	req_access_txt = "68"
