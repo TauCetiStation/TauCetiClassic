@@ -183,7 +183,7 @@
 						emote("twitch")
 					if(2 to 3)
 						if(config.rus_language)
-							say(pick(TRAIT_TOURETTE))
+							say(pick(CYRILLIC_TRAIT_TOURETTE))
 						else
 							say(pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS"))
 				var/old_x = pixel_x
