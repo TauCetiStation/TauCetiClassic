@@ -241,13 +241,8 @@
 				smoke.start()
 				playsound(src, 'sound/magic/cult_revive.ogg', 90, 1)
 				if(SMALLSIZE in mutations)
-					var/datum/dna2/record/buf = new /datum/dna2/record
-					buf.dna = new
-					buf.types = 4
-					buf.dna.ResetSE()
-					buf.dna.SetSEValue(SMALLSIZEBLOCK, 0x001)
-					dna.SetSEValue(SMALLSIZEBLOCK, buf.dna.GetSEValue(SMALLSIZEBLOCK))
-					domutcheck(src, null, SMALLSIZEBLOCK!=null, 1)
+					dna.SetSEState(SMALLSIZEBLOCK, 0)
+					domutcheck(src)
 
 		var/rn = rand(0, 200)
 		if(getBrainLoss() >= 5)

@@ -270,10 +270,11 @@
 		if((message_mode != "changeling") && prob(40))
 			if(prob(80))
 				message = pick("A-HA-HA-HA!", "U-HU-HU-HU!", "I'm a GN-NOME!", "I'm a GnOme!", "Don't GnoMe me!", "I'm gnot a gnoblin!", "You've been GNOMED!")
+			else if(config.rus_language)
+				message =  "[message]... Íî ÿ ÃÍÎÌ!"
 			else
 				message =  "[message]... But i'm A GNOME!"
 			verb = pick("yells like an idiot", "says rather loudly")
-			playsound(src, 'sound/magic/GNOMED.ogg', 90, 1)
 
 	if(wear_mask)
 		if(message_mode != "changeling")

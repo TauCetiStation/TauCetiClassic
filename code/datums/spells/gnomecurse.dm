@@ -64,13 +64,8 @@
 	H.equip_to_slot_if_possible(gnomesuit, SLOT_WEAR_SUIT)
 
 	if(!(NOCLONE in H.mutations)) // prevents drained people from having their DNA change
-		var/datum/dna2/record/buf = new /datum/dna2/record
-		buf.dna = new
-		buf.types = 4
-		buf.dna.ResetSE()
-		buf.dna.SetSEValue(SMALLSIZEBLOCK, 0xFFF)
-		H.dna.SetSEValue(SMALLSIZEBLOCK, buf.dna.GetSEValue(SMALLSIZEBLOCK))
-		domutcheck(H, null, SMALLSIZEBLOCK!=null, 1)
+		H.dna.SetSEState(SMALLSIZEBLOCK, 1)
+		domutcheck(H)
 
 	H.flash_eyes()
 
