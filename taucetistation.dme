@@ -1551,7 +1551,6 @@
 #include "code\modules\mob\living\simple_animal\hostile\retaliate\clown.dm"
 #include "code\modules\mob\living\simple_animal\hostile\retaliate\drone.dm"
 #include "code\modules\mob\living\simple_animal\hostile\retaliate\retaliate.dm"
-#include "code\modules\mob\living\simple_animal\special\scp.dm"
 #include "code\modules\musical_instruments\guitar.dm"
 #include "code\modules\musical_instruments\harmonica.dm"
 #include "code\modules\musical_instruments\piano.dm"
