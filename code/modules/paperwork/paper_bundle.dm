@@ -6,10 +6,12 @@
 	item_state = "paper"
 	throwforce = 0
 	w_class = ITEM_SIZE_TINY
+	cant_handle_when_hot = TRUE
 	throw_range = 2
 	throw_speed = 1
 	layer = 4
 	attack_verb = list("bapped")
+	cant_handle_when_hot = TRUE
 	var/amount = 0 //Amount of items clipped to the paper
 	var/page = 1
 	var/screen = 0
@@ -47,8 +49,6 @@
 		to_chat(user, "<span class='notice'>You add [(W.name == "photo") ? "the photo" : W.name] to [(src.name == "paper bundle") ? "the paper bundle" : src.name].</span>")
 		user.drop_from_inventory(W)
 		W.loc = src
-	else if(istype(W, /obj/item/weapon/lighter))
-		burnpaper(W, user)
 	else if(istype(W, /obj/item/weapon/paper_bundle))
 		user.drop_from_inventory(W)
 		for(var/obj/O in W)
@@ -224,3 +224,10 @@
 		desc += "\nThere is a photo attached to it."
 	overlays += image('icons/obj/bureaucracy.dmi', "clip")
 	return
+
+/obj/item/weapon/paper_bundle/Destroy()
+	. = ..()
+	for(var/obj/item/weapon/W in contents)
+		W.loc = get_turf(src)
+		if(is_burning && (W in burnable))
+			W.catch_flames("[src] catches fire!")

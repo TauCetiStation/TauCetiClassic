@@ -50,7 +50,7 @@
 		ex_act(3)
 
 /obj/item/weapon/match/water_act(depth)
-	if(!waterproof && lit)
+	if(!waterproof && is_burning)
 		burn_out()
 
 // todo lighters

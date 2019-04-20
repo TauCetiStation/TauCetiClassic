@@ -275,7 +275,7 @@
 	modules += new /obj/item/weapon/reagent_containers/robodropper(src)
 
 	var/obj/item/weapon/lighter/zippo/L = new /obj/item/weapon/lighter/zippo(src)
-	L.lit = 1
+	L.is_burning = TRUE
 	modules += L
 
 	modules += new /obj/item/weapon/tray/robotray(src)

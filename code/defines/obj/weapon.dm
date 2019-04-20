@@ -346,6 +346,8 @@
 	desc = "Keep away from fire."
 	icon_state = "wood_tableparts"
 	flags = null
+	burning_time = 30
+	drop_burning = /obj/item/weapon/ore/coal
 
 /obj/item/weapon/table_parts/wood/poker
 	name = "poker table parts"
@@ -824,6 +826,7 @@
 	name = "Broom"
 	desc = "This broom is made with the branches and leaves of a tree which secretes aromatic oils."
 	icon_state = "broom_sauna"
+	burning_time = 30
 
 /obj/item/weapon/broom/attack(mob/living/carbon/human/M, mob/living/user, def_zone)
 	if(!istype(M) || user.a_intent == "hurt")

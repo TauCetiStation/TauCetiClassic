@@ -66,7 +66,7 @@ for reference:
 	var/maxhealth = 100.0
 
 /obj/structure/barricade/wooden/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/stack/sheet/wood))
+	if(istype(W, /obj/item/stack/sheet/wood) && !W.is_burning)
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if (src.health < src.maxhealth)
 			if(user.is_busy()) return

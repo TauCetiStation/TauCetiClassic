@@ -76,6 +76,32 @@
 	*/
 	var/list/sprite_sheets_obj = null
 
+	// BURNING MECHANIC
+	var/image/burning_overlay // Can we ignite other things with it right now
+	var/is_burning = FALSE // Can we ignite other things with it right now
+	var/burning_time = 20
+	var/time_to_ignite = 15
+	var/cant_handle_when_hot = FALSE // TRUE for items we dont want people to mess around when theyre hot, etc. paper.
+	var/drop_burning = /obj/effect/decal/cleanable/ash // Burned items drop ashes, but you can customize it as you want
+
+var/global/list/burnable = list(/obj/item/weapon/paper,
+						/obj/item/weapon/paper_bundle,
+						/obj/item/weapon/photo,
+						/obj/item/apiary,
+//						/obj/item/clothing, < This is too hard to control, sadly. And also onmob sprites :(
+						/obj/item/decoration, // burn, christmas, burn!
+						/obj/item/device/violin, // stop, mime, STOP
+						/obj/item/weapon/bedsheet,
+						/obj/item/pizzabox,
+						/obj/item/stack/medical/bruise_pack/rags,
+						/obj/item/stack/sheet/cloth,
+						/obj/item/stack/sheet/wetleather,
+						/obj/item/stack/sheet/wood,
+						/obj/item/stack/tile/wood,
+						/obj/item/weapon/broom,
+						/obj/item/weapon/clipboard,
+						/obj/item/weapon/table_parts/wood)
+
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
 		return 0
@@ -272,7 +298,10 @@
 	to_chat(user, "[open_span]It's a[wet_status] [size] item.[close_span]")
 
 /obj/item/attack_hand(mob/user)
-	if (!user || anchored)
+	if(!user || anchored)
+		return
+	if(cant_handle_when_hot && is_burning)
+		to_chat(user, "<span class='warning'>[src] is too hot!</span>")
 		return
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
@@ -400,9 +429,12 @@
 
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
-/obj/item/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = W
+/obj/item/attackby(obj/item/I, mob/user, params)
+	if(I.is_burning)
+		if(is_type_in_list(src, burnable))
+			burn(I, user)
+	if(istype(I, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = I
 		if(S.use_to_pickup)
 			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
 				if(isturf(loc))
@@ -964,3 +996,74 @@ var/global/list/items_blood_overlay_by_type = list()
 		return
 	var/mob/M = loc
 	M.update_inv_item(src)
+
+//BURNING PROCS//
+
+/obj/item/proc/burn(obj/item/P, mob/user)
+	if(is_burning || user.restrained() || user.is_busy())
+		return
+	if(!P.is_burning)
+		return
+	user.visible_message("<span class='warning'>[user] holds \the [P] up to \the [src], it looks like \he's trying to burn it!</span>",
+	"<span class='notice'>You hold \the [P] up to \the [src], burning it slowly.</span>")
+	if(istype(src, /obj/item/stack))
+		var/obj/item/stack/S = src
+		burning_time = S.amount * initial(burning_time)
+	if(do_after(user, time_to_ignite, target = src) && P.is_burning)
+		if((get_dist(src, user) > 1) || !P.is_burning)
+			return
+
+		user.visible_message("<span class='warning'>[user] holds \the [P] up to \the [src] and it catches the fire!</span>",
+		"<span class='warning'>You hold \the [P] up to \the [src] so it catches the fire.</span>")
+
+		catch_flames()
+	else
+		to_chat(user, "<span class='warning'>You must hold \the [P] steady to burn \the [src].</span>")
+
+/obj/item/proc/catch_flames(burning_text)
+	if(burning_text)
+		visible_message("<span class='warning'>[burning_text]</span>")
+	if(cant_handle_when_hot && loc && istype(loc, /mob/living))
+		var/mob/living/L = loc
+		L.drop_from_inventory(src, get_turf(src)) // so we cant do stuff with it (there is a qdel(src) soon, so that way we prevent bad stuff from happening)
+		to_chat(L, "<span class='warning'>[src] is too hot!</span>")
+	light_color = LIGHT_COLOR_FIRE
+	set_light(3)
+	is_burning = TRUE
+	damtype = "fire"
+	if(wet)
+		wet = FALSE
+	START_PROCESSING(SSobj, src)
+	burning_overlay = image('icons/obj/items.dmi', "overlay_onfire")
+	overlays += burning_overlay
+	addtimer(CALLBACK(src, .proc/turn_to_ash), burning_time)
+
+/obj/item/proc/turn_to_ash()
+	if(!is_burning)
+		return
+	if(loc)
+		loc.visible_message("<span class='warning'>\The [src] burns away, turning to ash. It flutters through the air before settling on the floor in a heap.</span>")
+	new drop_burning(get_turf(src))
+	STOP_PROCESSING(SSobj, src)
+	set_light(0)
+	qdel(src)
+
+/obj/item/proc/ExtinguishItem()
+	if(!is_burning)
+		return
+	else
+		light_color = initial(light_color)
+		set_light(0)
+		STOP_PROCESSING(SSobj, src)
+		is_burning = FALSE
+		damtype = initial(damtype)
+		overlays -= burning_overlay
+		loc.visible_message("<span class='notice'>\The [src] stops burning away.</span>")
+
+/obj/item/process()
+	. = ..()
+	if(is_burning)
+		var/turf/location = get_turf(src)
+		if(location)
+			location.hotspot_expose(500, 5, src)
+		return

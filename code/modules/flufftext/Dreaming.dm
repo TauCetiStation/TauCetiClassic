@@ -35,7 +35,7 @@ var/list/nightmares = list(
 		else
 			dreaming = IS_NIGHTMARE
 	for(var/obj/item/candle/ghost/CG in range(4, src))
-		if(CG.lit)
+		if(CG.is_burning)
 			dreaming = IS_NIGHTMARE
 			break
 	var/i = rand(1,4)

@@ -2909,6 +2909,14 @@
 	var/list/boxes = list() // If the boxes are stacked, they come here
 	var/boxtag = ""
 
+/obj/item/pizzabox/burn(obj/item/P, mob/user)
+	. = ..()
+	if(!P.is_burning || is_burning || user.restrained() || user.is_busy())
+		return
+	if(pizza)
+		to_chat(user, "<span class='warning'>But there is a [pizza.name] inside! That would be horrible!</span>")
+		return 0
+
 /obj/item/pizzabox/update_icon()
 
 	overlays = list()

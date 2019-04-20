@@ -16,6 +16,7 @@
 	slot_flags = SLOT_FLAGS_HEAD
 	body_parts_covered = HEAD
 	attack_verb = list("bapped")
+	cant_handle_when_hot = TRUE
 
 	var/info		//What's actually written on the paper.
 	var/info_links	//A different version of the paper which includes html links at fields and EOF
@@ -26,9 +27,9 @@
 	var/list/ico      //Icons and
 	var/list/offset_x //offsets stored for later
 	var/list/offset_y //usage by the photocopier
-	var/rigged = 0
+	var/rigged = FALSE
 	var/spam_flag = 0
-	var/crumpled = 0
+	var/crumpled = FALSE
 
 	var/const/deffont = "Verdana"
 	var/const/signfont = "Times New Roman"
@@ -45,6 +46,12 @@
 	update_icon()
 	update_space(info)
 	updateinfolinks()
+
+/obj/item/weapon/paper/Destroy()
+	. = ..()
+	if(loc && (istype(loc, /obj/item/weapon/clipboard) || istype(loc, /obj/item/weapon/paper_bundle) || istype(loc, /obj/item/weapon/paper_bin) || istype(loc, /obj/item/weapon/folder)))
+		var/obj/item/weapon/W = loc
+		W.update_icon()
 
 /obj/item/weapon/paper/update_icon()
 	if(icon_state == "scrap_bloodied")
@@ -376,42 +383,6 @@
 		\[hr\] : Adds a horizontal rule.
 	</BODY></HTML>"}, "window=paper_help")
 
-
-/obj/item/weapon/proc/burnpaper(obj/item/weapon/lighter/P, mob/user) //weapon, to use this in paper_bundle and photo
-	var/list/burnable = list(/obj/item/weapon/paper,
-                          /obj/item/weapon/paper_bundle,
-                          /obj/item/weapon/photo)
-
-	if(!is_type_in_list(src, burnable))
-		return
-
-	if(P.lit && !user.restrained() && !user.is_busy())
-		var/class = "red"
-		if(istype(P, /obj/item/weapon/lighter/zippo))
-			class = "rose"
-
-		user.visible_message("<span class='[class]'>[user] holds \the [P] up to \the [src], it looks like \he's trying to burn it!</span>", \
-		"<span class='[class]'>You hold \the [P] up to \the [src], burning it slowly.</span>")
-
-		icon_state = "paper_onfire"
-		if(P.use_tool(P, user, 20, volume = 50))
-			if((get_dist(src, user) > 1) || !P.lit)
-				update_icon()
-				return
-			user.visible_message("<span class='[class]'>[user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>", \
-			"<span class='[class]'>You burn right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>")
-
-			if(user.get_inactive_hand() == src)
-				user.drop_from_inventory(src)
-
-			new /obj/effect/decal/cleanable/ash(src.loc)
-			qdel(src)
-
-		else
-			update_icon()
-			to_chat(user, "<span class='warning'>You must hold \the [P] steady to burn \the [src].</span>")
-
-
 /obj/item/weapon/paper/Topic(href, href_list)
 	..()
 	if(!usr || (usr.stat || usr.restrained()))
@@ -468,21 +439,21 @@
 
 /obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/user)
 	..()
+	if(is_burning)
+		return
 	user.SetNextMove(CLICK_CD_INTERACT)
 	var/clown = 0
 	if(user.mind && (user.mind.assigned_role == "Clown"))
 		clown = 1
 
 	if(crumpled)
-		if(!(istype(P, /obj/item/weapon/lighter)))
-			to_chat(user, "<span class='notice'>Paper too crumpled for anything.</span>")
-			return
-		else
-			burnpaper(P, user)
+		return
 
 	else if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/photo))
 		if (istype(P, /obj/item/weapon/paper/carbon))
 			var/obj/item/weapon/paper/carbon/C = P
+			if(P.is_burning)
+				return // cause it will be deleted soon
 			if (!C.iscopy && !C.copied)
 				to_chat(user, "<span class='notice'>Take off the carbon copy first.</span>")
 				add_fingerprint(user)
@@ -555,9 +526,6 @@
 
 		playsound(src, 'sound/effects/stamp.ogg', 50, 1)
 		visible_message("<span class='notice'>[user] stamp the paper.</span>", "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
-
-	else if(istype(P, /obj/item/weapon/lighter))
-		burnpaper(P, user)
 
 	add_fingerprint(user)
 	return

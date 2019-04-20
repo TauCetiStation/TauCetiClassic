@@ -166,7 +166,6 @@
 	spray_size = 1
 	spray_sizes = list(1)
 	volume = 100
-	var/lit = FALSE
 	var/temperature = 0 // At 100, it all evaporates. Yes, even the dense metals. The name doesn't actually imply that this item's temperature is changing.
 	var/fuel = 300
 	safety = TRUE
@@ -203,10 +202,10 @@
 		to_chat(user, "The cap is [safety ? "on" : "off"]. The thurbile's surface is [temp_sight]. The canister in [src] is [is_fueled].")
 
 /obj/item/weapon/reagent_containers/spray/thurible/proc/light(mob/user, action_string = "lights up")
-	if(!lit)
+	if(!is_burning)
 		icon_state = "thurible_lit"
 		update_icon()
-		lit = TRUE
+		is_burning = TRUE
 		user.visible_message("<span class='notice'>[user] [action_string] \the [src].</span>", "<span class='notice'>You light up \the [src].</span>")
 
 /obj/item/weapon/reagent_containers/spray/thurible/atom_init()
@@ -218,7 +217,7 @@
 	return ..()
 
 /obj/item/weapon/reagent_containers/spray/thurible/process()
-	if(lit && safety)
+	if(is_burning && safety)
 		if(temperature >= 100)
 			var/datum/reagents/evaporate = new /datum/reagents
 			evaporate.my_atom = src // Important for fingerprint tracking, and etc.
@@ -243,10 +242,10 @@
 			temperature = min(100, temperature+1)
 		if(temperature <=0)
 			visible_message("<span class='notice'>The fire in [src] just went out.</span>")
-			lit = FALSE
+			is_burning = FALSE
 			icon_state = "thurible"
 			update_icon()
-	else if(!lit)
+	else if(!is_burning)
 		if(temperature >= 0)
 			temperature = max(0, temperature - 1)
 		if(!safety)
@@ -257,32 +256,22 @@
 					fuel += min(round(A.volume*3), 3) // Basically, 1 point of fuel reagent is 3 fuel points of thurible. 100 - is max fuel.
 					reagents.remove_reagent(A.id, min(A.volume, 1))
 
-/obj/item/weapon/reagent_containers/spray/thurible/attackby(obj/item/weapon/W, mob/user)
+/obj/item/weapon/reagent_containers/spray/thurible/attackby(obj/item/W, mob/user)
 	..()
-	if(!lit && safety) // You can't lit the fuel when the cap's off, cause then it wouldn't start to burn.
+	if(!is_burning && safety) // You can't lit the fuel when the cap's off, cause then it wouldn't start to burn.
 		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.isOn())
 				light(user, "casually lights")
-		else if(istype(W, /obj/item/weapon/lighter))
-			var/obj/item/weapon/lighter/L = W
-			if(L.lit)
-				light(user)
-		else if(istype(W, /obj/item/weapon/match))
-			var/obj/item/weapon/match/M = W
-			if(M.lit)
-				light(user)
-		else if(istype(W, /obj/item/candle))
-			var/obj/item/candle/C = W
-			if(C.lit)
-				light(user)
+		if(W.is_burning)
+			light(user)
 	else if(!safety)
 		to_chat(user, "<span class='notice'>Put the cap back on.</span>")
 
 /obj/item/weapon/reagent_containers/spray/thurible/attack_self(mob/user)
-	if(lit) // You can't switch the spray mode, if the thing's burning.
+	if(is_burning) // You can't switch the spray mode, if the thing's burning.
 		user.visible_message("<span class='notice'>[user] extinguishes \the [src].</span>", "<span class='notice'>You extinguish \the [src].</span>")
-		lit = FALSE
+		is_burning = FALSE
 		icon_state = "thurible"
 		update_icon()
 	else
@@ -294,11 +283,11 @@
 	set category = "Object"
 	set src in usr
 
-	if(!lit && !safety)
+	if(!is_burning && !safety)
 		amount_per_transfer_from_this = next_in_list(amount_per_transfer_from_this, possible_transfer_amounts)
 		spray_size = next_in_list(spray_size, spray_sizes)
 		to_chat(usr, "<span class='notice'>You adjusted the pressure nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>")
-	else if(lit)
+	else if(is_burning)
 		to_chat(usr, "<span class='notice'>The nozzle is too hot to the touch.</span>")
 	else if(safety)
 		to_chat(usr, "<span class='notice'>Take the cap off first.</span>")

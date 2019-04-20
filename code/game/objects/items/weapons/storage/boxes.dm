@@ -451,12 +451,12 @@
 		new /obj/item/weapon/match(src)
 
 /obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W, mob/user)
-	if(istype(W) && !W.lit && !W.burnt)
+	if(istype(W) && !W.is_burning && !W.burnt)
 		if (prob (20))
 			playsound(src, 'sound/items/matchstick_hit.ogg', 20, 1, 1)
 			return
 		playsound(src, 'sound/items/matchstick_light.ogg', 20, 1, 1)
-		W.lit = 1
+		W.is_burning = TRUE
 		W.damtype = "burn"
 		W.icon_state = "match_lit"
 		START_PROCESSING(SSobj, W)

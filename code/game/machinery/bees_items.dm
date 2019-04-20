@@ -60,6 +60,8 @@
 	icon_state = "apiary_item"
 	item_state = "giftbag"
 	w_class = ITEM_SIZE_HUGE
+	burning_time = 45
+	time_to_ignite = 25
 
 /obj/item/beezeez
 	name = "bottle of BeezEez"

@@ -37,10 +37,15 @@
 	img = null
 	qdel(tiny)
 	tiny = null
+	if(loc && (istype(loc, /obj/item/weapon/clipboard) || istype(loc, /obj/item/weapon/paper_bundle) || istype(loc, /obj/item/weapon/paper) || istype(loc, /obj/item/weapon/picture_frame) || istype(loc, /obj/structure/picture_frame)))
+		var/obj/O = loc
+		O.update_icon()
 	return ..()
 
-/obj/item/weapon/photo/burnpaper(obj/item/weapon/lighter/P, mob/user)
-	..()
+/obj/item/weapon/photo/turn_to_ash()
+	. = ..()
+	if(!is_burning)
+		return
 	for(var/A in photographed_names)
 		if(photographed_names[A] == /mob/dead/observer)
 			if(prob(10))
@@ -55,8 +60,6 @@
 		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null) as text, 128)
 		if(loc == user && user.stat == CONSCIOUS)
 			scribble = txt
-	else if(istype(P, /obj/item/weapon/lighter))
-		burnpaper(P, user)
 	else if(istype(P, /obj/item/device/occult_scanner))
 		for(var/A in photographed_names)
 			if(photographed_names[A] == /mob/dead/observer)

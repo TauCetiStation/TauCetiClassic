@@ -4,6 +4,7 @@
 	icon = 'code/modules/holidays/new_year/decorations.dmi'
 	icon_state = "santa"
 	layer = 4.1
+	time_to_ignite = 20
 
 /obj/item/decoration/attack_hand(mob/user)
 	var/choice = input("Do you want to take \the [src]?") in list("Yes", "Cancel")

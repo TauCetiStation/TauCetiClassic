@@ -5,6 +5,9 @@
 	icon_state = "violin"
 	item_state = "violin"
 	force = 10
+	time_to_ignite = 35
+	burning_time = 45
+	drop_burning = /obj/item/weapon/ore/coal
 
 	var/datum/music_player/MP = null
 

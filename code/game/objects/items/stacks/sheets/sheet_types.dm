@@ -158,6 +158,8 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	singular_name = "wood plank"
 	icon_state = "sheet-wood"
 	origin_tech = "materials=1;biotech=1"
+	burning_time = 10
+	drop_burning = /obj/item/weapon/ore/coal
 
 /obj/item/stack/sheet/wood/cyborg
 	name = "wooden plank"

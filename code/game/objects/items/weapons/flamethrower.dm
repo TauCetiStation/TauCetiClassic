@@ -14,7 +14,6 @@
 	origin_tech = "combat=1;phorontech=1"
 	var/status = 0
 	var/throw_amount = 1 // If player turns it up higher, it may be a worldfire.
-	var/lit = 0	//on or off
 	var/operating = 0//cooldown
 	var/turf/previousturf = null
 	var/obj/item/weapon/weldingtool/weldtool = null
@@ -31,7 +30,7 @@
 	return ..()
 
 /obj/item/weapon/flamethrower/process()
-	if(!lit)
+	if(!is_burning)
 		STOP_PROCESSING(SSobj, src)
 		return
 
@@ -49,7 +48,7 @@
 		overlays += "+igniter[status]"
 	if(ptank)
 		overlays += "+ptank"
-	if(lit)
+	if(is_burning)
 		overlays += "+lit"
 		item_state = "flamethrower_1"
 	else
@@ -80,7 +79,7 @@
 		qdel(src)
 		return
 
-	if(isscrewdriver(W) && igniter && !lit)
+	if(isscrewdriver(W) && igniter && !is_burning)
 		status = !status
 		to_chat(user, "<span class='notice'>[igniter] is now [status ? "secured" : "unsecured"]!</span>")
 		update_icon()
@@ -119,7 +118,7 @@
 	if(!ptank)
 		to_chat(user, "<span class='notice'>Attach a phoron tank first!</span>")
 		return
-	var/dat = text("<TT><B>Flamethrower (<A HREF='?src=\ref[src];light=1'>[lit ? "<font color='red'>Lit</font>" : "Unlit"]</a>)</B><BR>\n Tank Pressure: [ptank.air_contents.return_pressure()]<BR>\nAmount to throw: <A HREF='?src=\ref[src];amount=-100'>-</A> <A HREF='?src=\ref[src];amount=-10'>-</A> <A HREF='?src=\ref[src];amount=-1'>-</A> [throw_amount] <A HREF='?src=\ref[src];amount=1'>+</A> <A HREF='?src=\ref[src];amount=10'>+</A> <A HREF='?src=\ref[src];amount=100'>+</A><BR>\n<A HREF='?src=\ref[src];remove=1'>Remove phorontank</A> - <A HREF='?src=\ref[src];close=1'>Close</A></TT>")
+	var/dat = text("<TT><B>Flamethrower (<A HREF='?src=\ref[src];light=1'>[is_burning ? "<font color='red'>Turn On</font>" : "Turn Off"]</a>)</B><BR>\n Tank Pressure: [ptank.air_contents.return_pressure()]<BR>\nAmount to throw: <A HREF='?src=\ref[src];amount=-100'>-</A> <A HREF='?src=\ref[src];amount=-10'>-</A> <A HREF='?src=\ref[src];amount=-1'>-</A> [throw_amount] <A HREF='?src=\ref[src];amount=1'>+</A> <A HREF='?src=\ref[src];amount=10'>+</A> <A HREF='?src=\ref[src];amount=100'>+</A><BR>\n<A HREF='?src=\ref[src];remove=1'>Remove phorontank</A> - <A HREF='?src=\ref[src];close=1'>Close</A></TT>")
 	user << browse(entity_ja(dat), "window=flamethrower;size=600x300")
 	onclose(user, "flamethrower")
 
@@ -134,8 +133,8 @@
 		if(!ptank)	return
 		if(ptank.air_contents.gas["phoron"] < 1)	return
 		if(!status)	return
-		lit = !lit
-		if(lit)
+		is_burning = !is_burning
+		if(is_burning)
 			START_PROCESSING(SSobj, src)
 	if(href_list["amount"])
 		throw_amount = throw_amount + text2num(href_list["amount"])
@@ -144,7 +143,7 @@
 		if(!ptank)	return
 		usr.put_in_hands(ptank)
 		ptank = null
-		lit = 0
+		is_burning = FALSE
 		usr.unset_machine()
 		usr << browse(null, "window=flamethrower")
 
@@ -155,11 +154,11 @@
 	update_icon()
 
 /obj/item/weapon/flamethrower/proc/flame_turf(list/turflist)
-	if(!lit || operating)
+	if(!is_burning || operating)
 		return
 	if(!ptank.air_contents.total_moles)
 		update_icon()
-		lit = FALSE
+		is_burning = FALSE
 		return
 
 	operating = TRUE

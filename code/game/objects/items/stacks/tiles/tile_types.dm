@@ -42,6 +42,7 @@
 	flags = CONDUCT
 	max_amount = 60
 	turf_type = /turf/simulated/floor/wood
+	burning_time = 5
 
 /*
  * Carpets

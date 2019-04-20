@@ -111,7 +111,7 @@
 	else if(istype(O, /obj/item/candle/ghost))
 		var/obj/item/candle/ghost/G = O
 		var/obj/item/candle/cleansed = new /obj/item/candle(G.loc)
-		if(G.lit) // Haha, but wouldn't water actually extinguish it?
+		if(G.is_burning) // Haha, but wouldn't water actually extinguish it?
 			cleansed.light("")
 		cleansed.wax = G.wax
 		if(istype(O.loc, /mob/living))
@@ -186,7 +186,7 @@
 	else if(istype(O, /obj/item/candle) && !istype(O, /obj/item/candle/ghost))
 		var/obj/item/candle/N = O
 		var/obj/item/candle/ghost/cursed = new /obj/item/candle/ghost(N.loc)
-		if(N.lit) // Haha, but wouldn't water actually extinguish it?
+		if(N.is_burning) // Haha, but wouldn't water actually extinguish it?
 			cursed.light("")
 		cursed.wax = N.wax
 		if(istype(O.loc, /mob/living))

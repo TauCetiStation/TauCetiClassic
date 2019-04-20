@@ -81,6 +81,9 @@
 		qdel(src)
 
 /obj/item/weapon/table_parts/wood/attack_self(mob/user)
+	if(is_burning)
+		to_chat(user, "<span class='warning'>[src] is burning!</span>")
+		return
 	new /obj/structure/table/woodentable( user.loc )
 	user.drop_item()
 	qdel(src)

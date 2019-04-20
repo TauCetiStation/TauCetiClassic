@@ -1148,19 +1148,19 @@ var/global/list/common_tools = list(
 			return 0
 	if(istype(W,/obj/item/weapon/lighter))
 		var/obj/item/weapon/lighter/LT = W
-		if(LT.lit)
+		if(LT.is_burning)
 			return 1500
 		else
 			return 0
 	if(istype(W,/obj/item/weapon/match))
 		var/obj/item/weapon/match/MT = W
-		if(MT.lit)
+		if(MT.is_burning)
 			return 1000
 		else
 			return 0
 	if(istype(W,/obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/CG = W
-		if(CG.lit)
+		if(CG.is_burning)
 			return 1000
 		else
 			return 0
@@ -1168,7 +1168,7 @@ var/global/list/common_tools = list(
 		return 3800
 	if(istype(W,/obj/item/candle))
 		var/obj/item/candle/CD = W
-		if(CD.lit)
+		if(CD.is_burning)
 			return 1000
 		else
 			return 0
@@ -1180,6 +1180,8 @@ var/global/list/common_tools = list(
 			return 0
 	if(istype(W,/obj/item/weapon/melee/energy))
 		return 3500
+	if(W.is_burning)
+		return 500
 	else
 		return 0
 	return 0

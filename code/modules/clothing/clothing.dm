@@ -1,6 +1,8 @@
 
 /obj/item/clothing
 	name = "clothing"
+	burning_time = 20
+	time_to_ignite = 20
 	var/list/species_restricted = null //Only these species can wear this kit.
 	var/equip_time = 0
 	var/equipping = 0

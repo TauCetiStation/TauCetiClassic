@@ -12,7 +12,7 @@
 /obj/item/device/flashlight/flare/torch/attackby(obj/item/W, mob/user, params) // ravioli ravioli here comes stupid copypastoli
 	..()
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(is_hot(W))
+	if(W.is_burning)
 		light(user)
 
 /obj/item/device/flashlight/flare/torch/proc/light(mob/user)
@@ -22,10 +22,11 @@
 		return
 	if(on)
 		return
-	user.visible_message("<span class='notice'>[user] lits the [src] on.</span>", "<span class='notice'>You had lt on the [src]!</span>")
+	user.visible_message("<span class='notice'>[user] lits the [src] on.</span>", "<span class='notice'>You had lit on \the [src]!</span>")
 	src.force = on_damage
 	src.damtype = "fire"
 	on = !on
+	is_burning = !is_burning
 	update_brightness(user)
 	item_state = icon_state
 	if(user.hand && loc == user)
@@ -109,7 +110,7 @@
 			//	overlays += image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_grill")
 			//else
 			//	return ..()
-	if(is_hot(W))
+	if(W.is_burning)
 		StartBurning()
 /*	if(grill)
 		if(user.a_intent != "hurt" && !(W.flags_1 & ABSTRACT_1))

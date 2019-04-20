@@ -282,11 +282,12 @@
 		//If off
 		if(0)
 			hitsound = initial(hitsound)
-			if(src.icon_state != "welder") //Check that the sprite is correct, if it isnt, it means toggle() was not called
-				src.force = 3
-				src.damtype = "brute"
-				src.icon_state = initial(src.icon_state)
-				src.welding = 0
+			if(icon_state != "welder") //Check that the sprite is correct, if it isnt, it means toggle() was not called
+				force = 3
+				damtype = "brute"
+				icon_state = initial(src.icon_state)
+				welding = FALSE
+				is_burning = FALSE
 			set_light(0)
 			if (!istype(src, /obj/item/weapon/weldingtool/experimental))
 				STOP_PROCESSING(SSobj, src)
@@ -381,7 +382,7 @@
 
 //Returns whether or not the welding tool is currently on.
 /obj/item/weapon/weldingtool/proc/isOn()
-	return src.welding
+	return welding
 
 //Sets the welding state of the welding tool. If you see W.welding = 1 anywhere, please change it to W.setWelding(1)
 //so that the welding tool updates accordingly
@@ -390,21 +391,23 @@
 	if(temp_welding > 0)
 		if (use(1))
 			to_chat(usr, "<span class='info'>The [src] switches on.</span>")
-			src.force = 15
-			src.damtype = "fire"
-			src.icon_state = initial(src.icon_state) + "1"
+			force = 15
+			damtype = "fire"
+			icon_state = initial(src.icon_state) + "1"
 			START_PROCESSING(SSobj, src)
 		else
 			to_chat(usr, "<span class='info'>Need more fuel!</span>")
-			src.welding = 0
+			welding = FALSE
+			is_burning = FALSE
 			return
 	//Otherwise
 	else
 		to_chat(usr, "<span class='info'>The [src] switches off.</span>")
-		src.force = 3
-		src.damtype = "brute"
-		src.icon_state = initial(src.icon_state)
-		src.welding = 0
+		force = 3
+		damtype = "brute"
+		icon_state = initial(src.icon_state)
+		welding = FALSE
+		is_burning = FALSE
 
 //Turns off the welder if there is no more fuel (does this really need to be its own proc?)
 /obj/item/weapon/weldingtool/proc/check_fuel()
@@ -418,8 +421,9 @@
 /obj/item/weapon/weldingtool/proc/toggle(message = 0)
 	if(!status)	return
 	if(!usr) return
-	src.welding = !( src.welding )
-	if (src.welding)
+	welding = !( src.welding )
+	if(welding)
+		is_burning = TRUE
 		if (use(1))
 			to_chat(usr, "<span class='notice'>You switch the [src] on.</span>")
 			src.force = 15
@@ -429,8 +433,10 @@
 		else
 			to_chat(usr, "<span class='info'>Need more fuel!</span>")
 			src.welding = 0
+			is_burning = FALSE
 			return
 	else
+		is_burning = FALSE
 		if(!message)
 			to_chat(usr, "<span class='notice'>You switch the [src] off.</span>")
 		else
@@ -439,6 +445,7 @@
 		src.damtype = "brute"
 		src.icon_state = initial(src.icon_state)
 		src.welding = 0
+		is_burning = FALSE
 
 	if(usr.hand)
 		usr.update_inv_l_hand()

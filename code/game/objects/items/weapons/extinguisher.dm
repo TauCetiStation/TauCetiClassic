@@ -135,6 +135,9 @@
 						if(!W) return
 						if(!W.reagents) break
 						W.reagents.reaction(atm)
+						if(istype(atm, /obj/item))
+							var/obj/item/IT = atm
+							IT.ExtinguishItem()
 						if(isliving(atm)) //For extinguishing mobs on fire
 							var/mob/living/M = atm
 							M.ExtinguishMob()

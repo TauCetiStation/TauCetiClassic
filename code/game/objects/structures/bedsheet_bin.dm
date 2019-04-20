@@ -15,6 +15,7 @@ LINEN BINS
 	throwforce = 1
 	throw_speed = 1
 	throw_range = 2
+	burning_time = 35
 	w_class = ITEM_SIZE_SMALL
 	item_color = "white"
 

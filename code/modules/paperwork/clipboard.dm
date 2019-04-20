@@ -44,13 +44,15 @@
 	overlays += "clipboard_over"
 	return
 
-/obj/item/weapon/clipboard/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo))
+/obj/item/weapon/clipboard/attackby(obj/item/I, mob/user)
+	if(I.is_burning)
+		burn(I, user)
+	else if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/photo))
 		user.drop_item()
-		W.loc = src
-		if(istype(W, /obj/item/weapon/paper))
-			toppaper = W
-		to_chat(user, "<span class='notice'>You clip the [W] onto \the [src].</span>")
+		I.loc = src
+		if(istype(I, /obj/item/weapon/paper))
+			toppaper = I
+		to_chat(user, "<span class='notice'>You clip the [I] onto \the [src].</span>")
 		update_icon()
 	else if(toppaper)
 		toppaper.attackby(usr.get_active_hand(), usr)
@@ -142,3 +144,10 @@
 		attack_self(usr)
 		update_icon()
 	return
+
+/obj/item/weapon/clipboard/Destroy()
+	. = ..()
+	for(var/obj/item/weapon/W in contents)
+		W.loc = get_turf(src)
+		if(is_burning && W in burnable)
+			W.catch_flames("[src] catches catches fire!")

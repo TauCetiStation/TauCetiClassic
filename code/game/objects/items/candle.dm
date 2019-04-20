@@ -14,25 +14,24 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	w_class = ITEM_SIZE_TINY
 
 	var/wax = 0
-	var/lit = FALSE
 	light_color = LIGHT_COLOR_FIRE
 
 	var/infinite = FALSE
-	var/start_lit = FALSE
+	var/start_burning = FALSE
 
 	var/faded_candle = /obj/item/trash/candle
 
 /obj/item/candle/atom_init()
 	. = ..()
 	wax = rand(600, 800)
-	if(start_lit)
+	if(start_burning)
 		// No visible message
 		light(show_message = FALSE)
 	update_icon()
 
 /obj/item/candle/proc/light(flavor_text = "<span class='warning'>[usr] lights the [name].</span>")
-	if(!lit)
-		lit = TRUE
+	if(!is_burning)
+		is_burning = TRUE
 		//src.damtype = "fire"
 		visible_message(flavor_text)
 		set_light(CANDLE_LUMINOSITY, 1)
@@ -47,8 +46,8 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		lighning_stage = 2
 	else
 		lighning_stage = 3
-	icon_state = "[initial(icon_state)][lighning_stage][lit ? "_lit" : ""]"
-	if(lit)
+	icon_state = "[initial(icon_state)][lighning_stage][is_burning ? "_lit" : ""]"
+	if(is_burning)
 		item_state = "[initial(icon_state)]_lit"
 	else
 		item_state = "[initial(icon_state)]"
@@ -61,27 +60,13 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 			if(H.r_hand == src)
 				M.update_inv_r_hand()
 
-/obj/item/candle/attackby(obj/item/weapon/W, mob/user)
+/obj/item/candle/attackby(obj/item/I, mob/user)
 	..()
-	if(iswelder(W))
-		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.isOn()) // Badasses dont get blinded by lighting their candle with a welding tool
-			light("<span class='warning'>[user] casually lights the [name] with [W].</span>")
-	else if(istype(W, /obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/L = W
-		if(L.lit)
-			light()
-	else if(istype(W, /obj/item/weapon/match))
-		var/obj/item/weapon/match/M = W
-		if(M.lit)
-			light()
-	else if(istype(W, /obj/item/candle))
-		var/obj/item/candle/C = W
-		if(C.lit)
-			light()
+	if(I.is_burning)
+		light()
 
 /obj/item/candle/process()
-	if(!lit)
+	if(!is_burning)
 		return
 	if(!infinite)
 		wax--
@@ -102,9 +87,9 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		M.put_in_hands(C)
 
 /obj/item/candle/attack_self(mob/user)
-	if(lit)
+	if(is_burning)
 		user.visible_message("<span class='notice'>[user] blows out the [src].</span>")
-		lit = FALSE
+		is_burning = FALSE
 		update_icon()
 		set_light(0)
 		STOP_PROCESSING(SSobj, src)
@@ -129,13 +114,13 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	return ..()
 
 /obj/item/candle/ghost/attack_ghost()
-	if(!lit)
+	if(!is_burning)
 		src.light("<span class='warning'>\The [name] suddenly lights up.</span>")
 		if(prob(10))
 			spook()
 
 /obj/item/candle/ghost/attack_self(mob/user)
-	if(lit)
+	if(is_burning)
 		to_chat(user, "<span class='notice'>You can't just extinguish it.</span>")
 
 /obj/item/candle/ghost/proc/spook()
@@ -159,7 +144,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		spook()
 		light()
 	if(user.getBrainLoss() >= 60 || user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")
-		if(!lit && istype(W, /obj/item/weapon/storage/bible))
+		if(!is_burning && istype(W, /obj/item/weapon/storage/bible))
 			var/obj/item/weapon/storage/bible/B = W
 			if(B.icon_state == "necronomicon")
 				spook()
@@ -171,7 +156,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 					light()
 		if(istype(W, /obj/item/weapon/nullrod))
 			var/obj/item/candle/C = new /obj/item/candle(loc)
-			if(lit)
+			if(is_burning)
 				C.light("")
 			C.wax = wax
 			if(istype(loc, /mob))
@@ -197,6 +182,6 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
  // Infinite candle (Admin item)
 /obj/item/candle/infinite
 	infinite = TRUE
-	start_lit = TRUE
+	start_burning = TRUE
 
 #undef CANDLE_LUMINOSITY
