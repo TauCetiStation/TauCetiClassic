@@ -361,30 +361,6 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
 
 /*
- * Crayons
- */
-
-/obj/item/toy/crayon
-	name = "crayon"
-	desc = "A colourful crayon. Please refrain from eating it or putting it in your nose."
-	icon = 'icons/obj/crayons.dmi'
-	icon_state = "crayonred"
-	w_class = ITEM_SIZE_TINY
-	attack_verb = list("attacked", "coloured")
-	var/colour = "#ff0000" //RGB
-	var/shadeColour = "#220000" //RGB
-	var/uses = 30 //0 for unlimited uses
-	var/instant = 0
-	var/colourName = "red" //for updateIcon purposes
-	var/list/validSurfaces = list(/turf/simulated/floor)
-	var/gang = 0 //For marking territory
-	var/edible = 1
-
-/obj/item/toy/crayon/suicide_act(mob/user)
-	to_chat(viewers(user), "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>")
-	return (BRUTELOSS|OXYLOSS)
-
-/*
  * Snap pops
  */
 /obj/item/toy/snappop

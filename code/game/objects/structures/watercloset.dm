@@ -49,7 +49,7 @@
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
-		if(do_after(user, 30, target = src))
+		if(I.use_tool(src, user, 30, volume = 0))
 			user.visible_message("<span class='notice'>[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!</span>", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "You hear grinding porcelain.")
 			cistern = !cistern
 			update_icon()
@@ -320,7 +320,7 @@
 	else if(iswrench(I))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I].</span>")
-		if(do_after(user, 50, target = src))
+		if(I.use_tool(src, user, 50, volume = 100))
 			switch(watertemp)
 				if("normal")
 					watertemp = "freezing"

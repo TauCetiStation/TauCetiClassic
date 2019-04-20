@@ -218,13 +218,11 @@
 		if(iswrench(W))
 			anchored = 1
 			user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>")
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			return 1
 	else
 		if(iswrench(W))
 			anchored = 0
 			user.visible_message("<span class='notice'>[user] unwrenches the solar assembly from it's place.</span>")
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			return 1
 
 		if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))

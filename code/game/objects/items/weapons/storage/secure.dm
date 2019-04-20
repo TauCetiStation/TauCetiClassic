@@ -61,14 +61,14 @@
 			return
 
 		if (isscrewdriver(W))
-			if (!user.is_busy(src) && do_after(user, 20, target = src))
+			if(!user.is_busy(src) && W.use_tool(src, user, 20, volume = 50))
 				src.open =! src.open
 				user.show_message(text("\blue You [] the service panel.", (src.open ? "open" : "close")))
 			return
 		if ((ismultitool(W)) && (src.open == 1)&& (!src.l_hacking))
 			user.show_message(text("\red Now attempting to reset internal memory, please hold."), 1)
 			src.l_hacking = 1
-			if (!user.is_busy() && do_after(usr, 100, target = src))
+			if (!user.is_busy(src) && W.use_tool(src, usr, 100, volume = 50))
 				if (prob(40))
 					src.l_setshort = 1
 					src.l_set = 0

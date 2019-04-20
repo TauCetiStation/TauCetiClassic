@@ -47,9 +47,9 @@ Bonus
 	M.nutrition -= 20
 	M.adjustToxLoss(-3)
 
-	var/turf/pos = get_turf(M)
-	pos.add_vomit_floor(M)
-	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+	var/turf/T = get_turf(M)
+	T.add_vomit_floor(M)
+
 /*
 //////////////////////////////////////
 
@@ -89,6 +89,5 @@ Bonus
 	if(brute_dam < 50)
 		M.adjustBruteLoss(3)
 
-	var/turf/simulated/pos = get_turf(M)
-	pos.add_blood_floor(M)
-	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+	var/turf/T = get_turf(M)
+	T.add_vomit_floor(M)

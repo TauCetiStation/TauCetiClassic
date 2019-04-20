@@ -326,7 +326,7 @@ var/list/turret_icons
 			//try and salvage its components
 			if(user.is_busy()) return
 			to_chat(user, "<span class='notice'>You begin prying the metal coverings off.</span>")
-			if(do_after(user, 20, src))
+			if(I.use_tool(src, user, 20, volume = 50))
 				if(prob(70))
 					to_chat(user, "<span class='notice'>You remove the turret and salvage some components.</span>")
 					if(t_gun)
@@ -357,16 +357,13 @@ var/list/turret_icons
 				"<span class='warning'>[user] begins [anchored ? "un" : ""]securing the turret.</span>", \
 				"<span class='notice'>You begin [anchored ? "un" : ""]securing the turret.</span>" \
 			)
-
-		if(do_after(user, 50, src))
+		if(I.use_tool(src, user, 50, volume = 100))
 			//This code handles moving the turret around. After all, it's a portable turret!
 			if(!anchored)
-				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 				anchored = TRUE
 				update_icon()
 				to_chat(user, "<span class='notice'>You secure the exterior bolts on the turret.</span>")
 			else
-				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 				anchored = FALSE
 				to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
 				update_icon()
@@ -797,9 +794,7 @@ var/list/turret_icons
 					to_chat(user, "<span class='notice'>You need more fuel to complete this task.</span>")
 					return
 				if(user.is_busy(src)) return
-				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
-				if(do_after(user, 20, src))
-					if(!src || !WT.remove_fuel(5, user)) return
+				if(I.use_tool(src, user, 20, amount = 5, volume = 50))
 					build_step = 1
 					to_chat(user, "You remove the turret's interior metal armor.")
 					new /obj/item/stack/sheet/metal(loc, 2)
@@ -871,10 +866,7 @@ var/list/turret_icons
 				if(WT.get_fuel() < 5)
 					to_chat(user, "<span class='notice'>You need more fuel to complete this task.</span>")
 				if(user.is_busy(src)) return
-				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
-				if(do_after(user, 30, src))
-					if(!src || !WT.remove_fuel(5, user))
-						return
+				if(WT.use_tool(src, user, 30, amount = 5, volume = 50))
 					build_step = 8
 					to_chat(user, "<span class='notice'>You weld the turret's armor down.</span>")
 
