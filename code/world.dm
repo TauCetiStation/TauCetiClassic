@@ -21,6 +21,7 @@
 	make_datum_references_lists() //initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
 	load_configuration()
+	load_regisration_panic_bunker()
 	load_stealth_keys()
 	load_mode()
 	load_last_mode()
@@ -34,6 +35,7 @@
 		load_whitelist()
 	if(config.usealienwhitelist)
 		load_whitelistSQL()
+	load_proxy_whitelist()
 	LoadBans()
 	investigate_reset()
 
@@ -52,6 +54,7 @@
 	radio_controller = new /datum/controller/radio()
 	data_core = new /obj/effect/datacore()
 	paiController = new /datum/paiController()
+	ahelp_tickets = new
 
 	spawn(10)
 		Master.Setup()
@@ -315,7 +318,26 @@ var/world_topic_spam_protect_time = world.timeofday
 		for(var/pr in prs)
 			join_test_merge += "<a href='[config.repository_link]/pull/[pr]'>#[pr]</a> "
 
+/world/proc/load_regisration_panic_bunker()
+	if(config.registration_panic_bunker_age)
+		log_game("Round with registration panic bunker! Panic age: [config.registration_panic_bunker_age]. Enabled by configuration. No active hours limit")
+		return
+
+	if(fexists("data/regisration_panic_bunker.sav"))
+		var/savefile/S = new /savefile("data/regisration_panic_bunker.sav")
+		var/active_until = text2num(S["active_until"])
+
+		if(active_until <= world.realtime)
+			fdel("data/regisration_panic_bunker.sav")
+		else
+			config.registration_panic_bunker_age = S["panic_age"]
+			var/enabled_by = S["enabled_by"]
+			var/active_hours_left = num2text((active_until - world.realtime) / 36000, 1)
+			log_game("Round with registration panic bunker! Panic age: [config.registration_panic_bunker_age]. Enabled by [enabled_by]. Active hours left: [active_hours_left]")
+
 /world/proc/load_donators()
+	if(!fexists("config/donators.txt"))
+		return
 	var/L = file2list("config/donators.txt")
 	for(var/line in L)
 		if(!length(line))
@@ -323,6 +345,17 @@ var/world_topic_spam_protect_time = world.timeofday
 		if(copytext(line,1,2) == "#")
 			continue
 		donators.Add(ckey(line))
+
+/world/proc/load_proxy_whitelist()
+	if(!fexists("config/proxy_whitelist.txt"))
+		return
+	var/L = file2list("config/proxy_whitelist.txt")
+	for(var/line in L)
+		if(!length(line))
+			continue
+		if(copytext(line,1,2) == "#")
+			continue
+		proxy_whitelist.Add(ckey(line))
 
 
 /world/proc/load_configuration()

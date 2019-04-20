@@ -59,6 +59,7 @@
 #define RAD_IMMUNE         "rad_immune"
 #define VIRUS_IMMUNE       "virus_immune"
 #define BIOHAZZARD_IMMUNE  "biohazzard_immune"
+#define NO_VOMIT           "no_vomit"
 #define HAS_HAIR           "has_hair"
 #define NO_FINGERPRINT     "no_fingerprint"
 #define NO_MINORCUTS	   "no_minorcuts"

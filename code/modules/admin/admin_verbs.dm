@@ -188,7 +188,8 @@ var/list/admin_verbs_permissions = list(
 	/client/proc/edit_admin_permissions,
 	/client/proc/gsw_add,
 	/client/proc/library_debug_remove,
-	/client/proc/library_debug_read
+	/client/proc/library_debug_read,
+	/client/proc/regisration_panic_bunker
 	)
 var/list/admin_verbs_rejuv = list(
 	/client/proc/respawn_character

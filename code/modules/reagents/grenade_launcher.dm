@@ -10,6 +10,7 @@
 	var/list/grenades = new/list()
 	var/max_grenades = 3
 	m_amt = 2000
+	slot_flags = SLOT_FLAGS_BACK
 
 /obj/item/weapon/gun/grenadelauncher/examine(mob/user)
 	..()

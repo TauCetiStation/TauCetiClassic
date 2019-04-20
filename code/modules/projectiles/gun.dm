@@ -176,7 +176,7 @@
 			to_chat(user, "<span class='notice'>You have tried to commit suicide, but couldn't do it.</span>")
 			return
 		M.visible_message("<span class='warning'>[user] sticks their gun in their mouth, ready to pull the trigger...</span>")
-		if(!do_after(user, 40, target = user))
+		if(!use_tool(user, user, 40))
 			M.visible_message("<span class='notice'>[user] decided life was worth living.</span>")
 			return
 		if (can_fire())

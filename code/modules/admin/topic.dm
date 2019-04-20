@@ -10,6 +10,22 @@
 		check_antagonists()
 		return
 
+	if(href_list["ahelp"])
+		if(!check_rights(R_ADMIN, TRUE))
+			return
+
+		var/ahelp_ref = href_list["ahelp"]
+		var/datum/admin_help/AH = locate(ahelp_ref)
+		if(AH)
+			AH.Action(href_list["ahelp_action"])
+		else
+			to_chat(usr, "Ticket [ahelp_ref] has been deleted!")
+		return
+
+	if(href_list["ahelp_tickets"])
+		global.ahelp_tickets.BrowseTickets(text2num(href_list["ahelp_tickets"]))
+		return
+
 //	if(href_list["stickyban"])
 //		stickyban(href_list["stickyban"],href_list)
 

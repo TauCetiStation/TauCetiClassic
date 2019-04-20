@@ -101,10 +101,10 @@
 	user.SetNextMove(CLICK_CD_RAPID)
 	if (iswrench(W))
 		if (src.stage == 1)
-			if(user.is_busy()) return
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			if(user.is_busy(src))
+				return
 			to_chat(user, "You begin deconstructing [src].")
-			if (!do_after(usr, 30, target = src))
+			if(!W.use_tool(src, usr, 30, volume = 75))
 				return
 			new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 			user.visible_message("[user.name] deconstructs [src].", \

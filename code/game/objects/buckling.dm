@@ -71,6 +71,10 @@
 		to_chat(user, "<span class='warning'>The [M] is too squishy to buckle in.</span>")
 		return
 
+	if(issilicon(M))
+		to_chat(user, "<span class='warning'>The [M] is too heavy to buckle in.</span>")
+		return
+
 	add_fingerprint(user)
 	unbuckle_mob()
 
