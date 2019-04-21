@@ -448,7 +448,7 @@
 				if(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space))
 					breathsound = "rigbreath"
 				if(breathsound == "rigbreath")
-					playsound(src, breathsound, 70, 0, -6, separate = TRUE)
+					playsound(src, breathsound, 60, 0, -6, separate = TRUE)
 				else
 					playsound(src, breathsound, 80, 0, -6)
 			return internal.remove_air_volume(volume_needed)
