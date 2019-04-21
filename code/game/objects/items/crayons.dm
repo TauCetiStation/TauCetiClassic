@@ -1,67 +1,54 @@
-/obj/item/toy/crayon/red
+/obj/item/toy/crayon
+	name = "crayon"
+	desc = "A colourful crayon. Please refrain from eating it or putting it in your nose."
+	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonred"
-	colour = "#da0000"
-	shadeColour = "#810c0c"
-	colourName = "red"
+	w_class = ITEM_SIZE_TINY
+	attack_verb = list("attacked", "coloured")
+	var/colour = "#ff0000" // RGB
+	var/shadeColour = "#220000" // RGB
+	var/uses = 30 // 0 for unlimited uses
+	var/instant = 0
+	var/colourName = "red" // for updateIcon purposes
+	var/list/validSurfaces = list(/turf/simulated/floor)
+	var/gang = 0 // For marking territory
+	var/edible = 1
 
-/obj/item/toy/crayon/orange
-	icon_state = "crayonorange"
-	colour = "#ff9300"
-	shadeColour = "#a55403"
-	colourName = "orange"
+/obj/item/toy/crayon/suicide_act(mob/user)
+	to_chat(viewers(user), "<span class='danger'><b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b></span>")
+	return (BRUTELOSS|OXYLOSS)
 
-/obj/item/toy/crayon/yellow
-	icon_state = "crayonyellow"
-	colour = "#fff200"
-	shadeColour = "#886422"
-	colourName = "yellow"
-
-/obj/item/toy/crayon/green
-	icon_state = "crayongreen"
-	colour = "#a8e61d"
-	shadeColour = "#61840f"
-	colourName = "green"
-
-/obj/item/toy/crayon/blue
-	icon_state = "crayonblue"
-	colour = "#00b7ef"
-	shadeColour = "#0082a8"
-	colourName = "blue"
-
-/obj/item/toy/crayon/purple
-	icon_state = "crayonpurple"
-	colour = "#da00ff"
-	shadeColour = "#810cff"
-	colourName = "purple"
-
-/obj/item/toy/crayon/mime
-	icon_state = "crayonmime"
-	desc = "A very sad-looking crayon."
-	colour = "#ffffff"
-	shadeColour = "#000000"
-	colourName = "mime"
-
-/obj/item/toy/crayon/mime/attack_self(mob/living/user) //inversion
-	if(colour != "#ffffff" && shadeColour != "#000000")
-		colour = "#ffffff"
-		shadeColour = "#000000"
-		to_chat(user, "You will now draw in white and black with this crayon.")
+/obj/item/toy/crayon/attack(mob/living/carbon/M, mob/user)
+	if(edible && (M == user))
+		to_chat(user, "You take a bite of the [src.name]. Delicious!")
+		user.nutrition += 5
+		uses = max(0, uses - 5)
+		if(!uses)
+			to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
+			qdel(src)
+	else if(ishuman(M) && M.lying)
+		to_chat(user, "You start outlining [M.name].")
+		if(do_after(user, 40, target = M))
+			to_chat(user, "You finish outlining [M.name].")
+			new /obj/effect/decal/cleanable/crayon(M.loc, colour, shadeColour, "outline", "body outline")
+			uses--
+			if(!uses)
+				to_chat(user, "<span class='warning'>You used up your [src.name]!</span>")
+				qdel(src)
 	else
-		colour = "#000000"
-		shadeColour = "#ffffff"
-		to_chat(user, "You will now draw in black and white with this crayon.")
-	return
+		..()
 
-/obj/item/toy/crayon/rainbow
-	icon_state = "crayonrainbow"
-	colour = "#fff000"
-	shadeColour = "#000fff"
-	colourName = "rainbow"
+/obj/item/toy/crayon/proc/territory_claimed(area/territory,mob/user)
+	var/occupying_gang
+	if(territory.type in (ticker.mode.A_territory | ticker.mode.A_territory_new))
+		occupying_gang = gang_name("A")
+	if(territory.type in (ticker.mode.B_territory | ticker.mode.B_territory_new))
+		occupying_gang = gang_name("B")
+	if(occupying_gang)
+		to_chat(user, "<span class='danger'>[territory] has already been tagged by the [occupying_gang] gang! You must get rid of or spray over the old tag first!</span>")
+		return TRUE
+	return FALSE
 
-/obj/item/toy/crayon/rainbow/attack_self(mob/living/user)
-	colour = input(user, "Please select the main colour.", "Crayon colour") as color
-	shadeColour = input(user, "Please select the shade colour.", "Crayon colour") as color
-	return
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity)
 	if(!proximity) return
@@ -73,10 +60,19 @@
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
 	if(is_type_in_list(target,validSurfaces))
-		var/drawtype = input("Choose what you'd like to draw.", "Crayon scribbles") in list("graffiti","rune","letter")
+		var/drawtype = input("Choose what you'd like to draw.", "Crayon scribbles") in list("graffiti", "rune", "letter", "arrow", "cancel")
 		switch(drawtype)
+			if("cancel")
+				return
+			if("arrow")
+				drawtype = input("Choose the letter.", "Crayon scribbles") in list("cancel", "left", "right", "up", "down")
+				if(drawtype == "cancel")
+					return
+				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] an arrow on the [target.name].</span>")
 			if("letter")
-				drawtype = input("Choose the letter.", "Crayon scribbles") in list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
+				drawtype = input("Choose the letter.", "Crayon scribbles") in list("cancel", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
+				if(drawtype == "cancel")
+					return
 				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] a letter on the [target.name].</span>")
 			if("graffiti")
 				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] graffiti on the [target.name].</span>")
@@ -121,7 +117,7 @@
 			return
 		if(instant)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
-		if(instant > 0 || (!user.is_busy(src) && do_after(user, 50, target = target)))
+		if(instant > 0 || (!user.is_busy(src) && do_after(user, 40, target = target)))
 
 			//Gang functions
 			if(gangID)
@@ -137,7 +133,7 @@
 			else
 				new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
 
-			if(drawtype in list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"))
+			if(drawtype in list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"))
 				to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] a letter on the [target.name].</span>")
 			else
 				to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] [drawtype] on the [target.name].</span>")
@@ -150,28 +146,78 @@
 					qdel(src)
 	return
 
-/obj/item/toy/crayon/attack(mob/M, mob/user)
-	if(edible && (M == user))
-		to_chat(user, "You take a bite of the [src.name]. Delicious!")
-		user.nutrition += 5
-		uses = max(0,uses-5)
-		if(!uses)
-			to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
-			qdel(src)
+/obj/item/toy/crayon/red
+	icon_state = "crayonred"
+	colour = "#da0000"
+	shadeColour = "#810c0c"
+	colourName = "red"
+
+/obj/item/toy/crayon/orange
+	icon_state = "crayonorange"
+	colour = "#ff9300"
+	shadeColour = "#a55403"
+	colourName = "orange"
+
+/obj/item/toy/crayon/yellow
+	icon_state = "crayonyellow"
+	colour = "#fff200"
+	shadeColour = "#886422"
+	colourName = "yellow"
+
+/obj/item/toy/crayon/green
+	icon_state = "crayongreen"
+	colour = "#a8e61d"
+	shadeColour = "#61840f"
+	colourName = "green"
+
+/obj/item/toy/crayon/blue
+	icon_state = "crayonblue"
+	colour = "#00b7ef"
+	shadeColour = "#0082a8"
+	colourName = "blue"
+
+/obj/item/toy/crayon/purple
+	icon_state = "crayonpurple"
+	colour = "#da00ff"
+	shadeColour = "#810cff"
+	colourName = "purple"
+
+/obj/item/toy/crayon/chalk
+	name = "white chalk"
+	desc = "A piece of regular white chalk. What else did you expect to see?"
+	icon_state = "chalk"
+	colour = "#ffffff"
+	shadeColour = "#cecece"
+	colourName = "white"
+
+/obj/item/toy/crayon/mime
+	icon_state = "crayonmime"
+	desc = "A very sad-looking crayon."
+	colour = "#ffffff"
+	shadeColour = "#000000"
+	colourName = "mime"
+
+/obj/item/toy/crayon/mime/attack_self(mob/living/user) //inversion
+	if(colour != "#ffffff" && shadeColour != "#000000")
+		colour = "#ffffff"
+		shadeColour = "#000000"
+		to_chat(user, "You will now draw in white and black with this crayon.")
 	else
-		..()
+		colour = "#000000"
+		shadeColour = "#ffffff"
+		to_chat(user, "You will now draw in black and white with this crayon.")
+	return
 
-/obj/item/toy/crayon/proc/territory_claimed(area/territory,mob/user)
-	var/occupying_gang
-	if(territory.type in (ticker.mode.A_territory | ticker.mode.A_territory_new))
-		occupying_gang = gang_name("A")
-	if(territory.type in (ticker.mode.B_territory | ticker.mode.B_territory_new))
-		occupying_gang = gang_name("B")
-	if(occupying_gang)
-		to_chat(user, "<span class='danger'>[territory] has already been tagged by the [occupying_gang] gang! You must get rid of or spray over the old tag first!</span>")
-		return 1
-	return 0
+/obj/item/toy/crayon/rainbow
+	icon_state = "crayonrainbow"
+	colour = "#fff000"
+	shadeColour = "#000fff"
+	colourName = "rainbow"
 
+/obj/item/toy/crayon/rainbow/attack_self(mob/living/user)
+	colour = input(user, "Please select the main colour.", "Crayon colour") as color
+	shadeColour = input(user, "Please select the shade colour.", "Crayon colour") as color
+	return
 
 //Spraycan stuff
 
@@ -236,6 +282,9 @@
 		N.overlays -= image('icons/effects/Nuke_sprays.dmi', N.spray_icon_state)
 		N.overlays += image('icons/effects/Nuke_sprays.dmi', choice)
 		N.spray_icon_state = choice
+	if((istype(target, /obj/mecha) || isrobot(target)) && uses >= 10)
+		target.color = normalize_color(colour)
+		uses -= 10
 	playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 	..()
 

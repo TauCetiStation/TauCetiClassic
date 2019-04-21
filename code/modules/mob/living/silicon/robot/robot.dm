@@ -559,7 +559,7 @@
 			return
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/weldingtool/WT = W
-		if (WT.remove_fuel(0))
+		if (WT.use(0))
 			adjustBruteLoss(-30)
 			updatehealth()
 			add_fingerprint(user)

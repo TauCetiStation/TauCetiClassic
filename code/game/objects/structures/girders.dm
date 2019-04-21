@@ -29,24 +29,22 @@
 			qdel(src)
 	else if(iswrench(W) && state == 0)
 		if(anchored && !istype(src,/obj/structure/girder/displaced))
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			to_chat(user, "\blue Now disassembling the girder")
-			if(do_after(user,40,target = src))
+			if(W.use_tool(src, user, 40, volume = 100))
 				if(!src) return
 				to_chat(user, "\blue You dissasembled the girder!")
 				new /obj/item/stack/sheet/metal(get_turf(src))
 				qdel(src)
 		else if(!anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			to_chat(user, "\blue Now securing the girder")
-			if(do_after(user,40, target = src))
+			if(W.use_tool(src, user, 40, volume = 100))
 				to_chat(user, "\blue You secured the girder!")
 				new/obj/structure/girder( src.loc )
 				qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 		to_chat(user, "\blue Now slicing apart the girder")
-		if(do_after(user,30,target = src))
+		if(W.use_tool(src, user, 30, volume = 100))
 			if(!src) return
 			to_chat(user, "\blue You slice apart the girder!")
 			new /obj/item/stack/sheet/metal(get_turf(src))
@@ -58,26 +56,23 @@
 		qdel(src)
 
 	else if(isscrewdriver(W) && state == 2 && istype(src,/obj/structure/girder/reinforced))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		to_chat(user, "\blue Now unsecuring support struts")
-		if(do_after(user,40,target = src))
+		if(W.use_tool(src, user, 40, volume = 100))
 			if(!src) return
 			to_chat(user, "\blue You unsecured the support struts!")
 			state = 1
 
 	else if(iswirecutter(W) && istype(src,/obj/structure/girder/reinforced) && state == 1)
-		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		to_chat(user, "\blue Now removing support struts")
-		if(do_after(user,40,target = src))
+		if(W.use_tool(src, user, 40, volume = 100))
 			if(!src) return
 			to_chat(user, "\blue You removed the support struts!")
 			new/obj/structure/girder( src.loc )
 			qdel(src)
 
 	else if(iscrowbar(W) && state == 0 && anchored )
-		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 		to_chat(user, "\blue Now dislodging the girder")
-		if(do_after(user, 40,target = src))
+		if(W.use_tool(src, user, 40, volume = 100))
 			if(!src) return
 			to_chat(user, "\blue You dislodged the girder!")
 			new/obj/structure/girder/displaced( src.loc )
@@ -99,9 +94,7 @@
 					if(S.get_amount() < 2)
 						return ..()
 					to_chat(user, "\blue Now adding plating...")
-					if (do_after(user, 40, target = src))
-						if(QDELETED(src) || QDELETED(S) || !S.use(2))
-							return
+					if(S.use_tool(src, user, 40, amount = 2, volume = 100))
 						to_chat(user, "\blue You added the plating!")
 						var/turf/Tsrc = get_turf(src)
 						Tsrc.ChangeTurf(/turf/simulated/wall)
@@ -122,9 +115,7 @@
 						if(S.get_amount() < 1)
 							return ..()
 						to_chat(user, "\blue Now finalising reinforced wall.")
-						if(do_after(user, 50, target = src))
-							if(QDELETED(src) || QDELETED(S) || !S.use(1))
-								return
+						if(S.use_tool(src, user, 50, amount = 1, volume = 100))
 							to_chat(user, "\blue Wall fully reinforced!")
 							var/turf/Tsrc = get_turf(src)
 							Tsrc.ChangeTurf(/turf/simulated/wall/r_wall)
@@ -136,9 +127,7 @@
 						if(S.get_amount() < 1)
 							return ..()
 						to_chat(user, "\blue Now reinforcing girders")
-						if (do_after(user, 60, target = src))
-							if(QDELETED(src) || QDELETED(S) || !S.use(1))
-								return
+						if(S.use_tool(src, user, 60, amount = 1, volume = 100))
 							to_chat(user, "\blue Girders reinforced!")
 							new/obj/structure/girder/reinforced( src.loc )
 							qdel(src)
@@ -157,9 +146,7 @@
 				if(S.get_amount() < 2)
 					return ..()
 				to_chat(user, "\blue Now adding plating...")
-				if (do_after(user, 40, target = src))
-					if(QDELETED(src) || QDELETED(S) || !S.use(2))
-						return
+				if(S.use_tool(src, user, 40, amount = 2, volume = 100))
 					to_chat(user, "\blue You added the plating!")
 					var/turf/Tsrc = get_turf(src)
 					Tsrc.ChangeTurf(text2path("/turf/simulated/wall/mineral/[M]"))
@@ -236,18 +223,18 @@
 	var/health = 250
 
 /obj/structure/cultgirder/attackby(obj/item/W, mob/user)
-	if(user.is_busy()) return
+	if(user.is_busy(src))
+		return
 	if(iswrench(W))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		to_chat(user, "\blue Now disassembling the girder")
-		if(do_after(user,40,target = src))
+		if(W.use_tool(src, user, 40, volume = 100))
 			to_chat(user, "\blue You dissasembled the girder!")
 			new /obj/effect/decal/remains/human(get_turf(src))
 			qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 		to_chat(user, "\blue Now slicing apart the girder")
-		if(do_after(user,30,target = src))
+		if(W.use_tool(src, user, 30, volume = 100))
 			to_chat(user, "\blue You slice apart the girder!")
 		new /obj/effect/decal/remains/human(get_turf(src))
 		qdel(src)

@@ -38,7 +38,7 @@
 	var/salvage_with = ""
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
-		if (WT.remove_fuel(3,user))
+		if (WT.use(3,user))
 			salvage_with = "welder"
 		else
 			to_chat(user, "\blue You need more welding fuel to complete this task.")

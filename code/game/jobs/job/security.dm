@@ -10,7 +10,7 @@
 	idtype = /obj/item/weapon/card/id/secGold
 	req_admin_notify = 1
 	access = list(
-		access_security, access_sec_doors, access_brig, access_armory, access_court,
+		access_security, access_sec_doors, access_brig, access_armory,
 		access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
 		access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
 		access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_detective
@@ -60,7 +60,7 @@
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
-	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels)
+	access = list(access_security, access_sec_doors, access_brig, access_armory, access_maint_tunnels)
 	minimal_player_age = 5
 	minimal_player_ingame_minutes = 1800
 	restricted_species = list(TAJARAN, DIONA, IPC)
@@ -106,7 +106,7 @@
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
-	access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels, access_court)
+	access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels)
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 	restricted_species = list(DIONA, IPC)
@@ -123,6 +123,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/det_suit(H), SLOT_WEAR_SUIT)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/det_hat(H), SLOT_HEAD)
 	H.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(H), SLOT_L_STORE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/noir(H), SLOT_GLASSES)
 
 	if(visualsOnly)
 		return
@@ -149,7 +150,7 @@
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
-	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
+	access = list(access_security, access_sec_doors, access_brig, access_maint_tunnels)
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 	restricted_species = list(DIONA, TAJARAN, IPC)
@@ -190,7 +191,7 @@
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
-	access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
+	access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels)
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 

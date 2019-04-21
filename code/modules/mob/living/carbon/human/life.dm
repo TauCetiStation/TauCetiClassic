@@ -183,7 +183,7 @@
 						emote("twitch")
 					if(2 to 3)
 						if(config.rus_language)
-							say(pick(TRAIT_TOURETTE))
+							say(pick(CYRILLIC_TRAIT_TOURETTE))
 						else
 							say(pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS"))
 				var/old_x = pixel_x
@@ -205,9 +205,9 @@
 			if(config.rus_language)//TODO:CYRILLIC dictionary?
 				switch(pick(1,2,3))
 					if(1)
-						say(pick(CYRILLIC_BRAINDAMAG_1))
+						say(pick(CYRILLIC_BRAINDAMAGE_1))
 					if(2)
-						say(pick(CYRILLIC_BRAINDAMAG_2))
+						say(pick(CYRILLIC_BRAINDAMAGE_2))
 					if(3)
 						emote("drool")
 			else
@@ -1584,6 +1584,8 @@
 			sightglassesmod = "thermal"
 		else if(istype(glasses, /obj/item/clothing/glasses/science))
 			sightglassesmod = "sci"
+		else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/noir))
+			sightglassesmod = "greyscale"
 
 	if(species.nighteyes)
 		if(sightglassesmod)

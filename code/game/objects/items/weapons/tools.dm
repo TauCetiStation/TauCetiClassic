@@ -27,6 +27,7 @@
 	m_amt = 150
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	usesound = 'sound/items/Ratchet.ogg'
 	var/random_color = TRUE
 
 /obj/item/weapon/wrench/atom_init(mapload, param_color)
@@ -46,6 +47,7 @@
 	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
 	force = 8 //might or might not be too high, subject to change
 	throwforce = 8
+	toolspeed = 0.7
 	attack_verb = list("drilled", "screwed", "jabbed")
 	action_button_name = "Change mode"
 	random_color = FALSE
@@ -75,7 +77,9 @@
 	g_amt = 0
 	m_amt = 75
 	attack_verb = list("stabbed")
+	usesound = 'sound/items/Screwdriver.ogg'
 	var/random_color = TRUE
+
 
 /obj/item/weapon/screwdriver/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='danger'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
@@ -113,6 +117,7 @@
 	throwforce = 8
 	throw_speed = 2
 	throw_range = 3//it's heavier than a screw driver/wrench, so it does more damage, but can't be thrown as far
+	toolspeed = 0.7
 	attack_verb = list("drilled", "screwed", "jabbed","whacked")
 	hitsound = 'sound/items/drill_hit.ogg'
 	action_button_name = "Change mode"
@@ -143,6 +148,7 @@
 	attack_verb = list("pinched", "nipped")
 	sharp = 1
 	edge = 1
+	usesound = 'sound/items/Wirecutter.ogg'
 	var/random_color = TRUE
 
 /obj/item/weapon/wirecutters/atom_init(mapload, param_color)
@@ -175,6 +181,7 @@
 	origin_tech = "materials=2;engineering=2"
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
 	action_button_name = "Change mode"
+	toolspeed = 0.7
 	random_color = FALSE
 
 /obj/item/weapon/wirecutters/power/attack_self(mob/user)
@@ -195,6 +202,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	action_button_name = "Switch Welding tool"
+	usesound = 'sound/items/Welder2.ogg'
 
 	//Amount of OUCH when it's thrown
 	force = 3.0
@@ -291,7 +299,7 @@
 				src.damtype = "fire"
 				src.icon_state = initial(src.icon_state) + "1"
 			if(prob(5))
-				remove_fuel(1)
+				use(1)
 			light_color = LIGHT_COLOR_FIRE
 			set_light(2)
 
@@ -299,7 +307,7 @@
 		//Is this actually used or set anywhere? - Nodrak
 		if(2)
 			if(prob(75))
-				remove_fuel(1)
+				use(1)
 
 
 	//I'm not sure what this does. I assume it has to do with starting fires...
@@ -328,7 +336,7 @@
 		tank.explode()
 		return
 	if (src.welding)
-		remove_fuel(1)
+		use(1)
 		var/turf/location = get_turf(user)
 		if (istype(location, /turf))
 			location.hotspot_expose(700, 50, src)
@@ -357,11 +365,11 @@
 
 
 //Removes fuel from the welding tool. If a mob is passed, it will perform an eyecheck on the mob. This should probably be renamed to use()
-/obj/item/weapon/weldingtool/proc/remove_fuel(amount = 1, mob/M = null)
+/obj/item/weapon/weldingtool/use(used = 1, mob/M = null)
 	if(!welding || !check_fuel())
 		return 0
-	if(get_fuel() >= amount)
-		reagents.remove_reagent("fuel", amount)
+	if(get_fuel() >= used)
+		reagents.remove_reagent("fuel", used)
 		check_fuel()
 		if(M)
 			eyecheck(M)
@@ -380,7 +388,7 @@
 /obj/item/weapon/weldingtool/proc/setWelding(temp_welding)
 	//If we're turning it on
 	if(temp_welding > 0)
-		if (remove_fuel(1))
+		if (use(1))
 			to_chat(usr, "<span class='info'>The [src] switches on.</span>")
 			src.force = 15
 			src.damtype = "fire"
@@ -412,7 +420,7 @@
 	if(!usr) return
 	src.welding = !( src.welding )
 	if (src.welding)
-		if (remove_fuel(1))
+		if (use(1))
 			to_chat(usr, "<span class='notice'>You switch the [src] on.</span>")
 			src.force = 15
 			src.damtype = "fire"
@@ -507,6 +515,7 @@
 	w_class = ITEM_SIZE_NORMAL
 	m_amt = 70
 	g_amt = 120
+	toolspeed = 0.5
 	origin_tech = "materials=4;engineering=4;bluespace=2;phorontech=3"
 	var/next_refuel_tick = 0
 
@@ -535,6 +544,7 @@
 	m_amt = 50
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
+	usesound = 'sound/items/Crowbar.ogg'
 
 /obj/item/weapon/crowbar/red
 	icon_state = "red_crowbar"
@@ -548,6 +558,7 @@
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
 	origin_tech = "materials=2;engineering=2"
 	force = 15
+	toolspeed = 0.7
 	action_button_name = "Change mode"
 
 /obj/item/weapon/crowbar/power/attack_self(mob/user)

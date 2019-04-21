@@ -7594,9 +7594,7 @@
 	},
 /area/security/detectives_office)
 "ame" = (
-/obj/structure/closet{
-	name = "Evidence Closet"
-	},
+/obj/machinery/vending/noiromat,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -13176,6 +13174,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/rnd/xenobiology)
+"awb" = (
+/obj/effect/landmark/sound_source/shuttle_docking,
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/hallway/secondary/exit)
 "awc" = (
 /obj/structure/grille{
 	density = 0;
@@ -40139,6 +40143,7 @@
 "bxw" = (
 /obj/structure/table,
 /obj/item/weapon/phone,
+/obj/item/clothing/accessory/stethoscope,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteblue"
@@ -94374,7 +94379,7 @@ aaa
 aah
 aaa
 asP
-hvb
+awb
 hXb
 tFb
 tRb

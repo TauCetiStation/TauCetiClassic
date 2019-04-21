@@ -169,7 +169,7 @@
 		return//Already doing something.
 	if(iswelder(C))
 		var/obj/item/weapon/weldingtool/W = C
-		if(W.remove_fuel(0, user))
+		if(W.use(0, user))
 			blocked = !blocked
 			user.visible_message("\red \The [user] [blocked ? "welds" : "unwelds"] \the [src] with \a [W].",\
 			"You [blocked ? "weld" : "unweld"] \the [src] with \the [W].",\
@@ -191,9 +191,8 @@
 		else if(!user.is_busy(src))
 			user.visible_message("<span class='danger'>[user] is removing the electronics from \the [src].</span>",
 									"You start to remove the electronics from [src].")
-			if(do_after(user,30,target = src))
+			if(C.use_tool(src, user, 30, volume = 100))
 				if(blocked && density && hatch_open)
-					playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user.visible_message("<span class='danger'>[user] has removed the electronics from \the [src].</span>",
 										"You have removed the electronics from [src].")
 
@@ -224,7 +223,7 @@
 		user.visible_message("\red \The [user] starts to force \the [src] [density ? "open" : "closed"] with \a [C]!",\
 				"You start forcing \the [src] [density ? "open" : "closed"] with \the [C]!",\
 				"You hear metal strain.")
-		if(do_after(user,30,target = src))
+		if(C.use_tool(src, user, 30, volume = 50))
 			if( iscrowbar(C) )
 				if( stat & (BROKEN|NOPOWER) || !density)
 					user.visible_message("\red \The [user] forces \the [src] [density ? "open" : "closed"] with \a [C]!",\

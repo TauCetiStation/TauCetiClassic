@@ -10,9 +10,10 @@
 
 /obj/structure/pit/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/shovel))
-		if(user.is_busy()) return
+		if(user.is_busy(src))
+			return
 		visible_message("<span class='notice'>\The [user] starts [open ? "filling" : "digging open"] \the [src]</span>")
-		if(do_after(user, 50, target = src) )
+		if(W.use_tool(src, user, 50, volume = 100))
 			visible_message("<span class='notice'>\The [user] [open ? "fills" : "digs open"] \the [src]!</span>")
 			if(open)
 				close(user)
@@ -30,7 +31,7 @@
 				return
 			if(user.is_busy()) return
 			visible_message("<span class='notice'>\The [user] starts making a grave marker on top of \the [src]</span>")
-			if(do_after(user, 50, target = src))
+			if(plank.use_tool(src, user, 50, volume = 100))
 				if(!plank.use(1))
 					return
 				visible_message("<span class='notice'>\The [user] finishes the grave marker</span>")
@@ -201,10 +202,11 @@
 	message = "Here lies [nam], [born] - [died]."
 
 /obj/structure/gravemarker/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/hatchet))
-		if(user.is_busy()) return
+	if(istype(W, /obj/item/weapon/hatchet))
+		if(user.is_busy(src))
+			return
 		visible_message("<span class = 'warning'>\The [user] starts hacking away at \the [src] with \the [W].</span>")
-		if(do_after(user, 30, target = src))
+		if(W.use_tool(src, user, 30, volume = 100))
 			visible_message("<span class = 'warning'>\The [user] hacks \the [src] apart.</span>")
 			new /obj/item/stack/sheet/wood(src)
 			qdel(src)

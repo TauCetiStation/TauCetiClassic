@@ -129,7 +129,6 @@
 	force = 3
 	var/on = 0
 
-
 /obj/item/weapon/melee/telebaton/attack_self(mob/user)
 	on = !on
 	if(on)
@@ -181,6 +180,16 @@
 				H.apply_damage(2 * force, BRUTE, BP_HEAD)
 			else
 				user.take_bodypart_damage(2 * force)
+			return
+		if(user.a_intent == I_HELP && ishuman(target))
+			var/mob/living/carbon/human/H = target
+			playsound(src, "swing_hit", 50, 1, -1)
+			user.do_attack_animation(H)
+			H.adjustHalLoss(25)
+			H.visible_message("<span class='warning'>[user] harmless hit [H] with a telebaton.</span>")
+			user.attack_log += "\[[time_stamp()]\]<font color='red'>harmless hit [H.name] ([H.ckey]) with [src.name].</font>"
+			H.attack_log += "\[[time_stamp()]\]<font color='orange'>harmless hited [user.name] ([user.ckey]) with [src.name].</font>"
+			msg_admin_attack("[key_name(user)] harmless hit [key_name(H)] with [src.name].")
 			return
 		if(..())
 			playsound(src.loc, "swing_hit", 50, 1, -1)
