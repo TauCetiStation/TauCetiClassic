@@ -1560,6 +1560,8 @@
 			sightglassesmod = "thermal"
 		else if(istype(glasses, /obj/item/clothing/glasses/science))
 			sightglassesmod = "sci"
+		else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/noir))
+			sightglassesmod = "greyscale"
 
 	if(species.nighteyes)
 		if(sightglassesmod)
