@@ -8,22 +8,22 @@
 			to_chat(M, "<br>")
 			var/announce_sound = 'sound/AI/announce.ogg'
 			switch(sound)
-				if("escalled")
-					announce_sound = 'sound/AI/escalled.ogg'
-				if("esrecalled")
-					announce_sound = 'sound/AI/esrecalled.ogg'
-				if("esdocked")
-					announce_sound = 'sound/AI/esdocked.ogg'
-				if("esleft")
-					announce_sound = 'sound/AI/esleft.ogg'
-				if("cscalled")
-					announce_sound = 'sound/AI/cscalled.ogg'
-				if("csrecalled")
-					announce_sound = 'sound/AI/csrecalled.ogg'
-				if("csdocked")
-					announce_sound = 'sound/AI/csdocked.ogg'
-				if("csleft")
-					announce_sound = 'sound/AI/csleft.ogg'
+				if("emer_shut_called")
+					announce_sound = 'sound/AI/emergency_s_called.ogg'
+				if("emer_shut_recalled")
+					announce_sound = 'sound/AI/emergency_s_recalled.ogg'
+				if("emer_shut_docked")
+					announce_sound = 'sound/AI/emergency_s_docked.ogg'
+				if("emer_shut_left")
+					announce_sound = 'sound/AI/emergency_s_left.ogg'
+				if("crew_shut_scalled")
+					announce_sound = 'sound/AI/crew_s_called.ogg'
+				if("crew_shut_recalled")
+					announce_sound = 'sound/AI/crew_s_recalled.ogg'
+				if("crew_shut_docked")
+					announce_sound = 'sound/AI/crew_s_docked.ogg'
+				if("crew_shut_left")
+					announce_sound = 'sound/AI/crew_s_left.ogg'
 				if("malf1")
 					announce_sound = 'sound/AI/ai_malf_1.ogg'
 				if("malf2")

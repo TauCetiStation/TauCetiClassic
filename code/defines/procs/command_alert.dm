@@ -43,7 +43,7 @@
 				if("greytide")
 					announce_sound = 'sound/AI/greytide.ogg'
 				if("rampbrand")
-					announce_sound = 'sound/AI/rb_int.ogg'
+					announce_sound = 'sound/AI/rampant_brand_int.ogg'
 				if("carps")
 					announce_sound = 'sound/AI/carps.ogg'
 				if("estorm")
