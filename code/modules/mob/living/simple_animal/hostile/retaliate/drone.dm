@@ -49,6 +49,8 @@
 	var/has_loot = 1
 	faction = "malf_drone"
 
+	animalistic = FALSE
+
 /mob/living/simple_animal/hostile/retaliate/malf_drone/atom_init()
 	. = ..()
 	if(prob(5))

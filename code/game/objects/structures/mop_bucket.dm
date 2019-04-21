@@ -11,6 +11,11 @@
 /obj/structure/mopbucket/atom_init()
 	create_reagents(100)
 	. = ..()
+	mopbucket_list += src
+
+/obj/structure/mopbucket/Destroy()
+	mopbucket_list -= src
+	return ..()
 
 
 /obj/structure/mopbucket/examine(mob/user)
@@ -22,7 +27,7 @@
 /obj/structure/mopbucket/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/mop))
 		if(reagents.total_volume < 1)
-			to_chat(user, "[src] is out of water!</span>")
+			to_chat(user, "<span class='notice'>[src] is out of water!</span>")
 		else
 			reagents.trans_to(I, 5)
 			user.SetNextMove(CLICK_CD_INTERACT)

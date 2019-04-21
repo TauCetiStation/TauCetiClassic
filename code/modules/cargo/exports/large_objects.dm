@@ -62,12 +62,12 @@
 	export_types = list(/obj/machinery/field_generator)
 
 /datum/export/large/collector
-	cost = 600
+	cost = 250
 	unit_name = "collector"
 	export_types = list(/obj/machinery/power/rad_collector)
 
 /datum/export/large/collector/pa
-	cost = 300
+	cost = 450
 	unit_name = "particle accelerator part"
 	export_types = list(/obj/structure/particle_accelerator)
 
@@ -83,7 +83,7 @@
 
 
 /datum/export/large/singularitygen
-	cost = 4000 // If you have one left after engine setup, sell it.
+	cost = 1000 // If you have one left after engine setup, sell it.
 	unit_name = "unused gravitational singularity generator"
 	export_types = list(/obj/machinery/the_singularitygen)
 	include_subtypes = FALSE

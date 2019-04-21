@@ -31,7 +31,7 @@
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/anti_revolution/pre_setup()
-	for(var/mob/dead/new_player/player in world)
+	for(var/mob/dead/new_player/player in not_world)
 		if(player.mind.assigned_role in command_positions)
 			heads += player.mind
 		else

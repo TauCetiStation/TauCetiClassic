@@ -38,7 +38,7 @@ var/const/NUKE_WIRE_SAFETY = 4
 					set_security_level("red")
 
 		if(NUKE_WIRE_SAFETY)
-			if(N.timing)
+			if(N.timing > 0)
 				N.explode()
 
 /datum/wires/nuclearbomb/update_pulsed(index)
@@ -50,7 +50,7 @@ var/const/NUKE_WIRE_SAFETY = 4
 			addtimer(CALLBACK(src, .proc/pulse_reaction, index), 100)
 
 		if(NUKE_WIRE_TIMING)
-			if(N.timing)
+			if(N.timing > 0)
 				N.explode()
 
 		if(NUKE_WIRE_SAFETY)

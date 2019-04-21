@@ -4,7 +4,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/attack_self(mob/user)
 	if (!canopened)
-		playsound(src.loc,'sound/effects/canopen.ogg', rand(10,50), 1)
+		playsound(src.loc,"can_open", rand(10,50), 1)
 		to_chat(user, "<span class='notice'>You open the drink with an audible pop!</span>")
 		canopened = 1
 	else

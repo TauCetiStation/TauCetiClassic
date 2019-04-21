@@ -31,7 +31,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 		to_chat(user, "<span class='notice'>You start attaching the pack to [A]...</span>")
 		if(istype(A, /obj/item))
 			var/obj/item/I = A
-			if(I.w_class <= 2)
+			if(I.w_class <= ITEM_SIZE_SMALL)
 				extract_time = 50
 			else
 				extract_time = w_class * 20 // 3 = 6 seconds, 4 = 8 seconds, 5 = 10 seconds.

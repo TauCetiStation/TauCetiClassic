@@ -6,7 +6,7 @@
 	item_state = "render"
 	force = 15
 	throwforce = 10
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	var/charged = 1
 
 

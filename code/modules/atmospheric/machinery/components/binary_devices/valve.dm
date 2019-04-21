@@ -18,6 +18,7 @@
 	icon_state = "map_valve1"
 
 /obj/machinery/atmospherics/components/binary/valve/update_icon(animation)
+	..()
 	if(animation)
 		flick("valve[src.open][!src.open]",src)
 	else

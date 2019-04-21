@@ -162,6 +162,13 @@
 		equip_traitor(traitor.current)
 	return
 
+/datum/game_mode/proc/remove_traitor(datum/mind/M)
+	traitors -= M
+	M.special_role = null
+	if(isAI(M.current))
+		var/mob/living/silicon/ai/A = M.current
+		A.set_zeroth_law("")
+		A.show_laws()
 
 /datum/game_mode/traitor/declare_completion()
 	..()
@@ -241,6 +248,11 @@
 						text += "<br>[entry]"
 				else
 					text += "<br>The traitor was a smooth operator this round (did not purchase any uplink items)."
+		text += "<BR><HR>"
+	if(ticker.reconverted_antags.len)
+		for(var/reconverted in ticker.reconverted_antags)
+			text += printplayerwithicon(ticker.reconverted_antags[reconverted])
+			text += "<br> Has been deconverted, and is now a [pick("loyal", "effective", "nominal")] [pick("dog", "pig", "underdog", "servant")] of [pick("corporation", "NanoTrasen")]"
 		text += "<BR><HR>"
 	return text
 
@@ -325,9 +337,9 @@
 	for(var/datum/objective/dehead/D in traitor_mob.mind.objectives)
 		var/obj/item/device/biocan/B = new (traitor_mob.loc)
 		var/list/slots = list (
-		"backpack" = slot_in_backpack,
-		"left hand" = slot_l_hand,
-		"right hand" = slot_r_hand,
+		"backpack" = SLOT_IN_BACKPACK,
+		"left hand" = SLOT_L_HAND,
+		"right hand" = SLOT_R_HAND,
 		)
 		var/where = traitor_mob.equip_in_one_of_slots(B, slots)
 		traitor_mob.update_icons()

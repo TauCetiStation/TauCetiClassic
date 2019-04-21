@@ -3,7 +3,7 @@
 	icon_state = "chemg"
 	item_state = "flashbang"
 	desc = "A hand made chemical grenade."
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	force = 2.0
 	var/stage = 0
 	var/state = 0
@@ -64,7 +64,7 @@
 		icon_state = initial(icon_state) +"_ass"
 		name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 		stage = 1
-	else if(istype(W,/obj/item/weapon/screwdriver) && path != 2)
+	else if(isscrewdriver(W) && path != 2)
 		if(stage == 1)
 			path = 1
 			if(beakers.len)

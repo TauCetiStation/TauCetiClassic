@@ -23,12 +23,14 @@
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/device/radio/headset/heads/captain(src)
 	new /obj/item/clothing/gloves/captain(src)
+	new /obj/item/clothing/accessory/holster/waist(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 	new /obj/item/clothing/suit/armor/captain(src)
 	new /obj/item/weapon/melee/telebaton(src)
 	new /obj/item/clothing/under/dress/dress_cap(src)
 	new /obj/item/clothing/under/rank/capcamsole(src)
 	new /obj/item/device/remote_device/captain(src)
+	new /obj/item/airbag(src)
 	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/wintercoat/captain(src)
 	new /obj/item/clothing/head/santa(src)
@@ -56,8 +58,10 @@
 	for (var/i in 1 to 2)
 		new /obj/item/weapon/storage/box/ids(src)
 
+	new /obj/item/clothing/accessory/holster/waist(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 	new /obj/item/device/flash(src)
+	new /obj/item/airbag(src)
 
 /obj/structure/closet/secure_closet/hop2
 	name = "Head of Personnel's Attire"
@@ -85,6 +89,7 @@
 	new /obj/item/clothing/under/rank/head_of_personnel_whimsy(src)
 	new /obj/item/clothing/under/rank/goodman_shirt(src)
 	new /obj/item/clothing/suit/goodman_jacket(src)
+	new /obj/item/airbag(src)
 
 /obj/structure/closet/secure_closet/hos
 	name = "Head of Security's Locker"
@@ -104,6 +109,8 @@
 
 	new /obj/item/clothing/head/helmet/HoS(src)
 	new /obj/item/clothing/head/helmet/HoS/dermal(src)
+	new	/obj/item/clothing/head/beret/sec/hos(src)
+	new /obj/item/clothing/head/hos_peakedcap(src)
 	new /obj/item/device/remote_device/head_of_security(src)
 	new /obj/item/clothing/under/rank/head_of_security_fem(src)
 	new /obj/item/clothing/suit/armor/hos(src)
@@ -129,6 +136,7 @@
 	new /obj/item/device/flashlight/flare(src)
 	new /obj/item/clothing/under/rank/head_of_security/turtleneck(src)
 	new /obj/item/device/flashlight/seclite(src)
+	new /obj/item/airbag(src)
 	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
@@ -267,6 +275,7 @@
 	for (var/i in 1 to 2)
 		new /obj/item/ammo_box/magazine/c45r(src)
 	new /obj/item/taperoll/police(src)
+	new /obj/item/toy/crayon/chalk(src)
 	new /obj/item/weapon/gun/projectile/automatic/colt1911(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
 
@@ -302,7 +311,7 @@
 
 /obj/structure/closet/secure_closet/courtroom
 	name = "Courtroom Locker"
-	req_access = list(access_court)
+	req_access = list(access_security)
 
 /obj/structure/closet/secure_closet/courtroom/PopulateContents()
 	new /obj/item/clothing/shoes/brown(src)
@@ -360,3 +369,4 @@
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/detective_scanner(src)
 	new /obj/item/taperoll/police(src)
+	new /obj/item/toy/crayon/chalk(src)

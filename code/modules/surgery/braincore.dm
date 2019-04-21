@@ -22,8 +22,7 @@
 	max_duration = 70
 
 /datum/surgery_step/brain/saw_skull/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
-	return ..() && target_zone == BP_HEAD && target.brain_op_stage == 1
+	return ..() && target.brain_op_stage == 1
 
 /datum/surgery_step/brain/saw_skull/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to cut through [target]'s skull with \the [tool].", \
@@ -46,13 +45,12 @@
 	/obj/item/weapon/kitchenknife = 75,	\
 	/obj/item/weapon/shard = 50, 		\
 	)
-	disallowed_species = list(IPC, DIONA)
+	allowed_species = list("exclude", IPC, DIONA)
 
 	min_duration = 80
 	max_duration = 100
 
 /datum/surgery_step/brain/cut_brain/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
 	return ..() && target.brain_op_stage == 2
 
 /datum/surgery_step/brain/cut_brain/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -81,7 +79,6 @@
 	max_duration = 70
 
 /datum/surgery_step/brain/saw_spine/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
 	return ..() && target.brain_op_stage == 3
 
 /datum/surgery_step/brain/saw_spine/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -136,7 +133,6 @@
 	max_duration = 100
 
 /datum/surgery_step/brain/bone_chips/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
 	return ..() && target.brain_op_stage == 2
 
 /datum/surgery_step/brain/bone_chips/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -165,7 +161,6 @@
 	max_duration = 110
 
 /datum/surgery_step/brain/hematoma/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
 	return ..() && target.brain_op_stage == 3
 
 /datum/surgery_step/brain/hematoma/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -191,7 +186,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/slime/can_use(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-	return istype(target, /mob/living/carbon/slime/) && target.stat == DEAD
+	return isslime(target) && target.stat == DEAD
 
 /datum/surgery_step/slime/cut_flesh
 	allowed_tools = list(
@@ -204,7 +199,6 @@
 	max_duration = 50
 
 /datum/surgery_step/slime/cut_flesh/can_use(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-	if(!isslime(target))	return 0
 	return ..() && target.brain_op_stage == 0
 
 /datum/surgery_step/slime/cut_flesh/begin_step(mob/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
@@ -231,7 +225,6 @@
 	max_duration = 50
 
 /datum/surgery_step/slime/cut_innards/can_use(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-	if(!isslime(target))	return 0
 	return ..() && target.brain_op_stage == 1
 
 /datum/surgery_step/slime/cut_innards/begin_step(mob/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
@@ -258,7 +251,6 @@
 	max_duration = 70
 
 /datum/surgery_step/slime/saw_core/can_use(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-	if(!isslime(target))	return 0
 	return ..() && target.brain_op_stage == 2 && target.cores > 0
 
 /datum/surgery_step/slime/saw_core/begin_step(mob/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)

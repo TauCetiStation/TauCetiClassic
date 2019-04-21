@@ -1,5 +1,6 @@
 /mob/living/carbon/human/movement_delay()
-
+	if(iszombie(src))
+		return src.zombie_movement_delay()
 	if(mind && mind.changeling && mind.changeling.strained_muscles)
 		if(!has_gravity(src))
 			return -3   // speed boost in space.
@@ -31,7 +32,7 @@
 	if(health_deficiency >= 40)
 		tally += (health_deficiency / 25)
 
-	var/hungry = (500 - nutrition) / 5 // So overeat would be 100 and default level would be 80
+	var/hungry = (500 - get_nutrition()) / 5 // So overeat would be 100 and default level would be 80
 	if(hungry >= 70)
 		tally += hungry / 50
 

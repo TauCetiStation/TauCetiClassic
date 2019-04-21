@@ -664,7 +664,7 @@
 		return stop()
 	var/energy_drain = S.energy_drain*10
 	if(!S.processed_reagents.len || S.reagents.total_volume >= S.reagents.maximum_volume || !S.chassis.has_charge(energy_drain))
-		S.occupant_message("<span class=\"alert\">Reagent processing stopped.</a>")
+		S.occupant_message("<span class='alert'>Reagent processing stopped.</span>")
 		S.log_message("Reagent processing stopped.")
 		return stop()
 	if(anyprob(S.reliability))

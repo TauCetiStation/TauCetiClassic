@@ -239,6 +239,11 @@
 	name = "Buckled"
 	desc = "You've been buckled to something and can't move. Click the alert to unbuckle unless you're handcuffed."
 
+/obj/screen/alert/brake
+	icon_state = "brake"
+	name = "Brake is on"
+	desc = "Wheelchair's brake is on right now, so you can't move."
+
 /obj/screen/alert/handcuffed // Not used right now.
 	name = "Handcuffed"
 	desc = "You're handcuffed and can't act. If anyone drags you, you won't be able to move. Click the alert to free yourself."

@@ -3,8 +3,8 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "backpack"
 	item_state = "backpack"
-	w_class = 4.0
-	slot_flags = SLOT_BACK
+	w_class = ITEM_SIZE_LARGE
+	slot_flags = SLOT_FLAGS_BACK
 
 /obj/item/weapon/pedalbag/verb/quick_empty()
 	set name = "Empty Prisoners"

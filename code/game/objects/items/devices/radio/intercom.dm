@@ -3,7 +3,7 @@
 	desc = "Talk through this."
 	icon_state = "intercom"
 	anchored = 1
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	canhear_range = 2
 	flags = CONDUCT | NOBLOODY
 	var/number = 0
@@ -24,7 +24,8 @@
 	INVOKE_ASYNC(src, .proc/attack_self, user)
 
 /obj/item/device/radio/intercom/attack_paw(mob/user)
-	return src.attack_hand(user)
+	to_chat(user, "<span class='info'>The console controls are far too complicated for your tiny brain!</span>")
+	return
 
 
 /obj/item/device/radio/intercom/attack_hand(mob/user)
@@ -61,11 +62,11 @@
 		if(!src.loc)
 			on = 0
 		else
-			var/area/A = src.loc.loc
-			if(!A || !isarea(A) || !A.master)
+			var/area/A = get_area(src)
+			if(!A)
 				on = 0
 			else
-				on = A.master.powered(EQUIP) // set "on" to the power status
+				on = A.powered(EQUIP) // set "on" to the power status
 
 		if(!on)
 			icon_state = "intercom-p"

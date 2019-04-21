@@ -3,7 +3,7 @@
 	singular_name = "floor tile"
 	desc = "Those could not work as a pretty decent throwing weapon."
 	icon_state = "tile"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	force = 6.0
 	m_amt = 937.5
 	throwforce = 5.0
@@ -11,6 +11,7 @@
 	throw_range = 3
 	flags = CONDUCT
 	max_amount = 60
+	turf_type = /turf/simulated/floor
 
 /obj/item/stack/tile/plasteel/atom_init()
 	. = ..()

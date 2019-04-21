@@ -125,7 +125,7 @@
 			rev_mind.special_role = "Head Revolutionary"
 			obj_count++
 	else
-		to_chat(rev_mind.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
+		to_chat(rev_mind.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 
 /////////////////////////////////////////////////////////////////////////////////
 //This are equips the rev heads with their gear, and makes the clown not clumsy//
@@ -144,11 +144,11 @@
 	var/obj/item/toy/crayon/spraycan/R = new(mob)
 
 	var/list/slots = list (
-		"backpack" = slot_in_backpack,
-		"left pocket" = slot_l_store,
-		"right pocket" = slot_r_store,
-		"left hand" = slot_l_hand,
-		"right hand" = slot_r_hand,
+		"backpack" = SLOT_IN_BACKPACK,
+		"left pocket" = SLOT_L_STORE,
+		"right pocket" = SLOT_R_STORE,
+		"left hand" = SLOT_L_HAND,
+		"right hand" = SLOT_R_HAND,
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots)
 	mob.equip_in_one_of_slots(R,slots)
@@ -204,7 +204,7 @@
 	to_chat(rev_mind.current, "\red <FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT>")
 	rev_mind.special_role = "Revolutionary"
 	if(config.objectives_disabled)
-		to_chat(rev_mind.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
+		to_chat(rev_mind.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 	update_all_rev_icons()
 	return 1
 //////////////////////////////////////////////////////////////////////////////
@@ -381,11 +381,11 @@
 			feedback_set_details("round_end_result","loss - rev heads killed")
 			completion_text += "<br><FONT size = 3, color='red'><B>The heads of staff managed to stop the revolution!</B></FONT>"
 	var/num_revs = 0
-	for(var/mob/living/carbon/mob in living_mob_list)
+	for(var/mob/living/carbon/mob in alive_mob_list)
 		if(mob.mind)
 			if(mob.mind in head_revolutionaries || mob.mind in revolutionaries)
 				num_revs++
-	completion_text += "<BR>[TAB]Command's Approval Rating: <B>[100 - round((num_revs/living_mob_list.len)*100, 0.1)]%</B>" // % of loyal crew
+	completion_text += "<BR>[TAB]Command's Approval Rating: <B>[100 - round((num_revs/alive_mob_list.len)*100, 0.1)]%</B>" // % of loyal crew
 	..()
 	return 1
 

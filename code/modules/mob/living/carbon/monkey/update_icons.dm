@@ -41,7 +41,7 @@
 		if(wear_mask:icon_custom)
 			overlays_standing[M_MASK_LAYER]	= image("icon" = wear_mask:icon_custom, "icon_state" = "[wear_mask.icon_state]_mob")
 		else
-			overlays_standing[M_MASK_LAYER]	= image("icon" = 'icons/mob/monkey.dmi', "icon_state" = "[wear_mask.icon_state]")
+			overlays_standing[M_MASK_LAYER]	= image("icon" = 'icons/mob/mask.dmi', "icon_state" = "[wear_mask.icon_state]")
 		wear_mask.screen_loc = ui_monkey_mask
 	else
 		overlays_standing[M_MASK_LAYER]	= null

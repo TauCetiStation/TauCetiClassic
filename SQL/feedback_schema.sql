@@ -72,6 +72,7 @@ CREATE TABLE `erro_player` (
   UNIQUE KEY `ckey` (`ckey`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
 
+/* commented cause polls are kinda broken now, needs refactoring
 CREATE TABLE `erro_poll_option` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pollid` int(11) NOT NULL,
@@ -117,6 +118,7 @@ CREATE TABLE `erro_poll_vote` (
   `rating` int(2) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+*/
 
 CREATE TABLE `erro_privacy` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

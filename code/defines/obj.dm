@@ -292,16 +292,16 @@ var/global/ManifestJSON
 	item_state = "beachball"
 	density = 0
 	anchored = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	force = 0.0
 	throwforce = 0.0
 	throw_speed = 1
 	throw_range = 20
 	flags = CONDUCT
 
-	afterattack(atom/target, mob/user)
-		user.drop_item()
-		src.throw_at(target, throw_range, throw_speed, user)
+/obj/item/weapon/beach_ball/afterattack(atom/target, mob/user)
+	user.drop_item()
+	src.throw_at(target, throw_range, throw_speed, user)
 
 /obj/effect/spawner
 	name = "object spawner"

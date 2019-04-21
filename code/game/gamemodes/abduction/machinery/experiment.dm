@@ -173,7 +173,7 @@
 				to_chat(H, "<span class='warning'>You feel intensely watched.</span>")
 		sleep(5)
 		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
-		var/objtype = pick(typesof(/datum/objective/abductee/) - /datum/objective/abductee/)
+		var/objtype = pick(typesof(/datum/objective/abductee) - /datum/objective/abductee)
 		var/datum/objective/abductee/O = new objtype()
 		ticker.mode.abductees += H.mind
 		H.mind.objectives += O

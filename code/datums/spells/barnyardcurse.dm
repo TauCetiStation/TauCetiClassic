@@ -52,5 +52,5 @@
 						   "<span class='danger'>Your face burns up, and shortly after the fire you realise you have the face of a barnyard animal!</span>")
 	playsound(target, mSounds[randM], 100, 1)
 	target.remove_from_mob(target.wear_mask)
-	target.equip_to_slot_if_possible(magichead, slot_wear_mask)
+	target.equip_to_slot_if_possible(magichead, SLOT_WEAR_MASK)
 	target.flash_eyes()

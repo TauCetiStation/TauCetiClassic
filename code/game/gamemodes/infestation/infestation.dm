@@ -108,27 +108,26 @@ Infestation:
 
 /datum/game_mode/proc/check_xeno_queen()
 	var/state = 0 // 0 = no queen
-	for(var/mob/living/carbon/alien/humanoid/queen/alive in living_mob_list)
-		if(alive)
-			state = 1
-	if(!state)
-		for(var/mob/living/carbon/alien/humanoid/queen/dead in dead_mob_list)
-			if(dead)
-				state = 2
+	for(var/mob/living/carbon/alien/humanoid/queen/Q in queen_list)
+		if(Q.stat != DEAD)
+			return 1
+		state = 2
 	return state
 
 /datum/game_mode/proc/count_hive_power()
 	var/count = 0
-	for(var/mob/living/carbon/alien/alive in living_mob_list)
-		if(alive)
-			count++
+	for(var/mob/living/carbon/alien/A in alien_list)
+		if(A.stat == DEAD)
+			continue
+		count++
 	return count
 
 /datum/game_mode/proc/count_hive_looses()
 	var/count = 0
-	for(var/mob/living/carbon/alien/dead in dead_mob_list)
-		if(dead)
-			count++
+	for(var/mob/living/carbon/alien/A in alien_list)
+		if(A.stat != DEAD)
+			continue
+		count++
 	return count
 
 /datum/game_mode/proc/auto_declare_completion_infestation()
@@ -136,13 +135,13 @@ Infestation:
 	if(xenomorphs.len)
 		if(check_xeno_queen())
 			if(check_xeno_queen() == 1)
-				text += "<font size=3 color=green><b>The Queen is alive!</FONT></b></span>"
+				text += "<font size=3 color=green><b>The Queen is alive!</FONT></b>"
 			if(check_xeno_queen() == 2)
 				text += "<span class='danger'><font size=3><b>The Queen has been killed!</b></FONT></span>"
 		else
-			text += "<font size=3 color=blue><b>The Queen was never born.</FONT></b></span>"
+			text += "<font size=3 color=blue><b>The Queen was never born.</FONT></b>"
 		if(count_hive_power())
-			text += "<font size=3 color=green><b>There is [count_hive_power()] xenomorphs alive!</FONT></b></span>"
+			text += "<font size=3 color=green><b>There is [count_hive_power()] xenomorphs alive!</FONT></b>"
 		else
 			text += "<span class='danger'><font size=3><b>All xenomorphs were eradicated.</b></FONT></span>"
 		if(count_hive_looses())

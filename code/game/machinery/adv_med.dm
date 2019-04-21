@@ -4,28 +4,23 @@
 /obj/machinery/bodyscanner
 	var/locked
 	name = "Body Scanner"
+	desc = "Used for a more detailed analysis of the patient."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scanner_0"
 	density = 1
 	anchored = 1
+	light_color = "#00ff00"
 
-	light_color = "#00FF00"
-
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)))
-			set_light(2)
-		else
-			set_light(0)
-
-/*/obj/machinery/bodyscanner/allow_drop()
-	return 0*/
+/obj/machinery/bodyscanner/power_change()
+	..()
+	if(!(stat & (BROKEN|NOPOWER)))
+		set_light(2)
+	else
+		set_light(0)
 
 /obj/machinery/bodyscanner/relaymove(mob/user)
-	if (user.stat)
-		return
-	src.go_out()
-	return
+	if(!user.stat)
+		open_machine()
 
 /obj/machinery/bodyscanner/verb/eject()
 	set src in oview(1)
@@ -34,7 +29,7 @@
 
 	if (usr.stat != CONSCIOUS)
 		return
-	src.go_out()
+	open_machine()
 	add_fingerprint(usr)
 	return
 
@@ -43,122 +38,79 @@
 	set category = "Object"
 	set name = "Enter Body Scanner"
 
-	if (usr.stat != CONSCIOUS)
+	if (usr.stat != CONSCIOUS || usr.lying)
 		return
-	if (src.occupant)
-		to_chat(usr, "\blue <B>The scanner is already occupied!</B>")
+	if(!move_inside_checks(usr, usr))
 		return
-	if (usr.abiotic())
-		to_chat(usr, "\blue <B>Subject cannot have abiotic items on.</B>")
-		return
-	usr.client.perspective = EYE_PERSPECTIVE
-	usr.client.eye = src
-	usr.forceMove(src)
-	src.occupant = usr
-	src.icon_state = "body_scanner_1"
-	for(var/obj/O in src)
-		//O = null
-		qdel(O)
-		//Foreach goto(124)
-	src.add_fingerprint(usr)
-	return
+	close_machine(usr, usr)
 
-/obj/machinery/bodyscanner/proc/go_out()
-	if ((!( src.occupant ) || src.locked))
-		return
-	for(var/obj/O in src)
-		O.loc = src.loc
-		//Foreach goto(30)
-	if (src.occupant.client)
-		src.occupant.client.eye = src.occupant.client.mob
-		src.occupant.client.perspective = MOB_PERSPECTIVE
-	src.occupant.loc = src.loc
-	src.occupant = null
-	src.icon_state = "body_scanner_0"
-	return
+/obj/machinery/bodyscanner/proc/move_inside_checks(mob/target, mob/user)
+	if(occupant)
+		to_chat(user, "<span class='userdanger'>The scanner is already occupied!</span>")
+		return FALSE
+	if(!iscarbon(target))
+		return FALSE
+	if(target.abiotic())
+		to_chat(user, "<span class='userdanger'>Subject cannot have abiotic items on.</span>")
+		return FALSE
+	return TRUE
 
 /obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G, mob/user)
-	if ((!( istype(G, /obj/item/weapon/grab) ) || !( ismob(G.affecting) )))
+	if(!istype(G))
 		return
-	if (src.occupant)
-		to_chat(user, "\blue <B>The scanner is already occupied!</B>")
+	if(!move_inside_checks(G.affecting, user))
 		return
-	if (G.affecting.abiotic())
-		to_chat(user, "\blue <B>Subject cannot have abiotic items on.</B>")
-		return
-	user.SetNextMove(CLICK_CD_MELEE)
-	var/mob/M = G.affecting
-	if(M.buckled)
-		var/obj/O = M.buckled
-		O.user_unbuckle_mob(user)
-	if (M.client)
-		M.client.perspective = EYE_PERSPECTIVE
-		M.client.eye = src
-	M.loc = src
-	src.occupant = M
-	src.icon_state = "body_scanner_1"
-	for(var/obj/O in src)
-		O.loc = src.loc
-		//Foreach goto(154)
-	src.add_fingerprint(user)
-	//G = null
+	add_fingerprint(user)
+	close_machine(G.affecting)
+	playsound(src, 'sound/machines/analysis.ogg', 40, 0)
 	qdel(G)
-	return
+
+/obj/machinery/bodyscanner/update_icon()
+	icon_state = "body_scanner_[occupant ? "1" : "0"]"
+
+/obj/machinery/bodyscanner/MouseDrop_T(mob/target, mob/user)
+	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user))
+		return
+	if(!iscarbon(user) && !isrobot(user))
+		return
+	if(!move_inside_checks(target, user))
+		return
+	add_fingerprint(user)
+	close_machine(target)
+	playsound(src, 'sound/machines/analysis.ogg', 40, 0)
 
 /obj/machinery/bodyscanner/ex_act(severity)
+	var/should_destroy = FALSE
 	switch(severity)
 		if(1.0)
-			for(var/atom/movable/A as mob|obj in src)
-				A.loc = src.loc
-				ex_act(severity)
-				//Foreach goto(35)
-			//SN src = null
-			qdel(src)
-			return
+			should_destroy = TRUE
 		if(2.0)
-			if (prob(50))
-				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
-					ex_act(severity)
-					//Foreach goto(108)
-				//SN src = null
-				qdel(src)
-				return
+			if(prob(50))
+				should_destroy = TRUE
 		if(3.0)
-			if (prob(25))
-				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
-					ex_act(severity)
-					//Foreach goto(181)
-				//SN src = null
-				qdel(src)
-				return
-		else
-	return
+			if(prob(25))
+				should_destroy = TRUE
+	if(should_destroy)
+		for(var/atom/movable/A in src)
+			A.forceMove(loc)
+			ex_act(severity)
+		qdel(src)
 
 /obj/machinery/bodyscanner/blob_act()
 	if(prob(50))
-		for(var/atom/movable/A as mob|obj in src)
-			A.loc = src.loc
+		for(var/atom/movable/A in src)
+			A.forceMove(loc)
 		qdel(src)
 
 /obj/machinery/body_scanconsole/ex_act(severity)
-
 	switch(severity)
 		if(1.0)
-			//SN src = null
 			qdel(src)
-			return
 		if(2.0)
 			if (prob(50))
-				//SN src = null
 				qdel(src)
-				return
-		else
-	return
 
 /obj/machinery/body_scanconsole/blob_act()
-
 	if(prob(50))
 		qdel(src)
 
@@ -182,7 +134,7 @@
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scannerconsole"
 	anchored = 1
-	var/latestprint = 0
+	var/next_print = 0
 	var/storedinfo = null
 
 
@@ -242,9 +194,9 @@
 					else
 						t1 = "*dead*"
 				if (!istype(occupant,/mob/living/carbon/human))
-					dat += "<font color='red'>This device can only scan human occupants.</FONT>"
+					dat += "<font color='red'>This device can only scan human occupants.</font>"
 				else
-					dat += text("[]\tHealth %: [] ([])</FONT><BR>", (occupant.health > 50 ? "<font color='blue'>" : "<font color='red'>"), occupant.health, t1)
+					dat += text("<font color='[]'>\tHealth %: [] ([])</font><BR>", (occupant.health > 50 ? "blue" : "red"), occupant.health, t1)
 
 					//if(occupant.mind && occupant.mind.changeling && occupant.status_flags & FAKEDEATH)
 					if(occupant.mind && occupant.mind.changeling && occupant.fake_death)
@@ -253,14 +205,14 @@
 					if(occupant.virus2.len)
 						dat += text("<font color='red'>Viral pathogen detected in blood stream.</font><BR>")
 
-					dat += text("[]\t-Brute Damage %: []</FONT><BR>", (occupant.getBruteLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getBruteLoss())
-					dat += text("[]\t-Respiratory Damage %: []</FONT><BR>", (occupant.getOxyLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getOxyLoss())
-					dat += text("[]\t-Toxin Content %: []</FONT><BR>", (occupant.getToxLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getToxLoss())
-					dat += text("[]\t-Burn Severity %: []</FONT><BR><BR>", (occupant.getFireLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getFireLoss())
+					dat += text("<font color='[]'>\t-Brute Damage %: []</font><BR>", (occupant.getBruteLoss() < 60 ? "blue" : "red"), occupant.getBruteLoss())
+					dat += text("<font color='[]'>\t-Respiratory Damage %: []</font><BR>", (occupant.getOxyLoss() < 60 ? "blue" : "red"), occupant.getOxyLoss())
+					dat += text("<font color='[]'>\t-Toxin Content %: []</font><BR>", (occupant.getToxLoss() < 60 ? "blue" : "red"), occupant.getToxLoss())
+					dat += text("<font color='[]'>\t-Burn Severity %: []</font><BR><BR>", (occupant.getFireLoss() < 60 ? "blue" : "red"), occupant.getFireLoss())
 
-					dat += text("[]\tRadiation Level %: []</FONT><BR>", (occupant.radiation < 10 ?"<font color='blue'>" : "<font color='red'>"), occupant.radiation)
-					dat += text("[]\tGenetic Tissue Damage %: []</FONT><BR>", (occupant.getCloneLoss() < 1 ?"<font color='blue'>" : "<font color='red'>"), occupant.getCloneLoss())
-					dat += text("[]\tApprox. Brain Damage %: []</FONT><BR>", (occupant.getBrainLoss() < 1 ?"<font color='blue'>" : "<font color='red'>"), occupant.getBrainLoss())
+					dat += text("<font color='[]'>\tRadiation Level %: []</font><BR>", (occupant.radiation < 10 ?"blue" : "red"), occupant.radiation)
+					dat += text("<font color='[]'>\tGenetic Tissue Damage %: []</font><BR>", (occupant.getCloneLoss() < 1 ?"blue" : "red"), occupant.getCloneLoss())
+					dat += text("<font color='[]'>\tApprox. Brain Damage %: []</font><BR>", (occupant.getBrainLoss() < 1 ?"blue" : "red"), occupant.getBrainLoss())
 					dat += text("Paralysis Summary %: [] ([] seconds left!)<BR>", occupant.paralysis, round(occupant.paralysis / 4))
 					dat += text("Body Temperature: [occupant.bodytemperature-T0C]&deg;C ([occupant.bodytemperature*1.8-459.67]&deg;F)<BR><HR>")
 
@@ -271,13 +223,13 @@
 						var/blood_volume = round(occupant.vessel.get_reagent_amount("blood"))
 						var/blood_percent =  blood_volume / 560
 						blood_percent *= 100
-						dat += text("[]\tBlood Level %: [] ([] units)</FONT><BR>", (blood_volume > 448 ?"<font color='blue'>" : "<font color='red'>"), blood_percent, blood_volume)
+						dat += text("<font color='[]'>\tBlood Level %: [] ([] units)</font><BR>", (blood_volume > 448 ? "blue" : "red"), blood_percent, blood_volume)
 					if(occupant.reagents)
 						dat += text("Inaprovaline units: [] units<BR>", occupant.reagents.get_reagent_amount("inaprovaline"))
 						dat += text("Soporific (Sleep Toxin): [] units<BR>", occupant.reagents.get_reagent_amount("stoxin"))
-						dat += text("[]\tDermaline: [] units</FONT><BR>", (occupant.reagents.get_reagent_amount("dermaline") < 30 ? "<font color='black'>" : "<font color='red'>"), occupant.reagents.get_reagent_amount("dermaline"))
-						dat += text("[]\tBicaridine: [] units<BR>", (occupant.reagents.get_reagent_amount("bicaridine") < 30 ? "<font color='black'>" : "<font color='red'>"), occupant.reagents.get_reagent_amount("bicaridine"))
-						dat += text("[]\tDexalin: [] units<BR>", (occupant.reagents.get_reagent_amount("dexalin") < 30 ? "<font color='black'>" : "<font color='red'>"), occupant.reagents.get_reagent_amount("dexalin"))
+						dat += text("<font color='[]'>\tDermaline: [] units</font><BR>", (occupant.reagents.get_reagent_amount("dermaline") < 30 ? "black" : "red"), occupant.reagents.get_reagent_amount("dermaline"))
+						dat += text("<font color='[]'>\tBicaridine: [] units</font><BR>", (occupant.reagents.get_reagent_amount("bicaridine") < 30 ? "black" : "red"), occupant.reagents.get_reagent_amount("bicaridine"))
+						dat += text("<font color='[]'>\tDexalin: [] units</font><BR>", (occupant.reagents.get_reagent_amount("dexalin") < 30 ? "black" : "red"), occupant.reagents.get_reagent_amount("dexalin"))
 
 					for(var/datum/disease/D in occupant.viruses)
 						if(!D.hidden[SCANNER])
@@ -411,24 +363,30 @@
 	. = ..()
 	if(!.)
 		return
-	if (href_list["print"])
-		if (src.latestprint + 100 < world.time) //10sec cooldown
-			src.latestprint = world.time
+	if(href_list["print"])
+		if (next_print < world.time) //10 sec cooldown
+			next_print = world.time + 10 SECONDS
 			to_chat(usr, "<span class='notice'>Printing... Please wait.</span>")
-			spawn(10)
-				var/obj/item/weapon/paper/P = new(loc)
-				var/mob/living/carbon/human/occupant = src.connected.occupant
-				var/t1 = "<B>[occupant ? occupant.name : "Unknown"]'s</B> advanced scanner report.<BR>"
-				t1 += "Station Time: <B>[worldtime2text()]</B><BR>"
-				switch(occupant.stat) // obvious, see what their status is
-					if(0)
-						t1 += "Status: <B>Conscious</B>"
-					if(1)
-						t1 += "Status: <B>Unconscious</B>"
-					else
-						t1 += "Status: <B>\red*dead*</B>"
-				t1 += storedinfo
-				P.info = t1
-				P.name = "[occupant.name]'s scanner report"
+			playsound(src, 'sound/items/polaroid1.ogg', 20, 0)
+			addtimer(CALLBACK(src, .proc/print_scan, storedinfo), 1 SECOND)
 		else
 			to_chat(usr, "<span class='notice'>The console can't print that fast!</span>")
+
+/obj/machinery/body_scanconsole/proc/print_scan(additional_info)
+	var/obj/item/weapon/paper/P = new(loc)
+	if(!connected || !connected.occupant) // If while we were printing the occupant got out or our thingy did a boom.
+		return
+	var/mob/living/carbon/human/occupant = connected.occupant
+	var/t1 = "<B>[occupant ? occupant.name : "Unknown"]'s</B> advanced scanner report.<BR>"
+	t1 += "Station Time: <B>[worldtime2text()]</B><BR>"
+	switch(occupant.stat) // obvious, see what their status is
+		if(CONSCIOUS)
+			t1 += "Status: <B>Conscious</B>"
+		if(UNCONSCIOUS)
+			t1 += "Status: <B>Unconscious</B>"
+		else
+			t1 += "Status: <B>\red*dead*</B>"
+	t1 += additional_info
+	P.info = t1
+	P.name = "[occupant.name]'s scanner report"
+	P.update_icon()

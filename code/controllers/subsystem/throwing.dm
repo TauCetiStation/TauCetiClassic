@@ -79,7 +79,7 @@ var/datum/subsystem/throwing/SSthrowing
 	var/atom/step
 
 	//calculate how many tiles to move, making up for any missed ticks.
-	var/tilestomove = round(min(((((world.time + world.tick_lag) - start_time) * speed) - (dist_travelled ? dist_travelled : -1)), speed * MAX_TICKS_TO_MAKE_UP) * (world.tick_lag * SSthrowing.wait))
+	var/tilestomove = ceil(min(((((world.time + world.tick_lag) - start_time) * speed) - (dist_travelled ? dist_travelled : -1)), speed * MAX_TICKS_TO_MAKE_UP) * (world.tick_lag * SSthrowing.wait))
 	while (tilestomove-- > 0)
 		if ((dist_travelled >= maxrange || AM.loc == target_turf) && has_gravity(AM, AM.loc))
 			finialize()

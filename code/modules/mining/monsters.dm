@@ -1,4 +1,4 @@
-/mob/living/simple_animal/hostile/asteroid/
+/mob/living/simple_animal/hostile/asteroid
 	vision_range = 2
 	min_oxy = 0
 	max_oxy = 0
@@ -460,17 +460,19 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_hide"
 	flags = NOBLUDGEON
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	layer = 4
 
 /obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
 		if(istype(target, /obj/item/clothing/suit/space) || istype(target, /obj/item/clothing/head/helmet/space))
-			var/obj/item/clothing/suit/space/C = target
+			var/obj/item/clothing/C = target
 			var/list/current_armor = C.armor
 			if(current_armor.["melee"] < 80)
 				current_armor.["melee"] = min(current_armor.["melee"] + 10, 80)
-				C.breach_threshold = min(C.breach_threshold + 2, 24)
+				if(istype(C, /obj/item/clothing/suit/space))
+					var/obj/item/clothing/suit/space/S = C
+					S.breach_threshold = min(S.breach_threshold + 2, 24)
 				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 				qdel(src)
 			else

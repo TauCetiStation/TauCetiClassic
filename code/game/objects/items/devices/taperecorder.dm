@@ -4,7 +4,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "taperecorderidle"
 	item_state = "analyzer"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	m_amt = 60
 	g_amt = 30
 	var/emagged = 0.0
@@ -206,6 +206,7 @@
 		t1 += "[storedinfo[i]]<BR>"
 	P.info = t1
 	P.name = "Transcript"
+	P.update_icon()
 	canprint = 0
 	sleep(300)
 	canprint = 1

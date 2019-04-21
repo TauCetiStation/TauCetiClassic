@@ -2,7 +2,7 @@
 	name = "rock"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore2"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	var/datum/geosample/geologic_data
 	var/oretag
 	var/points = 0

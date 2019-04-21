@@ -17,9 +17,9 @@
 	var/sanitized_text = replacetext(t, "'", "\\'")
 	sanitized_text = replacetext(sanitized_text, "\"", "\\\"")
 	return sanitized_text
-	
+
 // Sanitize inputs to avoid SQL injection attacks
-proc/sql_sanitize_text(text)
+/proc/sql_sanitize_text(text)
 	text = replacetext(text, "'", "''")
 	text = replacetext(text, ";", "")
 	text = replacetext(text, "&", "")
@@ -332,20 +332,20 @@ proc/sql_sanitize_text(text)
 
 //Replaces \red \blue \green \b etc with span classes for to_chat
 /proc/replace_text_macro(match, code, rest)
-    var/regex/text_macro = new("(\\xFF.)(.*)$")
-    switch(code)
-        if("\red")
-            return "<span class='warning'>[text_macro.Replace(rest, /proc/replace_text_macro)]</span>"
-        if("\blue", "\green")
-            return "<span class='notice'>[text_macro.Replace(rest, /proc/replace_text_macro)]</span>"
-        if("\b")
-            return "<b>[text_macro.Replace(rest, /proc/replace_text_macro)]</b>"
-        else
-            return text_macro.Replace(rest, /proc/replace_text_macro)
+	var/regex/text_macro = new("(\\xFF.)(.*)$")
+	switch(code)
+		if("\red")
+			return "<span class='warning'>[text_macro.Replace(rest, /proc/replace_text_macro)]</span>"
+		if("\blue", "\green")
+			return "<span class='notice'>[text_macro.Replace(rest, /proc/replace_text_macro)]</span>"
+		if("\b")
+			return "<b>[text_macro.Replace(rest, /proc/replace_text_macro)]</b>"
+		else
+			return text_macro.Replace(rest, /proc/replace_text_macro)
 
 /proc/macro2html(text)
-    var/static/regex/text_macro = new("(\\xFF.)(.*)$")
-    return text_macro.Replace(text, /proc/replace_text_macro)
+	var/static/regex/text_macro = new("(\\xFF.)(.*)$")
+	return text_macro.Replace(text, /proc/replace_text_macro)
 
 /*
  * Byond

@@ -77,6 +77,8 @@
 	if(!istype(T))
 		return
 
+	..()
+
 	var/obj/machinery/atmospherics/node1 = NODE1
 	var/obj/machinery/atmospherics/node2 = NODE2
 

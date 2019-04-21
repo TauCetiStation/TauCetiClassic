@@ -95,7 +95,7 @@
 	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
 		inv_box.icon_state = "hand_r_active"
 	inv_box.screen_loc = ui_rhand
-	inv_box.slot_id = slot_r_hand
+	inv_box.slot_id = SLOT_R_HAND
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	src.r_hand_hud_object = inv_box
@@ -108,7 +108,7 @@
 	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
 		inv_box.icon_state = "hand_l_active"
 	inv_box.screen_loc = ui_lhand
-	inv_box.slot_id = slot_l_hand
+	inv_box.slot_id = SLOT_L_HAND
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	src.l_hand_hud_object = inv_box
@@ -137,7 +137,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "mask"
 	inv_box.screen_loc = ui_monkey_mask
-	inv_box.slot_id = slot_wear_mask
+	inv_box.slot_id = SLOT_WEAR_MASK
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	src.adding += inv_box
@@ -147,7 +147,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
 	inv_box.screen_loc = ui_back
-	inv_box.slot_id = slot_back
+	inv_box.slot_id = SLOT_BACK
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	src.adding += inv_box

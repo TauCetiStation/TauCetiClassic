@@ -1,7 +1,7 @@
 /obj/machinery/biogenerator
 	name = "Biogenerator"
 	desc = ""
-	icon = 'icons/obj/biogenerator.dmi'
+	icon = 'icons/obj/machines/biogenerator.dmi'
 	icon_state = "biogen-empty"
 	density = 1
 	anchored = 1
@@ -184,7 +184,7 @@
 		processing = 1
 		update_icon()
 		updateUsrDialog()
-		playsound(src, 'sound/machines/blender.ogg', 50, 1)
+		playsound(src, 'sound/machines/blender.ogg', 35, 1)
 		use_power(S*30)
 		sleep(S+15/productivity)
 		processing = 0

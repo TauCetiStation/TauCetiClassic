@@ -90,7 +90,7 @@
 		return
 	else
 		user.SetNextMove(CLICK_CD_MELEE)
-		visible_message("span class='userdanger'>[user] kicks the display case.</span>")
+		visible_message("<span class='userdanger'>[user] kicks the display case.</span>")
 		src.health -= 2
 		healthcheck()
 		return

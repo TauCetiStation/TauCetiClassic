@@ -170,7 +170,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
 /obj/random/science/slimecore/item_to_spawn()
-	return pick(subtypesof(/obj/item/slime_extract/))
+	return pick(subtypesof(/obj/item/slime_extract))
 
 /obj/random/science/bomb_supply
 	name = "Bomb Supply"

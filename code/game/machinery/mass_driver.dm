@@ -15,6 +15,13 @@
 	var/id = 1.0
 	var/drive_range = 50 //this is mostly irrelevant since current mass drivers throw into space, but you could make a lower-range mass driver for interstation transport or something I guess.
 
+/obj/machinery/mass_driver/atom_init()
+	. = ..()
+	mass_driver_list += src
+
+/obj/machinery/mass_driver/Destroy()
+	mass_driver_list -= src
+	return ..()
 
 /obj/machinery/mass_driver/proc/drive(amount)
 	if(stat & (BROKEN|NOPOWER))

@@ -3,7 +3,7 @@
 	desc = "A slab of meat."
 	icon_state = "meat"
 	health = 180
-	filling_color = "#FF1C1C"
+	filling_color = "#ff1c1c"
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/atom_init()

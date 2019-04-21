@@ -53,6 +53,6 @@
 
 /mob/living/carbon/alien/larva/movement_delay()
 	var/tally = 0
-	if (istype(src, /mob/living/carbon/alien/larva/)) //just in case
+	if (istype(src, /mob/living/carbon/alien/larva)) //just in case
 		tally = -1
 	return (tally + move_delay_add + config.alien_delay)

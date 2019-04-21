@@ -2,12 +2,12 @@
 	name = "chameleon-projector"
 	icon_state = "shield0"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	item_state = "electronic"
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	origin_tech = "syndicate=4;magnets=4"
 	var/can_use = TRUE
 	var/toggled = FALSE

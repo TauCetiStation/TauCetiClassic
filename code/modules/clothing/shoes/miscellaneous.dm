@@ -39,6 +39,13 @@
 	heat_protection = LEGS
 	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 
+/obj/item/clothing/shoes/combat/cut // Basically combat shoes but for xenos.
+	name = "mangled combat boots"
+	desc = "When you REALLY want to turn up the heat<br>They have the toe caps cut off of them."
+	icon_state = "swat_cut"
+	clipped_status = CLIPPED
+	species_restricted = list("exclude", DIONA, VOX)
+
 /obj/item/clothing/shoes/space_ninja
 	name = "ninja shoes"
 	desc = "A pair of running shoes. Excellent for running and even better for smashing skulls."
@@ -59,7 +66,7 @@
 	icon_state = "tourist"
 	permeability_coefficient = 1
 	species_restricted = null
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
@@ -127,14 +134,14 @@
 	icon_state = "slippers"
 	item_state = "slippers"
 	species_restricted = null
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/clothing/shoes/slippers_worn
 	name = "worn bunny slippers"
 	desc = "Fluffy..."
 	icon_state = "slippers_worn"
 	item_state = "slippers_worn"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/clothing/shoes/laceup
 	name = "laceup shoes"

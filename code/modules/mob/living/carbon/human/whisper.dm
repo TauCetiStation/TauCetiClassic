@@ -29,6 +29,8 @@
 		return
 
 	message = sanitize(message)	//made consistent with say
+	if(iszombie(src))
+		message = zombie_talk(message)
 
 	if(name != GetVoice())
 		alt_name = "(as [get_id_name("Unknown")])"
@@ -54,7 +56,7 @@
 	message = capitalize(trim(message))
 
 	//TODO: handle_speech_problems for silent
-	if(!message || silent || miming)
+	if(!message || silent || miming || has_trait(TRAIT_MUTE))
 		return
 
 	// Mute disability
@@ -77,10 +79,8 @@
 	listening |= src
 
 	//ghosts
-	for(var/mob/M in dead_mob_list)	//does this include players who joined as observers as well?
-		if (!(M.client))
-			continue
-		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
+	for(var/mob/M in observer_list)	//does this include players who joined as observers as well?
+		if(M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
 			listening |= M
 
 	//Pass whispers on to anything inside the immediate listeners.

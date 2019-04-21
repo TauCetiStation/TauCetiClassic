@@ -79,7 +79,6 @@ move an amendment</a> to the drawing.</p>
 /obj/item/blueprints/proc/get_area()
 	var/turf/T = get_turf_loc(usr)
 	var/area/A = T.loc
-	A = A.master
 	return A
 
 /obj/item/blueprints/proc/get_area_type(area/A = get_area())
@@ -125,9 +124,7 @@ move an amendment</a> to the drawing.</p>
 	var/area/A = new
 	A.name = str
 	A.tag="[A.type]_[md5(str)]" // without this dynamic light system ruin everithing
-	//var/ma
-	//ma = A.master ? "[A.master]" : "(null)"
-	//world << "DEBUG: create_area: <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"
+	//world << "DEBUG: create_area: <br>A.name=[A.name]<br>A.tag=[A.tag]"
 	A.power_equip = 0
 	A.power_light = 0
 	A.power_environ = 0
@@ -137,16 +134,17 @@ move an amendment</a> to the drawing.</p>
 	A.always_unpowered = 0
 
 	spawn(5)
-		//ma = A.master ? "[A.master]" : "(null)"
-		//world << "DEBUG: create_area(5): <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"
+		//world << "DEBUG: create_area(5): <br>A.name=[A.name]<br>A.tag=[A.tag]"
 		interact()
 	return
 
 
 /obj/item/blueprints/proc/move_turfs_to_area(list/turf/turfs, area/A)
-	A.contents.Add(turfs)
-		//oldarea.contents.Remove(usr.loc) // not needed
-		//T.loc = A //error: cannot change constant value
+	for(var/i in 1 to turfs.len)
+		var/turf/thing = turfs[i]
+		var/area/old_area = thing.loc
+		A.contents += thing
+		thing.change_area(old_area, A)
 
 
 /obj/item/blueprints/proc/edit_area()
@@ -160,8 +158,7 @@ move an amendment</a> to the drawing.</p>
 		to_chat(usr, "\red Text too long.")
 		return
 	set_area_machinery_title(A,str,prevname)
-	for(var/area/RA in A.related)
-		RA.name = str
+	A.name = str
 	to_chat(usr, "\blue You set the area '[prevname]' title to '[str]'.")
 	interact()
 	return
@@ -171,17 +168,17 @@ move an amendment</a> to the drawing.</p>
 /obj/item/blueprints/proc/set_area_machinery_title(area/A,title,oldtitle)
 	if (!oldtitle) // or replacetext goes to infinite loop
 		return
-	for(var/area/RA in A.related)
-		for(var/obj/machinery/alarm/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/power/apc/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/atmospherics/components/unary/vent_pump/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/door/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
+
+	for(var/obj/machinery/alarm/M in src)
+		M.name = replacetext(M.name,oldtitle,title)
+	for(var/obj/machinery/power/apc/M in src)
+		M.name = replacetext(M.name,oldtitle,title)
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/M in src)
+		M.name = replacetext(M.name,oldtitle,title)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/M in src)
+		M.name = replacetext(M.name,oldtitle,title)
+	for(var/obj/machinery/door/M in src)
+		M.name = replacetext(M.name,oldtitle,title)
 	//TODO: much much more. Unnamed airlocks, cameras, etc.
 
 /obj/item/blueprints/proc/check_tile_is_border(turf/T2,dir)
@@ -207,8 +204,6 @@ move an amendment</a> to the drawing.</p>
 	if (locate(/obj/machinery/door) in T2)
 		return BORDER_2NDTILE
 	if (locate(/obj/structure/falsewall) in T2)
-		return BORDER_2NDTILE
-	if (locate(/obj/structure/falserwall) in T2)
 		return BORDER_2NDTILE
 	if (locate(/obj/structure/mineral_door) in T2)
 		return BORDER_2NDTILE

@@ -7,10 +7,10 @@
 	icon_state = "forensic1"
 	var/amount = 20.0
 	var/list/stored = list()
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	item_state = "electronic"
 	flags = CONDUCT | NOBLUDGEON
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 
 /obj/item/device/detective_scanner/attackby(obj/item/weapon/f_card/W, mob/user)
 	..()
@@ -80,9 +80,10 @@
 
 	//Special case for blood splatters, runes and gibs.
 	if (istype(A, /obj/effect/decal/cleanable/blood) || istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable/blood/gibs))
+		var/obj/effect/OE = A
 		if(!isnull(A.blood_DNA))
-			for(var/blood in A.blood_DNA)
-				to_chat(user, "\blue Blood type: [A.blood_DNA[blood]]\nDNA: [blood]")
+			for(var/blood in OE.blood_DNA)
+				to_chat(user, "<span class='notice'>Blood type: [OE.blood_DNA[blood]]\nDNA: [blood]</span>")
 				flick("forensic2",src)
 		return
 

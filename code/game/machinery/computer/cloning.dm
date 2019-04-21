@@ -349,7 +349,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject)
-	if ((isnull(subject)) || (!(ishuman(subject))) || (!subject.dna))
+	if ((isnull(subject)) || (!(ishuman(subject))) || subject.species.flags[NO_SCAN] || (!subject.dna))
 		scantemp = "Error: Unable to locate valid genetic data."
 		return
 	if (subject.brain_op_stage == 4.0)
@@ -377,6 +377,11 @@
 	R.name=R.dna.real_name
 	R.types=DNA2_BUF_UI|DNA2_BUF_UE|DNA2_BUF_SE
 	R.languages=subject.languages
+
+	R.quirks = list()
+	for(var/V in subject.roundstart_quirks)
+		var/datum/quirk/T = V
+		R.quirks += T.type
 
 	//Add an implant if needed
 	var/obj/item/weapon/implant/health/imp = locate(/obj/item/weapon/implant/health, subject)

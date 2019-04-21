@@ -9,12 +9,12 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	usr.verbs -= /mob/living/carbon/human/proc/shadowling_hatch
 	switch(alert("Are you sure you want to hatch? You cannot undo this!",,"Yes","No"))
 		if("No")
-			to_chat(usr, "<span class='warning'>You decide against hatching for now.")
+			to_chat(usr, "<span class='warning'>You decide against hatching for now.</span>")
 			usr.verbs += /mob/living/carbon/human/proc/shadowling_hatch
 			return
 		if("Yes")
 			if(!istype(usr.loc, /turf))
-				to_chat(usr, "<span class='warning'>You can't hatch here.")
+				to_chat(usr, "<span class='warning'>You can't hatch here.</span>")
 				usr.verbs += /mob/living/carbon/human/proc/shadowling_hatch
 				return
 			usr.notransform = 1
@@ -30,9 +30,9 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			var/turf/simulated/floor/F
 			var/turf/shadowturf = get_turf(usr)
 			for(F in orange(1, usr))
-				new /obj/effect/alien/resin/wall/shadowling(F)
+				new /obj/structure/alien/resin/wall/shadowling(F)
 			//for(var/obj/structure/alien/resin/wall/shadowling/R in shadowturf) //extremely hacky
-			for(var/obj/effect/alien/resin/wall/shadowling/R in shadowturf)
+			for(var/obj/structure/alien/resin/wall/shadowling/R in shadowturf)
 				qdel(R)
 				//new /obj/structure/alien/weeds/node(shadowturf) //Dim lighting in the chrysalis -- removes itself with the chrysalis
 				new /obj/structure/alien/weeds/node(shadowturf)
@@ -65,39 +65,18 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 
 			to_chat(usr, "<i><b><font size=3>YOU LIVE!!!</i></b></font>")
 
-			for(var/obj/effect/alien/resin/wall/shadowling/W in orange(usr, 1))
+			for(var/obj/structure/alien/resin/wall/shadowling/W in orange(usr, 1))
 				playsound(W, 'sound/effects/splat.ogg', 50, 1)
 				qdel(W)
 			for(var/obj/structure/alien/weeds/node/N in shadowturf)
 				qdel(N)
 			usr.visible_message("<span class='warning'>The chrysalis explodes in a shower of purple flesh and fluid!</span>")
 
-			var/mob/living/carbon/human/H = new /mob/living/carbon/human(usr.loc)
+			var/mob/living/carbon/human/shadowling/H = new /mob/living/carbon/human/shadowling(usr.loc)
 
-			var/newNameId = pick(possibleShadowlingNames)
-			possibleShadowlingNames.Remove(newNameId)
-			H.real_name = newNameId
-			H.name = usr.real_name
-
-			H.underwear = 0
-			H.undershirt = 0
-			H.faction = "faithless"
-			H.set_species(SHADOWLING)
-			H.dna.mutantrace = "shadowling"
-			H.update_mutantrace()
-			H.regenerate_icons()
 			usr.mind.transfer_to(H)
 			ticker.mode.update_all_shadows_icons()
-
-			to_chat(H, "<span class='shadowling'><b><i>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</b></i></span>")
-			H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
-			H.spell_list += new /obj/effect/proc_holder/spell/targeted/enthrall
-			H.spell_list += new /obj/effect/proc_holder/spell/targeted/glare
-			H.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/veil
-			H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadow_walk
-			H.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
-			H.spell_list += new /obj/effect/proc_holder/spell/targeted/collective_mind
-			H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor
+			to_chat(H, "<span class='shadowling bold italic'>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</span>")
 
 			qdel(usr)
 
@@ -112,12 +91,12 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	usr.verbs -= /mob/living/carbon/human/proc/shadowling_ascendance
 	switch(alert("It is time to ascend. Are you completely sure about this? You cannot undo this!",,"Yes","No"))
 		if("No")
-			to_chat(usr, "<span class='warning'>You decide against ascending for now.")
+			to_chat(usr, "<span class='warning'>You decide against ascending for now.</span>")
 			usr.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
 			return
 		if("Yes")
 			if(!istype(usr.loc, /turf))
-				to_chat(usr, "<span class='warning'>You can't evolve here.")
+				to_chat(usr, "<span class='warning'>You can't evolve here.</span>")
 				usr.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
 				return
 			usr.notransform = 1
@@ -162,7 +141,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				to_chat(M, "<span class='userdanger'>An immense pressure slams you onto the ground!</span>")
 			to_chat(world, "<font size=5><span class='shadowling'><b>\"VYSHA NERADA YEKHEZET U'RUU!!\"</font></span>")
 			world << 'sound/hallucinations/veryfar_noise.ogg'
-			for(var/obj/machinery/power/apc/A in world)
+			for(var/obj/machinery/power/apc/A in apc_list)
 				A.overload_lighting()
 			var/mob/A = new /mob/living/simple_animal/ascendant_shadowling(usr.loc)
 			A.spell_list = list()
@@ -182,7 +161,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			sleep(50)
 			if(!ticker.mode.shadowling_ascended)
 				SSshuttle.incall(0.3)
-				captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+				captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
 				world << sound('sound/AI/shuttlecalled.ogg')
 			ticker.mode.shadowling_ascended = 1
 			qdel(usr)

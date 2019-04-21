@@ -160,7 +160,7 @@
 						for(var/i=1, i<=Perp.len, i += 2)
 							var/crimstat = ""
 							var/datum/data/record/R = Perp[i]
-							if(istype(Perp[i+1],/datum/data/record/))
+							if(istype(Perp[i+1],/datum/data/record))
 								var/datum/data/record/E = Perp[i+1]
 								crimstat = E.fields["criminal"]
 							var/background
@@ -361,6 +361,7 @@ What a mess.*/
 				else
 					P.info += "<B>Security Record Lost!</B><BR>"
 				P.info += "</TT>"
+				P.update_icon()
 				printing = null
 				updateUsrDialog()
 //RECORD DELETE

@@ -4,7 +4,6 @@
 var/req_console_assistance = list()
 var/req_console_supplies = list()
 var/req_console_information = list()
-var/list/obj/machinery/requests_console/allConsoles = list()
 
 /obj/machinery/requests_console
 	name = "Requests Console"
@@ -71,7 +70,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 /obj/machinery/requests_console/atom_init()
 	. = ..()
 	name = "[department] Requests Console"
-	allConsoles += src
+	requests_console_list += src
 	//req_console_departments += department
 	switch(departmentType)
 		if(1)
@@ -95,7 +94,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			req_console_information += department
 
 /obj/machinery/requests_console/Destroy()
-	allConsoles -= src
+	requests_console_list -= src
 	switch(departmentType)
 		if(1)
 			req_console_assistance -= department
@@ -165,7 +164,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				dat += text("<A href='?src=\ref[src];setScreen=0'>Continue</A><BR>")
 
 			if(8)	//view messages
-				for (var/obj/machinery/requests_console/Console in allConsoles)
+				for (var/obj/machinery/requests_console/Console in requests_console_list)
 					if (Console.department == department)
 						Console.newmessagepriority = 0
 						Console.icon_state = "req_comp0"
@@ -261,7 +260,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			return FALSE
 		for(var/mob/M in player_list)
 			if(!isnewplayer(M))
-				to_chat(M, "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>")
+				to_chat(M, "<b><font size='3'><font color='red'>[department] announcement:</font> [message]</font></b>")
 		announceAuth = 0
 		message = ""
 		screen = 0
@@ -279,7 +278,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		screen = 7 //if it's successful, this will get overrwritten (7 = unsufccessfull, 6 = successfull)
 		if (sending)
 			var/pass = 0
-			for (var/obj/machinery/message_server/MS in machines)
+			for (var/obj/machinery/message_server/MS in message_servers)
 				if(!MS.active)
 					continue
 				MS.send_rc_message(href_list["department"],department,log_msg,msgStamped,msgVerified,priority)
@@ -287,7 +286,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 			if(pass)
 
-				for (var/obj/machinery/requests_console/Console in allConsoles)
+				for (var/obj/machinery/requests_console/Console in requests_console_list)
 					if (ckey(Console.department) == ckey(href_list["department"]))
 
 						switch(priority)
@@ -319,7 +318,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
 									for (var/mob/O in hearers(4, Console.loc))
 										O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'Message from [department]'"))
-								Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[message]"
+								Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></B><BR>[message]"
 
 						screen = 6
 						Console.set_light(2)
@@ -375,7 +374,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					//err... hacking code, which has no reason for existing... but anyway... it's supposed to unlock priority 3 messanging on that console (EXTREME priority...) the code for that actually exists.
 /obj/machinery/requests_console/attackby(obj/item/weapon/O, mob/user)
 	/*
-	if (istype(O, /obj/item/weapon/crowbar))
+	if (iscrowbar(O))
 		if(open)
 			open = 0
 			icon_state="req_comp0"
@@ -385,7 +384,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				icon_state="req_comp_open"
 			else if(hackState == 1)
 				icon_state="req_comp_rewired"
-	if (istype(O, /obj/item/weapon/screwdriver))
+	if (isscrewdriver(O))
 		if(open)
 			if(hackState == 0)
 				hackState = 1

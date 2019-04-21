@@ -4,7 +4,7 @@
 
 /obj/item/fluff // so that they don't spam up the object tree
 	icon = 'icons/obj/custom_items.dmi'
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 
 //////////////////////////////////
 ////////// Fluff Items ///////////
@@ -241,16 +241,16 @@
 /obj/item/weapon/fluff/cado_keppel_1 //sparklysheep: Cado Keppel
 	name = "purple comb"
 	desc = "A pristine purple comb made from flexible plastic. It has a small K etched into its side."
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "purplecomb"
 	item_state = "purplecomb"
 
-	attack_self(mob/user)
-		if(user.r_hand == src || user.l_hand == src)
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [] uses [] to comb their hair with incredible style and sophistication. What a guy.", user, src), 1)
-		return
+/obj/item/weapon/fluff/cado_keppel_1/attack_self(mob/user)
+	if(user.r_hand == src || user.l_hand == src)
+		for(var/mob/O in viewers(user, null))
+			O.show_message(text("\red [] uses [] to comb their hair with incredible style and sophistication. What a guy.", user, src), 1)
+	return
 
 /obj/item/weapon/fluff/hugo_cinderbacth_1 //thatoneguy: Hugo Cinderbatch
 	name = "Old Cane"
@@ -341,16 +341,6 @@
 	reagents.add_reagent("stoxin", 5)
 	reagents.add_reagent("sugar", 10)
 	reagents.add_reagent("ethanol", 5)
-
-/obj/item/clothing/mask/fluff/electriccig //CubeJackal: Barry Sharke
-	name = "Electronic cigarette"
-	desc = "An electronic cigarette. Most of the relief of a real cigarette with none of the side effects. Often used by smokers who are trying to quit the habit."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "ecig"
-	throw_speed = 0.5
-	item_state = "ecig"
-	w_class = 1
-	body_parts_covered = null
 
 //Strange penlight, Nerezza: Asher Spock
 
@@ -489,6 +479,8 @@
 	desc = "One of the older meson scanner models retrofitted to perform like its modern counterparts."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "book_berner_1"
+	off_state = "book_berner_1_off"
+	item_state = "glasses"
 
 /obj/item/clothing/glasses/fluff/uzenwa_sissra_1 //sparklysheep: Uzenwa Sissra
 	name = "Scanning Goggles"
@@ -621,7 +613,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "kung_jacket_w"
 	item_state = "kung_jacket_w"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 
 
 //////////// Uniforms ////////////
@@ -631,7 +623,7 @@
 	desc = "Pair of old jeans combined with a red tank-top"
 	icon_state = "kung_suit"
 	item_color = "kung_suit"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/clothing/under/fluff/milo_hachert //Field Dress Uniform - Milo Hachert - Commissar_Drew
 	name = "field dress uniform"
@@ -736,6 +728,7 @@
 	icon_state = "indiana"
 	item_state = "indiana"
 	item_color = "indiana"
+	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/fluff/cowboy
 	name = "western suit"
@@ -839,16 +832,9 @@
 	icon_state = "flagmask"
 	item_state = "flagmask"
 	flags = MASKCOVERSMOUTH
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	gas_transfer_coefficient = 0.90
 */
-
-/obj/item/clothing/mask/mara_kilpatrick_1 //staghorn: Mara Kilpatrick
-	name = "shamrock pendant"
-	desc = "A silver and emerald shamrock pendant. It has the initials \"M.K.\" engraved on the back."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "mara_kilpatrick_1"
-	w_class = 2
 
 ////// Small locket - Altair An-Nasaqan - Serithi
 
@@ -859,8 +845,8 @@
 	icon_state = "altair_locket"
 	item_state = "altair_locket"
 	item_color = "altair_locket"
-	w_class = 2
-	slot_flags = SLOT_MASK | SLOT_TIE
+	w_class = ITEM_SIZE_SMALL
+	slot_flags = SLOT_FLAGS_MASK | SLOT_FLAGS_TIE
 
 ////// Silver locket - Konaa Hirano - Konaa_Hirano
 
@@ -871,8 +857,8 @@
 	icon_state = "konaahirano"
 	item_state = "konaahirano"
 	item_color = "konaahirano"
-	w_class = 2
-	slot_flags = SLOT_MASK | SLOT_TIE
+	w_class = ITEM_SIZE_SMALL
+	slot_flags = SLOT_FLAGS_MASK | SLOT_FLAGS_TIE
 	var/obj/item/held //Item inside locket.
 
 /obj/item/clothing/accessory/fluff/konaa_hirano/attack_self(mob/user)
@@ -900,8 +886,8 @@
 	desc = "This silvered medallion bears the symbol of the Hadii Clan of the Tajaran."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "nasir_khayyam_1"
-	w_class = 2
-	slot_flags = SLOT_MASK | SLOT_TIE
+	w_class = ITEM_SIZE_SMALL
+	slot_flags = SLOT_FLAGS_MASK | SLOT_FLAGS_TIE
 
 ////// Emerald necklace - Ty Foster - Nega
 
@@ -910,7 +896,7 @@
 	desc = "A brass necklace with a green emerald placed at the end. It has a small inscription on the top of the chain, saying \'Foster\'"
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "ty_foster"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 
 ////// Apollon Pendant - Michael Guess - Dragor23
 /obj/item/clothing/mask/michael_guess_1
@@ -918,8 +904,8 @@
 	desc = "A pendant with the form of a sacrificial tripod, used in acient greece. It's a symbol of the Olympian Apollon, a god associated with oracles, poetry, the sun and healing."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "michael_guess_1"
-	w_class = 2
-	slot_flags = SLOT_MASK | SLOT_TIE
+	w_class = ITEM_SIZE_SMALL
+	slot_flags = SLOT_FLAGS_MASK | SLOT_FLAGS_TIE
 	body_parts_covered = 0
 
 //////////// Shoes ////////////
@@ -1075,7 +1061,7 @@
 /obj/item/weapon/cane/fluff/harold
 	name = "Harold's Cane"
 	desc = "A cane with a wooden handle and a plastic frame capable of folding itself to make it more storable."
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	icon = 'icons/obj/custom_items.dmi'
 	item_state = "foldcane"
 	icon_state = "foldcane"
@@ -1086,7 +1072,7 @@
 /obj/item/weapon/fluff/farwadoll
 	name = "Farwa plush doll"
 	desc = "A Farwa plush doll. It's soft and comforting!"
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	icon = 'icons/obj/custom_items.dmi'
 	item_state = "farwaplush"
 	icon_state = "farwaplush"

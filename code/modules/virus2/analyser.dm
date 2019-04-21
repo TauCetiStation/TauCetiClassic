@@ -43,6 +43,7 @@
 				<hr>
 				<u>Additional Notes:</u>&nbsp;
 "}
+			P.update_icon()
 			dish.info = r
 			dish.analysed = 1
 			dish.loc = src.loc
@@ -52,8 +53,7 @@
 			src.state("\The [src] prints a sheet of paper.")
 
 	else if(dish && !scanning && !pause)
-		if(dish.virus2 && dish.growth > 50)
-			dish.growth -= 10
+		if(dish.virus2)
 			scanning = 5
 			icon_state = "analyser_processing"
 		else

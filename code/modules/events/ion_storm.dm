@@ -7,7 +7,7 @@
 /datum/event/ionstorm/announce()
 	endWhen = rand(500, 1500)
 //		command_alert("The station has entered an ion storm.  Monitor all electronic equipment for malfunctions", "Anomaly Alert")
-	for (var/mob/living/carbon/human/player in mob_list)
+	for (var/mob/living/carbon/human/player in human_list)
 		if(player.client)
 			players += player.real_name
 	var/random_player = "The Captain"
@@ -70,7 +70,7 @@
 							"There will be a mandatory tea break every 30 minutes, with a duration of 5 minutes. Anyone caught working during a tea break must be sent a formal, but fairly polite, complaint about their actions, in writing.")
 	var/law = pick(laws)
 
-	for (var/mob/living/silicon/ai/target in mob_list)
+	for (var/mob/living/silicon/ai/target in ai_list)
 		if(target.mind.special_role == "traitor")
 			continue
 		to_chat(target, "\red <b>You have detected a change in your laws information:</b>")
@@ -79,7 +79,7 @@
 
 /datum/event/ionstorm/tick()
 	if(botEmagChance)
-		for(var/obj/machinery/bot/bot in machines)
+		for(var/obj/machinery/bot/bot in bots_list)
 			if(prob(botEmagChance))
 				bot.Emag()
 

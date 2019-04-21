@@ -1,7 +1,7 @@
 /obj/item/device/traitor_caller
 	name = "Suspicious phone"
 	desc = "Make a call for to attract an extra agent at station"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	origin_tech = "programming=4;materials=4"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "red_phone"
@@ -41,7 +41,7 @@
 	newtraitor.mind.special_role = "Syndicate"
 	newtraitor.hud_updateflag |= 1 << SPECIALROLE_HUD
 	ticker.mode.forge_syndicate_objectives(newtraitor.mind)
-	newtraitor.equip_or_collect(new /obj/item/device/encryptionkey/syndicate(newtraitor), slot_r_store)
+	newtraitor.equip_or_collect(new /obj/item/device/encryptionkey/syndicate(newtraitor), SLOT_R_STORE)
 	to_chat(newtraitor, "<span class='notice'> Your current objectives:</span>")
 	var/obj_count = 1
 	for(var/datum/objective/objective in newtraitor.mind.objectives)

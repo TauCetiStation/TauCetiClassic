@@ -35,7 +35,7 @@ var/global/list/ANTIGENS = list(
 	name = "Antibodies"
 	id = "antibodies"
 	reagent_state = LIQUID
-	color = "#0050F0"
+	color = "#0050f0"
 
 /datum/reagent/antibodies/reaction_mob(mob/M, method=TOUCH, volume)
 	if(istype(M,/mob/living/carbon))

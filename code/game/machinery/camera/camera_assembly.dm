@@ -3,7 +3,7 @@
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "cameracase"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	anchored = 0
 
 	m_amt = 700
@@ -28,7 +28,6 @@
 		if(0)
 			// State 0
 			if(iswrench(W) && isturf(src.loc))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				to_chat(user, "You wrench the assembly into place.")
 				anchored = 1
 				state = 1
@@ -46,7 +45,6 @@
 				return
 
 			else if(iswrench(W))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				to_chat(user, "You unattach the assembly from it's place.")
 				anchored = 0
 				update_icon()
@@ -156,9 +154,8 @@
 		return 0
 	if(user.is_busy(src)) return
 	to_chat(user, "<span class='notice'>You start to weld the [src]..</span>")
-	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
-	if(do_after(user, 20, target = src))
+	if(WT.use_tool(src, user, 20, volume = 50))
 		if(!WT.isOn())
 			return 0
 		return 1

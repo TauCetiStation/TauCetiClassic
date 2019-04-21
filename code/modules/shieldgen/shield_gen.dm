@@ -8,7 +8,7 @@
 /obj/machinery/shield_gen
 	name = "shield generator"
 	desc = "Machine that generates an impenetrable field of energy when activated."
-	icon = 'code/modules/shieldgen/shielding.dmi'
+	icon = 'icons/obj/machines/shielding.dmi'
 	icon_state = "generator0"
 	var/active = 0
 	var/field_radius = 3
@@ -66,7 +66,7 @@
 		s.set_up(5, 1, src)
 		s.start()
 
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(iswrench(W))
 		src.anchored = !src.anchored
 		src.visible_message("\blue [bicon(src)] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].")
 

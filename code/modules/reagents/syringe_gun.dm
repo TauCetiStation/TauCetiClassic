@@ -7,7 +7,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "syringegun"
 	item_state = "syringegun"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	throw_speed = 2
 	throw_range = 10
 	force = 4.0
@@ -136,6 +136,6 @@
 	desc = "A small spring-loaded sidearm that functions identically to a syringe gun."
 	icon_state = "syringe_pistol"
 	item_state = "gun"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	origin_tech = "combat=2;syndicate=2;biotech=3"
 	force = 2

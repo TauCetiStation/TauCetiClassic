@@ -4,9 +4,9 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	item_state = "flashlight"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 50
 	g_amt = 20
 	action_button_name = "Toggle Flashlight"
@@ -102,7 +102,7 @@
 	item_state = ""
 	flags = CONDUCT
 	brightness_on = 2
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 /obj/item/device/flashlight/drone
 	name = "low-power flashlight"
@@ -111,7 +111,7 @@
 	item_state = ""
 	flags = CONDUCT
 	brightness_on = 2
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 
 // the desk lamps are a bit special
@@ -121,7 +121,7 @@
 	icon_state = "lamp"
 	item_state = "lamp"
 	brightness_on = 4
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 	flags = CONDUCT
 	m_amt = 0
 	g_amt = 0
@@ -149,7 +149,7 @@
 /obj/item/device/flashlight/flare
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	brightness_on = 4
 	icon_state = "flare"
 	item_state = "flare"
@@ -157,7 +157,7 @@
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
-	light_color = "#ff0000"
+	light_color = LIGHT_COLOR_FLARE
 	light_power = 2
 	action_button_name = "Toggle Flare"
 
@@ -217,7 +217,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floor1" //not a slime extract sprite but... something close enough!
 	item_state = "slime"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	m_amt = 0
 	g_amt = 0
 	brightness_on = 6
@@ -277,7 +277,7 @@
 			M.visible_message("<span class='danger'>[user] blinks \the [src] at the [A]</span>")
 		else
 			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].</span>")
-		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.</span>")
+		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.")
 		A.emp_act(1)
 	else
 		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")

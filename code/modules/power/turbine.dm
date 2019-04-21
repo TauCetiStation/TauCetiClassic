@@ -266,7 +266,7 @@
 /obj/machinery/computer/turbine_computer/atom_init_late()
 	search_turbine()
 	doors = new /list()
-	for(var/obj/machinery/door/poddoor/P in machines)
+	for(var/obj/machinery/door/poddoor/P in poddoor_list)
 		if(P.id == id)
 			doors += P
 

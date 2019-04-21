@@ -47,7 +47,7 @@ for reference:
 	access_virology = 39
 	access_cmo = 40
 	access_qm = 41
-	access_court = 42
+	FREE SPACE = 42
 	access_clown = 43
 	access_mime = 44
 
@@ -71,7 +71,7 @@ for reference:
 		if (src.health < src.maxhealth)
 			if(user.is_busy()) return
 			visible_message("\red [user] begins to repair \the [src]!")
-			if(do_after(user,20,target = src))
+			if(W.use_tool(src, user, 20, volume = 50))
 				src.health = src.maxhealth
 				W:use(1)
 				visible_message("\red [user] repairs \the [src]!")
@@ -160,7 +160,7 @@ for reference:
 	icon_state = "barrier[locked]"
 
 /obj/machinery/deployable/barrier/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/card/id/))
+	if (istype(W, /obj/item/weapon/card/id))
 		if (src.allowed(user))
 			if	(src.emagged < 2.0)
 				src.locked = !src.locked
@@ -198,7 +198,7 @@ for reference:
 			s.start()
 			visible_message("\red BZZzZZzZZzZT")
 			return
-	else if (istype(W, /obj/item/weapon/wrench))
+	else if (iswrench(W))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if (src.health < src.maxhealth)
 			src.health = src.maxhealth
@@ -265,7 +265,7 @@ for reference:
 	visible_message("\red <B>[src] blows apart!</B>")
 	var/turf/Tsec = get_turf(src)
 
-/*	var/obj/item/stack/rods/ =*/
+/*	var/obj/item/stack/rods =*/
 	new /obj/item/stack/rods(Tsec)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()

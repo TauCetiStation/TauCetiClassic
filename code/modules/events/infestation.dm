@@ -61,11 +61,14 @@
 		//world << "	checking [areapath]"
 		var/area/A = locate(areapath)
 		//world << "	A: [A], contents.len: [A.contents.len]"
-		for(var/area/B in A.related)
-			//world << "	B: [B], contents.len: [B.contents.len]"
-			for(var/turf/simulated/floor/F in B.contents)
-				if(!F.contents.len)
-					turfs += F
+		for(var/turf/simulated/floor/F in A.contents)
+			var/is_available = TRUE
+			for(var/atom/F_A in F)
+				if(F_A.density)
+					is_available = FALSE
+					break
+			if(is_available)
+				turfs += F
 
 	var/list/spawn_types = list()
 	var/max_number

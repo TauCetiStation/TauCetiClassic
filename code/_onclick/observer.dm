@@ -25,8 +25,7 @@
 		to_chat(src, "\blue You will no longer interact with machines you click on.")
 
 /mob/dead/observer/DblClickOn(atom/A, params)
-	if(client.buildmode)
-		build_click(src, client.buildmode, params, A)
+	if(client.buildmode) // handled in normal click.
 		return
 	if(can_reenter_corpse && mind && mind.current)
 		if(A == mind.current || (mind.current in A)) // double click your corpse or whatever holds it
@@ -86,15 +85,9 @@
 	if(target)
 		user.loc = get_turf(target)
 
-/obj/machinery/gateway/centerstation/attack_ghost(mob/user)
-	if(awaygate)
-		user.loc = awaygate.loc
-	else
-		to_chat(user, "[src] has no destination.")
-
-/obj/machinery/gateway/centeraway/attack_ghost(mob/user)
-	if(stationgate)
-		user.loc = stationgate.loc
+/obj/machinery/gateway/center/attack_ghost(mob/user)
+	if(destination)
+		user.loc = destination.loc
 	else
 		to_chat(user, "[src] has no destination.")
 

@@ -11,13 +11,13 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 */
 
-/mob/living/carbon/var
-	image/halimage
-	image/halbody
-	obj/halitem
-	hal_screwyhud = 0 //1 - critical, 2 - dead, 3 - oxygen indicator, 4 - toxin indicator
-	handling_hal = 0
-	hal_crit = 0
+/mob/living/carbon
+	var/image/halimage
+	var/image/halbody
+	var/obj/halitem
+	var/hal_screwyhud = 0 //1 - critical, 2 - dead, 3 - oxygen indicator, 4 - toxin indicator
+	var/handling_hal = 0
+	var/hal_crit = 0
 
 /mob/living/carbon/proc/handle_hallucinations()
 	if(handling_hal) return
@@ -300,11 +300,15 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	collapse = 1
 	updateimage()
 
-/proc/fake_blood(mob/target)
+/proc/fake_blood(mob/living/carbon/human/target)
 	var/obj/effect/overlay/O = new/obj/effect/overlay(target.loc)
-	O.name = "blood"
-	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
-	to_chat(target, I)
+
+	var/datum/dirt_cover/D = new(target.species.blood_datum)
+	O.name = D.name
+	O.color = D.color
+
+	var/image/I = image('icons/effects/blood.dmi',O,"mfloor[rand(1,7)]",O.dir,1)
+	target << I
 	spawn(300)
 		qdel(O)
 	return
@@ -330,7 +334,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	var/mob/living/carbon/human/clone = null
 	var/clone_weapon = null
 
-	for(var/mob/living/carbon/human/H in living_mob_list)
+	for(var/mob/living/carbon/human/H in human_list)
 		if(H.stat || H.lying) continue
 //		possible_clones += H
 		clone = H

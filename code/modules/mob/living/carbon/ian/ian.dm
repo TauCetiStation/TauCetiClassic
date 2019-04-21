@@ -65,9 +65,8 @@
 /mob/living/carbon/ian/UnarmedAttack(atom/A)
 	..()
 	if(ian_action)
-		if(isHandsBusy)
+		if(is_busy(A))
 			return
-		isHandsBusy = TRUE
 
 		face_atom(A)
 /*
@@ -78,7 +77,6 @@
 		switch(ian_action)
 			if(IAN_LICK)
 				if(!do_after(src, 15, target = A))
-					isHandsBusy = FALSE
 					return
 
 				var/message = "<span class='notice'>[src] licks [A].</span>"
@@ -126,7 +124,6 @@
 				if(A == src) //Resets current smell in memory.
 					nose_memory = null
 					to_chat(src, "<span class='notice'>Dropped current smell.</span>")
-					isHandsBusy = FALSE
 					return
 
 				if(isturf(A)) //Visualize smells in X range around us.
@@ -135,11 +132,9 @@
 					else
 						visible_message("<span class='notice'>[src] sniffs around.</span>")
 						sniff_around()
-					isHandsBusy = FALSE
 					return
 
 				if(!do_after(src, 10, target = A))
-					isHandsBusy = FALSE
 					return
 
 				var/smell
@@ -192,7 +187,6 @@
 
 				visible_message("<span class='notice'>[src] sniffs [A].</span>")
 
-		isHandsBusy = FALSE
 /*
 	TONGUE
 	NOSE
@@ -371,13 +365,7 @@
 			if(health >= config.health_threshold_crit)
 				help_shake_act(M)
 				return
-			if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
-				to_chat(M, "<span class='notice'>Remove your mask!</span>")
-				return
-			if(head && (head.flags & HEADCOVERSMOUTH))
-				to_chat(M, "<span class='notice'>Remove his [head]!</span>")
-				return
-			un_equip_or_action(M, "CPR")
+			INVOKE_ASYNC(src, .proc/perform_cpr, M)
 		if ("hurt")
 			M.do_attack_animation(src)
 			if(is_armored(M, 35))
@@ -409,26 +397,8 @@
 			updatehealth()
 
 		if("grab")
-			if(M == src || anchored || M.lying)
-				return
+			M.Grab(src)
 
-			for(var/obj/item/weapon/grab/G in grabbed_by)
-				if(G.assailant == M)
-					to_chat(M, "<span class='notice'>You already grabbed [src].</span>")
-					return
-
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
-			if(buckled)
-				to_chat(M, "<span class='notice'>You cannot grab [src], \he is buckled in!</span>")
-			if(!G)
-				return
-			M.put_in_active_hand(G)
-			grabbed_by += G
-			G.synch()
-			LAssailant = M
-
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			visible_message("<span class='warning'>[M] has grabbed [src] passively!</span>")
 		if("disarm")
 			M.do_attack_animation(src)
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
@@ -451,12 +421,11 @@
 						visible_message("<span class='danger'>[M] has broken [src]'s grip on [pulling]!</span>")
 						talked = 1
 						stop_pulling()
-					if(istype(mouth, /obj/item/weapon/grab))
-						var/obj/item/weapon/grab/grab = l_hand
-						if(grab.affecting)
-							visible_message("<span class='danger'>[M] has broken [src]'s grip on [grab.affecting]!</span>")
+					for(var/obj/item/weapon/grab/G in GetGrabs())
+						if(G.affecting)
+							visible_message("<span class='danger'>[M] has broken [src]'s grip on [G.affecting]!</span>")
 							talked = 1
-							qdel(grab)
+							qdel(G)
 					if(!talked)
 						drop_item()
 						visible_message("<span class='danger'>[M] has disarmed [src]!</span>")
@@ -471,13 +440,7 @@
 			if(stat != DEAD)
 				if(FH == src)
 					return
-				var/obj/item/weapon/fh_grab/G = new /obj/item/weapon/fh_grab(FH, src)
-				FH.put_in_active_hand(G)
-				grabbed_by += G
-				G.last_upgrade = world.time - 20
-				G.synch()
-				LAssailant = FH
-				visible_message("<span class='red'>[FH] atempts to leap at [src] face!</span>")
+				new /obj/item/weapon/fh_grab(FH, src)
 			else
 				to_chat(FH, "<span class='red'>looks dead.</span>")
 
@@ -627,15 +590,7 @@
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>has attempted to lunge at [name]!</span>")
 		if ("grab")
-			if (M == src || anchored || M.lying)
-				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
-			M.put_in_active_hand(G)
-			grabbed_by += G
-			G.synch()
-			LAssailant = M
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			visible_message("<span class='red'>has grabbed [name] passively!</span>")
+			M.Grab(src)
 		if ("disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			if(is_armored(M, 35))

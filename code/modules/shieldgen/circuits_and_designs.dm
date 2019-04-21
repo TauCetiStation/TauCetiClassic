@@ -16,7 +16,7 @@
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/stack/cable_coil = 5)
 
-datum/design/shield_gen_ex
+/datum/design/shield_gen_ex
 	name = "Circuit Design (Experimental hull shield generator)"
 	desc = "Allows for the construction of circuit boards used to build an experimental hull shield generator."
 	id = "shield_gen"
@@ -42,7 +42,7 @@ datum/design/shield_gen_ex
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/stack/cable_coil = 5)
 
-datum/design/shield_gen
+/datum/design/shield_gen
 	name = "Circuit Design (Bubble shield generator)"
 	desc = "Allows for the construction of circuit boards used to build an experimental shield generator."
 	id = "shield_gen"
@@ -68,7 +68,7 @@ datum/design/shield_gen
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/stack/cable_coil = 5)
 
-datum/design/shield_cap
+/datum/design/shield_cap
 	name = "Circuit Design (Shield capacitor)"
 	desc = "Allows for the construction of circuit boards used to build an experimental shielding capacitor."
 	id = "shield_cap"

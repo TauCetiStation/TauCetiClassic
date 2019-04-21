@@ -8,7 +8,7 @@
 	force = 20
 	throwforce = 10
 	throw_range = 7
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=5;powerstorage=3;syndicate=3"
 	var/fisto_setting = 1
 	var/gasperfist = 3
@@ -34,7 +34,7 @@
 			updateTank(W, 0, user)
 		else
 			updateTank(W, 1, user)
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(iswrench(W))
 		switch(fisto_setting)
 			if(1)
 				fisto_setting = 2
@@ -44,7 +44,7 @@
 				fisto_setting = 1
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		to_chat(user,"<span class='notice'>You tweak \the [src]'s piston valve to [fisto_setting].</span>")
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(W))
 		updateTank(tank, 1, user)
 
 

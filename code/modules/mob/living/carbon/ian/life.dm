@@ -374,7 +374,7 @@
 
 	// nutrition decrease
 	if (nutrition > 0)
-		nutrition = max(0, nutrition - metabolism_factor/10)
+		nutrition = max(0, nutrition - get_metabolism_factor() / 10)
 
 	if (nutrition > 450)
 		if(overeatduration < 600)
@@ -403,19 +403,19 @@
 		jitteriness = max(0, jitteriness - 1)
 
 /mob/living/carbon/ian/proc/handle_disabilities()
-	if (disabilities & EPILEPSY)
+	if (disabilities & EPILEPSY || has_trait(TRAIT_EPILEPSY))
 		if (prob(1) && paralysis < 10)
 			to_chat(src, "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
-	if (disabilities & COUGHING)
+	if (disabilities & COUGHING || has_trait(TRAIT_COUGH))
 		if (prob(5) && paralysis <= 1)
 			drop_item()
 			emote("cough")
-	if (disabilities & TOURETTES)
+	if (disabilities & TOURETTES || has_trait(TRAIT_TOURETTE))
 		if (prob(10) && paralysis <= 1)
 			Stun(10)
 			emote("twitch")
-	if (disabilities & NERVOUS)
+	if (disabilities & NERVOUS || has_trait(TRAIT_NERVOUS))
 		if (prob(10))
 			stuttering = max(10, stuttering)
 

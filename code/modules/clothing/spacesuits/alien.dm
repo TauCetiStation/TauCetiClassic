@@ -82,7 +82,7 @@
 // Vox space gear (vaccuum suit, low pressure armour)
 // Can't be equipped by any other species due to bone structure and vox cybernetics.
 /obj/item/clothing/suit/space/vox
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank)
 	slowdown = 1.5
 	armor = list(melee = 60, bullet = 50, laser = 40,energy = 15, bomb = 30, bio = 30, rad = 30)
@@ -163,7 +163,7 @@
 
 /obj/item/clothing/suit/space/vox/stealth/equipped(mob/user, slot)
 	..()
-	if(slot == slot_wear_suit)
+	if(slot == SLOT_WEAR_SUIT)
 		wearer = user
 
 /obj/item/clothing/suit/space/vox/stealth/dropped(mob/user)
@@ -200,7 +200,7 @@
 
 /obj/item/clothing/suit/space/vox/stealth/proc/overload()
 	wearer.visible_message(
-	"<span class='warning'>[wearer] appears from nowhere!",
+	"<span class='warning'>[wearer] appears from nowhere!</span>",
 	"<span class='warning'>Your stealth got overloaded and no longer can sustain itself!</span>"
 	)
 	var/datum/effect/effect/system/spark_spread/s = new

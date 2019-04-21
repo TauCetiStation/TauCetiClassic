@@ -45,6 +45,13 @@
 			BB.p_x = text2num(mouse_control["icon-x"])
 		if(mouse_control["icon-y"])
 			BB.p_y = text2num(mouse_control["icon-y"])
+
+	//randomize clickpoint a bit based on dispersion
+	if(BB.dispersion)
+		var/radius = round((BB.dispersion * 0.443) * world.icon_size * 0.8) //0.443 = sqrt(pi)/4 = 2a, where a is the side length of a square that shares the same area as a circle with diameter = dispersion
+		BB.p_x = between(0, BB.p_x + rand(-radius, radius), world.icon_size)
+		BB.p_y = between(0, BB.p_y + rand(-radius, radius), world.icon_size)
+
 	if(BB)
 		BB.process()
 	BB = null

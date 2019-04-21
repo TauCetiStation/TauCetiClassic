@@ -32,7 +32,7 @@
 	display_name = "Vacuum-flask"
 	path = /obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask
 
-datum/gear/zippo
+/datum/gear/zippo
 	display_name = "Zippo lighter"
 	path = /obj/item/weapon/lighter/zippo
 	cost = 2
@@ -48,7 +48,7 @@ datum/gear/zippo
 
 /datum/gear/electriccig
 	display_name = "Electronic cigarette"
-	path = /obj/item/clothing/mask/fluff/electriccig
+	path = /obj/item/clothing/mask/ecig
 
 /datum/gear/game_kit
 	display_name = "Gaming Kit Selection"

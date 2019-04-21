@@ -10,6 +10,7 @@
 	body_parts_covered = UPPER_TORSO|ARMS
 	allowed = list(/obj/item/device/analyzer,/obj/item/stack/medical,/obj/item/weapon/dnainjector,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer,/obj/item/device/flashlight/pen,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/reagent_containers/glass/beaker,/obj/item/weapon/reagent_containers/pill,/obj/item/weapon/storage/pill_bottle,/obj/item/weapon/paper)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 50, rad = 0)
+	var/base_icon_state = null // used for fluff labcoats
 
 /obj/item/clothing/suit/storage/labcoat/verb/toggle()
 	set name = "Toggle Labcoat Buttons"
@@ -23,7 +24,10 @@
 		return 0
 
 	if(!src.is_button_up)
-		src.icon_state = initial(icon_state)
+		if(base_icon_state)
+			icon_state = base_icon_state
+		else
+			icon_state = initial(icon_state)
 		to_chat(usr, "You button up your labcoat.")
 		src.is_button_up = 1
 	else

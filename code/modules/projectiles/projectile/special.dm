@@ -122,7 +122,7 @@
 				M.show_message("\red The radiation beam singes you!")
 			//	for (var/mob/V in viewers(src))
 			//		V.show_message("\red [M] is singed by the radiation beam.", 3, "\red You hear the crackle of burning leaves.", 2)
-	else if(istype(target, /mob/living/carbon/))
+	else if(istype(target, /mob/living/carbon))
 	//	for (var/mob/V in viewers(src))
 	//		V.show_message("The radiation beam dissipates harmlessly through [M]", 3)
 		M.show_message("\blue The radiation beam dissipates harmlessly through your body.")
@@ -146,7 +146,7 @@
 		var/mob/living/carbon/human/H = M
 		if((H.species.flags[IS_PLANT]) && (M.nutrition < 500))
 			M.nutrition += 30
-	else if (istype(target, /mob/living/carbon/))
+	else if (istype(target, /mob/living/carbon))
 		M.show_message("\blue The radiation beam dissipates harmlessly through your body.")
 	else
 		return 1

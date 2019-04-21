@@ -351,6 +351,9 @@
 		return
 	if(isessence(usr) || isrobot(usr))
 		return
+	var/obj/item/weapon/W = O
+	if(!W.canremove || W.flags & NODROP)
+		return
 	user.drop_item()
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
@@ -372,9 +375,7 @@
 					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 					return
 			else
-				if(world.time < (G.last_action + UPGRADE_COOLDOWN))
-					return
-				G.affecting.loc = src.loc
+				G.affecting.forceMove(loc)
 				G.affecting.Weaken(5)
 				visible_message("<span class='danger'>[G.assailant] puts [G.affecting] on \the [src].</span>")
 				M.attack_log += "\[[time_stamp()]\] <font color='orange'>Was laied by [A.name] on \the [src]([A.ckey])</font>"
@@ -382,15 +383,17 @@
 			qdel(W)
 			return
 
-	if (istype(W, /obj/item/weapon/wrench))
-		if(user.is_busy()) return
+	if (iswrench(W))
+		if(user.is_busy(src))
+			return
 		to_chat(user, "\blue Now disassembling table")
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user,50, target = src))
+		if(W.use_tool(src, user, 50, volume = 50))
 			destroy()
 		return
 
 	if(isrobot(user))
+		return
+	if(!W.canremove || W.flags & NODROP)
 		return
 
 	if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W,/obj/item/weapon/twohanded/dualsaber))
@@ -440,7 +443,7 @@
 	T = locate() in get_step(src.loc,direction)
 	if (!T || T.flipped)
 		return 1
-	if (istype(T,/obj/structure/table/reinforced/))
+	if (istype(T,/obj/structure/table/reinforced))
 		var/obj/structure/table/reinforced/R = T
 		if (R.status == 2)
 			return 0
@@ -682,28 +685,24 @@
 		return ..()
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/weldingtool))
+	if (iswelder(W))
 		if(user.is_busy()) return FALSE
 		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0, user))
+		if(WT.use(0, user))
 			if(src.status == 2)
 				to_chat(user, "\blue Now weakening the reinforced table")
-				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50, target = src))
-					if(!src || !WT.isOn()) return
+				if(WT.use_tool(src, user, 50, volume = 50))
 					to_chat(user, "\blue Table weakened")
 					src.status = 1
 			else
 				to_chat(user, "\blue Now strengthening the reinforced table")
-				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50, target = src))
-					if(!src || !WT.isOn()) return
+				if(WT.use_tool(src, user, 50, volume = 50))
 					to_chat(user, "\blue Table strengthened")
 					src.status = 2
 			return FALSE
 		return TRUE
 
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		if(src.status == 2)
 			return TRUE
 
@@ -759,13 +758,16 @@
 		return
 	if(isrobot(user) || isessence(user))
 		return
+	var/obj/item/weapon/W = O
+	if(!W.canremove || W.flags & NODROP)
+		return
 	user.drop_item()
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
 	return
 
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		new /obj/item/weapon/rack_parts( src.loc )
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		qdel(src)
@@ -783,6 +785,8 @@
 			destroy()
 			return
 	if(isrobot(user))
+		return
+	if(!W.canremove || W.flags & NODROP)
 		return
 	user.drop_item()
 	if(W && W.loc)	W.loc = src.loc

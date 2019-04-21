@@ -307,7 +307,7 @@
  */
 
 /obj/machinery/door/proc/do_open()
-	playsound(src, door_open_sound, 100, 1)
+	playsound(src, door_open_sound, 50, 1)
 	do_animate("opening")
 	sleep(3)
 	set_opacity(FALSE)
@@ -319,7 +319,7 @@
 	update_nearby_tiles()
 
 /obj/machinery/door/proc/do_close()
-	playsound(src, door_close_sound, 100, 1)
+	playsound(src, door_close_sound, 50, 1)
 	do_animate("closing")
 	sleep(3)
 	density = TRUE
@@ -369,8 +369,8 @@
 		else
 			source.thermal_conductivity = initial(source.thermal_conductivity)
 
-/obj/machinery/door/Move(new_loc, new_dir)
-	..()
+/obj/machinery/door/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	update_nearby_tiles()
 
 /obj/machinery/door/proc/hasPower()

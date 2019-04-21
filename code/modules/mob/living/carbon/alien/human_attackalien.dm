@@ -53,21 +53,7 @@ This is what happens, when alien attack.
 		if ("help")
 			visible_message(text("\blue [M] caresses [src] with its scythe like arm."))
 		if ("grab")
-			if(M == src || anchored || M.lying)
-				return
-			if (w_uniform)
-				w_uniform.add_fingerprint(M)
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
-
-			M.put_in_active_hand(G)
-
-			grabbed_by += G
-			G.synch()
-			LAssailant = M
-
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			visible_message(text("\red [] has grabbed [] passively!", M, src))
-
+			M.Grab(src)
 		if("hurt")
 			M.do_attack_animation(src)
 			if (w_uniform)

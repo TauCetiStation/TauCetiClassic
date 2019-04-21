@@ -124,7 +124,7 @@
 /datum/recipe/microwave/mimeburger
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/bun,
-		/obj/item/clothing/head/beret
+		/obj/item/clothing/head/beret/red
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/mimeburger
 
@@ -134,16 +134,18 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meatball
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket
-	proc/warm_up(obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked)
-		being_cooked.warm = 1
-		being_cooked.reagents.add_reagent("tricordrazine", 5)
-		being_cooked.bitesize = 6
-		being_cooked.name = "Warm " + being_cooked.name
-		being_cooked.cooltime()
-	make_food(obj/container)
-		var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked = ..(container)
-		warm_up(being_cooked)
-		return being_cooked
+
+/datum/recipe/microwave/donkpocket/proc/warm_up(obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked)
+	being_cooked.warm = 1
+	being_cooked.reagents.add_reagent("tricordrazine", 5)
+	being_cooked.bitesize = 6
+	being_cooked.name = "Warm " + being_cooked.name
+	being_cooked.cooltime()
+
+/datum/recipe/microwave/donkpocket/make_food(obj/container)
+	var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked = ..(container)
+	warm_up(being_cooked)
+	return being_cooked
 
 /datum/recipe/microwave/donkpocket/warm
 	reagents = list() //This is necessary since this is a child object of the above recipe and we don't want donk pockets to need flour
@@ -151,11 +153,12 @@
 		/obj/item/weapon/reagent_containers/food/snacks/donkpocket
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket //SPECIAL
-	make_food(obj/container)
-		var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked = locate() in container
-		if(being_cooked && !being_cooked.warm)
-			warm_up(being_cooked)
-		return being_cooked
+
+/datum/recipe/microwave/donkpocket/warm/make_food(obj/container)
+	var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked = locate() in container
+	if(being_cooked && !being_cooked.warm)
+		warm_up(being_cooked)
+	return being_cooked
 
 /datum/recipe/microwave/eggplantparm
 	items = list(
@@ -492,7 +495,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/twobread
 
-datum/recipe/microwave/slimesandwich
+/datum/recipe/microwave/slimesandwich
 	reagents = list("slimejelly" = 5)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice,

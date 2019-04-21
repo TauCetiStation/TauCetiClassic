@@ -42,8 +42,8 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell/infinite"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse)
 
-	attack_self(mob/living/user)
-		to_chat(user, "\red [src.name] has three settings, and they are all DESTROY.")
+/obj/item/weapon/gun/energy/pulse_rifle/destroyer/attack_self(mob/living/user)
+	to_chat(user, "\red [src.name] has three settings, and they are all DESTROY.")
 
 /obj/item/weapon/gun/energy/pulse_rifle/M1911
 	name = "m1911-P"
@@ -52,5 +52,5 @@
 	item_state = "gun"
 	cell_type = "/obj/item/weapon/stock_parts/cell/infinite"
 
-	isHandgun()
-		return 1
+/obj/item/weapon/gun/energy/pulse_rifle/M1911/isHandgun()
+	return 1

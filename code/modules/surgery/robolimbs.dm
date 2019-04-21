@@ -136,16 +136,14 @@
 	allowed_tools = list(
 	/obj/item/robot_parts = 100,
 	/obj/item/weapon/organ/head/posi = 100)
-	allowed_species = list(IPC)
+	allowed_species = null
 
 	min_duration = 80
 	max_duration = 100
 
 /datum/surgery_step/limb/attach/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
-		if(istype(tool, /obj/item/weapon/organ/head/posi) && !target.get_species() == IPC)
-			return
-		else if(istype(tool, /obj/item/weapon/organ/head/posi))
+		if(istype(tool, /obj/item/weapon/organ/head/posi) && target.get_species() == IPC && target_zone == BP_HEAD)
 			var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 			return (BP.status & ORGAN_ATTACHABLE)
 		var/obj/item/robot_parts/p = tool
@@ -167,13 +165,12 @@
 	"\blue You have attached \the [tool] where [target]'s [BP.name] used to be.")
 	BP.germ_level = 0
 	BP.robotize()
-	if(L.sabotaged)
+	if(istype(L) && L.sabotaged)
 		BP.sabotaged = TRUE
 	else
 		BP.sabotaged = FALSE
-	if(target_zone == BP_HEAD && !target.has_eyes())
-		target.organs += E
-		target.organs_by_name += O_EYES
+	if(target_zone == BP_HEAD)
+		target.update_hair()
 	target.update_body()
 	target.updatehealth()
 	target.UpdateDamageIcon(BP)
@@ -195,8 +192,6 @@
 
 /datum/surgery_step/ipc_limb/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
-		return FALSE
-	if(!(target.species && target.species.flags[IS_SYNTHETIC]))
 		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if (!BP)

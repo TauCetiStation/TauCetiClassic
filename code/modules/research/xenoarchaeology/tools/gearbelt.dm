@@ -3,7 +3,7 @@
 	name = "excavation gear-belt"
 	desc = "Can hold various excavation gear."
 	icon_state = "gearbelt"
-	item_state = "utility"
+	item_state = "gearbelt"
 	can_hold = list(
 		"/obj/item/weapon/storage/box/samplebags",
 		"/obj/item/device/core_sampler",
@@ -21,10 +21,11 @@
 		"/obj/item/weapon/pen",
 		"/obj/item/weapon/folder",
 		"/obj/item/weapon/clipboard",
-		"/obj/item/weapon/anodevice",
+		"/obj/item/weapon/xenoarch_utilizer",
 		"/obj/item/clothing/glasses",
 		"/obj/item/weapon/wrench",
 		"/obj/item/weapon/storage/box/excavation",
-		"/obj/item/weapon/anobattery",
+		"/obj/item/weapon/particles_battery",
 		"/obj/item/device/ano_scanner",
+		"/obj/item/taperoll/science",
 		"/obj/item/weapon/pickaxe/hand")

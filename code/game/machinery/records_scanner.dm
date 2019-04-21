@@ -78,6 +78,7 @@
 	var/obj/item/weapon/paper/print = new(T)
 	print.name = "[mname] Report"
 	print.info = text
+	print.update_icon()
 
 	for(var/datum/data/record/test in data_core.general)
 		if (test.fields["name"] == mname)

@@ -81,23 +81,23 @@
 	default_deconstruction_crowbar(O)
 
 	if(src.broken > 0)
-		if(src.broken == 2 && istype(O, /obj/item/weapon/wirecutters)) // If it's broken and they're using a wirecutters.
+		if(src.broken == 2 && iswirecutter(O)) // If it's broken and they're using a wirecutters.
 			user.visible_message( \
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
-			if (!user.is_busy(src) && do_after(user,20,target = src))
+			if (!user.is_busy(src) && O.use_tool(src, user, 20, volume = 100))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes part of the [src].</span>", \
 					"<span class='notice'>You have fixed part of the [src].</span>" \
 				)
 				src.broken = 1 // Fix it a bit
-		else if(src.broken == 1 && istype(O, /obj/item/weapon/weldingtool) && !user.is_busy(src)) // If it's broken and they're doing the weldingtool.
+		else if(src.broken == 1 && iswelder(O) && !user.is_busy(src)) // If it's broken and they're doing the weldingtool.
 			user.visible_message( \
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
-			if (!user.is_busy(src) && do_after(user,20,target = src))
+			if (!user.is_busy(src) && O.use_tool(src, user, 20, volume = 100))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes the [src].</span>", \
 					"<span class='notice'>You have fixed the [src].</span>" \
@@ -110,7 +110,7 @@
 		else
 			to_chat(user, "<span class='danger'>It's broken!</span>")
 			return 1
-	else if(istype(O, /obj/item/weapon/reagent_containers/spray/))
+	else if(istype(O, /obj/item/weapon/reagent_containers/spray))
 		var/obj/item/weapon/reagent_containers/spray/clean_spray = O
 		if(clean_spray.reagents.has_reagent("cleaner",clean_spray.amount_per_transfer_from_this))
 			clean_spray.reagents.remove_reagent("cleaner",clean_spray.amount_per_transfer_from_this,1)
@@ -129,12 +129,12 @@
 			to_chat(user, "<span class='danger'>You need more space cleaner!</span>")
 			return 1
 
-	else if(istype(O, /obj/item/weapon/soap/)) // If they're trying to clean it then let them
+	else if(istype(O, /obj/item/weapon/soap)) // If they're trying to clean it then let them
 		user.visible_message( \
 			"<span class='notice'>[user] starts to clean [src].</span>", \
 			"<span class='notice'>You start to clean [src].</span>" \
 		)
-		if (!user.is_busy(src) && do_after(user,20,target=src))
+		if (!user.is_busy(src) && O.use_tool(src, user, 20, volume = 100))
 			user.visible_message( \
 				"<span class='notice'>[user]  has cleaned [src].</span>", \
 				"<span class='notice'>You have cleaned [src].</span>" \

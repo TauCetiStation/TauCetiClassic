@@ -2,8 +2,8 @@
 /obj/machinery/replicator
 	name = "alien machine"
 	desc = "It's some kind of pod with strange wires and gadgets all over it."
-	icon = 'icons/obj/xenoarchaeology.dmi'
-	icon_state = "borgcharger0(old)"
+	icon = 'icons/obj/xenoarchaeology/artifacts.dmi'
+	icon_state = "replicator"
 	density = 1
 
 	idle_power_usage = 100
@@ -72,26 +72,26 @@
 
 	var/quantity = rand(5,15)
 	for (var/i in 1 to quantity)
-		var/button_desc = "a [pick("yellow","purple","green","blue","red","orange","white")], "
-		button_desc += "[pick("round","square","diamond","heart","dog","human")] shaped "
-		button_desc += "[pick("toggle","switch","lever","button","pad","hole")]"
+		var/button_desc = "a [pick("yellow", "purple", "green", "blue", "red", "orange", "white")], "
+		button_desc += "[pick("round", "square", "diamond", "heart", "dog", "human")] shaped "
+		button_desc += "[pick("toggle", "switch", "lever", "button", "pad", "hole")]"
 		var/type = pick(viables)
 		viables.Remove(type)
 		construction[button_desc] = type
 
-	fail_message = "\blue [bicon(src)] a [pick("loud","soft","sinister","eery","triumphant","depressing","cheerful","angry")] \
-		[pick("horn","beep","bing","bleep","blat","honk","hrumph","ding")] sounds and a \
-		[pick("yellow","purple","green","blue","red","orange","white")] \
-		[pick("light","dial","meter","window","protrusion","knob","antenna","swirly thing")] \
-		[pick("swirls","flashes","whirrs","goes schwing","blinks","flickers","strobes","lights up")] on the \
-		[pick("front","side","top","bottom","rear","inside")] of [src]. A [pick("slot","funnel","chute","tube")] opens up in the \
-		[pick("front","side","top","bottom","rear","inside")]."
+	fail_message = "<span class='notice'>[bicon(src)] a [pick("loud", "soft", "sinister", "eery", "triumphant", "depressing", "cheerful", "angry")] \
+		[pick("horn", "beep", "bing", "bleep", "blat", "honk", "hrumph", "ding")] sounds and a \
+		[pick("yellow", "purple", "green", "blue", "red", "orange", "white")] \
+		[pick("light", "dial", "meter", "window", "protrusion", "knob", "antenna", "swirly thing")] \
+		[pick("swirls", "flashes", "whirrs", "goes schwing", "blinks", "flickers", "strobes", "lights up")] on the \
+		[pick("front", "side", "top", "bottom", "rear", "inside")] of [src]. A [pick("slot", "funnel", "chute", "tube")] opens up in the \
+		[pick("front", "side", "top", "bottom", "rear", "inside")].</span>"
 
 /obj/machinery/replicator/process()
 	if(spawning_types.len && powered())
 		spawn_progress_time += world.time - last_process_time
 		if(spawn_progress_time > max_spawn_time)
-			src.visible_message("\blue [bicon(src)] [src] pings!")
+			src.visible_message("<span class='warning'>[bicon(src)] [src] pings!</span>")
 
 			var/obj/source_material = pop(stored_materials)
 			var/spawn_type = pop(spawning_types)
@@ -111,10 +111,10 @@
 
 			if(!spawning_types.len || !stored_materials.len)
 				use_power = 1
-				icon_state = "borgcharger0(old)"
+				icon_state = "replicator"
 
 		else if(prob(5))
-			src.visible_message("\blue [bicon(src)] [src] [pick("clicks","whizzes","whirrs","whooshes","clanks","clongs","clonks","bangs")].")
+			src.visible_message("<span class='warning'>[bicon(src)] [src] [pick("clicks", "whizzes", "whirrs", "whooshes", "clanks", "clongs", "clonks", "bangs")].</span>")
 
 	last_process_time = world.time
 
@@ -130,7 +130,7 @@
 	user.drop_item()
 	W.loc = src
 	stored_materials.Add(W)
-	src.visible_message("\blue [user] inserts [W] into [src].")
+	src.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
 
 /obj/machinery/replicator/is_operational_topic()
 	return TRUE
@@ -145,14 +145,14 @@
 		if(index > 0 && index <= construction.len)
 			if(stored_materials.len > spawning_types.len)
 				if(spawning_types.len)
-					src.visible_message("\blue [bicon(src)] a [pick("light","dial","display","meter","pad")] on [src]'s front [pick("blinks","flashes")] [pick("red","yellow","blue","orange","purple","green","white")].")
+					src.visible_message("<span class='notice'>[bicon(src)] a [pick("light", "dial", "display", "meter", "pad")] on [src]'s front [pick("blinks", "flashes")] [pick("red", "yellow", "blue", "orange", "purple", "green", "white")].</span>")
 				else
-					src.visible_message("\blue [bicon(src)] [src]'s front compartment slides shut.")
+					src.visible_message("<span class='notice'>[bicon(src)] [src]'s front compartment slides shut.</span>")
 
 				spawning_types.Add(construction[construction[index]])
 				spawn_progress_time = 0
 				use_power = 2
-				icon_state = "borgcharger1(old)"
+				icon_state = "replicator_active"
 			else
 				src.visible_message(fail_message)
 

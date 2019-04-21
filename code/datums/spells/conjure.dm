@@ -128,7 +128,7 @@
 	name = "Harvester Toxin"
 	id = "harvester"
 	description = "A toxic cloud."
-	color = "#9C3636"
+	color = "#9c3636"
 	toxpwr = 0
 	custom_metabolism = 1
 

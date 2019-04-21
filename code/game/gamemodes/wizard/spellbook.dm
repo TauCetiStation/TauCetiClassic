@@ -368,7 +368,7 @@
 /obj/item/weapon/spellbook
 	name = "spell book"
 	desc = "An unearthly tome that glows with power."
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/library.dmi'
 	icon_state ="book"
 	var/uses = 10

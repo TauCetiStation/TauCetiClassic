@@ -3,7 +3,7 @@ var/list/alldepartments = list("Central Command")
 
 /obj/machinery/faxmachine
 	name = "fax machine"
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "fax"
 	req_one_access = list(access_lawyer, access_heads)
 	anchored = 1
@@ -174,8 +174,7 @@ var/list/alldepartments = list("Central Command")
 			idcard.loc = src
 			scan = idcard
 
-	else if(istype(O, /obj/item/weapon/wrench))
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+	else if(iswrench(O))
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 	return

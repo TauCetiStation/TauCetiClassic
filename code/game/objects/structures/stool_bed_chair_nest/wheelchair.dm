@@ -8,7 +8,8 @@
 	var/driving = 0
 	var/mob/living/pulling = null
 	var/bloodiness
-
+	var/brake = 0
+	var/alert = 0
 
 /obj/structure/stool/bed/chair/wheelchair/handle_rotation()
 	overlays = null
@@ -17,7 +18,37 @@
 	if(buckled_mob)
 		buckled_mob.dir = dir
 
+/obj/structure/stool/bed/chair/wheelchair/post_buckle_mob(mob/living/M)
+	. = ..()
+	if(!buckled_mob && alert)
+		M.clear_alert("brake")
+		alert = 0
+
+/obj/structure/stool/bed/chair/wheelchair/verb/toggle_brake()
+	set name = "Toggle brake"
+	set category = "Object"
+	set src in oview(1)
+
+	brake = !brake
+
+	if(isliving(usr))
+		var/mob/living/M = usr
+		if(buckled_mob == M)
+			if(brake)
+				M.throw_alert("brake")
+				alert = 1
+			else
+				M.clear_alert("brake")
+				alert = 0
+	if(brake)
+		to_chat(usr, "<span class='notice'>You turn the brake on.</span>")
+	else
+		to_chat(usr, "<span class='notice'>You turn the brake off.</span>")
+
 /obj/structure/stool/bed/chair/wheelchair/relaymove(mob/user, direction)
+	if(brake)
+		to_chat(user, "<span class='red'>You cannot drive while brake is on.</span>")
+		return
 	if(user.stat || user.stunned || user.weakened || user.paralysis || user.lying || user.restrained())
 		if(user==pulling)
 			pulling = null
@@ -36,7 +67,7 @@
 		if(user==pulling)
 			return
 	if(pulling && (get_dir(src.loc, pulling.loc) == direction))
-		to_chat(user, "<span class='red'>You cannot go there.")
+		to_chat(user, "<span class='red'>You cannot go there.</span>")
 		return
 	if(pulling && buckled_mob && (buckled_mob == user))
 		to_chat(user, "<span class='red'>You cannot drive while being pushed.</span>")
@@ -74,8 +105,10 @@
 		create_track()
 	driving = 0
 
-/obj/structure/stool/bed/chair/wheelchair/Move()
-	..()
+/obj/structure/stool/bed/chair/wheelchair/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	if(brake)
+		return FALSE
+	. = ..()
 	if(buckled_mob)
 		var/mob/living/occupant = buckled_mob
 		if(!driving)
@@ -96,6 +129,8 @@
 		else
 			if (occupant && (src.loc != occupant.loc))
 				src.loc = occupant.loc // Failsafe to make sure the wheelchair stays beneath the occupant after driving
+	else if(has_gravity(src))
+		playsound(src, 'sound/effects/roll.ogg', 75, 1)
 	handle_rotation()
 
 /obj/structure/stool/bed/chair/wheelchair/attack_hand(mob/living/user)
@@ -130,6 +165,8 @@
 		return
 
 /obj/structure/stool/bed/chair/wheelchair/Bump(atom/A)
+	if(brake)
+		return
 	..()
 	if(!buckled_mob)	return
 

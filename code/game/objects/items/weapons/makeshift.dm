@@ -1,17 +1,17 @@
 /obj/item/weapon/twohanded/spear
-		icon = 'icons/obj/makeshift.dmi'
-		icon_state = "spearglass0"
-		name = "spear"
-		desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
-		force = 10
-		w_class = 4.0
-		slot_flags = SLOT_BACK
-		force_unwielded = 10
-		force_wielded = 18 // Was 13, Buffed - RR
-		throwforce = 15
-		flags = NOSHIELD
-		hitsound = 'sound/weapons/bladeslice.ogg'
-		attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+	icon = 'icons/obj/makeshift.dmi'
+	icon_state = "spearglass0"
+	name = "spear"
+	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
+	force = 10
+	w_class = ITEM_SIZE_LARGE
+	slot_flags = SLOT_FLAGS_BACK
+	force_unwielded = 10
+	force_wielded = 18 // Was 13, Buffed - RR
+	throwforce = 15
+	flags = NOSHIELD
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 
 /obj/item/weapon/twohanded/spear/update_icon()
 	icon_state = "spearglass[wielded]"
@@ -34,18 +34,18 @@
 	armor = list(melee = 20, bullet = 5, laser = 5,energy = 3, bomb = 5, bio = 0, rad = 0)
 
 /obj/item/weapon/melee/cattleprod
-		icon = 'icons/obj/makeshift.dmi'
-		name = "stunprod"
-		desc = "An improvised stun baton."
-		icon_state = "stunprod"
-		item_state = "prod"
-		var/obj/item/weapon/stock_parts/cell/bcell = null
-		var/stunforce = 5
-		var/hitcost = 2500
-		force = 3
-		throwforce = 5
-		var/status = 0
-		slot_flags = null
+	icon = 'icons/obj/makeshift.dmi'
+	name = "stunprod"
+	desc = "An improvised stun baton."
+	icon_state = "stunprod"
+	item_state = "prod"
+	var/obj/item/weapon/stock_parts/cell/bcell = null
+	var/stunforce = 5
+	var/hitcost = 2500
+	force = 3
+	throwforce = 5
+	var/status = 0
+	slot_flags = null
 
 /obj/item/weapon/melee/cattleprod/atom_init()
 	. = ..()
@@ -103,7 +103,7 @@
 			update_icon()
 		else
 			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(W))
 		if(bcell)
 			bcell.updateicon()
 			bcell.loc = get_turf(src.loc)
@@ -182,6 +182,6 @@
 	flags = CONDUCT
 	force = 9
 	throwforce = 10
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	m_amt = 1875
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")

@@ -1,4 +1,4 @@
-var/static/list/scarySounds = list(
+var/global/list/scarySounds = list(
 	'sound/weapons/thudswoosh.ogg',
     'sound/weapons/Taser.ogg', 'sound/weapons/armbomb.ogg',
     'sound/voice/hiss1.ogg', 'sound/voice/hiss2.ogg',
@@ -44,3 +44,5 @@ var/list/roles_ingame_minute_unlock = list(
 	ROLE_SHADOWLING = 1200,
 	ROLE_ABDUCTOR = 1200
 )
+
+var/global/list/datum_alarm_list = list()

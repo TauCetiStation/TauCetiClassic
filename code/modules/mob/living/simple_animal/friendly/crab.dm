@@ -5,12 +5,13 @@
 	icon_state = "crab"
 	icon_living = "crab"
 	icon_dead = "crab_dead"
+	icon_move = "crab_move"
 	small = 1
 	speak_emote = list("clicks")
 	emote_hear = list("clicks")
 	emote_see = list("clacks")
 	speak_chance = 1
-	turns_per_move = 5
+	turns_per_move = 10
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 1)
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
@@ -45,7 +46,7 @@
 
 //LOOK AT THIS - ..()??
 /*/mob/living/simple_animal/crab/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/weapon/wirecutters))
+	if(iswirecutter(O))
 		if(prob(50))
 			to_chat(user, "\red \b This kills the crab.")
 			health -= 20
@@ -142,7 +143,7 @@
 						/obj/item/clothing/head/collectable/kitty,
 						/obj/item/clothing/head/rabbitears,
 						/obj/item/clothing/head/collectable/rabbitears,
-						/obj/item/clothing/head/beret,
+						/obj/item/clothing/head/beret/red,
 						/obj/item/clothing/head/collectable/beret,
 						/obj/item/clothing/head/det_hat,
 						/obj/item/clothing/head/nursehat,
@@ -187,7 +188,7 @@
 							name = "Hoppy"
 							emote_see = list("twitches its nose", "hops around a bit")
 							desc = "This is hoppy. It's a corgi-...urmm... bunny rabbit"
-						if(/obj/item/clothing/head/beret, /obj/item/clothing/head/collectable/beret)
+						if(/obj/item/clothing/head/beret/red, /obj/item/clothing/head/collectable/beret)
 							name = "Yann"
 							desc = "Mon dieu! C'est un chien!"
 							speak = list("le woof!", "le bark!", "JAPPE!!")

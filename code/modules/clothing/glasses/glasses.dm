@@ -2,9 +2,9 @@
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
-	//w_class = 2.0
+	//w_class = ITEM_SIZE_SMALL
 	//flags = GLASSESCOVERSEYES
-	//slot_flags = SLOT_EYES
+	//slot_flags = SLOT_FLAGS_EYES
 	//var/vision_flags = 0
 	//var/darkness_view = 0//Base human is 2
 	//var/invisa_view = 0
@@ -202,6 +202,23 @@
 	icon_state = "blindfold"
 	item_state = "blindfold"
 	//vision_flags = BLIND  	// This flag is only supposed to be used if it causes permanent blindness, not temporary because of glasses
+
+/obj/item/clothing/glasses/sunglasses/blindfold/white
+	name = "blind personnel blindfold"
+	desc = "Indicates that the wearer suffers from blindness."
+	icon_state = "blindfoldwhite"
+	item_state = "blindfoldwhite"
+	var/colored_before = FALSE
+
+/obj/item/clothing/glasses/sunglasses/blindfold/white/equipped(mob/living/carbon/human/user, slot)
+	if(ishuman(user) && slot == SLOT_GLASSES)
+		update_icon(user)
+	..()
+
+/obj/item/clothing/glasses/sunglasses/blindfold/white/update_icon(mob/living/carbon/human/user)
+	if(ishuman(user) && !colored_before)
+		colored_before = TRUE
+		color = rgb(user.r_eyes, user.g_eyes, user.b_eyes)
 
 /obj/item/clothing/glasses/sunglasses/prescription
 	name = "prescription sunglasses"

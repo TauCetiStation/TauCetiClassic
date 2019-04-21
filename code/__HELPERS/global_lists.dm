@@ -32,6 +32,7 @@
 	sort_surgeries()
 
 	init_subtypes(/datum/crafting_recipe, crafting_recipes)
+	init_subtypes(/datum/dirt_cover, global.all_dirt_covers)
 
 	//Medical side effects. List all effects by their names
 	for(var/T in subtypesof(/datum/medical_effect))
@@ -62,6 +63,33 @@
 
 		if(S.flags[IS_WHITELISTED])
 			whitelisted_species += S.name
+
+	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
+	global.chemical_reagents_list = list()
+	for(var/path in subtypesof(/datum/reagent))
+		var/datum/reagent/D = new path()
+		global.chemical_reagents_list[D.id] = D
+
+	//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
+	// It is filtered into multiple lists within a list.
+	// For example:
+	// chemical_reaction_list["phoron"] is a list of all reactions relating to phoron
+	global.chemical_reactions_list = list()
+	for(var/path in subtypesof(/datum/chemical_reaction))
+
+		var/datum/chemical_reaction/D = new path()
+		var/list/reaction_ids = list()
+
+		if(D.required_reagents && D.required_reagents.len)
+			for(var/reaction in D.required_reagents)
+				reaction_ids += reaction
+
+		// Create filters based on each reagent id in the required reagents list
+		for(var/id in reaction_ids)
+			if(!global.chemical_reactions_list[id])
+				global.chemical_reactions_list[id] = list()
+			global.chemical_reactions_list[id] += D
+			break // Don't bother adding ourselves to other reagent ids, it is redundant.
 
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()

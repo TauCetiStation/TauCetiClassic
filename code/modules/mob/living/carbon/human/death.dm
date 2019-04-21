@@ -19,7 +19,7 @@
 
 	flick("gibbed-h", animation)
 	if(species)
-		hgibs(loc, viruses, dna, species.flesh_color, species.blood_color)
+		hgibs(loc, viruses, dna, species.flesh_color, species.blood_datum)
 	else
 		hgibs(loc, viruses, dna)
 
@@ -100,6 +100,9 @@
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
 		update_canmove()
+
+		if(is_infected_with_zombie_virus())
+			handle_infected_death(src)
 
 	tod = worldtime2text()		//weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)

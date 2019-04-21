@@ -7,11 +7,12 @@
 	armor = list(melee = 80, bullet = 70, laser = 70,energy = 70, bomb = 70, bio = 30, rad = 30)
 
 /obj/item/clothing/head/helmet/space/deathsquad/beret
-	name = "officer's beret"
+	name = "special operations officer's beret"
 	desc = "An armored beret commonly used by special operations officers."
 	icon_state = "beret_badge"
-	armor = list(melee = 65, bullet = 15, laser = 35,energy = 20, bomb = 30, bio = 30, rad = 30)
-	flags = HEADCOVERSEYES | BLOCKHAIR
+	armor = list(melee = 80, bullet = 70, laser = 60,energy = 10, bomb = 25, bio = 10, rad = 0)
+	cold_protection = HEAD
+	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.9
 
 //Space santa outfit suit
@@ -56,7 +57,7 @@
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank)
 	slowdown = 0
 	armor = list(melee = 60, bullet = 35, laser = 60,energy = 60, bomb = 30, bio = 30, rad = 30)
@@ -80,7 +81,7 @@
 	icon_state = "mim"
 	item_state = "mim"
 
-obj/item/clothing/suit/space/mime
+/obj/item/clothing/suit/space/mime
 	name = "mime hardsuit"
 	desc = "A hardsuit specifically designed for the mime."
 	icon_state = "mime"
@@ -93,7 +94,7 @@ obj/item/clothing/suit/space/mime
 	icon_state = "kluwne"
 	item_state = "kluwne"
 
-obj/item/clothing/suit/space/clown
+/obj/item/clothing/suit/space/clown
 	name = "clown hardsuit"
 	desc = "A hardsuit specifically designed for the clown. SPESSHONK!"
 	icon_state = "clowan"

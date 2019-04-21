@@ -81,6 +81,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/timeleft = timeleft()
 	if(timeleft > 1e5)		// midnight rollover protection
 		timeleft = 0
+	var/static/last_es_sound = 0
 	switch(location)
 		if(SHUTTLE_IN_TRANSIT)
 			/* --- Shuttle is in transit to Central Command from SS13 --- */
@@ -103,7 +104,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				else
 					// turn off the star spawners
 					/*
-					for(var/obj/effect/starspawner/S in world)
+					for(var/obj/effect/starspawner/S in not_world)
 						S.spawning = 0
 					*/
 
@@ -115,9 +116,8 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					start_location.move_contents_to(end_location, null, NORTH)
 
-					dock_act(end_location, "shuttle_escape")
-
 					for(var/mob/M in end_location)
+						M.playsound_local(null, 'sound/effects/escape_shuttle/es_cc_docking.ogg', 70)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -127,6 +127,7 @@ var/datum/subsystem/shuttle/SSshuttle
 							if(!M.buckled)
 								M.Weaken(5)
 						CHECK_TICK
+					dock_act(end_location, "shuttle_escape")
 
 							//pods
 					start_location = locate(/area/shuttle/escape_pod1/transit)
@@ -134,9 +135,8 @@ var/datum/subsystem/shuttle/SSshuttle
 					if( prob(5) ) // 5% that they survive
 						start_location.move_contents_to(end_location, null, NORTH)
 
-					for(var/obj/machinery/door/D in machines)
-						if( get_area(D) == end_location )
-							D.open()
+					for(var/obj/machinery/door/D in end_location)
+						D.open()
 						CHECK_TICK
 
 					for(var/mob/M in end_location)
@@ -155,10 +155,9 @@ var/datum/subsystem/shuttle/SSshuttle
 					if( prob(5) ) // 5% that they survive
 						start_location.move_contents_to(end_location, null, NORTH)
 
-					for(var/obj/machinery/door/D in machines)
-						if( get_area(D) == end_location )
-							D.open()
-							CHECK_TICK
+					for(var/obj/machinery/door/D in end_location)
+						D.open()
+						CHECK_TICK
 
 					for(var/mob/M in end_location)
 						if(M.client)
@@ -176,9 +175,8 @@ var/datum/subsystem/shuttle/SSshuttle
 					if( prob(5) ) // 5% that they survive
 						start_location.move_contents_to(end_location, null, NORTH)
 
-					for(var/obj/machinery/door/D in machines)
-						if( get_area(D) == end_location )
-							D.open()
+					for(var/obj/machinery/door/D in end_location)
+						D.open()
 
 					for(var/mob/M in end_location)
 						if(M.client)
@@ -196,9 +194,8 @@ var/datum/subsystem/shuttle/SSshuttle
 					if( prob(5) ) // 5% that they survive
 						start_location.move_contents_to(end_location, null, EAST)
 
-					for(var/obj/machinery/door/D in machines)
-						if( get_area(D) == end_location )
-							D.open()
+					for(var/obj/machinery/door/D in end_location)
+						D.open()
 						CHECK_TICK
 
 					for(var/mob/M in end_location)
@@ -226,6 +223,14 @@ var/datum/subsystem/shuttle/SSshuttle
 			else if((fake_recall != 0) && (timeleft <= fake_recall))
 				recall()
 				fake_recall = 0
+				return 0
+
+			else if(timeleft == 22)
+				if(last_es_sound < world.time)
+					var/area/escape_hallway = locate(/area/hallway/secondary/exit)
+					for(var/obj/effect/landmark/sound_source/shuttle_docking/SD in escape_hallway)
+						playsound(SD.loc, 'sound/effects/escape_shuttle/es_ss_docking.ogg', 100, 0, -2, voluminosity = FALSE)
+					last_es_sound = world.time + 10
 				return 0
 
 					/* --- Shuttle has docked with the station - begin countdown to transit --- */
@@ -289,7 +294,13 @@ var/datum/subsystem/shuttle/SSshuttle
 				undock_act(/area/shuttle/escape/station, "shuttle_escape")
 				undock_act(/area/hallway/secondary/exit, "arrival_escape")
 
-			if(timeleft>0)
+			if(timeleft > 0)
+				if(timeleft == 13)
+					if(last_es_sound < world.time)
+						var/area/pre_location = locate(/area/shuttle/escape/station)
+						for(var/mob/M in pre_location)
+							M.playsound_local(null, 'sound/effects/escape_shuttle/es_undocking.ogg', 70)
+						last_es_sound = world.time + 10
 				return 0
 
 			/* --- Shuttle leaves the station, enters transit --- */
@@ -300,7 +311,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				// Turn on the star effects
 
 				/* // kinda buggy atm, i'll fix this later
-				for(var/obj/effect/starspawner/S in world)
+				for(var/obj/effect/starspawner/S in not_world)
 					if(!S.spawning)
 						spawn() S.startspawn()
 				*/
@@ -318,6 +329,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 				// Some aesthetic turbulance shaking
 				for(var/mob/M in end_location)
+					M.playsound_local(null, 'sound/effects/escape_shuttle/es_acceleration.ogg', 50)
 					if(M.client)
 						if(M.buckled)
 							shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -559,9 +571,9 @@ var/datum/subsystem/shuttle/SSshuttle
 			continue
 		var/contcount
 		for(var/atom/A in T.contents)
-			if(istype(A,/atom/movable/lighting_overlay))
+			if(!A.simulated)
 				continue
-			if(istype(A,/obj/machinery/light))
+			if(istype(A, /obj/machinery/light))
 				continue
 			contcount++
 		if(contcount)

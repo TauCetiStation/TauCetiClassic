@@ -25,7 +25,7 @@
 
 		//user.death(0)
 		//dead_mob_list -= user
-		//living_mob_list += user
+		//alive_mob_list += user
 		//user.status_flags |= FAKEDEATH		//play dead
 		//user.fake_death = 1
 		//user.update_canmove()

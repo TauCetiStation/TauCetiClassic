@@ -11,6 +11,7 @@
 
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
+	desc = "Charges exosuits. It consumes a lot of energy when working."
 	density = 1
 	anchored = 1
 	dir = 4
@@ -75,7 +76,7 @@
 	default_deconstruction_crowbar(I)
 
 	if(panel_open)
-		if(istype(I, /obj/item/device/multitool))
+		if(ismultitool(I))
 			var/obj/item/device/multitool/MT = I
 			if(istype(MT.buffer, /obj/machinery/computer/mech_bay_power_console))
 				recharge_console = MT.buffer
@@ -96,7 +97,7 @@
 
 /obj/machinery/computer/mech_bay_power_console/attackby(obj/item/I, mob/user)
 	..()
-	if(istype(I, /obj/item/device/multitool))
+	if(ismultitool(I))
 		var/obj/item/device/multitool/MT = I
 		MT.buffer = src
 		to_chat(user, "<span class='notice'>You download data to the buffer.</span>")

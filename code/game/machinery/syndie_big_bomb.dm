@@ -54,25 +54,23 @@
 	to_chat(user, "A digital display on it reads \"[timer]\".")
 
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/wrench))
+	if(iswrench(I))
 		if(!anchored)
 			if(!isturf(src.loc) || istype(src.loc, /turf/space))
 				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it</span>")
 			else
 				to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor</span>")
-				playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
 				anchored = 1
 				if(active)
 					to_chat(user, "<span class='notice'>The bolts lock in place</span>")
 		else
 			if(!active)
 				to_chat(user, "<span class='notice'>You wrench the bomb from the floor</span>")
-				playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
 				anchored = 0
 			else
 				to_chat(user, "<span class='warning'>The bolts are locked down!</span>")
 
-	else if(istype(I, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(I))
 		open_panel = !open_panel
 		if(!active)
 			icon_state = "syndicate-bomb-inactive[open_panel ? "-wires" : ""]"
@@ -82,11 +80,11 @@
 
 	else if(is_wire_tool(I) && open_panel)
 		if(degutted)
-			to_chat(user, "<span class='notice'>The wires aren't connected to anything!<span>")
+			to_chat(user, "<span class='notice'>The wires aren't connected to anything!</span>")
 		else
 			wires.interact(user)
 
-	else if(istype(I, /obj/item/weapon/crowbar))
+	else if(iscrowbar(I))
 		if(open_panel && !degutted && isWireCut(SYNDIEBOMB_WIRE_BOOM) && isWireCut(SYNDIEBOMB_WIRE_UNBOLT) && isWireCut(SYNDIEBOMB_WIRE_DELAY) && isWireCut(SYNDIEBOMB_WIRE_PROCEED) && isWireCut(SYNDIEBOMB_WIRE_ACTIVATE))
 			to_chat(user, "<span class='notice'>You carefully pry out the bomb's payload.</span>")
 			degutted = 1
@@ -162,7 +160,7 @@
 	icon = 'icons/obj/syndie_bomb_big.dmi'
 	icon_state = "bombcore"
 	item_state = "eshield0"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "syndicate=6;combat=5"
 
 /obj/item/weapon/syndicatebombcore/ex_act(severity) //Little boom can chain a big boom
@@ -175,7 +173,7 @@
 	icon = 'icons/obj/syndie_bomb_big.dmi'
 	icon_state = "bigred"
 	item_state = "electronic"
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	origin_tech = "syndicate=2"
 	var/cooldown = 0
 	var/detonated =	0

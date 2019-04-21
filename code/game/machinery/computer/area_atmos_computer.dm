@@ -127,48 +127,31 @@
 
 /obj/machinery/computer/area_atmos/area/validscrubber(obj/machinery/portable_atmospherics/powered/scrubber/huge/scrubber)
 	if(!isobj(scrubber))
-		return 0
+		return FALSE
 
-	/*
-	wow this is stupid, someone help me
-	*/
-	var/turf/T_src = get_turf(src)
-	if(!T_src.loc) return 0
-	var/area/A_src = T_src.loc
-	if (A_src.master)
-		A_src = A_src.master
+	var/area/A_src = get_area(src)
+	var/area/A_scrub = get_area(scrubber)
+	if(!A_src || !A_scrub)
+		return FALSE
 
-	var/turf/T_scrub = get_turf(scrubber)
-	if(!T_scrub.loc) return 0
-	var/area/A_scrub = T_scrub.loc
-	if (A_scrub.master)
-		A_scrub = A_scrub.master
+	if(A_src != A_scrub)
+		return FALSE
 
-	if(A_scrub != A_src)
-		return 0
-
-	return 1
+	return TRUE
 
 /obj/machinery/computer/area_atmos/area/scanscrubbers()
 	connectedscrubbers = new()
 
-	var/found = 0
+	var/area/A = get_area(src)
+	if(!A)
+		return
 
-	var/turf/T = get_turf(src)
-	if(!T.loc) return
-	var/area/A = T.loc
-	if (A.master)
-		A = A.master
-	for(var/obj/machinery/portable_atmospherics/powered/scrubber/huge/scrubber in world )
-		var/turf/T2 = get_turf(scrubber)
-		if(T2 && T2.loc)
-			var/area/A2 = T2.loc
-			if(istype(A2) && A2.master && A2.master == A )
-				connectedscrubbers += scrubber
-				found = 1
+	for(var/obj/machinery/portable_atmospherics/powered/scrubber/huge/scrubber in scrubber_huge_list)
+		var/area/A2 = get_area(scrubber)
+		if(A2 && A2 == A)
+			connectedscrubbers += scrubber
 
-
-	if(!found)
+	if(!LAZYLEN(connectedscrubbers))
 		status = "ERROR: No scrubber found!"
 
 	src.updateUsrDialog()

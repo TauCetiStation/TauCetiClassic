@@ -187,12 +187,13 @@
 /obj/structure/closet/attackby(obj/item/weapon/W, mob/user)
 	if(src.opened)
 		if(istype(W, /obj/item/weapon/grab))
-			src.MouseDrop_T(W:affecting, user)      //act like they were dragged onto the closet
+			var/obj/item/weapon/grab/G = W
+			MouseDrop_T(G.affecting, user)      //act like they were dragged onto the closet
 		if(istype(W,/obj/item/tk_grab))
 			return 0
-		if(istype(W, /obj/item/weapon/weldingtool))
+		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
-			if(!WT.remove_fuel(0,user))
+			if(!WT.use(0,user))
 				to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 				return
 			new /obj/item/stack/sheet/metal(loc)
@@ -201,7 +202,7 @@
 			return
 		if(isrobot(user))
 			return
-		if(!W.canremove)
+		if(!W.canremove || W.flags & NODROP)
 			return
 		usr.drop_item()
 		if(W)
@@ -210,10 +211,10 @@
 	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))
 		return
 
-	else if(istype(W, /obj/item/weapon/weldingtool))
+	else if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(!WT.remove_fuel(0,user))
+		if(!WT.use(0,user))
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
 		src.welded = !src.welded
@@ -303,7 +304,7 @@
 
 /obj/structure/closet/hear_talk(mob/M, text, verb, datum/language/speaking)
 	for (var/atom/A in src)
-		if(istype(A,/obj/))
+		if(istype(A,/obj))
 			var/obj/O = A
 			O.hear_talk(M, text, verb, speaking)
 

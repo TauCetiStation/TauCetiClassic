@@ -43,7 +43,7 @@
 /obj/item/clothing/suit/storage/flak/atom_init()
 	. = ..()
 	pockets = new/obj/item/weapon/storage/internal(src)
-	pockets.storage_slots = 4
+	pockets.set_slots(slots = 4, slot_size = ITEM_SIZE_SMALL)
 
 /obj/item/clothing/suit/storage/flak/marinad
 	name = "marine armor"
@@ -115,7 +115,7 @@
 /obj/item/clothing/suit/storage/flak/bulletproof/atom_init()
 	. = ..()
 	pockets = new/obj/item/weapon/storage/internal(src)
-	pockets.storage_slots = 5
+	pockets.set_slots(slots = 5, slot_size = ITEM_SIZE_SMALL)
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "ablative armor vest"
@@ -216,7 +216,7 @@
 	desc = "A suit that protects against some damage."
 	icon_state = "centcom"
 	item_state = "centcom"
-	w_class = 4//bulky item
+	w_class = ITEM_SIZE_LARGE//bulky item
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -229,7 +229,7 @@
 	desc = "A heavily armored suit that protects against moderate damage."
 	icon_state = "heavy"
 	item_state = "swat_suit"
-	w_class = 4//bulky item
+	w_class = ITEM_SIZE_LARGE//bulky item
 	gas_transfer_coefficient = 0.90
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	slowdown = 3

@@ -42,6 +42,7 @@
 	src << browse(entity_ja(output),"window=privacypoll;size=600x500")
 	return
 
+
 /datum/polloption
 	var/optionid
 	var/optiontext

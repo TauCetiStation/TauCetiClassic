@@ -277,7 +277,7 @@
 	var/list/all_items = M.GetAllContents()
 
 	for(var/obj/I in all_items)
-		if(istype(I,/obj/item/device/radio/))
+		if(istype(I,/obj/item/device/radio))
 			var/obj/item/device/radio/r = I
 			r.on = 0
 
@@ -358,7 +358,7 @@
 		helm_cam.c_tag = "[user.real_name] Cam"
 		helm_cam.replace_networks(list("Abductor[team]"))
 
-		for(var/obj/machinery/computer/security/abductor_ag/C in machines)
+		for(var/obj/machinery/computer/security/abductor_ag/C in computer_list)
 			if(C.team == team)
 				if(C.network.len < 1)
 					C.network = helm_cam.network
@@ -394,9 +394,9 @@
 	icon_state = "wonderprodStun"
 	item_state = "wonderprod"
 	origin_tech = "materials=6;combat=5;biotech=7"
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 7
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	action_button_name = "Toggle Mode"
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
@@ -611,19 +611,7 @@
 	if(!istype(C))
 		return
 	C.SetNextMove(CLICK_CD_MELEE)
-
-	if(istype(C.get_active_hand(),/obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = C.get_active_hand()
-		if(istype(C.l_hand, G))
-			C.drop_l_hand()
-		else
-			C.drop_r_hand()
-	if(istype(C.get_inactive_hand(),/obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = C.get_inactive_hand()
-		if(istype(C.l_hand, G))
-			C.drop_l_hand()
-		else
-			C.drop_r_hand()
+	C.StopGrabs()
 
 	holding = !holding
 

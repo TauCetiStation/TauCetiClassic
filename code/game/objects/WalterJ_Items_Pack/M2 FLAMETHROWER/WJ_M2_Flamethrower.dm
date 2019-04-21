@@ -1,7 +1,7 @@
 /obj/item/weapon/weldpack/M2_fuelback
 	name = "M2 Flamethrower backpack."
 	desc = "It smells like victory."
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 
 	icon = 'code/game/objects/WalterJ_Items_Pack/M2 FLAMETHROWER/WJ_M2_Flamethrower.dmi'
 	icon_custom = 'code/game/objects/WalterJ_Items_Pack/M2 FLAMETHROWER/WJ_M2_Flamethrower.dmi'
@@ -11,7 +11,7 @@
 	var/obj/item/weapon/flamethrower_M2/Connected_Flamethrower = null
 
 /obj/item/weapon/weldpack/M2_fuelback/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/T = W
 		if(T.welding)
 			message_admins("[key_name_admin(user)] triggered a flamethrower back explosion. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
@@ -75,7 +75,7 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	m_amt = 500
 	origin_tech = "combat=2;phorontech=1"
 
@@ -99,7 +99,7 @@
 		STOP_PROCESSING(SSobj, src)
 		return
 	var/turf/location = loc
-	if(istype(location, /mob/))
+	if(istype(location, /mob))
 		var/mob/M = location
 		if(M.l_hand == src || M.r_hand == src)
 			location = M.loc

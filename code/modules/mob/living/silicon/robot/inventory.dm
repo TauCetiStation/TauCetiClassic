@@ -5,6 +5,10 @@
 /mob/living/silicon/robot/get_active_hand()
 	return module_active
 
+// I'd rather do this then have something broken.
+/mob/living/silicon/robot/get_inactive_hand()
+	return module_active
+
 /*-------TODOOOOOOOOOO--------*/
 
 /mob/living/silicon/robot/u_equip(obj/W)

@@ -65,8 +65,8 @@
 	..()
 	src.visible_message("\red [src] gets an evil-looking gleam in their eye.")
 
-/mob/living/simple_animal/hostile/retaliate/goat/Move()
-	..()
+/mob/living/simple_animal/hostile/retaliate/goat/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	if(!stat)
 		if(locate(/obj/effect/spacevine) in loc)
 			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
@@ -144,8 +144,9 @@
 		else if(prob(15))
 			playsound(src, 'sound/voice/cowmoos.ogg', 50, 1, -3)
 
-/mob/living/simple_animal/cow/Move()
-	if(..() && prob(55))
+/mob/living/simple_animal/cow/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
+	if(. && prob(55))
 		playsound(src, 'sound/misc/cowbell.ogg', 50, 1, -3)
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
@@ -207,6 +208,7 @@ var/global/chicken_count = 0
 	icon_state = "chicken"
 	icon_living = "chicken"
 	icon_dead = "chicken_dead"
+	icon_move = "chicken_move"
 	speak = list("Cluck!","BWAAAAARK BWAK BWAK BWAK!","Bwaak bwak.")
 	speak_emote = list("clucks","croons")
 	emote_hear = list("clucks")
@@ -223,10 +225,11 @@ var/global/chicken_count = 0
 /mob/living/simple_animal/chicken/atom_init()
 	. = ..()
 	if(!body_color)
-		body_color = pick( list("brown","black","white") )
+		body_color = pick(list("brown", "black", "white"))
 	icon_state = "chicken_[body_color]"
 	icon_living = "chicken_[body_color]"
 	icon_dead = "chicken_[body_color]_dead"
+	icon_move = "chicken_[body_color]_move"
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 	chicken_count += 1

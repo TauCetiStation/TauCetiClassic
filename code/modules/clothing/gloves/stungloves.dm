@@ -5,7 +5,7 @@
 		return
 
 	//add wires
-	if(istype(W, /obj/item/stack/cable_coil))
+	if(iscoil(W))
 		var/obj/item/stack/cable_coil/C = W
 		if (clipped)
 			to_chat(user, "<span class='notice'>The [src] are too badly mangled for wiring.</span>")
@@ -19,7 +19,7 @@
 			to_chat(user, "<span class='notice'>There is not enough wire to cover the [src].</span>")
 			return
 
-		wired = 1
+		wired = TRUE
 		siemens_coefficient = 3.0
 		to_chat(user, "<span class='notice'>You wrap some wires around the [src].</span>")
 		update_icon()
@@ -39,7 +39,7 @@
 			to_chat(user, "<span class='notice'>A [cell] is already attached to the [src].</span>")
 		return
 
-	else if(istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/weapon/scalpel))
+	else if(iswirecutter(W) || istype(W, /obj/item/weapon/scalpel))
 
 		//stunglove stuff
 		if(cell)
@@ -50,7 +50,7 @@
 			update_icon()
 			return
 		if(wired) //wires disappear into the void because fuck that shit
-			wired = 0
+			wired = FALSE
 			siemens_coefficient = initial(siemens_coefficient)
 			to_chat(user, "<span class='notice'>You cut the wires away from the [src].</span>")
 			update_icon()
@@ -61,7 +61,7 @@
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			user.visible_message("\red [user] cuts the fingertips off of the [src].","\red You cut the fingertips off of the [src].")
 
-			clipped = 1
+			clipped = TRUE
 			name = "mangled [name]"
 			desc = "[desc]<br>They have had the fingertips cut off of them."
 			if("exclude" in species_restricted)

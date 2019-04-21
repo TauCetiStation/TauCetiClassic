@@ -19,7 +19,7 @@
 				to_chat(world, "<font size=4 color='red'>Attention! Security level lowered to green</font>")
 				to_chat(world, "<font color='red'>[config.alert_desc_green]</font>")
 				security_level = SEC_LEVEL_GREEN
-				for(var/obj/machinery/firealarm/FA in machines)
+				for(var/obj/machinery/firealarm/FA in firealarm_list)
 					if(FA.z == ZLEVEL_STATION || FA.z == ZLEVEL_ASTEROID)
 						FA.overlays = list()
 						FA.overlays += image('icons/obj/monitors.dmi', "overlay_green")
@@ -31,7 +31,7 @@
 					to_chat(world, "<font size=4 color='red'>Attention! Security level lowered to blue</font>")
 					to_chat(world, "<font color='red'>[config.alert_desc_blue_downto]</font>")
 				security_level = SEC_LEVEL_BLUE
-				for(var/obj/machinery/firealarm/FA in machines)
+				for(var/obj/machinery/firealarm/FA in firealarm_list)
 					if(FA.z == ZLEVEL_STATION || FA.z == ZLEVEL_ASTEROID)
 						FA.overlays = list()
 						FA.overlays += image('icons/obj/monitors.dmi', "overlay_blue")
@@ -44,11 +44,11 @@
 					to_chat(world, "<font color='red'>[config.alert_desc_red_downto]</font>")
 				security_level = SEC_LEVEL_RED
 
-				var/obj/machinery/computer/communications/CC = locate(/obj/machinery/computer/communications,world)
+				var/obj/machinery/computer/communications/CC = locate() in communications_list
 				if(CC)
 					CC.post_status("alert", "redalert")
 
-				for(var/obj/machinery/firealarm/FA in machines)
+				for(var/obj/machinery/firealarm/FA in firealarm_list)
 					if(FA.z == ZLEVEL_STATION || FA.z == ZLEVEL_ASTEROID)
 						FA.overlays = list()
 						FA.overlays += image('icons/obj/monitors.dmi', "overlay_red")
@@ -57,7 +57,7 @@
 				to_chat(world, "<font size=4 color='red'>Attention! Delta security level reached!</font>")
 				to_chat(world, "<font color='red'>[config.alert_desc_delta]</font>")
 				security_level = SEC_LEVEL_DELTA
-				for(var/obj/machinery/firealarm/FA in machines)
+				for(var/obj/machinery/firealarm/FA in firealarm_list)
 					if(FA.z == ZLEVEL_STATION || FA.z == ZLEVEL_ASTEROID)
 						FA.overlays = list()
 						FA.overlays += image('icons/obj/monitors.dmi', "overlay_delta")

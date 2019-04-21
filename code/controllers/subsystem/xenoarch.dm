@@ -45,7 +45,8 @@ var/datum/subsystem/xenoarch/SSxenoarch
 		/obj/item/seeds/amauri,
 		/obj/item/seeds/gelthi,
 		/obj/item/seeds/vale,
-		/obj/item/seeds/surik
+		/obj/item/seeds/surik,
+		/obj/item/seeds/blackberry
 	)
 
 
@@ -130,7 +131,7 @@ var/datum/subsystem/xenoarch/SSxenoarch
 		new_sequence.spawned_type = pick_n_take(spawn_types_animal)
 
 		var/prefixletter = pick_n_take(genome_prefixes)
-		while(new_sequence.full_genome_sequence.len < 7)
+		while(new_sequence.full_genome_sequence.len < 5)
 			new_sequence.full_genome_sequence.Add("[prefixletter][pick(alphabet_uppercase)][pick(alphabet_uppercase)][rand(0, 9)][rand(0, 9)]")
 
 		all_animal_genesequences += new_sequence
@@ -144,7 +145,7 @@ var/datum/subsystem/xenoarch/SSxenoarch
 		new_sequence.spawned_type = pick_n_take(spawn_types_plant)
 
 		var/prefixletter = pick_n_take(genome_prefixes)
-		while(new_sequence.full_genome_sequence.len < 7)
+		while(new_sequence.full_genome_sequence.len < 5)
 			new_sequence.full_genome_sequence.Add("[prefixletter][rand(0, 9)][rand(0, 9)][pick(alphabet_uppercase)][pick(alphabet_uppercase)]")
 
 		all_plant_genesequences += new_sequence

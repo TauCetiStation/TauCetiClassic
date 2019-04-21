@@ -94,7 +94,7 @@ Note: Must be placed west/left of and R&D console to function.
 		return
 
 	if (panel_open)
-		if(istype(I, /obj/item/weapon/crowbar))
+		if(iscrowbar(I))
 			for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 				reagents.trans_to(G, G.reagents.maximum_volume)
 			if(m_amount >= 3750)

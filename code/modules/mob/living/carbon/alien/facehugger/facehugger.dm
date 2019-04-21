@@ -49,6 +49,6 @@ var/const/MAX_IMPREGNATION_TIME = 150
 
 /mob/living/carbon/alien/facehugger/movement_delay()
 	var/tally = 0
-	if (istype(src, /mob/living/carbon/alien/facehugger/)) //just in case
+	if (istype(src, /mob/living/carbon/alien/facehugger)) //just in case
 		tally = -1
 	return (tally + move_delay_add + config.alien_delay)

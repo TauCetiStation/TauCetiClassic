@@ -177,16 +177,13 @@
 			qdel(E)
 	return TRUE
 
-/datum/teleport/instant //teleports when datum is created
+//teleports when datum is created
+/datum/teleport/instant/start(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
+	if(..())
+		if(teleport())
+			return 1
+	return 0
 
-	start(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
-		if(..())
-			if(teleport())
-				return 1
-		return 0
-
-
-/datum/teleport/instant/science
 
 /datum/teleport/instant/science/setEffects(datum/effect/effect/system/aeffectin,datum/effect/effect/system/aeffectout)
 	if(aeffectin==null || aeffectout==null)

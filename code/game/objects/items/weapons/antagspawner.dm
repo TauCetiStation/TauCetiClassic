@@ -1,7 +1,7 @@
 /obj/item/weapon/antag_spawner
 	throw_speed = 1
 	throw_range = 5
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	var/used = FALSE
 
 /obj/item/weapon/antag_spawner/proc/spawn_antag(client/C, turf/T, type = "")

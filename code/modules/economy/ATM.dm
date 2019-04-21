@@ -360,6 +360,7 @@ log transactions
 					R.info += "<i>Balance:</i> $[authenticated_account.money]<br>"
 					R.info += "<i>Date and time:</i> [worldtime2text()], [current_date_string]<br><br>"
 					R.info += "<i>Service terminal ID:</i> [machine_id]<br>"
+					R.update_icon()
 
 					//stamp the paper
 					var/obj/item/weapon/stamp/centcomm/S = new
@@ -397,6 +398,7 @@ log transactions
 						R.info += "<td>[T.source_terminal]</td>"
 						R.info += "</tr>"
 					R.info += "</table>"
+					R.update_icon()
 
 					//stamp the paper
 					var/obj/item/weapon/stamp/centcomm/S = new

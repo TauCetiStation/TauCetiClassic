@@ -5,12 +5,13 @@
 	item_color = "webbing"
 	slot = "utility"
 	var/slots = 3
+	var/max_w_class = ITEM_SIZE_SMALL //pocket sized
 	var/obj/item/weapon/storage/internal/hold
 
 /obj/item/clothing/accessory/storage/atom_init()
 	. = ..()
 	hold = new/obj/item/weapon/storage/internal(src)
-	hold.storage_slots = slots
+	hold.set_slots(slots, max_w_class)
 
 /obj/item/clothing/accessory/storage/attack_hand(mob/user)
 	if (has_suit) // if we are part of a suit
@@ -79,10 +80,10 @@
 	icon_state = "unathiharness2"
 	item_color = "unathiharness2"
 	slots = 2
+	max_w_class = ITEM_SIZE_NORMAL //for knives
 
 /obj/item/clothing/accessory/storage/knifeharness/atom_init()
 	. = ..()
-	hold.max_combined_w_class = 4
 	hold.can_hold = list(
 		"/obj/item/weapon/hatchet/unathiknife",
 		"/obj/item/weapon/kitchenknife/plastic",

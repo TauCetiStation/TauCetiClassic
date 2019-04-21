@@ -267,4 +267,5 @@
 					"}
 
 				P.info = text
+				P.update_icon()
 				state("The terminal prints out a report.")

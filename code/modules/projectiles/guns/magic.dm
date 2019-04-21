@@ -6,7 +6,7 @@
 	item_state = "staff"
 	fire_sound = 'sound/weapons/emitter.ogg'
 	flags =  CONDUCT
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 	var/max_charges = 3
 	var/charges = 0
 	var/recharge_rate = 14
@@ -28,10 +28,10 @@
 /obj/item/weapon/gun/magic/special_check(mob/M, atom/target)
 	var/area/A = get_area(M)
 	if(istype(A, /area/wizard_station))
-		to_chat(M, "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].<span>")
+		to_chat(M, "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].</span>")
 		return FALSE
 	if(M.mind.special_role != "Wizard" && !global_access)
-		to_chat(M, "<span class='warning'>You have no idea how to use [src].<span>")
+		to_chat(M, "<span class='warning'>You have no idea how to use [src].</span>")
 		return FALSE
 	return TRUE
 
@@ -66,5 +66,5 @@
 	return
 
 /obj/item/weapon/gun/magic/shoot_with_empty_chamber(mob/living/user)
-	to_chat(user, "<span class='warning'>The [name] whizzles quietly.<span>")
+	to_chat(user, "<span class='warning'>The [name] whizzles quietly.</span>")
 	return

@@ -32,6 +32,16 @@
 		var/mob/living/carbon/human/H = speaker
 		speaker_name = H.GetVoice()
 
+	if(ishuman(src)) //zombie logic
+		var/mob/living/carbon/human/ME = src
+		if(iszombie(ME))
+			if(!ishuman(speaker))
+				message = stars(message, 40)
+			else
+				var/mob/living/carbon/human/H = speaker
+				if(!iszombie(H))
+					message = stars(message, 40)
+
 	if(italics)
 		message = "<i>[message]</i>"
 
@@ -105,6 +115,16 @@
 		if(H.voice)
 			speaker_name = H.voice
 
+	if(ishuman(src)) //zombie logic
+		var/mob/living/carbon/human/ME = src
+		if(iszombie(ME))
+			if(!ishuman(speaker))
+				message = stars(message, 40)
+			else
+				var/mob/living/carbon/human/H = speaker
+				if(!iszombie(H))
+					message = stars(message, 40)
+
 	if(hard_to_hear)
 		speaker_name = "unknown"
 
@@ -167,9 +187,9 @@
 		if(prob(20))
 			to_chat(src, "<span class='warning'>You feel your headset vibrate but can hear nothing from it!</span>")
 	else if(track)
-		to_chat(src, "[part_a][track][part_b][formatted]</span></span>")
+		to_chat(src, "[part_a][track][part_b][formatted]")
 	else
-		to_chat(src, "[part_a][speaker_name][part_b][formatted]</span></span>")
+		to_chat(src, "[part_a][speaker_name][part_b][formatted]")
 
 /mob/proc/hear_signlang(message, verb = "gestures", datum/language/language, mob/speaker = null)
 	if(!client)

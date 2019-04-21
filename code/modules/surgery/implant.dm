@@ -6,7 +6,7 @@
 
 /datum/surgery_step/cavity
 	priority = 1
-	allowed_species = list(IPC)
+	allowed_species = null
 
 /datum/surgery_step/cavity/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))

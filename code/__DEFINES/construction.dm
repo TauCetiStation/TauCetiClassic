@@ -24,3 +24,12 @@
 #define CAT_SANDWICH    "Sandwiches"
 #define CAT_SOUP        "Soups"
 #define CAT_SPAGHETTI   "Spaghettis"
+
+//rwall construction states
+#define INTACT          0
+#define SUPPORT_LINES   1
+#define COVER           2
+#define CUT_COVER       3
+#define ANCHOR_BOLTS    4
+#define SUPPORT_RODS    5
+#define SHEATH          6
