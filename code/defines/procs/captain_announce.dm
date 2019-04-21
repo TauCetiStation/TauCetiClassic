@@ -36,4 +36,4 @@
 					announce_sound = 'sound/AI/aiannounce.ogg'
 				if("nuke")
 					announce_sound = 'sound/AI/nuke.ogg'
-			M.playsound_local(null, announce_sound, 70, channel = 802, wait = 1, is_global = 1)
+			M.playsound_local(null, announce_sound, 70, channel = CHANNEL_ANNOUNCE, wait = 1, is_global = 1)

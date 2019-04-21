@@ -21,7 +21,7 @@
 				security_level = SEC_LEVEL_GREEN
 				for(var/mob/M in player_list)
 					if(!isnewplayer(M))
-						M.playsound_local(null, 'sound/AI/downtogreen.ogg', 70, channel = 802, wait = 1, is_global = 1)
+						M.playsound_local(null, 'sound/AI/downtogreen.ogg', 70, channel = CHANNEL_ANNOUNCE, wait = 1, is_global = 1)
 				for(var/obj/machinery/firealarm/FA in firealarm_list)
 					if(FA.z == ZLEVEL_STATION || FA.z == ZLEVEL_ASTEROID)
 						FA.overlays = list()
@@ -32,12 +32,12 @@
 					to_chat(world, "<font color='red'>[config.alert_desc_blue_upto]</font>")
 					for(var/mob/M in player_list)
 						if(!isnewplayer(M))
-							M.playsound_local(null, 'sound/AI/blue.ogg', 70, channel = 802, wait = 1, is_global = 1)
+							M.playsound_local(null, 'sound/AI/blue.ogg', 70, channel = CHANNEL_ANNOUNCE, wait = 1, is_global = 1)
 				else
 					to_chat(world, "<font size=4 color='red'>Attention! Security level lowered to blue</font>")
 					for(var/mob/M in player_list)
 						if(!isnewplayer(M))
-							M.playsound_local(null, 'sound/AI/downtoblue.ogg', 70, channel = 802, wait = 1, is_global = 1)
+							M.playsound_local(null, 'sound/AI/downtoblue.ogg', 70, channel = CHANNEL_ANNOUNCE, wait = 1, is_global = 1)
 					to_chat(world, "<font color='red'>[config.alert_desc_blue_downto]</font>")
 				security_level = SEC_LEVEL_BLUE
 				for(var/obj/machinery/firealarm/FA in firealarm_list)
@@ -50,13 +50,13 @@
 					to_chat(world, "<font color='red'>[config.alert_desc_red_upto]</font>")
 					for(var/mob/M in player_list)
 						if(!isnewplayer(M))
-							M.playsound_local(null, 'sound/AI/red.ogg', 70, channel = 802, wait = 1, is_global = 1)
+							M.playsound_local(null, 'sound/AI/red.ogg', 70, channel = CHANNEL_ANNOUNCE, wait = 1, is_global = 1)
 				else
 					to_chat(world, "<font size=4 color='red'>Attention! Code red!</font>")
 					to_chat(world, "<font color='red'>[config.alert_desc_red_downto]</font>")
 					for(var/mob/M in player_list)
 						if(!isnewplayer(M))
-							M.playsound_local(null, 'sound/AI/downtored.ogg', 70, channel = 802, wait = 1, is_global = 1)
+							M.playsound_local(null, 'sound/AI/downtored.ogg', 70, channel = CHANNEL_ANNOUNCE, wait = 1, is_global = 1)
 				security_level = SEC_LEVEL_RED
 
 				var/obj/machinery/computer/communications/CC = locate() in communications_list
@@ -74,7 +74,7 @@
 				security_level = SEC_LEVEL_DELTA
 				for(var/mob/M in player_list)
 					if(!isnewplayer(M))
-						M.playsound_local(null, 'sound/AI/delta.ogg', 70, channel = 802, wait = 1, is_global = 1)
+						M.playsound_local(null, 'sound/AI/delta.ogg', 70, channel = CHANNEL_ANNOUNCE, wait = 1, is_global = 1)
 				for(var/obj/machinery/firealarm/FA in firealarm_list)
 					if(FA.z == ZLEVEL_STATION || FA.z == ZLEVEL_ASTEROID)
 						FA.overlays = list()
