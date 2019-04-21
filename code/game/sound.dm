@@ -35,8 +35,7 @@ var/const/FALLOFF_SOUNDS = 0.5
 	S.wait = wait
 	S.channel = channel // Note. Channel 802 is busy with sound of automatic AI announcements
 	S.volume = vol
-	S.environment = environment
-	S.echo = echo
+	S.environment = -1
 	if (vary)
 		if(frequency)
 			S.frequency = frequency

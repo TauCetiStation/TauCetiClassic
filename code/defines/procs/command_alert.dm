@@ -1,4 +1,4 @@
-/proc/command_alert(text, title = "", type = "")
+/proc/command_alert(text, title = "", sound = "")
 	var/command
 	command += "<h1 class='alert'>[command_name()] Update</h1>"
 	if (title && length(title) > 0)
@@ -9,7 +9,7 @@
 		if(!isnewplayer(M))
 			to_chat(M, command)
 			var/announce_sound = 'sound/AI/commandreport.ogg'
-			switch(type)
+			switch(sound)
 				if("radpassed")
 					announce_sound = 'sound/AI/radpassed.ogg'
 				if("radiation")

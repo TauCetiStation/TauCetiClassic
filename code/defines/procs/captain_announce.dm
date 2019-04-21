@@ -1,13 +1,13 @@
-/proc/captain_announce(message, title = "Priority Announcement", announcer = "", type = "")
+/proc/captain_announce(message, title = "Priority Announcement", announcer = "", sound = "")
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
-			to_chat(world, "<h1 class='alert'>[title]</h1>")
-			to_chat(world, "<span class='alert'>[message]</span>")
+			to_chat(M, "<h1 class='alert'>[title]</h1>")
+			to_chat(M, "<span class='alert'>[message]</span>")
 			if(announcer)
-				to_chat(world, "<span class='alert'> -[announcer]</span>")
-			to_chat(world, "<br>")
+				to_chat(M, "<span class='alert'> -[announcer]</span>")
+			to_chat(M, "<br>")
 			var/announce_sound = 'sound/AI/announce.ogg'
-			switch(type)
+			switch(sound)
 				if("escalled")
 					announce_sound = 'sound/AI/escalled.ogg'
 				if("esrecalled")
@@ -36,4 +36,4 @@
 					announce_sound = 'sound/AI/aiannounce.ogg'
 				if("nuke")
 					announce_sound = 'sound/AI/nuke.ogg'
-			M.playsound_local(null, announce_sound, 70, channel = 802, wait = 1, isglobal = 1)
+			M.playsound_local(null, announce_sound, 70, channel = 802, wait = 1, is_global = 1)
