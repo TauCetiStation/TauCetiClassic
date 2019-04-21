@@ -252,7 +252,7 @@
 			comm.messagetext.Add(message)
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
-			M.playsound_local(null, 'sound/AI/commandreport.ogg', 70, channel = 802, wait = 1, is_global = 1)
+			M.playsound_local(null, 'sound/AI/commandreport.ogg', 70, channel = CHANNEL_ANNOUNCE, wait = 1, is_global = 1)
 
 /datum/game_mode/revolution/rp_revolution/latespawn(mob/M)
 	if(M.mind.assigned_role in command_positions)
