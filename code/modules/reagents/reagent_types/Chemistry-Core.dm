@@ -212,6 +212,23 @@
 		var/obj/item/weapon/storage/fancy/black_candle_box/G = O
 		G.teleporter_delay += volume
 
+/datum/reagent/fishwater
+	name = "Fish Water"
+	id = "fishwater"
+	description = "Smelly water from a fish tank. Gross!"
+	reagent_state = LIQUID
+	color = "#757547"
+	taste_message = "puke"
+
+/datum/reagent/fishwater/reaction_mob(mob/living/M, method=TOUCH, volume)
+	if(method == INGEST)
+		to_chat(M, "Oh god, why did you drink that?")
+
+/datum/reagent/fishwater/on_mob_life(mob/living/carbon/human/M)
+	if(prob(30))		// Nasty, you drank this stuff? 30% chance of the fakevomit (non-stunning version) // 50/50 chance of green vomit vs normal vomit
+		M.vomit()
+	return ..()
+
 /datum/reagent/oxygen
 	name = "Oxygen"
 	id = "oxygen"
