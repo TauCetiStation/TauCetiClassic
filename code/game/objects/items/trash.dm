@@ -68,6 +68,19 @@
 	name = "\improper \"LiquidFood\" ration"
 	icon_state = "liquidfood"
 
+/obj/item/trash/can
+	name = "crushed can"
+	icon_state = "cola"
+
+/obj/item/trash/gum
+	name = "chewed gum"
+	desc = "NOT free candy."
+	icon_state = "gum"
+
+/obj/item/trash/tastybread
+	name = "bread tube"
+	icon_state = "tastybread"
+
 /obj/item/trash/candle/ghost
 	name = "black candle"
 	icon_state = "black_candle4"

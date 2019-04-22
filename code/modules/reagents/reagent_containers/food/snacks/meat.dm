@@ -48,6 +48,12 @@
 	name = "Ham"
 	desc = "Taste like bacon."
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/ham/atom_init()
+	. = ..()
+	reagents.add_reagent("protein", 3)
+	reagents.add_reagent("porktonium", 10)
+
+
 /obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat
 	name = "meatwheat clump"
 	desc = "This doesn't look like meat, but your standards aren't <i>that</i> high to begin with."

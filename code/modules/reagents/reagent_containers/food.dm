@@ -6,6 +6,7 @@
 	volume = 50 //Sets the default container amount for all food items.
 	var/filling_color = "#ffffff" //Used by sandwiches.
 	var/taste = TRUE//whether you can taste eating from this
+	var/junkiness = 0  //for junk food. used to lower human satiety.
 
 /obj/item/weapon/reagent_containers/food/atom_init()
 	. = ..()
