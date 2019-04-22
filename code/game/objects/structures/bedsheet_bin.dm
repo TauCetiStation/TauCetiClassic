@@ -30,14 +30,14 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/attackby(obj/item/I, mob/user)
 	. = ..()
-	if(!ishuman(user))
-		to_chat(user, "<span class='notice'>You try, but you can't.</span>")
-		return
 	if(I.sharp && istype(loc, /turf)) // you can cut only bedsheet lying on the floor
-		usr.visible_message("<span class='notice'>[usr] starts tearing \the [src] into rags.</span>", "<span class='notice'>You start tearing \the [src] into rags.</span>")
-		if(do_after(usr, 40, target = src))
-			usr.visible_message("<span class='notice'>[usr] tears \the [src] into rags using [I].</span>", "<span class='notice'>You finish tearing \the [src] into rags.</span>")
-			var/obj/item/stack/medical/bruise_pack/rags/R = new /obj/item/stack/medical/bruise_pack/rags(src.loc)
+		if(!ishuman(user))
+			to_chat(user, "<span class='notice'>You try, but you can't.</span>")
+			return
+		user.visible_message("<span class='notice'>[user] starts tearing \the [src] into rags.</span>", "<span class='notice'>You start tearing \the [src] into rags.</span>")
+		if(do_after(user, 40, target = src))
+			user.visible_message("<span class='notice'>[user] tears \the [src] into rags using [I].</span>", "<span class='notice'>You finish tearing \the [src] into rags.</span>")
+			var/obj/item/stack/medical/bruise_pack/rags/R = new /obj/item/stack/medical/bruise_pack/rags(get_turf(src))
 			R.amount = 3
 			qdel(src)
 		return
