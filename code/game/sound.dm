@@ -1,4 +1,4 @@
-/proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global, wait = 0, environment = -1, echo, voluminosity = TRUE)
+/proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global, wait = 0, voluminosity = TRUE)
 
 	soundin = get_sfx(soundin) // same sound for everyone
 
@@ -20,11 +20,11 @@
 			var/turf/T = get_turf(M)
 
 			if(T && T.z == turf_source.z)
-				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, is_global, wait, environment, echo, voluminosity)
+				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, is_global, wait, voluminosity)
 
 var/const/FALLOFF_SOUNDS = 0.5
 
-/mob/proc/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global, wait = 0, environment = -1, echo, voluminosity = TRUE)
+/mob/proc/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global, wait = 0, voluminosity = TRUE)
 	if(!src.client || ear_deaf > 0)
 		return FALSE
 	soundin = get_sfx(soundin)

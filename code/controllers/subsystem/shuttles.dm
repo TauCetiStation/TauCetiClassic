@@ -633,7 +633,7 @@ var/datum/subsystem/shuttle/SSshuttle
 			online = 1
 			return
 		else //makes it possible to send shuttle back.
-			captain_announce("The shuttle has been recalled.",,, "crew_shut_recalled")
+			captain_announce("The shuttle has been recalled.", sound = "crew_shut_recalled")
 			setdirection(-1)
 			online = 1
 			alert = 0 // set alert back to 0 after an admin recall
