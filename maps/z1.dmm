@@ -6606,6 +6606,9 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/effect/landmark/start{
+	name = "Security Cadet"
+	},
 /turf/simulated/floor{
 	icon_state = "red"
 	},
@@ -43829,6 +43832,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
+/obj/effect/landmark/start{
+	name = "Research Assistant"
+	},
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "warnwhite"
@@ -52862,6 +52868,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
+	},
+/obj/effect/landmark/start{
+	name = "Medical Intern"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -66275,6 +66284,9 @@
 	},
 /area/medical/hallway)
 "cGA" = (
+/obj/effect/landmark/start{
+	name = "Technical Assistant"
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "yellow"

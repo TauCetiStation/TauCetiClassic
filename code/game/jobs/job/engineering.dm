@@ -117,8 +117,8 @@
 	flag = TECHNICASSISTANT
 	department_flag = ENGSEC
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 3
+	spawn_positions = 3
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
 	idtype = /obj/item/weapon/card/id/eng
