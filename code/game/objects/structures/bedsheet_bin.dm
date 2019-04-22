@@ -28,24 +28,19 @@ LINEN BINS
 	add_fingerprint(user)
 	return
 
-/obj/item/weapon/bedsheet/verb/tear_to_rags()
-	set src in oview(1)
-	set name = "Tear to rags"
-	set desc = "Makes three rags"
-	set category = "Object"
-
-	if(usr.stat != CONSCIOUS)
+/obj/item/weapon/bedsheet/attackby(obj/item/I, mob/user)
+	. = ..()
+	if(!ishuman(user))
+		to_chat(user, "<span class='notice'>You try, but you can't.</span>")
 		return
-
-	if(!ishuman(usr))
-		to_chat(usr, "<span class='notice'>You try, but you can't.</span>")
+	if(I.sharp && istype(loc, /turf)) // you can cut only bedsheet lying on the floor
+		usr.visible_message("<span class='notice'>[usr] starts tearing \the [src] into rags.</span>", "<span class='notice'>You start tearing \the [src] into rags.</span>")
+		if(do_after(usr, 40, target = src))
+			usr.visible_message("<span class='notice'>[usr] tears \the [src] into rags using [I].</span>", "<span class='notice'>You finish tearing \the [src] into rags.</span>")
+			var/obj/item/stack/medical/bruise_pack/rags/R = new /obj/item/stack/medical/bruise_pack/rags(src.loc)
+			R.amount = 3
+			qdel(src)
 		return
-
-	usr.visible_message("<span class='notice'>[usr] starts tearing \the [src] into rags</span>", "<span class='notice'>You start tearing \the [src] into rags</span>")
-	if(do_after(usr, 40, target = src))
-		var/obj/item/stack/medical/bruise_pack/rags/R = new /obj/item/stack/medical/bruise_pack/rags(src.loc)
-		R.amount = 3
-		qdel(src)
 
 /obj/item/weapon/bedsheet/blue
 	icon_state = "sheetblue"
