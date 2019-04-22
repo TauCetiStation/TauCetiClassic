@@ -27,7 +27,7 @@
 
 #define NOBLOODY  512    // Used to items if they don't want to get a blood overlay.
 
-#define OPENCONTAINER  1024    // Is an open container for chemistry purposes.
+//#define OPENCONTAINER  1024    // Is an open container for chemistry purposes.~ Smalltasty, this was removed to reagents.dm
 
 #define BLOCK_GAS_SMOKE_EFFECT  2048    // Blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with ONESIZEFITSALL)
 #define ONESIZEFITSALL          2048
@@ -86,6 +86,7 @@
 #define PASSBLOB     8
 #define PASSCRAWL   16
 #define PASSMOB     32
+#define LETPASSTHROW 64 //something like 'throwpass' in adjacent.dm
 
 //turf-only flags
 #define NOJAUNT  1
