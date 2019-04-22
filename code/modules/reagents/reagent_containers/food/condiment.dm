@@ -1,8 +1,8 @@
-///-----------------------------------------------------//
-///														//
-///						Condiments						//
-///														//
-///-----------------------------------------------------//
+///------------//
+///            //
+/// Condiments //
+///            //
+///------------//
 //The condiments food-subtype is for stuff you don't actually eat but you use to modify existing food. They all
 //leave empty containers when used up and can be filled/re-filled with other items. Formatting for first section is identical
 //to mixed-drinks code. If you want an object that starts pre-loaded, you need to make it in addition to the other code.
@@ -29,7 +29,7 @@
 //	*Pepper mill
 //	*Honey pot
 //
-///-----------------------------------------------------//
+///-----------//
 
 /obj/item/weapon/reagent_containers/food/condiment
 	name = "Condiment Container"
@@ -110,22 +110,16 @@
 			return
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'> You transfer [trans] units of the condiment to [target].</span>")
-/*		if(istype(target, /obj/item/weapon/reagent_containers/food/snacks))
-			if(target.sauced_icon && target.icon_state == target.initial(icon_state))
-				if((target.get_reagent_amount("ketchup") > 1) || (target.get_reagent_amount("capsaicin") > 1))
-					target.icon_state = target.sauced_icon
-					target.desc = "[target.desc]<br><span class='rose'>It has [src] on it</span>"*/ // It will be implemented later on.
 
 /obj/item/weapon/reagent_containers/food/condiment/on_reagent_change()
-	if(!reagents.reagent_list.len && empty_icon)
+	if((!reagents || (reagents && !reagents.reagent_list.len)) && empty_icon)
 		icon_state = empty_icon
 		return
 
-	if(reagents) // So here we change the desc if condiment contains multiple reagents
-		if(reagents.reagent_list.len == 1)
-			desc = "Looks like it is [reagents.get_master_reagent_name()], but you are not sure."
-		else if(reagents.reagent_list.len > 0)
-			desc = "A mixture of various condiments. [reagents.get_master_reagent_name()] is one of them."
+	if(reagents.reagent_list.len == 1) // So here we change the desc if condiment contains multiple reagents
+		desc = "Looks like it is [reagents.get_master_reagent_name()], but you are not sure."
+	else if(reagents.reagent_list.len > 0)
+		desc = "A mixture of various condiments. [reagents.get_master_reagent_name()] is one of them."
 
 ///////////////////
 //Condiment Shelf//
@@ -159,7 +153,7 @@
 	var/turf/T = target
 	if(get_dist(T, user) > 1)
 		return
-	if(!iswallturf(T))
+	if(!istype(T, /turf/simulated/wall))
 		return
 	var/ndir = get_dir(user, T)
 	if(!(ndir in cardinal))
@@ -174,9 +168,11 @@
 	desc = "Its a small wooden shelf for spices and seasonings. Buon appetito!"
 	icon = 'icons/obj/cond_shelf.dmi'
 	icon_state = "cond_shelf"
-	anchored = 1
-	density = 0
-	opacity = 0
+	anchored = TRUE
+	density = FALSE
+	opacity = FALSE
+
+	var/max_items_inside = 6
 	var/list/can_be_placed = list(/obj/item/weapon/reagent_containers/food/condiment,
 								/obj/item/weapon/reagent_containers/food/condiment/sugar,
 								/obj/item/weapon/reagent_containers/food/condiment/rice,
@@ -194,7 +190,7 @@
 	if(mapload)
 		for(var/obj/item/I in loc)
 			if(I.type in can_be_placed)
-				if(contents.len < 6)
+				if(contents.len < max_items_inside)
 					I.loc = src
 	if(building)
 		pixel_x = (ndir & 3)? 0 : (ndir == EAST ? 32 : -32)
@@ -215,7 +211,7 @@
 		return
 
 	if(O.type in can_be_placed)
-		if(contents.len < 6)
+		if(contents.len < max_items_inside)
 			user.drop_item()
 			O.forceMove(src)
 			update_icon()
@@ -253,7 +249,7 @@
 		if(3.0)
 			if (prob(50))
 				for(var/obj/item/weapon/reagent_containers/food/condiment/b in contents)
-					b.loc = (get_turf(src))
+					b.forceMove(get_turf(src))
 				qdel(src)
 			return
 		else
@@ -266,7 +262,7 @@
 	var/cond_number = 0
 	for(var/obj/item/F in contents)
 		if(F.type in can_be_placed)
-			var/image/condiment = image(icon,"[initial(F.icon_state)]")
+			var/mutable_appearance/condiment = mutable_appearance(icon, "[initial(F.icon_state)]")
 			condiment.pixel_x += cond_number
 			overlays += condiment
 			cond_number += 4

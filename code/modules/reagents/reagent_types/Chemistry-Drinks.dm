@@ -474,6 +474,7 @@
 	taste_message = "honey"
 
 /datum/reagent/consumable/honey/on_general_digest(mob/living/M)
+	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(!holder)
@@ -485,7 +486,6 @@
 			M.heal_bodypart_damage(0, 2)
 		if(H.getToxLoss() && prob(50))
 			H.adjustToxLoss(-2)
-	..()
 
 //////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
 

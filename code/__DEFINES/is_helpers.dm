@@ -108,14 +108,6 @@
 
 #define istimer(O) (istype(O, /obj/item/device/assembly/timer))
 
-// TURFS
-
-#define isspaceturf(A) (istype(A, /turf/space))
-
-#define isfloorturf(A) (istype(A, /turf/simulated/floor))
-
-#define iswallturf(A) (istype(A, /turf/simulated/wall))
-
 // TOOLS HELPERS
 
 #define iswrench(A) istype(A, /obj/item/weapon/wrench)
