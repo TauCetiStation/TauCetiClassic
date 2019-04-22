@@ -147,6 +147,7 @@
 	desc = "Every time you look it makes you laugh."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "wooden_frame"
+	anchored = TRUE
 	var/obj/item/weapon/photo/framed
 	var/frame_type = /obj/item/weapon/picture_frame/wooden
 	var/health = 50
