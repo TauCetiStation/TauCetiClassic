@@ -123,6 +123,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/det_suit(H), SLOT_WEAR_SUIT)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/det_hat(H), SLOT_HEAD)
 	H.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(H), SLOT_L_STORE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/noir(H), SLOT_GLASSES)
 
 	if(visualsOnly)
 		return

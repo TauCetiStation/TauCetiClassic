@@ -480,10 +480,6 @@
 	icon_state = "trenchcoat_black"
 	item_state = "trenchcoat_black"
 
-/obj/item/clothing/suit/storage/det_suit/max_payne
-	desc = "An 20th-century multi-purpose trenchcoat. Someone who wears this means serious business."
-	icon_state = "maxcoat"
-
 /obj/item/clothing/suit/necromancer_hoodie
 	name = "necromancer hoodie"
 	desc = "This suit says to you 'hush'!"

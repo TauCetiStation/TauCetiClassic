@@ -145,9 +145,9 @@
 /obj/item/device/camera
 	name = "camera"
 	icon = 'icons/obj/items.dmi'
-	desc = "A polaroid camera. 10 photos left."
+	desc = "A polaroid camera."
 	icon_state = "camera"
-	item_state = "electropack"
+	item_state = "photocamera"
 	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
@@ -161,10 +161,17 @@
 	var/see_ghosts = 0 //for the spoop of it
 	var/photo_size = 3 //Default is 3x3. 1x1, 5x5, 7x7 are also options
 
+/obj/item/device/camera/atom_init()
+	. = ..()
+	update_desc()
+
 /obj/item/device/camera/spooky
 	name = "camera obscura"
 	desc = "A polaroid camera, some say it can see ghosts!"
 	see_ghosts = 1
+
+/obj/item/device/camera/proc/update_desc()
+	desc = "[initial(desc)]. [pictures_left ? "[pictures_left]" : "No"] photos left."
 
 /obj/item/device/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -184,10 +191,12 @@
 		if(pictures_left)
 			to_chat(user, "<span class='notice'>[src] still has some film in it!</span>")
 			return
-		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+		to_chat(user, "<span class='notice'>You insert [I] into \the [src].</span>")
 		user.drop_item()
 		qdel(I)
 		pictures_left = pictures_max
+		update_desc()
+		playsound(src, 'sound/items/insert_key.ogg', 50, 1)
 		return
 	..()
 
@@ -282,14 +291,17 @@
 	return list("mob_detail" = mob_detail, "names_detail" = names_detail)
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
-	if(!on || !pictures_left || ismob(target.loc))
+	if(!on || ismob(target.loc))
+		return
+	if(!pictures_left)
+		to_chat(user, "<span class='warning'>There is no photos left. Insert more camera film.</span>")
 		return
 	captureimage(target, user, flag)
 
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
 
 	pictures_left--
-	desc = "A polaroid camera. It has [pictures_left] photos left."
+	update_desc()
 	to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	icon_state = icon_off
 	on = 0
@@ -384,13 +396,19 @@
 
 	if(usr.incapacitated())
 		return
+	if(usr.get_active_hand() != src)
+		to_chat(usr, "You need to hold \the [src] in your active hand.")
+		return
 
-	if(photo_size == 3)
-		photo_size = 1
-		to_chat(usr, "<span class='info'>You zoom the camera in.</span>")
-	else
+	if(photo_size == 1)
 		photo_size = 3
-		to_chat(usr, "<span class='info'>You zoom the camera out.</span>")
+		to_chat(usr, "<span class='info'>You set the camera zoom to small.</span>")
+	else if(photo_size == 3)
+		photo_size = 5
+		to_chat(usr, "<span class='info'>You set the camera zoom to normal.</span>")
+	else
+		photo_size = 1
+		to_chat(usr, "<span class='info'>You set the camera zoom to big.</span>")
 
 /obj/item/device/camera/AltClick()
 	set_zoom()
