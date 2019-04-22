@@ -72,7 +72,7 @@
 		return 0
 	var/title = "Sheet-Glass"
 	title += " ([get_amount()] sheet\s left)"
-	switch(input(title, "What would you like to make?", "One Direction") in list("One Direction", "Full Window", "Glass Table Parts", "Cancel"))
+	switch(input(title, "What would you like to make?", "One Direction") in list("One Direction", "Full Window", "Glass Table Parts", "Fishbowl", "Fish tank", "Wall aquariam","Cancel"))
 		if("One Direction")
 			if(QDELETED(src))
 				return 1
@@ -142,6 +142,33 @@
 				return 1
 
 			new /obj/item/weapon/table_parts/glass(user.loc)
+		if("Fishbowl")
+			if(QDELETED(src))
+				return 1
+			if(src.loc != user)
+				return 1
+			if(!src.use(1))
+				to_chat(user, "\red You need more glass to do that.")
+				return 1
+			new /obj/machinery/fishtank/bowl(user.loc)
+		if("Fish tank")
+			if(QDELETED(src))
+				return 1
+			if(src.loc != user)
+				return 1
+			if(!src.use(3))
+				to_chat(user, "\red You need more glass to do that.")
+				return 1
+			new /obj/machinery/fishtank/tank(user.loc)
+		if("Wall aquariam")
+			if(QDELETED(src))
+				return 1
+			if(src.loc != user)
+				return 1
+			if(!src.use(4))
+				to_chat(user, "\red You need more glass to do that.")
+				return 1
+			new /obj/machinery/fishtank/wall(user.loc)
 	return 0
 
 /obj/item/stack/sheet/glass/after_throw(datum/callback/callback)

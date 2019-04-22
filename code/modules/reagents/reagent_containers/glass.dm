@@ -45,7 +45,8 @@
 		/obj/machinery/biogenerator,
 		/obj/machinery/hydroponics,
 		/obj/machinery/constructable_frame,
-		/obj/item/clothing/suit/space/rig)
+		/obj/item/clothing/suit/space/rig,
+		/obj/machinery/fishtank)
 
 /obj/item/weapon/reagent_containers/glass/atom_init()
 	. = ..()
@@ -60,10 +61,10 @@
 	..()
 	if (is_open_container())
 		to_chat(usr, "<span class = 'notice'>You put the lid on \the [src].</span>")
-		flags ^= OPENCONTAINER
+		flags ^= REFILLABLE | DRAINABLE
 	else
 		to_chat(usr, "<span class = 'notice'>You take the lid off \the [src].</span>")
-		flags |= OPENCONTAINER
+		flags |= REFILLABLE | DRAINABLE
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/afterattack(obj/target, mob/user , flag)

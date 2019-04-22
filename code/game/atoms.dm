@@ -134,8 +134,19 @@
 // returns true if open
 // false if closed
 /atom/proc/is_open_container()
-	return flags & OPENCONTAINER
+	return is_refillable() && is_drainable()
 
+/atom/proc/is_injectable(allowmobs = TRUE)
+	return reagents && (flags & (INJECTABLE | REFILLABLE))
+
+/atom/proc/is_drawable(allowmobs = TRUE)
+	return reagents && (flags & (DRAWABLE | DRAINABLE))
+
+/atom/proc/is_refillable()
+	return reagents && (flags & REFILLABLE)
+
+/atom/proc/is_drainable()
+	return reagents && (flags & DRAINABLE)
 /*//Convenience proc to see whether a container can be accessed in a certain way.
 
 /atom/proc/can_subract_container()
