@@ -158,7 +158,7 @@
 	var/ndir = get_dir(user, T)
 	if(!(ndir in cardinal))
 		return
-	user.visible_message("<span class='notice'>[user] fastens [src] to \the [T].</span>", \
+	user.visible_message("<span class='notice'>[user] fastens [src] to \the [T].</span>",
 						 "<span class='notice'>You attach [src] to \the [T].</span>")
 	new /obj/structure/condiment_shelf(get_turf(user), ndir, 1)
 	qdel(src)
