@@ -37,7 +37,10 @@
 			open(TRUE)
 	if(ismultitool(C) && hasPower() && !density)
 		var/obj/item/device/multitool/M = C
-		if(src in M.poddoors_buffer)
+		var/turf/turf = get_turf(src)
+		if(turf.z != 1 && turf.z != 5)
+			to_chat(user, "<span class='warning'>This poddoor cannot be connected!</span>")
+		else if(src in M.poddoors_buffer)
 			to_chat(user, "<span class='warning'>This poddoor is already in the buffer!</span>")
 		else if(M.poddoors_buffer.len >= M.buffer_limit)
 			to_chat(user, "<span class='warning'>The multitool's buffer is full!</span>")

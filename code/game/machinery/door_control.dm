@@ -1,6 +1,11 @@
 #define DOOR_CONTROL_COMPLETE 1
 #define DOOR_CONTROL_WITHOUT_WIRES 0
 
+#define OPEN    1
+#define BOLTS   2
+#define SHOCK   4
+#define SAFE    8
+
 /obj/machinery/door_control
 	name = "remote door control"
 	desc = "It controls doors, remotely."
@@ -470,3 +475,8 @@
 
 #undef DOOR_CONTROL_COMPLETE
 #undef DOOR_CONTROL_WITHOUT_WIRES
+
+#undef OPEN
+#undef BOLTS
+#undef SHOCK
+#undef SAFE

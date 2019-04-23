@@ -43,6 +43,22 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 	. += "<a href='?src=\ref[src];buffer=1'>Save to the buffer of you multitool</a>"
 	. += "</fieldset>"
 
+/datum/wires/airlock/Topic(href, href_list)
+	..()
+	if(href_list["buffer"])
+		var/obj/item/I = usr.get_active_hand()
+		if(ismultitool(I))
+			var/obj/item/device/multitool/M = I
+			if(holder in M.airlocks_buffer)
+				to_chat(usr, "<span class='warning'>This airlock is already in the buffer!</span>")
+			else if(M.airlocks_buffer.len >= M.buffer_limit)
+				to_chat(usr, "<span class='warning'>The multitool's buffer is full!</span>")
+			else
+				M.airlocks_buffer += holder
+				to_chat(usr, "<span class='notice'>You save this airlock to the buffer of your multitool.</span>")
+		else
+			to_chat(usr, "<span class='warning'>You need a multitool!</span>")
+
 /datum/wires/airlock/update_cut(index, mended)
 	var/obj/machinery/door/airlock/A = holder
 
