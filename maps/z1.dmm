@@ -33644,7 +33644,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
-	req_access = "71";
+	req_access = null;
+	req_access_txt = "71";
 	req_one_access_txt = null
 	},
 /obj/structure/cable{
@@ -33667,7 +33668,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
-	req_access = "71";
+	req_access = null;
+	req_access_txt = "71";
 	req_one_access_txt = null
 	},
 /turf/simulated/floor,
@@ -43802,7 +43804,7 @@
 "bFM" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medical Supplies";
-	req_access_txt = "5"
+	req_access_txt = "72"
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -50692,7 +50694,8 @@
 	dir = 4;
 	icon_state = "left";
 	name = "Engineering Moniter Station";
-	req_access_txt = "71"
+	req_access_txt = "71";
+	req_one_access = null
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -51552,7 +51555,8 @@
 /area/hallway/primary/central)
 "bXv" = (
 /obj/structure/window/reinforced{
-	dir = 8
+	dir = 8;
+	req_access_txt = "72"
 	},
 /obj/machinery/door/window/southright{
 	dir = 4;
@@ -52100,7 +52104,8 @@
 	},
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
-	req_access = "71";
+	req_access = null;
+	req_access_txt = "71";
 	req_one_access_txt = "null"
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/red{
@@ -52403,7 +52408,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
-	req_access = "71";
+	req_access = null;
+	req_access_txt = "71";
 	req_one_access_txt = null
 	},
 /obj/structure/cable{
