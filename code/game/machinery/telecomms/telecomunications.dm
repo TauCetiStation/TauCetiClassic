@@ -538,7 +538,9 @@
 
 			if(traffic > 0)
 				totaltraffic += traffic // add current traffic to total traffic
-/*
+
+/* This part of the code collects the data, which basically useless now, so why would we want to waste our time on this? (Fix telecomm machinery plz)
+
 			//Is this a test signal? Bypass logging
 			if(signal.data["type"] != 4)
 
