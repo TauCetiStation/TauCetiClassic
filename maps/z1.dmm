@@ -33644,7 +33644,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
-	req_access = "71";
+	req_access = null;
+	req_access_txt = "71";
 	req_one_access_txt = null
 	},
 /obj/structure/cable{
@@ -33667,7 +33668,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
-	req_access = "71";
+	req_access = null;
+	req_access_txt = "71";
 	req_one_access_txt = null
 	},
 /turf/simulated/floor,
@@ -43802,7 +43804,7 @@
 "bFM" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medical Supplies";
-	req_access_txt = "5"
+	req_access_txt = "72"
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -49526,7 +49528,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research/glass{
 	name = "Genetics Lab";
-	req_access_txt = "5; 9"
+	req_access_txt = "9";
+	req_one_access_txt = null
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -50692,7 +50695,8 @@
 	dir = 4;
 	icon_state = "left";
 	name = "Engineering Moniter Station";
-	req_access_txt = "71"
+	req_access_txt = "71";
+	req_one_access = null
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -51517,7 +51521,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/southright{
 	name = "Genetics Desk";
-	req_access_txt = "5; 9"
+	req_access_txt = "0";
+	req_one_access_txt = "47; 9"
 	},
 /obj/item/weapon/bell,
 /turf/simulated/floor/plating,
@@ -51552,7 +51557,8 @@
 /area/hallway/primary/central)
 "bXv" = (
 /obj/structure/window/reinforced{
-	dir = 8
+	dir = 8;
+	req_access_txt = "72"
 	},
 /obj/machinery/door/window/southright{
 	dir = 4;
@@ -52100,7 +52106,8 @@
 	},
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
-	req_access = "71";
+	req_access = null;
+	req_access_txt = "71";
 	req_one_access_txt = "null"
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/red{
@@ -52403,7 +52410,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
-	req_access = "71";
+	req_access = null;
+	req_access_txt = "71";
 	req_one_access_txt = null
 	},
 /obj/structure/cable{
@@ -60265,7 +60273,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
 	name = "Research Division Access";
-	req_access_txt = "47"
+	req_access_txt = "0";
+	req_one_access_txt = "47; 9"
 	},
 /turf/simulated/floor,
 /area/medical/genetics)
@@ -68889,7 +68898,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical{
 	name = "Morgue";
-	req_access_txt = "5; 9"
+	req_access_txt = "9"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -73714,7 +73723,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research/glass{
 	name = "Genetics Lab";
-	req_access_txt = "5; 9"
+	req_access_txt = "9";
+	req_one_access_txt = null
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
