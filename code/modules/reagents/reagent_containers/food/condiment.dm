@@ -238,22 +238,17 @@
 			for(var/obj/item/weapon/reagent_containers/food/condiment/b in contents)
 				qdel(b)
 			qdel(src)
-			return
 		if(2.0)
 			for(var/obj/item/weapon/reagent_containers/food/condiment/b in contents)
 				if(prob(50))
 					b.forceMove(get_turf(src))
 				else qdel(b)
 			qdel(src)
-			return
 		if(3.0)
-			if (prob(50))
+			if(prob(50))
 				for(var/obj/item/weapon/reagent_containers/food/condiment/b in contents)
 					b.forceMove(get_turf(src))
 				qdel(src)
-			return
-		else
-	return
 
 /obj/structure/condiment_shelf/update_icon()
 	overlays.Cut()
