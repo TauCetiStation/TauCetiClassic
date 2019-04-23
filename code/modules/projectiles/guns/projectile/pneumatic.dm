@@ -129,6 +129,7 @@
 	var/speed = ((fire_pressure*tank.volume)/object.w_class)/force_divisor //projectile speed.
 	if(speed>80) speed = 80 //damage cap.
 
+	playsound(src, 'sound/weapons/guns/gunshot_pneumaticgun.ogg', 100, 1, -2)
 	user.visible_message("<span class='danger'>[user] fires [src] and launches [object] at [target]!</span>","<span class='danger'>You fire [src] and launch [object] at [target]!</span>")
 
 	src.remove_from_storage(object,user.loc)

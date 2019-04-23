@@ -182,7 +182,7 @@
 /obj/item/weapon/magic/arcane_barrage
 	name = "arcane barrage"
 	desc = "Pew Pew Pew"
-	s_fire = 'sound/weapons/emitter.ogg'
+	s_fire = 'sound/weapons/guns/gunpulse_emitter.ogg'
 	icon_state = "arcane_barrage"
 	item_state = "arcane_barrage"
 	uses = 30
