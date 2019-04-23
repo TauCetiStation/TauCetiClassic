@@ -49528,7 +49528,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research/glass{
 	name = "Genetics Lab";
-	req_access_txt = "5; 9"
+	req_access_txt = "9";
+	req_one_access_txt = null
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -51520,7 +51521,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/southright{
 	name = "Genetics Desk";
-	req_access_txt = "5; 9"
+	req_access_txt = "0";
+	req_one_access_txt = "47; 9"
 	},
 /obj/item/weapon/bell,
 /turf/simulated/floor/plating,
@@ -60271,7 +60273,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
 	name = "Research Division Access";
-	req_access_txt = "47"
+	req_access_txt = "0";
+	req_one_access_txt = "47; 9"
 	},
 /turf/simulated/floor,
 /area/medical/genetics)
@@ -68895,7 +68898,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical{
 	name = "Morgue";
-	req_access_txt = "5; 9"
+	req_access_txt = "9"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -73720,7 +73723,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research/glass{
 	name = "Genetics Lab";
-	req_access_txt = "5; 9"
+	req_access_txt = "9";
+	req_one_access_txt = null
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
