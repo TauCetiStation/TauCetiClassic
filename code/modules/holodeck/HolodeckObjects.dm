@@ -186,7 +186,7 @@
 	qdel(src)
 
 /obj/structure/stool/bed/chair/holochair
-	icon_state = "chair_g"
+	icon_state = "chair_gray"
 
 /obj/structure/stool/bed/chair/holochair/attackby(obj/item/weapon/W, mob/user)
 	if(iswrench(W))
