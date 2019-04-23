@@ -153,7 +153,7 @@
 /obj/item/clothing/suit/armor/swat/officer
 	name = "officer jacket"
 	desc = "An armored jacket used in special operations."
-	icon_state = "detective"
+	icon_state = "detective_brown"
 	item_state = "det_suit"
 	blood_overlay_type = "coat"
 	flags_inv = 0
