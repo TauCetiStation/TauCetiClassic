@@ -402,13 +402,13 @@
 
 	if(photo_size == 1)
 		photo_size = 3
-		to_chat(usr, "<span class='info'>You set the camera zoom to small.</span>")
+		to_chat(usr, "<span class='info'>You set the camera zoom to normal.</span>")
 	else if(photo_size == 3)
 		photo_size = 5
-		to_chat(usr, "<span class='info'>You set the camera zoom to normal.</span>")
+		to_chat(usr, "<span class='info'>You set the camera zoom to big.</span>")
 	else
 		photo_size = 1
-		to_chat(usr, "<span class='info'>You set the camera zoom to big.</span>")
+		to_chat(usr, "<span class='info'>You set the camera zoom to small.</span>")
 
 /obj/item/device/camera/AltClick()
 	set_zoom()
