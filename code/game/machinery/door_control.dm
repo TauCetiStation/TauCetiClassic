@@ -139,7 +139,7 @@
 						to_chat(user, "<span class='warning'>Access Denied.</span>")
 						return
 				else if(ismultitool(W) && !(stat & NOPOWER))
-					if(!controls_locked || emagged)
+					if(!controls_locked || emagged || issilicon(user))
 						set_up_door_control(user)
 						update_icon()
 						return
