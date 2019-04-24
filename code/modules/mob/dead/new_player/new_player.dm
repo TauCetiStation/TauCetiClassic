@@ -365,32 +365,113 @@ commented cause polls are kinda broken now, needs refactoring */
 
 /mob/dead/new_player/proc/LateChoices()
 	var/mills = world.time // 1/10 of a second, not real milliseconds but whatever
-	//var/secs = ((mills % 36000) % 600) / 10 //Not really needed, but I'll leave it here for refrence.. or something
-	var/mins = (mills % 36000) / 600
-	var/hours = mills / 36000
+	var/mins = round((mills % 36000) / 600)
+	var/hours = round(mills / 36000)
+	var/which_time_is_it = ""
+	if(mins == 1)
+		which_time_is_it = "<b>[mins]</b> minute."
+	else
+		which_time_is_it = "<b>[mins]</b> minutes."
+	if(hours)
+		if(hours == 1)
+			which_time_is_it = "<b>[hours]</b> hour and [which_time_is_it]"
+		else
+			which_time_is_it = "<b>[hours]</b> hours and [which_time_is_it]"
 
-	var/dat = "<html><body><center>"
-	dat += "Round Duration: [round(hours)]h [round(mins)]m<br>"
+	var/dat = "<div class='notice'>Round Duration: [which_time_is_it]</div>"
 
-	if(SSshuttle) //In case Nanotrasen decides reposess CentComm's shuttles.
-		if(SSshuttle.direction == 2) //Shuttle is going to centcomm, not recalled
-			dat += "<font color='red'><b>The station has been evacuated.</b></font><br>"
-		if(SSshuttle.direction == 1 && SSshuttle.timeleft() < 300 && SSshuttle.alert == 0) // Emergency shuttle is past the point of no recall
-			dat += "<font color='red'>The station is currently undergoing evacuation procedures.</font><br>"
-		if(SSshuttle.direction == 1 && SSshuttle.alert == 1) // Crew transfer initiated
-			dat += "<font color='red'>The station is currently undergoing crew transfer procedures.</font><br>"
-
-	dat += "Choose from the following open positions:<br>"
+	if(SSshuttle) // In case Nanotrasen decides reposess CentComm's shuttles.
+		switch(SSshuttle.direction)
+			if(2) // Shuttle is going to centcomm, not recalled
+				dat += "<div class='notice red'>The station has been evacuated.</div><br>"
+			if(1)
+				if(SSshuttle.timeleft() < 300 && SSshuttle.alert == 0) // Emergency shuttle is past the point of no recall
+					dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
+				else if(SSshuttle.alert == 1) // Crew transfer initiated
+					dat += "<div class='notice red'>The station is currently undergoing crew transfer procedures.</div><br>"
+	var/available_job_count = 0
+	var/number_of_extra_line_breaks = 0 // We will need it in the end.
 	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobAvailable(job.title))
-			var/active = 0
-			// Only players with the job assigned and AFK for less than 10 minutes count as active
-			for(var/mob/M in player_list) if(M.mind && M.client && M.mind.assigned_role == job.title && M.client.inactivity <= 10 * 60 * 10)
-				active++
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions]) (Active: [active])</a><br>"
+			available_job_count++
 
-	dat += "</center>"
-	src << browse(entity_ja(dat), "window=latechoices;size=300x640;can_close=1")
+	if(!available_job_count)
+		dat += "<div class='notice red'>There are currently no open positions!</div>"
+	else
+		dat += "<div class='clearBoth'>Choose from the following open positions:</div>"
+		var/list/categorizedJobs = list(
+			"Command" = list(jobs = list(), titles = command_positions, color = "#aac1ee"),
+			"Engineering" = list(jobs = list(), titles = engineering_positions, color = "#ffd699"),
+			"Security" = list(jobs = list(), titles = security_positions, color = "#ff9999"),
+			"Miscellaneous" = list(jobs = list(), titles = list(), color = "#ffffff", colBreak = TRUE),
+			"Synthetic" = list(jobs = list(), titles = nonhuman_positions, color = "#ccffcc"),
+			"Service" = list(jobs = list(), titles = civilian_positions, color = "#cccccc"),
+			"Medical" = list(jobs = list(), titles = medical_positions, color = "#99ffe6", colBreak = TRUE),
+			"Science" = list(jobs = list(), titles = science_positions, color = "#e6b3e6"),
+		)
+
+		for(var/datum/job/job in SSjob.occupations)
+			if(job && IsJobAvailable(job.title))
+				var/categorized = FALSE
+				for(var/jobcat in categorizedJobs)
+					var/list/jobs = categorizedJobs[jobcat]["jobs"]
+					if(job.title in categorizedJobs[jobcat]["titles"])
+						categorized = TRUE
+						if(jobcat == "Command")
+
+							if(job.title == "Captain") // Put captain at top of command jobs
+								jobs.Insert(1, job)
+							else
+								jobs += job
+						else // Put heads at top of non-command jobs
+							if(job.title in command_positions)
+								jobs.Insert(1, job)
+							else
+								jobs += job
+				if(!categorized)
+					categorizedJobs["Miscellaneous"]["jobs"] += job
+
+
+		dat += "<table><tr><td valign='top'>"
+		for(var/jobcat in categorizedJobs)
+			if(categorizedJobs[jobcat]["colBreak"])
+				dat += "</td><td valign='top'>"
+			if(!length(categorizedJobs[jobcat]["jobs"]))
+				continue
+			var/color = categorizedJobs[jobcat]["color"]
+			dat += "<fieldset style='border: 2px solid [color]; display: inline'>"
+			dat += "<legend align='center' style='color: [color]'>[jobcat]</legend>"
+			for(var/datum/job/job in categorizedJobs[jobcat]["jobs"])
+				var/position_class = "otherPosition"
+				if(job.title in command_positions)
+					position_class = "commandPosition"
+				var/active = 0
+				if(job.current_positions) // If theres any people on this job already, we check if they are active and display it
+					for(var/mob/M in player_list) // Only players with the job assigned and AFK for less than 10 minutes count as active
+						if(M.mind && M.client && M.mind.assigned_role == job.title && M.client.inactivity <= 10 * 60 * 10)
+							active++
+				if(job.current_positions && active < job.current_positions)
+					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])<br><i>(Active: [active])</i></a>"
+					number_of_extra_line_breaks++
+				else
+					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a>"
+				categorizedJobs[jobcat]["jobs"] -= job
+
+			dat += "</fieldset><br>"
+		dat += "</td></tr></table></center>"
+		dat += "</div></div>"
+
+	// Removing the old window method but leaving it here for reference
+	//src << browse(entity_ja(dat), "window=latechoices;size=300x640;can_close=1")
+
+	// Added the new browser window method
+	var/accurate_length = 600
+	if(number_of_extra_line_breaks) // We will expand window length for each <br>(Active: [active]) until its reaches 700 (worst cases)
+		accurate_length = min(700, accurate_length + (number_of_extra_line_breaks * 8))
+	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 680, accurate_length)
+	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
+	popup.set_content(dat)
+	popup.open(FALSE) // FALSE is passed to open so that it doesn't use the onclose() proc
 
 
 /mob/dead/new_player/proc/create_character()
