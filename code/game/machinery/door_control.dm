@@ -17,6 +17,7 @@
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
+	allowed_checks = ALLOWED_CHECK_A_HAND
 	var/id = null
 	var/list/obj/machinery/door/airlock/connected_airlocks = list()
 	var/list/obj/machinery/door/poddoor/connected_poddoors = list()
@@ -24,9 +25,9 @@
 	var/range = 20
 	var/specialfunctions = OPEN
 	var/wiresexposed = FALSE
-	var/locked = TRUE
+	var/panel_locked = TRUE
+	var/controls_locked = TRUE
 	var/buildstage = DOOR_CONTROL_COMPLETE
-	var/door_control_access = null
 	var/accesses_showed = FALSE
 	var/modes_showed = FALSE
 	var/const/max_connections = 16
@@ -36,17 +37,14 @@
 	if(building)
 		buildstage = DOOR_CONTROL_WITHOUT_WIRES
 		wiresexposed = TRUE
-		locked = FALSE
-		req_access = list(access_engine)
+		panel_locked = FALSE
+		req_access = list()
 		pixel_x = (dir & 3) ? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3) ? (dir == 1 ? -24 : 24) : 0
 		icon_state = "doorctrl_assembly0"
 		return
 	else
-		req_access = list()
-		if(text2num(req_access_txt))
-			req_access += text2num(req_access_txt)
-			req_access_txt = null
+		generate_access_lists()
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/door_control/atom_init_late()
@@ -77,6 +75,8 @@
 				icon_state = "doorctrl_assembly1"
 				if(stat & NOPOWER)
 					return
+				else if(emagged)
+					overlays += image('icons/obj/stationobjs.dmi', "doorctrl_assembly-emagged")
 				else if(connected_poddoors.len || connected_airlocks.len)
 					overlays += image('icons/obj/stationobjs.dmi', "doorctrl_assembly-is_id")
 					return
@@ -94,32 +94,28 @@
 /obj/machinery/door_control/attackby(obj/item/weapon/W, mob/user)
 	switch(buildstage)
 		if(DOOR_CONTROL_COMPLETE)
+			if(istype(W, /obj/item/weapon/card/emag))
+				emagged = TRUE
+				playsound(src, "sparks", 100, 1)
+				update_icon()
+				return
 			if(!wiresexposed)
 				if(istype(W, /obj/item/device/detective_scanner))
 					return
-				else if(istype(W, /obj/item/weapon/card/emag))
-					emagged = TRUE
-					if(locked)
-						locked = FALSE
-					playsound(src, "sparks", 100, 1)
-					return
 				else if(isscrewdriver(W))
-					if(locked && !issilicon(user) && !(stat & NOPOWER))
+					if(panel_locked && !issilicon(user) && !(stat & NOPOWER) && !emagged)
 						to_chat(user, "<span class='warning'>The panel is locked</span>")
 						return
 					wiresexposed = TRUE
-					if(req_access.len)
-						door_control_access = req_access[1]
-					req_access = list(access_engine)
 					accesses_showed = FALSE
 					modes_showed = FALSE
 					update_icon()
 					return
-				else if(istype(W, /obj/item/weapon/card/id) && !(stat & NOPOWER))
+				else if(istype(W, /obj/item/weapon/card/id) && !(stat & NOPOWER) && !emagged)
 					var/obj/item/weapon/card/id/card = W
 					if(access_engine in card.access)
-						locked = !locked
-						to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the pannel</span>")
+						panel_locked = !panel_locked
+						to_chat(user, "<span class='notice'>You [panel_locked ? "lock" : "unlock"] the pannel</span>")
 						return
 					else
 						to_chat(user, "<span class='warning'>Access Denied.</span>")
@@ -129,20 +125,26 @@
 			else
 				if(isscrewdriver(W))
 					wiresexposed = FALSE
-					req_access.Cut()
-					if(door_control_access)
-						req_access += door_control_access
-					if(!emagged)
-						locked = TRUE
+					panel_locked = TRUE
+					controls_locked = TRUE
 					update_icon()
 					return
+				else if(istype(W, /obj/item/weapon/card/id) && !(stat & NOPOWER) && !emagged)
+					var/obj/item/weapon/card/id/card = W
+					if(access_engine in card.access)
+						controls_locked = !controls_locked
+						to_chat(user, "<span class='notice'>You [controls_locked ? "lock" : "unlock"] controls</span>")
+						return
+					else
+						to_chat(user, "<span class='warning'>Access Denied.</span>")
+						return
 				else if(ismultitool(W) && !(stat & NOPOWER))
-					if(allowed(usr))
+					if(!controls_locked || emagged)
 						set_up_door_control(user)
 						update_icon()
 						return
 					else
-						to_chat(usr, "<span class='warning'>Access Denied.</span>")
+						to_chat(usr, "<span class='warning'>Controls are locked!</span>")
 						return
 				else if(iswirecutter(W))
 					to_chat(user, "You remove wires from the door control frame.")
@@ -150,10 +152,11 @@
 					new /obj/item/stack/cable_coil/random(loc, 1)
 					connected_airlocks.Cut()
 					connected_poddoors.Cut()
+					req_access.Cut()
 					specialfunctions = OPEN
 					accesses_showed = FALSE
 					modes_showed = FALSE
-					door_control_access = null
+					emagged = FALSE
 					buildstage = DOOR_CONTROL_WITHOUT_WIRES
 					update_icon()
 					return
@@ -187,7 +190,7 @@
 		setup_menu += "<b><a href='?src=\ref[src];show_accesses=1'>Show access restrictions setup</a></b><br>"
 	else
 		setup_menu += "<b><a href='?src=\ref[src];show_accesses=1'>Hide access restrictions setup</a></b><ul>"
-		if(!door_control_access)
+		if(!req_access.len)
 			setup_menu +="<li><b><a style='color: green' href='?src=\ref[src];none=1'>None</a></b></li>"
 		else
 			setup_menu +="<li><a href='?src=\ref[src];none=1'>None</a></li>"
@@ -195,7 +198,7 @@
 		for (var/acc in accesses)
 			var/acc_desc = get_access_desc(acc)
 			if(acc_desc)
-				if(acc == door_control_access)
+				if(acc in req_access)
 					setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];access=[acc]'>[acc_desc]</a></b></li>"
 				else
 					setup_menu += "<li><a href='?src=\ref[src];access=[acc]'>[acc_desc]</a></li>"
@@ -252,11 +255,13 @@
 	if(href_list["show_modes"])
 		modes_showed = !modes_showed
 	if(href_list["access"])
-		door_control_access = text2num(href_list["access"])
-		usr << browse(null, "window=door_control")
+		var/acc = text2num(href_list["access"])
+		if(acc in req_access)
+			req_access -= acc
+		else
+			req_access += acc
 	if(href_list["none"])
-		door_control_access = null
-		usr << browse(null, "window=door_control")
+		req_access.Cut()
 	if(href_list["mode"])
 		specialfunctions = text2num(href_list["mode"])
 	if(href_list["load"])
