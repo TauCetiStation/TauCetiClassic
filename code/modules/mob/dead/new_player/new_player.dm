@@ -457,7 +457,7 @@ commented cause polls are kinda broken now, needs refactoring */
 					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a>"
 				categorizedJobs[jobcat]["jobs"] -= job
 
-			dat += "</fieldset><br></center>"
+			dat += "</fieldset><br>"
 		dat += "</td></tr></table>"
 		dat += "</div></div>"
 
