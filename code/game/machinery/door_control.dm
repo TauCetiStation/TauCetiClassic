@@ -98,9 +98,7 @@
 				if(istype(W, /obj/item/device/detective_scanner))
 					return
 				else if(istype(W, /obj/item/weapon/card/emag))
-					req_access.Cut()
-					user.SetNextMove(CLICK_CD_INTERACT)
-					req_one_access.Cut()
+					emagged = TRUE
 					if(locked)
 						locked = FALSE
 					playsound(src, "sparks", 100, 1)
@@ -134,7 +132,8 @@
 					req_access.Cut()
 					if(door_control_access)
 						req_access += door_control_access
-					locked = TRUE
+					if(!emagged)
+						locked = TRUE
 					update_icon()
 					return
 				else if(ismultitool(W) && !(stat & NOPOWER))
@@ -306,8 +305,8 @@
 			to_chat(usr, "<span class='warning'>There's no door data recorded.</span>")
 		else
 			var/obj/item/device/multitool/M = usr.get_active_hand()
-			M.airlocks_buffer = connected_airlocks
-			M.poddoors_buffer = connected_poddoors
+			M.airlocks_buffer = connected_airlocks.Copy()
+			M.poddoors_buffer = connected_poddoors.Copy()
 			to_chat(usr, "<span class='notice'>You copy data.</span>")
 	if(href_list["clear"])
 		if(!connected_airlocks.len && !connected_poddoors.len)
