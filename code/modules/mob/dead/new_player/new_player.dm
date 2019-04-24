@@ -457,8 +457,8 @@ commented cause polls are kinda broken now, needs refactoring */
 					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a>"
 				categorizedJobs[jobcat]["jobs"] -= job
 
-			dat += "</fieldset><br>"
-		dat += "</td></tr></table></center>"
+			dat += "</fieldset><br></center>"
+		dat += "</td></tr></table>"
 		dat += "</div></div>"
 
 	// Removing the old window method but leaving it here for reference
