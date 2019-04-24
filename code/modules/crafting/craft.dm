@@ -267,7 +267,7 @@
 		else
 			while(partlist[A] > 0)
 				var/atom/movable/AM = locate(A) in Deletion
-				if(istype(A, /obj))
+				if(isobj(A))
 					var/obj/O = A
 					AM.color = O.color
 				. += AM
