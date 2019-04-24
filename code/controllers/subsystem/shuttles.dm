@@ -420,7 +420,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.", sound = "emer_shut_left")
 				else
-					captain_announce("The Crew Transfer Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.", "crew_shut_left")
+					captain_announce("The Crew Transfer Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.", sound = "crew_shut_left")
 
 				return 1
 
