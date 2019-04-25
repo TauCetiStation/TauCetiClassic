@@ -33,7 +33,7 @@
 	. += "]"
 
 /json_writer/proc/write_string(txt)
-	var/static/list/json_escape = list("\\", "\"", "'", "\n")
+	var/static/list/json_escape = list("\\", "\"", "'", "\n", "\t")
 	for(var/targ in json_escape)
 		var/start = 1
 		while(start <= lentext(txt))
@@ -42,6 +42,9 @@
 				break
 			if(targ == "\n")
 				txt = copytext(txt, 1, i) + "\\n" + copytext(txt, i+2)
+				start = i + 1 // 1 character added
+			if(targ == "\t")
+				txt = copytext(txt, 1, i) + "\\t" + copytext(txt, i+2)
 				start = i + 1 // 1 character added
 			if(targ == "'")
 				txt = copytext(txt, 1, i) + "`" + copytext(txt, i+1) // apostrophies fuck shit up...
