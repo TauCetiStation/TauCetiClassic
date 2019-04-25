@@ -46417,6 +46417,8 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/item/weapon/circuitboard/access_controller,
+/obj/item/weapon/circuitboard/airlock_controller,
 /turf/simulated/floor/plating,
 /area/storage/tech)
 "bLZ" = (

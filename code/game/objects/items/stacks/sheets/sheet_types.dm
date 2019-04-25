@@ -82,6 +82,15 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	new/datum/stack_recipe("fire alarm frame", /obj/item/firealarm_frame, 2),
 	new/datum/stack_recipe("metal picture frame", /obj/item/weapon/picture_frame/metal, 1, time = 15),
 	null,
+	new/datum/stack_recipe_list("airlock controllers", list(
+		new/datum/stack_recipe("access controller", /obj/item/embedded_controller_assembly/access_controller, 2),
+		new/datum/stack_recipe("airlock controller", /obj/item/embedded_controller_assembly/airlock_controller, 2),
+		new/datum/stack_recipe("advanced airlock controller", /obj/item/embedded_controller_assembly/advanced_airlock_controller, 3),
+		null,
+		new/datum/stack_recipe("airlock sensor", /obj/item/airlock_sensor_assembly, 1),
+		new/datum/stack_recipe("access button", /obj/item/access_button_assembly, 1)
+		), 2),
+	null,
 	new/datum/stack_recipe("metal door", /obj/structure/mineral_door/metal, 20, one_per_turf = TRUE, on_floor = TRUE)
 )
 

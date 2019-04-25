@@ -1552,6 +1552,33 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/minefab
 
+/datum/design/access_controller
+	name = "Circuit Board (Access Controller)"
+	desc = "Used for building airlock controllers."
+	id = "access_controller"
+	req_tech = list("programming" = 3, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/access_controller
+
+/datum/design/airlock_controller
+	name = "Circuit Board (Airlock Controller)"
+	desc = "Used for building airlock controllers."
+	id = "airlock_controller"
+	req_tech = list("programming" = 3, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/airlock_controller
+
+/datum/design/advanced_airlock_controller
+	name = "Circuit Board (Advanced Airlock Controller)"
+	desc = "Used for building advanced airlock controllers."
+	id = "advanced_airlock_controller"
+	req_tech = list("programming" = 4, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/advanced_airlock_controller
+
 /////////////////////////////////////////
 ////////////Power Stuff//////////////////
 /////////////////////////////////////////

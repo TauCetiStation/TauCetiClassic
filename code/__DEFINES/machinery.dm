@@ -44,6 +44,16 @@
 #define AALARM_MODE_FILL        5 //emergency fill
 #define AALARM_MODE_OFF         6 //Shuts it all down.
 
+//States of embedded controllers programs
+#define STATE_WAIT			0
+#define STATE_DEPRESSURIZE	1
+#define STATE_PRESSURIZE	2
+#define STATE_EXTERMINATING 3
+
+#define TARGET_NONE			0
+#define TARGET_INOPEN		-1
+#define TARGET_OUTOPEN		-2
+
 /*
  *	Atmospherics Machinery.
 */

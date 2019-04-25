@@ -178,54 +178,55 @@ var/list/same_wires = list()
 	if(!can_use(usr) || href_list["close"])
 		usr << browse(null, "window=wires")
 		usr.unset_machine(holder)
-		return
+		return FALSE
 
-	if(in_range(holder, usr) && isliving(usr))
-		var/mob/living/L = usr
+	if(!(in_range(holder, usr) && isliving(usr)))
+		return FALSE
 
-		if(!holder.can_mob_interact(L))
-			return
+	var/mob/living/L = usr
 
-		if(href_list["action"])
-			var/obj/item/I = L.get_active_hand()
-			holder.add_hiddenprint(L)
+	if(!holder.can_mob_interact(L))
+		return FALSE
 
-			if(href_list["cut"]) // Toggles the cut/mend status
-				if(iswirecutter(I))
-					var/color = href_list["cut"]
-					cut_wire_color(color)
+	if(href_list["action"])
+		var/obj/item/I = L.get_active_hand()
+		holder.add_hiddenprint(L)
+
+		if(href_list["cut"]) // Toggles the cut/mend status
+			if(iswirecutter(I))
+				var/color = href_list["cut"]
+				cut_wire_color(color)
+			else
+				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
+
+		else if(href_list["pulse"])
+			if(ismultitool(I))
+				var/color = href_list["pulse"]
+				pulse_color(color)
+			else
+				to_chat(L, "<span class='warning'>You need a multitool!</span>")
+
+		else if(href_list["attach"])
+			var/color = href_list["attach"]
+
+			// Detach
+			if(is_signaler_attached(color))
+				var/obj/item/O = detach_signaler(color)
+				if(O)
+					L.put_in_hands(O)
+
+			// Attach
+			else
+				if(issignaler(I))
+					L.drop_item()
+					attach_signaler(color, I)
 				else
-					to_chat(L, "<span class='warning'>You need wirecutters!</span>")
-
-			else if(href_list["pulse"])
-				if(ismultitool(I))
-					var/color = href_list["pulse"]
-					pulse_color(color)
-				else
-					to_chat(L, "<span class='warning'>You need a multitool!</span>")
-
-			else if(href_list["attach"])
-				var/color = href_list["attach"]
-
-				// Detach
-				if(is_signaler_attached(color))
-					var/obj/item/O = detach_signaler(color)
-					if(O)
-						L.put_in_hands(O)
-
-				// Attach
-				else
-					if(issignaler(I))
-						L.drop_item()
-						attach_signaler(color, I)
-					else
-						to_chat(L, "<span class='warning'>You need a remote signaller!</span>")
+					to_chat(L, "<span class='warning'>You need a remote signaller!</span>")
 
 			// Update Window
 			interact(usr)
 
-
-
+	return TRUE
 
 ////////////////////
 // Overridable procs

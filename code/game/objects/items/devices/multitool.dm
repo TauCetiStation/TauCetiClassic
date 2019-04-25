@@ -18,4 +18,33 @@
 	m_amt = 50
 	g_amt = 20
 	origin_tech = "magnets=1;engineering=1"
+	var/const/buffer_limit = 16
 	var/obj/machinery/telecomms/buffer // simple machine buffer for device linkage
+	var/list/obj/machinery/door/airlock/airlocks_buffer = list()
+	var/list/obj/machinery/door/poddoor/poddoors_buffer = list()
+	var/list/obj/machinery/access_button/buttons_buffer = list()
+	var/list/obj/machinery/airlock_sensor/sensors_buffer = list()
+	var/list/obj/machinery/atmospherics/components/unary/vent_pump/airpumps_buffer = list()
+
+/obj/item/device/multitool/verb/clear_buffer()
+	set category = "Object"
+	set name = "Clear buffer"
+	if(airlocks_buffer.len || poddoors_buffer.len || buttons_buffer.len || sensors_buffer.len || airpumps_buffer.len || buffer)
+		airlocks_buffer.Cut()
+		poddoors_buffer.Cut()
+		buttons_buffer.Cut()
+		sensors_buffer.Cut()
+		airpumps_buffer.Cut()
+		buffer = null
+		to_chat(usr, "<span class='notice'>You clear the buffer of your multitool</span>")
+	else
+		to_chat(usr, "<span class='notice'>The buffer if empty</span>")
+
+/obj/item/device/multitool/Destroy()
+	airlocks_buffer.Cut()
+	poddoors_buffer.Cut()
+	buttons_buffer.Cut()
+	sensors_buffer.Cut()
+	airpumps_buffer.Cut()
+	buffer = null
+	return ..()

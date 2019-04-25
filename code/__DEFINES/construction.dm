@@ -33,3 +33,9 @@
 #define ANCHOR_BOLTS    4
 #define SUPPORT_RODS    5
 #define SHEATH          6
+
+//airlock controllers build stages
+#define AIRLOCK_CONTROLLER_WITHOUT_CIRCUIT  0
+#define AIRLOCK_CONTROLLER_WITHOUT_WIRES    1
+#define AIRLOCK_CONTROLLER_PANEL_OPEN       2
+#define AIRLOCK_CONTROLLER_COMPLETE         3

@@ -45,6 +45,8 @@
 	var/internal_pressure_bound_default = INTERNAL_PRESSURE_BOUND
 	var/pressure_checks_default = PRESSURE_CHECKS
 
+	var/obj/machinery/embedded_controller/radio/controller
+
 /obj/machinery/atmospherics/components/unary/vent_pump/on
 	use_power = 1
 	icon_state = "map_vent_out"
@@ -83,6 +85,9 @@
 	if(initial_loc)
 		initial_loc.air_vent_info -= id_tag
 		initial_loc.air_vent_names -= id_tag
+	if(controller)
+		controller.disconnect_airpump(src)
+		controller = null
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/atmos_init()
@@ -280,7 +285,7 @@
 	hibernate = 0
 
 	//log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/atmospherics/components/unary/vent_pump/receive_signal([signal.debug_print()])")
-	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
+	if(!signal.data["signal_target"] || !(src in signal.data["signal_target"]) || (signal.data["sigtype"]!="command"))
 		return FALSE
 
 	if(signal.data["purge"] != null)
@@ -387,6 +392,17 @@
 			"<span class='notice'>You [welded ? "weld \the [src] shut" : "unweld \the [src]"].</span>", \
 			"You hear welding.")
 		return
+	else if(ismultitool(W))
+		var/obj/item/device/multitool/M = W
+		if(controller)
+			to_chat(usr, "<span class='warning'>This airpump already has a connection!</span>")
+		else if(src in M.airpumps_buffer)
+			to_chat(usr, "<span class='warning'>This airpump is already in the buffer!</span>")
+		else if(M.airpumps_buffer.len >= M.buffer_limit)
+			to_chat(usr, "<span class='warning'>The airpumps buffer of multitool is full!</span>")
+		else
+			M.airpumps_buffer += src
+			to_chat(usr, "<span class='notice'>You save this airpump to the buffer of your multitool.</span>")
 
 	else
 		return ..()

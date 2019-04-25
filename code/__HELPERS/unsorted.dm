@@ -1277,14 +1277,12 @@ var/list/WALLITEMS = typecacheof(list(
 	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/door_control,
 	/obj/machinery/computer/security/telescreen,
 	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
-	/obj/structure/mirror, /obj/structure/closet/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment
+	/obj/structure/mirror, /obj/structure/closet/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment,
+	/obj/machinery/embedded_controller/radio, /obj/machinery/airlock_sensor, /obj/machinery/access_button
 ))
 /proc/gotwallitem(loc, dir)
 	for(var/obj/O in loc)
 		if(is_type_in_typecache(O, WALLITEMS))
-			if(O.dir == dir)
-				return 1
-			//Some stuff doesn't use dir properly, so we need to check pixel instead
 			switch(dir)
 				if(SOUTH)
 					if(O.pixel_y > 10)
@@ -1299,12 +1297,29 @@ var/list/WALLITEMS = typecacheof(list(
 					if(O.pixel_x < -10)
 						return 1
 
-
 	//Some stuff is placed directly on the wallturf (signs)
 	for(var/obj/O in get_step(loc, dir))
 		if(is_type_in_typecache(O, WALLITEMS))
 			if(O.pixel_x == 0 && O.pixel_y == 0)
 				return 1
+	return 0
+
+/proc/gotwallitem_exact(loc, dir, item_type)
+	for(var/obj/O in loc)
+		if(is_type_in_typecache(O, WALLITEMS) && istype(O, item_type))
+			switch(dir)
+				if(SOUTH)
+					if(O.pixel_y > 10)
+						return O
+				if(NORTH)
+					if(O.pixel_y < -10)
+						return O
+				if(WEST)
+					if(O.pixel_x > 10)
+						return O
+				if(EAST)
+					if(O.pixel_x < -10)
+						return O
 	return 0
 
 /proc/format_text(text)
