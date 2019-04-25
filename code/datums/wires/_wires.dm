@@ -224,6 +224,9 @@ var/list/same_wires = list()
 			// Update Window
 			interact(usr)
 
+
+
+
 ////////////////////
 // Overridable procs
 ////////////////////
