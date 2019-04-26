@@ -40,18 +40,18 @@
 			var/i = findtext(txt, targ, start)
 			if(!i)
 				break
-			if(targ == "\n")
-				txt = copytext(txt, 1, i) + "\\n" + copytext(txt, i+2)
-				start = i + 1 // 1 character added
 			if(targ == "\t")
-				txt = copytext(txt, 1, i) + "\\t" + copytext(txt, i+2)
-				start = i + 1 // 1 character added
-			if(targ == "'")
+				txt = copytext(txt, 1, i) + "\\t" + copytext(txt, i+1)
+				start = i + 1
+			else if(targ == "\n")
+				txt = copytext(txt, 1, i) + "\\n" + copytext(txt, i+1)
+				start = i + 1
+			else if(targ == "'")
 				txt = copytext(txt, 1, i) + "`" + copytext(txt, i+1) // apostrophies fuck shit up...
-				start = i + 1 // 1 character added
-			else
+				start = i + 1
+			else // \ and "
 				txt = copytext(txt, 1, i) + "\\" + copytext(txt, i)
-				start = i + 2 // 2 characters added
+				start = i + 2 //skip new \ and next (quote or slash) characters
 
 	return {""[txt]""}
 
