@@ -191,7 +191,7 @@
 
 /mob/living/simple_animal/hostile/cellular/nanite/Destroy()
 	nanite_parent = null
-	return
+	return .. ()
 
 /mob/living/simple_animal/hostile/cellular/nanite/death()
 	..()
@@ -199,5 +199,5 @@
 	new /obj/effect/gibspawner/robot(src.loc)
 	if(!clon)
 		src.nanite_parent.spawned--
-	src.Destroy()
+	qdel(src)
 	return
