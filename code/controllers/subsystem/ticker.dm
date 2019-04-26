@@ -123,7 +123,11 @@ var/datum/subsystem/ticker/ticker
 					if(mutiny)
 						mutiny.round_outcome()
 
-					slack_roundend()
+					world.send2bridge(
+						type = list(BRIDGE_ROUNDSTAT, BRIDGE_ANNOUNCE),
+						attachment_title = "Round is over",
+						attachment_color = BRIDGE_COLOR_ANNOUNCE,
+					)
 
 					if (mode.station_was_nuked)
 						feedback_set_details("end_proper","nuke")
@@ -139,11 +143,19 @@ var/datum/subsystem/ticker/ticker
 						if(!delay_end)
 							world.Reboot() //Can be upgraded to remove unneded sleep here.
 						else
-							to_chat(world, "\blue <B>An admin has delayed the round end</B>")
-							send2slack_service("An admin has delayed the round end")
+							to_chat(world, "<span class='info bold'>An admin has delayed the round end</span>")
+							world.send2bridge(
+								type = list(BRIDGE_ROUNDSTAT),
+								attachment_msg = "An admin has delayed the round end",
+								attachment_color = BRIDGE_COLOR_ROUNDSTAT,
+							)
 					else
-						to_chat(world, "\blue <B>An admin has delayed the round end</B>")
-						send2slack_service("An admin has delayed the round end")
+						to_chat(world, "<span class='info bold'>An admin has delayed the round end</span>")
+						world.send2bridge(
+							type = list(BRIDGE_ROUNDSTAT),
+							attachment_msg = "An admin has delayed the round end",
+							attachment_color = BRIDGE_COLOR_ROUNDSTAT,
+						)
 
 /datum/subsystem/ticker/proc/setup()
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
@@ -230,7 +242,12 @@ var/datum/subsystem/ticker/ticker
 
 	Master.RoundStart()
 
-	slack_roundstart()
+	world.send2bridge(
+		type = list(BRIDGE_ROUNDSTAT),
+		attachment_title = "Round is started, gamemode - **[master_mode]**",
+		attachment_msg = "Join now: <[BYOND_JOIN_LINK]>",
+		attachment_color = BRIDGE_COLOR_ANNOUNCE,
+	)
 
 	world.log << "Game start took [(world.timeofday - init_start)/10]s"
 

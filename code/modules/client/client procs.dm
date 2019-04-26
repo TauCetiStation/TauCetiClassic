@@ -389,7 +389,13 @@ var/list/blacklisted_builds = list(
 
 			if (!cidcheck_failedckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a cid randomizer. Connection rejected.</span>")
-				send2slack_logs(key_name(src), "has been detected as using a cid randomizer. Connection rejected.", "(CidRandomizer)")
+				world.send2bridge(
+					type = list(BRIDGE_ADMINLOG),
+					attachment_title = "Cid Randomizer",
+					attachment_msg = "**[key_name(src)]** has been detected as using a cid randomizer. Connection rejected.",
+					attachment_color = BRIDGE_COLOR_ADMINLOG,
+				)
+
 				cidcheck_failedckeys[ckey] = TRUE
 				notes_add(ckey, "Detected as using a cid randomizer.")
 
@@ -400,7 +406,12 @@ var/list/blacklisted_builds = list(
 		else
 			if (cidcheck_failedckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after showing they removed their cid randomizer</span>")
-				send2slack_logs(key_name(src), "has been allowed to connect after showing they removed their cid randomizer.", "(CidRandomizer)")
+				world.send2bridge(
+					type = list(BRIDGE_ADMINLOG),
+					attachment_title = "Cid Randomizer",
+					attachment_msg = "**[key_name(src)]** has been allowed to connect after showing they removed their cid randomizer",
+					attachment_color = BRIDGE_COLOR_ADMINLOG,
+				)
 				cidcheck_failedckeys -= ckey
 			if (cidcheck_spoofckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after appearing to have attempted to spoof a cid randomizer check because it <i>appears</i> they aren't spoofing one this time</span>")

@@ -40,8 +40,14 @@
 	if(config && config.log_runtime)
 		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")
 
-	slack_startup()
-
+	world.send2bridge(
+		type = list(BRIDGE_ROUNDSTAT, BRIDGE_ANNOUNCE),
+		attachment_title = "Server starting up, new round will starting soon",
+		attachment_msg = "Join now: <[BYOND_JOIN_LINK]>",
+		attachment_color = BRIDGE_COLOR_ANNOUNCE,
+		mention = BRIDGE_MENTION_ROUNDSTART,
+	)
+	
 	radio_controller = new /datum/controller/radio()
 	data_core = new /obj/effect/datacore()
 	paiController = new /datum/paiController()
@@ -247,10 +253,8 @@ var/world_topic_spam_protect_time = world.timeofday
 	world.log << dellog.Join("\n")
 
 	for(var/client/C in clients)
-		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
-			C << link("byond://[config.server]")
-		else
-			C << link("byond://[world.address]:[world.port]")
+		//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
+		C << link(BYOND_JOIN_LINK)
 
 	..(reason)
 

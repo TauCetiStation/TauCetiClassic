@@ -27,3 +27,9 @@
 	var/msg = "enables registration panic bunker for [active_hours != -1 ? "[active_hours] hours" : "current round"] with value: [panic_age]"
 	log_admin("[key_name(src)] [msg]")
 	message_admins("[key_name_admin(src)] [msg]")
+	world.send2bridge(
+		type = list(BRIDGE_ADMINALERT),
+		attachment_title = "Panic Bunker",
+		attachment_msg = "**[key_name(src)]** [msg]",
+		attachment_color = BRIDGE_COLOR_ADMINALERT,
+	)

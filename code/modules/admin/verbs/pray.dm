@@ -45,13 +45,23 @@
 	//log_admin("HELP: [key_name(src)]: [msg]")
 
 /proc/Centcomm_announce(text , mob/Sender , iamessage)
-	send2slack_custommsg("[key_name(Sender)] has made an Centcomm announcement", text, ":job_cap:")
+	world.send2bridge(
+		type = list(BRIDGE_ADMINCOM),
+		attachment_title = ":regional_indicator_c: **[key_name(Sender)]**  has made an ***Centcomm*** announcement",
+		attachment_msg = text,
+		attachment_color = BRIDGE_COLOR_ADMINCOM,
+	)
 	text = "\blue <b><font color=orange>CENTCOMM[iamessage ? " IA" : ""]:</font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;CentcommReply=\ref[Sender]'>RPLY</A>):</b> [text]"
 	for(var/client/C in admins)
 		to_chat(C, text)
 
 /proc/Syndicate_announce(text , mob/Sender)
-	send2slack_custommsg("[key_name(Sender)] has made an Syndicate announcement", text, ":job_nuke:")
+	world.send2bridge(
+		type = list(BRIDGE_ADMINCOM),
+		attachment_title = ":regional_indicator_s: **[key_name(Sender)]**  has made an ***Syndicate*** announcement",
+		attachment_msg = text,
+		attachment_color = BRIDGE_COLOR_ADMINCOM,
+	)
 	text = "\blue <b><font color=crimson>SYNDICATE:</font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;SyndicateReply=\ref[Sender]'>RPLY</A>):</b> [text]"
 	for(var/client/C in admins)
 		to_chat(C, text)
