@@ -191,7 +191,7 @@
 
 /mob/living/simple_animal/hostile/cellular/nanite/Destroy()
 	nanite_parent = null
-	return .. ()
+	return ..()
 
 /mob/living/simple_animal/hostile/cellular/nanite/death()
 	..()
