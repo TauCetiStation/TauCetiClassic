@@ -202,4 +202,10 @@
 	shirt["orange"] = /obj/item/clothing/suit/chemshirt
 	shirt["purple"] = /obj/item/clothing/suit/roundshirt
 	shirt["grey"] = /obj/item/clothing/suit/catshirt
+	shirt["yellow"] = /obj/item/clothing/suit/engishirt
+	shirt["alt yellow"] = /obj/item/clothing/suit/badengishirt
+	shirt["white"] = /obj/item/clothing/suit/docshirt
+	shirt["red"] = /obj/item/clothing/suit/battonshirt
+	shirt["black"] = /obj/item/clothing/suit/arstotzkashirt
+	shirt["green"] = /obj/item/clothing/suit/toxicshirt
 	gear_tweaks += new/datum/gear_tweak/path(shirt)
