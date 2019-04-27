@@ -1,3 +1,4 @@
+var/global_parallax_theme_override // overrides client settings for events
 
 /client
 	var/list/parallax_layers
@@ -17,10 +18,13 @@
 	if (!apply_parallax_pref())
 		return
 
-	if(!length(C.parallax_layers_cached) || C.parallax_theme != C.prefs.parallax_theme)
-		C.parallax_theme = C.prefs.parallax_theme
+	if(!length(C.parallax_layers_cached) || (!global_parallax_theme_override && C.parallax_theme != C.prefs.parallax_theme) || (global_parallax_theme_override && global_parallax_theme_override != C.parallax_theme))
+		if(!global_parallax_theme_override)
+			C.parallax_theme = C.prefs.parallax_theme
+		else
+			C.parallax_theme = global_parallax_theme_override
 		C.parallax_layers_cached = list()
-		switch(C.prefs.parallax_theme)
+		switch(C.parallax_theme)
 			if(PARALLAX_THEME_CLASSIC)
 				C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_1(null, C.view)
 				C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_2(null, C.view)
@@ -29,6 +33,8 @@
 				C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_2(null, C.view, 'icons/effects/parallax_tg.dmi')
 				//C.parallax_layers_cached += new /obj/screen/parallax_layer/planet(null, C.view, 'icons/effects/parallax_tg.dmi') awaiting for new planet image in replace for lavaland
 				C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_3(null, C.view, 'icons/effects/parallax_tg.dmi')
+			if(PARALLAX_THEME_BLACKHOLE)
+				C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_1(null, C.view, 'icons/effects/parallax_blackhole.dmi')
 
 	C.parallax_layers = C.parallax_layers_cached.Copy()
 
@@ -290,3 +296,10 @@
 
 /obj/screen/parallax_layer/planet/update_o()
 	return //Shit wont move
+
+/proc/parallax_layer_global_override(theme = "")
+	global_parallax_theme_override = theme
+
+	for(var/client/C in clients)
+		if (C.mob && C.mob.hud_used)
+			C.mob.hud_used.update_parallax_pref()

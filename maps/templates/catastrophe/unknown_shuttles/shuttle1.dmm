@@ -1,0 +1,688 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/space,
+/area/space)
+"ab" = (
+/turf/simulated/floor/plating/airless,
+/area/space)
+"ac" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "heater1"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"ad" = (
+/obj/item/weapon/stock_parts/scanning_module/triphasic,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"ae" = (
+/obj/mecha/working/ripley/deathripley,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"af" = (
+/obj/machinery/suit_storage_unit/science,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"ag" = (
+/obj/effect/decal/remains/human,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"ah" = (
+/obj/item/device/debugger,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"ai" = (
+/obj/machinery/field_generator,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aj" = (
+/obj/item/robot_parts/chest,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"ak" = (
+/obj/item/weapon/stock_parts/micro_laser/ultra,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"al" = (
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"am" = (
+/obj/item/clothing/head/helmet/laserproof,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"an" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/space)
+"ao" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/space)
+"ap" = (
+/obj/structure/lattice,
+/turf/space,
+/area/space)
+"aq" = (
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"ar" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/space)
+"as" = (
+/obj/structure/computerframe,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"at" = (
+/obj/vehicle/space/spacebike,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"au" = (
+/obj/structure/closet/crate{
+	name = "Gold Crate"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"av" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "burst_l"
+	},
+/turf/simulated/shuttle/plating,
+/area/space)
+"aw" = (
+/obj/item/weapon/stock_parts/manipulator/pico,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"ax" = (
+/obj/structure/table,
+/obj/item/weapon/gun/energy/xray,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"ay" = (
+/obj/item/weapon/gun/energy/laser/scatter/alien,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"az" = (
+/obj/structure/stool/bed/chair/schair{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aA" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/soda,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aB" = (
+/obj/structure/table,
+/obj/machinery/kitchen_machine/microwave{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aC" = (
+/obj/structure/table,
+/obj/item/trash/plate,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aD" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "diagonalWall3"
+	},
+/area/space)
+"aE" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/shuttle/plating,
+/area/space)
+"aF" = (
+/obj/machinery/door/airlock/hatch{
+	frequency = 1331;
+	id_tag = "vox_northwest_lock";
+	locked = 1;
+	req_access_txt = "150";
+	req_one_access = null;
+	req_one_access_txt = "0"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aG" = (
+/obj/structure/stool/bed/chair/metal,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aH" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aI" = (
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aJ" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 10
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aK" = (
+/obj/machinery/portable_atmospherics/canister/phoron,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aL" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aM" = (
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1331;
+	master_tag = "vox_west_control";
+	req_one_access_txt = "150"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/space)
+"aN" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/braincake,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aO" = (
+/obj/structure/table,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aP" = (
+/obj/machinery/door/airlock/hatch{
+	frequency = 1331;
+	id_tag = "vox_northwest_lock";
+	locked = 1;
+	req_access_txt = "150";
+	req_one_access = null;
+	req_one_access_txt = "0"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/simulated/shuttle/plating,
+/area/space)
+"aQ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 1
+	},
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	frequency = 1331;
+	id_tag = "vox_west_control";
+	pixel_x = 24;
+	req_access_txt = "150";
+	tag_airpump = "vox_west_vent";
+	tag_chamber_sensor = "vox_west_sensor";
+	tag_exterior_door = "vox_northwest_lock";
+	tag_interior_door = "vox_southwest_lock"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aR" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/space)
+"aS" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 5
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aT" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aV" = (
+/obj/machinery/door/airlock/hatch{
+	frequency = 1331;
+	id_tag = "vox_northwest_lock";
+	locked = 1;
+	req_access_txt = "150";
+	req_one_access = null;
+	req_one_access_txt = "0"
+	},
+/turf/simulated/shuttle/plating,
+/area/space)
+"aW" = (
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1331;
+	master_tag = "vox_west_control";
+	req_one_access_txt = "150"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/space)
+"bk" = (
+/obj/structure/lattice,
+/obj/structure/largecrate,
+/turf/space,
+/area/space)
+"bm" = (
+/obj/machinery/suit_storage_unit/science,
+/turf/simulated/shuttle/plating,
+/area/space)
+"bn" = (
+/obj/structure/lattice,
+/obj/item/weapon/storage/part_replacer,
+/turf/space,
+/area/space)
+"bv" = (
+/obj/item/weapon/stock_parts/micro_laser/ultra,
+/turf/space,
+/area/space)
+"bx" = (
+/obj/item/weapon/stock_parts/manipulator/pico,
+/turf/space,
+/area/space)
+"by" = (
+/obj/item/weapon/stock_parts/scanning_module/triphasic,
+/turf/space,
+/area/space)
+"bA" = (
+/obj/structure/lattice,
+/obj/item/weapon/stock_parts/matter_bin/bluespace,
+/turf/space,
+/area/space)
+"bB" = (
+/obj/structure/lattice,
+/obj/item/weapon/shovel,
+/turf/space,
+/area/space)
+"bG" = (
+/obj/structure/lattice,
+/obj/machinery/field_generator,
+/turf/space,
+/area/space)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+an
+av
+av
+aD
+aa
+aa
+aa
+an
+av
+av
+aD
+aa
+"}
+(3,1,1) = {"
+aa
+ao
+ac
+ac
+ao
+aa
+aa
+aa
+ao
+ac
+ac
+ao
+aa
+"}
+(4,1,1) = {"
+aa
+ao
+ab
+ab
+ao
+ao
+ao
+ao
+ao
+ab
+ab
+ao
+aa
+"}
+(5,1,1) = {"
+aa
+ao
+ad
+ag
+ab
+at
+ao
+ab
+ag
+ab
+aK
+ao
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+ap
+ah
+ab
+ab
+ao
+ab
+ab
+ab
+aK
+ao
+aa
+"}
+(7,1,1) = {"
+aa
+bk
+ap
+by
+bA
+ao
+ao
+ao
+ao
+aV
+ao
+ao
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+aa
+ap
+ap
+bG
+ao
+aA
+ab
+ab
+ab
+ao
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+bx
+bx
+bB
+ap
+ao
+aB
+ab
+ag
+aL
+ao
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+aa
+aa
+ap
+ap
+ao
+aC
+ab
+aG
+aN
+ao
+aa
+"}
+(11,1,1) = {"
+aa
+aa
+bx
+bn
+ap
+au
+ao
+ab
+ab
+aG
+aC
+ao
+aa
+"}
+(12,1,1) = {"
+aa
+bv
+aa
+ap
+ak
+ab
+ao
+ab
+ab
+aG
+aO
+ao
+aa
+"}
+(13,1,1) = {"
+aa
+ab
+ab
+ai
+ab
+ab
+ao
+ab
+ao
+ao
+ao
+ao
+aa
+"}
+(14,1,1) = {"
+aa
+ao
+ab
+aj
+al
+ab
+ao
+ab
+ao
+aH
+ab
+aV
+aa
+"}
+(15,1,1) = {"
+aa
+ao
+ae
+ab
+ab
+aw
+ao
+ab
+ao
+aI
+aQ
+aW
+aa
+"}
+(16,1,1) = {"
+aa
+ao
+ao
+ao
+ao
+aV
+ao
+aF
+aM
+aP
+ao
+ao
+aa
+"}
+(17,1,1) = {"
+aa
+ao
+af
+ab
+am
+ab
+ab
+ab
+ab
+aJ
+aS
+ao
+aa
+"}
+(18,1,1) = {"
+aa
+ao
+af
+ag
+ab
+ab
+ab
+ab
+ab
+ab
+aT
+ao
+aa
+"}
+(19,1,1) = {"
+aa
+ao
+bm
+ab
+aO
+ax
+ab
+ab
+ab
+ab
+ab
+ao
+aa
+"}
+(20,1,1) = {"
+aa
+ar
+ao
+ao
+ao
+ao
+aV
+ao
+ao
+ao
+ao
+aR
+aa
+"}
+(21,1,1) = {"
+aa
+aa
+ar
+ao
+as
+ay
+ag
+aq
+as
+ao
+aR
+aa
+aa
+"}
+(22,1,1) = {"
+aa
+aa
+aa
+ar
+aE
+as
+az
+as
+aE
+aR
+aa
+aa
+aa
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+aa
+aE
+aE
+aE
+aE
+aE
+aa
+aa
+aa
+aa
+"}
+(24,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

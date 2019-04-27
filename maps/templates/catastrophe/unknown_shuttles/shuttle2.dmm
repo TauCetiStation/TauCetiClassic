@@ -1,0 +1,323 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/space,
+/area/space)
+"b" = (
+/obj/item/stack/sheet/metal,
+/turf/space,
+/area/space)
+"c" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien20"
+	},
+/area/space)
+"d" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien21"
+	},
+/area/space)
+"e" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien22"
+	},
+/area/space)
+"f" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien23"
+	},
+/area/space)
+"g" = (
+/obj/item/stack/sheet/plasteel,
+/turf/space,
+/area/space)
+"h" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien16"
+	},
+/area/space)
+"i" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien17"
+	},
+/area/space)
+"j" = (
+/obj/machinery/abductor/experiment{
+	team = 1
+	},
+/turf/unsimulated/floor/abductor,
+/area/space)
+"k" = (
+/obj/effect/landmark/abductor/console,
+/obj/machinery/light{
+	invisibility = 101;
+	name = "invisible light fixture"
+	},
+/turf/unsimulated/floor/abductor,
+/area/space)
+"l" = (
+/obj/machinery/abductor/pad{
+	team = 2
+	},
+/turf/unsimulated/floor/abductor,
+/area/space)
+"m" = (
+/turf/unsimulated/floor/abductor,
+/area/space)
+"n" = (
+/obj/structure/alien/resin/wall,
+/turf/space,
+/area/space)
+"o" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien14"
+	},
+/area/space)
+"p" = (
+/obj/machinery/computer/security/abductor_ag{
+	team = 1
+	},
+/turf/unsimulated/floor/abductor,
+/area/space)
+"q" = (
+/mob/living/simple_animal/hostile/alien,
+/turf/unsimulated/floor/abductor,
+/area/space)
+"r" = (
+/obj/item/weapon/circular_saw/alien,
+/turf/unsimulated/floor/abductor,
+/area/space)
+"s" = (
+/obj/item/stack/medical/advanced/bruise_pack,
+/turf/unsimulated/floor/abductor,
+/area/space)
+"t" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien15"
+	},
+/area/space)
+"u" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien12"
+	},
+/area/space)
+"v" = (
+/obj/structure/alien/resin/wall,
+/turf/unsimulated/floor/abductor,
+/area/space)
+"w" = (
+/obj/item/alien_embryo,
+/turf/unsimulated/floor/abductor,
+/area/space)
+"x" = (
+/obj/machinery/optable/abductor,
+/turf/unsimulated/floor/abductor,
+/area/space)
+"y" = (
+/obj/structure/alien/weeds,
+/turf/unsimulated/floor/abductor,
+/area/space)
+"z" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien13"
+	},
+/area/space)
+"A" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien10"
+	},
+/area/space)
+"B" = (
+/obj/machinery/computer/security/abductor_hu,
+/turf/unsimulated/floor/abductor,
+/area/space)
+"C" = (
+/obj/item/weapon/scalpel/alien,
+/obj/item/weapon/surgicaldrill/alien,
+/obj/structure/table/abductor,
+/turf/unsimulated/floor/abductor,
+/area/space)
+"D" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien11"
+	},
+/area/space)
+"E" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien6"
+	},
+/area/space)
+"F" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien7"
+	},
+/area/space)
+"G" = (
+/obj/structure/lattice,
+/obj/structure/alien/resin/wall,
+/turf/space,
+/area/space)
+"H" = (
+/obj/item/weapon/cautery/alien,
+/obj/item/weapon/circular_saw/alien,
+/obj/item/weapon/paper/abductor,
+/obj/machinery/light{
+	invisibility = 101;
+	name = "invisible light fixture"
+	},
+/obj/structure/table/abductor{
+	dir = 4;
+	icon_state = "table_1tileendtable"
+	},
+/obj/item/weapon/storage/firstaid/tactical,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/turf/unsimulated/floor/abductor,
+/area/space)
+"I" = (
+/obj/item/weapon/hemostat/alien,
+/obj/item/weapon/retractor/alien,
+/obj/structure/table/abductor{
+	dir = 8;
+	icon_state = "table_1tileendtable"
+	},
+/obj/item/stack/nanopaste,
+/turf/unsimulated/floor/abductor,
+/area/space)
+"J" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien8"
+	},
+/area/space)
+"K" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien9"
+	},
+/area/space)
+"L" = (
+/turf/unsimulated/wall/abductor,
+/area/space)
+"M" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien2"
+	},
+/area/space)
+"N" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien3"
+	},
+/area/space)
+"O" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien4"
+	},
+/area/space)
+"P" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien5"
+	},
+/area/space)
+"Q" = (
+/obj/machinery/recharger/wallcharger/alien{
+	pixel_x = -26
+	},
+/turf/unsimulated/floor/abductor,
+/area/space)
+"R" = (
+/obj/item/weapon/gun/energy/laser/selfcharging/alien,
+/turf/unsimulated/floor/abductor,
+/area/space)
+"S" = (
+/obj/item/weapon/storage/firstaid/adv,
+/mob/living/simple_animal/hostile/alien,
+/turf/unsimulated/floor/abductor,
+/area/space)
+"T" = (
+/obj/item/alien_embryo,
+/obj/structure/alien/weeds,
+/turf/unsimulated/floor/abductor,
+/area/space)
+"U" = (
+/obj/structure/closet/abductor,
+/obj/structure/alien/weeds,
+/turf/unsimulated/floor/abductor,
+/area/space)
+
+(1,1,1) = {"
+a
+a
+h
+o
+u
+A
+E
+a
+"}
+(2,1,1) = {"
+a
+c
+i
+p
+Q
+B
+F
+L
+"}
+(3,1,1) = {"
+a
+d
+j
+q
+w
+m
+S
+M
+"}
+(4,1,1) = {"
+a
+e
+k
+r
+x
+w
+s
+N
+"}
+(5,1,1) = {"
+a
+e
+l
+y
+y
+R
+H
+N
+"}
+(6,1,1) = {"
+a
+f
+v
+y
+T
+m
+I
+O
+"}
+(7,1,1) = {"
+b
+n
+n
+v
+U
+C
+J
+P
+"}
+(8,1,1) = {"
+a
+g
+G
+t
+z
+D
+K
+a
+"}

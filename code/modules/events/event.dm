@@ -82,7 +82,8 @@
 		potentialRandomEvents.Remove(type)*/
 	..()
 
-/datum/event/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in! (TG-stuff)
+//Made public because it's used inside catastrophe gamemode
+/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in! (TG-stuff)
 	var/list/safe_areas = list(
 	/area/ai_monitored/storage/secure,
 	/area/turret_protected/ai,

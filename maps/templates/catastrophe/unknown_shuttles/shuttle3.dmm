@@ -1,0 +1,249 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/space,
+/area/space)
+"b" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/space)
+"c" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/space)
+"d" = (
+/obj/machinery/door/airlock/hatch{
+	frequency = 1331;
+	id_tag = "vox_northwest_lock";
+	locked = 1;
+	req_access_txt = "150";
+	req_one_access = null;
+	req_one_access_txt = "0"
+	},
+/turf/simulated/shuttle/plating,
+/area/space)
+"e" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/space)
+"f" = (
+/obj/effect/blob/normal,
+/turf/simulated/shuttle/plating,
+/area/space)
+"g" = (
+/obj/effect/blob/shield,
+/turf/simulated/shuttle/plating,
+/area/space)
+"h" = (
+/obj/effect/blob/normal,
+/mob/living/simple_animal/hostile/blobspore,
+/turf/simulated/shuttle/plating,
+/area/space)
+"i" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "burst_l"
+	},
+/turf/simulated/shuttle/plating,
+/area/space)
+"j" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "heater1"
+	},
+/turf/simulated/shuttle/plating,
+/area/space)
+"k" = (
+/obj/effect/decal/remains/human{
+	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
+	icon_state = "remains";
+	name = "Syndicate agent remains"
+	},
+/obj/item/weapon/gun/projectile/revolver/russian,
+/turf/simulated/shuttle/plating,
+/area/space)
+"l" = (
+/obj/effect/blob/shield,
+/mob/living/simple_animal/hostile/blobspore,
+/turf/simulated/shuttle/plating,
+/area/space)
+"m" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/shuttle/plating,
+/area/space)
+"n" = (
+/obj/mecha/combat/durand,
+/turf/simulated/shuttle/plating,
+/area/space)
+"o" = (
+/obj/effect/blob/core,
+/turf/simulated/shuttle/plating,
+/area/space)
+"p" = (
+/obj/effect/blob/node,
+/turf/simulated/shuttle/plating,
+/area/space)
+"q" = (
+/turf/simulated/shuttle/plating,
+/area/space)
+"r" = (
+/obj/effect/blob/shield,
+/mob/living/simple_animal/hostile/blobspore,
+/mob/living/simple_animal/hostile/blobspore,
+/turf/simulated/shuttle/plating,
+/area/space)
+"s" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "diagonalWall3"
+	},
+/area/space)
+"t" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/space)
+
+(1,1,1) = {"
+a
+a
+b
+i
+i
+i
+s
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+c
+j
+j
+j
+c
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+c
+k
+n
+q
+c
+a
+a
+"}
+(4,1,1) = {"
+a
+b
+c
+c
+d
+c
+c
+s
+a
+"}
+(5,1,1) = {"
+b
+c
+h
+l
+l
+r
+f
+c
+s
+"}
+(6,1,1) = {"
+c
+h
+h
+l
+o
+l
+f
+f
+c
+"}
+(7,1,1) = {"
+c
+c
+c
+c
+l
+l
+f
+f
+c
+"}
+(8,1,1) = {"
+c
+f
+f
+f
+f
+f
+f
+f
+c
+"}
+(9,1,1) = {"
+c
+f
+c
+c
+c
+c
+c
+c
+c
+"}
+(10,1,1) = {"
+d
+g
+f
+f
+p
+f
+f
+g
+d
+"}
+(11,1,1) = {"
+c
+g
+c
+f
+f
+f
+c
+g
+c
+"}
+(12,1,1) = {"
+e
+c
+c
+m
+m
+m
+c
+c
+t
+"}
