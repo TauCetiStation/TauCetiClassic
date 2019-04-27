@@ -1,13 +1,21 @@
 
 /json_writer/proc/WriteObject(list/L, cached_data = null)
 	. = "{"
-	var/i = 1
-	for(var/k in L)
-		var/val = L[k]
-		. += {"\"[k]\":[write(val)]"}
-		if(i++ < L.len)
+	var/index = 0
+	for(var/key in L)
+		index++
+
+		var/value = null
+		if(!isnum(key) || (!(isnum(key) && index != key) && L[key] != key))
+			value = L[key]
+
+		. += {"\"[key]\":[write(value)]"}
+
+
+		if(index < L.len)
 			. += ","
-	if(cached_data)
+
+	if(cached_data) // not sure that it is really used anywhere
 		. = copytext(., 1, lentext(.)) + ",\"cached\":[cached_data]}"
 	. += "}"
 
@@ -56,7 +64,18 @@
 	return {""[txt]""}
 
 /json_writer/proc/is_associative(list/L)
+	var/index = 0
 	for(var/key in L)
-		// if the key is a list that means it's actually an array of lists (stupid Byond...)
-		if(!isnum(key) && !istype(key, /list))
+		index++
+
+		var/value = null
+		// if key not num we can check L[key] without fear of "out of bound"
+		// else compare to index to prevent runtime error in e.g. list(5, 1)
+		// L[key] will exist and be same as key if we iterating through not associative list e.g. list(1, 2, 3)
+		if(!isnum(key) || (!(isnum(key) && index != key) && L[key] != key))
+			value = L[key]
+
+		if(!isnull(value)) 
 			return TRUE
+
+	return FALSE
