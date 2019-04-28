@@ -82,7 +82,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["neutral_quirks"] << neutral_quirks
 
 	if(current_version < 22)
-		player_alt_titles -= list("Technical Assistant", "Medical Intern", "Research Assistant", "Security Cadet")
+		var/datum/job/assistant/J = new
+
+		if(player_alt_titles && \
+			player_alt_titles[J.title] && \
+			player_alt_titles[J.title] in list("Technical Assistant", "Medical Intern", "Research Assistant", "Security Cadet"))
+
+			player_alt_titles -= J.title
 
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
