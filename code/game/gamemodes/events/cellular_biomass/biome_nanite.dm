@@ -102,7 +102,7 @@
 /mob/living/simple_animal/hostile/cellular/nanite/ranged
 	ranged = TRUE
 	projectiletype = /obj/item/projectile/bullet/midbullet
-	projectilesound = 'sound/weapons/Gunshot_silenced.ogg'
+	projectilesound = 'sound/weapons/guns/gunshot_silencer.ogg'
 	retreat_distance = 6
 	minimum_distance = 6
 	icon_state = "nanitemob_2"
