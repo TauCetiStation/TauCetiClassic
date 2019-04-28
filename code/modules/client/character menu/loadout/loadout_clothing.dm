@@ -198,14 +198,14 @@
 /datum/gear/suit/color_shirt/New()
 	..()
 	var/shirt = list()
-	shirt["blue"] = /obj/item/clothing/suit/blueshirt
-	shirt["orange"] = /obj/item/clothing/suit/chemshirt
-	shirt["purple"] = /obj/item/clothing/suit/roundshirt
-	shirt["grey"] = /obj/item/clothing/suit/catshirt
-	shirt["yellow"] = /obj/item/clothing/suit/engishirt
-	shirt["alt yellow"] = /obj/item/clothing/suit/badengishirt
-	shirt["white"] = /obj/item/clothing/suit/docshirt
-	shirt["red"] = /obj/item/clothing/suit/battonshirt
-	shirt["black"] = /obj/item/clothing/suit/arstotzkashirt
-	shirt["green"] = /obj/item/clothing/suit/toxicshirt
+	shirt["alien"] = /obj/item/clothing/suit/blueshirt
+	shirt["chemistry"] = /obj/item/clothing/suit/chemshirt
+	shirt["sun"] = /obj/item/clothing/suit/roundshirt
+	shirt["cat"] = /obj/item/clothing/suit/catshirt
+	shirt["engineer"] = /obj/item/clothing/suit/engishirt
+	shirt["bad engineer"] = /obj/item/clothing/suit/badengishirt
+	shirt["medical"] = /obj/item/clothing/suit/docshirt
+	shirt["stunbatton"] = /obj/item/clothing/suit/battonshirt
+	shirt["dictator"] = /obj/item/clothing/suit/arstotzkashirt
+	shirt["toxic"] = /obj/item/clothing/suit/toxicshirt
 	gear_tweaks += new/datum/gear_tweak/path(shirt)
