@@ -1,6 +1,7 @@
-/proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global, voluminosity = TRUE, separate = FALSE)
+/proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global, wait = 0, voluminosity = TRUE, separate = FALSE)
 // voluminosity = is that 3d sound?
 // separate = separate sound volume for its source and for others?
+
 	soundin = get_sfx(soundin) // same sound for everyone
 
 	if(isarea(source))
@@ -24,19 +25,20 @@
 			var/turf/T = get_turf(M)
 
 			if(T && T.z == turf_source.z)
-				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, is_global, voluminosity)
+				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, is_global, wait, voluminosity)
 
 var/const/FALLOFF_SOUNDS = 0.5
 
-/mob/proc/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global, voluminosity = TRUE)
+/mob/proc/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global, wait = 0, voluminosity = TRUE)
 	if(!src.client || ear_deaf > 0)
 		return FALSE
 	soundin = get_sfx(soundin)
 
 	var/sound/S = sound(soundin)
-	S.wait = 0 //No queue
+	//S.wait = 0 //No queue
 	//S.channel = 0 //Any channel
-	S.channel = channel
+	S.wait = wait
+	S.channel = channel // Note. Channel 802 is busy with sound of automatic AI announcements
 	S.volume = vol
 	S.environment = -1
 	if (vary)
@@ -106,7 +108,7 @@ var/const/FALLOFF_SOUNDS = 0.5
 
 /proc/get_sfx(soundin)
 	if(istext(soundin))
-		switch(soundin)
+		switch(soundin) // Note. All lists of sounds of automatic AI announcements are located in *command_alert.dm*, *captain_announce.dm* and *security_levels.dm* files
 			if ("shatter")
 				soundin = pick('sound/effects/glassbr1.ogg','sound/effects/glassbr2.ogg','sound/effects/glassbr3.ogg')
 			if ("explosion")

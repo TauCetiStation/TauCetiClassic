@@ -320,7 +320,7 @@
 	var/new_color = input(user, "Choose color!") as color|null
 	if(!new_color) return
 
-	if((!in_range(src, usr) && src.loc != usr) || !W.use(user, 1))
+	if((!in_range(src, usr) && src.loc != usr) || !W.use(1))
 		return
 	else
 		color = new_color

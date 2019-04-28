@@ -427,6 +427,7 @@
 		if (!SMG.magazine)
 			SMG.magazine = src
 			SMG.magazine.loc = SMG
+			playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', 60, 1)
 			to_chat(user, "<span class='notice'>You load a new magazine into \the [SMG].</span>")
 			SMG.chamber_round()
 			A.update_icon()

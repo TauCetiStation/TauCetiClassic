@@ -56,6 +56,11 @@
 	icon_state = "redtie"
 	item_color = "redtie"
 
+/obj/item/clothing/accessory/tie/black
+	name = "black tie"
+	icon_state = "blacktie"
+	item_color = "blacktie"
+
 /obj/item/clothing/accessory/tie/horrible
 	name = "horrible tie"
 	desc = "A neosilk clip-on tie. This one is disgusting."

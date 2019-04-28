@@ -235,7 +235,7 @@ var/datum/subsystem/ticker/ticker
 	world.log << "Game start took [(world.timeofday - init_start)/10]s"
 
 	to_chat(world, "<FONT color='blue'><B>Enjoy the game!</B></FONT>")
-	world << sound('sound/AI/welcome.ogg')
+	player_list << 'sound/AI/enjoyyourstay.ogg'
 
 	//Holiday Round-start stuff	~Carn
 	Holiday_Game_Start()

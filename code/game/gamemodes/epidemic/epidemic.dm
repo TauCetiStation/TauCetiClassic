@@ -66,7 +66,9 @@
 			comm.messagetitle.Add("Cent. Com. CONFIDENTIAL REPORT")
 			comm.messagetext.Add(intercepttext)
 
-	world << sound('sound/AI/commandreport.ogg')
+	for(var/mob/M in player_list)
+		if(!isnewplayer(M))
+			M.playsound_local(null, 'sound/AI/commandreport.ogg', 70, channel = CHANNEL_ANNOUNCE, wait = 1m is_global = 1)
 
 	// add an extra law to the AI to make sure it cooperates with the heads
 	var/extra_law = "Crew authorized to know of pathogen [virus_name]'s existence are: Heads of command, any crew member with loyalty implant. Do not allow unauthorized personnel to gain knowledge of [virus_name]. Aid authorized personnel in quarantining and neutrlizing the outbreak. This law overrides all other laws."
@@ -89,7 +91,9 @@
 
 			comm.messagetitle.Add("Cent. Com. CONFIDENTIAL REPORT")
 			comm.messagetext.Add(intercepttext)
-	world << sound('sound/AI/commandreport.ogg')
+	for(var/mob/M in player_list)
+		if(!isnewplayer(M))
+			M.playsound_local(null, 'sound/AI/commandreport.ogg', 70, channel = CHANNEL_ANNOUNCE, wait = 1, is_global = 1)
 
 
 /datum/game_mode/epidemic/post_setup()
