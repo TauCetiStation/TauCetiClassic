@@ -82,6 +82,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	if(timeleft > 1e5)		// midnight rollover protection
 		timeleft = 0
 	var/static/last_es_sound = 0
+	var/static/ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_lucky_shot.ogg'
 	switch(location)
 		if(SHUTTLE_IN_TRANSIT)
 			/* --- Shuttle is in transit to Central Command from SS13 --- */
@@ -295,11 +296,25 @@ var/datum/subsystem/shuttle/SSshuttle
 				undock_act(/area/hallway/secondary/exit, "arrival_escape")
 
 			if(timeleft > 0)
-				if(timeleft == 13)
-					if(last_es_sound < world.time)
+				if(last_es_sound < world.time)
+					if(timeleft == 13)
 						var/area/pre_location = locate(/area/shuttle/escape/station)
 						for(var/mob/M in pre_location)
 							M.playsound_local(null, 'sound/effects/escape_shuttle/es_undocking.ogg', 70)
+						last_es_sound = world.time + 10
+					if(timeleft == 7)
+						var/area/pre_location = locate(/area/shuttle/escape_pod1/station)
+						for(var/mob/M in pre_location)
+							M.playsound_local(null, 'sound/effects/escape_shuttle/ep_undocking.ogg', 100, is_global = 1)
+						pre_location = locate(/area/shuttle/escape_pod2/station)
+						for(var/mob/M in pre_location)
+							M.playsound_local(null, 'sound/effects/escape_shuttle/ep_undocking.ogg', 100, is_global = 1)
+						pre_location = locate(/area/shuttle/escape_pod3/station)
+						for(var/mob/M in pre_location)
+							M.playsound_local(null, 'sound/effects/escape_shuttle/ep_undocking.ogg', 100, is_global = 1)
+						pre_location = locate(/area/shuttle/escape_pod5/station)
+						for(var/mob/M in pre_location)
+							M.playsound_local(null, 'sound/effects/escape_shuttle/ep_undocking.ogg', 100, is_global = 1)
 						last_es_sound = world.time + 10
 				return 0
 
@@ -343,6 +358,8 @@ var/datum/subsystem/shuttle/SSshuttle
 				//pods
 				if(alert == 0) // Crew Transfer not for pods
 
+					if(prob(40))
+						ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_unlucky_shot.ogg'
 					start_location = locate(/area/shuttle/escape_pod1/station)
 					end_location = locate(/area/shuttle/escape_pod1/transit)
 					end_location.parallax_movedir = EAST
@@ -352,6 +369,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						CHECK_TICK
 
 					for(var/mob/M in end_location)
+						M.playsound_local(null, ep_shot_sound_type, 100, is_global = 1)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -371,6 +389,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						CHECK_TICK
 
 					for(var/mob/M in end_location)
+						M.playsound_local(null, ep_shot_sound_type, 100, is_global = 1)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -390,6 +409,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						CHECK_TICK
 
 					for(var/mob/M in end_location)
+						M.playsound_local(null, ep_shot_sound_type, 100, is_global = 1)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -409,6 +429,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						CHECK_TICK
 
 					for(var/mob/M in end_location)
+						M.playsound_local(null, ep_shot_sound_type, 100, is_global = 1)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
