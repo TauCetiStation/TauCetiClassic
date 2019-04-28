@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 22
+#define SAVEFILE_VERSION_MAX 23
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -81,7 +81,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["negative_quirks"] << negative_quirks
 		S["neutral_quirks"] << neutral_quirks
 
-	if(current_version < 22)
+	if(current_version < 23)
 		var/datum/job/assistant/J = new
 
 		if(player_alt_titles && \
