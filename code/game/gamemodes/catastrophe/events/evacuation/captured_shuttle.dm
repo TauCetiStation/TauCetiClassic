@@ -30,7 +30,6 @@
 				SSshuttle.fake_recall = 0
 
 				SSshuttle.incall()
-				world << sound('sound/AI/shuttlecalled.ogg')
 
 			var/list/shuttle_turfs = get_area_turfs(locate(/area/shuttle/escape/centcom))
 			var/list/valid_turfs = list()

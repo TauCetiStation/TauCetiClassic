@@ -18,4 +18,3 @@
 				SSshuttle.fake_recall = 0
 
 				SSshuttle.incall()
-				world << sound('sound/AI/shuttlecalled.ogg')
