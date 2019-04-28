@@ -19,11 +19,11 @@
 
 			var/time_diff = director.end_time - world.time
 
-			if(time_diff < 10*60*2) // if everything is gonna end soon dont bother about bringing gravity back
+			if(time_diff < 10 * 60 * 2) // if everything is gonna end soon dont bother about bringing gravity back
 				stop()
 				return
 
-			var/timer = time_diff * rand(30,70) / 100
+			var/timer = time_diff * rand(30, 70) / 100
 
 			addtimer(CALLBACK(src, .proc/turn_gravity_on), timer)
 

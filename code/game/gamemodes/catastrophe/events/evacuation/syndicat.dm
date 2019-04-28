@@ -15,7 +15,7 @@
 		if(1)
 			announce("Исход, мы ничём не можем вам помочь, станци[JA_PLACEHOLDER] ЦК практически полностью уничтожена, св[JA_PLACEHOLDER]зь с Икаром потер[JA_PLACEHOLDER]на, транзитна[JA_PLACEHOLDER] станци[JA_PLACEHOLDER] Велосити потер[JA_PLACEHOLDER]на, контроль над всей системой утер[JA_PLACEHOLDER]н, у нас нет свободных шатлов эвакуации дл[JA_PLACEHOLDER] вас, простите. Попытайтесь что-нибудь придумать. И да хранит вас бог, конец св[JA_PLACEHOLDER]зи")
 
-			addtimer(CALLBACK(src, .proc/syndicat_evacuation_real), 10*60*5) // 5 extra mins
+			addtimer(CALLBACK(src, .proc/syndicat_evacuation_real), 10 * 60 * 5) // 5 extra mins
 
 /datum/catastrophe_event/syndicat_evacuation/proc/syndicat_evacuation_real()
 	announce("Ха-а-а, кто это у мен[JA_PLACEHOLDER] тут на радаре. Неужели это полуразрушенный Исход? Неужели ваше хваленное Нанотрейзен решила забить на вас? Как же мне вас жаль, черт побери, ха. А теперь серьёзно. Я даю вам всего лишь один вариант спасти ваши жалкие задницы, вы отдаёте мне всё ценное, что имеет ваша станци[JA_PLACEHOLDER], включа[JA_PLACEHOLDER] технологии и корпоративные секретики, а [JA_PLACEHOLDER] обещаю что, может быть, не дам вашим душам бесследно пропасть в бездне, идёт? Конечно идёт, у вас тупо нет другого выбора, ха. И не обращайте внимани[JA_PLACEHOLDER] на красный цвет шатла и огромные буквы “Синдикат” на обшивке, [JA_PLACEHOLDER] теперь ваш единственный друг")

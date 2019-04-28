@@ -31,9 +31,9 @@
 					side_text = "южна[JA_PLACEHOLDER]"
 			announce("Внимание, системами станции был засечён неизвестный объект на траектории столкновени[JA_PLACEHOLDER] со станцией. Предполагаемый класс объекта – Астероид. Предполагаемый размер объекта – огромный. Врем[JA_PLACEHOLDER] до столкновени[JA_PLACEHOLDER] – двадцать минут. Примерное место столкновени[JA_PLACEHOLDER] – [side_text] часть станции. Примите необходимые меры дл[JA_PLACEHOLDER] нивелировани[JA_PLACEHOLDER] возможных жертв среди экипажа. При[JA_PLACEHOLDER]тного рабочего дн[JA_PLACEHOLDER].")
 
-			addtimer(CALLBACK(src, .proc/huge_asteroid_warning), 10*60*15)
-			addtimer(CALLBACK(src, .proc/huge_asteroid_last_warning), 10*60*20)
-			addtimer(CALLBACK(src, .proc/huge_asteroid_spawn), 10*60*20 + 10*3)
+			addtimer(CALLBACK(src, .proc/huge_asteroid_warning), 10 * 60 * 15)
+			addtimer(CALLBACK(src, .proc/huge_asteroid_last_warning), 10 * 60 * 20)
+			addtimer(CALLBACK(src, .proc/huge_asteroid_spawn), 10 * 60 * 20 + 10 * 3)
 		//if(3)
 			//
 		if(4)
@@ -94,7 +94,7 @@
 	var/datum/map_template/asteroid = new(map = generate_asteroid_mapfile(side_x, side_y))
 
 
-	T = locate(T.x - round(asteroid.width/2), T.y - round(asteroid.height/2) , T.z)
+	T = locate(T.x - round(asteroid.width / 2), T.y - round(asteroid.height / 2) , T.z)
 	var/list/bounds = list(T.x, T.y, T.z, T.x + asteroid.width + 1, T.y + asteroid.height + 1, T.z)
 
 	for(var/mob/M in player_list)
@@ -109,7 +109,7 @@
 			else
 				shake_camera(C, 10, 2)
 				C.Weaken(8)
-				C.throw_at(get_step(C,pick(1,2,4,8)),16,3)
+				C.throw_at(get_step(C,pick(1, 2, 4, 8)), 16, 3)
 
 	var/list/targetAtoms = list()
 	for(var/L in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
@@ -125,11 +125,11 @@
 			if(prob(5))
 				H.gib()
 		else
-			M.ex_act(pick(1,3))
+			M.ex_act(pick(1, 3))
 
 	asteroid.load(T)
 
-	sleep(max(side_x*side_y/100, 10))
+	sleep(max(side_x * side_y / 100, 10))
 	//fix for basetypes coped from old turfs in mapload
 	for(var/turf/T2 in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
 		                   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))

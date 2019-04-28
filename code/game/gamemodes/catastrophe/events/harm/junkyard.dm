@@ -37,9 +37,9 @@
 			will_trash = pick(trash_places)
 			announce("Внимание, к станции приближаетс[JA_PLACEHOLDER] огромный объёкт, метеоритной формы. Предположительно состоит в большей части из мусора. Метеорит заденет [will_trash] через 10 минут")
 
-			addtimer(CALLBACK(src, .proc/asteroid_warning), 10*60*9)
-			addtimer(CALLBACK(src, .proc/asteroid_last_warning), 10*60*10)
-			addtimer(CALLBACK(src, .proc/asteroid_spawn), 10*60*10 + 10*3)
+			addtimer(CALLBACK(src, .proc/asteroid_warning), 10 * 60 * 9)
+			addtimer(CALLBACK(src, .proc/asteroid_last_warning), 10 * 60 * 10)
+			addtimer(CALLBACK(src, .proc/asteroid_spawn), 10 * 60 * 10 + 10 * 3)
 		if(3)
 			announce("Экологический уровень вашей станции опустилс[JA_PLACEHOLDER] до нул[JA_PLACEHOLDER]. Исход официально признан космической свалкой")
 
@@ -107,7 +107,7 @@
 	for (var/i in 1 to rand(1, max_trash))
 		var/trash_type = pick(trash_types)
 		var/obj/item/trash = new trash_type(D.loc)
-		trash.throw_at(locate(D.x + rand(-5,5), D.y + rand(-5,5), D.z), 8, 2)
+		trash.throw_at(locate(D.x + rand(-5, 5), D.y + rand(-5, 5), D.z), 8, 2)
 
 /datum/catastrophe_event/junkyard/proc/totally_trash_area(area/A)
 	var/list/turfs = get_area_turfs(A)

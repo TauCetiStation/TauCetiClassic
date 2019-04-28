@@ -29,7 +29,7 @@
 		event_pool += event
 
 /datum/catastrophe_director/proc/post_setup()
-	end_time = world.time + 10*60*desired_length
+	end_time = world.time + 10 * 60 * desired_length
 	calculate_data()
 	start_story()
 
@@ -49,7 +49,7 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			allcount++
-			allhealth += Clamp((H.health+100)/200,0,1)
+			allhealth += Clamp((H.health + 100) / 200, 0, 1)
 
 	if(allcount <= 0)
 		d.aliveness = 1

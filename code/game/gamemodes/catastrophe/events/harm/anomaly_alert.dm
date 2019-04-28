@@ -25,7 +25,7 @@
 			timer_speed = 1
 		if(3)
 			announce("Внимание, по неизвестным причинам ваша звезда Тау Кита начинает увеличиватьс[JA_PLACEHOLDER]. Двигатели станции с трудом удерживают орбиту. Готовьтесь к возможной глобальной эвакуации.")
-			addtimer(CALLBACK(src, .proc/spawn_portalstorm), 10*5)
+			addtimer(CALLBACK(src, .proc/spawn_portalstorm), 10 * 5)
 			timer_speed = 2
 		if(4)
 			announce("Господи, вы это видите, Исход?! Тау Кита только что превратилась в огромную черную дыру. Господи, она зат[JA_PLACEHOLDER]гивает вашу станцию. Мы пон[JA_PLACEHOLDER]ти[JA_PLACEHOLDER] не имеем, какое воздействие окажет на вас черна[JA_PLACEHOLDER] дыра и что вас ждёт. Де..жи…есь, св[JA_PLACEHOLDER]зь про…ает… да… ит…с бог%%##//")
@@ -39,7 +39,7 @@
 	anomaly_timer -= timer_speed
 	if(anomaly_timer <= 0)
 		anomaly_timer = 300
-		active_timer = rand(11,29) // 1-2 anomaly per 10 minutes
+		active_timer = rand(11, 29) // 1-2 anomaly per 10 minutes
 
 
 	if(active_timer > 0)

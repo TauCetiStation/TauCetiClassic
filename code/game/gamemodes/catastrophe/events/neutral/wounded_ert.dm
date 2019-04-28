@@ -60,13 +60,13 @@
 		else
 			H.death(0) // Couldnt find a player, just spawn a dead guy
 
-		for (var/i in 1 to rand(4,5))
+		for (var/i in 1 to rand(4, 5))
 			if(prob(40))
-				H.adjustBruteLoss(rand(18,22))
+				H.adjustBruteLoss(rand(18, 22))
 			else if(prob(50))
-				H.adjustFireLoss(rand(18,22))
+				H.adjustFireLoss(rand(18, 22))
 			else
-				H.adjustToxLoss(rand(18,22))
+				H.adjustToxLoss(rand(18, 22))
 
 		to_chat(H, "<span class='notice'>The station is to [loc_text] from your location</span>")
 
@@ -76,7 +76,7 @@
 	var/datum/preferences/A = new()
 	A.randomize_appearance_for(H)
 
-	H.age = rand(35,45)
+	H.age = rand(35, 45)
 
 	var/commando_rank = pick("Lieutenant", "Captain", "Major", "Corporal", "Sergeant", "Staff Sergeant", "Sergeant 1st Class", "Master Sergeant", "Sergeant Major")
 	var/commando_name = pick(last_names)
@@ -148,7 +148,7 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun/nuclear(H), SLOT_BELT)
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/sigi/spec(H), SLOT_BELT)
-		for (var/i in 1 to rand(0,2))
+		for (var/i in 1 to rand(0, 2))
 			H.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m9mmr_2(H), SLOT_IN_BACKPACK)
 
 	var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)

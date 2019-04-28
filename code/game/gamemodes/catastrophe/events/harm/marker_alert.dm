@@ -42,8 +42,8 @@
 			if(marker)
 				marker.visible_message("<span class='warning'><b>[marker]</b> begins to glow bright <b>RED</b></span>")
 
-				addtimer(CALLBACK(src, .proc/spawn_monsters_marker), 10*10)
-			addtimer(CALLBACK(src, .proc/marker_report), 30*10)
+				addtimer(CALLBACK(src, .proc/spawn_monsters_marker), 10 * 10)
+			addtimer(CALLBACK(src, .proc/marker_report), 30 * 10)
 
 			for(var/obj/machinery/power/apc/apc in apc_list)
 				if(prob(80))
@@ -86,9 +86,9 @@
 	// this spawns monsters at random air pumps
 	monster_wave_timer -= 1
 	if(monster_wave_timer <= 0)
-		monster_wave_timer = rand(30,40)
+		monster_wave_timer = rand(30, 40)
 		if(prob(20))
-			monster_wave_timer = rand(90,120)
+			monster_wave_timer = rand(90, 120)
 
 		var/list/found_vents = list()
 		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in machines)
@@ -96,7 +96,7 @@
 				found_vents.Add(v)
 
 		if(found_vents.len)
-			for (var/i in 1 to rand(monster_wave_min,monster_wave_max))
+			for (var/i in 1 to rand(monster_wave_min, monster_wave_max))
 				var/obj/machinery/atmospherics/components/unary/vent_pump/vent_found = pick(found_vents)
 				spawn_monster(vent_found)
 
@@ -120,7 +120,7 @@
 					var/scary_object = spook(H)
 
 					if(scary_object && prob(monster_chance))
-						addtimer(CALLBACK(src, .proc/spawn_monster, scary_object), 10*rand(3,10))
+						addtimer(CALLBACK(src, .proc/spawn_monster, scary_object), 10 * rand(3, 10))
 
 // attempts to scare some one, also may return object that we can use to spawn some monsters inside
 /datum/catastrophe_event/marker_alert/proc/spook(mob/living/carbon/human/H)
@@ -129,23 +129,23 @@
 
 	// just some generic thing
 	if(spook_type == "sound")
-		var/turf/T = locate(H.x+rand(-7,7), H.y+rand(-7,7), H.z)
+		var/turf/T = locate(H.x+rand(-7, 7), H.y+rand(-7, 7), H.z)
 		if(!T)
 			return null
 
-		playsound(T, pick(spooky_sounds), rand(10,50), 1)
+		playsound(T, pick(spooky_sounds), rand(10, 50), 1)
 		return null
 
 	var/obj/scary_object = null
 
 	switch(spook_type)
 		if("vent")
-			for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/U in orange(7,H))
+			for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/U in orange(7, H))
 				if(!U.welded)
 					scary_object = U
 					break
 		if("closet")
-			for(var/obj/structure/closet/C in orange(7,H))
+			for(var/obj/structure/closet/C in orange(7, H))
 				if(istype(C, /obj/structure/closet/body_bag))
 					continue
 
@@ -153,7 +153,7 @@
 					scary_object = C
 					break
 		if("pump")
-			for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7,H))
+			for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7, H))
 				if(!U.welded)
 					scary_object = U
 					break

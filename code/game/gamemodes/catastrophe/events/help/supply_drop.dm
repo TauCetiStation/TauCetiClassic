@@ -27,18 +27,18 @@
 	desc = "A crate with usefull supplies"
 
 /obj/structure/closet/crate/medical/supplydrop/PopulateContents()
-	for (var/i in 1 to rand(1,4))
+	for (var/i in 1 to rand(1, 4))
 		if(prob(60))
 			new /obj/item/weapon/storage/firstaid(src)
 		else
 			new /obj/item/weapon/storage/firstaid/adv(src)
 
 	var/list/cell_weights = list(/obj/item/weapon/stock_parts/cell = 4, /obj/item/weapon/stock_parts/cell/high = 6, /obj/item/weapon/stock_parts/cell/super = 4, /obj/item/weapon/stock_parts/cell/hyper = 2, /obj/item/weapon/stock_parts/cell/bluespace = 1)
-	for (var/i in 1 to rand(0,2))
+	for (var/i in 1 to rand(0, 2))
 		var/e = pickweight(cell_weights)
 		new e(src)
 
-	for (var/i in 1 to rand(0,4))
+	for (var/i in 1 to rand(0, 4))
 		new /obj/item/clothing/suit/space(src)
 		new /obj/item/clothing/head/helmet/space(src)
 

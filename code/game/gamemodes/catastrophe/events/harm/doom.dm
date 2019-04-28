@@ -17,7 +17,7 @@
 		if(1)
 			announce("Проснитесь и пойте, Исход! Мы сообщаем вам, что на ЦК сейчас провод[JA_PLACEHOLDER]тс[JA_PLACEHOLDER] кристаллического тела, полученного из блюспейс пространства. Ваша станци[JA_PLACEHOLDER] будет использована в качестве усилител[JA_PLACEHOLDER] флуктуаций блюспейс-пол[JA_PLACEHOLDER]. Увер[JA_PLACEHOLDER]ем вас, процедура абсолютно безопасна! Скорее всего, всё пройдёт... успешно. Наш лучший ученый, выпускник MIT, в данный момент доставл[JA_PLACEHOLDER]ет кристалл в специальный Антимасс-Спектрометр. Мы же будем сообщать вам о ходе исследовани[JA_PLACEHOLDER].")
 
-			addtimer(CALLBACK(src, .proc/spawn_first_portal), 60*10)
+			addtimer(CALLBACK(src, .proc/spawn_first_portal), 60 * 10)
 		if(2)
 			announce("Мы правда пытаемс[JA_PLACEHOLDER] найти решение, Исход. Испытательна[JA_PLACEHOLDER] камера анализатора уничтожена, из блюспейс пространства вылезают какие-то монстры. А количество этих разломов только увеличиваетс[JA_PLACEHOLDER].")
 			portal_delay = 20
@@ -39,12 +39,12 @@
 	if(should_spawn_portals)
 		portal_timer -= 1
 		if(portal_timer <= 0)
-			portal_timer = rand(portal_delay, portal_delay*1.5)
+			portal_timer = rand(portal_delay, portal_delay * 1.5)
 			if(prob(10))
 				portal_timer = portal_timer * 10 // sometimes there are big intervals
 
 			var/obj/effect/doom_portal/P = spawn_portal(findEventArea())
-			P.monster_ammount = rand(2,5)
+			P.monster_ammount = rand(2, 5)
 
 /datum/catastrophe_event/doom/proc/spawn_first_portal()
 	announce("… Отключи эту штуку! Отключи немедленно! Исход, кристалл оказалс[JA_PLACEHOLDER] крайне нестабильным колебани[JA_PLACEHOLDER] блюспейс-пол[JA_PLACEHOLDER] вошли в каскадный резонанс с Антимасс-Спектрометром! По всей системе создаютс[JA_PLACEHOLDER] межпространственные разломы в блюспейс, не смейте приближатьс[JA_PLACEHOLDER] к ним! Мы ищем решение проблемы.")

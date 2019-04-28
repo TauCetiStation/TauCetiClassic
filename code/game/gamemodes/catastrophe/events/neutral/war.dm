@@ -89,7 +89,7 @@
 	var/datum/preferences/A = new()
 	A.randomize_appearance_for(H)
 
-	H.age = rand(23,45)
+	H.age = rand(23, 45)
 
 /datum/catastrophe_event/war/proc/equip_pirate(mob/living/carbon/human/H)
 	var/newname = pick(list("Creeper ","Jim ","Storm ","John ","George ","O` ","Rat ","Jack ","Legs ",

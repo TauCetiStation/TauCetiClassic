@@ -52,13 +52,13 @@
 
 	if(wave_timer <= 0)
 		spawn_wave()
-		wave_timer = rand(100,300) // 3-10 mins or ~25 if there are >20 carps
+		wave_timer = rand(100, 300) // 3-10 mins or ~25 if there are >20 carps
 
 /datum/catastrophe_event/carp_alert/proc/spawn_wave()
 	for(var/obj/effect/landmark/C in landmarks_list)
 		if(C.name == "carpspawn")
 			if(prob(30))
-				var/pack_size = rand(2,4)
+				var/pack_size = rand(2, 4)
 				for (var/i in 1 to pack_size)
 
 					if(step >= 2)
@@ -118,7 +118,7 @@
 
 	var/matrix/Mx = matrix()
 	Mx.Scale(3)
-	Mx.Translate(0,32)
+	Mx.Translate(0, 32)
 	transform = Mx
 
 	get_target_turf()
@@ -160,7 +160,7 @@
 	if(minions_timer <= 0)
 		minions_timer = 2
 
-	 	for (var/i in 1 to rand(1,2))
+	 	for (var/i in 1 to rand(1, 2))
 	 		minions.Add(new /mob/living/simple_animal/hostile/carp(loc))
 
 	for(var/mob/living/simple_animal/hostile/carp/C in minions)

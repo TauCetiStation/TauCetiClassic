@@ -30,7 +30,7 @@
 /datum/catastrophe_event/proc/start()
 	message_admins( "[name] has started")
 	starttime = world.time
-	event_selected_duration = event_duration_min + (event_duration_max - event_duration_min)*rand(0,1000)/1000
+	event_selected_duration = event_duration_min + (event_duration_max - event_duration_min) * rand(0, 1000) / 1000
 
 /datum/catastrophe_event/proc/on_step()
 	return
@@ -39,9 +39,9 @@
 	if(steps && world.time > next_step)
 		step += 1
 		if(step >= steps) // just to avoid division by zero
-			next_step = world.time + 10*60*10
+			next_step = world.time + 10 * 60 * 10
 		else
-			next_step = world.time + (director.end_time - world.time)*event_selected_duration/(steps + 1 - step) + rand(-step_variation, step_variation)*10
+			next_step = world.time + (director.end_time - world.time) * event_selected_duration / (steps + 1 - step) + rand(-step_variation, step_variation) * 10
 		on_step()
 
 		if(step == steps && !manual_stop)
@@ -62,7 +62,6 @@
 
 /datum/catastrophe_event/proc/announce(what, who = "")
 	command_alert(what, who)
-	world << sound('sound/AI/commandreport.ogg')
 
 /datum/catastrophe_event/proc/find_random_floor(area/A, check_mob = FALSE)
 	var/list/turfs = get_area_turfs(A)
