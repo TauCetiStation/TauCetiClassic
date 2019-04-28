@@ -32,6 +32,10 @@
 	if (config.log_admin)
 		diary << "\[[time_stamp()]]ADMIN: [LOG_CLEANING(text)][log_end]"
 
+/proc/log_admin_private(text)
+	admin_log.Add(text)
+	if (config.log_admin)
+		diary << "\[[time_stamp()]]ADMINPRIVATE: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_debug(text)
 	if (config.log_debug)

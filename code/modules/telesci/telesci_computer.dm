@@ -257,7 +257,7 @@
 				SS.start()
 
 				flick("pad-beam", telepad)
-				playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1)
+				playsound(telepad.loc, 'sound/weapons/guns/gunpulse_emitter2.ogg', 25, 1)
 
 			else
 				use_power(power * 1500)
@@ -266,7 +266,7 @@
 				SS.start()
 
 				flick("pad-beam", telepad)
-				playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1)
+				playsound(telepad.loc, 'sound/weapons/guns/gunpulse_emitter2.ogg', 25, 1)
 				temp_msg = "Error!<BR>Something wrong with the navigation data."
 			updateDialog()
 

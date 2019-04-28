@@ -14,12 +14,11 @@
 
 /obj/structure/sign/attackby(obj/item/W, mob/user, params)
 	if(iswrench(W) && buildable_sign)
-		if(user.is_busy())
+		if(user.is_busy(src))
 			return
 		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>",
 							 "<span class='notice'>You start unfastening [src].</span>")
-		playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
-		if(do_after(user,40,target = src))
+		if(W.use_tool(src, user, 40, volume = 50))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] unfastens [src].</span>",
 								 "<span class='notice'>You unfasten [src].</span>")

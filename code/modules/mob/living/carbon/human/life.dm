@@ -183,7 +183,7 @@
 						emote("twitch")
 					if(2 to 3)
 						if(config.rus_language)
-							say(pick(TRAIT_TOURETTE))
+							say(pick(CYRILLIC_TRAIT_TOURETTE))
 						else
 							say(pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS"))
 				var/old_x = pixel_x
@@ -205,9 +205,9 @@
 			if(config.rus_language)//TODO:CYRILLIC dictionary?
 				switch(pick(1,2,3))
 					if(1)
-						say(pick(CYRILLIC_BRAINDAMAG_1))
+						say(pick(CYRILLIC_BRAINDAMAGE_1))
 					if(2)
-						say(pick(CYRILLIC_BRAINDAMAG_2))
+						say(pick(CYRILLIC_BRAINDAMAGE_2))
 					if(3)
 						emote("drool")
 			else
@@ -220,6 +220,30 @@
 						emote("drool")
 
 	if(stat != DEAD)
+		if(gnomed) // if he's dead he's gnomed foreva-a-ah
+			if(prob(6))
+				say(pick("A-HA-HA-HA!", "U-HU-HU-HU!", "IM A GNOME", "I'm a GnOme!", "Don't GnoMe me!", "I'm gnot a gnoblin!", "You've been GNOMED!"))
+				playsound(src, 'sound/magic/GNOMED.ogg', 50, 1)
+			gnomed--
+			if(gnomed <= 0)
+				to_chat(src, "<span class='notice'>You are no longer gnomed!</span>")
+				gnomed = FALSE
+				if(wear_mask)
+					wear_mask.canremove = TRUE
+				if(head)
+					head.canremove = TRUE
+				if(w_uniform)
+					w_uniform.canremove = TRUE
+				if(wear_suit)
+					remove_from_mob(wear_suit)
+				var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
+				smoke.set_up(3, 0, src.loc)
+				smoke.start()
+				playsound(src, 'sound/magic/cult_revive.ogg', 90, 1)
+				if(SMALLSIZE in mutations)
+					dna.SetSEState(SMALLSIZEBLOCK, 0)
+					domutcheck(src, null)
+
 		var/rn = rand(0, 200)
 		if(getBrainLoss() >= 5)
 			if(0 <= rn && rn <= 3)
@@ -1560,6 +1584,8 @@
 			sightglassesmod = "thermal"
 		else if(istype(glasses, /obj/item/clothing/glasses/science))
 			sightglassesmod = "sci"
+		else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/noir))
+			sightglassesmod = "greyscale"
 
 	if(species.nighteyes)
 		if(sightglassesmod)

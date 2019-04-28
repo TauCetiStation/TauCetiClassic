@@ -129,7 +129,7 @@
 
 	if(open && over_object == usr && Adjacent(usr))
 		to_chat(usr, "<span class='notice'>You begin to remove \the [src]...</span>")
-		if (do_after(usr, 30, src))
+		if(do_after(usr, 30, src))
 			to_chat(usr, "<span class='notice'>You have removed \the [src].</span>")
 
 			var/obj/item/clamp/C = new
@@ -154,7 +154,7 @@
 
 	if (istype(A, /obj/machinery/atmospherics/pipe/simple))
 		to_chat(user, "<span class='notice'>You begin to attach \the [src] to \the [A]...</span>")
-		if (do_after(user, 30, src))
+		if(A.use_tool(src, user, 30, volume = 50))
 			to_chat(user, "<span class='notice'>You have attached \the [src] to \the [A].</span>")
 			new/obj/machinery/clamp(A.loc, A)
 			user.drop_from_inventory(src)
