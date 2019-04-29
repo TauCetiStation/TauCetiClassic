@@ -111,7 +111,7 @@
 				to_chat(usr, "<span class='warning'>A red light flashes on the console. It looks like you can't change the security level that fast.</span>")
 				return
 			else
-				last_seclevel_change = world.time + 600 // One minute seconds cooldown
+				last_seclevel_change = world.time + 600 // One minute cooldown
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
