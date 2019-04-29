@@ -134,16 +134,16 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						src << 'sound/machines/windowdoor.ogg'
 					if(9)
 						//To make it more realistic, I added two gunshots (enough to kill)
-						src << 'sound/weapons/Gunshot.ogg'
+						src << 'sound/weapons/guns/gunshot_heavy.ogg'
 						spawn(rand(10,30))
-							src << 'sound/weapons/Gunshot.ogg'
+							src << 'sound/weapons/guns/gunshot_heavy.ogg'
 					if(10)
 						src << 'sound/weapons/smash.ogg'
 					if(11)
 						//Same as above, but with tasers.
-						src << 'sound/weapons/Taser.ogg'
+						src << 'sound/weapons/guns/gunpulse_Taser.ogg'
 						spawn(rand(10,30))
-							src << 'sound/weapons/Taser.ogg'
+							src << 'sound/weapons/guns/gunpulse_Taser.ogg'
 				//Rare audio
 					if(12)
 //These sounds are (mostly) taken from Hidden: Source
