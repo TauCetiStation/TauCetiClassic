@@ -410,7 +410,7 @@
 		new /obj/item/stack/sheet/metal(get_turf(src.loc), 1)
 		qdel(src)
 
-/obj/item/door_control_frame/proc/try_build(turf/on_wall) //copied from code/game/machinery/alarm.dm
+/obj/item/door_control_frame/proc/try_build(turf/on_wall)
 	if (get_dist(on_wall, usr) > 1)
 		return
 
