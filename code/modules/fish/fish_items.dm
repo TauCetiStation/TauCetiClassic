@@ -64,7 +64,7 @@
 	desc = "A single raw shrimp."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "shrimp_raw"
-//	filling_color = "#FF1C1C"
+	filling_color = "#FF1C1C"
 
 	New()
 		..()
@@ -77,7 +77,7 @@
 	desc = "A tiny feeder fish. Sure doesn't look very filling..."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "feederfish"
-//	filling_color = "#FF1C1C"
+	filling_color = "#FF1C1C"
 
 	New()
 		..()
