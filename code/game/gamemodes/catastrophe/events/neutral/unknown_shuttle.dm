@@ -65,3 +65,8 @@
 	name = "Unknown Shuttle 3"
 	shuttle_id = "unknown_shuttle3"
 	mappath = "maps/templates/catastrophe/unknown_shuttles/shuttle3.dmm"
+
+/datum/map_template/unknown_shuttle/shuttle4
+	name = "Unknown Shuttle 4"
+	shuttle_id = "unknown_shuttle4"
+	mappath = "maps/templates/catastrophe/unknown_shuttles/shuttle4.dmm"

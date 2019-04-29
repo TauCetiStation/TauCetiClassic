@@ -152,12 +152,7 @@
 /area/space)
 "aF" = (
 /obj/machinery/door/airlock/hatch{
-	frequency = 1331;
-	id_tag = "vox_northwest_lock";
-	locked = 1;
-	req_access_txt = "150";
-	req_one_access = null;
-	req_one_access_txt = "0"
+	req_access_txt = "12"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -214,16 +209,11 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aP" = (
-/obj/machinery/door/airlock/hatch{
-	frequency = 1331;
-	id_tag = "vox_northwest_lock";
-	locked = 1;
-	req_access_txt = "150";
-	req_one_access = null;
-	req_one_access_txt = "0"
-	},
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
+	},
+/obj/machinery/door/airlock/hatch{
+	req_access_txt = "12"
 	},
 /turf/simulated/shuttle/plating,
 /area/space)
@@ -264,12 +254,7 @@
 /area/space)
 "aV" = (
 /obj/machinery/door/airlock/hatch{
-	frequency = 1331;
-	id_tag = "vox_northwest_lock";
-	locked = 1;
-	req_access_txt = "150";
-	req_one_access = null;
-	req_one_access_txt = "0"
+	req_access_txt = "12"
 	},
 /turf/simulated/shuttle/plating,
 /area/space)

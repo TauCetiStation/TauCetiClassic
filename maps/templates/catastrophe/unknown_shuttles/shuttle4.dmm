@@ -1,0 +1,548 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/space,
+/area/space)
+"b" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/space)
+"c" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/space)
+"d" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/space)
+"e" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "burst_l"
+	},
+/turf/simulated/shuttle/plating,
+/area/space)
+"f" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "heater1"
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"g" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/plating/airless{
+	dir = 8;
+	icon_state = "warnplate"
+	},
+/area/space)
+"h" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"i" = (
+/obj/random/tools/powercell,
+/obj/random/tools/powercell,
+/obj/random/tools/tool,
+/obj/structure/closet/crate{
+	icon_state = "crateopen";
+	opened = 1
+	},
+/obj/random/science/circuit,
+/obj/random/science/circuit,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"j" = (
+/obj/structure/table,
+/obj/random/cloth/masks,
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/space)
+"k" = (
+/obj/structure/table,
+/obj/item/clothing/suit/space/syndicate/infiltrator,
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/space)
+"l" = (
+/obj/structure/dispenser,
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space)
+"m" = (
+/obj/structure/rack,
+/obj/item/clothing/head/helmet/space/syndicate/infiltrator,
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/space)
+"n" = (
+/turf/simulated/floor/plating/airless{
+	dir = 8;
+	icon_state = "warnplate"
+	},
+/area/space)
+"o" = (
+/turf/simulated/floor/plating/airless,
+/area/space)
+"p" = (
+/turf/simulated/floor/plating/airless{
+	dir = 4;
+	icon_state = "warnplate"
+	},
+/area/space)
+"q" = (
+/obj/structure/table,
+/obj/random/cloth/masks,
+/turf/simulated/floor/airless{
+	icon_state = "damaged5"
+	},
+/area/space)
+"r" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/space)
+"s" = (
+/turf/simulated/floor/airless,
+/area/space)
+"t" = (
+/mob/living/simple_animal/hostile/carp,
+/turf/simulated/floor/plating/airless{
+	dir = 8;
+	icon_state = "warnplate"
+	},
+/area/space)
+"u" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "diagonalWall3"
+	},
+/area/space)
+"v" = (
+/obj/machinery/door/airlock/hatch{
+	req_access_txt = "12"
+	},
+/turf/simulated/floor/airless,
+/area/space)
+"w" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space)
+"x" = (
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/space)
+"y" = (
+/obj/random/plushie,
+/turf/simulated/floor/airless,
+/area/space)
+"z" = (
+/obj/structure/computerframe,
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/space)
+"A" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/shuttle/plating,
+/area/space)
+"B" = (
+/obj/machinery/door/airlock/hatch{
+	req_access_txt = "12"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"C" = (
+/obj/structure/stool/bed/chair/schair{
+	dir = 4
+	},
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/space)
+"D" = (
+/obj/structure/computerframe,
+/turf/simulated/floor/airless{
+	icon_state = "damaged5"
+	},
+/area/space)
+"E" = (
+/obj/random/tools/toolbox,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"F" = (
+/obj/structure/table,
+/obj/random/cloth/armor,
+/obj/random/cloth/under,
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/space)
+"G" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/syndicate/civilian,
+/obj/item/clothing/head/helmet/space/syndicate/civilian,
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/space)
+"H" = (
+/obj/structure/lattice,
+/turf/space,
+/area/space)
+"I" = (
+/mob/living/simple_animal/hostile/carp/megacarp,
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/space)
+"J" = (
+/obj/structure/table,
+/obj/random/guns/weapon_item,
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/space)
+"K" = (
+/obj/structure/stool,
+/turf/simulated/floor/airless,
+/area/space)
+"L" = (
+/obj/structure/table,
+/obj/random/meds/pills,
+/obj/random/meds/chemical_bottle,
+/obj/random/meds/chemical_bottle,
+/turf/simulated/floor/airless{
+	icon_state = "damaged5"
+	},
+/area/space)
+"M" = (
+/obj/random/randomtoy,
+/turf/simulated/floor/airless{
+	icon_state = "damaged5"
+	},
+/area/space)
+"N" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/space)
+"O" = (
+/obj/item/device/flashlight,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"P" = (
+/obj/random/tools/tool,
+/turf/space,
+/area/space)
+"Q" = (
+/obj/structure/stool,
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space)
+"R" = (
+/obj/structure/table,
+/obj/random/meds/medkit,
+/obj/random/meds/medkit,
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/space)
+"S" = (
+/mob/living/simple_animal/hostile/carp,
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/space)
+"T" = (
+/obj/structure/grille{
+	density = 0;
+	icon_state = "brokengrille"
+	},
+/turf/simulated/shuttle/plating,
+/area/space)
+"U" = (
+/mob/living/simple_animal/hostile/carp,
+/turf/simulated/floor/airless{
+	icon_state = "damaged5"
+	},
+/area/space)
+"V" = (
+/obj/effect/decal/remains/human,
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space)
+"W" = (
+/obj/random/science/circuit,
+/turf/space,
+/area/space)
+"X" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/space,
+/area/space)
+"Y" = (
+/obj/structure/computerframe{
+	anchored = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/space)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+b
+e
+e
+u
+a
+a
+a
+"}
+(2,1,1) = {"
+b
+e
+e
+u
+a
+c
+f
+f
+c
+a
+a
+a
+"}
+(3,1,1) = {"
+c
+f
+f
+c
+a
+c
+n
+n
+X
+a
+a
+a
+"}
+(4,1,1) = {"
+c
+g
+t
+c
+a
+c
+o
+O
+H
+W
+a
+a
+"}
+(5,1,1) = {"
+c
+h
+o
+c
+a
+c
+H
+H
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+c
+i
+o
+c
+a
+a
+W
+H
+P
+a
+H
+a
+"}
+(7,1,1) = {"
+c
+c
+p
+c
+B
+c
+p
+P
+H
+a
+a
+a
+"}
+(8,1,1) = {"
+d
+c
+o
+o
+o
+E
+o
+H
+H
+a
+H
+H
+"}
+(9,1,1) = {"
+b
+c
+c
+v
+c
+c
+c
+c
+u
+H
+a
+a
+"}
+(10,1,1) = {"
+c
+j
+q
+w
+c
+F
+J
+J
+c
+a
+a
+a
+"}
+(11,1,1) = {"
+c
+k
+r
+S
+c
+U
+K
+r
+c
+a
+a
+a
+"}
+(12,1,1) = {"
+c
+l
+s
+x
+v
+s
+S
+Q
+c
+a
+a
+a
+"}
+(13,1,1) = {"
+c
+m
+G
+G
+c
+x
+L
+R
+c
+a
+a
+a
+"}
+(14,1,1) = {"
+c
+c
+c
+c
+c
+v
+c
+c
+c
+a
+a
+a
+"}
+(15,1,1) = {"
+d
+c
+I
+y
+C
+V
+M
+c
+N
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+d
+c
+Y
+D
+z
+c
+N
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+d
+T
+A
+A
+N
+a
+a
+a
+a
+a
+"}
