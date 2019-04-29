@@ -1055,7 +1055,7 @@
 			if(prob(round(-satiety/40)))
 				make_jittery(5)
 			hunger_rate = 3 * hunger_drain
-		nutrition = max(0, nutrition - hunger_rate )
+		nutrition = max(0, nutrition - hunger_rate)
 		//nutrition = max(0, nutrition - met_factor * 0.1)//I'll leave it here for testing the speed of becoming hungry
 		if(has_trait(TRAIT_STRESS_EATER))
 			nutrition = max(0, nutrition - hunger_rate * getHalLoss() * 0.1)

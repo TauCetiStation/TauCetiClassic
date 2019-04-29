@@ -19,11 +19,11 @@
 		handle_phantom_move(NewLoc, Dir)
 		if(nutrition && stat != DEAD)
 			var/met_factor = get_metabolism_factor()
-			nutrition -= met_factor * 0.01
+			nutrition -= hunger_drain / 10
 			if(has_trait(TRAIT_STRESS_EATER))
-				nutrition -= met_factor * getHalLoss() * (m_intent == "run" ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
+				nutrition -= met_factor * getHalLoss() * (m_intent == "run" ? 0.2 : 0.1) // Which is actually a lot if you come to think of it.
 			if(m_intent == "run")
-				nutrition -= met_factor * 0.01
+				nutrition -= hunger_drain / 10
 		if((FAT in mutations) && m_intent == "run" && bodytemperature <= 360)
 			bodytemperature += 2
 
