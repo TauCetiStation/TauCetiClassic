@@ -1,8 +1,9 @@
 /datum/reagent/consumable
 	name = "Consumable"
 	id = "consumable"
+	//var/nutriment_factor = 1 * REAGENTS_METABOLISM
 	custom_metabolism = FOOD_METABOLISM
-	nutriment_factor = 1
+	nutriment_factor = 1 * REAGENTS_METABOLISM
 	taste_message = null
 	var/last_volume = 0 // Check digestion code below.
 
@@ -107,8 +108,8 @@
 	name = "Soysauce"
 	id = "soysauce"
 	description = "A salty sauce made from the soy plant."
+	nutriment_factor = 2 * REAGENTS_METABOLISM
 	reagent_state = LIQUID
-	nutriment_factor = 2
 	color = "#792300" // rgb: 121, 35, 0
 	taste_message = "salt"
 	diet_flags = DIET_MEAT
@@ -117,8 +118,8 @@
 	name = "Ketchup"
 	id = "ketchup"
 	description = "Ketchup, catsup, whatever. It's tomato paste."
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 	reagent_state = LIQUID
-	nutriment_factor = 5
 	color = "#731008" // rgb: 115, 16, 8
 	taste_message = "ketchup"
 	diet_flags = DIET_PLANT
@@ -128,7 +129,6 @@
 	id = "flour"
 	description = "This is what you rub all over yourself to pretend to be a ghost."
 	reagent_state = LIQUID
-	nutriment_factor = 2
 	color = "#f5eaea" // rgb: 245, 234, 234
 	taste_message = "flour"
 	diet_flags = DIET_PLANT
@@ -278,7 +278,7 @@
 	id = "coco"
 	description = "A fatty, bitter paste made from coco beans."
 	reagent_state = SOLID
-	nutriment_factor = 10
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "cocoa"
 	diet_flags = DIET_PLANT
@@ -288,7 +288,7 @@
 	id = "vanilla"
 	description = "A fatty, bitter paste made from vanilla pods."
 	reagent_state = SOLID
-	nutriment_factor = 10
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#FFFACD"
 	taste_message = "bitter vanilla"
 
@@ -297,7 +297,7 @@
 	id = "hot_coco"
 	description = "Made with love! And cocoa beans."
 	reagent_state = LIQUID
-	nutriment_factor = 4
+	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#403010" // rgb: 64, 48, 16
 	taste_message = "chocolate"
 	diet_flags = DIET_PLANT
@@ -351,7 +351,7 @@
 	id = "cornoil"
 	description = "An oil derived from various types of corn."
 	reagent_state = LIQUID
-	nutriment_factor = 40
+	nutriment_factor = 20 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "oil"
 	diet_flags = DIET_PLANT
@@ -383,7 +383,7 @@
 	id = "dry_ramen"
 	description = "Space age food, since August 25, 1958. Contains dried noodles, vegetables, and chemicals that boil in contact with water."
 	reagent_state = SOLID
-	nutriment_factor = 2
+	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "dry ramen coated with what might just be your tears"
 
@@ -392,7 +392,7 @@
 	id = "hot_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 5
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "ramen"
 
@@ -406,7 +406,7 @@
 	id = "hell_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 5
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "SPICY ramen"
 
@@ -419,7 +419,7 @@
 	id = "rice"
 	description = "Enjoy the great taste of nothing."
 	reagent_state = SOLID
-	nutriment_factor = 2
+	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#ffffff" // rgb: 0, 0, 0
 	taste_message = "rice"
 	diet_flags = DIET_PLANT
@@ -429,7 +429,7 @@
 	id = "cherryjelly"
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	reagent_state = LIQUID
-	nutriment_factor = 2
+	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#801e28" // rgb: 128, 30, 40
 	taste_message = "cherry jelly"
 	diet_flags = DIET_PLANT
@@ -495,7 +495,7 @@
 	description = "A golden yellow syrup, loaded with sugary sweetness."
 	reagent_state = LIQUID
 	color = "#ffff00"
-	nutriment_factor = 15
+	nutriment_factor = 15 * REAGENTS_METABOLISM
 	taste_message = "honey sweetness"
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/M)
@@ -553,7 +553,7 @@
 	id = "chocolate"
 	description = "Chocolate is a delightful product derived from the seeds of the theobroma cacao tree."
 	reagent_state = LIQUID
-	nutriment_factor = 5
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#2E2418"
 	taste_message = "chocolate"
 
@@ -586,7 +586,7 @@
 	reagent_state = LIQUID
 	color = "#B4B400"
 	custom_metabolism = 0.2
-	nutriment_factor = 5
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 	taste_message = "broth"
 
 /datum/reagent/consumable/cheese

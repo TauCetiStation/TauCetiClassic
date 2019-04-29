@@ -144,7 +144,7 @@
 	name = "Potato Juice"
 	id = "potato"
 	description = "Juice of the potato. Bleh."
-	nutriment_factor = 2
+	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "puke, you're pretty sure"
 
@@ -190,7 +190,7 @@
 	name = "Hot Chocolate"
 	id = "hot_coco"
 	description = "Made with love! And cocoa beans."
-	nutriment_factor = 2
+	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#403010" // rgb: 64, 48, 16
 	adj_temp = 5
 	taste_message = "chocolate"
@@ -446,7 +446,7 @@
 	reagent_state = LIQUID
 	color = "#ff8cff" // rgb: 255, 140, 255
 	custom_metabolism = FOOD_METABOLISM
-	nutriment_factor = 1
+	nutriment_factor = 4 * REAGENTS_METABOLISM
 	taste_message = "healthy dietary choices"
 
 /datum/reagent/consumable/doctor_delight/on_general_digest(mob/living/M)
@@ -550,6 +550,7 @@
 	name = "Hippies' Delight"
 	id = "hippiesdelight"
 	description = "You just don't get it maaaan."
+	nutriment_factor = 0.2 * REAGENTS_METABOLISM
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
 	custom_metabolism = FOOD_METABOLISM * 0.5
@@ -699,9 +700,9 @@
 	name = "Beer"
 	id = "beer"
 	description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
+	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#fbbf0d" // rgb: 251, 191, 13
 	boozepwr = 1
-	nutriment_factor = 1
 	taste_message = "beer"
 
 /datum/reagent/consumable/ethanol/beer/on_general_digest(mob/living/M)
@@ -744,9 +745,9 @@
 	name = "Thirteen Loko"
 	id = "thirteenloko"
 	description = "A potent mixture of caffeine and alcohol."
+	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#102000" // rgb: 16, 32, 0
 	boozepwr = 2
-	nutriment_factor = 1
 	taste_message = "party"
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_general_digest(mob/living/M)
@@ -771,9 +772,9 @@
 	name = "Bilk"
 	id = "bilk"
 	description = "This appears to be beer mixed with milk. Disgusting."
+	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#895c4c" // rgb: 137, 92, 76
 	boozepwr = 1
-	nutriment_factor = 2
 	taste_message = "bilk"
 
 /datum/reagent/consumable/ethanol/threemileisland
@@ -1321,6 +1322,7 @@
 	name = "Red Mead"
 	id = "red_mead"
 	description = "The true Viking's drink! Even though it has a strange red color."
+	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#c73c00" // rgb: 199, 60, 0
 	boozepwr = 1.5
 	taste_message = "blood"
@@ -1332,7 +1334,7 @@
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 1.5
-	nutriment_factor = 1
+	nutriment_factor = 1 * REAGENTS_METABOLISM
 	taste_message = "sweet alcohol"
 
 /datum/reagent/consumable/ethanol/iced_beer
@@ -1437,7 +1439,7 @@
 	name = "Driest Martini"
 	id = "driestmartini"
 	description = "Only for the experienced. You think you see sand floating in the glass."
-	nutriment_factor = 1
+	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#2e6671" // rgb: 46, 102, 113
 	boozepwr = 4
 	taste_message = "bitter alcohol"
@@ -1446,7 +1448,7 @@
 	name = "Banana Mama"
 	id = "bananahonk"
 	description = "A drink from Clown Heaven."
-	nutriment_factor = 1
+	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#ffff91" // rgb: 255, 255, 140
 	boozepwr = 4
 	taste_message = "honks"
@@ -1455,7 +1457,7 @@
 	name = "Silencer"
 	id = "silencer"
 	description = "A drink from Mime Heaven."
-	nutriment_factor = 1
+	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 4
 	taste_message = "mphhhh"

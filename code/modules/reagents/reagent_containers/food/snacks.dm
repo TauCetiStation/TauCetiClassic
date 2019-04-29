@@ -18,6 +18,8 @@
 		var/mob/living/L = M
 		if(taste)
 			L.taste_reagents(reagents)
+		if(M.satiety > -200)
+			M.satiety -= junkiness
 
 	if(!reagents.total_volume)
 		if(M == usr)
@@ -35,6 +37,8 @@
 		qdel(src)
 	return
 
+//Oh God, why it is still here? It needs to be moved to mob/living/carbon/human/proc. But not today
+
 /obj/item/weapon/reagent_containers/food/snacks/attack_self(mob/user)
 	return
 
@@ -50,21 +54,25 @@
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		var/fullness = C.get_nutrition()
+		//var/obj/item/weapon/reagent_containers/food = toEat
 		if(C == user)								//If you're eating it yourself
 			if(ishuman(C))
 				var/mob/living/carbon/human/H = M
 				if(H.species.flags[IS_SYNTHETIC])
 					to_chat(H, "<span class='rose'>You have a monitor for a head, where do you think you're going to put that?</span>")
 					return
+			if(src.junkiness && C.satiety < -150 && C.nutrition > NUTRITION_LEVEL_STARVING + 50 )
+				to_chat(C, "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>")
+				return 0
 			if (fullness <= 50)
 				to_chat(C, "<span class='rose'>You hungrily chew out a piece of [src] and gobble it!</span>")
 			if (fullness > 50 && fullness <= 150)
 				to_chat(C, "<span class='notice'>You hungrily begin to eat [src].</span>")
-			if (fullness > 150 && fullness <= 350)
+			if (fullness > 150 && fullness <= 500)
 				to_chat(C, "<span class='notice'>You take a bite of [src].</span>")
-			if (fullness > 350 && fullness <= 550)
+			if (fullness > 500 && fullness <= 600)
 				to_chat(C, "<span class='notice'>You unwillingly chew a bit of [src].</span>")
-			if (fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
+			if (fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 				to_chat(C, "<span class='rose'>You cannot force any more of [src] to go down your throat.</span>")
 				return 0
 		else
@@ -1352,6 +1360,7 @@
 	icon_state = "candy"
 	trash = /obj/item/trash/candy
 	filling_color = "#7d5f46"
+	junkiness = 25
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/candycane
 	name = "candy cane"
@@ -2184,6 +2193,7 @@
 	desc = "What is in this anyways?"
 	icon_state = "chinese1"
 	trash = /obj/item/trash/chinese1
+	junkiness = 25
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/chowmein/atom_init()
 	. = ..()
@@ -2197,6 +2207,7 @@
 	desc = "Is this chicken cooked? The odds are better than wok paper scissors."
 	icon_state = "chickenball"
 	trash = /obj/item/trash/snack_bowl
+	junkiness = 25
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball/atom_init()
 	. = ..()
@@ -2209,6 +2220,7 @@
 	desc = "Tastes like chicken."
 	icon_state = "chinese2"
 	trash = /obj/item/trash/chinese2
+	junkiness = 25
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/tao/atom_init()
 	. = ..()
@@ -2222,6 +2234,7 @@
 	desc = "Made fresh, weekly!"
 	icon_state = "chinese3"
 	trash = /obj/item/trash/chinese3
+	junkiness = 25
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/newdles/atom_init()
 	. = ..()
@@ -2234,6 +2247,7 @@
 	desc = "A timeless classic."
 	icon_state = "chinese4"
 	trash = /obj/item/trash/chinese4
+	junkiness = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/rice/atom_init()
 	. = ..()

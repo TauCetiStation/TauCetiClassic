@@ -89,6 +89,7 @@
 		return
 	if((overdose > 0) && (volume >= overdose))//Overdosing, wooo
 		M.adjustToxLoss(overdose_dam)
+
 	return TRUE
 
 /datum/reagent/proc/on_move(mob/M)

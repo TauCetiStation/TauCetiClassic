@@ -99,6 +99,7 @@
 
 	var/timeofdeath = 0.0//Living
 
+	var/dna_inject_count = 0
 
 	var/bodytemperature = BODYTEMP_NORMAL	//98.7 F
 	var/drowsyness = 0.0//Carbon
@@ -107,8 +108,10 @@
 	var/is_jittery = 0
 	var/jitteriness = 0//Carbon
 	var/charges = 0.0
-	var/nutrition = 400.0//Carbon
-	var/dna_inject_count = 0
+	var/nutrition = NUTRITION_LEVEL_FED + 50//Carbon
+	var/satiety = 0 //Carbon
+	var/hunger_drain = METABOLISM_FACTOR // how quickly the mob gets hungry; largely utilized by species.
+	var/metabolism_efficiency = 1 //more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
 
 	var/overeatduration = 0		// How long this guy is overeating //Carbon
 	var/paralysis = 0.0

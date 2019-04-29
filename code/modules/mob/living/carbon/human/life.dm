@@ -1045,15 +1045,39 @@
 
 	// nutrition decrease
 	if (nutrition > 0 && stat != DEAD)
-		var/met_factor = get_metabolism_factor()
-		nutrition = max(0, nutrition - met_factor * 0.1)
+		// THEY HUNGER
+		//var/met_factor = get_metabolism_factor()
+		var/hunger_rate = hunger_drain
+		if(satiety > 0)
+			satiety--
+		if(satiety < 0)
+			satiety++
+			if(prob(round(-satiety/40)))
+				make_jittery(5)
+			hunger_rate = 3 * hunger_drain
+		nutrition = max(0, nutrition - hunger_rate )
+		//nutrition = max(0, nutrition - met_factor * 0.1)//I'll leave it here for testing the speed of becoming hungry
 		if(has_trait(TRAIT_STRESS_EATER))
-			nutrition = max(0, nutrition - met_factor * getHalLoss() * 0.01)
+			nutrition = max(0, nutrition - hunger_rate * getHalLoss() * 0.1)
+			//nutrition = max(0, nutrition - met_factor * getHalLoss() * 0.01)
 
-	if (nutrition > 450)
+//metabolism change
+	if(nutrition > NUTRITION_LEVEL_FAT)
+		metabolism_efficiency = 1
+	else if(nutrition > NUTRITION_LEVEL_FED && satiety > 80)
 		if(overeatduration < 600) //capped so people don't take forever to unfat
 			overeatduration++
+		if(metabolism_efficiency != 1.25)
+			to_chat(src, "<span class='notice'>You feel vigorous.</span>")
+			metabolism_efficiency = 1.25
+	else if(nutrition < NUTRITION_LEVEL_STARVING + 50)
+		if(metabolism_efficiency != 0.8)
+			to_chat(src, "<span class='notice'>You feel sluggish.</span>")
+		metabolism_efficiency = 0.8
 	else
+		if(metabolism_efficiency == 1.25)
+			to_chat(src, "<span class='notice'>You no longer feel vigorous.</span>")
+		metabolism_efficiency = 1
 		if(overeatduration > 1)
 			overeatduration -= 2 //doubled the unfat rate
 

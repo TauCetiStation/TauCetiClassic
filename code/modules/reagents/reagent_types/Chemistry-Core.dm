@@ -414,6 +414,7 @@
 	name = "Sugar"
 	id = "sugar"
 	description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 	reagent_state = SOLID
 	color = "#ffffff" // rgb: 255, 255, 255
 	taste_message = "sweetness"
