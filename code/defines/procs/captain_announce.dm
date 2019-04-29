@@ -15,6 +15,9 @@
 				if("emer_shut_docked")
 					announce_sound = 'sound/AI/emergency_s_docked.ogg'
 				if("emer_shut_left")
+					M.get_location(is_on_shuttle = FALSE)
+					if(M.get_location(is_on_shuttle = TRUE))
+						continue
 					announce_sound = 'sound/AI/emergency_s_left.ogg'
 				if("crew_shut_scalled")
 					announce_sound = 'sound/AI/crew_s_called.ogg'
@@ -23,6 +26,9 @@
 				if("crew_shut_docked")
 					announce_sound = 'sound/AI/crew_s_docked.ogg'
 				if("crew_shut_left")
+					M.get_location(is_on_shuttle = FALSE)
+					if(M.get_location(is_on_shuttle = TRUE))
+						continue
 					announce_sound = 'sound/AI/crew_s_left.ogg'
 				if("malf1")
 					announce_sound = 'sound/AI/ai_malf_1.ogg'
