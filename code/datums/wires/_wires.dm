@@ -224,15 +224,10 @@ var/list/same_wires = list()
 			// Update Window
 			interact(usr)
 
-<<<<<<< HEAD
-
-
-
-=======
 		return TRUE
 	else
 		return FALSE
->>>>>>> Запрашиваемые правки
+
 ////////////////////
 // Overridable procs
 ////////////////////
