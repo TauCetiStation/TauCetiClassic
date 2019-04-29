@@ -1,16 +1,9 @@
 /*====== Explanation for some variables =======
 var/is_global = if true then do not add echo to the sound
 var/voluminosity = is that 3d sound? If false then ignore the coordinates of the sound(become a sort of mono sound)
-var/separate = separate sound volume for its source and for others?
-    if(TRUE)
-        Sound for the source will be split.
-        The source will not hear the sound intended for others.
-        Volume for the source will be constant and will not be affected by other variables that change the volume.
-    if(FALSE)
-        Sound and its volume are the same for everyone.
-        This is a standard type of sound
+var/src_vol = volume for its source. Separate sound volume for its source and for others? Make a "special" volume for the source?
 ===============================================*/
-/proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global, wait = 0, voluminosity = TRUE, separate = FALSE)
+/proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global, wait = 0, voluminosity = TRUE, src_vol)
 	soundin = get_sfx(soundin) // same sound for everyone
 
 	if(isarea(source))
@@ -25,8 +18,8 @@ var/separate = separate sound volume for its source and for others?
 		var/mob/M = P
 		if(!M || !M.client)
 			continue
-		if((M == source) && separate)
-			M.playsound_local(null, soundin, vol /= 2, vary, frequency, falloff, channel)
+		if((M == source) && (src_vol != null))
+			M.playsound_local(null, soundin, src_vol, vary, frequency, falloff, channel)
 			continue
 
 		var/distance = get_dist(M, turf_source)
