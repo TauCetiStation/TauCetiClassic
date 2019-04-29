@@ -90,6 +90,7 @@
 #define NUTRITION_LEVEL_FED 350
 #define NUTRITION_LEVEL_HUNGRY 250
 #define NUTRITION_LEVEL_STARVING 150
+#define NUTRITION_LEVEL_CURSED 0
 
 // How many units of reagent are consumed per tick, by default.
 #define REAGENTS_METABOLISM 0.2
