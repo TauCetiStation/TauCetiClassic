@@ -67,3 +67,8 @@
 	machine_name = "BarberVend"
 	icon_state = "refill_booze" // Placeholder?
 	charges =  25// of 70
+
+/obj/item/weapon/vending_refill/crittercare
+	machine_name = "CritterCare"
+	icon_state = "refill_pet"
+	charges = 31// of 94

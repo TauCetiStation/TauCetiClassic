@@ -294,7 +294,7 @@
 		egg_count = max_fish						//If you somehow exceeded the cap, set the egg_count to max, destroy the excess later
 
 	while(egg_count > 0)							//Loop until you've harvested all the eggs
-		var/obj/item/fish_eggs/egg = pick(egg_list)	//Select an egg at random
+		var/obj/item/weapon/fish_eggs/egg = pick(egg_list)	//Select an egg at random
 		egg = new egg(get_turf(user))				//Spawn the egg at the user's feet
 		egg_list.Remove(egg)						//Remove the egg from the egg_list
 		egg_count --								//Decrease the egg_count and begin again
@@ -347,19 +347,19 @@
 		if(match_found)
 			egg_list.Add(parent1.egg_item)
 		else
-			egg_list.Add(/obj/item/fish_eggs)
+			egg_list.Add(/obj/item/weapon/fish_eggs)
 	else
 		var/datum/fish/parent2 = pick(breed_candidates)
 		if(!parent2.crossbreeder)						//second fish refuses to crossbreed, spawn a dud
-			egg_list.Add(/obj/item/fish_eggs)
+			egg_list.Add(/obj/item/weapon/fish_eggs)
 		else if(parent1.type == parent2.type)						//both fish are the same type
 			if(prob(90))									//90% chance to get that type of egg
 				egg_list.Add(parent1.egg_item)
 			else											//10% chance to get a dud
-				egg_list.Add(/obj/item/fish_eggs)
+				egg_list.Add(/obj/item/weapon/fish_eggs)
 		else											//different types of fish
 			if(prob(30))									//30% chance to get dud
-				egg_list.Add(/obj/item/fish_eggs)
+				egg_list.Add(/obj/item/weapon/fish_eggs)
 			else
 				if(prob(50))								//chance to get egg for either parent type (50/50 for either parent, 35% overall each)
 					egg_list.Add(parent1.egg_item)
@@ -591,7 +591,7 @@
 	if(!disassembled)
 		playsound(src, "shatter", 70, 1)
 		for(var/i in 1 to shard_count)	//Produce the appropriate number of glass shards
-			var/obj/item/shard/S = new /obj/item/shard(get_turf(src))
+			var/obj/item/weapon/shard/S = new /obj/item/weapon/shard(get_turf(src))
 			transfer_fingerprints_to(S)
 		if(water_level)												//Spill any water that was left in the tank when it broke
 			spawn_fluid(loc,water_level*50)
@@ -599,7 +599,7 @@
 		new /obj/item/stack/sheet/glass(get_turf(src), shard_count + 1)		//Produce the appropriate number of glass sheets, in a single stack
 	qdel(src)
 
-/obj/machinery/fishtank/attackby(obj/item/O, mob/user)
+/obj/machinery/fishtank/attackby(obj/item/weapon/O, mob/user)
 	//Welders repair damaged tanks on help intent, damage on all others
 	if(iswelder(O))
 		var/obj/item/weapon/weldingtool/W = O
@@ -668,8 +668,8 @@
 		else
 			to_chat(user, "<span class='warning'>[src] must be empty before you disassemble it!</span>")
 	//Fish eggs
-	else if(istype(O, /obj/item/fish_eggs))
-		var/obj/item/fish_eggs/egg = O
+	else if(istype(O, /obj/item/weapon/fish_eggs))
+		var/obj/item/weapon/fish_eggs/egg = O
 		//Don't add eggs if there is no water (they kinda need that to live)
 		if(!water_level)
 			to_chat(user, "<span class='warning'>[src] has no water; [egg.name] won't hatch without water!</span>")
@@ -681,7 +681,7 @@
 				add_fish(egg.fish_type)
 				qdel(egg)
 	//Fish food
-	else if(istype(O, /obj/item/fishfood))
+	else if(istype(O, /obj/item/weapon/fishfood))
 		//Only add food if there is water and it isn't already full of food
 		if(water_level)
 			if(food_level < 10)
@@ -695,17 +695,17 @@
 		else
 			to_chat(user, "<span class='notice'>[src] doesn't have any water in it. You should fill it with water first.</span>")
 	//Fish egg scoop
-	else if(istype(O, /obj/item/egg_scoop))
+	else if(istype(O, /obj/item/weapon/egg_scoop))
 		if(egg_count)
 			user.visible_message("<span class='notice'>[user.name] harvests some fish eggs from [src].</span>", "<span class='notice'>You scoop the fish eggs out of [src].</span>")
 			harvest_eggs(user)
 		else
 			user.visible_message("<span class='notice'>[user.name] fails to harvest any fish eggs from [src].</span>", "<span class='notice'>There are no fish eggs in [src] to scoop out.</span>")
 	//Fish net
-	else if(istype(O, /obj/item/fish_net))
+	else if(istype(O, /obj/item/weapon/fish_net))
 		harvest_fish(user)
 	//Tank brush
-	else if(istype(O, /obj/item/tank_brush))
+	else if(istype(O, /obj/item/weapon/tank_brush))
 		if(filth_level == 0)
 			to_chat(user, "<span class='warning'>[src] is already spotless!</span>")
 		else

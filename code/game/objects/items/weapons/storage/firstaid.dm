@@ -103,6 +103,27 @@
 		new /obj/item/stack/medical/advanced/ointment(src)
 	new /obj/item/stack/medical/splint(src)
 
+///Aquatic Starter Kit
+
+/obj/item/weapon/storage/firstaid/aquatic_kit
+	name = "aquatic starter kit"
+	desc = "It's a starter kit box for an aquarium."
+	icon_state = "AquaticKit"
+	throw_speed = 2
+	throw_range = 8
+	//med_bot_skin = "fish"
+
+/obj/item/weapon/storage/firstaid/aquatic_kit/atom_init()
+	. = ..()
+	if (empty)
+		return
+	new /obj/item/weapon/egg_scoop(src)
+	new /obj/item/weapon/fish_net(src)
+	new /obj/item/weapon/tank_brush(src)
+	new /obj/item/weapon/fishfood(src)
+
+
+
 /*
  * Pill Bottles
  */

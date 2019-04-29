@@ -379,6 +379,15 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "barbershop supply crate"
 	group = "Hospitality"
 
+/datum/supply_pack/pets
+	name = "Pet Supply Crate"
+	contains = list(/obj/item/weapon/vending_refill/crittercare,
+					/obj/item/weapon/vending_refill/crittercare,
+					/obj/item/weapon/vending_refill/crittercare)
+	cost = 1000
+	crate_name = "Pet Supply Crate"
+	group = "Hospitality"
+
 /datum/supply_pack/party
 	name = "Party equipment"
 	contains = list(/obj/item/weapon/storage/box/drinkingglasses,
@@ -1298,6 +1307,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	cost = 1000
 	crate_name = "Barber supplies"
 	group = "Supply"
+
 
 //----------------------------------------------
 //--------------MISCELLANEOUS-------------------

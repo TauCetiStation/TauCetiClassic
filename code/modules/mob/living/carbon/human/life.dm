@@ -959,6 +959,7 @@
 
 /mob/living/carbon/human/proc/handle_chemicals_in_body()
 
+	var/met_factor = get_metabolism_factor()
 	if(reagents && !species.flags[IS_SYNTHETIC]) //Synths don't process reagents.
 		var/alien = null
 		if(species)
@@ -1046,7 +1047,6 @@
 	// nutrition decrease
 	if (nutrition > 0 && stat != DEAD)
 		// THEY HUNGER
-		//var/met_factor = get_metabolism_factor()
 		var/hunger_rate = hunger_drain
 		if(satiety > 0)
 			satiety--
@@ -1063,21 +1063,28 @@
 
 //metabolism change
 	if(nutrition > NUTRITION_LEVEL_FAT)
-		metabolism_efficiency = 1
+		met_factor = 1
+		//metabolism_efficiency = 1
 	else if(nutrition > NUTRITION_LEVEL_FED && satiety > 80)
 		if(overeatduration < 600) //capped so people don't take forever to unfat
 			overeatduration++
-		if(metabolism_efficiency != 1.25)
+		if (met_factor != 1.25)
+		//if(metabolism_efficiency != 1.25)
 			to_chat(src, "<span class='notice'>You feel vigorous.</span>")
-			metabolism_efficiency = 1.25
+			met_factor = 1.25
+			//metabolism_efficiency = 1.25
 	else if(nutrition < NUTRITION_LEVEL_STARVING + 50)
-		if(metabolism_efficiency != 0.8)
+		if (met_factor != 0.8)
+		//if(metabolism_efficiency != 0.8)
 			to_chat(src, "<span class='notice'>You feel sluggish.</span>")
-		metabolism_efficiency = 0.8
+		met_factor = 0.8
+		//metabolism_efficiency = 0.8
 	else
-		if(metabolism_efficiency == 1.25)
+		if (met_factor == 1.25)
+		//if(metabolism_efficiency == 1.25)
 			to_chat(src, "<span class='notice'>You no longer feel vigorous.</span>")
-		metabolism_efficiency = 1
+		met_factor = 1
+		//metabolism_efficiency = 1
 		if(overeatduration > 1)
 			overeatduration -= 2 //doubled the unfat rate
 
