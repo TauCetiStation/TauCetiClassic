@@ -358,7 +358,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				//pods
 				if(alert == 0) // Crew Transfer not for pods
 
-					if(prob(40))
+					if(prob(33))
 						ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_unlucky_shot.ogg'
 					start_location = locate(/area/shuttle/escape_pod1/station)
 					end_location = locate(/area/shuttle/escape_pod1/transit)
