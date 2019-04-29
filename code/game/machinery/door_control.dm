@@ -37,13 +37,16 @@
 		buildstage = DOOR_CONTROL_WITHOUT_WIRES
 		wiresexposed = TRUE
 		panel_locked = FALSE
-		req_access = list()
+		req_one_access = list()
 		pixel_x = (dir & 3) ? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3) ? (dir == 1 ? -24 : 24) : 0
 		icon_state = "doorctrl_assembly0"
 		return
 	else
 		generate_access_lists()
+		if(req_access.len)
+			req_one_access = req_access.Copy()
+			req_access.Cut()
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/door_control/atom_init_late()
@@ -151,7 +154,7 @@
 					new /obj/item/stack/cable_coil/random(loc, 1)
 					connected_airlocks.Cut()
 					connected_poddoors.Cut()
-					req_access.Cut()
+					req_one_access.Cut()
 					specialfunctions = OPEN
 					accesses_showed = FALSE
 					modes_showed = FALSE
@@ -188,7 +191,7 @@
 		setup_menu += "<b><a href='?src=\ref[src];show_accesses=1'>Show access restrictions setup</a></b><br>"
 	else
 		setup_menu += "<b><a href='?src=\ref[src];show_accesses=1'>Hide access restrictions setup</a></b><ul>"
-		if(!req_access.len)
+		if(!req_one_access.len)
 			setup_menu +="<li><b><a style='color: green' href='?src=\ref[src];none=1'>None</a></b></li>"
 		else
 			setup_menu +="<li><a href='?src=\ref[src];none=1'>None</a></li>"
@@ -196,7 +199,7 @@
 		for (var/acc in accesses)
 			var/acc_desc = get_access_desc(acc)
 			if(acc_desc)
-				if(acc in req_access)
+				if(acc in req_one_access)
 					setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];access=[acc]'>[acc_desc]</a></b></li>"
 				else
 					setup_menu += "<li><a href='?src=\ref[src];access=[acc]'>[acc_desc]</a></li>"
@@ -254,12 +257,12 @@
 		modes_showed = !modes_showed
 	if(href_list["access"])
 		var/acc = text2num(href_list["access"])
-		if(acc in req_access)
-			req_access -= acc
+		if(acc in req_one_access)
+			req_one_access -= acc
 		else
-			req_access += acc
+			req_one_access += acc
 	if(href_list["none"])
-		req_access.Cut()
+		req_one_access.Cut()
 	if(href_list["mode"])
 		specialfunctions = text2num(href_list["mode"])
 	if(href_list["load"])
