@@ -1069,14 +1069,16 @@
 		if(overeatduration < 600) //capped so people don't take forever to unfat
 			overeatduration++
 		if (met_factor != 1.25)
+			if (prob(5))
 		//if(metabolism_efficiency != 1.25)
-			to_chat(src, "<span class='notice'>You feel vigorous.</span>")
+				to_chat(src, "<span class='notice'>You feel vigorous.</span>")
 			met_factor = 1.25
 			//metabolism_efficiency = 1.25
 	else if(nutrition < NUTRITION_LEVEL_STARVING + 50)
 		if (met_factor != 0.8)
+			if (prob(5))
 		//if(metabolism_efficiency != 0.8)
-			to_chat(src, "<span class='notice'>You feel sluggish.</span>")
+				to_chat(src, "<span class='notice'>You feel sluggish.</span>")
 		met_factor = 0.8
 		//metabolism_efficiency = 0.8
 	else

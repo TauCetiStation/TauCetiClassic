@@ -2328,8 +2328,17 @@
 	filling_color = "#fffee0"
 	bitesize = 3
 
-
 /obj/item/weapon/reagent_containers/food/snacks/tofu/atom_init()
+	. = ..()
+	reagents.add_reagent("plantmatter", 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/fried_tofu
+	name = "fried tofu"
+	icon_state = "tofu"
+	desc = "Proof that even vegetarians crave unhealthy foods."
+	filling_color = "#FFFEE0"
+
+/obj/item/weapon/reagent_containers/food/snacks/fried_tofu/atom_init()
 	. = ..()
 	reagents.add_reagent("plantmatter", 3)
 
@@ -4218,6 +4227,51 @@ obj/item/weapon/reagent_containers/food/snacks/liquidfood/atom_init()
 	reagents.add_reagent("capsaicin", 3)
 	reagents.add_reagent("vitamin", 2)
 	bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/fried_shrimp
+	name = "fried shrimp"
+	desc = "Just one of the many things you can do with shrimp!"
+	icon_state = "shrimp_fried"
+
+/obj/item/weapon/reagent_containers/food/snacks/fried_shrimp/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 2)
+	bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/boiled_shrimp
+	name = "boiled shrimp"
+	desc = "Just one of the many things you can do with shrimp!"
+	icon_state = "shrimp_cooked"
+
+/obj/item/weapon/reagent_containers/food/snacks/boiled_shrimp/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 2)
+	bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/shrimp_skewer
+	name = "shrimp skewer"
+	desc = "Four shrimp lightly grilled on a skewer. Yummy!"
+	trash = /obj/item/stack/rods
+	icon_state = "shrimpskewer"
+
+/obj/item/weapon/reagent_containers/food/snacks/shrimp_skewer/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 8)
+	bitesize = 3
+
+
+/obj/item/weapon/reagent_containers/food/snacks/fish_skewer
+	name = "fish skewer"
+	desc = "A whole fish battered and grilled on a skewer. Hope you're hungry!"
+	trash = /obj/item/stack/rods
+	icon_state = "fishskewer"
+
+/obj/item/weapon/reagent_containers/food/snacks/shrimp_skewer/atom_init()
+	. = ..()
+	reagents.add_reagent("protein", 6)
+	reagents.add_reagent("nutriment", 4)
+	bitesize = 3
+
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/Ebi_maki
 	name = "ebi makiroll"

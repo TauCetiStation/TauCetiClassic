@@ -7,6 +7,8 @@
  *		Kitchen knives
  *		Butcher's cleaver
  *		Rolling Pins
+ *		Candy Moulds
+ *		Sushi Mat
  *		Trays
  */
 
@@ -511,6 +513,21 @@
 	name = "sucker mould"
 	desc = "It has the shape of a sucker imprinted into it."
 	icon_state = "mould_loli"
+
+/*
+ * Sushi Mat
+ */
+/obj/item/weapon/kitchen/sushimat
+	name = "Sushi Mat"
+	desc = "A wooden mat used for efficient sushi crafting."
+	icon_state = "sushi_mat"
+	force = 5
+	throwforce = 5
+	throw_speed = 3
+	throw_range = 3
+	w_class = ITEM_SIZE_SMALL
+	attack_verb = list("rolled", "cracked", "battered", "thrashed")
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 //Enough with the violent stuff, here's what happens if you try putting food on it

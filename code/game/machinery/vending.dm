@@ -963,6 +963,7 @@
 		/obj/item/weapon/kitchenknife = 3,
 		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,
 		/obj/item/clothing/suit/chef/classic = 2,
+		/obj/item/weapon/kitchen/sushimat = 3,
 		/obj/item/weapon/kitchen/mould/bear = 1,
 		/obj/item/weapon/kitchen/mould/worm = 1,
 		/obj/item/weapon/kitchen/mould/bean = 1,
