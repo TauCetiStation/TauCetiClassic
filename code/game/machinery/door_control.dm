@@ -182,7 +182,6 @@
 				playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 				qdel(src)
 				return
-	return
 
 /obj/machinery/door_control/proc/set_up_door_control(mob/user)
 	var/setup_menu = text("<b>Door Control Setup</b><hr>")
