@@ -44,7 +44,8 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 	. += "</fieldset>"
 
 /datum/wires/airlock/Topic(href, href_list)
-	..()
+	if(!..())
+		return
 	if(href_list["buffer"])
 		var/obj/item/I = usr.get_active_hand()
 		if(ismultitool(I))

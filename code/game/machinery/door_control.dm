@@ -1,10 +1,9 @@
 #define DOOR_CONTROL_COMPLETE 1
 #define DOOR_CONTROL_WITHOUT_WIRES 0
 
-#define OPEN    1
-#define BOLTS   2
-#define SHOCK   4
-#define SAFE    8
+#define OPEN_BOLTS        (OPEN | BOLTS)
+#define BOLTS_SHOCK       (BOLTS | SHOCK)
+#define OPEN_BOLTS_SHOCK  (OPEN | BOLTS | SHOCK)
 
 /obj/machinery/door_control
 	name = "remote door control"
@@ -221,20 +220,20 @@
 		else
 			setup_menu += "<li><a href='?src=\ref[src];mode=[SHOCK]'>Electrify</a></li>"
 
-		if(specialfunctions == (OPEN | BOLTS))
-			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=[OPEN | BOLTS]'>Open and toggle bolts</a></b></li>"
+		if(specialfunctions == OPEN_BOLTS)
+			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=[OPEN_BOLTS]'>Open and toggle bolts</a></b></li>"
 		else
-			setup_menu += "<li><a href='?src=\ref[src];mode=[OPEN | BOLTS]'>Open and toggle bolts</a></li>"
+			setup_menu += "<li><a href='?src=\ref[src];mode=[OPEN_BOLTS]'>Open and toggle bolts</a></li>"
 
-		if(specialfunctions == (BOLTS | SHOCK))
-			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=[BOLTS | SHOCK]'>Toggle bolts and electrify</a></b></li>"
+		if(specialfunctions == BOLTS_SHOCK)
+			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=[BOLTS_SHOCK]'>Toggle bolts and electrify</a></b></li>"
 		else
-			setup_menu += "<li><a href='?src=\ref[src];mode=[BOLTS | SHOCK]'>Toggle bolts and electrify</a></li>"
+			setup_menu += "<li><a href='?src=\ref[src];mode=[BOLTS_SHOCK]'>Toggle bolts and electrify</a></li>"
 
-		if(specialfunctions == (OPEN | BOLTS | SHOCK))
-			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=[OPEN | BOLTS | SHOCK]'>Open, toggle bolts and electrify</a></b></li>"
+		if(specialfunctions == OPEN_BOLTS_SHOCK)
+			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=[OPEN_BOLTS_SHOCK]'>Open, toggle bolts and electrify</a></b></li>"
 		else
-			setup_menu += "<li><a href='?src=\ref[src];mode=[OPEN | BOLTS | SHOCK]'>Open, toggle bolts and electrify</a></li>"
+			setup_menu += "<li><a href='?src=\ref[src];mode=[OPEN_BOLTS_SHOCK]'>Open, toggle bolts and electrify</a></li>"
 
 		setup_menu += "</ul>"
 
@@ -333,12 +332,10 @@
 	playsound(src, 'sound/items/buttonswitch.ogg', 20, 1, 1)
 	use_power(5)
 	icon_state = "doorctrl1"
-	if(connected_airlocks.len)
-		for(var/obj/machinery/door/airlock/A in connected_airlocks)
-			INVOKE_ASYNC(src, .obj/machinery/door_control/proc/toggle_airlock, A)
-	if(connected_poddoors.len)
-		for(var/obj/machinery/door/poddoor/P in connected_poddoors)
-			INVOKE_ASYNC(src, .obj/machinery/door_control/proc/toggle_poddoor, P)
+	for(var/obj/machinery/door/airlock/A in connected_airlocks)
+		INVOKE_ASYNC(src, .obj/machinery/door_control/proc/toggle_airlock, A)
+	for(var/obj/machinery/door/poddoor/P in connected_poddoors)
+		INVOKE_ASYNC(src, .obj/machinery/door_control/proc/toggle_poddoor, P)
 	addtimer(CALLBACK(src, .update_icon), 15)
 
 /obj/machinery/door_control/proc/toggle_airlock(obj/machinery/door/airlock/A)
@@ -358,7 +355,7 @@
 				A.secondsElectrified = 0
 			else
 				A.secondsElectrified = -1
-		else if(specialfunctions == (OPEN | BOLTS))
+		else if(specialfunctions == (OPEN_BOLTS))
 			if(A.density)
 				A.unbolt()
 				A.open()
@@ -367,14 +364,14 @@
 				A.unbolt()
 				A.close()
 				A.bolt()
-		else if(specialfunctions == (BOLTS | SHOCK))
+		else if(specialfunctions == (BOLTS_SHOCK))
 			if(A.locked)
 				A.unbolt()
 				A.secondsElectrified = 0
 			else
 				A.bolt()
 				A.secondsElectrified = -1
-		else if(specialfunctions == (OPEN | BOLTS | SHOCK))
+		else if(specialfunctions == (OPEN_BOLTS_SHOCK))
 			if(A.density)
 				A.unbolt()
 				A.open()
@@ -479,7 +476,6 @@
 #undef DOOR_CONTROL_COMPLETE
 #undef DOOR_CONTROL_WITHOUT_WIRES
 
-#undef OPEN
-#undef BOLTS
-#undef SHOCK
-#undef SAFE
+#undef OPEN_BOLTS
+#undef BOLTS_SHOCKS
+#undef OPEN_BOLTS_SHOCK

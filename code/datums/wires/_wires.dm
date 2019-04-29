@@ -178,13 +178,13 @@ var/list/same_wires = list()
 	if(!can_use(usr) || href_list["close"])
 		usr << browse(null, "window=wires")
 		usr.unset_machine(holder)
-		return
+		return FALSE
 
 	if(in_range(holder, usr) && isliving(usr))
 		var/mob/living/L = usr
 
 		if(!holder.can_mob_interact(L))
-			return
+			return FALSE
 
 		if(href_list["action"])
 			var/obj/item/I = L.get_active_hand()
@@ -224,9 +224,15 @@ var/list/same_wires = list()
 			// Update Window
 			interact(usr)
 
+<<<<<<< HEAD
 
 
 
+=======
+		return TRUE
+	else
+		return FALSE
+>>>>>>> Запрашиваемые правки
 ////////////////////
 // Overridable procs
 ////////////////////
