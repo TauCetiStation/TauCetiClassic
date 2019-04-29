@@ -343,7 +343,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 				// Some aesthetic turbulance shaking
 				for(var/mob/M in end_location)
-					M.playsound_local(null, 'sound/effects/escape_shuttle/es_acceleration.ogg', 50)
+					M.playsound_local(null, 'sound/effects/escape_shuttle/es_acceleration.ogg', 70)
 					if(M.client)
 						if(M.buckled)
 							shake_camera(M, 4, 1) // buckled, not a lot of shaking
