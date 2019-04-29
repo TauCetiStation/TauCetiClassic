@@ -24456,9 +24456,6 @@
 "aQX" = (
 /obj/structure/table,
 /obj/item/weapon/packageWrap,
-/obj/item/weapon/reagent_containers/food/condiment/enzyme{
-	layer = 5
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -35611,6 +35608,9 @@
 	dir = 2;
 	pixel_y = 24
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -35683,9 +35683,15 @@
 /area/crew_quarters/kitchen)
 "bmE" = (
 /obj/structure/table/reinforced,
-/obj/item/device/radio/intercom{
-	pixel_y = 25
+/obj/structure/condiment_shelf{
+	pixel_y = 32
 	},
+/obj/item/weapon/reagent_containers/food/condiment/sugar,
+/obj/item/weapon/reagent_containers/food/condiment/enzyme,
+/obj/item/weapon/reagent_containers/food/condiment/rice,
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker,
+/obj/item/weapon/reagent_containers/food/condiment/peppermill,
+/obj/item/weapon/reagent_containers/food/condiment/ketchup,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
