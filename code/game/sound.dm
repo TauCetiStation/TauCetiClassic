@@ -1,7 +1,16 @@
+/*====== Explanation for some variables =======
+var/is_global = if true then do not add echo to the sound
+var/voluminosity = is that 3d sound? If false then ignore the coordinates of the sound(become a sort of mono sound)
+var/separate = separate sound volume for its source and for others?
+    if(TRUE)
+        Sound for the source will be split.
+        The source will not hear the sound intended for others.
+        Volume for the source will be constant and will not be affected by other variables that change the volume.
+    if(FALSE)
+        Sound and its volume are the same for everyone.
+        This is a standard type of sound
+===============================================*/
 /proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global, wait = 0, voluminosity = TRUE, separate = FALSE)
-// voluminosity = is that 3d sound?
-// separate = separate sound volume for its source and for others?
-
 	soundin = get_sfx(soundin) // same sound for everyone
 
 	if(isarea(source))
@@ -11,7 +20,7 @@
 	var/frequency = get_rand_frequency() // Same frequency for everybody
 	var/turf/turf_source = get_turf(source)
 
- 	// Looping through the player list has the added bonus of working for mobs inside containers
+	// Looping through the player list has the added bonus of working for mobs inside containers
 	for (var/P in player_list)
 		var/mob/M = P
 		if(!M || !M.client)
