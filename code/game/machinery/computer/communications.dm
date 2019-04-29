@@ -140,18 +140,19 @@
 				to_chat(usr, "You need to swipe your ID.")
 
 		if("announce")
-			var/static/last_announcement = 0
-			if(last_announcement > world.time)
-				to_chat(usr, "<span class='warning'>A red light flashes on the console. It looks like you can't make announcements that fast.</span>")
-				return
-			else
-				last_announcement = world.time + 600 // One minute cooldown
-			var/input = sanitize(input(usr, "Please choose a message to announce to the station crew.", "What?"), extra = FALSE)
-			if(!input || !(usr in view(1,src)))
-				return
-			captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
-			log_say("[key_name(usr)] has made a captain announcement: [input]")
-			message_admins("[key_name_admin(usr)] has made a captain announcement. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
+			if(src.authenticated == 2)
+				var/static/last_announcement = 0
+				if(last_announcement > world.time)
+					to_chat(usr, "<span class='warning'>A red light flashes on the console. It looks like you can't make announcements that fast.</span>")
+					return
+				else
+					last_announcement = world.time + 600 // One minute cooldown
+				var/input = sanitize(input(usr, "Please choose a message to announce to the station crew.", "What?"), extra = FALSE)
+				if(!input || !(usr in view(1,src)))
+					return
+				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
+				log_say("[key_name(usr)] has made a captain announcement: [input]")
+				message_admins("[key_name_admin(usr)] has made a captain announcement. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
 
 		if("callshuttle")
 			src.state = STATE_DEFAULT
