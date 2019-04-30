@@ -1,4 +1,4 @@
-var/global_parallax_theme_override // overrides client settings for events
+var/global/global_parallax_theme_override // overrides client settings for events
 
 /client
 	var/list/parallax_layers

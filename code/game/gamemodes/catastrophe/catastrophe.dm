@@ -21,13 +21,13 @@
 
 	director.pre_setup()
 
-	return 1
+	return TRUE
 
 /datum/game_mode/catastrophe/post_setup()
 	director.post_setup()
 
 	if(SSshuttle)
-		SSshuttle.always_fake_recall = 1
+		SSshuttle.always_fake_recall = TRUE
 	return ..()
 
 /datum/game_mode/catastrophe/process()

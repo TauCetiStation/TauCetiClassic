@@ -28,7 +28,7 @@
 	var/datum/catastrophe_director/director
 
 /datum/catastrophe_event/proc/start()
-	message_admins( "[name] has started")
+	message_admins("[name] has started")
 	starttime = world.time
 	event_selected_duration = event_duration_min + (event_duration_max - event_duration_min) * rand(0, 1000) / 1000
 
@@ -39,7 +39,7 @@
 	if(steps && world.time > next_step)
 		step += 1
 		if(step >= steps) // just to avoid division by zero
-			next_step = world.time + 10 * 60 * 10
+			next_step = world.time + 10 MINUTES
 		else
 			next_step = world.time + (director.end_time - world.time) * event_selected_duration / (steps + 1 - step) + rand(-step_variation, step_variation) * 10
 		on_step()

@@ -16,28 +16,28 @@
 /datum/catastrophe_event/meteor_alert/on_step()
 	switch(step)
 		if(1)
-			announce("Это автоматическое предупреждение. В данный момент станци[JA_PLACEHOLDER] входит в астероидное поле. Расчётное врем[JA_PLACEHOLDER] прохождени[JA_PLACEHOLDER] пол[JA_PLACEHOLDER]… дев[JA_PLACEHOLDER]ть... дев[JA_PLACEHOLDER]ть… дев[JA_PLACEHOLDER]ть… минут. Примите необходимые меры дл[JA_PLACEHOLDER] защиты станции от угрозы. Хорошего дн[JA_PLACEHOLDER].")
+			announce("ГќГІГ® Г ГўГІГ®Г¬Г ГІГЁГ·ГҐГ±ГЄГ®ГҐ ГЇГ°ГҐГ¤ГіГЇГ°ГҐГ¦Г¤ГҐГ­ГЁГҐ. Г‚ Г¤Г Г­Г­Г»Г© Г¬Г®Г¬ГҐГ­ГІ Г±ГІГ Г­Г¶ГЁ[JA_PLACEHOLDER] ГўГµГ®Г¤ГЁГІ Гў Г Г±ГІГҐГ°Г®ГЁГ¤Г­Г®ГҐ ГЇГ®Г«ГҐ. ГђГ Г±Г·ВёГІГ­Г®ГҐ ГўГ°ГҐГ¬[JA_PLACEHOLDER] ГЇГ°Г®ГµГ®Г¦Г¤ГҐГ­ГЁ[JA_PLACEHOLDER] ГЇГ®Г«[JA_PLACEHOLDER]вЂ¦ Г¤ГҐГў[JA_PLACEHOLDER]ГІГј... Г¤ГҐГў[JA_PLACEHOLDER]ГІГјвЂ¦ Г¤ГҐГў[JA_PLACEHOLDER]ГІГјвЂ¦ Г¬ГЁГ­ГіГІ. ГЏГ°ГЁГ¬ГЁГІГҐ Г­ГҐГ®ГЎГµГ®Г¤ГЁГ¬Г»ГҐ Г¬ГҐГ°Г» Г¤Г«[JA_PLACEHOLDER] Г§Г Г№ГЁГІГ» Г±ГІГ Г­Г¶ГЁГЁ Г®ГІ ГіГЈГ°Г®Г§Г». Г•Г®Г°Г®ГёГҐГЈГ® Г¤Г­[JA_PLACEHOLDER].")
 		if(2)
 			bigmeteor_side = pick(cardinal)
 			var/side_text
 			switch(bigmeteor_side)
 				if(WEST)
-					side_text = "западна[JA_PLACEHOLDER]"
+					side_text = "Г§Г ГЇГ Г¤Г­Г [JA_PLACEHOLDER]"
 				if(EAST)
-					side_text = "восточна[JA_PLACEHOLDER]"
+					side_text = "ГўГ®Г±ГІГ®Г·Г­Г [JA_PLACEHOLDER]"
 				if(NORTH)
-					side_text = "северна[JA_PLACEHOLDER]"
+					side_text = "Г±ГҐГўГҐГ°Г­Г [JA_PLACEHOLDER]"
 				if(SOUTH)
-					side_text = "южна[JA_PLACEHOLDER]"
-			announce("Внимание, системами станции был засечён неизвестный объект на траектории столкновени[JA_PLACEHOLDER] со станцией. Предполагаемый класс объекта – Астероид. Предполагаемый размер объекта – огромный. Врем[JA_PLACEHOLDER] до столкновени[JA_PLACEHOLDER] – двадцать минут. Примерное место столкновени[JA_PLACEHOLDER] – [side_text] часть станции. Примите необходимые меры дл[JA_PLACEHOLDER] нивелировани[JA_PLACEHOLDER] возможных жертв среди экипажа. При[JA_PLACEHOLDER]тного рабочего дн[JA_PLACEHOLDER].")
+					side_text = "ГѕГ¦Г­Г [JA_PLACEHOLDER]"
+			announce("Г‚Г­ГЁГ¬Г Г­ГЁГҐ, Г±ГЁГ±ГІГҐГ¬Г Г¬ГЁ Г±ГІГ Г­Г¶ГЁГЁ ГЎГ»Г« Г§Г Г±ГҐГ·ВёГ­ Г­ГҐГЁГ§ГўГҐГ±ГІГ­Г»Г© Г®ГЎГєГҐГЄГІ Г­Г  ГІГ°Г ГҐГЄГІГ®Г°ГЁГЁ Г±ГІГ®Г«ГЄГ­Г®ГўГҐГ­ГЁ[JA_PLACEHOLDER] Г±Г® Г±ГІГ Г­Г¶ГЁГҐГ©. ГЏГ°ГҐГ¤ГЇГ®Г«Г ГЈГ ГҐГ¬Г»Г© ГЄГ«Г Г±Г± Г®ГЎГєГҐГЄГІГ  вЂ“ ГЂГ±ГІГҐГ°Г®ГЁГ¤. ГЏГ°ГҐГ¤ГЇГ®Г«Г ГЈГ ГҐГ¬Г»Г© Г°Г Г§Г¬ГҐГ° Г®ГЎГєГҐГЄГІГ  вЂ“ Г®ГЈГ°Г®Г¬Г­Г»Г©. Г‚Г°ГҐГ¬[JA_PLACEHOLDER] Г¤Г® Г±ГІГ®Г«ГЄГ­Г®ГўГҐГ­ГЁ[JA_PLACEHOLDER] вЂ“ Г¤ГўГ Г¤Г¶Г ГІГј Г¬ГЁГ­ГіГІ. ГЏГ°ГЁГ¬ГҐГ°Г­Г®ГҐ Г¬ГҐГ±ГІГ® Г±ГІГ®Г«ГЄГ­Г®ГўГҐГ­ГЁ[JA_PLACEHOLDER] вЂ“ [side_text] Г·Г Г±ГІГј Г±ГІГ Г­Г¶ГЁГЁ. ГЏГ°ГЁГ¬ГЁГІГҐ Г­ГҐГ®ГЎГµГ®Г¤ГЁГ¬Г»ГҐ Г¬ГҐГ°Г» Г¤Г«[JA_PLACEHOLDER] Г­ГЁГўГҐГ«ГЁГ°Г®ГўГ Г­ГЁ[JA_PLACEHOLDER] ГўГ®Г§Г¬Г®Г¦Г­Г»Гµ Г¦ГҐГ°ГІГў Г±Г°ГҐГ¤ГЁ ГЅГЄГЁГЇГ Г¦Г . ГЏГ°ГЁ[JA_PLACEHOLDER]ГІГ­Г®ГЈГ® Г°Г ГЎГ®Г·ГҐГЈГ® Г¤Г­[JA_PLACEHOLDER].")
 
-			addtimer(CALLBACK(src, .proc/huge_asteroid_warning), 10 * 60 * 15)
+			addtimer(CALLBACK(src, .proc/huge_asteroid_warning), 15 MINUTES)
 			addtimer(CALLBACK(src, .proc/huge_asteroid_last_warning), 10 * 60 * 20)
 			addtimer(CALLBACK(src, .proc/huge_asteroid_spawn), 10 * 60 * 20 + 10 * 3)
 		//if(3)
 			//
 		if(4)
-			announce("Внимание. Приближаетс[JA_PLACEHOLDER] сама[JA_PLACEHOLDER] больша[JA_PLACEHOLDER] волна метеоритов. По предварительным данным, станци[JA_PLACEHOLDER] скоро покинет астероидное поле. Спасибо за терпение и при[JA_PLACEHOLDER]тной смены")
+			announce("Г‚Г­ГЁГ¬Г Г­ГЁГҐ. ГЏГ°ГЁГЎГ«ГЁГ¦Г ГҐГІГ±[JA_PLACEHOLDER] Г±Г Г¬Г [JA_PLACEHOLDER] ГЎГ®Г«ГјГёГ [JA_PLACEHOLDER] ГўГ®Г«Г­Г  Г¬ГҐГІГҐГ®Г°ГЁГІГ®Гў. ГЏГ® ГЇГ°ГҐГ¤ГўГ Г°ГЁГІГҐГ«ГјГ­Г»Г¬ Г¤Г Г­Г­Г»Г¬, Г±ГІГ Г­Г¶ГЁ[JA_PLACEHOLDER] Г±ГЄГ®Г°Г® ГЇГ®ГЄГЁГ­ГҐГІ Г Г±ГІГҐГ°Г®ГЁГ¤Г­Г®ГҐ ГЇГ®Г«ГҐ. Г‘ГЇГ Г±ГЁГЎГ® Г§Г  ГІГҐГ°ГЇГҐГ­ГЁГҐ ГЁ ГЇГ°ГЁ[JA_PLACEHOLDER]ГІГ­Г®Г© Г±Г¬ГҐГ­Г»")
 			meteor_timer = 10000
 			active_timer = 200
 
@@ -56,10 +56,10 @@
 		active_timer -= 1
 
 /datum/catastrophe_event/meteor_alert/proc/huge_asteroid_warning()
-	announce("Внимание. Неизбежное столкновение с астероидом через… п[JA_PLACEHOLDER]ть минут")
+	announce("Г‚Г­ГЁГ¬Г Г­ГЁГҐ. ГЌГҐГЁГ§ГЎГҐГ¦Г­Г®ГҐ Г±ГІГ®Г«ГЄГ­Г®ГўГҐГ­ГЁГҐ Г± Г Г±ГІГҐГ°Г®ГЁГ¤Г®Г¬ Г·ГҐГ°ГҐГ§вЂ¦ ГЇ[JA_PLACEHOLDER]ГІГј Г¬ГЁГ­ГіГІ")
 
 /datum/catastrophe_event/meteor_alert/proc/huge_asteroid_last_warning()
-	announce("Угроза. Столкновение с неизвестным объектом через… три… два… один…")
+	announce("Г“ГЈГ°Г®Г§Г . Г‘ГІГ®Г«ГЄГ­Г®ГўГҐГ­ГЁГҐ Г± Г­ГҐГЁГ§ГўГҐГ±ГІГ­Г»Г¬ Г®ГЎГєГҐГЄГІГ®Г¬ Г·ГҐГ°ГҐГ§вЂ¦ ГІГ°ГЁвЂ¦ Г¤ГўГ вЂ¦ Г®Г¤ГЁГ­вЂ¦")
 
 // 119 141 center
 // 33 141 west corner 86

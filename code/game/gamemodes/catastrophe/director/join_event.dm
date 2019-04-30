@@ -22,7 +22,7 @@
 
 		joined[option] = list()
 
-	for(var/mob/dead/observer/G	in player_list)
+	for(var/G in observer_list)
 		to_chat(G, "<span class='notice big'>[name]: This event requires players, select one of the options if you want to participate: [options_str]. Event will start in [join_time] seconds</span>")
 
 	addtimer(CALLBACK(src, .proc/end_join_period), 10 * join_time)
@@ -60,7 +60,7 @@
 	for(var/option in join_options)
 		side_numbers += "<a href='?src=\ref[src];join=[option]'>[option]</a>: [joined[option].len]   "
 
-	for(var/mob/dead/observer/G	in player_list)
+	for(var/G in observer_list)
 		to_chat(G, "<span class='notice big'>[name]: event will start in 15 seconds. [side_numbers]</span>")
 
 

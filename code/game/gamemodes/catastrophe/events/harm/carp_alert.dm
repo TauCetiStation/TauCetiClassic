@@ -20,9 +20,9 @@
 /datum/catastrophe_event/carp_alert/on_step()
 	switch(step)
 		if(1)
-			announce("Исход, не знаю в курсе ли вы, но это врем[JA_PLACEHOLDER] года [JA_PLACEHOLDER]вл[JA_PLACEHOLDER]етс[JA_PLACEHOLDER] брачным сезоном дл[JA_PLACEHOLDER] космических карпов. Они собираютс[JA_PLACEHOLDER] в большие группы и могут представл[JA_PLACEHOLDER]ть большую угрозу. Будьте осторожны р[JA_PLACEHOLDER]дом с окнами")
+			announce("Г€Г±ГµГ®Г¤, Г­ГҐ Г§Г­Г Гѕ Гў ГЄГіГ°Г±ГҐ Г«ГЁ ГўГ», Г­Г® ГЅГІГ® ГўГ°ГҐГ¬[JA_PLACEHOLDER] ГЈГ®Г¤Г  [JA_PLACEHOLDER]ГўГ«[JA_PLACEHOLDER]ГҐГІГ±[JA_PLACEHOLDER] ГЎГ°Г Г·Г­Г»Г¬ Г±ГҐГ§Г®Г­Г®Г¬ Г¤Г«[JA_PLACEHOLDER] ГЄГ®Г±Г¬ГЁГ·ГҐГ±ГЄГЁГµ ГЄГ Г°ГЇГ®Гў. ГЋГ­ГЁ Г±Г®ГЎГЁГ°Г ГѕГІГ±[JA_PLACEHOLDER] Гў ГЎГ®Г«ГјГёГЁГҐ ГЈГ°ГіГЇГЇГ» ГЁ Г¬Г®ГЈГіГІ ГЇГ°ГҐГ¤Г±ГІГ ГўГ«[JA_PLACEHOLDER]ГІГј ГЎГ®Г«ГјГёГіГѕ ГіГЈГ°Г®Г§Гі. ГЃГіГ¤ГјГІГҐ Г®Г±ГІГ®Г°Г®Г¦Г­Г» Г°[JA_PLACEHOLDER]Г¤Г®Г¬ Г± Г®ГЄГ­Г Г¬ГЁ")
 		if(2)
-			announce("Внимание, по неизвестным причинам, карпы стали неверо[JA_PLACEHOLDER]тно агрессивными. Будьте осторожны, космическа[JA_PLACEHOLDER] рыбалка запрещена до стабилизации ситуации.")
+			announce("Г‚Г­ГЁГ¬Г Г­ГЁГҐ, ГЇГ® Г­ГҐГЁГ§ГўГҐГ±ГІГ­Г»Г¬ ГЇГ°ГЁГ·ГЁГ­Г Г¬, ГЄГ Г°ГЇГ» Г±ГІГ Г«ГЁ Г­ГҐГўГҐГ°Г®[JA_PLACEHOLDER]ГІГ­Г® Г ГЈГ°ГҐГ±Г±ГЁГўГ­Г»Г¬ГЁ. ГЃГіГ¤ГјГІГҐ Г®Г±ГІГ®Г°Г®Г¦Г­Г», ГЄГ®Г±Г¬ГЁГ·ГҐГ±ГЄГ [JA_PLACEHOLDER] Г°Г»ГЎГ Г«ГЄГ  Г§Г ГЇГ°ГҐГ№ГҐГ­Г  Г¤Г® Г±ГІГ ГЎГЁГ«ГЁГ§Г Г¶ГЁГЁ Г±ГЁГІГіГ Г¶ГЁГЁ.")
 			carp_soft_limit *= 2
 			carp_hard_limit *= 2
 		if(3)
@@ -31,7 +31,7 @@
 				if(C.name == "carpspawn")
 					valid_marks += C
 
-			announce("Внимание, на радаре обнаружено неизвестное существо. По форме оно напоминает… огромного космического карпа. Оно движетс[JA_PLACEHOLDER] в сторону вашей станции, Исход. Приготовьтесь к бою")
+			announce("Г‚Г­ГЁГ¬Г Г­ГЁГҐ, Г­Г  Г°Г Г¤Г Г°ГҐ Г®ГЎГ­Г Г°ГіГ¦ГҐГ­Г® Г­ГҐГЁГ§ГўГҐГ±ГІГ­Г®ГҐ Г±ГіГ№ГҐГ±ГІГўГ®. ГЏГ® ГґГ®Г°Г¬ГҐ Г®Г­Г® Г­Г ГЇГ®Г¬ГЁГ­Г ГҐГІвЂ¦ Г®ГЈГ°Г®Г¬Г­Г®ГЈГ® ГЄГ®Г±Г¬ГЁГ·ГҐГ±ГЄГ®ГЈГ® ГЄГ Г°ГЇГ . ГЋГ­Г® Г¤ГўГЁГ¦ГҐГІГ±[JA_PLACEHOLDER] Гў Г±ГІГ®Г°Г®Г­Гі ГўГ ГёГҐГ© Г±ГІГ Г­Г¶ГЁГЁ, Г€Г±ГµГ®Г¤. ГЏГ°ГЁГЈГ®ГІГ®ГўГјГІГҐГ±Гј ГЄ ГЎГ®Гѕ")
 			if(valid_marks.len)
 				var/turf/T = pick(valid_marks).loc
 				message_admins("Carp Queen was created in [T.x],[T.y],[T.z] [ADMIN_JMP(T)]")
@@ -183,7 +183,7 @@
 			if(A.density)
 				if(A.blocked)
 					A.blocked = FALSE
-				A.open(1)
+				A.open(TRUE)
 
 		for(var/obj/machinery/door/airlock/A in get_step(src, dir))
 			if(A.density)
@@ -191,4 +191,4 @@
 					A.door_rupture(src)
 					playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 				else
-					A.open(1)
+					A.open(TRUE)
