@@ -295,8 +295,8 @@ var/datum/subsystem/shuttle/SSshuttle
 				undock_act(/area/hallway/secondary/exit, "arrival_escape")
 
 			if(timeleft > 0)
-				if(last_es_sound < world.time)
-					if(timeleft == 13)
+				if(timeleft == 13)
+					if(last_es_sound < world.time)
 						var/area/pre_location = locate(/area/shuttle/escape/station)
 						for(var/mob/M in pre_location)
 							M.playsound_local(null, 'sound/effects/escape_shuttle/es_undocking.ogg', 70)
