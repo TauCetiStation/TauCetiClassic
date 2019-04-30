@@ -301,20 +301,6 @@ var/datum/subsystem/shuttle/SSshuttle
 						for(var/mob/M in pre_location)
 							M.playsound_local(null, 'sound/effects/escape_shuttle/es_undocking.ogg', 70)
 						last_es_sound = world.time + 10
-					if(timeleft == 7)
-						var/area/pre_location = locate(/area/shuttle/escape_pod1/station)
-						for(var/mob/M in pre_location)
-							M.playsound_local(null, 'sound/effects/escape_shuttle/ep_undocking.ogg', 100, is_global = 1)
-						pre_location = locate(/area/shuttle/escape_pod2/station)
-						for(var/mob/M in pre_location)
-							M.playsound_local(null, 'sound/effects/escape_shuttle/ep_undocking.ogg', 100, is_global = 1)
-						pre_location = locate(/area/shuttle/escape_pod3/station)
-						for(var/mob/M in pre_location)
-							M.playsound_local(null, 'sound/effects/escape_shuttle/ep_undocking.ogg', 100, is_global = 1)
-						pre_location = locate(/area/shuttle/escape_pod5/station)
-						for(var/mob/M in pre_location)
-							M.playsound_local(null, 'sound/effects/escape_shuttle/ep_undocking.ogg', 100, is_global = 1)
-						last_es_sound = world.time + 10
 				return 0
 
 			/* --- Shuttle leaves the station, enters transit --- */
