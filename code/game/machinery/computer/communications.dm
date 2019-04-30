@@ -111,7 +111,7 @@
 				to_chat(usr, "<span class='warning'>A red light flashes on the console. It looks like you can't change the security level that fast.</span>")
 				return
 			else
-				last_seclevel_change = world.time + 600 // One minute cooldown
+				last_seclevel_change = world.time + 1 MINUTE
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
@@ -146,7 +146,7 @@
 					to_chat(usr, "<span class='warning'>A red light flashes on the console. It looks like you can't make announcements that fast.</span>")
 					return
 				else
-					last_announcement = world.time + 600 // One minute cooldown
+					last_announcement = world.time + 1 MINUTE
 				var/input = sanitize(input(usr, "Please choose a message to announce to the station crew.", "What?"), extra = FALSE)
 				if(!input || !(usr in view(1,src)))
 					return
