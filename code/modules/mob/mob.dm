@@ -1116,9 +1116,3 @@ note dizziness decrements automatically in the mob's Life() proc.
 			updatehealth()
 		if("resize")
 			update_transform()*/
-
-/mob/proc/get_location(is_on_shuttle = FALSE)
-	var/area/A = get_area(src)
-	if(A in list(/area/shuttle/escape/transit, /area/shuttle/escape_pod1/transit, /area/shuttle/escape_pod2/transit, /area/shuttle/escape_pod3/transit, /area/shuttle/escape_pod5/transit))
-		is_on_shuttle = TRUE
-	return is_on_shuttle

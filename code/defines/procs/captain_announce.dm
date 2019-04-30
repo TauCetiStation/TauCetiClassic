@@ -1,3 +1,6 @@
+#define IS_ON_EMER_SHUTTLE is_type_in_list(get_area(M), list(/area/shuttle/escape/transit, \
+                                                             /area/shuttle/escape_pod1/transit, /area/shuttle/escape_pod2/transit, \
+                                                             /area/shuttle/escape_pod3/transit, /area/shuttle/escape_pod5/transit))
 /proc/captain_announce(message, title = "Priority Announcement", announcer = "", sound = "")
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
@@ -15,8 +18,7 @@
 				if("emer_shut_docked")
 					announce_sound = 'sound/AI/emergency_s_docked.ogg'
 				if("emer_shut_left")
-					M.get_location(is_on_shuttle = FALSE)
-					if(M.get_location(is_on_shuttle = TRUE))
+					if(IS_ON_EMER_SHUTTLE)
 						continue
 					announce_sound = 'sound/AI/emergency_s_left.ogg'
 				if("crew_shut_scalled")
@@ -26,8 +28,7 @@
 				if("crew_shut_docked")
 					announce_sound = 'sound/AI/crew_s_docked.ogg'
 				if("crew_shut_left")
-					M.get_location(is_on_shuttle = FALSE)
-					if(M.get_location(is_on_shuttle = TRUE))
+					if(IS_ON_EMER_SHUTTLE)
 						continue
 					announce_sound = 'sound/AI/crew_s_left.ogg'
 				if("malf1")
@@ -43,3 +44,4 @@
 				if("nuke")
 					announce_sound = 'sound/AI/nuke.ogg'
 			M.playsound_local(null, announce_sound, 70, channel = CHANNEL_ANNOUNCE, wait = 1, is_global = 1)
+#undef IS_ON_EMER_SHUTTLE
