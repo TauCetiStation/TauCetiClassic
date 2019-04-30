@@ -32,8 +32,8 @@
 			announce("Âíèìàíèå, ñèñòåìàìè ñòàíöèè áûë çàñå÷¸í íåèçâåñòíûé îáúåêò íà òðàåêòîðèè ñòîëêíîâåíè[JA_PLACEHOLDER] ñî ñòàíöèåé. Ïðåäïîëàãàåìûé êëàññ îáúåêòà – Àñòåðîèä. Ïðåäïîëàãàåìûé ðàçìåð îáúåêòà – îãðîìíûé. Âðåì[JA_PLACEHOLDER] äî ñòîëêíîâåíè[JA_PLACEHOLDER] – äâàäöàòü ìèíóò. Ïðèìåðíîå ìåñòî ñòîëêíîâåíè[JA_PLACEHOLDER] – [side_text] ÷àñòü ñòàíöèè. Ïðèìèòå íåîáõîäèìûå ìåðû äë[JA_PLACEHOLDER] íèâåëèðîâàíè[JA_PLACEHOLDER] âîçìîæíûõ æåðòâ ñðåäè ýêèïàæà. Ïðè[JA_PLACEHOLDER]òíîãî ðàáî÷åãî äí[JA_PLACEHOLDER].")
 
 			addtimer(CALLBACK(src, .proc/huge_asteroid_warning), 15 MINUTES)
-			addtimer(CALLBACK(src, .proc/huge_asteroid_last_warning), 10 * 60 * 20)
-			addtimer(CALLBACK(src, .proc/huge_asteroid_spawn), 10 * 60 * 20 + 10 * 3)
+			addtimer(CALLBACK(src, .proc/huge_asteroid_last_warning), 20 MINUTES)
+			addtimer(CALLBACK(src, .proc/huge_asteroid_spawn), 20 MINUTES + 3 SECONDS)
 		//if(3)
 			//
 		if(4)

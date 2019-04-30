@@ -37,9 +37,9 @@
 			will_trash = pick(trash_places)
 			announce("Внимание, к станции приближаетс[JA_PLACEHOLDER] огромный объёкт, метеоритной формы. Предположительно состоит в большей части из мусора. Метеорит заденет [will_trash] через 10 минут")
 
-			addtimer(CALLBACK(src, .proc/asteroid_warning), 10 * 60 * 9)
-			addtimer(CALLBACK(src, .proc/asteroid_last_warning), 10 * 60 * 10)
-			addtimer(CALLBACK(src, .proc/asteroid_spawn), 10 * 60 * 10 + 10 * 3)
+			addtimer(CALLBACK(src, .proc/asteroid_warning), 9 MINUTES)
+			addtimer(CALLBACK(src, .proc/asteroid_last_warning), 10 MINUTES)
+			addtimer(CALLBACK(src, .proc/asteroid_spawn), 10 MINUTES + 3 SECONDS)
 		if(3)
 			announce("Экологический уровень вашей станции опустилс[JA_PLACEHOLDER] до нул[JA_PLACEHOLDER]. Исход официально признан космической свалкой")
 

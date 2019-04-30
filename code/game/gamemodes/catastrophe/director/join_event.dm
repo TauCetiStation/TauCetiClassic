@@ -25,8 +25,8 @@
 	for(var/G in observer_list)
 		to_chat(G, "<span class='notice big'>[name]: This event requires players, select one of the options if you want to participate: [options_str]. Event will start in [join_time] seconds</span>")
 
-	addtimer(CALLBACK(src, .proc/end_join_period), 10 * join_time)
-	addtimer(CALLBACK(src, .proc/last_warning), 10 * (join_time - 15))
+	addtimer(CALLBACK(src, .proc/end_join_period), join_time SECONDS)
+	addtimer(CALLBACK(src, .proc/last_warning), (join_time - 15) SECONDS)
 
 /datum/catastrophe_join_event/Topic(href, href_list)
 	. = ..()
