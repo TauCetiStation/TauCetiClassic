@@ -31,6 +31,8 @@
 	holder_type = /obj/item/weapon/holder/mouse
 	ventcrawler = 2
 
+/obj/items/weapons/traiorcheese
+
 /mob/living/simple_animal/mouse/Life()
 	..()
 	if(!stat && prob(speak_chance))
@@ -98,7 +100,6 @@
 	if (stat >= DEAD)
 		return
 	..()
-
 //copy paste from alien/larva, if that func is updated please update this one alsoghost
 /mob/living/simple_animal/mouse/verb/hide()
 	set name = "Hide"
@@ -162,6 +163,72 @@
 	if(client)
 		client.time_died_as_mouse = world.time
 	..()
+
+var/obj/item/held_item = null
+
+/mob/living/simple_animal/mouse/verb/drop_held_item()
+	set name = "Drop held item"
+	set category = "mouse"
+	set desc = "Drop the item you're holding."
+	if(strong==1)
+		if(stat)
+			return
+
+		if(!held_item)
+			to_chat(usr, "\red You have nothing to drop!")
+			return 0
+
+		if(istype(held_item, /obj/item/weapon/grenade))
+			visible_message("\red [src] launches \the [held_item]!", "\red You launch \the [held_item]!", "You hear a skittering noise and a thump!")
+			var/obj/item/weapon/grenade/G = held_item
+			G.loc = src.loc
+			G.prime()
+			held_item = null
+			return 1
+
+		visible_message("\blue [src] drops \the [held_item]!", "\blue You drop \the [held_item]!", "You hear a skittering noise and a soft thump.")
+
+		held_item.loc = src.loc
+		held_item = null
+		return 1
+	else
+		to_chat(usr, "\red You not enough strong")
+	return
+
+/mob/living/simple_animal/mouse/verb/get_item()
+	set name = "Pick up item"
+	set category = "mouse"
+	set desc = "Allows you to take a nearby small item."
+	if(strong==1)
+		if(stat)
+			return -1
+
+		if(held_item)
+			to_chat(src, "\red You are already holding \the [held_item]")
+			return 1
+
+		var/list/items = list()
+		for(var/obj/item/I in view(1,src))
+			if(I.loc != src && I.w_class <= ITEM_SIZE_SMALL)
+				items.Add(I)
+
+		var/obj/selection = input("Select an item.", "Pickup") in items
+
+		if(selection)
+			for(var/obj/item/I in view(1, src))
+				if(selection == I)
+					held_item = selection
+					selection.loc = src
+					visible_message("\blue [src] scoops up \the [held_item]!", "\blue You grab \the [held_item]!", "You hear a skittering noise and a clink.")
+					return held_item
+			to_chat(src, "\red \The [selection] is too far away.")
+			return 0
+
+		to_chat(src, "\red There is nothing of interest to take.")
+		return 0
+	else
+		to_chat(usr, "\red You not enough strong")
+
 
 /*
  * Mouse types

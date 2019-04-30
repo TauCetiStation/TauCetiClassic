@@ -493,6 +493,12 @@
 	item = /obj/item/weapon/card/emag
 	cost = 6
 
+/datum/uplink_item/device_tools/traitorcheese
+	name = "Cheese"
+	desc = "Mouse is you slave"
+	item = /obj/item/weapon/reagent_containers/food/traitorcheese
+	cost = 8
+
 /datum/uplink_item/device_tools/toolbox
 	name = "Full Syndicate Toolbox"
 	desc = "The syndicate toolbox is a suspicious black and red. Aside from tools, it comes with cable and a multitool. Insulated gloves are not included."

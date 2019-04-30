@@ -755,6 +755,7 @@
 #include "code\game\objects\items\weapons\tape.dm"
 #include "code\game\objects\items\weapons\teleportation.dm"
 #include "code\game\objects\items\weapons\tools.dm"
+#include "code\game\objects\items\weapons\traitorcheese.dm"
 #include "code\game\objects\items\weapons\twohanded.dm"
 #include "code\game\objects\items\weapons\vending_items.dm"
 #include "code\game\objects\items\weapons\weaponry.dm"

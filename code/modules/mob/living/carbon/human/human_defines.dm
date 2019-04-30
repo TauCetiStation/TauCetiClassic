@@ -90,8 +90,9 @@
 
 	//Golem stuff
 	var/my_master = 0
+	var/my_king = list()
 	var/my_golems = list()
-
+	var/my_mouse = list()
 	var/lastSoundEmote = 0 // Prevent sound emotes spam in some situations
 	var/name_override //For temporary visible name changes
 
