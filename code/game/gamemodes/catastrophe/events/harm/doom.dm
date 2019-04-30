@@ -15,11 +15,11 @@
 /datum/catastrophe_event/doom/on_step()
 	switch(step)
 		if(1)
-			announce("Проснитесь и пойте, Исход! Мы сообщаем вам, что на ЦК сейчас провод[JA_PLACEHOLDER]тс[JA_PLACEHOLDER] кристаллического тела, полученного из блюспейс пространства. Ваша станци[JA_PLACEHOLDER] будет использована в качестве усилител[JA_PLACEHOLDER] флуктуаций блюспейс-пол[JA_PLACEHOLDER]. Увер[JA_PLACEHOLDER]ем вас, процедура абсолютно безопасна! Скорее всего, всё пройдёт... успешно. Наш лучший ученый, выпускник MIT, в данный момент доставл[JA_PLACEHOLDER]ет кристалл в специальный Антимасс-Спектрометр. Мы же будем сообщать вам о ходе исследовани[JA_PLACEHOLDER].")
+			announce(CYRILLIC_EVENT_DOOM_1)
 
 			addtimer(CALLBACK(src, .proc/spawn_first_portal), 1 MINUTE)
 		if(2)
-			announce("Мы правда пытаемс[JA_PLACEHOLDER] найти решение, Исход. Испытательна[JA_PLACEHOLDER] камера анализатора уничтожена, из блюспейс пространства вылезают какие-то монстры. А количество этих разломов только увеличиваетс[JA_PLACEHOLDER].")
+			announce(CYRILLIC_EVENT_DOOM_3)
 			portal_delay = 20
 			portal_timer = 20
 		if(3)
@@ -28,7 +28,7 @@
 				return
 			var/area/A = get_area(T)
 
-			announce("Подтверждено по[JA_PLACEHOLDER]вление био-угрозы неизвестного уровн[JA_PLACEHOLDER]. Весь экипаж должен не допустить распространени[JA_PLACEHOLDER] заражение. Примерна[JA_PLACEHOLDER] локаци[JA_PLACEHOLDER] био-угрозы: [A.name]")
+			announce(CYRILLIC_EVENT_DOOM_4)
 
 			new /obj/effect/cellular_biomass_controller/meat(T)
 			message_admins("Meatblob was created in [T.x],[T.y],[T.z] [ADMIN_JMP(T)]")
@@ -47,7 +47,7 @@
 			P.monster_ammount = rand(2, 5)
 
 /datum/catastrophe_event/doom/proc/spawn_first_portal()
-	announce("… Отключи эту штуку! Отключи немедленно! Исход, кристалл оказалс[JA_PLACEHOLDER] крайне нестабильным колебани[JA_PLACEHOLDER] блюспейс-пол[JA_PLACEHOLDER] вошли в каскадный резонанс с Антимасс-Спектрометром! По всей системе создаютс[JA_PLACEHOLDER] межпространственные разломы в блюспейс, не смейте приближатьс[JA_PLACEHOLDER] к ним! Мы ищем решение проблемы.")
+	announce(CYRILLIC_EVENT_DOOM_2)
 
 	should_spawn_portals = TRUE
 	portal_timer = 100

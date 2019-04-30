@@ -16,20 +16,20 @@
 /datum/catastrophe_event/meteor_alert/on_step()
 	switch(step)
 		if(1)
-			announce("Ýòî àâòîìàòè÷åñêîå ïðåäóïðåæäåíèå. Â äàííûé ìîìåíò ñòàíöè[JA_PLACEHOLDER] âõîäèò â àñòåðîèäíîå ïîëå. Ðàñ÷¸òíîå âðåì[JA_PLACEHOLDER] ïðîõîæäåíè[JA_PLACEHOLDER] ïîë[JA_PLACEHOLDER]… äåâ[JA_PLACEHOLDER]òü... äåâ[JA_PLACEHOLDER]òü… äåâ[JA_PLACEHOLDER]òü… ìèíóò. Ïðèìèòå íåîáõîäèìûå ìåðû äë[JA_PLACEHOLDER] çàùèòû ñòàíöèè îò óãðîçû. Õîðîøåãî äí[JA_PLACEHOLDER].")
+			announce(CYRILLIC_EVENT_METEOR_ALERT_1)
 		if(2)
 			bigmeteor_side = pick(cardinal)
 			var/side_text
 			switch(bigmeteor_side)
 				if(WEST)
-					side_text = "çàïàäíà[JA_PLACEHOLDER]"
+					side_text = CYRILLIC_EVENT_METEOR_ALERT_WEST
 				if(EAST)
-					side_text = "âîñòî÷íà[JA_PLACEHOLDER]"
+					side_text = CYRILLIC_EVENT_METEOR_ALERT_EAST
 				if(NORTH)
-					side_text = "ñåâåðíà[JA_PLACEHOLDER]"
+					side_text = CYRILLIC_EVENT_METEOR_ALERT_NORTH
 				if(SOUTH)
-					side_text = "þæíà[JA_PLACEHOLDER]"
-			announce("Âíèìàíèå, ñèñòåìàìè ñòàíöèè áûë çàñå÷¸í íåèçâåñòíûé îáúåêò íà òðàåêòîðèè ñòîëêíîâåíè[JA_PLACEHOLDER] ñî ñòàíöèåé. Ïðåäïîëàãàåìûé êëàññ îáúåêòà – Àñòåðîèä. Ïðåäïîëàãàåìûé ðàçìåð îáúåêòà – îãðîìíûé. Âðåì[JA_PLACEHOLDER] äî ñòîëêíîâåíè[JA_PLACEHOLDER] – äâàäöàòü ìèíóò. Ïðèìåðíîå ìåñòî ñòîëêíîâåíè[JA_PLACEHOLDER] – [side_text] ÷àñòü ñòàíöèè. Ïðèìèòå íåîáõîäèìûå ìåðû äë[JA_PLACEHOLDER] íèâåëèðîâàíè[JA_PLACEHOLDER] âîçìîæíûõ æåðòâ ñðåäè ýêèïàæà. Ïðè[JA_PLACEHOLDER]òíîãî ðàáî÷åãî äí[JA_PLACEHOLDER].")
+					side_text = CYRILLIC_EVENT_METEOR_ALERT_SOUTH
+			announce(CYRILLIC_EVENT_METEOR_ALERT_2)
 
 			addtimer(CALLBACK(src, .proc/huge_asteroid_warning), 15 MINUTES)
 			addtimer(CALLBACK(src, .proc/huge_asteroid_last_warning), 20 MINUTES)
@@ -37,7 +37,7 @@
 		//if(3)
 			//
 		if(4)
-			announce("Âíèìàíèå. Ïðèáëèæàåòñ[JA_PLACEHOLDER] ñàìà[JA_PLACEHOLDER] áîëüøà[JA_PLACEHOLDER] âîëíà ìåòåîðèòîâ. Ïî ïðåäâàðèòåëüíûì äàííûì, ñòàíöè[JA_PLACEHOLDER] ñêîðî ïîêèíåò àñòåðîèäíîå ïîëå. Ñïàñèáî çà òåðïåíèå è ïðè[JA_PLACEHOLDER]òíîé ñìåíû")
+			announce(CYRILLIC_EVENT_METEOR_ALERT_5)
 			meteor_timer = 10000
 			active_timer = 200
 
@@ -56,10 +56,10 @@
 		active_timer -= 1
 
 /datum/catastrophe_event/meteor_alert/proc/huge_asteroid_warning()
-	announce("Âíèìàíèå. Íåèçáåæíîå ñòîëêíîâåíèå ñ àñòåðîèäîì ÷åðåç… ï[JA_PLACEHOLDER]òü ìèíóò")
+	announce(CYRILLIC_EVENT_METEOR_ALERT_3)
 
 /datum/catastrophe_event/meteor_alert/proc/huge_asteroid_last_warning()
-	announce("Óãðîçà. Ñòîëêíîâåíèå ñ íåèçâåñòíûì îáúåêòîì ÷åðåç… òðè… äâà… îäèí…")
+	announce(CYRILLIC_EVENT_METEOR_ALERT_4)
 
 // 119 141 center
 // 33 141 west corner 86

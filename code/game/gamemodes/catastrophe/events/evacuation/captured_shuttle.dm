@@ -23,7 +23,7 @@
 /datum/catastrophe_event/capturedshuttle_evacuation/on_step()
 	switch(step)
 		if(1)
-			announce("Автоматическа[JA_PLACEHOLDER] система управлени[JA_PLACEHOLDER] шатлом.. обнаружила.. ваш.. ма[JA_PLACEHOLDER]к помощи. Готовьтесь к эвакуации через.. дес[JA_PLACEHOLDER]ть.. минут. Автоматическа[JA_PLACEHOLDER] система управлени[JA_PLACEHOLDER] шатла сообщает.. о наличии.. двадцати.. неизвестных форм жизни.. на шатле.")
+			announce(CYRILLIC_EVENT_CAPTURED_SHUTTLE_1)
 
 			if(SSshuttle)
 				SSshuttle.always_fake_recall = FALSE

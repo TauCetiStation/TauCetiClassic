@@ -14,9 +14,9 @@
 /datum/catastrophe_event/power_destroy/on_step()
 	switch(step)
 		if(1)
-			announce("Исход, наши сканеры регистрируют аномальную активность на звезде Тау Кита. Интенсивные вспышки создают проблемы с некоторым нашим оборудованием. Будьте осторожны, мы следим за ситуацией")
+			announce(CYRILLIC_EVENT_POWER_DESTROY_1)
 		if(2)
-			announce("Внимание, станци[JA_PLACEHOLDER]. Только что на звезде Тау Кита произошла одна из самых мощных вспышек за последнее врем[JA_PLACEHOLDER]. Часть нашего оборудовани[JA_PLACEHOLDER] полностью вышла из стро[JA_PLACEHOLDER]. Проверьте электрические приборы на наличие поломок и произведите ремонт. Ситуаци[JA_PLACEHOLDER] может ухудшитьс[JA_PLACEHOLDER], будьте готовы")
+			announce(CYRILLIC_EVENT_POWER_DESTROY_2)
 
 			for(var/obj/machinery/sleep_console/M in machines)
 				do_destroy(M)
@@ -46,7 +46,7 @@
 				if(prob(50))
 					M.set_broken()
 		if(3)
-			announce("Исход, внимание! Нова[JA_PLACEHOLDER] вспышка повлекла за собой мощный ЭМ импульс. Наши системы энергоснабжени[JA_PLACEHOLDER] частично вышли из стро[JA_PLACEHOLDER]. Так как ваша станци[JA_PLACEHOLDER] находитс[JA_PLACEHOLDER] гораздо ближе к звезде, то последстви[JA_PLACEHOLDER] могли быть гораздо более разрушительными. Попытайтесь восстановить энергию и затем отправьте отчёт о полученных повреждени[JA_PLACEHOLDER]х")
+			announce(CYRILLIC_EVENT_POWER_DESTROY_3)
 
 			var/list/skipped_areas = list(/area/turret_protected/ai, /area/tcommsat/computer, /area/tcommsat/chamber)
 

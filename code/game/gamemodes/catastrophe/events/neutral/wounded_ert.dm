@@ -22,7 +22,7 @@
 			var/datum/map_template/wounded_ert_shuttle/temp = new /datum/map_template/wounded_ert_shuttle()
 			temp.load(T, centered = TRUE)
 
-			announce("Исход, один из наших отр[JA_PLACEHOLDER]дов быстрого реагировани[JA_PLACEHOLDER] возвращаетс[JA_PLACEHOLDER] с задани[JA_PLACEHOLDER] и в данный момент пролетает р[JA_PLACEHOLDER]дом с вашей станцией. Они сильно ранены и хотели бы остановитьс[JA_PLACEHOLDER] у вас, помогите им, чем сможете.")
+			announce(CYRILLIC_EVENT_WOUNDED_ERT_1)
 			message_admins("ERT shuttle was created in [T.x],[T.y],[T.z] [ADMIN_JMP(T)]")
 
 			director.start_ghost_join_event("Wounded ERT", list("ERT"), CALLBACK(src, .proc/spawn_ert))

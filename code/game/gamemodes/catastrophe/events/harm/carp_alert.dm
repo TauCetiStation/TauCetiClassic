@@ -20,9 +20,9 @@
 /datum/catastrophe_event/carp_alert/on_step()
 	switch(step)
 		if(1)
-			announce("Èñõîä, íå çíàþ â êóðñå ëè âû, íî ýòî âðåì[JA_PLACEHOLDER] ãîäà [JA_PLACEHOLDER]âë[JA_PLACEHOLDER]åòñ[JA_PLACEHOLDER] áðà÷íûì ñåçîíîì äë[JA_PLACEHOLDER] êîñìè÷åñêèõ êàðïîâ. Îíè ñîáèðàþòñ[JA_PLACEHOLDER] â áîëüøèå ãðóïïû è ìîãóò ïðåäñòàâë[JA_PLACEHOLDER]òü áîëüøóþ óãðîçó. Áóäüòå îñòîðîæíû ð[JA_PLACEHOLDER]äîì ñ îêíàìè")
+			announce(CYRILLIC_EVENT_CARP_ALERT_1)
 		if(2)
-			announce("Âíèìàíèå, ïî íåèçâåñòíûì ïðè÷èíàì, êàðïû ñòàëè íåâåðî[JA_PLACEHOLDER]òíî àãðåññèâíûìè. Áóäüòå îñòîðîæíû, êîñìè÷åñêà[JA_PLACEHOLDER] ðûáàëêà çàïðåùåíà äî ñòàáèëèçàöèè ñèòóàöèè.")
+			announce(CYRILLIC_EVENT_CARP_ALERT_2)
 			carp_soft_limit *= 2
 			carp_hard_limit *= 2
 		if(3)
@@ -31,7 +31,7 @@
 				if(C.name == "carpspawn")
 					valid_marks += C
 
-			announce("Âíèìàíèå, íà ðàäàðå îáíàðóæåíî íåèçâåñòíîå ñóùåñòâî. Ïî ôîðìå îíî íàïîìèíàåò… îãðîìíîãî êîñìè÷åñêîãî êàðïà. Îíî äâèæåòñ[JA_PLACEHOLDER] â ñòîðîíó âàøåé ñòàíöèè, Èñõîä. Ïðèãîòîâüòåñü ê áîþ")
+			announce(CYRILLIC_EVENT_CARP_ALERT_3)
 			if(valid_marks.len)
 				var/turf/T = pick(valid_marks).loc
 				message_admins("Carp Queen was created in [T.x],[T.y],[T.z] [ADMIN_JMP(T)]")

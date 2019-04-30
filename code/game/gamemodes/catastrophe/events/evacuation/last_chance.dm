@@ -11,7 +11,7 @@
 /datum/catastrophe_event/lastchance_evacuation/on_step()
 	switch(step)
 		if(1)
-			announce("Исход, ситуаци[JA_PLACEHOLDER] полностью вышла из-под контрол[JA_PLACEHOLDER]. Начинаетс[JA_PLACEHOLDER] эвакуаци[JA_PLACEHOLDER] по всей системе. Вашей станции с огромным трудом был выделен эвакуационный шатл, это  ваш последний шанс свалить. Пакуйте чемоданы, космическа[JA_PLACEHOLDER] научна[JA_PLACEHOLDER] станци[JA_PLACEHOLDER] Исход закрываетс[JA_PLACEHOLDER]")
+			announce(CYRILLIC_EVENT_LAST_CHANCE_1)
 
 			if(SSshuttle)
 				SSshuttle.always_fake_recall = FALSE

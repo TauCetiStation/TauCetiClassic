@@ -11,7 +11,7 @@
 	var/list/enemy_types = list("pirates", "nukers", "elite-syndicate", "mages", "ninjas")
 	var/west_side
 	var/east_side
-	var/list/company_names = list("SolGov", "Эйнштейн Энджинс", "Вэй Мед", "BioTech Solutions", "Cybersun Industries")
+	var/list/company_names = list("SolGov", CYRILLIC_EVENT_WAR_COMPANY_EINSTEIN, CYRILLIC_EVENT_WAR_COMPANY_WEYMED, "BioTech Solutions", "Cybersun Industries")
 
 	event_duration_min = 0.5 // so worst case is ~20 mins for 3 announces which is ok
 	event_duration_max = 0.5
@@ -23,11 +23,11 @@
 			var/company1 = pick(company_names)
 			var/company2 = pick(company_names - company1)
 
-			announce("…К политическим новост[JA_PLACEHOLDER]м. Сегодн[JA_PLACEHOLDER] между [company1] и [company2] произошел конфликт на почве [pick("гуманности кибернизации преступников", "легальности колонизации зан[JA_PLACEHOLDER]тых планет ради ресурсов", "вреда телепортировани[JA_PLACEHOLDER] дл[JA_PLACEHOLDER] пространства-времени", "того, можно ли использовать технологию клонировани[JA_PLACEHOLDER] как средство против старени[JA_PLACEHOLDER]")]. Дебаты вскоре переросли в жаркий спор. Спикеры с обеих сторон перешли на резкие слова и обвинени[JA_PLACEHOLDER] в адрес оппонента. Мы будем следить за развитием событий.", "--=Galaxy News=--")
+			announce(CYRILLIC_EVENT_WAR_1, "--=Galaxy News=--")
 		if(2)
-			announce("С вами Джонни Доэ, и это Галактические Новости. Кажетс[JA_PLACEHOLDER] конфликт, который началс[JA_PLACEHOLDER] сегодн[JA_PLACEHOLDER] утром между представител[JA_PLACEHOLDER]ми мегакорпораций так и не желает прекращатьс[JA_PLACEHOLDER]. Наши источники сообщают, что обе стороны мобилизуют внутренние силы обороны. Надеемс[JA_PLACEHOLDER], что конфликт всё же будет решён мирно и стороны сойдутс[JA_PLACEHOLDER] к единому мнению.", "--=Galaxy News=--")
+			announce(CYRILLIC_EVENT_WAR_2, "--=Galaxy News=--")
 		if(3)
-			announce("С вами Джонни Доэ, и это Галактические Новости. В системе Тау Кита разгорелс[JA_PLACEHOLDER] вооруженный конфликт между двум[JA_PLACEHOLDER] мегакорпораци[JA_PLACEHOLDER]ми. По информации от наших источников, в бо[JA_PLACEHOLDER]х так же принимают участие частные военные компании и группы наемников! Научна[JA_PLACEHOLDER] мирова[JA_PLACEHOLDER] общественность в ужасе, так как на рассто[JA_PLACEHOLDER]нии гиперпрыжка места боев сейчас находитс[JA_PLACEHOLDER] передова[JA_PLACEHOLDER] исследовательска[JA_PLACEHOLDER] станци[JA_PLACEHOLDER] корпорации Нанотрейзен. Наши источники сообщают, что на станции находитс[JA_PLACEHOLDER] её экипаж, который не подозревает о том, что место их работы может стать полем бо[JA_PLACEHOLDER]. Нанотрейзен комментариев по поводу ситуации не дает.", "--=Galaxy News=--")
+			announce(CYRILLIC_EVENT_WAR_3, "--=Galaxy News=--")
 
 			west_side = pick(enemy_types)
 			east_side = pick(enemy_types - west_side)

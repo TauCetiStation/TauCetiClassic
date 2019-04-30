@@ -21,7 +21,7 @@
 
 			template.load(T, centered = TRUE)
 
-			announce("Системы станции засекли неизвестное космическое судно в координатах [T.x], [T.y]")
+			announce(CYRILLIC_EVENT_UNKNOWN_SHUTTLE_1)
 			message_admins("Unknown shuttle was created in [T.x],[T.y],[T.z] [ADMIN_JMP(T)]")
 
 

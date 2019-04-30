@@ -12,7 +12,7 @@
 /datum/catastrophe_event/no_gravity/on_step()
 	switch(step)
 		if(1)
-			announce("Îáíàðóæåíû íåïîëàäêè â ñòàöèîííîì ãåíåðàòîðå ãðàâèòàöèè. Ãåíåðàòîð îòêëþ÷¸í íà íåîïðåäåëåííûé ïðîìåæóòîê âðåìåíè")
+			announce(CYRILLIC_EVENT_NO_GRAVITY_1)
 
 			for(var/area/A in all_areas)
 				A.gravitychange(FALSE, A)
@@ -28,7 +28,7 @@
 			addtimer(CALLBACK(src, .proc/turn_gravity_on), timer)
 
 /datum/catastrophe_event/no_gravity/proc/turn_gravity_on()
-	announce("Ãåíåðàòîð ãðàâèòàöèè ñíîâà çàðàáîòàë")
+	announce(CYRILLIC_EVENT_NO_GRAVITY_2)
 
 	for(var/area/A in all_areas)
 		A.gravitychange(TRUE, A)

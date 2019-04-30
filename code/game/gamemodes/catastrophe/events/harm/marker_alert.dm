@@ -32,11 +32,11 @@
 
 			marker = new /obj/structure/obelisk(T)
 
-			announce("Âíèìàíèå, íåäàëåêî îò âàøåé ñòàíöèè çàìå÷åí íåèçâåñòíûé îáúåêò. Ïî íàøèì äàííûì îí, ñêîðåå âñåãî, íå ïðåäñòàâë[JA_PLACEHOLDER]åò óãðîçû, íî áóäüòå îñòîðîæíû. Äîñòàâüòå îáúåêò â íàó÷íûé îòäåë è íà÷íèòå èññëåäîâàíè[JA_PLACEHOLDER]. Ðåçóëüòàòû ïðèøëèòå â âèäå îò÷¸òà. Ïðèìåðíûå êîîðäèíàòû îáúåêòà: [T.x], [T.y]")
+			announce(CYRILLIC_EVENT_MARKER_ALERT_1)
 
 			message_admins("Marker was created in [T.x],[T.y],[T.z] [ADMIN_JMP(T)]")
 		if(2)
-			announce("Ó íàñ äë[JA_PLACEHOLDER] âàñ íîâîñòè, Èñõîä. Îáúåêò, ïîõîæèé íà âàø, áûë îáíàðóæåí ð[JA_PLACEHOLDER]äîì ñî ñòàíöèåé ÖÊ. Ó÷åíûå ïðèñâîèëè åìó êîäîâîå èì[JA_PLACEHOLDER] “Îáåëèñê”. Ïîõîæå, ó Îáåëèñêà åñòü íåñêîëüêî ñâîéñòâ. Ìåðòâûå êëåòêè ïîä åãî âëè[JA_PLACEHOLDER]íèåì ìîãóò êàêèì-òî ñòðàííûì îáðàçîì îæèâàòü. À òàê æå, ïîõîæå, ÷òî Îáåëèñê ìîæåò âëè[JA_PLACEHOLDER]òü íà ñîçíàíèå. Íå äàâàéòå ð[JA_PLACEHOLDER]äîâîìó ïåðñîíàëó ïîäõîäèòü ê Îáåëèñêó, ýòî ìîæåò áûòü îïàñíî. Ìû áóäåì äåðæàòü âàñ â êóðñå, Èñõîä")
+			announce(CYRILLIC_EVENT_MARKER_ALERT_2)
 		if(3)
 			// stuff happens first, then you get the report
 			if(marker)
@@ -49,7 +49,7 @@
 				if(prob(80))
 					apc.overload_lighting()
 		if(4)
-			announce("Ýòè ìîíñòðû, îíè óáèâàþò ëþäåé! Îòðûâàéòå èì êîíå÷íîñòè, ýòî åäèíñòâåííûé ñïîñîá èõ îñòàíîâèòü. Â äàííûé ìîìåíò ìû âåä¸ì îæåñòî÷¸ííîå ñðàæåíèå ñ íèìè. Íå äàéòå Èñõîäó ïàñòü, ýêèïàæ")
+			announce(CYRILLIC_EVENT_MARKER_ALERT_4)
 
 			monster_wave_min = 1
 			monster_wave_max = 3
@@ -59,7 +59,7 @@
 				return
 			var/area/A = get_area(T)
 
-			announce("Ïîäòâåðæäåíî ïî[JA_PLACEHOLDER]âëåíèå áèî-óãðîçû íåèçâåñòíîãî óðîâí[JA_PLACEHOLDER]. Âåñü ýêèïàæ äîëæåí íå äîïóñòèòü ðàñïðîñòðàíåíè[JA_PLACEHOLDER] çàðàæåíèå. Ïðèìåðíà[JA_PLACEHOLDER] ëîêàöè[JA_PLACEHOLDER] áèî-óãðîçû: [A.name]")
+			announce(CYRILLIC_EVENT_MARKER_ALERT_5)
 			message_admins("Necroblob was created in [T.x],[T.y],[T.z] [ADMIN_JMP(T)]")
 
 			new /obj/effect/cellular_biomass_controller/necro(T)
@@ -73,7 +73,7 @@
 			new monster_type(A)
 
 /datum/catastrophe_event/marker_alert/proc/marker_report()
-	announce("Âíèìàíèå, Èñõîä. Îáåëèñê íåñ¸ò â ñåáå ñìåðòåëüíóþ îïàñíîñòü, èçîëèðóéòå åãî íåìåäëåííî. Ñèãíàëû, êîòîðûå îí ïîñûëàåò, ìåí[JA_PLACEHOLDER]þò ãåíåòè÷åñêèé êîä îêðóæàþùèõ, ïðåâðàùà[JA_PLACEHOLDER] èõ â íàñòî[JA_PLACEHOLDER]ùèõ ìîíñòðîâ! Íåìåäëåííî ñîçäàéòå êàðàíòèííûé ïåðèìåòð, íå äàéòå ïåðñîíàëó ïîñòðàäàòü îò ýòèõ ìîíñòðîâ")
+	announce(CYRILLIC_EVENT_MARKER_ALERT_3)
 
 	should_spawn_monster = TRUE
 

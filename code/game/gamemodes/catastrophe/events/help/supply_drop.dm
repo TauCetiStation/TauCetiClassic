@@ -19,7 +19,7 @@
 
 			new /obj/effect/falling_effect(T, /obj/structure/closet/crate/medical/supplydrop)
 
-			announce("»сход, мы сейчас мало чем можем вам помочь, но это хоть что-то. ¬ данный момент к вам летит груз с полезными вещами. ѕримерное место приземление груза: [impact_area.name]")
+			announce(CYRILLIC_EVENT_SUPPLY_DROP_1)
 			message_admins("Supply drop was dropped in [T.x],[T.y],[T.z] [ADMIN_JMP(T)]")
 
 /obj/structure/closet/crate/medical/supplydrop

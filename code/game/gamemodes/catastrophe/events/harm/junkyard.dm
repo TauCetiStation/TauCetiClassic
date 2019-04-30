@@ -14,12 +14,12 @@
 	var/list/trash_types = list(/obj/item/weapon/cigbutt/cigarbutt, /obj/item/weapon/scrap_lump, /obj/item/weapon/shard, /obj/item/stack/rods)
 
 	var/trash_places = list(
-		"отсек службы безопасности" = /area/security,
-		"медбей" = /area/medical,
-		"инженерный отсек" = /area/engine/break_room,
-		"коридоры" = /area/hallway/primary,
-		"научный отсек" = /area/rnd,
-		"мостик" = /area/bridge
+		CYRILLIC_EVENT_JUNKYARD_SEC = /area/security,
+		CYRILLIC_EVENT_JUNKYARD_MED = /area/medical,
+		CYRILLIC_EVENT_JUNKYARD_ENG = /area/engine/break_room,
+		CYRILLIC_EVENT_JUNKYARD_COR = /area/hallway/primary,
+		CYRILLIC_EVENT_JUNKYARD_SCI = /area/rnd,
+		CYRILLIC_EVENT_JUNKYARD_BRI = /area/bridge
 	)
 	var/will_trash
 
@@ -31,23 +31,23 @@
 /datum/catastrophe_event/junkyard/on_step()
 	switch(step)
 		if(1)
-			announce("Приветствую, Исход. Как известно, над нашим миром уже давно нависла глобальна[JA_PLACEHOLDER] экологическа[JA_PLACEHOLDER] проблема. Планета Земл[JA_PLACEHOLDER] была покинута именно из-за того что природна[JA_PLACEHOLDER] среда стала похожа скорее на свалку. К чему это [JA_PLACEHOLDER]… Ах да, экологический уровень вашей станции один из самых низких, возможно стоит подумать о субботнике")
+			announce(CYRILLIC_EVENT_JUNKYARD_1)
 
 		if(2)
 			will_trash = pick(trash_places)
-			announce("Внимание, к станции приближаетс[JA_PLACEHOLDER] огромный объёкт, метеоритной формы. Предположительно состоит в большей части из мусора. Метеорит заденет [will_trash] через 10 минут")
+			announce(CYRILLIC_EVENT_JUNKYARD_2)
 
 			addtimer(CALLBACK(src, .proc/asteroid_warning), 9 MINUTES)
 			addtimer(CALLBACK(src, .proc/asteroid_last_warning), 10 MINUTES)
 			addtimer(CALLBACK(src, .proc/asteroid_spawn), 10 MINUTES + 3 SECONDS)
 		if(3)
-			announce("Экологический уровень вашей станции опустилс[JA_PLACEHOLDER] до нул[JA_PLACEHOLDER]. Исход официально признан космической свалкой")
+			announce(CYRILLIC_EVENT_JUNKYARD_5)
 
 /datum/catastrophe_event/junkyard/proc/asteroid_warning()
-	announce("Внимание. Неизбежное столкновение с неизвестным объектом через одну минуту. Объект точно заденет [will_trash]")
+	announce(CYRILLIC_EVENT_JUNKYARD_3)
 
 /datum/catastrophe_event/junkyard/proc/asteroid_last_warning()
-	announce("Угроза. Столкновение с неизвестным объектом через… три… два… один…")
+	announce(CYRILLIC_EVENT_JUNKYARD_4)
 
 /datum/catastrophe_event/junkyard/proc/asteroid_spawn()
 	var/area_to_trash = trash_places[will_trash]
