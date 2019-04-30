@@ -26,10 +26,7 @@
 
 
 /datum/catastrophe_event/unknown_shuttle/proc/find_spot()
-	var/try_count = 0
-	while(try_count < 20)
-		try_count += 1
-
+	for (var/try_count in 1 to 20)
 		var/turf/space/T = locate(rand(20, world.maxx - 20), rand(20, world.maxy - 20), ZLEVEL_STATION)
 		if(!istype(T))
 			continue

@@ -92,9 +92,10 @@
 	H.age = rand(23, 45)
 
 /datum/catastrophe_event/war/proc/equip_pirate(mob/living/carbon/human/H)
-	var/newname = pick(list("Creeper ","Jim ","Storm ","John ","George ","O` ","Rat ","Jack ","Legs ",
-		"Head ","Cackle ","Patch ","Bones ","Plank ","Greedy ","Space ","Mama ","Spike ",
-		"Squiffy ","Gold ","Yellow ","Felony ","Eddie ","Bay ","Thomas ","Spot "))
+	var/newname = pick(list("Creeper","Jim","Storm","John","George","O`","Rat","Jack","Legs",
+		"Head","Cackle","Patch","Bones","Plank","Greedy","Space","Mama","Spike",
+		"Squiffy","Gold","Yellow","Felony","Eddie","Bay","Thomas","Spot"))
+	newname += " "
 	newname += pick(list("From the West","Byrd","Jackson","Sparrow","Of the Coast","Jones","Ned Head","Bart","O`Carp",
 		"Kidd","O`Malley","Barnacle","Holystone","Hornswaggle","McStinky","Swashbuckler","Space Wolf","Beard",
 		"Chumbucket","Rivers","Morgan","Tuna Breath","Three Gates","Bailey","Of Atlantis","Of Dark Space"))

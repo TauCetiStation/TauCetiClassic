@@ -110,11 +110,9 @@
 	if(spook_active_timer > 0)
 		spook_active_timer -= 1
 
-		if(player_list.len > 0) // picks a random player each second and tries to scary them
-			var/mob/P = pick(player_list)
-			if(ishuman(P))
-				var/mob/living/carbon/human/H = P
-
+		if(human_list.len > 0) // picks a random player each second and tries to scary them
+			var/mob/living/carbon/human/H = pick(human_list)
+			if(H.stat == CONSCIOUS && H.client)
 				if(!(H in spooked))
 					spooked += H
 					var/scary_object = spook(H)
@@ -211,10 +209,7 @@
 
 // where do we spawn marker thing
 /datum/catastrophe_event/marker_alert/proc/find_spot()
-	var/try_count = 0
-	while(try_count < 30)
-		try_count += 1
-
+	for (var/try_count in 1 to 30)
 		var/turf/space/T = locate(rand(20, world.maxx - 20), rand(20, world.maxy - 20), ZLEVEL_STATION)
 		if(!istype(T))
 			continue

@@ -159,10 +159,7 @@
 	H.internal = H.s_store
 
 /datum/catastrophe_event/wounded_ert/proc/find_spot()
-	var/try_count = 0
-	while(try_count < 30)
-		try_count += 1
-
+	for (var/try_count in 1 to 30)
 		var/turf/space/T = locate(rand(40, world.maxx - 40), rand(40, world.maxy - 40), ZLEVEL_STATION)
 		if(!istype(T))
 			continue
