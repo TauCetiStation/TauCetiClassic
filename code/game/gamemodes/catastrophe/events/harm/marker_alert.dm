@@ -214,12 +214,10 @@
 		if(!istype(T))
 			continue
 
-		var/good = TRUE
-		for(var/turf/simulated/G in orange(5, T))
-			good = FALSE
-			break
-		if(good)
-			return T
+		if(locate(/turf/simulated) in orange(5, T))
+			continue
+
+		return T
 	return locate(rand(20, world.maxx - 20), rand(20, world.maxy - 20), ZLEVEL_STATION) // need to spawn it somewhere anyway
 
 /obj/structure/obelisk

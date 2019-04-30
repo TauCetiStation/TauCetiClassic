@@ -94,7 +94,6 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/doom_portal/Destroy()
-	STOP_PROCESSING(SSobj, src)
 	playsound(src, 'sound/effects/phasein.ogg', 50, 1)
 	return ..()
 

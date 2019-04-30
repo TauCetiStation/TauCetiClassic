@@ -111,21 +111,17 @@
 				C.Weaken(8)
 				C.throw_at(get_step(C,pick(1, 2, 4, 8)), 16, 3)
 
-	var/list/targetAtoms = list()
 	for(var/L in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
 		                   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
-		for(var/A in L)
-			targetAtoms += A
-
-	for(var/atom/movable/M in targetAtoms)
-		if(istype(M, /obj/machinery/atmospherics) || istype(M,/obj/structure/cable))
-			qdel(M)
-		else if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(prob(5))
-				H.gib()
-		else
-			M.ex_act(pick(1, 3))
+		for(var/atom/movable/M in L)
+			if(istype(M, /obj/machinery/atmospherics) || istype(M,/obj/structure/cable))
+				qdel(M)
+			else if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(prob(5))
+					H.gib()
+			else
+				M.ex_act(pick(1, 3))
 
 	asteroid.load(T)
 

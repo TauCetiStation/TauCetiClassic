@@ -31,12 +31,10 @@
 		if(!istype(T))
 			continue
 
-		var/good = TRUE
-		for(var/turf/simulated/G in orange(20, T))
-			good = FALSE
-			break
-		if(good)
-			return T
+		if(locate(/turf/simulated) in orange(20, T))
+			continue
+
+		return T
 	return null
 
 /datum/map_template/unknown_shuttle

@@ -80,7 +80,7 @@
 					C.update_icon()
 				CHECK_TICK
 
-			for(var/obj/singularity/C in world)
+			for(var/obj/singularity/C in poi_list)
 				qdel(C)
 
 /datum/catastrophe_event/power_destroy/proc/do_destroy(obj/machinery/M, chance = 50)

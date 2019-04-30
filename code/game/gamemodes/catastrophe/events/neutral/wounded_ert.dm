@@ -164,12 +164,10 @@
 		if(!istype(T))
 			continue
 
-		var/good = TRUE
-		for(var/turf/simulated/G in orange(10, T))
-			good = FALSE
-			break
-		if(good)
-			return T
+		if(locate(/turf/simulated) in orange(10, T))
+			continue
+
+		return T
 	return null
 
 /datum/map_template/wounded_ert_shuttle
