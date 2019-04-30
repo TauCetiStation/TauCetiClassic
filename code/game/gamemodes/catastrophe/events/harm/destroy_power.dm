@@ -28,16 +28,18 @@
 				do_destroy(M)
 			for(var/obj/machinery/vending/M in machines)
 				do_destroy(M, 60)
+				CHECK_TICK
 			for(var/obj/machinery/atmospherics/components/unary/cryo_cell/M in machines)
 				do_destroy(M, 60)
 			for(var/obj/machinery/dna_scannernew/M in machines)
 				do_destroy(M)
 			for(var/obj/machinery/mecha_part_fabricator/M in machines)
 				do_destroy(M)
-			for(var/obj/machinery/teleport/M in machines)
+			for(var/obj/machinery/teleport/M in teleporter_list)
 				do_destroy(M, 80)
-			for(var/obj/machinery/power/smes/M in machines)
+			for(var/obj/machinery/power/smes/M in smes_list)
 				do_destroy(M, 20)
+				CHECK_TICK
 			for(var/obj/machinery/chem_master/M in machines)
 				do_destroy(M)
 			for(var/obj/machinery/computer/M in computer_list)
@@ -45,6 +47,7 @@
 					continue
 				if(prob(50))
 					M.set_broken()
+				CHECK_TICK
 		if(3)
 			announce(CYRILLIC_EVENT_POWER_DESTROY_3)
 
@@ -64,15 +67,18 @@
 				S.max_output = 0
 				S.update_icon()
 				S.power_change()
+				CHECK_TICK
 
 			for(var/obj/machinery/power/apc/C in apc_list)
 				if(C.cell && C.z == ZLEVEL_STATION)
 					C.cell.charge = 0
+				CHECK_TICK
 
-			for(var/obj/item/weapon/stock_parts/cell/C in world)
+			for(var/obj/item/weapon/stock_parts/cell/C in cell_list)
 				if(prob(90))
 					C.charge = 0
 					C.update_icon()
+				CHECK_TICK
 
 			for(var/obj/singularity/C in world)
 				qdel(C)

@@ -17,6 +17,14 @@
 	var/rigged = 0		// true if rigged to explode
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
 
+/obj/item/weapon/stock_parts/cell/atom_init()
+	. = ..()
+	cell_list += src
+
+/obj/item/weapon/stock_parts/cell/Destroy()
+	cell_list -= src
+	return ..()
+
 /obj/item/weapon/stock_parts/cell/suicide_act(mob/user)
 	to_chat(viewers(user), "\red <b>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</b>")
 	return (FIRELOSS)
