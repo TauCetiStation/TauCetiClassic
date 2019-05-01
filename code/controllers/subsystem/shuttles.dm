@@ -85,7 +85,6 @@ var/datum/subsystem/shuttle/SSshuttle
 	if(timeleft > 1e5)		// midnight rollover protection
 		timeleft = 0
 	var/static/last_es_sound = 0
-	var/static/ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_lucky_shot.ogg'
 	switch(location)
 		if(SHUTTLE_IN_TRANSIT)
 			/* --- Shuttle is in transit to Central Command from SS13 --- */
@@ -354,8 +353,9 @@ var/datum/subsystem/shuttle/SSshuttle
 				//pods
 				if(alert == 0) // Crew Transfer not for pods
 
+					var/ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_lucky_shot.ogg' // successful undocking, clean flight, yay!
 					if(prob(33))
-						ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_unlucky_shot.ogg'
+						ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_unlucky_shot.ogg' // the escape pod almost crashed into something, damn it!
 					start_location = locate(/area/shuttle/escape_pod1/station)
 					end_location = locate(/area/shuttle/escape_pod1/transit)
 					end_location.parallax_movedir = EAST
