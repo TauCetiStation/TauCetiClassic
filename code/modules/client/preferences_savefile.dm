@@ -85,7 +85,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/datum/job/assistant/J = new
 
 		if(player_alt_titles && \
-			player_alt_titles[J.title] && \
 			player_alt_titles[J.title] in list("Technical Assistant", "Medical Intern", "Research Assistant", "Security Cadet"))
 
 			player_alt_titles -= J.title
