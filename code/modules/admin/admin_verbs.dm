@@ -1120,7 +1120,7 @@ var/centcom_barriers_stat = 1
 /obj/effect/landmark/trololo/Crossed(mob/M)
 	if(!active) return
 	/*if(istype(M, /mob/living/carbon))
-		M << sound(melody,0,1,lchannel,20)*/
+		send_sound(M, melody, 20, wait = 1)*/
 
 /obj/structure/centcom_barrier
 	name = "Invisible wall"

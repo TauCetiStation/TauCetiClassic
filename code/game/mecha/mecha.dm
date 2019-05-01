@@ -1022,7 +1022,7 @@
 		dir = dir_in
 		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 		if(!hasInternalDamage())
-			src.occupant << sound('sound/mecha/nominal.ogg',volume = 50)
+			send_sound(src.occupant, 'sound/mecha/nominal.ogg', 50)
 		return 1
 	else
 		return 0
@@ -1082,7 +1082,7 @@
 		src.log_message("[mmi_as_oc] moved in as pilot.")
 		log_admin("[key_name(mmi_as_oc)] has moved in [src.type] with name [src.name] as MMI brain by [key_name(user)]")
 		if(!hasInternalDamage())
-			src.occupant << sound('sound/mecha/nominal.ogg',volume = 50)
+			send_sound(src.occupant, 'sound/mecha/nominal.ogg', 50)
 		return 1
 	else
 		return 0
