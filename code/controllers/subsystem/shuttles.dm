@@ -308,7 +308,7 @@ var/datum/subsystem/shuttle/SSshuttle
 					if(last_es_sound < world.time)
 						for(var/mob/M in player_list)
 							if(IS_ON_POD)
-								M.playsound_local(null, 'sound/effects/escape_shuttle/ep_undocking.ogg', 100)
+								M.playsound_local(null, 'sound/effects/escape_shuttle/ep_undocking.ogg', 100, is_global = 1)
 							CHECK_TICK
 						last_es_sound = world.time + 10
 				return 0
