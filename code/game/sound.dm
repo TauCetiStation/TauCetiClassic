@@ -91,8 +91,7 @@ var/const/FALLOFF_SOUNDS = 0.5
 	if(!is_global)
 		S.environment = 2
 	if(src.stat == UNCONSCIOUS || src.sleeping > 0) // unconscious people will hear illegible sounds
-		S.volume /= 3
-		S.environment = 10
+		S.volume /= 4
 	src << S
 
 /mob/living/parasite/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global)
