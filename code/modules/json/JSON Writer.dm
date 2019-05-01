@@ -15,7 +15,7 @@
 		if(index < L.len)
 			. += ","
 
-	if(cached_data) // not sure that it is really used anywhere
+	if(cached_data) // nanoui thing
 		. = copytext(., 1, lentext(.)) + ",\"cached\":[cached_data]}"
 	. += "}"
 
