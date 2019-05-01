@@ -347,7 +347,7 @@
 			if(A.density)
 				A.open()
 			else
-				A.close()
+				A.close_unsafe()
 		else if(specialfunctions == BOLTS)
 			if(A.locked)
 				A.unbolt()
@@ -365,7 +365,7 @@
 				A.bolt()
 			else
 				A.unbolt()
-				A.close()
+				A.close_unsafe()
 				A.bolt()
 		else if(specialfunctions == (BOLTS_SHOCK))
 			if(A.locked)
@@ -382,7 +382,7 @@
 				A.secondsElectrified = 0
 			else
 				A.unbolt()
-				A.close()
+				A.close_unsafe()
 				A.bolt()
 				A.secondsElectrified = -1
 
