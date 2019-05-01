@@ -1,7 +1,11 @@
-#define IS_ON_EMER_SHUTTLE is_type_in_list(get_area(M), list(/area/shuttle/escape/transit, \
-                                                             /area/shuttle/escape_pod1/transit, /area/shuttle/escape_pod2/transit, \
-                                                             /area/shuttle/escape_pod3/transit, /area/shuttle/escape_pod5/transit))
+#define IS_ON_ESCAPE_SHUTTLE is_type_in_typecache(get_area(M), escape_shuttle_area)
 /proc/captain_announce(message, title = "Priority Announcement", announcer = "", sound = "")
+	var/escape_shuttle_area = list()
+	escape_shuttle_area = typecacheof(/area/shuttle/escape/transit)
+	escape_shuttle_area += typecacheof(/area/shuttle/escape_pod1/transit)
+	escape_shuttle_area += typecacheof(/area/shuttle/escape_pod2/transit)
+	escape_shuttle_area += typecacheof(/area/shuttle/escape_pod3/transit)
+	escape_shuttle_area += typecacheof(/area/shuttle/escape_pod5/transit)
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
 			to_chat(M, "<h1 class='alert'>[title]</h1>")
@@ -18,7 +22,7 @@
 				if("emer_shut_docked")
 					announce_sound = 'sound/AI/emergency_s_docked.ogg'
 				if("emer_shut_left")
-					if(IS_ON_EMER_SHUTTLE)
+					if(IS_ON_ESCAPE_SHUTTLE)
 						continue
 					announce_sound = 'sound/AI/emergency_s_left.ogg'
 				if("crew_shut_scalled")
@@ -28,7 +32,7 @@
 				if("crew_shut_docked")
 					announce_sound = 'sound/AI/crew_s_docked.ogg'
 				if("crew_shut_left")
-					if(IS_ON_EMER_SHUTTLE)
+					if(IS_ON_ESCAPE_SHUTTLE)
 						continue
 					announce_sound = 'sound/AI/crew_s_left.ogg'
 				if("malf1")
@@ -44,4 +48,4 @@
 				if("nuke")
 					announce_sound = 'sound/AI/nuke.ogg'
 			M.playsound_local(null, announce_sound, 70, channel = CHANNEL_ANNOUNCE, wait = 1, is_global = 1)
-#undef IS_ON_EMER_SHUTTLE
+#undef IS_ON_ESCPAE_SHUTTLE

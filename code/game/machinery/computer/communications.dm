@@ -20,6 +20,8 @@
 	var/message_cooldown = 0
 	var/centcomm_message_cooldown = 0
 	var/tmp_alertlevel = 0
+	var/last_seclevel_change = 0 // prevents announcement sounds spam
+	var/last_announcement = 0    // ^ ^ ^
 	var/const/STATE_DEFAULT = 1
 	var/const/STATE_CALLSHUTTLE = 2
 	var/const/STATE_CANCELSHUTTLE = 3
@@ -104,7 +106,6 @@
 			authenticated = 0
 
 		if("swipeidseclevel")
-			var/static/last_seclevel_change = 0 // prevents announcement sounds spam
 			var/mob/M = usr
 			var/obj/item/weapon/card/id/I = M.get_active_hand()
 			if(last_seclevel_change > world.time)
@@ -141,7 +142,6 @@
 
 		if("announce")
 			if(src.authenticated == 2)
-				var/static/last_announcement = 0
 				if(last_announcement > world.time)
 					to_chat(usr, "<span class='warning'>A red light flashes on the console. It looks like you can't make announcements that fast.</span>")
 					return
