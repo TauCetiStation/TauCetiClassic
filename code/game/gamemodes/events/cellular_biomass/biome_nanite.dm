@@ -58,9 +58,10 @@
 	icon_state = "nanitemobdead_[pick(1,2)]"
 
 /obj/structure/cellular_biomass/lair/nanite/atom_init(mapload)
+	. = ..()
 	icon_state = "lair"
-	. = ..(mapload, pick(subtypesof(/mob/living/simple_animal/hostile/cellular/nanite)))
-	qdel(src)
+	if(prob(30))
+		new /mob/living/simple_animal/hostile/cellular/nanite/eng(src.loc)
 
 /mob/living/simple_animal/hostile/cellular/nanite
 	name = "Nanite hivebot"
@@ -191,15 +192,14 @@
 	death()
 
 /mob/living/simple_animal/hostile/cellular/nanite/Destroy()
-	nanite_parent.spawned--
+	if(!clon)
+		nanite_parent.spawned--
 	nanite_parent = null
 	return ..()
 
 /mob/living/simple_animal/hostile/cellular/nanite/death()
 	..()
 	visible_message("<b>[src]</b> blows apart!")
-	new /obj/effect/gibspawner/robot(src.loc)
-	if(!clon)
-		src.nanite_parent.spawned--
+	new /obj/effect/decal/cleanable/blood/gibs/robot(src.loc)
 	qdel(src)
 	return
