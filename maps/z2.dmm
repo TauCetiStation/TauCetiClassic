@@ -17,6 +17,24 @@
 	},
 /turf/space,
 /area/space)
+"aac" = (
+/obj/machinery/computer/shuttle{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor,
+/area/shuttle/escape/centcom)
+"aad" = (
+/obj/machinery/computer/crew{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor,
+/area/shuttle/escape/centcom)
+"aae" = (
+/obj/machinery/computer/communications{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor,
+/area/shuttle/escape/centcom)
 "aaw" = (
 /obj/effect/step_trigger/teleporter/random{
 	affect_ghosts = 1;
@@ -1519,10 +1537,12 @@
 	},
 /area/syndicate_station/start)
 "aiD" = (
-/obj/structure/computerframe,
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
+	},
+/obj/structure/computerframe{
+	dir = 8
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -4068,7 +4088,9 @@
 	},
 /area/centcom/arrival)
 "apX" = (
-/obj/machinery/computer/arrival_shuttle,
+/obj/machinery/computer/arrival_shuttle{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -4221,10 +4243,12 @@
 	},
 /area/centcom/arrival)
 "aqq" = (
-/obj/machinery/computer/security,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
+	},
+/obj/machinery/computer/security{
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -4372,7 +4396,9 @@
 	},
 /area/centcom/arrival)
 "aqR" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -5385,7 +5411,9 @@
 /obj/machinery/recharger/wallcharger{
 	pixel_x = 32
 	},
-/obj/machinery/computer/arrival_shuttle,
+/obj/machinery/computer/arrival_shuttle{
+	dir = 8
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -6285,7 +6313,9 @@
 /turf/unsimulated/floor,
 /area/centcom/arrival)
 "awG" = (
-/obj/machinery/computer/arrival_shuttle/dock,
+/obj/machinery/computer/arrival_shuttle/dock{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -6767,6 +6797,9 @@
 	},
 /obj/structure/filingcabinet/chestdrawer,
 /obj/item/weapon/folder/red,
+/obj/machinery/computer/guestpass/dark{
+	pixel_x = 28
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -11008,11 +11041,13 @@
 /turf/unsimulated/floor,
 /area/centcom/control)
 "aKO" = (
-/obj/machinery/computer/cargo/request,
+/obj/machinery/computer/guestpass/dark{
+	pixel_y = 26
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/control)
+/area/centcom/arrival)
 "aKP" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -11066,11 +11101,20 @@
 	},
 /area/centcom/control)
 "aKU" = (
-/obj/machinery/computer/crew,
-/turf/unsimulated/floor{
-	icon_state = "floor"
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/area/centcom/control)
+/obj/structure/grille,
+/obj/effect/forcefield{
+	desc = "You can't get in. Heh.";
+	layer = 1;
+	name = "Blocker"
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/unsimulated/floor,
+/area/centcom/arrival)
 "aKX" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -11190,11 +11234,18 @@
 /turf/unsimulated/floor,
 /area/centcom/control)
 "aLp" = (
-/obj/machinery/computer/robotics,
-/turf/unsimulated/floor{
-	icon_state = "floor"
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/area/centcom/control)
+/obj/structure/grille,
+/obj/effect/forcefield{
+	desc = "You can't get in. Heh.";
+	layer = 1;
+	name = "Blocker"
+	},
+/obj/structure/window/reinforced,
+/turf/unsimulated/floor,
+/area/centcom/arrival)
 "aLq" = (
 /obj/machinery/computer/communications,
 /turf/unsimulated/floor{
@@ -11208,7 +11259,9 @@
 	},
 /area/centcom/control)
 "aLs" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/cargo/request{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -17206,7 +17259,9 @@
 	},
 /area/syndicate_mothership)
 "btb" = (
-/obj/machinery/computer/mech_bay_power_console,
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	dir = 4;
 	heat_capacity = 1;
@@ -19074,10 +19129,12 @@
 	},
 /area/centcom/arrival)
 "fgb" = (
-/obj/machinery/computer/officer_shuttle,
 /obj/machinery/light{
 	dir = 8;
 	icon_state = "tube1"
+	},
+/obj/machinery/computer/officer_shuttle{
+	dir = 4
 	},
 /turf/simulated/shuttle/floor/shuttle_new{
 	dir = 8;
@@ -23230,7 +23287,9 @@
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
 "ozb" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
 "oAb" = (
@@ -23297,9 +23356,13 @@
 	},
 /area/shuttle/escape/centcom)
 "oIb" = (
-/obj/machinery/computer/shuttle,
-/turf/simulated/shuttle/floor,
-/area/shuttle/escape/centcom)
+/obj/machinery/computer/crew{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/control)
 "oJb" = (
 /turf/simulated/shuttle/plating{
 	icon_state = "whiteblue"
@@ -23761,9 +23824,13 @@
 	},
 /area/centcom/evac)
 "pOb" = (
-/obj/machinery/computer/crew,
-/turf/simulated/shuttle/floor,
-/area/shuttle/escape/centcom)
+/obj/machinery/computer/robotics{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/control)
 "pPb" = (
 /obj/structure/table,
 /obj/item/weapon/phone,
@@ -23773,9 +23840,13 @@
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
 "pQb" = (
-/obj/machinery/computer/communications,
-/turf/simulated/shuttle/floor,
-/area/shuttle/escape/centcom)
+/obj/machinery/computer/med_data{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/control)
 "pRb" = (
 /obj/structure/closet/walllocker/emerglocker/south,
 /turf/simulated/shuttle/floor,
@@ -38280,12 +38351,12 @@ aaM
 aaM
 aUE
 ozb
-oIb
+aac
 oLb
 aUT
 ojb
-pOb
-pQb
+aad
+aae
 aUE
 aaM
 aaM
@@ -56760,9 +56831,9 @@ aJP
 aKf
 aKq
 aKA
-aKO
+aLs
 aJP
-aLp
+pOb
 aLA
 aJu
 aJu
@@ -58302,9 +58373,9 @@ aJP
 aKf
 aKq
 aKA
-aKU
+oIb
 aJP
-aLs
+pQb
 aLB
 aJu
 aJu
@@ -70071,13 +70142,13 @@ aaM
 aaM
 aoo
 aoo
-avA
+aKU
 avA
 avA
 awk
 awG
 axe
-avA
+aLp
 aus
 auy
 auy
@@ -72896,7 +72967,7 @@ aoo
 atM
 atX
 aoo
-arZ
+aKO
 auC
 auQ
 dTb

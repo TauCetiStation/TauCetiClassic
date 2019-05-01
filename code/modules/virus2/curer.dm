@@ -2,6 +2,8 @@
 	name = "Cure Research Machine"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
+	state_broken_preset = "crewb"
+	state_nopower_preset = "crew0"
 	circuit = /obj/item/weapon/circuitboard/curefab
 	var/curing
 	var/virusing
