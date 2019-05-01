@@ -18,7 +18,7 @@
 		if(O.client)
 			to_chat(O, "<span class='ghostalert'>[message]</span>")
 			if(ghost_sound)
-				O << sound(ghost_sound)
+				send_sound(O, ghost_sound)
 
 /* Old TG code that didn't work
 

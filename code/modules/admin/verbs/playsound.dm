@@ -66,6 +66,6 @@ var/global/list/sounds_cache = list()
 		return
 	var/sound/sound = sound(null, repeat = 0, wait = 0, channel = CHANNEL_ADMIN)
 	for(var/mob/M in player_list)
-		M << sound
+		send_sound(M, sound)
 	log_admin("[key_name(src)] has stopped the global sound.")
 	message_admins("[key_name_admin(src)] has stopped the global sound.")

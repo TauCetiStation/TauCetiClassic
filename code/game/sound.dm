@@ -1,7 +1,16 @@
-/*====== Explanation for some variables =======
+/*=============================================
+     === Explanation for some variables ===
+
 var/is_global = if true then do not add echo to the sound
 var/voluminosity = is that 3d sound? If false then ignore the coordinates of the sound(become a sort of mono sound)
 var/src_vol = volume for its source. Separate sound volume for its source and for others? Make a "special" volume for the source?
+
+
+     === Important notes for all soundmakers ===
+
+* !!! DO NOT USE `<<` !!!. Use send_sound() instead of this
+* All sounds played through playsound() will become mono sounds
+
 ===============================================*/
 /proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global, wait = 0, voluminosity = TRUE, src_vol)
 	soundin = get_sfx(soundin) // same sound for everyone
@@ -91,7 +100,8 @@ var/const/FALLOFF_SOUNDS = 0.5
 	if(!is_global)
 		S.environment = 2
 	if(src.stat == UNCONSCIOUS || src.sleeping > 0) // unconscious people will hear illegible sounds
-		S.volume /= 4
+		S.volume /= 3
+		S.environment = 10
 	src << S
 
 /mob/living/parasite/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global)
@@ -106,6 +116,11 @@ var/const/FALLOFF_SOUNDS = 0.5
 
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
+
+/proc/send_sound(target, sound)
+	var/sound/S = sound(sound)
+	S.environment = 2 // To solve all environment problems in playsound() and playsound_local()
+	target << S
 
 /proc/get_sfx(soundin)
 	if(istext(soundin))

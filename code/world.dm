@@ -188,7 +188,7 @@ var/world_topic_spam_protect_time = world.timeofday
 		C.received_irc_pm = world.time
 		C.irc_admin = input["sender"]
 
-		C << 'sound/effects/adminhelp.ogg'
+		send_sound(C, 'sound/effects/adminhelp.ogg')
 		to_chat(C, message)
 
 
