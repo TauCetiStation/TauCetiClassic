@@ -110,7 +110,7 @@
 	if(prob(armor))
 		damage_flags &= ~(DAM_SHARP | DAM_EDGE)
 
-	var/created_wound = apply_damage(throw_damage, dtype, null, armor, damage_flags, O)
+	var/created_wound = apply_damage(throw_damage, dtype, zone, armor, damage_flags, O)
 
 	//thrown weapon embedded object code.
 	if(dtype == BRUTE && istype(O, /obj/item))

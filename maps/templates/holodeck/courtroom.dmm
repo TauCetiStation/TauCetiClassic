@@ -78,7 +78,7 @@
 "k" = (
 /obj/structure/stool/bed/chair/holochair{
 	dir = 4;
-	icon_state = "chair_g"
+	icon_state = "chair"
 	},
 /obj/machinery/door/window/holowindoor{
 	dir = 8;
@@ -157,7 +157,7 @@
 "t" = (
 /obj/structure/stool/bed/chair/holochair{
 	dir = 4;
-	icon_state = "chair_g"
+	icon_state = "comfychair"
 	},
 /turf/simulated/floor/holofloor{
 	icon_state = "dark"
@@ -187,7 +187,7 @@
 "x" = (
 /obj/structure/stool/bed/chair/holochair{
 	dir = 4;
-	icon_state = "chair_g"
+	icon_state = "chair"
 	},
 /obj/machinery/door/window/holowindoor{
 	dir = 8;

@@ -14,9 +14,9 @@
 	switch(state)
 		if(0)
 			if(iswrench(P))
-				if(user.is_busy(src)) return
-				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20, target = src))
+				if(user.is_busy(src))
+					return
+				if(P.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "\blue You wrench the frame into place.")
 					anchored = 1
 					state = 1
@@ -26,17 +26,15 @@
 					to_chat(user, "The welder must be on for this task.")
 					return
 				if(user.is_busy(src)) return
-				playsound(loc, 'sound/items/Welder.ogg', 50, 1)
-				if(do_after(user, 20, target = src))
-					if(!src || !WT.remove_fuel(0, user)) return
+				if(WT.use_tool(src, user, 20, amount = 0, volume = 50))
 					to_chat(user, "\blue You deconstruct the frame.")
 					new /obj/item/stack/sheet/plasteel( loc, 4)
 					qdel(src)
 		if(1)
 			if(iswrench(P))
-				if(user.is_busy(src)) return
-				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20, target = src))
+				if(user.is_busy(src))
+					return
+				if(P.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "\blue You unfasten the frame.")
 					anchored = 0
 					state = 0
@@ -67,14 +65,14 @@
 				icon_state = "1"
 			if(iscoil(P))
 				var/obj/item/stack/cable_coil/C = P
-				if(user.is_busy(src)) return
+				if(user.is_busy(src))
+					return
 				if(C.get_amount() >= 5)
 					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20, target = src))
-						if(C.use(5))
-							to_chat(user, "\blue You add cables to the frame.")
-							state = 3
-							icon_state = "3"
+					if(C.use_tool(src, user, 20, amount = 5, volume = 50))
+						to_chat(user, "\blue You add cables to the frame.")
+						state = 3
+						icon_state = "3"
 		if(3)
 			if(iswirecutter(P))
 				if (brain)
@@ -88,14 +86,14 @@
 
 			if(istype(P, /obj/item/stack/sheet/rglass))
 				var/obj/item/stack/sheet/rglass/RG = P
-				if(user.is_busy(src)) return
+				if(user.is_busy(src))
+					return
 				if(RG.get_amount() >= 2)
 					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20, target = src))
-						if (RG.use(2))
-							to_chat(user, "\blue You put in the glass panel.")
-							state = 4
-							icon_state = "4"
+					if(RG.use_tool(src, user, 20, amount = 2, volume = 50))
+						to_chat(user, "\blue You put in the glass panel.")
+						state = 4
+						icon_state = "4"
 
 			if(istype(P, /obj/item/weapon/aiModule/asimov))
 				laws.add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")

@@ -96,9 +96,10 @@
 		istype(W, /obj/item/weapon/hatchet) )
 
 		//visible message on mobs is defined as visible_message(message, self_message, blind_message)
-		if(user.is_busy()) return
+		if(user.is_busy(src))
+			return
 		usr.visible_message("\blue \the [usr] starts cutting hair off \the [src]", "\blue You start cutting the hair off \the [src]", "You hear the sound of a knife rubbing against flesh")
-		if(do_after(user,50,target = src))
+		if(W.use_tool(src, user, 50, volume = 50))
 			if(!use(1))
 				return
 

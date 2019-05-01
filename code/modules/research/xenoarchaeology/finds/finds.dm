@@ -43,7 +43,7 @@
 
 /obj/item/weapon/ore/strangerock/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/pickaxe/brush))
-		if(do_after(user, 20, target = src) && W)
+		if(W.use_tool(src, user, 20, volume = 50) && W)
 			if(inside)
 				inside.forceMove(get_turf(src))
 				visible_message("<span class='notice'>\The [src] is brushed away revealing \the [inside].</span>")
@@ -55,8 +55,8 @@
 
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(do_after(user, 20, target = src) && WT && WT.isOn())
-			user.SetNextMove(CLICK_CD_INTERACT)
+		user.SetNextMove(CLICK_CD_INTERACT)
+		if(WT.use_tool(src, user, 20, volume = 50))
 			if(WT.isOn())
 				if(WT.get_fuel() >= 4)
 					if(inside)
@@ -67,11 +67,11 @@
 						for(var/mob/M in viewers(world.view, user))
 							M.show_message("<span class='info'>[src] burns away into nothing.</span>",1)
 					qdel(src)
-					WT.remove_fuel(4)
+					WT.use(4)
 				else
 					for(var/mob/M in viewers(world.view, user))
 						M.show_message("<span class='info'>A few sparks fly off [src], but nothing else happens.</span>",1)
-					WT.remove_fuel(1)
+					WT.use(1)
 		return
 
 	else if(istype(W,/obj/item/device/core_sampler))

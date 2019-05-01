@@ -1,4 +1,4 @@
-/proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global)
+/proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global, wait = 0, voluminosity = TRUE)
 
 	soundin = get_sfx(soundin) // same sound for everyone
 
@@ -20,19 +20,20 @@
 			var/turf/T = get_turf(M)
 
 			if(T && T.z == turf_source.z)
-				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, is_global)
+				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, is_global, wait, voluminosity)
 
 var/const/FALLOFF_SOUNDS = 0.5
 
-/mob/proc/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global)
+/mob/proc/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global, wait = 0, voluminosity = TRUE)
 	if(!src.client || ear_deaf > 0)
 		return FALSE
 	soundin = get_sfx(soundin)
 
 	var/sound/S = sound(soundin)
-	S.wait = 0 //No queue
+	//S.wait = 0 //No queue
 	//S.channel = 0 //Any channel
-	S.channel = channel
+	S.wait = wait
+	S.channel = channel // Note. Channel 802 is busy with sound of automatic AI announcements
 	S.volume = vol
 	S.environment = -1
 	if (vary)
@@ -72,12 +73,13 @@ var/const/FALLOFF_SOUNDS = 0.5
 		if (S.volume <= 0)
 			return FALSE	//no volume means no sound
 
-		var/dx = turf_source.x - T.x // Hearing from the right/left
-		S.x = dx
-		var/dz = turf_source.y - T.y // Hearing from infront/behind
-		S.z = dz
-		// The y value is for above your head, but there is no ceiling in 2d spessmens.
-		S.y = 1
+		if(voluminosity)
+			var/dx = turf_source.x - T.x // Hearing from the right/left
+			S.x = dx
+			var/dz = turf_source.y - T.y // Hearing from infront/behind
+			S.z = dz
+			// The y value is for above your head, but there is no ceiling in 2d spessmens.
+			S.y = 1
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 	if(!is_global)
 		S.environment = 2
@@ -98,7 +100,7 @@ var/const/FALLOFF_SOUNDS = 0.5
 
 /proc/get_sfx(soundin)
 	if(istext(soundin))
-		switch(soundin)
+		switch(soundin) // Note. All lists of sounds of automatic AI announcements are located in *command_alert.dm*, *captain_announce.dm* and *security_levels.dm* files
 			if ("shatter")
 				soundin = pick('sound/effects/glassbr1.ogg','sound/effects/glassbr2.ogg','sound/effects/glassbr3.ogg')
 			if ("explosion")

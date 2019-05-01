@@ -7,7 +7,7 @@
 	impact_area = findEventArea()
 
 /datum/event/anomaly/anomaly_vortex/announce()
-	command_alert("Localized high-intensity vortex anomaly detected on long range scanners. Expected location: [impact_area.name]", "Anomaly Alert")
+	command_alert("Localized high-intensity vortex anomaly detected on long range scanners. Expected location: [impact_area.name]", "Anomaly Alert", "vortexanom")
 
 /datum/event/anomaly/anomaly_vortex/start()
 	var/turf/T = pick(get_area_turfs(impact_area))

@@ -86,7 +86,7 @@
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
-			if (!user.is_busy(src) && do_after(user,20,target = src))
+			if (!user.is_busy(src) && O.use_tool(src, user, 20, volume = 100))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes part of the [src].</span>", \
 					"<span class='notice'>You have fixed part of the [src].</span>" \
@@ -97,7 +97,7 @@
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
-			if (!user.is_busy(src) && do_after(user,20,target = src))
+			if (!user.is_busy(src) && O.use_tool(src, user, 20, volume = 100))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes the [src].</span>", \
 					"<span class='notice'>You have fixed the [src].</span>" \
@@ -134,7 +134,7 @@
 			"<span class='notice'>[user] starts to clean [src].</span>", \
 			"<span class='notice'>You start to clean [src].</span>" \
 		)
-		if (!user.is_busy(src) && do_after(user,20,target=src))
+		if (!user.is_busy(src) && O.use_tool(src, user, 20, volume = 100))
 			user.visible_message( \
 				"<span class='notice'>[user]  has cleaned [src].</span>", \
 				"<span class='notice'>You have cleaned [src].</span>" \

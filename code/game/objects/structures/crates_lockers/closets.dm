@@ -193,7 +193,7 @@
 			return 0
 		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
-			if(!WT.remove_fuel(0,user))
+			if(!WT.use(0,user))
 				to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 				return
 			new /obj/item/stack/sheet/metal(loc)
@@ -214,7 +214,7 @@
 	else if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(!WT.remove_fuel(0,user))
+		if(!WT.use(0,user))
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
 		src.welded = !src.welded

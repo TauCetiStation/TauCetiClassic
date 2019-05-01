@@ -56,7 +56,7 @@
 	message = capitalize(trim(message))
 
 	//TODO: handle_speech_problems for silent
-	if(!message || silent || miming)
+	if(!message || silent || miming || has_trait(TRAIT_MUTE))
 		return
 
 	// Mute disability
