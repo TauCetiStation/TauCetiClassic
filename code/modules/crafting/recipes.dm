@@ -7,8 +7,6 @@
 	var/time = 30                   // time in deciseconds
 	var/parts[] = list()            // type paths of items that will be placed in the result
 	var/chem_catalysts[] = list()   // like tools but for reagents
-//	var/category = CAT_NONE         // where it shows up in the crafting UI
-//	var/subcategory = CAT_NONE
 
 /datum/crafting_recipe/can_grenade_igniter
 	name = "Can Grenade (igniter)"

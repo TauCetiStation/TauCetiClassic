@@ -142,5 +142,4 @@
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()
-			spawn(det_time)
 			addtimer(CALLBACK(src, .proc/prime), det_time)

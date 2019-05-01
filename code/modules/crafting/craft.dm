@@ -1,53 +1,10 @@
 /datum/personal_crafting
 	var/busy
-
-// There is too little amount of items to use categories
-/*
-	var/viewing_category = 1 //typical powergamer starting on the Weapons tab
-	var/viewing_subcategory = 1
-
-
-	var/list/categories = list(
-				CAT_WEAPONRY,
-				CAT_ROBOT,
-				CAT_MISC,
-				CAT_PRIMAL,
-				CAT_FOOD,
-				CAT_CLOTHING,
-				CAT_ASSEMBLY)
-	var/list/subcategories = list(
-						list(	//Weapon subcategories
-							CAT_WEAPON,
-							CAT_AMMO),
-						CAT_NONE, //Robot subcategories
-						CAT_NONE, //Misc subcategories
-						CAT_NONE, //Tribal subcategories
-						list(	//Food subcategories
-							CAT_BREAD,
-							CAT_BURGER,
-							CAT_CAKE,
-							CAT_EGG,
-							CAT_MEAT,
-							CAT_MISCFOOD,
-							CAT_PASTRY,
-							CAT_PIE,
-							CAT_PIZZA,
-							CAT_SALAD,
-							CAT_SANDWICH,
-							CAT_SOUP,
-							CAT_SPAGHETTI),
-						CAT_CLOTHING, //Clothing subcategories
-						CAT_NONE) //Assembly subcategories
-*/
-
 	var/datum/action/innate/crafting/button
 	var/display_craftable_only = FALSE
 	var/display_compact = TRUE
 
 	var/global/recipe_image_cache = list() // used for storing the icons of results
-
-
-
 
 /*	This is what procs do:
 	get_environment - gets a list of things accessable for crafting by user
@@ -57,9 +14,6 @@
 	construct_item - takes a recipe and a user, call all the checking procs, calls do_after, checks all the things again, calls del_reqs, creates result, calls CheckParts of said result with argument being list returned by deel_reqs
 	del_reqs - takes recipe and a user, loops over the recipes reqs var and tries to find everything in the list make by get_environment and delete it/add to parts list, then returns the said list
 */
-
-
-
 
 /datum/personal_crafting/proc/check_contents(datum/crafting_recipe/R, list/contents)
 	main_loop:
@@ -283,37 +237,13 @@
 		return
 
 	var/dat
-
-//	var/list/subs = list()
-//	var/cur_subcategory = CAT_NONE
-//	var/cur_category = categories[viewing_category]
-//	if (islist(subcategories[viewing_category]))
-//		subs = subcategories[viewing_category]
-//		cur_subcategory = subs[viewing_subcategory]
-
-//	dat += "<h3>[!cur_subcategory ? "[cur_category]" : "[cur_category] : [cur_subcategory]"]</h3>"
-//	dat += "<HR>"
-
 	if(busy)
 		dat += "Crafting..."
 	else
-//		var/arrow_left = html_decode("&#8592")
-//		var/arrow_right = html_decode("&#8594")
-//
-//		dat += "<A href='?src=\ref[src];action=backwardCat'>[arrow_left] [categories[prev_cat()]]</A>"
-//		dat += "<A href='?src=\ref[src];action=forwardCat'>[categories[next_cat()]] [arrow_right]</A>"
-//		dat += "&nbsp|&nbsp"
-
 		if(config.craft_recipes_visibility) // no point in this button, if this disabled on server.
 			dat += "<A href='?src=\ref[src];action=toggle_recipes'>[!display_craftable_only ? "Showing All Recipes" : "Showing Craftable Recipes"]</A>"
 		dat += "<A href='?src=\ref[src];action=toggle_compact'>[display_compact ? "Compact" : "Detailed"]</A>"
-
 		dat += "<BR>"
-
-//		if(subs.len)
-//			dat += "<A href='?src=\ref[src];action=backwardSubCat'>[arrow_left] [subs[prev_subcat()]]</A>"
-//			dat += "<A href='?src=\ref[src];action=forwardSubCat'>[subs[next_subcat()]] [arrow_right]</A>"
-
 		dat += "<div class='statusDisplay'>"
 
 		var/list/surroundings = get_surroundings(user)
@@ -321,9 +251,6 @@
 
 		for(var/rec in crafting_recipes)
 			var/datum/crafting_recipe/R = rec
-//			if((R.category != cur_category) || (R.subcategory != cur_subcategory))
-//				continue
-
 			var/can_craft = check_contents(R, surroundings)
 
 			if(!can_craft && (display_craftable_only || !config.craft_recipes_visibility))
@@ -335,10 +262,10 @@
 			if(display_compact)
 				dat += "<div class='connect_description'>"
 				if(can_craft)
-					dat += "<td><img src='data:image/jpeg;base64,[GetIconForResult(R)]'/></td>"
+					dat += "<img src='data:image/jpeg;base64,[GetIconForResult(R)]'/>"
 					dat += "[recipe_data["name"]]:&nbsp&nbsp<A href='?src=\ref[src];action=make;recipe=[recipe_data["ref"]]'>Craft"
 				else
-					dat += "<td><img src='data:image/jpeg;base64,[GetIconForResult(R)]'/></td>"
+					dat += "<img src='data:image/jpeg;base64,[GetIconForResult(R)]'/>"
 					dat += "[recipe_data["name"]]:&nbsp&nbsp<span class='linkOff'>Craft"
 				dat += "<span class='description'>"
 				dat += "REQUIREMENTS: [recipe_data["req_text"]]"
@@ -355,17 +282,16 @@
 				dat += "<hr>"
 			else
 				if(can_craft)
-					dat += "<tr><td><img src='data:image/jpeg;base64,[GetIconForResult(R)]'/></td>"
+					dat += "<img src='data:image/jpeg;base64,[GetIconForResult(R)]'/>"
 					dat += "[recipe_data["name"]]:&nbsp&nbsp<A href='?src=\ref[src];action=make;recipe=[recipe_data["ref"]]'>Craft</A>"
 				else
-					dat += "<tr><td><img src='data:image/jpeg;base64,[GetIconForResult(R)]'/></td>"
+					dat += "<img src='data:image/jpeg;base64,[GetIconForResult(R)]'/>"
 					dat += "[recipe_data["name"]]:&nbsp&nbsp<span class='linkOff'>Craft</span>"
 				dat += "<br>REQUIREMENTS: [recipe_data["req_text"]]"
 				if(recipe_data["catalyst_text"])
 					dat += "<br>CATALYSTS: [recipe_data["catalyst_text"]]"
 				if(recipe_data["tool_text"])
 					dat += "<br>TOOLS: [recipe_data["tool_text"]]"
-				dat += "</tr>"
 				dat += "<hr>"
 
 		if(!found_any_recipe)
@@ -400,57 +326,12 @@
 			else
 				to_chat(usr, "<span class='warning'>Construction failed[fail_msg]</span>")
 			busy = FALSE
-//		if("forwardCat") //Meow
-//			viewing_category = next_cat(FALSE)
-//		if("backwardCat")
-//			viewing_category = prev_cat(FALSE)
-//		if("forwardSubCat")
-//			viewing_subcategory = next_subcat()
-//		if("backwardSubCat")
-//			viewing_subcategory = prev_subcat()
 		if("toggle_recipes")
 			display_craftable_only = !display_craftable_only
 		if("toggle_compact")
 			display_compact = !display_compact
 
 	ui_interact(usr)
-
-
-//Next works nicely with modular arithmetic
-//datum/personal_crafting/proc/next_cat(readonly = TRUE)
-//	if (!readonly)
-//		viewing_subcategory = 1
-//	. = viewing_category % categories.len + 1
-
-//datum/personal_crafting/proc/next_subcat()
-//	if(islist(subcategories[viewing_category]))
-//		var/list/subs = subcategories[viewing_category]
-//		. = viewing_subcategory % subs.len + 1
-
-
-//Previous can go fuck itself
-//datum/personal_crafting/proc/prev_cat(readonly = TRUE)
-//	if (!readonly)
-//		viewing_subcategory = 1
-//	if(viewing_category == categories.len)
-//		. = viewing_category-1
-//	else
-//		. = viewing_category % categories.len - 1
-//	if(. <= 0)
-//		. = categories.len
-
-//datum/personal_crafting/proc/prev_subcat()
-//	if(islist(subcategories[viewing_category]))
-//		var/list/subs = subcategories[viewing_category]
-//		if(viewing_subcategory == subs.len)
-//			. = viewing_subcategory-1
-//		else
-//			. = viewing_subcategory % subs.len - 1
-//		if(. <= 0)
-//			. = subs.len
-//	else
-//		. = null
-
 
 /datum/personal_crafting/proc/build_recipe_data(datum/crafting_recipe/R)
 	var/list/data = list()
