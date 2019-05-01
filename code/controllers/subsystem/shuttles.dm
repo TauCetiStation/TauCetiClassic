@@ -13,6 +13,9 @@ var/datum/subsystem/shuttle/SSshuttle
 #define SUPPLY_STATION_AREATYPE /area/supply/station //Type of the supply shuttle area for station
 #define SUPPLY_DOCK_AREATYPE /area/supply/dock	//Type of the supply shuttle area for dock
 
+#define IS_ON_POD is_type_in_typecache(get_area(M), typecacheof(list(/area/shuttle/escape_pod1/station, /area/shuttle/escape_pod2/station, \
+                                                                   /area/shuttle/escape_pod3/station, /area/shuttle/escape_pod5/station)))
+
 /datum/subsystem/shuttle
 	name = "Shuttles"
 
@@ -300,6 +303,14 @@ var/datum/subsystem/shuttle/SSshuttle
 						var/area/pre_location = locate(/area/shuttle/escape/station)
 						for(var/mob/M in pre_location)
 							M.playsound_local(null, 'sound/effects/escape_shuttle/es_undocking.ogg', 70)
+							CHECK_TICK
+						last_es_sound = world.time + 10
+				if(timeleft == 10)
+					if(last_es_sound < world.time)
+						for(var/mob/M in player_list)
+							if(IS_ON_POD)
+								M.playsound_local(null, 'sound/effects/escape_shuttle/ep_undocking.ogg', 100)
+							CHECK_TICK
 						last_es_sound = world.time + 10
 				return 0
 
@@ -718,3 +729,5 @@ var/datum/subsystem/shuttle/SSshuttle
 		S.direction = spawndir
 		spawn()
 			S.startmove()
+
+#undef IS_ON_POD
