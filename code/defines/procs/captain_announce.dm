@@ -21,7 +21,7 @@
 					if(IS_ON_ESCAPE_SHUTTLE)
 						continue
 					announce_sound = 'sound/AI/emergency_s_left.ogg'
-				if("crew_shut_scalled")
+				if("crew_shut_called")
 					announce_sound = 'sound/AI/crew_s_called.ogg'
 				if("crew_shut_recalled")
 					announce_sound = 'sound/AI/crew_s_recalled.ogg'
