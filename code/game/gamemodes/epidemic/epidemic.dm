@@ -211,10 +211,12 @@
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/epidemic/declare_completion()
 	if(finished == 1)
-		feedback_set_details("round_end_result","win - epidemic cured")
+		mode_result = "win - epidemic cured"
+		feedback_set_details("round_end_result",mode_result)
 		to_chat(world, "\red <FONT size = 3><B> The virus outbreak was contained! The crew wins!</B></FONT>")
 	else if(finished == 2)
-		feedback_set_details("round_end_result","loss - rev heads killed")
+		mode_result = "loss - crew succumbed to the epidemic"
+		feedback_set_details("round_end_result",mode_result)
 		to_chat(world, "\red <FONT size = 3><B> The crew succumbed to the epidemic!</B></FONT>")
 	..()
 	return 1

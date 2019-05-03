@@ -72,6 +72,21 @@ CREATE TABLE `erro_player` (
   UNIQUE KEY `ckey` (`ckey`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
 
+CREATE TABLE `erro_round` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `initialize_datetime` DATETIME NOT NULL,
+  `start_datetime` datetime NULL,
+  `end_datetime` datetime NULL,
+  `shutdown_datetime` DATETIME NULL,
+  `server_ip` int(10) UNSIGNED NOT NULL,
+  `server_port` SMALLINT(5) UNSIGNED NOT NULL,
+  `game_mode` VARCHAR(32) NULL,
+  `game_mode_result` VARCHAR(64) NULL,
+  `end_state` VARCHAR(64) NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
 /* commented cause polls are kinda broken now, needs refactoring
 CREATE TABLE `erro_poll_option` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

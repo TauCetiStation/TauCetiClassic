@@ -22,6 +22,7 @@
 	var/explosion_in_progress = 0 //sit back and relax
 	var/nar_sie_has_risen = 0 //check, if there is already one god in the world who was summoned (only for tomes)
 	var/completion_text = ""
+	var/mode_result = "undefined"
 	var/list/datum/mind/modePlayer = new
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
@@ -128,6 +129,11 @@ Implants;
 		send_intercept()
 	start_state = new /datum/station_state()
 	start_state.count(1)
+
+	if(dbcon.IsConnected())
+		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET game_mode = '[sanitize_sql(ticker.mode)]' WHERE id = [round_id]")
+		query_round_game_mode.Execute()
+
 	return 1
 
 

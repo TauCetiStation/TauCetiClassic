@@ -471,8 +471,12 @@
 /datum/game_mode/gang/declare_completion()
 	completion_text += "<B>Gang mode resume:</B><BR>"
 	if(!finished)
+		mode_result = "loss - gangs were not successful"
+		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<FONT size=3 color=red><B>The station was [station_was_nuked ? "destroyed!" : "evacuated before either gang could claim it!"]</B></FONT>"
 	else
+		mode_result = "win - gang captured the station"
+		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<FONT size=3 color=red><B>The [finished=="A" ? gang_name("A") : gang_name("B")] Gang successfully performed a hostile takeover of the station!!</B></FONT>"
 		score["roleswon"]++
 	..()

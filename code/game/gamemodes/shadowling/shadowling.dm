@@ -207,13 +207,19 @@ Made by Xhuis
 	//if(check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE) //Doesn't end instantly - this is hacky and I don't know of a better way ~X
 	completion_text += "<B>Shadowling mode resume:</B><BR>"
 	if(check_shadow_victory() && SSshuttle.location==2)
+		mode_result = "win - shadowlings ascended"
+		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<font size=3, color=green><B>The shadowlings have ascended and taken over the station!</FONT></B>"
 		score["roleswon"]++
 	//else if(shadowling_dead && !check_shadow_victory()) //If the shadowlings have ascended, they can not lose the round
 	else if(check_shadow_killed() && !check_shadow_victory())
+		mode_result = "loss - shadowlings dead"
+		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<font size=3, color=red><B>The shadowlings have been killed by the crew!</B></FONT>"
 	//else if(!check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE)
 	else if(!check_shadow_victory() && SSshuttle.location==2)
+		mode_result = "halfwin - evacuation"
+		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<font size=3, color=red><B>The crew has escaped the station before the shadowlings could ascend!</B></FONT>"
 	..()
 	return 1

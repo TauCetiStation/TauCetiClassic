@@ -269,10 +269,14 @@
 		var/datum/objective/objective = team_objectives[team_number]
 		var/team_name = team_names[team_number]
 		if(console.experiment.points >= objective.target_amount)
+			mode_result = "win - abductor complete mission"
+			feedback_set_details("round_end_result",mode_result)
 			completion_text += "<B>[team_name]</B> team managed to <font color='green'><B>complete</B></font> their mission! "
 			completion_text += "[live_check(team_number)]"
 			completion_text += "[pick("Science of Galaxy","Greytide Science")] continues moving forward!<BR>"
 		else
+			mode_result = "loss - staff stopped abductors"
+			feedback_set_details("round_end_result",mode_result)
 			completion_text += "<B>[team_name]</B> team <font color='red'>failed</font> their mission."
 			completion_text += "[live_check(team_number)]"
 			completion_text += "Station crew managed to stop [pick("Science of Galaxy","Greytide Science")].<BR>"

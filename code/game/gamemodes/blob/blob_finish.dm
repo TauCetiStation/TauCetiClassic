@@ -13,20 +13,23 @@
 /datum/game_mode/blob/declare_completion()
 	completion_text += "<B>Blob mode resume:</B><BR>"
 	if(blobwincount <= blobs.len)
-		feedback_set_details("round_end_result","loss - blob took over")
+		mode_result = "loss - blob took over"
+		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<BR><FONT size = 3><B>The blob has taken over the station!</B></FONT>"
 		completion_text += "<B>The entire station was eaten by the Blob.</B>"
 		score["roleswon"]++
 		log_game("Blob mode completed with a blob victory.")
 
 	else if(station_was_nuked)
-		feedback_set_details("round_end_result","halfwin - nuke")
+		mode_result = "halfwin - nuke"
+		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<BR><FONT size = 3><B>Partial Win: The station has been destroyed!</B></FONT>"
 		completion_text += "<B>Directive 7-12 has been successfully carried out preventing the Blob from spreading.</B>"
 		log_game("Blob mode completed with a tie (station destroyed).")
 
 	else if(!blob_cores.len)
-		feedback_set_details("round_end_result","win - blob eliminated")
+		mode_result = "win - blob eliminated"
+		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<BR><FONT size = 3><B>The staff has won!</B></FONT>"
 		completion_text += "<B>The alien organism has been eradicated from the station.</B>"
 

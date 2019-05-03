@@ -1,3 +1,5 @@
+var/round_id = 0
+
 #define RECOMMENDED_VERSION 511
 /world/New()
 	//logs
@@ -65,6 +67,8 @@
 		world.log << "Your server failed to establish a connection with the feedback database."
 	else
 		world.log << "Feedback database connection established."
+
+	SetRoundID()
 
 	Get_Holiday()
 
@@ -220,7 +224,12 @@ var/world_topic_spam_protect_time = world.timeofday
 
 
 
-/world/Reboot(reason)
+/world/Reboot(reason = 0, end_state)
+
+	if(dbcon.IsConnected())
+		end_state = end_state ? end_state : "undefined"
+		var/DBQuery/query_round_shutdown = dbcon.NewQuery("UPDATE erro_round SET shutdown_datetime = Now(), end_state = '[sanitize_sql(end_state)]' WHERE id = [round_id]")
+		query_round_shutdown.Execute()
 
 	world.log << "Runtimes count: [total_runtimes]. Runtimes skip count: [total_runtimes_skipped]."
 
@@ -256,8 +265,7 @@ var/world_topic_spam_protect_time = world.timeofday
 		//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 		C << link(BYOND_JOIN_LINK)
 
-	..(reason)
-
+	..()
 
 #define INACTIVITY_KICK	6000	//10 minutes in ticks (approx.)
 /world/proc/KickInactiveClients()
@@ -420,6 +428,18 @@ var/world_topic_spam_protect_time = world.timeofday
 	/* does this help? I do not know */
 	if (src.status != s)
 		src.status = s
+
+/proc/SetRoundID()
+	if(!dbcon.IsConnected())
+		return
+	var/DBQuery/query_round_initialize = dbcon.NewQuery("INSERT INTO erro_round (initialize_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
+	query_round_initialize.Execute()
+	var/DBQuery/query_round_last_id = dbcon.NewQuery("SELECT LAST_INSERT_ID()")
+	query_round_last_id.Execute()
+	if(query_round_last_id.NextRow())
+		round_id = query_round_last_id.item[1]
+		log_game("New round: #[round_id]\n-------------------------")
+		world.log << "New round: #[round_id]\n-------------------------"
 
 #define FAILED_DB_CONNECTION_CUTOFF 5
 var/failed_db_connections = 0
