@@ -33,10 +33,13 @@
 		)
 	smooth = SMOOTH_TRUE
 
+	var/proj_holes = 0
+
 /turf/simulated/wall/Destroy()
 	for(var/obj/effect/E in src)
 		if(E.name == "Wallrot")
 			qdel(E)
+	clear_holes()
 	dismantle_wall()
 	return ..()
 
@@ -44,6 +47,7 @@
 	for(var/obj/effect/E in src)
 		if(E.name == "Wallrot")
 			qdel(E)
+	clear_holes()
 	return ..()
 
 //Appearance
@@ -64,12 +68,14 @@
 
 	if(rotting)
 		to_chat(user, "<span class='warning'>There is fungus growing on [src].</span>")
+	if(proj_holes)
+		to_chat(user, "<span class='warning'>There is [proj_holes] holes in it.</span>")
 
 /turf/simulated/wall/update_icon()
 	if(!damage_overlays[1]) //list hasn't been populated
 		generate_overlays()
 
-	if(!damage)
+	if(!proj_holes && !damage)
 		overlays.Cut()
 		return
 
@@ -77,13 +83,15 @@
 	if(overlay > damage_overlays.len)
 		overlay = damage_overlays.len
 
-	if(damage_overlay && overlay == damage_overlay) //No need to update.
+	if(!proj_holes && damage_overlay && overlay == damage_overlay) //No need to update.
 		return
 
 	overlays.Cut()
 	overlays += damage_overlays[overlay]
 	damage_overlay = overlay
-
+	if(proj_holes)
+		for(var/obj/effect/proj_hole/BH in src)
+			overlays += image(icon = 'icons/effects/bullet_holes.dmi', icon_state = "[BH.hole_type]_[BH.holes]")
 	return
 
 /turf/simulated/wall/proc/generate_overlays()
@@ -347,7 +355,7 @@
 		if(user.is_busy()) return
 
 		var/response = "Dismantle"
-		if(damage)
+		if(damage || proj_holes)
 			response = alert(user, "Would you like to repair or dismantle [src]?", "[src]", "Repair", "Dismantle")
 
 		var/obj/item/weapon/weldingtool/WT = W
@@ -358,7 +366,7 @@
 				if(WT.use_tool(src, user, max(5, damage / 5), volume = 100))
 					to_chat(user, "<span class='notice'>You finish repairing the damage to [src].</span>")
 					take_damage(-damage)
-
+					clear_holes()
 			else if(response == "Dismantle")
 				to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
 				if(WT.use_tool(src, user, 100, volume = 100))
@@ -484,3 +492,35 @@
 	if(current_size == STAGE_FOUR)
 		if(prob(30))
 			dismantle_wall()
+
+/turf/simulated/wall/bullet_act(obj/item/projectile/Proj)
+	if(Proj.damage < 10 || Proj.nodamage)
+		return
+	proj_holes++
+	var/suitable_holder = FALSE
+	for(var/obj/effect/proj_hole/BH in src)
+		if(BH.proj_name == Proj.name)
+			suitable_holder = TRUE
+			if(BH.holes < 10)
+				BH.holes++
+			break
+	if(!suitable_holder)
+		var/obj/effect/proj_hole/H = new /obj/effect/proj_hole(src)
+		H.proj_name = Proj.name
+		H.holes++
+		var/num_of_similar_projholes = FALSE
+		for(var/obj/effect/proj_hole/BH in src)
+			if(BH.hole_type == H.hole_type)
+				num_of_similar_projholes++
+		if(Proj.damage > 30)
+			H.hole_type = "scorch_[min(2, num_of_similar_projholes)]"
+		else
+			H.hole_type = "light_scorch_[min(2, num_of_similar_projholes)]"
+	take_damage(Proj.damage / 10)
+	update_icon()
+
+/turf/simulated/wall/proc/clear_holes()
+	for(var/obj/effect/proj_hole/BH in src)
+		qdel(BH)
+	proj_holes = FALSE
+	update_icon()

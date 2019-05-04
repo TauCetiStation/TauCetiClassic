@@ -234,6 +234,7 @@
 	fire_sound = 'sound/weapons/guns/gunpulse_l10c.ogg'
 	recoil = 0
 	energy_gun = 1
+	leaves_gunshot_residue = FALSE
 
 /obj/item/weapon/gun/projectile/automatic/l10c/atom_init()
 	. = ..()

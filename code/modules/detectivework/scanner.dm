@@ -36,6 +36,14 @@
 		to_chat(user, "\red [M] is not human and cannot have the fingerprints.")
 		flick("forensic0",src)
 		return 0
+
+	// Gunshot residue mechanic
+	if(M.gloves)
+		if(M.gloves.gunshot_residue)
+			to_chat(user, "<span class='notice'>Gunshot residue found on [M]'s gloves.</span>")
+	else if(M.gunshot_residue)
+		to_chat(user, "<span class='notice'>Gunshot residue found on [M]'s hands.</span>")
+
 	if (( !( istype(M.dna, /datum/dna) ) || M.gloves) )
 		to_chat(user, "\blue No fingerprints found on [M]")
 		flick("forensic0",src)
@@ -87,8 +95,24 @@
 				flick("forensic2",src)
 		return
 
+	// Gunshot residue mechanic
+	if(istype(A, /obj/item))
+		var/obj/item/I = A
+		if(I.gunshot_residue)
+			to_chat(user, "<span class='notice'>Gunshot residue found on \the [I].</span>")
+
+	// HProjectile holes mechanic
+	if(istype(A, /turf/simulated/wall))
+		var/turf/simulated/wall/W = A
+		if(W.proj_holes)
+			for(var/obj/effect/proj_hole/BH in W)
+				var/multiple = FALSE
+				if(BH.holes > 1)
+					multiple = TRUE
+				to_chat(src, "<span class='norice'>Found [BH.holes] hole[multiple ? "s" : ""] made by [BH.proj_name] in \the [W].</span>")
+
 	//General
-	if ((!A.fingerprints || !A.fingerprints.len) && !A.suit_fibers && !A.blood_DNA)
+	if((!A.fingerprints || !A.fingerprints.len) && !A.suit_fibers && !A.blood_DNA)
 		user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
 		"\blue Unable to locate any fingerprints, materials, fibers, or blood on [A]!",\
 		"You hear a faint hum of electrical equipment.")

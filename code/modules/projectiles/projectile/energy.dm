@@ -44,7 +44,7 @@
 	weaken = 5
 
 /obj/item/projectile/energy/bolt
-	name = "bolt"
+	name = "energy bolt"
 	icon_state = "cbbolt"
 	damage = 10
 	damage_type = TOX
@@ -54,12 +54,12 @@
 
 
 /obj/item/projectile/energy/bolt/large
-	name = "largebolt"
+	name = "energy bolt"
 	damage = 20
 
 
 /obj/item/projectile/energy/neurotoxin
-	name = "neuro"
+	name = "neurotoxin clot"
 	icon_state = "neurotoxin"
 	damage = 5
 	damage_type = TOX

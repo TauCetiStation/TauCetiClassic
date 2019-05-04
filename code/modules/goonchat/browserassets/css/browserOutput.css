@@ -322,6 +322,8 @@ h1.alert, h2.alert	{color: #000000;}
 
 .wet					{color: #007FBF;}
 
+.noir					{color: #3d3d3d;	font-weight: bold; font-size: 2; font-style: italic;}
+
 .big					{font-size: x-large;}
 .reallybig				{font-size: xx-large;}
 

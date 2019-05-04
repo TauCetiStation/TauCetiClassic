@@ -83,6 +83,7 @@
 
 	var/mob/remoteview_target = null
 	var/datum/dirt_cover/hand_dirt_datum
+	var/gunshot_residue = FALSE // used by detective stuff, can be left by guns. it means its on hands.
 
 	// Organs regenerating variables.
 	var/regenerating_organ_time = 0

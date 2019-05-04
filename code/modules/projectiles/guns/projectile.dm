@@ -7,6 +7,7 @@
 	m_amt = 1000
 	fire_delay = 0
 	recoil = 1
+	leaves_gunshot_residue = TRUE
 	var/mag_type = /obj/item/ammo_box/magazine/m9mm //Removes the need for max_ammo and caliber info
 	var/mag_type2
 	var/obj/item/ammo_box/magazine/magazine
@@ -31,6 +32,7 @@
 	if(eject_casing)
 		AC.loc = get_turf(src) //Eject casing onto ground.
 		AC.SpinAnimation(10, 1) //next gen special effects
+		AC.gunshot_residue += 3
 		spawn(3) //next gen sound effects
 			playsound(src.loc, 'sound/weapons/guns/shell_drop.ogg', 50, 1)
 	if(empty_chamber)

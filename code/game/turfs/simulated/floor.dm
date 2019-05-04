@@ -43,6 +43,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	var/mineral = "metal"
 	var/floor_type = /obj/item/stack/tile/plasteel
 	var/lightfloor_state // for light floors, this is the state of the tile. 0-7, 0x4 is on-bit - use the helper procs below
+	var/gunshot_residue = FALSE
 
 /turf/simulated/floor/proc/get_lightfloor_state()
 	return lightfloor_state & LIGHTFLOOR_STATE_BITS
@@ -73,6 +74,18 @@ var/list/wood_icons = list("wood","wood-broken")
 	if(floor_type)
 		floor_type = null
 	return ..()
+
+/turf/simulated/floor/examine(mob/user)
+	..()
+
+	if(gunshot_residue && get_dist(src, user) <= 1)
+		var/smelling_prob = gunshot_residue * 30
+		if(smelling_prob > 100 || prob(smelling_prob))
+			to_chat(user, "<span class='notice'>You notice a faint acrid smell coming from \the [src].</span>")
+
+/turf/simulated/floor/clean_blood()
+	. = ..()
+	gunshot_residue = FALSE
 
 //turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 //	if ((istype(mover, /obj/machinery/vehicle) && !(src.burnt)))
@@ -350,6 +363,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	else if(is_grass_floor())
 		src.icon_state = "sand[pick("1","2","3")]"
 		burnt = 1
+	gunshot_residue = FALSE
 
 //This proc will set floor_type to null and the update_icon() proc will then change the icon_state of the turf
 //This proc auto corrects the grass tiles' siding.
@@ -381,6 +395,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	intact = 0
 	broken = 0
 	burnt = 0
+	gunshot_residue = FALSE
 
 	update_icon()
 	levelupdate()

@@ -378,11 +378,13 @@
 			if(H.gloves.clean_blood())
 				H.update_inv_gloves()
 			H.gloves.germ_level = 0
+			H.gloves.gunshot_residue = FALSE
 		else
 			if(H.bloody_hands)
 				H.bloody_hands = 0
 				H.update_inv_gloves()
 			H.germ_level = 0
+			H.gunshot_residue = FALSE
 	update_icons()	//apply the now updated overlays to the mob
 
 

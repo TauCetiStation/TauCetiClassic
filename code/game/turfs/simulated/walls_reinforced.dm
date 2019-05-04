@@ -95,13 +95,14 @@
 		to_chat(user, "<span class='notice'>This wall is too thick to slice through. You will need to find a different path.</span>")
 		return
 
-	if(damage && iswelder(W))
+	if((damage || proj_holes) && iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.use(0,user))
 			to_chat(user, "<span class='notice'>You start repairing the damage to [src].</span>")
 			if(W.use_tool(src, user, max(5, damage / 5), volume = 100))
 				to_chat(user, "<span class='notice'>You finish repairing the damage to [src].</span>")
 				take_damage(-damage)
+				clear_holes()
 			return
 		else
 			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
@@ -329,6 +330,7 @@
 	return
 
 /turf/simulated/wall/r_wall/update_icon()
+	overlays.Cut()
 	if(d_state != INTACT)
 		smooth = SMOOTH_FALSE
 		icon_state = "r_wall-[d_state]"
@@ -336,6 +338,9 @@
 		smooth = SMOOTH_TRUE
 		queue_smooth_neighbors(src)
 		queue_smooth(src)
+	if(proj_holes)
+		for(var/obj/effect/proj_hole/BH in src)
+			overlays += image(icon = 'icons/effects/bullet_holes.dmi', icon_state = "[BH.hole_type]_[BH.holes]")
 
 /turf/simulated/wall/r_wall/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)

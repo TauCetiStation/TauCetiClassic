@@ -744,3 +744,13 @@ steam.start() -- spawns the effect
 			dmglevel = 3
 
 		if(dmglevel<4) holder.ex_act(dmglevel)
+
+/obj/effect/proj_hole
+	name = "hole"
+	desc = "Well, someone shot something."
+	unacidable = 1
+	mouse_opacity = 0
+	appearance_flags = 0
+	var/holes = 0 // num of holes
+	var/hole_type = "scorch" // affects wall's overlay
+	var/proj_name = "some bullet"

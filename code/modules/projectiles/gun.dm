@@ -34,6 +34,8 @@
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 
+	var/leaves_gunshot_residue = FALSE
+
 /obj/item/weapon/gun/proc/ready_to_fire()
 	if(world.time >= last_fired + fire_delay)
 		last_fired = world.time
@@ -114,6 +116,8 @@
 					explosion(user.loc, 0, 0, 1, 1)
 					to_chat(H, "<span class='danger'>[src] blows up in your face.</span>")
 					H.take_bodypart_damage(0, 20)
+					if(istype(chambered.BB, /obj/item/projectile/bullet))
+						add_gunshot_residue(user)
 					H.drop_item()
 					qdel(src)
 					return
@@ -131,11 +135,14 @@
 		if(point_blank)
 			user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
 			chambered.BB.damage *= 1.3
+			add_gunshot_residue(user)
 		if(!chambered.fire(target, user, params, , silenced))
 			shoot_with_empty_chamber(user)
 		else
+			add_gunshot_residue(user)
 			shoot_live_shot(user)
 			user.newtonian_move(get_dir(target, user))
+
 	else
 		shoot_with_empty_chamber(user)
 	process_chamber()
@@ -202,6 +209,7 @@
 			else
 				to_chat(user, "<span class = 'notice'>Ow...</span>")
 				user.apply_effect(110,AGONY,0)
+			add_gunshot_residue(user)
 			chambered.BB = null
 			chambered.update_icon()
 			update_icon()
@@ -221,3 +229,18 @@
 			return
 	else
 		return ..()
+
+/obj/item/weapon/gun/proc/add_gunshot_residue(mob/M) // places a gunshot residue on the gun itself, on the mob that fires the gun, and on the gun's turf
+	if(!leaves_gunshot_residue)
+		return
+	gunshot_residue++
+	if(M && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.gloves)
+			H.gloves.gunshot_residue++
+		else
+			H.gunshot_residue++
+	var/turf/T = get_turf(src)
+	if(istype(T, /turf/simulated/floor))
+		var/turf/simulated/floor/F = T
+		F.gunshot_residue++

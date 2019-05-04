@@ -57,6 +57,7 @@
 		/obj/machinery/autolathe
 	)
 	var/uncleanable = 0
+	var/gunshot_residue = FALSE // used by detective stuff, can be left by guns and on guns
 	var/toolspeed = 1
 
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
@@ -270,6 +271,10 @@
 	var/wet_status = "[src.wet ? " wet" : ""]"
 
 	to_chat(user, "[open_span]It's a[wet_status] [size] item.[close_span]")
+	if(gunshot_residue && get_dist(src, user) <= 2)
+		var/smelling_prob = gunshot_residue * 30
+		if(smelling_prob > 100 || prob(smelling_prob))
+			to_chat(user, "<span class='notice'>You notice a faint acrid smell coming from \the [src].</span>")
 
 /obj/item/attack_hand(mob/user)
 	if (!user || anchored)
@@ -911,6 +916,7 @@
 	if(istype(src, /obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = src
 		G.transfer_blood = 0
+	gunshot_residue = FALSE
 
 /obj/item/add_dirt_cover()
 	if(!blood_overlay)

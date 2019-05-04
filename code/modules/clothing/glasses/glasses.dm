@@ -358,6 +358,7 @@
 	name = "noir sunglasses"
 	desc = "Somehow these seem even more out-of-date than normal sunglasses."
 	action_button_name = "Toggle Noir"
+	active = FALSE
 
 /obj/item/clothing/glasses/sunglasses/noir/attack_self(mob/user)
 	toggle_noir()

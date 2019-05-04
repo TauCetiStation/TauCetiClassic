@@ -278,6 +278,96 @@
 	face_atom(A)
 	A.examine(src)
 
+	// noir glasses valuetown
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.glasses && H.glasses.type == /obj/item/clothing/glasses/sunglasses/noir)
+			var/obj/item/clothing/glasses/sunglasses/noir/N = H.glasses
+			if(!N.active)
+				return
+			var/clue = FALSE
+			if(ishuman(A))
+				var/mob/living/carbon/human/HU = A
+				var/dist_HU = get_dist(src, HU)
+
+				var/gunshot_residue_hands = FALSE
+				if(HU.gunshot_residue)
+					gunshot_residue_hands = HU.gunshot_residue
+				else if(HU.gloves && HU.gloves.gunshot_residue)
+					gunshot_residue_hands = HU.gloves.gunshot_residue
+
+				if(dist_HU > 1 && dist_HU <= 3)
+					if(gunshot_residue_hands > 4)
+						to_chat(src, "<span class='noir'>[pick("You notice", "There is", "You note")] a faint acrid smell coming from \the [HU]'s hands.</span>")
+						clue = TRUE
+					else if(gunshot_residue_hands && prob(40))
+						to_chat(src, "<span class='noir'>[pick("You notice", "There is", "You note")] a faint acrid smell coming from \the [HU]'s hands.</span>")
+						clue = TRUE
+				else if(dist_HU <= 1)
+					if(gunshot_residue_hands)
+						to_chat(src, "<span class='noir'>[pick("You notice", "There is", "You note")] a faint acrid smell coming from \the [HU]'s hands. Smells like gunshot residue.</span>")
+						clue = TRUE
+					if(HU.stat == DEAD && HU.timeofdeath)
+						var/time_since_death = round((world.time - HU.timeofdeath) / 600) // should be in minutes
+						if(time_since_death < 5)
+							to_chat(src, "<span class='noir'>[HU]'s body and hands are hot. \He was killed very recently.</span>")
+						else if(time_since_death < 15)
+							to_chat(src, "<span class='noir'>[HU]'s body is fresh. \He was killed recently.</span>")
+						else if(time_since_death < 30)
+							to_chat(src, "<span class='noir'>[HU]'s body is cold. It was lying here a while.</span>")
+						else
+							to_chat(src, "<span class='noir'>[HU]'s body is very cold. \He was killed more than half a hour ago.</span>")
+						clue = TRUE
+
+			else if(istype(A, /obj/item))
+				var/obj/item/I = A
+				var/dist_I = get_dist(src, I)
+
+				if(I.blood_DNA && I.blood_DNA.len)
+					to_chat(src, "<span class='noir'>[pick("You notice", "There is", "You note")] some blood on \the [I].</span>")
+					clue = TRUE
+
+				if(dist_I > 1 && dist_I <= 3)
+					if(I.gunshot_residue > 4)
+						to_chat(src, "<span class='noir'>[pick("You notice", "There is", "You note")] a faint acrid smell coming from \the [I].</span>")
+						clue = TRUE
+					else if(I.gunshot_residue && prob(40))
+						to_chat(src, "<span class='noir'>[pick("You notice", "There is", "You note")] a faint acrid smell coming from \the [I].</span>")
+						clue = TRUE
+				else if(dist_I <= 1)
+					if(I.gunshot_residue)
+						to_chat(src, "<span class='noir'>[pick("You notice", "There is", "You note")] a faint acrid smell coming from \the [I]. Smells like gunshot residue.</span>")
+						clue = TRUE
+
+			else if(isturf(A))
+				if(istype(A, /turf/simulated/floor)) // only gunshot_residue interactions
+					var/turf/simulated/floor/F = A
+					var/dist_F = get_dist(src, F)
+					if(!F.gunshot_residue)
+						return
+					if(dist_F > 1 && dist_F <= 3)
+						if(F.gunshot_residue > 4)
+							to_chat(src, "<span class='noir'>[pick("You notice", "There is", "You note")] a faint acrid smell coming from \the [F].</span>")
+							clue = TRUE
+						else if(prob(40))
+							to_chat(src, "<span class='noir'>[pick("You notice", "There is", "You note")] a faint acrid smell coming from \the [F].</span>")
+							clue = TRUE
+					else if(dist_F <= 1)
+						to_chat(src, "<span class='noir'>[pick("You notice", "There is", "You note")] a faint acrid smell coming from \the [F]. Smells like gunshot residue.</span>")
+						clue = TRUE
+				else if(istype(A, /turf/simulated/wall))
+					var/turf/simulated/wall/W = A
+					if(W.proj_holes && get_dist(src, W) <= 1)
+						for(var/obj/effect/proj_hole/BH in W)
+							var/multiple = FALSE
+							if(BH.holes > 1)
+								multiple = TRUE
+							to_chat(src, "<span class='noir'>[pick("You notice", "There is", "You note")] [BH.holes] hole[multiple ? "s" : ""] made by [BH.proj_name] in \the [W].</span>")
+						clue = TRUE
+
+			if(clue)
+				playsound_local(null, pick('sound/effects/clue1.ogg','sound/effects/clue2.ogg'), 90, is_global = TRUE)
+
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
 	set category = "Object"
