@@ -9,7 +9,6 @@ var/src_vol = volume for its source. Separate sound volume for its source and fo
      === Important notes for all soundmakers ===
 
 * !!! DO NOT USE `<<` !!!. Use send_sound() instead of this
-* All sounds played through playsound() will become mono sounds
 
 ===============================================*/
 /proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global, wait = 0, voluminosity = TRUE, src_vol)
