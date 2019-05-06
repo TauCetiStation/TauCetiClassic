@@ -31,9 +31,9 @@
 	var/modes_showed = FALSE
 	var/const/max_connections = 16
 
-/obj/machinery/door_control/atom_init(mapload, dir, building = FALSE)
+/obj/machinery/door_control/atom_init(mapload, dir)
 	. = ..()
-	if(building)
+	if(!mapload)
 		buildstage = DOOR_CONTROL_WITHOUT_WIRES
 		wiresexposed = TRUE
 		panel_locked = FALSE
@@ -56,6 +56,7 @@
 	for(var/obj/machinery/door/poddoor/P in poddoor_list)
 		if(P.id == src.id)
 			connected_poddoors += P
+	update_icon()
 
 /obj/machinery/door_control/Destroy()
 	connected_airlocks.Cut()
@@ -431,7 +432,7 @@
 		to_chat(usr, "<span class='warning'>There's already an item on this wall!</span>")
 		return
 
-	new /obj/machinery/door_control(loc, ndir, TRUE)
+	new /obj/machinery/door_control(loc, ndir)
 
 	qdel(src)
 
