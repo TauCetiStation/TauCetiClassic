@@ -101,16 +101,6 @@
 		if(I.gunshot_residue)
 			to_chat(user, "<span class='notice'>Gunshot residue found on \the [I].</span>")
 
-	// HProjectile holes mechanic
-	if(istype(A, /turf/simulated/wall))
-		var/turf/simulated/wall/W = A
-		if(W.proj_holes)
-			for(var/obj/effect/proj_hole/BH in W)
-				var/multiple = FALSE
-				if(BH.holes > 1)
-					multiple = TRUE
-				to_chat(src, "<span class='norice'>Found [BH.holes] hole[multiple ? "s" : ""] made by [BH.proj_name] in \the [W].</span>")
-
 	//General
 	if((!A.fingerprints || !A.fingerprints.len) && !A.suit_fibers && !A.blood_DNA)
 		user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\

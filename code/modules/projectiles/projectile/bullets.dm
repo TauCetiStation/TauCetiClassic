@@ -29,7 +29,7 @@
 	damage = 20
 
 /obj/item/projectile/bullet/weakbullet/beanbag		//because beanbags are not bullets
-	name = "shell"
+	name = "beanbag"
 	agony = 95
 
 /obj/item/projectile/bullet/weakbullet/rubber
@@ -131,22 +131,25 @@
 
 
 /obj/item/projectile/bullet/suffocationbullet//How does this even work?
+	name = "co bullet"
 	damage = 20
 	damage_type = OXY
 
 
 /obj/item/projectile/bullet/cyanideround
+	name = "poison bullet"
 	damage = 40
 	damage_type = TOX
 
 
 /obj/item/projectile/bullet/burstbullet//I think this one needs something for the on hit
+	name = "exploding bullet"
 	damage = 20
 	embed = 0
 	edge = 1
 
 /obj/item/projectile/bullet/stunslug
-	name = "slug"
+	name = "stunslug"
 	icon_state = "spark"
 	damage = 5
 	stun = 0
@@ -161,6 +164,7 @@
 	embed = 0
 
 /obj/item/projectile/bullet/incendiary
+	name = "incendiary bullet"
 	damage = 20
 
 /obj/item/projectile/bullet/incendiary/on_hit(atom/target, blocked = 0)
@@ -175,7 +179,7 @@
 	fake = 1
 
 /obj/item/projectile/l10
-	name ="clot of energy"
+	name ="projectile"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "l10"
 	layer = ABOVE_HUD_LAYER

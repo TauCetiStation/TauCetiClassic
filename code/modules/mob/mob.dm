@@ -355,16 +355,6 @@
 					else if(dist_F <= 1)
 						to_chat(src, "<span class='noir'>[pick("You notice", "There is", "You note")] a faint acrid smell coming from \the [F]. Smells like gunshot residue.</span>")
 						clue = TRUE
-				else if(istype(A, /turf/simulated/wall))
-					var/turf/simulated/wall/W = A
-					if(W.proj_holes && get_dist(src, W) <= 1)
-						for(var/obj/effect/proj_hole/BH in W)
-							var/multiple = FALSE
-							if(BH.holes > 1)
-								multiple = TRUE
-							to_chat(src, "<span class='noir'>[pick("You notice", "There is", "You note")] [BH.holes] hole[multiple ? "s" : ""] made by [BH.proj_name] in \the [W].</span>")
-						clue = TRUE
-
 			if(clue)
 				playsound_local(null, pick('sound/effects/clue1.ogg','sound/effects/clue2.ogg'), 90, is_global = TRUE)
 

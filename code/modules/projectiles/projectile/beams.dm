@@ -15,7 +15,7 @@
 	impact_type = /obj/effect/projectile/laser/impact
 
 /obj/item/projectile/beam/practice
-	name = "fake laser"
+	name = "laser"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 0
@@ -57,7 +57,7 @@
 	impact_type = /obj/effect/projectile/laser_pulse/impact
 
 /obj/item/projectile/beam/deathlaser
-	name = "heavy laser"
+	name = "death laser"
 	icon_state = "heavylaser"
 	damage = 60
 
@@ -129,7 +129,7 @@
 	return 1
 
 /obj/item/projectile/beam/sniper
-	name = "heavy laser"
+	name = "sniper beam"
 	icon_state = "laser"
 	damage = 60
 	stun = 5
