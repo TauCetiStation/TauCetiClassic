@@ -4,7 +4,7 @@
 	var/display_craftable_only = FALSE
 	var/display_compact = TRUE
 
-	var/global/recipe_image_cache = list() // used for storing the icons of results
+	var/static/recipe_image_cache = list() // used for storing the icons of results
 
 /*	This is what procs do:
 	get_environment - gets a list of things accessable for crafting by user
