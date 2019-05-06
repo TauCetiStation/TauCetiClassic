@@ -1,6 +1,9 @@
-#define IS_ON_ESCAPE_SHUTTLE is_type_in_typecache(get_area(M), typecacheof(list(/area/shuttle/escape/transit, \
-                                                                                /area/shuttle/escape_pod1/transit, /area/shuttle/escape_pod2/transit, \
-                                                                                /area/shuttle/escape_pod3/transit, /area/shuttle/escape_pod5/transit)))
+var/list/escape_area_transit = typecacheof(list(/area/shuttle/escape/transit,
+                                                /area/shuttle/escape_pod1/transit,
+                                                /area/shuttle/escape_pod2/transit,
+                                                /area/shuttle/escape_pod3/transit,
+                                                /area/shuttle/escape_pod5/transit))
+#define IS_ON_ESCAPE_SHUTTLE is_type_in_typecache(get_area(M), escape_area_transit)
 /proc/captain_announce(message, title = "Priority Announcement", announcer = "", sound = "")
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
