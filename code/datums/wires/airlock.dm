@@ -40,7 +40,7 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 	. += "<br>[!A.emergency ? "The emergency lights are off." : "The emergency lights are on."]"
 	. += "<br><fieldset class='block'>"
 	. += "<legend><h3>Remote control</h3></legend>"
-	. += "<a href='?src=\ref[src];buffer=1'>Save to the buffer of you multitool</a>"
+	. += "<a href='?src=\ref[src];buffer=1'>Save to the buffer of your multitool</a>"
 	. += "</fieldset>"
 
 /datum/wires/airlock/Topic(href, href_list)
