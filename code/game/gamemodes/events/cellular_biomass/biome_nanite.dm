@@ -58,7 +58,7 @@
 /obj/structure/cellular_biomass/lair/nanite/atom_init(mapload)
 	icon_state = "lair_2"
 	if(prob(50))
-		. = ..(mapload, /mob/living/simple_animal/hostile/cellular/nanite/eng)
+		..(mapload, /mob/living/simple_animal/hostile/cellular/nanite/eng)
 	return INITIALIZE_HINT_QDEL
 		
 /mob/living/simple_animal/hostile/cellular/nanite
