@@ -1,4 +1,4 @@
-/*=============================================
+/*=====================================================================================================================================
      === Explanation for some variables ===
 
 var/is_global = if true then do not add echo to the sound
@@ -8,9 +8,10 @@ var/src_vol = volume for its source. Separate sound volume for its source and fo
 
      === Important notes for all soundmakers ===
 
-* !!! DO NOT USE `<<` !!!. Use send_sound() instead of this
+* !!! DO NOT USE `<<` !!!. Use send_sound() instead of this.
+* Before you create a new new channel, put it in a file which is located in [code\__DEFINES\sound.dm].
 
-===============================================*/
+=======================================================================================================================================*/
 /proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global, wait = 0, voluminosity = TRUE, src_vol)
 	soundin = get_sfx(soundin) // same sound for everyone
 
