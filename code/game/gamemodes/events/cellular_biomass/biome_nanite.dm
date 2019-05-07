@@ -59,10 +59,8 @@
 	icon_state = "lair_2"
 	if(prob(50))
 		. = ..(mapload, /mob/living/simple_animal/hostile/cellular/nanite/eng)
-		return INITIALIZE_HINT_QDEL
-	else
-		return INITIALIZE_HINT_QDEL
-
+	return INITIALIZE_HINT_QDEL
+		
 /mob/living/simple_animal/hostile/cellular/nanite
 	name = "Nanite hivebot"
 	desc = "A sanity-destroying otherthing."
