@@ -60,6 +60,7 @@
 	if(prob(50))
 		qdel(src)
 	. = ..(mapload, /mob/living/simple_animal/hostile/cellular/nanite/eng)
+	qdel(src)
 
 /mob/living/simple_animal/hostile/cellular/nanite
 	name = "Nanite hivebot"
