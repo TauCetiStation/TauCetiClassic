@@ -1740,7 +1740,7 @@
 
 		if(heart_beat >= temp)
 			heart_beat = 0
-			send_sound(src, 'sound/effects/singlebeat.ogg')
+			send_sound(src, 'sound/effects/singlebeat.ogg', 50)
 		else if(temp != 0)
 			heart_beat++
 
