@@ -522,6 +522,5 @@
 #undef BOLTS_SHOCKS
 #undef OPEN_BOLTS_SHOCK
 
-
 #undef ON_WALL
 #undef ON_TABLE
