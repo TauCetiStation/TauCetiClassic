@@ -1,11 +1,11 @@
-/****************
-* picture frame *
-****************/
+/*
+ * Picture frame
+ */
 
 /obj/item/weapon/picture_frame
 	name = "picture frame"
 	desc = "The perfect showcase for your favorite memories."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/photography.dmi'
 	icon_state = "wooden_frame_item"
 	w_class = ITEM_SIZE_SMALL
 	var/obj/item/weapon/photo/displayed
@@ -116,7 +116,7 @@
 	if(displayed)
 		overlays |= image(displayed.icon, "photo")
 	if(frame_glass)
-		overlays |= icon('icons/obj/bureaucracy.dmi',"glass_frame_item")
+		overlays |= icon('icons/obj/photography.dmi',"glass_frame_item")
 
 /obj/item/weapon/picture_frame/afterattack(atom/target, mob/user, proximity)
 	var/turf/T = target
@@ -145,7 +145,7 @@
 /obj/structure/picture_frame
 	name = "picture frame"
 	desc = "Every time you look it makes you laugh."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/photography.dmi'
 	icon_state = "wooden_frame"
 	anchored = TRUE
 	var/obj/item/weapon/photo/framed
@@ -347,6 +347,6 @@
 			P.transform = Mx
 		overlays |= P
 	if(frame_glass)
-		var/image/I = image('icons/obj/bureaucracy.dmi', "glass_frame")
+		var/image/I = image('icons/obj/photography.dmi', "glass_frame")
 		I.dir = dir
 		overlays |= I

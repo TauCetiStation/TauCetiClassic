@@ -1,6 +1,7 @@
-/**************
-* AI-specific *
-**************/
+/*
+ * AI-specific camera
+ */
+
 /datum/picture
 	var/name = "image"
 	var/list/fields = list()

@@ -19,7 +19,7 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
 		return
 
-	if (H.mind.role_alt_title)
+	if(H.mind.role_alt_title)
 		switch(H.mind.role_alt_title)
 			if("Lawyer")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/bluesuit(H), SLOT_W_UNIFORM)
@@ -41,8 +41,9 @@
 			if("Reporter")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/black(H), SLOT_W_UNIFORM)
 				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-				H.equip_to_slot_or_del(new /obj/item/device/pda/reporter(H), SLOT_BELT)
-				H.equip_to_slot_or_del(new /obj/item/device/camera(H), SLOT_L_STORE)
+				H.equip_to_slot_or_del(new /obj/item/device/pda/reporter(H), SLOT_L_STORE)
+				H.equip_to_slot_or_del(new /obj/item/device/camera(H), SLOT_BELT)
+				H.equip_to_slot_or_del(new /obj/item/weapon/storage/photo_album(H), SLOT_L_HAND)
 			if("Security Cadet")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cadet(H), SLOT_W_UNIFORM)
 				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), SLOT_SHOES)
