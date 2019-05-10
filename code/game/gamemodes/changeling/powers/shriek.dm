@@ -15,10 +15,10 @@
 				M.confused += 20
 				M.make_jittery(500)
 			else
-				M << sound('sound/effects/screech.ogg')
+				send_sound(M, 'sound/effects/screech.ogg')
 
 		if(issilicon(M))
-			M << sound('sound/weapons/flash.ogg')
+			send_sound(M, 'sound/weapons/flash.ogg')
 			M.Weaken(rand(5,10))
 
 	for(var/obj/machinery/light/L in range(4, user))

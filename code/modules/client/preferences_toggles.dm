@@ -91,7 +91,7 @@
 	else
 		to_chat(src, "You will no longer hear music in the game lobby.")
 		if(isnewplayer(mob))
-			src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jamsz
+			send_sound(src, null, 85, CHANNEL_LOBBY_MUSIC) // stop the jamsz
 	feedback_add_details("admin_verb","TLobby") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/togglemidis()
@@ -140,8 +140,8 @@
 		to_chat(src, "You will now hear ambient sounds.")
 	else
 		to_chat(src, "You will no longer hear ambient sounds.")
-		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 1)
-		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 2)
+		send_sound(src, null, 0, CHANNEL_AMBIENCE)
+		send_sound(src, null, 0, CHANNEL_REGULAR_AMBIENCE)
 	feedback_add_details("admin_verb","TAmbi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/toggle_be_role(role in special_roles)

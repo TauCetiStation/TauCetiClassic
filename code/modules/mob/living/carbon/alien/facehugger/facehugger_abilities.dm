@@ -169,7 +169,7 @@ This is chestburster mechanic for damaging
 		if((BP.status & ORGAN_BROKEN) || H.stat == DEAD) //I don't know why, but bodyparts can't be broken, when human is dead.
 			chestburster.loc = get_turf(H)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [H]'s chest!</span>")
-			chestburster << sound('sound/voice/hiss5.ogg',0,0,0,100)
+			send_sound(chestburster, 'sound/voice/hiss5.ogg')
 			if(H.key)
 				H.death()
 				H.ghostize(can_reenter_corpse = FALSE, bancheck = TRUE)
@@ -189,7 +189,7 @@ This is chestburster mechanic for damaging
 		if(M.stat == DEAD)
 			chestburster.loc = get_turf(M)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [M]'s butt!</span>")
-			chestburster << sound('sound/voice/hiss5.ogg',0,0,0,100)
+			send_sound(chestburster, 'sound/voice/hiss5.ogg')
 			qdel(src)
 		else
 			last_bite = world.time
@@ -201,7 +201,7 @@ This is chestburster mechanic for damaging
 		if(C.stat == DEAD)
 			chestburster.loc = get_turf(C)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [C]'s butt!</span>")
-			chestburster << sound('sound/voice/hiss5.ogg',0,0,0,100)
+			send_sound(chestburster, 'sound/voice/hiss5.ogg')
 			qdel(src)
 		else
 			last_bite = world.time
