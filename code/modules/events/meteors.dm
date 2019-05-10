@@ -9,7 +9,7 @@
 	endWhen = rand(10,25) * 3
 
 /datum/event/meteor_wave/announce()
-	command_alert("Meteors have been detected on collision course with the station. The energy field generator is disabled or missng.", "Meteor Alert", "meteors")
+	command_alert("Meteors have been detected on collision course with the station. The energy field generator is disabled or missing.", "Meteor Alert", "meteors")
 
 /datum/event/meteor_wave/tick()
 	if(IsMultiple(activeFor, 3))
@@ -29,7 +29,7 @@
 	waves = rand(1,4)
 
 /datum/event/meteor_shower/announce()
-	command_alert("The station is now in a meteor shower. The energy field generator is disabled or missng.", "Meteor Alert", "meteors")
+	command_alert("The station is now in a meteor shower. The energy field generator is disabled or missing.", "Meteor Alert", "meteors")
 
 //meteor showers are lighter and more common,
 /datum/event/meteor_shower/tick()
