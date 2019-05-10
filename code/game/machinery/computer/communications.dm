@@ -147,7 +147,7 @@
 					return
 				else
 					last_announcement = world.time + 1 MINUTE
-				var/input = sanitize(input(usr, "Please choose a message to announce to the station crew.", "What?"), extra = FALSE)
+				var/input = sanitize(input(usr, "Please choose a message to announce to the station crew.", "Priority Announcement") as null|message, extra = FALSE)
 				if(!input || !(usr in view(1,src)))
 					return
 				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
