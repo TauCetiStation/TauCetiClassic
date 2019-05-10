@@ -177,4 +177,8 @@ var/const/FALLOFF_SOUNDS = 0.5
 				soundin = pick('sound/misc/frigvomit1.ogg','sound/misc/frigvomit2.ogg')
 			if ("mrigvomit")
 				soundin = pick('sound/misc/mrigvomit1.ogg','sound/misc/mrigvomit2.ogg')
+			if ("keyboard")
+				soundin = pick('sound/machines/keyboard/keyboard1.ogg', 'sound/machines/keyboard/keyboard2.ogg', 'sound/machines/keyboard/keyboard3.ogg', 'sound/machines/keyboard/keyboard4.ogg', 'sound/machines/keyboard/keyboard5.ogg')
+			if ("pda")
+				soundin = pick('sound/machines/keyboard/pda1.ogg', 'sound/machines/keyboard/pda2.ogg', 'sound/machines/keyboard/pda3.ogg', 'sound/machines/keyboard/pda4.ogg', 'sound/machines/keyboard/pda5.ogg')
 	return soundin
