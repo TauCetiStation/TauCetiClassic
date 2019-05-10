@@ -271,7 +271,7 @@
 	else if(iswelder(W))
 		if(buildstate == 1)
 			var/obj/item/weapon/weldingtool/T = W
-			if(T.remove_fuel(0, user))
+			if(T.use(0, user))
 				if(!T.isOn())
 					return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)

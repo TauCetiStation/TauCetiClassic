@@ -15,6 +15,7 @@
 	var/team = 0
 	var/metadata
 	var/seer = 0 // used in cult datum /cult/seer
+	var/gnomed = 0 // timer used by gnomecurse.dm
 
 	throw_range = 2
 

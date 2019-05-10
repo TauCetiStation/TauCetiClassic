@@ -142,7 +142,7 @@
 	var/obj/item/projectile/beam/A = new /obj/item/projectile/beam(loc)
 	A.icon = 'icons/effects/genetics.dmi'
 	A.icon_state = "eyelasers"
-	playsound(src.loc, 'sound/weapons/taser2.ogg', 75, 1)
+	playsound(src.loc, 'sound/weapons/guns/gunpulse_taser2.ogg', 75, 1)
 	A.original = target
 	A.current = T
 	A.starting = T

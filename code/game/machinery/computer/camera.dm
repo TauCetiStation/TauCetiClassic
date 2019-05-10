@@ -36,7 +36,7 @@
 
 	var/data[0]
 
-	data["current"] = null
+	data["current"] = 0
 
 	if(isnull(camera_cache))
 		cameranet.process_sort()

@@ -242,7 +242,7 @@ var/req_console_information = list()
 			priority = -1
 
 	if(href_list["writeAnnouncement"])
-		var/new_message = sanitize(input(usr, "Write your message:", "Awaiting Input", ""))
+		var/new_message = sanitize(input(usr, "Write your message:", "Awaiting Input", "") as null|message)
 		if(new_message)
 			message = new_message
 			switch(href_list["priority"])
@@ -261,6 +261,7 @@ var/req_console_information = list()
 		for(var/mob/M in player_list)
 			if(!isnewplayer(M))
 				to_chat(M, "<b><font size='3'><font color='red'>[department] announcement:</font> [message]</font></b>")
+				M.playsound_local(null,  'sound/AI/announce.ogg', 70, channel = CHANNEL_ANNOUNCE, wait = 1, is_global = 1)
 		announceAuth = 0
 		message = ""
 		screen = 0

@@ -144,6 +144,13 @@
 	required_reagents = list("phoron" = 1, "hydrogen" = 1, "nitrogen" = 1)
 	result_amount = 3
 
+/datum/chemical_reaction/nicotine
+	name = "Nicotine"
+	id = "nicotine"
+	result = "nicotine"
+	required_reagents = list("lexorin" = 5, "nitrogen" = 2, "inaprovaline" = 1)
+	result_amount = 5
+
 /datum/chemical_reaction/space_drugs
 	name = "Space Drugs"
 	id = "space_drugs"
