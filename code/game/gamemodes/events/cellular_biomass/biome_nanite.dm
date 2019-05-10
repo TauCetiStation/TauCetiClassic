@@ -199,9 +199,9 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/cellular/nanite/eng/Destroy()
-	..()
 	for(var/mob/living/simple_animal/hostile/cellular/nanite/M in child)
 		M.death()
+	return ..()
 
 /mob/living/simple_animal/hostile/cellular/nanite/death()
 	..()
