@@ -706,6 +706,11 @@
 		if(src.status == 2)
 			return TRUE
 
+	else if(istype(W, /obj/item/door_control_frame))
+		var/obj/item/door_control_frame/frame = W
+		frame.try_build_on_table(src)
+		return
+
  return ..()
 
 /*
