@@ -1,5 +1,18 @@
-/proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global, wait = 0, voluminosity = TRUE)
+/*=====================================================================================================================================
+     === Explanation for some variables ===
 
+var/is_global = if true then do not add echo to the sound
+var/voluminosity = is that 3d sound? If false then ignore the coordinates of the sound(become a sort of mono sound)
+var/src_vol = volume for its source. Separate sound volume for its source and for others? Make a "special" volume for the source?
+
+
+     === Important notes for all soundmakers ===
+
+* !!! DO NOT USE `<<` !!!. Use send_sound() instead of this.
+* Before you create a new new channel, put it in a file which is located in [code\__DEFINES\sound.dm].
+
+=======================================================================================================================================*/
+/proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global, wait = 0, voluminosity = TRUE, src_vol)
 	soundin = get_sfx(soundin) // same sound for everyone
 
 	if(isarea(source))
@@ -9,10 +22,13 @@
 	var/frequency = get_rand_frequency() // Same frequency for everybody
 	var/turf/turf_source = get_turf(source)
 
- 	// Looping through the player list has the added bonus of working for mobs inside containers
+	// Looping through the player list has the added bonus of working for mobs inside containers
 	for (var/P in player_list)
 		var/mob/M = P
 		if(!M || !M.client)
+			continue
+		if((M == source) && (src_vol != null))
+			M.playsound_local(null, soundin, src_vol, vary, frequency, falloff, channel)
 			continue
 
 		var/distance = get_dist(M, turf_source)
@@ -83,6 +99,9 @@ var/const/FALLOFF_SOUNDS = 0.5
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 	if(!is_global)
 		S.environment = 2
+	if(src.stat == UNCONSCIOUS || src.sleeping > 0) // unconscious people will hear illegible sounds
+		S.volume /= 3
+		S.environment = 10
 	src << S
 
 /mob/living/parasite/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global)
@@ -93,10 +112,19 @@ var/const/FALLOFF_SOUNDS = 0.5
 /client/proc/playtitlemusic()
 	if(!ticker || !ticker.login_music)	return
 	if(prefs.toggles & SOUND_LOBBY)
-		src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS
+		send_sound(src, ticker.login_music, 85, CHANNEL_LOBBY_MUSIC) // MAD JAMS
 
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
+
+/proc/send_sound(target, sound, volume = 100, channel = 0, repeat = 0, wait = 0)
+	var/sound/S = sound(sound)
+	S.volume = volume
+	S.channel = channel
+	S.repeat = repeat
+	S.wait = wait
+	S.environment = 2 // To solve all environment problems in playsound() and playsound_local()
+	target << S
 
 /proc/get_sfx(soundin)
 	if(istext(soundin))
