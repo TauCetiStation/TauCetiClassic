@@ -659,7 +659,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/cable_coil/gray
 	color = COLOR_GRAY
 
-/obj/item/stack/cable_coil/random/atom_init()
+/obj/item/stack/cable_coil/random/atom_init(mapload, new_amount = null)
 	..()
 	var/new_type = pick(/obj/item/stack/cable_coil/yellow,
 						/obj/item/stack/cable_coil/blue,
@@ -670,5 +670,5 @@ By design, d1 is the smallest direction and d2 is the highest
 						/obj/item/stack/cable_coil/red,
 						/obj/item/stack/cable_coil/gray,
 						/obj/item/stack/cable_coil)
-	new new_type(loc)
+	new new_type(loc, new_amount)
 	return INITIALIZE_HINT_QDEL
