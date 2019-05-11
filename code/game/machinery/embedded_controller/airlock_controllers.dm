@@ -92,9 +92,9 @@
 		. += "<li><b><a href='?src=\ref[src];show=sensors'>Sensors</a></b></li><ul>"
 
 		if(chamber_sensor)
-			. += "<li><b>Chamber  - <b style='color: green'>Connected</b> | <a href='?src=\ref[src];disconnect=chamber_sensor'>Disconnect</a></b></li>"
+			. += "<li><b>Chamber  - <x style='color: green'>Connected</x> | <a href='?src=\ref[src];disconnect=chamber_sensor'>Disconnect</a></b></li>"
 		else
-			. += "<li><b>Chamber  - <b style='color: red'>Not connected</b> | <a href='?src=\ref[src];connect=sensor;type=chamber'>Connect</a></b></li>"
+			. += "<li><b>Chamber  - <x style='color: red'>Not connected</x> | <a href='?src=\ref[src];connect=sensor;type=chamber'>Connect</a></b></li>"
 
 		. += "</ul>"
 
@@ -106,11 +106,11 @@
 		var/airpump_number = 1
 
 		if(!airpumps.len)
-			. += "<li><b>[airpump_number]  - <b style='color: red'>Not connected</b> | <a href='?src=\ref[src];connect=airpump'>Connect</a></b></li>"
+			. += "<li><b>[airpump_number]  - <x style='color: red'>Not connected</x> | <a href='?src=\ref[src];connect=airpump'>Connect</a></b></li>"
 
 		else
 			for(var/airpump in airpumps)
-				. += "<li><b>[airpump_number]  - <b style='color: green'>Connected</b> | <a href='?src=\ref[src];disconnect=airpump;airpump=[airpump_number]'>Disconnect</a></b></li>"
+				. += "<li><b>[airpump_number]  - <x style='color: green'>Connected</x> | <a href='?src=\ref[src];disconnect=airpump;airpump=[airpump_number]'>Disconnect</a></b></li>"
 				airpump_number++
 
 			if(airpumps.len < max_airpumps)
@@ -230,19 +230,19 @@
 		. += "<li><b><a href='?src=\ref[src];show=sensors'>Sensors</a></b></li><ul>"
 
 		if(chamber_sensor)
-			. += "<li><b>Chamber  - <b style='color: green'>Connected</b> | <a href='?src=\ref[src];disconnect=chamber_sensor'>Disconnect</a></b></li>"
+			. += "<li><b>Chamber  - <x style='color: green'>Connected</x> | <a href='?src=\ref[src];disconnect=chamber_sensor'>Disconnect</a></b></li>"
 		else
-			. += "<li><b>Chamber  - <b style='color: red'>Not connected</b> | <a href='?src=\ref[src];connect=sensor;type=chamber'>Connect</a></b></li>"
+			. += "<li><b>Chamber  - <x style='color: red'>Not connected</x> | <a href='?src=\ref[src];connect=sensor;type=chamber'>Connect</a></b></li>"
 
 		if(interior_sensor)
-			. += "<li><b>Internal  - <b style='color: green'>Connected</b> | <a href='?src=\ref[src];disconnect=interior_sensor'>Disconnect</a></b></li>"
+			. += "<li><b>Internal  - <x style='color: green'>Connected</x> | <a href='?src=\ref[src];disconnect=interior_sensor'>Disconnect</a></b></li>"
 		else
-			. += "<li><b>Internal  - <b style='color: red'>Not connected</b> | <a href='?src=\ref[src];connect=sensor;type=interior'>Connect</a></b></li>"
+			. += "<li><b>Internal  - <x style='color: red'>Not connected</x> | <a href='?src=\ref[src];connect=sensor;type=interior'>Connect</a></b></li>"
 
 		if(exterior_sensor)
-			. += "<li><b>External  - <b style='color: green'>Connected</b> | <a href='?src=\ref[src];disconnect=exterior_sensor'>Disconnect</a></b></li>"
+			. += "<li><b>External  - <x style='color: green'>Connected</x> | <a href='?src=\ref[src];disconnect=exterior_sensor'>Disconnect</a></b></li>"
 		else
-			. += "<li><b>External  - <b style='color: red'>Not connected</b> | <a href='?src=\ref[src];connect=sensor;type=exterior'>Connect</a></b></li>"
+			. += "<li><b>External  - <x style='color: red'>Not connected</x> | <a href='?src=\ref[src];connect=sensor;type=exterior'>Connect</a></b></li>"
 
 		. += "</ul>"
 
@@ -254,11 +254,11 @@
 		var/airpump_number = 1
 
 		if(!airpumps.len)
-			. += "<li><b>[airpump_number]  - <b style='color: red'>Not connected</b> | <a href='?src=\ref[src];connect=airpump'>Connect</a></b></li>"
+			. += "<li><b>[airpump_number]  - <x style='color: red'>Not connected</x> | <a href='?src=\ref[src];connect=airpump'>Connect</a></b></li>"
 
 		else
 			for(var/airpump in airpumps)
-				. += "<li><b>[airpump_number]  - <b style='color: green'>Connected</b> | <a href='?src=\ref[src];disconnect=airpump;airpump=[airpump_number]'>Disconnect</a></b></li>"
+				. += "<li><b>[airpump_number]  - <x style='color: green'>Connected</x> | <a href='?src=\ref[src];disconnect=airpump;airpump=[airpump_number]'>Disconnect</a></b></li>"
 				airpump_number++
 
 			if(airpumps.len < max_airpumps)

@@ -328,14 +328,14 @@
 		. += "<li><b><a href='?src=\ref[src];show=airlocks'>Airlocks</a></b></li><ul>"
 
 		if(interior_door)
-			. += "<li><b>Internal - <b style='color: green'>Connected</b> | <a href='?src=\ref[src];disconnect=interior_door'>Disconnect</a></b></li>"
+			. += "<li><b>Internal - <x style='color: green'>Connected</x> | <a href='?src=\ref[src];disconnect=interior_door'>Disconnect</a></b></li>"
 		else
-			. += "<li><b>Internal - <b style='color: red'>Not connected</b> | <a href='?src=\ref[src];connect=door;type=interior'>Connect</a></b></li>"
+			. += "<li><b>Internal - <x style='color: red'>Not connected</x> | <a href='?src=\ref[src];connect=door;type=interior'>Connect</a></b></li>"
 
 		if(exterior_door)
-			. += "<li><b>External - <b style='color: green'>Connected</b> | <a href='?src=\ref[src];disconnect=exterior_door'>Disconnect</a></b></li>"
+			. += "<li><b>External - <x style='color: green'>Connected</x> | <a href='?src=\ref[src];disconnect=exterior_door'>Disconnect</a></b></li>"
 		else
-			. += "<li><b>External - <b style='color: red'>Not connected</b> | <a href='?src=\ref[src];connect=door;type=exterior'>Connect</a></b></li>"
+			. += "<li><b>External - <x style='color: red'>Not connected</x> | <a href='?src=\ref[src];connect=door;type=exterior'>Connect</a></b></li>"
 
 		. += "</ul>"
 
@@ -345,14 +345,14 @@
 		. += "<li><b><a href='?src=\ref[src];show=access_buttons'>Access buttons</a></b></li><ul>"
 
 		if(interior_access_button)
-			. += "<li><b>Internal - <b style='color: green'>Connected</b> | <a href='?src=\ref[src];disconnect=interior_access_button'>Disconnect</a></b></li>"
+			. += "<li><b>Internal - <x style='color: green'>Connected</x> | <a href='?src=\ref[src];disconnect=interior_access_button'>Disconnect</a></b></li>"
 		else
-			. += "<li><b>Internal - <b style='color: red'>Not connected</b> | <a href='?src=\ref[src];connect=access_button;type=interior'>Connect</a></b></li>"
+			. += "<li><b>Internal - <x style='color: red'>Not connected</x> | <a href='?src=\ref[src];connect=access_button;type=interior'>Connect</a></b></li>"
 
 		if(exterior_access_button)
-			. += "<li><b>External - <b style='color: green'>Connected</b> | <a href='?src=\ref[src];disconnect=exterior_access_button'>Disconnect</a></b></li>"
+			. += "<li><b>External - <x style='color: green'>Connected</x> | <a href='?src=\ref[src];disconnect=exterior_access_button'>Disconnect</a></b></li>"
 		else
-			. += "<li><b>External - <b style='color: red'>Not connected</b> | <a href='?src=\ref[src];connect=access_button;type=exterior'>Connect</a></b></li>"
+			. += "<li><b>External - <x style='color: red'>Not connected</x> | <a href='?src=\ref[src];connect=access_button;type=exterior'>Connect</a></b></li>"
 
 		. += "</ul>"
 
