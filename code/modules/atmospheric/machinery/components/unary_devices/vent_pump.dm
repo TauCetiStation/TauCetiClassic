@@ -285,7 +285,13 @@
 	hibernate = 0
 
 	//log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/atmospherics/components/unary/vent_pump/receive_signal([signal.debug_print()])")
-	if(!signal.data["signal_target"] || !(src in signal.data["signal_target"]) || (signal.data["sigtype"]!="command"))
+	if((!signal.data["signal_target"] && !signal.data["tag"]) || (signal.data["sigtype"] != "command"))
+		return FALSE
+
+	if(signal.data["signal_target"] && !(src in signal.data["signal_target"]))
+		return FALSE
+
+	else if(signal.data["tag"] && !(signal.data["tag"] == id_tag))
 		return FALSE
 
 	if(signal.data["purge"] != null)
