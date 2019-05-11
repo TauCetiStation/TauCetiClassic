@@ -223,8 +223,8 @@ var/list/same_wires = list()
 				else
 					to_chat(L, "<span class='warning'>You need a remote signaller!</span>")
 
-			// Update Window
-			interact(usr)
+		// Update Window
+		interact(usr)
 
 	return TRUE
 
