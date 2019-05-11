@@ -194,7 +194,7 @@
 	ticker.mode:explosion_in_progress = 1
 	for(var/mob/M in mob_list)
 		if(M.client)
-			M << 'sound/machines/Alarm.ogg'
+			send_sound(M, 'sound/machines/Alarm.ogg')
 	to_chat(world, "\blue<b>Incoming missile detected.. Impact in 10..</b>")
 	for (var/i=9 to 1 step -1)
 		sleep(10)
