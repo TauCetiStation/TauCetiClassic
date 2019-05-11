@@ -60,7 +60,7 @@
 	if(prob(50))
 		..(mapload, /mob/living/simple_animal/hostile/cellular/nanite/eng)
 	return INITIALIZE_HINT_QDEL
-		
+
 /mob/living/simple_animal/hostile/cellular/nanite
 	name = "Nanite hivebot"
 	desc = "A sanity-destroying otherthing."
@@ -86,7 +86,7 @@
 	var/combohit = 0
 	var/mob/living/simple_animal/hostile/cellular/nanite/eng/nanite_parent
 	var/health_trigger = null
-	var/clon = FALSE
+	var/clone = FALSE
 	var/cloning = TRUE
 
 /mob/living/simple_animal/hostile/cellular/nanite/melee
@@ -132,7 +132,7 @@
 	var/cap_spawn = 6
 	var/spawned = 0
 	var/chance_spawn = 15
-	var/list/mob/living/simple_animal/hostile/cellular/nanite/child = list()
+	var/list/mob/living/simple_animal/hostile/cellular/nanite/childs = list()
 	cloning = FALSE
 
 /mob/living/simple_animal/hostile/cellular/nanite/Life()
@@ -156,7 +156,7 @@
 				newnanite.maxHealth = maxHealth / 2
 				newnanite.nanite_parent = nanite_parent
 				newnanite.target = target
-				newnanite.clon = TRUE
+				newnanite.clone = TRUE
 			if(nanite_parent != null)
 				if(nanite_parent.health < health_trigger)
 					stop_automated_movement = TRUE
@@ -168,13 +168,13 @@
 
 /mob/living/simple_animal/hostile/cellular/nanite/eng/Life()
 	..()
-	if(child.len < cap_spawn)
+	if(childs.len < cap_spawn)
 		if(prob(chance_spawn))
 			var/type_to_spawn = prob(25) ? /mob/living/simple_animal/hostile/cellular/nanite/ranged : /mob/living/simple_animal/hostile/cellular/nanite/melee
 			var/mob/living/simple_animal/hostile/cellular/nanite/S = new type_to_spawn(src.loc)
 			S.nanite_parent = src
 			S.health_trigger = health
-			child += S
+			childs += S
 
 /mob/living/simple_animal/hostile/cellular/nanite/AttackingTarget()
 	..()
@@ -191,13 +191,13 @@
 	death()
 
 /mob/living/simple_animal/hostile/cellular/nanite/Destroy()
-	if(!clon && nanite_parent)
-		nanite_parent.child -= src
+	if(!clone && nanite_parent)
+		nanite_parent.childs -= src
 	nanite_parent = null
 	return ..()
 
 /mob/living/simple_animal/hostile/cellular/nanite/eng/Destroy()
-	for(var/mob/living/simple_animal/hostile/cellular/nanite/M in child)
+	for(var/mob/living/simple_animal/hostile/cellular/nanite/M in childs)
 		M.death()
 	return ..()
 
