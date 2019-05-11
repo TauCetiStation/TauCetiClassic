@@ -357,7 +357,7 @@
 		. += "</ul>"
 
 /obj/machinery/embedded_controller/radio/proc/generate_access_management()
-	. += "<br><b>Access restrinctions setup for <a href='?src=\ref[src];access_setup_target=1'>[access_setup_target ? "controller" : "access buttons"]</a><b><hr>"
+	. += "<br><b>Access restrinctions setup for <a href='?src=\ref[src];access_setup_target=1'>[access_setup_target ? "controller" : "access buttons"]</a></b><hr>"
 	if(access_setup_target == CONTROLLER)
 		. += "<br>Requied <b><a href='?src=\ref[src];controller_one_access=1' [controller_one_access ? "style='color: green'>ONE" : "style='color: red'>ALL"]</a></b> of chosen accesses:<br>"
 		. += "<ul>"
