@@ -573,18 +573,20 @@
 	return 1
 
 /obj/structure/table/glass/proc/shatter()
-	var/list/targets = list(get_step(src,dir),get_step(src,turn(dir, 45)),get_step(src,turn(dir, -45)))
-	for (var/atom/movable/A in get_turf(src))
-		if (!A.anchored)
-			A.throw_at(pick(targets),1,1)
-
 	canconnect = FALSE
 	update_adjacent()
-	playsound(src.loc, "shatter", 50, 1)
-	visible_message("<span class='warning'>[src] breaks!</span>")
-	var/obj/item/weapon/shard/debri = new /obj/item/weapon/shard( src.loc )
-	debri.throw_at(pick(targets),1,1)
+
+	playsound(src, "shatter", 50, 1)
+	visible_message("<span class='warning'>[src] breaks!</span>", "<span class='danger'>You hear breaking glass.</span>")
+
+	var/T = get_turf(src)
+	new /obj/item/weapon/shard(T)
 	qdel(src)
+
+	var/list/targets = list(get_step(T, dir), get_step(T, turn(dir, 45)), get_step(T, turn(dir, -45)))
+	for (var/atom/movable/A in T)
+		if (!A.anchored)
+			A.throw_at(pick(targets), 1, 1)
 
 /obj/structure/table/glass/on_climb(mob/living/user)
 	usr.forceMove(get_turf(src))
