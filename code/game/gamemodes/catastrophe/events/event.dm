@@ -36,7 +36,7 @@
 	return
 
 /datum/catastrophe_event/proc/process_event()
-	if(steps && world.time > next_step)
+	if(steps && world.time > next_step && director.can_progress_event(src))
 		step += 1
 		if(step >= steps) // just to avoid division by zero
 			next_step = world.time + 10 MINUTES

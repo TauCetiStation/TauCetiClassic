@@ -10,6 +10,8 @@
 	var/neutral_event_timer
 
 	var/evacuation = FALSE
+	var/last_event_progression // when last event progression happened
+	var/event_progression_interval = 60 // how much seconds should we wait beetwen event progressions, so we dont accidentally spam with announces
 
 /datum/catastrophe_director/simple/start_story()
 	next_harm_event = world.time + 10 * 60 * (desired_length / 9) // ~10 mins of emptyness (if using desired_length value of 90)
@@ -48,3 +50,14 @@
 	if(neutral_event_timer <= 0)
 		neutral_event_timer = rand(desired_length * 60 / 6, desired_length * 60 / 2)
 		generate_event("neutral")
+
+// prevents announce spam
+/datum/catastrophe_director/simple/can_progress_event(datum/catastrophe_event/event)
+	if(event.event_type == "evacuation") // Evacuation events ignore this timer so they dont take more time than they should
+		return TRUE
+
+	if(world.time > (last_event_progression + event_progression_interval * 10))
+		last_event_progression  = world.time
+		return TRUE
+
+	return FALSE

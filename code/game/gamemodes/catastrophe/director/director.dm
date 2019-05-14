@@ -120,3 +120,7 @@
 
 /datum/catastrophe_director/proc/start_ghost_join_event(title, list/options, datum/callback/cb)
 	join_event_datums += new /datum/catastrophe_join_event(title, options, cb)
+
+// does some specific checks director requires. Event will not progress until this returns true
+/datum/catastrophe_director/proc/can_progress_event(datum/catastrophe_event/event)
+	return TRUE
