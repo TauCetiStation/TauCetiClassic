@@ -80,6 +80,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	new/datum/stack_recipe("apc frame", /obj/item/apc_frame, 2),
 	new/datum/stack_recipe("air alarm frame", /obj/item/alarm_frame, 2),
 	new/datum/stack_recipe("fire alarm frame", /obj/item/firealarm_frame, 2),
+	new/datum/stack_recipe("door control frame", /obj/item/door_control_frame, 1),
 	new/datum/stack_recipe("metal picture frame", /obj/item/weapon/picture_frame/metal, 1, time = 15),
 	null,
 	new/datum/stack_recipe("metal door", /obj/structure/mineral_door/metal, 20, one_per_turf = TRUE, on_floor = TRUE)
@@ -138,6 +139,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
  */
 var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("wooden sandals", /obj/item/clothing/shoes/sandal, 1), \
+	new/datum/stack_recipe("condiment shelf", /obj/item/weapon/condiment_shelf, 5, time = 15), \
 	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20), \
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts/wood, 2), \
 	new/datum/stack_recipe("fancy table parts", /obj/item/weapon/table_parts/wood/fancy, 2), \

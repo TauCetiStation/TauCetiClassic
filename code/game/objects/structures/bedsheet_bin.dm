@@ -28,6 +28,19 @@ LINEN BINS
 	add_fingerprint(user)
 	return
 
+/obj/item/weapon/bedsheet/attackby(obj/item/I, mob/user)
+	. = ..()
+	if(I.sharp && isturf(loc)) // you can cut only bedsheet lying on the floor
+		if(!ishuman(user))
+			to_chat(user, "<span class='notice'>You try, but you can't.</span>")
+			return
+		user.visible_message("<span class='notice'>[user] starts tearing \the [src] into rags.</span>", "<span class='notice'>You start tearing \the [src] into rags.</span>")
+		if(do_after(user, 40, target = src))
+			user.visible_message("<span class='notice'>[user] tears \the [src] into rags using [I].</span>", "<span class='notice'>You finish tearing \the [src] into rags.</span>")
+			var/obj/item/stack/medical/bruise_pack/rags/R = new(get_turf(src))
+			R.amount = 3
+			qdel(src)
+		return
 
 /obj/item/weapon/bedsheet/blue
 	icon_state = "sheetblue"

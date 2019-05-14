@@ -29,6 +29,6 @@
 				if(istype(S, randomizemagic))
 					S.clothes_req = 0
 	if(!summon_type)
-		player_list << sound('sound/magic/Summon_guns.ogg')
+		send_sound(player_list, 'sound/magic/Summon_guns.ogg')
 	else
-		player_list << sound('sound/magic/Summon_Magic.ogg')
+		send_sound(player_list, 'sound/magic/Summon_Magic.ogg')

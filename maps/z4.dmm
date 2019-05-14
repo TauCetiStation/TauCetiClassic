@@ -1428,12 +1428,6 @@
 	},
 /turf/simulated/floor,
 /area/derelict/bridge)
-"dS" = (
-/obj/item/weapon/storage/toolbox/syndicate,
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
-/area/derelict/singularity_engine)
 "dT" = (
 /obj/item/stack/cable_coil/cut/red,
 /turf/simulated/floor/airless{
@@ -4115,10 +4109,6 @@
 /area/derelict/bridge/ai_upload)
 "ls" = (
 /turf/simulated/floor/plating/airless,
-/area/derelict/bridge/ai_upload)
-"lt" = (
-/obj/item/weapon/storage/toolbox/syndicate,
-/turf/simulated/floor/airless,
 /area/derelict/bridge/ai_upload)
 "lu" = (
 /obj/structure/cable{
@@ -42816,7 +42806,7 @@ pb
 do
 dz
 dK
-dS
+dM
 eb
 ej
 ew
@@ -49296,7 +49286,7 @@ kA
 lg
 ll
 lq
-lt
+lq
 lw
 lD
 ls

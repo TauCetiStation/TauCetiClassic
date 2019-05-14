@@ -116,7 +116,8 @@
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
 
 /obj/item/stack/medical/bruise_pack/update_icon()
-	icon_state = "[initial(icon_state)][amount]"
+	var/icon_amount = min(amount, max_amount)
+	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/ointment
 	name = "ointment"
@@ -161,7 +162,8 @@
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
 
 /obj/item/stack/medical/ointment/update_icon()
-	icon_state = "[initial(icon_state)][amount]"
+	var/icon_amount = min(amount, max_amount)
+	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/bruise_pack/tajaran
 	name = "\improper S'rendarr's Hand leaf"

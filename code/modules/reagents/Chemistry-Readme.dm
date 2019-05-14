@@ -84,6 +84,10 @@ About the Holder:
 			You wont use this much. Mostly in new procs for pre-filled
 			objects.
 
+		add_reagent_list(list/list_reagents, data)
+			Like add_reagent but you can enter a list.
+			Format it like this: list_reagents = list("honey" = 40)
+
 		remove_reagent(reagent, amount)
 			The exact opposite of the add_reagent proc.
 			- Modified from original to return the reagent's data, in order to preserve reagent data across reactions (originally for xenoarchaeology)

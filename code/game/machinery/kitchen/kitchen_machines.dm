@@ -451,7 +451,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 2)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 2)
 	RefreshParts()
 
 /obj/machinery/kitchen_machine/oven
@@ -473,7 +473,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 2)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 2)
 	RefreshParts()
 
 /obj/machinery/kitchen_machine/grill
@@ -495,7 +495,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 2)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 2)
 	RefreshParts()
 
 /obj/machinery/kitchen_machine/candymaker
@@ -517,5 +517,5 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 2)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 2)
 	RefreshParts()
