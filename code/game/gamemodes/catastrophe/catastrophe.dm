@@ -3,7 +3,7 @@
 	config_tag = "catastrophe"
 	required_players = 0
 
-	//votable = 1 // maybe someday
+	votable = FALSE
 
 	uplink_welcome = "Syndicate Uplink Console:"
 	uplink_uses = 20
