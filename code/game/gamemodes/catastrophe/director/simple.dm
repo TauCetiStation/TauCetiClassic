@@ -2,8 +2,8 @@
 /datum/catastrophe_director/simple
 	name = "Simple director"
 
-	desired_length = 50 // set to 10 or something for quick rounds
-	var/harm_events_count = 3 // spawns 3 bad events at the start and thats it
+	desired_length = 70 // set to 10 or something for quick rounds
+	var/harm_events_count = 2 // spawns 2 bad events at the start and thats it
 
 	var/next_harm_event
 	var/help_event_timer
