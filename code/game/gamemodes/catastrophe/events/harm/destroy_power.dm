@@ -11,7 +11,8 @@
 	event_duration_min = 0.3 // ~10 min event
 	event_duration_max = 0.3
 
-	var/list/destroy_list = list( // type = chance_to_destroy
+	// type = chance_to_destroy
+	var/list/destroy_list = list(
 		/obj/machinery/sleep_console = 50,
 		/obj/machinery/autolathe = 75,
 		/obj/machinery/clonepod  = 50,
