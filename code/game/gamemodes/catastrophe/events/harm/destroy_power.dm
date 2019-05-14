@@ -11,6 +11,17 @@
 	event_duration_min = 0.3 // ~10 min event
 	event_duration_max = 0.3
 
+	var/list/destroy_list = list( // type = chance_to_destroy
+		/obj/machinery/sleep_console = 50,
+		/obj/machinery/autolathe = 75,
+		/obj/machinery/clonepod  = 50,
+		/obj/machinery/vending = 60,
+		/obj/machinery/atmospherics/components/unary/cryo_cell = 60,
+		/obj/machinery/dna_scannernew = 50,
+		/obj/machinery/mecha_part_fabricator = 50,
+		/obj/machinery/chem_master = 50
+	)
+
 /datum/catastrophe_event/power_destroy/on_step()
 	switch(step)
 		if(1)
@@ -18,30 +29,17 @@
 		if(2)
 			announce(CYRILLIC_EVENT_POWER_DESTROY_2)
 
-			for(var/obj/machinery/sleep_console/M in machines)
-				do_destroy(M)
-			for(var/obj/machinery/autolathe/M in machines)
-				do_destroy(M)
-			for(var/obj/machinery/clonepod/M in machines)
-				do_destroy(M)
-			for(var/obj/machinery/autolathe/M in machines)
-				do_destroy(M)
-			for(var/obj/machinery/vending/M in machines)
-				do_destroy(M, 60)
+			for(var/obj/machinery/M in machines)
+				for(var/e in destroy_list)
+					if(istype(M, e))
+						do_destroy(M, destroy_list[e])
+
 				CHECK_TICK
-			for(var/obj/machinery/atmospherics/components/unary/cryo_cell/M in machines)
-				do_destroy(M, 60)
-			for(var/obj/machinery/dna_scannernew/M in machines)
-				do_destroy(M)
-			for(var/obj/machinery/mecha_part_fabricator/M in machines)
-				do_destroy(M)
+
 			for(var/obj/machinery/teleport/M in teleporter_list)
 				do_destroy(M, 80)
 			for(var/obj/machinery/power/smes/M in smes_list)
 				do_destroy(M, 20)
-				CHECK_TICK
-			for(var/obj/machinery/chem_master/M in machines)
-				do_destroy(M)
 			for(var/obj/machinery/computer/M in computer_list)
 				if(M.z != ZLEVEL_STATION)
 					continue
