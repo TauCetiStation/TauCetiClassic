@@ -75,7 +75,7 @@
 	return TRUE
 
 // creates and runs a new event based on the required type
-/datum/catastrophe_director/proc/generate_event(event_type)
+/datum/catastrophe_director/proc/generate_event(event_type, start_now = TRUE)
 	message_admins("Attempt to generate event with [event_type] type!")
 
 	var/list/possible = list()
@@ -89,6 +89,15 @@
 	var/datum/catastrophe_event/event = pickweight(possible)
 	if(!event)
 		return
+
+	if(start_now)
+		start_event(event)
+	return event
+
+/datum/catastrophe_director/proc/start_event(datum/catastrophe_event/event)
+	if(!event)
+		return
+
 	tags |= event.adds_tags
 	events += event
 	event_pool -= event
