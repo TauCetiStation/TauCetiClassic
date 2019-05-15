@@ -329,6 +329,12 @@
 				ONE_ATMOSPHERE * 50
 			)
 
+	if(signal.data["reset_internal_pressure"] != null)
+		internal_pressure_bound = internal_pressure_bound_default
+
+	if(signal.data["reset_external_pressure"] != null)
+		external_pressure_bound = external_pressure_bound_default
+
 	if(signal.data["adjust_internal_pressure"] != null)
 		internal_pressure_bound = between(
 			0,

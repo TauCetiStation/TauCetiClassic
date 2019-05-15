@@ -541,7 +541,8 @@
 						"power"     = info["power"],
 						"checks"    = info["checks"],
 						"direction" = info["direction"],
-						"external"  = info["external"]
+						"external"  = info["external"],
+						"internal"  = info["internal"]
 					)
 			data["vents"] = vents
 		if(AALARM_SCREEN_SCRUB)
@@ -668,7 +669,17 @@
 					return FALSE
 
 				if("reset_external_pressure")
-					send_signal(device_id, list(href_list["command"] = ONE_ATMOSPHERE))
+					send_signal(device_id, list(href_list["command"] = TRUE))
+					return FALSE
+
+				if("set_internal_pressure")
+					var/input_pressure = input("What pressure you like the system to mantain?", "Pressure Controls") as num|null
+					if(isnum(input_pressure))
+						send_signal(device_id, list(href_list["command"] = input_pressure))
+					return FALSE
+
+				if("reset_internal_pressure")
+					send_signal(device_id, list(href_list["command"] = TRUE))
 					return FALSE
 
 				if( "power",
