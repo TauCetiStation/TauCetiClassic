@@ -320,7 +320,7 @@
 
 	else if(istype(W,/obj/item/door_control_frame))
 		var/obj/item/door_control_frame/AH = W
-		AH.try_build_on_wall(src)
+		AH.try_build(src)
 		return
 
 	//Poster stuff

@@ -418,51 +418,44 @@
 		new /obj/item/stack/sheet/metal(get_turf(src.loc), 1)
 		qdel(src)
 
-/obj/item/door_control_frame/proc/try_build_on_wall(turf/on_wall)
+/obj/item/door_control_frame/proc/try_build(target)
 
-	if (get_dist(on_wall, usr) > 1)
+	if (get_dist(target, usr) > 1)
 		return
 
-	var/ndir = get_dir(on_wall, usr)
-	if (!(ndir in cardinal))
-		return
-
-	var/turf/loc = get_turf_loc(usr)
-	var/area/A = get_area(src)
-	if (!istype(loc, /turf/simulated/floor))
-		to_chat(usr, "<span class='warning'>Door Control cannot be placed on this spot.</span>")
-		return
-	if (A.requires_power == 0 || istype(A, /area/space))
-		to_chat(usr, "<span class='warning'>Door Control cannot be placed in this area.</span>")
-		return
-
-	if(gotwallitem(loc, ndir))
-		to_chat(usr, "<span class='warning'>There's already an item on this wall!</span>")
-		return
-
-	new /obj/machinery/door_control(loc, ndir, ON_WALL)
-
-	qdel(src)
-
-/obj/item/door_control_frame/proc/try_build_on_table(obj/structure/table/reinforced/table)
-	if (get_dist(table, usr) > 1)
-		return
-
-	var/ndir = get_dir(table, usr)
+	var/ndir = get_dir(target, usr)
 	if (!(ndir in cardinal))
 		return
 
 	var/area/A = get_area(src)
-	if (!istype(table.loc, /turf/simulated/floor))
-		to_chat(usr, "<span class='warning'>Door Control cannot be placed on this spot.</span>")
-		return
-	if (A.requires_power == 0 || istype(A, /area/space))
+	if(A.requires_power == 0 || istype(A, /area/space))
 		to_chat(usr, "<span class='warning'>Door Control cannot be placed in this area.</span>")
 		return
 
-	for(var/obj/machinery/machine in table.loc)
-		if(machine.layer > CONTAINER_STRUCTURE_LAYER)
-			if(!istype(machine, /obj/machinery/door_control) && !istype(machine, /obj/machinery/door/window))
+	if(istype(target, /turf/simulated/wall))
+
+		var/turf/loc = get_turf_loc(usr)
+
+		if(!istype(loc, /turf/simulated/floor))
+			to_chat(usr, "<span class='warning'>Door Control cannot be placed on this spot.</span>")
+			return
+
+		if(gotwallitem(loc, ndir))
+			to_chat(usr, "<span class='warning'>There's already an item on this wall!</span>")
+			return
+
+		new /obj/machinery/door_control(loc, ndir, ON_WALL)
+
+	else if(istype(target, /obj/structure/table/reinforced))
+
+		var/turf/loc = get_turf_loc(target)
+
+		if (!istype(loc, /turf/simulated/floor))
+			to_chat(usr, "<span class='warning'>Door Control cannot be placed on this spot.</span>")
+			return
+
+		for(var/obj/machinery/machine in loc)
+			if(!istype(machine, /obj/machinery/door_control) && !istype(machine, /obj/machinery/door/window) && !istype(machine, /obj/machinery/atmospherics))
 				to_chat(usr, "<span class='warning'>There's already an object on this table!</span>")
 				return
 			else if(istype(machine, /obj/machinery/door_control))
@@ -470,7 +463,7 @@
 					to_chat(usr, "<span class='warning'>There's already a button at this side of table!</span>")
 					return
 
-	new /obj/machinery/door_control(table.loc, ndir, ON_TABLE)
+		new /obj/machinery/door_control(loc, ndir, ON_TABLE)
 
 	qdel(src)
 
