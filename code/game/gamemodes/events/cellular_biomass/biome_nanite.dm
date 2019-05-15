@@ -193,7 +193,7 @@
 	death()
 
 /mob/living/simple_animal/hostile/cellular/nanite/Destroy()
-	if(!clone && nanite_parent)
+	if(nanite_parent)
 		nanite_parent.childs -= src
 	nanite_parent = null
 	return ..()
