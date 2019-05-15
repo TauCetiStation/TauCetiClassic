@@ -157,6 +157,7 @@
 				newnanite.nanite_parent = nanite_parent
 				newnanite.target = target
 				newnanite.clone = TRUE
+				newnanite.faction = faction
 			if(nanite_parent != null)
 				if(nanite_parent.health < health_trigger)
 					stop_automated_movement = TRUE
@@ -174,6 +175,7 @@
 			var/mob/living/simple_animal/hostile/cellular/nanite/S = new type_to_spawn(src.loc)
 			S.nanite_parent = src
 			S.health_trigger = health
+			S.faction = faction
 			childs += S
 
 /mob/living/simple_animal/hostile/cellular/nanite/AttackingTarget()
@@ -183,7 +185,7 @@
 		combohit += 1
 		if(combohit == 4)
 			var/mob/living/simple_animal/hostile/cyber_horror/N = new(L.loc)
-			N.faction = "nanite"
+			N.faction = faction
 			combohit = 0
 			L.gib()
 
