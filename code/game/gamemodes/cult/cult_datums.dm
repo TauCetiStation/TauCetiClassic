@@ -938,7 +938,7 @@ var/list/cult_runes = list()
 	var/list/heretics = nearest_heretics()
 	if(length(heretics) < 1)
 		return fizzle(user)
-	var/damage_modifier = min(150 / length(heretics), 30)
+	var/damage_modifier = min(150 / length(heretics), 45)
 
 	for(var/mob/living/carbon/M in heretics)
 		M.take_overall_damage(damage_modifier, damage_modifier)
