@@ -17,6 +17,7 @@
 		/obj/item/light_fixture_frame,
 		/obj/item/apc_frame,
 		/obj/item/alarm_frame,
+		/obj/item/door_control_frame,
 		/obj/item/firealarm_frame,
 		/obj/item/weapon/table_parts,
 		/obj/item/weapon/rack_parts,

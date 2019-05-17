@@ -1328,7 +1328,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/proc/send_sound(mob/living/carbon/human/target, sound)
 	if(!target || !sound)
 		return
-	target << sound
+	send_sound(target, sound)
 */
 /////////////////////////////////////////////////////////////////////
 /*

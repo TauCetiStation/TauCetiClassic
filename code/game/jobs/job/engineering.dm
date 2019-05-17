@@ -122,7 +122,7 @@
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
 	idtype = /obj/item/weapon/card/id/eng
-	access = list(access_engineering_lobby, access_construction)
+	access = list(access_engineering_lobby, access_construction, access_maint_tunnels)
 	minimal_player_age = 1
 	minimal_player_ingame_minutes = 200
 	restricted_species = list(IPC)

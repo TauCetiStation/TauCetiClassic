@@ -471,7 +471,10 @@
 					breathsound = "gasmaskbreath"
 				if(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space))
 					breathsound = "rigbreath"
-				playsound(src, breathsound, 80, 0, -6)
+				if(breathsound == "rigbreath")
+					playsound(src, breathsound, 70, 0, -6, src_vol = 30)
+				else
+					playsound(src, breathsound, 80, 0, -6)
 			return internal.remove_air_volume(volume_needed)
 		else if(internals)
 			internals.icon_state = "internal0"
@@ -1036,7 +1039,7 @@
 		if(light_amount > LIGHT_DAM_THRESHOLD)
 			take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
 			to_chat(src, "<span class='userdanger'>The light burns you!</span>")
-			src << 'sound/weapons/sear.ogg'
+			send_sound(src, 'sound/weapons/sear.ogg')
 		else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
 			heal_overall_damage(5,5)
 			adjustToxLoss(-3)
@@ -1737,7 +1740,7 @@
 
 		if(heart_beat >= temp)
 			heart_beat = 0
-			src << sound('sound/effects/singlebeat.ogg',0,0,0,50)
+			send_sound(src, 'sound/effects/singlebeat.ogg', 50)
 		else if(temp != 0)
 			heart_beat++
 

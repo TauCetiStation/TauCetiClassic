@@ -40,7 +40,7 @@
 	armor = list(melee = 40, bullet = 30, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 50)
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	var/up = 0 //So Unathi helmets play nicely with the weldervision check.
+	var/up = 1 //So Unathi helmets play nicely with the weldervision check.
 	species_restricted = list(UNATHI)
 
 /obj/item/clothing/head/helmet/space/unathi/helmet_cheap
@@ -49,6 +49,27 @@
 	icon_state = "unathi_helm_cheap"
 	item_state = "unathi_helm_cheap"
 	item_color = "unathi_helm_cheap"
+
+	action_button_name = "Toggle Helmet Light"
+	var/brightness_on = 4 //luminosity when on
+	var/on = 0
+
+	light_color = "#00ffff"
+
+/obj/item/clothing/head/helmet/space/unathi/helmet_cheap/attack_self(mob/user)
+	if(!isturf(user.loc))
+		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
+		return
+	on = !on
+	icon_state = "unathi_helm_cheap[on ? "-light" : ""]"
+	usr.update_inv_head()
+
+	if(on)	set_light(brightness_on)
+	else	set_light(0)
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_inv_head()
 
 /obj/item/clothing/suit/space/unathi
 	armor = list(melee = 40, bullet = 30, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 50)
@@ -62,7 +83,7 @@
 	desc = "A cheap NT knock-off of a Unathi battle-rig. Looks like a fish, moves like a fish, steers like a cow."
 	icon_state = "rig-unathi-cheap"
 	item_state = "rig-unathi-cheap"
-	slowdown = 3
+	slowdown = 2.3
 
 /obj/item/clothing/head/helmet/space/unathi/breacher
 	name = "breacher helm"

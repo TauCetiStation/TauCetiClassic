@@ -260,9 +260,8 @@
 
 					else if(ptype==7) // Disposal outlet
 
-						var/obj/structure/disposaloutlet/P = new /obj/structure/disposaloutlet(src.loc)
+						var/obj/structure/disposaloutlet/P = new /obj/structure/disposaloutlet(src.loc, dir)
 						src.transfer_fingerprints_to(P)
-						P.dir = dir
 						var/obj/structure/disposalpipe/trunk/Trunk = CP
 						Trunk.linked = P
 

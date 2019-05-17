@@ -1323,8 +1323,10 @@
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/mode = 0
 
-/obj/structure/disposaloutlet/atom_init()
+/obj/structure/disposaloutlet/atom_init(mapload, dir)
 	..()
+	if(dir)
+		src.dir = dir
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/disposaloutlet/atom_init_late()
@@ -1381,6 +1383,7 @@
 				C.update()
 				C.anchored = 1
 				C.density = 1
+				C.dir = dir
 				qdel(src)
 			return
 		else

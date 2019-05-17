@@ -32,7 +32,7 @@
 	component_parts += new /obj/item/weapon/circuitboard/color_mixer(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
 
 	RefreshParts()
 	if(mapload)
