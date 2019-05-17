@@ -22901,6 +22901,7 @@
 "aOc" = (
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "tox_airlock_control";
+	ignore_connection_state = 1;
 	pixel_x = -28;
 	pixel_y = -24;
 	tag_airpump = "tox_airlock_pump";

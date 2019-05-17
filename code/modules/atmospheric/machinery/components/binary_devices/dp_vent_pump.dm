@@ -37,6 +37,7 @@
 
 	frequency = 0
 	var/id = null
+	var/obj/machinery/embedded_controller/radio/controller
 
 	var/pressure_checks = PRESSURE_CHECK_EXTERNAL
 	//1: Do not pass external_pressure_bound
@@ -222,7 +223,13 @@
 		to_chat(user, "A small gauge in the corner reads [round(last_flow_rate, 0.1)] L/s; [round(last_power_draw)] W")
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/receive_signal(datum/signal/signal)
-	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
+	if((!signal.data["signal_target"] && !signal.data["tag"]) || (signal.data["sigtype"] != "command"))
+		return FALSE
+
+	if(signal.data["signal_target"] && !(src in signal.data["signal_target"]))
+		return FALSE
+
+	else if(signal.data["tag"] && !(signal.data["tag"] == id))
 		return FALSE
 
 	if(signal.data["power"])

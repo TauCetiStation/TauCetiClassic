@@ -46,6 +46,7 @@
 
 	var/const/connection_range = 5
 	var/const/max_airpumps = 6
+	var/ignore_connection_state = FALSE //for mapping
 
 	var/last_electrocute
 
@@ -140,6 +141,11 @@
 			airpumps += P
 			P.controller = src
 
+	for(var/obj/machinery/atmospherics/components/binary/dp_vent_pump/P in range(connection_range, src))
+		if(P.id == tag_airpump)
+			airpumps += P
+			P.controller = src
+
 	for(var/obj/machinery/access_button/B in range(connection_range, src))
 		if(B.master_tag == id_tag)
 			if(B.command == "cycle_exterior")
@@ -174,6 +180,8 @@
 
 /obj/machinery/embedded_controller/radio/proc/update_connection_state()
 	has_all_connections = TRUE
+	if(ignore_connection_state)
+		return FALSE
 	if(!exterior_door || !interior_door || !interior_access_button || !exterior_access_button)
 		has_all_connections = FALSE
 	return has_all_connections
@@ -328,14 +336,14 @@
 		. += "<li><b><a href='?src=\ref[src];show=airlocks'>Airlocks</a></b></li><ul>"
 
 		if(interior_door)
-			. += "<li><b>Internal - <x style='color: green'>Connected</x> | <a href='?src=\ref[src];disconnect=interior_door'>Disconnect</a></b></li>"
+			. += "<li><b>Internal - <font color='green'>Connected</font> | <a href='?src=\ref[src];disconnect=interior_door'>Disconnect</a></b></li>"
 		else
-			. += "<li><b>Internal - <x style='color: red'>Not connected</x> | <a href='?src=\ref[src];connect=door;type=interior'>Connect</a></b></li>"
+			. += "<li><b>Internal - <font color='red'>Not connected</font> | <a href='?src=\ref[src];connect=door;type=interior'>Connect</a></b></li>"
 
 		if(exterior_door)
-			. += "<li><b>External - <x style='color: green'>Connected</x> | <a href='?src=\ref[src];disconnect=exterior_door'>Disconnect</a></b></li>"
+			. += "<li><b>External - <font color='green'>Connected</font> | <a href='?src=\ref[src];disconnect=exterior_door'>Disconnect</a></b></li>"
 		else
-			. += "<li><b>External - <x style='color: red'>Not connected</x> | <a href='?src=\ref[src];connect=door;type=exterior'>Connect</a></b></li>"
+			. += "<li><b>External - <font color='red'>Not connected</font> | <a href='?src=\ref[src];connect=door;type=exterior'>Connect</a></b></li>"
 
 		. += "</ul>"
 
@@ -345,14 +353,14 @@
 		. += "<li><b><a href='?src=\ref[src];show=access_buttons'>Access buttons</a></b></li><ul>"
 
 		if(interior_access_button)
-			. += "<li><b>Internal - <x style='color: green'>Connected</x> | <a href='?src=\ref[src];disconnect=interior_access_button'>Disconnect</a></b></li>"
+			. += "<li><b>Internal - <font color='green'>Connected</font> | <a href='?src=\ref[src];disconnect=interior_access_button'>Disconnect</a></b></li>"
 		else
-			. += "<li><b>Internal - <x style='color: red'>Not connected</x> | <a href='?src=\ref[src];connect=access_button;type=interior'>Connect</a></b></li>"
+			. += "<li><b>Internal - <font color='red'>Not connected</font> | <a href='?src=\ref[src];connect=access_button;type=interior'>Connect</a></b></li>"
 
 		if(exterior_access_button)
-			. += "<li><b>External - <x style='color: green'>Connected</x> | <a href='?src=\ref[src];disconnect=exterior_access_button'>Disconnect</a></b></li>"
+			. += "<li><b>External - <font color='green'>Connected</font> | <a href='?src=\ref[src];disconnect=exterior_access_button'>Disconnect</a></b></li>"
 		else
-			. += "<li><b>External - <x style='color: red'>Not connected</x> | <a href='?src=\ref[src];connect=access_button;type=exterior'>Connect</a></b></li>"
+			. += "<li><b>External - <font color='red'>Not connected</font> | <a href='?src=\ref[src];connect=access_button;type=exterior'>Connect</a></b></li>"
 
 		. += "</ul>"
 
@@ -389,6 +397,10 @@
 
 
 /obj/machinery/embedded_controller/radio/Topic(href, href_list)
+	. = ..()
+	if(!.)
+		return
+
 	if(buildstage == AIRLOCK_CONTROLLER_PANEL_OPEN)
 		if(get_dist(src, usr) > 1 || !(stat & NOPOWER))
 			usr << browse(null, "window=door_control")
@@ -593,9 +605,6 @@
 		program.state = STATE_EXTERMINATING
 		update_icon()
 		return FALSE
-
-	else
-		. = ..()
 
 /obj/machinery/embedded_controller/radio/proc/update_buttons_accesses()
 	if(buttons_one_access)

@@ -144,6 +144,7 @@
 	var/master_tag
 	var/obj/machinery/embedded_controller/radio/controller
 	frequency = 1379
+	var/command = "cycle"
 	var/const/connection_range = 5
 
 	var/alert = 0
@@ -166,6 +167,20 @@
 			icon_state = "airlock_sensor_standby"
 	else
 		icon_state = "airlock_sensor_off"
+
+/obj/machinery/airlock_sensor/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
+	if(master_tag)
+		var/datum/signal/signal = new
+		signal.transmission_method = 1 //radio signal
+		signal.data["signal_source"] = controller
+		signal.data["command"] = command
+
+		radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
+		flick("airlock_sensor_cycle", src)
 
 /obj/machinery/airlock_sensor/process()
 	if(controller && !(controller.stat & NOPOWER) && controller.has_all_connections)
