@@ -1,0 +1,2086 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/space,
+/area/space)
+"ab" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_s6"
+	},
+/area/derelict/ship)
+"ac" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall12"
+	},
+/area/derelict/ship)
+"ad" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall14"
+	},
+/area/derelict/ship)
+"ae" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_s10"
+	},
+/area/derelict/ship)
+"af" = (
+/obj/structure/scrap_cube,
+/turf/space,
+/area/space)
+"ag" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_s9"
+	},
+/area/derelict/ship)
+"ah" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"ai" = (
+/obj/effect/decal/cleanable/vomit,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"aj" = (
+/obj/machinery/sleeper,
+/obj/effect/decal/remains/human,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"ak" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/vending/medical,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"al" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_s5"
+	},
+/area/derelict/ship)
+"am" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall13"
+	},
+/area/derelict/ship)
+"an" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_f10";
+	layer = 2
+	},
+/area/derelict/ship)
+"ao" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall11"
+	},
+/area/derelict/ship)
+"ap" = (
+/obj/machinery/computer/med_data,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"aq" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 6;
+	pixel_y = -5
+	},
+/obj/item/roller,
+/obj/item/weapon/FixOVein,
+/obj/item/weapon/bonegel,
+/obj/item/weapon/bonesetter,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"ar" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall15"
+	},
+/area/derelict/ship)
+"as" = (
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_f9"
+	},
+/area/derelict/ship)
+"at" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "heater1"
+	},
+/turf/simulated/floor/plating/airless,
+/area/derelict/ship)
+"au" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "propulsion"
+	},
+/turf/space,
+/area/derelict/ship)
+"av" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_f10"
+	},
+/area/derelict/ship)
+"aw" = (
+/obj/machinery/bodyscanner,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"ax" = (
+/obj/machinery/body_scanconsole,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"ay" = (
+/obj/item/weapon/scalpel,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"az" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall7"
+	},
+/area/derelict/ship)
+"aA" = (
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/area/derelict/ship)
+"aB" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_f9"
+	},
+/area/derelict/ship)
+"aC" = (
+/obj/structure/computerframe{
+	anchored = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"aD" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/derelict/ship)
+"aE" = (
+/obj/machinery/door/airlock/glass{
+	name = "Hibernation Pods"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"aF" = (
+/obj/effect/decal/cleanable/blood/oil,
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/area/derelict/ship)
+"aG" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"aH" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/cobweb2,
+/obj/item/device/guitar,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"aI" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall3"
+	},
+/area/derelict/ship)
+"aJ" = (
+/obj/item/device/multitool,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"aK" = (
+/obj/item/weapon/stock_parts/cell{
+	charge = 100;
+	maxcharge = 15000
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"aL" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"aM" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/area/derelict/ship)
+"aN" = (
+/obj/machinery/light/small,
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/area/derelict/ship)
+"aO" = (
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_f6"
+	},
+/area/derelict/ship)
+"aP" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_f9"
+	},
+/area/derelict/ship)
+"aQ" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"aR" = (
+/obj/structure/table,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"aS" = (
+/obj/effect/decal/cleanable/blood/oil,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"aT" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_f6"
+	},
+/area/derelict/ship)
+"aU" = (
+/obj/machinery/door/airlock/glass,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"aV" = (
+/obj/machinery/portable_atmospherics/powered/scrubber,
+/obj/machinery/light_construct/small{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"aW" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_f5"
+	},
+/area/derelict/ship)
+"aX" = (
+/obj/machinery/light_construct/small{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"aY" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"aZ" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"ba" = (
+/obj/machinery/door/window,
+/obj/effect/decal/cleanable/cobweb2,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bb" = (
+/obj/item/weapon/soap,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bc" = (
+/obj/machinery/washing_machine,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bd" = (
+/obj/structure/lattice,
+/turf/space,
+/area/space)
+"be" = (
+/obj/structure/table,
+/obj/item/weapon/gun/energy/laser/retro,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bf" = (
+/obj/structure/table,
+/obj/item/clothing/accessory/medal/gold/captain,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bg" = (
+/obj/structure/table,
+/obj/item/weapon/tank/oxygen,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bh" = (
+/obj/machinery/light_construct/small{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bi" = (
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bj" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_s6"
+	},
+/area/space)
+"bk" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall14"
+	},
+/area/space)
+"bl" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall12"
+	},
+/area/space)
+"bm" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_s10"
+	},
+/area/space)
+"bn" = (
+/obj/structure/table,
+/obj/item/device/analyzer,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bo" = (
+/obj/effect/decal/remains/human,
+/obj/structure/stool/bed/chair/metal{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bp" = (
+/obj/machinery/door/airlock/glass{
+	name = "Living Module"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bq" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"br" = (
+/obj/machinery/light/small,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bs" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall7"
+	},
+/area/space)
+"bt" = (
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_f9"
+	},
+/area/space)
+"bu" = (
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/space)
+"bv" = (
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_f5"
+	},
+/area/space)
+"bw" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall11"
+	},
+/area/space)
+"bx" = (
+/obj/structure/table,
+/obj/item/clothing/accessory/medal/silver/security,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"by" = (
+/obj/structure/table,
+/obj/item/clothing/accessory/medal/gold/heroism,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bz" = (
+/obj/machinery/door/window/northright,
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/vomit,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bA" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/weapon/syntiflesh,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bB" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_f10";
+	layer = 2
+	},
+/area/derelict/ship)
+"bC" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/light/small,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bD" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/space)
+"bE" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_s9"
+	},
+/area/derelict/ship)
+"bF" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_s5"
+	},
+/area/derelict/ship)
+"bG" = (
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_f10"
+	},
+/area/space)
+"bH" = (
+/obj/item/weapon/table_parts,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/space)
+"bI" = (
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_f6"
+	},
+/area/space)
+"bJ" = (
+/obj/machinery/light_switch{
+	pixel_x = 27
+	},
+/obj/machinery/vending/sovietsoda,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bK" = (
+/obj/machinery/light/small,
+/obj/structure/dispenser/oxygen,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bL" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_s5"
+	},
+/area/space)
+"bM" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall13"
+	},
+/area/space)
+"bN" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_s9"
+	},
+/area/space)
+"bO" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bP" = (
+/obj/structure/stool/bed/chair/metal,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bQ" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_s10"
+	},
+/area/derelict/ship)
+"bR" = (
+/obj/structure/computerframe{
+	anchored = 1
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bS" = (
+/obj/structure/computerframe{
+	anchored = 1
+	},
+/obj/item/stack/cable_coil/cut/red,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bT" = (
+/obj/structure/rack,
+/obj/item/weapon/tank/emergency_oxygen,
+/obj/item/weapon/tank/emergency_oxygen,
+/obj/item/weapon/tank/emergency_oxygen,
+/obj/item/weapon/tank/emergency_oxygen,
+/obj/machinery/light_construct/small{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bU" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/syndicate,
+/obj/item/clothing/head/helmet/space/syndicate,
+/obj/item/clothing/mask/breath,
+/obj/item/weapon/storage/toolbox/emergency,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bV" = (
+/obj/machinery/vending/engivend,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bW" = (
+/obj/machinery/power/apc{
+	cell_type = 5000;
+	dir = 8;
+	environ = 0;
+	equipment = 0;
+	lighting = 0;
+	locked = 0;
+	name = "Worn-out APC";
+	pixel_x = -24;
+	pixel_y = 0
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2";
+	pixel_y = 0
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bX" = (
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_s5"
+	},
+/area/derelict/ship)
+"bY" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"bZ" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "burst_r"
+	},
+/turf/space,
+/area/derelict/ship)
+"ca" = (
+/obj/machinery/door/poddoor{
+	id = "oldship_gun";
+	name = "Pod Bay Door"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"cb" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	icon_state = "mass_driver";
+	id = "oldship_gun"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"cc" = (
+/obj/effect/decal/cleanable/ash,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"cd" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"ce" = (
+/obj/machinery/door/airlock/glass{
+	name = "Pod Bay"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"cf" = (
+/obj/effect/decal/remains/human,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"cg" = (
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_f10"
+	},
+/area/derelict/ship)
+"ch" = (
+/obj/machinery/computer/pod{
+	id = "oldship_gun"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"ci" = (
+/obj/machinery/vending/tool,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"cj" = (
+/obj/structure/table,
+/obj/item/device/radio/off,
+/obj/item/device/radio/off,
+/obj/item/device/radio/off,
+/obj/item/device/radio/off,
+/obj/item/weapon/circuitboard/security,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+"ck" = (
+/obj/machinery/light/small,
+/obj/machinery/constructable_frame/machine_frame,
+/obj/structure/cable,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/derelict/ship)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+af
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+az
+aI
+aD
+aD
+aD
+aD
+aD
+aD
+aD
+aI
+az
+bF
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+ab
+ar
+aB
+aQ
+ah
+ah
+be
+bn
+bx
+ah
+ah
+bO
+bQ
+am
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+af
+ab
+ar
+aB
+ah
+ah
+ah
+ah
+bf
+bo
+by
+ah
+ah
+bP
+bR
+ad
+ca
+bF
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+ab
+ao
+am
+aC
+aG
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+bP
+bS
+ac
+cb
+ac
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+ac
+ap
+av
+al
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+aT
+ar
+aU
+ao
+bF
+aa
+af
+"}
+(7,1,1) = {"
+ab
+ag
+ah
+aw
+ac
+aH
+aR
+aR
+aX
+ah
+ah
+ah
+aY
+bJ
+aT
+ar
+aB
+ah
+ch
+av
+bF
+aa
+"}
+(8,1,1) = {"
+ac
+ah
+ah
+ax
+ad
+aI
+aI
+aI
+aI
+aD
+aU
+aD
+aI
+aI
+ar
+aB
+ah
+ah
+ah
+ah
+ac
+aa
+"}
+(9,1,1) = {"
+ac
+ai
+ah
+ah
+aD
+aJ
+ah
+ah
+ah
+aS
+ah
+ah
+ah
+ah
+ac
+bT
+ah
+aS
+ah
+ci
+ac
+aa
+"}
+(10,1,1) = {"
+ac
+aj
+ah
+ah
+aD
+ah
+ah
+ah
+aY
+ah
+ah
+ah
+ah
+ah
+ac
+bU
+ah
+ah
+ah
+cj
+ac
+aa
+"}
+(11,1,1) = {"
+ac
+ak
+ah
+ay
+aD
+aK
+ah
+aT
+aI
+aI
+aI
+aI
+al
+ah
+ac
+bV
+ah
+cc
+bY
+ck
+ac
+aa
+"}
+(12,1,1) = {"
+ad
+al
+ah
+ah
+ac
+ah
+ah
+aU
+ah
+ah
+ah
+bz
+ac
+ah
+ad
+al
+ah
+cd
+ah
+aT
+am
+aa
+"}
+(13,1,1) = {"
+ae
+am
+aq
+ah
+ac
+ah
+ah
+ac
+aZ
+bg
+bi
+bA
+ac
+bh
+av
+ao
+aI
+ce
+az
+ar
+bE
+aa
+"}
+(14,1,1) = {"
+aa
+ad
+al
+ah
+aE
+ah
+ah
+ac
+ba
+ah
+aX
+ah
+aU
+ah
+ah
+bW
+bY
+cf
+ad
+am
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+ae
+ar
+az
+am
+aL
+aS
+av
+aI
+aI
+aI
+aI
+aB
+ah
+ah
+ah
+ah
+aT
+ar
+aP
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+ae
+ar
+am
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+aS
+aK
+aT
+ar
+bE
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+aa
+ae
+am
+ah
+ah
+ah
+aX
+ah
+ah
+ah
+ah
+ah
+ah
+br
+ad
+bE
+aa
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+af
+aa
+ab
+ao
+aM
+az
+aI
+aI
+aD
+bp
+aD
+aI
+aI
+az
+aM
+ao
+bF
+af
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+ab
+as
+aA
+aN
+ac
+aV
+ah
+ah
+ah
+ah
+ah
+bK
+ac
+aA
+aA
+cg
+bF
+aa
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+ab
+as
+aA
+aF
+aO
+ar
+aW
+bb
+ah
+ah
+ah
+ah
+aT
+ar
+bX
+aF
+aA
+cg
+bF
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+ac
+at
+at
+at
+ac
+ae
+am
+bc
+ah
+aS
+ah
+ah
+ad
+bE
+ac
+at
+at
+at
+ac
+aa
+aa
+"}
+(22,1,1) = {"
+aa
+an
+au
+au
+au
+aP
+aa
+ad
+aW
+ah
+ah
+ah
+aT
+am
+aa
+ae
+bZ
+bZ
+bZ
+bE
+aa
+aa
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ar
+aW
+ah
+aT
+ar
+bE
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(24,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ar
+bq
+ar
+bE
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(25,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+br
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(26,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ar
+bq
+ar
+bF
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(27,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+aB
+ah
+bB
+am
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(28,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+bh
+ah
+br
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(29,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ah
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(30,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ah
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(31,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+bi
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(32,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ah
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(33,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ah
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(34,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+bh
+ah
+bC
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(35,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+al
+ai
+aT
+am
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(36,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ao
+bq
+ao
+bE
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(37,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bd
+bd
+bd
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(38,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bd
+aa
+bd
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(39,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bd
+aa
+bd
+bd
+bd
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(40,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bj
+bs
+bD
+bs
+bL
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(41,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bk
+bt
+bu
+bG
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(42,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+bu
+bu
+bu
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(43,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+bu
+bu
+bu
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(44,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+bu
+bu
+bu
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(45,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+bu
+bu
+bu
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(46,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+bu
+bu
+bH
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(47,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+bu
+bu
+bu
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(48,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+bu
+bu
+bu
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(49,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bk
+bv
+bu
+bI
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(50,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bm
+bw
+bD
+bw
+bN
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

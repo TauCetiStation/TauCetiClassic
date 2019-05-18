@@ -107,6 +107,7 @@
 
 	preloadShelterTemplates()
 	preloadHolodeckTemplates()
+	preloadSpaceStructuresTemplates()
 
 /proc/preloadHolodeckTemplates()
 	for(var/item in subtypesof(/datum/map_template/holoscene))
@@ -126,3 +127,12 @@
 		var/datum/map_template/shelter/S = new shelter_type()
 		shelter_templates[S.id()] = S
 		map_templates[S.id()] = S
+
+/proc/preloadSpaceStructuresTemplates()
+	for(var/item in subtypesof(/datum/map_template/space_structure))
+		var/datum/map_template/space_structure/structure_type = item
+		if(!(initial(structure_type.mappath)))
+			continue
+		var/datum/map_template/space_structure/S = new structure_type()
+		spacestructures_templates[S.structure_id] = S
+		map_templates[S.structure_id] = S
