@@ -460,7 +460,7 @@
 				return
 			else if(istype(machine, /obj/machinery/door_control))
 				if((ndir == NORTH && machine.pixel_y > 3) || (ndir == SOUTH && machine.pixel_y < 3) || (ndir == EAST && machine.pixel_x > 0) || (ndir == WEST && machine.pixel_x < 0))
-					to_chat(usr, "<span class='warning'>There's already a button at this side of table!</span>")
+					to_chat(usr, "<span class='warning'>There's already a button on this side of table!</span>")
 					return
 
 		new /obj/machinery/door_control(loc, ndir, ON_TABLE)
