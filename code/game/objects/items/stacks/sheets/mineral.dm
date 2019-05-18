@@ -276,7 +276,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	icon_state = "sheet-silver"
 	sheettype = "osmium"
 	origin_tech = "materials=5"
-	color = "#9999FF"
+	color = "#9999ff"
 	perunit = 2000
 
 // Fusion fuel.

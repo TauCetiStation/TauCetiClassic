@@ -26,8 +26,5 @@
 	if(!newyear)
 		icon = pick('icons/misc/fullscreen_standart.dmi', 'icons/misc/fullscreen_leshiy.dmi')
 
-/turf/unsimulated/wall/other
-	icon_state = "r_wall"
-
 /turf/unsimulated/wall/abductor
 	icon_state = "alien1"

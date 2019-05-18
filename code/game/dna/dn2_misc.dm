@@ -335,7 +335,7 @@
 		usr.hulk_cd = 0
 
 	if (istype(usr.loc,/turf))
-		usr.visible_message("<font size='4' color='red'><b>[usr.name] prepares a heavy attack!</b>")
+		usr.visible_message("<font size='4' color='red'><b>[usr.name] prepares a heavy attack!</b></font>")
 		for(var/i=0, i<30, i++)
 			usr.canmove = 0
 			usr.anchored = 1

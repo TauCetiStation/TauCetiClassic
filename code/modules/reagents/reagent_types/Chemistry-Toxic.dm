@@ -3,7 +3,7 @@
 	id = "toxin"
 	description = "A toxic chemical."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#cf3600" // rgb: 207, 54, 0
 	var/toxpwr = 0.7 // Toxins are really weak, but without being treated, last very long.
 	custom_metabolism = 0.1
 	taste_message = "bitterness"
@@ -26,7 +26,7 @@
 	id = "mutagen"
 	description = "Might cause unpredictable mutations. Keep away from children."
 	reagent_state = LIQUID
-	color = "#13BC5E" // rgb: 19, 188, 94
+	color = "#13bc5e" // rgb: 19, 188, 94
 	toxpwr = 0
 
 /datum/reagent/toxin/mutagen/reaction_mob(mob/living/carbon/M, method=TOUCH, volume)
@@ -96,7 +96,7 @@
 	id = "lexorin"
 	description = "Lexorin temporarily stops respiration. Causes tissue damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#c8a5dc" // rgb: 200, 165, 220
 	toxpwr = 0
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
@@ -114,7 +114,7 @@
 	id = "slimejelly"
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
 	reagent_state = LIQUID
-	color = "#801E28" // rgb: 128, 30, 40
+	color = "#801e28" // rgb: 128, 30, 40
 	toxpwr = 0
 
 /datum/reagent/toxin/slimejelly/on_general_digest(mob/living/M)
@@ -130,7 +130,7 @@
 	id = "cyanide"
 	description = "A highly toxic chemical."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#cf3600" // rgb: 207, 54, 0
 	toxpwr = 4
 	custom_metabolism = 0.4
 
@@ -144,7 +144,7 @@
 	id = "minttoxin"
 	description = "Useful for dealing with undesirable customers."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#cf3600" // rgb: 207, 54, 0
 	toxpwr = 0
 
 /datum/reagent/toxin/minttoxin/on_general_digest(mob/living/M)
@@ -188,7 +188,7 @@
 	id = "mindbreaker"
 	description = "A powerful hallucinogen, it can cause fatal effects in users."
 	reagent_state = LIQUID
-	color = "#B31008" // rgb: 139, 166, 233
+	color = "#b31008" // rgb: 139, 166, 233
 	toxpwr = 0
 	custom_metabolism = 0.05
 	overdose = REAGENTS_OVERDOSE
@@ -202,7 +202,7 @@
 	id = "plantbgone"
 	description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
 	reagent_state = LIQUID
-	color = "#49002E" // rgb: 73, 0, 46
+	color = "#49002e" // rgb: 73, 0, 46
 	toxpwr = 1
 
 // Clear off wallrot fungi
@@ -247,7 +247,7 @@
 	id = "stoxin"
 	description = "An effective hypnotic used to treat insomnia."
 	reagent_state = LIQUID
-	color = "#E895CC" // rgb: 232, 149, 204
+	color = "#e895cc" // rgb: 232, 149, 204
 	toxpwr = 0
 	custom_metabolism = 0.1
 	overdose = REAGENTS_OVERDOSE
@@ -303,7 +303,7 @@
 	id = "potassium_chloride"
 	description = "A delicious salt that stops the heart when injected into cardiac muscle."
 	reagent_state = SOLID
-	color = "#FFFFFF" // rgb: 255,255,255
+	color = "#ffffff" // rgb: 255,255,255
 	toxpwr = 0
 	overdose = 30
 
@@ -321,7 +321,7 @@
 	id = "potassium_chlorophoride"
 	description = "A specific chemical based on Potassium Chloride to stop the heart for surgery. Not safe to eat!"
 	reagent_state = SOLID
-	color = "#FFFFFF" // rgb: 255,255,255
+	color = "#ffffff" // rgb: 255,255,255
 	toxpwr = 2
 	overdose = 20
 
@@ -340,7 +340,7 @@
 	id = "beer2"
 	description = "An alcoholic beverage made from malted grains, hops, yeast, and water. The fermentation appears to be incomplete." //If the players manage to analyze this, they deserve to know something is wrong.
 	reagent_state = LIQUID
-	color = "#FBBF0D" // rgb: 251, 191, 13
+	color = "#fbbf0d" // rgb: 251, 191, 13
 	custom_metabolism = 0.15 // Sleep toxins should always be consumed pretty fast
 	overdose = REAGENTS_OVERDOSE * 0.5
 	restrict_species = list(IPC, DIONA)
@@ -364,7 +364,7 @@
 	name = "Mute Toxin"
 	id = "mutetoxin"
 	description = "A toxin that temporarily paralyzes the vocal cords."
-	color = "#F0F8FF" // rgb: 240, 248, 255
+	color = "#f0f8ff" // rgb: 240, 248, 255
 	custom_metabolism = 0.4
 	toxpwr = 0
 
@@ -377,7 +377,7 @@
 	id = "sacid"
 	description = "A very corrosive mineral acid with the molecular formula H2SO4."
 	reagent_state = LIQUID
-	color = "#DB5008" // rgb: 219, 80, 8
+	color = "#db5008" // rgb: 219, 80, 8
 	toxpwr = 1
 	var/meltprob = 10
 
@@ -458,7 +458,7 @@
 	id = "pacid"
 	description = "Polytrinic acid is a an extremely corrosive chemical substance."
 	reagent_state = LIQUID
-	color = "#8E18A9" // rgb: 142, 24, 169
+	color = "#8e18a9" // rgb: 142, 24, 169
 	toxpwr = 2
 	meltprob = 30
 
@@ -565,7 +565,7 @@
 	id = "mulligan"
 	description = "This toxin will rapidly change the DNA of human beings. Commonly used by Syndicate spies and assassins in need of an emergency ID change."
 	reagent_state = LIQUID
-	color = "#5EFF3B" //RGB: 94, 255, 59
+	color = "#5eff3b" //RGB: 94, 255, 59
 	custom_metabolism = 1000
 
 /datum/reagent/mulligan/on_general_digest(mob/living/carbon/human/H)
@@ -591,15 +591,49 @@
 	reagent_state = LIQUID
 	color = "#13bc5e" // rgb: 19, 188, 94
 	overdose = REAGENTS_OVERDOSE
+	custom_metabolism = 0.02
 
 /datum/reagent/slimetoxin/on_general_digest(mob/living/M)
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.set_species(SLIME))
-			to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
-			H.dna.mutantrace = "slime"
-			H.update_mutantrace()
+		if(H.species.name == SLIME)
+			return
+		data++
+		switch(data)
+			if(1)
+				to_chat(H, "<span class='warning'>You feel different, somehow...</span>")
+			if(2 to 11)
+				var/obj/item/organ/external/BP = H.get_bodypart(pick(H.species.has_bodypart))
+				if(!(BP.status & (ORGAN_DESTROYED | ORGAN_ROBOT)))
+					BP.take_damage(10)
+					if(prob(25))
+						to_chat(H, "<span class='warning'>Your flesh is starting to melt!</span>")
+						H.emote("scream",,, 1)
+						BP.sever_artery()
+			if(12 to 21)
+				var/obj/item/organ/internal/BP = H.organs_by_name[pick(H.species.has_organ)]
+				BP.take_damage(5)
+				if(prob(25))
+					to_chat(H, "<span class='warning'>You feel unbearable pain inside you!</span>")
+					H.emote("scream",,, 1)
+			if(30)
+				if(H.set_species(SLIME))
+					to_chat(H, "<span class='warning'>Your flesh mutates and you feel free!</span>")
+					H.dna.mutantrace = "slime"
+					H.update_mutantrace()
+					for(var/obj/item/organ/external/BP in H.bodyparts)
+						if(BP.status & ORGAN_ROBOT)
+							BP.status = ORGAN_ROBOT
+						else if(BP.status & ORGAN_DESTROYED)
+							BP.status = ORGAN_DESTROYED
+						else
+							BP.status = 0
+					for(var/obj/item/organ/internal/BP in H.species.has_organ)
+						BP.rejuvenate()
+			if(31 to 50)
+				M.heal_bodypart_damage(0,5)
+				M.adjustOxyLoss(-2 * REM)
 
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
@@ -698,7 +732,7 @@
 	id = "impedrezene"
 	description = "Impedrezene is a narcotic that impedes one's ability by slowing down the higher brain cell functions."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#c8a5dc" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 

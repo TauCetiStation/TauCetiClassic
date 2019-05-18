@@ -77,7 +77,7 @@
 			. += "Disabled"
 		else
 			. += "High"
-	. += 					"</a></td>"
+	. += 					"</a></b></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
 	. += 					"<td width='45%'>Ambient Occlusion:</td>"
@@ -170,9 +170,9 @@
 		if("lobby_music")
 			toggles ^= SOUND_LOBBY
 			if(toggles & SOUND_LOBBY)
-				user << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
+				send_sound(user, ticker.login_music, 85, CHANNEL_LOBBY_MUSIC)
 			else
-				user << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
+				send_sound(user, null,  85, CHANNEL_LOBBY_MUSIC)
 
 		if("hear_ambience")
 			toggles ^= SOUND_AMBIENCE

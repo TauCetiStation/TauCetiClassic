@@ -12,7 +12,7 @@
 	basedatum = /datum/dirt_cover/xeno_blood
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/update_icon()
-	color = "#FFFFFF"
+	color = "#ffffff"
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/up
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6","xgibup1","xgibup1","xgibup1")

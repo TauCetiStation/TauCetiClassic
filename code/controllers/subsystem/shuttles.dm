@@ -51,6 +51,8 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/moving = 0
 	var/eta_timeofday
 	var/eta
+		//pod stuff
+	var/list/pod_station_area
 
 	//var/datum/round_event/shuttle_loan/shuttle_loan
 
@@ -59,6 +61,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/Initialize(timeofday)
 	ordernum = rand(1, 9000)
+	pod_station_area = typecacheof(list(/area/shuttle/escape_pod1/station, /area/shuttle/escape_pod2/station, /area/shuttle/escape_pod3/station, /area/shuttle/escape_pod5/station))
 
 	for(var/typepath in subtypesof(/datum/supply_pack))
 		var/datum/supply_pack/P = new typepath()
@@ -81,6 +84,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/timeleft = timeleft()
 	if(timeleft > 1e5)		// midnight rollover protection
 		timeleft = 0
+	var/static/last_es_sound = 0
 	switch(location)
 		if(SHUTTLE_IN_TRANSIT)
 			/* --- Shuttle is in transit to Central Command from SS13 --- */
@@ -115,9 +119,8 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					start_location.move_contents_to(end_location, null, NORTH)
 
-					dock_act(end_location, "shuttle_escape")
-
 					for(var/mob/M in end_location)
+						M.playsound_local(null, 'sound/effects/escape_shuttle/es_cc_docking.ogg', 70)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -127,6 +130,7 @@ var/datum/subsystem/shuttle/SSshuttle
 							if(!M.buckled)
 								M.Weaken(5)
 						CHECK_TICK
+					dock_act(end_location, "shuttle_escape")
 
 							//pods
 					start_location = locate(/area/shuttle/escape_pod1/transit)
@@ -224,6 +228,14 @@ var/datum/subsystem/shuttle/SSshuttle
 				fake_recall = 0
 				return 0
 
+			else if(timeleft == 22)
+				if(last_es_sound < world.time)
+					var/area/escape_hallway = locate(/area/hallway/secondary/exit)
+					for(var/obj/effect/landmark/sound_source/shuttle_docking/SD in escape_hallway)
+						playsound(SD.loc, 'sound/effects/escape_shuttle/es_ss_docking.ogg', 100, 0, -2, voluminosity = FALSE)
+					last_es_sound = world.time + 10
+				return 0
+
 					/* --- Shuttle has docked with the station - begin countdown to transit --- */
 			else if(timeleft <= 0)
 				location = SHUTTLE_AT_STATION
@@ -266,10 +278,9 @@ var/datum/subsystem/shuttle/SSshuttle
 
 				settimeleft(SHUTTLELEAVETIME)
 				if(alert == 0)
-					captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.")
-					world << sound('sound/AI/shuttledock.ogg')
+					captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.", sound = "emer_shut_docked")
 				else
-					captain_announce("The scheduled Crew Transfer Shuttle has docked with the station. It will depart in approximately [round(timeleft()/60,1)] minutes.")
+					captain_announce("The scheduled Crew Transfer Shuttle has docked with the station. It will depart in approximately [round(timeleft()/60,1)] minutes.", sound = "crew_shut_docked")
 
 				send2slack_service("the shuttle has docked with the station")
 
@@ -285,7 +296,21 @@ var/datum/subsystem/shuttle/SSshuttle
 				undock_act(/area/shuttle/escape/station, "shuttle_escape")
 				undock_act(/area/hallway/secondary/exit, "arrival_escape")
 
-			if(timeleft>0)
+			if(timeleft > 0)
+				if(timeleft == 13)
+					if(last_es_sound < world.time)
+						var/area/pre_location = locate(/area/shuttle/escape/station)
+						for(var/mob/M in pre_location)
+							M.playsound_local(null, 'sound/effects/escape_shuttle/es_undocking.ogg', 70)
+							CHECK_TICK
+						last_es_sound = world.time + 10
+				if(timeleft == 10)
+					if(last_es_sound < world.time)
+						for(var/mob/M in player_list)
+							if(is_type_in_typecache(get_area(M), pod_station_area))
+								M.playsound_local(null, 'sound/effects/escape_shuttle/ep_undocking.ogg', 100, is_global = 1)
+							CHECK_TICK
+						last_es_sound = world.time + 10
 				return 0
 
 			/* --- Shuttle leaves the station, enters transit --- */
@@ -314,6 +339,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 				// Some aesthetic turbulance shaking
 				for(var/mob/M in end_location)
+					M.playsound_local(null, 'sound/effects/escape_shuttle/es_acceleration.ogg', 70)
 					if(M.client)
 						if(M.buckled)
 							shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -327,6 +353,9 @@ var/datum/subsystem/shuttle/SSshuttle
 				//pods
 				if(alert == 0) // Crew Transfer not for pods
 
+					var/ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_lucky_shot.ogg' // successful undocking, clean flight, yay!
+					if(prob(33))
+						ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_unlucky_shot.ogg' // the escape pod almost crashed into something, damn it!
 					start_location = locate(/area/shuttle/escape_pod1/station)
 					end_location = locate(/area/shuttle/escape_pod1/transit)
 					end_location.parallax_movedir = EAST
@@ -336,6 +365,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						CHECK_TICK
 
 					for(var/mob/M in end_location)
+						M.playsound_local(null, ep_shot_sound_type, 100, is_global = 1)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -355,6 +385,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						CHECK_TICK
 
 					for(var/mob/M in end_location)
+						M.playsound_local(null, ep_shot_sound_type, 100, is_global = 1)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -374,6 +405,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						CHECK_TICK
 
 					for(var/mob/M in end_location)
+						M.playsound_local(null, ep_shot_sound_type, 100, is_global = 1)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -393,6 +425,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						CHECK_TICK
 
 					for(var/mob/M in end_location)
+						M.playsound_local(null, ep_shot_sound_type, 100, is_global = 1)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -403,9 +436,9 @@ var/datum/subsystem/shuttle/SSshuttle
 									M.Weaken(5)
 						CHECK_TICK
 
-					captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
+					captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.", sound = "emer_shut_left")
 				else
-					captain_announce("The Crew Transfer Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
+					captain_announce("The Crew Transfer Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.", sound = "crew_shut_left")
 
 				return 1
 
@@ -613,13 +646,12 @@ var/datum/subsystem/shuttle/SSshuttle
 		if(alert == 0)
 			if(timeleft >= get_shuttle_arrive_time())
 				return
-			captain_announce("The emergency shuttle has been recalled.")
-			world << sound('sound/AI/shuttlerecalled.ogg')
+			captain_announce("The emergency shuttle has been recalled.", sound = "emer_shut_recalled")
 			setdirection(-1)
 			online = 1
 			return
 		else //makes it possible to send shuttle back.
-			captain_announce("The shuttle has been recalled.")
+			captain_announce("The shuttle has been recalled.", sound = "crew_shut_recalled")
 			setdirection(-1)
 			online = 1
 			alert = 0 // set alert back to 0 after an admin recall

@@ -258,16 +258,6 @@
 
 /obj/structure/closet/secure_closet/detective/PopulateContents()
 	new /obj/item/clothing/under/det(src)
-	new /obj/item/clothing/under/det/black(src)
-	new /obj/item/clothing/under/det/slob(src)
-	new /obj/item/clothing/under/det/max_payne(src)
-	new /obj/item/clothing/suit/storage/det_suit(src)
-	new /obj/item/clothing/suit/storage/det_suit/black(src)
-	new /obj/item/clothing/suit/storage/det_suit/max_payne(src)
-	new /obj/item/clothing/gloves/black(src)
-	new /obj/item/clothing/head/det_hat(src)
-	new /obj/item/clothing/head/det_hat/black(src)
-	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/weapon/storage/box/evidence(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/detective_scanner(src)
@@ -275,6 +265,7 @@
 	for (var/i in 1 to 2)
 		new /obj/item/ammo_box/magazine/c45r(src)
 	new /obj/item/taperoll/police(src)
+	new /obj/item/toy/crayon/chalk(src)
 	new /obj/item/weapon/gun/projectile/automatic/colt1911(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
 
@@ -310,7 +301,7 @@
 
 /obj/structure/closet/secure_closet/courtroom
 	name = "Courtroom Locker"
-	req_access = list(access_court)
+	req_access = list(access_security)
 
 /obj/structure/closet/secure_closet/courtroom/PopulateContents()
 	new /obj/item/clothing/shoes/brown(src)
@@ -368,3 +359,4 @@
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/detective_scanner(src)
 	new /obj/item/taperoll/police(src)
+	new /obj/item/toy/crayon/chalk(src)

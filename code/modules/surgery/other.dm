@@ -133,7 +133,7 @@
 				IO.damage = 0
 			else
 				user.visible_message("<span class='notice'>[user] pokes [target]'s mechanical [IO.name] with [tool_name]...</span>",
-				"<span class='notice'>You poke [target]'s mechanical [IO.name] with [tool_name]... <span class='warning'>For no effect, since it's robotic.</span>")
+				"<span class='notice'>You poke [target]'s mechanical [IO.name] with [tool_name]...</span> <span class='warning'>For no effect, since it's robotic.</span>")
 
 /datum/surgery_step/groin_organs/fixing/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/groin/BP = target.get_bodypart(BP_GROIN)
@@ -209,7 +209,7 @@
 		if(istype(tool, /obj/item/stack/nanopaste) || istype(tool, /obj/item/weapon/bonegel))
 			target.apply_damage(6, BURN, BP, null)
 
-		else if(istype(tool, /obj/item/weapon/wrench))
+		else if(iswrench(tool))
 			target.apply_damage(12, BRUTE, BP, null)
 			BP.createwound(CUT, 5)
 

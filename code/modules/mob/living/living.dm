@@ -938,7 +938,7 @@
 							return
 						for(var/mob/O in viewers(CM))
 							O.show_message(text("<span class='danger'>[] manages to break the legcuffs!</span>", CM), 1)
-						to_chat(CM, "<span class='notice'>You successfully break your legcuffs.")
+						to_chat(CM, "<span class='notice'>You successfully break your legcuffs.</span>")
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						qdel(CM.legcuffed)
 						CM.legcuffed = null
@@ -1010,9 +1010,6 @@
 
 /mob/living/proc/has_eyes()
 	return 1
-
-/mob/living/proc/slip(slipped_on, stun_duration=4, weaken_duration=2)
-	return FALSE
 
 //-TG Port for smooth standing/lying animations
 /mob/living/proc/get_standard_pixel_x_offset(lying_current = 0)

@@ -18,7 +18,7 @@
 	. = ..()
 
 /obj/machinery/suspension_gen/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/screwdriver))
+	if (isscrewdriver(W))
 		if(!open)
 			if(screwed)
 				screwed = 0
@@ -26,7 +26,7 @@
 				screwed = 1
 			to_chat(user, "<span class='info'>You [screwed ? "screw" : "unscrew"] the battery panel.</span>")
 			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
-	else if (istype(W, /obj/item/weapon/crowbar))
+	else if (iscrowbar(W))
 		if(!locked)
 			if(!screwed)
 				if(!suspension_field)
@@ -43,7 +43,7 @@
 				to_chat(user, "<span class='warning'>Unscrew [src]'s battery panel first.</span>")
 		else
 			to_chat(user, "<span class='warning'>[src]'s security locks are engaged.</span>")
-	else if (istype(W, /obj/item/weapon/wrench))
+	else if (iswrench(W))
 		if(!suspension_field)
 			if(anchored)
 				anchored = 0

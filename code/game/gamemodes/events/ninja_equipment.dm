@@ -636,7 +636,7 @@ ________________________________________________________________________________
 									return
 							sleep(s_delay)
 					else
-						to_chat(U, "\red <b>ERROR<b>: \black Unable to initiate mode.")
+						to_chat(U, "\red <b>ERROR</b>: \black Unable to initiate mode.")
 				else
 					U << browse(null, "window=spideros")
 					s_busy = 0
@@ -658,7 +658,7 @@ ________________________________________________________________________________
 					t_disk.loc = T
 					t_disk = null
 				else
-					to_chat(U, "\red <b>ERROR<b>: \black Could not eject disk.")
+					to_chat(U, "\red <b>ERROR</b>: \black Could not eject disk.")
 
 		if("Copy to Disk")
 			var/datum/tech/current_data = locate(href_list["target"])
@@ -679,7 +679,7 @@ ________________________________________________________________________________
 					pai.loc = T
 					pai = null
 				else
-					to_chat(U, "\red <b>ERROR<b>: \black Could not eject pAI card.")
+					to_chat(U, "\red <b>ERROR</b>: \black Could not eject pAI card.")
 
 		if("Override AI Laws")
 			var/law_zero = A.laws.zeroth//Remembers law zero, if there is one.

@@ -74,7 +74,7 @@
 		empty = 0
 		t += "<tr>"
 		if(curNetId in displayedNetworks)
-			t += "<td><a href='?src=\ref[src];hide_net=[curNetId]'>\[-\]</a><b> " + curNetId + "<b></td>"
+			t += "<td><a href='?src=\ref[src];hide_net=[curNetId]'>\[-\]</a><b> " + curNetId + "</b></td>"
 			t += "<td colspan=\"2\"><b><a href='?src=\ref[src];open_net=[curNetId]'>Open all</a> / <a href='?src=\ref[src];close_net=[curNetId]'>Close all</a></b></td>"
 			t += "</tr>"
 
@@ -89,7 +89,7 @@
 				t += "<td><b><a href='?src=\ref[D];toggle=1'>Toggle</a></b></td>"
 				t += "</tr>"
 		else
-			t += "<td><a href='?src=\ref[src];show_net=[curNetId]'>\[+\]</a> <b>" + curNetId + "<b></td>"
+			t += "<td><a href='?src=\ref[src];show_net=[curNetId]'>\[+\]</a> <b>" + curNetId + "</b></td>"
 	t += "</table>"
 	if(empty)
 		t += "\red No networks connected.<br>"

@@ -383,11 +383,11 @@
 			qdel(W)
 			return
 
-	if (istype(W, /obj/item/weapon/wrench))
-		if(user.is_busy()) return
+	if (iswrench(W))
+		if(user.is_busy(src))
+			return
 		to_chat(user, "\blue Now disassembling table")
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user,50, target = src))
+		if(W.use_tool(src, user, 50, volume = 50))
 			destroy()
 		return
 
@@ -573,18 +573,20 @@
 	return 1
 
 /obj/structure/table/glass/proc/shatter()
-	var/list/targets = list(get_step(src,dir),get_step(src,turn(dir, 45)),get_step(src,turn(dir, -45)))
-	for (var/atom/movable/A in get_turf(src))
-		if (!A.anchored)
-			A.throw_at(pick(targets),1,1)
-
 	canconnect = FALSE
 	update_adjacent()
-	playsound(src.loc, "shatter", 50, 1)
-	visible_message("<span class='warning'>[src] breaks!</span>")
-	var/obj/item/weapon/shard/debri = new /obj/item/weapon/shard( src.loc )
-	debri.throw_at(pick(targets),1,1)
+
+	playsound(src, "shatter", 50, 1)
+	visible_message("<span class='warning'>[src] breaks!</span>", "<span class='danger'>You hear breaking glass.</span>")
+
+	var/T = get_turf(src)
+	new /obj/item/weapon/shard(T)
 	qdel(src)
+
+	var/list/targets = list(get_step(T, dir), get_step(T, turn(dir, 45)), get_step(T, turn(dir, -45)))
+	for (var/atom/movable/A in T)
+		if (!A.anchored)
+			A.throw_at(pick(targets), 1, 1)
 
 /obj/structure/table/glass/on_climb(mob/living/user)
 	usr.forceMove(get_turf(src))
@@ -685,28 +687,24 @@
 		return ..()
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/weldingtool))
+	if (iswelder(W))
 		if(user.is_busy()) return FALSE
 		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0, user))
+		if(WT.use(0, user))
 			if(src.status == 2)
 				to_chat(user, "\blue Now weakening the reinforced table")
-				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50, target = src))
-					if(!src || !WT.isOn()) return
+				if(WT.use_tool(src, user, 50, volume = 50))
 					to_chat(user, "\blue Table weakened")
 					src.status = 1
 			else
 				to_chat(user, "\blue Now strengthening the reinforced table")
-				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50, target = src))
-					if(!src || !WT.isOn()) return
+				if(WT.use_tool(src, user, 50, volume = 50))
 					to_chat(user, "\blue Table strengthened")
 					src.status = 2
 			return FALSE
 		return TRUE
 
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		if(src.status == 2)
 			return TRUE
 
@@ -771,7 +769,7 @@
 	return
 
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		new /obj/item/weapon/rack_parts( src.loc )
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		qdel(src)

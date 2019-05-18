@@ -17,6 +17,7 @@
 		/obj/item/light_fixture_frame,
 		/obj/item/apc_frame,
 		/obj/item/alarm_frame,
+		/obj/item/door_control_frame,
 		/obj/item/firealarm_frame,
 		/obj/item/weapon/table_parts,
 		/obj/item/weapon/rack_parts,
@@ -333,7 +334,7 @@
 		else
 			module_string += text("[O]: <A HREF=?src=\ref[src];act=\ref[O]>Activate</A><BR>")
 
-		if((istype(O,/obj/item/weapon) || istype(O,/obj/item/device)) && !(istype(O,/obj/item/stack/cable_coil)))
+		if((istype(O,/obj/item/weapon) || istype(O,/obj/item/device)) && !(iscoil(O)))
 			tools += module_string
 		else
 			resources += module_string

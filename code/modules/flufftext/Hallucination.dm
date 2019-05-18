@@ -114,36 +114,36 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				//src << "Strange Audio"
 				switch(rand(1,12))
 					if(1)
-						src << 'sound/machines/airlock/airlockToggle.ogg'
+						send_sound(src, 'sound/machines/airlock/airlockToggle.ogg')
 					if(2)
 						if(prob(50))
-							src << 'sound/effects/Explosion1.ogg'
+							send_sound(src, 'sound/effects/Explosion1.ogg')
 						else
-							src << 'sound/effects/Explosion2.ogg'
+							send_sound(src, 'sound/effects/Explosion2.ogg')
 					if(3)
-						src << 'sound/effects/explosionfar.ogg'
+						send_sound(src, 'sound/effects/explosionfar.ogg')
 					if(4)
-						src << 'sound/effects/Glassbr1.ogg'
+						send_sound(src, 'sound/effects/Glassbr1.ogg')
 					if(5)
-						src << 'sound/effects/Glassbr2.ogg'
+						send_sound(src, 'sound/effects/Glassbr2.ogg')
 					if(6)
-						src << 'sound/effects/Glassbr3.ogg'
+						send_sound(src, 'sound/effects/Glassbr3.ogg')
 					if(7)
-						src << 'sound/machines/twobeep.ogg'
+						send_sound(src, 'sound/machines/twobeep.ogg')
 					if(8)
-						src << 'sound/machines/windowdoor.ogg'
+						send_sound(src, 'sound/machines/windowdoor.ogg')
 					if(9)
 						//To make it more realistic, I added two gunshots (enough to kill)
-						src << 'sound/weapons/Gunshot.ogg'
+						send_sound(src, 'sound/weapons/guns/gunshot_heavy.ogg')
 						spawn(rand(10,30))
-							src << 'sound/weapons/Gunshot.ogg'
+							send_sound(src, 'sound/weapons/guns/gunshot_heavy.ogg')
 					if(10)
-						src << 'sound/weapons/smash.ogg'
+						send_sound(src, 'sound/weapons/smash.ogg')
 					if(11)
 						//Same as above, but with tasers.
-						src << 'sound/weapons/Taser.ogg'
+						send_sound(src, 'sound/weapons/guns/gunpulse_Taser.ogg')
 						spawn(rand(10,30))
-							src << 'sound/weapons/Taser.ogg'
+							send_sound(src, 'sound/weapons/guns/gunpulse_Taser.ogg')
 				//Rare audio
 					if(12)
 //These sounds are (mostly) taken from Hidden: Source
@@ -152,7 +152,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							'sound/hallucinations/growl3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg',\
 							'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',\
 							'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
-						src << pick(creepyasssounds)
+						send_sound(src, pick(creepyasssounds))
 			if(66 to 70)
 				//Flashes of danger
 				//src << "Danger Flash"
@@ -278,7 +278,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			if(prob(15))
 				src.do_attack_animation(my_target)
 				if(weapon_name)
-					my_target << sound(pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg'))
+					send_sound(my_target, pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg'))
 					my_target.show_message("\red <B>[my_target] has been attacked with [weapon_name] by [src.name] </B>", 1)
 					my_target.halloss += 8
 					if(prob(20)) my_target.eye_blurry += 3
@@ -286,7 +286,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						if(!locate(/obj/effect/overlay) in my_target.loc)
 							fake_blood(my_target)
 				else
-					my_target << sound(pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'))
+					send_sound(my_target, pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'))
 					my_target.show_message("\red <B>[src.name] has punched [my_target]!</B>", 1)
 					my_target.halloss += 4
 					if(prob(33))

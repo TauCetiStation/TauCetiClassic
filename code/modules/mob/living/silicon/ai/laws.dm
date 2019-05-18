@@ -62,7 +62,7 @@
 /mob/living/silicon/ai/proc/statelaws() // -- TLE
 //	set category = "AI Commands"
 //	set name = "State Laws"
-	/var/prefix = ""
+	var/prefix = ""
 	switch(lawchannel)
 		if("Common") prefix = ";"
 		if("Science") prefix = ":n "

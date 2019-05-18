@@ -411,11 +411,11 @@
 
 /obj/item/weapon/twohanded/shockpaddles/proc/return_to_body_dialog(mob/living/carbon/human/returnable)
 	if (returnable.key) //in body?
-		returnable << 'sound/misc/mario_1up.ogg'
+		send_sound(returnable, 'sound/misc/mario_1up.ogg')
 	else if(returnable.mind)
 		for(var/mob/dead/observer/ghost in player_list)
 			if(ghost.mind == returnable.mind && ghost.can_reenter_corpse)
-				ghost << 'sound/misc/mario_1up.ogg'
+				send_sound(ghost, 'sound/misc/mario_1up.ogg')
 				var/answer = alert(ghost,"You have been reanimated. Do you want to return to body?","Reanimate","Yes","No")
 				if(answer == "Yes")
 					ghost.reenter_corpse()
@@ -469,7 +469,7 @@
 	H.apply_effect(4, STUTTER, 0)
 	H.electrocute_act(burn_damage_amt*2, src, def_zone = target_zone)
 
-	user.visible_message("[user] shocks [H] with [src].", "You shock [H] with [src].</span>", "You hear electricity zaps flesh.")
+	user.visible_message("[user] shocks [H] with [src].", "<span class='warning'>You shock [H] with [src].</span>", "You hear electricity zaps flesh.")
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Electrocuted [H.name] ([H.ckey]) with [src.name]</font>"
 	msg_admin_attack("[user.name] ([user.ckey]) used [src.name] to electrocute [H.name] ([H.ckey]) [ADMIN_FLW(user)]")
 

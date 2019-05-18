@@ -8,7 +8,7 @@
 	icon_state = "sleeperconsole"
 	anchored = 1 //About time someone fixed this.
 	density = 0
-	light_color = "#7BF9FF"
+	light_color = "#7bf9ff"
 
 /obj/machinery/sleeper
 	name = "Sleeper"
@@ -18,7 +18,7 @@
 	density = 0
 	anchored = 1
 	state_open = 1
-	light_color = "#7BF9FF"
+	light_color = "#7bf9ff"
 	allowed_checks = ALLOWED_CHECK_TOPIC
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/filtering = 0
@@ -48,7 +48,7 @@
 		component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
 	RefreshParts()
 	if(mapload)
 		beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)

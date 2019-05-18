@@ -1,4 +1,4 @@
-/atom/movable/proc/nano_host()
+/datum/proc/nano_host()
 	return src
 
 /obj/nano_module/nano_host()

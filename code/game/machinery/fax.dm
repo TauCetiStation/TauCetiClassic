@@ -174,8 +174,7 @@ var/list/alldepartments = list("Central Command")
 			idcard.loc = src
 			scan = idcard
 
-	else if(istype(O, /obj/item/weapon/wrench))
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+	else if(iswrench(O))
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 	return

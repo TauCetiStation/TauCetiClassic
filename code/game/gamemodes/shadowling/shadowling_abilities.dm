@@ -312,7 +312,7 @@
 
 		if(thralls >= 7 && !screech_acquired)
 			screech_acquired = 1
-			to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Sonic Screech</b> ability. This ability will shatter nearby windows and deafen enemies, plus stunning silicon lifeforms.</span>")
+			to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Sonic Screech</b> ability. This ability will shatter nearby windows and deafen enemies, plus stunning silicon lifeforms.</i></span>")
 			user.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech
 
 		if(thralls >= 9 && !reviveThrallAcquired)
@@ -325,7 +325,7 @@
 			to_chat(user, "<span class='shadowling'>You do not have the power to ascend. You require [victory_threshold] thralls, but only [thralls] living thralls are present.</span>")
 
 		else if(thralls >= victory_threshold)
-			to_chat(usr, "<span class='shadowling'><b>You are now powerful enough to ascend. Use the Ascendance ability when you are ready. <i>This will kill all of your thralls.</i></span>")
+			to_chat(usr, "<span class='shadowling'><b>You are now powerful enough to ascend. Use the Ascendance ability when you are ready. <i>This will kill all of your thralls.</i></b></span>")
 			to_chat(usr, "<span class='shadowling'><b>You may find Ascendance in the Shadowling Evolution tab.</b></span>")
 			for(M in alive_mob_list)
 				if(is_shadow(M))
@@ -415,7 +415,7 @@
 			else if(issilicon(target))
 				var/mob/living/silicon/S = target
 				to_chat(S, "<span class='warning'><b>ERROR $!(@ ERROR )#^! SENSOR OVERLOAD \[$(!@#</b></span>")
-				S << 'sound/misc/interference.ogg'
+				send_sound(S, 'sound/misc/interference.ogg')
 				playsound(S, 'sound/machines/warning-buzzer.ogg', 50, 1)
 				var/datum/effect/effect/system/spark_spread/sp = new /datum/effect/effect/system/spark_spread
 				sp.set_up(5, 1, S)
@@ -484,7 +484,7 @@
 		var/mob/dead/observer/ghost = thrallToRevive.get_ghost()
 		if(ghost)
 			to_chat(ghost, "<span class='ghostalert'>Your masters are resuscitating you! Return to your corpse if you wish to be brought to life.</span> (Verbs -> Ghost -> Re-enter corpse)")
-			ghost << 'sound/effects/genetics.ogg'
+			send_sound(ghost, 'sound/effects/genetics.ogg')
 		if(!do_mob(usr, thrallToRevive, 100))
 			to_chat(usr, "<span class='warning'>Your concentration snaps. The flow of energy ebbs.</span>")
 			charge_counter= charge_max
@@ -522,7 +522,7 @@
 
 	for(var/mob/boom in targets)
 		if(is_shadow_or_thrall(boom))
-			to_chat(usr, "<span class='warning'>Making an ally explode seems unwise.<span>")
+			to_chat(usr, "<span class='warning'>Making an ally explode seems unwise.</span>")
 			charge_counter = charge_max
 			return
 		usr.visible_message("<span class='danger'>[usr]'s eyes flare as they gesture at [boom]!</span>", \
@@ -558,7 +558,7 @@
 
 	for(var/mob/living/carbon/human/target in targets)
 		if(is_shadow_or_thrall(target))
-			to_chat(usr, "<span class='warning'>You cannot enthrall an ally.<span>")
+			to_chat(usr, "<span class='warning'>You cannot enthrall an ally.</span>")
 			charge_counter = charge_max
 			return
 		if(!target.ckey)
@@ -679,4 +679,4 @@
 		var/text = sanitize(input(user, "What do you want to say to everything on and near [world.name]?.", "Transmit to World", ""))
 		if(!text)
 			return
-		to_chat(world, "<font size=4><span class='shadowling'><b>\"[sanitize(text)]\"</font></span>")
+		to_chat(world, "<font size=4><span class='shadowling'><b>\"[sanitize(text)]\"</b></font></span>")

@@ -53,7 +53,7 @@
 		s.set_up(5, 1, src)
 		s.start()
 
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(iswrench(W))
 		src.anchored = !src.anchored
 		src.visible_message("\blue [bicon(src)] [src] has been [anchored ? "bolted to the floor" : "unbolted from the floor"] by [user].")
 

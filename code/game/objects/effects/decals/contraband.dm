@@ -156,7 +156,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	. = ..()
 
 /obj/structure/sign/poster/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(iswirecutter(W))
 		playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		if(ruined)
 			to_chat(user, "<span class='notice'>You remove the remnants of the poster.</span>")

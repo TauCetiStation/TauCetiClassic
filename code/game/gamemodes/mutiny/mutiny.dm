@@ -317,7 +317,7 @@
 	else if (!directives_completed && !ead_activated)
 		to_chat(world, fluff.mutineer_major_victory())
 
-	world << sound('sound/machines/twobeep.ogg')
+	send_sound(world, 'sound/machines/twobeep.ogg')
 
 /datum/game_mode/mutiny/proc/update_all_icons()
 	spawn(0)

@@ -33,9 +33,9 @@
 
 
 /obj/item/target/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/weapon/weldingtool))
+	if (iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0, user))
+		if(WT.use(0, user))
 			overlays.Cut()
 			to_chat(usr, "<span class='notice'>You slice off [src]'s uneven chunks of aluminum and scorch marks.</span>")
 			return

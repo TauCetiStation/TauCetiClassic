@@ -345,7 +345,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	if (length(heard_masked) || length(heard_normal) || length(heard_voice) || length(heard_garbled) || length(heard_gibberish))
 
 	  /* --- Some miscellaneous variables to format the string output --- */
-		var/part_a = "<span class='radio'><span class='name'>" // goes in the actual output
 		var/freq_text // the name of the channel
 
 		// --- Set the name of the channel ---
@@ -381,47 +380,48 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		// --- Some more pre-message formatting ---
 
+		var/part_a_span = "radio"
+		// syndies!
+		if (display_freq == SYND_FREQ)
+			part_a_span = "syndradio"
+		// centcomm channels (deathsquid and ert)
+		else if (display_freq in CENT_FREQS)
+			part_a_span = "centradio"
+
+		// command channel
+		else if (display_freq == COMM_FREQ)
+			part_a_span = "comradio"
+
+		// AI private channel
+		else if (display_freq == 1447)
+			part_a_span = "airadio"
+
+		// department radio formatting (poorly optimized, ugh)
+		else if (display_freq == SEC_FREQ)
+			part_a_span = "secradio"
+
+		else if (display_freq == ENG_FREQ)
+			part_a_span = "engradio"
+
+		else if (display_freq == SCI_FREQ)
+			part_a_span = "sciradio"
+
+		else if (display_freq == MED_FREQ)
+			part_a_span = "medradio"
+
+		else if (display_freq == SUP_FREQ) // cargo
+			part_a_span = "supradio"
+
+		// If all else fails and it's a dept_freq, color me purple!
+		else if (display_freq in DEPT_FREQS)
+			part_a_span = "deptradio"
+
+		var/part_a = "<span class='[part_a_span]'><span class='name'>" // goes in the actual output
 		var/part_b_extra = ""
 		if(data == 3) // intercepted radio message
 			part_b_extra = " <i>(Intercepted)</i>"
 		var/part_b = "</span><b> [bicon(radio)]\[[freq_text]\][part_b_extra]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 		var/part_c = "</span></span>"
-
-		// syndies!
-		if (display_freq == SYND_FREQ)
-			part_a = "<span class='syndradio'><span class='name'>"
-		// centcomm channels (deathsquid and ert)
-		else if (display_freq in CENT_FREQS)
-			part_a = "<span class='centradio'><span class='name'>"
-
-		// command channel
-		else if (display_freq == COMM_FREQ)
-			part_a = "<span class='comradio'><span class='name'>"
-
-		// AI private channel
-		else if (display_freq == 1447)
-			part_a = "<span class='airadio'><span class='name'>"
-
-		// department radio formatting (poorly optimized, ugh)
-		else if (display_freq == SEC_FREQ)
-			part_a = "<span class='secradio'><span class='name'>"
-
-		else if (display_freq == ENG_FREQ)
-			part_a = "<span class='engradio'><span class='name'>"
-
-		else if (display_freq == SCI_FREQ)
-			part_a = "<span class='sciradio'><span class='name'>"
-
-		else if (display_freq == MED_FREQ)
-			part_a = "<span class='medradio'><span class='name'>"
-
-		else if (display_freq == SUP_FREQ) // cargo
-			part_a = "<span class='supradio'><span class='name'>"
-
-		// If all else fails and it's a dept_freq, color me purple!
-		else if (display_freq in DEPT_FREQS)
-			part_a = "<span class='deptradio'><span class='name'>"
-
 
 		// --- Filter the message; place it in quotes apply a verb ---
 
@@ -596,7 +596,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	if (length(heard_normal) || length(heard_garbled) || length(heard_gibberish))
 
 	  /* --- Some miscellaneous variables to format the string output --- */
-		var/part_a = "<span class='radio'><span class='name'>" // goes in the actual output
 		var/freq_text // the name of the channel
 
 		// --- Set the name of the channel ---
@@ -624,24 +623,26 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		if(!freq_text)
 			freq_text = format_frequency(display_freq)
 
-		// --- Some more pre-message formatting ---
-
-		var/part_b_extra = ""
-		if(data == 3) // intercepted radio message
-			part_b_extra = " <i>(Intercepted)</i>"
-
 		// Create a radio headset for the sole purpose of using its icon
 		var/obj/item/device/radio/headset/radio = new
 
+		// --- Some more pre-message formatting ---
+
+		var/part_a_span = "radio"
+
+		if (display_freq == SYND_FREQ)
+			part_a_span = "syndradio"
+		else if (display_freq == COMM_FREQ)
+			part_a_span = "comradio"
+		else if (display_freq in DEPT_FREQS)
+			part_a_span = "deptradio"
+
+		var/part_a = "<span class='[part_a_span]'><span class='name'>" // goes in the actual output
+		var/part_b_extra = ""
+		if(data == 3) // intercepted radio message
+			part_b_extra = " <i>(Intercepted)</i>"
 		var/part_b = "</span><b> [bicon(radio)]\[[freq_text]\][part_b_extra]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 		var/part_c = "</span></span>"
-
-		if (display_freq==SYND_FREQ)
-			part_a = "<span class='syndradio'><span class='name'>"
-		else if (display_freq==COMM_FREQ)
-			part_a = "<span class='comradio'><span class='name'>"
-		else if (display_freq in DEPT_FREQS)
-			part_a = "<span class='deptradio'><span class='name'>"
 
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
 

@@ -285,7 +285,7 @@
 	if(istype(tool, /obj/item/stack/nanopaste) || istype(tool, /obj/item/weapon/bonegel))
 		target.apply_damage(6, BURN, BP, null)
 
-	else if(istype(tool, /obj/item/weapon/wrench))
+	else if(iswrench(tool))
 		target.apply_damage(12, BRUTE, BP, null)
 		BP.createwound(CUT, 5)
 

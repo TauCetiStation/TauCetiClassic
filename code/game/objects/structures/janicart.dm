@@ -42,7 +42,7 @@
 	else if(istype(I, /obj/item/weapon/mop))
 		if(I.reagents.total_volume < I.reagents.maximum_volume)	//if it's not completely soaked we assume they want to wet it, otherwise store it
 			if(reagents.total_volume < 1)
-				to_chat(user, "[src] is out of water!</span>")
+				to_chat(user, "<span class='notice'>[src] is out of water!</span>")
 			else
 				reagents.trans_to(I, 5)	//
 				to_chat(user, "<span class='notice'>You wet [I] in [src].</span>")

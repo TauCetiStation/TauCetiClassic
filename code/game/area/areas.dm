@@ -46,6 +46,8 @@
 	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
 	var/air_doors_activated = 0
 
+	var/list/canSmoothWithAreas //typecache to limit the areas that atoms in this area can smooth with
+
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -95,6 +97,7 @@ var/list/ghostteleportlocs = list()
 	..()
 
 /area/atom_init()
+	canSmoothWithAreas = typecacheof(canSmoothWithAreas)
 
 	. = ..()
 
@@ -364,7 +367,7 @@ var/list/ghostteleportlocs = list()
 
 	if(!L.client.ambience_playing)
 		L.client.ambience_playing = 1
-		L << sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
+		send_sound(L, 'sound/ambience/shipambience.ogg', 35, CHANNEL_REGULAR_AMBIENCE, 1)
 
 	if(prob(35))
 		var/sound = 'sound/ambience/ambigen1.ogg'
@@ -389,7 +392,7 @@ var/list/ghostteleportlocs = list()
 			sound = pick('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
 
 		if(!L.client.played)
-			L << sound(sound, repeat = 0, wait = 0, volume = 25, channel = 1)
+			send_sound(L, sound, 25, CHANNEL_AMBIENCE)
 			L.client.played = TRUE
 			addtimer(CALLBACK(src, .proc/set_played_false, L), 600)
 

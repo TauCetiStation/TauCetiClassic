@@ -57,7 +57,7 @@
 		playsound(src, 'sound/items/insert_key.ogg', 25, 1)
 		use_power = 2
 		update_icon()
-	else if(istype(G, /obj/item/weapon/wrench))
+	else if(iswrench(G))
 		if(charging)
 			to_chat(user, "\red Remove the weapon first!")
 			return
@@ -68,7 +68,7 @@
 		if(default_deconstruction_screwdriver(user, istype(src, /obj/machinery/recharger/wallcharger) ? "wrechargeropen" : "rechargeropen", istype(src, /obj/machinery/recharger/wallcharger) ? "wrecharger0" : "recharger0", G))
 			return
 
-		if(panel_open && istype(G, /obj/item/weapon/crowbar))
+		if(panel_open && iscrowbar(G))
 			default_deconstruction_crowbar(G)
 			return
 

@@ -93,8 +93,7 @@
 
 /obj/machinery/artifact_analyser/Topic(href, href_list)
 	if(href_list["close"])
-		var/keyboard = pick('sound/machines/keyboard1.ogg', 'sound/machines/keyboard1.ogg')
-		playsound(src, keyboard, 50, 1)
+		playsound(src, "keyboard", 50, 0)
 		usr.unset_machine(src)
 		usr << browse(null, "window=artanalyser")
 		return FALSE
@@ -104,8 +103,7 @@
 		return
 
 	if(href_list["begin_scan"])
-		var/keyboard = pick('sound/machines/keyboard1.ogg', 'sound/machines/keyboard1.ogg')
-		playsound(src, keyboard, 50, 1)
+		playsound(src, "keyboard", 50, 0)
 		if(!owned_scanner)
 			reconnect_scanner()
 		if(owned_scanner)
@@ -136,8 +134,7 @@
 			if(!scanned_object)
 				src.visible_message("<b>[name]</b> states, \"Unable to isolate scan target.\"")
 	if(href_list["halt_scan"])
-		var/keyboard = pick('sound/machines/keyboard1.ogg', 'sound/machines/keyboard1.ogg')
-		playsound(src, keyboard, 50, 1)
+		playsound(src, "keyboard", 50, 0)
 		owned_scanner.icon_state = "xenoarch_scanner"
 		scan_in_progress = 0
 		src.visible_message("<b>[name]</b> states, \"Scanning halted.\"")
@@ -147,6 +144,8 @@
 // hardcoded responses, oh well
 /obj/machinery/artifact_analyser/proc/get_scan_info(obj/scanned_obj)
 	switch(scanned_obj.type)
+		if(/obj/item/clothing/glasses/hud/mining/ancient)
+			return "A heads-up display that scans the rocks in view and provides some data about their composition."
 		if(/obj/machinery/auto_cloner)
 			return "Automated cloning pod - appears to rely on organic nanomachines with a self perpetuating \
 			ecosystem involving self cannibalism and a symbiotic relationship with the contained liquid.<br><br>\

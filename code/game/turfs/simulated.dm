@@ -101,46 +101,6 @@
 
 			bloodDNA = null
 
-		switch (src.wet)
-			if(1)
-				if(istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes
-					if ((M.m_intent == "run") && !((istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP) || (istype(M:wear_suit, /obj/item/clothing/suit/space/rig) && M:wear_suit.flags&NOSLIP)))
-						M.slip("the wet floor", 5, 3)
-					else
-						M.inertia_dir = 0
-						return
-				else
-					if (M.m_intent == "run")
-						M.slip("the wet floor", 5, 3)
-					else
-						M.inertia_dir = 0
-						return
-
-			if(2) //lube                //can cause infinite loops - needs work
-				M.stop_pulling()
-				step(M, M.dir)
-				spawn(1) step(M, M.dir)
-				spawn(2) step(M, M.dir)
-				spawn(3) step(M, M.dir)
-				spawn(4) step(M, M.dir)
-				M.take_bodypart_damage(2) // Was 5 -- TLE
-				M.slip("the floor", 0, 10)
-			if(3) // Ice
-				if(istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes
-					if ((M.m_intent == "run") && (!(istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP) || !(istype(M:wear_suit, /obj/item/clothing/suit/space/rig) && M:wear_suit.flags&NOSLIP)) && prob(30))
-						M.slip("the icy floor", 4, 3)
-						step(M, M.dir)
-					else
-						M.inertia_dir = 0
-						return
-				else
-					if (M.m_intent == "run" && prob(30))
-						M.slip("the icy floor", 4, 3)
-						step(M, M.dir)
-					else
-						M.inertia_dir = 0
-						return
-
 	..()
 
 //returns 1 if made bloody, returns 0 otherwise
@@ -204,15 +164,15 @@
 
 //Wet floor procs.
 /turf/simulated/proc/make_wet_floor(severity = WATER_FLOOR)
+	addtimer(CALLBACK(src, .proc/make_dry_floor), rand(71 SECONDS, 80 SECONDS), TIMER_UNIQUE|TIMER_OVERRIDE)
 	if(wet < severity)
 		wet = severity
+		UpdateSlip()
 
 		if(severity < LUBE_FLOOR) // Thats right, lube does not add nor clean wet overlay. So if the floor was wet before and we add lube, wet overlay simply stays longer.
 			if(!wet_overlay)      // For stealth - floor must be dry, so added lube effect will be invisible.
 				wet_overlay = image('icons/effects/water.dmi', "wet_floor", src)
 				overlays += wet_overlay
-
-		addtimer(CALLBACK(src, .proc/make_dry_floor), rand(710,800), TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /turf/simulated/proc/make_dry_floor()
 	if(wet)
@@ -220,3 +180,13 @@
 			overlays -= wet_overlay
 			wet_overlay = null
 		wet = 0
+		UpdateSlip()
+
+/turf/simulated/proc/UpdateSlip()
+	switch(wet)
+		if(WATER_FLOOR)
+			AddComponent(/datum/component/slippery, 5, NO_SLIP_WHEN_WALKING)
+		if(LUBE_FLOOR)
+			AddComponent(/datum/component/slippery, 10, SLIDE | GALOSHES_DONT_HELP)
+		else
+			qdel(GetComponent(/datum/component/slippery))

@@ -131,7 +131,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/shadow_vortex/atom_init_late()
-	audible_message("<span class='warning'><b>\The [src] lets out a dismaying screech as dimensional barriers are torn apart!</span>")
+	audible_message("<span class='danger'>\The [src] lets out a dismaying screech as dimensional barriers are torn apart!</span>")
 	playsound(src, 'sound/effects/supermatter.ogg', 100, 1)
 	QDEL_IN(src, 100)
 

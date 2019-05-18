@@ -32,7 +32,7 @@
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
 	..()
-	if(istype(W,/obj/item/stack/cable_coil))
+	if(iscoil(W))
 
 		var/list/resources_to_use = list()
 		resources_to_use[W] = 5
@@ -316,9 +316,9 @@
 
 /obj/item/weapon/shard/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0, user))
+		if(WT.use(0, user))
 			var/obj/item/stack/sheet/glass/NG = new (user.loc)
 			for(var/obj/item/stack/sheet/glass/G in user.loc)
 				if(G==NG)
@@ -347,6 +347,9 @@
 				return
 
 			if(H.species.flags[NO_MINORCUTS])
+				return
+
+			if(H.buckled)
 				return
 
 			if(!H.shoes)

@@ -767,6 +767,3 @@
 /mob/living/carbon/slime/proc/get_starve_nutrition() // Below it we will eat before everything else
 	if(isslimeadult(src)) return 300
 	else return 200
-
-/mob/living/carbon/slime/slip()
-	return FALSE

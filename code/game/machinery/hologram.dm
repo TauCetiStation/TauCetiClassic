@@ -106,6 +106,7 @@ var/const/HOLOPAD_MODE = 0
 	if(!(stat & NOPOWER) && user.eyeobj.loc == src.loc)//If the projector has power and client eye is on it.
 		if(!hologram)//If there is not already a hologram.
 			create_holo(user)//Create one.
+			playsound(src, 'sound/machines/holopadon.ogg', 100, 0)
 
 			if(user.holohack)
 				change_holo_to_carp(user)

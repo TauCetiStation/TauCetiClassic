@@ -15,6 +15,7 @@
 	var/team = 0
 	var/metadata
 	var/seer = 0 // used in cult datum /cult/seer
+	var/gnomed = 0 // timer used by gnomecurse.dm
 
 	throw_range = 2
 
@@ -172,6 +173,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				stat("Body Temperature:","[bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)")
 
 	CHANGELING_STATPANEL_POWERS(null)
+
+	if(istype(wear_suit, /obj/item/clothing/suit/space/rig/))
+		var/obj/item/clothing/suit/space/rig/rig = wear_suit
+		rig_setup_stat(rig)
 
 /mob/living/carbon/human/ex_act(severity)
 	if(!blinded)
@@ -768,7 +773,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 					LAZYADD(wounds, W)
 
 		if(wounds)
-			visible_message("<span class='danger'>[usr] is trying to remove [src]'s bandages!")
+			visible_message("<span class='danger'>[usr] is trying to remove [src]'s bandages!</span>")
 			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
 				for(var/datum/wound/W in wounds)
 					if(W.bandaged)
@@ -786,7 +791,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				LAZYADD(splints, BP)
 
 		if(splints)
-			visible_message("<span class='danger'>[usr] is trying to remove [src]'s splints!")
+			visible_message("<span class='danger'>[usr] is trying to remove [src]'s splints!</span>")
 			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
 				for(var/obj/item/organ/external/BP in splints)
 					if (BP.status & ORGAN_SPLINTED)
@@ -1165,27 +1170,21 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/proc/vomit()
 
-	if(species.flags[IS_SYNTHETIC])
-		return //Machines don't throw up.
+	if(species.flags[NO_VOMIT])
+		return // Machines, golems, shadowlings and abductors don't throw up.
 
 	if(!lastpuke)
 		lastpuke = 1
-		to_chat(src, "<span class='warning'>You feel nauseous...</span>")
-		spawn(150)	//15 seconds until second warning
+		src.visible_message("<B>[src]</B> looks kinda like unhealthy.","<span class='warning'>You feel nauseous...</span>")
+		spawn(150) //15 seconds until second warning
 			to_chat(src, "<span class='warning'>You feel like you are about to throw up!</span>")
-			spawn(100)	//and you have 10 more for mad dash to the bucket
+			spawn(100) //and you have 10 more for mad dash to the bucket
 				Stun(5)
-
-				src.visible_message("<span class='warning'>[src] throws up!","<spawn class='warning'>You throw up!</span>")
-				playsound(loc, 'sound/effects/splat.ogg', 50, 1)
-
-				var/turf/location = loc
-				if (istype(location, /turf/simulated))
-					location.add_vomit_floor(src, 1)
-
+				var/turf/T = loc
+				T.add_vomit_floor(src, 1)
 				nutrition -= 40
 				adjustToxLoss(-3)
-				spawn(350)	//wait 35 seconds before next volley
+				spawn(350) //wait 35 seconds before next volley
 					lastpuke = 0
 
 /mob/living/carbon/human/proc/morph()
@@ -1854,11 +1853,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(istype(IO))
 			return 1
 	return 0
-
-/mob/living/carbon/human/slip(slipped_on, stun_duration=4, weaken_duration=2)
-	if(shoes && (shoes.flags & NOSLIP))
-		return FALSE
-	return ..(slipped_on,stun_duration, weaken_duration)
 
 /mob/living/carbon/human/is_nude(maximum_coverage = 0, pos_slots = list(src.head, src.shoes, src.neck, src.mouth, src.wear_suit, src.w_uniform, src.belt, src.gloves, src.glasses)) // Expands our pos_slots arg.
 	return ..()

@@ -5,7 +5,7 @@
 	var/auth_need = 3.0
 	var/list/authorized = list()
 
-	light_color = "#7BF9FF"
+	light_color = "#7bf9ff"
 
 
 /obj/machinery/computer/shuttle/attackby(obj/item/weapon/card/W, mob/user)

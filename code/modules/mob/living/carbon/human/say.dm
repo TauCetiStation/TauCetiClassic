@@ -3,13 +3,15 @@
 	var/message_range = world.view
 	var/italics = 0
 	var/alt_name = ""
+	var/sound/speech_sound
+	var/sound_vol
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "<span class='userdange'>You cannot speak in IC (Muted).</span>")
 			return
 
 	//Meme stuff
-	if((!speech_allowed && usr == src) || miming)
+	if((!speech_allowed && usr == src) || ((miming || has_trait(TRAIT_MUTE)) && !(copytext(message, 1, 2) == "*")))
 		to_chat(usr, "<span class='userdange'>You can't speak.</span>")
 		return
 
@@ -88,6 +90,9 @@
 		message = handle_r[1]
 		verb = handle_r[2]
 		speech_problem_flag = handle_r[3]
+		if(handle_r[4]) // speech sound management
+			speech_sound = handle_r[4]
+			sound_vol = handle_r[5]
 
 	if(!message || stat)
 		return
@@ -181,8 +186,6 @@
 						r_ear.talk_into(src,message, message_mode, verb, speaking)
 						used_radios += r_ear
 
-	var/sound/speech_sound
-	var/sound_vol
 	if((species.name == VOX || species.name == VOX_ARMALIS) && prob(20))
 		speech_sound = sound('sound/voice/shriek1.ogg')
 		sound_vol = 50
@@ -255,9 +258,11 @@
 
 //mob/living/carbon/human/proc/handle_speech_problems(message)
 /mob/living/carbon/human/proc/handle_speech_problems(message, message_mode)
-	var/list/returns[3]
+	var/list/returns[5]
 	var/verb = "says"
 	var/handled = 0
+	var/sound/speech_sound = null
+	var/sound_vol = 50
 	if(silent)
 		if(message_mode != "changeling")
 			message = ""
@@ -265,6 +270,18 @@
 	if(sdisabilities & MUTE)
 		message = ""
 		handled = 1
+	if(gnomed)
+		handled = 1
+		if((message_mode != "changeling") && prob(40))
+			if(prob(80))
+				message = pick("A-HA-HA-HA!", "U-HU-HU-HU!", "I'm a GN-NOME!", "I'm a GnOme!", "Don't GnoMe me!", "I'm gnot a gnoblin!", "You've been GNOMED!")
+			else if(config.rus_language)
+				message =  "[message]... Íî ÿ ÃÍÎÌ!"
+			else
+				message =  "[message]... But i'm A GNOME!"
+			verb = pick("yells like an idiot", "says rather loudly")
+			speech_sound = 'sound/magic/GNOMED.ogg'
+
 	if(wear_mask)
 		if(message_mode != "changeling")
 			message = wear_mask.speechModification(message)
@@ -296,5 +313,7 @@
 	returns[1] = message
 	returns[2] = verb
 	returns[3] = handled
+	returns[4] = speech_sound
+	returns[5] = sound_vol
 
 	return returns

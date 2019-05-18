@@ -63,6 +63,10 @@
 	if(isnull(var_value))
 		to_chat(usr, "Unable to determine variable type.")
 
+	else if (variable in global.bitfields)
+		to_chat(usr, "Variable appears to be <b>BITFIELD</b>.")
+		default = "bitfield"
+
 	else if(isnum(var_value))
 		to_chat(usr, "Variable appears to be <b>NUM</b>.")
 		default = "num"
@@ -120,7 +124,7 @@
 		if(dir)
 			to_chat(usr, "If a direction, direction is: [dir]")
 
-	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
+	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text", "bitfield",
 		"num","type","icon","file","edit referenced object","restore to default")
 
 	if(!class)
@@ -571,6 +575,16 @@
 						if(A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 						CHECK_TICK
+
+		if("bitfield")
+			var/new_value = input_bitfield(usr, "Editing bitfield: [variable]", variable, O.vars[variable], null, 400)
+			if(isnull(new_value))
+				return
+			var/target_type = O.type
+			for(var/datum/D in world)
+				if(method && istype(D, target_type) || D.type == target_type)
+					D.vars[variable] = new_value
+				CHECK_TICK
 
 	if(!log_handled)
 		world.log << "### MassVarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]"

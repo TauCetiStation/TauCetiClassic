@@ -971,11 +971,6 @@
 "cs" = (
 /turf/simulated/floor,
 /area/derelict/bridge/access)
-"ct" = (
-/obj/structure/rack,
-/obj/item/weapon/melee/classic_baton,
-/turf/simulated/floor,
-/area/derelict/bridge/access)
 "cu" = (
 /obj/structure/rack,
 /obj/machinery/light/small{
@@ -1016,10 +1011,6 @@
 /area/derelict/bridge/access)
 "cz" = (
 /obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
@@ -1057,14 +1048,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/plating/airless,
 /area/solar/derelict_starboard)
-"cD" = (
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	name = "Worn-out APC";
-	pixel_y = -24
-	},
-/turf/simulated/floor,
-/area/derelict/bridge/access)
 "cE" = (
 /turf/simulated/floor/plating,
 /area/derelict/bridge/access)
@@ -1445,12 +1428,6 @@
 	},
 /turf/simulated/floor,
 /area/derelict/bridge)
-"dS" = (
-/obj/item/weapon/storage/toolbox/syndicate,
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
-/area/derelict/singularity_engine)
 "dT" = (
 /obj/item/stack/cable_coil/cut/red,
 /turf/simulated/floor/airless{
@@ -4132,10 +4109,6 @@
 /area/derelict/bridge/ai_upload)
 "ls" = (
 /turf/simulated/floor/plating/airless,
-/area/derelict/bridge/ai_upload)
-"lt" = (
-/obj/item/weapon/storage/toolbox/syndicate,
-/turf/simulated/floor/airless,
 /area/derelict/bridge/ai_upload)
 "lu" = (
 /obj/structure/cable{
@@ -42833,7 +42806,7 @@ pb
 do
 dz
 dK
-dS
+dM
 eb
 ej
 ew
@@ -49313,7 +49286,7 @@ kA
 lg
 ll
 lq
-lt
+lq
 lw
 lD
 ls
@@ -50532,7 +50505,7 @@ aa
 aa
 aa
 cp
-ct
+cv
 cx
 cw
 cH
@@ -51305,7 +51278,7 @@ aa
 cp
 cv
 cz
-cD
+cs
 cp
 cp
 cK

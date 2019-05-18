@@ -242,7 +242,7 @@ var/req_console_information = list()
 			priority = -1
 
 	if(href_list["writeAnnouncement"])
-		var/new_message = sanitize(input(usr, "Write your message:", "Awaiting Input", ""))
+		var/new_message = sanitize(input(usr, "Write your message:", "Awaiting Input", "") as null|message)
 		if(new_message)
 			message = new_message
 			switch(href_list["priority"])
@@ -260,7 +260,8 @@ var/req_console_information = list()
 			return FALSE
 		for(var/mob/M in player_list)
 			if(!isnewplayer(M))
-				to_chat(M, "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>")
+				to_chat(M, "<b><font size='3'><font color='red'>[department] announcement:</font> [message]</font></b>")
+				M.playsound_local(null,  'sound/AI/announce.ogg', 70, channel = CHANNEL_ANNOUNCE, wait = 1, is_global = 1)
 		announceAuth = 0
 		message = ""
 		screen = 0
@@ -318,7 +319,7 @@ var/req_console_information = list()
 									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
 									for (var/mob/O in hearers(4, Console.loc))
 										O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'Message from [department]'"))
-								Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[message]"
+								Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></B><BR>[message]"
 
 						screen = 6
 						Console.set_light(2)
@@ -374,7 +375,7 @@ var/req_console_information = list()
 					//err... hacking code, which has no reason for existing... but anyway... it's supposed to unlock priority 3 messanging on that console (EXTREME priority...) the code for that actually exists.
 /obj/machinery/requests_console/attackby(obj/item/weapon/O, mob/user)
 	/*
-	if (istype(O, /obj/item/weapon/crowbar))
+	if (iscrowbar(O))
 		if(open)
 			open = 0
 			icon_state="req_comp0"
@@ -384,7 +385,7 @@ var/req_console_information = list()
 				icon_state="req_comp_open"
 			else if(hackState == 1)
 				icon_state="req_comp_rewired"
-	if (istype(O, /obj/item/weapon/screwdriver))
+	if (isscrewdriver(O))
 		if(open)
 			if(hackState == 0)
 				hackState = 1

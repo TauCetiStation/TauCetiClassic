@@ -3264,7 +3264,7 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "jx" = (
-/turf/simulated/wall/mineral/clown,
+/turf/simulated/wall/mineral/bananium,
 /area)
 "jy" = (
 /obj/machinery/sleeper{

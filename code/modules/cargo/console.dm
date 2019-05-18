@@ -223,7 +223,7 @@
 		to_chat(user, "\blue Special supplies unlocked.")
 		hacked = TRUE
 		contraband = TRUE
-		user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!",
+		user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
 		"<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
 
 		// This also permamently sets this on the circuit board

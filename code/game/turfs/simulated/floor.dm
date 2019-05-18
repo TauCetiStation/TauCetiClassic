@@ -502,7 +502,7 @@ var/list/wood_icons = list("wood","wood-broken")
 			else
 				to_chat(user, "\blue The lightbulb seems fine, no need to replace it.")
 
-	if(istype(C, /obj/item/weapon/crowbar) && (!(is_plating())))
+	if(iscrowbar(C) && (!(is_plating())))
 		if(broken || burnt)
 			to_chat(user, "\red You remove the broken plating.")
 		else
@@ -522,7 +522,7 @@ var/list/wood_icons = list("wood","wood-broken")
 
 		return
 
-	if(istype(C, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(C))
 		if(is_wood_floor())
 			if(broken || burnt)
 				return
@@ -544,9 +544,10 @@ var/list/wood_icons = list("wood","wood-broken")
 		var/obj/item/stack/rods/R = C
 		if (is_plating())
 			if (R.get_amount() >= 2)
-				if(user.is_busy()) return
+				if(user.is_busy(src))
+					return
 				to_chat(user, "\blue Reinforcing the floor...")
-				if(do_after(user, 30, target = src) && R.use(2) && is_plating())
+				if(R.use_tool(src, user, 30, amount = 2, volume = 50) && is_plating())
 					ChangeTurf(/turf/simulated/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
 					return
@@ -590,7 +591,7 @@ var/list/wood_icons = list("wood","wood-broken")
 				to_chat(user, "\blue This section is too damaged to support a tile. Use a welder to fix the damage.")
 
 
-	if(istype(C, /obj/item/stack/cable_coil))
+	if(iscoil(C))
 		if(is_plating() || is_catwalk())
 			var/obj/item/stack/cable_coil/coil = C
 			for(var/obj/structure/cable/LC in src)
@@ -610,11 +611,11 @@ var/list/wood_icons = list("wood","wood-broken")
 		else
 			to_chat(user, "\red You cannot shovel this.")
 
-	if(istype(C, /obj/item/weapon/weldingtool))
+	if(iswelder(C))
 		var/obj/item/weapon/weldingtool/welder = C
 		if(welder.isOn() && (is_plating()))
 			if(broken || burnt)
-				if(welder.remove_fuel(0,user))
+				if(welder.use(0,user))
 					to_chat(user, "\red You fix some dents on the broken plating.")
 					playsound(src, 'sound/items/Welder.ogg', 80, 1)
 					icon_state = "plating"

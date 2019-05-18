@@ -20,6 +20,8 @@
 	var/message_cooldown = 0
 	var/centcomm_message_cooldown = 0
 	var/tmp_alertlevel = 0
+	var/last_seclevel_change = 0 // prevents announcement sounds spam
+	var/last_announcement = 0    // ^ ^ ^
 	var/const/STATE_DEFAULT = 1
 	var/const/STATE_CALLSHUTTLE = 2
 	var/const/STATE_CANCELSHUTTLE = 3
@@ -60,8 +62,7 @@
 	SSshuttle.incall(2)
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
-	world << sound('sound/AI/shuttlecalled.ogg')
+	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
 
 	return ..()
 
@@ -107,6 +108,11 @@
 		if("swipeidseclevel")
 			var/mob/M = usr
 			var/obj/item/weapon/card/id/I = M.get_active_hand()
+			if(last_seclevel_change > world.time)
+				to_chat(usr, "<span class='warning'>A red light flashes on the console. It looks like you can't change the security level that fast.</span>")
+				return
+			else
+				last_seclevel_change = world.time + 1 MINUTE
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
@@ -135,17 +141,18 @@
 				to_chat(usr, "You need to swipe your ID.")
 
 		if("announce")
-			if(src.authenticated==2)
-				if(message_cooldown)	return
-				var/input = sanitize(input(usr, "Please choose a message to announce to the station crew.", "What?"), extra = FALSE)
+			if(src.authenticated == 2)
+				if(last_announcement > world.time)
+					to_chat(usr, "<span class='warning'>A red light flashes on the console. It looks like you can't make announcements that fast.</span>")
+					return
+				else
+					last_announcement = world.time + 1 MINUTE
+				var/input = sanitize(input(usr, "Please choose a message to announce to the station crew.", "Priority Announcement") as null|message, extra = FALSE)
 				if(!input || !(usr in view(1,src)))
 					return
 				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
 				log_say("[key_name(usr)] has made a captain announcement: [input]")
 				message_admins("[key_name_admin(usr)] has made a captain announcement. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
-				message_cooldown = 1
-				spawn(600)//One minute cooldown
-					message_cooldown = 0
 
 		if("callshuttle")
 			src.state = STATE_DEFAULT
@@ -464,8 +471,7 @@
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
-	world << sound('sound/AI/shuttlecalled.ogg')
+	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
 
 	make_maint_all_access(FALSE)
 
@@ -505,14 +511,19 @@
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-	captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
+	captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "crew_shut_called")
 
 	return
 
 /proc/cancel_call_proc(mob/user)
-	if ((!( ticker ) || SSshuttle.location || SSshuttle.direction == 0 || SSshuttle.timeleft() < 300))
+	if ((!( ticker ) || SSshuttle.location || SSshuttle.direction == 0))
+		to_chat(user, "The console is not responding.")
 		return
-	if((ticker.mode.name == "blob")||(ticker.mode.name == "meteor"))
+	if(SSshuttle.timeleft() < 300)
+		to_chat(user, "Shuttle is close and it's too late for cancellation.")
+		return
+	if((ticker.mode.name == "blob")||(ticker.mode.name == "meteor"))//why??
+		to_chat(user, "The console is not responding.")
 		return
 
 	if(SSshuttle.direction != -1 && SSshuttle.online) //check that shuttle isn't already heading to centcomm

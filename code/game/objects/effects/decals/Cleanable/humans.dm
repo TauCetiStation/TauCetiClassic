@@ -160,7 +160,7 @@ var/global/list/image/splatter_cache=list()
 
 /obj/effect/decal/cleanable/blood/writing/examine(mob/user)
 	..()
-	to_chat(user, "It reads: <font color='[basedatum.color]'>\"[message]\"<font>")
+	to_chat(user, "It reads: <font color='[basedatum.color]'>\"[message]\"</font>")
 
 /obj/effect/decal/cleanable/blood/trail_holder
 	name = "blood"
@@ -185,7 +185,7 @@ var/global/list/image/splatter_cache=list()
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "gibbl5"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
-	var/fleshcolor = "#FFFFFF"
+	var/fleshcolor = "#ffffff"
 
 /obj/effect/decal/cleanable/blood/gibs/remove_ex_blood()
 	return
@@ -232,6 +232,11 @@ var/global/list/image/splatter_cache=list()
 
 				if (step_to(src, get_step(src, direction), 0))
 					break
+
+/obj/effect/decal/cleanable/blood/gibs/Crossed(mob/living/L)
+	if(istype(L) && has_gravity(loc))
+		playsound(loc, 'sound/effects/gib_step.ogg', 50, 1)
+	. = ..()
 
 
 /obj/effect/decal/cleanable/mucus

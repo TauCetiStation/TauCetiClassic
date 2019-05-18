@@ -1,6 +1,6 @@
 var/global/list/scarySounds = list(
 	'sound/weapons/thudswoosh.ogg',
-    'sound/weapons/Taser.ogg', 'sound/weapons/armbomb.ogg',
+    'sound/weapons/guns/gunpulse_Taser.ogg', 'sound/weapons/armbomb.ogg',
     'sound/voice/hiss1.ogg', 'sound/voice/hiss2.ogg',
     'sound/voice/hiss3.ogg', 'sound/voice/hiss4.ogg',
     'sound/voice/hiss5.ogg', 'sound/voice/hiss6.ogg',

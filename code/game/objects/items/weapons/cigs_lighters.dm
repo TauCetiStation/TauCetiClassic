@@ -80,7 +80,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.isOn())//Badasses dont get blinded while lighting their cig with a welding tool
 			light("<span class='notice'>[user] casually lights the [name] with [W].</span>")
@@ -269,7 +269,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 
 /obj/item/clothing/mask/cigarette/cigar/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.isOn())
 			light("<span class='notice'>[user] insults [name] by lighting it with [W].</span>")
@@ -356,7 +356,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return
 
 /obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.isOn())//
 			light("<span class='notice'>[user] recklessly lights [name] with [W].</span>")
@@ -456,9 +456,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			item_state = icon_off
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
 				playsound(src, 'sound/items/zippo.ogg', 20, 1, 1)
-				user.visible_message("<span class='rose'>You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing.")
+				user.visible_message("<span class='rose'>You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing.</span>")
 			else
-				user.visible_message("<span class='notice'>[user] quietly shuts off the [src].")
+				user.visible_message("<span class='notice'>[user] quietly shuts off the [src].</span>")
 				playsound(src, 'sound/items/lighter.ogg', 20, 1, 1)
 
 			set_light(0)

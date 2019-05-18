@@ -29,6 +29,7 @@
 	var/tnote[0]  //Current Texts
 	var/last_text //No text spamming
 	var/last_honk //Also no honk spamming that's bad too
+	var/last_tap_sound = 0 // prevents tap sounds spam
 	var/ttone = "beep" //The PDA ringtone!
 	var/lock_code = "" // Lockcode to unlock uplink
 	var/honkamt = 0 //How many honks left when infected with honk.exe
@@ -114,6 +115,16 @@
 	icon_state = "pda-clown"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
+
+/obj/item/device/pda/clown/atom_init()
+	. = ..()
+	AddComponent(/datum/component/slippery, 4, NONE, CALLBACK(src, .proc/AfterSlip))
+
+/obj/item/device/pda/clown/proc/AfterSlip(mob/living/carbon/human/M)
+	if (istype(M) && (M.real_name != owner))
+		var/obj/item/weapon/cartridge/clown/cart = cartridge
+		if(istype(cart) && cart.charges < 5)
+			cart.charges++
 
 /obj/item/device/pda/mime
 	default_cartridge = /obj/item/weapon/cartridge/mime
@@ -557,6 +568,10 @@
 
 	add_fingerprint(U)
 	U.set_machine(src)
+
+	if(href_list && (last_tap_sound <= world.time))
+		playsound(src, "pda", 15, 0)
+		last_tap_sound = world.time + 8
 
 	switch(href_list["choice"])
 
@@ -1253,11 +1268,6 @@
 		T.hotspot_expose(700,125)
 		explosion(T, 0, 0, 1, rand(1,2))
 	return
-
-/obj/item/device/pda/clown/Crossed(mob/living/carbon/C) //Clown PDA is slippery.
-	if(istype(C))
-		if (C.slip("the PDA", 4, 2) && ishuman(C) && src.cartridge.charges < 5)
-			cartridge.charges++
 
 /obj/item/device/pda/proc/available_pdas()
 	var/list/names = list()

@@ -3,24 +3,24 @@
 ////////////////////////////////
 
 /datum/construction/reversible/mecha/custom_action(index, diff, atom/used_atom, mob/user)
-	if(istype(used_atom, /obj/item/weapon/weldingtool))
+	if(iswelder(used_atom))
 		var/obj/item/weapon/weldingtool/W = used_atom
-		if (W.remove_fuel(3, user))
+		if (W.use(3, user))
 			playsound(holder, 'sound/items/Welder2.ogg', 50, 1)
 			return 1
 		else
 			to_chat(user, ("There's not enough fuel."))
 			return 0
-	else if(istype(used_atom, /obj/item/weapon/wrench))
+	else if(iswrench(used_atom))
 		playsound(holder, 'sound/items/Ratchet.ogg', 50, 1)
 		return 1
-	else if(istype(used_atom, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(used_atom))
 		playsound(holder, 'sound/items/Screwdriver.ogg', 50, 1)
 		return 1
-	else if(istype(used_atom, /obj/item/weapon/wirecutters))
+	else if(iswirecutter(used_atom))
 		playsound(holder, 'sound/items/Wirecutter.ogg', 50, 1)
 		return 1
-	else if(istype(used_atom, /obj/item/stack/cable_coil))
+	else if(iscoil(used_atom))
 		var/obj/item/stack/cable_coil/C = used_atom
 		if(!C.use(4))
 			to_chat(user, ("There's not enough cable to finish the task."))

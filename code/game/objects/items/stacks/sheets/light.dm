@@ -13,7 +13,7 @@
 
 /obj/item/stack/light_w/attackby(obj/item/O, mob/user)
 	..()
-	if(istype(O,/obj/item/weapon/wirecutters))
+	if(iswirecutter(O))
 		if(!use(1))
 			return
 		new/obj/item/stack/cable_coil/random(user.loc, 5)

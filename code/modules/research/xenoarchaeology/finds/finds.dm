@@ -43,7 +43,7 @@
 
 /obj/item/weapon/ore/strangerock/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/pickaxe/brush))
-		if(do_after(user, 20, target = src) && W)
+		if(W.use_tool(src, user, 20, volume = 50) && W)
 			if(inside)
 				inside.forceMove(get_turf(src))
 				visible_message("<span class='notice'>\The [src] is brushed away revealing \the [inside].</span>")
@@ -53,10 +53,10 @@
 			qdel(src)
 			return
 
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(do_after(user, 20, target = src) && WT && WT.isOn())
-			user.SetNextMove(CLICK_CD_INTERACT)
+		user.SetNextMove(CLICK_CD_INTERACT)
+		if(WT.use_tool(src, user, 20, volume = 50))
 			if(WT.isOn())
 				if(WT.get_fuel() >= 4)
 					if(inside)
@@ -67,11 +67,11 @@
 						for(var/mob/M in viewers(world.view, user))
 							M.show_message("<span class='info'>[src] burns away into nothing.</span>",1)
 					qdel(src)
-					WT.remove_fuel(4)
+					WT.use(4)
 				else
 					for(var/mob/M in viewers(world.view, user))
 						M.show_message("<span class='info'>A few sparks fly off [src], but nothing else happens.</span>",1)
-					WT.remove_fuel(1)
+					WT.use(1)
 		return
 
 	else if(istype(W,/obj/item/device/core_sampler))
@@ -329,11 +329,10 @@
 			item_type = new_item.name
 			apply_material_decorations = 0
 		if(22)
-			if(prob(50))
-				new_item = new /obj/item/weapon/shard(src.loc)
-			else
-				new_item = new /obj/item/weapon/shard/phoron(src.loc)
 			apply_prefix = 0
+			new_item = new /obj/item/clothing/glasses/hud/mining/ancient(src.loc)
+			new_item.name = pick("strange looking hud", "strange looking glasses")
+			new_item.desc = "It glows faintly."
 			apply_image_decorations = 0
 			apply_material_decorations = 0
 		if(23)
@@ -512,6 +511,7 @@
 			additional_desc = "This device is made of metal, emits a strange purple formation of unknown origin."
 			apply_image_decorations = 0
 			apply_material_decorations = 0
+
 	var/decorations = ""
 	if(apply_material_decorations)
 		source_material = pick("cordite","quadrinium","steel","titanium","aluminium","ferritic-alloy","plasteel","duranium")

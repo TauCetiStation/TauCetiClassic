@@ -144,6 +144,13 @@
 	required_reagents = list("phoron" = 1, "hydrogen" = 1, "nitrogen" = 1)
 	result_amount = 3
 
+/datum/chemical_reaction/nicotine
+	name = "Nicotine"
+	id = "nicotine"
+	result = "nicotine"
+	required_reagents = list("lexorin" = 5, "nitrogen" = 2, "inaprovaline" = 1)
+	result_amount = 5
+
 /datum/chemical_reaction/space_drugs
 	name = "Space Drugs"
 	id = "space_drugs"
@@ -2318,42 +2325,42 @@ TODO: Convert everything to custom hair dye,
 	name = "Red Hair Dye"
 	id = "redhairdye"
 	result = "redhairdye"
-	required_reagents = list("hairdye" = 1, "iron" = 1)
+	required_reagents = list("whitehairdye" = 1, "iron" = 1)
 	result_amount = 1 // They don't mix, instead they react.
 
 /datum/chemical_reaction/hair_dye/blue
 	name = "Blue Hair Dye"
 	id = "bluehairdye"
 	result = "bluehairdye"
-	required_reagents = list("hairdye" = 1, "copper" = 1)
+	required_reagents = list("whitehairdye" = 1, "copper" = 1)
 	result_amount = 1
 
 /datum/chemical_reaction/hair_dye/green
 	name = "Green Hair Dye"
 	id = "greenhairdye"
 	result = "greenhairdye"
-	required_reagents = list("hairdye" = 1, "chlorine" = 1)
+	required_reagents = list("whitehairdye" = 1, "chlorine" = 1)
 	result_amount = 1
 
 /datum/chemical_reaction/hair_dye/black
 	name = "Black Hair Dye"
 	id = "blackhairdye"
 	result = "blackhairdye"
-	required_reagents = list("hairdye" = 1, "carbon" = 1)
+	required_reagents = list("whitehairdye" = 1, "carbon" = 1)
 	result_amount = 1
 
 /datum/chemical_reaction/hair_dye/brown
 	name = "Brown Hair Dye"
 	id = "brownhairdye"
 	result = "brownhairdye"
-	required_reagents = list("hairdye" = 1, "sulfur" = 1)
+	required_reagents = list("whitehairdye" = 1, "sulfur" = 1)
 	result_amount = 1
 
 /datum/chemical_reaction/hair_dye/blond
 	name = "Blond Hair Dye"
 	id = "blondhairdye"
 	result = "blondhairdye"
-	required_reagents = list("hairdye" = 1, "sugar" = 1)
+	required_reagents = list("whitehairdye" = 1, "sugar" = 1)
 	result_amount = 1
 
 // Converting dyes to paint. START madness
@@ -2362,7 +2369,7 @@ TODO: Convert everything to custom hair dye,
 	name = "White Dye Empowering"
 	id = "whitedyeempower"
 	result = "paint_white"
-	required_reagents = list("hairdye" = 1, "glycerol" = 10)
+	required_reagents = list("whitehairdye" = 1, "glycerol" = 10)
 	result_amount = 1
 
 /datum/chemical_reaction/hair_dye_empowering/red

@@ -6,7 +6,7 @@
 	silenced = 1
 	origin_tech = "combat=2;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/sm45
-	fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
 
 /obj/item/weapon/gun/projectile/sigi
 	name = "\improper pistol"
@@ -15,8 +15,8 @@
 	item_state = "sigi250"
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/m9mmr_2
-	var/mag_type2 = /obj/item/ammo_box/magazine/m9mm_2
-	fire_sound = 'sound/weapons/Gunshot.ogg'
+	mag_type2 = /obj/item/ammo_box/magazine/m9mm_2
+	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 
 	var/mag = null
 
@@ -43,35 +43,15 @@
 	return
 
 /obj/item/weapon/gun/projectile/sigi/attack_self(mob/user)
-	if (magazine)
-		magazine.loc = get_turf(src.loc)
-		user.put_in_hands(magazine)
-		magazine.update_icon()
-		magazine = null
-		overlays -= mag
-		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
-		playsound(src.loc, 'sound/weapons/pistol_reload.ogg', 50, 1, 1)
-	else
-		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
-	return
+	overlays -= mag
+	..()
 
 /obj/item/weapon/gun/projectile/sigi/attackby(obj/item/A, mob/user)
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if ((!magazine && (istype(AM, mag_type) || istype(AM, mag_type2))))
-			user.remove_from_mob(AM)
-			magazine = AM
-			magazine.loc = src
 			overlays += mag
-			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
-			chamber_round()
-			A.update_icon()
-			update_icon()
-			playsound(src.loc, 'sound/weapons/pistol_reload.ogg', 50, 1, 1)
-			return 1
-		else if (magazine)
-			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
-	return 0
+			..()
 
 /obj/item/weapon/gun/projectile/automatic/silenced/isHandgun()
 	return 1
@@ -88,7 +68,7 @@
 	item_state = "deagle"
 	force = 14.0
 	mag_type = /obj/item/ammo_box/magazine/m50
-	fire_sound = 'sound/weapons/guns/deagle_shot.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/deagle/isHandgun()
 	return 1
@@ -105,22 +85,6 @@
 		return
 	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
 	return
-
-/obj/item/weapon/gun/projectile/automatic/deagle/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
-		var/obj/item/ammo_box/magazine/AM = A
-		if (!magazine && istype(AM, mag_type))
-			user.remove_from_mob(AM)
-			magazine = AM
-			magazine.loc = src
-			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
-			chamber_round()
-			A.update_icon()
-			update_icon(1)
-			return 1
-		else if (magazine)
-			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
-	return 0
 
 /obj/item/weapon/gun/projectile/automatic/deagle/gold
 	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
@@ -141,7 +105,7 @@
 /obj/item/weapon/gun/projectile/automatic/gyropistol/afterattack(atom/target, mob/living/user, flag)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', 40, 1)
 		update_icon()
 		alarmed = 1
 	return
@@ -186,8 +150,8 @@
 	item_state = "colt"
 	w_class = ITEM_SIZE_SMALL
 	mag_type = /obj/item/ammo_box/magazine/c45r
-	var/mag_type2 = /obj/item/ammo_box/magazine/c45m
-	fire_sound = 'sound/weapons/guns/colt1911_shot.ogg'
+	mag_type2 = /obj/item/ammo_box/magazine/c45m
+	fire_sound = 'sound/weapons/guns/gunshot_colt1911.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/colt1911/isHandgun()
 	return 1
@@ -205,27 +169,11 @@
 	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/colt1911/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
-		var/obj/item/ammo_box/magazine/AM = A
-		if (!magazine && (istype(AM, mag_type) || istype(AM, mag_type2)))
-			user.remove_from_mob(AM)
-			magazine = AM
-			magazine.loc = src
-			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
-			chamber_round()
-			A.update_icon()
-			update_icon(1)
-			return 1
-		else if (magazine)
-			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
-	return 0
-
 /obj/item/weapon/gun/projectile/sec_pistol
 	name = "\improper pistol"
 	desc = "AT-7 .45 caliber pistol."
 	icon_state = "at7"
-	fire_sound = 'sound/weapons/guns/at7_shot.wav'
+	fire_sound = 'sound/weapons/guns/gunshot_at7.wav'
 	mag_type = /obj/item/ammo_box/magazine/at7_45
 
 /obj/item/weapon/gun/projectile/sec_pistol/atom_init()
@@ -250,28 +198,12 @@
 	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
 	return
 
-/obj/item/weapon/gun/projectile/sec_pistol/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
-		var/obj/item/ammo_box/magazine/AM = A
-		if (!magazine && istype(AM, mag_type))
-			user.remove_from_mob(AM)
-			magazine = AM
-			magazine.loc = src
-			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
-			chamber_round()
-			A.update_icon()
-			update_icon(1)
-			return 1
-		else if (magazine)
-			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
-	return 0
-
 /obj/item/weapon/gun/projectile/sec_pistol/acm38
 	name = "\improper pistol"
 	desc = "Seegert ACM38 pistol - when you need be TACTICOOL."
 	icon_state = "acm38"
 	item_state = "colt"
-	fire_sound = 'sound/weapons/guns/acm38_shot.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_acm38.ogg'
 	mag_type = /obj/item/ammo_box/magazine/acm38_38
 
 /obj/item/weapon/gun/projectile/sec_pistol/update_icon(load = 0)

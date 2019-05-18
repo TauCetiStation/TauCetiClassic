@@ -182,7 +182,7 @@
 	use_power(1000)
 
 /obj/machinery/gateway/center/attackby(obj/item/device/W, mob/user)
-	if(istype(W,/obj/item/device/multitool))
+	if(ismultitool(W))
 		calibrate(user)
 	else
 		..()

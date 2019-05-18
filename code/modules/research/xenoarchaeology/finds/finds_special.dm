@@ -34,7 +34,7 @@ var/list/bad_messages = list("Never take me off, please!",
 		M.say(pick(heard_talk))
 	if(istype(src.loc, /mob/living) && prob(2))
 		var/mob/living/M = src.loc
-		to_chat(M, "A strange voice goes through your head: <b><font color='red' size='[num2text(rand(1,3))]'><b>[pick(bad_messages)]</b></font>")
+		to_chat(M, "A strange voice goes through your head: <font color='red' size='[num2text(rand(1,3))]'><b>[pick(bad_messages)]</b></font>")
 
 /obj/item/clothing/mask/gas/poltergeist/hear_talk(mob/M, text)
 	..()

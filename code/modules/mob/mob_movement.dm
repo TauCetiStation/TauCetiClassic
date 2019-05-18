@@ -130,7 +130,7 @@
 
 	if(isobserver(mob))	return mob.Move(n,direct)
 
-	if(moving)	return 0
+	if(moving || mob.throwing)	return 0
 
 	if(world.time < move_delay)	return
 
@@ -403,6 +403,23 @@
 
 /mob/proc/mob_negates_gravity()
 	return 0
+
+
+/mob/proc/slip(weaken_duration, obj/slipped_on, lube)
+	return FALSE
+
+/mob/living/carbon/slip(weaken_duration, obj/slipped_on, lube)
+	return loc.handle_slip(src, weaken_duration, slipped_on, lube)
+
+/mob/living/carbon/slime/slip()
+	return FALSE
+
+/mob/living/carbon/human/slip(weaken_duration, obj/slipped_on, lube)
+	if(!(lube & GALOSHES_DONT_HELP))
+		if(shoes && (shoes.flags & NOSLIP))
+			return FALSE
+	return ..()
+
 
 /mob/proc/update_gravity()
 	return

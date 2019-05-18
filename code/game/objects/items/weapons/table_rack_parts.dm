@@ -16,7 +16,7 @@
  */
 /obj/item/weapon/table_parts/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		new /obj/item/stack/sheet/metal( user.loc )
 		//SN src = null
 		qdel(src)
@@ -40,7 +40,7 @@
  * Reinforced Table Parts
  */
 /obj/item/weapon/table_parts/reinforced/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		new /obj/item/stack/sheet/metal( user.loc )
 		new /obj/item/stack/rods( user.loc )
 		qdel(src)
@@ -55,7 +55,7 @@
  * Glass Table Parts
  */
 /obj/item/weapon/table_parts/glass/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		new /obj/item/stack/sheet/glass( user.loc )
 		qdel(src)
 
@@ -69,7 +69,7 @@
  * Wooden Table Parts
  */
 /obj/item/weapon/table_parts/wood/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		new /obj/item/stack/sheet/wood( user.loc )
 		qdel(src)
 
@@ -90,7 +90,7 @@
  * Fancy Wooden Table Parts
  */
 /obj/item/weapon/table_parts/wood/fancy/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		new /obj/item/stack/sheet/wood( user.loc )
 		qdel(src)
 
@@ -101,7 +101,7 @@
 	return
 
 /obj/item/weapon/table_parts/wood/fancy/black/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		new /obj/item/stack/sheet/wood( user.loc )
 		qdel(src)
 
@@ -117,7 +117,7 @@
  */
 
 /obj/item/weapon/table_parts/wood/poker/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		new /obj/item/stack/sheet/wood( user.loc )
 		new /obj/item/stack/tile/grass( user.loc )
 		qdel(src)
@@ -133,7 +133,7 @@
  */
 /obj/item/weapon/rack_parts/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		new /obj/item/stack/sheet/metal( user.loc )
 		qdel(src)
 		return

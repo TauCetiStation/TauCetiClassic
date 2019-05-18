@@ -95,7 +95,7 @@
 			user.drop_from_inventory(W)
 			W.loc = src
 			user.visible_message("<span class='notice'>[user] inserts [W] into \the [src]'s GPS device slot.</span>")
-	else if(istype(W, /obj/item/device/multitool))
+	else if(ismultitool(W))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/telepad))
 			if(telepad)
@@ -257,7 +257,7 @@
 				SS.start()
 
 				flick("pad-beam", telepad)
-				playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1)
+				playsound(telepad.loc, 'sound/weapons/guns/gunpulse_emitter2.ogg', 25, 1)
 
 			else
 				use_power(power * 1500)
@@ -266,7 +266,7 @@
 				SS.start()
 
 				flick("pad-beam", telepad)
-				playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1)
+				playsound(telepad.loc, 'sound/weapons/guns/gunpulse_emitter2.ogg', 25, 1)
 				temp_msg = "Error!<BR>Something wrong with the navigation data."
 			updateDialog()
 

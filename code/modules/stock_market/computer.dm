@@ -66,7 +66,7 @@
 			var/mystocks = 0
 			if(logged_in && (logged_in in S.shareholders))
 				mystocks = S.shareholders[logged_in]
-			dat += "<hr /><div class='stock'><span class='company'>[S.name]</span> <span class='s_company'>([S.short_name])</span>[S.bankrupt ? " <b style='color:red'>BANKRUPT</b>" : null]<br>"
+			dat += "<hr /><div class='stock'><span class='company'>[S.name]</span> <span class='s_company'>([S.short_name])</span>[S.bankrupt ? " <span style='color:red'><b>BANKRUPT</b></span>" : null]<br>"
 			dat += "<b>Current value per share:</b> [S.current_value] | <a href='?src=\ref[src];viewhistory=\ref[S]'>View history</a><br><br>"
 			dat += "You currently own <b>[mystocks]</b> shares in this company. There are [S.available_shares] purchasable shares on the market currently.<br>"
 			if(S.bankrupt)
@@ -273,14 +273,14 @@
 				continue
 			if (p > 0)
 				dat += "<hr>"
-			dat += "<div><b style='font-size:1.25em'>[E.current_title]</b><br>[E.current_desc]</div>"
+			dat += "<div><span style='font-size:1.25em'><b>[E.current_title]</b></span><br>[E.current_desc]</div>"
 			p++
 		dat += "</div><hr><div><h3>Articles</h3>"
 		p = 0
 		for (var/datum/article/A in S.articles)
 			if (p > 0)
 				dat += "<hr>"
-			dat += "<div><b style='font-size:1.25em'>[A.headline]</b><br><i>[A.subtitle]</i><br><br>[A.article]<br>- [A.author], [A.spacetime] (via <i>[A.outlet]</i>)</div>"
+			dat += "<div><span style='font-size:1.25em'><b>[A.headline]</b></span><br><i>[A.subtitle]</i><br><br>[A.article]<br>- [A.author], [A.spacetime] (via <i>[A.outlet]</i>)</div>"
 			p++
 		dat += "</div></body></html>"
 		var/datum/browser/popup = new(usr, "archive_[S.name]", "Stock News", 600, 400)

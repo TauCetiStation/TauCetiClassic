@@ -282,12 +282,11 @@ Implants;
 
 			comm.messagetitle.Add("Cent. Com. Status Summary")
 			comm.messagetext.Add(intercepttext)
-	world << sound('sound/AI/commandreport.ogg')
-
-/*	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
-			M << sound('sound/AI/intercept.ogg')
+			M.playsound_local(null, 'sound/AI/commandreport.ogg', 70, channel = CHANNEL_ANNOUNCE, wait = 1, is_global = 1)
+
+/*	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 	if(security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)*/
 
@@ -372,7 +371,7 @@ Implants;
 //Reports player logouts//
 //////////////////////////
 /proc/display_roundstart_logout_report()
-	var/msg = "\blue <b>Roundstart logout report\n\n"
+	var/msg = "\blue <b>Roundstart logout report</b>\n\n"
 	for(var/mob/living/L in living_list)
 
 		if(L.ckey)

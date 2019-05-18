@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 /obj/machinery/computer/telecomms
 
-	light_color = "#50AB00"
+	light_color = "#50ab00"
 
 /obj/machinery/computer/telecomms/server
 	name = "Telecommunications Server Monitor"
@@ -68,7 +68,7 @@
 				// If the log is a speech file
 				if(C.input_type == "Speech File")
 
-					dat += "<li><font color = #008F00>[C.name]</font color>  <font color = #FF0000><a href='?src=\ref[src];delete=[i]'>\[X\]</a></font color><br>"
+					dat += "<li><font color='#008F00'>[C.name]</font>  <font color='#FF0000'><a href='?src=\ref[src];delete=[i]'>\[X\]</a></font><br>"
 
 					// -- Determine race of orator --
 
@@ -107,26 +107,26 @@
 					// -- If the orator is a human, or universal translate is active, OR mob has universal speech on --
 
 					if(language == "Human" || universal_translate || C.parameters["uspeech"])
-						dat += "<u><font color = #18743E>Data type</font color></u>: [C.input_type]<br>"
-						dat += "<u><font color = #18743E>Source</font color></u>: [C.parameters["name"]] (Job: [C.parameters["job"]])<br>"
-						dat += "<u><font color = #18743E>Class</font color></u>: [race]<br>"
-						dat += "<u><font color = #18743E>Contents</font color></u>: \"[C.parameters["message"]]\"<br>"
+						dat += "<u><font color='#18743E'>Data type</font></u>: [C.input_type]<br>"
+						dat += "<u><font color='#18743E'>Source</font></u>: [C.parameters["name"]] (Job: [C.parameters["job"]])<br>"
+						dat += "<u><font color='#18743E'>Class</font></u>: [race]<br>"
+						dat += "<u><font color='#18743E'>Contents</font></u>: \"[C.parameters["message"]]\"<br>"
 
 
 					// -- Orator is not human and universal translate not active --
 
 					else
-						dat += "<u><font color = #18743E>Data type</font color></u>: Audio File<br>"
-						dat += "<u><font color = #18743E>Source</font color></u>: <i>Unidentifiable</i><br>"
-						dat += "<u><font color = #18743E>Class</font color></u>: [race]<br>"
-						dat += "<u><font color = #18743E>Contents</font color></u>: <i>Unintelligble</i><br>"
+						dat += "<u><font color='#18743E'>Data type</font></u>: Audio File<br>"
+						dat += "<u><font color='#18743E'>Source</font></u>: <i>Unidentifiable</i><br>"
+						dat += "<u><font color='#18743E'>Class</font></u>: [race]<br>"
+						dat += "<u><font color='#18743E'>Contents</font></u>: <i>Unintelligble</i><br>"
 
 					dat += "</li><br>"
 
 				else if(C.input_type == "Execution Error")
 
-					dat += "<li><font color = #990000>[C.name]</font color>  <font color = #FF0000><a href='?src=\ref[src];delete=[i]'>\[X\]</a></font color><br>"
-					dat += "<u><font color = #787700>Output</font color></u>: \"[C.parameters["message"]]\"<br>"
+					dat += "<li><font color='#990000'>[C.name]</font>  <font color='#FF0000'><a href='?src=\ref[src];delete=[i]'>\[X\]</a></font><br>"
+					dat += "<u><font color='#787700'>Output</font></u>: \"[C.parameters["message"]]\"<br>"
 					dat += "</li><br>"
 
 
@@ -165,7 +165,7 @@
 
 			if("scan")
 				if(servers.len > 0)
-					temp = "<font color = #D70B00>- FAILED: CANNOT PROBE WHEN BUFFER FULL -</font color>"
+					temp = "<font color='#D70B00'>- FAILED: CANNOT PROBE WHEN BUFFER FULL -</font>"
 
 				else
 					for(var/obj/machinery/telecomms/server/T in range(25, src))
@@ -173,9 +173,9 @@
 							servers.Add(T)
 
 					if(!servers.len)
-						temp = "<font color = #D70B00>- FAILED: UNABLE TO LOCATE SERVERS IN \[[network]\] -</font color>"
+						temp = "<font color='#D70B00'>- FAILED: UNABLE TO LOCATE SERVERS IN \[[network]\] -</font>"
 					else
-						temp = "<font color = #336699>- [servers.len] SERVERS PROBED & BUFFERED -</font color>"
+						temp = "<font color='#336699'>- [servers.len] SERVERS PROBED & BUFFERED -</font>"
 
 					screen = 0
 
@@ -189,13 +189,13 @@
 
 			var/datum/comm_log_entry/D = SelectedServer.log_entries[text2num(href_list["delete"])]
 
-			temp = "<font color = #336699>- DELETED ENTRY: [D.name] -</font color>"
+			temp = "<font color='#336699'>- DELETED ENTRY: [D.name] -</font>"
 
 			SelectedServer.log_entries.Remove(D)
 			qdel(D)
 
 		else
-			temp = "<font color = #D70B00>- FAILED: NO SELECTED MACHINE -</font color>"
+			temp = "<font color='#D70B00'>- FAILED: NO SELECTED MACHINE -</font>"
 
 	if(href_list["network"])
 
@@ -203,14 +203,14 @@
 
 		if(newnet && ((usr in range(1, src) || issilicon(usr))))
 			if(length(newnet) > 15)
-				temp = "<font color = #D70B00>- FAILED: NETWORK TAG STRING TOO LENGHTLY -</font color>"
+				temp = "<font color='#D70B00'>- FAILED: NETWORK TAG STRING TOO LENGHTLY -</font>"
 
 			else
 
 				network = newnet
 				screen = 0
 				servers = list()
-				temp = "<font color = #336699>- NEW NETWORK TAG SET IN ADDRESS \[[network]\] -</font color>"
+				temp = "<font color='#336699'>- NEW NETWORK TAG SET IN ADDRESS \[[network]\] -</font>"
 
 	updateUsrDialog()
 	return*/

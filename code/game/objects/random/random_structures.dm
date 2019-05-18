@@ -78,12 +78,6 @@
 					/obj/structure/closet/secure_closet/engineering_personal,\
 					/obj/structure/closet/secure_closet/atmos_personal,\
 					/obj/structure/closet/secure_closet/bar,\
-/*					/obj/structure/closet/secure_closet/barman_personal,\
-					/obj/structure/closet/secure_closet/hydro_personal,\
-					/obj/structure/closet/secure_closet/janitor_personal,\
-					/obj/structure/closet/secure_closet/lawyer_personal,\
-					/obj/structure/closet/secure_closet/librarian_personal,\
-					/obj/structure/closet/secure_closet/counselor_personal,\*/
 					/obj/structure/closet/secure_closet/cargotech,\
 					/obj/structure/closet/secure_closet/recycler,\
 					/obj/structure/closet/secure_closet/bar,\

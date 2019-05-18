@@ -222,7 +222,7 @@
 /obj/item/weapon/circular_saw/price = 1250
 /obj/item/weapon/claymore/price = 5000
 /obj/item/weapon/coin/price = 15
-/obj/item/weapon/coin/clown/price = 3000
+/obj/item/weapon/coin/bananium/price = 3000
 /obj/item/weapon/coin/diamond/price = 20000
 /obj/item/weapon/coin/gold/price = 7300
 /obj/item/weapon/coin/uranium/price = 3200

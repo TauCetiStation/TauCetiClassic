@@ -64,7 +64,7 @@
 
 
 /obj/structure/table/holotable/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		to_chat(user, "It's a holotable!  There are no bolts!")
 		return
 
@@ -122,11 +122,11 @@
 
 	if(W.flags & NOBLUDGEON) return
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		to_chat(user, ("<span class='notice'>It's a holowindow, you can't unfasten it!</span>"))
-	else if(istype(W, /obj/item/weapon/crowbar) && reinf && state <= 1)
+	else if(iscrowbar(W) && reinf && state <= 1)
 		to_chat(user, ("<span class='notice'>It's a holowindow, you can't pry it!</span>"))
-	else if(istype(W, /obj/item/weapon/wrench) && !anchored && (!state || !reinf))
+	else if(iswrench(W) && !anchored && (!state || !reinf))
 		to_chat(user, ("<span class='notice'>It's a holowindow, you can't dismantle it!</span>"))
 	else
 		if(W.damtype == BRUTE || W.damtype == BURN)
@@ -186,10 +186,10 @@
 	qdel(src)
 
 /obj/structure/stool/bed/chair/holochair
-	icon_state = "chair_g"
+	icon_state = "chair_gray"
 
 /obj/structure/stool/bed/chair/holochair/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		to_chat(user, ("<span class='notice'>It's a holochair, you can't dismantle it!</span>"))
 	return
 
@@ -386,7 +386,7 @@
 	return
 
 /obj/structure/rack/holorack/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		to_chat(user, "It's a holorack!  You can't unwrench it!")
 		return
 
@@ -400,6 +400,7 @@
 	alpha = 127
 	icon_gib = null
 	butcher_results = null //we can't butcher it
+	randomify = FALSE
 
 /mob/living/simple_animal/hostile/carp/holodeck/atom_init()
 	. = ..()

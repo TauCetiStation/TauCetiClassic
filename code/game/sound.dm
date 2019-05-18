@@ -1,20 +1,18 @@
-var/list/shatter_sound = list('sound/effects/Glassbr1.ogg','sound/effects/Glassbr2.ogg','sound/effects/Glassbr3.ogg')
-var/list/explosion_sound = list('sound/effects/Explosion1.ogg','sound/effects/Explosion2.ogg')
-var/list/spark_sound = list('sound/effects/sparks1.ogg','sound/effects/sparks2.ogg','sound/effects/sparks3.ogg','sound/effects/sparks4.ogg')
-var/list/rustle_sound = list('sound/effects/rustle1.ogg','sound/effects/rustle2.ogg','sound/effects/rustle3.ogg','sound/effects/rustle4.ogg','sound/effects/rustle5.ogg')
-var/list/punch_sound = list('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg')
-var/list/clown_sound = list('sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg')
-var/list/swing_hit_sound = list('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
-var/list/hiss_sound = list('sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg')
-var/list/page_sound = list('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
-var/list/fracture_sound = list('sound/effects/bonebreak1.ogg','sound/effects/bonebreak2.ogg','sound/effects/bonebreak3.ogg','sound/effects/bonebreak4.ogg')
-//var/list/gun_sound = list('sound/weapons/Gunshot.ogg', 'sound/weapons/Gunshot2.ogg','sound/weapons/Gunshot3.ogg','sound/weapons/Gunshot4.ogg')
-//var/list/footsteps_sound = list('sound/effects/footsteps.ogg','sound/effects/footsteps2.ogg')
-var/list/footsteps_sound = list('sound/effects/tile1.wav','sound/effects/tile2.wav','sound/effects/tile3.wav','sound/effects/tile4.wav')
-var/list/bandg_sound = list('sound/items/bandage.ogg','sound/items/bandage2.ogg','sound/items/bandage3.ogg')
+/*=====================================================================================================================================
+     === Explanation for some variables ===
 
-/proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global)
+var/is_global = if true then do not add echo to the sound
+var/voluminosity = is that 3d sound? If false then ignore the coordinates of the sound(become a sort of mono sound)
+var/src_vol = volume for its source. Separate sound volume for its source and for others? Make a "special" volume for the source?
 
+
+     === Important notes for all soundmakers ===
+
+* !!! DO NOT USE `<<` !!!. Use send_sound() instead of this.
+* Before you create a new new channel, put it in a file which is located in [code\__DEFINES\sound.dm].
+
+=======================================================================================================================================*/
+/proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global, wait = 0, voluminosity = TRUE, src_vol)
 	soundin = get_sfx(soundin) // same sound for everyone
 
 	if(isarea(source))
@@ -24,10 +22,13 @@ var/list/bandg_sound = list('sound/items/bandage.ogg','sound/items/bandage2.ogg'
 	var/frequency = get_rand_frequency() // Same frequency for everybody
 	var/turf/turf_source = get_turf(source)
 
- 	// Looping through the player list has the added bonus of working for mobs inside containers
+	// Looping through the player list has the added bonus of working for mobs inside containers
 	for (var/P in player_list)
 		var/mob/M = P
 		if(!M || !M.client)
+			continue
+		if((M == source) && (src_vol != null))
+			M.playsound_local(null, soundin, src_vol, vary, frequency, falloff, channel)
 			continue
 
 		var/distance = get_dist(M, turf_source)
@@ -35,19 +36,20 @@ var/list/bandg_sound = list('sound/items/bandage.ogg','sound/items/bandage2.ogg'
 			var/turf/T = get_turf(M)
 
 			if(T && T.z == turf_source.z)
-				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, is_global)
+				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, is_global, wait, voluminosity)
 
 var/const/FALLOFF_SOUNDS = 0.5
 
-/mob/proc/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global)
+/mob/proc/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global, wait = 0, voluminosity = TRUE)
 	if(!src.client || ear_deaf > 0)
 		return FALSE
 	soundin = get_sfx(soundin)
 
 	var/sound/S = sound(soundin)
-	S.wait = 0 //No queue
+	//S.wait = 0 //No queue
 	//S.channel = 0 //Any channel
-	S.channel = channel
+	S.wait = wait
+	S.channel = channel // Note. Channel 802 is busy with sound of automatic AI announcements
 	S.volume = vol
 	S.environment = -1
 	if (vary)
@@ -87,15 +89,19 @@ var/const/FALLOFF_SOUNDS = 0.5
 		if (S.volume <= 0)
 			return FALSE	//no volume means no sound
 
-		var/dx = turf_source.x - T.x // Hearing from the right/left
-		S.x = dx
-		var/dz = turf_source.y - T.y // Hearing from infront/behind
-		S.z = dz
-		// The y value is for above your head, but there is no ceiling in 2d spessmens.
-		S.y = 1
+		if(voluminosity)
+			var/dx = turf_source.x - T.x // Hearing from the right/left
+			S.x = dx
+			var/dz = turf_source.y - T.y // Hearing from infront/behind
+			S.z = dz
+			// The y value is for above your head, but there is no ceiling in 2d spessmens.
+			S.y = 1
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 	if(!is_global)
 		S.environment = 2
+	if(src.stat == UNCONSCIOUS || src.sleeping > 0) // unconscious people will hear illegible sounds
+		S.volume /= 3
+		S.environment = 10
 	src << S
 
 /mob/living/parasite/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global)
@@ -103,30 +109,76 @@ var/const/FALLOFF_SOUNDS = 0.5
 		return FALSE
 	return ..()
 
-
 /client/proc/playtitlemusic()
 	if(!ticker || !ticker.login_music)	return
 	if(prefs.toggles & SOUND_LOBBY)
-		src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS
+		send_sound(src, ticker.login_music, 85, CHANNEL_LOBBY_MUSIC) // MAD JAMS
 
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
 
+/proc/send_sound(target, sound, volume = 100, channel = 0, repeat = 0, wait = 0)
+	var/sound/S = sound(sound)
+	S.volume = volume
+	S.channel = channel
+	S.repeat = repeat
+	S.wait = wait
+	S.environment = 2 // To solve all environment problems in playsound() and playsound_local()
+	target << S
+
 /proc/get_sfx(soundin)
 	if(istext(soundin))
-		switch(soundin)
-			if ("footsteps") soundin = pick(footsteps_sound)
-			if ("shatter") soundin = pick(shatter_sound)
-			if ("explosion") soundin = pick(explosion_sound)
-			if ("sparks") soundin = pick(spark_sound)
-			if ("rustle") soundin = pick(rustle_sound)
-			if ("bodyfall") soundin = pick('sound/effects/bodyfall1.ogg','sound/effects/bodyfall2.ogg','sound/effects/bodyfall3.ogg','sound/effects/bodyfall4.ogg')
-			if ("punch") soundin = pick(punch_sound)
-			if ("clownstep") soundin = pick(clown_sound)
-			if ("swing_hit") soundin = pick(swing_hit_sound)
-			if ("hiss") soundin = pick(hiss_sound)
-			if ("pageturn") soundin = pick(page_sound)
-			if ("fracture") soundin = pick(fracture_sound)
-			if ("bandg") soundin = pick(bandg_sound)
-			//if ("gunshot") soundin = pick(gun_sound)
+		switch(soundin) // Note. All lists of sounds of automatic AI announcements are located in *command_alert.dm*, *captain_announce.dm* and *security_levels.dm* files
+			if ("shatter")
+				soundin = pick('sound/effects/glassbr1.ogg','sound/effects/glassbr2.ogg','sound/effects/glassbr3.ogg')
+			if ("explosion")
+				soundin = pick('sound/effects/explosion1.ogg','sound/effects/explosion2.ogg')
+			if ("sparks")
+				soundin = pick('sound/effects/sparks1.ogg','sound/effects/sparks2.ogg','sound/effects/sparks3.ogg','sound/effects/sparks4.ogg')
+			if ("rustle")
+				soundin = pick('sound/effects/rustle1.ogg','sound/effects/rustle2.ogg','sound/effects/rustle3.ogg','sound/effects/rustle4.ogg','sound/effects/rustle5.ogg')
+			if ("bodyfall")
+				soundin = pick('sound/effects/bodyfall1.ogg','sound/effects/bodyfall2.ogg','sound/effects/bodyfall3.ogg','sound/effects/bodyfall4.ogg')
+			if ("punch")
+				soundin = pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg')
+			if ("clownstep")
+				soundin = pick('sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg')
+			if ("swing_hit")
+				soundin = pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
+			if ("hiss")
+				soundin = pick('sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg')
+			if ("pageturn")
+				soundin = pick('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
+			if ("desceration")
+				soundin = pick('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
+			if ("im_here")
+				soundin = pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg')
+			if ("can_open")
+				soundin = pick('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
+			if ("law")
+				soundin = pick('sound/voice/beepsky/god.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/secureday.ogg', 'sound/voice/beepsky/radio.ogg', 'sound/voice/beepsky/insult.ogg', 'sound/voice/beepsky/creep.ogg')
+			if ("bandg")
+				soundin = pick('sound/items/bandage.ogg', 'sound/items/bandage2.ogg', 'sound/items/bandage3.ogg')
+			if ("fracture")
+				soundin = pick('sound/effects/bonebreak1.ogg', 'sound/effects/bonebreak2.ogg', 'sound/effects/bonebreak3.ogg', 'sound/effects/bonebreak4.ogg')
+			if ("footsteps")
+				soundin = pick('sound/effects/tile1.wav', 'sound/effects/tile2.wav', 'sound/effects/tile3.wav', 'sound/effects/tile4.wav')
+			if ("rigbreath")
+				soundin = pick('sound/misc/rigbreath1.ogg','sound/misc/rigbreath2.ogg','sound/misc/rigbreath3.ogg')
+			if ("breathmask")
+				soundin = pick('sound/misc/breathmask1.ogg','sound/misc/breathmask2.ogg')
+			if ("gasmaskbreath")
+				soundin = 'sound/misc/gasmaskbreath.ogg'
+			if ("malevomit")
+				soundin = pick('sound/misc/mvomit1.ogg','sound/misc/mvomit2.ogg')
+			if ("femalevomit")
+				soundin = pick('sound/misc/fvomit1.ogg','sound/misc/fvomit2.ogg')
+			if ("frigvomit")
+				soundin = pick('sound/misc/frigvomit1.ogg','sound/misc/frigvomit2.ogg')
+			if ("mrigvomit")
+				soundin = pick('sound/misc/mrigvomit1.ogg','sound/misc/mrigvomit2.ogg')
+			if ("keyboard")
+				soundin = pick('sound/machines/keyboard/keyboard1.ogg', 'sound/machines/keyboard/keyboard2.ogg', 'sound/machines/keyboard/keyboard3.ogg', 'sound/machines/keyboard/keyboard4.ogg', 'sound/machines/keyboard/keyboard5.ogg')
+			if ("pda")
+				soundin = pick('sound/machines/keyboard/pda1.ogg', 'sound/machines/keyboard/pda2.ogg', 'sound/machines/keyboard/pda3.ogg', 'sound/machines/keyboard/pda4.ogg', 'sound/machines/keyboard/pda5.ogg')
 	return soundin

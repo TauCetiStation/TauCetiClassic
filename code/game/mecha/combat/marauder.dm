@@ -113,7 +113,7 @@
 		if(get_charge() > 0)
 			thrusters = !thrusters
 			src.log_message("Toggled thrusters.")
-			src.occupant_message("<font color='[src.thrusters?"blue":"red"]'>Thrusters [thrusters?"en":"dis"]abled.")
+			src.occupant_message("<font color='[src.thrusters?"blue":"red"]'>Thrusters [thrusters?"en":"dis"]abled.</font>")
 	return
 
 /obj/mecha/combat/marauder/Process_Spacemove(movement_dir = 0)
@@ -151,7 +151,7 @@
 		src.occupant_message("<font color='[src.zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>")
 		if(zoom)
 			src.occupant.client.view = 12
-			src.occupant << sound('sound/mecha/imag_enh.ogg',volume=50)
+			send_sound(src.occupant, 'sound/mecha/imag_enh.ogg', 50)
 		else
 			src.occupant.client.view = world.view//world.view - default mob view size
 	return

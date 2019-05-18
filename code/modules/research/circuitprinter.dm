@@ -76,7 +76,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		return
 
 	if (panel_open)
-		if(istype(O, /obj/item/weapon/crowbar))
+		if(iscrowbar(O))
 			for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 				reagents.trans_to(G, G.reagents.maximum_volume)
 			if(g_amount >= 3750)

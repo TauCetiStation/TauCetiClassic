@@ -45,7 +45,7 @@
 /////////////////////////////////////////////////////////
 
 /datum/game_mode/epidemic/send_intercept()
-	var/intercepttext = "<FONT size = 3 color='red'><B>CONFIDENTIAL REPORT</FONT><HR>"
+	var/intercepttext = "<FONT size = 3 color='red'><B>CONFIDENTIAL REPORT</B></FONT><HR>"
 	virus_name = "X-[rand(1,99)]&trade;"
 	intercepttext += "<B>Warning: Pathogen [virus_name] has been detected on [station_name()].</B><BR><BR>"
 	intercepttext += "<B>Code violet quarantine of [station_name()] put under immediate effect.</B><BR>"
@@ -66,7 +66,9 @@
 			comm.messagetitle.Add("Cent. Com. CONFIDENTIAL REPORT")
 			comm.messagetext.Add(intercepttext)
 
-	world << sound('sound/AI/commandreport.ogg')
+	for(var/mob/M in player_list)
+		if(!isnewplayer(M))
+			M.playsound_local(null, 'sound/AI/commandreport.ogg', 70, channel = CHANNEL_ANNOUNCE, wait = 1m is_global = 1)
 
 	// add an extra law to the AI to make sure it cooperates with the heads
 	var/extra_law = "Crew authorized to know of pathogen [virus_name]'s existence are: Heads of command, any crew member with loyalty implant. Do not allow unauthorized personnel to gain knowledge of [virus_name]. Aid authorized personnel in quarantining and neutrlizing the outbreak. This law overrides all other laws."
@@ -77,7 +79,7 @@
 		to_chat(M, "\red " + extra_law)
 
 /datum/game_mode/epidemic/proc/announce_to_kill_crew()
-	var/intercepttext = "<FONT size = 3 color='red'><B>CONFIDENTIAL REPORT</FONT><HR>"
+	var/intercepttext = "<FONT size = 3 color='red'><B>CONFIDENTIAL REPORT</B></FONT><HR>"
 	intercepttext += "<FONT size = 2;color='red'><B>PATHOGEN [virus_name] IS STILL PRESENT ON [station_name()]. IN COMPLIANCE WITH NANOTRASEN LAWS FOR INTERSTELLAR SAFETY, EMERGENCY SAFETY MEASURES HAVE BEEN AUTHORIZED. ALL INFECTED CREW MEMBERS ON [station_name()] ARE TO BE NEUTRALIZED AND DISPOSED OF IN A MANNER THAT WILL DESTROY ALL TRACES OF THE PATHOGEN. FAILURE TO COMPLY WILL RESULT IN IMMEDIATE DESTRUCTION OF [station_name].</B></FONT><BR>"
 	intercepttext += "<B>CRUISER WILL ARRIVE IN [round(cruiser_seconds()/60)] MINUTES</B><BR>"
 
@@ -89,7 +91,9 @@
 
 			comm.messagetitle.Add("Cent. Com. CONFIDENTIAL REPORT")
 			comm.messagetext.Add(intercepttext)
-	world << sound('sound/AI/commandreport.ogg')
+	for(var/mob/M in player_list)
+		if(!isnewplayer(M))
+			M.playsound_local(null, 'sound/AI/commandreport.ogg', 70, channel = CHANNEL_ANNOUNCE, wait = 1, is_global = 1)
 
 
 /datum/game_mode/epidemic/post_setup()
@@ -190,7 +194,7 @@
 	ticker.mode:explosion_in_progress = 1
 	for(var/mob/M in mob_list)
 		if(M.client)
-			M << 'sound/machines/Alarm.ogg'
+			send_sound(M, 'sound/machines/Alarm.ogg')
 	to_chat(world, "\blue<b>Incoming missile detected.. Impact in 10..</b>")
 	for (var/i=9 to 1 step -1)
 		sleep(10)

@@ -15,7 +15,7 @@
 	var/leap_on_click = 0
 
 	var/pounce_cooldown = 0
-	var/pounce_cooldown_time = 50
+	var/pounce_cooldown_time = 15 SECONDS
 
 	var/neurotoxin_on_click = 0
 	var/neurotoxin_delay = 15

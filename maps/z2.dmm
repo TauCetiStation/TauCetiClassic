@@ -15301,7 +15301,7 @@
 /obj/item/clothing/accessory/storage/black_vest,
 /obj/item/clothing/suit/space/vox/carapace,
 /obj/item/clothing/head/helmet/space/vox/carapace,
-/obj/item/clothing/mask/breath/vox,
+/obj/item/clothing/mask/gas/vox,
 /turf/simulated/shuttle/floor4{
 	name = "red floor";
 	nitrogen = 103.984;
@@ -15441,7 +15441,7 @@
 /obj/item/clothing/accessory/storage/black_vest,
 /obj/item/clothing/suit/space/vox/medic,
 /obj/item/clothing/head/helmet/space/vox/medic,
-/obj/item/clothing/mask/breath/vox,
+/obj/item/clothing/mask/gas/vox,
 /turf/simulated/shuttle/floor4{
 	name = "red floor";
 	nitrogen = 103.984;
@@ -15538,7 +15538,7 @@
 /obj/item/clothing/accessory/storage/black_vest,
 /obj/item/clothing/suit/space/vox/pressure,
 /obj/item/clothing/head/helmet/space/vox/pressure,
-/obj/item/clothing/mask/breath/vox,
+/obj/item/clothing/mask/gas/vox,
 /turf/simulated/shuttle/floor4{
 	name = "red floor";
 	nitrogen = 103.984;
@@ -15583,7 +15583,7 @@
 /obj/item/clothing/accessory/storage/black_vest,
 /obj/item/clothing/suit/space/vox/stealth,
 /obj/item/clothing/head/helmet/space/vox/stealth,
-/obj/item/clothing/mask/breath/vox,
+/obj/item/clothing/mask/gas/vox,
 /turf/simulated/shuttle/floor4{
 	name = "red floor";
 	nitrogen = 103.984;

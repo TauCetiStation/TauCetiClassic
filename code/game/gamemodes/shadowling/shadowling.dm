@@ -68,14 +68,14 @@ Made by Xhuis
 	config_tag = "shadowling"
 	role_type = ROLE_SHADOWLING
 	required_players = 30
-	required_players_secret = 15
+	required_players_secret = 25
 	required_enemies = 2
 	recommended_enemies = 2
 
 	votable = 0
 
 	restricted_jobs = list("AI", "Cyborg")
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 
 /datum/game_mode/shadowling/announce()
 	to_chat(world, "<b>The current game mode is - Shadowling!</b>")

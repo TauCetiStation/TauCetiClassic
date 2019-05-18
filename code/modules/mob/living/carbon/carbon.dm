@@ -31,6 +31,8 @@
 		if(germ_level < GERM_LEVEL_MOVE_CAP && prob(8))
 			germ_level++
 
+		handle_rig_move(NewLoc, Dir)
+
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(isessence(user))
 		user.setMoveCooldown(1)
@@ -543,18 +545,6 @@
 	if(alert(src, "You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
 		sleeping = 20 //Short nap
 
-/mob/living/carbon/slip(slipped_on, stun_duration=4, weaken_duration=2)
-	if(buckled || sleeping || weakened || paralysis || stunned || resting || crawling)
-		return FALSE
-	stop_pulling()
-	to_chat(src, "<span class='warning'>You slipped on [slipped_on]!</span>")
-	playsound(loc, 'sound/misc/slip.ogg', 50, 1, -3)
-	if (stun_duration > 0)
-		Stun(stun_duration)
-	if(weaken_duration > 0)
-		Weaken(weaken_duration)
-	return TRUE
-
 //Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()
 
@@ -618,13 +608,10 @@
 
 	if(B.chemicals >= 100)
 		to_chat(src, "<span class='danger'>Your host twitches and quivers as you rapdly excrete several larvae from your sluglike body.</span>")
-		visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>")
 		B.chemicals -= 100
-
-		new /obj/effect/decal/cleanable/vomit(get_turf(src))
-		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
+		var/turf/T = get_turf(src)
+		T.add_vomit_floor(src)
 		new /mob/living/simple_animal/borer(get_turf(src))
-
 	else
 		to_chat(src, "<span class='info'>You do not have enough chemicals stored to reproduce.</span>")
 		return
@@ -833,17 +820,31 @@
 			visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>")
 
 			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
+				var/mob/living/carbon/C = src
 				var/gas_log_string = ""
+				var/internalsound
 				if (internal)
 					internal.add_fingerprint(usr)
 					internal = null
 					if (internals)
 						internals.icon_state = "internal0"
+					internalsound = 'sound/misc/internaloff.ogg'
+					if(ishuman(C)) // Because only human can wear a spacesuit
+						var/mob/living/carbon/human/H = C
+						if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
+							internalsound = 'sound/misc/riginternaloff.ogg'
+					playsound(src, internalsound, 85, 0, -5)
 				else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
 					internal = ITEM
 					internal.add_fingerprint(usr)
 					if (internals)
 						internals.icon_state = "internal1"
+					internalsound = 'sound/misc/internalon.ogg'
+					if(ishuman(C)) // Because only human can wear a spacesuit
+						var/mob/living/carbon/human/H = C
+						if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
+							internalsound = 'sound/misc/riginternalon.ogg'
+					playsound(src, internalsound, 85, 0, -5)
 
 					if(ITEM.air_contents && LAZYLEN(ITEM.air_contents.gas))
 						gas_log_string = " (gases:"

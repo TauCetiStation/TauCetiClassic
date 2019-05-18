@@ -398,7 +398,7 @@
 	return ..()
 
 /obj/machinery/teleport/station/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/device/multitool) && !panel_open)
+	if(ismultitool(W) && !panel_open)
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
 			if(linked_stations.len < efficiency)
@@ -417,12 +417,12 @@
 	default_deconstruction_crowbar(W)
 
 	if(panel_open)
-		if(istype(W, /obj/item/device/multitool))
+		if(ismultitool(W))
 			var/obj/item/device/multitool/M = W
 			M.buffer = src
 			to_chat(user, "<span class='notice'>You download the data to the [W.name]'s buffer.</span>")
 			return
-		if(istype(W, /obj/item/weapon/wirecutters))
+		if(iswirecutter(W))
 			link_console_and_hub()
 			to_chat(user, "<span class='notice'>You reconnect the station to nearby machinery.</span>")
 			return

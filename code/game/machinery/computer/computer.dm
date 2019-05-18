@@ -12,6 +12,7 @@
 
 	var/light_range_on = 1.5
 	var/light_power_on = 3
+	var/last_keyboard_sound = 0 // prevents keyboard sounds spam
 
 /obj/machinery/computer/atom_init(mapload, obj/item/weapon/circuitboard/C)
 	. = ..()
@@ -22,6 +23,14 @@
 		if(circuit)
 			circuit = new circuit(null)
 	power_change()
+
+/obj/machinery/computer/Topic(href, href_list)
+	. = ..()
+	if(!.)
+		return
+	if(href_list && (last_keyboard_sound <= world.time))
+		playsound(src, "keyboard", 50, 0)
+		last_keyboard_sound = world.time + 8
 
 /obj/machinery/computer/Destroy()
 	computer_list -= src
@@ -117,11 +126,11 @@
 
 /obj/machinery/computer/attackby(obj/item/I, mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(istype(I, /obj/item/weapon/screwdriver) && circuit && !(flags&NODECONSTRUCT))
+	if(isscrewdriver(I) && circuit && !(flags&NODECONSTRUCT))
 		if(user.is_busy(src)) return
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20, target = src))
+		if(I.use_tool(src, user, 20, volume = 50))
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
+			transfer_fingerprints_to(A)
 			A.circuit = circuit
 			A.anchored = 1
 			circuit = null

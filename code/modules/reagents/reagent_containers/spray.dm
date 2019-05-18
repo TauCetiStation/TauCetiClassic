@@ -260,7 +260,7 @@
 /obj/item/weapon/reagent_containers/spray/thurible/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(!lit && safety) // You can't lit the fuel when the cap's off, cause then it wouldn't start to burn.
-		if(istype(W, /obj/item/weapon/weldingtool))
+		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.isOn())
 				light(user, "casually lights")

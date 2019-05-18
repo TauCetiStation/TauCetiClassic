@@ -137,7 +137,7 @@
 	name = "Spore Toxin"
 	id = "spore"
 	description = "A toxic spore cloud which blocks vision when ingested."
-	color = "#9ACD32"
+	color = "#9acd32"
 	toxpwr = 0.5
 
 /datum/reagent/toxin/spore/on_general_digest(mob/living/M)

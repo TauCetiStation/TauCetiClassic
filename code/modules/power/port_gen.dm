@@ -66,8 +66,8 @@
 	component_parts = list()
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/stack/cable_coil/random(src, 1)
-	component_parts += new /obj/item/stack/cable_coil/random(src, 1)
+	component_parts += new /obj/item/stack/cable_coil/red(src, 1)
+	component_parts += new /obj/item/stack/cable_coil/red(src, 1)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 	component_parts += new board_path(src)
 	RefreshParts()
@@ -176,7 +176,7 @@
 		if(exchange_parts(user, O))
 			return
 
-		if(istype(O, /obj/item/weapon/wrench))
+		if(iswrench(O))
 
 			if(!anchored && !isinspace())
 				connect_to_network()
@@ -189,14 +189,14 @@
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
-		else if(istype(O, /obj/item/weapon/screwdriver))
+		else if(isscrewdriver(O))
 			panel_open = !panel_open
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if(panel_open)
 				to_chat(user, "<span class='notice'>You open the access panel.</span>")
 			else
 				to_chat(user, "<span class='notice'>You close the access panel.</span>")
-		else if(istype(O, /obj/item/weapon/crowbar) && panel_open)
+		else if(iscrowbar(O) && panel_open)
 			default_deconstruction_crowbar(O)
 
 /obj/machinery/power/port_gen/pacman/ui_interact(mob/user)

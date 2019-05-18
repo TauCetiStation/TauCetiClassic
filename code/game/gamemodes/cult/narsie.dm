@@ -16,9 +16,9 @@
 /proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
 	for(var/mob/dead/observer/O in player_list)
 		if(O.client)
-			to_chat(O, "<span class='ghostalert'>[message]<span>")
+			to_chat(O, "<span class='ghostalert'>[message]</span>")
 			if(ghost_sound)
-				O << sound(ghost_sound)
+				send_sound(O, ghost_sound)
 
 /* Old TG code that didn't work
 
@@ -33,7 +33,7 @@
 	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32
 	pixel_y = -32
-	color = "#9C3636"
+	color = "#9c3636"
 
 /obj/effect/effect/sleep_smoke/atom_init()
 	. = ..()

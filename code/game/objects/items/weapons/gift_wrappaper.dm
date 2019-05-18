@@ -45,7 +45,7 @@
 /obj/effect/spresent/attackby(obj/item/weapon/W, mob/user)
 	..()
 
-	if (!istype(W, /obj/item/weapon/wirecutters))
+	if (!iswirecutter(W))
 		to_chat(user, "\blue I need wirecutters for that.")
 		return
 
@@ -138,7 +138,7 @@
 	if (!( locate(/obj/structure/table, src.loc) ))
 		to_chat(user, "\blue You MUST put the paper on a table!")
 	if (W.w_class < ITEM_SIZE_LARGE)
-		if ((istype(user.l_hand, /obj/item/weapon/wirecutters) || istype(user.r_hand, /obj/item/weapon/wirecutters) || istype(user.l_hand, /obj/item/weapon/scissors) || istype(user.r_hand, /obj/item/weapon/scissors)))
+		if (iswirecutter(user.l_hand) || iswirecutter(user.r_hand) || istype(user.l_hand, /obj/item/weapon/scissors) || istype(user.r_hand, /obj/item/weapon/scissors))
 			var/a_used = 2 ** (src.w_class - 1)
 			if (src.amount < a_used)
 				to_chat(user, "\blue You need more paper!")

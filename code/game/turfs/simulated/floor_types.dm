@@ -35,20 +35,6 @@
 	name = "sand"
 	icon_state = "asteroid"
 
-/turf/simulated/floor/vault
-	icon_state = "rockvault"
-
-/turf/simulated/floor/vault/atom_init(mapload, type)
-	. = ..()
-	icon_state = "[type]vault"
-
-/turf/simulated/wall/vault
-	icon_state = "rockvault"
-
-/turf/simulated/wall/vault/atom_init(mapload, type)
-	. = ..()
-	icon_state = "[type]vault"
-
 /turf/simulated/floor/engine
 	name = "reinforced floor"
 	icon_state = "engine"
@@ -56,11 +42,11 @@
 	heat_capacity = 325000
 
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
-	if(istype(C, /obj/item/weapon/wrench))
-		if(user.is_busy()) return
+	if(iswrench(C))
+		if(user.is_busy(src))
+			return
 		to_chat(user, "\blue Removing rods...")
-		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
-		if(do_after(user, 30, target = src))
+		if(C.use_tool(src, user, 30, volume = 80))
 			new /obj/item/stack/rods(src, 2)
 			ChangeTurf(/turf/simulated/floor)
 			var/turf/simulated/floor/F = src
@@ -195,7 +181,7 @@
 /turf/simulated/floor/beach/water
 	name = "Water"
 	icon_state = "water"
-	light_color = "#00BFFF"
+	light_color = "#00bfff"
 	light_power = 2
 	light_range = 2
 
@@ -348,13 +334,13 @@
 
 
 /turf/simulated/floor/plating/airless/catwalk/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(C))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		ReplaceWithLattice()
 		playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
 		return
 
-	if(istype(C, /obj/item/stack/cable_coil))
+	if(iscoil(C))
 		var/obj/item/stack/cable_coil/coil = C
 		coil.turf_place(src, user)
 

@@ -182,12 +182,12 @@
 			body += "<br><font size='1'><a href='?_src_=vars;datumedit=\ref[D];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='?_src_=vars;datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
 			body += {"
 			<br><font size='1'>
-			BRUTE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brute'>[M.getBruteLoss()]</a>
-			FIRE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=fire'>[M.getFireLoss()]</a>
-			TOXIN:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=toxin'>[M.getToxLoss()]</a>
-			OXY:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
-			CLONE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=clone'>[M.getCloneLoss()]</a>
-			BRAIN:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brain'>[M.getBrainLoss()]</a>
+			BRUTE:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brute'>[M.getBruteLoss()]</a>
+			FIRE:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=fire'>[M.getFireLoss()]</a>
+			TOXIN:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=toxin'>[M.getToxLoss()]</a>
+			OXY:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
+			CLONE:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=clone'>[M.getCloneLoss()]</a>
+			BRAIN:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brain'>[M.getBrainLoss()]</a>
 			</font>
 
 
@@ -406,8 +406,12 @@ body
 					index++
 				html += "</ul>"
 
-	else if (isnum(value) && findtext(name, "flags")) // flag variables may not always have flags in name, but i don't know any other way to detect them, so better than nothing.
-		html += "(<a href='?_src_=vars;view_flags=[value]'>F</a>) [name] = <span class='value'>[value]</span>"
+	else if (name in global.bitfields)
+		var/list/flags = list()
+		for (var/i in global.bitfields[name])
+			if (value & global.bitfields[name][i])
+				flags += i
+		html += "[name] = <span class='value'>[jointext(flags, ", ")]</span>"
 
 	else
 		html += "[name] = <span class='value'>[value]</span>"
@@ -424,11 +428,6 @@ body
 		if(!check_rights(R_DEBUG|R_VAREDIT))
 			return
 		debug_variables(locate(href_list["Vars"]))
-
-	else if(href_list["view_flags"])
-		if(!check_rights(R_DEBUG|R_VAREDIT|R_LOG))
-			return
-		view_flags_variables(href_list["view_flags"])
 
 	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
 	else if(href_list["rename"])
@@ -1039,26 +1038,3 @@ body
 		src.debug_variables(DAT)
 
 	return
-
-/client/proc/view_flags_variables(N)
-	if(!usr.client || !usr.client.holder)
-		return
-
-	if(isnull(N))
-		return
-
-	if(!isnum(N))
-		N = text2num(N)
-
-	var/dat = "<html><head><title>Bit Flags list</title></head>"
-
-	var/i = 1
-	do
-		if(i & N)
-			dat += "<b>[i]</b> = <font color='#FF0000'>TRUE</font><br>"
-		else
-			dat += "<b>[i]</b> = FALSE<br>"
-		i *= 2
-	while(i < ~0)
-
-	usr << browse(entity_ja(dat), "window=bit_flags")

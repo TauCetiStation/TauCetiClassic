@@ -31,7 +31,7 @@
 /obj/structure/cellular_biomass/core/bluespace
 	name = "Glitch"
 	icon = 'code/game/gamemodes/events/cellular_biomass/bluespace_cellular.dmi'
-	light_color = "#00FFFF"
+	light_color = "#00ffff"
 
 /obj/effect/decal/cleanable/cellular/bluespace
 	name = "Glitch"

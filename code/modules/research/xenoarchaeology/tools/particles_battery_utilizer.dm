@@ -411,7 +411,7 @@
 	var/is_emitting = "_off"
 	if(activated && inserted_battery && inserted_battery.battery_effect)
 		is_emitting = "_on"
-		set_light(2, 1, "#8F66F4")
+		set_light(2, 1, "#8f66f4")
 	else
 		set_light(0)
 	var/power_battery = (inserted_battery.stored_charge / inserted_battery.capacity) * 100

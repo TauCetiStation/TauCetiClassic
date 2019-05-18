@@ -108,7 +108,7 @@
 	density = 1
 	anchored = 1
 	layer = 3
-	icon = 'icons/mob/critter.dmi'
+	icon = 'icons/mob/animal.dmi'
 	icon_state = "blob"
 	var/triggered = 0
 

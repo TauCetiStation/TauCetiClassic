@@ -19,7 +19,7 @@
 	component_parts += new /obj/item/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
 	RefreshParts()
 
 /obj/machinery/telepad/Destroy()
@@ -40,7 +40,7 @@
 		return
 
 	if(panel_open)
-		if(istype(I, /obj/item/device/multitool))
+		if(ismultitool(I))
 			var/obj/item/device/multitool/M = I
 			M.buffer = src
 			to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
@@ -63,7 +63,7 @@
 	active_power_usage = 500
 	var/stage = 0
 /obj/machinery/telepad_cargo/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 		if(anchored)
 			anchored = 0
@@ -71,7 +71,7 @@
 		else if(!anchored)
 			anchored = 1
 			to_chat(user, "<span class='notice'>The [src] is now secured.</span>")
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		if(stage == 0)
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You unscrew the telepad's tracking beacon.</span>")
@@ -80,7 +80,7 @@
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You screw in the telepad's tracking beacon.</span>")
 			stage = 0
-	if(istype(W, /obj/item/weapon/weldingtool) && stage == 1)
+	if(iswelder(W) && stage == 1)
 		playsound(src, 'sound/items/Welder.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>You disassemble the telepad.</span>")
 		new /obj/item/stack/sheet/metal(get_turf(src))

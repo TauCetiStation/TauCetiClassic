@@ -62,3 +62,12 @@
 			C.images += image(hudMineral,rock,"hudanomaly")
 		else if (rock.mineral)
 			C.images += image(hudMineral,rock,"hud[rock.mineral.ore_type]")
+
+/obj/item/clothing/glasses/hud/mining/ancient
+	name = "Ancient Mining Hud MK II"
+	desc = "This hud for mine work in hostile territory, with builded bioscanner inside."
+	icon = 'icons/obj/xenoarchaeology/finds.dmi'
+	icon_custom = 'icons/mob/eyes.dmi'
+	icon_state = "HUDmining"
+	item_state = "HUDmining"
+	vision_flags = SEE_MOBS

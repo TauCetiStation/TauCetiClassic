@@ -18,7 +18,7 @@ var/global/list/image/fluidtrack_cache=list()
 
 /datum/fluidtrack
 	var/direction=0
-//	var/basecolor="#A10808"
+//	var/basecolor="#a10808"
 	var/wet=0
 	var/fresh=1
 	var/crusty=0
@@ -121,7 +121,7 @@ var/global/list/image/fluidtrack_cache=list()
 
 /obj/effect/decal/cleanable/blood/tracks/update_icon()
 	overlays.Cut()
-	color = "#FFFFFF"
+	color = "#ffffff"
 	var/truedir=0
 
 	// Update ONLY the overlays that have changed.

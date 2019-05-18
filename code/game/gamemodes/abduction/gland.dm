@@ -71,17 +71,11 @@
 /obj/item/gland/slime/activate()
 	to_chat(host, "<span class='warning'>You feel nauseous!</span>")
 
-	host.visible_message("<span class='danger'>[host] vomits on the floor!</span>", \
-					"<span class='userdanger'>You throw up on the floor!</span>")
-
+	var/turf/T = get_turf(host)
+	T.add_vomit_floor(host)
 	host.nutrition -= 20
 	host.adjustToxLoss(-3)
-
-	var/turf/pos = get_turf(host)
-	pos.add_vomit_floor(host)
-	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
-
-	new/mob/living/simple_animal/slime(pos)
+	new/mob/living/simple_animal/slime(T)
 
 
 //SLIME BOOM
