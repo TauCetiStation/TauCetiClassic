@@ -175,6 +175,7 @@
 			if(created_name)
 				door.name = created_name
 			electronics.loc = door
+			electronics = null
 			qdel(src)
 	else
 		..()
