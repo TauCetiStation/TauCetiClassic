@@ -364,7 +364,7 @@
 	internal_damage |= int_dam_flag
 	pr_internal_damage.start()
 	log_append_to_last("Internal damage of type [int_dam_flag].",1)
-	send_sound(occupant, 'sound/machines/warning-buzzer.ogg')
+	occupant.playsound_local(null, 'sound/machines/warning-buzzer.ogg', 100)
 	return
 
 /obj/mecha/proc/clearInternalDamage(int_dam_flag)
@@ -1022,7 +1022,7 @@
 		dir = dir_in
 		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 		if(!hasInternalDamage())
-			send_sound(src.occupant, 'sound/mecha/nominal.ogg', 50)
+			src.occupant.playsound_local(null, 'sound/mecha/nominal.ogg', 50)
 		return 1
 	else
 		return 0
@@ -1082,7 +1082,7 @@
 		src.log_message("[mmi_as_oc] moved in as pilot.")
 		log_admin("[key_name(mmi_as_oc)] has moved in [src.type] with name [src.name] as MMI brain by [key_name(user)]")
 		if(!hasInternalDamage())
-			send_sound(src.occupant, 'sound/mecha/nominal.ogg', 50)
+			src.occupant.playsound_local(null, 'sound/mecha/nominal.ogg', 50)
 		return 1
 	else
 		return 0
@@ -1457,14 +1457,14 @@
 		send_byjax(src.occupant,"exosuit.browser","content",src.get_stats_part())
 		return
 	if(href_list["close"])
-		send_sound(usr, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg')
+		usr.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg', 100)
 		return
 	if(usr.stat > 0)
 		return
 	var/datum/topic_input/F = new /datum/topic_input(href,href_list)
 	if(href_list["select_equip"])
 		if(usr != src.occupant)	return
-		send_sound(usr, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg')
+		usr.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg', 100)
 		var/obj/item/mecha_parts/mecha_equipment/equip = F.getObj("select_equip")
 		if(equip)
 			src.selected = equip
@@ -1479,29 +1479,29 @@
 		return
 	if(href_list["toggle_lights"])
 		if(usr != src.occupant)	return
-		send_sound(usr, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg')
+		usr.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg', 100)
 		src.toggle_lights()
 		return
 	if(href_list["toggle_airtank"])
 		if(usr != src.occupant)	return
-		send_sound(usr, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg')
+		usr.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg', 100)
 		src.toggle_internal_tank()
 		return
 	if(href_list["rmictoggle"])
 		if(usr != src.occupant)	return
-		send_sound(usr, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg')
+		usr.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg', 100)
 		radio.broadcasting = !radio.broadcasting
 		send_byjax(src.occupant,"exosuit.browser","rmicstate",(radio.broadcasting?"Engaged":"Disengaged"))
 		return
 	if(href_list["rspktoggle"])
 		if(usr != src.occupant)	return
-		send_sound(usr, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg')
+		usr.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg', 100)
 		radio.listening = !radio.listening
 		send_byjax(src.occupant,"exosuit.browser","rspkstate",(radio.listening?"Engaged":"Disengaged"))
 		return
 	if(href_list["rfreq"])
 		if(usr != src.occupant)	return
-		send_sound(usr, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg')
+		usr.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg', 100)
 		var/new_frequency = (radio.frequency + F.getNum("rfreq"))
 		if (!radio.freerange || (radio.frequency < 1200 || radio.frequency > 1600))
 			new_frequency = sanitize_frequency(new_frequency)
@@ -1510,17 +1510,17 @@
 		return
 	if(href_list["port_disconnect"])
 		if(usr != src.occupant)	return
-		send_sound(usr, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg')
+		usr.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg', 100)
 		src.disconnect_from_port()
 		return
 	if (href_list["port_connect"])
 		if(usr != src.occupant)	return
-		send_sound(usr, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg')
+		usr.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg', 100)
 		src.connect_to_port()
 		return
 	if (href_list["view_log"])
 		if(usr != src.occupant)	return
-		send_sound(usr, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg')
+		usr.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg', 100)
 		src.occupant << browse(entity_ja(src.get_log_html()), "window=exosuit_log")
 		onclose(occupant, "exosuit_log")
 		return
@@ -1528,10 +1528,10 @@
 		if(usr != src.occupant)	return
 		var/newname = sanitize_safe(input(occupant,"Choose new exosuit name","Rename exosuit",initial(name)) as text, MAX_NAME_LEN)
 		if(newname)
-			send_sound(usr, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_stereo_complite.ogg')
+			usr.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_stereo_complite.ogg', 100)
 			name = newname
 		else
-			send_sound(usr, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_15_stereo_error.ogg')
+			usr.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_15_stereo_error.ogg', 100)
 		return
 	if (href_list["toggle_id_upload"])
 		if(usr != src.occupant)	return
@@ -1585,37 +1585,37 @@
 		add_req_access = 0
 		var/mob/user = F.getMob("user")
 		user << browse(null,"window=exosuit_add_access")
-		send_sound(user, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_stereo_complite.ogg')
+		user.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_stereo_complite.ogg', 100)
 		return
 	if(href_list["dna_lock"])
 		if(usr != src.occupant)	return
 		if(istype(occupant, /mob/living/carbon/brain))
 			occupant_message("You are a brain. No.")
-			send_sound(usr, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_15_stereo_error.ogg')
+			usr.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_15_stereo_error.ogg', 100)
 			return
 		if(src.occupant)
 			src.dna = src.occupant.dna.unique_enzymes
 			src.occupant_message("You feel a prick as the needle takes your DNA sample.")
-			send_sound(usr, 'sound/mecha/UI_SCI-FI_Compute_01_Wet_stereo.ogg')
+			usr.playsound_local(null, 'sound/mecha/UI_SCI-FI_Compute_01_Wet_stereo.ogg', 100)
 		return
 	if(href_list["reset_dna"])
 		if(usr != src.occupant)	return
-		send_sound(usr, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg')
+		usr.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg', 100)
 		src.dna = null
 	if(href_list["repair_int_control_lost"])
 		if(usr != src.occupant)	return
 		src.occupant_message("Recalibrating coordination system.")
 		src.log_message("Recalibration of coordination system started.")
-		send_sound(usr, 'sound/mecha/UI_SCI-FI_Compute_01_Wet_stereo.ogg')
+		usr.playsound_local(null, 'sound/mecha/UI_SCI-FI_Compute_01_Wet_stereo.ogg', 100)
 		var/T = src.loc
 		if(do_after(100))
 			if(T == src.loc)
 				src.clearInternalDamage(MECHA_INT_CONTROL_LOST)
-				send_sound(usr, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_stereo_complite.ogg')
+				usr.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_stereo_complite.ogg', 100)
 				src.occupant_message("<font color='blue'>Recalibration successful.</font>")
 				src.log_message("Recalibration of coordination system finished with 0 errors.")
 			else
-				send_sound(usr, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_15_stereo_error.ogg')
+				usr.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_15_stereo_error.ogg', 100)
 				src.occupant_message("<font color='red'>Recalibration failed.</font>")
 				src.log_message("Recalibration of coordination system failed with 1 error.",1)
 

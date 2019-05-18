@@ -21,7 +21,7 @@
 
 	for(var/mob/M in player_list)
 		if(M.z == T.z)
-			send_sound(M, 'sound/effects/Explosion3.ogg')
+			M.playsound_local(null, 'sound/effects/Explosion3.ogg', 100)
 
 	//shake the station!
 	for(var/mob/living/carbon/C in carbon_list)

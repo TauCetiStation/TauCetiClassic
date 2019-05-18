@@ -155,8 +155,8 @@
 		return
 	else
 		return
-	for(var/mob/living/K in viewers(usr))
-		send_sound(K, 'sound/weapons/guns/TargetOn.ogg')
+	for(var/mob/living/L in viewers(usr))
+		L.playsound_local(null, 'sound/weapons/guns/TargetOn.ogg', 100)
 
 	if(!targeted_by) targeted_by = list()
 	targeted_by += I
@@ -212,8 +212,8 @@
 
 /mob/living/proc/NotTargeted(obj/item/weapon/gun/I)
 	if(!I.silenced)
-		for(var/mob/living/M in viewers(src))
-			send_sound(M, 'sound/weapons/guns/TargetOff.ogg')
+		for(var/mob/living/L in viewers(src))
+			L.playsound_local(null, 'sound/weapons/guns/TargetOff.ogg', 100)
 	targeted_by -= I
 	I.target.Remove(src) //De-target them
 	if(!I.target.len)

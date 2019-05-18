@@ -1039,7 +1039,7 @@
 		if(light_amount > LIGHT_DAM_THRESHOLD)
 			take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
 			to_chat(src, "<span class='userdanger'>The light burns you!</span>")
-			send_sound(src, 'sound/weapons/sear.ogg')
+			src.playsound_local(null, 'sound/weapons/sear.ogg', 100)
 		else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
 			heal_overall_damage(5,5)
 			adjustToxLoss(-3)
@@ -1740,7 +1740,7 @@
 
 		if(heart_beat >= temp)
 			heart_beat = 0
-			send_sound(src, 'sound/effects/singlebeat.ogg', 50)
+			src.playsound_local(null, 'sound/effects/singlebeat.ogg', 50)
 		else if(temp != 0)
 			heart_beat++
 
