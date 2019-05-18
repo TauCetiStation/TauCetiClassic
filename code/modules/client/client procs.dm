@@ -298,7 +298,7 @@ var/list/blacklisted_builds = list(
 	if(!dbcon.IsConnected())
 		return
 
-	var/sql_ckey = sql_sanitize_text(src.ckey)
+	var/sql_ckey = sanitize_sql(src.ckey)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age, ingameage FROM erro_player WHERE ckey = '[sql_ckey]'")
 	query.Execute()
@@ -338,9 +338,9 @@ var/list/blacklisted_builds = list(
 		if(!isnum(sql_id))
 			return
 
-	var/sql_ip = sql_sanitize_text(src.address)
-	var/sql_computerid = sql_sanitize_text(src.computer_id)
-	var/sql_admin_rank = sql_sanitize_text(admin_rank)
+	var/sql_ip = sanitize_sql(src.address)
+	var/sql_computerid = sanitize_sql(src.computer_id)
+	var/sql_admin_rank = sanitize_sql(admin_rank)
 
 
 	if(sql_id)
@@ -446,7 +446,7 @@ var/list/blacklisted_builds = list(
 	if(player_ingame_age <= 0)
 		return
 
-	var/sql_ckey = sql_sanitize_text(src.ckey)
+	var/sql_ckey = sanitize_sql(src.ckey)
 	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[player_ingame_age]' WHERE ckey = '[sql_ckey]'")
 	query_update.Execute()
 
