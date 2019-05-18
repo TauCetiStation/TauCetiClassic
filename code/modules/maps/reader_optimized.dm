@@ -230,6 +230,19 @@ var/global/dmm_suite/preloader/_preloader = new
 		var/atom/instance
 		_preloader.setup(members_attributes[index])//preloader for assigning  set variables on atom creation
 		instance = locate(members[index])
+		// Below is a hackish way of getting /area with the exact type that we provide, because locate() can return child of the type that we need which is wrong
+		// locate(/area/parent/child) // returns area with type /area/parent/child, everything is ok
+		// locate(/area/parent) // returns area with type /area/parent/child, boom, wrong type.
+		// The code below finds the area with the right type or creates one
+		if(instance.type != members[index])
+			var/e = members[index]
+			for(var/area/N in all_areas)
+				if(N.type == e)
+					instance = N
+					break
+			if(instance.type != e)
+				instance = new e
+		// End of the hack
 		if(crds)
 			instance.contents.Add(crds)
 
