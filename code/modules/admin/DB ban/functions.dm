@@ -36,14 +36,14 @@
 	var/ip
 
 	if(ismob(banned_mob))
-		ckey = banned_mob.ckey
+		ckey = ckey(banned_mob.ckey)
 		if(banned_mob.client)
-			computerid = banned_mob.client.computer_id
-			ip = banned_mob.client.address
+			computerid = sanitize_sql(banned_mob.client.computer_id)
+			ip = sanitize_sql(banned_mob.client.address)
 	else if(banckey)
 		ckey = ckey(banckey)
-		computerid = bancid
-		ip = banip
+		computerid = sanitize_sql(bancid)
+		ip = sanitize_sql(banip)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_player WHERE ckey = '[ckey]'")
 	query.Execute()
@@ -60,23 +60,23 @@
 	var/a_ip
 
 	if(src.owner && istype(src.owner, /client))
-		a_ckey = src.owner:ckey
-		a_computerid = src.owner:computer_id
-		a_ip = src.owner:address
+		a_ckey = ckey(src.owner:ckey)
+		a_computerid = sanitize_sql(src.owner:computer_id)
+		a_ip = sanitize_sql(src.owner:address)
 
 	var/who
 	for(var/client/C in clients)
 		if(!who)
-			who = "[C]"
+			who = "[ckey(C)]"
 		else
-			who += ", [C]"
+			who += ", [ckey(C)]"
 
 	var/adminwho
 	for(var/client/C in admins)
 		if(!adminwho)
-			adminwho = "[C]"
+			adminwho = "[ckey(C)]"
 		else
-			adminwho += ", [C]"
+			adminwho += ", [ckey(C)]"
 
 	reason = sanitize_sql(reason)
 
@@ -86,7 +86,7 @@
 	if((bantype == BANTYPE_PERMA || bantype == BANTYPE_TEMP) && AH) // not sure if only for perma.
 		AH.Resolve()
 
-	var/sql = "INSERT INTO erro_ban (`id`,`bantime`,`serverip`,`bantype`,`reason`,`job`,`duration`,`rounds`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], [(rounds)?"[rounds]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
+	var/sql = "INSERT INTO erro_ban (`id`,`bantime`,`serverip`,`round_id`,`bantype`,`reason`,`job`,`duration`,`rounds`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', [round_id], '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], [(rounds)?"[rounds]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
 	var/DBQuery/query_insert = dbcon.NewQuery(sql)
 	query_insert.Execute()
 	to_chat(usr, "\blue Ban saved to database.")
@@ -535,14 +535,14 @@
 	var/ip
 
 	if(ismob(banned_mob))
-		ckey = banned_mob.ckey
+		ckey = ckey(banned_mob.ckey)
 		if(banned_mob.client)
-			computerid = banned_mob.client.computer_id
-			ip = banned_mob.client.address
+			computerid = sanitize_sql(banned_mob.client.computer_id)
+			ip = sanitize_sql(banned_mob.client.address)
 	else if(banckey)
 		ckey = ckey(banckey)
-		computerid = bancid
-		ip = banip
+		computerid = sanitize_sql(bancid)
+		ip = sanitize_sql(banip)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_player WHERE ckey = '[ckey]'")
 	query.Execute()
@@ -561,20 +561,20 @@
 	var/who
 	for(var/client/C in clients)
 		if(!who)
-			who = "[C]"
+			who = "[ckey(C)]"
 		else
-			who += ", [C]"
+			who += ", [ckey(C)]"
 
 	var/adminwho
 	for(var/client/C in admins)
 		if(!adminwho)
-			adminwho = "[C]"
+			adminwho = "[ckey(C)]"
 		else
-			adminwho += ", [C]"
+			adminwho += ", [ckey(C)]"
 
 	reason = sanitize_sql(reason)
 
-	var/sql = "INSERT INTO erro_ban (`id`,`bantime`,`serverip`,`bantype`,`reason`,`job`,`duration`,`rounds`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], [(rounds)?"[rounds]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
+	var/sql = "INSERT INTO erro_ban (`id`,`bantime`,`serverip`,`round_id`,`bantype`,`reason`,`job`,`duration`,`rounds`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', [round_id], '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], [(rounds)?"[rounds]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
 	var/DBQuery/query_insert = dbcon.NewQuery(sql)
 	query_insert.Execute()
 	message_admins("Tau Kitty has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.")

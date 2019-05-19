@@ -10,6 +10,7 @@ CREATE TABLE `erro_admin` (
 CREATE TABLE `erro_admin_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `datetime` datetime NOT NULL,
+  `round_id` int(11) unsigned NOT NULL,
   `adminckey` varchar(32) NOT NULL,
   `adminip` varchar(18) NOT NULL,
   `log` text NOT NULL,
@@ -26,6 +27,7 @@ CREATE TABLE `erro_ban` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bantime` datetime NOT NULL,
   `serverip` varchar(32) NOT NULL,
+  `round_id` int(11) unsigned NOT NULL,
   `bantype` varchar(32) NOT NULL,
   `reason` text NOT NULL,
   `job` varchar(32) DEFAULT NULL,
@@ -52,7 +54,7 @@ CREATE TABLE `erro_ban` (
 CREATE TABLE `erro_feedback` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `time` datetime NOT NULL,
-  `round_id` int(8) NOT NULL,
+  `round_id` int(11) NOT NULL,
   `var_name` varchar(32) NOT NULL,
   `var_value` int(16) DEFAULT NULL,
   `details` text,
