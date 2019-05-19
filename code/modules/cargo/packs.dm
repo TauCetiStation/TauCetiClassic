@@ -396,7 +396,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	contains = list(/obj/item/weapon/vending_refill/hydroseeds,
 					/obj/item/weapon/vending_refill/hydroseeds,
 					/obj/item/weapon/vending_refill/hydroseeds)
-	cost = 5200
+	cost = 4200
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "MegaSeed supply crate"
 	group = "Hospitality"
@@ -406,7 +406,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	contains = list(/obj/item/weapon/vending_refill/hydronutrients,
 					/obj/item/weapon/vending_refill/hydronutrients,
 					/obj/item/weapon/vending_refill/hydronutrients)
-	cost = 3700
+	cost = 5700
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "NutriMax supply crate"
 	group = "Hospitality"
@@ -416,7 +416,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	contains = list(/obj/item/weapon/vending_refill/medical,
 					/obj/item/weapon/vending_refill/medical,
 					/obj/item/weapon/vending_refill/medical)
-	cost = 2100
+	cost = 3100
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "NanoMed Plus supply crate"
 	group = "Hospitality"
@@ -446,7 +446,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	contains = list(/obj/item/weapon/vending_refill/engivend,
 					/obj/item/weapon/vending_refill/engivend,
 					/obj/item/weapon/vending_refill/engivend)
-	cost = 3500
+	cost = 2500
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Engi-Vend supply crate"
 	group = "Hospitality"
