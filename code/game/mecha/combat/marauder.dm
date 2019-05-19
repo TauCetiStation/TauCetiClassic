@@ -151,7 +151,7 @@
 		src.occupant_message("<font color='[src.zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>")
 		if(zoom)
 			src.occupant.client.view = 12
-			src.occupant.playsound_local(null, 'sound/mecha/imag_enh.ogg', 50)
+			send_sound(src.occupant, 'sound/mecha/imag_enh.ogg', 50)
 		else
 			src.occupant.client.view = world.view//world.view - default mob view size
 	return
