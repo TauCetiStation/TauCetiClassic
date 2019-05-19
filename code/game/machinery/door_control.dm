@@ -419,7 +419,6 @@
 		qdel(src)
 
 /obj/item/door_control_frame/proc/try_build(target)
-
 	if (get_dist(target, usr) > 1)
 		return
 
@@ -433,7 +432,6 @@
 		return
 
 	if(istype(target, /turf/simulated/wall))
-
 		var/turf/loc = get_turf_loc(usr)
 
 		if(!istype(loc, /turf/simulated/floor))
@@ -447,7 +445,6 @@
 		new /obj/machinery/door_control(loc, ndir, ON_WALL)
 
 	else if(istype(target, /obj/structure/table/reinforced))
-
 		var/turf/loc = get_turf_loc(target)
 
 		if (!istype(loc, /turf/simulated/floor))
