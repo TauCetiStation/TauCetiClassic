@@ -194,12 +194,15 @@ var/list/alldepartments = list("Central Command")
 		to_chat(C, msg)
 
 	send_fax(sender, P, "Central Command")
+
+	add_communication_log(type = "fax-station", author = sender.name, content = P.info + "\n" + P.stamp_text)
+
 	world.send2bridge(
 		type = list(BRIDGE_ADMINCOM),
 		attachment_title = ":fax: **[key_name(sender)]** sent fax to ***Centcomm***",
 		attachment_msg = P.info + P.stamp_text,
 		attachment_color = BRIDGE_COLOR_ADMINCOM,
-	)	
+	)
 
 /proc/send_fax(mob/sender, obj/item/weapon/paper/P, department)
 	for(var/obj/machinery/faxmachine/F in allfaxes)

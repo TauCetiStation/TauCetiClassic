@@ -1,4 +1,5 @@
 var/round_start_time = 0
+var/round_start_realtime = 0
 
 var/datum/subsystem/ticker/ticker
 
@@ -133,6 +134,8 @@ var/datum/subsystem/ticker/ticker
 						attachment_color = BRIDGE_COLOR_ANNOUNCE,
 					)
 
+					drop_round_stats()
+
 					if (mode.station_was_nuked)
 						feedback_set_details("end_proper","nuke")
 						if(!delay_end)
@@ -233,6 +236,7 @@ var/datum/subsystem/ticker/ticker
 
 	current_state = GAME_STATE_PLAYING
 	round_start_time = world.time
+	round_start_realtime = world.realtime
 
 	if(dbcon.IsConnected())
 		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET start_datetime = Now() WHERE id = [round_id]")
@@ -421,7 +425,7 @@ var/datum/subsystem/ticker/ticker
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
 
 	//Player status report
-	for(var/mob/Player in mob_list)
+	for(var/mob/Player in mob_list)//todo: remove in favour of /game_mode/proc/declare_completion
 		if(Player.mind && !isnewplayer(Player))
 			if(Player.stat != DEAD && !isbrain(Player))
 				num_survivors++
@@ -525,7 +529,8 @@ var/datum/subsystem/ticker/ticker
 	end_icons += cup
 	var/tempstate = end_icons.len
 	for(var/winner in achievements)
-		text += {"<br><img src="logo_[tempstate].png"> [winner]"}
+		var/winner_text = "<b>[winner["key"]]</b> as <b>[winner["name"]]</b> won \"<b>[winner["title"]]</b>\"! \"[winner["desc"]]\""
+		text += {"<br><img src="logo_[tempstate].png"> [winner_text]"}
 
 	return text
 

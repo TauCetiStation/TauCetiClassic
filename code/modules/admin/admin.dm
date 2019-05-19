@@ -694,7 +694,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set desc="Restarts the world"
 	if (!usr.client.holder)
 		return
-	var/confirm = alert("Restart the game world?", "Restart", "Yes", "Cancel")
+	var/confirm = alert("Restart the game world? Warning: game stats will be lost if round not ended.", "Restart", "Yes", "Cancel")
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")

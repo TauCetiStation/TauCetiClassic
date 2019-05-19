@@ -8,13 +8,13 @@
 	for (var/mob/living/silicon/ai/I in ai_list)
 		if (I.stat == DEAD && I.z == ZLEVEL_STATION)
 			score["deadaipenalty"] = 1
-			score["deadcrew"] += 1
+			score["crew_dead"] += 1
 
 	for (var/mob/living/carbon/human/I in human_list)
 //		for (var/datum/ailment/disease/V in I.ailments)
 //			if (!V.vaccine && !V.spread != "Remissive") score["disease"]++
 		if (I.stat == DEAD && I.z == ZLEVEL_STATION)
-			score["deadcrew"] += 1
+			score["crew_dead"] += 1
 		if (I.job == "Clown")
 			for(var/thing in I.attack_log)
 				if(findtext(thing, "<font color='orange'>")) //</font>
@@ -22,11 +22,13 @@
 
 	var/area/escape_zone = locate(/area/shuttle/escape/centcom)
 
+/*
+	moved to /game_mode/proc/declare_completion, where we already count players
 	for(var/mob/living/player in alive_mob_list)
 		if (player.client)
 			var/turf/location = get_turf(player.loc)
 			if (location in escape_zone)
-				score["escapees"] += 1
+				score["crew_escaped"] += 1*/
 //					player.unlock_medal("100M Dash", 1)
 //				player.unlock_medal("Survivor", 1)
 //				for (var/obj/item/weapon/gnomechompski/G in player.get_contents())
@@ -167,10 +169,10 @@
 	// Bonus Modifiers
 	//var/traitorwins = score["traitorswon"]
 	var/rolesuccess = score["roleswon"] * 250
-	var/deathpoints = score["deadcrew"] * 250 //done
+	var/deathpoints = score["crew_dead"] * 250 //done
 	var/researchpoints = score["researchdone"] * 30
 	var/eventpoints = score["eventsendured"] * 50
-	var/escapoints = score["escapees"] * 25 //done
+	var/escapoints = score["crew_escaped"] * 25 //done
 	var/harvests = score["stuffharvested"] //done
 	var/shipping = score["stuffshipped"] * 75
 	var/mining = score["oremined"] //done
@@ -349,14 +351,14 @@
 	<B>Ore Mined:</B> [score["oremined"]] ([score["oremined"]] Points)<BR>
 	<B>Refreshments Prepared:</B> [score["meals"]] ([score["meals"] * 5] Points)<BR>
 	<B>Research Completed:</B> [score["researchdone"]] ([score["researchdone"] * 30] Points)<BR>"}
-	dat += "<B>Shuttle Escapees:</B> [score["escapees"]] ([score["escapees"] * 25] Points)<BR>"
+	dat += "<B>Shuttle Escapees:</B> [score["crew_escaped"]] ([score["crew_escaped"] * 25] Points)<BR>"
 	dat += {"<B>Random Events Endured:</B> [score["eventsendured"]] ([score["eventsendured"] * 50] Points)<BR>
 	<B>Whole Station Powered:</B> [score["powerbonus"] ? "Yes" : "No"] ([score["powerbonus"] * 2500] Points)<BR>
 	<B>Ultra-Clean Station:</B> [score["mess"] ? "No" : "Yes"] ([score["messbonus"] * 3000] Points)<BR><BR>
 	<U>THE BAD:</U><BR>
 	<B>Roles successful:</B> [score["roleswon"]] (-[score["roleswon"] * 250] Points)<BR>
 	<B>Antags reconverted:</B> [score["rec_antags"]] ([score["rec_antags"] * 500] Points)<BR>
-	<B>Dead Bodies on Station:</B> [score["deadcrew"]] (-[score["deadcrew"] * 250] Points)<BR>
+	<B>Dead Bodies on Station:</B> [score["crew_dead"]] (-[score["crew_dead"] * 250] Points)<BR>
 	<B>Uncleaned Messes:</B> [score["mess"]] (-[score["mess"]] Points)<BR>
 	<B>Station Power Issues:</B> [score["powerloss"]] (-[score["powerloss"] * 30] Points)<BR>
 	<B>Rampant Diseases:</B> [score["disease"]] (-[score["disease"] * 30] Points)<BR>
@@ -370,7 +372,7 @@
 		dat += "<B>Station Deficit:</B> [num2text(profit,50)]<BR>"
 	dat += {"<B>Food Eaten:</b> [score["foodeaten"]]<BR>
 	<B>Times a Clown was Abused:</B> [score["clownabuse"]]<BR><BR>"}
-	if (score["escapees"])
+	if (score["crew_escaped"])
 		dat += "<B>Most Richest Escapee:</B> [score["richestname"]], [score["richestjob"]]: [score["richestcash"]] credits ([score["richestkey"]])<BR>"
 		dat += "<B>Most Battered Escapee:</B> [score["dmgestname"]], [score["dmgestjob"]]: [score["dmgestdamage"]] damage ([score["dmgestkey"]])<BR>"
 	else

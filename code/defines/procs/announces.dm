@@ -22,6 +22,7 @@ var/list/escape_area_transit = typecacheof(list(/area/shuttle/escape/transit,
 	if(sound)
 		announce_sound = get_announce_sound(sound)
 
+
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
 			if(announce_text)
@@ -36,9 +37,15 @@ var/list/escape_area_transit = typecacheof(list(/area/shuttle/escape/transit,
 #undef IS_ON_ESCPAE_SHUTTLE
 
 //station announces: communication console, shuttle(?), departaments
-/proc/captain_announce(message, title = "Priority Announcement", announcer, sound = "announce")
-	station_announce(message, title, null, announcer, sound)
+/proc/captain_announce(message, title = "Priority Announcement", announcer, sound = "announce", subtitle)
+	
+	station_announce(message, title, subtitle, announcer, sound)
+
+	add_communication_log(type = "station", title = title ? title : subtitle, author = announcer, content = message)
 
 //messages from centcomm
 /proc/command_alert(message, title, sound = "commandreport")
+
 	station_announce(message, "[command_name()] Update", title, null, sound)
+
+	add_communication_log(type = "centcomm", title = title, content = message)
