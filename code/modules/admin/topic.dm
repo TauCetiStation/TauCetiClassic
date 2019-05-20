@@ -2380,9 +2380,7 @@
 					W.item_state = "w_suit"
 					W.item_color = "schoolgirl"
 				message_admins("[key_name_admin(usr)] activated Japanese Animes mode")
-				for(var/mob/M in player_list)
-					if(!isnewplayer(M))
-						M.playsound_local(null, 'sound/AI/animes.ogg', 80, channel = CHANNEL_ANNOUNCE, wait = 1, is_global = 1)
+				station_announce(sound = "animes")
 			if("eagles")//SCRAW
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","EgL")

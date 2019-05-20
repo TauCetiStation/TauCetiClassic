@@ -89,16 +89,16 @@
 
 	if(apcs >= (INTERCEPT_APCS + 3) && AI_malf_revealed < 1)
 		AI_malf_revealed = 1
-		captain_announce("Caution, [station_name]. We have detected abnormal behaviour in your network. It seems someone is trying to hack your electronic systems. We will update you when we have more information.", "Network Monitoring", sound = "malf1")
+		command_alert("Caution, [station_name]. We have detected abnormal behaviour in your network. It seems someone is trying to hack your electronic systems. We will update you when we have more information.", "Network Monitoring", sound = "malf1")
 	else if(apcs >= (INTERCEPT_APCS + 5) && AI_malf_revealed < 2)
 		AI_malf_revealed = 2
-		captain_announce("We started tracing the intruder. Whoever is doing this, they seem to be on the station itself. We suggest checking all network control terminals. We will keep you updated on the situation.", "Network Monitoring", sound = "malf2")
+		command_alert("We started tracing the intruder. Whoever is doing this, they seem to be on the station itself. We suggest checking all network control terminals. We will keep you updated on the situation.", "Network Monitoring", sound = "malf2")
 	else if(apcs >= (INTERCEPT_APCS + 7) && AI_malf_revealed < 3)
 		AI_malf_revealed = 3
-		captain_announce("This is highly abnormal and somewhat concerning. The intruder is too fast, he is evading our traces. No man could be this fast...", "Network Monitoring", sound = "malf3")
+		command_alert("This is highly abnormal and somewhat concerning. The intruder is too fast, he is evading our traces. No man could be this fast...", "Network Monitoring", sound = "malf3")
 	else if(apcs >= (INTERCEPT_APCS + 9) && AI_malf_revealed < 4)
 		AI_malf_revealed = 4
-		captain_announce("We have traced the intrude#, it seem& t( e yo3r AI s7stem, it &# *#ck@ng th$ sel$ destru$t mechani&m, stop i# bef*@!)$#&&@@  <CONNECTION LOST>", "Network Monitoring", sound = "malf4")
+		command_alert("We have traced the intrude#, it seem& t( e yo3r AI s7stem, it &# *#ck@ng th$ sel$ destru$t mechani&m, stop i# bef*@!)$#&&@@  <CONNECTION LOST>", "Network Monitoring", sound = "malf4")
 		takeover()
 
 
@@ -170,9 +170,7 @@
 		if(takeover_module)
 			qdel(takeover_module)
 
-	for(var/mob/M in player_list)
-		if(!isnewplayer(M))
-			M.playsound_local(null, 'sound/AI/aimalf.ogg', 80, channel = CHANNEL_ANNOUNCE, wait = 1, is_global = 1)
+	station_announce(sound = "malf")
 
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/set_security_level, "delta"), 50)
 
