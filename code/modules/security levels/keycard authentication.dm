@@ -174,11 +174,7 @@ var/global/timer_maint_revoke_id = 0
 		maint_all_access_priority = TRUE
 
 	change_maintenance_access(TRUE)
-
-	for(var/mob/M in player_list)
-		if(!isnewplayer(M))
-			to_chat(M, "<font size=4 color='red'>Attention!</font>")
-			to_chat(M, "<font color='red'>The maintenance access requirement has been revoked on all airlocks.</font>")
+	captain_announce("The maintenance access requirement has been revoked on all airlocks.")
 
 /proc/revoke_maint_all_access(var/priority = FALSE)
 	if(priority)
@@ -187,11 +183,7 @@ var/global/timer_maint_revoke_id = 0
 		return
 
 	change_maintenance_access(FALSE)
-
-	for(var/mob/M in player_list)
-		if(!isnewplayer(M))
-			to_chat(M, "<font size=4 color='red'>Attention!</font>")
-			to_chat(M, "<font color='red'>The maintenance access requirement has been readded on all maintenance airlocks.</font>")
+	captain_announce("The maintenance access requirement has been readded on all maintenance airlocks.")
 
 /proc/change_maintenance_access(allow_state)
 	for(var/area/maintenance/M in all_areas)

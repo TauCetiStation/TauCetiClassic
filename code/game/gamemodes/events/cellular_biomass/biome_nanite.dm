@@ -13,7 +13,6 @@
 	name = "Nanomachine cluster"
 	desc = "They look so ... hungry"
 	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
-	health = 100
 
 /obj/structure/cellular_biomass/grass/nanite
 	name = "Wave of nanomachines"
@@ -34,7 +33,6 @@
 	plane = FLOOR_PLANE
 	light_color = "#8ae6ff"
 	light_range = 3
-	health = 100
 
 /obj/structure/cellular_biomass/cleanable/nanite
 	name = "Wave of nanomachines lair"
@@ -58,8 +56,10 @@
 	icon_state = "nanitemobdead_[pick(1,2)]"
 
 /obj/structure/cellular_biomass/lair/nanite/atom_init(mapload)
-	icon_state = "lair"
-	. = ..(mapload, pick(subtypesof(/mob/living/simple_animal/hostile/cellular/nanite)))
+	icon_state = "lair_2"
+	if(prob(50))
+		..(mapload, /mob/living/simple_animal/hostile/cellular/nanite/eng)
+	return INITIALIZE_HINT_QDEL
 
 /mob/living/simple_animal/hostile/cellular/nanite
 	name = "Nanite hivebot"
@@ -86,15 +86,15 @@
 	var/combohit = 0
 	var/mob/living/simple_animal/hostile/cellular/nanite/eng/nanite_parent
 	var/health_trigger = null
-	var/clon = FALSE
+	var/clone = FALSE
 	var/cloning = TRUE
 
 /mob/living/simple_animal/hostile/cellular/nanite/melee
 	icon_state = "nanitemob_1"
 	icon_living = "nanitemob_1"
 	icon_dead = "nanitemobdead_1"
-	maxHealth = 120
-	health = 120
+	maxHealth = 80
+	health = 80
 	melee_damage_upper = 10
 	melee_damage_lower = 5
 	speed = 4
@@ -129,9 +129,10 @@
 	light_color = "#00cc10"
 	anchored = TRUE
 	a_intent = "harm"
-	var/cap_spawn = 8
+	var/cap_spawn = 6
 	var/spawned = 0
 	var/chance_spawn = 15
+	var/list/mob/living/simple_animal/hostile/cellular/nanite/childs = list()
 	cloning = FALSE
 
 /mob/living/simple_animal/hostile/cellular/nanite/Life()
@@ -155,7 +156,8 @@
 				newnanite.maxHealth = maxHealth / 2
 				newnanite.nanite_parent = nanite_parent
 				newnanite.target = target
-				newnanite.clon = TRUE
+				newnanite.clone = TRUE
+				newnanite.faction = faction
 			if(nanite_parent != null)
 				if(nanite_parent.health < health_trigger)
 					stop_automated_movement = TRUE
@@ -167,13 +169,14 @@
 
 /mob/living/simple_animal/hostile/cellular/nanite/eng/Life()
 	..()
-	if(spawned < cap_spawn)
+	if(childs.len < cap_spawn)
 		if(prob(chance_spawn))
 			var/type_to_spawn = prob(25) ? /mob/living/simple_animal/hostile/cellular/nanite/ranged : /mob/living/simple_animal/hostile/cellular/nanite/melee
 			var/mob/living/simple_animal/hostile/cellular/nanite/S = new type_to_spawn(src.loc)
 			S.nanite_parent = src
 			S.health_trigger = health
-			spawned++
+			S.faction = faction
+			childs += S
 
 /mob/living/simple_animal/hostile/cellular/nanite/AttackingTarget()
 	..()
@@ -182,7 +185,7 @@
 		combohit += 1
 		if(combohit == 4)
 			var/mob/living/simple_animal/hostile/cyber_horror/N = new(L.loc)
-			N.faction = "nanite"
+			N.faction = faction
 			combohit = 0
 			L.gib()
 
@@ -190,14 +193,22 @@
 	death()
 
 /mob/living/simple_animal/hostile/cellular/nanite/Destroy()
+	if(nanite_parent)
+		nanite_parent.childs -= src
 	nanite_parent = null
+	return ..()
+
+/mob/living/simple_animal/hostile/cellular/nanite/eng/Destroy()
+	for(var/mob/living/simple_animal/hostile/cellular/nanite/M in childs)
+		M.death()
 	return ..()
 
 /mob/living/simple_animal/hostile/cellular/nanite/death()
 	..()
 	visible_message("<b>[src]</b> blows apart!")
-	new /obj/effect/gibspawner/robot(src.loc)
-	if(!clon)
-		src.nanite_parent.spawned--
+	new /obj/effect/decal/cleanable/blood/gibs/robot(src.loc)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(3, 1, src)
+	s.start()
 	qdel(src)
 	return
