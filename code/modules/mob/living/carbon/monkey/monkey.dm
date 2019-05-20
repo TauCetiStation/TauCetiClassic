@@ -166,7 +166,7 @@
 		if ((M.a_intent == "hurt" && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
 			M.do_attack_animation(src)
 			if ((prob(75) && health > 0))
-				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+				playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS)
 				for(var/mob/O in viewers(src, null))
 					O.show_message("\red <B>[M.name] has bit [name]!</B>", 1)
 				var/damage = rand(1, 5)
@@ -221,7 +221,7 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has punched [name]!</B>", M), 1)
 
-				playsound(loc, "punch", 25, 1, -1)
+				playsound(src, "punch", VOL_EFFECTS)
 				var/damage = rand(5, 10)
 				if (prob(40))
 					damage = rand(10, 15)
@@ -235,7 +235,7 @@
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
-				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has attempted to punch [name]!</B>", M), 1)
@@ -246,13 +246,13 @@
 				if (!( paralysis ))
 					if (prob(25))
 						Paralyse(2)
-						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+						playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS)
 						for(var/mob/O in viewers(src, null))
 							if ((O.client && !( O.blinded )))
 								O.show_message(text("\red <B>[] has pushed down [name]!</B>", M), 1)
 					else
 						drop_item()
-						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+						playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS)
 						for(var/mob/O in viewers(src, null))
 							if ((O.client && !( O.blinded )))
 								O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
@@ -275,7 +275,7 @@
 
 		if ("hurt")
 			if ((prob(95) && health > 0))
-				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+				playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS)
 				var/damage = rand(15, 30)
 				if (damage >= 25)
 					damage = rand(20, 40)
@@ -291,7 +291,7 @@
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
-				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
+				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has attempted to lunge at [name]!</B>", M), 1)
@@ -300,7 +300,7 @@
 			M.Grab(src)
 
 		if ("disarm")
-			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+			playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS)
 			var/damage = 5
 			if(prob(95))
 				Weaken(15)
@@ -323,7 +323,7 @@
 		M.emote("[M.friendly] [src]")
 	else
 		if(M.attack_sound)
-			playsound(loc, M.attack_sound, 50, 1, 1)
+			playsound(src, M.attack_sound, VOL_EFFECTS)
 		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")

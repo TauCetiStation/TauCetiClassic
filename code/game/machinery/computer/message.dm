@@ -430,7 +430,7 @@
 					if(isnull(PDARec))
 						src.linkedServer.send_pda_message("[customrecepient.owner]", "[customsender]","[custommessage]")
 						if (!customrecepient.message_silent)
-							playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
+							playsound(customrecepient, 'sound/machines/twobeep.ogg', VOL_EFFECTS)
 							for (var/mob/O in hearers(3, customrecepient.loc))
 								O.show_message(text("[bicon(customrecepient)] *[customrecepient.ttone]*"))
 							if( customrecepient.loc && ishuman(customrecepient.loc) )
@@ -449,7 +449,7 @@
 							customrecepient.conversations.Add("\ref[PDARec]")
 
 						if (!customrecepient.message_silent)
-							playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
+							playsound(customrecepient, 'sound/machines/twobeep.ogg', VOL_EFFECTS)
 							for (var/mob/O in hearers(3, customrecepient.loc))
 								O.show_message(text("[bicon(customrecepient)] *[customrecepient.ttone]*"))
 							if( customrecepient.loc && ishuman(customrecepient.loc) )

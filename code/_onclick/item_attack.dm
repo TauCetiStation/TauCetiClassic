@@ -64,7 +64,7 @@
 					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
 					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
 					M.adjustOxyLoss(60) // Brain lacks oxygen immediately, pass out
-					playsound(loc, 'sound/effects/throat_cutting.ogg', 50, 1, 1)
+					playsound(src, 'sound/effects/throat_cutting.ogg', VOL_EFFECTS)
 					flick(G.hud.icon_state, G.hud)
 					user.SetNextMove(CLICK_CD_ACTION)
 					user.visible_message("<span class='danger'>[user] slit [M]'s throat open with \the [name]!</span>")
@@ -76,7 +76,7 @@
 	if (istype(M,/mob/living/carbon/brain))
 		messagesource = M:container
 	if (hitsound)
-		playsound(loc, hitsound, 50, 1, -1)
+		playsound(src, hitsound, VOL_EFFECTS)
 	/////////////////////////
 	user.lastattacked = M
 	M.lastattacker = user

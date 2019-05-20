@@ -24,7 +24,7 @@
 /obj/effect/blob/Destroy()
 	blobs -= src
 	if(isturf(loc)) //Necessary because Expand() is retarded and spawns a blob and then deletes it
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS)
 	return ..()
 
 
@@ -149,13 +149,13 @@
 
 /obj/effect/blob/attackby(obj/item/weapon/W, mob/user)
 	..()
-	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS)
 	var/damage = 0
 	switch(W.damtype)
 		if("fire")
 			damage = (W.force / max(src.fire_resist,1))
 			if(iswelder(W))
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS)
 		if("brute")
 			damage = (W.force / max(src.brute_resist,1))
 
@@ -165,7 +165,7 @@
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M)
 	..()
-	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS)
 	src.visible_message("<span class='danger'>The [src.name] has been attacked by \the [M].</span>")
 	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 	if(!damage) // Avoid divide by zero errors

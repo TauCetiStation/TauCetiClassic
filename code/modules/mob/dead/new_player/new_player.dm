@@ -119,7 +119,7 @@ commented cause polls are kinda broken now, needs refactoring */
 			var/mob/dead/observer/observer = new()
 
 			spawning = 1
-			send_sound(src, null, 85, CHANNEL_LOBBY_MUSIC) // MAD JAMS cant last forever yo
+			playsound_stop(CHANNEL_MUSIC) // MAD JAMS cant last forever yo
 
 
 			observer.started_as_observer = 1
@@ -502,7 +502,7 @@ commented cause polls are kinda broken now, needs refactoring */
 	else
 		client.prefs.copy_to(new_character)
 
-	send_sound(src, null, 85, CHANNEL_LOBBY_MUSIC) // MAD JAMS cant last forever yo
+	playsound_stop(CHANNEL_MUSIC) // MAD JAMS cant last forever yo
 
 	if(mind)
 		mind.active = 0					//we wish to transfer the key manually

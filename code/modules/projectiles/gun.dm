@@ -51,7 +51,7 @@
 
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user)
 	to_chat(user, "<span class='warning'>*click*</span>")
-	playsound(user, 'sound/weapons/guns/empty.ogg', 100, 1)
+	playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS)
 	return
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
@@ -59,9 +59,9 @@
 		shake_camera(user, recoil + 1, recoil)
 
 	if(silenced)
-		playsound(user, fire_sound, 30, 1, -4)
+		playsound(user, fire_sound, VOL_EFFECTS, 30, null, -4)
 	else
-		playsound(user, fire_sound, 50, 1)
+		playsound(user, fire_sound, VOL_EFFECTS)
 		user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
 
 /obj/item/weapon/gun/emp_act(severity)
@@ -156,10 +156,10 @@
 /obj/item/weapon/gun/proc/click_empty(mob/user = null)
 	if (user)
 		user.visible_message("*click click*", "<span class='red'><b>*click*</b></span>")
-		playsound(user, 'sound/weapons/guns/empty.ogg', 100, 1)
+		playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS)
 	else
 		src.visible_message("*click click*")
-		playsound(src.loc, 'sound/weapons/guns/empty.ogg', 100, 1)
+		playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS)
 
 /obj/item/weapon/gun/proc/isHandgun()
 	return 1
@@ -182,9 +182,9 @@
 		if (can_fire())
 			user.visible_message("<span class = 'warning'>[user] pulls the trigger.</span>")
 			if(silenced)
-				playsound(user, fire_sound, 10, 1)
+				playsound(user, fire_sound, VOL_EFFECTS, 10)
 			else
-				playsound(user, fire_sound, 50, 1)
+				playsound(user, fire_sound, VOL_EFFECTS)
 			if(istype(chambered.BB, /obj/item/projectile/beam/lastertag) || istype(chambered.BB, /obj/item/projectile/beam/practice))
 				user.visible_message("<span class = 'notice'>Nothing happens.</span>",\
 									"<span class = 'notice'>You feel rather silly, trying to commit suicide with a toy.</span>")

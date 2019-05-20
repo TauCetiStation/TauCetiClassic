@@ -55,7 +55,7 @@
 	var/aforce = W.force
 	health = max(0, health - aforce)
 	user.SetNextMove(CLICK_CD_MELEE)
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS)
 	visible_message("<span class='warning'>[user] hits [src] with [W]!</span>")
 	healthcheck()
 

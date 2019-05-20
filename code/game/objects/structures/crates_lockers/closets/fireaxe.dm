@@ -32,7 +32,7 @@
 	if (isrobot(usr) || locked)
 		if(ismultitool(O))
 			to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
-			playsound(user, 'sound/machines/lockreset.ogg', 50, 1)
+			playsound(user, 'sound/machines/lockreset.ogg', VOL_EFFECTS)
 			if (do_after(user, 50, target = src))
 				locked = FALSE
 				to_chat(user, "<span class='notice'>You disable the locking modules.</span>")
@@ -47,13 +47,13 @@
 				return
 			else
 				user.do_attack_animation(src)
-				playsound(src, 'sound/effects/Glasshit.ogg', 100, 1) //We don't want this playing every time
+				playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS) //We don't want this playing every time
 			if(O.force < 15)
 				visible_message("<span class='notice'>The cabinet's protective glass glances off the hit.</span>")
 			else
 				hitstaken++
 				if(hitstaken == 4)
-					playsound(src, 'sound/effects/Glassbr3.ogg', 100, 1) //Break cabinet, receive goodies. Cabinet's fucked for life after that.
+					playsound(src, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS) //Break cabinet, receive goodies. Cabinet's fucked for life after that.
 					smashed = TRUE
 					locked = FALSE
 					localopened = TRUE
@@ -93,7 +93,7 @@
 				if(O.use_tool(src, user, 50, volume = 50))
 					locked = TRUE
 					to_chat(user, "<span class='notice'>You re-enable the locking modules.</span>")
-					playsound(user, 'sound/machines/lockenable.ogg', 50, 1)
+					playsound(user, 'sound/machines/lockenable.ogg', VOL_EFFECTS)
 		else
 			localopened = !localopened
 			if(localopened)

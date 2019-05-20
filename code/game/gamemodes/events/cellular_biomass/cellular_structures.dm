@@ -57,7 +57,7 @@
 /obj/structure/cellular_biomass/attack_hand(mob/user)
 	..()
 	user.SetNextMove(CLICK_CD_MELEE)
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS)
 	return
 
 /obj/structure/cellular_biomass/attack_paw()
@@ -69,7 +69,7 @@
 /obj/structure/cellular_biomass/attackby(obj/item/weapon/W, mob/user)
 	..()
 	health -= W.force
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS)
 	healthcheck()
 	return
 

@@ -150,7 +150,7 @@
 				message = "<B>[src]</B> beeps at [param]."
 			else
 				message = "<B>[src]</B> beeps."
-			playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 0)
+			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS, null, FALSE)
 			m_type = 1
 
 		if("ping")
@@ -167,7 +167,7 @@
 				message = "<B>[src]</B> pings at [param]."
 			else
 				message = "<B>[src]</B> pings."
-			playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+			playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS, null, FALSE)
 			m_type = 1
 
 		if("buzz")
@@ -184,14 +184,14 @@
 				message = "<B>[src]</B> buzzes at [param]."
 			else
 				message = "<B>[src]</B> buzzes."
-			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS, null, FALSE)
 			m_type = 1
 
 		if("law")
 			if (istype(module,/obj/item/weapon/robot_module/security))
 				message = "<B>[src]</B> shows its legal authorization barcode."
 
-				playsound(src.loc, 'sound/voice/beepsky/iamthelaw.ogg', 50, 0)
+				playsound(src, 'sound/voice/beepsky/iamthelaw.ogg', VOL_EFFECTS, null, FALSE)
 				m_type = 2
 			else
 				to_chat(src, "You are not THE LAW, pal.")
@@ -200,7 +200,7 @@
 			if (istype(module,/obj/item/weapon/robot_module/security))
 				message = "<B>[src]</B>'s speakers skreech, \"Halt! Security!\"."
 
-				playsound(src.loc, 'sound/voice/halt.ogg', 50, 0)
+				playsound(src, 'sound/voice/halt.ogg', VOL_EFFECTS, null, FALSE)
 				m_type = 2
 			else
 				to_chat(src, "You are not security.")

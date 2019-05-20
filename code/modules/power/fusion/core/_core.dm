@@ -116,7 +116,7 @@ var/list/fusion_cores = list()
 		return
 
 	else if(iswrench(W))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 		anchored = !anchored
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(anchored)

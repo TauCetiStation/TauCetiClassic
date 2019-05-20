@@ -28,7 +28,7 @@
 		to_chat(user, "\red \The [src] needs to recharge!")
 		return
 
-	playsound(src, 'sound/items/megaphone.ogg', 100, 1, 1)
+	playsound(src, 'sound/items/megaphone.ogg', VOL_EFFECTS)
 	var/message = sanitize(input(user, "Shout a message?", "Megaphone", null)  as text)
 	if(!message)
 		return

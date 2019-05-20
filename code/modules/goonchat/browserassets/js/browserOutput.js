@@ -19,7 +19,7 @@ var opts = {
 	'scrollSnapTolerance': 10, //If within x pixels of bottom
 	'clickTolerance': 10, //Keep focus if outside x pixels of mousedown position on mouseup
 	'imageRetryDelay': 50, //how long between attempts to reload images (in ms)
-	'imageRetryLimit': 5, //how many attempts should we make? 
+	'imageRetryLimit': 5, //how many attempts should we make?
 	'popups': 0, //Amount of popups opened ever
 	'wasd': false, //Is the user in wasd mode?
 	'priorChatHeight': 0, //Thing for height-resizing detection
@@ -264,7 +264,7 @@ function output(message, flag) {
 
 		$last_message = trimmed_message;
 		$messages[0].appendChild(entry);
-		
+
 		opts.messageCount++;
 
 		$(entry).find("img.icon").error(iconError);
@@ -418,7 +418,7 @@ function ehjaxCallback(data) {
 			return;
 		}
 		data = dataJ;
-		
+
 		if (data.clientData) {
 			if (opts.restarting) {
 				opts.restarting = false;
@@ -440,7 +440,7 @@ function ehjaxCallback(data) {
 			var firebugEl = document.createElement('script');
 			firebugEl.src = 'https://getfirebug.com/firebug-lite-debug.js';
 			document.body.appendChild(firebugEl);
-			
+
 		} else if (data.emoji) {
 			emojiList = data.emoji;
 		}
@@ -464,13 +464,6 @@ function createPopup(contents, width) {
 
 function toggleWasd(state) {
 	opts.wasd = (state == 'on' ? true : false);
-}
-
-function sendVolumeUpdate() {
-	opts.volumeUpdating = false;
-	if(opts.updatedVolume) {
-		runByond('?_src_=chat&proc=setAdminSoundVolume&param[volume]='+opts.updatedVolume);
-	}
 }
 
 function subSlideUp() {
@@ -583,7 +576,6 @@ $(function() {
 		'spingDisabled': getCookie('pingdisabled'),
 		'shighlightTerms': getCookie('highlightterms'),
 		'shighlightColor': getCookie('highlightcolor'),
-		'sadminSoundVolume': getCookie('adminSoundVolume'),
 		'smessagecombining': getCookie('messagecombining'),
 	};
 
@@ -620,15 +612,7 @@ $(function() {
 		opts.highlightColor = savedConfig.shighlightColor;
 		output('<span class="internal boldnshit">Loaded highlight color of: '+savedConfig.shighlightColor+'</span>', 'internal');
 	}
-	if (savedConfig.sadminSoundVolume) {
-		var newVolume = clamp(savedConfig.sadminSoundVolume, 0, 100);//может с сервера?
-		/*$('#adminMusic').prop('volume', newVolume / 100);*/
-		$('#adminSoundVolume').val(newVolume);
-		opts.updatedVolume = newVolume;
-		sendVolumeUpdate();
-		output('<span class="internal boldnshit">Loaded music volume of: '+savedConfig.sadminSoundVolume+'</span>', 'internal');
-	}
-	
+
 	if (savedConfig.smessagecombining) {
 		if (savedConfig.smessagecombining == 'false') {
 			opts.messageCombining = false;
@@ -967,24 +951,24 @@ $(function() {
 	});
 
 	$('#emojiPicker').click(function () {
-		var header = '<div class="head">Emoji Picker</div>' + 
-			'<div class="emojiPicker">' + 
+		var header = '<div class="head">Emoji Picker</div>' +
+			'<div class="emojiPicker">' +
 				'<div id="picker-notify"><span><b>COPIED</b></span></div>' +
 				'<p>Emoji will be copied to the clipboard.</p>';
-		
+
 		var main = '<div class="emojiList">';
-		
+
 		emojiList.forEach(function (emoji) {
 			main += '<a href="#" data-emoji="' + emoji + '" title="' + emoji + '"><i class="em em-' + emoji + '"></i></a>';
 		});
-		
+
 		var footer = '</div></div>';
 
 		createPopup(header + main + footer, 400);
-		
+
 		$('.emojiPicker a').click(function () {
 			copyToClipboard(':' + $(this).data('emoji') + ':');
-			
+
 			var $pickerNotify = $('#picker-notify');
 			$pickerNotify.slideDown('fast', function() {
 				setTimeout(function() {
@@ -993,31 +977,10 @@ $(function() {
 			});
 		});
 	});
-	
+
 	$('#clearMessages').click(function() {
 		$messages.empty();
 		opts.messageCount = 0;
-	});
-
-	$('#adminSoundVolumeSpan').hover(function() {
-		$('#adminSoundVolumeText').addClass('hidden');
-		$('#adminSoundVolume').removeClass('hidden');
-	}, function() {
-		$('#adminSoundVolume').addClass('hidden');
-		$('#adminSoundVolumeText').removeClass('hidden');
-	});
-
-
-	$('#adminSoundVolume').change(function() {
-		var newVolume = $('#adminSoundVolume').val();
-		newVolume = clamp(newVolume, 0, 100);
-		/*$('#adminMusic').prop('volume', newVolume / 100);*/
-		setCookie('adminSoundVolume', newVolume, 365);
-		opts.updatedVolume = newVolume;
-		if(!opts.volumeUpdating) {
-			setTimeout(sendVolumeUpdate, opts.volumeUpdateDelay);
-			opts.volumeUpdating = true;
-		}
 	});
 
 	$('#toggleCombine').click(function(e) {

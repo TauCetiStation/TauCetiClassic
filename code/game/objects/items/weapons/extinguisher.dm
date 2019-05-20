@@ -59,7 +59,7 @@
 		var/obj/O = target
 		O.reagents.trans_to(src, 50)
 		to_chat(user, "<span class='notice'>[src] is now refilled.</span>")
-		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS, null, null, -6)
 		return
 
 	if (!safety)
@@ -72,7 +72,7 @@
 
 		src.last_use = world.time
 
-		playsound(src.loc, 'sound/effects/extinguish.ogg', 75, 1, -3)
+		playsound(src, 'sound/effects/extinguish.ogg', VOL_EFFECTS, null, null, -3)
 
 		var/direction = get_dir(src,target)
 

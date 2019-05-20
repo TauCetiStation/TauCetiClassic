@@ -163,10 +163,10 @@
 			for(var/obj/item/candle/ghost/target in ghost_candles)
 				if(istype(target.loc, /turf))
 					loc.visible_message("<span class='warning'>You hear a loud pop, as [src] poofs out of existence.</span>")
-					playsound(loc, 'sound/effects/bubble_pop.ogg', 50, 1)
+					playsound(src, 'sound/effects/bubble_pop.ogg', VOL_EFFECTS)
 					forceMove(get_turf(target))
 					visible_message("<span class='warning'>You hear a loud pop, as [src] poofs into existence.</span>")
-					playsound(loc, 'sound/effects/bubble_pop.ogg', 50, 1)
+					playsound(src, 'sound/effects/bubble_pop.ogg', VOL_EFFECTS)
 					for(var/mob/living/A in viewers(3, loc))
 						A.confused += 10
 						A.make_jittery(150)

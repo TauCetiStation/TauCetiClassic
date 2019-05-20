@@ -10,7 +10,7 @@
 /obj/item/clothing/suit/bio_suit/particle_protection/equipped(mob/user, slot)
 	. = ..()
 	if(slot == SLOT_WEAR_SUIT && world.time > cooldown_sound)
-		playsound(src, 'sound/items/zip.ogg', 50, 1)
+		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS)
 		cooldown_sound = world.time + 4
 
 /obj/item/clothing/head/bio_hood/particle_protection
@@ -24,7 +24,7 @@
 /obj/item/clothing/head/bio_hood/particle_protection/equipped(mob/user, slot)
 	. = ..()
 	if(slot == SLOT_HEAD && world.time > cooldown_sound)
-		playsound(src, 'sound/items/zip.ogg', 50, 1)
+		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS)
 		cooldown_sound = world.time + 4
 
  // The older version of Particle protection suit

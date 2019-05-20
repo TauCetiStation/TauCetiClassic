@@ -94,7 +94,7 @@
 	var/turf/over_this_saved = over_this
 	if(from_recipe.time)
 		busy = TRUE
-		playsound(M, 'sound/effects/grillehit.ogg', 50, 1)
+		playsound(M, 'sound/effects/grillehit.ogg', VOL_EFFECTS)
 		b_overlay.alpha = 0
 		holo_build = new(over_this_saved) //Everyone will see what you trying to build.
 		holo_build.anchored = TRUE
@@ -122,7 +122,7 @@
 		return
 
 	if(over_this_saved && get_dist(M, over_this_saved) <= 1)
-		playsound(M, 'sound/effects/grillehit.ogg', 50, 1)//Yes, 2nd time with timed recipe.
+		playsound(M, 'sound/effects/grillehit.ogg', VOL_EFFECTS)//Yes, 2nd time with timed recipe.
 		var/atom/A = new from_recipe.result_type(over_this_saved)
 		A.dir = build_direction
 		using_this.use(from_recipe.req_amount)

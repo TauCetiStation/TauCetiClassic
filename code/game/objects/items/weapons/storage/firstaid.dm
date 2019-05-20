@@ -132,7 +132,7 @@
 	var/zone = user.zone_sel.selecting
 	if(zone == O_MOUTH && CanEat(user, target, src, "eat"))
 		user.visible_message("<span class='notice'>[user] pops a pill from \the [src].</span>")
-		playsound(get_turf(src), 'sound/effects/peelz.ogg', 50)
+		playsound(src, 'sound/effects/peelz.ogg', VOL_EFFECTS)
 		var/list/peelz = filter_list(contents,/obj/item/weapon/reagent_containers/pill)
 		if(peelz.len)
 			var/obj/item/weapon/reagent_containers/pill/P = pick(peelz)

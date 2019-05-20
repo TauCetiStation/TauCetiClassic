@@ -97,7 +97,7 @@
 	var/power_waste = 0
 
 	if(H.stat == DEAD && saved_stat != DEAD)
-		playsound(H, 'sound/rig/dead.wav', 50)
+		playsound(H, 'sound/rig/dead.wav', VOL_EFFECTS)
 	saved_stat = H.stat
 
 	process_warnings(H)

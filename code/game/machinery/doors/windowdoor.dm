@@ -68,7 +68,7 @@
 			ae.broken = TRUE
 			operating = 0
 	src.density = 0
-	playsound(src, "shatter", 70, 1)
+	playsound(src, "shatter", VOL_EFFECTS)
 	if(display_message)
 		visible_message("[src] shatters!")
 	qdel(src)
@@ -162,7 +162,7 @@
 /obj/machinery/door/window/do_open()
 	if(hasPower())
 		use_power(15)
-	playsound(src, door_open_sound, 100, 1)
+	playsound(src, door_open_sound, VOL_EFFECTS)
 	do_animate("opening")
 	icon_state = "[base_state]open"
 	sleep(10)
@@ -174,7 +174,7 @@
 /obj/machinery/door/window/do_close()
 	if(hasPower())
 		use_power(15)
-	playsound(src, door_close_sound, 100, 1)
+	playsound(src, door_close_sound, VOL_EFFECTS)
 	do_animate("closing")
 	icon_state = base_state
 	density = TRUE
@@ -214,7 +214,7 @@
 		tforce = 40
 	else
 		tforce = AM:throwforce
-	playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
+	playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS)
 	take_damage(tforce)
 	//..() //Does this really need to be here twice? The parent proc doesn't even do anything yet. - Nodrak
 	return
@@ -223,7 +223,7 @@
 	if(src.operating)
 		return
 	user.do_attack_animation(src)
-	playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+	playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS)
 	user.visible_message("<span class='danger'>[user] smashes against the [src.name].</span>", \
 						"<span class='userdanger'>[user] smashes against the [src.name].</span>")
 	take_damage(damage)
@@ -264,7 +264,7 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(W.use_charge(user, 6))
 			visible_message("<span class='red'><B>[user]</B> has punched [src]!</span>")
-			playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS)
 			shatter()
 		return
 
@@ -277,8 +277,8 @@
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
-			playsound(src.loc, "sparks", 50, 1)
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
+			playsound(src, "sparks", VOL_EFFECTS)
+			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS)
 			visible_message("<span class='warning'> The glass door was sliced open by [user]!</span>")
 			open(1)
 			return
@@ -291,7 +291,7 @@
 			if(src.density || src.operating == 1)
 				to_chat(user, "<span class='warning'>You need to open the [src.name] to access the maintenance panel.</span>")
 				return
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
 			src.p_open = !( src.p_open )
 			to_chat(user, "<span class='notice'>You [p_open ? "open":"close"] the maintenance panel of the [src.name].</span>")
 			return
@@ -366,7 +366,7 @@
 		if( (I.flags&NOBLUDGEON) || !I.force )
 			return
 		var/aforce = I.force
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS)
 		visible_message("\red <B>[src] was hit by [I].</B>")
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			take_damage(aforce)

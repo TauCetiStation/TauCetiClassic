@@ -95,7 +95,7 @@
 
 	if (has_clonable_bodies())
 		if(beeper)
-			playsound(src, 'sound/weapons/guns/empty_alarm.ogg', 50, 0)
+			playsound(src, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS, null, FALSE)
 		icon_state = "morgue3"
 	else
 		update()
@@ -108,16 +108,16 @@
 				if(ismob(A))
 					var/mob/M = A
 					M.instant_vision_update(1,src)
-		playsound(src, 'sound/effects/roll.ogg', 10, 1)
-		playsound(src, 'sound/items/Deconstruct.ogg', 25, 1)
+		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS, 10)
+		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS, 25)
 		qdel(connected)
 		connected = null
 		update()
 
 /obj/structure/morgue/proc/open()
 	if (!connected)
-		playsound(src, 'sound/items/Deconstruct.ogg', 25, 1)
-		playsound(src, 'sound/effects/roll.ogg', 10, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS, 25)
+		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS, 10)
 		connected = new /obj/structure/m_tray( loc )
 		step(connected, dir)
 		connected.layer = BELOW_CONTAINERS_LAYER
@@ -310,11 +310,11 @@
 		for(var/atom/movable/A in src.connected.loc)
 			if(!A.anchored)
 				A.loc = src
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS)
 		qdel(src.connected)
 		src.connected = null
 	else if (src.locked == 0)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS)
 		src.connected = new /obj/structure/c_tray( src.loc )
 		step(src.connected, SOUTH)
 		src.connected.layer = BELOW_CONTAINERS_LAYER
@@ -405,7 +405,7 @@
 		sleep(30)
 		cremating = 0
 		locked = 0
-		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+		playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS)
 	return
 
 

@@ -9,7 +9,7 @@
 		if(lying != lying_prev)
 			lying_prev = lying
 			get_lying_angle()
-			playsound(src, "bodyfall", 50, 1)
+			playsound(src, "bodyfall", VOL_EFFECTS)
 			changed++
 			ntransform.TurnTo(0,lying_current)
 			final_layer = 3.9

@@ -1278,58 +1278,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "null"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	requires_power = 0
-	var/sound/mysound = null
-/* hello copypasta of area/beach (this idea with this area is Eeeeuuuuuwwww)
-/area/awaymission/beach/New()
-	..()
-	var/sound/S = new/sound()
-	mysound = S
-	S.file = 'sound/ambience/shore.ogg'
-	S.repeat = 1
-	S.wait = 0
-	S.channel = 123
-	S.volume = 100
-	S.priority = 255
-	S.status = SOUND_UPDATE
-	process()
 
-/area/awaymission/beach/Entered(atom/movable/Obj,atom/OldLoc)
-	if(ismob(Obj))
-		if(Obj:client)
-			mysound.status = SOUND_UPDATE
-			Obj << mysound
-	return
-
-/area/awaymission/beach/Exited(atom/movable/Obj)
-	if(ismob(Obj))
-		if(Obj:client)
-			mysound.status = SOUND_PAUSED | SOUND_UPDATE
-			Obj << mysound
-
-/area/awaymission/beach/process()
-	var/sound/S = null
-	var/sound_delay = 0
-	if(prob(25))
-		S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=100)
-		sound_delay = rand(0, 50)
-
-	for(var/mob/living/carbon/human/H in src)
-		if(H.s_tone > -55)
-			H.s_tone--
-			H.update_body()
-		if(H.client)
-			mysound.status = SOUND_UPDATE
-			H << mysound
-			if(S)
-				addtimer(CALLBACK(src, .proc/send_sound, H, S), sound_delay)
-
-	addtimer(CALLBACK(src, .process), 60)
-
-/area/proc/send_sound(mob/living/carbon/human/target, sound)
-	if(!target || !sound)
-		return
-	send_sound(target, sound)
-*/
 /////////////////////////////////////////////////////////////////////
 /*
  Lists of areas to be used with is_type_in_list.
@@ -1395,47 +1344,3 @@ var/list/the_station_areas = list (
 	icon_state = "null"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	requires_power = 0
-	var/sound/mysound = null
-/* hello copypasta of area/away_mission/beach
-/area/beach/New()
-	..()
-	var/sound/S = new/sound()
-	mysound = S
-	S.file = 'sound/ambience/shore.ogg'
-	S.repeat = 1
-	S.wait = 0
-	S.channel = 123
-	S.volume = 100
-	S.priority = 255
-	S.status = SOUND_UPDATE
-	process()
-
-/area/beach/Entered(atom/movable/Obj,atom/OldLoc)
-	if(ismob(Obj))
-		if(Obj:client)
-			mysound.status = SOUND_UPDATE
-			Obj << mysound
-	return
-
-/area/beach/Exited(atom/movable/Obj)
-	if(ismob(Obj))
-		if(Obj:client)
-			mysound.status = SOUND_PAUSED | SOUND_UPDATE
-			Obj << mysound
-
-/area/beach/process()
-	var/sound/S = null
-	var/sound_delay = 0
-	if(prob(25))
-		S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=100)
-		sound_delay = rand(0, 50)
-
-	for(var/mob/living/carbon/human/H in src)
-		if(H.client)
-			mysound.status = SOUND_UPDATE
-			H << mysound
-			if(S)
-				addtimer(CALLBACK(src, .proc/send_sound, H, S), sound_delay)
-
-	addtimer(CALLBACK(src, .process), 60)
-*/

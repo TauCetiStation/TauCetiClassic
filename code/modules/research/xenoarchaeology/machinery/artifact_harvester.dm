@@ -30,7 +30,7 @@
 	if(istype(I,/obj/item/weapon/particles_battery))
 		if(!inserted_battery)
 			to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-			playsound(src, 'sound/items/insert_key.ogg', 50, 1)
+			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS)
 			user.drop_item()
 			I.loc = src
 			src.inserted_battery = I
@@ -93,7 +93,7 @@
 			cur_artifact.being_used = FALSE
 			cur_artifact = null
 			src.visible_message("<b>[name]</b> states, \"Battery is full.\"")
-			playsound(src, 'sound/machines/quite_beep.ogg', 50, 1)
+			playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS)
 			icon_state = "harvester_battery"
 			owned_scanner.icon_state = "xenoarch_scanner"
 
@@ -133,8 +133,7 @@
 		return
 
 	if(href_list["harvest"])
-		playsound(src, "keyboard", 50, 0)
-
+		playsound(src, "keyboard", VOL_EFFECTS, null, FALSE)
 		if(!inserted_battery)
 			src.visible_message("<b>[src]</b> states, \"Cannot harvest. No battery inserted.\"")
 
@@ -152,17 +151,17 @@
 
 			if(articount <= 0)
 				var/message = "<b>[src]</b> states, \"Cannot harvest. No noteworthy energy signature isolated.\""
-				playsound(src, 'sound/machines/buzz-two.ogg', 20, 1)
+				playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS, 20)
 				visible_message(message)
 
 			else if(analysed && analysed.being_used)
 				src.visible_message("<b>[src]</b> states, \"Cannot harvest. Source already being harvested.\"")
-				playsound(src, 'sound/machines/buzz-two.ogg', 20, 1)
+				playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS, 20)
 
 			else
 				if(articount > 1)
 					state("Cannot harvest. Too many artifacts on the pad.")
-					playsound(src, 'sound/machines/buzz-two.ogg', 20, 1)
+					playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS, 20)
 
 				else if(analysed)
 					cur_artifact = analysed
@@ -170,17 +169,17 @@
 					// if we got only the first one, and it isnt active we cant harvest anything
 					if(cur_artifact.my_effect && !cur_artifact.secondary_effect && !cur_artifact.my_effect.activated)
 						visible_message("<b>[src]</b> states, \"Cannot harvest. No energy emitting from source.\"")
-						playsound(src, 'sound/machines/buzz-two.ogg', 20, 1)
+						playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS, 20)
 
 					// if both effects are active, we cant harvest anything
 					else if(cur_artifact.my_effect && cur_artifact.my_effect.activated && cur_artifact.secondary_effect && cur_artifact.secondary_effect.activated)
 						visible_message("<b>[src]</b> states, \"Cannot harvest. Source is emitting conflicting energy signatures.\"")
-						playsound(src, 'sound/machines/buzz-two.ogg', 20, 1)
+						playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS, 20)
 
 					// if both effects arent active, we cant harvest anything
 					else if(cur_artifact.my_effect && !cur_artifact.my_effect.activated  && cur_artifact.secondary_effect && !cur_artifact.secondary_effect.activated)
 						visible_message("<b>[src]</b> states, \"Cannot harvest. No energy emitting from source.\"")
-						playsound(src, 'sound/machines/buzz-two.ogg', 20, 1)
+						playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS, 20)
 
 					else
 						// see if we can clear out an old effect
@@ -246,7 +245,7 @@
 								inserted_battery.stored_charge = 0
 
 	if(href_list["stopharvest"])
-		playsound(src, "keyboard", 50, 0)
+		playsound(src, "keyboard", VOL_EFFECTS, null, FALSE)
 		if(harvesting)
 			if(harvesting < 0 && inserted_battery.battery_effect && inserted_battery.battery_effect.activated)
 				inserted_battery.battery_effect.ToggleActivate()
@@ -259,7 +258,7 @@
 			owned_scanner.icon_state = "xenoarch_scanner"
 
 	if(href_list["ejectbattery"])
-		playsound(src, 'sound/items/insert_key.ogg', 50, 1)
+		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS)
 
 		src.inserted_battery.loc = src.loc
 		src.inserted_battery = null

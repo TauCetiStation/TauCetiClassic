@@ -67,8 +67,7 @@
 
 	//play the recieving admin the adminhelp sound (if they have them enabled)
 	//non-admins shouldn't be able to disable this
-	if(C.prefs && C.prefs.toggles & SOUND_ADMINHELP)
-		send_sound(C, 'sound/effects/adminhelp.ogg')
+	C.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
 	log_admin("PM: [key_name(src)]->[key_name(C)]: [msg]")
 	send2slack_logs("[key_name(src)]->[key_name(C)]",  msg, "(PM)")

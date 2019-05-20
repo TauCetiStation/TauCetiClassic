@@ -196,7 +196,7 @@
 			M.mind.objectives += new_objective
 	uses--
 	previous_users += M.mind
-	playsound(M, 'sound/effects/magic.ogg', 100, 1)
+	playsound(M, 'sound/effects/magic.ogg', VOL_EFFECTS)
 
 /obj/item/weapon/contract/proc/equip_apprentice(mob/living/carbon/human/target)
 	for(var/obj/item/I in target)

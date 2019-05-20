@@ -29,6 +29,8 @@
 				if(istype(S, randomizemagic))
 					S.clothes_req = 0
 	if(!summon_type)
-		send_sound(player_list, 'sound/magic/Summon_guns.ogg')
+		for(var/mob/M in player_list)
+			M.playsound_local(null, 'sound/magic/Summon_guns.ogg', VOL_EFFECTS, vary = FALSE, ignore_environment = TRUE)
 	else
-		send_sound(player_list, 'sound/magic/Summon_Magic.ogg')
+		for(var/mob/M in player_list)
+			M.playsound_local(null, 'sound/magic/Summon_Magic.ogg', VOL_EFFECTS, vary = FALSE, ignore_environment = TRUE)

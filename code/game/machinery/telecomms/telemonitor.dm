@@ -126,7 +126,7 @@
 
 /obj/machinery/computer/telecomms/monitor/attackby(obj/item/weapon/D, mob/user)
 	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
+		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS)
 		emagged = 1
 		to_chat(user, "\blue You disable the security protocols")
 	else

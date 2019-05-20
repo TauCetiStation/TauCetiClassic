@@ -93,7 +93,7 @@
 			src.shot_number = 0
 		use_power(1000)
 		var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
-		playsound(src.loc, 'sound/weapons/guns/gunpulse_emitter.ogg', 25, 1)
+		playsound(src, 'sound/weapons/guns/gunpulse_emitter.ogg', VOL_EFFECTS, 25)
 		if(prob(35))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, src)
@@ -124,14 +124,14 @@
 		switch(state)
 			if(0)
 				state = 1
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 				user.visible_message("[user.name] secures [src.name] to the floor.", \
 					"You secure the external reinforcing bolts to the floor.", \
 					"You hear a ratchet")
 				src.anchored = 1
 			if(1)
 				state = 0
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
 					"You undo the external reinforcing bolts.", \
 					"You hear a ratchet")

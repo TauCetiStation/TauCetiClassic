@@ -42,7 +42,7 @@
 				if(P == src)
 					M.visible_message("<span class='warning'>[bicon(src)][src] rings loudly!</span>")
 					alarm_playing = 1
-		playsound(src, 'sound/weapons/ring.ogg',50, 1)
+		playsound(src, 'sound/weapons/ring.ogg', VOL_EFFECTS)
 		if(alarm_playing != 1)
 			src.visible_message("<span class='warning'>[bicon(src)][src] rings loudly!</span>")
 			alarm_playing = 1
@@ -72,7 +72,7 @@
 	set name = "Switch Off"
 	set category = "Object"
 	icon_state = "[initial(icon_state)]_off"
-	playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS)
 	on = 0
 	set_light(0)
 	verbs -= /obj/item/clothing/gloves/pipboy/verb/switch_off
@@ -102,7 +102,7 @@
 	health_analyze_mode = FALSE
 	if(on)
 		if(profile_name)
-			playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
+			playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS)
 			var/dat = "<body link='#30CC30' alink='white' bgcolor='#1A351A'><font color='#30CC30'>[name]<br>"
 			switch(screen)
 				if(1)
@@ -177,7 +177,7 @@
 		set_light(2, 1, "#59f65f")
 		on = 1
 		verbs += /obj/item/clothing/gloves/pipboy/verb/switch_off
-		playsound(src, 'sound/mecha/powerup.ogg', 30, 1)
+		playsound(src, 'sound/mecha/powerup.ogg', VOL_EFFECTS, 30)
 		return
 
 /obj/item/clothing/gloves/pipboy/Topic(href, href_list, mob/user)
@@ -197,7 +197,7 @@
 	updateSelfDialog()
 
 /obj/item/clothing/gloves/pipboy/proc/create_personality(mob/living/U = usr)
-	playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS)
 	U.visible_message("<span class='notice'>[U] taps on \his [name]'s screen.</span>")
 	U.last_target_click = world.time
 	var/t = sanitize(input(U, "Please enter your name", name, null) as text)
@@ -215,11 +215,11 @@
 	if(U.stat || U.restrained() || U.paralysis || U.stunned || U.weakened || U.incapacitated())
 		return
 
-	playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
+	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS)
 	profile_name = "[t]"
 
 /obj/item/clothing/gloves/pipboy/proc/create_alarm_clock(mob/living/U = usr, numb_of_alarm)
-	playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS)
 	U.visible_message("<span class='notice'>[U] taps on \his [name]'s screen.</span>")
 	U.last_target_click = world.time
 	var/alarm = sanitize(input(U, "Please time for the alarm to ring(e.g. 12:00)", name, null) as text)

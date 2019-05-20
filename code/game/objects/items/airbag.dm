@@ -13,7 +13,7 @@
 	anchored = TRUE
 	user.forceMove(src)
 	to_chat(user, "<span class='warning'>Your [src] deploys!</span>")
-	playsound(src, 'sound/effects/inflate.ogg', 100, 1)
+	playsound(src, 'sound/effects/inflate.ogg', VOL_EFFECTS)
 	sleep(50)
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(get_turf(src))

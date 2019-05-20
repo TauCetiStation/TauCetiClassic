@@ -25,24 +25,24 @@
 		if(0)
 			if(isscrewdriver(P))
 				to_chat(user, "<span class='notice'>You unfasten the bolts.</span>")
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
 				construct_op ++
 		if(1)
 			if(isscrewdriver(P))
 				to_chat(user, "<span class='notice'>You fasten the bolts.</span>")
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
 				construct_op --
 			if(iswrench(P))
 				to_chat(user, "<span class='notice'>You dislodge the external plating.</span>")
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 				construct_op ++
 		if(2)
 			if(iswrench(P))
 				to_chat(user, "<span class='notice'>You secure the external plating.</span>")
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 				construct_op --
 			if(iswirecutter(P))
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				construct_op ++
 				new /obj/item/stack/cable_coil/red(user.loc, 5)

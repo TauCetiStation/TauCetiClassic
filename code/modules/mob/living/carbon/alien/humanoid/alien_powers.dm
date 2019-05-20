@@ -158,7 +158,7 @@ Doesn't work on other aliens/AI.*/
 	if(world.time < last_screech + screech_delay)
 		return
 
-	playsound(src, 'sound/effects/screech2.ogg', 100, 1)
+	playsound(src, 'sound/effects/screech2.ogg', VOL_EFFECTS)
 	for(var/mob/living/carbon/human/H in oviewers())
 		if(H.sdisabilities & DEAF || istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
 			continue

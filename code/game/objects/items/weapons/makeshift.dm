@@ -55,7 +55,7 @@
 	if(bcell && bcell.charge > hitcost)
 		status = !status
 		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
-		playsound(loc, "sparks", 75, 1, -1)
+		playsound(src, "sparks", VOL_EFFECTS)
 	else
 		status = 0
 		if(!bcell)
@@ -79,7 +79,7 @@
 		if(bcell.charge < (hitcost+chrgdeductamt)) // If after the deduction the baton doesn't have enough charge for a stun hit it turns off.
 			status = 0
 			update_icon()
-			playsound(loc, "sparks", 75, 1, -1)
+			playsound(src, "sparks", VOL_EFFECTS)
 		if(bcell.use(chrgdeductamt))
 			return 1
 		else
@@ -138,7 +138,7 @@
 		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Beaten by [user.name] ([user.ckey]) with [src.name]</font>"
 		msg_admin_attack("[user.name] ([user.ckey]) beat [H.name] ([H.ckey]) with [src.name] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		playsound(src.loc, "swing_hit", 50, 1, -1)
+		playsound(src, "swing_hit", VOL_EFFECTS)
 	else if(!status)
 		H.visible_message("<span class='warning'>[M] has been prodded with the [src] by [user]. Luckily it was off.</span>")
 		return
@@ -162,7 +162,7 @@
 		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by [user.name] ([user.ckey]) with [src.name]</font>"
 		msg_admin_attack("[key_name(user)] stunned [key_name(H)] with [src.name]")
 
-		playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS)
 	//	if(charges < 1)
 	//		status = 0
 	//		update_icon()

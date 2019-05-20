@@ -44,7 +44,7 @@
 		else
 			icon_state = "sword[item_color]"
 		w_class = ITEM_SIZE_LARGE
-		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
+		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS)
 		to_chat(user, "\blue [src] is now active.")
 
 	else
@@ -55,7 +55,7 @@
 		else
 			icon_state = "sword0"
 		w_class = ITEM_SIZE_SMALL
-		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
+		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS)
 		to_chat(user, "\blue [src] can now be concealed.")
 
 	if(istype(user,/mob/living/carbon/human))
@@ -98,7 +98,7 @@
 */
 	if (user.a_intent == "hurt")
 		if(!..()) return
-		playsound(src.loc, "swing_hit", 50, 1, -1)
+		playsound(src, "swing_hit", VOL_EFFECTS)
 		if (M.stuttering < 8 && (!(HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 			M.stuttering = 8
 		M.Stun(8)
@@ -106,7 +106,7 @@
 		for(var/mob/O in viewers(M))
 			if (O.client)	O.show_message("\red <B>[M] has been beaten with \the [src] by [user]!</B>", 1, "\red You hear someone fall", 2)
 	else
-		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS)
 		M.Stun(5)
 		M.Weaken(5)
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
@@ -155,7 +155,7 @@
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
 
-	playsound(src.loc, 'sound/weapons/guns/empty.ogg', 50, 1)
+	playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS)
 	add_fingerprint(user)
 
 	if(blood_overlay && blood_DNA && (blood_DNA.len >= 1)) //updates blood overlay, if any
@@ -183,7 +183,7 @@
 			return
 		if(user.a_intent == I_HELP && ishuman(target))
 			var/mob/living/carbon/human/H = target
-			playsound(src, "swing_hit", 50, 1, -1)
+			playsound(src, "swing_hit", VOL_EFFECTS)
 			user.do_attack_animation(H)
 			H.adjustHalLoss(25)
 			H.visible_message("<span class='warning'>[user] harmless hit [H] with a telebaton.</span>")
@@ -192,7 +192,7 @@
 			msg_admin_attack("[key_name(user)] harmless hit [key_name(H)] with [src.name].")
 			return
 		if(..())
-			playsound(src.loc, "swing_hit", 50, 1, -1)
+			playsound(src, "swing_hit", VOL_EFFECTS)
 			return
 	else
 		return ..()
@@ -284,7 +284,7 @@
 	force = 10
 	icon_state = "eshield[active]"
 	w_class = ITEM_SIZE_LARGE
-	playsound(loc, 'sound/weapons/saberon.ogg', 50, 1)
+	playsound(src, 'sound/weapons/saberon.ogg', VOL_EFFECTS)
 	to_chat(user, "<span class='notice'> [src] is now active.</span>")
 	update_icon()
 
@@ -292,7 +292,7 @@
 	force = 3
 	icon_state = "eshield[active]"
 	w_class = ITEM_SIZE_TINY
-	playsound(loc, 'sound/weapons/saberoff.ogg', 50, 1)
+	playsound(src, 'sound/weapons/saberoff.ogg', VOL_EFFECTS)
 	update_icon()
 	if(user)
 		to_chat(user, "<span class='notice'> [src] can now be concealed.</span>")

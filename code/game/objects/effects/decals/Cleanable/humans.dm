@@ -235,7 +235,7 @@ var/global/list/image/splatter_cache=list()
 
 /obj/effect/decal/cleanable/blood/gibs/Crossed(mob/living/L)
 	if(istype(L) && has_gravity(loc))
-		playsound(loc, 'sound/effects/gib_step.ogg', 50, 1)
+		playsound(src, 'sound/effects/gib_step.ogg', VOL_EFFECTS)
 	. = ..()
 
 

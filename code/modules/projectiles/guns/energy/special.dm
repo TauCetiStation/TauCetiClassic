@@ -272,7 +272,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	if(do_after(user, 40 * toolspeed, target = src))
 		if(charging && charge < 3)
 			charge++
-			playsound(loc, "sparks", 75, 1, -1)
+			playsound(src, "sparks", VOL_EFFECTS)
 			if(charge < 3)
 				charge(user)
 			else
@@ -334,7 +334,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 /obj/item/weapon/gun/tesla/proc/Bolt(mob/origin, mob/living/target, mob/user, jumps)
 	origin.Beam(target, "lightning[rand(1,12)]", 'icons/effects/effects.dmi', time = 5)
 	target.electrocute_act(15 * (jumps + 1), src, , , 1)
-	playsound(target, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+	playsound(target, 'sound/machines/defib_zap.ogg', VOL_EFFECTS)
 	var/list/possible_targets = new
 	for(var/mob/living/M in range(2, target))
 		if(user == M || !los_check(target, M) || origin == M || target == M)

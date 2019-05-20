@@ -34,7 +34,7 @@
 	stat = DEAD
 
 	if(!gibbed)
-		playsound(loc, 'sound/voice/hiss6.ogg', 80, 1, 1)
+		playsound(src, 'sound/voice/hiss6.ogg', VOL_EFFECTS)
 		for(var/mob/O in viewers(src, null))
 			O.show_message("<B>[src]</B> lets out a waning guttural screech, green blood bubbling from its maw...", 1)
 		update_canmove()

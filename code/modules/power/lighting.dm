@@ -40,7 +40,7 @@
 		to_chat(usr, "\red [src.name] cannot be placed on this spot.")
 		return
 	to_chat(usr, "Attaching [src] to the wall.")
-	playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
+	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS)
 	var/constrdir = usr.dir
 	var/constrloc = usr.loc
 	if (usr.is_busy() || !do_after(usr, 30, target = on_wall))
@@ -109,7 +109,7 @@
 			new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 			user.visible_message("[user.name] deconstructs [src].", \
 				"You deconstruct [src].", "You hear a noise.")
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 75, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS)
 			qdel(src)
 		if (src.stage == 2)
 			to_chat(usr, "You have to remove the wires first.")
@@ -131,7 +131,7 @@
 		new /obj/item/stack/cable_coil/random(get_turf(src.loc), 1)
 		user.visible_message("[user.name] removes the wiring from [src].", \
 			"You remove the wiring from [src].", "You hear a noise.")
-		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS)
 		return
 
 	if(iscoil(W))
@@ -160,7 +160,7 @@
 			src.stage = 3
 			user.visible_message("[user.name] closes [src]'s casing.", \
 				"You close [src]'s casing.", "You hear a noise.")
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
 
 			switch(fixture_type)
 
@@ -296,7 +296,7 @@
 	if(on)
 		if(light_range != brightness_range || light_power != brightness_power || light_color != brightness_color)
 			switchcount++
-			playsound(src.loc, 'sound/machines/lightson.ogg', 75)
+			playsound(src, 'sound/machines/lightson.ogg', VOL_EFFECTS)
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
 
@@ -421,7 +421,7 @@
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
 		if(isscrewdriver(W)) //If it's a screwdriver open it.
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
 			user.visible_message("[user.name] opens [src]'s casing.", \
 				"You open [src]'s casing.", "You hear a noise.")
 			var/obj/machinery/light_construct/newlight = null
@@ -590,7 +590,7 @@
 
 	if(!skip_sound_and_sparks)
 		if(status == LIGHT_OK || status == LIGHT_BURNED)
-			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS)
 		if(on)
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
@@ -780,5 +780,5 @@
 		status = LIGHT_BROKEN
 		force = 5
 		sharp = 1
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS)
 		update()

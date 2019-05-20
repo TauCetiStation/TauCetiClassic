@@ -27,12 +27,12 @@
 			active = FALSE
 			icon_state = "gigadrill"
 			src.visible_message("<span class='notice'>[src] slowly spins down.</span>")
-			playsound(src, 'sound/mecha/powerup.ogg', 50, 1)
+			playsound(src, 'sound/mecha/powerup.ogg', VOL_EFFECTS)
 		else
 			active = TRUE
 			icon_state = "gigadrill_active"
 			src.visible_message("<span class='warning'>[src]  shudders to life!</span>")
-			playsound(src, 'sound/mecha/mechmove03.ogg', 50, 1)
+			playsound(src, 'sound/mecha/mechmove03.ogg', VOL_EFFECTS)
 
 /obj/machinery/giga_drill/Bump(atom/A) // It drills the mineral if it bumps to it.
 	if(active && !drilling_turf)
@@ -40,7 +40,7 @@
 			var/turf/simulated/mineral/M = A
 			drilling_turf = get_turf(src)
 			src.visible_message("<span class='warning'><b>[src] begins to drill into \the [M].</b></span>")
-			playsound(src, 'sound/mecha/mechdrill.ogg', 50, 1)
+			playsound(src, 'sound/mecha/mechdrill.ogg', VOL_EFFECTS)
 			anchored = TRUE
 			addtimer(CALLBACK(src, .proc/drill_mineral, M), drill_time)
 		else if(world.time >= cooldown && istype(A, /turf/simulated))

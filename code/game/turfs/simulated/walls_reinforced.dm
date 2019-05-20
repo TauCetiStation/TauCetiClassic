@@ -21,13 +21,13 @@
 			if(prob(25))
 				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			if(prob(5))
-				playsound(user.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+				playsound(user, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS)
 				var/mob/living/carbon/human/H = user
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
 				BP.take_damage(rand(5, 15), used_weapon = "Reinforced wall")
 				to_chat(user, text("\red Ouch!!"))
 			else
-				playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
+				playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS)
 			return //##Z2
 
 	if(rotting)
@@ -35,7 +35,7 @@
 		return
 
 	/*user << "\blue You push the wall but nothing happens!"
-	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
+	playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS, 25)
 	src.add_fingerprint(user)*/ //this code is in standard wall attack_hand proc
 	..()
 	return
@@ -58,7 +58,7 @@
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
 				to_chat(user, "<span class='notice'>You burn away the fungi with \the [WT].</span>")
-				playsound(src, 'sound/items/Welder.ogg', 10, 1)
+				playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS, 10)
 				for(var/obj/effect/E in src) if(E.name == "Wallrot")
 					qdel(E)
 				rotting = 0
@@ -85,8 +85,8 @@
 
 			EB.spark_system.start()
 			to_chat(user, "<span class='notice'>You slash \the [src] with \the [EB]; the thermite ignites!</span>")
-			playsound(src, "sparks", 50, 1)
-			playsound(src, 'sound/weapons/blade1.ogg', 50, 1)
+			playsound(src, "sparks", VOL_EFFECTS)
+			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS)
 
 			thermitemelt(user)
 			return
@@ -113,7 +113,7 @@
 	switch(d_state)
 		if(INTACT)
 			if (iswirecutter(W))
-				playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
+				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS)
 				d_state = SUPPORT_LINES
 				update_icon()
 				new /obj/item/stack/rods(src)
@@ -123,7 +123,7 @@
 		if(SUPPORT_LINES)
 			if (isscrewdriver(W))
 				to_chat(user, "<span class='notice'>You begin removing the support lines.</span>")
-				playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
 
 				if(W.use_tool(src, user, 40, volume = 100))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
@@ -256,7 +256,7 @@
 		user.do_attack_animation(src)
 		visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
 		if(C.use_charge(user, 4))
-			playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS)
 			take_damage(pick(10, 20, 30))
 		return
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))

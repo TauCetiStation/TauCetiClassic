@@ -18,7 +18,7 @@
 		if(O.client)
 			to_chat(O, "<span class='ghostalert'>[message]</span>")
 			if(ghost_sound)
-				send_sound(O, ghost_sound)
+				O.playsound_local(null, ghost_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
 /* Old TG code that didn't work
 

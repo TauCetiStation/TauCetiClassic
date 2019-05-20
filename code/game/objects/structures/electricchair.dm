@@ -13,7 +13,7 @@
 /obj/structure/stool/bed/chair/e_chair/attackby(obj/item/weapon/W, mob/user)
 	if(iswrench(W))
 		var/obj/structure/stool/bed/chair/C = new /obj/structure/stool/bed/chair(loc)
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 		C.dir = dir
 		part.loc = loc
 		part.master = null

@@ -64,9 +64,9 @@ log transactions
 	for(var/obj/item/weapon/spacecash/S in src)
 		S.loc = src.loc
 		if(prob(50))
-			playsound(loc, 'sound/items/polaroid1.ogg', 50, 1)
+			playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS)
 		else
-			playsound(loc, 'sound/items/polaroid2.ogg', 50, 1)
+			playsound(src, 'sound/items/polaroid2.ogg', VOL_EFFECTS)
 		break
 
 /obj/machinery/atm/attackby(obj/item/I, mob/user)
@@ -107,9 +107,9 @@ log transactions
 					money_stock += SC.worth
 			authenticated_account.money += SC.worth
 			if(prob(50))
-				playsound(loc, 'sound/items/polaroid1.ogg', 50, 1)
+				playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS)
 			else
-				playsound(loc, 'sound/items/polaroid2.ogg', 50, 1)
+				playsound(src, 'sound/items/polaroid2.ogg', VOL_EFFECTS)
 
 			//create a transaction log entry
 			var/datum/transaction/T = new()
@@ -288,7 +288,7 @@ log transactions
 							if(number_incorrect_tries > max_pin_attempts)
 								//lock down the atm
 								ticks_left_locked_down = 30
-								playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
+								playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS)
 
 								//create an entry in the account transaction log
 								var/datum/money_account/failed_account = get_account(tried_account_num)
@@ -303,12 +303,12 @@ log transactions
 							else
 								to_chat(usr, "\red [bicon(src)] Incorrect pin/account combination entered, [max_pin_attempts - number_incorrect_tries] attempts remaining.")
 								previous_account_number = tried_account_num
-								playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1)
+								playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS)
 						else
 							to_chat(usr, "\red [bicon(src)] incorrect pin/account combination entered.")
 							number_incorrect_tries = 0
 					else
-						playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
+						playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS)
 						ticks_left_timeout = 120
 						view_screen = NO_SCREEN
 
@@ -332,7 +332,7 @@ log transactions
 					var/response = alert(usr.client, "In what way would you like to recieve your money?", "Choose money format", "Chip", "Cash")
 					if(amount <= authenticated_account.money)
 						authenticated_account.money -= amount
-						playsound(src, 'sound/machines/chime.ogg', 50, 1)
+						playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS)
 						if(response == "Chip")
 							spawn_ewallet(amount,src.loc)
 						else
@@ -367,9 +367,9 @@ log transactions
 					S.stamp_paper(R, "This paper has been stamped by the Automatic Teller Machine.")
 
 				if(prob(50))
-					playsound(loc, 'sound/items/polaroid1.ogg', 50, 1)
+					playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS)
 				else
-					playsound(loc, 'sound/items/polaroid2.ogg', 50, 1)
+					playsound(src, 'sound/items/polaroid2.ogg', VOL_EFFECTS)
 			if ("print_transaction")
 				if(authenticated_account)
 					var/obj/item/weapon/paper/R = new(src.loc)
@@ -405,9 +405,9 @@ log transactions
 					S.stamp_paper(R, "This paper has been stamped by the Automatic Teller Machine.")
 
 				if(prob(50))
-					playsound(loc, 'sound/items/polaroid1.ogg', 50, 1)
+					playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS)
 				else
-					playsound(loc, 'sound/items/polaroid2.ogg', 50, 1)
+					playsound(src, 'sound/items/polaroid2.ogg', VOL_EFFECTS)
 
 			if("insert_card")
 				if(!held_card)

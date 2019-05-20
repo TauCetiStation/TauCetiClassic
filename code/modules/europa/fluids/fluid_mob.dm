@@ -32,11 +32,11 @@
 
 			C.stop_pulling()
 			to_chat(C, "<span class='notice'>You slipped on the wet floor!</span>")
-			playsound(loc, 'sound/misc/slip.ogg', 50, 1, -3)
+			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS, null, null, -3)
 			C.Stun(5)
 			C.Weaken(2)
 	else
-		playsound(loc, 'sound/effects/waterstep.ogg', 50, 1, -3)
+		playsound(src, 'sound/effects/waterstep.ogg', VOL_EFFECTS, null, null, -3)
 
 	if(prob(5))
 		if(ishuman(C))

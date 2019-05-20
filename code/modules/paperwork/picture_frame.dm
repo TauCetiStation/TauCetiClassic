@@ -38,7 +38,7 @@
 			to_chat(user, "<span class='notice'>\The [src] already contains a photo.</span>")
 		return
 	if(istype(I, /obj/item/weapon/wrench))
-		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 		if(frame_type == /obj/structure/picture_frame/wooden)
 			new /obj/item/stack/sheet/wood(src.loc)
 		else
@@ -50,7 +50,7 @@
 	if(istype(I, /obj/item/stack/sheet/glass))
 		if(!frame_glass)
 			frame_glass = TRUE
-			playsound(src, 'sound/effects/glassknock.ogg', 50, 1)
+			playsound(src, 'sound/effects/glassknock.ogg', VOL_EFFECTS)
 			to_chat(user, "<span class='notice'>You insert the glass into \the [src].</span>")
 			var/obj/item/stack/sheet/glass/G = I
 			G.use(1)
@@ -60,7 +60,7 @@
 		return
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(frame_glass)
-			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
 			frame_glass = FALSE
 			to_chat(user,"<span class='notice'>You screw the glass out of \the [src].</span>")
 			new /obj/item/stack/sheet/glass(get_turf(src))
@@ -190,7 +190,7 @@
 				if("Cancel")
 					return
 				if("Screw the glass out")
-					playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+					playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
 					frame_glass = FALSE
 					to_chat(user, "<span class='notice'>You screw the glass out of \the [src].</span>")
 					new /obj/item/stack/sheet/glass(get_turf(src))
@@ -203,7 +203,7 @@
 			user.visible_message("<span class='notice'>[user] starts screwing \the [src] to the wall.</span>",
 								 "<span class='notice'>You start screwing \the [src] to the wall.</span>")
 		if(do_after(user, 20 * O.toolspeed, target = src))
-			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS)
 			screwed = !screwed
 			if(!screwed)
 				user.visible_message("<span class='notice'>[user] unscrews \the [src].</span>",
@@ -216,7 +216,7 @@
 	else if(istype(O, /obj/item/stack/sheet/glass))
 		if(!frame_glass)
 			frame_glass = TRUE
-			playsound(src, 'sound/effects/glassknock.ogg', 50, 1)
+			playsound(src, 'sound/effects/glassknock.ogg', VOL_EFFECTS)
 			to_chat(user, "<span class='notice'>You insert the glass into \the [src].</span>")
 			var/obj/item/stack/sheet/glass/G = O
 			G.use(1)
@@ -236,21 +236,21 @@
 		return
 	else
 		if(frame_glass && O.force > 3)
-			playsound(src, 'sound/effects/Glasshit.ogg', 50, 1)
+			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS)
 			glass_health -= O.force
 			if(glass_health <= 0)
 				frame_glass = null
-				playsound(src, 'sound/effects/Glassbr3.ogg', 40, 1)
+				playsound(src, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS)
 				new /obj/item/weapon/shard(get_turf(src))
 				new /obj/item/weapon/shard(get_turf(src))
 				update_icon()
 		else if(O.force > 5)
 			switch(O.damtype)
 				if("fire")
-					playsound(src, 'sound/items/welder.ogg', 50, 1)
+					playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS)
 					health -= O.force * 1
 				if("brute")
-					playsound(src, 'sound/weapons/slash.ogg', 40, 1)
+					playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS)
 					health -= O.force * 0.75
 			if(health <= 0)
 				visible_message("<span class='warning'>[user] smashed [src] apart!</span>")

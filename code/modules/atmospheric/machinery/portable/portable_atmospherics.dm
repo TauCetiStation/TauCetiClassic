@@ -104,7 +104,7 @@
 			if(connected_port)
 				disconnect()
 				user.SetNextMove(CLICK_CD_RAPID)
-				playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 				user.visible_message(
 					"[user] disconnects [src].",
 					"<span class='notice'>You unfasten [src] from the port.</span>",
@@ -119,7 +119,7 @@
 					to_chat(user, "<span class='notice'>[name] failed to connect to the port.</span>")
 					return
 				user.SetNextMove(CLICK_CD_RAPID)
-				playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 				user.visible_message(
 					"[user] connects [src].",
 					"<span class='notice'>You fasten [src] to the port.</span>",

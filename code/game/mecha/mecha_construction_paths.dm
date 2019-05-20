@@ -6,26 +6,26 @@
 	if(iswelder(used_atom))
 		var/obj/item/weapon/weldingtool/W = used_atom
 		if (W.use(3, user))
-			playsound(holder, 'sound/items/Welder2.ogg', 50, 1)
+			playsound(holder, 'sound/items/Welder2.ogg', VOL_EFFECTS)
 			return 1
 		else
 			to_chat(user, ("There's not enough fuel."))
 			return 0
 	else if(iswrench(used_atom))
-		playsound(holder, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(holder, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 		return 1
 	else if(isscrewdriver(used_atom))
-		playsound(holder, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(holder, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
 		return 1
 	else if(iswirecutter(used_atom))
-		playsound(holder, 'sound/items/Wirecutter.ogg', 50, 1)
+		playsound(holder, 'sound/items/Wirecutter.ogg', VOL_EFFECTS)
 		return 1
 	else if(iscoil(used_atom))
 		var/obj/item/stack/cable_coil/C = used_atom
 		if(!C.use(4))
 			to_chat(user, ("There's not enough cable to finish the task."))
 			return 0
-		playsound(holder, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(holder, 'sound/items/Deconstruct.ogg', VOL_EFFECTS)
 
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
@@ -761,7 +761,7 @@
 		return 0
 
 	if(istype(used_atom, /obj/item/weapon/bikehorn))
-		playsound(holder, 'sound/items/bikehorn.ogg', 50, 1)
+		playsound(holder, 'sound/items/bikehorn.ogg', VOL_EFFECTS)
 		user.visible_message("HONK!")
 
 	//TODO: better messages.

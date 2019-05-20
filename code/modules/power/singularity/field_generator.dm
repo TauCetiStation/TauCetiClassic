@@ -72,7 +72,7 @@ field_generator power level display
 			warming_up = 3
 			start_fields()
 			update_icon()
-			playsound(src, 'sound/machines/cfieldstart.ogg', 100, 0)
+			playsound(src, 'sound/machines/cfieldstart.ogg', VOL_EFFECTS, null, FALSE)
 		var_edit_start = FALSE
 
 	if(active == FG_ONLINE)
@@ -95,7 +95,7 @@ field_generator power level display
 					"<span class='notice'>You turn on the [src].</span>",
 					"<span class='notice'>You hear heavy droning.</span>")
 				turn_on()
-				playsound(src, 'sound/machines/cfieldbeforestart.ogg', 100, 0)
+				playsound(src, 'sound/machines/cfieldbeforestart.ogg', VOL_EFFECTS, null, FALSE)
 				investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
 	else
 		to_chat(user, "<span class='notice'>The [src] needs to be firmly secured to the floor first.</span>")
@@ -109,7 +109,7 @@ field_generator power level display
 		switch(state)
 			if(FG_UNSECURED)
 				state = FG_SECURED
-				playsound(src, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 				user.visible_message(
 					"<span class='notice'>[user] secures [src] to the floor.</span>",
 					"<span class='notice'>You secure the external reinforcing bolts to the floor.</span>",
@@ -117,7 +117,7 @@ field_generator power level display
 				anchored = TRUE
 			if(FG_SECURED)
 				state = FG_UNSECURED
-				playsound(src, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 				user.visible_message(
 					"<span class='notice'>[user] unsecures [src] reinforcing bolts from the floor.</span>",
 					"<span class='notice'>You undo the external reinforcing bolts.</span>",
@@ -198,7 +198,7 @@ field_generator power level display
 		update_icon()
 		if(warming_up >= 3)
 			start_fields()
-			playsound(src, 'sound/machines/cfieldstart.ogg', 100, 1)
+			playsound(src, 'sound/machines/cfieldstart.ogg', VOL_EFFECTS)
 
 /obj/machinery/field_generator/proc/calc_power()
 	if(var_power)
@@ -210,7 +210,7 @@ field_generator power level display
 	if(!draw_power(round(power_draw / 2, 1)))
 		visible_message("<span class='warning'>The [src] shuts down!</span>")
 		turn_off()
-		playsound(src, 'sound/machines/cfieldfail.ogg', 100, 0)
+		playsound(src, 'sound/machines/cfieldfail.ogg', VOL_EFFECTS, null, FALSE)
 		investigate_log("ran out of power and <font color='red'>deactivated</font>","singulo")
 		power = 0
 

@@ -82,7 +82,7 @@
 	set src in view(usr, 1)
 	set name = "Print Data"
 	flick("autopsy_printing",src)
-	playsound(src, 'sound/items/polaroid1.ogg', 50, 1)
+	playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS)
 	if(usr.stat || !(istype(usr,/mob/living/carbon/human)))
 		to_chat(usr, "No.")
 		return
@@ -205,7 +205,7 @@
 			return
 		for(var/mob/O in viewers(M))
 			O.show_message("\red [user.name] scans the wounds on [M.name]'s [BP.name] with \the [src.name]", 1)
-		playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
+		playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS)
 		to_chat(user, "[bicon(src)]<span class='notice'>Scanning completed!</span>")
 		src.add_data(BP)
 		flick("autopsy_scanning",src)

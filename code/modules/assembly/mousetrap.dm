@@ -42,7 +42,7 @@
 		var/mob/living/simple_animal/mouse/M = target
 		visible_message("\red <b>SPLAT!</b>")
 		M.splat()
-	playsound(target.loc, 'sound/effects/snap.ogg', 50, 1)
+	playsound(target, 'sound/effects/snap.ogg', VOL_EFFECTS)
 	layer = MOB_LAYER - 0.2
 	armed = 0
 	update_icon()
@@ -60,7 +60,7 @@
 		to_chat(user, "<span class='notice'>You disarm [src].</span>")
 	armed = !armed
 	update_icon()
-	playsound(user.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
+	playsound(user, 'sound/weapons/handcuffs.ogg', VOL_EFFECTS, 30, null, -3)
 
 /obj/item/device/assembly/mousetrap/attack_hand(mob/living/user)
 	if(armed)

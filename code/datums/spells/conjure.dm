@@ -22,7 +22,7 @@
 	for(var/turf/T in targets)
 		if(T.density && !summon_ignore_density)
 			targets -= T
-	playsound(loc, sound, 50, 1)
+	playsound(usr, sound, VOL_EFFECTS)
 
 	if(do_after(usr,delay,target=usr))
 		if(deleting_previous)

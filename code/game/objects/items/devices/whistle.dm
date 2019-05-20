@@ -17,13 +17,13 @@
 
 	if(emagged)
 		if(insults >= 1)
-			playsound(get_turf(src), 'sound/voice/beepsky/insult.ogg', 100, 1, vary = 0)//hueheuheuheuheuheuhe
+			playsound(src, 'sound/voice/beepsky/insult.ogg', VOL_EFFECTS, null, FALSE)//hueheuheuheuheuheuhe
 			user.show_message("<span class='warning'>[user]'s [name] gurgles, \"FUCK YOUR CUNT YOU SHIT EATING CUNT TILL YOU ARE A MASS EATING SHIT CUNT. EAT PENISES IN YOUR FUCK FACE AND SHIT OUT ABORTIONS TO FUCK UP SHIT IN YOUR ASS YOU COCK FUCK SHIT MONKEY FROM THE DEPTHS OF SHIT\"</span>",2) //It's a hearable message silly!
 			insults--
 		else
 			to_chat(user, "\red *BZZZZcuntZZZZT*")
 	else
-		playsound(get_turf(src), 'sound/voice/halt.ogg', 100, 1, vary = 0)
+		playsound(src, 'sound/voice/halt.ogg', VOL_EFFECTS, null, FALSE)
 		user.show_message("<span class='warning'>[user]'s [name] rasps, \"Halt! Security!\"</span>",1)
 	if(user)
 		var/list/halt_recipients = list()

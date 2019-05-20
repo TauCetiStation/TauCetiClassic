@@ -15,7 +15,7 @@
 				alien_talk(message)
 		else
 			if (copytext(message, 1, 2) != "*" && !stat)
-				playsound(loc, "hiss", 25, 1, 1)//So aliens can hiss while they hiss yo/N
+				playsound(src, "hiss", VOL_EFFECTS, 25)//So aliens can hiss while they hiss yo/N
 			return ..(message, sanitize = 0)
 
 /mob/living/carbon/alien/facehugger/say(message)

@@ -65,7 +65,7 @@
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, 10)
 
-		playsound(M.loc, 'sound/items/drink.ogg', rand(10, 50), 1)
+		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS, rand(10, 50))
 		return 1
 	else
 		for(var/mob/O in viewers(world.view, user))
@@ -80,7 +80,7 @@
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, 10)
 
-		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+		playsound(M,'sound/items/drink.ogg', VOL_EFFECTS, rand(10, 50))
 		return 1
 	return 0
 
@@ -139,7 +139,7 @@
 
 /obj/item/weapon/condiment_shelf/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/wrench))
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 		new /obj/item/stack/sheet/wood(src.loc)
 		qdel(src)
 		return
@@ -203,7 +203,7 @@
 			return
 		user.visible_message("<span class='warning'>[user] starts to disassemble \the [src].</span>")
 		if(do_after(user, 20, target = src))
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 			new /obj/item/weapon/condiment_shelf(src.loc)
 			for(var/obj/item/I in contents)
 				I.forceMove(get_turf(src))

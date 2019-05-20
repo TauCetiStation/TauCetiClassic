@@ -50,7 +50,7 @@
 	magichead.canremove = 0
 	target.visible_message("<span class='danger'>[target]'s face bursts into flames, and a barnyard animal's head takes its place!</span>", \
 						   "<span class='danger'>Your face burns up, and shortly after the fire you realise you have the face of a barnyard animal!</span>")
-	playsound(target, mSounds[randM], 100, 1)
+	playsound(target, mSounds[randM], VOL_EFFECTS)
 	target.remove_from_mob(target.wear_mask)
 	target.equip_to_slot_if_possible(magichead, SLOT_WEAR_MASK)
 	target.flash_eyes()

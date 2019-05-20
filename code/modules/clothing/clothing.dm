@@ -252,7 +252,7 @@ BLIND     // can't see anything
 	if(iswirecutter(W) || istype(W, /obj/item/weapon/scalpel))
 		switch(clipped_status)
 			if(CLIPPABLE)
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS)
 				user.visible_message("<span class='red'>[user] cuts the toe caps off of [src].</span>","<span class='red'>You cut the toe caps off of [src].</span>")
 
 				name = "mangled [name]"

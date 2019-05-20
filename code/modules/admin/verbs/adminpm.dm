@@ -126,8 +126,7 @@
 			to_chat(src, "<font color='blue'>PM to-<b>Admins</b>: <span class='emojify linkify'>[msg]</span></font>")
 
 		//play the receiving admin the adminhelp sound (if they have them enabled)
-		if(recipient.prefs.toggles & SOUND_ADMINHELP)
-			send_sound(recipient, 'sound/effects/adminhelp.ogg')
+		recipient.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
 	else
 		if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
@@ -145,7 +144,7 @@
 			admin_ticket_log(recipient, "<font color='blue'>PM From [key_name_admin(src)]: [msg]</font>")
 
 			//always play non-admin recipients the adminhelp sound
-			send_sound(recipient, 'sound/effects/adminhelp.ogg')
+			recipient.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
 		else		//neither are admins
 			to_chat(src, "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>")

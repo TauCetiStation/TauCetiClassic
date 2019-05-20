@@ -20,7 +20,7 @@
 /obj/item/device/gateway_locker/attack_self(mob/user)
 	if(!stationgate)
 		return
-	playsound(loc, 'sound/machines/twobeep.ogg', 50, 2)
+	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS)
 	if(used && opened)
 		stationgate.blocked = !stationgate.blocked
 		to_chat(user, "<span class='warning'>You [stationgate.blocked ? "dis" :""]allowed entering [stationgate]!</span>")
@@ -67,7 +67,7 @@
 	opened = TRUE
 	radio.autosay("Access was granted, It's Nice day to die, Crew.", "Gateway Message System", "Common")
 	qdel(radio)
-	playsound(src, 'sound/machines/twobeep.ogg', 50, 2)
+	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS)
 
 /obj/effect/landmark/syndie_gateway
 

@@ -799,7 +799,7 @@
 
 			if (iswirecutter(W) && wiresexposed && wires.is_all_cut())
 				user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
-				playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS)
 				new /obj/item/stack/cable_coil/random(loc, 5)
 				buildstage = 1
 				update_icon()
@@ -861,7 +861,7 @@
 				to_chat(user, "You remove the fire alarm assembly from the wall!")
 				var/obj/item/alarm_frame/frame = new /obj/item/alarm_frame()
 				frame.loc = user.loc
-				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 				qdel(src)
 
 	return ..()
@@ -1009,7 +1009,7 @@ FIRE ALARM
 				else if (iswirecutter(W))
 					user.visible_message("\red [user] has cut the wires inside \the [src]!", "You have cut the wires inside \the [src].")
 					new /obj/item/stack/cable_coil/random(loc, 5)
-					playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
+					playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS)
 					buildstage = 1
 					update_icon()
 			if(1)
@@ -1045,7 +1045,7 @@ FIRE ALARM
 					to_chat(user, "You remove the fire alarm assembly from the wall!")
 					var/obj/item/firealarm_frame/frame = new /obj/item/firealarm_frame()
 					frame.loc = user.loc
-					playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+					playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 					qdel(src)
 		return
 

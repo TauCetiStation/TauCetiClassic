@@ -33,7 +33,7 @@
 		to_chat(user, "<span class='warning'>You prime the [name]! [det_time/10] seconds!</span>")
 		active = 1
 		icon_state = initial(icon_state) + "_active"
-		playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+		playsound(src, 'sound/weapons/armbomb.ogg', VOL_EFFECTS, null, null, -3)
 		spawn(det_time)
 			prime()
 			return
@@ -75,7 +75,7 @@
 
 	icon_state = initial(icon_state) + "_active"
 	active = 1
-	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+	playsound(src, 'sound/weapons/armbomb.ogg', VOL_EFFECTS, null, null, -3)
 
 	spawn(det_time)
 		prime()
@@ -83,7 +83,7 @@
 
 
 /obj/item/weapon/grenade/proc/prime()
-//	playsound(loc, 'sound/items/Welder2.ogg', 25, 1)
+//	playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS, 25)
 	var/turf/T = get_turf(src)
 	if(T)
 		T.hotspot_expose(700,125)

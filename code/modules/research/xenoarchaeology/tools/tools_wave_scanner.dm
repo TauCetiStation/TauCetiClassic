@@ -90,7 +90,7 @@
 		if(!M.put_in_hands(processor))
 			to_chat(M, "<span class='warning'>You need a free hand to hold the [processor]!</span>")
 			return
-		playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
+		playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS)
 	else
 		// Remove from their hands and put back "into" the backpack
 		remove_processor()
@@ -108,7 +108,7 @@
 		var/mob/M = processor.loc
 		if(M.drop_from_inventory(processor, src))
 			to_chat(M, "<span class='notice'>\The [processor] snaps back into the [src].</span>")
-			playsound(src, 'sound/items/buttonswitch.ogg', 50, 1)
+			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS)
 	else
 		processor.forceMove(src)
 
@@ -173,9 +173,9 @@
 	..()
 	if(wavescanner)
 		wavescanner.remove_processor()
-		playsound(src, 'sound/items/buttonswitch.ogg', 50, 1)
+		playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS)
 	else
-		playsound(src, 'sound/items/buttonswitch.ogg', 50, 1)
+		playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS)
 		qdel(src)
 
 /obj/item/device/searcher/afterattack(obj/target, mob/user, proximity)
@@ -187,9 +187,9 @@
 	..()
 	if(wavescanner)
 		wavescanner.remove_processor()
-		playsound(src, 'sound/items/buttonswitch.ogg', 50, 1)
+		playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS)
 	else
-		playsound(src, 'sound/items/buttonswitch.ogg', 50, 1)
+		playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS)
 		qdel(src)
 	return
 
@@ -199,7 +199,7 @@
 /obj/item/device/searcher/interact(mob/user)
 	var/message = "Background radiation levels detected."
 	if(world.time - last_scan_time >= scan_delay)
-		playsound(src, 'sound/weapons/guns/gunpulse_wave.ogg', 10, 1)
+		playsound(src, 'sound/weapons/guns/gunpulse_wave.ogg', VOL_EFFECTS, 10)
 		INVOKE_ASYNC(src, .proc/scan)
 		if(nearest_artifact_distance >= 0)
 			message = "Exotic energy detected on wavelength '[nearest_artifact_id]' in a radius of [nearest_artifact_distance]m"

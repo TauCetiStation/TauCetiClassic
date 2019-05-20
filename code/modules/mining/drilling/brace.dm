@@ -32,7 +32,7 @@
 			to_chat(user, "<span class='notice'>You can't anchor something to empty space. Idiot.</span>")
 			return
 		user.SetNextMove(CLICK_CD_INTERACT)
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 		to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]anchor the brace.</span>")
 
 		anchored = !anchored

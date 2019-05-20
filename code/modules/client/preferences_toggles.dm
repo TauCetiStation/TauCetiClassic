@@ -45,16 +45,6 @@
 	to_chat(usr, "You will [(prefs.chat_toggles & CHAT_RADIO) ? "now" : "no longer"] see radio chatter from radios or speakers")
 	feedback_add_details("admin_verb","THR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/toggleadminhelpsound()
-	set name = "Hear/Silence Adminhelps"
-	set category = "Preferences"
-	set desc = "Toggle hearing a notification when admin PMs are recieved."
-	if(!holder)	return
-	prefs.toggles ^= SOUND_ADMINHELP
-	prefs.save_preferences()
-	to_chat(usr, "You will [(prefs.toggles & SOUND_ADMINHELP) ? "now" : "no longer"] hear a sound when adminhelps arrive.")
-	feedback_add_details("admin_verb","AHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/verb/deadchat() // Deadchat toggle is usable by anyone.
 	set name = "Show/Hide Deadchat"
 	set category = "Preferences"
@@ -78,38 +68,6 @@
 	to_chat(src, "You will [(prefs.chat_toggles & CHAT_PRAYER) ? "now" : "no longer"] see prayerchat.")
 	feedback_add_details("admin_verb","TP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/verb/toggletitlemusic()
-	set name = "Hear/Silence LobbyMusic"
-	set category = "Preferences"
-	set desc = "Toggles hearing the GameLobby music."
-	prefs.toggles ^= SOUND_LOBBY
-	prefs.save_preferences()
-	if(prefs.toggles & SOUND_LOBBY)
-		to_chat(src, "You will now hear music in the game lobby.")
-		if(isnewplayer(mob))
-			playtitlemusic()
-	else
-		to_chat(src, "You will no longer hear music in the game lobby.")
-		if(isnewplayer(mob))
-			send_sound(src, null, 85, CHANNEL_LOBBY_MUSIC) // stop the jamsz
-	feedback_add_details("admin_verb","TLobby") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/verb/togglemidis()
-	set name = "Hear/Silence Midis"
-	set category = "Preferences"
-	set desc = "Toggles hearing sounds uploaded by admins."
-	prefs.toggles ^= SOUND_MIDI
-	prefs.save_preferences()
-	if(prefs.toggles & SOUND_MIDI)
-		to_chat(src, "You will now hear any sounds uploaded by admins.")
-		var/sound/break_sound = sound(null, repeat = 0, wait = 0, channel = CHANNEL_ADMIN)
-
-		break_sound.priority = 250
-		src << break_sound	//breaks the client's sound output on channel CHANNEL_ADMIN
-	else
-		to_chat(src, "You will no longer hear sounds uploaded by admins; any currently playing midis have been disabled.")
-	feedback_add_details("admin_verb","TMidi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/verb/listen_ooc()
 	set name = "Show/Hide OOC"
 	set category = "Preferences"
@@ -128,21 +86,6 @@
 
 	to_chat(src, "You will [(prefs.chat_toggles & CHAT_LOOC) ? "now" : "no longer"] see messages on the LOOC channel.")
 	feedback_add_details("admin_verb","TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
-/client/verb/Toggle_Soundscape() //All new ambience should be added here so it works with this verb until someone better at things comes up with a fix that isn't awful
-	set name = "Hear/Silence Ambience"
-	set category = "Preferences"
-	set desc = "Toggles hearing ambient sound effects."
-	prefs.toggles ^= SOUND_AMBIENCE
-	prefs.save_preferences()
-	if(prefs.toggles & SOUND_AMBIENCE)
-		to_chat(src, "You will now hear ambient sounds.")
-	else
-		to_chat(src, "You will no longer hear ambient sounds.")
-		send_sound(src, null, 0, CHANNEL_AMBIENCE)
-		send_sound(src, null, 0, CHANNEL_REGULAR_AMBIENCE)
-	feedback_add_details("admin_verb","TAmbi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/toggle_be_role(role in special_roles)
 	set name = "Toggle SpecialRole Candidacy"

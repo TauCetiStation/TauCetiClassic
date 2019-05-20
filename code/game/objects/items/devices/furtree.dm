@@ -14,7 +14,7 @@
 	if(iswrench(W))	//unwrenching vendomats
 		var/turf/T = user.loc
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 		sleep(40)
 		//if( !istype(src, /obj/machinery/vending) || !user || !W || !T )	return
 		if( user.loc == T && user.get_active_hand() == W )

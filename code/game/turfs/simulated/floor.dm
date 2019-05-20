@@ -518,7 +518,7 @@ var/list/wood_icons = list("wood","wood-broken")
 
 		make_plating()
 		// Can't play sounds from areas. - N3X
-		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
+		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS)
 
 		return
 
@@ -532,12 +532,12 @@ var/list/wood_icons = list("wood","wood-broken")
 					new floor_type(src)
 
 			make_plating()
-			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
 		if(is_catwalk())
 			if(broken)
 				return
 			ReplaceWithLattice()
-			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
 		return
 
 	if(istype(C, /obj/item/stack/rods))
@@ -549,7 +549,7 @@ var/list/wood_icons = list("wood","wood-broken")
 				to_chat(user, "\blue Reinforcing the floor...")
 				if(R.use_tool(src, user, 30, amount = 2, volume = 50) && is_plating())
 					ChangeTurf(/turf/simulated/floor/engine)
-					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
+					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS)
 					return
 			else
 				to_chat(user, "\red You need more rods.")
@@ -586,7 +586,7 @@ var/list/wood_icons = list("wood","wood-broken")
 							FF.update_icon() //so siding gets updated properly
 				update_icon()
 				levelupdate()
-				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS)
 			else
 				to_chat(user, "\blue This section is too damaged to support a tile. Use a welder to fix the damage.")
 
@@ -617,7 +617,7 @@ var/list/wood_icons = list("wood","wood-broken")
 			if(broken || burnt)
 				if(welder.use(0,user))
 					to_chat(user, "\red You fix some dents on the broken plating.")
-					playsound(src, 'sound/items/Welder.ogg', 80, 1)
+					playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS)
 					icon_state = "plating"
 					burnt = 0
 					broken = 0

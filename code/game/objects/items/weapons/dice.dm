@@ -48,7 +48,7 @@
 	for(var/mob/living/A in viewers(3, loc))
 		A.confused += SLIGHTLY_CONFUSED
 	loc.visible_message("<span class='warning'>You hear a loud pop, as [src] poofs out of existence.</span>")
-	playsound(loc, 'sound/effects/bubble_pop.ogg', 50, 1)
+	playsound(src, 'sound/effects/bubble_pop.ogg', VOL_EFFECTS)
 	qdel(src)
 
 /obj/item/weapon/dice/atom_init()

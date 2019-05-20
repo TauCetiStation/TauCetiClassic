@@ -222,7 +222,7 @@
 					if(istype(imp,/obj/item/weapon/implant/storage))
 						var/obj/item/weapon/implant/storage/Simp = imp
 						Simp.removed()
-			playsound(target, 'sound/effects/squelch1.ogg', 50, 1)
+			playsound(target, 'sound/effects/squelch1.ogg', VOL_EFFECTS)
 		else
 			user.visible_message("\blue [user] removes \the [tool] from [target]'s [BP.name].", \
 			"\blue There's something inside [target]'s [BP.name], but you just missed it this time." )
@@ -251,6 +251,6 @@
 		if (prob(fail_prob))
 			var/obj/item/weapon/implant/imp = BP.implants[1]
 			user.visible_message("\red Something beeps inside [target]'s [BP.name]!")
-			playsound(imp.loc, 'sound/items/countdown.ogg', 75, 1, -3)
+			playsound(imp, 'sound/items/countdown.ogg', VOL_EFFECTS, null, null, -3)
 			spawn(25)
 				imp.activate()

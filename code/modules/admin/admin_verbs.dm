@@ -1,6 +1,5 @@
 //admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
 var/list/admin_verbs_default = list(
-	/client/proc/toggleadminhelpsound,	//toggles whether we hear a sound when adminhelps/PMs are used,
 	/client/proc/deadmin_self,			//destroys our own admin datum so we can play as a regular player,
 	/client/proc/hide_verbs,			//hides all our adminverbs,
 	/client/proc/hide_most_verbs,		//hides all our hideable adminverbs,
@@ -907,7 +906,7 @@ var/list/admin_verbs_hideable = list(
 
 	to_chat(T, "<span class='notice'><b><font size=3>Man up and deal with it.</font></b></span>")
 	to_chat(T, "<span class='notice'>Move on.</span>")
-	send_sound(T, 'sound/voice/ManUp1.ogg')
+	T.playsound_local(null, 'sound/voice/ManUp1.ogg', VOL_ADMIN, vary = FALSE, ignore_environment = TRUE)
 
 	log_admin("[key_name(usr)] told [key_name(T)] to man up and deal with it.")
 	message_admins("\blue [key_name_admin(usr)] told [key_name(T)] to man up and deal with it.")
@@ -917,9 +916,9 @@ var/list/admin_verbs_hideable = list(
 	set name = "Man Up Global"
 	set desc = "Tells everyone to man up and deal with it."
 
-	for (var/mob/T as mob in player_list)
+	for (var/mob/T in player_list)
 		to_chat(T, "<br><center><span class='notice'><b><font size=4>Man up.<br> Deal with it.</font></b><br>Move on.</span></center><br>")
-		send_sound(T, 'sound/voice/ManUp1.ogg')
+		T.playsound_local(null, 'sound/voice/ManUp1.ogg', VOL_ADMIN, vary = FALSE, ignore_environment = TRUE)
 
 	log_admin("[key_name(usr)] told everyone to man up and deal with it.")
 	message_admins("\blue [key_name_admin(usr)] told everyone to man up and deal with it.")
@@ -958,9 +957,10 @@ var/list/admin_verbs_hideable = list(
 	var/icon/cup = icon('icons/obj/drinks.dmi', "golden_cup")
 
 	if(glob == "No!")
-		send_sound(winner.client, 'sound/misc/achievement.ogg')
+		winner.playsound_local(null, 'sound/misc/achievement.ogg', VOL_ADMIN, vary = FALSE, ignore_environment = TRUE)
 	else
-		send_sound(world, 'sound/misc/achievement.ogg')
+		for(var/mob/M in player_list)
+			M.playsound_local(null, 'sound/misc/achievement.ogg', VOL_ADMIN, vary = FALSE, ignore_environment = TRUE)
 		to_chat(world, "<span class='danger'>[bicon(cup)] <b>[winner.name]</b> wins \"<b>[name]</b>\"!</span>")
 
 	to_chat(winner, "<span class='danger'>Congratulations!</span>")
@@ -1120,7 +1120,7 @@ var/centcom_barriers_stat = 1
 /obj/effect/landmark/trololo/Crossed(mob/M)
 	if(!active) return
 	/*if(istype(M, /mob/living/carbon))
-		send_sound(M, melody, 20, wait = 1)*/
+		M.playsound_local(null, melody, VOL_EFFECTS, 20, FALSE, channel = lchannel, wait = TRUE, ignore_environment = TRUE)*/
 
 /obj/structure/centcom_barrier
 	name = "Invisible wall"

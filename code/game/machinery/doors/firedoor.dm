@@ -103,7 +103,7 @@
 			return
 		else if(!user.is_busy(src))
 			to_chat(user, "\red You force your claws between the doors and begin to pry them open...")
-			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 50, 0)
+			playsound(src, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS, null, FALSE)
 			if (do_after(user,40,target = src) && src)
 				open(1)
 	return
@@ -174,7 +174,7 @@
 			user.visible_message("\red \The [user] [blocked ? "welds" : "unwelds"] \the [src] with \a [W].",\
 			"You [blocked ? "weld" : "unweld"] \the [src] with \the [W].",\
 			"You hear something being welded.")
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS)
 			update_icon()
 			return
 

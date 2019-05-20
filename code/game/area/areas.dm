@@ -362,12 +362,12 @@ var/list/ghostteleportlocs = list()
 		thunk(L)
 
 	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
-	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))
+	if(!L.client)
 		return
 
 	if(!L.client.ambience_playing)
 		L.client.ambience_playing = 1
-		send_sound(L, 'sound/ambience/shipambience.ogg', 35, CHANNEL_REGULAR_AMBIENCE, 1)
+		L.playsound_music('sound/ambience/shipambience.ogg', VOL_AMBIENT, TRUE, null, CHANNEL_AMBIENT)
 
 	if(prob(35))
 		var/sound = 'sound/ambience/ambigen1.ogg'
@@ -392,7 +392,7 @@ var/list/ghostteleportlocs = list()
 			sound = pick('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
 
 		if(!L.client.played)
-			send_sound(L, sound, 25, CHANNEL_AMBIENCE)
+			L.playsound_music(sound, VOL_AMBIENT, null, null, CHANNEL_AMBIENT_SUB)
 			L.client.played = TRUE
 			addtimer(CALLBACK(src, .proc/set_played_false, L), 600)
 

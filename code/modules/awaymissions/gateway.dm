@@ -101,7 +101,7 @@
 	for(var/obj/machinery/gateway/G in linked)
 		G.active = TRUE
 		G.update_icon()
-	playsound(src, 'sound/machines/gateway/gateway_open.ogg', 100, 2)
+	playsound(src, 'sound/machines/gateway/gateway_open.ogg', VOL_EFFECTS)
 	active = TRUE
 	update_icon()
 
@@ -112,7 +112,7 @@
 	for(var/obj/machinery/gateway/G in linked)
 		G.active = FALSE
 		G.update_icon()
-	playsound(src, 'sound/machines/gateway/gateway_close.ogg', 100, 2)
+	playsound(src, 'sound/machines/gateway/gateway_close.ogg', VOL_EFFECTS)
 	active = FALSE
 	update_icon()
 
@@ -188,7 +188,7 @@
 		..()
 
 /obj/machinery/gateway/proc/enter_to_transit(atom/movable/entered, turf/target)
-	playsound(src, 'sound/machines/gateway/gateway_enter.ogg', 100, 2)
+	playsound(src, 'sound/machines/gateway/gateway_enter.ogg', VOL_EFFECTS)
 	entered.freeze_movement = TRUE
 	entered.forceMove(transit_loc.loc)
 	if(isliving(entered))
@@ -214,7 +214,7 @@
 		M.AdjustStunned(-10, 1, 1, 0)
 	entered.freeze_movement = FALSE
 	entered.forceMove(target)
-	playsound(target, 'sound/machines/gateway/gateway_enter.ogg', 100, 2)
+	playsound(target, 'sound/machines/gateway/gateway_enter.ogg', VOL_EFFECTS)
 
 /obj/effect/landmark/gateway_transit
 

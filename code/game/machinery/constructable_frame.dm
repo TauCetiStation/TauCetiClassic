@@ -117,7 +117,7 @@
 				if(B.board_type == "machine")
 					if(!user.drop_item())
 						return
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS)
 					to_chat(user, "<span class='notice'>You add the circuit board to the frame.</span>")
 					circuit = P
 					P.loc = src
@@ -130,7 +130,7 @@
 				else
 					to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
 			if(iswirecutter(P))
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 1
 				icon_state = "box_0"
@@ -138,7 +138,7 @@
 
 		if(3)
 			if(iscrowbar(P))
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS)
 				state = 2
 				circuit.loc = src.loc
 				components.Remove(circuit)
@@ -161,7 +161,7 @@
 						component_check = 0
 						break
 				if(component_check)
-					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+					playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
 					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc)
 					transfer_fingerprints_to(new_machine)
 					new_machine.construction()

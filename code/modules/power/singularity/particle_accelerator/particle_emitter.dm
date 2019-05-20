@@ -39,13 +39,13 @@
 		switch(strength)
 			if(0)
 				A = new/obj/effect/accelerated_particle/weak(T, dir)
-				playsound(src, 'sound/machines/cyclotron.ogg', 30, 0)
+				playsound(src, 'sound/machines/cyclotron.ogg', VOL_SPAM, 30, FALSE)
 			if(1)
 				A = new/obj/effect/accelerated_particle(T, dir)
-				playsound(src, 'sound/machines/cyclotron.ogg', 70, 0)
+				playsound(src, 'sound/machines/cyclotron.ogg', VOL_SPAM, 70, FALSE)
 			if(2)
 				A = new/obj/effect/accelerated_particle/strong(T, dir)
-				playsound(src, 'sound/machines/cyclotron.ogg', 100, 0)
+				playsound(src, 'sound/machines/cyclotron.ogg', VOL_SPAM, null, FALSE) // null for default, which is maximum volume.
 		if(A)
 			A.dir = src.dir
 			return 1

@@ -29,13 +29,13 @@
 	var/time_joined_as_spacebum = null
 	var/mentorhelped = FALSE
 	var/supporter = 0
+	var/prefs_ready = FALSE
 
 		///////////////
 		//SOUND STUFF//
 		///////////////
 	var/ambience_playing = null
 	var/played = 0
-	var/adminSoundVolume = 50
 
 		////////////
 		//SECURITY//

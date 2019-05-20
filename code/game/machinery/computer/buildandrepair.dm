@@ -402,7 +402,7 @@
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "computer")
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS)
 					to_chat(user, "\blue You place the circuit board inside the frame.")
 					icon_state = "1"
 					circuit = P
@@ -412,12 +412,12 @@
 				else
 					to_chat(user, "\red This frame does not accept circuit boards of this type!")
 			if(isscrewdriver(P) && circuit)
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
 				to_chat(user, "\blue You screw the circuit board into place.")
 				src.state = 2
 				src.icon_state = "2"
 			if(iscrowbar(P) && circuit)
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS)
 				to_chat(user, "\blue You remove the circuit board.")
 				src.state = 1
 				src.icon_state = "0"
@@ -425,7 +425,7 @@
 				src.circuit = null
 		if(2)
 			if(isscrewdriver(P) && circuit)
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
 				to_chat(user, "\blue You unfasten the circuit board.")
 				src.state = 1
 				src.icon_state = "1"
@@ -434,14 +434,14 @@
 				if(C.get_amount() >= 5)
 					if(user.is_busy(src))
 						return
-					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS)
 					if(C.use_tool(src, user, 20, amount = 5, volume = 50))
 						to_chat(user, "\blue You add cables to the frame.")
 						src.state = 3
 						src.icon_state = "3"
 		if(3)
 			if(iswirecutter(P))
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS)
 				to_chat(user, "\blue You remove the cables.")
 				src.state = 2
 				src.icon_state = "2"
@@ -457,13 +457,13 @@
 						src.icon_state = "4"
 		if(4)
 			if(iscrowbar(P))
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS)
 				to_chat(user, "\blue You remove the glass panel.")
 				src.state = 3
 				src.icon_state = "3"
 				new /obj/item/stack/sheet/glass( src.loc, 2 )
 			if(isscrewdriver(P))
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
 				to_chat(user, "\blue You connect the monitor.")
 				var/obj/machinery/computer/new_computer = new src.circuit.build_path (src.loc, circuit)
 				transfer_fingerprints_to(new_computer)

@@ -53,7 +53,7 @@
 	random_color = FALSE
 
 /obj/item/weapon/wrench/power/attack_self(mob/user)
-	playsound(user, 'sound/items/change_drill.ogg', 50, 1)
+	playsound(user, 'sound/items/change_drill.ogg', VOL_EFFECTS)
 	var/obj/item/weapon/screwdriver/power/s_drill = new
 	to_chat(user, "<span class='notice'>You attach the screw driver bit to [src].</span>")
 	qdel(src)
@@ -124,7 +124,7 @@
 	random_color = FALSE
 
 /obj/item/weapon/screwdriver/power/attack_self(mob/user)
-	playsound(user, 'sound/items/change_drill.ogg', 50, 1)
+	playsound(user, 'sound/items/change_drill.ogg', VOL_EFFECTS)
 	var/obj/item/weapon/wrench/power/b_drill = new
 	to_chat(user, "<span class='notice'>You attach the bolt driver bit to [src].</span>")
 	qdel(src)
@@ -185,7 +185,7 @@
 	random_color = FALSE
 
 /obj/item/weapon/wirecutters/power/attack_self(mob/user)
-	playsound(user, 'sound/items/change_jaws.ogg', 50, 1)
+	playsound(user, 'sound/items/change_jaws.ogg', VOL_EFFECTS)
 	var/obj/item/weapon/crowbar/power/pryjaws = new
 	to_chat(user, "<span class='notice'>You attach the pry jaws to [src].</span>")
 	qdel(src)
@@ -326,7 +326,7 @@
 	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && !src.welding)
 		O.reagents.trans_to(src, max_fuel)
 		to_chat(user, "<span class='notice'>Welder refueled</span>")
-		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS, null, null, -6)
 		return
 	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)
 		message_admins("[key_name_admin(user)] triggered a fueltank explosion. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
@@ -562,7 +562,7 @@
 	action_button_name = "Change mode"
 
 /obj/item/weapon/crowbar/power/attack_self(mob/user)
-	playsound(user, 'sound/items/change_jaws.ogg', 50, 1)
+	playsound(user, 'sound/items/change_jaws.ogg', VOL_EFFECTS)
 	var/obj/item/weapon/wirecutters/power/cutjaws = new
 	to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
 	qdel(src)

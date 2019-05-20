@@ -497,7 +497,7 @@
 		flick(src.icon_vend,src)
 	spawn(src.vend_delay)
 		new R.product_path(get_turf(src))
-		playsound(src, 'sound/items/vending.ogg', 50, 1, 1)
+		playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS)
 		src.vend_ready = 1
 		return
 

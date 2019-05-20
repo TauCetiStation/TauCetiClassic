@@ -14,5 +14,5 @@
 	sight |= SEE_TURFS
 
 	new_player_panel()
-	client.playtitlemusic()
+	playsound_lobbymusic()
 //	handle_privacy_poll() // commented cause polls are kinda broken now, needs refactoring

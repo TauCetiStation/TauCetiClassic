@@ -200,7 +200,7 @@
 	icon_state = initial(icon_state)
 	if(stat & BROKEN)
 		icon_state += "b"
-		playsound(src.loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+		playsound(src, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS)
 	return
 
 /obj/machinery/computer/security/telescreen/entertainment

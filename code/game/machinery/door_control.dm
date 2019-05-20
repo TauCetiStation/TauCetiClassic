@@ -91,7 +91,7 @@
 			return
 
 /obj/machinery/door_control/allowed_fail(mob/user)
-	playsound(src, 'sound/items/buttonswitch.ogg', 20, 1, 1)
+	playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS, 20)
 	flick("doorctrl-denied",src)
 
 /obj/machinery/door_control/attackby(obj/item/weapon/W, mob/user)
@@ -248,7 +248,9 @@
 	onclose(user, "door_control")
 
 /obj/machinery/door_control/Topic(href, href_list)
-	..()
+	. = ..()
+	if(!.)
+		return
 	if(!ismultitool(usr.get_active_hand()))
 		to_chat(usr, "<span class='warning'>You need a multitool!</span>")
 		return
@@ -333,7 +335,7 @@
 	if(.)
 		return
 	user.SetNextMove(CLICK_CD_INTERACT)
-	playsound(src, 'sound/items/buttonswitch.ogg', 20, 1, 1)
+	playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS, 20)
 	use_power(5)
 	icon_state = "doorctrl1"
 	for(var/obj/machinery/door/airlock/A in connected_airlocks)

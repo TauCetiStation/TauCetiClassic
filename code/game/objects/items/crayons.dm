@@ -116,7 +116,7 @@
 			to_chat(user, "<span class = 'notice'>You must stay close to your drawing if you want to draw something.</span>")
 			return
 		if(instant)
-			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+			playsound(user, 'sound/effects/spray.ogg', VOL_EFFECTS, 5)
 		if(instant > 0 || (!user.is_busy(src) && do_after(user, 40, target = target)))
 
 			//Gang functions
@@ -138,7 +138,7 @@
 			else
 				to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] [drawtype] on the [target.name].</span>")
 			if(instant<0)
-				playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+				playsound(user, 'sound/effects/spray.ogg', VOL_EFFECTS, 5)
 			uses = max(0,uses-1)
 			if(!uses)
 				to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
@@ -285,7 +285,7 @@
 	if((istype(target, /obj/mecha) || isrobot(target)) && uses >= 10)
 		target.color = normalize_color(colour)
 		uses -= 10
-	playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+	playsound(user, 'sound/effects/spray.ogg', VOL_EFFECTS, 5)
 	..()
 
 /obj/item/toy/crayon/spraycan/update_icon()

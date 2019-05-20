@@ -25,7 +25,7 @@
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(C.use_charge(user, 1) && prob(40))
-			playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS)
 			qdel(src)
 	else if(iswrench(W) && state == 0)
 		if(anchored && !istype(src,/obj/structure/girder/displaced))
@@ -198,7 +198,7 @@
 		M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
 			 "<span class='warning'>You smash against [src].</span>", \
 			 "You hear twisting metal.")
-		playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
+		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS)
 		health -= M.melee_damage_upper
 		if(health <= 0)
 			new /obj/item/stack/sheet/metal(get_turf(src))

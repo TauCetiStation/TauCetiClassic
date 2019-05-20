@@ -54,7 +54,7 @@
 		user.drop_item()
 		G.loc = src
 		charging = G
-		playsound(src, 'sound/items/insert_key.ogg', 25, 1)
+		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS, 25)
 		use_power = 2
 		update_icon()
 	else if(iswrench(G))
@@ -63,7 +63,7 @@
 			return
 		anchored = !anchored
 		to_chat(user, "You [anchored ? "attached" : "detached"] the recharger.")
-		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 	if (anchored && !charging)
 		if(default_deconstruction_screwdriver(user, istype(src, /obj/machinery/recharger/wallcharger) ? "wrechargeropen" : "rechargeropen", istype(src, /obj/machinery/recharger/wallcharger) ? "wrecharger0" : "recharger0", G))
 			return
@@ -85,7 +85,7 @@
 		charging.update_icon()
 		charging.loc = loc
 		charging = null
-		playsound(src, 'sound/items/insert_key.ogg', 25, 1)
+		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS, 25)
 		use_power = 1
 		update_icon()
 

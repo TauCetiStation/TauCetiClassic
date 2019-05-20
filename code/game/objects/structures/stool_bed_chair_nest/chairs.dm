@@ -28,7 +28,7 @@
 			return
 		user.drop_item()
 		var/obj/structure/stool/bed/chair/e_chair/E = new /obj/structure/stool/bed/chair/e_chair(src.loc)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS)
 		E.dir = dir
 		E.part = SK
 		SK.loc = E
@@ -136,7 +136,7 @@
 		flipped = 1
 		anchored = 0		// can be pulled
 		buckle_movable = 0
-		playsound(src.loc, 'sound/items/chair_fall.ogg', 25, 1)
+		playsound(src, 'sound/items/chair_fall.ogg', VOL_EFFECTS, 25)
 	else
 		M.TurnTo(flip_angle,0)
 		flipped = 0
@@ -212,7 +212,7 @@
 
 /obj/structure/stool/bed/chair/wood/attackby(obj/item/weapon/W, mob/user)
 	if(iswrench(W))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/wood(loc)
 		qdel(src)
@@ -225,8 +225,8 @@
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
-			playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
-			playsound(loc, "sparks", 50, 1)
+			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS)
+			playsound(src, "sparks", VOL_EFFECTS)
 			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'>You hear [src] coming apart.</span>")
 			new /obj/item/stack/sheet/wood(loc)
 			qdel(src)
@@ -282,7 +282,7 @@
 			else
 				unbuckle_mob()
 	else if(has_gravity(src))
-		playsound(src, 'sound/effects/roll.ogg', 100, 1)		
+		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS)
 	handle_rotation()
 
 /obj/structure/stool/bed/chair/office/Bump(atom/A)
@@ -295,7 +295,7 @@
 		occupant.apply_effect(6, STUN, 0)
 		occupant.apply_effect(6, WEAKEN, 0)
 		occupant.apply_effect(6, STUTTER, 0)
-		playsound(src.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/punch1.ogg', VOL_EFFECTS)
 		if(istype(A, /mob/living))
 			var/mob/living/victim = A
 			victim.apply_effect(6, STUN, 0)

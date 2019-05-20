@@ -602,7 +602,7 @@
 		return FALSE
 
 	charges["foaming agent"].charges = max(charges["foaming agent"].charges - per_use, 0)
-	playsound(loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+	playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS, null, null, -6)
 	INVOKE_ASYNC(src, .proc/spray_at, T)
 
 	return TRUE

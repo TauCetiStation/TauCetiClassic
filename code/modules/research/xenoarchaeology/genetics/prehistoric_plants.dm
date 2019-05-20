@@ -253,7 +253,7 @@
 	new_smudge.icon_state = "smashed_blackberry"
 	reagents.reaction(hit_atom, TOUCH)
 	visible_message("<span class='rose'>\The [src.name] has been squashed.</span>", "<span class='rose'>You hear a smack.</span>")
-	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1, -3)
+	playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS, null, null, -3)
 	new /obj/effect/spider/spiderling(src.loc)
 	qdel(src)
 

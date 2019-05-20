@@ -253,8 +253,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 
 	//send this msg to all admins
 	for(var/client/X in global.admins)
-		if(X.prefs.toggles & SOUND_ADMINHELP)
-			send_sound(X, 'sound/effects/adminhelp.ogg')
+		X.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 		window_flash(X)
 		to_chat(X, admin_msg)
 
@@ -339,7 +338,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	if(initiator)
 		initiator.giveadminhelpverb()
 
-		send_sound(initiator, 'sound/effects/adminhelp.ogg')
+		initiator.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
 		to_chat(initiator, "<font color='red' size='4'><b>- AdminHelp Rejected! -</b></font>")
 		to_chat(initiator, "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</font>")

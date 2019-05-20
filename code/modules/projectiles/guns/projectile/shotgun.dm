@@ -19,7 +19,7 @@
 /obj/item/weapon/gun/projectile/shotgun/attackby(obj/item/A, mob/user)
 	var/num_loaded = magazine.attackby(A, user, 1)
 	if(num_loaded)
-		playsound(src, 'sound/weapons/guns/reload_shotgun.ogg', 100, 1)
+		playsound(src, 'sound/weapons/guns/reload_shotgun.ogg', VOL_EFFECTS)
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
 		A.update_icon()
 		update_icon()
@@ -45,7 +45,7 @@
 	icon_state = "shotgun_tg"
 
 /obj/item/weapon/gun/projectile/shotgun/proc/pump(mob/M)
-	playsound(M, pick('sound/weapons/guns/shotgun_pump1.ogg', 'sound/weapons/guns/shotgun_pump2.ogg', 'sound/weapons/guns/shotgun_pump3.ogg'), 60, 0)
+	playsound(M, pick('sound/weapons/guns/shotgun_pump1.ogg', 'sound/weapons/guns/shotgun_pump2.ogg', 'sound/weapons/guns/shotgun_pump3.ogg'), VOL_EFFECTS, null, FALSE)
 	pumped = 0
 	if(chambered)//We have a shell in the chamber
 		chambered.loc = get_turf(src)//Eject casing
@@ -98,7 +98,7 @@
 	if (istype(A,/obj/item/ammo_box) || istype(A,/obj/item/ammo_casing))
 		if(open)
 			to_chat(user, "<span class='notice'>You load shell into \the [src]!</span>")
-			playsound(src, 'sound/weapons/guns/reload_shotgun.ogg', 100, 1)
+			playsound(src, 'sound/weapons/guns/reload_shotgun.ogg', VOL_EFFECTS)
 			chamber_round()
 		else
 			to_chat(user, "<span class='notice'>You can't load shell while [src] is closed!</span>")
@@ -107,7 +107,7 @@
 		if(get_ammo())
 			to_chat(user, "<span class='notice'>You try to shorten the barrel of \the [src].</span>")
 			if(chambered.BB)
-				playsound(user, fire_sound, 50, 1)
+				playsound(user, fire_sound, VOL_EFFECTS)
 				user.visible_message("<span class='danger'>The shotgun goes off!</span>", "<span class='danger'>The shotgun goes off in your face!</span>")
 			else
 				to_chat(user, "<span class='danger'>You hear a clicking sound and thank God that bullet casing was empty.</span>")
@@ -135,7 +135,7 @@
 		var/num_unloaded = 0
 		while (get_ammo() > 0)
 			spawn(3)
-				playsound(src.loc, 'sound/weapons/guns/shell_drop.ogg', 50, 1)
+				playsound(src, 'sound/weapons/guns/shell_drop.ogg', VOL_EFFECTS)
 			var/obj/item/ammo_casing/CB
 			CB = magazine.get_round(0)
 			chambered = null
@@ -189,7 +189,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/shotgun/repeater/pump(mob/M)
-	playsound(M, 'sound/weapons/guns/reload_repeater.wav', 60, 0)
+	playsound(M, 'sound/weapons/guns/reload_repeater.wav', VOL_EFFECTS, null, FALSE)
 	pumped = 0
 	if(chambered)
 		chambered.loc = get_turf(src)
@@ -211,7 +211,7 @@
 	slot_flags = 0
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action/pump(mob/M)
-	playsound(M, 'sound/weapons/guns/reload_bolt.ogg', 60, 0)
+	playsound(M, 'sound/weapons/guns/reload_bolt.ogg', VOL_EFFECTS, null, FALSE)
 	pumped = 0
 	if(chambered)//We have a shell in the chamber
 		chambered.loc = get_turf(src)//Eject casing
