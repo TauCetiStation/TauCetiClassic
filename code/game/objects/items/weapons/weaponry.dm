@@ -180,7 +180,7 @@
 	m_amt = 12000
 	origin_tech = "materials=1"
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("stubbed", "poked")
+	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/extended = TRUE
 
 /obj/item/weapon/switchblade/attack_self(mob/user)
