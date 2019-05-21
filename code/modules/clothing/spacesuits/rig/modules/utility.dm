@@ -676,7 +676,4 @@
 	active = FALSE
 	holder.wearer.alpha = 255
 
-	if(show_toggle_button)
-		holder.update_activated_actions()
-
 	return TRUE
