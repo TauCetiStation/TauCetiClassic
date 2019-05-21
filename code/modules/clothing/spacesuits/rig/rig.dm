@@ -130,6 +130,14 @@
 	if(!rig.offline)
 		rig.cell.use(rig.move_energy_use)
 
+/obj/item/clothing/suit/space/rig/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
+	if(reaction_type == REACTION_ITEM_TAKE || reaction_type == REACTION_ITEM_TAKEOFF)
+		return
+	if(find_module(/obj/item/rig_module/stealth))
+		var/obj/item/rig_module/stealth/module = find_module(/obj/item/rig_module/stealth)
+		module.deactivate()
+
+
 /obj/item/clothing/suit/space/rig/proc/try_use(mob/living/user, cost, use_unconcious, use_stunned)
 
 	if(!istype(user))
