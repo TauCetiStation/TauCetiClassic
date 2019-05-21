@@ -181,7 +181,7 @@
 	origin_tech = "materials=1"
 	hitsound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("stubbed", "poked")
-	var/extended
+	var/extended = TRUE
 
 /obj/item/weapon/switchblade/attack_self(mob/user)
 	extended = !extended
