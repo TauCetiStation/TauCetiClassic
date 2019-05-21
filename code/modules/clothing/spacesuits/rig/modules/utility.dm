@@ -640,13 +640,12 @@
 
 /obj/item/rig_module/stealth
 	name = "hardsuit stealth system"
-	desc = "System that make hardsuit invisible."
+	desc = "System that makes hardsuit invisible."
 	interface_name = "Turn invisibility"
-	interface_desc = "System that make hardsuit invisible."
+	interface_desc = "System that makes hardsuit invisible."
 	origin_tech = "engineering=6;programming=6;bluespace=6;combat=6;phorontech=6"
 	active_power_cost = 55
-	active = 0
-	permanent = 1
+	permanent = TRUE
 	show_toggle_button = TRUE
 	toggleable = TRUE
 	activate_string = "Invisibility On"
@@ -658,7 +657,7 @@
 	if(holder.wearer.is_busy()) return FALSE
 
 	var/mob/living/carbon/human/H = holder.wearer
-	holder.canremove = 0
+	holder.canremove = FALSE
 	to_chat(H, "<span class='notice'>Starting invisibility protocol, please wait until it done.</span>")
 	if(do_after(H, 40, target = H))
 		if(!active)
@@ -672,7 +671,7 @@
 	if(!active)
 		return FALSE
 
-	holder.canremove = 1
+	holder.canremove = TRUE
 	active = FALSE
 	holder.wearer.alpha = 255
 
