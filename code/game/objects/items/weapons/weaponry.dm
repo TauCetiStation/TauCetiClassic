@@ -172,6 +172,7 @@
 	desc = "A sharp, concealable, spring-loaded knife."
 	flags = CONDUCT
 	force = 20
+	edge = 1
 	w_class = ITEM_SIZE_SMALL
 	throwforce = 15
 	throw_speed = 3
