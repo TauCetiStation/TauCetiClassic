@@ -172,7 +172,6 @@
 	desc = "A sharp, concealable, spring-loaded knife."
 	flags = CONDUCT
 	force = 20
-	edge = 1
 	w_class = ITEM_SIZE_SMALL
 	throwforce = 15
 	throw_speed = 3
@@ -190,6 +189,7 @@
 		force = 20
 		w_class = ITEM_SIZE_NORMAL
 		throwforce = 15
+		edge = 1
 		icon_state = "switchblade_ext"
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
@@ -197,6 +197,7 @@
 		force = 1
 		w_class = ITEM_SIZE_SMALL
 		throwforce = 5
+		edge = 0
 		icon_state = "switchblade"
 		attack_verb = list("stubbed", "poked")
 		hitsound = 'sound/weapons/Genhit.ogg'
