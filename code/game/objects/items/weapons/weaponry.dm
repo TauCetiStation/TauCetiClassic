@@ -168,12 +168,13 @@
 
 /obj/item/weapon/switchblade
 	name = "switchblade"
-	icon_state = "switchblade"
+	icon_state = "switchblade_ext"
 	desc = "A sharp, concealable, spring-loaded knife."
 	flags = CONDUCT
 	force = 20
 	w_class = ITEM_SIZE_SMALL
 	throwforce = 15
+	edge = 1
 	throw_speed = 3
 	throw_range = 6
 	m_amt = 12000
