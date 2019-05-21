@@ -179,7 +179,7 @@
 	throw_range = 6
 	m_amt = 12000
 	origin_tech = "materials=1"
-	hitsound = 'sound/weapons/Genhit.ogg'
+	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("stubbed", "poked")
 	var/extended = TRUE
 
