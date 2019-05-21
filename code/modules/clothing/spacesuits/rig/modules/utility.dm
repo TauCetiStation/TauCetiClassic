@@ -653,8 +653,10 @@
 	module_cooldown = 30 SECONDS
 
 /obj/item/rig_module/stealth/activate(forced = FALSE)
-	if(!..())	return FALSE
-	if(holder.wearer.is_busy()) return FALSE
+	if(!..())	
+		return FALSE
+	if(holder.wearer.is_busy()) 
+		return FALSE
 
 	var/mob/living/carbon/human/H = holder.wearer
 	holder.canremove = FALSE
@@ -668,9 +670,8 @@
 		return TRUE
 
 /obj/item/rig_module/stealth/deactivate()
-	if(!active)
-		return FALSE
-
+	. = ..()
+	
 	holder.canremove = TRUE
 	active = FALSE
 	holder.wearer.alpha = 255
