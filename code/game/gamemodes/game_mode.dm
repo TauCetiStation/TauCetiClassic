@@ -468,9 +468,9 @@ Implants;
 	var/count = 1
 	for(var/datum/objective/objective in ply.objectives)
 		if(objective.check_completion())
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
 		else
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='red'><b>Fail.</b></font>"
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
 		count++
 	return text
 
@@ -482,7 +482,7 @@ Implants;
 		var/icon/flat = getFlatIcon(ply.current,exact=1)
 		end_icons += flat
 		tempstate = end_icons.len
-		text += {"<BR><img src="logo_[tempstate].png"> <B>[ply.key]</B> was <B>[ply.name]</B> ("}
+		text += {"<br><img src="logo_[tempstate].png"> <b>[ply.key]</b> was <b>[ply.name]</b> ("}
 		if(ply.current.stat == DEAD)
 			text += "died"
 			flat.Turn(90)
@@ -495,7 +495,7 @@ Implants;
 		var/icon/sprotch = icon('icons/effects/blood.dmi', "gibbearcore")
 		end_icons += sprotch
 		tempstate = end_icons.len
-		text += {"<BR><img src="logo_[tempstate].png"> <B>[ply.key]</B> was <B>[ply.name]</B> ("}
+		text += {"<br><img src="logo_[tempstate].png"> <b>[ply.key]</b> was <b>[ply.name]</b> ("}
 		text += "body destroyed"
 	text += ")"
 	return text
@@ -506,5 +506,5 @@ Implants;
 	end_icons += logo
 	var/tempstate = end_icons.len
 	var/text = ""
-	text += {"<img src="logo_[tempstate].png"> <B>The [antagname] were:</B> <img src="logo_[tempstate].png">"}
+	text += {"<img src="logo_[tempstate].png"> <b>The [antagname] were:</b> <img src="logo_[tempstate].png">"}
 	return text

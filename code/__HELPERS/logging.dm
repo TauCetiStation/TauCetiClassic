@@ -216,7 +216,8 @@
 	stats["mode"] = ticker.mode
 	stats["mode_result"] = ticker.mode.mode_result
 
-	stats["antagonists"] = antagonists_completion//todo: icon2base64 icons?
+	stats["completion_html"] = ticker.mode.completion_text
+	stats["completion_antagonists"] = antagonists_completion//todo: icon2base64 icons?
 
 	stats["score"] = score
 	stats["achievements"] = achievements

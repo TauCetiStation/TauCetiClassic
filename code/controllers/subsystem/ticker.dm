@@ -414,7 +414,7 @@ var/datum/subsystem/ticker/ticker
 			if(!isnewplayer(M))
 				to_chat(M, "Captainship not forced on anyone.")
 
-
+//cursed code
 /datum/subsystem/ticker/proc/declare_completion()
 	var/station_evacuated
 	if(SSshuttle.location > 0)
@@ -459,7 +459,8 @@ var/datum/subsystem/ticker/ticker
 	var/ai_completions = "<h1>Round End Information</h1><HR>"
 
 	if(silicon_list.len)
-		ai_completions += "<H3>Silicons Laws</H3>"
+		ai_completions += "<h2>Silicons Laws</h2>"
+		ai_completions += "<div class='block'>"
 		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
 			if(!aiPlayer)
 				continue
@@ -501,12 +502,14 @@ var/datum/subsystem/ticker/ticker
 		if(dronecount)
 			ai_completions += "<B>There [dronecount>1 ? "were" : "was"] [dronecount] industrious maintenance [dronecount>1 ? "drones" : "drone"] this round.</B>"
 
-		ai_completions += "<HR>"
+		ai_completions += "</div>"
 
 	mode.declare_completion()//To declare normal completion.
 
-	ai_completions += "<BR><h2>Mode Result</h2>"
-	ai_completions += "[mode.completion_text]<HR>"
+	ai_completions += "<br><h2>Mode Result</h2>"
+	
+	if(mode.completion_text)//extendet has empty completion text
+		ai_completions += "<div class='block'>[mode.completion_text]</div>"
 
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))

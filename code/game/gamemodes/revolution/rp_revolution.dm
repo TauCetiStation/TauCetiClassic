@@ -145,17 +145,17 @@
 //Announces the end of the game with all relavent information stated//
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/rp_revolution/declare_completion()
-	completion_text += "<B>RP-revolution mode resume:</B><BR>"
+	completion_text += "<h3>RP-revolution mode resume:</h3>"
 	if(!config.objectives_disabled)
 		if(finished == 1)
 			mode_result = "win - heads overthrown"
 			feedback_set_details("round_end_result",mode_result)
-			completion_text += "<FONT size=3, color='red'><B>The heads of staff were overthrown! The revolutionaries win!</B></FONT>"
+			completion_text += "<span style='color: red; font-weight: bold;'>The heads of staff were overthrown! The revolutionaries win!</span>"
 			score["traitorswon"]++
 		else if(finished == 2)
 			mode_result = "loss - revolution stopped"
 			feedback_set_details("round_end_result",mode_result)
-			completion_text += "<FONT size=3, color='red'><B>The heads of staff managed to stop the revolution!</B></FONT>"
+			completion_text += "<span style='color: red; font-weight: bold;'>The heads of staff managed to stop the revolution!</span>"
 	..()
 	return 1
 

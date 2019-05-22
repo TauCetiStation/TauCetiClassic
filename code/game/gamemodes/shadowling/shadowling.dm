@@ -205,22 +205,22 @@ Made by Xhuis
 
 /datum/game_mode/shadowling/declare_completion()
 	//if(check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE) //Doesn't end instantly - this is hacky and I don't know of a better way ~X
-	completion_text += "<B>Shadowling mode resume:</B><BR>"
+	completion_text += "<h3>Shadowling mode resume:</h3>"
 	if(check_shadow_victory() && SSshuttle.location==2)
 		mode_result = "win - shadowlings ascended"
 		feedback_set_details("round_end_result",mode_result)
-		completion_text += "<font size=3, color=green><B>The shadowlings have ascended and taken over the station!</FONT></B>"
+		completion_text += "<span style='color: green; font-weight: bold;'>The shadowlings have ascended and taken over the station!</span>"
 		score["roleswon"]++
 	//else if(shadowling_dead && !check_shadow_victory()) //If the shadowlings have ascended, they can not lose the round
 	else if(check_shadow_killed() && !check_shadow_victory())
 		mode_result = "loss - shadowlings dead"
 		feedback_set_details("round_end_result",mode_result)
-		completion_text += "<font size=3, color=red><B>The shadowlings have been killed by the crew!</B></FONT>"
+		completion_text += "<span style='color: red; font-weight: bold;'>The shadowlings have been killed by the crew!</span>"
 	//else if(!check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE)
 	else if(!check_shadow_victory() && SSshuttle.location==2)
 		mode_result = "halfwin - evacuation"
 		feedback_set_details("round_end_result",mode_result)
-		completion_text += "<font size=3, color=red><B>The crew has escaped the station before the shadowlings could ascend!</B></FONT>"
+		completion_text += "<span style='color: red; font-weight: bold;'>The crew has escaped the station before the shadowlings could ascend!</span>"
 	..()
 	return 1
 
@@ -231,13 +231,17 @@ Made by Xhuis
 		text += printlogo("shadowling", "shadowlings")
 		for(var/datum/mind/shadow in shadows)
 			text += printplayerwithicon(shadow)
-		text += "<BR>"
+		text += "<br>"
 		if(thralls.len)
 			text += printlogo("thrall", "thralls")
 			for(var/datum/mind/thrall in thralls)
 				text += printplayerwithicon(thrall)
-			text += "<BR>"
-		text += "<HR>"
+			text += "<br>"
+
+	if(text)
+		antagonists_completion += list(list("mode" = "shadowling", "html" = text))
+		text = "<div class='block'>[text]</div>"
+		
 	return text
 
 /*

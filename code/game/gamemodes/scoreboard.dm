@@ -1,6 +1,6 @@
 /datum/subsystem/ticker/proc/scoreboard(completions)
 	if(achievements.len)
-		completions += "<br>[achievement_declare_completion()]"
+		completions += "<div class='block'>[achievement_declare_completion()]</div>"
 
 	// Score Calculation and Display
 
@@ -246,9 +246,9 @@
 
 
 
-/mob/proc/scorestats(completions)
+/mob/proc/scorestats(completions)//omg why we count this for every player
 	var/dat = completions
-	dat += {"<BR><h2>Round Statistics and Score</h2>"}
+	dat += {"<h2>Round Statistics and Score</h2><div class='block'>"}
 	if (ticker.mode.name == "nuclear emergency")
 		var/foecount = 0
 		var/crewcount = 0
@@ -400,6 +400,7 @@
 		if(10000 to 49999) score["rating"] = "The Pride of Science Itself"
 		if(50000 to INFINITY) score["rating"] = "NanoTrasen's Finest"
 	dat += "<B><U>RATING:</U></B> [score["rating"]]"
+	dat += "</div>"
 	for(var/i in 1 to end_icons.len)
 		src << browse_rsc(end_icons[i],"logo_[i].png")
 
@@ -407,5 +408,8 @@
 		endgame_info_logged = 1
 		log_game(dat)
 
-	src << browse(entity_ja(dat), "window=roundstats;size=1000x600")
+	var/datum/browser/popup = new(src, "roundstats", "Round #[round_id] Stats", 1000, 600)
+	popup.set_content(dat)
+	popup.open()
+
 	return

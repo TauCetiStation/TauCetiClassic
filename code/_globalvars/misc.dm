@@ -70,26 +70,7 @@ var/global/list/achievements = list()
 //line format: type, title, time, content
 var/global/list/centcomm_communications = list()
 
-//antagonists_completion format: 
-// [mode, mode]
-//
-// mode: {
-// 	"mode": "traitor",
-// 	"antagonists": []
-//    "team": []
-// 	"objectives": []
-// }
-//
-// antagonists: [antagonist, antagonist]
-//
-// antagonist: {"name": "", "objectives": objectives}
-//
-// team: {"name", "antagonists": antagonists}
-//
-// objectives: [objective, objective]
-//
-// objective: {"desc", "success"}
-//todo: base64 icons?
+//line format: mode, html
 var/global/list/antagonists_completion = list()
 
 // Icons that appear on the Round End pop-up browser
