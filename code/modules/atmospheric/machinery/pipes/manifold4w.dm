@@ -127,6 +127,7 @@
 	connect_types = CONNECT_TYPE_SCRUBBER
 	icon_connect_type = "-scrubbers"
 	color = PIPE_COLOR_RED
+	layer = GAS_PIPE_HIDDEN_SCRUBBER_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply
 	name = "4-way air supply pipe manifold"
@@ -135,6 +136,7 @@
 	connect_types = CONNECT_TYPE_SUPPLY
 	icon_connect_type = "-supply"
 	color = PIPE_COLOR_BLUE
+	layer = GAS_PIPE_HIDDEN_SUPPLY_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/yellow
 	color = PIPE_COLOR_YELLOW

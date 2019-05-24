@@ -1,9 +1,12 @@
-#define DOOR_CONTROL_COMPLETE 1
+#define DOOR_CONTROL_COMPLETE      1
 #define DOOR_CONTROL_WITHOUT_WIRES 0
 
 #define OPEN_BOLTS        (OPEN | BOLTS)
 #define BOLTS_SHOCK       (BOLTS | SHOCK)
 #define OPEN_BOLTS_SHOCK  (OPEN | BOLTS | SHOCK)
+
+#define ON_WALL  0
+#define ON_TABLE 1
 
 /obj/machinery/door_control
 	name = "remote door control"
@@ -31,15 +34,19 @@
 	var/modes_showed = FALSE
 	var/const/max_connections = 16
 
-/obj/machinery/door_control/atom_init(mapload, dir)
+/obj/machinery/door_control/atom_init(mapload, dir, build_on)
 	. = ..()
 	if(!mapload)
 		buildstage = DOOR_CONTROL_WITHOUT_WIRES
 		wiresexposed = TRUE
 		panel_locked = FALSE
 		req_one_access = list()
-		pixel_x = (dir & 3) ? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3) ? (dir == 1 ? -24 : 24) : 0
+		if(build_on == ON_WALL)
+			pixel_x = (dir & 3) ? 0 : (dir == 4 ? -24 : 24)
+			pixel_y = (dir & 3) ? (dir == 1 ? -24 : 24) : 0
+		else if(build_on == ON_TABLE)
+			pixel_x = (dir & 3) ? 0 : (dir == 4 ? 7 : -7)
+			pixel_y = (dir & 3) ? (dir == 1 ? 9 : -3) : (dir == 4 ? 3 : 3)
 		icon_state = "doorctrl_assembly0"
 		return
 	else
@@ -413,28 +420,49 @@
 		new /obj/item/stack/sheet/metal(get_turf(src.loc), 1)
 		qdel(src)
 
-/obj/item/door_control_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall, usr) > 1)
+/obj/item/door_control_frame/proc/try_build(target)
+	if (get_dist(target, usr) > 1)
 		return
 
-	var/ndir = get_dir(on_wall, usr)
+	var/ndir = get_dir(target, usr)
 	if (!(ndir in cardinal))
 		return
 
-	var/turf/loc = get_turf_loc(usr)
 	var/area/A = get_area(src)
-	if (!istype(loc, /turf/simulated/floor))
-		to_chat(usr, "<span class='warning'>Door Control cannot be placed on this spot.</span>")
-		return
-	if (A.requires_power == 0 || istype(A, /area/space))
+	if(A.requires_power == 0 || istype(A, /area/space))
 		to_chat(usr, "<span class='warning'>Door Control cannot be placed in this area.</span>")
 		return
 
-	if(gotwallitem(loc, ndir))
-		to_chat(usr, "<span class='warning'>There's already an item on this wall!</span>")
-		return
+	if(istype(target, /turf/simulated/wall))
+		var/turf/loc = get_turf_loc(usr)
 
-	new /obj/machinery/door_control(loc, ndir)
+		if(!istype(loc, /turf/simulated/floor))
+			to_chat(usr, "<span class='warning'>Door Control cannot be placed on this spot.</span>")
+			return
+
+		if(gotwallitem(loc, ndir))
+			to_chat(usr, "<span class='warning'>There's already an item on this wall!</span>")
+			return
+
+		new /obj/machinery/door_control(loc, ndir, ON_WALL)
+
+	else if(istype(target, /obj/structure/table/reinforced))
+		var/turf/loc = get_turf_loc(target)
+
+		if (!istype(loc, /turf/simulated/floor))
+			to_chat(usr, "<span class='warning'>Door Control cannot be placed on this spot.</span>")
+			return
+
+		for(var/obj/machinery/machine in loc)
+			if(!istype(machine, /obj/machinery/door_control) && !istype(machine, /obj/machinery/door/window) && !istype(machine, /obj/machinery/atmospherics))
+				to_chat(usr, "<span class='warning'>There's already an object on this table!</span>")
+				return
+			else if(istype(machine, /obj/machinery/door_control))
+				if((ndir == NORTH && machine.pixel_y > 3) || (ndir == SOUTH && machine.pixel_y < 3) || (ndir == EAST && machine.pixel_x > 0) || (ndir == WEST && machine.pixel_x < 0))
+					to_chat(usr, "<span class='warning'>There's already a button on this side of table!</span>")
+					return
+
+		new /obj/machinery/door_control(loc, ndir, ON_TABLE)
 
 	qdel(src)
 
@@ -485,3 +513,6 @@
 #undef OPEN_BOLTS
 #undef BOLTS_SHOCKS
 #undef OPEN_BOLTS_SHOCK
+
+#undef ON_WALL
+#undef ON_TABLE

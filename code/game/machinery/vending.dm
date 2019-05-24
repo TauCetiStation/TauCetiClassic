@@ -672,6 +672,7 @@
 						/obj/item/weapon/wirecutters = 1, /obj/item/weapon/cartridge/signal = 4)
 	contraband = list(/obj/item/device/flashlight = 5,/obj/item/device/assembly/timer = 2)
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
+	refill_canister = /obj/item/weapon/vending_refill/assist
 
 /obj/machinery/vending/coffee
 	name = "Hot Drinks machine"
@@ -714,7 +715,7 @@
 					/obj/item/weapon/reagent_containers/food/snacks/chinese/rice = 6, /obj/item/weapon/kitchen/utensil/fork/sticks = 18)
 	prices = list(/obj/item/weapon/reagent_containers/food/snacks/chinese/chowmein = 50, /obj/item/weapon/reagent_containers/food/snacks/chinese/tao = 50, /obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball = 50, /obj/item/weapon/reagent_containers/food/snacks/chinese/newdles = 50,
 					/obj/item/weapon/reagent_containers/food/snacks/chinese/rice = 50, /obj/item/weapon/kitchen/utensil/fork/sticks = 1)
-	refill_canister = /obj/item/weapon/vending_refill/snack
+	refill_canister = /obj/item/weapon/vending_refill/chinese
 
 /obj/machinery/vending/cola
 	name = "Robust Softdrinks"
@@ -732,6 +733,7 @@
 					/obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb = 1,/obj/item/weapon/reagent_containers/food/drinks/cans/starkist = 1,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle = 2,/obj/item/weapon/reagent_containers/food/drinks/cans/space_up = 1,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/iced_tea = 1,/obj/item/weapon/reagent_containers/food/drinks/cans/grape_juice = 1)
+	refill_canister = /obj/item/weapon/vending_refill/cola
 
 //This one's from bay12
 /obj/machinery/vending/cart
@@ -774,7 +776,7 @@
 					/obj/item/device/healthanalyzer = 5,/obj/item/weapon/reagent_containers/glass/beaker = 4, /obj/item/weapon/reagent_containers/dropper = 2,
 					/obj/item/stack/medical/advanced/bruise_pack = 3, /obj/item/stack/medical/advanced/ointment = 3, /obj/item/stack/medical/splint = 2)
 	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 3,/obj/item/weapon/reagent_containers/pill/stox = 4,/obj/item/weapon/reagent_containers/pill/dylovene = 6)
-
+	refill_canister = /obj/item/weapon/vending_refill/medical
 
 //This one's from bay12
 /obj/machinery/vending/phoronresearch
@@ -832,6 +834,7 @@
 	products = list(/obj/item/nutrient/ez = 45,/obj/item/nutrient/l4z = 25,/obj/item/nutrient/rh = 15,/obj/item/weapon/pestspray = 20,
 					/obj/item/weapon/reagent_containers/syringe = 5,/obj/item/weapon/storage/bag/plants = 5)
 	premium = list(/obj/item/weapon/reagent_containers/glass/bottle/ammonia = 10,/obj/item/weapon/reagent_containers/glass/bottle/diethylamine = 5)
+	refill_canister = /obj/item/weapon/vending_refill/hydronutrients
 
 /obj/machinery/vending/hydroseeds
 	name = "MegaSeed Servitor"
@@ -851,7 +854,7 @@
 	contraband = list(/obj/item/seeds/amanitamycelium = 2,/obj/item/seeds/glowshroom = 2,/obj/item/seeds/libertymycelium = 2,/obj/item/seeds/mtearseed = 2,
 					  /obj/item/seeds/nettleseed = 2,/obj/item/seeds/reishimycelium = 2,/obj/item/seeds/reishimycelium = 2,/obj/item/seeds/shandseed = 2,)
 	premium = list(/obj/item/toy/waterflower = 1)
-
+	refill_canister = /obj/item/weapon/vending_refill/hydroseeds
 
 /obj/machinery/vending/magivend
 	name = "MagiVend"
@@ -974,6 +977,7 @@
 		/obj/item/weapon/kitchen/mould/loli = 1
 	)
 	contraband = list(/obj/item/weapon/kitchen/utensil/spoon = 2,/obj/item/weapon/kitchen/rollingpin = 2, /obj/item/weapon/butch = 2)
+	refill_canister = /obj/item/weapon/vending_refill/dinnerware
 
 /obj/machinery/vending/sovietsoda
 	name = "BODA"
@@ -995,6 +999,7 @@
 					/obj/item/weapon/wrench = 5,/obj/item/device/analyzer = 5,/obj/item/device/t_scanner = 5,/obj/item/weapon/screwdriver = 5)
 	contraband = list(/obj/item/weapon/weldingtool/hugetank = 2,/obj/item/clothing/gloves/fyellow = 2)
 	premium = list(/obj/item/clothing/gloves/yellow = 1)
+	refill_canister = /obj/item/weapon/vending_refill/tool
 
 /obj/machinery/vending/engivend
 	name = "Engi-Vend"
@@ -1006,6 +1011,7 @@
 	products = list(/obj/item/clothing/glasses/meson = 2,/obj/item/device/multitool = 4,/obj/item/weapon/airlock_electronics = 10,/obj/item/weapon/module/power_control = 10,/obj/item/weapon/airalarm_electronics = 10,/obj/item/weapon/stock_parts/cell/high = 10)
 	contraband = list(/obj/item/weapon/stock_parts/cell/potato = 3)
 	premium = list(/obj/item/weapon/storage/belt/utility = 3)
+	refill_canister = /obj/item/weapon/vending_refill/engivend
 
 //This one's from bay12
 /obj/machinery/vending/engineering
@@ -1095,7 +1101,6 @@
 	/obj/item/clothing/under/dress/dress_summer=332,/obj/item/clothing/under/dress/dress_vintage=465,/obj/item/clothing/under/dress/dress_evening=386,/obj/item/clothing/under/dress/dress_party=349,
     /obj/item/clothing/glasses/aviator_orange=150, /obj/item/clothing/glasses/aviator_black=175, /obj/item/clothing/glasses/aviator_red=223, /obj/item/clothing/glasses/aviator_mirror=243,
 	/obj/item/clothing/glasses/jerusalem=130, /obj/item/clothing/glasses/threedglasses=150, /obj/item/clothing/glasses/gar=250)
-
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
 //from old nanotrasen
@@ -1111,6 +1116,7 @@
 					/obj/item/weapon/reagent_containers/blood/BPlus = 4, /obj/item/weapon/reagent_containers/blood/BMinus = 2,
 					/obj/item/weapon/reagent_containers/blood/OPlus = 7, /obj/item/weapon/reagent_containers/blood/OMinus = 4)
 	contraband = list(/obj/item/weapon/reagent_containers/pill/stox = 10, /obj/item/weapon/reagent_containers/blood/empty = 10)
+	refill_canister = /obj/item/weapon/vending_refill/blood
 
 //from old nanotrasen
 /obj/machinery/vending/holy
@@ -1234,6 +1240,7 @@
 				  /obj/item/weapon/reagent_containers/food/drinks/cans/space_up = 1,
 				  /obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb = 1)
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/fishfingers = 2)
+	refill_canister = /obj/item/weapon/vending_refill/junkfood
 
 /obj/machinery/vending/noiromat
 	name = "Noir-O-Mat"
