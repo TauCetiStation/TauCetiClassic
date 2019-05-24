@@ -1510,11 +1510,6 @@
 			var/obj/item/clothing/glasses/G = glasses
 			if(G.prescription)
 				nearsighted = 0
-		if(istype(head, /obj/item/clothing/head/helmet/space/rig/ert/stealth))
-			var/obj/item/clothing/head/helmet/space/rig/ert/stealth/helmet = head
-			if(helmet.on)
-				sight |= helmet.vision
-				see_in_dark += helmet.darkness_view
 
 		if(istype(head, /obj/item/clothing/head/welding) || istype(head, /obj/item/clothing/head/helmet/space/unathi))
 			var/obj/item/clothing/head/welding/O = head
@@ -1606,10 +1601,6 @@
 				sightglassesmod = null
 			else
 				sightglassesmod = "nightsight"
-	var/obj/item/clothing/head/helmet/space/rig/helmet = head
-	if(istype(helmet) && helmet.on)
-		if(istype(helmet, /obj/item/clothing/head/helmet/space/rig/ert/stealth))
-			sightglassesmod = "nvg"
 	set_EyesVision(sightglassesmod)
 
 /mob/living/carbon/human/proc/handle_random_events()

@@ -111,27 +111,8 @@
 	icon_state = "rig0-ert_stealth"
 	item_color = "ert_stealth"
 	armor = list(melee = 30, bullet = 15, laser = 20,energy = 5, bomb = 20, bio = 100, rad = 100)
-	action_button_name = "Toggle Helmet Visor"
-	var/vision = SEE_MOBS
-	var/darkness_view = 6
-
-/obj/item/clothing/head/helmet/space/rig/ert/stealth/attack_self(mob/user)
-	if(camera)
-		on = !on
-		icon_state = "rig[on]-[item_color]"
-		usr.update_inv_head()
-
-		if(istype(user,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = user
-			H.update_inv_head()
-	else
-		camera = new /obj/machinery/camera(src)
-		camera.network = list("ERT")
-		cameranet.removeCamera(camera)
-		camera.c_tag = user.name
-		to_chat(user, "<span class='notice'> User scanned as [camera.c_tag]. Camera activated.</span>")
-
-/obj/item/clothing/head/helmet/space/rig/ert/stealth/dropped(mob/user)
+	light_color = "#c388eb"
+	action_button_name = "Toggle Helmet Visor Light"
 
 /obj/item/clothing/suit/space/rig/ert/stealth
 	name = "emergency response team stealth suit"
