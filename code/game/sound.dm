@@ -1,6 +1,7 @@
 /*=====================================================================================================================================
      === Explanation for some variables ===
 
+volume_channel = must always present in args, connected with the slider that controls its volume for client. Check VOL_* defines for available sliders [code\__DEFINES\sound.dm].
 ignore_environment = when you need to ignore environment effects that may change sound if mob is unconscious or anything else (e.g. global OOC announcement).
 voluminosity = if FALSE, removes the difference between left and right ear.
 
@@ -8,6 +9,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 * !!! DO NOT USE `<<` !!!. Use playsound_local() instead of this with right arguments.
 * Before you create a new channel, put it in a file which is located in [code\__DEFINES\sound.dm].
+* For music there is playsound_music() proc.
 
 =======================================================================================================================================*/
 
@@ -157,8 +159,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	src << sound(null, repeat = 0, wait = 0, channel = _channel)
 
 /client/proc/get_sound_volume(volume_channel)
-	if(!isnum(volume_channel))
-		CRASH("type mismatch for volume_channel")
+	if(!isnum(volume_channel) || !volume_channel)
+		CRASH("type mismatch for volume_channel or volume channel is not set.")
 
 	if(volume_channel & VOL_MUSIC)
 		. = prefs.snd_music_vol
