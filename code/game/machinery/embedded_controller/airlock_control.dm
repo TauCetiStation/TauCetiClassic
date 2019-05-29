@@ -262,7 +262,7 @@
 
 	var/turf/loc = get_turf_loc(usr)
 
-	if(gotwallitem(loc, ndir) && !gotwallitem_exact(loc, ndir, /obj/machinery/access_button))
+	if(gotwallitem(loc, ndir, /obj/machinery/access_button))
 		to_chat(usr, "<span class='warning'>There's already an item on this wall!</span>")
 		return
 
@@ -407,9 +407,9 @@
 		return
 
 	var/turf/loc = get_turf_loc(usr)
-	var/obj/machinery/access_button/another_button = gotwallitem_exact(loc, ndir, /obj/machinery/access_button)
+	var/obj/machinery/access_button/another_button = locate(/obj/machinery/access_button) in loc
 
-	if(!another_button && gotwallitem(loc, ndir) && !gotwallitem_exact(loc, ndir, /obj/machinery/airlock_sensor))
+	if(!another_button && gotwallitem(loc, ndir, /obj/machinery/airlock_sensor))
 		to_chat(usr, "<span class='warning'>There's already an item on this wall!</span>")
 		return
 	else if(another_button)
