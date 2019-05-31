@@ -171,8 +171,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		switch(volume_channel) // now for sub categories
 			if(VOL_VOICE)
 				. *= prefs.snd_voice_vol * 0.01
-			if(VOL_SPAM)
-				. *= prefs.snd_spam_vol * 0.01
+			if(VOL_MISC)
+				. *= prefs.snd_misc_vol * 0.01
 			if(VOL_INSTRUMENTS)
 				. *= prefs.snd_instruments_vol * 0.01
 	else if(volume_channel & VOL_NOTIFICATIONS)
@@ -200,8 +200,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			prefs.snd_effects_vol = vol
 		if(VOL_VOICE)
 			prefs.snd_voice_vol = vol
-		if(VOL_SPAM)
-			prefs.snd_spam_vol = vol
+		if(VOL_MISC)
+			prefs.snd_misc_vol = vol
 		if(VOL_INSTRUMENTS)
 			prefs.snd_instruments_vol = vol
 		if(VOL_NOTIFICATIONS)
@@ -419,7 +419,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		"Effects" = list(
 			"Master" = "[VOL_EFFECTS]",
 			"Voice" = "[VOL_VOICE]",
-			"Spam" = "[VOL_SPAM]",
+			"Misc" = "[VOL_MISC]",
 			"Music Instruments" = "[VOL_INSTRUMENTS]"
 			),
 		"Notifications" = list(
@@ -435,7 +435,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		"[VOL_AMBIENT]" = prefs.snd_ambient_vol,
 		"[VOL_EFFECTS]" = prefs.snd_effects_vol,
 		"[VOL_VOICE]" = prefs.snd_voice_vol,
-		"[VOL_SPAM]" = prefs.snd_spam_vol,
+		"[VOL_MISC]" = prefs.snd_misc_vol,
 		"[VOL_INSTRUMENTS]" = prefs.snd_instruments_vol,
 		"[VOL_NOTIFICATIONS]" = prefs.snd_notifications_vol,
 		"[VOL_ADMIN]" = prefs.snd_admin_vol

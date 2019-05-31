@@ -185,12 +185,12 @@
 
 /obj/item/weapon/bikehorn/attack(mob/target, mob/user, def_zone)
 	. = ..()
-	playsound(src, 'sound/items/bikehorn.ogg', VOL_SPAM)
+	playsound(src, 'sound/items/bikehorn.ogg', VOL_MISC)
 
 /obj/item/weapon/bikehorn/attack_self(mob/user)
 	if(cooldown <= world.time)
 		cooldown = world.time + 8
-		playsound(src, 'sound/items/bikehorn.ogg', VOL_SPAM)
+		playsound(src, 'sound/items/bikehorn.ogg', VOL_MISC)
 		src.add_fingerprint(user)
 	return
 
@@ -222,7 +222,7 @@
 			'sound/voice/fake_laugh/laugh2.ogg',
 			'sound/voice/fake_laugh/laugh3.ogg',
 			)
-		playsound(src, laugh, VOL_SPAM)
+		playsound(src, laugh, VOL_MISC)
 		flick("laugh_button_down",src)
 		icon_state = "laugh_button_off"
 		cooldown = TRUE

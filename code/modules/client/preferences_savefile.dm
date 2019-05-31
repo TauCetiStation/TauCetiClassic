@@ -144,7 +144,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["snd_ambient_vol"]		>> snd_ambient_vol
 	S["snd_effects_vol"]		>> snd_effects_vol
 	S["snd_voice_vol"]			>> snd_voice_vol
-	S["snd_spam_vol"]			>> snd_spam_vol
+	S["snd_misc_vol"]			>> snd_misc_vol
 	S["snd_instruments_vol"]	>> snd_instruments_vol
 	S["snd_notifications_vol"]	>> snd_notifications_vol
 	S["snd_admin_vol"]			>> snd_admin_vol
@@ -177,7 +177,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	snd_ambient_vol = sanitize_integer(snd_ambient_vol, 0, 100, initial(snd_ambient_vol))
 	snd_effects_vol = sanitize_integer(snd_effects_vol, 0, 100, initial(snd_effects_vol))
 	snd_voice_vol = sanitize_integer(snd_voice_vol, 0, 100, initial(snd_voice_vol))
-	snd_spam_vol = sanitize_integer(snd_spam_vol, 0, 100, initial(snd_spam_vol))
+	snd_misc_vol = sanitize_integer(snd_misc_vol, 0, 100, initial(snd_misc_vol))
 	snd_instruments_vol = sanitize_integer(snd_instruments_vol, 0, 100, initial(snd_instruments_vol))
 	snd_notifications_vol = sanitize_integer(snd_notifications_vol, 0, 100, initial(snd_notifications_vol))
 	snd_admin_vol = sanitize_integer(snd_admin_vol, 0, 100, initial(snd_admin_vol))
@@ -220,7 +220,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["snd_ambient_vol"]		<< snd_ambient_vol
 	S["snd_effects_vol"]		<< snd_effects_vol
 	S["snd_voice_vol"]			<< snd_voice_vol
-	S["snd_spam_vol"]			<< snd_spam_vol
+	S["snd_misc_vol"]			<< snd_misc_vol
 	S["snd_instruments_vol"]	<< snd_instruments_vol
 	S["snd_notifications_vol"]	<< snd_notifications_vol
 	S["snd_admin_vol"]			<< snd_admin_vol

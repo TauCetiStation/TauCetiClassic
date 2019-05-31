@@ -5,7 +5,7 @@
 #define VOL_EFFECTS (1<<2) // anything that doesn't go into sub categories (this acts as a master channel for all subs of this type).
 //effects sub categories (VOL_EFFECTS included, so that we don't need to type it everytime when we want to use just a sub category).
 #define VOL_VOICE (VOL_EFFECTS | 1<<3) // voiced global announcements.
-#define VOL_SPAM (VOL_EFFECTS | 1<<4) // for any sound that may annoy players (like tesla engine).
+#define VOL_MISC (VOL_EFFECTS | 1<<4) // for any sound that may annoy players (like tesla engine).
 #define VOL_INSTRUMENTS (VOL_EFFECTS | 1<<5) // music instruments! actually this could be merged into spam category.
 
 #define VOL_NOTIFICATIONS (1<<6) // mainly for ghosts, such as cloning ready, admin pm, etc.
