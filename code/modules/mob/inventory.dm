@@ -310,7 +310,8 @@ var/list/slot_equipment_priority = list(
 
 // Attemps to remove an object on a mob. Will drop item to ground or move into target.
 /mob/proc/remove_from_mob(obj/O, atom/target)
-	if(!O) return
+	if(!O)
+		return FALSE
 	src.u_equip(O)
 	if (src.client)
 		src.client.screen -= O
@@ -320,13 +321,15 @@ var/list/slot_equipment_priority = list(
 	O.screen_loc = null
 	if(istype(O, /obj/item))
 		var/obj/item/I = O
-		if(target)
+		if(I.item_holder)
+			I.forceMove(I.item_holder) // Since we shouldn't ever actually leave it but one particularly horendous bootleg allows us to...
+		else if(target)
 			I.forceMove(target)
 		else
 			I.forceMove(loc)
 		I.dropped(src)
 		I.slot_equipped = initial(I.slot_equipped)
-	return 1
+	return TRUE
 
 /mob/proc/get_hand_slots()
 	return list(l_hand, r_hand)
@@ -502,13 +505,13 @@ var/list/slot_equipment_priority = list(
 /mob/proc/delay_clothing_u_equip(obj/item/clothing/C) // Bone White - delays unequipping by parameter.  Requires W to be /obj/item/clothing/
 
 	if(!istype(C))
-		return 0
+		return FALSE
 
 	if(usr.is_busy())
 		return
 
 	if(C.equipping) // Item is already being (un)equipped
-		return 0
+		return FALSE
 
 	to_chat(usr, "<span class='notice'>You start unequipping the [C].</span>")
 	C.equipping = 1
@@ -517,23 +520,26 @@ var/list/slot_equipment_priority = list(
 		to_chat(usr, "<span class='notice'>You have finished unequipping the [C].</span>")
 	else
 		to_chat(src, "<span class='red'>\The [C] is too fiddly to unequip whilst moving.</span>")
+		C.equipping = 0
+		return FALSE
 	C.equipping = 0
+	return TRUE
 
 /mob/proc/delay_clothing_equip_to_slot_if_possible(obj/item/clothing/C, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, delay_time = 0)
 	if(!istype(C))
-		return 0
+		return FALSE
 
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		if(H.wear_suit)
 			to_chat(H, "<span class='red'>You need to take off [H.wear_suit.name] first.</span>")
-			return
+			return FALSE
 
 	if(usr.is_busy())
 		return
 
 	if(C.equipping) // Item is already being equipped
-		return 0
+		return FALSE
 
 	to_chat(usr, "<span class='notice'>You start equipping the [C].</span>")
 	C.equipping = 1
@@ -542,7 +548,10 @@ var/list/slot_equipment_priority = list(
 		to_chat(usr, "<span class='notice'>You have finished equipping the [C].</span>")
 	else
 		to_chat(src, "<span class='red'>\The [C] is too fiddly to fasten whilst moving.</span>")
+		C.equipping = 0
+		return FALSE
 	C.equipping = 0
+	return TRUE
 
 /mob/proc/get_item_by_slot(slot_id)
 	switch(slot_id)

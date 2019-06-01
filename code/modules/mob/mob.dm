@@ -311,6 +311,11 @@
 			if(usr in S.Friends)
 				S.last_pointed = A
 
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		for(var/mob/living/carbon/monkey/diona/D in H.gestalt_subordinates)
+			D.last_pointed = A
+
 /mob/verb/abandon_mob()
 	set name = "Respawn"
 	set category = "OOC"

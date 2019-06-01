@@ -102,3 +102,12 @@
 
 	var/busy_left_hand = FALSE // See ambidextrous quirk and is_busy() override.
 	var/busy_right_hand = FALSE
+
+	// Diona stuff.
+	var/list/gestalt_subordinates = list()
+	var/unique_diona_hive_color = "" // Hex index, should be unique to each diona hive.
+	var/display_diona_hud = FALSE
+	var/gestalt_direct_control = FALSE
+
+	var/list/queued_orders = list() // Queue nymph orders in case we are selecting many.
+	var/list/diona_hud_images = list()

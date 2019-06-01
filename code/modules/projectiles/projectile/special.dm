@@ -256,3 +256,14 @@
 	damage = 35
 	stoping_power = 8
 	kill_count = 14
+
+/obj/item/projectile/bullet/pea
+	name = "pea"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "pea"
+	unacidable = FALSE
+	kill_count = 15
+	damage = 0
+	eyeblur = 1
+	agony = 3
+	step_delay = 2

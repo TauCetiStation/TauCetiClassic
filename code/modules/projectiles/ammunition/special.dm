@@ -41,3 +41,9 @@
 	projectile_type = /obj/item/projectile/bullet/scrap
 	pellets = 10
 	variance = 30
+
+/obj/item/ammo_casing/pea
+	desc = "pea"
+	caliber = "pea"
+	projectile_type = /obj/item/projectile/bullet/pea
+	variance = 10

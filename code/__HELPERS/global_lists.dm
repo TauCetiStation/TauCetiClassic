@@ -91,6 +91,8 @@
 			global.chemical_reactions_list[id] += D
 			break // Don't bother adding ourselves to other reagent ids, it is redundant.
 
+	initiate_nymph_orders()
+
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()
 

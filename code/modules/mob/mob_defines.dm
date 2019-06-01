@@ -41,6 +41,8 @@
 	var/obj/screen/alien_plasma_display = null
 	var/obj/screen/nightvisionicon = null
 
+	var/next_forced_moving = 0 // Nymphs can force gestalt to move. And gestalt can force nymphs to move.
+
 	var/use_me = 1 //Allows all mobs to use the me verb by default, will have to manually specify they cannot
 	var/speech_allowed = 1 //Meme Stuff
 	var/damageoverlaytemp = 0

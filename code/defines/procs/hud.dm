@@ -57,6 +57,69 @@ the HUD updates properly! */
 			continue
 		P.Client.images += image('icons/mob/hud.dmi', loc = perp, icon_state = "hudbroken[pick(1,2,3,4,5,6,7)]")
 
+#define DIONA_HUD_FILTER(hive_color) list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, hex2num(copytext(hive_color, 2, 4)) / 255, hex2num(copytext(hive_color, 4, 6)) / 255, hex2num(copytext(hive_color, 6, 8)) / 255, 0.58)
+#define BODY_LAYER 27
+
+/proc/process_diona_hud(mob/living/carbon/human/M, mob/Alt)
+	if(!can_process_hud(M))
+		return
+	for(var/image/I in M.diona_hud_images)
+		M.client.images -= I
+	M.diona_hud_images = list()
+	for(var/atom/movable/A in range(get_turf(M)))
+		/*if(P.Mob.see_invisible < perp.invisibility) // Dionas sense them nymphs.
+			continue*/
+		if(iscarbon(A))
+			var/mob/living/carbon/D = A
+			if(D.get_species() != DIONA)
+				continue
+			if(D.stat != CONSCIOUS)
+				continue
+			if(ishuman(D))
+				var/mob/living/carbon/human/H = D
+				var/image/I = image(loc = H)
+				var/image/T = new
+				T.overlays = H.overlays_standing[BODY_LAYER]
+				I.appearance = T
+				I.dir = D.dir
+				I.layer = LIGHTING_LAYER + 1
+				I.plane = LIGHTING_PLANE + 1
+				I.color = DIONA_HUD_FILTER(H.unique_diona_hive_color)
+				M.client.images += I
+				M.diona_hud_images += I
+			else if(istype(D, /mob/living/carbon/monkey/diona))
+				var/mob/living/carbon/monkey/diona/DD = D
+				if(DD.gestalt)
+					if(DD.selected && DD.gestalt == M)
+						var/image/II = image(loc = DD)
+						II.appearance = DD
+						II.dir = DD.dir
+						II.layer = LIGHTING_LAYER + 1
+						II.plane = LIGHTING_PLANE + 1
+						II.color = DIONA_HUD_FILTER(DD.gestalt.unique_diona_hive_color)
+						M.client.images += II
+						M.diona_hud_images += II
+					else
+						var/image/III = image('icons/misc/tools.dmi', loc = DD, icon_state = "huddiona")
+						III.layer = LIGHTING_LAYER + 1
+						III.plane = LIGHTING_PLANE + 1
+						III.color = DD.gestalt.unique_diona_hive_color
+						M.client.images += III
+						M.diona_hud_images += III
+		else if(istype(A, /obj/item/nymph_morph_ball))
+			var/mob/living/carbon/monkey/diona/D = locate() in A
+			if(D.gestalt)
+				var/image/I = image(loc = A)
+				I.appearance = A
+				I.dir = A.dir
+				I.layer = LIGHTING_LAYER + 1
+				I.plane = LIGHTING_PLANE + 1
+				I.color = DIONA_HUD_FILTER(D.gestalt.unique_diona_hive_color)
+				M.client.images += I
+				M.diona_hud_images += I
+#undef DIONA_HUD_FILTER
+#undef BODY_LAYER
+
 /datum/arranged_hud_process
 	var/client/Client
 	var/mob/Mob

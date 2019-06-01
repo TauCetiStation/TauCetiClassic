@@ -179,7 +179,7 @@
 				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
 				return
 	src.hand = !( src.hand )
-	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
+	if(hud_used && hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
 		if(hand)	//This being 1 means the left hand is in use
 			hud_used.l_hand_hud_object.icon_state = "hand_l_active"
 			hud_used.r_hand_hud_object.icon_state = "hand_r_inactive"
@@ -216,6 +216,7 @@
 
 			for(var/obj/item/organ/external/BP in H.bodyparts)
 				var/status = ""
+				var/is_ok = FALSE
 				var/brutedamage = BP.brute_dam
 				var/burndamage = BP.burn_dam
 				if(halloss > 0)
@@ -247,7 +248,26 @@
 					status = "weirdly shapen."
 				if(status == "")
 					status = "OK"
-				src.show_message(text("\t []My [] is [].", status == "OK" ? "\blue " : "\red ", BP.name,status), 1)
+					is_ok = TRUE
+
+				if(BP.dionified && BP.item_holder)
+					var/mob/living/carbon/monkey/diona/D = locate() in BP.item_holder
+					if(D)
+						status = "[status]. The limb is [D.name] in disguise."
+
+				show_message("\t <span class='[is_ok ? "notice" : "warning"]'>My [BP.name] is [status]</span>", 1)
+
+			if(get_species() == DIONA)
+				var/dionas_in = "These are the nymphs merged into you:"
+				var/first = TRUE
+				for(var/mob/living/carbon/monkey/diona/D in contents)
+					if(first)
+						first = FALSE
+						dionas_in = "[dionas_in] [D.name]"
+					else
+						dionas_in = "[dionas_in], [D.name]"
+				if(!first) // If we didn't pass even one iteration, there's no nymph's inside.
+					show_message("<span class='notice'>[dionas_in]</span>", 1)
 
 			if(roundstart_quirks.len)
 				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")

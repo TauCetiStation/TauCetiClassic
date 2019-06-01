@@ -113,3 +113,11 @@
 
 /mob/living/carbon/human/mob_negates_gravity()
 	return shoes && shoes.negates_gravity()
+
+/mob/living/carbon/human/relaymove(mob/user, direction)
+	if(get_species() == DIONA && user.get_species() == DIONA && !incapacitated() && !user.incapacitated())
+		if(client)
+			return client.Move(get_step(src, direction), direction)
+		else if(next_forced_moving < world.time) // Since we don't have all the needed client-related movement speed checks, we'll do it our own way.
+			next_forced_moving = world.time + movement_delay()
+			. = Move(get_step(src, direction), direction)
