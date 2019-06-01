@@ -36,7 +36,7 @@
 
 	var/friendc = 0      // track if Friend Computer mode
 
-	maptext_height = 26
+	maptext_height = 28
 	maptext_width = 32
 
 	// new display
