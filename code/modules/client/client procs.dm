@@ -9,6 +9,8 @@ var/list/blacklisted_builds = list(
 	"1408" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
 	"1428" = "bug causing right-click menus to show too many verbs that's been fixed in version 1429",
 	"1434" = "bug turf images weren't reapplied properly when moving around the map",
+	"1468" = "bug with screen-loc mouse parameter (x and y axis were switched) and several mouse hit problems",
+	"1469" = "bug with screen-loc mouse parameter (x and y axis were switched) and several mouse hit problems"
 	)
 
 	/*
