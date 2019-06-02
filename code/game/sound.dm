@@ -140,7 +140,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	S.repeat = repeat
 	S.wait = wait
 	S.channel = channel
-	S.volume = SANITIZE_VOL(100) * client.get_sound_volume(volume_channel) // vol <- switch with this while uncommenting block of code from above.
+	S.volume = SANITIZE_VOL(100) * client.get_sound_volume(volume_channel) // S.volume = vol <- replace line with this while uncommenting block of code from above.
 	S.environment = 2
 	src << S
 
@@ -441,6 +441,17 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		"[VOL_ADMIN]" = prefs.snd_admin_vol
 		)
 
+	var/list/sliders_hint = list(
+		"[VOL_MUSIC]" = "Lobby music.",
+		"[VOL_AMBIENT]" = "Music and sound effects of ambient type.",
+		"[VOL_EFFECTS]" = "Controls all sound effects.",
+		"[VOL_VOICE]" = "Voiced global announcements.",
+		"[VOL_MISC]" = "Anything spammy that may annoy e.g.: tesla engine.",
+		"[VOL_INSTRUMENTS]" = "Music instruments.",
+		"[VOL_NOTIFICATIONS]" = "OOC notifications such as admin PM, cloning.",
+		"[VOL_ADMIN]" = "Admin sounds and music."
+		)
+
 	var/dat = {"
 		<style>
 			.volume_slider {
@@ -456,10 +467,10 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 				padding: 0;
 			}
 			td {
-				width: 20%;
+				width: 25%;
 			}
 			td:nth-child(2n+0) {
-				width: 70%;
+				width: 65%;
 			}
 			td:nth-child(3n+0) {
 				width: 10%;
@@ -481,13 +492,14 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 		var/list/sliders_data = tables_data[category]
 
-		for(var/slider in sliders_data)
-			var/slider_id = sliders_data[slider]
+		for(var/slider_name in sliders_data)
+			var/slider_id = sliders_data[slider_name]
 			var/slider_value = prefs_vol_values[slider_id]
+			var/slider_hint = sliders_hint[slider_id]
 			dat += {"
 				<tr>
 					<td>
-						[slider]:
+						[slider_name] <span title="[slider_hint]">(?)</span>:
 					</td>
 					<td>
 						<input type="range" class="volume_slider" min="0" max="100" value="[slider_value]" id="[slider_id]" onchange="updateVolume([slider_id])">
@@ -511,7 +523,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 			function saveVolume() {
 				window.location = 'byond://?_src_=updateVolume&proc=save';
-				document.getElementById("notice").innerHTML = 'Hint: check \"Preferences Saved\" message in chat, if nothing push \"Save\" again.';
+				showHint('check \"Preferences Saved\" message in chat, if nothing push \"Save\" again.')
 			}
 
 			function updateVolume(slider_id) {
@@ -529,6 +541,11 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 				document.getElementById(slider_id + "_value").innerHTML = vol;
 			}
+
+			function showHint(text) {
+				document.getElementById("notice").innerHTML = '<b>Hint: ' + text + '</b>';
+			}
+
 		</script>
 		"}
 
