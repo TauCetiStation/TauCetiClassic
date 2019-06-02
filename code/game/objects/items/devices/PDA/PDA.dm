@@ -570,7 +570,7 @@
 	U.set_machine(src)
 
 	if(href_list && (last_tap_sound <= world.time))
-		playsound(src, "pda", 15, 0)
+		playsound(src, "pda", VOL_EFFECTS, 15, FALSE)
 		last_tap_sound = world.time + 8
 
 	switch(href_list["choice"])

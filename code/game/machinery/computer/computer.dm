@@ -29,7 +29,7 @@
 	if(!.)
 		return
 	if(href_list && (last_keyboard_sound <= world.time))
-		playsound(src, "keyboard", 50, 0)
+		playsound(src, "keyboard", VOL_EFFECTS)
 		last_keyboard_sound = world.time + 8
 
 /obj/machinery/computer/Destroy()
