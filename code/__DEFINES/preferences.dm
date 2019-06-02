@@ -1,7 +1,6 @@
-//Preference toggles
+//Preference toggles (it had more bits, but updating player saves without wiping method is a bit more complex).
 #define SHOW_ANIMATIONS	16
 #define SHOW_PROGBAR	32
-#define SOUND_STREAMING	64
 
 #define TOGGLES_DEFAULT (SHOW_ANIMATIONS|SHOW_PROGBAR)
 

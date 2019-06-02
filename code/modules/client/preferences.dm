@@ -51,6 +51,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/snd_instruments_vol = 100
 	var/snd_notifications_vol = 100
 	var/snd_admin_vol = 100
+	var/snd_jukebox_vol = 100
 
 	//antag preferences
 	var/list/be_role = list()

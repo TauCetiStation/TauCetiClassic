@@ -179,6 +179,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		. = prefs.snd_notifications_vol
 	else if(volume_channel & VOL_ADMIN)
 		. = prefs.snd_admin_vol
+	else if(volume_channel & VOL_JUKEBOX)
+		. = prefs.snd_jukebox_vol
 	else
 		CRASH("unknown volume_channel: [volume_channel]")
 
@@ -209,6 +211,18 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		if(VOL_ADMIN)
 			prefs.snd_admin_vol = vol
 			mob.playsound_music_update_volume(volume_channel, CHANNEL_ADMIN)
+		if(VOL_JUKEBOX)
+			var/old_vol = prefs.snd_jukebox_vol
+
+			prefs.snd_jukebox_vol = vol
+
+			if(istype(media)) // will be updated in "/mob/living/Login()" if changed in lobby.
+				media.update_volume()
+
+				if(!vol && old_vol) // only play/stop if last change is a mute or unmute state.
+					media.stop_music()
+				else if(vol && !old_vol)
+					media.update_music()
 
 /client/proc/update_volume(href_list)
 	var/slider
@@ -427,6 +441,9 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			),
 		"Admin Music/Sounds" = list(
 			"Master" = "[VOL_ADMIN]"
+			),
+		"Jukebox" = list(
+			"Master" = "[VOL_JUKEBOX]"
 			)
 		)
 
@@ -438,7 +455,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		"[VOL_MISC]" = prefs.snd_misc_vol,
 		"[VOL_INSTRUMENTS]" = prefs.snd_instruments_vol,
 		"[VOL_NOTIFICATIONS]" = prefs.snd_notifications_vol,
-		"[VOL_ADMIN]" = prefs.snd_admin_vol
+		"[VOL_ADMIN]" = prefs.snd_admin_vol,
+		"[VOL_JUKEBOX]" = prefs.snd_jukebox_vol
 		)
 
 	var/list/sliders_hint = list(
@@ -449,7 +467,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		"[VOL_MISC]" = "Anything spammy that may annoy e.g.: tesla engine.",
 		"[VOL_INSTRUMENTS]" = "Music instruments.",
 		"[VOL_NOTIFICATIONS]" = "OOC notifications such as admin PM, cloning.",
-		"[VOL_ADMIN]" = "Admin sounds and music."
+		"[VOL_ADMIN]" = "Admin sounds and music.",
+		"[VOL_JUKEBOX]" = "In-game jukebox's volume."
 		)
 
 	var/dat = {"

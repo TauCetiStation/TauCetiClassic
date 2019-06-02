@@ -11,6 +11,9 @@
 #define VOL_NOTIFICATIONS (1<<6) // mainly for ghosts, such as cloning ready, admin pm, etc.
 #define VOL_ADMIN (1<<7) // admin sounds or music (fun category).
 
+// jukebox not a VOL_MUSIC sub category because jukebox plays thru javascript, which is not boynd's sound datum.
+#define VOL_JUKEBOX (1<<8)
+
 //Misc
 #define VOL_RAW_TO_REAL(vol_raw) ((20 ** Clamp(vol_raw * 0.01, 0, 1.0)) - 0.99) / (20 - 0.99)
 #define SANITIZE_VOL(vol) vol * 0.5 // environment setting can overload sound that use 100% volume (0.5 actually is max, if you want pure sound with anything).

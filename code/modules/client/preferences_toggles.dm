@@ -156,19 +156,6 @@
 	to_chat(src, "You will [(prefs.toggles & SHOW_PROGBAR) ? "now" : "no longer"] see progress bars.")
 	feedback_add_details("admin_verb","PRB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/verb/toggle_media()
-	set name = "Hear/Silence Streaming"
-	set category = "Preferences"
-	set desc = "Toggle hearing streaming media (radios, jukeboxes, etc)."
-	prefs.toggles ^= SOUND_STREAMING
-	prefs.save_preferences()
-	to_chat(src, "You will [(prefs.toggles & SOUND_STREAMING) ? "now" : "no longer"] hear streamed media.")
-	if(!media) return
-	if(prefs.toggles & SOUND_STREAMING)
-		media.update_music()
-	else
-		media.stop_music()
-
 var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOST_ORBIT_SQUARE,GHOST_ORBIT_HEXAGON,GHOST_ORBIT_PENTAGON)
 
 /client/verb/pick_ghost_orbit()
