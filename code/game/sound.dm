@@ -569,6 +569,6 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		"}
 
 //	src << browse(dat, "window=volcontrols")
-	var/datum/browser/popup = new(usr, "volcontrols", "Audio Settings:", 620, 480, null, CSS_THEME_LIGHT)
+	var/datum/browser/popup = new(usr, "volcontrols", "Audio Settings:", 620, 500, null, CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()
