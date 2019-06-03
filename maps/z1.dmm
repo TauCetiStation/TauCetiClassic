@@ -3847,9 +3847,6 @@
 	},
 /area/security/main)
 "agu" = (
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 8
-	},
 /obj/machinery/firealarm{
 	dir = 2;
 	pixel_y = 24
@@ -4614,7 +4611,6 @@
 /turf/simulated/floor/plating,
 /area/security/warden)
 "ahK" = (
-/obj/structure/table,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4622,6 +4618,9 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4662,7 +4661,6 @@
 /area/security/brig)
 "ahN" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -5051,9 +5049,12 @@
 /turf/space/shuttle,
 /area/shuttle/escape_pod3/station)
 "aiw" = (
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 1
+/obj/structure/window/reinforced/polarized{
+	id = "op2"
 	},
+/obj/structure/table/reinforced,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/hand_labeler,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5069,6 +5070,9 @@
 "aiy" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
+	},
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -5249,41 +5253,31 @@
 /area/shuttle/escape_pod3/station)
 "aiM" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/hand_labeler,
-/obj/machinery/light,
+/obj/item/device/flashlight/lamp,
 /turf/simulated/floor{
-	dir = 10;
-	icon_state = "darkred"
+	icon_state = "dark"
 	},
 /area/security/brig)
 "aiN" = (
-/obj/structure/table,
-/obj/item/device/flashlight,
-/obj/item/weapon/folder/red{
-	pixel_y = 3
-	},
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "darkred"
 	},
 /area/security/brig)
 "aiO" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/evidence,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/windowtint{
+	id = "Patients";
+	pixel_x = -27
+	},
 /turf/simulated/floor{
-	dir = 2;
+	dir = 10;
 	icon_state = "darkred"
 	},
 /area/security/brig)
 "aiP" = (
-/obj/structure/table,
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
-/obj/item/device/taperecorder,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -6042,50 +6036,26 @@
 	},
 /area/security/brig)
 "ajY" = (
-/obj/machinery/alarm{
-	pixel_y = 26
+/obj/structure/window/reinforced/polarized{
+	id = "op2"
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/box/evidence,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "redcorner"
+	icon_state = "dark"
 	},
 /area/security/brig)
 "ajZ" = (
-/obj/machinery/firealarm{
-	dir = 2;
-	pixel_y = 24
+/obj/structure/window/reinforced/polarized{
+	id = "op2"
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 1
+/obj/structure/table/reinforced,
+/obj/item/device/flashlight,
+/obj/item/weapon/folder/red{
+	pixel_y = 3
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "redcorner"
+	icon_state = "dark"
 	},
 /area/security/brig)
 "aka" = (
@@ -6530,12 +6500,18 @@
 	},
 /area/security/brig)
 "akz" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
+/obj/structure/window/reinforced/polarized{
+	id = "op2"
 	},
+/obj/structure/table/reinforced,
+/obj/item/device/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30
+	},
+/obj/item/device/taperecorder,
 /turf/simulated/floor{
-	dir = 2;
-	icon_state = "redcorner"
+	icon_state = "dark"
 	},
 /area/security/brig)
 "akA" = (
@@ -33694,6 +33670,26 @@
 	},
 /turf/simulated/floor,
 /area/hallway/primary/starboard)
+"bid" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "redcorner"
+	},
+/area/security/brig)
 "bie" = (
 /obj/structure/stool/bed/chair/metal/yellow,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -33752,6 +33748,20 @@
 	icon_state = "vault"
 	},
 /area/quartermaster/recycleroffice)
+"bij" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_x = 0;
+	pixel_y = -24
+	},
+/turf/simulated/floor{
+	dir = 2;
+	icon_state = "redcorner"
+	},
+/area/security/brig)
 "bik" = (
 /obj/structure/stool/bed/chair/metal/yellow,
 /obj/machinery/firealarm{
@@ -33881,6 +33891,16 @@
 	icon_state = "whiteyellow"
 	},
 /area/medical/chemistry)
+"biz" = (
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/simulated/floor{
+	dir = 2;
+	icon_state = "redcorner"
+	},
+/area/security/brig)
 "biB" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -108303,8 +108323,8 @@ adM
 agT
 ahL
 vbb
-aiM
-adM
+aiO
+aiw
 ajX
 fmb
 afV
@@ -108559,9 +108579,9 @@ afL
 agq
 agS
 ahK
-aiw
+aeT
 aiN
-adM
+ajZ
 ajW
 aky
 alx
@@ -108816,11 +108836,11 @@ adH
 adH
 agu
 ahN
-aeT
-aiO
-adM
-ajZ
-akz
+aiM
+aiN
+ajY
+bid
+bij
 afV
 ame
 amg
@@ -109075,9 +109095,9 @@ agU
 ahM
 aiy
 aiP
-adM
-ajY
-fmb
+akz
+ajX
+biz
 afV
 ajs
 ami
