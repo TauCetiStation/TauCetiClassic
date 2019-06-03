@@ -34,10 +34,10 @@
 	if (istype(user, /mob/living/silicon/ai))	//Added by Strumpetplaya - AI shouldn't be able to
 		return									//activate emergency lockers.  This fixes that.  (Does this make sense, the AI can't call attack_hand, can it? --Mloc)
 	if(!amount)
-		to_chat(user, "<spawn class='notice'>It's empty..")
+		to_chat(user, "<span class='notice'>It's empty..</span>")
 		return
 	if(amount)
-		to_chat(user, "<spawn class='notice'>You take out some items from \the [src].")
+		to_chat(user, "<span class='notice'>You take out some items from \the [src].</span>")
 		for(var/path in spawnitems)
 			new path(src.loc)
 		amount--

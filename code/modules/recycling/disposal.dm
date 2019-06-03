@@ -80,12 +80,10 @@
 				return
 			if(user.is_busy()) return
 			var/obj/item/weapon/weldingtool/W = I
-			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+			if(W.use(0,user))
 				to_chat(user, "You start slicing the floorweld off the disposal unit.")
 
-				if(do_after(user,20, target = src))
-					if(!src || !W.isOn()) return
+				if(W.use_tool(src, user, 20, volume = 100))
 					to_chat(user, "You sliced the floorweld off the disposal unit.")
 					var/obj/structure/disposalconstruct/C = new (src.loc)
 					src.transfer_fingerprints_to(C)
@@ -120,16 +118,23 @@
 			if(user.is_busy()) return
 			for (var/mob/V in viewers(usr))
 				V.show_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>", 3)
-			if(do_after(usr, 20, target = src))
+			if(G.use_tool(src, usr, 20))
 				GM.loc = src
 				GM.instant_vision_update(1,src)
 				for (var/mob/C in viewers(src))
 					C.show_message("<span class='danger'>[GM.name] has been placed in the [src] by [user].</span>", 3)
 				qdel(G)
-				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Has placed [GM.name] ([GM.ckey]) in disposals.</font>")
-				GM.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [usr.name] ([usr.ckey])</font>")
-				msg_admin_attack("[usr.name] ([usr.ckey]) placed [GM.name] ([GM.ckey]) in a disposals unit. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
+				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Has placed [GM.name] ([GM.ckey]) in disposals.</font>"
+				GM.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [usr.name] ([usr.ckey])</font>"
+				msg_admin_attack("[usr.name] ([usr.ckey]) placed [GM.name] ([GM.ckey]) in a disposals unit. [ADMIN_JMP(usr)]")
 		return
+
+
+	if(istype(I, /obj/item/weapon/holder))
+		for(var/mob/holdermob in I.contents)
+			usr.attack_log += "\[[time_stamp()]\] <font color='red'>Has placed [holdermob.name] ([holdermob.ckey]) in disposals.</font>"
+			holdermob.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [usr.name] ([usr.ckey])</font>"
+			msg_admin_attack("[usr.name] ([usr.ckey]) placed [holdermob.name] ([holdermob.ckey]) in a disposals unit [ADMIN_JMP(usr)]")
 
 	if(!I || !I.canremove || I.flags & NODROP)
 		return
@@ -179,9 +184,9 @@
 		msg = "<span class='danger'>[user.name] stuffs [target.name] into the [src]!</span>"
 		to_chat(user, "<span class='red'>You stuff [target.name] into the [src]!</span>")
 
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has placed [target.name] ([target.ckey]) in disposals.</font>")
-		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) placed [target.name] ([target.ckey]) in a disposals unit. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		user.attack_log += "\[[time_stamp()]\] <font color='red'>Has placed [target.name] ([target.ckey]) in disposals.</font>"
+		target.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>"
+		msg_admin_attack("[user.name] ([user.ckey]) placed [target.name] ([target.ckey]) in a disposals unit. [ADMIN_JMP(usr)]")
 	else
 		return
 
@@ -916,12 +921,10 @@
 	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/W = I
 
-		if(W.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+		if(W.use(0,user))
 			// check if anything changed over 2 seconds
 			to_chat(user, "You start slicing the disposal pipe.")
-			if(do_after(user, 30, target = src))
-				if(!W.isOn()) return
+			if(W.use_tool(src, user, 30, volume = 100))
 				to_chat(user, "<span class='notice'>You sliced the disposal pipe.</span>")
 				welded()
 			else
@@ -1254,12 +1257,9 @@
 	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/W = I
 		if(user.is_busy()) return
-		if(W.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-			// check if anything changed over 2 seconds
+		if(W.use(0,user))
 			to_chat(user, "You start slicing the disposal pipe.")
-			if(do_after(user, 30, target = src))
-				if(!W.isOn()) return
+			if(W.use_tool(src, user, 30, volume = 100))
 				to_chat(user, "<span class='notice'>You sliced the disposal pipe.</span>")
 				welded()
 			else
@@ -1330,8 +1330,10 @@
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/mode = 0
 
-/obj/structure/disposaloutlet/atom_init()
+/obj/structure/disposaloutlet/atom_init(mapload, dir)
 	..()
+	if(dir)
+		src.dir = dir
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/disposaloutlet/atom_init_late()
@@ -1378,11 +1380,9 @@
 			return
 	else if(iswelder(I) && mode==1 && !user.is_busy())
 		var/obj/item/weapon/weldingtool/W = I
-		if(W.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+		if(W.use(0,user))
 			to_chat(user, "You start slicing the floorweld off the disposal outlet.")
-			if(do_after(user,20,target = src))
-				if(!src || !W.isOn()) return
+			if(W.use_tool(src, user, 20, volume = 100))
 				to_chat(user, "You sliced the floorweld off the disposal outlet.")
 				var/obj/structure/disposalconstruct/C = new (src.loc)
 				src.transfer_fingerprints_to(C)
@@ -1390,6 +1390,7 @@
 				C.update()
 				C.anchored = 1
 				C.density = 1
+				C.dir = dir
 				qdel(src)
 			return
 		else

@@ -39,6 +39,7 @@ var/list/airlock_overlays = list()
 	var/shockedby = list()
 	var/close_timer_id = null
 	var/datum/wires/airlock/wires = null
+	var/denying = FALSE
 
 	var/inner_material = null //material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
@@ -353,11 +354,14 @@ var/list/airlock_overlays = list()
 		if("closing")
 			update_icon(AIRLOCK_CLOSING)
 		if("deny")
-			update_icon(AIRLOCK_DENY)
-			playsound(src, door_deni_sound, 40, 0, 3)
-			sleep(6)
-			update_icon(AIRLOCK_CLOSED)
-			icon_state = "closed"
+			if(deny_animation_check())
+				denying = TRUE
+				update_icon(AIRLOCK_DENY)
+				playsound(src, door_deni_sound, 40, 0, 3)
+				sleep(6)
+				update_icon(AIRLOCK_CLOSED)
+				icon_state = "closed"
+				denying = FALSE
 
 /obj/machinery/door/airlock/attack_ghost(mob/user)
 	//Separate interface for ghosts.
@@ -857,7 +861,7 @@ var/list/airlock_overlays = list()
 	if(!no_window)
 		updateUsrDialog()
 
-/obj/machinery/door/airlock/attackby(C, mob/user)
+/obj/machinery/door/airlock/attackby(obj/item/C, mob/user)
 
 	if(istype(C,/obj/item/weapon/changeling_hammer) && !operating && density) // yeah, hammer ignore electrify
 		var/obj/item/weapon/changeling_hammer/W = C
@@ -881,7 +885,7 @@ var/list/airlock_overlays = list()
 
 	if(iswelder(C) && !(operating > 0) && density)
 		var/obj/item/weapon/weldingtool/W = C
-		if(W.remove_fuel(0,user))
+		if(W.use(0,user))
 			welded = !welded
 			update_icon()
 			return
@@ -907,9 +911,8 @@ var/list/airlock_overlays = list()
 			beingcrowbarred = 0
 		if( beingcrowbarred && (operating == -1 || density && welded && operating != 1 && p_open && !hasPower() && !locked) )
 			if(user.is_busy(src)) return
-			playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
-			if(do_after(user,40,target = src))
+			if(C.use_tool(src, user, 40, volume = 100))
 				to_chat(user, "\blue You removed the airlock electronics!")
 
 				var/obj/structure/door_assembly/da = new assembly_type(loc)
@@ -1011,6 +1014,11 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/normal_close_checks()
 	if(hasPower() && !isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+		return TRUE
+	return FALSE
+
+/obj/machinery/door/airlock/proc/deny_animation_check()
+	if(!denying && !welded && !locked && hasPower() && !isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
 		return TRUE
 	return FALSE
 
@@ -1133,10 +1141,9 @@ var/list/airlock_overlays = list()
 	//light_color = "#cc0000"
 
 
-/obj/structure/door_scrap/attackby(obj/O, mob/user)
+/obj/structure/door_scrap/attackby(obj/item/O, mob/user)
 	if(iswrench(O))
 		if(ticker >= 300)
-			playsound(user.loc, 'sound/items/Ratchet.ogg', 50)
 			user.visible_message("[user] has disassemble these scrap...")
 			new /obj/item/stack/sheet/metal(loc)
 			new /obj/item/stack/sheet/metal(loc)

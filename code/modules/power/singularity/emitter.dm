@@ -157,7 +157,7 @@
 			src.fire_delay = get_rand_burst_delay()
 			src.shot_number = 0
 		var/obj/item/projectile/beam/emitter/A = get_emitter_beam()
-		playsound(src.loc, 'sound/weapons/emitter.ogg', 25, 1)
+		playsound(src.loc, 'sound/weapons/guns/gunpulse_emitter.ogg', 25, 1)
 		if(prob(35))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, src)
@@ -211,13 +211,11 @@
 				to_chat(user, "\red The [src.name] needs to be wrenched to the floor.")
 			if(1)
 				if(user.is_busy()) return
-				if (WT.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+				if (WT.use(0,user))
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 						"You start to weld the [src] to the floor.", \
 						"You hear welding")
-					if (do_after(user,20,target = src))
-						if(!src || !WT.isOn()) return
+					if (WT.use_tool(src, user, 20, volume = 50))
 						state = 2
 						to_chat(user, "You weld the [src] to the floor.")
 						connect_to_network()
@@ -225,13 +223,11 @@
 					to_chat(user, "\red You need more welding fuel to complete this task.")
 			if(2)
 				if(user.is_busy()) return
-				if (WT.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+				if (WT.use(0,user))
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 						"You start to cut the [src] free from the floor.", \
 						"You hear welding")
-					if (do_after(user,20,target = src))
-						if(!src || !WT.isOn()) return
+					if (WT.use_tool(src, user, 20, volume = 50))
 						state = 1
 						to_chat(user, "You cut the [src] free from the floor.")
 						disconnect_from_network()

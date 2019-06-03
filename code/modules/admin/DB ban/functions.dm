@@ -78,13 +78,19 @@
 		else
 			adminwho += ", [C]"
 
-	reason = sql_sanitize_text(reason)
+	reason = sanitize_sql(reason)
+
+	var/msg = "[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[sanitize(reason)]\" to the ban database."
+
+	var/datum/admin_help/AH = admin_ticket_log(ckey, msg)
+	if((bantype == BANTYPE_PERMA || bantype == BANTYPE_TEMP) && AH) // not sure if only for perma.
+		AH.Resolve()
 
 	var/sql = "INSERT INTO erro_ban (`id`,`bantime`,`serverip`,`bantype`,`reason`,`job`,`duration`,`rounds`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], [(rounds)?"[rounds]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
 	var/DBQuery/query_insert = dbcon.NewQuery(sql)
 	query_insert.Execute()
 	to_chat(usr, "\blue Ban saved to database.")
-	message_admins("[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[sanitize(reason)]\" to the ban database.")
+	message_admins(msg)
 	send2slack_logs(key_name(usr), text("has added a [] for [] [] [] with the reason: [] to the ban database.", bantype_str, ckey, (job ? "([job])" : ""), (duration > 0 ? "([duration] minutes)" : ""), text("[sanitize(reason)]")), "(BAN)")
 
 
@@ -182,14 +188,14 @@
 		to_chat(usr, "Invalid ban id. Contact the database admin")
 		return
 
-	reason = sql_sanitize_text(reason)
+	reason = sanitize_sql(reason)
 	var/value
 
 	switch(param)
 		if("reason")
 			if(!value)
 				value = sanitize(input("Insert the new reason for [pckey]'s ban", "New Reason", "[reason]", null) as null|text)
-				value = sql_sanitize_text(value)
+				value = sanitize_sql(value)
 				if(!value)
 					to_chat(usr, "Cancelled")
 					return
@@ -346,8 +352,8 @@
 
 		adminckey = ckey(adminckey)
 		playerckey = ckey(playerckey)
-		playerip = sql_sanitize_text(playerip)
-		playercid = sql_sanitize_text(playercid)
+		playerip = sanitize_sql(playerip)
+		playercid = sanitize_sql(playercid)
 
 		if(adminckey || playerckey || playerip || playercid || dbbantype)
 
@@ -543,7 +549,7 @@
 		else
 			adminwho += ", [C]"
 
-	reason = sql_sanitize_text(reason)
+	reason = sanitize_sql(reason)
 
 	var/sql = "INSERT INTO erro_ban (`id`,`bantime`,`serverip`,`bantype`,`reason`,`job`,`duration`,`rounds`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], [(rounds)?"[rounds]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
 	var/DBQuery/query_insert = dbcon.NewQuery(sql)

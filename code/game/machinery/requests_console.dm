@@ -242,7 +242,7 @@ var/req_console_information = list()
 			priority = -1
 
 	if(href_list["writeAnnouncement"])
-		var/new_message = sanitize(input(usr, "Write your message:", "Awaiting Input", ""))
+		var/new_message = sanitize(input(usr, "Write your message:", "Awaiting Input", "") as null|message)
 		if(new_message)
 			message = new_message
 			switch(href_list["priority"])
@@ -258,9 +258,9 @@ var/req_console_information = list()
 	if(href_list["sendAnnouncement"])
 		if(!announcementConsole)
 			return FALSE
-		for(var/mob/M in player_list)
-			if(!isnewplayer(M))
-				to_chat(M, "<b><font size='3'><font color='red'>[department] announcement:</font> [message]</font></b>")
+
+		captain_announce(message, "[department] announcement")
+
 		announceAuth = 0
 		message = ""
 		screen = 0

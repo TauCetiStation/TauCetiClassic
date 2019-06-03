@@ -250,7 +250,8 @@
 
 			comm.messagetitle.Add("Cent. Com. Announcement")
 			comm.messagetext.Add(message)
-	world << sound('sound/AI/commandreport.ogg')
+
+	station_announce(sound = "commandreport")
 
 /datum/game_mode/revolution/rp_revolution/latespawn(mob/M)
 	if(M.mind.assigned_role in command_positions)

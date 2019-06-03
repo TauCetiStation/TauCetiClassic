@@ -199,7 +199,7 @@
 /obj/item/device/searcher/interact(mob/user)
 	var/message = "Background radiation levels detected."
 	if(world.time - last_scan_time >= scan_delay)
-		playsound(src, 'sound/weapons/wave.ogg', 10, 1)
+		playsound(src, 'sound/weapons/guns/gunpulse_wave.ogg', 10, 1)
 		INVOKE_ASYNC(src, .proc/scan)
 		if(nearest_artifact_distance >= 0)
 			message = "Exotic energy detected on wavelength '[nearest_artifact_id]' in a radius of [nearest_artifact_distance]m"

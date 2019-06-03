@@ -222,6 +222,42 @@
 	icon_state = "catshirt"
 	item_state = "catshirt"
 
+/obj/item/clothing/suit/engishirt
+	name = "engineer shirt"
+	desc = "Loose t-shirt made of insulating material. Trust me i'm an engineer"
+	icon_state = "engishirt"
+	item_state = "engishirt"
+
+/obj/item/clothing/suit/badengishirt
+	name = "bad engineer shirt"
+	desc = "A loose T-shirt made of insulating material with a picture of gravitational singularity on it. Don't trust me i'm a bad engineer"
+	icon_state = "badengishirt"
+	item_state = "badengishirt"
+
+/obj/item/clothing/suit/docshirt
+	name = "doc shirt"
+	desc = "Nice white T-shirt, designed to show that you are a fashionable doctor. Blood stains are not included"
+	icon_state = "docshirt"
+	item_state = "docshirt"
+
+/obj/item/clothing/suit/battonshirt
+	name = "stunning shirt"
+	desc = "A red T-shirt made from durable Rip-Stop material with a picture of bloody stun batton on it. It makes you stunned"
+	icon_state = "battonshirt"
+	item_state = "battonshirt"
+
+/obj/item/clothing/suit/arstotzkashirt
+	name = "dictator shirt"
+	desc = "Grim-looking T-shirt with a picture of red eagle. A good banner for creating your own state in a single department"
+	icon_state = "arstotzkashirt"
+	item_state = "arstotzkashirt"
+
+/obj/item/clothing/suit/toxicshirt
+	name = "toxic shirt"
+	desc = "Acidic-green t-shirt in order to show who is the biggest asshole here"
+	icon_state = "toxicshirt"
+	item_state = "toxicshirt"
+
 /obj/item/clothing/suit/jacket
 	name = "bomber jacket"
 	desc = "Aviators not included."
@@ -479,10 +515,6 @@
 	desc = "That shade of black just makes you look a bit more evil. Good for those mafia types."
 	icon_state = "trenchcoat_black"
 	item_state = "trenchcoat_black"
-
-/obj/item/clothing/suit/storage/det_suit/max_payne
-	desc = "An 20th-century multi-purpose trenchcoat. Someone who wears this means serious business."
-	icon_state = "maxcoat"
 
 /obj/item/clothing/suit/necromancer_hoodie
 	name = "necromancer hoodie"

@@ -154,7 +154,7 @@
 			return ..()
 		if(user.is_busy()) return
 		user.visible_message("[user] begins rigging [W] to \the [src].", "You begin rigging [W] to \the [src]")
-		if(do_after(user, 20, target = src))
+		if(W.use_tool(src, user, 20))
 			user.visible_message("\blue [user] rigs [W] to \the [src].", "\blue  You rig [W] to \the [src]")
 
 			var/obj/item/device/assembly_holder/H = W

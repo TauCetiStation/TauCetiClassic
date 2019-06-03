@@ -380,7 +380,7 @@
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
 		if(istype(IO))
-			if(IO.damage > 0)
+			if(IO.damage > 0 && IO.robotic < 2)
 				IO.damage = max(IO.damage - 1, 0)
 
 /datum/reagent/peridaxon
@@ -400,7 +400,7 @@
 
 		//Peridaxon is hard enough to get, it's probably fair to make this all organs
 		for(var/obj/item/organ/internal/IO in H.organs)
-			if(IO.damage > 0)
+			if(IO.damage > 0 && IO.robotic < 2)
 				IO.damage = max(IO.damage - 0.20, 0)
 
 /datum/reagent/kyphotorin

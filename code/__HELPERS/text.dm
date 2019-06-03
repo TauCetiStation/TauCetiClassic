@@ -14,16 +14,8 @@
 
 // Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
 /proc/sanitize_sql(t)
-	var/sanitized_text = replacetext(t, "'", "\\'")
-	sanitized_text = replacetext(sanitized_text, "\"", "\\\"")
-	return sanitized_text
-
-// Sanitize inputs to avoid SQL injection attacks
-/proc/sql_sanitize_text(text)
-	text = replacetext(text, "'", "''")
-	text = replacetext(text, ";", "")
-	text = replacetext(text, "&", "")
-	return text
+	var/sqltext = dbcon.Quote("[t]") // http://www.byond.com/forum/post/2218538
+	return copytext(sqltext, 2, lentext(sqltext))
 
 /*
  * Text sanitization

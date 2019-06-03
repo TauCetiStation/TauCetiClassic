@@ -71,6 +71,12 @@
 			ninjastart += loc
 			return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/sound_source
+	name = "Sound Source"
+
+/obj/effect/landmark/sound_source/shuttle_docking
+	name = "Shuttle Docking"
+
 /obj/effect/landmark/start
 	name = "start"
 	icon = 'icons/mob/screen1.dmi'

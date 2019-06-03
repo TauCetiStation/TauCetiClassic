@@ -86,7 +86,7 @@
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
-			if (!user.is_busy(src) && do_after(user,20,target = src))
+			if (!user.is_busy(src) && O.use_tool(src, user, 20, volume = 100))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes part of the [src].</span>", \
 					"<span class='notice'>You have fixed part of the [src].</span>" \
@@ -97,7 +97,7 @@
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
-			if (!user.is_busy(src) && do_after(user,20,target = src))
+			if (!user.is_busy(src) && O.use_tool(src, user, 20, volume = 100))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes the [src].</span>", \
 					"<span class='notice'>You have fixed the [src].</span>" \
@@ -134,7 +134,7 @@
 			"<span class='notice'>[user] starts to clean [src].</span>", \
 			"<span class='notice'>You start to clean [src].</span>" \
 		)
-		if (!user.is_busy(src) && do_after(user,20,target=src))
+		if (!user.is_busy(src) && O.use_tool(src, user, 20, volume = 100))
 			user.visible_message( \
 				"<span class='notice'>[user]  has cleaned [src].</span>", \
 				"<span class='notice'>You have cleaned [src].</span>" \
@@ -451,7 +451,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 2)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 2)
 	RefreshParts()
 
 /obj/machinery/kitchen_machine/oven
@@ -473,7 +473,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 2)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 2)
 	RefreshParts()
 
 /obj/machinery/kitchen_machine/grill
@@ -495,7 +495,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 2)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 2)
 	RefreshParts()
 
 /obj/machinery/kitchen_machine/candymaker
@@ -517,5 +517,5 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 2)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 2)
 	RefreshParts()

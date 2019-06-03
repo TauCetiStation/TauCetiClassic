@@ -188,7 +188,8 @@ var/list/admin_verbs_permissions = list(
 	/client/proc/edit_admin_permissions,
 	/client/proc/gsw_add,
 	/client/proc/library_debug_remove,
-	/client/proc/library_debug_read
+	/client/proc/library_debug_read,
+	/client/proc/regisration_panic_bunker
 	)
 var/list/admin_verbs_rejuv = list(
 	/client/proc/respawn_character
@@ -906,7 +907,7 @@ var/list/admin_verbs_hideable = list(
 
 	to_chat(T, "<span class='notice'><b><font size=3>Man up and deal with it.</font></b></span>")
 	to_chat(T, "<span class='notice'>Move on.</span>")
-	T << 'sound/voice/ManUp1.ogg'
+	send_sound(T, 'sound/voice/ManUp1.ogg')
 
 	log_admin("[key_name(usr)] told [key_name(T)] to man up and deal with it.")
 	message_admins("\blue [key_name_admin(usr)] told [key_name(T)] to man up and deal with it.")
@@ -918,7 +919,7 @@ var/list/admin_verbs_hideable = list(
 
 	for (var/mob/T as mob in player_list)
 		to_chat(T, "<br><center><span class='notice'><b><font size=4>Man up.<br> Deal with it.</font></b><br>Move on.</span></center><br>")
-		T << 'sound/voice/ManUp1.ogg'
+		send_sound(T, 'sound/voice/ManUp1.ogg')
 
 	log_admin("[key_name(usr)] told everyone to man up and deal with it.")
 	message_admins("\blue [key_name_admin(usr)] told everyone to man up and deal with it.")
@@ -957,9 +958,9 @@ var/list/admin_verbs_hideable = list(
 	var/icon/cup = icon('icons/obj/drinks.dmi', "golden_cup")
 
 	if(glob == "No!")
-		winner.client << sound('sound/misc/achievement.ogg')
+		send_sound(winner.client, 'sound/misc/achievement.ogg')
 	else
-		world  << sound('sound/misc/achievement.ogg')
+		send_sound(world, 'sound/misc/achievement.ogg')
 		to_chat(world, "<span class='danger'>[bicon(cup)] <b>[winner.name]</b> wins \"<b>[name]</b>\"!</span>")
 
 	to_chat(winner, "<span class='danger'>Congratulations!</span>")
@@ -1119,7 +1120,7 @@ var/centcom_barriers_stat = 1
 /obj/effect/landmark/trololo/Crossed(mob/M)
 	if(!active) return
 	/*if(istype(M, /mob/living/carbon))
-		M << sound(melody,0,1,lchannel,20)*/
+		send_sound(M, melody, 20, wait = 1)*/
 
 /obj/structure/centcom_barrier
 	name = "Invisible wall"

@@ -182,7 +182,10 @@
 					if(1)
 						emote("twitch")
 					if(2 to 3)
-						say("[pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
+						if(config.rus_language)
+							say(pick(CYRILLIC_TRAIT_TOURETTE))
+						else
+							say(pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS"))
 				var/old_x = pixel_x
 				var/old_y = pixel_y
 				pixel_x += rand(-2,2)
@@ -202,9 +205,9 @@
 			if(config.rus_language)//TODO:CYRILLIC dictionary?
 				switch(pick(1,2,3))
 					if(1)
-						say(pick(CYRILLIC_BRAINDAMAG_1))
+						say(pick(CYRILLIC_BRAINDAMAGE_1))
 					if(2)
-						say(pick(CYRILLIC_BRAINDAMAG_2))
+						say(pick(CYRILLIC_BRAINDAMAGE_2))
 					if(3)
 						emote("drool")
 			else
@@ -217,6 +220,30 @@
 						emote("drool")
 
 	if(stat != DEAD)
+		if(gnomed) // if he's dead he's gnomed foreva-a-ah
+			if(prob(6))
+				say(pick("A-HA-HA-HA!", "U-HU-HU-HU!", "IM A GNOME", "I'm a GnOme!", "Don't GnoMe me!", "I'm gnot a gnoblin!", "You've been GNOMED!"))
+				playsound(src, 'sound/magic/GNOMED.ogg', 50, 1)
+			gnomed--
+			if(gnomed <= 0)
+				to_chat(src, "<span class='notice'>You are no longer gnomed!</span>")
+				gnomed = FALSE
+				if(wear_mask)
+					wear_mask.canremove = TRUE
+				if(head)
+					head.canremove = TRUE
+				if(w_uniform)
+					w_uniform.canremove = TRUE
+				if(wear_suit)
+					remove_from_mob(wear_suit)
+				var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
+				smoke.set_up(3, 0, src.loc)
+				smoke.start()
+				playsound(src, 'sound/magic/cult_revive.ogg', 90, 1)
+				if(SMALLSIZE in mutations)
+					dna.SetSEState(SMALLSIZEBLOCK, 0)
+					domutcheck(src, null)
+
 		var/rn = rand(0, 200)
 		if(getBrainLoss() >= 5)
 			if(0 <= rn && rn <= 3)
@@ -376,8 +403,7 @@
 				if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
 					var/obj/item/clothing/mask/gas/G = wear_mask
 					var/datum/gas_mixture/filtered = new
-
-					for(var/g in  list("phoron", "sleeping_agent"))
+					for(var/g in  G.filter)
 						if(breath.gas[g])
 							filtered.gas[g] = breath.gas[g] * G.gas_filter_strength
 							breath.gas[g] -= filtered.gas[g]
@@ -429,7 +455,6 @@
 				for(var/mob/living/carbon/M in view(1,src))
 					src.spread_disease_to(M)
 
-
 /mob/living/carbon/human/proc/get_breath_from_internal(volume_needed)
 	if(internal)
 		if (!contents.Find(internal))
@@ -437,6 +462,19 @@
 		if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
 			internal = null
 		if(internal)
+					//internal breath sounds
+			if(internal.distribute_pressure >= 16)
+				var/breathsound = ""
+				if(istype(wear_mask, /obj/item/clothing/mask))
+					breathsound = "breathmask"
+				if(istype(wear_mask, /obj/item/clothing/mask/gas))
+					breathsound = "gasmaskbreath"
+				if(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space))
+					breathsound = "rigbreath"
+				if(breathsound == "rigbreath")
+					playsound(src, breathsound, 70, 0, -6, src_vol = 30)
+				else
+					playsound(src, breathsound, 80, 0, -6)
 			return internal.remove_air_volume(volume_needed)
 		else if(internals)
 			internals.icon_state = "internal0"
@@ -1001,7 +1039,7 @@
 		if(light_amount > LIGHT_DAM_THRESHOLD)
 			take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
 			to_chat(src, "<span class='userdanger'>The light burns you!</span>")
-			src << 'sound/weapons/sear.ogg'
+			send_sound(src, 'sound/weapons/sear.ogg')
 		else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
 			heal_overall_damage(5,5)
 			adjustToxLoss(-3)
@@ -1446,8 +1484,12 @@
 		switch(get_nutrition())
 			if(NUTRITION_LEVEL_FULL to INFINITY)
 				throw_alert("nutrition","fat")
-			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
-				clear_alert("nutrition")
+			if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+				throw_alert("nutrition", "full")
+			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+				throw_alert("nutrition", "well_fed")
+			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+				throw_alert("nutrition", "fed")
 			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
 				throw_alert("nutrition","hungry")
 			else
@@ -1549,6 +1591,8 @@
 			sightglassesmod = "thermal"
 		else if(istype(glasses, /obj/item/clothing/glasses/science))
 			sightglassesmod = "sci"
+		else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/noir))
+			sightglassesmod = "greyscale"
 
 	if(species.nighteyes)
 		if(sightglassesmod)
@@ -1700,7 +1744,7 @@
 
 		if(heart_beat >= temp)
 			heart_beat = 0
-			src << sound('sound/effects/singlebeat.ogg',0,0,0,50)
+			send_sound(src, 'sound/effects/singlebeat.ogg', 50)
 		else if(temp != 0)
 			heart_beat++
 

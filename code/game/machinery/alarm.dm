@@ -541,7 +541,8 @@
 						"power"     = info["power"],
 						"checks"    = info["checks"],
 						"direction" = info["direction"],
-						"external"  = info["external"]
+						"external"  = info["external"],
+						"internal"  = info["internal"]
 					)
 			data["vents"] = vents
 		if(AALARM_SCREEN_SCRUB)
@@ -668,7 +669,17 @@
 					return FALSE
 
 				if("reset_external_pressure")
-					send_signal(device_id, list(href_list["command"] = ONE_ATMOSPHERE))
+					send_signal(device_id, list(href_list["command"] = TRUE))
+					return FALSE
+
+				if("set_internal_pressure")
+					var/input_pressure = input("What pressure you like the system to mantain?", "Pressure Controls") as num|null
+					if(isnum(input_pressure))
+						send_signal(device_id, list(href_list["command"] = input_pressure))
+					return FALSE
+
+				if("reset_internal_pressure")
+					send_signal(device_id, list(href_list["command"] = TRUE))
 					return FALSE
 
 				if( "power",
@@ -831,8 +842,7 @@
 				if(user.is_busy())
 					return
 				to_chat(user, "You start prying out the circuit.")
-				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-				if(do_after(user,20,target = src))
+				if(W.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "You pry out the circuit!")
 					var/obj/item/weapon/airalarm_electronics/circuit = new /obj/item/weapon/airalarm_electronics()
 					circuit.loc = user.loc
@@ -897,7 +907,7 @@ Code shamelessly copied from apc_frame
 	flags = CONDUCT
 
 /obj/item/alarm_frame/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
+	if(iswrench(W))
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)
@@ -1015,8 +1025,7 @@ FIRE ALARM
 
 				else if(iscrowbar(W))
 					to_chat(user, "You start prying out the circuit.")
-					playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-					if(do_after(user,20,target = src))
+					if(W.use_tool(src, user, 20, volume = 50))
 						to_chat(user, "You pry out the circuit!")
 						var/obj/item/weapon/firealarm_electronics/circuit = new /obj/item/weapon/firealarm_electronics()
 						circuit.loc = user.loc
@@ -1031,6 +1040,8 @@ FIRE ALARM
 					update_icon()
 
 				else if(iswrench(W))
+					if(user.is_busy())
+						return
 					to_chat(user, "You remove the fire alarm assembly from the wall!")
 					var/obj/item/firealarm_frame/frame = new /obj/item/firealarm_frame()
 					frame.loc = user.loc
@@ -1204,7 +1215,7 @@ Code shamelessly copied from apc_frame
 	flags = CONDUCT
 
 /obj/item/firealarm_frame/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
+	if(iswrench(W))
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)

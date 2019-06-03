@@ -276,7 +276,7 @@
 		SetNextMove(CLICK_CD_MELEE)
 		var/obj/item/projectile/beam/LE = new (loc)
 		LE.damage = 20
-		playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
+		playsound(usr.loc, 'sound/weapons/guns/gunpulse_taser2.ogg', 75, 1)
 		LE.Fire(A, src)
 		nutrition = max(nutrition - rand(10, 40), 0)
 		handle_regular_hud_updates()

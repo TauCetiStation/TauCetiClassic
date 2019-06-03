@@ -10,6 +10,22 @@
 		check_antagonists()
 		return
 
+	if(href_list["ahelp"])
+		if(!check_rights(R_ADMIN, TRUE))
+			return
+
+		var/ahelp_ref = href_list["ahelp"]
+		var/datum/admin_help/AH = locate(ahelp_ref)
+		if(AH)
+			AH.Action(href_list["ahelp_action"])
+		else
+			to_chat(usr, "Ticket [ahelp_ref] has been deleted!")
+		return
+
+	if(href_list["ahelp_tickets"])
+		global.ahelp_tickets.BrowseTickets(text2num(href_list["ahelp_tickets"]))
+		return
+
 //	if(href_list["stickyban"])
 //		stickyban(href_list["stickyban"],href_list)
 
@@ -256,8 +272,7 @@
 				if ((!( ticker ) || SSshuttle.location))
 					return
 				SSshuttle.incall()
-				captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
-				world << sound('sound/AI/shuttlecalled.ogg')
+				captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
 				log_admin("[key_name(usr)] called the Emergency Shuttle")
 				message_admins("\blue [key_name_admin(usr)] called the Emergency Shuttle to the station")
 				make_maint_all_access(FALSE)
@@ -268,7 +283,7 @@
 				switch(SSshuttle.direction)
 					if(-1)
 						SSshuttle.incall()
-						captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
+						captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
 						log_admin("[key_name(usr)] called the Emergency Shuttle")
 						message_admins("\blue [key_name_admin(usr)] called the Emergency Shuttle to the station")
 						make_maint_all_access(FALSE)
@@ -288,7 +303,7 @@
 
 		SSshuttle.settimeleft( input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", SSshuttle.timeleft() ) as num )
 		log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [SSshuttle.timeleft()]")
-		captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
+		captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
 		message_admins("\blue [key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [SSshuttle.timeleft()]")
 		href_list["secretsadmin"] = "check_antagonist"
 
@@ -1602,7 +1617,7 @@
 		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
 		feedback_inc("admin_cookies_spawned",1)
 		to_chat(H, "<span class='adminnotice'>Your prayers have been answered!! You received the <b>best cookie</b>!</span>")
-		SEND_SOUND(H, sound('sound/effects/pray_chaplain.ogg'))
+		send_sound(H, 'sound/effects/pray_chaplain.ogg')
 
 	else if(href_list["BlueSpaceArtillery"])
 		if(!check_rights(R_ADMIN|R_FUN))
@@ -1988,11 +2003,11 @@
 				if(gravity_is_on)
 					log_admin("[key_name(usr)] toggled gravity on.")
 					message_admins("\blue [key_name_admin(usr)] toggled gravity on.")
-					command_alert("Gravity generators are again functioning within normal parameters. Sorry for any inconvenience.")
+					command_alert("Gravity generators are again functioning within normal parameters. Sorry for any inconvenience.", null, "gravon")
 				else
 					log_admin("[key_name(usr)] toggled gravity off.")
 					message_admins("\blue [key_name_admin(usr)] toggled gravity off.")
-					command_alert("Feedback surge detected in mass-distributions systems. Artifical gravity has been disabled whilst the system reinitializes. Further failures may result in a gravitational collapse and formation of blackholes. Have a nice day.")
+					command_alert("Feedback surge detected in mass-distributions systems. Artifical gravity has been disabled whilst the system reinitializes. Further failures may result in a gravitational collapse and formation of blackholes. Have a nice day.", null, "gravoff")
 			if("wave")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","Meteor")
@@ -2221,8 +2236,7 @@
 			if("gravanomalies")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","GA")
-				command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
-				world << sound('sound/AI/granomalies.ogg')
+				command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert", sound = "gravanom")
 				var/turf/T = pick(blobstart)
 				var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
 				spawn(rand(100, 600))
@@ -2366,7 +2380,7 @@
 					W.item_state = "w_suit"
 					W.item_color = "schoolgirl"
 				message_admins("[key_name_admin(usr)] activated Japanese Animes mode")
-				world << sound('sound/AI/animes.ogg')
+				station_announce(sound = "animes")
 			if("eagles")//SCRAW
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","EgL")
@@ -2375,7 +2389,6 @@
 						W.req_access = list()
 				message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
 				command_alert("Centcomm airlock control override activated. Please take this time to get acquainted with your coworkers.")
-				world << sound('sound/AI/commandreport.ogg')
 			if("dorf")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","DF")
@@ -2390,8 +2403,7 @@
 				message_admins("[key_name_admin(usr)] triggered an ion storm")
 				var/show_log = alert(usr, "Show ion message?", "Message", "Yes", "No")
 				if(show_log == "Yes")
-					command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
-					world << sound('sound/AI/ionstorm.ogg')
+					command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", "istorm")
 			if("spacevines")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","K")

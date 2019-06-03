@@ -4,7 +4,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
 	item_state = "staff"
-	fire_sound = 'sound/weapons/emitter.ogg'
+	fire_sound = 'sound/weapons/guns/gunpulse_emitter.ogg'
 	flags =  CONDUCT
 	w_class = ITEM_SIZE_LARGE
 	var/max_charges = 3
@@ -35,11 +35,15 @@
 		return FALSE
 	return TRUE
 
+/obj/item/weapon/gun/magic/examine(mob/user)
+	..()
+	to_chat(user, "The [name] has [charges] charges.")
+
 /obj/item/weapon/gun/magic/proc/newshot()
 	if (charges && chambered)
 		chambered.newshot()
 		charges--
-	return
+		charge_tick = 0
 
 /obj/item/weapon/gun/magic/atom_init()
 	. = ..()

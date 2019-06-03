@@ -39,6 +39,8 @@
 	var/datum/language/speaking = parse_language(message)
 	if(speaking)
 		message = copytext(message,2+length(speaking.key))
+	else if(species.force_racial_language)
+		speaking = all_languages[species.language]
 
 	whisper_say(message, speaking, alt_name)
 
@@ -56,7 +58,7 @@
 	message = capitalize(trim(message))
 
 	//TODO: handle_speech_problems for silent
-	if(!message || silent || miming)
+	if(!message || silent || miming || has_trait(TRAIT_MUTE))
 		return
 
 	// Mute disability

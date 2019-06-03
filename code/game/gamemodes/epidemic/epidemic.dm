@@ -66,8 +66,8 @@
 			comm.messagetitle.Add("Cent. Com. CONFIDENTIAL REPORT")
 			comm.messagetext.Add(intercepttext)
 
-	world << sound('sound/AI/commandreport.ogg')
-
+	station_announce(sound = "commandreport")
+	
 	// add an extra law to the AI to make sure it cooperates with the heads
 	var/extra_law = "Crew authorized to know of pathogen [virus_name]'s existence are: Heads of command, any crew member with loyalty implant. Do not allow unauthorized personnel to gain knowledge of [virus_name]. Aid authorized personnel in quarantining and neutrlizing the outbreak. This law overrides all other laws."
 	for(var/mob/living/silicon/ai/M in ai_list)
@@ -89,8 +89,8 @@
 
 			comm.messagetitle.Add("Cent. Com. CONFIDENTIAL REPORT")
 			comm.messagetext.Add(intercepttext)
-	world << sound('sound/AI/commandreport.ogg')
 
+	station_announce(sound = "commandreport")
 
 /datum/game_mode/epidemic/post_setup()
 	// make sure viral outbreak events don't happen on this mode
@@ -190,7 +190,7 @@
 	ticker.mode:explosion_in_progress = 1
 	for(var/mob/M in mob_list)
 		if(M.client)
-			M << 'sound/machines/Alarm.ogg'
+			send_sound(M, 'sound/machines/Alarm.ogg')
 	to_chat(world, "\blue<b>Incoming missile detected.. Impact in 10..</b>")
 	for (var/i=9 to 1 step -1)
 		sleep(10)

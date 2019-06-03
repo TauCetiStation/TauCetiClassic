@@ -68,10 +68,10 @@
 				if(C.get_amount() < 5)
 					to_chat(user, "<span class='warning'>You need five length of cable to wire the frame!</span>")
 					return
-				if(user.is_busy()) return
-				playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+				if(user.is_busy(src))
+					return
 				to_chat(user, "<span class='notice'>You start to add cables to the frame.</span>")
-				if(do_after(user, 20/P.toolspeed, target = src))
+				if(P.use_tool(src, user, 20, target = src, volume = 50))
 					if(state == 1)
 						if(!C.use(5))
 							return
@@ -81,11 +81,11 @@
 						icon_state = "box_1"
 
 			else if(isscrewdriver(P) && !anchored)
-				if(user.is_busy()) return
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				if(user.is_busy(src))
+					return
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
-				if(do_after(user, 40/P.toolspeed, target = src))
+				if(P.use_tool(src, user, 40, volume = 50))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
 						var/obj/item/stack/sheet/metal/M = new (loc, 5)
@@ -93,19 +93,19 @@
 						qdel(src)
 
 			else if(iswrench(P))
-				if(user.is_busy()) return
+				if(user.is_busy())
+					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				if(do_after(user, 40/P.toolspeed, target = src))
+				if(P.use_tool(src, user, 40, volume = 75))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 						anchored = !anchored
 		if(2)
 			if(iswrench(P))
-				if(user.is_busy()) return
+				if(user.is_busy())
+					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				if(do_after(user, 40/P.toolspeed, target = src))
+				if(P.use_tool(src, user, 40, volume = 75))
 					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 					anchored = !anchored
 
@@ -249,7 +249,18 @@ to destroy them and players will be able to make replacements.
 							/obj/machinery/vending/coffee = "Getmore Chocolate Corp",
 							/obj/machinery/vending/snack = "Hot Drinks",
 							/obj/machinery/vending/cola = "Robust Softdrinks",
-							/obj/machinery/vending/cigarette = "Cigarette")
+							/obj/machinery/vending/cigarette = "Cigarette",
+							/obj/machinery/vending/barbervend = "Fab-O-Vend",
+							/obj/machinery/vending/chinese = "\improper Mr. Chang",
+							/obj/machinery/vending/medical = "NanoMed Plus",
+							/obj/machinery/vending/hydronutrients = "NutriMax",
+							/obj/machinery/vending/hydroseeds = "MegaSeed Servitor",
+							/obj/machinery/vending/dinnerware = "Dinnerware",
+							/obj/machinery/vending/tool = "YouTool",
+							/obj/machinery/vending/engivend = "Engi-Vend",
+							/obj/machinery/vending/clothing = "ClothesMate",
+							/obj/machinery/vending/blood = "Blood'O'Matic",
+							/obj/machinery/vending/junkfood = "McNuffin's Fast Food")
 //							/obj/machinery/vending/autodrobe = "AutoDrobe")
 
 		build_path = pick(names)

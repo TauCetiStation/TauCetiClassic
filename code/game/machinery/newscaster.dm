@@ -708,10 +708,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				src.screen=2*/  //Obsolete after autorecognition
 
 	if(iswrench(I))
-		if(user.is_busy()) return
+		if(user.is_busy())
+			return
 		to_chat(user, "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>")
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 60, target = src))
+		if(I.use_tool(src, user, 60, volume = 50))
 			new /obj/item/newscaster_frame(loc)
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			qdel(src)

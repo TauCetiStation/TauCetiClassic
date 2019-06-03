@@ -490,16 +490,13 @@
 			if(isliving(M))
 				var/mob/living/L = M
 				L.Weaken(3)
-				if(ishuman(L))
-					shake_camera(L, 20, 1)
-					spawn(20)
-						if(L)
-							L.visible_message("<span class='danger'>[L.name] vomits from travelling through the [src.name]!</span>", "<span class='userdanger'>You throw up from travelling through the [src.name]!</span>")
-							L.nutrition -= 20
-							L.adjustToxLoss(-3)
-							var/turf/T = get_turf(L)
-							T.add_vomit_floor(L)
-							playsound(L, 'sound/effects/splat.ogg', 50, 1)
+				shake_camera(L, 20, 1)
+				spawn(20)
+					if(L)
+						var/turf/T = get_turf(L)
+						T.add_vomit_floor(L)
+						L.nutrition -= 20
+						L.adjustToxLoss(-3)
 
 
 /**********************Resonator**********************/
@@ -629,7 +626,7 @@
 	ranged_message = "shoots"
 	ranged_cooldown_cap = 3
 	projectiletype = /obj/item/projectile/kinetic
-	projectilesound = 'sound/weapons/Gunshot4.ogg'
+	projectilesound = 'sound/weapons/guns/Gunshot3.ogg'
 	wanted_objects = list(/obj/item/weapon/ore/diamond,
 						  /obj/item/weapon/ore/glass,
 						  /obj/item/weapon/ore/gold,

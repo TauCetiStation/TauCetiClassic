@@ -151,7 +151,7 @@
 
 	target_ckey = ckey(target_ckey)
 	role = lowertext(role)
-	reason = sql_sanitize_text(reason)
+	reason = sanitize_sql(reason)
 	adm_ckey = ckey(adm_ckey)
 
 	if(!target_ckey || !role || !reason || !adm_ckey)
@@ -207,7 +207,7 @@
 
 	target_ckey = ckey(target_ckey)
 	role = lowertext(role)
-	reason = sql_sanitize_text(reason)
+	reason = sanitize_sql(reason)
 	adm_ckey = ckey(adm_ckey)
 
 	if(!target_ckey || !role || !reason || !adm_ckey)

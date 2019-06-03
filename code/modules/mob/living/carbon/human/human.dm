@@ -15,6 +15,7 @@
 	var/team = 0
 	var/metadata
 	var/seer = 0 // used in cult datum /cult/seer
+	var/gnomed = 0 // timer used by gnomecurse.dm
 
 	throw_range = 2
 
@@ -1169,27 +1170,21 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/proc/vomit()
 
-	if(species.flags[IS_SYNTHETIC])
-		return //Machines don't throw up.
+	if(species.flags[NO_VOMIT])
+		return // Machines, golems, shadowlings and abductors don't throw up.
 
 	if(!lastpuke)
 		lastpuke = 1
-		to_chat(src, "<span class='warning'>You feel nauseous...</span>")
-		spawn(150)	//15 seconds until second warning
+		src.visible_message("<B>[src]</B> looks kinda like unhealthy.","<span class='warning'>You feel nauseous...</span>")
+		spawn(150) //15 seconds until second warning
 			to_chat(src, "<span class='warning'>You feel like you are about to throw up!</span>")
-			spawn(100)	//and you have 10 more for mad dash to the bucket
+			spawn(100) //and you have 10 more for mad dash to the bucket
 				Stun(5)
-
-				src.visible_message("<span class='warning'>[src] throws up!","<spawn class='warning'>You throw up!</span>")
-				playsound(loc, 'sound/effects/splat.ogg', 50, 1)
-
-				var/turf/location = loc
-				if (istype(location, /turf/simulated))
-					location.add_vomit_floor(src, 1)
-
+				var/turf/T = loc
+				T.add_vomit_floor(src, 1)
 				nutrition -= 40
 				adjustToxLoss(-3)
-				spawn(350)	//wait 35 seconds before next volley
+				spawn(350) //wait 35 seconds before next volley
 					lastpuke = 0
 
 /mob/living/carbon/human/proc/morph()

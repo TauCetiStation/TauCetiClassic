@@ -329,6 +329,12 @@
 				ONE_ATMOSPHERE * 50
 			)
 
+	if(signal.data["reset_internal_pressure"] != null)
+		internal_pressure_bound = internal_pressure_bound_default
+
+	if(signal.data["reset_external_pressure"] != null)
+		external_pressure_bound = external_pressure_bound_default
+
 	if(signal.data["adjust_internal_pressure"] != null)
 		internal_pressure_bound = between(
 			0,
@@ -359,7 +365,8 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/attackby(obj/item/W, mob/user)
 	if(iswelder(W))
-		if(user.is_busy()) return
+		if(user.is_busy(src))
+			return
 
 		var/obj/item/weapon/weldingtool/WT = W
 
@@ -367,13 +374,11 @@
 			to_chat(user, "<span class='notice'>The welding tool needs to be on to start this task.</span>")
 			return
 
-		if(!WT.remove_fuel(0, user))
+		if(!WT.use(0, user))
 			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 			return
 		to_chat(user, "<span class='notice'>Now welding \the [src].</span>")
-		playsound(src, 'sound/items/Welder2.ogg', 50, 1)
-
-		if(!do_after(user, 20, null, src))
+		if(!WT.use_tool(src, user, 20, volume = 50))
 			to_chat(user, "<span class='notice'>You must remain close to finish this task.</span>")
 			return
 

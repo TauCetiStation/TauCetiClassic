@@ -36,7 +36,7 @@
 
 	var/data[0]
 
-	data["current"] = null
+	data["current"] = 0
 
 	if(isnull(camera_cache))
 		cameranet.process_sort()
@@ -53,7 +53,7 @@
 				data["current"] = cam
 
 		var/list/camera_list = list("cameras" = cameras)
-		camera_cache = list2json(camera_list)
+		camera_cache = replacetext(list2json(camera_list), "'", "`")
 	else
 		if(current)
 			data["current"] = current.nano_structure()
