@@ -139,7 +139,7 @@ var/list/department_radio_keys = list(
 				if(M != src)
 					M.show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "the radio."]</span>")
 				if (speech_sound)
-					src.playsound_local(get_turf(src), speech_sound, sound_vol * 0.5, 1)
+					playsound_local(src, speech_sound, VOL_EFFECTS, sound_vol * 0.5)
 
 		speech_sound = null	//so we don't play it twice.
 
