@@ -155,7 +155,7 @@
 		message.text = stars(message.text, rand(50,100))
 	to_chat(H, "<span class='notice'>\[[voice_name]\]</span> <span class='[message.class]'>[message.text]</span>")
 	if(message.sound)
-		H.playsound_local(src, message.sound, 50)
+		H.playsound_local(src, message.sound, VOL_EFFECTS, null, FALSE)
 
 	return power_waste
 

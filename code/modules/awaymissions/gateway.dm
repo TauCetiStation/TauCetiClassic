@@ -197,7 +197,7 @@
 		var/obj/screen/cinematic = new /obj/screen{icon='icons/effects/gateway_entry.dmi'; icon_state="entry"; layer=21; mouse_opacity=0; screen_loc="1,0"; } (src)
 		if(M.client)
 			M.client.screen += cinematic
-			M.playsound_local(M.loc, 'sound/machines/gateway/gateway_transit.ogg', 100, 2)
+			M.playsound_local(M.loc, 'sound/machines/gateway/gateway_transit.ogg', VOL_EFFECTS, null, FALSE)
 		addtimer(CALLBACK(src, .proc/exit_from_transit, entered, target, cinematic), 100)
 	else
 		addtimer(CALLBACK(src, .proc/exit_from_transit, entered, target), 100)

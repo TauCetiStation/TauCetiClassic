@@ -131,7 +131,7 @@
 	add_fingerprint(user)
 	open = !open
 	if(open)
-		//playsound(src.loc, 'sound/weapons/heavybolt_out.ogg', 50, 1)
+		//playsound(src, 'sound/weapons/heavybolt_out.ogg', VOL_EFFECTS)
 		var/num_unloaded = 0
 		while (get_ammo() > 0)
 			spawn(3)

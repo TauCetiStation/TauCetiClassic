@@ -106,7 +106,7 @@
 		if(DOOR_CONTROL_COMPLETE)
 			if(istype(W, /obj/item/weapon/card/emag))
 				emagged = TRUE
-				playsound(src, "sparks", 100, 1)
+				playsound(src, "sparks", VOL_EFFECTS)
 				update_icon()
 				return
 			if(!wiresexposed)
@@ -158,7 +158,7 @@
 						return
 				else if(iswirecutter(W))
 					to_chat(user, "You remove wires from the door control frame.")
-					playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
+					playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS)
 					new /obj/item/stack/cable_coil/random(loc, 1)
 					connected_airlocks.Cut()
 					connected_poddoors.Cut()
@@ -189,7 +189,7 @@
 				to_chat(user, "You remove the door control assembly from the wall!")
 				var/obj/item/door_control_frame/frame = new
 				frame.loc = user.loc
-				playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
 				qdel(src)
 				return
 

@@ -259,7 +259,7 @@
 							cur_oct[cur_note] = ni
 
 					var/current_note = uppertext(copytext(note, 1, 2)) + cur_acc[cur_note] + cur_oct[cur_note]
-					playsound(instrument, "[sound_path]/[current_note].ogg", VOL_INSTRUMENTS, volume, falloff = 5)
+					playsound(instrument, "[sound_path]/[current_note].ogg", VOL_INSTRUMENTS, volume, FALSE, falloff = 5)
 
 				var/pause_time = COUNT_PAUSE(song_tempo)
 

@@ -239,7 +239,7 @@
 
 /obj/structure/inflatable/door/proc/Open()
 	isSwitchingStates = 1
-	//playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
+	//playsound(src, 'sound/effects/stonedoor_openclose.ogg', VOL_EFFECTS)
 	flick(opening_state,src)
 	sleep(10)
 	density = 0
@@ -250,7 +250,7 @@
 
 /obj/structure/inflatable/door/proc/Close()
 	isSwitchingStates = 1
-	//playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
+	//playsound(src, 'sound/effects/stonedoor_openclose.ogg', VOL_EFFECTS)
 	flick(closing_state,src)
 	sleep(10)
 	density = 1
