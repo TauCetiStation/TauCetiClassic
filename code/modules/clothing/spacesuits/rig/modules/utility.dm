@@ -670,8 +670,6 @@
 		return TRUE
 
 /obj/item/rig_module/stealth/deactivate()
-	. = ..()
-	
 	if(!..())	
 		return FALSE
 		
