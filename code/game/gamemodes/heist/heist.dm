@@ -223,7 +223,9 @@
 
 	completion_text += "<FONT size = 3, color='red'><B>[win_type] [win_group] victory!</B></FONT>"
 	completion_text += "<BR>[win_msg]"
-	feedback_set_details("round_end_result","heist - [win_type] [win_group]")
+
+	mode_result = "heist - [win_type] [win_group]"
+	feedback_set_details("round_end_result",mode_result)
 
 	var/count = 1
 	for(var/datum/objective/objective in raid_objectives)

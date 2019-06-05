@@ -708,7 +708,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			blackbox.save_all_data_to_sql()
 
 		sleep(50)
-		world.Reboot()
+		world.Reboot(end_state = "admin reboot - by [usr.key]")
 
 
 /datum/admins/proc/announce()
@@ -948,7 +948,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
 
-	world.Reboot()
+	world.Reboot(end_state = "immediate admin reboot - by [usr.key]")
 
 /datum/admins/proc/toggle_job_restriction()
 	set category = "Server"

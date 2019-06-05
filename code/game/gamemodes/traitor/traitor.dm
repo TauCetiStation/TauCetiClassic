@@ -172,7 +172,7 @@
 
 /datum/game_mode/traitor/declare_completion()
 	..()
-	return//Traitors will be checked as part of check_extra_completion. Leaving this here as a reminder.
+	return//Traitors will be checked as part of check_extra_completion. Leaving this here as a reminder.//WHERE IS check_extra_completion?!?!
 
 /datum/game_mode/traitor/process()
 	// Make sure all objectives are processed regularly, so that objectives

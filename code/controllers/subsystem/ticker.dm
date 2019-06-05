@@ -119,9 +119,13 @@ var/datum/subsystem/ticker/ticker
 					if(blackbox)
 						blackbox.save_all_data_to_sql()
 
-					var/datum/game_mode/mutiny/mutiny = get_mutiny_mode()
+					var/datum/game_mode/mutiny/mutiny = get_mutiny_mode()//why it is here?
 					if(mutiny)
 						mutiny.round_outcome()
+
+					if(dbcon.IsConnected())
+						var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET end_datetime = Now(), game_mode_result = '[sanitize_sql(mode.mode_result)]' WHERE id = [round_id]")
+						query_round_game_mode.Execute()
 
 					world.send2bridge(
 						type = list(BRIDGE_ROUNDSTAT, BRIDGE_ANNOUNCE),
@@ -141,7 +145,7 @@ var/datum/subsystem/ticker/ticker
 					if(!delay_end)
 						sleep(restart_timeout)
 						if(!delay_end)
-							world.Reboot() //Can be upgraded to remove unneded sleep here.
+							world.Reboot(end_state = mode.station_was_nuked ? "nuke" : "proper completion") //Can be upgraded to remove unneded sleep here.
 						else
 							to_chat(world, "<span class='info bold'>An admin has delayed the round end</span>")
 							world.send2bridge(
@@ -229,6 +233,10 @@ var/datum/subsystem/ticker/ticker
 
 	current_state = GAME_STATE_PLAYING
 	round_start_time = world.time
+
+	if(dbcon.IsConnected())
+		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET start_datetime = Now() WHERE id = [round_id]")
+		query_round_game_mode.Execute()
 
 	setup_economy()
 

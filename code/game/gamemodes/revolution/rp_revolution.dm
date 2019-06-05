@@ -148,11 +148,13 @@
 	completion_text += "<B>RP-revolution mode resume:</B><BR>"
 	if(!config.objectives_disabled)
 		if(finished == 1)
-			feedback_set_details("round_end_result","win - heads overthrown")
+			mode_result = "win - heads overthrown"
+			feedback_set_details("round_end_result",mode_result)
 			completion_text += "<FONT size=3, color='red'><B>The heads of staff were overthrown! The revolutionaries win!</B></FONT>"
 			score["traitorswon"]++
 		else if(finished == 2)
-			feedback_set_details("round_end_result","loss - revolution stopped")
+			mode_result = "loss - revolution stopped"
+			feedback_set_details("round_end_result",mode_result)
 			completion_text += "<FONT size=3, color='red'><B>The heads of staff managed to stop the revolution!</B></FONT>"
 	..()
 	return 1

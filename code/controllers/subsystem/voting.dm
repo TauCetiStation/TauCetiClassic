@@ -135,7 +135,7 @@ var/datum/subsystem/vote/SSvote
 				active_admins = 1
 				break
 		if(!active_admins)
-			world.Reboot("Restart vote successful.", "end_error", "restart vote")
+			world.Reboot(end_state = "restart vote")
 		else
 			to_chat(world, "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
 			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
