@@ -665,7 +665,7 @@
 		if(!active)
 			to_chat(H, "<span class='danger'>ERROR! Invisibility protocol has been stoped.</span>")
 			return FALSE
-		to_chat(H, "<span class='notice'>Invisibility protocol has been engage.</span>")
+		to_chat(H, "<span class='notice'>Invisibility protocol has been engaged.</span>")
 		holder.wearer.alpha = 4
 		return TRUE
 
