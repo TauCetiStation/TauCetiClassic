@@ -56,7 +56,8 @@
 	else
 		completion_text += "<font color='red'><B>Nobody survived the meteor storm!</B></font>"
 
-	feedback_set_details("round_end_result","end - evacuation")
+	mode_result = "end - evacuation"
+	feedback_set_details("round_end_result",mode_result)
 	feedback_set("round_end_result",survivors)
 
 	..()

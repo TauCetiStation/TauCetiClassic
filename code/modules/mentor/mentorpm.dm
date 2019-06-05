@@ -71,7 +71,12 @@
 		send_sound(C, 'sound/effects/adminhelp.ogg')
 
 	log_admin("PM: [key_name(src)]->[key_name(C)]: [msg]")
-	send2slack_logs("[key_name(src)]->[key_name(C)]",  msg, "(PM)")
+	world.send2bridge(
+		type = list(BRIDGE_ADMINLOG),
+		attachment_title = "MENTOR PM",
+		attachment_msg = "**[key_name(src)]->[key_name(C)]:** [msg]",
+		attachment_color = BRIDGE_COLOR_ADMINLOG,
+	)
 
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/X in admins)

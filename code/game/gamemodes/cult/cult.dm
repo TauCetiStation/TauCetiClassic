@@ -283,12 +283,14 @@
 		return 1
 	completion_text += "<B>Cult mode resume:</B><BR>"
 	if(!check_cult_victory())
-		feedback_set_details("round_end_result","win - cult win")
+		mode_result = "win - cult win"
+		feedback_set_details("round_end_result",mode_result)
 		feedback_set("round_end_result",acolytes_survived)
 		completion_text += "<FONT size = 3 color='red'><B>The cult <font color='green'>wins</font>! It has succeeded in serving its dark masters!</B></FONT>"
 		score["roleswon"]++
 	else
-		feedback_set_details("round_end_result","loss - staff stopped the cult")
+		mode_result = "loss - staff stopped the cult"
+		feedback_set_details("round_end_result",mode_result)
 		feedback_set("round_end_result",acolytes_survived)
 		completion_text += "<FONT size = 3 color='red'><B>The staff managed to stop the cult!</B></FONT><BR>"
 

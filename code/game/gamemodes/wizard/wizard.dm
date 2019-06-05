@@ -213,7 +213,8 @@
 
 	for(var/datum/mind/wizard in wizards)
 		if(wizard.current.stat == DEAD || finished)
-			feedback_set_details("round_end_result","loss - wizard killed")
+			mode_result = "loss - wizard killed"
+			feedback_set_details("round_end_result",mode_result)
 			prefinal_text = "<FONT size = 3>Wizard <b>[wizard.name]</b><i> ([wizard.key])</i> has been <font color='red'><b>killed</b></font> by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</FONT><BR>"
 		else
 			var/failed = 0
@@ -221,10 +222,12 @@
 				if(!objective.check_completion())
 					failed = 1
 			if(!failed)
-				feedback_set_details("round_end_result","win - wizard alive")
+				mode_result = "win - wizard alive"
+				feedback_set_details("round_end_result",mode_result)
 				prefinal_text = "<FONT size = 3>Wizard <b>[wizard.name]</b><i> ([wizard.key])</i> managed to <font color='green'><B>complete</B></font> his mission! The Space Wizards Federation understood that station crew - easy target and will use them next time.</FONT><BR>"
 			else
-				feedback_set_details("round_end_result","loss - wizard alive")
+				mode_result = "loss - wizard alive"
+				feedback_set_details("round_end_result",mode_result)
 				prefinal_text = "<FONT size = 3>Wizard <b>[wizard.name]</b><i> ([wizard.key])</i> managed to stay alive, but <font color='red'><B>failed</B></font> his mission! The Space Wizards Federation wouldn't forget this shame!</FONT><BR>"
 		final_text += "[prefinal_text]"
 

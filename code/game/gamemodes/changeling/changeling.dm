@@ -170,7 +170,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 	for(var/datum/mind/changeling in changelings)
 		if(changeling.current.stat == DEAD)
-			feedback_set_details("round_end_result","loss - changeling killed")
+			mode_result = "loss - changeling killed"
+			feedback_set_details("round_end_result", mode_result)
 			prefinal_text = "<FONT size = 3>Changeling <b>[changeling.changeling.changelingID]</b><i> ([changeling.key])</i> has been <font color='red'><b>killed</b></font> by the crew! The Thing failed again...</FONT><BR>"
 		else
 			var/failed = 0
@@ -178,10 +179,12 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 				if(!objective.check_completion())
 					failed = 1
 			if(!failed)
-				feedback_set_details("round_end_result","win - changeling alive")
+				mode_result = "win - changeling alive"
+				feedback_set_details("round_end_result", mode_result)
 				prefinal_text = "<FONT size = 3>Changeling <b>[changeling.changeling.changelingID]</b><i> ([changeling.key])</i> managed to <font color='green'><B>complete</B></font> his mission! All humanity soon will be infested!</FONT><BR>"
 			else
-				feedback_set_details("round_end_result","loss - changeling alive")
+				mode_result = "loss - changeling alive"
+				feedback_set_details("round_end_result", mode_result)
 				prefinal_text = "<FONT size = 3>Changeling <b>[changeling.changeling.changelingID]</b><i> ([changeling.key])</i> managed to stay alive, but <font color='red'><B>failed</B></font> his mission! Next time he will come more prepared!</FONT><BR>"
 		final_text += "[prefinal_text]"
 

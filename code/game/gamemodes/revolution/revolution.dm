@@ -375,10 +375,12 @@
 	completion_text += "<B>Revolution mode resume:</B><BR>"
 	if(!config.objectives_disabled)
 		if(finished == 1)
-			feedback_set_details("round_end_result","win - heads killed")
+			mode_result = "win - heads killed"
+			feedback_set_details("round_end_result",mode_result)
 			completion_text += "<br><FONT size = 3, color='red'><B>The heads of staff were killed or exiled! The revolutionaries win!</B></FONT>"
 		else if(finished == 2)
-			feedback_set_details("round_end_result","loss - rev heads killed")
+			mode_result = "loss - rev heads killed"
+			feedback_set_details("round_end_result",mode_result)
 			completion_text += "<br><FONT size = 3, color='red'><B>The heads of staff managed to stop the revolution!</B></FONT>"
 	var/num_revs = 0
 	for(var/mob/living/carbon/mob in alive_mob_list)

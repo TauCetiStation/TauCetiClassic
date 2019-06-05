@@ -151,7 +151,12 @@
 			to_chat(src, "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>")
 			return
 
-	send2slack_logs("[key_name(src)]->[key_name(recipient)]",  msg, "(PM)")
+	world.send2bridge(
+		type = list(BRIDGE_ADMINLOG),
+		attachment_title = "PM",
+		attachment_msg = "**[key_name(src)]->[key_name(recipient)]:** [msg]",
+		attachment_color = BRIDGE_COLOR_ADMINLOG,
+	)
 	window_flash(recipient)
 	log_admin_private("[key_name(src)]->[key_name(recipient)]: [msg]")
 	//we don't use message_admins here because the sender/receiver might get it too
