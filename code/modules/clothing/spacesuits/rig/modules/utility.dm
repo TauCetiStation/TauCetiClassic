@@ -672,8 +672,10 @@
 /obj/item/rig_module/stealth/deactivate()
 	. = ..()
 	
+	if(!..())	
+		return FALSE
+		
 	holder.canremove = TRUE
-	active = FALSE
 	holder.wearer.alpha = 255
 
 	return TRUE
