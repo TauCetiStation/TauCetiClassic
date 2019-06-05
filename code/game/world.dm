@@ -264,8 +264,8 @@ var/world_topic_spam_protect_time = world.timeofday
 	for(var/client/C in clients)
 		//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 		C << link(BYOND_JOIN_LINK)
-
-  if(fexists("scripts/hooks/round_end.sh")) //nevermind, we drop windows support for this things a little
+	
+	if(fexists("scripts/hooks/round_end.sh")) //nevermind, we drop windows support for this things a little
 		var/list/O = world.shelleo("./scripts/hooks/round_end.sh")
 		if(O[SHELLEO_ERRORLEVEL])
 			world.log << O[SHELLEO_STDERR]
