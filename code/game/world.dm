@@ -266,7 +266,7 @@ var/world_topic_spam_protect_time = world.timeofday
 		C << link(BYOND_JOIN_LINK)
 	
 	if(fexists("scripts/hooks/round_end.sh")) //nevermind, we drop windows support for this things a little
-		var/list/O = world.shelleo("./scripts/hooks/round_end.sh")
+		var/list/O = world.shelleo("scripts/hooks/round_end.sh")
 		if(O[SHELLEO_ERRORLEVEL])
 			world.log << O[SHELLEO_STDERR]
 		else
