@@ -27863,9 +27863,7 @@
 	dir = 1;
 	network = list("SS13","Research")
 	},
-/obj/effect/landmark{
-	name = "spacestructures_paper"
-	},
+/obj/item/weapon/paper/space_structures,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
