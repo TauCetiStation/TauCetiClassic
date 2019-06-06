@@ -318,10 +318,17 @@
 			result_amount = 2
 
 		imidazoline
-			name = "imidazoline"
+			name = "Imidazoline"
 			id = "imidazoline"
 			result = "imidazoline"
 			required_reagents = list("carbon" = 1, "hydrogen" = 1, "anti_toxin" = 1)
+			result_amount = 2
+
+		inacusiate
+			name = "Inacusiate"
+			id = "inacusiate"
+			result = "inacusiate"
+			required_reagents = list("nitrogen" = 1, "oxygen" = 1, "anti_toxin" = 1)
 			result_amount = 2
 
 		ethylredoxrazine

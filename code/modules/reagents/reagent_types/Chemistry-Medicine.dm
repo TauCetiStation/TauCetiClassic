@@ -580,3 +580,16 @@
 	..()
 	M.nutrition = max(M.nutrition - nutriment_factor, 0)
 	M.overeatduration = 0
+
+/datum/reagent/inacusiate
+	name = "Inacusiate"
+	id = "inacusiate"
+	description = "A chemical compound that instantly restores all hearing to the patient, but does not cure deafness."
+	reagent_state = LIQUID
+	color = "#6600FF" // rgb: 187, 237, 164
+	overdose = REAGENTS_OVERDOSE
+
+/datum/reagent/inacusiate/on_general_digest(mob/living/M)
+	..()
+	if(volume == 15)
+		M.ear_deaf = 0
