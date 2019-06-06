@@ -1,4 +1,4 @@
-var/datum/subsystem/space_structures/SSspace_structures
+var/datum/subsystem/space_structures/SSspaceStructures
 
 // How many structures will be spawned
 #define SPACE_STRUCTURES_AMMOUNT 7
@@ -9,9 +9,7 @@ var/datum/subsystem/space_structures/SSspace_structures
 
 /datum/subsystem/space_structures
 	name = "Space Structures"
-
 	init_order = SS_INIT_SPACESTRUCTURES
-
 	flags = SS_NO_FIRE
 
 	var/list/spawned_structures = list()
