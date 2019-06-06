@@ -104,3 +104,20 @@
 	icon_state = "ert_medical"
 	slowdown = 0.8
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/device/healthscanner, /obj/item/rig_module/chem_dispenser/medical/ert)
+
+/obj/item/clothing/head/helmet/space/rig/ert/stealth
+	name = "emergency response team stealth helmet"
+	desc = "A helmet worn by stealth members of a NanoTrasen Emergency Response Team."
+	icon_state = "rig0-ert_stealth"
+	item_color = "ert_stealth"
+	armor = list(melee = 30, bullet = 15, laser = 20,energy = 5, bomb = 20, bio = 100, rad = 100)
+	light_color = "#c388eb"
+	action_button_name = "Toggle Helmet Visor Light"
+
+/obj/item/clothing/suit/space/rig/ert/stealth
+	name = "emergency response team stealth suit"
+	desc = "A suit worn by stealth members of a NanoTrasen Emergency Response Team"
+	icon_state = "ert_stealth"
+	armor = list(melee = 40, bullet = 20, laser = 30,energy = 10, bomb = 30, bio = 100, rad = 100)
+	slowdown = 0.6
+	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/stealth, /obj/item/rig_module/nuclear_generator,/obj/item/rig_module/chem_dispenser/combat)
