@@ -670,7 +670,8 @@
 		return TRUE
 
 /obj/item/rig_module/stealth/deactivate()
-	if(!..())	
+	. = ..()
+	if(!.)	
 		return FALSE
 		
 	holder.canremove = TRUE
