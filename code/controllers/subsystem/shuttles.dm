@@ -54,6 +54,8 @@ var/datum/subsystem/shuttle/SSshuttle
 		//pod stuff
 	var/list/pod_station_area
 
+	var/status_display_last_mode
+
 	//var/datum/round_event/shuttle_loan/shuttle_loan
 
 /datum/subsystem/shuttle/New()
@@ -626,6 +628,11 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle/proc/incall(coeff = 1)
 	if(deny_shuttle && alert == 1) //crew transfer shuttle does not gets recalled by gamemode
 		return
+	var/obj/machinery/status_display/S = status_display_list[1]
+	status_display_last_mode = S.mode
+	for(var/obj/machinery/status_display/Screen in status_display_list)
+		Screen.mode = 1
+		Screen.update()
 	if(endtime)
 		if(direction == -1)
 			setdirection(1)
@@ -634,6 +641,7 @@ var/datum/subsystem/shuttle/SSshuttle
 		online = 1
 		if(always_fake_recall)
 			fake_recall = rand(300,500)		//turning on the red lights in hallways
+
 
 /datum/subsystem/shuttle/proc/get_shuttle_arrive_time()
 	// During mutiny rounds, the shuttle takes twice as long.
@@ -648,12 +656,18 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle/proc/recall()
 	if(direction == 1)
 		var/timeleft = timeleft()
+		for(var/obj/machinery/status_display/Screen in status_display_list)
+			if(Screen.mode == 1) 	// we don't need to change the mode if the mode is already non-shuttle-ETA
+				Screen.mode = status_display_last_mode
+				Screen.update()
+
 		if(alert == 0)
 			if(timeleft >= get_shuttle_arrive_time())
 				return
 			captain_announce("The emergency shuttle has been recalled.", sound = "emer_shut_recalled")
 			setdirection(-1)
 			online = 1
+
 			return
 		else //makes it possible to send shuttle back.
 			captain_announce("The shuttle has been recalled.", sound = "crew_shut_recalled")
