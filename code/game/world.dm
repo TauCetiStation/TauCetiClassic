@@ -42,14 +42,22 @@ var/round_id = 0
 	if(config && config.log_runtime)
 		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")
 
+	//announce with slap, round log without
 	world.send2bridge(
-		type = list(BRIDGE_ROUNDSTAT, BRIDGE_ANNOUNCE),
-		attachment_title = "Server starting up, new round will starting soon",
+		type = list(BRIDGE_ANNOUNCE),
+		attachment_title = "Server starting up, new round will start soon",
 		attachment_msg = "Join now: <[BYOND_JOIN_LINK]>",
 		attachment_color = BRIDGE_COLOR_ANNOUNCE,
 		mention = BRIDGE_MENTION_ROUNDSTART,
 	)
 	
+	world.send2bridge(
+		type = list(BRIDGE_ROUNDSTAT),
+		attachment_title = "Server starting up, new round will start soon",
+		attachment_msg = "Join now: <[BYOND_JOIN_LINK]>",
+		attachment_color = BRIDGE_COLOR_ANNOUNCE,
+	)
+
 	radio_controller = new /datum/controller/radio()
 	data_core = new /obj/effect/datacore()
 	paiController = new /datum/paiController()
