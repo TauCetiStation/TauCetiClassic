@@ -128,7 +128,7 @@ var/datum/subsystem/ticker/ticker
 						query_round_game_mode.Execute()
 
 					world.send2bridge(
-						type = list(BRIDGE_ROUNDSTAT, BRIDGE_ANNOUNCE),
+						type = list(BRIDGE_ROUNDSTAT),
 						attachment_title = "Round is over",
 						attachment_color = BRIDGE_COLOR_ANNOUNCE,
 					)
