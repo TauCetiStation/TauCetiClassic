@@ -1,9 +1,11 @@
 var/global/list/sounds_cache = list()
 
-/client/proc/play_sound(S as sound)
+/client/proc/play_global_sound(S as sound)
 	set category = "Fun"
 	set name = "Play Global Sound"
-	if(!check_rights(R_SOUNDS))	return
+
+	if(!check_rights(R_SOUNDS))
+		return
 
 	sounds_cache += S
 
@@ -22,27 +24,15 @@ var/global/list/sounds_cache = list()
 /client/proc/play_local_sound(S as sound)
 	set category = "Fun"
 	set name = "Play Local Sound"
-	if(!check_rights(R_SOUNDS))	return
+
+	if(!check_rights(R_SOUNDS))
+		return
 
 	log_admin("[key_name(src)] played a local sound [S]")
 	message_admins("[key_name_admin(src)] played a local sound [S]")
 	playsound(mob, S, VOL_EFFECTS)
 	feedback_add_details("admin_verb","PLS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/play_server_sound()
-	set category = "Fun"
-	set name = "Play Server Sound"
-	if(!check_rights(R_SOUNDS))	return
-
-	var/list/sounds = file2list("sound/serversound_list.txt");
-	sounds += "--CANCEL--"
-	sounds += sounds_cache
-
-	var/melody = input("Select a sound from the server to play", , "CANCEL") in sounds
-
-	if(melody == "--CANCEL--") return
-
-	play_sound(melody)
 
 /client/proc/stop_server_sound()
 	set category = "Fun"
