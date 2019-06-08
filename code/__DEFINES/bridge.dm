@@ -3,7 +3,7 @@
 
 //service messages
 #define BRIDGE_ROUNDSTAT  "roundstat"  //shuttle/server starting/round starting
-#define BRIDGE_SERVICE    "service"    //debug?
+#define BRIDGE_SERVICE    "service"    //private debug msgs
 #define BRIDGE_ANNOUNCE   "announce"   //general announces for players
 
 //admin
