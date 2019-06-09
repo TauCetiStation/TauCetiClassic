@@ -5,8 +5,15 @@ var/global/list/sounds_cache = list()
 	set name = "Play Global Sound"
 	if(!check_rights(R_SOUNDS))	return
 
-	var/sound/uploaded_sound = new()//sound(S, repeat = 0, wait = 1, channel = CHANNEL_ADMIN)
-	uploaded_sound.file = S
+	var/sound/uploaded_sound
+
+	if(istext(S))
+		//we need 'path' type for .file field, but seems like text2path not working with sounds, and this is the only way...
+		uploaded_sound = new(S) 
+	else
+		uploaded_sound = new()
+		uploaded_sound.file = S
+
 	uploaded_sound.priority = 250
 	uploaded_sound.channel = CHANNEL_ADMIN
 	uploaded_sound.wait = 1
