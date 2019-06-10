@@ -239,6 +239,11 @@ var/world_topic_spam_protect_time = world.timeofday
 		var/DBQuery/query_round_shutdown = dbcon.NewQuery("UPDATE erro_round SET shutdown_datetime = Now(), end_state = '[sanitize_sql(end_state)]' WHERE id = [round_id]")
 		query_round_shutdown.Execute()
 
+		dbcon.Disconnect()
+
+	if(dbcon_old.IsConnected())
+		dbcon_old.Disconnect()
+
 	world.log << "Runtimes count: [total_runtimes]. Runtimes skip count: [total_runtimes_skipped]."
 
 	// Bad initializations log.
