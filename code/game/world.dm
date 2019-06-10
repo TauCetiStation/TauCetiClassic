@@ -67,14 +67,14 @@ var/round_id = 0
 		Master.Setup()
 
 	if(!setup_old_database_connection())
-		world.log << "Your server failed to establish a connection with the SQL database."
+		log_sql("Your server failed to establish a connection with the SQL database.")
 	else
-		world.log << "SQL database connection established."
+		log_sql("SQL database connection established.")
 
 	if(!setup_database_connection())
-		world.log << "Your server failed to establish a connection with the feedback database."
+		log_sql("Your server failed to establish a connection with the feedback database.")
 	else
-		world.log << "Feedback database connection established."
+		log_sql("Feedback database connection established.")
 
 	SetRoundID()
 

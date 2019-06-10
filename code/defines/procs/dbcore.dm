@@ -102,7 +102,22 @@ var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is 
 
 /DBQuery/proc/Execute(sql_query=src.sql,cursor_handler=default_cursor)
 	Close()
-	return _dm_db_execute(_db_query,sql_query,db_connection._db_con,cursor_handler,null)
+
+	. = _dm_db_execute(_db_query,sql_query,db_connection._db_con,cursor_handler,null)
+	if(!.)
+		var/errmsg = ErrorMsg()
+
+		log_sql("ERROR: [errmsg] | [sql_query]")
+
+		if(findtext(errmsg, "Lost connection"))//something bad happened, basically "temporary" debug output before we hunt down this error
+			message_admins("<span style='color: red;'>[errmsg]</span>")
+			world.send2bridge(
+				type = list(BRIDGE_SERVICE),
+				attachment_title = errmsg,
+				attachment_msg = sql_query,
+				attachment_color = BRIDGE_COLOR_ADMINALERT,
+				mention = BRIDGE_MENTION_HERE,
+			)
 
 /DBQuery/proc/NextRow() return _dm_db_next_row(_db_query,item,conversions)
 
