@@ -95,7 +95,7 @@
 	diary << "\[[time_stamp()]]MISC: [text][log_end]"
 
 /proc/log_sql(text)
-	diary << "\[[time_stamp()]]SQL: [text][log_end]"
+	world.log << "\[[time_stamp()]]SQL: [text][log_end]"
 
 /proc/log_unit_test(text)
 	world.log << "## UNIT_TEST ##: [text]"
