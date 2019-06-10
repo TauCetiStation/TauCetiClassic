@@ -167,26 +167,27 @@ Implants;
 	for(var/mob/M in player_list)
 		if(M.client)
 			clients++
+			var/area/mob_area = get_area(M)
 			if(ishuman(M))
 				if(!M.stat)
 					surviving_humans++
-					if(M.loc && M.loc.loc && M.loc.loc.type in escape_locations)
+					if(mob_area.type in escape_locations)
 						escaped_humans++
 			if(!M.stat)
 				surviving_total++
-				if(M.loc && M.loc.loc && M.loc.loc.type in escape_locations)
+				if(mob_area.type in escape_locations)
 					escaped_total++
 
-				if(M.loc && M.loc.loc && M.loc.loc.type == /area/shuttle/escape/centcom)
+				if(mob_area.type == /area/shuttle/escape/centcom)
 					escaped_on_shuttle++
 
-				if(M.loc && M.loc.loc && M.loc.loc.type == /area/shuttle/escape_pod1/centcom)
+				if(mob_area.type == /area/shuttle/escape_pod1/centcom)
 					escaped_on_pod_1++
-				if(M.loc && M.loc.loc && M.loc.loc.type == /area/shuttle/escape_pod2/centcom)
+				if(mob_area.type == /area/shuttle/escape_pod2/centcom)
 					escaped_on_pod_2++
-				if(M.loc && M.loc.loc && M.loc.loc.type == /area/shuttle/escape_pod3/centcom)
+				if(mob_area.type == /area/shuttle/escape_pod3/centcom)
 					escaped_on_pod_3++
-				if(M.loc && M.loc.loc && M.loc.loc.type == /area/shuttle/escape_pod5/centcom)
+				if(mob_area.type == /area/shuttle/escape_pod5/centcom)
 					escaped_on_pod_5++
 
 			if(isobserver(M))
@@ -200,8 +201,10 @@ Implants;
 		feedback_set("survived_human",surviving_humans)
 	if(surviving_total > 0)
 		feedback_set("survived_total",surviving_total)
+		score["crew_survived"] = surviving_total
 	if(escaped_humans > 0)
 		feedback_set("escaped_human",escaped_humans)
+		score["crew_escaped"] = escaped_humans
 	if(escaped_total > 0)
 		feedback_set("escaped_total",escaped_total)
 	if(escaped_on_shuttle > 0)
@@ -465,9 +468,9 @@ Implants;
 	var/count = 1
 	for(var/datum/objective/objective in ply.objectives)
 		if(objective.check_completion())
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
 		else
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='red'><b>Fail.</b></font>"
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
 		count++
 	return text
 
@@ -479,7 +482,7 @@ Implants;
 		var/icon/flat = getFlatIcon(ply.current,exact=1)
 		end_icons += flat
 		tempstate = end_icons.len
-		text += {"<BR><img src="logo_[tempstate].png"> <B>[ply.key]</B> was <B>[ply.name]</B> ("}
+		text += {"<br><img src="logo_[tempstate].png"> <b>[ply.key]</b> was <b>[ply.name]</b> ("}
 		if(ply.current.stat == DEAD)
 			text += "died"
 			flat.Turn(90)
@@ -492,7 +495,7 @@ Implants;
 		var/icon/sprotch = icon('icons/effects/blood.dmi', "gibbearcore")
 		end_icons += sprotch
 		tempstate = end_icons.len
-		text += {"<BR><img src="logo_[tempstate].png"> <B>[ply.key]</B> was <B>[ply.name]</B> ("}
+		text += {"<br><img src="logo_[tempstate].png"> <b>[ply.key]</b> was <b>[ply.name]</b> ("}
 		text += "body destroyed"
 	text += ")"
 	return text
@@ -503,5 +506,5 @@ Implants;
 	end_icons += logo
 	var/tempstate = end_icons.len
 	var/text = ""
-	text += {"<img src="logo_[tempstate].png"> <B>The [antagname] were:</B> <img src="logo_[tempstate].png">"}
+	text += {"<img src="logo_[tempstate].png"> <b>The [antagname] were:</b> <img src="logo_[tempstate].png">"}
 	return text

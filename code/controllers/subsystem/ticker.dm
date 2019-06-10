@@ -1,4 +1,5 @@
 var/round_start_time = 0
+var/round_start_realtime = 0
 
 var/datum/subsystem/ticker/ticker
 
@@ -133,6 +134,8 @@ var/datum/subsystem/ticker/ticker
 						attachment_color = BRIDGE_COLOR_ANNOUNCE,
 					)
 
+					drop_round_stats()
+
 					if (mode.station_was_nuked)
 						feedback_set_details("end_proper","nuke")
 						if(!delay_end)
@@ -233,6 +236,7 @@ var/datum/subsystem/ticker/ticker
 
 	current_state = GAME_STATE_PLAYING
 	round_start_time = world.time
+	round_start_realtime = world.realtime
 
 	if(dbcon.IsConnected())
 		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET start_datetime = Now() WHERE id = [round_id]")
@@ -410,7 +414,7 @@ var/datum/subsystem/ticker/ticker
 			if(!isnewplayer(M))
 				to_chat(M, "Captainship not forced on anyone.")
 
-
+//cursed code
 /datum/subsystem/ticker/proc/declare_completion()
 	var/station_evacuated
 	if(SSshuttle.location > 0)
@@ -421,7 +425,7 @@ var/datum/subsystem/ticker/ticker
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
 
 	//Player status report
-	for(var/mob/Player in mob_list)
+	for(var/mob/Player in mob_list)//todo: remove in favour of /game_mode/proc/declare_completion
 		if(Player.mind && !isnewplayer(Player))
 			if(Player.stat != DEAD && !isbrain(Player))
 				num_survivors++
@@ -455,7 +459,8 @@ var/datum/subsystem/ticker/ticker
 	var/ai_completions = "<h1>Round End Information</h1><HR>"
 
 	if(silicon_list.len)
-		ai_completions += "<H3>Silicons Laws</H3>"
+		ai_completions += "<h2>Silicons Laws</h2>"
+		ai_completions += "<div class='block'>"
 		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
 			if(!aiPlayer)
 				continue
@@ -497,12 +502,14 @@ var/datum/subsystem/ticker/ticker
 		if(dronecount)
 			ai_completions += "<B>There [dronecount>1 ? "were" : "was"] [dronecount] industrious maintenance [dronecount>1 ? "drones" : "drone"] this round.</B>"
 
-		ai_completions += "<HR>"
+		ai_completions += "</div>"
 
 	mode.declare_completion()//To declare normal completion.
 
-	ai_completions += "<BR><h2>Mode Result</h2>"
-	ai_completions += "[mode.completion_text]<HR>"
+	ai_completions += "<br><h2>Mode Result</h2>"
+	
+	if(mode.completion_text)//extendet has empty completion text
+		ai_completions += "<div class='block'>[mode.completion_text]</div>"
 
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
@@ -525,7 +532,8 @@ var/datum/subsystem/ticker/ticker
 	end_icons += cup
 	var/tempstate = end_icons.len
 	for(var/winner in achievements)
-		text += {"<br><img src="logo_[tempstate].png"> [winner]"}
+		var/winner_text = "<b>[winner["key"]]</b> as <b>[winner["name"]]</b> won \"<b>[winner["title"]]</b>\"! \"[winner["desc"]]\""
+		text += {"<br><img src="logo_[tempstate].png"> [winner_text]"}
 
 	return text
 

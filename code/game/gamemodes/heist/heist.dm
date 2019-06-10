@@ -1,3 +1,5 @@
+//not used, look heist_old (wtf)
+
 /obj/effect/landmark/heist/aurora //used to locate shuttle.
 	name = "Aurora"
 	icon_state = "x3"
@@ -231,17 +233,17 @@
 	for(var/datum/objective/objective in raid_objectives)
 		if(objective.check_completion())
 			if(objective.target == "valuables")
-				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] ([num2text(heist_rob_total,9)]/[num2text(objective.target_amount,9)]) <font color='green'><B>Success!</B></font>"
+				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] ([num2text(heist_rob_total,9)]/[num2text(objective.target_amount,9)]) <span style='color: green; font-weight: bold;'>Success!</span>"
 				feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
 			else
-				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
 				feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
 		else
 			if(objective.target == "valuables")
-				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] ([num2text(heist_rob_total,9)]/[num2text(objective.target_amount,9)]) <font color='red'>Fail.</font>"
+				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] ([num2text(heist_rob_total,9)]/[num2text(objective.target_amount,9)]) <span style='color: red; font-weight: bold;'>Fail.</span>"
 				feedback_add_details("traitor_objective","[objective.type]|FAIL")
 			else
-				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
 				feedback_add_details("traitor_objective","[objective.type]|FAIL")
 		count++
 
@@ -300,7 +302,10 @@
 				text += "body destroyed"
 			text += ")"
 
-		text += "<BR><HR>"
+	if(text)
+		antagonists_completion += list(list("mode" = "heist", "html" = text))
+		text = "<div class='block'>[text]</div>"
+		
 	return text
 
 /datum/game_mode/heist/check_finished()

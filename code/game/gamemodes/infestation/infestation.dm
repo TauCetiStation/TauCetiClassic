@@ -135,15 +135,20 @@ Infestation:
 	if(xenomorphs.len)
 		if(check_xeno_queen())
 			if(check_xeno_queen() == 1)
-				text += "<font size=3 color=green><b>The Queen is alive!</FONT></b>"
+				text += "<span style='color: green; font-weight: bold;'>The Queen is alive!</span>"
 			if(check_xeno_queen() == 2)
-				text += "<span class='danger'><font size=3><b>The Queen has been killed!</b></FONT></span>"
+				text += "<span style='color: red; font-weight: bold;'>The Queen has been killed!</span>"
 		else
-			text += "<font size=3 color=blue><b>The Queen was never born.</FONT></b>"
+			text += "<span style='color: orange; font-weight: bold;'>The Queen was never born.</span>"
 		if(count_hive_power())
-			text += "<font size=3 color=green><b>There is [count_hive_power()] xenomorphs alive!</FONT></b>"
+			text += "<span style='color: green; font-weight: bold;'>There is [count_hive_power()] xenomorphs alive!</span>"
 		else
-			text += "<span class='danger'><font size=3><b>All xenomorphs were eradicated.</b></FONT></span>"
+			text += "<span style='color: red; font-weight: bold;'>All xenomorphs were eradicated.</span>"
 		if(count_hive_looses())
-			text += "<span class='danger'><font size=3><b>[count_hive_looses()] xenomorphs are dead.</b></FONT></span>"
+			text += "<span style='color: red; font-weight: bold;'>[count_hive_looses()] xenomorphs are dead.</span>"
+		
+	if(text)
+		antagonists_completion += list(list("mode" = "infestation", "html" = text))
+		text = "<div class='block'>[text]</div>"
+		
 	return text

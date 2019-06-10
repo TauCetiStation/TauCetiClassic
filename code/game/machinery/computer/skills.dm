@@ -308,7 +308,7 @@ What a mess.*/
 		if ("New Record (General)")
 			if(PDA_Manifest.len)
 				PDA_Manifest.Cut()
-			active1 = CreateGeneralRecord()
+			active1 = CreateGeneralRecord() // todo: datacore.manifest_inject or scaner (Identity Analyser)
 
 //FIELD FUNCTIONS
 		if ("Edit Field")

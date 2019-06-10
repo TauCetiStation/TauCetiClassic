@@ -372,22 +372,22 @@
 //Announces the end of the game with all relavent information stated//
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/declare_completion()
-	completion_text += "<B>Revolution mode resume:</B><BR>"
+	completion_text += "<h3>Revolution mode resume:</h3>"
 	if(!config.objectives_disabled)
 		if(finished == 1)
 			mode_result = "win - heads killed"
 			feedback_set_details("round_end_result",mode_result)
-			completion_text += "<br><FONT size = 3, color='red'><B>The heads of staff were killed or exiled! The revolutionaries win!</B></FONT>"
+			completion_text += "<br><span style='color: red; font-weight: bold;'>The heads of staff were killed or exiled! The revolutionaries win!</span>"
 		else if(finished == 2)
 			mode_result = "loss - rev heads killed"
 			feedback_set_details("round_end_result",mode_result)
-			completion_text += "<br><FONT size = 3, color='red'><B>The heads of staff managed to stop the revolution!</B></FONT>"
+			completion_text += "<br><span style='color: red; font-weight: bold;'>The heads of staff managed to stop the revolution!</span>"
 	var/num_revs = 0
 	for(var/mob/living/carbon/mob in alive_mob_list)
 		if(mob.mind)
 			if(mob.mind in head_revolutionaries || mob.mind in revolutionaries)
 				num_revs++
-	completion_text += "<BR>[TAB]Command's Approval Rating: <B>[100 - round((num_revs/alive_mob_list.len)*100, 0.1)]%</B>" // % of loyal crew
+	completion_text += "<br>[TAB]Command's Approval Rating: <b>[100 - round((num_revs/alive_mob_list.len)*100, 0.1)]%</b>" // % of loyal crew
 	..()
 	return 1
 
@@ -403,7 +403,7 @@
 				var/icon/flat = getFlatIcon(headrev.current,exact=1)
 				end_icons += flat
 				var/tempstate = end_icons.len
-				text += {"<BR><img src="logo_[tempstate].png"> <B>[headrev.key]</B> was <B>[headrev.name]</B> ("}
+				text += {"<br><img src="logo_[tempstate].png"> <b>[headrev.key]</b> was <b>[headrev.name]</b> ("}
 				if(headrev.current.stat == DEAD)
 					text += "died"
 					flat.Turn(90)
@@ -418,36 +418,36 @@
 				var/icon/sprotch = icon('icons/effects/blood.dmi', "gibbearcore")
 				end_icons += sprotch
 				var/tempstate = end_icons.len
-				text += {"<BR><img src="logo_[tempstate].png"> <B>[headrev.key]</B> was <B>[headrev.name]</B> ("}
+				text += {"<br><img src="logo_[tempstate].png"> <b>[headrev.key]</b> was <b>[headrev.name]</b> ("}
 				text += "body destroyed"
 			text += ")"
 			if(headrev.total_TC)
 				if(headrev.spent_TC)
-					text += "<BR><B>TC Remaining:</B> [headrev.total_TC - headrev.spent_TC]/[headrev.total_TC]"
-					text += "<BR><B>The tools used by the Head Revolutionary were:</B>"
+					text += "<br><b>TC Remaining:</b> [headrev.total_TC - headrev.spent_TC]/[headrev.total_TC]"
+					text += "<br><b>The tools used by the Head Revolutionary were:</b>"
 					for(var/entry in headrev.uplink_items_bought)
-						text += "<BR>[entry]"
+						text += "<br>[entry]"
 				else
-					text += "<BR>The Head Revolutionary was a smooth operator this round (did not purchase any uplink items)."
+					text += "<br>The Head Revolutionary was a smooth operator this round (did not purchase any uplink items)."
 
 			for(var/datum/objective/mutiny/objective in headrev.objectives)
 				targets |= objective.target
 
 
 	if(revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
-		text += "<BR>"
+		text += "<br>"
 		text += printlogo("rev-logo", "head revolutionaries")
 		var/icon/logo2 = icon('icons/mob/mob.dmi', "rev-logo")
 		end_icons += logo2
 		var/tempstate = end_icons.len
-		text += {"<BR><img src="logo_[tempstate].png"> <B>The revolutionaries were:</B> <img src="logo_[tempstate].png">"}
+		text += {"<br><img src="logo_[tempstate].png"> <b>The revolutionaries were:</b> <img src="logo_[tempstate].png">"}
 
 		for(var/datum/mind/rev in revolutionaries)
 			if(rev.current)
 				var/icon/flat = getFlatIcon(rev.current,exact=1)
 				end_icons += flat
 				tempstate = end_icons.len
-				text += {"<BR><img src="logo_[tempstate].png"> <B>[rev.key]</B> was <B>[rev.name]</B> ("}
+				text += {"<br><img src="logo_[tempstate].png"> <b>[rev.key]</b> was <b>[rev.name]</b> ("}
 				if(rev.current.stat == DEAD || isbrain(rev.current))
 					text += "died"
 					flat.Turn(90)
@@ -462,25 +462,25 @@
 				var/icon/sprotch = icon('icons/effects/blood.dmi', "gibbearcore")
 				end_icons += sprotch
 				tempstate = end_icons.len
-				text += {"<BR><img src="logo_[tempstate].png"> <B>[rev.key]</B> was <B>[rev.name]</B> ("}
+				text += {"<br><img src="logo_[tempstate].png"> <b>[rev.key]</b> was <b>[rev.name]</b> ("}
 				text += "body destroyed"
 			text += ")"
 
 
-	text += "<BR>"
 	if( head_revolutionaries.len || revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution) )
+		text += "<br>"
 		text += printlogo("nano-logo", "heads of staff")
 
 		var/list/heads = get_all_heads()
 		for(var/datum/mind/head in heads)
 			var/target = (head in targets)
 			if(target)
-				text += "<FONT color='red'>"
+				text += "<span style='color: red'>"
 			if(head.current)
 				var/icon/flat = getFlatIcon(head.current,exact=1)
 				end_icons += flat
 				var/tempstate = end_icons.len
-				text += {"<BR><img src="logo_[tempstate].png"> <B>[head.key]</B> was <B>[head.name]</B> ("}
+				text += {"<br><img src="logo_[tempstate].png"> <b>[head.key]</b> was <b>[head.name]</b> ("}
 				if(head.current.stat == DEAD || isbrain(head.current))
 					text += "died"
 					flat.Turn(90)
@@ -495,11 +495,14 @@
 				var/icon/sprotch = icon('icons/effects/blood.dmi', "gibbearcore")
 				end_icons += sprotch
 				var/tempstate = end_icons.len
-				text += {"<BR><img src="logo_[tempstate].png"> <B>[head.key]</B> was <B>[head.name]</B> ("}
+				text += {"<br><img src="logo_[tempstate].png"> <b>[head.key]</b> was <b>[head.name]</b> ("}
 				text += "body destroyed"
 			text += ")"
 			if(target)
-				text += "</FONT>"
+				text += "</span>"
 
-		text += "<BR><HR>"
+	if(text)
+		antagonists_completion += list(list("mode" = "revolution", "html" = text))
+		text = "<div class='block'>[text]</div>"
+		
 	return text

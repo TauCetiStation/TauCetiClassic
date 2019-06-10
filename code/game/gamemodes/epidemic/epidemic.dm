@@ -213,10 +213,10 @@
 	if(finished == 1)
 		mode_result = "win - epidemic cured"
 		feedback_set_details("round_end_result",mode_result)
-		to_chat(world, "\red <FONT size = 3><B> The virus outbreak was contained! The crew wins!</B></FONT>")
+		completion_text += "<span style='font-weight: bold; color: red;'>The virus outbreak was contained! The crew wins!</span>"
 	else if(finished == 2)
 		mode_result = "loss - crew succumbed to the epidemic"
 		feedback_set_details("round_end_result",mode_result)
-		to_chat(world, "\red <FONT size = 3><B> The crew succumbed to the epidemic!</B></FONT>")
+		completion_text += "<span style='font-weight: bold; color: red;'>The crew succumbed to the epidemic!</span>"
 	..()
 	return 1
