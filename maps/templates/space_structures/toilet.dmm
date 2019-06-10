@@ -10,7 +10,6 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/thermomachine/heater,
 /turf/simulated/floor/plating,
 /area/space)
 "d" = (
@@ -24,46 +23,15 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/tank/air,
-/turf/simulated/floor/plating,
-/area/space)
-"f" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor/plating,
 /area/space)
 "g" = (
 /obj/machinery/door/window/southright,
 /turf/simulated/floor/plating,
 /area/space)
-"h" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/simple/visible,
-/turf/simulated/floor/plating,
-/area/space)
-"i" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 5
-	},
-/turf/simulated/floor/plating,
-/area/space)
-"j" = (
-/obj/machinery/atmospherics/components/binary/valve{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "k" = (
 /obj/structure/stool,
 /obj/effect/decal/remains/human,
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 9
-	},
 /turf/simulated/floor/plating,
 /area/space)
 "l" = (
@@ -73,21 +41,21 @@
 (1,1,1) = {"
 a
 c
-f
-i
+c
+l
 a
 "}
 (2,1,1) = {"
 b
 d
 g
-j
+l
 l
 "}
 (3,1,1) = {"
 a
 e
-h
+e
 k
 a
 "}
