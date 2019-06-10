@@ -15661,7 +15661,7 @@
 "aZR" = (
 /obj/item/clothing/head/collectable/xenom,
 /obj/item/clothing/head/chicken,
-/obj/item/weapon/aiModule/syndicate,
+/obj/item/weapon/aiModule/freeform/syndicate,
 /turf/simulated/shuttle/floor4{
 	name = "red floor";
 	nitrogen = 103.984;
