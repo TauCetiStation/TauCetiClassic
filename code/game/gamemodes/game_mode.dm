@@ -130,10 +130,6 @@ Implants;
 	start_state = new /datum/station_state()
 	start_state.count(1)
 
-	if(dbcon.IsConnected())
-		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET game_mode = '[sanitize_sql(ticker.mode)]' WHERE id = [round_id]")
-		query_round_game_mode.Execute()
-
 	return 1
 
 

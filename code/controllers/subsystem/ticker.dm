@@ -112,6 +112,11 @@ var/datum/subsystem/ticker/ticker
 			if(!mode.explosion_in_progress && mode_finished)
 				current_state = GAME_STATE_FINISHED
 				declare_completion()
+				
+				if(dbcon.IsConnected())
+					var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET end_datetime = Now(), game_mode_result = '[sanitize_sql(mode.mode_result)]' WHERE id = [round_id]")
+					query_round_game_mode.Execute()
+
 				spawn(50)
 					for(var/client/C in clients)
 						C.log_client_ingame_age_to_db()
@@ -123,10 +128,6 @@ var/datum/subsystem/ticker/ticker
 					var/datum/game_mode/mutiny/mutiny = get_mutiny_mode()//why it is here?
 					if(mutiny)
 						mutiny.round_outcome()
-
-					if(dbcon.IsConnected())
-						var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET end_datetime = Now(), game_mode_result = '[sanitize_sql(mode.mode_result)]' WHERE id = [round_id]")
-						query_round_game_mode.Execute()
 
 					world.send2bridge(
 						type = list(BRIDGE_ROUNDSTAT),
@@ -239,7 +240,7 @@ var/datum/subsystem/ticker/ticker
 	round_start_realtime = world.realtime
 
 	if(dbcon.IsConnected())
-		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET start_datetime = Now() WHERE id = [round_id]")
+		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET start_datetime = Now(), game_mode = '[sanitize_sql(ticker.mode)]' WHERE id = [round_id]")
 		query_round_game_mode.Execute()
 
 	setup_economy()
