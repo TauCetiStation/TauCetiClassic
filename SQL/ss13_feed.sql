@@ -137,3 +137,15 @@ CREATE TABLE `whitelist` (
   `edittm` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE `xeno_job_whitelist` (
+  `ckey` varchar(32) NOT NULL,
+  `role` varchar(32) NOT NULL,
+  `job` varchar(32) NOT NULL,
+  `ban` int(11) NOT NULL,
+  `reason` text NOT NULL,
+  `addby` varchar(32) NOT NULL,
+  `addtm` datetime NOT NULL,
+  `editby` varchar(32) NOT NULL,
+  `edittm` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;

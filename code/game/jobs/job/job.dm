@@ -67,6 +67,8 @@
 /datum/job/proc/is_species_permitted(client/C)
 	if(!config.use_alien_job_restriction)
 		return TRUE
+	if(is_alien_job_whitelisted(C, C.prefs.species, title))
+		return TRUE
 	return !(C.prefs.species in restricted_species)
 
 /datum/job/proc/available_in_days(client/C)

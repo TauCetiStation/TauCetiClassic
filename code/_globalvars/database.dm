@@ -27,3 +27,4 @@ var/DBConnection/dbcon_old = new()	//Tgstation database (Old database) - See the
 //
 var/list/role_whitelist   // cache of all ckeys and their roles
 var/list/whitelisted_roles = list("unathi", "tajaran", "skrell", "diona", "machine", "ian") // Case important, everything must be in lowercase.
+var/list/xeno_job_whitelist // cache of all ckeys, their roles and whitelisted jobs for them

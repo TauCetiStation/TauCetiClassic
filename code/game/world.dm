@@ -28,6 +28,8 @@ var/round_id = 0
 		load_whitelist()
 	if(config.usealienwhitelist)
 		load_whitelistSQL()
+	if(config.use_alien_job_restriction)
+		load_xeno_job_whitelistSQL()
 	load_proxy_whitelist()
 	LoadBans()
 	investigate_reset()
@@ -50,7 +52,7 @@ var/round_id = 0
 		attachment_color = BRIDGE_COLOR_ANNOUNCE,
 		mention = BRIDGE_MENTION_ROUNDSTART,
 	)
-	
+
 	world.send2bridge(
 		type = list(BRIDGE_ROUNDSTAT),
 		attachment_title = "Server starting up, new round will start soon",
@@ -277,7 +279,7 @@ var/world_topic_spam_protect_time = world.timeofday
 	for(var/client/C in clients)
 		//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 		C << link(BYOND_JOIN_LINK)
-	
+
 	if(fexists("scripts/hooks/round_end.sh")) //nevermind, we drop windows support for this things a little
 		var/list/O = world.shelleo("scripts/hooks/round_end.sh")
 		if(O[SHELLEO_ERRORLEVEL])

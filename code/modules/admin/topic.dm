@@ -210,6 +210,29 @@
 			if("edit_reason")
 				whitelist_edit(target_ckey, role)
 
+	else if(href_list["xeno_job_whitelist"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/target_ckey = ckey(href_list["ckey"])
+		var/task = href_list["xeno_job_whitelist"]
+		if(!task)
+			return
+		var/role = href_list["role"]
+		var/job = href_list["job"]
+
+		switch(task)
+			if("add_user")
+				xeno_job_whitelist_add()
+			if("add_role")
+				xeno_job_whitelist_add(target_ckey)
+			if("showroles")
+				xeno_job_whitelist_view(target_ckey)
+			if("edit_ban")
+				xeno_job_whitelist_edit(target_ckey, role, job, ban_edit = TRUE)
+			if("edit_reason")
+				xeno_job_whitelist_edit(target_ckey, role, job)
+
 	else if(href_list["custom_items"])
 		if(!check_rights(R_PERMISSIONS))
 			return

@@ -27,6 +27,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/get_whitelist, 			//Whitelist,
 	/client/proc/add_to_whitelist,
 	/datum/admins/proc/whitelist_panel,
+	/datum/admins/proc/xeno_job_whitelist_panel,
 	/datum/admins/proc/customitems_panel,
 	/datum/admins/proc/customitemspremoderation_panel,
 	/datum/admins/proc/library_recycle_bin,
