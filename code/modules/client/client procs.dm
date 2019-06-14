@@ -460,7 +460,7 @@ var/list/blacklisted_builds = list(
 		return
 
 	var/sql_ckey = sanitize_sql(src.ckey)
-	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[player_ingame_age]' WHERE ckey = '[sql_ckey]' AND ingameage < '[player_ingame_age]'")
+	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[player_ingame_age]' WHERE ckey = '[sql_ckey]' AND cast(ingameage as integer) < [player_ingame_age]")
 	query_update.Execute()
 
 #undef TOPIC_SPAM_DELAY
