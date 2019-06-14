@@ -85,6 +85,8 @@ var/round_id = 0
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
 
+	round_log("Server starting up")
+
 	. = ..()
 
 #ifdef UNIT_TEST
@@ -230,9 +232,7 @@ var/world_topic_spam_protect_time = world.timeofday
 
 
 
-
-
-/world/Reboot(reason = 0, end_state)
+/world/proc/PreShutdown(end_state)
 
 	if(dbcon.IsConnected())
 		end_state = end_state ? end_state : "undefined"
@@ -245,6 +245,8 @@ var/world_topic_spam_protect_time = world.timeofday
 		dbcon_old.Disconnect()
 
 	world.log << "Runtimes count: [total_runtimes]. Runtimes skip count: [total_runtimes_skipped]."
+
+/* ToDo: these logs are too spamming, we should create different log for this. Also we have Debug buttons for this.
 
 	// Bad initializations log.
 	var/initlog = SSatoms.InitLog()
@@ -274,16 +276,33 @@ var/world_topic_spam_protect_time = world.timeofday
 			dellog += "\tNo hint: [I.no_hint] times"
 	world.log << dellog.Join("\n")
 
+*/
+
+var/shutdown_processed = FALSE
+
+/world/Reboot(reason = 0, end_state)
+	PreShutdown(end_state)
+
 	for(var/client/C in clients)
 		//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 		C << link(BYOND_JOIN_LINK)
+
+	round_log("Reboot [end_state ? ", [end_state]" : ""]")
+	shutdown_processed = TRUE
 	
-	if(fexists("scripts/hooks/round_end.sh")) //nevermind, we drop windows support for this things a little
-		var/list/O = world.shelleo("scripts/hooks/round_end.sh")
+	if(fexists("scripts/hooks/round_reboot.sh")) //nevermind, we drop windows support for this things a little
+		var/list/O = world.shelleo("scripts/hooks/round_reboot.sh")
 		if(O[SHELLEO_ERRORLEVEL])
 			world.log << O[SHELLEO_STDERR]
 		else
 			world.log << O[SHELLEO_STDOUT]
+
+	..()
+
+/world/Del()
+	if(!shutdown_processed) //if SIGTERM signal, not restart/reboot
+		PreShutdown("Graceful shutdown")
+		round_log("Graceful shutdown")
 
 	..()
 
