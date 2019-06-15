@@ -140,6 +140,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	S.repeat = repeat
 	S.wait = wait
 	S.channel = channel
+	S.priority = priority
+	S.status = status
 	S.volume = SANITIZE_VOL(100) * client.get_sound_volume(volume_channel) // S.volume = vol <- replace line with this while uncommenting block of code from above.
 	S.environment = 2
 	src << S
