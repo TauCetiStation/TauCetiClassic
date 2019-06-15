@@ -187,7 +187,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		CRASH("unknown volume_channel: [volume_channel]")
 
 	if(. > 0)
-		. = max(0.002, VOL_RAW_TO_REAL(.)) // max(master slider won't kill sub slider's volume if both are less than max value).
+		. = max(0.002, VOL_LINEAR_TO_NON(.)) // max(master slider won't kill sub slider's volume if both are less than max value).
 
 /client/proc/set_sound_volume(volume_channel, vol)
 	vol = Clamp(vol, 0, 100)
