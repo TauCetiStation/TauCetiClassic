@@ -1,13 +1,30 @@
 var/global/list/sounds_cache = list()
 
-/client/proc/play_global_sound(S as sound)
+/client/proc/play_global_sound()
 	set category = "Fun"
 	set name = "Play Global Sound"
 
 	if(!check_rights(R_SOUNDS))
 		return
 
-	sounds_cache += S
+
+
+	var/choice = alert("Category",,"Cache", "File", "Cancel")
+	var/sound/S
+
+	switch(choice)
+		if("Cache")
+			if(!LAZYLEN(sounds_cache))
+				to_chat(src, "<span class='notice'>Operation aborted. Reason: no cache.</span>")
+				return
+			S = input("Select a sound from the server to play") as null|anything in sounds_cache
+		if("File")
+			S = input("Select a sound from the local repository") as null|sound
+			sounds_cache |= S
+
+	if(!isfile(S))
+		to_chat(src, "<span class='notice'>Operation aborted. Reason: no input sound.</span>")
+		return
 
 	if(alert("Do you ready?\nSong: [S]\nDon't overuse this (knopka) play (or UNPEDALITY)! This is only for sound effects.",,"Play", "Cancel") == "Cancel")
 		return
