@@ -657,8 +657,9 @@
 				qdel(NM)
 			if(istype(NM.loc, /obj/item/organ))
 				var/obj/item/organ/O = NM.loc
-				nutrition += NM.morphed_into.w_class
-				O.owner.nutrition -= NM.morphed_into.w_class
+				if(O.owner)
+					nutrition += NM.morphed_into.w_class
+					O.owner.nutrition -= NM.morphed_into.w_class
 			else if(NM.loc == gestalt && iscarbon(gestalt))
 				var/mob/living/carbon/C = gestalt
 				nutrition += NM.morphed_into.w_class

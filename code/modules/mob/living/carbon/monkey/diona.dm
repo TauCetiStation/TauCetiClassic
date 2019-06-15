@@ -41,6 +41,7 @@
 	..()
 	if(!unique_diona_hive_color)
 		unique_diona_hive_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	set_gestalt(null)
 
 /mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M)
 
@@ -95,6 +96,19 @@
 	set_target_action(null)
 	M.remove_passemotes_flag()
 
+// Items you can merge with.
+/mob/living/var/list/can_merge_with = list(
+	/obj/item/weapon/implant,
+	/mob/living/simple_animal/borer,
+	/mob/living/parasite
+	)
+
+/mob/living/carbon/monkey/diona/proc/can_merge()
+	for(var/atom/A in contents)
+		if(!is_type_in_list(A, can_merge_with))
+			return FALSE
+	return TRUE
+
 //Verbs after this point.
 
 /mob/living/carbon/monkey/diona/verb/merge(mob/living/carbon/human/H)
@@ -119,6 +133,9 @@
 	if(!H || !Adjacent(H))
 		return
 	if(H.get_species() != DIONA)
+		return
+	if(!can_merge())
+		to_chat(src, "<span class='warning'>You can't merge while carrying items!</span>")
 		return
 	if(is_busy() || !do_after(src, 40, target = H))
 		return
@@ -390,6 +407,17 @@
 	action_on_target = action
 	to_target_dist = max_dist_from_target
 
+/mob/living/carbon/monkey/diona/proc/try_pickup(obj/item/I)
+	/* // This doesn't work when two nymphs are trying to pick something up.
+	I.pickup(src)
+	I.add_fingerprint(src)
+	. = put_in_active_hand(I)
+	if(!.)
+		. = put_in_inactive_hand(I)
+	*/
+	UnarmedAttack(I)
+	. = is_in_hands(I)
+
 /mob/living/carbon/monkey/diona/handle_ai_movement()
 	if(following)
 		move_target = null
@@ -405,10 +433,10 @@
 				if("")
 					action_accomplished = TRUE
 				if("grab")
-					if(put_in_hands(move_target))
+					if(try_pickup(move_target))
 						action_accomplished = TRUE
 				if("bring")
-					if(put_in_hands(move_target))
+					if(try_pickup(move_target))
 						set_target_action(gestalt, "drop")
 				if("drop")
 					drop_from_inventory(l_hand)

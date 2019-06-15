@@ -1464,6 +1464,7 @@
 #include "code\modules\mob\living\carbon\species\diona\dionificator.dm"
 #include "code\modules\mob\living\carbon\species\diona\nymph_morph_ball.dm"
 #include "code\modules\mob\living\carbon\species\diona\nymph_orders.dm"
+#include "code\modules\mob\living\carbon\species\diona\specie_procs.dm"
 #include "code\modules\mob\living\parasite\meme.dm"
 #include "code\modules\mob\living\silicon\alarm.dm"
 #include "code\modules\mob\living\silicon\death.dm"

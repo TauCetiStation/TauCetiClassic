@@ -144,10 +144,13 @@ var/global/list/nymph_orders = list()
 	allowed_pointers = list(/atom)
 
 /datum/nymph_order/target_action/execute(mob/living/carbon/human/ent, mob/living/carbon/monkey/diona/sub, permission_bitflag, message, selectors)
-	for(var/selector in allowed_selectors)
-		if(findtext(selector, selectors["sel"]))
-			selector_process(ent, sub, permission_bitflag, message, selectors, selector)
-			break
+	if(selectors["sel"] != "")
+		for(var/selector in allowed_selectors)
+			if(findtext(selector, selectors["sel"]))
+				. = selector_process(ent, sub, permission_bitflag, message, selectors, selector)
+				break
+	else
+		return "no_selector"
 
 /datum/nymph_order/target_action/proc/selector_process(mob/living/carbon/human/ent, mob/living/carbon/monkey/diona/sub, permission_bitflag, message, selectors, process_sel)
 	switch(process_sel)
@@ -218,10 +221,12 @@ The orders begin here.
 	command = "hide"
 	desc = "hide - Order nymphs to hide."
 	permissions_required = DIONA_SUBJECT_GESTALT
+	fail_indicators = list("no_permission" = "no_permission", "no_selector" = "no_selector", "no_location" = "no_location")
 
 /datum/nymph_order/hide/execute(mob/living/carbon/human/ent, mob/living/carbon/monkey/diona/sub, permission_bitflag, message, selectors)
 	var/atom/movable/candidate
 	var/candidate_distance = world.view + 1
+
 	for(var/atom/movable/AM in view(7, sub))
 		var/AM_dist = get_dist(src, AM)
 		if(AM_dist > candidate_distance)
@@ -250,9 +255,9 @@ The orders begin here.
 		sub.set_target_action(candidate, "ventcrawl")
 	else if(istype(candidate, /obj/structure/closet))
 		sub.set_target_action(candidate, "closet_hide")
+	else
+		return "no_location"
 
-/datum/nymph_order/hide/after_attempt(mob/living/carbon/human/ent, mob/living/carbon/monkey/diona/sub, permission_bitflag, message, selectors)
-	return
 
 
 /datum/nymph_order/status
@@ -323,14 +328,14 @@ The orders begin here.
 /datum/nymph_order/say
 	command = "say"
 	desc = "say - Force nymph to speak."
-	permissions_required = DIONA_SUBJECT_ALL
+	permissions_required = DIONA_SUBJECT_GESTALT|DIONA_SUBJECT_BODY|DIONA_SUBJECT_MIND
 
 	allowed_selectors = list("Rootspeak" = "Rootspeak - Speak in your own native language.", "Rootsong" = "Rootsong - Speak in a language that traverses through space.", "generic" = "generic - Speak in Galactic Common.", "none" = "none - Nymph will feel in whatever language.")
 
 /datum/nymph_order/say/execute(mob/living/carbon/human/ent, mob/living/carbon/monkey/diona/sub, permission_bitflag, message, selectors)
 	var/to_say = ""
 	var/language_key = ":q"
-	var/speech_pos = findtext(message, selectors["sel"]) - 1
+	var/speech_pos = findtext(message, selectors["sel"])
 	var/datum/language/L = all_languages[selectors["sel"]]
 	if(L)
 		language_key = ":[L.key[1]]"
@@ -340,7 +345,7 @@ The orders begin here.
 		to_say = copytext(message, speech_pos + lentext(selectors["sel"]))
 	else
 		var/found_lang = FALSE
-		if(message[speech_pos - 1] == ":")
+		if(message[speech_pos - 2] == ":")
 			for(var/lang in all_languages)
 				var/datum/language/LL = all_languages[lang]
 				for(var/k in LL.key)
@@ -351,7 +356,7 @@ The orders begin here.
 						break
 
 		if(!found_lang)
-			to_say = copytext(message, speech_pos)
+			to_say = copytext(message, speech_pos - 1)
 
 	sub.say(language_key + to_say)
 
@@ -414,7 +419,7 @@ The orders begin here.
 	desc = "morph - Morphs nymph into the pointed object."
 	permissions_required = DIONA_SUBJECT_GESTALT
 
-	allowed_selectors = list("stop" = "stop - Demorphs the nymph.", "pointer" = "pointer - Last pointed thing")
+	allowed_selectors = list("pointer" = "pointer - Last pointed thing", "stop" = "stop - Demorphs the nymph.")
 	allowed_pointers = list(/obj/item)
 
 /datum/nymph_order/morph/execute(mob/living/carbon/human/ent, mob/living/carbon/monkey/diona/sub, permission_bitflag, message, selectors)
@@ -441,7 +446,7 @@ The orders begin here.
 /datum/nymph_order/target_action/move_to
 	command = "move"
 	desc = "move - Order nymphs to move to target."
-	permissions_required = DIONA_SUBJECT_GESTALT
+	permissions_required = DIONA_SUBJECT_GESTALT|DIONA_SUBJECT_MIND
 
 	action_on_target = "" // No action, we just move.
 	max_dist_from_target = 1 // So they wouldn't all bunch up together.
@@ -458,6 +463,9 @@ The orders begin here.
 	action_on_target = "merge"
 	max_dist_from_target = 1
 
+/datum/nymph_order/target_action/merge/is_accessible(mob/living/carbon/human/ent, mob/living/carbon/monkey/diona/sub, permission_bitflag, message, selectors)
+	return (permissions_required & permission_bitflag) && sub.can_merge()
+
 
 
 /datum/nymph_order/target_action/grab
@@ -470,6 +478,9 @@ The orders begin here.
 	action_on_target = "grab"
 	max_dist_from_target = 1
 
+/datum/nymph_order/target_action/grab/is_accessible(mob/living/carbon/human/ent, mob/living/carbon/monkey/diona/sub, permission_bitflag, message, selectors)
+	return (permissions_required & permission_bitflag) && !sub.get_active_hand() && !sub.get_inactive_hand()
+
 
 
 /datum/nymph_order/target_action/drop
@@ -480,6 +491,9 @@ The orders begin here.
 	allowed_pointers = list(/atom)
 	action_on_target = "drop"
 	max_dist_from_target = 1
+
+/datum/nymph_order/target_action/drop/is_accessible(mob/living/carbon/human/ent, mob/living/carbon/monkey/diona/sub, permission_bitflag, message, selectors)
+	return (permissions_required & permission_bitflag) && (sub.get_active_hand() || sub.get_inactive_hand())
 
 
 
@@ -492,6 +506,9 @@ The orders begin here.
 	allowed_pointers = list(/obj/item)
 	action_on_target = "bring"
 	max_dist_from_target = 1
+
+/datum/nymph_order/target_action/bring/is_accessible(mob/living/carbon/human/ent, mob/living/carbon/monkey/diona/sub, permission_bitflag, message, selectors)
+	return (permissions_required & permission_bitflag) && !sub.get_active_hand() && !sub.get_inactive_hand()
 
 
 

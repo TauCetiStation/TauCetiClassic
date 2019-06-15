@@ -167,6 +167,7 @@
 		for(var/mob/living/carbon/monkey/diona/D in gestalt_subordinates)
 			if(D.client)
 				continue
+
 			if(D.selected && get_dist(D, src) <= 10)
 				var/old_intent = D.a_intent
 				var/old_zone_sel = D.zone_sel
