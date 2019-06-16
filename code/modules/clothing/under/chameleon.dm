@@ -43,7 +43,7 @@
 	permeability_coefficient = 0.90
 
 
-	if(A.icon_custom)  //Ôèêñ äëÿ íàøåé îäåæäû
+	if(A.icon_custom)  //Ã”Ã¨ÃªÃ± Ã¤Ã«Ã¿ Ã­Ã Ã¸Ã¥Ã© Ã®Ã¤Ã¥Ã¦Ã¤Ã»
 		icon = A.icon_custom
 		icon_custom = A.icon_custom
 	else
@@ -504,5 +504,132 @@
 	name = A.name
 	icon_state = A.icon_state
 	item_state = A.item_state
+	flags_inv = A.flags_inv
+	update_inv_mob()
+
+//*******************
+//**Chameleon Armor**
+//*******************
+
+/obj/item/clothing/suit/armor/chameleon_armor
+	name = "chameleon armor"
+	icon_state = "assaultarmor"
+	item_state = "assaultarmor"
+	flags_inv = HIDEJUMPSUIT
+	desc = "At first glance, simple armor, but something is wrong with it."
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	armor = list(melee = 50, bullet = 50, laser = 45,energy = 25, bomb = 35, bio = 0, rad = 0)
+	siemens_coefficient = 0.2
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
+	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS
+	var/list/clothing_choices = list()
+
+/obj/item/clothing/suit/armor/chameleon_armor/atom_init()
+	. = ..()
+	var/blocked = list(/obj/item/clothing/suit/jacket/puffer/vest)//Prevent infinite loops and bad suits.
+	for(var/U in typesof(/obj/item/clothing/suit/jacket,/obj/item/clothing/suit/sukeban_coat,
+	/obj/item/clothing/suit/captunic, /obj/item/clothing/suit/storage/flak/warden,
+	/obj/item/clothing/suit/armor/hos)-blocked)
+		var/obj/item/clothing/suit/V = new U
+		clothing_choices[V.name] = U
+
+/obj/item/clothing/suit/armor/chameleon_armor/emp_act(severity) 
+	name = "chameleon armor"
+	desc = "At first glance, simple armor, but something is wrong with it."
+	icon_state = "assaultarmor"
+	item_state = "assaultarmor"
+	item_color = "assaultarmor"
+	update_icon()
+	update_inv_mob()
+
+/obj/item/clothing/suit/armor/chameleon_armor/verb/change()
+	set name = "Change Exosuit Appearance"
+	set category = "Object"
+	set src in usr
+
+	var/picked = input("Select Coat to change it to", "Chameleon Armor")as null|anything in clothing_choices
+	if(!picked || !clothing_choices[picked])
+		return
+	var/newtype = clothing_choices[picked]
+	var/obj/item/clothing/A = new newtype
+
+	desc = null
+	permeability_coefficient = 0.90
+
+	if(A.icon_custom)
+		icon = A.icon_custom
+		icon_custom = A.icon_custom
+	else
+		icon = A.icon
+		icon_custom = null
+	desc = A.desc
+	name = A.name
+	icon_state = A.icon_state
+	item_state = A.item_state
+	item_color = A.item_color
+	flags_inv = A.flags_inv
+	update_inv_mob()
+
+//********************
+//**Chameleon Helmet**
+//********************
+
+/obj/item/clothing/head/helmet/chameleon_helmet
+	name = "chameleon helmet"
+	icon_state = "assaulthelmet_b"
+	item_state = "assaulthelmet_b"
+	desc = "At first glance, simple armor, but something is wrong with it."
+	armor = list(melee = 50, bullet = 50, laser = 45,energy = 25, bomb = 35, bio = 0, rad = 0)
+	siemens_coefficient = 0.2
+	var/list/clothing_choices = list()
+
+/obj/item/clothing/head/helmet/chameleon_helmet/atom_init()
+	. = ..()
+	var/blocked = list()
+	for(var/U in list(/obj/item/clothing/head/helmet, /obj/item/clothing/head/helmet/warden,
+	/obj/item/clothing/head/helmet/HoS, /obj/item/clothing/head/helmet/HoS/dermal,
+	/obj/item/clothing/head/helmet/riot, /obj/item/clothing/head/helmet/bulletproof,
+	/obj/item/clothing/head/helmet/laserproof, /obj/item/clothing/head/helmet/swat,
+	/obj/item/clothing/head/helmet/thunderdome, /obj/item/clothing/head/helmet/gladiator,
+	/obj/item/clothing/head/helmet/tactical, /obj/item/clothing/head/helmet/tactical/marinad,
+	/obj/item/clothing/head/helmet/helmet_of_justice, /obj/item/clothing/head/helmet/roman,
+	/obj/item/clothing/head/helmet/roman/legionaire)-blocked)
+	//If you do this through the typesof, the Chameleon Kit and the Chameleon Armor Kit are bagged
+		var/obj/item/clothing/suit/V = new U
+		clothing_choices[V.name] = U
+
+/obj/item/clothing/head/helmet/chameleon_helmet/emp_act(severity) 
+	name = "chameleon helmet"
+	desc = "At first glance, simple armor, but something is wrong with it."
+	icon_state = "assaulthelmet_b"
+	item_state = "assaulthelmet_b"
+	update_icon()
+	update_inv_mob()
+
+/obj/item/clothing/head/helmet/chameleon_helmet/verb/change()
+	set name = "Change Hat/Helmet Appearance"
+	set category = "Object"
+	set src in usr
+
+	var/picked = input("Select headwear to change it to", "Chameleon Hat")as null|anything in clothing_choices
+	if(!picked || !clothing_choices[picked])
+		return
+	var/newtype = clothing_choices[picked]
+	var/obj/item/clothing/A = new newtype
+
+	desc = null
+	permeability_coefficient = 0.90
+
+	if(A.icon_custom)
+		icon = A.icon_custom
+		icon_custom = A.icon_custom
+	else
+		icon = A.icon
+		icon_custom = null
+	desc = A.desc
+	name = A.name
+	icon_state = A.icon_state
+	item_state = A.item_state
+	item_color = A.item_color
 	flags_inv = A.flags_inv
 	update_inv_mob()
