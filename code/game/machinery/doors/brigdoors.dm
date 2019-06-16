@@ -30,7 +30,7 @@
 	var/timer_activator = "Unknown"	//Mob.name who activate timer
 	var/flag30sec = 0	//30 seconds notification flag
 
-	maptext_height = 26
+	maptext_height = 28
 	maptext_width = 32
 
 /obj/machinery/door_timer/atom_init()
