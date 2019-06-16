@@ -10,6 +10,50 @@
 	var/list/cargo = new
 	var/cargo_capacity = 15
 	var/hides = 0
+	var/obj/item/clothing/glasses/hud/mining/mech/hud
+	var/error
+
+/obj/mecha/working/ripley/atom_init()
+	. = ..()
+	hud = new /obj/item/clothing/glasses/hud/mining/mech(src)
+
+/obj/mecha/working/ripley/moved_inside(mob/living/carbon/human/H)
+	if(..())
+		if(H.glasses)
+			occupant_message("<font color='red'>[H.glasses] prevent you from using [src] [hud]</font>")
+		else
+			H.glasses = hud
+		return 1
+	else
+		return 0
+
+/obj/mecha/working/ripley/go_out()
+	if(ishuman(occupant))
+		var/mob/living/carbon/human/H = occupant
+		if(H.glasses == hud)
+			H.glasses = null
+	..()
+
+//TODO - Check documentation for client.eye and client.perspective...
+/obj/item/clothing/glasses/hud/mining/mech
+	name = "Integrated Mining Hud"
+
+/obj/item/clothing/glasses/hud/mining/mech/atom_init()
+	. = ..()
+	error = pick(-1,1)
+
+/obj/item/clothing/glasses/hud/mining/mech/process_hud(mob/M)
+	if(!M)	return
+	if(!M.client)	return
+	var/client/C = M.client
+	var/icon/hudMineral = 'icons/obj/mining/geoscanner.dmi'
+	for(var/turf/simulated/mineral/rock in RANGE_TURFS(7, (get_turf(M))))
+		if(!C) return
+
+		if(rock.finds && rock.finds.len || rock.artifact_find)
+			C.images += image(hudMineral,rock,"hudanomaly")
+		else if (rock.mineral)
+			C.images += image(hudMineral,rock,"hud[rock.mineral.ore_type]")
 
 /obj/mecha/working/ripley/go_out()
 	..()
