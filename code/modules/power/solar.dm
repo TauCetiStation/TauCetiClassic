@@ -297,12 +297,12 @@
 
 /obj/machinery/power/solar_control/update_icon()
 	if(stat & BROKEN)
-		icon_state = "broken"
+		icon_state = "powerb"
 		set_light(0)
 		overlays.Cut()
 		return
 	if(stat & NOPOWER)
-		icon_state = "c_unpowered"
+		icon_state = "power0"
 		set_light(0)
 		overlays.Cut()
 		return
@@ -310,7 +310,7 @@
 	set_light(light_range_on, light_power_on)
 	overlays.Cut()
 	if(cdir > 0)
-		overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(cdir))
+		overlays += image('icons/obj/computer.dmi', "solar_overlay_[dir]", FLY_LAYER, angle2dir(cdir))
 	return
 
 /obj/machinery/power/solar_control/attackby(I, mob/user)

@@ -31,7 +31,7 @@
 	name = "Gas turbine control computer"
 	desc = "A computer to remotely control a gas turbine."
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "airtunnel0e"
+	icon_state = "airtunnel"
 	circuit = /obj/item/weapon/circuitboard/turbine_control
 	anchored = 1
 	density = 1

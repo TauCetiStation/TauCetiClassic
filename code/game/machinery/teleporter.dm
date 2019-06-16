@@ -30,8 +30,8 @@
 /obj/machinery/computer/teleporter/proc/link_power_station()
 	if(power_station)
 		return
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		power_station = locate(/obj/machinery/teleport/station, get_step(src, dir))
+	for(var/newdir in cardinal)
+		power_station = locate(/obj/machinery/teleport/station, get_step(src, newdir))
 		if(power_station)
 			break
 	return power_station

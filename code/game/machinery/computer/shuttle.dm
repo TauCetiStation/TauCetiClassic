@@ -2,6 +2,8 @@
 	name = "Shuttle"
 	desc = "For shuttle control."
 	icon_state = "shuttle"
+	state_broken_preset = "commb"
+	state_nopower_preset = "comm0"
 	var/auth_need = 3.0
 	var/list/authorized = list()
 

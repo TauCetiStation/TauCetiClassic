@@ -3,7 +3,9 @@
 /obj/machinery/computer/skills//TODO:SANITY
 	name = "Employment Records"
 	desc = "Used to view personnel's employment records."
-	icon_state = "medlaptop"
+	icon_state = "laptop_employment"
+	state_broken_preset = "laptopb"
+	state_nopower_preset = "laptop0"
 	light_color = "#00b000"
 	req_one_access = list(access_heads)
 	circuit = "/obj/item/weapon/circuitboard/skills"

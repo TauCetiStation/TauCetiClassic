@@ -13,6 +13,8 @@ var/global/area/mine_sci_curr_location = null
 	name = "Mine-Science Shuttle Console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
+	state_broken_preset = "commb"
+	state_nopower_preset = "comm0"
 	circuit = /obj/item/weapon/circuitboard/mine_sci_shuttle
 
 /obj/machinery/computer/mine_sci_shuttle/ui_interact(mob/user)
@@ -66,6 +68,8 @@ var/global/area/mine_sci_curr_location = null
 /obj/machinery/computer/mine_sci_shuttle/flight_comp
 	name = "Shuttle Console"
 	icon = 'code/modules/locations/shuttles/computer_shuttle_mining.dmi'
+	state_broken_preset = null
+	state_nopower_preset = null
 	circuit = /obj/item/weapon/circuitboard/mine_sci_shuttle/flight_comp
 	var/area/mine_sci_curr_location
 	var/moving = 0
