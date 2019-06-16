@@ -403,6 +403,12 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/chameleon
 	cost = 2
 
+/datum/uplink_item/stealthy_tools/stealtharmor_kit
+	name = "Chameleon Armor Kit"
+	desc = "A set of a helmet and a vest with the ability to change your appearance"
+	item = /obj/item/weapon/storage/box/syndie_kit/stealtharmor_kit
+	cost = 8
+
 /datum/uplink_item/stealthy_tools/chameleon_penstamp
 	name = "Fake Bureucracy Set"
 	desc = "This set allows you to forge various documents at the station."
