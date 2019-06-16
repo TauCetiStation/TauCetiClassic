@@ -786,20 +786,28 @@
 	var/list/result = list()
 	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
 	while(t_amount < getYield())
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new produce(output_loc, potency)
-		result.Add(t_prod) // User gets a consumable
-		if(!t_prod)
-			return
-		t_prod.seed = mypath
-		t_prod.species = species
-		t_prod.lifespan = lifespan
-		t_prod.endurance = endurance
-		t_prod.maturation = maturation
-		t_prod.production = production
-		t_prod.yield = yield
-		t_prod.potency = potency
-		t_prod.plant_type = plant_type
-		t_amount++
+		if(ispath(produce, /obj/item/weapon/reagent_containers/food/snacks/grown))
+			var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new produce(output_loc, potency)
+			result.Add(t_prod) // User gets a consumable
+			if(!t_prod)
+				return
+			t_prod.seed = mypath
+			t_prod.species = species
+			t_prod.lifespan = lifespan
+			t_prod.endurance = endurance
+			t_prod.maturation = maturation
+			t_prod.production = production
+			t_prod.yield = yield
+			t_prod.potency = potency
+			t_prod.plant_type = plant_type
+			t_amount++
+		else // Messa's Tear and S'rendarr's Hand leaf are not grown consumables and dont have reqired variables
+			var/t_prod = new produce(output_loc)
+			result.Add(t_prod) // User gets a consumable
+			if(!t_prod)
+				return
+			t_amount++
+
 	if(getYield() >= 1)
 		score["stuffharvested"]++
 
