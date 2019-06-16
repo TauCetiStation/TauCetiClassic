@@ -239,3 +239,12 @@
 	new /obj/item/clothing/suit/syndieshirt(src)
 	new /obj/item/toy/syndicateballoon(src)
 	make_exact_fit()
+
+/obj/item/weapon/storage/box/syndie_kit/stealtharmor_kit
+	name = "box (N)"
+
+/obj/item/weapon/storage/box/syndie_kit/stealtharmor_kit/atom_init()
+	. = ..()
+	new /obj/item/clothing/suit/armor/chameleon_armor(src)
+	new /obj/item/clothing/head/helmet/chameleon_helmet(src)
+	make_exact_fit()
