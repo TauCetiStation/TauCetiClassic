@@ -965,7 +965,7 @@ var/list/admin_verbs_hideable = list(
 
 	to_chat(winner, "<span class='danger'>Congratulations!</span>")
 
-	achievements += "<b>[winner.key]</b> as <b>[winner.name]</b> won \"<b>[name]</b>\"! \"[desc]\""
+	achievements += list(list("key" = winner.key, "name" = winner.name, "title" = name, "desc" = desc))
 
 /client/proc/aooc()
 	set category = "Admin"

@@ -10,6 +10,8 @@
 	name = "security camera monitor"
 	desc = "Used to access the various cameras on the station."
 	icon_state = "cameras"
+	state_broken_preset = "securityb"
+	state_nopower_preset = "security0"
 	circuit = /obj/item/weapon/circuitboard/security
 	light_color = "#a91515"
 	var/obj/machinery/camera/current = null
@@ -192,6 +194,8 @@
 	desc = "Used for watching an empty arena."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "telescreen"
+	state_broken_preset = null
+	state_nopower_preset = null
 	light_color = "#ffffbb"
 	network = list("thunder")
 	density = 0
@@ -208,12 +212,16 @@
 	desc = "Damn, why do they never have anything interesting on these things?"
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "entertainment"
+	state_broken_preset = null
+	state_nopower_preset = null
 	light_color = "#ea4444"
 
 /obj/machinery/computer/security/wooden_tv
 	name = "security camera monitor"
 	desc = "An old TV hooked into the stations camera network."
 	icon_state = "security_det"
+	state_broken_preset = null
+	state_nopower_preset = null
 	light_color = "#3550b6"
 
 /obj/machinery/computer/security/mining
@@ -226,6 +234,8 @@
 	name = "engineering camera monitor"
 	desc = "Used to monitor fires and breaches."
 	icon_state = "engineeringcameras"
+	state_broken_preset = "powerb"
+	state_nopower_preset = "power0"
 	network = list("Engineering","Power Alarms","Atmosphere Alarms","Fire Alarms")
 	light_color = "#b88b2e"
 
@@ -233,6 +243,8 @@
 	name = "head mounted camera monitor"
 	desc = "Used to access the built-in cameras in helmets."
 	icon_state = "syndicam"
+	state_broken_preset = "tcbossb"
+	state_nopower_preset = "tcboss0"
 	network = list("NUKE")
 	light_color = "#a91515"
 
@@ -241,6 +253,8 @@
 	desc = "Used to access the cameras in agent helmet."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "camera"
+	state_broken_preset = null
+	state_nopower_preset = null
 	light_color = "#642850"
 	network = list()
 	var/team
@@ -257,5 +271,7 @@
 	desc = "Shows how subjects are living."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "camera_alt"
+	state_broken_preset = null
+	state_nopower_preset = null
 	network = list("SS13")
 	light_color = "#642850"

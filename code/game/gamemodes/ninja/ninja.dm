@@ -240,10 +240,10 @@
 				var/count = 1
 				for(var/datum/objective/objective in ninja.objectives)
 					if(objective.check_completion())
-						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
 						feedback_add_details("ninja_objective","[objective.type]|SUCCESS")
 					else
-						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
 						feedback_add_details("ninja_objective","[objective.type]|FAIL")
 						ninjawin = 0
 					count++
@@ -256,13 +256,15 @@
 
 			if(!config.objectives_disabled)
 				if(ninjawin)
-					text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
+					text += "<br><span style='color: green; font-weight: bold;'>The [special_role_text] was successful!</span>"
 					feedback_add_details("traitor_success","SUCCESS")
 					score["roleswon"]++
 				else
-					text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
+					text += "<br><span style='color: green; font-weight: bold;'>The [special_role_text] has failed!</span>"
 					feedback_add_details("traitor_success","FAIL")
 
-				text += "<BR>"
-		text += "<HR>"
+	if(text)
+		antagonists_completion += list(list("mode" = "ninja", "html" = text))
+		text = "<div class='block'>[text]</div>"
+		
 	return text

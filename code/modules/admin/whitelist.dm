@@ -191,13 +191,23 @@
 	if(!added_by_bot)
 		message_admins("[key_name_admin(usr)] [msg]")
 		log_admin("[key_name(usr)] [msg]")
-		send2slack_logs(key_name(usr), msg, "(WHITELIST)")
+		world.send2bridge(
+			type = list(BRIDGE_ADMINWL),
+			attachment_title = "WHITELIST",
+			attachment_msg = "**[key_name(usr)]** [msg]",
+			attachment_color = BRIDGE_COLOR_ADMINWL,
+		)
 		usr.client.holder.whitelist_panel()
 		usr.client.holder.whitelist_view(target_ckey)
 	else
 		message_admins("[adm_ckey] [msg]")
 		log_admin("[adm_ckey] [msg]")
-		send2slack_logs(adm_ckey, msg, "(WHITELIST BOT)")
+		world.send2bridge(
+			type = list(BRIDGE_ADMINWL),
+			attachment_title = "WHITELIST BOT",
+			attachment_msg = "**[adm_ckey]** [msg]",
+			attachment_color = BRIDGE_COLOR_ADMINWL,
+		)
 	return TRUE
 
 /datum/admins/proc/whitelist_DB_edit(target_ckey, role, ban, ban_edit, reason, adm_ckey)
@@ -255,8 +265,13 @@
 	role_whitelist[target_ckey][role]["edittm"] = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
 
 	message_admins("[key_name_admin(usr)] [msg]")
-	log_admin("[key_name(usr)] [msg]")
-	send2slack_logs(key_name(usr), msg, "(WHITELIST)")
+
+	world.send2bridge(
+		type = list(BRIDGE_ADMINWL),
+		attachment_title = "WHITELIST",
+		attachment_msg = "**[key_name(usr)]** [msg]",
+		attachment_color = BRIDGE_COLOR_ADMINWL,
+	)
 
 	whitelist_view(target_ckey)
 

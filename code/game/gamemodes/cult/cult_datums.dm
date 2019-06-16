@@ -47,7 +47,7 @@ var/list/cult_runes = list()
 /datum/cult/proc/nearest_heretics(range = 7, ignore_nullrod = FALSE)
 	var/list/heretics = list()
 	var/turf/center = get_turf(holder)
-	for(var/mob/living/heretic in range(range, center))
+	for(var/mob/living/heretic in view(range, center))
 		if(iscultist(heretic))
 			continue
 		if(!ignore_nullrod)
@@ -938,7 +938,7 @@ var/list/cult_runes = list()
 	var/list/heretics = nearest_heretics()
 	if(length(heretics) < 1)
 		return fizzle(user)
-	var/damage_modifier = min(153 / length(heretics), 71)
+	var/damage_modifier = min(150 / length(heretics), 45)
 
 	for(var/mob/living/carbon/M in heretics)
 		M.take_overall_damage(damage_modifier, damage_modifier)
@@ -962,7 +962,7 @@ var/list/cult_runes = list()
 	var/list/heretics = nearest_heretics()
 	if(length(heretics) < 1)
 		return fizzle(user)
-	var/stun_modifier = 6 / length(heretics)
+	var/stun_modifier = 12 / length(heretics)
 	for(var/mob/living/carbon/C in heretics)
 		C.flash_eyes()
 		if(C.stuttering < 1 && (!(HULK in C.mutations)))
@@ -977,6 +977,8 @@ var/list/cult_runes = list()
 	var/obj/item/weapon/nullrod/N = locate() in affected
 	if(N)
 		affected.visible_message("<span class='danger'>[user] invokes a talisman at [affected], but they are unaffected!</span>")
+		qdel(holder)
+		return
 	else
 		affected.visible_message("<span class='danger'>[user] invokes a talisman at [affected]!</span>")
 
@@ -986,9 +988,9 @@ var/list/cult_runes = list()
 		var/mob/living/carbon/C = affected
 		C.flash_eyes()
 		if(!(HULK in C.mutations))
-			C.silent += 15
-			C.Weaken(25)
-			C.Stun(25)
+			C.silent += 10
+			C.Weaken(15)
+			C.Stun(15)
 	qdel(holder)
 
 /datum/cult/stun/action(mob/living/carbon/user)

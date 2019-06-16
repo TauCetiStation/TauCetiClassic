@@ -58,7 +58,12 @@
 	var/mentor_number_present = mentors.len - mentor_number_afk
 	var/admin_number_present = admins.len - admin_number_afk
 
-	send2slack_logs(key_name(src), msg, "(MHELP)")
+	world.send2bridge(
+		type = list(BRIDGE_ADMINLOG),
+		attachment_title = "MENTOR HELP",
+		attachment_msg = "**[key_name(src)]:** [msg]",
+		attachment_color = BRIDGE_COLOR_ADMINLOG,
+	)
 
 	feedback_add_details("admin_verb", "MH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[prefix]: [key_name(src)]: [msg] - heard by [mentor_number_present] non-AFK mentors and [admin_number_present] non-AFK admins.")
