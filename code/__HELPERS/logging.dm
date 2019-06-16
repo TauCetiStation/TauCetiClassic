@@ -27,6 +27,9 @@
 /proc/info(msg)
 	world.log << "## INFO: [msg][log_end]"
 
+/proc/round_log(msg)
+	world.log << "\[[time_stamp()]][round_id ? " #[round_id]:" : ""] [msg][log_end]"
+
 /proc/log_admin(text)
 	admin_log.Add(text)
 	if (config.log_admin)
