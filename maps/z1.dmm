@@ -3556,9 +3556,9 @@
 	name = "Weapons locker";
 	req_access_txt = "3"
 	},
-/obj/item/ammo_box/shotgun/beanbag,
-/obj/item/ammo_box/shotgun/beanbag,
 /obj/item/weapon/storage/box/r4046,
+/obj/item/weapon/storage/box/shotgun/beanbag,
+/obj/item/weapon/storage/box/shotgun/beanbag,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
