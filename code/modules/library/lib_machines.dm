@@ -26,13 +26,22 @@
 /obj/machinery/computer/libraryconsole
 	name = "visitor computer"
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "library"
+	icon_state = "computer_regular_library"
 	circuit = /obj/item/weapon/circuitboard/libraryconsole
+
+	state_broken_preset = "computer_regularb"
+	state_nopower_preset = "computer_regular0"
+
 	var/screenstate = 0
 	var/title
 	var/category = "Any"
 	var/author
 	var/page = 0
+
+/obj/machinery/computer/libraryconsole/old // an older-looking version, looks fancy
+	icon_state = "computer_old"
+	state_broken_preset = "computer_oldb"
+	state_nopower_preset = "computer_old0"
 
 /obj/machinery/computer/libraryconsole/ui_interact(mob/user)
 	var/dat = "<HEAD><TITLE>Library Visitor</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
@@ -145,6 +154,11 @@
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 
 	var/bibledelay = 0
+
+/obj/machinery/computer/libraryconsole/bookmanagement/old // an older-looking version, looks fancy
+	icon_state = "computer_old"
+	state_broken_preset = "computer_oldb"
+	state_nopower_preset = "computer_old0"
 
 /obj/machinery/computer/libraryconsole/bookmanagement/atom_init()
 	. = ..()

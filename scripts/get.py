@@ -1,26 +1,51 @@
 #!/usr/bin/env python3
 
-import requests, argparse, os, sys
+## Reasons of this wrapper:
+## 1) Byond in a bad relationship with unicode (513?)
+## 2) Byond export proc does not support https (someday?)
+
+import requests, argparse, json, os, sys
 
 def read_arguments():
 	parser = argparse.ArgumentParser(
-		description="get page"
+		description="get wrapper"
 	)
 
 	parser.add_argument(
-		"url"
+		"url",
+	)
+
+	parser.add_argument(
+		"--json", type=os.fsencode
 	)
 
 	return parser.parse_args()
 
 def main(options):
-	
-	r = requests.get(options.url)
-	#print(prepare_text(r.text))#needs more tests
-	print(r.text)
-	
-def prepare_text(text):
-	return text.encode('u8').decode("cp1251", 'ignore').replace("я", "¶")
+
+	if(options.json):
+		options.json = json.loads(byond_outer_text(options.json))
+
+	try:
+
+		if(options.json):
+			r = requests.get(options.url, json=options.json)
+		else:
+			r = requests.get(options.url)
+
+	except requests.exceptions.RequestException as e:
+		print(e, file=sys.stderr)
+		sys.exit(1)
+
+	sys.stdout.buffer.write(byond_inner_text(r.text))
+
+def byond_outer_text(text):
+	return text.decode("cp1251").replace("¶", "я")
+
+#DOES NOT WORK I HATE THIS
+#UPD OMG IT IS WORK
+def byond_inner_text(text):
+	return text.replace("я", "¶").encode("cp1251", 'ignore')
 
 if __name__ == "__main__":
 	options = read_arguments()

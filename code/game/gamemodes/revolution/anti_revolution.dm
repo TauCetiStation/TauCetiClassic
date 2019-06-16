@@ -1,3 +1,5 @@
+//not used anymore
+
 // A sort of anti-revolution where the heads are given objectives to mess with the crew
 
 /datum/game_mode/anti_revolution
@@ -151,8 +153,12 @@
 
 	var/text = ""
 	if(finished == 2)
+		mode_result = "loss - crew wins"
+		feedback_set_details("round_end_result",mode_result)
 		to_chat(world, "\red <FONT size = 3><B> The heads of staff were relieved of their posts! The crew wins!</B></FONT>")
 	else if(finished == 1)
+		mode_result = "win - heads wins"
+		feedback_set_details("round_end_result",mode_result)
 		to_chat(world, "\red <FONT size = 3><B> The heads of staff managed to meet the goals set for them by CentComm!</B></FONT>")
 
 
@@ -180,10 +186,10 @@
 			var/count = 1
 			for(var/datum/objective/objective in head_mind.objectives)
 				if(objective.check_completion())
-					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
 					feedback_add_details("head_objective","[objective.type]|SUCCESS")
 				else
-					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
 					feedback_add_details("head_objective","[objective.type]|FAIL")
 				count++
 		break // just print once

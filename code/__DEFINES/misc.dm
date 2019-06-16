@@ -204,3 +204,5 @@
 // Used in browser.dm for common.css style.
 #define CSS_THEME_LIGHT "theme_light"
 #define CSS_THEME_DARK "theme_dark"
+
+#define BYOND_JOIN_LINK config.server ? "byond://[config.server]" : "byond://[world.address]:[world.port]"

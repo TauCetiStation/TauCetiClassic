@@ -410,7 +410,7 @@ What a mess.*/
 				screen = 3
 
 		if("New Record (General)")
-			active1 = CreateGeneralRecord()
+			active1 = CreateGeneralRecord() // todo: datacore.manifest_inject or scaner (Identity Analyser)
 			active2 = null
 
 //FIELD FUNCTIONS
