@@ -54,9 +54,9 @@ var/datum/subsystem/mapping/SSmapping
 
 		var/turf/T = find_spot(structure)
 		if(T)
-			// coords might point to any turf inside the structure
-			var/xcoord = T.x + rand(-structure.width / 2, structure.width / 2)
-			var/ycoord = T.y + rand(-structure.height / 2, structure.height / 2)
+			// coords might point to any turf inside the structure and some extra deviation
+			var/xcoord = T.x + rand(-structure.width / 2 - 10, structure.width / 2 + 10)
+			var/ycoord = T.y + rand(-structure.height / 2 - 10, structure.height / 2 + 10)
 			spawned_structures += list(list("id" = structure_id, "desc" = structure.desc, "turf" = T, "x" = xcoord, "y" = ycoord, "z" = T.z))
 			structure.load(T, centered = TRUE)
 #ifdef SPACE_STRUCTURES_DEBUG

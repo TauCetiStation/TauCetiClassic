@@ -654,5 +654,5 @@
 	var/paper_text = "<center><img src = bluentlogo.png /><br /><font size = 3><b>NSS Exodus</b> Sensor Readings:</font></center><br /><hr>"
 	paper_text += "Scan results show the following points of interest:<br />"
 	for(var/list/structure in SSmapping.spawned_structures)
-		paper_text += "<li><b>[structure["desc"]]</b>: x = [structure["x"]], y = [structure["y"]], z = [structure["z"]]</li>"
+		paper_text += "<li><b>[structure["desc"]]</b>: x = [structure["x"]], y = [structure["y"]], z = [prob(50) ? structure["z"] : "unknown"]</li>"
 	return paper_text
