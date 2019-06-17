@@ -19,11 +19,12 @@
 	density = 0
 	use_power = 1
 	idle_power_usage = 10
-	var/mode = 1	// 0 = Blank
+	var/mode = 5	// 0 = Blank
 					// 1 = Shuttle timer
 					// 2 = Arbitrary message(s)
 					// 3 = alert picture
 					// 4 = Supply shuttle timer
+					// 5 = default N picture
 
 	var/picture_state	// icon_state of alert picture
 	var/message1 = ""	// message line 1
@@ -46,6 +47,8 @@
 	. = ..()
 	status_display_list += src
 	radio_controller.add_object(src, frequency)
+	update()
+
 
 /obj/machinery/status_display/Destroy()
 	status_display_list -= src
@@ -130,6 +133,8 @@
 				else
 					line1 = ""
 			update_display(line1, line2)
+		if(5)				// default picture
+			set_picture("default")
 
 /obj/machinery/status_display/examine(mob/user)
 	..()
@@ -204,6 +209,10 @@
 		if("supply")
 			if(supply_display)
 				mode = 4
+
+		if("default")
+			mode = 5
+
 
 	update()
 
