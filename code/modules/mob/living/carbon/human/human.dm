@@ -814,9 +814,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 					usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Toggled [name]'s ([ckey]) sensors mode=([S.sensor_mode]).</font>")
 
 	if (href_list["accessory"] && href_list["suit_accessory"] && usr.CanUseTopicInventory(src))
-		var/obj/item/clothing/accessory/A = href_list["accessory"]
-		var/obj/item/clothing/under/S = href_list["suit_accessory"]
-		if(istype(A) && istype(S))
+		var/obj/item/clothing/accessory/A = locate(href_list["accessory"])
+		var/obj/item/clothing/under/S = locate(href_list["suit_accessory"])
+		if(istype(A) && istype(S) && (A in S.accessories))
 			var/strip_time = HUMAN_STRIP_DELAY
 			if(istype(A, /obj/item/clothing/accessory/holobadge) || istype(A, /obj/item/clothing/accessory/medal))
 				strip_time = 5
