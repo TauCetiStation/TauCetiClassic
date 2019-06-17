@@ -362,6 +362,7 @@ var/list/slot_equipment_priority = list(
 		if(SLOT_WEAR_MASK) return wear_mask
 		if(SLOT_L_HAND) return l_hand
 		if(SLOT_R_HAND) return r_hand
+		if(SLOT_S_STORE) return s_store
 	return null
 
 /mob/proc/get_equipped_items()
