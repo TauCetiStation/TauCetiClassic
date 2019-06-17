@@ -477,6 +477,12 @@
 	if(!AM || !src || src == AM || !isturf(AM.loc))	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
 	if(!AM.anchored)
+		if(ismob(AM))
+			var/mob/M = AM
+			if(M.buckled) // If we are trying to pull something that is buckled we will pull the thing its buckled to
+				start_pulling(M.buckled)
+				return
+
 		AM.add_fingerprint(src)
 
 		// If we're pulling something then drop what we're currently pulling and pull this instead.
