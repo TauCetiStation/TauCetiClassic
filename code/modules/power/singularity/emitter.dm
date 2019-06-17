@@ -157,7 +157,7 @@
 			src.fire_delay = get_rand_burst_delay()
 			src.shot_number = 0
 		var/obj/item/projectile/beam/emitter/A = get_emitter_beam()
-		playsound(src, 'sound/weapons/guns/gunpulse_emitter.ogg', VOL_MISC, 25)
+		playsound(src, 'sound/weapons/guns/gunpulse_emitter.ogg', VOL_EFFECTS_MISC, 25)
 		if(prob(35))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, src)

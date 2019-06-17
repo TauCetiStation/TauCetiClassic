@@ -173,8 +173,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		switch(volume_channel) // now for sub categories
 			if(VOL_EFFECTS_VOICE_ANNOUNCEMENT)
 				. *= prefs.snd_effects_voice_announcement_vol * 0.01
-			if(VOL_MISC)
-				. *= prefs.snd_misc_vol * 0.01
+			if(VOL_EFFECTS_MISC)
+				. *= prefs.snd_effects_misc_vol * 0.01
 			if(VOL_INSTRUMENTS)
 				. *= prefs.snd_instruments_vol * 0.01
 	else if(volume_channel & VOL_NOTIFICATIONS)
@@ -204,8 +204,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			prefs.snd_effects_master_vol = vol
 		if(VOL_EFFECTS_VOICE_ANNOUNCEMENT)
 			prefs.snd_effects_voice_announcement_vol = vol
-		if(VOL_MISC)
-			prefs.snd_misc_vol = vol
+		if(VOL_EFFECTS_MISC)
+			prefs.snd_effects_misc_vol = vol
 		if(VOL_INSTRUMENTS)
 			prefs.snd_instruments_vol = vol
 		if(VOL_NOTIFICATIONS)
@@ -435,7 +435,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		"Effects" = list(
 			"Master" = "[VOL_EFFECTS_MASTER]",
 			"Voice" = "[VOL_EFFECTS_VOICE_ANNOUNCEMENT]",
-			"Misc" = "[VOL_MISC]",
+			"Misc" = "[VOL_EFFECTS_MISC]",
 			"Music Instruments" = "[VOL_INSTRUMENTS]"
 			),
 		"Notifications" = list(
@@ -454,7 +454,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		"[VOL_AMBIENT]" = prefs.snd_ambient_vol,
 		"[VOL_EFFECTS_MASTER]" = prefs.snd_effects_master_vol,
 		"[VOL_EFFECTS_VOICE_ANNOUNCEMENT]" = prefs.snd_effects_voice_announcement_vol,
-		"[VOL_MISC]" = prefs.snd_misc_vol,
+		"[VOL_EFFECTS_MISC]" = prefs.snd_effects_misc_vol,
 		"[VOL_INSTRUMENTS]" = prefs.snd_instruments_vol,
 		"[VOL_NOTIFICATIONS]" = prefs.snd_notifications_vol,
 		"[VOL_ADMIN]" = prefs.snd_admin_vol,
@@ -466,7 +466,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		"[VOL_AMBIENT]" = "Music and sound effects of ambient type.",
 		"[VOL_EFFECTS_MASTER]" = "Controls all sound effects.",
 		"[VOL_EFFECTS_VOICE_ANNOUNCEMENT]" = "Voiced global announcements.",
-		"[VOL_MISC]" = "Anything spammy that may annoy e.g.: tesla engine.",
+		"[VOL_EFFECTS_MISC]" = "Anything spammy that may annoy e.g.: tesla engine.",
 		"[VOL_INSTRUMENTS]" = "Music instruments.",
 		"[VOL_NOTIFICATIONS]" = "OOC notifications such as admin PM, cloning.",
 		"[VOL_ADMIN]" = "Admin sounds and music.",
