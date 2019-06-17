@@ -290,7 +290,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		M.emote("[M.friendly] [src]")
 	else
 		if(M.attack_sound)
-			playsound(loc, M.attack_sound, 50, 1, 1)
+			playsound(src, M.attack_sound, VOL_EFFECTS_MASTER)
 		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
@@ -381,7 +381,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return FALSE
 	to_chat(src, "<span class='notice'>You grab the [name] with both hands.</span>")
 	if(wieldsound)
-		playsound(loc, wieldsound, 50, 1)
+		playsound(src, wieldsound, VOL_EFFECTS_MASTER)
 
 	if(hand)
 		update_inv_l_hand()
@@ -1165,7 +1165,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(!src.xylophone)
 		visible_message("\red [src] begins playing his ribcage like a xylophone. It's quite spooky.","\blue You begin to play a spooky refrain on your ribcage.","\red You hear a spooky xylophone melody.")
 		var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg')
-		playsound(loc, song, 50, 1, -1)
+		playsound(src, song, VOL_EFFECTS_INSTRUMENT)
 		xylophone = 1
 		spawn(1200)
 			xylophone=0

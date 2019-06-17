@@ -472,7 +472,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 	power_supply.give(500)
 	if(!silenced)
-		playsound(src.loc, 'sound/weapons/guns/kenetic_reload.ogg', 60, 1)
+		playsound(src, 'sound/weapons/guns/kenetic_reload.ogg', VOL_EFFECTS_MASTER)
 	else
 		to_chat(usr, "<span class='warning'>You silently charge [src].</span>")
 	recent_reload = 1
@@ -585,7 +585,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			new /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian(T)
 			new /obj/item/clothing/suit/space/cheap(T)
 			new /obj/item/clothing/head/helmet/space/cheap(T)
-			playsound(T, 'sound/effects/sparks2.ogg', 100, 1)
+			playsound(T, 'sound/effects/sparks2.ogg', VOL_EFFECTS_MASTER)
 		else
 			src.loc.visible_message("<span class='warning'>\The [src] begins \
 				to shake. Stand back!</span>")
@@ -609,7 +609,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 				used = FALSE
 				return
 
-			playsound(T, 'sound/effects/phasein.ogg', 100, 1)
+			playsound(T, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 			if(T.z != ZLEVEL_ASTEROID)//only report capsules away from the mining level
 				message_admins("[key_name_admin(usr)] [ADMIN_QUE(usr)] [ADMIN_FLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_JMP(T)]")
@@ -833,7 +833,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if(iswrench(W) && !(flags&NODECONSTRUCT))
 		if(user.is_busy(src))
 			return
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
 						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
 		if(W.use_tool(src, user, 20, volume = 50))

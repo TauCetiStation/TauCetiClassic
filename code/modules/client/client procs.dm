@@ -93,6 +93,7 @@ var/list/blacklisted_builds = list(
 		if("usr")		hsrc = mob
 		if("prefs")		return prefs.process_link(usr,href_list)
 		if("vars")		return view_var_Topic(href,href_list,hsrc)
+		if("updateVolume")	return update_volume(href_list)
 
 	switch(href_list["action"])
 		if ("openLink")
@@ -191,6 +192,8 @@ var/list/blacklisted_builds = list(
 
 	prefs.save_preferences()
 
+	prefs_ready = TRUE // if moved below parent call, Login feature with lobby music will be broken and maybe anything else.
+
 	. = ..()	//calls mob.Login()
 	spawn() // Goonchat does some non-instant checks in start()
 		chatOutput.start()
@@ -267,7 +270,6 @@ var/list/blacklisted_builds = list(
 		to_chat(src, "<span class='warning'>Unable to access asset cache browser, \
 		if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. \
 		This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
-
 
 	//////////////
 	//DISCONNECT//

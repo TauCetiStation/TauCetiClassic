@@ -169,7 +169,7 @@ This is chestburster mechanic for damaging
 		if((BP.status & ORGAN_BROKEN) || H.stat == DEAD) //I don't know why, but bodyparts can't be broken, when human is dead.
 			chestburster.loc = get_turf(H)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [H]'s chest!</span>")
-			send_sound(chestburster, 'sound/voice/hiss5.ogg')
+			chestburster.playsound_local(null, 'sound/voice/hiss5.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 			if(H.key)
 				H.death()
 				H.ghostize(can_reenter_corpse = FALSE, bancheck = TRUE)
@@ -179,7 +179,7 @@ This is chestburster mechanic for damaging
 			qdel(src)
 		else
 			last_bite = world.time
-			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+			playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 			H.apply_damage(rand(7,14), BRUTE, BP_CHEST)
 			H.shock_stage = 20
 			H.Weaken(1)
@@ -189,24 +189,24 @@ This is chestburster mechanic for damaging
 		if(M.stat == DEAD)
 			chestburster.loc = get_turf(M)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [M]'s butt!</span>")
-			send_sound(chestburster, 'sound/voice/hiss5.ogg')
+			chestburster.playsound_local(null, 'sound/voice/hiss5.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 			qdel(src)
 		else
 			last_bite = world.time
 			M.adjustBruteLoss(rand(35,65))
-			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+			playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 			M.Weaken(8)
 	else if(iscorgi(affecting))
 		var/mob/living/simple_animal/corgi/C = affecting
 		if(C.stat == DEAD)
 			chestburster.loc = get_turf(C)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [C]'s butt!</span>")
-			send_sound(chestburster, 'sound/voice/hiss5.ogg')
+			chestburster.playsound_local(null, 'sound/voice/hiss5.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 			qdel(src)
 		else
 			last_bite = world.time
 			C.health -= rand(5,10)
-			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+			playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/larva_bite/proc/confirm()
 	if(!chestburster || !affecting)

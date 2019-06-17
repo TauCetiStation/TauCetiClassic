@@ -67,7 +67,7 @@
 				for(var/mob/M in viewers(user, null))
 					if(M.client)
 						M.show_message(text("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>"), 2)
-				playsound(user.loc, 'sound/effects/attackblob.ogg', 50, 1)
+				playsound(user, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 
 				if(prob(src.getBruteLoss() - 50))
 					for(var/atom/movable/A in stomach_contents)
@@ -146,7 +146,7 @@
 	if(shock_damage<1)
 		return 0
 	apply_damage(shock_damage, BURN, def_zone, used_weapon="Electrocution")
-	playsound(loc, "sparks", 50, 1, -1)
+	playsound(src, "sparks", VOL_EFFECTS_MASTER)
 	if(shock_damage > 10)
 		visible_message(
 			"<span class='rose'>[src] was shocked by the [source]!</span>", \
@@ -303,7 +303,7 @@
 			AdjustStunned(-3)
 			AdjustWeakened(-3)
 
-			playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+			playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/proc/crawl_can_use()
 	var/turf/T = get_turf(src)
@@ -326,7 +326,7 @@
 		if(do_after(src, 10, target = src))
 			crawl_getup = FALSE
 			if(!crawl_can_use())
-				playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+				playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
 					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
@@ -833,7 +833,7 @@
 						var/mob/living/carbon/human/H = C
 						if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
 							internalsound = 'sound/misc/riginternaloff.ogg'
-					playsound(src, internalsound, 85, 0, -5)
+					playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
 				else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
 					internal = ITEM
 					internal.add_fingerprint(usr)
@@ -844,7 +844,7 @@
 						var/mob/living/carbon/human/H = C
 						if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
 							internalsound = 'sound/misc/riginternalon.ogg'
-					playsound(src, internalsound, 85, 0, -5)
+					playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
 
 					if(ITEM.air_contents && LAZYLEN(ITEM.air_contents.gas))
 						gas_log_string = " (gases:"

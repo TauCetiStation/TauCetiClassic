@@ -214,7 +214,7 @@ var/list/alldepartments = list("Central Command")
 /obj/machinery/faxmachine/proc/print_fax(obj/item/weapon/paper/P)
 	set waitfor = FALSE
 
-	playsound(src, "sound/items/polaroid1.ogg", 50, 1)
+	playsound(src, "sound/items/polaroid1.ogg", VOL_EFFECTS_MASTER)
 	flick("faxreceive", src)
 
 	sleep(20)

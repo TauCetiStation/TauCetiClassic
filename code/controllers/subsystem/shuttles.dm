@@ -120,7 +120,7 @@ var/datum/subsystem/shuttle/SSshuttle
 					start_location.move_contents_to(end_location, null, NORTH)
 
 					for(var/mob/M in end_location)
-						M.playsound_local(null, 'sound/effects/escape_shuttle/es_cc_docking.ogg', 70)
+						M.playsound_local(null, 'sound/effects/escape_shuttle/es_cc_docking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -232,7 +232,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				if(last_es_sound < world.time)
 					var/area/escape_hallway = locate(/area/hallway/secondary/exit)
 					for(var/obj/effect/landmark/sound_source/shuttle_docking/SD in escape_hallway)
-						playsound(SD.loc, 'sound/effects/escape_shuttle/es_ss_docking.ogg', 100, 0, -2, voluminosity = FALSE)
+						playsound(SD, 'sound/effects/escape_shuttle/es_ss_docking.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2, voluminosity = FALSE)
 					last_es_sound = world.time + 10
 				return 0
 
@@ -306,14 +306,14 @@ var/datum/subsystem/shuttle/SSshuttle
 					if(last_es_sound < world.time)
 						var/area/pre_location = locate(/area/shuttle/escape/station)
 						for(var/mob/M in pre_location)
-							M.playsound_local(null, 'sound/effects/escape_shuttle/es_undocking.ogg', 70)
+							M.playsound_local(null, 'sound/effects/escape_shuttle/es_undocking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 							CHECK_TICK
 						last_es_sound = world.time + 10
 				if(timeleft == 10)
 					if(last_es_sound < world.time)
 						for(var/mob/M in player_list)
 							if(is_type_in_typecache(get_area(M), pod_station_area))
-								M.playsound_local(null, 'sound/effects/escape_shuttle/ep_undocking.ogg', 100, is_global = 1)
+								M.playsound_local(null, 'sound/effects/escape_shuttle/ep_undocking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 							CHECK_TICK
 						last_es_sound = world.time + 10
 				return 0
@@ -344,7 +344,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 				// Some aesthetic turbulance shaking
 				for(var/mob/M in end_location)
-					M.playsound_local(null, 'sound/effects/escape_shuttle/es_acceleration.ogg', 70)
+					M.playsound_local(null, 'sound/effects/escape_shuttle/es_acceleration.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 					if(M.client)
 						if(M.buckled)
 							shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -370,7 +370,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						CHECK_TICK
 
 					for(var/mob/M in end_location)
-						M.playsound_local(null, ep_shot_sound_type, 100, is_global = 1)
+						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -390,7 +390,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						CHECK_TICK
 
 					for(var/mob/M in end_location)
-						M.playsound_local(null, ep_shot_sound_type, 100, is_global = 1)
+						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -410,7 +410,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						CHECK_TICK
 
 					for(var/mob/M in end_location)
-						M.playsound_local(null, ep_shot_sound_type, 100, is_global = 1)
+						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -430,7 +430,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						CHECK_TICK
 
 					for(var/mob/M in end_location)
-						M.playsound_local(null, ep_shot_sound_type, 100, is_global = 1)
+						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking

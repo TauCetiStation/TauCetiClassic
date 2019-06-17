@@ -97,7 +97,7 @@
 
 /obj/item/weapon/storage/proc/open(mob/user)
 	if (use_sound)
-		playsound(loc, use_sound, 50, 1, -5)
+		playsound(src, use_sound, VOL_EFFECTS_MASTER, null, null, -5)
 
 	prepare_ui()
 	storage_ui.on_open(user)

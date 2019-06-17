@@ -66,12 +66,12 @@
 				return
 			if(mode==0) // It's off but still not unscrewed
 				mode=-1 // Set it to doubleoff l0l
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "You remove the screws around the power connection.")
 				return
 			else if(mode==-1)
 				mode=0
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "You attach the screws around the power connection.")
 				return
 		else if(iswelder(I) && mode==-1)
@@ -464,7 +464,7 @@
 
 	sleep(10)
 	if(last_sound < world.time + 1)
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/disposalflush.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		last_sound = world.time
 	sleep(5) // wait for animation to finish
 
@@ -494,7 +494,7 @@
 /obj/machinery/disposal/proc/expel(obj/structure/disposalholder/H)
 
 	var/turf/target
-	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+	playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	if(H) // Somehow, someone managed to flush a window which broke mid-transit and caused the disposal to go in an infinite loop trying to expel null, hopefully this fixes it
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
@@ -691,7 +691,7 @@
 		for (var/mob/M in hearers(src.loc.loc))
 			to_chat(M, "<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>")
 
-	playsound(src.loc, 'sound/effects/clang.ogg', 50, 0, 0)
+	playsound(src, 'sound/effects/clang.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 // called to vent all gas in holder to a location
 /obj/structure/disposalholder/proc/vent_gas(atom/location)
@@ -825,7 +825,7 @@
 		else						// otherwise limit to 10 tiles
 			target = get_ranged_target_turf(T, direction, 10)
 
-		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		if(H)
 			for(var/atom/movable/AM in H)
 				AM.forceMove(T)
@@ -836,7 +836,7 @@
 
 	else	// no specified direction, so throw in random direction
 
-		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		if(H)
 			for(var/atom/movable/AM in H)
 				target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
@@ -1063,7 +1063,7 @@
 
 		if(O.currTag)// Tag set
 			sort_tag = O.currTag
-			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
+			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "<span class='notice'>You changed tag to '[sort_tag]'.</span>")
 			updatename()
 			updatedesc()
@@ -1133,7 +1133,7 @@
 
 		if(O.currTag)// Tag set
 			sortType = O.currTag
-			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
+			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "<span class='notice'>You changed filter to '[sortType]'.</span>")
 			updatename()
 			updatedesc()
@@ -1348,9 +1348,9 @@
 /obj/structure/disposaloutlet/proc/expel(obj/structure/disposalholder/H)
 
 	flick("outlet-open", src)
-	playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
+	playsound(src, 'sound/machines/warning-buzzer.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	sleep(20)	//wait until correct animation frame
-	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+	playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	if(H)
 		for(var/atom/movable/AM in H)
@@ -1370,12 +1370,12 @@
 	if(isscrewdriver(I))
 		if(mode==0)
 			mode=1
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "You remove the screws around the power connection.")
 			return
 		else if(mode==1)
 			mode=0
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "You attach the screws around the power connection.")
 			return
 	else if(iswelder(I) && mode==1 && !user.is_busy())
@@ -1432,7 +1432,7 @@
 /obj/machinery/disposal/attack_animal(mob/living/simple_animal/M)
 	if(M.environment_smash)
 		..()
-		playsound(M.loc, 'sound/effects/grillehit.ogg', 50, 1)
+		playsound(M, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
 		qdel(src)
 	return

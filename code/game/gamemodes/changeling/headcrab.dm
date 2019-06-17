@@ -40,7 +40,7 @@
 	to_chat(crab,"<span class='warning'>You burst out of the remains of your former body in a shower of gore!</span>")
 	feedback_add_details("changeling_powers","LR")
 	if(ismob(user))
-		playsound(user, 'sound/effects/blobattack.ogg', 100, 1)
+		playsound(user, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
 		user.gib()
 	else
 		qdel(user)
@@ -130,6 +130,6 @@
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		C.gib()
-		playsound(C, 'sound/effects/blobattack.ogg', 100, 1)
+		playsound(C, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
 
 #undef EGG_INCUBATION_TIME

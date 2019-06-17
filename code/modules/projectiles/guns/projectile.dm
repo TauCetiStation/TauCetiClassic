@@ -32,7 +32,7 @@
 		AC.loc = get_turf(src) //Eject casing onto ground.
 		AC.SpinAnimation(10, 1) //next gen special effects
 		spawn(3) //next gen sound effects
-			playsound(src.loc, 'sound/weapons/guns/shell_drop.ogg', 50, 1)
+			playsound(src, 'sound/weapons/guns/shell_drop.ogg', VOL_EFFECTS_MASTER, 25)
 	if(empty_chamber)
 		chambered = null
 	if(no_casing)
@@ -60,7 +60,7 @@
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src
-			playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', 60, 1)
+			playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 			chamber_round()
 			A.update_icon()
@@ -81,7 +81,7 @@
 		magazine.update_icon()
 		magazine = null
 		update_icon()
-		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', 60, 1)
+		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
 		return 1
 	else

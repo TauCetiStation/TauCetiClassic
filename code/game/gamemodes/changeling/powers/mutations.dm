@@ -68,7 +68,7 @@
 			var/turf/simulated/T = get_turf(H)
 			if(istype(T))
 				T.add_blood(H) //So real blood decals
-				playsound(H.loc, 'sound/effects/splat.ogg', 50, 1) //So real sounds
+				playsound(H, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER) //So real sounds
 
 		changeling.geneticdamage += genetic_damage //Casting off a space suit leaves you weak for a few seconds.
 		changeling.chem_recharge_slowdown -= recharge_slowdown

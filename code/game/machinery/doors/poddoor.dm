@@ -62,7 +62,7 @@
 /obj/machinery/door/poddoor/do_open()
 	if(hasPower())
 		use_power(20)
-	playsound(src, door_open_sound, 100, 1)
+	playsound(src, door_open_sound, VOL_EFFECTS_MASTER)
 	do_animate("opening")
 	icon_state = icon_state_open
 	sleep(3)
@@ -75,7 +75,7 @@
 /obj/machinery/door/poddoor/do_close()
 	if(hasPower())
 		use_power(20)
-	playsound(src, door_close_sound, 100, 1)
+	playsound(src, door_close_sound, VOL_EFFECTS_MASTER)
 	do_animate("closing")
 	icon_state = icon_state_close
 	sleep(3)

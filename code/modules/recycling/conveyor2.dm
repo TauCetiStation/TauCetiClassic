@@ -128,7 +128,7 @@
 		return
 	if(iswrench(I))
 		if(!(stat & BROKEN))
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			dir = turn(dir,-45)
 			update_move_direction()
 			to_chat(user, "<span class='notice'>You rotate [src].</span>")

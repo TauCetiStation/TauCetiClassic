@@ -15,10 +15,10 @@
 				M.confused += 20
 				M.make_jittery(500)
 			else
-				send_sound(M, 'sound/effects/screech.ogg')
+				M.playsound_local(null, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 		if(issilicon(M))
-			send_sound(M, 'sound/weapons/flash.ogg')
+			M.playsound_local(null, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			M.Weaken(rand(5,10))
 
 	for(var/obj/machinery/light/L in range(4, user))

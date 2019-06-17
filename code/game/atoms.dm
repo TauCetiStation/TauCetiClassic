@@ -460,9 +460,9 @@
 				vomitsound = "femalevomit"
 			else
 				vomitsound = "malevomit"
-		playsound(H.loc, vomitsound, 100, 0)
+		playsound(H, vomitsound, VOL_EFFECTS_MASTER, null, FALSE)
 	else
-		playsound(C.loc, 'sound/effects/splat.ogg', 100, 1)
+		playsound(C, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 		C.visible_message("<B>[C.name]</B> <span class='danger'>throws up!</span>","<span class='warning'>You throw up!</span>")
 
 	if(istype(src, /turf/simulated) && !istype(C.head, /obj/item/clothing/head/helmet/space))
@@ -560,7 +560,7 @@
 				return FALSE
 		if(!(lube & SLIDE_ICE))
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
-			playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
+			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 
 		var/olddir = C.dir
 

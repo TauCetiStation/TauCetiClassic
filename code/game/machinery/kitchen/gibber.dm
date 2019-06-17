@@ -186,7 +186,7 @@
 	update_icon()
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = gibtime / 100, loop = gibtime) //start shaking
-	playsound(src.loc, 'sound/effects/gibber.ogg', 100, 1)
+	playsound(src, 'sound/effects/gibber.ogg', VOL_EFFECTS_MASTER)
 
 	var/slab_name = occupant.name
 	var/slab_count = 3
@@ -226,7 +226,7 @@
 		qdel(src.occupant)
 		occupant = null
 
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 		operating = 0
 		for (var/obj/item/thing in contents)
 			thing.loc = get_turf(thing) // Drop it onto the turf for throwing.

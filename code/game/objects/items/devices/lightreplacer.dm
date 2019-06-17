@@ -119,7 +119,7 @@
 
 /obj/item/device/lightreplacer/proc/Use(mob/user)
 
-	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 	AddUses(-1)
 	return 1
 
@@ -180,7 +180,7 @@
 
 /obj/item/device/lightreplacer/proc/Emag()
 	emagged = !emagged
-	playsound(src.loc, "sparks", 100, 1)
+	playsound(src, "sparks", VOL_EFFECTS_MASTER)
 	if(emagged)
 		name = "Shortcircuited [initial(name)]"
 	else

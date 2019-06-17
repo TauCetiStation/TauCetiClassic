@@ -53,14 +53,14 @@ RCD
 		user.drop_item()
 		qdel(W)
 		matter += 10
-		playsound(src, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>The RCD now holds [matter]/30 matter-units.</span>")
 		desc = "A RCD. It currently holds [matter]/30 matter-units."
 
 
 /obj/item/weapon/rcd/attack_self(mob/user)
 	//Change the mode
-	playsound(src, 'sound/effects/pop.ogg', 50, 0)
+	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	switch(mode)
 		if(1)
 			mode = 2
@@ -81,7 +81,7 @@ RCD
 				spark_system.start()
 
 /obj/item/weapon/rcd/proc/activate()
-	playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 
 
 /obj/item/weapon/rcd/afterattack(atom/A, mob/user, proximity)
@@ -107,7 +107,7 @@ RCD
 			if(istype(A, /turf/simulated/floor) && !user.is_busy())
 				if(checkResource(3, user))
 					to_chat(user, "Building Wall ...")
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 					if(do_after(user, 20, target = A))
 						if(!useResource(3, user))
 							return 0
@@ -124,7 +124,7 @@ RCD
 						return 0
 				if(checkResource(10, user) && !user.is_busy())
 					to_chat(user, "Building Airlock...")
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 					if(do_after(user, 50, target = A))
 						if(!useResource(10, user))
 							return 0
@@ -140,7 +140,7 @@ RCD
 					return 0
 				if(checkResource(5, user) && !user.is_busy())
 					to_chat(user, "Deconstructing Wall...")
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 					if(do_after(user, 40, target = A))
 						if(!useResource(5, user))
 							return 0
@@ -152,7 +152,7 @@ RCD
 			if(istype(A, /turf/simulated/floor))
 				if(checkResource(5, user) && !user.is_busy())
 					to_chat(user, "Deconstructing Floor...")
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 					if(do_after(user, 50, target = A))
 						if(!useResource(5, user))
 							return 0
@@ -164,7 +164,7 @@ RCD
 			if(istype(A, /obj/machinery/door/airlock) && !user.is_busy())
 				if(checkResource(10, user))
 					to_chat(user, "Deconstructing Airlock...")
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 					if(do_after(user, 50, target = A))
 						if(!useResource(10, user))
 							return 0

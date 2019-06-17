@@ -53,6 +53,6 @@
 	log_game("[key_name_admin(user)] used a grenade ([src.name]).")
 	F.active = 1
 	F.icon_state = initial(F.icon_state) + "_active"
-	playsound(user.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+	playsound(user, 'sound/weapons/armbomb.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 	spawn(15)
 		F.prime()

@@ -69,7 +69,7 @@
 	qdel(S)
 	D.icon_state = "syringeproj"
 	D.name = "syringe"
-	playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
+	playsound(user, 'sound/items/syringeproj.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/i = 0 to 6)
 		if(!D) break

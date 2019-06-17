@@ -90,7 +90,7 @@
 				dancing = 1
 
 	synch()
-	playsound(victim, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 
 	if(state == GRAB_PASSIVE)
 		assailant.visible_message("<span class='red'>[assailant] has grabbed [affecting] passively!</span>")
@@ -430,7 +430,7 @@
 //							assailant << "<span class='warning'>You require a better grab to do this.</span>"
 //							return
 //						if(affecting:grab_joint(assailant))
-//							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+//							playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 //							return
 					else
 						if(affecting.lying)
@@ -446,7 +446,7 @@
 						if(!armor && prob(damage))
 							affecting.apply_effect(20, PARALYZE)
 							affecting.visible_message("<span class='danger'>[affecting] has been knocked unconscious!</span>")
-						playsound(assailant.loc, "swing_hit", 25, 1, -1)
+						playsound(assailant, "swing_hit", VOL_EFFECTS_MASTER)
 						assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Headbutted [affecting.name] ([affecting.ckey])</font>")
 						affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Headbutted by [assailant.name] ([assailant.ckey])</font>")
 						msg_admin_attack("[key_name(assailant)] has headbutted [key_name(affecting)]")

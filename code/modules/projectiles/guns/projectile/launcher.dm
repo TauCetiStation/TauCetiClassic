@@ -33,7 +33,7 @@
 		return
 	var/num_loaded = magazine.attackby(A, user, 1)
 	if(num_loaded)
-		playsound(src.loc, 'sound/weapons/guns/reload_m79.ogg', 50, 1)
+		playsound(src, 'sound/weapons/guns/reload_m79.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
 		var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
 		chambered = AC
@@ -43,14 +43,14 @@
 /obj/item/weapon/gun/projectile/m79/attack_self(mob/user)
 	open = !open
 	if(open)
-		playsound(src.loc, 'sound/weapons/guns/m79_out.ogg', 50, 1)
+		playsound(src, 'sound/weapons/guns/m79_out.ogg', VOL_EFFECTS_MASTER)
 		if(chambered)
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, loc, 'sound/weapons/guns/shell_drop.ogg', 50, 1), 3)
 			chambered.loc = get_turf(src)//Eject casing
 			chambered.SpinAnimation(5, 1)
 			chambered = null
 	else
-		playsound(src.loc, 'sound/weapons/guns/m79_in.ogg', 50, 1)
+		playsound(src, 'sound/weapons/guns/m79_in.ogg', VOL_EFFECTS_MASTER)
 		open = 0
 	add_fingerprint(user)
 	update_icon()

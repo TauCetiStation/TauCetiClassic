@@ -29,7 +29,7 @@
 				icon_state = initial(icon_state)
 				vision_flags = initial(vision_flags)
 				to_chat(usr, "You activate the optical matrix on the [src].")
-			playsound(src.loc, activation_sound, 10, 0)
+			playsound(src, activation_sound, VOL_EFFECTS_MASTER, 10, FALSE)
 			H.update_inv_glasses()
 			H.update_sight()
 

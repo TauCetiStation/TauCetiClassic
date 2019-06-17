@@ -61,7 +61,7 @@
 /obj/item/weapon/grenade/cancasing/attack_self(mob/user)
 	if(!active)
 		if(clown_check(user))
-			playsound(src, 'sound/items/matchstick_light.ogg', 50, 1)
+			playsound(src, 'sound/items/matchstick_light.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src]!</span>", "<span class='warning'>[bicon(src)] You light \the [name]!</span>")
 			active = 1
 			update_icon()
@@ -129,7 +129,7 @@
 			is_W_lit = TRUE
 	if(is_W_lit)
 		if(clown_check(user))
-			playsound(src, 'sound/items/matchstick_light.ogg', 50, 1)
+			playsound(src, 'sound/items/matchstick_light.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [W]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W]!</span>")
 			active = 1
 			update_icon()

@@ -48,7 +48,7 @@
 	if(iscrowbar(I))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>")
-		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
+		playsound(src, 'sound/effects/stonedoor_openclose.ogg', VOL_EFFECTS_MASTER)
 		if(I.use_tool(src, user, 30, volume = 0))
 			user.visible_message("<span class='notice'>[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!</span>", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "You hear grinding porcelain.")
 			cistern = !cistern
@@ -146,7 +146,7 @@
 		return
 	user.SetNextMove(CLICK_CD_INTERACT)
 	to_chat(user, "\blue You start drying your hands.")
-	playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
+	playsound(src, 'sound/items/drying.ogg', VOL_EFFECTS_MASTER)
 	add_fingerprint(user)
 	busy = 1
 	if(do_after(user, 40, target = src))
@@ -177,7 +177,7 @@
 			add_fingerprint(user)
 			emagged = 1
 			flick("dryer-broken",src)
-			playsound(src, 'sound/effects/sparks3.ogg', 50, 1, 1)
+			playsound(src, 'sound/effects/sparks3.ogg', VOL_EFFECTS_MASTER)
 			icon_state = "dryer-emag"
 			to_chat(user, "\red You swipe near [O] and crack it to be hot.")
 			return
@@ -193,7 +193,7 @@
 					return
 				user.visible_message("<span class='danger'>[user] slams [GM.name] into the [src]!</span>", "<span class='notice'>You slam [GM.name] into the [src]!</span>")
 				GM.apply_damage(8, BRUTE, BP_HEAD)
-				playsound(src, 'sound/weapons/smash.ogg', 50, 1, 1)
+				playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
 				return
 			else
 				to_chat(user, "<span class='notice'>You need a tighter grip.</span>")
@@ -224,7 +224,7 @@
 						return
 					busy = 1
 					user.visible_message("<span class='danger'>[user] hold [GM.name] under the [src]!</span>", "<span class='notice'>You hold [GM.name] under the [src]!</span>")
-					playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
+					playsound(src, 'sound/items/drying.ogg', VOL_EFFECTS_MASTER)
 					GM.adjustFireLoss(10)
 					if(do_after(user, 40, target = src))
 						busy = 0
@@ -240,7 +240,7 @@
 
 		busy = 1
 		to_chat(usr, "\blue You start drying \the [I].")
-		playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
+		playsound(src, 'sound/items/drying.ogg', VOL_EFFECTS_MASTER)
 		if(do_after(user, 40, target = src))
 			var/mob/living/carbon/C = user
 			C.apply_damage(25, BURN, C.hand ? BP_L_ARM : BP_R_ARM)
@@ -254,7 +254,7 @@
 
 	busy = 1
 	to_chat(usr, "\blue You start drying \the [I].")
-	playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
+	playsound(src, 'sound/items/drying.ogg', VOL_EFFECTS_MASTER)
 	if(do_after(user, 40, target = src))
 		busy = 0
 
@@ -590,7 +590,7 @@
 		to_chat(user, "\red Someone's already washing here.")
 		return
 	user.SetNextMove(CLICK_CD_INTERACT)
-	playsound(src, 'sound/items/wash.ogg', 50, 1, 1)
+	playsound(src, 'sound/items/wash.ogg', VOL_EFFECTS_MASTER)
 	to_chat(user, "\blue You start washing your hands.")
 	busy = 1
 	if(do_after(user, 30, target = src))
@@ -640,7 +640,7 @@
 
 	to_chat(usr, "\blue You start washing \the [I].")
 
-	playsound(src, 'sound/items/wash.ogg', 50, 1, 1)
+	playsound(src, 'sound/items/wash.ogg', VOL_EFFECTS_MASTER)
 	busy = 1
 	if(do_after(user, 30, target = src))
 		busy = 0

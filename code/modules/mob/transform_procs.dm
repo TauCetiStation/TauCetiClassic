@@ -82,7 +82,7 @@
 
 /mob/proc/AIize(move=1)
 	if(client)
-		send_sound(src, null, 85, CHANNEL_LOBBY_MUSIC) // stop the jams for AIs
+		playsound_stop(CHANNEL_MUSIC) // stop the jams for AIs
 	var/mob/living/silicon/ai/O = new (loc, base_law_type,,1)//No MMI but safety is in effect.
 	O.invisibility = 0
 	O.aiRestorePowerRoutine = 0

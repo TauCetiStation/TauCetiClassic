@@ -138,12 +138,12 @@
 			if(!target)
 				icon_state = "pinonnull"
 				return
-			playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)	//Plays a beep
+			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)	//Plays a beep
 			visible_message("Shuttle Locator active.")			//Lets the mob holding it know that the mode has changed
 	else
 		mode = SEARCH_FOR_DISK
 		if(istype(target, /obj/machinery/computer/syndicate_station))
-			playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
+			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>Authentication Disk Locator active.</span>")
 			target = null
 	return ..()

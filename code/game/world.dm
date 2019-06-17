@@ -199,7 +199,7 @@ var/world_topic_spam_protect_time = world.timeofday
 		C.received_irc_pm = world.time
 		C.irc_admin = input["sender"]
 
-		send_sound(C, 'sound/effects/adminhelp.ogg')
+		C.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 		to_chat(C, message)
 
 

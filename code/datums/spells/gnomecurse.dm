@@ -43,7 +43,7 @@
 	H.speech_problem_flag = 1
 	H.gnomed = rand(300, 600)
 
-	playsound(H, 'sound/magic/GNOMED.ogg', 100, 1)
+	playsound(H, 'sound/magic/GNOMED.ogg', VOL_EFFECTS_MASTER)
 
 	var/obj/item/clothing/mask/gnome_beard/gnomebeard = new /obj/item/clothing/mask/gnome_beard
 	var/obj/item/clothing/head/gnome_hat/gnomehat = new /obj/item/clothing/head/gnome_hat

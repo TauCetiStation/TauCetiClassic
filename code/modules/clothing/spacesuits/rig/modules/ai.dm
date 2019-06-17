@@ -97,7 +97,7 @@
 	var/power_waste = 0
 
 	if(H.stat == DEAD && saved_stat != DEAD)
-		playsound(H, 'sound/rig/dead.wav', 50)
+		playsound(H, 'sound/rig/dead.wav', VOL_EFFECTS_MASTER)
 	saved_stat = H.stat
 
 	process_warnings(H)
@@ -155,7 +155,7 @@
 		message.text = stars(message.text, rand(50,100))
 	to_chat(H, "<span class='notice'>\[[voice_name]\]</span> <span class='[message.class]'>[message.text]</span>")
 	if(message.sound)
-		H.playsound_local(src, message.sound, 50)
+		H.playsound_local(src, message.sound, VOL_EFFECTS_MASTER, null, FALSE)
 
 	return power_waste
 

@@ -118,7 +118,7 @@
 		cooldown = world.time + 15
 		flick("coin_[cmineral]_flip", src)
 		icon_state = "coin_[cmineral]_[coinflip]"
-		playsound(user.loc, 'sound/items/coinflip.ogg', 50, 1)
+		playsound(user, 'sound/items/coinflip.ogg', VOL_EFFECTS_MASTER)
 		var/oldloc = loc
 		if(loc == oldloc && user && !user.incapacitated())
 			user.visible_message("[user] has flipped [src]. It lands on [coinflip].",

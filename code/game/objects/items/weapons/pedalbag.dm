@@ -14,7 +14,7 @@
 		return
 
 	usr.visible_message("<font class='artefact'>[usr] shakes out the contents of \the [src]!</font>")
-	playsound(usr.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+	playsound(usr, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 
 	var/turf/T = get_turf(src)
 
@@ -38,7 +38,7 @@
 
 	user.do_attack_animation(target)
 	user.visible_message("<font class='artefact'>[user] put \the [src] on [target]!</font>")
-	playsound(user.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+	playsound(user, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 
 	target.forceMove(src)
 	target.status_flags ^= GODMODE

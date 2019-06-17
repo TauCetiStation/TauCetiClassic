@@ -32,7 +32,7 @@
 
 /obj/structure/stool/attackby(obj/item/weapon/W, mob/user)
 	if(iswrench(W) && !(flags & NODECONSTRUCT))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		new /obj/item/stack/sheet/metal(loc)
 		qdel(src)
 		return
@@ -43,8 +43,8 @@
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			playsound(src.loc, "sparks", 50, 1)
+			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, "sparks", VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'>You hear [src] coming apart.</span>")
 			if(!(flags & NODECONSTRUCT))
 				new /obj/item/stack/sheet/metal(loc)

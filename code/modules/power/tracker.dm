@@ -63,7 +63,7 @@
 			if(S)
 				S.loc = src.loc
 				S.give_glass()
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='notice'>[user] takes the glass off the tracker.</span>")
 			qdel(src)
 		return

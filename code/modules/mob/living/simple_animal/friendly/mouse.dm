@@ -35,7 +35,7 @@
 	..()
 	if(!stat && prob(speak_chance))
 		for(var/mob/M in view())
-			send_sound(M, 'sound/effects/mousesqueek.ogg')
+			M.playsound_local(loc, 'sound/effects/mousesqueek.ogg', VOL_EFFECTS_MASTER)
 
 	if(!ckey && stat == CONSCIOUS && prob(0.5))
 		stat = UNCONSCIOUS
@@ -154,7 +154,7 @@
 		if(!stat)
 			var/mob/M = AM
 			to_chat(M, "\blue [bicon(src)] Squeek!")
-			send_sound(M, 'sound/effects/mousesqueek.ogg')
+			playsound(src, 'sound/effects/mousesqueek.ogg', VOL_EFFECTS_MASTER)
 	..()
 
 /mob/living/simple_animal/mouse/death()

@@ -62,7 +62,7 @@
 		if(!R.use(1))
 			return
 		to_chat(user, "\blue Constructing support lattice ...")
-		playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+		playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 		ReplaceWithLattice()
 		return
 
@@ -74,7 +74,7 @@
 				return
 			qdel(L)
 			user.SetNextMove(CLICK_CD_RAPID)
-			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+			playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 			S.build(src)
 			return
 		else
