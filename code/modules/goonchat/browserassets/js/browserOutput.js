@@ -11,7 +11,7 @@ var decoder = decodeURIComponent || unescape;
 
 //Globals
 window.status = 'Output';
-var $messages, $subOptions, $subAudio, $selectedSub, $contextMenu, $filterMessages, $last_message;
+var $messages, $subOptions, $selectedSub, $contextMenu, $filterMessages, $last_message;
 var opts = {
 	//General
 	'messageCount': 0, //A count...of messages...
@@ -547,7 +547,6 @@ if (typeof $ === 'undefined') {
 $(function() {
 	$messages = $('#messages');
 	$subOptions = $('#subOptions');
-	$subAudio = $('#subAudio');
 	$selectedSub = $subOptions;
 
 	//Hey look it's a controller loop!
@@ -806,10 +805,6 @@ $(function() {
 
 	$('#toggleOptions').click(function(e) {
 		handleToggleClick($subOptions, $(this));
-	});
-
-	$('#toggleAudio').click(function(e) {
-		handleToggleClick($subAudio, $(this));
 	});
 
 	$('#subOptions, #toggleOptions').mouseenter(function() {
