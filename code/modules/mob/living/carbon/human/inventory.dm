@@ -357,3 +357,13 @@
 	W.plane = ABOVE_HUD_PLANE
 	W.appearance_flags = APPEARANCE_UI
 	W.slot_equipped = slot
+
+/mob/living/carbon/human/put_in_l_hand(obj/item/W)
+	if(!has_bodypart(BP_L_ARM))
+		return FALSE
+	return ..()
+
+/mob/living/carbon/human/put_in_r_hand(obj/item/W)
+	if(!has_bodypart(BP_R_ARM))
+		return FALSE
+	return ..()
