@@ -374,6 +374,29 @@
 	return
 
 /obj/structure/computerframe/attackby(obj/item/P, mob/user)
+	if(!ishuman(user))
+		to_chat(user, "<span class='warning'>It's too complicated for you.</span>")
+		return
+
+	if((state != 0) && (state != 1) && iswrench(P))
+		if(user.is_busy(src))
+			return
+
+		var/list/possible_directions = list()
+		for(var/direction_to_check in (cardinal - NORTH - dir))
+			possible_directions += dir2text(direction_to_check)
+
+		var/dir_choise = input(user, "Choose the direction where to turn \the [src].", "Choose the direction.", null) as null|anything in possible_directions
+
+		if(!dir_choise || !user || !(user in range(1, src)) || user.is_busy(src))
+			return
+
+		if(P.use_tool(src, user, 20, volume = 50) && src && P)
+			user.visible_message("<span class='notice'>[user] turns \the [src] [dir_choise].</span>", "<span class='notice'>You turn \the [src] [dir_choise].</span>")
+			dir = text2dir(dir_choise)
+
+		return
+
 	switch(state)
 		if(0)
 			if(iswrench(P))
@@ -466,5 +489,38 @@
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "\blue You connect the monitor.")
 				var/obj/machinery/computer/new_computer = new src.circuit.build_path (src.loc, circuit)
+				new_computer.dir = dir
 				transfer_fingerprints_to(new_computer)
 				qdel(src)
+
+/obj/structure/computerframe/verb/rotate()
+	set category = "Object"
+	set name = "Rotate"
+	set src in oview(1)
+
+	if(get_dist(src, usr) > 1 || usr.restrained() || usr.lying || usr.stat || issilicon(usr))
+		return
+	if(!ishuman(usr))
+		to_chat(usr, "<span class='warning'>It's too complicated for you.</span>")
+		return
+	if(usr.is_busy(src))
+		return
+
+	var/obj/item/I = usr.get_active_hand()
+
+	if (!I || !iswrench(I))
+		to_chat(usr, "<span class='warning'>You need to hold a wrench in your active hand to do this.</span>")
+		return
+
+	var/list/possible_directions = list()
+	for(var/direction_to_check in (cardinal - NORTH - dir))
+		possible_directions += dir2text(direction_to_check)
+
+	var/dir_choise = input(usr, "Choose the direction where to turn \the [src].", "Choose the direction.", null) as null|anything in possible_directions
+
+	if(!dir_choise || !usr || !(usr in range(1, src)) || usr.is_busy(src))
+		return
+
+	if(I.use_tool(src, usr, 20, volume = 50) && src && I)
+		usr.visible_message("<span class='notice'>[usr] turns \the [src] [dir_choise].</span>", "<span class='notice'>You turn \the [src] [dir_choise].</span>")
+		dir = text2dir(dir_choise)

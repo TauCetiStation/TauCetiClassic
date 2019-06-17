@@ -477,6 +477,12 @@
 	if(!AM || !src || src == AM || !isturf(AM.loc))	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
 	if(!AM.anchored)
+		if(ismob(AM))
+			var/mob/M = AM
+			if(M.buckled) // If we are trying to pull something that is buckled we will pull the thing its buckled to
+				start_pulling(M.buckled)
+				return
+
 		AM.add_fingerprint(src)
 
 		// If we're pulling something then drop what we're currently pulling and pull this instead.
@@ -626,6 +632,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 	..()
 
 	if(statpanel("Status"))
+		if(round_id)
+			stat(null, "Round ID: #[round_id]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(client)
 			stat(null, "Your in-game age: [client.player_ingame_age]")

@@ -58,13 +58,13 @@
 /obj/item/taperoll/attack_self(mob/user)
 	if(icon_state == "[icon_base]_start")
 		start = get_turf(src)
-		to_chat(usr, "\blue You place the first end of the [src].")
+		to_chat(usr, "<span class='notice'>You place the first end of the [src].</span>")
 		icon_state = "[icon_base]_stop"
 	else
 		icon_state = "[icon_base]_start"
 		end = get_turf(src)
 		if(start.y != end.y && start.x != end.x || start.z != end.z)
-			to_chat(usr, "\blue [src] can only be laid horizontally or vertically.")
+			to_chat(usr, "<span class='notice'>[src] can only be laid horizontally or vertically.</span>")
 			return
 
 		var/turf/cur = start
@@ -93,7 +93,7 @@
 						break
 			cur = get_step_towards(cur,end)
 		if (!can_place)
-			to_chat(usr, "\blue You can't run \the [src] through that!")
+			to_chat(usr, "<span class='notice'>You can't run \the [src] through that!</span>")
 			return
 
 		cur = start
@@ -106,8 +106,7 @@
 				var/obj/item/tape/P = new tape_type(cur)
 				P.icon_state = "[P.icon_base]_[dir]"
 			cur = get_step_towards(cur,end)
-	//is_blocked_turf(turf/T)
-		to_chat(usr, "\blue You finish placing the [src].")//Git Test
+		to_chat(usr, "<span class='notice'>You finish placing the [src].</span>")
 
 /obj/item/taperoll/afterattack(atom/A, mob/user)
 	if (istype(A, /obj/machinery/door/airlock))
@@ -117,23 +116,21 @@
 		var/turf/T = get_turf(A)
 		var/obj/item/tape/P = new tape_type(T.x,T.y,T.z)
 		P.loc = locate(T.x,T.y,T.z)
-		P.icon_state = "[src.icon_base]_door"
+		P.icon_state = "[icon_base]_door"
 		P.layer = 3.2
-		to_chat(user, "\blue You finish placing the [src].")
-
-/obj/item/tape/Bumped(M)
-	if(src.allowed(M))
-		var/turf/T = get_turf(src)
-		M:loc = T
+		to_chat(user, "<span class='notice'>You finish placing the [src].</span>")
 
 /obj/item/tape/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(!density) return 1
-	if(air_group || (height==0)) return 1
-
-	if ((mover.pass_flags & PASSTABLE || istype(mover, /obj/effect/meteor) || mover.throwing == 1) )
-		return 1
+	if(!density)
+		return TRUE
+	if(air_group || (height == 0))
+		return TRUE
+	if(allowed(mover))
+		return TRUE
+	if (mover.pass_flags & PASSTABLE || istype(mover, /obj/effect/meteor) || mover.throwing)
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/item/tape/attackby(obj/item/weapon/W, mob/user)
 	breaktape(W, user, FALSE)
@@ -141,13 +138,15 @@
 
 /obj/item/tape/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if (user.a_intent == "help" && src.allowed(user))
-		user.show_viewers("\blue [user] lifts [src], allowing passage.")
-		src.density = 0
-		spawn(200)
-			src.density = 1
+	if (user.a_intent == "help" && allowed(user))
+		user.visible_message("<span class='notice'>[user] lifts [src], allowing passage.</span>")
+		density = 0
+		addtimer(CALLBACK(src, .proc/stop_passage), 20 SECONDS)
 	else
 		breaktape(null, user, FALSE)
+
+/obj/item/tape/proc/stop_passage()
+	density = 1
 
 /obj/item/tape/attack_paw(mob/user)
 	breaktape(null, user, FALSE)
@@ -159,14 +158,14 @@
 	breaktape(W = null, user = null, forced = TRUE)
 
 /obj/item/tape/proc/breaktape(obj/item/weapon/W, mob/user, forced = FALSE)
-	if((user && user.a_intent == "help") && (W && !W.can_puncture() && src.allowed(user)) && !forced)
-		to_chat(user, "You can't break the [src] with that!")
+	if((user && user.a_intent == "help") && (W && !W.can_puncture() && allowed(user)) && !forced)
+		to_chat(user, "<span class='warning'>You can't break the [src] with that!</span>")
 		return
 	if(user)
-		user.show_viewers("\blue [user] breaks the [src]!")
+		user.visible_message("<span class='notice'>[user] breaks the [src]!</span>")
 
 	var/dir[2]
-	var/icon_dir = src.icon_state
+	var/icon_dir = icon_state
 	if(icon_dir == "[src.icon_base]_h")
 		dir[1] = EAST
 		dir[2] = WEST

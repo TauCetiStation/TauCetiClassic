@@ -12,7 +12,10 @@
 	var/dirt = 0
 
 /turf/simulated/atom_init()
-	. = ..()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/turf/simulated/atom_init_late()
 	levelupdate()
 
 /turf/simulated/proc/AddTracks(mob/M,bloodDNA,comingdir,goingdir, blooddatum = null)

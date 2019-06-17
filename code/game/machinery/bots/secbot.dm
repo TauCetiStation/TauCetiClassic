@@ -281,7 +281,7 @@
 				if(!C.handcuffed && !arrest_type)
 					playsound(src, 'sound/weapons/handcuffs.ogg', VOL_EFFECTS_MASTER, 30, null, -2)
 					mode = SECBOT_ARREST
-					visible_message("\red <B>[src] is trying to put handcuffs on [target]!</B>")
+					visible_message("<span class='warning bold'>[src] is trying to put handcuffs on [target]!</span>")
 					addtimer(CALLBACK(src, .proc/subprocess, SECBOT_PREP_ARREST), 60)
 
 			else
@@ -325,9 +325,7 @@
 			if(Adjacent(target))
 				if(iscarbon(target))
 					var/mob/living/carbon/mob_carbon = target
-					if(!mob_carbon.handcuffed)
-						mob_carbon.handcuffed = new /obj/item/weapon/handcuffs(target)
-						mob_carbon.update_inv_handcuffed()	//update the handcuffs overlay
+					mob_carbon.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(mob_carbon), SLOT_HANDCUFFED)
 				forgetCurrentTarget()
 				playsound(src, "law", VOL_EFFECTS_MASTER, null, FALSE)
 			else if(mode == SECBOT_ARREST)

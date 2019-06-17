@@ -1,3 +1,5 @@
+//no declare_completion?
+
 #define MUTINY_RECRUITMENT_COOLDOWN 5
 
 /datum/game_mode/mutiny

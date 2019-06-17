@@ -2,6 +2,8 @@
 	name = "Cloning console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
+	state_broken_preset = "crewb"
+	state_nopower_preset = "crew0"
 	light_color = "#315ab4"
 	circuit = /obj/item/weapon/circuitboard/cloning
 	req_access = list(access_heads) //Only used for record deletion right now.
@@ -46,30 +48,26 @@
 
 /obj/machinery/computer/cloning/proc/findscanner()
 	var/obj/machinery/dna_scannernew/scannerf = null
-
 	// Loop through every direction
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(var/nextdir in cardinal)
 
 		// Try to find a scanner in that direction
-		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
+		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, nextdir))
 
 		// If found, then we break, and return the scanner
-		if (!isnull(scannerf))
+		if(!isnull(scannerf))
 			break
-
 	// If no scanner was found, it will return null
 	return scannerf
 
 /obj/machinery/computer/cloning/proc/findcloner()
 	var/obj/machinery/clonepod/podf = null
+	for(var/newdir in cardinal)
 
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+		podf = locate(/obj/machinery/clonepod, get_step(src, newdir))
 
-		podf = locate(/obj/machinery/clonepod, get_step(src, dir))
-
-		if (!isnull(podf))
+		if(!isnull(podf))
 			break
-
 	return podf
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
@@ -411,10 +409,10 @@
 /obj/machinery/computer/cloning/update_icon()
 
 	if(stat & BROKEN)
-		icon_state = "commb"
+		icon_state = "crewb"
 	else
 		if(stat & NOPOWER)
-			src.icon_state = "c_unpowered"
+			src.icon_state = "crew0"
 			stat |= NOPOWER
 		else
 			icon_state = initial(icon_state)

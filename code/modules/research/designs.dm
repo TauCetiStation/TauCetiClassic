@@ -467,14 +467,14 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
 	build_path = /obj/item/weapon/aiModule/purge
 
-/datum/design/freeformcore_module
+/datum/design/freeform/core_module
 	name = "AI Core Module (Freeform)"
 	desc = "Allows for the construction of a Freeform AI Core Module."
 	id = "freeformcore_module"
 	req_tech = list("programming" = 4, "materials" = 6)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
-	build_path = /obj/item/weapon/aiModule/freeformcore
+	build_path = /obj/item/weapon/aiModule/freeform/core
 
 /datum/design/asimov
 	name = "AI Core Module (Asimov)"

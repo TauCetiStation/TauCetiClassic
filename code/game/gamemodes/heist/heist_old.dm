@@ -211,7 +211,7 @@ VOX HEIST ROUNDTYPE
 	//No objectives, go straight to the feedback.
 	if(!(raid_objectives.len)) return ..()
 
-	completion_text += "<B>Heist mode resume:</B><BR>"
+	completion_text += "<h3>Heist mode resume:</h3>"
 
 	var/win_type = "Major"
 	var/win_group = "Crew"
@@ -239,7 +239,7 @@ VOX HEIST ROUNDTYPE
 
 		win_type = "Major"
 		win_group = "Crew"
-		completion_text += "<B>The Vox Raiders have been wiped out!</B>"
+		completion_text += "<b>The Vox Raiders have been wiped out!</b>"
 
 	else if(!is_raider_crew_safe())
 
@@ -247,7 +247,7 @@ VOX HEIST ROUNDTYPE
 			win_type = "Major"
 
 		win_group = "Crew"
-		win_msg += "<B>The Vox Raiders have left someone behind!</B>"
+		win_msg += "<b>The Vox Raiders have left someone behind!</b>"
 
 	else
 
@@ -255,21 +255,21 @@ VOX HEIST ROUNDTYPE
 			if(win_type == "Minor")
 
 				win_type = "Major"
-			win_msg += "<B>The Vox Raiders escaped the station!</B>"
+			win_msg += "<b>The Vox Raiders escaped the station!</b>"
 		else
-			win_msg += "<B>The Vox Raiders were repelled!</B>"
+			win_msg += "<b>The Vox Raiders were repelled!</b>"
 
-	completion_text += " <B>[win_type] [win_group] victory!</B>"
+	completion_text += " <b>[win_type] [win_group] victory!</b>"
 	completion_text += win_msg
 	feedback_set_details("round_end_result","heist - [win_type] [win_group]")
 
 	var/count = 1
 	for(var/datum/objective/objective in raid_objectives)
 		if(objective.check_completion())
-			completion_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+			completion_text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
 			feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
 		else
-			completion_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+			completion_text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
 			feedback_add_details("traitor_objective","[objective.type]|FAIL")
 		count++
 

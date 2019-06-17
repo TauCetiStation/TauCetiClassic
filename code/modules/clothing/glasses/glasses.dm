@@ -173,17 +173,15 @@
 	set src in usr
 
 	if(usr.canmove && !usr.stat && !usr.restrained())
-		if(src.up)
-			src.up = !src.up
-			src.flags |= GLASSESCOVERSEYES
-			flags_inv |= HIDEEYES
+		if(up)
+			up = !up
+			flags |= GLASSESCOVERSEYES
 			body_parts_covered |= EYES
 			icon_state = initial(icon_state)
 			to_chat(usr, "You flip \the [src] down to protect your eyes.")
 		else
-			src.up = !src.up
-			src.flags &= ~HEADCOVERSEYES
-			flags_inv &= ~HIDEEYES
+			up = !up
+			flags &= ~GLASSESCOVERSEYES
 			body_parts_covered &= ~EYES
 			icon_state = "[initial(icon_state)]up"
 			to_chat(usr, "You push \the [src] up out of your face.")

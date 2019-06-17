@@ -282,7 +282,12 @@ var/datum/subsystem/shuttle/SSshuttle
 				else
 					captain_announce("The scheduled Crew Transfer Shuttle has docked with the station. It will depart in approximately [round(timeleft()/60,1)] minutes.", sound = "crew_shut_docked")
 
-				send2slack_service("the shuttle has docked with the station")
+				world.send2bridge(
+					type = list(BRIDGE_ROUNDSTAT),
+					attachment_title = "The shuttle docked to the station",
+					attachment_msg = "Join now: <[BYOND_JOIN_LINK]>",
+					attachment_color = BRIDGE_COLOR_ROUNDSTAT,
+				)
 
 				return 1
 

@@ -3,6 +3,8 @@
 	desc = "Used to order supplies, approve requests, and control the shuttle."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "supply"
+	state_broken_preset = "techb"
+	state_nopower_preset = "tech0"
 	light_color = "#b88b2e"
 	req_access = list(access_cargo)
 	circuit = /obj/item/weapon/circuitboard/computer/cargo

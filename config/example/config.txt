@@ -233,10 +233,8 @@ ALLOW_CULT_GHOSTWRITER
 ## Sets the minimum number of cultists needed for ghosts to write in blood.
 REQ_CULT_GHOSTWRITER 6
 
-## Uncomment to enable slack
-#USE_SLACK_BOT
-
-#SLACK_TEAM tauceti
+## place address for chat bridge
+# CHAT_BRIDGE http://localhost:3000
 
 ## Media base URL - determines where to pull the jukebox playlist from.
 # MEDIA_BASE_URL http://game2.tauceti.ru/media

@@ -35,11 +35,15 @@
 		return FALSE
 	return TRUE
 
+/obj/item/weapon/gun/magic/examine(mob/user)
+	..()
+	to_chat(user, "The [name] has [charges] charges.")
+
 /obj/item/weapon/gun/magic/proc/newshot()
 	if (charges && chambered)
 		chambered.newshot()
 		charges--
-	return
+		charge_tick = 0
 
 /obj/item/weapon/gun/magic/atom_init()
 	. = ..()

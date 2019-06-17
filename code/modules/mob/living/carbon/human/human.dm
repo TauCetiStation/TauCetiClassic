@@ -814,9 +814,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 					usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Toggled [name]'s ([ckey]) sensors mode=([S.sensor_mode]).</font>")
 
 	if (href_list["accessory"] && href_list["suit_accessory"] && usr.CanUseTopicInventory(src))
-		var/obj/item/clothing/accessory/A = href_list["accessory"]
-		var/obj/item/clothing/under/S = href_list["suit_accessory"]
-		if(istype(A) && istype(S))
+		var/obj/item/clothing/accessory/A = locate(href_list["accessory"])
+		var/obj/item/clothing/under/S = locate(href_list["suit_accessory"])
+		if(istype(A) && istype(S) && (A in S.accessories))
 			var/strip_time = HUMAN_STRIP_DELAY
 			if(istype(A, /obj/item/clothing/accessory/holobadge) || istype(A, /obj/item/clothing/accessory/medal))
 				strip_time = 5
@@ -1106,24 +1106,27 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(blinded)
 		return 2
 	var/number = 0
-	if(istype(src.head, /obj/item/clothing/head/welding))
-		if(!src.head:up)
+	if(istype(head, /obj/item/clothing/head/welding))
+		var/obj/item/clothing/head/welding/W = head
+		if(!W.up)
 			number += 2
-	if(istype(src.head, /obj/item/clothing/head/helmet/space) && !istype(src.head, /obj/item/clothing/head/helmet/space/sk))
+	if(istype(head, /obj/item/clothing/head/helmet/space) && !istype(head, /obj/item/clothing/head/helmet/space/sk))
 		number += 2
-	if(istype(src.glasses, /obj/item/clothing/glasses/thermal))
-		number -= 1
-	if(istype(src.glasses, /obj/item/clothing/glasses/sunglasses))
+	if(istype(glasses, /obj/item/clothing/glasses/thermal))
+		var/obj/item/clothing/glasses/thermal/G = glasses
+		if(G.active)
+			number -= 1
+	if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
 		number += 1
-	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/welding))
-		var/obj/item/clothing/mask/gas/welding/W = src.wear_mask
+	if(istype(wear_mask, /obj/item/clothing/mask/gas/welding))
+		var/obj/item/clothing/mask/gas/welding/W = wear_mask
 		if(!W.up)
 			number += 2
-	if(istype(src.glasses, /obj/item/clothing/glasses/welding))
-		var/obj/item/clothing/glasses/welding/W = src.glasses
+	if(istype(glasses, /obj/item/clothing/glasses/welding))
+		var/obj/item/clothing/glasses/welding/W = glasses
 		if(!W.up)
 			number += 2
-	if(istype(src.glasses, /obj/item/clothing/glasses/night/shadowling))
+	if(istype(glasses, /obj/item/clothing/glasses/night/shadowling))
 		number -= 1
 	return number
 

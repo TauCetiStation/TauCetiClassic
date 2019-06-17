@@ -154,6 +154,8 @@
 		//L.fields["image"]		= getFlatIcon(H)	//This is god-awful
 		L.fields["image"]		= get_id_photo(H)
 		locked += L
+
+		score["crew_total"]++
 	return
 
 

@@ -21,6 +21,14 @@
 		to_chat(S,"<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")
 		S.Weaken(3)
 
+	// Prevents having Regenerate verb after rebirth.
+	M.changeling.purchasedpowers -= locate(/obj/effect/proc_holder/changeling/revive) in M.changeling.purchasedpowers
+
+	// In case we did it out of stasis
+	if (M.changeling.instatis)
+		M.changeling.instatis = FALSE
+		user.fake_death = FALSE
+
 	var/mob/living/simple_animal/headcrab/crab = new(get_turf(user))
 	crab.origin = M
 	M.transfer_to(crab)

@@ -694,7 +694,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set desc="Restarts the world"
 	if (!usr.client.holder)
 		return
-	var/confirm = alert("Restart the game world?", "Restart", "Yes", "Cancel")
+	var/confirm = alert("Restart the game world? Warning: game stats will be lost if round not ended.", "Restart", "Yes", "Cancel")
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
@@ -708,7 +708,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			blackbox.save_all_data_to_sql()
 
 		sleep(50)
-		world.Reboot()
+		world.Reboot(end_state = "admin reboot - by [usr.key]")
 
 
 /datum/admins/proc/announce()
@@ -875,11 +875,19 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		if(newtime < 0)
 			to_chat(world, "<b>The game start has been delayed.</b>")
 			log_admin("[key_name(usr)] delayed the round start.")
-			send2slack_service("[key_name(usr)] delayed the round start.")
+			world.send2bridge(
+				type = list(BRIDGE_ROUNDSTAT),
+				attachment_msg = "**[key_name(usr)]** delayed the round start",
+				attachment_color = BRIDGE_COLOR_ROUNDSTAT,
+			)
 		else
 			to_chat(world, "<b>The game will start in [newtime] seconds.</b>")
 			log_admin("[key_name(usr)] set the pre-game delay to [newtime] seconds.")
-			send2slack_service("[key_name(usr)] set the pre-game delay to [newtime] seconds.")
+			world.send2bridge(
+				type = list(BRIDGE_ROUNDSTAT),
+				attachment_msg = "**[key_name(usr)]** set the pre-game delay to [newtime] seconds.",
+				attachment_color = BRIDGE_COLOR_ROUNDSTAT,
+			)
 		feedback_add_details("admin_verb","DELAY") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/delay_end()
@@ -892,7 +900,11 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		ticker.delay_end = !ticker.delay_end
 		log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
 		message_admins("<span class='adminnotice'>[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].</span>")
-		send2slack_service("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
+		world.send2bridge(
+			type = list(BRIDGE_ROUNDSTAT),
+			attachment_msg = "**[key_name(usr)]** [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].",
+			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
+		)
 	else
 		return alert("The game has not started yet!")
 
@@ -936,7 +948,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
 
-	world.Reboot()
+	world.Reboot(end_state = "immediate admin reboot - by [usr.key]")
 
 /datum/admins/proc/toggle_job_restriction()
 	set category = "Server"
