@@ -81,8 +81,6 @@ var/global/list/sounds_cache_local = list()
 		to_chat(src, "<span class='notice'>Operation aborted. Reason: no input sound.</span>")
 		return
 
-	to_chat(world, "vr: [set_vary]")
-
 	log_admin("[key_name(src)] played a local sound [S]")
 	message_admins("[key_name_admin(src)] played a local sound [S]")
 	playsound(mob, S, VOL_EFFECTS_MASTER, null, set_vary)
