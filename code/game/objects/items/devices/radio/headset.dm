@@ -259,7 +259,7 @@
 			keyslot2.loc = T
 			keyslot2 = null
 		recalculateChannels()
-		playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
+		playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You pop out the encryption keys in the headset!</span>")
 	else if(istype(W, /obj/item/device/encryptionkey))
 		if(keyslot1 && keyslot2)

@@ -105,7 +105,7 @@
 /obj/item/weapon/gun/projectile/automatic/gyropistol/afterattack(atom/target, mob/living/user, flag)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS, 40)
+		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, 40)
 		update_icon()
 		alarmed = 1
 	return

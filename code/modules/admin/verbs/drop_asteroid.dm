@@ -21,7 +21,7 @@
 
 	for(var/mob/M in player_list)
 		if(M.z == T.z)
-			M.playsound_local(null, 'sound/effects/Explosion3.ogg', VOL_EFFECTS, vary = FALSE)
+			M.playsound_local(null, 'sound/effects/Explosion3.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 
 	//shake the station!
 	for(var/mob/living/carbon/C in carbon_list)

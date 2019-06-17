@@ -46,7 +46,7 @@
 			else
 				reagents.trans_to(I, 5)	//
 				to_chat(user, "<span class='notice'>You wet [I] in [src].</span>")
-				playsound(src, 'sound/effects/slosh.ogg', VOL_EFFECTS, 25)
+				playsound(src, 'sound/effects/slosh.ogg', VOL_EFFECTS_MASTER, 25)
 				return
 		if(!mymop)
 			user.drop_item()
@@ -197,7 +197,7 @@
 		if(reagents.total_volume > 1)
 			reagents.trans_to(I, 2)
 			to_chat(user, "<span class='notice'>You wet [I] in the [callme].</span>")
-			playsound(src, 'sound/effects/slosh.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/effects/slosh.ogg', VOL_EFFECTS_MASTER)
 		else
 			to_chat(user, "<span class='notice'>This [callme] is out of water!</span>")
 	else if(istype(I, /obj/item/key))

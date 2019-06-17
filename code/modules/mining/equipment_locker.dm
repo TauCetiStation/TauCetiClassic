@@ -463,7 +463,7 @@
 		spawn(100) qdel(J)	//Portal will disappear after 10 sec
 		J.target = chosen_beacon
 		try_move_adjacent(J)
-		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
 
 /obj/item/device/wormhole_jaunter/attackby(obj/item/B, mob/user)
@@ -514,7 +514,7 @@
 
 /obj/item/weapon/resonator/proc/CreateResonance(target, creator)
 	if(cooldown <= 0)
-		playsound(src, 'sound/effects/stealthoff.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/effects/stealthoff.ogg', VOL_EFFECTS_MASTER)
 		var/obj/effect/resonance/R = new /obj/effect/resonance(get_turf(target))
 		R.creator = creator
 		cooldown = 1
@@ -551,7 +551,7 @@
 		return
 	if(istype(proj_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = proj_turf
-		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 		M.GetDrilled()
 		spawn(5)
 			qdel(src)
@@ -562,7 +562,7 @@
 			name = "strong resonance field"
 			resonance_damage = 60
 		spawn(50)
-			playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 			if(creator)
 				for(var/mob/living/L in src.loc)
 					usr.attack_log += text("\[[time_stamp()]\] used a resonator field on [L.name] ([L.ckey])")
@@ -765,7 +765,7 @@
 					log_game("[user] has revived hostile mob [target] with a lazarus injector")
 				loaded = 0
 				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
-				playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
 				icon_state = "lazarus_empty"
 				return
 			else
@@ -821,7 +821,7 @@
 		C.name = C.base_name
 		loaded = 0
 		user.visible_message("<span class='notice'>[user] fixes [C] with [src].</span>")
-		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
 		icon_state = "patcher_empty"
 		return TRUE
 	else

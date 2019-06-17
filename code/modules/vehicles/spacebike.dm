@@ -95,7 +95,7 @@
 			K.loc = src
 			key = K
 			user.SetNextMove(CLICK_CD_INTERACT)
-			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS, 25)
+			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 			to_chat(user, "<span class='notice'>You put the key into the slot.</span>")
 			verbs += /obj/vehicle/space/spacebike/verb/remove_key
 			verbs += /obj/vehicle/space/spacebike/verb/toggle_engine
@@ -124,7 +124,7 @@
 			L.attack_log += text("\[[time_stamp()]\] <font color='orange'>was driven over by [Driver.name] ([Driver.ckey])</font>")
 			msg_admin_attack("[key_name(Driver)] drives over [key_name(L)] with space bike (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
-			playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 			L.stop_pulling()
 			L.apply_effects(8,5)
 			L.lying = 1

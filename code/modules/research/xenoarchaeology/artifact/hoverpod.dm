@@ -11,20 +11,20 @@
 //these three procs overriden to play different sounds
 /obj/mecha/working/hoverpod/mechturn(direction)
 	dir = direction
-	//playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS)
+	//playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS_MASTER)
 	return 1
 
 /obj/mecha/working/hoverpod/mechstep(direction)
 	var/result = step(src,direction)
 	if(result)
-		playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS_MASTER)
 	return result
 
 
 /obj/mecha/working/hoverpod/mechsteprand()
 	var/result = step_rand(src)
 	if(result)
-		playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS_MASTER)
 	return result
 
 /obj/effect/decal/mecha_wreckage/hoverpod

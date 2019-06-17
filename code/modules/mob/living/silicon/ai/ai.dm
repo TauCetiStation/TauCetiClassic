@@ -84,7 +84,7 @@ var/list/ai_verbs_default = list(
 	var/mob/living/L = A
 	eyeobj.visible_message("<span class='userdanger'>space carp nashes at [A]</span>")
 	L.apply_damage(15, BRUTE, BP_CHEST, L.run_armor_check(BP_CHEST, "melee"), DAM_SHARP|DAM_EDGE)
-	playsound(eyeobj, 'sound/weapons/bite.ogg', VOL_EFFECTS)
+	playsound(eyeobj, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 	return TRUE
 
 
@@ -561,7 +561,7 @@ var/list/ai_verbs_default = list(
 		else //harm
 			var/damage = rand(10, 20)
 			if (prob(90))
-				playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
@@ -570,7 +570,7 @@ var/list/ai_verbs_default = list(
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
-				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
@@ -582,7 +582,7 @@ var/list/ai_verbs_default = list(
 		M.emote("[M.friendly] [src]")
 	else
 		if(M.attack_sound)
-			playsound(src, M.attack_sound, VOL_EFFECTS)
+			playsound(src, M.attack_sound, VOL_EFFECTS_MASTER)
 		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")

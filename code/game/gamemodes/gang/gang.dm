@@ -701,4 +701,4 @@
 			if(((tool.gang == "A") && ((mob.mind in A_gang) || (mob.mind in A_bosses))) || ((tool.gang == "B") && ((mob.mind in B_gang) || (mob.mind in B_bosses))))
 				to_chat(mob, "<span class='[warning ? "warning" : "notice"]'>[bicon(tool)] [message]</span>")
 				if(beep)
-					playsound(mob, 'sound/machines/twobeep.ogg', VOL_EFFECTS)
+					playsound(mob, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)

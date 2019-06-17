@@ -124,7 +124,7 @@
 		icon_state = "scrap"
 		throw_range = 1
 
-	playsound(src, 'sound/items/crumple.ogg', VOL_EFFECTS, 15)
+	playsound(src, 'sound/items/crumple.ogg', VOL_EFFECTS_MASTER, 15)
 	add_fingerprint(usr)
 
 /obj/item/weapon/paper/afterattack(atom/target, mob/user, proximity)
@@ -149,7 +149,7 @@
 	if(rigged && (Holiday == "April Fool's Day"))
 		if(spam_flag == 0)
 			spam_flag = 1
-			playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER)
 			addtimer(CALLBACK(src, .proc/reset_spam_flag), 20)
 	return
 
@@ -553,7 +553,7 @@
 		var/obj/item/weapon/stamp/S = P
 		S.stamp_paper(src)
 
-		playsound(src, 'sound/effects/stamp.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/effects/stamp.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='notice'>[user] stamp the paper.</span>", "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
 	else if(istype(P, /obj/item/weapon/lighter))

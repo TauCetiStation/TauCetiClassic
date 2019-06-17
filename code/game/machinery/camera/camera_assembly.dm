@@ -72,7 +72,7 @@
 		if(3)
 			// State 3
 			if(isscrewdriver(W))
-				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
 				var/input = sanitize_safe(input(usr, "Which networks would you like to connect this camera to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13"), MAX_LNAME_LEN)
 				if(!input)
@@ -114,7 +114,7 @@
 			else if(iswirecutter(W))
 
 				new /obj/item/stack/cable_coil/red(get_turf(src), 2)
-				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "You cut the wires from the circuits.")
 				state = 2
 				return
@@ -132,7 +132,7 @@
 		var/obj/U = locate(/obj) in upgrades
 		if(U)
 			to_chat(user, "You unattach an upgrade from the assembly.")
-			playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 			U.loc = get_turf(src)
 			upgrades -= U
 		return

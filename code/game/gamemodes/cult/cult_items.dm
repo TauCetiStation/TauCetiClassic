@@ -11,7 +11,7 @@
 
 /obj/item/weapon/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
 	if(iscultist(user))
-		playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 		return ..()
 	else
 		user.Paralyse(5)

@@ -60,7 +60,7 @@ var/global/obj/item/device/nuclear_challenge/Challenge
 		return
 	command_alert(war_declaration, "Declaration of War")
 	for(var/mob/M in player_list)
-		M.playsound_local(null, 'sound/machines/Alarm.ogg', VOL_EFFECTS, vary = FALSE, ignore_environment = TRUE)
+		M.playsound_local(null, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 
 	to_chat(user, "You've attracted the attention of powerful forces within the syndicate. \
 	A bonus bundle of telecrystals has been granted to your team. Great things await you if you complete the mission.")

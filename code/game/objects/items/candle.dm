@@ -37,7 +37,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		visible_message(flavor_text)
 		set_light(CANDLE_LUMINOSITY, 1)
 		START_PROCESSING(SSobj, src)
-		playsound(src, 'sound/items/matchstick_light.ogg', VOL_EFFECTS, null, FALSE)
+		playsound(src, 'sound/items/matchstick_light.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/item/candle/update_icon()
 	var/lighning_stage
@@ -140,7 +140,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 
 /obj/item/candle/ghost/proc/spook()
 	visible_message("<span class='warning bold'>Out of the tip of the flame, a face appears.</span>")
-	playsound(src, 'sound/effects/screech.ogg', VOL_EFFECTS, null, FALSE)
+	playsound(src, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	for(var/mob/living/carbon/M in hearers(4, get_turf(src)))
 		if(!iscultist(M))
 			M.confused += 10

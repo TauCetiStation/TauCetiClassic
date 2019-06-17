@@ -56,10 +56,10 @@
 			src.density = 0
 			src.destroyed = 1
 			new /obj/item/weapon/shard( src.loc )
-			playsound(src, "shatter", VOL_EFFECTS)
+			playsound(src, "shatter", VOL_EFFECTS_MASTER)
 			update_icon()
 	else
-		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 	return
 
 /obj/structure/displaycase/update_icon()

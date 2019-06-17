@@ -77,7 +77,7 @@
 		if(A)
 
 			A.meteorhit(src)
-			playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS, 40)
+			playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER, 40)
 
 			for(var/mob/M in range(10, src))
 				if(!M.stat && !istype(M, /mob/living/silicon/ai))\

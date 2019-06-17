@@ -299,21 +299,21 @@ var/datum/subsystem/ticker/ticker
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					for(var/mob/M in player_list)
-						M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS, vary = FALSE, ignore_environment = TRUE) // arguments? OOC sound because is a part of cinematic.
+						M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE) // arguments? OOC sound because is a part of cinematic.
 					flick("station_intact_fade_red",cinematic)
 					cinematic.icon_state = "summary_nukefail"
 				else
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					for(var/mob/M in player_list)
-						M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS, vary = FALSE, ignore_environment = TRUE)
+						M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 					//flick("end",cinematic)
 
 
 		if(2)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
 			sleep(50)
 			for(var/mob/M in player_list)
-				M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS, vary = FALSE, ignore_environment = TRUE)
+				M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 		else	//station was destroyed
 			if( mode && !override )
 				override = mode.name
@@ -323,28 +323,28 @@ var/datum/subsystem/ticker/ticker
 					sleep(35)
 					flick("station_explode_fade_red",cinematic)
 					for(var/mob/M in player_list)
-						M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS, vary = FALSE, ignore_environment = TRUE)
+						M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 					cinematic.icon_state = "summary_nukewin"
 				if("AI malfunction") //Malf (screen,explosion,summary)
 					flick("intro_malf",cinematic)
 					sleep(76)
 					flick("station_explode_fade_red",cinematic)
 					for(var/mob/M in player_list)
-						M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS, vary = FALSE, ignore_environment = TRUE)
+						M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 					cinematic.icon_state = "summary_malf"
 				if("blob") //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					flick("station_explode_fade_red",cinematic)
 					for(var/mob/M in player_list)
-						M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS, vary = FALSE, ignore_environment = TRUE)
+						M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 					cinematic.icon_state = "summary_selfdes"
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					flick("station_explode_fade_red", cinematic)
 					for(var/mob/M in player_list)
-						M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS, vary = FALSE, ignore_environment = TRUE)
+						M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 					cinematic.icon_state = "summary_selfdes"
 	//If its actually the end of the round, wait for it to end.
 	//Otherwise if its a verb it will continue on afterwards.

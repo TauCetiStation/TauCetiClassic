@@ -256,7 +256,7 @@
 	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
 	smoke.set_up(10, 0, M.loc)
 	smoke.start()
-	playsound(M, 'sound/effects/bamf.ogg', VOL_EFFECTS)
+	playsound(M, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 
 	Monster.original_body = M
 	M.forceMove(Monster)

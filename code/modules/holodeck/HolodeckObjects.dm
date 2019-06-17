@@ -136,12 +136,12 @@
 				update_nearby_icons()
 				step(src, get_dir(user, src))
 		else
-			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 		..()
 	return
 
 /obj/structure/window/reinforced/holowindow/shatter(display_message = 1)
-	playsound(src, "shatter", VOL_EFFECTS)
+	playsound(src, "shatter", VOL_EFFECTS_MASTER)
 	if(display_message)
 		visible_message("[src] fades away as it shatters!")
 	qdel(src)
@@ -156,7 +156,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
 		var/aforce = I.force
-		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 
 		visible_message("\red <B>[src] was hit by [I].</B>")
 		if(I.damtype == BRUTE || I.damtype == BURN)
@@ -180,7 +180,7 @@
 
 /obj/machinery/door/window/holowindoor/shatter(display_message = 1)
 	src.density = 0
-	playsound(src, "shatter", VOL_EFFECTS)
+	playsound(src, "shatter", VOL_EFFECTS_MASTER)
 	if(display_message)
 		visible_message("[src] fades away as it shatters!")
 	qdel(src)
@@ -237,13 +237,13 @@
 		force = 30
 		icon_state = "sword[item_color]"
 		w_class = ITEM_SIZE_LARGE
-		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS)
+		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 	else
 		force = 3
 		icon_state = "sword0"
 		w_class = ITEM_SIZE_SMALL
-		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS)
+		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
 	if(istype(user,/mob/living/carbon/human))

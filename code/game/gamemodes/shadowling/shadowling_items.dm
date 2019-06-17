@@ -132,7 +132,7 @@
 
 /obj/structure/shadow_vortex/atom_init_late()
 	audible_message("<span class='danger'>\The [src] lets out a dismaying screech as dimensional barriers are torn apart!</span>")
-	playsound(src, 'sound/effects/supermatter.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/effects/supermatter.ogg', VOL_EFFECTS_MASTER)
 	QDEL_IN(src, 100)
 
 /obj/structure/shadow_vortex/Crossed(var/td)
@@ -142,5 +142,5 @@
 		All around you is endless blackness. After you see something moving, you realize it isn't entirely lifeless.</font></span>") //A bit of spooking before they die
 		var/mob/M = td
 		M.ghostize()
-	playsound(src, 'sound/effects/EMPulse.ogg', VOL_EFFECTS, 25)
+	playsound(src, 'sound/effects/EMPulse.ogg', VOL_EFFECTS_MASTER, 25)
 	qdel(td)

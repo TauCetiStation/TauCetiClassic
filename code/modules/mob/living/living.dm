@@ -1121,7 +1121,7 @@
 		if(user.is_busy())
 			return
 		to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
-		playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
 		if(do_mob(user, src, 80))
 			harvest(user)
 		return TRUE

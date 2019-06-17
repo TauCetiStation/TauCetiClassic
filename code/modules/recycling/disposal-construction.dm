@@ -226,7 +226,7 @@
 			else
 				density = 1 // We don't want disposal bins or outlets to go density 0
 			to_chat(user, "You attach the [nicetype] to the underfloor.")
-		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		update()
 
 	else if(iswelder(I))

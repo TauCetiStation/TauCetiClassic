@@ -295,7 +295,7 @@
 			return
 
 	else if(iswrench(B))
-		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 	return
@@ -327,7 +327,7 @@
 			return
 
 	else if(iswrench(B))
-		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 	return
@@ -1093,7 +1093,7 @@
 		return
 
 	if(iswrench(O))
-		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 		return
@@ -1279,7 +1279,7 @@
 		return
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
-	playsound(src, 'sound/machines/juicer.ogg', VOL_EFFECTS, 20)
+	playsound(src, 'sound/machines/juicer.ogg', VOL_EFFECTS_MASTER, 20)
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	inuse = 1
@@ -1315,7 +1315,7 @@
 		return
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
-	playsound(src, 'sound/machines/blender.ogg', VOL_EFFECTS, 35)
+	playsound(src, 'sound/machines/blender.ogg', VOL_EFFECTS_MASTER, 35)
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	inuse = 1

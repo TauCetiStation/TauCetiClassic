@@ -70,7 +70,7 @@
 
 /obj/machinery/atmospherics/components/pipeturbine/attackby(obj/item/weapon/W, mob/user)
 	if(iswrench(W))
-		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
 		user.visible_message(
 			"[user.name] [anchored ? "secures" : "unsecures"] the bolts holding [src.name] to the floor.", \

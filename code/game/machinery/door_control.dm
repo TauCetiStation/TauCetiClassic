@@ -98,7 +98,7 @@
 			return
 
 /obj/machinery/door_control/allowed_fail(mob/user)
-	playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS, 20)
+	playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER, 20)
 	flick("doorctrl-denied",src)
 
 /obj/machinery/door_control/attackby(obj/item/weapon/W, mob/user)
@@ -106,7 +106,7 @@
 		if(DOOR_CONTROL_COMPLETE)
 			if(istype(W, /obj/item/weapon/card/emag))
 				emagged = TRUE
-				playsound(src, "sparks", VOL_EFFECTS)
+				playsound(src, "sparks", VOL_EFFECTS_MASTER)
 				update_icon()
 				return
 			if(!wiresexposed)
@@ -158,7 +158,7 @@
 						return
 				else if(iswirecutter(W))
 					to_chat(user, "You remove wires from the door control frame.")
-					playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS)
+					playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 					new /obj/item/stack/cable_coil/random(loc, 1)
 					connected_airlocks.Cut()
 					connected_poddoors.Cut()
@@ -189,7 +189,7 @@
 				to_chat(user, "You remove the door control assembly from the wall!")
 				var/obj/item/door_control_frame/frame = new
 				frame.loc = user.loc
-				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				qdel(src)
 				return
 
@@ -342,7 +342,7 @@
 	if(.)
 		return
 	user.SetNextMove(CLICK_CD_INTERACT)
-	playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS, 20)
+	playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER, 20)
 	use_power(5)
 	icon_state = "doorctrl1"
 	for(var/obj/machinery/door/airlock/A in connected_airlocks)

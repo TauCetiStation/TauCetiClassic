@@ -146,13 +146,13 @@
 
 /obj/item/stack/sheet/glass/after_throw(datum/callback/callback)
 	..()
-	playsound(src, "shatter", VOL_EFFECTS)
+	playsound(src, "shatter", VOL_EFFECTS_MASTER)
 	new /obj/item/weapon/shard(loc)
 	set_amount(get_amount() - rand(5,35))
 
 /obj/item/stack/sheet/rglass/after_throw(datum/callback/callback)
 	..()
-	playsound(src, "shatter", VOL_EFFECTS)
+	playsound(src, "shatter", VOL_EFFECTS_MASTER)
 	new /obj/item/weapon/shard(loc)
 	set_amount(get_amount() - rand(1,15))
 
@@ -336,7 +336,7 @@
 	if(ismob(AM))
 		var/mob/M = AM
 		to_chat(M, "\red <B>You step in the broken glass!</B>")
-		playsound(src, 'sound/effects/glass_step.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/effects/glass_step.ogg', VOL_EFFECTS_MASTER)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 

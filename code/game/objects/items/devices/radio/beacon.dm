@@ -51,7 +51,7 @@
 	if(user)
 		to_chat(user, "\blue Locked In")
 		new /obj/machinery/singularity_beacon/syndicate( user.loc )
-		playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
 	return
 
@@ -121,7 +121,7 @@
 		loc = null
 		//var/location
 		H.attack_log += "\[[time_stamp()]\]<font color='blue'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
-		playsound(H, 'sound/items/timer.ogg', VOL_EFFECTS, 5, FALSE)
+		playsound(H, 'sound/items/timer.ogg', VOL_EFFECTS_MASTER, 5, FALSE)
 		user.visible_message("\red [user.name] finished planting an [name] on [H.name]!")
 		var/I = image('icons/obj/device.dmi', "medicon")
 		H.overlays += I

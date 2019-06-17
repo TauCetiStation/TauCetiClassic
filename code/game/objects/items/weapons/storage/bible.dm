@@ -40,5 +40,5 @@
 
 /obj/item/weapon/storage/bible/attackby(obj/item/weapon/W, mob/user)
 	if (use_sound)
-		playsound(src, use_sound, VOL_EFFECTS, null, null, -5)
+		playsound(src, use_sound, VOL_EFFECTS_MASTER, null, null, -5)
 	..()

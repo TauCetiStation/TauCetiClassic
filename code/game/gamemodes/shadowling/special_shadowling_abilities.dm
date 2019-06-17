@@ -49,23 +49,23 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 							"<span class='shadowling'>Your false skin slips away. You begin tearing at the fragile membrane protecting you.</span>")
 
 			sleep(80)
-			playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 			to_chat(usr, "<i><b>You rip and slice.</b></i>")
 			sleep(10)
-			playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
 			to_chat(usr, "<i><b>The chrysalis falls like water before you.</b></i>")
 			sleep(10)
-			playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
 			to_chat(usr, "<i><b>You are free!</b></i>")
 
 			sleep(10)
-			playsound(src, 'sound/effects/ghost.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/effects/ghost.ogg', VOL_EFFECTS_MASTER)
 
 			usr.notransform = 0
 
 			to_chat(usr, "<i><b><font size=3>YOU LIVE!!!</i></b></font>")
 
-			playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 			for(var/obj/structure/alien/resin/wall/shadowling/W in orange(usr, 1))
 				qdel(W)
 			for(var/obj/structure/alien/weeds/node/N in shadowturf)
@@ -141,7 +141,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				to_chat(M, "<span class='userdanger'>An immense pressure slams you onto the ground!</span>")
 			to_chat(world, "<font size=5><span class='shadowling'><b>\"VYSHA NERADA YEKHEZET U'RUU!!\"</font></span>")
 			for(var/mob/M in player_list)
-				M.playsound_local(null, 'sound/hallucinations/veryfar_noise.ogg', VOL_EFFECTS, null, FALSE)
+				M.playsound_local(null, 'sound/hallucinations/veryfar_noise.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			for(var/obj/machinery/power/apc/A in apc_list)
 				A.overload_lighting()
 			var/mob/A = new /mob/living/simple_animal/ascendant_shadowling(usr.loc)

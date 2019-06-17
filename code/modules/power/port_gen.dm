@@ -187,11 +187,11 @@
 				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
 				anchored = 0
 
-			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 
 		else if(isscrewdriver(O))
 			panel_open = !panel_open
-			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			if(panel_open)
 				to_chat(user, "<span class='notice'>You open the access panel.</span>")
 			else

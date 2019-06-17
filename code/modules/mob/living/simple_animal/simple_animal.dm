@@ -203,7 +203,7 @@
 		return TRUE
 	else
 		if(M.attack_sound)
-			playsound(src, M.attack_sound, VOL_EFFECTS)
+			playsound(src, M.attack_sound, VOL_EFFECTS_MASTER)
 		visible_message("<span class='userdanger'><B>[M]</B> [M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")

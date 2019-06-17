@@ -4,7 +4,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/attack_self(mob/user)
 	if (!canopened)
-		playsound(src, "can_open", VOL_EFFECTS, rand(10, 50))
+		playsound(src, "can_open", VOL_EFFECTS_MASTER, rand(10, 50))
 		to_chat(user, "<span class='notice'>You open the drink with an audible pop!</span>")
 		canopened = 1
 	else
@@ -35,7 +35,7 @@
 			reagents.reaction(M, INGEST)
 			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, gulp_size), 5)
 
-		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS, rand(10, 50))
+		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
 	else if (!canopened)
 		to_chat(user, "<span class='notice'> You need to open the drink!</span>")
@@ -61,7 +61,7 @@
 			var/refill = R.get_master_reagent_id()
 			addtimer(CALLBACK(R, /datum/reagents.proc/add_reagent, refill, fillevel), 600)
 
-		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS, rand(10, 50))
+		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
 
 	return 0

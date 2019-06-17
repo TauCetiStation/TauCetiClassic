@@ -738,7 +738,7 @@ Buildable meters
 			var/obj/machinery/atmospherics/components/omni/filter/P = new(loc)
 			P.construction()
 
-	playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message(
 		"[user] fastens the [src].",
 		"<span class='notice'>You have fastened the [src].</span>",
@@ -770,6 +770,6 @@ Buildable meters
 		return TRUE
 
 	new/obj/machinery/meter( src.loc )
-	playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 	to_chat(user, "<span class='notice'>You have fastened the meter to the pipe</span>")
 	qdel(src)

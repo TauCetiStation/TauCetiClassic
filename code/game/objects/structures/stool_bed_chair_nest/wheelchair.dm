@@ -130,7 +130,7 @@
 			if (occupant && (src.loc != occupant.loc))
 				src.loc = occupant.loc // Failsafe to make sure the wheelchair stays beneath the occupant after driving
 	else if(has_gravity(src))
-		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER)
 	handle_rotation()
 
 /obj/structure/stool/bed/chair/wheelchair/attack_hand(mob/living/user)
@@ -179,7 +179,7 @@
 		occupant.apply_effect(6, STUN, 0)
 		occupant.apply_effect(6, WEAKEN, 0)
 		occupant.apply_effect(6, STUTTER, 0)
-		playsound(src, 'sound/weapons/punch1.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/weapons/punch1.ogg', VOL_EFFECTS_MASTER)
 		if(istype(A, /mob/living))
 			var/mob/living/victim = A
 			victim.apply_effect(6, STUN, 0)

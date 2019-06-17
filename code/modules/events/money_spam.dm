@@ -98,7 +98,7 @@
 			//P.tnote += "<i><b>&larr; From [sender] (Unknown / spam?):</b></i><br>[message]<br>"
 
 			if (!P.message_silent)
-				playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS)
+				playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 			for (var/mob/O in hearers(3, P.loc))
 				if(!P.message_silent) O.show_message(text("[bicon(P)] *[P.ttone]*"))
 			//Search for holder of the PDA.

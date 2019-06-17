@@ -428,13 +428,13 @@
 					syr.update_icon()
 			else if(istype(reagent_source, /obj/item/weapon/reagent_containers/spray))
 				visible_message("<span class='notice'>[user] sprays [target] with [reagent_source].</span>")
-				playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS, null, null, -6)
+				playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 			else if(reagent_source.amount_per_transfer_from_this) // Droppers, cans, beakers, what have you.
 				visible_message("<span class='notice'>[user] uses [reagent_source] on [target].</span>")
 
 			// Beakers, bottles, buckets, etc.  Can't use is_open_container though.
 			if(istype(reagent_source, /obj/item/weapon/reagent_containers/glass))
-				playsound(src, 'sound/effects/slosh.ogg', VOL_EFFECTS, 25)
+				playsound(src, 'sound/effects/slosh.ogg', VOL_EFFECTS_MASTER, 25)
 
 		// There needs to be a good amount of mutagen to actually work
 		if(S.has_reagent("mutagen", 5))
@@ -667,7 +667,7 @@
 		adjustToxic(myWKiller.toxicity)
 		adjustWeeds(-myWKiller.WeedKillStr)
 		to_chat(user, "You apply the weedkiller solution into [src].")
-		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS, null, null, -6)
+		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 		qdel(O)
 		update_icon()
 
@@ -686,11 +686,11 @@
 			return
 
 		if(!anchored && !isinspace())
-			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			anchored = 1
 			to_chat(user, "You wrench [src] in place.")
 		else if(anchored)
-			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			anchored = 0
 			to_chat(user, "You unwrench [src].")
 
@@ -698,12 +698,12 @@
 
 		if(anchored)
 			if(anchored == 2)
-				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				anchored = 1
 				to_chat(user, "<span class='notice'>You snip \the [src]'s hoses.</span>")
 
 			else if(anchored == 1)
-				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				anchored = 2
 				to_chat(user, "<span class='notice'>You reconnect \the [src]'s hoses.</span>")
 
@@ -715,7 +715,7 @@
 		adjustToxic(myPKiller.toxicity)
 		adjustPests(-myPKiller.PestKillStr)
 		to_chat(user, "You apply the pestkiller solution into [src].")
-		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS, null, null, -6)
+		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 		qdel(O)
 		update_icon()
 	else if(istype(O, /obj/item/apiary))

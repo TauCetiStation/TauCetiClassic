@@ -804,7 +804,7 @@
 		if(islist(usesound))
 			played_sound = pick(usesound)
 
-		playsound(target, played_sound, VOL_EFFECTS, volume)
+		playsound(target, played_sound, VOL_EFFECTS_MASTER, volume)
 
 // Generic use proc. Depending on the item, it uses up fuel, charges, sheets, etc.
 // Returns TRUE on success, FALSE on failure.

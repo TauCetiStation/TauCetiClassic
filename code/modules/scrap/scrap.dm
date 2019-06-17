@@ -125,7 +125,7 @@ var/global/list/scrap_base_cache = list()
 /obj/structure/scrap/Crossed(atom/movable/AM)
 	if(ismob(AM))
 		var/mob/M = AM
-		playsound(src, 'sound/effects/glass_step.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/effects/glass_step.ogg', VOL_EFFECTS_MASTER)
 		if(ishuman(M) && !M.buckled)
 			var/mob/living/carbon/human/H = M
 			if(H.species.flags[IS_SYNTHETIC])

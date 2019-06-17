@@ -290,7 +290,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		M.emote("[M.friendly] [src]")
 	else
 		if(M.attack_sound)
-			playsound(src, M.attack_sound, VOL_EFFECTS)
+			playsound(src, M.attack_sound, VOL_EFFECTS_MASTER)
 		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
@@ -381,7 +381,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return FALSE
 	to_chat(src, "<span class='notice'>You grab the [name] with both hands.</span>")
 	if(wieldsound)
-		playsound(src, wieldsound, VOL_EFFECTS)
+		playsound(src, wieldsound, VOL_EFFECTS_MASTER)
 
 	if(hand)
 		update_inv_l_hand()

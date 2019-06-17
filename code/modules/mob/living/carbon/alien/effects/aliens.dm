@@ -116,7 +116,7 @@
 		tforce = 10
 	else
 		tforce = AM:throwforce
-	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	health = max(0, health - tforce)
 	healthcheck()
 	..()
@@ -149,7 +149,7 @@
 	to_chat(usr, "\green You claw at the [name].")
 	for(var/mob/O in oviewers(src))
 		O.show_message("\red [usr] claws at the resin!", 1)
-	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	health -= rand(40, 60)
 	if(health <= 0)
 		to_chat(usr, "\green You slice the [name] to pieces.")
@@ -162,7 +162,7 @@
 	var/aforce = W.force
 	user.SetNextMove(CLICK_CD_MELEE)
 	health = max(0, health - aforce)
-	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	healthcheck()
 	..()
 	return
@@ -273,7 +273,7 @@
 
 		if(WT.use(0, user))
 			damage = 15
-			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 
 	health -= damage
 	healthcheck()
@@ -428,7 +428,7 @@
 			if(BURST)
 				to_chat(user, "You clear the hatched egg.")
 				user.SetNextMove(CLICK_CD_MELEE)
-				playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 				qdel(src)
 				return
 	else
@@ -507,7 +507,7 @@
 
 		if(WT.use(0, user))
 			damage = 15
-			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 
 	src.health -= damage
 	src.healthcheck()
@@ -571,7 +571,7 @@
 	var/aforce = W.force
 	user.SetNextMove(CLICK_CD_MELEE)
 	health = max(0, health - aforce)
-	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	healthcheck()
 	..()
 	return

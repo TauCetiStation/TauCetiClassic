@@ -716,7 +716,7 @@
 
 		M.stop_pulling()
 		to_chat(M, "\blue You slipped on the [name]!")
-		playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS, null, null, -3)
+		playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 		if(!M.buckled)
 			M.Stun(8)
 			M.Weaken(5)

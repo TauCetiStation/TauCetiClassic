@@ -114,7 +114,7 @@
 		return 0
 
 	if (!pda.message_silent)
-		playsound(pda, 'sound/machines/twobeep.ogg', VOL_EFFECTS)
+		playsound(pda, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 		for (var/mob/O in hearers(3, pda.loc))
 			O.show_message(text("[bicon(pda)] *[pda.ttone]*"))
 
@@ -318,7 +318,7 @@
 		to_chat(world, fluff.mutineer_major_victory())
 
 	for(var/mob/M in player_list)
-		M.playsound_local(null, 'sound/machines/twobeep.ogg', VOL_EFFECTS, vary = FALSE, ignore_environment = TRUE)
+		M.playsound_local(null, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 
 /datum/game_mode/mutiny/proc/update_all_icons()
 	spawn(0)

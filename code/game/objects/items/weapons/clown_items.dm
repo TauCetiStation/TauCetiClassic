@@ -159,7 +159,7 @@
 				user.visible_message("<span class='notice'>\the [user] cleans \his [body_part_name] out with soap.</span>")
 			else
 				user.visible_message("<span class='notice'>\the [user] cleans \the [target]'s [body_part_name] out with soap.</span>")
-			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 			return
 		else
 			user.visible_message("<span class='red'>\the [user] fails to clean \the [target]'s [body_part_name] out with soap.</span>")
@@ -216,7 +216,7 @@
 /obj/item/toy/laugh_button/attack_self(mob/user)
 	if(!cooldown)
 		user.visible_message("<span class='notice'>[bicon(src)] \the [user] presses \the [src]</span>")
-		playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
 		var/laugh = pick(
 			'sound/voice/fake_laugh/laugh1.ogg',
 			'sound/voice/fake_laugh/laugh2.ogg',
@@ -234,5 +234,5 @@
 	flick("laugh_button_up",src)
 	icon_state = "laugh_button_on"
 	cooldown = FALSE
-	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
 	return

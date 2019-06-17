@@ -102,5 +102,5 @@
 		headobj.forceMove(get_turf(src))
 		headobj = null
 	new /obj/item/weapon/shard(loc)
-	playsound(src, "shatter", VOL_EFFECTS)
+	playsound(src, "shatter", VOL_EFFECTS_MASTER)
 	qdel(src)

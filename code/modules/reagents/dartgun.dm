@@ -160,7 +160,7 @@
 		D.icon_state = "syringeproj"
 		D.name = "syringe"
 		D.flags |= NOREACT
-		playsound(user, 'sound/items/syringeproj.ogg', VOL_EFFECTS)
+		playsound(user, 'sound/items/syringeproj.ogg', VOL_EFFECTS_MASTER)
 
 		for(var/i=0, i<6, i++)
 			if(!D) break

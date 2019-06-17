@@ -38,7 +38,7 @@
 			aimloc = locate(targloc.x+GaussRandRound(deviation,1),targloc.y+GaussRandRound(deviation,1),targloc.z)
 		if(!aimloc || aimloc == curloc)
 			break
-		playsound(chassis, fire_sound, VOL_EFFECTS, fire_volume)
+		playsound(chassis, fire_sound, VOL_EFFECTS_MASTER, fire_volume)
 		projectiles--
 		var/P = new projectile(curloc)
 		Fire(P, target, aimloc)
@@ -145,7 +145,7 @@
 	if(!equip_ready)
 		return 0
 
-	playsound(chassis, 'sound/items/AirHorn.ogg', VOL_EFFECTS)
+	playsound(chassis, 'sound/items/AirHorn.ogg', VOL_EFFECTS_MASTER)
 	chassis.occupant_message("<font color='red' size='5'>HONK</font>")
 	for(var/mob/living/carbon/M in ohearers(6, chassis))
 		if(istype(M, /mob/living/carbon/human))

@@ -72,7 +72,7 @@
 		else
 			user.SetNextMove(CLICK_CD_INTERACT)
 			if(buckled_mob.nutrition > 10)
-				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS, 20)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER, 20)
 				Generator.Rotated()
 				var/mob/living/carbon/human/pedaler = buckled_mob
 				pedaler.nutrition -= 0.5

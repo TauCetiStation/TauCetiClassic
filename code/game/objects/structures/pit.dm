@@ -78,7 +78,7 @@
 	visible_message("<span class='danger'>Something is scratching its way out of \the [src]!</span>")
 
 	for(var/i in 1 to (6*breakout_time * 2)) //minutes * 6 * 5seconds * 2
-		playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 
 		if(!do_after(escapee, 50, target = src))
 			to_chat(escapee, "<span class='warning'>You have stopped digging.</span>")
@@ -93,7 +93,7 @@
 
 	to_chat(escapee, "<span class='warning'>You successfuly dig yourself out!</span>")
 	visible_message("<span class='danger'>\the [escapee] emerges from \the [src]!</span>")
-	playsound(src, 'sound/effects/squelch1.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
 	open()
 
 /obj/structure/pit/closed

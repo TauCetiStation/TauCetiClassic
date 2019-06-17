@@ -47,7 +47,7 @@ var/global/list/sounds_cache = list()
 
 	log_admin("[key_name(src)] played a local sound [S]")
 	message_admins("[key_name_admin(src)] played a local sound [S]")
-	playsound(mob, S, VOL_EFFECTS)
+	playsound(mob, S, VOL_EFFECTS_MASTER)
 	feedback_add_details("admin_verb","PLS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

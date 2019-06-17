@@ -32,7 +32,7 @@
 /obj/structure/grille/attack_hand(mob/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
 						 "<span class='warning'>You kick [src].</span>", \
 						 "You hear twisting metal.")
@@ -50,7 +50,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(istype(user, /mob/living/carbon/alien/larva))	return
 
-	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='warning'>[user] mangles [src].</span>", \
 						 "<span class='warning'>You mangle [src].</span>", \
 						 "You hear twisting metal.")
@@ -64,7 +64,7 @@
 	if(!istype(user, /mob/living/carbon/slime/adult))	return
 	user.SetNextMove(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='warning'>[user] smashes against [src].</span>", \
 						 "<span class='warning'>You smash against [src].</span>", \
 						 "You hear twisting metal.")
@@ -77,7 +77,7 @@
 	if(M.melee_damage_upper == 0)
 		return
 	..()
-	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 	M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
 					  "<span class='warning'>You smash against [src].</span>", \
 					  "You hear twisting metal.")
@@ -112,12 +112,12 @@
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(iswirecutter(W))
 		if(!shock(user, 100))
-			playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 			new /obj/item/stack/rods(get_turf(src), 2)
 			qdel(src)
 	else if((isscrewdriver(W)) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))
-			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			anchored = !anchored
 			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] the grille.</span>", \
 								 "<span class='notice'>You have [anchored ? "fastened the grille to" : "unfastened the grill from"] the floor.</span>")
@@ -177,7 +177,7 @@
 	else if(istype(W, /obj/item/weapon/shard))
 		health -= W.force * 0.1
 	else if(!shock(user, 70))
-		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 		switch(W.damtype)
 			if("fire")
 				health -= W.force

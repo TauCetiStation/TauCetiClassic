@@ -114,7 +114,7 @@
 		var/obj/item/weapon/reagent_containers/spray/clean_spray = O
 		if(clean_spray.reagents.has_reagent("cleaner",clean_spray.amount_per_transfer_from_this))
 			clean_spray.reagents.remove_reagent("cleaner",clean_spray.amount_per_transfer_from_this,1)
-			playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS, null, null, -6)
+			playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 			user.visible_message( \
 				"<span class='notice'>[user] has cleaned [src].</span>", \
 				"<span class='notice'>You have cleaned [src].</span>" \
@@ -343,13 +343,13 @@
 	src.icon_state = on_icon
 	src.updateUsrDialog()
 	if(on_icon == "mw1")
-		playsound(src, 'sound/machines/microwave.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/machines/microwave.ogg', VOL_EFFECTS_MASTER)
 	if(on_icon == "oven_on")
-		playsound(src, 'sound/machines/stove.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/machines/stove.ogg', VOL_EFFECTS_MASTER)
 	if(on_icon == "candymaker_on")
-		playsound(src, 'sound/machines/candy.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/machines/candy.ogg', VOL_EFFECTS_MASTER)
 	if(on_icon == "grill_on")
-		playsound(src, 'sound/machines/grill.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/machines/grill.ogg', VOL_EFFECTS_MASTER)
 	return
 
 /obj/machinery/kitchen_machine/proc/abort()
@@ -358,7 +358,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/kitchen_machine/proc/stop()
-	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 	src.operating = 0 // Turn it off again aferwards
 	src.icon_state = off_icon
 	src.updateUsrDialog()
@@ -373,11 +373,11 @@
 	src.updateUsrDialog()
 
 /obj/machinery/kitchen_machine/proc/muck_start()
-	playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS) // Play a splat sound
+	playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER) // Play a splat sound
 	src.icon_state = dirty_icon // Make it look dirty!!
 
 /obj/machinery/kitchen_machine/proc/muck_finish()
-	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 	src.visible_message("\red [src] gets covered in muck!")
 	src.dirty = 100 // Make it dirty so it can't be used util cleaned
 	src.flags = null //So you can't add condiments

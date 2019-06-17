@@ -50,7 +50,7 @@ effective or pretty fucking useless.
 			else
 				to_chat(M, "\red <b>You feel a sudden, electric jolt travel through your head.</b>")
 
-	playsound(src, 'sound/misc/interference.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/misc/interference.ogg', VOL_EFFECTS_MASTER)
 	to_chat(user, "\blue You trigger [src].")
 	times_used += 1
 	if(times_used >= max_uses)

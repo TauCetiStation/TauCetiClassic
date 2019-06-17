@@ -42,7 +42,7 @@
 	if(user.is_busy(target))
 		return
 
-	playsound(src, cuff_sound, VOL_EFFECTS, 30, null, -2)
+	playsound(src, cuff_sound, VOL_EFFECTS_MASTER, 30, null, -2)
 
 	if (ishuman(target) || isIAN(target) || ismonkey(target))
 		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")

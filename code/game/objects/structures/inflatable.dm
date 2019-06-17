@@ -8,13 +8,13 @@
 
 /obj/item/inflatable/attack_self(mob/user)
 	if(user.is_busy()) return
-	playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message(
 		"<span class='notice'>[user] starts inflating \the [src]...</span>",
 		"<span class='notice'>You start inflating \the [src]...</span>"
 	)
 	if(do_after(user, 40, target = user))
-		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message(
 			"<span class='notice'>[user] inflated \the [src].</span>",
 			"<span class='notice'>You inflate \the [src].</span>"
@@ -136,13 +136,13 @@
 /obj/structure/inflatable/proc/hit(damage, sound_effect = 1)
 	health = max(0, health - damage)
 	if(sound_effect)
-		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 	if(health <= 0)
 		deflate(1)
 
 
 /obj/structure/inflatable/proc/deflate(violent=0)
-	playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS_MASTER)
 	if(violent)
 		visible_message("[src] rapidly deflates!")
 		var/obj/item/inflatable/torn/R = new /obj/item/inflatable/torn(loc)
@@ -239,7 +239,7 @@
 
 /obj/structure/inflatable/door/proc/Open()
 	isSwitchingStates = 1
-	//playsound(src, 'sound/effects/stonedoor_openclose.ogg', VOL_EFFECTS)
+	//playsound(src, 'sound/effects/stonedoor_openclose.ogg', VOL_EFFECTS_MASTER)
 	flick(opening_state,src)
 	sleep(10)
 	density = 0
@@ -250,7 +250,7 @@
 
 /obj/structure/inflatable/door/proc/Close()
 	isSwitchingStates = 1
-	//playsound(src, 'sound/effects/stonedoor_openclose.ogg', VOL_EFFECTS)
+	//playsound(src, 'sound/effects/stonedoor_openclose.ogg', VOL_EFFECTS_MASTER)
 	flick(closing_state,src)
 	sleep(10)
 	density = 1
@@ -266,7 +266,7 @@
 		icon_state = closed_state
 
 /obj/structure/inflatable/door/deflate(violent=0)
-	playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS_MASTER)
 	if(violent)
 		visible_message("[src] rapidly deflates!")
 		var/obj/item/inflatable/door/torn/R = new /obj/item/inflatable/door/torn(loc)

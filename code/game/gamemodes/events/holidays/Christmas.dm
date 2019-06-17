@@ -46,7 +46,7 @@
 		other_half.cracked = 1
 		other_half.icon_state = "cracker2"
 		target.put_in_active_hand(other_half)
-		playsound(user, 'sound/effects/snap.ogg', VOL_EFFECTS)
+		playsound(user, 'sound/effects/snap.ogg', VOL_EFFECTS_MASTER)
 		return 1
 	return ..()
 

@@ -39,7 +39,7 @@
 	if (istype(A, /mob/living/simple_animal/hulk))
 		var/mob/living/simple_animal/hulk/Hulk = A
 		if(!Hulk.lying)
-			playsound(src, 'sound/effects/hulk_step.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/effects/hulk_step.ogg', VOL_EFFECTS_MASTER)
 	if (istype(A,/mob/living/carbon))
 		var/mob/living/carbon/M = A
 		if(M.lying && !M.crawling)        return
@@ -72,11 +72,11 @@
 				if(H.m_intent == "run")
 					if(O.footstep >= 2)
 						O.footstep = 0
-						playsound(src, footstepsound, VOL_EFFECTS)
+						playsound(src, footstepsound, VOL_EFFECTS_MASTER)
 					else
 						O.footstep++
 				else
-					playsound(src, footstepsound, VOL_EFFECTS, 20)
+					playsound(src, footstepsound, VOL_EFFECTS_MASTER, 20)
 
 		// Tracking blood
 		var/list/bloodDNA = null

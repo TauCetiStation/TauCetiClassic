@@ -41,7 +41,7 @@
 	else
 		state = 5
 	update_icon()
-	playsound(src, 'sound/items/washingmachine.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/items/washingmachine.ogg', VOL_EFFECTS_MASTER)
 	sleep(210)
 	for(var/atom/A in contents)
 		A.clean_blood()

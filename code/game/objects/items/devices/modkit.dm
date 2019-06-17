@@ -51,7 +51,7 @@
 		to_chat(user, "<span class='warning'>This kit has no parts for this modification left.</span>")
 		return
 
-	playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
+	playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
 	user.visible_message("<span class='red'>[user] opens \the [src] and modifies \the [O].</span>","<span class='red'> You open \the [src] and modify \the [O].</span>")
 

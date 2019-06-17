@@ -168,7 +168,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		. = prefs.snd_music_vol
 	else if(volume_channel & VOL_AMBIENT)
 		. = prefs.snd_ambient_vol
-	else if(volume_channel & VOL_EFFECTS)
+	else if(volume_channel & VOL_EFFECTS_MASTER)
 		. = prefs.snd_effects_vol
 		switch(volume_channel) // now for sub categories
 			if(VOL_VOICE)
@@ -200,7 +200,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			prefs.snd_ambient_vol = vol
 			mob.playsound_music_update_volume(volume_channel, CHANNEL_AMBIENT)
 			mob.playsound_music_update_volume(volume_channel, CHANNEL_AMBIENT_SUB)
-		if(VOL_EFFECTS)
+		if(VOL_EFFECTS_MASTER)
 			prefs.snd_effects_vol = vol
 		if(VOL_VOICE)
 			prefs.snd_voice_vol = vol
@@ -433,7 +433,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			"Master" = "[VOL_AMBIENT]"
 			),
 		"Effects" = list(
-			"Master" = "[VOL_EFFECTS]",
+			"Master" = "[VOL_EFFECTS_MASTER]",
 			"Voice" = "[VOL_VOICE]",
 			"Misc" = "[VOL_MISC]",
 			"Music Instruments" = "[VOL_INSTRUMENTS]"
@@ -452,7 +452,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	var/list/prefs_vol_values = list(
 		"[VOL_MUSIC]" = prefs.snd_music_vol,
 		"[VOL_AMBIENT]" = prefs.snd_ambient_vol,
-		"[VOL_EFFECTS]" = prefs.snd_effects_vol,
+		"[VOL_EFFECTS_MASTER]" = prefs.snd_effects_vol,
 		"[VOL_VOICE]" = prefs.snd_voice_vol,
 		"[VOL_MISC]" = prefs.snd_misc_vol,
 		"[VOL_INSTRUMENTS]" = prefs.snd_instruments_vol,
@@ -464,7 +464,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	var/list/sliders_hint = list(
 		"[VOL_MUSIC]" = "Lobby music.",
 		"[VOL_AMBIENT]" = "Music and sound effects of ambient type.",
-		"[VOL_EFFECTS]" = "Controls all sound effects.",
+		"[VOL_EFFECTS_MASTER]" = "Controls all sound effects.",
 		"[VOL_VOICE]" = "Voiced global announcements.",
 		"[VOL_MISC]" = "Anything spammy that may annoy e.g.: tesla engine.",
 		"[VOL_INSTRUMENTS]" = "Music instruments.",

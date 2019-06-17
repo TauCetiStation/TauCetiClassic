@@ -34,7 +34,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(istype(clong, /turf/simulated/shuttle) || clong == src) //Skip shuttles without actually deleting the rod
 		return
 	audible_message("<span class='danger'>CLANG</span>", "You feel vibrations")
-	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 	if((istype(clong, /turf/simulated) || isobj(clong)) && clong.density)
 		clong.ex_act(2)
 	else if(isliving(clong))

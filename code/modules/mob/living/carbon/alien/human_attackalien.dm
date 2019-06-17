@@ -34,12 +34,12 @@ This is what happens, when alien attack.
 			M.do_attack_animation(src)
 			var/damage = rand(1, 5)
 			if(!damage)
-				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
 				visible_message("\red <B>[M] has lunged at [src]!</B>")
 				return 0
 			var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
 			var/armor_block = run_armor_check(BP, "melee")
-			playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 			visible_message("\red <B>[M] has bitten [src]!</B>")
 			apply_damage(damage, BRUTE, BP, armor_block)
 			updatehealth()
@@ -60,13 +60,13 @@ This is what happens, when alien attack.
 				w_uniform.add_fingerprint(M)
 			var/damage = rand(15, 30)
 			if(!damage)
-				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
 				visible_message("\red <B>[M] has lunged at [src]!</B>")
 				return 0
 			var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
 			var/armor_block = run_armor_check(BP, "melee")
 
-			playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
 			visible_message("\red <B>[M] has slashed at [src]!</B>")
 
 			apply_damage(damage, BRUTE, BP, armor_block)
@@ -77,7 +77,7 @@ This is what happens, when alien attack.
 
 		if("disarm")
 			if (prob(80))
-				playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS_MASTER)
 				Weaken(rand(3,5))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
@@ -86,10 +86,10 @@ This is what happens, when alien attack.
 					M.Weaken(rand(5,8))
 			else
 				if (prob(80))
-					playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS)
+					playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 					drop_item()
 					visible_message(text("\red <B>[] disarmed []!</B>", M, src))
 				else
-					playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS)
+					playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
 					visible_message(text("\red <B>[] has tried to disarm []!</B>", M, src))
 	return

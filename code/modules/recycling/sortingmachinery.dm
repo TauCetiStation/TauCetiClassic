@@ -36,7 +36,7 @@
 		if(src.sortTag != O.currTag)
 			to_chat(user, "\blue *[O.currTag]*")
 			src.sortTag = O.currTag
-			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = sanitize_safe(input(usr,"Label text?","Set label",""), MAX_NAME_LEN)
@@ -74,7 +74,7 @@
 		if(src.sortTag != O.currTag)
 			to_chat(user, "\blue *[O.currTag]*")
 			src.sortTag = O.currTag
-			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = sanitize_safe(input(usr,"Label text?","Set label",""), MAX_NAME_LEN)
@@ -266,7 +266,7 @@
 	air_contents = new()		// new empty gas resv.
 
 	sleep(10)
-	playsound(src, 'sound/machines/disposalflush.ogg', VOL_EFFECTS, null, FALSE)
+	playsound(src, 'sound/machines/disposalflush.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	sleep(5) // wait for animation to finish
 
 	H.init(src)	// copy the contents of disposer to holder
@@ -287,12 +287,12 @@
 	if(isscrewdriver(I))
 		if(c_mode==0)
 			c_mode=1
-			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "You remove the screws around the power connection.")
 			return
 		else if(c_mode==1)
 			c_mode=0
-			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "You attach the screws around the power connection.")
 			return
 	else if(iswelder(I) && c_mode==1 && !user.is_busy())

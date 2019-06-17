@@ -724,13 +724,13 @@
 			canremove = FALSE
 			can_breach = FALSE
 			flags_pressure &= ~STOPS_PRESSUREDMAGE
-			playsound(usr, 'sound/effects/air_release.ogg', VOL_EFFECTS)
+			playsound(usr, 'sound/effects/air_release.ogg', VOL_EFFECTS_MASTER)
 			usr.visible_message("<span class='notice'>[usr]'s suit depressurizes, exposing armor plates.</span>")
 		else
 			canremove = TRUE
 			can_breach = TRUE
 			flags_pressure |= STOPS_PRESSUREDMAGE
-			playsound(usr, 'sound/effects/inflate.ogg', VOL_EFFECTS, 30)
+			playsound(usr, 'sound/effects/inflate.ogg', VOL_EFFECTS_MASTER, 30)
 			usr.visible_message("<span class='notice'>[usr]'s suit inflates and pressurizes.</span>")
 		update_icon(usr)
 

@@ -27,14 +27,14 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 	if(!transform_dead && H.stat == DEAD)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS, null, FALSE)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
-	playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 	use_power(5000) // Use a lot of power.
 	var/mob/living/silicon/robot = H.Robotize()
 	robot.lying = 1
 	spawn(50) // So he can't jump out the gate right away.
-		playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS, null, FALSE)
+		playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		if(robot)
 			robot.lying = 0
 

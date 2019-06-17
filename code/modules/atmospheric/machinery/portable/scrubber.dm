@@ -213,7 +213,7 @@
 
 		anchored = !anchored
 		user.SetNextMove(CLICK_CD_INTERACT)
-		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 
 		return

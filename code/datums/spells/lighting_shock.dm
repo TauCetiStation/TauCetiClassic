@@ -42,7 +42,7 @@
 	target.visible_message("<span class='danger'>[target] looks like is being blocked by something from the outside world...</span>", \
 						   "<span class='danger'>You feel how strange powers holding you...</span>")
 
-	playsound(target, 'sound/effects/electricity.ogg', VOL_EFFECTS)
+	playsound(target, 'sound/effects/electricity.ogg', VOL_EFFECTS_MASTER)
 
 	// makes target drop weapons to floor
 	target.drop_from_inventory(target.l_hand)

@@ -161,7 +161,7 @@
 	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
 	smoke.set_up(10, 0, src.loc)
 	smoke.start()
-	playsound(src, 'sound/effects/bamf.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 
 	var/obj/effect/decal/remains/human/RH = new /obj/effect/decal/remains/human(src.loc)
 	var/matrix/Mx = matrix()
@@ -249,7 +249,7 @@
 	if(D.density)
 		to_chat(src, "<span class='userdanger'>You force your fingers between \
 		 the doors and begin to pry them open...</span>")
-		playsound(D, 'sound/machines/electric_door_open.ogg', VOL_EFFECTS, 30, null, -4)
+		playsound(D, 'sound/machines/electric_door_open.ogg', VOL_EFFECTS_MASTER, 30, null, -4)
 		if (!is_busy() && do_after(src, 40, target = D) && D)
 			D.open(1)
 
@@ -258,12 +258,12 @@
 		visible_message("<span class='userdanger'>[src] has punched \the [target]!</span>",\
 		"<span class='userdanger'>You punch the [target]!</span>",\
 		"<span class='userdanger'>You feel some weird vibration!</span>")
-		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 		return 0
 	else
 		say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
 		visible_message("<span class='userdanger'>[src] has destroyed some mechanic in the [target]!</span>",\
 		"<span class='userdanger'>You destroy some mechanic in the [target] door, which holds it in place!</span>",\
 		"<span class='userdanger'>You feel some weird vibration!</span>")
-		playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS)
+		playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 		return 1

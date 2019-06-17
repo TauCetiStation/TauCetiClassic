@@ -102,7 +102,7 @@
 		locked = !locked
 		to_chat(user, "\blue You [locked ? "lock" : "unlock"] the mulebot's controls!")
 		flick("mulebot-emagged", src)
-		playsound(src, 'sound/effects/sparks1.ogg', VOL_EFFECTS, null, FALSE)
+		playsound(src, 'sound/effects/sparks1.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	else if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
 		var/obj/item/weapon/stock_parts/cell/C = I
 		user.drop_item()
@@ -337,13 +337,13 @@
 	switch(type)
 		if(SIGH)
 			visible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS, null, FALSE)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		if(ANNOYED)
 			visible_message("[src] makes an annoyed buzzing sound.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
-			playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS, null, FALSE)
+			playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		if(DELIGHT)
 			visible_message("[src] makes a delighted ping!", "<span class='italics'>You hear a ping.</span>")
-			playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS, null, FALSE)
+			playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/machinery/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
 	if(!iscarbon(user) && !isrobot(user))
@@ -630,7 +630,7 @@
 /obj/machinery/bot/mulebot/proc/at_target()
 	if(!reached_target)
 		src.visible_message("[src] makes a chiming sound!", "You hear a chime.")
-		playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS, null, FALSE)
+		playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		reached_target = 1
 
 		if(load)		// if loaded, unload at target
@@ -684,7 +684,7 @@
 // when mulebot is in the same loc
 /obj/machinery/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
 	src.visible_message("\red [src] drives over [H]!")
-	playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 
 	var/damage = rand(5,15)
 	H.apply_damage(2*damage, BRUTE, BP_HEAD)

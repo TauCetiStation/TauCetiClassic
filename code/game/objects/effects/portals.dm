@@ -78,8 +78,8 @@
 		linked_console.use_power = 1
 		linked_console = null
 	if(linked_portal)
-		playsound(src, 'sound/effects/phasein.ogg', VOL_EFFECTS, 25)
-		playsound(linked_portal, 'sound/effects/phasein.ogg', VOL_EFFECTS, 25)
+		playsound(src, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER, 25)
+		playsound(linked_portal, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER, 25)
 		var/obj/effect/portal/tsci_wormhole/LP = linked_portal
 		linked_portal = null
 		LP.linked_portal = null

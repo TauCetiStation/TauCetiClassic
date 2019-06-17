@@ -87,7 +87,7 @@
 	on = !on
 	update_brightness(user)
 	action_button_name = null
-	playsound(src, 'sound/weapons/glowstick_bend.ogg', VOL_EFFECTS, 35, FALSE)
+	playsound(src, 'sound/weapons/glowstick_bend.ogg', VOL_EFFECTS_MASTER, 35, FALSE)
 	user.visible_message("<span class='notice'>[user] bends the [name].</span>", "<span class='notice'>You bend the [name]!</span>")
 	START_PROCESSING(SSobj, src)
 
@@ -135,7 +135,7 @@
 				return
 
 		if(reagents)								//Handle ingestion of the reagent.
-			playsound(M, 'sound/items/eatfood.ogg', VOL_EFFECTS, rand(10, 50))
+			playsound(M, 'sound/items/eatfood.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 			if(reagents.total_volume)
 				var/datum/reagent/my_reagent = locate(/datum/reagent/luminophore) in reagents.reagent_list
 				var/list/list_regs = list()

@@ -46,7 +46,7 @@
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, gulp_size)
 
-		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS, rand(10, 50))
+		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
 	else
 		if(istype(M, /mob/living/carbon/human))
@@ -74,7 +74,7 @@
 			var/refill = R.get_master_reagent_id()
 			addtimer(CALLBACK(R, /datum/reagents.proc/add_reagent, refill, fillevel), 600)
 
-		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS, rand(10, 50))
+		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
 
 	return 0

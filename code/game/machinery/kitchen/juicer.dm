@@ -146,7 +146,7 @@
 		return
 	if (!beaker || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 		return
-	playsound(src, 'sound/machines/juicer.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/machines/juicer.ogg', VOL_EFFECTS_MASTER)
 	for (var/obj/item/weapon/reagent_containers/food/snacks/O in src.contents)
 		var/r_id = get_juice_id(O)
 		beaker.reagents.add_reagent(r_id,get_juice_amount(O))

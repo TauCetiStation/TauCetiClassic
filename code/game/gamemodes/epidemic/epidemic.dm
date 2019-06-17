@@ -189,7 +189,7 @@
 /datum/game_mode/epidemic/proc/crew_lose()
 	ticker.mode:explosion_in_progress = 1
 	for(var/mob/M in player_list)
-		M.playsound_local(null, 'sound/machines/Alarm.ogg', VOL_EFFECTS, vary = FALSE, ignore_environment = TRUE)
+		M.playsound_local(null, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 	to_chat(world, "\blue<b>Incoming missile detected.. Impact in 10..</b>")
 	for (var/i=9 to 1 step -1)
 		sleep(10)

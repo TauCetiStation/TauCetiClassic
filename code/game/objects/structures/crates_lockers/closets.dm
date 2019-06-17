@@ -78,9 +78,9 @@
 	src.icon_state = src.icon_opened
 	src.opened = 1
 	if(istype(src, /obj/structure/closet/body_bag))
-		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS, 15, null, -3)
+		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
 	else
-		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS, 15, null, -3)
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
 	density = 0
 	return 1
 
@@ -121,9 +121,9 @@
 	src.icon_state = src.icon_closed
 	src.opened = 0
 	if(istype(src, /obj/structure/closet/body_bag))
-		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS, 15, null, -3)
+		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
 	else
-		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS, 15, null, -3)
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
 	density = 1
 	return 1
 
@@ -166,7 +166,7 @@
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
 		..()
-		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS)
+		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 		visible_message("\red [user] destroys the [src]. ")
 		open()
 		qdel(src)

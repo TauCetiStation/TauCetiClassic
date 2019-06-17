@@ -99,7 +99,7 @@
 	var/choice = input("Would you like to change colour or mode?") as null|anything in list("Colour","Mode")
 	if(!choice) return
 
-	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS, null, FALSE)
+	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	switch(choice)
 		if("Colour")

@@ -223,7 +223,7 @@
 		if(gnomed) // if he's dead he's gnomed foreva-a-ah
 			if(prob(6))
 				say(pick("A-HA-HA-HA!", "U-HU-HU-HU!", "IM A GNOME", "I'm a GnOme!", "Don't GnoMe me!", "I'm gnot a gnoblin!", "You've been GNOMED!"))
-				playsound(src, 'sound/magic/GNOMED.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/magic/GNOMED.ogg', VOL_EFFECTS_MASTER)
 			gnomed--
 			if(gnomed <= 0)
 				to_chat(src, "<span class='notice'>You are no longer gnomed!</span>")
@@ -239,7 +239,7 @@
 				var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 				smoke.set_up(3, 0, src.loc)
 				smoke.start()
-				playsound(src, 'sound/magic/cult_revive.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/magic/cult_revive.ogg', VOL_EFFECTS_MASTER)
 				if(SMALLSIZE in mutations)
 					dna.SetSEState(SMALLSIZEBLOCK, 0)
 					domutcheck(src, null)
@@ -471,7 +471,7 @@
 					breathsound = "gasmaskbreath"
 				if(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space))
 					breathsound = "rigbreath"
-				playsound(src, breathsound, VOL_EFFECTS, null, FALSE, -6)
+				playsound(src, breathsound, VOL_EFFECTS_MASTER, null, FALSE, -6)
 			return internal.remove_air_volume(volume_needed)
 		else if(internals)
 			internals.icon_state = "internal0"
@@ -1036,7 +1036,7 @@
 		if(light_amount > LIGHT_DAM_THRESHOLD)
 			take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
 			to_chat(src, "<span class='userdanger'>The light burns you!</span>")
-			playsound_local(null, 'sound/weapons/sear.ogg', VOL_EFFECTS, null, FALSE)
+			playsound_local(null, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
 			heal_overall_damage(5,5)
 			adjustToxLoss(-3)
@@ -1614,7 +1614,7 @@
 	if(isturf(loc) && rand(1,1000) == 1)
 		var/turf/T = loc
 		if(T.get_lumcount() < 0.1)
-			playsound_local(src, pick(scarySounds), VOL_EFFECTS)
+			playsound_local(src, pick(scarySounds), VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/human/proc/handle_virus_updates()
 	if(status_flags & GODMODE)	return 0	//godmode
@@ -1741,7 +1741,7 @@
 
 		if(heart_beat >= temp)
 			heart_beat = 0
-			playsound_local(null, 'sound/effects/singlebeat.ogg', VOL_EFFECTS, null, FALSE)
+			playsound_local(null, 'sound/effects/singlebeat.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		else if(temp != 0)
 			heart_beat++
 

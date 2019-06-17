@@ -126,7 +126,7 @@
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
-		playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 		toggle_cam(FALSE, user)
 
 /obj/machinery/camera/attackby(W, mob/living/user)
@@ -140,7 +140,7 @@
 		panel_open = !panel_open
 		user.visible_message("<span class='warning'>[user] screws the camera's panel [panel_open ? "open" : "closed"]!</span>",
 		"<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
-		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
 	else if(is_wire_tool(W) && panel_open)
 		wires.interact(user)
@@ -217,8 +217,8 @@
 			var/datum/effect/effect/system/spark_spread/spark_system = new()
 			spark_system.set_up(5, 0, loc)
 			spark_system.start()
-			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS)
-			playsound(src, "sparks", VOL_EFFECTS)
+			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, "sparks", VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>The camera has been sliced apart by [user] with [W]!</span>")
 			drop_assembly()
 			new /obj/item/stack/cable_coil/cut/red(loc)
@@ -251,7 +251,7 @@
 			visible_message("[bicon(src)] <span class='danger'>[user] [status_message] [src]!</span>")
 		else
 			visible_message("[bicon(src)] <span class='danger'>\The [src] [status_message]!</span>")
-		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 
 	update_icon()
 

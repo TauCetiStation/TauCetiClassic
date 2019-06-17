@@ -337,7 +337,7 @@
 	if(isscrewdriver(C))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		ReplaceWithLattice()
-		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		return
 
 	if(iscoil(C))

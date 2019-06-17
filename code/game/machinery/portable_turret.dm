@@ -660,9 +660,9 @@ var/list/turret_icons
 	A.process()
 
 	if(emagged || lethal)
-		playsound(src, eshot_sound, VOL_EFFECTS)
+		playsound(src, eshot_sound, VOL_EFFECTS_MASTER)
 	else
-		playsound(src, shot_sound, VOL_EFFECTS)
+		playsound(src, shot_sound, VOL_EFFECTS_MASTER)
 
 /obj/machinery/porta_turret/proc/ready_to_fire()
 	last_fired = FALSE
@@ -686,7 +686,7 @@ var/list/turret_icons
 	M.do_attack_animation(src)
 	M.SetNextMove(CLICK_CD_MELEE)
 	if(!(stat & BROKEN))
-		playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS, 25)
+		playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER, 25)
 		visible_message("<span class='danger'>[M] has slashed at [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 		take_damage(15)
@@ -747,14 +747,14 @@ var/list/turret_icons
 	switch(build_step)
 		if(0)	//first step
 			if(iswrench(I) && !anchored)
-				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You secure the external bolts.</span>")
 				anchored = TRUE
 				build_step = 1
 				return
 
 			else if(iscrowbar(I) && !anchored)
-				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You dismantle the turret construction.</span>")
 				new /obj/item/stack/sheet/metal( loc, 5)
 				qdel(src)
@@ -772,7 +772,7 @@ var/list/turret_icons
 				return
 
 			else if(iswrench(I))
-				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You unfasten the external bolts.</span>")
 				anchored = FALSE
 				build_step = 0
@@ -781,7 +781,7 @@ var/list/turret_icons
 
 		if(2)
 			if(iswrench(I))
-				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You bolt the metal armor into place.</span>")
 				build_step = 3
 				return
@@ -817,7 +817,7 @@ var/list/turret_icons
 				return
 
 			else if(iswrench(I))
-				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the turret's metal armor bolts.</span>")
 				build_step = 2
 				return
@@ -836,7 +836,7 @@ var/list/turret_icons
 
 		if(5)
 			if(isscrewdriver(I))
-				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				build_step = 6
 				to_chat(user, "<span class='notice'>You close the internal access hatch.</span>")
 				return
@@ -854,7 +854,7 @@ var/list/turret_icons
 				return
 
 			else if(isscrewdriver(I))
-				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				build_step = 5
 				to_chat(user, "<span class='notice'>You open the internal access hatch.</span>")
 				return
@@ -881,7 +881,7 @@ var/list/turret_icons
 					qdel(src) // qdel
 
 			else if(iscrowbar(I))
-				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You pry off the turret's exterior armor.</span>")
 				new /obj/item/stack/sheet/metal(loc, 2)
 				build_step = 6

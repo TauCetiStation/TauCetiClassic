@@ -188,11 +188,11 @@
 		if(point_reward > 0)
 			open_machine()
 			SendBack(H)
-			playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 			points += point_reward
 			return "<span class='good'>Experiment successfull! [point_reward] new data-points collected.</span>"
 		else
-			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
 			return "<span class='bad'>Experiment failed! No replacement organ detected.</span>"
 	else
 		src.visible_message("Brain activity nonexistant - disposing Sample...")

@@ -295,7 +295,7 @@ var/req_console_information = list()
 									Console.newmessagepriority = 2
 									Console.icon_state = "req_comp2"
 								if(!Console.silent)
-									playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS)
+									playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 									for (var/mob/O in hearers(5, Console.loc))
 										O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [department]'"))
 								Console.messages += "<B><FONT color='red'>High Priority message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[sending]"
@@ -305,7 +305,7 @@ var/req_console_information = list()
 		//							Console.newmessagepriority = 3
 		//							Console.icon_state = "req_comp3"
 		//						if(!Console.silent)
-		//							playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS)
+		//							playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 		//							for (var/mob/O in hearers(7, Console.loc))
 		//								O.show_message(text("[bicon(Console)] *The Requests Console yells: 'EXTREME PRIORITY alert in [department]'"))
 		//						Console.messages += "<B><FONT color='red'>Extreme Priority message from [ckey(department)]</FONT></B><BR>[message]"
@@ -315,7 +315,7 @@ var/req_console_information = list()
 									Console.newmessagepriority = 1
 									Console.icon_state = "req_comp1"
 								if(!Console.silent)
-									playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS)
+									playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 									for (var/mob/O in hearers(4, Console.loc))
 										O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'Message from [department]'"))
 								Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></B><BR>[message]"

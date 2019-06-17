@@ -72,7 +72,7 @@ var/global/list/rad_collectors = list()
 		if(P)
 			to_chat(user, "\blue Remove the phoron tank first.")
 			return 1
-		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		src.anchored = !src.anchored
 		user.visible_message("[user.name] [anchored? "secures":"unsecures"] the [src.name].", \
 			"You [anchored? "secure":"undo"] the external bolts.", \

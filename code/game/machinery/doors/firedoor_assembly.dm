@@ -38,7 +38,7 @@
 
 	else if(istype(C, /obj/item/weapon/airalarm_electronics) && wired)
 		if(anchored)
-			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='warning'>[user] has inserted a circuit into \the [src]!</span>",
 								  "You have inserted the circuit into \the [src]!")
 			new /obj/machinery/door/firedoor(src.loc)

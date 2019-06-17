@@ -163,7 +163,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		D.loc = src
 		to_chat(user, "\blue You add the disk to the machine!")
 	else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
-		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 		emagged = 1
 		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "\blue You you disable the security protocols")

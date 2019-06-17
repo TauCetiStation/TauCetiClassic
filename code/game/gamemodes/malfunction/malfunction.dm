@@ -188,7 +188,7 @@
 			malf_turf = get_turf(cur_AI)
 	explosion_in_progress = TRUE
 	for(var/mob/M in player_list)
-		M.playsound_local(null, 'sound/machines/Alarm.ogg', VOL_EFFECTS, vary = FALSE, ignore_environment = TRUE)
+		M.playsound_local(null, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 	to_chat(world, "Self-destructing in 10")
 	for (var/i=9 to 1 step -1)
 		sleep(10)

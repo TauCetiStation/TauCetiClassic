@@ -195,7 +195,7 @@
 				var/obj/item/ammo_casing/AC = chambered
 				if(AC.fire(user, user))
 					user.apply_damage(300, BRUTE, def_zone, null, DAM_SHARP)
-					playsound(user, fire_sound, VOL_EFFECTS)
+					playsound(user, fire_sound, VOL_EFFECTS_MASTER)
 					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(AC.BB, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 					return
 				else

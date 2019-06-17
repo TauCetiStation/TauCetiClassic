@@ -360,7 +360,7 @@ Class Procs:
 /obj/machinery/proc/default_pry_open(obj/item/weapon/crowbar/C)
 	. = !(state_open || panel_open || is_operational() || (flags & NODECONSTRUCT)) && istype(C)
 	if(.)
-		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='notice'>[usr] pry open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
 		open_machine()
 		return 1
@@ -369,7 +369,7 @@ Class Procs:
 	. = istype(C) && (panel_open || ignore_panel) &&  !(flags & NODECONSTRUCT)
 	if(.)
 		deconstruction()
-		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(loc)
 		transfer_fingerprints_to(M)
 		M.state = 2
@@ -382,7 +382,7 @@ Class Procs:
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
 	if(istype(S) &&  !(flags & NODECONSTRUCT))
-		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(!panel_open)
 			panel_open = 1
 			icon_state = icon_state_open
@@ -396,7 +396,7 @@ Class Procs:
 
 /obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
 	if(panel_open && istype(W))
-		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		dir = turn(dir,-90)
 		to_chat(user, "<span class='notice'>You rotate [src].</span>")
 		return 1
@@ -409,7 +409,7 @@ Class Procs:
 		if(W.use_tool(src, user, time, volume = 50))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 			anchored = !anchored
-			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		return 1
 	return 0
 
@@ -471,7 +471,7 @@ Class Procs:
 		text = "\The [src] pings."
 
 	state(text, "blue")
-	playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS, null, FALSE)
+	playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/machinery/tesla_act(power)
 	..()

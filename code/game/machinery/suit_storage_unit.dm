@@ -198,7 +198,7 @@
 				protected = 1
 
 	if(!protected)
-		playsound(src, "sparks", VOL_EFFECTS)
+		playsound(src, "sparks", VOL_EFFECTS_MASTER)
 		to_chat(user, "<font color='red'>You try to touch the controls but you get zapped. There must be a short circuit somewhere.</font>")
 		return*/
 	else  //welp, the guy is protected, we can continue
@@ -224,7 +224,7 @@
 				protected = 1
 
 	if(!protected)
-		playsound(src, "sparks", VOL_EFFECTS)
+		playsound(src, "sparks", VOL_EFFECTS_MASTER)
 		to_chat(user, "<font color='red'>You try to touch the controls but you get zapped. There must be a short circuit somewhere.</font>")
 		return*/
 	else
@@ -474,7 +474,7 @@
 		return
 	if(isscrewdriver(I))
 		src.panelopen = !src.panelopen
-		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, text("<font color='blue'>You [] the unit's maintenance panel.</font>",(src.panelopen ? "open up" : "close") ))
 		src.updateUsrDialog()
 		return

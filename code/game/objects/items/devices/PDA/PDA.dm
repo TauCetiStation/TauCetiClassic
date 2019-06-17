@@ -324,7 +324,7 @@
 /obj/item/device/pda/silicon/attack_self(mob/user)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
-		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS, 30)
+		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER, 30)
 	return
 
 //Special PDA for robots
@@ -570,7 +570,7 @@
 	U.set_machine(src)
 
 	if(href_list && (last_tap_sound <= world.time))
-		playsound(src, "pda", VOL_EFFECTS, 15, FALSE)
+		playsound(src, "pda", VOL_EFFECTS_MASTER, 15, FALSE)
 		last_tap_sound = world.time + 8
 
 	switch(href_list["choice"])
@@ -657,7 +657,7 @@
 				scanmode = 4
 		if("Honk")
 			if ( !(last_honk && world.time < last_honk + 20) )
-				playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER)
 				last_honk = world.time
 		if("Gas Scan")
 			if(scanmode == 5)
@@ -855,7 +855,7 @@
 
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
-		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS, 30)
+		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER, 30)
 
 	return 1 // return 1 tells it to refresh the UI in NanoUI
 
@@ -903,14 +903,14 @@
 		var/datum/effect/effect/system/smoke_spread/S = new /datum/effect/effect/system/smoke_spread
 		S.attach(P.loc)
 		S.set_up(n = 10, c = 0, loca = P.loc, direct = 0)
-		playsound(P, 'sound/effects/smoke.ogg', VOL_EFFECTS, null, null, -3)
+		playsound(P, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 		S.start()
 		message += "Large clouds of smoke billow forth from your [P]!"
 	if(i>=40 && i<=45) //Bad smoke
 		var/datum/effect/effect/system/smoke_spread/bad/B = new /datum/effect/effect/system/smoke_spread/bad
 		B.attach(P.loc)
 		B.set_up(n = 10, c = 0, loca = P.loc, direct = 0)
-		playsound(P, 'sound/effects/smoke.ogg', VOL_EFFECTS, null, null, -3)
+		playsound(P, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 		B.start()
 		message += "Large clouds of noxious smoke billow forth from your [P]!"
 	if(i>=65 && i<=75) //Weaken
@@ -1027,7 +1027,7 @@
 		nanomanager.update_user_uis(U, src) // Update the sending user's PDA UI so that they can see the new message
 
 		if (!P.message_silent)
-			playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS)
+			playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 		for (var/mob/O in hearers(3, P.loc))
 			if(!P.message_silent) O.show_message(text("[bicon(P)] *[P.ttone]*"))
 		//Search for holder of the PDA.
@@ -1101,7 +1101,7 @@
 				if(M.get_active_hand() == null)
 					M.put_in_hands(O)
 					to_chat(usr, "<span class='notice'>You remove \the [O] from \the [src].</span>")
-					playsound(src, 'sound/items/penclick.ogg', VOL_EFFECTS, 20)
+					playsound(src, 'sound/items/penclick.ogg', VOL_EFFECTS_MASTER, 20)
 					return
 			O.loc = get_turf(src)
 		else

@@ -104,7 +104,7 @@
 		if(shutter.dock_tag == "Syndicate_shuttle")
 			to_chat(user, "<span class='notice'>The Shuttle has been unlocked!</span>")
 			qdel(shutter)
-			playsound(console, 'sound/machines/twobeep.ogg', VOL_EFFECTS)
+			playsound(console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 			for(var/datum/intruder_tools/gateway_locker/D in console.tools)
 				console.tools -= D
 				qdel(D)

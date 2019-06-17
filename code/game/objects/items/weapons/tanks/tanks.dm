@@ -163,7 +163,7 @@
 					var/mob/living/carbon/human/H = C
 					if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
 						internalsound = 'sound/misc/riginternaloff.ogg'
-				playsound(src, internalsound, VOL_EFFECTS, null, FALSE, -5)
+				playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
 			else
 				if(C.wear_mask && (C.wear_mask.flags & MASKINTERNALS))
 					C.internal = src
@@ -175,7 +175,7 @@
 						var/mob/living/carbon/human/H = C
 						if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
 							internalsound = 'sound/misc/riginternalon.ogg'
-					playsound(src, internalsound, VOL_EFFECTS, null, FALSE, -5)
+					playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
 				else
 					to_chat(usr, "\blue You need something to connect to \the [src].")
 			internal_switch = world.time + 16
@@ -245,7 +245,7 @@
 			if(!T)
 				return
 			T.assume_air(air_contents)
-			playsound(src, 'sound/effects/spray.ogg', VOL_EFFECTS, 10, null, -3)
+			playsound(src, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 10, null, -3)
 			qdel(src)
 		else
 			integrity--

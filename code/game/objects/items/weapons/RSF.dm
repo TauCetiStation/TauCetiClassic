@@ -27,13 +27,13 @@ RSF
 			return
 		qdel(W)
 		matter += 10
-		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS, 10)
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 		to_chat(user, "The RSF now holds [matter]/30 fabrication-units.")
 		desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
 
 /obj/item/weapon/rsf/attack_self(mob/user)
-	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS, null, FALSE)
+	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	if (mode == 1)
 		mode = 2
 		to_chat(user, "Changed dispensing mode to 'Drinking Glass'")
@@ -68,7 +68,7 @@ RSF
 	if (istype(A, /obj/structure/table) && mode == 1)
 		if (istype(A, /obj/structure/table) && matter >= 1)
 			to_chat(user, "Dispensing Dosh...")
-			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS, 10)
+			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 			new /obj/item/weapon/spacecash/c10( A.loc )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
@@ -82,7 +82,7 @@ RSF
 	else if (istype(A, /turf/simulated/floor) && mode == 1)
 		if (istype(A, /turf/simulated/floor) && matter >= 1)
 			to_chat(user, "Dispensing Dosh...")
-			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS, 10)
+			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 			new /obj/item/weapon/spacecash/c10( A )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
@@ -96,7 +96,7 @@ RSF
 	else if (istype(A, /obj/structure/table) && mode == 2)
 		if (istype(A, /obj/structure/table) && matter >= 1)
 			to_chat(user, "Dispensing Drinking Glass...")
-			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS, 10)
+			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 			new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass( A.loc )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
@@ -110,7 +110,7 @@ RSF
 	else if (istype(A, /turf/simulated/floor) && mode == 2)
 		if (istype(A, /turf/simulated/floor) && matter >= 1)
 			to_chat(user, "Dispensing Drinking Glass...")
-			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS, 10)
+			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 			new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass( A )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
@@ -124,7 +124,7 @@ RSF
 	else if (istype(A, /obj/structure/table) && mode == 3)
 		if (istype(A, /obj/structure/table) && matter >= 1)
 			to_chat(user, "Dispensing Paper Sheet...")
-			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS, 10)
+			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 			new /obj/item/weapon/paper( A.loc )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
@@ -138,7 +138,7 @@ RSF
 	else if (istype(A, /turf/simulated/floor) && mode == 3)
 		if (istype(A, /turf/simulated/floor) && matter >= 1)
 			to_chat(user, "Dispensing Paper Sheet...")
-			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS, 10)
+			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 			new /obj/item/weapon/paper( A )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
@@ -152,7 +152,7 @@ RSF
 	else if (istype(A, /obj/structure/table) && mode == 4)
 		if (istype(A, /obj/structure/table) && matter >= 1)
 			to_chat(user, "Dispensing Pen...")
-			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS, 10)
+			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 			new /obj/item/weapon/pen( A.loc )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
@@ -166,7 +166,7 @@ RSF
 	else if (istype(A, /turf/simulated/floor) && mode == 4)
 		if (istype(A, /turf/simulated/floor) && matter >= 1)
 			to_chat(user, "Dispensing Pen...")
-			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS, 10)
+			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 			new /obj/item/weapon/pen( A )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
@@ -180,7 +180,7 @@ RSF
 	else if (istype(A, /obj/structure/table) && mode == 5)
 		if (istype(A, /obj/structure/table) && matter >= 1)
 			to_chat(user, "Dispensing Dice Pack...")
-			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS, 10)
+			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 			new /obj/item/weapon/storage/pill_bottle/dice( A.loc )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
@@ -194,7 +194,7 @@ RSF
 	else if (istype(A, /turf/simulated/floor) && mode == 5)
 		if (istype(A, /turf/simulated/floor) && matter >= 1)
 			to_chat(user, "Dispensing Dice Pack...")
-			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS, 10)
+			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 			new /obj/item/weapon/storage/pill_bottle/dice( A )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
@@ -208,7 +208,7 @@ RSF
 	else if (istype(A, /obj/structure/table) && mode == 6)
 		if (istype(A, /obj/structure/table) && matter >= 1)
 			to_chat(user, "Dispensing Cigarette...")
-			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS, 10)
+			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 			new /obj/item/clothing/mask/cigarette( A.loc )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
@@ -222,7 +222,7 @@ RSF
 	else if (istype(A, /turf/simulated/floor) && mode == 6)
 		if (istype(A, /turf/simulated/floor) && matter >= 1)
 			to_chat(user, "Dispensing Cigarette...")
-			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS, 10)
+			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 			new /obj/item/clothing/mask/cigarette( A )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user

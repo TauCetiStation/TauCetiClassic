@@ -20,7 +20,7 @@
 		light_range = heavy_range
 
 	for(var/mob/M in range(heavy_range, epicenter))
-		M.playsound_local(null, 'sound/effects/EMPulse.ogg', VOL_EFFECTS, null, FALSE)
+		M.playsound_local(null, 'sound/effects/EMPulse.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	for(var/atom/T in range(light_range, epicenter))
 		var/distance = get_dist(epicenter, T)

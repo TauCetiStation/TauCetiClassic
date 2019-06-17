@@ -19,7 +19,7 @@
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
 	if(iswrench(W))
 		anchored = !anchored
-		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		if(anchored)
 			user.visible_message("[user.name] secures [src.name] to the floor.", \
 				"You secure the [src.name] to the floor.", \

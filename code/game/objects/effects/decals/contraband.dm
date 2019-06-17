@@ -157,7 +157,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 
 /obj/structure/sign/poster/attackby(obj/item/weapon/W, mob/user)
 	if(iswirecutter(W))
-		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 		if(ruined)
 			to_chat(user, "<span class='notice'>You remove the remnants of the poster.</span>")
 			qdel(src)
@@ -176,7 +176,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 			if(user.loc != temp_loc || ruined)
 				return
 			visible_message("<span class='warning'>[user] rips [src] in a single, decisive motion!</span>" )
-			playsound(src, 'sound/items/poster_ripped.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/items/poster_ripped.ogg', VOL_EFFECTS_MASTER)
 			ruined = 1
 			icon_state = "poster_ripped"
 			name = "ripped poster"
@@ -222,7 +222,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	D.pixel_y = (y - D.y) * D.bound_height
 	D.official = P.official
 	qdel(P)	//delete it now to cut down on sanity checks afterwards. Agouri's code supports rerolling it anyway
-	playsound(D, 'sound/items/poster_being_created.ogg', VOL_EFFECTS)
+	playsound(D, 'sound/items/poster_being_created.ogg', VOL_EFFECTS_MASTER)
 
 	if(do_after(user, D.placespeed, target=src))
 		to_chat(user, "<span class='notice'>You placed the poster!</span>")

@@ -119,7 +119,7 @@ var/global/raider_tick = 1
 
 /obj/item/weapon/grenade/monsternade/prime()
 	..()
-	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 	switch(rand(1,4))
 		if(1)
 			for(var/i=0,i<2,i++)

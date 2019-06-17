@@ -7,7 +7,7 @@
 	if(user)
 		to_chat(user, "\blue Locked In")
 		new /obj/machinery/syndicatebomb( user.loc )
-		playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
 	return
 
@@ -32,7 +32,7 @@
 
 /obj/machinery/syndicatebomb/process()
 	if(active && !defused && (timer > 0)) 	//Tick Tock
-		playsound(src, 'sound/items/timer.ogg', VOL_EFFECTS, 5, FALSE)
+		playsound(src, 'sound/items/timer.ogg', VOL_EFFECTS_MASTER, 5, FALSE)
 		timer--
 	if(active && !defused && (timer <= 0))	//Boom
 		active = 0
@@ -137,7 +137,7 @@
 			return
 		else
 			src.loc.visible_message("\red [bicon(src)] [timer] seconds until detonation, please clear the area.")
-			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS, 30)
+			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 30)
 			if(!open_panel)
 				icon_state = "syndicate-bomb-active"
 			else
@@ -186,7 +186,7 @@
 				B.timer = 0
 				detonated++
 			existant++
-		playsound(user, 'sound/machines/click.ogg', VOL_EFFECTS, 20)
+		playsound(user, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 20)
 		to_chat(user, "<span class='notice'>[existant] found, [detonated] triggered.</span>")
 		if(detonated)
 			var/turf/T = get_turf(src)

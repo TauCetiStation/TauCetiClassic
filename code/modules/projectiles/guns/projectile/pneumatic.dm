@@ -129,7 +129,7 @@
 	var/speed = ((fire_pressure*tank.volume)/object.w_class)/force_divisor //projectile speed.
 	if(speed>80) speed = 80 //damage cap.
 
-	playsound(src, 'sound/weapons/guns/gunshot_pneumaticgun.ogg', VOL_EFFECTS, null, null, -2)
+	playsound(src, 'sound/weapons/guns/gunshot_pneumaticgun.ogg', VOL_EFFECTS_MASTER, null, null, -2)
 	user.visible_message("<span class='danger'>[user] fires [src] and launches [object] at [target]!</span>","<span class='danger'>You fire [src] and launch [object] at [target]!</span>")
 
 	src.remove_from_storage(object,user.loc)
@@ -203,7 +203,7 @@
 			var/obj/item/weapon/weldingtool/T = W
 			if(T.use(0,user))
 				if(!src || !T.isOn()) return
-				playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "\blue You weld the pipe into place.")
 				buildstate++
 				update_icon()
@@ -211,7 +211,7 @@
 			var/obj/item/weapon/weldingtool/T = W
 			if(T.use(0,user))
 				if(!src || !T.isOn()) return
-				playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "\blue You weld the metal chassis together.")
 				buildstate++
 				update_icon()
@@ -219,7 +219,7 @@
 			var/obj/item/weapon/weldingtool/T = W
 			if(T.use(0,user))
 				if(!src || !T.isOn()) return
-				playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "\blue You weld the valve into place.")
 				new /obj/item/weapon/storage/pneumatic(get_turf(src))
 				qdel(src)

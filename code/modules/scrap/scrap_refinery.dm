@@ -76,7 +76,7 @@ var/const/SAFETY_COOLDOWN = 100
 		if(safety_mode)
 			safety_mode = 0
 			update_icon()
-		playsound(src, "sparks", VOL_EFFECTS)
+		playsound(src, "sparks", VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>")
 
 /obj/machinery/recycler/update_icon()
@@ -112,7 +112,7 @@ var/const/SAFETY_COOLDOWN = 100
 		else if(istype(AM, /obj/item))
 			recycle(AM)
 		else // Can't recycle
-			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS, null, FALSE)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			AM.forceMove(src.loc)
 
 /obj/machinery/recycler/proc/recycle(obj/item/I, sound = 1)
@@ -121,7 +121,7 @@ var/const/SAFETY_COOLDOWN = 100
 		return
 
 	if(sound)
-		playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 	var/chance_mod = 1
 	if(!istype(I, /obj/item/weapon/scrap_lump))
 		chance_mod = 5
@@ -132,13 +132,13 @@ var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler/proc/stop(mob/living/L)
 	set waitfor = 0
-	playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS, null, FALSE)
+	playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	safety_mode = 1
 	update_icon()
 	L.forceMove(src.loc)
 
 	sleep(SAFETY_COOLDOWN)
-	playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS, null, FALSE)
+	playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	safety_mode = 0
 	update_icon()
 
@@ -147,7 +147,7 @@ var/const/SAFETY_COOLDOWN = 100
 	L.forceMove(src.loc)
 
 	if(issilicon(L))
-		playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 	else
 		L.emote("scream",,, 1)
 
@@ -174,7 +174,7 @@ var/const/SAFETY_COOLDOWN = 100
 	// For admin fun, var edit emagged to 2.
 	if(gib || emagged == 2)
 		L.gib()
-		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 	else if(emagged == 1)
 		for(var/i = 1 to 3)
 			sleep(10)

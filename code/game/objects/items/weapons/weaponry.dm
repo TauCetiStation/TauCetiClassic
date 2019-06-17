@@ -97,7 +97,7 @@
 		power.action(user, 1)
 
 /obj/item/weapon/sord/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
 /obj/item/weapon/claymore
@@ -126,7 +126,7 @@
 	can_embed = 0
 
 /obj/item/weapon/claymore/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
 /obj/item/weapon/katana
@@ -151,7 +151,7 @@
 		return 50
 
 /obj/item/weapon/katana/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
 /obj/item/weapon/harpoon
@@ -185,7 +185,7 @@
 
 /obj/item/weapon/switchblade/attack_self(mob/user)
 	extended = !extended
-	playsound(src, 'sound/weapons/batonextend.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/weapons/batonextend.ogg', VOL_EFFECTS_MASTER)
 	if(extended)
 		force = 20
 		w_class = ITEM_SIZE_NORMAL

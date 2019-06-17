@@ -68,10 +68,10 @@
 			reconnect_scanner()
 		if(!owned_scanner)
 			results = "Error communicating with scanner."
-			playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS, 20)
+			playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, 20)
 		else if(!scanned_object || scanned_object.loc != owned_scanner.loc)
 			results = "Unable to locate scanned object. Ensure it was not moved in the process."
-			playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS, 20)
+			playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, 20)
 		else
 			results = get_scan_info(scanned_object)
 		owned_scanner.icon_state = "xenoarch_scanner"
@@ -85,7 +85,7 @@
 
 		var/obj/item/weapon/stamp/S = new
 		S.stamp_paper(P)
-		playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
 
 		if(scanned_object && istype(scanned_object, /obj/machinery/artifact))
 			var/obj/machinery/artifact/A = scanned_object
@@ -93,7 +93,7 @@
 
 /obj/machinery/artifact_analyser/Topic(href, href_list)
 	if(href_list["close"])
-		playsound(src, "keyboard", VOL_EFFECTS, null, FALSE)
+		playsound(src, "keyboard", VOL_EFFECTS_MASTER, null, FALSE)
 		usr.unset_machine(src)
 		usr << browse(null, "window=artanalyser")
 		return FALSE
@@ -103,7 +103,7 @@
 		return
 
 	if(href_list["begin_scan"])
-		playsound(src, "keyboard", VOL_EFFECTS, null, FALSE)
+		playsound(src, "keyboard", VOL_EFFECTS_MASTER, null, FALSE)
 		if(!owned_scanner)
 			reconnect_scanner()
 		if(owned_scanner)
@@ -122,7 +122,7 @@
 
 				if(artifact_in_use)
 					src.visible_message("<b>[name]</b> states, \"Cannot harvest. Too much interference.\"")
-					playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS, 20)
+					playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, 20)
 				else
 					scanned_object = O
 					scan_in_progress = 1
@@ -134,7 +134,7 @@
 			if(!scanned_object)
 				src.visible_message("<b>[name]</b> states, \"Unable to isolate scan target.\"")
 	if(href_list["halt_scan"])
-		playsound(src, "keyboard", VOL_EFFECTS, null, FALSE)
+		playsound(src, "keyboard", VOL_EFFECTS_MASTER, null, FALSE)
 		owned_scanner.icon_state = "xenoarch_scanner"
 		scan_in_progress = 0
 		src.visible_message("<b>[name]</b> states, \"Scanning halted.\"")

@@ -217,7 +217,7 @@
 
 /obj/effect/bubble_ian/atom_init(loc, mob/M)
 	. = ..()
-	playsound(src, 'sound/effects/bubble_spawn.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/effects/bubble_spawn.ogg', VOL_EFFECTS_MASTER)
 	switch(M.dir)
 		if(WEST)
 			pixel_x = -20
@@ -242,7 +242,7 @@
 		for(var/mob/living/carbon/C in view(1,src))
 			C.Stun(1)
 			C.Weaken(1)
-	playsound(src, 'sound/effects/bubble_pop.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/effects/bubble_pop.ogg', VOL_EFFECTS_MASTER)
 	underlays.Cut()
 	qdel(src)
 
@@ -369,7 +369,7 @@
 		if ("hurt")
 			M.do_attack_animation(src)
 			if(is_armored(M, 35))
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 				return
 
 			var/datum/unarmed_attack/attack = M.species.unarmed
@@ -379,14 +379,14 @@
 
 			var/damage = rand(0, 5)
 			if(!damage)
-				playsound(src, attack.miss_sound, VOL_EFFECTS)
+				playsound(src, attack.miss_sound, VOL_EFFECTS_MASTER)
 				visible_message("<span class='danger'>[M] has attempted to [response_harm] [src]!</span>")
 				return
 
 			if(HULK in M.mutations)
 				damage += 5
 
-			playsound(src, attack.attack_sound, VOL_EFFECTS)
+			playsound(src, attack.attack_sound, VOL_EFFECTS_MASTER)
 
 			if(damage >= 5 && prob(15))
 				visible_message("<span class='danger'>[M] has weakened [src]!</span>")
@@ -406,14 +406,14 @@
 			msg_admin_attack("[key_name(M)] disarmed [src.name] ([src.ckey])")
 
 			if(is_armored(M, 25))
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 				return
 
 			var/randn = rand(1, 100)
 			switch(randn)
 				if(0 to 25)
 					Paralyse(2)
-					playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS)
+					playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 					visible_message("<span class='danger'>[M] [response_disarm] [src]!</span>")
 				if(26 to 60)
 					var/talked = 0
@@ -429,9 +429,9 @@
 					if(!talked)
 						drop_item()
 						visible_message("<span class='danger'>[M] has disarmed [src]!</span>")
-					playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS)
+					playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 				else
-					playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS)
+					playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 					visible_message("<span class='danger'>[M] attempted to disarm [src]!</span>")
 
 /mob/living/carbon/ian/attack_facehugger(mob/living/carbon/alien/facehugger/FH)
@@ -547,11 +547,11 @@
 			M.do_attack_animation(src)
 
 			if(is_armored(M, 35))
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 				return
 
 			if(prob(75))
-				playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 				visible_message("<span class='danger'>[M.name] has bit [name]!</span>")
 				var/damage = rand(1, 5)
 				adjustBruteLoss(damage)
@@ -573,9 +573,9 @@
 		if ("hurt")
 			if(prob(95))
 				if(is_armored(M, 25))
-					playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS)
+					playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
 					return
-				playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
 				var/damage = rand(15, 30)
 				if (damage >= 25)
 					damage = rand(20, 40)
@@ -587,12 +587,12 @@
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
-				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
 				visible_message("<span class='danger'>has attempted to lunge at [name]!</span>")
 		if ("grab")
 			M.Grab(src)
 		if ("disarm")
-			playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS_MASTER)
 			if(is_armored(M, 35))
 				return
 			var/damage = 5
@@ -611,7 +611,7 @@
 		M.emote("[M.friendly] [src]")
 	else
 		if(M.attack_sound)
-			playsound(src, M.attack_sound, VOL_EFFECTS)
+			playsound(src, M.attack_sound, VOL_EFFECTS_MASTER)
 		if(is_armored(M, 35))
 			return
 		visible_message("<span class='red'><B>[M]</B> [M.attacktext] [src]!</span>")

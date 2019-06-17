@@ -221,7 +221,7 @@
 		flick("pad-beam", telepad)
 
 		if(spawn_time > 15) // 1.5 seconds
-			playsound(telepad, 'sound/weapons/flash.ogg', VOL_EFFECTS, 25)
+			playsound(telepad, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER, 25)
 			// Wait depending on the time the projectile took to get there
 			teleporting = 1
 			temp_msg = "Powering up bluespace crystals.<BR>Please wait."
@@ -257,7 +257,7 @@
 				SS.start()
 
 				flick("pad-beam", telepad)
-				playsound(telepad, 'sound/weapons/guns/gunpulse_emitter2.ogg', VOL_EFFECTS, 25)
+				playsound(telepad, 'sound/weapons/guns/gunpulse_emitter2.ogg', VOL_EFFECTS_MASTER, 25)
 
 			else
 				use_power(power * 1500)
@@ -266,7 +266,7 @@
 				SS.start()
 
 				flick("pad-beam", telepad)
-				playsound(telepad, 'sound/weapons/guns/gunpulse_emitter2.ogg', VOL_EFFECTS, 25)
+				playsound(telepad, 'sound/weapons/guns/gunpulse_emitter2.ogg', VOL_EFFECTS_MASTER, 25)
 				temp_msg = "Error!<BR>Something wrong with the navigation data."
 			updateDialog()
 

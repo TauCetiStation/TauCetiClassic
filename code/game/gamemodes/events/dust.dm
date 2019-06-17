@@ -96,7 +96,7 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 			if(!M.stat && !istype(M, /mob/living/silicon/ai))
 				shake_camera(M, 3, 1)
 	if (A)
-		playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER)
 
 		if(ismob(A))
 			A.meteorhit(src)//This should work for now I guess

@@ -66,7 +66,7 @@
 	ASSERT(parent)
 	parent.temporarily_store_air()
 	visible_message("<span class='danger'>\The [src] bursts!</span>");
-	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS, 25)
+	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
 	var/datum/effect/effect/system/smoke_spread/smoke = new
 	smoke.set_up(1, 0, loc, 0)
 	smoke.start()

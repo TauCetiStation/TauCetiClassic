@@ -34,7 +34,7 @@
 		if ("chirp")
 			if(istype(src,/mob/living/carbon/monkey/diona))
 				message = "<B>The [src.name]</B> chirps!"
-				playsound(src, 'sound/misc/nymphchirp.ogg', VOL_EFFECTS, null, FALSE)
+				playsound(src, 'sound/misc/nymphchirp.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 				m_type = 2
 		if("sign")
 			if (!src.restrained())

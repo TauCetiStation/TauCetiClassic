@@ -54,7 +54,7 @@
 
 			var/damage = rand(0, 9)
 			if(!damage)
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 				visible_message("\red <B>[M] has attempted to punch [src]!</B>")
 				return 0
 			var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
@@ -64,7 +64,7 @@
 			if(dna && dna.mutantrace == "adamantine")
 				damage += 5
 
-			playsound(src, "punch", VOL_EFFECTS)
+			playsound(src, "punch", VOL_EFFECTS_MASTER)
 
 			visible_message("\red <B>[M] has punched [src]!</B>")
 
@@ -103,7 +103,7 @@
 
 			var/damage = rand(0, 5)//BS12 EDIT
 			if(!damage)
-				playsound(src, attack.miss_sound, VOL_EFFECTS)
+				playsound(src, attack.miss_sound, VOL_EFFECTS_MASTER)
 				visible_message("\red <B>[M] tried to [pick(attack.attack_verb)] [src]!</B>")
 				return 0
 
@@ -115,7 +115,7 @@
 			if(HULK in M.mutations)			damage += 5
 
 
-			playsound(src, attack.attack_sound, VOL_EFFECTS)
+			playsound(src, attack.attack_sound, VOL_EFFECTS_MASTER)
 
 			visible_message("\red <B>[M] [pick(attack.attack_verb)]ed [src]!</B>")
 			//Rearranged, so claws don't increase weaken chance.
@@ -162,7 +162,7 @@
 			if (randn <= 25)
 				var/armor_check = run_armor_check(BP, "melee")
 				apply_effect(3, WEAKEN, armor_check)
-				playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 				if(armor_check < 2)
 					visible_message("<span class='danger'>[M] has pushed [src]!</span>")
 				else
@@ -192,11 +192,11 @@
 					else
 						drop_item()
 						visible_message("\red <B>[M] has disarmed [src]!</B>")
-				playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS)
+				playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 				return
 
 
-			playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 			visible_message("\red <B>[M] attempted to disarm [src]!</B>")
 	return
 

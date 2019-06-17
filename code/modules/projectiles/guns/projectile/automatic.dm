@@ -52,7 +52,7 @@
 /obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target, mob/living/user, flag)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS, 40)
+		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, 40)
 		update_icon()
 		alarmed = 1
 	return
@@ -249,7 +249,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l10c/attack_self(mob/user)
 	if(magazine && magazine.ammo_count())
-		playsound(user, 'sound/weapons/guns/reload_l10c_unload.ogg', VOL_EFFECTS)
+		playsound(user, 'sound/weapons/guns/reload_l10c_unload.ogg', VOL_EFFECTS_MASTER)
 	if(chambered)
 		var/obj/item/ammo_casing/AC = chambered //Find chambered round
 		qdel(AC)
@@ -275,7 +275,7 @@
 			magazine.loc = src
 			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 			if(AM.ammo_count())
-				playsound(user, 'sound/weapons/guns/reload_l10c_load.ogg', VOL_EFFECTS)
+				playsound(user, 'sound/weapons/guns/reload_l10c_load.ogg', VOL_EFFECTS_MASTER)
 			chamber_round()
 			A.update_icon()
 			update_icon(user)
@@ -403,7 +403,7 @@
 		magazine.loc = get_turf(src.loc)
 		magazine.update_icon()
 		magazine = null
-		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS)
+		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
 	else
 		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
@@ -438,7 +438,7 @@
 /obj/item/weapon/gun/projectile/automatic/bulldog/afterattack(atom/target, mob/living/user, flag)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS, 40)
+		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, 40)
 		update_icon()
 		alarmed = 1
 	return

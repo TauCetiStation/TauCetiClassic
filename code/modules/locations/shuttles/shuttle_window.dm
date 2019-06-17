@@ -41,7 +41,7 @@
 				update_nearby_icons()
 				step(src, get_dir(user, src))
 		else
-			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS)
+			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 		..()
 
 /obj/structure/window/reinforced/shuttle/mining

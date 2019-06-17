@@ -14,7 +14,7 @@
 	if(SSshuttle.departed || SSshuttle.online)
 		to_chat(user, "<span class='userdanger'>All rats have worked their shift</span>")
 		return
-	playsound(user, 'sound/weapons/ring.ogg', VOL_EFFECTS)
+	playsound(user, 'sound/weapons/ring.ogg', VOL_EFFECTS_MASTER)
 	uses--
 	var/list/possible_traitors = list()
 	for(var/mob/living/carbon/human/player in player_list)

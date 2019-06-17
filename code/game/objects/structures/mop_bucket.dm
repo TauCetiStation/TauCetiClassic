@@ -32,7 +32,7 @@
 			reagents.trans_to(I, 5)
 			user.SetNextMove(CLICK_CD_INTERACT)
 			to_chat(user, "<span class='notice'>You wet [I] in [src].</span>")
-			playsound(src, 'sound/effects/slosh.ogg', VOL_EFFECTS, 25)
+			playsound(src, 'sound/effects/slosh.ogg', VOL_EFFECTS_MASTER, 25)
 	else
 		..()
 

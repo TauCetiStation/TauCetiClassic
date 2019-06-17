@@ -21,7 +21,7 @@
 /obj/item/latexballon/proc/burst()
 	if (!air_contents)
 		return
-	playsound(src, 'sound/weapons/guns/Gunshot.ogg', VOL_EFFECTS)
+	playsound(src, 'sound/weapons/guns/Gunshot.ogg', VOL_EFFECTS_MASTER)
 	icon_state = "latexballon_bursted"
 	item_state = "lgloves"
 	loc.assume_air(air_contents)
