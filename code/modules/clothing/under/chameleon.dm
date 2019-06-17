@@ -519,9 +519,9 @@
 	desc = "At first glance, simple armor, but something is wrong with it."
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	armor = list(melee = 50, bullet = 50, laser = 45,energy = 25, bomb = 35, bio = 0, rad = 0)
-	siemens_coefficient = 0.2
+	siemens_coefficient = 0.3
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
-	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS
+	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	var/list/clothing_choices = list()
 
 /obj/item/clothing/suit/armor/chameleon_armor/atom_init()
@@ -529,7 +529,7 @@
 	var/blocked = list(/obj/item/clothing/suit/jacket/puffer/vest)//Prevent infinite loops and bad suits.
 	for(var/U in typesof(/obj/item/clothing/suit/jacket,/obj/item/clothing/suit/sukeban_coat,
 	/obj/item/clothing/suit/captunic, /obj/item/clothing/suit/storage/flak/warden,
-	/obj/item/clothing/suit/armor/hos)-blocked)
+	/obj/item/clothing/suit/armor/hos, /obj/item/clothing/suit/hooded/angel_suit)-blocked)
 		var/obj/item/clothing/suit/V = new U
 		clothing_choices[V.name] = U
 
@@ -554,7 +554,7 @@
 	var/obj/item/clothing/A = new newtype
 
 	desc = null
-	permeability_coefficient = 0.90
+	permeability_coefficient = 1
 
 	if(A.icon_custom)
 		icon = A.icon_custom
@@ -580,7 +580,7 @@
 	item_state = "assaulthelmet_b"
 	desc = "At first glance, simple armor, but something is wrong with it."
 	armor = list(melee = 50, bullet = 50, laser = 45,energy = 25, bomb = 35, bio = 0, rad = 0)
-	siemens_coefficient = 0.2
+	siemens_coefficient = 0.3
 	var/list/clothing_choices = list()
 
 /obj/item/clothing/head/helmet/chameleon_helmet/atom_init()
@@ -618,7 +618,7 @@
 	var/obj/item/clothing/A = new newtype
 
 	desc = null
-	permeability_coefficient = 0.90
+	permeability_coefficient = 1
 
 	if(A.icon_custom)
 		icon = A.icon_custom
