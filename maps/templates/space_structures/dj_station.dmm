@@ -430,7 +430,8 @@
 /area/djstation)
 "ba" = (
 /obj/structure/computerframe{
-	anchored = 1
+	anchored = 1;
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"

@@ -95,7 +95,9 @@
 	},
 /area/derelict/ship)
 "ap" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -852,6 +854,7 @@
 /area/derelict/ship)
 "ch" = (
 /obj/machinery/computer/pod{
+	dir = 4;
 	id = "oldship_gun"
 	},
 /turf/simulated/floor{

@@ -233,7 +233,9 @@
 	icon_state = "0-2"
 	},
 /obj/structure/cable,
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/derelict/solar_control)
 "aG" = (
@@ -4053,7 +4055,7 @@ gW
 fY
 fP
 eQ
-eQ
+aa
 aa
 aa
 aa
@@ -4155,8 +4157,8 @@ gC
 gX
 fZ
 fQ
-hH
 eQ
+aa
 aa
 aa
 aa
@@ -4259,7 +4261,7 @@ gY
 ga
 fR
 eQ
-eQ
+aa
 aa
 aa
 aa
@@ -4561,7 +4563,7 @@ eY
 eY
 eQ
 fQ
-fZ
+hH
 fQ
 fZ
 fQ

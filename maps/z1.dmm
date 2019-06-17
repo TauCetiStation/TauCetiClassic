@@ -27894,6 +27894,7 @@
 	network = list("SS13","Research")
 	},
 /obj/machinery/computer/skills,
+/obj/item/weapon/paper/space_structures,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
