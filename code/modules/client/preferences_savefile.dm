@@ -145,8 +145,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["snd_ambient_vol"]					>> snd_ambient_vol
 	S["snd_effects_master_vol"]				>> snd_effects_master_vol
 	S["snd_effects_voice_announcement_vol"]	>> snd_effects_voice_announcement_vol
-	S["snd_instruments_vol"]				>> snd_instruments_vol
 	S["snd_effects_misc_vol"]				>> snd_effects_misc_vol
+	S["snd_effects_instrument_vol"]			>> snd_effects_instrument_vol
 	S["snd_notifications_vol"]				>> snd_notifications_vol
 	S["snd_admin_vol"]						>> snd_admin_vol
 	S["snd_jukebox_vol"]					>> snd_jukebox_vol
@@ -180,7 +180,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	snd_effects_master_vol = sanitize_integer(snd_effects_master_vol, 0, 100, initial(snd_effects_master_vol))
 	snd_effects_voice_announcement_vol = sanitize_integer(snd_effects_voice_announcement_vol, 0, 100, initial(snd_effects_voice_announcement_vol))
 	snd_effects_misc_vol = sanitize_integer(snd_effects_misc_vol, 0, 100, initial(snd_effects_misc_vol))
-	snd_instruments_vol = sanitize_integer(snd_instruments_vol, 0, 100, initial(snd_instruments_vol))
+	snd_effects_instrument_vol = sanitize_integer(snd_effects_instrument_vol, 0, 100, initial(snd_effects_instrument_vol))
 	snd_notifications_vol = sanitize_integer(snd_notifications_vol, 0, 100, initial(snd_notifications_vol))
 	snd_admin_vol = sanitize_integer(snd_admin_vol, 0, 100, initial(snd_admin_vol))
 	snd_jukebox_vol = sanitize_integer(snd_jukebox_vol, 0, 100, initial(snd_jukebox_vol))
@@ -223,8 +223,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["snd_ambient_vol"]					<< snd_ambient_vol
 	S["snd_effects_master_vol"]				<< snd_effects_master_vol
 	S["snd_effects_voice_announcement_vol"]	<< snd_effects_voice_announcement_vol
-	S["snd_instruments_vol"]				<< snd_instruments_vol
 	S["snd_effects_misc_vol"]				<< snd_effects_misc_vol
+	S["snd_effects_instrument_vol"]			<< snd_effects_instrument_vol
 	S["snd_notifications_vol"]				<< snd_notifications_vol
 	S["snd_admin_vol"]						<< snd_admin_vol
 	S["snd_jukebox_vol"]					<< snd_jukebox_vol

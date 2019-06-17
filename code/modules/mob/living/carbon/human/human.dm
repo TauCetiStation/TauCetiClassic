@@ -1162,7 +1162,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(!src.xylophone)
 		visible_message("\red [src] begins playing his ribcage like a xylophone. It's quite spooky.","\blue You begin to play a spooky refrain on your ribcage.","\red You hear a spooky xylophone melody.")
 		var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg')
-		playsound(src, song, VOL_INSTRUMENTS)
+		playsound(src, song, VOL_EFFECTS_INSTRUMENT)
 		xylophone = 1
 		spawn(1200)
 			xylophone=0
