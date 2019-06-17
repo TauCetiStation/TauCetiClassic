@@ -45,7 +45,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	//sound volume preferences
 	var/snd_music_vol = 100
 	var/snd_ambient_vol = 100
-	var/snd_effects_vol = 100
+	var/snd_effects_master_vol = 100
 	var/snd_voice_vol = 100
 	var/snd_misc_vol = 100
 	var/snd_instruments_vol = 100

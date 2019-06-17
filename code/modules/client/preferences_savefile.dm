@@ -143,7 +143,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Sound preferences
 	S["snd_music_vol"]			>> snd_music_vol
 	S["snd_ambient_vol"]		>> snd_ambient_vol
-	S["snd_effects_vol"]		>> snd_effects_vol
+	S["snd_effects_master_vol"]	>> snd_effects_master_vol
 	S["snd_voice_vol"]			>> snd_voice_vol
 	S["snd_misc_vol"]			>> snd_misc_vol
 	S["snd_instruments_vol"]	>> snd_instruments_vol
@@ -177,7 +177,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	snd_music_vol = sanitize_integer(snd_music_vol, 0, 100, initial(snd_music_vol))
 	snd_ambient_vol = sanitize_integer(snd_ambient_vol, 0, 100, initial(snd_ambient_vol))
-	snd_effects_vol = sanitize_integer(snd_effects_vol, 0, 100, initial(snd_effects_vol))
+	snd_effects_master_vol = sanitize_integer(snd_effects_master_vol, 0, 100, initial(snd_effects_master_vol))
 	snd_voice_vol = sanitize_integer(snd_voice_vol, 0, 100, initial(snd_voice_vol))
 	snd_misc_vol = sanitize_integer(snd_misc_vol, 0, 100, initial(snd_misc_vol))
 	snd_instruments_vol = sanitize_integer(snd_instruments_vol, 0, 100, initial(snd_instruments_vol))
@@ -221,7 +221,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Sound preferences
 	S["snd_music_vol"]			<< snd_music_vol
 	S["snd_ambient_vol"]		<< snd_ambient_vol
-	S["snd_effects_vol"]		<< snd_effects_vol
+	S["snd_effects_master_vol"]	<< snd_effects_master_vol
 	S["snd_voice_vol"]			<< snd_voice_vol
 	S["snd_misc_vol"]			<< snd_misc_vol
 	S["snd_instruments_vol"]	<< snd_instruments_vol

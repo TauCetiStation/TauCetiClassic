@@ -169,7 +169,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	else if(volume_channel & VOL_AMBIENT)
 		. = prefs.snd_ambient_vol
 	else if(volume_channel & VOL_EFFECTS_MASTER)
-		. = prefs.snd_effects_vol
+		. = prefs.snd_effects_master_vol
 		switch(volume_channel) // now for sub categories
 			if(VOL_VOICE)
 				. *= prefs.snd_voice_vol * 0.01
@@ -201,7 +201,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			mob.playsound_music_update_volume(volume_channel, CHANNEL_AMBIENT)
 			mob.playsound_music_update_volume(volume_channel, CHANNEL_AMBIENT_SUB)
 		if(VOL_EFFECTS_MASTER)
-			prefs.snd_effects_vol = vol
+			prefs.snd_effects_master_vol = vol
 		if(VOL_VOICE)
 			prefs.snd_voice_vol = vol
 		if(VOL_MISC)
@@ -452,7 +452,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	var/list/prefs_vol_values = list(
 		"[VOL_MUSIC]" = prefs.snd_music_vol,
 		"[VOL_AMBIENT]" = prefs.snd_ambient_vol,
-		"[VOL_EFFECTS_MASTER]" = prefs.snd_effects_vol,
+		"[VOL_EFFECTS_MASTER]" = prefs.snd_effects_master_vol,
 		"[VOL_VOICE]" = prefs.snd_voice_vol,
 		"[VOL_MISC]" = prefs.snd_misc_vol,
 		"[VOL_INSTRUMENTS]" = prefs.snd_instruments_vol,
