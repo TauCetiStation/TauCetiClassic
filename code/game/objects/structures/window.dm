@@ -242,12 +242,14 @@
 			update_nearby_icons()
 			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			to_chat(user, (anchored ? "<span class='notice'>You have fastened the frame to the floor.</span>" : "<span class='notice'>You have unfastened the frame from the floor.</span>"))
+			fastened_change()
 
 		else if(!reinf)
 			anchored = !anchored
 			update_nearby_icons()
 			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			to_chat(user, (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>"))
+			fastened_change()
 
 	else if(iscrowbar(W) && reinf && state <= 1)
 		state = 1 - state
@@ -301,10 +303,14 @@
 			if(health <= 7)
 				anchored = 0
 				update_nearby_icons()
+				fastened_change()
 				step(src, get_dir(user, src))
 		else
 			playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		..()
+
+/obj/structure/window/proc/fastened_change()
+	return
 
 //painter
 /obj/structure/window/proc/change_paintjob(obj/item/C, mob/user)
@@ -535,10 +541,16 @@
 /obj/structure/window/reinforced/polarized/proc/toggle()
 	if(opacity)
 		icon_state = "fwindow"
+		basestate = "fwindow"
 		set_opacity(0)
 	else
 		icon_state = "twindowold"
+		basestate = "twindowold"
 		set_opacity(1)
+
+/obj/structure/window/reinforced/polarized/fastened_change()
+	if(opacity && !anchored)
+		toggle()
 
 /obj/machinery/windowtint/attack_hand(mob/user as mob)
 	if(..())
@@ -553,7 +565,7 @@
 	update_icon()
 
 	for(var/obj/structure/window/reinforced/polarized/W in range(src,range))
-		if (W.id == src.id || !W.id)
+		if ((W.id == src.id || !W.id) && W.anchored)
 			W.toggle()
 
 /obj/machinery/windowtint/power_change()
