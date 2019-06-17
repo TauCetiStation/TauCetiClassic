@@ -31,7 +31,7 @@ var/list/escape_area_transit = typecacheof(list(/area/shuttle/escape/transit,
 				if((sound == "emer_shut_left" || sound == "crew_shut_left") && IS_ON_ESCAPE_SHUTTLE)
 					continue
 
-				M.playsound_local(null, announce_sound, VOL_VOICE, null, FALSE, channel = CHANNEL_ANNOUNCE, wait = TRUE)
+				M.playsound_local(null, announce_sound, VOL_EFFECTS_VOICE_ANNOUNCEMENT, null, FALSE, channel = CHANNEL_ANNOUNCE, wait = TRUE)
 
 #undef IS_ON_ESCPAE_SHUTTLE
 

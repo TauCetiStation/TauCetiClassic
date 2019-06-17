@@ -236,7 +236,7 @@ var/datum/subsystem/ticker/ticker
 
 	to_chat(world, "<FONT color='blue'><B>Enjoy the game!</B></FONT>")
 	for(var/mob/M in player_list)
-		M.playsound_local(null, 'sound/AI/enjoyyourstay.ogg', VOL_VOICE, vary = FALSE, ignore_environment = TRUE)
+		M.playsound_local(null, 'sound/AI/enjoyyourstay.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, ignore_environment = TRUE)
 
 	//Holiday Round-start stuff	~Carn
 	Holiday_Game_Start()
