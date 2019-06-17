@@ -607,11 +607,11 @@
 	update_inv_mob()
 
 /obj/item/clothing/head/helmet/chameleon_helmet/verb/change()
-	set name = "Change Hat/Helmet Appearance"
+	set name = "Change Helmet/Helmet Appearance"
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select headwear to change it to", "Chameleon Hat")as null|anything in clothing_choices
+	var/picked = input("Select helmet to change it to", "Chameleon Helmet")as null|anything in clothing_choices
 	if(!picked || !clothing_choices[picked])
 		return
 	var/newtype = clothing_choices[picked]
