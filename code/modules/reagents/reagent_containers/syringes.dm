@@ -228,28 +228,27 @@
 	if(mode == SYRINGE_BROKEN)
 		icon_state = "broken"
 		overlays.Cut()
-		underlays.Cut()
 		return
-	var/rounded_vol = min(15, round(reagents.total_volume, 5))
-	if(!(rounded_vol in list(0, 5, 10, 15)))
-		rounded_vol = 0
+	var/rounded_vol = round(reagents.total_volume,5)
 	overlays.Cut()
-	underlays.Cut()
 	if(ismob(loc))
 		var/injoverlay
 		switch(mode)
-			if(SYRINGE_DRAW)
+			if (SYRINGE_DRAW)
 				injoverlay = "draw"
-			if(SYRINGE_INJECT)
+			if (SYRINGE_INJECT)
 				injoverlay = "inject"
 		overlays += injoverlay
 	icon_state = "[rounded_vol]"
 	item_state = "syringe_[rounded_vol]"
 
 	if(reagents.total_volume)
-		var/mutable_appearance/filling = mutable_appearance(icon = 'icons/obj/reagentfillings.dmi', icon_state = "syringe[rounded_vol]")
+		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "syringe10")
+
+		filling.icon_state = "syringe[rounded_vol]"
+
 		filling.icon += mix_color_from_reagents(reagents.reagent_list)
-		underlays += filling
+		overlays += filling
 
 /obj/item/weapon/reagent_containers/syringe/proc/infect_limb(mob/living/carbon/user, mob/living/carbon/target)
 	if(ishuman(target))
@@ -363,31 +362,18 @@
 
 
 /obj/item/weapon/reagent_containers/ld50_syringe/update_icon()
-	if(mode == SYRINGE_BROKEN)
-		icon_state = "broken"
-		overlays.Cut()
-		underlays.Cut()
-		return
-	var/rounded_vol = min(15, round(reagents.total_volume, 5))
-	if(!(rounded_vol in list(0, 5, 10, 15)))
-		rounded_vol = 0
-	overlays.Cut()
-	underlays.Cut()
+	var/rounded_vol = round(reagents.total_volume,50)
 	if(ismob(loc))
-		var/injoverlay
+		var/mode_t
 		switch(mode)
-			if(SYRINGE_DRAW)
-				injoverlay = "draw"
-			if(SYRINGE_INJECT)
-				injoverlay = "inject"
-		overlays += injoverlay
-	icon_state = "[rounded_vol]"
+			if (SYRINGE_DRAW)
+				mode_t = "d"
+			if (SYRINGE_INJECT)
+				mode_t = "i"
+		icon_state = "[mode_t][rounded_vol]"
+	else
+		icon_state = "[rounded_vol]"
 	item_state = "syringe_[rounded_vol]"
-
-	if(reagents.total_volume)
-		var/mutable_appearance/filling = mutable_appearance(icon = 'icons/obj/reagentfillings.dmi', icon_state = "syringe[rounded_vol]")
-		filling.icon += mix_color_from_reagents(reagents.reagent_list)
-		underlays += filling
 
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -39,6 +39,7 @@ var/list/airlock_overlays = list()
 	var/shockedby = list()
 	var/close_timer_id = null
 	var/datum/wires/airlock/wires = null
+	var/denying = FALSE
 
 	var/inner_material = null //material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
@@ -353,11 +354,14 @@ var/list/airlock_overlays = list()
 		if("closing")
 			update_icon(AIRLOCK_CLOSING)
 		if("deny")
-			update_icon(AIRLOCK_DENY)
-			playsound(src, door_deni_sound, 40, 0, 3)
-			sleep(6)
-			update_icon(AIRLOCK_CLOSED)
-			icon_state = "closed"
+			if(deny_animation_check())
+				denying = TRUE
+				update_icon(AIRLOCK_DENY)
+				playsound(src, door_deni_sound, 40, 0, 3)
+				sleep(6)
+				update_icon(AIRLOCK_CLOSED)
+				icon_state = "closed"
+				denying = FALSE
 
 /obj/machinery/door/airlock/attack_ghost(mob/user)
 	//Separate interface for ghosts.
@@ -1010,6 +1014,11 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/normal_close_checks()
 	if(hasPower() && !isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+		return TRUE
+	return FALSE
+
+/obj/machinery/door/airlock/proc/deny_animation_check()
+	if(!denying && !welded && !locked && hasPower() && !isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
 		return TRUE
 	return FALSE
 

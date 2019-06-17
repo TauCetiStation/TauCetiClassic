@@ -145,15 +145,17 @@
 //Announces the end of the game with all relavent information stated//
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/rp_revolution/declare_completion()
-	completion_text += "<B>RP-revolution mode resume:</B><BR>"
+	completion_text += "<h3>RP-revolution mode resume:</h3>"
 	if(!config.objectives_disabled)
 		if(finished == 1)
-			feedback_set_details("round_end_result","win - heads overthrown")
-			completion_text += "<FONT size=3, color='red'><B>The heads of staff were overthrown! The revolutionaries win!</B></FONT>"
+			mode_result = "win - heads overthrown"
+			feedback_set_details("round_end_result",mode_result)
+			completion_text += "<span style='color: red; font-weight: bold;'>The heads of staff were overthrown! The revolutionaries win!</span>"
 			score["traitorswon"]++
 		else if(finished == 2)
-			feedback_set_details("round_end_result","loss - revolution stopped")
-			completion_text += "<FONT size=3, color='red'><B>The heads of staff managed to stop the revolution!</B></FONT>"
+			mode_result = "loss - revolution stopped"
+			feedback_set_details("round_end_result",mode_result)
+			completion_text += "<span style='color: red; font-weight: bold;'>The heads of staff managed to stop the revolution!</span>"
 	..()
 	return 1
 
@@ -250,9 +252,8 @@
 
 			comm.messagetitle.Add("Cent. Com. Announcement")
 			comm.messagetext.Add(message)
-	for(var/mob/M in player_list)
-		if(!isnewplayer(M))
-			M.playsound_local(null, 'sound/AI/commandreport.ogg', 70, channel = CHANNEL_ANNOUNCE, wait = 1, is_global = 1)
+
+	station_announce(sound = "commandreport")
 
 /datum/game_mode/revolution/rp_revolution/latespawn(mob/M)
 	if(M.mind.assigned_role in command_positions)

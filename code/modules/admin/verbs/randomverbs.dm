@@ -668,9 +668,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			command_alert(input, customname);
 		if("No")
 			to_chat(world, "\red New NanoTrasen Update available at all communication consoles.")
-			for(var/mob/M in player_list)
-				if(!isnewplayer(M))
-					M.playsound_local(null, 'sound/AI/commandreport.ogg', 70, channel = CHANNEL_ANNOUNCE, wait = 1, is_global = 1)
+			station_announce(sound = "commandreport")
 
 	log_admin("[key_name(src)] has created a command report: [input]")
 	message_admins("[key_name_admin(src)] has created a command report")
@@ -1108,9 +1106,16 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	send_fax(usr, P, department)
 
+	add_communication_log(type = "fax-centcomm", title = sent_name, author = "Centcomm Officer", content = P.info + "\n" + P.stamp_text)
+
 	feedback_add_details("admin_verb","FAXMESS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	message_admins("Fax message was created by [key_name_admin(usr)] and sent to [department]")
-	send2slack_custommsg("Fax message was created by [key_name_admin(usr)] and sent to [department]: [sent_text]")
+	world.send2bridge(
+		type = list(BRIDGE_ADMINCOM),
+		attachment_title = ":fax: Fax message was created by **[key_name_admin(usr)]** and sent to ***[department]***",
+		attachment_msg = sent_text,
+		attachment_color = BRIDGE_COLOR_ADMINCOM,
+	)
 
 /client/proc/add_player_age()
 	set category = "Server"

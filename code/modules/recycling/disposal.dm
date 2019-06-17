@@ -124,10 +124,17 @@
 				for (var/mob/C in viewers(src))
 					C.show_message("<span class='danger'>[GM.name] has been placed in the [src] by [user].</span>", 3)
 				qdel(G)
-				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Has placed [GM.name] ([GM.ckey]) in disposals.</font>")
-				GM.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [usr.name] ([usr.ckey])</font>")
-				msg_admin_attack("[usr.name] ([usr.ckey]) placed [GM.name] ([GM.ckey]) in a disposals unit. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
+				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Has placed [GM.name] ([GM.ckey]) in disposals.</font>"
+				GM.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [usr.name] ([usr.ckey])</font>"
+				msg_admin_attack("[usr.name] ([usr.ckey]) placed [GM.name] ([GM.ckey]) in a disposals unit. [ADMIN_JMP(usr)]")
 		return
+
+
+	if(istype(I, /obj/item/weapon/holder))
+		for(var/mob/holdermob in I.contents)
+			usr.attack_log += "\[[time_stamp()]\] <font color='red'>Has placed [holdermob.name] ([holdermob.ckey]) in disposals.</font>"
+			holdermob.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [usr.name] ([usr.ckey])</font>"
+			msg_admin_attack("[usr.name] ([usr.ckey]) placed [holdermob.name] ([holdermob.ckey]) in a disposals unit [ADMIN_JMP(usr)]")
 
 	if(!I || !I.canremove || I.flags & NODROP)
 		return
@@ -177,9 +184,9 @@
 		msg = "<span class='danger'>[user.name] stuffs [target.name] into the [src]!</span>"
 		to_chat(user, "<span class='red'>You stuff [target.name] into the [src]!</span>")
 
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has placed [target.name] ([target.ckey]) in disposals.</font>")
-		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) placed [target.name] ([target.ckey]) in a disposals unit. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		user.attack_log += "\[[time_stamp()]\] <font color='red'>Has placed [target.name] ([target.ckey]) in disposals.</font>"
+		target.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>"
+		msg_admin_attack("[user.name] ([user.ckey]) placed [target.name] ([target.ckey]) in a disposals unit. [ADMIN_JMP(usr)]")
 	else
 		return
 

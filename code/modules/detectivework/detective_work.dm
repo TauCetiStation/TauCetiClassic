@@ -54,6 +54,8 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 /obj/machinery/computer/forensic_scanning
 	name = "\improper High-Res Forensic Scanning Computer"
 	icon_state = "forensic"
+	state_broken_preset = "securityb"
+	state_nopower_preset = "security0"
 	light_color = "#a91515"
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/scanning
@@ -614,6 +616,9 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 	return
 
 /obj/machinery/computer/forensic_scanning/detective
-	icon_state = "library"
+	icon_state = "computer_old"
+	req_access = null
 	name = "PowerScan Mk.I"
 	light_color = "#3550b6"
+	state_broken_preset = null
+	state_nopower_preset = null

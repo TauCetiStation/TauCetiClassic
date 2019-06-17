@@ -460,7 +460,7 @@ var/bomb_set
 					blackbox.save_all_data_to_sql()
 				sleep(450)
 				log_game("Rebooting due to nuclear detonation")
-				world.Reboot()
+				world.Reboot(end_state = "nuke - unhandled ending")
 				return
 	return
 

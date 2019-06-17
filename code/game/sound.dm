@@ -43,7 +43,7 @@ var/const/FALLOFF_SOUNDS = 0.5
 /mob/proc/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global, wait = 0, voluminosity = TRUE)
 	if(!src.client || ear_deaf > 0)
 		return FALSE
-	soundin = get_sfx(soundin)
+	soundin = get_sfx(soundin) //todo: it is very stupid that we search this sound in sfx every time for every player TWICE, and from start soundin may already be path to sound file...
 
 	var/sound/S = sound(soundin)
 	//S.wait = 0 //No queue
@@ -128,7 +128,7 @@ var/const/FALLOFF_SOUNDS = 0.5
 
 /proc/get_sfx(soundin)
 	if(istext(soundin))
-		switch(soundin) // Note. All lists of sounds of automatic AI announcements are located in *command_alert.dm*, *captain_announce.dm* and *security_levels.dm* files
+		switch(soundin)
 			if ("shatter")
 				soundin = pick('sound/effects/glassbr1.ogg','sound/effects/glassbr2.ogg','sound/effects/glassbr3.ogg')
 			if ("explosion")
@@ -182,3 +182,109 @@ var/const/FALLOFF_SOUNDS = 0.5
 			if ("pda")
 				soundin = pick('sound/machines/keyboard/pda1.ogg', 'sound/machines/keyboard/pda2.ogg', 'sound/machines/keyboard/pda3.ogg', 'sound/machines/keyboard/pda4.ogg', 'sound/machines/keyboard/pda5.ogg')
 	return soundin
+
+/proc/get_announce_sound(soundin)
+	if(istext(soundin))
+		switch(soundin)
+			if("downtogreen")
+				. = 'sound/AI/downtogreen.ogg'
+			if("blue")
+				. = 'sound/AI/blue.ogg'
+			if("downtoblue")
+				. = 'sound/AI/downtoblue.ogg'
+			if("red")
+				. = 'sound/AI/red.ogg'
+			if("downtored")
+				. = 'sound/AI/downtored.ogg'
+			if("radpassed")
+				. = 'sound/AI/radpassed.ogg'
+			if("radiation")
+				. = pick('sound/AI/radiation1.ogg', 'sound/AI/radiation2.ogg', 'sound/AI/radiation3.ogg')
+			if("noert")
+				. = 'sound/AI/noert.ogg'
+			if("yesert")
+				. = 'sound/AI/yesert.ogg'
+			if("meteors")
+				. = pick('sound/AI/meteors1.ogg', 'sound/AI/meteors2.ogg')
+			if("meteorcleared")
+				. = 'sound/AI/meteorcleared.ogg'
+			if("gravanom")
+				. = 'sound/AI/gravanomalies.ogg'
+			if("fluxanom")
+				. = 'sound/AI/flux.ogg'
+			if("vortexanom")
+				. = 'sound/AI/vortex.ogg'
+			if("bluspaceanom")
+				. = 'sound/AI/blusp_anomalies.ogg'
+			if("pyroanom")
+				. = 'sound/AI/pyr_anomalies.ogg'
+			if("wormholes")
+				. = 'sound/AI/wormholes.ogg'
+			if("outbreak7")
+				. = 'sound/AI/outbreak7.ogg'
+			if("outbreak5")
+				. = pick('sound/AI/outbreak5_1.ogg', 'sound/AI/outbreak5_2.ogg')
+			if("lifesigns")
+				. = pick('sound/AI/lifesigns1.ogg', 'sound/AI/lifesigns2.ogg', 'sound/AI/lifesigns3.ogg')
+			if("greytide")
+				. = 'sound/AI/greytide.ogg'
+			if("rampbrand")
+				. = 'sound/AI/rampant_brand_int.ogg'
+			if("carps")
+				. = 'sound/AI/carps.ogg'
+			if("estorm")
+				. = 'sound/AI/e-storm.ogg'
+			if("istorm")
+				. = 'sound/AI/i-storm.ogg'
+			if("poweroff")
+				. = pick('sound/AI/poweroff1.ogg', 'sound/AI/poweroff2.ogg')
+			if("poweron")
+				. = 'sound/AI/poweron.ogg'
+			if("gravoff")
+				. = 'sound/AI/gravityoff.ogg'
+			if("gravon")
+				. = 'sound/AI/gravityon.ogg'
+			if("artillery")
+				. = 'sound/AI/artillery.ogg'
+			if("icaruslost")
+				. = 'sound/AI/icarus.ogg'
+			if("fungi")
+				. = 'sound/AI/fungi.ogg'
+			if("emer_shut_called")
+				. = 'sound/AI/emergency_s_called.ogg'
+			if("emer_shut_recalled")
+				. = 'sound/AI/emergency_s_recalled.ogg'
+			if("emer_shut_docked")
+				. = 'sound/AI/emergency_s_docked.ogg'
+			if("emer_shut_left")
+				. = 'sound/AI/emergency_s_left.ogg'
+			if("crew_shut_called")
+				. = 'sound/AI/crew_s_called.ogg'
+			if("crew_shut_recalled")
+				. = 'sound/AI/crew_s_recalled.ogg'
+			if("crew_shut_docked")
+				. = 'sound/AI/crew_s_docked.ogg'
+			if("crew_shut_left")
+				. = 'sound/AI/crew_s_left.ogg'
+			if("malf")
+				. = 'sound/AI/aimalf.ogg'
+			if("malf1")
+				. = 'sound/AI/ai_malf_1.ogg'
+			if("malf2")
+				. = 'sound/AI/ai_malf_2.ogg'
+			if("malf3")
+				. = 'sound/AI/ai_malf_3.ogg'
+			if("malf4")
+				. = 'sound/AI/ai_malf_4.ogg'
+			if("aiannounce")
+				. = 'sound/AI/aiannounce.ogg'
+			if("nuke")
+				. = 'sound/AI/nuke.ogg'
+			if("animes")
+				. = 'sound/AI/animes.ogg'
+			if("announce")
+				. = 'sound/AI/announce.ogg'
+			if("commandreport")
+				. = 'sound/AI/commandreport.ogg'
+	if(!.)
+		WARNING("No sound file for [soundin]")
