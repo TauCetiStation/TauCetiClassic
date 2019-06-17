@@ -375,6 +375,7 @@ var/list/wood_icons = list("wood","wood-broken")
 
 	if(!floor_type)
 		return
+	name = "plating"
 	icon_plating = "plating"
 	set_light(0)
 	floor_type = null
@@ -567,6 +568,7 @@ var/list/wood_icons = list("wood","wood-broken")
 				var/obj/item/stack/tile/T = C
 				floor_type = T.type
 				icon = initial(T.turf_type.icon)
+				name = initial(T.turf_type.name)
 				if(!T.use(1))
 					return
 				intact = 1
