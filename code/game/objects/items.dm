@@ -794,7 +794,7 @@
 
 // A check called by tool_start_check once, and by use_tool on every tick of delay.
 /obj/item/proc/tool_use_check(mob/living/user, amount)
-	return !amount
+	return TRUE
 
 // Plays item's usesound, if any.
 /obj/item/proc/play_tool_sound(atom/target, volume=null) // null, so default value of this proc won't override default value of the playsound.
