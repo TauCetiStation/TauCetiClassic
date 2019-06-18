@@ -540,7 +540,7 @@
 			gulp_size = volume/10
 			..()
 			return
-	if(volume)
+	if(reagents.total_volume)
 		if(!CanEat(user, target, src, "drink"))
 			return
 		..()
