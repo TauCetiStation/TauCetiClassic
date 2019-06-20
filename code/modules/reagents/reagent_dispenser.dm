@@ -287,3 +287,18 @@
 /obj/structure/reagent_dispensers/acid/atom_init()
 	. = ..()
 	reagents.add_reagent("sacid", 1000)
+
+/obj/structure/reagent_dispensers/kvasstank
+	name = "KBAC"
+	desc = "A cool refreshing drink with a taste of socialism."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "kvasstank"
+	amount_per_transfer_from_this = 10
+
+/obj/structure/reagent_dispensers/beerkeg/atom_init()
+	. = ..()
+	reagents.add_reagent("beer",1000)
+
+/obj/structure/reagent_dispensers/beerkeg/blob_act()
+	explosion(src.loc,0,3,5,7,10)
+	qdel(src)
