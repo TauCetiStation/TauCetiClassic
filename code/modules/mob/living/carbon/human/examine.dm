@@ -413,8 +413,10 @@
 	if(display_gloves)
 		msg += "<span class='warning'><b>[src] has blood running from under [t_his] gloves!</b></span>\n"
 
-	for(var/implant in get_visible_implants(1))
-		msg += "<span class='warning'><b>[src] has \a [implant] sticking out of their flesh!</b></span>\n"
+	for(var/obj/item/organ/external/BP in bodyparts)
+		for(var/obj/item/weapon/O in BP.implants)
+			if(!istype(O,/obj/item/weapon/implant) && O.w_class > ITEM_SIZE_TINY)
+				msg += "<span class='warning'><b>[src] has \a [O] sticking out of their [BP.name]!</b></span>\n"
 	if(digitalcamo)
 		msg += "<span class='warning'>[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.</span>\n"
 	if(mind && mind.changeling && mind.changeling.isabsorbing)
