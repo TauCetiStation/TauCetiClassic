@@ -293,7 +293,8 @@
 	desc = "A cool refreshing drink with a taste of socialism."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "kvasstank"
-	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(25,60,100)
+	amount_per_transfer_from_this = 25
 
 /obj/structure/reagent_dispensers/kvasstank/atom_init()
 	. = ..()
