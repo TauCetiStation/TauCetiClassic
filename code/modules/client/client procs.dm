@@ -9,6 +9,8 @@ var/list/blacklisted_builds = list(
 	"1408" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
 	"1428" = "bug causing right-click menus to show too many verbs that's been fixed in version 1429",
 	"1434" = "bug turf images weren't reapplied properly when moving around the map",
+	"1468" = "bug with screen-loc mouse parameter (x and y axis were switched) and several mouse hit problems",
+	"1469" = "bug with screen-loc mouse parameter (x and y axis were switched) and several mouse hit problems"
 	)
 
 	/*
@@ -91,6 +93,7 @@ var/list/blacklisted_builds = list(
 		if("usr")		hsrc = mob
 		if("prefs")		return prefs.process_link(usr,href_list)
 		if("vars")		return view_var_Topic(href,href_list,hsrc)
+		if("updateVolume")	return update_volume(href_list)
 
 	switch(href_list["action"])
 		if ("openLink")
@@ -189,6 +192,8 @@ var/list/blacklisted_builds = list(
 
 	prefs.save_preferences()
 
+	prefs_ready = TRUE // if moved below parent call, Login feature with lobby music will be broken and maybe anything else.
+
 	. = ..()	//calls mob.Login()
 	spawn() // Goonchat does some non-instant checks in start()
 		chatOutput.start()
@@ -265,7 +270,6 @@ var/list/blacklisted_builds = list(
 		to_chat(src, "<span class='warning'>Unable to access asset cache browser, \
 		if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. \
 		This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
-
 
 	//////////////
 	//DISCONNECT//
@@ -389,7 +393,13 @@ var/list/blacklisted_builds = list(
 
 			if (!cidcheck_failedckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a cid randomizer. Connection rejected.</span>")
-				send2slack_logs(key_name(src), "has been detected as using a cid randomizer. Connection rejected.", "(CidRandomizer)")
+				world.send2bridge(
+					type = list(BRIDGE_ADMINLOG),
+					attachment_title = "Cid Randomizer",
+					attachment_msg = "**[key_name(src)]** has been detected as using a cid randomizer. Connection rejected.",
+					attachment_color = BRIDGE_COLOR_ADMINLOG,
+				)
+
 				cidcheck_failedckeys[ckey] = TRUE
 				notes_add(ckey, "Detected as using a cid randomizer.")
 
@@ -400,7 +410,12 @@ var/list/blacklisted_builds = list(
 		else
 			if (cidcheck_failedckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after showing they removed their cid randomizer</span>")
-				send2slack_logs(key_name(src), "has been allowed to connect after showing they removed their cid randomizer.", "(CidRandomizer)")
+				world.send2bridge(
+					type = list(BRIDGE_ADMINLOG),
+					attachment_title = "Cid Randomizer",
+					attachment_msg = "**[key_name(src)]** has been allowed to connect after showing they removed their cid randomizer",
+					attachment_color = BRIDGE_COLOR_ADMINLOG,
+				)
 				cidcheck_failedckeys -= ckey
 			if (cidcheck_spoofckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after appearing to have attempted to spoof a cid randomizer check because it <i>appears</i> they aren't spoofing one this time</span>")
@@ -447,7 +462,7 @@ var/list/blacklisted_builds = list(
 		return
 
 	var/sql_ckey = sanitize_sql(src.ckey)
-	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[player_ingame_age]' WHERE ckey = '[sql_ckey]'")
+	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[player_ingame_age]' WHERE ckey = '[sql_ckey]' AND cast(ingameage as integer) < [player_ingame_age]")
 	query_update.Execute()
 
 #undef TOPIC_SPAM_DELAY

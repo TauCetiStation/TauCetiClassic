@@ -1,38 +1,39 @@
 
 var/global/normal_ooc_colour = "#002eb8"
+var/global/bridge_ooc_colour = "#7b804f"
 
 /client/verb/ooc(msg as text)
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "\red Speech is currently admin-disabled.")
+		to_chat(usr, "<span class='red'>Speech is currently admin-disabled.</span>")
 		return
 
-	if(!mob)	return
+	if(!mob || !msg)
+		return
 
-	msg = sanitize(msg)
 	if(!msg)	return
 
 	if(!(prefs.chat_toggles & CHAT_OOC))
-		to_chat(src, "\red You have OOC muted.")
+		to_chat(src, "<span class='red'>You have OOC muted.</span>")
 		return
 
 	if(prefs.muted & MUTE_OOC)
-		to_chat(src, "\red You cannot use OOC (muted).")
+		to_chat(src, "<span class='red'>You cannot use OOC (muted).</span>")
 		return
 
 	if(!holder)
 		if(!ooc_allowed)
-			to_chat(src, "\red OOC is globally muted")
+			to_chat(src, "<span class='red'>OOC is globally muted</span>")
 			return
 		if(!dooc_allowed && (mob.stat == DEAD))
-			to_chat(usr, "\red OOC for dead mobs has been turned off.")
+			to_chat(usr, "<span class='red'>OOC for dead mobs has been turned off.</span>")
 			return
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
 		if(findtext(msg, "byond://"))
-			to_chat(src, "<B>Advertising other servers is not allowed.</B>")
+			to_chat(src, "<b>Advertising other servers is not allowed.</b>")
 			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
@@ -40,6 +41,8 @@ var/global/normal_ooc_colour = "#002eb8"
 	log_ooc("[mob.name]/[key] : [msg]")
 
 	var/display_colour = normal_ooc_colour
+	var/display_name = key
+
 	if(holder && !holder.fakekey)
 		display_colour = "#704f80"
 		if(holder.rights & R_DEBUG && !(holder.rights & R_ADMIN))
@@ -50,36 +53,40 @@ var/global/normal_ooc_colour = "#002eb8"
 			else
 				display_colour = "#b82e00"	//orange
 
+	send2ooc(msg, display_name, display_colour, src)
+
+	world.send2bridge(
+		type = list(BRIDGE_OOC),
+		attachment_msg = "OOC: **[(holder && holder.fakekey)? holder.fakekey : display_name ]**: [msg]",
+		attachment_color = (supporter && prefs.ooccolor) ? prefs.ooccolor : display_colour,
+	)
+
+/proc/send2ooc(msg, name, colour, client/sender)
+	msg = sanitize(msg)
+
+	if(!msg)
+		return
+
+	if(sender)
+		log_ooc("[sender.mob.name]/[sender.key] : [msg]")
+	else
+		log_ooc("[name]: [msg]")
+
 	for(var/client/C in clients)
-		if(C.prefs.chat_toggles & CHAT_OOC)
-			var/display_name = src.key
-			if(holder)
-				if(holder.fakekey)
-					if(C.holder)
-						display_name = "[holder.fakekey]/([src.key])"
-					else
-						display_name = holder.fakekey
+		var/display_name = name
 
-			if(supporter && prefs.ooccolor)
-				display_name = "<span style='color: [prefs.ooccolor]'>[display_name]</span>"
+		if(sender)
+			if(sender.supporter && sender.prefs.ooccolor)
+				display_name = "<span style='color: [sender.prefs.ooccolor]'>[display_name]</span>"
 
-			to_chat(C, "<font color='[display_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[display_name]:</EM> <span class='message emojify linkify'>[msg]</span></span></font>")
-
-			/*
-			if(holder)
-				if(!holder.fakekey || C.holder)
-					if(holder.rights & R_ADMIN)
-						to_chat(C, "<font color=[config.allow_admin_ooccolor ? src.prefs.ooccolor :"#b82e00" ]><b><span class='prefix'>OOC:</span> <EM>[key][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>")
-					else if(holder.rights & R_MOD)
-						to_chat(C, "<font color=#184880><b><span class='prefix'>OOC:</span> <EM>[src.key][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>")
-					else
-						to_chat(C, "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.key]:</EM> <span class='message'>[msg]</span></span></font>")
-
+			if(sender.holder && sender.holder.fakekey)
+				if(C.holder)
+					display_name = "[sender.holder.fakekey]/([sender.key])"
 				else
-					to_chat(C, "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : src.key]:</EM> <span class='message'>[msg]</span></span></font>")
-			else
-				to_chat(C, "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.key]:</EM> <span class='message'>[msg]</span></span></font>")
-			*/
+					display_name = sender.holder.fakekey
+
+		if(C.prefs.chat_toggles & CHAT_OOC)
+			to_chat(C, "<font color='[colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[display_name]:</EM> <span class='message emojify linkify'>[msg]</span></span></font>")
 
 /client/proc/set_global_ooc(newColor as color)
 	set name = "Set Global OOC Colour"

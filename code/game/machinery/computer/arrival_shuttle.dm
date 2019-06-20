@@ -126,7 +126,7 @@ var/lastMove = 0
 	for(var/mob/M in A)
 		if(M.client)
 			if(location == 1)
-				M.playsound_local(null, 'sound/effects/shuttle_flying.ogg', 40)
+				M.playsound_local(null, 'sound/effects/shuttle_flying.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			spawn(0)
 				if(M.buckled)
 					shake_camera(M, 2, 1)

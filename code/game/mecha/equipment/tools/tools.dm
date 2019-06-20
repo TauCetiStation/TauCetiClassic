@@ -50,7 +50,7 @@
 				occupant_message("<font color='red'>Not enough room in cargo compartment.</font>")
 		else if(istype(target, /obj/structure/scrap))
 			var/obj/structure/scrap/pile = target
-			playsound(target, 'sound/effects/metal_creaking.ogg', 50, 1)
+			playsound(target, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER)
 			if(do_after_cooldown(pile))
 				occupant_message("<font color='red'>You squeeze the [pile.name] into compact shape.</font>")
 				pile.make_cube()
@@ -246,10 +246,10 @@
 			var/obj/o = target
 			o.reagents.trans_to(src, 200)
 			occupant_message("\blue Extinguisher refilled")
-			playsound(chassis, 'sound/effects/refill.ogg', 50, 1, -6)
+			playsound(chassis, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 		else
 			if(src.reagents.total_volume > 0)
-				playsound(chassis, 'sound/effects/extinguish.ogg', 75, 1, -3)
+				playsound(chassis, 'sound/effects/extinguish.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 				var/direction = get_dir(chassis,target)
 				var/turf/T = get_turf(target)
 				var/turf/T1 = get_step(T,turn(direction, 90))
@@ -321,7 +321,7 @@
 	if(!istype(target, /turf) && !istype(target, /obj/machinery/door/airlock))
 		target = get_turf(target)
 	if(!action_checks(target) || disabled || get_dist(chassis, target)>3) return
-	playsound(chassis, 'sound/machines/click.ogg', 50, 1)
+	playsound(chassis, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 	//meh
 	switch(mode)
 		if(0)
@@ -332,7 +332,7 @@
 					if(disabled) return
 					chassis.spark_system.start()
 					target:ChangeTurf(/turf/simulated/floor/plating)
-					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					chassis.use_power(energy_drain)
 			else if (istype(target, /turf/simulated/floor))
 				occupant_message("Deconstructing [target]...")
@@ -341,7 +341,7 @@
 					if(disabled) return
 					chassis.spark_system.start()
 					target:BreakToBase()
-					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					chassis.use_power(energy_drain)
 			else if (istype(target, /obj/machinery/door/airlock))
 				occupant_message("Deconstructing [target]...")
@@ -350,7 +350,7 @@
 					if(disabled) return
 					chassis.spark_system.start()
 					qdel(target)
-					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					chassis.use_power(energy_drain)
 		if(1)
 			if(istype(target, /turf/space))
@@ -359,7 +359,7 @@
 				if(do_after_cooldown(target))
 					if(disabled) return
 					target:ChangeTurf(/turf/simulated/floor/plating)
-					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					chassis.spark_system.start()
 					chassis.use_power(energy_drain*2)
 			else if(istype(target, /turf/simulated/floor))
@@ -368,7 +368,7 @@
 				if(do_after_cooldown(target))
 					if(disabled) return
 					target:ChangeTurf(/turf/simulated/wall)
-					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					chassis.spark_system.start()
 					chassis.use_power(energy_drain*2)
 		if(2)
@@ -380,8 +380,8 @@
 					chassis.spark_system.start()
 					var/obj/machinery/door/airlock/T = new /obj/machinery/door/airlock(target)
 					T.autoclose = 1
-					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
-					playsound(target, 'sound/effects/sparks2.ogg', 50, 1)
+					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
+					playsound(target, 'sound/effects/sparks2.ogg', VOL_EFFECTS_MASTER)
 					chassis.use_power(energy_drain*2)
 	return
 
@@ -1172,7 +1172,7 @@
 	chassis.opacity = FALSE
 	var/initial_x = chassis.pixel_x
 	var/initial_y = chassis.pixel_y
-	playsound(src, 'sound/effects/drop_start.ogg', 100, 2)
+	playsound(src, 'sound/effects/drop_start.ogg', VOL_EFFECTS_MASTER)
 	chassis.pixel_x = rand(-150, 150)
 	chassis.pixel_y = 500
 	animate(chassis, pixel_y = initial_y, pixel_x = initial_x, time = 20)
@@ -1187,7 +1187,7 @@
 		shake_camera(M, 2, 2)
 	for(var/turf/simulated/floor/T in RANGE_TURFS(1, chassis))
 		T.break_tile_to_plating()
-	playsound(loc, 'sound/effects/drop_land.ogg', 100, 2)
+	playsound(src, 'sound/effects/drop_land.ogg', VOL_EFFECTS_MASTER)
 	chassis.freeze_movement = FALSE
 	chassis.density = TRUE
 	chassis.opacity = TRUE

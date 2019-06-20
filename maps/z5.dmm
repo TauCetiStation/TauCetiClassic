@@ -9860,7 +9860,9 @@
 /turf/simulated/mineral,
 /area/mine/unexplored)
 "uC" = (
-/obj/machinery/computer/rdconsole/mining,
+/obj/machinery/computer/rdconsole/mining{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "delivery";
 	name = "floor"
@@ -10985,7 +10987,9 @@
 /obj/machinery/light_switch{
 	pixel_x = 27
 	},
-/obj/machinery/computer/mech_bay_power_console,
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/mine/eva)
 "wX" = (
@@ -12041,7 +12045,9 @@
 /turf/simulated/floor,
 /area/mine/production)
 "Af" = (
-/obj/machinery/computer/mine_sci_shuttle,
+/obj/machinery/computer/mine_sci_shuttle{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -13065,7 +13071,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/computer/reconstitutor,
+/obj/machinery/computer/reconstitutor{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "greenfull"

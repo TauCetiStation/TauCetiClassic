@@ -39,6 +39,7 @@ var/list/airlock_overlays = list()
 	var/shockedby = list()
 	var/close_timer_id = null
 	var/datum/wires/airlock/wires = null
+	var/denying = FALSE
 
 	var/inner_material = null //material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
@@ -182,14 +183,14 @@ var/list/airlock_overlays = list()
 	if(locked)
 		return
 	locked = 1
-	playsound(src, door_bolt_down_sound, 30, 0, 3)
+	playsound(src, door_bolt_down_sound, VOL_EFFECTS_MASTER, 30, FALSE, 3)
 	update_icon()
 
 /obj/machinery/door/airlock/proc/unbolt()
 	if(!locked)
 		return
 	locked = 0
-	playsound(src, door_bolt_up_sound, 30, 0, 3)
+	playsound(src, door_bolt_up_sound, VOL_EFFECTS_MASTER, 30, FALSE, 3)
 	update_icon()
 
 // shock user with probability prb (if all connections & power are working)
@@ -353,11 +354,14 @@ var/list/airlock_overlays = list()
 		if("closing")
 			update_icon(AIRLOCK_CLOSING)
 		if("deny")
-			update_icon(AIRLOCK_DENY)
-			playsound(src, door_deni_sound, 40, 0, 3)
-			sleep(6)
-			update_icon(AIRLOCK_CLOSED)
-			icon_state = "closed"
+			if(deny_animation_check())
+				denying = TRUE
+				update_icon(AIRLOCK_DENY)
+				playsound(src, door_deni_sound, VOL_EFFECTS_MASTER, 40, FALSE, 3)
+				sleep(6)
+				update_icon(AIRLOCK_CLOSED)
+				icon_state = "closed"
+				denying = FALSE
 
 /obj/machinery/door/airlock/attack_ghost(mob/user)
 	//Separate interface for ghosts.
@@ -548,7 +552,7 @@ var/list/airlock_overlays = list()
 			return
 		else if(!user.is_busy(src))
 			to_chat(user, "<span class='red'>You force your claws between the doors and begin to pry them open...</span>")
-			playsound(src, door_forced_sound, 30, 1, -4)
+			playsound(src, door_forced_sound, VOL_EFFECTS_MASTER, 30, null, -4)
 			if(do_after(user,40, target = src) && src)
 				open(1)
 	return
@@ -623,7 +627,7 @@ var/list/airlock_overlays = list()
 				for(var/mob/living/L in get_step(user,cur_dir))
 					L.adjustBruteLoss(rand(20,60))
 				break
-		playsound(src,'sound/weapons/thudswoosh.ogg', 50, 1)
+		playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("<span class='userdanger'>The [user] forces the [src] open with a bare hands!</span>",\
 				"<span class='userdanger'>You force the [src] open with a bare hands!</span>",\
 				"You hear metal strain, and a door open.")
@@ -634,7 +638,7 @@ var/list/airlock_overlays = list()
 	if(ishuman(user) && prob(40) && density)
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
-			playsound(src, 'sound/effects/bang.ogg', 25, 1)
+			playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				visible_message("<span class='userdanger'> [user] headbutts the airlock.</span>")
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
@@ -864,9 +868,9 @@ var/list/airlock_overlays = list()
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='userdanger'>[user] has punched the [src]!</span>")
-		playsound(loc, 'sound/effects/grillehit.ogg', 50, 1)
+		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 		if(W.use_charge(user) && prob(20))
-			playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 			door_rupture(user)
 		return
 
@@ -1013,6 +1017,11 @@ var/list/airlock_overlays = list()
 		return TRUE
 	return FALSE
 
+/obj/machinery/door/airlock/proc/deny_animation_check()
+	if(!denying && !welded && !locked && hasPower() && !isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+		return TRUE
+	return FALSE
+
 /obj/machinery/door/airlock/do_open()
 	send_status_if_allowed()
 	if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock) && !closeOther.density)
@@ -1081,7 +1090,7 @@ var/list/airlock_overlays = list()
 		optionlist = list("Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
 
 	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
-	if((!in_range(src, usr) && loc != usr) || !W.use(user))
+	if((!in_range(src, usr) && loc != usr) || !W.use(10))
 		return
 	switch(paintjob)
 		if("Public")

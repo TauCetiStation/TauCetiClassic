@@ -34,7 +34,7 @@
 
 		if(WT.use(0, user))
 			damage = 15
-			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 
 	health -= damage
 	healthcheck()

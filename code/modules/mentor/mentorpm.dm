@@ -67,11 +67,15 @@
 
 	//play the recieving admin the adminhelp sound (if they have them enabled)
 	//non-admins shouldn't be able to disable this
-	if(C.prefs && C.prefs.toggles & SOUND_ADMINHELP)
-		send_sound(C, 'sound/effects/adminhelp.ogg')
+	C.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
 	log_admin("PM: [key_name(src)]->[key_name(C)]: [msg]")
-	send2slack_logs("[key_name(src)]->[key_name(C)]",  msg, "(PM)")
+	world.send2bridge(
+		type = list(BRIDGE_ADMINLOG),
+		attachment_title = "MENTOR PM",
+		attachment_msg = "**[key_name(src)]->[key_name(C)]:** [msg]",
+		attachment_color = BRIDGE_COLOR_ADMINLOG,
+	)
 
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/X in admins)

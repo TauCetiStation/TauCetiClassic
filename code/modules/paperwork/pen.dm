@@ -147,7 +147,7 @@
 		name = initial(name)
 		hitsound = initial(hitsound)
 		throwforce = initial(throwforce)
-		playsound(user, 'sound/weapons/saberoff.ogg', 5, 1)
+		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER, 5)
 		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
 	else
 		on = 1
@@ -157,7 +157,7 @@
 		name = "energy dagger"
 		hitsound = 'sound/weapons/blade1.ogg'
 		throwforce = 35
-		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
+		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER, 5)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
 	update_icon()
 

@@ -71,7 +71,7 @@
 			if(telegraph_message)
 				to_chat(M, telegraph_message)
 			if(telegraph_sound)
-				send_sound(M, telegraph_sound)
+				M.playsound_local(null, telegraph_sound, VOL_EFFECTS_MASTER, null, FALSE)
 	addtimer(CALLBACK(src, .proc/start), telegraph_duration)
 
 /datum/weather/proc/start()
@@ -85,7 +85,7 @@
 			if(weather_message)
 				to_chat(M, weather_message)
 			if(weather_sound)
-				send_sound(M, weather_sound)
+				M.playsound_local(null, weather_sound, VOL_EFFECTS_MASTER, null, FALSE)
 	START_PROCESSING(SSweather, src)
 	addtimer(CALLBACK(src, .proc/wind_down), weather_duration)
 
@@ -100,7 +100,7 @@
 			if(end_message)
 				to_chat(M, end_message)
 			if(end_sound)
-				send_sound(M, end_sound)
+				M.playsound_local(null, end_sound, VOL_EFFECTS_MASTER, null, FALSE)
 	STOP_PROCESSING(SSweather, src)
 	addtimer(CALLBACK(src, .proc/end), end_duration)
 

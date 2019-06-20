@@ -97,7 +97,7 @@
 		power.action(user, 1)
 
 /obj/item/weapon/sord/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
 /obj/item/weapon/claymore
@@ -126,7 +126,7 @@
 	can_embed = 0
 
 /obj/item/weapon/claymore/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
 /obj/item/weapon/katana
@@ -151,7 +151,7 @@
 		return 50
 
 /obj/item/weapon/katana/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
 /obj/item/weapon/harpoon
@@ -171,24 +171,26 @@
 	icon_state = "switchblade"
 	desc = "A sharp, concealable, spring-loaded knife."
 	flags = CONDUCT
-	force = 20
+	force = 1
 	w_class = ITEM_SIZE_SMALL
-	throwforce = 15
+	throwforce = 5
+	edge = FALSE
 	throw_speed = 3
 	throw_range = 6
 	m_amt = 12000
 	origin_tech = "materials=1"
 	hitsound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("stubbed", "poked")
-	var/extended
+	var/extended = FALSE
 
 /obj/item/weapon/switchblade/attack_self(mob/user)
 	extended = !extended
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(src, 'sound/weapons/batonextend.ogg', VOL_EFFECTS_MASTER)
 	if(extended)
 		force = 20
 		w_class = ITEM_SIZE_NORMAL
 		throwforce = 15
+		edge = TRUE
 		icon_state = "switchblade_ext"
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
@@ -196,6 +198,7 @@
 		force = 1
 		w_class = ITEM_SIZE_SMALL
 		throwforce = 5
+		edge = FALSE
 		icon_state = "switchblade"
 		attack_verb = list("stubbed", "poked")
 		hitsound = 'sound/weapons/Genhit.ogg'

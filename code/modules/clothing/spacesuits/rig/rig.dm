@@ -130,6 +130,14 @@
 	if(!rig.offline)
 		rig.cell.use(rig.move_energy_use)
 
+/obj/item/clothing/suit/space/rig/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
+	if(reaction_type == REACTION_ITEM_TAKE || reaction_type == REACTION_ITEM_TAKEOFF)
+		return
+	var/obj/item/rig_module/stealth/module = find_module(/obj/item/rig_module/stealth)
+	if(module)
+		module.deactivate()
+
+
 /obj/item/clothing/suit/space/rig/proc/try_use(mob/living/user, cost, use_unconcious, use_stunned)
 
 	if(!istype(user))
@@ -724,13 +732,13 @@
 			canremove = FALSE
 			can_breach = FALSE
 			flags_pressure &= ~STOPS_PRESSUREDMAGE
-			playsound(usr, "sound/effects/air_release.ogg", 50)
+			playsound(usr, 'sound/effects/air_release.ogg', VOL_EFFECTS_MASTER)
 			usr.visible_message("<span class='notice'>[usr]'s suit depressurizes, exposing armor plates.</span>")
 		else
 			canremove = TRUE
 			can_breach = TRUE
 			flags_pressure |= STOPS_PRESSUREDMAGE
-			playsound(usr, "sound/effects/inflate.ogg", 30)
+			playsound(usr, 'sound/effects/inflate.ogg', VOL_EFFECTS_MASTER, 30)
 			usr.visible_message("<span class='notice'>[usr]'s suit inflates and pressurizes.</span>")
 		update_icon(usr)
 

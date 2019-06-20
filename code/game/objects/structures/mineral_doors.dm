@@ -72,7 +72,7 @@
 
 /obj/structure/mineral_door/proc/Open()
 	isSwitchingStates = TRUE
-	playsound(src, operating_sound, 100, 1)
+	playsound(src, operating_sound, VOL_EFFECTS_MASTER)
 	flick("[initial(icon_state)]_opening", src)
 	sleep(10)
 	density = FALSE
@@ -84,7 +84,7 @@
 
 /obj/structure/mineral_door/proc/Close()
 	isSwitchingStates = TRUE
-	playsound(src, operating_sound, 100, 1)
+	playsound(src, operating_sound, VOL_EFFECTS_MASTER)
 	flick("[initial(icon_state)]_closing", src)
 	sleep(10)
 	density = TRUE
@@ -305,7 +305,7 @@
 	qdel(src)
 
 /obj/structure/mineral_door/resin/CheckHealth()
-	playsound(src, 'sound/effects/attackblob.ogg', 100, 1)
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	..()
 
 /obj/structure/mineral_door/resin/bullet_act(obj/item/projectile/Proj)

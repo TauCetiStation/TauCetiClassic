@@ -70,8 +70,8 @@
 
 
 /datum/game_mode/traitor/autotraitor/post_setup()
-	..()
 	abandon_allowed = 1
+	return ..()
 
 /datum/game_mode/proc/traitorcheckloop()
 	if(SSshuttle.departed)

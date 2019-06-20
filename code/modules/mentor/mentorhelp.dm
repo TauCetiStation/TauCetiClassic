@@ -36,8 +36,7 @@
 		if(R_ADMIN & X.holder.rights)
 			if(X.is_afk())
 				admin_number_afk++
-			if(X.prefs.toggles & SOUND_ADMINHELP)
-				send_sound(X, 'sound/effects/adminhelp.ogg')
+			X.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 			to_chat(X, "<font color=blue><b><font color=[colour]>[prefix]: </font>[get_options_bar(mob, 2, 1, 1, MHELP_REPLY, TRUE)][ai_found ? " (<A HREF='?_src_=holder;adminchecklaws=[ref_mob]'>CL</A>)" : ""]:</b> <span class='emojify linkify'>[msg]</span></font>")
 
 	var/mentor_number_afk = 0
@@ -47,7 +46,7 @@
 			mentor_number_afk++
 		if(isobserver(X.mob))
 			jump = "(<A HREF='?src=\ref[X.mob];ghostplayerobservejump=[ref_mob]'>JMP</A>) "
-		send_sound(X, 'sound/effects/adminhelp.ogg')
+		X.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 		to_chat(X, "<font color=blue><b><font color=[colour]>[prefix]: </font>[key_name(src, 1, 0, 0, MHELP_REPLY, TRUE)][jump]:</b> <span class='emojify linkify'>[msg]</span></font>")
 
 	mentorhelped = TRUE //Determines if they get the message to reply by clicking the name.
@@ -58,7 +57,12 @@
 	var/mentor_number_present = mentors.len - mentor_number_afk
 	var/admin_number_present = admins.len - admin_number_afk
 
-	send2slack_logs(key_name(src), msg, "(MHELP)")
+	world.send2bridge(
+		type = list(BRIDGE_ADMINLOG),
+		attachment_title = "MENTOR HELP",
+		attachment_msg = "**[key_name(src)]:** [msg]",
+		attachment_color = BRIDGE_COLOR_ADMINLOG,
+	)
 
 	feedback_add_details("admin_verb", "MH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[prefix]: [key_name(src)]: [msg] - heard by [mentor_number_present] non-AFK mentors and [admin_number_present] non-AFK admins.")

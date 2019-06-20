@@ -39,7 +39,7 @@
 /obj/structure/pbag/proc/down()
 	anchored = 0
 	icon_state = "pbagdown"
-	playsound(src.loc, 'sound/weapons/tablehit1.ogg', 70, 1, -1)
+	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 	update_icon()
 	return
 
@@ -51,7 +51,7 @@
 			health -= rand(100, 500)
 		else
 			health -= rand(10, 50)
-		playsound(src.loc, "swing_hit", 50, 1, -1)
+		playsound(src, "swing_hit", VOL_EFFECTS_MASTER)
 		swing()
 
 	return
@@ -69,7 +69,7 @@
 	var/mob/living/carbon/user = usr
 
 	if(iscarbon(user))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		src.anchored = !src.anchored
 		user.visible_message("[user] [anchored? "secures":"unsecures"] the [src].", \
 			"You [anchored? "secure":"undo"] the external bolts.", \

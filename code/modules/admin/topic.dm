@@ -313,7 +313,11 @@
 		ticker.delay_end = !ticker.delay_end
 		log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
 		message_admins("\blue [key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
-		send2slack_service("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
+		world.send2bridge(
+			type = list(BRIDGE_ROUNDSTAT),
+			attachment_msg = "**[key_name(usr)]** [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].",
+			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
+		)
 		href_list["secretsadmin"] = "check_antagonist"
 
 	else if(href_list["simplemake"])
@@ -1617,7 +1621,7 @@
 		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
 		feedback_inc("admin_cookies_spawned",1)
 		to_chat(H, "<span class='adminnotice'>Your prayers have been answered!! You received the <b>best cookie</b>!</span>")
-		send_sound(H, 'sound/effects/pray_chaplain.ogg')
+		H.playsound_local(null, 'sound/effects/pray_chaplain.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 
 	else if(href_list["BlueSpaceArtillery"])
 		if(!check_rights(R_ADMIN|R_FUN))
@@ -1671,7 +1675,13 @@
 		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
 		log_admin("[src.owner] replied to [key_name(H)]'s Centcomm message with the message [input].")
 		message_admins("[src.owner] replied to [key_name(H)]'s Centcom message with: \"[input]\"")
-		send2slack_custommsg("[key_name(src.owner)] replied to [key_name(H)]'s Centcom message", input, ":job-cap:")
+		world.send2bridge(
+			type = list(BRIDGE_ADMINCOM),
+			attachment_title = ":regional_indicator_c: **[key_name(src.owner)]** replied to **[key_name(H)]**'s ***Centcom*** message",
+			attachment_msg = input,
+			attachment_color = BRIDGE_COLOR_ADMINCOM,
+		)
+
 		to_chat(H, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. <b>\"[input]\"</b>  Message ends.\"")
 
 	else if(href_list["SyndicateReply"])
@@ -1689,7 +1699,12 @@
 		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
 		log_admin("[src.owner] replied to [key_name(H)]'s Syndicate message with the message [input].")
 		message_admins("[src.owner] replied to [key_name(H)]'s Syndicate message with: \"[input]\"")
-		send2slack_custommsg("[key_name(src.owner)] replied to [key_name(H)]'s Syndicate message", input, ":job-nuke:")
+		world.send2bridge(
+			type = list(BRIDGE_ADMINCOM),
+			attachment_title = ":regional_indicator_s: **[key_name(src.owner)]** replied to **[key_name(H)]**'s ***Syndicate*** message",
+			attachment_msg = input,
+			attachment_color = BRIDGE_COLOR_ADMINCOM,
+		)
 		to_chat(H, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. <b>\"[input]\"</b>  Message ends.\"")
 
 	else if(href_list["CentcommFaxViewInfo"])
@@ -1717,11 +1732,17 @@
 
 		send_fax(usr, P, "All")
 
+		add_communication_log(type = "fax-centcomm", title = customname ? customname : 0, author = "Centcomm Officer", content = input)
+
 		to_chat(src.owner, "Message reply to transmitted successfully.")
 		log_admin("[key_name(src.owner)] replied to a fax message from [key_name(H)]: [input]")
 		message_admins("[key_name_admin(src.owner)] replied to a fax message from [key_name_admin(H)]")
-		send2slack_custommsg("[key_name(src.owner)] replied to a fax message from [key_name(H)]", input, ":fax:")
-
+		world.send2bridge(
+			type = list(BRIDGE_ADMINCOM),
+			attachment_title = ":fax: **[key_name(src.owner)]** replied to a fax message from **[key_name(H)]**",
+			attachment_msg = input,
+			attachment_color = BRIDGE_COLOR_ADMINCOM,
+		)
 
 	else if(href_list["jumpto"])
 		if(!check_rights(R_ADMIN))

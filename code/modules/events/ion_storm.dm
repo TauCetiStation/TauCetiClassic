@@ -76,7 +76,7 @@
 			continue
 		if(last_istorm_sound < world.time)
 			to_chat(target, "<b>&@&%**ATTENT^$N. THE AI SYSTEM IS OVERLOADED.</b>")
-			target.playsound_local(null, 'sound/AI/ionstorm.ogg', 40, is_global = 1)
+			target.playsound_local(null, 'sound/AI/ionstorm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			last_istorm_sound = world.time + 100
 		to_chat(target, "\red <b>You have detected a change in your laws information:</b>")
 		to_chat(target, law)

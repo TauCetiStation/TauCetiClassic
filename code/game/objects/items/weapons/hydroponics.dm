@@ -146,7 +146,7 @@
 	if(!proximity) return
 	if(force > 0)
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
-		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	else
 		to_chat(usr, "All the leaves have fallen off the nettle from violent whacking.")
 		qdel(src)
@@ -179,7 +179,7 @@
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] on [M.name] ([M.ckey])</font>")
 		msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] on [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 
 		M.eye_blurry += force/7
 		if(prob(20))

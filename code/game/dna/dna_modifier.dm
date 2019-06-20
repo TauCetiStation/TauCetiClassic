@@ -129,12 +129,12 @@
 
 				if (occupant.stat == DEAD)
 					if (occupant.client) //Ghost in body?
-						send_sound(occupant, 'sound/machines/chime.ogg') 	//probably not the best sound but I think it's reasonable
+						occupant.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
 					else
 						for(var/mob/dead/observer/ghost in player_list)
 							if(ghost.mind == occupant.mind)
 								if(ghost.can_reenter_corpse)
-									send_sound(ghost, 'sound/machines/chime.ogg')	//probably not the best sound but I think it's reasonable
+									ghost.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
 									var/answer = alert(ghost,"Do you want to return to corpse for cloning?","Cloning","Yes","No")
 									if(answer == "Yes")
 										ghost.reenter_corpse()
@@ -251,7 +251,9 @@
 	name = "DNA Modifier Access Console"
 	desc = "Scand DNA."
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "scanner"
+	icon_state = "dna"
+	state_broken_preset = "crewb"
+	state_nopower_preset = "crew0"
 	light_color = "#315ab4"
 	density = 1
 	circuit = /obj/item/weapon/circuitboard/scan_consolenew
@@ -294,8 +296,8 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/scan_consolenew/atom_init_late()
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		connected = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
+	for(var/newdir in cardinal)
+		connected = locate(/obj/machinery/dna_scannernew, get_step(src, newdir))
 		if(!isnull(connected))
 			break
 	spawn(250)

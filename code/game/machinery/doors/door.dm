@@ -147,7 +147,7 @@
 	if(!src.requiresID())
 		user = null
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(src.allowed(user))
+	if(src.allowed(user) || emergency)
 		if(src.density)
 			open()
 		else
@@ -307,7 +307,7 @@
  */
 
 /obj/machinery/door/proc/do_open()
-	playsound(src, door_open_sound, 50, 1)
+	playsound(src, door_open_sound, VOL_EFFECTS_MASTER)
 	do_animate("opening")
 	sleep(3)
 	set_opacity(FALSE)
@@ -319,7 +319,7 @@
 	update_nearby_tiles()
 
 /obj/machinery/door/proc/do_close()
-	playsound(src, door_close_sound, 50, 1)
+	playsound(src, door_close_sound, VOL_EFFECTS_MASTER)
 	do_animate("closing")
 	sleep(3)
 	density = TRUE

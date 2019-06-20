@@ -415,7 +415,7 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 					M.add_ion_law("THE STATION IS [who2pref] [who2]")
 			var/static/last_istorm_sound = 0
 			if(last_istorm_sound < world.time)
-				M.playsound_local(null, 'sound/AI/ionstorm.ogg', 70, is_global = 1)
+				M.playsound_local(null, 'sound/AI/ionstorm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 				to_chat(M, "<b>&@&%**ATTENT^$N. THE AI SYSTEM IS OVERLOADED.</b>")
 				last_istorm_sound = world.time + 100
 	if(botEmagChance)

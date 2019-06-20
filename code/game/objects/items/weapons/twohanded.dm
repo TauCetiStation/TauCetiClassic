@@ -75,7 +75,7 @@
 			user.update_inv_r_hand()
 
 		if (src.unwieldsound)
-			playsound(src.loc, unwieldsound, 50, 1)
+			playsound(src, unwieldsound, VOL_EFFECTS_MASTER)
 
 		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
 		if(istype(O))
@@ -230,7 +230,7 @@
 		return
 	if(O.density && wielded && proximity && in_range(user, O))
 		user.visible_message("<span class='danger'>[user] start slicing the [O] </span>")
-		playsound(user.loc, 'sound/items/Welder2.ogg', 100, 1, -1)
+		playsound(user, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER)
 		slicing = TRUE
 		var/obj/machinery/door/airlock/D = O
 		var/obj/effect/I = new /obj/effect/overlay/slice(D.loc)
@@ -246,7 +246,7 @@
 			S.name += " remains"
 			qdel(D)
 			qdel(IC)
-			playsound(user.loc, 'sound/weapons/blade1.ogg', 100, 1, -1)
+			playsound(user, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 		slicing = FALSE
 		qdel(I)
 

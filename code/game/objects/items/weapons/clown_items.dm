@@ -159,7 +159,7 @@
 				user.visible_message("<span class='notice'>\the [user] cleans \his [body_part_name] out with soap.</span>")
 			else
 				user.visible_message("<span class='notice'>\the [user] cleans \the [target]'s [body_part_name] out with soap.</span>")
-			playsound(src.loc, 'sound/misc/slip.ogg', 50, 1)
+			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 			return
 		else
 			user.visible_message("<span class='red'>\the [user] fails to clean \the [target]'s [body_part_name] out with soap.</span>")
@@ -185,12 +185,12 @@
 
 /obj/item/weapon/bikehorn/attack(mob/target, mob/user, def_zone)
 	. = ..()
-	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+	playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
 
 /obj/item/weapon/bikehorn/attack_self(mob/user)
 	if(cooldown <= world.time)
 		cooldown = world.time + 8
-		playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
+		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
 		src.add_fingerprint(user)
 	return
 
@@ -216,13 +216,13 @@
 /obj/item/toy/laugh_button/attack_self(mob/user)
 	if(!cooldown)
 		user.visible_message("<span class='notice'>[bicon(src)] \the [user] presses \the [src]</span>")
-		playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
+		playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
 		var/laugh = pick(
 			'sound/voice/fake_laugh/laugh1.ogg',
 			'sound/voice/fake_laugh/laugh2.ogg',
 			'sound/voice/fake_laugh/laugh3.ogg',
 			)
-		playsound(src, laugh, 50, 1)
+		playsound(src, laugh, VOL_EFFECTS_MISC)
 		flick("laugh_button_down",src)
 		icon_state = "laugh_button_off"
 		cooldown = TRUE
@@ -234,5 +234,5 @@
 	flick("laugh_button_up",src)
 	icon_state = "laugh_button_on"
 	cooldown = FALSE
-	playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
 	return

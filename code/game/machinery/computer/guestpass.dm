@@ -21,12 +21,12 @@
 	return
 
 /obj/item/weapon/card/id/guest/proc/expire_warn()
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 20, 1)
+	playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, 20)
 	flick("guest_warn", src)
 	return
 
 /obj/item/weapon/card/id/guest/proc/expire()
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 20, 1)
+	playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, 20)
 	is_expired = 1
 	icon_state = "guest_expired"
 	return

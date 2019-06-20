@@ -19,7 +19,7 @@
 		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>",
 							 "<span class='notice'>You start unfastening [src].</span>")
 		if(W.use_tool(src, user, 40, volume = 50))
-			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='notice'>[user] unfastens [src].</span>",
 								 "<span class='notice'>You unfasten [src].</span>")
 			var/obj/item/sign_backing/SB = new (get_turf(user))
@@ -73,7 +73,7 @@
 		//It's import to clone the pixel layout information
 		//Otherwise signs revert to being on the turf and
 		//move jarringly
-		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1)
+		playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER)
 		var/obj/structure/sign/newsign = new sign_type(get_turf(src))
 		newsign.pixel_x = pixel_x
 		newsign.pixel_y = pixel_y
@@ -82,10 +82,10 @@
 	else
 		switch(W.damtype)
 			if("fire")
-				playsound(loc, 'sound/items/welder.ogg', 80, 1)
+				playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER)
 				src.health -= W.force * 1
 			if("brute")
-				playsound(loc, 'sound/weapons/slash.ogg', 80, 1)
+				playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 				src.health -= W.force * 0.75
 			else
 		if (src.health <= 0)
@@ -107,7 +107,7 @@
 		var/turf/T = target
 		user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>",
 							 "<span class='notice'>You attach the sign to [T].</span>")
-		playsound(T, 'sound/items/deconstruct.ogg', 50, 1)
+		playsound(T, 'sound/items/deconstruct.ogg', VOL_EFFECTS_MASTER)
 		new sign_path(T)
 		qdel(src)
 	else
@@ -115,7 +115,7 @@
 
 /obj/item/sign_backing/attackby(obj/item/weapon/W, mob/user)
 	if (iswelder(W))
-		playsound(loc, 'sound/items/welder.ogg', 50, 1)
+		playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER)
 		new /obj/item/stack/sheet/mineral/plastic(user.loc, 2)
 		qdel(src)
 

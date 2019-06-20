@@ -797,14 +797,14 @@
 	return !amount
 
 // Plays item's usesound, if any.
-/obj/item/proc/play_tool_sound(atom/target, volume=50)
+/obj/item/proc/play_tool_sound(atom/target, volume=null) // null, so default value of this proc won't override default value of the playsound.
 	if(target && usesound && volume)
 		var/played_sound = usesound
 
 		if(islist(usesound))
 			played_sound = pick(usesound)
 
-		playsound(target, played_sound, volume, 1)
+		playsound(target, played_sound, VOL_EFFECTS_MASTER, volume)
 
 // Generic use proc. Depending on the item, it uses up fuel, charges, sheets, etc.
 // Returns TRUE on success, FALSE on failure.

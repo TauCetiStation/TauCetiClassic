@@ -64,7 +64,7 @@
 
 		anchored = !anchored
 		to_chat(user, "You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground")
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 
 /obj/machinery/cell_charger/attack_hand(mob/user)
 	. = ..()

@@ -119,7 +119,7 @@
 		var/mob/M = usr
 		if(!( istype(over_object, /obj/screen) ))
 			return ..()
-		playsound(loc, "rustle", 50, 1, -5)
+		playsound(src, "rustle", VOL_EFFECTS_MASTER, null, null, -5)
 		if((!( M.restrained() ) && !( M.stat ) && M.back == src))
 			switch(over_object.name)
 				if("r_hand")
@@ -196,7 +196,7 @@
 		qdel(I)
 		pictures_left = pictures_max
 		update_desc()
-		playsound(src, 'sound/items/insert_key.ogg', 50, 1)
+		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 		return
 	..()
 
@@ -298,7 +298,7 @@
 		return
 	captureimage(target, user, flag)
 
-	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
+	playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), VOL_EFFECTS_MASTER, null, null, -3)
 
 	pictures_left--
 	update_desc()

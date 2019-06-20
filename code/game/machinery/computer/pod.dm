@@ -123,12 +123,13 @@
 
 
 /obj/machinery/computer/pod/old
-	icon_state = "oldcomp"
+	icon_state = "computer_old"
 	name = "DoorMex Control Computer"
 	title = "Door Controls"
 
 /obj/machinery/computer/pod/old/syndicate
 	name = "ProComp Executive IIc"
+	icon_state = "computer_regular"
 	desc = "The Syndicate operate on a tight budget. Operates external airlocks."
 	title = "External Airlock Controls"
 	req_access = list(access_syndicate)

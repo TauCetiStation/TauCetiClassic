@@ -54,6 +54,8 @@ var/datum/subsystem/shuttle/SSshuttle
 		//pod stuff
 	var/list/pod_station_area
 
+	var/status_display_last_mode
+
 	//var/datum/round_event/shuttle_loan/shuttle_loan
 
 /datum/subsystem/shuttle/New()
@@ -120,7 +122,7 @@ var/datum/subsystem/shuttle/SSshuttle
 					start_location.move_contents_to(end_location, null, NORTH)
 
 					for(var/mob/M in end_location)
-						M.playsound_local(null, 'sound/effects/escape_shuttle/es_cc_docking.ogg', 70)
+						M.playsound_local(null, 'sound/effects/escape_shuttle/es_cc_docking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -232,7 +234,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				if(last_es_sound < world.time)
 					var/area/escape_hallway = locate(/area/hallway/secondary/exit)
 					for(var/obj/effect/landmark/sound_source/shuttle_docking/SD in escape_hallway)
-						playsound(SD.loc, 'sound/effects/escape_shuttle/es_ss_docking.ogg', 100, 0, -2, voluminosity = FALSE)
+						playsound(SD, 'sound/effects/escape_shuttle/es_ss_docking.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2, voluminosity = FALSE)
 					last_es_sound = world.time + 10
 				return 0
 
@@ -282,7 +284,12 @@ var/datum/subsystem/shuttle/SSshuttle
 				else
 					captain_announce("The scheduled Crew Transfer Shuttle has docked with the station. It will depart in approximately [round(timeleft()/60,1)] minutes.", sound = "crew_shut_docked")
 
-				send2slack_service("the shuttle has docked with the station")
+				world.send2bridge(
+					type = list(BRIDGE_ROUNDSTAT),
+					attachment_title = "The shuttle docked to the station",
+					attachment_msg = "Join now: <[BYOND_JOIN_LINK]>",
+					attachment_color = BRIDGE_COLOR_ROUNDSTAT,
+				)
 
 				return 1
 
@@ -301,14 +308,14 @@ var/datum/subsystem/shuttle/SSshuttle
 					if(last_es_sound < world.time)
 						var/area/pre_location = locate(/area/shuttle/escape/station)
 						for(var/mob/M in pre_location)
-							M.playsound_local(null, 'sound/effects/escape_shuttle/es_undocking.ogg', 70)
+							M.playsound_local(null, 'sound/effects/escape_shuttle/es_undocking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 							CHECK_TICK
 						last_es_sound = world.time + 10
 				if(timeleft == 10)
 					if(last_es_sound < world.time)
 						for(var/mob/M in player_list)
 							if(is_type_in_typecache(get_area(M), pod_station_area))
-								M.playsound_local(null, 'sound/effects/escape_shuttle/ep_undocking.ogg', 100, is_global = 1)
+								M.playsound_local(null, 'sound/effects/escape_shuttle/ep_undocking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 							CHECK_TICK
 						last_es_sound = world.time + 10
 				return 0
@@ -339,7 +346,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 				// Some aesthetic turbulance shaking
 				for(var/mob/M in end_location)
-					M.playsound_local(null, 'sound/effects/escape_shuttle/es_acceleration.ogg', 70)
+					M.playsound_local(null, 'sound/effects/escape_shuttle/es_acceleration.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 					if(M.client)
 						if(M.buckled)
 							shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -365,7 +372,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						CHECK_TICK
 
 					for(var/mob/M in end_location)
-						M.playsound_local(null, ep_shot_sound_type, 100, is_global = 1)
+						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -385,7 +392,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						CHECK_TICK
 
 					for(var/mob/M in end_location)
-						M.playsound_local(null, ep_shot_sound_type, 100, is_global = 1)
+						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -405,7 +412,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						CHECK_TICK
 
 					for(var/mob/M in end_location)
-						M.playsound_local(null, ep_shot_sound_type, 100, is_global = 1)
+						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -425,7 +432,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						CHECK_TICK
 
 					for(var/mob/M in end_location)
-						M.playsound_local(null, ep_shot_sound_type, 100, is_global = 1)
+						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
 						if(M.client)
 							if(M.buckled)
 								shake_camera(M, 4, 1) // buckled, not a lot of shaking
@@ -621,6 +628,11 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle/proc/incall(coeff = 1)
 	if(deny_shuttle && alert == 1) //crew transfer shuttle does not gets recalled by gamemode
 		return
+	var/obj/machinery/status_display/S = status_display_list[1]
+	status_display_last_mode = S.mode
+	for(var/obj/machinery/status_display/Screen in status_display_list)
+		Screen.mode = 1
+		Screen.update()
 	if(endtime)
 		if(direction == -1)
 			setdirection(1)
@@ -629,6 +641,7 @@ var/datum/subsystem/shuttle/SSshuttle
 		online = 1
 		if(always_fake_recall)
 			fake_recall = rand(300,500)		//turning on the red lights in hallways
+
 
 /datum/subsystem/shuttle/proc/get_shuttle_arrive_time()
 	// During mutiny rounds, the shuttle takes twice as long.
@@ -643,12 +656,18 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle/proc/recall()
 	if(direction == 1)
 		var/timeleft = timeleft()
+		for(var/obj/machinery/status_display/Screen in status_display_list)
+			if(Screen.mode == 1) 	// we don't need to change the mode if the mode is already non-shuttle-ETA
+				Screen.mode = status_display_last_mode
+				Screen.update()
+
 		if(alert == 0)
 			if(timeleft >= get_shuttle_arrive_time())
 				return
 			captain_announce("The emergency shuttle has been recalled.", sound = "emer_shut_recalled")
 			setdirection(-1)
 			online = 1
+
 			return
 		else //makes it possible to send shuttle back.
 			captain_announce("The shuttle has been recalled.", sound = "crew_shut_recalled")
