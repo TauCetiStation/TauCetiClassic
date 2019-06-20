@@ -295,10 +295,6 @@
 	icon_state = "kvasstank"
 	amount_per_transfer_from_this = 10
 
-/obj/structure/reagent_dispensers/beerkeg/atom_init()
+/obj/structure/reagent_dispensers/kvasstank/atom_init()
 	. = ..()
-	reagents.add_reagent("beer",1000)
-
-/obj/structure/reagent_dispensers/beerkeg/blob_act()
-	explosion(src.loc,0,3,5,7,10)
-	qdel(src)
+	reagents.add_reagent("kvass",1000)
