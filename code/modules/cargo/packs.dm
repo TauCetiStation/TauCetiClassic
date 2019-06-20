@@ -481,6 +481,14 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "Vendomat supply crate"
 	group = "Hospitality"
 
+/datum/supply_pack/watertank
+	name = "Kvass tank crate"
+	contains = list(/obj/structure/reagent_dispensers/kvasstank)
+	cost = 1200
+	crate_type = /obj/structure/largecrate
+	crate_name = "Kvass tank crate"
+	group = "Hospitality"
+
 /datum/supply_pack/vending_dinnerware
 	name = "Dinnerware supply crate"
 	contains = list(/obj/item/weapon/vending_refill/dinnerware,
