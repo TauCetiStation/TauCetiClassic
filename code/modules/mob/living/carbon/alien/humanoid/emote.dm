@@ -19,28 +19,28 @@
 			m_type = 1
 			to_chat(src, "<span class='warning'>Pretending to be dead is not a good idea. I must fight for my Queen!</span>")
 			if(CAN_MAKE_A_SOUND)
-				playsound(src, 'sound/voice/xenomorph/death_1.ogg', VOL_EFFECTS_MASTER, 40)
+				playsound(src, 'sound/voice/xenomorph/death_1.ogg', VOL_EFFECTS_MASTER, 50)
 				last_sound_emote = world.time + 7 SECONDS
 		if("whimper")
 			message = "<B>The [src.name]</B> sadly [pick("screeches", "whines")]."
 			m_type = 2
 			if(CAN_MAKE_A_SOUND)
-				playsound(src, 'sound/voice/xenomorph/whimper.ogg', VOL_EFFECTS_MASTER, 15)
+				playsound(src, 'sound/voice/xenomorph/whimper.ogg', VOL_EFFECTS_MASTER, 25)
 		if("roar")
 			message = "<B>The [src.name]</B>[pick(" triumphantly", " menacingly", "")] roars."
 			m_type = 2
 			if(CAN_MAKE_A_SOUND)
-				playsound(src, "xenomorph_roar", VOL_EFFECTS_MASTER, 70)
+				playsound(src, "xenomorph_roar", VOL_EFFECTS_MASTER, vary = FALSE)
 		if("hiss")
 			message = "<B>The [src.name]</B>[pick(" predatory", " dissatisfied", " maliciously", " menacingly", " suspiciously", "")] hisses!"
 			m_type = 2
 			if(CAN_MAKE_A_SOUND)
-				playsound(src, "xenomorph_hiss", VOL_EFFECTS_MASTER, 80)
+				playsound(src, "xenomorph_hiss", VOL_EFFECTS_MASTER, vary = FALSE)
 		if("growl")
 			message = "<B>The [src.name]</B>[pick(" relaxed", " predatory", " excitedly", " joyfully", " maliciously", " menacingly", " suspiciously", "")] growls."
 			m_type = 2
 			if(CAN_MAKE_A_SOUND)
-				playsound(src, "xenomorph_growl", VOL_EFFECTS_MASTER, 80)
+				playsound(src, "xenomorph_growl", VOL_EFFECTS_MASTER, vary = FALSE)
 
 //  ========== BASIC ==========
 
