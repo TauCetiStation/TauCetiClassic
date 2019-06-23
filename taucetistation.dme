@@ -1384,7 +1384,6 @@
 #include "code\modules\mob\living\carbon\alien\say.dm"
 #include "code\modules\mob\living\carbon\alien\screen.dm"
 #include "code\modules\mob\living\carbon\alien\effects\aliens.dm"
-#include "code\modules\mob\living\carbon\alien\facehugger\emote.dm"
 #include "code\modules\mob\living\carbon\alien\facehugger\facehugger.dm"
 #include "code\modules\mob\living\carbon\alien\facehugger\facehugger_abilities.dm"
 #include "code\modules\mob\living\carbon\alien\facehugger\inventory.dm"

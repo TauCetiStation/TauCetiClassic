@@ -15,6 +15,7 @@
 	var/nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500
+	var/last_sound_emote = 0 // prevents sounds spam
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/has_fine_manipulation = 0

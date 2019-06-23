@@ -94,4 +94,4 @@
 /mob/living/simple_animal/hostile/alien/death()
 	..()
 	visible_message("[src] lets out a waning guttural screech, green blood bubbling from its maw...")
-	playsound(src, 'sound/voice/hiss6.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/voice/xenomorph/death_1.ogg', VOL_EFFECTS_MASTER)

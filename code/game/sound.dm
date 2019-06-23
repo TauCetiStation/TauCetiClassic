@@ -39,6 +39,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			if(T && T.z == turf_source.z)
 				M.playsound_local(turf_source, soundin, volume_channel, vol, vary, frequency, falloff, channel, null, wait, ignore_environment, voluminosity)
 
+//todo: inconsistent behaviour and meaning of first parameter in playsound/playsound_local
 /mob/proc/playsound_local(turf/turf_source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency, falloff, channel, repeat, wait, ignore_environment = FALSE, voluminosity = TRUE)
 	if(!client || !client.prefs_ready || !ignore_environment && ear_deaf > 0)
 		return
@@ -273,8 +274,6 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 				soundin = pick('sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg')
 			if ("swing_hit")
 				soundin = pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
-			if ("hiss")
-				soundin = pick('sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg')
 			if ("pageturn")
 				soundin = pick('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
 			if ("desceration")
@@ -305,6 +304,14 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 				soundin = pick('sound/misc/frigvomit1.ogg','sound/misc/frigvomit2.ogg')
 			if ("mrigvomit")
 				soundin = pick('sound/misc/mrigvomit1.ogg','sound/misc/mrigvomit2.ogg')
+			if ("xenomorph_talk")
+				soundin = pick('sound/voice/xenomorph/talk_1.ogg', 'sound/voice/xenomorph/talk_2.ogg', 'sound/voice/xenomorph/talk_3.ogg', 'sound/voice/xenomorph/talk_4.ogg')
+			if ("xenomorph_roar")
+				soundin = pick('sound/voice/xenomorph/roar_1.ogg', 'sound/voice/xenomorph/roar_2.ogg')
+			if ("xenomorph_hiss")
+				soundin = pick('sound/voice/xenomorph/hiss_1.ogg', 'sound/voice/xenomorph/hiss_2.ogg', 'sound/voice/xenomorph/hiss_3.ogg')
+			if ("xenomorph_growl")
+				soundin = pick('sound/voice/xenomorph/growl_1.ogg', 'sound/voice/xenomorph/growl_2.ogg')
 			if ("keyboard")
 				soundin = pick('sound/machines/keyboard/keyboard1.ogg', 'sound/machines/keyboard/keyboard2.ogg', 'sound/machines/keyboard/keyboard3.ogg', 'sound/machines/keyboard/keyboard4.ogg', 'sound/machines/keyboard/keyboard5.ogg')
 			if ("pda")
