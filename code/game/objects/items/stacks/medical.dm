@@ -56,7 +56,7 @@
 	name = "roll of gauze"
 	singular_name = "gauze length"
 	desc = "Some sterile gauze to wrap around bloody stumps."
-	icon_state = "brutepack5"
+	icon_state = "brutepack"
 	origin_tech = "biotech=1"
 
 /obj/item/stack/medical/bruise_pack/attack(mob/living/carbon/M, mob/user, def_zone)
@@ -124,7 +124,7 @@
 	desc = "Used to treat those nasty burns."
 	gender = PLURAL
 	singular_name = "ointment"
-	icon_state = "ointment5"
+	icon_state = "ointment"
 	heal_burn = 1
 	origin_tech = "biotech=1"
 
@@ -191,7 +191,7 @@
 	name = "advanced trauma kit"
 	singular_name = "advanced trauma kit"
 	desc = "An advanced trauma kit for severe injuries."
-	icon_state = "traumakit6"
+	icon_state = "traumakit"
 	heal_brute = 12
 	amount = 6
 	max_amount = 6
@@ -258,7 +258,7 @@
 	name = "advanced burn kit"
 	singular_name = "advanced burn kit"
 	desc = "An advanced treatment kit for severe burns."
-	icon_state = "burnkit6"
+	icon_state = "burnkit"
 	amount = 6
 	max_amount = 6
 	heal_burn = 12
