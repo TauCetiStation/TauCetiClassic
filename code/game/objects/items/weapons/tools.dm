@@ -363,6 +363,8 @@
 /obj/item/weapon/weldingtool/proc/get_fuel()
 	return reagents.get_reagent_amount("fuel")
 
+/obj/item/weapon/weldingtool/tool_use_check(mob/living/user, amount)
+	return get_fuel() >= amount
 
 //Removes fuel from the welding tool. If a mob is passed, it will perform an eyecheck on the mob. This should probably be renamed to use()
 /obj/item/weapon/weldingtool/use(used = 1, mob/M = null)

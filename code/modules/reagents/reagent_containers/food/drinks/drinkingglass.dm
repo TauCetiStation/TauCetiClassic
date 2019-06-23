@@ -540,14 +540,13 @@
 			gulp_size = volume/10
 			..()
 			return
-	if(icon_state != "glass_empty")
-		var/turf/T = get_turf(user)
-		if(!CanEat(user, target, src, "drink")) return
-		T.visible_message("[user] gulped down the whole [src]. Wow!")
+	if(reagents.total_volume)
+		if(!CanEat(user, target, src, "drink"))
+			return
+		..()
+		target.visible_message("[target] gulped down the whole [src]. Wow!")
+		return
 	..()
-	return
-
-
 
 // for /obj/machinery/vending/sovietsoda
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda
