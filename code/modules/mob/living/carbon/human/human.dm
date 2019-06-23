@@ -1451,13 +1451,14 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	verbs += /mob/living/carbon/human/proc/bloody_doodle
 	return 1 //we applied blood to the item
 
+// returns associative list (implant = bodypart)
 /mob/living/carbon/human/get_visible_implants(class = 0)
 
 	var/list/visible_implants = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
 		for(var/obj/item/weapon/O in BP.implants)
 			if(!istype(O,/obj/item/weapon/implant) && O.w_class > class)
-				visible_implants += O
+				visible_implants[O] = BP
 
 	return(visible_implants)
 
