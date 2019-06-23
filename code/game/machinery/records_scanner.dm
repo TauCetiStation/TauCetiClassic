@@ -37,6 +37,7 @@
 		icon_state = "scanner_idle"
 		stat &= ~NOPOWER
 
+//todo: rewrite to datacore.manifest_inject ?
 /obj/machinery/scanner/attack_hand(mob/living/carbon/human/user)
 	. = ..()
 	if(.)

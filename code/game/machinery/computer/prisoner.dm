@@ -1,9 +1,11 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/prisoner
-	name = "Prisoner Management"
+	name = "Implant Management"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "explosive"
+	state_broken_preset = "securityb"
+	state_nopower_preset = "security0"
 	light_color = "#a91515"
 	req_access = list(access_armory)
 	circuit = /obj/item/weapon/circuitboard/prisoner

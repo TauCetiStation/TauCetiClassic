@@ -36,7 +36,7 @@
 		return
 	last_ripped = world.time
 	if(safety_mode)
-		playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+		playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		safety_mode = 0
 		update_icon()
 	var/turf/ripped_turf = get_turf(get_step(src, 8))
@@ -78,7 +78,7 @@
 	update_icon()
 
 /obj/machinery/pile_ripper/proc/stop(mob/living/L)
-	playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+	playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	safety_mode = 1
 	update_icon()
 	L.forceMove(src.loc)
@@ -113,7 +113,7 @@
 		if(safety_mode)
 			safety_mode = 0
 			update_icon()
-		playsound(src.loc, "sparks", 75, 1, -1)
+		playsound(src, "sparks", VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>")
 
 /obj/machinery/pile_ripper/update_icon()
@@ -126,9 +126,9 @@
 
 /obj/machinery/pile_ripper/proc/eat(mob/living/L)
 	if(issilicon(L))
-		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+		playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 	else
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 
 	var/gib = 1
 	// By default, the emagged pile_ripper will gib all non-carbons. (human simple animal mobs don't count)

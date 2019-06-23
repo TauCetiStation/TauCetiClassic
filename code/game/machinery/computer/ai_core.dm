@@ -39,19 +39,19 @@
 					anchored = 0
 					state = 0
 			if(istype(P, /obj/item/weapon/circuitboard/aicore) && !circuit)
-				playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "\blue You place the circuit board inside the frame.")
 				icon_state = "1"
 				circuit = P
 				user.drop_item()
 				P.loc = src
 			if(isscrewdriver(P) && circuit)
-				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "\blue You screw the circuit board into place.")
 				state = 2
 				icon_state = "2"
 			if(iscrowbar(P) && circuit)
-				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "\blue You remove the circuit board.")
 				state = 1
 				icon_state = "0"
@@ -59,7 +59,7 @@
 				circuit = null
 		if(2)
 			if(isscrewdriver(P) && circuit)
-				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "\blue You unfasten the circuit board.")
 				state = 1
 				icon_state = "1"
@@ -68,7 +68,7 @@
 				if(user.is_busy(src))
 					return
 				if(C.get_amount() >= 5)
-					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					if(C.use_tool(src, user, 20, amount = 5, volume = 50))
 						to_chat(user, "\blue You add cables to the frame.")
 						state = 3
@@ -78,7 +78,7 @@
 				if (brain)
 					to_chat(user, "Get that brain out of there first")
 				else
-					playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
+					playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 					to_chat(user, "\blue You remove the cables.")
 					state = 2
 					icon_state = "2"
@@ -89,7 +89,7 @@
 				if(user.is_busy(src))
 					return
 				if(RG.get_amount() >= 2)
-					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					if(RG.use_tool(src, user, 20, amount = 2, volume = 50))
 						to_chat(user, "\blue You put in the glass panel.")
 						state = 4
@@ -142,7 +142,7 @@
 				icon_state = "3b"
 
 			if(iscrowbar(P) && brain)
-				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "\blue You remove the brain.")
 				brain.loc = loc
 				brain = null
@@ -150,7 +150,7 @@
 
 		if(4)
 			if(iscrowbar(P))
-				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "\blue You remove the glass panel.")
 				state = 3
 				if (brain)
@@ -161,7 +161,7 @@
 				return
 
 			if(isscrewdriver(P))
-				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "\blue You connect the monitor.")
 				if(!brain)
 					var/open_for_latejoin = alert(user, "Would you like this core to be open for latejoining AIs?", "Latejoin", "Yes", "Yes", "No") == "Yes"

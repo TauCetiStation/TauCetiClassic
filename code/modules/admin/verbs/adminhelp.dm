@@ -187,12 +187,20 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	else
 		MessageNoRecipient(msg)
 
-		//send it to slack if nobody is on and tell us how many were on
-		var/admin_number_present = send2slack_adminless_only(initiator_ckey, "Ticket #[id]: [name]")
+		//send it to chat bridge if nobody is on and tell us how many were on
+		var/admin_number_present = send2bridge_adminless_only("**Ticket #[id]** created by **[key_name(initiator)]**", name)
+
 		log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
-		send2slack_logs("Ticket #[id] created", "[key_name(initiator)]: [name]", "(AHELP)")
+		
+		world.send2bridge(
+			type = list(BRIDGE_ADMINLOG),
+			attachment_title = "**Ticket #[id]** created by **[key_name(initiator)]**",
+			attachment_msg = name,
+			attachment_color = BRIDGE_COLOR_ADMINLOG,
+		)
+
 		if(admin_number_present <= 0)
-			to_chat(C, "<span class='notice'>No active admins are online, your adminhelp was sent to the admin chat.</span>")
+			to_chat(C, "<span class='notice'>No active admins are online[config.chat_bridge ? ", your adminhelp was sent to the admin chat" : ""].</span>")
 			heard_by_no_admins = TRUE
 
 	global.ahelp_tickets.active_tickets += src
@@ -206,7 +214,11 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 /datum/admin_help/proc/AddInteraction(formatted_message)
 	if(heard_by_no_admins && usr && usr.ckey != initiator_ckey)
 		heard_by_no_admins = FALSE
-		send2slack_admincall("[initiator_ckey] | Ticket #[id]: Answered by [key_name(usr)]")
+		world.send2bridge(
+			type = list(BRIDGE_ADMINALERT, BRIDGE_ADMINLOG),
+			attachment_title = "**Ticket #[id]** answered by **[key_name(usr)]**",
+			attachment_color = BRIDGE_COLOR_ADMINALERT,
+		)
 	_interactions += "[time_stamp()]: [formatted_message]"
 
 //Adds a cooldown to the user's ahelp verb.
@@ -253,8 +265,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 
 	//send this msg to all admins
 	for(var/client/X in global.admins)
-		if(X.prefs.toggles & SOUND_ADMINHELP)
-			send_sound(X, 'sound/effects/adminhelp.ogg')
+		X.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 		window_flash(X)
 		to_chat(X, admin_msg)
 
@@ -285,7 +296,11 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	var/msg = "<span class='adminhelp'>Ticket [TicketHref("#[id]")] reopened by [key_name_admin(usr)].</span>"
 	message_admins(msg)
 	log_admin_private(msg)
-	send2slack_logs("Ticket #[id]", "Reopened by [key_name(usr)].", "(AHELP)")
+	world.send2bridge(
+		type = list(BRIDGE_ADMINLOG),
+		attachment_title = "**Ticket #[id]** reopened by **[key_name(usr)]**",
+		attachment_color = BRIDGE_COLOR_ADMINLOG,
+	)
 	TicketPanel()	//can only be done from here, so refresh it
 
 //private
@@ -311,7 +326,11 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		var/msg = "Ticket [TicketHref("#[id]")] closed by [key_name]."
 		message_admins(msg)
 		log_admin_private(msg)
-		send2slack_logs("Ticket #[id]", "Closed by [key_name(usr)].", "(AHELP)")
+		world.send2bridge(
+			type = list(BRIDGE_ADMINLOG),
+			attachment_title = "**Ticket #[id]** closed by **[key_name(usr)]**",
+			attachment_color = BRIDGE_COLOR_ADMINLOG,
+		)
 
 //Mark open ticket as resolved/legitimate, returns ahelp verb
 /datum/admin_help/proc/Resolve(key_name = key_name_admin(usr), silent = FALSE)
@@ -329,7 +348,11 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		var/msg = "Ticket [TicketHref("#[id]")] resolved by [key_name]"
 		message_admins(msg)
 		log_admin_private(msg)
-		send2slack_logs("Ticket #[id]", "Resolved by [key_name(usr)].", "(AHELP)")
+		world.send2bridge(
+			type = list(BRIDGE_ADMINLOG),
+			attachment_title = "**Ticket #[id]** resolved by **[key_name(usr)]**",
+			attachment_color = BRIDGE_COLOR_ADMINLOG,
+		)
 
 //Close and return ahelp verb, use if ticket is incoherent
 /datum/admin_help/proc/Reject(key_name = key_name_admin(usr))
@@ -339,7 +362,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	if(initiator)
 		initiator.giveadminhelpverb()
 
-		send_sound(initiator, 'sound/effects/adminhelp.ogg')
+		initiator.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
 		to_chat(initiator, "<font color='red' size='4'><b>- AdminHelp Rejected! -</b></font>")
 		to_chat(initiator, "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</font>")
@@ -348,7 +371,11 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	var/msg = "Ticket [TicketHref("#[id]")] rejected by [key_name]"
 	message_admins(msg)
 	log_admin_private(msg)
-	send2slack_logs("Ticket #[id]", "Rejected by [key_name(usr)].", "(AHELP)")
+	world.send2bridge(
+		type = list(BRIDGE_ADMINLOG),
+		attachment_title = "**Ticket #[id]** rejected by **[key_name(usr)]**",
+		attachment_color = BRIDGE_COLOR_ADMINLOG,
+	)
 	AddInteraction("Rejected by [key_name].")
 	Close(silent = TRUE)
 
@@ -367,7 +394,11 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	msg = "Ticket [TicketHref("#[id]")] marked as IC by [key_name]"
 	message_admins(msg)
 	log_admin_private(msg)
-	send2slack_logs("Ticket #[id]", "Marked as IC issue by [key_name(usr)].", "(AHELP)")
+	world.send2bridge(
+		type = list(BRIDGE_ADMINLOG),
+		attachment_title = "**Ticket #[id]** marked as IC issue by **[key_name(usr)]**",
+		attachment_color = BRIDGE_COLOR_ADMINLOG,
+	)
 	AddInteraction("Marked as IC issue by [key_name]")
 	Resolve(silent = TRUE)
 
@@ -559,7 +590,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		else
 			.["present"] += X
 
-/proc/send2slack_adminless_only(source, msg, requiredflags = R_BAN)
+/proc/send2bridge_adminless_only(title, msg, requiredflags = R_BAN)
 	var/list/adm = get_admin_counts(requiredflags)
 	var/list/activemins = adm["present"]
 	. = activemins.len
@@ -570,12 +601,25 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		var/list/powerlessmins = adm["noflags"]
 		var/list/allmins = adm["total"]
 		if(!afkmins.len && !stealthmins.len && !powerlessmins.len)
-			final = "[msg] - No admins online"
+			final = "No admins online"
 		else
-			final = "[msg] - All admins stealthed\[[english_list(stealthmins)]\], AFK\[[english_list(afkmins)]\], or lacks +BAN\[[english_list(powerlessmins)]\]! Total: [allmins.len] "
+			final = "All admins stealthed\[[english_list(stealthmins)]\], AFK\[[english_list(afkmins)]\], or lacks +BAN\[[english_list(powerlessmins)]\]! Total: [allmins.len] "
 
 		if(world.time > ahelp_tickets.next_slap_mention_time)
 			ahelp_tickets.next_slap_mention_time = world.time + 30 MINUTES
-			send2slack_admincall("@here adminhelp from *[source]*:", final)
+			world.send2bridge(
+				type = list(BRIDGE_ADMINALERT),
+				attachment_title = title,
+				attachment_msg = msg,
+				attachment_color = BRIDGE_COLOR_ADMINALERT,
+				attachment_footer = final,
+				mention = BRIDGE_MENTION_HERE,
+			)
 		else
-			send2slack_admincall("adminhelp from *[source]*:", final)
+			world.send2bridge(
+				type = list(BRIDGE_ADMINALERT),
+				attachment_title = title,
+				attachment_msg = msg,
+				attachment_color = BRIDGE_COLOR_ADMINALERT,
+				attachment_footer = final,
+			)

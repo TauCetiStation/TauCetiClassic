@@ -36,7 +36,7 @@
 	if(charges > 0)
 		status = !status
 		to_chat(user, "<span class='notice'>\The [src] is now [status ? "on" : "off"].</span>")
-		playsound(src.loc, "sparks", 75, 1, -1)
+		playsound(src, "sparks", VOL_EFFECTS_MASTER)
 		update_icon()
 	else
 		status = 0
@@ -63,7 +63,7 @@
 		//H.apply_effect(5, WEAKEN, 0)
 		H.visible_message("<span class='danger'>[M] has been beaten with the [src] by [user]!</span>")
 
-		playsound(src.loc, "swing_hit", 50, 1, -1)
+		playsound(src, "swing_hit", VOL_EFFECTS_MASTER)
 
 	if(!status)
 		H.visible_message("<span class='warning'>[M] has been prodded with the [src] by [user]. Luckily it was off.</span>")
@@ -89,7 +89,7 @@
 			H.attack_log += "\[[time_stamp()]\]<font color='orange'> stunned by [user.name] ([user.ckey]) with [src.name]</font>"
 			msg_admin_attack("[key_name(user)] attempted to stun [key_name(H)] with [src.name]")
 
-		playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 		if(charges < 1)
 			status = 0
 			update_icon()

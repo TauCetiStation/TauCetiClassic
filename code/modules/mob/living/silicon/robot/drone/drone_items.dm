@@ -75,6 +75,9 @@
 	if(wrapped)
 		wrapped.attack_self(user)
 
+		if(QDELETED(wrapped))
+			wrapped = null
+
 /obj/item/weapon/gripper/verb/drop_item()
 
 	set name = "Drop Item"

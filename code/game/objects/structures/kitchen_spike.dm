@@ -57,7 +57,7 @@
 					if(G.affecting.buckled)
 						return
 					var/mob/living/H = G.affecting
-					playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
+					playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER, 25)
 					H.visible_message("<span class='danger'>[user] slams [G.affecting] onto the meat spike!</span>", \
 					                  "<span class='userdanger'>[user] slams you onto the meat spike!</span>", \
 					                  "<span class='notice'>You hear a squishy wet noise.</span>")

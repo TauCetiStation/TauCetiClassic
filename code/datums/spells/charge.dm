@@ -89,7 +89,7 @@
 	if(!charged_item)
 		to_chat(C, "<span class='notice'>You feel magical power surging through your hands, but the feeling rapidly fades...</span>")
 	else
-		playsound(user, 'sound/magic/Charge.ogg', 50, 1)
+		playsound(user, 'sound/magic/Charge.ogg', VOL_EFFECTS_MASTER)
 		to_chat(C, "<span class='notice'>[charged_item] suddenly feels very [bad_charge ? "cold" : "warm"]!</span>")
 
 /obj/effect/proc_holder/spell/targeted/charge/proc/cell_charge(obj/item/weapon/stock_parts/cell/Cell, bad_charge)

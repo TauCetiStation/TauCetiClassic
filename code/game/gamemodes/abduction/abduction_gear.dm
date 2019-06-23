@@ -488,7 +488,7 @@
 
 	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
 							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
-	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 
 	L.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> stunned <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
 	user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> stunned <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
@@ -500,7 +500,7 @@
 		L.SetSleeping(60)
 	L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
-	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 
 	L.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> put to sleep <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
 	user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> put to sleep <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
@@ -512,7 +512,7 @@
 		return
 	var/mob/living/carbon/C = L
 	if(!C.handcuffed)
-		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
+		playsound(src, 'sound/weapons/cablecuff.ogg', VOL_EFFECTS_MASTER, 30)
 		C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
 								"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
 		if(do_mob(user, C, 30))
@@ -726,7 +726,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		M.revive()
 		loaded = 0
 		user.visible_message("<span class='notice'>[user] injects [M] with [src], fully heal it.</span>")
-		playsound(src, 'sound/effects/refill.ogg', 50, 1)
+		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
 		icon_state = "abductor_empty"
 
 /obj/machinery/recharger/wallcharger/alien

@@ -205,7 +205,7 @@
 			oldtarget_name = L.name
 			speak("Level [threatlevel] infraction alert!")
 			if(!lasercolor)
-				playsound(loc, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/EDPlaceholder.ogg'), 50, 0)
+				playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/EDPlaceholder.ogg'), VOL_EFFECTS_MASTER, null, FALSE)
 			visible_message("<b>[src]</b> points at [L.name]!")
 			mode = SECBOT_HUNT
 			process() // ensure bot quickly responds to a perp
@@ -298,7 +298,7 @@
 		return
 
 	//if(lastfired && world.time - lastfired < 100)
-	//	playsound(loc, 'ed209_shoot.ogg', 50, 0)
+	//	playsound(src, 'ed209_shoot.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	if(!projectile)
 		if(!lasercolor)

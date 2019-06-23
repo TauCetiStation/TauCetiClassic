@@ -374,6 +374,29 @@
 	return
 
 /obj/structure/computerframe/attackby(obj/item/P, mob/user)
+	if(!ishuman(user))
+		to_chat(user, "<span class='warning'>It's too complicated for you.</span>")
+		return
+
+	if((state != 0) && (state != 1) && iswrench(P))
+		if(user.is_busy(src))
+			return
+
+		var/list/possible_directions = list()
+		for(var/direction_to_check in (cardinal - NORTH - dir))
+			possible_directions += dir2text(direction_to_check)
+
+		var/dir_choise = input(user, "Choose the direction where to turn \the [src].", "Choose the direction.", null) as null|anything in possible_directions
+
+		if(!dir_choise || !user || !(user in range(1, src)) || user.is_busy(src))
+			return
+
+		if(P.use_tool(src, user, 20, volume = 50) && src && P)
+			user.visible_message("<span class='notice'>[user] turns \the [src] [dir_choise].</span>", "<span class='notice'>You turn \the [src] [dir_choise].</span>")
+			dir = text2dir(dir_choise)
+
+		return
+
 	switch(state)
 		if(0)
 			if(iswrench(P))
@@ -402,7 +425,7 @@
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "computer")
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					to_chat(user, "\blue You place the circuit board inside the frame.")
 					icon_state = "1"
 					circuit = P
@@ -412,12 +435,12 @@
 				else
 					to_chat(user, "\red This frame does not accept circuit boards of this type!")
 			if(isscrewdriver(P) && circuit)
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "\blue You screw the circuit board into place.")
 				src.state = 2
 				src.icon_state = "2"
 			if(iscrowbar(P) && circuit)
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "\blue You remove the circuit board.")
 				src.state = 1
 				src.icon_state = "0"
@@ -425,7 +448,7 @@
 				src.circuit = null
 		if(2)
 			if(isscrewdriver(P) && circuit)
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "\blue You unfasten the circuit board.")
 				src.state = 1
 				src.icon_state = "1"
@@ -434,14 +457,14 @@
 				if(C.get_amount() >= 5)
 					if(user.is_busy(src))
 						return
-					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					if(C.use_tool(src, user, 20, amount = 5, volume = 50))
 						to_chat(user, "\blue You add cables to the frame.")
 						src.state = 3
 						src.icon_state = "3"
 		if(3)
 			if(iswirecutter(P))
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "\blue You remove the cables.")
 				src.state = 2
 				src.icon_state = "2"
@@ -457,14 +480,47 @@
 						src.icon_state = "4"
 		if(4)
 			if(iscrowbar(P))
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "\blue You remove the glass panel.")
 				src.state = 3
 				src.icon_state = "3"
 				new /obj/item/stack/sheet/glass( src.loc, 2 )
 			if(isscrewdriver(P))
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "\blue You connect the monitor.")
 				var/obj/machinery/computer/new_computer = new src.circuit.build_path (src.loc, circuit)
+				new_computer.dir = dir
 				transfer_fingerprints_to(new_computer)
 				qdel(src)
+
+/obj/structure/computerframe/verb/rotate()
+	set category = "Object"
+	set name = "Rotate"
+	set src in oview(1)
+
+	if(get_dist(src, usr) > 1 || usr.restrained() || usr.lying || usr.stat || issilicon(usr))
+		return
+	if(!ishuman(usr))
+		to_chat(usr, "<span class='warning'>It's too complicated for you.</span>")
+		return
+	if(usr.is_busy(src))
+		return
+
+	var/obj/item/I = usr.get_active_hand()
+
+	if (!I || !iswrench(I))
+		to_chat(usr, "<span class='warning'>You need to hold a wrench in your active hand to do this.</span>")
+		return
+
+	var/list/possible_directions = list()
+	for(var/direction_to_check in (cardinal - NORTH - dir))
+		possible_directions += dir2text(direction_to_check)
+
+	var/dir_choise = input(usr, "Choose the direction where to turn \the [src].", "Choose the direction.", null) as null|anything in possible_directions
+
+	if(!dir_choise || !usr || !(usr in range(1, src)) || usr.is_busy(src))
+		return
+
+	if(I.use_tool(src, usr, 20, volume = 50) && src && I)
+		usr.visible_message("<span class='notice'>[usr] turns \the [src] [dir_choise].</span>", "<span class='notice'>You turn \the [src] [dir_choise].</span>")
+		dir = text2dir(dir_choise)

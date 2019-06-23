@@ -69,7 +69,7 @@
 	if(ishuman(AM) && prob(40) && src.density)
 		var/mob/living/carbon/human/H = AM
 		if(H.getBrainLoss() >= 60)
-			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
+			playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				visible_message("\red [H] headbutts the airlock.")
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]

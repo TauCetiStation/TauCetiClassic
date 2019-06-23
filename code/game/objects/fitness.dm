@@ -38,8 +38,8 @@
 			sleep(3)
 			animate(user, pixel_y = -4, time = 3)
 			sleep(3)
-			playsound(user, 'sound/machines/spring.ogg', 60, 1)
-		playsound(user, 'sound/machines/click.ogg', 60, 1)
+			playsound(user, 'sound/machines/spring.ogg', VOL_EFFECTS_MASTER)
+		playsound(user, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		in_use = 0
 		user.pixel_y = 0
 		gymnast.nutrition -= 6
@@ -93,12 +93,12 @@
 				sleep(3)
 				animate(user, pixel_y = (user.pixel_y == 3) ? 5 : 3, time = 3)
 
-			playsound(user, 'sound/machines/spring.ogg', 60, 1)
+			playsound(user, 'sound/machines/spring.ogg', VOL_EFFECTS_MASTER)
 
 		sleep(3)
 		animate(user, pixel_y = 2, time = 3)
 		sleep(3)
-		playsound(user, 'sound/machines/click.ogg', 60, 1)
+		playsound(user, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		in_use = 0
 		animate(user, pixel_y = 0, time = 3)
 		gymnast.nutrition -= 12

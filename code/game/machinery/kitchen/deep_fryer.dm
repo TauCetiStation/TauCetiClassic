@@ -67,7 +67,7 @@
 	if(frying)
 		fry_time++
 		if(fry_time == 30)
-			playsound(src, "sound/machines/ding.ogg", 50, 1)
+			playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 			visible_message("[src] dings!")
 		else if (fry_time == 60)
 			visible_message("[src] emits an acrid smell!")

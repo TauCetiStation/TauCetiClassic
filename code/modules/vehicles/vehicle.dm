@@ -75,7 +75,7 @@
 		return
 	else if(isscrewdriver(W))
 		open = !open
-		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(on && open)
 			turn_off()
 		update_icon()
@@ -87,7 +87,7 @@
 			if(health < maxhealth)
 				if(open)
 					health = min(maxhealth, health + 20)
-					playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
+					playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER)
 					user.visible_message("<span class='red'>[user] repairs \the [src]!</span>","<span class='notice'>You repair \the [src]!</span>")
 					check_move_delay()
 				else

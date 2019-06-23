@@ -35,7 +35,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
-	RefreshParts()
 
 /obj/machinery/telecomms/broadcaster/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	// Don't broadcast rejected signals

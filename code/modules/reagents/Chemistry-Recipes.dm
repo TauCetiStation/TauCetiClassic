@@ -444,7 +444,7 @@
 	var/datum/effect/system/bad_smoke_spread/S = new /datum/effect/system/bad_smoke_spread
 	S.attach(location)
 	S.set_up(10, 0, location)
-	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+	playsound(location, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 	spawn(0)
 		S.start()
 		sleep(10)
@@ -471,7 +471,7 @@
 	var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
 	S.attach(location)
 	S.set_up(holder, created_volume, 0, location)
-	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+	playsound(location, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 	spawn(0)
 		S.start()
 	holder.clear_reagents()
@@ -864,7 +864,7 @@
 		var/turf/FROM = get_turf_loc(holder.my_atom) // the turf of origin we're travelling FROM
 		var/turf/TO = get_turf_loc(chosen)			 // the turf of origin we're travelling TO
 
-		playsound(TO, 'sound/effects/phasein.ogg', 100, 1)
+		playsound(TO, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 		var/list/flashers = list()
 		for(var/mob/living/carbon/human/M in viewers(TO, null))
@@ -924,7 +924,7 @@
 		)//exclusion list for things you don't want the reaction to create.
 	var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
-	playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+	playsound(holder.my_atom, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/mob/living/carbon/human/M in viewers(get_turf_loc(holder.my_atom), null))
 		if(M:eyecheck() <= 0)
@@ -951,7 +951,7 @@
 	var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/snacks) - /obj/item/weapon/reagent_containers/food/snacks
 	// BORK BORK BORK
 
-	playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+	playsound(holder.my_atom, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/mob/living/carbon/human/M in viewers(get_turf_loc(holder.my_atom), null))
 		if(M:eyecheck() <= 0)
@@ -1107,7 +1107,7 @@
 		)//exclusion list for things you don't want the reaction to create.
 	var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
-	playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+	playsound(holder.my_atom, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/mob/living/carbon/human/M in viewers(get_turf_loc(holder.my_atom), null))
 		if(M:eyecheck() <= 0)
@@ -1138,7 +1138,7 @@
 	var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/snacks) - /obj/item/weapon/reagent_containers/food/snacks
 	// BORK BORK BORK
 
-	playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+	playsound(holder.my_atom, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/mob/living/carbon/human/M in viewers(get_turf_loc(holder.my_atom), null))
 		if(M:eyecheck() <= 0)
@@ -1166,7 +1166,7 @@
 	var/list/borks2 = typesof(/obj/item/weapon/reagent_containers/food/drinks) - /obj/item/weapon/reagent_containers/food/drinks
 	// BORK BORK BORK
 
-	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+	playsound(holder.my_atom, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
 		if(M:eyecheck() <= 0)
@@ -1205,7 +1205,7 @@
 	for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
 		O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
 	sleep(50)
-	playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+	playsound(holder.my_atom, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 	for(var/mob/living/M in range(get_turf_loc(holder.my_atom), 7))
 		M.bodytemperature -= 140
 		to_chat(M, "\blue You feel a chill!")

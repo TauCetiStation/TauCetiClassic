@@ -117,7 +117,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			else
 				user.whisper(replacetext(invocation," ", "`"))
 	if(sound)
-		playsound(user, sound, 100, 1)
+		playsound(user, sound, VOL_EFFECTS_MASTER)
 
 /obj/effect/proc_holder/spell/atom_init()
 	. = ..()

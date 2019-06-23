@@ -399,10 +399,10 @@ By design, d1 is the smallest direction and d2 is the highest
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
 	full_w_class = ITEM_SIZE_SMALL
+	merge_type = /obj/item/stack/cable_coil
 
 /obj/item/stack/cable_coil/cyborg
-	merge_type = /obj/item/stack/cable_coil
-	max_amount = 50
+	max_amount = 90
 	m_amt = 0
 	g_amt = 0
 

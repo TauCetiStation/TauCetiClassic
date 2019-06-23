@@ -49,7 +49,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 		var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
 		smoke.set_up(10, 0, U.loc)
 		smoke.start()
-		playsound(U.loc, 'sound/effects/bamf.ogg', 50, 2)
+		playsound(U, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 		s_bombs--
 		s_coold = 1
 		to_chat(U, "<span class='info'>There are <B>[s_bombs]</B> smoke bombs remaining.</span>")
@@ -70,7 +70,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 		var/turf/mobloc = get_turf(U.loc)//To make sure that certain things work properly below.
 		if((!T.density)&&istype(mobloc, /turf))
 			spawn(0)
-				playsound(U.loc, 'sound/effects/sparks4.ogg', 50, 1)
+				playsound(U, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 				anim(mobloc,src,'icons/mob/mob.dmi',,"phaseout",,U.dir)
 
 			cell.use(C*10)
@@ -79,8 +79,8 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 
 			spawn(0)
 				spark_system.start()
-				playsound(U.loc, 'sound/effects/phasein.ogg', 25, 1)
-				playsound(U.loc, 'sound/effects/sparks2.ogg', 50, 1)
+				playsound(U, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER, 25)
+				playsound(U, 'sound/effects/sparks2.ogg', VOL_EFFECTS_MASTER)
 				anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 		else
 			to_chat(U, "\red You cannot teleport into solid walls or from solid matter.")
@@ -97,7 +97,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 	var/C = 200
 	if(!ninjacost(C,0)) // EMP's now cost 1,000Energy about 30%
 		var/mob/living/carbon/human/U = affecting
-		playsound(U.loc, 'sound/effects/EMPulse.ogg', 60, 2)
+		playsound(U, 'sound/effects/EMPulse.ogg', VOL_EFFECTS_MASTER)
 		empulse(U, 2, 3) //Procs sure are nice. Slightly weaker than wizard's disable tch.
 		s_coold = 2
 		cell.use(C*10)
@@ -119,7 +119,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 			if(!U.get_active_hand()&&!istype(U.get_inactive_hand(), /obj/item/weapon/melee/energy/blade))
 				var/obj/item/weapon/melee/energy/blade/W = new()
 				spark_system.start()
-				playsound(U.loc, "sparks", 50, 1)
+				playsound(U, "sparks", VOL_EFFECTS_MASTER)
 				U.put_in_hands(W)
 				cell.use(C*10)
 			else
@@ -132,7 +132,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 				var/obj/item/weapon/melee/energy/blade/W = new()
 				U.put_in_inactive_hand(W)
 			spark_system.start()
-			playsound(U.loc, "sparks", 50, 1)
+			playsound(U, "sparks", VOL_EFFECTS_MASTER)
 			s_coold = 1
 	return
 
@@ -284,7 +284,7 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 		if(destination&&istype(mobloc, /turf))
 			U.say("Ai Satsugai!")
 			spawn(0)
-				playsound(U.loc, "sparks", 50, 1)
+				playsound(U, "sparks", VOL_EFFECTS_MASTER)
 				anim(mobloc,U,'icons/mob/mob.dmi',,"phaseout",,U.dir)
 
 			spawn(0)
@@ -300,8 +300,8 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 
 			spawn(0)
 				spark_system.start()
-				playsound(U.loc, 'sound/effects/phasein.ogg', 25, 1)
-				playsound(U.loc, "sparks", 50, 1)
+				playsound(U, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER, 25)
+				playsound(U, "sparks", VOL_EFFECTS_MASTER)
 				anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 			s_coold = 1
 		else
@@ -356,7 +356,7 @@ This is so anime it hurts. But that's the point.*/
 				U.say("Kumo no Shinkiro!")
 				var/turf/picked = locate(locx,locy,mobloc.z)
 				spawn(0)
-					playsound(U.loc, "sparks", 50, 1)
+					playsound(U, "sparks", VOL_EFFECTS_MASTER)
 					anim(mobloc,U,'icons/mob/mob.dmi',,"phaseout",,U.dir)
 
 				spawn(0)
@@ -374,8 +374,8 @@ This is so anime it hurts. But that's the point.*/
 
 				spawn(0)
 					spark_system.start()
-					playsound(U.loc, 'sound/effects/phasein.ogg', 25, 1)
-					playsound(U.loc, "sparks", 50, 1)
+					playsound(U, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER, 25)
+					playsound(U, "sparks", VOL_EFFECTS_MASTER)
 					anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 				s_coold = 1
 			else

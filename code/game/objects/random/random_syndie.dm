@@ -16,7 +16,7 @@
 	prob(6);/obj/item/weapon/gun/projectile/automatic/bulldog,\
 	prob(7);/obj/item/device/radio/beacon/syndicate,\
 	prob(7);/obj/item/ammo_box/magazine/m762,\
-	prob(8);/obj/item/weapon/aiModule/syndicate,\
+	prob(8);/obj/item/weapon/aiModule/freeform/syndicate,\
 	prob(8);/obj/item/device/powersink,\
 	prob(8);/obj/item/device/radio/beacon/syndicate_bomb,\
 	prob(10);/obj/item/weapon/storage/firstaid/tactical,\

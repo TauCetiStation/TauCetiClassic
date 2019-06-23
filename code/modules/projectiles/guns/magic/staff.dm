@@ -10,6 +10,7 @@
 	icon_state = "staffofchange"
 	item_state = "staffofchange"
 	fire_delay = 30
+	max_charges = 1
 
 /obj/item/weapon/gun/magic/staff/animate
 	name = "staff of animation"

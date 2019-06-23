@@ -42,6 +42,17 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/lastchangelog = ""              //Saved changlog filesize to detect if there was a change
 
+	//sound volume preferences
+	var/snd_music_vol = 100
+	var/snd_ambient_vol = 100
+	var/snd_effects_master_vol = 100
+	var/snd_effects_voice_announcement_vol = 100
+	var/snd_effects_misc_vol = 100
+	var/snd_effects_instrument_vol = 100
+	var/snd_notifications_vol = 100
+	var/snd_admin_vol = 100
+	var/snd_jukebox_vol = 100
+
 	//antag preferences
 	var/list/be_role = list()
 	var/uplinklocation = "PDA"

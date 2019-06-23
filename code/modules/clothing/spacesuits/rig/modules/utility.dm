@@ -602,7 +602,7 @@
 		return FALSE
 
 	charges["foaming agent"].charges = max(charges["foaming agent"].charges - per_use, 0)
-	playsound(loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+	playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 	INVOKE_ASYNC(src, .proc/spray_at, T)
 
 	return TRUE
@@ -636,4 +636,45 @@
 	input_item.reagents.remove_reagent("foaming_agent", total_transferred)
 
 	to_chat(user, "<font color='blue'>You transfer [total_transferred] units into the [interface_name].</font>")
+	return TRUE
+
+/obj/item/rig_module/stealth
+	name = "hardsuit stealth system"
+	desc = "System that makes hardsuit invisible."
+	interface_name = "Turn invisibility"
+	interface_desc = "System that makes hardsuit invisible."
+	origin_tech = "engineering=6;programming=6;bluespace=6;combat=6;phorontech=6"
+	active_power_cost = 55
+	permanent = TRUE
+	show_toggle_button = TRUE
+	toggleable = TRUE
+	activate_string = "Invisibility On"
+	deactivate_string = "Invisibility Off"
+	module_cooldown = 30 SECONDS
+
+/obj/item/rig_module/stealth/activate(forced = FALSE)
+	if(!..())	
+		return FALSE
+	if(holder.wearer.is_busy()) 
+		return FALSE
+
+	var/mob/living/carbon/human/H = holder.wearer
+	holder.canremove = FALSE
+	to_chat(H, "<span class='notice'>Starting invisibility protocol, please wait until it done.</span>")
+	if(do_after(H, 40, target = H))
+		if(!active)
+			to_chat(H, "<span class='danger'>ERROR! Invisibility protocol has been stoped.</span>")
+			return FALSE
+		to_chat(H, "<span class='notice'>Invisibility protocol has been engaged.</span>")
+		holder.wearer.alpha = 4
+		return TRUE
+
+/obj/item/rig_module/stealth/deactivate()
+	. = ..()
+	if(!.)	
+		return FALSE
+		
+	holder.canremove = TRUE
+	holder.wearer.alpha = 255
+
 	return TRUE

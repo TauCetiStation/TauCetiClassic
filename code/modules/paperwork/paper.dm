@@ -124,7 +124,7 @@
 		icon_state = "scrap"
 		throw_range = 1
 
-	playsound(src, 'sound/items/crumple.ogg', 15, 1, 1)
+	playsound(src, 'sound/items/crumple.ogg', VOL_EFFECTS_MASTER, 15)
 	add_fingerprint(usr)
 
 /obj/item/weapon/paper/afterattack(atom/target, mob/user, proximity)
@@ -149,7 +149,7 @@
 	if(rigged && (Holiday == "April Fool's Day"))
 		if(spam_flag == 0)
 			spam_flag = 1
-			playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
+			playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER)
 			addtimer(CALLBACK(src, .proc/reset_spam_flag), 20)
 	return
 
@@ -553,7 +553,7 @@
 		var/obj/item/weapon/stamp/S = P
 		S.stamp_paper(src)
 
-		playsound(src, 'sound/effects/stamp.ogg', 50, 1)
+		playsound(src, 'sound/effects/stamp.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='notice'>[user] stamp the paper.</span>", "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
 	else if(istype(P, /obj/item/weapon/lighter))
@@ -636,3 +636,23 @@
 /obj/item/weapon/paper/firing_range
 	name = "Firing Range Instructions"
 	info = "Directions:<br><i>First you'll want to make sure there is a target stake in the center of the magnetic platform. Next, take an aluminum target from the crates back there and slip it into the stake. Make sure it clicks! Next, there should be a control console mounted on the wall somewhere in the room.<br><br> This control console dictates the behaviors of the magnetic platform, which can move your firing target around to simulate real-world combat situations. From here, you can turn off the magnets or adjust their electromagnetic levels and magnetic fields. The electricity level dictates the strength of the pull - you will usually want this to be the same value as the speed. The magnetic field level dictates how far the magnetic pull reaches.<br><br>Speed and path are the next two settings. Speed is associated with how fast the machine loops through the designated path. Paths dictate where the magnetic field will be centered at what times. There should be a pre-fabricated path input already. You can enable moving to observe how the path affects the way the stake moves. To script your own path, look at the following key:</i><br><br>N: North<br>S: South<br>E: East<br>W: West<br>C: Center<br>R: Random (results may vary)<br>; or &: separators. They are not necessary but can make the path string better visible."
+
+/obj/item/weapon/paper/space_structures
+	name = "NSS Exodus Sensor Readings"
+
+/obj/item/weapon/paper/space_structures/atom_init()
+	. = ..()
+	info = get_space_structures_info()
+
+	var/obj/item/weapon/stamp/centcomm/S = new
+	S.stamp_paper(src, "This paper has been stamped by the Centcomm Science Department.")
+
+	update_icon()
+	updateinfolinks()
+
+/obj/item/weapon/paper/space_structures/proc/get_space_structures_info()
+	var/paper_text = "<center><img src = bluentlogo.png /><br /><font size = 3><b>NSS Exodus</b> Sensor Readings:</font></center><br /><hr>"
+	paper_text += "Scan results show the following points of interest:<br />"
+	for(var/list/structure in SSmapping.spawned_structures)
+		paper_text += "<li><b>[structure["desc"]]</b>: x = [structure["x"]], y = [structure["y"]], z = [prob(50) ? structure["z"] : "unknown"]</li>"
+	return paper_text

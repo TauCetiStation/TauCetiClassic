@@ -68,9 +68,6 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 		if("analyzeClientData")
 			data = analyzeClientData(arglist(params))
 
-		if("setAdminSoundVolume")
-			data = setAdminSoundVolume(arglist(params))
-
 	if(data)
 		ehjax_send(data = data)
 
@@ -113,15 +110,6 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	if(islist(data))
 		data = json_encode(data)
 	C << output("[data]", "[window]:ehjaxCallback")
-
-/datum/chatOutput/proc/setAdminSoundVolume(volume = "")
-	owner.adminSoundVolume = Clamp(text2num(volume), 0, 100)
-	
-	var/sound/S = new()
-	S.channel = CHANNEL_ADMIN
-	S.volume = owner.adminSoundVolume
-	S.status = SOUND_UPDATE | SOUND_STREAM
-	owner << S
 
 /datum/chatOutput/proc/sendClientData()
 	var/list/deets = list("clientData" = list())

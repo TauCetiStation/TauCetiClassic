@@ -13,7 +13,7 @@
 /obj/structure/flora/attackby(obj/item/weapon/W, mob/user)
 	. = ..()
 	if(can_be_cut && is_sharp(W) && W.force >= damage_threshhold)
-		playsound(src, cutting_sound, 50, 1)
+		playsound(src, cutting_sound, VOL_EFFECTS_MASTER)
 		health_flora -= W.force
 		if(health_flora <= 0)
 			visible_message("<span class='warning'>[src] is hacked into pieces!</span>")

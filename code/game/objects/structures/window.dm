@@ -51,7 +51,7 @@
 		shatter()
 	else
 		if(sound_effect)
-			playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
+			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 		if(message)
 			if(health < maxhealth / 4 && initialhealth >= maxhealth / 4)
 				visible_message("[src] looks like it's about to shatter!" )
@@ -62,7 +62,7 @@
 	update_icon()
 
 /obj/structure/window/proc/shatter(display_message = 1)
-	playsound(src, "shatter", 70, 1)
+	playsound(src, "shatter", VOL_EFFECTS_MASTER)
 	if(display_message)
 		visible_message("[src] shatters!")
 	if(dir == SOUTHWEST)
@@ -160,7 +160,7 @@
 
 /obj/structure/window/attack_tk(mob/user)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
-	playsound(loc, 'sound/effects/Glasshit.ogg', 50, 1)
+	playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 
 /obj/structure/window/attack_hand(mob/user)	//specflags please!!
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -172,12 +172,12 @@
 		user.do_attack_animation(src)
 		take_damage(rand(15,25), "generic")
 	else if (user.a_intent == "hurt")
-		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
+		playsound(src, 'sound/effects/glassknock.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("<span class='danger'>[usr.name] bangs against the [src.name]!</span>", \
 							"<span class='danger'>You bang against the [src.name]!</span>", \
 							"You hear a banging sound.")
 	else
-		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
+		playsound(src, 'sound/effects/glassknock.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("[usr.name] knocks on the [src.name].", \
 							"You knock on the [src.name].", \
 							"You hear a knocking sound.")
@@ -234,24 +234,26 @@
 	else if(isscrewdriver(W))
 		if(reinf && state >= 1)
 			state = 3 - state
-			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, (state == 1 ? "<span class='notice'>You have unfastened the window from the frame.</span>" : "<span class='notice'>You have fastened the window to the frame.</span>"))
 
 		else if(reinf && state == 0)
 			anchored = !anchored
 			update_nearby_icons()
-			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, (anchored ? "<span class='notice'>You have fastened the frame to the floor.</span>" : "<span class='notice'>You have unfastened the frame from the floor.</span>"))
+			fastened_change()
 
 		else if(!reinf)
 			anchored = !anchored
 			update_nearby_icons()
-			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>"))
+			fastened_change()
 
 	else if(iscrowbar(W) && reinf && state <= 1)
 		state = 1 - state
-		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
+		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>"))
 
 	else if(istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
@@ -292,7 +294,7 @@
 		var/obj/item/weapon/changeling_hammer/C = W
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(C.use_charge(user))
-			playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 			shatter()
 
 	else
@@ -301,10 +303,14 @@
 			if(health <= 7)
 				anchored = 0
 				update_nearby_icons()
+				fastened_change()
 				step(src, get_dir(user, src))
 		else
-			playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
+			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 		..()
+
+/obj/structure/window/proc/fastened_change()
+	return
 
 //painter
 /obj/structure/window/proc/change_paintjob(obj/item/C, mob/user)
@@ -396,7 +402,7 @@
 
 /obj/structure/window/Destroy()
 	density = 0
-	playsound(src, "shatter", 70, 1)
+	playsound(src, "shatter", VOL_EFFECTS_MASTER)
 	update_nearby_tiles()
 	update_nearby_icons()
 	return ..()
@@ -535,10 +541,16 @@
 /obj/structure/window/reinforced/polarized/proc/toggle()
 	if(opacity)
 		icon_state = "fwindow"
+		basestate = "fwindow"
 		set_opacity(0)
 	else
 		icon_state = "twindowold"
+		basestate = "twindowold"
 		set_opacity(1)
+
+/obj/structure/window/reinforced/polarized/fastened_change()
+	if(opacity && !anchored)
+		toggle()
 
 /obj/machinery/windowtint/attack_hand(mob/user as mob)
 	if(..())
@@ -553,7 +565,7 @@
 	update_icon()
 
 	for(var/obj/structure/window/reinforced/polarized/W in range(src,range))
-		if (W.id == src.id || !W.id)
+		if ((W.id == src.id || !W.id) && W.anchored)
 			W.toggle()
 
 /obj/machinery/windowtint/power_change()

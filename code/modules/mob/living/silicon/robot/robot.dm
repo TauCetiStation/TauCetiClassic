@@ -138,7 +138,7 @@
 	else
 		lawupdate = 0
 
-	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
+	playsound(src, 'sound/voice/liveagain.ogg', VOL_EFFECTS_MASTER)
 
 // setup the PDA and its name
 /mob/living/silicon/robot/proc/setup_PDA()
@@ -804,7 +804,7 @@
 			var/damage = rand(10, 20)
 			if (prob(90))
 
-				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+				playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 				for(var/mob/O in viewers(src, null))
 					O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
 				if(prob(8))
@@ -812,7 +812,7 @@
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
-				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
+				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
@@ -824,12 +824,12 @@
 					Stun(7)
 					step(src,get_dir(M,src))
 					spawn(5) step(src,get_dir(M,src))
-					playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
+					playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS_MASTER)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] has forced back []!</B>", M, src), 1)
 				else
-					playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
+					playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] attempted to force back []!</B>", M, src), 1)
@@ -901,7 +901,7 @@
 		M.emote("[M.friendly] [src]")
 	else
 		if(M.attack_sound)
-			playsound(loc, M.attack_sound, 50, 1, 1)
+			playsound(src, M.attack_sound, VOL_EFFECTS_MASTER)
 		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")

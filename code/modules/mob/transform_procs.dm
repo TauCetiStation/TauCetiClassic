@@ -82,7 +82,7 @@
 
 /mob/proc/AIize(move=1)
 	if(client)
-		send_sound(src, null, 85, CHANNEL_LOBBY_MUSIC) // stop the jams for AIs
+		playsound_stop(CHANNEL_MUSIC) // stop the jams for AIs
 	var/mob/living/silicon/ai/O = new (loc, base_law_type,,1)//No MMI but safety is in effect.
 	O.invisibility = 0
 	O.aiRestorePowerRoutine = 0
@@ -121,7 +121,7 @@
 	to_chat(O, "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>")
 	to_chat(O, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
 	to_chat(O, "To use something, simply click on it.")
-	to_chat(O, {"Use say ":b to speak to your cyborgs through binary."})
+	to_chat(O, "Use say \":b to speak to your cyborgs through binary.")
 	if (!(ticker && ticker.mode && (O.mind in ticker.mode.malf_ai)))
 		O.show_laws()
 		to_chat(O, "<b>These laws may be changed by other players, or by you being the traitor.</b>")

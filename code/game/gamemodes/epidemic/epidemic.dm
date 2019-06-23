@@ -67,7 +67,7 @@
 			comm.messagetext.Add(intercepttext)
 
 	station_announce(sound = "commandreport")
-	
+
 	// add an extra law to the AI to make sure it cooperates with the heads
 	var/extra_law = "Crew authorized to know of pathogen [virus_name]'s existence are: Heads of command, any crew member with loyalty implant. Do not allow unauthorized personnel to gain knowledge of [virus_name]. Aid authorized personnel in quarantining and neutrlizing the outbreak. This law overrides all other laws."
 	for(var/mob/living/silicon/ai/M in ai_list)
@@ -188,9 +188,8 @@
 ///////////////////////////////////////////
 /datum/game_mode/epidemic/proc/crew_lose()
 	ticker.mode:explosion_in_progress = 1
-	for(var/mob/M in mob_list)
-		if(M.client)
-			send_sound(M, 'sound/machines/Alarm.ogg')
+	for(var/mob/M in player_list)
+		M.playsound_local(null, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 	to_chat(world, "\blue<b>Incoming missile detected.. Impact in 10..</b>")
 	for (var/i=9 to 1 step -1)
 		sleep(10)
@@ -211,10 +210,12 @@
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/epidemic/declare_completion()
 	if(finished == 1)
-		feedback_set_details("round_end_result","win - epidemic cured")
-		to_chat(world, "\red <FONT size = 3><B> The virus outbreak was contained! The crew wins!</B></FONT>")
+		mode_result = "win - epidemic cured"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='font-weight: bold; color: red;'>The virus outbreak was contained! The crew wins!</span>"
 	else if(finished == 2)
-		feedback_set_details("round_end_result","loss - rev heads killed")
-		to_chat(world, "\red <FONT size = 3><B> The crew succumbed to the epidemic!</B></FONT>")
+		mode_result = "loss - crew succumbed to the epidemic"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='font-weight: bold; color: red;'>The crew succumbed to the epidemic!</span>"
 	..()
 	return 1

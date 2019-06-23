@@ -113,7 +113,7 @@
 /obj/machinery/computer/HolodeckControl/attackby(obj/item/weapon/D, mob/user)
 	if(istype(D, /obj/item/weapon/card/emag))
 		user.SetNextMove(CLICK_CD_INTERACT)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
+		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 		last_to_emag = user //emag again to change the owner
 		if (!emagged)
 			emagged = 1

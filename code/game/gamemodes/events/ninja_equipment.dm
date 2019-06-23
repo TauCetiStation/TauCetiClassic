@@ -562,7 +562,7 @@ ________________________________________________________________________________
 						M.show_message("<span class='game say'>PDA Message - <span class='name'>[U]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[t]</span></span>")
 
 				if (!P.message_silent)
-					playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
+					playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 					for (var/mob/O in hearers(3, P.loc))
 						O.show_message(text("[bicon(P)] *[P.ttone]*"))
 				P.overlays.Cut()
@@ -1045,7 +1045,7 @@ ________________________________________________________________________________
 
 					if (do_after(U,10,target = A))
 						spark_system.start()
-						playsound(A.loc, "sparks", 50, 1)
+						playsound(A, "sparks", VOL_EFFECTS_MASTER)
 						A.cell.charge-=drain
 						S.cell.charge+=drain
 						totaldrain+=drain
@@ -1073,7 +1073,7 @@ ________________________________________________________________________________
 						maxcapacity = 1
 					if (do_after(U,10,target = A))
 						spark_system.start()
-						playsound(A.loc, "sparks", 50, 1)
+						playsound(A, "sparks", VOL_EFFECTS_MASTER)
 						A.charge-=drain
 						S.cell.charge+=drain
 						totaldrain+=drain
@@ -1200,7 +1200,7 @@ ________________________________________________________________________________
 						maxcapacity = 1
 					if (do_after(U,10,target = A))
 						A.spark_system.start()
-						playsound(A.loc, "sparks", 50, 1)
+						playsound(A, "sparks", VOL_EFFECTS_MASTER)
 						A.cell.use(drain)
 						S.cell.charge+=drain
 						totaldrain+=drain
@@ -1223,7 +1223,7 @@ ________________________________________________________________________________
 						maxcapacity = 1
 					if (do_after(U,10,target = A))
 						A.spark_system.start()
-						playsound(A.loc, "sparks", 50, 1)
+						playsound(A, "sparks", VOL_EFFECTS_MASTER)
 						A.cell.charge-=drain
 						S.cell.charge+=drain
 						totaldrain+=drain
@@ -1447,7 +1447,7 @@ It is possible to destroy the net by the occupant or someone else.
 			M.drop_from_inventory(W)
 
 		spawn(0)
-			playsound(M.loc, 'sound/effects/sparks4.ogg', 50, 1)
+			playsound(M, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 			anim(M.loc,M,'icons/mob/mob.dmi',,"phaseout",,M.dir)
 
 		if(holdingfacility.len)
@@ -1456,8 +1456,8 @@ It is possible to destroy the net by the occupant or someone else.
 				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 				spark_system.set_up(5, 0, M.loc)
 				spark_system.start()
-				playsound(M.loc, 'sound/effects/phasein.ogg', 25, 1)
-				playsound(M.loc, 'sound/effects/sparks2.ogg', 50, 1)
+				playsound(M, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER, 25)
+				playsound(M, 'sound/effects/sparks2.ogg', VOL_EFFECTS_MASTER)
 				anim(M.loc,M,'icons/mob/mob.dmi',,"phasein",,M.dir)
 				qdel(src)//Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
 		else
@@ -1513,7 +1513,7 @@ It is possible to destroy the net by the occupant or someone else.
 		tforce = 10
 	else
 		tforce = AM:throwforce
-	playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
+	playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 	health = max(0, health - tforce)
 	healthcheck()
 	..()
@@ -1540,7 +1540,7 @@ It is possible to destroy the net by the occupant or someone else.
 	to_chat(usr, text("\green You claw at the net."))
 	for(var/mob/O in oviewers(src))
 		O.show_message(text("\red [] claws at the energy net!", usr), 1)
-	playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
+	playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 	health -= rand(10, 20)
 	if(health <= 0)
 		to_chat(usr, text("\green You slice the energy net to pieces."))

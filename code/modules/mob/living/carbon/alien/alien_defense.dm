@@ -51,7 +51,7 @@ This is what happens, when we attack aliens.
 						step_away(src,M,15)
 						sleep(3)
 						step_away(src,M,15)
-				playsound(loc, "punch", 25, 1, -1)
+				playsound(src, "punch", VOL_EFFECTS_MASTER)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
@@ -63,7 +63,7 @@ This is what happens, when we attack aliens.
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
-				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has attempted to punch []!</B>", M, src), 1)
@@ -72,19 +72,19 @@ This is what happens, when we attack aliens.
 			if (!lying)
 				if (prob(5))//Very small chance to push an alien down.
 					Weaken(2)
-					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+					playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] has pushed down []!</B>", M, src), 1)
 				else
 					if (prob(50))
 						drop_item()
-						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+						playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 						for(var/mob/O in viewers(src, null))
 							if ((O.client && !( O.blinded )))
 								O.show_message(text("\red <B>[] has disarmed []!</B>", M, src), 1)
 					else
-						playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+						playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 						for(var/mob/O in viewers(src, null))
 							if ((O.client && !( O.blinded )))
 								O.show_message(text("\red <B>[] has attempted to disarm []!</B>", M, src), 1)
@@ -110,7 +110,7 @@ This is what happens, when we attack aliens.
 			if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
 				return
 			if (health > 0)
-				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+				playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[M.name] has bit [src]!</B>"), 1)
@@ -125,7 +125,7 @@ This is what happens, when we attack aliens.
 		M.emote("[M.friendly] [src]")
 	else
 		if(M.attack_sound)
-			playsound(loc, M.attack_sound, 50, 1, 1)
+			playsound(src, M.attack_sound, VOL_EFFECTS_MASTER)
 		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
@@ -156,7 +156,7 @@ This is what happens, when we attack aliens.
 
 		else
 			if (health > 0)
-				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+				playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 				var/damage = rand(1, 3)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))

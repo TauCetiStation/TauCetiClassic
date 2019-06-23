@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 23
+#define SAVEFILE_VERSION_MAX 25
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -48,6 +48,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 16)
 		S["aooccolor"] << S["ooccolor"]
 		aooccolor = ooccolor
+
+	if(current_version < 25)
+		var/const/SOUND_ADMINHELP = 1
+		var/const/SOUND_MIDI = 2
+		var/const/SOUND_AMBIENCE = 4
+		var/const/SOUND_LOBBY = 8
+		var/const/SOUND_STREAMING = 64
+
+		toggles &= ~(SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|SOUND_STREAMING)
+		S["toggles"] << toggles
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 17)
@@ -130,6 +140,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax_theme"]		>> parallax_theme
 	S["ambientocclusion"]	>> ambientocclusion
 
+	//Sound preferences
+	S["snd_music_vol"]						>> snd_music_vol
+	S["snd_ambient_vol"]					>> snd_ambient_vol
+	S["snd_effects_master_vol"]				>> snd_effects_master_vol
+	S["snd_effects_voice_announcement_vol"]	>> snd_effects_voice_announcement_vol
+	S["snd_effects_misc_vol"]				>> snd_effects_misc_vol
+	S["snd_effects_instrument_vol"]			>> snd_effects_instrument_vol
+	S["snd_notifications_vol"]				>> snd_notifications_vol
+	S["snd_admin_vol"]						>> snd_admin_vol
+	S["snd_jukebox_vol"]					>> snd_jukebox_vol
+
 	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -153,6 +174,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!cid_list)
 		cid_list = list()
 	ignore_cid_warning = sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
+
+	snd_music_vol = sanitize_integer(snd_music_vol, 0, 100, initial(snd_music_vol))
+	snd_ambient_vol = sanitize_integer(snd_ambient_vol, 0, 100, initial(snd_ambient_vol))
+	snd_effects_master_vol = sanitize_integer(snd_effects_master_vol, 0, 100, initial(snd_effects_master_vol))
+	snd_effects_voice_announcement_vol = sanitize_integer(snd_effects_voice_announcement_vol, 0, 100, initial(snd_effects_voice_announcement_vol))
+	snd_effects_misc_vol = sanitize_integer(snd_effects_misc_vol, 0, 100, initial(snd_effects_misc_vol))
+	snd_effects_instrument_vol = sanitize_integer(snd_effects_instrument_vol, 0, 100, initial(snd_effects_instrument_vol))
+	snd_notifications_vol = sanitize_integer(snd_notifications_vol, 0, 100, initial(snd_notifications_vol))
+	snd_admin_vol = sanitize_integer(snd_admin_vol, 0, 100, initial(snd_admin_vol))
+	snd_jukebox_vol = sanitize_integer(snd_jukebox_vol, 0, 100, initial(snd_jukebox_vol))
+
 	return 1
 
 /datum/preferences/proc/save_preferences()
@@ -185,6 +217,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]			<< parallax
 	S["parallax_theme"]		<< parallax_theme
 	S["ambientocclusion"]	<< ambientocclusion
+
+	//Sound preferences
+	S["snd_music_vol"]						<< snd_music_vol
+	S["snd_ambient_vol"]					<< snd_ambient_vol
+	S["snd_effects_master_vol"]				<< snd_effects_master_vol
+	S["snd_effects_voice_announcement_vol"]	<< snd_effects_voice_announcement_vol
+	S["snd_effects_misc_vol"]				<< snd_effects_misc_vol
+	S["snd_effects_instrument_vol"]			<< snd_effects_instrument_vol
+	S["snd_notifications_vol"]				<< snd_notifications_vol
+	S["snd_admin_vol"]						<< snd_admin_vol
+	S["snd_jukebox_vol"]					<< snd_jukebox_vol
 	return 1
 
 /datum/preferences/proc/load_saved_character(dir)

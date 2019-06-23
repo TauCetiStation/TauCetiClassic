@@ -21,6 +21,14 @@
 		to_chat(S,"<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")
 		S.Weaken(3)
 
+	// Prevents having Regenerate verb after rebirth.
+	M.changeling.purchasedpowers -= locate(/obj/effect/proc_holder/changeling/revive) in M.changeling.purchasedpowers
+
+	// In case we did it out of stasis
+	if (M.changeling.instatis)
+		M.changeling.instatis = FALSE
+		user.fake_death = FALSE
+
 	var/mob/living/simple_animal/headcrab/crab = new(get_turf(user))
 	crab.origin = M
 	M.transfer_to(crab)
@@ -32,7 +40,7 @@
 	to_chat(crab,"<span class='warning'>You burst out of the remains of your former body in a shower of gore!</span>")
 	feedback_add_details("changeling_powers","LR")
 	if(ismob(user))
-		playsound(user, 'sound/effects/blobattack.ogg', 100, 1)
+		playsound(user, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
 		user.gib()
 	else
 		qdel(user)
@@ -122,6 +130,6 @@
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		C.gib()
-		playsound(C, 'sound/effects/blobattack.ogg', 100, 1)
+		playsound(C, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
 
 #undef EGG_INCUBATION_TIME

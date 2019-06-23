@@ -2,7 +2,7 @@
 /obj/machinery/computer/station_alert
 	name = "Station Alert Console"
 	desc = "Used to access the station's automated alert system."
-	icon_state = "alert:0"
+	icon_state = "atmos"
 	light_color = "#e6ffff"
 	circuit = /obj/item/weapon/circuitboard/stationalert
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
@@ -94,6 +94,6 @@
 			var/list/L = src.alarms[cat]
 			if(L.len) active_alarms = 1
 		if(active_alarms)
-			icon_state = "alert:2"
+			icon_state = "atmos_alert_2"
 		else
-			icon_state = "alert:0"
+			icon_state = "atmos_alert_0"
