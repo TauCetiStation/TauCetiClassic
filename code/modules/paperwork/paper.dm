@@ -636,3 +636,23 @@
 /obj/item/weapon/paper/firing_range
 	name = "Firing Range Instructions"
 	info = "Directions:<br><i>First you'll want to make sure there is a target stake in the center of the magnetic platform. Next, take an aluminum target from the crates back there and slip it into the stake. Make sure it clicks! Next, there should be a control console mounted on the wall somewhere in the room.<br><br> This control console dictates the behaviors of the magnetic platform, which can move your firing target around to simulate real-world combat situations. From here, you can turn off the magnets or adjust their electromagnetic levels and magnetic fields. The electricity level dictates the strength of the pull - you will usually want this to be the same value as the speed. The magnetic field level dictates how far the magnetic pull reaches.<br><br>Speed and path are the next two settings. Speed is associated with how fast the machine loops through the designated path. Paths dictate where the magnetic field will be centered at what times. There should be a pre-fabricated path input already. You can enable moving to observe how the path affects the way the stake moves. To script your own path, look at the following key:</i><br><br>N: North<br>S: South<br>E: East<br>W: West<br>C: Center<br>R: Random (results may vary)<br>; or &: separators. They are not necessary but can make the path string better visible."
+
+/obj/item/weapon/paper/space_structures
+	name = "NSS Exodus Sensor Readings"
+
+/obj/item/weapon/paper/space_structures/atom_init()
+	. = ..()
+	info = get_space_structures_info()
+
+	var/obj/item/weapon/stamp/centcomm/S = new
+	S.stamp_paper(src, "This paper has been stamped by the Centcomm Science Department.")
+
+	update_icon()
+	updateinfolinks()
+
+/obj/item/weapon/paper/space_structures/proc/get_space_structures_info()
+	var/paper_text = "<center><img src = bluentlogo.png /><br /><font size = 3><b>NSS Exodus</b> Sensor Readings:</font></center><br /><hr>"
+	paper_text += "Scan results show the following points of interest:<br />"
+	for(var/list/structure in SSmapping.spawned_structures)
+		paper_text += "<li><b>[structure["desc"]]</b>: x = [structure["x"]], y = [structure["y"]], z = [prob(50) ? structure["z"] : "unknown"]</li>"
+	return paper_text
