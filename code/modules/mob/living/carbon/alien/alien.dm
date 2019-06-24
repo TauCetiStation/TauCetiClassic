@@ -29,6 +29,8 @@
 	var/heat_protection = 0.5
 	var/leaping = 0
 	ventcrawler = 2
+	
+	flags = NO_BREATHE
 
 /mob/living/carbon/alien/atom_init()
 	. = ..()
