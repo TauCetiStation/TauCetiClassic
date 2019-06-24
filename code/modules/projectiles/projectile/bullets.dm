@@ -1,7 +1,7 @@
 /obj/item/projectile/bullet
 	name = "bullet"
 	icon_state = "bullet"
-	damage = 40
+	damage = 45
 	damage_type = BRUTE
 	nodamage = 0
 	flag = "bullet"
@@ -26,11 +26,11 @@
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
-	damage = 9
+	damage = 12
 
 /obj/item/projectile/bullet/weakbullet/beanbag		//because beanbags are not bullets
 	name = "beanbag"
-	agony = 50
+	agony = 45
 
 /obj/item/projectile/bullet/weakbullet/rubber
 	name = "rubber bullet"
