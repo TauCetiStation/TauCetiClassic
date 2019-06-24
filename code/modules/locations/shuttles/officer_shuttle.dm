@@ -122,6 +122,7 @@
 /area/shuttle/officer/station
 	name = "NSS Exodus"
 	icon_state = "shuttle"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/shuttle/officer/centcomm
 	name = "Centcomm"
