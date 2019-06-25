@@ -985,7 +985,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 		src.verbs -= /mob/proc/yank_out_object
 		clear_alert("embeddedobject")
 
-	if(istype(src, /mob/living/carbon/human))
+	embedded -= selection
+
+	if(ishuman(src))
 
 		var/mob/living/carbon/human/H = src
 		var/obj/item/organ/external/BP
