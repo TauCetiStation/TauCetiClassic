@@ -26,7 +26,7 @@
 
 /obj/item/projectile/bullet/buckpellet
 	name = "buckpellet"
-	damage = 13
+	damage = 14
 	dispersion = 2.5
 
 /obj/item/projectile/bullet/pellet
