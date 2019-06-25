@@ -1879,5 +1879,4 @@
 #include "maps\z5.dmm"
 #include "maps\z6.dmm"
 #include "maps\z7.dmm"
-#include "maps\RandomZLevels\ancienttemple.dmm"
 // END_INCLUDE
