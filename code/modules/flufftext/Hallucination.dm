@@ -114,7 +114,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				//src << "Strange Audio"
 				switch(rand(1,12))
 					if(1)
-						playsound_local(null, 'sound/machines/airlock/airlockToggle.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+						playsound_local(null, 'sound/machines/airlock/toggle.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 					if(2)
 						if(prob(50))
 							playsound_local(null, 'sound/effects/Explosion1.ogg', VOL_EFFECTS_MASTER, null, FALSE)

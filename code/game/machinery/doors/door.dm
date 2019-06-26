@@ -24,8 +24,8 @@
 	var/block_air_zones = 1 //If set, air zones cannot merge across the door even when it is opened.
 	var/emergency = 0 // Emergency access override
 
-	var/door_open_sound  = 'sound/machines/airlock/airlockToggle_2.ogg'
-	var/door_close_sound = 'sound/machines/airlock/airlockToggle_2.ogg'
+	var/door_open_sound  = 'sound/machines/airlock/toggle.ogg'
+	var/door_close_sound = 'sound/machines/airlock/toggle.ogg'
 
 	var/dock_tag
 
