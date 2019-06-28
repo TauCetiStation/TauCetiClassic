@@ -69,13 +69,12 @@
 		else if (magazine)
 			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 	return 0
-
 /obj/item/weapon/gun/projectile/can_fire()
 	if(chambered && chambered.BB)
 		return 1
 
 /obj/item/weapon/gun/projectile/attack_self(mob/living/user)
-	if (magazine)
+	if (magazine && src)
 		magazine.loc = get_turf(src.loc)
 		user.put_in_hands(magazine)
 		magazine.update_icon()

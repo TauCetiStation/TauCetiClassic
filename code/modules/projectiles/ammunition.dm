@@ -12,7 +12,13 @@
 	var/projectile_type = null					//The bullet type to create when New() is called
 	var/obj/item/projectile/BB = null 			//The loaded bullet
 	var/pellets = 0								//Pellets for spreadshot
-	var/variance = 0							//Variance for inaccuracy fundamental to the casing
+	var/variance = 0.6							//Variance for inaccuracy fundamental to the casing
+
+	var/lessdamage = 5
+	var/lessdispersion = -1
+	var/lessfiredelay = -2
+	var/lessrecoil = 0
+	var/size = 0
 
 /obj/item/ammo_casing/atom_init()
 	. = ..()
@@ -74,6 +80,8 @@
 	var/multiple_sprites = 0
 	var/caliber
 	var/multiload = 1
+	var/size = 0.1
+	var/gun_type = list("bullet")
 
 /obj/item/ammo_box/atom_init()
 	. = ..()

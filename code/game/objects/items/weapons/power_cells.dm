@@ -16,6 +16,7 @@
 	g_amt = 50
 	var/rigged = 0		// true if rigged to explode
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
+	var/size = 0.2
 
 /obj/item/weapon/stock_parts/cell/suicide_act(mob/user)
 	to_chat(viewers(user), "\red <b>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</b>")
@@ -58,6 +59,7 @@
 	maxcharge = 10000
 	g_amt = 60
 	rating = 3
+	size = 0.3
 
 /obj/item/weapon/stock_parts/cell/high/empty/atom_init()
 	. = ..()
@@ -70,6 +72,7 @@
 	maxcharge = 20000
 	g_amt = 70
 	rating = 4
+	size = 0.4
 
 /obj/item/weapon/stock_parts/cell/super/empty/atom_init()
 	. = ..()
@@ -82,6 +85,7 @@
 	maxcharge = 30000
 	g_amt = 80
 	rating = 5
+	size = 0.4
 
 /obj/item/weapon/stock_parts/cell/hyper/empty/atom_init()
 	. = ..()
@@ -95,6 +99,7 @@
 	g_amt = 80
 	rating = 6
 	//chargerate = 4000
+	size = 0.5
 
 /obj/item/weapon/stock_parts/cell/bluespace/empty/atom_init()
 	. = ..()

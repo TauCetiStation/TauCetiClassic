@@ -34,9 +34,9 @@
 	var/p_x = 16
 	var/p_y = 16 // the pixel location of the tile that the player clicked. Default is the center
 
-	var/dispersion = 0.0
+	var/dispersion = 1.0
 
-	var/damage = 10
+	var/damage = 15
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
 	var/fake = 0 //Fake projectile won't spam chat for admins with useless logs
