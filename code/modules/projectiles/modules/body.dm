@@ -76,6 +76,7 @@
 		lessrecoil += modul.lessrecoil
 		size += modul.size
 		overlays += modul.icon_state
+		update_icon()
 	else
 		modul.loc = get_turf(src)
 		lessdamage -= modul.lessdamage
@@ -84,6 +85,7 @@
 		lessrecoil -= modul.lessrecoil
 		size -= modul.size
 		overlays -= modul.icon_state
+		update_icon()
 	return modul
 
 /obj/item/weapon/gun/projectile/modulargun/attackby(obj/item/A, mob/user)
@@ -102,6 +104,18 @@
 				user.remove_from_mob(AM)
 				magazine = AM
 				magazine.loc = src
+				overlays += "magazine_external"
+				playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
+				to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
+				chamber_round()
+				A.update_icon()
+				update_icon()
+				return TRUE
+			else if(!magazine && !mag_type2 && istype(AM, /obj/item/ammo_box/magazine) && AM.caliber == caliber)
+				user.remove_from_mob(AM)
+				magazine = AM
+				magazine.loc = src
+				overlays += "magazine_external"
 				playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 				chamber_round()
@@ -309,6 +323,7 @@
 		if (magazine && src && magazine_eject && !gun_energy)
 			magazine.loc = get_turf(src.loc)
 			user.put_in_hands(magazine)
+			overlays -= "magazine_external"
 			magazine.update_icon()
 			magazine = null
 			update_icon()
@@ -429,6 +444,31 @@
 						var/datum/reagents/casting_reagents = chambered.reagents
 						casting_reagents.trans_to(chambered.BB, casting_reagents.total_volume) //For chemical darts/bullets
 						casting_reagents.delete()
+		return
+
+/obj/item/weapon/gun/projectile/modulargun/update_icon()
+	if(gun_energy && power_supply)
+		var/ratio = 0
+		if(power_supply.maxcharge)
+			ratio = power_supply.charge / power_supply.maxcharge
+			ratio = ceil(ratio * 4) * 25
+		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+		switch(modifystate)
+			if (0)
+				if(ratio > 100)
+					icon_state = "[initial(icon_state)]100"
+				else
+					icon_state = "[initial(icon_state)][ratio]"
+			if (1)
+				if(ratio > 100)
+					icon_state = "[initial(icon_state)][shot.mod_name]100"
+				else
+					icon_state = "[initial(icon_state)][shot.mod_name][ratio]"
+			if (2)
+				if(ratio > 100)
+					icon_state = "[initial(icon_state)][shot.select_name]100"
+				else
+					icon_state = "[initial(icon_state)][shot.select_name][ratio]"
 		return
 
 /obj/item/weapon/gun/projectile/modulargun/emp_act(severity)
