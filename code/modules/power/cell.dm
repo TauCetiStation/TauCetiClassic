@@ -81,6 +81,18 @@
 			message_admins("LOG: [user.name] ([user.ckey]) injected a power cell with phoron, rigging it to explode. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 		S.reagents.clear_reagents()
+	if(isscrewdriver(W))
+		modular_cell = !modular_cell
+		to_chat(user, "You changed the battery.")
+		if(modular_cell)
+			icon_mem = icon_state
+			icon = 'code/modules/projectiles/modules/modular.dmi'
+			icon_state = "magazine_charge_icon"
+			item_state = "magazine_charge_icon"
+		else
+			icon = 'icons/obj/power.dmi'
+			icon_state = icon_mem
+			item_state = icon_mem
 
 
 /obj/item/weapon/stock_parts/cell/proc/explode()

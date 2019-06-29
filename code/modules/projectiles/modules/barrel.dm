@@ -6,7 +6,8 @@
 	gun_type = ALL_TYPE_MODULARGUN
 
 /obj/item/modular/barrel/small
-	icon_state = "barrel_small"
+	icon_state = "barrel_small_icon"
+	icon_overlay = "barrel_small"
 	name = "small barrel"
 	lessdispersion = 0.2
 	lessdamage = 8
@@ -21,7 +22,8 @@
 	gun_type = list("bullet", "shotgun")
 
 /obj/item/modular/barrel/medium
-	icon_state = "barrel_medium"
+	icon_state = "barrel_medium_icon"
+	icon_overlay = "barrel_medium"
 	name = "medium barrel"
 	lessdispersion = 0.5
 	lessdamage = 6
@@ -36,7 +38,8 @@
 	gun_type = list("bullet", "shotgun")
 
 /obj/item/modular/barrel/large
-	icon_state = "barrel_large"
+	icon_state = "barrel_large_icon"
+	icon_overlay = "barrel_large"
 	name = "large barrel"
 	lessdispersion = 1
 	lessdamage = 3

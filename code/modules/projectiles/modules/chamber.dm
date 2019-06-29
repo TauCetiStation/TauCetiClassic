@@ -1,5 +1,5 @@
 /obj/item/modular/chambered
-	icon_state = "chamber_bullet"
+	icon_state = "chamber_bullet_icon"
 	name = "chamber"
 	lessfiredelay = 6
 	lessrecoil = 0.2
@@ -12,7 +12,8 @@
 	gun_type = "bullet"
 
 /obj/item/modular/chambered/laser
-	icon_state = "chamber_laser"
+	icon_state = "chamber_laser_icon"
+	icon_overlay = "chamber_laser"
 	name = "chamber laser"
 	lessfiredelay = 4
 	lessrecoil = 1
@@ -24,8 +25,9 @@
 	gun_type = "laser"
 
 /obj/item/modular/chambered/duolas
-	icon_state = "chamber_laser"
-	name = "chamber laser-taser"
+	icon_state = "chamber_laser_icon"
+	icon_overlay = "chamber_laser"
+	name = "chamber duo laser"
 	lessfiredelay = 4
 	lessrecoil = 1
 	size = 0.2
@@ -36,7 +38,8 @@
 	gun_type = "laser"
 
 /obj/item/modular/chambered/bullet9mm
-	icon_state = "chamber_bullet"
+	icon_state = "chamber_bullet_icon"
+	icon_overlay = "chamber_bullet"
 	name = "chamber 9mm"
 	lessfiredelay = 5
 	lessrecoil = 0.2
@@ -46,7 +49,8 @@
 	gun_type = "bullet"
 
 /obj/item/modular/chambered/bullet357
-	icon_state = "chamber_bullet"
+	icon_state = "chamber_bullet_icon"
+	icon_overlay = "chamber_bullet"
 	name = "chamber 357"
 	lessfiredelay = 5
 	lessrecoil = 0.2
@@ -56,7 +60,8 @@
 	gun_type = "bullet"
 
 /obj/item/modular/chambered/bulletshotgun
-	icon_state = "chamber_bullet"
+	icon_state = "chamber_bullet_icon"
+	icon_overlay = "chamber_bullet"
 	name = "chamber shotgun"
 	lessfiredelay = 2
 	lessrecoil = -0.5
@@ -67,7 +72,8 @@
 	pellets = 4
 
 /obj/item/modular/chambered/lasershotgun
-	icon_state = "chamber_laser"
+	icon_state = "chamber_laser_icon"
+	icon_overlay = "chamber_laser"
 	name = "chamber shotgun"
 	lessfiredelay = 1
 	lessrecoil = 1

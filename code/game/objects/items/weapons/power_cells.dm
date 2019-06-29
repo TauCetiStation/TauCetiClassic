@@ -4,11 +4,13 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
 	item_state = "cell"
+	var/icon_mem
 	origin_tech = "powerstorage=1"
 	force = 5.0
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
+
 	w_class = ITEM_SIZE_NORMAL
 	var/charge = 0	// note %age conveted to actual charge in New
 	var/maxcharge = 1000
@@ -17,6 +19,7 @@
 	var/rigged = 0		// true if rigged to explode
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
 	var/size = 0.2
+	var/modular_cell = FALSE
 
 /obj/item/weapon/stock_parts/cell/suicide_act(mob/user)
 	to_chat(viewers(user), "\red <b>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</b>")

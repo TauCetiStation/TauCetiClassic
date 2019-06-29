@@ -1,5 +1,6 @@
 /obj/item/modular/grip
-	icon_state = "grip_normal"
+	icon_state = "grip_normal_icon"
+	icon_overlay = "grip_normal"
 	name = "grip"
 	lessdispersion = 0.3
 	lessrecoil = 0.2
@@ -7,7 +8,8 @@
 	gun_type = ALL_TYPE_MODULARGUN
 
 /obj/item/modular/grip/resilient
-	icon_state = "grip_resilient"
+	icon_state = "grip_resilient_icon"
+	icon_overlay = "grip_resilient"
 	name = "grip resilient"
 	lessdispersion = 0.4
 	lessrecoil = 0.4

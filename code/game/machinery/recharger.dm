@@ -98,6 +98,8 @@
 		if(istype(charging, /obj/item/weapon/gun/energy) || istype(charging, /obj/item/weapon/gun/projectile/modulargun))
 			var/obj/item/weapon/gun/energy/E = charging
 			if(E.power_supply.charge < E.power_supply.maxcharge)
+				if(E.power_supply.charge == 0)
+					E.power_supply.charge = 1
 				//E.power_supply.give(E.power_supply.chargerate * recharge_coeff)
 				E.power_supply.give(100 * recharge_coeff)
 				icon_state = "recharger1"
