@@ -90,33 +90,37 @@
 		w_class = ITEM_SIZE_NORMAL
 	if(size > 0.3)
 		w_class = ITEM_SIZE_LARGE
+/obj/item/weapon/gun/projectile/modulargun/proc/size_value(mob/user, var/user_trigger = TRUE)
+	fire_delay = 10
+	if(size <= 0.7)
+		w_class = ITEM_SIZE_SMALL
+		slot_flags = SLOT_FLAGS_BELT
+		isHandgun = TRUE
+	if(size > 0.7 && size <= 1.2)
+		w_class = ITEM_SIZE_NORMAL
+		slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
+		isHandgun = TRUE
+	if(size > 1.2)
+		w_class = ITEM_SIZE_LARGE
+		slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
+
+	if(lessrecoil > 0.6)
+		recoil = FALSE
+	else
+		recoil = TRUE
+
+	fire_delay -= lessfiredelay
+	initex()
 
 /obj/item/weapon/gun/projectile/modulargun/proc/collect(mob/user, var/user_trigger = TRUE)
 	collected = !collected
 	if(!collected)
 		if(chamber && barrel && grip && magazine1in)
-			if(size <= 0.7)
-				w_class = ITEM_SIZE_SMALL
-				slot_flags = SLOT_FLAGS_BELT
-				isHandgun = TRUE
-			if(size > 0.7 && size <= 1.2)
-				w_class = ITEM_SIZE_NORMAL
-				slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
-				isHandgun = TRUE
-			if(size > 1.2)
-				w_class = ITEM_SIZE_LARGE
-				slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
+			size_value(user, user_trigger)
 
 			if(gun_energy)
 				power_supply.maxcharge /= 10
 				power_supply.charge /= 10
-
-			if(lessrecoil > 0.6)
-				recoil = FALSE
-			else
-				recoil = TRUE
-
-			fire_delay -= lessfiredelay
 
 			var/weapon_size
 			var/magazine_ejected
@@ -133,7 +137,6 @@
 			if(w_class == ITEM_SIZE_LARGE)
 				weapon_size = "Big"
 
-			initex()
 			name = "[weapon_size] weapon [gun_type] [caliber] gun"
 			desc = "Assembly completed \the [src]. Weapon Type - [gun_type]. Weapon size - [weapon_size]. Caliber - [caliber]. Type store - [magazine_ejected]."
 			if(user_trigger)
@@ -228,16 +231,6 @@
 			grip = modul
 			success = TRUE
 
-		if(chamber && barrel && istype(modul1, /obj/item/modular/accessory) && !modul1.type in accessory_type)
-			var/obj/item/modular/accessory/modul = modul1
-			modul.fixation = TRUE
-			accessory.Add(modul)
-			accessory_type.Add(modul.type)
-			if(user_trigger)
-				modul.activate(user)
-			modul.parent = src
-			success = TRUE
-
 		if(success)
 			if(user_trigger)
 				user.drop_item()
@@ -271,8 +264,12 @@
 				else
 					contents.Remove(i)
 					qdel(i)
-			for(var/i in contents)
-				attach(i, FALSE, user, user_trigger)
+
+			for(var/obj/item/modular/accessory/i in accessory)
+				accessory_attach(i, FALSE, user)
+
+			for(var/obj/item/modular/i in contents)
+				attach(i, FALSE, user)
 
 			contents = null
 
@@ -290,10 +287,12 @@
 			icon_state = "357"
 			icon = 'icons/obj/ammo.dmi'
 			update_icon()
+			to_chat(user, "<span class='notice'>The chamber is taken out</span>")
 
 		if(istype(modul1, /obj/item/modular/barrel))
 			success = TRUE
 			barrel = null
+			to_chat(user, "<span class='notice'>The barrel is taken out</span>")
 
 		if(istype(modul1, /obj/item/modular/grip))
 			success = TRUE
@@ -306,6 +305,7 @@
 			power_supply = null
 			cell_type = null
 			overlays -= "magazine_charge"
+			to_chat(user, "<span class='notice'>The cell is taken out</span>")
 
 		if(istype(modul1, /obj/item/ammo_box/magazine))
 			success = TRUE
@@ -329,6 +329,7 @@
 				mag_type = null
 				mag_type2 = null
 				magazine = null
+			to_chat(user, "<span class='notice'>The magazine is taken out</span>")
 
 		if(istype(modul1, /obj/item/ammo_casing/energy))
 			lens.Remove(modul1)
@@ -337,16 +338,7 @@
 
 			success = TRUE
 			inited = FALSE
-
-		if(istype(modul1, /obj/item/modular/accessory))
-			var/obj/item/modular/accessory/modul = modul1
-			accessory_type.Remove(modul.type)
-			if(user_trigger)
-				modul.deactivate(user)
-			modul.fixation = FALSE
-			accessory.Remove(modul)
-			modul.parent = null
-			success = TRUE
+			to_chat(user, "<span class='notice'>The lens is taken out</span>")
 
 		if(success)
 			modul1.loc = get_turf(src)
@@ -421,14 +413,6 @@
 			else
 				to_chat(user, "<span class='notice'>The module does not fit the type \the [src].</span>")
 
-		if(istype(A, /obj/item/modular/accessory))
-			var/obj/item/modular/accessory/modul = A
-			if(gun_type in modul.gun_type)
-				if(attach(modul, TRUE, user))
-					to_chat(user, "<span class='notice'>Accessory installed \the [src].</span>")
-			else
-				to_chat(user, "<span class='notice'>The module does not fit the type \the [src].</span>")
-
 		if(istype(A, /obj/item/weapon/stock_parts/cell))
 			var/obj/item/weapon/stock_parts/cell/modul = A
 			if(gun_energy)
@@ -497,11 +481,16 @@
 				var/obj/item/ammo_casing/energy/modul = modul1
 				attach(modul, FALSE, user)
 
+			update_icon()
+	else
+		if(iswrench(A))
+			var/list/listmodules = list("Cancel")
+			for(var/obj/item/modular/accessory/i in contents)
+				listmodules.Add(i)
+			var/modul1 = input(user, "Pull module", , "Cancel") in listmodules
 			if(istype(modul1, /obj/item/modular/accessory))
 				var/obj/item/modular/accessory/modul = A
 				attach(modul, FALSE, user)
-
-			update_icon()
 
 	if(isscrewdriver(A))
 		if(gun_energy && lens.len > 0)
@@ -670,6 +659,64 @@
 		power_supply.use(round(power_supply.maxcharge / severity))
 		update_icon()
 		..()
+/obj/item/weapon/gun/projectile/modulargun/proc/accessory_attach(obj/item/modular/accessory/modul, var/attach, mob/user)
+	if(attach)
+		if(accessory_type.len == 0 || !modul.type in accessory_type)
+			user.drop_item()
+			modul.loc = src
+			accessory.Add(modul)
+			accessory_type.Add(modul.type)
+			lessdamage += modul.lessdamage
+			lessdispersion += modul.lessdispersion
+			lessfiredelay += modul.lessfiredelay
+			lessrecoil += modul.lessrecoil
+			size += modul.size
+			if(istype(modul, /obj/item/modular))
+				if(modul.icon_overlay)
+					overlays += modul.icon_overlay
+			modul.fixation = TRUE
+			modul.parent = src
+			modul.activate(user)
+			update_icon()
+			size_value(user)
+
+	else
+		accessory.Remove(modul)
+		accessory_type.Remove(modul.type)
+		lessdamage -= modul.lessdamage
+		lessdispersion -= modul.lessdispersion
+		lessfiredelay -= modul.lessfiredelay
+		lessrecoil -= modul.lessrecoil
+		size -= modul.size
+		if(istype(modul, /obj/item/modular))
+			if(modul.icon_overlay)
+				overlays -= modul.icon_overlay
+		modul.deactivate(user)
+		modul.parent = null
+		modul.fixation = FALSE
+		modul.loc = get_turf(src.loc)
+		update_icon()
+		size_value(user)
+
+/obj/item/weapon/gun/projectile/modulargun/verb/attach_verb(mob/user)
+	set src in oview(1)
+	set category = "Object"
+	set name = "Attach/Deattach"
+	if(collected)
+		if(istype(user.get_active_hand(), /obj/item/modular/accessory))
+			var/obj/item/modular/accessory/modul = user.get_active_hand()
+			accessory_attach(modul, TRUE, user)
+		else
+			if(!user.get_active_hand())
+				var/list/listmodules = list("Cancel")
+				for(var/obj/item/modular/accessory/i in accessory)
+					listmodules.Add(i)
+				var/modul1 = input(user, "Pull module", , "Cancel") in listmodules
+				var/obj/item/modular/accessory/modul = modul1
+				accessory_attach(modul, FALSE, user)
+	else
+		to_chat(user, "<span class='notice'>Weapon not yet collected!</span>")
+
 
 /obj/item/weapon/gun/projectile/modulargun/attack_hand(mob/user)
 	..()
