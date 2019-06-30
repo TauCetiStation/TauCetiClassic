@@ -228,7 +228,7 @@
 			grip = modul
 			success = TRUE
 
-		if(collected && istype(modul1, /obj/item/modular/accessory) && !modul1.type in accessory_type)
+		if(chamber && barrel && istype(modul1, /obj/item/modular/accessory) && !modul1.type in accessory_type)
 			var/obj/item/modular/accessory/modul = modul1
 			modul.fixation = TRUE
 			accessory.Add(modul)
@@ -421,6 +421,14 @@
 			else
 				to_chat(user, "<span class='notice'>The module does not fit the type \the [src].</span>")
 
+		if(istype(A, /obj/item/modular/accessory))
+			var/obj/item/modular/accessory/modul = A
+			if(gun_type in modul.gun_type)
+				if(attach(modul, TRUE, user))
+					to_chat(user, "<span class='notice'>Accessory installed \the [src].</span>")
+			else
+				to_chat(user, "<span class='notice'>The module does not fit the type \the [src].</span>")
+
 		if(istype(A, /obj/item/weapon/stock_parts/cell))
 			var/obj/item/weapon/stock_parts/cell/modul = A
 			if(gun_energy)
@@ -494,23 +502,6 @@
 				attach(modul, FALSE, user)
 
 			update_icon()
-	else
-		if(istype(A, /obj/item/modular/accessory))
-			var/obj/item/modular/accessory/modul = A
-			if(gun_type in modul.gun_type)
-				if(attach(modul, TRUE, user))
-					to_chat(user, "<span class='notice'>Accessory installed \the [src].</span>")
-			else
-				to_chat(user, "<span class='notice'>The module does not fit the type \the [src].</span>")
-
-		if(iswrench(A))
-			var/list/listmodules = list("Cancel")
-			for(var/obj/item/modular/accessory/i in contents)
-				listmodules.Add(i)
-			var/modul1 = input(user, "Pull module", , "Cancel") in listmodules
-			if(istype(modul1, /obj/item/modular/accessory))
-				var/obj/item/modular/accessory/modul = A
-				attach(modul, FALSE, user)
 
 	if(isscrewdriver(A))
 		if(gun_energy && lens.len > 0)
@@ -679,28 +670,6 @@
 		power_supply.use(round(power_supply.maxcharge / severity))
 		update_icon()
 		..()
-
-/obj/item/weapon/gun/projectile/modulargun/verb/attach_verb(mob/user)
-	set src in oview(1)
-	set category = "Object"
-	set name = "Attach"
-
-	if(istype(user.get_active_hand(), /obj/item/modular/accessory))
-		var/obj/item/modular/accessory/modul = user.get_active_hand()
-		modul.loc = src
-		accessory.Add(modul)
-		accessory_type.Add(modul.type)
-		lessdamage += modul.lessdamage
-		lessdispersion += modul.lessdispersion
-		lessfiredelay += modul.lessfiredelay
-		lessrecoil += modul.lessrecoil
-		size += modul.size
-		if(istype(modul, /obj/item/modular))
-			if(modul.icon_overlay)
-				overlays += modul.icon_overlay
-		modul.fixation = TRUE
-		modul.activate(user)
-		update_icon()
 
 /obj/item/weapon/gun/projectile/modulargun/attack_hand(mob/user)
 	..()

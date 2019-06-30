@@ -130,8 +130,8 @@
 	anchored = TRUE
 	a_intent = "harm"
 	var/cap_spawn = 6
-	var/chance_spawn = 15
 	var/spawned = 0
+	var/chance_spawn = 15
 	var/list/mob/living/simple_animal/hostile/cellular/nanite/childs = list()
 	cloning = FALSE
 
