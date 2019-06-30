@@ -82,6 +82,10 @@
 	var/multiple_sprites = 0
 	var/caliber
 	var/multiload = 1
+	var/lessdamage = 0
+	var/lessdispersion = 0
+	var/lessfiredelay = 0
+	var/lessrecoil = 0
 	var/size = 0.1
 	var/gun_type = list("bullet")
 

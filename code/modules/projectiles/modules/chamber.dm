@@ -37,6 +37,19 @@
 	type_cap = 2
 	gun_type = "laser"
 
+/obj/item/modular/chambered/l10
+	icon_state = "chamber_laser_icon"
+	icon_overlay = "chamber_laser"
+	name = "chamber duo laser"
+	lessfiredelay = 4
+	lessrecoil = 1
+	size = 0.2
+	caliber = "energy"
+	multi_type = TRUE
+	gun_energy = FALSE
+	type_cap = 2
+	gun_type = "laser"
+
 /obj/item/modular/chambered/bullet9mm
 	icon_state = "chamber_bullet_icon"
 	icon_overlay = "chamber_bullet"

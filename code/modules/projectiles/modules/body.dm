@@ -17,6 +17,7 @@
 	var/list/obj/item/ammo_casing/lens = list()
 	var/obj/item/weapon/stock_parts/cell/power_supply //What type of power cell this uses
 	var/list/obj/item/modular/accessory = list()
+	var/obj/item/device/assembly/signaler/anomaly/core
 
 	var/cell_type
 	var/modifystate = FALSE
@@ -38,6 +39,8 @@
 	var/caliber
 	var/gun_type
 	var/pellets
+	var/recharge_time = 3
+	var/charge_tick = 0
 
 	var/recentpump = 0 // to prevent spammage
 	var/pumped = 0
@@ -57,24 +60,23 @@
 
 /obj/item/weapon/gun/projectile/modulargun/atom_init()
 	.=..()
-	if(chamber)
-		attach(chamber, TRUE)
-		if(barrel)
-			attach(barrel, TRUE)
-			if(magazine1in)
-				attach(magazine1in, TRUE)
-				if(gun_energy && lens)
-					for(var/obj/item/ammo_casing/energy/i in lens)
-						attach(i, TRUE)
-					collect()
+
+/obj/item/weapon/gun/projectile/modulargun/process()
+	charge_tick++
+	if(charge_tick < recharge_time)
+		return 0
+	charge_tick = 0
+	if(!power_supply)
+		return 0
+	power_supply.give(100)
 
 /obj/item/modular/atom_init()
 	.=..()
 
-/obj/item/weapon/gun/projectile/modulargun/proc/collect(mob/user = null)
+/obj/item/weapon/gun/projectile/modulargun/proc/collect(mob/user, var/user_trigger = TRUE)
 	collected = !collected
 	if(collected)
-		if(chamber && barrel && grip && magazine1in	)
+		if(chamber && barrel && grip && magazine1in)
 			if(size <= 0.7)
 				w_class = ITEM_SIZE_SMALL
 			if(size > 0.7 && size <= 1.2)
@@ -111,7 +113,7 @@
 			initex()
 			name = "[weapon_size] weapon [gun_type] [caliber] gun"
 			desc = "Assembly completed \the [src]. Weapon Type - [gun_type]. Weapon size - [weapon_size]. Caliber - [caliber]. Type store - [magazine_ejected]."
-			if(user != null)
+			if(user_trigger)
 				to_chat(user, "<span class='notice'>Assembly completed \the [src]. Weapon Type - [gun_type]. Weapon size - [weapon_size]. Caliber - [caliber]. Type store - [magazine_ejected].</span>")
 	else
 		to_chat(user, "<span class='notice'>Disassembly completed \the [src].")
@@ -124,14 +126,9 @@
 /obj/item/weapon/gun/projectile/modulargun/proc/initex()
 	if(collected)
 		if(gun_energy)
+			select = 1
 			if(!inited)
-				var/obj/item/ammo_casing/energy/shot
-				for (var/i in 1 to ammo_type.len)
-					var/shottype = ammo_type[i]
-					shot = new shottype(src)
-					ammo_type[i] = shot
-				shot = ammo_type[select]
-				fire_sound = shot.fire_sound
+				fire_sound = ammo_type[select].fire_sound
 				inited = !inited
 			update_icon()
 		else
@@ -139,7 +136,7 @@
 			fire_sound = chambered.fire_sound
 			update_icon()
 
-/obj/item/weapon/gun/projectile/modulargun/proc/attach(obj/item/modular/modul1, var/attach, mob/user = null)
+/obj/item/weapon/gun/projectile/modulargun/proc/attach(obj/item/modular/modul1, var/attach, mob/user = null, var/user_trigger = TRUE)
 	var/success = FALSE
 	if(attach)
 		if(!chamber && istype(modul1, /obj/item/modular/chambered))
@@ -155,15 +152,6 @@
 			icon_state = chamber.icon_overlay
 			success = TRUE
 
-		if(chamber && !power_supply && istype(modul1, /obj/item/weapon/stock_parts/cell))
-			var/obj/item/weapon/stock_parts/cell/modul = modul1
-			magazine1in = modul
-			magazine_eject = FALSE
-			power_supply = magazine1in
-			cell_type = power_supply.type
-			overlays += "magazine_charge"
-			success = TRUE
-
 		if(gun_energy && istype(modul1, /obj/item/ammo_casing/energy))
 			var/obj/item/ammo_casing/energy/modul = modul1
 			if(modul.caliber == caliber)
@@ -175,24 +163,34 @@
 					lens.Add(modul)
 				success = TRUE
 
-		if(istype(modul1, /obj/item/ammo_box/magazine/internal))
+		if(chamber && !power_supply && istype(modul1, /obj/item/weapon/stock_parts/cell))
+			var/obj/item/weapon/stock_parts/cell/modul = modul1
+			magazine1in = modul
+			magazine_eject = FALSE
+			power_supply = magazine1in
+			cell_type = power_supply.type
+			overlays += "magazine_charge"
+			success = TRUE
+
+		else if(istype(modul1, /obj/item/ammo_box/magazine/internal))
 			var/obj/item/ammo_box/magazine/internal/modul = modul1
 			magazine1in = modul
-			magazine_eject = TRUE
+			magazine_eject = FALSE
 			mag_type = magazine1in.type
 			magazine = magazine1in
 			overlays += "magazine_internal"
 			success = TRUE
 
-		if(istype(modul1, /obj/item/ammo_box/magazine))
-			var/obj/item/ammo_box/magazine/modul = modul1
-			magazine1in = modul
-			size += modul.size
-			magazine_eject = TRUE
-			mag_type = magazine1in.type
-			magazine = magazine1in
-			overlays += "magazine_external"
-			success = TRUE
+		else
+			if(istype(modul1, /obj/item/ammo_box/magazine))
+				var/obj/item/ammo_box/magazine/modul = modul1
+				magazine1in = modul
+				size += modul.size
+				magazine_eject = TRUE
+				mag_type = magazine1in.type
+				magazine = magazine1in
+				overlays += "magazine_external"
+				success = TRUE
 
 		if(chamber && !barrel && istype(modul1, /obj/item/modular/barrel))
 			var/obj/item/modular/barrel/modul = modul1
@@ -204,8 +202,20 @@
 			grip = modul
 			success = TRUE
 
+		if(chamber && gun_energy && !core && istype(modul1, /obj/item/device/assembly/signaler/anomaly))
+			modul1.loc = src
+			size += modul1.size
+			overlays += "anomal_charger"
+			START_PROCESSING(SSobj, src)
+
+		if(collected && istype(modul1, /obj/item/modular/accessory))
+			var/obj/item/modular/accessory/modul = modul1
+			accessory.Add(modul)
+			modul.parent = src
+			success = TRUE
+
 		if(success)
-			if(user != null)
+			if(user_trigger)
 				user.drop_item()
 				modul1.loc = src
 			lessdamage += modul1.lessdamage
@@ -221,22 +231,24 @@
 		if(istype(modul1, /obj/item/modular/chambered))
 			success = TRUE
 			if(barrel)
-				attach(barrel, FALSE, user)
+				attach(barrel, FALSE, user, user_trigger)
 				barrel = null
 			if(grip)
-				attach(grip, FALSE, user)
+				attach(grip, FALSE, user, user_trigger)
 				grip = null
 			if(gun_energy)
-				attach(magazine1in, FALSE, user)
+				attach(magazine1in, FALSE, user, user_trigger)
 			else
-				attach(magazine1in, FALSE, user)
+				attach(magazine1in, FALSE, user, user_trigger)
 
 			for(var/obj/item/ammo_casing/energy/i in contents)
 				if(i in ammo_type)
-					ammo_type.Remove(i)
-					qdel(i)
-				else
 					attach(i, FALSE, user)
+				else
+					contents.Remove(i)
+					qdel(i)
+			for(var/i in contents)
+				attach(i, FALSE, user, user_trigger)
 
 			contents = null
 
@@ -251,11 +263,6 @@
 			inited = FALSE
 			ammo_type = list()
 
-			lessdamage = 0
-			lessdispersion = 0
-			lessfiredelay = 0
-			lessrecoil = 0
-			lessvariance = 0
 			icon_state = "357"
 			icon = 'icons/obj/ammo.dmi'
 			update_icon()
@@ -300,14 +307,27 @@
 				magazine = null
 
 		if(istype(modul1, /obj/item/ammo_casing/energy))
-			for(var/obj/item/ammo_casing/energy/i in contents)
-				if(i in ammo_type)
-					ammo_type.Remove(i)
-					qdel(i)
-				else
-					lens.Remove(modul1)
-					success = TRUE
+			lens.Remove(modul1)
+			ammo_type.Remove(modul1)
+			contents.Remove(modul1)
+			icon_state = "lens"
+
+			success = TRUE
 			inited = FALSE
+
+		if(chamber && gun_energy && core && istype(modul1, /obj/item/device/assembly/signaler/anomaly))
+			modul1.loc = get_turf(src)
+			size -= modul1.size
+			overlays -= "anomal_charger"
+			contents.Remove(modul1)
+			STOP_PROCESSING(SSobj, src)
+
+		if(istype(modul1, /obj/item/modular/accessory))
+			var/obj/item/modular/accessory/modul = modul1
+			modul.deactivate(user)
+			accessory.Remove(modul)
+			modul.parent = null
+			success = TRUE
 
 		if(success)
 			modul1.loc = get_turf(src)
@@ -451,11 +471,24 @@
 				attach(modul, FALSE, user)
 
 			update_icon()
+	else
+		if(istype(A, /obj/item/modular/accessory))
+			var/obj/item/modular/accessory/modul = A
+			attach(modul, TRUE, user)
 
-
+		if(iswrench(A))
+			var/list/listmodules = list("Cancel")
+			for(var/obj/item/modular/accessory/i in contents)
+				listmodules.Add(i)
+			var/modul1 = input(user, "Pull module", , "Cancel") in listmodules
+			attach(modul1, FALSE, user)
 
 	if(isscrewdriver(A))
-		collect(user)
+		if(gun_energy && lens.len > 0)
+			collect(user)
+		else
+			if(!gun_energy)
+				collect(user)
 
 /obj/item/weapon/gun/projectile/modulargun/attack_self(mob/living/user)
 	if(collected)
@@ -616,6 +649,11 @@
 		power_supply.use(round(power_supply.maxcharge / severity))
 		update_icon()
 		..()
+
+/obj/item/weapon/gun/projectile/modulargun/dropped(mob/user)
+	for(var/obj/item/modular/accessory/i in contents)
+		i.deactivate(user)
+	..()
 
 
 
