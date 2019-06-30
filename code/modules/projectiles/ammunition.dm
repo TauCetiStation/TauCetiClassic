@@ -13,6 +13,7 @@
 	var/obj/item/projectile/BB = null 			//The loaded bullet
 	var/pellets = 0								//Pellets for spreadshot
 	var/variance = 0.8							//Variance for inaccuracy fundamental to the casing
+	var/fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
 
 	var/lessdamage = 3
 	var/lessdispersion = -0.1

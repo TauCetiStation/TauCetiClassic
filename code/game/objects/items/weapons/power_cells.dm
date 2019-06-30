@@ -20,6 +20,10 @@
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
 	var/size = 0.2
 	var/modular_cell = FALSE
+	var/lessdamage = 0
+	var/lessdispersion = 0
+	var/lessfiredelay = 0
+	var/lessrecoil = 0
 
 /obj/item/weapon/stock_parts/cell/suicide_act(mob/user)
 	to_chat(viewers(user), "\red <b>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</b>")

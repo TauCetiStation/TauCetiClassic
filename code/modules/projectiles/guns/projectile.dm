@@ -14,9 +14,10 @@
 
 /obj/item/weapon/gun/projectile/atom_init()
 	. = ..()
-	magazine = new mag_type(src)
-	chamber_round()
-	update_icon()
+	if(!istype(src, /obj/item/weapon/gun/projectile/modulargun))
+		magazine = new mag_type(src)
+		chamber_round()
+		update_icon()
 
 /obj/item/weapon/gun/projectile/process_chamber(var/eject_casing = 1, var/empty_chamber = 1, var/no_casing = 0)
 //	if(chambered)
