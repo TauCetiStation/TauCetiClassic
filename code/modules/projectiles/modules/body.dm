@@ -9,7 +9,8 @@
 	magazine = null
 	mag_type = null
 	mag_type2 = null
-	fire_delay = 10
+	fire_delay = 13
+	var/standard_fire_delay = fire_delay
 
 	var/obj/item/modular/barrel/barrel
 	var/obj/item/modular/grip/grip
@@ -92,7 +93,7 @@
 	if(size > 0.3)
 		w_class = ITEM_SIZE_LARGE
 /obj/item/weapon/gun/projectile/modulargun/proc/size_value(mob/user, var/user_trigger = TRUE)
-	fire_delay = 10
+	fire_delay = standard_fire_delay
 	if(size <= 0.7)
 		w_class = ITEM_SIZE_SMALL
 		slot_flags = SLOT_FLAGS_BELT
@@ -145,7 +146,7 @@
 	else
 		to_chat(user, "<span class='notice'>Disassembly completed \the [src].")
 		name = "The basis of the weapon"
-		fire_delay = 10
+		fire_delay = standard_fire_delay
 		if(gun_energy)
 			power_supply.maxcharge *= 10
 			power_supply.charge *= 10
@@ -422,9 +423,6 @@
 						to_chat(user, "<span class='notice'>Battery installed \the [src]. Type internal</span>")
 				else
 					to_chat(user, "<span class='notice'>Change the battery with a screwdriver.</span>")
-		if(istype(A, /obj/item/modular/accessory))
-			var/obj/item/modular/accessory/modul = A
-			accessory_attach(modul, TRUE, user)
 
 		if(istype(A, /obj/item/ammo_casing/energy))
 			var/obj/item/ammo_casing/energy/modul = A
@@ -487,14 +485,9 @@
 
 			update_icon()
 	else
-		if(iswrench(A))
-			var/list/listmodules = list("Cancel")
-			for(var/obj/item/modular/accessory/i in contents)
-				listmodules.Add(i)
-			var/modul1 = input(user, "Pull module", , "Cancel") in listmodules
-			if(istype(modul1, /obj/item/modular/accessory))
-				var/obj/item/modular/accessory/modul = A
-				attach(modul, FALSE, user)
+		if(istype(A, /obj/item/modular/accessory))
+			var/obj/item/modular/accessory/modul = A
+			accessory_attach(modul, TRUE, user)
 
 	if(isscrewdriver(A))
 		if(gun_energy && lens.len > 0)
@@ -673,7 +666,7 @@
 		..()
 /obj/item/weapon/gun/projectile/modulargun/proc/accessory_attach(obj/item/modular/accessory/modul, var/attach, mob/user)
 	if(attach)
-		if(accessory_type.len == 0 || !modul.type in accessory_type)
+		if((accessory_type.len == 0) || (!modul.type in accessory_type))
 			if(barrel.type in modul.barrel_size)
 				if(accessory.len < max_accessory)
 					user.drop_item()
@@ -731,13 +724,17 @@
 
 		else if(istype(user.get_active_hand(), /obj/item/device/assembly/signaler/anomaly))
 			var/obj/item/device/assembly/signaler/anomaly/modul = user.get_active_hand()
-			size += modul.size
-			user.drop_item()
-			modul.loc = src
-			core = modul
-			if(modul.icon_overlay)
-				overlays += modul.icon_overlay
-			START_PROCESSING(SSobj, src)
+			if(gun_energy && power_supply)
+				size += modul.size
+				user.drop_item()
+				modul.loc = src
+				core = modul
+				if(modul.icon_overlay)
+					overlays += modul.icon_overlay
+				START_PROCESSING(SSobj, src)
+				to_chat(user, "<span class='notice'>Kernel installed.</span>")
+			else
+				to_chat(user, "<span class='notice'>The weapon does not have a built-in battery.</span>")
 		else
 			if(!user.get_active_hand())
 				var/list/listmodules = list("Cancel")
@@ -759,6 +756,7 @@
 							overlays -= modul.icon_overlay
 						STOP_PROCESSING(SSobj, src)
 						update_icon()
+						to_chat(user, "<span class='notice'>Core removed.</span>")
 
 	else
 		to_chat(user, "<span class='notice'>Weapon not yet collected!</span>")
