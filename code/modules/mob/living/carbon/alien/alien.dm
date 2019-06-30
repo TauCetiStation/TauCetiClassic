@@ -30,7 +30,7 @@
 	var/leaping = 0
 	ventcrawler = 2
 	
-	flags = NO_BREATHE
+	flags = list(NO_BREATHE = TRUE)
 
 /mob/living/carbon/alien/atom_init()
 	. = ..()
