@@ -2,7 +2,7 @@
 	name = "accessory"
 	var/obj/item/weapon/gun/projectile/modulargun/parent
 	var/activated
-	var/fixation = TRUE
+	var/fixation = FALSE
 
 /obj/item/modular/accessory/proc/deactivate()
 	if(fixation)

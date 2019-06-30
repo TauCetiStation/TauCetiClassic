@@ -9,7 +9,7 @@
 	magazine = null
 	mag_type = null
 	mag_type2 = null
-	fire_delay = 12
+	fire_delay = 10
 
 	var/obj/item/modular/barrel/barrel
 	var/obj/item/modular/grip/grip
@@ -49,6 +49,7 @@
 	var/pumped = 0
 	var/ratio = 0
 	var/inited = FALSE
+	var/charge_indicator = FALSE
 
 /obj/item/modular
 	icon = 'code/modules/projectiles/modules/modular.dmi'
@@ -60,6 +61,11 @@
 	var/lessfiredelay = 0
 	var/lessrecoil = 0.0
 	var/gun_type
+
+/obj/item/modular/atom_init()
+	.=..()
+	pixel_x = rand(0, 10)
+	pixel_y = rand(0, 10)
 
 /obj/item/weapon/gun/projectile/modulargun/atom_init()
 	.=..()
@@ -87,7 +93,7 @@
 
 /obj/item/weapon/gun/projectile/modulargun/proc/collect(mob/user, var/user_trigger = TRUE)
 	collected = !collected
-	if(collected)
+	if(!collected)
 		if(chamber && barrel && grip && magazine1in)
 			if(size <= 0.7)
 				w_class = ITEM_SIZE_SMALL
@@ -135,7 +141,7 @@
 	else
 		to_chat(user, "<span class='notice'>Disassembly completed \the [src].")
 		name = "The basis of the weapon"
-		fire_delay = 15
+		fire_delay = 10
 		if(gun_energy)
 			power_supply.maxcharge *= 10
 			power_supply.charge *= 10
@@ -167,6 +173,7 @@
 			multi_type = chamber.multi_type
 			type_cap = chamber.type_cap
 			pellets = chamber.pellets
+			charge_indicator = chamber.charge_indicator
 			icon = 'code/modules/projectiles/modules/modular.dmi'
 			icon_state = chamber.icon_overlay
 			success = TRUE
@@ -221,14 +228,14 @@
 			grip = modul
 			success = TRUE
 
-		if(chamber && barrel && istype(modul1, /obj/item/modular/accessory) && !modul1.type in accessory_type)
+		if(collected && istype(modul1, /obj/item/modular/accessory) && !modul1.type in accessory_type)
 			var/obj/item/modular/accessory/modul = modul1
+			modul.fixation = TRUE
 			accessory.Add(modul)
 			accessory_type.Add(modul.type)
 			if(user_trigger)
 				modul.activate(user)
 			modul.parent = src
-			modul.fixation = TRUE
 			success = TRUE
 
 		if(success)
@@ -333,10 +340,10 @@
 
 		if(istype(modul1, /obj/item/modular/accessory))
 			var/obj/item/modular/accessory/modul = modul1
-			modul.fixation = FALSE
 			accessory_type.Remove(modul.type)
 			if(user_trigger)
 				modul.deactivate(user)
+			modul.fixation = FALSE
 			accessory.Remove(modul)
 			modul.parent = null
 			success = TRUE
@@ -414,14 +421,6 @@
 			else
 				to_chat(user, "<span class='notice'>The module does not fit the type \the [src].</span>")
 
-		if(istype(A, /obj/item/modular/accessory))
-			var/obj/item/modular/accessory/modul = A
-			if(gun_type in modul.gun_type)
-				if(attach(modul, TRUE, user))
-					to_chat(user, "<span class='notice'>Accessory installed \the [src].</span>")
-			else
-				to_chat(user, "<span class='notice'>The module does not fit the type \the [src].</span>")
-
 		if(istype(A, /obj/item/weapon/stock_parts/cell))
 			var/obj/item/weapon/stock_parts/cell/modul = A
 			if(gun_energy)
@@ -490,11 +489,28 @@
 				var/obj/item/ammo_casing/energy/modul = modul1
 				attach(modul, FALSE, user)
 
-			if(istype(A, /obj/item/modular/accessory))
+			if(istype(modul1, /obj/item/modular/accessory))
 				var/obj/item/modular/accessory/modul = A
 				attach(modul, FALSE, user)
 
 			update_icon()
+	else
+		if(istype(A, /obj/item/modular/accessory))
+			var/obj/item/modular/accessory/modul = A
+			if(gun_type in modul.gun_type)
+				if(attach(modul, TRUE, user))
+					to_chat(user, "<span class='notice'>Accessory installed \the [src].</span>")
+			else
+				to_chat(user, "<span class='notice'>The module does not fit the type \the [src].</span>")
+
+		if(iswrench(A))
+			var/list/listmodules = list("Cancel")
+			for(var/obj/item/modular/accessory/i in contents)
+				listmodules.Add(i)
+			var/modul1 = input(user, "Pull module", , "Cancel") in listmodules
+			if(istype(modul1, /obj/item/modular/accessory))
+				var/obj/item/modular/accessory/modul = A
+				attach(modul, FALSE, user)
 
 	if(isscrewdriver(A))
 		if(gun_energy && lens.len > 0)
@@ -517,7 +533,7 @@
 			return TRUE
 		else if (magazine_eject && !gun_energy)
 			to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
-		else if(!gun_energy && !magazine_eject && !istype(magazine1in, /obj/item/ammo_box/magazine/internal/cylinder))
+		else if(!gun_energy && !magazine_eject && gun_type == "shotgun")
 			if(recentpump)
 				return
 			pump(user)
@@ -525,7 +541,7 @@
 			spawn(10)
 				recentpump = 0
 			return
-		else if(istype(magazine1in, /obj/item/ammo_box/magazine/internal/cylinder))
+		else if(!gun_energy && istype(magazine1in, /obj/item/ammo_box/magazine/internal/cylinder))
 			var/num_unloaded = 0
 			while (get_ammo() > 0)
 				var/obj/item/ammo_casing/CB
@@ -626,6 +642,7 @@
 				AC.SpinAnimation(10, 1) //next gen special effects
 				spawn(3) //next gen sound effects
 					playsound(src, 'sound/weapons/guns/shell_drop.ogg', VOL_EFFECTS_MASTER, 25)
+
 			if(empty_chamber)
 				chambered = null
 			if(no_casing)
@@ -649,7 +666,7 @@
 		return
 
 /obj/item/weapon/gun/projectile/modulargun/update_icon()
-	if(gun_energy && power_supply)
+	if(charge_indicator)
 		overlays -= "[icon_state][ratio]"
 		if(power_supply.maxcharge)
 			ratio = power_supply.charge / power_supply.maxcharge
@@ -662,6 +679,29 @@
 		power_supply.use(round(power_supply.maxcharge / severity))
 		update_icon()
 		..()
+
+/obj/item/weapon/gun/projectile/modulargun/verb/attach_verb(mob/user)
+	set src in oview(1)
+	set category = "Object"
+	set name = "Attach"
+
+	if(istype(user.get_active_hand(), /obj/item/modular/accessory))
+		var/obj/item/modular/accessory/modul = user.get_active_hand()
+		modul.loc = src
+		accessory.Add(modul)
+		accessory_type.Add(modul.type)
+		lessdamage += modul.lessdamage
+		lessdispersion += modul.lessdispersion
+		lessfiredelay += modul.lessfiredelay
+		lessrecoil += modul.lessrecoil
+		size += modul.size
+		if(istype(modul, /obj/item/modular))
+			if(modul.icon_overlay)
+				overlays += modul.icon_overlay
+		modul.fixation = TRUE
+		modul.activate(user)
+		update_icon()
+
 /obj/item/weapon/gun/projectile/modulargun/attack_hand(mob/user)
 	..()
 	for(var/obj/item/modular/accessory/i in accessory)

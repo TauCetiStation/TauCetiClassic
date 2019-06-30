@@ -10,14 +10,14 @@
 	icon_overlay = "barrel_small"
 	name = "small barrel"
 	lessdispersion = -0.3
-	lessdamage = 8
+	lessdamage = 7
 	size = 0.1
 	gun_type = ALL_TYPE_MODULARGUN
 
 /obj/item/modular/barrel/small/threaded
 	name = "threaded small barrel"
 	lessdispersion = -0.2
-	lessdamage = 7
+	lessdamage = 6
 	size = 0.1
 	gun_type = list("bullet", "shotgun")
 
@@ -26,14 +26,14 @@
 	icon_overlay = "barrel_medium"
 	name = "medium barrel"
 	lessdispersion = 0.0
-	lessdamage = 6
+	lessdamage = 4
 	size = 0.2
 	gun_type = ALL_TYPE_MODULARGUN
 
 /obj/item/modular/barrel/medium/threaded
 	name = "threader medium barrel"
 	lessdispersion = 0.2
-	lessdamage = 5
+	lessdamage = 3
 	size = 0.2
 	gun_type = list("bullet", "shotgun")
 
@@ -41,16 +41,16 @@
 	icon_state = "barrel_large_icon"
 	icon_overlay = "barrel_large"
 	name = "large barrel"
-	lessdispersion = 0.5
-	lessdamage = 3
+	lessdispersion = 0.6
+	lessdamage = -3
 	lessrecoil = 0.1
 	size = 0.4
 	gun_type = ALL_TYPE_MODULARGUN
 
 /obj/item/modular/barrel/large/threaded
 	name = "threaded large barrel"
-	lessdispersion = 0.7
-	lessdamage = 2
+	lessdispersion = 0.8
+	lessdamage = -5
 	lessrecoil = 0.1
 	size = 0.4
 	gun_type = list("bullet", "shotgun")
@@ -70,7 +70,7 @@
 	icon_state = "barrel_large_bullet"
 	icon_overlay = "barrel_large_bullet"
 	lessdispersion = 1
-	lessdamage = 2
+	lessdamage = -3
 	lessrecoil = 0.1
 	size = 0.6
 	gun_type = list("bullet", "shotgun")
