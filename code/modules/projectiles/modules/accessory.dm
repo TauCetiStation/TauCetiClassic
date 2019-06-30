@@ -3,7 +3,7 @@
 	var/obj/item/weapon/gun/projectile/modulargun/parent
 	var/activated
 	var/fixation = TRUE
-	var/list/barrel_size = list()
+	var/list/barrel_size = BARREL_ALL
 
 /obj/item/modular/accessory/proc/deactivate()
 	if(fixation)
@@ -19,12 +19,12 @@
 	icon_overlay = "optical"
 	var/range = 12
 	var/zoom = FALSE
-	var/uloc = src.loc
+	var/uloc
 	gun_type = list("laser", "bullet")
-	barrel_size = ALL
+	barrel_size = BARREL_ALL
 
 /obj/item/modular/accessory/optical/small
-	name = "small"
+	name = "small optical"
 	icon_state = "optical_small_icon"
 	icon_overlay = "optical_small"
 	range = 9
@@ -38,9 +38,9 @@
 	barrel_size = BARREL_ALL
 
 /obj/item/modular/accessory/optical/medium
-	name = "small"
-	icon_state = "optical_small_icon"
-	icon_overlay = "optical_small"
+	name = "medium optical"
+	icon_state = "optical_medium_icon"
+	icon_overlay = "optical_medium"
 	range = 12
 	zoom = FALSE
 	lessdamage = 0
@@ -52,9 +52,9 @@
 	barrel_size = list(BARREL_MEDIUM, BARREL_LARGE)
 
 /obj/item/modular/accessory/optical/large
-	name = "small"
-	icon_state = "optical_small_icon"
-	icon_overlay = "optical_small"
+	name = "large optical"
+	icon_state = "optical_large_icon"
+	icon_overlay = "optical_large"
 	range = 16
 	zoom = FALSE
 	lessdamage = 0
@@ -145,6 +145,7 @@
 	throwforce = 6.0
 	throw_speed = 3
 	throw_range = 6
+	barrel_size = list(BARREL_MEDIUM)
 
 /obj/item/modular/accessory/bayonet/activate(mob/user)
 	..()

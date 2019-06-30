@@ -662,23 +662,27 @@
 /obj/item/weapon/gun/projectile/modulargun/proc/accessory_attach(obj/item/modular/accessory/modul, var/attach, mob/user)
 	if(attach)
 		if(accessory_type.len == 0 || !modul.type in accessory_type)
-			user.drop_item()
-			modul.loc = src
-			accessory.Add(modul)
-			accessory_type.Add(modul.type)
-			lessdamage += modul.lessdamage
-			lessdispersion += modul.lessdispersion
-			lessfiredelay += modul.lessfiredelay
-			lessrecoil += modul.lessrecoil
-			size += modul.size
-			if(istype(modul, /obj/item/modular))
-				if(modul.icon_overlay)
-					overlays += modul.icon_overlay
-			modul.fixation = TRUE
-			modul.parent = src
-			modul.activate(user)
-			update_icon()
-			size_value(user)
+			if(barrel.type in barrel_size)
+				user.drop_item()
+				modul.loc = src
+				accessory.Add(modul)
+				accessory_type.Add(modul.type)
+				lessdamage += modul.lessdamage
+				lessdispersion += modul.lessdispersion
+				lessfiredelay += modul.lessfiredelay
+				lessrecoil += modul.lessrecoil
+				size += modul.size
+				if(istype(modul, /obj/item/modular))
+					if(modul.icon_overlay)
+						overlays += modul.icon_overlay
+				modul.fixation = TRUE
+				modul.parent = src
+				modul.activate(user)
+				update_icon()
+				size_value(user)
+				o_chat(user, "<span class='notice'>Accessory installed</span>")
+			else
+				o_chat(user, "<span class='notice'>The module does not fit the barrel</span>")
 
 	else
 		accessory.Remove(modul)

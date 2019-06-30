@@ -2,6 +2,7 @@
 	icon_state = "chamber_bullet_icon"
 	name = "chamber"
 	lessfiredelay = 6
+	lessdamage = -2
 	lessrecoil = 0.2
 	size = 0.2
 	var/caliber = "9mm"
@@ -17,6 +18,7 @@
 	icon_overlay = "chamber_laser"
 	name = "chamber laser"
 	lessfiredelay = 6
+	lessdamage = -3
 	lessrecoil = 1
 	size = 0.2
 	caliber = "energy"
@@ -31,6 +33,7 @@
 	icon_overlay = "chamber_laser"
 	name = "chamber duo laser"
 	lessfiredelay = 6
+	lessdamage = -1
 	lessrecoil = 1
 	size = 0.2
 	caliber = "energy"
@@ -45,6 +48,7 @@
 	icon_overlay = "chamber_energy"
 	name = "chamber l10"
 	lessfiredelay = 6
+	lessdamage = -1
 	lessrecoil = 1
 	size = 0.2
 	caliber = "energy"
@@ -59,6 +63,7 @@
 	icon_overlay = "chamber_bullet"
 	name = "chamber 9mm"
 	lessfiredelay = 6
+	lessdamage = 0
 	lessrecoil = 0.2
 	size = 0.2
 	caliber = "9mm"
@@ -70,6 +75,7 @@
 	icon_overlay = "chamber_bullet"
 	name = "chamber 357"
 	lessfiredelay = 6
+	lessdamage = 0.0
 	lessrecoil = 0.2
 	size = 0.2
 	caliber = "357"
@@ -83,6 +89,7 @@
 	lessfiredelay = 4
 	lessrecoil = -0.5
 	lessdispersion = -0.3
+	lessdamage = -1
 	size = 0.3
 	caliber = "shotgun"
 	gun_type = "shotgun"
@@ -95,6 +102,7 @@
 	name = "chamber shotgun"
 	lessfiredelay = 1
 	lessrecoil = 1
+	lessdamage = -1
 	lessdispersion = -0.3
 	size = 0.3
 	caliber = "energy"
