@@ -50,3 +50,4 @@
 	var/lasttaste = 0 // Prevent tastes spam
 
 	var/list/roundstart_quirks = list()
+	flags = list()
