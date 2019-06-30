@@ -19,7 +19,7 @@
 	var/obj/item/weapon/stock_parts/cell/power_supply //What type of power cell this uses
 	var/list/obj/item/modular/accessory = list()
 	var/list/accessory_type = list()
-	var/obj/item/device/assembly/signaler/anomaly/core
+	var/obj/item/device/assembly/signaler/core
 
 	var/cell_type
 	var/modifystate = FALSE
@@ -41,6 +41,7 @@
 	var/lessvariance = 0.0
 	var/caliber
 	var/gun_type
+	var/max_accessory = 3
 	var/pellets
 	var/recharge_time = 3
 	var/charge_tick = 0
@@ -114,7 +115,7 @@
 
 /obj/item/weapon/gun/projectile/modulargun/proc/collect(mob/user, var/user_trigger = TRUE)
 	collected = !collected
-	if(!collected)
+	if(collected)
 		if(chamber && barrel && grip && magazine1in)
 			size_value(user, user_trigger)
 
@@ -341,7 +342,7 @@
 			to_chat(user, "<span class='notice'>The lens is taken out</span>")
 
 		if(success)
-			modul1.loc = get_turf(src)
+			modul1.loc = get_turf(src.loc)
 			contents.Remove(modul1)
 			lessdamage -= modul1.lessdamage
 			lessdispersion -= modul1.lessdispersion
@@ -421,6 +422,9 @@
 						to_chat(user, "<span class='notice'>Battery installed \the [src]. Type internal</span>")
 				else
 					to_chat(user, "<span class='notice'>Change the battery with a screwdriver.</span>")
+		if(istype(A, /obj/item/modular/accessory))
+			var/obj/item/modular/accessory/modul = A
+			accessory_attach(modul, TRUE, user)
 
 		if(istype(A, /obj/item/ammo_casing/energy))
 			var/obj/item/ammo_casing/energy/modul = A
@@ -531,6 +535,10 @@
 				CB.SpinAnimation(10, 1)
 				CB.update_icon()
 				num_unloaded++
+			for(var/obj/item/ammo_casing/i in contents)
+				i.loc = get_turf(src.loc)
+				i.SpinAnimation(10, 1)
+				i.update_icon()
 			if (num_unloaded)
 				to_chat(user, "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>")
 			else
@@ -545,28 +553,30 @@
 		return FALSE
 
 /obj/item/weapon/gun/projectile/modulargun/proc/pump(mob/M)
-	playsound(M, pick('sound/weapons/guns/shotgun_pump1.ogg', 'sound/weapons/guns/shotgun_pump2.ogg', 'sound/weapons/guns/shotgun_pump3.ogg'), VOL_EFFECTS_MASTER, null, FALSE)
-	pumped = 0
-	if(chambered)//We have a shell in the chamber
-		chambered.loc = get_turf(src)//Eject casing
-		chambered.SpinAnimation(5, 1)
-		chambered = null
-	if(!magazine.ammo_count())	return 0
-	var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
-	chambered = AC
-	update_icon()	//I.E. fix the desc
-	return 1
+	if(collected)
+		playsound(M, pick('sound/weapons/guns/shotgun_pump1.ogg', 'sound/weapons/guns/shotgun_pump2.ogg', 'sound/weapons/guns/shotgun_pump3.ogg'), VOL_EFFECTS_MASTER, null, FALSE)
+		pumped = 0
+		if(chambered)//We have a shell in the chamber
+			chambered.loc = get_turf(src.loc)//Eject casing
+			chambered.SpinAnimation(5, 1)
+			chambered = null
+		if(!magazine.ammo_count())	return 0
+		var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
+		chambered = AC
+		update_icon()	//I.E. fix the desc
+		return 1
 
 /obj/item/weapon/gun/projectile/modulargun/proc/select_fire(mob/living/user)
-	select++
-	if (select > ammo_type.len)
-		select = 1
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	fire_sound = shot.fire_sound
-	if (shot.select_name)
-		to_chat(user, "\red [src] is now set to [shot.select_name].")
-	update_icon()
-	return
+	if(collected)
+		select++
+		if (select > ammo_type.len)
+			select = 1
+		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+		fire_sound = shot.fire_sound
+		if (shot.select_name)
+			to_chat(user, "\red [src] is now set to [shot.select_name].")
+		update_icon()
+		return
 
 /obj/item/weapon/gun/projectile/modulargun/Fire(atom/target, mob/living/user, params, reflex = 0)
 	if(collected)
@@ -593,14 +603,15 @@
 			return TRUE
 
 /obj/item/weapon/gun/projectile/modulargun/proc/newshot()
-	if (!ammo_type || !power_supply)
+	if(collected)
+		if (!ammo_type || !power_supply)
+			return
+		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+		if (power_supply.charge < shot.e_cost)
+			return
+		chambered = shot
+		chambered.newshot()
 		return
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if (power_supply.charge < shot.e_cost)
-		return
-	chambered = shot
-	chambered.newshot()
-	return
 
 /obj/item/weapon/gun/projectile/modulargun/process_chamber(var/eject_casing = TRUE, var/empty_chamber = TRUE, var/no_casing = FALSE)
 	if(collected)
@@ -618,7 +629,7 @@
 				chamber_round()
 				return
 			if(eject_casing && caliber != "energy" && !istype(magazine1in, /obj/item/ammo_box/magazine/internal/cylinder))
-				AC.loc = get_turf(src) //Eject casing onto ground.
+				AC.loc = get_turf(src.loc) //Eject casing onto ground.
 				AC.SpinAnimation(10, 1) //next gen special effects
 				spawn(3) //next gen sound effects
 					playsound(src, 'sound/weapons/guns/shell_drop.ogg', VOL_EFFECTS_MASTER, 25)
@@ -646,13 +657,14 @@
 		return
 
 /obj/item/weapon/gun/projectile/modulargun/update_icon()
-	if(charge_indicator)
-		overlays -= "[icon_state][ratio]"
-		if(power_supply.maxcharge)
-			ratio = power_supply.charge / power_supply.maxcharge
-			ratio = ceil(ratio * 4) * 25
-			overlays += "[icon_state][ratio]"
-		return
+	if(collected)
+		if(charge_indicator)
+			overlays -= "[icon_state][ratio]"
+			if(power_supply.maxcharge)
+				ratio = power_supply.charge / power_supply.maxcharge
+				ratio = ceil(ratio * 4) * 25
+				overlays += "[icon_state][ratio]"
+			return
 
 /obj/item/weapon/gun/projectile/modulargun/emp_act(severity)
 	if(gun_energy)
@@ -662,27 +674,33 @@
 /obj/item/weapon/gun/projectile/modulargun/proc/accessory_attach(obj/item/modular/accessory/modul, var/attach, mob/user)
 	if(attach)
 		if(accessory_type.len == 0 || !modul.type in accessory_type)
-			if(barrel.type in barrel_size)
-				user.drop_item()
-				modul.loc = src
-				accessory.Add(modul)
-				accessory_type.Add(modul.type)
-				lessdamage += modul.lessdamage
-				lessdispersion += modul.lessdispersion
-				lessfiredelay += modul.lessfiredelay
-				lessrecoil += modul.lessrecoil
-				size += modul.size
-				if(istype(modul, /obj/item/modular))
-					if(modul.icon_overlay)
-						overlays += modul.icon_overlay
-				modul.fixation = TRUE
-				modul.parent = src
-				modul.activate(user)
-				update_icon()
-				size_value(user)
-				o_chat(user, "<span class='notice'>Accessory installed</span>")
+			if(barrel.type in modul.barrel_size)
+				if(accessory.len < max_accessory)
+					user.drop_item()
+					modul.loc = src
+					accessory.Add(modul)
+					accessory_type.Add(modul.type)
+					lessdamage += modul.lessdamage
+					lessdispersion += modul.lessdispersion
+					lessfiredelay += modul.lessfiredelay
+					lessrecoil += modul.lessrecoil
+					size += modul.size
+					if(istype(modul, /obj/item/modular))
+						if(modul.icon_overlay)
+							overlays += modul.icon_overlay
+					modul.fixation = TRUE
+					modul.parent = src
+					modul.activate(user)
+					update_icon()
+					size_value(user)
+					to_chat(user, "<span class='notice'>Accessory installed</span>")
+				else
+					to_chat(user, "<span class='notice'>Maximum modules reached</span>")
 			else
-				o_chat(user, "<span class='notice'>The module does not fit the barrel</span>")
+				to_chat(user, "<span class='notice'>The module does not fit the barrel</span>")
+		else
+			to_chat(user, "<span class='notice'>Module already installed</span>")
+
 
 	else
 		accessory.Remove(modul)
@@ -710,14 +728,38 @@
 		if(istype(user.get_active_hand(), /obj/item/modular/accessory))
 			var/obj/item/modular/accessory/modul = user.get_active_hand()
 			accessory_attach(modul, TRUE, user)
+
+		else if(istype(user.get_active_hand(), /obj/item/device/assembly/signaler/anomaly))
+			var/obj/item/device/assembly/signaler/anomaly/modul = user.get_active_hand()
+			size += modul.size
+			user.drop_item()
+			modul.loc = src
+			core = modul
+			if(modul.icon_overlay)
+				overlays += modul.icon_overlay
+			START_PROCESSING(SSobj, src)
 		else
 			if(!user.get_active_hand())
 				var/list/listmodules = list("Cancel")
 				for(var/obj/item/modular/accessory/i in accessory)
 					listmodules.Add(i)
+				if(core)
+					listmodules.Add(core)
 				var/modul1 = input(user, "Pull module", , "Cancel") in listmodules
-				var/obj/item/modular/accessory/modul = modul1
-				accessory_attach(modul, FALSE, user)
+				if(istype(modul1, /obj/item/modular/accessory))
+					var/obj/item/modular/accessory/modul = modul1
+					accessory_attach(modul, FALSE, user)
+				else
+					if(istype(modul1, /obj/item/device/assembly/signaler/anomaly))
+						var/obj/item/device/assembly/signaler/anomaly/modul = user.get_active_hand()
+						size -= modul.size
+						core = null
+						modul.loc = get_turf(src.loc)
+						if(modul.icon_overlay)
+							overlays -= modul.icon_overlay
+						STOP_PROCESSING(SSobj, src)
+						update_icon()
+
 	else
 		to_chat(user, "<span class='notice'>Weapon not yet collected!</span>")
 
