@@ -255,13 +255,13 @@
 	return oxyloss
 
 /mob/living/proc/adjustOxyLoss(amount)
-	if((status_flags & GODMODE) || (flags == NO_BREATHE))
+	if((status_flags & GODMODE) || (flags[NO_BREATHE]))
 		oxyloss = 0
 		return
 	oxyloss = Clamp(oxyloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setOxyLoss(amount)
-	if((status_flags & GODMODE) || (flags == NO_BREATHE ))
+	if((status_flags & GODMODE) || (flags[NO_BREATHE]))
 		oxyloss = 0
 		return
 	oxyloss = Clamp(amount, 0, maxHealth * 2)
