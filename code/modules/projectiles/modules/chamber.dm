@@ -38,9 +38,9 @@
 	gun_type = "laser"
 
 /obj/item/modular/chambered/l10
-	icon_state = "chamber_laser_icon"
-	icon_overlay = "chamber_laser"
-	name = "chamber duo laser"
+	icon_state = "chamber_energy"
+	icon_overlay = "chamber_energy"
+	name = "chamber l10"
 	lessfiredelay = 4
 	lessrecoil = 1
 	size = 0.2
@@ -85,14 +85,14 @@
 	pellets = 4
 
 /obj/item/modular/chambered/lasershotgun
-	icon_state = "chamber_laser_icon"
-	icon_overlay = "chamber_laser"
+	icon_state = "chamber_laser1"
+	icon_overlay = "chamber_laser1"
 	name = "chamber shotgun"
 	lessfiredelay = 1
 	lessrecoil = 1
 	size = 0.3
 	caliber = "energy"
 	gun_energy = TRUE
-	gun_type = "laser"
+	gun_type = "shotgun"
 	type_cap = 1
 	pellets = 4
