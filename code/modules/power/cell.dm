@@ -4,6 +4,7 @@
 /obj/item/weapon/stock_parts/cell/atom_init()
 	. = ..()
 	charge = maxcharge
+	start_maxcharge = maxcharge
 	addtimer(CALLBACK(src, .proc/updateicon), 5)
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()

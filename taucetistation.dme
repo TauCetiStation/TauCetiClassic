@@ -1675,6 +1675,7 @@
 #include "code\modules\projectiles\modules\barrel.dm"
 #include "code\modules\projectiles\modules\body.dm"
 #include "code\modules\projectiles\modules\chamber.dm"
+#include "code\modules\projectiles\modules\destroy.dm"
 #include "code\modules\projectiles\modules\grip.dm"
 #include "code\modules\projectiles\modules\guns.dm"
 #include "code\modules\projectiles\projectile\beams.dm"

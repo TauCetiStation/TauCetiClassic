@@ -6,13 +6,18 @@
 	var/fixation = TRUE
 	var/list/barrel_size = BARREL_ALL
 	var/list/conflicts = list()
+	var/attacked = FALSE
 
-/obj/item/modular/accessory/proc/deactivate()
-	if(fixation)
+/obj/item/modular/accessory/attackby(obj/item/A, mob/user)
+	if(!attacked)
 		return
 
-/obj/item/modular/accessory/proc/activate()
-	if(fixation)
+/obj/item/modular/accessory/proc/deactivate(mob/user)
+	if(fixation && user != null)
+		return
+
+/obj/item/modular/accessory/proc/activate(mob/user)
+	if(fixation && user != null)
 		return
 
 /obj/item/modular/accessory/optical

@@ -63,7 +63,7 @@
 			if(grip.icon_overlay)
 				overlays += grip.icon_overlay
 
-	if(istype(magazine_module, /obj/item/weapon/stock_parts/cell))
+	if(istype(magazine_module, MAGAZINE_CELL))
 		magazine_eject = FALSE
 		power_supply = magazine_module
 		cell_type = power_supply.type
@@ -74,7 +74,7 @@
 		lessrecoil += magazine_module.lessrecoil
 		size += magazine_module.size
 
-	else if(istype(magazine_module, /obj/item/ammo_box/magazine/internal))
+	else if(istype(magazine_module, MAGAZINE_INTERNAL))
 		magazine_eject = FALSE
 		mag_type = magazine_module.type
 		magazine = magazine_module
@@ -86,7 +86,7 @@
 		size += magazine_module.size
 
 	else
-		if(istype(magazine_module, /obj/item/ammo_box/magazine))
+		if(istype(magazine_module, MAGAZINE_EXTERNAL))
 			magazine_eject = TRUE
 			mag_type = magazine_module.type
 			magazine = magazine_module
@@ -140,8 +140,11 @@
 							modul.fixation = TRUE
 							modul.parent = src
 							update_icon()
+
 	if(!core && selfrecharging)
 		core = new SELF_RECHARGER(src)
+		accessory.Add(core)
+		accessory_type.Add(core.type)
 		if(istype(core, SELF_RECHARGER))
 			if(gun_energy && power_supply)
 				size += core.size
@@ -155,6 +158,6 @@
 		size_value()
 
 		if(gun_energy)
-			power_supply.maxcharge /= 10
+			power_supply.maxcharge = power_supply.start_maxcharge / 10
 			power_supply.charge /= 10
 		update_icon()
