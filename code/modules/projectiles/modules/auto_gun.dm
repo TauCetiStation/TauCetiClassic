@@ -19,6 +19,10 @@
 	if(istype(magazine_module, /obj/item/weapon/stock_parts/cell))
 		var/obj/item/weapon/stock_parts/cell/modul = magazine_module
 		modul.modular_cell = TRUE
+		modul.icon_mem = icon_state
+		modul.icon = 'code/modules/projectiles/modules/modular.dmi'
+		modul.icon_state = "magazine_charge_icon"
+		modul.item_state = "magazine_charge_icon"
 		modul.update_icon()
 
 	if(chamber)

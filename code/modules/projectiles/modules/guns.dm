@@ -190,7 +190,6 @@
 	magazine_module_type = /obj/item/weapon/stock_parts/cell/super
 	lens1 = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	all_accessory = list(/obj/item/modular/accessory/additional_battery)
-	var/mode = 2
 	fire_delay = 25
 
 /obj/item/weapon/gun/projectile/modulargun/auto_gun/energy/pulse_rifle/destroyer

@@ -1,11 +1,11 @@
 /obj/item/modular/accessory
 	name = "accessory"
+	m_amt = 1000
 	var/obj/item/weapon/gun/projectile/modulargun/parent
 	var/activated
 	var/fixation = TRUE
 	var/list/barrel_size = BARREL_ALL
 	var/list/conflicts = list()
-	m_amt = 1000
 
 /obj/item/modular/accessory/proc/deactivate()
 	if(fixation)
@@ -19,13 +19,13 @@
 	name = "optical"
 	icon_state = "optical_icon"
 	icon_overlay = "optical"
-	var/range = 12
-	var/zoom = FALSE
-	var/x1
-	var/y1
-	var/mob/user1
 	gun_type = list(LASER, BULLET)
 	barrel_size = BARREL_ALL
+	var/range = 12
+	var/zoom = FALSE
+	var/mob/user_parent
+	var/x_lock
+	var/y_lock
 
 /obj/item/modular/accessory/optical/small
 	name = "small optical"
@@ -67,12 +67,12 @@
 	barrel_size = list(BARREL_LARGE)
 
 /obj/item/modular/accessory/optical/process()
-	if((x1 != user1.x) || (y1 != user1.y))
+	if((x_lock != user_parent.loc.x) || (y_lock != user_parent.loc.y))
 		if(zoom)
-			if(user1.client)
-				user1.client.view = world.view
-			if(user1.hud_used)
-				user1.hud_used.show_hud(HUD_STYLE_STANDARD)
+			if(user_parent.client)
+				user_parent.client.view = world.view
+			if(user_parent.hud_used)
+				user_parent.hud_used.show_hud(HUD_STYLE_STANDARD)
 			zoom = FALSE
 			STOP_PROCESSING(SSobj, src)
 
@@ -82,8 +82,6 @@
 	set popup_menu = 0
 
 	if(activated)
-		x1 = user1.x
-		y1 = user1.y
 		if(usr.stat || !(istype(usr,/mob/living/carbon/human)))
 			to_chat(usr, "You are unable to focus down the scope of the rifle.")
 			return
@@ -98,6 +96,8 @@
 			if(usr.hud_used)
 				usr.hud_used.show_hud(HUD_STYLE_REDUCED)
 			usr.client.view = range
+			x_lock = user_parent.loc.x
+			y_lock = user_parent.loc.y
 			zoom = TRUE
 			START_PROCESSING(SSobj, src)
 		else
@@ -111,7 +111,7 @@
 /obj/item/modular/accessory/optical/activate(mob/user)
 	..()
 	src.loc = user
-	user1 = user
+	user_parent = user
 	activated = TRUE
 
 /obj/item/modular/accessory/optical/deactivate(mob/user)
@@ -123,7 +123,7 @@
 			user.hud_used.show_hud(HUD_STYLE_STANDARD)
 		zoom = FALSE
 	activated = FALSE
-	user1 = null
+	user_parent = null
 	src.loc = parent
 
 /obj/item/modular/accessory/silenser
@@ -156,7 +156,7 @@
 	throw_speed = 3
 	throw_range = 6
 	barrel_size = list(BARREL_MEDIUM)
-	conflicts = list(/obj/item/modular/accessory/silenser)
+	conflicts = list(/obj/item/modular/accessory/silenser, /obj/item/modular/accessory/additional_battery)
 
 /obj/item/modular/accessory/bayonet/activate(mob/user)
 	..()
@@ -172,9 +172,10 @@
 	name = "Additional battery"
 	icon_state = "additional_battery_icon"
 	icon_overlay = "additional_battery"
-	var/add_max_charge = 1000
 	barrel_size = list(BARREL_LARGE, BARREL_MEDIUM)
 	gun_type = list(LASER)
+	conflicts = list(/obj/item/modular/accessory/bayonet)
+	var/add_max_charge = 1000
 
 /obj/item/modular/accessory/additional_battery/activate(mob/user)
 	..()

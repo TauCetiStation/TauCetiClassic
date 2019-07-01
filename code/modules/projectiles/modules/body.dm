@@ -1,9 +1,9 @@
 /obj/item/weapon/gun/projectile/modulargun
+	name = "The basis of the weapon"
 	icon_state = "357"
 	icon = 'icons/obj/ammo.dmi'
 	desc = ""
 	m_amt = 2000
-	name = "The basis of the weapon"
 	flags = CONDUCT
 	w_class = ITEM_SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BELT
@@ -49,6 +49,7 @@
 	var/recharge_time = 3
 	var/charge_tick = 0
 	var/chargespeed = 1
+	var/normalaize = FALSE
 
 	var/recentpump = 0 // to prevent spammage
 	var/pumped = 0
@@ -97,6 +98,7 @@
 		w_class = ITEM_SIZE_NORMAL
 	if(size > 0.3)
 		w_class = ITEM_SIZE_LARGE
+
 /obj/item/weapon/gun/projectile/modulargun/proc/size_value()
 	fire_delay = standard_fire_delay
 	if(size <= 0.7)
@@ -117,18 +119,17 @@
 		recoil = TRUE
 
 	fire_delay -= lessfiredelay
-	initex()
 
 /obj/item/weapon/gun/projectile/modulargun/proc/collect(mob/user)
-	collected = !collected
 	if(collected)
 		if(chamber && barrel && grip && magazine_module)
 			size_value()
+			initex()
 
-			if(gun_energy)
+			if(gun_energy && !normalaize)
 				power_supply.maxcharge /= 10
 				power_supply.charge /= 10
-
+				normalaize = TRUE
 			var/weapon_size
 			var/magazine_ejected
 
@@ -147,21 +148,23 @@
 				if(i.m_amt)
 					m_amt += i.m_amt
 
-			name = "[weapon_size] weapon [gun_type] [caliber] gun"
 			desc = "Assembly completed \the [src]. Weapon Type - [gun_type]. Weapon size - [weapon_size]. Caliber - [caliber]. Type store - [magazine_ejected]."
 			to_chat(user, "<span class='notice'>Assembly completed \the [src]. Weapon Type - [gun_type]. Weapon size - [weapon_size]. Caliber - [caliber]. Type store - [magazine_ejected].</span>")
 	else
 		to_chat(user, "<span class='notice'>Disassembly completed \the [src].")
 		name = "The basis of the weapon"
 		fire_delay = standard_fire_delay
-		if(gun_energy)
+		if(gun_energy && normalaize)
 			power_supply.maxcharge *= 10
 			power_supply.charge *= 10
+			normalaize = FALSE
 
-		for(var/obj/item/modular/accessory/i in accessory)
+		for(var/obj/item/i in accessory)
 			if(i in contents)
 				contents.Remove(i)
-			accessory_attach(i, FALSE, user)
+			if(i in user.contents)
+				user.contents.Remove(i)
+			attach(i, FALSE, user)
 
 /obj/item/weapon/gun/projectile/modulargun/proc/initex()
 	if(collected)
@@ -201,6 +204,7 @@
 		if(chamber && !grip && istype(modul, GRIP))
 			success = grip_attach(modul, attach, user)
 
+		size_value()
 		update_icon()
 	else
 		if(istype(modul, CHAMBER))
@@ -224,6 +228,9 @@
 		if(istype(modul, ACCESSORY))
 			success = accessory_attach(modul, FALSE, user)
 
+		if(istype(modul, SELF_RECHARGER))
+			success = core_attach(modul, FALSE, user)
+		size_value()
 		update_icon()
 	return success
 
@@ -388,9 +395,11 @@
 	if(parsed)
 		if(isscrewdriver(A))
 			if(gun_energy && lens.len > 0)
+				collected = !collected
 				collect(user)
 			else
 				if(!gun_energy)
+					collected = !collected
 					collect(user)
 	else
 		to_chat(user, "<span class='notice'>You can not disassemble this weapon.</span>")
@@ -639,6 +648,9 @@
 			lessfiredelay -= modul.lessfiredelay
 			lessrecoil -= modul.lessrecoil
 			size -= modul.size
+
+	size_value()
+	update_icon()
 /obj/item/weapon/gun/projectile/modulargun/proc/core_attach(obj/item/device/assembly/signaler/anomaly/modul, var/attach, mob/user)
 	if(attach)
 		if(gun_energy && power_supply)
@@ -770,12 +782,15 @@
 		return FALSE
 	else
 		change_stat(modul, FALSE, user)
+		modul.loc = get_turf(src.loc)
 		barrel = null
-		for(var/obj/item/modular/accessory/i in accessory)
+		contents.Remove(modul)
+		for(var/obj/item/i in accessory)
 			if(i in contents)
 				contents.Remove(i)
-			accessory_attach(i, FALSE, user)
-			modul.loc = get_turf(src.loc)
+			if(i in user.contents)
+				user.contents.Remove(i)
+			attach(i, FALSE, user)
 		to_chat(user, "<span class='notice'>The barrel is taken out</span>")
 		return TRUE
 
@@ -808,6 +823,8 @@
 				ammo_type += modul
 				lens.Add(modul)
 				change_stat(modul, TRUE, user)
+				user.drop_item()
+				modul.loc = src
 				return TRUE
 		return FALSE
 	else
