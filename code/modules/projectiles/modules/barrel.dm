@@ -56,26 +56,6 @@
 	size = 0.4
 	gun_type = list("bullet", "shotgun")
 
-/obj/item/modular/barrel/large/laser_rifle
-	name = "large barrel laser rifle"
-	icon_state = "barrel_large_laser"
-	icon_overlay = "barrel_large_laser"
-	lessdispersion = 1.3
-	lessdamage = 2
-	lessrecoil = 0.2
-	size = 0.6
-	gun_type = list("laser", "shotgun")
-
-/obj/item/modular/barrel/large/bullet_rifle
-	name = "large barrel bullet rifle"
-	icon_state = "barrel_large_bullet"
-	icon_overlay = "barrel_large_bullet"
-	lessdispersion = 1
-	lessdamage = -3
-	lessrecoil = 0.1
-	size = 0.6
-	gun_type = list("bullet", "shotgun")
-
 /obj/item/modular/barrel/medium/bullet_pistol
 	name = "medium barrel bullet pistol"
 	icon_state = "barrel_medium_bullet"
@@ -95,3 +75,23 @@
 	lessrecoil = 0.2
 	size = 0.4
 	gun_type = list("laser", "shotgun")
+
+/obj/item/modular/barrel/large/laser_rifle
+	name = "large barrel laser rifle"
+	icon_state = "barrel_large_laser"
+	icon_overlay = "barrel_large_laser"
+	lessdispersion = 1.3
+	lessdamage = 2
+	lessrecoil = 0.2
+	size = 0.6
+	gun_type = list("laser", "shotgun")
+
+/obj/item/modular/barrel/large/bullet_rifle
+	name = "large barrel bullet rifle"
+	icon_state = "barrel_large_bullet"
+	icon_overlay = "barrel_large_bullet"
+	lessdispersion = 1
+	lessdamage = -3
+	lessrecoil = 0.1
+	size = 0.6
+	gun_type = list("bullet", "shotgun")

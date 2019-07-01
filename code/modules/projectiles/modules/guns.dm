@@ -236,4 +236,75 @@
 	lens1 = list(/obj/item/ammo_casing/energy/ion)
 	all_accessory = list()
 
+/obj/item/weapon/gun/projectile/modulargun/auto_gun/energy/decloner
+	name = "biological demolecularisor"
+	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
+	origin_tech = "combat=5;materials=4;powerstorage=3"
+	chamber_type = /obj/item/modular/chambered/laser
+	barrel_type = /obj/item/modular/barrel/medium/laser_pistol
+	grip_type = /obj/item/modular/grip/resilient
+	magazine1in_type = /obj/item/weapon/stock_parts/cell/high
+	lens1 = list(/obj/item/ammo_casing/energy/declone)
+	all_accessory = list()
+
+/obj/item/weapon/gun/projectile/modulargun/auto_gun/energy/floragun
+	name = "floral somatoray"
+	desc = "A tool that discharges controlled radiation which induces mutation in plant cells."
+	origin_tech = "materials=2;biotech=3;powerstorage=3"
+	chamber_type = /obj/item/modular/chambered/duolas
+	barrel_type = /obj/item/modular/barrel/medium/laser_pistol
+	grip_type = /obj/item/modular/grip
+	magazine1in_type = /obj/item/weapon/stock_parts/cell/high
+	lens1 = list(/obj/item/ammo_casing/energy/flora/mut, /obj/item/ammo_casing/energy/flora/yield)
+	all_accessory = list()
+	core1 = /obj/item/device/assembly/signaler
+
+/obj/item/weapon/gun/projectile/modulargun/auto_gun/energy/mindflayer
+	name = "mind flayer"
+	desc = "A prototype weapon recovered from the ruins of Research-Station Epsilon."
+	chamber_type = /obj/item/modular/chambered/laser
+	barrel_type = /obj/item/modular/barrel/medium/laser_pistol
+	grip_type = /obj/item/modular/grip/weighted
+	magazine1in_type = /obj/item/weapon/stock_parts/cell/high
+	lens1 = list(/obj/item/ammo_casing/energy/mindflayer)
+	all_accessory = list()
+
+/obj/item/weapon/gun/projectile/modulargun/auto_gun/energy/toxgun
+	name = "phoron pistol"
+	desc = "A specialized firearm designed to fire lethal bolts of phoron."
+	origin_tech = "combat=5;phorontech=4"
+	chamber_type = /obj/item/modular/chambered/laser
+	barrel_type = /obj/item/modular/barrel/medium/laser_pistol
+	grip_type = /obj/item/modular/grip/weighted
+	magazine1in_type = /obj/item/weapon/stock_parts/cell/high
+	lens1 = list(/obj/item/ammo_casing/energy/toxin)
+	all_accessory = list(/obj/item/modular/accessory/additional_battery)
+
+/obj/item/weapon/gun/projectile/modulargun/auto_gun/energy/sniperrifle
+	name = "sniper rifle"
+	desc = "Designed by W&J Company, W2500-E sniper rifle constructed of lightweight materials, fitted with a SMART aiming-system scope."
+	origin_tech = "combat=6;materials=5;powerstorage=4"
+	chamber_type = /obj/item/modular/chambered/laser
+	barrel_type = /obj/item/modular/barrel/large
+	grip_type = /obj/item/modular/grip/rifle
+	magazine1in_type = /obj/item/weapon/stock_parts/cell/high
+	lens1 = list(/obj/item/ammo_casing/energy/sniper)
+	all_accessory = list(/obj/item/modular/accessory/additional_battery, /obj/item/modular/accessory/optical/large)
+	fire_delay = 30
+	var/zoom = FALSE
+
+/obj/item/weapon/gun/energy/sniperrifle/rails
+	name = "Rails rifle"
+	desc = "With this weapon you'll be the boss at any Arena."
+	origin_tech = "combat=6;materials=5;powerstorage=4"
+	chamber_type = /obj/item/modular/chambered/laser
+	barrel_type = /obj/item/modular/barrel/large
+	grip_type = /obj/item/modular/grip/rifle
+	magazine1in_type = /obj/item/weapon/stock_parts/cell/high
+	lens1 = list(/obj/item/ammo_casing/energy/rails)
+	all_accessory = list(/obj/item/modular/accessory/additional_battery, /obj/item/modular/accessory/optical/large)
+	origin_tech = null
+	fire_delay = 20
+
+
 
