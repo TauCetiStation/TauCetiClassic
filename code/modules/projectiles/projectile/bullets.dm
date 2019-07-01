@@ -1,7 +1,7 @@
 /obj/item/projectile/bullet
 	name = "bullet"
 	icon_state = "bullet"
-	damage = 60
+	damage = 45
 	damage_type = BRUTE
 	nodamage = 0
 	flag = "bullet"
@@ -30,7 +30,7 @@
 
 /obj/item/projectile/bullet/weakbullet/beanbag		//because beanbags are not bullets
 	name = "beanbag"
-	agony = 95
+	agony = 35
 
 /obj/item/projectile/bullet/weakbullet/rubber
 	name = "rubber bullet"
@@ -58,7 +58,7 @@
 	embed = 0
 
 /obj/item/projectile/bullet/heavy/a145
-	damage = 110
+	damage = 90
 	stun = 3
 	weaken = 3
 	impact_force = 5
@@ -138,7 +138,7 @@
 
 /obj/item/projectile/bullet/cyanideround
 	name = "poison bullet"
-	damage = 40
+	damage = 35
 	damage_type = TOX
 
 
@@ -155,12 +155,12 @@
 	stun = 0
 	weaken = 0
 	stutter = 10
-	agony = 60
+	agony = 50
 	embed = 0
 	sharp = 0
 
 /obj/item/projectile/bullet/a762
-	damage = 50
+	damage = 45
 	embed = 0
 
 /obj/item/projectile/bullet/incendiary

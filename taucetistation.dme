@@ -1671,6 +1671,7 @@
 #include "code\modules\projectiles\guns\projectile\sniper.dm"
 #include "code\modules\projectiles\modules\__modular.dm"
 #include "code\modules\projectiles\modules\accessory.dm"
+#include "code\modules\projectiles\modules\auto_gun.dm"
 #include "code\modules\projectiles\modules\barrel.dm"
 #include "code\modules\projectiles\modules\body.dm"
 #include "code\modules\projectiles\modules\chamber.dm"

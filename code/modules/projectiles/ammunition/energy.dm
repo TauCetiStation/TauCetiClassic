@@ -10,6 +10,7 @@
 	var/select_name = "energy"
 	var/mod_name = null
 	fire_sound = 'sound/weapons/guns/gunpulse_laser.ogg'
+	icon_overlay = "lens_overlay"
 
 /obj/item/ammo_casing/energy/laser
 	projectile_type = /obj/item/projectile/beam

@@ -59,7 +59,7 @@
 	name = "large barrel laser rifle"
 	icon_state = "barrel_large_laser"
 	icon_overlay = "barrel_large_laser"
-	lessdispersion = 1
+	lessdispersion = 1.3
 	lessdamage = 2
 	lessrecoil = 0.1
 	size = 0.6

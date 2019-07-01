@@ -4,6 +4,7 @@
 	var/activated
 	var/fixation = TRUE
 	var/list/barrel_size = BARREL_ALL
+	var/list/conflicts = list()
 
 /obj/item/modular/accessory/proc/deactivate()
 	if(fixation)
@@ -20,6 +21,7 @@
 	var/range = 12
 	var/zoom = FALSE
 	var/uloc
+	var/mob/user1
 	gun_type = list("laser", "bullet")
 	barrel_size = BARREL_ALL
 
@@ -30,8 +32,8 @@
 	range = 9
 	zoom = FALSE
 	lessdamage = 0
-	lessdispersion = -0.1
-	lessfiredelay= 0
+	lessdispersion = 0.1
+	lessfiredelay= -1
 	lessrecoil = 0
 	size = 0.1
 	gun_type = list("laser", "bullet")
@@ -44,8 +46,8 @@
 	range = 12
 	zoom = FALSE
 	lessdamage = 0
-	lessdispersion = -0.2
-	lessfiredelay= 0
+	lessdispersion = 0.2
+	lessfiredelay= -2
 	lessrecoil = 0
 	size = 0.2
 	gun_type = list("laser", "bullet")
@@ -58,8 +60,8 @@
 	range = 16
 	zoom = FALSE
 	lessdamage = 0
-	lessdispersion = -0.4
-	lessfiredelay= 0
+	lessdispersion = 0.4
+	lessfiredelay= -3
 	lessrecoil = 0
 	size = 0.4
 	gun_type = list("laser", "bullet")
@@ -67,7 +69,13 @@
 
 /obj/item/modular/accessory/optical/process()
 	if(uloc != src.locs)
-		zoom()
+		if(zoom)
+			if(user1.client)
+				user1.client.view = world.view
+			if(user1.hud_used)
+				user1.hud_used.show_hud(HUD_STYLE_STANDARD)
+			zoom = FALSE
+			STOP_PROCESSING(SSobj, src)
 
 /obj/item/modular/accessory/optical/verb/zoom()
 	set category = "Gun"
@@ -91,13 +99,13 @@
 				usr.hud_used.show_hud(HUD_STYLE_REDUCED)
 			usr.client.view = range
 			zoom = TRUE
+			uloc = src.locs
 			START_PROCESSING(SSobj, src)
 		else
 			usr.client.view = world.view
 			if(usr.hud_used)
 				usr.hud_used.show_hud(HUD_STYLE_STANDARD)
 			zoom = FALSE
-			STOP_PROCESSING(SSobj, src)
 		to_chat(usr, "<font color='[zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>")
 	return
 
@@ -105,6 +113,7 @@
 	..()
 	src.loc = user
 	uloc = src.locs
+	user1 = usr
 	activated = TRUE
 
 /obj/item/modular/accessory/optical/deactivate(mob/user)
@@ -116,6 +125,7 @@
 			user.hud_used.show_hud(HUD_STYLE_STANDARD)
 		zoom = FALSE
 	activated = FALSE
+	user1 = null
 	src.loc = parent
 
 /obj/item/modular/accessory/silenser
@@ -146,6 +156,7 @@
 	throw_speed = 3
 	throw_range = 6
 	barrel_size = list(BARREL_MEDIUM)
+	conflicts = list(/obj/item/modular/accessory/silenser)
 
 /obj/item/modular/accessory/bayonet/activate(mob/user)
 	..()

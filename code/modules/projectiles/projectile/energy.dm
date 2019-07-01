@@ -16,7 +16,7 @@
 	stun = 0
 	weaken = 0
 	stutter = 10
-	agony = 120
+	agony = 110
 	damage_type = HALLOSS
 	//Damage will be handled on the MOB side, to prevent window shattering.
 
@@ -82,5 +82,5 @@
 	light_power = 2
 	light_range = 2
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 40
+	damage = 35
 	damage_type = BURN

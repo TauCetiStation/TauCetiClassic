@@ -31,5 +31,5 @@
 	name = "grip rifle"
 	lessdispersion = 0.5
 	lessrecoil = 0.2
-	size = 0.3
+	size = 0.4
 	gun_type = ALL_TYPE_MODULARGUN
