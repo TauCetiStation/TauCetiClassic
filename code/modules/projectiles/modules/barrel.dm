@@ -20,7 +20,7 @@
 	lessdispersion = -0.2
 	lessdamage = 6
 	size = 0.1
-	gun_type = list("bullet", "shotgun")
+	gun_type = list(BULLET, SHOTGUN)
 
 /obj/item/modular/barrel/medium
 	icon_state = "barrel_medium_icon"
@@ -36,7 +36,7 @@
 	lessdispersion = 0.2
 	lessdamage = 3
 	size = 0.2
-	gun_type = list("bullet", "shotgun")
+	gun_type = list(BULLET, SHOTGUN)
 
 /obj/item/modular/barrel/large
 	icon_state = "barrel_large_icon"
@@ -54,7 +54,7 @@
 	lessdamage = -5
 	lessrecoil = 0.1
 	size = 0.4
-	gun_type = list("bullet", "shotgun")
+	gun_type = list(BULLET, SHOTGUN)
 
 /obj/item/modular/barrel/medium/bullet_pistol
 	name = "medium barrel bullet pistol"
@@ -64,7 +64,7 @@
 	lessdamage = -2
 	lessrecoil = 0.2
 	size = 0.4
-	gun_type = list("bullet", "shotgun")
+	gun_type = list(BULLET, SHOTGUN)
 
 /obj/item/modular/barrel/medium/laser_pistol
 	name = "medium barrel laser pistol"
@@ -74,7 +74,7 @@
 	lessdamage = 2
 	lessrecoil = 0.2
 	size = 0.4
-	gun_type = list("laser", "shotgun")
+	gun_type = list(LASER, SHOTGUN)
 
 /obj/item/modular/barrel/large/laser_rifle
 	name = "large barrel laser rifle"
@@ -84,7 +84,7 @@
 	lessdamage = 2
 	lessrecoil = 0.2
 	size = 0.6
-	gun_type = list("laser", "shotgun")
+	gun_type = list(LASER, SHOTGUN)
 
 /obj/item/modular/barrel/large/bullet_rifle
 	name = "large barrel bullet rifle"
@@ -94,4 +94,4 @@
 	lessdamage = -3
 	lessrecoil = 0.1
 	size = 0.6
-	gun_type = list("bullet", "shotgun")
+	gun_type = list(BULLET, SHOTGUN)

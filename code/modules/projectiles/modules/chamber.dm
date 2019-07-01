@@ -1,4 +1,4 @@
-/obj/item/modular/chambered
+/obj/item/modular/chamber
 	icon_state = "chamber_bullet_icon"
 	name = "chamber"
 	lessfiredelay = 6
@@ -14,7 +14,7 @@
 	gun_type = "bullet"
 	m_amt = 2000
 
-/obj/item/modular/chambered/laser
+/obj/item/modular/chamber/laser
 	icon_state = "chamber_laser_icon"
 	icon_overlay = "chamber_laser"
 	name = "chamber laser"
@@ -29,7 +29,7 @@
 	charge_indicator = TRUE
 	gun_type = "laser"
 
-/obj/item/modular/chambered/duolas
+/obj/item/modular/chamber/duolas
 	icon_state = "chamber_laser_icon"
 	icon_overlay = "chamber_laser"
 	name = "chamber duo laser"
@@ -44,9 +44,9 @@
 	charge_indicator = TRUE
 	gun_type = "laser"
 
-/obj/item/modular/chambered/triolas
-	icon_state = "chamber_laser_icon"
-	icon_overlay = "chamber_laser"
+/obj/item/modular/chamber/triolas
+	icon_state = "chamber_energy"
+	icon_overlay = "chamber_energy"
 	name = "chamber trio laser"
 	lessfiredelay = 5
 	lessdamage = -4
@@ -59,9 +59,9 @@
 	charge_indicator = TRUE
 	gun_type = "laser"
 
-/obj/item/modular/chambered/l10
-	icon_state = "chamber_energy"
-	icon_overlay = "chamber_energy"
+/obj/item/modular/chamber/l10
+	icon_state = "chamber_laser1"
+	icon_overlay = "chamber_laser1"
 	name = "chamber l10"
 	lessfiredelay = 5
 	lessdamage = -4
@@ -71,10 +71,9 @@
 	multi_type = TRUE
 	gun_energy = FALSE
 	type_cap = 2
-	charge_indicator = TRUE
-	gun_type = "laser"
+	gun_type = LASER
 
-/obj/item/modular/chambered/bullet9mm
+/obj/item/modular/chamber/bullet9mm
 	icon_state = "chamber_bullet_icon"
 	icon_overlay = "chamber_bullet"
 	name = "chamber 9mm"
@@ -84,9 +83,9 @@
 	size = 0.2
 	caliber = "9mm"
 	type_cap = 1
-	gun_type = "bullet"
+	gun_type = BULLET
 
-/obj/item/modular/chambered/bullet357
+/obj/item/modular/chamber/bullet357
 	icon_state = "chamber_bullet_icon"
 	icon_overlay = "chamber_bullet"
 	name = "chamber 357"
@@ -96,9 +95,9 @@
 	size = 0.2
 	caliber = "357"
 	type_cap = 1
-	gun_type = "bullet"
+	gun_type = BULLET
 
-/obj/item/modular/chambered/bulletshotgun
+/obj/item/modular/chamber/bulletshotgun
 	icon_state = "chamber_bullet_icon"
 	icon_overlay = "chamber_bullet"
 	name = "chamber shotgun"
@@ -108,11 +107,11 @@
 	lessdamage = -3
 	size = 0.3
 	caliber = "shotgun"
-	gun_type = "shotgun"
+	gun_type = SHOTGUN
 	type_cap = 1
 	pellets = 7
 
-/obj/item/modular/chambered/lasershotgun
+/obj/item/modular/chamber/lasershotgun
 	icon_state = "chamber_laser1"
 	icon_overlay = "chamber_laser1"
 	name = "chamber shotgun"
@@ -124,6 +123,6 @@
 	caliber = "energy"
 	gun_energy = TRUE
 	charge_indicator = FALSE
-	gun_type = "shotgun"
+	gun_type = SHOTGUN
 	type_cap = 1
 	pellets = 4

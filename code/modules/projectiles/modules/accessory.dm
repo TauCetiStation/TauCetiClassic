@@ -24,7 +24,7 @@
 	var/x1
 	var/y1
 	var/mob/user1
-	gun_type = list("laser", "bullet")
+	gun_type = list(LASER, BULLET)
 	barrel_size = BARREL_ALL
 
 /obj/item/modular/accessory/optical/small
@@ -38,7 +38,6 @@
 	lessfiredelay= -1
 	lessrecoil = 0
 	size = 0.1
-	gun_type = list("laser", "bullet")
 	barrel_size = BARREL_ALL
 
 /obj/item/modular/accessory/optical/medium
@@ -52,7 +51,6 @@
 	lessfiredelay= -2
 	lessrecoil = 0
 	size = 0.2
-	gun_type = list("laser", "bullet")
 	barrel_size = list(BARREL_MEDIUM, BARREL_LARGE)
 
 /obj/item/modular/accessory/optical/large
@@ -66,7 +64,6 @@
 	lessfiredelay= -3
 	lessrecoil = 0
 	size = 0.4
-	gun_type = list("laser", "bullet")
 	barrel_size = list(BARREL_LARGE)
 
 /obj/item/modular/accessory/optical/process()
@@ -133,9 +130,9 @@
 	name = "silenser"
 	icon_state = "silenser_icon"
 	icon_overlay = "silenser"
-	conflicts = list(/obj/item/modular/accessory/bayonet)
+	conflicts = list(/obj/item/modular/accessory/bayonet, /obj/item/modular/barrel/medium/bullet_pistol)
 	barrel_size = list(BARREL_MEDIUM, BARREL_SMALL)
-	gun_type = list("bullet")
+	gun_type = list(BULLET)
 
 /obj/item/modular/accessory/silenser/activate(mob/user)
 	..()
@@ -177,7 +174,7 @@
 	icon_overlay = "additional_battery"
 	var/add_max_charge = 1000
 	barrel_size = list(BARREL_LARGE, BARREL_MEDIUM)
-	gun_type = list("laser")
+	gun_type = list(LASER)
 
 /obj/item/modular/accessory/additional_battery/activate(mob/user)
 	..()

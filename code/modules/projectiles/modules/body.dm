@@ -15,8 +15,8 @@
 
 	var/obj/item/modular/barrel/barrel
 	var/obj/item/modular/grip/grip
-	var/obj/item/modular/chambered/chamber
-	var/obj/item/ammo_box/magazine/magazine1in
+	var/obj/item/modular/chamber/chamber
+	var/obj/item/ammo_box/magazine/magazine_module
 	var/list/obj/item/ammo_casing/lens = list()
 	var/obj/item/weapon/stock_parts/cell/power_supply //What type of power cell this uses
 	var/list/obj/item/modular/accessory = list()
@@ -119,10 +119,10 @@
 	fire_delay -= lessfiredelay
 	initex()
 
-/obj/item/weapon/gun/projectile/modulargun/proc/collect(mob/user, var/user_trigger = TRUE)
+/obj/item/weapon/gun/projectile/modulargun/proc/collect(mob/user)
 	collected = !collected
 	if(collected)
-		if(chamber && barrel && grip && magazine1in)
+		if(chamber && barrel && grip && magazine_module)
 			size_value()
 
 			if(gun_energy)
@@ -149,8 +149,7 @@
 
 			name = "[weapon_size] weapon [gun_type] [caliber] gun"
 			desc = "Assembly completed \the [src]. Weapon Type - [gun_type]. Weapon size - [weapon_size]. Caliber - [caliber]. Type store - [magazine_ejected]."
-			if(user_trigger)
-				to_chat(user, "<span class='notice'>Assembly completed \the [src]. Weapon Type - [gun_type]. Weapon size - [weapon_size]. Caliber - [caliber]. Type store - [magazine_ejected].</span>")
+			to_chat(user, "<span class='notice'>Assembly completed \the [src]. Weapon Type - [gun_type]. Weapon size - [weapon_size]. Caliber - [caliber]. Type store - [magazine_ejected].</span>")
 	else
 		to_chat(user, "<span class='notice'>Disassembly completed \the [src].")
 		name = "The basis of the weapon"
@@ -158,8 +157,11 @@
 		if(gun_energy)
 			power_supply.maxcharge *= 10
 			power_supply.charge *= 10
+
 		for(var/obj/item/modular/accessory/i in accessory)
-			i.deactivate(user)
+			if(i in contents)
+				contents.Remove(i)
+			accessory_attach(i, FALSE, user)
 
 /obj/item/weapon/gun/projectile/modulargun/proc/initex()
 	if(collected)
@@ -174,213 +176,60 @@
 			fire_sound = chambered.fire_sound
 			update_icon()
 
-/obj/item/weapon/gun/projectile/modulargun/proc/attach(obj/item/modular/modul1, var/attach, mob/user = null, var/user_trigger = TRUE)
+/obj/item/weapon/gun/projectile/modulargun/proc/attach(obj/item/modular/modul, var/attach, mob/user = null)
 	var/success = FALSE
 	if(attach)
-		if(!chamber && istype(modul1, /obj/item/modular/chambered))
-			var/obj/item/modular/chambered/modul = modul1
-			chamber = modul
-			caliber = chamber.caliber
-			gun_type = chamber.gun_type
-			gun_energy = chamber.gun_energy
-			multi_type = chamber.multi_type
-			type_cap = chamber.type_cap
-			pellets = chamber.pellets
-			charge_indicator = chamber.charge_indicator
-			icon = 'code/modules/projectiles/modules/modular.dmi'
-			icon_state = chamber.icon_overlay
-			success = TRUE
+		if(!chamber && istype(modul, CHAMBER))
+			success = chamber_attach(modul, attach, user)
 
-		if(gun_energy && istype(modul1, /obj/item/ammo_casing/energy))
-			var/obj/item/ammo_casing/energy/modul = modul1
-			if(modul.caliber == caliber)
-				if(multi_type && ammo_type.len < type_cap)
-					ammo_type += modul
-					lens.Add(modul)
-				else if(!multi_type && ammo_type.len == 0)
-					ammo_type += modul
-					lens.Add(modul)
-				success = TRUE
+		if(gun_energy && istype(modul, LENS))
+			success = lens_attach(modul, attach, user)
 
-		if(chamber && !power_supply && istype(modul1, /obj/item/weapon/stock_parts/cell))
-			var/obj/item/weapon/stock_parts/cell/modul = modul1
-			magazine1in = modul
-			magazine_eject = FALSE
-			power_supply = magazine1in
-			cell_type = power_supply.type
-			overlays += "magazine_charge"
-			success = TRUE
+		if(chamber && gun_energy && !power_supply && istype(modul, MAGAZINE_CELL))
+			success = magazine_attach(modul, attach, user)
 
-		else if(istype(modul1, /obj/item/ammo_box/magazine/internal))
-			var/obj/item/ammo_box/magazine/internal/modul = modul1
-			magazine1in = modul
-			magazine_eject = FALSE
-			mag_type = magazine1in.type
-			magazine = magazine1in
-			overlays += "magazine_internal"
-			success = TRUE
+		else if(chamber && !gun_energy && istype(modul, MAGAZINE_INTERNAL))
+			success = magazine_attach(modul, attach, user)
 
 		else
-			if(istype(modul1, /obj/item/ammo_box/magazine))
-				var/obj/item/ammo_box/magazine/modul = modul1
-				magazine1in = modul
-				magazine_eject = TRUE
-				mag_type = magazine1in.type
-				magazine = magazine1in
-				overlays += "magazine_external"
-				success = TRUE
+			if(chamber && !gun_energy && istype(modul, MAGAZINE_EXTERNAL))
+				success = magazine_attach(modul, attach, user)
 
-		if(chamber && !barrel && istype(modul1, /obj/item/modular/barrel))
-			var/obj/item/modular/barrel/modul = modul1
-			barrel = modul
-			success = TRUE
+		if(chamber && !barrel && istype(modul, BARREL))
+			success = barrel_attach(modul, attach, user)
 
-		if(chamber && !grip && istype(modul1, /obj/item/modular/grip))
-			var/obj/item/modular/grip/modul = modul1
-			grip = modul
-			success = TRUE
+		if(chamber && !grip && istype(modul, GRIP))
+			success = grip_attach(modul, attach, user)
 
-		if(success)
-			if(user_trigger)
-				user.drop_item()
-				modul1.loc = src
-			lessdamage += modul1.lessdamage
-			lessdispersion += modul1.lessdispersion
-			lessfiredelay += modul1.lessfiredelay
-			lessrecoil += modul1.lessrecoil
-			size += modul1.size
-			if(istype(modul1, /obj/item/modular))
-				if(modul1.icon_overlay)
-					overlays += modul1.icon_overlay
 		update_icon()
 	else
-		if(istype(modul1, /obj/item/modular/chambered))
-			success = TRUE
-			if(barrel)
-				attach(barrel, FALSE, user, user_trigger)
-				barrel = null
-			if(grip)
-				attach(grip, FALSE, user, user_trigger)
-				grip = null
-			if(gun_energy)
-				attach(magazine1in, FALSE, user, user_trigger)
-			else
-				attach(magazine1in, FALSE, user, user_trigger)
+		if(istype(modul, CHAMBER))
+			success = chamber_attach(modul, attach, user)
 
-			for(var/obj/item/ammo_casing/energy/i in contents)
-				if(i in ammo_type)
-					attach(i, FALSE, user)
-				else
-					contents.Remove(i)
-					qdel(i)
+		if(istype(modul, BARREL))
+			success = barrel_attach(modul, attach, user)
 
-			for(var/obj/item/modular/accessory/i in accessory)
-				if(i in contents)
-					contents.Remove(i)
-				accessory_attach(i, FALSE, user)
+		if(istype(modul, GRIP))
+			success = grip_attach(modul, attach, user)
 
-			for(var/obj/item/modular/i in contents)
-				attach(i, FALSE, user)
+		if(istype(modul, MAGAZINE_CELL))
+			success = magazine_attach(modul, attach, user)
 
-			for(var/obj/item/i in contents)
-				i.loc = get_turf(src.loc)
-				contents.Remove(i)
+		if(istype(modul, MAGAZINE_EXTERNAL))
+			success = magazine_attach(modul, attach, user)
 
-			contents = null
+		if(istype(modul, LENS))
+			success = lens_attach(modul, attach, user)
 
-			chambered = null
-			chamber = null
-			caliber = null
-			gun_type = null
-			gun_energy = null
-			multi_type = null
-			type_cap = null
-			pellets = null
-			inited = FALSE
-			ammo_type = list()
+		if(istype(modul, ACCESSORY))
+			success = accessory_attach(modul, FALSE, user)
 
-			icon_state = "357"
-			icon = 'icons/obj/ammo.dmi'
-			update_icon()
-			to_chat(user, "<span class='notice'>The chamber is taken out</span>")
-
-		if(istype(modul1, /obj/item/modular/barrel))
-			success = TRUE
-			barrel = null
-			for(var/obj/item/modular/accessory/i in accessory)
-				if(i in contents)
-					contents.Remove(i)
-				accessory_attach(i, FALSE, user)
-			to_chat(user, "<span class='notice'>The barrel is taken out</span>")
-
-		if(istype(modul1, /obj/item/modular/grip))
-			success = TRUE
-			grip = null
-
-		if(istype(modul1, /obj/item/weapon/stock_parts/cell))
-			var/obj/item/weapon/stock_parts/cell/modul = modul1
-			success = TRUE
-			magazine_eject = null
-			magazine1in = null
-			power_supply = null
-			cell_type = null
-			modul.maxcharge = modul.start_maxcharge
-			overlays -= "magazine_charge"
-			to_chat(user, "<span class='notice'>The cell is taken out</span>")
-
-		if(istype(modul1, /obj/item/ammo_box/magazine))
-			success = TRUE
-			if(magazine)
-				if(istype(magazine1in, /obj/item/ammo_box/magazine/internal))
-					overlays -= "magazine_internal"
-				else
-					overlays -= "magazine_external"
-				magazine_eject = null
-				magazine1in = null
-				mag_type = null
-				mag_type2 = null
-				magazine = null
-			else
-				if(istype(magazine1in, /obj/item/ammo_box/magazine/internal))
-					overlays -= "magazine_internal"
-				else
-					overlays -= "magazine_external"
-				magazine_eject = null
-				magazine1in = null
-				mag_type = null
-				mag_type2 = null
-				magazine = null
-			to_chat(user, "<span class='notice'>The magazine is taken out</span>")
-
-		if(istype(modul1, /obj/item/ammo_casing/energy))
-			lens.Remove(modul1)
-			ammo_type.Remove(modul1)
-			contents.Remove(modul1)
-
-			success = TRUE
-			inited = FALSE
-			to_chat(user, "<span class='notice'>The lens is taken out</span>")
-
-		if(istype(modul1, /obj/item/modular/accessory))
-			accessory_attach(modul1, FALSE, user)
-			contents.Remove(modul1)
-
-		if(success)
-			modul1.loc = get_turf(src.loc)
-			contents.Remove(modul1)
-			lessdamage -= modul1.lessdamage
-			lessdispersion -= modul1.lessdispersion
-			lessfiredelay -= modul1.lessfiredelay
-			lessrecoil -= modul1.lessrecoil
-			size -= modul1.size
-			if(istype(modul1, /obj/item/modular))
-				if(modul1.icon_overlay)
-					overlays -= modul1.icon_overlay
 		update_icon()
 	return success
 
 /obj/item/weapon/gun/projectile/modulargun/attackby(obj/item/A, mob/user)
 	if(collected)
+
 		if(magazine && collected && !magazine_eject)
 			var/num_loaded = magazine.attackby(A, user, 1)
 			if(num_loaded)
@@ -389,7 +238,8 @@
 				A.update_icon()
 				update_icon()
 				chamber_round()
-		if (istype(A, /obj/item/ammo_box/magazine) && magazine_eject)
+
+		if (istype(A, MAGAZINE_EXTERNAL) && magazine_eject)
 			var/obj/item/ammo_box/magazine/AM = A
 			if (!magazine && (istype(AM, mag_type) || (istype(AM, mag_type2) && mag_type != null)) && AM.caliber == caliber)
 				user.remove_from_mob(AM)
@@ -402,7 +252,7 @@
 				A.update_icon()
 				update_icon()
 				return TRUE
-			else if(!magazine && !mag_type2 && istype(AM, /obj/item/ammo_box/magazine) && AM.caliber == caliber)
+			else if(!magazine && !mag_type2 && istype(AM, MAGAZINE_EXTERNAL) && AM.caliber == caliber)
 				user.remove_from_mob(AM)
 				magazine = AM
 				magazine.loc = src
@@ -417,12 +267,12 @@
 				to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 
 	if(!collected)
-		if(istype(A, /obj/item/modular/chambered))
-			var/obj/item/modular/chambered/modul = A
+		if(istype(A, CHAMBER))
+			var/obj/item/modular/chamber/modul = A
 			if(attach(modul, TRUE, user))
 				to_chat(user, "<span class='notice'>Chamber installed \the [src]. Type gun [gun_type]. Caliber [caliber].</span>")
 
-		if(istype(A, /obj/item/modular/barrel))
+		if(istype(A, BARREL))
 			var/obj/item/modular/barrel/modul = A
 			if(gun_type in modul.gun_type)
 				if(attach(modul, TRUE, user))
@@ -430,7 +280,7 @@
 			else
 				to_chat(user, "<span class='notice'>The module does not fit the type \the [src].</span>")
 
-		if(istype(A, /obj/item/modular/grip))
+		if(istype(A, GRIP))
 			var/obj/item/modular/grip/modul = A
 			if(gun_type in modul.gun_type)
 				if(attach(modul, TRUE, user))
@@ -438,7 +288,7 @@
 			else
 				to_chat(user, "<span class='notice'>The module does not fit the type \the [src].</span>")
 
-		if(istype(A, /obj/item/weapon/stock_parts/cell))
+		if(istype(A, MAGAZINE_CELL))
 			var/obj/item/weapon/stock_parts/cell/modul = A
 			if(gun_energy)
 				if(modul.modular_cell)
@@ -447,7 +297,7 @@
 				else
 					to_chat(user, "<span class='notice'>Change the battery with a screwdriver.</span>")
 
-		if(istype(A, /obj/item/ammo_casing/energy))
+		if(istype(A, LENS))
 			var/obj/item/ammo_casing/energy/modul = A
 			if(modul.caliber == caliber)
 				if(multi_type && ammo_type.len < type_cap)
@@ -461,7 +311,7 @@
 			else
 				to_chat(user, "<span class='notice'>The module does not fit the caliber \the [src].</span>")
 
-		if(chamber && !magazine1in && istype(A, /obj/item/ammo_box/magazine/internal))
+		if(chamber && !magazine_module && istype(A, MAGAZINE_INTERNAL))
 			var/obj/item/ammo_box/magazine/internal/modul = A
 			if(modul.caliber == caliber)
 				if(attach(modul, TRUE, user))
@@ -469,7 +319,7 @@
 			else
 				to_chat(user, "<span class='notice'>The module does not fit the caliber \the [src].</span>")
 
-		if(chamber && !magazine1in && istype(A, /obj/item/ammo_box/magazine))
+		if(chamber && !magazine_module && istype(A, MAGAZINE_EXTERNAL))
 			var/obj/item/ammo_box/magazine/modul = A
 			if(modul.caliber == caliber)
 				if(attach(modul, TRUE, user))
@@ -479,75 +329,61 @@
 
 		if(iswrench(A))
 			var/list/listmodules = list("Cancel")
-			listmodules.Add(contents)
-			var/modul1 = input(user, "Pull module", , "Cancel") in listmodules
+			for(var/obj/item/i in contents)
+				if(!istype(i, ACCESSORY))
+					listmodules.Add(i)
+			var/command = input(user, "Pull module", , "Cancel") in listmodules
 
-			if(istype(modul1, /obj/item/modular/chambered))
-				var/obj/item/modular/chambered/modul = modul1
+			if(istype(command, CHAMBER))
+				var/obj/item/modular/chamber/modul = command
 				attach(modul, FALSE, user)
 
-			if(istype(modul1, /obj/item/modular/barrel))
-				var/obj/item/modular/barrel/modul = modul1
+			if(istype(command, BARREL))
+				var/obj/item/modular/barrel/modul = command
 				attach(modul, FALSE, user)
 
-			if(istype(modul1, /obj/item/modular/grip))
-				var/obj/item/modular/grip/modul = modul1
+			if(istype(command, GRIP))
+				var/obj/item/modular/grip/modul = command
 				attach(modul, FALSE, user)
 
-			if(istype(modul1, /obj/item/weapon/stock_parts/cell))
-				var/obj/item/weapon/stock_parts/cell/modul = modul1
+			if(istype(command, MAGAZINE_CELL))
+				var/obj/item/weapon/stock_parts/cell/modul = command
 				attach(modul, FALSE, user)
 
-			if(istype(modul1, /obj/item/ammo_box/magazine))
-				var/obj/item/ammo_box/magazine/modul = modul1
+			if(istype(command, MAGAZINE_EXTERNAL))
+				var/obj/item/ammo_box/magazine/modul = command
 				attach(modul, FALSE, user)
 
-			if(istype(modul1, /obj/item/ammo_casing/energy))
-				var/obj/item/ammo_casing/energy/modul = modul1
+			if(istype(command, LENS))
+				var/obj/item/ammo_casing/energy/modul = command
 				attach(modul, FALSE, user)
+
+			if(istype(command, SELF_RECHARGER))
+				var/obj/item/device/assembly/signaler/anomaly/modul = command
+				core_attach(modul, FALSE, user)
 
 			update_icon()
 	else
-		if(istype(A, /obj/item/modular/accessory))
+		if(istype(A, ACCESSORY))
 			var/obj/item/modular/accessory/modul = A
-			modul.deactivate(user)
 			accessory_attach(modul, TRUE, user)
 
-		else if(istype(A, /obj/item/device/assembly/signaler/anomaly))
+		else if(istype(A, SELF_RECHARGER))
 			var/obj/item/device/assembly/signaler/anomaly/modul = A
-			if(gun_energy && power_supply)
-				size += modul.size
-				user.drop_item()
-				modul.loc = src
-				core = modul
-				if(modul.icon_overlay)
-					overlays += modul.icon_overlay
-				START_PROCESSING(SSobj, src)
-				to_chat(user, "<span class='notice'>Kernel installed.</span>")
-			else
-				to_chat(user, "<span class='notice'>The weapon does not have a built-in battery.</span>")
+			core_attach(modul, TRUE, user)
 		else
 			if(iswrench(A))
 				var/list/listmodules = list("Cancel")
 				for(var/obj/item/modular/accessory/i in accessory)
 					listmodules.Add(i)
-				if(core)
-					listmodules.Add(core)
-				var/modul1 = input(user, "Pull module", , "Cancel") in listmodules
-				if(istype(modul1, /obj/item/modular/accessory))
-					var/obj/item/modular/accessory/modul = modul1
+				var/command = input(user, "Pull module", , "Cancel") in listmodules
+				if(istype(command, ACCESSORY))
+					var/obj/item/modular/accessory/modul = command
 					accessory_attach(modul, FALSE, user)
 				else
-					if(istype(modul1, /obj/item/device/assembly/signaler/anomaly))
+					if(istype(command, SELF_RECHARGER))
 						var/obj/item/device/assembly/signaler/anomaly/modul = core
-						size -= modul.size
-						core = null
-						modul.loc = get_turf(src.loc)
-						if(modul.icon_overlay)
-							overlays -= modul.icon_overlay
-						STOP_PROCESSING(SSobj, src)
-						update_icon()
-						to_chat(user, "<span class='notice'>Core removed.</span>")
+						core_attach(modul, FALSE, user)
 
 	if(parsed)
 		if(isscrewdriver(A))
@@ -573,7 +409,7 @@
 			return TRUE
 		else if (magazine_eject && !gun_energy)
 			to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
-		else if(!gun_energy && !magazine_eject && gun_type == "shotgun")
+		else if(!gun_energy && !magazine_eject && gun_type == SHOTGUN)
 			if(recentpump)
 				return
 			pump(user)
@@ -581,7 +417,7 @@
 			spawn(10)
 				recentpump = 0
 			return
-		else if(!gun_energy && istype(magazine1in, /obj/item/ammo_box/magazine/internal/cylinder))
+		else if(!gun_energy && istype(magazine_module, /obj/item/ammo_box/magazine/internal/cylinder))
 			var/num_unloaded = 0
 			while (get_ammo() > 0)
 				var/obj/item/ammo_casing/CB
@@ -599,6 +435,14 @@
 				to_chat(user, "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>")
 			else
 				to_chat(user, "<span class='notice'>[src] is empty.</span>")
+		else if(!gun_energy && istype(magazine_module, MAGAZINE_INTERNAL))
+			var/obj/item/ammo_casing/CB
+			CB = magazine.get_round(0)
+			chambered = null
+			CB.loc = get_turf(src.loc)
+			CB.SpinAnimation(10, 1)
+			CB.update_icon()
+			to_chat(user, "<span class = 'notice'>You unload shell from [src].</span>")
 		else if(gun_energy)
 			select_fire(user)
 			return
@@ -684,7 +528,7 @@
 			if(isnull(AC) || !istype(AC))
 				chamber_round()
 				return
-			if(eject_casing && caliber != "energy" && !istype(magazine1in, /obj/item/ammo_box/magazine/internal/cylinder))
+			if(eject_casing && caliber != "energy" && !istype(magazine_module, /obj/item/ammo_box/magazine/internal/cylinder))
 				AC.loc = get_turf(src.loc) //Eject casing onto ground.
 				AC.SpinAnimation(10, 1) //next gen special effects
 				spawn(3) //next gen sound effects
@@ -727,34 +571,126 @@
 		power_supply.use(round(power_supply.maxcharge / severity))
 		update_icon()
 		..()
+
+/obj/item/weapon/gun/projectile/modulargun/proc/change_stat(obj/item/modul1, var/attach, mob/user)
+	if(istype(modul1, MODULAR))
+		var/obj/item/modular/modul = modul1
+		if(attach)
+			lessdamage += modul.lessdamage
+			lessdispersion += modul.lessdispersion
+			lessfiredelay += modul.lessfiredelay
+			lessrecoil += modul.lessrecoil
+			size += modul.size
+			if(istype(modul, MODULAR))
+				if(modul.icon_overlay)
+					overlays += modul.icon_overlay
+		else
+			lessdamage -= modul.lessdamage
+			lessdispersion -= modul.lessdispersion
+			lessfiredelay -= modul.lessfiredelay
+			lessrecoil -= modul.lessrecoil
+			size -= modul.size
+			if(istype(modul, MODULAR))
+				if(modul.icon_overlay)
+					overlays -= modul.icon_overlay
+
+	if(istype(modul1, LENS))
+		var/obj/item/ammo_casing/energy/modul = modul1
+		if(attach)
+			lessdamage += modul.lessdamage
+			lessdispersion += modul.lessdispersion
+			lessfiredelay += modul.lessfiredelay
+			lessrecoil += modul.lessrecoil
+			size += modul.size
+		else
+			lessdamage -= modul.lessdamage
+			lessdispersion -= modul.lessdispersion
+			lessfiredelay -= modul.lessfiredelay
+			lessrecoil -= modul.lessrecoil
+			size -= modul.size
+
+
+	if(istype(modul1, MAGAZINE_CELL))
+		var/obj/item/weapon/stock_parts/cell/modul = modul1
+		if(attach)
+			lessdamage += modul.lessdamage
+			lessdispersion += modul.lessdispersion
+			lessfiredelay += modul.lessfiredelay
+			lessrecoil += modul.lessrecoil
+			size += modul.size
+		else
+			lessdamage -= modul.lessdamage
+			lessdispersion -= modul.lessdispersion
+			lessfiredelay -= modul.lessfiredelay
+			lessrecoil -= modul.lessrecoil
+			size -= modul.size
+
+	if(istype(modul1, MAGAZINE_EXTERNAL))
+		var/obj/item/ammo_box/magazine/modul = modul1
+		if(attach)
+			lessdamage += modul.lessdamage
+			lessdispersion += modul.lessdispersion
+			lessfiredelay += modul.lessfiredelay
+			lessrecoil += modul.lessrecoil
+			size += modul.size
+		else
+			lessdamage -= modul.lessdamage
+			lessdispersion -= modul.lessdispersion
+			lessfiredelay -= modul.lessfiredelay
+			lessrecoil -= modul.lessrecoil
+			size -= modul.size
+/obj/item/weapon/gun/projectile/modulargun/proc/core_attach(obj/item/device/assembly/signaler/anomaly/modul, var/attach, mob/user)
+	if(attach)
+		if(gun_energy && power_supply)
+			size += modul.size
+			user.drop_item()
+			modul.loc = src
+			core = modul
+			accessory.Add(modul)
+			if(modul.icon_overlay)
+				overlays += modul.icon_overlay
+			START_PROCESSING(SSobj, src)
+			to_chat(user, "<span class='notice'>Kernel installed.</span>")
+		else
+			to_chat(user, "<span class='notice'>The weapon does not have a built-in battery.</span>")
+	else
+		size -= modul.size
+		core = null
+		accessory.Remove(modul)
+		modul.loc = get_turf(src.loc)
+		if(modul.icon_overlay)
+			overlays -= modul.icon_overlay
+		STOP_PROCESSING(SSobj, src)
+		update_icon()
+		to_chat(user, "<span class='notice'>Core removed.</span>")
+
 /obj/item/weapon/gun/projectile/modulargun/proc/accessory_attach(obj/item/modular/accessory/modul, var/attach, mob/user)
 	if(attach)
 		if((accessory_type.len == 0) || !(is_type_in_list(modul, accessory_type)))
 			if(is_type_in_list(barrel, modul.barrel_size) && gun_type in modul.gun_type)
 				if(accessory.len < max_accessory)
 					var/conflict = FALSE
-					for(var/i in modul.conflicts)
-						if(is_type_in_list(i, contents))
+					var/list/check = list() + contents + accessory
+					for(var/i in check)
+						if(is_type_in_list(i, modul.conflicts))
+							conflict = TRUE
+						if(is_type_in_list(i, modul.conflicts))
 							conflict = TRUE
 					if(!conflict)
 						user.drop_item()
 						modul.loc = src
 						accessory.Add(modul)
 						accessory_type.Add(modul.type)
-						lessdamage += modul.lessdamage
-						lessdispersion += modul.lessdispersion
-						lessfiredelay += modul.lessfiredelay
-						lessrecoil += modul.lessrecoil
-						size += modul.size
-						if(istype(modul, /obj/item/modular))
-							if(modul.icon_overlay)
-								overlays += modul.icon_overlay
+						change_stat(modul, TRUE, user)
+						user.drop_item()
+						modul.loc = src
 						modul.fixation = TRUE
 						modul.parent = src
 						modul.activate(user)
 						update_icon()
 						size_value()
 						to_chat(user, "<span class='notice'>Accessory installed</span>")
+						return TRUE
 					else
 						to_chat(user, "<span class='notice'>The module conflicts with another module.</span>")
 				else
@@ -764,24 +700,208 @@
 		else
 			to_chat(user, "<span class='notice'>Module already installed</span>")
 
+		return FALSE
 
 	else
 		accessory.Remove(modul)
 		accessory_type.Remove(modul.type)
-		lessdamage -= modul.lessdamage
-		lessdispersion -= modul.lessdispersion
-		lessfiredelay -= modul.lessfiredelay
-		lessrecoil -= modul.lessrecoil
-		size -= modul.size
-		if(istype(modul, /obj/item/modular))
-			if(modul.icon_overlay)
-				overlays -= modul.icon_overlay
+		change_stat(modul, FALSE, user)
 		modul.deactivate(user)
 		modul.parent = null
 		modul.fixation = FALSE
 		modul.loc = get_turf(src.loc)
 		update_icon()
 		size_value(user)
+		return TRUE
+
+/obj/item/weapon/gun/projectile/modulargun/proc/chamber_attach(obj/item/modular/chamber/modul, var/attach, mob/user)
+	if(attach)
+		chamber = modul
+		caliber = chamber.caliber
+		gun_type = chamber.gun_type
+		gun_energy = chamber.gun_energy
+		multi_type = chamber.multi_type
+		type_cap = chamber.type_cap
+		pellets = chamber.pellets
+		charge_indicator = chamber.charge_indicator
+		icon = 'code/modules/projectiles/modules/modular.dmi'
+		icon_state = chamber.icon_overlay
+		change_stat(chamber, TRUE, user)
+		user.drop_item()
+		modul.loc = src
+		return TRUE
+	else
+		change_stat(chamber, FALSE, user)
+		modul.loc = get_turf(src.loc)
+		for(var/obj/item/i in contents)
+			attach(i, FALSE, user)
+
+		for(var/obj/item/i in contents)
+			i.loc = get_turf(src.loc)
+			contents.Remove(i)
+
+		contents = null
+
+		chambered = null
+		chamber = null
+		caliber = null
+		gun_type = null
+		gun_energy = null
+		multi_type = null
+		type_cap = null
+		pellets = null
+		inited = FALSE
+		ammo_type = list()
+
+		icon_state = "357"
+		icon = 'icons/obj/ammo.dmi'
+		update_icon()
+		to_chat(user, "<span class='notice'>The chamber is taken out</span>")
+		return TRUE
+
+/obj/item/weapon/gun/projectile/modulargun/proc/barrel_attach(obj/item/modular/barrel/modul, var/attach, mob/user)
+	if(attach)
+		if(chamber && !barrel)
+			barrel = modul
+			change_stat(modul, TRUE, user)
+			user.drop_item()
+			modul.loc = src
+			return TRUE
+		return FALSE
+	else
+		change_stat(modul, FALSE, user)
+		barrel = null
+		for(var/obj/item/modular/accessory/i in accessory)
+			if(i in contents)
+				contents.Remove(i)
+			accessory_attach(i, FALSE, user)
+			modul.loc = get_turf(src.loc)
+		to_chat(user, "<span class='notice'>The barrel is taken out</span>")
+		return TRUE
+
+/obj/item/weapon/gun/projectile/modulargun/proc/grip_attach(obj/item/modular/grip/modul, var/attach, mob/user)
+	if(attach)
+		if(chamber && !grip)
+			grip = modul
+			change_stat(modul, TRUE, user)
+			user.drop_item()
+			modul.loc = src
+			return TRUE
+		return FALSE
+	else
+		change_stat(modul, FALSE, user)
+		modul.loc = get_turf(src.loc)
+		grip = null
+		return TRUE
+
+/obj/item/weapon/gun/projectile/modulargun/proc/lens_attach(obj/item/ammo_casing/energy/modul, var/attach, mob/user)
+	if(attach)
+		if(modul.caliber == caliber)
+			if(multi_type && ammo_type.len < type_cap)
+				ammo_type += modul
+				lens.Add(modul)
+				change_stat(modul, TRUE, user)
+				user.drop_item()
+				modul.loc = src
+				return TRUE
+			else if(!multi_type && ammo_type.len == 0)
+				ammo_type += modul
+				lens.Add(modul)
+				change_stat(modul, TRUE, user)
+				return TRUE
+		return FALSE
+	else
+		lens.Remove(modul)
+		ammo_type.Remove(modul)
+		contents.Remove(modul)
+
+		change_stat(modul, FALSE, user)
+		modul.loc = get_turf(src.loc)
+		inited = FALSE
+		to_chat(user, "<span class='notice'>The lens is taken out</span>")
+		return TRUE
+
+/obj/item/weapon/gun/projectile/modulargun/proc/magazine_attach(obj/item/modul1, var/attach, mob/user)
+	if(attach)
+		if(istype(modul1, /obj/item/weapon/stock_parts/cell))
+			var/obj/item/weapon/stock_parts/cell/modul = modul1
+			magazine_module = modul
+			magazine_eject = FALSE
+			power_supply = magazine_module
+			cell_type = power_supply.type
+			overlays += "magazine_charge"
+			change_stat(modul, TRUE, user)
+			user.drop_item()
+			modul.loc = src
+			return TRUE
+
+		else if(istype(modul1, /obj/item/ammo_box/magazine/internal))
+			var/obj/item/ammo_box/magazine/internal/modul = modul1
+			magazine_module = modul
+			magazine_eject = FALSE
+			mag_type = magazine_module.type
+			magazine = magazine_module
+			overlays += "magazine_internal"
+			change_stat(modul, TRUE, user)
+			user.drop_item()
+			modul.loc = src
+			return TRUE
+
+		else
+			if(istype(modul1, /obj/item/ammo_box/magazine))
+				var/obj/item/ammo_box/magazine/modul = modul1
+				magazine_module = modul
+				magazine_eject = TRUE
+				mag_type = magazine_module.type
+				magazine = magazine_module
+				overlays += "magazine_external"
+				change_stat(modul, TRUE, user)
+				user.drop_item()
+				modul.loc = src
+				return TRUE
+		return FALSE
+	else
+		if(istype(modul1, MAGAZINE_CELL))
+			var/obj/item/weapon/stock_parts/cell/modul = modul1
+			change_stat(modul, FALSE, user)
+			modul.loc = get_turf(src.loc)
+			magazine_eject = null
+			magazine_module = null
+			power_supply = null
+			cell_type = null
+			modul.maxcharge = modul.start_maxcharge
+			overlays -= "magazine_charge"
+			to_chat(user, "<span class='notice'>The cell is taken out</span>")
+			return TRUE
+
+		if(istype(modul1, MAGAZINE_EXTERNAL))
+			change_stat(modul1, FALSE, user)
+			modul1.loc = get_turf(src.loc)
+			if(magazine)
+				if(istype(magazine_module, MAGAZINE_INTERNAL))
+					overlays -= "magazine_internal"
+				else
+					overlays -= "magazine_external"
+				magazine_eject = null
+				magazine_module = null
+				mag_type = null
+				mag_type2 = null
+				magazine = null
+				to_chat(user, "<span class='notice'>The magazine is taken out</span>")
+				return TRUE
+			else
+				if(istype(magazine_module, MAGAZINE_INTERNAL))
+					overlays -= "magazine_internal"
+				else
+					overlays -= "magazine_external"
+				magazine_eject = null
+				magazine_module = null
+				mag_type = null
+				mag_type2 = null
+				magazine = null
+				to_chat(user, "<span class='notice'>The magazine is taken out</span>")
+				return TRUE
+		return FALSE
 
 /obj/item/weapon/gun/projectile/modulargun/attack_hand(mob/user)
 	..()

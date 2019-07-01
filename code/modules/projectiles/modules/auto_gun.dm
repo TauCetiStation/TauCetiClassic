@@ -1,13 +1,13 @@
 /obj/item/weapon/gun/projectile/modulargun/auto_gun
 	name = "gun"
 	parsed = FALSE
-	var/chamber_type = /obj/item/modular/chambered/duolas
+	var/chamber_type = /obj/item/modular/chamber/duolas
 	var/barrel_type = /obj/item/modular/barrel/large/laser_rifle
 	var/grip_type = /obj/item/modular/grip/rifle
-	var/magazine1in_type = /obj/item/weapon/stock_parts/cell/super
+	var/magazine_module_type = /obj/item/weapon/stock_parts/cell/super
 	var/list/obj/item/ammo_casing/lens1 = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser)
 	var/list/obj/item/modular/accessory/all_accessory = list(/obj/item/modular/accessory/optical/large)
-	var/core1 = null
+	var/selfrecharging = FALSE
 
 /obj/item/weapon/gun/projectile/modulargun/auto_gun/atom_init()
 	.=..()
@@ -15,9 +15,9 @@
 	barrel = new barrel_type(src)
 	grip = new grip_type(src)
 	chamber = new chamber_type(src)
-	magazine1in = new magazine1in_type(src)
-	if(istype(magazine1in, /obj/item/weapon/stock_parts/cell))
-		var/obj/item/weapon/stock_parts/cell/modul = magazine1in
+	magazine_module = new magazine_module_type(src)
+	if(istype(magazine_module, /obj/item/weapon/stock_parts/cell))
+		var/obj/item/weapon/stock_parts/cell/modul = magazine_module
 		modul.modular_cell = TRUE
 		modul.update_icon()
 
@@ -59,39 +59,39 @@
 			if(grip.icon_overlay)
 				overlays += grip.icon_overlay
 
-	if(istype(magazine1in, /obj/item/weapon/stock_parts/cell))
+	if(istype(magazine_module, /obj/item/weapon/stock_parts/cell))
 		magazine_eject = FALSE
-		power_supply = magazine1in
+		power_supply = magazine_module
 		cell_type = power_supply.type
 		overlays += "magazine_charge"
-		lessdamage += magazine1in.lessdamage
-		lessdispersion += magazine1in.lessdispersion
-		lessfiredelay += magazine1in.lessfiredelay
-		lessrecoil += magazine1in.lessrecoil
-		size += magazine1in.size
+		lessdamage += magazine_module.lessdamage
+		lessdispersion += magazine_module.lessdispersion
+		lessfiredelay += magazine_module.lessfiredelay
+		lessrecoil += magazine_module.lessrecoil
+		size += magazine_module.size
 
-	else if(istype(magazine1in, /obj/item/ammo_box/magazine/internal))
+	else if(istype(magazine_module, /obj/item/ammo_box/magazine/internal))
 		magazine_eject = FALSE
-		mag_type = magazine1in.type
-		magazine = magazine1in
+		mag_type = magazine_module.type
+		magazine = magazine_module
 		overlays += "magazine_internal"
-		lessdamage += magazine1in.lessdamage
-		lessdispersion += magazine1in.lessdispersion
-		lessfiredelay += magazine1in.lessfiredelay
-		lessrecoil += magazine1in.lessrecoil
-		size += magazine1in.size
+		lessdamage += magazine_module.lessdamage
+		lessdispersion += magazine_module.lessdispersion
+		lessfiredelay += magazine_module.lessfiredelay
+		lessrecoil += magazine_module.lessrecoil
+		size += magazine_module.size
 
 	else
-		if(istype(magazine1in, /obj/item/ammo_box/magazine))
+		if(istype(magazine_module, /obj/item/ammo_box/magazine))
 			magazine_eject = TRUE
-			mag_type = magazine1in.type
-			magazine = magazine1in
+			mag_type = magazine_module.type
+			magazine = magazine_module
 			overlays += "magazine_external"
-			lessdamage += magazine1in.lessdamage
-			lessdispersion += magazine1in.lessdispersion
-			lessfiredelay += magazine1in.lessfiredelay
-			lessrecoil += magazine1in.lessrecoil
-			size += magazine1in.size
+			lessdamage += magazine_module.lessdamage
+			lessdispersion += magazine_module.lessdispersion
+			lessfiredelay += magazine_module.lessfiredelay
+			lessrecoil += magazine_module.lessrecoil
+			size += magazine_module.size
 	if(lens1.len > 0)
 		for(var/i in lens1)
 			var/obj/item/ammo_casing/energy/modul = new i(src)
@@ -136,9 +136,9 @@
 							modul.fixation = TRUE
 							modul.parent = src
 							update_icon()
-	if(!core && core1)
-		core = new core1(src)
-		if(istype(core, /obj/item/device/assembly/signaler/anomaly))
+	if(!core && selfrecharging)
+		core = new SELF_RECHARGER(src)
+		if(istype(core, SELF_RECHARGER))
 			if(gun_energy && power_supply)
 				size += core.size
 				if(core.icon_overlay)
