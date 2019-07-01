@@ -685,6 +685,7 @@
 		core = null
 		accessory.Remove(modul)
 		accessory_type.Remove(modul.type)
+		contents.Remove(modul)
 		modul.loc = get_turf(src.loc)
 		if(modul.icon_overlay)
 			overlays -= modul.icon_overlay
@@ -737,6 +738,7 @@
 	else
 		accessory.Remove(modul)
 		accessory_type.Remove(modul.type)
+		contents.Remove(modul)
 		change_stat(modul, FALSE, user)
 		modul.deactivate(user)
 		modul.parent = null
@@ -831,6 +833,7 @@
 	else
 		change_stat(modul, FALSE, user)
 		modul.loc = get_turf(src.loc)
+		contents.Remove(modul)
 		grip = null
 		return TRUE
 
@@ -913,6 +916,7 @@
 			var/obj/item/weapon/stock_parts/cell/modul = modul1
 			change_stat(modul, FALSE, user)
 			modul.loc = get_turf(src.loc)
+			contents.Remove(modul)
 			magazine_eject = null
 			magazine_module = null
 			power_supply = null
@@ -926,6 +930,7 @@
 		if(istype(modul1, MAGAZINE_EXTERNAL))
 			change_stat(modul1, FALSE, user)
 			modul1.loc = get_turf(src.loc)
+			contents.Remove(modul1)
 			if(magazine)
 				if(istype(magazine_module, MAGAZINE_INTERNAL))
 					overlays -= "magazine_internal"

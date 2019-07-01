@@ -1,5 +1,4 @@
 /obj/item/weapon/gun/projectile/modulargun/Destroy()
-	.=..()
 	if(barrel)
 		attach(barrel, FALSE, null)
 	if(grip)
@@ -16,3 +15,4 @@
 		attach(magazine_module, FALSE, null)
 	if(chamber)
 		attach(chamber, FALSE, null)
+	return ..()
