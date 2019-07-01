@@ -137,7 +137,7 @@
 							if(istype(modul, /obj/item/modular))
 								if(modul.icon_overlay)
 									overlays += modul.icon_overlay
-							modul.fixation = TRUE
+							modul.activate()
 							modul.parent = src
 							update_icon()
 
@@ -156,8 +156,4 @@
 
 	if(collected)
 		size_value()
-
-		if(gun_energy)
-			power_supply.maxcharge = power_supply.start_maxcharge / 10
-			power_supply.charge /= 10
 		update_icon()

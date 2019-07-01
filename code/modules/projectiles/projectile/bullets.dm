@@ -58,7 +58,7 @@
 	embed = 0
 
 /obj/item/projectile/bullet/heavy/a145
-	damage = 90
+	damage = 110
 	stun = 3
 	weaken = 3
 	impact_force = 5

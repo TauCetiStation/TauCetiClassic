@@ -288,7 +288,7 @@
 	magazine_module_type = /obj/item/weapon/stock_parts/cell/high
 	lens1 = list(/obj/item/ammo_casing/energy/sniper)
 	all_accessory = list(/obj/item/modular/accessory/additional_battery, /obj/item/modular/accessory/optical/large)
-	fire_delay = 30
+	fire_delay = 35
 	var/zoom = FALSE
 
 /obj/item/weapon/gun/projectile/modulargun/auto_gun/energy/sniperrifle/rails

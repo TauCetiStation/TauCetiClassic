@@ -2,22 +2,28 @@
 	name = "accessory"
 	m_amt = 1000
 	var/obj/item/weapon/gun/projectile/modulargun/parent
+	var/mob/user_parent
 	var/activated
-	var/fixation = TRUE
 	var/list/barrel_size = BARREL_ALL
 	var/list/conflicts = list()
 	var/attacked = FALSE
+	var/usering = FALSE
 
+/obj/item/modular/accessory/Destroy()
+	parent = null
+	src.deactivate(user_parent)
+	user_parent = null
+	return ..()
 /obj/item/modular/accessory/attackby(obj/item/A, mob/user)
 	if(!attacked)
 		return
 
-/obj/item/modular/accessory/proc/deactivate(mob/user)
-	if(fixation && user != null)
+/obj/item/modular/accessory/proc/deactivate(mob/user = user_parent)
+	if(user != null && usering)
 		return
 
-/obj/item/modular/accessory/proc/activate(mob/user)
-	if(fixation && user != null)
+/obj/item/modular/accessory/proc/activate(mob/user = user_parent)
+	if(user != null && usering)
 		return
 
 /obj/item/modular/accessory/optical
@@ -28,7 +34,6 @@
 	barrel_size = BARREL_ALL
 	var/range = 12
 	var/zoom = FALSE
-	var/mob/user_parent
 	var/x_lock
 	var/y_lock
 
@@ -87,28 +92,28 @@
 	set popup_menu = 0
 
 	if(activated)
-		if(usr.stat || !(istype(usr,/mob/living/carbon/human)))
-			to_chat(usr, "You are unable to focus down the scope of the rifle.")
+		if(user_parent.stat || !(istype(user_parent,/mob/living/carbon/human)))
+			to_chat(user_parent, "You are unable to focus down the scope of the rifle.")
 			return
 		//if(!zoom && global_hud.darkMask[1] in usr.client.screen)
 		//	usr << "Your welding equipment gets in the way of you looking down the scope"
 		//	return
-		if(!zoom && usr.get_active_hand() != parent)
-			to_chat(usr, "You are too distracted to look down the scope, perhaps if it was in your active hand this might work better")
+		if(!zoom && user_parent.get_active_hand() != parent)
+			to_chat(user_parent, "You are too distracted to look down the scope, perhaps if it was in your active hand this might work better")
 			return
 
-		if(usr.client.view == world.view)
-			if(usr.hud_used)
-				usr.hud_used.show_hud(HUD_STYLE_REDUCED)
-			usr.client.view = range
+		if(user_parent.client.view == world.view)
+			if(user_parent.hud_used)
+				user_parent.hud_used.show_hud(HUD_STYLE_REDUCED)
+			user_parent.client.view = range
 			x_lock = user_parent.loc.x
 			y_lock = user_parent.loc.y
 			zoom = TRUE
 			START_PROCESSING(SSobj, src)
 		else
-			usr.client.view = world.view
+			user_parent.client.view = world.view
 			if(usr.hud_used)
-				usr.hud_used.show_hud(HUD_STYLE_STANDARD)
+				user_parent.hud_used.show_hud(HUD_STYLE_STANDARD)
 			zoom = FALSE
 		to_chat(usr, "<font color='[zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>")
 	return
@@ -123,9 +128,9 @@
 	..()
 	if(zoom)
 		if(user.client)
-			user.client.view = world.view
+			user_parent.client.view = world.view
 		if(user.hud_used)
-			user.hud_used.show_hud(HUD_STYLE_STANDARD)
+			user_parent.hud_used.show_hud(HUD_STYLE_STANDARD)
 		zoom = FALSE
 	activated = FALSE
 	user_parent = null
@@ -184,7 +189,6 @@
 
 /obj/item/modular/accessory/additional_battery/activate(mob/user)
 	..()
-	parent.power_supply.start_maxcharge = parent.power_supply.maxcharge
 	parent.power_supply.maxcharge += add_max_charge
 	activated = TRUE
 

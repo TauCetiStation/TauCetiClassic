@@ -60,6 +60,7 @@
 /obj/item/modular
 	icon = 'code/modules/projectiles/modules/modular.dmi'
 	flags = CONDUCT
+	m_amt = 500
 	var/icon_overlay
 	var/size = 0.0
 	var/lessdamage = 0.0
@@ -67,7 +68,6 @@
 	var/lessfiredelay = 0
 	var/lessrecoil = 0.0
 	var/gun_type
-	m_amt = 500
 
 /obj/item/modular/atom_init()
 	.=..()
@@ -87,7 +87,7 @@
 	charge_tick = 0
 	if(!power_supply)
 		return 0
-	power_supply.give(100 * chargespeed)
+	power_supply.give(100 * chargespeed * 10)
 	update_icon()
 
 /obj/item/modular/atom_init()
@@ -126,10 +126,6 @@
 			size_value()
 			initex()
 
-			if(gun_energy)
-				power_supply.maxcharge = power_supply.start_maxcharge / 10
-				power_supply.charge /= 10
-
 			var/weapon_size
 			var/magazine_ejected
 
@@ -154,9 +150,6 @@
 		to_chat(user, "<span class='notice'>Disassembly completed \the [src].")
 		name = "The basis of the weapon"
 		fire_delay = standard_fire_delay
-		if(gun_energy)
-			power_supply.maxcharge = power_supply.start_maxcharge
-			power_supply.charge *= 10
 
 		for(var/obj/item/i in accessory)
 			if(i in contents)
@@ -712,7 +705,6 @@
 						if(user != null)
 							user.drop_item()
 							modul.loc = src
-						modul.fixation = TRUE
 						modul.parent = src
 						modul.activate(user)
 						update_icon()
@@ -742,7 +734,6 @@
 		change_stat(modul, FALSE, user)
 		modul.deactivate(user)
 		modul.parent = null
-		modul.fixation = FALSE
 		modul.loc = get_turf(src.loc)
 		update_icon()
 		size_value(user)
