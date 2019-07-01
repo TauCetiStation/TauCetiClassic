@@ -26,7 +26,7 @@
 	name = "laser carbine"
 	desc = "J10 carbine, pretty old model of corporate security laser weaponry with constant cooling issues. Faster firerate but reduced damage."
 	chamber_type = /obj/item/modular/chambered/laser
-	barrel_type = /obj/item/modular/barrel/medium
+	barrel_type = /obj/item/modular/barrel/medium/laser_pistol
 	grip_type = /obj/item/modular/grip/resilient
 	magazine1in_type = /obj/item/weapon/stock_parts/cell/high
 	lens1 = list(/obj/item/ammo_casing/energy/laser)
@@ -49,7 +49,7 @@
 	name = "retro laser"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 	chamber_type = /obj/item/modular/chambered/laser
-	barrel_type = /obj/item/modular/barrel/medium
+	barrel_type = /obj/item/modular/barrel/medium/laser_pistol
 	grip_type = /obj/item/modular/grip
 	magazine1in_type = /obj/item/weapon/stock_parts/cell/high
 	lens1 = list(/obj/item/ammo_casing/energy/laser)
@@ -193,5 +193,47 @@
 	all_accessory = list(/obj/item/modular/accessory/additional_battery)
 	var/mode = 2
 	fire_delay = 25
+
+/obj/item/weapon/gun/projectile/modulargun/auto_gun/energy/pulse_rifle/destroyer
+	name = "pulse destroyer"
+	desc = "A heavy-duty, pulse-based energy weapon."
+	chamber_type = /obj/item/modular/chambered/laser
+	barrel_type = /obj/item/modular/barrel/large/laser_rifle
+	grip_type = /obj/item/modular/grip/rifle
+	magazine1in_type = /obj/item/weapon/stock_parts/cell/infinite
+	lens1 = list(/obj/item/ammo_casing/energy/laser/pulse)
+	all_accessory = list(/obj/item/modular/accessory/additional_battery)
+
+/obj/item/weapon/gun/projectile/modulargun/auto_gun/energy/pulse_rifle/M1911
+	name = "m1911-P"
+	desc = "It's not the size of the gun, it's the size of the hole it puts through people."
+	chamber_type = /obj/item/modular/chambered/laser
+	barrel_type = /obj/item/modular/barrel/large/laser_rifle
+	grip_type = /obj/item/modular/grip/rifle
+	magazine1in_type = /obj/item/weapon/stock_parts/cell/infinite
+	lens1 = list(/obj/item/ammo_casing/energy/laser/pulse)
+	all_accessory = list(/obj/item/modular/accessory/additional_battery)
+	isHandgun = TRUE
+
+/obj/item/weapon/gun/projectile/modulargun/auto_gun/energy/ionrifle
+	name = "ion rifle"
+	desc = "A man portable anti-armor weapon designed to disable mechanical threats."
+	origin_tech = "combat=2;magnets=4"
+	chamber_type = /obj/item/modular/chambered/laser
+	barrel_type = /obj/item/modular/barrel/large/laser_rifle
+	grip_type = /obj/item/modular/grip/resilient
+	magazine1in_type = /obj/item/weapon/stock_parts/cell/high
+	lens1 = list(/obj/item/ammo_casing/energy/ion)
+	all_accessory = list()
+
+/obj/item/weapon/gun/projectile/modulargun/auto_gun/energy/ionrifle/classic
+	name = "ion rifle"
+	desc = "A man portable anti-armor weapon designed to disable mechanical threats."
+	chamber_type = /obj/item/modular/chambered/laser
+	barrel_type = /obj/item/modular/barrel/medium/laser_pistol
+	grip_type = /obj/item/modular/grip/rifle
+	magazine1in_type = /obj/item/weapon/stock_parts/cell/high
+	lens1 = list(/obj/item/ammo_casing/energy/ion)
+	all_accessory = list()
 
 
