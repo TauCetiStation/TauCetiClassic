@@ -307,6 +307,10 @@
 		if(istype(modul1, /obj/item/modular/barrel))
 			success = TRUE
 			barrel = null
+			for(var/obj/item/modular/accessory/i in accessory)
+				if(i in contents)
+					contents.Remove(i)
+				accessory_attach(i, FALSE, user)
 			to_chat(user, "<span class='notice'>The barrel is taken out</span>")
 
 		if(istype(modul1, /obj/item/modular/grip))
