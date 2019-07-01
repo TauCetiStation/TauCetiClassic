@@ -23,6 +23,7 @@
 	var/zoom = FALSE
 	var/x1
 	var/y1
+	var/mob/user1
 	gun_type = list("laser", "bullet")
 	barrel_size = BARREL_ALL
 
@@ -69,12 +70,12 @@
 	barrel_size = list(BARREL_LARGE)
 
 /obj/item/modular/accessory/optical/process()
-	if((x1 != usr.x) || (y1 != usr.y))
+	if((x1 != user1.x) || (y1 != user1.y))
 		if(zoom)
-			if(usr.client)
-				usr.client.view = world.view
-			if(usr.hud_used)
-				usr.hud_used.show_hud(HUD_STYLE_STANDARD)
+			if(user1.client)
+				user1.client.view = world.view
+			if(user1.hud_used)
+				user1.hud_used.show_hud(HUD_STYLE_STANDARD)
 			zoom = FALSE
 			STOP_PROCESSING(SSobj, src)
 
@@ -84,8 +85,8 @@
 	set popup_menu = 0
 
 	if(activated)
-		x1 = usr.x
-		y1 = usr.y
+		x1 = user1.x
+		y1 = user1.y
 		if(usr.stat || !(istype(usr,/mob/living/carbon/human)))
 			to_chat(usr, "You are unable to focus down the scope of the rifle.")
 			return
@@ -113,6 +114,7 @@
 /obj/item/modular/accessory/optical/activate(mob/user)
 	..()
 	src.loc = user
+	user1 = user
 	activated = TRUE
 
 /obj/item/modular/accessory/optical/deactivate(mob/user)
@@ -124,6 +126,7 @@
 			user.hud_used.show_hud(HUD_STYLE_STANDARD)
 		zoom = FALSE
 	activated = FALSE
+	user1 = null
 	src.loc = parent
 
 /obj/item/modular/accessory/silenser

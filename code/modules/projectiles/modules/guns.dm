@@ -56,7 +56,6 @@
 	all_accessory = list()
 
 /obj/item/weapon/gun/projectile/modulargun/auto_gun/energy/laser/selfcharging/captain
-	icon_state = "caplaser"
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
 	chamber_type = /obj/item/modular/chambered/laser
 	barrel_type = /obj/item/modular/barrel/medium/laser_pistol
@@ -64,10 +63,11 @@
 	magazine1in_type = /obj/item/weapon/stock_parts/cell/super
 	lens1 = list(/obj/item/ammo_casing/energy/laser)
 	all_accessory = list(/obj/item/modular/accessory/additional_battery)
-	core1 = /obj/item/device/assembly/signaler
+	core1 = /obj/item/device/assembly/signaler/anomaly
 	force = 10
 	origin_tech = null
 	chargespeed = 1
+	isHandgun = TRUE
 
 /obj/item/weapon/gun/projectile/modulargun/auto_gun/energy/laser/scatter
 	name = "scatter laser gun"
@@ -257,7 +257,7 @@
 	magazine1in_type = /obj/item/weapon/stock_parts/cell/high
 	lens1 = list(/obj/item/ammo_casing/energy/flora/mut, /obj/item/ammo_casing/energy/flora/yield)
 	all_accessory = list()
-	core1 = /obj/item/device/assembly/signaler
+	core1 = /obj/item/device/assembly/signaler/anomaly
 
 /obj/item/weapon/gun/projectile/modulargun/auto_gun/energy/mindflayer
 	name = "mind flayer"

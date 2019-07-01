@@ -136,13 +136,14 @@
 							modul.fixation = TRUE
 							modul.parent = src
 							update_icon()
-	if(!core)
+	if(!core && core1)
 		core = new core1(src)
-		if(gun_energy)
-			size += core.size
-			if(core.icon_overlay)
-				overlays += core.icon_overlay
-			START_PROCESSING(SSobj, src)
+		if(istype(core, /obj/item/device/assembly/signaler/anomaly))
+			if(gun_energy && power_supply)
+				size += core.size
+				if(core.icon_overlay)
+					overlays += core.icon_overlay
+				START_PROCESSING(SSobj, src)
 
 	collected = TRUE
 
