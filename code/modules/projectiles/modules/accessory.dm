@@ -133,6 +133,8 @@
 	name = "silenser"
 	icon_state = "silenser_icon"
 	icon_overlay = "silenser"
+	conflicts = list(/obj/item/modular/accessory/bayonet)
+	barrel_size = list(BARREL_MEDIUM, BARREL_SMALL)
 	gun_type = list("bullet")
 
 /obj/item/modular/accessory/silenser/activate(mob/user)
