@@ -7,6 +7,7 @@
 	var/magazine1in_type = /obj/item/weapon/stock_parts/cell/super
 	var/list/obj/item/ammo_casing/lens1 = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser)
 	var/list/obj/item/modular/accessory/all_accessory = list(/obj/item/modular/accessory/optical/large)
+	var/core1 = null
 
 /obj/item/weapon/gun/projectile/modulargun/auto_gun/atom_init()
 	.=..()
@@ -135,6 +136,14 @@
 							modul.fixation = TRUE
 							modul.parent = src
 							update_icon()
+	if(core1)
+		var/obj/item/device/assembly/signaler/anomaly/modul = new core1(src)
+		if(istype(modul, /obj/item/device/assembly/signaler/anomaly))
+			if(gun_energy && power_supply)
+				size += modul.size
+				if(modul.icon_overlay)
+					overlays += modul.icon_overlay
+				START_PROCESSING(SSobj, src)
 
 	collected = TRUE
 
@@ -144,22 +153,4 @@
 		if(gun_energy)
 			power_supply.maxcharge /= 10
 			power_supply.charge /= 10
-
-		var/weapon_size
-		var/magazine_ejected
-
-		if(magazine_eject)
-			magazine_ejected = "external"
-		else
-			magazine_ejected = "internal"
-
-		if(w_class == ITEM_SIZE_SMALL)
-			weapon_size = "Small"
-		if(w_class == ITEM_SIZE_NORMAL)
-			weapon_size = "Medium"
-		if(w_class == ITEM_SIZE_LARGE)
-			weapon_size = "Big"
-
-		name = "[weapon_size] weapon [gun_type] [caliber] gun"
-		desc = "Assembly completed \the [src]. Weapon Type - [gun_type]. Weapon size - [weapon_size]. Caliber - [caliber]. Type store - [magazine_ejected]."
 		update_icon()

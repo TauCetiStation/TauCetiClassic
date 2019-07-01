@@ -1,14 +1,15 @@
 /obj/item/modular/grip
-	icon_state = "grip_normal_icon"
+	icon_state = "grip_normal"
 	icon_overlay = "grip_normal"
 	name = "grip"
 	lessdispersion = 0.1
 	lessrecoil = 0.1
 	size = 0.1
+	m_amt = 400
 	gun_type = ALL_TYPE_MODULARGUN
 
 /obj/item/modular/grip/resilient
-	icon_state = "grip_resilient_icon"
+	icon_state = "grip_resilient"
 	icon_overlay = "grip_resilient"
 	name = "grip resilient"
 	lessdispersion = 0.4
@@ -32,4 +33,13 @@
 	lessdispersion = 0.5
 	lessrecoil = 0.2
 	size = 0.4
+	gun_type = ALL_TYPE_MODULARGUN
+
+/obj/item/modular/grip/weighted
+	icon_state = "grip_weighted"
+	icon_overlay = "grip_weighted"
+	name = "grip weighted"
+	lessdispersion = 0.3
+	lessrecoil = 0.3
+	size = 0.3
 	gun_type = ALL_TYPE_MODULARGUN

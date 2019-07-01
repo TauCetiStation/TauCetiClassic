@@ -12,6 +12,7 @@
 	var/pellets = 0
 	var/charge_indicator = FALSE
 	gun_type = "bullet"
+	m_amt = 2000
 
 /obj/item/modular/chambered/laser
 	icon_state = "chamber_laser_icon"
@@ -40,6 +41,21 @@
 	multi_type = TRUE
 	gun_energy = TRUE
 	type_cap = 2
+	charge_indicator = TRUE
+	gun_type = "laser"
+
+/obj/item/modular/chambered/triolas
+	icon_state = "chamber_laser_icon"
+	icon_overlay = "chamber_laser"
+	name = "chamber trio laser"
+	lessfiredelay = 5
+	lessdamage = -4
+	lessrecoil = 1
+	size = 0.2
+	caliber = "energy"
+	multi_type = TRUE
+	gun_energy = TRUE
+	type_cap = 3
 	charge_indicator = TRUE
 	gun_type = "laser"
 

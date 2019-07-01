@@ -10,6 +10,7 @@
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
+	var/start_maxcharge
 
 	w_class = ITEM_SIZE_NORMAL
 	var/charge = 0	// note %age conveted to actual charge in New

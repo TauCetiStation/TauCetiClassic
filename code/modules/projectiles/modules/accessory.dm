@@ -5,6 +5,7 @@
 	var/fixation = TRUE
 	var/list/barrel_size = BARREL_ALL
 	var/list/conflicts = list()
+	m_amt = 1000
 
 /obj/item/modular/accessory/proc/deactivate()
 	if(fixation)
@@ -68,7 +69,7 @@
 	barrel_size = list(BARREL_LARGE)
 
 /obj/item/modular/accessory/optical/process()
-	if(uloc != src.locs)
+	if(uloc != user1.locs)
 		if(zoom)
 			if(user1.client)
 				user1.client.view = world.view
@@ -82,7 +83,7 @@
 	set name = "Use Sniper Scope"
 	set popup_menu = 0
 
-	uloc = src.locs
+	uloc = user1.locs
 	if(activated)
 		if(usr.stat || !(istype(usr,/mob/living/carbon/human)))
 			to_chat(usr, "You are unable to focus down the scope of the rifle.")
@@ -167,3 +168,23 @@
 	..()
 	parent.force -= force
 	activated = FALSE
+
+/obj/item/modular/accessory/additional_battery
+	name = "Additional battery"
+	icon_state = "additional_battery_icon"
+	icon_overlay = "additional_battery"
+	var/add_max_charge = 1000
+	barrel_size = list(BARREL_LARGE, BARREL_MEDIUM)
+	gun_type = list("laser")
+
+/obj/item/modular/accessory/additional_battery/activate(mob/user)
+	..()
+	parent.power_supply.start_maxcharge = parent.power_supply.maxcharge
+	parent.power_supply.maxcharge += add_max_charge
+	activated = TRUE
+
+/obj/item/modular/accessory/additional_battery/deactivate(mob/user)
+	..()
+	parent.power_supply.maxcharge = parent.power_supply.start_maxcharge
+	activated = FALSE
+

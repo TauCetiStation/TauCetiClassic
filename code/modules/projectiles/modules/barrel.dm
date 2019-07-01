@@ -4,6 +4,7 @@
 	lessdamage = 0
 	size = 0.2
 	gun_type = ALL_TYPE_MODULARGUN
+	m_amt = 700
 
 /obj/item/modular/barrel/small
 	icon_state = "barrel_small_icon"
@@ -61,7 +62,7 @@
 	icon_overlay = "barrel_large_laser"
 	lessdispersion = 1.3
 	lessdamage = 2
-	lessrecoil = 0.1
+	lessrecoil = 0.2
 	size = 0.6
 	gun_type = list("laser", "shotgun")
 
@@ -75,4 +76,22 @@
 	size = 0.6
 	gun_type = list("bullet", "shotgun")
 
+/obj/item/modular/barrel/medium/bullet_pistol
+	name = "medium barrel bullet pistol"
+	icon_state = "barrel_medium_bullet"
+	icon_overlay = "barrel_medium_bullet"
+	lessdispersion = 0.7
+	lessdamage = -2
+	lessrecoil = 0.2
+	size = 0.4
+	gun_type = list("bullet", "shotgun")
 
+/obj/item/modular/barrel/medium/laser_pistol
+	name = "medium barrel laser pistol"
+	icon_state = "barrel_medium_laser"
+	icon_overlay = "barrel_medium_laser"
+	lessdispersion = 0.9
+	lessdamage = 2
+	lessrecoil = 0.2
+	size = 0.4
+	gun_type = list("laser", "shotgun")

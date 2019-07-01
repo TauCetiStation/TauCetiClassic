@@ -2,6 +2,7 @@
 	icon_state = "357"
 	icon = 'icons/obj/ammo.dmi'
 	desc = ""
+	m_amt = 2000
 	name = "The basis of the weapon"
 	flags = CONDUCT
 	w_class = ITEM_SIZE_NORMAL
@@ -47,6 +48,7 @@
 	var/pellets
 	var/recharge_time = 3
 	var/charge_tick = 0
+	var/chargespeed = 1
 
 	var/recentpump = 0 // to prevent spammage
 	var/pumped = 0
@@ -64,6 +66,7 @@
 	var/lessfiredelay = 0
 	var/lessrecoil = 0.0
 	var/gun_type
+	m_amt = 500
 
 /obj/item/modular/atom_init()
 	.=..()
@@ -83,7 +86,7 @@
 	charge_tick = 0
 	if(!power_supply)
 		return 0
-	power_supply.give(100)
+	power_supply.give(100 * chargespeed)
 	update_icon()
 
 /obj/item/modular/atom_init()
@@ -140,6 +143,9 @@
 				weapon_size = "Medium"
 			if(w_class == ITEM_SIZE_LARGE)
 				weapon_size = "Big"
+			for(var/obj/item/i in contents)
+				if(i.m_amt)
+					m_amt += i.m_amt
 
 			name = "[weapon_size] weapon [gun_type] [caliber] gun"
 			desc = "Assembly completed \the [src]. Weapon Type - [gun_type]. Weapon size - [weapon_size]. Caliber - [caliber]. Type store - [magazine_ejected]."
@@ -308,11 +314,13 @@
 			grip = null
 
 		if(istype(modul1, /obj/item/weapon/stock_parts/cell))
+			var/obj/item/weapon/stock_parts/cell/modul = modul1
 			success = TRUE
 			magazine_eject = null
 			magazine1in = null
 			power_supply = null
 			cell_type = null
+			modul.maxcharge = modul.start_maxcharge
 			overlays -= "magazine_charge"
 			to_chat(user, "<span class='notice'>The cell is taken out</span>")
 
