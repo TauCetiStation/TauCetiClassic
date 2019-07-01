@@ -19,6 +19,7 @@
 	var/datum/radio_frequency/radio_connection
 	var/deadman = 0
 	var/size = 0.3
+	var/icon_overlay
 
 /obj/item/device/assembly/signaler/atom_init()
 	. = ..()
@@ -198,7 +199,7 @@ Code:
 	desc = "The neutralized core of an anomaly. It'd probably be valuable for research."
 	icon_state = "anomaly core"
 	item_state = "electronic"
-	var/icon_overlay = "anomal_charger"
+	icon_overlay = "anomal_charger"
 
 /obj/item/device/assembly/signaler/anomaly/receive_signal(datum/signal/signal)
 	if(!signal)
