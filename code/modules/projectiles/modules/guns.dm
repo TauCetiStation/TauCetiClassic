@@ -293,7 +293,7 @@
 	fire_delay = 30
 	var/zoom = FALSE
 
-/obj/item/weapon/gun/energy/sniperrifle/rails
+/obj/item/weapon/gun/projectile/modulargun/auto_gun/energy/sniperrifle/rails
 	name = "Rails rifle"
 	desc = "With this weapon you'll be the boss at any Arena."
 	origin_tech = "combat=6;materials=5;powerstorage=4"
@@ -306,5 +306,26 @@
 	origin_tech = null
 	fire_delay = 20
 
+////////////////////STUN
+
+/obj/item/weapon/gun/projectile/modulargun/auto_gun/energy/taser
+	name = "taser gun"
+	desc = "A small, low capacity gun used for non-lethal takedowns."
+	chamber_type = /obj/item/modular/chambered/duolas
+	barrel_type = /obj/item/modular/barrel/medium/laser_pistol
+	grip_type = /obj/item/modular/grip
+	magazine1in_type = /obj/item/weapon/stock_parts/cell/crap
+	lens1 = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/electrode)
+	all_accessory = list()
+
+/obj/item/weapon/gun/projectile/modulargun/auto_gun/energy/stunrevolver
+	name = "stun revolver"
+	desc = "A high-tech revolver that fires stun cartridges. The stun cartridges can be recharged using a conventional energy weapon recharger."
+	origin_tech = "combat=3;materials=3;powerstorage=2"
+	chamber_type = /obj/item/modular/chambered/duolas
+	barrel_type = /obj/item/modular/barrel/medium/laser_pistol
+	grip_type = /obj/item/modular/grip
+	magazine1in_type = /obj/item/weapon/stock_parts/cell
+	lens1 = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/electrode)
 
 

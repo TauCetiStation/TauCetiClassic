@@ -123,7 +123,7 @@
 	size = 0.3
 	caliber = "energy"
 	gun_energy = TRUE
-	charge_indicator = TRUE
+	charge_indicator = FALSE
 	gun_type = "shotgun"
 	type_cap = 1
 	pellets = 4

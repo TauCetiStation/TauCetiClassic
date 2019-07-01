@@ -136,14 +136,15 @@
 							modul.fixation = TRUE
 							modul.parent = src
 							update_icon()
-	if(core1)
-		var/obj/item/device/assembly/signaler/anomaly/modul = new core1(src)
-		if(istype(modul, /obj/item/device/assembly/signaler/anomaly))
-			if(gun_energy && power_supply)
-				size += modul.size
-				if(modul.icon_overlay)
-					overlays += modul.icon_overlay
-				START_PROCESSING(SSobj, src)
+
+	var/obj/item/device/assembly/signaler/anomaly/modul = new core1(src)
+	if(istype(modul, /obj/item/device/assembly/signaler/anomaly))
+		if(gun_energy && power_supply)
+			size += modul.size
+			core = modul
+			if(modul.icon_overlay)
+				overlays += modul.icon_overlay
+			START_PROCESSING(SSobj, src)
 
 	collected = TRUE
 

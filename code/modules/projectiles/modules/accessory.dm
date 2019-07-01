@@ -69,7 +69,7 @@
 	barrel_size = list(BARREL_LARGE)
 
 /obj/item/modular/accessory/optical/process()
-	if(uloc != user1.locs)
+	if(uloc != user1.loc)
 		if(zoom)
 			if(user1.client)
 				user1.client.view = world.view
@@ -83,7 +83,7 @@
 	set name = "Use Sniper Scope"
 	set popup_menu = 0
 
-	uloc = user1.locs
+	uloc = user1.loc
 	if(activated)
 		if(usr.stat || !(istype(usr,/mob/living/carbon/human)))
 			to_chat(usr, "You are unable to focus down the scope of the rifle.")
@@ -100,7 +100,6 @@
 				usr.hud_used.show_hud(HUD_STYLE_REDUCED)
 			usr.client.view = range
 			zoom = TRUE
-			uloc = src.locs
 			START_PROCESSING(SSobj, src)
 		else
 			usr.client.view = world.view
