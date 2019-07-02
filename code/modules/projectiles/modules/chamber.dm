@@ -14,7 +14,23 @@
 	gun_type = BULLET
 	m_amt = 2000
 
-/obj/item/modular/chamber/laser
+/obj/item/modular/chamber/small
+	icon_state = "chamber_bullet_icon"
+	name = "chamber"
+	lessfiredelay = 6
+	lessdamage = -2
+	lessrecoil = 0.2
+	size = 0.2
+	caliber = "9mm"
+	multi_type = FALSE
+	gun_energy = FALSE
+	type_cap = 1
+	pellets = 0
+	charge_indicator = FALSE
+	gun_type = BULLET
+	m_amt = 2000
+
+/obj/item/modular/chamber/small/laser
 	icon_state = "chamber_laser_icon"
 	icon_overlay = "chamber_laser"
 	name = "chamber laser"
@@ -29,7 +45,7 @@
 	charge_indicator = TRUE
 	gun_type = LASER
 
-/obj/item/modular/chamber/duolas
+/obj/item/modular/chamber/medium/duolas
 	icon_state = "chamber_laser_icon"
 	icon_overlay = "chamber_laser"
 	name = "chamber duo laser"
@@ -44,7 +60,7 @@
 	charge_indicator = TRUE
 	gun_type = LASER
 
-/obj/item/modular/chamber/triolas
+/obj/item/modular/chamber/large/triolas
 	icon_state = "chamber_energy"
 	icon_overlay = "chamber_energy"
 	name = "chamber trio laser"
@@ -59,7 +75,7 @@
 	charge_indicator = TRUE
 	gun_type = LASER
 
-/obj/item/modular/chamber/l10
+/obj/item/modular/chamber/medium/l10
 	icon_state = "chamber_laser1"
 	icon_overlay = "chamber_laser1"
 	name = "chamber l10"
@@ -73,7 +89,7 @@
 	type_cap = 2
 	gun_type = LASER
 
-/obj/item/modular/chamber/bullet9mm
+/obj/item/modular/chamber/small/bullet9mm
 	icon_state = "chamber_bullet_icon"
 	icon_overlay = "chamber_bullet"
 	name = "chamber 9mm"
@@ -85,7 +101,7 @@
 	type_cap = 1
 	gun_type = BULLET
 
-/obj/item/modular/chamber/bullet357
+/obj/item/modular/chamber/medium/bullet357
 	icon_state = "chamber_bullet_icon"
 	icon_overlay = "chamber_bullet"
 	name = "chamber 357"
@@ -97,7 +113,7 @@
 	type_cap = 1
 	gun_type = BULLET
 
-/obj/item/modular/chamber/bulletshotgun
+/obj/item/modular/chamber/large/bulletshotgun
 	icon_state = "chamber_bullet_icon"
 	icon_overlay = "chamber_bullet"
 	name = "chamber shotgun"
@@ -111,7 +127,7 @@
 	type_cap = 1
 	pellets = 7
 
-/obj/item/modular/chamber/lasershotgun
+/obj/item/modular/chamber/large/lasershotgun
 	icon_state = "chamber_laser1"
 	icon_overlay = "chamber_laser1"
 	name = "chamber shotgun"

@@ -2,7 +2,7 @@
 	name = "accessory"
 	m_amt = 1000
 	var/activated
-	var/list/barrel_size = BARREL_ALL
+	var/list/modul_size = ALL_SIZE_ATTACH
 	var/list/conflicts = list()
 	var/attacked = FALSE
 	var/usering = FALSE
@@ -32,7 +32,7 @@
 	icon_state = "optical_icon"
 	icon_overlay = "optical"
 	gun_type = list(LASER, BULLET)
-	barrel_size = BARREL_ALL
+	modul_size = ALL_SIZE_ATTACH
 	usering = TRUE
 	attachment_point = CHAMBER
 	var/range = 12
@@ -51,7 +51,7 @@
 	lessfiredelay= -1
 	lessrecoil = 0
 	size = 0.1
-	barrel_size = BARREL_ALL
+	modul_size = list(BARREL_ALL, CHAMBER_ALL, GRIP_ALL)
 
 /obj/item/modular/accessory/optical/medium
 	name = "medium optical"
@@ -64,7 +64,7 @@
 	lessfiredelay= -2
 	lessrecoil = 0
 	size = 0.2
-	barrel_size = list(BARREL_MEDIUM, BARREL_LARGE)
+	modul_size = list(BARREL_MEDIUM, BARREL_LARGE, CHAMBER_ALL, GRIP_ALL)
 
 /obj/item/modular/accessory/optical/large
 	name = "large optical"
@@ -77,7 +77,7 @@
 	lessfiredelay= -3
 	lessrecoil = 0
 	size = 0.4
-	barrel_size = list(BARREL_LARGE)
+	modul_size = list(BARREL_LARGE, CHAMBER_ALL, GRIP_ALL)
 
 /obj/item/modular/accessory/optical/process()
 	if((x_lock != user_parent.loc.x) || (y_lock != user_parent.loc.y))
@@ -143,7 +143,7 @@
 	icon_overlay = "silenser"
 	conflicts = list(/obj/item/modular/barrel/medium/bullet_pistol)
 	attachment_point = BARREL
-	barrel_size = list(BARREL_MEDIUM, BARREL_SMALL)
+	modul_size = list(BARREL_SMALL, BARREL_MEDIUM, CHAMBER_ALL, GRIP_ALL)
 	gun_type = list(BULLET)
 
 /obj/item/modular/accessory/silenser/activate(mob/user)
@@ -167,7 +167,7 @@
 	throwforce = 6.0
 	throw_speed = 3
 	throw_range = 6
-	barrel_size = list(BARREL_MEDIUM)
+	modul_size = list(BARREL_MEDIUM, CHAMBER_ALL, GRIP_ALL)
 	attachment_point = BARREL
 	conflicts = list()
 
@@ -183,7 +183,7 @@
 	name = "Additional battery"
 	icon_state = "additional_battery_icon"
 	icon_overlay = "additional_battery"
-	barrel_size = list(BARREL_LARGE, BARREL_MEDIUM)
+	modul_size = list(BARREL_MEDIUM, BARREL_LARGE, CHAMBER_ALL, GRIP_ALL)
 	gun_type = list(LASER)
 	attachment_point = BARREL
 	conflicts = list(/obj/item/modular/accessory/bayonet)
@@ -205,7 +205,7 @@
 	name = "Grenade launcher"
 	icon_state = "additional_battery_icon"
 	icon_overlay = "additional_battery"
-	barrel_size = list(BARREL_LARGE, BARREL_MEDIUM)
+	modul_size = list(BARREL_MEDIUM, BARREL_LARGE, CHAMBER_ALL, GRIP_ALL)
 	gun_type = ALL_TYPE_MODULARGUN
 	attachment_point = BARREL
 	conflicts = list(/obj/item/modular/accessory/bayonet)

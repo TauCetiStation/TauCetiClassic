@@ -1,9 +1,9 @@
 /obj/item/weapon/gun/projectile/modulargun/auto_gun
 	name = "gun"
 	parsed = FALSE
-	var/chamber_type = /obj/item/modular/chamber/duolas
+	var/chamber_type = /obj/item/modular/chamber/medium/duolas
 	var/barrel_type = /obj/item/modular/barrel/large/laser_rifle
-	var/grip_type = /obj/item/modular/grip/rifle
+	var/grip_type = /obj/item/modular/grip/large/rifle
 	var/magazine_module_type = /obj/item/weapon/stock_parts/cell/super
 	var/list/obj/item/ammo_casing/lens1 = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser)
 	var/list/obj/item/modular/accessory/all_accessory = list(/obj/item/modular/accessory/optical/large)
@@ -123,16 +123,25 @@
 							modul.icon_state = modul.icon_overlay
 							overlays += modul.icon_state
 	if(all_accessory.len > 0)
-		for(var/i in all_accessory)
-			var/obj/item/modular/accessory/modul = new i(src)
+		for(var/accessory_modul in all_accessory)
+			var/obj/item/modular/accessory/modul = new accessory_modul(src)
 			if((accessory_type.len == 0) || !(is_type_in_list(modul, accessory_type)))
-				if(is_type_in_list(barrel, modul.barrel_size) && gun_type in modul.gun_type)
+				var/conflict_size = FALSE
+				for(var/obj/item/modular/modules in contents)
+					if(!is_type_in_list(modules, modul.modul_size) && !istype(modules, ACCESSORY) && gun_type in modul.gun_type)
+						conflict_size = TRUE
+				if(!conflict_size)
 					if(accessory.len < max_accessory)
-						var/conflict = FALSE
-						for(var/o in modul.conflicts)
-							if(is_type_in_list(o, contents))
-								conflict = TRUE
-						if(!conflict)
+						var/conflict_module = FALSE
+						var/list/check = list() + contents + accessory
+						for(var/i in check)
+							if(is_type_in_list(i, modul.conflicts))
+								conflict_module = TRUE
+							if(istype(i, /obj/item/modular/accessory))
+								var/obj/item/modular/accessory/modul1 = i
+								if(modul1.attachment_point == modul.attachment_point)
+									conflict_module = TRUE
+						if(!conflict_module)
 							accessory.Add(modul)
 							accessory_type.Add(modul.type)
 							lessdamage += modul.lessdamage
@@ -140,12 +149,11 @@
 							lessfiredelay += modul.lessfiredelay
 							lessrecoil += modul.lessrecoil
 							size += modul.size
-							modul.parent = src
-							if(istype(modul, /obj/item/modular))
+							if(istype(modul, MODULAR))
 								if(modul.icon_overlay)
 									overlays += modul.icon_overlay
-							modul.activate()
 							modul.parent = src
+							modul.activate()
 							update_icon()
 
 	if(!core && selfrecharging)

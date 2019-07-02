@@ -697,18 +697,22 @@
 /obj/item/weapon/gun/projectile/modulargun/proc/accessory_attach(obj/item/modular/accessory/modul, var/attach, mob/user = null)
 	if(attach)
 		if((accessory_type.len == 0) || !(is_type_in_list(modul, accessory_type)))
-			if(is_type_in_list(barrel, modul.barrel_size) && gun_type in modul.gun_type)
+			var/conflict_size = FALSE
+			for(var/obj/item/modular/modules in contents)
+				if(!is_type_in_list(modules, modul.modul_size) && !istype(modules, ACCESSORY) && gun_type in modul.gun_type)
+					conflict_size = TRUE
+			if(!conflict_size)
 				if(accessory.len < max_accessory)
-					var/conflict = FALSE
+					var/conflict_module = FALSE
 					var/list/check = list() + contents + accessory
 					for(var/i in check)
 						if(is_type_in_list(i, modul.conflicts))
-							conflict = TRUE
+							conflict_module = TRUE
 						if(istype(i, /obj/item/modular/accessory))
 							var/obj/item/modular/accessory/modul1 = i
 							if(modul1.attachment_point == modul.attachment_point)
-								conflict = TRUE
-					if(!conflict)
+								conflict_module = TRUE
+					if(!conflict_module)
 						accessory.Add(modul)
 						accessory_type.Add(modul.type)
 						change_stat(modul, TRUE, user)
@@ -730,7 +734,7 @@
 						to_chat(user, "<span class='notice'>Maximum modules reached</span>")
 			else
 				if(user != null)
-					to_chat(user, "<span class='notice'>The module does not fit the barrel</span>")
+					to_chat(user, "<span class='notice'>The module does not fit the size</span>")
 		else
 			if(user != null)
 				to_chat(user, "<span class='notice'>Module already installed</span>")
@@ -740,9 +744,9 @@
 	else
 		accessory.Remove(modul)
 		accessory_type.Remove(modul.type)
+		modul.deactivate(user)
 		contents.Remove(modul)
 		change_stat(modul, FALSE, user)
-		modul.deactivate(user)
 		modul.parent = null
 		modul.loc = get_turf(src.loc)
 		update_icon()
@@ -814,13 +818,10 @@
 		contents.Remove(modul)
 		modul.parent = null
 		for(var/obj/item/i in accessory)
-			if(contents != null)
-				if(i in contents)
-					contents.Remove(i)
-			if(user.contents != null)
-				if(i in user.contents)
-					user.contents.Remove(i)
-			attach(i, FALSE, user)
+			if(istype(i, ACCESSORY))
+				var/obj/item/modular/accessory/modul_check = i
+				if(modul_check.attachment_point == BARREL)
+					attach(modul_check, FALSE, user)
 		if(user != null)
 			to_chat(user, "<span class='notice'>The barrel is taken out</span>")
 		return TRUE
@@ -839,6 +840,11 @@
 		change_stat(modul, FALSE, user)
 		modul.loc = get_turf(src.loc)
 		modul.parent = null
+		for(var/obj/item/i in accessory)
+			if(istype(i, ACCESSORY))
+				var/obj/item/modular/accessory/modul_check = i
+				if(modul_check.attachment_point == GRIP)
+					attach(modul_check, FALSE, user)
 		contents.Remove(modul)
 		grip = null
 		return TRUE
