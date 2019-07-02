@@ -123,8 +123,8 @@
 							modul.icon_state = modul.icon_overlay
 							overlays += modul.icon_state
 	if(all_accessory.len > 0)
-		for(var/accessory_modul in all_accessory)
-			var/obj/item/modular/accessory/modul = new accessory_modul(src)
+		for(var/i in all_accessory)
+			var/obj/item/modular/accessory/modul = new i(src)
 			if((accessory_type.len == 0) || !(is_type_in_list(modul, accessory_type)))
 				var/conflict_size = FALSE
 				for(var/obj/item/modular/modules in contents)
@@ -132,16 +132,11 @@
 						conflict_size = TRUE
 				if(!conflict_size)
 					if(accessory.len < max_accessory)
-						var/conflict_module = FALSE
-						var/list/check = list() + contents + accessory
-						for(var/i in check)
-							if(is_type_in_list(i, modul.conflicts))
-								conflict_module = TRUE
-							if(istype(i, /obj/item/modular/accessory))
-								var/obj/item/modular/accessory/modul1 = i
-								if(modul1.attachment_point == modul.attachment_point)
-									conflict_module = TRUE
-						if(!conflict_module)
+						var/conflict = FALSE
+						for(var/o in modul.conflicts)
+							if(is_type_in_list(o, contents))
+								conflict = TRUE
+						if(!conflict)
 							accessory.Add(modul)
 							accessory_type.Add(modul.type)
 							lessdamage += modul.lessdamage
@@ -149,11 +144,12 @@
 							lessfiredelay += modul.lessfiredelay
 							lessrecoil += modul.lessrecoil
 							size += modul.size
-							if(istype(modul, MODULAR))
+							modul.parent = src
+							if(istype(modul, /obj/item/modular))
 								if(modul.icon_overlay)
 									overlays += modul.icon_overlay
-							modul.parent = src
 							modul.activate()
+							modul.parent = src
 							update_icon()
 
 	if(!core && selfrecharging)

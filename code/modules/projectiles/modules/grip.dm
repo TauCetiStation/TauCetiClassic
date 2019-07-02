@@ -27,6 +27,15 @@
 	size = 0.3
 	gun_type = ALL_TYPE_MODULARGUN
 
+/obj/item/modular/grip/medium/weighted
+	icon_state = "grip_weighted"
+	icon_overlay = "grip_weighted"
+	name = "grip weighted"
+	lessdispersion = 0.3
+	lessrecoil = 0.3
+	size = 0.3
+	gun_type = ALL_TYPE_MODULARGUN
+
 /obj/item/modular/grip/large/shotgun
 	icon_state = "grip_shotgun"
 	icon_overlay = "grip_shotgun"
@@ -43,13 +52,4 @@
 	lessdispersion = 0.5
 	lessrecoil = 0.2
 	size = 0.4
-	gun_type = ALL_TYPE_MODULARGUN
-
-/obj/item/modular/grip/medium/weighted
-	icon_state = "grip_weighted"
-	icon_overlay = "grip_weighted"
-	name = "grip weighted"
-	lessdispersion = 0.3
-	lessrecoil = 0.3
-	size = 0.3
 	gun_type = ALL_TYPE_MODULARGUN

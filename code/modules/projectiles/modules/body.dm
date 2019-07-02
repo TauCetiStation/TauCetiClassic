@@ -496,20 +496,25 @@
 
 /obj/item/weapon/gun/projectile/modulargun/Fire(atom/target, mob/living/user, params, reflex = 0)
 	if(collected)
-		if(gun_energy)
-			newshot()
-		if(chambered)
-			if(chambered.BB.damage != 0)
-				chambered.BB.damage -= (lessdamage * (pellets + 1))*1.2
+		var/shot = TRUE
+		for(var/obj/item/modular/accessory/i in accessory)
+			if(i.modification_shot)
+				shot = i.afterattack(target, user)
+		if(shot)
+			if(gun_energy)
+				newshot()
+			if(chambered)
+				if(chambered.BB.damage != 0)
+					chambered.BB.damage -= (lessdamage * (pellets + 1))*1.2
+					if(chambered.BB.damage < 0)
+						chambered.BB.damage = 0
+				chambered.BB.dispersion -= lessdispersion
+				chambered.pellets = pellets
+				if(chambered.BB.dispersion < 0)
+					chambered.BB.dispersion = 0
 				if(chambered.BB.damage < 0)
 					chambered.BB.damage = 0
-			chambered.BB.dispersion -= lessdispersion
-			chambered.pellets = pellets
-			if(chambered.BB.dispersion < 0)
-				chambered.BB.dispersion = 0
-			if(chambered.BB.damage < 0)
-				chambered.BB.damage = 0
-		..()
+			..()
 
 /obj/item/weapon/gun/projectile/modulargun/can_fire()
 	if(collected)
@@ -709,8 +714,8 @@
 						if(is_type_in_list(i, modul.conflicts))
 							conflict_module = TRUE
 						if(istype(i, /obj/item/modular/accessory))
-							var/obj/item/modular/accessory/modul1 = i
-							if(modul1.attachment_point == modul.attachment_point)
+							var/obj/item/modular/accessory/modul_in = i
+							if(modul_in.attachment_point == modul.attachment_point)
 								conflict_module = TRUE
 					if(!conflict_module)
 						accessory.Add(modul)

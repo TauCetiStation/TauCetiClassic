@@ -5,6 +5,7 @@
 	var/list/modul_size = ALL_SIZE_ATTACH
 	var/list/conflicts = list()
 	var/attacked = FALSE
+	var/modification_shot = FALSE
 	var/usering = FALSE
 	var/mob/user_parent
 	var/attachment_point
@@ -16,16 +17,23 @@
 /obj/item/modular/accessory/attackby(obj/item/A, mob/user)
 	if(!attacked)
 		return
+/obj/item/modular/accessory/afterattack(obj/target, mob/user , flag)
+	if(!modification_shot)
+		return
 
 /obj/item/modular/accessory/proc/deactivate(mob/user = user_parent)
-	if(user != null && usering)
+	if(user == null && usering)
 		return
 	activated = FALSE
+	user_parent = null
+	src.loc = parent
 
 /obj/item/modular/accessory/proc/activate(mob/user = user_parent)
-	if(user != null && usering)
+	if(user == null && usering)
 		return
 	activated = TRUE
+	src.loc = user
+	user_parent = user
 
 /obj/item/modular/accessory/optical
 	name = "optical"
@@ -64,7 +72,7 @@
 	lessfiredelay= -2
 	lessrecoil = 0
 	size = 0.2
-	modul_size = list(BARREL_MEDIUM, BARREL_LARGE, CHAMBER_ALL, GRIP_ALL)
+	modul_size = list(BARREL_MEDIUM, BARREL_LARGE, CHAMBER_ALL, GRIP_MEDIUM, GRIP_LARGE)
 
 /obj/item/modular/accessory/optical/large
 	name = "large optical"
@@ -77,7 +85,7 @@
 	lessfiredelay= -3
 	lessrecoil = 0
 	size = 0.4
-	modul_size = list(BARREL_LARGE, CHAMBER_ALL, GRIP_ALL)
+	modul_size = list(BARREL_LARGE, CHAMBER_ALL, GRIP_LARGE)
 
 /obj/item/modular/accessory/optical/process()
 	if((x_lock != user_parent.loc.x) || (y_lock != user_parent.loc.y))
@@ -123,8 +131,6 @@
 
 /obj/item/modular/accessory/optical/activate(mob/user)
 	..()
-	src.loc = user
-	user_parent = user
 
 /obj/item/modular/accessory/optical/deactivate(mob/user)
 	..()
@@ -134,9 +140,6 @@
 		if(user.hud_used)
 			user_parent.hud_used.show_hud(HUD_STYLE_STANDARD)
 		zoom = FALSE
-	user_parent = null
-	src.loc = parent
-
 /obj/item/modular/accessory/silenser
 	name = "silenser"
 	icon_state = "silenser_icon"
@@ -211,6 +214,7 @@
 	conflicts = list(/obj/item/modular/accessory/bayonet)
 	attacked = TRUE
 	usering = TRUE
+	modification_shot = TRUE
 	var/max_grenades = 1
 	var/list/grenades = list()
 
@@ -227,6 +231,7 @@
 			to_chat(usr, "\red The grenade launcher cannot hold more grenades.")
 
 /obj/item/modular/accessory/grenade_launcher/afterattack(obj/target, mob/user , flag)
+	..()
 	if (locate (/obj/structure/table, src.loc))
 		return
 
@@ -235,8 +240,10 @@
 
 	if(grenades.len)
 		spawn(0) fire_grenade(target,user)
+		return FALSE
 	else
 		to_chat(usr, "\red The grenade launcher is empty.")
+		return TRUE
 
 /obj/item/modular/accessory/grenade_launcher/proc/fire_grenade(atom/target, mob/user)
 	for(var/mob/O in viewers(world.view, user))
@@ -261,15 +268,16 @@
 
 	if(activated)
 		attacked = !attacked
+		if(attacked)
+			to_chat(usr, "Activate grenade launcher. Grenade loaded [grenades.len]")
+			modification_shot = TRUE
+		else
+			to_chat(usr, "Deactivate grenade launcher. Grenade loaded [grenades.len]")
+			modification_shot = FALSE
 
 /obj/item/modular/accessory/grenade_launcher/activate(mob/user)
 	..()
-	src.loc = user
-	user_parent = user
-	to_chat(usr, "Activate grenade launcher. Grenade loaded [grenades.len]")
+
 /obj/item/modular/accessory/grenade_launcher/deactivate(mob/user)
 	..()
-	user_parent = null
-	src.loc = parent
-	to_chat(usr, "Deactivate grenade launcher. Grenade loaded [grenades.len]")
 
