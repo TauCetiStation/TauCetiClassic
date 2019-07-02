@@ -206,9 +206,9 @@
 
 /obj/item/modular/accessory/grenade_launcher
 	name = "Grenade launcher"
-	icon_state = "additional_battery_icon"
-	icon_overlay = "additional_battery"
-	modul_size = list(BARREL_MEDIUM, BARREL_LARGE, CHAMBER_ALL, GRIP_ALL)
+	icon_state = "grenade_launcher_icon"
+	icon_overlay = "grenade_launcher"
+	modul_size = list(BARREL_MEDIUM, CHAMBER_ALL, GRIP_ALL)
 	gun_type = ALL_TYPE_MODULARGUN
 	attachment_point = BARREL
 	conflicts = list(/obj/item/modular/accessory/bayonet)
