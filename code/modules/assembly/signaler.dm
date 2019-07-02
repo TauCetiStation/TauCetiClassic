@@ -19,6 +19,7 @@
 	var/datum/radio_frequency/radio_connection
 	var/deadman = 0
 	var/size = 0.3
+	var/obj/item/weapon/gun/projectile/modulargun/parent
 	var/icon_overlay
 
 /obj/item/device/assembly/signaler/atom_init()

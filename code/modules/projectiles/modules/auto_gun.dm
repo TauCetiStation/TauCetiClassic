@@ -26,6 +26,7 @@
 		modul.update_icon()
 
 	if(chamber)
+		chamber.parent = src
 		caliber = chamber.caliber
 		gun_type = chamber.gun_type
 		gun_energy = chamber.gun_energy
@@ -44,6 +45,7 @@
 			if(chamber.icon_overlay)
 				overlays += chamber.icon_overlay
 	if(barrel)
+		barrel.parent = src
 		lessdamage += barrel.lessdamage
 		lessdispersion += barrel.lessdispersion
 		lessfiredelay += barrel.lessfiredelay
@@ -54,6 +56,7 @@
 				overlays += barrel.icon_overlay
 
 	if(grip)
+		grip.parent = src
 		lessdamage += grip.lessdamage
 		lessdispersion += grip.lessdispersion
 		lessfiredelay += grip.lessfiredelay
@@ -62,40 +65,42 @@
 		if(istype(grip, /obj/item/modular))
 			if(grip.icon_overlay)
 				overlays += grip.icon_overlay
-
-	if(istype(magazine_module, MAGAZINE_CELL))
-		magazine_eject = FALSE
-		power_supply = magazine_module
-		cell_type = power_supply.type
-		overlays += "magazine_charge"
-		lessdamage += magazine_module.lessdamage
-		lessdispersion += magazine_module.lessdispersion
-		lessfiredelay += magazine_module.lessfiredelay
-		lessrecoil += magazine_module.lessrecoil
-		size += magazine_module.size
-
-	else if(istype(magazine_module, MAGAZINE_INTERNAL))
-		magazine_eject = FALSE
-		mag_type = magazine_module.type
-		magazine = magazine_module
-		overlays += "magazine_internal"
-		lessdamage += magazine_module.lessdamage
-		lessdispersion += magazine_module.lessdispersion
-		lessfiredelay += magazine_module.lessfiredelay
-		lessrecoil += magazine_module.lessrecoil
-		size += magazine_module.size
-
-	else
-		if(istype(magazine_module, MAGAZINE_EXTERNAL))
-			magazine_eject = TRUE
-			mag_type = magazine_module.type
-			magazine = magazine_module
-			overlays += "magazine_external"
+	if(magazine_module)
+		magazine_module.parent = src
+		if(istype(magazine_module, MAGAZINE_CELL))
+			magazine_eject = FALSE
+			power_supply = magazine_module
+			cell_type = power_supply.type
+			overlays += "magazine_charge"
 			lessdamage += magazine_module.lessdamage
 			lessdispersion += magazine_module.lessdispersion
 			lessfiredelay += magazine_module.lessfiredelay
 			lessrecoil += magazine_module.lessrecoil
 			size += magazine_module.size
+
+		else if(istype(magazine_module, MAGAZINE_INTERNAL))
+			magazine_eject = FALSE
+			mag_type = magazine_module.type
+			magazine = magazine_module
+			overlays += "magazine_internal"
+			lessdamage += magazine_module.lessdamage
+			lessdispersion += magazine_module.lessdispersion
+			lessfiredelay += magazine_module.lessfiredelay
+			lessrecoil += magazine_module.lessrecoil
+			size += magazine_module.size
+
+		else
+			if(istype(magazine_module, MAGAZINE_EXTERNAL))
+				magazine_eject = TRUE
+				mag_type = magazine_module.type
+				magazine = magazine_module
+				overlays += "magazine_external"
+				lessdamage += magazine_module.lessdamage
+				lessdispersion += magazine_module.lessdispersion
+				lessfiredelay += magazine_module.lessfiredelay
+				lessrecoil += magazine_module.lessrecoil
+				size += magazine_module.size
+
 	if(lens1.len > 0)
 		for(var/i in lens1)
 			var/obj/item/ammo_casing/energy/modul = new i(src)
@@ -112,6 +117,7 @@
 					lessfiredelay += modul.lessfiredelay
 					lessrecoil += modul.lessrecoil
 					size += modul.size
+					modul.parent = src
 					if(istype(modul, /obj/item/modular))
 						if(modul.icon_overlay)
 							modul.icon_state = modul.icon_overlay
@@ -134,6 +140,7 @@
 							lessfiredelay += modul.lessfiredelay
 							lessrecoil += modul.lessrecoil
 							size += modul.size
+							modul.parent = src
 							if(istype(modul, /obj/item/modular))
 								if(modul.icon_overlay)
 									overlays += modul.icon_overlay
@@ -143,6 +150,7 @@
 
 	if(!core && selfrecharging)
 		core = new SELF_RECHARGER(src)
+		core.parent = src
 		accessory.Add(core)
 		accessory_type.Add(core.type)
 		if(istype(core, SELF_RECHARGER))

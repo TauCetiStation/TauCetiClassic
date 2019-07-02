@@ -20,6 +20,7 @@
 	var/lessfiredelay = -0.5
 	var/lessrecoil = 0
 	var/size = 0
+	var/obj/item/weapon/gun/projectile/modulargun/parent
 	var/icon_overlay = null
 
 /obj/item/ammo_casing/atom_init()
@@ -87,6 +88,7 @@
 	var/lessfiredelay = 0
 	var/lessrecoil = 0
 	var/size = 0.1
+	var/obj/item/weapon/gun/projectile/modulargun/parent
 	var/gun_type = list("bullet")
 
 /obj/item/ammo_box/atom_init()

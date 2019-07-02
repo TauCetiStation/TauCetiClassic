@@ -21,7 +21,7 @@
 	icon_state = "grip_shotgun"
 	icon_overlay = "grip_shotgun"
 	name = "grip shotgun"
-	lessdispersion = -0.5
+	lessdispersion = 0.2
 	lessrecoil = 0.2
 	size = 0.3
 	gun_type = ALL_TYPE_MODULARGUN

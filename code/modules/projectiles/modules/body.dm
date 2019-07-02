@@ -28,6 +28,7 @@
 	var/modifystate = FALSE
 	var/list/ammo_type = list()
 	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
+	var/delete_all = TRUE
 
 	var/magazine_eject
 	var/gun_energy = FALSE
@@ -61,6 +62,7 @@
 	icon = 'code/modules/projectiles/modules/modular.dmi'
 	flags = CONDUCT
 	m_amt = 500
+	var/obj/item/weapon/gun/projectile/modulargun/parent
 	var/icon_overlay
 	var/size = 0.0
 	var/lessdamage = 0.0
@@ -140,9 +142,12 @@
 				weapon_size = "Medium"
 			if(w_class == ITEM_SIZE_LARGE)
 				weapon_size = "Big"
-			for(var/obj/item/i in contents)
-				if(i.m_amt)
-					m_amt += i.m_amt
+			if(contents != null)
+				var/sum = 0
+				for(var/obj/item/i in contents)
+					if(i.m_amt)
+						sum += i.m_amt
+				m_amt = sum
 
 			desc = "Assembly completed \the [src]. Weapon Type - [gun_type]. Weapon size - [weapon_size]. Caliber - [caliber]. Type store - [magazine_ejected]."
 			to_chat(user, "<span class='notice'>Assembly completed \the [src]. Weapon Type - [gun_type]. Weapon size - [weapon_size]. Caliber - [caliber]. Type store - [magazine_ejected].</span>")
@@ -336,9 +341,10 @@
 
 		if(iswrench(A))
 			var/list/listmodules = list("Cancel")
-			for(var/obj/item/i in contents)
-				if(!istype(i, ACCESSORY))
-					listmodules.Add(i)
+			if(contents != null)
+				for(var/obj/item/i in contents)
+					if(!istype(i, ACCESSORY))
+						listmodules.Add(i)
 			var/command = input(user, "Pull module", , "Cancel") in listmodules
 
 			if(istype(command, CHAMBER))
@@ -436,10 +442,11 @@
 				CB.SpinAnimation(10, 1)
 				CB.update_icon()
 				num_unloaded++
-			for(var/obj/item/ammo_casing/i in contents)
-				i.loc = get_turf(src.loc)
-				i.SpinAnimation(10, 1)
-				i.update_icon()
+			if(contents != null)
+				for(var/obj/item/ammo_casing/i in contents)
+					i.loc = get_turf(src.loc)
+					i.SpinAnimation(10, 1)
+					i.update_icon()
 			if (num_unloaded)
 				to_chat(user, "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>")
 			else
@@ -493,7 +500,7 @@
 			newshot()
 		if(chambered)
 			if(chambered.BB.damage != 0)
-				chambered.BB.damage -= (lessdamage * (pellets + 1))/0.7
+				chambered.BB.damage -= (lessdamage * (pellets + 1))*1.2
 				if(chambered.BB.damage < 0)
 					chambered.BB.damage = 0
 			chambered.BB.dispersion -= lessdispersion
@@ -527,7 +534,7 @@
 		if(gun_energy)
 			if (chambered) // incase its out of energy - since then this will be null.
 				var/obj/item/ammo_casing/energy/shot = chambered
-				power_supply.use(shot.e_cost * (pellets + 1))
+				power_supply.use(shot.e_cost * (pellets + 1) * 10)
 			chambered = null
 		else
 			if(crit_fail && prob(50))  // IT JAMMED GODDAMIT
@@ -567,7 +574,7 @@
 
 /obj/item/weapon/gun/projectile/modulargun/update_icon()
 	if(collected)
-		if(charge_indicator)
+		if(charge_indicator && magazine_module)
 			overlays -= "[icon_state][ratio]"
 			if(power_supply.maxcharge)
 				ratio = power_supply.charge / power_supply.maxcharge
@@ -680,6 +687,7 @@
 		accessory_type.Remove(modul.type)
 		contents.Remove(modul)
 		modul.loc = get_turf(src.loc)
+		modul.parent = null
 		if(modul.icon_overlay)
 			overlays -= modul.icon_overlay
 		STOP_PROCESSING(SSobj, src)
@@ -696,8 +704,10 @@
 					for(var/i in check)
 						if(is_type_in_list(i, modul.conflicts))
 							conflict = TRUE
-						if(is_type_in_list(i, modul.conflicts))
-							conflict = TRUE
+						if(istype(i, /obj/item/modular/accessory))
+							var/obj/item/modular/accessory/modul1 = i
+							if(modul1.attachment_point == modul.attachment_point)
+								conflict = TRUE
 					if(!conflict)
 						accessory.Add(modul)
 						accessory_type.Add(modul.type)
@@ -759,14 +769,15 @@
 	else
 		change_stat(chamber, FALSE, user)
 		modul.loc = get_turf(src.loc)
-		for(var/obj/item/i in contents)
-			attach(i, FALSE, user)
+		if(contents != null)
+			for(var/obj/item/i in contents)
+				attach(i, FALSE, user)
 
-		for(var/obj/item/i in contents)
-			i.loc = get_turf(src.loc)
-			contents.Remove(i)
+			for(var/obj/item/i in contents)
+				i.loc = get_turf(src.loc)
+				contents.Remove(i)
 
-		contents = null
+		contents = list()
 
 		chambered = null
 		chamber = null
@@ -801,11 +812,14 @@
 		modul.loc = get_turf(src.loc)
 		barrel = null
 		contents.Remove(modul)
+		modul.parent = null
 		for(var/obj/item/i in accessory)
-			if(i in contents)
-				contents.Remove(i)
-			if(i in user.contents)
-				user.contents.Remove(i)
+			if(contents != null)
+				if(i in contents)
+					contents.Remove(i)
+			if(user.contents != null)
+				if(i in user.contents)
+					user.contents.Remove(i)
 			attach(i, FALSE, user)
 		if(user != null)
 			to_chat(user, "<span class='notice'>The barrel is taken out</span>")
@@ -824,6 +838,7 @@
 	else
 		change_stat(modul, FALSE, user)
 		modul.loc = get_turf(src.loc)
+		modul.parent = null
 		contents.Remove(modul)
 		grip = null
 		return TRUE
@@ -855,6 +870,7 @@
 
 		change_stat(modul, FALSE, user)
 		modul.loc = get_turf(src.loc)
+		modul.parent = null
 		inited = FALSE
 		if(user != null)
 			to_chat(user, "<span class='notice'>The lens is taken out</span>")
@@ -913,6 +929,7 @@
 			power_supply = null
 			cell_type = null
 			modul.maxcharge = modul.start_maxcharge
+			modul.parent = null
 			overlays -= "magazine_charge"
 			if(user != null)
 				to_chat(user, "<span class='notice'>The cell is taken out</span>")

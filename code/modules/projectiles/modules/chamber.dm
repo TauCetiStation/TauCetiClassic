@@ -11,7 +11,7 @@
 	var/type_cap = 1
 	var/pellets = 0
 	var/charge_indicator = FALSE
-	gun_type = "bullet"
+	gun_type = BULLET
 	m_amt = 2000
 
 /obj/item/modular/chamber/laser
@@ -27,7 +27,7 @@
 	gun_energy = TRUE
 	type_cap = 1
 	charge_indicator = TRUE
-	gun_type = "laser"
+	gun_type = LASER
 
 /obj/item/modular/chamber/duolas
 	icon_state = "chamber_laser_icon"
@@ -42,7 +42,7 @@
 	gun_energy = TRUE
 	type_cap = 2
 	charge_indicator = TRUE
-	gun_type = "laser"
+	gun_type = LASER
 
 /obj/item/modular/chamber/triolas
 	icon_state = "chamber_energy"
@@ -57,7 +57,7 @@
 	gun_energy = TRUE
 	type_cap = 3
 	charge_indicator = TRUE
-	gun_type = "laser"
+	gun_type = LASER
 
 /obj/item/modular/chamber/l10
 	icon_state = "chamber_laser1"
@@ -103,8 +103,8 @@
 	name = "chamber shotgun"
 	lessfiredelay = 3
 	lessrecoil = -0.5
-	lessdispersion = -0.3
-	lessdamage = -3
+	lessdispersion = -0.8
+	lessdamage = 6
 	size = 0.3
 	caliber = "shotgun"
 	gun_type = SHOTGUN
@@ -117,8 +117,8 @@
 	name = "chamber shotgun"
 	lessfiredelay = 1
 	lessrecoil = 1
-	lessdamage = -3
-	lessdispersion = -0.3
+	lessdamage = 6
+	lessdispersion = -0.8
 	size = 0.3
 	caliber = "energy"
 	gun_energy = TRUE
