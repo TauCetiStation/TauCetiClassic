@@ -1,5 +1,5 @@
-#define TIMER_MIN 420
-#define TIMER_MAX 600
+#define TIMER_MIN 600
+#define TIMER_MAX 780
 
 var/bomb_set
 
@@ -15,7 +15,7 @@ var/bomb_set
 	var/extended = 0.0
 	var/lighthack = 0
 	var/opened = 0.0
-	var/timeleft = 600.0
+	var/timeleft = TIMER_MAX
 	var/timing = 0.0
 	var/r_code = "ADMIN"
 	var/code = ""
