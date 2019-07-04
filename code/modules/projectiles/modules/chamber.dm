@@ -7,6 +7,7 @@
 	var/list/ammo_type = list()
 	var/caliber = "9mm"
 	var/select = 1
+	var/pellets = 0
 
 /obj/item/weapon/modul_gun/chamber/attach(obj/item/weapon/gun_modular/gun)
 	.=..()
@@ -60,6 +61,7 @@
 		ammo_type.Add(lense.type)
 		user.drop_item()
 		lense.loc = src
+		fire_sound = lense.fire_sound
 
 /obj/item/weapon/modul_gun/chamber/bullet
 	name = "bullet chamber"
@@ -85,8 +87,10 @@
 	if(parent.chambered || !parent.magazine)
 		return
 	var/obj/item/ammo_casing/energy/chambered = parent.magazine.get_round()
-	chambered.loc = src
-	return chambered
+	if(chambered)
+		chambered.loc = src
+		return chambered
+	return null
 
 /obj/item/weapon/modul_gun/chamber/bullet/process_chamber(var/eject_casing = 1, var/empty_chamber = 1, var/no_casing = 0)
 //	if(chambered)
@@ -114,6 +118,109 @@
 /obj/item/weapon/modul_gun/chamber/energy/process_chamber()
 	if (parent.chambered) // incase its out of energy - since then this will be null.
 		var/obj/item/ammo_casing/energy/shot = parent.chambered
-		parent.magazine.power_supply.use(shot.e_cost)
+		parent.magazine.power_supply.use(shot.e_cost * 10)
 	parent.chambered = null
 	return
+
+
+
+//////////////////////////////////////////////MODULES BULLET
+/obj/item/weapon/modul_gun/chamber/bullet/shotgun
+	name = "chamber bullet shotgun"
+	icon_state = "chamber_bullet_icon"
+	icon_overlay = "chamber_bullet"
+	pellets = 7
+	lessdamage = 7
+	lessdispersion = -3
+	size = 2
+	recoil = 3
+	fire_delay = 12
+	caliber = "shotgun"
+
+/obj/item/weapon/modul_gun/chamber/bullet/rus357
+	name = "chamber bullet 357"
+	icon_state = "chamber_bullet_icon"
+	icon_overlay = "chamber_bullet"
+	pellets = 0
+	lessdamage = 3
+	lessdispersion = -3
+	size = 2
+	recoil = 1
+	fire_delay = 8
+	caliber = "357"
+
+/obj/item/weapon/modul_gun/chamber/bullet/m9mm
+	name = "chamber bullet 9mm"
+	icon_state = "chamber_bullet_icon"
+	icon_overlay = "chamber_bullet"
+	pellets = 0
+	lessdamage = 3
+	lessdispersion = -2
+	size = 2
+	recoil = 1
+	fire_delay = 7
+	caliber = "9mm"
+
+/obj/item/weapon/modul_gun/chamber/bullet/heavyrifle
+	name = "chamber bullet 14.5mm"
+	icon_state = "chamber_bullet_icon"
+	icon_overlay = "chamber_bullet"
+	pellets = 0
+	lessdamage = 0
+	lessdispersion = -2
+	size = 3
+	recoil = 6
+	fire_delay = 20
+	caliber = "14.5mm"
+//////////////////////////////////////////////MODULES LASER
+/obj/item/weapon/modul_gun/chamber/energy/shotgun
+	name = "chamber laser shotgun"
+	icon_state = "chamber_laser1"
+	icon_overlay = "chamber_laser1"
+	pellets = 7
+	lessdamage = 7
+	lessdispersion = -3
+	size = 2
+	recoil = -10
+	fire_delay = 16
+	max_lens = 1
+	caliber = "energy"
+
+/obj/item/weapon/modul_gun/chamber/energy/laser
+	name = "chamber laser one"
+	icon_state = "chamber_laser_icon"
+	icon_overlay = "chamber_laser"
+	pellets = 0
+	lessdamage = 3
+	lessdispersion = -2
+	size = 2
+	recoil = -10
+	fire_delay = 8
+	max_lens = 1
+	caliber = "energy"
+
+/obj/item/weapon/modul_gun/chamber/energy/duolaser
+	name = "chamber laser duo"
+	icon_state = "chamber_laser_icon"
+	icon_overlay = "chamber_laser"
+	pellets = 0
+	lessdamage = 4
+	lessdispersion = -2
+	size = 2
+	recoil = -10
+	fire_delay = 8
+	max_lens = 2
+	caliber = "energy"
+
+/obj/item/weapon/modul_gun/chamber/energy/triolaser
+	name = "chamber laser trio"
+	icon_state = "chamber_energy"
+	icon_overlay = "chamber_energy"
+	pellets = 0
+	lessdamage = 5
+	lessdispersion = -2
+	size = 2
+	recoil = -10
+	fire_delay = 8
+	max_lens = 3
+	caliber = "energy"

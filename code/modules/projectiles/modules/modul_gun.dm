@@ -1,6 +1,6 @@
 /obj/item/weapon/modul_gun
 	name = "modul"
-	icon = 'code/modules/projectiles/modules/module_gun.dmi'
+	icon = 'code/modules/projectiles/modules/modular.dmi'
 	icon_state = ""
 	var/obj/item/weapon/gun_modular/parent = null
 	var/icon/icon_overlay = ""

@@ -170,10 +170,8 @@
 
 /obj/item/weapon/modul_gun/magazine/bullet/internal/attack_self(mob/user)
 	var/num_unloaded = 0
-	while (ammo_count() > 0)
-		var/obj/item/ammo_casing/CB
-		CB = get_round(0)
-		parent.chambered = null
+	parent.chambered = null
+	for(var/obj/item/ammo_casing/CB in contents)
 		CB.loc = get_turf(src.loc)
 		CB.SpinAnimation(10, 1)
 		CB.update_icon()
@@ -182,3 +180,48 @@
 		to_chat(user, "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>")
 	else
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
+
+
+
+//////////////////////////////////////////////MODULES LASER
+////////////////////////INTERNAL
+/obj/item/weapon/modul_gun/magazine/energy/internal/normal
+	name = "energy magazine internal"
+	caliber = "energy"
+	icon_state = "magazine_charge_icon"
+	icon_overlay = "magazine_internal"
+////////////////////////EXTERNAL
+/obj/item/weapon/modul_gun/magazine/energy/external/normal
+	name = "energy magazine external"
+	caliber = "energy"
+	icon_state = "magazine_charge_icon"
+	icon_overlay = "magazine_charge"
+//////////////////////////////////////////////MODULES BULLET
+////////////////////////INTERNAL
+/obj/item/weapon/modul_gun/magazine/bullet/internal/rus357
+	name = "magazine internal 357"
+	caliber = "357"
+	max_ammo = 6
+	icon_state = "magazine_internal_icon"
+	icon_overlay = "magazine_internal"
+
+/obj/item/weapon/modul_gun/magazine/bullet/internal/heavyrifle
+	name = "magazine internal heavyrifle"
+	caliber = "14.5mm"
+	max_ammo = 1
+	icon_state = "magazine_internal_icon"
+	icon_overlay = "magazine_internal"
+
+/obj/item/weapon/modul_gun/magazine/bullet/internal/shotgun
+	name = "magazine internal shotgun"
+	caliber = "shotgun"
+	max_ammo = 8
+	icon_state = "magazine_internal_icon"
+	icon_overlay = "magazine_internal"
+////////////////////////EXTERNAL
+/obj/item/weapon/modul_gun/magazine/bullet/external/m9mm
+	name = "magazine internal 9mm"
+	caliber = "9mm"
+	max_ammo = 8
+	icon_state = "magazine_external_icon"
+	icon_overlay = "magazine_external"

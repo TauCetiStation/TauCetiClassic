@@ -53,3 +53,35 @@
 					qdel(src)
 					return TRUE
 		return FALSE
+
+/obj/item/weapon/modul_gun/grip/rifle
+	name = "grip rifle"
+	icon_state = "grip_rifle"
+	icon_overlay = "grip_rifle"
+	lessdispersion = 2
+	lessrecoil = 3
+	size = 3
+
+/obj/item/weapon/modul_gun/grip/resilient
+	name = "grip resilient"
+	icon_state = "grip_resilient"
+	icon_overlay = "grip_resilient"
+	lessdispersion = 1
+	lessrecoil = 4
+	size = 2
+
+/obj/item/weapon/modul_gun/grip/weighted
+	name = "grip weighted"
+	icon_state = "grip_weighted"
+	icon_overlay = "grip_weighted"
+	lessdispersion = 2
+	lessrecoil = 2
+	size = 2
+
+/obj/item/weapon/modul_gun/grip/shotgun
+	name = "grip shotgun"
+	icon_state = "grip_shotgun"
+	icon_overlay = "grip_shotgun"
+	lessdispersion = -0.5
+	lessrecoil = 0
+	size = 2

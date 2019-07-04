@@ -1,7 +1,7 @@
 /obj/item/weapon/gun_modular
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
-	icon = 'code/modules/projectiles/modules/module_gun.dmi'
+	icon = 'code/modules/projectiles/modules/modular.dmi'
 	icon_state = "base"
 	item_state = "gun"
 	flags =  CONDUCT
@@ -69,7 +69,7 @@
 				i.delete_overlays(src)
 			return
 		else
-			icon = 'code/modules/projectiles/modules/module_gun.dmi'
+			icon = 'code/modules/projectiles/modules/modular.dmi'
 			icon_state = "base"
 			for(var/obj/item/weapon/modul_gun/i in contents)
 				i.eject(src)
@@ -120,7 +120,7 @@
 	if(flag)	return //It's adjacent, is the user, or is on the user's person
 	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
 	if(user && user.client && user.client.gun_mode && !(A in target))
-		Fire(A,user,params) //They're using the new gun system, locate what they're aiming at.
+		PreFire(A,user,params) //They're using the new gun system, locate what they're aiming at.
 	else
 		Fire(A,user,params) //Otherwise, fire normally.
 
@@ -133,6 +133,8 @@
 	if(grip)
 		if(grip.check_uses(user))
 			return
+	else
+		return
 
 	add_fingerprint(user)
 
@@ -146,8 +148,16 @@
 	if(chamber)
 		chambered = chamber.chamber_round()
 		if(chambered)
-			chambered.BB.damage -= lessdamage
+			if(chambered.BB.damage != 0)
+				chambered.BB.damage -= (lessdamage * (chamber.pellets + 1))*1.2
+				if(chambered.BB.damage < 0)
+					chambered.BB.damage = 0
 			chambered.BB.dispersion -= lessdispersion
+			chambered.pellets = chamber.pellets
+			if(chambered.BB.dispersion < 0)
+				chambered.BB.dispersion = 0
+			if(chambered.BB.damage < 0)
+				chambered.BB.damage = 0
 			if(point_blank)
 				user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
 				chambered.BB.damage *= 1.3

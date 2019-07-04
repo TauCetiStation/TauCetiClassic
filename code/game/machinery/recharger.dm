@@ -16,7 +16,9 @@
                                         /obj/item/weapon/gun/energy,
                                         /obj/item/weapon/melee/baton,
                                         /obj/item/weapon/twohanded/shockpaddles/standalone,
-                                        /obj/item/ammo_box/magazine/l10mag
+                                        /obj/item/ammo_box/magazine/l10mag,
+                                        /obj/item/weapon/modul_gun/magazine/energy,
+                                        /obj/item/weapon/gun_modular
                                     )
 
 /obj/machinery/recharger/atom_init()
@@ -137,6 +139,33 @@
 				use_power(500 * recharge_coeff)
 			else
 				icon_state = "recharger2"
+		if(istype(charging, /obj/item/weapon/modul_gun/magazine/energy))
+			var/obj/item/weapon/modul_gun/magazine/energy/E = charging
+			if(E.power_supply)
+				if(E.power_supply.charge < E.power_supply.maxcharge)
+					if(E.power_supply.charge == 0)
+						E.power_supply.give(1)
+					//E.power_supply.give(E.power_supply.chargerate * recharge_coeff)
+					E.power_supply.give(100 * recharge_coeff)
+					icon_state = "recharger1"
+					use_power(250 * recharge_coeff)
+				else
+					icon_state = "recharger2"
+			return
+		if(istype(charging, /obj/item/weapon/gun_modular))
+			var/obj/item/weapon/gun_modular/gun = charging
+			if(gun.magazine)
+				if(gun.magazine.power_supply)
+					if(gun.magazine.power_supply.charge < gun.magazine.power_supply.maxcharge)
+						if(gun.magazine.power_supply.charge == 0)
+							gun.magazine.power_supply.give(1)
+						//E.power_supply.give(E.power_supply.chargerate * recharge_coeff)
+						gun.magazine.power_supply.give(100 * recharge_coeff)
+						icon_state = "recharger1"
+						use_power(250 * recharge_coeff)
+					else
+						icon_state = "recharger2"
+			return
 
 /obj/machinery/recharger/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN) || !anchored)
@@ -211,6 +240,33 @@
 				use_power(500 * recharge_coeff)
 			else
 				icon_state = "wrecharger2"
+		if(istype(charging, /obj/item/weapon/modul_gun/magazine/energy))
+			var/obj/item/weapon/modul_gun/magazine/energy/E = charging
+			if(E.power_supply)
+				if(E.power_supply.charge < E.power_supply.maxcharge)
+					if(E.power_supply.charge == 0)
+						E.power_supply.give(1)
+					//E.power_supply.give(E.power_supply.chargerate * recharge_coeff)
+					E.power_supply.give(100 * recharge_coeff)
+					icon_state = "recharger1"
+					use_power(250 * recharge_coeff)
+				else
+					icon_state = "recharger2"
+			return
+		if(istype(charging, /obj/item/weapon/gun_modular))
+			var/obj/item/weapon/gun_modular/gun = charging
+			if(gun.magazine)
+				if(gun.magazine.power_supply)
+					if(gun.magazine.power_supply.charge < gun.magazine.power_supply.maxcharge)
+						if(gun.magazine.power_supply.charge == 0)
+							gun.magazine.power_supply.give(1)
+						//E.power_supply.give(E.power_supply.chargerate * recharge_coeff)
+						gun.magazine.power_supply.give(100 * recharge_coeff)
+						icon_state = "recharger1"
+						use_power(250 * recharge_coeff)
+					else
+						icon_state = "recharger2"
+			return
 
 /obj/machinery/recharger/wallcharger/update_icon()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
