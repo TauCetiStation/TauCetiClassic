@@ -63,12 +63,14 @@
 	if(isscrewdriver(A))
 		collected = !collected
 		if(collected)
+			icon_state = ""
 			icon = getFlatIcon(src)
 			for(var/obj/item/weapon/modul_gun/i in contents)
 				i.delete_overlays(src)
 			return
 		else
 			icon = 'code/modules/projectiles/modules/module_gun.dmi'
+			icon_state = "base"
 			for(var/obj/item/weapon/modul_gun/i in contents)
 				i.eject(src)
 
@@ -144,6 +146,8 @@
 	if(chamber)
 		chambered = chamber.chamber_round()
 		if(chambered)
+			chambered.BB.damage -= lessdamage
+			chambered.BB.dispersion -= lessdispersion
 			if(point_blank)
 				user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
 				chambered.BB.damage *= 1.3

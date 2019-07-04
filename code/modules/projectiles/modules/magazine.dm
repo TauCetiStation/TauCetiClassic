@@ -2,6 +2,7 @@
 	name = "magazine"
 	var/caliber
 	var/obj/item/weapon/stock_parts/cell/power_supply
+	var/eject_casing = TRUE
 
 /obj/item/weapon/modul_gun/magazine/proc/get_round()
 	return
@@ -165,6 +166,7 @@
 	name = "magazine internal"
 	caliber = "357"
 	max_ammo = 6
+	eject_casing = FALSE
 
 /obj/item/weapon/modul_gun/magazine/bullet/internal/attack_self(mob/user)
 	var/num_unloaded = 0

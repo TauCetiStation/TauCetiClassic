@@ -98,11 +98,13 @@
 	if(isnull(AC) || !istype(AC))
 		chamber_round()
 		return
-	if(eject_casing)
+	if(parent.magazine.eject_casing)
 		AC.loc = get_turf(src) //Eject casing onto ground.
 		AC.SpinAnimation(10, 1) //next gen special effects
 		spawn(3) //next gen sound effects
 			playsound(src, 'sound/weapons/guns/shell_drop.ogg', VOL_EFFECTS_MASTER, 25)
+	else
+		AC.loc = parent.magazine
 	if(empty_chamber)
 		parent.chambered = null
 	if(no_casing)
