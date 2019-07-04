@@ -1,8 +1,8 @@
 /obj/item/weapon/gun_modular
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
-	icon = 'icons/obj/gun.dmi'
-	icon_state = "detective"
+	icon = 'code/modules/projectiles/modules/module_gun.dmi'
+	icon_state = "base"
 	item_state = "gun"
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
@@ -28,7 +28,7 @@
 	var/tmp/told_cant_shoot = 0 //So that it doesn't spam them with the fact they cannot hit them.
 	var/firerate = 0 	//0 for keep shooting until aim is lowered
 						// 1 for one bullet after tarrget moves and aim is lowered
-	var/fire_delay = 6
+	var/fire_delay = 0
 	var/last_fired = 0
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
@@ -48,7 +48,7 @@
 	var/lessfiredelay = 0
 	var/lessrecoil = 0
 	var/size = 0
-	var/collected
+	var/collected = FALSE
 
 /obj/item/weapon/gun_modular/attackby(obj/item/A, mob/user)
 	if(MODULE)
@@ -60,8 +60,23 @@
 		selected_module.attackby(A, user)
 	else if(magazine)
 		magazine.attackby(A, user)
-	else
-		return
+	if(isscrewdriver(A))
+		collected = !collected
+		if(collected)
+			icon = getFlatIcon(src)
+			for(var/obj/item/weapon/modul_gun/i in contents)
+				i.delete_overlays(src)
+			return
+		else
+			icon = 'code/modules/projectiles/modules/module_gun.dmi'
+			for(var/obj/item/weapon/modul_gun/i in contents)
+				i.eject(src)
+
+/obj/item/weapon/gun_modular/attack_self(mob/user)
+	if(selected_module)
+		selected_module.attack_self(user)
+	else if(magazine)
+		magazine.attack_self(user)
 
 /obj/item/weapon/gun_modular/proc/ready_to_fire()
 	if(world.time >= last_fired + fire_delay)
@@ -112,6 +127,10 @@
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
 		return
+
+	if(grip)
+		if(grip.check_uses(user))
+			return
 
 	add_fingerprint(user)
 

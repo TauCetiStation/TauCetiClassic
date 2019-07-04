@@ -10,15 +10,24 @@
 
 /obj/item/weapon/modul_gun/chamber/attach(obj/item/weapon/gun_modular/gun)
 	.=..()
-	if(caliber == "energy" && !ammo_type.len > 0)
-		return
-	if(!gun.chamber)
+	if(!gun.chamber && condition_check(gun))
 		parent = gun
 		src.loc = gun
 		parent.chamber = src
 		parent.recoil += recoil
+		parent.fire_delay += fire_delay
+		parent.overlays += icon_overlay
+		change_stat(gun, TRUE)
 	else
 		return
+
+/obj/item/weapon/modul_gun/chamber/eject(obj/item/weapon/gun_modular/gun)
+	change_stat(gun, FALSE)
+	parent = null
+	gun.chamber = null
+	gun.recoil -= recoil
+	gun.fire_delay -= fire_delay
+	src.loc = get_turf(gun.loc)
 
 /obj/item/weapon/modul_gun/chamber/proc/chamber_round()
 	return
@@ -29,8 +38,20 @@
 /obj/item/weapon/modul_gun/chamber/energy
 	name = "energy chamber"
 	caliber = "energy"
+	icon_state = "cha1_icon"
+	icon_overlay = "cha1"
 	var/list/obj/item/ammo_casing/energy/lens = list()
 	var/max_lens = 2
+
+/obj/item/weapon/modul_gun/chamber/energy/condition_check(obj/item/weapon/gun_modular/gun)
+	if(caliber == "energy" && ammo_type.len > 0)
+		return TRUE
+	return FALSE
+
+/obj/item/weapon/modul_gun/chamber/bullet/condition_check(obj/item/weapon/gun_modular/gun)
+	if(gun.chamber)
+		return FALSE
+	return TRUE
 
 /obj/item/weapon/modul_gun/chamber/energy/attackby(obj/item/A, mob/user)
 	if(LENS && lens.len < max_lens)
@@ -42,6 +63,8 @@
 
 /obj/item/weapon/modul_gun/chamber/bullet
 	name = "bullet chamber"
+	icon_state = "cha2_icon"
+	icon_overlay = "cha2"
 
 
 /obj/item/weapon/modul_gun/chamber/bullet/chamber_round()

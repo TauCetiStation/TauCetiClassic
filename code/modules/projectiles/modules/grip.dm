@@ -1,30 +1,40 @@
 /obj/item/weapon/modul_gun/grip
 	name = "grip"
+	icon_state = "gri1_icon"
+	icon_overlay = "gri1"
 
 /obj/item/weapon/modul_gun/grip/attach(obj/item/weapon/gun_modular/gun)
 	.=..()
 	parent = gun
 	parent.grip = src
 	src.loc = parent
+	parent.overlays += icon_overlay
+	change_stat(gun, TRUE)
+
+/obj/item/weapon/modul_gun/grip/eject(obj/item/weapon/gun_modular/gun)
+	change_stat(gun, FALSE)
+	parent = null
+	gun.grip = null
+	src.loc = get_turf(gun.loc)
 
 /obj/item/weapon/modul_gun/grip/proc/check_uses(mob/user)
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
-		return FALSE
+		return TRUE
 	if(isliving(user))
 		var/mob/living/M = user
 		if (HULK in M.mutations)
 			to_chat(M, "<span class='red'>Your meaty finger is much too large for the trigger guard!</span>")
-			return FALSE
+			return TRUE
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.species.name == SHADOWLING)
 				to_chat(H, "<span class='notice'>Your fingers don't fit in the trigger guard!</span>")
-				return FALSE
+				return TRUE
 
 			if(user.dna && user.dna.mutantrace == "adamantine")
 				to_chat(user, "<span class='red'>Your metal fingers don't fit in the trigger guard!</span>")
-				return FALSE
+				return TRUE
 			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
 				var/obj/item/clothing/suit/V = H.wear_suit
 				V.attack_reaction(H, REACTION_GUN_FIRE)
@@ -41,4 +51,5 @@
 					H.take_bodypart_damage(0, 20)
 					H.drop_item()
 					qdel(src)
-					return FALSE
+					return TRUE
+		return FALSE
