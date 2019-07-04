@@ -14,7 +14,6 @@
 	var/recharge_coeff = 1
 	var/static/list/allowed_items = list(
                                         /obj/item/weapon/gun/energy,
-                                        /obj/item/weapon/gun/projectile/modulargun,
                                         /obj/item/weapon/melee/baton,
                                         /obj/item/weapon/twohanded/shockpaddles/standalone,
                                         /obj/item/ammo_box/magazine/l10mag
@@ -95,7 +94,7 @@
 		return
 
 	if(charging)
-		if(istype(charging, /obj/item/weapon/gun/energy) || istype(charging, /obj/item/weapon/gun/projectile/modulargun))
+		if(istype(charging, /obj/item/weapon/gun/energy))
 			var/obj/item/weapon/gun/energy/E = charging
 			if(E.power_supply.charge < E.power_supply.maxcharge)
 				if(E.power_supply.charge == 0)

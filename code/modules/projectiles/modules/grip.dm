@@ -1,55 +1,44 @@
-/obj/item/modular/grip
-	icon_state = "grip_normal"
-	icon_overlay = "grip_normal"
+/obj/item/weapon/modul_gun/grip
 	name = "grip"
-	lessdispersion = 0.1
-	lessrecoil = 0.1
-	size = 0.1
-	m_amt = 400
-	gun_type = ALL_TYPE_MODULARGUN
 
-/obj/item/modular/grip/small
-	icon_state = "grip_normal"
-	icon_overlay = "grip_normal"
-	name = "grip"
-	lessdispersion = 0.1
-	lessrecoil = 0.1
-	size = 0.1
-	m_amt = 400
-	gun_type = ALL_TYPE_MODULARGUN
+/obj/item/weapon/modul_gun/grip/attach(obj/item/weapon/gun_modular/gun)
+	.=..()
+	parent = gun
+	parent.grip = src
+	src.loc = parent
 
-/obj/item/modular/grip/medium/resilient
-	icon_state = "grip_resilient"
-	icon_overlay = "grip_resilient"
-	name = "grip resilient"
-	lessdispersion = 0.4
-	lessrecoil = 0.4
-	size = 0.3
-	gun_type = ALL_TYPE_MODULARGUN
+/obj/item/weapon/modul_gun/grip/proc/check_uses(mob/user)
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
+		return FALSE
+	if(isliving(user))
+		var/mob/living/M = user
+		if (HULK in M.mutations)
+			to_chat(M, "<span class='red'>Your meaty finger is much too large for the trigger guard!</span>")
+			return FALSE
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.species.name == SHADOWLING)
+				to_chat(H, "<span class='notice'>Your fingers don't fit in the trigger guard!</span>")
+				return FALSE
 
-/obj/item/modular/grip/medium/weighted
-	icon_state = "grip_weighted"
-	icon_overlay = "grip_weighted"
-	name = "grip weighted"
-	lessdispersion = 0.3
-	lessrecoil = 0.3
-	size = 0.3
-	gun_type = ALL_TYPE_MODULARGUN
+			if(user.dna && user.dna.mutantrace == "adamantine")
+				to_chat(user, "<span class='red'>Your metal fingers don't fit in the trigger guard!</span>")
+				return FALSE
+			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+				var/obj/item/clothing/suit/V = H.wear_suit
+				V.attack_reaction(H, REACTION_GUN_FIRE)
 
-/obj/item/modular/grip/large/shotgun
-	icon_state = "grip_shotgun"
-	icon_overlay = "grip_shotgun"
-	name = "grip shotgun"
-	lessdispersion = 0.2
-	lessrecoil = 0.2
-	size = 0.3
-	gun_type = ALL_TYPE_MODULARGUN
-
-/obj/item/modular/grip/large/rifle
-	icon_state = "grip_rifle"
-	icon_overlay = "grip_rifle"
-	name = "grip rifle"
-	lessdispersion = 0.5
-	lessrecoil = 0.2
-	size = 0.4
-	gun_type = ALL_TYPE_MODULARGUN
+			if(parent.clumsy_check) //it should be AFTER hulk or monkey check.
+				var/going_to_explode = 0
+				if ((CLUMSY in H.mutations) && prob(50))
+					going_to_explode = 1
+				if(parent.chambered && parent.chambered.crit_fail && prob(10))
+					going_to_explode = 1
+				if(going_to_explode)
+					explosion(user.loc, 0, 0, 1, 1)
+					to_chat(H, "<span class='danger'>[src] blows up in your face.</span>")
+					H.take_bodypart_damage(0, 20)
+					H.drop_item()
+					qdel(src)
+					return FALSE

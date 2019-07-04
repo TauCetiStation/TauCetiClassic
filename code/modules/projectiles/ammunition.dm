@@ -15,14 +15,6 @@
 	var/variance = 0.8							//Variance for inaccuracy fundamental to the casing
 	var/fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
 
-	var/lessdamage = 3
-	var/lessdispersion = -0.1
-	var/lessfiredelay = -0.5
-	var/lessrecoil = 0
-	var/size = 0
-	var/obj/item/weapon/gun/projectile/modulargun/parent
-	var/icon_overlay = null
-
 /obj/item/ammo_casing/atom_init()
 	. = ..()
 	if(projectile_type)
@@ -83,13 +75,6 @@
 	var/multiple_sprites = 0
 	var/caliber
 	var/multiload = 1
-	var/lessdamage = 0
-	var/lessdispersion = 0
-	var/lessfiredelay = 0
-	var/lessrecoil = 0
-	var/size = 0.1
-	var/obj/item/weapon/gun/projectile/modulargun/parent
-	var/gun_type = list("bullet")
 
 /obj/item/ammo_box/atom_init()
 	. = ..()
