@@ -125,13 +125,13 @@
 		return
 	return shot
 
-/obj/item/weapon/modul_gun/magazine/proc/internal(user)
+/obj/item/weapon/modul_gun/magazine/proc/internal(mob/user)
 	return FALSE
-/obj/item/weapon/modul_gun/magazine/proc/external(user)
-	if (magazine)
+/obj/item/weapon/modul_gun/magazine/proc/external(mob/user)
+	if (parent.magazine)
 		src.loc = get_turf(src.loc)
 		user.put_in_hands(src)
-		magazine = null
+		parent.magazine = null
 		update_icon()
 		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
@@ -144,13 +144,13 @@
 /obj/item/weapon/modul_gun/magazine/energy/external
 	name = "energy magazine external"
 
-/obj/item/weapon/modul_gun/magazine/energy/external/attack_self(user)
+/obj/item/weapon/modul_gun/magazine/energy/external/attack_self(mob/user)
 	external(user)
 
 /obj/item/weapon/modul_gun/magazine/energy/internal
 	name = "enery magazine internal"
 
-/obj/item/weapon/modul_gun/magazine/energy/internal/attack_self(user)
+/obj/item/weapon/modul_gun/magazine/energy/internal/attack_self(mob/user)
 	return
 
 /obj/item/weapon/modul_gun/magazine/bullet/external
@@ -158,7 +158,7 @@
 	caliber = "9mm"
 	max_ammo = 8
 
-/obj/item/weapon/modul_gun/magazine/bullet/external/attack_self(user)
+/obj/item/weapon/modul_gun/magazine/bullet/external/attack_self(mob/user)
 	external(user)
 
 /obj/item/weapon/modul_gun/magazine/bullet/internal
@@ -166,12 +166,12 @@
 	caliber = "357"
 	max_ammo = 6
 
-/obj/item/weapon/modul_gun/magazine/bullet/internal/attack_self(user)
+/obj/item/weapon/modul_gun/magazine/bullet/internal/attack_self(mob/user)
 	var/num_unloaded = 0
-	while (get_ammo() > 0)
+	while (ammo_count() > 0)
 		var/obj/item/ammo_casing/CB
-		CB = magazine.get_round(0)
-		chambered = null
+		CB = get_round(0)
+		parent.chambered = null
 		CB.loc = get_turf(src.loc)
 		CB.SpinAnimation(10, 1)
 		CB.update_icon()
