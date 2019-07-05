@@ -17,7 +17,6 @@
 		parent = gun
 		parent.magazine = src
 		src.loc = gun
-		parent.overlays += icon_overlay
 		change_stat(gun, TRUE)
 	else
 		return
@@ -27,13 +26,49 @@
 	parent = null
 	gun.magazine = null
 	src.loc = get_turf(gun.loc)
-
+//////////////////////////////////////////////ENERGY
 /obj/item/weapon/modul_gun/magazine/energy
 	name = "energy magazine"
 	caliber = "energy"
 	icon_state = "mag1_icon"
 	icon_overlay = "mag1"
 
+/obj/item/weapon/modul_gun/magazine/energy/condition_check(obj/item/weapon/gun_modular/gun)
+	if(power_supply && gun.chamber && !gun.magazine)
+		if(gun.chamber.caliber == caliber)
+			return TRUE
+	return FALSE
+
+/obj/item/weapon/modul_gun/magazine/energy/attackby(obj/item/A, mob/user)
+	if(CELL && !power_supply)
+		var/obj/item/weapon/stock_parts/cell/cell = A
+		power_supply = cell
+		user.drop_item()
+		cell.loc = src
+
+/obj/item/weapon/modul_gun/magazine/energy/get_round()
+	if (!parent.chamber.ammo_type || !power_supply)
+		return
+	var/shottype = parent.chamber.ammo_type[parent.chamber.select]
+	var/obj/item/ammo_casing/energy/shot = new shottype(src)
+	if(power_supply.charge < shot.e_cost)
+		return
+	power_supply.use(shot.e_cost * 10)
+	return shot
+
+/obj/item/weapon/modul_gun/magazine/energy/external
+	name = "energy magazine external"
+
+/obj/item/weapon/modul_gun/magazine/energy/external/attack_self(mob/user)
+	external(user)
+
+/obj/item/weapon/modul_gun/magazine/energy/internal
+	name = "enery magazine internal"
+
+/obj/item/weapon/modul_gun/magazine/energy/internal/attack_self(mob/user)
+	return
+
+//////////////////////////////////////////////BULLET
 /obj/item/weapon/modul_gun/magazine/bullet
 	name = "magazine"
 	caliber = "9mm"
@@ -45,24 +80,11 @@
 	icon_state = "mag1_icon"
 	icon_overlay = "mag1"
 
-/obj/item/weapon/modul_gun/magazine/energy/condition_check(obj/item/weapon/gun_modular/gun)
-	if(power_supply && gun.chamber && !gun.magazine)
-		if(gun.chamber.caliber == caliber)
-			return TRUE
-	return FALSE
-
 /obj/item/weapon/modul_gun/magazine/bullet/condition_check(obj/item/weapon/gun_modular/gun)
 	if(gun.chamber && !gun.magazine)
 		if(gun.chamber.caliber == caliber)
 			return TRUE
 	return FALSE
-
-/obj/item/weapon/modul_gun/magazine/energy/attackby(obj/item/A, mob/user)
-	if(CELL && !power_supply)
-		var/obj/item/weapon/stock_parts/cell/cell = A
-		power_supply = cell
-		user.drop_item()
-		cell.loc = src
 
 /obj/item/weapon/modul_gun/magazine/bullet/ammo_count()
 	return stored_ammo.len
@@ -117,22 +139,12 @@
 		stored_ammo -= b
 		return b
 
-/obj/item/weapon/modul_gun/magazine/energy/get_round()
-	if (!parent.chamber.ammo_type || !power_supply)
-		return
-	var/shottype = parent.chamber.ammo_type[parent.chamber.select]
-	var/obj/item/ammo_casing/energy/shot = new shottype(src)
-	if(power_supply.charge < shot.e_cost)
-		return
-	return shot
-
 /obj/item/weapon/modul_gun/magazine/proc/internal(mob/user)
 	return FALSE
 /obj/item/weapon/modul_gun/magazine/proc/external(mob/user)
 	if (parent.magazine)
-		src.loc = get_turf(src.loc)
+		eject(parent)
 		user.put_in_hands(src)
-		parent.magazine = null
 		update_icon()
 		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
@@ -141,18 +153,6 @@
 		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
 	update_icon()
 	return FALSE
-
-/obj/item/weapon/modul_gun/magazine/energy/external
-	name = "energy magazine external"
-
-/obj/item/weapon/modul_gun/magazine/energy/external/attack_self(mob/user)
-	external(user)
-
-/obj/item/weapon/modul_gun/magazine/energy/internal
-	name = "enery magazine internal"
-
-/obj/item/weapon/modul_gun/magazine/energy/internal/attack_self(mob/user)
-	return
 
 /obj/item/weapon/modul_gun/magazine/bullet/external
 	name = "magazine external"

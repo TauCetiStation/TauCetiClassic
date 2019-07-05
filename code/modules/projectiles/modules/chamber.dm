@@ -11,7 +11,7 @@
 
 /obj/item/weapon/modul_gun/chamber/attach(obj/item/weapon/gun_modular/gun)
 	.=..()
-	if(!gun.chamber && condition_check(gun))
+	if(condition_check(gun))
 		parent = gun
 		src.loc = gun
 		parent.chamber = src
@@ -36,6 +36,8 @@
 /obj/item/weapon/modul_gun/chamber/proc/process_chamber()
 	return
 
+//////////////////////////////////////////////ENERGY
+
 /obj/item/weapon/modul_gun/chamber/energy
 	name = "energy chamber"
 	caliber = "energy"
@@ -45,14 +47,9 @@
 	var/max_lens = 2
 
 /obj/item/weapon/modul_gun/chamber/energy/condition_check(obj/item/weapon/gun_modular/gun)
-	if(caliber == "energy" && ammo_type.len > 0)
+	if(!gun.chamber && caliber == "energy" && ammo_type.len > 0)
 		return TRUE
 	return FALSE
-
-/obj/item/weapon/modul_gun/chamber/bullet/condition_check(obj/item/weapon/gun_modular/gun)
-	if(gun.chamber)
-		return FALSE
-	return TRUE
 
 /obj/item/weapon/modul_gun/chamber/energy/attackby(obj/item/A, mob/user)
 	if(LENS && lens.len < max_lens)
@@ -62,12 +59,36 @@
 		user.drop_item()
 		lense.loc = src
 		fire_sound = lense.fire_sound
+	if(isscrewdriver(A))
+		for(var/obj/item/ammo_casing/energy/I in lens)
+			I.loc = get_turf(src.loc)
+			ammo_type.Remove(I.type)
+			lens.Remove(I)
+
+/obj/item/weapon/modul_gun/chamber/energy/chamber_round()
+	if(parent.chambered || !parent.magazine)
+		return
+	var/obj/item/ammo_casing/energy/chambered = parent.magazine.get_round()
+	if(chambered)
+		chambered.loc = src
+		return chambered
+	return null
+
+/obj/item/weapon/modul_gun/chamber/energy/process_chamber()
+	parent.chambered = null
+	return
+
+//////////////////////////////////////////////BULLET
 
 /obj/item/weapon/modul_gun/chamber/bullet
 	name = "bullet chamber"
 	icon_state = "cha2_icon"
 	icon_overlay = "cha2"
 
+/obj/item/weapon/modul_gun/chamber/bullet/condition_check(obj/item/weapon/gun_modular/gun)
+	if(!gun.chamber)
+		return TRUE
+	return FALSE
 
 /obj/item/weapon/modul_gun/chamber/bullet/chamber_round()
 	if (parent.chambered || !parent.magazine)
@@ -80,15 +101,6 @@
 				var/datum/reagents/casting_reagents = chambered.reagents
 				casting_reagents.trans_to(chambered.BB, casting_reagents.total_volume) //For chemical darts/bullets
 				casting_reagents.delete()
-		return chambered
-	return null
-
-/obj/item/weapon/modul_gun/chamber/energy/chamber_round()
-	if(parent.chambered || !parent.magazine)
-		return
-	var/obj/item/ammo_casing/energy/chambered = parent.magazine.get_round()
-	if(chambered)
-		chambered.loc = src
 		return chambered
 	return null
 
@@ -113,13 +125,6 @@
 		parent.chambered = null
 	if(no_casing)
 		qdel(AC)
-	return
-
-/obj/item/weapon/modul_gun/chamber/energy/process_chamber()
-	if (parent.chambered) // incase its out of energy - since then this will be null.
-		var/obj/item/ammo_casing/energy/shot = parent.chambered
-		parent.magazine.power_supply.use(shot.e_cost * 10)
-	parent.chambered = null
 	return
 
 
@@ -172,7 +177,7 @@
 	recoil = 6
 	fire_delay = 20
 	caliber = "14.5mm"
-//////////////////////////////////////////////MODULES LASER
+//////////////////////////////////////////////MODULES ENERGY
 /obj/item/weapon/modul_gun/chamber/energy/shotgun
 	name = "chamber laser shotgun"
 	icon_state = "chamber_laser1"

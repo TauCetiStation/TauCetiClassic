@@ -31,6 +31,8 @@
 	var/fire_delay = 0
 	var/last_fired = 0
 
+	var/mob/user_parent = null
+
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 
@@ -75,10 +77,23 @@
 				i.eject(src)
 
 /obj/item/weapon/gun_modular/attack_self(mob/user)
-	if(selected_module)
-		selected_module.attack_self(user)
-	else if(magazine)
+	if(magazine)
 		magazine.attack_self(user)
+		return
+
+/obj/item/weapon/gun_modular/attack_hand(mob/user)
+	..()
+	user_parent = user
+	for(var/obj/item/weapon/modul_gun/accessory/action/i in accessory)
+		i.user_parent = user
+		i.action_button(user, src, TRUE)
+
+/obj/item/weapon/gun_modular/dropped(mob/user)
+	..()
+	user_parent = null
+	for(var/obj/item/weapon/modul_gun/accessory/action/i in accessory)
+		i.user_parent = null
+		i.action_button(user, src, FALSE)
 
 /obj/item/weapon/gun_modular/proc/ready_to_fire()
 	if(world.time >= last_fired + fire_delay)
@@ -117,6 +132,8 @@
 	return ..()
 
 /obj/item/weapon/gun_modular/afterattack(atom/A, mob/living/user, flag, params)
+	if(!collected)
+		return
 	if(flag)	return //It's adjacent, is the user, or is on the user's person
 	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
 	if(user && user.client && user.client.gun_mode && !(A in target))
