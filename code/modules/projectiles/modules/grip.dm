@@ -3,20 +3,6 @@
 	icon_state = "gri1_icon"
 	icon_overlay = "gri1"
 
-/obj/item/weapon/modul_gun/grip/attach(obj/item/weapon/gun_modular/gun)
-	.=..()
-	parent = gun
-	parent.grip = src
-	src.loc = parent
-	parent.overlays += icon_overlay
-	change_stat(gun, TRUE)
-
-/obj/item/weapon/modul_gun/grip/eject(obj/item/weapon/gun_modular/gun)
-	change_stat(gun, FALSE)
-	parent = null
-	gun.grip = null
-	src.loc = get_turf(gun.loc)
-
 /obj/item/weapon/modul_gun/grip/proc/check_uses(mob/user)
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")

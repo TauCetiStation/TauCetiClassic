@@ -9,29 +9,9 @@
 	var/select = 1
 	var/pellets = 0
 
-/obj/item/weapon/modul_gun/chamber/attach(obj/item/weapon/gun_modular/gun)
-	.=..()
-	if(condition_check(gun))
-		parent = gun
-		src.loc = gun
-		parent.chamber = src
-		parent.recoil += recoil
-		parent.fire_delay += fire_delay
-		parent.overlays += icon_overlay
-		change_stat(gun, TRUE)
-	else
-		return
-
-/obj/item/weapon/modul_gun/chamber/eject(obj/item/weapon/gun_modular/gun)
-	change_stat(gun, FALSE)
-	parent = null
-	gun.chamber = null
-	gun.recoil -= recoil
-	gun.fire_delay -= fire_delay
-	src.loc = get_turf(gun.loc)
-
 /obj/item/weapon/modul_gun/chamber/proc/chamber_round()
-	return
+	if (parent.chambered || !parent.magazine)
+		return
 
 /obj/item/weapon/modul_gun/chamber/proc/process_chamber()
 	return
@@ -45,11 +25,6 @@
 	icon_overlay = "cha1"
 	var/list/obj/item/ammo_casing/energy/lens = list()
 	var/max_lens = 2
-
-/obj/item/weapon/modul_gun/chamber/energy/condition_check(obj/item/weapon/gun_modular/gun)
-	if(!gun.chamber && caliber == "energy" && ammo_type.len > 0)
-		return TRUE
-	return FALSE
 
 /obj/item/weapon/modul_gun/chamber/energy/attackby(obj/item/A, mob/user)
 	if(LENS && lens.len < max_lens)
@@ -66,9 +41,8 @@
 			lens.Remove(I)
 
 /obj/item/weapon/modul_gun/chamber/energy/chamber_round()
-	if(parent.chambered || !parent.magazine)
-		return
-	var/obj/item/ammo_casing/energy/chambered = parent.magazine.get_round()
+	.=..()
+	var/obj/item/ammo_casing/energy/chambered = parent.magazine.get_round(lens[select])
 	if(chambered)
 		chambered.loc = src
 		return chambered
@@ -85,15 +59,9 @@
 	icon_state = "cha2_icon"
 	icon_overlay = "cha2"
 
-/obj/item/weapon/modul_gun/chamber/bullet/condition_check(obj/item/weapon/gun_modular/gun)
-	if(!gun.chamber)
-		return TRUE
-	return FALSE
-
 /obj/item/weapon/modul_gun/chamber/bullet/chamber_round()
-	if (parent.chambered || !parent.magazine)
-		return
-	else if (parent.magazine.ammo_count())
+	.=..()
+	if(parent.magazine.ammo_count())
 		var/obj/item/ammo_casing/chambered = parent.magazine.get_round()
 		chambered.loc = src
 		if(chambered.BB)

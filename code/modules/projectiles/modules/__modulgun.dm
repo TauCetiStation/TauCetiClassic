@@ -3,3 +3,4 @@
 #define MODULE_MAGAZINE istype(A, /obj/item/weapon/modul_gun/magazine)
 #define LENS istype(A, /obj/item/ammo_casing/energy)
 #define CELL istype(A, /obj/item/weapon/stock_parts/cell)
+#define MAGAZINE istype(A, /obj/item/ammo_box/magazine)

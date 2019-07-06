@@ -77,9 +77,9 @@
 				i.eject(src)
 
 /obj/item/weapon/gun_modular/attack_self(mob/user)
+	..()
 	if(magazine)
 		magazine.attack_self(user)
-		return
 
 /obj/item/weapon/gun_modular/attack_hand(mob/user)
 	..()
