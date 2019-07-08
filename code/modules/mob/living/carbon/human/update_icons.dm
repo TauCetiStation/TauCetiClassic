@@ -344,7 +344,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(standing.len)
 		overlays_standing[MUTANTRACE_LAYER]	= standing
 
-	update_hair()
+	if( !((HUSK in mutations) && !(species.flags[HAS_HAIR])) )
+		update_hair()
 
 	apply_overlay(MUTANTRACE_LAYER)
 

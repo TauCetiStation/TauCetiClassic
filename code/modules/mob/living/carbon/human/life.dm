@@ -323,7 +323,7 @@
 			if(radiation > 50)
 				radiation--
 				damage = 1
-				if(prob(5) && prob(radiation) && (h_style != "Bald" || f_style != "Shaved"))
+				if(prob(5) && species.flags[HAS_HAIR] && prob(radiation) && (h_style != "Bald" || f_style != "Shaved"))
 					h_style = "Bald"
 					f_style = "Shaved"
 					update_hair()
