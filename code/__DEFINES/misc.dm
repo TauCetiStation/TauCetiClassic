@@ -58,7 +58,7 @@
 #define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
 
 // Doors!
-#define DOOR_CRUSH_DAMAGE 10
+#define DOOR_CRUSH_DAMAGE 20
 
 #define FIREDOOR_MAX_PRESSURE_DIFF 25 // kPa
 

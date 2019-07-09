@@ -6,7 +6,7 @@ var/global/list/scarySounds = list(
     'sound/voice/xenomorph/growl_1.ogg', 'sound/voice/xenomorph/growl_2.ogg',
     'sound/effects/Glassbr1.ogg', 'sound/effects/Glassbr2.ogg',
     'sound/effects/Glassbr3.ogg', 'sound/items/Welder.ogg',
-    'sound/items/Welder2.ogg','sound/machines/airlock/airlockToggle.ogg',
+    'sound/items/Welder2.ogg','sound/machines/airlock/toggle.ogg',
     'sound/effects/clownstep1.ogg', 'sound/effects/clownstep2.ogg'
 	)
 
