@@ -56,8 +56,7 @@
 /area/awaymission/junkyard)
 "n" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/junkyard)
@@ -163,7 +162,6 @@
 /area/awaymission/junkyard)
 "E" = (
 /turf/simulated/floor/plating{
-	dir = 2;
 	icon_state = "warnplate"
 	},
 /area/awaymission/junkyard)
@@ -192,7 +190,6 @@
 "I" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating{
-	dir = 2;
 	icon_state = "warnplate"
 	},
 /area/awaymission/junkyard)
