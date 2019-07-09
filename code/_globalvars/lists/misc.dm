@@ -1,9 +1,9 @@
 var/global/list/scarySounds = list(
 	'sound/weapons/thudswoosh.ogg',
     'sound/weapons/guns/gunpulse_Taser.ogg', 'sound/weapons/armbomb.ogg',
-    'sound/voice/hiss1.ogg', 'sound/voice/hiss2.ogg',
-    'sound/voice/hiss3.ogg', 'sound/voice/hiss4.ogg',
-    'sound/voice/hiss5.ogg', 'sound/voice/hiss6.ogg',
+    'sound/voice/xenomorph/hiss_1.ogg', 'sound/voice/xenomorph/hiss_2.ogg',
+    'sound/voice/xenomorph/hiss_3.ogg',
+    'sound/voice/xenomorph/growl_1.ogg', 'sound/voice/xenomorph/growl_2.ogg',
     'sound/effects/Glassbr1.ogg', 'sound/effects/Glassbr2.ogg',
     'sound/effects/Glassbr3.ogg', 'sound/items/Welder.ogg',
     'sound/items/Welder2.ogg','sound/machines/airlock/airlockToggle.ogg',

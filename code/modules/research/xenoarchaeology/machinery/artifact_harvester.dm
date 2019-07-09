@@ -134,6 +134,7 @@
 
 	if(href_list["harvest"])
 		playsound(src, "keyboard", VOL_EFFECTS_MASTER, null, FALSE)
+
 		if(!inserted_battery)
 			src.visible_message("<b>[src]</b> states, \"Cannot harvest. No battery inserted.\"")
 
