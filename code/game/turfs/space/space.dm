@@ -157,6 +157,11 @@
 				A.y = TRANSITIONEDGE + 1
 				A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
 
+			if(ismob(A))
+				var/mob/M = A
+				if(M.pulling)
+					M.pulling.forceMove(get_turf(M), keep_pulling = TRUE)
+
 
 			stoplag()//Let a diagonal move finish, if necessary
 			A.newtonian_move(A.inertia_dir)
