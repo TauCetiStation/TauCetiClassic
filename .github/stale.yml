@@ -17,9 +17,10 @@ pulls:
 
 issues:
   daysUntilStale: 200
-  daysUntilClose: false
-  staleLabel: Old issue
-  exemptLabels:
-    - Proposal
-  markComment: >
-    Этот ишью пробыл открытым более полугода. Пожалуйста, сообщите, является ли он актуальным для текущей версии билда?
+  daysUntilClose: 0
+  staleLabel: Stalled Proposal
+  onlyLabels: [Proposal]
+  closeComment: >
+    Данное предложение пробыло без активности открытым более полугода. Если вы найдёте того, кто его реализует,
+    и вам нужно открыть данный ишью, пожалуйста, обратитесь к кому-либо из мейнтейнеров.
+    Вы можете призвать их в комментарии слапнув ``@TauCetiStation/maintainers``.
