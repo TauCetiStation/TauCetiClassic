@@ -24,6 +24,11 @@
 	embed = 0
 	sharp = 0
 
+/obj/item/projectile/bullet/buckpellet
+	name = "buckpellet"
+	damage = 14
+	dispersion = 2.5
+
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
 	damage = 20
