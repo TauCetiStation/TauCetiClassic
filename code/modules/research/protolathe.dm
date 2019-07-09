@@ -10,19 +10,19 @@ Note: Must be placed west/left of and R&D console to function.
 /obj/machinery/r_n_d/protolathe
 	name = "Protolathe"
 	icon_state = "protolathe"
-	flags = OPENCONTAINER
 
-	var/max_material_storage = 100000 //All this could probably be done better with a list but meh.
-	var/m_amount = 0.0
-	var/g_amount = 0.0
-	var/gold_amount = 0.0
-	var/silver_amount = 0.0
-	var/phoron_amount = 0.0
-	var/uranium_amount = 0.0
-	var/diamond_amount = 0.0
-	var/clown_amount = 0.0
+	var/max_material_storage = 100000
 	var/efficiency_coeff
-	reagents = new()
+	var/list/loaded_materials = list(
+		MAT_METAL =    list("name" = "Metal",    "amount" = 0.0, "sheet_size" = 3750, "sheet_type" = /obj/item/stack/sheet/metal),
+		MAT_GLASS =    list("name" = "Glass",    "amount" = 0.0, "sheet_size" = 3750, "sheet_type" = /obj/item/stack/sheet/glass),
+		MAT_SILVER =   list("name" = "Silver",   "amount" = 0.0, "sheet_size" = 2000, "sheet_type" = /obj/item/stack/sheet/mineral/silver),
+		MAT_GOLD =     list("name" = "Gold",     "amount" = 0.0, "sheet_size" = 2000, "sheet_type" = /obj/item/stack/sheet/mineral/gold),
+		MAT_DIAMOND =  list("name" = "Diamond",  "amount" = 0.0, "sheet_size" = 3750, "sheet_type" = /obj/item/stack/sheet/mineral/diamond),
+		MAT_URANIUM =  list("name" = "Uranium",  "amount" = 0.0, "sheet_size" = 2000, "sheet_type" = /obj/item/stack/sheet/mineral/uranium),
+		MAT_PHORON =   list("name" = "Phoron",   "amount" = 0.0, "sheet_size" = 2000, "sheet_type" = /obj/item/stack/sheet/mineral/phoron),
+		MAT_BANANIUM = list("name" = "Bananium", "amount" = 0.0, "sheet_size" = 2000, "sheet_type" = /obj/item/stack/sheet/mineral/clown),
+	)
 
 
 /obj/machinery/r_n_d/protolathe/atom_init()
@@ -36,15 +36,15 @@ Note: Must be placed west/left of and R&D console to function.
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
 	RefreshParts()
-	reagents.my_atom = src
 
 /obj/machinery/r_n_d/protolathe/proc/TotalMaterials() //returns the total of all the stored materials. Makes code neater.
-	return m_amount + g_amount + gold_amount + silver_amount + phoron_amount + uranium_amount + diamond_amount + clown_amount
+	var/am = 0
+	for(var/M in loaded_materials)
+		am += loaded_materials[M]["amount"]
+	return am
 
 /obj/machinery/r_n_d/protolathe/RefreshParts()
 	var/T = 0
-	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
-		G.reagents.trans_to(src, G.reagents.total_volume)
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
 	max_material_storage = T * 75000
@@ -55,26 +55,8 @@ Note: Must be placed west/left of and R&D console to function.
 
 /obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, M)
 	var/A = 0
-	switch(M)
-		if(MAT_METAL)
-			A = m_amount
-		if(MAT_GLASS)
-			A = g_amount
-		if(MAT_GOLD)
-			A = gold_amount
-		if(MAT_SILVER)
-			A = silver_amount
-		if(MAT_PHORON)
-			A = phoron_amount
-		if(MAT_URANIUM)
-			A = uranium_amount
-		if(MAT_DIAMOND)
-			A = diamond_amount
-		if("$clown")
-			A = clown_amount
-		else
-			A = reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff))
-			//return reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff))
+	if(loaded_materials[M])
+		A = loaded_materials[M]["amount"]
 	A = A / max(1 , (being_built.materials[M]/efficiency_coeff))
 	return A
 
@@ -95,32 +77,11 @@ Note: Must be placed west/left of and R&D console to function.
 
 	if (panel_open)
 		if(iscrowbar(I))
-			for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
-				reagents.trans_to(G, G.reagents.maximum_volume)
-			if(m_amount >= 3750)
-				var/obj/item/stack/sheet/metal/G = new (loc)
-				G.set_amount(round(m_amount / G.perunit))
-			if(g_amount >= 3750)
-				var/obj/item/stack/sheet/glass/G = new (loc)
-				G.set_amount(round(g_amount / G.perunit))
-			if(phoron_amount >= 2000)
-				var/obj/item/stack/sheet/mineral/phoron/G = new (loc)
-				G.set_amount(round(phoron_amount / G.perunit))
-			if(silver_amount >= 2000)
-				var/obj/item/stack/sheet/mineral/silver/G = new (loc)
-				G.set_amount(round(silver_amount / G.perunit))
-			if(gold_amount >= 2000)
-				var/obj/item/stack/sheet/mineral/gold/G = new (loc)
-				G.set_amount(round(gold_amount / G.perunit))
-			if(uranium_amount >= 2000)
-				var/obj/item/stack/sheet/mineral/uranium/G = new (loc)
-				G.set_amount(round(uranium_amount / G.perunit))
-			if(diamond_amount >= 2000)
-				var/obj/item/stack/sheet/mineral/diamond/G = new (loc)
-				G.set_amount(round(diamond_amount / G.perunit))
-			if(clown_amount >= 2000)
-				var/obj/item/stack/sheet/mineral/clown/G = new (loc)
-				G.set_amount(round(clown_amount / G.perunit))
+			for(var/M in loaded_materials)
+				if(loaded_materials[M]["amount"] >= loaded_materials[M]["sheet_size"])
+					var/sheet_type = loaded_materials[M]["sheet_type"]
+					var/obj/item/stack/sheet/G = new sheet_type(loc)
+					G.set_amount(round(loaded_materials[M]["amount"] / G.perunit))
 			default_deconstruction_crowbar(I)
 			return 1
 		else if (is_wire_tool(I) && wires.interact(user))
@@ -172,25 +133,59 @@ Note: Must be placed west/left of and R&D console to function.
 	use_power(max(1000, (3750 * amount / 10)))
 
 	if(stack.get_amount() >= amount)
-		switch(stack.type)
-			if(/obj/item/stack/sheet/metal)
-				m_amount += amount * 3750
-			if(/obj/item/stack/sheet/glass)
-				g_amount += amount * 3750
-			if(/obj/item/stack/sheet/mineral/gold)
-				gold_amount += amount * 2000
-			if(/obj/item/stack/sheet/mineral/silver)
-				silver_amount += amount * 2000
-			if(/obj/item/stack/sheet/mineral/phoron)
-				phoron_amount += amount * 2000
-			if(/obj/item/stack/sheet/mineral/uranium)
-				uranium_amount += amount * 2000
-			if(/obj/item/stack/sheet/mineral/diamond)
-				diamond_amount += amount * 2000
-			if(/obj/item/stack/sheet/mineral/clown)
-				clown_amount += amount * 2000
-
-		stack.use(amount)
+		for(var/M in loaded_materials)
+			if(stack.type == loaded_materials[M]["sheet_type"])
+				loaded_materials[M]["amount"] += amount * stack.perunit
+				stack.use(amount)
+				break
 
 	busy = FALSE
-	updateUsrDialog()
+	if(linked_console)
+		nanomanager.update_uis(linked_console)
+
+/obj/machinery/r_n_d/protolathe/proc/produce_design(datum/design/D, amount)
+	var/power = 2000
+	amount = max(1, min(10, amount))
+	for(var/M in D.materials)
+		power += round(D.materials[M] * amount / 5)
+	power = max(2000, power)
+	if(busy)
+		to_chat(usr, "<span class='warning'>The [name] is busy right now</span>")
+		return
+	var/key = usr.key	//so we don't lose the info during the spawn delay
+	if (!(D.build_type & PROTOLATHE))
+		message_admins("Protolathe exploit attempted by [key_name(usr, usr.client)]!")
+		return
+
+	busy = TRUE
+	flick("protolathe_n",src)
+	use_power(power)
+
+	for(var/M in D.materials)
+		if(check_mat(D, M) < amount)
+			visible_message("<span class='warning'>The [name] beeps, \"Not enough materials to complete prototype.\"</span>")
+			busy = FALSE
+			return
+	for(var/M in D.materials)
+		loaded_materials[M]["amount"] = max(0, (loaded_materials[M]["amount"] - (D.materials[M] / efficiency_coeff * amount)))
+
+	addtimer(CALLBACK(src, .proc/create_design, D, amount, key), 32 * amount / efficiency_coeff)
+
+/obj/machinery/r_n_d/protolathe/proc/create_design(datum/design/D, amount, key)
+	for(var/i = 1 to amount)
+		var/obj/new_item = new D.build_path(loc)
+		if( new_item.type == /obj/item/weapon/storage/backpack/holding )
+			new_item.investigate_log("built by [key]","singulo")
+		new_item.m_amt /= efficiency_coeff
+		new_item.g_amt /= efficiency_coeff
+	busy = FALSE
+
+/obj/machinery/r_n_d/protolathe/proc/eject_sheet(sheet_type, amount)
+	if(loaded_materials[sheet_type])
+		var/available_num_sheets = Floor(loaded_materials[sheet_type]["amount"] / loaded_materials[sheet_type]["sheet_size"])
+		if(available_num_sheets > 0)
+			var/S = loaded_materials[sheet_type]["sheet_type"]
+			var/obj/item/stack/sheet/sheet = new S(loc)
+			var/sheet_ammount = min(available_num_sheets, amount)
+			sheet.set_amount(sheet_ammount)
+			loaded_materials[sheet_type]["amount"] = max(0, loaded_materials[sheet_type]["amount"] - sheet_ammount * loaded_materials[sheet_type]["sheet_size"])

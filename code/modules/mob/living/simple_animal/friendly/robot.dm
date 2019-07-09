@@ -45,7 +45,8 @@
 /mob/living/simple_animal/det5/proc/print() //proc print det5 robot
 	var/obj/item/weapon/paper/O = new /obj/item/weapon/paper(get_turf(src))
 	var/dat
-	for(var/datum/tech/T in rdconsole.files.known_tech)
+	for(var/tech_tree_id in rdconsole.files.tech_trees)
+		var/datum/tech/T = rdconsole.files.tech_trees[tech_tree_id]
 		dat += "[T.name]<BR>"
 		dat +=  "* Level: [T.level]<BR>"
 		dat +=  "* Summary: [T.desc]<HR>"

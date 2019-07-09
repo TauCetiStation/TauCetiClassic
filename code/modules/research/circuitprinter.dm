@@ -9,12 +9,13 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	icon_state = "circuit_imprinter"
 	flags = OPENCONTAINER
 
-	var/g_amount = 0
-	var/gold_amount = 0
-	var/diamond_amount = 0
-	var/uranium_amount = 0
 	var/max_material_amount = 75000.0
 	var/efficiency_coeff
+	var/list/loaded_materials = list(
+		MAT_GLASS =    list("name" = "Glass",    "amount" = 0.0, "sheet_size" = 3750, "sheet_type" = /obj/item/stack/sheet/glass),
+		MAT_GOLD =     list("name" = "Gold",     "amount" = 0.0, "sheet_size" = 2000, "sheet_type" = /obj/item/stack/sheet/mineral/gold),
+		MAT_DIAMOND =  list("name" = "Diamond",  "amount" = 0.0, "sheet_size" = 3750, "sheet_type" = /obj/item/stack/sheet/mineral/diamond),
+	)
 	reagents = new(0)
 
 /obj/machinery/r_n_d/circuit_imprinter/atom_init()
@@ -50,18 +51,16 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	return
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, M)
-	switch(M)
-		if(MAT_GLASS)
-			return (g_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
-		if(MAT_GOLD)
-			return (gold_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
-		if(MAT_DIAMOND)
-			return (diamond_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
-		else
-			return (reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff)) != 0) ? 1 : 0
+	if(loaded_materials[M])
+		return (loaded_materials[M]["amount"] - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+	else
+		return (reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff)) != 0) ? 1 : 0
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/TotalMaterials()
-	return g_amount + gold_amount + diamond_amount + uranium_amount
+	var/am = 0
+	for(var/M in loaded_materials)
+		am += loaded_materials[M]["amount"]
+	return am
 
 /obj/machinery/r_n_d/circuit_imprinter/attackby(obj/item/O, mob/user)
 	if (shocked)
@@ -79,12 +78,11 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		if(iscrowbar(O))
 			for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 				reagents.trans_to(G, G.reagents.maximum_volume)
-			if(g_amount >= 3750)
-				new /obj/item/stack/sheet/glass(loc, round(g_amount / 3750))
-			if(gold_amount >= 2000)
-				new /obj/item/stack/sheet/mineral/gold(loc, round(gold_amount / 2000))
-			if(diamond_amount >= 2000)
-				new /obj/item/stack/sheet/mineral/diamond(loc, round(diamond_amount / 2000))
+			for(var/M in loaded_materials)
+				if(loaded_materials[M]["amount"] >= loaded_materials[M]["sheet_size"])
+					var/sheet_type = loaded_materials[M]["sheet_type"]
+					var/obj/item/stack/sheet/G = new sheet_type(loc)
+					G.set_amount(round(loaded_materials[M]["amount"] / G.perunit))
 			default_deconstruction_crowbar(O)
 			return
 		else if(is_wire_tool(O) && wires.interact(user))
@@ -125,12 +123,54 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	spawn(16)
 		if(stack.get_amount() >= amount)
 			to_chat(user, "\blue You add [amount] sheets to the [src.name].")
-			if(istype(stack, /obj/item/stack/sheet/glass))
-				g_amount += amount * 3750
-			else if(istype(stack, /obj/item/stack/sheet/mineral/gold))
-				gold_amount += amount * 2000
-			else if(istype(stack, /obj/item/stack/sheet/mineral/diamond))
-				diamond_amount += amount * 2000
-			stack.use(amount)
+			for(var/M in loaded_materials)
+				if(stack.type == loaded_materials[M]["sheet_type"])
+					loaded_materials[M]["amount"] += amount * stack.perunit
+					stack.use(amount)
+					break
 		busy = 0
-		src.updateUsrDialog()
+		if(linked_console)
+			nanomanager.update_uis(linked_console)
+
+/obj/machinery/r_n_d/circuit_imprinter/proc/produce_design(datum/design/D)
+	var/power = 2000
+	for(var/M in D.materials)
+		power += round(D.materials[M] / 5)
+	power = max(2000, power)
+	if (busy)
+		to_chat(usr, "<span class='warning'>The [name] is busy right now</span>")
+		return
+	if (!(D.build_type & IMPRINTER))
+		message_admins("Circuit imprinter exploit attempted by [key_name(usr, usr.client)]!")
+		return
+
+	busy = TRUE
+	flick("circuit_imprinter_ani", src)
+	use_power(power)
+
+	for(var/M in D.materials)
+		if(!check_mat(D, M))
+			visible_message("<span class='warning'>The [name] beeps, \"Not enough materials to complete prototype.\"</span>")
+			busy = FALSE
+			return
+	for(var/M in D.materials)
+		if(loaded_materials[M])
+			loaded_materials[M]["amount"] = max(0, (loaded_materials[M]["amount"] - (D.materials[M] / efficiency_coeff)))
+		else
+			reagents.remove_reagent(M, D.materials[M]/efficiency_coeff)
+
+	addtimer(CALLBACK(src, .proc/create_design, D), 16)
+
+/obj/machinery/r_n_d/circuit_imprinter/proc/create_design(datum/design/D)
+	new D.build_path(loc)
+	busy = FALSE
+
+/obj/machinery/r_n_d/circuit_imprinter/proc/eject_sheet(sheet_type, amount)
+	if(loaded_materials[sheet_type])
+		var/available_num_sheets = Floor(loaded_materials[sheet_type]["amount"] / loaded_materials[sheet_type]["sheet_size"])
+		if(available_num_sheets > 0)
+			var/S = loaded_materials[sheet_type]["sheet_type"]
+			var/obj/item/stack/sheet/sheet = new S(loc)
+			var/sheet_ammount = min(available_num_sheets, amount)
+			sheet.set_amount(sheet_ammount)
+			loaded_materials[sheet_type]["amount"] = max(0, loaded_materials[sheet_type]["amount"] - sheet_ammount * loaded_materials[sheet_type]["sheet_size"])
