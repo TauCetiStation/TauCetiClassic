@@ -145,8 +145,11 @@
 /turf/simulated/floor/airless,
 /area/space)
 "x" = (
-/obj/item/weapon/disk/research_points,
-/turf/simulated/floor/airless,
+/turf/space,
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_f5"
+	},
 /area/space)
 "y" = (
 /turf/simulated/floor/airless,
