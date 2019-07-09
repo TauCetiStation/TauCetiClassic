@@ -9456,7 +9456,7 @@
 	},
 /area/rnd/mixing)
 "apf" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/radio/beacon/explosion_watcher,
 /turf/simulated/floor/plating/airless{
 	icon_state = "platebot"
 	},
@@ -29334,6 +29334,7 @@
 "baa" = (
 /obj/structure/table/glass,
 /obj/item/weapon/paper_bin,
+/obj/item/device/science_tool,
 /turf/simulated/floor{
 	icon_state = "white"
 	},

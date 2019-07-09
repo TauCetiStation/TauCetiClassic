@@ -69,6 +69,10 @@
 	},
 /turf/simulated/floor/airless,
 /area/derelict/teleporter)
+"p" = (
+/obj/item/weapon/disk/research_points,
+/turf/simulated/floor/airless,
+/area/derelict/teleporter)
 
 (1,1,1) = {"
 a
@@ -149,7 +153,7 @@ b
 d
 d
 h
-f
+p
 m
 d
 d

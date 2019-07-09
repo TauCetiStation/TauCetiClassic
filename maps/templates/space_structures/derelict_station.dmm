@@ -3788,6 +3788,15 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/solar/derelict_aft)
+"kv" = (
+/obj/structure/table,
+/obj/item/weapon/disk/research_points,
+/turf/simulated/floor,
+/area/derelict/bridge)
+"kw" = (
+/obj/item/weapon/disk/research_points,
+/turf/simulated/floor/airless,
+/area/derelict/bridge/ai_upload)
 
 (1,1,1) = {"
 aa
@@ -9644,7 +9653,7 @@ jD
 jD
 jT
 jU
-jU
+kw
 kf
 jU
 jD
@@ -11341,7 +11350,7 @@ bZ
 cw
 bZ
 cK
-bM
+kv
 bD
 ac
 aa
