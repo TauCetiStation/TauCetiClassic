@@ -17,9 +17,10 @@ pulls:
 
 issues:
   daysUntilStale: 200
-  daysUntilClose: 0
+  daysUntilClose: 1
   staleLabel: Stalled Proposal
   onlyLabels: [Proposal]
+  markComment: false
   closeComment: >
     Данное предложение пробыло без активности открытым более полугода. Если вы найдёте того, кто его реализует,
     и вам нужно открыть данный ишью, пожалуйста, обратитесь к кому-либо из мейнтейнеров.
