@@ -452,7 +452,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	y = 0.5
 	icon = "advmatterbin"
 
-	required_technologies = list("adv_handheld", "adv_engineering")
+	required_technologies = list("adv_handheld", "advanced_mining")
 	required_tech_levels = list()
 	cost = 1000
 
