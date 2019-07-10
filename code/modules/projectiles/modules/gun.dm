@@ -163,30 +163,8 @@
 			to_chat(user, "<span class='warning'>[src] is not ready to fire again!</span>")
 		return
 	if(chamber)
-		chambered = chamber.chamber_round()
-		if(chambered)
-			if(chambered.BB.damage != 0)
-				chambered.BB.damage -= (lessdamage * (chamber.pellets + 1))*1.2
-				if(chambered.BB.damage < 0)
-					chambered.BB.damage = 0
-			chambered.BB.dispersion -= lessdispersion
-			chambered.pellets = chamber.pellets
-			if(chambered.BB.dispersion < 0)
-				chambered.BB.dispersion = 0
-			if(chambered.BB.damage < 0)
-				chambered.BB.damage = 0
-			if(point_blank)
-				user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
-				chambered.BB.damage *= 1.3
-			if(!barrel)
-				chambered.BB.dispersion += 4
-			if(!chambered.fire(target, user, params, , silenced))
-				shoot_with_empty_chamber(user)
-			else
-				shoot_live_shot(user)
-				user.newtonian_move(get_dir(target, user))
-		else
-			shoot_with_empty_chamber(user)
+		chamber.chamber_round()
+		chamber.Fire(A,user,params)
 		chamber.process_chamber()
 	update_icon()
 

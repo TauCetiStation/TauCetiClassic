@@ -2,6 +2,7 @@
 	name = "barrel"
 	icon_state = "bar1_icon"
 	icon_overlay = "bar1"
+	var/silenced = FALSE
 
 ////////////////////////BARREL
 /obj/item/weapon/modul_gun/barrel/small

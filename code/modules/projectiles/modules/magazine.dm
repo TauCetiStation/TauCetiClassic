@@ -26,6 +26,11 @@
 		user.drop_item()
 		cell.loc = src
 
+/obj/item/weapon/modul_gun/magazine/energy/attack_self(mob/user)
+	..()
+	to_chat(user, "<span class='warning'>*click*</span>")
+	playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
+
 /obj/item/weapon/modul_gun/magazine/energy/get_round(obj/item/ammo_casing/energy/ammo)
 	if(power_supply)
 		if(ammo.e_cost * 10 < power_supply.charge)

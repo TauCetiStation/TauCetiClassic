@@ -1,6 +1,12 @@
 /obj/item/weapon/modul_gun/chamber
 	name = "chamber"
 	icon_state = "chamber_bullet_icon"
+	var/obj/item/ammo_casing/chambered_fire
+	var/obj/item/ammo_casing/storage
+	var/obj/item/weapon/modul_gun/magazine/magazine
+	var/obj/item/weapon/modul_gun/grip/grip = null
+	var/obj/item/weapon/modul_gun/barrel/barrel = null
+	var/obj/item/weapon/gun_modular/parent
 	var/fire_delay = 12
 	var/fire_sound = 'sound/weapons/guns/Gunshot.ogg'
 	var/recoil = 1
@@ -8,13 +14,50 @@
 	var/caliber = "9mm"
 	var/select = 1
 	var/pellets = 0
+	var/silenced = FALSE
+	var/collected = FALSE
 
 /obj/item/weapon/modul_gun/chamber/proc/chamber_round()
-	if (parent.chambered || !parent.magazine)
-		return
+	return	magazine.get_round()
 
 /obj/item/weapon/modul_gun/chamber/proc/process_chamber()
 	return
+
+/obj/item/weapon/modul_gun/chamber/proc/shoot_with_empty_chamber(mob/living/user)
+	to_chat(user, "<span class='warning'>*click*</span>")
+	playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
+	return
+
+/obj/item/weapon/modul_gun/chamber/proc/shoot_live_shot(mob/living/user)
+	if(recoil)
+		shake_camera(user, recoil + 1, recoil)
+
+	if(silenced)
+		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, null, -4)
+	else
+		playsound(user, fire_sound, VOL_EFFECTS_MASTER)
+		user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
+
+
+/obj/item/weapon/modul_gun/chamber/proc/Fire(atom/A, mob/living/user, flag, params)
+	if(chambered)
+		if(point_blank)
+			user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
+			chambered.BB.damage *= 1.3
+		if(!barrel)
+			chambered.BB.dispersion += 4
+		else
+			silenced = barrel.silenced
+
+		if(!chambered.fire(target, user, params, , silenced))
+			shoot_with_empty_chamber(user)
+		else
+			shoot_live_shot(user)
+			user.newtonian_move(get_dir(target, user))
+	else
+		shoot_with_empty_chamber(user)
+	update_icon()
+
 
 //////////////////////////////////////////////ENERGY
 
@@ -41,14 +84,11 @@
 			lens.Remove(I)
 
 /obj/item/weapon/modul_gun/chamber/energy/chamber_round()
-	.=..()
-	var/obj/item/ammo_casing/energy/chambered = parent.magazine.get_round(lens[select])
-	if(chambered)
-		chambered.loc = src
-		return chambered
-	return null
+	if(magazine)
+		return magazine.get_round(lens[select])
+	return FALSE
 
-/obj/item/weapon/modul_gun/chamber/energy/process_chamber()
+/obj/item/weapon/modul_gun/chamber/proc/process_chamber()
 	parent.chambered = null
 	return
 
