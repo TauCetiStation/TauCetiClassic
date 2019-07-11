@@ -229,38 +229,38 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Engineering Research"
 	shortname = "Engineering"
 	desc = "Development of new and improved engineering parts."
-	id = "engineering"
+	id = RESEARCH_ENGINEERING
 
 /datum/tech/biotech
 	name = "Biological Technology"
 	shortname = "Biological"
 	desc = "Research into the deeper mysteries of life and organic substances."
-	id = "biotech"
+	id = RESEARCH_BIOTECH
 
 /datum/tech/combat
 	name = "Combat Systems Research"
 	shortname = "Combat Systems"
 	desc = "The development of offensive and defensive systems."
-	id = "combat"
+	id = RESEARCH_COMBAT
 
 /datum/tech/powerstorage
 	name = "Power Manipulation Technology"
 	shortname = "Power Manipulation"
 	desc = "The various technologies behind the storage and generation of electicity."
-	id = "powerstorage"
+	id = RESEARCH_POWERSTORAGE
 
 /datum/tech/bluespace
 	name = "'Blue-space' Research"
 	shortname = "Blue-space"
 	desc = "Research into the sub-reality known as 'blue-space'."
-	id = "bluespace"
+	id = RESEARCH_BLUESPACE
 	rare = 2
 
 /datum/tech/robotics
 	name = "Robotics Research"
 	shortname = "Robotics"
 	desc = "Research into the exosuits"
-	id = "robotics"
+	id = RESEARCH_ROBOTICS
 
 
 
@@ -268,7 +268,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	var/name = "name"
 	var/desc = "description"                // Not used because lazy
 	var/id = "id"                           // should be unique
-	var/tech_type = "engineering"           // Which tech tree does this techology belongs to
+	var/tech_type                           // Which tech tree does this techology belongs to
 
 	var/x = 0.5                             // Position on the tech tree map, 0 - left, 1 - right
 	var/y = 0.5                             // 0 - down, 1 - top
@@ -286,7 +286,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Basic Engineering"
 	desc = "Basic"
 	id = "basic_engineering"
-	tech_type = "engineering"
+	tech_type = RESEARCH_ENGINEERING
 
 	x = 0.1
 	y = 0.4
@@ -302,7 +302,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Monitoring"
 	desc = "Monitoring"
 	id = "monitoring"
-	tech_type = "engineering"
+	tech_type = RESEARCH_ENGINEERING
 
 	x = 0.2
 	y = 0.4
@@ -318,7 +318,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Ice And Fire"
 	desc = "Ice And Fire"
 	id = "ice_and_fire"
-	tech_type = "engineering"
+	tech_type = RESEARCH_ENGINEERING
 
 	x = 0.2
 	y = 0.6
@@ -334,7 +334,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Advanced Engineering"
 	desc = "Advanced Engineering"
 	id = "adv_engineering"
-	tech_type = "engineering"
+	tech_type = RESEARCH_ENGINEERING
 
 	x = 0.3
 	y = 0.4
@@ -350,7 +350,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Tesla"
 	desc = "Tesla"
 	id = "tesla"
-	tech_type = "engineering"
+	tech_type = RESEARCH_ENGINEERING
 
 	x = 0.3
 	y = 0.2
@@ -366,7 +366,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Supply And Demand"
 	desc = "Supply And Demand"
 	id = "supply_and_demand"
-	tech_type = "engineering"
+	tech_type = RESEARCH_ENGINEERING
 
 	x = 0.4
 	y = 0.4
@@ -382,7 +382,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Basic Mining"
 	desc = "Basic Mining"
 	id = "basic_mining"
-	tech_type = "engineering"
+	tech_type = RESEARCH_ENGINEERING
 
 	x = 0.5
 	y = 0.4
@@ -398,7 +398,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Advanced Mining"
 	desc = "Advanced Mining"
 	id = "advanced_mining"
-	tech_type = "engineering"
+	tech_type = RESEARCH_ENGINEERING
 
 	x = 0.6
 	y = 0.4
@@ -414,7 +414,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Basic Handheld"
 	desc = "Basic Handheld"
 	id = "basic_handheld"
-	tech_type = "engineering"
+	tech_type = RESEARCH_ENGINEERING
 
 	x = 0.3
 	y = 0.6
@@ -430,7 +430,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Advanced Handheld"
 	desc = "Advanced Handheld"
 	id = "adv_handheld"
-	tech_type = "engineering"
+	tech_type = RESEARCH_ENGINEERING
 
 	x = 0.6
 	y = 0.6
@@ -446,7 +446,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Advanced Parts"
 	desc = "Advanced Parts"
 	id = "adv_parts"
-	tech_type = "engineering"
+	tech_type = RESEARCH_ENGINEERING
 
 	x = 0.7
 	y = 0.5
@@ -462,7 +462,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Ultra Parts"
 	desc = "Ultra Parts"
 	id = "ultra_parts"
-	tech_type = "engineering"
+	tech_type = RESEARCH_ENGINEERING
 
 	x = 0.8
 	y = 0.5
@@ -478,7 +478,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Telescience"
 	desc = "telescience"
 	id = "telescience"
-	tech_type = "engineering"
+	tech_type = RESEARCH_ENGINEERING
 
 	x = 0.8
 	y = 0.3
@@ -494,7 +494,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Bluespace Parts"
 	desc = "Bluespace Parts"
 	id = "bluespace_parts"
-	tech_type = "engineering"
+	tech_type = RESEARCH_ENGINEERING
 
 	x = 0.9
 	y = 0.5
@@ -510,7 +510,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Super Advanced Engineering"
 	desc = "Super Advanced Engineering"
 	id = "super_adv_engineering"
-	tech_type = "engineering"
+	tech_type = RESEARCH_ENGINEERING
 
 	x = 0.8
 	y = 0.7
@@ -526,7 +526,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Advanced Tools"
 	desc = "Advanced Tools"
 	id = "adv_tools"
-	tech_type = "engineering"
+	tech_type = RESEARCH_ENGINEERING
 
 	x = 0.8
 	y = 0.9
@@ -544,7 +544,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Basic Biotech"
 	desc = "Basic Biotech"
 	id = "basic_biotech"
-	tech_type = "biotech"
+	tech_type = RESEARCH_BIOTECH
 
 	x = 0.1
 	y = 0.8
@@ -560,7 +560,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Basic Medical Machines"
 	desc = "Basic Medical Machines"
 	id = "basic_med_machines"
-	tech_type = "biotech"
+	tech_type = RESEARCH_BIOTECH
 
 	x = 0.25
 	y = 0.8
@@ -576,7 +576,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Virology"
 	desc = "Virology"
 	id = "virology"
-	tech_type = "biotech"
+	tech_type = RESEARCH_BIOTECH
 
 	x = 0.4
 	y = 0.8
@@ -592,7 +592,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Advanced Medical Machines"
 	desc = "Advanced Medical Machines"
 	id = "adv_med_machines"
-	tech_type = "biotech"
+	tech_type = RESEARCH_BIOTECH
 
 	x = 0.25
 	y = 0.6
@@ -608,7 +608,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Hydroponics"
 	desc = "Hydroponics"
 	id = "hydroponics"
-	tech_type = "biotech"
+	tech_type = RESEARCH_BIOTECH
 
 	x = 0.1
 	y = 0.6
@@ -624,7 +624,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Basic Food Processing"
 	desc = "Basic Food Processing"
 	id = "basic_food_processing"
-	tech_type = "biotech"
+	tech_type = RESEARCH_BIOTECH
 
 	x = 0.1
 	y = 0.4
@@ -640,7 +640,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Advanced Food Processing"
 	desc = "Advanced Food Processing"
 	id = "adv_food_processing"
-	tech_type = "biotech"
+	tech_type = RESEARCH_BIOTECH
 
 	x = 0.1
 	y = 0.2
@@ -656,7 +656,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Basic Medical Tools"
 	desc = "Basic Medical Tools"
 	id = "basic_medical_tools"
-	tech_type = "biotech"
+	tech_type = RESEARCH_BIOTECH
 
 	x = 0.4
 	y = 0.6
@@ -672,7 +672,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Improved Biotech"
 	desc = "Improved Biotech"
 	id = "improved_biotech"
-	tech_type = "biotech"
+	tech_type = RESEARCH_BIOTECH
 
 	x = 0.55
 	y = 0.6
@@ -688,7 +688,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Medical Teleportation"
 	desc = "Medical Teleportation"
 	id = "med_teleportation"
-	tech_type = "biotech"
+	tech_type = RESEARCH_BIOTECH
 
 	x = 0.7
 	y = 0.5
@@ -704,7 +704,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Advanced Biotech"
 	desc = "Advanced Biotech"
 	id = "advanced_biotech"
-	tech_type = "biotech"
+	tech_type = RESEARCH_BIOTECH
 
 	x = 0.7
 	y = 0.7
@@ -720,7 +720,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Top-tier Biotech"
 	desc = "Top-tier Biotech"
 	id = "top_biotech"
-	tech_type = "biotech"
+	tech_type = RESEARCH_BIOTECH
 
 	x = 0.85
 	y = 0.7
@@ -738,7 +738,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Basic Combat Systems"
 	desc = "Basic Combat Systems"
 	id = "basic_combat"
-	tech_type = "combat"
+	tech_type = RESEARCH_COMBAT
 
 	x = 0.1
 	y = 0.5
@@ -754,7 +754,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Basic Non-Lethal"
 	desc = "Basic Non-Lethal"
 	id = "basic_nonlethal"
-	tech_type = "combat"
+	tech_type = RESEARCH_COMBAT
 
 	x = 0.3
 	y = 0.5
@@ -770,7 +770,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Advanced Non-Lethal"
 	desc = "Advanced Non-Lethal"
 	id = "advanced_nonlethal"
-	tech_type = "combat"
+	tech_type = RESEARCH_COMBAT
 
 	x = 0.3
 	y = 0.3
@@ -786,7 +786,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Weapon Recharging"
 	desc = "Weapon Recharging"
 	id = "weapon_recharging"
-	tech_type = "combat"
+	tech_type = RESEARCH_COMBAT
 
 	x = 0.5
 	y = 0.5
@@ -802,7 +802,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Security Computers"
 	desc = "Security Computers"
 	id = "sec_computers"
-	tech_type = "combat"
+	tech_type = RESEARCH_COMBAT
 
 	x = 0.1
 	y = 0.7
@@ -818,7 +818,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Basic Lethal Weapons"
 	desc = "Basic Lethal Weapons"
 	id = "basic_lethal"
-	tech_type = "combat"
+	tech_type = RESEARCH_COMBAT
 
 	x = 0.7
 	y = 0.5
@@ -834,7 +834,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Exotic Weaponry"
 	desc = "Exotic Weaponry"
 	id = "exotic_weaponry"
-	tech_type = "combat"
+	tech_type = RESEARCH_COMBAT
 
 	x = 0.7
 	y = 0.3
@@ -850,7 +850,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Advanced Exotic Weaponry"
 	desc = "Advanced Exotic Weaponry"
 	id = "adv_exotic_weaponry"
-	tech_type = "combat"
+	tech_type = RESEARCH_COMBAT
 
 	x = 0.9
 	y = 0.3
@@ -866,7 +866,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Advanced Lethal Weapons"
 	desc = "Advanced Lethal Weapons"
 	id = "adv_lethal"
-	tech_type = "combat"
+	tech_type = RESEARCH_COMBAT
 
 	x = 0.7
 	y = 0.7
@@ -882,7 +882,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Laser Weaponry"
 	desc = "Laser Weaponry"
 	id = "laser_weaponry"
-	tech_type = "combat"
+	tech_type = RESEARCH_COMBAT
 
 	x = 0.9
 	y = 0.7
@@ -900,7 +900,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Basic Power"
 	desc = "Basic Power"
 	id = "basic_power"
-	tech_type = "powerstorage"
+	tech_type = RESEARCH_POWERSTORAGE
 
 	x = 0.5
 	y = 0.8
@@ -916,7 +916,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Advanced Power"
 	desc = "Advanced Power"
 	id = "advanced_power"
-	tech_type = "powerstorage"
+	tech_type = RESEARCH_POWERSTORAGE
 
 	x = 0.5
 	y = 0.6
@@ -932,7 +932,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Improved Power Generation"
 	desc = "Improved Power Generation"
 	id = "improved_power_generation"
-	tech_type = "powerstorage"
+	tech_type = RESEARCH_POWERSTORAGE
 
 	x = 0.3
 	y = 0.6
@@ -948,7 +948,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Advanced Power Storage"
 	desc = "Advanced Power Storage"
 	id = "advanced_power_storage"
-	tech_type = "powerstorage"
+	tech_type = RESEARCH_POWERSTORAGE
 
 	x = 0.1
 	y = 0.6
@@ -964,7 +964,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Solar Power"
 	desc = "Solar Power"
 	id = "solar_power"
-	tech_type = "powerstorage"
+	tech_type = RESEARCH_POWERSTORAGE
 
 	x = 0.7
 	y = 0.6
@@ -980,7 +980,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Super Power"
 	desc = "Super Power"
 	id = "super_power"
-	tech_type = "powerstorage"
+	tech_type = RESEARCH_POWERSTORAGE
 
 	x = 0.5
 	y = 0.4
@@ -996,7 +996,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Advanced Power Generation"
 	desc = "Advanced Power Generation"
 	id = "advanced_power_generation"
-	tech_type = "powerstorage"
+	tech_type = RESEARCH_POWERSTORAGE
 
 	x = 0.3
 	y = 0.4
@@ -1012,7 +1012,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "R-UST Mk. 8 Tokamak Generator"
 	desc = "R-UST Mk. 8 Tokamak Generator"
 	id = "fusion_power_generation"
-	tech_type = "powerstorage"
+	tech_type = RESEARCH_POWERSTORAGE
 
 	x = 0.1
 	y = 0.4
@@ -1028,7 +1028,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Bluespace Power"
 	desc = "Bluespace Power"
 	id = "bluespace_power"
-	tech_type = "powerstorage"
+	tech_type = RESEARCH_POWERSTORAGE
 
 	x = 0.5
 	y = 0.2
@@ -1046,7 +1046,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Basic 'Blue-space'"
 	desc = "Basic 'Blue-space'"
 	id = "basic_bluespace"
-	tech_type = "bluespace"
+	tech_type = RESEARCH_BLUESPACE
 
 	x = 0.2
 	y = 0.2
@@ -1062,7 +1062,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Radio Transmission"
 	desc = "Radio Transmission"
 	id = "radio_transmission"
-	tech_type = "bluespace"
+	tech_type = RESEARCH_BLUESPACE
 
 	x = 0.2
 	y = 0.4
@@ -1078,7 +1078,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Telecommunications"
 	desc = "Telecommunications"
 	id = "telecommunications"
-	tech_type = "bluespace"
+	tech_type = RESEARCH_BLUESPACE
 
 	x = 0.2
 	y = 0.6
@@ -1094,7 +1094,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Bluespace Telecommunications"
 	desc = "Bluespace Telecommunications"
 	id = "bluespace_telecommunications"
-	tech_type = "bluespace"
+	tech_type = RESEARCH_BLUESPACE
 
 	x = 0.4
 	y = 0.6
@@ -1110,7 +1110,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Bluespace Shields"
 	desc = "Bluespace Shields"
 	id = "bluespace_shield"
-	tech_type = "bluespace"
+	tech_type = RESEARCH_BLUESPACE
 
 	x = 0.4
 	y = 0.4
@@ -1126,7 +1126,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Transmission Encryption"
 	desc = "Transmission Encryption"
 	id = "transmission_encryption"
-	tech_type = "bluespace"
+	tech_type = RESEARCH_BLUESPACE
 
 	x = 0.2
 	y = 0.8
@@ -1142,7 +1142,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Teleportation"
 	desc = "Teleportation"
 	id = "teleportation"
-	tech_type = "bluespace"
+	tech_type = RESEARCH_BLUESPACE
 
 	x = 0.6
 	y = 0.6
@@ -1158,7 +1158,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Bluespace Tools"
 	desc = "Bluespace Tools"
 	id = "bluespace_tools"
-	tech_type = "bluespace"
+	tech_type = RESEARCH_BLUESPACE
 
 	x = 0.8
 	y = 0.8
@@ -1174,7 +1174,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Bluespace RPED"
 	desc = "Bluespace RPED"
 	id = "bluespace_rped"
-	tech_type = "bluespace"
+	tech_type = RESEARCH_BLUESPACE
 
 	x = 0.8
 	y = 0.4
@@ -1192,7 +1192,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Basic Robotics"
 	desc = "Basic Robotics"
 	id = "basic_robotics"
-	tech_type = "robotics"
+	tech_type = RESEARCH_ROBOTICS
 
 	x = 0.5
 	y = 0.2
@@ -1208,7 +1208,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Ripley"
 	desc = "Ripley"
 	id = "mech_ripley"
-	tech_type = "robotics"
+	tech_type = RESEARCH_ROBOTICS
 
 	x = 0.4
 	y = 0.3
@@ -1224,7 +1224,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Odyssey"
 	desc = "Odyssey"
 	id = "mech_odysseus"
-	tech_type = "robotics"
+	tech_type = RESEARCH_ROBOTICS
 
 	x = 0.6
 	y = 0.3
@@ -1240,7 +1240,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Advanced Robotics"
 	desc = "Advanced Robotics"
 	id = "advanced_robotics"
-	tech_type = "robotics"
+	tech_type = RESEARCH_ROBOTICS
 
 	x = 0.5
 	y = 0.5
@@ -1256,7 +1256,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Artificial intelligence"
 	desc = "Artificial intelligence"
 	id = "artificial_intelligence"
-	tech_type = "robotics"
+	tech_type = RESEARCH_ROBOTICS
 
 	x = 0.5
 	y = 0.65
@@ -1272,7 +1272,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Gygax"
 	desc = "Gygax"
 	id = "mech_gyrax"
-	tech_type = "robotics"
+	tech_type = RESEARCH_ROBOTICS
 
 	x = 0.4
 	y = 0.7
@@ -1288,7 +1288,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Gygax Ultra"
 	desc = "Gygax Ultra"
 	id = "mech_gyrax_ultra"
-	tech_type = "robotics"
+	tech_type = RESEARCH_ROBOTICS
 
 	x = 0.4
 	y = 0.9
@@ -1304,7 +1304,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Durand"
 	desc = "Durand"
 	id = "mech_durand"
-	tech_type = "robotics"
+	tech_type = RESEARCH_ROBOTICS
 
 	x = 0.6
 	y = 0.7
@@ -1320,7 +1320,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Vindicator"
 	desc = "Vindicator"
 	id = "mech_vindicator"
-	tech_type = "robotics"
+	tech_type = RESEARCH_ROBOTICS
 
 	x = 0.6
 	y = 0.9
@@ -1336,7 +1336,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Exosuit Utility Modules"
 	desc = "Exosuit Utility Modules"
 	id = "mech_utility_modules"
-	tech_type = "robotics"
+	tech_type = RESEARCH_ROBOTICS
 
 	x = 0.25
 	y = 0.5
@@ -1352,7 +1352,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Exosuit Teleporter Module"
 	desc = "Exosuit Teleporter Module"
 	id = "mech_teleporter_modules"
-	tech_type = "robotics"
+	tech_type = RESEARCH_ROBOTICS
 
 	x = 0.1
 	y = 0.5
@@ -1368,7 +1368,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Exosuit Armor Modules"
 	desc = "Exosuit Armor Modules"
 	id = "mech_armor_modules"
-	tech_type = "robotics"
+	tech_type = RESEARCH_ROBOTICS
 
 	x = 0.25
 	y = 0.8
@@ -1384,7 +1384,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Exosuit Weaponry"
 	desc = "Exosuit Weaponry"
 	id = "mech_weaponry_modules"
-	tech_type = "robotics"
+	tech_type = RESEARCH_ROBOTICS
 
 	x = 0.75
 	y = 0.5
@@ -1400,7 +1400,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Exosuit Heavy Weaponry"
 	desc = "Exosuit Heavy Weaponry"
 	id = "mech_heavy_weaponry_modules"
-	tech_type = "robotics"
+	tech_type = RESEARCH_ROBOTICS
 
 	x = 0.75
 	y = 0.8
@@ -1416,7 +1416,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Basic Hardsuit Modules"
 	desc = "Basic Hardsuit Modules"
 	id = "basic_hardsuit_modules"
-	tech_type = "robotics"
+	tech_type = RESEARCH_ROBOTICS
 
 	x = 0.35
 	y = 0.1
@@ -1432,7 +1432,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Advanced Hardsuit Modules"
 	desc = "Basic Hardsuit Modules"
 	id = "advanced_hardsuit_modules"
-	tech_type = "robotics"
+	tech_type = RESEARCH_ROBOTICS
 
 	x = 0.5
 	y = 0.1
@@ -1448,7 +1448,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	name = "Top-Tier Hardsuit Modules"
 	desc = "Top-Tier Hardsuit Modules"
 	id = "toptier_hardsuit_modules"
-	tech_type = "robotics"
+	tech_type = RESEARCH_ROBOTICS
 
 	x = 0.65
 	y = 0.1
