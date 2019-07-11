@@ -1676,7 +1676,7 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 1000, MAT_GOLD = 1000, MAT_DIAMOND = 1000)
 	build_path = /obj/item/weapon/implantcase/freedom
-	category = list("Support")
+	category = list("Illegal")
 
 /datum/design/chameleon
 	name = "Chameleon Kit"
@@ -1685,7 +1685,7 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000)
 	build_path = /obj/item/weapon/storage/box/syndie_kit/chameleon
-	category = list("Equipment")
+	category = list("Illegal")
 
 
 /datum/design/bluespacebeaker
@@ -2194,7 +2194,7 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 300, MAT_GLASS = 600)
 	build_path = /obj/item/device/encryptionkey/binary
-	category = list("Telecomms")
+	category = list("Illegal")
 
 /datum/design/pda
 	name = "PDA"

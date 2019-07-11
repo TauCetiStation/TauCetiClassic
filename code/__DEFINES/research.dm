@@ -4,3 +4,4 @@
 #define RESEARCH_POWERSTORAGE  "powerstorage"
 #define RESEARCH_BLUESPACE     "bluespace"
 #define RESEARCH_ROBOTICS      "robotics"
+#define RESEARCH_ILLEGAL       "illegal"

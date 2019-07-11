@@ -108,6 +108,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		return
 
 	if(linked_console)
+		linked_console.files.check_item_for_tech(loaded_item)
 		linked_console.files.research_points += linked_console.files.experiments.get_object_research_value(loaded_item)
 		linked_console.files.experiments.do_research_object(loaded_item)
 

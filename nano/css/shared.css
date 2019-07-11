@@ -718,6 +718,10 @@ th.misc {
 .sciTechTreeIcon.icon-fusion { background-position: -32px -288px; }
 .sciTechTreeIcon.icon-chemdisp { background-position: -64px -288px; }
 .sciTechTreeIcon.icon-cloning { background-position: -96px -288px; }
+.sciTechTreeIcon.icon-chamelion { background-position: -128px -288px; }
+.sciTechTreeIcon.icon-freedom { background-position: -160px -288px; }
+.sciTechTreeIcon.icon-module { background-position: -192px -288px; }
+.sciTechTreeIcon.icon-borgmodule { background-position: -224px -288px; }
 
 .sciMenuButton {
     width: 300px;

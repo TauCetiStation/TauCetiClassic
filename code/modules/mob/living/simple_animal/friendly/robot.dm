@@ -47,6 +47,8 @@
 	var/dat
 	for(var/tech_tree_id in rdconsole.files.tech_trees)
 		var/datum/tech/T = rdconsole.files.tech_trees[tech_tree_id]
+		if(!T.shown)
+			continue
 		dat += "[T.name]<BR>"
 		dat +=  "* Level: [T.level]<BR>"
 		dat +=  "* Summary: [T.desc]<HR>"

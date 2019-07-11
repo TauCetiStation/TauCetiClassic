@@ -423,6 +423,8 @@ cause a ton of data to be lost, an admin can go send it back.
 		var/list/tech_tree_list = list()
 		for(var/tech_tree_id in files.tech_trees)
 			var/datum/tech/Tech_Tree = files.tech_trees[tech_tree_id]
+			if(!Tech_Tree.shown)
+				continue
 			var/list/tech_tree_data = list(
 				"id" =             Tech_Tree.id,
 				"name" =           "[Tech_Tree.name]",
@@ -526,6 +528,8 @@ cause a ton of data to be lost, an admin can go send it back.
 		var/list/tech_tree_list = list()
 		for(var/tech_tree_id in files.tech_trees)
 			var/datum/tech/Tech_Tree = files.tech_trees[tech_tree_id]
+			if(!Tech_Tree.shown)
+				continue
 			var/list/tech_tree_data = list(
 				"id" =             Tech_Tree.id,
 				"name" =           "[Tech_Tree.name]",

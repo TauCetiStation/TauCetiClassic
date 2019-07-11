@@ -118,6 +118,13 @@ The tech datums are the actual "tech trees" that you improve through researching
 		AddDesign2Known(D)
 
 /datum/research/proc/download_from(datum/research/O)
+	for(var/tech_tree_id in O.tech_trees)
+		var/datum/tech/Tech_Tree = O.tech_trees[tech_tree_id]
+		var/datum/tech/Our_Tech_Tree = tech_trees[tech_tree_id]
+
+		if(Tech_Tree.shown)
+			Our_Tech_Tree.shown = Tech_Tree.shown
+
 	for(var/tech_id in O.researched_tech)
 		var/datum/technology/T = O.researched_tech[tech_id]
 		UnlockTechology(T, force = TRUE)
@@ -176,6 +183,21 @@ The tech datums are the actual "tech trees" that you improve through researching
 		else if(D.build_type & IMPRINTER)
 			design_categories_imprinter |= "Unspecified"
 
+// Unlocks hidden tech trees
+/datum/research/proc/check_item_for_tech(obj/item/I)
+	var/list/temp_tech = experiments.ConvertReqString2List(I.origin_tech)
+	if(!temp_tech.len)
+		return
+
+	for(var/tech_tree_id in tech_trees)
+		var/datum/tech/T = tech_trees[tech_tree_id]
+		if(T.shown || !T.item_tech_req)
+			continue
+
+		for(var/item_tech in temp_tech)
+			if(item_tech == T.item_tech_req)
+				T.shown = TRUE
+				return
 
 /***************************************************************
 **						Technology Datums					  **
@@ -206,6 +228,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 	var/level = 1              //A simple number scale of the research level. Level 0 = Secret tech.
 	var/rare = 1               //How much CentCom wants to get that tech. Used in supply shuttle tech cost calculation.
 	var/maxlevel               //Calculated based on the ammount of technologies
+	var/shown = TRUE           //Used to hide tech that is not supposed to be shown from the start
+	var/item_tech_req          //Deconstructing items with this tech will unlock this tech tree
 
 /datum/tech/proc/getCost(current_level = null)
 	// Calculates tech disk's supply points sell cost
@@ -262,6 +286,14 @@ The tech datums are the actual "tech trees" that you improve through researching
 	desc = "Research into the exosuits"
 	id = RESEARCH_ROBOTICS
 
+/datum/tech/illegal
+	name = "Illegal Technologies Research"
+	shortname = "Illegal Tech"
+	desc = "The study of technologies that violate standard Nanotrasen regulations."
+	id = RESEARCH_ILLEGAL
+	rare = 3
+	shown = FALSE
+	item_tech_req = "syndicate" // research any traiter item and this tech will show up
 
 
 /datum/technology
@@ -1298,7 +1330,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("aifixer", "safeguard_module", "onehuman_module", "protectstation_module", "notele_module", "quarantine_module", "oxygen_module", "freeform_module", "reset_module", "purge_module", "freeformcore_module", "asimov_module", "paladin_module", "tyrant_module", "holopad", "aicore", "aiupload", "borgupload")
+	unlocks_designs = list("aifixer", "safeguard_module", "onehuman_module", "protectstation_module", "notele_module", "quarantine_module", "oxygen_module", "freeform_module", "reset_module", "purge_module", "freeformcore_module", "asimov_module", "paladin_module", "holopad", "aicore", "aiupload", "borgupload")
 
 /datum/technology/mech_gyrax
 	name = "Gygax"
@@ -1491,3 +1523,85 @@ The tech datums are the actual "tech trees" that you improve through researching
 	cost = 5000
 
 	unlocks_designs = list("rigmountedlaserrifle", "rigrcd", "rigmedteleport", "rignuclearreactor")
+
+// Illegal
+
+/datum/technology/binary_encryption_key
+	name = "Binary Encrpytion Key"
+	desc = "Binary Encrpytion Key"
+	id = "binary_encryption_key"
+	tech_type = RESEARCH_ILLEGAL
+
+	x = 0.1
+	y = 0.5
+	icon = "headset"
+
+	required_technologies = list()
+	required_tech_levels = list(RESEARCH_BLUESPACE = 5)
+	cost = 2000
+
+	unlocks_designs = list("binaryencrypt")
+
+/datum/technology/chameleon_kit
+	name = "Chameleon Kit"
+	desc = "Chameleon Kit"
+	id = "chameleon_kit"
+	tech_type = RESEARCH_ILLEGAL
+
+	x = 0.3
+	y = 0.5
+	icon = "chamelion"
+
+	required_technologies = list("binary_encryption_key")
+	required_tech_levels = list(RESEARCH_ENGINEERING = 10)
+	cost = 3000
+
+	unlocks_designs = list("chameleon")
+
+/datum/technology/freedom_implant
+	name = "Glass Case- 'Freedom'"
+	desc = "Glass Case- 'Freedom'"
+	id = "freedom_implant"
+	tech_type = RESEARCH_ILLEGAL
+
+	x = 0.5
+	y = 0.5
+	icon = "freedom"
+
+	required_technologies = list("chameleon_kit")
+	required_tech_levels = list(RESEARCH_BIOTECH = 5)
+	cost = 3000
+
+	unlocks_designs = list("implant_free")
+
+/datum/technology/tyrant_aimodule
+	name = "AI Core Module (T.Y.R.A.N.T.)"
+	desc = "AI Core Module (T.Y.R.A.N.T.)"
+	id = "tyrant_aimodule"
+	tech_type = RESEARCH_ILLEGAL
+
+	x = 0.7
+	y = 0.5
+	icon = "module"
+
+	required_technologies = list("freedom_implant")
+	required_tech_levels = list(RESEARCH_ROBOTICS = 5)
+	cost = 3000
+
+	unlocks_designs = list("tyrant_module")
+
+/datum/technology/borg_syndicate_module
+	name = "Borg Illegal Weapons Upgrade"
+	desc = "Borg Illegal Weapons Upgrade"
+	id = "borg_syndicate_module"
+	tech_type = RESEARCH_ILLEGAL
+
+	x = 0.9
+	y = 0.5
+	icon = "borgmodule"
+
+	required_technologies = list("tyrant_aimodule")
+	required_tech_levels = list(RESEARCH_ROBOTICS = 10)
+	cost = 5000
+
+	unlocks_designs = list("borg_syndicate_module")
