@@ -396,7 +396,7 @@ cause a ton of data to be lost, an admin can go send it back.
 				))
 	return designs_list
 
-/obj/machinery/computer/rdconsole/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+/obj/machinery/computer/rdconsole/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	var/list/data = list()
 	data["screen"] = screen
 	data["sync"] = sync
@@ -609,7 +609,7 @@ cause a ton of data to be lost, an admin can go send it back.
 
 			data["selected_technology"] = technology_data
 
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
 		ui = new(user, src, ui_key, "rdconsole.tmpl", "R&D Console", 1000, 700)
 
