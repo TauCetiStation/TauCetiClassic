@@ -193,7 +193,7 @@
 			var/added_power = max(0, power - saved_power_level)
 			var/already_earned_power = min(saved_power_level, power)
 
-			calculated_research_points = added_power * 1000 + already_earned_power * 500
+			calculated_research_points = added_power * 1000 + already_earned_power * 200
 
 			if(power > saved_power_level)
 				RD.files.experiments.saved_best_explosion = power
