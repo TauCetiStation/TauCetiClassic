@@ -162,11 +162,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		user.drop_item()
 		D.loc = src
 		to_chat(user, "\blue You add the disk to the machine!")
-	else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
-		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
-		emagged = 1
-		user.SetNextMove(CLICK_CD_INTERACT)
-		to_chat(user, "\blue You you disable the security protocols")
 	else if(ismultitool(D))
 		var/obj/item/device/multitool/M = D
 		M.buffer = src
@@ -176,6 +171,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		..()
 	src.updateUsrDialog()
 	return
+
+/obj/machinery/computer/rdconsole/emag_act(mob/user)
+	if(!emagged)
+		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
+		emagged = 1
+		user.SetNextMove(CLICK_CD_INTERACT)
+		to_chat(user, "\blue You you disable the security protocols")
+		return TRUE
+	return FALSE
 
 /obj/machinery/computer/rdconsole/Topic(href, href_list)
 	. = ..()

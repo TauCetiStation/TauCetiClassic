@@ -171,12 +171,7 @@
 		if(iscrowbar(W))
 			default_deconstruction_crowbar(W)
 
-	if (istype(W, /obj/item/weapon/card/emag))
-		src.emagged = 1
-		to_chat(user, "You short out the product lock on [src]")
-		return
-
-	else if(isscrewdriver(W) && anchored)
+	if(isscrewdriver(W) && anchored)
 		src.panel_open = !src.panel_open
 		to_chat(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
 		src.overlays.Cut()
@@ -254,6 +249,13 @@
 				qdel(W)
 	else
 		..()
+
+/obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
+	if(emagged)
+		return FALSE
+	src.emagged = 1
+	to_chat(user, "You short out the product lock on [src]")
+	return TRUE
 
 /obj/machinery/vending/default_deconstruction_crowbar(obj/item/O)
 	var/list/all_products = product_records + hidden_records + coin_records

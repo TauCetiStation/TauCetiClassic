@@ -186,18 +186,16 @@
 		else
 			to_chat(user, "\red Access denied.")
 		return
-
-
-	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
-		locked = 0
-		emagged = 1
-		user.visible_message("[user.name] emags the [src.name].","\red You short out the lock.")
-		user.SetNextMove(CLICK_CD_INTERACT)
-		return
-
 	..()
 	return
 
+/obj/machinery/zero_point_emitter/emag_act(obj/item/W, mob/user)
+	if(!emagged)
+		locked = 0
+		emagged = 1
+		user.visible_message("[user.name] emags the [src.name].","\red You short out the lock.")
+		return TRUE
+	return FALSE
 
 /obj/machinery/zero_point_emitter/power_change()
 	..()

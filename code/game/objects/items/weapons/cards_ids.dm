@@ -73,11 +73,8 @@
 		/obj/item/weapon/storage/lockbox,
 		/obj/item/weapon/storage/secure,
 		/obj/item/weapon/circuitboard,
-		/obj/item/device/eftpos,
 		/obj/item/device/lightreplacer,
 		/obj/item/device/taperecorder,
-		/obj/item/device/hailer,
-		/obj/item/device/megaphone,
 		/obj/item/clothing/accessory/holobadge,
 		/obj/structure/closet/crate/secure,
 		/obj/structure/closet/secure_closet,
@@ -101,13 +98,11 @@
 		/obj/machinery/mecha_part_fabricator
 		)
 
+/obj/item/weapon/card/emag/afterattack(atom/target, mob/user)
 
-/obj/item/weapon/card/emag/afterattack(obj/item/weapon/O, mob/user)
-
-	for(var/type in devices)
-		if(istype(O,type))
-			uses--
-			break
+	if(target.emag_act(user))
+		user.SetNextMove(CLICK_CD_INTERACT)
+		uses--
 
 	if(uses<1)
 		user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")

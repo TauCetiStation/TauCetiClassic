@@ -39,19 +39,16 @@
 			dat += "</a><br/>"
 	user << browse(entity_ja(dat), "window=atmoscontrol")
 
-/obj/machinery/computer/atmoscontrol/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
-		user.visible_message("<span class='red'>\The [user] swipes \a [I] through \the [src], causing the screen to flash!</span>",
-			                 "<span class='red'>You swipe your [I] through \the [src], the screen flashing as you gain full control.</span>",
-			                 "You hear the swipe of a card through a reader, and an electronic warble.")
+/obj/machinery/computer/atmoscontrol/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	user.visible_message("<span class='red'>\The [user] swipes \a suspicious card through \the [src], causing the screen to flash!</span>",
+			             "<span class='red'>You swipe your card through \the [src], the screen flashing as you gain full control.</span>",
+			             "You hear the swipe of a card through a reader, and an electronic warble.")
 
-		emagged = TRUE
-		overridden = TRUE
-		return
-
-	return ..()
-
-// This is here for non nano support which this computer is actually uses for now.
+	emagged = TRUE
+	overridden = TRUE
+	return TRUE
 
 /obj/machinery/alarm/proc/return_status()
 	var/turf/location = get_turf(src)
