@@ -323,10 +323,10 @@ cause a ton of data to be lost, an admin can go send it back.
 	for(var/M in linked_lathe.loaded_materials)
 		material_list += list(list(
 			"id" =             M,
-			"name" =           linked_lathe.loaded_materials[M]["name"],
-			"ammount" =        linked_lathe.loaded_materials[M]["amount"],
-			"can_eject_one" =  linked_lathe.loaded_materials[M]["amount"] >= linked_lathe.loaded_materials[M]["sheet_size"],
-			"can_eject_five" = linked_lathe.loaded_materials[M]["amount"] >= (linked_lathe.loaded_materials[M]["sheet_size"] * 5),
+			"name" =           linked_lathe.loaded_materials[M].name,
+			"ammount" =        linked_lathe.loaded_materials[M].amount,
+			"can_eject_one" =  linked_lathe.loaded_materials[M].amount >= linked_lathe.loaded_materials[M].sheet_size,
+			"can_eject_five" = linked_lathe.loaded_materials[M].amount >= (linked_lathe.loaded_materials[M].sheet_size * 5),
 		))
 	protolathe_list["materials"] = material_list
 	return protolathe_list
@@ -350,10 +350,10 @@ cause a ton of data to be lost, an admin can go send it back.
 	for(var/M in linked_imprinter.loaded_materials)
 		material_list += list(list(
 			"id" =             M,
-			"name" =           linked_imprinter.loaded_materials[M]["name"],
-			"ammount" =        linked_imprinter.loaded_materials[M]["amount"],
-			"can_eject_one" =  linked_imprinter.loaded_materials[M]["amount"] >= linked_imprinter.loaded_materials[M]["sheet_size"],
-			"can_eject_five" = linked_imprinter.loaded_materials[M]["amount"] >= (linked_imprinter.loaded_materials[M]["sheet_size"] * 5),
+			"name" =           linked_imprinter.loaded_materials[M].name,
+			"ammount" =        linked_imprinter.loaded_materials[M].amount,
+			"can_eject_one" =  linked_imprinter.loaded_materials[M].amount >= linked_imprinter.loaded_materials[M].sheet_size,
+			"can_eject_five" = linked_imprinter.loaded_materials[M].amount >= (linked_imprinter.loaded_materials[M].sheet_size * 5),
 		))
 	imprinter_list["materials"] = material_list
 	return imprinter_list

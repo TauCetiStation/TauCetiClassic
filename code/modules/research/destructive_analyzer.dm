@@ -112,8 +112,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 		linked_console.files.experiments.do_research_object(loaded_item)
 
 		if(linked_console.linked_lathe)
-			linked_console.linked_lathe.loaded_materials[MAT_METAL]["amount"] += round(min((linked_console.linked_lathe.max_material_storage - linked_console.linked_lathe.TotalMaterials()), (loaded_item.m_amt*(decon_mod/10))))
-			linked_console.linked_lathe.loaded_materials[MAT_GLASS]["amount"] += round(min((linked_console.linked_lathe.max_material_storage - linked_console.linked_lathe.TotalMaterials()), (loaded_item.g_amt*(decon_mod/10))))
+			linked_console.linked_lathe.loaded_materials[MAT_METAL].amount += round(min((linked_console.linked_lathe.max_material_storage - linked_console.linked_lathe.TotalMaterials()), (loaded_item.m_amt*(decon_mod/10))))
+			linked_console.linked_lathe.loaded_materials[MAT_GLASS].amount += round(min((linked_console.linked_lathe.max_material_storage - linked_console.linked_lathe.TotalMaterials()), (loaded_item.g_amt*(decon_mod/10))))
 
 	if(istype(loaded_item,/obj/item/stack/sheet))
 		var/obj/item/stack/sheet/S = loaded_item

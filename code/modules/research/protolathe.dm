@@ -7,22 +7,25 @@ it creates. All the menus and other manipulation commands are in the R&D console
 Note: Must be placed west/left of and R&D console to function.
 
 */
+/datum/rnd_material
+	var/name
+	var/amount
+	var/sheet_size
+	var/sheet_type
+
+/datum/rnd_material/New(Name, obj/item/stack/sheet/Sheet_type)
+	name = Name
+	amount = 0
+	sheet_type = Sheet_type
+	sheet_size = initial(Sheet_type.perunit)
+
 /obj/machinery/r_n_d/protolathe
 	name = "Protolathe"
 	icon_state = "protolathe"
 
 	var/max_material_storage = 100000
 	var/efficiency_coeff
-	var/list/loaded_materials = list(
-		MAT_METAL =    list("name" = "Metal",    "amount" = 0.0, "sheet_size" = 3750, "sheet_type" = /obj/item/stack/sheet/metal),
-		MAT_GLASS =    list("name" = "Glass",    "amount" = 0.0, "sheet_size" = 3750, "sheet_type" = /obj/item/stack/sheet/glass),
-		MAT_SILVER =   list("name" = "Silver",   "amount" = 0.0, "sheet_size" = 2000, "sheet_type" = /obj/item/stack/sheet/mineral/silver),
-		MAT_GOLD =     list("name" = "Gold",     "amount" = 0.0, "sheet_size" = 2000, "sheet_type" = /obj/item/stack/sheet/mineral/gold),
-		MAT_DIAMOND =  list("name" = "Diamond",  "amount" = 0.0, "sheet_size" = 3750, "sheet_type" = /obj/item/stack/sheet/mineral/diamond),
-		MAT_URANIUM =  list("name" = "Uranium",  "amount" = 0.0, "sheet_size" = 2000, "sheet_type" = /obj/item/stack/sheet/mineral/uranium),
-		MAT_PHORON =   list("name" = "Phoron",   "amount" = 0.0, "sheet_size" = 2000, "sheet_type" = /obj/item/stack/sheet/mineral/phoron),
-		MAT_BANANIUM = list("name" = "Bananium", "amount" = 0.0, "sheet_size" = 2000, "sheet_type" = /obj/item/stack/sheet/mineral/clown),
-	)
+	var/list/loaded_materials = list()
 
 
 /obj/machinery/r_n_d/protolathe/atom_init()
@@ -37,10 +40,19 @@ Note: Must be placed west/left of and R&D console to function.
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
 	RefreshParts()
 
+	loaded_materials[MAT_METAL]    = new /datum/rnd_material("Metal",    /obj/item/stack/sheet/metal)
+	loaded_materials[MAT_GLASS]    = new /datum/rnd_material("Glass",    /obj/item/stack/sheet/glass)
+	loaded_materials[MAT_SILVER]   = new /datum/rnd_material("Silver",   /obj/item/stack/sheet/mineral/silver)
+	loaded_materials[MAT_GOLD]     = new /datum/rnd_material("Gold",     /obj/item/stack/sheet/mineral/gold)
+	loaded_materials[MAT_DIAMOND]  = new /datum/rnd_material("Diamond",  /obj/item/stack/sheet/mineral/diamond)
+	loaded_materials[MAT_URANIUM]  = new /datum/rnd_material("Uranium",  /obj/item/stack/sheet/mineral/uranium)
+	loaded_materials[MAT_PHORON]   = new /datum/rnd_material("Phoron",   /obj/item/stack/sheet/mineral/phoron)
+	loaded_materials[MAT_BANANIUM] = new /datum/rnd_material("Bananium", /obj/item/stack/sheet/mineral/clown)
+
 /obj/machinery/r_n_d/protolathe/proc/TotalMaterials() //returns the total of all the stored materials. Makes code neater.
 	var/am = 0
 	for(var/M in loaded_materials)
-		am += loaded_materials[M]["amount"]
+		am += loaded_materials[M].amount
 	return am
 
 /obj/machinery/r_n_d/protolathe/RefreshParts()
@@ -56,7 +68,7 @@ Note: Must be placed west/left of and R&D console to function.
 /obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, M)
 	var/A = 0
 	if(loaded_materials[M])
-		A = loaded_materials[M]["amount"]
+		A = loaded_materials[M].amount
 	A = A / max(1 , (being_built.materials[M]/efficiency_coeff))
 	return A
 
@@ -78,10 +90,10 @@ Note: Must be placed west/left of and R&D console to function.
 	if (panel_open)
 		if(iscrowbar(I))
 			for(var/M in loaded_materials)
-				if(loaded_materials[M]["amount"] >= loaded_materials[M]["sheet_size"])
-					var/sheet_type = loaded_materials[M]["sheet_type"]
+				if(loaded_materials[M].amount >= loaded_materials[M].sheet_size)
+					var/sheet_type = loaded_materials[M].sheet_type
 					var/obj/item/stack/sheet/G = new sheet_type(loc)
-					G.set_amount(round(loaded_materials[M]["amount"] / G.perunit))
+					G.set_amount(round(loaded_materials[M].amount / G.perunit))
 			default_deconstruction_crowbar(I)
 			return 1
 		else if (is_wire_tool(I) && wires.interact(user))
@@ -134,8 +146,8 @@ Note: Must be placed west/left of and R&D console to function.
 
 	if(stack.get_amount() >= amount)
 		for(var/M in loaded_materials)
-			if(stack.type == loaded_materials[M]["sheet_type"])
-				loaded_materials[M]["amount"] += amount * stack.perunit
+			if(stack.type == loaded_materials[M].sheet_type)
+				loaded_materials[M].amount += amount * stack.perunit
 				stack.use(amount)
 				break
 
@@ -167,7 +179,7 @@ Note: Must be placed west/left of and R&D console to function.
 			busy = FALSE
 			return
 	for(var/M in D.materials)
-		loaded_materials[M]["amount"] = max(0, (loaded_materials[M]["amount"] - (D.materials[M] / efficiency_coeff * amount)))
+		loaded_materials[M].amount = max(0, (loaded_materials[M].amount - (D.materials[M] / efficiency_coeff * amount)))
 
 	addtimer(CALLBACK(src, .proc/create_design, D, amount, key), 32 * amount / efficiency_coeff)
 
@@ -182,10 +194,10 @@ Note: Must be placed west/left of and R&D console to function.
 
 /obj/machinery/r_n_d/protolathe/proc/eject_sheet(sheet_type, amount)
 	if(loaded_materials[sheet_type])
-		var/available_num_sheets = Floor(loaded_materials[sheet_type]["amount"] / loaded_materials[sheet_type]["sheet_size"])
+		var/available_num_sheets = Floor(loaded_materials[sheet_type].amount / loaded_materials[sheet_type].sheet_size)
 		if(available_num_sheets > 0)
-			var/S = loaded_materials[sheet_type]["sheet_type"]
+			var/S = loaded_materials[sheet_type].sheet_type
 			var/obj/item/stack/sheet/sheet = new S(loc)
 			var/sheet_ammount = min(available_num_sheets, amount)
 			sheet.set_amount(sheet_ammount)
-			loaded_materials[sheet_type]["amount"] = max(0, loaded_materials[sheet_type]["amount"] - sheet_ammount * loaded_materials[sheet_type]["sheet_size"])
+			loaded_materials[sheet_type].amount = max(0, loaded_materials[sheet_type].amount - sheet_ammount * loaded_materials[sheet_type].sheet_size)

@@ -11,11 +11,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 	var/max_material_amount = 75000.0
 	var/efficiency_coeff
-	var/list/loaded_materials = list(
-		MAT_GLASS =    list("name" = "Glass",    "amount" = 0.0, "sheet_size" = 3750, "sheet_type" = /obj/item/stack/sheet/glass),
-		MAT_GOLD =     list("name" = "Gold",     "amount" = 0.0, "sheet_size" = 2000, "sheet_type" = /obj/item/stack/sheet/mineral/gold),
-		MAT_DIAMOND =  list("name" = "Diamond",  "amount" = 0.0, "sheet_size" = 3750, "sheet_type" = /obj/item/stack/sheet/mineral/diamond),
-	)
+	var/list/loaded_materials = list()
 	reagents = new(0)
 
 /obj/machinery/r_n_d/circuit_imprinter/atom_init()
@@ -28,6 +24,10 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
 	RefreshParts()
 	reagents.my_atom = src
+
+	loaded_materials[MAT_GLASS]    = new /datum/rnd_material("Glass",    /obj/item/stack/sheet/glass)
+	loaded_materials[MAT_GOLD]     = new /datum/rnd_material("Gold",     /obj/item/stack/sheet/mineral/gold)
+	loaded_materials[MAT_DIAMOND]  = new /datum/rnd_material("Diamond",  /obj/item/stack/sheet/mineral/diamond)
 
 /obj/machinery/r_n_d/circuit_imprinter/RefreshParts()
 	var/T = 0
@@ -52,14 +52,14 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, M)
 	if(loaded_materials[M])
-		return (loaded_materials[M]["amount"] - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+		return (loaded_materials[M].amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
 	else
 		return (reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff)) != 0) ? 1 : 0
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/TotalMaterials()
 	var/am = 0
 	for(var/M in loaded_materials)
-		am += loaded_materials[M]["amount"]
+		am += loaded_materials[M].amount
 	return am
 
 /obj/machinery/r_n_d/circuit_imprinter/attackby(obj/item/O, mob/user)
@@ -79,10 +79,10 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 				reagents.trans_to(G, G.reagents.maximum_volume)
 			for(var/M in loaded_materials)
-				if(loaded_materials[M]["amount"] >= loaded_materials[M]["sheet_size"])
-					var/sheet_type = loaded_materials[M]["sheet_type"]
+				if(loaded_materials[M].amount >= loaded_materials[M].sheet_size)
+					var/sheet_type = loaded_materials[M].sheet_type
 					var/obj/item/stack/sheet/G = new sheet_type(loc)
-					G.set_amount(round(loaded_materials[M]["amount"] / G.perunit))
+					G.set_amount(round(loaded_materials[M].amount / G.perunit))
 			default_deconstruction_crowbar(O)
 			return
 		else if(is_wire_tool(O) && wires.interact(user))
@@ -124,8 +124,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		if(stack.get_amount() >= amount)
 			to_chat(user, "\blue You add [amount] sheets to the [src.name].")
 			for(var/M in loaded_materials)
-				if(stack.type == loaded_materials[M]["sheet_type"])
-					loaded_materials[M]["amount"] += amount * stack.perunit
+				if(stack.type == loaded_materials[M].sheet_type)
+					loaded_materials[M].amount += amount * stack.perunit
 					stack.use(amount)
 					break
 		busy = 0
@@ -155,7 +155,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			return
 	for(var/M in D.materials)
 		if(loaded_materials[M])
-			loaded_materials[M]["amount"] = max(0, (loaded_materials[M]["amount"] - (D.materials[M] / efficiency_coeff)))
+			loaded_materials[M].amount = max(0, (loaded_materials[M].amount - (D.materials[M] / efficiency_coeff)))
 		else
 			reagents.remove_reagent(M, D.materials[M]/efficiency_coeff)
 
@@ -167,10 +167,10 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/eject_sheet(sheet_type, amount)
 	if(loaded_materials[sheet_type])
-		var/available_num_sheets = Floor(loaded_materials[sheet_type]["amount"] / loaded_materials[sheet_type]["sheet_size"])
+		var/available_num_sheets = Floor(loaded_materials[sheet_type].amount / loaded_materials[sheet_type].sheet_size)
 		if(available_num_sheets > 0)
-			var/S = loaded_materials[sheet_type]["sheet_type"]
+			var/S = loaded_materials[sheet_type].sheet_type
 			var/obj/item/stack/sheet/sheet = new S(loc)
 			var/sheet_ammount = min(available_num_sheets, amount)
 			sheet.set_amount(sheet_ammount)
-			loaded_materials[sheet_type]["amount"] = max(0, loaded_materials[sheet_type]["amount"] - sheet_ammount * loaded_materials[sheet_type]["sheet_size"])
+			loaded_materials[sheet_type].amount = max(0, loaded_materials[sheet_type].amount - sheet_ammount * loaded_materials[sheet_type].sheet_size)
