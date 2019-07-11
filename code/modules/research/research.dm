@@ -604,6 +604,22 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	unlocks_designs = list("sleeper", "cryotube", "crewconsole")
 
+/datum/technology/cloning
+	name = "Cloning"
+	desc = "Cloning"
+	id = "cloning"
+	tech_type = RESEARCH_BIOTECH
+
+	x = 0.25
+	y = 0.4
+	icon = "cloning"
+
+	required_technologies = list("adv_med_machines")
+	required_tech_levels = list()
+	cost = 1000
+
+	unlocks_designs = list("scan_console", "clonecontrol", "clonepod", "clonescanner")
+
 /datum/technology/hydroponics
 	name = "Hydroponics"
 	desc = "Hydroponics"
@@ -715,6 +731,22 @@ The tech datums are the actual "tech trees" that you improve through researching
 	cost = 1000
 
 	unlocks_designs = list("phasic_sensor", "pico_mani", "adv_mass_spectrometer", "adv_reagent_scanner", "implant_loyal", "implant_mindshield", "defibrillators_standalone", "scalpel_laser3", "chemsprayer", "rapidsyringe")
+
+/datum/technology/portable_chemistry
+	name = "Portable Chemistry"
+	desc = "Portable Chemistry"
+	id = "portable_chemistry"
+	tech_type = RESEARCH_BIOTECH
+
+	x = 0.7
+	y = 0.9
+	icon = "chemdisp"
+
+	required_technologies = list("advanced_biotech")
+	required_tech_levels = list()
+	cost = 1500
+
+	unlocks_designs = list("chem_dispenser", "chem_master")
 
 /datum/technology/top_biotech
 	name = "Top-tier Biotech"

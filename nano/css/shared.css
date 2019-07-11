@@ -716,6 +716,8 @@ th.misc {
 
 .sciTechTreeIcon.icon-shield { background-position: 0px -288px; }
 .sciTechTreeIcon.icon-fusion { background-position: -32px -288px; }
+.sciTechTreeIcon.icon-chemdisp { background-position: -64px -288px; }
+.sciTechTreeIcon.icon-cloning { background-position: -96px -288px; }
 
 .sciMenuButton {
     width: 300px;
