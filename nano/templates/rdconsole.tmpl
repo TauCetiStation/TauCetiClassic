@@ -329,6 +329,28 @@
 					</div>
 				</div>
 				{{/if}}
+				<H3>Queue information</H3>
+				<div class="statusDisplayRecords">
+					<div class="item">
+						<div class="itemContent" style="width: 100%;">
+							{{if (data.queue_data.queue.length > 0)}}
+								<div class="item">
+									{{:helper.link("Clear", '', {'clear_queue' : 1})}}
+									{{if data.queue_data.can_restart}}
+										{{:helper.link("Restart", '', {'restart_queue' : 1})}}
+									{{/if}}
+								</div>
+							{{/if}}
+							<span class="average">Queue:</span><br/>
+							{{if data.queue_data.queue.length == 0}}
+								Empty
+							{{/if}}
+							{{for data.queue_data.queue}}
+								{{:index + 1}}) {{:value}}<br/>
+							{{/for}}
+						</div>
+					</div>
+				</div>
 			</td>
 		</tr>
 	</table>

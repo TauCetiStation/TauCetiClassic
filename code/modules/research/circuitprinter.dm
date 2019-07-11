@@ -13,6 +13,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	var/efficiency_coeff
 	var/list/loaded_materials = list()
 	reagents = new(0)
+	var/list/queue = list()
 
 /obj/machinery/r_n_d/circuit_imprinter/atom_init()
 	. = ..()
@@ -132,7 +133,24 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		if(linked_console)
 			nanomanager.update_uis(linked_console)
 
-/obj/machinery/r_n_d/circuit_imprinter/proc/produce_design(datum/design/D)
+/obj/machinery/r_n_d/circuit_imprinter/proc/queue_design(datum/design/D)
+	var/datum/rnd_queue_design/RNDD = new /datum/rnd_queue_design(D, 1)
+
+	if(queue.len) // Something is already being created, put us into queue
+		queue += RNDD
+	else if(!busy)
+		queue += RNDD
+		produce_design(RNDD)
+
+/obj/machinery/r_n_d/circuit_imprinter/proc/clear_queue()
+	queue = list()
+
+/obj/machinery/r_n_d/circuit_imprinter/proc/restart_queue()
+	if(queue.len && !busy)
+		produce_design(queue[1])
+
+/obj/machinery/r_n_d/circuit_imprinter/proc/produce_design(datum/rnd_queue_design/RNDD)
+	var/datum/design/D = RNDD.design
 	var/power = 2000
 	for(var/M in D.materials)
 		power += round(D.materials[M] / 5)
@@ -159,11 +177,19 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		else
 			reagents.remove_reagent(M, D.materials[M]/efficiency_coeff)
 
-	addtimer(CALLBACK(src, .proc/create_design, D), 16)
+	addtimer(CALLBACK(src, .proc/create_design, RNDD), 16)
 
-/obj/machinery/r_n_d/circuit_imprinter/proc/create_design(datum/design/D)
+/obj/machinery/r_n_d/circuit_imprinter/proc/create_design(datum/rnd_queue_design/RNDD)
+	var/datum/design/D = RNDD.design
 	new D.build_path(loc)
 	busy = FALSE
+	queue -= RNDD
+
+	if(queue.len)
+		produce_design(queue[1])
+
+	if(linked_console)
+		nanomanager.update_uis(linked_console)
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/eject_sheet(sheet_type, amount)
 	if(loaded_materials[sheet_type])

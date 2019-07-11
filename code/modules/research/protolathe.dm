@@ -19,6 +19,19 @@ Note: Must be placed west/left of and R&D console to function.
 	sheet_type = Sheet_type
 	sheet_size = initial(Sheet_type.perunit)
 
+/datum/rnd_queue_design
+	var/name
+	var/datum/design/design
+	var/amount
+
+/datum/rnd_queue_design/New(datum/design/D, Amount)
+	name = D.name
+	if(Amount > 1)
+		name = "[name] x[Amount]"
+
+	design = D
+	amount = Amount
+
 /obj/machinery/r_n_d/protolathe
 	name = "Protolathe"
 	icon_state = "protolathe"
@@ -26,7 +39,7 @@ Note: Must be placed west/left of and R&D console to function.
 	var/max_material_storage = 100000
 	var/efficiency_coeff
 	var/list/loaded_materials = list()
-
+	var/list/queue = list()
 
 /obj/machinery/r_n_d/protolathe/atom_init()
 	. = ..()
@@ -155,7 +168,25 @@ Note: Must be placed west/left of and R&D console to function.
 	if(linked_console)
 		nanomanager.update_uis(linked_console)
 
-/obj/machinery/r_n_d/protolathe/proc/produce_design(datum/design/D, amount)
+/obj/machinery/r_n_d/protolathe/proc/queue_design(datum/design/D, amount)
+	var/datum/rnd_queue_design/RNDD = new /datum/rnd_queue_design(D, amount)
+
+	if(queue.len) // Something is already being created, put us into queue
+		queue += RNDD
+	else if(!busy)
+		queue += RNDD
+		produce_design(RNDD)
+
+/obj/machinery/r_n_d/protolathe/proc/clear_queue()
+	queue = list()
+
+/obj/machinery/r_n_d/protolathe/proc/restart_queue()
+	if(queue.len && !busy)
+		produce_design(queue[1])
+
+/obj/machinery/r_n_d/protolathe/proc/produce_design(datum/rnd_queue_design/RNDD)
+	var/datum/design/D = RNDD.design
+	var/amount = RNDD.amount
 	var/power = 2000
 	amount = max(1, min(10, amount))
 	for(var/M in D.materials)
@@ -164,7 +195,6 @@ Note: Must be placed west/left of and R&D console to function.
 	if(busy)
 		to_chat(usr, "<span class='warning'>The [name] is busy right now</span>")
 		return
-	var/key = usr.key	//so we don't lose the info during the spawn delay
 	if (!(D.build_type & PROTOLATHE))
 		message_admins("Protolathe exploit attempted by [key_name(usr, usr.client)]!")
 		return
@@ -181,16 +211,23 @@ Note: Must be placed west/left of and R&D console to function.
 	for(var/M in D.materials)
 		loaded_materials[M].amount = max(0, (loaded_materials[M].amount - (D.materials[M] / efficiency_coeff * amount)))
 
-	addtimer(CALLBACK(src, .proc/create_design, D, amount, key), 32 * amount / efficiency_coeff)
+	addtimer(CALLBACK(src, .proc/create_design, RNDD), 32 * amount / efficiency_coeff)
 
-/obj/machinery/r_n_d/protolathe/proc/create_design(datum/design/D, amount, key)
+/obj/machinery/r_n_d/protolathe/proc/create_design(datum/rnd_queue_design/RNDD)
+	var/datum/design/D = RNDD.design
+	var/amount = RNDD.amount
 	for(var/i = 1 to amount)
 		var/obj/new_item = new D.build_path(loc)
-		if( new_item.type == /obj/item/weapon/storage/backpack/holding )
-			new_item.investigate_log("built by [key]","singulo")
 		new_item.m_amt /= efficiency_coeff
 		new_item.g_amt /= efficiency_coeff
 	busy = FALSE
+	queue -= RNDD
+
+	if(queue.len)
+		produce_design(queue[1])
+
+	if(linked_console)
+		nanomanager.update_uis(linked_console)
 
 /obj/machinery/r_n_d/protolathe/proc/eject_sheet(sheet_type, amount)
 	if(loaded_materials[sheet_type])

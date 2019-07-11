@@ -218,7 +218,7 @@ cause a ton of data to be lost, an admin can go send it back.
 				being_built = D
 				break
 		if(being_built && amount)
-			linked_lathe.produce_design(being_built, amount)
+			linked_lathe.queue_design(being_built, amount)
 	if(href_list["build"] && screen == "circuit_imprinter" && linked_imprinter)
 		var/datum/design/being_built = null
 		for(var/datum/design/D in files.known_designs)
@@ -226,7 +226,7 @@ cause a ton of data to be lost, an admin can go send it back.
 				being_built = D
 				break
 		if(being_built)
-			linked_imprinter.produce_design(being_built)
+			linked_imprinter.queue_design(being_built)
 	if(href_list["search"])
 		var/input = sanitize_safe(input(usr, "Enter text to search", "Searching") as null|text, MAX_LNAME_LEN)
 		search_text = input
@@ -240,6 +240,16 @@ cause a ton of data to be lost, an admin can go send it back.
 				selected_imprinter_category = null
 			else
 				selected_imprinter_category = "Search Results"
+	if(href_list["clear_queue"])
+		if(screen == "protolathe" && linked_lathe)
+			linked_lathe.clear_queue()
+		if(screen == "circuit_imprinter" && linked_imprinter)
+			linked_imprinter.clear_queue()
+	if(href_list["restart_queue"])
+		if(screen == "protolathe" && linked_lathe)
+			linked_lathe.restart_queue()
+		if(screen == "circuit_imprinter" && linked_imprinter)
+			linked_imprinter.restart_queue()
 	if(href_list["deconstruct"])
 		if(linked_destroy)
 			linked_destroy.deconstruct_item()
@@ -480,6 +490,13 @@ cause a ton of data to be lost, an admin can go send it back.
 				data["selected_category"] = selected_protolathe_category
 				data["possible_designs"] = get_possible_designs_data(PROTOLATHE, selected_protolathe_category)
 
+			var/list/queue_list = list()
+			queue_list["can_restart"] = (linked_lathe.queue.len && !linked_lathe.busy)
+			queue_list["queue"] = list()
+			for(var/datum/rnd_queue_design/RNDD in linked_lathe.queue)
+				queue_list["queue"] += RNDD.name
+			data["queue_data"] = queue_list
+
 	if(screen == "circuit_imprinter")
 		if(linked_imprinter)
 			data["search_text"] = search_text
@@ -494,6 +511,13 @@ cause a ton of data to be lost, an admin can go send it back.
 			if(selected_imprinter_category)
 				data["selected_category"] = selected_imprinter_category
 				data["possible_designs"] = get_possible_designs_data(IMPRINTER, selected_imprinter_category)
+
+			var/list/queue_list = list()
+			queue_list["can_restart"] = (linked_imprinter.queue.len && !linked_imprinter.busy)
+			queue_list["queue"] = list()
+			for(var/datum/rnd_queue_design/RNDD in linked_imprinter.queue)
+				queue_list["queue"] += RNDD.name
+			data["queue_data"] = queue_list
 
 	// All the info needed for displaying tech trees
 	if(screen == "tech_trees")
