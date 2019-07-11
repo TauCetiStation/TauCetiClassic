@@ -557,7 +557,9 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			function updateVolume(slider_id) {
 				if (!volumeUpdating) {
 					volumeUpdating = true;
-					setTimeout(setVolume, 300, slider_id);
+					setTimeout(function() {
+						setVolume(slider_id);
+					}, 300);
 				}
 
 			}
