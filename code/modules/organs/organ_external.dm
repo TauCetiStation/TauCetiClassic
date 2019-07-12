@@ -26,6 +26,7 @@
 	var/list/bodypart_organs = list() // Internal organs of this body part
 	var/sabotaged = 0                 // If a prosthetic limb is emagged, it will detonate when it fails.
 	var/list/implants = list()        // Currently implanted objects.
+	var/bandaged = FALSE              // Are there any visual bandages on this bodypart
 
 	// Joint/state stuff.
 	var/cannot_amputate               // Impossible to amputate.
