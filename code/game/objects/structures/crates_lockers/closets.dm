@@ -240,6 +240,10 @@
 		return
 	if(istype(O, /obj/structure/closet))
 		return
+	if(istype(O, /obj/item))
+		var/obj/item/W = O
+		if(!W.canremove || W.flags & NODROP)
+			return
 	user.SetNextMove(CLICK_CD_INTERACT)
 	step_towards(O, src.loc)
 	if(user != O)
