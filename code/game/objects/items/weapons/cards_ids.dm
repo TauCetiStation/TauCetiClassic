@@ -67,36 +67,6 @@
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
 	var/uses = 10
-	// List of devices that cost a use to emag.
-	var/list/devices = list(
-		/obj/item/robot_parts,
-		/obj/item/weapon/storage/lockbox,
-		/obj/item/weapon/storage/secure,
-		/obj/item/weapon/circuitboard,
-		/obj/item/device/lightreplacer,
-		/obj/item/device/taperecorder,
-		/obj/item/clothing/accessory/holobadge,
-		/obj/structure/closet/crate/secure,
-		/obj/structure/closet/secure_closet,
-		/obj/machinery/computer/libraryconsole/bookmanagement,
-		/obj/machinery/computer,
-		/obj/machinery/power,
-		/obj/machinery/suspension_gen,
-		/obj/machinery/shield_capacitor,
-		/obj/machinery/shield_gen,
-		/obj/machinery/zero_point_emitter,
-		/obj/machinery/clonepod,
-		/obj/machinery/deployable,
-		/obj/machinery/door_control,
-		/obj/machinery/porta_turret,
-		/obj/machinery/shieldgen,
-		/obj/machinery/turretid,
-		/obj/machinery/vending,
-		/obj/machinery/bot,
-		/obj/machinery/door,
-		/obj/machinery/telecomms,
-		/obj/machinery/mecha_part_fabricator
-		)
 
 /obj/item/weapon/card/emag/afterattack(atom/target, mob/user)
 
