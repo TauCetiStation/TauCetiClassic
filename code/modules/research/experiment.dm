@@ -45,6 +45,8 @@
 /datum/experiment_data/proc/get_object_research_value(obj/item/I, ignoreRepeat = FALSE)
 	var/list/temp_tech = ConvertReqString2List(I.origin_tech)
 	var/item_tech_points = 0
+	var/has_new_tech = FALSE
+	var/is_board = istype(I, /obj/item/weapon/circuitboard)
 
 	for(var/T in temp_tech)
 		if(tech_points[T])
@@ -52,9 +54,14 @@
 				item_tech_points += temp_tech[T] * tech_points[T]
 			else
 				if(saved_tech_levels[T] && (temp_tech[T] in saved_tech_levels[T])) // You only get a fraction of points if you researched items with this level already
-					item_tech_points += temp_tech[T] * tech_points[T] * 0.1
+					if(!is_board) // Boards are cheap to make so we don't give any points for repeats
+						item_tech_points += temp_tech[T] * tech_points[T] * 0.1
 				else
 					item_tech_points += temp_tech[T] * tech_points[T]
+					has_new_tech = TRUE
+
+	if(!ignoreRepeat && !has_new_tech) // We are deconstucting the same items, cut the reward really hard
+		item_tech_points = min(item_tech_points, 400)
 
 	return round(item_tech_points)
 
