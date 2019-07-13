@@ -24,13 +24,16 @@
 	to_chat(world, "<span class='alert'>[custom_event_msg]</span>")
 	to_chat(world, "<br>")
 
-	world.send2bridge(
-		type = list(BRIDGE_ANNOUNCE),
-		attachment_title = "Custom Event",
-		attachment_msg = custom_event_msg,
-		attachment_color = BRIDGE_COLOR_ANNOUNCE,
-		mention = BRIDGE_MENTION_EVENT,
-	)
+
+	if(config.chat_bridge && \
+		alert("Do you want to make an announcement to chat conference?", "Chat announcement", "Yes", "No, I don't want these people at my party") == "Yes")
+		world.send2bridge(
+			type = list(BRIDGE_ANNOUNCE),
+			attachment_title = "Custom Event",
+			attachment_msg = custom_event_msg,
+			attachment_color = BRIDGE_COLOR_ANNOUNCE,
+			mention = BRIDGE_MENTION_EVENT,
+		)
 
 // normal verb for players to view info
 /client/verb/cmd_view_custom_event()
