@@ -9,6 +9,7 @@
 	build_path = /obj/item/clothing/suit/space/cheap
 	materials = list(MAT_METAL=6000,MAT_GLASS=500,MAT_PLASTIC=1000)
 	construction_time = 120
+	starts_unlocked = TRUE
 	category = list("Spacesuit")
 
 /datum/design/space_suit_hlemet_cheap
@@ -18,6 +19,7 @@
 	build_path = /obj/item/clothing/head/helmet/space/cheap
 	materials = list(MAT_METAL=1000,MAT_GLASS=500)
 	construction_time = 30
+	starts_unlocked = TRUE
 	category = list("Spacesuit")
 
 //Common buble
@@ -163,6 +165,7 @@
 	build_path = /obj/item/weapon/pickaxe
 	materials = list(MAT_METAL=8000)
 	construction_time = 100
+	starts_unlocked = TRUE
 	category = list("Tools")
 
 //shovel
@@ -173,6 +176,7 @@
 	build_path = /obj/item/weapon/shovel
 	materials = list(MAT_METAL=4000)
 	construction_time = 50
+	starts_unlocked = TRUE
 	category = list("Tools")
 
 //geo_hud
@@ -183,6 +187,7 @@
 	build_path = /obj/item/clothing/glasses/hud/mining
 	materials = list(MAT_METAL=50,MAT_GLASS=40)
 	construction_time = 50
+	starts_unlocked = TRUE
 	category = list("Tools")
 
 //mine_flashlight
@@ -193,6 +198,7 @@
 	build_path = /obj/item/device/flashlight/lantern
 	materials = list(MAT_METAL=120,MAT_GLASS=40)
 	construction_time = 50
+	starts_unlocked = TRUE
 	category = list("Tools")
 
 /datum/design/resonator
@@ -241,6 +247,7 @@
 	build_path = /obj/item/device/radio/headset/headset_cargo
 	materials = list(MAT_METAL=50,MAT_GLASS=25)
 	construction_time = 50
+	starts_unlocked = TRUE
 	category = list("Support")
 
 /datum/design/glowsticks
@@ -250,6 +257,7 @@
 	build_path = /obj/item/weapon/storage/fancy/glowsticks
 	materials = list(MAT_GLASS=250,MAT_PLASTIC=100,MAT_PHORON=150)
 	construction_time = 50
+	starts_unlocked = TRUE
 	category = list("Support")
 
 /datum/design/glowsticks_adv
@@ -295,6 +303,7 @@
 	build_path = /obj/item/weapon/patcher
 	materials = list(MAT_METAL=200,MAT_GLASS=250,MAT_PLASTIC=100,MAT_PHORON=150)
 	construction_time = 100
+	starts_unlocked = TRUE
 	category = list("Support")
 
 /datum/design/lazarus
