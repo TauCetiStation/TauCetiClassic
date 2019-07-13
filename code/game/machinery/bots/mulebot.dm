@@ -140,7 +140,7 @@
 		..()
 	return
 
-/obj/machinery/bot/mulebot/attackby(obj/item/I, mob/user)
+/obj/machinery/bot/mulebot/emag_act(mob/user)
 	locked = !locked
 	to_chat(user, "\blue You [locked ? "lock" : "unlock"] the mulebot's controls!")
 	flick("mulebot-emagged", src)

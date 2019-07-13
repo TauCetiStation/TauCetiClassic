@@ -250,7 +250,7 @@
 	else
 		..()
 
-/obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/vending/emag_act(mob/user)
 	if(emagged)
 		return FALSE
 	src.emagged = 1

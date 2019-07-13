@@ -118,7 +118,7 @@
 	else
 		..()
 
-/obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/closet/crate/secure/loot/emag_act(mob/user)
 	if(locked)
 		to_chat(user, "<span class='notice'>The crate unlocks!</span>")
 		locked = 0

@@ -24,11 +24,10 @@
 
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 
-/obj/machinery/power/port_gen/riteg/attackby(obj/item/O, mob/user, params)
+/obj/machinery/power/port_gen/riteg/emag_act(mob/user)
 	if(emagged)
 		return FALSE
 	emagged = 1
-	user.SetNextMove(CLICK_CD_INTERACT)
 	emp_act(1)
 	return TRUE
 
