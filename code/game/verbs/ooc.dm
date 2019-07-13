@@ -38,8 +38,6 @@ var/global/bridge_ooc_colour = "#7b804f"
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
 
-	log_ooc("[mob.name]/[key] : [msg]")
-
 	var/display_colour = normal_ooc_colour
 	var/display_name = key
 

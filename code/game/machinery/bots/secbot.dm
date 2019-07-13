@@ -226,14 +226,8 @@
 						icon_state = "[lasercolor][icon_state_arrest]"
 						addtimer(CALLBACK(src, .proc/update_icon), 2)
 						var/mob/living/carbon/M = target
-						var/maxstuns = 4
-						if(M.stuttering < 10 && !(HULK in M.mutations))
-							M.stuttering = 10
-						M.Stun(10)
-						M.Weaken(10)
-						maxstuns--
-						if(maxstuns <= 0)
-							target = null
+						do_attack_animation(M)
+						M.apply_effect(60, AGONY, 0) // As much as a normal stunbaton
 
 						if(declare_arrests)
 							var/area/location = get_area(src)
@@ -253,7 +247,7 @@
 							visible_message("<span class='danger'>[src] beats [target] with the stun baton!</span>")
 							icon_state = "[lasercolor][icon_state_arrest]"
 							addtimer(CALLBACK(src, .proc/update_icon), 2)
-							target.AdjustStunned(10)
+							do_attack_animation(target)
 							target.adjustBruteLoss(15)
 							if(target.stat)
 								forgetCurrentTarget()

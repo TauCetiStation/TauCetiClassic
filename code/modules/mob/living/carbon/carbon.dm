@@ -408,14 +408,20 @@
 	return
 
 /mob/living/carbon/throw_item(atom/target)
-	src.throw_mode_off()
+	throw_mode_off()
 	if(usr.stat || !target)
 		return
-	if(target.type == /obj/screen) return
+	if(target.type == /obj/screen)
+		return
 
-	var/atom/movable/item = src.get_active_hand()
+	var/atom/movable/item = get_active_hand()
+	if(!item)
+		return
 
-	if(!item || !item:canremove) return
+	if(istype(item, /obj/item))
+		var/obj/item/W = item
+		if(!W.canremove || W.flags & NODROP)
+			return
 
 	if (istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
