@@ -5908,11 +5908,10 @@
 	opacity = 0
 	},
 /obj/machinery/door/firedoor,
+/obj/item/weapon/reagent_containers/food/snacks/mint,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/reagent_containers/food/snacks/mint,
-/obj/structure/window/reinforced,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -6759,12 +6758,11 @@
 	opacity = 0
 	},
 /obj/machinery/door/firedoor,
-/obj/item/weapon/bell,
-/obj/machinery/door/window{
-	dir = 8;
+/obj/machinery/door/window/eastleft{
 	name = "Kitchen";
 	req_access_txt = "28"
 	},
+/obj/item/weapon/bell,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -6854,14 +6852,12 @@
 	opacity = 0
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/window/reinforced,
-/obj/item/weapon/reagent_containers/food/snacks/pie,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/machinery/door/window/eastright{
+	name = "Kitchen";
+	req_access_txt = "28"
 	},
+/obj/item/weapon/reagent_containers/food/snacks/pie,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
