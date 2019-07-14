@@ -188,20 +188,20 @@ var/list/bad_messages = list("Never take me off, please!",
 		src.loc = get_turf(pick(orange(1,src)))
 		var/mob/living/carbon/M = locate() in src.loc
 		if(M)
-			playsound(src, pick('sound/hallucinations/behind_you1.ogg',  \
-			                    'sound/hallucinations/behind_you2.ogg',  \
-			                    'sound/hallucinations/i_see_you_1.ogg',  \
-			                    'sound/hallucinations/i_see_you_2.ogg',  \
-			                    'sound/hallucinations/im_here1.ogg',     \
-			                    'sound/hallucinations/im_here2.ogg',     \
-			                    'sound/hallucinations/look_up1.ogg',     \
-			                    'sound/hallucinations/look_up2.ogg',     \
-			                    'sound/hallucinations/over_here1.ogg',   \
-			                    'sound/hallucinations/over_here2.ogg',   \
-			                    'sound/hallucinations/over_here3.ogg',   \
-			                    'sound/hallucinations/turn_around1.ogg', \
-			                    'sound/hallucinations/turn_around2.ogg', \
-			), VOL_EFFECTS_MASTER, null, FALSE, -3)
+			var/list/hallsound = list('sound/hallucinations/behind_you1.ogg',
+			                          'sound/hallucinations/behind_you2.ogg',
+			                          'sound/hallucinations/i_see_you_1.ogg',
+			                          'sound/hallucinations/i_see_you_2.ogg',
+			                          'sound/hallucinations/im_here1.ogg',
+			                          'sound/hallucinations/im_here2.ogg',
+			                          'sound/hallucinations/look_up1.ogg',
+			                          'sound/hallucinations/look_up2.ogg',
+			                          'sound/hallucinations/over_here1.ogg',
+			                          'sound/hallucinations/over_here2.ogg',
+			                          'sound/hallucinations/over_here3.ogg',
+			                          'sound/hallucinations/turn_around1.ogg',
+			                          'sound/hallucinations/turn_around2.ogg')
+			playsound(src, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE, -3)
 			M.sleeping = max(M.sleeping,rand(5,10))
 			src.loc = null
 	else
