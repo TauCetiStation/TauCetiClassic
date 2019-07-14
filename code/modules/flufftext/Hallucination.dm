@@ -181,7 +181,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						playsound_local(target, pick('sound/weapons/smash.ogg',      \
 						                             'sound/weapons/polkan_atk.ogg', \
 						                             'sound/weapons/Egloves.ogg',    \
-						                             'sound/weapons/genhit3.ogg'     ), VOL_EFFECTS_MASTER)
+						                             'sound/weapons/genhit3.ogg',    \
+						                             'sound/weapons/armbomb.ogg'     ), VOL_EFFECTS_MASTER)
 					if(9) // GUNPULSES
 						var/gunsound = pick('sound/weapons/guns/gunpulse_l10c.ogg',        \
 						                    'sound/weapons/guns/gunpulse_Taser.ogg',       \
@@ -216,9 +217,10 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							to_chat(src, "<span class='userdanger'>[pick("", "Voices in my head...")] [pick("They're coming back!", "Not again...", "WHAT YOU NEED?!", "I CAN'T TAKE IT ANYMORE!", "GAAAAAAAAAAAAAH!")]</span>")
 							H.emote("scream", auto = TRUE)
 					if(13) // MISC
-						playsound_local(null, pick('sound/effects/Heart Beat.ogg',        \
-						                           'sound/hallucinations/liar.ogg',       \
-						                           'sound/hallucinations/i_see_you_3.ogg' ), VOL_EFFECTS_MASTER, null, FALSE)
+						playsound_local(null, pick('sound/effects/Heart Beat.ogg',          \
+						                           'sound/hallucinations/liar.ogg',         \
+						                           'sound/hallucinations/i_see_you_3.ogg',  \
+						                           'sound/hallucinations/fake_poweroff.ogg' ), VOL_EFFECTS_MASTER, null, FALSE)
 					else   // FAKE EVENTS
 						playsound_local(target, pick('sound/hallucinations/fake_battle_1.ogg',   \
 						                           'sound/hallucinations/fake_battle_2.ogg',   \
