@@ -142,22 +142,26 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				var/turf/simulated/target = pick(possible_points)
 				switch(rand(1, 15))
 					if(1) // AIRLOCKS
-						playsound_local(target, pick('sound/machines/airlock/creaking.ogg', \
-						                             'sound/machines/airlock/open.ogg',     \
-						                             'sound/machines/airlock/close.ogg'     ), VOL_EFFECTS_MASTER)
+						var/list/hallsound = list('sound/machines/airlock/creaking.ogg',
+						                          'sound/machines/airlock/open.ogg',
+						                          'sound/machines/airlock/close.ogg')
+						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
 					if(2) // EXPLOSIONS
-						playsound_local(target, pick('sound/effects/explosionfar.ogg', \
-						                             'sound/effects/Explosion2.ogg',   \
-						                             'sound/effects/Explosion1.ogg'    ), VOL_EFFECTS_MASTER)
+						var/list/hallsound = list('sound/effects/explosionfar.ogg',
+						                          'sound/effects/Explosion2.ogg',
+						                          'sound/effects/Explosion1.ogg')
+						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
 					if(3) // GLASS
 						playsound_local(target, "shatter", VOL_EFFECTS_MASTER)
 					if(4) // GROWLS
-						playsound_local(target, pick( 'sound/voice/growl1.ogg', \
-						                              'sound/voice/growl2.ogg', \
-						                              'sound/voice/growl3.ogg'  ), VOL_EFFECTS_MASTER)
+						var/list/hallsound = list('sound/voice/growl1.ogg',
+						                          'sound/voice/growl2.ogg',
+						                          'sound/voice/growl3.ogg')
+						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
 					if(5) // MACHINERY
-						playsound_local(target, pick('sound/machines/twobeep.ogg', \
-						                             'sound/misc/interference.ogg' ), VOL_EFFECTS_MASTER)
+						var/list/hallsound = list('sound/machines/twobeep.ogg',
+						                          'sound/misc/interference.ogg')
+						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
 					if(6) // DEMONS
 						playsound_local(null, DEMON_SOUNDS, VOL_EFFECTS_MASTER, null, FALSE)
 						if(ishuman(src))
@@ -165,49 +169,56 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							if(!H.stat)
 								H.emote(pick("scream", "cry", "laugh"), auto = TRUE)
 					if(7) // GUNSHOTS
-						var/gunsound = pick('sound/weapons/guns/gunshot_heavy.ogg',   \
-						                    'sound/weapons/guns/gunshot_ak74.ogg',    \
-						                    'sound/weapons/guns/gunshot_shotgun.ogg', \
-						                    'sound/weapons/guns/gunshot_medium.ogg',  \
-						                    'sound/weapons/guns/gunshot_light.ogg',   \
-						                    'sound/weapons/guns/gunshot_colt1911.ogg' )
+						var/list/gunsound_list = list('sound/weapons/guns/gunshot_heavy.ogg',
+						                              'sound/weapons/guns/gunshot_ak74.ogg',
+						                              'sound/weapons/guns/gunshot_shotgun.ogg',
+						                              'sound/weapons/guns/gunshot_medium.ogg',
+						                              'sound/weapons/guns/gunshot_light.ogg',
+						                              'sound/weapons/guns/gunshot_colt1911.ogg')
+						var/gunsound = pick(gunsound_list)
 						playsound_local(target, gunsound, VOL_EFFECTS_MASTER)
 						spawn(rand(10,30))
 							playsound_local(target, gunsound, VOL_EFFECTS_MASTER)
 							if(prob(60))
-								playsound_local(target, pick('sound/misc/malescream1.ogg',  \
-								                             'sound/misc/femalescream2.ogg' ), VOL_EFFECTS_MASTER, null, FALSE)
+								var/list/hallsound = list('sound/misc/malescream1.ogg',
+								                          'sound/misc/femalescream2.ogg')
+								playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE)
 					if(8) // MELEE
-						playsound_local(target, pick('sound/weapons/smash.ogg',      \
-						                             'sound/weapons/polkan_atk.ogg', \
-						                             'sound/weapons/Egloves.ogg',    \
-						                             'sound/weapons/genhit3.ogg',    \
-						                             'sound/weapons/armbomb.ogg'     ), VOL_EFFECTS_MASTER)
+						var/list/hallsound = list('sound/weapons/smash.ogg',
+						                          'sound/weapons/polkan_atk.ogg',
+						                          'sound/weapons/Egloves.ogg',
+						                          'sound/weapons/genhit3.ogg',
+						                          'sound/weapons/armbomb.ogg')
+						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
 					if(9) // GUNPULSES
-						var/gunsound = pick('sound/weapons/guns/gunpulse_l10c.ogg',        \
-						                    'sound/weapons/guns/gunpulse_Taser.ogg',       \
-						                    'sound/weapons/guns/gunpulse_laser.ogg',       \
-						                    'sound/weapons/guns/gunpulse_stunrevolver.ogg' )
+						var/list/gunsound_list = list('sound/weapons/guns/gunpulse_l10c.ogg',
+						                              'sound/weapons/guns/gunpulse_Taser.ogg',
+						                              'sound/weapons/guns/gunpulse_laser.ogg',
+						                              'sound/weapons/guns/gunpulse_stunrevolver.ogg')
+						var/gunsound = pick(gunsound_list)
 						playsound_local(target, gunsound, VOL_EFFECTS_MASTER)
 						spawn(rand(10,30))
 							playsound_local(target, gunsound, VOL_EFFECTS_MASTER)
 					if(10) // GHOSTS AND FAR ROARS
-						playsound_local(target, pick('sound/effects/ghost.ogg',                \
-						                             'sound/effects/ghost2.ogg',               \
-						                             'sound/hallucinations/veryfar_noise.ogg', \
-						                             'sound/hallucinations/far_noise.ogg',     \
-						                             'sound/hallucinations/wail.ogg',          ), VOL_EFFECTS_MASTER)
+						var/list/hallsound = list('sound/effects/ghost.ogg',
+						                          'sound/effects/ghost2.ogg',
+						                          'sound/hallucinations/veryfar_noise.ogg',
+						                          'sound/hallucinations/far_noise.ogg',
+						                          'sound/hallucinations/wail.ogg')
+						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
 					if(11) // HIDDEN: SOURCE WHISPERS
-						playsound_local(target, pick('sound/hallucinations/behind_you1.ogg',  'sound/hallucinations/behind_you2.ogg',  \
-						                             'sound/hallucinations/im_here1.ogg',     'sound/hallucinations/im_here2.ogg',     \
-						                             'sound/hallucinations/i_see_you_1.ogg',  'sound/hallucinations/i_see_you_2.ogg',  \
-						                             'sound/hallucinations/look_up1.ogg',     'sound/hallucinations/look_up2.ogg',     \
-						                             'sound/hallucinations/over_here1.ogg',   'sound/hallucinations/over_here2.ogg',   \
-						                             'sound/hallucinations/over_here3.ogg',   'sound/hallucinations/turn_around1.ogg', \
-						                             'sound/hallucinations/turn_around2.ogg'                                           ), VOL_EFFECTS_MASTER, null, FALSE)
+						var/list/hallsound = list('sound/hallucinations/behind_you1.ogg',  'sound/hallucinations/behind_you2.ogg',
+						                          'sound/hallucinations/im_here1.ogg',     'sound/hallucinations/im_here2.ogg',
+						                          'sound/hallucinations/i_see_you_1.ogg',  'sound/hallucinations/i_see_you_2.ogg',
+						                          'sound/hallucinations/look_up1.ogg',     'sound/hallucinations/look_up2.ogg',
+						                          'sound/hallucinations/over_here1.ogg',   'sound/hallucinations/over_here2.ogg',
+						                          'sound/hallucinations/over_here3.ogg',   'sound/hallucinations/turn_around1.ogg',
+						                          'sound/hallucinations/turn_around2.ogg')
+						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE)
 					if(12) // WHISPERS
-						playsound_local(null, pick('sound/hallucinations/whispers_1.ogg', \
-						                           'sound/hallucinations/whispers_2.ogg', ), VOL_EFFECTS_MASTER, null, FALSE)
+						var/list/hallsound = list('sound/hallucinations/whispers_1.ogg',
+						                          'sound/hallucinations/whispers_2.ogg')
+						playsound_local(null, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE)
 						if(ishuman(src))
 							var/mob/living/carbon/human/H = src
 							H.stuttering += 15
@@ -217,15 +228,17 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							to_chat(src, "<span class='userdanger'>[pick("", "Voices in my head...", "WHY?!")] [pick("They're coming back!", "Not again...", "WHAT YOU NEED?!", "I CAN'T TAKE IT ANYMORE!", "GAAAAAAAAAAAAAH!")]</span>")
 							H.emote("scream", auto = TRUE)
 					if(13) // MISC
-						playsound_local(null, pick('sound/effects/Heart Beat.ogg',          \
-						                           'sound/hallucinations/liar.ogg',         \
-						                           'sound/hallucinations/i_see_you_3.ogg',  \
-						                           'sound/hallucinations/fake_poweroff.ogg' ), VOL_EFFECTS_MASTER, null, FALSE)
+						var/list/hallsound = list('sound/effects/Heart Beat.ogg',
+						                          'sound/hallucinations/liar.ogg',
+						                          'sound/hallucinations/i_see_you_3.ogg',
+						                          'sound/hallucinations/fake_poweroff.ogg')
+						playsound_local(null, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE)
 					else   // FAKE EVENTS
-						playsound_local(target, pick('sound/hallucinations/fake_battle_1.ogg',   \
-						                           'sound/hallucinations/fake_battle_2.ogg',   \
-						                           'sound/hallucinations/fake_battle_3.ogg',   \
-						                           'sound/hallucinations/fake_announcement.ogg'), VOL_EFFECTS_MASTER, null, FALSE)
+						var/list/hallsound = list('sound/hallucinations/fake_battle_1.ogg',
+						                          'sound/hallucinations/fake_battle_2.ogg',
+						                          'sound/hallucinations/fake_battle_3.ogg',
+						                          'sound/hallucinations/fake_announcement.ogg')
+						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE)
 
         // FLASHES OF DANGER, MOBS
 
