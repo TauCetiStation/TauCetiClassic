@@ -38,8 +38,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 			if(0 to 15)
 				hal_screwyhud = pick(1, 2, 3, 3, 4, 4)
-				if(hal_screwyhud == 2 && prob(60))
-					to_chat(src, "<span class='userdanger'>[pick("FUCK!", "FOR FUCKS SAKE, END THIS!")] I LOST! [pick("NNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHH!", "DAMN THIS GAME IS SO HARD!", "I CAN'T PLAY THIS GAME ANY MORE!")]</span>")
+				if(hal_screwyhud == 2 && prob(30))
+					to_chat(src, "<span class='userdanger'>[pick("FUCK!", "FOR FUCKS SAKE, END THIS!", "")] I LOST! [pick("NNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHH!", "DAMN THIS GAME IS SO HARD!", "I CAN'T PLAY THIS GAME ANY MORE!")]</span>")
 					playsound_local(null, 'sound/hallucinations/fake_death.ogg', VOL_EFFECTS_MASTER)
 				spawn(rand(100,250))
 					hal_screwyhud = 0
@@ -118,7 +118,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 								//src << "C4"
 								halimage = image('icons/obj/assemblies.dmi',target,"plastic-explosive2",OBJ_LAYER+0.01)
 						if(prob(60))
-							to_chat(src, "<span class='userdanger'>O-OH NO! [pick("I H-HAVE TO RUN!", "QUICKLY! TO THE SHELTER", "")]</span>")
+							to_chat(src, "<span class='userdanger'>[pick("O-OH NO!", "SH-SHIT!", "NOT NOW! PLEASE!", "I DON'T WANT TO DIE!")] [pick("I H-HAVE TO RUN!", "QUICKLY! TO THE SHELTER", "")]</span>")
 							playsound_local(null, DEMON_SOUNDS, VOL_EFFECTS_MASTER, null, FALSE)
 							if(ishuman(src))
 								var/mob/living/carbon/human/H = src
@@ -214,7 +214,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							H.ear_deaf += 8
 							H.Weaken(5)
 							H.Stun(8)
-							to_chat(src, "<span class='userdanger'>[pick("", "Voices in my head...")] [pick("They're coming back!", "Not again...", "WHAT YOU NEED?!", "I CAN'T TAKE IT ANYMORE!", "GAAAAAAAAAAAAAH!")]</span>")
+							to_chat(src, "<span class='userdanger'>[pick("", "Voices in my head...", "WHY?!")] [pick("They're coming back!", "Not again...", "WHAT YOU NEED?!", "I CAN'T TAKE IT ANYMORE!", "GAAAAAAAAAAAAAH!")]</span>")
 							H.emote("scream", auto = TRUE)
 					if(13) // MISC
 						playsound_local(null, pick('sound/effects/Heart Beat.ogg',          \
@@ -256,7 +256,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				src.sleeping = 20
 				hal_crit = 1
 				hal_screwyhud = 1
-				to_chat(src, "<span class='userdanger'>[pick("FUCK!", "FOR FUCKS SAKE, END THIS!", "")] I LOST! [pick("NNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHH!", "DAMN THIS GAME IS SO HARD!", "I CAN'T PLAY THIS GAME ANY MORE!")]</span>")
+				to_chat(src, "<span class='userdanger'>[pick("FUCK!", "FOR FUCKS SAKE, END THIS!", "", "WHY-Y-Y?!", "NOT AGAIN")] I LOST! [pick("NNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHH!", "DAMN THIS GAME IS SO HARD!", "I CAN'T PLAY THIS GAME ANY MORE!")]</span>")
 				playsound_local(null, 'sound/hallucinations/fake_death.ogg', VOL_EFFECTS_MASTER)
 				spawn(rand(50,100))
 					src.sleeping = 0
