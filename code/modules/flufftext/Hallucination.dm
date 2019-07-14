@@ -152,12 +152,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 					if(3) // GLASS
 						playsound_local(target, "shatter", VOL_EFFECTS_MASTER)
 					if(4) // GROWLS
-						playsound_local(target, pick('sound/voice/zombie/growl_1.ogg', \
-						                             'sound/voice/zombie/growl_2.ogg', \
-						                             'sound/voice/zombie/growl_3.ogg', \
-						                             'sound/voice/zombie/attack_1.ogg', \
-						                             'sound/voice/zombie/attack_2.ogg', \
-						                             'sound/voice/zombie/attack_3.ogg'  ), VOL_EFFECTS_MASTER)
+						playsound_local(target, pick( 'sound/voice/growl1.ogg', \
+						                              'sound/voice/growl2.ogg', \
+						                              'sound/voice/growl3.ogg'  ), VOL_EFFECTS_MASTER)
 					if(5) // MACHINERY
 						playsound_local(target, pick('sound/machines/twobeep.ogg', \
 						                             'sound/misc/interference.ogg' ), VOL_EFFECTS_MASTER)

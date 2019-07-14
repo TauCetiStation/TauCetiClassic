@@ -888,9 +888,9 @@
 	tox_mod = 0
 	speed_mod = -0.2
 
-	var/list/spooks = list('sound/voice/zombie/growl_1.ogg', \
-	                       'sound/voice/zombie/growl_2.ogg', \
-	                       'sound/voice/zombie/growl_3.ogg'  )
+	var/list/spooks = list('sound/voice/growl1.ogg', \
+	                       'sound/voice/growl2.ogg', \
+	                       'sound/voice/growl3.ogg'  )
 
 /datum/species/zombie/handle_post_spawn(mob/living/carbon/human/H)
 	return ..()

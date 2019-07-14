@@ -96,7 +96,7 @@ var/list/bad_messages = list("Never take me off, please!",
 			charges -= 1
 			var/spawn_type = pick(/mob/living/simple_animal/hostile/creature)
 			new spawn_type(pick(view(1,src)))
-			playsound(src, pick('sound/voice/zombie/attack_1.ogg', 'sound/voice/zombie/attack_2.ogg', 'sound/voice/zombie/attack_3.ogg'), VOL_EFFECTS_MASTER, null, null, -3)
+			playsound(src, pick('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg'), VOL_EFFECTS_MASTER, null, null, -3)
 
 	if(charges >= 1)
 		if(shadow_wights.len < 5 && prob(5))
