@@ -19,7 +19,7 @@ issues:
   daysUntilStale: 200
   daysUntilClose: 1
   staleLabel: Stalled Proposal
-  onlyLabels: [Proposal]
+  onlyLabels: Proposal
   markComment: false
   closeComment: >
     Данное предложение пробыло без активности открытым более полугода. Если вы найдёте того, кто его реализует,
