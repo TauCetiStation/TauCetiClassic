@@ -180,9 +180,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						spawn(rand(10,30))
 							playsound_local(target, gunsound, VOL_EFFECTS_MASTER)
 							if(prob(60))
-								var/list/hallsound = list('sound/misc/malescream1.ogg',
-								                          'sound/misc/femalescream2.ogg')
-								playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE)
+								playsound_local(target, pick("mscream", "fscream"), VOL_EFFECTS_MASTER, null, FALSE)
 					if(8) // MELEE
 						var/list/hallsound = list('sound/weapons/smash.ogg',
 						                          'sound/weapons/polkan_atk.ogg',
