@@ -194,6 +194,9 @@ var/specops_shuttle_timeleft = 0
 			return 0
 	return 1
 
+/obj/machinery/computer/specops_shuttle/attackby(I, user)
+	attack_hand(user)
+
 /obj/machinery/computer/specops_shuttle/emag_act(mob/user)
 	to_chat(user, "\blue The electronic systems in this console are far too advanced for your primitive hacking peripherals.")
 	return TRUE //yep, don't try do that

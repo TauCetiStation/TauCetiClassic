@@ -101,6 +101,9 @@ var/syndicate_elite_shuttle_timeleft = 0
 	if(syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership) return 0
 	else return 1
 
+/obj/machinery/computer/syndicate_elite_shuttle/attackby(I, user)
+	attack_hand(user)
+
 /obj/machinery/computer/syndicate_elite_shuttle/emag_act(mob/user)
 	to_chat(user, "\blue The electronic systems in this console are far too advanced for your primitive hacking peripherals.")
 	return TRUE //yep, don't try do that
