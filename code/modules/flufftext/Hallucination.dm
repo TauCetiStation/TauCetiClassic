@@ -90,9 +90,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 								halitem.name = "Flashbang"
 						if(client)
 							client.screen += halitem
-							playsound_local(null, SCARY_SOUNDS, VOL_EFFECTS_MASTER, null, FALSE)
-							if(prob(50))
+							if(prob(70))
 								to_chat(src, "<span class='warning'>[pick("W-WHAT?", "AGAIN?!", "H-HA, HA-HA!")] [pick("IT'S TIME FOR REVENGE!", "FINALLY! I'LL SHOW THEM ALL...", "I NEED TO FIND A WORTHY OPPONENT!")]</span>")
+								playsound_local(null, SCARY_SOUNDS, VOL_EFFECTS_MASTER, null, FALSE)
 						spawn(rand(100,250))
 							if(client)
 								client.screen -= halitem
@@ -162,8 +162,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						var/list/hallsound = list('sound/machines/twobeep.ogg',
 						                          'sound/misc/interference.ogg')
 						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
-					if(6) // DEMONS
-						playsound_local(null, DEMON_SOUNDS, VOL_EFFECTS_MASTER, null, FALSE)
+					if(6) // DEMONS & EMOTES
+						if(prob(80))
+							playsound_local(null, DEMON_SOUNDS, VOL_EFFECTS_MASTER, null, FALSE)
 						if(ishuman(src))
 							var/mob/living/carbon/human/H = src
 							if(!H.stat)
