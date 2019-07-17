@@ -12,7 +12,8 @@ var/list/ai_verbs_default = list(
 	/mob/living/silicon/ai/proc/pick_icon,
 	/mob/living/silicon/ai/proc/show_laws_verb,
 	/mob/living/silicon/ai/proc/toggle_acceleration,
-	/mob/living/silicon/ai/proc/change_floor
+	/mob/living/silicon/ai/proc/change_floor,
+	/mob/living/silicon/ai/proc/ai_emergency_message
 )
 
 //Not sure why this is necessary...
@@ -383,6 +384,26 @@ var/list/ai_verbs_default = list(
 		F.color = f_color
 
 	to_chat(usr, "Floor color was change to [f_color]")
+
+/mob/living/silicon/ai/var/emergency_message_cooldown = 0
+/mob/living/silicon/ai/proc/ai_emergency_message()
+	set category = "AI Commands"
+	set name = "Send Emergency Message"
+
+	if(check_unable(AI_CHECK_WIRELESS))
+		return
+	if(emergency_message_cooldown)
+		to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
+		return
+	var/input = sanitize(input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""))
+	if(!input)
+		return
+	Centcomm_announce(input, usr)
+	to_chat(usr, "<span class='notice'>Message transmitted.</span>")
+	log_say("[key_name(usr)] has sent an emergency message: [input]")
+	emergency_message_cooldown = 1
+	spawn(300)
+		emergency_message_cooldown = 0
 
 /mob/living/silicon/ai/proc/ai_recall_shuttle()
 	set category = "AI Commands"
