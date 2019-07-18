@@ -252,14 +252,14 @@
 /datum/spellbook_entry/item/staffchange
 	name = "Staff of Change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
-	item_path = /obj/item/weapon/gun/magic/staff/change
+	item_path = /obj/item/weapon/gun/magic/change
 	log_name = "ST"
 	cost = 4
 
 /datum/spellbook_entry/item/staffanimation
 	name = "Staff of Animation"
 	desc = "An arcane staff capable of shooting bolts of eldritch energy which cause inanimate objects to come to life. This magic doesn't affect machines."
-	item_path = /obj/item/weapon/gun/magic/staff/animate
+	item_path = /obj/item/weapon/gun/magic/animate
 	log_name = "SA"
 	category = "Assistance"
 	cost = 3
@@ -267,7 +267,7 @@
 /datum/spellbook_entry/item/staffdoor
 	name = "Staff of Door Creation"
 	desc = "A particular staff that can mold solid metal into ornate doors. Useful for getting around in the absence of other transportation. Does not work on glass."
-	item_path = /obj/item/weapon/gun/magic/staff/doorcreation
+	item_path = /obj/item/weapon/gun/magic/doorcreation
 	log_name = "SD"
 	category = "Mobility"
 	cost = 3
@@ -275,7 +275,7 @@
 /datum/spellbook_entry/item/staffhealing
 	name = "Staff of Healing"
 	desc = "An altruistic staff that can heal the lame and raise the dead."
-	item_path = /obj/item/weapon/gun/magic/staff/healing
+	item_path = /obj/item/weapon/gun/magic/healing
 	log_name = "SH"
 	category = "Defensive"
 	cost = 4
