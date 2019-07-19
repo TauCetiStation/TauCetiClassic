@@ -1,5 +1,6 @@
 #define AI_CHECK_WIRELESS 1
 #define AI_CHECK_RADIO 2
+#define EMERGENCY_MESSAGE_COOLDOWN 300
 
 var/list/ai_verbs_default = list(
 //	/mob/living/silicon/ai/proc/ai_recall_shuttle,
@@ -51,6 +52,7 @@ var/list/ai_verbs_default = list(
 	var/obj/item/device/multitool/aiMulti = null
 	var/obj/item/device/radio/headset/heads/ai_integrated/aiRadio = null
 	var/custom_sprite = 0 //For our custom sprites
+	var/next_emergency_message_time = 0
 //Hud stuff
 
 	//MALFUNCTION
@@ -385,14 +387,14 @@ var/list/ai_verbs_default = list(
 
 	to_chat(usr, "Floor color was change to [f_color]")
 
-/mob/living/silicon/ai/var/emergency_message_cooldown = 0
+
 /mob/living/silicon/ai/proc/ai_emergency_message()
 	set category = "AI Commands"
 	set name = "Send Emergency Message"
 
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
-	if(emergency_message_cooldown)
+	if(world.time < next_emergency_message_time)
 		to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
 		return
 	var/input = sanitize(input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""))
@@ -401,9 +403,7 @@ var/list/ai_verbs_default = list(
 	Centcomm_announce(input, usr)
 	to_chat(usr, "<span class='notice'>Message transmitted.</span>")
 	log_say("[key_name(usr)] has sent an emergency message: [input]")
-	emergency_message_cooldown = 1
-	spawn(300)
-		emergency_message_cooldown = 0
+	next_emergency_message_time = world.time + EMERGENCY_MESSAGE_COOLDOWN
 
 /mob/living/silicon/ai/proc/ai_recall_shuttle()
 	set category = "AI Commands"
@@ -919,5 +919,9 @@ var/list/ai_verbs_default = list(
 	else
 		to_chat(src, "[new_mod_name] module activation failed. Out of uses.")
 
+/mob/living/silicon/ai/CanObtainCentcommMessage()
+	return 1
+
 #undef AI_CHECK_WIRELESS
 #undef AI_CHECK_RADIO
+#undef EMERGENCY_MESSAGE_COOLDOWN
