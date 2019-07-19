@@ -920,7 +920,7 @@ var/list/ai_verbs_default = list(
 		to_chat(src, "[new_mod_name] module activation failed. Out of uses.")
 
 /mob/living/silicon/ai/CanObtainCentcommMessage()
-	return 1
+	return TRUE
 
 #undef AI_CHECK_WIRELESS
 #undef AI_CHECK_RADIO
