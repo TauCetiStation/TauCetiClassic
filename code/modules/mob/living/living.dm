@@ -1199,4 +1199,4 @@
 	return METABOLISM_FACTOR
 
 /mob/living/proc/CanObtainCentcommMessage()
-	return 0
+	return FALSE
