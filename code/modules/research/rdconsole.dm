@@ -942,8 +942,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/robotics
 	name = "Robotics R&D Console"
 	id = 2
-	req_access = null
-	req_access_txt = "29"
+	req_access = list(29)
 
 /obj/machinery/computer/rdconsole/robotics/atom_init()
 	. = ..()
@@ -958,8 +957,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/mining
 	name = "Mining R&D Console"
 	id = 3
-	req_access = null
-	req_access_txt = "48"
+	req_access = list(48)
 
 /obj/machinery/computer/rdconsole/mining/atom_init()
 	. = ..()
