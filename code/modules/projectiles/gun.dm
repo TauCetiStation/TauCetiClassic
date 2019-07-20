@@ -77,7 +77,7 @@
 	if(flag)	return //It's adjacent, is the user, or is on the user's person
 	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
 	if(user && user.client && user.client.gun_mode && !(A in target))
-		Fire(A,user,params) //They're using the new gun system, locate what they're aiming at.
+		PreFire(A,user,params) //They're using the new gun system, locate what they're aiming at.
 	else
 		Fire(A,user,params) //Otherwise, fire normally.
 

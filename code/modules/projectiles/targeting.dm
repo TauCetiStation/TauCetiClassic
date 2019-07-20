@@ -1,4 +1,4 @@
-/obj/item/weapon/gun_modular/verb/toggle_firerate()
+/obj/item/weapon/gun/verb/toggle_firerate()
 	set name = "Toggle Firerate"
 	set category = "Object"
 
@@ -9,7 +9,7 @@
 	else
 		to_chat(loc, "You will now only fire once, then lower your aim, when your target moves.")
 
-/obj/item/weapon/gun_modular/verb/lower_aim()
+/obj/item/weapon/gun/verb/lower_aim()
 	set name = "Lower Aim"
 	set category = "Object"
 	if(target)
@@ -17,18 +17,18 @@
 		usr.visible_message("\blue \The [usr] lowers \the [src]...")
 
 //Clicking gun will still lower aim for guns that don't overwrite this
-/obj/item/weapon/gun_modular/gun/attack_self()
+/obj/item/weapon/gun/attack_self()
 	lower_aim()
 
 //Removing the lock and the buttons.
-/obj/item/weapon/gun_modular/gun/dropped(mob/user)
+/obj/item/weapon/gun/dropped(mob/user)
 	stop_aim()
 	if (!user) return
 	if (user.client)
 		user.client.remove_gun_icons()
 	return ..()
 
-/obj/item/weapon/gun_modular/equipped(mob/user, slot)
+/obj/item/weapon/gun/equipped(mob/user, slot)
 	if (slot != SLOT_L_HAND && slot != SLOT_R_HAND)
 		stop_aim()
 		if (user.client)
@@ -36,7 +36,7 @@
 	return ..()
 
 //Removes lock fro mall targets
-/obj/item/weapon/gun_modular/proc/stop_aim()
+/obj/item/weapon/gun/proc/stop_aim()
 	if(target)
 		for(var/mob/living/M in target)
 			if(M)
@@ -44,7 +44,7 @@
 		qdel(target)
 
 //Compute how to fire.....
-/obj/item/weapon/gun_modular/proc/PreFire(atom/A, mob/living/user, params)
+/obj/item/weapon/gun/proc/PreFire(atom/A, mob/living/user, params)
 	//Lets not spam it.
 	if(lock_time > world.time - 2) return
 	if(ismob(A) && isliving(A) && !(A in target))
@@ -58,7 +58,7 @@
 	usr.dir = get_cardinal_dir(src, A)
 
 //Aiming at the target mob.
-/obj/item/weapon/gun_modular/proc/Aim(mob/living/M)
+/obj/item/weapon/gun/proc/Aim(mob/living/M)
 	if(!target || !(M in target))
 		lock_time = world.time
 		if(target && !automatic) //If they're targeting someone and they have a non automatic weapon.
@@ -72,7 +72,7 @@
 		M.Targeted(src)
 
 //HE MOVED, SHOOT HIM!
-/obj/item/weapon/gun_modular/proc/TargetActed(mob/living/T)
+/obj/item/weapon/gun/proc/TargetActed(mob/living/T)
 	var/mob/living/M = loc
 	if(M == T)
 		return
@@ -144,7 +144,7 @@
 	var/last_target_click = -5
 	var/target_locked = null
 
-/mob/living/proc/Targeted(var/obj/item/weapon/gun_modular/I) //Self explanitory.
+/mob/living/proc/Targeted(obj/item/weapon/gun/I) //Self explanitory.
 	if(!I.target)
 		I.target = list(src)
 	else if(I.automatic && I.target.len < 5) //Automatic weapon, they can hold down a room.
@@ -210,7 +210,7 @@
 				I.last_moved_mob = src
 			sleep(1)
 
-/mob/living/proc/NotTargeted(var/obj/item/weapon/gun_modular/I)
+/mob/living/proc/NotTargeted(obj/item/weapon/gun/I)
 	if(!I.silenced)
 		for(var/mob/living/M in viewers(src))
 			M.playsound_local(null, 'sound/weapons/guns/TargetOff.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -228,11 +228,11 @@
 
 /mob/living/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	for(var/obj/item/weapon/gun_modular/G in targeted_by) //Handle moving out of the gunner's view.
+	for(var/obj/item/weapon/gun/G in targeted_by) //Handle moving out of the gunner's view.
 		var/mob/living/M = G.loc
 		if(!(M in view(src)))
 			NotTargeted(G)
-	for(var/obj/item/weapon/gun_modular/G in src) //Handle the gunner loosing sight of their target/s
+	for(var/obj/item/weapon/gun/G in src) //Handle the gunner loosing sight of their target/s
 		if(G.target)
 			for(var/mob/living/M in G.target)
 				if(M && !(M in view(src)))
@@ -282,7 +282,7 @@
 		add_gun_icons()
 	else
 		to_chat(usr, "You will now shoot where you target.")
-		for(var/obj/item/weapon/gun_modular/G in usr)
+		for(var/obj/item/weapon/gun/G in usr)
 			G.stop_aim()
 		remove_gun_icons()
 	if(usr.gun_setting_icon)
@@ -309,7 +309,7 @@
 		usr.gun_move_icon.name = "[target_can_move ? "Disallow" : "Allow"] Walking"
 
 	//Handling change for all the guns on client
-	for(var/obj/item/weapon/gun_modular/G in usr)
+	for(var/obj/item/weapon/gun/G in usr)
 		G.lock_time = world.time + 5
 		if(G.target)
 			for(var/mob/living/M in G.target)
@@ -345,7 +345,7 @@
 		usr.gun_run_icon.name = "[target_can_run ? "Disallow" : "Allow"] Running"
 
 	//Handling change for all the guns on client
-	for(var/obj/item/weapon/gun_modular/G in src)
+	for(var/obj/item/weapon/gun/G in src)
 		G.lock_time = world.time + 5
 		if(G.target)
 			for(var/mob/living/M in G.target)
@@ -369,7 +369,7 @@
 		usr.item_use_icon.name = "[target_can_click ? "Disallow" : "Allow"] Item Use"
 
 	//Handling change for all the guns on client
-	for(var/obj/item/weapon/gun_modular/G in src)
+	for(var/obj/item/weapon/gun/G in src)
 		G.lock_time = world.time + 5
 		if(G.target)
 			for(var/mob/living/M in G.target)

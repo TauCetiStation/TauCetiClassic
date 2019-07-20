@@ -25,7 +25,6 @@
 	var/lessdispersion = 0
 	var/lessfiredelay = 0
 	var/lessrecoil = 0
-	var/obj/item/weapon/gun/projectile/modulargun/parent
 
 /obj/item/weapon/stock_parts/cell/suicide_act(mob/user)
 	to_chat(viewers(user), "\red <b>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</b>")

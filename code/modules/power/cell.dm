@@ -87,7 +87,7 @@
 		to_chat(user, "You changed the battery.")
 		if(modular_cell)
 			icon_mem = icon_state
-			icon = 'code/modules/projectiles/modules/modular.dmi'
+			icon = 'code/modules/projectiles/module/modular.dmi'
 			icon_state = "magazine_charge_icon"
 			item_state = "magazine_charge_icon"
 		else
