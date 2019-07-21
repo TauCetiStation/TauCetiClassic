@@ -50,6 +50,7 @@
 		return FALSE
 	if(!parent.magazine_supply.ammo_count(ammo))
 		return FALSE
+	return TRUE
 
 /obj/item/weapon/gun_module/chamber/proc/process_chamber()
 	chambered = null
