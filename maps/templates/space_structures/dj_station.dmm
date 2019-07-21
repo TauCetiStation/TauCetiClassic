@@ -398,6 +398,7 @@
 /area/djstation)
 "aX" = (
 /obj/structure/table,
+/obj/item/weapon/disk/research_points,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
