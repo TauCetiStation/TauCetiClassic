@@ -1056,6 +1056,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Technical Storage"
 	icon_state = "auxstorage"
 
+/area/storage/tech/north
+	name = "North Technical Storage"
+
 
 //DJSTATION
 
