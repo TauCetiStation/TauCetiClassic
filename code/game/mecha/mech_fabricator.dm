@@ -45,7 +45,8 @@
 								"Exosuit Equipment",
 								"Cyborg Upgrade Modules",
 								"Cyborg Components",
-								"Misc"
+								"Misc",
+								"Stock Parts",
 								)
 
 /obj/machinery/mecha_part_fabricator/atom_init()
@@ -250,19 +251,24 @@
 	if(!files)
 		return
 	var/output
-	for(var/datum/tech/T in files.known_tech)
+	for(var/tech_tree_id in files.tech_trees)
+		var/datum/tech/T = files.tech_trees[tech_tree_id]
 		if(T && T.level > 1)
 			var/diff
 			switch(T.id)
-				if("materials")
+				if("engineering")
 					//one materials level is 1/32, so that max level is 0.75 coefficient
 					diff = round(initial(resource_coeff_tech) - (initial(resource_coeff_tech)*(T.level-1))/32,0.01)
+					if(diff < 0.75)
+						diff = 0.75
 					if(resource_coeff_tech>diff)
 						resource_coeff_tech = diff
 						output+="Production efficiency increased.<br>"
-				if("programming")
+				if("robotics")
 					//one materials level is 1/40, so that max level is 0.8 coefficient
 					diff = round(initial(time_coeff_tech) - (initial(time_coeff_tech)*(T.level-1))/40,0.1)
+					if(diff < 0.8)
+						diff = 0.8
 					if(time_coeff_tech>diff)
 						time_coeff_tech = diff
 						output+="Production routines updated.<br>"
@@ -277,11 +283,7 @@
 	for(var/obj/machinery/computer/rdconsole/RDC in oview(7,src))
 		if(!RDC.sync)
 			continue
-		for(var/datum/tech/T in RDC.files.known_tech)
-			files.AddTech2Known(T)
-		for(var/datum/design/D in RDC.files.known_designs)
-			files.AddDesign2Known(D)
-		files.RefreshResearch()
+		files.download_from(RDC.files)
 		temp = "Processed equipment designs.<br>"
 		//check if the tech coefficients have changed
 		temp += update_tech()

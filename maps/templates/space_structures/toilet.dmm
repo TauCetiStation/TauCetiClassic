@@ -27,6 +27,7 @@
 /area/space)
 "g" = (
 /obj/machinery/door/window/southright,
+/obj/item/weapon/disk/research_points,
 /turf/simulated/floor/plating,
 /area/space)
 "k" = (
