@@ -32,9 +32,8 @@
 	parent = null
 	change_stat(gun, FALSE)
 
-/obj/item/weapon/gun_module/magazine/proc/ammo_count(var/obj/item/ammo_casing/ammo = null)
-	if(ammo == null)
-		return FALSE
+/obj/item/weapon/gun_module/magazine/proc/ammo_count()
+	return
 
 /obj/item/weapon/gun_module/magazine/proc/get_round()
 	return null
@@ -73,10 +72,13 @@
 		power_supply = null
 
 /obj/item/weapon/gun_module/magazine/energy/ammo_count(var/obj/item/ammo_casing/energy/ammo = null)
-	.=..(ammo)
+	if(ammo == null)
+		return FALSE
 	if(power_supply)
 		var/obj/item/ammo_casing/energy/shot = new ammo.type(src)
-		return power_supply.charge > shot.e_cost * 10
+		var/power = power_supply.charge > (shot.e_cost * 10)
+		return power
+	return FALSE
 
 /obj/item/weapon/gun_module/magazine/energy/get_round(obj/item/ammo_casing/energy/ammo)
 	if(power_supply)
@@ -128,7 +130,6 @@
 		bullet_supply = null
 
 /obj/item/weapon/gun_module/magazine/bullet/ammo_count()
-	.=..()
 	if(bullet_supply)
 		return bullet_supply.ammo_count()
 

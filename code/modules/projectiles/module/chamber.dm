@@ -46,7 +46,7 @@
 /obj/item/weapon/gun_module/chamber/proc/chamber_round(var/obj/item/ammo_casing/ammo = null)
 	if(chambered)
 		return FALSE
-	if(!magazine_supply)
+	if(!parent.magazine_supply)
 		return FALSE
 	if(!parent.magazine_supply.ammo_count(ammo))
 		return FALSE
@@ -132,7 +132,8 @@
 	gun_type = BULLET
 
 /obj/item/weapon/gun_module/chamber/bullet/chamber_round()
-	.=..()
+	if(!..())
+		return FALSE
 	chambered = parent.magazine_supply.get_round()
 	chambered.loc = src
 	if(chambered.BB)
@@ -178,12 +179,13 @@
 	var/select = 1
 
 /obj/item/weapon/gun_module/chamber/energy/condition_check(GUN)
-	if(.=..() && lens.len > 0)
+	if(..() && lens.len > 0)
 		return TRUE
 	return FALSE
 
 /obj/item/weapon/gun_module/chamber/energy/chamber_round(var/obj/item/ammo_casing/energy/lense = lens[select])
-	.=..(lense)
+	if(!..(lense))
+		return FALSE
 	chambered = parent.magazine_supply.get_round(lense)
 
 /obj/item/weapon/gun_module/chamber/energy/process_chamber()
