@@ -970,8 +970,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/weapon/melee/baton,
 /obj/item/clothing/suit/armor/riot,
@@ -2618,8 +2617,7 @@
 	dir = 1
 	},
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/structure/closet/wardrobe/tactical,
 /obj/machinery/light/small{
@@ -2659,8 +2657,7 @@
 	dir = 8
 	},
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/structure/closet/wardrobe/tactical,
 /turf/simulated/floor{
@@ -2676,8 +2673,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/structure/closet/wardrobe/tactical,
 /obj/structure/disposalpipe/segment,
@@ -2928,8 +2924,7 @@
 /obj/structure/rack,
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/weapon/melee/baton,
 /obj/item/clothing/suit/armor/riot,
@@ -3083,8 +3078,7 @@
 /obj/structure/rack,
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/weapon/melee/baton,
 /obj/item/clothing/suit/armor/riot,
@@ -3397,8 +3391,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/clothing/suit/storage/flak/bulletproof{
 	pixel_x = -3;
@@ -4152,8 +4145,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/clothing/suit/armor/laserproof{
 	pixel_x = -3;
@@ -5017,8 +5009,7 @@
 /obj/machinery/door_control{
 	id = "eq_storage";
 	name = "Shutters Control";
-	pixel_y = 26;
-	req_access = list()
+	pixel_y = 26
 	},
 /obj/effect/landmark/start{
 	name = "Shaft Miner"
@@ -5117,8 +5108,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/weapon/gun/projectile/automatic/l10c{
 	pixel_x = -3;
@@ -5282,8 +5272,7 @@
 	name = "Medbay Doors Control";
 	pixel_x = -28;
 	pixel_y = 28;
-	range = 8;
-	req_access = list()
+	range = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/disposalpipe/segment{
@@ -5764,8 +5753,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/weapon/gun/energy/gun{
 	pixel_x = 3;
@@ -6529,8 +6517,7 @@
 /obj/structure/rack,
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/weapon/gun/energy/laser{
 	pixel_x = -3;
@@ -6572,8 +6559,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/weapon/gun/energy/ionrifle{
 	pixel_x = -3;
@@ -6614,8 +6600,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/weapon/gun/projectile/shotgun{
 	pixel_x = -3;
@@ -25928,6 +25913,7 @@
 /area/rnd/lab)
 "biQ" = (
 /obj/structure/table/glass,
+/obj/item/device/science_tool,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurple"
@@ -28004,9 +27990,7 @@
 	},
 /area/engine/drone_fabrication)
 "bnf" = (
-/obj/structure/closet/secure_closet/bar{
-	req_access = list(25)
-	},
+/obj/structure/closet/secure_closet/bar,
 /obj/item/weapon/gun/projectile/revolver/doublebarrel,
 /obj/item/weapon/paper{
 	info = "This permit signifies that the Bartender is permitted to posess this firearm in the bar, and ONLY the bar. Failure to adhere to this permit will result in confiscation of the weapon and possibly arrest.";
@@ -32814,8 +32798,7 @@
 /obj/machinery/door_control{
 	id = "Patients";
 	name = "Privacy Shutters";
-	pixel_y = 28;
-	req_access = list()
+	pixel_y = 28
 	},
 /turf/simulated/floor/carpet,
 /area/medical/patients_rooms)
@@ -44154,8 +44137,7 @@
 	id_tag = "recycler_inner";
 	locked = 1;
 	name = "Recycler External Access";
-	req_access = list(67);
-	req_one_access = list()
+	req_access = list(67)
 	},
 /turf/simulated/floor/plating,
 /area/quartermaster/recycleroffice)
@@ -44384,8 +44366,7 @@
 	id_tag = "recycler_outer";
 	locked = 1;
 	name = "Recycler External Access";
-	req_access = list(67);
-	req_one_access = list()
+	req_access = list(67)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -45280,8 +45261,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -45305,8 +45285,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/ammo_box/magazine/m9mm_2,
 /obj/item/ammo_box/magazine/m9mm_2,
@@ -45337,8 +45316,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/ammo_box/shotgun,
 /obj/item/ammo_box/shotgun,
@@ -45356,8 +45334,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/ammo_box/shotgun/beanbag,
 /obj/item/ammo_box/shotgun/beanbag,
@@ -45535,8 +45512,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -46077,7 +46053,7 @@
 	},
 /area/security/nuke_storage)
 "ccW" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/radio/beacon/explosion_watcher,
 /turf/simulated/floor/engine/vacuum,
 /turf/simulated/floor{
 	dir = 4;
@@ -47143,9 +47119,7 @@
 /area/shuttle/escape_pod3/station)
 "cfE" = (
 /obj/machinery/door/airlock/external{
-	name = "Escape Pod 5";
-	req_access = list();
-	req_one_access = list()
+	name = "Escape Pod 5"
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
@@ -56009,8 +55983,7 @@
 /area/medical/patient_a)
 "cEQ" = (
 /obj/machinery/door/airlock/medical{
-	name = "Patient Room 1";
-	req_access = list()
+	name = "Patient Room 1"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -56127,8 +56100,7 @@
 /area/maintenance/medbay)
 "cFu" = (
 /obj/machinery/door/airlock/medical{
-	name = "Patient Room 2";
-	req_access = list()
+	name = "Patient Room 2"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -71078,8 +71050,7 @@
 	name = "Medbay Doors Control";
 	pixel_x = 28;
 	pixel_y = 28;
-	range = 8;
-	req_access = list()
+	range = 8
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -71502,7 +71473,6 @@
 	},
 /obj/machinery/door/airlock/medical{
 	name = "Morgue";
-	req_access = list();
 	req_one_access = list(6,28)
 	},
 /turf/simulated/floor{
