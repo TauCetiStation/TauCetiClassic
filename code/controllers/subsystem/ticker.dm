@@ -439,7 +439,7 @@ var/datum/subsystem/ticker/ticker
 				num_survivors++
 				if(station_evacuated) //If the shuttle has already left the station
 					var/turf/playerTurf = get_turf(Player)
-					if(playerTurf.z != ZLEVEL_CENTCOMM)
+					if(!is_centcom_level(playerTurf.z))
 						to_chat(Player, "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>")
 					else
 						num_escapees++
@@ -515,7 +515,7 @@ var/datum/subsystem/ticker/ticker
 	mode.declare_completion()//To declare normal completion.
 
 	ai_completions += "<br><h2>Mode Result</h2>"
-	
+
 	if(mode.completion_text)//extendet has empty completion text
 		ai_completions += "<div class='block'>[mode.completion_text]</div>"
 

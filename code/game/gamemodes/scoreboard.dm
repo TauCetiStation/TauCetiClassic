@@ -6,14 +6,14 @@
 
 	// Who is alive/dead, who escaped
 	for (var/mob/living/silicon/ai/I in ai_list)
-		if (I.stat == DEAD && I.z == ZLEVEL_STATION)
+		if (I.stat == DEAD && is_station_level(I.z))
 			score["deadaipenalty"] = 1
 			score["crew_dead"] += 1
 
 	for (var/mob/living/carbon/human/I in human_list)
 //		for (var/datum/ailment/disease/V in I.ailments)
 //			if (!V.vaccine && !V.spread != "Remissive") score["disease"]++
-		if (I.stat == DEAD && I.z == ZLEVEL_STATION)
+		if (I.stat == DEAD && is_station_level(I.z))
 			score["crew_dead"] += 1
 		if (I.job == "Clown")
 			for(var/thing in I.attack_log)
@@ -133,7 +133,7 @@
 
 	// Check station's power levels
 	for (var/obj/machinery/power/apc/A in apc_list)
-		if (A.z != ZLEVEL_STATION)
+		if (!is_station_level(A.z))
 			continue
 		for (var/obj/item/weapon/stock_parts/cell/C in A.contents)
 			if (C.charge < 2300)
@@ -141,7 +141,7 @@
 
 	// Check how much uncleaned mess is on the station
 	for (var/obj/effect/decal/cleanable/M in decal_cleanable)
-		if (M.z != ZLEVEL_STATION)
+		if (!is_station_level(M.z))
 			continue
 		if (istype(M, /obj/effect/decal/cleanable/blood/gibs))
 			score["mess"] += 3

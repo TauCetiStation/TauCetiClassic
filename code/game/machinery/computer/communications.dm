@@ -77,7 +77,7 @@
 	if(!.)
 		return
 
-	if (src.z > ZLEVEL_STATION)
+	if (!is_station_level(z))
 		to_chat(usr, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return FALSE
 	if(!href_list["operation"])
@@ -307,7 +307,7 @@
 	return
 
 /obj/machinery/computer/communications/ui_interact(mob/user)
-	if (src.z > ZLEVEL_EMPTY)
+	if (!SSmapping.has_level(z))
 		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return
 

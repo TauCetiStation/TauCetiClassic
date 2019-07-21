@@ -181,6 +181,9 @@
 	var/craft_recipes_visibility = FALSE // If false, then users won't see crafting recipes in personal crafting menu until they have all required components and then it will show up.
 	var/starlight = FALSE	// Whether space turfs have ambient light or not
 
+	var/list/maplist = list()
+	var/datum/map_config/defaultmap
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for (var/T in L)
@@ -766,3 +769,53 @@
 		statclick = new/obj/effect/statclick/debug(null, "Edit", src)
 
 	stat("[name]:", statclick)
+
+/datum/configuration/proc/loadmaplist(filename)
+	var/list/Lines = file2list(filename)
+
+	var/datum/map_config/currentmap = null
+	for(var/t in Lines)
+		if(!t)
+			continue
+
+		t = trim(t)
+		if(length(t) == 0)
+			continue
+		else if(copytext(t, 1, 2) == "#")
+			continue
+
+		var/pos = findtext(t, " ")
+		var/command = null
+		var/data = null
+
+		if(pos)
+			command = lowertext(copytext(t, 1, pos))
+			data = copytext(t, pos + 1)
+		else
+			command = lowertext(t)
+
+		if(!command)
+			continue
+
+		if (!currentmap && command != "map")
+			continue
+
+		switch (command)
+			if ("map")
+				currentmap = load_map_config("maps/[data].json")
+				if(currentmap.defaulted)
+					error("Failed to load map config for [data]!")
+					currentmap = null
+			if ("minplayers","minplayer")
+				currentmap.config_min_users = text2num(data)
+			if ("maxplayers","maxplayer")
+				currentmap.config_max_users = text2num(data)
+			if ("default","defaultmap")
+				defaultmap = currentmap
+			if ("endmap")
+				maplist[currentmap.map_name] = currentmap
+				currentmap = null
+			if ("disabled")
+				currentmap = null
+			else
+				error("Unknown command in map vote config: '[command]'")

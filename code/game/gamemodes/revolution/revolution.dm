@@ -363,7 +363,7 @@
 /datum/game_mode/revolution/proc/check_heads_victory()
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		var/turf/T = get_turf(rev_mind.current)
-		if((rev_mind) && (rev_mind.current) && (rev_mind.current.stat != DEAD) && T && (T.z == ZLEVEL_STATION))
+		if((rev_mind) && (rev_mind.current) && (rev_mind.current.stat != DEAD) && T && is_station_level(T.z))
 			if(ishuman(rev_mind.current))
 				return 0
 	return 1
@@ -408,7 +408,7 @@
 					text += "died"
 					flat.Turn(90)
 					end_icons[tempstate] = flat
-				else if(headrev.current.z != ZLEVEL_STATION)
+				else if(!is_station_level(headrev.current.z))
 					text += "fled the station"
 				else
 					text += "survived the revolution"
@@ -452,7 +452,7 @@
 					text += "died"
 					flat.Turn(90)
 					end_icons[tempstate] = flat
-				else if(rev.current.z != ZLEVEL_STATION)
+				else if(!is_station_level(rev.current.z))
 					text += "fled the station"
 				else
 					text += "survived the revolution"
@@ -485,7 +485,7 @@
 					text += "died"
 					flat.Turn(90)
 					end_icons[tempstate] = flat
-				else if(head.current.z != ZLEVEL_STATION)
+				else if(!is_station_level(head.current.z))
 					text += "fled the station"
 				else
 					text += "survived the revolution"
@@ -504,5 +504,5 @@
 	if(text)
 		antagonists_completion += list(list("mode" = "revolution", "html" = text))
 		text = "<div class='block'>[text]</div>"
-		
+
 	return text

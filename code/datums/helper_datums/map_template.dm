@@ -6,6 +6,7 @@
 	var/mapfile = null
 	var/loaded = 0 // Times loaded this round
 	var/list/loaded_stuff = list()
+	var/list/bounds
 
 /datum/map_template/New(path = null, map = null, rename = null)
 	if(path)
@@ -22,7 +23,7 @@
 /datum/map_template/proc/preload_size(path)
 	loaded_stuff = maploader.load_map(get_file(), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
 	if(loaded_stuff && loaded_stuff.len)
-		var/list/bounds = loaded_stuff["bounds"]
+		bounds = loaded_stuff["bounds"]
 		if(bounds && bounds.len)
 			width = bounds[MAP_MAXX] // Assumes all templates are rectangular, have a single Z level, and begin at 1,1,1
 			height = bounds[MAP_MAXY]
@@ -55,7 +56,7 @@
 	SSmachine.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 
-/datum/map_template/proc/load(turf/T, centered = FALSE)
+/datum/map_template/proc/load(turf/T, centered = FALSE, initBounds = TRUE)
 	if(centered)
 		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
 	if(!T)
@@ -69,17 +70,21 @@
 	if(!loaded_stuff || !loaded_stuff.len)
 		return 0
 
-	var/list/bounds = loaded_stuff["bounds"]
+	bounds = loaded_stuff["bounds"]
 	if(!bounds || !bounds.len)
 		return 0
 
 	var/list/stuff = loaded_stuff["stuff"]
 	. = stuff
 	//initialize things that are normally initialized after map load
-	initTemplateBounds(bounds)
+	if(initBounds)
+		initTemplateBounds(bounds)
 
 	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
 	loaded_stuff.Cut()
+
+/datum/map_template/proc/loadMap(z)
+	return maploader.load_map(get_file(), 1, 1, z, cropMap=TRUE)
 
 /datum/map_template/proc/get_file()
 	if(mapfile)

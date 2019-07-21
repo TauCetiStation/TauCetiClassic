@@ -78,7 +78,8 @@ var/global/dmm_suite/preloader/_preloader = new
 				if(cropMap)
 					continue
 				else
-					world.maxz = zcrd //create a new z_level if needed
+					while (zcrd > world.maxz) //create a new z_level if needed
+						world.incrementMaxZ()
 
 			bounds[MAP_MINX] = min(bounds[MAP_MINX], xcrdStart)
 			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
@@ -233,11 +234,9 @@ var/global/dmm_suite/preloader/_preloader = new
 		// Below is a hackish way of getting /area with the exact type that we provide, because locate() can return child of the type that we need which is wrong
 		if(instance.type != members[index])
 			var/e = members[index]
-			for(var/area/N in all_areas)
-				if(N.type == e)
-					instance = N
-					break
-			if(instance.type != e)
+			if(areas_by_type[e])
+				instance = areas_by_type[e]
+			else
 				instance = new e
 		// End of the hack
 		if(crds)

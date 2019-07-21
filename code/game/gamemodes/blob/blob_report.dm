@@ -24,7 +24,7 @@
 			var/nukecode = "ERROR"
 			for(var/obj/machinery/nuclearbomb/bomb in poi_list)
 				if(bomb && bomb.r_code)
-					if(bomb.z == ZLEVEL_STATION)
+					if(is_station_level(bomb.z))
 						nukecode = bomb.r_code
 			interceptname = "Directive 7-12"
 			intercepttext += "<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>"
@@ -66,42 +66,43 @@
 
 
 /datum/station_state/proc/count(count_territories)
-	for(var/turf/T in block(locate(1, 1, ZLEVEL_STATION), locate(world.maxx, world.maxy, ZLEVEL_STATION)))
-		if(istype(T,/turf/simulated/floor))
-			var/turf/simulated/floor/F = T
-			if(!F.burnt)
-				src.floor += 12
-			else
-				src.floor += 1
+	for(var/Z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+		for(var/turf/T in block(locate(1, 1, Z), locate(world.maxx, world.maxy, Z)))
+			if(istype(T,/turf/simulated/floor))
+				var/turf/simulated/floor/F = T
+				if(!F.burnt)
+					floor += 12
+				else
+					floor += 1
 
-		if(istype(T, /turf/simulated/wall))
-			if(T.intact)
-				src.wall += 2
-			else
-				src.wall += 1
+			if(istype(T, /turf/simulated/wall))
+				if(T.intact)
+					wall += 2
+				else
+					wall += 1
 
-		if(istype(T, /turf/simulated/wall/r_wall))
-			if(T.intact)
-				src.r_wall += 2
-			else
-				src.r_wall += 1
+			if(istype(T, /turf/simulated/wall/r_wall))
+				if(T.intact)
+					r_wall += 2
+				else
+					r_wall += 1
 
-		for(var/obj/O in T.contents)
-			if(istype(O, /obj/structure/window))
-				src.window += 1
-			else if(istype(O, /obj/structure/grille))
-				var/obj/structure/grille/G = O
-				if(!G.destroyed)
-					src.grille += 1
-			else if(istype(O, /obj/machinery/door))
-				src.door += 1
-			else if(istype(O, /obj/machinery))
-				src.mach += 1
+			for(var/obj/O in T.contents)
+				if(istype(O, /obj/structure/window))
+					window += 1
+				else if(istype(O, /obj/structure/grille))
+					var/obj/structure/grille/G = O
+					if(!G.destroyed)
+						grille += 1
+				else if(istype(O, /obj/machinery/door))
+					door += 1
+				else if(istype(O, /obj/machinery))
+					mach += 1
 
 	if(count_territories)
 		var/list/valid_territories = list()
 		for(var/area/A in all_areas) //First, collect all area types on the station zlevel
-			if(A.z == ZLEVEL_STATION)
+			if(is_station_level(A.z))
 				if(!(A.type in valid_territories) && A.valid_territory)
 					valid_territories |= A.type
 		if(valid_territories.len)
