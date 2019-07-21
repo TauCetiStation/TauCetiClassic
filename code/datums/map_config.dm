@@ -8,7 +8,7 @@
 	// Config actually from the JSON - should default to Box
 	var/map_name = "Box Station"
 	var/map_path = "boxstation"
-	var/map_file = "z1.dmm"
+	var/map_file = "boxstation.dmm"
 
 	// Config from maps.txt
 	var/config_max_users = 0
