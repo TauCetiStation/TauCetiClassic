@@ -323,7 +323,7 @@
 			if(radiation > 50)
 				radiation--
 				damage = 1
-				if(prob(5) && prob(radiation) && (h_style != "Bald" || f_style != "Shaved"))
+				if(prob(5) && species.flags[HAS_HAIR] && prob(radiation) && (h_style != "Bald" || f_style != "Shaved"))
 					h_style = "Bald"
 					f_style = "Shaved"
 					update_hair()
@@ -1147,10 +1147,12 @@
 			if(hallucination >= 20)
 				if(prob(3))
 					fake_attack(src)
+				if(hallucination > 1000)
+					hallucination = 1000
 				if(!handling_hal)
 					spawn handle_hallucinations() //The not boring kind!
 
-			if(hallucination<=2)
+			if(hallucination <= 2)
 				hallucination = 0
 				halloss = 0
 			else

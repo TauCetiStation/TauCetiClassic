@@ -629,7 +629,7 @@
 							BP.status = ORGAN_DESTROYED
 						else
 							BP.status = 0
-					for(var/obj/item/organ/internal/BP in H.species.has_organ)
+					for(var/obj/item/organ/internal/BP in H.organs)
 						BP.rejuvenate()
 			if(31 to 50)
 				M.heal_bodypart_damage(0,5)

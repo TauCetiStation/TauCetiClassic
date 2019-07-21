@@ -173,6 +173,13 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	flags_inv = HIDEJUMPSUIT
 
+/obj/item/clothing/suit/byzantine_dress
+	name = "Byzantine dress"
+	desc = "Fancy expensive clothes from Space Byzantium"
+	icon_state = "Byzantine_dress"
+	item_state = "Byzantine_dress"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
 /*
  * Misc
  */

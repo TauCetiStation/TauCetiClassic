@@ -120,10 +120,14 @@
 				admin_ticket_log(recipient, interaction_message)
 
 		else		//recipient is an admin but sender is not
-			var/replymsg = "<font color='red'>Reply PM from-<b>[key_name(src, recipient, 1)]</b>: <span class='emojify linkify'>[msg]</span></font>"
-			admin_ticket_log(src, replymsg)
-			to_chat(recipient, replymsg)
-			to_chat(src, "<font color='blue'>PM to-<b>Admins</b>: <span class='emojify linkify'>[msg]</span></font>")
+			if(!current_ticket)
+				to_chat(src, "<font color='red'>You can no longer reply to this ticket, please open another one by using the Adminhelp verb if need be.</font>")
+				to_chat(src, "<font color='blue'>Message: [msg]</font>")
+			else
+				var/replymsg = "<font color='red'>Reply PM from-<b>[key_name(src, recipient, 1)]</b>: <span class='emojify linkify'>[msg]</span></font>"
+				admin_ticket_log(src, replymsg)
+				to_chat(recipient, replymsg)
+				to_chat(src, "<font color='blue'>PM to-<b>Admins</b>: <span class='emojify linkify'>[msg]</span></font>")
 
 		//play the receiving admin the adminhelp sound (if they have them enabled)
 		recipient.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)

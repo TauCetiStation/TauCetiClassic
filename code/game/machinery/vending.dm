@@ -666,7 +666,7 @@
 	vend_delay = 15
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
-	req_access_txt = "25"
+	req_access = list(25)
 	refill_canister = /obj/item/weapon/vending_refill/boozeomat
 
 /obj/machinery/vending/assist
@@ -771,7 +771,7 @@
 	icon_deny = "med-deny"
 	light_color = "#e6fff2"
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
-	req_access_txt = "5"
+	req_access = list(5)
 	products = list(/obj/item/weapon/reagent_containers/glass/bottle/antitoxin = 4,/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline = 4,
 					/obj/item/weapon/reagent_containers/glass/bottle/stoxin = 4,/obj/item/weapon/reagent_containers/glass/bottle/toxin = 4,
 					/obj/item/weapon/reagent_containers/syringe/antiviral = 4,/obj/item/weapon/reagent_containers/syringe = 12,
@@ -795,7 +795,7 @@
 	light_power_on = 1
 	light_color = "#e6fff2"
 	icon_deny = "wallmed-deny"
-	req_access_txt = "5"
+	req_access = list(5)
 	density = 0 //It is wall-mounted, and thus, not dense. --Superxpdude
 	products = list(/obj/item/stack/medical/bruise_pack = 2,/obj/item/stack/medical/ointment = 2,/obj/item/weapon/reagent_containers/hypospray/autoinjector = 4,/obj/item/device/healthanalyzer = 1)
 	contraband = list(/obj/item/weapon/reagent_containers/syringe/antitoxin = 4,/obj/item/weapon/reagent_containers/syringe/antiviral = 4,/obj/item/weapon/reagent_containers/pill/tox = 1)
@@ -807,7 +807,7 @@
 	light_power_on = 1
 	light_color = "#e6fff2"
 	icon_deny = "wallmed-deny"
-	req_access_txt = "5"
+	req_access = list(5)
 	density = 0 //It is wall-mounted, and thus, not dense. --Superxpdude
 	products = list(/obj/item/weapon/reagent_containers/hypospray/autoinjector = 5,/obj/item/weapon/reagent_containers/syringe/antitoxin = 3,/obj/item/stack/medical/bruise_pack = 3,
 					/obj/item/stack/medical/ointment =3,/obj/item/device/healthanalyzer = 3)
@@ -820,7 +820,7 @@
 	icon_state = "sec"
 	light_color = "#f1f8ff"
 	icon_deny = "sec-deny"
-	req_access_txt = "1"
+	req_access = list(1)
 	products = list(/obj/item/weapon/handcuffs = 8,/obj/item/weapon/grenade/flashbang = 4,/obj/item/device/flash = 5,
 					/obj/item/weapon/reagent_containers/food/snacks/donut/normal = 12,/obj/item/weapon/storage/box/evidence = 6)
 	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,/obj/item/weapon/storage/fancy/donut_box = 2,/obj/item/device/flashlight/seclite = 4)
@@ -943,7 +943,7 @@
 	icon_state = "barbervend"
 	product_slogans = "Spread the colour, like butter, onto toast... Onto their hair.; Sometimes, I dream about dyes...; Paint 'em up and call me Mr. Painter.; Look brother, I'm a vendomat, I solve practical problems."
 	product_ads = "Cut 'em all!; To sheds!; Hair be gone!; Prettify!; Beautify!"
-	req_access_txt = "69"
+	req_access = list(69)
 	refill_canister = /obj/item/weapon/vending_refill/barbervend
 	products = list(/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/white = 10,
 					/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/red = 10,
@@ -1009,7 +1009,7 @@
 	icon_state = "engivend"
 	light_color = "#ffcc33"
 	icon_deny = "engivend-deny"
-	req_access_txt = "11" //Engineering Equipment access
+	req_access = list(11) //Engineering Equipment access
 	products = list(/obj/item/clothing/glasses/meson = 2,/obj/item/device/multitool = 4,/obj/item/weapon/airlock_electronics = 10,/obj/item/weapon/module/power_control = 10,/obj/item/weapon/airalarm_electronics = 10,/obj/item/weapon/stock_parts/cell/high = 10)
 	contraband = list(/obj/item/weapon/stock_parts/cell/potato = 3)
 	premium = list(/obj/item/weapon/storage/belt/utility = 3)
@@ -1021,7 +1021,7 @@
 	desc = "Everything you need for do-it-yourself station repair."
 	icon_state = "engi"
 	icon_deny = "engi-deny"
-	req_access_txt = "11"
+	req_access = list(11)
 	products = list(/obj/item/clothing/under/rank/chief_engineer = 4,/obj/item/clothing/under/rank/engineer = 4,/obj/item/clothing/shoes/workboots = 4,/obj/item/clothing/head/hardhat/yellow = 4,
 					/obj/item/clothing/head/hardhat/yellow/visor = 1,/obj/item/weapon/storage/belt/utility = 4,/obj/item/clothing/glasses/meson = 4,/obj/item/clothing/gloves/yellow = 4, /obj/item/weapon/screwdriver = 12,
 					/obj/item/weapon/crowbar = 12,/obj/item/weapon/wirecutters = 12,/obj/item/device/multitool = 12,/obj/item/weapon/wrench = 12,/obj/item/device/t_scanner = 12,
@@ -1038,7 +1038,7 @@
 	desc = "All the tools you need to create your own robot army."
 	icon_state = "robotics"
 	icon_deny = "robotics-deny"
-	req_access_txt = "29"
+	req_access = list(29)
 	products = list(/obj/item/stack/cable_coil/random = 2,/obj/item/device/flash = 4,
 					/obj/item/weapon/stock_parts/cell/high = 5, /obj/item/device/assembly/prox_sensor = 3,/obj/item/device/assembly/signaler = 3,/obj/item/device/healthanalyzer = 3,
 					/obj/item/weapon/scalpel = 2,/obj/item/weapon/circular_saw = 2,/obj/item/weapon/tank/anesthetic = 2,/obj/item/clothing/mask/breath/medical = 2)
@@ -1064,7 +1064,7 @@
 	/obj/item/clothing/under/sundress=4,/obj/item/clothing/under/blacktango=2,
 	/obj/item/clothing/suit/jacket=6,/obj/item/clothing/glasses/regular=4,/obj/item/clothing/head/sombrero=2,
 	/obj/item/clothing/suit/poncho=2,/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=4,
-	/obj/item/clothing/shoes/sandal=2,
+	/obj/item/clothing/shoes/sandal=2,/obj/item/clothing/head/byzantine_hat=1,/obj/item/clothing/suit/byzantine_dress=1,
 	/obj/item/clothing/mask/bandana/black=2,/obj/item/clothing/mask/bandana/skull=2,/obj/item/clothing/mask/bandana/green=2,/obj/item/clothing/mask/bandana/gold=2,
 	/obj/item/clothing/mask/bandana/blue=2,/obj/item/clothing/mask/scarf/blue=2,/obj/item/clothing/mask/scarf/red=2,/obj/item/clothing/mask/scarf/green=2,
 	/obj/item/clothing/mask/scarf/yellow=2,/obj/item/clothing/mask/scarf/violet=2,
@@ -1092,7 +1092,7 @@
 	/obj/item/clothing/under/sundress=85,/obj/item/clothing/under/blacktango=99,
 	/obj/item/clothing/suit/jacket=138,/obj/item/clothing/glasses/regular=55,/obj/item/clothing/head/sombrero=240,
 	/obj/item/clothing/suit/poncho=295,/obj/item/clothing/suit/ianshirt=4000,/obj/item/clothing/shoes/laceup=99,
-	/obj/item/clothing/shoes/sandal=35,
+	/obj/item/clothing/shoes/sandal=35,/obj/item/clothing/head/byzantine_hat=500,/obj/item/clothing/suit/byzantine_dress=1000,
 	/obj/item/clothing/mask/bandana/black=384,/obj/item/clothing/mask/bandana/skull=399,/obj/item/clothing/mask/bandana/green=384,/obj/item/clothing/mask/bandana/gold=389,
 	/obj/item/clothing/mask/bandana/blue=384,/obj/item/clothing/mask/scarf/blue=250,/obj/item/clothing/mask/scarf/red=250,/obj/item/clothing/mask/scarf/green=250,
 	/obj/item/clothing/mask/scarf/yellow=250,/obj/item/clothing/mask/scarf/violet=250,
@@ -1266,4 +1266,4 @@
 	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 30, /obj/item/weapon/storage/fancy/cigarettes/menthol = 40, /obj/item/weapon/storage/box/matches = 10)
 	product_slogans = "The cheaper the crook, the gaudier the patter.;Dead men are heavier than broken hearts.;Life is a bucket of shit with a barbed wire handle.;After all, you’re only an immortal until someone manages to kill you. After that, you were just long-lived.;The rain fell like dead bullets.;Though I often run out of courage and good sense, stubbornness keeps me going."
 	product_ads = "Keep your mind too open, and you never know what might walk in.;After all, you’re only an immortal until someone manages to kill you. After that, you were just long-lived.;If you don't trust anyone, they can't let you down.;Wait. You've got principles? We'll have to update your file.;I always feel most alive when everything else is dying all around me."
-	req_access_txt = "68"
+	req_access = list(68)

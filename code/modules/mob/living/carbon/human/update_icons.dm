@@ -344,7 +344,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(standing.len)
 		overlays_standing[MUTANTRACE_LAYER]	= standing
 
-	update_hair()
+	if(species.flags[HAS_HAIR] || !(HUSK in mutations))
+		update_hair()
 
 	apply_overlay(MUTANTRACE_LAYER)
 
@@ -895,9 +896,11 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	var/list/standing = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
+		BP.bandaged = FALSE
 		if(BP.wounds.len)
 			for(var/datum/wound/W in BP.wounds)
 				if(W.bandaged)
+					BP.bandaged = TRUE
 					standing += image("icon" = 'icons/mob/bandages.dmi', "icon_state" = "[BP.body_zone]", "layer" = -BANDAGE_LAYER)
 
 	if(standing.len)

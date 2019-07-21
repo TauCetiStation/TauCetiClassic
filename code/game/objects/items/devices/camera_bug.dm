@@ -237,7 +237,6 @@
 					usr << browse(null, "window=camerabug")
 			return
 		else
-			usr.unset_machine()
 			usr.reset_view(null)
 
 	interact()
@@ -246,7 +245,7 @@
 	if(track_mode == BUGMODE_LIST || (world.time < (last_tracked + refresh_interval)))
 		return
 	last_tracked = world.time
-	if(track_mode == BUGMODE_TRACK ) // search for user
+	if(track_mode == BUGMODE_TRACK) // search for user
 		// Note that it will be tricked if your name appears to change.
 		// This is not optimal but it is better than tracking you relentlessly despite everything.
 		if(!tracking)
