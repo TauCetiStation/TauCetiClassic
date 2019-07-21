@@ -31,7 +31,7 @@
 			icon_state = ""
 			icon = getFlatIcon(src)
 		else
-			for(var/obj/item/weapon/gun_module/module in modules)
+			for(var/obj/item/weapon/gun_module/module in contents)
 				module.eject(src)
 			icon = 'code/modules/projectiles/module/modular.dmi'
 			icon_state = "base"

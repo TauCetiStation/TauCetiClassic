@@ -177,6 +177,11 @@
 	var/max_lens = 2
 	var/select = 1
 
+/obj/item/weapon/gun_module/chamber/energy/condition_check(GUN)
+	if(.=..() && lens.len > 0)
+		return TRUE
+	return FALSE
+
 /obj/item/weapon/gun_module/chamber/energy/chamber_round(var/obj/item/ammo_casing/energy/lense = lens[select])
 	.=..(lense)
 	chambered = parent.magazine_supply.get_round(lense)
