@@ -24,32 +24,50 @@
 		user.drop_item()
 		module.attach(src)
 		update_icon()
+		to_chat(user, "<span class='danger'>[src] blows up in your face.</span>")
+	else if(isscrewdriver(A))
+		collected = !collected
+		if(collected)
+			icon_state = ""
+			icon = getFlatIcon(src)
+		else
+			for(var/obj/item/weapon/gun_module/module in modules)
+				module.eject(src)
+			icon = 'code/modules/projectiles/module/modular.dmi'
+			icon_state = "base"
+	else
+		if(collected)
+			for(var/obj/item/weapon/gun_module/module in modules)
+				var/rezul = module.attackbying
+				switch(rezul)
+					if(INTERRUPT)
+						module.attackby(A, user)
+						break
+					if(IGNORING)
+						continue
+					if(CONTINUED)
+						module.attackby(A, user)
+	..()
 
 /obj/item/weapon/gunmodule/afterattack(atom/A, mob/living/user, flag, params)
+	if(!collected)
+		return
 	add_fingerprint(user)
-	if(user && user.client && user.client.gun_mode && !(A in target) && grip)
+	if(grip)
 		if(grip.special_check(user, A))
 			if(chamber)
 				chamber.Fire(A,user,params)
 
 /obj/item/weapon/gunmodule/attack_self(mob/user)
+	if(!collected)
+		return
 	for(var/obj/item/weapon/gun_module/module in modules)
 		var/rezul = module.attackself
 		switch(rezul)
 			if(INTERRUPT)
+				module.attack_self(user)
 				break
 			if(IGNORING)
 				continue
 			if(CONTINUED)
 				module.attack_self(user)
-
-/obj/item/weapon/gunmodule/attackby(obj/item/A, mob/user)
-	for(var/obj/item/weapon/gun_module/module in modules)
-		var/rezul = module.attackbying
-		switch(rezul)
-			if(INTERRUPT)
-				break
-			if(IGNORING)
-				continue
-			if(CONTINUED)
-				module.attackby(A, user)

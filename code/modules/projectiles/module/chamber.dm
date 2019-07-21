@@ -7,6 +7,8 @@
 	lessfiredelay = 0
 	lessrecoil = 0
 	size = 0
+	attackbying = CONTINUED
+	attackself = CONTINUED
 	var/obj/item/ammo_casing/chambered = null
 	var/caliber
 	var/gun_type
@@ -43,9 +45,11 @@
 
 /obj/item/weapon/gun_module/chamber/proc/chamber_round(var/obj/item/ammo_casing/ammo = null)
 	if(chambered)
-		return
+		return FALSE
+	if(!magazine_supply)
+		return FALSE
 	if(!parent.magazine_supply.ammo_count(ammo))
-		return
+		return FALSE
 
 /obj/item/weapon/gun_module/chamber/proc/process_chamber()
 	chambered = null
@@ -56,6 +60,7 @@
 			to_chat(user, "<span class='warning'>[src] is not ready to fire again!</span>")
 		return
 
+	chamber_round()
 	if(chambered)
 		if(point_blank)
 			user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
@@ -128,14 +133,13 @@
 
 /obj/item/weapon/gun_module/chamber/bullet/chamber_round()
 	.=..()
-	var/obj/item/ammo_casing/storage = parent.magazine_supply.get_round()
-	storage.loc = src
-	if(storage.BB)
-		if(storage.reagents && storage.BB.reagents)
-			var/datum/reagents/casting_reagents = storage.reagents
-			casting_reagents.trans_to(storage.BB, casting_reagents.total_volume) //For chemical darts/bullets
+	chambered = parent.magazine_supply.get_round()
+	chambered.loc = src
+	if(chambered.BB)
+		if(chambered.reagents && chambered.BB.reagents)
+			var/datum/reagents/casting_reagents = chambered.reagents
+			casting_reagents.trans_to(chambered.BB, casting_reagents.total_volume) //For chemical darts/bullets
 			casting_reagents.delete()
-	return storage
 
 /obj/item/weapon/gun_module/chamber/bullet/process_chamber(var/eject_casing = 1, var/empty_chamber = 1, var/no_casing = 0)
 	if(crit_fail && prob(50))  // IT JAMMED GODDAMIT
@@ -143,7 +147,6 @@
 		return
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(isnull(AC) || !istype(AC))
-		chambered = chamber_round()
 		return
 	if(eject_casing)
 		AC.loc = get_turf(src) //Eject casing onto ground.
@@ -154,7 +157,6 @@
 		chambered = null
 	if(no_casing)
 		qdel(AC)
-	chambered = chamber_round()
 	return
 
 //////////////////////////////////////////////////////////////////////////////
@@ -175,14 +177,13 @@
 	var/max_lens = 2
 	var/select = 1
 
-/obj/item/weapon/gun_module/chamber/energy/chamber_round(var/obj/item/ammo_casing/energy/lense)
+/obj/item/weapon/gun_module/chamber/energy/chamber_round(var/obj/item/ammo_casing/energy/lense = lens[select])
 	.=..(lense)
-	return parent.magazine_supply.get_round(lense)
+	chambered = parent.magazine_supply.get_round(lense)
 
 /obj/item/weapon/gun_module/chamber/energy/process_chamber()
 	if(chambered)
 		qdel(chambered)
-	chambered = chamber_round(lens[select])
 
 /obj/item/weapon/gun_module/chamber/energy/proc/select_fire(mob/user)
 	select++
@@ -203,5 +204,7 @@
 		lens += lense
 		user.drop_item()
 		lense.loc = src
+		select = lens.len
+		fire_sound = lense.fire_sound
 
 

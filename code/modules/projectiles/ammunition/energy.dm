@@ -1,6 +1,6 @@
 /obj/item/ammo_casing/energy
 	name = "energy weapon lens"
-	icon = 'code/modules/projectiles/modules/modular.dmi'
+	icon = 'code/modules/projectiles/module/modular.dmi'
 	icon_state = "lens"
 	color = "#cc0b00"
 	desc = "The part of the gun that makes the laser go pew."

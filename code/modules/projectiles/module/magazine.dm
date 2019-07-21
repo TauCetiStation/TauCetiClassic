@@ -9,6 +9,8 @@
 	size = 0
 	var/external = TRUE
 	var/caliber
+	attackbying = INTERRUPT
+	attackself = INTERRUPT
 
 /obj/item/weapon/gun_module/magazine/attach(GUN)
 	if(condition_check(gun))
@@ -26,8 +28,8 @@
 
 /obj/item/weapon/gun_module/magazine/eject(GUN)
 	gun.magazine_supply = null
+	src.loc = get_turf(gun.loc)
 	parent = null
-	src.loc = get_turf(parent.loc)
 	change_stat(gun, FALSE)
 
 /obj/item/weapon/gun_module/magazine/proc/ammo_count(var/obj/item/ammo_casing/ammo = null)
@@ -65,14 +67,13 @@
 			power_supply = null
 
 /obj/item/weapon/gun_module/magazine/energy/attack_self(mob/user)
-	..()
 	if(external && power_supply)
 		power_supply.loc = get_turf(parent.loc)
 		user.put_in_hands(power_supply)
 		power_supply = null
 
 /obj/item/weapon/gun_module/magazine/energy/ammo_count(var/obj/item/ammo_casing/energy/ammo = null)
-	.=..()
+	.=..(ammo)
 	if(power_supply)
 		var/obj/item/ammo_casing/energy/shot = new ammo.type(src)
 		return power_supply.charge > shot.e_cost * 10
@@ -121,7 +122,6 @@
 			bullet_supply = modul
 
 /obj/item/weapon/gun_module/magazine/bullet/attack_self(mob/user)
-	..()
 	if(external && bullet_supply)
 		bullet_supply.loc = get_turf(parent.loc)
 		user.put_in_hands(bullet_supply)

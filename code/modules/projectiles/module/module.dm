@@ -13,7 +13,8 @@
 
 /obj/item/weapon/gun_module/proc/attach(GUN)
 	if(gun.collected)
-		return
+		return FALSE
+	return TRUE
 
 /obj/item/weapon/gun_module/proc/eject(GUN)
 	return
