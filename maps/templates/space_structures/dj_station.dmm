@@ -160,7 +160,7 @@
 /area/djstation)
 "aw" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "0"
+	req_access = list(0)
 	},
 /turf/simulated/floor/plating,
 /area/djstation)
@@ -398,6 +398,7 @@
 /area/djstation)
 "aX" = (
 /obj/structure/table,
+/obj/item/weapon/disk/research_points,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -464,7 +465,7 @@
 "bf" = (
 /obj/machinery/door/airlock{
 	name = "Restroom";
-	req_access_txt = "0"
+	req_access = list(0)
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -582,8 +583,7 @@
 "br" = (
 /obj/machinery/door/airlock/external{
 	name = "Ruskie DJ Station";
-	req_access = null;
-	req_access_txt = "0"
+	req_access = list(0)
 	},
 /turf/simulated/floor/plating,
 /area/djstation)

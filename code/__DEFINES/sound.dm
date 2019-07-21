@@ -20,7 +20,7 @@
 
 //sound channels, max is 1024
 #define CHANNEL_AMBIENT 1
-#define CHANNEL_AMBIENT_SUB 2
+#define CHANNEL_AMBIENT_LOOP 2
 #define CHANNEL_MUSIC 3
 #define CHANNEL_ADMIN 777
 #define CHANNEL_ANNOUNCE 802

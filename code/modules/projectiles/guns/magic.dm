@@ -6,6 +6,7 @@
 	item_state = "staff"
 	fire_sound = 'sound/weapons/guns/gunpulse_emitter.ogg'
 	flags =  CONDUCT
+	slot_flags = SLOT_FLAGS_BACK
 	w_class = ITEM_SIZE_LARGE
 	var/max_charges = 3
 	var/charges = 0

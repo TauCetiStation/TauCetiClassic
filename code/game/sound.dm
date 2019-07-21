@@ -200,7 +200,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		if(VOL_AMBIENT)
 			prefs.snd_ambient_vol = vol
 			mob.playsound_music_update_volume(volume_channel, CHANNEL_AMBIENT)
-			mob.playsound_music_update_volume(volume_channel, CHANNEL_AMBIENT_SUB)
+			mob.playsound_music_update_volume(volume_channel, CHANNEL_AMBIENT_LOOP)
 		if(VOL_EFFECTS_MASTER)
 			prefs.snd_effects_master_vol = vol
 		if(VOL_EFFECTS_VOICE_ANNOUNCEMENT)

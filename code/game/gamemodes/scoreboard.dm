@@ -160,8 +160,9 @@
 	//Research Levels
 	var/research_levels = 0
 	for(var/obj/machinery/r_n_d/server/core/C in rnd_server_list)
-		for(var/datum/tech/T in C.files.known_tech)
-			research_levels += T.level - 1
+		for(var/tech_tree_id in C.files.tech_trees)
+			var/datum/tech/T = C.files.tech_trees[tech_tree_id]
+			research_levels += T.level
 
 	if(research_levels)
 		score["researchdone"] += research_levels

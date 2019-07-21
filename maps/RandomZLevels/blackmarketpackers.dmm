@@ -837,7 +837,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	locked = 0;
-	req_access = ""
+	req_access = list()
 	},
 /turf/simulated/floor{
 	icon_state = "carpet"
@@ -1251,7 +1251,7 @@
 	environ = 0;
 	equipment = 3;
 	locked = 0;
-	req_access = ""
+	req_access = list()
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/BMPship1)
@@ -1722,7 +1722,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	locked = 0;
-	req_access = ""
+	req_access = list()
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
