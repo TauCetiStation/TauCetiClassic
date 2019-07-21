@@ -32,7 +32,7 @@ var/power_fail_event = 0
 
 /proc/play_ambience()
 	for(var/mob/M in player_list)
-		M.playsound_local(null, 'sound/ambience/hullcreak.ogg', VOL_AMBIENT, vary = FALSE, ignore_environment = TRUE)
+		M.playsound_music('sound/ambience/specific/hullcreak.ogg', VOL_AMBIENT, null, null, CHANNEL_AMBIENT_LOOP)
 
 /proc/power_restore(announce = 1, badminery = 0)
 	power_fail_event = 0
