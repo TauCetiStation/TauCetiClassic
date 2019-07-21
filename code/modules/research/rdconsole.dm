@@ -650,8 +650,7 @@ cause a ton of data to be lost, an admin can go send it back.
 /obj/machinery/computer/rdconsole/robotics
 	name = "Robotics R&D Console"
 	id = 2
-	req_access = null
-	req_access_txt = "29"
+	req_access = list(29)
 	can_research = FALSE
 
 /obj/machinery/computer/rdconsole/robotics/atom_init()
@@ -668,8 +667,7 @@ cause a ton of data to be lost, an admin can go send it back.
 /obj/machinery/computer/rdconsole/mining
 	name = "Mining R&D Console"
 	id = 3
-	req_access = null
-	req_access_txt = "48"
+	req_access = list(48)
 	can_research = FALSE
 
 /obj/machinery/computer/rdconsole/mining/atom_init()

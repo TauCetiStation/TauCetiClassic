@@ -758,7 +758,7 @@
 "bR" = (
 /obj/machinery/door/airlock/research{
 	name = "Spectrometry Lab Sample Preparation";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -799,7 +799,7 @@
 /obj/machinery/door/window/westleft{
 	dir = 1;
 	name = "Sample Preparation Loading";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -1304,7 +1304,7 @@
 "cY" = (
 /obj/machinery/door/airlock/research{
 	name = "Anomalous Materials Loading";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -1539,7 +1539,7 @@
 	},
 /obj/machinery/door/airlock/research/glass{
 	name = "Anomalous Materials Sample Preparation";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -1717,7 +1717,7 @@
 "dN" = (
 /obj/machinery/door/airlock/research{
 	name = "Spectrometry Lab";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -1735,7 +1735,7 @@
 "dO" = (
 /obj/machinery/door/airlock/research{
 	name = "Sample Preparation";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -1857,7 +1857,7 @@
 "dZ" = (
 /obj/machinery/door/airlock/atmos{
 	name = "Outpost Atmospherics";
-	req_one_access_txt = "65;10;24"
+	req_one_access = list(65,10,24)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -2122,7 +2122,7 @@
 	dir = 2;
 	layer = 3.1;
 	name = "laser testing";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -2149,7 +2149,7 @@
 "eG" = (
 /obj/machinery/door/airlock/atmos/glass{
 	name = "Outpost Atmospherics";
-	req_one_access_txt = "65;10;24"
+	req_one_access = list(65,10,24)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
@@ -2377,7 +2377,7 @@
 "eY" = (
 /obj/machinery/door/airlock/research{
 	name = "Anomalous Materials";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -2469,7 +2469,7 @@
 "fd" = (
 /obj/machinery/door/airlock/research{
 	name = "Anomalous Materials";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -2797,7 +2797,7 @@
 "fJ" = (
 /obj/machinery/door/airlock/research{
 	name = "Anomalous Materials Locker Room";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
@@ -2884,7 +2884,7 @@
 "fQ" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Outpost Power";
-	req_one_access_txt = "65;10;24"
+	req_one_access = list(65,10,24)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -3053,7 +3053,7 @@
 	dir = 8
 	},
 /obj/structure/closet/secure_closet/xenoarchaeologist{
-	req_access_txt = "47"
+	req_access = list(47)
 	},
 /obj/machinery/alarm{
 	dir = 8;
@@ -3069,7 +3069,7 @@
 	dir = 4
 	},
 /obj/structure/closet/secure_closet/xenoarchaeologist{
-	req_access_txt = "47"
+	req_access = list(47)
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -3079,7 +3079,7 @@
 "go" = (
 /obj/machinery/door/airlock/research{
 	name = "Anomalous Materials";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -3281,7 +3281,7 @@
 	dir = 8
 	},
 /obj/structure/closet/secure_closet/xenoarchaeologist{
-	req_access_txt = "47"
+	req_access = list(47)
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -3337,7 +3337,7 @@
 /obj/machinery/door/window/westleft{
 	dir = 4;
 	name = "Monkey Pen";
-	req_access_txt = "47"
+	req_access = list(47)
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -3547,7 +3547,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "Research Outpost Dock Airlock";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost/entry)
@@ -3565,7 +3565,7 @@
 "hz" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Outpost Primary Access";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
@@ -3610,7 +3610,7 @@
 "hE" = (
 /obj/machinery/door/window/westleft{
 	name = "Locker room";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /turf/simulated/floor{
 	icon_state = "warning"
@@ -3645,7 +3645,7 @@
 "hI" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Power substation";
-	req_one_access_txt = "65;10;24"
+	req_one_access = list(65,10,24)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -3696,7 +3696,7 @@
 	},
 /obj/machinery/door/airlock/research/glass{
 	name = "Research Shuttle Dock";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -3866,7 +3866,7 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "";
 	name = "Medbay";
-	req_one_access_txt = "65;5"
+	req_one_access = list(65,5)
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -3887,7 +3887,7 @@
 "ig" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Outpost Primary Access";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -3953,7 +3953,7 @@
 "il" = (
 /obj/machinery/door/airlock/research{
 	name = "Temporary Storage";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -4118,7 +4118,7 @@
 /obj/machinery/door/window/westleft{
 	dir = 2;
 	name = "Locker room";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -4141,7 +4141,7 @@
 /obj/machinery/door/window/westleft{
 	dir = 2;
 	name = "Monkey Pen";
-	req_access_txt = "47"
+	req_access = list(47)
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -4543,7 +4543,7 @@
 	name = "Test Chamber Blast Doors";
 	pixel_x = 6;
 	pixel_y = -4;
-	req_access_txt = "47"
+	req_access = list(47)
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -4865,12 +4865,12 @@
 /obj/machinery/door/window/southleft{
 	dir = 8;
 	name = "Test Chamber";
-	req_access_txt = "47"
+	req_access = list(47)
 	},
 /obj/machinery/door/window/southleft{
 	dir = 4;
 	name = "Test Chamber";
-	req_access_txt = "47"
+	req_access = list(47)
 	},
 /obj/structure/window/reinforced{
 	dir = 1
@@ -5008,7 +5008,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
 	name = "Isolation room one";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -5023,7 +5023,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
 	name = "Isolation room two";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -5038,7 +5038,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
 	name = "Isolation room three";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -5047,7 +5047,7 @@
 "ko" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Maintenance Storage";
-	req_one_access_txt = "12;65"
+	req_one_access = list(12,65)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -5062,7 +5062,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/research{
 	name = "Long Term Storage";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -5110,14 +5110,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/research/glass{
 	name = "Expedition Prep";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /turf/simulated/floor,
 /area/research_outpost/entry)
 "ku" = (
 /obj/machinery/door/airlock/research{
 	name = "Temporary Storage Loading";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -5280,7 +5280,7 @@
 "kG" = (
 /obj/machinery/door/airlock/research{
 	name = "Isolation room 4";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -5451,7 +5451,7 @@
 	},
 /obj/machinery/door/airlock/research/glass{
 	name = "Loading Area";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /turf/simulated/floor,
 /area/research_outpost/tempstorage)
@@ -5502,7 +5502,7 @@
 /area/research_outpost/maint)
 "lf" = (
 /obj/machinery/door/airlock/maintenance{
-	req_one_access_txt = "12;65"
+	req_one_access = list(12,65)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -5668,12 +5668,12 @@
 /obj/machinery/door/window/southleft{
 	dir = 8;
 	name = "Test Chamber";
-	req_access_txt = "47"
+	req_access = list(47)
 	},
 /obj/machinery/door/window/southleft{
 	dir = 4;
 	name = "Test Chamber";
-	req_access_txt = "47"
+	req_access = list(47)
 	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor/engine,
@@ -5829,7 +5829,7 @@
 "lR" = (
 /obj/machinery/conveyor_switch{
 	id = "anosample";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -6068,7 +6068,7 @@
 	},
 /obj/machinery/door/airlock/research/glass{
 	name = "Equipment storage";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /turf/simulated/floor,
 /area/research_outpost/gearstore)
@@ -6237,7 +6237,7 @@
 	frequency = 1379;
 	id_tag = "riso1";
 	name = "Isolation Section Airlock";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /turf/simulated/floor,
 /area/research_outpost/iso1)
@@ -6245,7 +6245,7 @@
 /obj/machinery/door/airlock/external{
 	id_tag = "riso2";
 	name = "Isolation Section Airlock";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -6476,7 +6476,7 @@
 /obj/machinery/door/window/westleft{
 	dir = 2;
 	name = "Artifact Storage";
-	req_access_txt = "47"
+	req_access = list(47)
 	},
 /turf/simulated/floor{
 	icon_state = "warndark"
@@ -6484,7 +6484,7 @@
 /area/research_outpost/longtermstorage)
 "nr" = (
 /obj/machinery/door/airlock/maintenance{
-	req_one_access_txt = "12;65"
+	req_one_access = list(12,65)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating{
@@ -6526,8 +6526,7 @@
 	master_tag = "research_airlock";
 	name = "interior access button";
 	pixel_x = -25;
-	pixel_y = -25;
-	req_access_txt = null
+	pixel_y = -25
 	},
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
@@ -6555,8 +6554,7 @@
 	icon_state = "door_locked";
 	id_tag = "research_inner";
 	locked = 1;
-	name = "Research Outpost External Access";
-	req_access_txt = null
+	name = "Research Outpost External Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor{
@@ -6567,7 +6565,6 @@
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "research_airlock";
 	pixel_x = -25;
-	req_access_txt = null;
 	tag_airpump = "research_pump";
 	tag_chamber_sensor = "research_sensor";
 	tag_exterior_door = "research_outer";
@@ -6701,7 +6698,7 @@
 "nR" = (
 /obj/machinery/conveyor_switch{
 	id = "anotempload";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /turf/simulated/floor/airless{
 	dir = 1;
@@ -6808,8 +6805,7 @@
 	master_tag = "dwarf_airlock";
 	name = "interior access button";
 	pixel_x = -25;
-	pixel_y = -25;
-	req_access_txt = null
+	pixel_y = -25
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
@@ -6866,7 +6862,7 @@
 /obj/machinery/door/window/westleft{
 	dir = 2;
 	name = "Artifact Storage";
-	req_access_txt = "47"
+	req_access = list(47)
 	},
 /turf/simulated/floor{
 	icon_state = "warndark"
@@ -6883,7 +6879,7 @@
 	},
 /obj/machinery/door/window/westleft{
 	name = "Locker room";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/structure/rack,
 /obj/item/weapon/wrench{
@@ -7000,8 +6996,7 @@
 	icon_state = "door_locked";
 	id_tag = "dwarf_inner";
 	locked = 1;
-	name = "External Access";
-	req_access_txt = null
+	name = "External Access"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -7176,7 +7171,7 @@
 	},
 /obj/machinery/door/window/westleft{
 	name = "Locker room";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/structure/rack,
 /obj/item/weapon/wrench{
@@ -7395,7 +7390,7 @@
 /obj/machinery/door/window/westleft{
 	dir = 2;
 	name = "Artifact Storage";
-	req_access_txt = "47"
+	req_access = list(47)
 	},
 /turf/simulated/floor{
 	icon_state = "warndark"
@@ -7954,7 +7949,7 @@
 "qD" = (
 /obj/machinery/door/airlock/external{
 	name = "Mining Bridge";
-	req_one_access_txt = "54;65"
+	req_one_access = list(54,65)
 	},
 /turf/simulated/floor/airless{
 	dir = 5;
@@ -7976,7 +7971,7 @@
 	id_tag = "research_outer";
 	locked = 1;
 	name = "Research Outpost External Access";
-	req_access_txt = "10;13"
+	req_access = list(10,13)
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost/gearstore)
@@ -8056,7 +8051,7 @@
 /area/mine/abandoned)
 "qR" = (
 /obj/machinery/door/airlock/multi_tile/glass{
-	req_access_txt = "20"
+	req_access = list(20)
 	},
 /turf/simulated/floor,
 /area/mine/abandoned)
@@ -8125,8 +8120,7 @@
 	master_tag = "research_airlock";
 	name = "exterior access button";
 	pixel_x = 25;
-	pixel_y = 25;
-	req_access_txt = null
+	pixel_y = 25
 	},
 /turf/simulated/floor/airless{
 	dir = 5;
@@ -9059,7 +9053,7 @@
 "tC" = (
 /obj/machinery/door/airlock/glass{
 	name = "Crew Area";
-	req_access_txt = "48"
+	req_access = list(48)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -9115,8 +9109,7 @@
 	icon_state = "door_locked";
 	id_tag = "dwarf_outer";
 	locked = 1;
-	name = "External Access";
-	req_access_txt = null
+	name = "External Access"
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -9133,8 +9126,7 @@
 	master_tag = "dwarf_airlock";
 	name = "exterior access button";
 	pixel_x = 25;
-	pixel_y = 25;
-	req_access_txt = null
+	pixel_y = 25
 	},
 /turf/simulated/floor/airless{
 	icon_state = "asteroidwarning"
@@ -9167,7 +9159,7 @@
 "tP" = (
 /obj/machinery/door/airlock/external{
 	name = "Mining Bridge";
-	req_access_txt = "54"
+	req_access = list(54)
 	},
 /turf/simulated/floor/airless{
 	dir = 5;
@@ -9338,8 +9330,7 @@
 	icon_state = "door_locked";
 	id_tag = "mining_west_outpost_inner";
 	locked = 1;
-	name = "Mining External Access";
-	req_access_txt = null
+	name = "Mining External Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -9373,7 +9364,7 @@
 "up" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Mining Station Communications";
-	req_access_txt = "48"
+	req_access = list(48)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -9688,7 +9679,7 @@
 	},
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Station EVA";
-	req_access_txt = "54"
+	req_access = list(54)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -9788,8 +9779,7 @@
 	master_tag = "mining_east_airlock";
 	name = "interior access button";
 	pixel_x = 25;
-	pixel_y = 25;
-	req_access_txt = null
+	pixel_y = 25
 	},
 /obj/machinery/atmospherics/components/binary/valve/open{
 	dir = 4
@@ -9819,7 +9809,7 @@
 "vs" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Mining Station Maintenance";
-	req_access_txt = "54"
+	req_access = list(54)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -9890,7 +9880,7 @@
 "vy" = (
 /obj/machinery/door/airlock/mining{
 	name = "Mining Storage";
-	req_access_txt = "48"
+	req_access = list(48)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
@@ -9952,8 +9942,7 @@
 	master_tag = "mining_west_outpost_airlock";
 	name = "interior access button";
 	pixel_x = 25;
-	pixel_y = 25;
-	req_access_txt = null
+	pixel_y = 25
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -10049,7 +10038,7 @@
 	id_tag = "mining_west_outpost_outer";
 	locked = 1;
 	name = "Mining External Access";
-	req_access_txt = "10;13"
+	req_access = list(10,13)
 	},
 /turf/simulated/floor/plating,
 /area/mine/west_outpost)
@@ -10060,8 +10049,7 @@
 	master_tag = "mining_west_outpost_airlock";
 	name = "exterior access button";
 	pixel_x = -25;
-	pixel_y = -25;
-	req_access_txt = null
+	pixel_y = -25
 	},
 /turf/simulated/floor/airless{
 	dir = 4;
@@ -10404,7 +10392,7 @@
 	},
 /obj/machinery/door/airlock/maintenance{
 	name = "Mining Station Maintenance";
-	req_access_txt = "48"
+	req_access = list(48)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor/plating,
@@ -10412,7 +10400,7 @@
 "wH" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Break Room";
-	req_access_txt = "54"
+	req_access = list(54)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -10450,7 +10438,6 @@
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "mining_west_outpost_airlock";
 	pixel_y = -25;
-	req_access_txt = null;
 	tag_airpump = "mining_west_outpost_pump";
 	tag_chamber_sensor = "mining_west_outpost_sensor";
 	tag_exterior_door = "mining_west_outpost_outer";
@@ -10865,8 +10852,7 @@
 	master_tag = "mining_east_airlock";
 	name = "exterior access button";
 	pixel_x = -25;
-	pixel_y = -25;
-	req_access_txt = null
+	pixel_y = -25
 	},
 /turf/simulated/floor/airless{
 	dir = 4;
@@ -10928,8 +10914,7 @@
 	icon_state = "door_locked";
 	id_tag = "mining_west_inner";
 	locked = 1;
-	name = "Mining External Access";
-	req_access_txt = null
+	name = "Mining External Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor/plating,
@@ -10961,7 +10946,7 @@
 	id_tag = "mining_east_outer";
 	locked = 1;
 	name = "Mining External Access";
-	req_access_txt = "10;13"
+	req_access = list(10,13)
 	},
 /turf/simulated/floor/plating,
 /area/mine/eva)
@@ -11224,7 +11209,7 @@
 	},
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Station Bridge";
-	req_access_txt = "48"
+	req_access = list(48)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -11318,7 +11303,6 @@
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "mining_east_airlock";
 	pixel_y = -25;
-	req_access_txt = null;
 	tag_airpump = "mining_east_pump";
 	tag_chamber_sensor = "mining_east_sensor";
 	tag_exterior_door = "mining_east_outer";
@@ -11363,8 +11347,7 @@
 	icon_state = "door_locked";
 	id_tag = "mining_east_inner";
 	locked = 1;
-	name = "Mining External Access";
-	req_access_txt = null
+	name = "Mining External Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
@@ -11463,7 +11446,7 @@
 	},
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Station Bridge";
-	req_access_txt = "48"
+	req_access = list(48)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -11595,8 +11578,7 @@
 	icon_state = "door_locked";
 	id_tag = "mining_west_outer";
 	locked = 1;
-	name = "Mining External Access";
-	req_access_txt = null
+	name = "Mining External Access"
 	},
 /turf/simulated/floor/plating,
 /area/mine/living_quarters)
@@ -11618,8 +11600,7 @@
 	master_tag = "mining_west_airlock";
 	name = "exterior access button";
 	pixel_x = 25;
-	pixel_y = 25;
-	req_access_txt = null
+	pixel_y = 25
 	},
 /turf/simulated/floor/airless{
 	dir = 5;
@@ -11704,7 +11685,7 @@
 "At" = (
 /obj/machinery/door/airlock/external{
 	name = "Mining Shuttle Airlock";
-	req_access_txt = "48"
+	req_access = list(48)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
@@ -11843,7 +11824,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "Mining Shuttle Airlock";
-	req_access_txt = "48"
+	req_access = list(48)
 	},
 /turf/simulated/floor,
 /area/mine/production)
@@ -11924,7 +11905,7 @@
 /obj/machinery/door/airlock/external{
 	id_tag = "riso3";
 	name = "Isolation Section Airlock";
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/visible,
@@ -12101,7 +12082,7 @@
 "Cf" = (
 /obj/machinery/door/window/westleft{
 	name = "Production Area";
-	req_access_txt = "48"
+	req_access = list(48)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -12361,7 +12342,7 @@
 "Hb" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Auxiliary Storage";
-	req_one_access_txt = "65;12"
+	req_one_access = list(65,12)
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -12827,7 +12808,6 @@
 	id_tag = "mining_west_airlock";
 	pixel_x = 25;
 	pixel_y = 5;
-	req_access_txt = null;
 	tag_airpump = "mining_west_pump";
 	tag_chamber_sensor = "mining_west_sensor";
 	tag_exterior_door = "mining_west_outer";
@@ -12969,7 +12949,7 @@
 "Se" = (
 /obj/machinery/door/window/westright{
 	name = "Production Area";
-	req_access_txt = "48"
+	req_access = list(48)
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -13055,8 +13035,7 @@
 	master_tag = "mining_west_airlock";
 	name = "interior access button";
 	pixel_x = -25;
-	pixel_y = -25;
-	req_access_txt = null
+	pixel_y = -25
 	},
 /obj/machinery/atmospherics/components/binary/valve/open,
 /turf/simulated/floor{
