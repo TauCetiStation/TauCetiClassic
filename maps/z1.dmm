@@ -959,8 +959,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/ammo_box/magazine/m9mmr_2,
 /obj/item/ammo_box/magazine/m9mmr_2,
@@ -1001,8 +1000,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/weapon/gun/projectile/sigi,
 /obj/item/weapon/gun/projectile/sigi,
@@ -1018,9 +1016,7 @@
 	},
 /obj/structure/closet/wardrobe/tactical,
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker";
-	req_access = null;
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -1070,9 +1066,7 @@
 	dir = 8
 	},
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker";
-	req_access = null;
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/structure/closet/wardrobe/tactical,
 /turf/simulated/floor{
@@ -1089,8 +1083,7 @@
 	dir = 1
 	},
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/clothing/suit/storage/flak/bulletproof,
 /obj/item/clothing/suit/storage/flak/bulletproof,
@@ -1115,9 +1108,7 @@
 	},
 /obj/structure/closet/wardrobe/tactical,
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker";
-	req_access = null;
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -1159,8 +1150,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/clothing/suit/armor/laserproof,
 /obj/item/clothing/suit/armor/laserproof,
@@ -1716,8 +1706,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/weapon/melee/baton,
 /obj/item/clothing/suit/armor/riot,
@@ -1832,8 +1821,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/weapon/melee/baton,
 /obj/item/clothing/suit/armor/riot,
@@ -1849,8 +1837,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/weapon/melee/baton,
 /obj/item/clothing/suit/armor/riot,
@@ -2187,8 +2174,7 @@
 	dir = 8
 	},
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/weapon/gun/energy/gun{
 	pixel_y = 4
@@ -2246,8 +2232,7 @@
 	dir = 1
 	},
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/weapon/gun/energy/ionrifle{
 	pixel_y = 3
@@ -2383,8 +2368,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/weapon/gun/projectile/automatic/l10c{
 	pixel_y = 2
@@ -2402,8 +2386,7 @@
 	dir = 1
 	},
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/weapon/gun/energy/laser{
 	pixel_y = 3
@@ -2505,8 +2488,7 @@
 /area/maintenance/dormitory)
 "aeg" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Secure Armoury Section";
-	req_access = list(3)
+	name = "Secure Armoury Section"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -3228,8 +3210,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/weapon/gun/projectile/m79{
 	pixel_y = 6
@@ -3247,8 +3228,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/ammo_box/magazine/m9mm_2,
 /obj/item/ammo_box/magazine/m9mm_2,
@@ -3268,8 +3248,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/weapon/gun/projectile/shotgun{
 	pixel_y = 4
@@ -3503,8 +3482,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	name = "Weapons locker";
-	req_access = list(3)
+	name = "Weapons locker"
 	},
 /obj/item/ammo_box/shotgun/beanbag,
 /obj/item/ammo_box/shotgun/beanbag,
