@@ -1197,3 +1197,6 @@
 
 /mob/living/proc/get_metabolism_factor()
 	return METABOLISM_FACTOR
+
+/mob/living/proc/CanObtainCentcommMessage()
+	return FALSE

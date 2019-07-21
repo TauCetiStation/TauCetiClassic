@@ -25,7 +25,7 @@
 "ah" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Turbine Maintenance";
-	req_access_txt = "10"
+	req_access = list(10)
 	},
 /turf/simulated/floor/plating,
 /area/derelict/solar_control)
@@ -409,7 +409,7 @@
 "ba" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Starboard Solar Access";
-	req_access_txt = "10"
+	req_access = list(10)
 	},
 /turf/simulated/floor,
 /area/derelict/bridge/access)
@@ -537,8 +537,7 @@
 "bq" = (
 /obj/machinery/door/airlock/command{
 	name = "E.V.A.";
-	req_access = null;
-	req_access_txt = "18"
+	req_access = list(18)
 	},
 /turf/simulated/floor,
 /area/derelict/bridge/access)
@@ -615,14 +614,14 @@
 "bG" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Access";
-	req_access_txt = "10"
+	req_access = list(10)
 	},
 /turf/simulated/floor/plating/airless,
 /area/derelict/singularity_engine)
 "bH" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Access";
-	req_access_txt = "10"
+	req_access = list(10)
 	},
 /turf/simulated/floor/airless{
 	icon_state = "damaged5"
@@ -862,7 +861,7 @@
 "cu" = (
 /obj/machinery/door/window/eastleft{
 	name = "Heads of Staff";
-	req_access_txt = "19"
+	req_access = list(19)
 	},
 /turf/simulated/floor,
 /area/derelict/bridge/access)
@@ -1140,7 +1139,7 @@
 /obj/machinery/door/window{
 	dir = 2;
 	name = "Captain's Quarters";
-	req_access_txt = "20"
+	req_access = list(20)
 	},
 /obj/structure/grille,
 /turf/simulated/floor/plating/airless,
@@ -1373,7 +1372,7 @@
 "dN" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Tech Storage";
-	req_access_txt = "23"
+	req_access = list(23)
 	},
 /turf/simulated/floor/airless,
 /area/derelict/bridge/access)
@@ -1886,7 +1885,7 @@
 "fv" = (
 /obj/machinery/door/airlock/medical{
 	name = "Morgue";
-	req_access_txt = "6"
+	req_access = list(6)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -1963,7 +1962,7 @@
 /obj/machinery/door/morgue{
 	dir = 2;
 	name = "coffin storage";
-	req_access_txt = "22"
+	req_access = list(22)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2115,7 +2114,7 @@
 "gd" = (
 /obj/machinery/door/airlock/glass{
 	name = "Med-Sci";
-	req_access_txt = "9"
+	req_access = list(9)
 	},
 /turf/simulated/floor/plating/airless,
 /area/derelict/medical)
@@ -2324,7 +2323,7 @@
 	},
 /obj/machinery/door/window{
 	dir = 4;
-	req_access_txt = "25"
+	req_access = list(25)
 	},
 /obj/structure/closet/coffin,
 /turf/simulated/floor/plating,
@@ -2549,7 +2548,7 @@
 	},
 /obj/machinery/door/airlock/research{
 	name = "Toxins Research";
-	req_access_txt = "7"
+	req_access = list(7)
 	},
 /turf/simulated/floor/airless,
 /area/derelict/hallway/primary)
@@ -2655,7 +2654,7 @@
 	},
 /obj/machinery/door/airlock/research{
 	name = "Toxins Research";
-	req_access_txt = "7"
+	req_access = list(7)
 	},
 /turf/simulated/floor/airless,
 /area/derelict/arrival)
@@ -2855,8 +2854,7 @@
 "hS" = (
 /obj/machinery/door/airlock/security{
 	name = "Gas Storage";
-	req_access = null;
-	req_access_txt = "3"
+	req_access = list(3)
 	},
 /turf/simulated/floor/plating/airless,
 /area/derelict/hallway/primary)
@@ -2909,8 +2907,7 @@
 "hZ" = (
 /obj/machinery/door/airlock/security{
 	name = "Security";
-	req_access = null;
-	req_access_txt = "1"
+	req_access = list(1)
 	},
 /turf/simulated/floor/airless,
 /area/derelict/hallway/primary)
@@ -2985,7 +2982,7 @@
 "in" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Atmospherics Access";
-	req_access_txt = "24"
+	req_access = list(24)
 	},
 /turf/simulated/floor/plating/airless,
 /area/derelict/hallway/primary)
@@ -3237,7 +3234,7 @@
 "ja" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Aux Storage";
-	req_access_txt = "23"
+	req_access = list(23)
 	},
 /turf/simulated/floor/plating/airless,
 /area/derelict/hallway/secondary)
@@ -3427,7 +3424,7 @@
 "jE" = (
 /obj/machinery/door/airlock/command{
 	name = "AI Upload";
-	req_access_txt = "16"
+	req_access = list(16)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -3498,7 +3495,7 @@
 "jO" = (
 /obj/machinery/door/airlock/command{
 	name = "AI Upload";
-	req_access_txt = "16"
+	req_access = list(16)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -3788,6 +3785,15 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/solar/derelict_aft)
+"kv" = (
+/obj/structure/table,
+/obj/item/weapon/disk/research_points,
+/turf/simulated/floor,
+/area/derelict/bridge)
+"kw" = (
+/obj/item/weapon/disk/research_points,
+/turf/simulated/floor/airless,
+/area/derelict/bridge/ai_upload)
 
 (1,1,1) = {"
 aa
@@ -9644,7 +9650,7 @@ jD
 jD
 jT
 jU
-jU
+kw
 kf
 jU
 jD
@@ -11341,7 +11347,7 @@ bZ
 cw
 bZ
 cK
-bM
+kv
 bD
 ac
 aa

@@ -3265,7 +3265,7 @@
 "if" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Glass Airlock";
-	req_access_txt = "0"
+	req_access = list(0)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -3643,7 +3643,7 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = null;
 	name = "Glass Airlock";
-	req_access_txt = "0"
+	req_access = list(0)
 	},
 /turf/simulated/floor,
 /area/awaymission/southblock)

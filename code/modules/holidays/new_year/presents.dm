@@ -116,10 +116,11 @@
 		new /obj/item/weapon/ore/coal/special(src.loc)
 		if(prob(5) && ishuman(user))
 			var/mob/living/carbon/human/H = user
-			H.visible_message("[user] begins balding.", \
-									 "<span class='notice'>You become bald from shame.</span>")
-			H.h_style = "Bald"
-			H.update_hair()
+			if(H.species.flags[HAS_HAIR])
+				H.visible_message("[user] begins balding.", \
+										 "<span class='notice'>You become bald from shame.</span>")
+				H.h_style = "Bald"
+				H.update_hair()
 		qdel(src)
 		return
 

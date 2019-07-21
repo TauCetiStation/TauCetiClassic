@@ -200,7 +200,7 @@ var/list/alldepartments = list("Central Command")
 	world.send2bridge(
 		type = list(BRIDGE_ADMINCOM),
 		attachment_title = ":fax: **[key_name(sender)]** sent fax to ***Centcomm***",
-		attachment_msg = P.info + P.stamp_text,
+		attachment_msg = strip_html_properly(replacetext((P.info + P.stamp_text), "<br>", "\n")),
 		attachment_color = BRIDGE_COLOR_ADMINCOM,
 	)
 

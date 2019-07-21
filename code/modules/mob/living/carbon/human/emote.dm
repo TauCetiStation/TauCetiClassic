@@ -215,9 +215,9 @@
 						if(message == "coughs up blood!")
 							if(world.time-lastSoundEmote >= 30)
 								if(gender == FEMALE)
-									playsound(src, 'sound/misc/fbcough.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+									playsound(src, "fbcough", VOL_EFFECTS_MASTER, null, FALSE)
 								else
-									playsound(src, 'sound/misc/mbcough.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+									playsound(src, "mbcough", VOL_EFFECTS_MASTER, null, FALSE)
 								lastSoundEmote = world.time
 					message = "<B>[src]</B> [message ? message : "gasps!"]"
 					m_type = 2
@@ -585,12 +585,11 @@
 								m_type = 1
 								lastSoundEmote = world.time
 							else if(world.time-lastSoundEmote >= 30)//prevent scream spam with things like poly spray
-								message = "<B>[src]</B> screams in agony!"
-								var/list/screamSound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg', 'sound/misc/wilhelm.ogg', 'sound/misc/goofy.ogg')
-								if (gender == FEMALE) //Females have their own screams. Trannys be damned.
-									screamSound = list('sound/misc/femalescream1.ogg', 'sound/misc/femalescream2.ogg', 'sound/misc/femalescream3.ogg', 'sound/misc/femalescream4.ogg', 'sound/misc/femalescream5.ogg')
-								var/scream = pick(screamSound)//AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
-								playsound(src, scream, VOL_EFFECTS_MASTER, null, FALSE)
+								message = "<B>[src]</B> screams in agony!" // AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
+								if (gender == FEMALE) // Females have their own screams. Trannys be damned.
+									playsound(src, "fscream", VOL_EFFECTS_MASTER, null, FALSE)
+								else
+									playsound(src, "mscream", VOL_EFFECTS_MASTER, null, FALSE)
 								m_type = 2
 								lastSoundEmote = world.time
 						else

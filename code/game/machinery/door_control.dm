@@ -50,7 +50,6 @@
 		icon_state = "doorctrl_assembly0"
 		return
 	else
-		generate_access_lists()
 		if(req_access.len)
 			req_one_access = req_access.Copy()
 			req_access.Cut()

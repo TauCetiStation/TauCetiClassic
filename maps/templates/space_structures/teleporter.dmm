@@ -94,6 +94,10 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/AIsattele)
+"t" = (
+/obj/item/weapon/disk/research_points,
+/turf/simulated/floor/plating/airless,
+/area/AIsattele)
 
 (1,1,1) = {"
 a
@@ -157,7 +161,7 @@ b
 b
 k
 f
-f
+t
 b
 b
 a

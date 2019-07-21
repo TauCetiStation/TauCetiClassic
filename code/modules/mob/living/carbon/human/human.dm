@@ -766,13 +766,17 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			return
 
 		var/list/wounds
+		var/has_visual_bandages = FALSE // We need this var because wounds might have healed by themselfs
 
 		for(var/obj/item/organ/external/BP in bodyparts)
+			if(BP.bandaged)
+				has_visual_bandages = TRUE
+
 			for(var/datum/wound/W in BP.wounds)
 				if(W.bandaged)
 					LAZYADD(wounds, W)
 
-		if(wounds)
+		if(wounds || has_visual_bandages)
 			visible_message("<span class='danger'>[usr] is trying to remove [src]'s bandages!</span>")
 			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
 				for(var/datum/wound/W in wounds)
@@ -1905,3 +1909,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return species.taste_sensitivity
 	else
 		return 1
+
+/mob/living/carbon/human/CanObtainCentcommMessage()
+	return istype(l_ear, /obj/item/device/radio/headset) || istype(r_ear, /obj/item/device/radio/headset)
