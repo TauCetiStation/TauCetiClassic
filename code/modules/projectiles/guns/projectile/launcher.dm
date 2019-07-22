@@ -11,10 +11,8 @@
 	recoil = 0 //extra kickback
 	mag_type = /obj/item/ammo_box/magazine/internal/m79
 	fire_sound = 'sound/weapons/guns/gunshot_m79.ogg'
+	can_be_holstered = FALSE
 	var/open = 0
-
-/obj/item/weapon/gun/projectile/m79/isHandgun()
-	return 0
 
 /obj/item/weapon/gun/projectile/m79/update_icon()
 	if(open)

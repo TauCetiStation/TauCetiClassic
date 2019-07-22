@@ -209,9 +209,6 @@
 	icon_state = "peacemaker"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45
 
-/obj/item/weapon/gun/projectile/revolver/peacemaker/isHandgun()
-	return 1
-
 /obj/item/weapon/gun/projectile/revolver/peacemaker/attack_self(mob/living/user)
 	var/num_unloaded = 0
 	if (get_ammo() > 0)

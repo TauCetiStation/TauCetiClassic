@@ -276,7 +276,7 @@
 			to_chat(usr, "\blue You need your gun equiped to holster it.")
 			return
 		var/obj/item/weapon/gun/W = usr.get_active_hand()
-		if (!W.isHandgun())
+		if (!W.canHolster())
 			to_chat(usr, "\red This gun won't fit in \the belt!")
 			return
 		holstered = usr.get_active_hand()

@@ -21,6 +21,7 @@
 	var/recoil = 0
 	var/clumsy_check = 1
 	var/can_suicide_with = TRUE
+	var/can_be_holstered = TRUE
 	var/tmp/list/mob/living/target //List of who yer targeting.
 	var/tmp/lock_time = -100
 	var/automatic = 0 //Used to determine if you can target multiple people.
@@ -161,8 +162,8 @@
 		src.visible_message("*click click*")
 		playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 
-/obj/item/weapon/gun/proc/isHandgun()
-	return 1
+/obj/item/weapon/gun/proc/canHolster()
+	return can_be_holstered
 
 /obj/item/weapon/gun/attack(mob/living/M, mob/living/user, def_zone)
 	//Suicide handling.
