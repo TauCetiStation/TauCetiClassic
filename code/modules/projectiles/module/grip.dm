@@ -17,6 +17,9 @@
 		src.loc = gun
 		change_stat(gun, TRUE)
 		gun.overlays += icon_overlay
+		gun.modules += src
+		return TRUE
+	return FALSE
 
 /obj/item/weapon/gun_module/grip/condition_check(GUN)
 	if(gun.chamber && !gun.grip && !gun.collected)
@@ -29,6 +32,7 @@
 	src.loc = get_turf(gun.loc)
 	change_stat(gun, FALSE)
 	delete_overlay(gun)
+	gun.modules -= src
 
 /obj/item/weapon/gun_module/grip/proc/special_check(mob/user, atom/target)
 	if(user.mind.special_role == "Wizard")

@@ -20,6 +20,8 @@
 		change_stat(gun, TRUE)
 		gun.overlays += icon_overlay
 		gun.modules += src
+		return TRUE
+	return FALSE
 
 /obj/item/weapon/gun_module/magazine/condition_check(GUN)
 	if(!gun.magazine_supply && gun.chamber && caliber == gun.chamber.caliber)
@@ -31,6 +33,7 @@
 	src.loc = get_turf(gun.loc)
 	parent = null
 	change_stat(gun, FALSE)
+	gun.modules -= src
 
 /obj/item/weapon/gun_module/magazine/proc/ammo_count()
 	return
@@ -68,6 +71,7 @@
 /obj/item/weapon/gun_module/magazine/energy/attack_self(mob/user)
 	if(external && power_supply)
 		power_supply.loc = get_turf(parent.loc)
+		power_supply.update_icon()
 		user.put_in_hands(power_supply)
 		power_supply = null
 
@@ -76,14 +80,14 @@
 		return FALSE
 	if(power_supply)
 		var/obj/item/ammo_casing/energy/shot = new ammo.type(src)
-		var/power = power_supply.charge > (shot.e_cost * 10)
-		return power
+		if(power_supply.charge > (shot.e_cost * 10))
+			return TRUE
 	return FALSE
 
 /obj/item/weapon/gun_module/magazine/energy/get_round(obj/item/ammo_casing/energy/ammo)
 	if(power_supply)
 		var/obj/item/ammo_casing/energy/shot = new ammo.type(src)
-		power_supply.use(shot.e_cost *10)
+		power_supply.use(shot.e_cost * 10)
 		return shot
 	return null
 
@@ -126,6 +130,7 @@
 /obj/item/weapon/gun_module/magazine/bullet/attack_self(mob/user)
 	if(external && bullet_supply)
 		bullet_supply.loc = get_turf(parent.loc)
+		bullet_supply.update_icon()
 		user.put_in_hands(bullet_supply)
 		bullet_supply = null
 

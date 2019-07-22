@@ -8,7 +8,7 @@
 	lessrecoil = 0
 	size = 0
 	attackbying = CONTINUED
-	attackself = CONTINUED
+	attackself = IGNORING
 	var/obj/item/ammo_casing/chambered = null
 	var/caliber
 	var/gun_type
@@ -29,6 +29,8 @@
 		change_stat(gun, TRUE)
 		gun.overlays += icon_overlay
 		gun.modules += src
+		return TRUE
+	return FALSE
 
 /obj/item/weapon/gun_module/chamber/condition_check(GUN)
 	if(!gun.chamber && !gun.collected)
@@ -174,6 +176,7 @@
 	size = 0
 	caliber = "energy"
 	gun_type = ENERGY
+	activate_selfing = /obj/item/weapon/gun_module/chamber/energy/activate_self
 	var/modifystate = 0
 	var/list/obj/item/ammo_casing/energy/lens = list()
 	var/max_lens = 2
@@ -188,10 +191,18 @@
 	if(!..(lense))
 		return FALSE
 	chambered = parent.magazine_supply.get_round(lense)
+	chambered.loc = src
 
 /obj/item/weapon/gun_module/chamber/energy/process_chamber()
 	if(chambered)
-		qdel(chambered)
+		var/obj/item/ammo_casing/energy/lense = chambered
+		chambered = null
+		qdel(lense)
+
+/obj/item/weapon/gun_module/chamber/energy/activate_self()
+	set category = "Gun"
+
+	select_fire(usr)
 
 /obj/item/weapon/gun_module/chamber/energy/proc/select_fire(mob/user)
 	select++
@@ -202,9 +213,6 @@
 	if (shot.select_name)
 		to_chat(user, "\red [src] is now set to [shot.select_name].")
 	update_icon()
-
-/obj/item/weapon/gun_module/chamber/energy/attack_self(mob/user)
-	select_fire(user)
 
 /obj/item/weapon/gun_module/chamber/energy/attackby(obj/item/A, mob/user)
 	if(LENS && lens.len < max_lens)

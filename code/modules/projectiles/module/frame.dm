@@ -18,6 +18,7 @@
 	var/list/obj/item/weapon/gun_module/accessory = list()
 	var/list/obj/item/weapon/gun_module/modules = list()
 
+
 /obj/item/weapon/gunmodule/attackby(obj/item/A, mob/user)
 	if(MODULE)
 		var/obj/item/weapon/gun_module/module = A
@@ -71,3 +72,14 @@
 				continue
 			if(CONTINUED)
 				module.attack_self(user)
+
+/obj/item/weapon/gunmodule/attack_hand(mob/user)
+	..()
+	for(var/obj/item/weapon/gun_module/module in modules)
+		if(usr.get_active_hand() == src)
+			module.loc = user
+
+/obj/item/weapon/gunmodule/dropped(mob/user)
+	..()
+	for(var/obj/item/weapon/gun_module/module in modules)
+		module.loc = src

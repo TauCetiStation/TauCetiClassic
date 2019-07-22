@@ -3,6 +3,7 @@
 	icon = 'code/modules/projectiles/module/modular.dmi'
 	var/icon/icon_overlay
 	var/obj/item/weapon/gunmodule/parent = null
+	var/activate_selfing = null
 	var/attackbying = IGNORING
 	var/attackself = IGNORING
 	var/lessdamage = 0
@@ -15,6 +16,9 @@
 	if(gun.collected)
 		return FALSE
 	return TRUE
+
+/obj/item/weapon/gun_module/verb/activate_self()
+	return
 
 /obj/item/weapon/gun_module/proc/eject(GUN)
 	return

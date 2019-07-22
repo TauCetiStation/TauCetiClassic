@@ -19,6 +19,8 @@
 		change_stat(gun, TRUE)
 		gun.overlays += icon_overlay
 		gun.modules += src
+		return TRUE
+	return FALSE
 
 /obj/item/weapon/gun_module/barrel/condition_check(GUN)
 	if(gun.chamber && !gun.barrel && !gun.collected && gun.gun_type == gun_type)
