@@ -53,7 +53,7 @@
 	name ="retro laser"
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
-	can_be_holstered = FALSE
+	can_be_holstered = TRUE
 
 /obj/item/weapon/gun/energy/laser/selfcharging
 	var/charge_tick = 0
@@ -93,6 +93,7 @@
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
 	force = 10
 	origin_tech = null
+	can_be_holstered = TRUE
 	chargespeed = 1
 
 /obj/item/weapon/gun/energy/laser/selfcharging/alien
