@@ -11,6 +11,7 @@
 	var/map_file = "boxstation.dmm"
 	var/station_name = "NSS Exodus"
 	var/system_name = "Tau Ceti"
+	var/station_image = "exodus"
 
 	// Config from maps.txt
 	var/config_max_users = 0
@@ -121,6 +122,9 @@
 
 	if ("system_name" in json)
 		system_name = json["system_name"]
+
+	if("station_image" in json)
+		station_image = json["station_image"]
 
 	defaulted = FALSE
 	return TRUE
