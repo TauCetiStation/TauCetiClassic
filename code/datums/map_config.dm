@@ -9,6 +9,8 @@
 	var/map_name = "Box Station"
 	var/map_path = "boxstation"
 	var/map_file = "boxstation.dmm"
+	var/station_name = "NSS Exodus"
+	var/system_name = "Tau Ceti"
 
 	// Config from maps.txt
 	var/config_max_users = 0
@@ -113,6 +115,12 @@
 
 	if ("minetype" in json)
 		minetype = json["minetype"]
+
+	if ("station_name" in json)
+		station_name = json["station_name"]
+
+	if ("system_name" in json)
+		system_name = json["system_name"]
 
 	defaulted = FALSE
 	return TRUE

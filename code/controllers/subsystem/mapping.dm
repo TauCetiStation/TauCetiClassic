@@ -29,6 +29,7 @@ var/datum/subsystem/mapping/SSmapping
 	config = load_map_config(error_if_missing = FALSE)
 
 	loadWorld()
+	renameAreas()
 
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
@@ -194,6 +195,17 @@ var/datum/subsystem/mapping/SSmapping
 		INIT_ANNOUNCE(msg)
 
 #undef INIT_ANNOUNCE
+
+// Some areas use station name so we rename them here
+/datum/subsystem/mapping/proc/renameAreas()
+	if(!config)
+		return
+
+	if(config.system_name)
+		areas_by_type[/area/shuttle/arrival/pre_game].name = "[config.system_name] Transfer Station 13"
+	if(config.station_name)
+		areas_by_type[/area/shuttle/arrival/station].name = config.station_name
+		areas_by_type[/area/shuttle/officer/station].name = config.station_name
 
 /datum/subsystem/mapping/proc/changemap(var/datum/map_config/VM)
 	if(!VM.MakeNextMap())

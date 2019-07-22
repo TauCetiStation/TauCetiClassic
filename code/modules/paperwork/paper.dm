@@ -642,6 +642,7 @@
 
 /obj/item/weapon/paper/space_structures/atom_init()
 	. = ..()
+	name = "[station_name()] Sensor Readings"
 	info = get_space_structures_info()
 
 	var/obj/item/weapon/stamp/centcomm/S = new
@@ -651,7 +652,7 @@
 	updateinfolinks()
 
 /obj/item/weapon/paper/space_structures/proc/get_space_structures_info()
-	var/paper_text = "<center><img src = bluentlogo.png /><br /><font size = 3><b>NSS Exodus</b> Sensor Readings:</font></center><br /><hr>"
+	var/paper_text = "<center><img src = bluentlogo.png /><br /><font size = 3><b>[station_name()]</b> Sensor Readings:</font></center><br /><hr>"
 	paper_text += "Scan results show the following points of interest:<br />"
 	for(var/list/structure in SSmapping.spawned_structures)
 		paper_text += "<li><b>[structure["desc"]]</b>: x = [structure["x"]], y = [structure["y"]], z = [prob(50) ? structure["z"] : "unknown"]</li>"
