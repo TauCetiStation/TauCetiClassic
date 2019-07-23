@@ -33,11 +33,6 @@
 
 		handle_rig_move(NewLoc, Dir)
 
-/mob/living/carbon/handle_vision_check()
-    if(istype(loc, /obj/item/weapon/holder))
-        return loc.handle_vision_check()
-    return ..()
-
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(isessence(user))
 		user.setMoveCooldown(1)
