@@ -150,12 +150,19 @@ var/const/INGEST = 2
 /datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
 	if (!target)
 		return
-	if (!target.reagents || src.total_volume<=0 || !src.get_reagent_amount(reagent))
+	if(src.total_volume<=0 || !src.get_reagent_amount(reagent))
 		return
 	if(amount < 0) return
 	if(amount > 2000) return
 
-	var/datum/reagents/R = target.reagents
+	var/datum/reagents/R = null
+	if(istype(target, /datum/reagents))
+		R = target
+	else
+		if(!target.reagents)
+			return
+		R = target.reagents
+
 	if(src.get_reagent_amount(reagent)<amount)
 		amount = src.get_reagent_amount(reagent)
 	amount = min(amount, R.maximum_volume-R.total_volume)

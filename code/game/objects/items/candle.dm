@@ -180,8 +180,8 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		if(istype(W, /obj/item/trash/candle))
 			to_chat(user, "<span class='warning'>The wax begins to corrupt and pulse like veins as it merges itself with the [src], impressive.</span>")
 			user.confused += 10 // Sights of this are not pleasant.
-			if(prob(10) && user.nutrition > 20)
-				user.vomit()
+			if(prob(10))
+				user.invoke_vomit_async()
 			wax += 50
 			user.drop_item()
 			qdel(W)

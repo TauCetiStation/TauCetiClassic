@@ -72,10 +72,8 @@
 	to_chat(host, "<span class='warning'>You feel nauseous!</span>")
 
 	var/turf/T = get_turf(host)
-	T.add_vomit_floor(host)
-	host.nutrition -= 20
-	host.adjustToxLoss(-3)
-	new/mob/living/simple_animal/slime(T)
+	if(host.vomit())
+		new/mob/living/simple_animal/slime(T)
 
 
 //SLIME BOOM

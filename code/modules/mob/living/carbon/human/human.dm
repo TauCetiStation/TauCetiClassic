@@ -1175,24 +1175,82 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			xylophone=0
 	return
 
-/mob/living/carbon/human/proc/vomit()
+/mob/living/carbon/human/vomit(punched = FALSE, masked = FALSE)
+	var/mask_ = masked
+	if(species.flags[NO_VOMIT])
+		return FALSE
+
+	if(wear_mask && (wear_mask.flags & MASKCOVERSMOUTH))
+		mask_ = TRUE
+
+	return ..(punched, mask_)
+
+
+/mob/living/carbon/human/proc/force_vomit(mob/living/carbon/human/H)
+	if(H.species.flags[IS_SYNTHETIC])
+		to_chat(src, "<span class='warning'>Wait... Where is the mouth?</span>")
+		return
+
+	if((H.head && (H.head.flags & HEADCOVERSMOUTH)) || (H.wear_mask && (H.wear_mask.flags & MASKCOVERSMOUTH)))
+		to_chat(src, "<span class='warning'>You can't slide your fingers through THAT...</span>")
+		return
+
+	if(src != H)
+		visible_message("<span class='notice'>[src] is sliding \his fingers into [H]'s mouth.</span>", "<span class='notice'>You are sliding your fingers into [H]'s mouth.</span>")
+		shoving_fingers = TRUE
+		if(is_busy() || !do_after(src, 3 SECONDS, target = H))
+			return
+		if(!shoving_fingers)
+			return
+
+	if(src != H)
+		visible_message("<span class='warning'>[src] put \his fingers into [H]'s mouth and begins to press on.</span>", "<span class='notice'>You put your fingers into [H]'s mouth and begin to press on.</span>")
+	else
+		visible_message("<span class='warning'>[src] put \his fingers into \his own mouth.</span>", "<span class='notice'>You put your fingers into your own mouth.</span>")
+		shoving_fingers = TRUE
+
+	if(H.species.flags[NO_VOMIT])
+		shoving_fingers = FALSE
+		return
+
+	var/stage = 0
+
+	for(var/i in 1 to 10)
+		if(!shoving_fingers) // They bit us or something.
+			return
+		if(!is_busy() && do_after(src, 7, target = H))
+			if(stage < 3)
+				if(prob(30))
+					switch(stage)
+						if(0)
+							to_chat(H, "<span class='notice'>You feel nauseous.</span>")
+						if(1)
+							to_chat(H, "<span class='warning'>Your stomach feels uneasy.</span>")
+						if(2)
+							to_chat(H, "<span class='warning'>You feel something coming up your throat!</span>")
+					stage++
+			else
+				H.vomit()
+		else
+			break
+
+	shoving_fingers = FALSE
+
+/mob/living/carbon/human/proc/invoke_vomit_async()
+	set waitfor = FALSE
 
 	if(species.flags[NO_VOMIT])
 		return // Machines, golems, shadowlings and abductors don't throw up.
 
 	if(!lastpuke)
-		lastpuke = 1
-		src.visible_message("<B>[src]</B> looks kinda like unhealthy.","<span class='warning'>You feel nauseous...</span>")
-		spawn(150) //15 seconds until second warning
-			to_chat(src, "<span class='warning'>You feel like you are about to throw up!</span>")
-			spawn(100) //and you have 10 more for mad dash to the bucket
-				Stun(5)
-				var/turf/T = loc
-				T.add_vomit_floor(src, 1)
-				nutrition -= 40
-				adjustToxLoss(-3)
-				spawn(350) //wait 35 seconds before next volley
-					lastpuke = 0
+		lastpuke = TRUE
+		visible_message("<B>[src]</B> looks kinda like unhealthy.","<span class='warning'>You feel nauseous...</span>")
+		sleep(15 SECONDS) //15 seconds until second warning
+		to_chat(src, "<span class='warning'>You feel like you are about to throw up!</span>")
+		sleep(10 SECONDS) //and you have 10 more for mad dash to the bucket
+		vomit()
+		sleep(35 SECONDS) //wait 35 seconds before next volley
+		lastpuke = FALSE
 
 /mob/living/carbon/human/proc/morph()
 	set name = "Morph"
@@ -1912,3 +1970,15 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/CanObtainCentcommMessage()
 	return istype(l_ear, /obj/item/device/radio/headset) || istype(r_ear, /obj/item/device/radio/headset)
+
+/mob/living/carbon/human/make_dizzy(amount)
+	dizziness = min(1000, dizziness + amount)	// store what will be new value
+													// clamped to max 1000
+	if(dizziness > 100 && !is_dizzy)
+		INVOKE_ASYNC(src, /mob.proc/dizzy_process)
+
+/mob/living/carbon/human/make_jittery(amount)
+	jitteriness = min(1000, jitteriness + amount)	// store what will be new value
+													// clamped to max 1000
+	if(jitteriness > 30 && !is_jittery)
+		INVOKE_ASYNC(src, /mob.proc/jittery_process)

@@ -821,6 +821,12 @@
 			resisting++
 			switch(G.state)
 				if(GRAB_PASSIVE)
+					if(G.assailant.shoving_fingers)
+						if(iscarbon(src))
+							var/mob/living/carbon/C_ = src
+							if(!istype(C_.wear_mask, /obj/item/clothing/mask/muzzle))
+								G.assailant.adjustBruteLoss(5) // We bit them.
+								G.assailant.shoving_fingers = FALSE
 					qdel(G)
 				if(GRAB_AGGRESSIVE)
 					if(prob(50 - (L.lying ? 35 : 0)))
@@ -1200,3 +1206,59 @@
 
 /mob/living/proc/CanObtainCentcommMessage()
 	return FALSE
+
+/mob/living/proc/vomit(punched = FALSE, masked = FALSE)
+	if(stat == DEAD && !punched)
+		return FALSE
+
+	Stun(3)
+
+	if(nutrition < 50)
+		visible_message("<span class='warning'>[src] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but there is nothing!</span>")
+		adjustOxyLoss(3)
+		adjustHalLoss(5)
+		return FALSE
+
+	nutrition -= 50
+	eye_blurry = max(5, eye_blurry)
+
+	if(ishuman(src)) // A stupid, snowflakey thing, but I see no point in creating a third argument to define the sound... ~Luduk
+		if(!prob((reagents.get_reagent_amount("water") * 9) + 10))
+			visible_message("<span class='warning'>[src] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but it gets stuck in your throat!</span>")
+			adjustOxyLoss(3)
+			adjustHalLoss(5)
+			return FALSE
+
+		var/vomitsound = ""
+		// The main reason why this is here, and not made into a polymorphized proc, is because we need to know from the subclasses that could cover their face, that they do.
+		if(masked)
+			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>","<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")
+			if(gender == FEMALE)
+				vomitsound = "frigvomit"
+			else
+				vomitsound = "mrigvomit"
+			eye_blurry = max(10, eye_blurry)
+			losebreath += 20
+		else
+			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>","<span class='warning'>You throw up!</span>")
+			if(gender == FEMALE)
+				vomitsound = "femalevomit"
+			else
+				vomitsound = "malevomit"
+		make_jittery(max(35 - jitteriness, 0))
+		playsound(src, vomitsound, VOL_EFFECTS_MASTER, null, FALSE)
+	else
+		visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>","<span class='warning'>You throw up!</span>")
+		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
+
+	var/turf/simulated/T = loc
+	var/obj/structure/toilet/WC = locate(/obj/structure/toilet) in T
+	if(WC && WC.open)
+		return TRUE
+	if(locate(/obj/structure/sink) in T)
+		return TRUE
+
+	if(istype(T))
+		T.add_vomit_floor(src, getToxLoss() > 0 ? TRUE : FALSE)
+
+	return TRUE
