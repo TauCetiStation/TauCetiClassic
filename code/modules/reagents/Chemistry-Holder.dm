@@ -175,6 +175,8 @@ var/const/INGEST = 2
 	return amount
 
 /datum/reagents/proc/metabolize(mob/M, alien)
+	if(has_reagent("aclometasone")) // Has a "unique" metabolization disabling factor, which just prevents any metabolization at all without affecting hunger. ~Luduk
+		return
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if(M && R)
@@ -473,6 +475,16 @@ var/const/INGEST = 2
 	return FALSE
 
 /datum/reagents/proc/has_reagent(reagent, amount = 0)
+	/*
+	Aclometasone prevents: reactions, metabolism, reagent effects, so we make this special snowflake code
+	to prevent all of the above.
+	*/
+	var/datum/reagent/aclometasone/ACLO = locate(/datum/reagent/aclometasone) in reagent_list
+	if(ismob(my_atom) && ACLO)
+		if(reagent == "aclometasone")
+			return ACLO.volume
+		return 0
+
 	for(var/datum/reagent/R in reagent_list)
 		if(R.id == reagent)
 			if(!amount)
@@ -482,6 +494,16 @@ var/const/INGEST = 2
 	return 0
 
 /datum/reagents/proc/get_reagent_amount(reagent)
+	/*
+	Aclometasone prevents: reactions, metabolism, reagent effects, so we make this special snowflake code
+	to prevent all of the above.
+	*/
+	var/datum/reagent/aclometasone/ACLO = locate(/datum/reagent/aclometasone) in reagent_list
+	if(ismob(my_atom) && ACLO)
+		if(reagent == "aclometasone")
+			return ACLO.volume
+		return 0
+
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if (R.id == reagent)
