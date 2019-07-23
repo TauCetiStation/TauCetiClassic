@@ -28,7 +28,7 @@
     if(istype(loot,  /obj/item/stack/sheet))
         var/obj/item/stack/sheet/S = loot
         S.amount = rand(5,15)
-    qdel(src) // удаляется после использования
+    qdel(src) // delete after use
 
 /obj/structure/clown_stuff_spawner
 	name = "strange button"
@@ -44,4 +44,4 @@
 /obj/structure/clown_stuff_spawner/attack_hand(mob/user)
 	var/selected_loot = pick(loot_types)
 	new selected_loot(loc)
-	qdel(src) // удалить себя
+	qdel(src) // delete after use
