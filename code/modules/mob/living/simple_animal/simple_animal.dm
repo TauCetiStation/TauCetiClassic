@@ -78,7 +78,8 @@
 
 	health = min(health, maxHealth)
 
-	handle_vision()
+	if(client)
+		handle_vision()
 
 	if(stunned)
 		AdjustStunned(-1)

@@ -46,9 +46,9 @@
 
 	return 1
 
-/mob/living/handle_vision_check()
+/mob/living/is_vision_obstructed()
     if(istype(loc, /obj/item/weapon/holder))
-        return loc.handle_vision_check()
+        return loc.is_vision_obstructed()
     return ..()	
 
 /mob/living/proc/handle_vision()
@@ -58,7 +58,7 @@
 		if(blinded)
 			throw_alert("blind")
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-		else if(handle_vision_check())
+		else if(is_vision_obstructed())
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		else
 			clear_alert("blind")

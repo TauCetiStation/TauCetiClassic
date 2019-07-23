@@ -596,5 +596,5 @@
 /turf/space/handle_slip()
 	return
 
-/atom/proc/handle_vision_check()
+/atom/proc/is_vision_obstructed()
     return loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside)
