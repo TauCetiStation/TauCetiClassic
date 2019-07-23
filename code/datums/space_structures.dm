@@ -43,7 +43,13 @@
 	structure_id = "teleporter"
 	desc = "Unknown debris"
 	mappath = "maps/templates/space_structures/teleporter.dmm"
-
+  
+/datum/map_template/space_structure/abandoned_lab
+	name = "Abandoned Lab"
+	structure_id = "abandoned_lab"
+	desc = "Debris of an unknown lab"
+	mappath = "maps/templates/space_structures/abandoned_lab.dmm"
+  
 /datum/map_template/space_structure/agrosphere
 	name = "agrosphere"
 	structure_id = "agrosphere"
@@ -67,3 +73,4 @@
 	structure_id = "ghost_ship_1"
 	desc = "Debris of an unknown shuttle"
 	mappath = "maps/templates/space_structures/ghost_ship_1.dmm"
+

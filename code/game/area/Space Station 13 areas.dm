@@ -1412,3 +1412,7 @@ var/list/the_station_areas = list (
 	icon_state = "null"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	requires_power = 0
+
+/area/derelict/lab
+	name = "Abandoned Lab"
+	icon_state = "yellow"
