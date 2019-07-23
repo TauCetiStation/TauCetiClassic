@@ -42,6 +42,12 @@
 	for(var/mob/living/M in contents)
 		M.show_message(message,m_type)
 
+/obj/item/weapon/holder/handle_vision_check()
+    if(ishuman(loc))
+        var/mob/living/carbon/human/H = loc
+        return H.head == src && H.handle_vision_check()
+    return ..()
+
 // Mob procs and vars for scooping up
 /mob/living/var/holder_type
 
