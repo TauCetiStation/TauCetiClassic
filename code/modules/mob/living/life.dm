@@ -80,6 +80,10 @@
 		else
 			if(!client.adminobs)
 				reset_view(null)
+		if(ismonkey(src))
+			if(istype(loc, /obj/item/weapon/holder) | is_type_in_list(loc, ignore_vision_inside))
+				clear_fullscreen("blind", 0)
+				clear_alert("blind")
 
 /mob/living/proc/update_sight()
 	return
