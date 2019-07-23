@@ -32255,6 +32255,9 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/start{
+	name = "Research Assistant"
+	},
 /turf/simulated/floor{
 	icon_state = "purple"
 	},
@@ -36195,6 +36198,9 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
+	},
+/obj/effect/landmark/start{
+	name = "Research Assistant"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -74444,19 +74450,13 @@
 	},
 /area/assembly/sppodconstr)
 "yAb" = (
-/obj/machinery/mecha_part_fabricator{
-	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "Robotics";
-	network = list("SS13","Research");
-	pixel_x = 22
+/obj/effect/landmark/start{
+	name = "Research Assistant"
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "warning"
+	icon_state = "purplecorner"
 	},
-/area/assembly/robotics)
+/area/hallway/primary/bridgehall)
 "yBb" = (
 /obj/effect/landmark/start{
 	name = "Cyborg"
@@ -74510,18 +74510,17 @@
 /area/space)
 "yJb" = (
 /obj/machinery/mecha_part_fabricator{
-	dir = 8
+	dir = 4
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Robotics Lab APC";
-	pixel_x = -25
+/obj/machinery/camera{
+	c_tag = "Robotics";
+	network = list("SS13","Research");
+	pixel_x = 22
 	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "warning"
 	},
-/turf/simulated/floor,
 /area/assembly/robotics)
 "yKb" = (
 /obj/effect/landmark/start{
@@ -74659,16 +74658,20 @@
 	},
 /area/assembly/sppodconstr)
 "yXb" = (
-/obj/machinery/shieldwall{
-	density = 0;
-	pixel_x = 8
+/obj/machinery/mecha_part_fabricator{
+	dir = 4
 	},
-/turf/simulated/floor{
-	blocks_air = 1;
+/obj/machinery/power/apc{
 	dir = 8;
-	icon_state = "vault"
+	name = "Robotics Lab APC";
+	pixel_x = -25
 	},
-/area/assembly/sppodconstr)
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor,
+/area/assembly/robotics)
 "yYb" = (
 /turf/simulated/floor/plating{
 	dir = 5;
@@ -74975,12 +74978,11 @@
 	},
 /area/assembly/sppodconstr)
 "zqb" = (
-/obj/machinery/vending/snack{
-	dir = 4;
-	icon_state = "pod_civ"
-	},
+/obj/machinery/shieldwall,
 /turf/simulated/floor{
-	icon_state = "dark"
+	blocks_air = 1;
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/assembly/sppodconstr)
 "zrb" = (
@@ -118860,7 +118862,7 @@ aPl
 aPn
 bLT
 aqn
-xMb
+yAb
 cfv
 bic
 bOc
@@ -119380,8 +119382,8 @@ xWb
 yeb
 btC
 yqb
-yAb
 yJb
+yXb
 zab
 zwb
 zQb
@@ -123494,7 +123496,7 @@ ypb
 yyb
 yGb
 yWb
-zqb
+zrb
 zKb
 zrb
 Anb
@@ -124264,11 +124266,11 @@ aaa
 aaa
 ajf
 ypb
-yXb
-yXb
+zqb
+zqb
 ypb
-yXb
-yXb
+zqb
+zqb
 ypb
 ypb
 bZQ
