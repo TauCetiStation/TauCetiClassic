@@ -3,76 +3,72 @@
 /turf/space,
 /area/space)
 "b" = (
+/obj/structure/window/phoronreinforced{
+	dir = 6
+	},
 /turf/space,
+/turf/space,
+/area/planetarium)
+"c" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien20"
 	},
 /area/planetarium)
-"c" = (
-/turf/space,
+"d" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien21"
 	},
 /area/planetarium)
-"d" = (
-/turf/space,
+"e" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien22"
 	},
 /area/planetarium)
-"e" = (
+"f" = (
+/obj/structure/window/phoronreinforced{
+	dir = 6
+	},
+/turf/unsimulated/floor/abductor,
 /turf/space,
+/area/planetarium)
+"g" = (
+/obj/structure/window/phoronreinforced{
+	dir = 6
+	},
+/turf/space,
+/turf/space,
+/area/planetarium)
+"h" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien23"
 	},
 /area/planetarium)
-"f" = (
-/turf/space,
+"i" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien24"
 	},
 /area/planetarium)
-"g" = (
-/turf/space,
+"j" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien16"
 	},
 /area/planetarium)
-"h" = (
+"k" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien17"
 	},
 /area/planetarium)
-"i" = (
+"l" = (
 /obj/structure/closet/abductor,
 /obj/item/weapon/storage/box/alienhandcuffs,
 /turf/unsimulated/floor/abductor,
 /area/planetarium)
-"j" = (
-/obj/structure/closet/abductor,
-/obj/item/bluespace_crystal,
-/obj/machinery/light/small{
-	dir = 1;
-	light_color = "#8b008b"
-	},
-/turf/unsimulated/floor/abductor,
-/area/planetarium)
-"k" = (
-/obj/structure/closet/abductor,
-/obj/item/gland/viral,
-/obj/item/weapon/disk/research_points,
-/turf/unsimulated/floor/abductor,
-/area/planetarium)
-"l" = (
-/turf/unsimulated/wall/abductor{
-	icon_state = "alien18"
-	},
-/area/planetarium)
 "m" = (
-/turf/space,
-/turf/unsimulated/wall/abductor{
-	icon_state = "alien19"
+/obj/structure/window/phoronreinforced{
+	dir = 6
 	},
+/turf/unsimulated/floor/abductor,
+/turf/space,
 /area/planetarium)
 "n" = (
 /obj/structure/window/phoronreinforced{
@@ -90,83 +86,139 @@
 /turf/unsimulated/floor/abductor,
 /area/planetarium)
 "q" = (
+/obj/singularity/academy,
+/turf/space,
+/area/planetarium)
+"r" = (
+/obj/structure/closet/abductor,
+/obj/item/bluespace_crystal,
+/obj/machinery/light/small{
+	dir = 1;
+	light_color = "#8b008b"
+	},
+/turf/unsimulated/floor/abductor,
+/area/planetarium)
+"s" = (
+/obj/structure/closet/abductor,
+/obj/item/gland/viral,
+/obj/item/weapon/disk/research_points,
+/turf/unsimulated/floor/abductor,
+/area/planetarium)
+"t" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien7"
 	},
 /area/planetarium)
-"r" = (
+"u" = (
+/obj/structure/window/phoronreinforced{
+	dir = 6
+	},
+/turf/unsimulated/floor/abductor,
+/turf/space,
+/area/planetarium)
+"v" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien8"
 	},
 /area/planetarium)
-"s" = (
+"w" = (
 /obj/machinery/light/small{
 	dir = 8;
 	light_color = "#8b008b"
 	},
 /turf/unsimulated/floor/abductor,
 /area/planetarium)
-"t" = (
+"x" = (
 /obj/machinery/light/small{
 	dir = 4;
 	light_color = "#8b008b"
 	},
 /turf/unsimulated/floor/abductor,
 /area/planetarium)
-"u" = (
+"y" = (
+/turf/unsimulated/floor/abductor,
 /turf/space,
+/area/planetarium)
+"z" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien19"
+	},
+/area/planetarium)
+"A" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien18"
+	},
+/area/planetarium)
+"B" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien14"
 	},
 /area/planetarium)
-"v" = (
-/obj/structure/window/phoronreinforced,
-/obj/structure/window/phoronreinforced{
-	dir = 4
-	},
+"C" = (
 /turf/unsimulated/floor/abductor,
+/turf/space,
 /area/planetarium)
-"w" = (
+"D" = (
 /obj/structure/window/phoronreinforced,
 /obj/structure/window/phoronreinforced{
 	dir = 8
 	},
 /turf/unsimulated/floor/abductor,
 /area/planetarium)
-"x" = (
-/turf/space,
+"E" = (
+/obj/structure/window/phoronreinforced,
+/obj/structure/window/phoronreinforced{
+	dir = 4
+	},
+/turf/unsimulated/floor/abductor,
+/area/planetarium)
+"F" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien15"
 	},
 /area/planetarium)
-"y" = (
+"G" = (
+/obj/structure/table/abductor,
+/obj/structure/planetarium_spawner,
+/turf/unsimulated/floor/abductor,
 /turf/space,
+/area/planetarium)
+"H" = (
+/turf/unsimulated/floor/abductor,
+/turf/space,
+/area/planetarium)
+"I" = (
+/turf/unsimulated/floor/abductor,
+/turf/space,
+/area/planetarium)
+"J" = (
+/obj/structure/window/phoronreinforced{
+	dir = 6
+	},
+/turf/unsimulated/floor/abductor,
+/turf/space,
+/area/planetarium)
+"K" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien12"
 	},
 /area/planetarium)
-"z" = (
+"L" = (
 /obj/structure/table/abductor,
 /obj/structure/planetarium_spawner,
 /turf/unsimulated/floor/abductor,
 /area/planetarium)
-"A" = (
-/obj/singularity/academy,
-/turf/space,
-/area/planetarium)
-"B" = (
-/turf/space,
+"M" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien13"
 	},
 /area/planetarium)
-"C" = (
-/turf/space,
+"N" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien10"
 	},
 /area/planetarium)
-"D" = (
+"O" = (
 /obj/structure/window/phoronreinforced{
 	dir = 1
 	},
@@ -175,7 +227,7 @@
 	},
 /turf/unsimulated/floor/abductor,
 /area/planetarium)
-"E" = (
+"P" = (
 /obj/structure/window/phoronreinforced{
 	dir = 8
 	},
@@ -185,59 +237,54 @@
 /obj/item/weapon/haircomb,
 /turf/unsimulated/floor/abductor,
 /area/planetarium)
-"F" = (
-/turf/space,
-/turf/unsimulated/wall/abductor{
-	icon_state = "alien11"
-	},
-/area/planetarium)
-"G" = (
-/turf/space,
-/turf/unsimulated/wall/abductor{
-	icon_state = "alien6"
-	},
-/area/planetarium)
-"H" = (
-/turf/space,
-/turf/unsimulated/wall/abductor{
-	icon_state = "alien9"
-	},
-/area/planetarium)
-"I" = (
-/turf/space,
-/turf/unsimulated/wall/abductor,
-/area/planetarium)
-"J" = (
-/turf/space,
+"Q" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien5"
 	},
 /area/planetarium)
-"K" = (
+"R" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien2"
+	},
+/area/planetarium)
+"S" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien4"
+	},
+/area/planetarium)
+"T" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien9"
+	},
+/area/planetarium)
+"U" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien11"
+	},
+/area/planetarium)
+"V" = (
+/obj/item/alien_embryo,
+/obj/item/weapon/scalpel/alien,
+/turf/unsimulated/floor/abductor,
+/area/planetarium)
+"W" = (
 /obj/machinery/light/small{
 	light_color = "#8b008b"
 	},
 /turf/unsimulated/floor/abductor,
 /area/planetarium)
-"L" = (
-/obj/item/alien_embryo,
-/obj/item/weapon/scalpel/alien,
-/turf/unsimulated/floor/abductor,
-/area/planetarium)
-"M" = (
-/turf/unsimulated/wall/abductor{
-	icon_state = "alien2"
-	},
-/area/planetarium)
-"N" = (
+"X" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien3"
 	},
 /area/planetarium)
-"O" = (
+"Y" = (
 /turf/unsimulated/wall/abductor{
-	icon_state = "alien4"
+	icon_state = "alien6"
 	},
+/area/planetarium)
+"Z" = (
+/turf/unsimulated/wall/abductor,
 /area/planetarium)
 
 (1,1,1) = {"
@@ -250,15 +297,11 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+j
+B
+K
+N
+Y
 a
 a
 a
@@ -278,17 +321,13 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+c
+k
+p
+w
+p
+t
+Z
 a
 a
 a
@@ -306,19 +345,15 @@ a
 a
 a
 a
-a
-a
-a
-a
 g
-u
-y
-C
+J
+I
+I
 G
-a
-a
-a
-a
+p
+p
+o
+n
 a
 a
 a
@@ -334,21 +369,17 @@ a
 a
 a
 a
-a
-a
-a
-a
-b
-h
+g
+o
 p
-s
 p
-q
+p
+p
 I
-a
-a
-a
-a
+p
+p
+o
+n
 a
 a
 a
@@ -362,23 +393,19 @@ a
 a
 a
 a
-a
-a
-a
-a
 n
 o
 p
 p
-z
+o
+A
+p
+v
+o
 p
 p
 o
 n
-a
-a
-a
-a
 a
 a
 a
@@ -390,25 +417,21 @@ a
 a
 a
 a
-a
-a
-a
-a
 n
 o
 p
 p
+o
+n
+o
 p
-p
-p
+o
+n
+o
 p
 p
 o
 n
-a
-a
-a
-a
 a
 a
 a
@@ -418,27 +441,23 @@ a
 a
 a
 a
-a
-a
-a
-a
 n
-o
-p
-p
-o
-l
-p
-r
 o
 p
 p
 o
 n
 a
+o
+p
+o
 a
-a
-a
+n
+o
+p
+p
+o
+n
 a
 a
 a
@@ -446,19 +465,6 @@ a
 (8,1,1) = {"
 a
 a
-a
-a
-a
-a
-n
-o
-p
-p
-o
-n
-o
-p
-o
 n
 o
 p
@@ -467,29 +473,23 @@ o
 n
 a
 a
+o
+p
+o
 a
 a
+n
+o
+p
+p
+o
+n
 a
 a
 "}
 (9,1,1) = {"
 a
-a
-a
-a
-a
-n
-o
-p
-p
-o
-n
-a
-o
-p
-o
-a
-n
+j
 o
 p
 p
@@ -497,201 +497,184 @@ o
 n
 a
 a
+j
+o
+p
+o
+Y
 a
 a
+n
+o
+p
+p
+o
+Y
 a
 "}
 (10,1,1) = {"
-a
-a
-a
-a
-n
-o
-p
-p
-o
-n
-a
-a
-o
-p
-o
-a
-a
-n
-o
-p
-p
-o
-n
-a
-a
-a
-a
-"}
-(11,1,1) = {"
-a
-a
-a
-g
-o
-p
-p
-o
-n
-a
-a
-g
-o
-p
-o
-G
-a
-a
-n
-o
-p
-p
-o
-G
-a
-a
-a
-"}
-(12,1,1) = {"
-a
-a
-b
-h
-p
-p
-o
-n
-a
-a
-b
-h
-p
-p
-p
-q
-I
-a
-a
-n
-o
-p
-p
-q
-I
-a
-a
-"}
-(13,1,1) = {"
-a
-a
 c
-i
-p
-p
-q
-o
-o
-o
-o
-s
-v
-o
-D
-s
-o
-o
-o
-o
-h
-p
-p
-p
-M
-a
-a
-"}
-(14,1,1) = {"
-a
-a
-d
-j
-p
-p
-p
-p
-p
-p
-p
-p
-o
-A
-o
-p
-p
-p
-p
-p
-p
-p
-z
-K
-N
-a
-a
-"}
-(15,1,1) = {"
-a
-a
-e
 k
 p
 p
-r
 o
-o
-o
-o
+n
+a
+a
+c
+k
+p
+p
+p
 t
-w
+Z
+a
+a
+n
 o
-E
+p
+p
 t
-o
-o
-o
-o
+Z
+"}
+(11,1,1) = {"
+d
 l
 p
 p
-L
+t
+o
+o
+J
+o
+w
+E
+J
 O
+w
+o
+o
+o
+o
+k
+I
+p
+p
+R
+"}
+(12,1,1) = {"
+e
+r
+p
+p
+p
+p
+I
+p
+p
+p
+o
+q
+J
+p
+p
+p
+p
+p
+p
+p
+G
+W
+X
+"}
+(13,1,1) = {"
+h
+s
+p
+p
+v
+o
+o
+o
+o
+x
+D
+o
+P
+x
+o
+o
+o
+o
+A
+p
+p
+V
+S
+"}
+(14,1,1) = {"
+i
+A
+p
+p
+o
+n
 a
+a
+i
+A
+p
+p
+p
+v
+Q
+a
+a
+n
+o
+p
+p
+v
+Q
+"}
+(15,1,1) = {"
+a
+z
+o
+p
+p
+o
+n
+a
+a
+z
+o
+p
+o
+T
+a
+a
+n
+o
+p
+p
+o
+T
 a
 "}
 (16,1,1) = {"
 a
 a
-f
-l
-p
-p
+n
 o
+p
+p
+J
 n
 a
 a
-f
-l
+o
 p
-p
-p
-r
 J
 a
 a
@@ -699,8 +682,8 @@ n
 o
 p
 p
-r
-J
+o
+g
 a
 a
 "}
@@ -708,27 +691,23 @@ a
 a
 a
 a
-m
+n
 o
 p
 p
-o
+J
 n
 a
-a
-m
 o
-p
+I
 o
-H
-a
 a
 n
 o
 p
 p
 o
-H
+g
 a
 a
 a
@@ -744,13 +723,9 @@ p
 p
 o
 n
-a
-a
 o
 p
 o
-a
-a
 n
 o
 p
@@ -773,13 +748,9 @@ o
 p
 p
 o
-n
-a
-o
+k
 p
-o
-a
-n
+t
 o
 p
 p
@@ -802,13 +773,9 @@ n
 o
 p
 p
-o
-n
-o
 p
-o
-n
-o
+p
+p
 p
 p
 o
@@ -832,11 +799,7 @@ n
 o
 p
 p
-o
-h
-p
-q
-o
+L
 p
 p
 o
@@ -858,17 +821,13 @@ a
 a
 a
 a
-n
-o
+i
+A
 p
+x
 p
-p
-p
-p
-p
-p
-o
-n
+v
+Q
 a
 a
 a
@@ -888,131 +847,11 @@ a
 a
 a
 a
-n
-o
-p
-p
 z
-p
-p
-o
-n
-a
-a
-a
-a
-a
-a
-a
-a
-a
-"}
-(24,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-f
-l
-p
-t
-p
-r
-J
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-"}
-(25,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-m
-x
-B
 F
-H
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-"}
-(26,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-"}
-(27,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+M
+U
+T
 a
 a
 a

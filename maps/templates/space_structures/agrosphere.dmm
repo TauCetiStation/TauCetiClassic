@@ -3,35 +3,20 @@
 /turf/space,
 /area/space)
 "ab" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 1
-	},
-/turf/space,
-/area/agrospheregarden)
-"ac" = (
-/obj/structure/shuttle/engine/heater{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8;
-	req_access = list(72)
-	},
-/obj/structure/window/reinforced,
-/turf/simulated/floor/plating,
-/area/agrospheregarden)
-"ad" = (
-/turf/simulated/wall,
-/area/agrospheregarden)
-"ae" = (
 /obj/machinery/chem_dispenser,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
 /area/agrospheregarden)
-"af" = (
+"ac" = (
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/agrospheregarden)
+"ad" = (
+/turf/simulated/wall,
+/area/agrospheregarden)
+"ae" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/pill_bottle/zoom{
 	pixel_x = -4
@@ -53,37 +38,19 @@
 	icon_state = "white"
 	},
 /area/agrospheregarden)
-"ag" = (
-/obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/pill/happy{
-	pixel_x = 7;
-	pixel_y = 5
-	},
-/obj/item/weapon/reagent_containers/pill/happy,
-/obj/item/weapon/storage/pill_bottle/happy{
-	pixel_x = -6;
-	pixel_y = 8
-	},
-/obj/item/weapon/storage/pill_bottle/citalopram,
-/obj/item/weapon/reagent_containers/syringe/antitoxin,
-/obj/item/weapon/disk/research_points,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/agrospheregarden)
-"ah" = (
+"af" = (
 /obj/machinery/chem_master,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
 /area/agrospheregarden)
-"ai" = (
+"ag" = (
 /obj/item/toy/figure/chemist,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
 /area/agrospheregarden)
-"aj" = (
+"ah" = (
 /obj/item/weapon/reagent_containers/pill/paracetamol{
 	pixel_x = 12;
 	pixel_y = 6
@@ -114,7 +81,7 @@
 	icon_state = "white"
 	},
 /area/agrospheregarden)
-"ak" = (
+"ai" = (
 /obj/item/weapon/reagent_containers/pill/LSD{
 	pixel_x = 7;
 	pixel_y = 9
@@ -130,9 +97,24 @@
 	icon_state = "white"
 	},
 /area/agrospheregarden)
+"aj" = (
+/obj/structure/table/glass,
+/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/weapon/reagent_containers/hypospray,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/agrospheregarden)
+"ak" = (
+/obj/item/weapon/reagent_containers/pill/methylphenidate,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/agrospheregarden)
 "al" = (
 /obj/structure/table/glass,
-/obj/machinery/kitchen_machine/microwave,
+/obj/item/weapon/reagent_containers/food/snacks/dionaroast,
+/obj/item/weapon/kitchenknife/plastic,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -145,53 +127,13 @@
 /turf/simulated/floor/plating,
 /area/agrospheregarden)
 "an" = (
-/obj/structure/table/glass,
-/obj/item/weapon/storage/firstaid/toxin,
-/obj/item/weapon/reagent_containers/hypospray,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/agrospheregarden)
-"ao" = (
-/obj/item/weapon/reagent_containers/pill/methylphenidate,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/agrospheregarden)
-"ap" = (
-/obj/machinery/hydroponics/constructable,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/agrospheregarden)
-"aq" = (
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/agrospheregarden)
-"ar" = (
-/obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/food/snacks/dionaroast,
-/obj/item/weapon/kitchenknife/plastic,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/agrospheregarden)
-"as" = (
-/obj/machinery/hydroponics/constructable,
-/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/agrospheregarden)
-"at" = (
 /obj/machinery/hydroponics/constructable,
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
 /area/agrospheregarden)
-"au" = (
+"ao" = (
 /obj/machinery/light{
 	dir = 8
 	},
@@ -201,7 +143,20 @@
 	icon_state = "white"
 	},
 /area/agrospheregarden)
-"av" = (
+"ap" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 1
+	},
+/turf/space,
+/area/agrospheregarden)
+"aq" = (
+/obj/structure/table/glass,
+/obj/machinery/kitchen_machine/microwave,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/agrospheregarden)
+"ar" = (
 /obj/machinery/light{
 	dir = 4
 	},
@@ -211,14 +166,39 @@
 	icon_state = "white"
 	},
 /area/agrospheregarden)
-"aw" = (
-/obj/machinery/hydroponics/constructable,
-/obj/item/weapon/grown/deathnettle,
+"as" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	req_access = list(72)
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
+/area/agrospheregarden)
+"at" = (
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/pill/happy{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/weapon/reagent_containers/pill/happy,
+/obj/item/weapon/storage/pill_bottle/happy{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/pill_bottle/citalopram,
+/obj/item/weapon/reagent_containers/syringe/antitoxin,
+/obj/item/weapon/disk/research_points,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
 /area/agrospheregarden)
-"ax" = (
+"au" = (
 /obj/item/seeds/ambrosiadeusseed,
 /obj/item/seeds/ambrosiadeusseed,
 /obj/item/seeds/ambrosiadeusseed,
@@ -232,7 +212,7 @@
 	icon_state = "white"
 	},
 /area/agrospheregarden)
-"ay" = (
+"av" = (
 /obj/item/weapon/hatchet,
 /obj/item/weapon/pestspray,
 /obj/item/weapon/reagent_containers/spray/plantbgone,
@@ -240,7 +220,7 @@
 	icon_state = "white"
 	},
 /area/agrospheregarden)
-"az" = (
+"aw" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window/reinforced{
 	dir = 4
@@ -254,28 +234,54 @@
 	},
 /turf/simulated/floor/plating,
 /area/agrospheregarden)
-"aA" = (
-/obj/machinery/door/airlock/external,
-/turf/simulated/floor/plating,
+"ax" = (
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/agrospheregarden)
-"aB" = (
+"ay" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/simulated/floor/plating,
 /area/agrospheregarden)
+"az" = (
+/obj/machinery/hydroponics/constructable,
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/agrospheregarden)
+"aA" = (
+/obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom,
+/turf/simulated/floor/grass,
+/area/agrospheregarden)
+"aB" = (
+/obj/machinery/hydroponics/constructable,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/agrospheregarden)
 "aC" = (
-/turf/simulated/floor/plating,
+/obj/machinery/hydroponics/constructable,
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/agrospheregarden)
 "aD" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 1
+/obj/machinery/hydroponics/constructable,
+/obj/item/weapon/grown/deathnettle,
+/turf/simulated/floor{
+	icon_state = "white"
 	},
-/turf/simulated/floor/plating,
 /area/agrospheregarden)
 "aE" = (
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
 "aF" = (
-/obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom,
+/obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom{
+	pixel_x = 6;
+	pixel_y = -5
+	},
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
 "aG" = (
@@ -283,29 +289,42 @@
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
 "aH" = (
+/turf/simulated/floor/plating,
+/area/agrospheregarden)
+"aI" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/agrospheregarden)
+"aJ" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
-"aI" = (
+"aK" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell,
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
-"aJ" = (
+"aL" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
-"aK" = (
+"aM" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/agrospheregarden)
-"aL" = (
+"aN" = (
+/obj/machinery/door/airlock/external,
+/turf/simulated/floor/plating,
+/area/agrospheregarden)
+"aO" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
@@ -318,19 +337,23 @@
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
 /area/agrospheregarden)
-"aM" = (
+"aP" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/mtear,
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
-"aN" = (
+"aQ" = (
 /obj/structure/flora/junglebush/c,
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
-"aO" = (
+"aR" = (
 /obj/structure/flora/tree/jungle,
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
-"aP" = (
+"aS" = (
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle,
+/turf/simulated/floor/grass,
+/area/agrospheregarden)
+"aT" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 4
 	},
@@ -344,81 +367,70 @@
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
 /area/agrospheregarden)
-"aQ" = (
+"aU" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/agrospheregarden)
-"aR" = (
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle,
-/turf/simulated/floor/grass,
-/area/agrospheregarden)
-"aS" = (
+"aV" = (
 /obj/structure/flora/junglebush/large,
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
-"aT" = (
+"aW" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle{
 	pixel_x = -15;
 	pixel_y = 15
 	},
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
-"aU" = (
+"aX" = (
 /obj/structure/flora/tree/jungle/small,
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
-"aV" = (
+"aY" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
-"aW" = (
-/obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom{
-	pixel_x = 6;
-	pixel_y = -5
-	},
-/turf/simulated/floor/grass,
-/area/agrospheregarden)
-"aX" = (
+"aZ" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap,
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
-"aY" = (
+"ba" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom,
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
-"aZ" = (
+"bb" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap,
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
-"ba" = (
+"bc" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap{
 	pixel_x = -20;
 	pixel_y = 10
 	},
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
-"bb" = (
+"bd" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/tree/jungle/small,
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
-"bc" = (
+"fK" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell{
 	pixel_x = 6;
 	pixel_y = 7
 	},
 /turf/simulated/floor/grass,
 /area/agrospheregarden)
-"bd" = (
+"OZ" = (
 /obj/machinery/light{
 	dir = 4
 	},
@@ -445,21 +457,13 @@ aa
 aa
 aa
 aa
+aM
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aM
 aa
 aa
 aa
@@ -489,21 +493,13 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aO
+am
+am
+am
+am
+am
+aO
 aa
 aa
 aa
@@ -533,21 +529,13 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ad
+am
+aE
+aY
+aK
+am
+ad
 aa
 aa
 aa
@@ -576,23 +564,15 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aK
-aa
-aa
-aa
-aa
-aa
-aK
-aa
-aa
-aa
-aa
-aa
-aa
+am
+am
+aE
+aV
+aE
+aQ
+aE
+am
+am
 aa
 aa
 aa
@@ -619,25 +599,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aL
 am
 am
+aP
+aE
+aV
+aE
+aE
+aE
+aV
 am
 am
-am
-aL
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -662,27 +634,19 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-ad
 am
+am
+aJ
 aE
-aV
-aI
+aE
+aE
+aE
+aE
+aR
+aE
+aJ
 am
-ad
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+am
 aa
 aa
 aa
@@ -690,309 +654,253 @@ aa
 aa
 "}
 (7,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ap
+as
+ad
+ad
+am
+ad
+ad
+ad
+am
+ad
+ad
+aw
+ay
+aI
+as
 am
 am
 aE
-aS
 aE
-aN
+aQ
+aR
 aE
+aE
+aE
+aE
+aE
+aV
+aA
 am
-am
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aw
+ay
 aa
 aa
 aa
 "}
 (8,1,1) = {"
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-am
-am
-aM
+ad
+ad
+af
+aj
+aC
+ao
+an
+aC
+au
+ad
+ad
+ad
+ad
+ad
+ad
 aE
-aS
 aE
 aE
 aE
 aS
-am
-am
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aW
+aP
+aE
+aE
+bd
+aE
+aE
+aG
+ad
+ad
+ad
+ad
+ad
 "}
 (9,1,1) = {"
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-am
-am
+ad
+ab
+ag
+ak
+ax
+ax
+ax
+ax
+ax
+ax
+ad
 aH
-aE
-aE
-aE
-aE
-aE
-aO
-aE
 aH
-am
-am
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ad
+aE
+aA
+aG
+aE
+aE
+aE
+aG
+aE
+aE
+aE
+aE
+fK
+aQ
+aE
+aE
+ad
+aH
+aH
+ad
 "}
 (10,1,1) = {"
 aa
-aa
-aa
-ab
-ac
 ad
-ad
-am
-ad
-ad
-ad
-am
-ad
-ad
-az
+ae
+ah
+aB
+aB
+aC
 aB
 aD
-ac
-am
-am
+ax
+ax
+aN
+aH
+aH
+aN
+aE
+aE
+aE
+aK
+aE
+aE
+aE
+aF
+aG
+aE
+aE
+aE
+aE
 aE
 aE
 aN
-aO
-aE
-aE
-aE
-aE
-aE
-aS
-aF
-am
-az
-aB
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aH
+aH
+aN
 "}
 (11,1,1) = {"
 aa
-aa
-aa
-aa
 ad
-ad
-ah
-an
-as
-au
 at
-as
+ai
+ax
+ax
+ax
+ax
+ax
+ax
 ax
 ad
-ad
-ad
-ad
-ad
+aH
+aH
 ad
 aE
+aE
+aE
+aE
+aE
+aE
+aX
+aE
+aE
+aE
+aE
+aE
+aE
+aA
+aE
+ad
+aH
+aH
+ad
+"}
+(12,1,1) = {"
+aa
+ad
+ad
+aq
+al
+an
+ar
+aC
+an
+av
+ad
+ad
+ad
+ad
+ad
+ad
 aE
 aE
 aE
 aR
-aT
-aM
-aE
-aE
-bb
-aE
-aE
-aG
-ad
-ad
-ad
-ad
-ad
-aa
-aa
-aa
-aa
-aa
-"}
-(12,1,1) = {"
-aa
-aa
-aa
-aa
-ad
-ae
-ai
-ao
-aq
-aq
-aq
-aq
-aq
-aq
-ad
-aC
-aC
-ad
-aE
-aF
-aG
-aE
 aE
 aE
 aG
 aE
 aE
 aE
-aE
-bc
-aN
-aE
+aR
+aV
 aE
 ad
-aC
-aC
 ad
-aa
-aa
-aa
-aa
-aa
+ad
+ad
+ad
 "}
 (13,1,1) = {"
-aa
-aa
-aa
-aa
-ad
-af
-aj
-ap
 ap
 as
-ap
+ad
+ad
+am
+ad
+ad
+ad
+am
+ad
+ad
 aw
-aq
-aq
-aA
-aC
-aC
-aA
-aE
-aE
-aE
+ay
 aI
+as
+am
+am
 aE
 aE
+aQ
 aE
-aW
+aG
+aK
+aE
+aV
+aE
 aG
 aE
-aE
-aE
-aE
-aE
-aE
-aA
-aC
-aC
-aA
-aa
-aa
+am
+aw
+ay
 aa
 aa
 aa
@@ -1002,39 +910,31 @@ aa
 aa
 aa
 aa
-ad
-ag
-ak
-aq
-aq
-aq
-aq
-aq
-aq
-aq
-ad
-aC
-aC
-ad
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+am
+am
+aL
 aE
 aE
 aE
+aZ
+aQ
 aE
 aE
-aE
-aU
-aE
-aE
-aE
-aE
-aE
-aE
-aF
-aE
-ad
-aC
-aC
-ad
+OZ
+am
+am
 aa
 aa
 aa
@@ -1046,39 +946,31 @@ aa
 aa
 aa
 aa
-ad
-ad
-al
-ar
-at
-av
-as
-at
-ay
-ad
-ad
-ad
-ad
-ad
-ad
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+am
+am
 aE
 aE
 aE
-aO
+aR
+bb
 aE
-aE
-aG
-aE
-aE
-aE
-aO
-aS
-aE
-ad
-ad
-ad
-ad
-ad
+aP
+am
+am
+aa
 aa
 aa
 aa
@@ -1089,38 +981,30 @@ aa
 aa
 aa
 aa
-ab
-ac
-ad
-ad
-am
-ad
-ad
-ad
-am
-ad
-ad
-az
-aB
-aD
-ac
-am
-am
-aE
-aE
-aN
-aE
-aG
-aI
-aE
-aS
-aE
-aG
-aE
-am
-az
-aB
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+am
+am
+aE
+aG
+aG
+bc
+aG
+am
+am
 aa
 aa
 aa
@@ -1149,21 +1033,13 @@ aa
 aa
 aa
 aa
+ad
 am
+aE
+ba
+aV
 am
-aJ
-aE
-aE
-aE
-aX
-aN
-aE
-aE
-bd
-am
-am
-aa
-aa
+ad
 aa
 aa
 aa
@@ -1193,21 +1069,13 @@ aa
 aa
 aa
 aa
-aa
+aT
 am
 am
-aE
-aE
-aE
-aO
-aZ
-aE
-aM
 am
 am
-aa
-aa
-aa
+am
+aT
 aa
 aa
 aa
@@ -1237,285 +1105,13 @@ aa
 aa
 aa
 aa
+aU
 aa
 aa
-am
-am
-aE
-aG
-aG
-ba
-aG
-am
-am
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(20,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ad
-am
-aE
-aY
-aS
-am
-ad
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(21,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aP
-am
-am
-am
-am
-am
-aP
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(22,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aQ
-aa
-aa
-aa
-aa
-aa
-aQ
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(23,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(24,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(25,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aU
 aa
 aa
 aa
