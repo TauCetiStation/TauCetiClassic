@@ -206,10 +206,13 @@ var/datum/subsystem/mapping/SSmapping
 		return
 
 	if(config.system_name)
-		areas_by_type[/area/shuttle/arrival/pre_game].name = "[config.system_name] Transfer Station 13"
+		if(areas_by_type[/area/shuttle/arrival/pre_game])
+			areas_by_type[/area/shuttle/arrival/pre_game].name = "[config.system_name] Transfer Station 13"
 	if(config.station_name)
-		areas_by_type[/area/shuttle/arrival/station].name = config.station_name
-		areas_by_type[/area/shuttle/officer/station].name = config.station_name
+		if(areas_by_type[/area/shuttle/arrival/station])
+			areas_by_type[/area/shuttle/arrival/station].name = config.station_name
+		if(areas_by_type[/area/shuttle/officer/station])
+			areas_by_type[/area/shuttle/officer/station].name = config.station_name
 
 /datum/subsystem/mapping/proc/changemap(var/datum/map_config/VM)
 	if(!VM.MakeNextMap())
