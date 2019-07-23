@@ -86,7 +86,8 @@
 	icon = 'icons/obj/device.dmi'
 
 /obj/item/proc/health_analyze(mob/living/M, mob/living/user, mode)
-	var/message
+	var/message = "<HTML><head><title>[M.name]'s scan results</title></head><BODY>"
+
 	if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>", "<span class = 'warning'>You try to analyze the floor's vitals!</span>")
 		message += "<span class='notice'>Analyzing Results for The floor:\n&emsp; Overall Status: Healthy</span><br>"
@@ -195,8 +196,10 @@
 				message += "<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span><br>"
 		message += "<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
 	add_fingerprint(user)
-	user.show_message(message)
-	return
+
+	message += "</BODY></HTML>"
+	user << browse(entity_ja(message), "window=[M.name]_scan_report")
+	onclose(user, "[M.name]_scan_report")
 
 /obj/item/Destroy()
 	QDEL_NULL(action)
