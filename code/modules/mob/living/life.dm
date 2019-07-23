@@ -53,7 +53,7 @@
 		if(blinded)
 			throw_alert("blind")
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-		else if(loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside))
+		else if(loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside) && !istype(loc, /obj/item/weapon/holder))
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		else
 			clear_alert("blind")
@@ -80,10 +80,6 @@
 		else
 			if(!client.adminobs)
 				reset_view(null)
-		if(ismonkey(src))
-			if(istype(loc, /obj/item/weapon/holder) | is_type_in_list(loc, ignore_vision_inside))
-				clear_fullscreen("blind", 0)
-				clear_alert("blind")
 
 /mob/living/proc/update_sight()
 	return
