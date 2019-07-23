@@ -6,28 +6,28 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f9"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "ac" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall12"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "ae" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall3"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "af" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "ag" = (
 /obj/machinery/chem_dispenser,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "ah" = (
 /obj/machinery/door/airlock/virology/glass{
 	name = "Isolation B";
@@ -36,7 +36,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "ai" = (
 /obj/structure/table/glass,
 /obj/item/weapon/paper{
@@ -46,7 +46,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aj" = (
 /obj/structure/table/glass,
 /obj/structure/reagent_dispensers/virusfood{
@@ -55,7 +55,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "ak" = (
 /obj/structure/table/glass,
 /obj/machinery/light{
@@ -64,27 +64,27 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "al" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/glass/beaker/large,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "am" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/landmark/corpse/doctor,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "an" = (
 /obj/item/weapon/pen,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "ao" = (
 /obj/item/weapon/paper{
 	info = "The preliminary name of the virus is PAX-12. 6 weeks after delivery, the infected began to attack the medical staff and security officers. Some infected are trying to get out of isolation cells.";
@@ -93,14 +93,14 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "ap" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/glass/beaker/bluespace,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aq" = (
 /obj/structure/table/glass,
 /obj/machinery/light{
@@ -109,28 +109,28 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "ar" = (
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "as" = (
 /turf/simulated/shuttle/wall,
-/area/derelict/ship)
+/area/derelict/lab)
 "at" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "au" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "av" = (
 /obj/structure/table/glass,
 /obj/item/weapon/paper_bin,
@@ -138,25 +138,25 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aw" = (
 /obj/structure/table/glass,
 /obj/item/weapon/disk/research_points,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "ax" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s10"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "ay" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "az" = (
 /obj/item/clothing/shoes/combat,
 /obj/effect/decal/cleanable/blood,
@@ -168,20 +168,20 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aA" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 5
 	},
 /turf/simulated/shuttle/plating,
-/area/derelict/ship)
+/area/derelict/lab)
 "aB" = (
 /obj/structure/table/glass,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aC" = (
 /obj/item/ammo_casing/c9mm,
 /obj/item/ammo_casing/c9mm,
@@ -190,27 +190,27 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aD" = (
 /obj/machinery/smartfridge/secure/virology,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aE" = (
 /obj/item/ammo_casing/c9mm,
 /obj/item/ammo_casing/c9mm,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aF" = (
 /obj/item/clothing/under/ert,
 /obj/effect/decal/remains/human,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aG" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 1
@@ -218,26 +218,26 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aH" = (
 /obj/item/ammo_casing/a74,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aI" = (
 /obj/machinery/disease2/diseaseanalyser,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aK" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/fancy/vials,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aL" = (
 /obj/item/ammo_casing/a74,
 /obj/item/ammo_casing/a74,
@@ -245,60 +245,60 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aM" = (
 /obj/item/weapon/shard,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aN" = (
 /obj/effect/decal/remains/human,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aP" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f6"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aQ" = (
 /obj/item/ammo_box/magazine/m9mmr_2,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aR" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall14"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aS" = (
 /obj/effect/decal/cleanable/vomit,
 /turf/simulated/floor{
 	dir = 3;
 	icon_state = "whitegreen"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aT" = (
 /obj/item/weapon/paper_bin,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aU" = (
 /turf/simulated/floor{
 	dir = 3;
 	icon_state = "whitegreen"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aW" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aX" = (
 /obj/machinery/door/airlock/virology/glass{
 	name = "Isolation A";
@@ -307,7 +307,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "aZ" = (
 /obj/item/ammo_casing/a74,
 /obj/effect/decal/remains/human,
@@ -315,18 +315,18 @@
 	dir = 3;
 	icon_state = "whitegreen"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "ba" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f5"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bb" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warnwhite"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bc" = (
 /obj/structure/grille{
 	density = 0;
@@ -334,19 +334,19 @@
 	},
 /obj/item/weapon/shard,
 /turf/simulated/shuttle/plating,
-/area/derelict/ship)
+/area/derelict/lab)
 "bd" = (
 /obj/machinery/computer/centrifuge,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bg" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bi" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -356,19 +356,19 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bj" = (
 /obj/effect/decal/cleanable/vomit,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bk" = (
 /obj/item/weapon/bedsheet/medical,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bl" = (
 /obj/effect/landmark/corpse/doctor,
 /obj/effect/decal/cleanable/blood,
@@ -376,25 +376,25 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bm" = (
 /obj/machinery/computer/diseasesplicer,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bn" = (
 /obj/machinery/disease2/incubator,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bo" = (
 /obj/machinery/chem_master,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bp" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -412,32 +412,32 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bq" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
 	icon_state = "warnwhite"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "br" = (
 /obj/item/ammo_casing/c9mm,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bs" = (
 /obj/structure/stool/bed,
 /obj/effect/decal/cleanable/vomit,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bt" = (
 /obj/effect/decal/cleanable/blood/gibs/limb,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bu" = (
 /obj/structure/grille{
 	density = 0;
@@ -446,26 +446,26 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bv" = (
 /obj/structure/stool/bed,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bw" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitegreen"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bx" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitegreen"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "by" = (
 /obj/machinery/door/airlock/virology/glass{
 	name = "Virology";
@@ -474,7 +474,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bz" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -484,12 +484,12 @@
 /turf/simulated/floor{
 	icon_state = "damaged1"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bA" = (
 /turf/simulated/floor{
 	icon_state = "damaged1"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bB" = (
 /obj/machinery/door/airlock/security/glass,
 /obj/structure/cable{
@@ -500,7 +500,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bC" = (
 /obj/item/weapon/spike,
 /turf/space,
@@ -510,7 +510,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bE" = (
 /obj/structure/sink{
 	dir = 4;
@@ -522,7 +522,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bF" = (
 /obj/machinery/light{
 	dir = 8
@@ -530,12 +530,12 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bG" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall13"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bH" = (
 /obj/structure/grille{
 	density = 0;
@@ -545,7 +545,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bI" = (
 /obj/machinery/light{
 	dir = 4
@@ -553,7 +553,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bJ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -561,19 +561,19 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/derelict/ship)
+/area/derelict/lab)
 "bK" = (
 /obj/structure/closet/l3closet/security,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bL" = (
 /obj/structure/rack,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bN" = (
 /obj/machinery/shower{
 	dir = 8
@@ -581,21 +581,21 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bO" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/taser,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bP" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitegreen"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bQ" = (
 /obj/machinery/light{
 	dir = 1
@@ -603,13 +603,13 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bR" = (
 /obj/structure/flora/plant/random,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bS" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/medical,
@@ -617,41 +617,41 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bT" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/medical,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bU" = (
 /obj/item/stack/sheet/metal,
 /turf/space,
-/area/derelict/ship)
+/area/derelict/lab)
 "bV" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitegreen"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bW" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bX" = (
 /obj/machinery/light_construct/small,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bY" = (
 /obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "bZ" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -660,12 +660,12 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "ca" = (
 /turf/simulated/floor{
 	icon_state = "damaged4"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "cb" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/glass/beaker,
@@ -675,7 +675,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "cc" = (
 /obj/item/weapon/shard,
 /turf/space,
@@ -684,7 +684,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s9"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "ce" = (
 /obj/machinery/light{
 	dir = 1
@@ -693,13 +693,13 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "cf" = (
 /obj/structure/stool/bed/chair/office/light,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "cg" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -709,18 +709,18 @@
 /turf/simulated/floor{
 	icon_state = "damaged4"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "ch" = (
 /obj/machinery/door/airlock/engineering/glass,
 /turf/simulated/floor{
 	icon_state = "damaged1"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "ci" = (
 /turf/simulated/floor{
 	icon_state = "warnwhite"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "cj" = (
 /obj/machinery/power/solar{
 	id = "portsolar";
@@ -729,7 +729,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "ck" = (
 /obj/item/weapon/spike,
 /obj/structure/cable{
@@ -738,16 +738,16 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/derelict/ship)
+/area/derelict/lab)
 "cl" = (
 /turf/simulated/floor/plating/airless/catwalk,
-/area/derelict/ship)
+/area/derelict/lab)
 "cm" = (
 /obj/machinery/suit_storage_unit/science,
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "cn" = (
 /obj/machinery/suit_storage_unit/science,
 /obj/machinery/light_construct/small{
@@ -756,13 +756,13 @@
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "co" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "cp" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/engineering,
@@ -772,35 +772,35 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/derelict/ship)
+/area/derelict/lab)
 "cq" = (
 /obj/structure/rack,
 /obj/item/clothing/head/helmet/space/rig/engineering,
 /turf/simulated/floor,
-/area/derelict/ship)
+/area/derelict/lab)
 "cr" = (
 /obj/item/weapon/spike,
 /turf/simulated/floor/plating/airless/catwalk,
-/area/derelict/ship)
+/area/derelict/lab)
 "cs" = (
 /obj/machinery/computer/rdconsole/core,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "ct" = (
 /obj/structure/table/glass,
 /obj/item/weapon/paper_bin,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "cu" = (
 /obj/effect/landmark/corpse/scientist,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "cv" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Research and Development";
@@ -809,49 +809,49 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "cw" = (
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "cx" = (
 /obj/structure/lattice,
 /turf/space,
-/area/derelict/ship)
+/area/derelict/lab)
 "cy" = (
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "cz" = (
 /obj/effect/decal/remains/human,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "cA" = (
 /obj/item/stack/cable_coil/red,
 /turf/space,
-/area/derelict/ship)
+/area/derelict/lab)
 "cB" = (
 /obj/item/weapon/storage/briefcase/inflatable,
 /obj/structure/rack,
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "cC" = (
 /obj/item/stack/sheet/metal,
 /turf/simulated/floor/plating/airless/catwalk,
-/area/derelict/ship)
+/area/derelict/lab)
 "cD" = (
 /obj/item/stack/cable_coil/red{
 	pixel_x = 3;
 	pixel_y = -7
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/derelict/ship)
+/area/derelict/lab)
 "cE" = (
 /obj/structure/table/glass,
 /obj/item/device/antibody_scanner,
@@ -861,7 +861,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "cG" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -869,14 +869,14 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/derelict/ship)
+/area/derelict/lab)
 "cH" = (
 /obj/item/stack/cable_coil/red{
 	pixel_x = -3;
 	pixel_y = 3
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/derelict/ship)
+/area/derelict/lab)
 "cI" = (
 /obj/item/weapon/paper{
 	info = "MSBL-113 entrusted: 1) Investigate an unknown virus strain from the planet Omicron 8. 2) Make a copy of the virus, and modify it with: a) Phoron b) Radiation c) Toxin LL-7. Received results must be documented. Responsible for maintaining records - Leonid Skvortsov. Sincerely, member of the expedition EKB-410 - L.Trovato.";
@@ -885,87 +885,87 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
-"cW" = (
-/turf/space,
-/area/derelict/ship)
-"eY" = (
+/area/derelict/lab)
+"fi" = (
 /obj/item/weapon/shard,
 /turf/space,
-/area/derelict/ship)
+/area/derelict/lab)
 "lt" = (
 /obj/structure/flora/plant/floorleaf,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "mG" = (
 /obj/machinery/r_n_d/protolathe,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "oK" = (
 /obj/structure/filingcabinet/chestdrawer,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "qp" = (
 /obj/machinery/autolathe,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "wY" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall7"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "Fc" = (
 /obj/machinery/r_n_d/destructive_analyzer,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/derelict/ship)
-"FG" = (
+/area/derelict/lab)
+"HA" = (
 /obj/structure/rack,
 /obj/item/device/radio/off,
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "IX" = (
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "LK" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall11"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 "My" = (
 /obj/item/weapon/circuitboard/smes,
 /turf/space,
-/area/derelict/ship)
+/area/derelict/lab)
 "Np" = (
 /obj/item/clothing/shoes/magboots,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
-"VO" = (
+/area/derelict/lab)
+"VN" = (
 /obj/item/weapon/spike,
 /turf/space,
-/area/derelict/ship)
+/area/derelict/lab)
+"Yw" = (
+/turf/space,
+/area/derelict/lab)
 "Zu" = (
 /obj/effect/decal/remains/human,
 /turf/simulated/floor{
 	icon_state = "damaged1"
 	},
-/area/derelict/ship)
+/area/derelict/lab)
 
 (1,1,1) = {"
 aa
@@ -1297,7 +1297,7 @@ bj
 ac
 aa
 ac
-FG
+HA
 cy
 aR
 ae
@@ -1418,7 +1418,7 @@ cd
 aa
 ac
 bA
-cW
+Yw
 ca
 ca
 ac
@@ -1442,10 +1442,10 @@ aa
 aa
 ac
 ca
-VO
+VN
 bU
-cW
-cW
+Yw
+Yw
 "}
 (21,1,1) = {"
 ac
@@ -1468,7 +1468,7 @@ ac
 ca
 cA
 My
-VO
+VN
 bU
 "}
 (22,1,1) = {"
@@ -1490,10 +1490,10 @@ ae
 ae
 as
 bU
-VO
-VO
-cW
-cW
+VN
+VN
+Yw
+Yw
 "}
 (23,1,1) = {"
 ac
@@ -1514,10 +1514,10 @@ bA
 cg
 bz
 bA
-VO
-VO
-VO
-cW
+VN
+VN
+VN
+Yw
 "}
 (24,1,1) = {"
 af
@@ -1539,9 +1539,9 @@ ae
 ae
 ae
 cC
-cW
+Yw
 bU
-VO
+VN
 "}
 (25,1,1) = {"
 aa
@@ -1583,12 +1583,12 @@ aa
 aa
 aa
 aa
-cW
+Yw
 cj
-cW
+Yw
 cD
-VO
-eY
+VN
+fi
 aa
 "}
 (27,1,1) = {"
@@ -1607,7 +1607,7 @@ aa
 aa
 aa
 aa
-cW
+Yw
 ck
 cr
 cG
@@ -1631,12 +1631,12 @@ aa
 aa
 aa
 aa
-VO
+VN
 cw
-cW
+Yw
 cH
-cW
-cW
+Yw
+Yw
 cc
 "}
 (29,1,1) = {"
@@ -1656,11 +1656,11 @@ aa
 aa
 cc
 cw
-cW
-eY
+Yw
+fi
 cl
-cW
-cW
+Yw
+Yw
 cc
 "}
 (30,1,1) = {"
@@ -1683,7 +1683,7 @@ cx
 cx
 cl
 cl
-cW
-cW
+Yw
+Yw
 aa
 "}
