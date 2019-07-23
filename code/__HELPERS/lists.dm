@@ -721,6 +721,19 @@
 		used_key_list[input_key] = 1
 	return input_key
 
+/proc/compare_list(list/l, list/d)
+	if (!islist(l) || !islist(d))
+		return FALSE
+
+	if (l.len != d.len)
+		return FALSE
+
+	for (var/i in 1 to l.len)
+		if (l[i] != d[i])
+			return FALSE
+
+	return TRUE
+
 #define LAZYINITLIST(L) if (!L) L = list()
 #define UNSETEMPTY(L) if (L && !L.len) L = null
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
