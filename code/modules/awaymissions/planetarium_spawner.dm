@@ -5,21 +5,21 @@
 	icon_state = "doorctrl-denied"
 	anchored = TRUE
 	var/list/loot_types = list(\
-	/mob/living/simple_animal/hostile/alien,\
-	/mob/living/simple_animal/hostile/faithless,\
-	/mob/living/simple_animal/hostile/cyber_horror,\
-	/mob/living/simple_animal/hostile/viscerator,\
-	/mob/living/simple_animal/hostile/hivebot,\
-	/obj/item/weapon/gun/energy/decloner,\
-	/obj/item/weapon/gun/projectile/revolver/flare,\
-	/obj/item/weapon/gun/energy/sniperrifle,\
-	/obj/item/stack/sheet/mineral/diamond,\
-	/obj/item/stack/sheet/mineral/uranium,\
-	/obj/item/stack/sheet/mineral/gold,\
-	/obj/item/trash/raisins,\
-	/obj/item/trash/candy,\
-	/obj/item/trash/cheesie,\
-	/obj/item/trash/chips,\
+	/mob/living/simple_animal/hostile/alien,
+	/mob/living/simple_animal/hostile/faithless,
+	/mob/living/simple_animal/hostile/cyber_horror,
+	/mob/living/simple_animal/hostile/viscerator,
+	/mob/living/simple_animal/hostile/hivebot,
+	/obj/item/weapon/gun/energy/decloner,
+	/obj/item/weapon/gun/projectile/revolver/flare,
+	/obj/item/weapon/gun/energy/sniperrifle,
+	/obj/item/stack/sheet/mineral/diamond,
+	/obj/item/stack/sheet/mineral/uranium,
+	/obj/item/stack/sheet/mineral/gold,
+	/obj/item/trash/raisins,
+	/obj/item/trash/candy,
+	/obj/item/trash/cheesie,
+	/obj/item/trash/chips,
 	)
 
 /obj/structure/planetarium_spawner/attack_hand(mob/user)
@@ -37,8 +37,8 @@
 	icon_state = "doorctrl-denied"
 	anchored = TRUE
 	var/list/loot_types = list(\
-	/obj/item/weapon/reagent_containers/food/snacks/grown/banana,\
-	/obj/item/mecha_parts/part/honker_torso,\
+	/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
+	/obj/item/mecha_parts/part/honker_torso,
 	)
 
 /obj/structure/clown_stuff_spawner/attack_hand(mob/user)
