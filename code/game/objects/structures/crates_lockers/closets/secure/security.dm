@@ -178,6 +178,8 @@
 	new /obj/item/weapon/melee/baton(src)
 	new /obj/item/weapon/storage/box/holobadge(src)
 	new /obj/item/device/flashlight/seclite(src)
+	new /obj/item/clothing/shoes/jackboots(src)
+	new /obj/item/device/hailer(src)
 	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
