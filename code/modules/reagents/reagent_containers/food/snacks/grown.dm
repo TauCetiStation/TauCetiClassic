@@ -572,6 +572,9 @@
 	pixel_x = rand(-5.0, 5)
 	pixel_y = rand(-5.0, 5)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana/canHolster()
+	return TRUE
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	seed = "/obj/item/seeds/chiliseed"
 	name = "chili"

@@ -201,24 +201,23 @@
 	var/obj/item/weapon/gun/holstered = null
 
 //subtypes can override this to specify what can be holstered
-/obj/item/clothing/tie/holster/proc/can_holster(obj/item/weapon/gun/W)
-	return W.canHolster()
+/obj/item/clothing/tie/holster/proc/can_holster(obj/item/I)
+	return I.canHolster()
 
 /obj/item/clothing/tie/holster/proc/holster(obj/item/I, mob/user)
 	if(holstered)
 		to_chat(user, "\red There is already a [holstered] holstered here!")
 		return
 
-	if (!istype(I, /obj/item/weapon/gun))
+	if (!istype(I, /obj/item/weapon/gun) && !can_holster(I))
 		to_chat(user, "\red Only guns can be holstered!")
 		return
 
-	var/obj/item/weapon/gun/W = I
-	if (!can_holster(W))
-		to_chat(user, "\red This [W] won't fit in the [src]!")
+	if (!can_holster(I))
+		to_chat(user, "\red This [I] won't fit in the [src]!")
 		return
 
-	holstered = W
+	holstered = I
 	user.drop_from_inventory(holstered)
 	holstered.loc = src
 	holstered.add_fingerprint(user)

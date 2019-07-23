@@ -162,7 +162,7 @@
 		src.visible_message("*click click*")
 		playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 
-/obj/item/weapon/gun/proc/canHolster()
+/obj/item/weapon/gun/canHolster()
 	return can_be_holstered
 
 /obj/item/weapon/gun/attack(mob/living/M, mob/living/user, def_zone)

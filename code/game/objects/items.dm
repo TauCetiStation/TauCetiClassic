@@ -446,6 +446,10 @@
 /obj/item/proc/on_found(mob/finder)
 	return
 
+//called when try put the object in the holster.
+/obj/item/proc/canHolster()
+	return FALSE
+
 // called after an item is placed in an equipment slot
 // user is mob that equipped it
 // slot uses the slot_X defines found in setup.dm
