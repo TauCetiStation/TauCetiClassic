@@ -1323,6 +1323,30 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	requires_power = 0
 
+/area/agrospheregarden
+	name = "Agroshere Structure"
+	icon_state = "yellow"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/planetarium
+	name = "Planetarium"
+	icon_state = "yellow"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/robostatoin
+	name = "Robostation"
+	icon_state = "yellow"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/ghostship
+	name = "Ghost Ship"
+	icon_state = "yellow"
+	always_unpowered = 1
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
 /////////////////////////////////////////////////////////////////////
 /*
  Lists of areas to be used with is_type_in_list.
