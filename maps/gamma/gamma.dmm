@@ -853,8 +853,7 @@
 	opacity = 0
 	},
 /obj/machinery/door/airlock/security{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
-	name = "Star Vigil Maintenance";
+	name = "Security Maintenance";
 	req_access = list(1)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -7635,7 +7634,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor{
 	dir = 9;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "aqc" = (
@@ -8503,7 +8502,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "asi" = (
@@ -10667,7 +10666,6 @@
 "axk" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
 	name = "Security Hardsuits";
 	req_access = list(1)
 	},
@@ -11933,7 +11931,6 @@
 /area/security/brig)
 "aAq" = (
 /obj/machinery/door/airlock/security/glass{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
 	name = "Solitary Confinement";
 	req_access = list(2)
 	},
@@ -12734,7 +12731,7 @@
 /area/engine/chiefs_office)
 "aCn" = (
 /obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/blue,
+/obj/item/weapon/bedsheet/red,
 /turf/simulated/floor/wood,
 /area/crew_quarters/security)
 "aCo" = (
@@ -13622,8 +13619,7 @@
 "aEq" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
-	name = "Star Vigilance Dorms";
+	name = "Security Dorms";
 	req_access = list(63)
 	},
 /turf/simulated/floor{
@@ -14277,8 +14273,7 @@
 "aGi" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
-	name = "Star Vigilance Dorms";
+	name = "Security Dorms";
 	req_access = list(63)
 	},
 /turf/simulated/floor{
@@ -15448,8 +15443,7 @@
 "aJK" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
-	name = "Star Vigilance Dorms";
+	name = "Security Dorms";
 	req_access = list(63)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -17575,7 +17569,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "aOV" = (
@@ -17589,7 +17583,7 @@
 /area/maintenance/chapel)
 "aOX" = (
 /turf/simulated/floor{
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "aOY" = (
@@ -17871,7 +17865,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/secconfhall)
 "aPB" = (
@@ -18017,7 +18011,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/secconfhall)
 "aPV" = (
@@ -18033,7 +18027,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/secconfhall)
 "aPW" = (
@@ -18123,8 +18117,7 @@
 /area/security/warden)
 "aQf" = (
 /obj/machinery/door/airlock/security/glass{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
-	name = "Sergeant's Office";
+	name = "Warden's Office";
 	req_access = list(3)
 	},
 /obj/machinery/door/firedoor,
@@ -18665,7 +18658,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/warden)
 "aRn" = (
@@ -20549,7 +20542,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/main)
 "aVE" = (
@@ -21046,7 +21039,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "aWK" = (
@@ -21111,7 +21104,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "aWQ" = (
@@ -21212,7 +21205,6 @@
 /area/maintenance/bridge)
 "aXb" = (
 /obj/machinery/door/airlock/security/glass{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
 	name = "Forensic";
 	req_access = list(4)
 	},
@@ -21252,7 +21244,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/warden)
 "aXg" = (
@@ -21707,7 +21699,7 @@
 	},
 /obj/machinery/photocopier,
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/warden)
 "aYl" = (
@@ -22102,7 +22094,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/warden)
 "aZj" = (
@@ -23322,7 +23314,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "bcc" = (
@@ -23439,7 +23431,7 @@
 "bcu" = (
 /obj/machinery/gateway/center/station,
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/gateway)
 "bcv" = (
@@ -24889,7 +24881,7 @@
 	pixel_x = 30
 	},
 /turf/simulated/floor{
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "bgg" = (
@@ -26917,7 +26909,7 @@
 	pixel_x = 32
 	},
 /turf/simulated/floor{
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "bkY" = (
@@ -29910,7 +29902,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/forensic_office)
 "brP" = (
@@ -30264,7 +30256,7 @@
 	pixel_y = -1
 	},
 /turf/simulated/floor{
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "bsE" = (
@@ -30824,7 +30816,7 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "buc" = (
@@ -31663,7 +31655,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "bwc" = (
@@ -33022,7 +33014,7 @@
 	},
 /obj/structure/table/reinforced,
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/checkpoint)
 "bzG" = (
@@ -33426,7 +33418,7 @@
 	},
 /obj/item/weapon/pen,
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/checkpoint)
 "bAH" = (
@@ -33511,7 +33503,7 @@
 	icon_state = "medlaptop"
 	},
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/checkpoint)
 "bAQ" = (
@@ -33531,7 +33523,7 @@
 	pixel_x = 27
 	},
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/checkpoint)
 "bAT" = (
@@ -35084,7 +35076,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/hallway/secondary/entry)
 "bEp" = (
@@ -38661,7 +38653,7 @@
 /area/rnd/xenobiology)
 "bMz" = (
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/hallway/secondary/entry)
 "bMA" = (
@@ -38874,7 +38866,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/secconfhall)
 "bMV" = (
@@ -39507,7 +39499,7 @@
 	dir = 9
 	},
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/secconfhall)
 "bOr" = (
@@ -44904,7 +44896,7 @@
 /area/rnd/hallway)
 "bZU" = (
 /turf/simulated/floor{
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/lobby)
 "bZW" = (
@@ -44966,7 +44958,7 @@
 "cae" = (
 /obj/structure/closet/secure_closet/brig,
 /turf/simulated/floor{
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "caf" = (
@@ -44990,7 +44982,6 @@
 "cah" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
 	name = "Interrogation";
 	req_access = list(63)
 	},
@@ -45451,15 +45442,15 @@
 /area/medical/genetics)
 "cbq" = (
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "cbr" = (
-/obj/structure/stool/bed/chair/metal/blue{
+/obj/structure/stool/bed/chair/metal/red{
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "cbs" = (
@@ -45470,7 +45461,7 @@
 	},
 /obj/item/weapon/hand_labeler,
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "cbt" = (
@@ -45763,7 +45754,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "ccc" = (
@@ -48188,7 +48179,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "chV" = (
@@ -48239,7 +48230,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "cij" = (
@@ -48252,7 +48243,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "cil" = (
@@ -49294,7 +49285,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "cmc" = (
@@ -50224,7 +50215,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "cpd" = (
@@ -50300,7 +50291,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "cpt" = (
@@ -52855,7 +52846,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "cxc" = (
@@ -55554,7 +55545,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "cEc" = (
@@ -59780,7 +59771,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "cMc" = (
@@ -59879,7 +59870,7 @@
 /obj/structure/closet/secure_closet/brig,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluefull"
+	icon_state = "darkredfull"
 	},
 /area/security/brig)
 "cOb" = (
@@ -59888,7 +59879,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "cPb" = (
@@ -59897,7 +59888,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "cQb" = (
@@ -59914,7 +59905,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "cRb" = (
@@ -59929,7 +59920,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "cSb" = (
@@ -59949,7 +59940,7 @@
 "cUb" = (
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "cVb" = (
@@ -59957,7 +59948,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "cWb" = (
@@ -59987,7 +59978,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/main)
 "cXb" = (
@@ -59998,7 +59989,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/main)
 "cYb" = (
@@ -60008,7 +59999,7 @@
 /obj/machinery/disposal,
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/main)
 "cZb" = (
@@ -60018,7 +60009,7 @@
 /obj/item/device/megaphone,
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/main)
 "dab" = (
@@ -60031,7 +60022,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "dbb" = (
@@ -60043,13 +60034,12 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "dcb" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
 	name = "Equipment Storage";
 	req_access = list(1)
 	},
@@ -60068,7 +60058,7 @@
 	},
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluefull"
+	icon_state = "darkredfull"
 	},
 /area/security/main)
 "ddb" = (
@@ -60085,7 +60075,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/main)
 "deb" = (
@@ -60100,7 +60090,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/main)
 "dfb" = (
@@ -60130,13 +60120,12 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "dhb" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
 	name = "Equipment Storage";
 	req_access = list(1)
 	},
@@ -60144,13 +60133,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluefull"
+	icon_state = "darkredfull"
 	},
 /area/security/main)
 "dib" = (
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/main)
 "djb" = (
@@ -60159,7 +60148,7 @@
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/main)
 "dkb" = (
@@ -60177,7 +60166,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/secconfhall)
 "dmb" = (
@@ -60186,7 +60175,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/secconfhall)
 "dnb" = (
@@ -60201,7 +60190,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/secconfhall)
 "dob" = (
@@ -60213,14 +60202,14 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/secconfhall)
 "dpb" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/secconfhall)
 "dqb" = (
@@ -60230,7 +60219,7 @@
 /obj/machinery/vending/snack,
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/secconfhall)
 "drb" = (
@@ -60246,7 +60235,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "dsb" = (
@@ -60262,7 +60251,7 @@
 /obj/structure/closet/wardrobe/red,
 /turf/simulated/floor{
 	dir = 10;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/main)
 "dtb" = (
@@ -60275,7 +60264,7 @@
 	},
 /turf/simulated/floor{
 	dir = 6;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/main)
 "dub" = (
@@ -60288,13 +60277,12 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "dvb" = (
 /obj/machinery/door/airlock/security/glass{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
-	name = "Star Vigilance Office";
+	name = "Security Office";
 	req_access = list(1)
 	},
 /obj/machinery/door/firedoor,
@@ -60311,7 +60299,7 @@
 	},
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluefull"
+	icon_state = "darkredfull"
 	},
 /area/security/secconfhall)
 "dwb" = (
@@ -60323,7 +60311,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "dxb" = (
@@ -60344,7 +60332,7 @@
 	},
 /turf/simulated/floor{
 	dir = 9;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/warden)
 "dyb" = (
@@ -60360,7 +60348,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/warden)
 "dzb" = (
@@ -60391,7 +60379,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/warden)
 "dAb" = (
@@ -60403,7 +60391,7 @@
 	},
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/warden)
 "dBb" = (
@@ -60419,14 +60407,14 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "dCb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/structure/stool/bed/chair/metal/blue{
+/obj/structure/stool/bed/chair/metal/red{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -60473,20 +60461,20 @@
 /obj/machinery/vending/coffee,
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/secconfhall)
 "dGb" = (
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/warden)
 "dHb" = (
 /obj/machinery/computer/security,
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/warden)
 "dIb" = (
@@ -60501,7 +60489,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "dJb" = (
@@ -60512,7 +60500,7 @@
 	network = list("Interrogation");
 	pixel_x = 32
 	},
-/obj/structure/stool/bed/chair/metal/blue{
+/obj/structure/stool/bed/chair/metal/red{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -60523,11 +60511,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "dLb" = (
-/obj/structure/stool/bed/chair/metal/blue{
+/obj/structure/stool/bed/chair/metal/red{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -60544,7 +60532,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "dNb" = (
@@ -60554,7 +60542,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "dOb" = (
@@ -60601,8 +60589,7 @@
 /area/security/prison)
 "dRb" = (
 /obj/machinery/door/airlock/security/glass{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
-	name = "Sergeant's Office";
+	name = "Warden's Office";
 	req_access = list(3)
 	},
 /obj/machinery/door/firedoor,
@@ -60625,13 +60612,12 @@
 	},
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluefull"
+	icon_state = "darkredfull"
 	},
 /area/security/warden)
 "dSb" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
 	name = "Interrogation Observervation";
 	req_access = list(63)
 	},
@@ -60639,7 +60625,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluefull"
+	icon_state = "darkredfull"
 	},
 /area/security/brig)
 "dTb" = (
@@ -60743,7 +60729,6 @@
 	opacity = 0
 	},
 /obj/machinery/door/airlock/security/glass{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
 	id_tag = "prisonentry";
 	name = "Brig Exit";
 	req_access = list(2)
@@ -60819,7 +60804,6 @@
 	opacity = 0
 	},
 /obj/machinery/door/airlock/security/glass{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
 	id_tag = "prisonentry";
 	name = "Brig Entry";
 	req_access = list(2)
@@ -60854,7 +60838,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "edb" = (
@@ -60862,7 +60846,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "eeb" = (
@@ -60878,7 +60862,7 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluefull"
+	icon_state = "darkredfull"
 	},
 /area/security/brig)
 "efb" = (
@@ -60890,7 +60874,7 @@
 	},
 /turf/simulated/floor{
 	dir = 9;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "egb" = (
@@ -60903,7 +60887,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "ehb" = (
@@ -60915,7 +60899,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "eib" = (
@@ -60937,7 +60921,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "ejb" = (
@@ -60952,7 +60936,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "ekb" = (
@@ -60967,7 +60951,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "elb" = (
@@ -60982,7 +60966,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "emb" = (
@@ -60998,7 +60982,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "enb" = (
@@ -61013,7 +60997,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "eob" = (
@@ -61029,7 +61013,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "epb" = (
@@ -61044,7 +61028,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "eqb" = (
@@ -61059,7 +61043,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "erb" = (
@@ -61075,7 +61059,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "esb" = (
@@ -61093,7 +61077,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "etb" = (
@@ -61109,7 +61093,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "eub" = (
@@ -61117,7 +61101,7 @@
 /obj/item/weapon/evidencebag,
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "evb" = (
@@ -61128,7 +61112,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "ewb" = (
@@ -61139,7 +61123,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "exb" = (
@@ -61151,7 +61135,7 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluefull"
+	icon_state = "darkredfull"
 	},
 /area/security/brig)
 "eyb" = (
@@ -61162,7 +61146,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "ezb" = (
@@ -61179,7 +61163,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/security/glass{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
 	name = "Detective";
 	req_access = list(68)
 	},
@@ -61195,7 +61178,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/prison)
 "eBb" = (
@@ -61218,20 +61201,20 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/prison)
 "eDb" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluefull"
+	icon_state = "darkredfull"
 	},
 /area/security/brig)
 "eEb" = (
 /turf/simulated/floor{
 	dir = 10;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "eFb" = (
@@ -61264,7 +61247,7 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/prison)
 "eHb" = (
@@ -61287,7 +61270,7 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/prison)
 "eJb" = (
@@ -61308,7 +61291,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "eKb" = (
@@ -61352,7 +61335,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
 "eNb" = (
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/security/glass{
 	name = "Colonial Marshals Office";
 	req_access = list(63)
 	},
@@ -61361,13 +61344,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluefull"
+	icon_state = "darkredfull"
 	},
 /area/security/brig)
 "eOb" = (
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/prison)
 "ePb" = (
@@ -61383,13 +61366,13 @@
 /obj/item/weapon/pen,
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/prison)
 "eRb" = (
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "eSb" = (
@@ -61456,18 +61439,18 @@
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
 "eXb" = (
-/obj/structure/stool/bed/chair/metal/blue{
+/obj/structure/stool/bed/chair/metal/red{
 	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "eYb" = (
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "eZb" = (
@@ -61475,7 +61458,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "fab" = (
@@ -61488,7 +61471,7 @@
 /obj/item/device/taperecorder,
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "fbb" = (
@@ -61501,7 +61484,7 @@
 "fcb" = (
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/forensic_office)
 "fdb" = (
@@ -61509,7 +61492,7 @@
 /obj/item/weapon/storage/briefcase,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/forensic_office)
 "feb" = (
@@ -61526,7 +61509,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "ffb" = (
@@ -61550,7 +61533,7 @@
 	c_tag = "SV Processing";
 	dir = 4
 	},
-/obj/structure/stool/bed/chair/metal/blue{
+/obj/structure/stool/bed/chair/metal/red{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -61587,7 +61570,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/forensic_office)
 "flb" = (
@@ -61598,7 +61581,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/prison)
 "fmb" = (
@@ -61611,13 +61594,13 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/prison)
 "fnb" = (
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "fob" = (
@@ -61694,7 +61677,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/forensic_office)
 "fub" = (
@@ -61726,7 +61709,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/prison)
 "fwb" = (
@@ -61747,7 +61730,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "fxb" = (
@@ -61760,7 +61743,7 @@
 	},
 /turf/simulated/floor{
 	dir = 9;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/lobby)
 "fyb" = (
@@ -61769,13 +61752,13 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/lobby)
 "fzb" = (
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/lobby)
 "fAb" = (
@@ -61789,13 +61772,13 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/lobby)
 "fBb" = (
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/lobby)
 "fCb" = (
@@ -61804,7 +61787,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/lobby)
 "fDb" = (
@@ -61824,7 +61807,7 @@
 	},
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/lobby)
 "fEb" = (
@@ -61842,7 +61825,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/forensic_office)
 "fFb" = (
@@ -61884,7 +61867,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/lobby)
 "fJb" = (
@@ -61911,7 +61894,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/forensic_office)
 "fLb" = (
@@ -61924,37 +61907,37 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "fMb" = (
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/lobby)
 "fNb" = (
-/obj/structure/stool/bed/chair/metal/blue{
-	dir = 8
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/lobby)
 "fOb" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/stool/bed/chair/metal/blue{
+/obj/structure/stool/bed/chair/metal/red{
 	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/lobby)
 "fPb" = (
@@ -61971,18 +61954,6 @@
 	icon_state = "dark"
 	},
 /area/security/lobby)
-"fQb" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/stool/bed/chair/metal/blue{
-	dir = 8
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkblue"
-	},
-/area/security/lobby)
 "fSb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/firealarm{
@@ -61991,7 +61962,7 @@
 	},
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/lobby)
 "fTb" = (
@@ -62029,7 +62000,7 @@
 	},
 /turf/simulated/floor{
 	dir = 6;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/forensic_office)
 "fVb" = (
@@ -62040,7 +62011,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/prison)
 "fWb" = (
@@ -62062,7 +62033,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/prison)
 "fYb" = (
@@ -62085,9 +62056,6 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/stool/bed/chair/metal/blue{
-	dir = 8
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -62096,9 +62064,12 @@
 /obj/effect/landmark/start{
 	name = "Test Subject"
 	},
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/lobby)
 "gab" = (
@@ -62110,12 +62081,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/stool/bed/chair/metal/blue{
+/obj/structure/stool/bed/chair/metal/red{
 	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/lobby)
 "gbb" = (
@@ -62132,14 +62103,14 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/lobby)
 "gcb" = (
 /obj/machinery/computer/secure_data,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluefull"
+	icon_state = "darkredfull"
 	},
 /area/security/forensic_office)
 "gdb" = (
@@ -62147,14 +62118,14 @@
 /obj/machinery/light,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluefull"
+	icon_state = "darkredfull"
 	},
 /area/security/forensic_office)
 "geb" = (
 /obj/machinery/computer/forensic_scanning,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluefull"
+	icon_state = "darkredfull"
 	},
 /area/security/forensic_office)
 "gfb" = (
@@ -62164,7 +62135,7 @@
 	},
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluefull"
+	icon_state = "darkredfull"
 	},
 /area/security/forensic_office)
 "ggb" = (
@@ -62196,7 +62167,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/prison)
 "gib" = (
@@ -62217,7 +62188,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "gjb" = (
@@ -62252,7 +62223,7 @@
 	},
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/lobby)
 "gmb" = (
@@ -62261,7 +62232,7 @@
 	},
 /turf/simulated/floor{
 	dir = 10;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/lobby)
 "gnb" = (
@@ -62275,7 +62246,7 @@
 	},
 /turf/simulated/floor{
 	dir = 6;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/lobby)
 "gpb" = (
@@ -62291,7 +62262,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "gqb" = (
@@ -62325,7 +62296,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/prison)
 "gub" = (
@@ -62338,7 +62309,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/prison)
 "gvb" = (
@@ -62424,7 +62395,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "gBb" = (
@@ -62445,7 +62416,7 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/prison)
 "gEb" = (
@@ -62460,7 +62431,7 @@
 /obj/structure/closet/secure_closet/brig,
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "gGb" = (
@@ -62790,7 +62761,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/checkpoint)
 "hkb" = (
@@ -62804,14 +62775,14 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/checkpoint)
 "hlb" = (
 /obj/machinery/computer/secure_data,
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/checkpoint)
 "hmb" = (
@@ -62831,7 +62802,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/checkpoint)
 "hnb" = (
@@ -62880,7 +62851,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/checkpoint)
 "hrb" = (
@@ -62932,7 +62903,6 @@
 /area/security/checkpoint)
 "hvb" = (
 /obj/machinery/door/airlock/security{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
 	name = "Security Checkpoint";
 	req_access = list(1)
 	},
@@ -63109,7 +63079,7 @@
 /obj/item/weapon/crowbar,
 /turf/simulated/floor{
 	dir = 10;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/checkpoint)
 "hJb" = (
@@ -63187,12 +63157,11 @@
 	},
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluefull"
+	icon_state = "darkredfull"
 	},
 /area/security/checkpoint)
 "hOb" = (
 /obj/machinery/door/airlock/security{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
 	name = "Security Checkpoint";
 	req_access = list(1)
 	},
@@ -63362,19 +63331,19 @@
 	},
 /turf/simulated/floor{
 	dir = 9;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/hallway/secondary/entry)
 "icb" = (
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/hallway/secondary/entry)
 "idb" = (
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/hallway/secondary/entry)
 "ieb" = (
@@ -63495,13 +63464,13 @@
 "ipb" = (
 /turf/simulated/floor{
 	dir = 10;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/hallway/secondary/entry)
 "iqb" = (
 /turf/simulated/floor{
 	dir = 6;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/hallway/secondary/entry)
 "irb" = (
@@ -63710,7 +63679,7 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor{
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "iJb" = (
@@ -64607,7 +64576,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "darkredcorners"
 	},
 /area/security/brig)
 "knb" = (
@@ -64645,7 +64614,6 @@
 /area/engine/equip)
 "kpb" = (
 /obj/machinery/door/airlock/security{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
 	name = "Evidence Storage";
 	req_access = list(1)
 	},
@@ -64736,7 +64704,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/forensic_office)
 "kxb" = (
@@ -64752,7 +64720,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/forensic_office)
 "kyb" = (
@@ -67772,14 +67740,13 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
 	id_tag = "BrigFoyer";
-	name = "Star Vigilance";
+	name = "Security";
 	req_access = list(63)
 	},
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluefull"
+	icon_state = "darkredfull"
 	},
 /area/security/brig)
 "pbb" = (
@@ -67943,16 +67910,15 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
 	id_tag = "BrigFoyer";
-	name = "Star Vigilance";
+	name = "Security";
 	req_access = list(63)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluefull"
+	icon_state = "darkredfull"
 	},
 /area/security/brig)
 "pob" = (
@@ -68207,7 +68173,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "pEb" = (
@@ -68339,7 +68305,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "pOb" = (
@@ -68778,7 +68744,7 @@
 /obj/machinery/computer/secure_data,
 /turf/simulated/floor{
 	dir = 10;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "qrb" = (
@@ -68803,21 +68769,21 @@
 	range = 10
 	},
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "qsb" = (
 /obj/machinery/computer/security,
 /turf/simulated/floor{
 	dir = 6;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "qtb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "qub" = (
@@ -69902,14 +69868,13 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
 	id_tag = "BrigFoyer2";
-	name = "Star Vigilance";
+	name = "Security";
 	req_access = list(63)
 	},
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluefull"
+	icon_state = "darkredfull"
 	},
 /area/security/brig)
 "rYb" = (
@@ -70045,7 +70010,7 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluefull"
+	icon_state = "darkredfull"
 	},
 /area/security/brig)
 "seb" = (
@@ -70102,16 +70067,15 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
 	id_tag = "BrigFoyer2";
-	name = "Star Vigilance";
+	name = "Security";
 	req_access = list(63)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "darkbluefull"
+	icon_state = "darkredfull"
 	},
 /area/security/brig)
 "sjb" = (
@@ -70440,7 +70404,7 @@
 	},
 /turf/simulated/floor{
 	dir = 9;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/checkpoint)
 "sGb" = (
@@ -70469,7 +70433,7 @@
 "sIb" = (
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/checkpoint)
 "sJb" = (
@@ -72505,7 +72469,6 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/security{
-	icon = 'icons/obj/doors/airlocks/station/command.dmi';
 	name = "Evidence Storage";
 	req_access = list(4)
 	},
@@ -73490,7 +73453,7 @@
 "wUb" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "darkred"
 	},
 /area/security/secconfhall)
 "wVb" = (
@@ -103401,7 +103364,7 @@ qsb
 shb
 fBb
 luG
-fQb
+fNb
 fZb
 gkb
 fFb
