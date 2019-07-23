@@ -609,7 +609,7 @@
 		if(blinded)
 			throw_alert("blind")
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-		else if(istype(loc, "/obj/item/weapon/holder") && !is_type_in_list(loc.loc, ignore_vision_inside))
+		else if(istype(loc, /obj/item/weapon/holder) && !is_type_in_list(loc.loc, ignore_vision_inside))
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		else
 			clear_fullscreen("blind", 0)
