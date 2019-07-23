@@ -554,7 +554,6 @@
 /mob/living/carbon/monkey/handle_regular_hud_updates()
 	if(!client)
 		return 0
-	handle_vision()
 
 	if (stat == DEAD || (XRAY in mutations))
 		sight |= SEE_TURFS
@@ -602,20 +601,6 @@
 	..()
 
 	return 1
-
-/mob/living/carbon/monkey/handle_vision()
-	update_sight()
-	if(stat != DEAD)
-		if(blinded)
-			throw_alert("blind")
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-		else if(istype(loc, "/obj/item/weapon/holder") && !is_type_in_list(loc.loc, ignore_vision_inside))
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-		else
-			clear_fullscreen("blind", 0)
-			clear_alert("blind")
-
-
 
 /mob/living/carbon/monkey/proc/handle_random_events()
 	if (prob(1) && prob(2))
