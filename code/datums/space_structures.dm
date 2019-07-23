@@ -43,3 +43,9 @@
 	structure_id = "teleporter"
 	desc = "Unknown debris"
 	mappath = "maps/templates/space_structures/teleporter.dmm"
+
+/datum/map_template/space_structure/abandoned_lab
+	name = "Abandoned Lab"
+	structure_id = "abandoned_lab"
+	desc = "Debris of an unknown lab"
+	mappath = "maps/templates/space_structures/abandoned_lab.dmm"
