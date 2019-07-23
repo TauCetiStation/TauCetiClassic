@@ -6,20 +6,16 @@
 	slot = "utility"
 	var/obj/item/weapon/gun/holstered = null
 
-//subtypes can override this to specify what can be holstered
-/obj/item/clothing/accessory/holster/proc/can_holster(obj/item/I)
-	return I.canHolster()
-
 /obj/item/clothing/accessory/holster/proc/holster(obj/item/I, mob/user)
 	if(holstered)
 		to_chat(user, "<span class='warning'>There is already a [holstered] holstered here!</span>")
 		return
 
-	if (!istype(I, /obj/item/weapon/gun) && !can_holster(I))
+	if (!istype(I, /obj/item/weapon/gun) && !I.canHolster())
 		to_chat(user, "<span class='warning'>Only guns can be holstered!</span>")
 		return
 
-	if (!can_holster(I))
+	if (!I.canHolster())
 		to_chat(user, "<span class='warning'>This [I] won't fit in the [src]!</span>")
 		return
 

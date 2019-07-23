@@ -200,20 +200,16 @@
 	item_color = "holster"
 	var/obj/item/weapon/gun/holstered = null
 
-//subtypes can override this to specify what can be holstered
-/obj/item/clothing/tie/holster/proc/can_holster(obj/item/I)
-	return I.canHolster()
-
 /obj/item/clothing/tie/holster/proc/holster(obj/item/I, mob/user)
 	if(holstered)
 		to_chat(user, "\red There is already a [holstered] holstered here!")
 		return
 
-	if (!istype(I, /obj/item/weapon/gun) && !can_holster(I))
+	if (!istype(I, /obj/item/weapon/gun) && !I.canHolster())
 		to_chat(user, "\red Only guns can be holstered!")
 		return
 
-	if (!can_holster(I))
+	if (!I.canHolster())
 		to_chat(user, "\red This [I] won't fit in the [src]!")
 		return
 
