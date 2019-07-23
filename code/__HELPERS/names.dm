@@ -44,15 +44,12 @@ var/religion_name = null
 	return capitalize(name)
 
 /proc/system_name()
-	if(SSmapping.config && SSmapping.config.system_name)
-		return SSmapping.config.system_name
+	if(system_name)
+		return system_name
 
 	return "Tau Ceti" //Screw Nyx
 
 /proc/station_name()
-	if(SSmapping.config && SSmapping.config.station_name)
-		return SSmapping.config.station_name
-
 	if (station_name)
 		return station_name
 

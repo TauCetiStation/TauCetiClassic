@@ -29,6 +29,8 @@ var/datum/subsystem/mapping/SSmapping
 /datum/subsystem/mapping/Initialize(timeofday)
 	config = load_map_config(error_if_missing = FALSE)
 	station_image = config.station_image
+	station_name = config.station_name
+	system_name = config.system_name
 
 	loadWorld()
 	renameAreas()
