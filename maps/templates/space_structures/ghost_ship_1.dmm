@@ -829,12 +829,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/ghostship)
-"dj" = (
-/obj/item/weapon/storage/toolbox,
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
-/area/ghostship)
 "dl" = (
 /turf/simulated/floor/airless/ceiling,
 /area/ghostship)
@@ -1361,7 +1355,7 @@ aC
 cm
 aC
 ar
-dj
+aE
 aa
 aa
 aa

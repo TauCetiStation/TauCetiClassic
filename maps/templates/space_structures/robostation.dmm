@@ -92,8 +92,10 @@
 /turf/simulated/floor/greengrid,
 /area/robostatoin)
 "at" = (
-/obj/machinery/porta_turret/stationary,
-/turf/simulated/floor/plating,
+/turf/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s6"
+	},
 /area/robostatoin)
 "au" = (
 /obj/machinery/door/airlock/clown,
@@ -112,8 +114,12 @@
 /turf/simulated/floor/greengrid,
 /area/robostatoin)
 "ay" = (
-/obj/structure/curtain/open/bed,
-/turf/simulated/floor/carpet,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/turf/space,
 /area/robostatoin)
 "az" = (
 /obj/item/mecha_parts/part/honker_head,
@@ -279,8 +285,10 @@
 /turf/simulated/floor/plating,
 /area/robostatoin)
 "bf" = (
-/obj/structure/sign/poster,
-/turf/simulated/wall/r_wall,
+/turf/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f10"
+	},
 /area/robostatoin)
 "bg" = (
 /obj/effect/glowshroom,
@@ -397,8 +405,10 @@
 /turf/simulated/floor/greengrid,
 /area/robostatoin)
 "bD" = (
-/obj/structure/sign/warning/airlock,
-/turf/simulated/wall/r_wall,
+/turf/simulated/floor/plating,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s9"
+	},
 /area/robostatoin)
 "bE" = (
 /obj/machinery/light{
@@ -454,13 +464,16 @@
 /turf/simulated/floor/greengrid,
 /area/robostatoin)
 "bQ" = (
-/turf/space,
-/turf/space,
-/area/space)
+/turf/simulated/floor/plating,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f5"
+	},
+/area/robostatoin)
 "bR" = (
+/obj/item/weapon/reagent_containers/pill/cyanide,
+/turf/simulated/floor/plating,
 /turf/space,
-/turf/space,
-/area/space)
+/area/robostatoin)
 "bS" = (
 /obj/structure/lattice,
 /turf/space,
@@ -547,17 +560,19 @@
 /turf/simulated/floor/greengrid,
 /area/robostatoin)
 "ch" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall3"
+/obj/structure/trap/stun,
+/obj/structure/window/reinforced,
+/obj/structure/barricade/wooden,
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
+/turf/space,
 /area/robostatoin)
 "ci" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/turf/simulated/floor/plating,
 /turf/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f5"
+	},
 /area/robostatoin)
 "cj" = (
 /obj/item/mecha_parts/part/honker_right_leg,
@@ -572,12 +587,17 @@
 	},
 /area/robostatoin)
 "ck" = (
-/turf/space,
+/turf/simulated/floor/plating,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f10"
+	},
 /area/robostatoin)
 "cl" = (
-/turf/space,
-/turf/space,
-/area/space)
+/turf/simulated/floor/plating,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s6"
+	},
+/area/robostatoin)
 "cm" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall3"
@@ -614,6 +634,9 @@
 /area/robostatoin)
 "cs" = (
 /turf/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s9"
+	},
 /area/robostatoin)
 "ct" = (
 /obj/structure/sign/warning/airlock,
@@ -624,21 +647,9 @@
 /obj/item/weapon/bananapeel,
 /turf/simulated/floor/plating,
 /area/robostatoin)
-"cv" = (
-/obj/structure/computerframe{
-	anchored = 1
-	},
-/turf/simulated/floor/plating,
-/area/robostatoin)
 "cw" = (
 /obj/machinery/light/small{
 	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/robostatoin)
-"cx" = (
-/obj/structure/computerframe{
-	anchored = 1
 	},
 /turf/simulated/floor/plating,
 /area/robostatoin)
@@ -646,18 +657,6 @@
 /obj/item/weapon/paper{
 	info = "August 31, 2556. This is the last entry in the log. Our ship was carrying the latest weapons to protect the sovereignty of the Clown Planet. We were supposed to arrive at the base to transfer the technology into the hands of our scientists, but we found it had been captured by an unknown enemy. Our engines are broken. There is no hope. Damn you stupid tin cans.";
 	name = "no hope"
-	},
-/turf/simulated/floor/plating,
-/area/robostatoin)
-"cz" = (
-/obj/structure/computerframe{
-	anchored = 1
-	},
-/turf/simulated/floor/plating,
-/area/robostatoin)
-"cA" = (
-/obj/structure/computerframe{
-	anchored = 1
 	},
 /turf/simulated/floor/plating,
 /area/robostatoin)
@@ -671,10 +670,6 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall7"
 	},
-/area/robostatoin)
-"cD" = (
-/obj/machinery/light/small,
-/turf/simulated/floor/plating,
 /area/robostatoin)
 "cE" = (
 /obj/structure/trap/stun,
@@ -755,9 +750,6 @@
 	icon_state = "warnplate"
 	},
 /area/robostatoin)
-"cP" = (
-/turf/space,
-/area/robostatoin)
 "cQ" = (
 /mob/living/simple_animal/hostile/hivebot/strong,
 /turf/simulated/floor{
@@ -775,10 +767,6 @@
 	dir = 4;
 	icon_state = "escape"
 	},
-/area/robostatoin)
-"cT" = (
-/obj/machinery/door/airlock/external,
-/turf/simulated/floor/plating,
 /area/robostatoin)
 "cU" = (
 /obj/item/mecha_parts/mecha_equipment/weapon/honker,
@@ -834,12 +822,6 @@
 	icon_state = "warnplate"
 	},
 /area/robostatoin)
-"cY" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/robostatoin)
 "cZ" = (
 /turf/simulated/floor{
 	dir = 6;
@@ -857,10 +839,6 @@
 	dir = 9;
 	icon_state = "purple"
 	},
-/area/robostatoin)
-"dc" = (
-/obj/machinery/door/airlock/external,
-/turf/simulated/floor/plating,
 /area/robostatoin)
 "dd" = (
 /turf/simulated/floor{
@@ -885,11 +863,6 @@
 	icon_state = "whiteblue"
 	},
 /area/robostatoin)
-"dh" = (
-/obj/item/weapon/reagent_containers/pill/cyanide,
-/turf/simulated/floor/plating,
-/turf/space,
-/area/robostatoin)
 "di" = (
 /obj/structure/trap/stun,
 /obj/structure/window/reinforced{
@@ -902,25 +875,12 @@
 	icon_state = "warnplate"
 	},
 /area/robostatoin)
-"dj" = (
-/obj/structure/trap/stun,
-/obj/structure/window/reinforced,
-/obj/structure/barricade/wooden,
-/turf/simulated/floor/plating{
-	icon_state = "warnplate"
-	},
-/turf/space,
-/area/robostatoin)
 "dk" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall3"
 	},
 /turf/space,
 /area/robostatoin)
-"dl" = (
-/turf/space,
-/turf/space,
-/area/space)
 "dm" = (
 /turf/simulated/floor/plating,
 /turf/space,
@@ -938,13 +898,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/robostatoin)
-"dp" = (
-/turf/space,
-/turf/space,
-/area/space)
-"dq" = (
-/turf/space,
 /area/robostatoin)
 "dr" = (
 /obj/structure/stool/bed/chair/comfy/beige{
@@ -2073,13 +2026,13 @@ aE
 aa
 aa
 aa
-dq
+at
 cC
 cm
 au
 cm
 cm
-dq
+ci
 aa
 aa
 aE
@@ -2111,15 +2064,15 @@ aa
 aE
 aa
 aa
-dq
+at
 ca
-dq
+bD
 cw
 cL
 ar
 cw
 ki
-dq
+ci
 aa
 aE
 "}
@@ -2149,15 +2102,15 @@ aa
 aa
 aa
 aa
-dp
+aa
 ad
 cB
 ar
 cy
 ar
-dh
+bR
 ar
-dq
+ck
 gc
 aa
 aa
@@ -2187,9 +2140,9 @@ aa
 aa
 aa
 aa
-dp
 aa
-ci
+aa
+ay
 cB
 cM
 cE
@@ -2233,7 +2186,7 @@ cB
 cN
 cV
 cU
-dj
+ch
 ar
 ar
 Cw
@@ -2313,7 +2266,7 @@ ar
 ar
 ar
 ar
-dq
+cl
 cf
 aa
 aa
@@ -2345,15 +2298,15 @@ bU
 ae
 aa
 aa
-dq
+bf
 cC
-dq
+bQ
 do
 ar
 ar
 do
 ki
-dq
+cs
 aa
 aa
 "}
@@ -2385,13 +2338,13 @@ ae
 aa
 aa
 aa
-dq
+bf
 cf
 cm
 au
 dk
 cm
-dq
+cs
 aa
 aa
 aa
@@ -2421,15 +2374,15 @@ ae
 ae
 ae
 ae
-dp
-aa
-dp
 aa
 aa
 aa
 aa
 aa
-dp
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -2461,13 +2414,13 @@ aC
 aa
 aa
 aa
-dp
 aa
 aa
 aa
 aa
 aa
-dp
+aa
+aa
 aa
 aa
 aa
