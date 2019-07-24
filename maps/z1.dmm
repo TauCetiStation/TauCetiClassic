@@ -3774,10 +3774,8 @@
 	},
 /area/security/main)
 "agu" = (
-/obj/item/device/radio/intercom{
-	frequency = 1475;
-	name = "Station Intercom (Security)";
-	pixel_y = 27
+/obj/machinery/firealarm{
+	pixel_y = 24
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -4063,9 +4061,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkred"
@@ -4581,7 +4576,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/table,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4956,6 +4950,14 @@
 /turf/space/shuttle,
 /area/shuttle/escape_pod3/station)
 "aiw" = (
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 8
+	},
+/obj/item/device/radio/intercom{
+	frequency = 1475;
+	name = "Station Intercom (Security)";
+	pixel_x = 30
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -4972,9 +4974,6 @@
 "aiy" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
-	},
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -5147,34 +5146,35 @@
 /turf/space/shuttle,
 /area/shuttle/escape_pod3/station)
 "aiM" = (
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 4
-	},
+/obj/structure/table,
+/obj/item/device/flashlight/lamp,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "aiN" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/security/brig)
 "aiO" = (
-/obj/structure/table,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/hand_labeler,
 /obj/machinery/light,
 /obj/item/weapon/folder/red{
 	pixel_y = 3
 	},
+/obj/structure/table,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "darkred"
 	},
 /area/security/brig)
 "aiP" = (
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -77239,10 +77239,10 @@
 	},
 /area/quartermaster/storage)
 "vbb" = (
-/obj/structure/table,
 /obj/item/device/camera,
 /obj/item/device/taperecorder,
 /obj/item/weapon/storage/box/evidence,
+/obj/structure/table,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkred"
@@ -107363,7 +107363,7 @@ afL
 agq
 agS
 ahK
-aiM
+aeT
 aiP
 adM
 ajW
@@ -107621,7 +107621,7 @@ adH
 agu
 ahN
 aiN
-aiP
+aiM
 adM
 ajZ
 akz
