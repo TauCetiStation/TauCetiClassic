@@ -87,14 +87,16 @@ var/datum/subsystem/mapping/SSmapping
 
 /datum/subsystem/mapping/proc/find_spot(datum/map_template/space_structure/structure)
 	var/structure_size = ceil(max(structure.width / 2, structure.height / 2))
+	var/structure_padding = structure_size + TRANSITIONEDGE
 	for (var/try_count in 1 to 10)
-		var/turf/space/T = locate(rand(structure.width, world.maxx - structure.width), rand(structure.height, world.maxy - structure.height), pick(levels_by_trait(ZTRAIT_SPACE_RUINS)))
+		var/turf/space/T = locate(rand(structure_padding, world.maxx - structure_padding), rand(structure_padding, world.maxy - structure_padding), pick(levels_by_trait(ZTRAIT_SPACE_RUINS)))
 		if(!istype(T))
 			continue
 
-		if(locate(/turf/simulated) in orange(structure_size, T))
+		var/space_block = block(locate(T.x - structure_size, T.y - structure_size, T.z), locate(T.x + structure_size, T.y + structure_size, T.z))
+		if(locate(/turf/simulated) in space_block)
 			continue
-		if(locate(/obj) in orange(structure_size, T))
+		if(locate(/obj) in space_block)
 			continue
 
 		return T
