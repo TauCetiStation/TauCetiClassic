@@ -198,7 +198,7 @@
 	add_fingerprint(user)
 
 	message += "</BODY></HTML>"
-	user << browse(entity_ja(message), "window=[M.name]_scan_report")
+	user << browse(entity_ja(message), "window=[M.name]_scan_report;size=820x200;can_resize=1")
 	onclose(user, "[M.name]_scan_report")
 
 /obj/item/Destroy()
