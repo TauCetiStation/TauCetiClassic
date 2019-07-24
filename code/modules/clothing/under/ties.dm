@@ -205,11 +205,11 @@
 		to_chat(user, "\red There is already a [holstered] holstered here!")
 		return
 
-	if (!istype(I, /obj/item/weapon/gun) && !I.canHolster())
+	if (!istype(I, /obj/item/weapon/gun) && !I.can_be_holstered)
 		to_chat(user, "\red Only guns can be holstered!")
 		return
 
-	if (!I.canHolster())
+	if (!I.can_be_holstered)
 		to_chat(user, "\red This [I] won't fit in the [src]!")
 		return
 

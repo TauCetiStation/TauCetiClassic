@@ -127,6 +127,7 @@
 	item_state = "gun"
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
+	can_be_holstered = TRUE
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	w_class = ITEM_SIZE_NORMAL
@@ -177,9 +178,6 @@
 	for(var/mob/O in viewers(user, null))
 		O.show_message(text("\red <B>[] fires a cap gun at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
 
-/obj/item/toy/gun/canHolster()
-	return TRUE
-
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
 	desc = "There are 7 caps left! Make sure to recyle the box in an autolathe when it gets empty."
@@ -208,6 +206,7 @@
 	item_state = "crossbow"
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
+	can_be_holstered = TRUE
 	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("attacked", "struck", "hit")
 	var/bullets = 5
@@ -296,9 +295,6 @@
 			if (O.client)	O.show_message(text("\red <B>[] casually lines up a shot with []'s head, pulls the trigger, then realizes they are out of ammo and drops to the floor in search of some!</B>", user, M), 1, "\red You hear someone fall", 2)
 		user.Weaken(5)
 	return
-
-/obj/item/toy/crossbow/canHolster()
-	return TRUE
 
 /obj/item/toy/ammo/crossbow
 	name = "foam dart"

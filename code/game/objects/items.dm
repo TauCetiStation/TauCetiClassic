@@ -56,6 +56,7 @@
 //		/obj/machinery/r_n_d/experimentor,
 		/obj/machinery/autolathe
 	)
+	var/can_be_holstered = FALSE
 	var/uncleanable = 0
 	var/toolspeed = 1
 
@@ -445,10 +446,6 @@
 // called when "found" in pockets and storage items. Returns 1 if the search should end.
 /obj/item/proc/on_found(mob/finder)
 	return
-
-//called when try put the object in the holster.
-/obj/item/proc/canHolster()
-	return FALSE
 
 // called after an item is placed in an equipment slot
 // user is mob that equipped it

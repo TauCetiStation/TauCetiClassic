@@ -11,11 +11,11 @@
 		to_chat(user, "<span class='warning'>There is already a [holstered] holstered here!</span>")
 		return
 
-	if (!istype(I, /obj/item/weapon/gun) && !I.canHolster())
+	if (!istype(I, /obj/item/weapon/gun) && !I.can_be_holstered)
 		to_chat(user, "<span class='warning'>Only guns can be holstered!</span>")
 		return
 
-	if (!I.canHolster())
+	if (!I.can_be_holstered)
 		to_chat(user, "<span class='warning'>This [I] won't fit in the [src]!</span>")
 		return
 

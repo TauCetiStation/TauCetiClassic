@@ -243,6 +243,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	name = "sawn-off shotgun"
 	desc = "Omar's coming!"
+	can_be_holstered = TRUE
 	short = 1
 
 /obj/item/weapon/gun/projectile/revolver/syndie

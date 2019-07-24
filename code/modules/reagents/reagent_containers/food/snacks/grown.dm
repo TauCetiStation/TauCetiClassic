@@ -563,6 +563,7 @@
 	icon_state = "banana"
 	item_state = "banana"
 	filling_color = "#fcf695"
+	can_be_holstered = TRUE
 	trash = /obj/item/weapon/bananapeel
 	bitesize = 5
 
@@ -571,9 +572,6 @@
 	reagents.add_reagent("banana", 1+round((potency / 10), 1))
 	pixel_x = rand(-5.0, 5)
 	pixel_y = rand(-5.0, 5)
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/banana/canHolster()
-	return TRUE
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	seed = "/obj/item/seeds/chiliseed"
