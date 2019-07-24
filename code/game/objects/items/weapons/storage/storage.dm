@@ -146,7 +146,7 @@
 	if(can_hold.len)
 		var/ok = FALSE
 		for(var/A in can_hold)
-			if(istype(W, text2path(A) ))
+			if(istype(W, A))
 				ok = TRUE
 				break
 		if(!ok)
@@ -157,7 +157,7 @@
 			return FALSE
 
 	for(var/A in cant_hold) //Check for specific items which this container can't hold.
-		if(istype(W, text2path(A) ))
+		if(istype(W, A))
 			if(!stop_messages)
 				to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
 			return FALSE
@@ -457,9 +457,9 @@
 	max_w_class = 0
 	max_storage_space = 0
 	for(var/obj/item/I in src)
-		var/texttype = "[I.type]"
-		if(!(texttype in can_hold))
-			can_hold += texttype
+		var/type_ = I.type
+		if(!(type_ in can_hold))
+			can_hold += type_
 		max_w_class = max(I.w_class, max_w_class)
 		max_storage_space += I.get_storage_cost()
 

@@ -8,7 +8,7 @@
 	icon_type = "heart"
 
 	storage_slots = 5
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/candyheart")
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/candyheart)
 
 	var/opened = FALSE
 

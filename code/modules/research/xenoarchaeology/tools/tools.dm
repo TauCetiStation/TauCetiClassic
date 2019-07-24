@@ -33,5 +33,5 @@
 	storage_slots = 50
 	max_w_class = ITEM_SIZE_NORMAL
 	can_hold = list(
- 		"/obj/item/weapon/fossil",
- 		"/obj/item/weapon/ore/strangerock")
+ 		/obj/item/weapon/fossil,
+ 		/obj/item/weapon/ore/strangerock)

@@ -116,7 +116,7 @@
 	flags = NOBLUDGEON
 	w_class = ITEM_SIZE_SMALL
 	max_storage_space = 21
-	can_hold = list("/obj/item/weapon/reagent_containers/pill","/obj/item/weapon/dice","/obj/item/weapon/paper")
+	can_hold = list(/obj/item/weapon/reagent_containers/pill,/obj/item/weapon/dice,/obj/item/weapon/paper)
 	allow_quick_gather = 1
 	use_to_pickup = 1
 	use_sound = 'sound/effects/pillbottle.ogg'
