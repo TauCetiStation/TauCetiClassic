@@ -10,8 +10,17 @@
 	..()
 
 	// Increase germ_level regularly
-	if(germ_level < GERM_LEVEL_AMBIENT && prob(80))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
-		germ_level++
+	if(get_germ_level() < GERM_LEVEL_AMBIENT && prob(80))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
+		increase_germ_level(1, null, "all")
+
+	var/turf/T = get_turf(src)
+	if(T)
+		if(locate(/obj/effect/decal/cleanable/vomit) in T)
+			increase_germ_level(1, T, "all")
+		if(locate(/obj/effect/decal/cleanable/blood) in T)
+			increase_germ_level(1, T, "all")
+		if(locate(/obj/effect/decal/cleanable/mucus) in T)
+			increase_germ_level(1, T, "all")
 
 /mob/living/carbon/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
@@ -28,8 +37,8 @@
 			bodytemperature += 2
 
 		// Moving around increases germ_level faster
-		if(germ_level < GERM_LEVEL_MOVE_CAP && prob(8))
-			germ_level++
+		if(get_germ_level() < GERM_LEVEL_MOVE_CAP && prob(8))
+			increase_germ_level(1, NewLoc, "all")
 
 		handle_rig_move(NewLoc, Dir)
 
@@ -377,12 +386,12 @@
 		if(H.gloves)
 			if(H.gloves.clean_blood())
 				H.update_inv_gloves()
-			H.gloves.germ_level = 0
+			H.gloves.cleanse_germ_level()
 		else
 			if(H.bloody_hands)
 				H.bloody_hands = 0
 				H.update_inv_gloves()
-			H.germ_level = 0
+			H.cleanse_germ_level("arms")
 	update_icons()	//apply the now updated overlays to the mob
 
 
@@ -892,3 +901,22 @@
 					break
 			R.reaction(loc)
 			adjustToxLoss(-toxins_puked)
+
+/mob/living/carbon/human/increase_germ_level(amount, atom/source = null, part = "")
+	if(!can_increase_germ_level())
+		return FALSE
+
+	var/to_add = amount
+	if(part == "mouth")
+		to_add *= 2 // Mouth leads to internal organs, which makes such infections more troublesome.
+		var/bio_armor = getarmor(BP_HEAD, "bio")
+		if(prob(bio_armor))
+			to_add = round(to_add / 2)
+		germ_level += to_add
+		return TRUE
+
+	var/bio_armor = getarmor(, "bio") // Getting armor for the entire body.
+	if(prob(bio_armor))
+		to_add = round(to_add / 2)
+	germ_level += to_add
+	return TRUE

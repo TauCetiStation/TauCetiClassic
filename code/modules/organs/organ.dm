@@ -29,6 +29,9 @@
 
 	return ..()
 
+/obj/item/organ/can_increase_germ_level()
+	return !(status & (ORGAN_ROBOT|ORGAN_DESTROYED)) && owner.can_increase_germ_level()
+
 /obj/item/organ/proc/insert_organ(mob/living/carbon/human/H)
 	STOP_PROCESSING(SSobj, src)
 
@@ -51,15 +54,15 @@
 /obj/item/organ/proc/handle_antibiotics()
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
 
-	if (!germ_level || antibiotics < 5)
+	if (!get_germ_level() || antibiotics < 5)
 		return
 
-	if (germ_level < INFECTION_LEVEL_ONE)
-		germ_level = 0	//cure instantly
-	else if (germ_level < INFECTION_LEVEL_TWO)
-		germ_level -= 6	//at germ_level == 500, this should cure the infection in a minute
+	if(get_germ_level() < INFECTION_LEVEL_ONE)
+		cleanse_germ_level() //cure instantly
+	else if(get_germ_level() < INFECTION_LEVEL_TWO)
+		decrease_germ_level(6) //at germ_level == 500, this should cure the infection in a minute
 	else
-		germ_level -= 2 //at germ_level == 1000, this will cure the infection in 5 minutes
+		decrease_germ_level(2) //at germ_level == 1000, this will cure the infection in 5 minutes
 
 //Handles chem traces
 /mob/living/carbon/human/proc/handle_trace_chems()

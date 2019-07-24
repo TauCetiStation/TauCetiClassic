@@ -71,12 +71,12 @@
 	if(!istype(user) || !istype(BP))
 		return
 
-	var/germ_level = user.germ_level
-	if(user.gloves)
-		germ_level = user.gloves.germ_level
+	var/germ_level = user.get_germ_level("arms")
 
-	BP.germ_level = max(germ_level, BP.germ_level) //as funny as scrubbing microbes out with clean gloves is - no.
-	if(BP.germ_level)
+	if(germ_level > BP.get_germ_level())
+		BP.set_germ_level(germ_level, user)
+
+	if(BP.get_germ_level())
 		BP.owner.bad_bodyparts |= BP
 
 /proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)

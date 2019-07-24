@@ -148,12 +148,12 @@
 					if((l_hand && !(l_hand.status & ORGAN_DESTROYED)) && (r_hand && !(r_hand.status & ORGAN_DESTROYED)))
 						if(H.gloves && H.gloves.clean_blood())
 							H.update_inv_gloves()
-							H.gloves.germ_level = 0
+							H.gloves.cleanse_germ_level(src)
 						else
 							if(H.bloody_hands)
 								H.bloody_hands = 0
 								H.update_inv_gloves()
-							H.germ_level = 0
+							H.cleanse_germ_level(src, "arms")
 			H.clean_blood()
 			if(target == user)
 				user.visible_message("<span class='notice'>\the [user] cleans \his [body_part_name] out with soap.</span>")

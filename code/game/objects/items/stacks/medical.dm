@@ -96,9 +96,9 @@
 											"<span class='notice'>You place bandaid over [W.desc] on [M]'s [BP.name].</span>")
 					W.bandage()
 					if(crit_fail)
-						W.germ_level += germ_level
+						W.germ_level += get_germ_level()
 					else
-						W.germ_level += min(germ_level, 3)
+						W.germ_level += min(get_germ_level(), 3)
 
 				BP.update_damages()
 				H.update_bandage()

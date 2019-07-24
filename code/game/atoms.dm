@@ -293,6 +293,12 @@
 /atom/proc/add_fingerprint(mob/M, ignoregloves = 0)
 	if(!M || !M.key || isAI(M)) //AI's clicks already calls add_hiddenprint from ClickOn() proc
 		return
+	var/g_level = get_germ_level()
+	var/M_g_level = M.get_germ_level()
+	if(g_level > 0 && g_level > M_g_level)
+		M.increase_germ_level(1, src, "arms")
+	if(M_g_level > 0 && M_g_level > g_level)
+		increase_germ_level(1, M)
 	if (ishuman(M))
 		//Add the list if it does not exist.
 		if(!fingerprintshidden)
@@ -448,7 +454,7 @@
 	return 1
 
 /atom/proc/clean_blood()
-	src.germ_level = 0
+	cleanse_germ_level()
 	if(dirt_overlay)
 		dirt_overlay = null
 	if(istype(blood_DNA, /list))
@@ -486,6 +492,46 @@
 
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
+
+/atom/proc/can_increase_germ_level()
+	return TRUE
+
+/atom/proc/get_germ_level(part = "")
+	/*
+	part is for mobs, determines germ level of what part we are getting.
+	*/
+	return germ_level
+
+/atom/proc/set_germ_level(amount, atom/source = null, part = "")
+	/*
+	source is what part we set germ level to.
+	*/
+	var/increase_in = amount - get_germ_level()
+	if(increase_in > 0)
+		. = increase_germ_level(increase_in, source, part)
+	else
+		. = decrease_germ_level(-increase_in, source, part)
+
+/atom/proc/increase_germ_level(amount, atom/source = null, part = "")
+	/*
+	source is what provoked the increase in germ level, part is for mobs - the bodyzone we provoked.
+	*/
+	if(can_increase_germ_level())
+		germ_level += amount
+		return TRUE
+	return FALSE
+
+/atom/proc/decrease_germ_level(amount, atom/source = null, part = "")
+	if(can_increase_germ_level())
+		germ_level += amount
+		return TRUE
+	return FALSE
+
+/atom/proc/cleanse_germ_level(atom/source = null, part = "")
+	/*
+	source is what cleansed us, part is for mobs - the bodyzone we cleansed, use "all" for showers and such.
+	*/
+	germ_level = 0
 
 // Byond seemingly calls stat, each tick.
 // Calling things each tick can get expensive real quick.

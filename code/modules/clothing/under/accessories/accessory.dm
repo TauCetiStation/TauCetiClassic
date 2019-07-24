@@ -105,7 +105,7 @@
 								if(L)
 									if(L.is_bruised())
 										chest_inspected = "<span class='warning'>You can hear noises and wheezing, \the [M]'s [L.name] may be bruised!</span>"
-									else if(L.germ_level > INFECTION_LEVEL_ONE)
+									else if(L.get_germ_level() > INFECTION_LEVEL_ONE)
 										chest_inspected = "<span class='warning'>\The [M]'s [L.name] sound like he got respitory tract infection!</span>"
 									else
 										chest_inspected = "<span class='notice'>\The [M]'s [L.name] sound normal.</span>"

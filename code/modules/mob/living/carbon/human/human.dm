@@ -1456,12 +1456,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return NEUTER
 	return gender
 
-/mob/living/carbon/human/proc/increase_germ_level(n)
-	if(gloves)
-		gloves.germ_level += n
-	else
-		germ_level += n
-
 /mob/living/carbon/human/proc/is_lung_ruptured()
 	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
 	return IO.is_bruised()
@@ -1987,3 +1981,57 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 													// clamped to max 1000
 	if(jitteriness > 30 && !is_jittery)
 		INVOKE_ASYNC(src, /mob.proc/jittery_process)
+
+/mob/living/carbon/human/can_increase_germ_level()
+	if(species.flags[BIOHAZZARD_IMMUNE])
+		return FALSE
+	return TRUE
+
+/mob/living/carbon/human/get_germ_level(part = "")
+	if(part == "arms")
+		if(gloves)
+			return gloves.get_germ_level()
+		if(species.flags[BIOHAZZARD_IMMUNE])
+			return 0
+		var/obj/item/organ/external/L_A = get_bodypart(BP_L_ARM)
+		var/ret_g_level = 0
+		if(L_A)
+			ret_g_level = L_A.get_germ_level()
+		var/obj/item/organ/external/R_A = get_bodypart(BP_R_ARM)
+		if(R_A)
+			return max(ret_g_level, R_A.get_germ_level())
+	// for cases where part is "all" or "".
+	if(species.flags[BIOHAZZARD_IMMUNE])
+		return 0
+	return germ_level
+
+/mob/living/carbon/human/increase_germ_level(amount, atom/source = null, part = "")
+	var/to_add = amount
+	if(part == "arms")
+		if(gloves)
+			return gloves.increase_germ_level(amount, source)
+		if(!can_increase_germ_level())
+			return FALSE
+		var/obj/item/organ/external/L_A = get_bodypart(BP_L_ARM)
+		if(L_A)
+			. = L_A.increase_germ_level(amount, source)
+		var/obj/item/organ/external/R_A = get_bodypart(BP_R_ARM)
+		if(R_A && R_A.increase_germ_level(amount, source))
+			. = TRUE
+		return .
+
+	if(!can_increase_germ_level())
+		return FALSE
+	if(part == "mouth")
+		to_add *= 2 // Mouth leads to internal organs, which makes such infections more troublesome.
+		var/bio_armor = getarmor(BP_HEAD, "bio")
+		if(prob(bio_armor))
+			to_add = round(to_add / 2)
+		germ_level += to_add
+		return TRUE
+
+	var/bio_armor = getarmor(, "bio") // Getting armor for the entire body.
+	if(prob(bio_armor))
+		to_add = round(to_add / 2)
+	germ_level += to_add
+	return TRUE

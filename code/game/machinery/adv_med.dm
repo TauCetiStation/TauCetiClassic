@@ -255,7 +255,7 @@
 							robot = "Prosthetic:"
 						if(BP.open)
 							open = "Open:"
-						switch (BP.germ_level)
+						switch (BP.get_germ_level())
 							if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 								infected = "Mild Infection:"
 							if (INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
@@ -298,7 +298,7 @@
 							mech = "Mechanical:"
 
 						var/infection = "None"
-						switch (IO.germ_level)
+						switch (IO.get_germ_level())
 							if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 								infection = "Mild Infection:"
 							if (INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)

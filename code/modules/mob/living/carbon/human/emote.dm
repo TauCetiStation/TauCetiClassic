@@ -630,9 +630,13 @@
 
 		if (m_type & 1)
 			for (var/mob/O in get_mobs_in_view(world.view,src))
+				if(act == "cough" || act == "sneeze")
+					O.increase_germ_level(1, src, "mouth")
 				O.show_message(message, m_type)
 		else if (m_type & 2)
 			for (var/mob/O in (hearers(src.loc, null) | get_mobs_in_view(world.view,src)))
+				if(act == "cough" || act == "sneeze")
+					O.increase_germ_level(1, src, "mouth")
 				O.show_message(message, m_type)
 
 	if(cloud_emote)

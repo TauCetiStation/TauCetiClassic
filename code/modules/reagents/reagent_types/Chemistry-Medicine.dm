@@ -121,13 +121,13 @@
 	//makes you squeaky clean
 /datum/reagent/sterilizine/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(method == TOUCH)
-		M.germ_level -= min(volume*20, M.germ_level)
+		M.decrease_germ_level(min(volume * 20, M.get_germ_level()), null, "all")
 
 /datum/reagent/sterilizine/reaction_obj(obj/O, volume)
-	O.germ_level -= min(volume*20, O.germ_level)
+	O.decrease_germ_level(min(volume * 20, O.get_germ_level()))
 
 /datum/reagent/sterilizine/reaction_turf(turf/T, volume)
-	T.germ_level -= min(volume*20, T.germ_level)
+	T.decrease_germ_level(min(volume * 20, T.get_germ_level()))
 
 /datum/reagent/leporazine
 	name = "Leporazine"

@@ -161,9 +161,10 @@
 /datum/surgery_step/limb/attach/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/robot_parts/L = tool
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+
 	user.visible_message("<span class='notice'>[user] has attached \the [tool] where [target]'s [BP.name] used to be.</span>",
 	"<span class='notice'>You have attached \the [tool] where [target]'s [BP.name] used to be.</span>")
-	BP.germ_level = 0
+
 	BP.robotize()
 	if(istype(L) && L.sabotaged)
 		BP.sabotaged = TRUE

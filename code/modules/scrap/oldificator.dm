@@ -6,7 +6,7 @@
 	if(prob(75))
 		origin_tech = null
 	reliability = rand(100)
-	germ_level = pick(80,110,160)
+	increase_germ_level(pick(80,110,160))
 	if(prob(40))
 		if(prob(70))
 			light_power = light_power / pick(1.5, 2, 2.5)

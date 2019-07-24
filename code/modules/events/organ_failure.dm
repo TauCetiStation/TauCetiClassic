@@ -26,17 +26,17 @@
 			var/obj/item/organ/internal/IO = pick(C.organs)
 
 			if (acute)
-				IO.germ_level = max(INFECTION_LEVEL_TWO, IO.germ_level)
+				IO.set_germ_level(max(INFECTION_LEVEL_TWO, IO.get_germ_level()))
 			else
-				IO.germ_level = max(rand(INFECTION_LEVEL_ONE,INFECTION_LEVEL_ONE*2), IO.germ_level)
+				IO.set_germ_level(max(rand(INFECTION_LEVEL_ONE,INFECTION_LEVEL_ONE*2), IO.get_germ_level()))
 		else
 			//external organ infection
 			var/obj/item/organ/external/BP = pick(C.bodyparts)
 
 			if (acute)
-				BP.germ_level = max(INFECTION_LEVEL_TWO, BP.germ_level)
+				BP.set_germ_level(max(INFECTION_LEVEL_TWO, BP.get_germ_level()))
 			else
-				BP.germ_level = max(rand(INFECTION_LEVEL_ONE,INFECTION_LEVEL_ONE*2), BP.germ_level)
+				BP.set_germ_level(max(rand(INFECTION_LEVEL_ONE,INFECTION_LEVEL_ONE*2), BP.get_germ_level()))
 
 			C.bad_bodyparts |= BP
 

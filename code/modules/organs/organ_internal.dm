@@ -24,6 +24,8 @@
 	if(parent)
 		parent.bodypart_organs += src
 
+/obj/item/organ/internal/can_increase_germ_level()
+	return robotic < 2 && owner.can_increase_germ_level()
 
 /obj/item/organ/internal/proc/rejuvenate()
 	damage = 0
@@ -44,8 +46,7 @@
 /obj/item/organ/internal/process()
 	//Process infections
 
-	if (robotic >= 2 || (owner.species && owner.species.flags[IS_PLANT]))	//TODO make robotic organs and bodyparts separate types instead of a flag
-		germ_level = 0
+	if(!can_increase_germ_level()) //TODO make robotic organs and bodyparts separate types instead of a flag. (this comment now makes no sense) ~Luduk
 		return
 
 	if(owner.bodytemperature >= 170)	//cryo stops germs from moving and doing their bad stuffs
@@ -54,22 +55,24 @@
 
 		//** Handle the effects of infections
 		var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
+		var/g_level = get_germ_level()
 
-		if (germ_level > 0 && germ_level < INFECTION_LEVEL_ONE/2 && prob(30))
-			germ_level--
+		if(g_level > 0 && g_level < INFECTION_LEVEL_ONE/2 && prob(30))
+			decrease_germ_level(1)
 
-		if (germ_level >= INFECTION_LEVEL_ONE/2)
+		if(g_level >= INFECTION_LEVEL_ONE/2)
 			//aiming for germ level to go from ambient to INFECTION_LEVEL_TWO in an average of 15 minutes
-			if(antibiotics < 5 && prob(round(germ_level/6)))
-				germ_level++
+			if(antibiotics < 5 && prob(round(g_level/6)))
+				increase_germ_level(1)
 
-		if (germ_level >= INFECTION_LEVEL_TWO)
+		if(g_level >= INFECTION_LEVEL_TWO)
 			var/obj/item/organ/external/BP = owner.bodyparts_by_name[parent_bodypart]
+			var/BP_g_level = BP.get_germ_level()
 			//spread germs
-			if (antibiotics < 5 && BP.germ_level < germ_level && ( BP.germ_level < INFECTION_LEVEL_ONE * 2 || prob(30) ))
-				BP.germ_level++
+			if(antibiotics < 5 && BP_g_level < g_level && ( BP_g_level < INFECTION_LEVEL_ONE * 2 || prob(30) ))
+				BP.increase_germ_level(1)
 
-			if (prob(3))	//about once every 30 seconds
+			if(prob(3)) //about once every 30 seconds
 				take_damage(1,silent=prob(30))
 
 /obj/item/organ/internal/proc/take_damage(amount, silent=0)
@@ -149,11 +152,12 @@
 
 /obj/item/organ/internal/lungs/process()
 	..()
-	if (owner.species && owner.species.flags[NO_BREATHE])
+	if(owner.species.flags[NO_BREATHE])
 		return
-	if (germ_level > INFECTION_LEVEL_ONE)
+
+	if(get_germ_level() > INFECTION_LEVEL_ONE)
 		if(prob(5))
-			owner.emote("cough")		//respitory tract infection
+			owner.emote("cough") //respitory tract infection
 
 	if(is_bruised())
 		if(prob(2))
@@ -209,10 +213,11 @@
 
 /obj/item/organ/internal/liver/process()
 	..()
-	if (germ_level > INFECTION_LEVEL_ONE)
+	var/g_level = get_germ_level()
+	if(g_level > INFECTION_LEVEL_ONE)
 		if(prob(1))
 			to_chat(owner, "<span class='warning'>Your skin itches.</span>")
-	if (germ_level > INFECTION_LEVEL_TWO)
+	if(g_level > INFECTION_LEVEL_TWO)
 		if(prob(1))
 			INVOKE_ASYNC(owner, /mob/living/carbon/human.proc/vomit)
 

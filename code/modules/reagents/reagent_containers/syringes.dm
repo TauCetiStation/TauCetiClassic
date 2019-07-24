@@ -259,9 +259,9 @@
 		if (!BP)
 			return
 		if(crit_fail)
-			BP.germ_level += germ_level / 7
+			BP.increase_germ_level(get_germ_level() / 7, src, target_zone)
 		else
-			BP.germ_level += min(germ_level, 3)
+			BP.increase_germ_level(min(get_germ_level(), 3), src, target_zone)
 		H.bad_bodyparts |= BP
 
 /obj/item/weapon/reagent_containers/ld50_syringe

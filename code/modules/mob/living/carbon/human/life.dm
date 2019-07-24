@@ -1252,8 +1252,8 @@
 			druggy = max(druggy-1, 0)
 
 		// If you're dirty, your gloves will become dirty, too.
-		if(gloves && germ_level > gloves.germ_level && prob(10))
-			gloves.germ_level += 1
+		if(gloves && get_germ_level() > gloves.get_germ_level() && prob(10))
+			gloves.increase_germ_level(1, src)
 
 	return 1
 
@@ -1617,7 +1617,21 @@
 			playsound_local(src, pick(scarySounds), VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/human/proc/handle_virus_updates()
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)
+		return 0	//godmode
+
+	var/g_level = get_germ_level()
+	if(g_level > INFECTION_LEVEL_TWO && !virus2.len) // We are quite dirty, we might get infected by some virus.
+		var/prob_of_virus_infection = (g_level / INFECTION_LEVEL_THREE) * 100
+		if(nutrition <= 100) // If we're hungry, our immune system works badly.
+			prob_of_virus_infection *= 1.2
+		if(locate(/datum/disease/appendicitis) in resistances) // Removed appendix makes us more susceptible.
+			prob_of_virus_infection *= 1.2
+		if(prob(getarmor(, "bio"))) // We are *somehow* saved by all the holy clean attire we wear.
+			prob_of_virus_infection *= 0.5
+		if(prob(prob_of_virus_infection))
+			infect_mob_random_lesser(src)
+
 	if(bodytemperature > 406)
 		for(var/datum/disease/D in viruses)
 			D.cure()

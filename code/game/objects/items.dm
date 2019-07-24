@@ -987,3 +987,14 @@ var/global/list/items_blood_overlay_by_type = list()
 		. |= DAM_SHARP
 		if(damtype == BURN)
 			. |= DAM_LASER
+
+/obj/item/increase_germ_level(amount, atom/source = null, part = "")
+	if(can_increase_germ_level())
+		var/to_add = amount
+		if(prob(armor["bio"])) // We are somewhat protected.
+			to_add = round(to_add / 2)
+		if(prob(permeability_coefficient * 100) - 1)
+			to_add = round(to_add / 2)
+		germ_level += to_add
+		return TRUE
+	return FALSE

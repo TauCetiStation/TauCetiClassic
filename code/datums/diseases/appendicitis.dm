@@ -52,6 +52,6 @@
 
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_GROIN]
 			BP.sever_artery()
-			BP.germ_level = max(INFECTION_LEVEL_TWO, BP.germ_level)
+			BP.set_germ_level(max(INFECTION_LEVEL_TWO, BP.get_germ_level()))
 			H.adjustToxLoss(25)
 			src.cure()
