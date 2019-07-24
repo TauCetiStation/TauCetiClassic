@@ -4950,16 +4950,16 @@
 /turf/space/shuttle,
 /area/shuttle/escape_pod3/station)
 "aiw" = (
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 8
-	},
+/obj/structure/table,
+/obj/item/device/flashlight/lamp,
 /obj/item/device/radio/intercom{
+	broadcasting = 1;
 	frequency = 1475;
+	listening = 0;
 	name = "Station Intercom (Security)";
-	pixel_x = 30
+	pixel_y = -28
 	},
 /turf/simulated/floor{
-	dir = 6;
 	icon_state = "darkred"
 	},
 /area/security/brig)
@@ -5146,12 +5146,16 @@
 /turf/space/shuttle,
 /area/shuttle/escape_pod3/station)
 "aiM" = (
-/obj/structure/table,
-/obj/item/device/flashlight/lamp,
-/turf/simulated/floor{
-	icon_state = "darkred"
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/area/security/brig)
+/obj/machinery/computer/prisoner,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/security/warden)
 "aiN" = (
 /obj/structure/table,
 /turf/simulated/floor{
@@ -33500,6 +33504,15 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/assembly/robotics)
+"biK" = (
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkred"
+	},
+/area/security/brig)
 "biL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -107621,7 +107634,7 @@ adH
 agu
 ahN
 aiN
-aiM
+aiw
 adM
 ajZ
 akz
@@ -107878,7 +107891,7 @@ adH
 agU
 ahM
 aiy
-aiw
+biK
 adM
 ajY
 fmb
@@ -109161,7 +109174,7 @@ aft
 afS
 adH
 fvb
-ahO
+aiM
 aiS
 ajq
 ajB
