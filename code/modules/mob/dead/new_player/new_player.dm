@@ -290,6 +290,8 @@ commented cause polls are kinda broken now, needs refactoring */
 		return FALSE
 	if(!job.is_species_permitted(client))
 		return FALSE
+	if(!job.map_check())
+		return FALSE
 	return TRUE
 
 
