@@ -3774,9 +3774,6 @@
 	},
 /area/security/main)
 "agu" = (
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 8
-	},
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
@@ -4527,7 +4524,6 @@
 /turf/simulated/floor/plating,
 /area/security/warden)
 "ahK" = (
-/obj/structure/table,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4574,8 +4570,6 @@
 	},
 /area/security/brig)
 "ahN" = (
-/obj/structure/table,
-/obj/item/device/flashlight/lamp,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4962,10 +4956,11 @@
 /area/shuttle/escape_pod3/station)
 "aiw" = (
 /obj/structure/stool/bed/chair/metal/red{
-	dir = 1
+	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 6;
+	icon_state = "darkred"
 	},
 /area/security/brig)
 "aix" = (
@@ -5152,19 +5147,13 @@
 /area/shuttle/escape_pod3/station)
 "aiM" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/hand_labeler,
-/obj/machinery/light,
 /turf/simulated/floor{
-	dir = 10;
-	icon_state = "darkred"
+	icon_state = "dark"
 	},
 /area/security/brig)
 "aiN" = (
-/obj/structure/table,
-/obj/item/device/flashlight,
-/obj/item/weapon/folder/red{
-	pixel_y = 3
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "darkred"
@@ -5172,21 +5161,21 @@
 /area/security/brig)
 "aiO" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/evidence,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/hand_labeler,
+/obj/machinery/light,
+/obj/item/weapon/folder/red{
+	pixel_y = 3
+	},
 /turf/simulated/floor{
+	dir = 10;
 	icon_state = "darkred"
 	},
 /area/security/brig)
 "aiP" = (
 /obj/structure/table,
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
-/obj/item/device/taperecorder,
+/obj/item/device/flashlight/lamp,
 /turf/simulated/floor{
-	dir = 6;
 	icon_state = "darkred"
 	},
 /area/security/brig)
@@ -48967,7 +48956,6 @@
 "bTc" = (
 /obj/machinery/door/airlock/medical{
 	name = "Cooling Room";
-	req_access = 72;
 	req_access = list(72)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible{
@@ -52087,9 +52075,7 @@
 /turf/simulated/wall/r_wall,
 /area/maintenance/incinerator)
 "caR" = (
-/obj/structure/closet/secure_closet/bar{
-	req_access = list(25)
-	},
+/obj/structure/closet/secure_closet/bar,
 /obj/item/weapon/gun/projectile/revolver/doublebarrel,
 /obj/item/weapon/paper{
 	info = "This permit signifies that the Bartender is permitted to posess this firearm in the bar, and ONLY the bar. Failure to adhere to this permit will result in confiscation of the weapon and possibly arrest.";
@@ -77253,6 +77239,10 @@
 	},
 /area/quartermaster/storage)
 "vbb" = (
+/obj/structure/table,
+/obj/item/device/camera,
+/obj/item/device/taperecorder,
+/obj/item/weapon/storage/box/evidence,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkred"
@@ -107117,7 +107107,7 @@ adM
 agT
 ahL
 vbb
-aiM
+aiO
 adM
 ajX
 fmb
@@ -107373,7 +107363,7 @@ afL
 agq
 agS
 ahK
-aiw
+aeT
 aiN
 adM
 ajW
@@ -107630,8 +107620,8 @@ adH
 adH
 agu
 ahN
-aeT
-aiO
+aiM
+aiP
 adM
 ajZ
 akz
@@ -107888,7 +107878,7 @@ adH
 agU
 ahM
 aiy
-aiP
+aiw
 adM
 ajY
 fmb
