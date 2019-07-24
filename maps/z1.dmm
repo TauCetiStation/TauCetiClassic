@@ -3774,8 +3774,10 @@
 	},
 /area/security/main)
 "agu" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
+/obj/item/device/radio/intercom{
+	frequency = 1475;
+	name = "Station Intercom (Security)";
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -4061,10 +4063,8 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/item/device/radio/intercom{
-	frequency = 1475;
-	name = "Station Intercom (Security)";
-	pixel_y = 27
+/obj/machinery/firealarm{
+	pixel_y = 24
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -4581,6 +4581,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/table,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4955,9 +4956,6 @@
 /turf/space/shuttle,
 /area/shuttle/escape_pod3/station)
 "aiw" = (
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -4974,6 +4972,9 @@
 "aiy" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
+	},
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -5146,17 +5147,18 @@
 /turf/space/shuttle,
 /area/shuttle/escape_pod3/station)
 "aiM" = (
-/obj/structure/table,
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/security/brig)
 "aiN" = (
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 4
-	},
+/obj/structure/table,
+/obj/item/device/flashlight/lamp,
 /turf/simulated/floor{
-	icon_state = "darkred"
+	icon_state = "dark"
 	},
 /area/security/brig)
 "aiO" = (
@@ -5173,8 +5175,6 @@
 	},
 /area/security/brig)
 "aiP" = (
-/obj/structure/table,
-/obj/item/device/flashlight/lamp,
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -107363,8 +107363,8 @@ afL
 agq
 agS
 ahK
-aeT
-aiN
+aiM
+aiP
 adM
 ajW
 aky
@@ -107620,7 +107620,7 @@ adH
 adH
 agu
 ahN
-aiM
+aiN
 aiP
 adM
 ajZ
