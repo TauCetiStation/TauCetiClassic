@@ -122,6 +122,7 @@
 			name = "sawn-off shotgun"
 			desc = "Omar's coming!"
 			short = 1
+			can_be_holstered = TRUE
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attack_self(mob/living/user)
 	add_fingerprint(user)
