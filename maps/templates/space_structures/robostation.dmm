@@ -115,11 +115,7 @@
 /area/robostatoin)
 "ay" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
 /turf/simulated/floor/plating,
-/turf/space,
 /area/robostatoin)
 "az" = (
 /obj/item/mecha_parts/part/honker_head,
@@ -470,7 +466,10 @@
 	},
 /area/robostatoin)
 "bR" = (
-/obj/item/weapon/reagent_containers/pill/cyanide,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
 /turf/simulated/floor/plating,
 /turf/space,
 /area/robostatoin)
@@ -560,13 +559,9 @@
 /turf/simulated/floor/greengrid,
 /area/robostatoin)
 "ch" = (
-/obj/structure/trap/stun,
-/obj/structure/window/reinforced,
+/obj/machinery/light/small,
 /obj/structure/barricade/wooden,
-/turf/simulated/floor/plating{
-	icon_state = "warnplate"
-	},
-/turf/space,
+/turf/simulated/floor/plating,
 /area/robostatoin)
 "ci" = (
 /turf/space,
@@ -647,11 +642,25 @@
 /obj/item/weapon/bananapeel,
 /turf/simulated/floor/plating,
 /area/robostatoin)
+"cv" = (
+/obj/item/weapon/reagent_containers/pill/cyanide,
+/turf/simulated/floor/plating,
+/turf/space,
+/area/robostatoin)
 "cw" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
+/area/robostatoin)
+"cx" = (
+/obj/structure/trap/stun,
+/obj/structure/window/reinforced,
+/obj/structure/barricade/wooden,
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
+	},
+/turf/space,
 /area/robostatoin)
 "cy" = (
 /obj/item/weapon/paper{
@@ -848,10 +857,6 @@
 /area/robostatoin)
 "de" = (
 /obj/machinery/door/airlock/external,
-/turf/simulated/floor/plating,
-/area/robostatoin)
-"df" = (
-/obj/machinery/light/small,
 /turf/simulated/floor/plating,
 /area/robostatoin)
 "dg" = (
@@ -1443,8 +1448,8 @@ aa
 ae
 ae
 ae
-ar
-ar
+bp
+bp
 ae
 ae
 ae
@@ -1677,8 +1682,8 @@ aC
 aa
 aC
 ae
-ar
-df
+bp
+ch
 ae
 aC
 aa
@@ -1745,7 +1750,7 @@ ae
 bs
 by
 bE
-ah
+cg
 ah
 ae
 ah
@@ -1911,8 +1916,8 @@ aa
 aa
 aa
 ae
-ar
-df
+bp
+ch
 ae
 aa
 aa
@@ -2108,7 +2113,7 @@ cB
 ar
 cy
 ar
-bR
+cv
 ar
 ck
 gc
@@ -2142,7 +2147,7 @@ aa
 aa
 aa
 aa
-ay
+bR
 cB
 cM
 cE
@@ -2186,7 +2191,7 @@ cB
 cN
 cV
 cU
-ch
+cx
 ar
 ar
 Cw
@@ -2359,7 +2364,7 @@ aq
 aB
 ar
 aP
-ar
+ay
 bg
 ar
 ah

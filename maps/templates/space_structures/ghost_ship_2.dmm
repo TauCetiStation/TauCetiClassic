@@ -346,8 +346,13 @@
 /turf/simulated/floor/wood,
 /area/ghostship)
 "bd" = (
-/obj/structure/flora/pottedplant,
-/turf/simulated/floor/wood,
+/obj/structure/cellular_biomass/grass/meat,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
 /area/ghostship)
 "be" = (
 /obj/structure/mineral_door/wood,
@@ -394,9 +399,13 @@
 /turf/simulated/floor/wood,
 /area/ghostship)
 "bm" = (
-/obj/structure/table/woodentable,
 /obj/effect/decal/cleanable/blood,
-/turf/simulated/floor/wood,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
 /area/ghostship)
 "bn" = (
 /obj/structure/table/woodentable/fancy,
@@ -458,11 +467,12 @@
 	},
 /area/ghostship)
 "bz" = (
-/obj/structure/stool/bed/chair/wood/normal,
-/obj/structure/cellular_biomass/core/meat,
-/obj/structure/cellular_biomass/grass/meat,
-/obj/effect/decal/cleanable/blood,
-/obj/item/clothing/shoes/heels,
+/obj/structure/flora/pottedplant{
+	icon_state = "plant-21"
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/simulated/floor/wood,
 /area/ghostship)
 "bA" = (
@@ -828,6 +838,92 @@
 	},
 /turf/simulated/floor/plating,
 /area/ghostship)
+"cy" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s6"
+	},
+/area/ghostship)
+"cz" = (
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/ghostship)
+"cA" = (
+/turf/simulated/floor/plating,
+/area/ghostship)
+"cB" = (
+/obj/structure/cellular_biomass/grass/meat,
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
+/area/ghostship)
+"cC" = (
+/obj/structure/cellular_biomass/grass/meat,
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/simulated/floor/wood,
+/area/ghostship)
+"cD" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/simulated/floor/wood,
+/area/ghostship)
+"cE" = (
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/simulated/floor{
+	icon_state = "freezerfloor2"
+	},
+/area/ghostship)
+"cF" = (
+/obj/structure/cellular_biomass/grass/meat,
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/simulated/floor{
+	icon_state = "freezerfloor2"
+	},
+/area/ghostship)
+"cG" = (
+/obj/structure/flora/pottedplant,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/ghostship)
+"cH" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/ghostship)
+"cI" = (
+/obj/structure/table/woodentable,
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/ghostship)
+"cJ" = (
+/obj/structure/stool/bed/chair/wood/normal,
+/obj/structure/cellular_biomass/core/meat,
+/obj/structure/cellular_biomass/grass/meat,
+/obj/effect/decal/cleanable/blood,
+/obj/item/clothing/shoes/heels,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/ghostship)
+"cK" = (
+/obj/structure/stool/bed/chair/wood/normal,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/ghostship)
 
 (1,1,1) = {"
 aa
@@ -881,7 +977,7 @@ aa
 aa
 aE
 aX
-bz
+cJ
 bC
 bF
 aW
@@ -931,10 +1027,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-ab
+cy
+bJ
+ag
+ag
 ag
 ae
 ae
@@ -962,14 +1058,14 @@ aa
 aa
 aa
 aa
-aa
-aa
-ab
+ac
+cA
+aE
 aC
 aG
 aP
 aV
-aZ
+bz
 ac
 aH
 bo
@@ -993,13 +1089,13 @@ ae
 ae
 ae
 ae
-ae
-aA
+ah
+bJ
 aC
 aG
 aH
 aQ
-aM
+cC
 aH
 be
 aH
@@ -1033,7 +1129,7 @@ aM
 aH
 ba
 aF
-bj
+cH
 bp
 bw
 aM
@@ -1052,11 +1148,11 @@ ag
 ak
 ao
 ao
-ao
+bd
 au
 ao
-ao
-ao
+at
+cB
 aD
 aI
 aN
@@ -1133,7 +1229,7 @@ aH
 aM
 aH
 bH
-bK
+cq
 aE
 aA
 aA
@@ -1164,7 +1260,7 @@ aM
 bk
 aH
 ac
-bK
+cE
 ac
 cg
 cp
@@ -1176,11 +1272,11 @@ ah
 al
 ap
 ap
+bm
+ap
+ap
+ap
 at
-ap
-ap
-ap
-ap
 aD
 aI
 aH
@@ -1197,7 +1293,7 @@ aH
 ac
 bN
 bV
-bM
+cF
 cq
 ac
 "}
@@ -1210,16 +1306,16 @@ aq
 aq
 aq
 aq
-aq
+cz
 aq
 ac
 aH
 aH
 aM
-aH
+cD
 aZ
 aF
-bm
+cI
 bj
 bw
 aH
@@ -1241,8 +1337,8 @@ ae
 ae
 ae
 ae
-ae
-aA
+ag
+bJ
 aC
 aL
 aM
@@ -1272,14 +1368,14 @@ aa
 aa
 aa
 aa
-aa
-aa
-ad
+ac
+cA
+aE
 aC
 aL
 aU
 aP
-bd
+cG
 ac
 aH
 aH
@@ -1303,10 +1399,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 ad
+bJ
+ah
+ah
 ah
 ae
 ae
@@ -1377,7 +1473,7 @@ aa
 aa
 aE
 by
-bi
+cK
 bE
 bu
 aY

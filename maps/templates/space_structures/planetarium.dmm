@@ -3,15 +3,15 @@
 /turf/space,
 /area/space)
 "b" = (
-/obj/structure/window/phoronreinforced{
-	dir = 6
-	},
 /turf/space,
-/turf/space,
-/area/planetarium)
-"c" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien20"
+	},
+/area/planetarium)
+"c" = (
+/turf/space,
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien24"
 	},
 /area/planetarium)
 "d" = (
@@ -25,18 +25,16 @@
 	},
 /area/planetarium)
 "f" = (
-/obj/structure/window/phoronreinforced{
-	dir = 6
-	},
-/turf/unsimulated/floor/abductor,
 /turf/space,
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien16"
+	},
 /area/planetarium)
 "g" = (
-/obj/structure/window/phoronreinforced{
-	dir = 6
+/turf/space,
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien19"
 	},
-/turf/space,
-/turf/space,
 /area/planetarium)
 "h" = (
 /turf/unsimulated/wall/abductor{
@@ -44,13 +42,16 @@
 	},
 /area/planetarium)
 "i" = (
-/turf/unsimulated/wall/abductor{
-	icon_state = "alien24"
+/obj/structure/window/phoronreinforced{
+	dir = 6
 	},
+/turf/unsimulated/floor/abductor,
+/turf/space,
 /area/planetarium)
 "j" = (
+/turf/space,
 /turf/unsimulated/wall/abductor{
-	icon_state = "alien16"
+	icon_state = "alien6"
 	},
 /area/planetarium)
 "k" = (
@@ -64,11 +65,10 @@
 /turf/unsimulated/floor/abductor,
 /area/planetarium)
 "m" = (
-/obj/structure/window/phoronreinforced{
-	dir = 6
-	},
-/turf/unsimulated/floor/abductor,
 /turf/space,
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien9"
+	},
 /area/planetarium)
 "n" = (
 /obj/structure/window/phoronreinforced{
@@ -110,11 +110,8 @@
 	},
 /area/planetarium)
 "u" = (
-/obj/structure/window/phoronreinforced{
-	dir = 6
-	},
-/turf/unsimulated/floor/abductor,
 /turf/space,
+/turf/unsimulated/wall/abductor,
 /area/planetarium)
 "v" = (
 /turf/unsimulated/wall/abductor{
@@ -136,13 +133,16 @@
 /turf/unsimulated/floor/abductor,
 /area/planetarium)
 "y" = (
-/turf/unsimulated/floor/abductor,
 /turf/space,
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien5"
+	},
 /area/planetarium)
 "z" = (
-/turf/unsimulated/wall/abductor{
-	icon_state = "alien19"
-	},
+/obj/structure/table/abductor,
+/obj/structure/planetarium_spawner,
+/turf/unsimulated/floor/abductor,
+/turf/space,
 /area/planetarium)
 "A" = (
 /turf/unsimulated/wall/abductor{
@@ -155,8 +155,8 @@
 	},
 /area/planetarium)
 "C" = (
+/obj/effect/decal/cleanable/blood/gibs/xeno/up,
 /turf/unsimulated/floor/abductor,
-/turf/space,
 /area/planetarium)
 "D" = (
 /obj/structure/window/phoronreinforced,
@@ -178,25 +178,20 @@
 	},
 /area/planetarium)
 "G" = (
-/obj/structure/table/abductor,
-/obj/structure/planetarium_spawner,
+/obj/effect/decal/cleanable/blood/gibs/xeno/limb,
 /turf/unsimulated/floor/abductor,
-/turf/space,
 /area/planetarium)
 "H" = (
+/obj/machinery/light/small{
+	light_color = "#8b008b"
+	},
+/obj/effect/decal/cleanable/blood/gibs/xeno/limb,
 /turf/unsimulated/floor/abductor,
-/turf/space,
 /area/planetarium)
 "I" = (
+/obj/item/weapon/scalpel/alien,
+/obj/effect/decal/cleanable/blood/gibs/xeno/body,
 /turf/unsimulated/floor/abductor,
-/turf/space,
-/area/planetarium)
-"J" = (
-/obj/structure/window/phoronreinforced{
-	dir = 6
-	},
-/turf/unsimulated/floor/abductor,
-/turf/space,
 /area/planetarium)
 "K" = (
 /turf/unsimulated/wall/abductor{
@@ -237,11 +232,6 @@
 /obj/item/weapon/haircomb,
 /turf/unsimulated/floor/abductor,
 /area/planetarium)
-"Q" = (
-/turf/unsimulated/wall/abductor{
-	icon_state = "alien5"
-	},
-/area/planetarium)
 "R" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien2"
@@ -252,39 +242,15 @@
 	icon_state = "alien4"
 	},
 /area/planetarium)
-"T" = (
-/turf/unsimulated/wall/abductor{
-	icon_state = "alien9"
-	},
-/area/planetarium)
 "U" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien11"
 	},
 /area/planetarium)
-"V" = (
-/obj/item/alien_embryo,
-/obj/item/weapon/scalpel/alien,
-/turf/unsimulated/floor/abductor,
-/area/planetarium)
-"W" = (
-/obj/machinery/light/small{
-	light_color = "#8b008b"
-	},
-/turf/unsimulated/floor/abductor,
-/area/planetarium)
 "X" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien3"
 	},
-/area/planetarium)
-"Y" = (
-/turf/unsimulated/wall/abductor{
-	icon_state = "alien6"
-	},
-/area/planetarium)
-"Z" = (
-/turf/unsimulated/wall/abductor,
 /area/planetarium)
 
 (1,1,1) = {"
@@ -297,11 +263,11 @@ a
 a
 a
 a
-j
+f
 B
 K
 N
-Y
+j
 a
 a
 a
@@ -321,13 +287,13 @@ a
 a
 a
 a
-c
+b
 k
 p
 w
 p
 t
-Z
+u
 a
 a
 a
@@ -345,11 +311,11 @@ a
 a
 a
 a
-g
-J
-I
-I
-G
+n
+i
+p
+p
+L
 p
 p
 o
@@ -369,13 +335,13 @@ a
 a
 a
 a
-g
+n
 o
 p
 p
 p
 p
-I
+p
 p
 p
 o
@@ -489,7 +455,7 @@ a
 "}
 (9,1,1) = {"
 a
-j
+f
 o
 p
 p
@@ -497,11 +463,11 @@ o
 n
 a
 a
-j
+f
 o
 p
 o
-Y
+j
 a
 a
 n
@@ -509,11 +475,11 @@ o
 p
 p
 o
-Y
+j
 a
 "}
 (10,1,1) = {"
-c
+b
 k
 p
 p
@@ -521,13 +487,13 @@ o
 n
 a
 a
-c
+b
 k
 p
 p
 p
 t
-Z
+u
 a
 a
 n
@@ -535,7 +501,7 @@ o
 p
 p
 t
-Z
+u
 "}
 (11,1,1) = {"
 d
@@ -545,11 +511,11 @@ p
 t
 o
 o
-J
+i
 o
 w
 E
-J
+i
 O
 w
 o
@@ -557,7 +523,7 @@ o
 o
 o
 k
-I
+p
 p
 p
 R
@@ -569,13 +535,13 @@ p
 p
 p
 p
-I
+p
 p
 p
 p
 o
 q
-J
+i
 p
 p
 p
@@ -583,8 +549,8 @@ p
 p
 p
 p
-G
-W
+z
+H
 X
 "}
 (13,1,1) = {"
@@ -608,12 +574,12 @@ o
 o
 A
 p
-p
-V
+C
+I
 S
 "}
 (14,1,1) = {"
-i
+c
 A
 p
 p
@@ -621,25 +587,25 @@ o
 n
 a
 a
-i
+c
 A
 p
 p
 p
 v
-Q
+y
 a
 a
 n
 o
 p
-p
+G
 v
-Q
+y
 "}
 (15,1,1) = {"
 a
-z
+g
 o
 p
 p
@@ -647,11 +613,11 @@ o
 n
 a
 a
-z
+g
 o
 p
 o
-T
+m
 a
 a
 n
@@ -659,7 +625,7 @@ o
 p
 p
 o
-T
+m
 a
 "}
 (16,1,1) = {"
@@ -669,13 +635,13 @@ n
 o
 p
 p
-J
+i
 n
 a
 a
 o
 p
-J
+i
 a
 a
 n
@@ -683,7 +649,7 @@ o
 p
 p
 o
-g
+n
 a
 a
 "}
@@ -695,11 +661,11 @@ n
 o
 p
 p
-J
+i
 n
 a
 o
-I
+p
 o
 a
 n
@@ -707,7 +673,7 @@ o
 p
 p
 o
-g
+n
 a
 a
 a
@@ -821,13 +787,13 @@ a
 a
 a
 a
-i
+c
 A
 p
 x
 p
 v
-Q
+y
 a
 a
 a
@@ -847,11 +813,11 @@ a
 a
 a
 a
-z
+g
 F
 M
 U
-T
+m
 a
 a
 a

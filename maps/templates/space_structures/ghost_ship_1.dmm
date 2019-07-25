@@ -74,12 +74,6 @@
 /turf/simulated/floor/airless,
 /area/ghostship)
 "al" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
-/turf/simulated/floor/airless,
-/area/ghostship)
-"am" = (
 /obj/structure/stool/bed/chair{
 	dir = 4
 	},
@@ -88,7 +82,7 @@
 	},
 /turf/space,
 /area/ghostship)
-"an" = (
+"am" = (
 /obj/structure/stool/bed/chair{
 	dir = 8
 	},
@@ -96,6 +90,15 @@
 	icon_state = "floor4"
 	},
 /turf/space,
+/area/ghostship)
+"an" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/obj/machinery/light_construct{
+	dir = 1
+	},
+/turf/simulated/floor/airless,
 /area/ghostship)
 "ao" = (
 /turf/space,
@@ -150,9 +153,6 @@
 	},
 /area/ghostship)
 "aw" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/machinery/blackbox_recorder,
 /obj/item/weapon/disk/research_points,
 /turf/simulated/floor/airless,
@@ -179,9 +179,12 @@
 	},
 /area/ghostship)
 "aA" = (
-/obj/item/ammo_casing/a12mm,
-/turf/simulated/floor/airless,
-/turf/space,
+/obj/machinery/light_construct{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "damaged4"
+	},
 /area/ghostship)
 "aB" = (
 /turf/simulated/floor/airless,
@@ -303,10 +306,12 @@
 /turf/space,
 /area/ghostship)
 "aW" = (
-/obj/structure/artilleryplaceholder{
-	icon_state = "3"
+/obj/item/ammo_casing/a12mm,
+/obj/item/ammo_casing/a12mm{
+	pixel_x = -4;
+	pixel_y = 5
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/airless,
 /turf/space,
 /area/ghostship)
 "aX" = (
@@ -319,28 +324,27 @@
 	},
 /area/ghostship)
 "aZ" = (
-/obj/machinery/door/unpowered/shuttle/officer,
-/turf/simulated/floor/airless,
-/turf/space,
-/area/ghostship)
-"ba" = (
-/obj/structure/shuttle/engine/heater{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/item/ammo_casing/a12mm,
+/obj/item/ammo_casing/a12mm,
+/obj/item/ammo_casing/a12mm{
+	pixel_x = -4;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
-	icon_state = "engine"
+	icon_state = "damaged2"
 	},
-/turf/space,
+/area/ghostship)
+"ba" = (
+/obj/machinery/telecomms/relay,
+/obj/machinery/light_construct,
+/turf/simulated/floor/airless,
 /area/ghostship)
 "bb" = (
-/obj/structure/stool/bed/chair/metal{
+/obj/structure/stool/bed/chair/schair/wagon{
 	dir = 4
 	},
+/obj/item/device/flashlight/seclite,
 /turf/simulated/floor/airless,
-/turf/space,
 /area/ghostship)
 "bc" = (
 /turf/simulated/shuttle/floor{
@@ -361,11 +365,12 @@
 	},
 /area/ghostship)
 "bf" = (
-/obj/machinery/light{
-	dir = 4
+/obj/machinery/light_construct{
+	dir = 1
 	},
-/turf/simulated/floor/airless,
-/turf/space,
+/turf/simulated/floor{
+	icon_state = "damaged4"
+	},
 /area/ghostship)
 "bg" = (
 /obj/machinery/power/emitter,
@@ -398,10 +403,12 @@
 /turf/space,
 /area/ghostship)
 "bl" = (
-/obj/structure/closet/crate/miningcar,
-/obj/item/ammo_casing/caseless/rocket,
-/turf/simulated/floor/airless/ceiling,
-/turf/space,
+/obj/machinery/light_construct{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
 /area/ghostship)
 "bm" = (
 /obj/item/ammo_casing/a357,
@@ -439,6 +446,11 @@
 	},
 /turf/space,
 /area/ghostship)
+"bs" = (
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/ammo_casing/caseless/rocket/emp,
+/turf/simulated/floor/airless,
+/area/ghostship)
 "bt" = (
 /obj/effect/landmark/corpse/engineer/rig{
 	corpseidjob = "Gunner";
@@ -448,12 +460,39 @@
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/airless,
 /area/ghostship)
-"bx" = (
-/obj/item/ammo_casing/a12mm,
-/obj/item/ammo_casing/a12mm,
-/turf/simulated/floor{
-	icon_state = "damaged2"
+"bu" = (
+/obj/item/ammo_casing/a12mm{
+	pixel_x = 4
 	},
+/obj/item/ammo_casing/a12mm{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/turf/simulated/floor/airless,
+/area/ghostship)
+"bv" = (
+/obj/machinery/light_construct{
+	dir = 8
+	},
+/turf/simulated/floor/airless/ceiling,
+/area/ghostship)
+"bw" = (
+/obj/machinery/light_construct{
+	dir = 1
+	},
+/turf/simulated/floor/airless/ceiling,
+/area/ghostship)
+"bx" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "3"
+	},
+/turf/simulated/floor/plating/airless,
+/turf/space,
+/area/ghostship)
+"by" = (
+/obj/machinery/door/unpowered/shuttle/officer,
+/turf/simulated/floor/airless,
+/turf/space,
 /area/ghostship)
 "bz" = (
 /obj/item/stack/sheet/metal,
@@ -464,6 +503,18 @@
 /obj/item/stack/cable_coil,
 /turf/space,
 /area/space)
+"bB" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "engine"
+	},
+/turf/space,
+/area/ghostship)
 "bC" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall15"
@@ -475,17 +526,36 @@
 	},
 /turf/space,
 /area/ghostship)
+"bE" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 4
+	},
+/turf/simulated/floor/airless,
+/turf/space,
+/area/ghostship)
 "bF" = (
 /turf/simulated/floor{
 	icon_state = "damaged4"
 	},
 /turf/space,
 /area/ghostship)
+"bG" = (
+/obj/item/ammo_casing/a12mm{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/turf/simulated/floor/airless,
+/area/ghostship)
 "bH" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall7"
 	},
 /area/derelict/ship)
+"bI" = (
+/obj/item/ammo_casing/a12mm,
+/turf/simulated/floor/airless,
+/turf/space,
+/area/ghostship)
 "bJ" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall11"
@@ -494,15 +564,19 @@
 "bK" = (
 /turf/simulated/floor,
 /area/ghostship)
+"bL" = (
+/obj/structure/closet/crate/miningcar,
+/obj/item/ammo_casing/caseless/rocket/emp,
+/turf/simulated/floor/airless/ceiling,
+/turf/space,
+/area/ghostship)
 "bM" = (
 /turf/simulated/floor{
 	icon_state = "damaged2"
 	},
 /area/ghostship)
 "bN" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light_construct,
 /turf/simulated/floor/airless/ceiling,
 /area/ghostship)
 "bO" = (
@@ -518,7 +592,7 @@
 /turf/space,
 /area/ghostship)
 "bQ" = (
-/obj/machinery/telecomms/relay,
+/obj/structure/closet/crate/secure/weapon,
 /turf/simulated/floor/airless,
 /area/ghostship)
 "bR" = (
@@ -526,6 +600,20 @@
 /turf/simulated/floor{
 	icon_state = "damaged2"
 	},
+/area/ghostship)
+"bS" = (
+/obj/machinery/light_construct{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "damaged2"
+	},
+/area/ghostship)
+"bT" = (
+/obj/machinery/light_construct{
+	dir = 8
+	},
+/turf/simulated/floor/airless,
 /area/ghostship)
 "bU" = (
 /turf/simulated/shuttle/wall{
@@ -567,6 +655,36 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall13"
 	},
+/area/ghostship)
+"cb" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/reagent_containers/food/snacks/donkpocket,
+/obj/machinery/light_construct{
+	dir = 1
+	},
+/turf/simulated/floor/airless,
+/area/ghostship)
+"cc" = (
+/obj/item/ammo_casing/a12mm{
+	pixel_x = 4
+	},
+/turf/simulated/floor/airless,
+/area/ghostship)
+"cd" = (
+/obj/item/ammo_casing/a12mm{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/ammo_casing/a12mm,
+/obj/item/ammo_casing/a12mm{
+	pixel_x = 4
+	},
+/turf/simulated/floor/airless,
+/area/ghostship)
+"ce" = (
+/obj/machinery/telecomms/hub,
+/obj/machinery/light_construct,
+/turf/simulated/floor/airless,
 /area/ghostship)
 "cf" = (
 /obj/structure/lattice,
@@ -624,14 +742,6 @@
 /obj/machinery/door/unpowered/shuttle/officer,
 /turf/simulated/floor/airless,
 /area/ghostship)
-"cr" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "damaged5"
-	},
-/area/ghostship)
 "cs" = (
 /obj/structure/scrap/vehicle,
 /turf/simulated/floor{
@@ -651,14 +761,6 @@
 /obj/item/stack/sheet/metal,
 /turf/space,
 /area/ghostship)
-"cv" = (
-/obj/structure/closet/crate/secure/weapon,
-/obj/item/ammo_casing/caseless/rocket,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor/airless,
-/area/ghostship)
 "cw" = (
 /obj/item/ammo_casing/a12mm,
 /obj/structure/closet/crate/secure/weapon,
@@ -672,12 +774,6 @@
 /area/ghostship)
 "cy" = (
 /obj/structure/stool/bed/chair/metal{
-	dir = 4
-	},
-/turf/simulated/floor/airless,
-/area/ghostship)
-"cz" = (
-/obj/machinery/light{
 	dir = 4
 	},
 /turf/simulated/floor/airless,
@@ -894,10 +990,6 @@
 /obj/item/weapon/stock_parts/cell/bluespace,
 /turf/simulated/floor/plating/airless,
 /area/ghostship)
-"mU" = (
-/obj/machinery/light,
-/turf/simulated/floor/airless,
-/area/ghostship)
 "ne" = (
 /obj/structure/artilleryplaceholder/decorative{
 	icon_state = "33"
@@ -943,10 +1035,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/ghostship)
-"ra" = (
-/obj/machinery/telecomms/hub,
-/turf/simulated/floor/airless,
-/area/ghostship)
 "tW" = (
 /obj/effect/landmark/corpse/bridgeofficer{
 	mobname = "John Price";
@@ -962,12 +1050,6 @@
 	icon_state = "20"
 	},
 /turf/simulated/floor/plating/airless,
-/area/ghostship)
-"yd" = (
-/obj/random/tools,
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
 /area/ghostship)
 "zW" = (
 /obj/structure/artilleryplaceholder/decorative{
@@ -1048,11 +1130,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/ghostship)
-"IY" = (
-/obj/structure/closet/crate/secure/weapon,
-/obj/machinery/light,
-/turf/simulated/floor/airless,
-/area/ghostship)
 "Kx" = (
 /obj/structure/artilleryplaceholder{
 	icon_state = "23"
@@ -1070,10 +1147,6 @@
 	icon_state = "29"
 	},
 /turf/simulated/floor/plating/airless,
-/area/ghostship)
-"Ny" = (
-/obj/machinery/light,
-/turf/simulated/floor/airless/ceiling,
 /area/ghostship)
 "NE" = (
 /obj/item/stack/rods,
@@ -1138,11 +1211,6 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall4"
 	},
-/area/ghostship)
-"ZJ" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/snacks/donkpocket,
-/turf/simulated/floor/airless,
 /area/ghostship)
 
 (1,1,1) = {"
@@ -1291,7 +1359,7 @@ bA
 cl
 aa
 aC
-ba
+bB
 aa
 aC
 aa
@@ -1508,7 +1576,7 @@ aa
 aa
 aa
 dv
-cH
+bf
 ch
 dv
 aC
@@ -1550,8 +1618,8 @@ aC
 bX
 bX
 dv
-bM
-yd
+bS
+aE
 aa
 aa
 aC
@@ -1638,7 +1706,7 @@ aB
 bX
 aE
 aJ
-cr
+bX
 aa
 aC
 aE
@@ -1647,7 +1715,7 @@ bM
 FT
 ah
 SG
-bf
+aX
 aJ
 aJ
 aF
@@ -1696,21 +1764,21 @@ aa
 aa
 aa
 dv
-cH
+aA
 aX
 aE
 aD
 bY
 bY
 ap
-aE
+bl
 aa
 aV
 bX
 cH
 aX
 aJ
-aJ
+bT
 bY
 bY
 aM
@@ -1739,9 +1807,9 @@ ct
 ci
 aa
 aC
-bb
-aJ
-bb
+bE
+bG
+bE
 aJ
 ds
 aF
@@ -1772,7 +1840,7 @@ aE
 bq
 dg
 NE
-aA
+bI
 bX
 aJ
 cq
@@ -1788,7 +1856,7 @@ aa
 (21,1,1) = {"
 at
 ad
-am
+al
 bi
 bi
 aj
@@ -1826,17 +1894,17 @@ bj
 bc
 aL
 bF
-bx
+aZ
 aD
 bo
 bY
 aM
 aJ
-cz
+bu
 aX
 aJ
 aJ
-bf
+aX
 aJ
 aD
 bY
@@ -1852,7 +1920,7 @@ aa
 (23,1,1) = {"
 ab
 ae
-an
+am
 bd
 bd
 bc
@@ -1866,7 +1934,7 @@ bY
 bo
 bo
 cG
-aZ
+by
 aY
 bo
 bo
@@ -1876,7 +1944,7 @@ aa
 dv
 aJ
 aJ
-mU
+aJ
 dv
 aa
 aa
@@ -1895,19 +1963,19 @@ dv
 aa
 aa
 dv
-cv
-dl
+bs
+bv
 aJ
 aJ
 aJ
-dl
-IY
+bv
+bQ
 dv
 aa
 aa
 dv
 aJ
-aJ
+cc
 aJ
 dv
 aa
@@ -1964,14 +2032,14 @@ cB
 cK
 dh
 nh
-bl
+bL
 cV
 dv
 aa
 bk
 ap
 aJ
-aJ
+cd
 aJ
 bn
 ca
@@ -2015,17 +2083,17 @@ aa
 aa
 aa
 dv
-al
+an
 aJ
-aA
+aW
 aX
-bQ
+ba
 dv
 aa
 aQ
 aU
 cC
-aW
+bx
 pU
 Ah
 dl
@@ -2033,11 +2101,11 @@ aD
 az
 aa
 dv
-ZJ
+cb
 aJ
 SY
 aJ
-ra
+ce
 dv
 aa
 "}
@@ -2056,11 +2124,11 @@ dv
 aa
 aa
 dc
-bN
+dl
 cM
 Pv
 jP
-Ny
+dl
 dc
 aa
 aa
@@ -2069,7 +2137,7 @@ aJ
 qw
 aJ
 aJ
-mU
+aJ
 dv
 aa
 "}
@@ -2083,7 +2151,7 @@ bO
 aJ
 aJ
 bO
-bO
+bb
 ds
 aa
 aa
@@ -2184,11 +2252,11 @@ aa
 aa
 aa
 dv
-dl
+bw
 cQ
 wX
 oI
-dl
+bN
 dv
 aa
 aa
@@ -2248,11 +2316,11 @@ aa
 aa
 aa
 dv
-bN
+dl
 cS
 DZ
 ne
-Ny
+dl
 dv
 aa
 aa
