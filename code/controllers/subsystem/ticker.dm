@@ -239,7 +239,7 @@ var/datum/subsystem/ticker/ticker
 	round_start_realtime = world.realtime
 
 	if(dbcon.IsConnected())
-		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET start_datetime = Now() WHERE id = [round_id]")
+		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET start_datetime = Now(), map_name = '[sanitize_sql(SSmapping.config.map_name)]' WHERE id = [round_id]")
 		query_round_game_mode.Execute()
 
 	setup_economy()
