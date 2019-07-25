@@ -76,12 +76,18 @@ REAGENT SCANNER
 	m_amt = 200
 	origin_tech = "magnets=1;biotech=1"
 	var/mode = TRUE
+	var/output_to_chat = TRUE
+	var/last_scan = ""
+	var/last_scan_name = ""
 
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT])
-			var/message = "<HTML><head><title>[M.name]'s scan results</title></head><BODY>"
+			var/message = ""
+			if(!output_to_chat)
+				message += "<HTML><head><title>[M.name]'s scan results</title></head><BODY>"
+
 			message += "<span class = 'notice'>Analyzing Results for ERROR:\n&emsp; Overall Status: ERROR</span><br>"
 			message += "&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font><br>"
 			message += "&emsp; Damage Specifics: <font color='blue'>?</font> - <font color='green'>?</font> - <font color='#FFA500'>?</font> - <font color='red'>?</font><br>"
@@ -89,28 +95,54 @@ REAGENT SCANNER
 			message += "<span class = 'warning bold'>Warning: Blood Level ERROR: --% --cl.</span><span class = 'notice bold'>Type: ERROR</span><br>"
 			message += "<span class = 'notice'>Subject's pulse:</span><font color='red'>-- bpm.</font><br>"
 
-			message += "</BODY></HTML>"
-			user << browse(entity_ja(message), "window=[M.name]_scan_report;size=820x200;can_resize=1")
-			onclose(user, "[M.name]_scan_report")
+			last_scan = message
+			last_scan_name = M.name
+			if(!output_to_chat)
+				message += "</BODY></HTML>"
+				user << browse(entity_ja(message), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+				onclose(user, "[M.name]_scan_report")
+			else
+				user.show_message(message)
 
 			add_fingerprint(user)
 			return
 		else
-			health_analyze(M, user, mode)
+			add_fingerprint(user)
+			var/dat = health_analyze(M, user, mode, output_to_chat)
+			last_scan = dat
+			last_scan_name = M.name
+			if(!output_to_chat)
+				user << browse(entity_ja(dat), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+				onclose(user, "[M.name]_scan_report")
+			else
+				user.show_message(dat)
 	else
 		add_fingerprint(user)
 		user.show_message("<span class = 'warning'>Analyzing Results not compiled. Unknown anatomy detected.</span>")
+
+/obj/item/device/healthanalyzer/attack_self(mob/user)
+	user << browse(entity_ja(last_scan), "window=[last_scan_name]_scan_report;size=400x400;can_resize=1")
+	onclose(user, "[last_scan_name]")
+
+/obj/item/device/healthanalyzer/verb/toggle_output()
+	set name = "Toggle Output"
+	set category = "Object"
+
+	output_to_chat = !output_to_chat
+	if(output_to_chat)
+		to_chat(usr, "The scanner now outputs data to chat.")
+	else
+		to_chat(usr, "The scanner now outputs data in a seperate window.")
 
 /obj/item/device/healthanalyzer/verb/toggle_mode()
 	set name = "Switch Verbosity"
 	set category = "Object"
 
 	mode = !mode
-	switch (mode)
-		if(TRUE)
-			to_chat(usr, "The scanner now shows specific limb damage.")
-		if(FALSE)
-			to_chat(usr, "The scanner no longer shows limb damage.")
+	if(mode)
+		to_chat(usr, "The scanner now shows specific limb damage.")
+	else
+		to_chat(usr, "The scanner no longer shows limb damage.")
 
 /obj/item/device/healthanalyzer/rad_laser
 	materials = list(MAT_METAL=400)

@@ -11,12 +11,30 @@
 	icon_state = "hydro"
 	item_state = "plantanalyzer"
 
+	var/output_to_chat = TRUE
+
 /obj/item/device/plant_analyzer/attack_self(mob/user)
 	return FALSE
 
+/obj/item/device/plant_analyzer/verb/toggle_output()
+	set name = "Toggle Output"
+	set category = "Object"
+
+	output_to_chat = !output_to_chat
+	if(output_to_chat)
+		to_chat(usr, "The scanner now outputs data to chat.")
+	else
+		to_chat(usr, "The scanner now outputs data in a seperate window.")
+
 /obj/item/device/plant_analyzer/attack(mob/living/carbon/human/M, mob/living/user)
-	if(M.species && M.species.flags[IS_PLANT])
-		health_analyze(M, user, TRUE) // 1 means limb-scanning mode
+	if(istype(M) && M.species.flags[IS_PLANT])
+		add_fingerprint(user)
+		var/dat = health_analyze(M, user, TRUE, output_to_chat) // TRUE means limb-scanning mode
+		if(output_to_chat)
+			user << browse(entity_ja(dat), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+			onclose(user, "[M.name]_scan_report")
+		else
+			user.show_message(dat)
 
 // ********************************************************
 // Here's all the seeds (plants) that can be used in hydro
