@@ -5145,17 +5145,6 @@
 	},
 /turf/space/shuttle,
 /area/shuttle/escape_pod3/station)
-"aiM" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/computer/prisoner,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/security/warden)
 "aiN" = (
 /obj/structure/table,
 /turf/simulated/floor{
@@ -109174,7 +109163,7 @@ aft
 afS
 adH
 fvb
-aiM
+ahO
 aiS
 ajq
 ajB
