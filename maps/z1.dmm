@@ -3777,6 +3777,13 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/structure/table,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/obj/item/weapon/hand_labeler,
+/obj/item/weapon/folder/red{
+	pixel_y = 3
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -4051,6 +4058,7 @@
 /obj/machinery/alarm{
 	pixel_y = 26
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkred"
@@ -4060,7 +4068,10 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/table,
+/obj/item/device/camera,
+/obj/item/device/taperecorder,
+/obj/item/weapon/storage/box/evidence,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkred"
@@ -4524,8 +4535,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4536,11 +4551,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -4553,12 +4566,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -4570,12 +4577,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
+/obj/structure/stool/bed/chair/metal/red,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4950,8 +4952,9 @@
 /turf/space/shuttle,
 /area/shuttle/escape_pod3/station)
 "aiw" = (
-/obj/structure/table,
-/obj/item/device/flashlight/lamp,
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 1
+	},
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
 	frequency = 1475;
@@ -4972,9 +4975,6 @@
 /turf/simulated/floor/plating,
 /area/maintenance/dormitory)
 "aiy" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -5145,6 +5145,12 @@
 	},
 /turf/space/shuttle,
 /area/shuttle/escape_pod3/station)
+"aiM" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkred"
+	},
+/area/security/brig)
 "aiN" = (
 /obj/structure/table,
 /turf/simulated/floor{
@@ -5152,23 +5158,16 @@
 	},
 /area/security/brig)
 "aiO" = (
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/hand_labeler,
-/obj/machinery/light,
-/obj/item/weapon/folder/red{
-	pixel_y = 3
-	},
 /obj/structure/table,
+/obj/item/device/flashlight/lamp,
 /turf/simulated/floor{
-	dir = 10;
-	icon_state = "darkred"
+	icon_state = "dark"
 	},
 /area/security/brig)
 "aiP" = (
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 4
-	},
+/obj/machinery/light,
 /turf/simulated/floor{
+	dir = 10;
 	icon_state = "darkred"
 	},
 /area/security/brig)
@@ -33495,10 +33494,9 @@
 /area/assembly/robotics)
 "biK" = (
 /obj/structure/stool/bed/chair/metal/red{
-	dir = 8
+	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 6;
 	icon_state = "darkred"
 	},
 /area/security/brig)
@@ -77241,10 +77239,9 @@
 	},
 /area/quartermaster/storage)
 "vbb" = (
-/obj/item/device/camera,
-/obj/item/device/taperecorder,
-/obj/item/weapon/storage/box/evidence,
-/obj/structure/table,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkred"
@@ -107109,7 +107106,7 @@ adM
 agT
 ahL
 vbb
-aiO
+aiP
 adM
 ajX
 fmb
@@ -107365,8 +107362,8 @@ afL
 agq
 agS
 ahK
-aeT
-aiP
+aiN
+aiw
 adM
 ajW
 aky
@@ -107622,8 +107619,8 @@ adH
 adH
 agu
 ahN
-aiN
-aiw
+aiO
+biK
 adM
 ajZ
 akz
@@ -107880,7 +107877,7 @@ adH
 agU
 ahM
 aiy
-biK
+aiM
 adM
 ajY
 fmb
