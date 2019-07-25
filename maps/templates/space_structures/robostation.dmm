@@ -489,7 +489,7 @@
 "bV" = (
 /obj/item/mecha_parts/part/honker_left_arm,
 /obj/item/weapon/paper{
-	info = "Oh no! Robot jokes were so terrible that we rolled it on a banana peel. When the robot hit the floor, something sparkled in it, it got up and started killing! Damn, there's a few more in the warehouse. I hope he doesn't get to them. I'm very scared and not funny.";
+	info = "Oh no! The jokes of the robot were so terrible! So, we decided to slip it on a banana peel. Haha, but when the robot fell to the floor, something sparkled in it, it rised and started killing! Damn, some more in the pantry. I am very scared and I dont havin fun.";
 	name = "NOT FUNNY NOT FUNNY"
 	},
 /turf/simulated/floor/plating,
