@@ -507,3 +507,12 @@
 /obj/item/proc/get_storage_cost()
 	//If you want to prevent stuff above a certain w_class from being stored, use max_w_class
 	return base_storage_cost(w_class)
+
+// Useful for spilling the contents of containers all over the floor.
+/obj/item/weapon/storage/proc/spill(dist = 2, turf/T = null)
+	if (!istype(T))
+		T = get_turf(src)
+
+	for(var/obj/O in contents)
+		remove_from_storage(O, T)
+		O.tumble(2)

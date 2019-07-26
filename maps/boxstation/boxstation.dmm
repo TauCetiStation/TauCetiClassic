@@ -46511,7 +46511,7 @@
 	},
 /area/hallway/primary/starboard)
 "bNK" = (
-/obj/structure/janitorialcart,
+/obj/structure/stool/bed/chair/janitorialcart,
 /obj/machinery/light/small,
 /turf/simulated/floor,
 /area/janitor)

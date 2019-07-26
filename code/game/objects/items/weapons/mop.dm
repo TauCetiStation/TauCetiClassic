@@ -71,7 +71,7 @@
 	sleep(3)
 	step(C, movementdirection)
 
-/obj/item/weapon/mop/proc/mop_push(atom/movable/target, mob/user)
+/obj/item/weapon/mop/proc/mop_push(atom/target, mob/user)
 	var/s_time = sweep_step * 2
 	user.SetNextMove(s_time)
 
@@ -80,6 +80,8 @@
 	var/turf/T = get_step(src_turf, get_dir(src_turf, T_target))
 
 	for(var/obj/item/I in T)
+		if(I == target)
+			continue
 		if(I.w_class <= ITEM_SIZE_NORMAL)
 			var/obj/item/weapon/storage/bag/trash/TR = user.get_inactive_hand()
 			if(istype(TR) && TR.can_be_inserted(I))
@@ -96,10 +98,10 @@
 	if(T.Adjacent(target))
 		if(!has_gravity(src) && !istype(target, /turf/space)) // A little cheat.
 			step_away(user, T_target)
-		else
+		else if(istype(target, /atom/movable))
 			step_away(target, get_turf(user))
 
-/obj/item/weapon/mop/proc/mop_pull(atom/movable/target, mob/user)
+/obj/item/weapon/mop/proc/mop_pull(atom/target, mob/user)
 	var/s_time = sweep_step * 2
 	user.SetNextMove(s_time)
 
@@ -108,6 +110,8 @@
 	var/turf/T = get_step(src_turf, get_dir(src_turf, T_target))
 
 	for(var/obj/item/I in T)
+		if(I == target)
+			continue
 		if(I.w_class <= ITEM_SIZE_NORMAL)
 			var/obj/item/weapon/storage/bag/trash/TR = user.get_inactive_hand()
 			if(istype(TR) && TR.can_be_inserted(I))
@@ -119,7 +123,7 @@
 	if(T.Adjacent(target))
 		if(!has_gravity(src) && !istype(target, /turf/space))
 			step_to(user, T_target)
-		else
+		else if(istype(target, /atom/movable))
 			step_to(target, get_turf(user))
 
 /obj/item/weapon/mop/proc/clean(turf/simulated/T, amount)
@@ -187,7 +191,7 @@
 			user.apply_effect(3, WEAKEN, 0)
 			user.apply_effect(6, STUTTER, 0)
 			shake_camera(user, 1, 1)
-			// playsound(T, "thud", 20, 1, -3)
+			// here be thud sound
 			break
 	sleep(sweep_step) // A sleep for that last sweet sweep.
 	qdel(mop_image)

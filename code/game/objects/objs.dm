@@ -241,3 +241,16 @@
 
 /obj/proc/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
 	return !density
+
+// To be called from things that spill objects on the floor.
+// Makes an object move around randomly for a couple of tiles.
+/obj/proc/tumble(dist)
+	set waitfor = FALSE
+
+	sleep(0)
+	if(dist >= 1)
+		dist += rand(0, 1)
+		for(var/i in 1 to dist)
+			if(src)
+				step(src, pick(cardinal))
+				sleep(rand(2, 4))
