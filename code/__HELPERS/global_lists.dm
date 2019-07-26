@@ -86,6 +86,8 @@
 			global.chemical_reactions_list[id] += D
 			break // Don't bother adding ourselves to other reagent ids, it is redundant.
 
+	populate_gear_list()
+
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!
 	for(var/T in (subtypesof(/datum/job) - list(/datum/job/ai,/datum/job/cyborg)))

@@ -134,7 +134,7 @@ var/datum/subsystem/mapping/SSmapping
 		var/full_path = "maps/[path]/[file]"
 		//var/datum/parsed_map/pm = new(file(full_path))
 		var/datum/map_template/pm = new(full_path)
-		var/bounds = pm?.bounds
+		var/bounds = pm.bounds
 		if (!bounds)
 			errorList |= full_path
 			continue
