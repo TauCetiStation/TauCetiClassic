@@ -163,6 +163,8 @@ var/global/sent_strike_team = 0
 	START_PROCESSING(SSobj, L)
 
 
+	robust_skill = 100
+	shooting_skill = 120
 
 	var/obj/item/weapon/card/id/W = new(src)
 	W.name = "[real_name]'s ID Card"

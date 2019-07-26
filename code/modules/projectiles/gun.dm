@@ -55,7 +55,7 @@
 	return
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
-	if(recoil)
+	if(recoil && user.shooting_skill < 116)
 		shake_camera(user, recoil + 1, recoil)
 
 	if(silenced)

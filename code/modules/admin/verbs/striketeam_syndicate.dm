@@ -166,6 +166,8 @@ var/global/sent_syndicate_strike_team = 0
 
 	equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle(src), SLOT_R_HAND) //Will change to something different at a later time -- Superxpdude
 
+	robust_skill = 100
+	shooting_skill = 120
 	var/obj/item/weapon/card/id/syndicate/W = new(src) //Untrackable by AI
 	W.name = "[real_name]'s ID Card"
 	W.icon_state = "id"

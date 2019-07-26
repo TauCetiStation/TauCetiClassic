@@ -46,9 +46,11 @@
 	L.inject(H)
 	START_PROCESSING(SSobj, L)
 	to_chat(world, "<b>[H.real_name] is the captain!</b>")//maybe should be announcment, not OOC notification?
-	
+
 	score["captain"].Add(H.real_name)
 
+	H.robust_skill = 70
+	H.shooting_skill = 116
 	return TRUE
 
 /datum/job/captain/get_access()

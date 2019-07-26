@@ -47,6 +47,8 @@
 	var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)
 	L.inject(H)
 	START_PROCESSING(SSobj, L)
+	H.robust_skill = 70
+	H.shooting_skill = 116
 	return TRUE
 
 
@@ -93,6 +95,8 @@
 	var/obj/item/weapon/implant/mindshield/L = new(H)
 	L.inject(H)
 
+	H.robust_skill = 60
+	H.shooting_skill = 112
 	return TRUE
 
 
@@ -137,6 +141,8 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/evidence(H), SLOT_IN_BACKPACK)
 		H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), SLOT_IN_BACKPACK)
 
+	H.robust_skill = 45
+	H.shooting_skill = 112
 	return TRUE
 
 
@@ -179,6 +185,8 @@
 	var/obj/item/weapon/implant/mindshield/L = new(H)
 	L.inject(H)
 
+	H.robust_skill = 45
+	H.shooting_skill = 112
 	return TRUE
 
 /datum/job/forensic
@@ -260,5 +268,8 @@
 
 	var/obj/item/weapon/implant/mindshield/L = new(H)
 	L.inject(H)
+
+	H.robust_skill = 45
+	H.shooting_skill = 86
 
 	return TRUE

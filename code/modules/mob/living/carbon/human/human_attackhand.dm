@@ -3,6 +3,7 @@
 		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 	..()
+	var/robust_chance = (src.paralysis || src.stunned) ? 100 : (100*M.robust_skill)/(src.robust_skill+M.robust_skill)
 
 	if((M != src) && check_shields(0, M.name, get_dir(M,src)))
 		visible_message("\red <B>[M] attempted to touch [src]!</B>")
@@ -22,6 +23,9 @@
 		if(G.cell)
 			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
+					if(!prob(robust_chance))
+						visible_message("\red <B>[M] tried to touch [src.name] with stngloves. But [src.name] blocked it!</B>")
+						return
 					G.cell.use(2500)
 					G.update_icon()
 					var/mob/living/carbon/human/target = src
@@ -52,8 +56,8 @@
 
 		if(istype(M.gloves , /obj/item/clothing/gloves/boxing))
 
-			var/damage = rand(0, 9)
-			if(!damage)
+			var/damage = robust_chance >= 60 ? rand(1,9)*2 : rand(0,9)
+			if(!prob(robust_chance))
 				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 				visible_message("\red <B>[M] has attempted to punch [src]!</B>")
 				return 0
@@ -101,13 +105,12 @@
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [pick(attack.attack_verb)]ed by [M.name] ([M.ckey])</font>")
 			msg_admin_attack("[key_name(M)] [pick(attack.attack_verb)]ed [key_name(src)]")
 
-			var/damage = rand(0, 5)//BS12 EDIT
-			if(!damage)
+			var/damage = robust_chance >= 60 ? rand(1, 5)*robust_chance/35 : rand(0,5)
+
+			if(!prob(robust_chance))
 				playsound(src, attack.miss_sound, VOL_EFFECTS_MASTER)
 				visible_message("\red <B>[M] tried to [pick(attack.attack_verb)] [src]!</B>")
 				return 0
-
-
 
 			var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
 			var/armor_block = run_armor_check(BP, "melee")
@@ -119,7 +122,7 @@
 
 			visible_message("\red <B>[M] [pick(attack.attack_verb)]ed [src]!</B>")
 			//Rearranged, so claws don't increase weaken chance.
-			if(damage >= 5 && prob(50))
+			if(damage >= 5 && prob(robust_chance))
 				visible_message("\red <B>[M] has weakened [src]!</B>")
 				apply_effect(2, WEAKEN, armor_block)
 
@@ -138,28 +141,8 @@
 				w_uniform.add_fingerprint(M)
 			var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
 
-			if(istype(r_hand,/obj/item/weapon/gun) || istype(l_hand,/obj/item/weapon/gun))
-				var/obj/item/weapon/gun/W = null
-				var/chance = 0
-
-				if (istype(l_hand,/obj/item/weapon/gun))
-					W = l_hand
-					chance = hand ? 40 : 20
-
-				if (istype(r_hand,/obj/item/weapon/gun))
-					W = r_hand
-					chance = !hand ? 40 : 20
-
-				if (prob(chance))
-					visible_message("<span class='danger'>[src]'s [W] goes off during struggle!</span>")
-					var/list/turfs = list()
-					for(var/turf/T in view())
-						turfs += T
-					var/turf/target = pick(turfs)
-					return W.afterattack(target,src)
-
-			var/randn = rand(1, 100)
-			if (randn <= 25)
+			var/randn = rand(0, 100-robust_chance)
+			if (prob(robust_chance))
 				var/armor_check = run_armor_check(BP, "melee")
 				apply_effect(3, WEAKEN, armor_check)
 				playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)

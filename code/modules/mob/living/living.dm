@@ -823,11 +823,11 @@
 				if(GRAB_PASSIVE)
 					qdel(G)
 				if(GRAB_AGGRESSIVE)
-					if(prob(50 - (L.lying ? 35 : 0)))
+					if(prob(L.robust_skill - (L.lying ? 35-L.robust_skill/2 : 0)))
 						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s grip!</span>")
 						qdel(G)
 				if(GRAB_NECK)
-					if(prob(5 - L.stunned * 2))
+					if(prob(L.robust_skill/3 - L.stunned * 2))
 						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s headlock!</span>")
 						qdel(G)
 		if(resisting)
@@ -1200,3 +1200,7 @@
 
 /mob/living/proc/CanObtainCentcommMessage()
 	return FALSE
+
+/mob/living
+	var/shooting_skill = 66
+	var/robust_skill = 20

@@ -1,4 +1,17 @@
 /obj/item/ammo_casing/proc/fire(atom/target, mob/living/user, params, distro, quiet)
+
+	var/shoot_distance = sqrt((user.x-target.x)**2 + (user.y-target.y)**2)
+	var/is_missed = shoot_distance <= 1 ? FALSE : prob(100 - user.shooting_skill + shoot_distance*2)
+	if(is_missed)
+		switch(user.dir)
+			if(NORTH)
+				target = locate(target.x + rand(-shoot_distance,shoot_distance),target.y + rand(1,shoot_distance),target.z)
+			if(SOUTH)
+				target = locate(target.x + rand(-shoot_distance,shoot_distance),target.y + rand(-shoot_distance,-1),target.z)
+			if(EAST)
+				target = locate(target.x + rand(1,shoot_distance),target.y + rand(-shoot_distance,shoot_distance),target.z)
+			if(WEST)
+				target = locate(target.x + rand(-shoot_distance,-1),target.y + rand(-shoot_distance,shoot_distance),target.z)
 	distro += variance
 	for(var/i = max(1, pellets), i > 0, i--)
 		var/curloc = user.loc

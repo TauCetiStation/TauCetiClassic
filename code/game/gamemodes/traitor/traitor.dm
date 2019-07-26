@@ -257,7 +257,7 @@
 	if(text)
 		antagonists_completion += list(list("mode" = "traitor", "html" = text))
 		text = "<div class='block'>[text]</div>"
-		
+
 	return text
 
 
@@ -274,6 +274,9 @@
 	// find a radio! toolbox(es), backpack, belt, headset
 	var/loc = ""
 	var/obj/item/R = locate() //Hide the uplink in a PDA if available, otherwise radio
+
+	traitor_mob.robust_skill = 100
+	traitor_mob.shooting_skill = 120
 
 	if(traitor_mob.client.prefs.uplinklocation == "Headset")
 		R = locate(/obj/item/device/radio) in traitor_mob.contents

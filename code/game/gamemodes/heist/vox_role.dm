@@ -49,6 +49,9 @@ var/global/vox_tick = 1
 	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox, SLOT_WEAR_MASK)
 	equip_to_slot_or_del(new /obj/item/device/flashlight, SLOT_R_STORE)
 
+
+	robust_skill = 80
+	shooting_skill = 100
 	var/obj/item/weapon/tank/nitrogen/NITRO = new
 	equip_to_slot_or_del(NITRO, SLOT_S_STORE)
 	internal = NITRO
