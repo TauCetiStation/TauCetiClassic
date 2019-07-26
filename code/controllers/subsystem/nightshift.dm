@@ -17,12 +17,12 @@ var/datum/subsystem/nightshift/SSnightshift
 	NEW_SS_GLOBAL(SSnightshift)
 
 /datum/subsystem/nightshift/Initialize(timeofday)
-	if(!config.disable_nightshift)
+	if(config.nightshift)
 		check_nightshift()
 	..()
 
 /datum/subsystem/nightshift/fire(resumed = FALSE)
-	if(!config.disable_nightshift)
+	if(config.nightshift)
 		check_nightshift()
 
 /datum/subsystem/nightshift/proc/check_nightshift()

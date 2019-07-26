@@ -180,7 +180,7 @@
 
 	var/craft_recipes_visibility = FALSE // If false, then users won't see crafting recipes in personal crafting menu until they have all required components and then it will show up.
 	var/starlight = FALSE	// Whether space turfs have ambient light or not
-	var/disable_nightshift = FALSE
+	var/nightshift = FALSE
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -653,8 +653,8 @@
 					config.craft_recipes_visibility = TRUE
 				if("starlight")
 					config.starlight = TRUE
-				if("disable_nightshift")
-					config.disable_nightshift = TRUE
+				if("nightshift")
+					config.nightshift = TRUE
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 
