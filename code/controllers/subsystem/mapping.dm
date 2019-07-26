@@ -56,8 +56,9 @@ var/datum/subsystem/mapping/SSmapping
 		make_mining_asteroid_secret()
 
 /datum/subsystem/mapping/proc/populate_distribution_map()
-	var/datum/ore_distribution/distro = new
-	distro.populate_distribution_map()
+	for(var/z in SSmapping.levels_by_trait(ZTRAIT_MINING))
+		var/datum/ore_distribution/distro = new
+		distro.populate_distribution_map(z)
 
 /datum/subsystem/mapping/proc/spawn_space_structures()
 	if(!levels_by_trait(ZTRAIT_SPACE_RUINS).len)
