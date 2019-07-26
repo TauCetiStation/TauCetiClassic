@@ -41,7 +41,10 @@
 /turf/simulated/floor/greengrid,
 /area/robostatoin)
 "ai" = (
-/obj/machinery/porta_turret/stationary,
+/obj/machinery/porta_turret/stationary{
+	check_n_synth = 1;
+	shot_synth = 1
+	},
 /obj/machinery/light{
 	dir = 1
 	},
@@ -110,7 +113,10 @@
 /turf/simulated/floor/greengrid,
 /area/robostatoin)
 "ax" = (
-/obj/machinery/porta_turret/stationary,
+/obj/machinery/porta_turret/stationary{
+	check_n_synth = 1;
+	shot_synth = 1
+	},
 /turf/simulated/floor/greengrid,
 /area/robostatoin)
 "ay" = (
@@ -930,6 +936,13 @@
 	icon_state = "warnplate"
 	},
 /area/robostatoin)
+"en" = (
+/obj/machinery/porta_turret/stationary{
+	check_n_synth = 1;
+	shot_synth = 1
+	},
+/turf/simulated/floor/plating,
+/area/robostatoin)
 "eQ" = (
 /obj/machinery/light{
 	dir = 8
@@ -1395,10 +1408,10 @@ ae
 aa
 aa
 aa
-bw
+en
 aa
 aa
-bw
+en
 aa
 aa
 aa
@@ -2319,7 +2332,7 @@ aa
 aa
 aE
 aa
-bw
+en
 ad
 ap
 ar
@@ -2397,7 +2410,7 @@ aa
 aa
 aE
 aa
-bw
+en
 ad
 aN
 ar
