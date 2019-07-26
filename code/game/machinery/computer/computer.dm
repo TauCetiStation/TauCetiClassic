@@ -32,8 +32,9 @@
 	if(!.)
 		return
 	if(href_list && (last_keyboard_sound <= world.time))
-		playsound(src, "keyboard", VOL_EFFECTS_MASTER)
-		last_keyboard_sound = world.time + 8
+		if(!isAI(usr))
+			playsound(src, "keyboard", VOL_EFFECTS_MASTER)
+			last_keyboard_sound = world.time + 8
 
 /obj/machinery/computer/Destroy()
 	computer_list -= src
@@ -201,7 +202,7 @@
 
 	if(!dir_choise || !usr || !(usr in range(1, src)) || usr.is_busy(src))
 		return
-	
+
 	if(I.use_tool(src, usr, 20, volume = 50) && src && I)
 		usr.visible_message("<span class='notice'>[usr] turns \the [src] [dir_choise].</span>","<span class='notice'>You turn \the [src] [dir_choise].</span>")
 		dir = text2dir(dir_choise)
