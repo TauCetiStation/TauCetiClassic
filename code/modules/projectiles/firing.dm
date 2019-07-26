@@ -1,6 +1,6 @@
 /obj/item/ammo_casing/proc/fire(atom/target, mob/living/user, params, distro, quiet)
 
-	var/shoot_distance = sqrt((user.x-target.x)**2 + (user.y-target.y)**2)
+	var/shoot_distance = get_dist(user, target)
 	var/is_missed = shoot_distance <= 1 ? FALSE : prob(100 - user.shooting_skill + shoot_distance*2)
 	if(is_missed)
 		switch(user.dir)

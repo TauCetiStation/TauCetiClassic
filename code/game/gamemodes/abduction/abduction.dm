@@ -234,6 +234,9 @@
 	agent.equip_to_slot_or_del(new /obj/item/device/abductor/silencer(agent), SLOT_IN_BACKPACK)
 	agent.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/abductor(agent), SLOT_HEAD)
 
+	agent.shooting_skill = 120
+	agent.robust_skill = 100
+
 /datum/game_mode/abduction/proc/equip_scientist(mob/living/carbon/human/scientist,team_number)
 	if(!team_number)
 		team_number = scientist.team
@@ -340,7 +343,7 @@
 	if(text)
 		antagonists_completion += list(list("mode" = "abduction", "html" = text))
 		text = "<div class='block'>[text]</div>"
-	
+
 	return text
 
 // Machinery

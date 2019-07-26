@@ -15,7 +15,7 @@
 
 
 	var/obj/item/device/camera/siliconcam/aiCamera = null //photography
-
+	shooting_skill = 120
 	var/sensor_mode = 0 //Determines the current HUD.
 	#define SEC_HUD 1 //Security HUD mode
 	#define MED_HUD 2 //Medical HUD mode

@@ -178,6 +178,8 @@
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(wizard_mob), SLOT_R_STORE)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/spellbook(wizard_mob), SLOT_R_HAND)
 
+	wizard_mob.shooting_skill = 120
+
 	to_chat(wizard_mob, "<span class='info'>You will find a list of available spells in your spell book. Choose your magic arsenal carefully.</span>")
 	to_chat(wizard_mob, "<span class='info'>In your pockets you will find a teleport scroll. Use it as needed.</span>")
 	wizard_mob.mind.store_memory("<B>Remember:</B> do not forget to prepare your spells.")
@@ -280,7 +282,7 @@
 	if(text)
 		antagonists_completion += list(list("mode" = "wizard", "html" = text))
 		text = "<div class='block'>[text]</div>"
-		
+
 	return text
 
 //OTHER PROCS
