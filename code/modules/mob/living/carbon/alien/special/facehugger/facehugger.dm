@@ -282,8 +282,7 @@
 	//if(!sterile)
 	//	src.flags |= NODROP
 	if(!current_hugger)
-		spawn(rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
-			Impregnate(C)
+		addtimer(CALLBACK(src, .proc/Impregnate, C), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
 
 	return TRUE
 
@@ -328,8 +327,7 @@
 	stat = UNCONSCIOUS
 	icon_state = "[initial(icon_state)]_inactive"
 
-	spawn(rand(MIN_ACTIVE_TIME,MAX_ACTIVE_TIME))
-		GoActive()
+	addtimer(CALLBACK(src, .proc/GoActive), rand(MIN_ACTIVE_TIME, MAX_ACTIVE_TIME))
 
 /obj/item/clothing/mask/facehugger/proc/Die()
 	if(stat == DEAD)
