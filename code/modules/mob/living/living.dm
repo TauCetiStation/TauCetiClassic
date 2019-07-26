@@ -1223,12 +1223,6 @@
 	eye_blurry = max(5, eye_blurry)
 
 	if(ishuman(src)) // A stupid, snowflakey thing, but I see no point in creating a third argument to define the sound... ~Luduk
-		if(!prob((reagents.get_reagent_amount("water") * 9) + 10))
-			visible_message("<span class='warning'>[src] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but it gets stuck in your throat!</span>")
-			adjustOxyLoss(3)
-			adjustHalLoss(5)
-			return FALSE
-
 		var/vomitsound = ""
 		// The main reason why this is here, and not made into a polymorphized proc, is because we need to know from the subclasses that could cover their face, that they do.
 		if(masked)

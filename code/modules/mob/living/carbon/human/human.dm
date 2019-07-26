@@ -1230,6 +1230,11 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 							to_chat(H, "<span class='warning'>You feel something coming up your throat!</span>")
 					stage++
 			else
+				if(!prob((reagents.total_volume * 9) + 10))
+					visible_message("<span class='warning'>[src] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but it gets stuck in your throat!</span>")
+					adjustOxyLoss(3)
+					adjustHalLoss(5)
+					return FALSE
 				H.vomit()
 		else
 			break
