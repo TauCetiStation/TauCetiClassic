@@ -33,7 +33,7 @@
 		message_admins("An event attempted to spawn an borer but no suitable vents were found. Shutting down.")
 		return
 
-	var/list/candidates = get_alien_candidates()
+	var/list/candidates = get_candidates(ROLE_ALIEN)
 	while(spawncount > 0 && vents.len && candidates.len)
 		var/obj/vent = pick_n_take(vents)
 		var/client/C = pick_n_take(candidates)
