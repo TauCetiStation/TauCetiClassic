@@ -56,6 +56,7 @@
 					if(FA.z == ZLEVEL_STATION || FA.z == ZLEVEL_ASTEROID)
 						FA.overlays = list()
 						FA.overlays += image('icons/obj/monitors.dmi', "overlay_delta")
+		SSnightshift.check_nightshift() // Night shift mode turns off if security level is raised to red or above
 	else
 		return
 
