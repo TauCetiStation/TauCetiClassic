@@ -222,9 +222,21 @@
 	return
 
 /atom/proc/CtrlClick(mob/user)
-	return
+	var/obj/item/weapon/mop/M = user.get_active_hand()
+	if(istype(M))
+		. = TRUE
+		if(user.next_move > world.time)
+			return
+		if(user.incapacitated())
+			return
+		if(get_dist(user, src) > 2)
+			return
+
+		M.mop_push(src, user)
 
 /atom/movable/CtrlClick(mob/user)
+	if(..())
+		return
 	if(Adjacent(user))
 		user.start_pulling(src)
 
@@ -237,6 +249,22 @@
 	return
 
 /atom/proc/AltClick(mob/user)
+	var/obj/item/weapon/mop/M = user.get_active_hand()
+	if(istype(M))
+		if(user.next_move > world.time)
+			return
+		if(user.incapacitated())
+			return
+		if(!user.Adjacent(src))
+			return
+
+		// INVOKE_ASYNC(user, /atom/movable.proc/do_attack_animation, src)
+		var/turf/T = get_turf(src)
+		var/direction = get_dir(get_turf(M), T)
+		var/list/turfs = list(turn(direction, 45), direction, turn(direction, -45))
+		M.sweep(turfs, user, 8)
+		return
+
 	var/turf/T = get_turf(src)
 	if(T && user.TurfAdjacent(T))
 		if(user.listed_turf == T)
@@ -244,7 +272,6 @@
 		else
 			user.listed_turf = T
 			user.client.statpanel = T.name
-	return
 
 /mob/proc/TurfAdjacent(turf/T)
 	return T.AdjacentQuick(src)
@@ -258,7 +285,16 @@
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)
-	return
+	var/obj/item/weapon/mop/M = user.get_active_hand()
+	if(istype(M))
+		if(user.next_move > world.time)
+			return
+		if(user.incapacitated())
+			return
+		if(get_dist(user, src) > 2)
+			return
+
+		M.mop_pull(src, user)
 
 /*
 	Misc helpers
