@@ -466,7 +466,7 @@
 			if(internal.distribute_pressure >= 16)
 				var/breathsound = ""
 				if(istype(wear_mask, /obj/item/clothing/mask))
-					breathsound = "breathmask"
+					breathsound = SOUNDIN_BREATHMASK
 				if(istype(wear_mask, /obj/item/clothing/mask/gas))
 					breathsound = "gasmaskbreath"
 				if(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space))
