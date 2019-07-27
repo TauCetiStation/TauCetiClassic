@@ -1045,7 +1045,7 @@ ________________________________________________________________________________
 
 					if (do_after(U,10,target = A))
 						spark_system.start()
-						playsound(A, "sparks", VOL_EFFECTS_MASTER)
+						playsound(A, SOUNDIN_SPARKS, VOL_EFFECTS_MASTER)
 						A.cell.charge-=drain
 						S.cell.charge+=drain
 						totaldrain+=drain
@@ -1073,7 +1073,7 @@ ________________________________________________________________________________
 						maxcapacity = 1
 					if (do_after(U,10,target = A))
 						spark_system.start()
-						playsound(A, "sparks", VOL_EFFECTS_MASTER)
+						playsound(A, SOUNDIN_SPARKS, VOL_EFFECTS_MASTER)
 						A.charge-=drain
 						S.cell.charge+=drain
 						totaldrain+=drain
@@ -1199,7 +1199,7 @@ ________________________________________________________________________________
 						maxcapacity = 1
 					if (do_after(U,10,target = A))
 						A.spark_system.start()
-						playsound(A, "sparks", VOL_EFFECTS_MASTER)
+						playsound(A, SOUNDIN_SPARKS, VOL_EFFECTS_MASTER)
 						A.cell.use(drain)
 						S.cell.charge+=drain
 						totaldrain+=drain
@@ -1222,7 +1222,7 @@ ________________________________________________________________________________
 						maxcapacity = 1
 					if (do_after(U,10,target = A))
 						A.spark_system.start()
-						playsound(A, "sparks", VOL_EFFECTS_MASTER)
+						playsound(A, SOUNDIN_SPARKS, VOL_EFFECTS_MASTER)
 						A.cell.charge-=drain
 						S.cell.charge+=drain
 						totaldrain+=drain

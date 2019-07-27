@@ -258,8 +258,6 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 /proc/get_sfx(soundin)
 	if(istext(soundin))
 		switch(soundin)
-			if ("sparks")
-				soundin = pick('sound/effects/sparks1.ogg','sound/effects/sparks2.ogg','sound/effects/sparks3.ogg','sound/effects/sparks4.ogg')
 			if ("rustle")
 				soundin = pick('sound/effects/rustle1.ogg','sound/effects/rustle2.ogg','sound/effects/rustle3.ogg','sound/effects/rustle4.ogg','sound/effects/rustle5.ogg')
 			if ("bodyfall")

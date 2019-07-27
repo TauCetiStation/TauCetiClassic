@@ -272,7 +272,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	if(do_after(user, 40 * toolspeed, target = src))
 		if(charging && charge < 3)
 			charge++
-			playsound(src, "sparks", VOL_EFFECTS_MASTER)
+			playsound(src, SOUNDIN_SPARKS, VOL_EFFECTS_MASTER)
 			if(charge < 3)
 				charge(user)
 			else

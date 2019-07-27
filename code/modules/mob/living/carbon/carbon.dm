@@ -146,7 +146,7 @@
 	if(shock_damage<1)
 		return 0
 	apply_damage(shock_damage, BURN, def_zone, used_weapon="Electrocution")
-	playsound(src, "sparks", VOL_EFFECTS_MASTER)
+	playsound(src, SOUNDIN_SPARKS, VOL_EFFECTS_MASTER)
 	if(shock_damage > 10)
 		visible_message(
 			"<span class='rose'>[src] was shocked by the [source]!</span>", \
