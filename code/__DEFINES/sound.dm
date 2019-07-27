@@ -32,7 +32,7 @@
 #define SOUNDIN_SHATTER   pick('sound/effects/glassbr1.ogg', 'sound/effects/glassbr2.ogg', 'sound/effects/glassbr3.ogg')
 #define SOUNDIN_EXPLOSION pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg')
 #define SOUNDIN_SPARKS    pick('sound/effects/sparks1.ogg', 'sound/effects/sparks2.ogg', 'sound/effects/sparks3.ogg', 'sound/effects/sparks4.ogg')
-#define
+#define SOUNDIN_RUSTLE    pick('sound/effects/rustle1.ogg', 'sound/effects/rustle2.ogg', 'sound/effects/rustle3.ogg', 'sound/effects/rustle4.ogg', 'sound/effects/rustle5.ogg')
 #define
 #define
 #define
