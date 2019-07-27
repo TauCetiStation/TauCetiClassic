@@ -46,7 +46,7 @@
 /obj/structure/stool/bed/chair/janitorialcart/flip()
 	..()
 	if(flipped)
-		spill(100)
+		spill(200) // So even the bucket is flipped out.
 
 /obj/structure/stool/bed/chair/janitorialcart/examine(mob/user)
 	..()
@@ -90,7 +90,7 @@
 			if(buckled_mob)
 				user_unbuckle_mob(AM)
 			else
-				user_buckle_mob(src, AM)
+				user_buckle_mob(AM, user)
 	else
 		..()
 
@@ -266,10 +266,16 @@
 		INVOKE_ASYNC(myreplacer, /obj.proc/tumble_async, 2)
 		myreplacer = null
 
-	if(mybucket && prob(chance * 0.5)) // Bucket is heavier, harder to knock off.
-		mybucket.forceMove(dropspot)
-		INVOKE_ASYNC(mybucket, /obj.proc/tumble_async, 1)
-		mybucket = null
+	if(mybucket) // Bucket is heavier, harder to knock off.
+		if(prob(chance * 0.5))
+			mybucket.forceMove(dropspot)
+			mybucket.reagents.reaction(dropspot, method=TOUCH)
+			mybucket.reagents.trans_to(dropspot, amount=mybucket.reagents.total_volume)
+			INVOKE_ASYNC(mybucket, /obj.proc/tumble_async, 1)
+			mybucket = null
+		else // But the water is gone anyway.
+			mybucket.reagents.reaction(dropspot, method=TOUCH)
+			mybucket.reagents.trans_to(dropspot, amount=mybucket.reagents.total_volume)
 
 	if(signs)
 		for(var/obj/item/weapon/caution/Sign in src)

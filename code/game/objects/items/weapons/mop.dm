@@ -108,6 +108,8 @@
 	for(var/obj/item/I in T)
 		if(I == target)
 			continue
+		if(I.anchored)
+			continue
 		if(I.w_class <= ITEM_SIZE_NORMAL)
 			var/obj/item/weapon/storage/bag/trash/TR = user.get_inactive_hand()
 			if(istype(TR) && TR.can_be_inserted(I))
@@ -125,7 +127,9 @@
 		if(!has_gravity(src) && !istype(target, /turf/space)) // A little cheat.
 			step_away(user, T_target)
 		else if(istype(target, /atom/movable))
-			step_away(target, get_turf(user))
+			var/atom/movable/AM = target
+			if(!AM.anchored)
+				step_away(target, get_turf(user))
 
 /obj/item/weapon/mop/proc/mop_pull(atom/target, mob/user)
 	var/s_time = sweep_step * 2
@@ -137,6 +141,8 @@
 
 	for(var/obj/item/I in T)
 		if(I == target)
+			continue
+		if(I.anchored)
 			continue
 		if(I.w_class <= ITEM_SIZE_NORMAL)
 			var/obj/item/weapon/storage/bag/trash/TR = user.get_inactive_hand()
@@ -150,7 +156,9 @@
 		if(!has_gravity(src) && !istype(target, /turf/space))
 			step_to(user, T_target)
 		else if(istype(target, /atom/movable))
-			step_to(target, get_turf(user))
+			var/atom/movable/AM = target
+			if(!AM.anchored)
+				step_to(target, get_turf(user))
 
 /obj/item/weapon/mop/proc/clean(turf/simulated/T, amount)
 	if(reagents.has_reagent("water", amount))
@@ -202,6 +210,8 @@
 				break
 			if(istype(A, /obj/item))
 				var/obj/item/I = A
+				if(I.anchored)
+					continue
 				if(I.w_class <= ITEM_SIZE_NORMAL)
 					var/obj/item/weapon/storage/bag/trash/TR = user.get_inactive_hand()
 					if(istype(TR) && TR.can_be_inserted(I))
