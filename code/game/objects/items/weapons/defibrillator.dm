@@ -368,7 +368,7 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, H)
 	s.start()
-	playsound(src, "bodyfall", VOL_EFFECTS_MASTER)
+	playsound(src, SOUNDIN_BODYFALL, VOL_EFFECTS_MASTER)
 	playsound(src, 'sound/items/defib_zap.ogg', VOL_EFFECTS_MASTER)
 	set_cooldown(cooldown_time)
 
