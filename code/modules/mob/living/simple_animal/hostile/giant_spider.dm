@@ -125,7 +125,7 @@
 				var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
 				if(!W)
 					busy = SPINNING_WEB
-					src.visible_message("\blue \the [src] begins to secrete a sticky substance.")
+					src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
 					stop_automated_movement = 1
 					spawn(40)
 						if(busy == SPINNING_WEB)
@@ -137,7 +137,7 @@
 					var/obj/effect/spider/eggcluster/E = locate() in get_turf(src)
 					if(!E && fed > 0)
 						busy = LAYING_EGGS
-						src.visible_message("\blue \the [src] begins to lay a cluster of eggs.")
+						src.visible_message("<span class='notice'>\the [src] begins to lay a cluster of eggs.</span>")
 						stop_automated_movement = 1
 						spawn(50)
 							if(busy == LAYING_EGGS)
@@ -165,7 +165,7 @@
 			else if(busy == MOVING_TO_TARGET && cocoon_target)
 				if(get_dist(src, cocoon_target) <= 1)
 					busy = SPINNING_COCOON
-					src.visible_message("\blue \the [src] begins to secrete a sticky substance around \the [cocoon_target].")
+					src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance around \the [cocoon_target].</span>")
 					stop_automated_movement = 1
 					walk(src,0)
 					spawn(50)

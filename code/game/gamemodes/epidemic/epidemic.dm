@@ -190,10 +190,10 @@
 	ticker.mode:explosion_in_progress = 1
 	for(var/mob/M in player_list)
 		M.playsound_local(null, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
-	to_chat(world, "\blue<b>Incoming missile detected.. Impact in 10..</b>")
+	to_chat(world, "<span class='notice'><b>Incoming missile detected.. Impact in 10..</b></span>")
 	for (var/i=9 to 1 step -1)
 		sleep(10)
-		to_chat(world, "\blue<b>[i]..</b>")
+		to_chat(world, "<span class='notice'><b>[i]..</b></span>")
 	sleep(10)
 	enter_allowed = 0
 	if(ticker)

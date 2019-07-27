@@ -915,7 +915,7 @@ var/list/airlock_overlays = list()
 			if(user.is_busy(src)) return
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
 			if(C.use_tool(src, user, 40, volume = 100))
-				to_chat(user, "\blue You removed the airlock electronics!")
+				to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
 
 				var/obj/structure/door_assembly/da = new assembly_type(loc)
 				da.anchored = 1

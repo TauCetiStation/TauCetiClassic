@@ -51,7 +51,7 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/analyzer))
-		to_chat(user, "\blue The [W.name] detects that [last_power]W were recently produced.")
+		to_chat(user, "<span class='notice'>The [W.name] detects that [last_power]W were recently produced.</span>")
 		return 1
 	else if(istype(W, /obj/item/weapon/tank/phoron))
 		if(!src.anchored)
@@ -70,7 +70,7 @@ var/global/list/rad_collectors = list()
 			return 1
 	else if(iswrench(W))
 		if(P)
-			to_chat(user, "\blue Remove the phoron tank first.")
+			to_chat(user, "<span class='notice'>Remove the phoron tank first.</span>")
 			return 1
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		src.anchored = !src.anchored

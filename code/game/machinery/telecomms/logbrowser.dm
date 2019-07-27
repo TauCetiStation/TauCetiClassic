@@ -224,5 +224,5 @@
 		return FALSE
 	playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 	emagged = 1
-	to_chat(user, "\blue You you disable the security protocols")
+	to_chat(user, "<span class='notice'>You you disable the security protocols</span>")
 	return TRUE

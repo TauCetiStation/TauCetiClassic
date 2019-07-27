@@ -97,7 +97,7 @@ Infestation:
 	to_chat(xeno.current, "\green <B>Then check your tail action button, there will be leap available.</b>")
 	to_chat(xeno.current, "\green <B>Leap isnt instant, keep that in mind. There is 1-2 seconds delay, before you can actually leap.</b>")
 	to_chat(xeno.current, "\green <B>You target also must be near, after you prepares to leap.</b>")
-	to_chat(xeno.current, "\blue Use :A to hivetalk.")
+	to_chat(xeno.current, "<span class='notice'>Use :A to hivetalk.</span>")
 	to_chat(xeno.current, "\green ------------------")
 	//xeno.current << "<span class='warning'>IF YOU HAVE NOT PLAYED A XENOMORPH, REVIEW THIS THREAD: http://tauceti.ru</span>"
 

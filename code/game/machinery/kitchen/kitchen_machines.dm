@@ -338,7 +338,7 @@
 	return 0
 
 /obj/machinery/kitchen_machine/proc/start()
-	src.visible_message("\blue [src] turns on.", "\blue You hear a [src].")
+	src.visible_message("<span class='notice'>[src] turns on.</span>", "<span class='notice'>You hear a [src].</span>")
 	src.operating = 1
 	src.icon_state = on_icon
 	src.updateUsrDialog()
@@ -369,7 +369,7 @@
 	if (src.reagents.total_volume)
 		src.dirty++
 	src.reagents.clear_reagents()
-	to_chat(usr, "\blue You dispose of [src] contents.")
+	to_chat(usr, "<span class='notice'>You dispose of [src] contents.</span>")
 	src.updateUsrDialog()
 
 /obj/machinery/kitchen_machine/proc/muck_start()

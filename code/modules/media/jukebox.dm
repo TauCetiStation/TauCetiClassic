@@ -153,10 +153,10 @@ var/global/loopModeNames=list(
 		if(user.is_busy(src))
 			return
 		var/un = !anchored ? "" : "un"
-		user.visible_message("\blue [user.name] begins [un]locking \the [src.name]'s casters.","\blue You begin [un]locking \the [src.name]'s casters.")
+		user.visible_message("<span class='notice'>[user.name] begins [un]locking \the [src.name]'s casters.</span>","<span class='notice'>You begin [un]locking \the [src.name]'s casters.</span>")
 		if(W.use_tool(src, user, 30, volume = 50))
 			anchored = !anchored
-			user.visible_message("\blue [user.name] [un]locks \the [src.name]'s casters.","<span class='warning'>You [un]lock \the [src.name]'s casters.</span>")
+			user.visible_message("<span class='notice'>[user.name] [un]locks \the [src.name]'s casters.</span>","<span class='warning'>You [un]lock \the [src.name]'s casters.</span>")
 			playing = emagged
 			update_music()
 			update_icon()

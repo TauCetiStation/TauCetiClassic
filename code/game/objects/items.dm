@@ -283,7 +283,7 @@
 		else if(istype(src, /obj/item/weapon/gun))
 			if(prob(20))
 				user.say(pick(";RAAAAAAAARGH! WEAPON!", ";HNNNNNNNNNGGGGGGH! I HATE WEAPONS!!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGUUUUUNNNNHH!", ";AAAAAAARRRGH!" ))
-			user.visible_message("\blue [user] crushes \a [src] with hands.", "\blue You crush the [src].")
+			user.visible_message("<span class='notice'>[user] crushes \a [src] with hands.</span>", "<span class='notice'>You crush the [src].</span>")
 			qdel(src)
 			//user << "<span class='warning'>\The [src] is far too small for you to pick up.</span>"
 			return

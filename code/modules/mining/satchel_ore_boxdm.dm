@@ -20,7 +20,7 @@
 		S.hide_from(usr)
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
-		to_chat(user, "\blue You empty the satchel into the box.")
+		to_chat(user, "<span class='notice'>You empty the satchel into the box.</span>")
 
 	update_ore_count()
 
@@ -137,7 +137,7 @@
 		for (var/obj/item/weapon/ore/O in contents)
 			contents -= O
 			O.loc = src.loc
-		to_chat(usr, "\blue You empty the box")
+		to_chat(usr, "<span class='notice'>You empty the box</span>")
 	src.updateUsrDialog()
 	return
 
@@ -166,6 +166,6 @@
 	for (var/obj/item/weapon/ore/O in contents)
 		contents -= O
 		O.loc = src.loc
-	to_chat(usr, "\blue You empty the ore box")
+	to_chat(usr, "<span class='notice'>You empty the ore box</span>")
 
 	return

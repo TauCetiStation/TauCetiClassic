@@ -75,16 +75,16 @@
 			if(host.reagents.has_reagent("sugar"))
 				if(!docile)
 					if(controlling)
-						to_chat(host, "\blue You feel the soporific flow of sugar in your host's blood, lulling you into docility.")
+						to_chat(host, "<span class='notice'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>")
 					else
-						to_chat(src, "\blue You feel the soporific flow of sugar in your host's blood, lulling you into docility.")
+						to_chat(src, "<span class='notice'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>")
 					docile = 1
 			else
 				if(docile)
 					if(controlling)
-						to_chat(host, "\blue You shake off your lethargy as the sugar leaves your host's blood.")
+						to_chat(host, "<span class='notice'>You shake off your lethargy as the sugar leaves your host's blood.</span>")
 					else
-						to_chat(src, "\blue You shake off your lethargy as the sugar leaves your host's blood.")
+						to_chat(src, "<span class='notice'>You shake off your lethargy as the sugar leaves your host's blood.</span>")
 					docile = 0
 
 			if(chemicals < 250)
@@ -92,7 +92,7 @@
 			if(controlling)
 
 				if(docile)
-					to_chat(host, "\blue You are feeling far too docile to continue controlling your host...")
+					to_chat(host, "<span class='notice'>You are feeling far too docile to continue controlling your host...</span>")
 					host.release_control()
 					return
 
@@ -215,7 +215,7 @@
 		return
 
 	if(docile)
-		to_chat(src, "\blue You are feeling far too docile to do that.")
+		to_chat(src, "<span class='notice'>You are feeling far too docile to do that.</span>")
 		return
 
 	to_chat(src, "You begin delicately adjusting your connection to the host brain...")
@@ -249,7 +249,7 @@
 		to_chat(src, "You cannot secrete chemicals in your current state.")
 
 	if(docile)
-		to_chat(src, "\blue You are feeling far too docile to do that.")
+		to_chat(src, "<span class='notice'>You are feeling far too docile to do that.</span>")
 		return
 
 	if(chemicals < 50)
@@ -277,7 +277,7 @@
 		to_chat(src, "You cannot leave your host in your current state.")
 
 	if(docile)
-		to_chat(src, "\blue You are feeling far too docile to do that.")
+		to_chat(src, "<span class='notice'>You are feeling far too docile to do that.</span>")
 		return
 
 	if(!host || !src) return
@@ -413,10 +413,10 @@
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
-		to_chat(src, text("\blue You are now hiding."))
+		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
 	else
 		layer = MOB_LAYER
-		to_chat(src, text("\blue You have stopped hiding."))
+		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
 
 //Procs for grabbing players.
 /mob/living/simple_animal/borer/proc/request_player()

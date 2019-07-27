@@ -586,7 +586,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 		host_mind.current.clearHUD()
 		H.update_body()
 
-		to_chat(dummy, "\blue You feel very drowsy.. Your eyelids become heavy...")
+		to_chat(dummy, "<span class='notice'>You feel very drowsy.. Your eyelids become heavy...</span>")
 
 		log_admin("[meme_mind.key] has taken possession of [host]([host_mind.key])")
 		message_admins("[meme_mind.key] has taken possession of [host]([host_mind.key]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")

@@ -106,7 +106,7 @@
 						src.on_reagent_change()
 						src.reagents.handle_reactions()
 					infect_limb(user, target)
-					to_chat(user, "\blue You take a blood sample from [target]")
+					to_chat(user, "<span class='notice'>You take a blood sample from [target]</span>")
 					for(var/mob/O in viewers(4, user))
 						O.show_message("<span class='warning'>[user] takes a blood sample from [target].</span>", 1)
 
@@ -121,7 +121,7 @@
 
 				var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this) // transfer from, transfer to - who cares?
 
-				to_chat(user, "\blue You fill the syringe with [trans] units of the solution.")
+				to_chat(user, "<span class='notice'>You fill the syringe with [trans] units of the solution.</span>")
 			if (reagents.total_volume >= reagents.maximum_volume)
 				mode=!mode
 				update_icon()
@@ -325,7 +325,7 @@
 
 				var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this) // transfer from, transfer to - who cares?
 
-				to_chat(user, "\blue You fill the syringe with [trans] units of the solution.")
+				to_chat(user, "<span class='notice'>You fill the syringe with [trans] units of the solution.</span>")
 			if (reagents.total_volume >= reagents.maximum_volume)
 				mode=!mode
 				update_icon()
@@ -354,7 +354,7 @@
 				src.reagents.reaction(target, INGEST)
 			spawn(5)
 				var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-				to_chat(user, "\blue You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units.")
+				to_chat(user, "<span class='notice'>You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>")
 				if (reagents.total_volume >= reagents.maximum_volume && mode==SYRINGE_INJECT)
 					mode = SYRINGE_DRAW
 					update_icon()

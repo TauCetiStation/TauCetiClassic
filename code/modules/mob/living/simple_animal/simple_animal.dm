@@ -229,7 +229,7 @@
 			if (health > 0)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message("\blue [M] [response_help] [src]")
+						O.show_message("<span class='notice'>[M] [response_help] [src]</span>")
 
 		if("grab")
 			M.Grab(src)
@@ -251,7 +251,7 @@
 
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
+					O.show_message(text("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>"), 1)
 		if ("grab")
 			M.Grab(src)
 
@@ -266,7 +266,7 @@
 
 	switch(L.a_intent)
 		if("help")
-			visible_message("\blue [L] rubs it's head against [src]")
+			visible_message("<span class='notice'>[L] rubs it's head against [src]</span>")
 
 
 		else

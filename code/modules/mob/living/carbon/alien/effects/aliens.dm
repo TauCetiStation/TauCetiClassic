@@ -126,12 +126,12 @@
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if (HULK in user.mutations)
-		to_chat(user, "\blue You easily destroy the [name].")
+		to_chat(user, "<span class='notice'>You easily destroy the [name].</span>")
 		for(var/mob/O in oviewers(src))
 			O.show_message("<span class='warning'>[user] destroys the [name]!</span>", 1)
 		health = 0
 	else
-		to_chat(user, "\blue You claw at the [name].")
+		to_chat(user, "<span class='notice'>You claw at the [name].</span>")
 		for(var/mob/O in oviewers(src))
 			O.show_message("<span class='warning'>[user] claws at the [name]!</span>", 1)
 		health -= rand(5,10)

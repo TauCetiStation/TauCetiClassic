@@ -48,8 +48,8 @@
 
 /datum/surgery_step/generic/cut_with_laser/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] has made a bloodless incision on [target]'s [BP.name] with \the [tool].", \
-	"\blue You have made a bloodless incision on [target]'s [BP.name] with \the [tool].",)
+	user.visible_message("<span class='notice'>[user] has made a bloodless incision on [target]'s [BP.name] with \the [tool].</span>", \
+	"<span class='notice'>You have made a bloodless incision on [target]'s [BP.name] with \the [tool].</span>",)
 	//Could be cleaner ...
 	BP.open = 1
 	BP.createwound(CUT, 1)
@@ -88,8 +88,8 @@
 
 /datum/surgery_step/generic/incision_manager/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] has constructed a prepared incision on and within [target]'s [BP.name] with \the [tool].", \
-	"\blue You have constructed a prepared incision on and within [target]'s [BP.name] with \the [tool].",)
+	user.visible_message("<span class='notice'>[user] has constructed a prepared incision on and within [target]'s [BP.name] with \the [tool].</span>", \
+	"<span class='notice'>You have constructed a prepared incision on and within [target]'s [BP.name] with \the [tool].</span>",)
 	BP.open = 1
 	BP.status |= ORGAN_BLEEDING
 	BP.createwound(CUT, 1)
@@ -129,8 +129,8 @@
 
 /datum/surgery_step/generic/cut_open/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] has made an incision on [target]'s [BP.name] with \the [tool].", \
-	"\blue You have made an incision on [target]'s [BP.name] with \the [tool].",)
+	user.visible_message("<span class='notice'>[user] has made an incision on [target]'s [BP.name] with \the [tool].</span>", \
+	"<span class='notice'>You have made an incision on [target]'s [BP.name] with \the [tool].</span>",)
 	BP.open = 1
 	BP.status |= ORGAN_BLEEDING
 	BP.createwound(CUT, 1)
@@ -169,8 +169,8 @@
 
 /datum/surgery_step/generic/clamp_bleeders/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] clamps bleeders in [target]'s [BP.name] with \the [tool].",	\
-	"\blue You clamp bleeders in [target]'s [BP.name] with \the [tool].")
+	user.visible_message("<span class='notice'>[user] clamps bleeders in [target]'s [BP.name] with \the [tool].</span>",	\
+	"<span class='notice'>You clamp bleeders in [target]'s [BP.name] with \the [tool].</span>")
 	BP.clamp()
 
 /datum/surgery_step/generic/clamp_bleeders/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -210,14 +210,14 @@
 
 /datum/surgery_step/generic/retract_skin/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	var/msg = "\blue [user] keeps the incision open on [target]'s [BP.name] with \the [tool]."
-	var/self_msg = "\blue You keep the incision open on [target]'s [BP.name] with \the [tool]."
+	var/msg = "<span class='notice'>[user] keeps the incision open on [target]'s [BP.name] with \the [tool].</span>"
+	var/self_msg = "<span class='notice'>You keep the incision open on [target]'s [BP.name] with \the [tool].</span>"
 	if (target_zone == BP_CHEST)
-		msg = "\blue [user] keeps the ribcage open on [target]'s torso with \the [tool]."
-		self_msg = "\blue You keep the ribcage open on [target]'s torso with \the [tool]."
+		msg = "<span class='notice'>[user] keeps the ribcage open on [target]'s torso with \the [tool].</span>"
+		self_msg = "<span class='notice'>You keep the ribcage open on [target]'s torso with \the [tool].</span>"
 	if (target_zone == BP_GROIN)
-		msg = "\blue [user] keeps the incision open on [target]'s lower abdomen with \the [tool]."
-		self_msg = "\blue You keep the incision open on [target]'s lower abdomen with \the [tool]."
+		msg = "<span class='notice'>[user] keeps the incision open on [target]'s lower abdomen with \the [tool].</span>"
+		self_msg = "<span class='notice'>You keep the incision open on [target]'s lower abdomen with \the [tool].</span>"
 	user.visible_message(msg, self_msg)
 	BP.open = 2
 
@@ -259,8 +259,8 @@
 
 /datum/surgery_step/generic/cauterize/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] cauterizes the incision on [target]'s [BP.name] with \the [tool].", \
-	"\blue You cauterize the incision on [target]'s [BP.name] with \the [tool].")
+	user.visible_message("<span class='notice'>[user] cauterizes the incision on [target]'s [BP.name] with \the [tool].</span>", \
+	"<span class='notice'>You cauterize the incision on [target]'s [BP.name] with \the [tool].</span>")
 	BP.open = 0
 	BP.status &= ~ORGAN_BLEEDING
 
@@ -302,8 +302,8 @@
 
 /datum/surgery_step/generic/cut_limb/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] cuts off [target]'s [BP.name] with \the [tool].", \
-	"\blue You cut off [target]'s [BP.name] with \the [tool].")
+	user.visible_message("<span class='notice'>[user] cuts off [target]'s [BP.name] with \the [tool].</span>", \
+	"<span class='notice'>You cut off [target]'s [BP.name] with \the [tool].</span>")
 	BP.droplimb(null, TRUE)
 
 /datum/surgery_step/generic/cut_limb/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

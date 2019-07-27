@@ -81,7 +81,7 @@
 			return
 
 			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-			to_chat(user, "\blue You fill [src] with [trans] units of the contents of [target].")
+			to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 	else if(target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
 
@@ -102,7 +102,7 @@
 			refillName = reagents.get_master_reagent_name()
 
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-		to_chat(user, "\blue You transfer [trans] units of the solution to [target].")
+		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user

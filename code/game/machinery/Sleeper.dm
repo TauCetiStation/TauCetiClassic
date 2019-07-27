@@ -313,7 +313,7 @@
 
 /obj/machinery/sleeper/close_machine(mob/target)
 	if(state_open && !panel_open)
-		to_chat(target, "\blue <b>You feel cool air surround you. You go numb as your senses turn inward.</b>")
+		to_chat(target, "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>")
 		..(target)
 
 /obj/machinery/sleeper/proc/inject_chem(mob/user, chem)

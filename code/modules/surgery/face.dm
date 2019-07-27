@@ -35,8 +35,8 @@
 	..()
 
 /datum/surgery_step/generic/cut_face/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("\blue [user] has cut open [target]'s face and neck with \the [tool]." , \
-	"\blue You have cut open [target]'s face and neck with \the [tool].",)
+	user.visible_message("<span class='notice'>[user] has cut open [target]'s face and neck with \the [tool].</span>" , \
+	"<span class='notice'>You have cut open [target]'s face and neck with \the [tool].</span>",)
 	target.op_stage.face = 1
 
 /datum/surgery_step/generic/cut_face/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -67,8 +67,8 @@
 	..()
 
 /datum/surgery_step/face/mend_vocal/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("\blue [user] mends [target]'s vocal cords with \the [tool].", \
-	"\blue You mend [target]'s vocal cords with \the [tool].")
+	user.visible_message("<span class='notice'>[user] mends [target]'s vocal cords with \the [tool].</span>", \
+	"<span class='notice'>You mend [target]'s vocal cords with \the [tool].</span>")
 	target.op_stage.face = 2
 
 /datum/surgery_step/face/mend_vocal/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -95,8 +95,8 @@
 	..()
 
 /datum/surgery_step/face/fix_face/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("\blue [user] pulls the skin on [target]'s face back in place with \the [tool].",	\
-	"\blue You pull the skin on [target]'s face back in place with \the [tool].")
+	user.visible_message("<span class='notice'>[user] pulls the skin on [target]'s face back in place with \the [tool].</span>",	\
+	"<span class='notice'>You pull the skin on [target]'s face back in place with \the [tool].</span>")
 	target.op_stage.face = 3
 
 /datum/surgery_step/face/fix_face/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -126,8 +126,8 @@
 
 /datum/surgery_step/face/cauterize/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] cauterizes the incision on [target]'s face and neck with \the [tool].", \
-	"\blue You cauterize the incision on [target]'s face and neck with \the [tool].")
+	user.visible_message("<span class='notice'>[user] cauterizes the incision on [target]'s face and neck with \the [tool].</span>", \
+	"<span class='notice'>You cauterize the incision on [target]'s face and neck with \the [tool].</span>")
 	BP.open = 0
 	BP.status &= ~ORGAN_BLEEDING
 	if (target.op_stage.face == 3)

@@ -245,7 +245,7 @@
 		if(istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(chassis,target) <= 1)
 			var/obj/o = target
 			o.reagents.trans_to(src, 200)
-			occupant_message("\blue Extinguisher refilled")
+			occupant_message("<span class='notice'>Extinguisher refilled</span>")
 			playsound(chassis, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 		else
 			if(src.reagents.total_volume > 0)
@@ -641,7 +641,7 @@
 	if(!action_checks(src))
 		return chassis.dynbulletdamage(Proj)
 	if(prob(chassis.deflect_chance*deflect_coeff))
-		chassis.occupant_message("\blue The armor deflects incoming projectile.")
+		chassis.occupant_message("<span class='notice'>The armor deflects incoming projectile.</span>")
 		chassis.visible_message("The [chassis.name] armor deflects the projectile")
 		chassis.log_append_to_last("Armor saved.")
 	else
@@ -657,7 +657,7 @@
 	if(!action_checks(A))
 		return chassis.dynhitby(A)
 	if(prob(chassis.deflect_chance*deflect_coeff) || istype(A, /mob/living) || istype(A, /obj/item/mecha_parts/mecha_tracking))
-		chassis.occupant_message("\blue The [A] bounces off the armor.")
+		chassis.occupant_message("<span class='notice'>The [A] bounces off the armor.</span>")
 		chassis.visible_message("The [A] bounces off the [chassis] armor")
 		chassis.log_append_to_last("Armor saved.")
 		if(istype(A, /mob/living))

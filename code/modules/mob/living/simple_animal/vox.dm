@@ -98,7 +98,7 @@
 		to_chat(src, "Not even the armalis can speak to the dead.")
 		return
 
-	to_chat(M, "\blue Like lead slabs crashing into the ocean, alien thoughts drop into your mind: [text]")
+	to_chat(M, "<span class='notice'>Like lead slabs crashing into the ocean, alien thoughts drop into your mind: [text]</span>")
 	if(istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		if(H.species.name == VOX)
@@ -119,14 +119,14 @@
 		maxHealth += 200
 		health += 200
 		O.loc = src
-		visible_message("\blue [src] is quickly outfitted in [O] by [user].","\blue You quickly outfit [src] in [O].")
+		visible_message("<span class='notice'>[src] is quickly outfitted in [O] by [user].</span>","<span class='notice'>You quickly outfit [src] in [O].</span>")
 		regenerate_icons()
 		return
 	if(istype(O,/obj/item/vox/armalis_amp))
 		user.drop_item()
 		amp = O
 		O.loc = src
-		visible_message("\blue [src] is quickly outfitted in [O] by [user].","\blue You quickly outfit [src] in [O].")
+		visible_message("<span class='notice'>[src] is quickly outfitted in [O] by [user].</span>","<span class='notice'>You quickly outfit [src] in [O].</span>")
 		regenerate_icons()
 		return
 	return ..()

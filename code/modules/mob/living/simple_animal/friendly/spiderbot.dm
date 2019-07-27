@@ -72,7 +72,7 @@
 			to_chat(user, "<span class='warning'>[O] does not seem to fit.</span>")
 			return
 
-		to_chat(user, "\blue You install [O] in [src]!")
+		to_chat(user, "<span class='notice'>You install [O] in [src]!</span>")
 
 		user.drop_item()
 		src.mmi = O
@@ -94,7 +94,7 @@
 				for(var/mob/W in viewers(user, null))
 					W.show_message(text("<span class='warning'>[user] has spot-welded some of the damage to [src]!</span>"), 1)
 			else
-				to_chat(user, "\blue [src] is undamaged!")
+				to_chat(user, "<span class='notice'>[src] is undamaged!</span>")
 		else
 			to_chat(user, "Need more welding fuel!")
 			return
@@ -112,7 +112,7 @@
 			id_card = pda.id
 
 		if(access_robotics in id_card.access)
-			to_chat(user, "\blue You swipe your access card and pop the brain out of [src].")
+			to_chat(user, "<span class='notice'>You swipe your access card and pop the brain out of [src].</span>")
 			eject_brain()
 
 			if(held_item)
@@ -153,7 +153,7 @@
 		return FALSE
 	else
 		emagged = 1
-		to_chat(user, "\blue You short out the security protocols and overload [src]'s cell, priming it to explode in a short time.")
+		to_chat(user, "<span class='notice'>You short out the security protocols and overload [src]'s cell, priming it to explode in a short time.</span>")
 		spawn(100)
 			to_chat(src, "<span class='warning'>Your cell seems to be outputting a lot of power...</span>")
 		spawn(200)
@@ -229,10 +229,10 @@
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
-		to_chat(src, text("\blue You are now hiding."))
+		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
 	else
 		layer = MOB_LAYER
-		to_chat(src, text("\blue You have stopped hiding."))
+		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
 
 //Cannibalized from the parrot mob. ~Zuhayr
 
@@ -256,7 +256,7 @@
 		held_item = null
 		return 1
 
-	visible_message("\blue [src] drops \the [held_item]!", "\blue You drop \the [held_item]!", "You hear a skittering noise and a soft thump.")
+	visible_message("<span class='notice'>[src] drops \the [held_item]!</span>", "<span class='notice'>You drop \the [held_item]!</span>", "You hear a skittering noise and a soft thump.")
 
 	held_item.loc = src.loc
 	held_item = null
@@ -288,7 +288,7 @@
 			if(selection == I)
 				held_item = selection
 				selection.loc = src
-				visible_message("\blue [src] scoops up \the [held_item]!", "\blue You grab \the [held_item]!", "You hear a skittering noise and a clink.")
+				visible_message("<span class='notice'>[src] scoops up \the [held_item]!</span>", "<span class='notice'>You grab \the [held_item]!</span>", "You hear a skittering noise and a clink.")
 				return held_item
 		to_chat(src, "<span class='warning'>\The [selection] is too far away.</span>")
 		return 0

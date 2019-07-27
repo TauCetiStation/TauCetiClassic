@@ -106,7 +106,7 @@
 
 /mob/living/simple_animal/hulk/unathi/Login()
 	..()
-	to_chat(src, "\blue Can eat limbs (left mouse button).")
+	to_chat(src, "<span class='notice'>Can eat limbs (left mouse button).</span>")
 
 /mob/living/simple_animal/hulk/Life()
 	if(health < 1)

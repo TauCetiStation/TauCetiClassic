@@ -299,7 +299,7 @@
 		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 		emagged = 1
 		user.SetNextMove(CLICK_CD_INTERACT)
-		to_chat(user, "\blue You you disable the security protocols")
+		to_chat(user, "<span class='notice'>You you disable the security protocols</span>")
 		return TRUE
 	return FALSE
 

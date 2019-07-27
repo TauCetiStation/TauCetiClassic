@@ -379,7 +379,7 @@ Implants;
 //Reports player logouts//
 //////////////////////////
 /proc/display_roundstart_logout_report()
-	var/msg = "\blue <b>Roundstart logout report</b>\n\n"
+	var/msg = "<span class='notice'><b>Roundstart logout report</b>\n\n</span>"
 	for(var/mob/living/L in living_list)
 
 		if(L.ckey)

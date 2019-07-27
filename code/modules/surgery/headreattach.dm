@@ -41,8 +41,8 @@
 
 /datum/surgery_step/head/peel/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] peels back tattered flesh where [target]'s head used to be with \the [tool].",	\
-	"\blue You peel back tattered flesh where [target]'s head used to be with \the [tool].")
+	user.visible_message("<span class='notice'>[user] peels back tattered flesh where [target]'s head used to be with \the [tool].</span>",	\
+	"<span class='notice'>You peel back tattered flesh where [target]'s head used to be with \the [tool].</span>")
 	BP.status |= ORGAN_CUT_AWAY
 
 /datum/surgery_step/head/peel/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -76,8 +76,8 @@
 
 /datum/surgery_step/head/shape/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] has finished repositioning flesh and tissue to something anatomically recognizable where [target]'s head used to be with \the [tool].",	\
-	"\blue You have finished repositioning flesh and tissue to something anatomically recognizable where [target]'s head used to be with \the [tool].")
+	user.visible_message("<span class='notice'>[user] has finished repositioning flesh and tissue to something anatomically recognizable where [target]'s head used to be with \the [tool].</span>",	\
+	"<span class='notice'>You have finished repositioning flesh and tissue to something anatomically recognizable where [target]'s head used to be with \the [tool].</span>")
 	BP.open = 3
 
 /datum/surgery_step/head/shape/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -111,8 +111,8 @@
 
 /datum/surgery_step/head/suture/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] has finished stapling [target]'s neck into place with \the [tool].",	\
-	"\blue You have finished stapling [target]'s neck into place with \the [tool].")
+	user.visible_message("<span class='notice'>[user] has finished stapling [target]'s neck into place with \the [tool].</span>",	\
+	"<span class='notice'>You have finished stapling [target]'s neck into place with \the [tool].</span>")
 	BP.open = 4
 
 /datum/surgery_step/head/suture/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -146,8 +146,8 @@
 
 /datum/surgery_step/head/prepare/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] has finished adjusting the area around [target]'s neck with \the [tool].",	\
-	"\blue You have finished adjusting the area around [target]'s neck with \the [tool].")
+	user.visible_message("<span class='notice'>[user] has finished adjusting the area around [target]'s neck with \the [tool].</span>",	\
+	"<span class='notice'>You have finished adjusting the area around [target]'s neck with \the [tool].</span>")
 	BP.status |= ORGAN_ATTACHABLE
 	BP.amputated = 1
 	BP.setAmputatedTree()
@@ -180,8 +180,8 @@
 
 /datum/surgery_step/head/attach/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] has attached [target]'s head to the body.",	\
-	"\blue You have attached [target]'s head to the body.")
+	user.visible_message("<span class='notice'>[user] has attached [target]'s head to the body.</span>",	\
+	"<span class='notice'>You have attached [target]'s head to the body.</span>")
 	BP.status = 0
 	BP.amputated = 0
 	BP.destspawn = 0

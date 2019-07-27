@@ -27,7 +27,7 @@
 			to_chat(user, "<span class='warning'>There is a software error with the device.</span>")
 			return 0
 		else
-			to_chat(user, "\blue The device's software appears to be fine.")
+			to_chat(user, "<span class='notice'>The device's software appears to be fine.</span>")
 			return 1
 	else if(istype(O, /obj/machinery/door))
 		var/obj/machinery/door/D = O
@@ -35,7 +35,7 @@
 			to_chat(user, "<span class='warning'>There is a software error with the device.</span>")
 			return 0
 		else
-			to_chat(user, "\blue The device's software appears to be fine.")
+			to_chat(user, "<span class='notice'>The device's software appears to be fine.</span>")
 			return 1
 	else if(istype(O, /obj/machinery))
 		var/obj/machinery/A = O
@@ -43,7 +43,7 @@
 			to_chat(user, "<span class='warning'>There is a software error with the device.</span>")
 			return 0
 		else
-			to_chat(user, "\blue The device's software appears to be fine.")
+			to_chat(user, "<span class='notice'>The device's software appears to be fine.</span>")
 			return 1
 
 /obj/item/device/debugger/afterattack(obj/O, mob/user, proximity)

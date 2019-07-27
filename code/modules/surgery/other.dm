@@ -32,8 +32,8 @@
 
 /datum/surgery_step/fix_vein/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] has patched the damaged vein in [target]'s [BP.name] with \the [tool].", \
-		"\blue You have patched the damaged vein in [target]'s [BP.name] with \the [tool].")
+	user.visible_message("<span class='notice'>[user] has patched the damaged vein in [target]'s [BP.name] with \the [tool].</span>", \
+		"<span class='notice'>You have patched the damaged vein in [target]'s [BP.name] with \the [tool].</span>")
 
 	BP.status &= ~ORGAN_ARTERY_CUT
 	if (ishuman(user) && prob(40))

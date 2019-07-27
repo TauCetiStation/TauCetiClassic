@@ -188,7 +188,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.ventcrawler = 1
-		to_chat(H, "\blue \b Ventcrawling allowed")
+		to_chat(H, "<span class='notice'>\b Ventcrawling allowed</span>")
 
 	var/matrix/Mx = matrix()
 	Mx.Scale(0.8) //Makes our hulk to be bigger than any normal human.

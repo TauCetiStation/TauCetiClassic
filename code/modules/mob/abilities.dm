@@ -30,6 +30,6 @@ Creature-level abilities.
 			to_chat(src, "<span class='warning'>You cannot do this while cuffed.</span>")
 			return 0
 
-	to_chat(src, "\blue You perform an ability.")
+	to_chat(src, "<span class='notice'>You perform an ability.</span>")
 
 */

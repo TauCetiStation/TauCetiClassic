@@ -62,7 +62,7 @@
 	if(probability <= 0)
 		return
 
-	//world << "\blue Spread([probability])"
+	//world << "<span class='notice'>Spread([probability])</span>"
 	for(var/turf/unsimulated/jungle/J in orange(1, src))
 		if(!J.bushes_spawn)
 			continue
@@ -145,7 +145,7 @@
 
 		//piranhas - 25% chance to be an omnipresent risk, although they do practically no damage
 		if(prob(25))
-			to_chat(M, "\blue You feel something slithering around your legs.")
+			to_chat(M, "<span class='notice'>You feel something slithering around your legs.</span>")
 			if(prob(50))
 				spawn(rand(25,50))
 					var/turf/T = get_turf(M)

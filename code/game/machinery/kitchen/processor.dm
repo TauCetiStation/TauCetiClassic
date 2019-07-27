@@ -96,7 +96,7 @@
 	var/mob/living/carbon/monkey/O = what
 	if (O.client) //grief-proof
 		O.loc = loc
-		O.visible_message("\blue Suddenly [O] jumps out from the processor!", \
+		O.visible_message("<span class='notice'>Suddenly [O] jumps out from the processor!</span>", \
 				"You jump out from the processor", \
 				"You hear chimp")
 		return
@@ -198,5 +198,5 @@
 			continue
 		P.process_food(loc, O, src)
 	processing = FALSE
-	visible_message("\blue \the [src] finished processing.", \
+	visible_message("<span class='notice'>\the [src] finished processing.</span>", \
 		"You hear the food processor stopping/")

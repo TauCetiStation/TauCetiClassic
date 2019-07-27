@@ -51,7 +51,7 @@ This is what happens, when alien attack.
 
 	switch(M.a_intent)
 		if ("help")
-			visible_message(text("\blue [M] caresses [src] with its scythe like arm."))
+			visible_message(text("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>"))
 		if ("grab")
 			M.Grab(src)
 		if("hurt")

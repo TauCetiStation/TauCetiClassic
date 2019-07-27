@@ -128,7 +128,7 @@
 							C.icon_state = "soulstone2"
 							C.name = "Soul Stone: [S.real_name]"
 							to_chat(S, "Your soul has been captured! You are now bound to [U.name]'s and his allies will, help them suceed in their goals at all costs.")
-							to_chat(U, "\blue <b>Capture successful!</b>: \black [T.real_name]'s soul has been ripped from their body and stored within the soul stone.")
+							to_chat(U, "<span class='notice'><b>Capture successful!</b>: \black [T.real_name]'s soul has been ripped from their body and stored within the soul stone.</span>")
 							to_chat(U, "The soulstone has been imprinted with [S.real_name]'s mind, it will no longer react to other souls.")
 							C.imprinted = "[S.name]"
 							qdel(T)
@@ -150,7 +150,7 @@
 						T.health = T.maxHealth
 						C.icon_state = "soulstone2"
 						to_chat(T, "Your soul has been recaptured by the soul stone, its arcane energies are reknitting your ethereal form")
-						to_chat(U, "\blue <b>Capture successful!</b>: \black [T.name]'s has been recaptured and stored within the soul stone.")
+						to_chat(U, "<span class='notice'><b>Capture successful!</b>: \black [T.name]'s has been recaptured and stored within the soul stone.</span>")
 		if("CONSTRUCT")
 			var/obj/structure/constructshell/T = target
 			var/obj/item/device/soulstone/C = src

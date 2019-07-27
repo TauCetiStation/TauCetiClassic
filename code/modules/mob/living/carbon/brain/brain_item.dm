@@ -31,7 +31,7 @@
 	if(H.mind)
 		H.mind.transfer_to(brainmob)
 
-	to_chat(brainmob, "\blue You feel slightly disoriented. That's normal when you're just a brain.")
+	to_chat(brainmob, "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>")
 	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
 	if(mode)
 		mode.debrain_directive(src)
@@ -58,7 +58,7 @@
 	var/mob/living/carbon/human/H = M
 	if(ishuman(M) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
-		to_chat(user, "\blue You're going to need to remove their head cover first.")
+		to_chat(user, "<span class='notice'>You're going to need to remove their head cover first.</span>")
 		return
 
 //since these people will be dead M != usr

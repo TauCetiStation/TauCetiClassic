@@ -529,7 +529,7 @@
 		if(user.is_busy()) return
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.get_fuel() < 3)
-			to_chat(user, "\blue You need more welding fuel to complete this task.")
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
 		to_chat(user, "You start welding the APC frame...")
 		if(WT.use_tool(src, user, 50, amount = 3, volume = 50))
@@ -618,13 +618,13 @@
 						H.nutrition += src.cell.charge/10
 						src.cell.charge = 0
 
-					to_chat(user, "\blue You slot your fingers into the APC interface and siphon off some of the stored charge for your own use.")
+					to_chat(user, "<span class='notice'>You slot your fingers into the APC interface and siphon off some of the stored charge for your own use.</span>")
 					if(src.cell.charge < 0) src.cell.charge = 0
 					if(H.nutrition > 500) H.nutrition = 500
 					src.charging = 1
 
 				else
-					to_chat(user, "\blue You are already fully charged.")
+					to_chat(user, "<span class='notice'>You are already fully charged.</span>")
 			else
 				to_chat(user, "There is no charge to draw from that APC.")
 			return

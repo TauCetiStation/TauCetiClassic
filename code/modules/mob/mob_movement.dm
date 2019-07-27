@@ -63,7 +63,7 @@
 	set hidden = 1
 
 	if(!usr.pulling)
-		to_chat(usr, "\blue You are not pulling anything.")
+		to_chat(usr, "<span class='notice'>You are not pulling anything.</span>")
 		return
 	usr.stop_pulling()
 
@@ -189,13 +189,13 @@
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
 					if(!M.restrained() && M.stat == CONSCIOUS && M.canmove && mob.Adjacent(M))
-						to_chat(src, "\blue You're restrained! You can't move!")
+						to_chat(src, "<span class='notice'>You're restrained! You can't move!</span>")
 						return 0
 					else
 						M.stop_pulling()
 
 		if(mob.pinned.len)
-			to_chat(src, "\blue You're pinned to a wall by [mob.pinned[1]]!")
+			to_chat(src, "<span class='notice'>You're pinned to a wall by [mob.pinned[1]]!</span>")
 			return 0
 
 		move_delay = world.time//set move delay

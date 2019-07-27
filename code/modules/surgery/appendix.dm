@@ -40,8 +40,8 @@
 	..()
 
 /datum/surgery_step/appendectomy/cut_appendix/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("\blue [user] has separated [target]'s appendix with \the [tool]." , \
-	"\blue You have separated [target]'s appendix with \the [tool].")
+	user.visible_message("<span class='notice'>[user] has separated [target]'s appendix with \the [tool].</span>" , \
+	"<span class='notice'>You have separated [target]'s appendix with \the [tool].</span>")
 	target.op_stage.appendix = 1
 
 /datum/surgery_step/appendectomy/cut_appendix/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -70,8 +70,8 @@
 	..()
 
 /datum/surgery_step/appendectomy/remove_appendix/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("\blue [user] has removed [target]'s appendix with \the [tool].", \
-	"\blue You have removed [target]'s appendix with \the [tool].")
+	user.visible_message("<span class='notice'>[user] has removed [target]'s appendix with \the [tool].</span>", \
+	"<span class='notice'>You have removed [target]'s appendix with \the [tool].</span>")
 	var/app = 0
 	for(var/datum/disease/appendicitis/appendicitis in target.viruses)
 		app = 1

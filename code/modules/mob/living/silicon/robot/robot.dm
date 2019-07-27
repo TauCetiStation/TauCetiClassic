@@ -545,7 +545,7 @@
 					C.brute_damage = WC.brute
 					C.electronics_damage = WC.burn
 
-				to_chat(usr, "\blue You install the [W.name].")
+				to_chat(usr, "<span class='notice'>You install the [W.name].</span>")
 
 				return
 
@@ -791,7 +791,7 @@
 		if ("help")
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M] caresses [src]'s plating with its scythe-like arm."), 1)
+					O.show_message(text("<span class='notice'>[M] caresses [src]'s plating with its scythe-like arm.</span>"), 1)
 
 		if ("grab")
 			M.Grab(src)

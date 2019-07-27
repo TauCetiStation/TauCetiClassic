@@ -190,7 +190,7 @@
 		if ("help")
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M] caresses [src]'s casing with its scythe like arm."), 1)
+					O.show_message(text("<span class='notice'>[M] caresses [src]'s casing with its scythe like arm.</span>"), 1)
 
 		else //harm
 			var/damage = rand(10, 20)
@@ -259,7 +259,7 @@
 				cameralist[C.network] = C.network
 
 	src.network = input(usr, "Which network would you like to view?") as null|anything in cameralist
-	to_chat(src, "\blue Switched to [src.network] camera network.")
+	to_chat(src, "<span class='notice'>Switched to [src.network] camera network.</span>")
 //End of code by Mord_Sith
 */
 

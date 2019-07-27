@@ -37,7 +37,7 @@
 			user.visible_message("<span class='warning'><b>[user] begins clearing away [src].</b></span>","<span class='warning'><b>You begin clearing away [src].</b></span>")
 			spawn(rand(15,30))
 				if(get_dist(user,src) < 2)
-					to_chat(user, "\blue You clear away [src].")
+					to_chat(user, "<span class='notice'>You clear away [src].</span>")
 					new/obj/item/stack/sheet/wood(loc, rand(3,15))
 					if(prob(50))
 						icon_state = "stump[rand(1,2)]"
@@ -106,7 +106,7 @@ var/jungle_plants_init = 0
 	if(fruits_left > 0)
 		user.SetNextMove(CLICK_CD_INTERACT)
 		fruits_left--
-		to_chat(user, "\blue You pick a fruit off [src].")
+		to_chat(user, "<span class='notice'>You pick a fruit off [src].</span>")
 
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/jungle_fruit/J = new (src.loc)
 		J.potency = plant_strength

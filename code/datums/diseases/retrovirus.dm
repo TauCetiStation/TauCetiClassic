@@ -34,12 +34,12 @@
 			if(restcure)
 /*
 				if(affected_mob.sleeping && prob(30))  //removed until sleeping is fixed
-					to_chat(affected_mob, "\blue You feel better.")
+					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return
 */
 				if(affected_mob.lying && prob(30))  //changed FROM prob(20) until sleeping is fixed
-					to_chat(affected_mob, "\blue You feel better.")
+					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return
 			if (prob(8))
@@ -52,12 +52,12 @@
 			if(restcure)
 /*
 				if(affected_mob.sleeping && prob(20))  //removed until sleeping is fixed
-					to_chat(affected_mob, "\blue You feel better.")
+					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return
 */
 				if(affected_mob.lying && prob(20))  //changed FROM prob(10) until sleeping is fixed
-					to_chat(affected_mob, "\blue You feel better.")
+					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return
 			if (prob(8))
@@ -73,12 +73,12 @@
 			if(restcure)
 /*
 				if(affected_mob.sleeping && prob(20))  //removed until sleeping is fixed
-					to_chat(affected_mob, "\blue You feel better.")
+					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return
 */
 				if(affected_mob.lying && prob(20))  //changed FROM prob(10) until sleeping is fixed
-					to_chat(affected_mob, "\blue You feel better.")
+					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return
 			if (prob(10))
@@ -94,12 +94,12 @@
 			if(restcure)
 /*
 				if(affected_mob.sleeping && prob(10))  //removed until sleeping is fixed
-					to_chat(affected_mob, "\blue You feel better.")
+					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return
 */
 				if(affected_mob.lying && prob(5))  //changed FROM prob(5) until sleeping is fixed
-					to_chat(affected_mob, "\blue You feel better.")
+					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return
 			if (prob(60))

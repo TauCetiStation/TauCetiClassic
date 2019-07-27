@@ -28,7 +28,7 @@
 				to_chat(H, "<span class='warning'>You have a monitor for a head, where do you think you're going to put that?</span>")
 				return
 
-		to_chat(M, "\blue You swallow [src].")
+		to_chat(M, "<span class='notice'>You swallow [src].</span>")
 		M.drop_from_inventory(src) //icon update
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, reagents.total_volume)
@@ -75,7 +75,7 @@
 		if(!target.reagents.total_volume)
 			to_chat(user, "<span class='warning'>[target] is empty. Cant dissolve pill.</span>")
 			return
-		to_chat(user, "\blue You dissolve the pill in [target]")
+		to_chat(user, "<span class='notice'>You dissolve the pill in [target]</span>")
 
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Spiked \a [target] with a pill. Reagents: [reagentlist(src)]</font>")
 		msg_admin_attack("[user.name] ([user.ckey]) spiked \a [target] with a pill. Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")

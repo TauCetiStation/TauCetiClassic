@@ -438,8 +438,8 @@
 		src.log_append_to_last("Armor saved.")
 		playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "\green Your claws had no effect!")
-		src.occupant_message("\blue The [user]'s claws are stopped by the armor.")
-		visible_message("\blue The [user] rebounds off [src.name]'s armor!")
+		src.occupant_message("<span class='notice'>The [user]'s claws are stopped by the armor.</span>")
+		visible_message("<span class='notice'>The [user] rebounds off [src.name]'s armor!</span>")
 	return
 
 
@@ -459,8 +459,8 @@
 		else
 			src.log_append_to_last("Armor saved.")
 			playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
-			src.occupant_message("\blue The [user]'s attack is stopped by the armor.")
-			visible_message("\blue The [user] rebounds off [src.name]'s armor!")
+			src.occupant_message("<span class='notice'>The [user]'s attack is stopped by the armor.</span>")
+			visible_message("<span class='notice'>The [user] rebounds off [src.name]'s armor!</span>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 	return
 
@@ -476,7 +476,7 @@
 		src.visible_message("The [A] fastens firmly to [src].")
 		return
 	if(prob(src.deflect_chance) || istype(A, /mob))
-		src.occupant_message("\blue The [A] bounces off the armor.")
+		src.occupant_message("<span class='notice'>The [A] bounces off the armor.</span>")
 		src.visible_message("The [A] bounces off the [src.name] armor")
 		src.log_append_to_last("Armor saved.")
 		if(istype(A, /mob/living))
@@ -498,7 +498,7 @@
 
 /obj/mecha/proc/dynbulletdamage(obj/item/projectile/Proj)
 	if(prob(src.deflect_chance))
-		src.occupant_message("\blue The armor deflects incoming projectile.")
+		src.occupant_message("<span class='notice'>The armor deflects incoming projectile.</span>")
 		src.visible_message("The [src.name] armor deflects the projectile")
 		src.log_append_to_last("Armor saved.")
 		return
@@ -571,10 +571,10 @@
 		src.log_append_to_last("Armor saved.")
 		playsound(src, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "\green Your attack had no effect!")
-		src.occupant_message("\blue The [user]'s attack is stopped by the armor.")
+		src.occupant_message("<span class='notice'>The [user]'s attack is stopped by the armor.</span>")
 		for (var/mob/V in viewers(src))
 			if(V.client && !(V.blinded))
-				V.show_message("\blue The [user] rebounds off the [src.name] armor!", 1)
+				V.show_message("<span class='notice'>The [user] rebounds off the [src.name] armor!</span>", 1)
 	return
 */
 
@@ -716,11 +716,11 @@
 		if (WT.use(0,user))
 			if (hasInternalDamage(MECHA_INT_TANK_BREACH))
 				clearInternalDamage(MECHA_INT_TANK_BREACH)
-				to_chat(user, "\blue You repair the damaged gas tank.")
+				to_chat(user, "<span class='notice'>You repair the damaged gas tank.</span>")
 		else
 			return
 		if(src.health<initial(src.health))
-			to_chat(user, "\blue You repair some damage to [src.name].")
+			to_chat(user, "<span class='notice'>You repair some damage to [src.name].</span>")
 			src.health += min(10, initial(src.health)-src.health)
 		else
 			to_chat(user, "The [src.name] is at full integrity")
@@ -897,7 +897,7 @@
 	var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
 	if(possible_port)
 		if(connect(possible_port))
-			src.occupant_message("\blue [name] connects to the port.")
+			src.occupant_message("<span class='notice'>[name] connects to the port.</span>")
 			src.verbs += /obj/mecha/verb/disconnect_from_port
 			src.verbs -= /obj/mecha/verb/connect_to_port
 			return
@@ -917,7 +917,7 @@
 	if(usr!=src.occupant)
 		return
 	if(disconnect())
-		src.occupant_message("\blue [name] disconnects from the port.")
+		src.occupant_message("<span class='notice'>[name] disconnects from the port.</span>")
 		src.verbs -= /obj/mecha/verb/disconnect_from_port
 		src.verbs += /obj/mecha/verb/connect_to_port
 	else
@@ -970,12 +970,12 @@
 			to_chat(usr, "<span class='warning'>Kinda hard to climb in while handcuffed don't you think?</span>")
 			return
 	if (src.occupant)
-		to_chat(usr, "\blue <B>The [src.name] is already occupied!</B>")
+		to_chat(usr, "<span class='notice'><B>The [src.name] is already occupied!</B></span>")
 		src.log_append_to_last("Permission denied.")
 		return
 /*
 	if (usr.abiotic())
-		to_chat(usr, "\blue <B>Subject cannot have abiotic items on.</B>")
+		to_chat(usr, "<span class='notice'><B>Subject cannot have abiotic items on.</B></span>")
 		return
 */
 	var/passed
@@ -994,7 +994,7 @@
 			return
 //	usr << "You start climbing into [src.name]"
 
-	visible_message("\blue [usr] starts to climb into [src.name]")
+	visible_message("<span class='notice'>[usr] starts to climb into [src.name]</span>")
 
 	if(enter_after(40,usr))
 		if(!src.occupant)
@@ -1043,7 +1043,7 @@
 	//Added a message here since people assume their first click failed or something./N
 //	user << "Installing MMI, please stand by."
 
-	visible_message("\blue [usr] starts to insert an MMI into [src.name]")
+	visible_message("<span class='notice'>[usr] starts to insert an MMI into [src.name]</span>")
 
 	if(enter_after(40,user))
 		if(!occupant)

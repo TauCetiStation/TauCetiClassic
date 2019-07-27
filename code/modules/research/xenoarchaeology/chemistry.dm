@@ -84,7 +84,7 @@
 		var/new_label = sanitize_safe(input("What should the new label be?","Label solution tray"), MAX_NAME_LEN)
 		if(new_label)
 			name = "solution tray ([new_label])"
-			to_chat(user, "\blue You write on the label of the solution tray.")
+			to_chat(user, "<span class='notice'>You write on the label of the solution tray.</span>")
 	else
 		..(W, user)
 

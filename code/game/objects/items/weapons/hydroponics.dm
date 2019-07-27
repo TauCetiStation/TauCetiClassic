@@ -52,10 +52,10 @@
 					else
 						S.item_quants[G.name] = 1
 				else
-					to_chat(user, "\blue The seed bag is full.")
+					to_chat(user, "<span class='notice'>The seed bag is full.</span>")
 					S.updateUsrDialog()
 					return
-			to_chat(user, "\blue You pick up all the seeds.")
+			to_chat(user, "<span class='notice'>You pick up all the seeds.</span>")
 		else
 			if (S.contents.len < S.capacity)
 				S.contents += src;
@@ -64,7 +64,7 @@
 				else
 					S.item_quants[name] = 1
 			else
-				to_chat(user, "\blue The seed bag is full.")
+				to_chat(user, "<span class='notice'>The seed bag is full.</span>")
 		S.updateUsrDialog()
 	return
 

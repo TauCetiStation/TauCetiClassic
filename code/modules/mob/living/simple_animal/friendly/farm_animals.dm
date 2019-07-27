@@ -42,7 +42,7 @@
 		if(enemies.len && prob(10))
 			enemies = list()
 			LoseTarget()
-			src.visible_message("\blue [src] calms down.")
+			src.visible_message("<span class='notice'>[src] calms down.</span>")
 
 		if(stat == CONSCIOUS)
 			if(udder && prob(5))
@@ -242,13 +242,13 @@ var/global/chicken_count = 0
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat)) //feedin' dem chickens
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!stat && eggsleft < 8)
-			user.visible_message("\blue [user] feeds [O] to [name]! It clucks happily.","\blue You feed [O] to [name]! It clucks happily.")
+			user.visible_message("<span class='notice'>[user] feeds [O] to [name]! It clucks happily.</span>","<span class='notice'>You feed [O] to [name]! It clucks happily.</span>")
 			user.drop_item()
 			qdel(O)
 			eggsleft += rand(1, 4)
 			//world << eggsleft
 		else
-			to_chat(user, "\blue [name] doesn't seem hungry!")
+			to_chat(user, "<span class='notice'>[name] doesn't seem hungry!</span>")
 	else
 		..()
 

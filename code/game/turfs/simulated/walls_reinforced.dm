@@ -16,7 +16,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations) //#Z2
 		if(user.a_intent == "hurt")
-			to_chat(user, text("\blue You punch the wall."))
+			to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
 			take_damage(rand(5, 25))
 			if(prob(25))
 				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
@@ -31,10 +31,10 @@
 			return //##Z2
 
 	if(rotting)
-		to_chat(user, "\blue This wall feels rather unstable.")
+		to_chat(user, "<span class='notice'>This wall feels rather unstable.</span>")
 		return
 
-	/*user << "\blue You push the wall but nothing happens!"
+	/*user << "<span class='notice'>You push the wall but nothing happens!</span>"
 	playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER, 25)
 	src.add_fingerprint(user)*/ //this code is in standard wall attack_hand proc
 	..()

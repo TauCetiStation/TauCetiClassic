@@ -1049,7 +1049,7 @@
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(FAT in mutations)
 		if(!has_trait(TRAIT_FAT) && overeatduration < 100)
-			to_chat(src, "\blue You feel fit again!")
+			to_chat(src, "<span class='notice'>You feel fit again!</span>")
 			mutations.Remove(FAT)
 			update_body()
 			update_mutantrace()

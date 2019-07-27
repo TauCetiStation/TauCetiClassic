@@ -42,12 +42,12 @@
 
 /datum/surgery_step/gender_reassignment/reshape_genitals/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(target.gender == FEMALE)
-		user.visible_message("\blue [user] has made a man of [target] with \the [tool]." , \
-		"\blue You have made a man of [target].")
+		user.visible_message("<span class='notice'>[user] has made a man of [target] with \the [tool].</span>" , \
+		"<span class='notice'>You have made a man of [target].</span>")
 		target.gender = MALE
 	else
-		user.visible_message("\blue [user] has made a woman of [target] with \the [tool]." , \
-		"\blue You have made a woman of [target].")
+		user.visible_message("<span class='notice'>[user] has made a woman of [target] with \the [tool].</span>" , \
+		"<span class='notice'>You have made a woman of [target].</span>")
 		target.gender = FEMALE
 
 	target.regenerate_icons()

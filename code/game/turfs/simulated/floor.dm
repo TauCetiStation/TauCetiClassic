@@ -499,9 +499,9 @@ var/list/wood_icons = list("wood","wood-broken")
 				qdel(C)
 				set_lightfloor_state(0) //fixing it by bashing it with a light bulb, fun eh?
 				update_icon()
-				to_chat(user, "\blue You replace the light bulb.")
+				to_chat(user, "<span class='notice'>You replace the light bulb.</span>")
 			else
-				to_chat(user, "\blue The lightbulb seems fine, no need to replace it.")
+				to_chat(user, "<span class='notice'>The lightbulb seems fine, no need to replace it.</span>")
 
 	if(iscrowbar(C) && (!(is_plating())))
 		if(broken || burnt)
@@ -547,7 +547,7 @@ var/list/wood_icons = list("wood","wood-broken")
 			if (R.get_amount() >= 2)
 				if(user.is_busy(src))
 					return
-				to_chat(user, "\blue Reinforcing the floor...")
+				to_chat(user, "<span class='notice'>Reinforcing the floor...</span>")
 				if(R.use_tool(src, user, 30, amount = 2, volume = 50) && is_plating())
 					ChangeTurf(/turf/simulated/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
@@ -590,7 +590,7 @@ var/list/wood_icons = list("wood","wood-broken")
 				levelupdate()
 				playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 			else
-				to_chat(user, "\blue This section is too damaged to support a tile. Use a welder to fix the damage.")
+				to_chat(user, "<span class='notice'>This section is too damaged to support a tile. Use a welder to fix the damage.</span>")
 
 
 	if(iscoil(C))
@@ -608,7 +608,7 @@ var/list/wood_icons = list("wood","wood-broken")
 		if(is_grass_floor())
 			new /obj/item/weapon/ore/glass(src)
 			new /obj/item/weapon/ore/glass(src) //Make some sand if you shovel grass
-			to_chat(user, "\blue You shovel the grass.")
+			to_chat(user, "<span class='notice'>You shovel the grass.</span>")
 			make_plating()
 		else
 			to_chat(user, "<span class='warning'>You cannot shovel this.</span>")
@@ -624,7 +624,7 @@ var/list/wood_icons = list("wood","wood-broken")
 					burnt = 0
 					broken = 0
 				else
-					to_chat(user, "\blue You need more welding fuel to complete this task.")
+					to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 
 #undef LIGHTFLOOR_ON_BIT
 

@@ -60,7 +60,7 @@
 		if (isscrewdriver(W))
 			if(!user.is_busy(src) && W.use_tool(src, user, 20, volume = 50))
 				src.open =! src.open
-				user.show_message(text("\blue You [] the service panel.", (src.open ? "open" : "close")))
+				user.show_message(text("<span class='notice'>You [] the service panel.</span>", (src.open ? "open" : "close")))
 			return
 		if ((ismultitool(W)) && (src.open == 1)&& (!src.l_hacking))
 			user.show_message(text("<span class='warning'>Now attempting to reset internal memory, please hold.</span>"), 1)

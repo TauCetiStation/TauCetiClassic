@@ -24,8 +24,8 @@
 			user.drop_item()
 			I.loc = src
 			grenades += I
-			to_chat(user, "\blue You put the grenade in the grenade launcher.")
-			to_chat(user, "\blue [grenades.len] / [max_grenades] Grenades.")
+			to_chat(user, "<span class='notice'>You put the grenade in the grenade launcher.</span>")
+			to_chat(user, "<span class='notice'>[grenades.len] / [max_grenades] Grenades.</span>")
 		else
 			to_chat(usr, "<span class='warning'>The grenade launcher cannot hold more grenades.</span>")
 

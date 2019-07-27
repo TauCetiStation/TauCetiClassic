@@ -198,7 +198,7 @@ var/specops_shuttle_timeleft = 0
 	attack_hand(user)
 
 /obj/machinery/computer/specops_shuttle/emag_act(mob/user)
-	to_chat(user, "\blue The electronic systems in this console are far too advanced for your primitive hacking peripherals.")
+	to_chat(user, "<span class='notice'>The electronic systems in this console are far too advanced for your primitive hacking peripherals.</span>")
 	return TRUE //yep, don't try do that
 
 /obj/machinery/computer/specops_shuttle/ui_interact(mob/user)
@@ -223,14 +223,14 @@ var/specops_shuttle_timeleft = 0
 		if(!specops_shuttle_at_station || specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
 		if (!specops_can_move())
-			to_chat(usr, "\blue Central Command will not allow the Special Operations shuttle to return yet.")
+			to_chat(usr, "<span class='notice'>Central Command will not allow the Special Operations shuttle to return yet.</span>")
 			if(world.timeofday <= specops_shuttle_timereset)
 				if (((world.timeofday - specops_shuttle_timereset) / 10) > 60)
-					to_chat(usr, "\blue [-((world.timeofday - specops_shuttle_timereset) / 10) / 60] minutes remain!")
-				to_chat(usr, "\blue [-(world.timeofday - specops_shuttle_timereset) / 10] seconds remain!")
+					to_chat(usr, "<span class='notice'>[-((world.timeofday - specops_shuttle_timereset) / 10) / 60] minutes remain!</span>")
+				to_chat(usr, "<span class='notice'>[-(world.timeofday - specops_shuttle_timereset) / 10] seconds remain!</span>")
 			return FALSE
 
-		to_chat(usr, "\blue The Special Operations shuttle will arrive at Central Command in [(SPECOPS_MOVETIME / 10)] seconds.")
+		to_chat(usr, "<span class='notice'>The Special Operations shuttle will arrive at Central Command in [(SPECOPS_MOVETIME / 10)] seconds.</span>")
 
 		temp += "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
@@ -246,7 +246,7 @@ var/specops_shuttle_timeleft = 0
 			to_chat(usr, "<span class='warning'>The Special Operations shuttle is unable to leave.</span>")
 			return FALSE
 
-		to_chat(usr, "\blue The Special Operations shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds.")
+		to_chat(usr, "<span class='notice'>The Special Operations shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds.</span>")
 
 		temp += "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 

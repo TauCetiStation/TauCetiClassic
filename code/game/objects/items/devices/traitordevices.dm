@@ -51,7 +51,7 @@ effective or pretty fucking useless.
 				to_chat(M, "<span class='warning'><b>You feel a sudden, electric jolt travel through your head.</b></span>")
 
 	playsound(src, 'sound/misc/interference.ogg', VOL_EFFECTS_MASTER)
-	to_chat(user, "\blue You trigger [src].")
+	to_chat(user, "<span class='notice'>You trigger [src].</span>")
 	times_used += 1
 	if(times_used >= max_uses)
 		icon_state = "battererburnt"

@@ -125,7 +125,7 @@ commented cause polls are kinda broken now, needs refactoring */
 			observer.started_as_observer = 1
 			close_spawn_windows()
 			var/obj/O = locate("landmark*Observer-Start")
-			to_chat(src, "\blue Now teleporting.")
+			to_chat(src, "<span class='notice'>Now teleporting.</span>")
 			observer.loc = O.loc
 			observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
 
@@ -164,7 +164,7 @@ commented cause polls are kinda broken now, needs refactoring */
 	if(href_list["SelectedJob"])
 
 		if(!enter_allowed)
-			to_chat(usr, "\blue There is an administrative lock on entering the game!")
+			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 			return
 
 		if(client.prefs.species != HUMAN)
@@ -297,7 +297,7 @@ commented cause polls are kinda broken now, needs refactoring */
 		to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 		return 0
 	if(!enter_allowed)
-		to_chat(usr, "\blue There is an administrative lock on entering the game!")
+		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 		return 0
 	if(!IsJobAvailable(rank))
 		to_chat(src, alert("[rank] is not available. Please try another."))

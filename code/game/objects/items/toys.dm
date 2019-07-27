@@ -43,7 +43,7 @@
 	if(!proximity) return
 	if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
 		A.reagents.trans_to(src, 10)
-		to_chat(user, "\blue You fill the balloon with the contents of [A].")
+		to_chat(user, "<span class='notice'>You fill the balloon with the contents of [A].</span>")
 		src.desc = "A translucent balloon with some form of liquid sloshing around in it."
 		src.update_icon()
 	return
@@ -60,7 +60,7 @@
 					qdel(src)
 				else
 					src.desc = "A translucent balloon with some form of liquid sloshing around in it."
-					to_chat(user, "\blue You fill the balloon with the contents of [O].")
+					to_chat(user, "<span class='notice'>You fill the balloon with the contents of [O].</span>")
 					O.reagents.trans_to(src, 10)
 	src.update_icon()
 	return
@@ -144,7 +144,7 @@
 
 	if (istype(A, /obj/item/toy/ammo/gun))
 		if (src.bullets >= 7)
-			to_chat(user, "\blue It's already fully loaded!")
+			to_chat(user, "<span class='notice'>It's already fully loaded!</span>")
 			return 1
 		if (A.amount_left <= 0)
 			to_chat(user, "<span class='warning'>There is no more caps!</span>")
@@ -220,7 +220,7 @@
 			user.drop_item()
 			qdel(I)
 			bullets++
-			to_chat(user, "\blue You load the foam dart into the crossbow.")
+			to_chat(user, "<span class='notice'>You load the foam dart into the crossbow.</span>")
 		else
 			to_chat(usr, "<span class='warning'>It's already fully loaded.</span>")
 
@@ -327,13 +327,13 @@
 /obj/item/toy/sword/attack_self(mob/user)
 	src.active = !( src.active )
 	if (src.active)
-		to_chat(user, "\blue You extend the plastic blade with a quick flick of your wrist.")
+		to_chat(user, "<span class='notice'>You extend the plastic blade with a quick flick of your wrist.</span>")
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		src.icon_state = "swordblue"
 		src.item_state = "swordblue"
 		src.w_class = ITEM_SIZE_LARGE
 	else
-		to_chat(user, "\blue You push the plastic blade back down into the handle.")
+		to_chat(user, "<span class='notice'>You push the plastic blade back down into the handle.</span>")
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		src.icon_state = "sword0"
 		src.item_state = "sword0"
@@ -421,12 +421,12 @@
 
 	else if(istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
 		A.reagents.trans_to(src, 10)
-		to_chat(user, "\blue You refill your flower!")
+		to_chat(user, "<span class='notice'>You refill your flower!</span>")
 		return
 
 	else if(src.reagents.total_volume < 1)
 		src.empty = 1
-		to_chat(user, "\blue Your flower has run dry!")
+		to_chat(user, "<span class='notice'>Your flower has run dry!</span>")
 		return
 
 	else
@@ -1233,7 +1233,7 @@ Owl & Griffin toys
 	icon_state = "poly_companion"
 
 /obj/item/toy/prize/poly/polycompanion/attack_self(mob/user)
-	to_chat(user, "\blue You have clicked a switch behind the toy.")
+	to_chat(user, "<span class='notice'>You have clicked a switch behind the toy.</span>")
 	src.icon_state = "poly_companion" + pick("1","2","")
 
 	if(istype(user,/mob/living/carbon/human))
@@ -1252,7 +1252,7 @@ Owl & Griffin toys
 	icon_state = "poly_special"
 
 /obj/item/toy/prize/poly/polyspecial/attack_self(mob/user)
-	to_chat(user, "\blue You have clicked a switch behind the toy.")
+	to_chat(user, "<span class='notice'>You have clicked a switch behind the toy.</span>")
 	src.icon_state = "poly_special" + pick("1","2","")
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user

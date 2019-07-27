@@ -52,16 +52,16 @@
 				to_chat(user, "<span class='warning'>You don't have enough rods to do that.</span>")
 				return
 			if(user.is_busy()) return
-			to_chat(user, "\blue You begin to build a catwalk.")
+			to_chat(user, "<span class='notice'>You begin to build a catwalk.</span>")
 			if(R.use_tool(src, user, 30, amount = 2, volume = 50))
-				to_chat(user, "\blue You build a catwalk!")
+				to_chat(user, "<span class='notice'>You build a catwalk!</span>")
 				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
 				qdel(L)
 				return
 
 		if(!R.use(1))
 			return
-		to_chat(user, "\blue Constructing support lattice ...")
+		to_chat(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 		ReplaceWithLattice()
 		return

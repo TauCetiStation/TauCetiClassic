@@ -447,12 +447,12 @@
 		if(user.a_intent == "hurt")
 			playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 			if (prob(75))
-				to_chat(user, text("\blue You destroy that girder!"))
+				to_chat(user, text("<span class='notice'>You destroy that girder!</span>"))
 				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 				new /obj/item/stack/sheet/metal(loc)
 				qdel(src)
 			else
-				to_chat(user, text("\blue You punch the girder."))
+				to_chat(user, text("<span class='notice'>You punch the girder.</span>"))
 		else
-			to_chat(user, "\blue You push the girder but nothing happens!")
+			to_chat(user, "<span class='notice'>You push the girder but nothing happens!</span>")
 		return

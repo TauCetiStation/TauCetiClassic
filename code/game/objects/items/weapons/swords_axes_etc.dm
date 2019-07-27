@@ -45,7 +45,7 @@
 			icon_state = "sword[item_color]"
 		w_class = ITEM_SIZE_LARGE
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "\blue [src] is now active.")
+		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 
 	else
 		force = 3
@@ -56,7 +56,7 @@
 			icon_state = "sword0"
 		w_class = ITEM_SIZE_SMALL
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "\blue [src] can now be concealed.")
+		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
@@ -141,8 +141,8 @@
 		force = 15//quite robust
 		attack_verb = list("smacked", "struck", "slapped")
 	else
-		user.visible_message("\blue [user] collapses their telescopic baton.",\
-		"\blue You collapse the baton.",\
+		user.visible_message("<span class='notice'>[user] collapses their telescopic baton.</span>",\
+		"<span class='notice'>You collapse the baton.</span>",\
 		"You hear a click.")
 		icon_state = "telebaton_0"
 		item_state = null
@@ -245,12 +245,12 @@
 /obj/item/weapon/melee/energy/axe/attack_self(mob/user)
 	src.active = !( src.active )
 	if (src.active)
-		to_chat(user, "\blue The axe is now energised.")
+		to_chat(user, "<span class='notice'>The axe is now energised.</span>")
 		src.force = 150
 		src.icon_state = "axe1"
 		src.w_class = ITEM_SIZE_HUGE
 	else
-		to_chat(user, "\blue The axe can now be concealed.")
+		to_chat(user, "<span class='notice'>The axe can now be concealed.</span>")
 		src.force = 40
 		src.icon_state = "axe0"
 		src.w_class = ITEM_SIZE_HUGE

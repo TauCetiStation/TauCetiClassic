@@ -42,15 +42,15 @@
 					to_chat(user, "<span class='warning'>The inscription can be at most 20 characters long.</span>")
 				else
 					if(label_text == "")
-						to_chat(user, "\blue You scratch the inscription off of [initial(BB)].")
+						to_chat(user, "<span class='notice'>You scratch the inscription off of [initial(BB)].</span>")
 						BB.name = initial(BB.name)
 					else
-						to_chat(user, "\blue You inscribe \"[label_text]\" into \the [initial(BB.name)].")
+						to_chat(user, "<span class='notice'>You inscribe \"[label_text]\" into \the [initial(BB.name)].</span>")
 						BB.name = "[initial(BB.name)] \"[label_text]\""
 			else
-				to_chat(user, "\blue You can only inscribe a metal bullet.")//because inscribing beanbags is silly
+				to_chat(user, "<span class='notice'>You can only inscribe a metal bullet.</span>")//because inscribing beanbags is silly
 		else
-			to_chat(user, "\blue There is no bullet in the casing to inscribe anything into.")
+			to_chat(user, "<span class='notice'>There is no bullet in the casing to inscribe anything into.</span>")
 	else
 		..()
 

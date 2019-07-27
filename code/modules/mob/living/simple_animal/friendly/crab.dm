@@ -62,9 +62,9 @@
 					health = min(maxHealth, health + MED.heal_brute)
 					for(var/mob/M in viewers(src, null))
 						if ((M.client && !( M.blinded )))
-							M.show_message("\blue [user] applies the [MED] on [src]")
+							M.show_message("<span class='notice'>[user] applies the [MED] on [src]</span>")
 		else
-			to_chat(user, "\blue this [src] is dead, medical items won't bring it back to life.")
+			to_chat(user, "<span class='notice'>this [src] is dead, medical items won't bring it back to life.</span>")
 	else
 		if(O.force)
 			health -= O.force

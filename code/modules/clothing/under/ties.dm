@@ -222,7 +222,7 @@
 	user.drop_from_inventory(holstered)
 	holstered.loc = src
 	holstered.add_fingerprint(user)
-	user.visible_message("\blue [user] holsters the [holstered].", "You holster the [holstered].")
+	user.visible_message("<span class='notice'>[user] holsters the [holstered].</span>", "You holster the [holstered].")
 
 /obj/item/clothing/tie/holster/proc/unholster(mob/user)
 	if(!holstered)
@@ -235,8 +235,8 @@
 			usr.visible_message("<span class='warning'>[user] draws the [holstered], ready to shoot!</span>", \
 			"<span class='warning'>You draw the [holstered], ready to shoot!</span>")
 		else
-			user.visible_message("\blue [user] draws the [holstered], pointing it at the ground.", \
-			"\blue You draw the [holstered], pointing it at the ground.")
+			user.visible_message("<span class='notice'>[user] draws the [holstered], pointing it at the ground.</span>", \
+			"<span class='notice'>You draw the [holstered], pointing it at the ground.</span>")
 		user.put_in_hands(holstered)
 		holstered.add_fingerprint(user)
 		holstered = null
@@ -293,7 +293,7 @@
 
 	if(!H.holstered)
 		if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
-			to_chat(usr, "\blue You need your gun equiped to holster it.")
+			to_chat(usr, "<span class='notice'>You need your gun equiped to holster it.</span>")
 			return
 		var/obj/item/weapon/gun/W = usr.get_active_hand()
 		H.holster(W, usr)

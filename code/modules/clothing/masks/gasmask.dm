@@ -72,13 +72,13 @@
 	if(isscrewdriver(W))
 		switch(aggressiveness)
 			if(1)
-				to_chat(user, "\blue You set the restrictor to the middle position.")
+				to_chat(user, "<span class='notice'>You set the restrictor to the middle position.</span>")
 				aggressiveness = 2
 			if(2)
-				to_chat(user, "\blue You set the restrictor to the last position.")
+				to_chat(user, "<span class='notice'>You set the restrictor to the last position.</span>")
 				aggressiveness = 3
 			if(3)
-				to_chat(user, "\blue You set the restrictor to the first position.")
+				to_chat(user, "<span class='notice'>You set the restrictor to the first position.</span>")
 				aggressiveness = 1
 			if(4)
 				to_chat(user, "<span class='warning'>You adjust the restrictor but nothing happens, probably because its broken.</span>")

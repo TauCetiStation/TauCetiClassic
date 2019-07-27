@@ -359,11 +359,11 @@
 	update_icon()
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack_self(mob/user)
-	to_chat(user, "\blue You click \the [src] but get no reaction. Must be dead.")
+	to_chat(user, "<span class='notice'>You click \the [src] but get no reaction. Must be dead.</span>")
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack(mob/M, mob/user)
 	if (user.ckey != "nerezza") //Because this can end up in the wrong hands, let's make it useless for them!
-		to_chat(user, "\blue You click \the [src] but get no reaction. Must be dead.")
+		to_chat(user, "<span class='notice'>You click \the [src] but get no reaction. Must be dead.</span>")
 		return
 	if(!reagents.total_volume)
 		to_chat(user, "<span class='warning'>\The [src] is empty.</span>")
@@ -374,7 +374,7 @@
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
-			to_chat(user, "\blue [trans] units injected. [reagents.total_volume] units remaining in \the [src].")
+			to_chat(user, "<span class='notice'>[trans] units injected. [reagents.total_volume] units remaining in \the [src].</span>")
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/examine(mob/user)

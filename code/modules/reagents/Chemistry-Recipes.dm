@@ -1208,7 +1208,7 @@
 	playsound(holder.my_atom, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 	for(var/mob/living/M in range(get_turf_loc(holder.my_atom), 7))
 		M.bodytemperature -= 140
-		to_chat(M, "\blue You feel a chill!")
+		to_chat(M, "<span class='notice'>You feel a chill!</span>")
 
 //Orange
 /datum/chemical_reaction/slimecasp

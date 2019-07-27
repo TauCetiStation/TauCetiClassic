@@ -388,7 +388,7 @@
 	if(answer == "Yes")
 		var/turf/T = get_turf_or_move(P.loc)
 		for (var/mob/v in viewers(T))
-			v.show_message("\blue [M] presses \his thumb against [P].", 3, "\blue [P] makes a sharp clicking sound as it extracts DNA material from [M].", 2)
+			v.show_message("<span class='notice'>[M] presses \his thumb against [P].</span>", 3, "<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>", 2)
 		var/datum/dna/dna = M.dna
 		to_chat(P, "<font color = red><h3>[M]'s UE string : [dna.unique_enzymes]</h3></font>")
 		if(dna.unique_enzymes == P.master_dna)
@@ -692,7 +692,7 @@
 		remove_language("Siik'tajr")
 		remove_language("Skrellian")
 
-		to_chat(src, "\blue Translator Module toggled OFF.")
+		to_chat(src, "<span class='notice'>Translator Module toggled OFF.</span>")
 
 	else
 		translator_on = 1
@@ -702,4 +702,4 @@
 		add_language("Siik'tajr", 0)
 		add_language("Skrellian")
 
-		to_chat(src, "\blue Translator Module toggled ON.")
+		to_chat(src, "<span class='notice'>Translator Module toggled ON.</span>")

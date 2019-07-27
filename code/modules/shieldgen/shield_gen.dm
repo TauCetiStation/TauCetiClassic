@@ -59,7 +59,7 @@
 
 	else if(iswrench(W))
 		src.anchored = !src.anchored
-		src.visible_message("\blue [bicon(src)] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].")
+		src.visible_message("<span class='notice'>[bicon(src)] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].</span>")
 
 		if(active)
 			toggle()
