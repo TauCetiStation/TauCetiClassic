@@ -470,7 +470,7 @@
 				if(istype(wear_mask, /obj/item/clothing/mask/gas))
 					breathsound = "gasmaskbreath"
 				if(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space))
-					breathsound = "rigbreath"
+					breathsound = SOUNDIN_RIGBREATH
 				playsound(src, breathsound, VOL_EFFECTS_MASTER, null, FALSE, -6)
 			return internal.remove_air_volume(volume_needed)
 		else if(internals)
