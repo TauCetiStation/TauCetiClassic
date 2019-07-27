@@ -483,7 +483,7 @@ This is facehugger Attach procs
 		STOP_PROCESSING(SSobj, src)
 
 		target.status_flags |= XENO_HOST
-		target.visible_message("<span class='warning'>\b [src] falls limp after violating [target]'s face!</span>")
+		target.visible_message("<span class='warning'><b>[src] falls limp after violating [target]'s face!</b></span>")
 
 		Die()
 		icon_state = "[initial(icon_state)]_impregnated"
@@ -493,7 +493,7 @@ This is facehugger Attach procs
 			src.loc = get_turf(C)
 			C.facehugger = null
 	else
-		target.visible_message("<span class='warning'>\b [src] violates [target]'s face!</span>")
+		target.visible_message("<span class='warning'><b>[src] violates [target]'s face!</b></span>")
 
 /obj/item/clothing/mask/facehugger/proc/Die()
 	if(stat == DEAD)
@@ -501,7 +501,7 @@ This is facehugger Attach procs
 
 	icon_state = "[initial(icon_state)]_dead"
 	stat = DEAD
-	src.visible_message("<span class='warning'>\b[src] curls up into a ball!</span>")
+	src.visible_message("<span class='warning'><b>[src] curls up into a ball!</b></span>")
 	return
 
 /*----------------------------------------
@@ -707,7 +707,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 		assailant.visible_message("<span class='danger'>[assailant] extends its proboscis deep inside [affecting]'s mouth!</span>")
 		spawn(rand(MIN_IMPREGNATION_TIME,MAX_IMPREGNATION_TIME))
 			if(istype(assailant.loc, /obj/item/clothing/mask/facehugger))
-				assailant.visible_message("<span class='warning'>\b [assailant] falls limp after violating [affecting]'s face!</span>")
+				assailant.visible_message("<span class='warning'><b>[assailant] falls limp after violating [affecting]'s face!</b></span>")
 				var/obj/item/clothing/mask/facehugger/FH_mask = assailant.loc
 				FH_mask.canremove = 1
 				FH_mask.Impregnate(affecting, assailant)

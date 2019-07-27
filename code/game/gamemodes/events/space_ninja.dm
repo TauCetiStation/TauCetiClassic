@@ -585,13 +585,13 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 			U.gib()
 			return 0
 		if(!istype(U:head, /obj/item/clothing/head/helmet/space/space_ninja))
-			to_chat(U, "<span class='warning'><B>ERROR</B>: 100113 \black UNABLE TO LOCATE HEAD GEAR\nABORTING...</span>")
+			to_chat(U, "<span class='warning'><B>ERROR</B>: 100113</span> UNABLE TO LOCATE HEAD GEAR\nABORTING...")
 			return 0
 		if(!istype(U:shoes, /obj/item/clothing/shoes/space_ninja))
-			to_chat(U, "<span class='warning'><B>ERROR</B>: 122011 \black UNABLE TO LOCATE FOOT GEAR\nABORTING...</span>")
+			to_chat(U, "<span class='warning'><B>ERROR</B>: 122011</span> UNABLE TO LOCATE FOOT GEAR\nABORTING...")
 			return 0
 		if(!istype(U:gloves, /obj/item/clothing/gloves/space_ninja))
-			to_chat(U, "<span class='warning'><B>ERROR</B>: 110223 \black UNABLE TO LOCATE HAND GEAR\nABORTING...</span>")
+			to_chat(U, "<span class='warning'><B>ERROR</B>: 110223</span> UNABLE TO LOCATE HAND GEAR\nABORTING...")
 			return 0
 
 		affecting = U
@@ -737,7 +737,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		U.incorporeal_move = 0
 		kamikaze = 0
 		k_unlock = 0
-		to_chat(U, "<span class='notice'>Disengaging mode...\n\black<b>CODE NAME</b>: <span class='warning'><b>KAMIKAZE</b></span></span>")
+		to_chat(U, "<span class='notice'>Disengaging mode...\n</span><b>CODE NAME</b>: <span class='warning'><b>KAMIKAZE</b></span>")
 
 //=======//AI VERBS//=======//
 

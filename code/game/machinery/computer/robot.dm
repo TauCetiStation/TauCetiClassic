@@ -21,7 +21,7 @@
 
 /obj/machinery/computer/robotics/ui_interact(mob/user)
 	if (src.z > ZLEVEL_EMPTY)
-		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>: \black You're too far away from the station!</span>")
+		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return
 
 	var/dat

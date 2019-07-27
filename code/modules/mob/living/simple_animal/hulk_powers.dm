@@ -567,7 +567,7 @@
 			usr.attack_log += "\[[time_stamp()]\]<font color='red'> Eats [target.name] ([target.ckey]) with hulk_eat</font>"
 			msg_admin_attack("[key_name(usr)] eats [key_name(target)] body with hulk_eat")
 			if(isrobot(target))
-				usr.visible_message("<span class='warning'><b>[usr.name]</b> swallows <b>[target.name]</b> and vomits some parts of it!\black Looks like robots are not so tasty.</span>")
+				usr.visible_message("<span class='warning'><b>[usr.name]</b> swallows <b>[target.name]</b> and vomits some parts of it!</span> Looks like robots are not so tasty.")
 				SA.health -= 150
 			else
 				usr.visible_message("<span class='warning'><b>[usr.name]</b> swallows <b>[target.name]</b>!</span>")
@@ -585,7 +585,7 @@
 			target.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_eat</font>"
 			msg_admin_attack("[key_name(usr)] attacked [key_name(target)] with hulk_eat")
 			if(isrobot(target))
-				usr.visible_message("<span class='warning'><b>[usr.name]</b> rends apart and vomit some parts of <b>[target.name]</b>!\black Looks like robots are not so tasty.</span>")
+				usr.visible_message("<span class='warning'><b>[usr.name]</b> rends apart and vomit some parts of <b>[target.name]</b>!</span> Looks like robots are not so tasty.")
 				SA.health -= 45
 				HE.charge_counter += 30
 				target.take_overall_damage(rand(75,140), used_weapon = "teeth marks")

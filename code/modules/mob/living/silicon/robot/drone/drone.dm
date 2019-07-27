@@ -219,7 +219,7 @@
 
 	to_chat(src, "<b>Obey these laws:</b>")
 	laws.show_laws(src)
-	to_chat(src, "<span class='warning'>\b ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</span>")
+	to_chat(src, "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</b></span>")
 	return TRUE
 
 //DRONE LIFE/DEATH

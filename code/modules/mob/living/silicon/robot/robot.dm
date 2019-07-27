@@ -765,7 +765,7 @@
 				to_chat(src, "<span class='warning'>ERRORERRORERROR</span>")
 				to_chat(src, "<b>Obey these laws:</b>")
 				laws.show_laws(src)
-				to_chat(src, "<span class='warning'>\b ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</span>")
+				to_chat(src, "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</b></span>")
 				if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
 					for(var/obj/item/weapon/pickaxe/drill/borgdrill/D in src.module.modules)
 						qdel(D)

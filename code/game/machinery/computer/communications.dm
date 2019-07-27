@@ -78,7 +78,7 @@
 		return
 
 	if (src.z > ZLEVEL_STATION)
-		to_chat(usr, "<span class='warning'><b>Unable to establish a connection</b>: \black You're too far away from the station!</span>")
+		to_chat(usr, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return FALSE
 	if(!href_list["operation"])
 		return FALSE
@@ -307,7 +307,7 @@
 
 /obj/machinery/computer/communications/ui_interact(mob/user)
 	if (src.z > ZLEVEL_EMPTY)
-		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>: \black You're too far away from the station!</span>")
+		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return
 
 	var/dat = "<head><title>Communications Console</title></head><body>"

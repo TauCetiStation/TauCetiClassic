@@ -1235,7 +1235,7 @@
 
 				user.show_message("<span class='notice'>Analyzing Results for [C]:</span>")
 				if(C.radiation)
-					user.show_message("<span class='notice'>Radiation Level: \black [C.radiation]</span>")
+					user.show_message("<span class='notice'>Radiation Level:</span> [C.radiation]")
 				else
 					user.show_message("<span class='notice'>No radiation detected.</span>")
 

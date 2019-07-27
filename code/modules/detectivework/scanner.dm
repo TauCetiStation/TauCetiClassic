@@ -129,7 +129,7 @@
 		to_chat(user, "<span class='notice'>Blood found on [A]. Analysing...</span>")
 		spawn(15)
 			for(var/blood in A.blood_DNA)
-				to_chat(user, "Blood type: <span class='warning'>[A.blood_DNA[blood]]</span> &emsp; \black DNA: <span class='warning'>[blood]</span>")
+				to_chat(user, "Blood type: <span class='warning'>[A.blood_DNA[blood]]</span> &emsp; DNA: <span class='warning'>[blood]</span>")
 	if(prob(80) || !A.fingerprints)
 		user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
 		"You finish scanning \the [A].",\
