@@ -509,11 +509,11 @@
 			text += gang_membership_report(B_bosses)
 			text += "<br>The [gang_name("B")] Gangsters were:"
 			text += gang_membership_report(B_gang)
-	
+
 	if(text)
 		antagonists_completion += list(list("mode" = "gang", "html" = text))
 		text = "<div class='block'>[text]</div>"
-		
+
 	return text
 
 /datum/game_mode/proc/gang_membership_report(list/membership)
@@ -529,7 +529,7 @@
 				text += "died"
 				flat.Turn(90)
 				end_icons[tempstate] = flat
-			else if(gangster.current.z != ZLEVEL_STATION)
+			else if(!is_station_level(gangster.current.z))
 				text += "fled the station"
 			else
 				text += "survived"
@@ -594,7 +594,7 @@
 		if(ishuman(gangmind.current))
 			var/mob/living/carbon/human/gangster = gangmind.current
 			//Gangster must be alive and on station
-			if((gangster.stat == DEAD) || (gangster.z > ZLEVEL_STATION))
+			if((gangster.stat == DEAD) || !is_station_level(gangster.z))
 				continue
 
 			var/obj/item/clothing/outfit

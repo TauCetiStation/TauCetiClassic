@@ -245,12 +245,7 @@
 			to_chat(user, "The device must first be secured to the floor.")
 
 /obj/machinery/shieldgen/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/card/emag))
-		malfunction = 1
-		user.SetNextMove(CLICK_CD_MELEE)
-		update_icon()
-
-	else if(isscrewdriver(W))
+	if(isscrewdriver(W))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(is_open)
 			to_chat(user, "\blue You close the panel.")
@@ -296,6 +291,13 @@
 	else
 		..()
 
+/obj/machinery/shieldgen/emag_act(mob/user)
+	if(malfunction)
+		return FALSE
+	malfunction = 1
+	user.SetNextMove(CLICK_CD_MELEE)
+	update_icon()
+	return TRUE
 
 /obj/machinery/shieldgen/update_icon()
 	if(active)

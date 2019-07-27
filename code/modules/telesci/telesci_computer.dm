@@ -282,9 +282,9 @@
 		telefail()
 		temp_msg = "ERROR!<BR>Elevation is less than 1 or greater than 90."
 		return
-	if(z_co == 2 || z_co < 1 || z_co > 6)
+	if(!SSmapping.has_level(z_co) || is_centcom_level(z_co) || is_junkyard_level(z_co)) // Change this to notele trait or something
 		telefail()
-		temp_msg = "ERROR! Sector is less than 1, <BR>greater than 6, or equal to 2."
+		temp_msg = "ERROR! This sector is unreachable."
 		return
 	if(teles_left > 0)
 		open_wormhole(user)

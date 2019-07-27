@@ -827,10 +827,10 @@
 
 
 
-/mob/living/simple_animal/parrot/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, mob/speaker = null, hard_to_hear = 0)
+/mob/living/simple_animal/parrot/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
 	if(speaker != src)
 		parrot_hear("[pick(available_channels)] [message]")
-	..(message,verb,language,part_a,part_b,speaker,hard_to_hear)
+	..()
 
 
 /mob/living/simple_animal/parrot/proc/parrot_hear(message="")

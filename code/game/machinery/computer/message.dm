@@ -35,33 +35,34 @@
 	var/custommessage 	= "This is a test, please ignore."
 
 /obj/machinery/computer/message_monitor/attackby(obj/item/weapon/O, mob/living/user)
-	if(..())
-		return
-	if(istype(O,/obj/item/weapon/card/emag))
-		// Will create sparks and print out the console's password. You will then have to wait a while for the console to be back online.
-		// It'll take more time if there's more characters in the password..
-		if(!emag)
-			if(!isnull(src.linkedServer))
-				icon_state = hack_icon // An error screen I made in the computers.dmi
-				emag = 1
-				screen = 2
-				spark_system.set_up(5, 0, src)
-				src.spark_system.start()
-				var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey(loc)
-				// Will help make emagging the console not so easy to get away with.
-				MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
-				MK.update_icon()
-				spawn(100*length(src.linkedServer.decryptkey)) UnmagConsole()
-				message = rebootmsg
-			else
-				to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
 	if(isscrewdriver(O) && emag)
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
 		to_chat(user, "<span class='warning'>It is too hot to mess with!</span>")
 		return
 
 	..()
-	return
+
+/obj/machinery/computer/message_monitor/emag_act(mob/living/user)
+	// Will create sparks and print out the console's password. You will then have to wait a while for the console to be back online.
+	// It'll take more time if there's more characters in the password..
+	if(emag)
+		return FALSE
+	if(!isnull(src.linkedServer))
+		icon_state = hack_icon // An error screen I made in the computers.dmi
+		emag = 1
+		screen = 2
+		spark_system.set_up(5, 0, src)
+		src.spark_system.start()
+		var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey(loc)
+		// Will help make emagging the console not so easy to get away with.
+		MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
+		MK.update_icon()
+		spawn(100*length(src.linkedServer.decryptkey)) UnmagConsole()
+		message = rebootmsg
+		return TRUE
+	else
+		to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
+		return FALSE
 
 /obj/machinery/computer/message_monitor/update_icon()
 	..()

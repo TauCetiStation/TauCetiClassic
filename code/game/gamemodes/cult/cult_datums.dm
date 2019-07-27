@@ -87,7 +87,7 @@ var/list/cult_runes = list()
 	for(var/obj/effect/rune/R in cult_runes)
 		if(!istype(R.power, type) || R.power == src)
 			continue
-		if(R.power.word3 == src.word3 && R.loc.z != ZLEVEL_CENTCOMM)
+		if(R.power.word3 == src.word3 && !is_centcom_level(R.loc.z))
 			allrunes += R
 
 	var/length = length(allrunes)
@@ -123,7 +123,7 @@ var/list/cult_runes = list()
 	for(var/obj/effect/rune/R in cult_runes)
 		if(!istype(R.power, type) || R.power == src)
 			continue
-		if(R.loc.z != ZLEVEL_CENTCOMM && R.power.word3 == src.word3)
+		if(!is_centcom_level(R.loc.z) && R.power.word3 == src.word3)
 			allrunes += R
 	var/length = length(allrunes)
 	if(length >= 5)

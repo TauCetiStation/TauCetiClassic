@@ -395,4 +395,5 @@
 	cam["x"] = x
 	cam["y"] = y
 	cam["z"] = z
+	cam["isonstation"] = is_station_level(z)
 	return cam
