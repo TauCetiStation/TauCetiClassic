@@ -22,7 +22,7 @@
 	user.visible_message("<span class='notice'>[user] scans [A], the air around them humming gently.</span>")
 	user.show_message("<span class='notice'><B>Results:</B></span>", 1)
 	if(M.mineral)
-		user.show_message("\green Mineral found", 1)
+		user.show_message("<span class='notice'>Mineral found</span>", 1)
 		user.show_message("<span class='notice'>Ore class: [M.mineral.ore_type]</span>", 1)
 		user.show_message("<span class='notice'>Mineral type: [M.mineral]</span>", 1)
 		user.show_message("<span class='notice'>Ore amount: [M.ore_amount]</span>", 1)

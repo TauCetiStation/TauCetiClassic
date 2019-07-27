@@ -62,9 +62,9 @@
 
 		if(no_queen)
 			adjustToxLoss(-500)
-			to_chat(src, "\green You begin to evolve!")
+			to_chat(src, "<span class='notice'>You begin to evolve!</span>")
 			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\green <B>[src] begins to twist and contort!</B>"), 1)
+				O.show_message(text("<span class='notice'><B>[src] begins to twist and contort!</B></span>"), 1)
 			var/mob/living/carbon/alien/humanoid/queen/new_xeno = new (loc)
 			mind.transfer_to(new_xeno)
 			qdel(src)
