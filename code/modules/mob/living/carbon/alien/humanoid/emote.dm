@@ -35,7 +35,7 @@
 			message = "<B>The [src.name]</B>[pick(" predatory", " dissatisfied", " maliciously", " menacingly", " suspiciously", "")] hisses!"
 			m_type = 2
 			if(CAN_MAKE_A_SOUND)
-				playsound(src, "xenomorph_hiss", VOL_EFFECTS_MASTER, vary = FALSE)
+				playsound(src, SOUNDIN_XENOMORPH_HISS, VOL_EFFECTS_MASTER, vary = FALSE)
 		if("growl")
 			message = "<B>The [src.name]</B>[pick(" relaxed", " predatory", " excitedly", " joyfully", " maliciously", " menacingly", " suspiciously", "")] growls."
 			m_type = 2
