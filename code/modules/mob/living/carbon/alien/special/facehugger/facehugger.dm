@@ -68,6 +68,7 @@
 /obj/item/clothing/mask/facehugger/proc/chase()
 	while(target)
 		if(facehuggers_control_type != FACEHUGGERS_DYNAMIC_AI)
+			target = null
 			return
 		if(!isturf(loc))
 			target = null
@@ -140,7 +141,7 @@
 	else
 		if(stat == DEAD && isalien(user))
 			if(do_after(user, 20, target = src))
-				user << "You ate a facehugger."
+				to_chat(user, "You ate a facehugger.")
 				qdel(src)
 			return
 		..()
@@ -221,6 +222,9 @@
 	if(ismonkey(C))
 		return TRUE
 	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if(H.species.flags[NO_BREATHE]) // so IPCs, dioneae, abductors, skeletons, zombies, shadowlings, golems cannot be infected
+			return FALSE
 		return TRUE
 	return FALSE
 
