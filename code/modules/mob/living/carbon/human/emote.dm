@@ -587,7 +587,7 @@
 							else if(world.time-lastSoundEmote >= 30)//prevent scream spam with things like poly spray
 								message = "<B>[src]</B> screams in agony!" // AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
 								if (gender == FEMALE) // Females have their own screams. Trannys be damned.
-									playsound(src, "fscream", VOL_EFFECTS_MASTER, null, FALSE)
+									playsound(src, SOUNDIN_FSCREAM, VOL_EFFECTS_MASTER, null, FALSE)
 								else
 									playsound(src, "mscream", VOL_EFFECTS_MASTER, null, FALSE)
 								m_type = 2
