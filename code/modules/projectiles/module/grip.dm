@@ -9,30 +9,20 @@
 	size = 0
 	var/clumsy_check = TRUE
 
-/obj/item/weapon/gun_module/grip/attach(GUN)
-	.=..()
-	if(condition_check(gun))
+/obj/item/weapon/gun_module/grip/attach(obj/item/weapon/gunmodule/gun)
+	if(..(gun, condition_check(gun)))
 		gun.grip = src
-		parent = gun
-		src.loc = gun
-		change_stat(gun, TRUE)
-		gun.overlays += icon_overlay
-		gun.modules += src
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/gun_module/grip/condition_check(GUN)
+/obj/item/weapon/gun_module/grip/condition_check(obj/item/weapon/gunmodule/gun)
 	if(gun.chamber && !gun.grip && !gun.collected)
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/gun_module/grip/eject(GUN)
+/obj/item/weapon/gun_module/grip/eject(obj/item/weapon/gunmodule/gun)
 	gun.grip = null
-	parent = null
-	src.loc = get_turf(gun.loc)
-	change_stat(gun, FALSE)
-	delete_overlay(gun)
-	gun.modules -= src
+	..()
 
 /obj/item/weapon/gun_module/grip/proc/special_check(mob/user, atom/target)
 	if(user.mind.special_role == "Wizard")

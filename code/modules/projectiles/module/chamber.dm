@@ -19,38 +19,27 @@
 	var/point_blank
 	var/silenced = FALSE
 
-/obj/item/weapon/gun_module/chamber/attach(GUN)
-	.=..()
-	if(condition_check(gun))
+/obj/item/weapon/gun_module/chamber/attach(obj/item/weapon/gunmodule/gun)
+	if(..(gun, condition_check(gun)))
 		gun.chamber = src
 		gun.gun_type = gun_type
-		parent = gun
-		src.loc = parent
-		change_stat(gun, TRUE)
-		gun.overlays += icon_overlay
-		gun.modules += src
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/gun_module/chamber/condition_check(GUN)
+/obj/item/weapon/gun_module/chamber/condition_check(obj/item/weapon/gunmodule/gun)
 	if(!gun.chamber && !gun.collected)
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/gun_module/chamber/eject(GUN)
+/obj/item/weapon/gun_module/chamber/eject(obj/item/weapon/gunmodule/gun)
 	gun.chamber = null
-	parent = null
-	src.loc = get_turf(gun.loc)
-	change_stat(gun, FALSE)
-	delete_overlay(gun)
-	gun.modules -= src
+	gun.gun_type = null
+	..()
 
-/obj/item/weapon/gun_module/chamber/proc/chamber_round(var/obj/item/ammo_casing/ammo = null)
+/obj/item/weapon/gun_module/chamber/proc/chamber_round()
 	if(chambered)
 		return FALSE
 	if(!parent.magazine_supply)
-		return FALSE
-	if(!parent.magazine_supply.ammo_count(ammo))
 		return FALSE
 	return TRUE
 
@@ -135,7 +124,7 @@
 	gun_type = BULLET
 
 /obj/item/weapon/gun_module/chamber/bullet/chamber_round()
-	if(!..())
+	if(!..() && !parent.magazine_supply.ammo_count())
 		return FALSE
 	chambered = parent.magazine_supply.get_round()
 	chambered.loc = src
@@ -176,19 +165,18 @@
 	size = 0
 	caliber = "energy"
 	gun_type = ENERGY
-	activate_selfing = /obj/item/weapon/gun_module/chamber/energy/activate_self
 	var/modifystate = 0
 	var/list/obj/item/ammo_casing/energy/lens = list()
 	var/max_lens = 2
 	var/select = 1
 
-/obj/item/weapon/gun_module/chamber/energy/condition_check(GUN)
+/obj/item/weapon/gun_module/chamber/energy/condition_check(obj/item/weapon/gunmodule/gun)
 	if(..() && lens.len > 0)
 		return TRUE
 	return FALSE
 
 /obj/item/weapon/gun_module/chamber/energy/chamber_round(var/obj/item/ammo_casing/energy/lense = lens[select])
-	if(!..(lense))
+	if(!..() && !parent.magazine_supply.ammo_count(lense))
 		return FALSE
 	chambered = parent.magazine_supply.get_round(lense)
 	chambered.loc = src
@@ -199,10 +187,12 @@
 		chambered = null
 		qdel(lense)
 
-/obj/item/weapon/gun_module/chamber/energy/activate_self()
+/obj/item/weapon/gun_module/chamber/energy/verb/activate_self()
 	set category = "Gun"
+	set name = "Select Fire"
 
-	select_fire(usr)
+	if(usr.get_active_hand() == parent)
+		select_fire(usr)
 
 /obj/item/weapon/gun_module/chamber/energy/proc/select_fire(mob/user)
 	select++
@@ -215,7 +205,7 @@
 	update_icon()
 
 /obj/item/weapon/gun_module/chamber/energy/attackby(obj/item/A, mob/user)
-	if(LENS && lens.len < max_lens)
+	if(istype(A, /obj/item/ammo_casing/energy) && lens.len < max_lens)
 		var/obj/item/ammo_casing/energy/lense = A
 		lens += lense
 		user.drop_item()

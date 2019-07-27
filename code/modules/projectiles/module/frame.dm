@@ -15,12 +15,14 @@
 	var/obj/item/weapon/gun_module/magazine/magazine_supply = null
 	var/obj/item/weapon/gun_module/barrel/barrel = null
 	var/obj/item/weapon/gun_module/grip/grip = null
-	var/list/obj/item/weapon/gun_module/accessory = list()
-	var/list/obj/item/weapon/gun_module/modules = list()
+	var/list/obj/item/weapon/gun_module/accessory
+	var/list/obj/item/weapon/gun_module/modules
 
 
 /obj/item/weapon/gunmodule/attackby(obj/item/A, mob/user)
-	if(MODULE)
+	LAZYINITLIST(modules)
+	LAZYINITLIST(accessory)
+	if(istype(A, /obj/item/weapon/gun_module))
 		var/obj/item/weapon/gun_module/module = A
 		user.drop_item()
 		module.attach(src)
@@ -75,11 +77,13 @@
 
 /obj/item/weapon/gunmodule/attack_hand(mob/user)
 	..()
+	LAZYINITLIST(modules)
 	for(var/obj/item/weapon/gun_module/module in modules)
 		if(usr.get_active_hand() == src)
 			module.loc = user
 
 /obj/item/weapon/gunmodule/dropped(mob/user)
 	..()
+	LAZYINITLIST(modules)
 	for(var/obj/item/weapon/gun_module/module in modules)
 		module.loc = src

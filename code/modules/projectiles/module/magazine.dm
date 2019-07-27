@@ -12,28 +12,20 @@
 	attackbying = INTERRUPT
 	attackself = INTERRUPT
 
-/obj/item/weapon/gun_module/magazine/attach(GUN)
-	if(condition_check(gun))
+/obj/item/weapon/gun_module/magazine/attach(obj/item/weapon/gunmodule/gun)
+	if(..(gun, condition_check(gun)))
 		gun.magazine_supply = src
-		parent = gun
-		src.loc = parent
-		change_stat(gun, TRUE)
-		gun.overlays += icon_overlay
-		gun.modules += src
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/gun_module/magazine/condition_check(GUN)
+/obj/item/weapon/gun_module/magazine/condition_check(obj/item/weapon/gunmodule/gun)
 	if(!gun.magazine_supply && gun.chamber && caliber == gun.chamber.caliber)
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/gun_module/magazine/eject(GUN)
+/obj/item/weapon/gun_module/magazine/eject(obj/item/weapon/gunmodule/gun)
 	gun.magazine_supply = null
-	src.loc = get_turf(gun.loc)
-	parent = null
-	change_stat(gun, FALSE)
-	gun.modules -= src
+	..()
 
 /obj/item/weapon/gun_module/magazine/proc/ammo_count()
 	return
@@ -59,7 +51,7 @@
 	var/obj/item/weapon/stock_parts/cell/power_supply = null
 
 /obj/item/weapon/gun_module/magazine/energy/attackby(obj/item/A, mob/user)
-	if(CELL && !power_supply)
+	if(istype(A, /obj/item/weapon/stock_parts/cell) && !power_supply)
 		power_supply = A
 		user.drop_item()
 		power_supply.loc = src
@@ -91,6 +83,18 @@
 		return shot
 	return null
 
+
+/obj/item/weapon/gun_module/magazine/energy/update_icon()
+	var/ratio = 0
+	parent.overlays.Cut()
+	if(power_supply.maxcharge)
+		ratio = power_supply.charge / power_supply.maxcharge
+		ratio = ceil(ratio * 4) * 25
+	if(ratio > 100)
+		parent.overlays += "[parent.chamber.icon_overlay]100"
+	else
+		parent.overlays += "[parent.chamber.icon_overlay][ratio]"
+	return
 //////////////////////////////////////////////////////////////////////////////
 
 /obj/item/weapon/gun_module/magazine/bullet
@@ -109,7 +113,7 @@
 	var/mag_type2 = null
 
 /obj/item/weapon/gun_module/magazine/bullet/attackby(obj/item/A, mob/user)
-	if(MAGAZINE && !bullet_supply)
+	if(istype(A, /obj/item/ammo_box/magazine) && !bullet_supply)
 		var/obj/item/ammo_box/magazine/modul = A
 		if(!mag_type)
 			if(modul.caliber == caliber)
@@ -126,6 +130,9 @@
 			user.drop_item()
 			modul.loc = src
 			bullet_supply = modul
+
+	if(istype(A, /obj/item/ammo_casing) && bullet_supply && !external)
+		bullet_supply.attackby(A, user)
 
 /obj/item/weapon/gun_module/magazine/bullet/attack_self(mob/user)
 	if(external && bullet_supply)

@@ -10,30 +10,20 @@
 	var/gun_type
 	var/silenced = FALSE
 
-/obj/item/weapon/gun_module/barrel/attach(GUN)
-	.=..()
-	if(condition_check(gun))
+/obj/item/weapon/gun_module/barrel/attach(obj/item/weapon/gunmodule/gun)
+	if(..(gun, condition_check(gun)))
 		gun.barrel = src
-		parent = gun
-		src.loc = gun
-		change_stat(gun, TRUE)
-		gun.overlays += icon_overlay
-		gun.modules += src
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/gun_module/barrel/condition_check(GUN)
+/obj/item/weapon/gun_module/barrel/condition_check(obj/item/weapon/gunmodule/gun)
 	if(gun.chamber && !gun.barrel && !gun.collected && gun.gun_type == gun_type)
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/gun_module/barrel/eject(GUN)
+/obj/item/weapon/gun_module/barrel/eject(obj/item/weapon/gunmodule/gun)
 	gun.barrel = null
-	parent = null
-	src.loc = get_turf(gun.loc)
-	change_stat(gun, FALSE)
-	delete_overlay(gun)
-	gun.modules -= src
+	..()
 
 //////////////////////////////////////////////////////////////////////////////
 /obj/item/weapon/gun_module/barrel/energy
