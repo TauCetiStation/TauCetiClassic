@@ -69,11 +69,7 @@
 	return
 
 /mob/living/simple_animal/det5/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)	// Trigger EMAG
-		user.SetNextMove(CLICK_CD_MELEE)
-		act_emag = user.name	   // Emag user saved
-		Emag(user)
-	else if(ismultitool(W))
+	if(ismultitool(W))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/computer/rdconsole))
 			rdconsole = M.buffer
@@ -96,10 +92,13 @@
 	explosion(get_turf(src), 0, 2, 2, 2, 1)
 	death()
 
-/mob/living/simple_animal/det5/proc/Emag(user)	// used EMAG
-	if(!emagged)
+/mob/living/simple_animal/det5/emag_act(mob/user)
+	if(!emagged && emagged < 2)
+		act_emag = user.name
 		emagged = 1
 		to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>B-b-b-broken pro#oco%s %%ctivated</span>")
+		return TRUE
+	return FALSE
 
 /mob/living/simple_animal/det5/proc/det5controll(user)	// Used Controller (Input command)
 	if(health <=0)

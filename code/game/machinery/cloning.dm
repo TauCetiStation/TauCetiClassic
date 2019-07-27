@@ -332,14 +332,6 @@
 		else
 			src.locked = 0
 			to_chat(user, "System unlocked.")
-	else if (istype(W, /obj/item/weapon/card/emag))
-		if (isnull(src.occupant))
-			return
-		user.SetNextMove(CLICK_CD_INTERACT)
-		to_chat(user, "You force an emergency ejection.")
-		src.locked = 0
-		src.go_out()
-		return
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
 		to_chat(user, "\blue \The [src] processes \the [W].")
 		biomass += 50
@@ -348,6 +340,15 @@
 		return
 	else
 		..()
+
+/obj/machinery/clonepod/emag_act(mob/user)
+	if(isnull(src.occupant))
+		return FALSE
+	user.SetNextMove(CLICK_CD_INTERACT)
+	to_chat(user, "You force an emergency ejection.")
+	src.locked = 0
+	src.go_out()
+	return TRUE
 
 //Put messages in the connected computer's temp var for display.
 /obj/machinery/clonepod/proc/connected_message(message)

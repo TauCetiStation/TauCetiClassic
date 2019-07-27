@@ -308,27 +308,20 @@
 	src.blocked = 0
 	return
 
-
-/obj/machinery/computer/arcade/attackby(I, user)
-	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
-		temp = "If you die in the game, you die for real!"
-		player_hp = 30
-		player_mp = 10
-		enemy_hp = 45
-		enemy_mp = 20
-		gameover = 0
-		blocked = 0
-
-		emagged = 1
-
-		enemy_name = "Cuban Pete"
-		name = "Outbomb Cuban Pete"
-
-
-		src.updateUsrDialog()
-	else
-		..()
-	return
+/obj/machinery/computer/arcade/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	temp = "If you die in the game, you die for real!"
+	player_hp = 30
+	player_mp = 10
+	enemy_hp = 45
+	enemy_mp = 20
+	gameover = 0
+	blocked = 0
+	emagged = 1
+	enemy_name = "Cuban Pete"
+	name = "Outbomb Cuban Pete"
+	src.updateUsrDialog()
 
 /obj/machinery/computer/arcade/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN))

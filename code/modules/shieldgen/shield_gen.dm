@@ -56,15 +56,6 @@
 			updateDialog()
 		else
 			to_chat(user, "\red Access denied.")
-	else if(istype(W, /obj/item/weapon/card/emag))
-		user.SetNextMove(CLICK_CD_INTERACT)
-		if(prob(75))
-			src.locked = !src.locked
-			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
-			updateDialog()
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
 
 	else if(iswrench(W))
 		src.anchored = !src.anchored
@@ -88,6 +79,16 @@
 			owned_capacitor = null
 	else
 		..()
+
+/obj/machinery/shield_gen/emag_act(mob/user)
+	if(prob(75))
+		src.locked = !src.locked
+		to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
+		updateDialog()
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start()
+	return TRUE
 
 /obj/machinery/shield_gen/ui_interact(mob/user)
 	if ( !in_range(src, user) || (stat & (BROKEN|NOPOWER)) )
