@@ -32,7 +32,7 @@
 	if(!.)
 		return
 	if(href_list && (last_keyboard_sound <= world.time))
-		if(!isAI(usr))
+		if(iscarbon(usr))
 			playsound(src, "keyboard", VOL_EFFECTS_MASTER)
 			last_keyboard_sound = world.time + 8
 
