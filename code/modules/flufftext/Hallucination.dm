@@ -370,7 +370,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			if(prob(15))
 				src.do_attack_animation(my_target)
 				if(weapon_name)
-					my_target.playsound_local(null, "swing_hit", VOL_EFFECTS_MASTER)
+					my_target.playsound_local(null, SOUNDIN_GENHIT, VOL_EFFECTS_MASTER)
 					my_target.show_message("\red <B>[my_target] has been attacked with [weapon_name] by [src.name] </B>", 1)
 					my_target.halloss += 8
 					if(prob(20)) my_target.eye_blurry += 3
