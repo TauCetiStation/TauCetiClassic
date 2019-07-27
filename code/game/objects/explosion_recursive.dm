@@ -23,7 +23,7 @@ var/explosion_in_progress = 0
 	log_game("Explosion with size ([power]) in area [epicenter.loc.name] ")
 
 	playsound(epicenter, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, null, null, round(power*2,1) )
-	playsound(epicenter, "explosion", VOL_EFFECTS_MASTER, null, null, round(power,1) )
+	playsound(epicenter, SOUNDIN_EXPLOSION, VOL_EFFECTS_MASTER, null, null, round(power,1) )
 
 	explosion_in_progress = 1
 	explosion_turfs = list()
