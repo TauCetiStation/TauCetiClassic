@@ -460,9 +460,9 @@
 		else
 			H.visible_message("<B>[H.name]</B> <span class='danger'>throws up!</span>","<span class='warning'>You throw up!</span>")
 			if(H.gender == FEMALE)
-				vomitsound = "femalevomit"
+				vomitsound = SOUNDIN_FEMALEVOMIT
 			else
-				vomitsound = "malevomit"
+				vomitsound = SOUNDIN_MALEVOMIT
 		playsound(H, vomitsound, VOL_EFFECTS_MASTER, null, FALSE)
 	else
 		playsound(C, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)

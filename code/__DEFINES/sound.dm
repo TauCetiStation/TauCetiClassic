@@ -29,22 +29,22 @@
 // -----------------------------------------------------
 //     SOUNDIN PICK
 // -----------------------------------------------------
-#define SOUNDIN_SHATTER    pick('sound/effects/glassbr1.ogg', 'sound/effects/glassbr2.ogg', 'sound/effects/glassbr3.ogg')
-#define SOUNDIN_EXPLOSION  pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg')
-#define SOUNDIN_SPARKS     pick('sound/effects/sparks1.ogg', 'sound/effects/sparks2.ogg', 'sound/effects/sparks3.ogg', 'sound/effects/sparks4.ogg')
-#define SOUNDIN_BODYFALL   pick('sound/effects/bodyfall1.ogg', 'sound/effects/bodyfall2.ogg', 'sound/effects/bodyfall3.ogg', 'sound/effects/bodyfall4.ogg')
-#define SOUNDIN_CLOWNSTEP  pick('sound/effects/clownstep1.ogg', 'sound/effects/clownstep2.ogg')
-#define SOUNDIN_GENHIT     pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
-#define SOUNDIN_PAGETURN   pick('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
-#define SOUNDIN_CAN_OPEN   pick('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
-#define SOUNDIN_BEEPSKY    pick('sound/voice/beepsky/god.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/secureday.ogg', 'sound/voice/beepsky/radio.ogg', 'sound/voice/beepsky/insult.ogg', 'sound/voice/beepsky/creep.ogg')
-#define SOUNDIN_BANDAGE    pick('sound/items/bandage.ogg', 'sound/items/bandage2.ogg', 'sound/items/bandage3.ogg')
-#define SOUNDIN_BONEBREAK  pick('sound/effects/bonebreak1.ogg', 'sound/effects/bonebreak2.ogg', 'sound/effects/bonebreak3.ogg', 'sound/effects/bonebreak4.ogg')
-#define SOUNDIN_FOOTSTEPS  pick('sound/effects/tile1.wav', 'sound/effects/tile2.wav', 'sound/effects/tile3.wav', 'sound/effects/tile4.wav')
-#define SOUNDIN_RIGBREATH  pick('sound/misc/rigbreath1.ogg', 'sound/misc/rigbreath2.ogg', 'sound/misc/rigbreath3.ogg')
-#define SOUNDIN_BREATHMASK pick('sound/misc/breathmask1.ogg','sound/misc/breathmask2.ogg')
-#define
-#define
+#define SOUNDIN_SHATTER     pick('sound/effects/glassbr1.ogg', 'sound/effects/glassbr2.ogg', 'sound/effects/glassbr3.ogg')
+#define SOUNDIN_EXPLOSION   pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg')
+#define SOUNDIN_SPARKS      pick('sound/effects/sparks1.ogg', 'sound/effects/sparks2.ogg', 'sound/effects/sparks3.ogg', 'sound/effects/sparks4.ogg')
+#define SOUNDIN_BODYFALL    pick('sound/effects/bodyfall1.ogg', 'sound/effects/bodyfall2.ogg', 'sound/effects/bodyfall3.ogg', 'sound/effects/bodyfall4.ogg')
+#define SOUNDIN_CLOWNSTEP   pick('sound/effects/clownstep1.ogg', 'sound/effects/clownstep2.ogg')
+#define SOUNDIN_GENHIT      pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
+#define SOUNDIN_PAGETURN    pick('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
+#define SOUNDIN_CAN_OPEN    pick('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
+#define SOUNDIN_BEEPSKY     pick('sound/voice/beepsky/god.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/secureday.ogg', 'sound/voice/beepsky/radio.ogg', 'sound/voice/beepsky/insult.ogg', 'sound/voice/beepsky/creep.ogg')
+#define SOUNDIN_BANDAGE     pick('sound/items/bandage.ogg', 'sound/items/bandage2.ogg', 'sound/items/bandage3.ogg')
+#define SOUNDIN_BONEBREAK   pick('sound/effects/bonebreak1.ogg', 'sound/effects/bonebreak2.ogg', 'sound/effects/bonebreak3.ogg', 'sound/effects/bonebreak4.ogg')
+#define SOUNDIN_FOOTSTEPS   pick('sound/effects/tile1.wav', 'sound/effects/tile2.wav', 'sound/effects/tile3.wav', 'sound/effects/tile4.wav')
+#define SOUNDIN_RIGBREATH   pick('sound/misc/rigbreath1.ogg', 'sound/misc/rigbreath2.ogg', 'sound/misc/rigbreath3.ogg')
+#define SOUNDIN_BREATHMASK  pick('sound/misc/breathmask1.ogg', 'sound/misc/breathmask2.ogg')
+#define SOUNDIN_MALEVOMIT   pick('sound/voice/mob/mvomit_1.ogg', 'sound/voice/mob/mvomit_2.ogg')
+#define SOUNDIN_FEMALEVOMIT pick('sound/voice/mob/fvomit_1.ogg','sound/voice/mob/fvomit_2.ogg')
 #define
 #define
 #define
