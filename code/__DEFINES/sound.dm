@@ -35,7 +35,7 @@
 #define SOUNDIN_BODYFALL  pick('sound/effects/bodyfall1.ogg', 'sound/effects/bodyfall2.ogg', 'sound/effects/bodyfall3.ogg', 'sound/effects/bodyfall4.ogg')
 #define SOUNDIN_CLOWNSTEP pick('sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg')
 #define SOUNDIN_GENHIT    pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
-#define
+#define SOUNDIN_PAGETURN  pick('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
 #define
 #define
 #define
