@@ -51,9 +51,9 @@
 /obj/structure/stool/bed/chair/janitorialcart/examine(mob/user)
 	..()
 	if(mybucket)
-		to_chat(user, "[bicon(src)] The bucket contains [mybucket.reagents.total_volume] unit\s of liquid.")
+		to_chat(user, "The bucket contains [mybucket.reagents.total_volume] unit\s of liquid.")
 	else
-		to_chat(user, "[bicon(src)] There is no bucket mounted on it!")
+		to_chat(user, "There is no bucket mounted on it!")
 
 //Altclick the cart with a mop to stow the mop away
 //Altclick the cart with a reagent container to pour things into the bucket without putting the bottle in trash
@@ -270,12 +270,19 @@
 		if(prob(chance * 0.5))
 			mybucket.forceMove(dropspot)
 			mybucket.reagents.reaction(dropspot, method=TOUCH)
-			mybucket.reagents.trans_to(dropspot, amount=mybucket.reagents.total_volume)
+			if(dropspot.reagents)
+				mybucket.reagents.trans_to(dropspot, amount=mybucket.reagents.total_volume)
+			else
+				mybucket.reagents.clear_reagents()
 			INVOKE_ASYNC(mybucket, /obj.proc/tumble_async, 1)
 			mybucket = null
 		else // But the water is gone anyway.
 			mybucket.reagents.reaction(dropspot, method=TOUCH)
-			mybucket.reagents.trans_to(dropspot, amount=mybucket.reagents.total_volume)
+			if(dropspot.reagents)
+				mybucket.reagents.trans_to(dropspot, amount=mybucket.reagents.total_volume)
+			else
+				mybucket.reagents.clear_reagents()
+			update_icon()
 
 	if(signs)
 		for(var/obj/item/weapon/caution/Sign in src)
@@ -292,8 +299,16 @@
 		mybag.spill()//trashbag spills its contents too
 		mybag = null
 
+	if(buckled_mob && prob(chance * 0.5))
+		buckled_mob.apply_effect(6, STUN, 0)
+		buckled_mob.apply_effect(6, WEAKEN, 0)
+		buckled_mob.apply_effect(12, STUTTER, 0)
+
 	update_icon()
 
 /obj/structure/stool/bed/chair/janitorialcart/ex_act(severity)
 	spill(100 / severity)
 	..()
+
+/obj/structure/stool/bed/chair/janitorialcart/bullet_act(obj/item/projectile/Proj)
+	spill(Proj.damage * 10)

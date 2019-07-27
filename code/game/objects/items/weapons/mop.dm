@@ -24,22 +24,14 @@
 	return ..()
 
 /obj/item/weapon/mop/CtrlClickAction(atom/target, mob/user)
-	if(get_dist(user, src) > 2)
-		return FALSE
-
 	mop_push(target, user)
 	return TRUE
 
 /obj/item/weapon/mop/CtrlShiftClickAction(atom/target, mob/user)
-	if(get_dist(user, src) > 2)
-		return FALSE
-
 	mop_pull(target, user)
 	return TRUE
 
 /obj/item/weapon/mop/AltClickAction(atom/target, mob/user)
-	if(!user.Adjacent(src))
-		return FALSE
 	if(istype(target, /obj/structure/stool/bed/chair/janitorialcart))
 		return FALSE // So we can still put our mop in.
 
@@ -119,9 +111,11 @@
 	user.do_attack_animation(T)
 
 	if(istype(get_turf(src), /turf/simulated) && istype(user.buckled, /obj/structure/stool/bed/chair) && !user.buckled.anchored)
-		var/direction = turn(get_dir(src_turf, T_target), 180)
-		push_on_chair(user.buckled, user, direction)
-		return
+		var/obj/structure/stool/bed/chair/buckled_to = user.buckled
+		if(!buckled_to.flipped)
+			var/direction = turn(get_dir(src_turf, T_target), 180)
+			push_on_chair(user.buckled, user, direction)
+			return
 
 	if(T.Adjacent(target))
 		if(!has_gravity(src) && !istype(target, /turf/space)) // A little cheat.
@@ -222,6 +216,8 @@
 		if(turf_clear)
 			clean(current_turf, amount / directions.len)
 		else
+			if(user.buckled)
+				user.buckled.user_unbuckle_mob(user)
 			// You hit a wall!
 			user.apply_effect(3, STUN, 0)
 			user.apply_effect(3, WEAKEN, 0)

@@ -51,7 +51,7 @@
 	shake_camera(occupant, 1, 1)
 	occupant.apply_effect(6, STUN, 0)
 	occupant.apply_effect(6, WEAKEN, 0)
-	occupant.apply_effect(6, STUTTER, 0)
+	occupant.apply_effect(12, STUTTER, 0)
 	playsound(src, 'sound/weapons/punch1.ogg', VOL_EFFECTS_MASTER)
 	if(istype(A, /mob/living))
 		var/mob/living/victim = A
