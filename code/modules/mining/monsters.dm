@@ -77,7 +77,7 @@
 	melee_damage_upper = 12
 	attacktext = "bites into"
 	a_intent = "harm"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = list('sound/weapons/bladeslice.ogg')
 	ranged_cooldown_cap = 4
 	aggro_vision_range = 9
 	idle_vision_range = 2
@@ -360,7 +360,7 @@
 	icon_aggro = "Goliath_alert"
 	icon_dead = "Goliath_dead"
 	icon_gib = "syndicate_gib"
-	attack_sound = 'sound/weapons/punch4.ogg'
+	attack_sound = list('sound/weapons/punch4.ogg')
 	mouse_opacity = 2
 	move_to_delay = 40
 	ranged = 1

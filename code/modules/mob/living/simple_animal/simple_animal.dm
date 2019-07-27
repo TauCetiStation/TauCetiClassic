@@ -49,7 +49,7 @@
 	var/melee_damage_lower = 0
 	var/melee_damage_upper = 0
 	var/attacktext = "attacks"
-	var/attack_sound = null
+	var/list/attack_sound = list()
 	var/friendly = "nuzzles" // If the mob does no damage with it's attack
 	var/environment_smash = 0 // Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls
 

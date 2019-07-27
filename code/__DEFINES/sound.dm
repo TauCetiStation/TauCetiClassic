@@ -82,3 +82,4 @@
 //     SOUNDIN LIST
 // -----------------------------------------------------
 #define SOUNDIN_RUSTLE list('sound/effects/rustle1.ogg', 'sound/effects/rustle2.ogg', 'sound/effects/rustle3.ogg', 'sound/effects/rustle4.ogg', 'sound/effects/rustle5.ogg')
+#define SOUNDIN_PUNCH  list('sound/weapons/punch1.ogg', 'sound/weapons/punch2.ogg', 'sound/weapons/punch3.ogg', 'sound/weapons/punch4.ogg')

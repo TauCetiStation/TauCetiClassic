@@ -471,7 +471,7 @@
 						step_away(src,M,15)
 
 
-				playsound(src, "punch", VOL_EFFECTS_MASTER)
+				playsound(src, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)

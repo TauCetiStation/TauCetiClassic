@@ -57,7 +57,7 @@
 	icon = 'code/game/gamemodes/events/cellular_biomass/meatland_cellular.dmi'
 	speak_emote = list("gibbers")
 	attacktext = "brutally chomps"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = list('sound/weapons/bite.ogg')
 	faction = "meat"
 
 /mob/living/simple_animal/hostile/cellular/meat/creep_standing

@@ -221,7 +221,7 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has punched [name]!</B>", M), 1)
 
-				playsound(src, "punch", VOL_EFFECTS_MASTER)
+				playsound(src, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
 				var/damage = rand(5, 10)
 				if (prob(40))
 					damage = rand(10, 15)

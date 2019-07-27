@@ -64,7 +64,7 @@
 			if(dna && dna.mutantrace == "adamantine")
 				damage += 5
 
-			playsound(src, "punch", VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
 
 			visible_message("\red <B>[M] has punched [src]!</B>")
 

@@ -28,7 +28,7 @@
 	status_flags = CANPUSH
 	universal_speak = 1
 	universal_understand = 1
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = list('sound/weapons/punch1.ogg')
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -66,7 +66,7 @@
 
 	speed = 2
 
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = list('sound/weapons/bite.ogg')
 
 	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/hulk_mill,
 						/obj/effect/proc_holder/spell/aoe_turf/hulk_gas,
@@ -91,7 +91,7 @@
 
 	speed = 4
 
-	attack_sound =  'sound/items/bikehorn.ogg'
+	attack_sound = list( 'sound/items/bikehorn.ogg')
 	health_regen = 3
 
 	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/HulkHONK)
