@@ -133,25 +133,6 @@
 	desc = "A prototype weapon recovered from the ruins of Research-Station Epsilon."
 	icon_state = "xray"
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
-/*
-/obj/item/weapon/gun/energy/staff/focus
-	name = "mental focus"
-	desc = "An artefact that channels the will of the user into destructive bolts of force. If you aren't careful with it, you might poke someone's brain out."
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "focus"
-	item_state = "focus"
-	projectile_type = "/obj/item/projectile/forcebolt"
-
-/obj/item/weapon/gun/energy/staff/focus/attack_self(mob/living/user)
-	if(projectile_type == "/obj/item/projectile/forcebolt")
-		charge_cost = 200
-		to_chat(user, "\red The [src.name] will now strike a small area.")
-		projectile_type = "/obj/item/projectile/forcebolt/strong"
-	else
-		charge_cost = 100
-		to_chat(user, "\red The [src.name] will now strike only a single person.")
-		projectile_type = "/obj/item/projectile/forcebolt"
-	*/
 
 /obj/item/weapon/gun/energy/toxgun
 	name = "phoron pistol"

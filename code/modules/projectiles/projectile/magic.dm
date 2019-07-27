@@ -180,7 +180,32 @@
 			D.Open()
 	qdel(src)
 
+/obj/item/projectile/magic/forcebolt
+	name = "force bolt"
+	icon_state = "ice_1"
+	light_color = "#00bfff"
+	damage = 20
+	nodamage = 0
+
+/obj/item/projectile/magic/forcebolt/on_hit(atom/target, blocked = 0)
+
+	var/obj/T = target
+	var/throwdir = get_dir(firer,target)
+	T.throw_at(get_edge_target_turf(target, throwdir),10,10)
+	return 1
+
 /*
+/obj/item/projectile/forcebolt/strong/on_hit(atom/target, blocked = 0)
+
+	// NONE OF THIS WORKS. DO NOT USE.
+	var/throwdir = null
+
+	for(var/mob/M in hearers(2, src))
+		if(M.loc != src.loc)
+			throwdir = get_dir(src,target)
+			M.throw_at(get_edge_target_turf(M, throwdir),15,1)
+	return ..()
+
 /obj/item/projectile/magic/teleport
 	name = "bolt of teleportation"
 	icon_state = "bluespace"
