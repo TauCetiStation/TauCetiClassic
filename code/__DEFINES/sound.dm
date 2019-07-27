@@ -52,7 +52,7 @@
 #define SOUNDIN_FSCREAM        pick('sound/voice/mob/femalescream_1.ogg', 'sound/voice/mob/femalescream_2.ogg', 'sound/voice/mob/femalescream_3.ogg', 'sound/voice/mob/femalescream_4.ogg', 'sound/voice/mob/femalescream_5.ogg')
 #define SOUNDIN_MSCREAM        pick('sound/voice/mob/malescream_1.ogg', 'sound/voice/mob/malescream_2.ogg', 'sound/voice/mob/malescream_3.ogg', 'sound/voice/mob/malescream_4.ogg', 'sound/voice/mob/malescream_5.ogg', 'sound/voice/mob/malescream_6.ogg', 'sound/voice/mob/malescream_7.ogg')
 #define SOUNDIN_XENOMORPH_TALK pick('sound/voice/xenomorph/talk_1.ogg', 'sound/voice/xenomorph/talk_2.ogg', 'sound/voice/xenomorph/talk_3.ogg', 'sound/voice/xenomorph/talk_4.ogg')
-#define
+#define SOUNDIN_XENOMORPH_ROAR pick('sound/voice/xenomorph/roar_1.ogg', 'sound/voice/xenomorph/roar_2.ogg')
 #define
 #define
 #define

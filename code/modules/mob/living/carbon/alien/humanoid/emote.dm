@@ -30,7 +30,7 @@
 			message = "<B>The [src.name]</B>[pick(" triumphantly", " menacingly", "")] roars."
 			m_type = 2
 			if(CAN_MAKE_A_SOUND)
-				playsound(src, "xenomorph_roar", VOL_EFFECTS_MASTER, vary = FALSE)
+				playsound(src, SOUNDIN_XENOMORPH_ROAR, VOL_EFFECTS_MASTER, vary = FALSE)
 		if("hiss")
 			message = "<B>The [src.name]</B>[pick(" predatory", " dissatisfied", " maliciously", " menacingly", " suspiciously", "")] hisses!"
 			m_type = 2
