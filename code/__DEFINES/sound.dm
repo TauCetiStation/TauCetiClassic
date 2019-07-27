@@ -44,9 +44,9 @@
 #define SOUNDIN_RIGBREATH   pick('sound/misc/rigbreath1.ogg', 'sound/misc/rigbreath2.ogg', 'sound/misc/rigbreath3.ogg')
 #define SOUNDIN_BREATHMASK  pick('sound/misc/breathmask1.ogg', 'sound/misc/breathmask2.ogg')
 #define SOUNDIN_MALEVOMIT   pick('sound/voice/mob/mvomit_1.ogg', 'sound/voice/mob/mvomit_2.ogg')
-#define SOUNDIN_FEMALEVOMIT pick('sound/voice/mob/fvomit_1.ogg','sound/voice/mob/fvomit_2.ogg')
-#define
-#define
+#define SOUNDIN_FEMALEVOMIT pick('sound/voice/mob/fvomit_1.ogg', 'sound/voice/mob/fvomit_2.ogg')
+#define SOUNDIN_FRIGVOMIT   pick('sound/voice/mob/frigvomit_1.ogg', 'sound/voice/mob/frigvomit_2.ogg')
+#define SOUNDIN_MRIGVOMIT   pick('sound/voice/mob/mrigvomit_1.ogg', 'sound/voice/mob/mrigvomit_2.ogg')
 #define
 #define
 #define

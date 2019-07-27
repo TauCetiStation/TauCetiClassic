@@ -452,9 +452,9 @@
 		if(istype(H.head, /obj/item/clothing/head/helmet/space))
 			H.visible_message("<B>[H.name]</B> <span class='danger'>throws up in their helmet!</span>","<span class='warning'>You threw up in your helmet, damn it, what could be worse!</span>")
 			if(H.gender == FEMALE)
-				vomitsound = "frigvomit"
+				vomitsound = SOUNDIN_FRIGVOMIT
 			else
-				vomitsound = "mrigvomit"
+				vomitsound = SOUNDIN_MRIGVOMIT
 			H.eye_blurry = max(2, H.eye_blurry)
 			H.losebreath += 20
 		else
