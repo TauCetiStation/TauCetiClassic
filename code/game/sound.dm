@@ -24,7 +24,6 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 	var/max_distance = (world.view + extrarange) * 3
 	var/frequency = get_rand_frequency() // Same frequency for everybody
-	soundin = get_sfx(soundin) // same sound for everyone
 
 	// Looping through the player list has the added bonus of working for mobs inside containers
 	for (var/P in player_list)
@@ -48,8 +47,6 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	vol *= client.get_sound_volume(volume_channel)
 	if(!vol)
 		return
-
-	soundin = get_sfx(soundin) //todo: it is very stupid that we search this sound in sfx every time for every player TWICE, and from start soundin may already be path to sound file...
 
 	var/sound/S = sound(soundin)
 	S.repeat = repeat
@@ -254,11 +251,6 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
-
-/proc/get_sfx(soundin)
-	if(istext(soundin))
-		switch(soundin)
-	return soundin
 
 /proc/get_announce_sound(soundin)
 	if(istext(soundin))

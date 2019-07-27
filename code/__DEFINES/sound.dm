@@ -26,61 +26,69 @@
 #define CHANNEL_ANNOUNCE 802
 #define CHANNEL_VOLUMETEST 803
 
-// -----------------------------------------------------
-//     SOUNDIN PICK
-// -----------------------------------------------------
-#define SOUNDIN_SHATTER         pick('sound/effects/glassbr1.ogg', 'sound/effects/glassbr2.ogg', 'sound/effects/glassbr3.ogg')
-#define SOUNDIN_EXPLOSION       pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg')
-#define SOUNDIN_SPARKS          pick('sound/effects/sparks1.ogg', 'sound/effects/sparks2.ogg', 'sound/effects/sparks3.ogg', 'sound/effects/sparks4.ogg')
-#define SOUNDIN_BODYFALL        pick('sound/effects/bodyfall1.ogg', 'sound/effects/bodyfall2.ogg', 'sound/effects/bodyfall3.ogg', 'sound/effects/bodyfall4.ogg')
-#define SOUNDIN_CLOWNSTEP       pick('sound/effects/clownstep1.ogg', 'sound/effects/clownstep2.ogg')
-#define SOUNDIN_GENHIT          pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
-#define SOUNDIN_PAGETURN        pick('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
-#define SOUNDIN_CAN_OPEN        pick('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
-#define SOUNDIN_BEEPSKY         pick('sound/voice/beepsky/god.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/secureday.ogg', 'sound/voice/beepsky/radio.ogg', 'sound/voice/beepsky/insult.ogg', 'sound/voice/beepsky/creep.ogg')
-#define SOUNDIN_BANDAGE         pick('sound/items/bandage.ogg', 'sound/items/bandage2.ogg', 'sound/items/bandage3.ogg')
-#define SOUNDIN_BONEBREAK       pick('sound/effects/bonebreak1.ogg', 'sound/effects/bonebreak2.ogg', 'sound/effects/bonebreak3.ogg', 'sound/effects/bonebreak4.ogg')
-#define SOUNDIN_FOOTSTEPS       pick('sound/effects/tile1.wav', 'sound/effects/tile2.wav', 'sound/effects/tile3.wav', 'sound/effects/tile4.wav')
-#define SOUNDIN_RIGBREATH       pick('sound/misc/rigbreath1.ogg', 'sound/misc/rigbreath2.ogg', 'sound/misc/rigbreath3.ogg')
-#define SOUNDIN_BREATHMASK      pick('sound/misc/breathmask1.ogg', 'sound/misc/breathmask2.ogg')
-#define SOUNDIN_MALEVOMIT       pick('sound/voice/mob/mvomit_1.ogg', 'sound/voice/mob/mvomit_2.ogg')
-#define SOUNDIN_FEMALEVOMIT     pick('sound/voice/mob/fvomit_1.ogg', 'sound/voice/mob/fvomit_2.ogg')
-#define SOUNDIN_FRIGVOMIT       pick('sound/voice/mob/frigvomit_1.ogg', 'sound/voice/mob/frigvomit_2.ogg')
-#define SOUNDIN_MRIGVOMIT       pick('sound/voice/mob/mrigvomit_1.ogg', 'sound/voice/mob/mrigvomit_2.ogg')
-#define SOUNDIN_FBCOUGH         pick('sound/voice/mob/fbcough_1.ogg', 'sound/voice/mob/fbcough_2.ogg', 'sound/voice/mob/fbcough_3.ogg')
-#define SOUNDIN_MBCOUGH         pick('sound/voice/mob/mbcough_1.ogg', 'sound/voice/mob/mbcough_2.ogg', 'sound/voice/mob/mbcough_3.ogg')
-#define SOUNDIN_FSCREAM         pick('sound/voice/mob/femalescream_1.ogg', 'sound/voice/mob/femalescream_2.ogg', 'sound/voice/mob/femalescream_3.ogg', 'sound/voice/mob/femalescream_4.ogg', 'sound/voice/mob/femalescream_5.ogg')
-#define SOUNDIN_MSCREAM         pick('sound/voice/mob/malescream_1.ogg', 'sound/voice/mob/malescream_2.ogg', 'sound/voice/mob/malescream_3.ogg', 'sound/voice/mob/malescream_4.ogg', 'sound/voice/mob/malescream_5.ogg', 'sound/voice/mob/malescream_6.ogg', 'sound/voice/mob/malescream_7.ogg')
+
+ /*-----------------------------------------------------*\
+|                         SOUNDIN                         |
+ \*-----------------------------------------------------*/
+
+     /*\
+    |* *| PICK
+     \*/
+
+// ----- Effects ------
+#define SOUNDIN_SHATTER   pick('sound/effects/glassbr1.ogg', 'sound/effects/glassbr2.ogg', 'sound/effects/glassbr3.ogg')
+#define SOUNDIN_EXPLOSION pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg')
+#define SOUNDIN_SPARKS    pick('sound/effects/sparks1.ogg', 'sound/effects/sparks2.ogg', 'sound/effects/sparks3.ogg', 'sound/effects/sparks4.ogg')
+#define SOUNDIN_BODYFALL  pick('sound/effects/bodyfall1.ogg', 'sound/effects/bodyfall2.ogg', 'sound/effects/bodyfall3.ogg', 'sound/effects/bodyfall4.ogg')
+#define SOUNDIN_PAGETURN  pick('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
+#define SOUNDIN_CAN_OPEN  pick('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
+#define SOUNDIN_BONEBREAK pick('sound/effects/bonebreak1.ogg', 'sound/effects/bonebreak2.ogg', 'sound/effects/bonebreak3.ogg', 'sound/effects/bonebreak4.ogg')
+// Footsteps
+#define SOUNDIN_CLOWNSTEP pick('sound/effects/clownstep1.ogg', 'sound/effects/clownstep2.ogg')
+#define SOUNDIN_FOOTSTEPS pick('sound/effects/tile1.wav', 'sound/effects/tile2.wav', 'sound/effects/tile3.wav', 'sound/effects/tile4.wav')
+
+// ----- Voice -----
+// Human's vomit
+#define SOUNDIN_MALEVOMIT   pick('sound/voice/mob/mvomit_1.ogg', 'sound/voice/mob/mvomit_2.ogg')
+#define SOUNDIN_FEMALEVOMIT pick('sound/voice/mob/fvomit_1.ogg', 'sound/voice/mob/fvomit_2.ogg')
+#define SOUNDIN_FRIGVOMIT   pick('sound/voice/mob/frigvomit_1.ogg', 'sound/voice/mob/frigvomit_2.ogg')
+#define SOUNDIN_MRIGVOMIT   pick('sound/voice/mob/mrigvomit_1.ogg', 'sound/voice/mob/mrigvomit_2.ogg')
+// Human's emotes
+#define SOUNDIN_FBCOUGH pick('sound/voice/mob/fbcough_1.ogg', 'sound/voice/mob/fbcough_2.ogg', 'sound/voice/mob/fbcough_3.ogg')
+#define SOUNDIN_MBCOUGH pick('sound/voice/mob/mbcough_1.ogg', 'sound/voice/mob/mbcough_2.ogg', 'sound/voice/mob/mbcough_3.ogg')
+#define SOUNDIN_FSCREAM pick('sound/voice/mob/femalescream_1.ogg', 'sound/voice/mob/femalescream_2.ogg', 'sound/voice/mob/femalescream_3.ogg', 'sound/voice/mob/femalescream_4.ogg', 'sound/voice/mob/femalescream_5.ogg')
+#define SOUNDIN_MSCREAM pick('sound/voice/mob/malescream_1.ogg', 'sound/voice/mob/malescream_2.ogg', 'sound/voice/mob/malescream_3.ogg', 'sound/voice/mob/malescream_4.ogg', 'sound/voice/mob/malescream_5.ogg', 'sound/voice/mob/malescream_6.ogg', 'sound/voice/mob/malescream_7.ogg')
+// Xenomorph's emotes
 #define SOUNDIN_XENOMORPH_TALK  pick('sound/voice/xenomorph/talk_1.ogg', 'sound/voice/xenomorph/talk_2.ogg', 'sound/voice/xenomorph/talk_3.ogg', 'sound/voice/xenomorph/talk_4.ogg')
 #define SOUNDIN_XENOMORPH_ROAR  pick('sound/voice/xenomorph/roar_1.ogg', 'sound/voice/xenomorph/roar_2.ogg')
 #define SOUNDIN_XENOMORPH_HISS  pick('sound/voice/xenomorph/hiss_1.ogg', 'sound/voice/xenomorph/hiss_2.ogg', 'sound/voice/xenomorph/hiss_3.ogg')
 #define SOUNDIN_XENOMORPH_GROWL pick('sound/voice/xenomorph/growl_1.ogg', 'sound/voice/xenomorph/growl_2.ogg')
-#define
-#define
-#define
-#define
-#define
-#define
-#define
-#define
-#define
-#define
-#define
-#define
-#define
-#define
-#define
-#define
-#define
-#define
-#define
-#define
-#define
-#define
+// Beepsky
+#define SOUNDIN_BEEPSKY pick('sound/voice/beepsky/god.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/secureday.ogg', 'sound/voice/beepsky/radio.ogg', 'sound/voice/beepsky/insult.ogg', 'sound/voice/beepsky/creep.ogg')
 
-// -----------------------------------------------------
-//     SOUNDIN LIST
-// -----------------------------------------------------
+// ----- Misc -----
+// Breath
+#define SOUNDIN_RIGBREATH  pick('sound/misc/rigbreath1.ogg', 'sound/misc/rigbreath2.ogg', 'sound/misc/rigbreath3.ogg')
+#define SOUNDIN_BREATHMASK pick('sound/misc/breathmask1.ogg', 'sound/misc/breathmask2.ogg')
+
+// ----- Machines -----
+// Keystroke
+#define SOUNDIN_KEYBOARD pick('sound/machines/keyboard/keyboard1.ogg', 'sound/machines/keyboard/keyboard2.ogg', 'sound/machines/keyboard/keyboard3.ogg', 'sound/machines/keyboard/keyboard4.ogg', 'sound/machines/keyboard/keyboard5.ogg')
+// PDA's taps
+#define SOUNDIN_PDA_TAPS pick('sound/machines/keyboard/pda1.ogg', 'sound/machines/keyboard/pda2.ogg', 'sound/machines/keyboard/pda3.ogg', 'sound/machines/keyboard/pda4.ogg', 'sound/machines/keyboard/pda5.ogg')
+
+// ----- Weapons -----
+// Melee
+#define SOUNDIN_GENHIT pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
+
+// ----- Items -----
+// Medical
+#define SOUNDIN_BANDAGE   pick('sound/items/bandage.ogg', 'sound/items/bandage2.ogg', 'sound/items/bandage3.ogg')
+
+     /*\
+    |* *| LIST
+     \*/
+
 #define SOUNDIN_RUSTLE      list('sound/effects/rustle1.ogg', 'sound/effects/rustle2.ogg', 'sound/effects/rustle3.ogg', 'sound/effects/rustle4.ogg', 'sound/effects/rustle5.ogg')
 #define SOUNDIN_PUNCH       list('sound/weapons/punch1.ogg', 'sound/weapons/punch2.ogg', 'sound/weapons/punch3.ogg', 'sound/weapons/punch4.ogg')
 #define SOUNDIN_DESCERATION list('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
