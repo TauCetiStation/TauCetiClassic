@@ -18,19 +18,19 @@
 
 /obj/item/device/robotanalyzer/attack(mob/living/M, mob/living/user)
 	if(( (CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
-		to_chat(user, text("\red You try to analyze the floor's vitals!"))
+		to_chat(user, text("<span class='warning'>You try to analyze the floor's vitals!</span>"))
 		for(var/mob/O in viewers(M, null))
-			O.show_message(text("\red [user] has analyzed the floor's vitals!"), 1)
+			O.show_message(text("<span class='warning'>[user] has analyzed the floor's vitals!</span>"), 1)
 		user.show_message(text("\blue Analyzing Results for The floor:\n&emsp; Overall Status: Healthy"), 1)
 		user.show_message(text("\blue &emsp; Damage Specifics: [0]-[0]-[0]-[0]"), 1)
 		user.show_message("\blue Key: Suffocation/Toxin/Burns/Brute", 1)
 		user.show_message("\blue Body Temperature: ???", 1)
 		return
 	if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		to_chat(user, "\red You don't have the dexterity to do this!")
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(!istype(M, /mob/living/silicon/robot) && !(ishuman(M) && M:species.flags[IS_SYNTHETIC]))
-		to_chat(user, "\red You can't analyze non-robotic things!")
+		to_chat(user, "<span class='warning'>You can't analyze non-robotic things!</span>")
 		return
 
 	user.visible_message("<span class='notice'> [user] has analyzed [M]'s components.</span>","<span class='notice'> You have analyzed [M]'s components.</span>")
@@ -58,7 +58,7 @@
 		else
 			user.show_message("\blue &emsp; Components are OK.",1)
 		if(H.emagged && prob(5))
-			user.show_message("\red &emsp; ERROR: INTERNAL SYSTEMS COMPROMISED",1)
+			user.show_message("<span class='warning'>&emsp; ERROR: INTERNAL SYSTEMS COMPROMISED</span>",1)
 
 	if (ishuman(M) && M:species.flags[IS_SYNTHETIC])
 		var/mob/living/carbon/human/H = M
@@ -68,7 +68,7 @@
 			for(var/obj/item/organ/external/BP in damaged)
 				user.show_message(text("\blue &emsp; []: [] - []",	\
 				capitalize(BP.name),					\
-				(BP.brute_dam > 0)	?	"\red [BP.brute_dam]"							:0,		\
+				(BP.brute_dam > 0)	?	"<span class='warning'>[BP.brute_dam]</span>"							:0,		\
 				(BP.burn_dam > 0)	?	"<font color='#FFA500'>[BP.burn_dam]</font>"	:0),1)
 		else
 			user.show_message("\blue &emsp; Components are OK.",1)

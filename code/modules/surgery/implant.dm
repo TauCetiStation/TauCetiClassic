@@ -63,8 +63,8 @@
 
 /datum/surgery_step/cavity/make_space/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
-	user.visible_message("\red [user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!", \
-	"\red Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!")
+	user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
+	"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
 	BP.createwound(CUT, 20)
 
 /datum/surgery_step/cavity/close_space
@@ -99,8 +99,8 @@
 
 /datum/surgery_step/cavity/close_space/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
-	user.visible_message("\red [user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!", \
-	"\red Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!")
+	user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
+	"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
 	BP.createwound(CUT, 20)
 
 /datum/surgery_step/cavity/place_item
@@ -128,7 +128,7 @@
 	user.visible_message("\blue [user] puts \the [tool] inside [target]'s [get_cavity(BP)] cavity.", \
 	"\blue You put \the [tool] inside [target]'s [get_cavity(BP)] cavity." )
 	if (tool.w_class > get_max_wclass(BP)/2 && prob(50) && BP.sever_artery())
-		to_chat(user, "\red You tear some blood vessels trying to fit such a big object in this cavity.")
+		to_chat(user, "<span class='warning'>You tear some blood vessels trying to fit such a big object in this cavity.</span>")
 		BP.owner.custom_pain("You feel something rip in your [BP.name]!", 1)
 	if(istype(tool, /obj/item/gland))	//Abductor surgery integration
 		if(target_zone != BP_CHEST)
@@ -146,8 +146,8 @@
 
 /datum/surgery_step/cavity/place_item/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
-	user.visible_message("\red [user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!", \
-	"\red Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!")
+	user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
+	"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
 	BP.createwound(CUT, 20)
 
 //////////////////////////////////////////////////////////////////
@@ -242,15 +242,15 @@
 
 /datum/surgery_step/cavity/implant_removal/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
-	user.visible_message("\red [user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!", \
-	"\red Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!")
+	user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
+	"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
 	BP.createwound(CUT, 20)
 	if (BP.implants.len)
 		var/fail_prob = 10
 		fail_prob += 100 - tool_quality(tool)
 		if (prob(fail_prob))
 			var/obj/item/weapon/implant/imp = BP.implants[1]
-			user.visible_message("\red Something beeps inside [target]'s [BP.name]!")
+			user.visible_message("<span class='warning'>Something beeps inside [target]'s [BP.name]!</span>")
 			playsound(imp, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 			spawn(25)
 				imp.activate()

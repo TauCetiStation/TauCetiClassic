@@ -110,7 +110,7 @@
 	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
 		return 0
 	revolutionaries += rev_mind
-	to_chat(rev_mind.current, "\red <FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill, capture or convert the heads to win the revolution!</FONT>")
+	to_chat(rev_mind.current, "<span class='warning'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill, capture or convert the heads to win the revolution!</FONT></span>")
 	rev_mind.special_role = "Revolutionary"
 	if(config.objectives_disabled)
 		to_chat(rev_mind.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
@@ -167,31 +167,31 @@
 		if(!stat && P.client && P.mind && !P.mind.special_role)
 			Possible += P
 	if(!Possible.len)
-		to_chat(src, "\red There doesn't appear to be anyone available for you to convert here.")
+		to_chat(src, "<span class='warning'>There doesn't appear to be anyone available for you to convert here.</span>")
 		return
 	var/mob/living/carbon/human/M = input("Select a person to convert", "Viva la revolution!", null) as mob in Possible
 	if(((src.mind in ticker.mode:head_revolutionaries) || (src.mind in ticker.mode:revolutionaries)))
 		if((M.mind in ticker.mode:head_revolutionaries) || (M.mind in ticker.mode:revolutionaries))
-			to_chat(src, "\red <b>[M] is already be a revolutionary!</b>")
+			to_chat(src, "<span class='warning'><b>[M] is already be a revolutionary!</b></span>")
 		else if(ismindshielded(M))
-			to_chat(src, "\red <b>[M] is implanted with a loyalty implant - Remove it first!</b>")
+			to_chat(src, "<span class='warning'><b>[M] is implanted with a loyalty implant - Remove it first!</b></span>")
 		else if(jobban_isbanned(M, ROLE_REV) || jobban_isbanned(M, "Syndicate") || role_available_in_minutes(M, ROLE_REV))
-			to_chat(src, "\red <b>[M] is a blacklisted player!</b>")
+			to_chat(src, "<span class='warning'><b>[M] is a blacklisted player!</b></span>")
 		else
 			if(world.time < M.mind.rev_cooldown)
-				to_chat(src, "\red Wait five seconds before reconversion attempt.")
+				to_chat(src, "<span class='warning'>Wait five seconds before reconversion attempt.</span>")
 				return
-			to_chat(src, "\red Attempting to convert [M]...")
+			to_chat(src, "<span class='warning'>Attempting to convert [M]...</span>")
 			log_admin("[src]([src.ckey]) attempted to convert [M].")
-			message_admins("\red [src]([src.ckey]) attempted to convert [M]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
+			message_admins("<span class='warning'>[src]([src.ckey]) attempted to convert [M]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)</span>")
 			var/choice = alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
 			if(choice == "Yes!")
 				ticker.mode:add_revolutionary(M.mind)
 				to_chat(M, "\blue You join the revolution!")
 				to_chat(src, "\blue <b>[M] joins the revolution!</b>")
 			else if(choice == "No!")
-				to_chat(M, "\red You reject this traitorous cause!")
-				to_chat(src, "\red <b>[M] does not support the revolution!</b>")
+				to_chat(M, "<span class='warning'>You reject this traitorous cause!</span>")
+				to_chat(src, "<span class='warning'><b>[M] does not support the revolution!</b></span>")
 			M.mind.rev_cooldown = world.time+50
 
 /datum/game_mode/revolution/rp_revolution/process()
@@ -218,7 +218,7 @@
 				update_all_rev_icons()
 				H.verbs += /mob/living/carbon/human/proc/RevConvert
 
-				to_chat(H, "\red Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion.")
+				to_chat(H, "<span class='warning'>Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion.</span>")
 				added_heads = 1
 				break
 
@@ -266,4 +266,4 @@
 			rev_obj.target = M.mind
 			rev_obj.explanation_text = "Assassinate, convert or capture [M.real_name], the [M.mind.assigned_role]."
 			rev_mind.objectives += rev_obj
-			to_chat(rev_mind.current, "\red A new Head of Staff, [M.real_name], the [M.mind.assigned_role] has appeared. Your objectives have been updated.")
+			to_chat(rev_mind.current, "<span class='warning'>A new Head of Staff, [M.real_name], the [M.mind.assigned_role] has appeared. Your objectives have been updated.</span>")

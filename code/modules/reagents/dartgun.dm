@@ -148,10 +148,10 @@
 		var/obj/effect/syringe_gun_dummy/D = new/obj/effect/syringe_gun_dummy(get_turf(src))
 		var/obj/item/weapon/reagent_containers/syringe/S = get_mixed_syringe()
 		if(!S)
-			to_chat(user, "\red There are no darts in [src]!")
+			to_chat(user, "<span class='warning'>There are no darts in [src]!</span>")
 			return
 		if(!S.reagents)
-			to_chat(user, "\red There are no reagents available!")
+			to_chat(user, "<span class='warning'>There are no reagents available!</span>")
 			return
 		cartridge.darts--
 		src.update_icon()
@@ -282,7 +282,7 @@
 	if(cartridge)
 		spawn(0) fire_dart(target,user)
 	else
-		to_chat(usr, "\red [src] is empty.")
+		to_chat(usr, "<span class='warning'>[src] is empty.</span>")
 
 
 /obj/item/weapon/gun/dartgun/vox

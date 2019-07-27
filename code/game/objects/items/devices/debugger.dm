@@ -24,7 +24,7 @@
 	if(istype(O, /obj/machinery/power/apc))
 		var/obj/machinery/power/apc/A = O
 		if(A.emagged || A.malfhack)
-			to_chat(user, "\red There is a software error with the device.")
+			to_chat(user, "<span class='warning'>There is a software error with the device.</span>")
 			return 0
 		else
 			to_chat(user, "\blue The device's software appears to be fine.")
@@ -32,7 +32,7 @@
 	else if(istype(O, /obj/machinery/door))
 		var/obj/machinery/door/D = O
 		if(D.operating == -1)
-			to_chat(user, "\red There is a software error with the device.")
+			to_chat(user, "<span class='warning'>There is a software error with the device.</span>")
 			return 0
 		else
 			to_chat(user, "\blue The device's software appears to be fine.")
@@ -40,7 +40,7 @@
 	else if(istype(O, /obj/machinery))
 		var/obj/machinery/A = O
 		if(A.emagged)
-			to_chat(user, "\red There is a software error with the device.")
+			to_chat(user, "<span class='warning'>There is a software error with the device.</span>")
 			return 0
 		else
 			to_chat(user, "\blue The device's software appears to be fine.")

@@ -69,7 +69,7 @@
 /obj/structure/reagent_dispensers/watertank/examine(mob/user)
 	..()
 	if(src in oview(2, user) && modded)
-		to_chat(user, "\red Water faucet is wrenched open, leaking the water!")
+		to_chat(user, "<span class='warning'>Water faucet is wrenched open, leaking the water!</span>")
 
 /obj/structure/reagent_dispensers/watertank/attackby(obj/item/weapon/W, mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
@@ -150,7 +150,7 @@
 		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [src.x], [src.y], [src.z] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 	if (istype(W,/obj/item/device/assembly_holder))
 		if (rig)
-			to_chat(user, "\red There is another device in the way.")
+			to_chat(user, "<span class='warning'>There is another device in the way.</span>")
 			return ..()
 		if(user.is_busy()) return
 		user.visible_message("[user] begins rigging [W] to \the [src].", "You begin rigging [W] to \the [src]")

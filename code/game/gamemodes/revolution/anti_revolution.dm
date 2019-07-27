@@ -155,11 +155,11 @@
 	if(finished == 2)
 		mode_result = "loss - crew wins"
 		feedback_set_details("round_end_result",mode_result)
-		to_chat(world, "\red <FONT size = 3><B> The heads of staff were relieved of their posts! The crew wins!</B></FONT>")
+		to_chat(world, "<span class='warning'><FONT size = 3><B> The heads of staff were relieved of their posts! The crew wins!</B></FONT></span>")
 	else if(finished == 1)
 		mode_result = "win - heads wins"
 		feedback_set_details("round_end_result",mode_result)
-		to_chat(world, "\red <FONT size = 3><B> The heads of staff managed to meet the goals set for them by CentComm!</B></FONT>")
+		to_chat(world, "<span class='warning'><FONT size = 3><B> The heads of staff managed to meet the goals set for them by CentComm!</B></FONT></span>")
 
 
 
@@ -221,4 +221,4 @@
 
 	src.verbs -= /mob/proc/ResignFromHeadPosition
 
-	to_chat(src, "\red You resigned from your position, now you have the consequences.")
+	to_chat(src, "<span class='warning'>You resigned from your position, now you have the consequences.</span>")

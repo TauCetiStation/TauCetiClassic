@@ -27,10 +27,10 @@
 		user.show_message("\blue Mineral type: [M.mineral]", 1)
 		user.show_message("\blue Ore amount: [M.ore_amount]", 1)
 	else
-		user.show_message("\red No minerals found in [M]", 1)
+		user.show_message("<span class='warning'>No minerals found in [M]</span>", 1)
 
 	if(M.finds && M.finds.len || M.artifact_find)
-		user.show_message("\red Unidentified signature in [M]. Report to nearby xenoarchaeologist/anomalist.", 1)
+		user.show_message("<span class='warning'>Unidentified signature in [M]. Report to nearby xenoarchaeologist/anomalist.</span>", 1)
 
 //	user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>","<span class='notice'>You paint \the [P] [mode].</span>")
 //	user << "[M.mineral], [M.toughness], [M.ore_amount]"

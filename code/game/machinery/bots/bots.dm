@@ -69,7 +69,7 @@
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 	src.health -= rand(15,30)*brute_dam_coeff
-	src.visible_message("\red <B>[user] has slashed [src]!</B>")
+	src.visible_message("<span class='warning'><B>[user] has slashed [src]!</B></span>")
 	playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER, 25)
 	if(prob(10))
 		new /obj/effect/decal/cleanable/blood/oil(src.loc)
@@ -81,7 +81,7 @@
 	if(M.melee_damage_upper == 0)
 		return
 	src.health -= M.melee_damage_upper
-	src.visible_message("\red <B>[M] has [M.attacktext] [src]!</B>")
+	src.visible_message("<span class='warning'><B>[M] has [M.attacktext] [src]!</B></span>")
 	M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 	if(prob(10))
 		new /obj/effect/decal/cleanable/blood/oil(src.loc)
@@ -99,7 +99,7 @@
 		if(health < maxhealth)
 			if(open)
 				health = min(maxhealth, health+10)
-				user.visible_message("\red [user] repairs [src]!","\blue You repair [src]!")
+				user.visible_message("<span class='warning'>[user] repairs [src]!</span>","\blue You repair [src]!")
 			else
 				to_chat(user, "<span class='notice'>Unable to repair with the maintenance panel closed.</span>")
 		else

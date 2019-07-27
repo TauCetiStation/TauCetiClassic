@@ -70,7 +70,7 @@
 /obj/item/weapon/reagent_containers/borghypo/attack(mob/living/M, mob/user)
 	var/datum/reagents/R = reagent_list[mode]
 	if(!R.total_volume)
-		to_chat(user, "\red The injector is empty.")
+		to_chat(user, "<span class='warning'>The injector is empty.</span>")
 		return
 	if (!istype(M))
 		return

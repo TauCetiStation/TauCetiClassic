@@ -33,7 +33,7 @@
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
-		to_chat(user, "\red You accidentally cut yourself with [src].")
+		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src].</span>")
 		user.take_bodypart_damage(5, 5)
 	active = !active
 	if (active)
@@ -81,7 +81,7 @@
 
 /obj/item/weapon/melee/classic_baton/attack(mob/M, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
-		to_chat(user, "\red You club yourself over the head.")
+		to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
 		user.Weaken(3 * force)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -104,7 +104,7 @@
 		M.Stun(8)
 		M.Weaken(8)
 		for(var/mob/O in viewers(M))
-			if (O.client)	O.show_message("\red <B>[M] has been beaten with \the [src] by [user]!</B>", 1, "\red You hear someone fall", 2)
+			if (O.client)	O.show_message("<span class='warning'><B>[M] has been beaten with \the [src] by [user]!</B></span>", 1, "<span class='warning'>You hear someone fall</span>", 2)
 	else
 		playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 		M.Stun(5)
@@ -115,7 +115,7 @@
 		src.add_fingerprint(user)
 
 		for(var/mob/O in viewers(M))
-			if (O.client)	O.show_message("\red <B>[M] has been stunned with \the [src] by [user]!</B>", 1, "\red You hear someone fall", 2)
+			if (O.client)	O.show_message("<span class='warning'><B>[M] has been stunned with \the [src] by [user]!</B></span>", 1, "<span class='warning'>You hear someone fall</span>", 2)
 
 //Telescopic baton
 /obj/item/weapon/melee/telebaton
@@ -132,8 +132,8 @@
 /obj/item/weapon/melee/telebaton/attack_self(mob/user)
 	on = !on
 	if(on)
-		user.visible_message("\red With a flick of their wrist, [user] extends their telescopic baton.",\
-		"\red You extend the baton.",\
+		user.visible_message("<span class='warning'>With a flick of their wrist, [user] extends their telescopic baton.</span>",\
+		"<span class='warning'>You extend the baton.</span>",\
 		"You hear an ominous click.")
 		icon_state = "telebaton_1"
 		item_state = "telebaton"
@@ -173,7 +173,7 @@
 /obj/item/weapon/melee/telebaton/attack(mob/target, mob/living/user)
 	if(on)
 		if ((CLUMSY in user.mutations) && prob(50))
-			to_chat(user, "\red You club yourself over the head.")
+			to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
 			user.Weaken(3 * force)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user

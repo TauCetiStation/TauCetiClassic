@@ -45,7 +45,7 @@
 	set category = "Alien"
 
 	if(!isturf(src.loc))
-		to_chat(src, "\red You cannot evolve when you are inside something.")//Silly aliens!
+		to_chat(src, "<span class='warning'>You cannot evolve when you are inside something.</span>")//Silly aliens!
 		return
 
 	if(powerc(500))

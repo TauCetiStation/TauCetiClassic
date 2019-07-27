@@ -33,7 +33,7 @@
 
 /obj/item/device/detective_scanner/attack(mob/living/carbon/human/M, mob/user)
 	if (!ishuman(M))
-		to_chat(user, "\red [M] is not human and cannot have the fingerprints.")
+		to_chat(user, "<span class='warning'>[M] is not human and cannot have the fingerprints.</span>")
 		flick("forensic0",src)
 		return 0
 	if (( !( istype(M.dna, /datum/dna) ) || M.gloves) )

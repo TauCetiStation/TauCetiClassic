@@ -107,10 +107,10 @@
 				M.apply_effect((rand(30,80)),IRRADIATE)
 				M.Weaken(5)
 				for (var/mob/V in viewers(src))
-					V.show_message("\red [M] writhes in pain as \his vacuoles boil.", 3, "\red You hear the crunching of leaves.", 2)
+					V.show_message("<span class='warning'>[M] writhes in pain as \his vacuoles boil.</span>", 3, "<span class='warning'>You hear the crunching of leaves.</span>", 2)
 			if(prob(35))
 			//	for (var/mob/V in viewers(src)) //Public messages commented out to prevent possible metaish genetics experimentation and stuff. - Cheridan
-			//		V.show_message("\red [M] is mutated by the radiation beam.", 3, "\red You hear the snapping of twigs.", 2)
+			//		V.show_message("<span class='warning'>[M] is mutated by the radiation beam.</span>", 3, "<span class='warning'>You hear the snapping of twigs.</span>", 2)
 				if(prob(80))
 					randmutb(M)
 					domutcheck(M,null)
@@ -119,9 +119,9 @@
 					domutcheck(M,null)
 			else
 				M.adjustFireLoss(rand(5,15))
-				M.show_message("\red The radiation beam singes you!")
+				M.show_message("<span class='warning'>The radiation beam singes you!</span>")
 			//	for (var/mob/V in viewers(src))
-			//		V.show_message("\red [M] is singed by the radiation beam.", 3, "\red You hear the crackle of burning leaves.", 2)
+			//		V.show_message("<span class='warning'>[M] is singed by the radiation beam.</span>", 3, "<span class='warning'>You hear the crackle of burning leaves.</span>", 2)
 	else if(istype(target, /mob/living/carbon))
 	//	for (var/mob/V in viewers(src))
 	//		V.show_message("The radiation beam dissipates harmlessly through [M]", 3)
@@ -236,7 +236,7 @@
 							H.update_inv_gloves()
 						if(bp == H.shoes)
 							H.update_inv_shoes()
-					visible_message("\red The [target.name] gets absorbed by [H]'s [C.name]!")
+					visible_message("<span class='warning'>The [target.name] gets absorbed by [H]'s [C.name]!</span>")
 					return
 			else
 				continue //Does this thing we're shooting even exist?
@@ -246,7 +246,7 @@
 		H.apply_damage(damage, damage_type, organ, armorblock, null, src)
 		H.apply_effects(stun,weaken,0,0,stutter,0,0,armorblock)
 		H.flash_pain()
-		to_chat(H, "\red You feel the acid on your skin!")
+		to_chat(H, "<span class='warning'>You feel the acid on your skin!</span>")
 		return
 	..()
 

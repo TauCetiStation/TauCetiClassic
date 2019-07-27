@@ -26,7 +26,7 @@
 		for (var/mob/living/silicon/robot/M in range(src.effectrange,T))
 			for (var/obj/item/weapon/stock_parts/cell/D in M.contents)
 				D.charge = max(D.charge - 50,0)
-				to_chat(M, "\red SYSTEM ALERT: Energy drain detected!")
+				to_chat(M, "<span class='warning'>SYSTEM ALERT: Energy drain detected!</span>")
 	return 1
 
 /datum/artifact_effect/celldrain/DoEffectPulse()
@@ -40,5 +40,5 @@
 		for (var/mob/living/silicon/robot/M in range(src.effectrange,T))
 			for (var/obj/item/weapon/stock_parts/cell/D in M.contents)
 				D.charge = max(D.charge - rand() * 150,0)
-				to_chat(M, "\red SYSTEM ALERT: Energy drain detected!")
+				to_chat(M, "<span class='warning'>SYSTEM ALERT: Energy drain detected!</span>")
 	return 1

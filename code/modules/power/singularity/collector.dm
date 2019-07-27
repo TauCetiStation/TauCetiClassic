@@ -55,10 +55,10 @@ var/global/list/rad_collectors = list()
 		return 1
 	else if(istype(W, /obj/item/weapon/tank/phoron))
 		if(!src.anchored)
-			to_chat(user, "\red The [src] needs to be secured to the floor first.")
+			to_chat(user, "<span class='warning'>The [src] needs to be secured to the floor first.</span>")
 			return 1
 		if(src.P)
-			to_chat(user, "\red There's already a phoron tank loaded.")
+			to_chat(user, "<span class='warning'>There's already a phoron tank loaded.</span>")
 			return 1
 		user.drop_item()
 		src.P = W
@@ -88,9 +88,9 @@ var/global/list/rad_collectors = list()
 				to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
 			else
 				src.locked = 0 //just in case it somehow gets locked
-				to_chat(user, "\red The controls can only be locked when the [src] is active")
+				to_chat(user, "<span class='warning'>The controls can only be locked when the [src] is active</span>")
 		else
-			to_chat(user, "\red Access denied!")
+			to_chat(user, "<span class='warning'>Access denied!</span>")
 			return 1
 	else
 		..()

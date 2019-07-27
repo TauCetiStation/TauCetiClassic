@@ -144,7 +144,7 @@
 			src.icon_state = off_icon
 			src.flags = OPENCONTAINER
 	else if(src.dirty==100) // The microwave is all dirty so can't be used!
-		to_chat(user, "\red It's dirty!")
+		to_chat(user, "<span class='warning'>It's dirty!</span>")
 		return 1
 	else if(is_type_in_list(O,acceptable_items))
 		if (contents.len>=max_n_of_items)
@@ -378,7 +378,7 @@
 
 /obj/machinery/kitchen_machine/proc/muck_finish()
 	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
-	src.visible_message("\red [src] gets covered in muck!")
+	src.visible_message("<span class='warning'>[src] gets covered in muck!</span>")
 	src.dirty = 100 // Make it dirty so it can't be used util cleaned
 	src.flags = null //So you can't add condiments
 	src.icon_state = dirty_icon // Make it look dirty too
@@ -390,7 +390,7 @@
 	s.set_up(2, 1, src)
 	s.start()
 	src.icon_state = broken_icon // Make it look all busted up and shit
-	src.visible_message("\red [src] breaks!") //Let them know they're stupid
+	src.visible_message("<span class='warning'>[src] breaks!</span>") //Let them know they're stupid
 	src.broken = 2 // Make it broken so it can't be used util fixed
 	src.flags = null //So you can't add condiments
 	src.operating = 0 // Turn it off again aferwards

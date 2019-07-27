@@ -67,7 +67,7 @@
 		return 1
 	else if(istype(mover, /mob/living))
 		if(prob(50))
-			to_chat(mover, "\red You get stuck in \the [src] for a moment.")
+			to_chat(mover, "<span class='warning'>You get stuck in \the [src] for a moment.</span>")
 			return 0
 	else if(istype(mover, /obj/item/projectile))
 		return prob(30)
@@ -225,7 +225,7 @@
 		qdel(src)
 
 /obj/effect/spider/cocoon/Destroy()
-	src.visible_message("\red \the [src] splits open.")
+	src.visible_message("<span class='warning'>\the [src] splits open.</span>")
 	for(var/atom/movable/A in contents)
 		A.loc = src.loc
 	return ..()

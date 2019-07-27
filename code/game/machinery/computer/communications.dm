@@ -78,7 +78,7 @@
 		return
 
 	if (src.z > ZLEVEL_STATION)
-		to_chat(usr, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
+		to_chat(usr, "<span class='warning'><b>Unable to establish a connection</b>: \black You're too far away from the station!</span>")
 		return FALSE
 	if(!href_list["operation"])
 		return FALSE
@@ -223,7 +223,7 @@
 		if("MessageCentcomm")
 			if(src.authenticated==2)
 				if(CM.cooldown)
-					to_chat(usr, "\red Arrays recycling.  Please stand by.")
+					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
 					return
 				var/input = sanitize(input(usr, "Please choose a message to transmit to Centcomm via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""))
 				if(!input || !(usr in view(1,src)))
@@ -238,7 +238,7 @@
 		if("MessageSyndicate")
 			if((src.authenticated==2) && (src.emagged))
 				if(CM.cooldown)
-					to_chat(usr, "\red Arrays recycling.  Please stand by.")
+					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
 					return
 				var/input = sanitize(input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""))
 				if(!input || !(usr in view(1,src)))
@@ -307,7 +307,7 @@
 
 /obj/machinery/computer/communications/ui_interact(mob/user)
 	if (src.z > ZLEVEL_EMPTY)
-		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
+		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>: \black You're too far away from the station!</span>")
 		return
 
 	var/dat = "<head><title>Communications Console</title></head><body>"

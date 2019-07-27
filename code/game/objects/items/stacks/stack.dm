@@ -156,12 +156,12 @@
 		if (!multiplier) multiplier = 1
 		if(src.amount < (R.req_amount*multiplier))
 			if (R.req_amount*multiplier>1)
-				to_chat(usr, "\red You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!")
+				to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")
 			else
-				to_chat(usr, "\red You haven't got enough [src] to build \the [R.title]!")
+				to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
 			return
 		if (R.one_per_turf && (locate(R.result_type) in usr.loc))
-			to_chat(usr, "\red There is another [R.title] here!")
+			to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
 			return
 		if (R.on_floor)
 			usr.client.cob.turn_on_build_overlay(usr.client, R, src)

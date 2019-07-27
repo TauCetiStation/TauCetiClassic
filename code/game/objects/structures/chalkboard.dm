@@ -23,7 +23,7 @@
 		return
 
 	if(!ishuman(usr))
-		to_chat(usr, "\red You want, but you don't. You try, but you can't.")
+		to_chat(usr, "<span class='warning'>You want, but you don't. You try, but you can't.</span>")
 		return
 
 	if(content)
@@ -45,7 +45,7 @@
 
 
 	if(!ishuman(usr))
-		to_chat(usr, "\red You want, but you don't. You try, but you can't.")
+		to_chat(usr, "<span class='warning'>You want, but you don't. You try, but you can't.</span>")
 		return
 
 	if(content)
@@ -96,7 +96,7 @@
 		return
 
 	if(!ishuman(usr))
-		to_chat(usr, "\red You want, but you don't. You try, but you can't.")
+		to_chat(usr, "<span class='warning'>You want, but you don't. You try, but you can't.</span>")
 		return
 
 	if(status != CB_WET)

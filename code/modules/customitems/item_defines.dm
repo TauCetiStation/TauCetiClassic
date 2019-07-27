@@ -145,11 +145,11 @@
 
 /obj/item/fluff/ana_issek_2/attack_self(mob/user)
 	if(isliving(user))
-		user.visible_message("\red [user] flashes their golden security badge.\nIt reads: Ana Issek, NT Security.","\red You display the faded bage.\nIt reads: Ana Issek, NT Security.")
+		user.visible_message("<span class='warning'>[user] flashes their golden security badge.\nIt reads: Ana Issek, NT Security.</span>","<span class='warning'>You display the faded bage.\nIt reads: Ana Issek, NT Security.</span>")
 
 /obj/item/fluff/ana_issek_2/attack(mob/living/carbon/human/M, mob/living/user)
 	if(isliving(user))
-		user.visible_message("\red [user] invades [M]'s personal space, thrusting [src] into their face insistently.","\red You invade [M]'s personal space, thrusting [src] into their face insistently. You are the law.")
+		user.visible_message("<span class='warning'>[user] invades [M]'s personal space, thrusting [src] into their face insistently.</span>","<span class='warning'>You invade [M]'s personal space, thrusting [src] into their face insistently. You are the law.</span>")
 
 /obj/item/weapon/soap/fluff/azare_siraj_1 //mister fox: Azare Siraj
 	name = "S'randarr's Tongue Leaf"
@@ -249,7 +249,7 @@
 /obj/item/weapon/fluff/cado_keppel_1/attack_self(mob/user)
 	if(user.r_hand == src || user.l_hand == src)
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red [] uses [] to comb their hair with incredible style and sophistication. What a guy.", user, src), 1)
+			O.show_message(text("<span class='warning'>[] uses [] to comb their hair with incredible style and sophistication. What a guy.</span>", user, src), 1)
 	return
 
 /obj/item/weapon/fluff/hugo_cinderbacth_1 //thatoneguy: Hugo Cinderbatch
@@ -366,7 +366,7 @@
 		to_chat(user, "\blue You click \the [src] but get no reaction. Must be dead.")
 		return
 	if(!reagents.total_volume)
-		to_chat(user, "\red \The [src] is empty.")
+		to_chat(user, "<span class='warning'>\The [src] is empty.</span>")
 		return
 	if (!( istype(M, /mob) ))
 		return

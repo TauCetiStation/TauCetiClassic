@@ -41,7 +41,7 @@
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = sanitize_safe(input(usr,"Label text?","Set label",""), MAX_NAME_LEN)
 		if(!str || !length(str))
-			to_chat(usr, "\red Invalid text.")
+			to_chat(usr, "<span class='warning'>Invalid text.</span>")
 			return
 		for(var/mob/M in viewers())
 			to_chat(M, "\blue [user] labels [src] as [str].")
@@ -79,7 +79,7 @@
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = sanitize_safe(input(usr,"Label text?","Set label",""), MAX_NAME_LEN)
 		if(!str || !length(str))
-			to_chat(usr, "\red Invalid text.")
+			to_chat(usr, "<span class='warning'>Invalid text.</span>")
 			return
 		for(var/mob/M in viewers())
 			to_chat(M, "\blue [user] labels [src] as [str].")

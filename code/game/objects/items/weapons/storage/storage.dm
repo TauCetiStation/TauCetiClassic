@@ -287,14 +287,14 @@
 		var/obj/item/weapon/tray/T = W
 		if(T.calc_carry() > 0)
 			if(prob(85))
-				to_chat(user, "\red The tray won't fit in [src].")
+				to_chat(user, "<span class='warning'>The tray won't fit in [src].</span>")
 				return FALSE
 			else
 				W.loc = user.loc
 				if ((user.client && user.s_active != src))
 					user.client.screen -= W
 				W.dropped(user)
-				to_chat(user, "\red God damnit!")
+				to_chat(user, "<span class='warning'>God damnit!</span>")
 
 	if(istype(W, /obj/item/weapon/packageWrap) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
 		return FALSE

@@ -25,7 +25,7 @@
 				var/mob/living/carbon/human/H = user
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
 				BP.take_damage(rand(5, 15), used_weapon = "Reinforced wall")
-				to_chat(user, text("\red Ouch!!"))
+				to_chat(user, text("<span class='warning'>Ouch!!</span>"))
 			else
 				playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 			return //##Z2
@@ -254,7 +254,7 @@
 	if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
 		var/obj/item/weapon/changeling_hammer/C = W
 		user.do_attack_animation(src)
-		visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
+		visible_message("<span class='warning'><B>[user]</B> has punched \the <B>[src]!</B></span>")
 		if(C.use_charge(user, 4))
 			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 			take_damage(pick(10, 20, 30))

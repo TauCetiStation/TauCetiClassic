@@ -107,7 +107,7 @@
 			else if(istype(W, /obj/item/stack/rods) && !secure)
 				var/obj/item/stack/rods/R = W
 				if(R.get_amount() < 4)
-					to_chat(user, "\red You need more rods to do this.")
+					to_chat(user, "<span class='warning'>You need more rods to do this.</span>")
 					return
 				to_chat(user, "\blue You start to reinforce the windoor with rods.")
 				if(W.use_tool(src, user, 40, amount = 4, volume = 100))
@@ -198,7 +198,7 @@
 			//Crowbar to complete the assembly, Step 7 complete.
 			else if(iscrowbar(W))
 				if(!src.electronics)
-					to_chat(usr, "\red The assembly is missing electronics.")
+					to_chat(usr, "<span class='warning'>The assembly is missing electronics.</span>")
 					return
 				usr << browse(null, "window=windoor_access")
 				user.visible_message("[user] pries the windoor into the frame.", "You start prying the windoor into the frame.")

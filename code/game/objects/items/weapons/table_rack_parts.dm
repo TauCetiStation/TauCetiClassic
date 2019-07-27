@@ -27,7 +27,7 @@
 			to_chat(user, "\blue You reinforce the [name].")
 			qdel(src)
 		else
-			to_chat(user, "\red You need at least four rods to do this.")
+			to_chat(user, "<span class='warning'>You need at least four rods to do this.</span>")
 
 /obj/item/weapon/table_parts/attack_self(mob/user)
 	new /obj/structure/table( user.loc )

@@ -34,31 +34,31 @@
 			if("1")
 				log_admin("[key_name(usr)] has spawned a traitor.")
 				if(!src.makeTraitors())
-					to_chat(usr, "\red Unfortunately there weren't enough candidates available.")
+					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
 			if("2")
 				log_admin("[key_name(usr)] has spawned a changeling.")
 				if(!src.makeChanglings())
-					to_chat(usr, "\red Unfortunately there weren't enough candidates available.")
+					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
 			if("3")
 				log_admin("[key_name(usr)] has spawned revolutionaries.")
 				if(!src.makeRevs())
-					to_chat(usr, "\red Unfortunately there weren't enough candidates available.")
+					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
 			if("4")
 				log_admin("[key_name(usr)] has spawned a cultists.")
 				if(!src.makeCult())
-					to_chat(usr, "\red Unfortunately there weren't enough candidates available.")
+					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
 			if("5")
 				log_admin("[key_name(usr)] has spawned a malf AI.")
 				if(!src.makeMalfAImode())
-					to_chat(usr, "\red Unfortunately there weren't enough candidates available.")
+					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
 			if("6")
 				log_admin("[key_name(usr)] has spawned a wizard.")
 				if(!src.makeWizard())
-					to_chat(usr, "\red Unfortunately there weren't enough candidates available.")
+					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
 			if("7")
 				log_admin("[key_name(usr)] has spawned a nuke team.")
 				if(!src.makeNukeTeam())
-					to_chat(usr, "\red Unfortunately there weren't enough candidates available.")
+					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
 			if("8")
 				log_admin("[key_name(usr)] has spawned a ninja.")
 				src.makeSpaceNinja()
@@ -70,7 +70,7 @@
 			if("11")
 				log_admin("[key_name(usr)] has spawned vox raiders.")
 				if(!src.makeVoxRaiders())
-					to_chat(usr, "\red Unfortunately there weren't enough candidates available.")
+					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
 			if("12")
 				message_admins("[key_name(usr)] started a gang war.")
 				log_admin("[key_name(usr)] started a gang war.")
@@ -917,9 +917,9 @@
 							msg += ", [job]"
 					notes_add(M.ckey, "Banned  from [msg] - [reason]")
 					message_admins("\blue [key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes")
-					to_chat(M, "\red<BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG>")
-					to_chat(M, "\red <B>The reason is: [reason]</B>")
-					to_chat(M, "\red This jobban will be lifted in [mins] minutes.")
+					to_chat(M, "<span class='warning'><BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG></span>")
+					to_chat(M, "<span class='warning'><B>The reason is: [reason]</B></span>")
+					to_chat(M, "<span class='warning'>This jobban will be lifted in [mins] minutes.</span>")
 					href_list["jobban2"] = 1 // lets it fall through and refresh
 					return 1
 				if("No")
@@ -940,9 +940,9 @@
 							else		msg += ", [job]"
 						notes_add(M.ckey, "Banned  from [msg] - [reason]")
 						message_admins("\blue [key_name_admin(usr)] banned [key_name_admin(M)] from [msg]")
-						to_chat(M, "\red<BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG>")
-						to_chat(M, "\red <B>The reason is: [reason]</B>")
-						to_chat(M, "\red Jobban can be lifted only upon request.")
+						to_chat(M, "<span class='warning'><BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG></span>")
+						to_chat(M, "<span class='warning'><B>The reason is: [reason]</B></span>")
+						to_chat(M, "<span class='warning'>Jobban can be lifted only upon request.</span>")
 						href_list["jobban2"] = 1 // lets it fall through and refresh
 						return 1
 				if("Cancel")
@@ -971,7 +971,7 @@
 						continue
 			if(msg)
 				message_admins("\blue [key_name_admin(usr)] unbanned [key_name_admin(M)] from [msg]")
-				to_chat(M, "\red<BIG><B>You have been un-jobbanned by [usr.client.ckey] from [msg].</B></BIG>")
+				to_chat(M, "<span class='warning'><BIG><B>You have been un-jobbanned by [usr.client.ckey] from [msg].</B></BIG></span>")
 				href_list["jobban2"] = 1 // lets it fall through and refresh
 			return 1
 		return 0 //we didn't do anything!
@@ -1054,9 +1054,9 @@
 				return
 			var/reason = sanitize(input("Please enter reason"))
 			if(!reason)
-				to_chat(M, "\red You have been kicked from the server")
+				to_chat(M, "<span class='warning'>You have been kicked from the server</span>")
 			else
-				to_chat(M, "\red You have been kicked from the server: [reason]")
+				to_chat(M, "<span class='warning'>You have been kicked from the server: [reason]</span>")
 			log_admin("[key_name(usr)] booted [key_name(M)].")
 			message_admins("\blue [key_name_admin(usr)] booted [key_name_admin(M)].")
 			//M.client = null
@@ -1100,15 +1100,15 @@
 					return
 				AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
 				ban_unban_log_save("[usr.client.ckey] has banned [M.ckey]. - Reason: [reason] - This will be removed in [mins] minutes.")
-				to_chat(M, "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>")
-				to_chat(M, "\red This is a temporary ban, it will be removed in [mins] minutes.")
+				to_chat(M, "<span class='warning'><BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG></span>")
+				to_chat(M, "<span class='warning'>This is a temporary ban, it will be removed in [mins] minutes.</span>")
 				feedback_inc("ban_tmp",1)
 				DB_ban_record(BANTYPE_TEMP, M, mins, reason)
 				feedback_inc("ban_tmp_mins",mins)
 				if(config.banappeals)
-					to_chat(M, "\red To try to resolve this matter head to [config.banappeals]")
+					to_chat(M, "<span class='warning'>To try to resolve this matter head to [config.banappeals]</span>")
 				else
-					to_chat(M, "\red No ban appeals URL has been set.")
+					to_chat(M, "<span class='warning'>No ban appeals URL has been set.</span>")
 				log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 				message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 
@@ -1125,12 +1125,12 @@
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0, M.lastKnownIP)
 					if("No")
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
-				to_chat(M, "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>")
-				to_chat(M, "\red This is a permanent ban.")
+				to_chat(M, "<span class='warning'><BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG></span>")
+				to_chat(M, "<span class='warning'>This is a permanent ban.</span>")
 				if(config.banappeals)
-					to_chat(M, "\red To try to resolve this matter head to [config.banappeals]")
+					to_chat(M, "<span class='warning'>To try to resolve this matter head to [config.banappeals]</span>")
 				else
-					to_chat(M, "\red No ban appeals URL has been set.")
+					to_chat(M, "<span class='warning'>No ban appeals URL has been set.</span>")
 				ban_unban_log_save("[usr.client.ckey] has permabanned [M.ckey]. - Reason: [reason] - This is a permanent ban.")
 				log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
 				message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
@@ -1293,7 +1293,7 @@
 			prisoner.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(prisoner), SLOT_W_UNIFORM)
 			prisoner.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(prisoner), SLOT_SHOES)
 
-		to_chat(M, "\red You have been sent to the prison station!")
+		to_chat(M, "<span class='warning'>You have been sent to the prison station!</span>")
 		log_admin("[key_name(usr)] sent [key_name(M)] to the prison station.")
 		message_admins("\blue [key_name_admin(usr)] sent [key_name_admin(M)] to the prison station.")
 
@@ -1412,7 +1412,7 @@
 
 		if(config.allow_admin_rev)
 			L.revive()
-			message_admins("\red Admin [key_name_admin(usr)] healed / revived [key_name_admin(L)]!")
+			message_admins("<span class='warning'>Admin [key_name_admin(usr)] healed / revived [key_name_admin(L)]!</span>")
 			log_admin("[key_name(usr)] healed / Rrvived [key_name(L)]")
 		else
 			to_chat(usr, "Admin Rejuvinates have been disabled")
@@ -1425,7 +1425,7 @@
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human")
 			return
 
-		message_admins("\red Admin [key_name_admin(usr)] AIized [key_name_admin(H)]!")
+		message_admins("<span class='warning'>Admin [key_name_admin(usr)] AIized [key_name_admin(H)]!</span>")
 		log_admin("[key_name(usr)] AIized [key_name(H)]")
 		H.AIize()
 
@@ -2177,7 +2177,7 @@
 				var/range_dev = MAX_EXPLOSION_RANGE *0.25
 				var/range_high = MAX_EXPLOSION_RANGE *0.5
 				var/range_low = MAX_EXPLOSION_RANGE
-				message_admins("\red <b> [key_name_admin(usr)] changed the bomb cap to [range_dev], [range_high], [range_low]</b>")
+				message_admins("<span class='warning'><b> [key_name_admin(usr)] changed the bomb cap to [range_dev], [range_high], [range_low]</b></span>")
 				log_admin("[key_name_admin(usr)] changed the bomb cap to [MAX_EXPLOSION_RANGE]")
 
 			if("flicklights")
@@ -2380,7 +2380,7 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","RET")
 				for(var/mob/living/carbon/human/H in player_list)
-					to_chat(H, "\red <B>You suddenly feel stupid.</B>")
+					to_chat(H, "<span class='warning'><B>You suddenly feel stupid.</B></span>")
 					H.setBrainLoss(60)
 				message_admins("[key_name_admin(usr)] made everybody retarded")
 			if("fakeguns")

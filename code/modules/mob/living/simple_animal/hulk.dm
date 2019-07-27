@@ -214,16 +214,16 @@
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
+					M.show_message("<span class='warning'>\b [src] has been attacked with [O] by [user]. </span>")
 		else
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [O] bounces harmlessly off of [src]. ")
+					M.show_message("<span class='warning'>\b [O] bounces harmlessly off of [src]. </span>")
 	else
-		to_chat(usr, "\red This weapon is ineffective, it does no damage.")
+		to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("\red [user] gently taps [src] with [O]. ")
+				M.show_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
 
 /mob/living/simple_animal/hulk/bullet_act(obj/item/projectile/P)
 	..()

@@ -192,12 +192,12 @@
 	//Begin code phrase.
 	to_chat(killer, "The Syndicate provided you with the following information on how to identify their agents:")
 	if(prob(80))
-		to_chat(killer, "\red Code Phrase: \black [syndicate_code_phrase]")
+		to_chat(killer, "<span class='warning'>Code Phrase: \black [syndicate_code_phrase]</span>")
 		killer.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
 	else
 		to_chat(killer, "Unfortunately, the Syndicate did not provide you with a code phrase.")
 	if(prob(80))
-		to_chat(killer, "\red Code Response: \black [syndicate_code_response]")
+		to_chat(killer, "<span class='warning'>Code Response: \black [syndicate_code_response]</span>")
 		killer.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
 	else
 		to_chat(killer, "Unfortunately, the Syndicate did not provide you with a code response.")
@@ -355,12 +355,12 @@
 	if(!safety)//If they are not a rev. Can be added on to.
 		to_chat(traitor_mob, "The Syndicate provided you with the following information on how to identify other agents:")
 		if(prob(80))
-			to_chat(traitor_mob, "\red Code Phrase: \black [syndicate_code_phrase]")
+			to_chat(traitor_mob, "<span class='warning'>Code Phrase: \black [syndicate_code_phrase]</span>")
 			traitor_mob.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
 		else
 			to_chat(traitor_mob, "Unfortunetly, the Syndicate did not provide you with a code phrase.")
 		if(prob(80))
-			to_chat(traitor_mob, "\red Code Response: \black [syndicate_code_response]")
+			to_chat(traitor_mob, "<span class='warning'>Code Response: \black [syndicate_code_response]</span>")
 			traitor_mob.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
 		else
 			to_chat(traitor_mob, "Unfortunately, the Syndicate did not provide you with a code response.")

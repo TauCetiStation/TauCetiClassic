@@ -27,7 +27,7 @@
 			attack_log += "\[[time_stamp()]\]<font color='orange'>triggers their deadman's switch!</font>"
 			message_admins("\blue [key_name_admin(src)] triggers their deadman's switch! ([ADMIN_JMP(src)])")
 			log_game("\blue [key_name(src)] triggers their deadman's switch!")
-			src.visible_message("\red [src] triggers their deadman's switch!")
+			src.visible_message("<span class='warning'>[src] triggers their deadman's switch!</span>")
 			signaler.signal()
 
 	//Armor

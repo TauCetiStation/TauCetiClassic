@@ -68,7 +68,7 @@
 		for (var/mob/living/M in O.contents)
 			G = M
 		if (G.stat == CONSCIOUS)
-			to_chat(user, "\red The monkey is struggling far too much to put it in the recycler.")
+			to_chat(user, "<span class='warning'>The monkey is struggling far too much to put it in the recycler.</span>")
 		else
 			grind(O, user)
 	if (istype(O, /obj/item/weapon/grab))
@@ -77,11 +77,11 @@
 		if(ismonkey(grabbed))
 			var/mob/living/carbon/monkey/target = grabbed
 			if(target.stat == CONSCIOUS)
-				to_chat(user, "\red The monkey is struggling far too much to put it in the recycler.")
+				to_chat(user, "<span class='warning'>The monkey is struggling far too much to put it in the recycler.</span>")
 			else
 				grind(target, user)
 		else
-			to_chat(user, "\red The machine only accepts monkeys!")
+			to_chat(user, "<span class='warning'>The machine only accepts monkeys!</span>")
 	return
 
 /obj/machinery/monkey_recycler/attack_hand(mob/user)

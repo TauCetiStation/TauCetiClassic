@@ -110,7 +110,7 @@
 /obj/structure/alien/resin/hitby(AM)
 	..()
 	for(var/mob/O in viewers(src, null))
-		O.show_message("\red <B>[src] was hit by [AM].</B>", 1)
+		O.show_message("<span class='warning'><B>[src] was hit by [AM].</B></span>", 1)
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 10
@@ -128,12 +128,12 @@
 	if (HULK in user.mutations)
 		to_chat(user, "\blue You easily destroy the [name].")
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [user] destroys the [name]!", 1)
+			O.show_message("<span class='warning'>[user] destroys the [name]!</span>", 1)
 		health = 0
 	else
 		to_chat(user, "\blue You claw at the [name].")
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [user] claws at the [name]!", 1)
+			O.show_message("<span class='warning'>[user] claws at the [name]!</span>", 1)
 		health -= rand(5,10)
 	healthcheck()
 	return
@@ -148,13 +148,13 @@
 		return
 	to_chat(usr, "\green You claw at the [name].")
 	for(var/mob/O in oviewers(src))
-		O.show_message("\red [usr] claws at the resin!", 1)
+		O.show_message("<span class='warning'>[usr] claws at the resin!</span>", 1)
 	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	health -= rand(40, 60)
 	if(health <= 0)
 		to_chat(usr, "\green You slice the [name] to pieces.")
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] slices the [name] apart!", 1)
+			O.show_message("<span class='warning'>[usr] slices the [name] apart!</span>", 1)
 	healthcheck()
 	return
 
@@ -423,7 +423,7 @@
 	if(isalien(user))
 		switch(status)
 			if(GROWING)
-				to_chat(user, "\red The child is not developed yet.")
+				to_chat(user, "<span class='warning'>The child is not developed yet.</span>")
 				return
 			if(BURST)
 				to_chat(user, "You clear the hatched egg.")
@@ -462,7 +462,7 @@
 		return
 	switch(status)
 		if(GROWING)
-			to_chat(user, "\red The child is not developed yet.")
+			to_chat(user, "<span class='warning'>The child is not developed yet.</span>")
 			return
 		if(GROWN)
 			used = 1

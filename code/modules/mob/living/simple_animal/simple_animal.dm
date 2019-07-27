@@ -239,7 +239,7 @@
 			adjustBruteLoss(harm_intent_damage)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message("\red [M] [response_harm] [src]")
+					O.show_message("<span class='warning'>[M] [response_harm] [src]</span>")
 
 	return
 
@@ -257,7 +257,7 @@
 
 		if("hurt", "disarm")
 			var/damage = rand(15, 30)
-			visible_message("\red <B>[M] has slashed at [src]!</B>")
+			visible_message("<span class='warning'><B>[M] has slashed at [src]!</B></span>")
 			adjustBruteLoss(damage)
 
 	return
@@ -272,7 +272,7 @@
 		else
 
 			var/damage = rand(5, 10)
-			visible_message("\red <B>[L] bites [src]!</B>")
+			visible_message("<span class='warning'><B>[L] bites [src]!</B></span>")
 
 			if(stat != DEAD)
 				adjustBruteLoss(damage)

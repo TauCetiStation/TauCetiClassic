@@ -81,10 +81,10 @@
 				to_chat(user, "\blue You set the restrictor to the first position.")
 				aggressiveness = 1
 			if(4)
-				to_chat(user, "\red You adjust the restrictor but nothing happens, probably because its broken.")
+				to_chat(user, "<span class='warning'>You adjust the restrictor but nothing happens, probably because its broken.</span>")
 	else if(iswirecutter(W))
 		if(aggressiveness != 4)
-			to_chat(user, "\red You broke it!")
+			to_chat(user, "<span class='warning'>You broke it!</span>")
 			aggressiveness = 4
 	else
 		..()

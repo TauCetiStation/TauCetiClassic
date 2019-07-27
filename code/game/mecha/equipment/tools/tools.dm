@@ -76,8 +76,8 @@
 			M.take_overall_damage(dam_force)
 			M.adjustOxyLoss(round(dam_force/2))
 			M.updatehealth()
-			occupant_message("\red You squeeze [target] with [src.name]. Something cracks.")
-			chassis.visible_message("\red [chassis] squeezes [target].")
+			occupant_message("<span class='warning'>You squeeze [target] with [src.name]. Something cracks.</span>")
+			chassis.visible_message("<span class='warning'>[chassis] squeezes [target].</span>")
 
 			chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name]</font>"
 			M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name]</font>"
@@ -589,7 +589,7 @@
 		return chassis.dynattackby(W,user)
 	chassis.log_message("Attacked by [W]. Attacker - [user]")
 	if(prob(chassis.deflect_chance*deflect_coeff))
-		to_chat(user, "\red The [W] bounces off [chassis] armor.")
+		to_chat(user, "<span class='warning'>The [W] bounces off [chassis] armor.</span>")
 		chassis.log_append_to_last("Armor saved.")
 	else
 		chassis.occupant_message("<font color='red'><b>[user] hits [chassis] with [W].</b></font>")
@@ -1078,11 +1078,11 @@
 		var/mob/living/M = target
 		if(M.stat>1) return
 		if(chassis.occupant.a_intent == "hurt")
-			chassis.occupant_message("\red You obliterate [target] with [src.name], leaving blood and guts everywhere.")
-			chassis.visible_message("\red [chassis] destroys [target] in an unholy fury.")
+			chassis.occupant_message("<span class='warning'>You obliterate [target] with [src.name], leaving blood and guts everywhere.</span>")
+			chassis.visible_message("<span class='warning'>[chassis] destroys [target] in an unholy fury.</span>")
 		if(chassis.occupant.a_intent == "disarm")
-			chassis.occupant_message("\red You tear [target]'s limbs off with [src.name].")
-			chassis.visible_message("\red [chassis] rips [target]'s arms off.")
+			chassis.occupant_message("<span class='warning'>You tear [target]'s limbs off with [src.name].</span>")
+			chassis.visible_message("<span class='warning'>[chassis] rips [target]'s arms off.</span>")
 		else
 			step_away(M,chassis)
 			chassis.occupant_message("You smash into [target], sending them flying.")

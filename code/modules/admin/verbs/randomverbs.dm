@@ -38,7 +38,7 @@
 			prisoner.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(prisoner), SLOT_W_UNIFORM)
 			prisoner.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(prisoner), SLOT_SHOES)
 		spawn(50)
-			to_chat(M, "\red You have been sent to the prison station!")
+			to_chat(M, "<span class='warning'>You have been sent to the prison station!</span>")
 		log_admin("[key_name(usr)] sent [key_name(M)] to the prison station.")
 		message_admins("\blue [key_name_admin(usr)] sent [key_name_admin(M)] to the prison station.")
 		feedback_add_details("admin_verb","PRISON") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -354,9 +354,9 @@ Ccomp's first proc.
 			if(g.antagHUD)
 				g.antagHUD = 0						// Disable it on those that have it enabled
 				g.has_enabled_antagHUD = 2				// We'll allow them to respawn
-				to_chat(g, "\red <B>The Administrator has disabled AntagHUD </B>")
+				to_chat(g, "<span class='warning'><B>The Administrator has disabled AntagHUD </B></span>")
 		config.antag_hud_allowed = 0
-		to_chat(src, "\red <B>AntagHUD usage has been disabled</B>")
+		to_chat(src, "<span class='warning'><B>AntagHUD usage has been disabled</B></span>")
 		action = "disabled"
 	else
 		for(var/mob/dead/observer/g in get_ghosts())
@@ -388,13 +388,13 @@ Ccomp's first proc.
 		to_chat(src, "\blue <B>AntagHUD restrictions have been lifted</B>")
 	else
 		for(var/mob/dead/observer/g in get_ghosts())
-			to_chat(g, "\red <B>The administrator has placed restrictions on joining the round if you use AntagHUD</B>")
-			to_chat(g, "\red <B>Your AntagHUD has been disabled, you may choose to re-enabled it but will be under restrictions </B>")
+			to_chat(g, "<span class='warning'><B>The administrator has placed restrictions on joining the round if you use AntagHUD</B></span>")
+			to_chat(g, "<span class='warning'><B>Your AntagHUD has been disabled, you may choose to re-enabled it but will be under restrictions </B></span>")
 			g.antagHUD = 0
 			g.has_enabled_antagHUD = 0
 		action = "placed restrictions"
 		config.antag_hud_restricted = 1
-		to_chat(src, "\red <B>AntagHUD restrictions have been enabled</B>")
+		to_chat(src, "<span class='warning'><B>AntagHUD restrictions have been enabled</B></span>")
 
 	log_admin("[key_name(usr)] has [action] on joining the round if they use AntagHUD")
 	message_admins("Admin [key_name_admin(usr)] has [action] on joining the round if they use AntagHUD")
@@ -611,7 +611,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		else
 			M.add_ion_law(input)
 			for(var/mob/living/silicon/ai/O in ai_list)
-				to_chat(O, "\red " + input + "\red...LAWS UPDATED")
+				to_chat(O, "<span class='warning'></span>" + input + "<span class='warning'>...LAWS UPDATED</span>")
 
 	log_admin("Admin [key_name(usr)] has added a new AI law - [input]")
 	message_admins("Admin [key_name_admin(usr)] has added a new AI law - [input]")
@@ -637,7 +637,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		M.revive()
 
 		log_admin("[key_name(usr)] healed / revived [key_name(M)]")
-		message_admins("\red Admin [key_name_admin(usr)] healed / revived [key_name_admin(M)]!")
+		message_admins("<span class='warning'>Admin [key_name_admin(usr)] healed / revived [key_name_admin(M)]!</span>")
 	else
 		alert("Admin revive disabled")
 	feedback_add_details("admin_verb","REJU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -667,7 +667,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if("Yes")
 			command_alert(input, customname);
 		if("No")
-			to_chat(world, "\red New NanoTrasen Update available at all communication consoles.")
+			to_chat(world, "<span class='warning'>New NanoTrasen Update available at all communication consoles.</span>")
 			station_announce(sound = "commandreport")
 
 	log_admin("[key_name(src)] has created a command report: [input]")
@@ -822,9 +822,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			return
 		if(M)
 			AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
-			to_chat(M, "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>")
-			to_chat(M, "\red This is a temporary ban, it will be removed in [mins] minutes.")
-			to_chat(M, "\red To try to resolve this matter head to http://ss13.donglabs.com/forum/")
+			to_chat(M, "<span class='warning'><BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG></span>")
+			to_chat(M, "<span class='warning'>This is a temporary ban, it will be removed in [mins] minutes.</span>")
+			to_chat(M, "<span class='warning'>To try to resolve this matter head to http://ss13.donglabs.com/forum/</span>")
 			log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 			message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 			world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[html_decode(reason)]&time=[mins]&server=[replacetext(config.server_name, "#", "")]")
@@ -837,9 +837,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if(!reason)
 			return
 		AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
-		to_chat(M, "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>")
-		to_chat(M, "\red This is a permanent ban.")
-		to_chat(M, "\red To try to resolve this matter head to http://ss13.donglabs.com/forum/")
+		to_chat(M, "<span class='warning'><BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG></span>")
+		to_chat(M, "<span class='warning'>This is a permanent ban.</span>")
+		to_chat(M, "<span class='warning'>To try to resolve this matter head to http://ss13.donglabs.com/forum/</span>")
 		log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
 		message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
 		world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[html_decode(reason)]&time=perma&server=[replacetext(config.server_name, "#", "")]")
@@ -997,7 +997,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "Attack Log"
 
-	to_chat(usr, text("\red <b>Attack Log for []</b>", mob))
+	to_chat(usr, text("<span class='warning'><b>Attack Log for []</b></span>", mob))
 	for(var/t in M.attack_log)
 		to_chat(usr, t)
 	feedback_add_details("admin_verb","ATTL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

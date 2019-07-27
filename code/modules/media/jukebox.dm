@@ -109,10 +109,10 @@ var/global/loopModeNames=list(
 /obj/machinery/media/jukebox/ui_interact(mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(stat & NOPOWER)
-		to_chat(usr, "\red You don't see anything to mess with.")
+		to_chat(usr, "<span class='warning'>You don't see anything to mess with.</span>")
 		return
 	if(stat & BROKEN && playlist!=null)
-		user.visible_message("\red <b>[user.name] smacks the side of \the [src.name].</b>","\red You hammer the side of \the [src.name].")
+		user.visible_message("<span class='warning'><b>[user.name] smacks the side of \the [src.name].</b></span>","<span class='warning'>You hammer the side of \the [src.name].</span>")
 		stat &= ~BROKEN
 		playlist=null
 		playing=emagged
@@ -156,7 +156,7 @@ var/global/loopModeNames=list(
 		user.visible_message("\blue [user.name] begins [un]locking \the [src.name]'s casters.","\blue You begin [un]locking \the [src.name]'s casters.")
 		if(W.use_tool(src, user, 30, volume = 50))
 			anchored = !anchored
-			user.visible_message("\blue [user.name] [un]locks \the [src.name]'s casters.","\red You [un]lock \the [src.name]'s casters.")
+			user.visible_message("\blue [user.name] [un]locks \the [src.name]'s casters.","<span class='warning'>You [un]lock \the [src.name]'s casters.</span>")
 			playing = emagged
 			update_music()
 			update_icon()
@@ -172,7 +172,7 @@ var/global/loopModeNames=list(
 		loop_mode = JUKEMODE_SHUFFLE
 		emagged = 1
 		playing = 1
-		user.visible_message("\red [user.name] slides something into the [src.name]'s card-reader.","\red You short out the [src.name].")
+		user.visible_message("<span class='warning'>[user.name] slides something into the [src.name]'s card-reader.</span>","<span class='warning'>You short out the [src.name].</span>")
 		update_icon()
 		update_music()
 	return TRUE
@@ -183,7 +183,7 @@ var/global/loopModeNames=list(
 		return
 
 	if(emagged)
-		to_chat(usr, "\red You touch the bluescreened menu. Nothing happens. You feel dumber.")
+		to_chat(usr, "<span class='warning'>You touch the bluescreened menu. Nothing happens. You feel dumber.</span>")
 		return FALSE
 
 	if (href_list["power"])
@@ -193,7 +193,7 @@ var/global/loopModeNames=list(
 
 	if (href_list["playlist"])
 		if(!check_reload())
-			to_chat(usr, "\red You must wait 60 seconds between playlist reloads.")
+			to_chat(usr, "<span class='warning'>You must wait 60 seconds between playlist reloads.</span>")
 			return FALSE
 		playlist_id = href_list["playlist"]
 		last_reload = world.time

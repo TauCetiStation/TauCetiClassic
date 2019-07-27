@@ -189,7 +189,7 @@ Code:
 	set desc = "BOOOOM!"
 	deadman = 1
 	START_PROCESSING(SSobj, src)
-	usr.visible_message("\red [usr] moves their finger over [src]'s signal button...")
+	usr.visible_message("<span class='warning'>[usr] moves their finger over [src]'s signal button...</span>")
 
 // Embedded signaller used in anomalies.
 /obj/item/device/assembly/signaler/anomaly

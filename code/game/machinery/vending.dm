@@ -429,10 +429,10 @@
 		if(isrobot(usr))
 			var/mob/living/silicon/robot/R = usr
 			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
-				to_chat(usr, "\red The vending machine refuses to interface with you, as you are not in its target demographic!")
+				to_chat(usr, "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
 				return FALSE
 		else if(issilicon(usr))
-			to_chat(usr, "\red The vending machine refuses to interface with you, as you are not in its target demographic!")
+			to_chat(usr, "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
 			return FALSE
 
 		if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
@@ -452,7 +452,7 @@
 					ewallet.worth -= R.price
 					src.vend(R, usr)
 				else
-					to_chat(usr, "\red The ewallet doesn't have enough money to pay for that.")
+					to_chat(usr, "<span class='warning'>The ewallet doesn't have enough money to pay for that.</span>")
 					src.currently_vending = R
 					src.updateUsrDialog()
 			else

@@ -113,9 +113,9 @@ var/const/HOLOPAD_MODE = 0
 
 			src.visible_message("A holographic image of [hologram.name] flicks to life right before your eyes!")
 		else
-			to_chat(user, "\red ERROR: \black Image feed in progress.")
+			to_chat(user, "<span class='warning'>ERROR: \black Image feed in progress.</span>")
 	else
-		to_chat(user, "\red ERROR: \black Unable to project hologram.")
+		to_chat(user, "<span class='warning'>ERROR: \black Unable to project hologram.</span>")
 	return
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.

@@ -100,7 +100,7 @@ var/ninja_confirmed_selection = 0
 /proc/space_ninja_arrival(assign_key = null, assign_mission = null)
 
 	if(ninja_selection_active)
-		to_chat(usr, "\red Ninja selection already in progress. Please wait until it ends.")
+		to_chat(usr, "<span class='warning'>Ninja selection already in progress. Please wait until it ends.</span>")
 		return
 
 	var/datum/game_mode/current_mode = ticker.mode
@@ -178,7 +178,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 				break
 
 	if(!candidate_mob)
-		to_chat(usr, "\red The randomly chosen mob was not found in the second check.")
+		to_chat(usr, "<span class='warning'>The randomly chosen mob was not found in the second check.</span>")
 		return
 
 	ninja_selection_active = 1
@@ -187,7 +187,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 	spawn(1)
 		if(alert(candidate_mob, "You have been selected to play as a space ninja. Would you like to play as this role? (You have 30 seconds to accept - You will spawn in 30 seconds if you accept)",,"Yes","No")!="Yes")
-			to_chat(usr, "\red The selected candidate for space ninja declined.")
+			to_chat(usr, "<span class='warning'>The selected candidate for space ninja declined.</span>")
 			return
 
 		ninja_confirmed_selection = this_selection_id
@@ -195,12 +195,12 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 	spawn(300)
 		if(!ninja_selection_active || (this_selection_id != ninja_selection_id ))
 			ninja_selection_active = 0
-			to_chat(candidate_mob, "\red Sorry, you were too late. You only had 30 seconds to accept.")
+			to_chat(candidate_mob, "<span class='warning'>Sorry, you were too late. You only had 30 seconds to accept.</span>")
 			return
 
 		if(ninja_confirmed_selection != ninja_selection_id)
 			ninja_selection_active = 0
-			to_chat(usr, "\red The ninja did not accept the role in time.")
+			to_chat(usr, "<span class='warning'>The ninja did not accept the role in time.</span>")
 			return
 
 		ninja_selection_active = 0
@@ -719,7 +719,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	cancel_stealth()
 
 	U << browse(null, "window=spideros")
-	to_chat(U, "\red Do or Die, <b>LET'S ROCK!!</b>")
+	to_chat(U, "<span class='warning'>Do or Die, <b>LET'S ROCK!!</b></span>")
 
 /obj/item/clothing/suit/space/space_ninja/proc/remove_kamikaze(mob/living/carbon/U)
 	if(kamikaze)
@@ -793,13 +793,13 @@ spideros = text2num(return_to)//Maximum length here is 6. Use (return_to, X) to 
 		if(isturf(T) && T.is_plating())
 			attached = locate() in T
 			if(!attached)
-				to_chat(U, "\red Warning: no exposed cable available.")
+				to_chat(U, "<span class='warning'>Warning: no exposed cable available.</span>")
 			else
 				to_chat(U, "\blue Connecting to wire, stand still...")
 				if(do_after(U,50)&&!isnull(attached))
 					drain("WIRE",attached,U:wear_suit,src)
 				else
-					to_chat(U, "\red Procedure interrupted. Protocol terminated.")
+					to_chat(U, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
 	return
 
 I've tried a lot of stuff but adding verbs to the AI while inside an object, inside another object, did not want to work properly.

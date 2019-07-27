@@ -147,7 +147,7 @@
 
 /obj/machinery/body_scanconsole/ui_interact(mob/user)
 	if(!ishuman(connected.occupant))
-		to_chat(user, "\red This device can only scan compatible lifeforms.")
+		to_chat(user, "<span class='warning'>This device can only scan compatible lifeforms.</span>")
 		return
 
 	var/dat

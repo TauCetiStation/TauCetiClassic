@@ -29,11 +29,11 @@
 		return
 
 	if(!isturf(src.loc))
-		to_chat(src, "\red You cannot evolve when you are inside something.")//Silly aliens!
+		to_chat(src, "<span class='warning'>You cannot evolve when you are inside something.</span>")//Silly aliens!
 		return
 
 	if(handcuffed || legcuffed)
-		to_chat(src, "\red You cannot evolve when you are cuffed.")
+		to_chat(src, "<span class='warning'>You cannot evolve when you are cuffed.</span>")
 		return
 
 	if(amount_grown >= max_grown)	//TODO ~Carn
@@ -60,5 +60,5 @@
 		qdel(src)
 		return
 	else
-		to_chat(src, "\red You are not fully grown.")
+		to_chat(src, "<span class='warning'>You are not fully grown.</span>")
 		return

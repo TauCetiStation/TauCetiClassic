@@ -784,10 +784,10 @@
 
 			if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
 				if(!(useMS && useTC))
-					U.show_message("\red An error flashes on your [src]: Connection unavailable", 1)
+					U.show_message("<span class='warning'>An error flashes on your [src]: Connection unavailable</span>", 1)
 					return
 				if(useTC != 2) // Does our recepient have a broadcaster on their level?
-					U.show_message("\red An error flashes on your [src]: Recipient unavailable", 1)
+					U.show_message("<span class='warning'>An error flashes on your [src]: Recipient unavailable</span>", 1)
 					return
 				var/obj/item/device/pda/P = locate(href_list["target"])
 				if(!isnull(P))
@@ -806,9 +806,9 @@
 								difficulty += 3
 
 						if(prob(difficulty))
-							U.show_message("\red An error flashes on your [src].", 1)
+							U.show_message("<span class='warning'>An error flashes on your [src].</span>", 1)
 						else if (prob(difficulty * 7))
-							U.show_message("\red Energy feeds back into your [src]!", 1)
+							U.show_message("<span class='warning'>Energy feeds back into your [src]!</span>", 1)
 							ui.close()
 							detonate_act(src)
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge but failed, blowing themselves up")
@@ -938,7 +938,7 @@
 			message += "Your [P] shatters in a thousand pieces!"
 
 	if(M && isliving(M))
-		message = "\red" + message
+		message = "<span class='warning'></span>" + message
 		M.show_message(message, 1)
 
 /obj/item/device/pda/proc/remove_id()
@@ -1184,11 +1184,11 @@
 			if(1)
 
 				for (var/mob/O in viewers(C, null))
-					O.show_message("\red [user] has analyzed [C]'s vitals!", 1)
+					O.show_message("<span class='warning'>[user] has analyzed [C]'s vitals!</span>", 1)
 
 				user.show_message("\blue Analyzing Results for [C]:")
 				user.show_message("\blue &emsp; Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]", 1)
-				user.show_message("\blue &emsp; Damage Specifics: [C.getOxyLoss() > 50 ? "\red" : "\blue"][C.getOxyLoss()]-[C.getToxLoss() > 50 ? "\red" : "\blue"][C.getToxLoss()]-[C.getFireLoss() > 50 ? "\red" : "\blue"][C.getFireLoss()]-[C.getBruteLoss() > 50 ? "\red" : "\blue"][C.getBruteLoss()]", 1)
+				user.show_message("\blue &emsp; Damage Specifics: [C.getOxyLoss() > 50 ? "<span class='warning'>" : "<span class='notice'>"][C.getOxyLoss()]</span>-[C.getToxLoss() > 50 ? "<span class='warning'>" : "<span class='notice'>"][C.getToxLoss()]</span>-[C.getFireLoss() > 50 ? "<span class='warning'>" : "<span class='notice'>"][C.getFireLoss()]</span>-[C.getBruteLoss() > 50 ? "<span class='warning'>" : "<span class='notice'>"][C.getBruteLoss()]</span>", 1)
 				user.show_message("\blue &emsp; Key: Suffocation/Toxin/Burns/Brute", 1)
 				user.show_message("\blue &emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)", 1)
 				if(C.tod && (C.stat == DEAD || (C.status_flags & FAKEDEATH)))
@@ -1199,13 +1199,13 @@
 					user.show_message("\blue Localized Damage, Brute/Burn:",1)
 					if(length(damaged)>0)
 						for(var/obj/item/organ/external/BP in damaged)
-							user.show_message(text("\blue &emsp; []: []\blue-[]",capitalize(BP.name),(BP.brute_dam > 0)?"\red [BP.brute_dam]":0,(BP.burn_dam > 0)?"\red [BP.burn_dam]":0),1)
+							user.show_message(text("\blue &emsp; []: []\blue-[]",capitalize(BP.name),(BP.brute_dam > 0)?"<span class='warning'>[BP.brute_dam]</span>":0,(BP.burn_dam > 0)?"<span class='warning'>[BP.burn_dam]</span>":0),1)
 					else
 						user.show_message("\blue &emsp; Limbs are OK.",1)
 
 				for(var/datum/disease/D in C.viruses)
 					if(!D.hidden[SCANNER])
-						user.show_message(text("\red <b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]"))
+						user.show_message(text("<span class='warning'><b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span>"))
 
 			if(2)
 				if (!istype(C:dna, /datum/dna))
@@ -1227,7 +1227,7 @@
 
 			if(4)
 				for (var/mob/O in viewers(C, null))
-					O.show_message("\red [user] has analyzed [C]'s radiation levels!", 1)
+					O.show_message("<span class='warning'>[user] has analyzed [C]'s radiation levels!</span>", 1)
 
 				user.show_message("\blue Analyzing Results for [C]:")
 				if(C.radiation)

@@ -79,7 +79,7 @@
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			updateDialog()
 		else
-			to_chat(user, "\red Access denied.")
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/machinery/suspension_gen/emag_act(mob/user)
 	if(prob(75))
@@ -300,7 +300,7 @@
 	set category = "Object"
 
 	if(anchored)
-		to_chat(usr, "\red You cannot rotate [src], it has been firmly fixed to the floor.")
+		to_chat(usr, "<span class='warning'>You cannot rotate [src], it has been firmly fixed to the floor.</span>")
 	else
 		dir = turn(dir, 90)
 
@@ -310,7 +310,7 @@
 	set category = "Object"
 
 	if(anchored)
-		to_chat(usr, "\red You cannot rotate [src], it has been firmly fixed to the floor.")
+		to_chat(usr, "<span class='warning'>You cannot rotate [src], it has been firmly fixed to the floor.</span>")
 	else
 		dir = turn(dir, -90)
 

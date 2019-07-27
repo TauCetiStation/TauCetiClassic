@@ -127,7 +127,7 @@
 		return
 
 	if(W.can_puncture())
-		visible_message("\red <b>[user] pierces [src] with [W]!</b>")
+		visible_message("<span class='warning'><b>[user] pierces [src] with [W]!</b></span>")
 		deflate(1)
 	if(W.damtype == BRUTE || W.damtype == BURN)
 		hit(W.force)

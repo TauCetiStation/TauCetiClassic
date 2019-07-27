@@ -124,7 +124,7 @@
 /mob/living/simple_animal/corgi/borgi/proc/explode()
 	for(var/mob/M in viewers(src, null))
 		if (M.client)
-			M.show_message("\red [src] makes an odd whining noise.")
+			M.show_message("<span class='warning'>[src] makes an odd whining noise.</span>")
 	sleep(10)
 	explosion(get_turf(src), 0, 1, 4, 7)
 	Die()

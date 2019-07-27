@@ -153,17 +153,17 @@
 		ban_number++;
 
 	if(ban_number == 0)
-		to_chat(usr, "\red Database update failed due to no bans fitting the search criteria. If this is not a legacy ban you should contact the database admin.")
+		to_chat(usr, "<span class='warning'>Database update failed due to no bans fitting the search criteria. If this is not a legacy ban you should contact the database admin.</span>")
 		return
 
 	if(ban_number > 1)
-		to_chat(usr, "\red Database update failed due to multiple bans fitting the search criteria. Note down the ckey, job and current time and contact the database admin.")
+		to_chat(usr, "<span class='warning'>Database update failed due to multiple bans fitting the search criteria. Note down the ckey, job and current time and contact the database admin.</span>")
 		return
 
 	if(istext(ban_id))
 		ban_id = text2num(ban_id)
 	if(!isnum(ban_id))
-		to_chat(usr, "\red Database update failed due to a ban ID mismatch. Contact the database admin.")
+		to_chat(usr, "<span class='warning'>Database update failed due to a ban ID mismatch. Contact the database admin.</span>")
 		return
 
 	DB_ban_unban_by_id(ban_id)
@@ -263,11 +263,11 @@
 		ban_number++;
 
 	if(ban_number == 0)
-		to_chat(usr, "\red Database update failed due to a ban id not being present in the database.")
+		to_chat(usr, "<span class='warning'>Database update failed due to a ban id not being present in the database.</span>")
 		return
 
 	if(ban_number > 1)
-		to_chat(usr, "\red Database update failed due to multiple bans having the same ID. Contact the database admin.")
+		to_chat(usr, "<span class='warning'>Database update failed due to multiple bans having the same ID. Contact the database admin.</span>")
 		return
 
 	if(!src.owner || !istype(src.owner, /client))
@@ -310,7 +310,7 @@
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
-		to_chat(usr, "\red Failed to establish database connection")
+		to_chat(usr, "<span class='warning'>Failed to establish database connection</span>")
 		return
 
 	var/output = "<div align='center'><table width='90%'><tr>"

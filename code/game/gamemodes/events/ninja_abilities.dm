@@ -17,21 +17,21 @@ s_cooldown ticks off each second based on the suit recharge proc, in seconds. De
 /obj/item/clothing/suit/space/space_ninja/proc/ninjacost(C = 0,X = 0)
 	var/mob/living/carbon/human/U = affecting
 	if( (U.stat||U.incorporeal_move)&&X!=3 )//Will not return if user is using an adrenaline booster since you can use them when stat==1.
-		to_chat(U, "\red You must be conscious and solid to do this.")//It's not a problem of stat==2 since the ninja will explode anyway if they die.
+		to_chat(U, "<span class='warning'>You must be conscious and solid to do this.</span>")//It's not a problem of stat==2 since the ninja will explode anyway if they die.
 		return 1
 	else if(C&&cell.charge<C*10)
-		to_chat(U, "\red Not enough energy.")
+		to_chat(U, "<span class='warning'>Not enough energy.</span>")
 		return 1
 	switch(X)
 		if(1)
 			cancel_stealth()//Get rid of it.
 		if(2)
 			if(s_bombs<=0)
-				to_chat(U, "\red There are no more smoke bombs remaining.")
+				to_chat(U, "<span class='warning'>There are no more smoke bombs remaining.</span>")
 				return 1
 		if(3)
 			if(a_boost<=0)
-				to_chat(U, "\red You do not have any more adrenaline boosters.")
+				to_chat(U, "<span class='warning'>You do not have any more adrenaline boosters.</span>")
 				return 1
 	return (s_coold)//Returns the value of the variable which counts down to zero.
 
@@ -83,7 +83,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 				playsound(U, 'sound/effects/sparks2.ogg', VOL_EFFECTS_MASTER)
 				anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 		else
-			to_chat(U, "\red You cannot teleport into solid walls or from solid matter.")
+			to_chat(U, "<span class='warning'>You cannot teleport into solid walls or from solid matter.</span>")
 	return
 
 //=======//EM PULSE//=======//
@@ -123,7 +123,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 				U.put_in_hands(W)
 				cell.use(C*10)
 			else
-				to_chat(U, "\red You can only summon one blade. Try dropping an item first.")
+				to_chat(U, "<span class='warning'>You can only summon one blade. Try dropping an item first.</span>")
 		else//Else you can run around with TWO energy blades. I don't know why you'd want to but cool factor remains.
 			if(!U.get_active_hand())
 				var/obj/item/weapon/melee/energy/blade/W = new()
@@ -171,7 +171,7 @@ This could be a lot better but I'm too tired atm.*/
 			cell.use(C*10)
 			A.process()
 		else
-			to_chat(U, "\red There are no targets in view.")
+			to_chat(U, "<span class='warning'>There are no targets in view.</span>")
 	return
 
 //=======//ENERGY NET//=======//
@@ -201,7 +201,7 @@ Must right click on a mob to activate.*/
 				var/obj/effect/energy_net/E = new /obj/effect/energy_net(M.loc)
 				E.layer = M.layer+1//To have it appear one layer above the mob.
 				for(var/mob/O in viewers(U, 3))
-					O.show_message(text("\red [] caught [] with an energy net!", U, M), 1)
+					O.show_message(text("<span class='warning'>[] caught [] with an energy net!</span>", U, M), 1)
 				E.affecting = M
 				E.master = U
 				spawn(0)//Parallel processing.
@@ -240,7 +240,7 @@ Movement impairing would indicate drugs and the like.*/
 		spawn(70)
 			reagents.reaction(U, 2)
 			reagents.trans_id_to(U, "radium", a_transfer)
-			to_chat(U, "\red You are beginning to feel the after-effect of the injection.")
+			to_chat(U, "<span class='warning'>You are beginning to feel the after-effect of the injection.</span>")
 		a_boost--
 		s_coold = 3
 	return
@@ -305,7 +305,7 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 				anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 			s_coold = 1
 		else
-			to_chat(U, "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>.")
+			to_chat(U, "<span class='warning'>The VOID-shift device is malfunctioning, <B>teleportation failed</B>.</span>")
 	return
 
 //=======//TELEPORT BEHIND MOB//=======//
@@ -379,7 +379,7 @@ This is so anime it hurts. But that's the point.*/
 					anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 				s_coold = 1
 			else
-				to_chat(U, "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>.")
+				to_chat(U, "<span class='warning'>The VOID-shift device is malfunctioning, <B>teleportation failed</B>.</span>")
 		else
-			to_chat(U, "\red There are no targets in view.")
+			to_chat(U, "<span class='warning'>There are no targets in view.</span>")
 	return

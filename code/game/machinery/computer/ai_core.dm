@@ -120,14 +120,14 @@
 
 			if(istype(P, /obj/item/device/mmi) || istype(P, /obj/item/device/mmi/posibrain))
 				if(!P:brainmob)
-					to_chat(user, "\red Sticking an empty [P] into the frame would sort of defeat the purpose.")
+					to_chat(user, "<span class='warning'>Sticking an empty [P] into the frame would sort of defeat the purpose.</span>")
 					return
 				if(P:brainmob.stat == DEAD)
-					to_chat(user, "\red Sticking a dead [P] into the frame would sort of defeat the purpose.")
+					to_chat(user, "<span class='warning'>Sticking a dead [P] into the frame would sort of defeat the purpose.</span>")
 					return
 
 				if(jobban_isbanned(P:brainmob, "AI"))
-					to_chat(user, "\red This [P] does not seem to fit.")
+					to_chat(user, "<span class='warning'>This [P] does not seem to fit.</span>")
 					return
 
 				if(P:brainmob.mind)
@@ -214,13 +214,13 @@ That prevents a few funky behaviors.
 					if("AICARD")
 						var/obj/item/device/aicard/C = src
 						if(C.contents.len)//If there is an AI on card.
-							to_chat(U, "\red <b>Transfer failed</b>: \black Existing AI found on this terminal. Remove existing AI to install a new one.")
+							to_chat(U, "<span class='warning'><b>Transfer failed</b>: \black Existing AI found on this terminal. Remove existing AI to install a new one.</span>")
 						else
 							if (ticker.mode.name == "AI malfunction")
 								var/datum/game_mode/malfunction/malf = ticker.mode
 								for (var/datum/mind/malfai in malf.malf_ai)
 									if (T.mind == malfai)
-										to_chat(U, "\red <b>ERROR</b>: \black Remote transfer interface disabled.")//Do ho ho ho~
+										to_chat(U, "<span class='warning'><b>ERROR</b>: \black Remote transfer interface disabled.</span>")//Do ho ho ho~
 										return
 							new /obj/structure/AIcore/deactivated(T.loc)//Spawns a deactivated terminal at AI location.
 							T.aiRestorePowerRoutine = 0//So the AI initially has power.
@@ -237,16 +237,16 @@ That prevents a few funky behaviors.
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src
 						if(C.AI)//If there is an AI on card.
-							to_chat(U, "\red <b>Transfer failed</b>: \black Existing AI found on this terminal. Remove existing AI to install a new one.")
+							to_chat(U, "<span class='warning'><b>Transfer failed</b>: \black Existing AI found on this terminal. Remove existing AI to install a new one.</span>")
 						else
 							if (ticker.mode.name == "AI malfunction")
 								var/datum/game_mode/malfunction/malf = ticker.mode
 								for (var/datum/mind/malfai in malf.malf_ai)
 									if (T.mind == malfai)
-										to_chat(U, "\red <b>ERROR</b>: \black Remote transfer interface disabled.")
+										to_chat(U, "<span class='warning'><b>ERROR</b>: \black Remote transfer interface disabled.</span>")
 										return
 							if(T.stat)//If the ai is dead/dying.
-								to_chat(U, "\red <b>ERROR</b>: \black [T.name] data core is corrupted. Unable to install.")
+								to_chat(U, "<span class='warning'><b>ERROR</b>: \black [T.name] data core is corrupted. Unable to install.</span>")
 							else
 								new /obj/structure/AIcore/deactivated(T.loc)
 								T.aiRestorePowerRoutine = 0
@@ -325,11 +325,11 @@ That prevents a few funky behaviors.
 								T.occupier.cancel_camera()
 								T.occupier = null
 							else if (C.contents.len)
-								to_chat(U, "\red <b>ERROR</b>: \black Artificial intelligence detected on terminal.")
+								to_chat(U, "<span class='warning'><b>ERROR</b>: \black Artificial intelligence detected on terminal.</span>")
 							else if (T.active)
-								to_chat(U, "\red <b>ERROR</b>: \black Reconstruction in progress.")
+								to_chat(U, "<span class='warning'><b>ERROR</b>: \black Reconstruction in progress.</span>")
 							else if (!T.occupier)
-								to_chat(U, "\red <b>ERROR</b>: \black Unable to locate artificial intelligence.")
+								to_chat(U, "<span class='warning'><b>ERROR</b>: \black Unable to locate artificial intelligence.</span>")
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src
 						if(!T.contents.len)
@@ -349,7 +349,7 @@ That prevents a few funky behaviors.
 						else
 							if(!C.AI && T.occupant && !T.active)
 								if (T.occupant.stat)
-									to_chat(U, "\red <b>ERROR</b>: \black [T.occupant.name] data core is corrupted. Unable to install.")
+									to_chat(U, "<span class='warning'><b>ERROR</b>: \black [T.occupant.name] data core is corrupted. Unable to install.</span>")
 								else
 									T.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
 									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-full")
@@ -359,11 +359,11 @@ That prevents a few funky behaviors.
 									T.occupant.cancel_camera()
 									T.occupant = null
 							else if (C.AI)
-								to_chat(U, "\red <b>ERROR</b>: \black Artificial intelligence detected on terminal.")
+								to_chat(U, "<span class='warning'><b>ERROR</b>: \black Artificial intelligence detected on terminal.</span>")
 							else if (T.active)
-								to_chat(U, "\red <b>ERROR</b>: \black Reconstruction in progress.")
+								to_chat(U, "<span class='warning'><b>ERROR</b>: \black Reconstruction in progress.</span>")
 							else if (!T.occupant)
-								to_chat(U, "\red <b>ERROR</b>: \black Unable to locate artificial intelligence.")
+								to_chat(U, "<span class='warning'><b>ERROR</b>: \black Unable to locate artificial intelligence.</span>")
 			if("NINJASUIT")//Ninjasuit
 				var/obj/item/clothing/suit/space/space_ninja/T = target
 				switch(interaction)
@@ -376,7 +376,7 @@ That prevents a few funky behaviors.
 
 							if(A)//If the host AI card is not empty.
 								if(A_T)//If there is an AI on the target card.
-									to_chat(U, "\red <b>ERROR</b>: \black [A_T.name] already installed. Remove [A_T.name] to install a new one.")
+									to_chat(U, "<span class='warning'><b>ERROR</b>: \black [A_T.name] already installed. Remove [A_T.name] to install a new one.</span>")
 								else
 									A.loc = C//Throw them into the target card. Since they are already on a card, transfer is easy.
 									C.name = "inteliCard - [A.name]"
@@ -387,7 +387,7 @@ That prevents a few funky behaviors.
 									to_chat(U, "\blue <b>SUCCESS</b>: \black [A.name] ([rand(1000,9999)].exe) removed from host and stored within local memory.")
 							else//If host AI is empty.
 								if(C.flush)//If the other card is flushing.
-									to_chat(U, "\red <b>ERROR</b>: \black AI flush is in progress, cannot execute transfer protocol.")
+									to_chat(U, "<span class='warning'><b>ERROR</b>: \black AI flush is in progress, cannot execute transfer protocol.</span>")
 								else
 									if(A_T&&!A_T.stat)//If there is an AI on the target card and it's not inactive.
 										A_T.loc = T//Throw them into suit.
@@ -399,9 +399,9 @@ That prevents a few funky behaviors.
 										to_chat(A_T, "You have been uploaded to a mobile storage device.")
 										to_chat(U, "\blue <b>SUCCESS</b>: \black [A_T.name] ([rand(1000,9999)].exe) removed from local memory and installed to host.")
 									else if(A_T)//If the target AI is dead. Else just go to return since nothing would happen if both are empty.
-										to_chat(U, "\red <b>ERROR</b>: \black [A_T.name] data core is corrupted. Unable to install.")
+										to_chat(U, "<span class='warning'><b>ERROR</b>: \black [A_T.name] data core is corrupted. Unable to install.</span>")
 	else
-		to_chat(U, "\red <b>ERROR</b>: \black AI flush is in progress, cannot execute transfer protocol.")
+		to_chat(U, "<span class='warning'><b>ERROR</b>: \black AI flush is in progress, cannot execute transfer protocol.</span>")
 	return
 
 /client/proc/empty_ai_core_toggle_latejoin()

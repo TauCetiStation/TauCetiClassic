@@ -46,7 +46,7 @@
 /obj/machinery/apiary/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/queen_bee))
 		if(health > 0)
-			to_chat(user, "\red There is already a queen in there.")
+			to_chat(user, "<span class='warning'>There is already a queen in there.</span>")
 		else
 			health = 10
 			nutrilevel += 10
@@ -65,7 +65,7 @@
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/minihoe))
 		if(health > 0)
-			to_chat(user, "\red <b>You begin to dislodge the apiary from the tray, the bees don't like that.</b>")
+			to_chat(user, "<span class='warning'><b>You begin to dislodge the apiary from the tray, the bees don't like that.</b></span>")
 			angry_swarm(user)
 		else
 			to_chat(user, "\blue You begin to dislodge the dead apiary from the tray.")
@@ -73,7 +73,7 @@
 		if(O.use_tool(src, user, 50, volume = 50))
 			new hydrotray_type(src.loc)
 			new /obj/item/apiary(src.loc)
-			to_chat(user, "\red You dislodge the apiary from the tray.")
+			to_chat(user, "<span class='warning'>You dislodge the apiary from the tray.</span>")
 			qdel(src)
 	else if(istype(O, /obj/item/weapon/bee_net))
 		var/obj/item/weapon/bee_net/N = O
@@ -87,7 +87,7 @@
 		var/obj/item/weapon/reagent_containers/glass/G = O
 		if(harvestable_honey > 0)
 			if(health > 0)
-				to_chat(user, "\red You begin to harvest the honey. The bees don't seem to like it.")
+				to_chat(user, "<span class='warning'>You begin to harvest the honey. The bees don't seem to like it.</span>")
 				angry_swarm(user)
 			else
 				if(user.is_busy()) return

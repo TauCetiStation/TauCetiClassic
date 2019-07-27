@@ -311,7 +311,7 @@ var/bomb_set
 
 			//if(removal_stage == 5)
 			//	src.anchored = 0
-			//	visible_message("\red \The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.")
+			//	visible_message("<span class='warning'>\The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.</span>")
 			//	return
 
 			src.anchored = !( src.anchored )

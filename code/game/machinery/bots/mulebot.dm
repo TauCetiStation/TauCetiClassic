@@ -125,7 +125,7 @@
 		if (src.health < maxhealth)
 			src.health = min(maxhealth, src.health+25)
 			user.visible_message(
-				"\red [user] repairs [src]!",
+				"<span class='warning'>[user] repairs [src]!</span>",
 				"\blue You repair [src]!"
 			)
 		else
@@ -133,7 +133,7 @@
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1+I.force * 2))
 			unload(0)
-			user.visible_message("\red [user] knocks [load] off [src] with \the [I]!", "\red You knock [load] off [src] with \the [I]!")
+			user.visible_message("<span class='warning'>[user] knocks [load] off [src] with \the [I]!</span>", "<span class='warning'>You knock [load] off [src] with \the [I]!</span>")
 		else
 			to_chat(user, "You hit [src] with \the [I] but to no effect.")
 	else
@@ -241,14 +241,14 @@
 			if(src.allowed(usr))
 				locked = !locked
 			else
-				to_chat(usr, "\red Access denied.")
+				to_chat(usr, "<span class='warning'>Access denied.</span>")
 				return FALSE
 		if("power")
 			if (src.on)
 				turn_off()
 			else if (cell && !open)
 				if (!turn_on())
-					to_chat(usr, "\red You can't switch on [src].")
+					to_chat(usr, "<span class='warning'>You can't switch on [src].</span>")
 					return FALSE
 			else
 				return FALSE
@@ -668,9 +668,9 @@
 		var/mob/M = obs
 		if(ismob(M))
 			if(istype(M,/mob/living/silicon/robot))
-				src.visible_message("\red [src] bumps into [M]!")
+				src.visible_message("<span class='warning'>[src] bumps into [M]!</span>")
 			else
-				src.visible_message("\red [src] knocks over [M]!")
+				src.visible_message("<span class='warning'>[src] knocks over [M]!</span>")
 				M.stop_pulling()
 				M.Stun(8)
 				M.Weaken(5)
@@ -684,7 +684,7 @@
 // called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
 /obj/machinery/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
-	src.visible_message("\red [src] drives over [H]!")
+	src.visible_message("<span class='warning'>[src] drives over [H]!</span>")
 	playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 
 	var/damage = rand(5,15)

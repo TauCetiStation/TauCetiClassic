@@ -95,16 +95,16 @@
 			var/mob/living/carbon/human/T = target
 			var/obj/item/device/soulstone/C = src
 			if(C.imprinted != "empty")
-				to_chat(U, "\red <b>Capture failed!</b>: \black The soul stone has already been imprinted with [C.imprinted]'s mind!")
+				to_chat(U, "<span class='warning'><b>Capture failed!</b>: \black The soul stone has already been imprinted with [C.imprinted]'s mind!</span>")
 			else
 				if (T.stat == CONSCIOUS)
-					to_chat(U, "\red <b>Capture failed!</b>: \black Kill or maim the victim first!")
+					to_chat(U, "<span class='warning'><b>Capture failed!</b>: \black Kill or maim the victim first!</span>")
 				else
 					if(T.client == null)
-						to_chat(U, "\red <b>Capture failed!</b>: \black The soul has already fled it's mortal frame.")
+						to_chat(U, "<span class='warning'><b>Capture failed!</b>: \black The soul has already fled it's mortal frame.</span>")
 					else
 						if(C.contents.len)
-							to_chat(U, "\red <b>Capture failed!</b>: \black The soul stone is full! Use or free an existing soul to make room.")
+							to_chat(U, "<span class='warning'><b>Capture failed!</b>: \black The soul stone is full! Use or free an existing soul to make room.</span>")
 						else
 							for(var/obj/item/W in T)
 								T.drop_from_inventory(W)
@@ -136,13 +136,13 @@
 			var/mob/living/simple_animal/shade/T = target
 			var/obj/item/device/soulstone/C = src
 			if (T.stat == DEAD)
-				to_chat(U, "\red <b>Capture failed!</b>: \black The shade has already been banished!")
+				to_chat(U, "<span class='warning'><b>Capture failed!</b>: \black The shade has already been banished!</span>")
 			else
 				if(C.contents.len)
-					to_chat(U, "\red <b>Capture failed!</b>: \black The soul stone is full! Use or free an existing soul to make room.")
+					to_chat(U, "<span class='warning'><b>Capture failed!</b>: \black The soul stone is full! Use or free an existing soul to make room.</span>")
 				else
 					if(T.name != C.imprinted)
-						to_chat(U, "\red <b>Capture failed!</b>: \black The soul stone has already been imprinted with [C.imprinted]'s mind!")
+						to_chat(U, "<span class='warning'><b>Capture failed!</b>: \black The soul stone has already been imprinted with [C.imprinted]'s mind!</span>")
 					else
 						T.loc = C //put shade in stone
 						T.status_flags |= GODMODE
@@ -203,5 +203,5 @@
 						Z.cancel_camera()
 						qdel(C)
 			else
-				to_chat(U, "\red <b>Creation failed!</b>: \black The soul stone is empty! Go kill someone!")
+				to_chat(U, "<span class='warning'><b>Creation failed!</b>: \black The soul stone is empty! Go kill someone!</span>")
 	return

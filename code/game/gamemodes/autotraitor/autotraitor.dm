@@ -140,7 +140,7 @@
 				equip_traitor(newtraitor)
 
 			traitors += newtraitor.mind
-			to_chat(newtraitor, "\red <B>ATTENTION:</B> \black It is time to pay your debt to the Syndicate...")
+			to_chat(newtraitor, "<span class='warning'><B>ATTENTION:</B> \black It is time to pay your debt to the Syndicate...</span>")
 			to_chat(newtraitor, "<B>You are now a traitor.</B>")
 			newtraitor.mind.special_role = "traitor"
 			newtraitor.hud_updateflag |= 1 << SPECIALROLE_HUD
@@ -205,7 +205,7 @@
 					forge_traitor_objectives(character.mind)
 				equip_traitor(character)
 				traitors += character.mind
-				to_chat(character, "\red <B>You are the traitor.</B>")
+				to_chat(character, "<span class='warning'><B>You are the traitor.</B></span>")
 				character.mind.special_role = "traitor"
 				if (config.objectives_disabled)
 					to_chat(character, "<i>You have been selected this round as an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>")

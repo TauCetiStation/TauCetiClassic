@@ -99,7 +99,7 @@ Infestation:
 	to_chat(xeno.current, "\green <B>You target also must be near, after you prepares to leap.</b>")
 	to_chat(xeno.current, "\blue Use :A to hivetalk.")
 	to_chat(xeno.current, "\green ------------------")
-	//xeno.current << "\red IF YOU HAVE NOT PLAYED A XENOMORPH, REVIEW THIS THREAD: http://tauceti.ru"
+	//xeno.current << "<span class='warning'>IF YOU HAVE NOT PLAYED A XENOMORPH, REVIEW THIS THREAD: http://tauceti.ru</span>"
 
 
 /*

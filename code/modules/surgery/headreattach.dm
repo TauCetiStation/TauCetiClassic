@@ -49,8 +49,8 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if (BP.parent)
 		BP = BP.parent
-		user.visible_message("\red [user]'s hand slips, ripping [target]'s [BP.name] open!", \
-		"\red Your hand slips,  ripping [target]'s [BP.name] open!")
+		user.visible_message("<span class='warning'>[user]'s hand slips, ripping [target]'s [BP.name] open!</span>", \
+		"<span class='warning'>Your hand slips,  ripping [target]'s [BP.name] open!</span>")
 		BP.createwound(CUT, 10)
 
 
@@ -84,8 +84,8 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if (BP.parent)
 		BP = BP.parent
-		user.visible_message("\red [user]'s hand slips, further rending flesh on [target]'s neck!", \
-		"\red Your hand slips, further rending flesh on [target]'s neck!")
+		user.visible_message("<span class='warning'>[user]'s hand slips, further rending flesh on [target]'s neck!</span>", \
+		"<span class='warning'>Your hand slips, further rending flesh on [target]'s neck!</span>")
 		target.apply_damage(10, BRUTE, BP)
 
 /datum/surgery_step/head/suture
@@ -119,8 +119,8 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if (BP.parent)
 		BP = BP.parent
-		user.visible_message("\red [user]'s hand slips, ripping apart flesh on [target]'s neck!", \
-		"\red Your hand slips, ripping apart flesh on [target]'s neck!")
+		user.visible_message("<span class='warning'>[user]'s hand slips, ripping apart flesh on [target]'s neck!</span>", \
+		"<span class='warning'>Your hand slips, ripping apart flesh on [target]'s neck!</span>")
 		target.apply_damage(10, BRUTE, BP)
 
 /datum/surgery_step/head/prepare
@@ -157,8 +157,8 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if (BP.parent)
 		BP = BP.parent
-		user.visible_message("\red [user]'s hand slips, searing [target]'s neck!", \
-		"\red Your hand slips, searing [target]'s [BP.name]!")
+		user.visible_message("<span class='warning'>[user]'s hand slips, searing [target]'s neck!</span>", \
+		"<span class='warning'>Your hand slips, searing [target]'s [BP.name]!</span>")
 		target.apply_damage(10, BURN, BP)
 
 
@@ -197,6 +197,6 @@
 
 /datum/surgery_step/head/attach/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\red [user]'s hand slips, damaging connectors on [target]'s neck!", \
-	"\red Your hand slips, damaging connectors on [target]'s neck!")
+	user.visible_message("<span class='warning'>[user]'s hand slips, damaging connectors on [target]'s neck!</span>", \
+	"<span class='warning'>Your hand slips, damaging connectors on [target]'s neck!</span>")
 	target.apply_damage(10, BRUTE, BP, null, DAM_SHARP)

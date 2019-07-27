@@ -315,16 +315,16 @@
 /obj/item/weapon/circuitboard/security/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/card/id))
 		if(emagged)
-			to_chat(user, "\red Circuit lock does not respond.")
+			to_chat(user, "<span class='warning'>Circuit lock does not respond.</span>")
 			return
 		if(check_access(I))
 			locked = !locked
 			to_chat(user, "\blue You [locked ? "" : "un"]lock the circuit controls.")
 		else
-			to_chat(user, "\red Access denied.")
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 	else if(ismultitool(I))
 		if(locked)
-			to_chat(user, "\red Circuit controls are locked.")
+			to_chat(user, "<span class='warning'>Circuit controls are locked.</span>")
 			return
 		var/existing_networks = jointext(network,",")
 		var/input = sanitize_safe(input(usr, "Which networks would you like to connect this camera console circuit to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Multitool-Circuitboard interface", input_default(existing_networks)), MAX_LNAME_LEN)
@@ -438,7 +438,7 @@
 					circuit.add_fingerprint(user)
 					P.loc = null
 				else
-					to_chat(user, "\red This frame does not accept circuit boards of this type!")
+					to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
 			if(isscrewdriver(P) && circuit)
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "\blue You screw the circuit board into place.")

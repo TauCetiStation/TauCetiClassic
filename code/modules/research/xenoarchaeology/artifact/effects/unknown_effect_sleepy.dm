@@ -17,7 +17,7 @@
 			H.eye_blurry = min(H.eye_blurry + rand(1,3) * weakness, 50 * weakness)
 			return 1
 		else if(isrobot(toucher))
-			to_chat(toucher, "\red SYSTEM ALERT: CPU cycles slowing down.")
+			to_chat(toucher, "<span class='warning'>SYSTEM ALERT: CPU cycles slowing down.</span>")
 			return 1
 
 /datum/artifact_effect/sleepy/DoEffectAura()
@@ -31,7 +31,7 @@
 				H.drowsyness = min(H.drowsyness + 1 * weakness, 25 * weakness)
 				H.eye_blurry = min(H.eye_blurry + 1 * weakness, 25 * weakness)
 		for (var/mob/living/silicon/robot/R in range(src.effectrange,holder))
-			to_chat(R, "\red SYSTEM ALERT: CPU cycles slowing down.")
+			to_chat(R, "<span class='warning'>SYSTEM ALERT: CPU cycles slowing down.</span>")
 		return 1
 
 /datum/artifact_effect/sleepy/DoEffectPulse()
@@ -44,5 +44,5 @@
 				H.drowsyness = min(H.drowsyness + rand(5,15) * weakness, 50 * weakness)
 				H.eye_blurry = min(H.eye_blurry + rand(5,15) * weakness, 50 * weakness)
 		for (var/mob/living/silicon/robot/R in range(src.effectrange,holder))
-			to_chat(R, "\red SYSTEM ALERT: CPU cycles slowing down.")
+			to_chat(R, "<span class='warning'>SYSTEM ALERT: CPU cycles slowing down.</span>")
 		return 1

@@ -19,7 +19,7 @@
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	if(!reagents.total_volume)
-		to_chat(user, "\red [src] is empty.")
+		to_chat(user, "<span class='warning'>[src] is empty.</span>")
 		return
 	if(!istype(M))
 		return

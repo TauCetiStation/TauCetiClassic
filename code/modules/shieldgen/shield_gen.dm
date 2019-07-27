@@ -55,7 +55,7 @@
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			updateDialog()
 		else
-			to_chat(user, "\red Access denied.")
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 	else if(iswrench(W))
 		src.anchored = !src.anchored

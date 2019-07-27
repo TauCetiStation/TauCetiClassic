@@ -96,7 +96,7 @@
 
 /obj/machinery/shield/hitby(AM)
 	//Let everyone know we've been hit!
-	visible_message("\red <B>[src] was hit by [AM].</B>")
+	visible_message("<span class='warning'><B>[src] was hit by [AM].</B></span>")
 
 	//Super realistic, resource-intensive, real-time damage calculations.
 	var/tforce = 0
@@ -286,7 +286,7 @@
 			src.locked = !src.locked
 			to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
 		else
-			to_chat(user, "\red Access denied.")
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 	else
 		..()
@@ -362,13 +362,13 @@
 	if(.)
 		return
 	if(state != 1)
-		to_chat(user, "\red The shield generator needs to be firmly secured to the floor first.")
+		to_chat(user, "<span class='warning'>The shield generator needs to be firmly secured to the floor first.</span>")
 		return 1
 	if(src.locked && !issilicon(user) && !IsAdminGhost(user))
-		to_chat(user, "\red The controls are locked!")
+		to_chat(user, "<span class='warning'>The controls are locked!</span>")
 		return 1
 	if(power != 1)
-		to_chat(user, "\red The shield generator needs to be powered by wire underneath.")
+		to_chat(user, "<span class='warning'>The shield generator needs to be powered by wire underneath.</span>")
 		return 1
 
 	user.SetNextMove(CLICK_CD_INTERACT)
@@ -414,7 +414,7 @@
 		src.active = 2
 	if(src.active >= 1)
 		if(src.power == 0)
-			src.visible_message("\red The [src.name] shuts down due to lack of power!", \
+			src.visible_message("<span class='warning'>The [src.name] shuts down due to lack of power!</span>", \
 				"You hear heavy droning fade out")
 			icon_state = "Shield_Gen"
 			src.active = 0
@@ -489,11 +489,11 @@
 			src.locked = !src.locked
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 		else
-			to_chat(user, "\red Access denied.")
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 	else
 		src.add_fingerprint(user)
-		visible_message("\red The [src.name] has been hit with \the [W.name] by [user.name]!")
+		visible_message("<span class='warning'>The [src.name] has been hit with \the [W.name] by [user.name]!</span>")
 		user.SetNextMove(CLICK_CD_MELEE)
 
 /obj/machinery/shieldwallgen/proc/cleanup(NSEW)

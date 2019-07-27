@@ -59,7 +59,7 @@ ________________________________________________________________________________
 
 /obj/item/clothing/suit/space/space_ninja/proc/killai(mob/living/silicon/ai/A = AI)
 	if(A.client)
-		to_chat(A, "\red Self-erase protocol dete-- *bzzzzz*")
+		to_chat(A, "<span class='warning'>Self-erase protocol dete-- *bzzzzz*</span>")
 		A << browse(null, "window=hack spideros")
 	AI = null
 	A.death(1)//Kill, deleting mob.
@@ -85,7 +85,7 @@ ________________________________________________________________________________
 	if(s_control&&!s_busy)
 		deinitialize()
 	else
-		to_chat(affecting, "\red The function did not trigger!")
+		to_chat(affecting, "<span class='warning'>The function did not trigger!</span>")
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/spideros()
@@ -96,7 +96,7 @@ ________________________________________________________________________________
 	if(s_control&&!s_busy&&!kamikaze)
 		display_spideros()
 	else
-		to_chat(affecting, "\red The interface is locked!")
+		to_chat(affecting, "<span class='warning'>The interface is locked!</span>")
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/stealth()
@@ -108,7 +108,7 @@ ________________________________________________________________________________
 	if(s_control&&!s_busy)
 		toggle_stealth()
 	else
-		to_chat(affecting, "\red Stealth does not appear to work!")
+		to_chat(affecting, "<span class='warning'>Stealth does not appear to work!</span>")
 	return
 
 //=======//PROCESS PROCS//=======//
@@ -170,7 +170,7 @@ ________________________________________________________________________________
 					to_chat(U, "\blue Extending neural-net interface...\nNow monitoring brain wave pattern...")
 				if(3)
 					if(U.stat==2||U.health<=0)
-						to_chat(U, "\red <B>FĆAL �Rr�R</B>: 344--93#�&&21 BR��N |/|/aV� PATT$RN <B>RED</B>\nA-A-aB�rT�NG...")
+						to_chat(U, "<span class='warning'><B>FĆAL �Rr�R</B>: 344--93#�&&21 BR��N |/|/aV� PATT$RN <B>RED</B>\nA-A-aB�rT�NG...</span>")
 						unlock_suit()
 						break
 					lock_suit(U,1)//Check for icons.
@@ -191,9 +191,9 @@ ________________________________________________________________________________
 		if(!U.mind||U.mind.assigned_role!="MODE")//Your run of the mill persons shouldn't know what it is. Or how to turn it on.
 			to_chat(U, "You do not understand how this suit functions. Where the heck did it even come from?")
 		else if(s_initialized)
-			to_chat(U, "\red The suit is already functioning. \black <b>Please report this bug.</b>")
+			to_chat(U, "<span class='warning'>The suit is already functioning. \black <b>Please report this bug.</b></span>")
 		else
-			to_chat(U, "\red <B>ERROR</B>: \black You cannot use this function at this time.")
+			to_chat(U, "<span class='warning'><B>ERROR</B>: \black You cannot use this function at this time.</span>")
 	return
 
 //=======//DEINITIALIZE//=======//
@@ -202,12 +202,12 @@ ________________________________________________________________________________
 	if(affecting==loc&&!s_busy)
 		var/mob/living/carbon/human/U = affecting
 		if(!s_initialized)
-			to_chat(U, "\red The suit is not initialized. \black <b>Please report this bug.</b>")
+			to_chat(U, "<span class='warning'>The suit is not initialized. \black <b>Please report this bug.</b></span>")
 			return
 		if(alert("Are you certain you wish to remove the suit? This will take time and remove all abilities.",,"Yes","No")=="No")
 			return
 		if(s_busy||flush)
-			to_chat(U, "\red <B>ERROR</B>: \black You cannot use this function at this time.")
+			to_chat(U, "<span class='warning'><B>ERROR</B>: \black You cannot use this function at this time.</span>")
 			return
 		s_busy = 1
 		for(var/i = 0,i<7,i++)
@@ -494,7 +494,7 @@ ________________________________________________________________________________
 
 	if(s_control)
 		if(!affecting||U.stat||!s_initialized)//Check to make sure the guy is wearing the suit after clicking and it's on.
-			to_chat(U, "\red Your suit must be worn and active to use this function.")
+			to_chat(U, "<span class='warning'>Your suit must be worn and active to use this function.</span>")
 			U << browse(null, "window=spideros")//Closes the window.
 			return
 
@@ -506,7 +506,7 @@ ________________________________________________________________________________
 				to_chat(U, "Anonymous Messenger blinks.")
 	else
 		if(!affecting||A.stat||!s_initialized||A.loc!=src)
-			to_chat(A, "\red This function is not available at this time.")
+			to_chat(A, "<span class='warning'>This function is not available at this time.</span>")
 			A << browse(null, "window=spideros")//Closes the window.
 			return
 
@@ -531,7 +531,7 @@ ________________________________________________________________________________
 				else
 					cell.use(damage)
 			else
-				to_chat(A, "\red <b>ERROR</b>: \black Not enough energy remaining.")
+				to_chat(A, "<span class='warning'><b>ERROR</b>: \black Not enough energy remaining.</span>")
 
 		if("Message")
 			var/obj/item/device/pda/P = locate(href_list["target"])
@@ -540,7 +540,7 @@ ________________________________________________________________________________
 				display_to << browse(null, "window=spideros")
 				return
 			if(isnull(P)||P.toff)//So it doesn't freak out if the object no-longer exists.
-				to_chat(display_to, "\red Error: unable to deliver message.")
+				to_chat(display_to, "<span class='warning'>Error: unable to deliver message.</span>")
 				display_spideros()
 				return
 			var/obj/machinery/message_server/useMS = null
@@ -581,7 +581,7 @@ ________________________________________________________________________________
 
 		if("Inject")
 			if( (href_list["tag"]=="radium"? (reagents.get_reagent_amount("radium"))<=(a_boost*a_transfer) : !reagents.get_reagent_amount(href_list["tag"])) )//Special case for radium. If there are only a_boost*a_transfer radium units left.
-				to_chat(display_to, "\red Error: the suit cannot perform this function. Out of [href_list["name"]].")
+				to_chat(display_to, "<span class='warning'>Error: the suit cannot perform this function. Out of [href_list["name"]].</span>")
 			else
 				reagents.reaction(U, 2)
 				reagents.trans_id_to(U, href_list["tag"], href_list["tag"]=="nutriment"?5:a_transfer)//Nutriment is a special case since it's very potent. Shouldn't influence actual refill amounts or anything.
@@ -636,13 +636,13 @@ ________________________________________________________________________________
 									return
 							sleep(s_delay)
 					else
-						to_chat(U, "\red <b>ERROR</b>: \black Unable to initiate mode.")
+						to_chat(U, "<span class='warning'><b>ERROR</b>: \black Unable to initiate mode.</span>")
 				else
 					U << browse(null, "window=spideros")
 					s_busy = 0
 					return
 			else
-				to_chat(U, "\red ERROR: WRONG PASSWORD!")
+				to_chat(U, "<span class='warning'>ERROR: WRONG PASSWORD!</span>")
 				k_unlock = 0
 				spideros = 0
 			s_busy = 0
@@ -658,7 +658,7 @@ ________________________________________________________________________________
 					t_disk.loc = T
 					t_disk = null
 				else
-					to_chat(U, "\red <b>ERROR</b>: \black Could not eject disk.")
+					to_chat(U, "<span class='warning'><b>ERROR</b>: \black Could not eject disk.</span>")
 
 		if("Copy to Disk")
 			var/datum/tech/current_data = locate(href_list["target"])
@@ -679,7 +679,7 @@ ________________________________________________________________________________
 					pai.loc = T
 					pai = null
 				else
-					to_chat(U, "\red <b>ERROR</b>: \black Could not eject pAI card.")
+					to_chat(U, "<span class='warning'><b>ERROR</b>: \black Could not eject pAI card.</span>")
 
 		if("Override AI Laws")
 			var/law_zero = A.laws.zeroth//Remembers law zero, if there is one.
@@ -700,25 +700,25 @@ ________________________________________________________________________________
 						if(AI==A)
 							switch(i)
 								if(0)
-									to_chat(A, "\red <b>WARNING</b>: \black purge procedure detected. \nNow hacking host...")
-									to_chat(U, "\red <b>WARNING</b>: HACKING AT��TEMP� IN PR0GRESs!")
+									to_chat(A, "<span class='warning'><b>WARNING</b>: \black purge procedure detected. \nNow hacking host...</span>")
+									to_chat(U, "<span class='warning'><b>WARNING</b>: HACKING AT��TEMP� IN PR0GRESs!</span>")
 									spideros = 0
 									k_unlock = 0
 									U << browse(null, "window=spideros")
 								if(1)
 									to_chat(A, "Disconnecting neural interface...")
-									to_chat(U, "\red <b>WAR�NING</b>: �R�O0�Gr�--S 2&3%")
+									to_chat(U, "<span class='warning'><b>WAR�NING</b>: �R�O0�Gr�--S 2&3%</span>")
 								if(2)
 									to_chat(A, "Shutting down external protocol...")
-									to_chat(U, "\red <b>WARNING</b>: P����RֆGr�5S 677^%")
+									to_chat(U, "<span class='warning'><b>WARNING</b>: P����RֆGr�5S 677^%</span>")
 									cancel_stealth()
 								if(3)
 									to_chat(A, "Connecting to kernel...")
-									to_chat(U, "\red <b>WARNING</b>: �R�r�R_404")
+									to_chat(U, "<span class='warning'><b>WARNING</b>: �R�r�R_404</span>")
 									A.control_disabled = 0
 								if(4)
 									to_chat(A, "Connection established and secured. Menu updated.")
-									to_chat(U, "\red <b>W�r#nING</b>: #%@!!WȆ|_4�54@ \nUn�B88l3 T� L�-�o-L�CaT2 ##$!�RN�0..%..")
+									to_chat(U, "<span class='warning'><b>W�r#nING</b>: #%@!!WȆ|_4�54@ \nUn�B88l3 T� L�-�o-L�CaT2 ##$!�RN�0..%..</span>")
 									grant_AI_verbs()
 									return
 							sleep(s_delay)
@@ -772,9 +772,9 @@ ________________________________________________________________________________
 
 			ai_holo_process()//Move to initialize
 		else
-			to_chat(AI, "\red ERROR: \black Image feed in progress.")
+			to_chat(AI, "<span class='warning'>ERROR: \black Image feed in progress.</span>")
 	else
-		to_chat(AI, "\red ERROR: \black Unable to project image.")
+		to_chat(AI, "<span class='warning'>ERROR: \black Unable to project image.</span>")
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_process()
@@ -839,7 +839,7 @@ ________________________________________________________________________________
 			if(s_control)
 				I:transfer_ai("NINJASUIT","AICARD",src,U)
 			else
-				to_chat(U, "\red <b>ERROR</b>: \black Remote access channel disabled.")
+				to_chat(U, "<span class='warning'><b>ERROR</b>: \black Remote access channel disabled.</span>")
 			return//Return individually so that ..() can run properly at the end of the proc.
 		else if(istype(I, /obj/item/device/paicard) && !pai)//If it's a pai card.
 			U:drop_item()
@@ -881,7 +881,7 @@ ________________________________________________________________________________
 					cell = I
 					to_chat(U, "\blue Upgrade complete. Maximum capacity: <b>[round(cell.maxcharge/100)]</b>%")
 				else
-					to_chat(U, "\red Procedure interrupted. Protocol terminated.")
+					to_chat(U, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
 			return
 		else if(istype(I, /obj/item/weapon/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
 			var/obj/item/weapon/disk/tech_disk/TD = I
@@ -898,7 +898,7 @@ ________________________________________________________________________________
 					TD.stored = null
 					to_chat(U, "\blue Data analyzed and updated. Disk erased.")
 				else
-					to_chat(U, "\red <b>ERROR</b>: \black Procedure interrupted. Process terminated.")
+					to_chat(U, "<span class='warning'><b>ERROR</b>: \black Procedure interrupted. Process terminated.</span>")
 			else
 				I.loc = src
 				t_disk = I
@@ -1057,7 +1057,7 @@ ________________________________________________________________________________
 					A.locked = 0
 					A.update_icon()
 			else
-				to_chat(U, "\red This APC has run dry of power. You must find another source.")
+				to_chat(U, "<span class='warning'>This APC has run dry of power. You must find another source.</span>")
 
 		if("SMES")
 			var/obj/machinery/power/smes/A = target
@@ -1080,7 +1080,7 @@ ________________________________________________________________________________
 					else	break
 				to_chat(U, "\blue Gained <B>[totaldrain]</B> energy from the SMES cell.")
 			else
-				to_chat(U, "\red This SMES cell has run dry of power. You must find another source.")
+				to_chat(U, "<span class='warning'>This SMES cell has run dry of power. You must find another source.</span>")
 
 		if("CELL")
 			var/obj/item/weapon/stock_parts/cell/A = target
@@ -1096,9 +1096,9 @@ ________________________________________________________________________________
 					A.corrupt()
 					A.updateicon()
 				else
-					to_chat(U, "\red Procedure interrupted. Protocol terminated.")
+					to_chat(U, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
 			else
-				to_chat(U, "\red This cell is empty and of no use.")
+				to_chat(U, "<span class='warning'>This cell is empty and of no use.</span>")
 
 		if("MACHINERY")//Can be applied to generically to all powered machinery. I'm leaving this alone for now.
 			var/obj/machinery/A = target
@@ -1135,9 +1135,9 @@ ________________________________________________________________________________
 						if(drained==0)	break
 					to_chat(U, "\blue Gained <B>[totaldrain]</B> energy from the power network.")
 				else
-					to_chat(U, "\red Power network could not be found. Aborting.")
+					to_chat(U, "<span class='warning'>Power network could not be found. Aborting.</span>")
 			else
-				to_chat(U, "\red This recharger is not providing energy. You must find another source.")
+				to_chat(U, "<span class='warning'>This recharger is not providing energy. You must find another source.</span>")
 
 		if("RESEARCH")
 			var/obj/machinery/A = target
@@ -1145,7 +1145,7 @@ ________________________________________________________________________________
 			spawn(0)
 				var/turf/location = get_turf(U)
 				for(var/mob/living/silicon/ai/AI in player_list)
-					to_chat(AI, "\red <b>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</b>.")
+					to_chat(AI, "<span class='warning'><b>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</b>.</span>")
 			if(A:files&&A:files.tech_trees.len)
 				for(var/datum/tech/current_data in S.stored_research)
 					to_chat(U, "\blue Checking \the [current_data.name] database.")
@@ -1188,7 +1188,7 @@ ________________________________________________________________________________
 
 		if("MECHA")
 			var/obj/mecha/A = target
-			A.occupant_message("\red Warning: Unauthorized access through sub-route 4, block H, detected.")
+			A.occupant_message("<span class='warning'>Warning: Unauthorized access through sub-route 4, block H, detected.</span>")
 			if(A.get_charge())
 				while(G.candrain&&A.cell.charge>0&&!maxcapacity)
 					drain = rand(G.mindrain,G.maxdrain)
@@ -1206,11 +1206,11 @@ ________________________________________________________________________________
 					else	break
 				to_chat(U, "\blue Gained <B>[totaldrain]</B> energy from [src].")
 			else
-				to_chat(U, "\red The exosuit's battery has run dry. You must find another source of power.")
+				to_chat(U, "<span class='warning'>The exosuit's battery has run dry. You must find another source of power.</span>")
 
 		if("CYBORG")
 			var/mob/living/silicon/robot/A = target
-			to_chat(A, "\red Warning: Unauthorized access through sub-route 12, block C, detected.")
+			to_chat(A, "<span class='warning'>Warning: Unauthorized access through sub-route 12, block C, detected.</span>")
 			G.draining = 1
 			if(A.cell&&A.cell.charge)
 				while(G.candrain&&A.cell.charge>0&&!maxcapacity)
@@ -1229,7 +1229,7 @@ ________________________________________________________________________________
 					else	break
 				to_chat(U, "\blue Gained <B>[totaldrain]</B> energy from [A].")
 			else
-				to_chat(U, "\red Their battery has run dry of power. You must find another source.")
+				to_chat(U, "<span class='warning'>Their battery has run dry of power. You must find another source.</span>")
 
 		else//Else nothing :<
 
@@ -1403,7 +1403,7 @@ It is possible to destroy the net by the occupant or someone else.
 			for(var/mob/O in viewers(src, 3))
 				O.show_message(text("[] was recovered from the energy net!", M.name), 1, text("You hear a grunt."), 2)
 			//if(!isnull(master))//As long as they still exist.
-			//	master << "\red <b>ERROR</b>: \black unable to initiate transport protocol. Procedure terminated."
+			//	master << "<span class='warning'><b>ERROR</b>: \black unable to initiate transport protocol. Procedure terminated.</span>"
 		qdel(src)
 	return
 
@@ -1423,7 +1423,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 	if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
 		//if(!isnull(master))//As long as they still exist.
-		//	master << "\red <b>ERROR</b>: \black unable to locate \the [mob_name]. Procedure terminated."
+		//	master << "<span class='warning'><b>ERROR</b>: \black unable to locate \the [mob_name]. Procedure terminated.</span>"
 		qdel(src)//Get rid of the net.
 		return
 
@@ -1462,7 +1462,7 @@ It is possible to destroy the net by the occupant or someone else.
 		else
 			M.loc = null
 
-		to_chat(M, "\red You appear in a strange place!")
+		to_chat(M, "<span class='warning'>You appear in a strange place!</span>")
 
 		for(var/mob/O in viewers(src, 3))
 			O.show_message(text("[] vanished!", M), 1, text("You hear sparks flying!"), 2)
@@ -1506,7 +1506,7 @@ It is possible to destroy the net by the occupant or someone else.
 /obj/effect/energy_net/hitby(AM)
 	..()
 	for(var/mob/O in viewers(src, null))
-		O.show_message(text("\red <B>[src] was hit by [AM].</B>"), 1)
+		O.show_message(text("<span class='warning'><B>[src] was hit by [AM].</B></span>"), 1)
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 10
@@ -1523,7 +1523,7 @@ It is possible to destroy the net by the occupant or someone else.
 		user.SetNextMove(CLICK_CD_MELEE)
 		to_chat(usr, text("\blue You easily destroy the energy net."))
 		for(var/mob/O in oviewers(src))
-			O.show_message(text("\red [] rips the energy net apart!", usr), 1)
+			O.show_message(text("<span class='warning'>[] rips the energy net apart!</span>", usr), 1)
 		health-=50
 	healthcheck()
 	return
@@ -1538,13 +1538,13 @@ It is possible to destroy the net by the occupant or someone else.
 		return
 	to_chat(usr, text("\green You claw at the net."))
 	for(var/mob/O in oviewers(src))
-		O.show_message(text("\red [] claws at the energy net!", usr), 1)
+		O.show_message(text("<span class='warning'>[] claws at the energy net!</span>", usr), 1)
 	playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 	health -= rand(10, 20)
 	if(health <= 0)
 		to_chat(usr, text("\green You slice the energy net to pieces."))
 		for(var/mob/O in oviewers(src))
-			O.show_message(text("\red [] slices the energy net apart!", usr), 1)
+			O.show_message(text("<span class='warning'>[] slices the energy net apart!</span>", usr), 1)
 	healthcheck()
 	return
 

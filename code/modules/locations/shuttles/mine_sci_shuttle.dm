@@ -43,7 +43,7 @@ var/global/area/mine_sci_curr_location = null
 		return
 
 	if(!autopilot)
-		to_chat(usr, "\red Shuttle not found!")
+		to_chat(usr, "<span class='warning'>Shuttle not found!</span>")
 		return FALSE
 	if(autopilot.moving)
 		to_chat(usr, "\blue Shuttle is already moving.")

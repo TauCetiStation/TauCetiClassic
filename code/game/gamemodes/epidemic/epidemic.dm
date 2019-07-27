@@ -74,7 +74,7 @@
 		if(M.stat == DEAD)
 			continue
 		M.add_ion_law(extra_law)
-		to_chat(M, "\red " + extra_law)
+		to_chat(M, "<span class='warning'>[extra_law]</span>")
 
 /datum/game_mode/epidemic/proc/announce_to_kill_crew()
 	var/intercepttext = "<FONT size = 3 color='red'><B>CONFIDENTIAL REPORT</B></FONT><HR>"
@@ -104,8 +104,8 @@
 		crew += H
 
 	if(crew.len < 2)
-		to_chat(world, "\red There aren't enough players for this mode!")
-		to_chat(world, "\red Rebooting world in 5 seconds.")
+		to_chat(world, "<span class='warning'>There aren't enough players for this mode!</span>")
+		to_chat(world, "<span class='warning'>Rebooting world in 5 seconds.</span>")
 
 		if(blackbox)
 			blackbox.save_all_data_to_sql()

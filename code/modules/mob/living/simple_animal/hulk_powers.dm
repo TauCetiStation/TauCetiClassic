@@ -10,7 +10,7 @@
 	//for(var/turf/T in targets)
 	var/failure = 0
 	if (istype(usr.loc,/mob) || usr.lying || usr.stunned || usr.buckled || usr.stat)
-		to_chat(usr, "\red You can't jump right now!")
+		to_chat(usr, "<span class='warning'>You can't jump right now!</span>")
 		return
 
 	if (istype(usr.loc,/turf) && !(istype(usr.loc,/turf/space)))
@@ -22,7 +22,7 @@
 		if(usr.pinned.len)
 			failure = 1
 
-		usr.visible_message("\red <b>[usr.name]</b> takes a huge leap!")
+		usr.visible_message("<span class='warning'><b>[usr.name]</b> takes a huge leap!</span>")
 		playsound(usr, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 		if(failure)
 			usr.Weaken(5)
@@ -88,7 +88,7 @@
 							else M.pixel_y -= 8
 
 		if ((FAT in usr.mutations) && prob(66))
-			usr.visible_message("\red <b>[usr.name]</b> crashes due to their heavy weight!")
+			usr.visible_message("<span class='warning'><b>[usr.name]</b> crashes due to their heavy weight!</span>")
 			playsound(usr, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 			usr.weakened += 10
 			usr.stunned += 5
@@ -97,15 +97,15 @@
 		usr.canmove = 1
 		usr.layer = prevLayer
 	else
-		to_chat(usr, "\red You need a ground to do this!")
+		to_chat(usr, "<span class='warning'>You need a ground to do this!</span>")
 		return
 
 	if (istype(usr.loc,/obj))
 		var/obj/container = usr.loc
-		to_chat(usr, "\red You leap and slam your head against the inside of [container]! Ouch!")
+		to_chat(usr, "<span class='warning'>You leap and slam your head against the inside of [container]! Ouch!</span>")
 		usr.paralysis += 3
 		usr.weakened += 5
-		container.visible_message("\red <b>[usr.loc]</b> emits a loud thump and rattles a bit.")
+		container.visible_message("<span class='warning'><b>[usr.loc]</b> emits a loud thump and rattles a bit.</span>")
 		playsound(usr, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 		var/wiggle = 6
 		while(wiggle > 0)
@@ -129,16 +129,16 @@
 /obj/effect/proc_holder/spell/aoe_turf/hulk_dash/cast(list/targets)
 	var/turf/T = get_turf(get_step(usr,usr.dir))
 	for(var/mob/living/M in T.contents)
-		to_chat(usr, "\red Something right in front of you!")
+		to_chat(usr, "<span class='warning'>Something right in front of you!</span>")
 		return
 	T = get_turf(get_step(T,usr.dir))
 	for(var/mob/living/M in T.contents)
-		to_chat(usr, "\red Something right in front of you!")
+		to_chat(usr, "<span class='warning'>Something right in front of you!</span>")
 		return
 
 	var/failure = 0
 	if (istype(usr.loc,/mob) || usr.lying || usr.stunned || usr.buckled || usr.stat)
-		to_chat(usr, "\red You can't dash right now!")
+		to_chat(usr, "<span class='warning'>You can't dash right now!</span>")
 		return
 
 	if (istype(usr.loc,/turf) && !(istype(usr.loc,/turf/space)))
@@ -149,7 +149,7 @@
 		if(usr.pinned.len)
 			failure = 1
 
-		usr.visible_message("\red <b>[usr.name]</b> dashes forward!")
+		usr.visible_message("<span class='warning'><b>[usr.name]</b> dashes forward!</span>")
 		playsound(usr, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 		if(failure)
 			usr.Weaken(5)
@@ -263,7 +263,7 @@
 			sleep(1)
 
 		if ((FAT in usr.mutations) && prob(66))
-			usr.visible_message("\red <b>[usr.name]</b> crashes due to their heavy weight!")
+			usr.visible_message("<span class='warning'><b>[usr.name]</b> crashes due to their heavy weight!</span>")
 			playsound(usr, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 			usr.weakened += 10
 			usr.stunned += 5
@@ -272,15 +272,15 @@
 		usr.canmove = 1
 		usr.layer = prevLayer
 	else
-		to_chat(usr, "\red You need a ground to do this!")
+		to_chat(usr, "<span class='warning'>You need a ground to do this!</span>")
 		return
 
 	if (istype(usr.loc,/obj))
 		var/obj/container = usr.loc
-		to_chat(usr, "\red You dash and slam your head against the inside of [container]! Ouch!")
+		to_chat(usr, "<span class='warning'>You dash and slam your head against the inside of [container]! Ouch!</span>")
 		usr.paralysis += 3
 		usr.weakened += 5
-		container.visible_message("\red <b>[usr.loc]</b> emits a loud thump and rattles a bit.")
+		container.visible_message("<span class='warning'><b>[usr.loc]</b> emits a loud thump and rattles a bit.</span>")
 		playsound(usr, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 		var/wiggle = 6
 		while(wiggle > 0)
@@ -303,7 +303,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_smash/cast(list/targets)
 	if (usr.lying || usr.stunned || usr.stat)
-		to_chat(usr, "\red You can't smash right now!")
+		to_chat(usr, "<span class='warning'>You can't smash right now!</span>")
 		return
 
 	if (istype(usr.loc,/turf))
@@ -315,7 +315,7 @@
 		//usr.anchored = 0
 		sleep(30)
 		usr.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
-		usr.visible_message("\red <b>[usr.name] slams the ground with \his arms!</b>")
+		usr.visible_message("<span class='warning'><b>[usr.name] slams the ground with \his arms!</b></span>")
 		playsound(usr, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER)
 		var/cur_dir = usr.dir
 		var/turf/T = get_turf(get_step(usr,cur_dir))
@@ -324,7 +324,7 @@
 		if(istype(tile))
 			tile.break_tile()
 		if(istype(W,/turf/simulated/wall/r_wall))
-			to_chat(usr, "\red <B>Ouch!</B> This wall is too strong.")
+			to_chat(usr, "<span class='warning'><B>Ouch!</B> This wall is too strong.</span>")
 			var/mob/living/carbon/human/H = usr
 			H.take_overall_damage(25, used_weapon = "reinforced wall")
 		else if(istype(W,/turf/simulated/wall))
@@ -389,8 +389,8 @@
 
 	if (istype(usr.loc,/obj))
 		var/obj/container = usr.loc
-		to_chat(usr, "\red You smash [container]!")
-		container.visible_message("\red <b>[usr.loc]</b> emits a loud thump and rattles a bit.")
+		to_chat(usr, "<span class='warning'>You smash [container]!</span>")
+		container.visible_message("<span class='warning'><b>[usr.loc]</b> emits a loud thump and rattles a bit.</span>")
 		playsound(usr, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 		var/wiggle = 6
 		while(wiggle > 0)
@@ -400,7 +400,7 @@
 			sleep(1)
 		container.pixel_x = 0
 		container.pixel_y = 0
-		visible_message("\red [usr] destroys the [container]. ")
+		visible_message("<span class='warning'>[usr] destroys the [container]. </span>")
 		for(var/atom/movable/A as mob|obj in container)
 			A.loc = container.loc
 			var/mob/M = A
@@ -437,7 +437,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_mill/cast(list/targets)
 	if (usr.lying || usr.stunned || usr.stat)
-		to_chat(usr, "\red You can't right now!")
+		to_chat(usr, "<span class='warning'>You can't right now!</span>")
 		return
 
 	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses hulk_mill</font>"
@@ -476,7 +476,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_gas/cast(list/targets)
 	if (usr.lying || usr.stunned || usr.stat)
-		to_chat(usr, "\red You can't right now!")
+		to_chat(usr, "<span class='warning'>You can't right now!</span>")
 		return
 
 	//Some weird magic
@@ -510,7 +510,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_spit/cast(list/targets)
 	if (usr.lying || usr.stunned || usr.stat)
-		to_chat(usr, "\red You can't right now!")
+		to_chat(usr, "<span class='warning'>You can't right now!</span>")
 		return
 
 	var/turf/T = usr.loc
@@ -562,15 +562,15 @@
 
 	var/mob/living/simple_animal/SA = usr
 	if(target.stat == DEAD)
-		usr.visible_message("\red <b>[usr.name]</b> is trying to swallow <b>[target.name]</b>!")
+		usr.visible_message("<span class='warning'><b>[usr.name]</b> is trying to swallow <b>[target.name]</b>!</span>")
 		if(do_after(usr,50,target = target))
 			usr.attack_log += "\[[time_stamp()]\]<font color='red'> Eats [target.name] ([target.ckey]) with hulk_eat</font>"
 			msg_admin_attack("[key_name(usr)] eats [key_name(target)] body with hulk_eat")
 			if(isrobot(target))
-				usr.visible_message("\red <b>[usr.name]</b> swallows <b>[target.name]</b> and vomits some parts of it!\black Looks like robots are not so tasty.")
+				usr.visible_message("<span class='warning'><b>[usr.name]</b> swallows <b>[target.name]</b> and vomits some parts of it!\black Looks like robots are not so tasty.</span>")
 				SA.health -= 150
 			else
-				usr.visible_message("\red <b>[usr.name]</b> swallows <b>[target.name]</b>!")
+				usr.visible_message("<span class='warning'><b>[usr.name]</b> swallows <b>[target.name]</b>!</span>")
 				SA.health += 30
 				if(isanimal(target))
 					HE.charge_counter += 90
@@ -579,18 +579,18 @@
 			playsound(usr, 'sound/weapons/zilla_eat.ogg', VOL_EFFECTS_MASTER)
 			target.gib()
 	else
-		usr.visible_message("\red <b>[usr.name]</b> is trying to rend <b>[target.name]</b> into shreds!")
+		usr.visible_message("<span class='warning'><b>[usr.name]</b> is trying to rend <b>[target.name]</b> into shreds!</span>")
 		if(do_after(usr,20,target = target))
 			usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [target.name] ([target.ckey]) with hulk_eat</font>"
 			target.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_eat</font>"
 			msg_admin_attack("[key_name(usr)] attacked [key_name(target)] with hulk_eat")
 			if(isrobot(target))
-				usr.visible_message("\red <b>[usr.name]</b> rends apart and vomit some parts of <b>[target.name]</b>!\black Looks like robots are not so tasty.")
+				usr.visible_message("<span class='warning'><b>[usr.name]</b> rends apart and vomit some parts of <b>[target.name]</b>!\black Looks like robots are not so tasty.</span>")
 				SA.health -= 45
 				HE.charge_counter += 30
 				target.take_overall_damage(rand(75,140), used_weapon = "teeth marks")
 			else
-				usr.visible_message("\red <b>[usr.name]</b> rends <b>[target.name]</b> apart!")
+				usr.visible_message("<span class='warning'><b>[usr.name]</b> rends <b>[target.name]</b> apart!</span>")
 				SA.health += 15
 				HE.charge_counter += 60
 				if(isanimal(target))
@@ -612,7 +612,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_lazor/cast(list/targets)
 	if (usr.lying || usr.stunned || usr.stat)
-		to_chat(usr, "\red You can't right now!")
+		to_chat(usr, "<span class='warning'>You can't right now!</span>")
 		return
 
 	var/turf/T = usr.loc
@@ -674,5 +674,5 @@
 		var/mob/living/simple_animal/hulk/Hulk = user
 		playsound(user, 'sound/weapons/zilla_eat.ogg', VOL_EFFECTS_MASTER)
 		Hulk.health += 10
-		usr.visible_message("\red <b>[usr.name]</b> eats [src.name]!")
+		usr.visible_message("<span class='warning'><b>[usr.name]</b> eats [src.name]!</span>")
 		qdel(src)

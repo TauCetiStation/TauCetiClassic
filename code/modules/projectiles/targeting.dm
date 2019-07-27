@@ -66,9 +66,9 @@
 				if(L)
 					L.NotTargeted(src)
 			qdel(target)
-			usr.visible_message("\red <b>[usr] turns \the [src] on [M]!</b>")
+			usr.visible_message("<span class='warning'><b>[usr] turns \the [src] on [M]!</b></span>")
 		else
-			usr.visible_message("\red <b>[usr] aims \a [src] at [M]!</b>")
+			usr.visible_message("<span class='warning'><b>[usr] aims \a [src] at [M]!</b></span>")
 		M.Targeted(src)
 
 //HE MOVED, SHOOT HIM!
@@ -85,7 +85,7 @@
 			if(firing_check == 1)
 				Fire(T,usr, reflex = 1)
 		else if(!told_cant_shoot)
-			to_chat(M, "\red They can't be hit from here!")
+			to_chat(M, "<span class='warning'>They can't be hit from here!</span>")
 			told_cant_shoot = 1
 			spawn(30)
 				told_cant_shoot = 0
@@ -316,10 +316,10 @@
 				if(target_can_move)
 					to_chat(M, "Your character may now <b>walk</b> at the discretion of their targeter.")
 					if(!target_can_run)
-						to_chat(M, "\red Your move intent is now set to walk, as your targeter permits it.")
+						to_chat(M, "<span class='warning'>Your move intent is now set to walk, as your targeter permits it.</span>")
 						M.set_m_intent("walk")
 				else
-					to_chat(M, "\red <b>Your character will now be shot if they move.</b>")
+					to_chat(M, "<span class='warning'><b>Your character will now be shot if they move.</b></span>")
 
 /mob/living/proc/set_m_intent(intent)
 	if (intent != "walk" && intent != "run")
@@ -352,7 +352,7 @@
 				if(target_can_run)
 					to_chat(M, "Your character may now <b>run</b> at the discretion of their targeter.")
 				else
-					to_chat(M, "\red <b>Your character will now be shot if they run.</b>")
+					to_chat(M, "<span class='warning'><b>Your character will now be shot if they run.</b></span>")
 
 /client/verb/AllowTargetClick()
 	set hidden=1
@@ -376,4 +376,4 @@
 				if(target_can_click)
 					to_chat(M, "Your character may now <b>use items</b> at the discretion of their targeter.")
 				else
-					to_chat(M, "\red <b>Your character will now be shot if they use items.</b>")
+					to_chat(M, "<span class='warning'><b>Your character will now be shot if they use items.</b></span>")

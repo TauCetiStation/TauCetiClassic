@@ -281,7 +281,7 @@
 				var/turf/T = get_turf_or_move(src.loc)
 				src.cable = new /obj/item/weapon/pai_cable(T)
 				for (var/mob/M in viewers(T))
-					M.show_message("\red A port on [src] opens to reveal [src.cable], which promptly falls to the floor.", 3, "\red You hear the soft click of something light and hard falling to the ground.", 2)
+					M.show_message("<span class='warning'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", 3, "<span class='warning'>You hear the soft click of something light and hard falling to the ground.</span>", 2)
 	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return

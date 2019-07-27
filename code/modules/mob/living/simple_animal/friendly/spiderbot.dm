@@ -48,10 +48,10 @@
 	if(istype(O, /obj/item/device/mmi) || istype(O, /obj/item/device/mmi/posibrain))
 		var/obj/item/device/mmi/B = O
 		if(src.mmi) //There's already a brain in it.
-			to_chat(user, "\red There's already a brain in [src]!")
+			to_chat(user, "<span class='warning'>There's already a brain in [src]!</span>")
 			return
 		if(!B.brainmob)
-			to_chat(user, "\red Sticking an empty MMI into the frame would sort of defeat the purpose.")
+			to_chat(user, "<span class='warning'>Sticking an empty MMI into the frame would sort of defeat the purpose.</span>")
 			return
 		if(!B.brainmob.key)
 			var/ghost_can_reenter = 0
@@ -65,11 +65,11 @@
 				return
 
 		if(B.brainmob.stat == DEAD)
-			to_chat(user, "\red [O] is dead. Sticking it into the frame would sort of defeat the purpose.")
+			to_chat(user, "<span class='warning'>[O] is dead. Sticking it into the frame would sort of defeat the purpose.</span>")
 			return
 
 		if(jobban_isbanned(B.brainmob, "Cyborg"))
-			to_chat(user, "\red [O] does not seem to fit.")
+			to_chat(user, "<span class='warning'>[O] does not seem to fit.</span>")
 			return
 
 		to_chat(user, "\blue You install [O] in [src]!")
@@ -92,7 +92,7 @@
 					health = maxHealth
 				add_fingerprint(user)
 				for(var/mob/W in viewers(user, null))
-					W.show_message(text("\red [user] has spot-welded some of the damage to [src]!"), 1)
+					W.show_message(text("<span class='warning'>[user] has spot-welded some of the damage to [src]!</span>"), 1)
 			else
 				to_chat(user, "\blue [src] is undamaged!")
 		else
@@ -100,7 +100,7 @@
 			return
 	else if(istype(O, /obj/item/weapon/card/id)||istype(O, /obj/item/device/pda))
 		if (!mmi)
-			to_chat(user, "\red There's no reason to swipe your ID - the spiderbot has no brain to remove.")
+			to_chat(user, "<span class='warning'>There's no reason to swipe your ID - the spiderbot has no brain to remove.</span>")
 			return 0
 
 		var/obj/item/weapon/card/id/id_card
@@ -121,7 +121,7 @@
 
 			return 1
 		else
-			to_chat(user, "\red You swipe your card, with no effect.")
+			to_chat(user, "<span class='warning'>You swipe your card, with no effect.</span>")
 			return 0
 
 	else
@@ -133,12 +133,12 @@
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
+					M.show_message("<span class='warning'>\b [src] has been attacked with the [O] by [user]. </span>")
 		else
-			to_chat(usr, "\red This weapon is ineffective, it does no damage.")
+			to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red [user] gently taps [src] with the [O]. ")
+					M.show_message("<span class='warning'>[user] gently taps [src] with the [O]. </span>")
 
 /mob/living/simple_animal/spiderbot/proc/transfer_personality(obj/item/device/mmi/M)
 
@@ -149,15 +149,15 @@
 
 /mob/living/simple_animal/spiderbot/emag_act(mob/user)
 	if (emagged)
-		to_chat(user, "\red [src] is already overloaded - better run.")
+		to_chat(user, "<span class='warning'>[src] is already overloaded - better run.</span>")
 		return FALSE
 	else
 		emagged = 1
 		to_chat(user, "\blue You short out the security protocols and overload [src]'s cell, priming it to explode in a short time.")
 		spawn(100)
-			to_chat(src, "\red Your cell seems to be outputting a lot of power...")
+			to_chat(src, "<span class='warning'>Your cell seems to be outputting a lot of power...</span>")
 		spawn(200)
-			to_chat(src, "\red Internal heat sensors are spiking! Something is badly wrong with your cell!")
+			to_chat(src, "<span class='warning'>Internal heat sensors are spiking! Something is badly wrong with your cell!</span>")
 		spawn(300)
 			src.explode()
 		return FALSE
@@ -165,7 +165,7 @@
 /mob/living/simple_animal/spiderbot/proc/explode() //When emagged.
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))
-			M.show_message("\red [src] makes an odd warbling noise, fizzles, and explodes.")
+			M.show_message("<span class='warning'>[src] makes an odd warbling noise, fizzles, and explodes.</span>")
 	explosion(get_turf(loc), -1, -1, 3, 5)
 	eject_brain()
 	death()
@@ -245,11 +245,11 @@
 		return
 
 	if(!held_item)
-		to_chat(usr, "\red You have nothing to drop!")
+		to_chat(usr, "<span class='warning'>You have nothing to drop!</span>")
 		return 0
 
 	if(istype(held_item, /obj/item/weapon/grenade))
-		visible_message("\red [src] launches \the [held_item]!", "\red You launch \the [held_item]!", "You hear a skittering noise and a thump!")
+		visible_message("<span class='warning'>[src] launches \the [held_item]!</span>", "<span class='warning'>You launch \the [held_item]!</span>", "You hear a skittering noise and a thump!")
 		var/obj/item/weapon/grenade/G = held_item
 		G.loc = src.loc
 		G.prime()
@@ -273,7 +273,7 @@
 		return -1
 
 	if(held_item)
-		to_chat(src, "\red You are already holding \the [held_item]")
+		to_chat(src, "<span class='warning'>You are already holding \the [held_item]</span>")
 		return 1
 
 	var/list/items = list()
@@ -290,10 +290,10 @@
 				selection.loc = src
 				visible_message("\blue [src] scoops up \the [held_item]!", "\blue You grab \the [held_item]!", "You hear a skittering noise and a clink.")
 				return held_item
-		to_chat(src, "\red \The [selection] is too far away.")
+		to_chat(src, "<span class='warning'>\The [selection] is too far away.</span>")
 		return 0
 
-	to_chat(src, "\red There is nothing of interest to take.")
+	to_chat(src, "<span class='warning'>There is nothing of interest to take.</span>")
 	return 0
 
 /mob/living/simple_animal/spiderbot/examine(mob/user)

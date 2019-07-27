@@ -13,16 +13,16 @@ var/can_call_ert
 	set desc = "Send an emergency response team to the station."
 
 	if(!holder)
-		to_chat(usr, "\red Only administrators may use this command.")
+		to_chat(usr, "<span class='warning'>Only administrators may use this command.</span>")
 		return
 	if(!ticker)
-		to_chat(usr, "\red The game hasn't started yet!")
+		to_chat(usr, "<span class='warning'>The game hasn't started yet!</span>")
 		return
 	if(ticker.current_state == 1)
-		to_chat(usr, "\red The round hasn't started yet!")
+		to_chat(usr, "<span class='warning'>The round hasn't started yet!</span>")
 		return
 	if(send_emergency_team)
-		to_chat(usr, "\red Central Command has already dispatched an emergency response team!")
+		to_chat(usr, "<span class='warning'>Central Command has already dispatched an emergency response team!</span>")
 		return
 	if(alert("Do you want to dispatch an Emergency Response Team?",,"Yes","No") != "Yes")
 		return
@@ -31,7 +31,7 @@ var/can_call_ert
 			if("No")
 				return
 	if(send_emergency_team)
-		to_chat(usr, "\red Looks like somebody beat you to it!")
+		to_chat(usr, "<span class='warning'>Looks like somebody beat you to it!</span>")
 		return
 
 	message_admins("[key_name_admin(usr)] is dispatching an Emergency Response Team.", 1)

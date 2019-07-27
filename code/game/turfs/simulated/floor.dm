@@ -505,17 +505,17 @@ var/list/wood_icons = list("wood","wood-broken")
 
 	if(iscrowbar(C) && (!(is_plating())))
 		if(broken || burnt)
-			to_chat(user, "\red You remove the broken plating.")
+			to_chat(user, "<span class='warning'>You remove the broken plating.</span>")
 		else
 			if(is_wood_floor())
-				to_chat(user, "\red You forcefully pry off the planks, destroying them in the process.")
+				to_chat(user, "<span class='warning'>You forcefully pry off the planks, destroying them in the process.</span>")
 			else
 				var/obj/item/I = new floor_type(src)
 				if(is_light_floor())
 					var/obj/item/stack/tile/light/L = I
 					L.on = get_lightfloor_on()
 					L.state = get_lightfloor_state()
-				to_chat(user, "\red You remove the [I.name].")
+				to_chat(user, "<span class='warning'>You remove the [I.name].</span>")
 
 		make_plating()
 		// Can't play sounds from areas. - N3X
@@ -529,7 +529,7 @@ var/list/wood_icons = list("wood","wood-broken")
 				return
 			else
 				if(is_wood_floor())
-					to_chat(user, "\red You unscrew the planks.")
+					to_chat(user, "<span class='warning'>You unscrew the planks.</span>")
 					new floor_type(src)
 
 			make_plating()
@@ -553,16 +553,16 @@ var/list/wood_icons = list("wood","wood-broken")
 					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					return
 			else
-				to_chat(user, "\red You need more rods.")
+				to_chat(user, "<span class='warning'>You need more rods.</span>")
 		else if (is_catwalk())
-			to_chat(user, "\red The entire thing is 100% rods already, it doesn't need any more.")
+			to_chat(user, "<span class='warning'>The entire thing is 100% rods already, it doesn't need any more.</span>")
 		else
-			to_chat(user, "\red You must remove the plating first.")
+			to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
 		return
 
 	if(istype(C, /obj/item/stack/tile))
 		if (is_catwalk())
-			to_chat(user, "\red The catwalk is too primitive to support tiling.")
+			to_chat(user, "<span class='warning'>The catwalk is too primitive to support tiling.</span>")
 		if(is_plating())
 			if(!broken && !burnt)
 				var/obj/item/stack/tile/T = C
@@ -602,7 +602,7 @@ var/list/wood_icons = list("wood","wood-broken")
 					return
 			coil.turf_place(src, user)
 		else
-			to_chat(user, "\red You must remove the plating first.")
+			to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
 
 	if(istype(C, /obj/item/weapon/shovel))
 		if(is_grass_floor())
@@ -611,14 +611,14 @@ var/list/wood_icons = list("wood","wood-broken")
 			to_chat(user, "\blue You shovel the grass.")
 			make_plating()
 		else
-			to_chat(user, "\red You cannot shovel this.")
+			to_chat(user, "<span class='warning'>You cannot shovel this.</span>")
 
 	if(iswelder(C))
 		var/obj/item/weapon/weldingtool/welder = C
 		if(welder.isOn() && (is_plating()))
 			if(broken || burnt)
 				if(welder.use(0,user))
-					to_chat(user, "\red You fix some dents on the broken plating.")
+					to_chat(user, "<span class='warning'>You fix some dents on the broken plating.</span>")
 					playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 					icon_state = "plating"
 					burnt = 0

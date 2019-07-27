@@ -60,8 +60,8 @@
 
 /datum/surgery_step/generic/cut_with_laser/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\red [user]'s hand slips as the blade sputters, searing a long gash in [target]'s [BP.name] with \the [tool]!", \
-	"\red Your hand slips as the blade sputters, searing a long gash in [target]'s [BP.name] with \the [tool]!")
+	user.visible_message("<span class='warning'>[user]'s hand slips as the blade sputters, searing a long gash in [target]'s [BP.name] with \the [tool]!</span>", \
+	"<span class='warning'>Your hand slips as the blade sputters, searing a long gash in [target]'s [BP.name] with \the [tool]!</span>")
 	BP.createwound(CUT, 7.5)
 	BP.createwound(BURN, 12.5)
 
@@ -100,8 +100,8 @@
 
 /datum/surgery_step/generic/incision_manager/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\red [user]'s hand jolts as the system sparks, ripping a gruesome hole in [target]'s [BP.name] with \the [tool]!", \
-	"\red Your hand jolts as the system sparks, ripping a gruesome hole in [target]'s [BP.name] with \the [tool]!")
+	user.visible_message("<span class='warning'>[user]'s hand jolts as the system sparks, ripping a gruesome hole in [target]'s [BP.name] with \the [tool]!</span>", \
+	"<span class='warning'>Your hand jolts as the system sparks, ripping a gruesome hole in [target]'s [BP.name] with \the [tool]!</span>")
 	BP.createwound(CUT, 20)
 	BP.createwound(BURN, 15)
 
@@ -139,8 +139,8 @@
 
 /datum/surgery_step/generic/cut_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\red [user]'s hand slips, slicing open [target]'s [BP.name] in the wrong place with \the [tool]!", \
-	"\red Your hand slips, slicing open [target]'s [BP.name] in the wrong place with \the [tool]!")
+	user.visible_message("<span class='warning'>[user]'s hand slips, slicing open [target]'s [BP.name] in the wrong place with \the [tool]!</span>", \
+	"<span class='warning'>Your hand slips, slicing open [target]'s [BP.name] in the wrong place with \the [tool]!</span>")
 	BP.createwound(CUT, 10)
 
 /datum/surgery_step/generic/clamp_bleeders
@@ -175,8 +175,8 @@
 
 /datum/surgery_step/generic/clamp_bleeders/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\red [user]'s hand slips, tearing blood vessals and causing massive bleeding in [target]'s [BP.name] with \the [tool]!",	\
-	"\red Your hand slips, tearing blood vessels and causing massive bleeding in [target]'s [BP.name] with \the [tool]!",)
+	user.visible_message("<span class='warning'>[user]'s hand slips, tearing blood vessals and causing massive bleeding in [target]'s [BP.name] with \the [tool]!</span>",	\
+	"<span class='warning'>Your hand slips, tearing blood vessels and causing massive bleeding in [target]'s [BP.name] with \the [tool]!</span>",)
 	BP.createwound(CUT, 10)
 
 /datum/surgery_step/generic/retract_skin
@@ -223,14 +223,14 @@
 
 /datum/surgery_step/generic/retract_skin/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	var/msg = "\red [user]'s hand slips, tearing the edges of the incision on [target]'s [BP.name] with \the [tool]!"
-	var/self_msg = "\red Your hand slips, tearing the edges of the incision on [target]'s [BP.name] with \the [tool]!"
+	var/msg = "<span class='warning'>[user]'s hand slips, tearing the edges of the incision on [target]'s [BP.name] with \the [tool]!</span>"
+	var/self_msg = "<span class='warning'>Your hand slips, tearing the edges of the incision on [target]'s [BP.name] with \the [tool]!</span>"
 	if (target_zone == BP_CHEST)
-		msg = "\red [user]'s hand slips, damaging several organs in [target]'s torso with \the [tool]!"
-		self_msg = "\red Your hand slips, damaging several organs in [target]'s torso with \the [tool]!"
+		msg = "<span class='warning'>[user]'s hand slips, damaging several organs in [target]'s torso with \the [tool]!</span>"
+		self_msg = "<span class='warning'>Your hand slips, damaging several organs in [target]'s torso with \the [tool]!</span>"
 	if (target_zone == BP_GROIN)
-		msg = "\red [user]'s hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]"
-		self_msg = "\red Your hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]!"
+		msg = "<span class='warning'>[user]'s hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]</span>"
+		self_msg = "<span class='warning'>Your hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]!</span>"
 	user.visible_message(msg, self_msg)
 	target.apply_damage(12, BRUTE, BP, null, DAM_SHARP)
 
@@ -266,8 +266,8 @@
 
 /datum/surgery_step/generic/cauterize/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\red [user]'s hand slips, leaving a small burn on [target]'s [BP.name] with \the [tool]!", \
-	"\red Your hand slips, leaving a small burn on [target]'s [BP.name] with \the [tool]!")
+	user.visible_message("<span class='warning'>[user]'s hand slips, leaving a small burn on [target]'s [BP.name] with \the [tool]!</span>", \
+	"<span class='warning'>Your hand slips, leaving a small burn on [target]'s [BP.name] with \the [tool]!</span>")
 	target.apply_damage(3, BURN, BP)
 
 /datum/surgery_step/generic/cut_limb
@@ -308,8 +308,8 @@
 
 /datum/surgery_step/generic/cut_limb/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\red [user]'s hand slips, sawwing through the bone in [target]'s [BP.name] with \the [tool]!", \
-	"\red Your hand slips, sawwing through the bone in [target]'s [BP.name] with \the [tool]!")
+	user.visible_message("<span class='warning'>[user]'s hand slips, sawwing through the bone in [target]'s [BP.name] with \the [tool]!</span>", \
+	"<span class='warning'>Your hand slips, sawwing through the bone in [target]'s [BP.name] with \the [tool]!</span>")
 	BP.createwound(CUT, 30)
 	BP.fracture()
 //////////////////////////////////////////////////////////////////

@@ -720,7 +720,7 @@
 		update_icon()
 	else if(istype(O, /obj/item/apiary))
 		if(planted)
-			to_chat(user, "\red The hydroponics tray is already occupied!")
+			to_chat(user, "<span class='warning'>The hydroponics tray is already occupied!</span>")
 		else
 			user.remove_from_mob()
 			qdel(O)

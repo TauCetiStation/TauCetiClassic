@@ -277,7 +277,7 @@
 			return
 		var/obj/item/weapon/gun/W = usr.get_active_hand()
 		if (!W.isHandgun())
-			to_chat(usr, "\red This gun won't fit in \the belt!")
+			to_chat(usr, "<span class='warning'>This gun won't fit in \the belt!</span>")
 			return
 		holstered = usr.get_active_hand()
 		usr.drop_item()
@@ -285,11 +285,11 @@
 		usr.visible_message("\blue \The [usr] holsters \the [holstered].", "You holster \the [holstered].")
 	else
 		if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
-			to_chat(usr, "\red You need an empty hand to draw the gun!")
+			to_chat(usr, "<span class='warning'>You need an empty hand to draw the gun!</span>")
 		else
 			if(usr.a_intent == "hurt")
-				usr.visible_message("\red \The [usr] draws \the [holstered], ready to shoot!", \
-				"\red You draw \the [holstered], ready to shoot!")
+				usr.visible_message("<span class='warning'>\The [usr] draws \the [holstered], ready to shoot!</span>", \
+				"<span class='warning'>You draw \the [holstered], ready to shoot!</span>")
 			else
 				usr.visible_message("\blue \The [usr] draws \the [holstered], pointing it at the ground.", \
 				"\blue You draw \the [holstered], pointing it at the ground.")

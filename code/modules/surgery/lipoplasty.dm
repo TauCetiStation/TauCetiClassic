@@ -106,7 +106,7 @@
 		"\blue Unfortunately, there is nothing to extract of [target] with \the [tool].")
 
 /datum/surgery_step/lipoplasty/remove_fat/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("\red [user]'s hand slips, cutting [target]'s belly with \the [tool]!" , \
-	"\red Your hand slips, cutting [target]'s belly with \the [tool]!" )
+	user.visible_message("<span class='warning'>[user]'s hand slips, cutting [target]'s belly with \the [tool]!</span>" , \
+	"<span class='warning'>Your hand slips, cutting [target]'s belly with \the [tool]!</span>" )
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.createwound(CUT, 30)
