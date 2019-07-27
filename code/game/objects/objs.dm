@@ -244,10 +244,7 @@
 
 // To be called from things that spill objects on the floor.
 // Makes an object move around randomly for a couple of tiles.
-/obj/proc/tumble(dist)
-	set waitfor = FALSE
-
-	sleep(0)
+/obj/proc/tumble_async(dist)
 	if(dist >= 1)
 		dist += rand(0, 1)
 		for(var/i in 1 to dist)

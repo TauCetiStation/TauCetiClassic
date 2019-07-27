@@ -23,6 +23,32 @@
 	mop_list -= src
 	return ..()
 
+/obj/item/weapon/mop/CtrlClickAction(atom/target, mob/user)
+	if(get_dist(user, src) > 2)
+		return FALSE
+
+	mop_push(target, user)
+	return TRUE
+
+/obj/item/weapon/mop/CtrlShiftClickAction(atom/target, mob/user)
+	if(get_dist(user, src) > 2)
+		return FALSE
+
+	mop_pull(target, user)
+	return TRUE
+
+/obj/item/weapon/mop/AltClickAction(atom/target, mob/user)
+	if(!user.Adjacent(src))
+		return FALSE
+	if(istype(target, /obj/structure/stool/bed/chair/janitorialcart))
+		return FALSE // So we can still put our mop in.
+
+	var/turf/T = get_turf(target)
+	var/direction = get_dir(get_turf(src), T)
+	var/list/turfs = list(turn(direction, 45), direction, turn(direction, -45))
+	sweep(turfs, user, 8)
+	return TRUE
+
 /obj/item/weapon/mop/attack_self(mob/user)
 	if(user.next_move > world.time)
 		return
@@ -153,18 +179,18 @@
 
 	var/i = 0 // So we begin with one.
 	for(var/dir_ in directions)
-		var/turf/T_T = get_step(src, dir_)
+		var/turf/current_turf = get_step(src, dir_)
 		i++
-		INVOKE_ASYNC(src, .proc/move_mop_image, mop_image, T_T, sweep_step)
-		if(user.is_busy() || !do_after(user, sweep_step, target = T_T, can_move = TRUE, progress = FALSE))
+		INVOKE_ASYNC(src, .proc/move_mop_image, mop_image, current_turf, sweep_step)
+		if(user.is_busy() || !do_after(user, sweep_step, target = current_turf, can_move = TRUE, progress = FALSE))
 			break
 
-		user.face_atom(T_T)
-		mop_image.forceMove(T_T)
+		user.face_atom(current_turf)
+		mop_image.forceMove(current_turf)
 		var/turf_clear = TRUE
 		var/list/to_check = list()
-		to_check += T_T.contents
-		to_check += T_T
+		to_check += current_turf.contents
+		to_check += current_turf
 		// Get out of the way, fellows!
 		for(var/atom/A in to_check)
 			if(A.density)
@@ -184,7 +210,7 @@
 						step_to(I, get_step(src, directions[i + 1]))
 
 		if(turf_clear)
-			clean(T_T, amount / directions.len)
+			clean(current_turf, amount / directions.len)
 		else
 			// You hit a wall!
 			user.apply_effect(3, STUN, 0)
@@ -193,8 +219,7 @@
 			shake_camera(user, 1, 1)
 			// here be thud sound
 			break
-	sleep(sweep_step) // A sleep for that last sweet sweep.
-	qdel(mop_image)
+	QDEL_IN(mop_image, sweep_step)
 
 /obj/item/weapon/mop/proc/move_mop_image(obj/effect/effect/mop_image, turf/target, delay)
 	sleep(delay)

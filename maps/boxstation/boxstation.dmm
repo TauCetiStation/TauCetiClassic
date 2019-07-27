@@ -37633,7 +37633,6 @@
 "bsQ" = (
 /obj/structure/safe,
 /obj/item/clothing/under/color/yellow,
-/obj/item/key,
 /obj/item/toy/katana,
 /turf/simulated/floor{
 	dir = 4;

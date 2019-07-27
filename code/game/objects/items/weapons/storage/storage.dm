@@ -515,4 +515,4 @@
 
 	for(var/obj/O in contents)
 		remove_from_storage(O, T)
-		O.tumble(2)
+		INVOKE_ASYNC(O, /obj.proc/tumble_async, 2)

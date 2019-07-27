@@ -206,6 +206,9 @@
 	This is overridden in ai.dm
 */
 /mob/proc/ShiftClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && I.ShiftClickAction(A, src))
+		return
 	A.ShiftClick(src)
 	return
 /atom/proc/ShiftClick(mob/user)
@@ -217,54 +220,33 @@
 	Ctrl click
 	For most objects, pull
 */
+
+
 /mob/proc/CtrlClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && I.CtrlClickAction(A, src))
+		return
 	A.CtrlClick(src)
 	return
 
 /atom/proc/CtrlClick(mob/user)
-	var/obj/item/weapon/mop/M = user.get_active_hand()
-	if(istype(M))
-		. = TRUE
-		if(user.next_move > world.time)
-			return
-		if(user.incapacitated())
-			return
-		if(get_dist(user, src) > 2)
-			return
-
-		M.mop_push(src, user)
+	return
 
 /atom/movable/CtrlClick(mob/user)
-	if(..())
-		return
 	if(Adjacent(user))
 		user.start_pulling(src)
 
 /*
 	Alt click
-	Unused except for AI
 */
 /mob/proc/AltClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && I.AltClickAction(A, src))
+		return
 	A.AltClick(src)
 	return
 
 /atom/proc/AltClick(mob/user)
-	var/obj/item/weapon/mop/M = user.get_active_hand()
-	if(istype(M))
-		if(user.next_move > world.time)
-			return
-		if(user.incapacitated())
-			return
-		if(!user.Adjacent(src))
-			return
-
-		// INVOKE_ASYNC(user, /atom/movable.proc/do_attack_animation, src)
-		var/turf/T = get_turf(src)
-		var/direction = get_dir(get_turf(M), T)
-		var/list/turfs = list(turn(direction, 45), direction, turn(direction, -45))
-		M.sweep(turfs, user, 8)
-		return
-
 	var/turf/T = get_turf(src)
 	if(T && user.TurfAdjacent(T))
 		if(user.listed_turf == T)
@@ -281,20 +263,14 @@
 	Unused except for AI
 */
 /mob/proc/CtrlShiftClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && I.CtrlShiftClickAction(A, src))
+		return
 	A.CtrlShiftClick(src)
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)
-	var/obj/item/weapon/mop/M = user.get_active_hand()
-	if(istype(M))
-		if(user.next_move > world.time)
-			return
-		if(user.incapacitated())
-			return
-		if(get_dist(user, src) > 2)
-			return
-
-		M.mop_pull(src, user)
+	return
 
 /*
 	Misc helpers
