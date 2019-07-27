@@ -60,7 +60,7 @@
 	desc = "You can drill using this item. You dig?"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "drill"
-	hitsound = 'sound/weapons/circsawhit.ogg'
+	hitsound = list('sound/weapons/circsawhit.ogg')
 	m_amt = 15000
 	g_amt = 10000
 	flags = CONDUCT
@@ -138,7 +138,7 @@
 	desc = "For heavy duty cutting."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw"
-	hitsound = 'sound/weapons/circsawhit.ogg'
+	hitsound = list('sound/weapons/circsawhit.ogg')
 	flags = CONDUCT
 	force = 15.0
 	w_class = ITEM_SIZE_SMALL

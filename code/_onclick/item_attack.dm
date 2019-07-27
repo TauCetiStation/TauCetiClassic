@@ -75,8 +75,8 @@
 
 	if (istype(M,/mob/living/carbon/brain))
 		messagesource = M:container
-	if (hitsound)
-		playsound(src, hitsound, VOL_EFFECTS_MASTER)
+	if (hitsound.len)
+		playsound(src, pick(hitsound), VOL_EFFECTS_MASTER)
 	/////////////////////////
 	user.lastattacked = M
 	M.lastattacker = user

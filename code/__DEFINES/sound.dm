@@ -36,6 +36,7 @@
 #define SOUNDIN_CLOWNSTEP pick('sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg')
 #define SOUNDIN_GENHIT    pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
 #define SOUNDIN_PAGETURN  pick('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
+/*#define
 #define
 #define
 #define
@@ -76,10 +77,10 @@
 #define
 #define
 #define
-#define
-
+*/
 // -----------------------------------------------------
 //     SOUNDIN LIST
 // -----------------------------------------------------
-#define SOUNDIN_RUSTLE list('sound/effects/rustle1.ogg', 'sound/effects/rustle2.ogg', 'sound/effects/rustle3.ogg', 'sound/effects/rustle4.ogg', 'sound/effects/rustle5.ogg')
-#define SOUNDIN_PUNCH  list('sound/weapons/punch1.ogg', 'sound/weapons/punch2.ogg', 'sound/weapons/punch3.ogg', 'sound/weapons/punch4.ogg')
+#define SOUNDIN_RUSTLE      list('sound/effects/rustle1.ogg', 'sound/effects/rustle2.ogg', 'sound/effects/rustle3.ogg', 'sound/effects/rustle4.ogg', 'sound/effects/rustle5.ogg')
+#define SOUNDIN_PUNCH       list('sound/weapons/punch1.ogg', 'sound/weapons/punch2.ogg', 'sound/weapons/punch3.ogg', 'sound/weapons/punch4.ogg')
+#define SOUNDIN_DESCERATION list('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')

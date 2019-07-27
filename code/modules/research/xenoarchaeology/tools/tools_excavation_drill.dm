@@ -12,7 +12,7 @@
 	force = 15.0
 	w_class = ITEM_SIZE_NORMAL
 	attack_verb = list("drills")
-	hitsound = 'sound/weapons/circsawhit.ogg'
+	hitsound = list('sound/weapons/circsawhit.ogg')
 
 /obj/item/weapon/pickaxe/excavationdrill/attack_self(mob/user)
 	var/depth = input("Put the desired depth (1-30 centimeters).", "Set Depth", excavation_amount * 2)
