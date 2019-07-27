@@ -42,12 +42,6 @@
 	for(var/mob/living/M in contents)
 		M.show_message(message,m_type)
 
-/obj/item/weapon/holder/is_vision_obstructed()
-    if(ishuman(loc))
-        var/mob/living/carbon/human/H = loc
-        return H.head == src && H.is_vision_obstructed()
-    return ..()
-
 // Mob procs and vars for scooping up
 /mob/living/var/holder_type
 

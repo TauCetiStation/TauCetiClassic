@@ -46,10 +46,14 @@
 
 	return 1
 
-/mob/living/is_vision_obstructed()
-    if(istype(loc, /obj/item/weapon/holder))
-        return loc.is_vision_obstructed()
-    return ..()	
+/mob/living/proc/is_vision_obstructed()
+	if (istype(loc, /obj/item/weapon/holder))
+		if (ishuman(loc.loc))
+			var/mob/living/H = loc.loc
+			return H.is_vision_obstructed()
+		else
+			return TRUE
+	return loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside)
 
 /mob/living/proc/handle_vision()
 	update_sight()
