@@ -113,6 +113,9 @@ commented cause polls are kinda broken now, needs refactoring */
 		if(!(ckey in admin_datums) && jobban_isbanned(src, "Observer"))
 			to_chat(src, "<span class='red'>You have been banned from observing. Declare yourself.</span>")
 			return 0
+		if(!SSmapping.station_loaded)
+			to_chat(src, "<span class='red'>There is no station yet, please wait.</span>")
+			return 0
 		if(alert(src,"Are you sure you wish to observe? You will have to wait 30 minutes before being able to respawn!","Player Setup","Yes","No") == "Yes")
 			if(!client)
 				return 1
@@ -286,6 +289,8 @@ commented cause polls are kinda broken now, needs refactoring */
 	if(!job.player_old_enough(client))
 		return FALSE
 	if(!job.is_species_permitted(client))
+		return FALSE
+	if(!job.map_check())
 		return FALSE
 	return TRUE
 
