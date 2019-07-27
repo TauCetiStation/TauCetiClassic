@@ -68,7 +68,7 @@
 			ae.broken = TRUE
 			operating = 0
 	src.density = 0
-	playsound(src, "shatter", VOL_EFFECTS_MASTER)
+	playsound(src, SOUNDIN_SHATTER, VOL_EFFECTS_MASTER)
 	if(display_message)
 		visible_message("[src] shatters!")
 	qdel(src)

@@ -31,7 +31,7 @@
 		return
 	shattered = 1
 	icon_state = "mirror_broke"
-	playsound(src, "shatter", VOL_EFFECTS_MASTER)
+	playsound(src, SOUNDIN_SHATTER, VOL_EFFECTS_MASTER)
 	desc = "Oh no, seven years of bad luck!"
 
 

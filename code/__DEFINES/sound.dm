@@ -26,3 +26,55 @@
 #define CHANNEL_ANNOUNCE 802
 #define CHANNEL_VOLUMETEST 803
 
+// -----------------------------------------------------
+// SOUNDIN PICK (switch() alternative)
+// -----------------------------------------------------
+#define SOUNDIN_SHATTER pick('sound/effects/glassbr1.ogg', 'sound/effects/glassbr2.ogg', 'sound/effects/glassbr3.ogg')
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
