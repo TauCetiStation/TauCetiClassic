@@ -9411,12 +9411,10 @@
 	},
 /area/security/detectives_office)
 "auj" = (
-/obj/structure/closet{
-	name = "Evidence Closet"
-	},
 /obj/machinery/firealarm{
 	pixel_y = 28
 	},
+/obj/machinery/vending/noiromat,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -23431,7 +23429,7 @@
 "bcu" = (
 /obj/machinery/gateway/center/station,
 /turf/simulated/floor{
-	icon_state = "darkred"
+	icon_state = "darkblue"
 	},
 /area/gateway)
 "bcv" = (
@@ -25891,7 +25889,6 @@
 /obj/structure/sign/warning/detailed{
 	pixel_y = 32
 	},
-/turf/simulated/floor/plating,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -33198,7 +33195,6 @@
 	},
 /turf/simulated/floor/plating,
 /turf/simulated/floor{
-	dir = 1;
 	icon_state = "siding2"
 	},
 /area/crew_quarters/bar)
@@ -36032,16 +36028,16 @@
 	},
 /area/crew_quarters/hor)
 "bGN" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -36976,9 +36972,16 @@
 	},
 /area/toxins/brainstorm_center)
 "bIW" = (
-/turf/space,
-/turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 1
+	},
+/obj/effect/landmark/start{
+	name = "Test Subject"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/crew_quarters)
 "bIX" = (
 /obj/machinery/computer/secure_data,
 /obj/machinery/alarm{
@@ -39662,8 +39665,10 @@
 	},
 /area/hallway/primary/central)
 "bOK" = (
-/obj/machinery/light{
-	dir = 4
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -45734,7 +45739,6 @@
 	pixel_y = -20;
 	req_one_access = list(13,45,1)
 	},
-/turf/space,
 /turf/simulated/floor/plating/airless/catwalk,
 /area/space)
 "cca" = (
@@ -49717,15 +49721,18 @@
 /turf/simulated/floor,
 /area/hallway/secondary/entry)
 "cnI" = (
+/obj/machinery/light{
+	dir = 4
+	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "floorgrime"
+	icon_state = "white"
 	},
-/area/maintenance/science)
+/area/rnd/mixing)
 "cnJ" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -49770,11 +49777,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -60105,10 +60107,10 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/mob/living/simple_animal/corgi/borgi{
+/obj/structure/stool/bed/chair/metal/blue{
 	dir = 4
 	},
-/obj/structure/stool/bed/chair/metal/blue{
+/mob/living/simple_animal/corgi/borgi{
 	dir = 4
 	},
 /turf/simulated/floor/carpet,
@@ -62400,6 +62402,7 @@
 /area/security/brig)
 "gBb" = (
 /turf/simulated/floor{
+	dir = 4;
 	icon_state = "white"
 	},
 /turf/simulated/floor{
@@ -62646,7 +62649,8 @@
 	name = "Bar Shutters";
 	opacity = 0
 	},
-/turf/simulated/floor/exodus{
+/turf/simulated/floor{
+	dir = 5;
 	icon_state = "bar_floor"
 	},
 /turf/simulated/floor{
@@ -62826,7 +62830,8 @@
 	name = "Bar Shutters";
 	opacity = 0
 	},
-/turf/simulated/floor/exodus{
+/turf/simulated/floor{
+	dir = 5;
 	icon_state = "bar_floor"
 	},
 /turf/simulated/floor{
@@ -62938,7 +62943,8 @@
 	name = "Bar Shutters";
 	opacity = 0
 	},
-/turf/simulated/floor/exodus{
+/turf/simulated/floor{
+	dir = 5;
 	icon_state = "bar_floor"
 	},
 /turf/simulated/floor{
@@ -63128,7 +63134,8 @@
 	name = "Bar Shutters";
 	opacity = 0
 	},
-/turf/simulated/floor/exodus{
+/turf/simulated/floor{
+	dir = 5;
 	icon_state = "bar_floor"
 	},
 /turf/simulated/floor{
@@ -63179,11 +63186,11 @@
 	icon_state = "asteroid"
 	},
 /turf/simulated/floor{
-	icon_state = "siding8"
-	},
-/turf/simulated/floor{
 	dir = 5;
 	icon_state = "siding4"
+	},
+/turf/simulated/floor{
+	icon_state = "siding8"
 	},
 /area/hydroponics)
 "hQb" = (
@@ -63372,11 +63379,11 @@
 	icon_state = "asteroid"
 	},
 /turf/simulated/floor{
-	icon_state = "siding8"
-	},
-/turf/simulated/floor{
 	dir = 5;
 	icon_state = "siding4"
+	},
+/turf/simulated/floor{
+	icon_state = "siding8"
 	},
 /area/hydroponics)
 "ihb" = (
@@ -63406,11 +63413,11 @@
 	icon_state = "asteroid"
 	},
 /turf/simulated/floor{
-	icon_state = "siding8"
-	},
-/turf/simulated/floor{
 	dir = 5;
 	icon_state = "siding4"
+	},
+/turf/simulated/floor{
+	icon_state = "siding8"
 	},
 /area/hydroponics)
 "ikb" = (
@@ -64267,9 +64274,6 @@
 /area/crew_quarters)
 "jNb" = (
 /turf/simulated/floor/wood,
-/turf/simulated/floor{
-	icon_state = "siding1"
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "siding5"
@@ -68464,8 +68468,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "warndark"
+	icon_state = "dark"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -68490,8 +68493,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "warndark"
+	icon_state = "dark"
 	},
 /turf/simulated/floor{
 	icon_state = "siding8"
@@ -73119,12 +73121,9 @@
 	},
 /obj/item/weapon/game_kit/random,
 /obj/item/toy/cards,
-/turf/simulated/floor/exodus{
-	icon_state = "bar_floor"
-	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "siding2"
+	dir = 5;
+	icon_state = "bar_floor"
 	},
 /turf/simulated/floor{
 	icon_state = "siding8"
@@ -103184,7 +103183,7 @@ jMb
 cta
 bXG
 bNY
-cdV
+bIW
 Cub
 aaa
 aaa
@@ -126306,7 +126305,7 @@ bEj
 bWf
 bVY
 bGN
-bEa
+cnI
 bOK
 bPx
 bBY
@@ -127077,7 +127076,7 @@ ccQ
 ceU
 ceU
 cnD
-cnI
+coH
 cnM
 asM
 cof
@@ -128875,7 +128874,7 @@ aaa
 aaa
 ajf
 cbZ
-bIW
+akD
 ajf
 aaa
 ajf
@@ -129132,7 +129131,7 @@ aaa
 aaa
 ajf
 ajf
-bIW
+akD
 ajf
 ajf
 ajf
@@ -129389,7 +129388,7 @@ aaa
 aaa
 ajf
 ajf
-bIW
+akD
 ajf
 ajf
 aaa
@@ -129646,7 +129645,7 @@ aaa
 aaa
 ajf
 ajf
-bIW
+akD
 ajf
 aaa
 aaa
@@ -129903,7 +129902,7 @@ aaa
 aaa
 aaa
 ajf
-bIW
+akD
 ajf
 aaa
 aaa
@@ -130160,7 +130159,7 @@ aaa
 aaa
 ajf
 ajf
-bIW
+akD
 ajf
 aaa
 aaa
