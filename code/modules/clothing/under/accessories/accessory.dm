@@ -1,7 +1,7 @@
 /obj/item/clothing/accessory
 	name = "tie"
 	desc = "A neosilk clip-on tie."
-	icon = 'icons/obj/clothing/ties.dmi'
+	icon = 'icons/obj/clothing/accessory.dmi'
 	icon_state = "bluetie"
 	item_state = "" // no inhands
 	item_color = "bluetie"
@@ -15,7 +15,7 @@
 
 /obj/item/clothing/accessory/atom_init()
 	. = ..()
-	inv_overlay = image("icon" = 'icons/obj/clothing/ties_overlay.dmi', "icon_state" = "[item_color ? "[item_color]" : "[icon_state]"]")
+	inv_overlay = image("icon" = 'icons/obj/clothing/accessory_overlay.dmi', "icon_state" = "[item_color ? "[item_color]" : "[icon_state]"]")
 
 //when user attached an accessory to S
 /obj/item/clothing/accessory/proc/on_attached(obj/item/clothing/under/S, mob/user, silent)
@@ -141,7 +141,7 @@
     name = "holy cross"
     desc = "Time to take the Jerusalem!"
     icon_state = "holycross"
-    item_color = "holycross1"
+    item_color = "holycross"
 
 /obj/item/clothing/accessory/medal/conduct
 	name = "distinguished conduct medal"
