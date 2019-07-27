@@ -39,7 +39,7 @@
 #define SOUNDIN_CAN_OPEN  pick('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
 #define SOUNDIN_BEEPSKY   pick('sound/voice/beepsky/god.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/secureday.ogg', 'sound/voice/beepsky/radio.ogg', 'sound/voice/beepsky/insult.ogg', 'sound/voice/beepsky/creep.ogg')
 #define SOUNDIN_BANDAGE   pick('sound/items/bandage.ogg', 'sound/items/bandage2.ogg', 'sound/items/bandage3.ogg')
-/*#define
+#define SOUNDIN_BONEBREAK pick('sound/effects/bonebreak1.ogg', 'sound/effects/bonebreak2.ogg', 'sound/effects/bonebreak3.ogg', 'sound/effects/bonebreak4.ogg')
 #define
 #define
 #define
@@ -77,7 +77,7 @@
 #define
 #define
 #define
-*/
+
 // -----------------------------------------------------
 //     SOUNDIN LIST
 // -----------------------------------------------------
