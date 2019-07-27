@@ -64,7 +64,7 @@
 			if(istype(H:shoes, /obj/item/clothing/shoes) && !H.buckled)
 				var/obj/item/clothing/shoes/O = H.shoes
 
-				var/footstepsound = "footsteps"
+				var/footstepsound = SOUNDIN_FOOTSTEPS
 
 				if(istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
 					if(prob(25))
