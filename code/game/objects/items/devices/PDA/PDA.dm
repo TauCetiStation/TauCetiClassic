@@ -1188,7 +1188,7 @@
 
 				user.show_message("<span class='notice'>Analyzing Results for [C]:</span>")
 				user.show_message("<span class='notice'>&emsp; Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]</span>", 1)
-				user.show_message("<span class='notice'>&emsp; Damage Specifics: [C.getOxyLoss() > 50 ? "<span class='warning'>" : "<span class='notice'>"][C.getOxyLoss()]</span>-[C.getToxLoss() > 50 ? "<span class='warning'>" : "<span class='notice'>"][C.getToxLoss()]</span>-[C.getFireLoss() > 50 ? "<span class='warning'>" : "<span class='notice'>"][C.getFireLoss()]</span>-[C.getBruteLoss() > 50 ? "<span class='warning'>" : "<span class='notice'>"][C.getBruteLoss()]</span></span>", 1)
+				user.show_message("<span class='notice'>&emsp; Damage Specifics: <span class='[C.getOxyLoss() > 50 ? "warning" : "notice"]'>[C.getOxyLoss()]</span>-<span class='[C.getToxLoss() > 50 ? "warning" : "notice"]'>[C.getToxLoss()]</span>-<span class='[C.getFireLoss() > 50 ? "warning" : "notice"]'>[C.getFireLoss()]</span>-<span class='[C.getBruteLoss() > 50 ? "warning" : "notice"]'>[C.getBruteLoss()]</span></span>", 1)
 				user.show_message("<span class='notice'>&emsp; Key: Suffocation/Toxin/Burns/Brute</span>", 1)
 				user.show_message("<span class='notice'>&emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)</span>", 1)
 				if(C.tod && (C.stat == DEAD || (C.status_flags & FAKEDEATH)))
