@@ -175,7 +175,7 @@ ________________________________________________________________________________
 						break
 					lock_suit(U,1)//Check for icons.
 					U.regenerate_icons()
-					to_chat(U, "<span class='notice'>Linking neural-net interface...\nPattern \green <B>GREEN</B>\blue, continuing operation.</span>")
+					to_chat(U, "<span class='notice'>Linking neural-net interface...\nPattern <B>GREEN</B>, continuing operation.</span>")
 				if(4)
 					to_chat(U, "<span class='notice'>VOID-shift device status: <B>ONLINE</B>.\nCLOAK-tech device status: <B>ONLINE</B>.</span>")
 				if(5)
@@ -225,9 +225,9 @@ ________________________________________________________________________________
 					to_chat(U, "<span class='notice'>VOID-shift device status: <B>OFFLINE</B>.\nCLOAK-tech device status: <B>OFFLINE</B>.</span>")
 					cancel_stealth()//Shutdowns stealth.
 				if(4)
-					to_chat(U, "<span class='notice'>Disconnecting neural-net interface...\green<B>Success</B>\blue.</span>")
+					to_chat(U, "<span class='notice'>Disconnecting neural-net interface...<B>Success</B>.</span>")
 				if(5)
-					to_chat(U, "<span class='notice'>Disengaging neural-net interface...\green<B>Success</B>\blue.</span>")
+					to_chat(U, "<span class='notice'>Disengaging neural-net interface...<B>Success</B>.</span>")
 				if(6)
 					to_chat(U, "<span class='notice'>Unsecuring external locking mechanism...\nNeural-net abolished.\nOperation status: <B>FINISHED</B>.</span>")
 					blade_check(U,2)

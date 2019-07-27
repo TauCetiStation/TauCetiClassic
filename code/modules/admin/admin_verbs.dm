@@ -1112,7 +1112,7 @@ var/centcom_barriers_stat = 1
 /obj/effect/landmark/trololo
 	name = "Rickroll"
 	//var/melody = 'sound/Never_Gonna_Give_You_Up.ogg'	//NOPE
-	var/message = "<i>\blue It's not the door you're looking for...</i>"
+	var/message = "<i><span class='notice'>It's not the door you're looking for...</span></i>"
 	var/active = 1
 	var/lchannel = 999
 
