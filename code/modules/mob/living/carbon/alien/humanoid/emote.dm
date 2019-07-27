@@ -40,7 +40,7 @@
 			message = "<B>The [src.name]</B>[pick(" relaxed", " predatory", " excitedly", " joyfully", " maliciously", " menacingly", " suspiciously", "")] growls."
 			m_type = 2
 			if(CAN_MAKE_A_SOUND)
-				playsound(src, "xenomorph_growl", VOL_EFFECTS_MASTER, vary = FALSE)
+				playsound(src, SOUNDIN_XENOMORPH_GROWL, VOL_EFFECTS_MASTER, vary = FALSE)
 
 //  ========== BASIC ==========
 
