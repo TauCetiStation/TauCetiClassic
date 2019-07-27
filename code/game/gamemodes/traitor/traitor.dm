@@ -257,7 +257,7 @@
 	if(text)
 		antagonists_completion += list(list("mode" = "traitor", "html" = text))
 		text = "<div class='block'>[text]</div>"
-		
+
 	return text
 
 
