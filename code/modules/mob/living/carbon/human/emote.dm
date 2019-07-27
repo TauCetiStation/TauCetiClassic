@@ -215,9 +215,9 @@
 						if(message == "coughs up blood!")
 							if(world.time-lastSoundEmote >= 30)
 								if(gender == FEMALE)
-									playsound(src, "fbcough", VOL_EFFECTS_MASTER, null, FALSE)
+									playsound(src, SOUNDIN_FBCOUGH, VOL_EFFECTS_MASTER, null, FALSE)
 								else
-									playsound(src, "mbcough", VOL_EFFECTS_MASTER, null, FALSE)
+									playsound(src, SOUNDIN_MBCOUGH, VOL_EFFECTS_MASTER, null, FALSE)
 								lastSoundEmote = world.time
 					message = "<B>[src]</B> [message ? message : "gasps!"]"
 					m_type = 2

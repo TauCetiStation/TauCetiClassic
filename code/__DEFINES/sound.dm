@@ -47,8 +47,8 @@
 #define SOUNDIN_FEMALEVOMIT pick('sound/voice/mob/fvomit_1.ogg', 'sound/voice/mob/fvomit_2.ogg')
 #define SOUNDIN_FRIGVOMIT   pick('sound/voice/mob/frigvomit_1.ogg', 'sound/voice/mob/frigvomit_2.ogg')
 #define SOUNDIN_MRIGVOMIT   pick('sound/voice/mob/mrigvomit_1.ogg', 'sound/voice/mob/mrigvomit_2.ogg')
-#define
-#define
+#define SOUNDIN_FBCOUGH     pick('sound/voice/mob/fbcough_1.ogg', 'sound/voice/mob/fbcough_2.ogg', 'sound/voice/mob/fbcough_3.ogg')
+#define SOUNDIN_MBCOUGH     pick('sound/voice/mob/mbcough_1.ogg', 'sound/voice/mob/mbcough_2.ogg', 'sound/voice/mob/mbcough_3.ogg')
 #define
 #define
 #define
