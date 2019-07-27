@@ -251,7 +251,7 @@
 							target.adjustBruteLoss(15)
 							if(target.stat)
 								forgetCurrentTarget()
-								playsound(src, "law", VOL_EFFECTS_MASTER, null, FALSE)
+								playsound(src, SOUNDIN_BEEPSKY, VOL_EFFECTS_MASTER, null, FALSE)
 
 				else								// not next to perp
 					var/turf/olddist = get_dist(src, target)
@@ -321,7 +321,7 @@
 					var/mob/living/carbon/mob_carbon = target
 					mob_carbon.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(mob_carbon), SLOT_HANDCUFFED)
 				forgetCurrentTarget()
-				playsound(src, "law", VOL_EFFECTS_MASTER, null, FALSE)
+				playsound(src, SOUNDIN_BEEPSKY, VOL_EFFECTS_MASTER, null, FALSE)
 			else if(mode == SECBOT_ARREST)
 				anchored = FALSE
 				mode = SECBOT_HUNT
