@@ -917,7 +917,7 @@
 					ticker.mode.wizards += src
 					special_role = "Wizard"
 					//ticker.mode.learn_basic_spells(current)
-					to_chat(current, "<B>\red You are the Space Wizard!</B>")
+					to_chat(current, "<B><span class='warning'>You are the Space Wizard!</span></B>")
 					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 					log_admin("[key_name_admin(usr)] has wizard'ed [current].")
 			if("lair")
@@ -1037,7 +1037,7 @@
 				if(!(src in ticker.mode.traitors))
 					ticker.mode.traitors += src
 					special_role = "traitor"
-					to_chat(current, "<B>\red You are a traitor!</B>")
+					to_chat(current, "<B><span class='warning'>You are a traitor!</span></B>")
 					log_admin("[key_name_admin(usr)] has traitor'ed [current].")
 					if (config.objectives_disabled)
 						to_chat(current, "<i>You have been turned into an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>")

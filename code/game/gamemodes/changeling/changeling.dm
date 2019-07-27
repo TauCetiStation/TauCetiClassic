@@ -116,8 +116,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/game_mode/proc/greet_changeling(datum/mind/changeling, you_are=1)
 	if (you_are)
-		to_chat(changeling.current, "<B>\red You are a changeling!</B>")
-	to_chat(changeling.current, "<b>\red Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</b>")
+		to_chat(changeling.current, "<B><span class='warning'>You are a changeling!</span></B>")
+	to_chat(changeling.current, "<b><span class='warning'>Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</span></b>")
 
 	if(config.objectives_disabled)
 		to_chat(changeling.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")

@@ -622,7 +622,7 @@ ________________________________________________________________________________
 						for(var/i, i<4, i++)
 							switch(i)
 								if(0)
-									to_chat(U, "\blue Engaging mode...\n\black<b>CODE NAME</b>: \red <b>KAMIKAZE</b>")
+									to_chat(U, "<span class='notice'>Engaging mode...\n</span><b>CODE NAME</b>: <span class='warning'><b>KAMIKAZE</b></span>")
 								if(1)
 									to_chat(U, "\blue Re-routing power nodes... \nUnlocking limiter...")
 								if(2)

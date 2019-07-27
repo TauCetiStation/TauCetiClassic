@@ -66,8 +66,8 @@
 			"\blue You set the bone in [target]'s [BP.name] in place with \the [tool].")
 		BP.stage = 2
 	else
-		user.visible_message("\blue [user] sets the bone in [target]'s [BP.name]\red in the WRONG place with \the [tool].", \
-			"\blue You set the bone in [target]'s [BP.name]\red in the WRONG place with \the [tool].")
+		user.visible_message("\blue [user] sets the bone in [target]'s [BP.name]<span class='warning'> in the WRONG place with \the [tool].</span>", \
+			"\blue You set the bone in [target]'s [BP.name]<span class='warning'> in the WRONG place with \the [tool].</span>")
 		BP.fracture()
 
 /datum/surgery_step/set_bone/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

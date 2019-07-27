@@ -1235,7 +1235,7 @@
 		force = round((5 + potency / 5), 1)
 
 /obj/item/weapon/grown/deathnettle
-	desc = "The \red glowing \black nettle incites \red<B>rage</B>\black in you just from looking at it!"
+	desc = "The <span class='warning'>glowing</span> nettle incites <span class='warning'><B>rage</B></span> in you just from looking at it!"
 	icon = 'icons/obj/weapons.dmi'
 	name = "deathnettle"
 	icon_state = "deathnettle"

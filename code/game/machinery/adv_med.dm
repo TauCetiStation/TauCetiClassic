@@ -361,7 +361,7 @@
 		if(UNCONSCIOUS)
 			t1 += "Status: <B>Unconscious</B>"
 		else
-			t1 += "Status: <B>\red*dead*</B>"
+			t1 += "Status: <B><span class='warning'>*dead*</span></B>"
 	t1 += additional_info
 	P.info = t1
 	P.name = "[occupant.name]'s scanner report"

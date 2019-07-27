@@ -224,8 +224,8 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 				xeno_list += xeno
 
 		if(assign_mission)
-			new_ninja.mind.store_memory("<B>Mission:</B> \red [assign_mission].<br>")
-			to_chat(new_ninja, "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: \red <B>[assign_mission]</B>")
+			new_ninja.mind.store_memory("<B>Mission:</B> <span class='warning'>[assign_mission].</span><br>")
+			to_chat(new_ninja, "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded <span class='warning'><B>SPACE NINJA</B></span>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: <span class='warning'><B>[assign_mission]</B></span>")
 		else
 			if(xeno_list.len>3)//If there are more than three humanoid xenos on the station, time to get dangerous.
 				//Here we want the ninja to murder all the queens. The other aliens don't really matter.
@@ -373,8 +373,8 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 			ninja_mind.objectives += ninja_objective
 
 			var/directive = generate_ninja_directive(side)
-			to_chat(new_ninja, "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current directive is: \red <B>[directive]</B>")
-			new_ninja.mind.store_memory("<B>Directive:</B> \red [directive]<br>")
+			to_chat(new_ninja, "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded <span class='warning'><B>SPACE NINJA</B></span>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current directive is: <span class='warning'><B>[directive]</B></span>")
+			new_ninja.mind.store_memory("<B>Directive:</B> <span class='warning'>[directive]</span><br>")
 
 			var/obj_count = 1
 			to_chat(new_ninja, "\blue Your current objectives:")
@@ -737,7 +737,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		U.incorporeal_move = 0
 		kamikaze = 0
 		k_unlock = 0
-		to_chat(U, "\blue Disengaging mode...\n\black<b>CODE NAME</b>: \red <b>KAMIKAZE</b>")
+		to_chat(U, "\blue Disengaging mode...\n\black<b>CODE NAME</b>: <span class='warning'><b>KAMIKAZE</b></span>")
 
 //=======//AI VERBS//=======//
 

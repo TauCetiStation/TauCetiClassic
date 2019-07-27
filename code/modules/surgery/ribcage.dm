@@ -255,7 +255,7 @@
 				IO.damage = 0
 			else
 				user.visible_message("\blue [user] pokes [target]'s mechanical [IO.name] with [tool_name]...", \
-				"\blue You poke [target]'s mechanical [IO.name] with [tool_name]... \red For no effect, since it's robotic.")
+				"\blue You poke [target]'s mechanical [IO.name] with [tool_name]... <span class='warning'>For no effect, since it's robotic.</span>")
 
 /datum/surgery_step/ribcage/fix_chest_internal/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
