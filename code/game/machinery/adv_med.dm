@@ -145,30 +145,6 @@
 /obj/machinery/body_scanconsole/atom_init_late()
 	connected = locate(/obj/machinery/bodyscanner, get_step(src, WEST))
 
-/*
-
-/obj/machinery/body_scanconsole/process() //not really used right now
-	if(stat & (NOPOWER|BROKEN))
-		return
-	//use_power(250) // power stuff
-
-//	var/mob/M //occupant
-//	if (!( src.status )) //remove this
-//		return
-//	if ((src.connected && src.connected.occupant)) //connected & occupant ok
-//		M = src.connected.occupant
-//	else
-//		if (istype(M, /mob))
-//		//do stuff
-//		else
-///			src.temphtml = "Process terminated due to lack of occupant in scanning chamber."
-//			src.status = null
-//	src.updateDialog()
-//	return
-
-*/
-
-
 /obj/machinery/body_scanconsole/ui_interact(mob/user)
 	if(!ishuman(connected.occupant))
 		to_chat(user, "\red This device can only scan compatible lifeforms.")

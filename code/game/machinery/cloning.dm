@@ -382,21 +382,10 @@
 		src.mess = 0
 		gibs(src.loc)
 		src.icon_state = "pod_0"
-
-		/*
-		for(var/obj/O in src)
-			O.loc = src.loc
-		*/
 		return
 
 	if (!(src.occupant))
 		return
-
-	/*
-	for(var/obj/O in src)
-		O.loc = src.loc
-	*/
-
 	if (src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
@@ -497,11 +486,5 @@
 	<i>A good diskette is a great way to counter aforementioned genetic drift!</i><br>
 	<br>
 	<font size=1>This technology produced under license from Thinktronic Systems, LTD.</font>"}
-
-//SOME SCRAPS I GUESS
-/* EMP grenade/spell effect
-		if(istype(A, /obj/machinery/clonepod))
-			A:malfunction()
-*/
 
 #undef CLONE_INITIAL_DAMAGE
