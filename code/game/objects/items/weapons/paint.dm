@@ -20,8 +20,8 @@ var/global/list/cached_icons = list()
 /obj/item/weapon/reagent_containers/glass/paint/afterattack(turf/simulated/target, mob/user, proximity)
 	if(!proximity)
 		return
-	if(istype(target) && reagents.total_volume > 5)
-		visible_message("<span class='notice'>[target] has been splashed by [user] with [src].</span>")
+	if(istype(target, /turf/simulated/floor) && reagents.total_volume > 5)
+		user.visible_message("<span class='notice'>[target] has been splashed by [user] with [src].</span>")
 		reagents.reaction(target, TOUCH)
 		reagents.remove_any(5)
 	else
