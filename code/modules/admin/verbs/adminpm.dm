@@ -55,7 +55,7 @@
 	if(reply_type != MHELP_REPLY)
 		cmd_admin_pm(whom, msg)
 	else
-		if(!holder && mob.mind && mob.mind.special_role) //Mentors are just a players, so they shan't know gamemode from these ones who toggles all role prefs to yes
+		if(!holder && mob.mind && mob.mind.special_role && !(C in mentors)) //Mentors are just a players, so they shan't know gamemode from these ones who toggles all role prefs to yes
 			to_chat(src, "<font color='red'>You cannot ask mentors for help while being antag. File a ticket instead if you wish question this to admins.</font>")
 			return
 		cmd_mentor_pm(whom, msg)
@@ -179,8 +179,8 @@
 		return
 
 	if(length(msg) > 400) // TODO: if message length is over 400, divide it up into seperate messages, the message length restriction is based on IRC limitations.  Probably easier to do this on the bots ends.
-		to_chat(src, "\red Your message was not sent because it was more then 400 characters find your message below for ease of copy/pasting")
-		to_chat(src, "\blue [msg]")
+		to_chat(src, "<span class='warning'>Your message was not sent because it was more then 400 characters find your message below for ease of copy/pasting</span>")
+		to_chat(src, "<span class='notice'>[msg]</span>")
 		return
 
 	to_chat(src, "<font color='blue'>IRC PM to-<b>IRC-Admins</b>: [msg]</font>")
@@ -190,5 +190,5 @@
 		if(X == src)
 			continue
 		if(X.holder.rights & R_ADMIN)
-			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC-Admins:</B> \blue [msg]</font>")
+			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC-Admins:</B> <span class='notice'>[msg]</span></font>")
 

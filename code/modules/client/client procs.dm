@@ -101,17 +101,21 @@ var/list/blacklisted_builds = list(
 
 	..()	//redirect to hsrc.Topic()
 
+/client/Destroy()
+	..() // Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
+	return QDEL_HINT_HARDDEL_NOW
+
 /client/proc/handle_spam_prevention(message, mute_type)
 	if(global_message_cooldown && (world.time < last_message_time + 5))
 		return 1
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			to_chat(src, "\red You have exceeded the spam filter limit for identical messages. An auto-mute was applied.")
+			to_chat(src, "<span class='warning'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>")
 			cmd_admin_mute(src.mob, mute_type, 1)
 			return 1
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			to_chat(src, "\red You are nearing the spam filter limit for identical messages.")
+			to_chat(src, "<span class='warning'>You are nearing the spam filter limit for identical messages.</span>")
 			return 0
 	else
 		last_message_time = world.time
@@ -150,7 +154,7 @@ var/list/blacklisted_builds = list(
 		src.preload_rsc = pick(config.resource_urls)
 	else src.preload_rsc = 1 // If config.resource_urls is not set, preload like normal.
 
-	to_chat(src, "\red If the title screen is black, resources are still downloading. Please be patient until the title screen appears.")
+	to_chat(src, "<span class='warning'>If the title screen is black, resources are still downloading. Please be patient until the title screen appears.</span>")
 
 
 	clients += src

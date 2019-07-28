@@ -182,7 +182,7 @@
 	frustration = 0
 	anchored = FALSE
 
-/obj/machinery/bot/secbot/Emag(mob/user)
+/obj/machinery/bot/secbot/emag_act(mob/user)
 	..()
 	if(open && !locked)
 		if(user)
@@ -608,7 +608,7 @@
 
 /obj/machinery/bot/secbot/explode()
 	walk_to(src,0)
-	visible_message("\red <B>[src] blows apart!</B>", 1)
+	visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)

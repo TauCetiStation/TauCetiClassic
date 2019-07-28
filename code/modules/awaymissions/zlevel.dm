@@ -3,7 +3,7 @@
 		return
 
 	var/list/potentialRandomZlevels = list()
-	to_chat(world, "\red \b Searching for away missions...")
+	to_chat(world, "<span class='warning'><b>Searching for away missions...</b></span>")
 	var/list/Lines = file2list("maps/RandomZLevels/fileList.txt")
 	if(!Lines.len)	return
 	for (var/t in Lines)
@@ -35,15 +35,15 @@
 
 
 	if(potentialRandomZlevels.len)
-		to_chat(world, "\red \b Loading away mission...")
+		to_chat(world, "<span class='warning'><b>Loading away mission...</b></span>")
 
 		var/map = pick(potentialRandomZlevels)
 		var/file = file(map)
 		if(isfile(file))
 			maploader.load_map(file)
 
-		to_chat(world, "\red \b Away mission loaded.")
+		to_chat(world, "<span class='warning'><b>Away mission loaded.</b></span>")
 
 	else
-		to_chat(world, "\red \b No away missions found.")
+		to_chat(world, "<span class='warning'><b>No away missions found.</b></span>")
 		return

@@ -167,10 +167,6 @@
 		addstack.use(amount)
 		updateUsrDialog()
 		return
-	else if (istype(O, /obj/item/weapon/card/emag))
-		emagged = 1
-		user.SetNextMove(CLICK_CD_INTERACT)
-		emp_act(1)
 	else if(!active)
 
 		if(exchange_parts(user, O))
@@ -198,6 +194,14 @@
 				to_chat(user, "<span class='notice'>You close the access panel.</span>")
 		else if(iscrowbar(O) && panel_open)
 			default_deconstruction_crowbar(O)
+
+/obj/machinery/power/port_gen/pacman/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	emagged = 1
+	user.SetNextMove(CLICK_CD_INTERACT)
+	emp_act(1)
+	return TRUE
 
 /obj/machinery/power/port_gen/pacman/ui_interact(mob/user)
 	if ((get_dist(src, user) > 1) && !issilicon(user) && !isobserver(user))

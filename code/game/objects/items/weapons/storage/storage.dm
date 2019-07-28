@@ -146,7 +146,7 @@
 	if(can_hold.len)
 		var/ok = FALSE
 		for(var/A in can_hold)
-			if(istype(W, text2path(A) ))
+			if(istype(W, A))
 				ok = TRUE
 				break
 		if(!ok)
@@ -157,7 +157,7 @@
 			return FALSE
 
 	for(var/A in cant_hold) //Check for specific items which this container can't hold.
-		if(istype(W, text2path(A) ))
+		if(istype(W, A))
 			if(!stop_messages)
 				to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
 			return FALSE
@@ -274,7 +274,7 @@
 	..()
 
 	if(isrobot(user))
-		to_chat(user, "\blue You're a robot. No.")
+		to_chat(user, "<span class='notice'>You're a robot. No.</span>")
 		return //Robots can't interact with storage items. FALSE
 
 	if(!can_be_inserted(W))
@@ -287,14 +287,14 @@
 		var/obj/item/weapon/tray/T = W
 		if(T.calc_carry() > 0)
 			if(prob(85))
-				to_chat(user, "\red The tray won't fit in [src].")
+				to_chat(user, "<span class='warning'>The tray won't fit in [src].</span>")
 				return FALSE
 			else
 				W.loc = user.loc
 				if ((user.client && user.s_active != src))
 					user.client.screen -= W
 				W.dropped(user)
-				to_chat(user, "\red God damnit!")
+				to_chat(user, "<span class='warning'>God damnit!</span>")
 
 	if(istype(W, /obj/item/weapon/packageWrap) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
 		return FALSE
@@ -457,9 +457,9 @@
 	max_w_class = 0
 	max_storage_space = 0
 	for(var/obj/item/I in src)
-		var/texttype = "[I.type]"
-		if(!(texttype in can_hold))
-			can_hold += texttype
+		var/type_ = I.type
+		if(!(type_ in can_hold))
+			can_hold += type_
 		max_w_class = max(I.w_class, max_w_class)
 		max_storage_space += I.get_storage_cost()
 

@@ -301,7 +301,7 @@ var/global/list/frozen_items = list()
 				insert(M)
 				// Book keeping!
 				log_admin("[key_name_admin(M)] has entered a stasis pod.")
-				message_admins("\blue [key_name_admin(M)] has entered a stasis pod.")
+				message_admins("<span class='notice'>[key_name_admin(M)] has entered a stasis pod.</span>")
 
 				//Despawning occurs when process() is called with an occupant without a client.
 				add_fingerprint(M)

@@ -88,9 +88,6 @@
 
 /obj/machinery/pile_ripper/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if (istype(I, /obj/item/weapon/card/emag))
-		emag_act(user)
-		user.SetNextMove(CLICK_CD_INTERACT)
 
 	if(default_deconstruction_screwdriver(user, "grinder-bOpen", "grinder-b0", I))
 		return
@@ -107,14 +104,16 @@
 	else
 		default_deconstruction_crowbar(I)
 
-/obj/machinery/pile_ripper/proc/emag_act(mob/user)
-	if(!emagged)
-		emagged = 1
-		if(safety_mode)
-			safety_mode = 0
-			update_icon()
-		playsound(src, "sparks", VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>")
+/obj/machinery/pile_ripper/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	emagged = 1
+	if(safety_mode)
+		safety_mode = 0
+		update_icon()
+	playsound(src, "sparks", VOL_EFFECTS_MASTER)
+	to_chat(user, "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>")
+	return TRUE
 
 /obj/machinery/pile_ripper/update_icon()
 	..()

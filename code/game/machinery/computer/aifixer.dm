@@ -4,7 +4,7 @@
 	icon_state = "ai-fixer"
 	light_color = "#a97faa"
 	circuit = /obj/item/weapon/circuitboard/aifixer
-	req_access = list(access_captain, access_robotics, access_heads)
+	req_access = list(access_heads)
 	var/mob/living/silicon/ai/occupier = null
 	var/active = 0
 	circuit = /obj/item/weapon/circuitboard/aifixer

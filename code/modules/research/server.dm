@@ -177,7 +177,7 @@
 		return
 
 	if(!src.allowed(usr) && !emagged)
-		to_chat(usr, "\red You do not have the required access level")
+		to_chat(usr, "<span class='warning'>You do not have the required access level</span>")
 		return FALSE
 
 	if(href_list["main"])
@@ -291,16 +291,17 @@
 	onclose(user, "server_control")
 
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/weapon/D, mob/user)
-	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
+	..()
+	src.updateUsrDialog()
+
+/obj/machinery/computer/rdservercontrol/emag_act(mob/user)
+	if(!emagged)
 		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 		emagged = 1
 		user.SetNextMove(CLICK_CD_INTERACT)
-		to_chat(user, "\blue You you disable the security protocols")
-	else
-		..()
-	src.updateUsrDialog()
-	return
-
+		to_chat(user, "<span class='notice'>You you disable the security protocols</span>")
+		return TRUE
+	return FALSE
 
 /obj/machinery/r_n_d/server/robotics
 	name = "Robotics R&D Server"

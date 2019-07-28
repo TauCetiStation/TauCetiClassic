@@ -98,13 +98,15 @@
 				locked = !locked
 				to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the panel.</span>")
 		return
-	else if(istype(W, /obj/item/weapon/card/emag) && !emagged)
-		to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")
-		emagged = 1
-		locked = 0
-		ailock = 0
-		return
 	return ..()
+/obj/machinery/turretid/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")
+	emagged = 1
+	locked = 0
+	ailock = 0
+	return TRUE
 
 /obj/machinery/turretid/ui_interact(mob/user)
 	if(isLocked(user))

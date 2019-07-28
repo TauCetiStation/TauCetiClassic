@@ -68,13 +68,13 @@
 				if (WT.use(0,user))
 					user.visible_message("[user] dissassembles the windoor assembly.", "You start to dissassemble the windoor assembly.")
 					if(WT.use_tool(src, user, 40, volume = 50))
-						to_chat(user, "\blue You dissasembled the windoor assembly!")
+						to_chat(user, "<span class='notice'>You dissasembled the windoor assembly!</span>")
 						new /obj/item/stack/sheet/rglass(loc, 5)
 						if(secure)
 							new /obj/item/stack/rods(loc, 4)
 						qdel(src)
 				else
-					to_chat(user, "\blue You need more welding fuel to dissassemble the windoor assembly.")
+					to_chat(user, "<span class='notice'>You need more welding fuel to dissassemble the windoor assembly.</span>")
 					return
 
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
@@ -83,7 +83,7 @@
 				if(W.use_tool(src, user, 40, volume = 100))
 					if(src.anchored)
 						return
-					to_chat(user, "\blue You've secured the windoor assembly!")
+					to_chat(user, "<span class='notice'>You've secured the windoor assembly!</span>")
 					src.anchored = 1
 					if(src.secure)
 						src.name = "Secure Anchored Windoor Assembly"
@@ -96,7 +96,7 @@
 				if(W.use_tool(src, user, 40, volume = 100))
 					if(!src.anchored)
 						return
-					to_chat(user, "\blue You've unsecured the windoor assembly!")
+					to_chat(user, "<span class='notice'>You've unsecured the windoor assembly!</span>")
 					src.anchored = 0
 					if(src.secure)
 						src.name = "Secure Windoor Assembly"
@@ -107,14 +107,14 @@
 			else if(istype(W, /obj/item/stack/rods) && !secure)
 				var/obj/item/stack/rods/R = W
 				if(R.get_amount() < 4)
-					to_chat(user, "\red You need more rods to do this.")
+					to_chat(user, "<span class='warning'>You need more rods to do this.</span>")
 					return
-				to_chat(user, "\blue You start to reinforce the windoor with rods.")
+				to_chat(user, "<span class='notice'>You start to reinforce the windoor with rods.</span>")
 				if(W.use_tool(src, user, 40, amount = 4, volume = 100))
 					if(!secure)
 						return
 
-					to_chat(user, "\blue You reinforce the windoor.")
+					to_chat(user, "<span class='notice'>You reinforce the windoor.</span>")
 					src.secure = 1
 					if(src.anchored)
 						src.name = "Secure Anchored Windoor Assembly"
@@ -128,7 +128,7 @@
 				if(CC.use_tool(src, user, 40, amount = 1, volume = 100))
 					if(!src.anchored || src.state != "01")
 						return
-					to_chat(user, "\blue You wire the windoor!")
+					to_chat(user, "<span class='notice'>You wire the windoor!</span>")
 					src.state = "02"
 					if(src.secure)
 						src.name = "Secure Wired Windoor Assembly"
@@ -146,7 +146,7 @@
 					if(src.state != "02")
 						return
 
-					to_chat(user, "\blue You cut the windoor wires.!")
+					to_chat(user, "<span class='notice'>You cut the windoor wires.!</span>")
 					new /obj/item/stack/cable_coil/random(get_turf(user), 1)
 					src.state = "01"
 					if(src.secure)
@@ -179,7 +179,7 @@
 				if(W.use_tool(src, user, 40, volume = 100))
 					if(!electronics)
 						return
-					to_chat(user, "\blue You've removed the airlock electronics!")
+					to_chat(user, "<span class='notice'>You've removed the airlock electronics!</span>")
 					var/obj/item/weapon/airlock_electronics/ae = electronics
 					ae = electronics
 					electronics = null
@@ -198,7 +198,7 @@
 			//Crowbar to complete the assembly, Step 7 complete.
 			else if(iscrowbar(W))
 				if(!src.electronics)
-					to_chat(usr, "\red The assembly is missing electronics.")
+					to_chat(usr, "<span class='warning'>The assembly is missing electronics.</span>")
 					return
 				usr << browse(null, "window=windoor_access")
 				user.visible_message("[user] pries the windoor into the frame.", "You start prying the windoor into the frame.")
@@ -207,7 +207,7 @@
 						return
 
 					density = 1 //Shouldn't matter but just incase
-					to_chat(user, "\blue You finish the windoor!")
+					to_chat(user, "<span class='notice'>You finish the windoor!</span>")
 
 					if(secure)
 						var/obj/machinery/door/window/brigdoor/windoor = new /obj/machinery/door/window/brigdoor(src.loc)
@@ -221,7 +221,7 @@
 						windoor.density = 0
 
 						if(src.electronics.one_access)
-							windoor.req_access = null
+							windoor.req_access = list()
 							windoor.req_one_access = src.electronics.conf_access
 						else
 							windoor.req_access = src.electronics.conf_access
@@ -243,7 +243,7 @@
 						windoor.density = 0
 
 						if(src.electronics.one_access)
-							windoor.req_access = null
+							windoor.req_access = list()
 							windoor.req_one_access = src.electronics.conf_access
 						else
 							windoor.req_access = src.electronics.conf_access

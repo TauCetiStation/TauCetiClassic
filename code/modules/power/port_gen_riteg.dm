@@ -9,13 +9,7 @@
 	var/rad_range = 1
 
 /obj/machinery/power/port_gen/riteg/attackby(obj/item/O, mob/user, params)
-
-	if (istype(O, /obj/item/weapon/card/emag))
-		emagged = 1
-		user.SetNextMove(CLICK_CD_INTERACT)
-		emp_act(1)
-
-	else if(!active)
+	if(!active)
 
 		if(iswrench(O))
 
@@ -29,6 +23,13 @@
 				anchored = 0
 
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
+
+/obj/machinery/power/port_gen/riteg/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	emagged = 1
+	emp_act(1)
+	return TRUE
 
 /obj/machinery/power/port_gen/riteg/ui_interact(mob/user)
 	if ((get_dist(src, user) > 1) && !issilicon(user) && !isobserver(user))
