@@ -4,7 +4,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "fire_extinguisher0"
 	item_state = "fire_extinguisher"
-	hitsound = list('sound/weapons/smash.ogg')
+	hitsound = 'sound/weapons/smash.ogg'
 	flags = CONDUCT
 	throwforce = 10
 	w_class = ITEM_SIZE_NORMAL
@@ -25,7 +25,7 @@
 	desc = "A light and compact fibreglass-framed model fire extinguisher."
 	icon_state = "miniFE0"
 	item_state = "miniFE"
-	hitsound = list()	//it is much lighter, after all.
+	hitsound = null	//it is much lighter, after all.
 	throwforce = 2
 	w_class = ITEM_SIZE_SMALL
 	force = 3.0

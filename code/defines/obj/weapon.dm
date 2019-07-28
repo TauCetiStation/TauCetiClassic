@@ -10,7 +10,7 @@
 	throw_range = 4
 	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("called", "rang")
-	hitsound = list('sound/weapons/ring.ogg')
+	hitsound = 'sound/weapons/ring.ogg'
 
 /obj/item/weapon/rsp
 	name = "\improper Rapid-Seed-Producer (RSP)"
@@ -289,7 +289,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
 	force = 3.0
-	hitsound = list('sound/effects/magic.ogg')
+	hitsound = 'sound/effects/magic.ogg'
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5

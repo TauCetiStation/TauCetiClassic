@@ -10,7 +10,7 @@
 	var/health = null
 	var/burn_point = null
 	var/burning = null
-	var/list/hitsound = list()
+	var/hitsound = null
 	var/usesound = null
 	var/wet = 0
 	var/w_class = ITEM_SIZE_NORMAL
