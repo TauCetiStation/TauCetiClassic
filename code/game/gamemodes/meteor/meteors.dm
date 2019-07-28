@@ -52,9 +52,8 @@
 				endy = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE)
 				endx = world.maxx - TRANSITIONEDGE
 
-		var/picked_zlevel = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
-		pickedstart = locate(startx, starty, picked_zlevel)
-		pickedgoal = locate(endx, endy, picked_zlevel)
+		pickedstart = locate(startx, starty, ZLEVEL_STATION)
+		pickedgoal = locate(endx, endy, ZLEVEL_STATION)
 		max_i--
 		if(max_i <= 0)
 			return

@@ -98,7 +98,12 @@
 // cell: insert it
 // other: chance to knock rider off bot
 /obj/machinery/bot/mulebot/attackby(obj/item/I, mob/user)
-	if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
+	if(istype(I,/obj/item/weapon/card/emag))
+		locked = !locked
+		to_chat(user, "\blue You [locked ? "lock" : "unlock"] the mulebot's controls!")
+		flick("mulebot-emagged", src)
+		playsound(src, 'sound/effects/sparks1.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	else if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
 		var/obj/item/weapon/stock_parts/cell/C = I
 		user.drop_item()
 		C.loc = src
@@ -140,12 +145,6 @@
 		..()
 	return
 
-/obj/machinery/bot/mulebot/emag_act(mob/user)
-	locked = !locked
-	to_chat(user, "\blue You [locked ? "lock" : "unlock"] the mulebot's controls!")
-	flick("mulebot-emagged", src)
-	playsound(src, 'sound/effects/sparks1.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	return TRUE
 
 /obj/machinery/bot/mulebot/ex_act(severity)
 	unload(0)

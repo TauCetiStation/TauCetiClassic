@@ -155,6 +155,41 @@
 		to_chat(user, "The machine is hermetically sealed. You can't open the case.")
 		return
 
+	else if (istype(W, /obj/item/weapon/card/emag))
+
+		if(!client || stat == DEAD)
+			to_chat(user, "\red There's not much point subverting this heap of junk.")
+			return
+
+		if(emagged)
+			to_chat(src, "\red [user] attempts to load subversive software into you, but your hacked subroutined ignore the attempt.")
+			to_chat(user, "\red You attempt to subvert [src], but the sequencer has no effect.")
+			return
+		user.SetNextMove(CLICK_CD_MELEE)
+		to_chat(user, "\red You swipe the sequencer across [src]'s interface and watch its eyes flicker.")
+		to_chat(src, "\red You feel a sudden burst of malware loaded into your execute-as-root buffer. Your tiny brain methodically parses, loads and executes the script.")
+
+		var/obj/item/weapon/card/emag/emag = W
+		emag.uses--
+
+		message_admins("[key_name_admin(user)] emagged drone [key_name_admin(src)].  Laws overridden.")
+		log_game("[key_name(user)] emagged drone [key_name(src)].  Laws overridden.")
+		var/time = time2text(world.realtime,"hh:mm:ss")
+		lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
+
+		emagged = 1
+		lawupdate = 0
+		connected_ai = null
+		clear_supplied_laws()
+		clear_inherent_laws()
+		laws = new /datum/ai_laws/syndicate_override
+		set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
+
+		to_chat(src, "<b>Obey these laws:</b>")
+		laws.show_laws(src)
+		to_chat(src, "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands.")
+		return
+
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 
 		if(stat == DEAD)
@@ -190,37 +225,6 @@
 		return
 
 	..()
-
-/mob/living/silicon/robot/drone/emag_act(mob/user)
-	if(!client || stat == DEAD)
-		to_chat(user, "\red There's not much point subverting this heap of junk.")
-		return FALSE
-
-	if(emagged)
-		to_chat(src, "\red [user] attempts to load subversive software into you, but your hacked subroutined ignore the attempt.")
-		to_chat(user, "\red You attempt to subvert [src], but the sequencer has no effect.")
-		return FALSE
-
-	to_chat(user, "\red You swipe the sequencer across [src]'s interface and watch its eyes flicker.")
-	to_chat(src, "\red You feel a sudden burst of malware loaded into your execute-as-root buffer. Your tiny brain methodically parses, loads and executes the script.")
-
-	message_admins("[key_name_admin(user)] emagged drone [key_name_admin(src)].  Laws overridden.")
-	log_game("[key_name(user)] emagged drone [key_name(src)].  Laws overridden.")
-	var/time = time2text(world.realtime,"hh:mm:ss")
-	lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-
-	emagged = 1
-	lawupdate = 0
-	connected_ai = null
-	clear_supplied_laws()
-	clear_inherent_laws()
-	laws = new /datum/ai_laws/syndicate_override
-	set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
-
-	to_chat(src, "<b>Obey these laws:</b>")
-	laws.show_laws(src)
-	to_chat(src, "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands.")
-	return TRUE
 
 //DRONE LIFE/DEATH
 

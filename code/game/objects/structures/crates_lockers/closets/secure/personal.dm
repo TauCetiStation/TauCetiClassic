@@ -66,28 +66,23 @@
 				src.desc = "Owned by [I.registered_name]."
 		else
 			to_chat(user, "\red Access Denied")
-	else if((istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/twohanded/dualsaber)) && !src.broken)
-		emag_act(user)
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-		spark_system.set_up(5, 0, src.loc)
-		spark_system.start()
-		playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
-		playsound(src, "sparks", VOL_EFFECTS_MASTER)
-		for(var/mob/O in viewers(user, 3))
-			O.show_message("\blue The locker has been sliced open by [user] with an [W.name]!", 1, "\red You hear metal being sliced and sparks flying.", 2)
+	else if( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/twohanded/dualsaber)) && !src.broken)
+		broken = 1
+		locked = 0
+		user.SetNextMove(CLICK_CD_MELEE)
+		desc = "It appears to be broken."
+		icon_state = src.icon_broken
+		if(istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/twohanded/dualsaber))
+			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+			spark_system.set_up(5, 0, src.loc)
+			spark_system.start()
+			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, "sparks", VOL_EFFECTS_MASTER)
+			for(var/mob/O in viewers(user, 3))
+				O.show_message("\blue The locker has been sliced open by [user] with an [W.name]!", 1, "\red You hear metal being sliced and sparks flying.", 2)
 	else
 		to_chat(user, "\red Access Denied")
 	return
-
-/obj/structure/closet/secure_closet/personal/emag_act(mob/user)
-	if(src.broken)
-		return FALSE
-	broken = 1
-	locked = 0
-	user.SetNextMove(CLICK_CD_MELEE)
-	desc = "It appears to be broken."
-	icon_state = src.icon_broken
-	return TRUE
 
 /obj/structure/closet/secure_closet/personal/verb/reset()
 	set src in oview(1) // One square distance

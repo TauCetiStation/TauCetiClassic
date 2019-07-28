@@ -163,6 +163,72 @@ var/bomb_set
 						//anchored = 0
 						removal_stage = 5
 				return
+			/*if(0)
+				if(iswelder(O))
+
+					var/obj/item/weapon/weldingtool/WT = O
+					if(!WT.isOn()) return
+					if (WT.get_fuel() < 5) // uses up 5 fuel.
+						to_chat(user, "\red You need more fuel to complete this task.")
+						return
+
+					user.visible_message("[user] starts cutting loose the anchoring bolt covers on [src].", "You start cutting loose the anchoring bolt covers with [O]...")
+
+					if(do_after(user,40))
+						if(!src || !user || !WT.use(5, user)) return
+						user.visible_message("[user] cuts through the bolt covers on [src].", "You cut through the bolt cover.")
+						removal_stage = 1
+				return
+
+			if(1)
+				if(iscrowbar(O))
+					user.visible_message("[user] starts forcing open the bolt covers on [src].", "You start forcing open the anchoring bolt covers with [O]...")
+
+					if(do_after(user,15))
+						if(!src || !user) return
+						user.visible_message("[user] forces open the bolt covers on [src].", "You force open the bolt covers.")
+						removal_stage = 2
+				return
+
+			if(2)
+				if(iswelder(O))
+
+					var/obj/item/weapon/weldingtool/WT = O
+					if(!WT.isOn()) return
+					if (WT.get_fuel() < 5) // uses up 5 fuel.
+						to_chat(user, "\red You need more fuel to complete this task.")
+						return
+
+					user.visible_message("[user] starts cutting apart the anchoring system sealant on [src].", "You start cutting apart the anchoring system's sealant with [O]...")
+
+					if(do_after(user,40))
+						if(!src || !user || !WT.use(5, user)) return
+						user.visible_message("[user] cuts apart the anchoring system sealant on [src].", "You cut apart the anchoring system's sealant.")
+						removal_stage = 3
+				return
+
+			if(3)
+				if(iswrench(O))
+
+					user.visible_message("[user] begins unwrenching the anchoring bolts on [src].", "You begin unwrenching the anchoring bolts...")
+
+					if(do_after(user,50))
+						if(!src || !user) return
+						user.visible_message("[user] unwrenches the anchoring bolts on [src].", "You unwrench the anchoring bolts.")
+						removal_stage = 4
+				return
+
+			if(4)
+				if(iscrowbar(O))
+
+					user.visible_message("[user] begins lifting [src] off of the anchors.", "You begin lifting the device off the anchors...")
+
+					if(do_after(user,80))
+						if(!src || !user) return
+						user.visible_message("[user] crowbars [src] off of the anchors. It can now be moved.", "You jam the crowbar under the nuclear device and lift it off its anchors. You can now move it!")
+						anchored = 0
+						removal_stage = 5
+				return*/
 	..()
 
 /obj/machinery/nuclearbomb/attack_hand(mob/user)
@@ -175,7 +241,7 @@ var/bomb_set
 			to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
 			return 1
 		var/turf/current_location = get_turf(usr)//What turf is the user on?
-		if(is_centcom_level(current_location.z) && user.mind.special_role == "Syndicate")//If turf was not found or they're on z level 2.
+		if(current_location.z == ZLEVEL_CENTCOMM && user.mind.special_role == "Syndicate")//If turf was not found or they're on z level 2.
 			to_chat(user, "<span class = 'red'>It's not the best idea to plant a bomb on your own base</span>")
 			return
 	else if (deployable)
@@ -358,7 +424,7 @@ var/bomb_set
 
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
-	if( bomb_location && is_station_level(bomb_location.z) )
+	if( bomb_location && (bomb_location.z == ZLEVEL_STATION) )
 		if( (bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)) )
 			off_station = 1
 		else
@@ -372,7 +438,7 @@ var/bomb_set
 		if(ticker.mode && ticker.mode.name == "nuclear emergency")
 			var/obj/machinery/computer/syndicate_station/syndie_location = locate(/obj/machinery/computer/syndicate_station)
 			if(syndie_location)
-				ticker.mode:syndies_didnt_escape = is_station_level(syndie_location.z)
+				ticker.mode:syndies_didnt_escape = (syndie_location.z > ZLEVEL_STATION ? 0 : 1)	//muskets will make me change this, but it will do for now
 			ticker.mode:nuke_off_station = off_station
 		ticker.station_explosion_cinematic(off_station,null)
 		if(ticker.mode)
@@ -461,7 +527,7 @@ var/bomb_set
 
 /obj/item/weapon/disk/nuclear/process()
 	var/turf/disk_loc = get_turf(src)
-	if(!is_centcom_level(disk_loc.z) && !is_station_level(disk_loc.z))
+	if(disk_loc.z > ZLEVEL_CENTCOM)
 		to_chat(get(src, /mob), "<span class='danger'>You can't help but feel that you just lost something back there...</span>")
 		qdel(src)
 

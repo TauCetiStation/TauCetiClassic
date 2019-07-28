@@ -402,7 +402,7 @@ var/list/advance_cures = 	list(
 			AD.Refresh()
 
 		for(var/mob/living/carbon/human/H in shuffle(human_list))
-			if(H.stat == DEAD || !is_station_level(H.z))
+			if(H.stat == DEAD || H.z != ZLEVEL_STATION)
 				continue
 			if(!H.has_disease(D))
 				H.contract_disease(D, 1)

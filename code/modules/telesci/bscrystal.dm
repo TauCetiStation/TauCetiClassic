@@ -21,7 +21,7 @@
 		qdel(src)
 
 /obj/item/bluespace_crystal/proc/blink_mob(mob/living/L)
-	if(istype(L) && !is_centcom_level(L.z))
+	if(istype(L) && L.z != ZLEVEL_CENTCOMM)
 		do_teleport(L, get_turf(L), blink_range, asoundin = 'sound/effects/phasein.ogg')
 		return TRUE
 	return FALSE

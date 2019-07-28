@@ -17,7 +17,7 @@
 
 	area_type = /area
 	protected_areas = list(/area/space)
-	target_ztrait = ZTRAIT_STATION
+	target_z = ZLEVEL_STATION
 
 	overlay_layer = 2.1 //Covers floors only
 	immunity_type = "lava"
@@ -51,7 +51,7 @@
 	end_duration = 0
 
 	area_type = /area
-	target_ztrait = ZTRAIT_STATION
+	target_z = ZLEVEL_STATION
 
 /datum/weather/advanced_darkness/update_areas()
 	for(var/V in impacted_areas)
@@ -88,7 +88,7 @@
 	end_sound = 'sound/ambience/specific/ash_storm_end.ogg'
 	end_overlay = "light_ash"
 	area_type = /area/awaymission/junkyard
-	target_ztrait = ZTRAIT_JUNKYARD
+	target_z = ZLEVEL_JUNKYARD
 
 	immunity_type = "ash"
 	var/spawn_tornadoes = 1
@@ -160,7 +160,7 @@
 
 	area_type = /area
 	protected_areas = list(/area/maintenance, /area/crew_quarters, /area/storage/emergency, /area/storage/emergency2, /area/storage/emergency3, /area/storage/tech)
-	target_ztrait = ZTRAIT_STATION
+	target_z = ZLEVEL_STATION
 
 	immunity_type = "rad"
 
@@ -232,7 +232,7 @@
 	end_sound = 'sound/ambience/specific/acidrain_end.ogg'
 	additional_action = TRUE
 	area_type = /area/awaymission/junkyard
-	target_ztrait = ZTRAIT_JUNKYARD
+	target_z = ZLEVEL_JUNKYARD
 
 	immunity_type = "acid" // temp
 

@@ -101,10 +101,6 @@ var/list/blacklisted_builds = list(
 
 	..()	//redirect to hsrc.Topic()
 
-/client/Destroy()
-	..() // Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
-	return QDEL_HINT_HARDDEL_NOW
-
 /client/proc/handle_spam_prevention(message, mute_type)
 	if(global_message_cooldown && (world.time < last_message_time + 5))
 		return 1

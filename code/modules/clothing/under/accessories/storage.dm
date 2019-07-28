@@ -85,10 +85,10 @@
 /obj/item/clothing/accessory/storage/knifeharness/atom_init()
 	. = ..()
 	hold.can_hold = list(
-		/obj/item/weapon/hatchet/unathiknife,
-		/obj/item/weapon/kitchenknife/plastic,
-		/obj/item/weapon/kitchenknife,
-		/obj/item/weapon/kitchenknife/ritual
+		"/obj/item/weapon/hatchet/unathiknife",
+		"/obj/item/weapon/kitchenknife/plastic",
+		"/obj/item/weapon/kitchenknife",
+		"/obj/item/weapon/kitchenknife/ritual"
 		)
 	new /obj/item/weapon/hatchet/unathiknife(hold)
 	new /obj/item/weapon/hatchet/unathiknife(hold)

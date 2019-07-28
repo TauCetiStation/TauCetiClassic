@@ -221,7 +221,7 @@
 						windoor.density = 0
 
 						if(src.electronics.one_access)
-							windoor.req_access = list()
+							windoor.req_access = null
 							windoor.req_one_access = src.electronics.conf_access
 						else
 							windoor.req_access = src.electronics.conf_access
@@ -243,7 +243,7 @@
 						windoor.density = 0
 
 						if(src.electronics.one_access)
-							windoor.req_access = list()
+							windoor.req_access = null
 							windoor.req_one_access = src.electronics.conf_access
 						else
 							windoor.req_access = src.electronics.conf_access

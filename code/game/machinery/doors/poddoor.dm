@@ -38,7 +38,7 @@
 	if(ismultitool(C) && hasPower() && !density)
 		var/obj/item/device/multitool/M = C
 		var/turf/turf = get_turf(src)
-		if(!is_station_level(turf.z) && !is_mining_level(turf.z))
+		if(turf.z != ZLEVEL_STATION && turf.z != ZLEVEL_ASTEROID)
 			to_chat(user, "<span class='warning'>This poddoor cannot be connected!</span>")
 		else if(src in M.poddoors_buffer)
 			to_chat(user, "<span class='warning'>This poddoor is already in the buffer!</span>")

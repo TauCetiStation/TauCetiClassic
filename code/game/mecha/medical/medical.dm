@@ -1,7 +1,7 @@
 /obj/mecha/medical/atom_init()
 	. = ..()
 	var/turf/T = get_turf(src)
-	if(!is_centcom_level(T.z) && !is_junkyard_level(T.z))
+	if(T.z != ZLEVEL_CENTCOMM)
 		new /obj/item/mecha_parts/mecha_tracking(src)
 
 

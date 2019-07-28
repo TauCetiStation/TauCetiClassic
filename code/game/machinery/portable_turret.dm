@@ -377,6 +377,17 @@ var/list/turret_icons
 		else
 			to_chat(user, "<span class='notice'>Access denied.</span>")
 
+	else if (istype(I, /obj/item/weapon/card/emag) && !emagged)
+		//Emagging the turret makes it go bonkers and stun everyone. It also makes
+		//the turret shoot much, much faster.
+		to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
+		visible_message("[src] hums oddly...")
+		emagged = TRUE
+		iconholder = TRUE
+		controllock = TRUE
+		enabled = FALSE //turns off the turret temporarily
+		addtimer(CALLBACK(src, .proc/enable), 80) //8 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
+
 	else
 		//if the turret was attacked with the intention of harming it:
 		take_damage(I.force * 0.5)
@@ -386,20 +397,6 @@ var/list/turret_icons
 				attacked = TRUE
 				addtimer(CALLBACK(src, .proc/attacked_clear), 60)
 		..()
-
-/obj/machinery/porta_turret/emag_act(mob/user)
-	if(emagged)
-		return FALSE
-	//Emagging the turret makes it go bonkers and stun everyone. It also makes
-	//the turret shoot much, much faster.
-	to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
-	visible_message("[src] hums oddly...")
-	emagged = TRUE
-	iconholder = TRUE
-	controllock = TRUE
-	enabled = FALSE //turns off the turret temporarily
-	addtimer(CALLBACK(src, .proc/enable), 80) //8 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
-	return TRUE
 
 /obj/machinery/porta_turret/proc/take_damage(force)
 	if(!raised && !raising)

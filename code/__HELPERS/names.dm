@@ -44,9 +44,6 @@ var/religion_name = null
 	return capitalize(name)
 
 /proc/system_name()
-	if(system_name)
-		return system_name
-
 	return "Tau Ceti" //Screw Nyx
 
 /proc/station_name()

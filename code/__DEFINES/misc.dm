@@ -19,6 +19,15 @@
 #define GHOST_ORBIT_SQUARE		"square"
 #define GHOST_ORBIT_PENTAGON	"pentagon"
 
+//zlevel defines, can be overriden for different maps in the appropriate _maps file.
+#define ZLEVEL_STATION  	1
+#define ZLEVEL_CENTCOMM 	2 //EI NATH!!
+#define ZLEVEL_CENTCOM  	2
+#define ZLEVEL_TELECOMMS	3
+#define ZLEVEL_DERELICT		4
+#define ZLEVEL_ASTEROID 	5
+#define ZLEVEL_EMPTY	 	6
+
 #define TRANSITIONEDGE		7 //Distance from edge to move to another z-level
 
 #define ENGINE_EJECT_Z		3 //Unused now

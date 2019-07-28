@@ -287,15 +287,3 @@
 /obj/structure/reagent_dispensers/acid/atom_init()
 	. = ..()
 	reagents.add_reagent("sacid", 1000)
-
-/obj/structure/reagent_dispensers/kvasstank
-	name = "KBAC"
-	desc = "A cool refreshing drink with a taste of socialism."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "kvasstank"
-	possible_transfer_amounts = list(25,60,100)
-	amount_per_transfer_from_this = 25
-
-/obj/structure/reagent_dispensers/kvasstank/atom_init()
-	. = ..()
-	reagents.add_reagent("kvass",1000)

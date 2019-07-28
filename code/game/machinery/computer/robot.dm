@@ -20,7 +20,7 @@
 	var/screen = 0 // 0 - Main Menu, 1 - Cyborg Status, 2 - Kill 'em All! -- In text
 
 /obj/machinery/computer/robotics/ui_interact(mob/user)
-	if (!SSmapping.has_level(z))
+	if (src.z > ZLEVEL_EMPTY)
 		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return
 

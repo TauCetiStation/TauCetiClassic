@@ -103,6 +103,9 @@
 			bcell = null
 			to_chat(user, "<span class='notice'>You remove the cell from \the [src].</span>")
 			update_icon()
+	else if (istype(I, /obj/item/weapon/card/emag))
+		paddles.emag_act(user)
+		return
 	else
 		return ..()
 
@@ -487,7 +490,7 @@
 /obj/item/weapon/twohanded/shockpaddles/proc/make_announcement(message)
 	audible_message("<b>\The [src]</b> [message]", "\The [src] vibrates slightly.")
 
-/obj/item/weapon/twohanded/shockpaddles/emag_act(mob/user)
+/obj/item/weapon/twohanded/shockpaddles/proc/emag_act(mob/user)
 	if(safety)
 		safety = FALSE
 		to_chat(user, "<span class='warning'>You silently disable \the [src]'s safety protocols with the cryptographic sequencer.</span>")
@@ -497,7 +500,6 @@
 		to_chat(user, "<span class='notice'>You silently enable \the [src]'s safety protocols with the cryptographic sequencer.</span>")
 		burn_damage_amt = initial(burn_damage_amt)
 	update_icon()
-	return TRUE
 
 /obj/item/weapon/twohanded/shockpaddles/emp_act(severity)
 	var/new_safety = rand(0, 1)

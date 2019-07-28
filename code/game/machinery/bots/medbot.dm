@@ -212,7 +212,7 @@
 		if (health < maxhealth && !isscrewdriver(W) && W.force)
 			step_to(src, (get_step_away(src,user)))
 
-/obj/machinery/bot/medbot/emag_act(mob/user)
+/obj/machinery/bot/medbot/Emag(mob/user)
 	..()
 	if(open && !locked)
 		if(user)

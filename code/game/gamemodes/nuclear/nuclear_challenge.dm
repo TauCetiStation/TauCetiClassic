@@ -77,7 +77,7 @@ var/global/obj/item/device/nuclear_challenge/Challenge
 	if(player_list.len < CHALLENGE_MIN_PLAYERS)
 		to_chat(user, "The enemy crew is too small to be worth declaring war on.")
 		return 0
-	if(!is_centcom_level(user.z))
+	if(user.z != ZLEVEL_CENTCOM)
 		to_chat(user, "You have to be at your base to use this.")
 		return 0
 	if(world.time-round_start_time > CHALLENGE_TIME_LIMIT)

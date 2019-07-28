@@ -239,13 +239,14 @@
 		to_chat(user, "<span class='notice'>\The [src] smartly refuses [O].</span>")
 		return
 
-/obj/machinery/smartfridge/secure/emag_act(mob/user)
-	if(emagged)
-		return FALSE
-	emagged = 1
-	locked = -1
-	to_chat(user, "You short out the product lock on [src].")
-	return TRUE
+/obj/machinery/smartfridge/secure/attackby(obj/item/O, mob/user)
+	if (istype(O, /obj/item/weapon/card/emag))
+		emagged = 1
+		locked = -1
+		to_chat(user, "You short out the product lock on [src].")
+		return
+
+	..()
 
 /obj/machinery/smartfridge/attack_ai(mob/user)
 	if(IsAdminGhost(user))

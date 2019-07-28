@@ -4,9 +4,9 @@
 /mob/living/silicon/ai/proc/InvalidTurf(turf/T)
 	if(!T)
 		return 1
-	if(is_centcom_level(T.z))
+	if(T.z == ZLEVEL_CENTCOMM)
 		return 1
-	if(!SSmapping.has_level(T.z))
+	if(T.z > ZLEVEL_EMPTY)
 		return 1
 	return 0
 

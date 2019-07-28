@@ -17,7 +17,7 @@
 		var/turf/T = get_turf(H)
 		if(!T)
 			continue
-		if(!is_station_level(T.z))
+		if(T.z != ZLEVEL_STATION)
 			continue
 		for(var/datum/disease/D in H.viruses)
 			foundAlready = 1

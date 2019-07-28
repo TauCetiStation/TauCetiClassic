@@ -41,7 +41,7 @@
 
 /obj/item/weapon/storage/secure/attackby(obj/item/weapon/W, mob/user)
 	if(locked)
-		if(istype(W, /obj/item/weapon/melee/energy/blade) && (!src.emagged))
+		if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && (!src.emagged))
 			emagged = 1
 			user.SetNextMove(CLICK_CD_MELEE)
 			src.overlays += image('icons/obj/storage.dmi', icon_sparking)
@@ -49,12 +49,15 @@
 			overlays.Cut()
 			overlays += image('icons/obj/storage.dmi', icon_locking)
 			locked = 0
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-			spark_system.set_up(5, 0, src.loc)
-			spark_system.start()
-			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
-			playsound(src, "sparks", VOL_EFFECTS_MASTER)
-			to_chat(user, "You slice through the lock on [src].")
+			if(istype(W, /obj/item/weapon/melee/energy/blade))
+				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+				spark_system.set_up(5, 0, src.loc)
+				spark_system.start()
+				playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+				playsound(src, "sparks", VOL_EFFECTS_MASTER)
+				to_chat(user, "You slice through the lock on [src].")
+			else
+				to_chat(user, "You short out the lock on [src].")
 			return
 
 		if (isscrewdriver(W))
@@ -85,18 +88,6 @@
 	// -> storage/attackby() what with handle insertion, etc
 	..()
 
-/obj/item/weapon/storage/secure/emag_act(mob/user)
-	if(!locked || src.emagged)
-		return FALSE
-	emagged = 1
-	user.SetNextMove(CLICK_CD_MELEE)
-	src.overlays += image('icons/obj/storage.dmi', icon_sparking)
-	sleep(6)
-	overlays.Cut()
-	overlays += image('icons/obj/storage.dmi', icon_locking)
-	locked = 0
-	to_chat(user, "You short out the lock on [src].")
-	return TRUE
 
 /obj/item/weapon/storage/secure/MouseDrop(over_object, src_location, over_location)
 	if (locked)

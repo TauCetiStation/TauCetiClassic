@@ -283,7 +283,7 @@
 
 /obj/screen/parallax_layer/planet/update_status(mob/M)
 	var/turf/T = get_turf(M)
-	if(T && is_station_level(T.z))
+	if(T && T.z == ZLEVEL_STATION)
 		invisibility = 0
 	else
 		invisibility = INVISIBILITY_ABSTRACT

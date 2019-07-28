@@ -50,10 +50,6 @@
 				icon_state  = "glass_brown"
 				name = "Glass of Space Cola"
 				desc = "A glass of refreshing Space Cola."
-			if("kvass")
-				icon_state  = "kvass"
-				name = "Glass of kvass"
-				desc = "A cool refreshing drink with a taste of socialism."
 			if("nuka_cola")
 				icon_state = "nuka_colaglass"
 				name = "Nuka Cola"

@@ -13116,7 +13116,9 @@
 /area/maintenance/eva)
 "awx" = (
 /turf/simulated/wall,
-/area/storage/tech/north)
+/area/storage/tech{
+	name = "North Technical Storage"
+	})
 "awy" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -13223,7 +13225,9 @@
 "awL" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
-/area/storage/tech/north)
+/area/storage/tech{
+	name = "North Technical Storage"
+	})
 "awM" = (
 /obj/structure/cryofeed/right,
 /turf/simulated/floor/plating,
@@ -13557,7 +13561,9 @@
 /area/maintenance/chapel)
 "axz" = (
 /turf/simulated/floor/plating,
-/area/storage/tech/north)
+/area/storage/tech{
+	name = "North Technical Storage"
+	})
 "axA" = (
 /obj/machinery/door/airlock/research{
 	name = "Telescience Research Room";
@@ -13631,7 +13637,9 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/storage/tech/north)
+/area/storage/tech{
+	name = "North Technical Storage"
+	})
 "axH" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -13640,7 +13648,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor/plating,
-/area/storage/tech/north)
+/area/storage/tech{
+	name = "North Technical Storage"
+	})
 "axI" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 4
@@ -14115,7 +14125,9 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech/north)
+/area/storage/tech{
+	name = "North Technical Storage"
+	})
 "ayD" = (
 /obj/machinery/door_control{
 	id = "lawyer_blast";
@@ -14223,7 +14235,9 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech/north)
+/area/storage/tech{
+	name = "North Technical Storage"
+	})
 "ayM" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 1
@@ -14304,7 +14318,9 @@
 	pixel_y = -7
 	},
 /turf/simulated/floor/plating,
-/area/storage/tech/north)
+/area/storage/tech{
+	name = "North Technical Storage"
+	})
 "ayV" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -14926,7 +14942,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
-/area/storage/tech/north)
+/area/storage/tech{
+	name = "North Technical Storage"
+	})
 "aAb" = (
 /obj/structure/table,
 /obj/machinery/cell_charger{
@@ -14947,7 +14965,9 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech/north)
+/area/storage/tech{
+	name = "North Technical Storage"
+	})
 "aAc" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/camera{
@@ -14975,7 +14995,9 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech/north)
+/area/storage/tech{
+	name = "North Technical Storage"
+	})
 "aAe" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -14987,7 +15009,9 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/storage/tech/north)
+/area/storage/tech{
+	name = "North Technical Storage"
+	})
 "aAf" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -15405,7 +15429,9 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech/north)
+/area/storage/tech{
+	name = "North Technical Storage"
+	})
 "aAP" = (
 /obj/structure/window/reinforced{
 	dir = 5
@@ -15428,7 +15454,9 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech/north)
+/area/storage/tech{
+	name = "North Technical Storage"
+	})
 "aAR" = (
 /turf/simulated/wall,
 /area/storage/emergency2)
@@ -15452,14 +15480,18 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech/north)
+/area/storage/tech{
+	name = "North Technical Storage"
+	})
 "aAV" = (
 /obj/structure/rack,
 /obj/random/tools/tech_supply,
 /obj/random/tools/tech_supply,
 /obj/item/device/t_scanner,
 /turf/simulated/floor/plating,
-/area/storage/tech/north)
+/area/storage/tech{
+	name = "North Technical Storage"
+	})
 "aAW" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -15949,7 +15981,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
-/area/storage/tech/north)
+/area/storage/tech{
+	name = "North Technical Storage"
+	})
 "aBL" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -16593,7 +16627,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
-/area/storage/tech/north)
+/area/storage/tech{
+	name = "North Technical Storage"
+	})
 "aCV" = (
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
@@ -16965,7 +17001,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
-/area/storage/tech/north)
+/area/storage/tech{
+	name = "North Technical Storage"
+	})
 "aDD" = (
 /obj/machinery/gateway{
 	dir = 5
@@ -17245,7 +17283,9 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/storage/tech/north)
+/area/storage/tech{
+	name = "North Technical Storage"
+	})
 "aEh" = (
 /obj/structure/flora/rock/jungle,
 /turf/simulated/floor/grass,

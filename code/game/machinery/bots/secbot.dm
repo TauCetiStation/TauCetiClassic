@@ -182,7 +182,7 @@
 	frustration = 0
 	anchored = FALSE
 
-/obj/machinery/bot/secbot/emag_act(mob/user)
+/obj/machinery/bot/secbot/Emag(mob/user)
 	..()
 	if(open && !locked)
 		if(user)

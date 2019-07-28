@@ -159,7 +159,7 @@
 			var/turf/T = get_turf(R)
 			if (!T)
 				continue
-			if(is_centcom_level(T.z) || !SSmapping.has_level(T.z))
+			if(T.z == ZLEVEL_CENTCOMM || T.z > 7)
 				continue
 			var/tmpname = T.loc.name
 			if(areaindex[tmpname])
@@ -178,8 +178,7 @@
 						continue
 				var/turf/T = get_turf(M)
 				if(!T)	continue
-				if(is_centcom_level(T.z))
-					continue
+				if(T.z == ZLEVEL_CENTCOMM)	continue
 				var/tmpname = M.real_name
 				if(areaindex[tmpname])
 					tmpname = "[tmpname] ([++areaindex[tmpname]])"
@@ -201,7 +200,7 @@
 			var/turf/T = get_turf(R)
 			if (!T || !R.teleporter_hub || !R.teleporter_console)
 				continue
-			if(is_centcom_level(T.z))
+			if(T.z == ZLEVEL_CENTCOMM)
 				continue
 			var/tmpname = T.loc.name
 			if(areaindex[tmpname])
@@ -276,7 +275,7 @@
 	return power_station
 
 /obj/machinery/teleport/hub/Bumped(M)
-	if(is_centcom_level(z))
+	if(z == ZLEVEL_CENTCOMM)
 		to_chat(M, "You can't use this here.")
 	if(is_ready())
 		teleport(M)
@@ -299,7 +298,7 @@
 	if (!com.target)
 		visible_message("<span class='notice'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
-	if(is_centcom_level(com.target.z))
+	if(com.target.z == ZLEVEL_CENTCOMM)
 		visible_message("<span class='notice'>Unknown coordinates. Please reinstate coordinate matrix.</span>")
 		return
 	if (istype(M, /atom/movable))

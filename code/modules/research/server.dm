@@ -291,17 +291,16 @@
 	onclose(user, "server_control")
 
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/weapon/D, mob/user)
-	..()
-	src.updateUsrDialog()
-
-/obj/machinery/computer/rdservercontrol/emag_act(mob/user)
-	if(!emagged)
+	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 		emagged = 1
 		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "\blue You you disable the security protocols")
-		return TRUE
-	return FALSE
+	else
+		..()
+	src.updateUsrDialog()
+	return
+
 
 /obj/machinery/r_n_d/server/robotics
 	name = "Robotics R&D Server"

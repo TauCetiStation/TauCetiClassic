@@ -77,7 +77,7 @@ var/list/teleportlocs = list()
 		if(teleportlocs.Find(AR.name))
 			continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (is_station_level(picked.z))
+		if (picked.z == ZLEVEL_STATION)
 			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
 	teleportlocs = sortAssoc(teleportlocs)
@@ -94,7 +94,7 @@ var/list/ghostteleportlocs = list()
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (is_station_level(picked.z) || is_mining_level(picked.z))
+		if (picked.z == ZLEVEL_STATION || picked.z == ZLEVEL_ASTEROID || picked.z == ZLEVEL_TELECOMMS)
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 	ghostteleportlocs = sortAssoc(ghostteleportlocs)
@@ -105,7 +105,6 @@ var/list/ghostteleportlocs = list()
 	layer = 10
 	uid = ++global_uid
 	all_areas += src
-	areas_by_type[type] = src
 
 	if(!requires_power)
 		power_light = 0
@@ -393,7 +392,7 @@ var/list/ghostteleportlocs = list()
 		L.client.sound_old_looped_ambience = looped_ambience
 		L.playsound_music(looped_ambience, VOL_AMBIENT, TRUE, null, CHANNEL_AMBIENT_LOOP)
 
-	if (!compare_list(old_area.ambience, new_area.ambience))
+	if (old_area.ambience != new_area.ambience)
 		L.playsound_stop(CHANNEL_AMBIENT)
 
 	if (ambience != null && (is_force_ambience || (prob(50) && L.client.sound_next_ambience_play <= world.time)))

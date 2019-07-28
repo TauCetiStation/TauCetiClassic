@@ -271,7 +271,12 @@
 
 
 /obj/item/weapon/circuitboard/computer/cargo/attackby(obj/item/I, mob/user)
-	if(ismultitool(I))
+	if(istype(I, /obj/item/weapon/card/emag) && !hacked)
+		to_chat(user, "\blue Special supplies unlocked.")
+		hacked = TRUE
+		contraband_enabled = TRUE
+		return
+	else if(ismultitool(I))
 		var/catastasis = src.contraband_enabled
 		var/opposite_catastasis
 		if(catastasis)
@@ -292,14 +297,6 @@
 				to_chat(user, "DERP! BUG! Report this (And what you were doing to cause it) to Agouri")
 	return
 
-/obj/item/weapon/circuitboard/computer/cargo/emag_act(mob/user)
-	if(hacked)
-		return FALSE
-	to_chat(user, "\blue Special supplies unlocked.")
-	hacked = TRUE
-	contraband_enabled = TRUE
-	return TRUE
-
 /obj/item/weapon/circuitboard/libraryconsole/attackby(obj/item/I, mob/user)
 	if(isscrewdriver(I))
 		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
@@ -313,7 +310,14 @@
 	return
 
 /obj/item/weapon/circuitboard/security/attackby(obj/item/I, mob/user)
-	if(istype(I,/obj/item/weapon/card/id))
+	if(istype(I,/obj/item/weapon/card/emag))
+		if(emagged)
+			to_chat(user, "Circuit lock is already removed.")
+			return
+		to_chat(user, "\blue You override the circuit lock and open controls.")
+		emagged = 1
+		locked = 0
+	else if(istype(I,/obj/item/weapon/card/id))
 		if(emagged)
 			to_chat(user, "\red Circuit lock does not respond.")
 			return
@@ -338,15 +342,6 @@
 			return
 		network = tempnetwork
 	return
-
-/obj/item/weapon/circuitboard/security/emag_act(mob/user)
-	if(emagged)
-		to_chat(user, "Circuit lock is already removed.")
-		return FALSE
-	to_chat(user, "\blue You override the circuit lock and open controls.")
-	emagged = 1
-	locked = 0
-	return TRUE
 
 /obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I, mob/user)
 	if(isscrewdriver(I))

@@ -174,6 +174,19 @@
 	if(user.is_busy())
 		return
 
+	if (istype(O, /obj/item/weapon/card/emag))
+		if (emagged)
+			to_chat(user, "<span class='warning'>[src] is already cracked.</span>")
+			return
+		else
+			add_fingerprint(user)
+			emagged = TRUE
+			flick("dryer-broken",src)
+			playsound(src, 'sound/effects/sparks3.ogg', VOL_EFFECTS_MASTER)
+			icon_state = "dryer-emag"
+			to_chat(user, "<span class='warning'>You swipe near [O] and crack it to be hot.</span>")
+			return
+
 	if((istype(O, /obj/item/weapon/grab)) && !emagged)
 		var/obj/item/weapon/grab/G = O
 		if(isliving(G.affecting))
@@ -266,18 +279,6 @@
 			"<span class='notice'>You dry \a [I] using \the [src].</span>")
 	else
 		busy = FALSE
-
-/obj/structure/dryer/emag_act(mob/user)
-	if(emagged)
-		to_chat(user, "<span class='warning'>[src] is already cracked.</span>")
-		return FALSE
-	add_fingerprint(user)
-	emagged = TRUE
-	flick("dryer-broken",src)
-	playsound(src, 'sound/effects/sparks3.ogg', VOL_EFFECTS_MASTER)
-	icon_state = "dryer-emag"
-	to_chat(user, "<span class='warning'>You swipe near card and crack it to be hot.</span>")
-	return TRUE
 
 /obj/machinery/shower
 	name = "shower"

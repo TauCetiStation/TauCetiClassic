@@ -110,18 +110,21 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/computer/HolodeckControl/emag_act(mob/user)
-	playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
-	last_to_emag = user //emag again to change the owner
-	if(!emagged)
-		emagged = 1
-		safety_disabled = 1
-		update_projections()
-		to_chat(user, "<span class='notice'>You vastly increase projector power and override the safety and security protocols.</span>")
-		to_chat(user, "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator.")
-		log_game("[key_name(usr)] emagged the Holodeck Control Computer")
-	src.updateUsrDialog()
-	return TRUE
+/obj/machinery/computer/HolodeckControl/attackby(obj/item/weapon/D, mob/user)
+	if(istype(D, /obj/item/weapon/card/emag))
+		user.SetNextMove(CLICK_CD_INTERACT)
+		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
+		last_to_emag = user //emag again to change the owner
+		if (!emagged)
+			emagged = 1
+			safety_disabled = 1
+			update_projections()
+			to_chat(user, "<span class='notice'>You vastly increase projector power and override the safety and security protocols.</span>")
+			to_chat(user, "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator.")
+			log_game("[key_name(usr)] emagged the Holodeck Control Computer")
+		src.updateUsrDialog()
+	else
+		..()
 
 /obj/machinery/computer/HolodeckControl/proc/update_projections()
 	if (safety_disabled)

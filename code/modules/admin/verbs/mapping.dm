@@ -143,7 +143,6 @@ var/list/debug_verbs = list (
         ,/client/proc/disable_movement
         ,/client/proc/Zone_Info
         ,/client/proc/Test_ZAS_Connection
-        ,/client/proc/debug_z_levels
         ,/client/proc/hide_debug_verbs
 	,/client/proc/testZAScolors
 	,/client/proc/testZAScolors_remove
@@ -353,77 +352,3 @@ var/global/movement_disabled_exception //This is the client that calls the proc,
 		movement_disabled_exception = usr.ckey
 	else
 		message_admins("[src.ckey] used 'Disable all movement', restoring all movement.")*/
-
-/client/proc/debug_z_levels()
-	set name = "Debug Z-Levels"
-	set category = "Mapping"
-
-	var/list/z_list = SSmapping.z_list
-	var/list/messages = list()
-	messages += "<b>World</b>: [world.maxx] x [world.maxy] x [world.maxz]<br>"
-
-	for(var/z in 1 to max(world.maxz, z_list.len))
-		if (z > z_list.len)
-			messages += "<b>[z]</b>: Unmanaged (out of bounds)<br>"
-			continue
-		var/datum/space_level/S = z_list[z]
-		if (!S)
-			messages += "<b>[z]</b>: Unmanaged (null)<br>"
-			continue
-		var/linkage
-		switch (S.linkage)
-			if (UNAFFECTED)
-				linkage = "no linkage"
-			if (SELFLOOPING)
-				linkage = "self-looping"
-			if (CROSSLINKED)
-				linkage = "crosslinked"
-			else
-				linkage = "unknown linkage '[S.linkage]'"
-
-		messages += "<b>[z]</b>: [S.name], [linkage], traits: [json_encode(S.traits)]<br>"
-		if (S.z_value != z)
-			messages += "-- z_value is [S.z_value], should be [z]<br>"
-		if (S.name == initial(S.name))
-			messages += "-- name not set<br>"
-		if (z > world.maxz)
-			messages += "-- exceeds max z"
-
-	to_chat(src, messages.Join(""))
-
-/client/proc/adminchangemap()
-	set category = "Server"
-	set name = "Change Map"
-	var/list/maprotatechoices = list()
-	for (var/map in config.maplist)
-		var/datum/map_config/VM = config.maplist[map]
-		var/mapname = VM.map_name
-		if (VM == config.defaultmap)
-			mapname += " (Default)"
-
-		if (VM.config_min_users > 0 || VM.config_max_users > 0)
-			mapname += " \["
-			if (VM.config_min_users > 0)
-				mapname += "[VM.config_min_users]"
-			else
-				mapname += "0"
-			mapname += "-"
-			if (VM.config_max_users > 0)
-				mapname += "[VM.config_max_users]"
-			else
-				mapname += "inf"
-			mapname += "\]"
-
-		maprotatechoices[mapname] = VM
-	if(!maprotatechoices.len)
-		to_chat(usr, "Map config 'config/maps.txt' is missing or empty")
-		return
-
-	var/chosenmap = input("Choose a map to change to", "Change Map")  as null|anything in maprotatechoices
-	if (!chosenmap)
-		return
-	var/datum/map_config/VM = maprotatechoices[chosenmap]
-	message_admins("[key_name_admin(usr)] is changing the map to [VM.map_name]")
-	log_admin("[key_name(usr)] is changing the map to [VM.map_name]")
-	if (SSmapping.changemap(VM) == 0)
-		message_admins("[key_name_admin(usr)] has changed the map to [VM.map_name]")

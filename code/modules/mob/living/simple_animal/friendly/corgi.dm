@@ -112,14 +112,19 @@
 	butcher_results = list()
 	var/emagged = 0
 
-/mob/living/simple_animal/corgi/borgi/emag_act(mob/user)
-	if(!emagged && emagged < 2)
+/mob/living/simple_animal/corgi/borgi/attackby(obj/item/weapon/W, mob/user)
+	if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)
+		user.SetNextMove(CLICK_CD_MELEE)
+		Emag(user)
+	else
+		..()
+
+/mob/living/simple_animal/corgi/borgi/proc/Emag(user)
+	if(!emagged)
 		emagged = 1
 		visible_message("<span class='warning'>[user] swipes a card through [src].</span>", "<span class='notice'>You overload [src]s internal reactor.</span>")
 		spawn (1000)
 			src.explode()
-		return TRUE
-	return FALSE
 
 /mob/living/simple_animal/corgi/borgi/proc/explode()
 	for(var/mob/M in viewers(src, null))

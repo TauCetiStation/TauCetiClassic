@@ -78,8 +78,7 @@ var/global/dmm_suite/preloader/_preloader = new
 				if(cropMap)
 					continue
 				else
-					while (zcrd > world.maxz) //create a new z_level if needed
-						world.incrementMaxZ()
+					world.maxz = zcrd //create a new z_level if needed
 
 			bounds[MAP_MINX] = min(bounds[MAP_MINX], xcrdStart)
 			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
@@ -234,9 +233,11 @@ var/global/dmm_suite/preloader/_preloader = new
 		// Below is a hackish way of getting /area with the exact type that we provide, because locate() can return child of the type that we need which is wrong
 		if(instance.type != members[index])
 			var/e = members[index]
-			if(areas_by_type[e])
-				instance = areas_by_type[e]
-			else
+			for(var/area/N in all_areas)
+				if(N.type == e)
+					instance = N
+					break
+			if(instance.type != e)
 				instance = new e
 		// End of the hack
 		if(crds)
@@ -308,9 +309,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 	if(crds)
 		if(ispath(path, /turf))
-			var/turf/turfpath = path
 			. = crds.ChangeTurf(path)
-			crds.basetype = initial(turfpath.basetype)
 		else
 			. = create_atom(path, crds) // first preloader pass
 
@@ -354,67 +353,57 @@ var/global/dmm_suite/preloader/_preloader = new
 //build a list from variables in text form (e.g {var1="derp"; var2; var3=7} => list(var1="derp", var2, var3=7))
 //return the filled list
 /dmm_suite/proc/readlist(text, delimiter=",")
-	. = list()
-	if (!text)
-		return
+
+	var/list/to_return = list()
 
 	var/position
 	var/old_position = 1
 
-	while(position != 0)
+	do
 		//find next delimiter that is not within  "..."
 		position = find_next_delimiter_position(text,old_position,delimiter)
 
 		//check if this is a simple variable (as in list(var1, var2)) or an associative one (as in list(var1="foo",var2=7))
 		var/equal_position = findtext(text,"=",old_position, position)
 
-		var/trim_left = trim_text(copytext(text,old_position,(equal_position ? equal_position : position)))
-		var/left_constant = delimiter == ";" ? trim_left : parse_constant(trim_left)
+		var/trim_left = trim_text(copytext(text,old_position,(equal_position ? equal_position : position)),1)//the name of the variable, must trim quotes to build a BYOND compliant associatives list
 		old_position = position + 1
 
-		if(equal_position && !isnum(left_constant))
-			// Associative var, so do the association.
-			// Note that numbers cannot be keys - the RHS is dropped if so.
-			var/trim_right = trim_text(copytext(text,equal_position+1,position))
-			var/right_constant = parse_constant(trim_right)
-			.[left_constant] = right_constant
+		if(equal_position)//associative var, so do the association
+			var/trim_right = trim_text(copytext(text,equal_position+1,position))//the content of the variable
 
-		else  // simple var
-			. += list(left_constant)
+			//Check for string
+			if(findtext(trim_right,quote,1,2))
+				trim_right = copytext(trim_right,2,findtext(trim_right,quote,3,0))
 
-/dmm_suite/proc/parse_constant(text)
-	// number
-	var/num = text2num(text)
-	if(isnum(num))
-		return num
+			//Check for number
+			else if(isnum(text2num(trim_right)))
+				trim_right = text2num(trim_right)
 
-	// string
-	if(findtext(text,"\"",1,2))
-		return copytext(text,2,findtext(text,"\"",3,0))
+			//Check for null
+			else if(trim_right == "null")
+				trim_right = null
 
-	// list
-	if(copytext(text,1,6) == "list(")
-		return readlist(copytext(text,6,length(text)))
+			//Check for list
+			else if(copytext(trim_right,1,5) == "list")
+				trim_right = readlist(copytext(trim_right,6,length(trim_right)))
 
-	// typepath
-	var/path = text2path(text)
-	if(ispath(path))
-		return path
+			//Check for file
+			else if(copytext(trim_right,1,2) == "'")
+				trim_right = file(copytext(trim_right,2,length(trim_right)))
 
-	// file
-	if(copytext(text,1,2) == "'")
-		return file(copytext(text,2,length(text)))
+			//Check for path
+			else if(ispath(text2path(trim_right)))
+				trim_right = text2path(trim_right)
 
-	// null
-	if(text == "null")
-		return null
+			to_return[trim_left] = trim_right
 
-	// not parsed:
-	// - pops: /obj{name="foo"}
-	// - new(), newlist(), icon(), matrix(), sound()
+		else//simple var
+			to_return[trim_left] = null
 
-	// fallback: string
-	return text
+	while(position != 0)
+
+	return to_return
 
 /dmm_suite/Destroy()
 	..()

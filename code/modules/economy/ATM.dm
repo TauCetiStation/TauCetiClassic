@@ -75,6 +75,18 @@ log transactions
 			//prevent inserting id into an emagged ATM
 			to_chat(user, "\red [bicon(src)] CARD READER ERROR. This system has been compromised!")
 			return
+		else if(istype(I,/obj/item/weapon/card/emag))
+			//short out the machine, shoot sparks, spew money!
+			emagged = 1
+			spark_system.start()
+			print_money_stock(rand(100,500))
+			//we don't want to grief people by locking their id in an emagged ATM
+			release_held_id(user)
+
+			//display a message to the user
+			var/response = pick("Initiating withdraw. Have a nice day!", "CRITICAL ERROR: Activating cash chamber panic siphon.","PIN Code accepted! Emptying account balance.", "Jackpot!")
+			to_chat(user, "\red [bicon(src)] The [src] beeps: \"[response]\"")
+			return
 
 		var/obj/item/weapon/card/id/idcard = I
 		if(!held_card)
@@ -114,18 +126,6 @@ log transactions
 			qdel(I)
 	else
 		..()
-
-/obj/machinery/atm/emag_act(mob/user)
-	//short out the machine, shoot sparks, spew money!
-	emagged = 1
-	spark_system.start()
-	print_money_stock(rand(100,500))
-	//we don't want to grief people by locking their id in an emagged ATM
-	release_held_id(user)
-	//display a message to the user
-	var/response = pick("Initiating withdraw. Have a nice day!", "CRITICAL ERROR: Activating cash chamber panic siphon.","PIN Code accepted! Emptying account balance.", "Jackpot!")
-	to_chat(user, "\red [bicon(src)] The [src] beeps: \"[response]\"")
-	return TRUE
 
 /obj/machinery/atm/attack_ai(mob/user)
 	if(IsAdminGhost(user))

@@ -355,11 +355,12 @@
 		return
 	return
 
-/obj/item/robot_parts/emag_act(mob/user)
-	if(sabotaged)
-		to_chat(user, "<span class='warning'>[src] is already sabotaged!</span>")
-		return FALSE
-	else
-		to_chat(user, "<span class='warning'>You slide card into the dataport on [src] and short out the safeties.</span>")
-		sabotaged = 1
-		return TRUE
+/obj/item/robot_parts/attackby(obj/item/W, mob/user)
+	if(istype(W,/obj/item/weapon/card/emag))
+		if(sabotaged)
+			to_chat(user, "<span class='warning'>[src] is already sabotaged!</span>")
+		else
+			to_chat(user, "<span class='warning'>You slide [W] into the dataport on [src] and short out the safeties.</span>")
+			sabotaged = 1
+		return
+	..()

@@ -94,8 +94,7 @@
 
 		// Okay, so let's make it so that people can travel z levels but not nuke disks!
 		// if(ticker.mode.name == "nuclear emergency")	return
-		if(!SSmapping.has_level(A.z))
-			return
+		if(A.z > ZLEVEL_EMPTY) return
 		if (A.x <= TRANSITIONEDGE || A.x >= (world.maxx - TRANSITIONEDGE - 1) || A.y <= TRANSITIONEDGE || A.y >= (world.maxy - TRANSITIONEDGE - 1))
 			if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
 				qdel(A)
@@ -127,11 +126,15 @@
 						qdel(N)//Make the disk respawn if it is floating on its own
 				return
 
-			var/datum/space_level/L = SSmapping.get_level(z)
-			if(!L)
-				return
+			var/move_to_z = src.z
+			var/safety = 1
 
-			var/move_to_z = L.get_next_z()
+			while(move_to_z == src.z)
+				var/move_to_z_str = pickweight(accessable_z_levels)
+				move_to_z = text2num(move_to_z_str)
+				safety++
+				if(safety > 10)
+					break
 
 			if(!move_to_z)
 				return

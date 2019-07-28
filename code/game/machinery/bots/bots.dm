@@ -44,18 +44,13 @@
 	if (src.health <= 0)
 		src.explode()
 
-/obj/machinery/bot/emag_act(mob/user)
-	if(emagged >= 2)
-		return FALSE
+/obj/machinery/bot/proc/Emag(mob/user)
 	if(locked)
 		locked = 0
 		emagged = 1
 		to_chat(user, "<span class='warning'>You bypass [src]'s controls.</span>")
-		return TRUE
 	if(!locked && open)
 		emagged = 2
-		return TRUE
-	return FALSE
 
 /obj/machinery/bot/examine(mob/user)
 	..()
@@ -104,6 +99,8 @@
 				to_chat(user, "<span class='notice'>Unable to repair with the maintenance panel closed.</span>")
 		else
 			to_chat(user, "<span class='notice'>[src] does not need a repair.</span>")
+	else if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)
+		Emag(user)
 	else
 		if(hasvar(W,"force") && hasvar(W,"damtype"))
 			switch(W.damtype)

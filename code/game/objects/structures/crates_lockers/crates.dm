@@ -189,27 +189,21 @@
 /obj/structure/closet/crate/secure/attackby(obj/item/weapon/W, mob/user)
 	if(is_type_in_list(W, list(/obj/item/weapon/packageWrap, /obj/item/stack/cable_coil, /obj/item/device/radio/electropack, /obj/item/weapon/wirecutters)))
 		return ..()
-	if(locked && istype(W, /obj/item/weapon/melee/energy/blade))
-		emag_act(user)
+	if(locked && (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)))
+		user.SetNextMove(CLICK_CD_MELEE)
+		overlays.Cut()
+		overlays += emag
+		overlays += sparks
+		spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
+		playsound(src, "sparks", VOL_EFFECTS_MASTER)
+		src.locked = 0
+		src.broken = 1
+		to_chat(user, "<span class='notice'>You unlock \the [src].</span>")
 		return
 	if(!opened)
 		src.togglelock(user)
 		return
 	return ..()
-
-/obj/structure/closet/crate/secure/emag_act(mob/user)
-	if(!locked)
-		return FALSE
-	user.SetNextMove(CLICK_CD_MELEE)
-	overlays.Cut()
-	overlays += emag
-	overlays += sparks
-	spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
-	playsound(src, "sparks", VOL_EFFECTS_MASTER)
-	src.locked = 0
-	src.broken = 1
-	to_chat(user, "<span class='notice'>You unlock \the [src].</span>")
-	return TRUE
 
 /obj/structure/closet/crate/secure/emp_act(severity)
 	for(var/obj/O in src)

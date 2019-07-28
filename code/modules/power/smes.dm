@@ -412,7 +412,7 @@
 
 
 /obj/machinery/power/smes/proc/ion_act()
-	if(is_station_level(z))
+	if(src.z == ZLEVEL_STATION)
 		if(prob(1)) //explosion
 			to_chat(world, "\red SMES explosion in [src.loc.loc]")
 			for(var/mob/M in viewers(src))

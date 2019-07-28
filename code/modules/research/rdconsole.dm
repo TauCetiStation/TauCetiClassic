@@ -138,6 +138,11 @@ cause a ton of data to be lost, an admin can go send it back.
 		files.research_points += disk.stored_points
 		user.remove_from_mob(disk)
 		qdel(disk)
+	else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
+		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
+		emagged = 1
+		user.SetNextMove(CLICK_CD_INTERACT)
+		to_chat(user, "<span class='notice'>You you disable the security protocols</span>")
 	else if(ismultitool(D))
 		var/obj/item/device/multitool/M = D
 		M.buffer = src
@@ -153,15 +158,6 @@ cause a ton of data to be lost, an admin can go send it back.
 		//The construction/deconstruction of the console code.
 		..()
 	nanomanager.update_uis(src)
-
-/obj/machinery/computer/rdconsole/emag_act(mob/user)
-	if(!emagged)
-		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
-		emagged = 1
-		user.SetNextMove(CLICK_CD_INTERACT)
-		to_chat(user, "\blue You you disable the security protocols")
-		return TRUE
-	return FALSE
 
 /obj/machinery/computer/rdconsole/Topic(href, href_list)
 	. = ..()

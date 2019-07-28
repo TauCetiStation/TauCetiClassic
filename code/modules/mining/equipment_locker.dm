@@ -452,7 +452,7 @@
 		var/list/L = list()
 		for(var/obj/item/device/radio/beacon/B in radio_beacon_list)
 			var/turf/T = get_turf(B)
-			if(is_station_level(T.z))
+			if(T.z == ZLEVEL_STATION)
 				L += B
 		if(!L.len)
 			to_chat(user, "<span class='notice'>The [src.name] failed to create a wormhole.</span>")

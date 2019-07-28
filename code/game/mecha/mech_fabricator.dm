@@ -95,7 +95,7 @@
 			return 0
 	return 1
 
-/obj/machinery/mecha_part_fabricator/emag_act(mob/user)
+/obj/machinery/mecha_part_fabricator/proc/emag()
 	switch(emagged)
 		if(0)
 			emagged = 0.5
@@ -106,15 +106,13 @@
 			visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"User DB corrupted \[Code 0x00FA\]. Truncating data structure...\"")
 			sleep(30)
 			visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"User DB truncated. Please contact your Nanotrasen system operator for future assistance.\"")
-			req_access = list()
+			req_access = null
 			emagged = 1
 		if(0.5)
 			visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"DB not responding \[Code 0x0003\]...\"")
-			return FALSE
 		if(1)
 			visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"No records in User DB\"")
-			return FALSE
-	return TRUE
+	return
 
 /obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)
 	var/output = ""
@@ -504,6 +502,11 @@
 
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/W, mob/user, params)
+
+	if(istype(W, /obj/item/weapon/card/emag))
+		emag()
+		return
+
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
 		return
 

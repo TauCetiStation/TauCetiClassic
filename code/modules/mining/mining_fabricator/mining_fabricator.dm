@@ -143,6 +143,9 @@
 
 
 /obj/machinery/mecha_part_fabricator/mining_fabricator/attackby(obj/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/card/emag))
+		emag()
+		return
 
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
 		return
