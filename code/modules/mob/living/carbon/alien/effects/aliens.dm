@@ -110,7 +110,7 @@
 /obj/structure/alien/resin/hitby(AM)
 	..()
 	for(var/mob/O in viewers(src, null))
-		O.show_message("\red <B>[src] was hit by [AM].</B>", 1)
+		O.show_message("<span class='warning'><B>[src] was hit by [AM].</B></span>", 1)
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 10
@@ -126,14 +126,14 @@
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if (HULK in user.mutations)
-		to_chat(user, "\blue You easily destroy the [name].")
+		to_chat(user, "<span class='notice'>You easily destroy the [name].</span>")
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [user] destroys the [name]!", 1)
+			O.show_message("<span class='warning'>[user] destroys the [name]!</span>", 1)
 		health = 0
 	else
-		to_chat(user, "\blue You claw at the [name].")
+		to_chat(user, "<span class='notice'>You claw at the [name].</span>")
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [user] claws at the [name]!", 1)
+			O.show_message("<span class='warning'>[user] claws at the [name]!</span>", 1)
 		health -= rand(5,10)
 	healthcheck()
 	return
@@ -146,15 +146,15 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	if (islarva(usr) || isfacehugger(usr))//Safety check for larva. /N
 		return
-	to_chat(usr, "\green You claw at the [name].")
+	to_chat(usr, "<span class='notice'>You claw at the [name].</span>")
 	for(var/mob/O in oviewers(src))
-		O.show_message("\red [usr] claws at the resin!", 1)
+		O.show_message("<span class='warning'>[usr] claws at the resin!</span>", 1)
 	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	health -= rand(40, 60)
 	if(health <= 0)
-		to_chat(usr, "\green You slice the [name] to pieces.")
+		to_chat(usr, "<span class='notice'>You slice the [name] to pieces.</span>")
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] slices the [name] apart!", 1)
+			O.show_message("<span class='warning'>[usr] slices the [name] apart!</span>", 1)
 	healthcheck()
 	return
 
@@ -366,7 +366,7 @@
 	if(ticks >= target_strength)
 
 		for(var/mob/O in hearers(src, null))
-			O.show_message("\green <B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B>", 1)
+			O.show_message("<span class='notice'><B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B></span>", 1)
 
 		if(istype(target, /turf/simulated/wall)) // I hate turf code.
 			var/turf/simulated/wall/W = target
@@ -382,13 +382,13 @@
 
 	switch(target_strength - ticks)
 		if(6)
-			visible_message("\green <B>[src.target] is holding up against the acid!</B>")
+			visible_message("<span class='notice'><B>[src.target] is holding up against the acid!</B></span>")
 		if(4)
-			visible_message("\green <B>[src.target]\s structure is being melted by the acid!</B>")
+			visible_message("<span class='notice'><B>[src.target]\s structure is being melted by the acid!</B></span>")
 		if(2)
-			visible_message("\green <B>[src.target] is struggling to withstand the acid!</B>")
+			visible_message("<span class='notice'><B>[src.target] is struggling to withstand the acid!</B></span>")
 		if(0 to 1)
-			visible_message("\green <B>[src.target] begins to crumble under the acid!</B>")
+			visible_message("<span class='notice'><B>[src.target] begins to crumble under the acid!</B></span>")
 	spawn(rand(150, 200)) tick()
 
 /*

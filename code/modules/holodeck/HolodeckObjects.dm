@@ -158,7 +158,7 @@
 		var/aforce = I.force
 		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 
-		visible_message("\red <B>[src] was hit by [I].</B>")
+		visible_message("<span class='warning'><B>[src] was hit by [I].</B></span>")
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			take_damage(aforce)
 		return

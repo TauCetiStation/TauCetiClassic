@@ -281,7 +281,7 @@
 				var/turf/T = get_turf_or_move(src.loc)
 				src.cable = new /obj/item/weapon/pai_cable(T)
 				for (var/mob/M in viewers(T))
-					M.show_message("\red A port on [src] opens to reveal [src.cable], which promptly falls to the floor.", 3, "\red You hear the soft click of something light and hard falling to the ground.", 2)
+					M.show_message("<span class='warning'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", 3, "<span class='warning'>You hear the soft click of something light and hard falling to the ground.</span>", 2)
 	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
@@ -388,7 +388,7 @@
 	if(answer == "Yes")
 		var/turf/T = get_turf_or_move(P.loc)
 		for (var/mob/v in viewers(T))
-			v.show_message("\blue [M] presses \his thumb against [P].", 3, "\blue [P] makes a sharp clicking sound as it extracts DNA material from [M].", 2)
+			v.show_message("<span class='notice'>[M] presses \his thumb against [P].</span>", 3, "<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>", 2)
 		var/datum/dna/dna = M.dna
 		to_chat(P, "<font color = red><h3>[M]'s UE string : [dna.unique_enzymes]</h3></font>")
 		if(dna.unique_enzymes == P.master_dna)
@@ -692,7 +692,7 @@
 		remove_language("Siik'tajr")
 		remove_language("Skrellian")
 
-		to_chat(src, "\blue Translator Module toggled OFF.")
+		to_chat(src, "<span class='notice'>Translator Module toggled OFF.</span>")
 
 	else
 		translator_on = 1
@@ -702,4 +702,4 @@
 		add_language("Siik'tajr", 0)
 		add_language("Skrellian")
 
-		to_chat(src, "\blue Translator Module toggled ON.")
+		to_chat(src, "<span class='notice'>Translator Module toggled ON.</span>")

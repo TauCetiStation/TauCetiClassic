@@ -34,17 +34,17 @@
 		var/obj/item/device/destTagger/O = W
 
 		if(src.sortTag != O.currTag)
-			to_chat(user, "\blue *[O.currTag]*")
+			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
 			src.sortTag = O.currTag
 			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = sanitize_safe(input(usr,"Label text?","Set label",""), MAX_NAME_LEN)
 		if(!str || !length(str))
-			to_chat(usr, "\red Invalid text.")
+			to_chat(usr, "<span class='warning'>Invalid text.</span>")
 			return
 		for(var/mob/M in viewers())
-			to_chat(M, "\blue [user] labels [src] as [str].")
+			to_chat(M, "<span class='notice'>[user] labels [src] as [str].</span>")
 		src.name = "[src.name] ([str])"
 	return
 
@@ -72,17 +72,17 @@
 		var/obj/item/device/destTagger/O = W
 
 		if(src.sortTag != O.currTag)
-			to_chat(user, "\blue *[O.currTag]*")
+			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
 			src.sortTag = O.currTag
 			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = sanitize_safe(input(usr,"Label text?","Set label",""), MAX_NAME_LEN)
 		if(!str || !length(str))
-			to_chat(usr, "\red Invalid text.")
+			to_chat(usr, "<span class='warning'>Invalid text.</span>")
 			return
 		for(var/mob/M in viewers())
-			to_chat(M, "\blue [user] labels [src] as [str].")
+			to_chat(M, "<span class='notice'>[user] labels [src] as [str].</span>")
 		src.name = "[src.name] ([str])"
 	return
 
@@ -146,7 +146,7 @@
 			O.loc = P
 			src.amount -= 3
 		else if(src.amount < 3)
-			to_chat(user, "\blue You need more paper.")
+			to_chat(user, "<span class='notice'>You need more paper.</span>")
 	else if (istype (target, /obj/structure/closet))
 		var/obj/structure/closet/O = target
 		if (src.amount > 3 && !O.opened)
@@ -156,9 +156,9 @@
 			O.loc = P
 			src.amount -= 3
 		else if(src.amount < 3)
-			to_chat(user, "\blue You need more paper.")
+			to_chat(user, "<span class='notice'>You need more paper.</span>")
 	else
-		to_chat(user, "\blue The object you are trying to wrap is unsuitable for the sorting machinery!")
+		to_chat(user, "<span class='notice'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>")
 	if (src.amount <= 0)
 		new /obj/item/weapon/c_tube( src.loc )
 		qdel(src)

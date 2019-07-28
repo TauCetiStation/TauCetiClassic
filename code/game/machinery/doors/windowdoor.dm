@@ -208,7 +208,7 @@
 /obj/machinery/door/window/hitby(AM)
 
 	..()
-	visible_message("\red <B>The glass door was hit by [AM].</B>", 1)
+	visible_message("<span class='warning'><B>The glass door was hit by [AM].</B></span>", 1)
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
@@ -363,7 +363,7 @@
 			return
 		var/aforce = I.force
 		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-		visible_message("\red <B>[src] was hit by [I].</B>")
+		visible_message("<span class='warning'><B>[src] was hit by [I].</B></span>")
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			take_damage(aforce)
 		return

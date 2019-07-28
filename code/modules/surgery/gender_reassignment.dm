@@ -42,18 +42,18 @@
 
 /datum/surgery_step/gender_reassignment/reshape_genitals/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(target.gender == FEMALE)
-		user.visible_message("\blue [user] has made a man of [target] with \the [tool]." , \
-		"\blue You have made a man of [target].")
+		user.visible_message("<span class='notice'>[user] has made a man of [target] with \the [tool].</span>" , \
+		"<span class='notice'>You have made a man of [target].</span>")
 		target.gender = MALE
 	else
-		user.visible_message("\blue [user] has made a woman of [target] with \the [tool]." , \
-		"\blue You have made a woman of [target].")
+		user.visible_message("<span class='notice'>[user] has made a woman of [target] with \the [tool].</span>" , \
+		"<span class='notice'>You have made a woman of [target].</span>")
 		target.gender = FEMALE
 
 	target.regenerate_icons()
 
 /datum/surgery_step/gender_reassignment/reshape_genitals/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.bodyparts_by_name[BP_GROIN]
-	user.visible_message("\red [user]'s hand slips, slicing [target]'s genitals with \the [tool]!", \
-	"\red Your hand slips, slicing [target]'s genitals with \the [tool]!")
+	user.visible_message("<span class='warning'>[user]'s hand slips, slicing [target]'s genitals with \the [tool]!</span>", \
+	"<span class='warning'>Your hand slips, slicing [target]'s genitals with \the [tool]!</span>")
 	BP.createwound(CUT, 20, 1)

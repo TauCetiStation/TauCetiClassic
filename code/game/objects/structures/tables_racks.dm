@@ -386,7 +386,7 @@
 	if (iswrench(W))
 		if(user.is_busy(src))
 			return
-		to_chat(user, "\blue Now disassembling table")
+		to_chat(user, "<span class='notice'>Now disassembling table</span>")
 		if(W.use_tool(src, user, 50, volume = 50))
 			destroy()
 		return
@@ -692,14 +692,14 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.use(0, user))
 			if(src.status == 2)
-				to_chat(user, "\blue Now weakening the reinforced table")
+				to_chat(user, "<span class='notice'>Now weakening the reinforced table</span>")
 				if(WT.use_tool(src, user, 50, volume = 50))
-					to_chat(user, "\blue Table weakened")
+					to_chat(user, "<span class='notice'>Table weakened</span>")
 					src.status = 1
 			else
-				to_chat(user, "\blue Now strengthening the reinforced table")
+				to_chat(user, "<span class='notice'>Now strengthening the reinforced table</span>")
 				if(WT.use_tool(src, user, 50, volume = 50))
-					to_chat(user, "\blue Table strengthened")
+					to_chat(user, "<span class='notice'>Table strengthened</span>")
 					src.status = 2
 			return FALSE
 		return TRUE

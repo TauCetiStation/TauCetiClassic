@@ -74,10 +74,10 @@ var/global/sent_strike_team = 0
 			//So they don't forget their code or mission.
 			create_random_account_and_store_in_mind(new_commando)
 			if(nuke_code)
-				new_commando.mind.store_memory("<B>Nuke Code:</B> \red [nuke_code].")
-			new_commando.mind.store_memory("<B>Mission:</B> \red [input].")
+				new_commando.mind.store_memory("<B>Nuke Code:</B> <span class='warning'>[nuke_code]</span>.")
+			new_commando.mind.store_memory("<B>Mission:</B> <span class='warning'>[input]</span>.")
 
-			to_chat(new_commando, "\blue You are a Special Ops. [!leader_selected?"commando":"<B>LEADER</B>"] in the service of Central Command. Check the table ahead for detailed instructions.\nYour current mission is: \red<B>[input]</B>")
+			to_chat(new_commando, "<span class='notice'>You are a Special Ops. [!leader_selected?"commando":"<B>LEADER</B>"] in the service of Central Command. Check the table ahead for detailed instructions.\nYour current mission is: <span class='warning'><B>[input]</B></span></span>")
 
 			commando_number--
 
@@ -95,7 +95,7 @@ var/global/sent_strike_team = 0
 			new /obj/effect/spawner/newbomb/timer/syndicate(L.loc)
 			qdel(L)
 
-	message_admins("\blue [key_name_admin(usr)] has spawned a CentCom strike squad.")
+	message_admins("<span class='notice'>[key_name_admin(usr)] has spawned a CentCom strike squad.</span>")
 	log_admin("[key_name(usr)] used Spawn Death Squad.")
 	return 1
 

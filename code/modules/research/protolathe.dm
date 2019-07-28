@@ -112,7 +112,7 @@ Note: Must be placed west/left of and R&D console to function.
 		else if (is_wire_tool(I) && wires.interact(user))
 			return 1
 		else
-			to_chat(user, "\red You can't load the [src.name] while it's opened.")
+			to_chat(user, "<span class='warning'>You can't load the [src.name] while it's opened.</span>")
 			return 1
 
 	if (disabled)
@@ -121,17 +121,17 @@ Note: Must be placed west/left of and R&D console to function.
 		to_chat(user, "\The protolathe must be linked to an R&D console first!")
 		return 1
 	if (busy)
-		to_chat(user, "\red The protolathe is busy. Please wait for completion of previous operation.")
+		to_chat(user, "<span class='warning'>The protolathe is busy. Please wait for completion of previous operation.</span>")
 		return 1
 	if (!istype(I, /obj/item/stack/sheet))
-		to_chat(user, "\red You cannot insert this item into the protolathe!")
+		to_chat(user, "<span class='warning'>You cannot insert this item into the protolathe!</span>")
 		return 1
 	if (stat)
 		return 1
 	if(istype(I,/obj/item/stack/sheet))
 		var/obj/item/stack/sheet/S = I
 		if (TotalMaterials() + S.perunit > max_material_storage)
-			to_chat(user, "\red The protolathe's material bin is full. Please remove material before adding more.")
+			to_chat(user, "<span class='warning'>The protolathe's material bin is full. Please remove material before adding more.</span>")
 			return 1
 
 	var/obj/item/stack/sheet/stack = I
