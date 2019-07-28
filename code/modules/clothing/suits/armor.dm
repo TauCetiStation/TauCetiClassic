@@ -274,10 +274,10 @@
 	if(!holstered)
 		var/obj/item/I = usr.get_active_hand()
 		if(!istype(I, /obj/item/weapon/gun) && !I.can_be_holstered)
-			to_chat(usr, "\blue You need your gun equiped to holster it.")
+			to_chat(usr, "<span class='notice'>You need your gun equiped to holster it.</span>")
 			return
 		if(!I.can_be_holstered)
-			to_chat(usr, "\red This gun won't fit in \the belt!")
+			to_chat(usr, "<span class='warning'>This gun won't fit in \the belt!</span>")
 			return
 		holstered = usr.get_active_hand()
 		usr.drop_item()
