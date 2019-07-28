@@ -65,22 +65,21 @@
 
 // ----- Misc -----
 // Breath
-#define SOUNDIN_RIGBREATH  pick('sound/misc/rigbreath1.ogg', 'sound/misc/rigbreath2.ogg', 'sound/misc/rigbreath3.ogg')
-#define SOUNDIN_BREATHMASK pick('sound/misc/breathmask1.ogg', 'sound/misc/breathmask2.ogg')
+#define SOUNDIN_RIGBREATH   list('sound/misc/rigbreath1.ogg', 'sound/misc/rigbreath2.ogg', 'sound/misc/rigbreath3.ogg')
+#define SOUNDIN_BREATHMASK  list('sound/misc/breathmask1.ogg', 'sound/misc/breathmask2.ogg')
+#define SOUNDIN_DESCERATION list('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
 
 // ----- Machines -----
 // Keystroke
-#define SOUNDIN_KEYBOARD pick('sound/machines/keyboard/keyboard1.ogg', 'sound/machines/keyboard/keyboard2.ogg', 'sound/machines/keyboard/keyboard3.ogg', 'sound/machines/keyboard/keyboard4.ogg', 'sound/machines/keyboard/keyboard5.ogg')
+#define SOUNDIN_KEYBOARD list('sound/machines/keyboard/keyboard1.ogg', 'sound/machines/keyboard/keyboard2.ogg', 'sound/machines/keyboard/keyboard3.ogg', 'sound/machines/keyboard/keyboard4.ogg', 'sound/machines/keyboard/keyboard5.ogg')
 // PDA's taps
-#define SOUNDIN_PDA_TAPS pick('sound/machines/keyboard/pda1.ogg', 'sound/machines/keyboard/pda2.ogg', 'sound/machines/keyboard/pda3.ogg', 'sound/machines/keyboard/pda4.ogg', 'sound/machines/keyboard/pda5.ogg')
+#define SOUNDIN_PDA_TAPS list('sound/machines/keyboard/pda1.ogg', 'sound/machines/keyboard/pda2.ogg', 'sound/machines/keyboard/pda3.ogg', 'sound/machines/keyboard/pda4.ogg', 'sound/machines/keyboard/pda5.ogg')
 
 // ----- Weapons -----
 // Melee
-#define SOUNDIN_GENHIT pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
+#define SOUNDIN_GENHIT list('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
+#define SOUNDIN_PUNCH  list('sound/weapons/punch1.ogg', 'sound/weapons/punch2.ogg', 'sound/weapons/punch3.ogg', 'sound/weapons/punch4.ogg')
 
 // ----- Items -----
 // Medical
-#define SOUNDIN_BANDAGE   pick('sound/items/bandage.ogg', 'sound/items/bandage2.ogg', 'sound/items/bandage3.ogg')
-
-#define SOUNDIN_PUNCH       list('sound/weapons/punch1.ogg', 'sound/weapons/punch2.ogg', 'sound/weapons/punch3.ogg', 'sound/weapons/punch4.ogg')
-#define SOUNDIN_DESCERATION list('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
+#define SOUNDIN_BANDAGE list('sound/items/bandage.ogg', 'sound/items/bandage2.ogg', 'sound/items/bandage3.ogg')

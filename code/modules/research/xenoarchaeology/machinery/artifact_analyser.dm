@@ -106,7 +106,7 @@
 
 /obj/machinery/artifact_analyser/Topic(href, href_list)
 	if(href_list["close"])
-		playsound(src, SOUNDIN_KEYBOARD, VOL_EFFECTS_MASTER, null, FALSE)
+		playsound(src, pick(SOUNDIN_KEYBOARD), VOL_EFFECTS_MASTER, null, FALSE)
 		usr.unset_machine(src)
 		usr << browse(null, "window=artanalyser")
 		return FALSE
@@ -116,7 +116,7 @@
 		return
 
 	if(href_list["begin_scan"])
-		playsound(src, SOUNDIN_KEYBOARD, VOL_EFFECTS_MASTER, null, FALSE)
+		playsound(src, pick(SOUNDIN_KEYBOARD), VOL_EFFECTS_MASTER, null, FALSE)
 		if(!owned_scanner)
 			reconnect_scanner()
 		if(owned_scanner)
@@ -147,7 +147,7 @@
 			if(!scanned_object)
 				src.visible_message("<b>[name]</b> states, \"Unable to isolate scan target.\"")
 	if(href_list["halt_scan"])
-		playsound(src, SOUNDIN_KEYBOARD, VOL_EFFECTS_MASTER, null, FALSE)
+		playsound(src, pick(SOUNDIN_KEYBOARD), VOL_EFFECTS_MASTER, null, FALSE)
 		owned_scanner.icon_state = "xenoarch_scanner"
 		scan_in_progress = 0
 		src.visible_message("<b>[name]</b> states, \"Scanning halted.\"")

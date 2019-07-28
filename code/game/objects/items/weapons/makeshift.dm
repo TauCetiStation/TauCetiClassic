@@ -138,7 +138,7 @@
 		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Beaten by [user.name] ([user.ckey]) with [src.name]</font>"
 		msg_admin_attack("[user.name] ([user.ckey]) beat [H.name] ([H.ckey]) with [src.name] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		playsound(src, SOUNDIN_GENHIT, VOL_EFFECTS_MASTER)
+		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 	else if(!status)
 		H.visible_message("<span class='warning'>[M] has been prodded with the [src] by [user]. Luckily it was off.</span>")
 		return

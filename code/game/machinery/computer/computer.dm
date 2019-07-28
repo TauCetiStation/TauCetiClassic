@@ -33,7 +33,7 @@
 		return
 	if(href_list && (last_keyboard_sound <= world.time))
 		if(iscarbon(usr))
-			playsound(src, SOUNDIN_KEYBOARD, VOL_EFFECTS_MASTER, null, FALSE)
+			playsound(src, pick(SOUNDIN_KEYBOARD), VOL_EFFECTS_MASTER, null, FALSE)
 			last_keyboard_sound = world.time + 8
 
 /obj/machinery/computer/Destroy()
