@@ -15,7 +15,7 @@
 	origin_tech = "combat=2"
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
-	to_chat(viewers(user), "\red <b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b></span>")
 	return (FIRELOSS)
 
 /obj/item/weapon/melee/baton/update_icon()
@@ -26,7 +26,7 @@
 
 /obj/item/weapon/melee/baton/attack_self(mob/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))
-		to_chat(user, "\red You grab the [src] on the wrong side.")
+		to_chat(user, "<span class='warning'>You grab the [src] on the wrong side.</span>")
 		user.Weaken(30)
 		charges--
 		if(charges < 1)

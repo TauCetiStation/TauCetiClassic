@@ -25,7 +25,7 @@
 
 /datum/game_mode/abduction/announce()
 	to_chat(world, "<B>The current game mode is - Abduction!</B>")
-	to_chat(world, "There are alien <b>abductors</b> sent to [world.name] to perform nefarious experiments!")
+	to_chat(world, "There are alien <b>abductors</b> sent to [station_name()] to perform nefarious experiments!")
 	to_chat(world, "<b>Abductors</b> - kidnap the crew and replace their organs with experimental ones.")
 	to_chat(world, "<b>Crew</b> - don't get abducted and stop the abductors.")
 
@@ -340,7 +340,7 @@
 	if(text)
 		antagonists_completion += list(list("mode" = "abduction", "html" = text))
 		text = "<div class='block'>[text]</div>"
-	
+
 	return text
 
 // Machinery

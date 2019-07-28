@@ -277,21 +277,21 @@ var/const/INGEST = 2
 
 					var/list/seen = viewers(4, get_turf(my_atom))
 					for(var/mob/M in seen)
-						to_chat(M, "\blue [bicon(my_atom)] The solution begins to bubble.")
+						to_chat(M, "<span class='notice'>[bicon(my_atom)] The solution begins to bubble.</span>")
 
 				/*	if(istype(my_atom, /obj/item/slime_core))
 						var/obj/item/slime_core/ME = my_atom
 						ME.Uses--
 						if(ME.Uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in viewers(4, get_turf(my_atom)) )
-								to_chat(M, "\blue [bicon(my_atom)] The innards begin to boil!")
+								to_chat(M, "<span class='notice'>[bicon(my_atom)] The innards begin to boil!</span>")
 					*/
 					if(istype(my_atom, /obj/item/slime_extract))
 						var/obj/item/slime_extract/ME2 = my_atom
 						ME2.Uses--
 						if(ME2.Uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in seen)
-								to_chat(M, "\blue [bicon(my_atom)] The [my_atom]'s power is consumed in the reaction.")
+								to_chat(M, "<span class='notice'>[bicon(my_atom)] The [my_atom]'s power is consumed in the reaction.</span>")
 								ME2.name = "used slime extract"
 								ME2.desc = "This extract has been used up."
 

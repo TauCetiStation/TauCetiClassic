@@ -424,7 +424,7 @@
 						IO.damage += rand(3,4)
 						if (IO.damage >= IO.min_broken_damage)
 							if(affecting.stat != DEAD)
-								to_chat(affecting, "\red You go blind!")
+								to_chat(affecting, "<span class='warning'>You go blind!</span>")
 //					else if(hit_zone != BP_HEAD)
 //						if(state < GRAB_NECK)
 //							assailant << "<span class='warning'>You require a better grab to do this.</span>"

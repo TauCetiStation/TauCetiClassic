@@ -77,7 +77,7 @@ var/list/teleportlocs = list()
 		if(teleportlocs.Find(AR.name))
 			continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z == ZLEVEL_STATION)
+		if (is_station_level(picked.z))
 			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
 	teleportlocs = sortAssoc(teleportlocs)
@@ -94,7 +94,7 @@ var/list/ghostteleportlocs = list()
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z == ZLEVEL_STATION || picked.z == ZLEVEL_ASTEROID || picked.z == ZLEVEL_TELECOMMS)
+		if (is_station_level(picked.z) || is_mining_level(picked.z))
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 	ghostteleportlocs = sortAssoc(ghostteleportlocs)
@@ -105,6 +105,7 @@ var/list/ghostteleportlocs = list()
 	layer = 10
 	uid = ++global_uid
 	all_areas += src
+	areas_by_type[type] = src
 
 	if(!requires_power)
 		power_light = 0

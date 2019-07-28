@@ -576,7 +576,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	get_template()
 	if(!used)
 		var/turf/T = get_turf(src)
-		if((T.z != ZLEVEL_ASTEROID) && (T.z != ZLEVEL_JUNKYARD) && !istype(T.loc, /area/space)  && !istype(T.loc, /area/shuttle)) //we don't need complete all checks
+		if(!is_mining_level(T.z) && !is_junkyard_level(T.z) && !istype(T.loc, /area/space)  && !istype(T.loc, /area/shuttle)) //we don't need complete all checks
 			src.loc.visible_message("<span class='warning'>You must use shelter at asteroid or in space! Grab this shit \
 			and shut up!</span>")
 			used = TRUE
@@ -611,7 +611,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 			playsound(T, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
-			if(T.z != ZLEVEL_ASTEROID)//only report capsules away from the mining level
+			if(!is_mining_level(T.z))//only report capsules away from the mining level
 				message_admins("[key_name_admin(usr)] [ADMIN_QUE(usr)] [ADMIN_FLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_JMP(T)]")
 				log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
 			template.load(T, centered = TRUE)
@@ -798,7 +798,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		if(iswrench(O))
 			if(user.is_busy(src))
 				return
-			to_chat(user, "\blue You start to disassemble the storage unit...")
+			to_chat(user, "<span class='notice'>You start to disassemble the storage unit...</span>")
 			if(O.use_tool(src, user, 20, volume = 50))
 				qdel(src)
 			return

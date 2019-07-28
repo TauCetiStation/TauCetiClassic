@@ -18,6 +18,8 @@ var/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle/atom_init()
 //	curr_location= locate(/area/shuttle/arrival/pre_game)
+	arrival_note = "Arrival shuttle docked with the [station_name()]."
+	department_note = "Arrival shuttle left the [station_name()]."
 	radio = new (src)
 	. = ..()
 

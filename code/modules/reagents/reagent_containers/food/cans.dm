@@ -21,7 +21,7 @@
 	var/fillevel = gulp_size
 
 	if(!R.total_volume || !R)
-		to_chat(user, "\red None of [src] left, oh no!")
+		to_chat(user, "<span class='warning'>None of [src] left, oh no!</span>")
 		return 0
 
 	if(M == user)
@@ -43,10 +43,10 @@
 
 	else
 		for(var/mob/O in viewers(world.view, user))
-			O.show_message("\red [user] attempts to feed [M] [src].", 1)
+			O.show_message("<span class='warning'>[user] attempts to feed [M] [src].</span>", 1)
 		if(!do_mob(user, M)) return
 		for(var/mob/O in viewers(world.view, user))
-			O.show_message("\red [user] feeds [M] [src].", 1)
+			O.show_message("<span class='warning'>[user] feeds [M] [src].</span>", 1)
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
@@ -73,24 +73,24 @@
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume)
-			to_chat(user, "\red [target] is empty.")
+			to_chat(user, "<span class='warning'>[target] is empty.</span>")
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
-			to_chat(user, "\red [src] is full.")
+			to_chat(user, "<span class='warning'>[src] is full.</span>")
 			return
 
 			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-			to_chat(user, "\blue You fill [src] with [trans] units of the contents of [target].")
+			to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 	else if(target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
 
 		if(!reagents.total_volume)
-			to_chat(user, "\red [src] is empty.")
+			to_chat(user, "<span class='warning'>[src] is empty.</span>")
 			return
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			to_chat(user, "\red [target] is full.")
+			to_chat(user, "<span class='warning'>[target] is full.</span>")
 			return
 
 
@@ -102,7 +102,7 @@
 			refillName = reagents.get_master_reagent_name()
 
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-		to_chat(user, "\blue You transfer [trans] units of the solution to [target].")
+		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user

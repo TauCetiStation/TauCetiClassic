@@ -181,7 +181,7 @@ var/global/list/breach_burn_descriptors = list(
 	if(istype(W,/obj/item/stack/sheet/mineral/plastic) || istype(W,/obj/item/stack/sheet/metal))
 
 		if(isliving(loc))
-			to_chat(user, "\red How do you intend to patch a hardsuit while someone is wearing it?")
+			to_chat(user, "<span class='warning'>How do you intend to patch a hardsuit while someone is wearing it?</span>")
 			return
 
 		if(!damage || !burn_damage)
@@ -201,7 +201,7 @@ var/global/list/breach_burn_descriptors = list(
 	else if(iswelder(W))
 
 		if(isliving(loc))
-			to_chat(user, "\red How do you intend to patch a hardsuit while someone is wearing it?")
+			to_chat(user, "<span class='warning'>How do you intend to patch a hardsuit while someone is wearing it?</span>")
 			return
 
 		if (!damage || ! brute_damage)
@@ -211,7 +211,7 @@ var/global/list/breach_burn_descriptors = list(
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!WT.use(5))
-			to_chat(user, "\red You need more welding fuel to repair this suit.")
+			to_chat(user, "<span class='warning'>You need more welding fuel to repair this suit.</span>")
 			return
 
 		repair_breaches(BRUTE, 3, user)

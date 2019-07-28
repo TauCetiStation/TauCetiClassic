@@ -45,7 +45,8 @@ var/global/wcDw
 		/area/security/warden,
 		/area/security/range,
 		/area/security/forensic_office,
-		/area/security/checkpoint
+		/area/security/checkpoint,
+		/area/security/secconfhall
 		)
 
 	for(var/A in wsRedList)

@@ -83,7 +83,7 @@
 /obj/structure/displaycase/attack_hand(mob/user)
 	if (src.destroyed && src.occupied)
 		new /obj/item/weapon/gun/energy/laser/selfcharging/captain( src.loc )
-		to_chat(user, "\b You deactivate the hover field built into the case.")
+		to_chat(user, "<b>You deactivate the hover field built into the case.</b>")
 		src.occupied = 0
 		src.add_fingerprint(user)
 		update_icon()

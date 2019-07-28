@@ -1187,7 +1187,7 @@
 	level = 1
 
 /datum/disease2/effect/gunck/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	to_chat(mob, "\red Mucous runs down the back of your throat.")*/
+	to_chat(mob, "<span class='warning'>Mucous runs down the back of your throat.</span>")*/
 
 /datum/disease2/effect/drool
 	name = "Drooling"

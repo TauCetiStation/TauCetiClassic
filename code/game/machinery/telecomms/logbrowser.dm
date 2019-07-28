@@ -182,7 +182,7 @@
 	if(href_list["delete"])
 
 		if(!src.allowed(usr) && !emagged)
-			to_chat(usr, "\red ACCESS DENIED.")
+			to_chat(usr, "<span class='warning'>ACCESS DENIED.</span>")
 			return
 
 		if(SelectedServer)
@@ -224,5 +224,5 @@
 		return FALSE
 	playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 	emagged = 1
-	to_chat(user, "\blue You you disable the security protocols")
+	to_chat(user, "<span class='notice'>You you disable the security protocols</span>")
 	return TRUE

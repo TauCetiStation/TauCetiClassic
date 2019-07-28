@@ -133,7 +133,7 @@
 /obj/machinery/singularity_beacon/proc/Activate(mob/user = null)
 	if(!checkWirePower())
 		if(user)
-			to_chat(user, "\blue The connected wire doesn't have enough current.")
+			to_chat(user, "<span class='notice'>The connected wire doesn't have enough current.</span>")
 		return 1
 	for(var/obj/singularity/singulo in poi_list)
 		if(singulo.z == z)
@@ -141,7 +141,7 @@
 	icon_state = "[icontype]1"
 	active = 1
 	if(user)
-		to_chat(user, "\blue You activate the beacon.")
+		to_chat(user, "<span class='notice'>You activate the beacon.</span>")
 
 
 /obj/machinery/singularity_beacon/proc/Deactivate(mob/user = null)
@@ -151,7 +151,7 @@
 	icon_state = "[icontype]0"
 	active = 0
 	if(user)
-		to_chat(user, "\blue You deactivate the beacon.")
+		to_chat(user, "<span class='notice'>You deactivate the beacon.</span>")
 
 
 /obj/machinery/singularity_beacon/attack_ai(mob/user)
@@ -166,20 +166,20 @@
 	if(stat & SCREWED)
 		return active ? Deactivate(user) : Activate(user)
 	else
-		to_chat(user, "\red You need to screw the beacon to the floor first!")
+		to_chat(user, "<span class='warning'>You need to screw the beacon to the floor first!</span>")
 		return 1
 
 
 /obj/machinery/singularity_beacon/attackby(obj/item/weapon/W, mob/user)
 	if(isscrewdriver(W))
 		if(active)
-			to_chat(user, "\red You need to deactivate the beacon first!")
+			to_chat(user, "<span class='warning'>You need to deactivate the beacon first!</span>")
 			return
 
 		if(stat & SCREWED)
 			stat &= ~SCREWED
 			anchored = 0
-			to_chat(user, "\blue You unscrew the beacon from the floor.")
+			to_chat(user, "<span class='notice'>You unscrew the beacon from the floor.</span>")
 			attached = null
 			return
 		else
@@ -191,7 +191,7 @@
 				return
 			stat |= SCREWED
 			anchored = 1
-			to_chat(user, "\blue You screw the beacon to the floor and attach the cable.")
+			to_chat(user, "<span class='notice'>You screw the beacon to the floor and attach the cable.</span>")
 			return
 	..()
 	return

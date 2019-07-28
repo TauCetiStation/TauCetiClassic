@@ -17,7 +17,7 @@
 				if(user.is_busy(src))
 					return
 				if(P.use_tool(src, user, 20, volume = 50))
-					to_chat(user, "\blue You wrench the frame into place.")
+					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
 					anchored = 1
 					state = 1
 			if(iswelder(P))
@@ -27,7 +27,7 @@
 					return
 				if(user.is_busy(src)) return
 				if(WT.use_tool(src, user, 20, amount = 0, volume = 50))
-					to_chat(user, "\blue You deconstruct the frame.")
+					to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
 					new /obj/item/stack/sheet/plasteel( loc, 4)
 					qdel(src)
 		if(1)
@@ -35,24 +35,24 @@
 				if(user.is_busy(src))
 					return
 				if(P.use_tool(src, user, 20, volume = 50))
-					to_chat(user, "\blue You unfasten the frame.")
+					to_chat(user, "<span class='notice'>You unfasten the frame.</span>")
 					anchored = 0
 					state = 0
 			if(istype(P, /obj/item/weapon/circuitboard/aicore) && !circuit)
 				playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
-				to_chat(user, "\blue You place the circuit board inside the frame.")
+				to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 				icon_state = "1"
 				circuit = P
 				user.drop_item()
 				P.loc = src
 			if(isscrewdriver(P) && circuit)
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-				to_chat(user, "\blue You screw the circuit board into place.")
+				to_chat(user, "<span class='notice'>You screw the circuit board into place.</span>")
 				state = 2
 				icon_state = "2"
 			if(iscrowbar(P) && circuit)
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
-				to_chat(user, "\blue You remove the circuit board.")
+				to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 				state = 1
 				icon_state = "0"
 				circuit.loc = loc
@@ -60,7 +60,7 @@
 		if(2)
 			if(isscrewdriver(P) && circuit)
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-				to_chat(user, "\blue You unfasten the circuit board.")
+				to_chat(user, "<span class='notice'>You unfasten the circuit board.</span>")
 				state = 1
 				icon_state = "1"
 			if(iscoil(P))
@@ -70,7 +70,7 @@
 				if(C.get_amount() >= 5)
 					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					if(C.use_tool(src, user, 20, amount = 5, volume = 50))
-						to_chat(user, "\blue You add cables to the frame.")
+						to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
 						state = 3
 						icon_state = "3"
 		if(3)
@@ -79,7 +79,7 @@
 					to_chat(user, "Get that brain out of there first")
 				else
 					playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
-					to_chat(user, "\blue You remove the cables.")
+					to_chat(user, "<span class='notice'>You remove the cables.</span>")
 					state = 2
 					icon_state = "2"
 					new /obj/item/stack/cable_coil/red(loc, 5)
@@ -91,7 +91,7 @@
 				if(RG.get_amount() >= 2)
 					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					if(RG.use_tool(src, user, 20, amount = 2, volume = 50))
-						to_chat(user, "\blue You put in the glass panel.")
+						to_chat(user, "<span class='notice'>You put in the glass panel.</span>")
 						state = 4
 						icon_state = "4"
 
@@ -120,14 +120,14 @@
 
 			if(istype(P, /obj/item/device/mmi) || istype(P, /obj/item/device/mmi/posibrain))
 				if(!P:brainmob)
-					to_chat(user, "\red Sticking an empty [P] into the frame would sort of defeat the purpose.")
+					to_chat(user, "<span class='warning'>Sticking an empty [P] into the frame would sort of defeat the purpose.</span>")
 					return
 				if(P:brainmob.stat == DEAD)
-					to_chat(user, "\red Sticking a dead [P] into the frame would sort of defeat the purpose.")
+					to_chat(user, "<span class='warning'>Sticking a dead [P] into the frame would sort of defeat the purpose.</span>")
 					return
 
 				if(jobban_isbanned(P:brainmob, "AI"))
-					to_chat(user, "\red This [P] does not seem to fit.")
+					to_chat(user, "<span class='warning'>This [P] does not seem to fit.</span>")
 					return
 
 				if(P:brainmob.mind)
@@ -143,7 +143,7 @@
 
 			if(iscrowbar(P) && brain)
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
-				to_chat(user, "\blue You remove the brain.")
+				to_chat(user, "<span class='notice'>You remove the brain.</span>")
 				brain.loc = loc
 				brain = null
 				icon_state = "3"
@@ -151,7 +151,7 @@
 		if(4)
 			if(iscrowbar(P))
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
-				to_chat(user, "\blue You remove the glass panel.")
+				to_chat(user, "<span class='notice'>You remove the glass panel.</span>")
 				state = 3
 				if (brain)
 					icon_state = "3b"
@@ -162,7 +162,7 @@
 
 			if(isscrewdriver(P))
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-				to_chat(user, "\blue You connect the monitor.")
+				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 				if(!brain)
 					var/open_for_latejoin = alert(user, "Would you like this core to be open for latejoining AIs?", "Latejoin", "Yes", "Yes", "No") == "Yes"
 					var/obj/structure/AIcore/deactivated/D = new(loc)
@@ -214,13 +214,13 @@ That prevents a few funky behaviors.
 					if("AICARD")
 						var/obj/item/device/aicard/C = src
 						if(C.contents.len)//If there is an AI on card.
-							to_chat(U, "\red <b>Transfer failed</b>: \black Existing AI found on this terminal. Remove existing AI to install a new one.")
+							to_chat(U, "<span class='warning'><b>Transfer failed</b>:</span> Existing AI found on this terminal. Remove existing AI to install a new one.")
 						else
 							if (ticker.mode.name == "AI malfunction")
 								var/datum/game_mode/malfunction/malf = ticker.mode
 								for (var/datum/mind/malfai in malf.malf_ai)
 									if (T.mind == malfai)
-										to_chat(U, "\red <b>ERROR</b>: \black Remote transfer interface disabled.")//Do ho ho ho~
+										to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Remote transfer interface disabled.")//Do ho ho ho~
 										return
 							new /obj/structure/AIcore/deactivated(T.loc)//Spawns a deactivated terminal at AI location.
 							T.aiRestorePowerRoutine = 0//So the AI initially has power.
@@ -233,20 +233,20 @@ That prevents a few funky behaviors.
 								C.icon_state = "aicard-full"
 							T.cancel_camera()
 							to_chat(T, "You have been downloaded to a mobile storage device. Remote device connection severed.")
-							to_chat(U, "\blue <b>Transfer successful</b>: \black [T.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+							to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [T.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src
 						if(C.AI)//If there is an AI on card.
-							to_chat(U, "\red <b>Transfer failed</b>: \black Existing AI found on this terminal. Remove existing AI to install a new one.")
+							to_chat(U, "<span class='warning'><b>Transfer failed</b>:</span> Existing AI found on this terminal. Remove existing AI to install a new one.")
 						else
 							if (ticker.mode.name == "AI malfunction")
 								var/datum/game_mode/malfunction/malf = ticker.mode
 								for (var/datum/mind/malfai in malf.malf_ai)
 									if (T.mind == malfai)
-										to_chat(U, "\red <b>ERROR</b>: \black Remote transfer interface disabled.")
+										to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Remote transfer interface disabled.")
 										return
 							if(T.stat)//If the ai is dead/dying.
-								to_chat(U, "\red <b>ERROR</b>: \black [T.name] data core is corrupted. Unable to install.")
+								to_chat(U, "<span class='warning'><b>ERROR</b>:</span> [T.name] data core is corrupted. Unable to install.")
 							else
 								new /obj/structure/AIcore/deactivated(T.loc)
 								T.aiRestorePowerRoutine = 0
@@ -256,7 +256,7 @@ That prevents a few funky behaviors.
 								C.AI = T
 								T.cancel_camera()
 								to_chat(T, "You have been downloaded to a mobile storage device. Remote device connection severed.")
-								to_chat(U, "\blue <b>Transfer successful</b>: \black [T.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+								to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [T.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 
 			if("INACTIVE")//Inactive AI object.
 				var/obj/structure/AIcore/deactivated/T = target
@@ -273,7 +273,7 @@ That prevents a few funky behaviors.
 							C.overlays.Cut()
 							A.cancel_camera()
 							to_chat(A, "You have been uploaded to a stationary terminal. Remote device connection restored.")
-							to_chat(U, "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed.")
+							to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [A.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed.")
 							qdel(T)
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src
@@ -284,7 +284,7 @@ That prevents a few funky behaviors.
 							A.loc = T.loc
 							A.cancel_camera()
 							to_chat(A, "You have been uploaded to a stationary terminal. Remote device connection restored.")
-							to_chat(U, "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
+							to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 							qdel(T)
 			if("AIFIXER")//AI Fixer terminal.
 				var/obj/machinery/computer/aifixer/T = target
@@ -308,7 +308,7 @@ That prevents a few funky behaviors.
 								T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-empty")
 								A.cancel_camera()
 								to_chat(A, "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here.")
-								to_chat(U, "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
+								to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 						else
 							if(!C.contents.len && T.occupier && !T.active)
 								C.name = "inteliCard - [T.occupier.name]"
@@ -320,16 +320,16 @@ That prevents a few funky behaviors.
 									C.icon_state = "aicard-full"
 									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-full")
 								to_chat(T.occupier, "You have been downloaded to a mobile storage device. Still no remote access.")
-								to_chat(U, "\blue <b>Transfer successful</b>: \black [T.occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+								to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [T.occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 								T.occupier.loc = C
 								T.occupier.cancel_camera()
 								T.occupier = null
 							else if (C.contents.len)
-								to_chat(U, "\red <b>ERROR</b>: \black Artificial intelligence detected on terminal.")
+								to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Artificial intelligence detected on terminal.")
 							else if (T.active)
-								to_chat(U, "\red <b>ERROR</b>: \black Reconstruction in progress.")
+								to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Reconstruction in progress.")
 							else if (!T.occupier)
-								to_chat(U, "\red <b>ERROR</b>: \black Unable to locate artificial intelligence.")
+								to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Unable to locate artificial intelligence.")
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src
 						if(!T.contents.len)
@@ -345,25 +345,25 @@ That prevents a few funky behaviors.
 								T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-empty")
 								A.cancel_camera()
 								to_chat(A, "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here.")
-								to_chat(U, "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
+								to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 						else
 							if(!C.AI && T.occupant && !T.active)
 								if (T.occupant.stat)
-									to_chat(U, "\red <b>ERROR</b>: \black [T.occupant.name] data core is corrupted. Unable to install.")
+									to_chat(U, "<span class='warning'><b>ERROR</b>:</span> [T.occupant.name] data core is corrupted. Unable to install.")
 								else
 									T.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
 									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-full")
 									to_chat(T.occupant, "You have been downloaded to a mobile storage device. Still no remote access.")
-									to_chat(U, "\blue <b>Transfer successful</b>: \black [T.occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+									to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [T.occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 									T.occupant.loc = C
 									T.occupant.cancel_camera()
 									T.occupant = null
 							else if (C.AI)
-								to_chat(U, "\red <b>ERROR</b>: \black Artificial intelligence detected on terminal.")
+								to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Artificial intelligence detected on terminal.")
 							else if (T.active)
-								to_chat(U, "\red <b>ERROR</b>: \black Reconstruction in progress.")
+								to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Reconstruction in progress.")
 							else if (!T.occupant)
-								to_chat(U, "\red <b>ERROR</b>: \black Unable to locate artificial intelligence.")
+								to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Unable to locate artificial intelligence.")
 			if("NINJASUIT")//Ninjasuit
 				var/obj/item/clothing/suit/space/space_ninja/T = target
 				switch(interaction)
@@ -376,7 +376,7 @@ That prevents a few funky behaviors.
 
 							if(A)//If the host AI card is not empty.
 								if(A_T)//If there is an AI on the target card.
-									to_chat(U, "\red <b>ERROR</b>: \black [A_T.name] already installed. Remove [A_T.name] to install a new one.")
+									to_chat(U, "<span class='warning'><b>ERROR</b>:</span> [A_T.name] already installed. Remove [A_T.name] to install a new one.")
 								else
 									A.loc = C//Throw them into the target card. Since they are already on a card, transfer is easy.
 									C.name = "inteliCard - [A.name]"
@@ -384,10 +384,10 @@ That prevents a few funky behaviors.
 									T.AI = null
 									A.cancel_camera()
 									to_chat(A, "You have been uploaded to a mobile storage device.")
-									to_chat(U, "\blue <b>SUCCESS</b>: \black [A.name] ([rand(1000,9999)].exe) removed from host and stored within local memory.")
+									to_chat(U, "<span class='notice'><b>SUCCESS</b>:</span> [A.name] ([rand(1000,9999)].exe) removed from host and stored within local memory.")
 							else//If host AI is empty.
 								if(C.flush)//If the other card is flushing.
-									to_chat(U, "\red <b>ERROR</b>: \black AI flush is in progress, cannot execute transfer protocol.")
+									to_chat(U, "<span class='warning'><b>ERROR</b>:</span> AI flush is in progress, cannot execute transfer protocol.")
 								else
 									if(A_T&&!A_T.stat)//If there is an AI on the target card and it's not inactive.
 										A_T.loc = T//Throw them into suit.
@@ -397,11 +397,11 @@ That prevents a few funky behaviors.
 										T.AI = A_T
 										A_T.cancel_camera()
 										to_chat(A_T, "You have been uploaded to a mobile storage device.")
-										to_chat(U, "\blue <b>SUCCESS</b>: \black [A_T.name] ([rand(1000,9999)].exe) removed from local memory and installed to host.")
+										to_chat(U, "<span class='notice'><b>SUCCESS</b>:</span> [A_T.name] ([rand(1000,9999)].exe) removed from local memory and installed to host.")
 									else if(A_T)//If the target AI is dead. Else just go to return since nothing would happen if both are empty.
-										to_chat(U, "\red <b>ERROR</b>: \black [A_T.name] data core is corrupted. Unable to install.")
+										to_chat(U, "<span class='warning'><b>ERROR</b>:</span> [A_T.name] data core is corrupted. Unable to install.")
 	else
-		to_chat(U, "\red <b>ERROR</b>: \black AI flush is in progress, cannot execute transfer protocol.")
+		to_chat(U, "<span class='warning'><b>ERROR</b>:</span> AI flush is in progress, cannot execute transfer protocol.")
 	return
 
 /client/proc/empty_ai_core_toggle_latejoin()

@@ -205,7 +205,7 @@
 	..()
 	if (germ_level > INFECTION_LEVEL_ONE)
 		if(prob(1))
-			to_chat(owner, "\red Your skin itches.")
+			to_chat(owner, "<span class='warning'>Your skin itches.</span>")
 	if (germ_level > INFECTION_LEVEL_TWO)
 		if(prob(1))
 			INVOKE_ASYNC(owner, /mob/living/carbon/human.proc/vomit)

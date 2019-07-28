@@ -11,7 +11,7 @@
 	attack_verb = list("banned")
 
 /obj/item/weapon/banhammer/suicide_act(mob/user)
-	to_chat(viewers(user), "\red <b>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</b>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</b></span>")
 	return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 /obj/item/weapon/nullrod
@@ -118,7 +118,7 @@
 	return 50
 
 /obj/item/weapon/claymore/suicide_act(mob/user)
-	to_chat(viewers(user), "\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
 	return(BRUTELOSS)
 
 /obj/item/weapon/claymore/light
@@ -144,7 +144,7 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/katana/suicide_act(mob/user)
-	to_chat(viewers(user), "\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b></span>")
 	return(BRUTELOSS)
 
 /obj/item/weapon/katana/Get_shield_chance()
