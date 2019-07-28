@@ -76,35 +76,37 @@
 
 		var/direction = get_dir(src,target)
 
-		if(usr.buckled && isobj(usr.buckled) && !usr.buckled.anchored )
-			spawn(0)
-				var/obj/structure/stool/bed/chair/C = null
-				if(istype(usr.buckled, /obj/structure/stool/bed/chair))
-					C = usr.buckled
-				var/obj/B = usr.buckled
-				var/movementdirection = turn(direction,180)
-				if(C)	C.propelled = 4
-				step(B, movementdirection)
-				sleep(1)
-				step(B, movementdirection)
-				if(C)	C.propelled = 3
-				sleep(1)
-				step(B, movementdirection)
-				sleep(1)
-				step(B, movementdirection)
-				if(C)	C.propelled = 2
-				sleep(2)
-				step(B, movementdirection)
-				if(C)	C.propelled = 1
-				sleep(2)
-				step(B, movementdirection)
-				if(C)	C.propelled = 0
-				sleep(3)
-				step(B, movementdirection)
-				sleep(3)
-				step(B, movementdirection)
-				sleep(3)
-				step(B, movementdirection)
+		if(usr.buckled && isobj(usr.buckled) && !usr.buckled.anchored)
+			var/obj/structure/stool/bed/chair/buckled_to = usr.buckled
+			if(!buckled_to.flipped)
+				spawn(0)
+					var/obj/structure/stool/bed/chair/C = null
+					if(istype(usr.buckled, /obj/structure/stool/bed/chair))
+						C = usr.buckled
+					var/obj/B = usr.buckled
+					var/movementdirection = turn(direction,180)
+					if(C)	C.propelled = 4
+					step(B, movementdirection)
+					sleep(1)
+					step(B, movementdirection)
+					if(C)	C.propelled = 3
+					sleep(1)
+					step(B, movementdirection)
+					sleep(1)
+					step(B, movementdirection)
+					if(C)	C.propelled = 2
+					sleep(2)
+					step(B, movementdirection)
+					if(C)	C.propelled = 1
+					sleep(2)
+					step(B, movementdirection)
+					if(C)	C.propelled = 0
+					sleep(3)
+					step(B, movementdirection)
+					sleep(3)
+					step(B, movementdirection)
+					sleep(3)
+					step(B, movementdirection)
 		else
 			user.newtonian_move(turn(direction, 180))
 

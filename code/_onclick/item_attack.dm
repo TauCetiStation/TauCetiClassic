@@ -203,3 +203,22 @@
 		M.updatehealth()
 	add_fingerprint(user)
 	return 1
+
+/*
+[ModifierName]ClickAction procs are called from [ModifierName]Click
+and passed to an item held in user's hand, when he clicks on target.
+
+Return TRUE to prevent any other click logic.
+*/
+
+/obj/item/proc/ShiftClickAction(atom/target, mob/user)
+	return FALSE
+
+/obj/item/proc/CtrlClickAction(atom/target, mob/user)
+	return FALSE
+
+/obj/item/proc/CtrlShiftClickAction(atom/target, mob/user)
+	return FALSE
+
+/obj/item/proc/AltClickAction(atom/target, mob/user)
+	return FALSE

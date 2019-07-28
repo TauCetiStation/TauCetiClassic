@@ -37633,7 +37633,6 @@
 "bsQ" = (
 /obj/structure/safe,
 /obj/item/clothing/under/color/yellow,
-/obj/item/key,
 /obj/item/toy/katana,
 /turf/simulated/floor{
 	dir = 4;
@@ -46511,7 +46510,7 @@
 	},
 /area/hallway/primary/starboard)
 "bNK" = (
-/obj/structure/janitorialcart,
+/obj/structure/stool/bed/chair/janitorialcart,
 /obj/machinery/light/small,
 /turf/simulated/floor,
 /area/janitor)
