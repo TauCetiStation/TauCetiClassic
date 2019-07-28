@@ -207,7 +207,7 @@
 					pass.name = "guest pass #[number]"
 					pass.count_until_expired()
 				else
-					to_chat(usr, "\red Cannot issue pass without issuing ID.")
+					to_chat(usr, "<span class='warning'>Cannot issue pass without issuing ID.</span>")
 
 	updateUsrDialog()
 

@@ -231,7 +231,7 @@
 			if (health > 0)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message("\blue [M] [response_help] [src]")
+						O.show_message("<span class='notice'>[M] [response_help] [src]</span>")
 
 		if("grab")
 			M.Grab(src)
@@ -241,7 +241,7 @@
 			adjustBruteLoss(harm_intent_damage)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message("\red [M] [response_harm] [src]")
+					O.show_message("<span class='warning'>[M] [response_harm] [src]</span>")
 
 	return
 
@@ -253,13 +253,13 @@
 
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
+					O.show_message(text("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>"), 1)
 		if ("grab")
 			M.Grab(src)
 
 		if("hurt", "disarm")
 			var/damage = rand(15, 30)
-			visible_message("\red <B>[M] has slashed at [src]!</B>")
+			visible_message("<span class='warning'><B>[M] has slashed at [src]!</B></span>")
 			adjustBruteLoss(damage)
 
 	return
@@ -268,13 +268,13 @@
 
 	switch(L.a_intent)
 		if("help")
-			visible_message("\blue [L] rubs it's head against [src]")
+			visible_message("<span class='notice'>[L] rubs it's head against [src]</span>")
 
 
 		else
 
 			var/damage = rand(5, 10)
-			visible_message("\red <B>[L] bites [src]!</B>")
+			visible_message("<span class='warning'><B>[L] bites [src]!</B></span>")
 
 			if(stat != DEAD)
 				adjustBruteLoss(damage)

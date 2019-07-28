@@ -6,7 +6,7 @@
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "\red You cannot speak in IC (muted).")
+			to_chat(src, "<span class='warning'>You cannot speak in IC (muted).</span>")
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
@@ -75,16 +75,16 @@
 			if(host.reagents.has_reagent("sugar"))
 				if(!docile)
 					if(controlling)
-						to_chat(host, "\blue You feel the soporific flow of sugar in your host's blood, lulling you into docility.")
+						to_chat(host, "<span class='notice'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>")
 					else
-						to_chat(src, "\blue You feel the soporific flow of sugar in your host's blood, lulling you into docility.")
+						to_chat(src, "<span class='notice'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>")
 					docile = 1
 			else
 				if(docile)
 					if(controlling)
-						to_chat(host, "\blue You shake off your lethargy as the sugar leaves your host's blood.")
+						to_chat(host, "<span class='notice'>You shake off your lethargy as the sugar leaves your host's blood.</span>")
 					else
-						to_chat(src, "\blue You shake off your lethargy as the sugar leaves your host's blood.")
+						to_chat(src, "<span class='notice'>You shake off your lethargy as the sugar leaves your host's blood.</span>")
 					docile = 0
 
 			if(chemicals < 250)
@@ -92,7 +92,7 @@
 			if(controlling)
 
 				if(docile)
-					to_chat(host, "\blue You are feeling far too docile to continue controlling your host...")
+					to_chat(host, "<span class='notice'>You are feeling far too docile to continue controlling your host...</span>")
 					host.release_control()
 					return
 
@@ -117,7 +117,7 @@
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "\red You cannot speak in IC (muted).")
+			to_chat(src, "<span class='warning'>You cannot speak in IC (muted).</span>")
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
@@ -191,8 +191,8 @@
 		to_chat(src, "You cannot infest someone who is already infested!")
 		return
 
-	to_chat(src, "\red You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.")
-	to_chat(M, "\red You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.")
+	to_chat(src, "<span class='warning'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>")
+	to_chat(M, "<span class='warning'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>")
 	M.Weaken(3)
 
 	used_dominate = world.time
@@ -215,7 +215,7 @@
 		return
 
 	if(docile)
-		to_chat(src, "\blue You are feeling far too docile to do that.")
+		to_chat(src, "<span class='notice'>You are feeling far too docile to do that.</span>")
 		return
 
 	to_chat(src, "You begin delicately adjusting your connection to the host brain...")
@@ -225,8 +225,8 @@
 		if(!host || !src || controlling)
 			return
 		else
-			to_chat(src, "\red <B>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</B>")
-			to_chat(host, "\red <B>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</B>")
+			to_chat(src, "<span class='warning'><B>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</B></span>")
+			to_chat(host, "<span class='warning'><B>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</B></span>")
 
 			host_brain.ckey = host.ckey
 			host.ckey = src.ckey
@@ -249,7 +249,7 @@
 		to_chat(src, "You cannot secrete chemicals in your current state.")
 
 	if(docile)
-		to_chat(src, "\blue You are feeling far too docile to do that.")
+		to_chat(src, "<span class='notice'>You are feeling far too docile to do that.</span>")
 		return
 
 	if(chemicals < 50)
@@ -260,7 +260,7 @@
 	if(chemicals < 50 || !host || controlling || !src || stat) //Sanity check.
 		return
 
-	to_chat(src, "\red <B>You squirt a measure of [chem] from your reservoirs into [host]'s bloodstream.</B>")
+	to_chat(src, "<span class='warning'><B>You squirt a measure of [chem] from your reservoirs into [host]'s bloodstream.</B></span>")
 	host.reagents.add_reagent(chem, 15)
 	chemicals -= 50
 
@@ -277,7 +277,7 @@
 		to_chat(src, "You cannot leave your host in your current state.")
 
 	if(docile)
-		to_chat(src, "\blue You are feeling far too docile to do that.")
+		to_chat(src, "<span class='notice'>You are feeling far too docile to do that.</span>")
 		return
 
 	if(!host || !src) return
@@ -413,10 +413,10 @@
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
-		to_chat(src, text("\blue You are now hiding."))
+		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
 	else
 		layer = MOB_LAYER
-		to_chat(src, text("\blue You have stopped hiding."))
+		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
 
 //Procs for grabbing players.
 /mob/living/simple_animal/borer/proc/request_player()

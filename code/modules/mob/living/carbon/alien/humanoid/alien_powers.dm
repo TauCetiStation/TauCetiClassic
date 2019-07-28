@@ -123,13 +123,13 @@ Doesn't work on other aliens/AI.*/
 
 	if(powerc(50))
 		if(isalien(target))
-			to_chat(src, "\green Your allies are not a valid target.")
+			to_chat(src, "<span class='notice'>Your allies are not a valid target.</span>")
 			return
 		adjustToxLoss(-50)
-		to_chat(src, "\green You spit neurotoxin at [target].")
+		to_chat(src, "<span class='notice'>You spit neurotoxin at [target].</span>")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				to_chat(O, "\red [src] spits neurotoxin at [target]!")
+				to_chat(O, "<span class='warning'>[src] spits neurotoxin at [target]!</span>")
 		//I'm not motivated enough to revise this. Prjectile code in general needs update.
 		var/turf/T = loc
 		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)

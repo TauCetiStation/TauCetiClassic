@@ -418,11 +418,11 @@ var/list/admin_verbs_hideable = list(
 	if(holder && mob)
 		if(mob.invisibility == INVISIBILITY_OBSERVER)
 			mob.invisibility = initial(mob.invisibility)
-			to_chat(mob, "\red <b>Invisimin off. Invisibility reset.</b>")
+			to_chat(mob, "<span class='warning'><b>Invisimin off. Invisibility reset.</b></span>")
 			mob.alpha = max(mob.alpha + 100, 255)
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
-			to_chat(mob, "\blue <b>Invisimin on. You are now as invisible as a ghost.</b>")
+			to_chat(mob, "<span class='notice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>")
 			mob.alpha = max(mob.alpha - 100, 0)
 
 
@@ -564,7 +564,7 @@ var/list/admin_verbs_hideable = list(
 		if("Cancel")
 			return 0
 	log_admin("[ckey] creating an admin explosion at [epicenter.loc].")
-	message_admins("\blue [ckey] creating an admin explosion at [epicenter.loc].")
+	message_admins("<span class='notice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/give_spell(mob/T as mob in mob_list) // -- Urist
@@ -581,7 +581,7 @@ var/list/admin_verbs_hideable = list(
 	T.AddSpell(new path)
 	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
-	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the spell [S].")
+	message_admins("<span class='notice'>[key_name_admin(usr)] gave [key_name(T)] the spell [S].</span>")
 
 /client/proc/give_disease(mob/T as mob in mob_list) // -- Giacom
 	set category = "Fun"
@@ -597,7 +597,7 @@ var/list/admin_verbs_hideable = list(
 	T.contract_disease(new path, 1)
 	feedback_add_details("admin_verb","GD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
-	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the disease [D].")
+	message_admins("<span class='notice'>[key_name_admin(usr)] gave [key_name(T)] the disease [D].</span>")
 
 /client/proc/give_disease2(mob/T as mob in mob_list) // -- Giacom
 	set category = "Fun"
@@ -675,7 +675,7 @@ var/list/admin_verbs_hideable = list(
 		for (var/mob/V in hearers(O))
 			V.show_message(message, 2)
 		log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound")
-		message_admins("\blue [key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[O.x];Y=[O.y];Z=[O.z]'>JMP</a>) make a sound")
+		message_admins("<span class='notice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[O.x];Y=[O.y];Z=[O.z]'>JMP</a>) make a sound</span>")
 		feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 */
 
@@ -771,7 +771,7 @@ var/list/admin_verbs_hideable = list(
 		return
 
 	if(!istype(M, /mob/living/carbon/human))
-		to_chat(usr, "\red You can only do this to humans!")
+		to_chat(usr, "<span class='warning'>You can only do this to humans!</span>")
 		return
 	switch(alert("Are you sure you wish to edit this mob's appearance? Skrell, Unathi, Vox and Tajaran can result in unintended consequences.",,"Yes","No"))
 		if("No")
@@ -909,7 +909,7 @@ var/list/admin_verbs_hideable = list(
 	T.playsound_local(null, 'sound/voice/ManUp1.ogg', VOL_ADMIN, vary = FALSE, ignore_environment = TRUE)
 
 	log_admin("[key_name(usr)] told [key_name(T)] to man up and deal with it.")
-	message_admins("\blue [key_name_admin(usr)] told [key_name(T)] to man up and deal with it.")
+	message_admins("<span class='notice'>[key_name_admin(usr)] told [key_name(T)] to man up and deal with it.</span>")
 
 /client/proc/global_man_up()
 	set category = "Fun"
@@ -921,7 +921,7 @@ var/list/admin_verbs_hideable = list(
 		T.playsound_local(null, 'sound/voice/ManUp1.ogg', VOL_ADMIN, vary = FALSE, ignore_environment = TRUE)
 
 	log_admin("[key_name(usr)] told everyone to man up and deal with it.")
-	message_admins("\blue [key_name_admin(usr)] told everyone to man up and deal with it.")
+	message_admins("<span class='notice'>[key_name_admin(usr)] told everyone to man up and deal with it.</span>")
 
 /client/proc/achievement()
 	set name = "Give Achievement"
@@ -1070,7 +1070,7 @@ var/list/admin_verbs_hideable = list(
 			O.icon = newIcon
 
 	log_admin("[key_name(src)] started noir event!", 1)
-	message_admins("\blue [key_name_admin(src)] started noir event!", 1)
+	message_admins("<span class='notice'>[key_name_admin(src)] started noir event!</span>", 1)
 */
 //////////////////////////////
 // Gateway
@@ -1108,12 +1108,12 @@ var/centcom_barriers_stat = 1
 		B.density = centcom_barriers_stat
 
 	log_admin("[key_name(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")
-	message_admins("\blue [key_name_admin(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")
+	message_admins("[key_name_admin(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")
 
 /obj/effect/landmark/trololo
 	name = "Rickroll"
 	//var/melody = 'sound/Never_Gonna_Give_You_Up.ogg'	//NOPE
-	var/message = "<i>\blue It's not the door you're looking for...</i>"
+	var/message = "<i><span class='notice'>It's not the door you're looking for...</span></i>"
 	var/active = 1
 	var/lchannel = 999
 

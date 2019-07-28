@@ -18,12 +18,12 @@
 
 /obj/item/weapon/handcuffs/attack(mob/living/carbon/C, mob/user)
 	if (!ishuman(user) && !isIAN(user))
-		to_chat(user, "\red You don't have the dexterity to do this!")
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(!istype(C))
 		return
 	if ((CLUMSY in usr.mutations) && prob(50))
-		to_chat(user, "\red Uh ... how do those things work?!")
+		to_chat(user, "<span class='warning'>Uh ... how do those things work?!</span>")
 		place_handcuffs(user, user)
 		return
 	if(!C.handcuffed)
@@ -36,7 +36,7 @@
 			if (G.loc == user && G.state >= GRAB_AGGRESSIVE)
 				place_handcuffs(C, user)
 				return
-		to_chat(user, "\red You need to have a firm grip on [C] before you can put \the [src] on!")
+		to_chat(user, "<span class='warning'>You need to have a firm grip on [C] before you can put \the [src] on!</span>")
 
 /obj/item/weapon/handcuffs/proc/place_handcuffs(mob/living/carbon/target, mob/user)
 	if(user.is_busy(target))

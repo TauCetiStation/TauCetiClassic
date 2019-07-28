@@ -798,7 +798,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		if(iswrench(O))
 			if(user.is_busy(src))
 				return
-			to_chat(user, "\blue You start to disassemble the storage unit...")
+			to_chat(user, "<span class='notice'>You start to disassemble the storage unit...</span>")
 			if(O.use_tool(src, user, 20, volume = 50))
 				qdel(src)
 			return

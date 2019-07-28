@@ -297,7 +297,7 @@
 
 /obj/structure/crematorium/attack_hand(mob/user)
 //	if (cremating) AWW MAN! THIS WOULD BE SO MUCH MORE FUN ... TO WATCH
-//		user.show_message("\red Uh-oh, that was a bad idea.", 1)
+//		user.show_message("<span class='warning'>Uh-oh, that was a bad idea.</span>", 1)
 //		//usr << "Uh-oh, that was a bad idea."
 //		src:loc:poison += 20000000
 //		src:loc:firelevel = src:loc:poison

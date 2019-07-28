@@ -165,7 +165,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				if(!card.fingerprints)
 					card.fingerprints = list()
 				if(card.amount > 1 || !card.fingerprints.len)
-					to_chat(usr, "\red ERROR: No prints/too many cards.")
+					to_chat(usr, "<span class='warning'>ERROR: No prints/too many cards.</span>")
 					if(card.loc == src)
 						card.loc = src.loc
 					card = null
@@ -174,7 +174,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				I.loc = src
 				process_card()
 			else
-				to_chat(usr, "\red Invalid Object Rejected.")
+				to_chat(usr, "<span class='warning'>Invalid Object Rejected.</span>")
 		if("database") //Viewing all records in each database
 			canclear = 1
 			if(href_list["delete_record"])
@@ -598,7 +598,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 			to_chat(usr, "No match found.")
 		qdel(card)
 	else
-		to_chat(usr, "\red ERROR: No prints/too many cards.")
+		to_chat(usr, "<span class='warning'>ERROR: No prints/too many cards.</span>")
 		if(card.loc == src)
 			card.loc = src.loc
 		card = null
