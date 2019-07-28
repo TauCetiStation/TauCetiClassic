@@ -39,31 +39,13 @@
 		antag_candidates -= ninja //So it doesn't pick the same guy each time.
 		ninja_number--
 
-	/*var/datum/mind/ninja = pick(possible_ninjas)
-	ninjas += ninja
-	modePlayer += ninja
-	ninja.assigned_role = "MODE" //So they aren't chosen for other jobs.
-	ninja.special_role = "Ninja"
-	ninja.original = ninja.current*/
-
-	/*if(ninjastart.len == 0)
-		to_chat(ninja.current, "<B>\red A proper starting location for you could not be found, please report this bug!</B>")
-		to_chat(ninja.current, "<B>\red Attempting to place at a carpspawn.</B>")*/
-
 	//Until such a time as people want to place ninja spawn points, carpspawn will do fine.
 	for(var/obj/effect/landmark/L in landmarks_list)
 		if(L.name == "carpspawn")
 			ninjastart.Add(L)
 
 	if (ninjastart.len == 0)
-		//ninja.current << "<B>\red No spawneable locations could be found. Aborting.</B>"
 		return 0
-	/*if(ninjastart.len == 0 && latejoin.len > 0)
-		//ninja.current << "<B>\red No spawneable locations could be found. Defaulting to latejoin.</B>"
-		return 1
-	else if (ninjastart.len == 0)
-		//ninja.current << "<B>\red No spawneable locations could be found. Aborting.</B>"
-		return 0*/
 
 	return 1
 
@@ -266,5 +248,5 @@
 	if(text)
 		antagonists_completion += list(list("mode" = "ninja", "html" = text))
 		text = "<div class='block'>[text]</div>"
-		
+
 	return text
