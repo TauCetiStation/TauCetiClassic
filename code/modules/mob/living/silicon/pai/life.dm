@@ -6,8 +6,7 @@
 			var/turf/T = get_turf_or_move(src.loc)
 			for (var/mob/M in viewers(T))
 				M.show_message("<span class='warning'>The data cable rapidly retracts back into its spool.</span>", 3, "<span class='warning'>You hear a click and the sound of wire spooling rapidly.</span>", 2)
-			qdel(src.cable)
-			cable = null
+			QDEL_NULL(src.cable)
 
 	add_ingame_age()
 	regular_hud_updates()
