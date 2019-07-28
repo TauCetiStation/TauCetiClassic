@@ -2640,6 +2640,11 @@
 /turf/simulated/floor,
 /area/security/warden)
 "aes" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor,
 /area/security/warden)
@@ -3109,14 +3114,20 @@
 /area/security/warden)
 "afk" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
 	},
 /turf/simulated/floor,
 /area/security/warden)
@@ -3162,7 +3173,14 @@
 /turf/simulated/floor/plating,
 /area/security/brig)
 "afr" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/security/warden)
 "afs" = (
@@ -3173,23 +3191,14 @@
 	pixel_y = -28;
 	req_access = list(3)
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warning"
 	},
 /area/security/warden)
 "aft" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/security/warden)
@@ -3455,19 +3464,14 @@
 /turf/simulated/floor/plating,
 /area/security/main)
 "afQ" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/lockbox/mind_shields,
-/obj/item/weapon/storage/box/chemimp{
-	pixel_y = 3
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/item/weapon/storage/box/cdeathalarm_kit,
-/obj/item/weapon/storage/box/trackimp{
-	pixel_y = -3
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "bot"
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor,
 /area/security/warden)
 "afR" = (
 /obj/structure/rack,
@@ -3488,14 +3492,19 @@
 	},
 /area/security/warden)
 "afS" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/rack,
+/obj/item/weapon/storage/lockbox/mind_shields,
+/obj/item/weapon/storage/box/chemimp{
+	pixel_y = 3
 	},
-/turf/simulated/floor,
+/obj/item/weapon/storage/box/cdeathalarm_kit,
+/obj/item/weapon/storage/box/trackimp{
+	pixel_y = -3
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bot"
+	},
 /area/security/warden)
 "afT" = (
 /obj/structure/disposalpipe/segment,
@@ -3741,18 +3750,18 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/solar/auxport)
 "ags" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Warden's Office";
+	req_access = list(3)
+	},
 /obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/security/glass{
-	name = "Warden's Office";
-	req_access = list(3)
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/security/warden)
 "agt" = (
@@ -3888,11 +3897,6 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/storage/box/seccarts,
-/obj/machinery/recharger/wallcharger{
-	dir = 1;
-	pixel_x = 5;
-	pixel_y = 25
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4071,10 +4075,13 @@
 	},
 /area/security/brig)
 "agV" = (
-/obj/structure/sign/warning/securearea{
-	pixel_y = 32
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/machinery/computer/prisoner,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4492,24 +4499,31 @@
 	},
 /area/security/brig)
 "ahJ" = (
+/obj/machinery/door/window/westright{
+	name = "Reception Door"
+	},
+/obj/machinery/door/window/brigdoor{
+	dir = 4;
+	name = "Warden's Desk";
+	req_access = list(3)
+	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
-/obj/structure/cable,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
+/obj/structure/table/reinforced,
 /turf/simulated/floor/plating,
 /area/security/warden)
 "ahK" = (
@@ -4609,13 +4623,25 @@
 /turf/simulated/floor/plating,
 /area/security/warden)
 "ahQ" = (
-/obj/structure/table,
-/obj/item/device/radio/off,
-/obj/item/weapon/crowbar,
+/obj/machinery/hologram/holopad,
 /obj/structure/cable{
-	d1 = 4;
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 2;
 	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -4743,10 +4769,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/stool/bed/chair/office/dark{
-	dir = 1
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
-/obj/effect/landmark/start,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4867,6 +4892,9 @@
 /turf/simulated/floor/plating,
 /area/maintenance/dormitory)
 "aio" = (
+/obj/machinery/computer/secure_data{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4889,9 +4917,8 @@
 /turf/simulated/floor/plating,
 /area/maintenance/eva)
 "air" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
+/obj/structure/table,
+/obj/machinery/recharger,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5048,7 +5075,15 @@
 /turf/simulated/floor,
 /area/security/prison)
 "aiG" = (
-/obj/machinery/hologram/holopad,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5160,25 +5195,25 @@
 	dir = 4;
 	pixel_x = -22
 	},
-/obj/structure/closet/secure_closet/warden,
+/obj/machinery/computer/security{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/security/warden)
 "aiR" = (
+/obj/structure/stool/bed/chair/office/dark,
+/obj/effect/landmark/start{
+	name = "Warden"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/security/warden)
 "aiS" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -5206,11 +5241,16 @@
 	name = "Station Intercom (Security)";
 	pixel_x = 30
 	},
+/obj/structure/table,
+/obj/item/weapon/book/manual/wiki/security_space_law{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/obj/item/weapon/folder/red,
 /obj/machinery/light{
 	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -5343,10 +5383,29 @@
 	},
 /area/security/hos)
 "ajh" = (
-/obj/machinery/photocopier,
+/obj/machinery/door_control{
+	id = "Prison Gate";
+	name = "Prison Wing Lockdown";
+	pixel_x = -28;
+	pixel_y = 7;
+	req_access = list(2)
+	},
+/obj/machinery/door_control{
+	id = "Secure Gate";
+	name = "Brig Lockdown";
+	pixel_x = -28;
+	pixel_y = -3;
+	req_access = list(2)
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/security/warden)
 "aji" = (
@@ -5370,10 +5429,11 @@
 	},
 /area/security/brig)
 "ajl" = (
-/obj/structure/filingcabinet/chestdrawer/black,
+/obj/structure/table,
+/obj/item/device/radio/off,
+/obj/item/weapon/crowbar,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/security/warden)
 "ajm" = (
@@ -5413,19 +5473,10 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /turf/simulated/floor/plating,
 /area/security/warden)
 "ajq" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+/obj/machinery/computer/prisoner{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -5520,28 +5571,36 @@
 /turf/simulated/floor/plating,
 /area/security/main)
 "ajx" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Warden's Office";
+	req_access = list(3)
+	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /obj/structure/cable{
+	d1 = 2;
 	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "2-8"
 	},
 /obj/structure/cable{
+	d1 = 2;
 	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "2-4"
 	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor,
 /area/security/warden)
 "ajy" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -5573,29 +5632,24 @@
 	},
 /area/security/brig)
 "ajB" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8"
+	icon_state = "0-8"
 	},
 /obj/structure/cable{
-	d1 = 2;
 	d2 = 4;
-	icon_state = "2-4"
+	icon_state = "0-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/door/airlock/security/glass{
-	name = "Warden's Office";
-	req_access = list(3)
-	},
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/security/warden)
 "ajC" = (
 /obj/structure/cable{
@@ -5958,6 +6012,16 @@
 /area/security/brig)
 "akb" = (
 /obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
@@ -5970,17 +6034,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "redcorner"
@@ -6695,9 +6750,10 @@
 /obj/machinery/camera{
 	c_tag = "Security Warden Office"
 	},
-/obj/machinery/computer/secure_data,
+/obj/structure/filingcabinet/chestdrawer/black,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/security/warden)
 "alc" = (
@@ -14636,12 +14692,13 @@
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
 "azw" = (
+/obj/machinery/photocopier,
 /obj/machinery/newscaster/security_unit{
 	pixel_y = 32
 	},
-/obj/machinery/computer/security,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/security/warden)
 "azx" = (
@@ -48910,6 +48967,7 @@
 "bTc" = (
 /obj/machinery/door/airlock/medical{
 	name = "Cooling Room";
+	req_access = 72;
 	req_access = list(72)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible{
@@ -52029,7 +52087,9 @@
 /turf/simulated/wall/r_wall,
 /area/maintenance/incinerator)
 "caR" = (
-/obj/structure/closet/secure_closet/bar,
+/obj/structure/closet/secure_closet/bar{
+	req_access = list(25)
+	},
 /obj/item/weapon/gun/projectile/revolver/doublebarrel,
 /obj/item/weapon/paper{
 	info = "This permit signifies that the Bartender is permitted to posess this firearm in the bar, and ONLY the bar. Failure to adhere to this permit will result in confiscation of the weapon and possibly arrest.";
@@ -68571,32 +68631,6 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/maintenance/auxsolarport)
-"exH" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "redcorner"
-	},
-/area/security/brig)
 "eyb" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -69159,12 +69193,9 @@
 /turf/simulated/floor/plating,
 /area/quartermaster/recycleroffice)
 "fvb" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/closet/secure_closet/warden,
+/obj/structure/sign/warning/securearea{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -69800,19 +69831,6 @@
 	icon_state = "red"
 	},
 /area/security/brig)
-"gAk" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/brigdoor{
-	dir = 4;
-	name = "Warden's Desk";
-	req_access = list(3)
-	},
-/obj/machinery/door/window/westright{
-	name = "Reception Door"
-	},
-/obj/structure/table/reinforced,
-/turf/simulated/floor/plating,
-/area/security/warden)
 "gBb" = (
 /obj/machinery/hologram/holopad,
 /obj/structure/cable/yellow{
@@ -73079,42 +73097,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
-"nll" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/door_control{
-	id = "Secure Gate";
-	name = "Brig Lockdown";
-	pixel_x = -28;
-	pixel_y = -3;
-	req_access = list(2)
-	},
-/obj/machinery/door_control{
-	id = "Prison Gate";
-	name = "Prison Wing Lockdown";
-	pixel_x = -28;
-	pixel_y = 7;
-	req_access = list(2)
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/security/warden)
 "nmb" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -74571,25 +74553,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/wall,
 /area/crew_quarters/locker)
-"pDh" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
-	},
-/turf/simulated/floor/plating,
-/area/security/warden)
 "pEb" = (
 /obj/machinery/space_heater,
 /obj/structure/disposalpipe/sortjunction{
@@ -76333,24 +76296,6 @@
 	icon_state = "whitegreen"
 	},
 /area/medical/virology)
-"sNl" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/book/manual/wiki/security_space_law{
-	pixel_x = -3;
-	pixel_y = 5
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/security/warden)
 "sOb" = (
 /obj/structure/stool/bed/chair/office/light,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -108197,9 +108142,9 @@ aer
 aeV
 afw
 adH
-pDh
+aha
 ahJ
-gAk
+aik
 aeq
 aeq
 aka
@@ -108455,8 +108400,8 @@ afj
 afv
 adH
 azw
-sNl
-aiR
+ahO
+aio
 aiQ
 aiE
 ajX
@@ -108707,8 +108652,8 @@ acq
 enb
 abl
 adX
-aes
-afj
+aep
+afr
 afR
 adH
 alb
@@ -108964,10 +108909,10 @@ acn
 eob
 aeg
 afU
-afU
+aes
 afk
 afQ
-adH
+ags
 agV
 ahQ
 aiG
@@ -109221,16 +109166,16 @@ acA
 erb
 abl
 adZ
-afr
+aep
 aft
 afS
-ags
+adH
 fvb
-nll
+ahO
 aiS
 ajq
 ajB
-exH
+ajX
 amQ
 alc
 aqy
