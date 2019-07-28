@@ -259,7 +259,7 @@
 	if(A && !A.requires_power)
 		on = 1
 
-	if(src.z == ZLEVEL_STATION || src.z == ZLEVEL_ASTEROID)
+	if(is_station_level(z) || is_mining_level(z))
 		switch(fitting)
 			if("tube","bulb")
 				if(prob(2))

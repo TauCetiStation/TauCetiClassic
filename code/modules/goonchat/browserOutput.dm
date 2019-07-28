@@ -200,7 +200,13 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	return "<img [class] src='data:image/png;base64,[bicon_cache[key]]'>"
 
 /proc/to_chat(target, message, handle_whitespace=TRUE)
-	if(!target) //shitty fix, but it's works
+	if(!Master.init_time || !SSchat) // This is supposed to be Master.current_runlevel == RUNLEVEL_INIT || !SSchat?.initialized but we don't have these variables
+		to_chat_immediate(target, message, handle_whitespace)
+		return
+	SSchat.queue(target, message, handle_whitespace)
+
+/proc/to_chat_immediate(target, message, handle_whitespace = TRUE)
+	if(!target || !message)
 		return
 
 	//if(istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !(ismob(target) || islist(target) || isclient(target) || target == world))

@@ -175,7 +175,7 @@ var/bomb_set
 			to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
 			return 1
 		var/turf/current_location = get_turf(usr)//What turf is the user on?
-		if(current_location.z == ZLEVEL_CENTCOMM && user.mind.special_role == "Syndicate")//If turf was not found or they're on z level 2.
+		if(is_centcom_level(current_location.z) && user.mind.special_role == "Syndicate")//If turf was not found or they're on z level 2.
 			to_chat(user, "<span class = 'red'>It's not the best idea to plant a bomb on your own base</span>")
 			return
 	else if (deployable)
@@ -358,7 +358,7 @@ var/bomb_set
 
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
-	if( bomb_location && (bomb_location.z == ZLEVEL_STATION) )
+	if( bomb_location && is_station_level(bomb_location.z) )
 		if( (bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)) )
 			off_station = 1
 		else
@@ -372,7 +372,7 @@ var/bomb_set
 		if(ticker.mode && ticker.mode.name == "nuclear emergency")
 			var/obj/machinery/computer/syndicate_station/syndie_location = locate(/obj/machinery/computer/syndicate_station)
 			if(syndie_location)
-				ticker.mode:syndies_didnt_escape = (syndie_location.z > ZLEVEL_STATION ? 0 : 1)	//muskets will make me change this, but it will do for now
+				ticker.mode:syndies_didnt_escape = is_station_level(syndie_location.z)
 			ticker.mode:nuke_off_station = off_station
 		ticker.station_explosion_cinematic(off_station,null)
 		if(ticker.mode)
@@ -461,7 +461,7 @@ var/bomb_set
 
 /obj/item/weapon/disk/nuclear/process()
 	var/turf/disk_loc = get_turf(src)
-	if(disk_loc.z > ZLEVEL_CENTCOM)
+	if(!is_centcom_level(disk_loc.z) && !is_station_level(disk_loc.z))
 		to_chat(get(src, /mob), "<span class='danger'>You can't help but feel that you just lost something back there...</span>")
 		qdel(src)
 

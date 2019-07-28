@@ -72,12 +72,14 @@
 			density = 1
 		return 0
 
-
 	else if(health < 1)
 		health = 0
 		death()
 
 	health = min(health, maxHealth)
+
+	if(client)
+		handle_vision()
 
 	if(stunned)
 		AdjustStunned(-1)

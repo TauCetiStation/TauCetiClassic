@@ -21,6 +21,8 @@ var/datum/subsystem/job/SSjob
 
 
 /datum/subsystem/job/Initialize(timeofday)
+	SSmapping.LoadMapConfig() // Required before SSmapping initialization so we can modify the jobs
+	init_joblist()
 	SetupOccupations()
 	LoadJobs("config/jobs.txt")
 	..()
@@ -74,6 +76,8 @@ var/datum/subsystem/job/SSjob
 			return 0
 		if(!job.player_old_enough(player.client))
 			return 0
+		if(!job.map_check())
+			return 0
 		var/position_limit = job.total_positions
 		if(!latejoin)
 			position_limit = job.spawn_positions
@@ -104,6 +108,8 @@ var/datum/subsystem/job/SSjob
 		if(!job.player_old_enough(player.client))
 			Debug("FOC player not old enough, Player: [player]")
 			continue
+		if(!job.map_check())
+			continue
 		if(flag && (!(flag in player.client.prefs.be_role)))
 			Debug("FOC flag failed, Player: [player], Flag: [flag], ")
 			continue
@@ -125,6 +131,9 @@ var/datum/subsystem/job/SSjob
 			continue
 
 		if(!job.is_species_permitted(player.client))
+			continue
+
+		if(!job.map_check())
 			continue
 
 		if(jobban_isbanned(player, job.title))
@@ -307,6 +316,9 @@ var/datum/subsystem/job/SSjob
 
 				if(!job.player_old_enough(player.client))
 					Debug("DO player not old enough, Player: [player], Job:[job.title]")
+					continue
+
+				if(!job.map_check())
 					continue
 
 				// If the player wants that job on this level, then try give it to him.
