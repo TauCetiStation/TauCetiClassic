@@ -60,4 +60,5 @@ var/global/list/rnd_server_list = list()
 var/global/list/PDAs = list()
 
 var/global/list/all_areas = list()
+var/global/list/areas_by_type = list()
 var/global/list/machines = list()

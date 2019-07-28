@@ -168,7 +168,7 @@
 			door.assembly_type = type
 			door.electronics = electronics
 			if(electronics.one_access)
-				door.req_access = null
+				door.req_access = list()
 				door.req_one_access = electronics.conf_access
 			else
 				door.req_access = electronics.conf_access

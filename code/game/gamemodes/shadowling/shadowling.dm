@@ -121,7 +121,7 @@ Made by Xhuis
 	return ..()
 
 /datum/game_mode/proc/greet_shadow(datum/mind/shadow)
-	to_chat(shadow.current, "<b>Currently, you are disguised as an employee aboard [world.name].</b>")
+	to_chat(shadow.current, "<b>Currently, you are disguised as an employee aboard [station_name()].</b>")
 	to_chat(shadow.current, "<b>In your limited state, you have three abilities: Enthrall, Hatch, and Hivemind Commune.</b>")
 	to_chat(shadow.current, "<b>Any other shadowlings are you allies. You must assist them as they shall assist you.</b>")
 	to_chat(shadow.current, "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at http://tauceti.ru/wiki/Shadowling</b><br>")
@@ -167,21 +167,6 @@ Made by Xhuis
 /*
 	GAME FINISH CHECKS
 */
-
-/*
-/datum/game_mode/shadowling/check_finished()
-	var/shadows_alive = 0 //and then shadowling was kill
-	for(var/datum/mind/shadow in shadows) //but what if shadowling was not kill?
-		if(!istype(shadow.current,/mob/living/carbon/human) && !istype(shadow.current,/mob/living/simple_animal/ascendant_shadowling))
-			continue
-		if(shadow.current.stat == DEAD)
-			continue
-		shadows_alive++
-	if(shadows_alive)
-		return ..()
-	else
-		shadowling_dead = 1 //but shadowling was kill :(
-		return 1*/
 
 /datum/game_mode/shadowling/proc/check_shadow_killed()
 	var/shadows_alive = 0 //and then shadowling was kill
@@ -241,7 +226,7 @@ Made by Xhuis
 	if(text)
 		antagonists_completion += list(list("mode" = "shadowling", "html" = text))
 		text = "<div class='block'>[text]</div>"
-		
+
 	return text
 
 /*

@@ -80,15 +80,16 @@
 			updateDialog()
 		else
 			to_chat(user, "\red Access denied.")
-	else if(istype(W, /obj/item/weapon/card/emag))
-		user.SetNextMove(CLICK_CD_INTERACT)
-		if(prob(75))
-			src.locked = !src.locked
-			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
-			updateDialog()
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
+
+/obj/machinery/suspension_gen/emag_act(mob/user)
+	if(prob(75))
+		src.locked = !src.locked
+		to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
+		updateDialog()
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start()
+	return TRUE
 
 /obj/machinery/suspension_gen/ui_interact(mob/user)
 	var/dat = "<b>Multi-phase mobile suspension field generator MK II \"Steadfast\"</b><br>"

@@ -41,7 +41,7 @@
 		var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 		sparks.set_up(3, 0, D.loc)
 		sparks.start()
-		D.z = config.admin_levels[1]
+		D.z = SSmapping.level_by_trait(ZTRAIT_CENTCOM)
 		D.has_loot = 0
 
 		qdel(D)

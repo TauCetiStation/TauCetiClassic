@@ -123,22 +123,6 @@
 		else
 			to_chat(user, "\red You swipe your card, with no effect.")
 			return 0
-	else if (istype(O, /obj/item/weapon/card/emag))
-		user.SetNextMove(CLICK_CD_INTERACT)
-		if (emagged)
-			to_chat(user, "\red [src] is already overloaded - better run.")
-			return 0
-		else
-			var/obj/item/weapon/card/emag/emag = O
-			emag.uses--
-			emagged = 1
-			to_chat(user, "\blue You short out the security protocols and overload [src]'s cell, priming it to explode in a short time.")
-			spawn(100)
-				to_chat(src, "\red Your cell seems to be outputting a lot of power...")
-			spawn(200)
-				to_chat(src, "\red Internal heat sensors are spiking! Something is badly wrong with your cell!")
-			spawn(300)
-				src.explode()
 
 	else
 		user.SetNextMove(CLICK_CD_MELEE)
@@ -162,6 +146,21 @@
 		src.mind.key = M.brainmob.key
 		src.ckey = M.brainmob.ckey
 		src.name = "Spider-bot ([M.brainmob.name])"
+
+/mob/living/simple_animal/spiderbot/emag_act(mob/user)
+	if (emagged)
+		to_chat(user, "\red [src] is already overloaded - better run.")
+		return FALSE
+	else
+		emagged = 1
+		to_chat(user, "\blue You short out the security protocols and overload [src]'s cell, priming it to explode in a short time.")
+		spawn(100)
+			to_chat(src, "\red Your cell seems to be outputting a lot of power...")
+		spawn(200)
+			to_chat(src, "\red Internal heat sensors are spiking! Something is badly wrong with your cell!")
+		spawn(300)
+			src.explode()
+		return FALSE
 
 /mob/living/simple_animal/spiderbot/proc/explode() //When emagged.
 	for(var/mob/M in viewers(src, null))

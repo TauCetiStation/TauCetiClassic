@@ -250,13 +250,6 @@
 			to_chat(user, "\red Access denied.")
 		return
 
-
-	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
-		locked = 0
-		emagged = 1
-		user.visible_message("[user.name] emags the [src.name].","\red You short out the lock.")
-		return
-
 	if(isscrewdriver(W))
 		if(active)
 			to_chat(user, "Turn off the [src] first.")
@@ -274,6 +267,14 @@
 
 	..()
 	return
+
+/obj/machinery/power/emitter/emag_act(mob/user)
+	if(!emagged)
+		locked = 0
+		emagged = 1
+		user.visible_message("[user.name] emags the [src.name].","\red You short out the lock.")
+		return TRUE
+	return FALSE
 
 /obj/machinery/power/emitter/proc/get_rand_burst_delay()
 	return rand(minimum_fire_delay, maximum_fire_delay)

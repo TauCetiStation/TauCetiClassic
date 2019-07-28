@@ -26,7 +26,7 @@
 
 /datum/game_mode/nuclear/announce()
 	to_chat(world, "<B>The current game mode is - Nuclear Emergency!</B>")
-	to_chat(world, "<B>Gorlex Maradeurs are approaching NSS Exodus!</B>")
+	to_chat(world, "<B>Gorlex Maradeurs are approaching [station_name()]!</B>")
 	to_chat(world, "A nuclear explosive was being transported by Nanotrasen to a military base. The transport ship mysteriously lost contact with Space Traffic Control (STC). About that time a strange disk was discovered around [station_name()]. It was identified by Nanotrasen as a nuclear auth. disk and now Syndicate Operatives have arrived to retake the disk and detonate SS13! Also, most likely Syndicate star ships are in the vicinity so take care not to lose the disk!\n<B>Syndicate</B>: Reclaim the disk and detonate the nuclear bomb anywhere on SS13.\n<B>Personnel</B>: Hold the disk and <B>escape with the disk</B> on the shuttle!")
 
 /datum/game_mode/nuclear/can_start()//This could be better, will likely have to recode it later
@@ -326,26 +326,26 @@
 		mode_result = "win - syndicate nuke"
 		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<span style='font-color: red; font-weight: bold;'>Syndicate Major Victory!</span>"
-		completion_text += "<br><b>Gorlex Maradeurs operatives have destroyed NSS Exodus!</b>"
+		completion_text += "<br><b>Gorlex Maradeurs operatives have destroyed [station_name()]!</b>"
 		score["roleswon"]++
 
 	else if (!disk_rescued &&  station_was_nuked &&           syndies_didnt_escape)
 		mode_result = "halfwin - syndicate nuke - did not evacuate in time"
 		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<span style='font-color: red; font-weight: bold;'>Total Annihilation</span>"
-		completion_text += "<br><b>Gorlex Maradeurs operatives destroyed NSS Exodus but did not leave the area in time and got caught in the explosion.</b> Next time, don't lose the disk!"
+		completion_text += "<br><b>Gorlex Maradeurs operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</b> Next time, don't lose the disk!"
 
 	else if (!disk_rescued && !station_was_nuked &&  nuke_off_station && !syndies_didnt_escape)
 		mode_result = "halfwin - blew wrong station"
 		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<span style='font-color: red; font-weight: bold;'>Crew Minor Victory</span>"
-		completion_text += "<br><b>Gorlex Maradeurs operatives secured the authentication disk but blew up something that wasn't NSS Exodus.</b> Next time, don't lose the disk!"
+		completion_text += "<br><b>Gorlex Maradeurs operatives secured the authentication disk but blew up something that wasn't [station_name()].</b> Next time, don't lose the disk!"
 
 	else if (!disk_rescued && !station_was_nuked &&  nuke_off_station &&  syndies_didnt_escape)
 		mode_result = "halfwin - blew wrong station - did not evacuate in time"
 		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<span style='font-color: red; font-weight: bold;'>Gorlex Maradeurs span earned Darwin Award!</span>"
-		completion_text += "<br><b>Gorlex Maradeurs operatives blew up something that wasn't NSS Exodus and got caught in the explosion.</b> Next time, don't lose the disk!"
+		completion_text += "<br><b>Gorlex Maradeurs operatives blew up something that wasn't [station_name()] and got caught in the explosion.</b> Next time, don't lose the disk!"
 
 	else if ( disk_rescued                                         && is_operatives_are_dead())
 		mode_result = "loss - evacuation - disk secured - syndi team dead"
@@ -369,7 +369,7 @@
 		mode_result = "halfwin - detonation averted"
 		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<span style='font-color: red; font-weight: bold;'>Syndicate Minor Victory!</span>"
-		completion_text += "<br><b>Gorlex Maradeurs operatives recovered the abandoned authentication disk but detonation of NSS Exodus was averted.</b> Next time, don't lose the disk!"
+		completion_text += "<br><b>Gorlex Maradeurs operatives recovered the abandoned authentication disk but detonation of [station_name()] was averted.</b> Next time, don't lose the disk!"
 
 	else if (!disk_rescued                                         && !crew_evacuated)
 		mode_result = "halfwin - interrupted"
@@ -400,7 +400,7 @@
 	if(text)
 		antagonists_completion += list(list("mode" = "nuclear", "html" = text))
 		text = "<div class='block'>[text]</div>"
-		
+
 	return text
 
 

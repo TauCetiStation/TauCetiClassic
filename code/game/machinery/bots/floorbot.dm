@@ -113,7 +113,7 @@
 	else
 		..()
 
-/obj/machinery/bot/floorbot/Emag(mob/user)
+/obj/machinery/bot/floorbot/emag_act(mob/user)
 	..()
 	if(open && !locked && user)
 		to_chat(user, "<span class='notice'>The [src] buzzes and beeps.</span>")
