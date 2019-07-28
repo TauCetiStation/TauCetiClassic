@@ -6,7 +6,7 @@
 		return
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "\red Speech is currently admin-disabled.")
+		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
 	if(mob.mind && mob.mind.special_role)	//Mentors are just a players, so they shan't know gamemode from these ones who toggles all role prefs to yes

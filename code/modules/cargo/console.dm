@@ -223,7 +223,7 @@
 /obj/machinery/computer/cargo/emag_act(mob/user)
 	if(hacked)
 		return FALSE
-	to_chat(user, "\blue Special supplies unlocked.")
+	to_chat(user, "<span class='notice'>Special supplies unlocked.</span>")
 	hacked = TRUE
 	contraband = TRUE
 	user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",

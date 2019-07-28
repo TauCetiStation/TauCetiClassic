@@ -97,8 +97,8 @@
 /datum/game_mode/proc/greet_head(datum/mind/head_mind, you_are=1)
 	var/obj_count = 1
 	if (you_are)
-		to_chat(head_mind.current, "\blue It looks like this shift CentComm has some special orders for you.. check your objectives.")
-		to_chat(head_mind.current, "\blue Note that you can ignore these objectives, but resisting NT's orders probably means demotion or worse.")
+		to_chat(head_mind.current, "<span class='notice'>It looks like this shift CentComm has some special orders for you.. check your objectives.</span>")
+		to_chat(head_mind.current, "<span class='notice'>Note that you can ignore these objectives, but resisting NT's orders probably means demotion or worse.</span>")
 	for(var/datum/objective/objective in head_mind.objectives)
 		to_chat(head_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		head_mind.special_role = "Corrupt Head"
@@ -155,11 +155,11 @@
 	if(finished == 2)
 		mode_result = "loss - crew wins"
 		feedback_set_details("round_end_result",mode_result)
-		to_chat(world, "\red <FONT size = 3><B> The heads of staff were relieved of their posts! The crew wins!</B></FONT>")
+		to_chat(world, "<span class='warning'><FONT size = 3><B> The heads of staff were relieved of their posts! The crew wins!</B></FONT></span>")
 	else if(finished == 1)
 		mode_result = "win - heads wins"
 		feedback_set_details("round_end_result",mode_result)
-		to_chat(world, "\red <FONT size = 3><B> The heads of staff managed to meet the goals set for them by CentComm!</B></FONT>")
+		to_chat(world, "<span class='warning'><FONT size = 3><B> The heads of staff managed to meet the goals set for them by CentComm!</B></FONT></span>")
 
 
 
@@ -221,4 +221,4 @@
 
 	src.verbs -= /mob/proc/ResignFromHeadPosition
 
-	to_chat(src, "\red You resigned from your position, now you have the consequences.")
+	to_chat(src, "<span class='warning'>You resigned from your position, now you have the consequences.</span>")

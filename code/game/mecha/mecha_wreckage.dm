@@ -41,7 +41,7 @@
 		if (WT.use(3,user))
 			salvage_with = "welder"
 		else
-			to_chat(user, "\blue You need more welding fuel to complete this task.")
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
 	if(iswirecutter(W))
 		salvage_with = "wirecutter"

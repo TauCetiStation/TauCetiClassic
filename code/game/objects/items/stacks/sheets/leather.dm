@@ -98,12 +98,12 @@
 		//visible message on mobs is defined as visible_message(message, self_message, blind_message)
 		if(user.is_busy(src))
 			return
-		usr.visible_message("\blue \the [usr] starts cutting hair off \the [src]", "\blue You start cutting the hair off \the [src]", "You hear the sound of a knife rubbing against flesh")
+		usr.visible_message("<span class='notice'>\the [usr] starts cutting hair off \the [src]</span>", "<span class='notice'>You start cutting the hair off \the [src]</span>", "You hear the sound of a knife rubbing against flesh")
 		if(W.use_tool(src, user, 50, volume = 50))
 			if(!use(1))
 				return
 
-			to_chat(usr, "\blue You cut the hair from this [src.singular_name]")
+			to_chat(usr, "<span class='notice'>You cut the hair from this [src.singular_name]</span>")
 			new/obj/item/stack/sheet/hairlesshide(usr.loc, , TRUE)
 
 	else

@@ -90,16 +90,16 @@ Infestation:
 	return ..()
 
 /datum/game_mode/infestation/proc/greet_xeno(datum/mind/xeno)
-	to_chat(xeno.current, "\green <B>You are a Xenomorph.</b>")
-	to_chat(xeno.current, "\green <B>Your current alien form is a facehugger.</b>")
-	to_chat(xeno.current, "\green <B>Go find some monkeys, corgi or a sleeping human.</b>")
-	to_chat(xeno.current, "\green <B>To leap at someones face, you simply start with left mouse button click.</b>")
-	to_chat(xeno.current, "\green <B>Then check your tail action button, there will be leap available.</b>")
-	to_chat(xeno.current, "\green <B>Leap isnt instant, keep that in mind. There is 1-2 seconds delay, before you can actually leap.</b>")
-	to_chat(xeno.current, "\green <B>You target also must be near, after you prepares to leap.</b>")
-	to_chat(xeno.current, "\blue Use :A to hivetalk.")
-	to_chat(xeno.current, "\green ------------------")
-	//xeno.current << "\red IF YOU HAVE NOT PLAYED A XENOMORPH, REVIEW THIS THREAD: http://tauceti.ru"
+	to_chat(xeno.current, "<span class='notice'><B>You are a Xenomorph.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>Your current alien form is a facehugger.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>Go find some monkeys, corgi or a sleeping human.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>To leap at someones face, you simply start with left mouse button click.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>Then check your tail action button, there will be leap available.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>Leap isnt instant, keep that in mind. There is 1-2 seconds delay, before you can actually leap.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>You target also must be near, after you prepares to leap.</b></span>")
+	to_chat(xeno.current, "<span class='notice'>Use :A to hivetalk.</span>")
+	to_chat(xeno.current, "<span class='notice'>------------------</span>")
+	//xeno.current << "<span class='warning'>IF YOU HAVE NOT PLAYED A XENOMORPH, REVIEW THIS THREAD: http://tauceti.ru</span>"
 
 
 /*

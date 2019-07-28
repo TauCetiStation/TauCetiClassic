@@ -23,7 +23,6 @@ var/datum/subsystem/atoms/SSatoms
 
 /datum/subsystem/atoms/Initialize(timeofday)
 	global_announcer = new(null) // Doh...
-	populate_gear_list()
 	setupGenetics() // to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()

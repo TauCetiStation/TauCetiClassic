@@ -47,9 +47,9 @@
 		src.disable = !src.disable
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if (src.disable)
-			user.visible_message("\red [user] has disconnected the [src]'s flashbulb!", "\red You disconnect the [src]'s flashbulb!")
+			user.visible_message("<span class='warning'>[user] has disconnected the [src]'s flashbulb!</span>", "<span class='warning'>You disconnect the [src]'s flashbulb!</span>")
 		if (!src.disable)
-			user.visible_message("\red [user] has connected the [src]'s flashbulb!", "\red You connect the [src]'s flashbulb!")
+			user.visible_message("<span class='warning'>[user] has connected the [src]'s flashbulb!</span>", "<span class='warning'>You connect the [src]'s flashbulb!</span>")
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai(mob/user)
@@ -120,11 +120,11 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 
 		if (!src.anchored)
-			user.show_message(text("\red [src] can now be moved."))
+			user.show_message(text("<span class='warning'>[src] can now be moved.</span>"))
 			src.overlays.Cut()
 
 		else if (src.anchored)
-			user.show_message(text("\red [src] is now secured."))
+			user.show_message(text("<span class='warning'>[src] is now secured.</span>"))
 			src.overlays += "[base_state]-s"
 
 /obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user)

@@ -177,7 +177,7 @@
 		return
 
 	if(!src.allowed(usr) && !emagged)
-		to_chat(usr, "\red You do not have the required access level")
+		to_chat(usr, "<span class='warning'>You do not have the required access level</span>")
 		return FALSE
 
 	if(href_list["main"])
@@ -299,7 +299,7 @@
 		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 		emagged = 1
 		user.SetNextMove(CLICK_CD_INTERACT)
-		to_chat(user, "\blue You you disable the security protocols")
+		to_chat(user, "<span class='notice'>You you disable the security protocols</span>")
 		return TRUE
 	return FALSE
 

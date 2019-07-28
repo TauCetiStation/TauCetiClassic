@@ -49,7 +49,7 @@
 
 /obj/item/device/radio/beacon/syndicate/attack_self(mob/user)
 	if(user)
-		to_chat(user, "\blue Locked In")
+		to_chat(user, "<span class='notice'>Locked In</span>")
 		new /obj/machinery/singularity_beacon/syndicate( user.loc )
 		playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)

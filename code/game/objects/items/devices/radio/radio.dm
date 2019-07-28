@@ -201,7 +201,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	Broadcast_Message(connection, A,
 						0, "*garbled automated announcement*", src,
 						message, from, "Automated Announcement", from, "synthesized voice",
-						4, 0, list(1), freq)
+						4, 0, SSmapping.levels_by_trait(ZTRAIT_STATION), freq)
 	qdel(A)
 	return
 

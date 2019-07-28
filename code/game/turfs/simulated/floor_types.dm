@@ -45,7 +45,7 @@
 	if(iswrench(C))
 		if(user.is_busy(src))
 			return
-		to_chat(user, "\blue Removing rods...")
+		to_chat(user, "<span class='notice'>Removing rods...</span>")
 		if(C.use_tool(src, user, 30, volume = 80))
 			new /obj/item/stack/rods(src, 2)
 			ChangeTurf(/turf/simulated/floor)

@@ -499,23 +499,23 @@ var/list/wood_icons = list("wood","wood-broken")
 				qdel(C)
 				set_lightfloor_state(0) //fixing it by bashing it with a light bulb, fun eh?
 				update_icon()
-				to_chat(user, "\blue You replace the light bulb.")
+				to_chat(user, "<span class='notice'>You replace the light bulb.</span>")
 			else
-				to_chat(user, "\blue The lightbulb seems fine, no need to replace it.")
+				to_chat(user, "<span class='notice'>The lightbulb seems fine, no need to replace it.</span>")
 
 	if(iscrowbar(C) && (!(is_plating())))
 		if(broken || burnt)
-			to_chat(user, "\red You remove the broken plating.")
+			to_chat(user, "<span class='warning'>You remove the broken plating.</span>")
 		else
 			if(is_wood_floor())
-				to_chat(user, "\red You forcefully pry off the planks, destroying them in the process.")
+				to_chat(user, "<span class='warning'>You forcefully pry off the planks, destroying them in the process.</span>")
 			else
 				var/obj/item/I = new floor_type(src)
 				if(is_light_floor())
 					var/obj/item/stack/tile/light/L = I
 					L.on = get_lightfloor_on()
 					L.state = get_lightfloor_state()
-				to_chat(user, "\red You remove the [I.name].")
+				to_chat(user, "<span class='warning'>You remove the [I.name].</span>")
 
 		make_plating()
 		// Can't play sounds from areas. - N3X
@@ -529,7 +529,7 @@ var/list/wood_icons = list("wood","wood-broken")
 				return
 			else
 				if(is_wood_floor())
-					to_chat(user, "\red You unscrew the planks.")
+					to_chat(user, "<span class='warning'>You unscrew the planks.</span>")
 					new floor_type(src)
 
 			make_plating()
@@ -547,22 +547,22 @@ var/list/wood_icons = list("wood","wood-broken")
 			if (R.get_amount() >= 2)
 				if(user.is_busy(src))
 					return
-				to_chat(user, "\blue Reinforcing the floor...")
+				to_chat(user, "<span class='notice'>Reinforcing the floor...</span>")
 				if(R.use_tool(src, user, 30, amount = 2, volume = 50) && is_plating())
 					ChangeTurf(/turf/simulated/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					return
 			else
-				to_chat(user, "\red You need more rods.")
+				to_chat(user, "<span class='warning'>You need more rods.</span>")
 		else if (is_catwalk())
-			to_chat(user, "\red The entire thing is 100% rods already, it doesn't need any more.")
+			to_chat(user, "<span class='warning'>The entire thing is 100% rods already, it doesn't need any more.</span>")
 		else
-			to_chat(user, "\red You must remove the plating first.")
+			to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
 		return
 
 	if(istype(C, /obj/item/stack/tile))
 		if (is_catwalk())
-			to_chat(user, "\red The catwalk is too primitive to support tiling.")
+			to_chat(user, "<span class='warning'>The catwalk is too primitive to support tiling.</span>")
 		if(is_plating())
 			if(!broken && !burnt)
 				var/obj/item/stack/tile/T = C
@@ -590,7 +590,7 @@ var/list/wood_icons = list("wood","wood-broken")
 				levelupdate()
 				playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 			else
-				to_chat(user, "\blue This section is too damaged to support a tile. Use a welder to fix the damage.")
+				to_chat(user, "<span class='notice'>This section is too damaged to support a tile. Use a welder to fix the damage.</span>")
 
 
 	if(iscoil(C))
@@ -602,29 +602,29 @@ var/list/wood_icons = list("wood","wood-broken")
 					return
 			coil.turf_place(src, user)
 		else
-			to_chat(user, "\red You must remove the plating first.")
+			to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
 
 	if(istype(C, /obj/item/weapon/shovel))
 		if(is_grass_floor())
 			new /obj/item/weapon/ore/glass(src)
 			new /obj/item/weapon/ore/glass(src) //Make some sand if you shovel grass
-			to_chat(user, "\blue You shovel the grass.")
+			to_chat(user, "<span class='notice'>You shovel the grass.</span>")
 			make_plating()
 		else
-			to_chat(user, "\red You cannot shovel this.")
+			to_chat(user, "<span class='warning'>You cannot shovel this.</span>")
 
 	if(iswelder(C))
 		var/obj/item/weapon/weldingtool/welder = C
 		if(welder.isOn() && (is_plating()))
 			if(broken || burnt)
 				if(welder.use(0,user))
-					to_chat(user, "\red You fix some dents on the broken plating.")
+					to_chat(user, "<span class='warning'>You fix some dents on the broken plating.</span>")
 					playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 					icon_state = "plating"
 					burnt = 0
 					broken = 0
 				else
-					to_chat(user, "\blue You need more welding fuel to complete this task.")
+					to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 
 #undef LIGHTFLOOR_ON_BIT
 

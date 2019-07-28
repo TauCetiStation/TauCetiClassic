@@ -40,7 +40,7 @@
 			if(!T.implanted) continue
 			var/loc_display = "Unknown"
 			var/mob/living/carbon/M = T.imp_in
-			if(M.z == ZLEVEL_STATION && !istype(M.loc, /turf/space))
+			if(is_station_level(M.z) && !istype(M.loc, /turf/space))
 				var/turf/mob_loc = get_turf_loc(M)
 				loc_display = mob_loc.loc
 			if(T.malfunction)
@@ -89,6 +89,6 @@
 		var/obj/item/weapon/implant/I = locate(href_list["warn"])
 		if((I)&&(I.imp_in))
 			var/mob/living/carbon/R = I.imp_in
-			to_chat(R, "\green You hear a voice in your head saying: '[warning]'")
+			to_chat(R, "<span class='notice'>You hear a voice in your head saying: '[warning]'</span>")
 
 	src.updateUsrDialog()

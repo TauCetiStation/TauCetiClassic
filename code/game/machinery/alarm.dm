@@ -812,10 +812,10 @@
 				else
 					if(allowed(usr) && !wires.is_index_cut(AALARM_WIRE_IDSCAN))
 						locked = !locked
-						to_chat(user, "\blue You [ locked ? "lock" : "unlock"] the Air Alarm interface.")
+						to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the Air Alarm interface.</span>")
 						updateUsrDialog()
 					else
-						to_chat(user, "\red Access denied.")
+						to_chat(user, "<span class='warning'>Access denied.</span>")
 
 			if(wiresexposed && is_wire_tool(W))
 				wires.interact(user)
@@ -925,14 +925,14 @@ Code shamelessly copied from apc_frame
 	var/turf/loc = get_turf_loc(usr)
 	var/area/A = loc.loc
 	if (!istype(loc, /turf/simulated/floor))
-		to_chat(usr, "\red Air Alarm cannot be placed on this spot.")
+		to_chat(usr, "<span class='warning'>Air Alarm cannot be placed on this spot.</span>")
 		return
 	if (A.requires_power == 0 || A.name == "Space")
-		to_chat(usr, "\red Air Alarm cannot be placed in this area.")
+		to_chat(usr, "<span class='warning'>Air Alarm cannot be placed in this area.</span>")
 		return
 
 	if(gotwallitem(loc, ndir))
-		to_chat(usr, "\red There's already an item on this wall!")
+		to_chat(usr, "<span class='warning'>There's already an item on this wall!</span>")
 		return
 
 	new /obj/machinery/alarm(loc, ndir, 1)
@@ -1003,11 +1003,11 @@ FIRE ALARM
 				if (ismultitool(W))
 					detecting = !detecting
 					if (detecting)
-						user.visible_message("\red [user] has reconnected [src]'s detecting unit!", "You have reconnected [src]'s detecting unit.")
+						user.visible_message("<span class='warning'>[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
 					else
-						user.visible_message("\red [user] has disconnected [src]'s detecting unit!", "You have disconnected [src]'s detecting unit.")
+						user.visible_message("<span class='warning'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
 				else if (iswirecutter(W))
-					user.visible_message("\red [user] has cut the wires inside \the [src]!", "You have cut the wires inside \the [src].")
+					user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
 					new /obj/item/stack/cable_coil/random(loc, 5)
 					playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 					buildstage = 1
@@ -1176,7 +1176,7 @@ FIRE ALARM
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 
-	if(z == ZLEVEL_STATION || z == ZLEVEL_ASTEROID)
+	if(is_station_level(z) || is_mining_level(z))
 		if(security_level)
 			overlays += image('icons/obj/monitors.dmi', "overlay_[get_security_level()]")
 		else
@@ -1233,14 +1233,14 @@ Code shamelessly copied from apc_frame
 	var/turf/loc = get_turf_loc(usr)
 	var/area/A = get_area(src)
 	if (!istype(loc, /turf/simulated/floor))
-		to_chat(usr, "\red Fire Alarm cannot be placed on this spot.")
+		to_chat(usr, "<span class='warning'>Fire Alarm cannot be placed on this spot.</span>")
 		return
 	if (A.requires_power == 0 || A.name == "Space")
-		to_chat(usr, "\red Fire Alarm cannot be placed in this area.")
+		to_chat(usr, "<span class='warning'>Fire Alarm cannot be placed in this area.</span>")
 		return
 
 	if(gotwallitem(loc, ndir))
-		to_chat(usr, "\red There's already an item on this wall!")
+		to_chat(usr, "<span class='warning'>There's already an item on this wall!</span>")
 		return
 
 	new /obj/machinery/firealarm(loc, ndir, 1)

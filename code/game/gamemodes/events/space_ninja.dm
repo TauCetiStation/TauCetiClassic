@@ -100,7 +100,7 @@ var/ninja_confirmed_selection = 0
 /proc/space_ninja_arrival(assign_key = null, assign_mission = null)
 
 	if(ninja_selection_active)
-		to_chat(usr, "\red Ninja selection already in progress. Please wait until it ends.")
+		to_chat(usr, "<span class='warning'>Ninja selection already in progress. Please wait until it ends.</span>")
 		return
 
 	var/datum/game_mode/current_mode = ticker.mode
@@ -178,7 +178,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 				break
 
 	if(!candidate_mob)
-		to_chat(usr, "\red The randomly chosen mob was not found in the second check.")
+		to_chat(usr, "<span class='warning'>The randomly chosen mob was not found in the second check.</span>")
 		return
 
 	ninja_selection_active = 1
@@ -187,7 +187,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 	spawn(1)
 		if(alert(candidate_mob, "You have been selected to play as a space ninja. Would you like to play as this role? (You have 30 seconds to accept - You will spawn in 30 seconds if you accept)",,"Yes","No")!="Yes")
-			to_chat(usr, "\red The selected candidate for space ninja declined.")
+			to_chat(usr, "<span class='warning'>The selected candidate for space ninja declined.</span>")
 			return
 
 		ninja_confirmed_selection = this_selection_id
@@ -195,12 +195,12 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 	spawn(300)
 		if(!ninja_selection_active || (this_selection_id != ninja_selection_id ))
 			ninja_selection_active = 0
-			to_chat(candidate_mob, "\red Sorry, you were too late. You only had 30 seconds to accept.")
+			to_chat(candidate_mob, "<span class='warning'>Sorry, you were too late. You only had 30 seconds to accept.</span>")
 			return
 
 		if(ninja_confirmed_selection != ninja_selection_id)
 			ninja_selection_active = 0
-			to_chat(usr, "\red The ninja did not accept the role in time.")
+			to_chat(usr, "<span class='warning'>The ninja did not accept the role in time.</span>")
 			return
 
 		ninja_selection_active = 0
@@ -224,8 +224,8 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 				xeno_list += xeno
 
 		if(assign_mission)
-			new_ninja.mind.store_memory("<B>Mission:</B> \red [assign_mission].<br>")
-			to_chat(new_ninja, "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: \red <B>[assign_mission]</B>")
+			new_ninja.mind.store_memory("<B>Mission:</B> <span class='warning'>[assign_mission].</span><br>")
+			to_chat(new_ninja, "<span class='notice'>\nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded <span class='warning'><B>SPACE NINJA</B></span>! You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: <span class='warning'><B>[assign_mission]</B></span></span>")
 		else
 			if(xeno_list.len>3)//If there are more than three humanoid xenos on the station, time to get dangerous.
 				//Here we want the ninja to murder all the queens. The other aliens don't really matter.
@@ -373,11 +373,11 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 			ninja_mind.objectives += ninja_objective
 
 			var/directive = generate_ninja_directive(side)
-			to_chat(new_ninja, "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current directive is: \red <B>[directive]</B>")
-			new_ninja.mind.store_memory("<B>Directive:</B> \red [directive]<br>")
+			to_chat(new_ninja, "<span class='notice'>\nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded <span class='warning'><B>SPACE NINJA</B></span>! You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current directive is: <span class='warning'><B>[directive]</B></span></span>")
+			new_ninja.mind.store_memory("<B>Directive:</B> <span class='warning'>[directive]</span><br>")
 
 			var/obj_count = 1
-			to_chat(new_ninja, "\blue Your current objectives:")
+			to_chat(new_ninja, "<span class='notice'>Your current objectives:</span>")
 			for(var/datum/objective/objective in ninja_mind.objectives)
 				to_chat(new_ninja, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 				obj_count++
@@ -495,7 +495,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 	space_ninja_arrival(input, mission)
 
-	message_admins("\blue [key_name_admin(key)] has spawned [input] as a Space Ninja.\nTheir <b>mission</b> is: [mission]")
+	message_admins("<span class='notice'>[key_name_admin(key)] has spawned [input] as a Space Ninja.\nTheir <b>mission</b> is: [mission]</span>")
 	log_admin("[key] used Spawn Space Ninja.")
 
 	return
@@ -585,13 +585,13 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 			U.gib()
 			return 0
 		if(!istype(U:head, /obj/item/clothing/head/helmet/space/space_ninja))
-			to_chat(U, "<span class='warning'><B>ERROR</B>: 100113 \black UNABLE TO LOCATE HEAD GEAR\nABORTING...</span>")
+			to_chat(U, "<span class='warning'><B>ERROR</B>: 100113</span> UNABLE TO LOCATE HEAD GEAR\nABORTING...")
 			return 0
 		if(!istype(U:shoes, /obj/item/clothing/shoes/space_ninja))
-			to_chat(U, "<span class='warning'><B>ERROR</B>: 122011 \black UNABLE TO LOCATE FOOT GEAR\nABORTING...</span>")
+			to_chat(U, "<span class='warning'><B>ERROR</B>: 122011</span> UNABLE TO LOCATE FOOT GEAR\nABORTING...")
 			return 0
 		if(!istype(U:gloves, /obj/item/clothing/gloves/space_ninja))
-			to_chat(U, "<span class='warning'><B>ERROR</B>: 110223 \black UNABLE TO LOCATE HAND GEAR\nABORTING...</span>")
+			to_chat(U, "<span class='warning'><B>ERROR</B>: 110223</span> UNABLE TO LOCATE HAND GEAR\nABORTING...")
 			return 0
 
 		affecting = U
@@ -719,7 +719,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	cancel_stealth()
 
 	U << browse(null, "window=spideros")
-	to_chat(U, "\red Do or Die, <b>LET'S ROCK!!</b>")
+	to_chat(U, "<span class='warning'>Do or Die, <b>LET'S ROCK!!</b></span>")
 
 /obj/item/clothing/suit/space/space_ninja/proc/remove_kamikaze(mob/living/carbon/U)
 	if(kamikaze)
@@ -737,7 +737,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		U.incorporeal_move = 0
 		kamikaze = 0
 		k_unlock = 0
-		to_chat(U, "\blue Disengaging mode...\n\black<b>CODE NAME</b>: \red <b>KAMIKAZE</b>")
+		to_chat(U, "<span class='notice'>Disengaging mode...\n</span><b>CODE NAME</b>: <span class='warning'><b>KAMIKAZE</b></span>")
 
 //=======//AI VERBS//=======//
 
@@ -793,13 +793,13 @@ spideros = text2num(return_to)//Maximum length here is 6. Use (return_to, X) to 
 		if(isturf(T) && T.is_plating())
 			attached = locate() in T
 			if(!attached)
-				to_chat(U, "\red Warning: no exposed cable available.")
+				to_chat(U, "<span class='warning'>Warning: no exposed cable available.</span>")
 			else
-				to_chat(U, "\blue Connecting to wire, stand still...")
+				to_chat(U, "<span class='notice'>Connecting to wire, stand still...</span>")
 				if(do_after(U,50)&&!isnull(attached))
 					drain("WIRE",attached,U:wear_suit,src)
 				else
-					to_chat(U, "\red Procedure interrupted. Protocol terminated.")
+					to_chat(U, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
 	return
 
 I've tried a lot of stuff but adding verbs to the AI while inside an object, inside another object, did not want to work properly.

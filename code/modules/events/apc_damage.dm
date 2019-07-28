@@ -44,4 +44,4 @@
 		return 0
 
 	var/turf/T = get_turf(apc)
-	return !apc.emagged && T && (T.z in config.player_levels)
+	return !apc.emagged && T && (T.z in SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING)))
