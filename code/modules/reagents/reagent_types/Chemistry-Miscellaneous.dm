@@ -933,3 +933,16 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 		if(180 to INFINITY)
 			M.adjustBrainLoss(100)
 	data++
+
+/datum/reagent/AFFF
+	name = "Aqueous Film Forming Foam"
+	id = "AFFF"
+	description = "Smothers the fire and seals in the flammable vapours."
+	reagent_state = LIQUID
+	taste_message = "fire repellant"
+	color = "#c2eaed" // rgb: 194, 234, 237
+
+/datum/reagent/AFFF/reaction_turf(turf/T, method=TOUCH, volume)
+	var/obj/effect/effect/afff_foam/F = locate(/obj/effect/effect/afff_foam) in T
+	if(!F)
+		new /obj/effect/effect/afff_foam(T)
