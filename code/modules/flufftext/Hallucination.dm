@@ -181,7 +181,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						spawn(rand(10,30))
 							playsound_local(target, gunsound, VOL_EFFECTS_MASTER)
 							if(prob(60))
-								playsound_local(target, pick(pick(SOUNDIN_MSCREAM), pick(SOUNDIN_FSCREAM)), VOL_EFFECTS_MASTER, null, FALSE)
+								var/list/screamsound_list = pick(SOUNDIN_MSCREAM, SOUNDIN_FSCREAM)
+								playsound_local(target, pick(screamsound_list), VOL_EFFECTS_MASTER, null, FALSE)
 					if(8) // MELEE
 						var/list/hallsound = list('sound/weapons/smash.ogg',
 						                          'sound/weapons/polkan_atk.ogg',

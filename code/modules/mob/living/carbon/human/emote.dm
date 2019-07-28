@@ -589,7 +589,7 @@
 								if (gender == FEMALE) // Females have their own screams. Trannys be damned.
 									playsound(src, pick(SOUNDIN_FSCREAM), VOL_EFFECTS_MASTER, null, FALSE)
 								else
-									playsound(src, pick(SOUNDIN_MALESCREAM), VOL_EFFECTS_MASTER, null, FALSE)
+									playsound(src, pick(SOUNDIN_MSCREAM), VOL_EFFECTS_MASTER, null, FALSE)
 								m_type = 2
 								lastSoundEmote = world.time
 						else
