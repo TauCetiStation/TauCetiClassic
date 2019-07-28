@@ -152,7 +152,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						                          'sound/effects/Explosion1.ogg')
 						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
 					if(3) // GLASS
-						playsound_local(target, SOUNDIN_SHATTER, VOL_EFFECTS_MASTER)
+						playsound_local(target, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 					if(4) // GROWLS
 						var/list/hallsound = list('sound/voice/growl1.ogg',
 						                          'sound/voice/growl2.ogg',

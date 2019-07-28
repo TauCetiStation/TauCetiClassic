@@ -190,7 +190,7 @@
 /obj/machinery/door_control/emag_act(mob/user)
 	if((buildstage == DOOR_CONTROL_COMPLETE) && !emagged)
 		emagged = TRUE
-		playsound(src, SOUNDIN_SPARKS, VOL_EFFECTS_MASTER)
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		update_icon()
 		return TRUE
 	return FALSE

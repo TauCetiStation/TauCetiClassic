@@ -500,7 +500,7 @@
 									   "<span class='shadowling'><b><i>You have returned. One of your masters has brought you from the darkness beyond.</b></i></span>")
 		thrallToRevive.Weaken(4)
 		thrallToRevive.emote("gasp")
-		playsound(thrallToRevive, SOUNDIN_BODYFALL, VOL_EFFECTS_MASTER)
+		playsound(thrallToRevive, pick(SOUNDIN_BODYFALL), VOL_EFFECTS_MASTER)
 
 // ASCENDANT ABILITIES BEYOND THIS POINT //
 

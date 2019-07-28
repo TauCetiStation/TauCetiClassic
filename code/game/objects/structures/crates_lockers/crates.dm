@@ -205,7 +205,7 @@
 	overlays += emag
 	overlays += sparks
 	spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
-	playsound(src, SOUNDIN_SPARKS, VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	src.locked = 0
 	src.broken = 1
 	to_chat(user, "<span class='notice'>You unlock \the [src].</span>")

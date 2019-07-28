@@ -31,21 +31,18 @@
 |                         SOUNDIN                         |
  \*-----------------------------------------------------*/
 
-     /*\
-    |* *| PICK
-     \*/
-
 // ----- Effects ------
-#define SOUNDIN_SHATTER   pick('sound/effects/glassbr1.ogg', 'sound/effects/glassbr2.ogg', 'sound/effects/glassbr3.ogg')
-#define SOUNDIN_EXPLOSION pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg')
-#define SOUNDIN_SPARKS    pick('sound/effects/sparks1.ogg', 'sound/effects/sparks2.ogg', 'sound/effects/sparks3.ogg', 'sound/effects/sparks4.ogg')
-#define SOUNDIN_BODYFALL  pick('sound/effects/bodyfall1.ogg', 'sound/effects/bodyfall2.ogg', 'sound/effects/bodyfall3.ogg', 'sound/effects/bodyfall4.ogg')
-#define SOUNDIN_PAGETURN  pick('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
-#define SOUNDIN_CAN_OPEN  pick('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
-#define SOUNDIN_BONEBREAK pick('sound/effects/bonebreak1.ogg', 'sound/effects/bonebreak2.ogg', 'sound/effects/bonebreak3.ogg', 'sound/effects/bonebreak4.ogg')
+#define SOUNDIN_SHATTER   list('sound/effects/glassbr1.ogg', 'sound/effects/glassbr2.ogg', 'sound/effects/glassbr3.ogg')
+#define SOUNDIN_EXPLOSION list('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg')
+#define SOUNDIN_SPARKS    list('sound/effects/sparks1.ogg', 'sound/effects/sparks2.ogg', 'sound/effects/sparks3.ogg', 'sound/effects/sparks4.ogg')
+#define SOUNDIN_BODYFALL  list('sound/effects/bodyfall1.ogg', 'sound/effects/bodyfall2.ogg', 'sound/effects/bodyfall3.ogg', 'sound/effects/bodyfall4.ogg')
+#define SOUNDIN_PAGETURN  list('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
+#define SOUNDIN_PAGETURN  list('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
+#define SOUNDIN_BONEBREAK list('sound/effects/bonebreak1.ogg', 'sound/effects/bonebreak2.ogg', 'sound/effects/bonebreak3.ogg', 'sound/effects/bonebreak4.ogg')
+#define SOUNDIN_RUSTLE    list('sound/effects/rustle1.ogg', 'sound/effects/rustle2.ogg', 'sound/effects/rustle3.ogg', 'sound/effects/rustle4.ogg', 'sound/effects/rustle5.ogg')
 // Footsteps
-#define SOUNDIN_CLOWNSTEP pick('sound/effects/clownstep1.ogg', 'sound/effects/clownstep2.ogg')
-#define SOUNDIN_FOOTSTEPS pick('sound/effects/tile1.wav', 'sound/effects/tile2.wav', 'sound/effects/tile3.wav', 'sound/effects/tile4.wav')
+#define SOUNDIN_CLOWNSTEP list('sound/effects/clownstep1.ogg', 'sound/effects/clownstep2.ogg')
+#define SOUNDIN_FOOTSTEPS list('sound/effects/tile1.wav', 'sound/effects/tile2.wav', 'sound/effects/tile3.wav', 'sound/effects/tile4.wav')
 
 // ----- Voice -----
 // Human's vomit
@@ -85,10 +82,5 @@
 // Medical
 #define SOUNDIN_BANDAGE   pick('sound/items/bandage.ogg', 'sound/items/bandage2.ogg', 'sound/items/bandage3.ogg')
 
-     /*\
-    |* *| LIST
-     \*/
-
-#define SOUNDIN_RUSTLE      list('sound/effects/rustle1.ogg', 'sound/effects/rustle2.ogg', 'sound/effects/rustle3.ogg', 'sound/effects/rustle4.ogg', 'sound/effects/rustle5.ogg')
 #define SOUNDIN_PUNCH       list('sound/weapons/punch1.ogg', 'sound/weapons/punch2.ogg', 'sound/weapons/punch3.ogg', 'sound/weapons/punch4.ogg')
 #define SOUNDIN_DESCERATION list('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')

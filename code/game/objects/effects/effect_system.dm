@@ -131,7 +131,7 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/sparks/atom_init()
 	. = ..()
-	playsound(src, SOUNDIN_SPARKS, VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	var/turf/T = loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
