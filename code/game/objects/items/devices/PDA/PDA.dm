@@ -570,8 +570,9 @@
 	U.set_machine(src)
 
 	if(href_list && (last_tap_sound <= world.time))
-		playsound(src, "pda", VOL_EFFECTS_MASTER, 15, FALSE)
-		last_tap_sound = world.time + 8
+		if(iscarbon(usr))
+			playsound(src, "pda", VOL_EFFECTS_MASTER, 15, FALSE)
+			last_tap_sound = world.time + 8
 
 	switch(href_list["choice"])
 
@@ -952,7 +953,7 @@
 		id = null
 
 /obj/item/device/pda/proc/create_message(mob/living/U = usr, obj/item/device/pda/P, tap = 1)
-	if(tap)
+	if(tap && iscarbon(U))
 		U.visible_message("<span class='notice'>[U] taps on \his PDA's screen.</span>")
 	U.last_target_click = world.time
 	var/t = sanitize(input(U, "Please enter message", name, null) as text)

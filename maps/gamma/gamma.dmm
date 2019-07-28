@@ -41770,7 +41770,7 @@
 	},
 /area/medical/surgery)
 "mFj" = (
-/obj/structure/janitorialcart,
+/obj/structure/stool/bed/chair/janitorialcart,
 /turf/simulated/floor,
 /area/janitor)
 "mFl" = (

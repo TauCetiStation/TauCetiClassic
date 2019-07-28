@@ -206,6 +206,9 @@
 	This is overridden in ai.dm
 */
 /mob/proc/ShiftClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && I.ShiftClickAction(A, src))
+		return
 	A.ShiftClick(src)
 	return
 /atom/proc/ShiftClick(mob/user)
@@ -217,7 +220,12 @@
 	Ctrl click
 	For most objects, pull
 */
+
+
 /mob/proc/CtrlClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && I.CtrlClickAction(A, src))
+		return
 	A.CtrlClick(src)
 	return
 
@@ -230,9 +238,11 @@
 
 /*
 	Alt click
-	Unused except for AI
 */
 /mob/proc/AltClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && I.AltClickAction(A, src))
+		return
 	A.AltClick(src)
 	return
 
@@ -244,7 +254,6 @@
 		else
 			user.listed_turf = T
 			user.client.statpanel = T.name
-	return
 
 /mob/proc/TurfAdjacent(turf/T)
 	return T.AdjacentQuick(src)
@@ -254,6 +263,9 @@
 	Unused except for AI
 */
 /mob/proc/CtrlShiftClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && I.CtrlShiftClickAction(A, src))
+		return
 	A.CtrlShiftClick(src)
 	return
 

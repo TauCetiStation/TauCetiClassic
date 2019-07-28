@@ -197,3 +197,5 @@
 #define CSS_THEME_DARK "theme_dark"
 
 #define BYOND_JOIN_LINK config.server ? "byond://[config.server]" : "byond://[world.address]:[world.port]"
+
+#define DELAY2GLIDESIZE(delay) (world.icon_size / max(ceil(delay / world.tick_lag), 1))
