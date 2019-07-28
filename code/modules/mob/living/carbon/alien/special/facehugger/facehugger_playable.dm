@@ -415,12 +415,12 @@ When we finish, facehugger's player will be transfered inside embryo.
 		return
 
 	for(var/obj/item/alien_embryo/AE in affecting.contents)
-		to_chat(assailant, "\red [affecting] already impregnated.")
+		to_chat(assailant, "<span class='warning'>[affecting] already impregnated.</span>")
 		qdel(src)
 		return
 
 	for(var/mob/living/carbon/alien/larva/baby in affecting.contents)
-		to_chat(assailant, "\red [affecting] already impregnated.")
+		to_chat(assailant, "<span class='warning'>[affecting] already impregnated.</span>")
 		qdel(src)
 		return
 
