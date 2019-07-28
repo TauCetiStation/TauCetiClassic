@@ -4866,11 +4866,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/maintenance/dormitory)
-"aio" = (
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/security/warden)
 "aip" = (
 /obj/machinery/bodyscanner,
 /turf/simulated/floor{
@@ -5201,11 +5196,6 @@
 /turf/simulated/floor/plating,
 /area/security/hos)
 "aiU" = (
-/obj/item/device/radio/intercom{
-	frequency = 1475;
-	name = "Station Intercom (Security)";
-	pixel_x = 30
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -6696,6 +6686,11 @@
 	c_tag = "Security Warden Office"
 	},
 /obj/machinery/computer/secure_data,
+/obj/item/device/radio/intercom{
+	frequency = 1475;
+	name = "Station Intercom (Security)";
+	pixel_y = 27
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
