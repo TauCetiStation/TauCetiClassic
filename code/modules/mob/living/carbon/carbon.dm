@@ -615,8 +615,8 @@
 	if(B.chemicals >= 100)
 		to_chat(src, "<span class='danger'>Your host twitches and quivers as you rapdly excrete several larvae from your sluglike body.</span>")
 		B.chemicals -= 100
-		var/turf/T = get_turf(src)
-		T.add_vomit_floor(src)
+
+		vomit()
 		new /mob/living/simple_animal/borer(get_turf(src))
 	else
 		to_chat(src, "<span class='info'>You do not have enough chemicals stored to reproduce.</span>")
@@ -863,3 +863,32 @@
 				visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>")
 				attack_log += text("\[[time_stamp()]\] <font color='orange'>Had their internals [internal ? "open" : "close"] by [usr.name] ([usr.ckey])[gas_log_string]</font>")
 				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>[internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name][gas_log_string]</font>")
+
+/mob/living/carbon/vomit(punched = FALSE, masked = FALSE)
+	var/mask_ = masked
+	if(head && (head.flags & HEADCOVERSMOUTH))
+		mask_ = TRUE
+
+	. = ..(punched, mask_)
+	if(. && !mask_)
+		if(reagents.total_volume > 0)
+			var/toxins_puked = 0
+			var/datum/reagents/R = new(10)
+
+			while(TRUE)
+				var/datum/reagent/R_V = pick(reagents.reagent_list)
+				if(istype(R_V, /datum/reagent/water))
+					toxins_puked += 0.5
+				else if(R_V.id == "carbon")
+					toxins_puked += 2
+				else if(R_V.id == "anti_toxin")
+					toxins_puked += 3
+				else if(R_V.id == "thermopsis")
+					toxins_puked += 5
+				reagents.trans_id_to(R, R_V.id, 1)
+				if(R.total_volume >= 10)
+					break
+				if(reagents.total_volume <= 0)
+					break
+			R.reaction(loc)
+			adjustToxLoss(-toxins_puked)

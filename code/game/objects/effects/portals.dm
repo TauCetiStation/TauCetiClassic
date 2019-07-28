@@ -109,6 +109,6 @@
 			to_chat(H, "<span class='warning'>[msg]</span>")
 		if(prob(20))
 			bad_effects += 1
-			H.vomit() //No msg required, since vomit() will handle this.
+			H.invoke_vomit_async() //No msg required, since vomit() will handle this.
 		if(bad_effects == 2)
 			H.Paralyse(3)

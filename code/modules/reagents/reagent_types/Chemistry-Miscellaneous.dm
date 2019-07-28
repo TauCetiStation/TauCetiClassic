@@ -348,7 +348,7 @@
 				M.drowsyness = min(40, (M.drowsyness + 2))
 			if(prob(3) & ishuman(M))
 				var/mob/living/carbon/human/H = M
-				H.vomit()
+				H.invoke_vomit_async()
 		if(volume > 5)
 			if(prob(70))
 				M.adjustOxyLoss(1)
@@ -435,7 +435,7 @@
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.vomit()
+		H.invoke_vomit_async()
 		H.apply_effect(1,IRRADIATE,0)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////

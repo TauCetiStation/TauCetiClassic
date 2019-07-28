@@ -491,12 +491,9 @@
 				var/mob/living/L = M
 				L.Weaken(3)
 				shake_camera(L, 20, 1)
-				spawn(20)
-					if(L)
-						var/turf/T = get_turf(L)
-						T.add_vomit_floor(L)
-						L.nutrition -= 20
-						L.adjustToxLoss(-3)
+				if(ishuman(L))
+					var/mob/living/carbon/human/H = L
+					H.invoke_vomit_async()
 
 
 /**********************Resonator**********************/

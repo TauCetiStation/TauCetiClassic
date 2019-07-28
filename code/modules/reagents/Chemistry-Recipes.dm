@@ -87,6 +87,13 @@
 	required_reagents = list("silicon" = 1, "potassium" = 1, "nitrogen" = 1)
 	result_amount = 3
 
+/datum/chemical_reaction/thermopsis
+	name = "Thermopsis"
+	id = "thermopsis"
+	result = "thermopsis"
+	required_reagents = list("anti_toxin" = 1, "sugar" = 1, "carbon" = 1)
+	result_amount = 3
+
 /datum/chemical_reaction/mutagen
 	name = "Unstable mutagen"
 	id = "mutagen"

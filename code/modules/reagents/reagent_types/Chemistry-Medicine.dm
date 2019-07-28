@@ -257,6 +257,23 @@
 	M.hallucination = max(0, M.hallucination - 5 * REM)
 	M.adjustToxLoss(-2 * REM)
 
+/datum/reagent/thermopsis
+	name = "Thermopsis"
+	id = "thermopsis"
+	description = "Irritates stomach receptors, that leads to reflex rise of vomiting."
+	reagent_state = LIQUID
+	color = "#a0a000"
+	taste_message = "vomit"
+	restrict_species = list(IPC, DIONA)
+	data = 1
+
+/datum/reagent/thermopsis/on_general_digest(mob/living/M)
+	..()
+	data++
+	if(data > 10)
+		M.vomit()
+		data -= rand(0, 10)
+
 /datum/reagent/adminordrazine //An OP chemical for admins
 	name = "Adminordrazine"
 	id = "adminordrazine"
