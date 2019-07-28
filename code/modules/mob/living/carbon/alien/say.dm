@@ -18,7 +18,7 @@
 				alien_talk(message)
 		else
 			if (!stat)
-				playsound(src, SOUNDIN_XENOMORPH_TALK, VOL_EFFECTS_MASTER, 45) // So aliens can hiss while they hiss yo/N
+				playsound(src, pick(SOUNDIN_XENOMORPH_TALK), VOL_EFFECTS_MASTER, 45) // So aliens can hiss while they hiss yo/N
 			return ..("<span class='alien'>[message]</span>", sanitize = 0)
 
 /mob/living/carbon/alien/facehugger/say(message)

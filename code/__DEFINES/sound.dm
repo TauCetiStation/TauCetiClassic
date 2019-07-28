@@ -46,22 +46,22 @@
 
 // ----- Voice -----
 // Human's vomit
-#define SOUNDIN_MALEVOMIT   pick('sound/voice/mob/mvomit_1.ogg', 'sound/voice/mob/mvomit_2.ogg')
-#define SOUNDIN_FEMALEVOMIT pick('sound/voice/mob/fvomit_1.ogg', 'sound/voice/mob/fvomit_2.ogg')
-#define SOUNDIN_FRIGVOMIT   pick('sound/voice/mob/frigvomit_1.ogg', 'sound/voice/mob/frigvomit_2.ogg')
-#define SOUNDIN_MRIGVOMIT   pick('sound/voice/mob/mrigvomit_1.ogg', 'sound/voice/mob/mrigvomit_2.ogg')
+#define SOUNDIN_MALEVOMIT   list('sound/voice/mob/mvomit_1.ogg', 'sound/voice/mob/mvomit_2.ogg')
+#define SOUNDIN_FEMALEVOMIT list('sound/voice/mob/fvomit_1.ogg', 'sound/voice/mob/fvomit_2.ogg')
+#define SOUNDIN_FRIGVOMIT   list('sound/voice/mob/frigvomit_1.ogg', 'sound/voice/mob/frigvomit_2.ogg')
+#define SOUNDIN_MRIGVOMIT   list('sound/voice/mob/mrigvomit_1.ogg', 'sound/voice/mob/mrigvomit_2.ogg')
 // Human's emotes
-#define SOUNDIN_FBCOUGH pick('sound/voice/mob/fbcough_1.ogg', 'sound/voice/mob/fbcough_2.ogg', 'sound/voice/mob/fbcough_3.ogg')
-#define SOUNDIN_MBCOUGH pick('sound/voice/mob/mbcough_1.ogg', 'sound/voice/mob/mbcough_2.ogg', 'sound/voice/mob/mbcough_3.ogg')
-#define SOUNDIN_FSCREAM pick('sound/voice/mob/femalescream_1.ogg', 'sound/voice/mob/femalescream_2.ogg', 'sound/voice/mob/femalescream_3.ogg', 'sound/voice/mob/femalescream_4.ogg', 'sound/voice/mob/femalescream_5.ogg')
-#define SOUNDIN_MSCREAM pick('sound/voice/mob/malescream_1.ogg', 'sound/voice/mob/malescream_2.ogg', 'sound/voice/mob/malescream_3.ogg', 'sound/voice/mob/malescream_4.ogg', 'sound/voice/mob/malescream_5.ogg', 'sound/voice/mob/malescream_6.ogg', 'sound/voice/mob/malescream_7.ogg')
+#define SOUNDIN_FBCOUGH list('sound/voice/mob/fbcough_1.ogg', 'sound/voice/mob/fbcough_2.ogg', 'sound/voice/mob/fbcough_3.ogg')
+#define SOUNDIN_MBCOUGH list('sound/voice/mob/mbcough_1.ogg', 'sound/voice/mob/mbcough_2.ogg', 'sound/voice/mob/mbcough_3.ogg')
+#define SOUNDIN_FSCREAM list('sound/voice/mob/femalescream_1.ogg', 'sound/voice/mob/femalescream_2.ogg', 'sound/voice/mob/femalescream_3.ogg', 'sound/voice/mob/femalescream_4.ogg', 'sound/voice/mob/femalescream_5.ogg')
+#define SOUNDIN_MSCREAM list('sound/voice/mob/malescream_1.ogg', 'sound/voice/mob/malescream_2.ogg', 'sound/voice/mob/malescream_3.ogg', 'sound/voice/mob/malescream_4.ogg', 'sound/voice/mob/malescream_5.ogg', 'sound/voice/mob/malescream_6.ogg', 'sound/voice/mob/malescream_7.ogg')
 // Xenomorph's emotes
-#define SOUNDIN_XENOMORPH_TALK  pick('sound/voice/xenomorph/talk_1.ogg', 'sound/voice/xenomorph/talk_2.ogg', 'sound/voice/xenomorph/talk_3.ogg', 'sound/voice/xenomorph/talk_4.ogg')
-#define SOUNDIN_XENOMORPH_ROAR  pick('sound/voice/xenomorph/roar_1.ogg', 'sound/voice/xenomorph/roar_2.ogg')
-#define SOUNDIN_XENOMORPH_HISS  pick('sound/voice/xenomorph/hiss_1.ogg', 'sound/voice/xenomorph/hiss_2.ogg', 'sound/voice/xenomorph/hiss_3.ogg')
-#define SOUNDIN_XENOMORPH_GROWL pick('sound/voice/xenomorph/growl_1.ogg', 'sound/voice/xenomorph/growl_2.ogg')
+#define SOUNDIN_XENOMORPH_TALK  list('sound/voice/xenomorph/talk_1.ogg', 'sound/voice/xenomorph/talk_2.ogg', 'sound/voice/xenomorph/talk_3.ogg', 'sound/voice/xenomorph/talk_4.ogg')
+#define SOUNDIN_XENOMORPH_ROAR  list('sound/voice/xenomorph/roar_1.ogg', 'sound/voice/xenomorph/roar_2.ogg')
+#define SOUNDIN_XENOMORPH_HISS  list('sound/voice/xenomorph/hiss_1.ogg', 'sound/voice/xenomorph/hiss_2.ogg', 'sound/voice/xenomorph/hiss_3.ogg')
+#define SOUNDIN_XENOMORPH_GROWL list('sound/voice/xenomorph/growl_1.ogg', 'sound/voice/xenomorph/growl_2.ogg')
 // Beepsky
-#define SOUNDIN_BEEPSKY pick('sound/voice/beepsky/god.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/secureday.ogg', 'sound/voice/beepsky/radio.ogg', 'sound/voice/beepsky/insult.ogg', 'sound/voice/beepsky/creep.ogg')
+#define SOUNDIN_BEEPSKY list('sound/voice/beepsky/god.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/secureday.ogg', 'sound/voice/beepsky/radio.ogg', 'sound/voice/beepsky/insult.ogg', 'sound/voice/beepsky/creep.ogg')
 
 // ----- Misc -----
 // Breath

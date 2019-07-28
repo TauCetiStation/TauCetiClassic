@@ -215,9 +215,9 @@
 						if(message == "coughs up blood!")
 							if(world.time-lastSoundEmote >= 30)
 								if(gender == FEMALE)
-									playsound(src, SOUNDIN_FBCOUGH, VOL_EFFECTS_MASTER, null, FALSE)
+									playsound(src, pick(SOUNDIN_FBCOUGH), VOL_EFFECTS_MASTER, null, FALSE)
 								else
-									playsound(src, SOUNDIN_MBCOUGH, VOL_EFFECTS_MASTER, null, FALSE)
+									playsound(src, pick(SOUNDIN_MBCOUGH), VOL_EFFECTS_MASTER, null, FALSE)
 								lastSoundEmote = world.time
 					message = "<B>[src]</B> [message ? message : "gasps!"]"
 					m_type = 2
@@ -587,7 +587,7 @@
 							else if(world.time-lastSoundEmote >= 30)//prevent scream spam with things like poly spray
 								message = "<B>[src]</B> screams in agony!" // AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
 								if (gender == FEMALE) // Females have their own screams. Trannys be damned.
-									playsound(src, SOUNDIN_FSCREAM, VOL_EFFECTS_MASTER, null, FALSE)
+									playsound(src, pick(SOUNDIN_FSCREAM), VOL_EFFECTS_MASTER, null, FALSE)
 								else
 									playsound(src, "mscream", VOL_EFFECTS_MASTER, null, FALSE)
 								m_type = 2
