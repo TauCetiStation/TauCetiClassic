@@ -22,7 +22,7 @@
 	var/allow_quick_gather	//Set this variable to allow the object to have the 'toggle mode' verb, which quickly collects all items from a tile.
 	var/collection_mode = 1  //0 = pick one at a time, 1 = pick all on tile
 	var/foldable = null	// BubbleWrap - if set, can be folded (when empty) into a sheet of cardboard
-	var/list/use_sound = SOUNDIN_RUSTLE	//sound played when used. null for no sound.
+	var/use_sound = SOUNDIN_RUSTLE	//sound played when used. null for no sound.
 
 	var/storage_ui_path = /datum/storage_ui/default
 	var/datum/storage_ui/storage_ui = null
@@ -96,7 +96,7 @@
 		storage_ui.hide_from(user)
 
 /obj/item/weapon/storage/proc/open(mob/user)
-	if (use_sound.len)
+	if (length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
 
 	prepare_ui()
