@@ -1137,51 +1137,6 @@ var/global/list/common_tools = list(
 		return 1
 	return 0
 
-/proc/is_hot(obj/item/W)
-	if(iswelder(W))
-		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.isOn())
-			return 3800
-		else
-			return 0
-	if(istype(W,/obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/LT = W
-		if(LT.lit)
-			return 1500
-		else
-			return 0
-	if(istype(W,/obj/item/weapon/match))
-		var/obj/item/weapon/match/MT = W
-		if(MT.lit)
-			return 1000
-		else
-			return 0
-	if(istype(W,/obj/item/clothing/mask/cigarette))
-		var/obj/item/clothing/mask/cigarette/CG = W
-		if(CG.lit)
-			return 1000
-		else
-			return 0
-	if(istype(W,/obj/item/weapon/pickaxe/plasmacutter))
-		return 3800
-	if(istype(W,/obj/item/candle))
-		var/obj/item/candle/CD = W
-		if(CD.lit)
-			return 1000
-		else
-			return 0
-	if(istype(W,/obj/item/device/flashlight/flare/torch))
-		var/obj/item/device/flashlight/flare/torch/TCH = W
-		if(TCH.on)
-			return 1500
-		else
-			return 0
-	if(istype(W,/obj/item/weapon/melee/energy))
-		return 3500
-	else
-		return 0
-	return 0
-
 // Whether or not the given item counts as sharp in terms of dealing damage
 /proc/is_sharp(obj/O)
 	if(!O)

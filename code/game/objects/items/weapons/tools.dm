@@ -385,6 +385,12 @@
 /obj/item/weapon/weldingtool/proc/isOn()
 	return src.welding
 
+/obj/item/weapon/weldingtool/get_current_temperature()
+	if(isOn())
+		return 3800
+	else
+		return 0
+
 //Sets the welding state of the welding tool. If you see W.welding = 1 anywhere, please change it to W.setWelding(1)
 //so that the welding tool updates accordingly
 /obj/item/weapon/weldingtool/proc/setWelding(temp_welding)

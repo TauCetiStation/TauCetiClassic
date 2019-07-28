@@ -173,10 +173,6 @@
 	fuel = max(fuel - 1, 0)
 	if(!fuel || !on)
 		turn_off()
-		if(!fuel)
-			icon_state = "[initial(icon_state)]-empty"
-			item_state = icon_state
-		STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/proc/turn_off()
 	on = 0
@@ -187,6 +183,11 @@
 		update_brightness(U)
 	else
 		update_brightness(null)
+
+	if(!fuel)
+		icon_state = "[initial(icon_state)]-empty"
+		item_state = icon_state
+	STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/attack_self(mob/user)
 
