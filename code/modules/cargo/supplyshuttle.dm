@@ -18,6 +18,7 @@ var/list/mechtoys = list(
 	icon_state = "shuttle3"
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/supply/dock
 	name = "supply shuttle"

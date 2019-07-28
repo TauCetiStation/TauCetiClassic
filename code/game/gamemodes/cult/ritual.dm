@@ -109,7 +109,7 @@ var/list/cult_datums = list()
 	for(var/obj/effect/rune/R in cult_runes)
 		if(!istype(R.power, power.type) || R == src)
 			continue
-		if(R.power.word3 == power.word3 && R.loc.z != ZLEVEL_CENTCOMM)
+		if(R.power.word3 == power.word3 && !is_centcom_level(R.loc.z))
 			allrunes += R
 	if(length(allrunes) > 0)
 		user.forceMove(get_turf(pick(allrunes)))

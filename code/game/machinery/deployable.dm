@@ -179,25 +179,6 @@ for reference:
 				visible_message("\red BZZzZZzZZzZT")
 				return
 		return
-	else if (istype(W, /obj/item/weapon/card/emag))
-		user.SetNextMove(CLICK_CD_MELEE)
-		if (src.emagged == 0)
-			src.emagged = 1
-			src.req_access = null
-			to_chat(user, "You break the ID authentication lock on \the [src].")
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-			s.set_up(2, 1, src)
-			s.start()
-			visible_message("\red BZZzZZzZZzZT")
-			return
-		else if (src.emagged == 1)
-			src.emagged = 2
-			to_chat(user, "You short out the anchoring mechanism on \the [src].")
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-			s.set_up(2, 1, src)
-			s.start()
-			visible_message("\red BZZzZZzZZzZT")
-			return
 	else if (iswrench(W))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if (src.health < src.maxhealth)
@@ -223,6 +204,25 @@ for reference:
 		if (src.health <= 0)
 			src.explode()
 		..()
+
+/obj/machinery/deployable/barrier/emag_act(mob/user)
+	if (src.emagged == 0)
+		src.emagged = 1
+		src.req_access = list()
+		to_chat(user, "You break the ID authentication lock on \the [src].")
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(2, 1, src)
+		s.start()
+		visible_message("\red BZZzZZzZZzZT")
+		return TRUE
+	else if (src.emagged == 1)
+		src.emagged = 2
+		to_chat(user, "You short out the anchoring mechanism on \the [src].")
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(2, 1, src)
+		s.start()
+		visible_message("\red BZZzZZzZZzZT")
+		return TRUE
 
 /obj/machinery/deployable/barrier/ex_act(severity)
 	switch(severity)

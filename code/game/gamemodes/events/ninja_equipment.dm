@@ -27,9 +27,9 @@ ________________________________________________________________________________
 	spark_system = new()//spark initialize
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-	stored_research = new()//Stolen research initialize.
-	for(var/T in typesof(/datum/tech) - /datum/tech)//Store up on research.
-		stored_research += new T(src)
+	stored_research = list()//Stolen research initialize.
+	for(var/T in subtypesof(/datum/tech))//Store up on research.
+		stored_research += new T
 	var/reagent_amount//reagent initialize
 	for(var/reagent_id in reagent_list)
 		reagent_amount += reagent_id == "radium" ? r_maxamount+(a_boost*a_transfer) : r_maxamount//AI can inject radium directly.
@@ -1146,17 +1146,16 @@ ________________________________________________________________________________
 				var/turf/location = get_turf(U)
 				for(var/mob/living/silicon/ai/AI in player_list)
 					to_chat(AI, "\red <b>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</b>.")
-			if(A:files&&A:files.known_tech.len)
+			if(A:files&&A:files.tech_trees.len)
 				for(var/datum/tech/current_data in S.stored_research)
 					to_chat(U, "\blue Checking \the [current_data.name] database.")
 					if(do_after(U, S.s_delay, target = A)&&G.candrain&&!isnull(A))
-						for(var/datum/tech/analyzing_data in A:files.known_tech)
-							if(current_data.id==analyzing_data.id)
-								if(analyzing_data.level>current_data.level)
-									to_chat(U, "\blue Database: \black <b>UPDATED</b>.")
-									current_data.level = analyzing_data.level
-								break//Move on to next.
-					else	break//Otherwise, quit processing.
+						var/datum/tech/analyzing_data = A:files.tech_trees[current_data.id]
+						if(analyzing_data && analyzing_data.level>current_data.level)
+							to_chat(U, "\blue Database: \black <b>UPDATED</b>.")
+							current_data.level = analyzing_data.level
+					else
+						break//Otherwise, quit processing.
 			to_chat(U, "\blue Data analyzed. Process finished.")
 
 		if("WIRE")

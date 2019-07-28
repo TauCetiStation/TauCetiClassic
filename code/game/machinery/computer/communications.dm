@@ -77,7 +77,7 @@
 	if(!.)
 		return
 
-	if (src.z > ZLEVEL_STATION)
+	if (!is_station_level(z))
 		to_chat(usr, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return FALSE
 	if(!href_list["operation"])
@@ -298,16 +298,15 @@
 			state = STATE_ALERT_LEVEL
 	src.updateUsrDialog()
 
-/obj/machinery/computer/communications/attackby(obj/I, mob/user)
-	if(istype(I,/obj/item/weapon/card/emag))
-		src.emagged = 1
-		to_chat(user, "You scramble the communication routing circuits!")
-	else
-		..()
-	return
+/obj/machinery/computer/communications/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	src.emagged = 1
+	to_chat(user, "You scramble the communication routing circuits!")
+	return TRUE
 
 /obj/machinery/computer/communications/ui_interact(mob/user)
-	if (src.z > ZLEVEL_EMPTY)
+	if (!SSmapping.has_level(z))
 		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return
 

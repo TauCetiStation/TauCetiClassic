@@ -988,7 +988,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 /datum/admins/proc/unprison(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
-	if (M.z == ZLEVEL_CENTCOMM)
+	if (is_centcom_level(M.z))
 		if (config.allow_admin_jump)
 			M.loc = pick(latejoin)
 			message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")

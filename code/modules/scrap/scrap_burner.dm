@@ -13,11 +13,10 @@
 	name = "Scrapman Circuit Board"
 	desc = "Scrapman Generator Board (PACMAN-type Generator)"
 	id = "scrapman"
-	req_tech = list("programming" = 2, "phorontech" = 3, "powerstorage" = 2, "engineering" = 4)
 	build_type = IMPRINTER
-	reliability = 79
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/pacman/scrap
+	category = list("Power")
 
 /obj/machinery/power/port_gen/pacman/scrap
 	name = "Scrapman Portable Generator"

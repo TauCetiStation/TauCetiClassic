@@ -56,16 +56,18 @@
 			if("Abort")
 				to_chat(world, "\blue <B>All authorizations to shortening time for shuttle launch have been revoked!</B>")
 				src.authorized.Cut()
-
-	else if (istype(W, /obj/item/weapon/card/emag) && !emagged)
-		var/choice = alert(user, "Would you like to launch the shuttle?","Shuttle control", "Launch", "Cancel")
-
-		if(!emagged && SSshuttle.location == 1 && user.get_active_hand() == W)
-			switch(choice)
-				if("Launch")
-					to_chat(world, "\blue <B>Alert: Shuttle launch time shortened to 10 seconds!</B>")
-					SSshuttle.settimeleft( 10 )
-					emagged = 1
-				if("Cancel")
-					return
 	return
+
+/obj/machinery/computer/shuttle/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	var/choice = alert(user, "Would you like to launch the shuttle?","Shuttle control", "Launch", "Cancel")
+	if(SSshuttle.location == 1)
+		switch(choice)
+			if("Launch")
+				to_chat(world, "\blue <B>Alert: Shuttle launch time shortened to 10 seconds!</B>")
+				SSshuttle.settimeleft( 10 )
+				emagged = 1
+				return TRUE
+			if("Cancel")
+				return FALSE

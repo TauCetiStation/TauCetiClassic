@@ -57,7 +57,7 @@ var/global/list/all_objectives = list()
 
 /datum/objective/assassinate/check_completion()
 	if(target && target.current)
-		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > ZLEVEL_EMPTY || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
+		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || !SSmapping.has_level(target.current.z) || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 			return 1
 		return 0
 	return 1
@@ -87,7 +87,7 @@ var/global/list/all_objectives = list()
 		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
 			return 1
 		var/turf/T = get_turf(target.current)
-		if(T && (T.z != ZLEVEL_STATION))			//If they leave the station they count as dead for this
+		if(T && !is_station_level(T.z))			//If they leave the station they count as dead for this
 			return 2
 		return 0
 	return 1
@@ -121,7 +121,7 @@ var/global/list/all_objectives = list()
 			if(target in ticker.mode:head_revolutionaries)
 				return TRUE
 		var/turf/T = get_turf(target.current)
-		if(T && (T.z != ZLEVEL_STATION))			//If they leave the station they count as dead for this
+		if(T && !is_station_level(T.z))			//If they leave the station they count as dead for this
 			return TRUE
 		return FALSE
 	return TRUE

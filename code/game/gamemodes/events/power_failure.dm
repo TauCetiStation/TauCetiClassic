@@ -13,7 +13,7 @@ var/power_fail_event = 0
 
 	for(var/obj/machinery/power/smes/S in smes_list)
 		var/area/current_area = get_area(S)
-		if(current_area.type in skipped_areas || S.z != ZLEVEL_STATION)
+		if(current_area.type in skipped_areas || !is_station_level(S.z))
 			continue
 		S.last_charge = S.charge
 		S.last_output = S.output
@@ -27,12 +27,12 @@ var/power_fail_event = 0
 		S.power_change()
 
 	for(var/obj/machinery/power/apc/C in apc_list)
-		if(C.cell && C.z == ZLEVEL_STATION)
+		if(C.cell && is_station_level(C.z))
 			C.cell.charge = 0
 
 /proc/play_ambience()
 	for(var/mob/M in player_list)
-		M.playsound_local(null, 'sound/ambience/hullcreak.ogg', VOL_AMBIENT, vary = FALSE, ignore_environment = TRUE)
+		M.playsound_music('sound/ambience/specific/hullcreak.ogg', VOL_AMBIENT, null, null, CHANNEL_AMBIENT_LOOP)
 
 /proc/power_restore(announce = 1, badminery = 0)
 	power_fail_event = 0
@@ -42,11 +42,11 @@ var/power_fail_event = 0
 		command_alert("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal", "poweron")
 	if(badminery)
 		for(var/obj/machinery/power/apc/C in apc_list)
-			if(C.cell && C.z == ZLEVEL_STATION)
+			if(C.cell && is_station_level(C.z))
 				C.cell.charge = C.cell.maxcharge
 	for(var/obj/machinery/power/smes/S in smes_list)
 		var/area/current_area = get_area(S)
-		if(current_area.type in skipped_areas || S.z != ZLEVEL_STATION)
+		if(current_area.type in skipped_areas || !is_station_level(S.z))
 			continue
 		S.RefreshParts()
 		if(badminery)
@@ -61,7 +61,7 @@ var/power_fail_event = 0
 	if(announce)
 		command_alert("All SMESs on [station_name()] have been recharged. We apologize for the inconvenience.", "Power Systems Nominal", "poweron")
 	for(var/obj/machinery/power/smes/S in smes_list)
-		if(S.z != ZLEVEL_STATION)
+		if(!is_station_level(S.z))
 			continue
 		S.RefreshParts()
 		S.charge = S.capacity

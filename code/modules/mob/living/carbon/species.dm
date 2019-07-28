@@ -888,7 +888,7 @@
 	tox_mod = 0
 	speed_mod = -0.2
 
-	var/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
+	var/list/spooks = list('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg')
 
 /datum/species/zombie/handle_post_spawn(mob/living/carbon/human/H)
 	return ..()

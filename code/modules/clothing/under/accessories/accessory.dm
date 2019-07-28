@@ -218,16 +218,8 @@
 
 /obj/item/clothing/accessory/holobadge/attackby(obj/item/O, mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if (istype(O, /obj/item/weapon/card/emag))
-		if (emagged)
-			to_chat(user, "<span class='warning'>[src] is already cracked.</span>")
-			return
-		else
-			emagged = TRUE
-			to_chat(user, "<span class='warning'>You swipe [O] and crack the holobadge security checks.</span>")
-			return
 
-	else if(istype(O, /obj/item/weapon/card/id) || istype(O, /obj/item/device/pda))
+	if(istype(O, /obj/item/weapon/card/id) || istype(O, /obj/item/device/pda))
 
 		var/obj/item/weapon/card/id/id_card = null
 
@@ -252,3 +244,11 @@
 		user.visible_message(
 			"<span class='warning'>[user] invades [M]'s personal space, thrusting [src] into their face insistently.</span>",
 			"<span class='warning'>You invade [M]'s personal space, thrusting [src] into their face insistently. You are the law.</span>")
+
+/obj/item/clothing/accessory/holobadge/emag_act(mob/user)
+	if(emagged)
+		to_chat(user, "<span class='warning'>[src] is already cracked.</span>")
+		return FALSE
+	emagged = TRUE
+	to_chat(user, "<span class='warning'>You swipe card and crack the holobadge security checks.</span>")
+	return TRUE

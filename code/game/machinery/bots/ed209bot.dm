@@ -109,7 +109,7 @@
 			shootAt(user)
 
 
-/obj/machinery/bot/secbot/ed209/Emag(mob/user)
+/obj/machinery/bot/secbot/ed209/emag_act(mob/user)
 	..()
 	if(open && !locked)
 		projectile = null

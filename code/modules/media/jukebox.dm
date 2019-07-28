@@ -149,19 +149,7 @@ var/global/loopModeNames=list(
 
 /obj/machinery/media/jukebox/attackby(obj/item/W, mob/user, params)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(istype(W, /obj/item/weapon/card/emag))
-		current_song = 0
-		if(!emagged)
-			playlist_id = "emagged"
-			last_reload=world.time
-			playlist=null
-			loop_mode = JUKEMODE_SHUFFLE
-			emagged = 1
-			playing = 1
-			user.visible_message("\red [user.name] slides something into the [src.name]'s card-reader.","\red You short out the [src.name].")
-			update_icon()
-			update_music()
-	else if(iswrench(W))
+	if(iswrench(W))
 		if(user.is_busy(src))
 			return
 		var/un = !anchored ? "" : "un"
@@ -174,6 +162,20 @@ var/global/loopModeNames=list(
 			update_icon()
 	else
 		..()
+
+/obj/machinery/media/jukebox/emag_act(mob/user)
+	current_song = 0
+	if(!emagged)
+		playlist_id = "emagged"
+		last_reload=world.time
+		playlist=null
+		loop_mode = JUKEMODE_SHUFFLE
+		emagged = 1
+		playing = 1
+		user.visible_message("\red [user.name] slides something into the [src.name]'s card-reader.","\red You short out the [src.name].")
+		update_icon()
+		update_music()
+	return TRUE
 
 /obj/machinery/media/jukebox/Topic(href, href_list)
 	. = ..()

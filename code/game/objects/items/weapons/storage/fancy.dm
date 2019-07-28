@@ -47,7 +47,7 @@
 	icon_type = "donut"
 	name = "donut box"
 	storage_slots = 6
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/donut")
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/donut)
 
 
 /obj/item/weapon/storage/fancy/donut_box/atom_init()
@@ -65,7 +65,7 @@
 	icon_type = "egg"
 	name = "egg box"
 	storage_slots = 12
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/egg")
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/egg)
 
 /obj/item/weapon/storage/fancy/egg_box/atom_init()
 	. = ..()
@@ -192,7 +192,7 @@
 	storage_slots = 6
 	icon_type = "crayon"
 	can_hold = list(
-		"/obj/item/toy/crayon"
+		/obj/item/toy/crayon
 	)
 
 /obj/item/weapon/storage/fancy/crayons/atom_init()
@@ -241,7 +241,7 @@
 	storage_slots = 5
 	icon_type = "glowstick"
 	can_hold = list(
-		"/obj/item/weapon/reagent_containers/food/snacks/glowstick"
+		/obj/item/weapon/reagent_containers/food/snacks/glowstick
 	)
 
 /obj/item/weapon/storage/fancy/glowsticks/atom_init()
@@ -285,7 +285,7 @@
 	throwforce = 2
 	slot_flags = SLOT_FLAGS_BELT
 	storage_slots = 6
-	can_hold = list("/obj/item/clothing/mask/cigarette","/obj/item/weapon/lighter")
+	can_hold = list(/obj/item/clothing/mask/cigarette, /obj/item/weapon/lighter)
 	icon_type = "cigarette"
 
 /obj/item/weapon/storage/fancy/cigarettes/atom_init()
@@ -357,7 +357,7 @@
 	icon_type = "vial"
 	name = "vial storage box"
 	storage_slots = 6
-	can_hold = list("/obj/item/weapon/reagent_containers/glass/beaker/vial")
+	can_hold = list(/obj/item/weapon/reagent_containers/glass/beaker/vial)
 
 
 /obj/item/weapon/storage/fancy/vials/atom_init()
@@ -372,7 +372,7 @@
 	icon_state = "vialbox0"
 	item_state = "syringe_kit"
 	max_w_class = ITEM_SIZE_NORMAL
-	can_hold = list("/obj/item/weapon/reagent_containers/glass/beaker/vial")
+	can_hold = list(/obj/item/weapon/reagent_containers/glass/beaker/vial)
 	storage_slots = 6
 	req_access = list(access_virology)
 

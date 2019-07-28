@@ -26,7 +26,7 @@
 
 
 /obj/machinery/computer/aiupload/attackby(obj/item/weapon/O, mob/user)
-	if (user.z > ZLEVEL_EMPTY)
+	if (!SSmapping.has_level(user.z))
 		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return
 	if(istype(O, /obj/item/weapon/aiModule))

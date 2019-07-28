@@ -87,7 +87,7 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 	var/goal = locate(endx, endy, 1)
 	x = startx
 	y = starty
-	z = ZLEVEL_STATION
+	z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 	walk_towards(src, goal, 1)
 
 /obj/effect/space_dust/Bump(atom/A)

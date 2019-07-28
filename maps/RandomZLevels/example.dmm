@@ -613,7 +613,7 @@
 "bE" = (
 /obj/machinery/door/airlock{
 	name = "Unisex Restrooms";
-	req_access_txt = "0"
+	req_access = list(0)
 	},
 /turf/simulated/floor,
 /area/awaymission/example)

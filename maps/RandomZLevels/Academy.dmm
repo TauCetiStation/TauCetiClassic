@@ -53,7 +53,7 @@
 	environ = 0;
 	equipment = 3;
 	locked = 0;
-	req_access = ""
+	req_access = list()
 	},
 /turf/simulated/floor/carpet,
 /area/awaymission/academy/headmaster)
@@ -1460,7 +1460,7 @@
 	environ = 3;
 	equipment = 3;
 	locked = 0;
-	req_access = ""
+	req_access = list()
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -2715,7 +2715,7 @@
 	environ = 3;
 	equipment = 3;
 	locked = 0;
-	req_access = ""
+	req_access = list()
 	},
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)
@@ -3938,7 +3938,7 @@
 	environ = 3;
 	equipment = 3;
 	locked = 0;
-	req_access = ""
+	req_access = list()
 	},
 /obj/structure/cable{
 	d2 = 2;
