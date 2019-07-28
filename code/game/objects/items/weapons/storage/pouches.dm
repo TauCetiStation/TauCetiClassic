@@ -231,8 +231,8 @@
 	max_w_class = ITEM_SIZE_LARGE
 
 	can_hold = list(
-		"/obj/item/weapon/melee",
-		"/obj/item/weapon/crowbar"
+		/obj/item/weapon/melee,
+		/obj/item/weapon/crowbar
 		)
 
 	sliding_behavior = TRUE
