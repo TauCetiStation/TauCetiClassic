@@ -280,7 +280,7 @@
 
 	if (environment_pressure <= pressure_levels[1])		//low pressures
 		if (!(mode == AALARM_MODE_PANIC || mode == AALARM_MODE_CYCLE))
-			playsound(src, 'sound/machines/alarm_air.ogg', VOL_EFFECTS_MASTER, 40, FALSE)
+			playsound(src, 'sound/machines/alarm_air.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			return 1
 
 	return 0
@@ -1159,7 +1159,7 @@ FIRE ALARM
 	for(var/obj/machinery/firealarm/FA in A)
 		FA.detecting = FALSE
 		FA.update_icon()
-		playsound(src, 'sound/machines/alarm_fire.ogg', VOL_EFFECTS_MASTER, 30, FALSE)
+		playsound(src, 'sound/machines/alarm_fire.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/machinery/firealarm/atom_init(mapload, dir, building)
 	. = ..()
