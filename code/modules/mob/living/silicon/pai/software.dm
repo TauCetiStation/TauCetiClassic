@@ -644,8 +644,7 @@
 			hackprogress = 0
 			src.hackdoor = null
 			if(src.cable)
-				qdel(src.cable)
-				cable = null
+				QDEL_NULL(src.cable)
 			return
 		if(hackprogress >= 100)		// This is clunky, but works. We need to make sure we don't ever display a progress greater than 100,
 			hackprogress = 100		// but we also need to reset the progress AFTER it's been displayed
@@ -654,8 +653,7 @@
 		if(hackprogress >= 100)
 			src.hackprogress = 0
 			src.cable.machine:open()
-			qdel(src.cable)
-			cable = null
+			QDEL_NULL(src.cable)
 		sleep(50)			// Update every 5 seconds
 
 // Digital Messenger
