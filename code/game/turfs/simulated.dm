@@ -165,6 +165,21 @@
 	else if( istype(M, /mob/living/silicon/robot ))
 		new /obj/effect/decal/cleanable/blood/oil(src)
 
+/turf/simulated/proc/add_vomit_floor(mob/living/carbon/C, toxvomit = 0)
+	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src)
+	// Make toxins vomit look different
+	if(toxvomit)
+		var/datum/reagent/new_color = locate(/datum/reagent/luminophore) in C.reagents.reagent_list
+		if(!new_color)
+			V.icon_state = "vomittox_[pick(1,4)]"
+		else
+			V.icon_state = "vomittox_nc_[pick(1,4)]"
+			V.alpha = 127
+			V.color = new_color.color
+			V.light_color = V.color
+			V.set_light(3)
+			V.stop_light()
+
 //Wet floor procs.
 /turf/simulated/proc/make_wet_floor(severity = WATER_FLOOR)
 	addtimer(CALLBACK(src, .proc/make_dry_floor), rand(71 SECONDS, 80 SECONDS), TIMER_UNIQUE|TIMER_OVERRIDE)

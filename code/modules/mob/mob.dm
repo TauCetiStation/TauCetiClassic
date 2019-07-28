@@ -567,15 +567,7 @@ value of dizziness ranges from 0 to 1000
 below 100 is not dizzy
 */
 /mob/proc/make_dizzy(amount)
-	if(!istype(src, /mob/living/carbon/human)) // for the moment, only humans get dizzy
-		return
-
-	dizziness = min(1000, dizziness + amount)	// store what will be new value
-													// clamped to max 1000
-	if(dizziness > 100 && !is_dizzy)
-		spawn(0)
-			dizzy_process()
-
+	return
 
 /*
 dizzy process - wiggles the client's pixel offset over time
@@ -600,25 +592,17 @@ note dizziness decrements automatically in the mob's Life() proc.
 // jitteriness - copy+paste of dizziness
 
 /mob/proc/make_jittery(amount)
-	if(!istype(src, /mob/living/carbon/human)) // for the moment, only humans get dizzy
-		return
-
-	jitteriness = min(1000, jitteriness + amount)	// store what will be new value
-													// clamped to max 1000
-	if(jitteriness > 100 && !is_jittery)
-		spawn(0)
-			jittery_process()
-
+	return
 
 // Typo from the oriignal coder here, below lies the jitteriness process. So make of his code what you will, the previous comment here was just a copypaste of the above.
 /mob/proc/jittery_process()
 	is_jittery = TRUE
-	while(jitteriness > 100)
+	while(jitteriness > 30)
 //		var/amplitude = jitteriness*(sin(jitteriness * 0.044 * world.time) + 1) / 70
 //		pixel_x = amplitude * sin(0.008 * jitteriness * world.time)
 //		pixel_y = amplitude * cos(0.008 * jitteriness * world.time)
 
-		var/amplitude = min(4, jitteriness / 100)
+		var/amplitude = min(4, jitteriness / 30)
 		pixel_x = rand(-amplitude, amplitude)
 		pixel_y = rand(-amplitude/3, amplitude/3)
 

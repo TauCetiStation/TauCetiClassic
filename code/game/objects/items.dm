@@ -85,19 +85,23 @@
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
-/obj/item/proc/health_analyze(mob/living/M, mob/living/user, mode)
-	var/message
+/obj/item/proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat)
+	var/message = ""
+	if(!output_to_chat)
+		message += "<HTML><head><title>[M.name]'s scan results</title></head><BODY>"
+
 	if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>", "<span class = 'warning'>You try to analyze the floor's vitals!</span>")
 		message += "<span class='notice'>Analyzing Results for The floor:\n&emsp; Overall Status: Healthy</span><br>"
 		message += "<span class='notice'>&emsp; Damage Specifics: [0]-[0]-[0]-[0]</span><br>"
 		message += "<span class='notice'>Key: Suffocation/Toxin/Burns/Brute</span><br>"
 		message += "<span class='notice'>Body Temperature: ???</span>"
-		user.show_message(message)
-		return
+		if(!output_to_chat)
+			message += "</BODY></HTML>"
+		return message
 	if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return
+		return ""
 	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>","<span class='notice'>You have analyzed [M]'s vitals.</span>")
 
 	var/fake_oxy = max(rand(1,40), M.getOxyLoss(), (300 - (M.getToxLoss() + M.getFireLoss() + M.getBruteLoss())))
@@ -131,7 +135,7 @@
 	BR = M.getBruteLoss() > 50 ? "<font color='red'><b>Severe anatomical damage detected</b></font>" : "Subject brute-force injury status O.K"
 	if(M.status_flags & FAKEDEATH)
 		OX = fake_oxy > 50 ? 		"<span class='warning'>Severe oxygen deprivation detected</span>" : "Subject bloodstream oxygen level normal"
-	message += "[OX] | [TX] | [BU] | [BR]<br>"
+	message += "[OX]<br>[TX]<br>[BU]<br>[BR]<br>"
 	if(istype(M, /mob/living/carbon))
 		var/mob/living/carbon/C = M
 		if(C.reagents.total_volume || C.is_infected_with_zombie_virus())
@@ -194,9 +198,10 @@
 			else
 				message += "<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span><br>"
 		message += "<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
-	add_fingerprint(user)
-	user.show_message(message)
-	return
+
+	if(!output_to_chat)
+		message += "</BODY></HTML>"
+	return message
 
 /obj/item/Destroy()
 	QDEL_NULL(action)

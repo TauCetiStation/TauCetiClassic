@@ -150,12 +150,19 @@ var/const/INGEST = 2
 /datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
 	if (!target)
 		return
-	if (!target.reagents || src.total_volume<=0 || !src.get_reagent_amount(reagent))
+	if(src.total_volume<=0 || !src.get_reagent_amount(reagent))
 		return
 	if(amount < 0) return
 	if(amount > 2000) return
 
-	var/datum/reagents/R = target.reagents
+	var/datum/reagents/R = null
+	if(istype(target, /datum/reagents))
+		R = target
+	else
+		if(!target.reagents)
+			return
+		R = target.reagents
+
 	if(src.get_reagent_amount(reagent)<amount)
 		amount = src.get_reagent_amount(reagent)
 	amount = min(amount, R.maximum_volume-R.total_volume)
@@ -175,6 +182,8 @@ var/const/INGEST = 2
 	return amount
 
 /datum/reagents/proc/metabolize(mob/M, alien)
+	if(has_reagent("aclometasone")) // Has a "unique" metabolization disabling factor, which just prevents any metabolization at all without affecting hunger. ~Luduk
+		return
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if(M && R)
@@ -473,6 +482,16 @@ var/const/INGEST = 2
 	return FALSE
 
 /datum/reagents/proc/has_reagent(reagent, amount = 0)
+	/*
+	Aclometasone prevents: reactions, metabolism, reagent effects, so we make this special snowflake code
+	to prevent all of the above.
+	*/
+	var/datum/reagent/aclometasone/ACLO = locate(/datum/reagent/aclometasone) in reagent_list
+	if(ismob(my_atom) && ACLO)
+		if(reagent == "aclometasone")
+			return ACLO.volume
+		return 0
+
 	for(var/datum/reagent/R in reagent_list)
 		if(R.id == reagent)
 			if(!amount)
@@ -482,6 +501,16 @@ var/const/INGEST = 2
 	return 0
 
 /datum/reagents/proc/get_reagent_amount(reagent)
+	/*
+	Aclometasone prevents: reactions, metabolism, reagent effects, so we make this special snowflake code
+	to prevent all of the above.
+	*/
+	var/datum/reagent/aclometasone/ACLO = locate(/datum/reagent/aclometasone) in reagent_list
+	if(ismob(my_atom) && ACLO)
+		if(reagent == "aclometasone")
+			return ACLO.volume
+		return 0
+
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if (R.id == reagent)
