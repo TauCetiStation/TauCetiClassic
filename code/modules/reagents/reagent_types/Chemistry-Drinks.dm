@@ -439,6 +439,15 @@
 	..()
 	M.make_jittery(5)
 
+/datum/reagent/consumable/drink/cold/kvass
+	name = "kvass"
+	id = "kvass"
+	description = "A cool refreshing drink with a taste of socialism."
+	reagent_state = LIQUID
+	color = "#381600" // rgb: 56, 22, 0
+	adj_temp = -7
+	taste_message = "communism"
+
 /datum/reagent/consumable/doctor_delight
 	name = "The Doctor's Delight"
 	id = "doctorsdelight"

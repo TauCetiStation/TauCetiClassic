@@ -59,7 +59,7 @@
 							"[random_player] is the monarch of of England. Ensure all crewmembers pay due respect.",
 							"Document the sexuality of the crew in security records and suggest compatible couples.",
 							"Everything on the station is now some form of a donut pastry. Donuts are not to be consumed.",
-							"The NSS Exodus is a ship, not a station. You are now assigned to a ship, instead of a station.",
+							"The [station_name()] is a ship, not a station. You are now assigned to a ship, instead of a station.",
 							"You have come to the conclusion that [prob(50)?"the crew":random_player] is ugly. Build support for that conclusion.",
 							"You are in unrequited love with [prob(50)?"the crew":random_player]. Try to be extra nice, but do not tell of your crush.",
 							"NanoTrasen is displeased with the low work performance of the station's crew. Therefore, you must increase station-wide productivity.",
@@ -86,7 +86,7 @@
 	if(botEmagChance)
 		for(var/obj/machinery/bot/bot in bots_list)
 			if(prob(botEmagChance))
-				bot.Emag()
+				bot.emag_act()
 
 /datum/event/ionstorm/end()
 	spawn(rand(5000,8000))

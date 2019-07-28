@@ -143,7 +143,7 @@
 		var/turf/T = get_turf(H)
 		if(!T)
 			continue
-		if(T.z != ZLEVEL_STATION)
+		if(!is_station_level(T.z))
 			continue
 		for(var/datum/disease/D in H.viruses)
 			foundAlready = 1
@@ -178,7 +178,7 @@
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in machines)
 		if(QDELETED(temp_vent))
 			continue
-		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)
+		if(is_station_level(temp_vent.loc.z) && !temp_vent.welded)
 			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
 			//Stops Aliens getting stuck in small networks.
 			//See: Security, Virology
@@ -211,7 +211,7 @@
 
 	for(var/mob/living/carbon/human/H in human_list)
 		var/turf/T = get_turf(H)
-		if(!T || T.z != ZLEVEL_STATION || H.stat == DEAD)
+		if(!T || !is_station_level(T.z) || H.stat == DEAD)
 			continue
 		H.apply_effect((rand(15,75)),IRRADIATE,0)
 		if (prob(5))
@@ -225,7 +225,7 @@
 				domutcheck(H,null,MUTCHK_FORCED)
 	for(var/mob/living/carbon/monkey/M in monkey_list)
 		var/turf/T = get_turf(M)
-		if(!T || T.z != ZLEVEL_STATION || M.stat == DEAD)
+		if(!T || !is_station_level(T.z) || M.stat == DEAD)
 			continue
 		M.apply_effect((rand(15,75)),IRRADIATE,0)
 	sleep(100)
@@ -421,4 +421,4 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 	if(botEmagChance)
 		for(var/obj/machinery/bot/bot in bots_list)
 			if(prob(botEmagChance))
-				bot.Emag()
+				bot.emag_act()

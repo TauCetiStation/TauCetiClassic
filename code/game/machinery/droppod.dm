@@ -294,7 +294,7 @@
 	intruder.client.eye = eyeobj
 
 /obj/structure/droppod/proc/ChooseTarget()
-	if(!eyeobj || eyeobj.z == ZLEVEL_CENTCOMM)
+	if(!eyeobj || is_centcom_level(eyeobj.z))
 		return
 	var/turf/teleport_turf = get_turf(eyeobj.loc)
 	if(teleport_turf.obscured)

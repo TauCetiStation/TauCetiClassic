@@ -36,7 +36,7 @@
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
 /obj/machinery/computer/skills/ui_interact(mob/user)
-	if (src.z > ZLEVEL_EMPTY)
+	if (!SSmapping.has_level(z))
 		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return
 

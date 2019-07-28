@@ -74,9 +74,6 @@ var/round_id = 0
 
 	src.update_status()
 
-	process_teleport_locs()			//Sets up the wizard teleport locations
-	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
-
 	round_log("Server starting up")
 
 	. = ..()
@@ -136,6 +133,7 @@ var/world_topic_spam_protect_time = world.timeofday
 		s["stationtime"] = worldtime2text()
 		s["gamestate"] = ticker.current_state
 		s["roundduration"] = roundduration2text()
+		s["map"] = SSmapping.config?.map_name || "Loading..."
 		var/n = 0
 		var/admins = 0
 
@@ -281,7 +279,7 @@ var/shutdown_processed = FALSE
 
 	round_log("Reboot [end_state ? ", [end_state]" : ""]")
 	shutdown_processed = TRUE
-	
+
 	if(fexists("scripts/hooks/round_reboot.sh")) //nevermind, we drop windows support for this things a little
 		var/list/O = world.shelleo("scripts/hooks/round_reboot.sh")
 		if(O[SHELLEO_ERRORLEVEL])
@@ -397,6 +395,7 @@ var/shutdown_processed = FALSE
 	config.load("config/config.txt")
 	config.load("config/game_options.txt","game_options")
 	config.loadsql("config/dbconfig.txt")
+	config.loadmaplist("config/maps.txt")
 	// apply some settings from config..
 	abandon_allowed = config.respawn
 
@@ -546,3 +545,6 @@ var/failed_old_db_connections = 0
 		return 1
 
 #undef FAILED_DB_CONNECTION_CUTOFF
+
+/world/proc/incrementMaxZ()
+	maxz++

@@ -311,14 +311,6 @@ A proc that does all the animations before mix()-ing.
 		to_chat(user, "<span class='notice'>You try to open up the panel, but [beakers["output"]] is in the way.</span>")
 		return
 
-	if(istype(O, /obj/item/weapon/card/emag) && !emagged)
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(5, 1, src)
-		s.start() //sparks always.
-		emagged = TRUE
-		update_icon(beaker_update = FALSE)
-		return
-
 	if(panel_open)
 		if(iswirecutter(O))
 			return attack_hand(user)
@@ -331,6 +323,16 @@ A proc that does all the animations before mix()-ing.
 		return
 
 	default_deconstruction_crowbar(O)
+
+/obj/machinery/color_mixer/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start() //sparks always.
+	emagged = TRUE
+	update_icon(beaker_update = FALSE)
+	return TRUE
 
 /obj/machinery/color_mixer/MouseDrop_T(mob/living/target, mob/user)
 	if(!processing)

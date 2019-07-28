@@ -121,6 +121,7 @@ CREATE TABLE `erro_round` (
   `game_mode` varchar(32) DEFAULT NULL,
   `game_mode_result` varchar(64) DEFAULT NULL,
   `end_state` varchar(64) DEFAULT NULL,
+  `map_name` VARCHAR(32) NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

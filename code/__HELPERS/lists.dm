@@ -707,8 +707,19 @@
 		return l
 	. = l.Copy()
 	for(var/i = 1 to l.len)
-		if(islist(.[i]))
-			.[i] = .(.[i])
+		var/key = .[i]
+		if(isnum(key))
+			// numbers cannot ever be associative keys
+			continue
+		var/value = .[key]
+		if(islist(value))
+			value = deepCopyList(value)
+			.[key] = value
+		if(islist(key))
+			key = deepCopyList(key)
+			.[i] = key
+			.[key] = value
+
 //takes an input_key, as text, and the list of keys already used, outputting a replacement key in the format of "[input_key] ([number_of_duplicates])" if it finds a duplicate
 //use this for lists of things that might have the same name, like mobs or objects, that you plan on giving to a player as input
 /proc/avoid_assoc_duplicate_keys(input_key, list/used_key_list)
@@ -720,6 +731,19 @@
 	else
 		used_key_list[input_key] = 1
 	return input_key
+
+/proc/compare_list(list/l, list/d)
+	if (!islist(l) || !islist(d))
+		return FALSE
+
+	if (l.len != d.len)
+		return FALSE
+
+	for (var/i in 1 to l.len)
+		if (l[i] != d[i])
+			return FALSE
+
+	return TRUE
 
 #define LAZYINITLIST(L) if (!L) L = list()
 #define UNSETEMPTY(L) if (L && !L.len) L = null
