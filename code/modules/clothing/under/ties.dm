@@ -206,11 +206,11 @@
 		return
 
 	if (!istype(I, /obj/item/weapon/gun) && !I.can_be_holstered)
-		to_chat(user, "\red Only guns can be holstered!")
+		to_chat(user, "<span class='warning'>Only guns can be holstered!</span>")
 		return
 
 	if (!I.can_be_holstered)
-		to_chat(user, "\red This [I] won't fit in the [src]!")
+		to_chat(user, "<span class='warning'>This [I] won't fit in the [src]!</span>")
 		return
 
 	holstered = I
