@@ -10,7 +10,7 @@
 
 /obj/structure/extinguisher_cabinet/atom_init()
 	. = ..()
-	has_extinguisher = new/obj/item/weapon/extinguisher(src)
+	has_extinguisher = new/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned(src)
 
 /obj/structure/extinguisher_cabinet/attackby(obj/item/O, mob/user)
 	if(isrobot(user) || isalien(user))
@@ -60,7 +60,7 @@
 		icon_state = "extinguisher_closed"
 		return
 	if(has_extinguisher)
-		if(istype(has_extinguisher, /obj/item/weapon/extinguisher/mini))
+		if(istype(has_extinguisher, /obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned))
 			icon_state = "extinguisher_mini"
 		else
 			icon_state = "extinguisher_full"

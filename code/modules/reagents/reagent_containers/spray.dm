@@ -20,6 +20,8 @@
 
 	action_button_name = "Switch Spray"
 
+	var/spray_sound = 'sound/effects/spray2.ogg'
+	var/volume_modifier = -6
 
 /obj/item/weapon/reagent_containers/spray/atom_init()
 	. = ..()
@@ -54,7 +56,7 @@
 		to_chat(usr, "<span class = 'warning'>The safety is on!</span>")
 		return
 
-	playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+	playsound(src, spray_sound, VOL_EFFECTS_MASTER, null, null, volume_modifier)
 
 	if(reagents.has_reagent("sacid"))
 		message_admins("[key_name_admin(user)] fired sulphuric acid from \a [src]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
@@ -80,6 +82,47 @@
 		INVOKE_ASYNC(src, .proc/Spray_at, T2)
 	else
 		INVOKE_ASYNC(src, .proc/Spray_at, T)
+
+	INVOKE_ASYNC(src, .proc/on_spray, T, user) // A proc where we do all the dirty chair riding stuff.
+
+/obj/item/weapon/reagent_containers/spray/proc/on_spray(turf/T, mob/user)
+	if(!triple_shot) // Currently only the big baddies have this mechanic.
+		return
+
+	var/movementdirection = turn(get_dir(get_turf(src), T), 180)
+	if(istype(get_turf(src), /turf/simulated) && istype(user.buckled, /obj/structure/stool/bed/chair) && !user.buckled.anchored)
+		var/obj/structure/stool/bed/chair/buckled_to = user.buckled
+		if(!buckled_to.flipped)
+			if(buckled_to)
+				buckled_to.propelled = 4
+			step(buckled_to, movementdirection)
+			sleep(1)
+			step(buckled_to, movementdirection)
+			if(buckled_to)
+				buckled_to.propelled = 3
+			sleep(1)
+			step(buckled_to, movementdirection)
+			sleep(1)
+			step(buckled_to, movementdirection)
+			if(buckled_to)
+				buckled_to.propelled = 2
+			sleep(2)
+			step(buckled_to, movementdirection)
+			if(buckled_to)
+				buckled_to.propelled = 1
+			sleep(2)
+			step(buckled_to, movementdirection)
+			if(buckled_to)
+				buckled_to.propelled = 0
+			sleep(3)
+			step(buckled_to, movementdirection)
+			sleep(3)
+			step(buckled_to, movementdirection)
+			sleep(3)
+			step(buckled_to, movementdirection)
+	else
+		user.newtonian_move(movementdirection)
+
 
 /obj/item/weapon/reagent_containers/spray/proc/Spray_at(atom/A)
 	var/spray_size_current = spray_size // This ensures, that a player doesn't switch to another mode mid-fly.

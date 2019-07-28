@@ -57,7 +57,7 @@
 /datum/export/extinguisher/mini
 	cost = 2
 	unit_name = "pocket fire extinguisher"
-	export_types = list(/obj/item/weapon/extinguisher/mini)
+	export_types = list(/obj/item/weapon/reagent_containers/spray/extinguisher/mini)
 
 
 // Flashlights
