@@ -20,7 +20,7 @@
 	melee_damage_lower = 8
 	melee_damage_upper = 12
 	attacktext = "attacks"
-	attack_sound = list('sound/weapons/bite.ogg')
+	attack_sound = 'sound/weapons/bite.ogg'
 
 	min_oxy = 0
 	max_oxy = 0

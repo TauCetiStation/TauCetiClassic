@@ -15,7 +15,7 @@
 	attacktext = "slammed its enormous claws into"
 	speed = -1
 	environment_smash = 2
-	attack_sound = list('sound/weapons/bladeslice.ogg')
+	attack_sound = 'sound/weapons/bladeslice.ogg'
 	status_flags = 0
 	universal_speak = 1
 
