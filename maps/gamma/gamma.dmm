@@ -3185,6 +3185,16 @@
 	icon_state = "warningline"
 	},
 /area/rnd/xenobiology)
+"aeX" = (
+/obj/structure/mopbucket,
+/obj/item/weapon/mop,
+/obj/machinery/newscaster{
+	pixel_x = 30
+	},
+/obj/item/weapon/legcuffs/beartrap,
+/obj/item/weapon/legcuffs/beartrap,
+/turf/simulated/floor,
+/area/janitor)
 "afd" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -5854,10 +5864,7 @@
 /turf/simulated/wall/r_wall,
 /area/aisat)
 "aYr" = (
-/obj/item/weapon/legcuffs/beartrap,
-/obj/item/weapon/legcuffs/beartrap,
-/obj/item/weapon/storage/box/mousetraps,
-/obj/item/weapon/storage/box/mousetraps,
+/obj/structure/reagent_dispensers/watertank/affftank,
 /turf/simulated/floor,
 /area/janitor)
 "aYs" = (
@@ -37019,13 +37026,9 @@
 	},
 /area/tcommsat/chamber)
 "leK" = (
-/obj/structure/mopbucket,
-/obj/item/weapon/mop,
-/obj/machinery/newscaster{
-	pixel_x = 30
-	},
+/obj/structure/reagent_dispensers/watertank/affftank,
 /turf/simulated/floor,
-/area/janitor)
+/area/atmos)
 "leM" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor,
@@ -49488,6 +49491,8 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/pen,
+/obj/item/weapon/storage/box/mousetraps,
+/obj/item/weapon/storage/box/mousetraps,
 /turf/simulated/floor,
 /area/janitor)
 "pmk" = (
@@ -98240,7 +98245,7 @@ chJ
 qFE
 eQD
 bqe
-leK
+aeX
 wRi
 pZV
 ttD
@@ -121608,7 +121613,7 @@ iir
 iir
 oiB
 mKz
-rom
+leK
 rtz
 uVU
 qqY

@@ -36,6 +36,10 @@
 		return
 
 	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
+		if(!is_open_container())
+			to_chat(user, "<span class='notice'>[src] can't be filled right now.</span>")
+			return
+
 		if(!A.reagents.total_volume && A.reagents)
 			to_chat(user, "<span class='notice'>[A] does not have enough liquids.</span>")
 			return
