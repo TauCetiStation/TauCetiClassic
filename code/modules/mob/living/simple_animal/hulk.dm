@@ -91,7 +91,7 @@
 
 	speed = 4
 
-	attack_sound = list( 'sound/items/bikehorn.ogg')
+	attack_sound = list('sound/items/bikehorn.ogg')
 	health_regen = 3
 
 	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/HulkHONK)
