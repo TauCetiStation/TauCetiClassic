@@ -155,7 +155,7 @@
 			if(C.internal == src)
 				C.internal = null
 				C.internals.icon_state = "internal0"
-				to_chat(usr, "\blue You close the tank release valve.")
+				to_chat(usr, "<span class='notice'>You close the tank release valve.</span>")
 				if (C.internals)
 					C.internals.icon_state = "internal0"
 				internalsound = 'sound/misc/internaloff.ogg'
@@ -167,7 +167,7 @@
 			else
 				if(C.wear_mask && (C.wear_mask.flags & MASKINTERNALS))
 					C.internal = src
-					to_chat(usr, "\blue You open \the [src] valve.")
+					to_chat(usr, "<span class='notice'>You open \the [src] valve.</span>")
 					if (C.internals)
 						C.internals.icon_state = "internal1"
 					internalsound = 'sound/misc/internalon.ogg'
@@ -177,7 +177,7 @@
 							internalsound = 'sound/misc/riginternalon.ogg'
 					playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
 				else
-					to_chat(usr, "\blue You need something to connect to \the [src].")
+					to_chat(usr, "<span class='notice'>You need something to connect to \the [src].</span>")
 			internal_switch = world.time + 16
 
 	src.add_fingerprint(usr)
@@ -223,7 +223,7 @@
 		if(!istype(src.loc,/obj/item/device/transfer_valve))
 			message_admins("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 			log_game("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
-		//world << "\blue[x],[y] tank is exploding: [pressure] kPa"
+		//world << "<span class='notice'>[x],[y] tank is exploding: [pressure] kPa</span>"
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react()
 		air_contents.react()
@@ -233,13 +233,13 @@
 		range = min(range, MAX_EXPLOSION_RANGE)		// was 8 - - - Changed to a configurable define -- TLE
 		var/turf/epicenter = get_turf(loc)
 
-		//world << "\blue Exploding Pressure: [pressure] kPa, intensity: [range]"
+		//world << "<span class='notice'>Exploding Pressure: [pressure] kPa, intensity: [range]</span>"
 
 		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
 		qdel(src)
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)
-		//world << "\blue[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]"
+		//world << "<span class='notice'>[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]</span>"
 		if(integrity <= 0)
 			var/turf/simulated/T = get_turf(src)
 			if(!T)
@@ -251,7 +251,7 @@
 			integrity--
 
 	else if(pressure > TANK_LEAK_PRESSURE)
-		//world << "\blue[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]"
+		//world << "<span class='notice'>[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]</span>"
 		if(integrity <= 0)
 			var/turf/simulated/T = get_turf(src)
 			if(!T)

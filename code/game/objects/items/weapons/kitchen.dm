@@ -134,9 +134,9 @@
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/kitchenknife/suicide_act(mob/user)
-	to_chat(viewers(user), pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-						"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-						"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>"))
+	to_chat(viewers(user), pick("<span class='warning'><b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b></span>", \
+						"<span class='warning'><b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b></span>", \
+						"<span class='warning'><b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b></span>"))
 	return (BRUTELOSS)
 
 /obj/item/weapon/kitchenknife/attack(mob/living/carbon/M, mob/living/carbon/user)
@@ -202,7 +202,7 @@
 
 /obj/item/weapon/kitchen/rollingpin/attack(mob/living/M, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
-		to_chat(user, "\red The [src] slips out of your hand and hits your head.")
+		to_chat(user, "<span class='warning'>The [src] slips out of your hand and hits your head.</span>")
 		user.take_bodypart_damage(10)
 		user.Paralyse(2)
 		return
@@ -218,7 +218,7 @@
 			if (H.stat < 2 && H.health < 50 && prob(90))
 				// ******* Check
 				if (istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80))
-					to_chat(H, "\red The helmet protects you from being hit hard in the head!")
+					to_chat(H, "<span class='warning'>The helmet protects you from being hit hard in the head!</span>")
 					return
 				var/time = rand(2, 6)
 				if (prob(75))
@@ -226,10 +226,10 @@
 				else
 					H.Stun(time)
 				if(H.stat != DEAD)	H.stat = UNCONSCIOUS
-				user.visible_message("\red <B>[H] has been knocked unconscious!</B>", "\red <B>You knock [H] unconscious!</B>")
+				user.visible_message("<span class='warning'><B>[H] has been knocked unconscious!</B></span>", "<span class='warning'><B>You knock [H] unconscious!</B></span>")
 				return
 			else
-				H.visible_message("\red [user] tried to knock [H] unconscious!", "\red [user] tried to knock you unconscious!")
+				H.visible_message("<span class='warning'>[user] tried to knock [H] unconscious!</span>", "<span class='warning'>[user] tried to knock you unconscious!</span>")
 				H.eye_blurry += 3
 	return ..()
 
@@ -282,7 +282,7 @@
 
 
 	if((CLUMSY in user.mutations) && prob(50))              //What if he's a clown?
-		to_chat(M, "\red You accidentally slam yourself with the [src]!")
+		to_chat(M, "<span class='warning'>You accidentally slam yourself with the [src]!</span>")
 		M.Weaken(1)
 		user.take_bodypart_damage(2)
 		if(prob(50))
@@ -314,19 +314,19 @@
 		if(prob(50))
 			playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
+				O.show_message(text("<span class='warning'><B>[] slams [] with the tray!</B></span>", user, M), 1)
 			return
 		else
 			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)  //we applied the damage, we played the sound, we showed the appropriate messages. Time to return and stop the proc
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
+				O.show_message(text("<span class='warning'><B>[] slams [] with the tray!</B></span>", user, M), 1)
 			return
 
 
 
 
 	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
-		to_chat(M, "\red You get slammed in the face with the tray, against your mask!")
+		to_chat(M, "<span class='warning'>You get slammed in the face with the tray, against your mask!</span>")
 		if(prob(33))
 			src.add_blood(H)
 			if (H.wear_mask)
@@ -342,11 +342,11 @@
 		if(prob(50))
 			playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
+				O.show_message(text("<span class='warning'><B>[] slams [] with the tray!</B></span>", user, M), 1)
 		else
 			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)  //sound playin'
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
+				O.show_message(text("<span class='warning'><B>[] slams [] with the tray!</B></span>", user, M), 1)
 		if(prob(10))
 			M.Stun(rand(1,3))
 			M.take_bodypart_damage(3)
@@ -356,7 +356,7 @@
 			return
 
 	else //No eye or head protection, tough luck!
-		to_chat(M, "\red You get slammed in the face with the tray!")
+		to_chat(M, "<span class='warning'>You get slammed in the face with the tray!</span>")
 		if(prob(33))
 			src.add_blood(M)
 			var/turf/location = H.loc
@@ -366,11 +366,11 @@
 		if(prob(50))
 			playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red <B>[] slams [] in the face with the tray!</B>", user, M), 1)
+				O.show_message(text("<span class='warning'><B>[] slams [] in the face with the tray!</B></span>", user, M), 1)
 		else
 			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)  //sound playin' again
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red <B>[] slams [] in the face with the tray!</B>", user, M), 1)
+				O.show_message(text("<span class='warning'><B>[] slams [] in the face with the tray!</B></span>", user, M), 1)
 		if(prob(30))
 			M.Stun(rand(2,4))
 			M.take_bodypart_damage(4)
@@ -519,7 +519,7 @@
 /*/obj/item/weapon/tray/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
 		if (W.icon_state == "forkloaded")
-			to_chat(user, "\red You already have omelette on your fork.")
+			to_chat(user, "<span class='warning'>You already have omelette on your fork.</span>")
 			return
 		W.icon = 'icons/obj/kitchen.dmi'
 		W.icon_state = "forkloaded"

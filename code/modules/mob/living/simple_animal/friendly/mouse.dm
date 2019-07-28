@@ -107,7 +107,7 @@
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
-		to_chat(src, text("\blue You are now hiding."))
+		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
 		/*
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
@@ -115,7 +115,7 @@
 		*/
 	else
 		layer = MOB_LAYER
-		to_chat(src, text("\blue You have stopped hiding."))
+		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
 		/*
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
@@ -153,7 +153,7 @@
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM
-			to_chat(M, "\blue [bicon(src)] Squeek!")
+			to_chat(M, "<span class='notice'>[bicon(src)] Squeek!</span>")
 			playsound(src, 'sound/effects/mousesqueek.ogg', VOL_EFFECTS_MASTER)
 	..()
 

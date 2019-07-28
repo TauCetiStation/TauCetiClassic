@@ -63,7 +63,7 @@
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	if (shot.select_name)
-		to_chat(user, "\red [src] is now set to [shot.select_name].")
+		to_chat(user, "<span class='warning'>[src] is now set to [shot.select_name].</span>")
 	update_icon()
 	return
 

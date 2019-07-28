@@ -206,37 +206,37 @@
 
 /obj/item/clothing/tie/holster/proc/holster(obj/item/I, mob/user)
 	if(holstered)
-		to_chat(user, "\red There is already a [holstered] holstered here!")
+		to_chat(user, "<span class='warning'>There is already a [holstered] holstered here!</span>")
 		return
 
 	if (!istype(I, /obj/item/weapon/gun))
-		to_chat(user, "\red Only guns can be holstered!")
+		to_chat(user, "<span class='warning'>Only guns can be holstered!</span>")
 		return
 
 	var/obj/item/weapon/gun/W = I
 	if (!can_holster(W))
-		to_chat(user, "\red This [W] won't fit in the [src]!")
+		to_chat(user, "<span class='warning'>This [W] won't fit in the [src]!</span>")
 		return
 
 	holstered = W
 	user.drop_from_inventory(holstered)
 	holstered.loc = src
 	holstered.add_fingerprint(user)
-	user.visible_message("\blue [user] holsters the [holstered].", "You holster the [holstered].")
+	user.visible_message("<span class='notice'>[user] holsters the [holstered].</span>", "You holster the [holstered].")
 
 /obj/item/clothing/tie/holster/proc/unholster(mob/user)
 	if(!holstered)
 		return
 
 	if(istype(user.get_active_hand(),/obj) && istype(user.get_inactive_hand(),/obj))
-		to_chat(user, "\red You need an empty hand to draw the [holstered]!")
+		to_chat(user, "<span class='warning'>You need an empty hand to draw the [holstered]!</span>")
 	else
 		if(user.a_intent == "hurt")
-			usr.visible_message("\red [user] draws the [holstered], ready to shoot!", \
-			"\red You draw the [holstered], ready to shoot!")
+			usr.visible_message("<span class='warning'>[user] draws the [holstered], ready to shoot!</span>", \
+			"<span class='warning'>You draw the [holstered], ready to shoot!</span>")
 		else
-			user.visible_message("\blue [user] draws the [holstered], pointing it at the ground.", \
-			"\blue You draw the [holstered], pointing it at the ground.")
+			user.visible_message("<span class='notice'>[user] draws the [holstered], pointing it at the ground.</span>", \
+			"<span class='notice'>You draw the [holstered], pointing it at the ground.</span>")
 		user.put_in_hands(holstered)
 		holstered.add_fingerprint(user)
 		holstered = null
@@ -293,7 +293,7 @@
 
 	if(!H.holstered)
 		if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
-			to_chat(usr, "\blue You need your gun equiped to holster it.")
+			to_chat(usr, "<span class='notice'>You need your gun equiped to holster it.</span>")
 			return
 		var/obj/item/weapon/gun/W = usr.get_active_hand()
 		H.holster(W, usr)
@@ -412,17 +412,17 @@
 		to_chat(user, "Waving around a badge before swiping an ID would be pretty pointless.")
 		return
 	if(isliving(user))
-		user.visible_message("\red [user] displays their NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.","\red You display your NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.")
+		user.visible_message("<span class='warning'>[user] displays their NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.</span>","<span class='warning'>You display your NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.</span>")
 
 /obj/item/clothing/tie/holobadge/attackby(obj/item/O, mob/user)
 
 	if (istype(O, /obj/item/weapon/card/emag))
 		if (emagged)
-			to_chat(user, "\red [src] is already cracked.")
+			to_chat(user, "<span class='warning'>[src] is already cracked.</span>")
 			return
 		else
 			emagged = 1
-			to_chat(user, "\red You swipe [O] and crack the holobadge security checks.")
+			to_chat(user, "<span class='warning'>You swipe [O] and crack the holobadge security checks.</span>")
 			return
 
 	else if(istype(O, /obj/item/weapon/card/id) || istype(O, /obj/item/device/pda))
@@ -447,7 +447,7 @@
 
 /obj/item/clothing/tie/holobadge/attack(mob/living/carbon/human/M, mob/living/user)
 	if(isliving(user))
-		user.visible_message("\red [user] invades [M]'s personal space, thrusting [src] into their face insistently.","\red You invade [M]'s personal space, thrusting [src] into their face insistently. You are the law.")
+		user.visible_message("<span class='warning'>[user] invades [M]'s personal space, thrusting [src] into their face insistently.</span>","<span class='warning'>You invade [M]'s personal space, thrusting [src] into their face insistently. You are the law.</span>")
 
 /obj/item/clothing/tie/storage/knifeharness
 	name = "decorated harness"

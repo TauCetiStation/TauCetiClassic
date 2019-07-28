@@ -274,7 +274,7 @@
 	..()
 
 	if(isrobot(user))
-		to_chat(user, "\blue You're a robot. No.")
+		to_chat(user, "<span class='notice'>You're a robot. No.</span>")
 		return //Robots can't interact with storage items. FALSE
 
 	if(!can_be_inserted(W))
@@ -287,14 +287,14 @@
 		var/obj/item/weapon/tray/T = W
 		if(T.calc_carry() > 0)
 			if(prob(85))
-				to_chat(user, "\red The tray won't fit in [src].")
+				to_chat(user, "<span class='warning'>The tray won't fit in [src].</span>")
 				return FALSE
 			else
 				W.loc = user.loc
 				if ((user.client && user.s_active != src))
 					user.client.screen -= W
 				W.dropped(user)
-				to_chat(user, "\red God damnit!")
+				to_chat(user, "<span class='warning'>God damnit!</span>")
 
 	if(istype(W, /obj/item/weapon/packageWrap) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
 		return FALSE
@@ -507,3 +507,12 @@
 /obj/item/proc/get_storage_cost()
 	//If you want to prevent stuff above a certain w_class from being stored, use max_w_class
 	return base_storage_cost(w_class)
+
+// Useful for spilling the contents of containers all over the floor.
+/obj/item/weapon/storage/proc/spill(dist = 2, turf/T = null)
+	if (!istype(T))
+		T = get_turf(src)
+
+	for(var/obj/O in contents)
+		remove_from_storage(O, T)
+		INVOKE_ASYNC(O, /obj.proc/tumble_async, 2)

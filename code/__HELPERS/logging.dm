@@ -221,6 +221,7 @@
 	stats["duration"] = roundduration2text()
 	stats["mode"] = ticker.mode
 	stats["mode_result"] = ticker.mode.mode_result
+	stats["map"] = SSmapping.config.map_name
 
 	stats["completion_html"] = ticker.mode.completion_text
 	stats["completion_antagonists"] = antagonists_completion//todo: icon2base64 icons?

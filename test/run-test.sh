@@ -165,6 +165,7 @@ function run_code_tests {
     msg "*** running code tests ***"
     find_code_deps
     shopt -s globstar
+	run_test_fail "code contains no byond escapes" "grep -REnr --include='*.dm' '\\\\(red|blue|green|black|b|i)\s' code/"
     run_test_fail "maps contain no step_[xy]" "grep -n 'step_[xy]' maps/**/*.dmm"
     run_test_fail "maps contain no tag" "grep -n '\<tag =' maps/**/*.dmm"
     run_test_fail "ensure code, nanoui templates, icons unique" "find code/ nano/templates/ icons/ -type f -exec md5sum {} + | sort | uniq -D -w 32 | grep -w 'code\|nano\|icons'"

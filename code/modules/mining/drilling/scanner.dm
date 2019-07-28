@@ -32,7 +32,7 @@
 
 	find_ore(user)
 
-	to_chat(user, "[bicon(src)] \blue The scanner beeps and displays a readout.")
+	to_chat(user, "[bicon(src)] <span class='notice'>The scanner beeps and displays a readout.</span>")
 
 	show_ore_count(user)
 
