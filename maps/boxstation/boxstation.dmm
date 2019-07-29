@@ -33460,10 +33460,9 @@
 /turf/simulated/floor/plating,
 /area/assembly/robotics)
 "biK" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "warnplate"
-	},
-/area/rnd/test_area)
+/obj/structure/reagent_dispensers/watertank/affftank,
+/turf/simulated/floor,
+/area/atmos)
 "biL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -33634,30 +33633,10 @@
 	},
 /area/rnd/test_area)
 "bjc" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/turf/simulated/floor/plating/airless{
+	icon_state = "warnplate"
 	},
-/obj/machinery/airlock_sensor{
-	id_tag = "engineering_west_sensor";
-	pixel_x = 25;
-	pixel_y = 12
-	},
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	id_tag = "engineering_west_airlock";
-	pixel_x = 25;
-	req_access = list(10,13);
-	tag_airpump = "engineering_west_pump";
-	tag_chamber_sensor = "engineering_west_sensor";
-	tag_exterior_door = "engineering_west_outer";
-	tag_interior_door = "engineering_west_inner"
-	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 9
-	},
-/turf/simulated/floor/plating,
-/area/engine/engineering)
+/area/rnd/test_area)
 "bjd" = (
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -55433,9 +55412,30 @@
 	},
 /area/engine/drone_fabrication)
 "cjB" = (
-/obj/structure/reagent_dispensers/watertank/affftank,
-/turf/simulated/floor,
-/area/atmos)
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/airlock_sensor{
+	id_tag = "engineering_west_sensor";
+	pixel_x = 25;
+	pixel_y = 12
+	},
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	id_tag = "engineering_west_airlock";
+	pixel_x = 25;
+	req_access = list(10,13);
+	tag_airpump = "engineering_west_pump";
+	tag_chamber_sensor = "engineering_west_sensor";
+	tag_exterior_door = "engineering_west_outer";
+	tag_interior_door = "engineering_west_inner"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 9
+	},
+/turf/simulated/floor/plating,
+/area/engine/engineering)
 "cjC" = (
 /turf/simulated/floor/engine/vacuum,
 /area/rnd/mixing)
@@ -106678,7 +106678,7 @@ chl
 chJ
 cir
 cGW
-bjc
+cjB
 cMr
 cBK
 cCc
@@ -110506,7 +110506,7 @@ bWH
 bUd
 bZK
 bLP
-cjB
+biK
 bQM
 avv
 bSV
@@ -119655,9 +119655,9 @@ ceO
 ceO
 ceO
 ceO
-biK
+bjc
 bjb
-biK
+bjc
 aaa
 aaa
 aaa

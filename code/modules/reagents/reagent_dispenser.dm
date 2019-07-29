@@ -145,7 +145,7 @@
 	if (rig && !user.is_busy())
 		user.visible_message("[user] begins to detach [rig] from \the [src].", "You begin to detach [rig] from \the [src]")
 		if(do_after(user, 20, target = src))
-			user.visible_message("\blue [user] detaches [rig] from \the [src].", "\blue  You detach [rig] from \the [src]")
+			user.visible_message("<span class='notice'>[user] detaches [rig] from \the [src].</span>", "<span class='notice'>You detach [rig] from \the [src]</span>")
 			rig.loc = get_turf(usr)
 			rig = null
 			overlays = new/list()
@@ -161,12 +161,12 @@
 		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [src.x], [src.y], [src.z] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 	if (istype(W,/obj/item/device/assembly_holder))
 		if (rig)
-			to_chat(user, "\red There is another device in the way.")
+			to_chat(user, "<span class='warning'>There is another device in the way.</span>")
 			return ..()
 		if(user.is_busy()) return
 		user.visible_message("[user] begins rigging [W] to \the [src].", "You begin rigging [W] to \the [src]")
 		if(W.use_tool(src, user, 20))
-			user.visible_message("\blue [user] rigs [W] to \the [src].", "\blue  You rig [W] to \the [src]")
+			user.visible_message("<span class='notice'>[user] rigs [W] to \the [src].</span>", "<span class='notice'>You rig [W] to \the [src]</span>")
 
 			var/obj/item/device/assembly_holder/H = W
 			if (istype(H.a_left,/obj/item/device/assembly/igniter) || istype(H.a_right,/obj/item/device/assembly/igniter))
