@@ -23,7 +23,7 @@
 	to_chat(usr, "<span class='notice'>Items will now [sliding_behavior ? "" : "not"] slide out of [src].</span>")
 
 /obj/item/weapon/storage/pouch/attack_hand(mob/living/carbon/human/user)
-	if(sliding_behavior && contents.len && (src in user))
+	if(sliding_behavior && contents.len && loc == user)
 		var/obj/item/I = contents[contents.len]
 		if(istype(I))
 			hide_from(usr)
