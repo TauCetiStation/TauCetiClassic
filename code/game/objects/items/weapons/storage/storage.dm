@@ -96,7 +96,7 @@
 		storage_ui.hide_from(user)
 
 /obj/item/weapon/storage/proc/open(mob/user)
-	if (use_sound.len)
+	if (length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
 
 	prepare_ui()
