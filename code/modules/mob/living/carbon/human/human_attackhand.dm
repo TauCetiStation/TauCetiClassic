@@ -117,8 +117,8 @@
 
 			if(HULK in M.mutations)			damage += 5
 
-			if(length(attack.attack_sound))
-				playsound(src, pick(attack.attack_sound), VOL_EFFECTS_MASTER)
+
+			playsound(src, attack.attack_sound, VOL_EFFECTS_MASTER)
 
 			visible_message("<span class='warning'><B>[M] [pick(attack.attack_verb)]ed [src]!</B></span>")
 			//Rearranged, so claws don't increase weaken chance.
