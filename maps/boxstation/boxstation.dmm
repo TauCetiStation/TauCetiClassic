@@ -3902,6 +3902,11 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/storage/box/seccarts,
+/obj/machinery/recharger/wallcharger{
+	dir = 1;
+	pixel_x = 5;
+	pixel_y = 25
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5174,9 +5179,6 @@
 /obj/structure/table,
 /obj/item/device/radio/off,
 /obj/item/weapon/crowbar,
-/obj/machinery/recharger/wallcharger{
-	pixel_y = -30
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
