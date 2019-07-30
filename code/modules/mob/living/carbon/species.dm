@@ -790,7 +790,7 @@
 	deform = 'icons/mob/human_races/r_golem.dmi'
 	dietflags = 0 //this is ROCK
 
-	total_health = 200
+	total_health = 100
 	oxy_mod = 0
 	tox_mod = 0
 	brain_mod = 0
