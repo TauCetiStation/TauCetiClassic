@@ -10,10 +10,8 @@
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rocket
 	var/wielded = 0
+	can_be_holstered = FALSE
 	fire_sound = 'sound/effects/bang.ogg'
-
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/isHandgun()
-	return 0
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/proc/unwield()
 	wielded = 0

@@ -127,6 +127,7 @@
 	item_state = "gun"
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
+	can_be_holstered = TRUE
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	w_class = ITEM_SIZE_NORMAL
@@ -205,6 +206,7 @@
 	item_state = "crossbow"
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
+	can_be_holstered = TRUE
 	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("attacked", "struck", "hit")
 	var/bullets = 5

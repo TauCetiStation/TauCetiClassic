@@ -9,9 +9,6 @@
 	slot_flags = SLOT_FLAGS_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 
-/obj/item/weapon/gun/energy/ionrifle/isHandgun()
-	return 0
-
 /obj/item/weapon/gun/energy/ionrifle/update_icon()
 	var/ratio = power_supply.charge / power_supply.maxcharge
 	ratio = ceil(ratio * 4) * 25
@@ -48,6 +45,7 @@
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
 	icon_state = "decloner"
 	origin_tech = "combat=5;materials=4;powerstorage=3"
+	can_be_holstered = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
 
 /obj/item/weapon/gun/energy/floragun
@@ -58,6 +56,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/flora/yield, /obj/item/ammo_casing/energy/flora/mut)
 	origin_tech = "materials=2;biotech=3;powerstorage=3"
 	modifystate = 1
+	can_be_holstered = TRUE
 	var/charge_tick = 0
 	var/mode = 0 //0 = mutate, 1 = yield boost
 
@@ -126,6 +125,7 @@
 	item_state = "pen"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	can_be_holstered = TRUE
 	w_class = ITEM_SIZE_TINY
 
 /obj/item/weapon/gun/energy/mindflayer
@@ -159,6 +159,7 @@
 	icon_state = "toxgun"
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=5;phorontech=4"
+	can_be_holstered = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/toxin)
 
 /obj/item/weapon/gun/energy/sniperrifle
@@ -177,9 +178,6 @@
 /obj/item/weapon/gun/energy/sniperrifle/atom_init()
 	. = ..()
 	update_icon()
-
-/obj/item/weapon/gun/energy/sniperrifle/isHandgun()
-	return 0
 
 /obj/item/weapon/gun/energy/sniperrifle/update_icon()
 	var/ratio = power_supply.charge / power_supply.maxcharge
@@ -259,6 +257,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	item_state = "tesla"
 	w_class = ITEM_SIZE_LARGE
 	origin_tech = "combat=5;materials=5;powerstorage=5;magnets=5;engineering=5"
+	can_be_holstered = FALSE
 	var/charge = 0
 	var/charging = FALSE
 	var/cooldown = FALSE

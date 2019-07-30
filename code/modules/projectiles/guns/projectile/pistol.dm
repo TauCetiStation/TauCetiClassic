@@ -7,6 +7,7 @@
 	origin_tech = "combat=2;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/sm45
 	fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
+	can_be_holstered = TRUE
 
 /obj/item/weapon/gun/projectile/sigi
 	name = "\improper pistol"
@@ -17,6 +18,7 @@
 	mag_type = /obj/item/ammo_box/magazine/m9mmr_2
 	mag_type2 = /obj/item/ammo_box/magazine/m9mm_2
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
+	can_be_holstered = TRUE
 
 	var/mag = null
 
@@ -30,9 +32,6 @@
 	desc = "A W&J Company designed Special SIGI p250, this one has a military coloring. Looks like SIG 250, but it's not. Uses 9mm rounds."
 	icon_state = "sigi250special"
 	item_state = "sigi250special"
-
-/obj/item/weapon/gun/projectile/sigi/isHandgun()
-	return 1
 
 /obj/item/weapon/gun/projectile/sigi/update_icon(load = 0)
 	..()
@@ -53,9 +52,6 @@
 			overlays += mag
 			..()
 
-/obj/item/weapon/gun/projectile/automatic/silenced/isHandgun()
-	return 1
-
 /obj/item/weapon/gun/projectile/automatic/silenced/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]"
@@ -68,10 +64,8 @@
 	item_state = "deagle"
 	force = 14.0
 	mag_type = /obj/item/ammo_box/magazine/m50
+	can_be_holstered = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
-
-/obj/item/weapon/gun/projectile/automatic/deagle/isHandgun()
-	return 1
 
 /obj/item/weapon/gun/projectile/automatic/deagle/afterattack(atom/target, mob/living/user, flag)
 	..()
@@ -122,10 +116,8 @@
 	w_class = ITEM_SIZE_SMALL
 	silenced = 0
 	origin_tech = "combat=2;materials=2;syndicate=2"
+	can_be_holstered = TRUE
 	mag_type = /obj/item/ammo_box/magazine/m9mm
-
-/obj/item/weapon/gun/projectile/automatic/pistol/isHandgun()
-	return 1
 
 /obj/item/weapon/gun/projectile/automatic/pistol/attack_hand(mob/user)
 	if(loc == user)
@@ -151,10 +143,8 @@
 	w_class = ITEM_SIZE_SMALL
 	mag_type = /obj/item/ammo_box/magazine/c45r
 	mag_type2 = /obj/item/ammo_box/magazine/c45m
+	can_be_holstered = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_colt1911.ogg'
-
-/obj/item/weapon/gun/projectile/automatic/colt1911/isHandgun()
-	return 1
 
 /obj/item/weapon/gun/projectile/automatic/colt1911/afterattack(atom/target, mob/living/user, flag)
 	..()
@@ -179,9 +169,6 @@
 /obj/item/weapon/gun/projectile/sec_pistol/atom_init()
 	. = ..()
 	update_icon()
-
-/obj/item/weapon/gun/projectile/sec_pistol/isHandgun()
-	return 1
 
 /obj/item/weapon/gun/projectile/sec_pistol/proc/update_magazine()
 	if(magazine)

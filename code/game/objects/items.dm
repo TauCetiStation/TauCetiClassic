@@ -56,6 +56,7 @@
 //		/obj/machinery/r_n_d/experimentor,
 		/obj/machinery/autolathe
 	)
+	var/can_be_holstered = FALSE
 	var/uncleanable = 0
 	var/toolspeed = 1
 

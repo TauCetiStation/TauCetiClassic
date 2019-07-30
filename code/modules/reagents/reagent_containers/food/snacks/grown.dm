@@ -563,6 +563,7 @@
 	icon_state = "banana"
 	item_state = "banana"
 	filling_color = "#fcf695"
+	can_be_holstered = TRUE
 	trash = /obj/item/weapon/bananapeel
 	bitesize = 5
 
