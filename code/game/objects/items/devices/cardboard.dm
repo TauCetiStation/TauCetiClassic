@@ -41,7 +41,7 @@
 		return
 	if(!I.force)
 		playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER)
-	else if(length(I.hitsound))
+	else if(I.hitsound.len)
 		playsound(loc, pick(I.hitsound), VOL_EFFECTS_MASTER)
 
 	user.do_attack_animation(src)

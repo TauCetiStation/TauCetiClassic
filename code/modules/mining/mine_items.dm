@@ -280,7 +280,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	m_amt = 3750
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 	usesound = 'sound/items/drill.ogg'
-	hitsound = 'sound/items/drill_hit.ogg'
+	hitsound = list('sound/items/drill_hit.ogg')
 	drill_verb = "drill"
 	toolspeed = 0.6
 	var/drill_cost = 15

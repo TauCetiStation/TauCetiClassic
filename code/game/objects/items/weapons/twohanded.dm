@@ -268,7 +268,7 @@
 
 /obj/item/weapon/twohanded/dualsaber/wield()
 	set_light(2)
-	hitsound = 'sound/weapons/blade1.ogg'
+	hitsound = list('sound/weapons/blade1.ogg')
 	w_class = ITEM_SIZE_HUGE
 	return ..()
 
