@@ -209,11 +209,10 @@
 
 	sliding_behavior = TRUE
 
-/obj/item/weapon/storage/pouch/pistol_holster/can_be_inserted(obj/item/W, stop_messages = FALSE)
+/obj/item/weapon/storage/pouch/pistol_holster/can_be_inserted(obj/item/I, stop_messages = FALSE)
 	. = ..()
-	if(. && istype(W, /obj/item/weapon/gun))
-		var/obj/item/weapon/gun/G = W
-		return G.isHandgun()
+	if(. && istype(I))
+		return I.can_be_holstered
 
 /obj/item/weapon/storage/pouch/pistol_holster/update_icon()
 	..()
