@@ -83,6 +83,9 @@
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
 	var/mob/living/silicon/ai/occupier = null
 	var/longtermpower = 10
+	var/nightshift_lights = FALSE
+	var/nightshift_preset = "soft"
+	var/last_nightshift_switch = 0
 	var/update_state = -1
 	var/update_overlay = -1
 	var/static/status_overlays = 0
@@ -677,6 +680,8 @@
 		"coverLocked" = coverlocked,
 		"siliconUser" = issilicon(user) || isobserver(user),
 		"malfStatus" = get_malf_status(user),
+		"nightshift_lights" = nightshift_lights,
+		"nightshift_preset" = nightshift_preset,
 
 		"powerChannels" = list(
 			list(
@@ -717,7 +722,7 @@
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "apc.tmpl", "[area.name] - APC", 520, data["siliconUser"] ? 465 : 440)
+		ui = new(user, src, ui_key, "apc.tmpl", "[area.name] - APC", 520, data["siliconUser"] ? 485 : 460)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
 		// open the new ui window
@@ -787,6 +792,14 @@
 
 	else if (href_list["lock"])
 		coverlocked = !coverlocked
+
+	else if (href_list["toggle_nightshift"])
+		toggle_nightshift_lights()
+
+	else if (href_list["change_nightshift"])
+		var/new_preset = input(usr, "Please choose night shift lighting.") as null|anything in lighting_presets
+		if(new_preset && lighting_presets[new_preset])
+			set_nightshift_preset(new_preset)
 
 	else if (href_list["breaker"])
 		operating = !operating
@@ -1234,4 +1247,37 @@
 		return (val==1) ? 0 : val
 	else
 		return (val == 3)
+
+/obj/machinery/power/apc/proc/set_nightshift(on, preset = null)
+	set waitfor = FALSE
+	nightshift_lights = on
+
+	if(on && preset && preset != nightshift_preset && lighting_presets[preset])
+		nightshift_preset = preset
+		for(var/obj/machinery/light/L in area)
+			var/list/preset_data = lighting_presets[nightshift_preset]
+			L.nightshift_light_range = preset_data["range"]
+			L.nightshift_light_power = preset_data["power"]
+			L.nightshift_light_color = preset_data["color"]
+
+	for(var/obj/machinery/light/L in area)
+		if(L.nightshift_allowed)
+			L.nightshift_enabled = nightshift_lights
+			L.update(FALSE)
+		CHECK_TICK
+
+/obj/machinery/power/apc/proc/toggle_nightshift_lights(mob/living/user)
+	if(last_nightshift_switch > world.time - 20) //~2 seconds between each toggle to prevent spamming
+		to_chat(usr, "<span class='warning'>[src]'s night lighting circuit breaker is still cycling!</span>")
+		return
+	last_nightshift_switch = world.time
+	set_nightshift(!nightshift_lights)
+
+/obj/machinery/power/apc/proc/set_nightshift_preset(preset)
+	if(last_nightshift_switch > world.time - 20) //~2 seconds between each change to prevent spamming
+		to_chat(usr, "<span class='warning'>[src]'s night lighting circuit breaker is still cycling!</span>")
+		return
+	last_nightshift_switch = world.time
+	set_nightshift(nightshift_lights, preset)
+
 #undef APC_UPDATE_ICON_COOLDOWN

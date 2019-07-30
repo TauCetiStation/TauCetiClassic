@@ -592,7 +592,9 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			<A href='?src=\ref[src];secretsadmin=showgm'>Show Game Mode</A><BR>
 			<A href='?src=\ref[src];secretsadmin=manifest'>Show Crew Manifest</A><BR>
 			<A href='?src=\ref[src];secretsadmin=DNA'>List DNA (Blood)</A><BR>
-			<A href='?src=\ref[src];secretsadmin=fingerprints'>List Fingerprints</A><BR><BR>
+			<A href='?src=\ref[src];secretsadmin=fingerprints'>List Fingerprints</A><BR>
+			<A href='?src=\ref[src];secretsadmin=night_shift_set'>Set Night Shift Mode</A><BR>
+			<BR>
 			<BR>
 			"}
 

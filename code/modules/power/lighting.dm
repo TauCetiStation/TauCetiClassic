@@ -205,7 +205,7 @@
 	var/static_power_used = 0
 	var/brightness_range = 7	// luminosity when on, also used in power calculation
 	var/brightness_power = 2
-	var/brightness_color = null
+	var/brightness_color = "#ffffff"
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/flickering = 0
 	var/light_type = /obj/item/weapon/light/tube		// the type of light item
@@ -214,6 +214,12 @@
 								// this is used to calc the probability the light burns out
 
 	var/rigged = 0				// true if rigged to explode
+
+	var/nightshift_enabled = FALSE	//Currently in night shift mode?
+	var/nightshift_allowed = TRUE	//Set to FALSE to never let this light get switched to night mode.
+	var/nightshift_light_range = 8
+	var/nightshift_light_power = 0.8
+	var/nightshift_light_color = "#ffdbb5"
 
 // the smaller bulb light fixture
 
@@ -250,8 +256,20 @@
 	. = ..()
 
 // create a new lighting fixture
-/obj/machinery/light/atom_init()
+/obj/machinery/light/atom_init(mapload)
 	..()
+
+	if(!mapload) //sync up nightshift lighting for player made lights
+		var/area/A = get_area(src)
+		var/obj/machinery/power/apc/temp_apc = A.get_apc()
+		if(temp_apc)
+			nightshift_enabled = temp_apc.nightshift_lights
+			var/list/preset_data = lighting_presets[temp_apc.nightshift_preset]
+			if(preset_data)
+				nightshift_light_range = preset_data["range"]
+				nightshift_light_power = preset_data["power"]
+				nightshift_light_color = preset_data["color"]
+
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/light/atom_init_late()
@@ -294,7 +312,17 @@
 
 	update_icon()
 	if(on)
-		if(light_range != brightness_range || light_power != brightness_power || light_color != brightness_color)
+		var/BR = brightness_range
+		var/PO = brightness_power
+		var/CO = brightness_color
+
+		if (nightshift_enabled)
+			BR = nightshift_light_range
+			PO = nightshift_light_power
+			if(!brightness_color || brightness_color == "#ffffff") // Only white lights are overwritten
+				CO = nightshift_light_color
+
+		if(light_range != BR || light_power != PO || light_color != CO)
 			switchcount++
 			playsound(src, 'sound/machines/lightson.ogg', VOL_EFFECTS_MASTER)
 			if(rigged)
@@ -312,7 +340,7 @@
 					set_light(0)
 			else
 				use_power = 2
-				set_light(brightness_range, brightness_power, brightness_color)
+				set_light(BR, PO, CO)
 	else
 		use_power = 1
 		set_light(0)
@@ -671,7 +699,7 @@
 	var/rigged = 0		// true if rigged to explode
 	var/brightness_range = 2 //how much light it gives off
 	var/brightness_power = 1
-	var/brightness_color = null
+	var/brightness_color = "#ffffff"
 
 /obj/item/weapon/light/tube
 	name = "light tube"
