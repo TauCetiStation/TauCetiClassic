@@ -108,10 +108,11 @@
 		M.hud_updateflag |= 1 << STATUS_HUD
 
 //Infects mob M with random lesser disease, if he doesn't have one
-/proc/infect_mob_random_lesser(mob/living/carbon/M)
+/proc/infect_mob_random_lesser(mob/living/carbon/M, possible_spreadtypes = list("Airborne" = 50, "Contact" = 40, "Blood" = 5, "None" = 5))
 	var/datum/disease2/disease/D = new /datum/disease2/disease
 	D.makerandom()
 	D.infectionchance = 1
+	D.spreadtype = pickweight(possible_spreadtypes)
 	infect_virus2(M,D,1)
 	M.hud_updateflag |= 1 << STATUS_HUD
 

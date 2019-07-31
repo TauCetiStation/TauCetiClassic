@@ -71,12 +71,10 @@
 	if(!istype(user) || !istype(BP))
 		return
 
-	var/germ_level = user.get_germ_level("arms")
+	var/g_level = user.get_germ_level("arms")
 
-	if(germ_level > BP.get_germ_level())
-		BP.set_germ_level(germ_level, user)
-
-	if(BP.get_germ_level())
+	if(g_level > 0 && g_level > BP.get_germ_level())
+		BP.set_germ_level(g_level, user)
 		BP.owner.bad_bodyparts |= BP
 
 /proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)

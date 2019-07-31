@@ -57,10 +57,10 @@
 		var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
 		var/g_level = get_germ_level()
 
-		if(g_level > 0 && g_level < INFECTION_LEVEL_ONE/2 && prob(30))
+		if(g_level > 0 && g_level < INFECTION_LEVEL_ONE && prob(30))
 			decrease_germ_level(1)
 
-		if(g_level >= INFECTION_LEVEL_ONE/2)
+		if(g_level >= INFECTION_LEVEL_ONE)
 			//aiming for germ level to go from ambient to INFECTION_LEVEL_TWO in an average of 15 minutes
 			if(antibiotics < 5 && prob(round(g_level/6)))
 				increase_germ_level(1)
@@ -69,7 +69,7 @@
 			var/obj/item/organ/external/BP = owner.bodyparts_by_name[parent_bodypart]
 			var/BP_g_level = BP.get_germ_level()
 			//spread germs
-			if(antibiotics < 5 && BP_g_level < g_level && ( BP_g_level < INFECTION_LEVEL_ONE * 2 || prob(30) ))
+			if(antibiotics < 5 && BP_g_level < g_level && ( BP_g_level < INFECTION_LEVEL_TWO || prob(30) ))
 				BP.increase_germ_level(1)
 
 			if(prob(3)) //about once every 30 seconds

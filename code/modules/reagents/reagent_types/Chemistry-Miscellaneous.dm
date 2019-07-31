@@ -25,6 +25,8 @@
 		if(vlist.len)
 			for(var/ID in vlist)
 				var/datum/disease2/disease/V = vlist[ID]
+				if(V.spreadtype == "None")
+					continue
 				if(method == TOUCH)
 					infect_virus2(M,V.getcopy())
 				else

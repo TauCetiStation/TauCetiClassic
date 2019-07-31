@@ -1,7 +1,7 @@
 /datum/disease2/disease
 	var/infectionchance = 70
 	var/speed = 1
-	var/spreadtype = "Contact" // Can also be "Airborne"
+	var/spreadtype = "Contact" // Can also be "Airborne" or "Blood" or even "None"
 	var/stage = 1
 	var/stageprob = 10
 	var/dead = 0
@@ -79,7 +79,7 @@
 	infectionchance = rand(30,60)
 	antigen |= text2num(pick(ANTIGENS))
 	antigen |= text2num(pick(ANTIGENS))
-	spreadtype = prob(60) ? "Airborne" : "Contact"
+	spreadtype = pickweight(list("Airborne" = 50, "Contact" = 40, "Blood" = 5, "None" = 5))
 
 	if(all_species.len)
 		affected_species = get_infectable_species()

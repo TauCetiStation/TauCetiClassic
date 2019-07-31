@@ -988,6 +988,9 @@ var/global/list/items_blood_overlay_by_type = list()
 		if(damtype == BURN)
 			. |= DAM_LASER
 
+/obj/item/get_germ_level(part = "")
+	return germ_level * permeability_coefficient
+
 /obj/item/increase_germ_level(amount, atom/source = null, part = "")
 	if(can_increase_germ_level())
 		var/to_add = amount

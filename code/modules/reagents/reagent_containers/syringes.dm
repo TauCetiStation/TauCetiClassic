@@ -256,12 +256,15 @@
 		var/target_zone = user.zone_sel.selecting
 		var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
 
+		var/g_level = get_germ_level()
+		var/BP_g_level = BP.get_germ_level()
+
 		if (!BP)
 			return
 		if(crit_fail)
-			BP.increase_germ_level(get_germ_level() / 7, src, target_zone)
-		else
-			BP.increase_germ_level(min(get_germ_level(), 3), src, target_zone)
+			BP.increase_germ_level(max(get_germ_level() / 7, 3), src, target_zone)
+		else if(g_level > 0 && g_level > BP_g_level)
+			BP.increase_germ_level(3, src, target_zone)
 		H.bad_bodyparts |= BP
 
 /obj/item/weapon/reagent_containers/ld50_syringe

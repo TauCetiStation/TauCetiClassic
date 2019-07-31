@@ -453,7 +453,7 @@
 			if (prob(10) && get_infection_chance(src))
 //					log_debug("[src] : Exhaling some viruses")
 				for(var/mob/living/carbon/M in view(1,src))
-					src.spread_disease_to(M)
+					src.spread_disease_to(M, "Airborne")
 
 /mob/living/carbon/human/proc/get_breath_from_internal(volume_needed)
 	if(internal)
@@ -1251,9 +1251,20 @@
 		if(druggy)
 			druggy = max(druggy-1, 0)
 
-		// If you're dirty, your gloves will become dirty, too.
-		if(gloves && get_germ_level() > gloves.get_germ_level() && prob(10))
-			gloves.increase_germ_level(1, src)
+		var/g_level = get_germ_level()
+
+		var/list/clothes = list(wear_suit, w_uniform, belt, gloves, glasses, l_ear, r_ear,
+		                        wear_id, r_store, l_store, s_store, head, shoes, mouth,
+		                        neck, mouth, l_hand, r_hand)
+
+		for(var/obj/item/I in clothes)
+			if(!I)
+				continue
+			var/I_g_level = I.get_germ_level()
+			if(I_g_level > 1 && I_g_level > g_level)
+				increase_germ_level(1, I)
+			else if(g_level > 0 && g_level > I_g_level && prob(10))
+				I.increase_germ_level(1, src)
 
 	return 1
 
@@ -1630,7 +1641,7 @@
 		if(prob(getarmor(, "bio"))) // We are *somehow* saved by all the holy clean attire we wear.
 			prob_of_virus_infection *= 0.5
 		if(prob(prob_of_virus_infection))
-			infect_mob_random_lesser(src)
+			infect_mob_random_lesser(src, list("Blood" = 10, "None" = 90))
 
 	if(bodytemperature > 406)
 		for(var/datum/disease/D in viruses)

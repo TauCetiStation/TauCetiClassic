@@ -1,20 +1,24 @@
 /datum/dirt_cover
 	var/name = "red blood"
 	var/color = "#a10808"
+	var/germ_level = 10 // By how much does germ_level increase when we are sprayed with _this_.
 
 /datum/dirt_cover/New(datum/dirt_cover/cover)
 	if(cover)
 		name = cover.name
 		color = cover.color
+		germ_level = cover.germ_level
 	..()
 
 /datum/dirt_cover/dirt
 	name = "dirt"
 	color = "#784800"
+	germ_level = 5
 
 /datum/dirt_cover/oil
 	name = "oil"
 	color = "#1f181f"
+	germ_level = 0
 
 /datum/dirt_cover/red_blood
 	name = "red blood"
@@ -43,6 +47,7 @@
 /datum/dirt_cover/adamant_blood
 	name = "liquid adamant"
 	color = "#515573"
+	germ_level = 0
 
 /datum/dirt_cover/xeno_blood
 	name = "xeno blood"

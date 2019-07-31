@@ -470,3 +470,12 @@
 	message = capitalize(trim_left(message))
 
 	..(message, speaking, verb, alt_name, italics, message_range, used_radios)
+
+/mob/living/carbon/monkey/get_germ_level(part = "")
+	if(part == "legs" && shoes)
+		return shoes.get_germ_level()
+
+	var/datum/species/S = all_species[race]
+	if(S.flags[BIOHAZZARD_IMMUNE])
+		return 0
+	return germ_level

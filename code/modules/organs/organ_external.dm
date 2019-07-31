@@ -410,14 +410,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
 	for(var/datum/wound/W in wounds)
 		//Open wounds can become infected
-		if (owner.get_germ_level() > W.germ_level && W.infection_check())
+		if(owner.get_germ_level() > W.germ_level && W.infection_check())
 			W.germ_level++
 
-	if (antibiotics < 5)
-		for(var/datum/wound/W in wounds)
-			//Infected wounds raise the organ's germ level
-			if (W.germ_level > get_germ_level())
-				increase_germ_level(min(W.amount + get_germ_level(), W.germ_level)) //faster infections from dirty wounds, but not faster than natural wound germification.
+		if(antibiotics < 5 && (W.amount * W.germ_level) > get_germ_level() && W.amount * W.germ_level > INFECTION_LEVEL_ONE)
+			increase_germ_level(W.amount * W.germ_level / INFECTION_LEVEL_ONE)
 
 /obj/item/organ/external/proc/handle_germ_effects()
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
@@ -840,8 +837,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/rval = 0
 	for(var/datum/wound/W in wounds)
 		rval |= !W.disinfected
-		W.disinfected = 1
-		W.germ_level = 0
+		W.disinfect()
 	return rval
 
 /obj/item/organ/external/proc/clamp()
