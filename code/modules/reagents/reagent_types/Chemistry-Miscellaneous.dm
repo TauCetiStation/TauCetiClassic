@@ -685,7 +685,6 @@
 			cached_icons[ind] = T.icon
 	else
 		T.icon = cached_icons[ind]
-		world.log << "[ind]"
 
 /datum/reagent/paint/reaction_mob(mob/M, method=TOUCH, volume)
 	if(ishuman(M))
