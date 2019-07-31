@@ -53,6 +53,7 @@
 /obj/machinery/autoclave/verb/start_cleaning()
 	set name = "Start Cleaning Procedure"
 	set desc = "Starts the cleaning procedure."
+	set src in oview(1)
 
 	if(processing)
 		return

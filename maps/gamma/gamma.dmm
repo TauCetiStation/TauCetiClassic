@@ -9880,14 +9880,11 @@
 	},
 /area/maintenance/chapel)
 "cmu" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12
-	},
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -25
 	},
+/obj/machinery/autoclave,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralfull"
@@ -13330,7 +13327,9 @@
 /obj/machinery/vending/wallmed2{
 	pixel_y = 30
 	},
-/obj/machinery/iv_drip,
+/obj/structure/sink{
+	pixel_y = 12
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralfull"
@@ -15753,7 +15752,9 @@
 	pixel_x = -4;
 	pixel_y = 28
 	},
-/obj/machinery/iv_drip,
+/obj/structure/sink{
+	pixel_y = 12
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralfull"
@@ -18459,6 +18460,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/machinery/iv_drip,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "escapecorner"
@@ -22809,11 +22811,7 @@
 /turf/simulated/floor/grass,
 /area/hydroponics)
 "gwu" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/machinery/autoclave,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralfull"
@@ -64234,7 +64232,6 @@
 "tWZ" = (
 /obj/structure/safe,
 /obj/item/clothing/under/color/yellow,
-/obj/item/key,
 /obj/item/toy/katana,
 /turf/simulated/floor{
 	dir = 8;
@@ -66433,6 +66430,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/autoclave,
 /turf/simulated/floor{
 	icon_state = "blue"
 	},
@@ -72763,6 +72761,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/machinery/autoclave,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "blue"
