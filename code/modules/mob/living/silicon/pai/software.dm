@@ -643,8 +643,7 @@
 			src.temp = "Door Jack: Connection to airlock has been lost. Hack aborted."
 			hackprogress = 0
 			src.hackdoor = null
-			if(src.cable)
-				QDEL_NULL(src.cable)
+			QDEL_NULL(src.cable)
 			return
 		if(hackprogress >= 100)		// This is clunky, but works. We need to make sure we don't ever display a progress greater than 100,
 			hackprogress = 100		// but we also need to reset the progress AFTER it's been displayed
