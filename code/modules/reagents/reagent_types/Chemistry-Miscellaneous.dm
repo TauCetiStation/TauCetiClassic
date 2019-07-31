@@ -666,14 +666,26 @@
 	if(color_weight < 15 || volume < 5)
 		return
 	var/ind = "[initial(T.icon)]|[color]"
+	if(T.underlays.len > 0)
+		ind = "[T.underlays[1].icon]|[T.underlays[1].icon_state]|[color]"
 	if(!cached_icons[ind])
 		var/icon/overlay = new/icon(T.icon)
-		overlay.Blend(color, ICON_MULTIPLY)
-		overlay.SetIntensity(color_weight * 0.1)
-		T.icon = overlay
-		cached_icons[ind] = T.icon
+		if(T.underlays.len > 0)
+			overlay = new/icon(T.underlays[1].icon, T.underlays[1].icon_state)
+			overlay.Blend(color, ICON_MULTIPLY)
+			overlay.SetIntensity(color_weight * 0.1)
+			var/icon/temp = new/icon(T.icon)
+			temp.Blend(overlay, ICON_UNDERLAY)
+			T.icon = temp
+			cached_icons[ind] = T.icon
+		else
+			overlay.Blend(color, ICON_MULTIPLY)
+			overlay.SetIntensity(color_weight * 0.1)
+			T.icon = overlay
+			cached_icons[ind] = T.icon
 	else
 		T.icon = cached_icons[ind]
+		world.log << "[ind]"
 
 /datum/reagent/paint/reaction_mob(mob/M, method=TOUCH, volume)
 	if(ishuman(M))
