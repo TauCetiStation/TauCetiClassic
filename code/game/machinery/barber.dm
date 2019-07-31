@@ -321,6 +321,8 @@ A proc that does all the animations before mix()-ing.
 
 	if(exchange_parts(user, O))
 		return
+	if(default_unfasten_wrench(O))
+		return
 
 	default_deconstruction_crowbar(O)
 
