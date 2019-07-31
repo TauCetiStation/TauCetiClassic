@@ -870,11 +870,6 @@
 		if(id_overlay)
 			overlays += image('icons/obj/pda.dmi', id_overlay)
 
-/obj/item/device/pda/proc/get_registered_name()
-	if(!id || !id.registered_name)
-		return
-	return id.registered_name
-
 /obj/item/device/pda/proc/get_id_overlay(obj/item/weapon/card/id/I)
 	if(!I)
 		return

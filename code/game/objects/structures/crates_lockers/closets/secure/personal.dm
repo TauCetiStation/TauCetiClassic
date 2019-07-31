@@ -43,14 +43,9 @@
 	new /obj/item/device/radio/headset(src)
 
 /obj/structure/closet/secure_closet/personal/proc/get_registered_name(obj/item/W)
-	if(istype(W, /obj/item/device/pda))
-		var/obj/item/device/pda/pda = W
-		return pda.get_registered_name()
-	else if(istype(W, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/id = W
-		return id.registered_name
 
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/W, mob/user)
+	var/user_registered_name = null
 	if (src.opened)
 		if (istype(W, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = W
@@ -61,15 +56,21 @@
 		if(src.broken)
 			to_chat(user, "<span class='warning'>It appears to be broken.</span>")
 			return
-		if(src.allowed(user) || !src.registered_name || (src.registered_name == get_registered_name(W)))
+		if(istype(W, /obj/item/device/pda))
+			var/obj/item/device/pda/pda = W
+			user_registered_name = pda.id.registered_name
+		else if(istype(W, /obj/item/weapon/card/id))
+			var/obj/item/weapon/card/id/id = W
+			user_registered_name = id.registered_name
+		if(src.allowed(user) || !src.registered_name || (src.registered_name == user_registered_name))
 			//they can open all lockers, or nobody owns this, or they own this locker
 			src.locked = !( src.locked )
 			if(src.locked)	src.icon_state = src.icon_locked
 			else	src.icon_state = src.icon_closed
 
 			if(!src.registered_name)
-				src.registered_name = get_registered_name(W)
-				src.desc = "Owned by [get_registered_name(W)]."
+				src.registered_name = user_registered_name
+				src.desc = "Owned by [user_registered_name]."
 		else
 			to_chat(user, "\red Access Denied")
 	else if((istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/twohanded/dualsaber)) && !src.broken)
