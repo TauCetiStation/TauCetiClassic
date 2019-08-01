@@ -42,10 +42,7 @@
 	new /obj/item/weapon/storage/backpack/satchel/withwallet(src)
 	new /obj/item/device/radio/headset(src)
 
-/obj/structure/closet/secure_closet/personal/proc/get_registered_name(obj/item/W)
-
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/W, mob/user)
-	var/user_registered_name = null
 	if (src.opened)
 		if (istype(W, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = W
@@ -53,12 +50,16 @@
 		user.drop_item()
 		if (W) W.forceMove(src.loc)
 	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
+		var/user_registered_name = null
 		if(src.broken)
 			to_chat(user, "<span class='warning'>It appears to be broken.</span>")
 			return
 		if(istype(W, /obj/item/device/pda))
 			var/obj/item/device/pda/pda = W
-			user_registered_name = pda.id.registered_name
+			user_registered_name = pda?.id?.registered_name
+			if(isnull(user_registered_name))
+				to_chat(user, "<span class='red'> You need ID card in PDA for this.</span>")
+				return
 		else if(istype(W, /obj/item/weapon/card/id))
 			var/obj/item/weapon/card/id/id = W
 			user_registered_name = id.registered_name
@@ -68,7 +69,7 @@
 			if(src.locked)	src.icon_state = src.icon_locked
 			else	src.icon_state = src.icon_closed
 
-			if(!src.registered_name)
+			if(!src.registered_name && user_registered_name)
 				src.registered_name = user_registered_name
 				src.desc = "Owned by [user_registered_name]."
 		else
