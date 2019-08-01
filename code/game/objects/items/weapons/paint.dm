@@ -24,7 +24,6 @@ var/global/list/cached_icons = list()
 		user.visible_message("<span class='notice'>[target] has been splashed by [user] with [src].</span>", "<span class='notice'>You splash [target] with [src].</span>")
 		reagents.reaction(target, TOUCH)
 		reagents.remove_any(5)
-		message_admins("[key_name_admin(usr)] splashed [src.reagents.get_reagents()] on [target], location ([target.x],[target.y],[target.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
 		log_game("[usr.ckey]([usr]) splashed [src.reagents.get_reagents()] on [target], location ([target.x],[target.y],[target.z])")
 	else 
 		..()
