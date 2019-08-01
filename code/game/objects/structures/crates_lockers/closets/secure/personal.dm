@@ -42,28 +42,36 @@
 	new /obj/item/weapon/storage/backpack/satchel/withwallet(src)
 	new /obj/item/device/radio/headset(src)
 
-/obj/structure/closet/secure_closet/personal/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/closet/secure_closet/personal/attackby(obj/item/W, mob/user)
 	if (src.opened)
 		if (istype(W, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = W
 			MouseDrop_T(G.affecting, user)      //act like they were dragged onto the closet
 		user.drop_item()
 		if (W) W.forceMove(src.loc)
-	else if(istype(W, /obj/item/weapon/card/id))
+	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
+		var/user_registered_name = null
 		if(src.broken)
 			to_chat(user, "<span class='warning'>It appears to be broken.</span>")
 			return
-		var/obj/item/weapon/card/id/I = W
-		if(!I || !I.registered_name)	return
-		if(src.allowed(user) || !src.registered_name || (istype(I) && (src.registered_name == I.registered_name)))
+		if(istype(W, /obj/item/device/pda))
+			var/obj/item/device/pda/pda = W
+			user_registered_name = pda?.id?.registered_name
+			if(isnull(user_registered_name))
+				to_chat(user, "<span class='red'> You need ID card in PDA for this.</span>")
+				return
+		else if(istype(W, /obj/item/weapon/card/id))
+			var/obj/item/weapon/card/id/id = W
+			user_registered_name = id.registered_name
+		if(src.allowed(user) || !src.registered_name || (src.registered_name == user_registered_name))
 			//they can open all lockers, or nobody owns this, or they own this locker
 			src.locked = !( src.locked )
 			if(src.locked)	src.icon_state = src.icon_locked
 			else	src.icon_state = src.icon_closed
 
-			if(!src.registered_name)
-				src.registered_name = I.registered_name
-				src.desc = "Owned by [I.registered_name]."
+			if(!src.registered_name && user_registered_name)
+				src.registered_name = user_registered_name
+				src.desc = "Owned by [user_registered_name]."
 		else
 			to_chat(user, "<span class='warning'>Access Denied</span>")
 	else if((istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/twohanded/dualsaber)) && !src.broken)
