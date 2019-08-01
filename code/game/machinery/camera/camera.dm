@@ -173,7 +173,7 @@
 			to_chat(user, "[msg2]")
 
 	// OTHER
-	else if ((istype(W, /obj/item/weapon/paper) && !(W:crumpled==1) || istype(W, /obj/item/device/pda)) && isliving(user))
+	else if ((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
 		var/mob/living/U = user
 		var/obj/item/weapon/paper/X = null
 		var/obj/item/device/pda/P = null
@@ -182,17 +182,20 @@
 		var/info = ""
 		if(istype(W, /obj/item/weapon/paper))
 			X = W
+			if(X.crumpled)
+				to_chat(usr, "Paper to crumpled for anything.")
+				return
 			itemname = X.name
 			info = X.info
 		else
 			P = W
 			itemname = P.name
 			info = P.notehtml
-		to_chat(U, "You hold \the [itemname] up to the camera ...")
+		to_chat(U, "You hold \the [itemname] up to the camera...")
 		for(var/mob/living/silicon/ai/O in ai_list)
 			if(!O.client || O.stat == DEAD)
 				continue
-			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U.name]</a></b> holds \a [itemname] up to one of your cameras ...")
+			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U];trackname=[U.name]'>[U.name]</a></b> holds \a [itemname] up to one of your cameras...")
 			O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, entity_ja(info)), text("window=[]", itemname))
 		for(var/mob/O in player_list)
 			if (O.client && O.client.eye == src)

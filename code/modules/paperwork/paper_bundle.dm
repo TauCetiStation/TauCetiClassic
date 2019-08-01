@@ -21,8 +21,8 @@
 	var/obj/item/weapon/paper/P
 	if(istype(W, /obj/item/weapon/paper))
 		P = W
-		if(P.crumpled>0)
-			to_chat(usr, "Paper to crumpled for bundle.")
+		if(P.crumpled)
+			to_chat(usr, "Paper too crumpled for anything")
 			return
 		if (istype(P, /obj/item/weapon/paper/carbon))
 			var/obj/item/weapon/paper/carbon/C = P
