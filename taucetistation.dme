@@ -966,6 +966,7 @@
 #include "code\modules\admin\verbs\epileptic_anomaly.dm"
 #include "code\modules\admin\verbs\fps.dm"
 #include "code\modules\admin\verbs\getlogs.dm"
+#include "code\modules\admin\verbs\hub.dm"
 #include "code\modules\admin\verbs\library.dm"
 #include "code\modules\admin\verbs\mapping.dm"
 #include "code\modules\admin\verbs\massmodvar.dm"

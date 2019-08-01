@@ -11,3 +11,14 @@ If not, let us know on the main tgstation IRC channel of irc.rizon.net #tgstatio
 	hub_password = "kMZy3U5jJHSiBQjr"
 	name = "Space Station 13"
 */
+
+var/hub_visibility = TRUE
+
+/world/proc/update_hub_visibility(new_visibility)
+	if(new_visibility == hub_visibility)
+		return
+	hub_visibility = new_visibility
+	if(hub_visibility)
+		hub_password = "kMZy3U5jJHSiBQjr"
+	else
+		hub_password = "SORRYNOPASSWORD"
