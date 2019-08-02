@@ -199,7 +199,7 @@
 				to_chat(user, "<span class='warning'>Your [src] has hit [A]! There's not enough space for broad sweeps here!</span>")
 				var/resolved = A.attackby(src, user, list())
 				if(!resolved && src)
-					afterattack(A, src, TRUE, list()) // 1 indicates adjacency
+					afterattack(A, user, TRUE, list()) // 1 indicates adjacency
 				turf_clear = FALSE
 				break
 			if(istype(A, /obj/item))
