@@ -195,17 +195,6 @@
 	return 1
 
 /*
-/obj/item/projectile/forcebolt/strong/on_hit(atom/target, blocked = 0)
-
-	// NONE OF THIS WORKS. DO NOT USE.
-	var/throwdir = null
-
-	for(var/mob/M in hearers(2, src))
-		if(M.loc != src.loc)
-			throwdir = get_dir(src,target)
-			M.throw_at(get_edge_target_turf(M, throwdir),15,1)
-	return ..()
-
 /obj/item/projectile/magic/teleport
 	name = "bolt of teleportation"
 	icon_state = "bluespace"
