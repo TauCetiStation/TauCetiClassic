@@ -299,13 +299,13 @@
 	icon_state = "aesirsalad"
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#468c00"
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/aesirsalad/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 8)
+	reagents.add_reagent("nutriment", 32)
 	reagents.add_reagent("doctorsdelight", 8)
-	reagents.add_reagent("vitamin", 6)
+	reagents.add_reagent("vitamin", 24)
 
 /obj/item/weapon/reagent_containers/food/snacks/candy
 	name = "candy"
@@ -372,27 +372,27 @@
 	desc = "Such sweet, fattening food."
 	icon_state = "chocolatebar"
 	filling_color = "#7d5f46"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 2)
-	reagents.add_reagent("sugar", 2)
-	reagents.add_reagent("coco", 2)
+	reagents.add_reagent("nutriment", 8)
+	reagents.add_reagent("sugar", 8)
+	reagents.add_reagent("coco", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolateegg
 	name = "Chocolate Egg"
 	desc = "Such sweet, fattening food."
 	icon_state = "chocolateegg"
 	filling_color = "#7d5f46"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolateegg/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 4)
-	reagents.add_reagent("sugar", 2)
-	reagents.add_reagent("coco", 2)
-	reagents.add_reagent("egg", 5)
+	reagents.add_reagent("nutriment", 16)
+	reagents.add_reagent("sugar", 8)
+	reagents.add_reagent("coco", 8)
+	reagents.add_reagent("egg", 20)
 
 /obj/item/weapon/reagent_containers/food/snacks/donut
 	name = "donut"
@@ -459,62 +459,63 @@
 	desc = "You jelly?"
 	icon_state = "jdonut1"
 	filling_color = "#ed1169"
-	bitesize = 5
+	bitesize = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/jelly/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 3)
-	reagents.add_reagent("sprinkles", 1)
+	reagents.add_reagent("nutriment", 12)
+	reagents.add_reagent("sprinkles", 4)
 	reagents.add_reagent("berryjuice", 5)
 	if(prob(30))
 		src.icon_state = "jdonut2"
 		src.name = "Frosted Jelly Donut"
-		reagents.add_reagent("sprinkles", 2)
+		reagents.add_reagent("sprinkles", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly
 	name = "Jelly Donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
 	filling_color = "#ed1169"
-	bitesize = 5
+	bitesize = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 3)
-	reagents.add_reagent("sprinkles", 1)
+	reagents.add_reagent("nutriment", 12)
+	reagents.add_reagent("sprinkles", 4)
 	reagents.add_reagent("slimejelly", 5)
 	if(prob(30))
 		src.icon_state = "jdonut2"
 		src.name = "Frosted Jelly Donut"
-		reagents.add_reagent("sprinkles", 2)
+		reagents.add_reagent("sprinkles", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly
 	name = "Jelly Donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
 	filling_color = "#ed1169"
-	bitesize = 5
+	bitesize = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 3)
-	reagents.add_reagent("sprinkles", 1)
+	reagents.add_reagent("nutriment", 12)
+	reagents.add_reagent("sprinkles", 4)
 	reagents.add_reagent("cherryjelly", 5)
 	if(prob(30))
 		src.icon_state = "jdonut2"
 		src.name = "Frosted Jelly Donut"
-		reagents.add_reagent("sprinkles", 2)
+		reagents.add_reagent("sprinkles", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg
 	name = "egg"
 	desc = "An egg!"
 	icon_state = "egg"
 	filling_color = "#fdffd1"
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 1)
-	reagents.add_reagent("egg", 5)
+	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("egg", 20)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	..()
@@ -575,14 +576,14 @@
 	desc = "A fried egg, with a touch of salt and pepper."
 	icon_state = "friedegg"
 	filling_color = "#ffdf78"
-	bitesize = 1
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/friedegg/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 3)
-	reagents.add_reagent("sodiumchloride", 1)
-	reagents.add_reagent("blackpepper", 1)
-	reagents.add_reagent("egg", 5)
+	reagents.add_reagent("nutriment", 12)
+	reagents.add_reagent("sodiumchloride", 4)
+	reagents.add_reagent("blackpepper", 4)
+	reagents.add_reagent("egg", 20)
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledegg
 	name = "Boiled egg"
@@ -634,11 +635,11 @@
 	desc = "A fake turkey made from tofu."
 	icon_state = "tofurkey"
 	filling_color = "#fffee0"
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/tofurkey/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 12)
+	reagents.add_reagent("nutriment", 48)
 	reagents.add_reagent("stoxin", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/stuffing
@@ -646,11 +647,11 @@
 	desc = "Moist, peppery breadcrumbs for filling the body cavities of dead birds. Dig in!"
 	icon_state = "stuffing"
 	filling_color = "#c9ac83"
-	bitesize = 1
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/stuffing/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("nutriment", 12)
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat
 	name = "carp fillet"
@@ -669,11 +670,11 @@
 	desc = "A finger of fish."
 	icon_state = "fishfingers"
 	filling_color = "#ffdefe"
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/fishfingers/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 4)
+	reagents.add_reagent("protein", 16)
 	reagents.add_reagent("carpotoxin", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice
@@ -751,24 +752,24 @@
 	desc = "A great meal all round."
 	icon_state = "meatball"
 	filling_color = "#db0000"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/meatball/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 4)
-	reagents.add_reagent("vitamin", 1)
+	reagents.add_reagent("protein", 16)
+	reagents.add_reagent("vitamin", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/sausage
 	name = "Sausage"
 	desc = "A piece of mixed, long meat."
 	icon_state = "sausage"
 	filling_color = "#db0000"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/sausage/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 6)
-	reagents.add_reagent("vitamin", 1)
+	reagents.add_reagent("protein", 24)
+	reagents.add_reagent("vitamin", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/donkpocket
 	name = "Donk-pocket"
@@ -795,11 +796,11 @@
 	desc = "A strange looking burger. It looks almost sentient."
 	icon_state = "brainburger"
 	filling_color = "#f2b6ea"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/brainburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("nutriment", 24)
 	reagents.add_reagent("alkysine", 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/ghostburger
@@ -807,11 +808,11 @@
 	desc = "Spooky! It doesn't look very filling."
 	icon_state = "ghostburger"
 	filling_color = "#fff2ff"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/ghostburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("nutriment", 24)
 	reagents.add_reagent("ectoplasm", 1)
 
 
@@ -824,12 +825,12 @@
 	name = "-burger"
 	desc = "A bloody burger."
 	icon_state = "hburger"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/human/burger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 1)
+	reagents.add_reagent("nutriment", 24)
+	reagents.add_reagent("vitamin", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/cheeseburger
 	name = "cheeseburger"
@@ -860,11 +861,11 @@
 	desc = "Almost like a carp is yelling somewhere... Give me back that fillet -o- carp, give me that carp."
 	icon_state = "fishburger"
 	filling_color = "#ffdefe"
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/fishburger/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 6)
+	reagents.add_reagent("protein", 24)
 	reagents.add_reagent("carpotoxin", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/tofuburger
@@ -872,26 +873,26 @@
 	desc = "What.. is that meat?"
 	icon_state = "tofuburger"
 	filling_color = "#fffee0"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/tofuburger/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 6)
-	reagents.add_reagent("vitamin", 1)
+	reagents.add_reagent("plantmatter", 24)
+	reagents.add_reagent("vitamin", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/roburger
 	name = "roburger"
 	desc = "The lettuce is the only organic component. Beep."
 	icon_state = "roburger"
 	filling_color = "#cccccc"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/roburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("nutriment", 24)
 	if(prob(5))
 		reagents.add_reagent("nanites", 2)
-		reagents.add_reagent("vitamin", 1)
+		reagents.add_reagent("vitamin", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/roburgerbig
 	name = "roburger"
@@ -904,27 +905,27 @@
 /obj/item/weapon/reagent_containers/food/snacks/roburgerbig/atom_init()
 	. = ..()
 	reagents.add_reagent("nanites", 100)
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 5)
+	reagents.add_reagent("nutriment", 24)
+	reagents.add_reagent("vitamin", 20)
 
 /obj/item/weapon/reagent_containers/food/snacks/xenoburger
 	name = "xenoburger"
 	desc = "Smells caustic. Tastes like heresy."
 	icon_state = "xburger"
 	filling_color = "#43de18"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/xenoburger/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 6)
-	reagents.add_reagent("vitamin", 1)
+	reagents.add_reagent("protein", 24)
+	reagents.add_reagent("vitamin", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/clownburger
 	name = "Clown Burger"
 	desc = "This tastes funny..."
 	icon_state = "clownburger"
 	filling_color = "#ff00ff"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/clownburger/atom_init()
 	. = ..()
@@ -933,19 +934,19 @@
 	var/list/data = list("viruses"= list(F))
 	reagents.add_reagent("blood", 4, data)
 */
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 1)
+	reagents.add_reagent("nutriment", 24)
+	reagents.add_reagent("vitamin", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/mimeburger
 	name = "Mime Burger"
 	desc = "Its taste defies language."
 	icon_state = "mimeburger"
 	filling_color = "#ffffff"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/mimeburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("nutriment", 24)
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette
 	name = "Omelette Du Fromage"
@@ -953,24 +954,24 @@
 	icon_state = "omelette"
 	trash = /obj/item/trash/plate
 	filling_color = "#fff9a8"
-	bitesize = 1
+	bitesize = 4
 
 	//var/herp = 0
 /obj/item/weapon/reagent_containers/food/snacks/omelette/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 1)
+	reagents.add_reagent("nutriment", 24)
+	reagents.add_reagent("vitamin", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/muffin
 	name = "Muffin"
 	desc = "A delicious and spongy little cake"
 	icon_state = "muffin"
 	filling_color = "#e0cf9b"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/muffin/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("nutriment", 24)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie
 	name = "Banana Cream Pie"
@@ -978,13 +979,13 @@
 	icon_state = "pie"
 	trash = /obj/item/trash/plate
 	filling_color = "#fbffb8"
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 6)
-	reagents.add_reagent("banana",5)
-	reagents.add_reagent("vitamin", 2)
+	reagents.add_reagent("plantmatter", 24)
+	reagents.add_reagent("banana",20)
+	reagents.add_reagent("vitamin", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom)
 	..()
@@ -997,11 +998,11 @@
 	desc = "No black birds, this is a good sign."
 	icon_state = "berryclafoutis"
 	trash = /obj/item/trash/plate
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/berryclafoutis/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 10)
+	reagents.add_reagent("plantmatter", 40)
 	reagents.add_reagent("berryjuice", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/waffles
@@ -1010,12 +1011,12 @@
 	icon_state = "waffles"
 	trash = /obj/item/trash/waffles
 	filling_color = "#e6deb5"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/waffles/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 8)
-	reagents.add_reagent("vitamin", 1)
+	reagents.add_reagent("nutriment", 32)
+	reagents.add_reagent("vitamin", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/eggplantparm
 	name = "Eggplant Parmigiana"
@@ -1023,12 +1024,12 @@
 	icon_state = "eggplantparm"
 	trash = /obj/item/trash/plate
 	filling_color = "#4d2f5e"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/eggplantparm/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 2)
+	reagents.add_reagent("nutriment", 24)
+	reagents.add_reagent("vitamin", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/soylentgreen
 	name = "Soylent Green"
@@ -1036,12 +1037,12 @@
 	icon_state = "soylent_green"
 	trash = /obj/item/trash/waffles
 	filling_color = "#b8e6b5"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/soylentgreen/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 10)
-	reagents.add_reagent("vitamin", 2)
+	reagents.add_reagent("protein", 40)
+	reagents.add_reagent("vitamin", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/soylenviridians
 	name = "Soylen Virdians"
@@ -1049,12 +1050,12 @@
 	icon_state = "soylent_yellow"
 	trash = /obj/item/trash/waffles
 	filling_color = "#e6fa61"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/soylenviridians/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 10)
-	reagents.add_reagent("vitamin", 1)
+	reagents.add_reagent("plantmatter", 40)
+	reagents.add_reagent("vitamin", 4)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/meatpie
@@ -1063,12 +1064,12 @@
 	desc = "An old barber recipe, very delicious!"
 	trash = /obj/item/trash/plate
 	filling_color = "#948051"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/meatpie/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 10)
-	reagents.add_reagent("vitamin", 2)
+	reagents.add_reagent("protein", 40)
+	reagents.add_reagent("vitamin", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/tofupie
 	name = "Tofu-pie"
@@ -1076,12 +1077,12 @@
 	desc = "A delicious tofu pie."
 	trash = /obj/item/trash/plate
 	filling_color = "#fffee0"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/tofupie/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 10)
-	reagents.add_reagent("vitamin", 2)
+	reagents.add_reagent("plantmatter", 40)
+	reagents.add_reagent("vitamin", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/amanita_pie
 	name = "amanita pie"
@@ -1102,19 +1103,19 @@
 	desc = "I bet you love stuff made out of plump helmets!"
 	icon_state = "plump_pie"
 	filling_color = "#b8279b"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/plump_pie/atom_init()
 	. = ..()
 	if(prob(10))
 		name = "exceptional plump pie"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump pie!"
-		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("nutriment", 32)
 		reagents.add_reagent("tricordrazine", 5)
-		reagents.add_reagent("vitamin", 2)
+		reagents.add_reagent("vitamin", 8)
 	else
-		reagents.add_reagent("nutriment", 8)
-		reagents.add_reagent("vitamin", 2)
+		reagents.add_reagent("nutriment", 32)
+		reagents.add_reagent("vitamin", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/xemeatpie
 	name = "Xeno-pie"
@@ -1122,12 +1123,12 @@
 	desc = "A delicious meatpie. Probably heretical."
 	trash = /obj/item/trash/plate
 	filling_color = "#43de18"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/xemeatpie/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 10)
-	reagents.add_reagent("vitamin", 2)
+	reagents.add_reagent("protein", 40)
+	reagents.add_reagent("vitamin", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/wingfangchu
 	name = "Wing Fang Chu"
@@ -1149,11 +1150,11 @@
 	desc = "A human meat, on a stick."
 	trash = /obj/item/stack/rods
 	filling_color = "#a85340"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/human/kabob/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 8)
+	reagents.add_reagent("protein", 32)
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeykabob
 	name = "Meat-kabob"
@@ -1161,11 +1162,11 @@
 	desc = "Delicious meat, on a stick."
 	trash = /obj/item/stack/rods
 	filling_color = "#a85340"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeykabob/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 8)
+	reagents.add_reagent("protein", 32)
 
 /obj/item/weapon/reagent_containers/food/snacks/tofukabob
 	name = "Tofu-kabob"
@@ -1173,11 +1174,11 @@
 	desc = "Vegan meat, on a stick."
 	trash = /obj/item/stack/rods
 	filling_color = "#fffee0"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/tofukabob/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 8)
+	reagents.add_reagent("plantmatter", 32)
 
 /obj/item/weapon/reagent_containers/food/snacks/cubancarp
 	name = "Cuban Carp"
@@ -1185,11 +1186,11 @@
 	icon_state = "cubancarp"
 	trash = /obj/item/trash/plate
 	filling_color = "#e9adff"
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/cubancarp/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 6)
+	reagents.add_reagent("protein", 24)
 	reagents.add_reagent("carpotoxin", 3)
 	reagents.add_reagent("capsaicin", 3)
 
@@ -1205,7 +1206,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/popcorn/atom_init()
 	. = ..()
 	unpopped = rand(1,10)
-	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("nutriment", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/popcorn/On_Consume()
 	if(prob(unpopped))	//lol ...what's the point?
@@ -1332,25 +1333,25 @@
 	icon_state = "syndi_cakes"
 	desc = "An extremely moist snack cake that tastes just as good after being nuked."
 	filling_color = "#ff5d05"
-	bitesize = 3
+	bitesize = 12
 
 	trash = /obj/item/trash/syndi_cakes
 
 /obj/item/weapon/reagent_containers/food/snacks/syndicake/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 4)
-	reagents.add_reagent("syndicream", 5)
+	reagents.add_reagent("nutriment", 16)
+	reagents.add_reagent("syndicream", 20)
 
 /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato
 	name = "Loaded Baked Potato"
 	desc = "Totally baked."
 	icon_state = "loadedbakedpotato"
 	filling_color = "#9c7a68"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("nutriment", 24)
 
 /obj/item/weapon/reagent_containers/food/snacks/fries
 	name = "Space Fries"
@@ -1381,12 +1382,12 @@
 	desc = "A bundle of raw spaghetti."
 	icon_state = "spagetti"
 	filling_color = "#eddd00"
-	bitesize = 1
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/spagetti/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 1)
-	reagents.add_reagent("vitamin", 1)
+	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("vitamin", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesyfries
 	name = "Cheesy Fries"
@@ -1405,11 +1406,11 @@
 	desc = "A true prophecy in each cookie!"
 	icon_state = "fortune_cookie"
 	filling_color = "#e8e79e"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/fortunecookie/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("nutriment", 12)
 
 /obj/item/weapon/reagent_containers/food/snacks/badrecipe
 	name = "Burned mess"
@@ -1429,13 +1430,13 @@
 	icon_state = "meatstake"
 	trash = /obj/item/trash/plate
 	filling_color = "#7a3d11"
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/meatsteak/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 6)
-	reagents.add_reagent("sodiumchloride", 1)
-	reagents.add_reagent("blackpepper", 1)
+	reagents.add_reagent("protein", 24)
+	reagents.add_reagent("sodiumchloride", 4)
+	reagents.add_reagent("blackpepper", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/spacylibertyduff
 	name = "Spacy Liberty Duff"
@@ -1443,11 +1444,11 @@
 	icon_state = "spacylibertyduff"
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#42b873"
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/spacylibertyduff/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 6)
+	reagents.add_reagent("plantmatter", 24)
 	reagents.add_reagent("psilocybin", 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/amanitajelly
@@ -1483,55 +1484,55 @@
 	icon_state = "meatballsoup"
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#785210"
-	bitesize = 5
+	bitesize = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/meatballsoup/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 8)
+	reagents.add_reagent("protein", 32)
 	reagents.add_reagent("water", 5)
-	reagents.add_reagent("vitamin", 4)
+	reagents.add_reagent("vitamin", 16)
 
 /obj/item/weapon/reagent_containers/food/snacks/slimesoup
 	name = "slime soup"
 	desc = "If no water is available, you may substitute tears."
 	icon_state = "slimesoup"
 	filling_color = "#c4dba0"
-	bitesize = 5
+	bitesize = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/slimesoup/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("nutriment", 16)
 	reagents.add_reagent("slimejelly", 5)
 	reagents.add_reagent("water", 10)
-	reagents.add_reagent("vitamin", 4)
+	reagents.add_reagent("vitamin", 16)
 
 /obj/item/weapon/reagent_containers/food/snacks/bloodsoup
 	name = "Tomato soup"
 	desc = "Smells like copper."
 	icon_state = "tomatosoup"
 	filling_color = "#ff0000"
-	bitesize = 5
+	bitesize = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/bloodsoup/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 2)
+	reagents.add_reagent("protein", 8)
 	reagents.add_reagent("blood", 10)
 	reagents.add_reagent("water", 5)
-	reagents.add_reagent("vitamin", 4)
+	reagents.add_reagent("vitamin", 16)
 
 /obj/item/weapon/reagent_containers/food/snacks/clownstears
 	name = "Clown's Tears"
 	desc = "Not very funny."
 	icon_state = "clownstears"
 	filling_color = "#c4fbff"
-	bitesize = 5
+	bitesize = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/clownstears/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 4)
-	reagents.add_reagent("banana", 5)
+	reagents.add_reagent("nutriment", 16)
+	reagents.add_reagent("banana", 20)
 	reagents.add_reagent("water", 10)
-	reagents.add_reagent("vitamin", 8)
+	reagents.add_reagent("vitamin", 32)
 
 /obj/item/weapon/reagent_containers/food/snacks/vegetablesoup
 	name = "Vegetable soup"
@@ -1539,13 +1540,13 @@
 	icon_state = "vegetablesoup"
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#afc4b5"
-	bitesize = 5
+	bitesize = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/vegetablesoup/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 8)  //done!
+	reagents.add_reagent("plantmatter", 32)  //done!
 	reagents.add_reagent("water", 5)
-	reagents.add_reagent("vitamin", 4)
+	reagents.add_reagent("vitamin", 16)
 
 /obj/item/weapon/reagent_containers/food/snacks/nettlesoup
 	name = "Nettle soup"
@@ -1553,14 +1554,14 @@
 	icon_state = "nettlesoup"
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#afc4b5"
-	bitesize = 5
+	bitesize = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/nettlesoup/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 8)
+	reagents.add_reagent("plantmatter", 32)
 	reagents.add_reagent("water", 5)
 	reagents.add_reagent("tricordrazine", 5)
-	reagents.add_reagent("vitamin", 4)
+	reagents.add_reagent("vitamin", 16)
 
 /obj/item/weapon/reagent_containers/food/snacks/mysterysoup
 	name = "Mystery soup"
@@ -1568,32 +1569,32 @@
 	icon_state = "mysterysoup"
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#f082ff"
-	bitesize = 5
+	bitesize = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/mysterysoup/atom_init()
 	. = ..()
 	var/mysteryselect = pick(1,2,3,4,5,6,7,8,9,10)
 	switch(mysteryselect)
 		if(1)
-			reagents.add_reagent("nutriment", 6)
+			reagents.add_reagent("nutriment", 24)
 			reagents.add_reagent("capsaicin", 3)
-			reagents.add_reagent("tomatojuice", 2)
+			reagents.add_reagent("tomatojuice", 8)
 		if(2)
-			reagents.add_reagent("nutriment", 6)
-			reagents.add_reagent("frostoil", 3)
-			reagents.add_reagent("tomatojuice", 2)
+			reagents.add_reagent("nutriment", 24)
+			reagents.add_reagent("frostoil", 12)
+			reagents.add_reagent("tomatojuice", 8)
 		if(3)
-			reagents.add_reagent("nutriment", 5)
+			reagents.add_reagent("nutriment", 20)
 			reagents.add_reagent("water", 5)
 			reagents.add_reagent("tricordrazine", 5)
 		if(4)
-			reagents.add_reagent("nutriment", 5)
+			reagents.add_reagent("nutriment", 20)
 			reagents.add_reagent("water", 10)
 		if(5)
-			reagents.add_reagent("nutriment", 2)
-			reagents.add_reagent("banana", 10)
+			reagents.add_reagent("nutriment", 8)
+			reagents.add_reagent("banana", 40)
 		if(6)
-			reagents.add_reagent("nutriment", 6)
+			reagents.add_reagent("nutriment", 24)
 			reagents.add_reagent("blood", 10)
 		if(7)
 			reagents.add_reagent("slimejelly", 10)
@@ -1602,11 +1603,11 @@
 			reagents.add_reagent("carbon", 10)
 			reagents.add_reagent("toxin", 10)
 		if(9)
-			reagents.add_reagent("nutriment", 5)
-			reagents.add_reagent("tomatojuice", 10)
+			reagents.add_reagent("nutriment", 20)
+			reagents.add_reagent("tomatojuice", 40)
 		if(10)
-			reagents.add_reagent("nutriment", 6)
-			reagents.add_reagent("tomatojuice", 5)
+			reagents.add_reagent("nutriment", 24)
+			reagents.add_reagent("tomatojuice", 20)
 			reagents.add_reagent("imidazoline", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/wishsoup
@@ -1615,15 +1616,15 @@
 	icon_state = "wishsoup"
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#d1f4ff"
-	bitesize = 5
+	bitesize = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/wishsoup/atom_init()
 	. = ..()
 	reagents.add_reagent("water", 10)
 	if(prob(25))
 		src.desc = "A wish come true!"
-		reagents.add_reagent("nutriment", 8)
-		reagents.add_reagent("vitamin", 1)
+		reagents.add_reagent("nutriment", 32)
+		reagents.add_reagent("vitamin", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/hotchili
 	name = "Hot Chili"
@@ -1631,14 +1632,14 @@
 	icon_state = "hotchili"
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#ff3c00"
-	bitesize = 5
+	bitesize = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/hotchili/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 6)
+	reagents.add_reagent("plantmatter", 24)
 	reagents.add_reagent("capsaicin", 3)
 	reagents.add_reagent("tomatojuice", 2)
-	reagents.add_reagent("vitamin", 2)
+	reagents.add_reagent("vitamin", 8)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/coldchili
@@ -1646,16 +1647,16 @@
 	desc = "This slush is barely a liquid!"
 	icon_state = "coldchili"
 	filling_color = "#2b00ff"
-	bitesize = 5
+	bitesize = 20
 
 	trash = /obj/item/trash/snack_bowl
 
 /obj/item/weapon/reagent_containers/food/snacks/coldchili/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 6)
+	reagents.add_reagent("plantmatter", 24)
 	reagents.add_reagent("frostoil", 3)
 	reagents.add_reagent("tomatojuice", 2)
-	reagents.add_reagent("vitamin", 2)
+	reagents.add_reagent("vitamin", 8)
 
 /* No more of this
 /obj/item/weapon/reagent_containers/food/snacks/telebacon
@@ -1789,24 +1790,24 @@
 	desc = "This is absolutely Ei Nath."
 	icon_state = "spellburger"
 	filling_color = "#d505ff"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/spellburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 1)
+	reagents.add_reagent("nutriment", 24)
+	reagents.add_reagent("vitamin", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/bigbiteburger
 	name = "Big Bite Burger"
 	desc = "Forget the Big Mac. THIS is the future!"
 	icon_state = "bigbiteburger"
 	filling_color = "#e3d681"
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/bigbiteburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 14)
-	reagents.add_reagent("vitamin", 2)
+	reagents.add_reagent("nutriment", 56)
+	reagents.add_reagent("vitamin", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/enchiladas
 	name = "Enchiladas"
@@ -1814,12 +1815,12 @@
 	icon_state = "enchiladas"
 	trash = /obj/item/trash/tray
 	filling_color = "#a36a1f"
-	bitesize = 4
+	bitesize = 16
 
 /obj/item/weapon/reagent_containers/food/snacks/enchiladas/atom_init()
 	. = ..()
-	reagents.add_reagent("protein",8)
-	reagents.add_reagent("capsaicin", 6)
+	reagents.add_reagent("protein",32)
+	reagents.add_reagent("capsaicin", 24)
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeysdelight
 	name = "monkey's Delight"
@@ -1827,15 +1828,15 @@
 	icon_state = "monkeysdelight"
 	trash = /obj/item/trash/tray
 	filling_color = "#5c3c11"
-	bitesize = 6
+	bitesize = 24
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeysdelight/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 10)
-	reagents.add_reagent("banana", 5)
-	reagents.add_reagent("blackpepper", 1)
-	reagents.add_reagent("sodiumchloride", 1)
-	reagents.add_reagent("vitamin", 5)
+	reagents.add_reagent("nutriment", 40)
+	reagents.add_reagent("banana", 20)
+	reagents.add_reagent("blackpepper", 4)
+	reagents.add_reagent("sodiumchloride", 4)
+	reagents.add_reagent("vitamin", 20)
 
 /obj/item/weapon/reagent_containers/food/snacks/baguette
 	name = "Baguette"
@@ -1845,11 +1846,11 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/baguette/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("blackpepper", 1)
-	reagents.add_reagent("sodiumchloride", 1)
-	reagents.add_reagent("vitamin", 1)
-	bitesize = 3
+	reagents.add_reagent("nutriment", 24)
+	reagents.add_reagent("blackpepper", 4)
+	reagents.add_reagent("sodiumchloride", 4)
+	reagents.add_reagent("vitamin", 4)
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/fishandchips
 	name = "Fish and Chips"
@@ -1859,10 +1860,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/fishandchips/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 6)
+	reagents.add_reagent("protein", 24)
 	reagents.add_reagent("carpotoxin", 3)
-	reagents.add_reagent("vitamin", 2)
-	bitesize = 3
+	reagents.add_reagent("vitamin", 8)
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/sashimi
 	name = "Carp sashimi"
@@ -1871,10 +1872,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sashimi/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 6)
+	reagents.add_reagent("protein", 24)
 	reagents.add_reagent("capsaicin", 3)
-	reagents.add_reagent("vitamin", 2)
-	bitesize = 3
+	reagents.add_reagent("vitamin", 8)
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/sandwich
 	name = "Sandwich"
@@ -1885,9 +1886,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sandwich/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 1)
-	bitesize = 2
+	reagents.add_reagent("nutriment", 24)
+	reagents.add_reagent("vitamin", 4)
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/toastedsandwich
 	name = "Toasted Sandwich"
@@ -1898,9 +1899,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/toastedsandwich/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("nutriment", 24)
 	reagents.add_reagent("carbon", 2)
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/grilledcheese
 	name = "Grilled Cheese Sandwich"
@@ -1911,9 +1912,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grilledcheese/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 7)
-	reagents.add_reagent("vitamin", 1)
-	bitesize = 2
+	reagents.add_reagent("nutriment", 28)
+	reagents.add_reagent("vitamin", 4)
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/tomatosoup
 	name = "Tomato Soup"
@@ -1924,10 +1925,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/tomatosoup/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 5)
-	reagents.add_reagent("tomatojuice", 10)
-	reagents.add_reagent("vitamin", 3)
-	bitesize = 3
+	reagents.add_reagent("plantmatter", 20)
+	reagents.add_reagent("tomatojuice", 40)
+	reagents.add_reagent("vitamin", 12)
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/rofflewaffles
 	name = "Roffle Waffles"
@@ -1938,10 +1939,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/rofflewaffles/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 8)
+	reagents.add_reagent("nutriment", 32)
 	reagents.add_reagent("psilocybin", 8)
-	reagents.add_reagent("vitamin", 2)
-	bitesize = 4
+	reagents.add_reagent("vitamin", 8)
+	bitesize = 16
 
 /obj/item/weapon/reagent_containers/food/snacks/stew
 	name = "Stew"
@@ -1951,12 +1952,12 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/stew/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 10)
+	reagents.add_reagent("nutriment", 40)
 	reagents.add_reagent("tomatojuice", 5)
 	reagents.add_reagent("imidazoline", 5)
 	reagents.add_reagent("water", 5)
-	reagents.add_reagent("vitamin", 5)
-	bitesize = 10
+	reagents.add_reagent("vitamin", 20)
+	bitesize = 40
 
 /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast
 	name = "Jellied Toast"
@@ -1967,9 +1968,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 1)
-	reagents.add_reagent("vitamin", 2)
-	bitesize = 3
+	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("vitamin", 8)
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/cherry
 
@@ -1991,8 +1992,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/jellyburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 5)
-	bitesize = 2
+	reagents.add_reagent("nutriment", 20)
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/jellyburger/slime
 
@@ -2014,10 +2015,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/milosoup/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 8)
-	reagents.add_reagent("water", 5)
-	reagents.add_reagent("vitamin", 2)
-	bitesize = 4
+	reagents.add_reagent("nutriment", 32)
+	reagents.add_reagent("water", 20)
+	reagents.add_reagent("vitamin", 8)
+	bitesize = 16
 
 /obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat
 	name = "Stewed Soy Meat"
@@ -2027,8 +2028,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 8)
-	bitesize = 2
+	reagents.add_reagent("plantmatter", 32)
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspagetti
 	name = "Boiled Spaghetti"
@@ -2039,9 +2040,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspagetti/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 2)
-	reagents.add_reagent("vitamin", 1)
-	bitesize = 2
+	reagents.add_reagent("plantmatter", 8)
+	reagents.add_reagent("vitamin", 4)
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledrice
 	name = "Boiled Rice"
@@ -2052,9 +2053,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledrice/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 5)
-	reagents.add_reagent("vitamin", 1)
-	bitesize = 2
+	reagents.add_reagent("plantmatter", 20)
+	reagents.add_reagent("vitamin", 4)
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/sushi
 	name = "Sushi"
@@ -2064,9 +2065,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sushi/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 10)
-	reagents.add_reagent("vitamin", 2)
-	bitesize = 2
+	reagents.add_reagent("nutriment", 40)
+	reagents.add_reagent("vitamin", 8)
+	bitesize = 8
 
 
 /obj/item/weapon/reagent_containers/food/snacks/ricepudding
@@ -2078,9 +2079,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/ricepudding/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 4)
-	reagents.add_reagent("vitamin", 2)
-	bitesize = 2
+	reagents.add_reagent("plantmatter", 16)
+	reagents.add_reagent("vitamin", 8)
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/pastatomato
 	name = "Spaghetti"
@@ -2091,10 +2092,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/pastatomato/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 6)
+	reagents.add_reagent("plantmatter", 24)
 	reagents.add_reagent("tomatojuice", 10)
-	reagents.add_reagent("vitamin", 4)
-	bitesize = 4
+	reagents.add_reagent("vitamin", 16)
+	bitesize = 16
 
 /obj/item/weapon/reagent_containers/food/snacks/meatballspagetti
 	name = "Spaghetti & Meatballs"
@@ -2105,9 +2106,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meatballspagetti/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 8)
-	reagents.add_reagent("vitamin", 4)
-	bitesize = 2
+	reagents.add_reagent("protein", 32)
+	reagents.add_reagent("vitamin", 16)
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/spesslaw
 	name = "Spesslaw"
@@ -2117,9 +2118,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/spesslaw/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 8)
-	reagents.add_reagent("vitamin", 4)
-	bitesize = 2
+	reagents.add_reagent("protein", 32)
+	reagents.add_reagent("vitamin", 16)
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/poppypretzel
 	name = "Poppy Pretzel"
@@ -2129,8 +2130,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/poppypretzel/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 5)
-	bitesize = 2
+	reagents.add_reagent("plantmatter", 20)
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries
 	name = "Carrot Fries"
@@ -2141,10 +2142,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 3)
+	reagents.add_reagent("plantmatter", 12)
 	reagents.add_reagent("imidazoline", 3)
-	reagents.add_reagent("vitamin", 2)
-	bitesize = 2
+	reagents.add_reagent("vitamin", 8)
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/superbiteburger
 	name = "Super Bite Burger"
@@ -2154,9 +2155,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/superbiteburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 50)
-	reagents.add_reagent("vitamin", 5)
-	bitesize = 10
+	reagents.add_reagent("nutriment", 200)
+	reagents.add_reagent("vitamin", 20)
+	bitesize = 40
 
 /obj/item/weapon/reagent_containers/food/snacks/candiedapple
 	name = "Candied Apple"
@@ -2166,9 +2167,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candiedapple/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 3)
-	reagents.add_reagent("sugar", 2)
-	bitesize = 3
+	reagents.add_reagent("nutriment", 12)
+	reagents.add_reagent("sugar", 8)
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/applepie
 	name = "Apple Pie"
@@ -2178,9 +2179,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/applepie/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 10)
-	reagents.add_reagent("vitamin", 2)
-	bitesize = 3
+	reagents.add_reagent("nutriment", 40)
+	reagents.add_reagent("vitamin", 8)
+	bitesize = 12
 
 
 /obj/item/weapon/reagent_containers/food/snacks/cherrypie
@@ -2191,9 +2192,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/cherrypie/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 10)
-	reagents.add_reagent("vitamin", 2)
-	bitesize = 3
+	reagents.add_reagent("nutriment", 40)
+	reagents.add_reagent("vitamin", 8)
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/twobread
 	name = "Two Bread"
@@ -2203,9 +2204,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/twobread/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 2)
-	reagents.add_reagent("vitamin", 2)
-	bitesize = 3
+	reagents.add_reagent("nutriment", 32)
+	reagents.add_reagent("vitamin", 32)
+	bitesize = 48
 
 /obj/item/weapon/reagent_containers/food/snacks/jellysandwich
 	name = "Jelly Sandwich"
@@ -2216,9 +2217,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 2)
-	reagents.add_reagent("vitamin", 2)
-	bitesize = 3
+	reagents.add_reagent("nutriment", 8)
+	reagents.add_reagent("vitamin", 8)
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/slime
 
@@ -2262,9 +2263,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/mushroomsoup/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 8)
-	reagents.add_reagent("vitamin", 4)
-	bitesize = 3
+	reagents.add_reagent("plantmatter", 32)
+	reagents.add_reagent("vitamin", 16)
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit
 	name = "plump helmet biscuit"
@@ -2277,12 +2278,12 @@
 	if(prob(10))
 		name = "exceptional plump helmet biscuit"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump helmet biscuit!"
-		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("nutriment", 32)
 		reagents.add_reagent("tricordrazine", 5)
-		bitesize = 2
+		bitesize = 8
 	else
-		reagents.add_reagent("nutriment", 5)
-		bitesize = 2
+		reagents.add_reagent("nutriment", 20)
+		bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/chawanmushi
 	name = "chawanmushi"
@@ -2293,8 +2294,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/chawanmushi/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 5)
-	bitesize = 1
+	reagents.add_reagent("nutriment", 20)
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/beetsoup
 	name = "beet soup"
@@ -2318,9 +2319,9 @@
 			name = "borshch"
 		if(6)
 			name = "borscht"
-	reagents.add_reagent("nutriment", 8)
-	reagents.add_reagent("vitamin", 2)
-	bitesize = 2
+	reagents.add_reagent("nutriment", 32)
+	reagents.add_reagent("vitamin", 8)
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/tossedsalad
 	name = "tossed salad"
@@ -2331,9 +2332,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/tossedsalad/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 8)
-	reagents.add_reagent("vitamin", 1)
-	bitesize = 3
+	reagents.add_reagent("plantmatter", 32)
+	reagents.add_reagent("vitamin", 4)
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/validsalad
 	name = "valid salad"
@@ -2344,9 +2345,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/validsalad/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 8)
-	reagents.add_reagent("vitamin", 2)
-	bitesize = 3
+	reagents.add_reagent("plantmatter", 32)
+	reagents.add_reagent("vitamin", 8)
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/appletart
 	name = "golden apple streusel tart"
@@ -2357,10 +2358,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/appletart/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 8)
+	reagents.add_reagent("plantmatter", 32)
 	reagents.add_reagent("gold", 5)
-	reagents.add_reagent("vitamin", 4)
-	bitesize = 3
+	reagents.add_reagent("vitamin", 16)
+	bitesize = 12
 
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
@@ -2377,10 +2378,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/meatbread/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 20)
-	reagents.add_reagent("nutriment", 10)
-	reagents.add_reagent("vitamin", 5)
-	bitesize = 2
+	reagents.add_reagent("protein", 40)
+	reagents.add_reagent("nutriment", 20)
+	reagents.add_reagent("vitamin", 10)
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice
 	name = "meatbread slice"
@@ -2388,7 +2389,7 @@
 	icon_state = "meatbreadslice"
 	trash = /obj/item/trash/plate
 	filling_color = "#ff7575"
-	bitesize = 2
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/xenomeatbread
 	name = "xenomeatbread loaf"
@@ -2400,10 +2401,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/xenomeatbread/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 20)
-	reagents.add_reagent("nutriment", 10)
-	reagents.add_reagent("vitamin", 5)
-	bitesize = 2
+	reagents.add_reagent("protein", 40)
+	reagents.add_reagent("nutriment", 20)
+	reagents.add_reagent("vitamin", 10)
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice
 	name = "xenomeatbread slice"
@@ -2411,7 +2412,7 @@
 	icon_state = "xenobreadslice"
 	trash = /obj/item/trash/plate
 	filling_color = "#8aff75"
-	bitesize = 2
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/spidermeatbread
 	name = "spider meat loaf"
@@ -2422,16 +2423,18 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/spidermeatbread/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 20)
-	reagents.add_reagent("nutriment", 10)
-	reagents.add_reagent("vitamin", 5)
+	reagents.add_reagent("protein", 40)
+	reagents.add_reagent("nutriment", 20)
+	reagents.add_reagent("vitamin", 10)
 	reagents.add_reagent("toxin", 15)
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/spidermeatbreadslice
 	name = "spider meat bread slice"
 	desc = "A slice of meatloaf made from an animal that most likely still wants you dead."
 	icon_state = "xenobreadslice"
 	trash = /obj/item/trash/plate
+	bitesize = 4
 
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/bananabread
@@ -2444,9 +2447,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/bananabread/atom_init()
 	. = ..()
-	reagents.add_reagent("banana", 20)
-	reagents.add_reagent("nutriment", 20)
-	bitesize = 2
+	reagents.add_reagent("banana", 40)
+	reagents.add_reagent("nutriment", 40)
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/bananabreadslice
 	name = "Banana-nut bread slice"
@@ -2454,7 +2457,7 @@
 	icon_state = "bananabreadslice"
 	trash = /obj/item/trash/plate
 	filling_color = "#ede5ad"
-	bitesize = 2
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/tofubread
 	name = "Tofubread"
@@ -2466,9 +2469,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/tofubread/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 20)
-	reagents.add_reagent("vitamin", 5)
-	bitesize = 2
+	reagents.add_reagent("plantmatter", 40)
+	reagents.add_reagent("vitamin", 10)
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice
 	name = "Tofubread slice"
@@ -2476,7 +2479,7 @@
 	icon_state = "tofubreadslice"
 	trash = /obj/item/trash/plate
 	filling_color = "#f7ffe0"
-	bitesize = 2
+	bitesize = 4
 
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/carrotcake
@@ -2489,10 +2492,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/carrotcake/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 20)
+	reagents.add_reagent("nutriment", 80)
 	reagents.add_reagent("imidazoline", 10)
-	reagents.add_reagent("vitamin", 5)
-	bitesize = 2
+	reagents.add_reagent("vitamin", 20)
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/carrotcakeslice
 	name = "Carrot Cake slice"
@@ -2500,7 +2503,7 @@
 	icon_state = "carrotcake_slice"
 	trash = /obj/item/trash/plate
 	filling_color = "#ffd675"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/braincake
 	name = "Brain Cake"
@@ -2512,11 +2515,11 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/braincake/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 10)
-	reagents.add_reagent("nutriment", 10)
+	reagents.add_reagent("protein", 40)
+	reagents.add_reagent("nutriment", 40)
 	reagents.add_reagent("alkysine", 10)
-	reagents.add_reagent("vitamin", 5)
-	bitesize = 2
+	reagents.add_reagent("vitamin", 20)
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/braincakeslice
 	name = "Brain Cake slice"
@@ -2524,7 +2527,7 @@
 	icon_state = "braincakeslice"
 	trash = /obj/item/trash/plate
 	filling_color = "#e6aedb"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesecake
 	name = "Cheese Cake"
@@ -2536,9 +2539,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesecake/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("vitamin", 5)
-	bitesize = 2
+	reagents.add_reagent("nutriment", 80)
+	reagents.add_reagent("vitamin", 20)
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesecakeslice
 	name = "Cheese Cake slice"
@@ -2546,7 +2549,7 @@
 	icon_state = "cheesecake_slice"
 	trash = /obj/item/trash/plate
 	filling_color = "#faf7af"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/plaincake
 	name = "Vanilla Cake"
@@ -2558,8 +2561,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/plaincake/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("vitamin", 5)
+	reagents.add_reagent("nutriment", 80)
+	reagents.add_reagent("vitamin", 20)
 
 /obj/item/weapon/reagent_containers/food/snacks/plaincakeslice
 	name = "Vanilla Cake slice"
@@ -2567,7 +2570,7 @@
 	icon_state = "plaincake_slice"
 	trash = /obj/item/trash/plate
 	filling_color = "#f7edd5"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/orangecake
 	name = "Orange Cake"
@@ -2579,8 +2582,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/orangecake/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("vitamin", 5)
+	reagents.add_reagent("nutriment", 80)
+	reagents.add_reagent("vitamin", 20)
 
 /obj/item/weapon/reagent_containers/food/snacks/orangecakeslice
 	name = "Orange Cake slice"
@@ -2588,7 +2591,7 @@
 	icon_state = "orangecake_slice"
 	trash = /obj/item/trash/plate
 	filling_color = "#fada8e"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/limecake
 	name = "Lime Cake"
@@ -2600,8 +2603,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/limecake/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("vitamin", 5)
+	reagents.add_reagent("nutriment", 80)
+	reagents.add_reagent("vitamin", 20)
 
 /obj/item/weapon/reagent_containers/food/snacks/limecakeslice
 	name = "Lime Cake slice"
@@ -2609,7 +2612,7 @@
 	icon_state = "limecake_slice"
 	trash = /obj/item/trash/plate
 	filling_color = "#cbfa8e"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/lemoncake
 	name = "Lemon Cake"
@@ -2621,8 +2624,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/lemoncake/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("vitamin", 5)
+	reagents.add_reagent("nutriment", 80)
+	reagents.add_reagent("vitamin", 20)
 
 /obj/item/weapon/reagent_containers/food/snacks/lemoncakeslice
 	name = "Lemon Cake slice"
@@ -2630,7 +2633,7 @@
 	icon_state = "lemoncake_slice"
 	trash = /obj/item/trash/plate
 	filling_color = "#fafa8e"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/chocolatecake
 	name = "Chocolate Cake"
@@ -2642,8 +2645,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/chocolatecake/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("vitamin", 5)
+	reagents.add_reagent("nutriment", 80)
+	reagents.add_reagent("vitamin", 20)
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatecakeslice
 	name = "Chocolate Cake slice"
@@ -2651,7 +2654,7 @@
 	icon_state = "chocolatecake_slice"
 	trash = /obj/item/trash/plate
 	filling_color = "#805930"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel
 	name = "Cheese wheel"
@@ -2663,17 +2666,17 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 15)
-	reagents.add_reagent("vitamin", 5)
-	reagents.add_reagent("cheese", 20)
-	bitesize = 2
+	reagents.add_reagent("nutriment", 60)
+	reagents.add_reagent("vitamin", 20)
+	reagents.add_reagent("cheese", 80)
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesewedge
 	name = "Cheese wedge"
 	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
 	icon_state = "cheesewedge"
 	filling_color = "#fff700"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/birthdaycake
 	name = "Birthday Cake"
@@ -2685,10 +2688,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/birthdaycake/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("sprinkles", 10)
-	reagents.add_reagent("vitamin", 5)
-	bitesize = 3
+	reagents.add_reagent("nutriment", 80)
+	reagents.add_reagent("sprinkles", 40)
+	reagents.add_reagent("vitamin", 20)
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/birthdaycakeslice
 	name = "Birthday Cake slice"
@@ -2696,7 +2699,7 @@
 	icon_state = "birthdaycakeslice"
 	trash = /obj/item/trash/plate
 	filling_color = "#ffd6d6"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread
 	name = "Bread"
@@ -2708,9 +2711,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 10)
-	reagents.add_reagent("bread", 10)
-	bitesize = 2
+	reagents.add_reagent("nutriment", 20)
+	reagents.add_reagent("bread", 20)
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice
 	name = "Bread slice"
@@ -2718,7 +2721,7 @@
 	icon_state = "breadslice"
 	trash = /obj/item/trash/plate
 	filling_color = "#d27332"
-	bitesize = 2
+	bitesize = 4
 
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/creamcheesebread
@@ -2731,9 +2734,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/creamcheesebread/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("vitamin", 5)
-	bitesize = 2
+	reagents.add_reagent("nutriment", 40)
+	reagents.add_reagent("vitamin", 10)
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/creamcheesebreadslice
 	name = "Cream Cheese Bread slice"
@@ -2741,7 +2744,7 @@
 	icon_state = "creamcheesebreadslice"
 	trash = /obj/item/trash/plate
 	filling_color = "#fff896"
-	bitesize = 2
+	bitesize = 4
 
 
 /obj/item/weapon/reagent_containers/food/snacks/watermelonslice
@@ -2762,8 +2765,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/applecake/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("vitamin", 5)
+	reagents.add_reagent("nutriment", 80)
+	reagents.add_reagent("vitamin", 20)
 
 /obj/item/weapon/reagent_containers/food/snacks/applecakeslice
 	name = "Apple Cake slice"
@@ -2771,7 +2774,7 @@
 	icon_state = "applecakeslice"
 	trash = /obj/item/trash/plate
 	filling_color = "#ebf5b8"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pumpkinpie
 	name = "Pumpkin Pie"
@@ -2783,8 +2786,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pumpkinpie/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 20)
-	reagents.add_reagent("vitamin", 5)
+	reagents.add_reagent("nutriment", 80)
+	reagents.add_reagent("vitamin", 20)
 
 /obj/item/weapon/reagent_containers/food/snacks/pumpkinpieslice
 	name = "Pumpkin Pie slice"
@@ -2792,17 +2795,18 @@
 	icon_state = "pumpkinpieslice"
 	trash = /obj/item/trash/plate
 	filling_color = "#f5b951"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/cracker
 	name = "Cracker"
 	desc = "It's a salted cracker."
 	icon_state = "cracker"
 	filling_color = "#f5deb8"
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/cracker/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 1)
+	reagents.add_reagent("nutriment", 4)
 
 
 
@@ -3085,11 +3089,11 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/dionaroast/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 4)
-	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("plantmatter", 16)
+	reagents.add_reagent("nutriment", 8)
 	reagents.add_reagent("radium", 2)
-	reagents.add_reagent("vitamin", 4)
-	bitesize = 2
+	reagents.add_reagent("vitamin", 8)
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspiderleg
 	name = "boiled spider leg"
@@ -3099,18 +3103,19 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspiderleg/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("nutriment", 12)
 	reagents.add_reagent("capsaicin", 2)
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/spidereggs
 	name = "spider eggs"
 	desc = "A cluster of juicy spider eggs. A great side dish for when you care not for your health."
 	icon_state = "spidereggs"
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/spidereggs/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 2)
+	reagents.add_reagent("protein", 8)
 	reagents.add_reagent("toxin", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/spidereggsham
@@ -3122,8 +3127,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/spidereggsham/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
-	bitesize = 4
+	reagents.add_reagent("nutriment", 24)
+	bitesize = 16
 
 ///////////////////////////////////////////
 // new old food stuff from bs12
@@ -3176,11 +3181,11 @@
 	desc = "A base for any self-respecting burger."
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "bun"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/bun/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 1)
+	reagents.add_reagent("nutriment", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/bun/attackby(obj/item/weapon/W, mob/user)
 	// Bun + meatball = burger
@@ -3230,34 +3235,34 @@
 	name = "taco"
 	desc = "Take a bite!"
 	icon_state = "taco"
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/taco/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 7)
-	reagents.add_reagent("vitamin", 1)
+	reagents.add_reagent("nutriment", 28)
+	reagents.add_reagent("vitamin", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/rawcutlet
 	name = "raw cutlet"
 	desc = "A thin piece of raw meat."
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "rawcutlet"
-	bitesize = 1
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/rawcutlet/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 1)
+	reagents.add_reagent("nutriment", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/cutlet
 	name = "cutlet"
 	desc = "A tasty meat slice."
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "cutlet"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/cutlet/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 1)
+	reagents.add_reagent("protein", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/rawcutlet/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/kitchenknife))
@@ -3270,11 +3275,11 @@
 	desc = "A tasty meat slice."
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "cutlet"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/cutlet/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 2)
+	reagents.add_reagent("protein", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/deepfryholder
 	name = "Deep Fried Foods Holder Obj"
@@ -3292,11 +3297,11 @@
 	desc = "A raw meatball."
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "rawmeatball"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/rawmeatball/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 2)
+	reagents.add_reagent("protein", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/hotdog
 	name = "hotdog"
@@ -3313,12 +3318,12 @@
 	desc = "Bland but filling."
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "flatbread"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/flatbread/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 3)
-	reagents.add_reagent("vitamin", 1)
+	reagents.add_reagent("plantmatter", 12)
+	reagents.add_reagent("vitamin", 4)
 
 // potato + knife = raw sticks
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W, mob/user)
@@ -3334,11 +3339,11 @@
 	desc = "Raw fries, not very tasty."
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "rawsticks"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/rawsticks/atom_init()
 	. = ..()
-	reagents.add_reagent("plantmatter", 3)
+	reagents.add_reagent("plantmatter", 12)
 
 ////////////////////////////////FOOD ADDITIONS////////////////////////////////////////////
 
@@ -3346,89 +3351,89 @@
 	name = "tin of beans"
 	desc = "Musical fruit in a slightly less musical container."
 	icon_state = "beans"
-	bitesize = 2
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/beans/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 10)
-	reagents.add_reagent("vitamin", 3)
-	reagents.add_reagent("beans", 10)
+	reagents.add_reagent("nutriment", 20)
+	reagents.add_reagent("vitamin", 6)
+	reagents.add_reagent("beans", 20)
 
 /obj/item/weapon/reagent_containers/food/snacks/wrap
 	name = "egg wrap"
 	desc = "The precursor to Pigs in a Blanket."
 	icon_state = "wrap"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/wrap/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 5)
+	reagents.add_reagent("nutriment", 20)
 
 /obj/item/weapon/reagent_containers/food/snacks/benedict
 	name = "eggs benedict"
 	desc = "There is only one egg on this, how rude."
 	icon_state = "benedict"
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/benedict/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 4)
-	reagents.add_reagent("egg", 3)
+	reagents.add_reagent("nutriment", 24)
+	reagents.add_reagent("vitamin", 16)
+	reagents.add_reagent("egg", 9)
 
 /obj/item/weapon/reagent_containers/food/snacks/meatbun
 	name = "meat bun"
 	desc = "Has the potential to not be Dog."
 	icon_state = "meatbun"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/meatbun/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 6)
+	reagents.add_reagent("protein", 24)
 
 /obj/item/weapon/reagent_containers/food/snacks/icecreamsandwich
 	name = "icecream sandwich"
 	desc = "Portable Ice-cream in it's own packaging."
 	icon_state = "icecreamsanwich"
-	bitesize = 1
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/icecreamsandwich/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 2)
-	reagents.add_reagent("ice", 2)
+	reagents.add_reagent("nutriment", 8)
+	reagents.add_reagent("ice", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/notasandwich
 	name = "not-a-sandwich"
 	desc = "Something seems to be wrong with this, you can't quite figure what. Maybe it's his moustache."
 	icon_state = "notasandwich"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/notasandwich/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 6)
+	reagents.add_reagent("nutriment", 24)
+	reagents.add_reagent("vitamin", 24)
 
 /obj/item/weapon/reagent_containers/food/snacks/sugarcookie
 	name = "sugar cookie"
 	desc = "Just like your little sister used to make."
 	icon_state = "sugarcookie"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/sugarcookie/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 3)
-	reagents.add_reagent("sugar", 3)
+	reagents.add_reagent("nutriment", 12)
+	reagents.add_reagent("sugar", 12)
 
 /obj/item/weapon/reagent_containers/food/snacks/friedbanana
 	name = "Fried Banana"
 	desc = "Goreng Pisang, also known as fried bananas."
 	icon_state = "friedbanana"
-	bitesize = 4
+	bitesize = 16
 
 /obj/item/weapon/reagent_containers/food/snacks/friedbanana/atom_init()
 	. = ..()
 	reagents.add_reagent("sugar", 5)
-	reagents.add_reagent("nutriment", 8)
+	reagents.add_reagent("nutriment", 32)
 	reagents.add_reagent("cornoil", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey
@@ -3437,13 +3442,13 @@
 	icon_state = "turkey"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/turkeyslice
 	slices_num = 6
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 24)
-	reagents.add_reagent("nutriment", 18)
-	reagents.add_reagent("vitamin", 5)
+	reagents.add_reagent("protein", 96)
+	reagents.add_reagent("nutriment", 72)
+	reagents.add_reagent("vitamin", 20)
 
 /obj/item/weapon/reagent_containers/food/snacks/turkeyslice
 	name = "turkey serving"
@@ -3451,7 +3456,7 @@
 	icon_state = "turkeyslice"
 	trash = /obj/item/trash/plate
 	filling_color = "#b97a57"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/herbsalad
 	name = "herb salad"
@@ -3459,11 +3464,11 @@
 	icon_state = "herbsalad"
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#76b87f"
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/herbsalad/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 8)
+	reagents.add_reagent("nutriment", 32)
 
 /obj/item/weapon/reagent_containers/food/snacks/burrito
 	name = "Burrito"
@@ -3471,41 +3476,41 @@
 	icon_state = "burrito"
 	trash = /obj/item/trash/plate
 	filling_color = "#a36a1f"
-	bitesize = 1
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/burrito/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 5)
+	reagents.add_reagent("protein", 20)
 
 /obj/item/weapon/reagent_containers/food/snacks/raw_bacon
 	name = "raw bacon"
 	desc = "It's fleshy and pink!"
 	icon_state = "raw_bacon"
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/raw_bacon/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 1)
+	reagents.add_reagent("protein", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/bacon
 	name = "bacon"
 	desc = "It looks juicy and tastes amazing!"
 	icon_state = "bacon"
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/bacon/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 7)
+	reagents.add_reagent("protein", 28)
 
 /obj/item/weapon/reagent_containers/food/snacks/telebacon
 	name = "Tele Bacon"
 	desc = "It tastes a little odd but it is still delicious."
 	icon_state = "bacon_tele"
-	bitesize = 1
+	bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/telebacon/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 6)
+	reagents.add_reagent("protein", 24)
 
 /obj/item/weapon/reagent_containers/food/snacks/salmonsteak
 	name = "Salmon steak"
@@ -3527,73 +3532,73 @@
 	desc = "Chocolate fudge, a timeless classic treat."
 	icon_state = "fudge"
 	filling_color = "#7d5f46"
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/fudge/atom_init()
 	. = ..()
-	reagents.add_reagent("cream", 2)
-	reagents.add_reagent("nutriment",4)
+	reagents.add_reagent("cream", 8)
+	reagents.add_reagent("nutriment",16)
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/fudge/cherry
 	name = "Chocolate Cherry Fudge"
 	desc = "Chocolate fudge surrounding sweet cherries. Good for tricking kids into eating some fruit."
 	icon_state = "fudge_cherry"
 	filling_color = "#7d5f46"
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/fudge/cherry/atom_init()
 	. = ..()
-	reagents.add_reagent("cream", 3)
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("cream", 12)
+	reagents.add_reagent("nutriment", 24)
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/fudge/cookies_n_cream
 	name = "Cookies 'n' Cream Fudge"
 	desc = "An extra creamy fudge with bits of real chocolate cookie mixed in. Crunchy!"
 	icon_state = "fudge_cookies_n_cream"
 	filling_color = "#7d5f46"
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/fudge/cookies_n_cream/atom_init()
 	. = ..()
-	reagents.add_reagent("cream", 5)
-	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("cream", 20)
+	reagents.add_reagent("nutriment", 16)
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/fudge/turtle
 	name = "Turtle Fudge"
 	desc = "Chocolate fudge with caramel and nuts. It doesn't contain real turtles, thankfully."
 	icon_state = "fudge_turtle"
 	filling_color = "#7d5f46"
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/fudge/turtle/atom_init()
 	. = ..()
-	reagents.add_reagent("cream", 2)
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("cream", 8)
+	reagents.add_reagent("nutriment", 24)
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/toffee
 	name = "Toffee"
 	desc = "A hard, brittle candy with a distinctive taste."
 	icon_state = "toffee"
 	filling_color = "#7d5f46"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/toffee/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 3)
-	reagents.add_reagent("sugar", 3)
-	bitesize = 2
+	reagents.add_reagent("nutriment", 12)
+	reagents.add_reagent("sugar", 12)
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/caramel
 	name = "Caramel"
 	desc = "Chewy and dense, yet it practically melts in your mouth!"
 	icon_state = "caramel"
 	filling_color = "#db944d"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/caramel/atom_init()
 	. = ..()
-	reagents.add_reagent("cream", 2)
-	reagents.add_reagent("sugar", 2)
+	reagents.add_reagent("cream", 8)
+	reagents.add_reagent("sugar", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/candycane
 	name = "candy cane"
@@ -3611,25 +3616,25 @@
 	desc = "Old fashioned saltwater taffy. Chewy!"
 	icon_state = "candy1"
 	filling_color = "#7d5f46"
-	bitesize = 4
+	bitesize = 16
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/taffy/atom_init()
 	. = ..()
 	icon_state = pick("candy1", "candy2", "candy3", "candy4", "candy5")
-	reagents.add_reagent("nutriment", 2)
-	reagents.add_reagent("sugar", 2)
+	reagents.add_reagent("nutriment", 8)
+	reagents.add_reagent("sugar", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/nougat
 	name = "Nougat"
 	desc = "A soft, chewy candy commonly found in candybars."
 	icon_state = "nougat"
 	filling_color = "#7d5f46"
-	bitesize = 2
+	bitesize = 8
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/nougat/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 3)
-	reagents.add_reagent("sugar", 3)
+	reagents.add_reagent("nutriment", 12)
+	reagents.add_reagent("sugar", 12)
 
 ///////////////////////////////////////////
 // COTTONS :3
@@ -4075,22 +4080,22 @@
 	desc = "A candy bean, guarenteed to not give you gas. It's chocolate!"
 	icon_state = "jbean_choc"
 	filling_color = "#302000"
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/chocolate/atom_init()
 	. = ..()
-	reagents.add_reagent("hot_coco",2)
+	reagents.add_reagent("hot_coco",8)
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/popcorn
 	name = "jelly bean"
 	desc = "A candy bean, guarenteed to not give you gas. It's popcorn flavored!"
 	icon_state = "jbean_popcorn"
 	filling_color = "#664330"
-	bitesize = 3
+	bitesize = 12
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/popcorn/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("nutriment", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/cola
 	name = "jelly bean"
