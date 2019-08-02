@@ -279,3 +279,9 @@ REPOSITORY_LINK https://github.com/TauCetiStation/TauCetiClassic
 
 ## Registration panic bunker won't allow user with registration date less than that. (format: year-month-day)
 # REGISTRATION_PANIC_BUNKER_AGE 2000-1-1
+
+## Panic bunker configured by players limit. This value is a maximum number of players.
+# CLIENT_LIMIT_PANIC_BUNKER_COUNT 60
+
+## Link used by limit panic bunker to redirect a client
+# CLIENT_LIMIT_PANIC_BUNKER_LINK byond://game.taucetistation.org:2507

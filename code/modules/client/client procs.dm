@@ -204,6 +204,27 @@ var/list/blacklisted_builds = list(
 
 
 	spawn(50)//should wait for goonchat initialization
+		if(config.client_limit_panic_bunker_count != null)
+			if(!(ckey in admin_datums) && !(src in mentors) && (clients.len > config.client_limit_panic_bunker_count) && !(ckey in joined_player_list))
+				if (config.client_limit_panic_bunker_link)
+					to_chat(src, "<span class='notice'>Player limit is enabled. You are redirected to [config.client_limit_panic_bunker_link].</span>")
+					SEND_LINK(src, config.client_limit_panic_bunker_link)
+				else
+					to_chat(src, "<span class='danger'>Sorry, player limit is enabled. Try to connect later.</span>")
+					log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
+					qdel(src)
+				return
+
+		if(config.registration_panic_bunker_age)
+			if(!(ckey in admin_datums) && !(src in mentors) && is_blocked_by_regisration_panic_bunker())
+				to_chat(src, "<span class='danger'>Sorry, but server is currently accepting only users with registration date before [config.registration_panic_bunker_age]. Try to connect later.</span>")
+				message_admins("<span class='adminnotice'>[key_name(src)] has been blocked by panic bunker. Connection rejected.</span>")
+				log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
+				qdel(src)
+				return
+			if(holder)
+				to_chat("<span class='adminnotice'>Round with registration panic bunker! Panic age: [config.registration_panic_bunker_age]</span>")
+
 		if(config.byond_version_min && byond_version < config.byond_version_min)
 			to_chat(src, "<span class='warning bold'>Your version of Byond is too old. Update to the [config.byond_version_min] or later for playing on our server.</span>")
 			log_access("Failed Login: [key] [computer_id] [address] - byond version less that minimal required: [byond_version].[byond_build])")
@@ -221,16 +242,6 @@ var/list/blacklisted_builds = list(
 			if(!holder)
 				qdel(src)
 				return
-
-		if(config.registration_panic_bunker_age)
-			if(!(src in admin_datums) && !(src in mentors) && is_blocked_by_regisration_panic_bunker())
-				to_chat(src, "<span class='danger'>Sorry, but server is currently accepting only users with registration date before [config.registration_panic_bunker_age]. Try to connect later.</span>")
-				message_admins("<span class='adminnotice'>[key_name(src)] has been blocked by panic bunker. Connection rejected.</span>")
-				log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
-				qdel(src)
-				return
-			if(holder)
-				to_chat("<span class='adminnotice'>Round with registration panic bunker! Panic age: [config.registration_panic_bunker_age]</span>")
 
 	if(custom_event_msg && custom_event_msg != "")
 		to_chat(src, "<h1 class='alert'>Custom Event</h1>")
