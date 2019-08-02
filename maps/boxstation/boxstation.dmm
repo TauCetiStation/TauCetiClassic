@@ -2488,8 +2488,7 @@
 /area/maintenance/dormitory)
 "aeg" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Secure Armoury Section";
-	req_access = list(3)
+	name = "Secure Armoury Section"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -3775,13 +3774,12 @@
 	},
 /area/security/main)
 "agu" = (
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 8
+	},
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
-/obj/item/weapon/hand_labeler,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -4056,7 +4054,6 @@
 /obj/machinery/alarm{
 	pixel_y = 26
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkred"
@@ -4066,14 +4063,12 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/table,
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/item/device/radio/intercom{
+	frequency = 1475;
+	name = "Station Intercom (Security)";
+	pixel_y = 27
 	},
-/obj/item/device/taperecorder,
-/obj/item/weapon/storage/box/evidence,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkred"
@@ -4532,17 +4527,14 @@
 /turf/simulated/floor/plating,
 /area/security/warden)
 "ahK" = (
+/obj/structure/table,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
-	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4553,10 +4545,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkred"
@@ -4568,18 +4562,31 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
 	},
 /area/security/brig)
 "ahN" = (
+/obj/structure/table,
+/obj/item/device/flashlight/lamp,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/stool/bed/chair/metal/red,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4954,7 +4961,9 @@
 /turf/space/shuttle,
 /area/shuttle/escape_pod3/station)
 "aiw" = (
-/obj/structure/table,
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4968,6 +4977,9 @@
 /turf/simulated/floor/plating,
 /area/maintenance/dormitory)
 "aiy" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -5139,6 +5151,9 @@
 /turf/space/shuttle,
 /area/shuttle/escape_pod3/station)
 "aiM" = (
+/obj/structure/table,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/hand_labeler,
 /obj/machinery/light,
 /turf/simulated/floor{
 	dir = 10;
@@ -5146,29 +5161,30 @@
 	},
 /area/security/brig)
 "aiN" = (
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 1
-	},
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	frequency = 1475;
-	listening = 0;
-	name = "Station Intercom (Security)";
-	pixel_y = -28
+/obj/structure/table,
+/obj/item/device/flashlight,
+/obj/item/weapon/folder/red{
+	pixel_y = 3
 	},
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
 /area/security/brig)
 "aiO" = (
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 1
-	},
+/obj/structure/table,
+/obj/item/weapon/storage/box/evidence,
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
 /area/security/brig)
 "aiP" = (
+/obj/structure/table,
+/obj/item/device/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30
+	},
+/obj/item/device/taperecorder,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -71560,13 +71576,6 @@
 	icon_state = "freezerfloor2"
 	},
 /area/crew_quarters/captain)
-"jWV" = (
-/obj/structure/table,
-/obj/item/device/flashlight/lamp,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/security/brig)
 "jXb" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/book/manual/wiki/security_space_law,
@@ -77200,9 +77209,6 @@
 	},
 /area/quartermaster/storage)
 "vbb" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkred"
@@ -107580,7 +107586,7 @@ adH
 adH
 agu
 ahN
-jWV
+aeT
 aiO
 adM
 ajZ
