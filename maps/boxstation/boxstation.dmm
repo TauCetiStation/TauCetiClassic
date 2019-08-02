@@ -2488,7 +2488,8 @@
 /area/maintenance/dormitory)
 "aeg" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Secure Armoury Section"
+	name = "Secure Armoury Section";
+	req_access = list(3)
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -11269,7 +11270,7 @@
 	name = "exterior access button";
 	pixel_x = -25;
 	pixel_y = -25;
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -53241,7 +53242,7 @@
 	name = "interior access button";
 	pixel_x = -25;
 	pixel_y = -25;
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -54967,7 +54968,7 @@
 	name = "interior access button";
 	pixel_x = -20;
 	pixel_y = -20;
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -55427,7 +55428,7 @@
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "engineering_west_airlock";
 	pixel_x = 25;
-	req_access = list(10, 13);
+	req_access = list(10,13);
 	tag_airpump = "engineering_west_pump";
 	tag_chamber_sensor = "engineering_west_sensor";
 	tag_exterior_door = "engineering_west_outer";
@@ -55462,7 +55463,7 @@
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "engineering_east_airlock";
 	pixel_x = -25;
-	req_access = list(10, 13);
+	req_access = list(10,13);
 	tag_airpump = "engineering_east_pump";
 	tag_chamber_sensor = "engineering_east_sensor";
 	tag_exterior_door = "engineering_east_outer";
@@ -58136,7 +58137,7 @@
 	id_tag = "robotics_solar_outer";
 	locked = 1;
 	name = "Engineering External Access";
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/portsolar)
@@ -61164,7 +61165,7 @@
 	id_tag = "solar_xeno_outer";
 	locked = 1;
 	name = "Engineering External Access";
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -61556,7 +61557,7 @@
 	name = "exterior access button";
 	pixel_x = -20;
 	pixel_y = 20;
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -62059,7 +62060,7 @@
 	name = "exterior access button";
 	pixel_x = 25;
 	pixel_y = 25;
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /obj/structure/cable,
 /turf/simulated/floor/plating/airless/catwalk,
@@ -63241,7 +63242,7 @@
 	id_tag = "engineering_west_outer";
 	locked = 1;
 	name = "Engineering External Access";
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /turf/simulated/floor/plating,
 /area/engine/engineering)
@@ -63352,7 +63353,7 @@
 	name = "exterior access button";
 	pixel_x = 20;
 	pixel_y = 20;
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/engine/engineering)
@@ -63371,7 +63372,7 @@
 	id_tag = "engineering_east_outer";
 	locked = 1;
 	name = "Engineering External Access";
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /turf/simulated/floor/plating,
 /area/engine/engineering)
@@ -63426,7 +63427,7 @@
 	name = "exterior access button";
 	pixel_x = 20;
 	pixel_y = 20;
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -65505,7 +65506,7 @@
 	id_tag = "engineering_west_inner";
 	locked = 1;
 	name = "Engineering External Access";
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/door/firedoor,
@@ -65667,7 +65668,7 @@
 	id_tag = "engineering_east_inner";
 	locked = 1;
 	name = "Engineering External Access";
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/door/firedoor,
@@ -66372,7 +66373,7 @@
 	name = "interior access button";
 	pixel_x = -20;
 	pixel_y = -20;
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
