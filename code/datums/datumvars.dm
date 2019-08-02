@@ -855,7 +855,7 @@ body
 			to_chat(usr, "Mob doesn't exist anymore")
 			return
 
-		if(H.set_species(new_species))
+		if(H.set_species(new_species, TRUE))
 			to_chat(usr, "Set species of [H] to [H.species].")
 			H.regenerate_icons()
 		else

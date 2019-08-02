@@ -264,7 +264,7 @@
 		user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling, SLOT_WEAR_MASK)
 		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling, SLOT_GLASSES)
 		var/mob/living/carbon/human/H = usr
-		H.set_species(SHADOWLING)
+		H.set_species(SHADOWLING, TRUE)
 		H.dna.mutantrace = "shadowling"
 		H.update_mutantrace()
 		H.regenerate_icons()

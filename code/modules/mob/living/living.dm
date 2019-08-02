@@ -547,11 +547,12 @@
 
 /mob/living/carbon/human/rejuvenate()
 	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
-	BP.disfigured = FALSE
+	if(istype(BP))
+		BP.disfigured = FALSE
 
-	for (var/obj/item/weapon/organ/head/H in organ_head_list) // damn son, where'd you get this?
+	for (var/obj/item/organ/external/head/H in organ_head_list) // damn son, where'd you get this?
 		if(H.brainmob)
-			if(H.brainmob.real_name == src.real_name)
+			if(H.brainmob.real_name == real_name)
 				if(H.brainmob.mind)
 					H.brainmob.mind.transfer_to(src)
 					qdel(H)

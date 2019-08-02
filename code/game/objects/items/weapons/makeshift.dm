@@ -18,7 +18,7 @@
 
 /obj/item/weapon/twohanded/spear/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if(istype(W, /obj/item/weapon/organ/head))
+	if(istype(W, /obj/item/organ/external/head))
 		if(loc == user)
 			user.drop_from_inventory(src)
 		var/obj/structure/headpole/H = new (get_turf(src), W, src)

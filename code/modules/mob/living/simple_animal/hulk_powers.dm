@@ -668,7 +668,7 @@
 /obj/item/weapon/organ/attack_animal(mob/user)
 	..()
 	if(istype(user, /mob/living/simple_animal/hulk))
-		if(istype(src, /obj/item/weapon/organ/head))
+		if(istype(src, /obj/item/organ/external/head))
 			to_chat(usr, "<span class='notice'>Head? Ewww..</span>")
 			return
 		var/mob/living/simple_animal/hulk/Hulk = user

@@ -604,8 +604,8 @@
 			if(1)
 				to_chat(H, "<span class='warning'>You feel different, somehow...</span>")
 			if(2 to 11)
-				var/obj/item/organ/external/BP = H.get_bodypart(pick(H.species.has_bodypart))
-				if(!(BP.status & (ORGAN_DESTROYED | ORGAN_ROBOT)))
+				var/obj/item/organ/external/BP = pick(H.bodyparts)
+				if(BP.is_flesh())
 					BP.take_damage(10)
 					if(prob(25))
 						to_chat(H, "<span class='warning'>Your flesh is starting to melt!</span>")
@@ -618,17 +618,12 @@
 					to_chat(H, "<span class='warning'>You feel unbearable pain inside you!</span>")
 					H.emote("scream",,, 1)
 			if(30)
-				if(H.set_species(SLIME))
+				if(H.set_species(SLIME, TRUE))
 					to_chat(H, "<span class='warning'>Your flesh mutates and you feel free!</span>")
 					H.dna.mutantrace = "slime"
 					H.update_mutantrace()
 					for(var/obj/item/organ/external/BP in H.bodyparts)
-						if(BP.status & ORGAN_ROBOT)
-							BP.status = ORGAN_ROBOT
-						else if(BP.status & ORGAN_DESTROYED)
-							BP.status = ORGAN_DESTROYED
-						else
-							BP.status = 0
+						BP.status = 0
 					for(var/obj/item/organ/internal/BP in H.organs)
 						BP.rejuvenate()
 			if(31 to 50)

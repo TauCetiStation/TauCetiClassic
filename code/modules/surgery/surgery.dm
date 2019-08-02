@@ -147,3 +147,4 @@
 	var/face = 0
 	var/appendix = 0
 	var/ribcage = 0
+	var/list/bodyparts = list() // Holds info about removed bodyparts
