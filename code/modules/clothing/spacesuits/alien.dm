@@ -208,7 +208,7 @@
 	item_state = "vox-stealth"
 	desc = "A smoothly contoured, matte-black alien helmet."
 
-	armor = list(melee = 50, bullet = 20, laser = 30, energy = 5, bomb = 15, bio = 30, rad = 30)
+	armor = list(melee = 45, bullet = 20, laser = 25, energy = 5, bomb = 15, bio = 30, rad = 30)
 
 /obj/item/clothing/suit/space/vox/stealth
 	name = "alien stealth suit"
@@ -216,9 +216,9 @@
 	item_state = "vox-stealth"
 	desc = "A sleek black suit. It seems to have a tail, and is very heavy."
 
-	armor = list(melee = 50, bullet = 20, laser = 30, energy = 5, bomb = 15, bio = 30, rad = 30)
-	slowdown = 1
+	armor = list(melee = 45, bullet = 20, laser = 25, energy = 5, bomb = 15, bio = 30, rad = 30)
 
+	slowdown = 0.5
 	action_button_name = "Toggle Stealth Technology"
 	var/on = FALSE
 	var/mob/living/carbon/human/wearer
@@ -238,9 +238,9 @@
 		var/power_decrease = 2 // 5 minutes to full discharge
 		if(damage > 0)
 			power_decrease = 5 // 2 minute seconds to full discharge
-		if(damage > 2)
+		if(damage > 3)
 			power_decrease = 10 // 1 minute to full discharge
-		if(damage > 4)
+		if(damage > 6)
 			power_decrease = 0
 			current_charge = 0
 			STOP_PROCESSING(SSobj, src)
@@ -261,9 +261,9 @@
 		var/power_increase = 20 // 30 seconds to full charge
 		if(damage > 0)
 			power_increase = 10 // 1 minute seconds to full charge
-		if(damage > 2)
+		if(damage > 3)
 			power_increase = 5 // 2 minutes to full charge
-		if(damage > 4)
+		if(damage > 6)
 			power_increase = 0
 			current_charge = 0
 			STOP_PROCESSING(SSobj, src)
@@ -286,6 +286,7 @@
 	if(on)
 		playsound(src, 'sound/rig/stealthrig_turn_off.ogg', VOL_EFFECTS_MASTER, null, null, -4)
 		on = FALSE
+		slowdown = 0.5
 		wearer.alpha = 255
 	else if(!deactive)
 		if(!istype(wearer.head, /obj/item/clothing/head/helmet/space/vox/stealth))
@@ -305,18 +306,19 @@
 			playsound(src, 'sound/rig/stealthrig_turn_on.ogg', VOL_EFFECTS_MASTER, null, null, -5)
 			on = TRUE
 			to_chat(wearer, "<span class='notice'>Stealth mode in now on!</span>")
+			slowdown = 2
 			wearer.alpha = 5
 			START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/vox/stealth/proc/is_damaged(low_damage_check = FALSE)
-	if(damage > 4)
+	if(damage > 6)
 		to_chat(wearer, "<span class='warning'>[src] is too damaged to support stealth mode!</span>")
 		var/datum/effect/effect/system/spark_spread/s = new
 		s.set_up(5, 1, src)
 		s.start()
 		return TRUE
 	else if(low_damage_check)
-		if(prob(33) && (damage > 2))
+		if(prob(33) && (damage > 3))
 			to_chat(wearer, "<span class='warning'>[src] is damaged and failed to generate a cloaking field!</span>")
 			return TRUE
 	return FALSE
