@@ -34,6 +34,199 @@
 	},
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
+"aaf" = (
+/obj/machinery/chem_master,
+/obj/item/weapon/storage/box/autoinjectors,
+/turf/unsimulated/floor/velocity{
+	icon_state = "white"
+	},
+/area/centcom)
+"aag" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/obj/machinery/optable,
+/obj/item/clothing/head/surgery,
+/obj/item/weapon/reagent_containers/spray/cleaner,
+/turf/unsimulated/floor/velocity{
+	icon_state = "white"
+	},
+/area/centcom)
+"aah" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/belt/medical/surg,
+/obj/item/weapon/storage/box/masks{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/item/weapon/storage/box/gloves{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/velocity{
+	icon_state = "white"
+	},
+/area/centcom)
+"aai" = (
+/obj/structure/closet/secure_closet/medical2{
+	req_access = list(101)
+	},
+/turf/unsimulated/floor/velocity{
+	icon_state = "white"
+	},
+/area/centcom)
+"aaj" = (
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/rack,
+/obj/item/weapon/gun/energy/taser,
+/obj/item/weapon/gun/energy/taser,
+/obj/item/weapon/gun/energy/taser,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/arrival)
+"aak" = (
+/obj/structure/rack,
+/obj/item/weapon/implanter,
+/obj/item/weapon/implantcase/mindshield,
+/obj/item/weapon/implantcase/mindshield,
+/obj/item/weapon/implantcase/mindshield,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/arrival)
+"aal" = (
+/obj/structure/closet/crate,
+/obj/item/device/flash,
+/obj/item/device/flash,
+/obj/item/device/flash,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/arrival)
+"aam" = (
+/obj/machinery/light,
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/arrival)
+"aan" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/obj/item/weapon/reagent_containers/spray/cleaner,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/arrival)
+"aao" = (
+/obj/machinery/door/airlock/centcom{
+	req_access = list(101)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/arrival)
+"aap" = (
+/obj/machinery/door_control{
+	desc = "A remote control switch for port-side blast doors.";
+	id = "velocity05";
+	name = "Security Doors Right";
+	pixel_x = 7;
+	pixel_y = -32;
+	req_access = list(101)
+	},
+/obj/machinery/door_control{
+	desc = "A remote control switch for port-side blast doors.";
+	id = "velocity06";
+	name = "Security Doors Left";
+	pixel_x = -4;
+	pixel_y = -32;
+	req_access = list(101)
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/photocopier{
+	density = 0;
+	layer = 2;
+	pixel_x = 5
+	},
+/obj/item/weapon/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/weapon/stamp/denied,
+/obj/item/weapon/stamp/centcomm{
+	name = "APPROVED rubber stamp"
+	},
+/obj/item/weapon/reagent_containers/spray/cleaner,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/arrival)
+"aaq" = (
+/obj/machinery/door_control{
+	desc = "A remote control switch for port-side blast doors.";
+	id = "velocity03";
+	name = "Security Doors Right";
+	pixel_x = 7;
+	pixel_y = 32;
+	req_access = list(101)
+	},
+/obj/machinery/door_control{
+	desc = "A remote control switch for port-side blast doors.";
+	id = "velocity04";
+	name = "Security Doors Left";
+	pixel_x = -4;
+	pixel_y = 32;
+	req_access = list(101)
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/photocopier{
+	density = 0;
+	layer = 2;
+	pixel_x = 5
+	},
+/obj/item/weapon/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/weapon/stamp/denied,
+/obj/item/weapon/stamp/centcomm{
+	name = "APPROVED rubber stamp"
+	},
+/obj/item/weapon/reagent_containers/spray/cleaner,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/arrival)
+"aar" = (
+/obj/structure/closet/secure_closet/velocity_security/full,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/arrival)
+"aas" = (
+/obj/structure/closet/secure_closet/velocity_security/full,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/arrival)
 "aaw" = (
 /obj/effect/step_trigger/teleporter/random{
 	affect_ghosts = 1;
@@ -4790,31 +4983,21 @@
 	},
 /area/centcom/arrival)
 "asF" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
-/obj/structure/closet/secure_closet/personal,
-/obj/item/ammo_box/magazine/m9mm,
-/obj/item/ammo_box/magazine/m9mm,
-/obj/item/weapon/gun/projectile/automatic/pistol,
+/obj/machinery/body_scanconsole,
+/obj/machinery/iv_drip,
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+/turf/unsimulated/floor/velocity{
+	icon_state = "white"
 	},
-/area/centcom/arrival)
+/area/centcom)
 "asG" = (
-/obj/structure/closet/secure_closet/personal,
-/obj/item/ammo_box/magazine/m9mm,
-/obj/item/ammo_box/magazine/m9mm,
-/obj/item/weapon/gun/projectile/automatic/pistol,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+/obj/machinery/bodyscanner,
+/turf/unsimulated/floor/velocity{
+	icon_state = "white"
 	},
-/area/centcom/arrival)
+/area/centcom)
 "asJ" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "3,2"
@@ -5022,23 +5205,16 @@
 	},
 /area/centcom/arrival)
 "ats" = (
-/obj/structure/closet/crate,
-/obj/item/device/flash,
-/obj/item/device/flash,
-/obj/item/device/flash,
-/obj/item/weapon/handcuffs,
-/obj/item/weapon/handcuffs,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+/turf/unsimulated/floor/velocity{
+	icon_state = "white"
 	},
-/area/centcom/arrival)
+/area/centcom)
 "att" = (
-/obj/structure/rack,
-/obj/machinery/light,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+/obj/machinery/door/airlock/medical/glass{
+	req_access = list(101)
+	},
+/turf/unsimulated/floor/velocity{
+	icon_state = "white"
 	},
 /area/centcom/arrival)
 "atv" = (
@@ -5431,40 +5607,12 @@
 	},
 /area/centcom/arrival)
 "auA" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for port-side blast doors.";
-	id = "velocity05";
-	name = "Security Doors Right";
-	pixel_x = 7;
-	pixel_y = -32;
-	req_access = list(101)
+/obj/machinery/chem_dispenser,
+/obj/item/weapon/storage/box/beakers,
+/turf/unsimulated/floor/velocity{
+	icon_state = "white"
 	},
-/obj/machinery/door_control{
-	desc = "A remote control switch for port-side blast doors.";
-	id = "velocity06";
-	name = "Security Doors Left";
-	pixel_x = -4;
-	pixel_y = -32;
-	req_access = list(101)
-	},
-/obj/structure/table/reinforced,
-/obj/machinery/photocopier{
-	density = 0;
-	layer = 2;
-	pixel_x = 5
-	},
-/obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/weapon/stamp/denied,
-/obj/item/weapon/stamp/centcomm{
-	name = "APPROVED rubber stamp"
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/arrival)
+/area/centcom)
 "auB" = (
 /obj/structure/stool/bed/chair/metal/red,
 /turf/unsimulated/floor{
@@ -6535,40 +6683,13 @@
 	},
 /area/centcom/arrival)
 "ayf" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for port-side blast doors.";
-	id = "velocity03";
-	name = "Security Doors Right";
-	pixel_x = 7;
-	pixel_y = 32;
-	req_access = list(101)
+/obj/structure/stool/bed/chair/office/light{
+	dir = 4
 	},
-/obj/machinery/door_control{
-	desc = "A remote control switch for port-side blast doors.";
-	id = "velocity04";
-	name = "Security Doors Left";
-	pixel_x = -4;
-	pixel_y = 32;
-	req_access = list(101)
+/turf/unsimulated/floor/velocity{
+	icon_state = "white"
 	},
-/obj/structure/table/reinforced,
-/obj/machinery/photocopier{
-	density = 0;
-	layer = 2;
-	pixel_x = 5
-	},
-/obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/weapon/stamp/denied,
-/obj/item/weapon/stamp/centcomm{
-	name = "APPROVED rubber stamp"
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/arrival)
+/area/centcom)
 "ayg" = (
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 1
@@ -7285,36 +7406,9 @@
 	},
 /area/centcom/arrival)
 "aAd" = (
-/obj/structure/closet/secure_closet/velocity_security,
-/obj/item/clothing/under/det/fluff/retpoluniform{
-	desc = "A standart Velocity Security Officer's uniform.";
-	name = "velocity security officer's uniform"
-	},
-/obj/item/clothing/under/fluff/olddressuniform{
-	desc = "A Blue Velocity Security Officer's uniform.";
-	name = "blue velocity security officer's uniform"
-	},
-/obj/item/clothing/shoes/sandal,
-/obj/item/clothing/gloves/combat,
-/obj/item/clothing/shoes/combat,
-/obj/item/clothing/gloves/fluff/chal_appara_1,
-/obj/item/weapon/storage/belt/security,
-/obj/item/weapon/storage/backpack/satchel/sec,
-/obj/item/weapon/storage/backpack/satchel,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/accessory/storage/webbing,
-/obj/item/clothing/head/soft/sec/corp,
-/obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat,
-/obj/item/clothing/suit/armor/vest/fluff/deus_blueshield,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/melee/classic_baton,
-/obj/item/weapon/storage/box/flashbangs,
-/obj/item/weapon/storage/box/handcuffs,
-/obj/item/weapon/reagent_containers/spray/pepper,
-/obj/item/device/flash,
-/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/machinery/vending/medical,
 /turf/unsimulated/floor{
-	icon_state = "floor"
+	icon_state = "hydrofloor"
 	},
 /area/centcom/arrival)
 "aAe" = (
@@ -7466,37 +7560,9 @@
 	},
 /area/centcom/arrival)
 "aAH" = (
-/obj/structure/closet/secure_closet/velocity_security,
-/obj/item/clothing/under/det/fluff/retpoluniform{
-	desc = "A standart Velocity Security Officer's uniform.";
-	name = "velocity security officer's uniform"
-	},
-/obj/item/clothing/under/fluff/olddressuniform{
-	desc = "A Blue Velocity Security Officer's uniform.";
-	name = "blue velocity security officer's uniform"
-	},
-/obj/item/clothing/shoes/sandal,
-/obj/item/clothing/gloves/combat,
-/obj/item/clothing/shoes/combat,
-/obj/item/clothing/gloves/fluff/chal_appara_1,
-/obj/item/weapon/storage/belt/security,
-/obj/item/weapon/storage/backpack/satchel/sec,
-/obj/item/weapon/storage/backpack/satchel,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/accessory/storage/webbing,
-/obj/item/clothing/head/soft/sec/corp,
-/obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat,
-/obj/item/clothing/suit/armor/vest/fluff/deus_blueshield,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/melee/classic_baton,
-/obj/item/weapon/storage/box/flashbangs,
-/obj/item/weapon/storage/box/handcuffs,
-/obj/item/weapon/reagent_containers/spray/pepper,
-/obj/item/device/flash,
-/obj/item/clothing/glasses/sunglasses/sechud,
-/obj/machinery/light,
+/obj/machinery/vending/blood,
 /turf/unsimulated/floor{
-	icon_state = "floor"
+	icon_state = "hydrofloor"
 	},
 /area/centcom/arrival)
 "aAJ" = (
@@ -71464,7 +71530,7 @@ aoo
 asD
 asQ
 atg
-ats
+aal
 aoo
 atK
 atU
@@ -71727,7 +71793,7 @@ arZ
 atV
 aty
 arZ
-auA
+aap
 auS
 dTb
 arZ
@@ -71740,7 +71806,7 @@ eEb
 arZ
 axS
 axY
-ayf
+aaq
 arZ
 aty
 ayw
@@ -71975,10 +72041,10 @@ cGb
 cLb
 cGb
 aoo
-asF
+aaj
 asE
 asE
-att
+aam
 aoo
 atL
 atW
@@ -72007,9 +72073,9 @@ aoo
 azg
 feb
 atV
-aAd
-aAd
-aAH
+aar
+aas
+aar
 fFb
 eNb
 fPb
@@ -72232,10 +72298,10 @@ cJb
 cLb
 cUb
 aoo
-asG
+aak
 asE
 ath
-asG
+aan
 aoo
 atM
 atX
@@ -73006,7 +73072,7 @@ cTb
 cGb
 cGb
 cGb
-asX
+aao
 arZ
 arZ
 dyb
@@ -75312,7 +75378,7 @@ aaM
 aaM
 aaM
 aoo
-cGb
+aAH
 cGb
 cGb
 asv
@@ -75569,7 +75635,7 @@ aaM
 aaM
 aaM
 aoo
-cGb
+aAd
 cGb
 cGb
 asv
@@ -75827,7 +75893,7 @@ aaM
 aaM
 aoo
 aoo
-aoo
+att
 aoo
 aoo
 aoo
@@ -76082,11 +76148,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aEz
+asG
+ats
+aag
+aEz
 aoo
 dib
 dib
@@ -76339,11 +76405,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aEz
+asF
+ayf
+aah
+aEz
 aoo
 djb
 dmb
@@ -76596,11 +76662,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aEz
+auA
+aaf
+aai
+aEz
 aoo
 aoo
 aoo
@@ -76853,11 +76919,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aEz
+aEz
+aEz
+aEz
+aEz
 aaM
 aaM
 aaM

@@ -613,6 +613,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"nanotrasen representative",
 		"nanotrasen officer",
 		"nanotrasen captain",
+		"velocity officer",
+		"velocity chief",
+		"velocity doctor",
 		"captain",
 		"hop",
 		"hos",
@@ -928,6 +931,96 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
 			W.rank = "NanoTrasen Representative"
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
+
+		if("velocity officer")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/det/fluff/retpoluniform(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), SLOT_GLOVES)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/velocity(M), SLOT_L_EAR)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), SLOT_BACK)
+
+			var/obj/item/device/pda/velocity/pda = new(M)
+			pda.owner = M.real_name
+			pda.ownjob = "Velocity Officer"
+			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+
+			M.equip_to_slot_or_del(pda, SLOT_BELT)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(M), SLOT_GLASSES)
+
+			var/obj/item/weapon/card/id/velocity/W = new(M)
+			W.assignment = "Velocity Officer"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = get_all_accesses()
+			W.access += get_all_centcom_access()
+			W.rank = "Velocity Officer"
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
+
+		if("velocity chief")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/det/fluff/retpoluniform(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), SLOT_GLOVES)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/velocity(M), SLOT_L_EAR)
+
+			var/obj/item/weapon/storage/backpack/satchel/back_storage = new /obj/item/weapon/storage/backpack/satchel(M)
+			M.equip_to_slot_or_del(back_storage, SLOT_BACK)
+			new /obj/item/weapon/storage/box/handcuffs(back_storage)
+			new /obj/item/device/flash(back_storage)
+
+			var/obj/item/device/pda/velocity/pda = new(M)
+			pda.owner = M.real_name
+			pda.ownjob = "Velocity Chief"
+			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+
+			var/obj/item/weapon/storage/pouch/baton_holster/BH = new(M)
+			new /obj/item/weapon/melee/classic_baton(BH)
+			M.equip_to_slot_or_del(BH, SLOT_L_STORE)
+
+			var/obj/item/weapon/storage/pouch/pistol_holster/PH = new(M)
+			var/obj/item/weapon/gun/energy/laser/selfcharging/SG = new /obj/item/weapon/gun/energy/laser/selfcharging(PH)
+			SG.name = "laser pistol rifle"
+			SG.can_be_holstered = TRUE
+			M.equip_to_slot_or_del(PH, SLOT_R_STORE)
+
+			M.equip_to_slot_or_del(pda, SLOT_BELT)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(M), SLOT_GLASSES)
+
+			var/obj/item/weapon/card/id/velocity/W = new(M)
+			W.assignment = "Velocity Chief"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = get_all_accesses()
+			W.access += get_all_centcom_access()
+			W.rank = "Velocity Chief"
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
+
+		if("velocity doctor")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/det/fluff/retpoluniform(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/latex/nitrile(M), SLOT_GLOVES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/blue(M), SLOT_WEAR_SUIT)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/velocity(M), SLOT_L_EAR)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/med(M), SLOT_BACK)
+
+			var/obj/item/device/pda/velocity/doctor/pda = new(M)
+			pda.owner = M.real_name
+			pda.ownjob = "Velocity Medical Doctor"
+			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+
+			M.equip_to_slot_or_del(pda, SLOT_BELT)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/health(M), SLOT_GLASSES)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/hypospray/cmo(M), SLOT_L_STORE)
+
+			var/obj/item/weapon/card/id/velocity/W = new(M)
+			W.assignment = "Velocity Medical Doctor"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = get_all_accesses()
+			W.access += get_all_centcom_access()
+			W.rank = "Velocity Medical Doctor"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 

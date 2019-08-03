@@ -132,6 +132,13 @@
 	message_silent = 1
 	ttone = "silence"
 
+/obj/item/device/pda/velocity
+	default_cartridge = /obj/item/weapon/cartridge/hos
+	icon_state = "pda-velocity"
+
+/obj/item/device/pda/velocity/doctor
+	default_cartridge = /obj/item/weapon/cartridge/medical
+
 /obj/item/device/pda/heads
 	default_cartridge = /obj/item/weapon/cartridge/head
 	icon_state = "pda-h"
