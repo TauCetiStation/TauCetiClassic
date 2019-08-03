@@ -6,27 +6,27 @@
 	health = 200 - (getBruteLoss() + getFireLoss())
 	return
 
-/mob/living/silicon/robot/getBruteLoss()
+/mob/living/silicon/robot/getBruteLoss(force_real = TRUE)
 	var/amount = 0
 	for(var/V in components)
 		var/datum/robot_component/C = components[V]
 		if(C.installed != 0) amount += C.brute_damage
 	return amount
 
-/mob/living/silicon/robot/getFireLoss()
+/mob/living/silicon/robot/getFireLoss(force_real = TRUE)
 	var/amount = 0
 	for(var/V in components)
 		var/datum/robot_component/C = components[V]
 		if(C.installed != 0) amount += C.electronics_damage
 	return amount
 
-/mob/living/silicon/robot/adjustBruteLoss(amount)
+/mob/living/silicon/robot/adjustBruteLoss(amount, force_real = TRUE)
 	if(amount > 0)
 		take_overall_damage(amount, 0)
 	else
 		heal_overall_damage(-amount, 0)
 
-/mob/living/silicon/robot/adjustFireLoss(amount)
+/mob/living/silicon/robot/adjustFireLoss(amount, force_real = TRUE)
 	if(amount > 0)
 		take_overall_damage(0, amount)
 	else

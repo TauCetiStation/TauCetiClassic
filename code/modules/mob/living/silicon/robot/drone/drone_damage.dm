@@ -17,8 +17,8 @@
 /mob/living/silicon/robot/drone/heal_bodypart_damage(brute, burn)
 	heal_overall_damage(brute,burn)
 
-/mob/living/silicon/robot/drone/getFireLoss()
+/mob/living/silicon/robot/drone/getFireLoss(force_real = TRUE)
 	return fireloss
 
-/mob/living/silicon/robot/drone/getBruteLoss()
+/mob/living/silicon/robot/drone/getBruteLoss(force_real = TRUE)
 	return bruteloss

@@ -12,19 +12,25 @@
 	if(!damage || (blocked >= 100))
 		return FALSE
 
+	/*
+		Since this proc is ought to take into
+		consideration all the possible checks
+		we do not force "real" damage to be dealt.
+	*/
+
 	switch(damagetype)
 		if(BRUTE)
-			adjustBruteLoss(damage * blocked_mult(blocked))
+			adjustBruteLoss(damage * blocked_mult(blocked), force_real = FALSE)
 		if(BURN)
-			adjustFireLoss(damage * blocked_mult(blocked))
+			adjustFireLoss(damage * blocked_mult(blocked), force_real = FALSE)
 		if(TOX)
-			adjustToxLoss(damage * blocked_mult(blocked))
+			adjustToxLoss(damage * blocked_mult(blocked), force_real = FALSE)
 		if(OXY)
-			adjustOxyLoss(damage * blocked_mult(blocked))
+			adjustOxyLoss(damage * blocked_mult(blocked), force_real = FALSE)
 		if(CLONE)
-			adjustCloneLoss(damage * blocked_mult(blocked))
+			adjustCloneLoss(damage * blocked_mult(blocked), force_real = FALSE)
 		if(HALLOSS)
-			adjustHalLoss(damage * blocked_mult(blocked))
+			adjustHalLoss(damage * blocked_mult(blocked), force_real = FALSE)
 
 	flash_weak_pain()
 	updatehealth()

@@ -186,7 +186,7 @@
 		if(damage < 0)
 			damage = 0
 
-		if(owner.getToxLoss() >= 60 && !owner.reagents.has_reagent("anti_toxin"))
+		if(owner.getToxLoss(force_real = FALSE) >= 60 && !owner.reagents.has_reagent("anti_toxin"))
 			if(damage < min_broken_damage)
 				damage += 0.2 * process_accuracy
 			else
@@ -231,7 +231,7 @@
 			src.damage = 0
 
 		//High toxins levels are dangerous
-		if(owner.getToxLoss() >= 60 && !owner.reagents.has_reagent("anti_toxin"))
+		if(owner.getToxLoss(force_real = FALSE) >= 60 && !owner.reagents.has_reagent("anti_toxin"))
 			//Healthy liver suffers on its own
 			if (src.damage < min_broken_damage)
 				src.damage += 0.2 * process_accuracy

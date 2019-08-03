@@ -112,7 +112,7 @@
 
 	var/toxDamageMessage = null
 	var/toxMessageProb = 1
-	switch(getToxLoss())
+	switch(getToxLoss(force_real = FALSE))
 		if(1 to 5)
 			toxMessageProb = 1
 			toxDamageMessage = "Your body stings slightly."
@@ -130,4 +130,4 @@
 			toxDamageMessage = "Your body aches all over, it's driving you mad."
 
 	if(toxDamageMessage && prob(toxMessageProb))
-		src.custom_pain(toxDamageMessage, getToxLoss() >= 15)
+		src.custom_pain(toxDamageMessage, getToxLoss(force_real = FALSE) >= 15)

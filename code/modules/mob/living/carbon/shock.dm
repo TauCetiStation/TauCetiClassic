@@ -4,11 +4,11 @@
 // proc to find out in how much pain the mob is at the moment
 /mob/living/carbon/proc/updateshock()
 	src.traumatic_shock = 			\
-	1	* src.getOxyLoss() + 		\
-	0.7	* src.getToxLoss() + 		\
-	1.5	* src.getFireLoss() + 		\
-	1.2	* src.getBruteLoss() + 		\
-	1.7	* src.getCloneLoss() + 		\
+	1	* src.getOxyLoss(force_real = FALSE) + 		\
+	0.7	* src.getToxLoss(force_real = FALSE) + 		\
+	1.5	* src.getFireLoss(force_real = FALSE) + 		\
+	1.2	* src.getBruteLoss(force_real = FALSE) + 		\
+	1.7	* src.getCloneLoss(force_real = FALSE) + 		\
 	2	* src.halloss
 
 	if(reagents.has_reagent("alkysine"))
@@ -68,7 +68,7 @@
 		return
 
 	var/pain_sound_name
-	var/current_health = round(100 - (traumatic_shock - (getOxyLoss() + 0.7 * getToxLoss()))) // don't consider suffocation and toxins
+	var/current_health = round(100 - (traumatic_shock - (getOxyLoss(force_real = FALSE) + 0.7 * getToxLoss(force_real = FALSE)))) // don't consider suffocation and toxins
 	switch(current_health)
 		if(80 to 99)
 			if(has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(20))

@@ -106,10 +106,10 @@
 	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>","<span class='notice'>You have analyzed [M]'s vitals.</span>")
 
 	var/fake_oxy = max(rand(1,40), M.getOxyLoss(), (300 - (M.getToxLoss() + M.getFireLoss() + M.getBruteLoss())))
-	var/OX = M.getOxyLoss() > 50 	? 	"<b>[M.getOxyLoss()]</b>" 		: M.getOxyLoss()
-	var/TX = M.getToxLoss() > 50 	? 	"<b>[M.getToxLoss()]</b>" 		: M.getToxLoss()
-	var/BU = M.getFireLoss() > 50 	? 	"<b>[M.getFireLoss()]</b>" 		: M.getFireLoss()
-	var/BR = M.getBruteLoss() > 50 	? 	"<b>[M.getBruteLoss()]</b>" 	: M.getBruteLoss()
+	var/OX = M.getOxyLoss(force_real = FALSE) > 50 	? 	"<b>[M.getOxyLoss(force_real = FALSE)]</b>" 		: M.getOxyLoss(force_real = FALSE)
+	var/TX = M.getToxLoss(force_real = FALSE) > 50 	? 	"<b>[M.getToxLoss(force_real = FALSE)]</b>" 		: M.getToxLoss(force_real = FALSE)
+	var/BU = M.getFireLoss(force_real = FALSE) > 50 	? 	"<b>[M.getFireLoss(force_real = FALSE)]</b>" 		: M.getFireLoss(force_real = FALSE)
+	var/BR = M.getBruteLoss(force_real = FALSE) > 50 	? 	"<b>[M.getBruteLoss(force_real = FALSE)]</b>" 	: M.getBruteLoss(force_real = FALSE)
 	if(M.status_flags & FAKEDEATH)
 		OX = fake_oxy > 50 			? 	"<b>[fake_oxy]</b>" 			: fake_oxy
 		message += "<span class='notice'>Analyzing Results for [M]:\n&emsp; Overall Status: dead</span><br>"
@@ -130,10 +130,10 @@
 		else
 			message += "<span class='notice'>&emsp; Limbs are OK.</span><br>"
 
-	OX = M.getOxyLoss() > 50 ? "<font color='blue'><b>Severe oxygen deprivation detected</b></font>" : "Subject bloodstream oxygen level normal"
-	TX = M.getToxLoss() > 50 ? "<font color='green'><b>Dangerous amount of toxins detected</b></font>" : "Subject bloodstream toxin level minimal"
-	BU = M.getFireLoss() > 50 ? "<font color='#FFA500'><b>Severe burn damage detected</b></font>" : "Subject burn injury status O.K"
-	BR = M.getBruteLoss() > 50 ? "<font color='red'><b>Severe anatomical damage detected</b></font>" : "Subject brute-force injury status O.K"
+	OX = M.getOxyLoss(force_real = FALSE) > 50 ? "<font color='blue'><b>Severe oxygen deprivation detected</b></font>" : "Subject bloodstream oxygen level normal"
+	TX = M.getToxLoss(force_real = FALSE) > 50 ? "<font color='green'><b>Dangerous amount of toxins detected</b></font>" : "Subject bloodstream toxin level minimal"
+	BU = M.getFireLoss(force_real = FALSE) > 50 ? "<font color='#FFA500'><b>Severe burn damage detected</b></font>" : "Subject burn injury status O.K"
+	BR = M.getBruteLoss(force_real = FALSE) > 50 ? "<font color='red'><b>Severe anatomical damage detected</b></font>" : "Subject brute-force injury status O.K"
 	if(M.status_flags & FAKEDEATH)
 		OX = fake_oxy > 50 ? 		"<span class='warning'>Severe oxygen deprivation detected</span>" : "Subject bloodstream oxygen level normal"
 	message += "[OX]<br>[TX]<br>[BU]<br>[BR]<br>"

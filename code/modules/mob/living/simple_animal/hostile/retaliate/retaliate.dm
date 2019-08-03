@@ -44,6 +44,6 @@
 			H.enemies |= enemies
 	return 0
 
-/mob/living/simple_animal/hostile/retaliate/adjustBruteLoss(damage)
+/mob/living/simple_animal/hostile/retaliate/adjustBruteLoss(damage, force_real = TRUE)
 	..(damage)
 	Retaliate()

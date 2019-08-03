@@ -242,89 +242,89 @@
 // ==================================
 
 // ========== BRUTE ==========
-/mob/living/proc/getBruteLoss()
+/mob/living/proc/getBruteLoss(force_real = TRUE)
 	return bruteloss
 
-/mob/living/proc/adjustBruteLoss(amount)
+/mob/living/proc/adjustBruteLoss(amount, force_real = TRUE)
 	if(status_flags & GODMODE)
 		return
 	bruteloss = CLAMP(bruteloss + amount, 0, maxHealth * 2)
 
 // ========== OXY ==========
-/mob/living/proc/getOxyLoss()
+/mob/living/proc/getOxyLoss(force_real = TRUE)
 	return oxyloss
 
-/mob/living/proc/adjustOxyLoss(amount)
+/mob/living/proc/adjustOxyLoss(amount, force_real = TRUE)
 	if(status_flags & GODMODE)
 		return
 	oxyloss = CLAMP(oxyloss + amount, 0, maxHealth * 2)
 
-/mob/living/proc/setOxyLoss(amount)
+/mob/living/proc/setOxyLoss(amount, force_real = TRUE)
 	if(status_flags & GODMODE)
 		return
 	oxyloss = CLAMP(amount, 0, maxHealth * 2)
 
 // ========== TOX ==========
-/mob/living/proc/getToxLoss()
+/mob/living/proc/getToxLoss(force_real = TRUE)
 	return toxloss
 
-/mob/living/proc/adjustToxLoss(amount)
+/mob/living/proc/adjustToxLoss(amount, force_real = TRUE)
 	if(status_flags & GODMODE)
 		return
 	toxloss = CLAMP(toxloss + amount, 0, maxHealth * 2)
 
-/mob/living/proc/setToxLoss(amount)
+/mob/living/proc/setToxLoss(amount, force_real = TRUE)
 	if(status_flags & GODMODE)
 		return
 	toxloss = CLAMP(amount, 0, maxHealth * 2)
 
 // ========== FIRE ==========
-/mob/living/proc/getFireLoss()
+/mob/living/proc/getFireLoss(force_real = TRUE)
 	return fireloss
 
-/mob/living/proc/adjustFireLoss(amount)
+/mob/living/proc/adjustFireLoss(amount, force_real = TRUE)
 	if(status_flags & GODMODE)
 		return
 	fireloss = CLAMP(fireloss + amount, 0, maxHealth * 2)
 
 // ========== CLONE ==========
-/mob/living/proc/getCloneLoss()
+/mob/living/proc/getCloneLoss(force_real = TRUE)
 	return cloneloss
 
-/mob/living/proc/adjustCloneLoss(amount)
+/mob/living/proc/adjustCloneLoss(amount, force_real = TRUE)
 	if(status_flags & GODMODE)
 		return
 	cloneloss = CLAMP(cloneloss + amount, 0, maxHealth * 2)
 
-/mob/living/proc/setCloneLoss(amount)
+/mob/living/proc/setCloneLoss(amount, force_real = TRUE)
 	if(status_flags & GODMODE)
 		return
 	cloneloss = CLAMP(amount, 0, maxHealth * 2)
 
 // ========== BRAIN ==========
-/mob/living/proc/getBrainLoss()
+/mob/living/proc/getBrainLoss(force_real = TRUE)
 	return brainloss
 
-/mob/living/proc/adjustBrainLoss(amount)
+/mob/living/proc/adjustBrainLoss(amount, force_real = TRUE)
 	if(status_flags & GODMODE)
 		return
 	brainloss = CLAMP(brainloss + amount, 0, maxHealth * 2)
 
-/mob/living/proc/setBrainLoss(amount)
+/mob/living/proc/setBrainLoss(amount, force_real = TRUE)
 	if(status_flags & GODMODE)
 		return
 	brainloss = CLAMP(amount, 0, maxHealth * 2)
 
 // ========== PAIN ==========
-/mob/living/proc/getHalLoss()
+/mob/living/proc/getHalLoss(force_real = TRUE)
 	return halloss
 
-/mob/living/proc/adjustHalLoss(amount)
+/mob/living/proc/adjustHalLoss(amount, force_real = TRUE)
 	if(status_flags & GODMODE)
 		return
 	halloss = CLAMP(halloss + amount, 0, maxHealth * 2)
 
-/mob/living/proc/setHalLoss(amount)
+/mob/living/proc/setHalLoss(amount, force_real = TRUE)
 	if(status_flags & GODMODE)
 		return
 	halloss = CLAMP(amount, 0, maxHealth * 2)

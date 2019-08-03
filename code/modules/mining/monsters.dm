@@ -401,7 +401,7 @@
 		pre_attack = 0
 	return
 
-/mob/living/simple_animal/hostile/asteroid/goliath/adjustBruteLoss(damage)
+/mob/living/simple_animal/hostile/asteroid/goliath/adjustBruteLoss(damage, force_real = TRUE)
 	ranged_cooldown--
 	handle_preattack()
 	..()

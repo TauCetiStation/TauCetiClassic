@@ -1620,7 +1620,7 @@
 /mob/living/carbon/human/proc/handle_random_events()
 	// Puke if toxloss is too high
 	if(!stat)
-		if (getToxLoss() >= 45)
+		if (getToxLoss(force_real = FALSE) >= 45)
 			invoke_vomit_async()
 
 	//0.1% chance of playing a scary sound to someone who's in complete darkness

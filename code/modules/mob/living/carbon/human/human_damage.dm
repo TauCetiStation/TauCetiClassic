@@ -27,7 +27,7 @@
 
 // =============================================
 
-/mob/living/carbon/human/getBrainLoss()
+/mob/living/carbon/human/getBrainLoss(force_real = TRUE)
 	if(status_flags & GODMODE)
 		return 0
 
@@ -48,14 +48,14 @@
 
 	return res
 
-/mob/living/carbon/human/adjustBrainLoss(amount)
+/mob/living/carbon/human/adjustBrainLoss(amount, force_real = TRUE)
 	if(species.brain_mod == 0 || !should_have_organ(O_BRAIN))
 		brainloss = 0
 	else
 		amount = amount * species.brain_mod
 		..(amount)
 
-/mob/living/carbon/human/setBrainLoss(amount)
+/mob/living/carbon/human/setBrainLoss(amount, force_real = TRUE)
 	if(species.brain_mod == 0 || !should_have_organ(O_BRAIN))
 		brainloss = 0
 	else
@@ -64,7 +64,7 @@
 // =============================================
 
 //These procs fetch a cumulative total damage from all bodyparts
-/mob/living/carbon/human/getBruteLoss()
+/mob/living/carbon/human/getBruteLoss(force_real = TRUE)
 	var/amount = 0
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.is_robotic() && !BP.vital)
@@ -72,7 +72,7 @@
 		amount += BP.brute_dam
 	return amount
 
-/mob/living/carbon/human/adjustBruteLoss(amount)
+/mob/living/carbon/human/adjustBruteLoss(amount, force_real = TRUE)
 	if(amount > 0)
 		take_overall_damage(amount, 0)
 	else
@@ -80,7 +80,7 @@
 
 // =============================================
 
-/mob/living/carbon/human/getFireLoss()
+/mob/living/carbon/human/getFireLoss(force_real = TRUE)
 	var/amount = 0
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.is_robotic() && !BP.vital)
@@ -88,7 +88,7 @@
 		amount += BP.burn_dam
 	return amount
 
-/mob/living/carbon/human/adjustFireLoss(amount)
+/mob/living/carbon/human/adjustFireLoss(amount, force_real = TRUE)
 	if(amount > 0)
 		if(RESIST_HEAT in mutations)
 			return
@@ -98,15 +98,15 @@
 
 // =============================================
 
-/mob/living/carbon/human/getToxLoss()
-	if(reagents.has_reagent("aclometasone")) // Doesn't modify our toxLoss, but pretends that we aren't intoxified.
+/mob/living/carbon/human/getToxLoss(force_real = TRUE)
+	if(!force_real && reagents.has_reagent("aclometasone")) // Doesn't modify our toxLoss, but pretends that we aren't intoxified.
 		return 0
 	if(species.tox_mod == 0 || species.flags[NO_BLOOD])
 		toxloss = 0
 	return ..()
 
-/mob/living/carbon/human/adjustToxLoss(amount)
-	if(reagents.has_reagent("aclometasone")) // Doesn't allow to modify our toxLoss.
+/mob/living/carbon/human/adjustToxLoss(amount, force_real = TRUE)
+	if(!force_real && reagents.has_reagent("aclometasone") && amount > 0) // Doesn't allow to modify our toxLoss.
 		return
 	if(species.tox_mod == 0 || species.flags[NO_BLOOD])
 		toxloss = 0
@@ -114,8 +114,8 @@
 		amount = amount * species.tox_mod
 		..(amount)
 
-/mob/living/carbon/human/setToxLoss(amount)
-	if(reagents.has_reagent("aclometasone")) // Doesn't allow to modify our toxLoss.
+/mob/living/carbon/human/setToxLoss(amount, force_real = TRUE)
+	if(!force_real && reagents.has_reagent("aclometasone") && amount > toxloss) // Doesn't allow to modify our toxLoss.
 		return
 	if(species.tox_mod == 0 || species.flags[NO_BLOOD])
 		toxloss = 0
@@ -124,19 +124,19 @@
 
 // =============================================
 
-/mob/living/carbon/human/getOxyLoss()
+/mob/living/carbon/human/getOxyLoss(force_real = TRUE)
 	if(species.oxy_mod == 0 || !should_have_organ(O_LUNGS))
 		oxyloss = 0
 	return ..()
 
-/mob/living/carbon/human/adjustOxyLoss(amount)
+/mob/living/carbon/human/adjustOxyLoss(amount, force_real = TRUE)
 	if(species.oxy_mod == 0 || !should_have_organ(O_LUNGS))
 		oxyloss = 0
 	else
 		amount = amount * species.oxy_mod
 		..(amount)
 
-/mob/living/carbon/human/setOxyLoss(amount)
+/mob/living/carbon/human/setOxyLoss(amount, force_real = TRUE)
 	if(species.oxy_mod == 0 || !should_have_organ(O_LUNGS))
 		oxyloss = 0
 	else
@@ -144,7 +144,7 @@
 
 // =============================================
 
-/mob/living/carbon/human/adjustCloneLoss(amount)
+/mob/living/carbon/human/adjustCloneLoss(amount, force_real = TRUE)
 	if(species.clone_mod == 0)
 		cloneloss = 0
 		return

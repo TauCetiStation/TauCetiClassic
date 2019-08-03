@@ -38,12 +38,12 @@
 	alien_list -= src
 	return ..()
 
-/mob/living/carbon/alien/adjustToxLoss(amount)
+/mob/living/carbon/alien/adjustToxLoss(amount, force_real = TRUE)
 	storedPlasma = min(max(storedPlasma + amount,0),max_plasma) //upper limit of max_plasma, lower limit of 0
 	updatePlasmaDisplay()
 	return
 
-/mob/living/carbon/alien/adjustFireLoss(amount) // Weak to Fire
+/mob/living/carbon/alien/adjustFireLoss(amount, force_real = TRUE) // Weak to Fire
 	if(amount > 0)
 		..(amount * 2)
 	else
@@ -56,7 +56,7 @@
 /mob/living/carbon/alien/eyecheck()
 	return 2
 
-/mob/living/carbon/alien/getToxLoss()
+/mob/living/carbon/alien/getToxLoss(force_real = TRUE)
 	return 0
 
 /mob/living/carbon/alien/updatehealth()

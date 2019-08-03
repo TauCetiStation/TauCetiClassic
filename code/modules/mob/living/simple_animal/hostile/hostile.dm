@@ -165,7 +165,7 @@
 /mob/living/simple_animal/hostile/proc/Goto(target, delay, minimum_distance)
 	walk_to(src, target, minimum_distance, delay)
 
-/mob/living/simple_animal/hostile/adjustBruteLoss(damage)
+/mob/living/simple_animal/hostile/adjustBruteLoss(damage, force_real = TRUE)
 	..()
 	if(!stat && search_objects < 3)//Not unconscious, and we don't ignore mobs
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight

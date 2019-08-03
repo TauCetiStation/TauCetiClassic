@@ -1,14 +1,14 @@
-/mob/living/carbon/human/getHalLoss()
+/mob/living/carbon/human/getHalLoss(force_real = TRUE)
 	if(species.flags[NO_PAIN])
 		return 0
 	return ..()
 
-/mob/living/carbon/human/setHalLoss()
+/mob/living/carbon/human/setHalLoss(amount, force_real = TRUE)
 	if(species.flags[NO_PAIN])
 		return
 	..()
 
-/mob/living/carbon/human/adjustHalLoss()
+/mob/living/carbon/human/adjustHalLoss(amount, force_real = TRUE)
 	if(species.flags[NO_PAIN])
 		return
 	..()

@@ -809,10 +809,10 @@
 		Overall Status: [M.stat > 1 ? "dead" : "[M.health]% healthy"] <br><br>
 
 		<b>Scan Breakdown</b>: <br>
-		Respiratory: [M.getOxyLoss() > 50 ? "<font color=#FF5555>[M.getOxyLoss()]</font>" : "<font color=#55FF55>[M.getOxyLoss()]</font>"]<br>
-		Toxicology: [M.getToxLoss() > 50 ? "<font color=#FF5555>[M.getToxLoss()]</font>" : "<font color=#55FF55>[M.getToxLoss()]</font>"]<br>
-		Burns: [M.getFireLoss() > 50 ? "<font color=#FF5555>[M.getFireLoss()]</font>" : "<font color=#55FF55>[M.getFireLoss()]</font>"]<br>
-		Structural Integrity: [M.getBruteLoss() > 50 ? "<font color=#FF5555>[M.getBruteLoss()]</font>" : "<font color=#55FF55>[M.getBruteLoss()]</font>"]<br>
+		Respiratory: [M.getOxyLoss(force_real = FALSE) > 50 ? "<font color=#FF5555>[M.getOxyLoss()]</font>" : "<font color=#55FF55>[M.getOxyLoss(force_real = FALSE)]</font>"]<br>
+		Toxicology: [M.getToxLoss(force_real = FALSE) > 50 ? "<font color=#FF5555>[M.getToxLoss()]</font>" : "<font color=#55FF55>[M.getToxLoss(force_real = FALSE)]</font>"]<br>
+		Burns: [M.getFireLoss(force_real = FALSE) > 50 ? "<font color=#FF5555>[M.getFireLoss()]</font>" : "<font color=#55FF55>[M.getFireLoss(force_real = FALSE)]</font>"]<br>
+		Structural Integrity: [M.getBruteLoss(force_real = FALSE) > 50 ? "<font color=#FF5555>[M.getBruteLoss()]</font>" : "<font color=#55FF55>[M.getBruteLoss(force_real = FALSE)]</font>"]<br>
 		Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)<br>
 		"}
 		for(var/datum/disease/D in M.viruses)

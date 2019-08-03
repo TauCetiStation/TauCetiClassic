@@ -194,7 +194,7 @@
 		stat(null,"Power Level: [powerlevel]")
 
 
-/mob/living/carbon/slime/adjustFireLoss(amount)
+/mob/living/carbon/slime/adjustFireLoss(amount, force_real = TRUE)
 	..(-abs(amount)) // Heals them
 	return
 
