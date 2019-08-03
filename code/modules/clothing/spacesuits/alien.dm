@@ -192,11 +192,11 @@
 		return
 	if(!istype(wearer.head, /obj/item/clothing/head/helmet/space/vox/medic))
 		return
-	if(damage > 5)
+	if(damage > 9)
 		wearer.adjustToxLoss(0.7) // this will kill the wearer after a while if the suit is not repaired or removed
 	else if(wearer.reagents.get_reagent_amount("tricordrazine") > 5)
 		return // safe tricordrazine injection
-	if(damage > 16)
+	if(damage > 19)
 		wearer.adjustToxLoss(1) // this will kill the wearer much faster
 	wearer.reagents.add_reagent("tricordrazine", REAGENTS_METABOLISM)
 
