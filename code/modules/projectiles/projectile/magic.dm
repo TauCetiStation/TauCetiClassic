@@ -193,36 +193,3 @@
 	var/throwdir = get_dir(firer,target)
 	T.throw_at(get_edge_target_turf(target, throwdir),10,10)
 	return 1
-
-/*
-/obj/item/projectile/magic/teleport
-	name = "bolt of teleportation"
-	icon_state = "bluespace"
-	damage = 0
-	damage_type = OXY
-	nodamage = 1
-	flag = "magic"
-	var/inner_tele_radius = 0
-	var/outer_tele_radius = 6
-
-/obj/item/projectile/magic/teleport/on_hit(mob/target)
-	var/teleammount = 0
-	var/teleloc = target
-	if(!isturf(target))
-		teleloc = target.loc
-	for(var/atom/movable/stuff in teleloc)
-		if(!stuff.anchored && stuff.loc)
-			teleammount++
-			do_teleport(stuff, stuff, 10)
-			var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
-			smoke.set_up(max(round(10 - teleammount),1), 0, stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
-			smoke.start()
-
-/obj/item/projectile/magic/death
-	name = "bolt of death"
-	icon_state = "pulse1_bl"
-	damage = 9001
-	damage_type = OXY
-	nodamage = 0
-	flag = "magic"
-*/
