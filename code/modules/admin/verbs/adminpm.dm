@@ -55,7 +55,7 @@
 	if(reply_type != MHELP_REPLY)
 		cmd_admin_pm(whom, msg)
 	else
-		if(!holder && mob.mind && mob.mind.special_role && !(C in mentors)) //Mentors are just a players, so they shan't know gamemode from these ones who toggles all role prefs to yes
+		if(!holder && mob.mind && mob.mind.special_role && !(src in mentors))
 			to_chat(src, "<font color='red'>You cannot ask mentors for help while being antag. File a ticket instead if you wish question this to admins.</font>")
 			return
 		cmd_mentor_pm(whom, msg)

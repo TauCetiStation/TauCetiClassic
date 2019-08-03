@@ -9,7 +9,7 @@
 		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
-	if(mob.mind && mob.mind.special_role)	//Mentors are just a players, so they shan't know gamemode from these ones who toggles all role prefs to yes
+	if(mob.mind && mob.mind.special_role && !(src in mentors))
 		to_chat(usr, "<font color='red'>You cannot ask mentors for help while being antag. File a ticket instead if you wish question this to admins.</font>")
 		return
 
