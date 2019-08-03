@@ -1005,6 +1005,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "toxstorage"
 
 /area/rnd/test_area
+	valid_territory = 0
 	name = "Toxins Test Area"
 	icon_state = "toxtest"
 
