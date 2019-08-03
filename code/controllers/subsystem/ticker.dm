@@ -315,7 +315,7 @@ var/datum/subsystem/ticker/ticker
 				M.client.screen += cinematic
 			if(M.stat != DEAD)//Just you wait for real destruction!
 				var/turf/T = get_turf(M)
-				if(T && T.z==1)
+				if(T && is_station_level(T.z))
 					M.death(0) //no mercy
 
 	//Now animate the cinematic
