@@ -47,6 +47,10 @@
 	projectile_type = /obj/item/projectile/beam/lastertag/red
 	select_name = "redtag"
 
+/obj/item/ammo_casing/energy/laser/omnitag
+	projectile_type = /obj/item/projectile/beam/lastertag/omni
+	select_name = "omnitag"
+
 /obj/item/ammo_casing/energy/bolt
 	projectile_type = /obj/item/projectile/energy/bolt
 	select_name = "bolt"

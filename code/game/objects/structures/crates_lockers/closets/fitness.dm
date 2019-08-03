@@ -50,7 +50,7 @@
 
 /obj/structure/closet/lasertag/red/PopulateContents()
 	for (var/i in 1 to 2)
-		new /obj/item/weapon/gun/energy/laser/redtag(src)
+		new /obj/item/weapon/gun/energy/laser/lasertag/redtag(src)
 		new /obj/item/clothing/suit/redtag(src)
 
 
@@ -62,5 +62,5 @@
 
 /obj/structure/closet/lasertag/blue/PopulateContents()
 	for (var/i in 1 to 2)
-		new /obj/item/weapon/gun/energy/laser/bluetag(src)
+		new /obj/item/weapon/gun/energy/laser/lasertag/bluetag(src)
 		new /obj/item/clothing/suit/bluetag(src)

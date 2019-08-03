@@ -225,18 +225,18 @@
 			threatcount = 0//They will not, however shoot at people who have guns, because it gets really fucking annoying
 			if(istype(hperp.wear_suit, /obj/item/clothing/suit/redtag))
 				threatcount += 4
-			if(istype(hperp.r_hand, /obj/item/weapon/gun/energy/laser/redtag) || istype(hperp.l_hand, /obj/item/weapon/gun/energy/laser/redtag))
+			if(istype(hperp.r_hand, /obj/item/weapon/gun/energy/laser/lasertag/redtag) || istype(hperp.l_hand, /obj/item/weapon/gun/energy/laser/lasertag/redtag))
 				threatcount += 4
-			if(istype(hperp.belt, /obj/item/weapon/gun/energy/laser/redtag))
+			if(istype(hperp.belt, /obj/item/weapon/gun/energy/laser/lasertag/redtag))
 				threatcount += 2
 
 		else if(lasercolor == "r")
 			threatcount = 0
 			if(istype(hperp.wear_suit, /obj/item/clothing/suit/bluetag))
 				threatcount += 4
-			if(istype(hperp.r_hand, /obj/item/weapon/gun/energy/laser/bluetag) || istype(hperp.l_hand, /obj/item/weapon/gun/energy/laser/bluetag))
+			if(istype(hperp.r_hand, /obj/item/weapon/gun/energy/laser/lasertag/bluetag) || istype(hperp.l_hand, /obj/item/weapon/gun/energy/laser/lasertag/bluetag))
 				threatcount += 4
-			if(istype(hperp.belt, /obj/item/weapon/gun/energy/laser/bluetag))
+			if(istype(hperp.belt, /obj/item/weapon/gun/energy/laser/lasertag/bluetag))
 				threatcount += 2
 
 	if(idcheck && allowed(perp) && !lasercolor)
@@ -259,10 +259,10 @@
 		var/obj/item/weapon/gun/energy/taser/G = new /obj/item/weapon/gun/energy/taser(Tsec)
 		G.power_supply.charge = 0
 	else if(lasercolor == "b")
-		var/obj/item/weapon/gun/energy/laser/bluetag/G = new /obj/item/weapon/gun/energy/laser/bluetag(Tsec)
+		var/obj/item/weapon/gun/energy/laser/lasertag/bluetag/G = new /obj/item/weapon/gun/energy/laser/lasertag/bluetag(Tsec)
 		G.power_supply.charge = 0
 	else if(lasercolor == "r")
-		var/obj/item/weapon/gun/energy/laser/redtag/G = new /obj/item/weapon/gun/energy/laser/redtag(Tsec)
+		var/obj/item/weapon/gun/energy/laser/lasertag/redtag/G = new /obj/item/weapon/gun/energy/laser/lasertag/redtag(Tsec)
 		G.power_supply.charge = 0
 
 	if(prob(50))
@@ -450,11 +450,11 @@
 		if(7)
 			switch(lasercolor)
 				if("b")
-					if(!istype(W, /obj/item/weapon/gun/energy/laser/bluetag))
+					if(!istype(W, /obj/item/weapon/gun/energy/laser/lasertag/bluetag))
 						return
 					name = "bluetag ED-209 assembly"
 				if("r")
-					if(!istype(W, /obj/item/weapon/gun/energy/laser/redtag))
+					if(!istype(W, /obj/item/weapon/gun/energy/laser/lasertag/redtag))
 						return
 					name = "redtag ED-209 assembly"
 				if("")
