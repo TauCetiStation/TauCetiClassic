@@ -45,17 +45,13 @@
 
 
 
-/obj/item/weapon/gun/energy/stunrevolver
+/obj/item/weapon/gun/energy/taser/stunrevolver
 	name = "stun revolver"
 	desc = "A high-tech revolver that fires stun cartridges. The stun cartridges can be recharged using a conventional energy weapon recharger."
 	icon_state = "stunrevolver"
 	origin_tech = "combat=3;materials=3;powerstorage=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/stun/gun, /obj/item/ammo_casing/energy/electrode/gun)
-	can_be_holstered = TRUE
 	cell_type = "/obj/item/weapon/stock_parts/cell"
-
-/obj/item/weapon/gun/energy/stunrevolver/attack_self(mob/living/user)
-	select_fire(user)
 
 /obj/item/weapon/gun/energy/crossbow
 	name = "mini energy-crossbow"
