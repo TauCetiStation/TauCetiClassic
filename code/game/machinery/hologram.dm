@@ -187,6 +187,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/hologram/holopad/proc/move_hologram()
 	if(hologram)
+		step_to(hologram, master.eyeobj) // So it turns.
 		hologram.loc = get_turf(master.eyeobj)
 
 	return 1

@@ -22,11 +22,11 @@
 	var/data = null
 
 /obj/effect/datacore/proc/manifest()
-	spawn()
-		for(var/mob/living/carbon/human/H in player_list)
-			manifest_inject(H)
+	set waitfor = FALSE
+	for(var/mob/living/carbon/human/H in player_list)
+		manifest_inject(H)
 
-			CHECK_TICK
+		CHECK_TICK
 
 /obj/effect/datacore/proc/manifest_modify(name, assignment)
 	if(PDA_Manifest.len)
@@ -54,8 +54,6 @@
 		foundrecord.fields["real_rank"] = real_title
 
 /obj/effect/datacore/proc/manifest_inject(mob/living/carbon/human/H)
-	set waitfor = FALSE
-	var/static/list/show_directions = list(SOUTH, WEST)
 	if(PDA_Manifest.len)
 		PDA_Manifest.Cut()
 
@@ -75,7 +73,7 @@
 
 		//General Record
 		//Creating photo
-		var/icon/ticon = get_id_photo(H, show_directions)
+		var/icon/ticon = get_id_photo(H, cardinal)
 		var/icon/photo_front = new(ticon, dir = SOUTH)
 		var/icon/photo_side = new(ticon, dir = WEST)
 		var/datum/data/record/G = new()
@@ -151,8 +149,7 @@
 		L.fields["citizenship"]	= H.citizenship
 		L.fields["faction"]		= H.personal_faction
 		L.fields["religion"]	= H.religion
-		L.fields["identity"]	= H.dna.UI // "
-		//L.fields["image"]		= getFlatIcon(H)	//This is god-awful
+		L.fields["identity"]	= H.dna.UI
 		L.fields["image"]		= ticon
 		locked += L
 
