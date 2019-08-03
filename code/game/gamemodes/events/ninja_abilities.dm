@@ -119,7 +119,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 			if(!U.get_active_hand()&&!istype(U.get_inactive_hand(), /obj/item/weapon/melee/energy/blade))
 				var/obj/item/weapon/melee/energy/blade/W = new()
 				spark_system.start()
-				playsound(U, "sparks", VOL_EFFECTS_MASTER)
+				playsound(U, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 				U.put_in_hands(W)
 				cell.use(C*10)
 			else
@@ -132,7 +132,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 				var/obj/item/weapon/melee/energy/blade/W = new()
 				U.put_in_inactive_hand(W)
 			spark_system.start()
-			playsound(U, "sparks", VOL_EFFECTS_MASTER)
+			playsound(U, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			s_coold = 1
 	return
 
@@ -284,7 +284,7 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 		if(destination&&istype(mobloc, /turf))
 			U.say("Ai Satsugai!")
 			spawn(0)
-				playsound(U, "sparks", VOL_EFFECTS_MASTER)
+				playsound(U, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 				anim(mobloc,U,'icons/mob/mob.dmi',,"phaseout",,U.dir)
 
 			spawn(0)
@@ -301,7 +301,7 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 			spawn(0)
 				spark_system.start()
 				playsound(U, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER, 25)
-				playsound(U, "sparks", VOL_EFFECTS_MASTER)
+				playsound(U, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 				anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 			s_coold = 1
 		else
@@ -356,7 +356,7 @@ This is so anime it hurts. But that's the point.*/
 				U.say("Kumo no Shinkiro!")
 				var/turf/picked = locate(locx,locy,mobloc.z)
 				spawn(0)
-					playsound(U, "sparks", VOL_EFFECTS_MASTER)
+					playsound(U, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 					anim(mobloc,U,'icons/mob/mob.dmi',,"phaseout",,U.dir)
 
 				spawn(0)
@@ -375,7 +375,7 @@ This is so anime it hurts. But that's the point.*/
 				spawn(0)
 					spark_system.start()
 					playsound(U, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER, 25)
-					playsound(U, "sparks", VOL_EFFECTS_MASTER)
+					playsound(U, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 					anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 				s_coold = 1
 			else

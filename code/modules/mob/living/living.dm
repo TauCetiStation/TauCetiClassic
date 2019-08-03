@@ -1223,24 +1223,24 @@
 	eye_blurry = max(5, eye_blurry)
 
 	if(ishuman(src)) // A stupid, snowflakey thing, but I see no point in creating a third argument to define the sound... ~Luduk
-		var/vomitsound = ""
+		var/list/vomitsound = list()
 		// The main reason why this is here, and not made into a polymorphized proc, is because we need to know from the subclasses that could cover their face, that they do.
 		if(masked)
 			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>","<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")
 			if(gender == FEMALE)
-				vomitsound = "frigvomit"
+				vomitsound = SOUNDIN_FRIGVOMIT
 			else
-				vomitsound = "mrigvomit"
+				vomitsound = SOUNDIN_MRIGVOMIT
 			eye_blurry = max(10, eye_blurry)
 			losebreath += 20
 		else
 			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>","<span class='warning'>You throw up!</span>")
 			if(gender == FEMALE)
-				vomitsound = "femalevomit"
+				vomitsound = SOUNDIN_FEMALEVOMIT
 			else
-				vomitsound = "malevomit"
+				vomitsound = SOUNDIN_MALEVOMIT
 		make_jittery(max(35 - jitteriness, 0))
-		playsound(src, vomitsound, VOL_EFFECTS_MASTER, null, FALSE)
+		playsound(src, pick(vomitsound), VOL_EFFECTS_MASTER, null, FALSE)
 	else
 		visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>","<span class='warning'>You throw up!</span>")
 		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)

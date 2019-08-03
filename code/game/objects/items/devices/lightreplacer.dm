@@ -176,7 +176,7 @@
 
 /obj/item/device/lightreplacer/emag_act(mob/user)
 	emagged = !emagged
-	playsound(src, "sparks", VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	if(emagged)
 		name = "Shortcircuited [initial(name)]"
 	else

@@ -51,7 +51,7 @@
 			health -= rand(100, 500)
 		else
 			health -= rand(10, 50)
-		playsound(src, "swing_hit", VOL_EFFECTS_MASTER)
+		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 		swing()
 
 	return

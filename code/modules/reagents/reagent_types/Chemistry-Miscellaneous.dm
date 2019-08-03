@@ -665,9 +665,9 @@
 		return
 	if(color_weight < 15 || volume < 5)
 		return
-	var/ind = "[initial(T.icon)][color]"
+	var/ind = "[initial(T.icon)]|[color]"
 	if(!cached_icons[ind])
-		var/icon/overlay = new/icon(initial(T.icon))
+		var/icon/overlay = new/icon(T.icon)
 		overlay.Blend(color, ICON_MULTIPLY)
 		overlay.SetIntensity(color_weight * 0.1)
 		T.icon = overlay

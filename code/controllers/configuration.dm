@@ -64,6 +64,8 @@
 	var/automute_on = 0					//enables automuting/spam prevention
 
 	var/registration_panic_bunker_age = null
+	var/client_limit_panic_bunker_count = null
+	var/client_limit_panic_bunker_link = null
 
 	var/cult_ghostwriter = 1               //Allows ghosts to write in blood in cult rounds...
 	var/cult_ghostwriter_req_cultists = 10 //...so long as this many cultists are active.
@@ -593,6 +595,12 @@
 
 				if("registration_panic_bunker_age")
 					config.registration_panic_bunker_age = value
+
+				if("client_limit_panic_bunker_count")
+					config.client_limit_panic_bunker_count = text2num(value)
+
+				if("client_limit_panic_bunker_link")
+					config.client_limit_panic_bunker_link = value
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")

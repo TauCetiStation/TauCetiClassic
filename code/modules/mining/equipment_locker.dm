@@ -618,7 +618,7 @@
 	melee_damage_upper = 15
 	environment_smash = 0
 	attacktext = "drills"
-	attack_sound = 'sound/weapons/circsawhit.ogg'
+	attack_sound = list('sound/weapons/circsawhit.ogg')
 	ranged = 1
 	ranged_message = "shoots"
 	ranged_cooldown_cap = 3

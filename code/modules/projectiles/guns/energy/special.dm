@@ -133,25 +133,6 @@
 	desc = "A prototype weapon recovered from the ruins of Research-Station Epsilon."
 	icon_state = "xray"
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
-/*
-/obj/item/weapon/gun/energy/staff/focus
-	name = "mental focus"
-	desc = "An artefact that channels the will of the user into destructive bolts of force. If you aren't careful with it, you might poke someone's brain out."
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "focus"
-	item_state = "focus"
-	projectile_type = "/obj/item/projectile/forcebolt"
-
-/obj/item/weapon/gun/energy/staff/focus/attack_self(mob/living/user)
-	if(projectile_type == "/obj/item/projectile/forcebolt")
-		charge_cost = 200
-		to_chat(user, "<span class='warning'>The [src.name] will now strike a small area.</span>")
-		projectile_type = "/obj/item/projectile/forcebolt/strong"
-	else
-		charge_cost = 100
-		to_chat(user, "<span class='warning'>The [src.name] will now strike only a single person.</span>")
-		projectile_type = "/obj/item/projectile/forcebolt"
-	*/
 
 /obj/item/weapon/gun/energy/toxgun
 	name = "phoron pistol"
@@ -271,7 +252,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	if(do_after(user, 40 * toolspeed, target = src))
 		if(charging && charge < 3)
 			charge++
-			playsound(src, "sparks", VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			if(charge < 3)
 				charge(user)
 			else

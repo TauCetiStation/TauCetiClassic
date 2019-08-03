@@ -19,7 +19,6 @@
 	name = "staff of healing"
 	desc = "An artefact that spits bolts of restoring magic which can remove ailments of all kinds and even raise the dead."
 	ammo_type = /obj/item/ammo_casing/magic/heal
-	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staffofhealing"
 	item_state = "staffofhealing"
 	fire_sound = 'sound/magic/Staff_Healing.ogg'
@@ -28,7 +27,6 @@
 	name = "staff of door creation"
 	desc = "An artefact that spits bolts of transformative magic that can create doors in walls."
 	ammo_type = /obj/item/ammo_casing/magic/door
-	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staffofdoor"
 	item_state = "staffofdoor"
 	fire_sound = 'sound/magic/Staff_Door.ogg'

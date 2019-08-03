@@ -23,13 +23,13 @@
 	opened = !opened
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user)
-	if (use_sound)
-		playsound(src, use_sound, VOL_EFFECTS_MASTER, null, null, -5)
+	if (length(use_sound))
+		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
 	return ..()
 
 /obj/item/weapon/storage/backpack/equipped(mob/user, slot)
-	if (slot == SLOT_BACK && use_sound)
-		playsound(src, use_sound, VOL_EFFECTS_MASTER, null, null, -5)
+	if (slot == SLOT_BACK && length(use_sound))
+		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
 	..(user, slot)
 
 /*
