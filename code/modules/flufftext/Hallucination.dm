@@ -152,7 +152,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						                          'sound/effects/Explosion1.ogg')
 						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
 					if(3) // GLASS
-						playsound_local(target, "shatter", VOL_EFFECTS_MASTER)
+						playsound_local(target, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 					if(4) // GROWLS
 						var/list/hallsound = list('sound/voice/growl1.ogg',
 						                          'sound/voice/growl2.ogg',
@@ -181,7 +181,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						spawn(rand(10,30))
 							playsound_local(target, gunsound, VOL_EFFECTS_MASTER)
 							if(prob(60))
-								playsound_local(target, pick("mscream", "fscream"), VOL_EFFECTS_MASTER, null, FALSE)
+								playsound_local(target, pick(SOUNDIN_MSCREAM + SOUNDIN_FSCREAM), VOL_EFFECTS_MASTER, null, FALSE)
 					if(8) // MELEE
 						var/list/hallsound = list('sound/weapons/smash.ogg',
 						                          'sound/weapons/polkan_atk.ogg',
@@ -370,7 +370,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			if(prob(15))
 				src.do_attack_animation(my_target)
 				if(weapon_name)
-					my_target.playsound_local(null, "swing_hit", VOL_EFFECTS_MASTER)
+					my_target.playsound_local(null, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 					my_target.show_message("<span class='warning'><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", 1)
 					my_target.halloss += 8
 					if(prob(20)) my_target.eye_blurry += 3
@@ -378,7 +378,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						if(!locate(/obj/effect/overlay) in my_target.loc)
 							fake_blood(my_target)
 				else
-					my_target.playsound_local(null, "punch", VOL_EFFECTS_MASTER, 35)
+					my_target.playsound_local(null, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER, 35)
 					my_target.show_message("<span class='warning'><B>[src.name] has punched [my_target]!</B></span>", 1)
 					my_target.halloss += 4
 					if(prob(33))

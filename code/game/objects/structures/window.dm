@@ -62,7 +62,7 @@
 	update_icon()
 
 /obj/structure/window/proc/shatter(display_message = 1)
-	playsound(src, "shatter", VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	if(display_message)
 		visible_message("[src] shatters!")
 	if(dir == SOUTHWEST)
@@ -402,7 +402,7 @@
 
 /obj/structure/window/Destroy()
 	density = 0
-	playsound(src, "shatter", VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	update_nearby_tiles()
 	update_nearby_icons()
 	return ..()

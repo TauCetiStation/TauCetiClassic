@@ -38,7 +38,7 @@
 	active = !active
 	if (active)
 		force = 30
-		hitsound = 'sound/weapons/blade1.ogg'
+		hitsound = list('sound/weapons/blade1.ogg')
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass1"
 		else
@@ -98,7 +98,7 @@
 */
 	if (user.a_intent == "hurt")
 		if(!..()) return
-		playsound(src, "swing_hit", VOL_EFFECTS_MASTER)
+		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 		if (M.stuttering < 8 && (!(HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 			M.stuttering = 8
 		M.Stun(8)
@@ -183,7 +183,7 @@
 			return
 		if(user.a_intent == I_HELP && ishuman(target))
 			var/mob/living/carbon/human/H = target
-			playsound(src, "swing_hit", VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 			user.do_attack_animation(H)
 			H.adjustHalLoss(25)
 			H.visible_message("<span class='warning'>[user] harmless hit [H] with a telebaton.</span>")
@@ -192,7 +192,7 @@
 			msg_admin_attack("[key_name(user)] harmless hit [key_name(H)] with [src.name].")
 			return
 		if(..())
-			playsound(src, "swing_hit", VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 			return
 	else
 		return ..()

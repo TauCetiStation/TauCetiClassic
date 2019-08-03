@@ -52,7 +52,7 @@
 			src.density = 0
 			src.destroyed = 1
 			new /obj/item/weapon/shard( src.loc )
-			playsound(src, "shatter", VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 			Break()
 	else
 		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)

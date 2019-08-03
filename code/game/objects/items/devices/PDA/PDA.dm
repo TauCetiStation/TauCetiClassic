@@ -578,7 +578,7 @@
 
 	if(href_list && (last_tap_sound <= world.time))
 		if(iscarbon(usr))
-			playsound(src, "pda", VOL_EFFECTS_MASTER, 15, FALSE)
+			playsound(src, pick(SOUNDIN_PDA_TAPS), VOL_EFFECTS_MASTER, 15, FALSE)
 			last_tap_sound = world.time + 8
 
 	switch(href_list["choice"])

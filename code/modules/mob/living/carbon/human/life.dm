@@ -464,13 +464,11 @@
 		if(internal)
 					//internal breath sounds
 			if(internal.distribute_pressure >= 16)
-				var/breathsound = ""
-				if(istype(wear_mask, /obj/item/clothing/mask))
-					breathsound = "breathmask"
+				var/breathsound = pick(SOUNDIN_BREATHMASK)
 				if(istype(wear_mask, /obj/item/clothing/mask/gas))
-					breathsound = "gasmaskbreath"
+					breathsound = 'sound/misc/gasmaskbreath.ogg'
 				if(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space))
-					breathsound = "rigbreath"
+					breathsound = pick(SOUNDIN_RIGBREATH)
 				playsound(src, breathsound, VOL_EFFECTS_MASTER, null, FALSE, -6)
 			return internal.remove_air_volume(volume_needed)
 		else if(internals)
