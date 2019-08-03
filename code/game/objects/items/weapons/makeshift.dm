@@ -13,6 +13,45 @@
 	hitsound = list('sound/weapons/bladeslice.ogg')
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 
+	__can_push = TRUE
+	__can_pull = TRUE
+
+/obj/item/weapon/twohanded/spear/can_push()
+	return __can_push && wielded
+
+/obj/item/weapon/twohanded/spear/can_pull()
+	return __can_pull && wielded
+
+/obj/item/weapon/twohanded/spear/on_sweep_push_success(atom/target, mob/user)
+	var/turf/T_target = get_turf(target)
+
+	if(user.a_intent != I_HELP)
+		var/resolved = target.attackby(src, user, list())
+		if(!resolved && src)
+			afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+
+	if(!has_gravity(src) && !istype(target, /turf/space))
+		step_away(user, T_target)
+	else if(istype(target, /atom/movable))
+		var/atom/movable/AM = target
+		if(!AM.anchored)
+			step_away(target, get_turf(src))
+
+/obj/item/weapon/twohanded/spear/on_sweep_pull_success(atom/target, mob/user)
+	var/turf/T_target = get_turf(target)
+
+	if(user.a_intent != I_HELP)
+		var/resolved = target.attackby(src, user, list())
+		if(!resolved && src)
+			afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+
+	if(!has_gravity(src) && !istype(target, /turf/space))
+		step_to(user, T_target)
+	else if(istype(target, /atom/movable))
+		var/atom/movable/AM = target
+		if(!AM.anchored)
+			step_to(target, get_turf(src))
+
 /obj/item/weapon/twohanded/spear/update_icon()
 	icon_state = "spearglass[wielded]"
 
@@ -47,9 +86,42 @@
 	var/status = 0
 	slot_flags = null
 
+	__can_push = TRUE
+	__can_pull = TRUE
+
 /obj/item/weapon/melee/cattleprod/atom_init()
 	. = ..()
 	update_icon()
+
+/obj/item/weapon/melee/cattleprod/on_sweep_push_success(atom/target, mob/user)
+	var/turf/T_target = get_turf(target)
+
+	if(user.a_intent != I_HELP)
+		var/resolved = target.attackby(src, user, list())
+		if(!resolved && src)
+			afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+
+	if(!has_gravity(src) && !istype(target, /turf/space))
+		step_away(user, T_target)
+	else if(istype(target, /atom/movable))
+		var/atom/movable/AM = target
+		if(!AM.anchored)
+			step_away(target, get_turf(src))
+
+/obj/item/weapon/melee/cattleprod/on_sweep_pull_success(atom/target, mob/user)
+	var/turf/T_target = get_turf(target)
+
+	if(user.a_intent != I_HELP)
+		var/resolved = target.attackby(src, user, list())
+		if(!resolved && src)
+			afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+
+	if(!has_gravity(src) && !istype(target, /turf/space))
+		step_to(user, T_target)
+	else if(istype(target, /atom/movable))
+		var/atom/movable/AM = target
+		if(!AM.anchored)
+			step_to(target, get_turf(src))
 
 /obj/item/weapon/melee/cattleprod/attack_self(mob/user)
 	if(bcell && bcell.charge > hitcost)

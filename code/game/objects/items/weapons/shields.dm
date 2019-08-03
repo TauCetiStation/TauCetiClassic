@@ -2,6 +2,31 @@
 	name = "shield"
 	var/block_chance = 65
 
+	__can_sweep = TRUE
+	__interupt_on_sweep_hit_types = list(/turf, /obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
+
+/obj/item/weapon/shield/on_sweep_hit(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, atom/A, mob/living/user)
+	var/is_stunned = is_type_in_list(A, __interupt_on_sweep_hit_types)
+	if(is_stunned)
+		to_chat(user, "<span class='warning'>Your [src] has hit [A]! There's not enough space for broad sweeps here!</span>")
+
+	if(isliving(A) && prob(Get_shield_chance())) // Better shields have more chance to stun.
+		var/mob/living/M = A
+		user.visible_message("<span class='warning'>[M] is stunned by [user] with [src]!</span>", "<span class='warning'>You stun [M] with [src]!</span>")
+		if(M.buckled)
+			M.buckled.user_unbuckle_mob(M)
+
+		M.apply_effect(3, STUN, 0)
+		M.apply_effect(3, WEAKEN, 0)
+		M.apply_effect(6, STUTTER, 0)
+		shake_camera(M, 1, 1)
+
+	var/resolved = A.attackby(src, user, list())
+	if(!resolved && src)
+		afterattack(A, user, TRUE, list()) // 1 indicates adjacency
+
+	return is_stunned
+
 /obj/item/weapon/shield/riot
 	name = "riot shield"
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."

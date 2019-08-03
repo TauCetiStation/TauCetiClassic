@@ -79,6 +79,11 @@
 	slot_flags = SLOT_FLAGS_BELT
 	force = 10
 
+	__can_sweep = TRUE
+	__can_spin = TRUE
+	sweep_step = 4
+	__interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep)
+
 /obj/item/weapon/melee/classic_baton/attack(mob/M, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
@@ -128,6 +133,57 @@
 	w_class = ITEM_SIZE_SMALL
 	force = 3
 	var/on = 0
+
+	__can_sweep = TRUE
+	__can_spin = TRUE
+	spin_on_middleclick = TRUE
+	sweep_step = 5
+	__interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep)
+
+	__can_push = TRUE
+	__can_pull = TRUE
+
+/obj/item/weapon/melee/telebaton/can_sweep()
+	return __can_sweep && on
+
+/obj/item/weapon/melee/telebaton/can_spin()
+	return __can_spin && on
+
+/obj/item/weapon/melee/telebaton/can_push()
+	return __can_push && on
+
+/obj/item/weapon/melee/telebaton/can_pull()
+	return __can_pull && on
+
+/obj/item/weapon/melee/telebaton/on_sweep_push_success(atom/target, mob/user)
+	var/turf/T_target = get_turf(target)
+
+	if(user.a_intent != I_HELP)
+		var/resolved = target.attackby(src, user, list())
+		if(!resolved && src)
+			afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+
+	if(!has_gravity(src) && !istype(target, /turf/space))
+		step_away(user, T_target)
+	else if(istype(target, /atom/movable))
+		var/atom/movable/AM = target
+		if(!AM.anchored)
+			step_away(target, get_turf(src))
+
+/obj/item/weapon/melee/telebaton/on_sweep_pull_success(atom/target, mob/user)
+	var/turf/T_target = get_turf(target)
+
+	if(user.a_intent != I_HELP)
+		var/resolved = target.attackby(src, user, list())
+		if(!resolved && src)
+			afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+
+	if(!has_gravity(src) && !istype(target, /turf/space))
+		step_to(user, T_target)
+	else if(istype(target, /atom/movable))
+		var/atom/movable/AM = target
+		if(!AM.anchored)
+			step_to(target, get_turf(src))
 
 /obj/item/weapon/melee/telebaton/attack_self(mob/user)
 	on = !on

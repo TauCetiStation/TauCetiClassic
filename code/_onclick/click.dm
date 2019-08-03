@@ -191,7 +191,11 @@
 */
 /mob/proc/MiddleClickOn(atom/A)
 	return
+
 /mob/living/carbon/MiddleClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && I.MiddleClickAction(A, src))
+		return
 	swap_hand()
 
 // In case of use break glass

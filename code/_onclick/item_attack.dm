@@ -222,3 +222,6 @@ Return TRUE to prevent any other click logic.
 
 /obj/item/proc/AltClickAction(atom/target, mob/user)
 	return FALSE
+
+/obj/item/proc/MiddleClickAction(atom/target, mob/user)
+	return FALSE

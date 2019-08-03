@@ -59,6 +59,29 @@
 	m_amt = 50
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
+	__can_push = TRUE
+	__can_pull = TRUE
+
+/obj/item/weapon/cane/on_sweep_push_success(atom/target, mob/user)
+	var/turf/T_target = get_turf(target)
+
+	if(!has_gravity(src) && !istype(target, /turf/space))
+		step_away(user, T_target)
+	else if(istype(target, /atom/movable))
+		var/atom/movable/AM = target
+		if(!AM.anchored)
+			step_away(target, get_turf(src))
+
+/obj/item/weapon/cane/on_sweep_pull_success(atom/target, mob/user)
+	var/turf/T_target = get_turf(target)
+
+	if(!has_gravity(src) && !istype(target, /turf/space))
+		step_to(user, T_target)
+	else if(istype(target, /atom/movable))
+		var/atom/movable/AM = target
+		if(!AM.anchored)
+			step_to(target, get_turf(src))
+
 /obj/item/weapon/gift
 	name = "gift"
 	desc = "A wrapped item."
@@ -297,6 +320,29 @@
 	flags = NOSHIELD
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 
+	__can_push = TRUE
+	__can_pull = TRUE
+
+/obj/item/weapon/staff/on_sweep_push_success(atom/target, mob/user)
+	var/turf/T_target = get_turf(target)
+
+	if(!has_gravity(src) && !istype(target, /turf/space))
+		step_away(user, T_target)
+	else if(istype(target, /atom/movable))
+		var/atom/movable/AM = target
+		if(!AM.anchored)
+			step_away(target, get_turf(src))
+
+/obj/item/weapon/staff/on_sweep_pull_success(atom/target, mob/user)
+	var/turf/T_target = get_turf(target)
+
+	if(!has_gravity(src) && !istype(target, /turf/space))
+		step_to(user, T_target)
+	else if(istype(target, /atom/movable))
+		var/atom/movable/AM = target
+		if(!AM.anchored)
+			step_to(target, get_turf(src))
+
 /obj/item/weapon/staff/broom
 	name = "broom"
 	desc = "Used for sweeping, and flying into the night while cackling. Black cat not included."
@@ -444,6 +490,9 @@
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")
 
+	__can_sweep = TRUE
+	__can_spin = TRUE
+
 /obj/item/weapon/hatchet/attack(mob/living/carbon/M, mob/living/carbon/user)
 	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
@@ -470,6 +519,10 @@
 	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
+
+	__can_sweep = TRUE
+	__can_spin = TRUE
+	__interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep)
 
 /obj/item/weapon/scythe/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
@@ -824,6 +877,9 @@
 	name = "Broom"
 	desc = "This broom is made with the branches and leaves of a tree which secretes aromatic oils."
 	icon_state = "broom_sauna"
+
+	__can_sweep = TRUE
+	__can_spin = TRUE
 
 /obj/item/weapon/broom/attack(mob/living/carbon/human/M, mob/living/user, def_zone)
 	if(!istype(M) || user.a_intent == "hurt")

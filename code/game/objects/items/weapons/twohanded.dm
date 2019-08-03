@@ -119,6 +119,18 @@
 	force_wielded = 40
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
+	__can_sweep = TRUE
+	__can_spin = TRUE
+	spin_on_middleclick = TRUE
+	sweep_step = 5
+	__interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep)
+
+/obj/item/weapon/twohanded/fireaxe/can_sweep()
+	return __can_sweep && wielded
+
+/obj/item/weapon/twohanded/fireaxe/can_spin()
+	return __can_spin && wielded
+
 /obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
 	return
@@ -162,6 +174,35 @@
 	sharp = 1
 	edge = 1
 	can_embed = 0
+
+	__can_spin = TRUE
+	spin_on_middleclick = TRUE
+	sweep_step = 2
+	__interupt_on_sweep_hit_types = list(/obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
+
+/obj/item/weapon/twohanded/dualsaber/can_spin()
+	return __can_spin && wielded
+
+/obj/item/weapon/twohanded/dualsaber/sweep_spin(mob/user)
+	var/rot_dir = 1
+	if(user.dir == SOUTH || user.dir == WEST) // South-west rotate anti-clockwise.
+		rot_dir = -1
+
+	var/list/turfs = list(user.dir, turn(user.dir, rot_dir * 45), turn(user.dir, rot_dir * 90), turn(user.dir, rot_dir * 135), turn(user.dir, rot_dir * 180), turn(user.dir, rot_dir * 225), turn(user.dir, rot_dir * 270), turn(user.dir, rot_dir * 315), user.dir)
+	var/list/turfs_2 = list(turn(user.dir, rot_dir * 180), turn(user.dir, rot_dir * 225), turn(user.dir, rot_dir * 270), turn(user.dir, rot_dir * 315), user.dir, turn(user.dir, rot_dir * 45), turn(user.dir, rot_dir * 90), turn(user.dir, rot_dir * 135), turn(user.dir, rot_dir * 180))
+
+	var/saved_sweep_step = sweep_step
+	sweep_step *= 0.5
+	INVOKE_ASYNC(src, /obj/item/weapon.proc/sweep, turfs, user, sweep_step)
+	INVOKE_ASYNC(src, /obj/item/weapon.proc/sweep, turfs_2, user, sweep_step)
+	sweep_step = saved_sweep_step
+
+/obj/item/weapon/twohanded/dualsaber/sweep_continue_check(mob/living/user, sweep_step, turf/current_turf)
+	if(!can_sweep() && !can_spin())
+		return FALSE
+	if(!do_after(user, sweep_step, target = current_turf, can_move = TRUE, progress = FALSE))
+		return FALSE
+	return TRUE
 
 /obj/item/weapon/twohanded/dualsaber/atom_init()
 	. = ..()
