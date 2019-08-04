@@ -55,7 +55,6 @@
 /area/centcom)
 "aah" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/belt/medical/surg,
 /obj/item/weapon/storage/box/masks{
 	pixel_x = -5;
 	pixel_y = -5
@@ -64,6 +63,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
+/obj/item/weapon/storage/belt/medical/surg/full,
 /turf/unsimulated/floor/velocity{
 	icon_state = "white"
 	},
@@ -172,6 +172,7 @@
 	name = "APPROVED rubber stamp"
 	},
 /obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/item/device/taperecorder,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -208,6 +209,7 @@
 	name = "APPROVED rubber stamp"
 	},
 /obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/item/device/taperecorder,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -3952,6 +3954,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/structure/closet/toolcloset,
 /turf/unsimulated/floor{
 	icon_state = "sandwater"
 	},
@@ -4577,10 +4580,12 @@
 	},
 /area/centcom/arrival)
 "arn" = (
-/obj/machinery/door/airlock/centcom,
 /obj/structure/sign/mark{
 	icon_state = "*";
 	layer = 3.5
+	},
+/obj/machinery/door/airlock/centcom{
+	req_access = list(101)
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -5071,12 +5076,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/arrival)
-"asX" = (
-/obj/machinery/door/airlock/centcom,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/arrival)
 "atb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Kitchen";
@@ -5271,8 +5270,10 @@
 	},
 /area/centcom/arrival)
 "aty" = (
-/obj/machinery/door/airlock/centcom,
 /obj/effect/landmark/trololo,
+/obj/machinery/door/airlock/centcom{
+	req_access = list(101)
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -5321,6 +5322,12 @@
 /area/centcom/arrival)
 "atK" = (
 /obj/structure/rack,
+/obj/item/device/camera,
+/obj/item/device/camera,
+/obj/item/device/camera_film,
+/obj/item/device/camera_film,
+/obj/item/device/toner,
+/obj/item/device/toner,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -6739,7 +6746,9 @@
 	},
 /area/centcom/arrival)
 "ayn" = (
-/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/airlock/centcom{
+	req_access = list(101)
+	},
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "bluefull"
@@ -17599,7 +17608,9 @@
 	},
 /area/centcom/arrival)
 "dab" = (
-/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/airlock/centcom{
+	req_access = list(101)
+	},
 /turf/unsimulated/floor{
 	icon_state = "bcircuitoff"
 	},
@@ -71788,7 +71799,7 @@ asE
 asE
 asE
 asE
-asX
+aao
 arZ
 atV
 aty
@@ -71819,7 +71830,7 @@ ayA
 aAc
 aAc
 aAc
-asX
+aao
 eNb
 fPb
 fPb
