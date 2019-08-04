@@ -182,9 +182,8 @@
 
 /obj/item/weapon/gun/energy/laser/lasertag/special_check(mob/living/carbon/human/M)
 	if(ishuman(M))
-		for(var/armortag in armor_to_tag)
-			if(istype(M.wear_suit, armortag))
-				return ..()
+		if(is_type_in_list(M.wear_suit, armor_to_tag))
+			return ..()
 		to_chat(M, "<span class='warning'>You need to be wearing your laser tag vest!</span>")
 	return 0
 
