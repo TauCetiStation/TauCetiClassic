@@ -1014,10 +1014,14 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/closet/wardrobe/tactical,
 /obj/machinery/door/window/brigdoor{
 	name = "Weapons locker"
 	},
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/rig/security,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/security,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -1068,7 +1072,11 @@
 /obj/machinery/door/window/brigdoor{
 	name = "Weapons locker"
 	},
-/obj/structure/closet/wardrobe/tactical,
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/rig/security,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/security,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -1106,10 +1114,14 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/closet/wardrobe/tactical,
 /obj/machinery/door/window/brigdoor{
 	name = "Weapons locker"
 	},
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/rig/security,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/security,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -68472,6 +68484,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/light/small/emergency,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warndark"
