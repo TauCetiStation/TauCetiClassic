@@ -504,6 +504,7 @@ REAGENT SCANNER
 	                                 /obj/item/clothing/accessory/holster,
 	                                 /obj/item/device/flash,
 	                                 /obj/item/weapon/reagent_containers/hypospray,
+	                                 /obj/item/weapon/reagent_containers/syringe,
 	                                 /obj/item/weapon/reagent_containers/glass/bottle,
 	                                 /obj/item/weapon/reagent_containers/food,
 	                                 /obj/item/weapon/cartridge/clown,
@@ -515,11 +516,17 @@ REAGENT SCANNER
 	                                 /obj/item/weapon/storage/pill_bottle,
 	                                 /obj/item/device/paicard,
 	                                 /obj/item/clothing/mask/ecig,
-	                                 /obj/item/weapon/game_kit
+	                                 /obj/item/weapon/game_kit,
+	                                 /obj/item/weapon/legcuffs,
+	                                 /obj/item/weapon/handcuffs,
+	                                 /obj/item/weapon/reagent_containers/spray/pepper
 	                                 )
 
 	var/list/danger_items = list(/obj/item/device/uplink,
 	                             /obj/item/weapon/gun,
+	                             /obj/item/weapon/shield,
+	                             /obj/item/clothing/head/helmet,
+	                             /obj/item/clothing/suit/armor,
 	                             /obj/item/weapon/melee/powerfist,
 	                             /obj/item/weapon/melee/energy/sword,
 	                             /obj/item/weapon/storage/box/emps,
@@ -555,7 +562,6 @@ REAGENT SCANNER
 	                             /obj/item/weapon/storage/belt/military,
 	                             /obj/item/weapon/storage/firstaid/tactical,
 	                             /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
-	                             /obj/item/weapon/reagent_containers/syringe,
 	                             /obj/item/weapon/storage/box/syndie_kit/space,
 	                             /obj/item/clothing/glasses/thermal/syndi,
 	                             /obj/item/device/flashlight/emp,
@@ -574,8 +580,50 @@ REAGENT SCANNER
 	                             /obj/item/weapon/storage/box/syndie_kit/imp_freedom,
 	                             /obj/item/weapon/storage/box/syndie_kit/imp_uplink,
 	                             /obj/item/weapon/implanter/storage,
-	                             /obj/item/weapon/storage/box/syndicate
+	                             /obj/item/weapon/storage/box/syndicate,
+	                             /obj/item/device/assembly/mousetrap
 	                             )
+
+	var/list/contraband_reagents = list("sugar",
+	                                    "serotrotium",
+	                                    "kyphotorin",
+	                                    "lube",
+	                                    "glycerol",
+	                                    "nicotine",
+	                                    "nanites",
+	                                    "nanites2",
+	                                    "nanobots",
+	                                    "mednanobots"
+	                                    )
+
+	var/list/contraband_reagents_types = list(/datum/reagent/consumable)
+
+	var/list/danger_reagents_types = list(/datum/reagent/toxin)
+
+	var/list/danger_reagents = list("potassium",
+	                                "mercury",
+	                                "chlorine",
+	                                "radium",
+	                                "uranium",
+	                                "alphaamanitin",
+	                                "aflatoxin",
+	                                "chefspecial",
+	                                "dioxin",
+	                                "mulligan",
+	                                "mutationtoxin",
+	                                "amutationtoxin",
+	                                "space_drugs",
+	                                "cryptobiolin",
+	                                "impedrezene",
+	                                "stoxin2",
+	                                "hyperzine",
+	                                "blood",
+	                                "nitroglycerin",
+	                                "thermite",
+	                                "fuel",
+	                                "xenomicrobes",
+	                                "ectoplasm"
+	                                )
 
 /obj/item/device/contraband_finder/proc/reset_color()
 	icon_state = "contraband_scanner"
@@ -595,39 +643,71 @@ REAGENT SCANNER
 /obj/item/device/contraband_finder/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return
+	scan(target, user)
+
+/obj/item/device/contraband_finder/MouseDrop_T(atom/dropping, mob/user)
+	if(!dropping.Adjacent(user))
+		return
+	scan(dropping, user)
+
+/obj/item/device/contraband_finder/proc/scan(atom/target, mob/user)
 	if(!can_scan)
 		return
 
-	var/list/to_check = list()
-	if(ismob(target))
-		var/mob/M = target
-		to_check = M.get_contents()
-	else
-		to_check += target.contents
-		to_check += target
+	var/list/to_check = target.get_contents()
+	to_check += target
 
 	var/danger_color = "green"
 
-	for(var/atom/A in to_check)
-		if(danger_color != "yellow" && is_type_in_list(A, contraband_items))
-			danger_color = "yellow"
-		if(A.blood_DNA)
-			danger_color = "red"
-			break
-		if(is_sharp(A))
-			danger_color = "red"
-			break
-		if(is_type_in_list(A, danger_items))
-			danger_color = "red"
-			break
+	to_check_loop:
+		for(var/atom/A in to_check)
+			if(danger_color == "green" && is_type_in_list(A, contraband_items))
+				danger_color = "yellow"
+			if(A.blood_DNA)
+				danger_color = "red"
+				break
+			if(istype(A, /obj/item))
+				var/obj/item/I = A
+				if(I.is_sharp())
+					danger_color = "red"
+					break
+				if(I.force >= 10)
+					danger_color = "red"
+					break
+			if(is_type_in_list(A, danger_items))
+				danger_color = "red"
+				break
+
+			if(A.reagents)
+				if(danger_color == "green")
+					for(var/reagent in contraband_reagents_types)
+						if(locate(reagent) in A.reagents.reagent_list)
+							danger_color = "yellow"
+
+					for(var/reagent_id in contraband_reagents)
+						if(A.reagents.has_reagent(reagent_id))
+							danger_color = "yellow"
+
+				for(var/reagent in danger_reagents_types)
+					if(locate(reagent) in A.reagents.reagent_list)
+						danger_color = "red"
+						break to_check_loop
+
+				for(var/reagent_id in danger_reagents)
+					if(A.reagents.has_reagent(reagent_id))
+						danger_color = "red"
+						break to_check_loop
 
 	switch(danger_color)
 		if("green")
 			user.visible_message("[bicon(src)] <span class='notice'>Ping.</span>")
+			playsound(user, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER)
 		if("yellow")
 			user.visible_message("[bicon(src)] <span class='warning'>Beep!</span>")
+			playsound(user, 'sound/rig/shortbeep.wav', VOL_EFFECTS_MASTER)
 		if("red")
 			user.visible_message("[bicon(src)] <span class='warning bold'>BE-E-E-EP!</span>")
+			playsound(user, 'sound/rig/longbeep.wav', VOL_EFFECTS_MASTER)
 
 	icon_state = "contraband_scanner_[danger_color]"
 	item_state = "contraband_scanner_[danger_color]"

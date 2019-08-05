@@ -981,9 +981,9 @@ var/global/list/items_blood_overlay_by_type = list()
 
 /obj/item/damage_flags()
 	. = FALSE
-	if(has_edge(src))
+	if(has_edge())
 		. |= DAM_EDGE
-	if(is_sharp(src))
+	if(is_sharp())
 		. |= DAM_SHARP
 		if(damtype == BURN)
 			. |= DAM_LASER
