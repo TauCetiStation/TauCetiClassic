@@ -24,16 +24,19 @@
 	spray_sound = 'sound/effects/refill.ogg'
 	volume_modifier = -3
 
+	spray_cloud_move_delay = 2
+	spray_cloud_react_delay = 0
+
 /obj/item/weapon/reagent_containers/spray/extinguisher/atom_init()
 	. = ..()
-	flags ^= OPENCONTAINER
+	flags ^= OPENCONTAINER|NOBLUDGEON
 	icon_state = "[initial(icon_state)][!safety]"
-	reagents.add_reagent("AFFF", volume)
+	reagents.add_reagent("aqueous_foam", volume)
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned/atom_init() // Station-spawned, as in, in-cabinets extinguishers shouldn't be full by default.
 	. = ..()
 	reagents.clear_reagents()
-	reagents.add_reagent("AFFF", rand(volume * 0.5, volume))
+	reagents.add_reagent("aqueous_foam", rand(volume * 0.5, volume))
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
@@ -71,4 +74,4 @@
 /obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned/atom_init() // Station-spawned, as in, in-cabinets extinguishers shouldn't be full by default.
 	. = ..()
 	reagents.clear_reagents()
-	reagents.add_reagent("AFFF", rand(volume * 0.5, volume))
+	reagents.add_reagent("aqueous_foam", rand(volume * 0.5, volume))

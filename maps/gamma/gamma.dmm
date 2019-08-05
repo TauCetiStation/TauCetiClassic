@@ -5864,7 +5864,7 @@
 /turf/simulated/wall/r_wall,
 /area/aisat)
 "aYr" = (
-/obj/structure/reagent_dispensers/watertank/affftank,
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor,
 /area/janitor)
 "aYs" = (
@@ -37026,7 +37026,7 @@
 	},
 /area/tcommsat/chamber)
 "leK" = (
-/obj/structure/reagent_dispensers/watertank/affftank,
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor,
 /area/atmos)
 "leM" = (
@@ -64239,7 +64239,6 @@
 "tWZ" = (
 /obj/structure/safe,
 /obj/item/clothing/under/color/yellow,
-/obj/item/key,
 /obj/item/toy/katana,
 /turf/simulated/floor{
 	dir = 8;

@@ -1,4 +1,4 @@
-/obj/effect/effect/afff_foam
+/obj/effect/effect/aqueous_foam
 	name = "aqueous film forming foam"
 	icon_state = "afff_foam"
 
@@ -9,33 +9,32 @@
 	layer = OBJ_LAYER + 0.9
 	animate_movement = FALSE
 
-/obj/effect/effect/afff_foam/atom_init()
+/obj/effect/effect/aqueous_foam/atom_init()
 	. = ..()
 	playsound(src, 'sound/effects/bubbles2.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/effect/afff_foam/atom_init_late()
-	INVOKE_ASYNC(src, .proc/process_foam)
+/obj/effect/effect/aqueous_foam/atom_init_late()
+	if(loc.density)
+		addtimer(CALLBACK(src, .proc/disolve), 5 SECONDS)
+	INVOKE_ASYNC(src, .proc/performAction)
 
-/obj/effect/effect/afff_foam/proc/process_foam()
-	performAction()
-	sleep(15 SECONDS)
-	if(src) // Since we can get removed by being stepped on.
-		disolve()
-
-/obj/effect/effect/afff_foam/proc/disolve()
+/obj/effect/effect/aqueous_foam/proc/disolve()
 	flick("[icon_state]-disolve", src)
 	sleep(5)
 	qdel(src)
 
-/obj/effect/effect/afff_foam/Crossed(atom/movable/AM)
+/obj/effect/effect/aqueous_foam/Crossed(atom/movable/AM)
+	if(istype(AM, /obj/effect/decal/chempuff))
+		return
+
 	if(isslime(AM)) // Slimes are vulnerable to us and shouldn't be able to destroy us.
 		var/mob/living/carbon/slime/S = AM
 		S.Stun(5)
 	else
 		INVOKE_ASYNC(src, .proc/disolve) // You should never call procs with delay from BYOND movement procs.
 
-/obj/effect/effect/afff_foam/proc/performAction()
+/obj/effect/effect/aqueous_foam/proc/performAction()
 	var/list/perform_on = list()
 	var/turf/T = get_turf(src)
 

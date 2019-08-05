@@ -544,24 +544,24 @@
 
 /obj/item/rig_module/device/extinguisher/init_charges()
 	charges = list()
-	charges["AFFF"] = new /datum/rig_charge("Aqueous Film Forming Foam", "AFFF", 0) // syncs with the extinguisher
+	charges["aqueous_foam"] = new /datum/rig_charge("Aqueous Film Forming Foam", "aqueous_foam", 0) // syncs with the extinguisher
 
 /obj/item/rig_module/device/extinguisher/atom_init()
 	. = ..()
 	if(device)
 		var/obj/item/weapon/reagent_containers/spray/extinguisher/ext = device
 		ext.safety = FALSE
-		charges["AFFF"].charges = ext.reagents.total_volume
+		charges["aqueous_foam"].charges = ext.reagents.total_volume
 
 /obj/item/rig_module/device/extinguisher/engage(atom/target)
 	. = ..()
 	if(device)
-		addtimer(CALLBACK(src, .proc/update_water_ammount), 5) // because extinguisher uses spawns
+		addtimer(CALLBACK(src, .proc/update_foam_ammount), 5) // because extinguisher uses spawns
 
-/obj/item/rig_module/device/extinguisher/proc/update_water_ammount()
+/obj/item/rig_module/device/extinguisher/proc/update_foam_ammount()
 	if(device)
 		var/obj/item/weapon/extinguisher/ext = device
-		charges["water"].charges = ext.reagents.total_volume
+		charges["aqueous_foam"].charges = ext.reagents.total_volume
 
 /obj/item/rig_module/metalfoam_spray
 	name = "hardsuit metal foam spray"

@@ -66,15 +66,15 @@
 	. = ..()
 	reagents.add_reagent("water", 1000)
 
-/obj/structure/reagent_dispensers/watertank/affftank
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank
 	name = "AFFF tank"
 	desc = "A tank containing Aqueous Film Forming Foam(AFFF)."
 	icon_state = "affftank"
 
-/obj/structure/reagent_dispensers/watertank/affftank/atom_init()
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank/atom_init()
 	. = ..()
 	reagents.clear_reagents()
-	reagents.add_reagent("AFFF", 1000)
+	reagents.add_reagent("aqueous_foam", 1000)
 
 /obj/structure/reagent_dispensers/watertank/examine(mob/user)
 	..()

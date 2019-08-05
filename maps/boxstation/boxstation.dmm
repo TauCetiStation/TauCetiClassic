@@ -33642,10 +33642,9 @@
 	},
 /area/rnd/test_area)
 "bjc" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "warnplate"
-	},
-/area/rnd/test_area)
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor,
+/area/atmos)
 "bjd" = (
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -40965,6 +40964,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor,
 /area/janitor)
 "bAL" = (
@@ -110505,7 +110505,7 @@ bWH
 bUd
 bZK
 bLP
-bVD
+bjc
 bQM
 avv
 bSV

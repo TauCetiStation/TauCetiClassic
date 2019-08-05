@@ -123,7 +123,7 @@
 		to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 		return
 
-	else if(istype(I, /obj/item/weapon/reagent_containers/spray) && !myspray)
+	else if(istype(I, /obj/item/weapon/reagent_containers/spray/cleaner) && !myspray)
 		user.drop_from_inventory(I, src)
 		myspray = I
 		update_icon()
