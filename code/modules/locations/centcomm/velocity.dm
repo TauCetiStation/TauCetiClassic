@@ -133,6 +133,7 @@
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/device/radio/headset/velocity(src)
 	new /obj/item/device/contraband_finder(src)
+	new /obj/item/device/reagent_scanner(src)
 
 /obj/structure/object_wall/velocity
 
