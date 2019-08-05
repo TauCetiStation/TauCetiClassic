@@ -118,7 +118,7 @@
 		if(!I.can_embed || I.is_robot_module())
 			return
 
-		var/sharp = is_sharp(I)
+		var/sharp = I.is_sharp()
 
 		var/damage = throw_damage //the effective damage used for embedding purposes, no actual damage is dealt here
 		if (armor)
