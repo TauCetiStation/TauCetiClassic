@@ -2488,8 +2488,7 @@
 /area/maintenance/dormitory)
 "aeg" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Secure Armoury Section";
-	req_access = list(3)
+	name = "Secure Armoury Section"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -3775,17 +3774,12 @@
 	},
 /area/security/main)
 "agu" = (
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 8
+	},
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/structure/table,
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
-/obj/item/device/taperecorder,
-/obj/item/weapon/storage/box/evidence,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -4060,7 +4054,6 @@
 /obj/machinery/alarm{
 	pixel_y = 26
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkred"
@@ -4070,10 +4063,12 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
-/obj/item/weapon/hand_labeler,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/item/device/radio/intercom{
+	frequency = 1475;
+	name = "Station Intercom (Security)";
+	pixel_y = 27
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkred"
@@ -4532,17 +4527,14 @@
 /turf/simulated/floor/plating,
 /area/security/warden)
 "ahK" = (
+/obj/structure/table,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
-	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4553,9 +4545,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -4568,16 +4562,30 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
 	},
 /area/security/brig)
 "ahN" = (
+/obj/structure/table,
+/obj/item/device/flashlight/lamp,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -4954,7 +4962,7 @@
 /area/shuttle/escape_pod3/station)
 "aiw" = (
 /obj/structure/stool/bed/chair/metal/red{
-	dir = 4
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -4969,8 +4977,8 @@
 /turf/simulated/floor/plating,
 /area/maintenance/dormitory)
 "aiy" = (
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 8
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -5143,6 +5151,9 @@
 /turf/space/shuttle,
 /area/shuttle/escape_pod3/station)
 "aiM" = (
+/obj/structure/table,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/hand_labeler,
 /obj/machinery/light,
 /turf/simulated/floor{
 	dir = 10;
@@ -5150,8 +5161,10 @@
 	},
 /area/security/brig)
 "aiN" = (
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 4
+/obj/structure/table,
+/obj/item/device/flashlight,
+/obj/item/weapon/folder/red{
+	pixel_y = 3
 	},
 /turf/simulated/floor{
 	icon_state = "darkred"
@@ -5159,19 +5172,19 @@
 /area/security/brig)
 "aiO" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	frequency = 1475;
-	listening = 0;
-	name = "Station Intercom (Security)";
-	pixel_y = -28
-	},
+/obj/item/weapon/storage/box/evidence,
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
 /area/security/brig)
 "aiP" = (
+/obj/structure/table,
+/obj/item/device/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30
+	},
+/obj/item/device/taperecorder,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -11257,7 +11270,7 @@
 	name = "exterior access button";
 	pixel_x = -25;
 	pixel_y = -25;
-	req_access = list(10,13)
+	req_access = list(10, 13)
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -33459,10 +33472,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/assembly/robotics)
-"biK" = (
-/obj/structure/reagent_dispensers/watertank/affftank,
-/turf/simulated/floor,
-/area/atmos)
 "biL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -40956,7 +40965,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/structure/reagent_dispensers/watertank/affftank,
 /turf/simulated/floor,
 /area/janitor)
 "bAL" = (
@@ -53239,7 +53247,7 @@
 	name = "interior access button";
 	pixel_x = -25;
 	pixel_y = -25;
-	req_access = list(10,13)
+	req_access = list(10, 13)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -54965,7 +54973,7 @@
 	name = "interior access button";
 	pixel_x = -20;
 	pixel_y = -20;
-	req_access = list(10,13)
+	req_access = list(10, 13)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -55425,7 +55433,7 @@
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "engineering_west_airlock";
 	pixel_x = 25;
-	req_access = list(10,13);
+	req_access = list(10, 13);
 	tag_airpump = "engineering_west_pump";
 	tag_chamber_sensor = "engineering_west_sensor";
 	tag_exterior_door = "engineering_west_outer";
@@ -55460,7 +55468,7 @@
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "engineering_east_airlock";
 	pixel_x = -25;
-	req_access = list(10,13);
+	req_access = list(10, 13);
 	tag_airpump = "engineering_east_pump";
 	tag_chamber_sensor = "engineering_east_sensor";
 	tag_exterior_door = "engineering_east_outer";
@@ -58134,7 +58142,7 @@
 	id_tag = "robotics_solar_outer";
 	locked = 1;
 	name = "Engineering External Access";
-	req_access = list(10,13)
+	req_access = list(10, 13)
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/portsolar)
@@ -61162,7 +61170,7 @@
 	id_tag = "solar_xeno_outer";
 	locked = 1;
 	name = "Engineering External Access";
-	req_access = list(10,13)
+	req_access = list(10, 13)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -61554,7 +61562,7 @@
 	name = "exterior access button";
 	pixel_x = -20;
 	pixel_y = 20;
-	req_access = list(10,13)
+	req_access = list(10, 13)
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -62057,7 +62065,7 @@
 	name = "exterior access button";
 	pixel_x = 25;
 	pixel_y = 25;
-	req_access = list(10,13)
+	req_access = list(10, 13)
 	},
 /obj/structure/cable,
 /turf/simulated/floor/plating/airless/catwalk,
@@ -63239,7 +63247,7 @@
 	id_tag = "engineering_west_outer";
 	locked = 1;
 	name = "Engineering External Access";
-	req_access = list(10,13)
+	req_access = list(10, 13)
 	},
 /turf/simulated/floor/plating,
 /area/engine/engineering)
@@ -63350,7 +63358,7 @@
 	name = "exterior access button";
 	pixel_x = 20;
 	pixel_y = 20;
-	req_access = list(10,13)
+	req_access = list(10, 13)
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/engine/engineering)
@@ -63369,7 +63377,7 @@
 	id_tag = "engineering_east_outer";
 	locked = 1;
 	name = "Engineering External Access";
-	req_access = list(10,13)
+	req_access = list(10, 13)
 	},
 /turf/simulated/floor/plating,
 /area/engine/engineering)
@@ -63424,7 +63432,7 @@
 	name = "exterior access button";
 	pixel_x = 20;
 	pixel_y = 20;
-	req_access = list(10,13)
+	req_access = list(10, 13)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -65503,7 +65511,7 @@
 	id_tag = "engineering_west_inner";
 	locked = 1;
 	name = "Engineering External Access";
-	req_access = list(10,13)
+	req_access = list(10, 13)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/door/firedoor,
@@ -65665,7 +65673,7 @@
 	id_tag = "engineering_east_inner";
 	locked = 1;
 	name = "Engineering External Access";
-	req_access = list(10,13)
+	req_access = list(10, 13)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/door/firedoor,
@@ -66370,7 +66378,7 @@
 	name = "interior access button";
 	pixel_x = -20;
 	pixel_y = -20;
-	req_access = list(10,13)
+	req_access = list(10, 13)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -73570,12 +73578,6 @@
 	icon_state = "warning"
 	},
 /area/engine/engineering)
-"oje" = (
-/obj/structure/table,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/security/brig)
 "okb" = (
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = -28
@@ -77216,9 +77218,6 @@
 	},
 /area/quartermaster/storage)
 "vbb" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkred"
@@ -107596,7 +107595,7 @@ adH
 adH
 agu
 ahN
-oje
+aeT
 aiO
 adM
 ajZ
@@ -110506,7 +110505,7 @@ bWH
 bUd
 bZK
 bLP
-biK
+bVD
 bQM
 avv
 bSV
