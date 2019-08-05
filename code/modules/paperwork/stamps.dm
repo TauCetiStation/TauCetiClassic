@@ -83,6 +83,17 @@
 	stamp_by_message = "Syndicate Command Interception Relay"
 	big_stamp = TRUE
 
+/obj/item/weapon/stamp/cargo_industries
+	name = "cargo industries rubber stamp"
+	icon_state = "stamp-cargo-industries"
+	stamp_by_message = "Cargo Industries Quantum Relay"
+	big_stamp = TRUE
+
+/obj/item/weapon/stamp/velocity
+	name = "velocity rubber stamp"
+	icon_state = "stamp-velocity"
+	big_stamp = TRUE
+
 // Syndicate stamp to forge documents.
 /obj/item/weapon/stamp/chameleon/attack_self(mob/user)
 

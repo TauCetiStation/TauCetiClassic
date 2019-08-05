@@ -233,10 +233,14 @@
 	desc = "The headset, if you wish to talk to your fellow crew-nies. ; - Velocity crew channel."
 	icon_state = "vel_headset"
 	item_state = "headset"
+	maxf = 1341
 
 /obj/item/device/radio/headset/velocity/atom_init()
 	. = ..()
 	set_frequency(1245)
+
+/obj/item/device/radio/headset/velocity/chief
+	ks2type = /obj/item/device/encryptionkey/headset_cargo
 
 /obj/item/device/radio/headset/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/radio_grid))
