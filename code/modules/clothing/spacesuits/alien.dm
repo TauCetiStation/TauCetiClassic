@@ -237,7 +237,7 @@
 	if(on)
 		var/power_decrease = 2 // 5 minutes to full discharge
 		if(damage > 0)
-			power_decrease = 5 // 2 minute seconds to full discharge
+			power_decrease = 5 // 2 minutes to full discharge
 		if(damage > 3)
 			power_decrease = 10 // 1 minute to full discharge
 		if(damage > 6)
@@ -260,7 +260,7 @@
 	else
 		var/power_increase = 20 // 30 seconds to full charge
 		if(damage > 0)
-			power_increase = 10 // 1 minute seconds to full charge
+			power_increase = 10 // 1 minutes to full charge
 		if(damage > 3)
 			power_increase = 5 // 2 minutes to full charge
 		if(damage > 6)
