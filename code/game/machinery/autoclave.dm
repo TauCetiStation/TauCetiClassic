@@ -29,6 +29,10 @@
 
 	update_icon()
 
+/obj/machinery/autoclave/Destroy()
+	QDEL_NULL(shelves)
+	return ..()
+
 /obj/machinery/autoclave/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
 		efficency += M.rating
@@ -55,6 +59,14 @@
 	set desc = "Starts the cleaning procedure."
 	set src in oview(1)
 
+	var/mob/living/user = usr
+	if(!istype(user))
+		return
+	if(user.incapacitated())
+		return
+	if(!user.IsAdvancedToolUser())
+		return
+
 	if(processing)
 		return
 
@@ -62,7 +74,7 @@
 	visible_message("<span class='notice'>[src] boops, as it starts up.</span>")
 
 	icon_state = "autoclave_processing"
-	INVOKE_ASYNC(src, .proc/clean)
+	clean()
 	sleep(15)
 	icon_state = "autoclave_idle"
 
