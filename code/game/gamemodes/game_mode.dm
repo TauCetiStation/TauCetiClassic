@@ -267,10 +267,10 @@ Implants;
 				var/extra = 8
 				suplink.uses += extra
 				if(man.mind) man.mind.total_TC += extra
-				to_chat(man, "\red We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity.")
+				to_chat(man, "<span class='warning'>We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity.</span>")
 			else
 				// Give them a warning!
-				to_chat(man, "\red They are on to you!")
+				to_chat(man, "<span class='warning'>They are on to you!</span>")
 
 		// Some poor people who were just in the wrong place at the wrong time..
 		else if(prob(10))
@@ -379,7 +379,7 @@ Implants;
 //Reports player logouts//
 //////////////////////////
 /proc/display_roundstart_logout_report()
-	var/msg = "\blue <b>Roundstart logout report</b>\n\n"
+	var/msg = "<span class='notice'><b>Roundstart logout report</b>\n\n</span>"
 	for(var/mob/living/L in living_list)
 
 		if(L.ckey)

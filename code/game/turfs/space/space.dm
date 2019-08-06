@@ -49,19 +49,19 @@
 		user.SetNextMove(CLICK_CD_RAPID)
 		if(L)
 			if(R.get_amount() < 2)
-				to_chat(user, "\red You don't have enough rods to do that.")
+				to_chat(user, "<span class='warning'>You don't have enough rods to do that.</span>")
 				return
 			if(user.is_busy()) return
-			to_chat(user, "\blue You begin to build a catwalk.")
+			to_chat(user, "<span class='notice'>You begin to build a catwalk.</span>")
 			if(R.use_tool(src, user, 30, amount = 2, volume = 50))
-				to_chat(user, "\blue You build a catwalk!")
+				to_chat(user, "<span class='notice'>You build a catwalk!</span>")
 				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
 				qdel(L)
 				return
 
 		if(!R.use(1))
 			return
-		to_chat(user, "\blue Constructing support lattice ...")
+		to_chat(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 		ReplaceWithLattice()
 		return
@@ -78,14 +78,14 @@
 			S.build(src)
 			return
 		else
-			to_chat(user, "\red The plating is going to need some support.")
+			to_chat(user, "<span class='warning'>The plating is going to need some support.</span>")
 
 
 // Ported from unstable r355
 
 /turf/space/Entered(atom/movable/A as mob|obj)
 	if(movement_disabled)
-		to_chat(usr, "\red Movement is admin-disabled.")//This is to identify lag problems
+		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
 		return
 	..()
 	if ((!(A) || src != A.loc))	return
@@ -94,7 +94,8 @@
 
 		// Okay, so let's make it so that people can travel z levels but not nuke disks!
 		// if(ticker.mode.name == "nuclear emergency")	return
-		if(A.z > ZLEVEL_EMPTY) return
+		if(!SSmapping.has_level(A.z))
+			return
 		if (A.x <= TRANSITIONEDGE || A.x >= (world.maxx - TRANSITIONEDGE - 1) || A.y <= TRANSITIONEDGE || A.y >= (world.maxy - TRANSITIONEDGE - 1))
 			if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
 				qdel(A)
@@ -109,7 +110,7 @@
 				if(istype(A, /mob/living))
 					var/mob/living/MM = A
 					if(MM.client && !MM.stat)
-						to_chat(MM, "\red Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is.")
+						to_chat(MM, "<span class='warning'>Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is.</span>")
 						if(MM.x <= TRANSITIONEDGE)
 							MM.inertia_dir = 4
 						else if(MM.x >= world.maxx -TRANSITIONEDGE)
@@ -126,15 +127,11 @@
 						qdel(N)//Make the disk respawn if it is floating on its own
 				return
 
-			var/move_to_z = src.z
-			var/safety = 1
+			var/datum/space_level/L = SSmapping.get_level(z)
+			if(!L)
+				return
 
-			while(move_to_z == src.z)
-				var/move_to_z_str = pickweight(accessable_z_levels)
-				move_to_z = text2num(move_to_z_str)
-				safety++
-				if(safety > 10)
-					break
+			var/move_to_z = L.get_next_z()
 
 			if(!move_to_z)
 				return
@@ -156,6 +153,11 @@
 			else if (A.y >= (world.maxy - TRANSITIONEDGE - 1))
 				A.y = TRANSITIONEDGE + 1
 				A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
+
+			if(ismob(A))
+				var/mob/M = A
+				if(M.pulling)
+					M.pulling.forceMove(get_turf(M), keep_pulling = TRUE)
 
 
 			stoplag()//Let a diagonal move finish, if necessary

@@ -10,10 +10,8 @@
 	recoil = 3 //extra kickback
 	mag_type = /obj/item/ammo_box/magazine/internal/heavyrifle
 	fire_sound = 'sound/weapons/guns/gunshot_cannon.ogg'
+	can_be_holstered = FALSE
 	var/bolt_open = 0
-
-/obj/item/weapon/gun/projectile/heavyrifle/isHandgun()
-	return 0
 
 /obj/item/weapon/gun/projectile/heavyrifle/update_icon()
 	if(bolt_open)

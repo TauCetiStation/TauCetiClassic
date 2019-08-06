@@ -41,7 +41,7 @@
 
 /obj/item/weapon/storage/secure/attackby(obj/item/weapon/W, mob/user)
 	if(locked)
-		if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && (!src.emagged))
+		if(istype(W, /obj/item/weapon/melee/energy/blade) && (!src.emagged))
 			emagged = 1
 			user.SetNextMove(CLICK_CD_MELEE)
 			src.overlays += image('icons/obj/storage.dmi', icon_sparking)
@@ -49,35 +49,32 @@
 			overlays.Cut()
 			overlays += image('icons/obj/storage.dmi', icon_locking)
 			locked = 0
-			if(istype(W, /obj/item/weapon/melee/energy/blade))
-				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-				spark_system.set_up(5, 0, src.loc)
-				spark_system.start()
-				playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
-				playsound(src, "sparks", VOL_EFFECTS_MASTER)
-				to_chat(user, "You slice through the lock on [src].")
-			else
-				to_chat(user, "You short out the lock on [src].")
+			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+			spark_system.set_up(5, 0, src.loc)
+			spark_system.start()
+			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+			to_chat(user, "You slice through the lock on [src].")
 			return
 
 		if (isscrewdriver(W))
 			if(!user.is_busy(src) && W.use_tool(src, user, 20, volume = 50))
 				src.open =! src.open
-				user.show_message(text("\blue You [] the service panel.", (src.open ? "open" : "close")))
+				user.show_message(text("<span class='notice'>You [] the service panel.</span>", (src.open ? "open" : "close")))
 			return
 		if ((ismultitool(W)) && (src.open == 1)&& (!src.l_hacking))
-			user.show_message(text("\red Now attempting to reset internal memory, please hold."), 1)
+			user.show_message(text("<span class='warning'>Now attempting to reset internal memory, please hold.</span>"), 1)
 			src.l_hacking = 1
 			if (!user.is_busy(src) && W.use_tool(src, usr, 100, volume = 50))
 				if (prob(40))
 					src.l_setshort = 1
 					src.l_set = 0
-					user.show_message(text("\red Internal memory reset.  Please give it a few seconds to reinitialize."), 1)
+					user.show_message(text("<span class='warning'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>"), 1)
 					sleep(80)
 					src.l_setshort = 0
 					src.l_hacking = 0
 				else
-					user.show_message(text("\red Unable to reset internal memory."), 1)
+					user.show_message(text("<span class='warning'>Unable to reset internal memory.</span>"), 1)
 					src.l_hacking = 0
 			else	src.l_hacking = 0
 			return
@@ -88,6 +85,18 @@
 	// -> storage/attackby() what with handle insertion, etc
 	..()
 
+/obj/item/weapon/storage/secure/emag_act(mob/user)
+	if(!locked || src.emagged)
+		return FALSE
+	emagged = 1
+	user.SetNextMove(CLICK_CD_MELEE)
+	src.overlays += image('icons/obj/storage.dmi', icon_sparking)
+	sleep(6)
+	overlays.Cut()
+	overlays += image('icons/obj/storage.dmi', icon_locking)
+	locked = 0
+	to_chat(user, "You short out the lock on [src].")
+	return TRUE
 
 /obj/item/weapon/storage/secure/MouseDrop(over_object, src_location, over_location)
 	if (locked)
@@ -166,7 +175,7 @@
 
 /obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user)
 	if ((src.loc == user) && (src.locked == 1))
-		to_chat(usr, "\red [src] is locked and cannot be opened!")
+		to_chat(usr, "<span class='warning'>[src] is locked and cannot be opened!</span>")
 	else if ((src.loc == user) && (!src.locked))
 		src.open(usr)
 	else

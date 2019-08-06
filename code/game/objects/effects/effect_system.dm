@@ -131,7 +131,7 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/sparks/atom_init()
 	. = ..()
-	playsound(src, "sparks", VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	var/turf/T = loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
@@ -643,14 +643,14 @@ steam.start() -- spawns the effect
 /obj/structure/foamedmetal/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if ((HULK in user.mutations) || (prob(75 - metal*25)))
-		to_chat(user, "\blue You smash through the metal foam wall.")
+		to_chat(user, "<span class='notice'>You smash through the metal foam wall.</span>")
 		for(var/mob/O in oviewers(user))
 			if ((O.client && !( O.blinded )))
-				to_chat(O, "\red [user] smashes through the foamed metal.")
+				to_chat(O, "<span class='warning'>[user] smashes through the foamed metal.</span>")
 
 		qdel(src)
 	else
-		to_chat(user, "\blue You hit the metal foam but bounce off it.")
+		to_chat(user, "<span class='notice'>You hit the metal foam but bounce off it.</span>")
 
 
 /obj/structure/foamedmetal/attackby(obj/item/I, mob/user)
@@ -660,18 +660,18 @@ steam.start() -- spawns the effect
 		G.affecting.forceMove(loc)
 		for(var/mob/O in viewers(src))
 			if (O.client)
-				to_chat(O, "\red [G.assailant] smashes [G.affecting] through the foamed metal wall.")
+				to_chat(O, "<span class='warning'>[G.assailant] smashes [G.affecting] through the foamed metal wall.</span>")
 		qdel(I)
 		qdel(src)
 
 	else if(prob(I.force*20 - metal*25))
-		to_chat(user, "\blue You smash through the foamed metal with \the [I].")
+		to_chat(user, "<span class='notice'>You smash through the foamed metal with \the [I].</span>")
 		for(var/mob/O in oviewers(user))
 			if ((O.client && !( O.blinded )))
-				to_chat(O, "\red [user] smashes through the foamed metal.")
+				to_chat(O, "<span class='warning'>[user] smashes through the foamed metal.</span>")
 		qdel(src)
 	else
-		to_chat(user, "\blue You hit the metal foam to no effect.")
+		to_chat(user, "<span class='notice'>You hit the metal foam to no effect.</span>")
 
 /obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
 	if(air_group)
@@ -702,10 +702,10 @@ steam.start() -- spawns the effect
 		s.start()
 
 		for(var/mob/M in viewers(5, location))
-			to_chat(M, "\red The solution violently explodes.")
+			to_chat(M, "<span class='warning'>The solution violently explodes.</span>")
 		for(var/mob/M in viewers(1, location))
 			if (prob (50 * amount))
-				to_chat(M, "\red The explosion knocks you down.")
+				to_chat(M, "<span class='warning'>The explosion knocks you down.</span>")
 				M.Weaken(rand(1,5))
 		return
 	else

@@ -9,14 +9,13 @@
 	plane = FLOOR_PLANE
 	//	flags = CONDUCT
 
-/obj/structure/lattice/atom_init(mapload)
+/obj/structure/lattice/atom_init()
 	. = ..()
 	if(!istype(loc, /turf/space))
 		return INITIALIZE_HINT_QDEL
 	for(var/obj/structure/lattice/LAT in loc)
 		if(LAT != src)
-			if(mapload)
-				warning("Found stacked lattice at [COORD(src)] while initializing map.")
+			warning("Found stacked lattice at [COORD(src)] while initializing map.")
 			QDEL_IN(LAT, 0)
 	icon = 'icons/obj/smoothlattice.dmi'
 	icon_state = "latticeblank"
@@ -59,7 +58,7 @@
 	if (iswelder(C))
 		var/obj/item/weapon/weldingtool/WT = C
 		if(WT.use(0, user))
-			to_chat(user, "\blue Slicing lattice joints ...")
+			to_chat(user, "<span class='notice'>Slicing lattice joints ...</span>")
 			new /obj/item/stack/rods(loc)
 			qdel(src)
 

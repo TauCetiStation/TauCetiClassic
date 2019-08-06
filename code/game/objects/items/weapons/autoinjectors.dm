@@ -63,6 +63,42 @@
 	reagents.add_reagent("anti_toxin", 20)
 	update_icon()
 
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine
+	name = "Metatrombine autoinjector"
+	desc = "Induces quick blood clotting."
+	icon_state = "autoquickclot"
+	volume = 20
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine/atom_init()
+	. = ..()
+	reagents.clear_reagents()
+	reagents.add_reagent("metatrombine", 20)
+	update_icon()
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/stabyzol
+	name = "Stabyzol autoinjector"
+	desc = "Temporarily prevents symptoms of organ failure."
+	icon_state = "autostaby"
+	volume = 9 // 10 is an overdose.
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/stabyzol/atom_init()
+	. = ..()
+	reagents.clear_reagents()
+	reagents.add_reagent("stabyzol", 9)
+	update_icon()
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/aclometasone
+	name = "Aclometasone autoinjector"
+	desc = "Shuts down metabolism until let out of bloodstream."
+	icon_state = "autoaclo"
+	volume = 1 // There's no point for more, if it's in the system, it works.
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/aclometasone/atom_init()
+	. = ..()
+	reagents.clear_reagents()
+	reagents.add_reagent("aclometasone", 1)
+	update_icon()
+
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_imp
 	name = "Improved stimpack"
 	desc = "It does not contain caffeine"

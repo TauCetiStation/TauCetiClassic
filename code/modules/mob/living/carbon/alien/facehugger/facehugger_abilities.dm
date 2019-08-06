@@ -34,9 +34,9 @@ This is modified grab mechanic for facehugger
 				G.synch()
 				LAssailant = FH
 
-				visible_message(text("\red [] atempts to leap at [] face!", FH, src))
+				visible_message(text("<span class='warning'>[] atempts to leap at [] face!</span>", FH, src))
 			else
-				to_chat(FH, "\red looks dead.")
+				to_chat(FH, "<span class='warning'>looks dead.</span>")
 
 /mob/living/carbon/monkey/attack_facehugger(mob/living/carbon/alien/facehugger/FH)
 	switch(FH.a_intent)
@@ -53,9 +53,9 @@ This is modified grab mechanic for facehugger
 				G.synch()
 				LAssailant = FH
 
-				visible_message(text("\red [] atempts to leap at [] face!", FH, src))
+				visible_message(text("<span class='warning'>[] atempts to leap at [] face!</span>", FH, src))
 			else
-				to_chat(FH, "\red looks dead.")
+				to_chat(FH, "<span class='warning'>looks dead.</span>")
 
 /mob/living/simple_animal/corgi/attack_facehugger(mob/living/carbon/alien/facehugger/FH)
 	switch(FH.a_intent)
@@ -72,9 +72,9 @@ This is modified grab mechanic for facehugger
 				G.synch()
 				LAssailant = FH
 
-				visible_message(text("\red [] atempts to leap at [] face!", FH, src))
+				visible_message(text("<span class='warning'>[] atempts to leap at [] face!</span>", FH, src))
 			else
-				to_chat(FH, "\red looks dead.")
+				to_chat(FH, "<span class='warning'>looks dead.</span>")
 
 /*----------------------------------------
 This is called when facehugger has grabbed(left click) and then
@@ -169,7 +169,7 @@ This is chestburster mechanic for damaging
 		if((BP.status & ORGAN_BROKEN) || H.stat == DEAD) //I don't know why, but bodyparts can't be broken, when human is dead.
 			chestburster.loc = get_turf(H)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [H]'s chest!</span>")
-			chestburster.playsound_local(null, 'sound/voice/hiss5.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+			chestburster.playsound_local(null, 'sound/voice/xenomorph/small_roar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 			if(H.key)
 				H.death()
 				H.ghostize(can_reenter_corpse = FALSE, bancheck = TRUE)
@@ -189,7 +189,7 @@ This is chestburster mechanic for damaging
 		if(M.stat == DEAD)
 			chestburster.loc = get_turf(M)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [M]'s butt!</span>")
-			chestburster.playsound_local(null, 'sound/voice/hiss5.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+			chestburster.playsound_local(null, 'sound/voice/xenomorph/small_roar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 			qdel(src)
 		else
 			last_bite = world.time
@@ -201,7 +201,7 @@ This is chestburster mechanic for damaging
 		if(C.stat == DEAD)
 			chestburster.loc = get_turf(C)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [C]'s butt!</span>")
-			chestburster.playsound_local(null, 'sound/voice/hiss5.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+			chestburster.playsound_local(null, 'sound/voice/xenomorph/small_roar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 			qdel(src)
 		else
 			last_bite = world.time
@@ -293,7 +293,7 @@ This is emryo growth procs
 		return
 	if(stage < 5)
 		if(affected_mob.stat == DEAD)
-			to_chat(baby, "\red Your host died, so and you.")
+			to_chat(baby, "<span class='warning'>Your host died, so and you.</span>")
 			baby.death()
 			if(baby.key)
 				baby.ghostize(can_reenter_corpse = FALSE, bancheck = TRUE)
@@ -312,20 +312,20 @@ This is emryo growth procs
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				to_chat(affected_mob, "\red Your throat feels sore.")
+				to_chat(affected_mob, "<span class='warning'>Your throat feels sore.</span>")
 			if(prob(1))
-				to_chat(affected_mob, "\red Mucous runs down the back of your throat.")
+				to_chat(affected_mob, "<span class='warning'>Mucous runs down the back of your throat.</span>")
 		if(4)
 			if(prob(1))
 				affected_mob.emote("sneeze")
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(2))
-				to_chat(affected_mob, "\red Your muscles ache.")
+				to_chat(affected_mob, "<span class='warning'>Your muscles ache.</span>")
 				if(prob(20))
 					affected_mob.take_bodypart_damage(1)
 			if(prob(2))
-				to_chat(affected_mob, "\red Your stomach hurts.")
+				to_chat(affected_mob, "<span class='warning'>Your stomach hurts.</span>")
 				if(prob(20))
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
@@ -483,7 +483,7 @@ This is facehugger Attach procs
 		STOP_PROCESSING(SSobj, src)
 
 		target.status_flags |= XENO_HOST
-		target.visible_message("\red \b [src] falls limp after violating [target]'s face!")
+		target.visible_message("<span class='warning'><b>[src] falls limp after violating [target]'s face!</b></span>")
 
 		Die()
 		icon_state = "[initial(icon_state)]_impregnated"
@@ -493,7 +493,7 @@ This is facehugger Attach procs
 			src.loc = get_turf(C)
 			C.facehugger = null
 	else
-		target.visible_message("\red \b [src] violates [target]'s face!")
+		target.visible_message("<span class='warning'><b>[src] violates [target]'s face!</b></span>")
 
 /obj/item/clothing/mask/facehugger/proc/Die()
 	if(stat == DEAD)
@@ -501,7 +501,7 @@ This is facehugger Attach procs
 
 	icon_state = "[initial(icon_state)]_dead"
 	stat = DEAD
-	src.visible_message("\red \b[src] curls up into a ball!")
+	src.visible_message("<span class='warning'><b>[src] curls up into a ball!</b></span>")
 	return
 
 /*----------------------------------------
@@ -635,12 +635,12 @@ When we finish, facehugger's player will be transfered inside embryo.
 		return
 
 	for(var/obj/item/alien_embryo/AE in affecting.contents)
-		to_chat(assailant, "\red [affecting] already impregnated.")
+		to_chat(assailant, "<span class='warning'>[affecting] already impregnated.</span>")
 		qdel(src)
 		return
 
 	for(var/mob/living/carbon/alien/larva/baby in affecting.contents)
-		to_chat(assailant, "\red [affecting] already impregnated.")
+		to_chat(assailant, "<span class='warning'>[affecting] already impregnated.</span>")
 		qdel(src)
 		return
 
@@ -707,7 +707,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 		assailant.visible_message("<span class='danger'>[assailant] extends its proboscis deep inside [affecting]'s mouth!</span>")
 		spawn(rand(MIN_IMPREGNATION_TIME,MAX_IMPREGNATION_TIME))
 			if(istype(assailant.loc, /obj/item/clothing/mask/facehugger))
-				assailant.visible_message("\red \b [assailant] falls limp after violating [affecting]'s face!")
+				assailant.visible_message("<span class='warning'><b>[assailant] falls limp after violating [affecting]'s face!</b></span>")
 				var/obj/item/clothing/mask/facehugger/FH_mask = assailant.loc
 				FH_mask.canremove = 1
 				FH_mask.Impregnate(affecting, assailant)

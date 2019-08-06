@@ -77,8 +77,8 @@
 	if(!.)
 		return
 
-	if (src.z > ZLEVEL_STATION)
-		to_chat(usr, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
+	if (!is_station_level(z))
+		to_chat(usr, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return FALSE
 	if(!href_list["operation"])
 		return FALSE
@@ -223,13 +223,13 @@
 		if("MessageCentcomm")
 			if(src.authenticated==2)
 				if(CM.cooldown)
-					to_chat(usr, "\red Arrays recycling.  Please stand by.")
+					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
 					return
 				var/input = sanitize(input(usr, "Please choose a message to transmit to Centcomm via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""))
 				if(!input || !(usr in view(1,src)))
 					return
 				Centcomm_announce(input, usr)
-				to_chat(usr, "\blue Message transmitted.")
+				to_chat(usr, "<span class='notice'>Message transmitted.</span>")
 				log_say("[key_name(usr)] has made an IA Centcomm announcement: [input]")
 				CM.cooldown = 55
 
@@ -238,13 +238,13 @@
 		if("MessageSyndicate")
 			if((src.authenticated==2) && (src.emagged))
 				if(CM.cooldown)
-					to_chat(usr, "\red Arrays recycling.  Please stand by.")
+					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
 					return
 				var/input = sanitize(input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""))
 				if(!input || !(usr in view(1,src)))
 					return
 				Syndicate_announce(input, usr)
-				to_chat(usr, "\blue Message transmitted.")
+				to_chat(usr, "<span class='notice'>Message transmitted.</span>")
 				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
 				CM.cooldown = 55 //about one minute
 
@@ -298,17 +298,16 @@
 			state = STATE_ALERT_LEVEL
 	src.updateUsrDialog()
 
-/obj/machinery/computer/communications/attackby(obj/I, mob/user)
-	if(istype(I,/obj/item/weapon/card/emag))
-		src.emagged = 1
-		to_chat(user, "You scramble the communication routing circuits!")
-	else
-		..()
-	return
+/obj/machinery/computer/communications/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	src.emagged = 1
+	to_chat(user, "You scramble the communication routing circuits!")
+	return TRUE
 
 /obj/machinery/computer/communications/ui_interact(mob/user)
-	if (src.z > ZLEVEL_EMPTY)
-		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
+	if (!SSmapping.has_level(z))
+		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return
 
 	var/dat = "<head><title>Communications Console</title></head><body>"

@@ -24,7 +24,6 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 	var/max_distance = (world.view + extrarange) * 3
 	var/frequency = get_rand_frequency() // Same frequency for everybody
-	soundin = get_sfx(soundin) // same sound for everyone
 
 	// Looping through the player list has the added bonus of working for mobs inside containers
 	for (var/P in player_list)
@@ -39,6 +38,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			if(T && T.z == turf_source.z)
 				M.playsound_local(turf_source, soundin, volume_channel, vol, vary, frequency, falloff, channel, null, wait, ignore_environment, voluminosity)
 
+//todo: inconsistent behaviour and meaning of first parameter in playsound/playsound_local
 /mob/proc/playsound_local(turf/turf_source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency, falloff, channel, repeat, wait, ignore_environment = FALSE, voluminosity = TRUE)
 	if(!client || !client.prefs_ready || !ignore_environment && ear_deaf > 0)
 		return
@@ -47,8 +47,6 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	vol *= client.get_sound_volume(volume_channel)
 	if(!vol)
 		return
-
-	soundin = get_sfx(soundin) //todo: it is very stupid that we search this sound in sfx every time for every player TWICE, and from start soundin may already be path to sound file...
 
 	var/sound/S = sound(soundin)
 	S.repeat = repeat
@@ -199,7 +197,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		if(VOL_AMBIENT)
 			prefs.snd_ambient_vol = vol
 			mob.playsound_music_update_volume(volume_channel, CHANNEL_AMBIENT)
-			mob.playsound_music_update_volume(volume_channel, CHANNEL_AMBIENT_SUB)
+			mob.playsound_music_update_volume(volume_channel, CHANNEL_AMBIENT_LOOP)
 		if(VOL_EFFECTS_MASTER)
 			prefs.snd_effects_master_vol = vol
 		if(VOL_EFFECTS_VOICE_ANNOUNCEMENT)
@@ -254,66 +252,11 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
 
-/proc/get_sfx(soundin)
-	if(istext(soundin))
-		switch(soundin)
-			if ("shatter")
-				soundin = pick('sound/effects/glassbr1.ogg','sound/effects/glassbr2.ogg','sound/effects/glassbr3.ogg')
-			if ("explosion")
-				soundin = pick('sound/effects/explosion1.ogg','sound/effects/explosion2.ogg')
-			if ("sparks")
-				soundin = pick('sound/effects/sparks1.ogg','sound/effects/sparks2.ogg','sound/effects/sparks3.ogg','sound/effects/sparks4.ogg')
-			if ("rustle")
-				soundin = pick('sound/effects/rustle1.ogg','sound/effects/rustle2.ogg','sound/effects/rustle3.ogg','sound/effects/rustle4.ogg','sound/effects/rustle5.ogg')
-			if ("bodyfall")
-				soundin = pick('sound/effects/bodyfall1.ogg','sound/effects/bodyfall2.ogg','sound/effects/bodyfall3.ogg','sound/effects/bodyfall4.ogg')
-			if ("punch")
-				soundin = pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg')
-			if ("clownstep")
-				soundin = pick('sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg')
-			if ("swing_hit")
-				soundin = pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
-			if ("hiss")
-				soundin = pick('sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg')
-			if ("pageturn")
-				soundin = pick('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
-			if ("desceration")
-				soundin = pick('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
-			if ("im_here")
-				soundin = pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg')
-			if ("can_open")
-				soundin = pick('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
-			if ("law")
-				soundin = pick('sound/voice/beepsky/god.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/secureday.ogg', 'sound/voice/beepsky/radio.ogg', 'sound/voice/beepsky/insult.ogg', 'sound/voice/beepsky/creep.ogg')
-			if ("bandg")
-				soundin = pick('sound/items/bandage.ogg', 'sound/items/bandage2.ogg', 'sound/items/bandage3.ogg')
-			if ("fracture")
-				soundin = pick('sound/effects/bonebreak1.ogg', 'sound/effects/bonebreak2.ogg', 'sound/effects/bonebreak3.ogg', 'sound/effects/bonebreak4.ogg')
-			if ("footsteps")
-				soundin = pick('sound/effects/tile1.wav', 'sound/effects/tile2.wav', 'sound/effects/tile3.wav', 'sound/effects/tile4.wav')
-			if ("rigbreath")
-				soundin = pick('sound/misc/rigbreath1.ogg','sound/misc/rigbreath2.ogg','sound/misc/rigbreath3.ogg')
-			if ("breathmask")
-				soundin = pick('sound/misc/breathmask1.ogg','sound/misc/breathmask2.ogg')
-			if ("gasmaskbreath")
-				soundin = 'sound/misc/gasmaskbreath.ogg'
-			if ("malevomit")
-				soundin = pick('sound/misc/mvomit1.ogg','sound/misc/mvomit2.ogg')
-			if ("femalevomit")
-				soundin = pick('sound/misc/fvomit1.ogg','sound/misc/fvomit2.ogg')
-			if ("frigvomit")
-				soundin = pick('sound/misc/frigvomit1.ogg','sound/misc/frigvomit2.ogg')
-			if ("mrigvomit")
-				soundin = pick('sound/misc/mrigvomit1.ogg','sound/misc/mrigvomit2.ogg')
-			if ("keyboard")
-				soundin = pick('sound/machines/keyboard/keyboard1.ogg', 'sound/machines/keyboard/keyboard2.ogg', 'sound/machines/keyboard/keyboard3.ogg', 'sound/machines/keyboard/keyboard4.ogg', 'sound/machines/keyboard/keyboard5.ogg')
-			if ("pda")
-				soundin = pick('sound/machines/keyboard/pda1.ogg', 'sound/machines/keyboard/pda2.ogg', 'sound/machines/keyboard/pda3.ogg', 'sound/machines/keyboard/pda4.ogg', 'sound/machines/keyboard/pda5.ogg')
-	return soundin
-
 /proc/get_announce_sound(soundin)
 	if(istext(soundin))
 		switch(soundin)
+			if("delta")
+				. = 'sound/AI/delta.ogg'
 			if("downtogreen")
 				. = 'sound/AI/downtogreen.ogg'
 			if("blue")
@@ -550,7 +493,9 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			function updateVolume(slider_id) {
 				if (!volumeUpdating) {
 					volumeUpdating = true;
-					setTimeout(setVolume, 300, slider_id);
+					setTimeout(function() {
+						setVolume(slider_id);
+					}, 300);
 				}
 
 			}

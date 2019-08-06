@@ -39,11 +39,6 @@
 		var/datum/medical_effect/M = new T
 		side_effects[M.name] = T
 
-	//List of job. I can't believe this was calculated multiple times per tick!
-	for(var/T in (subtypesof(/datum/job) - list(/datum/job/ai,/datum/job/cyborg)))
-		var/datum/job/J = new T
-		joblist[J.title] = J
-
 	//Languages and species.
 	for(var/T in subtypesof(/datum/language))
 		var/datum/language/L = new T
@@ -90,6 +85,14 @@
 				global.chemical_reactions_list[id] = list()
 			global.chemical_reactions_list[id] += D
 			break // Don't bother adding ourselves to other reagent ids, it is redundant.
+
+	populate_gear_list()
+
+/proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
+	//List of job. I can't believe this was calculated multiple times per tick!
+	for(var/T in (subtypesof(/datum/job) - list(/datum/job/ai,/datum/job/cyborg)))
+		var/datum/job/J = new T
+		joblist[J.title] = J
 
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()

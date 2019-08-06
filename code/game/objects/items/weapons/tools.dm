@@ -119,7 +119,7 @@
 	throw_range = 3//it's heavier than a screw driver/wrench, so it does more damage, but can't be thrown as far
 	toolspeed = 0.7
 	attack_verb = list("drilled", "screwed", "jabbed","whacked")
-	hitsound = 'sound/items/drill_hit.ogg'
+	hitsound = list('sound/items/drill_hit.ogg')
 	action_button_name = "Change mode"
 	random_color = FALSE
 
@@ -293,7 +293,7 @@
 			return
 		//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
-			hitsound = 'sound/items/Welder2.ogg'
+			hitsound = list('sound/items/Welder2.ogg')
 			if(src.icon_state != "welder1") //Check that the sprite is correct, if it isnt, it means toggle() was not called
 				src.force = 15
 				src.damtype = "fire"
@@ -363,6 +363,8 @@
 /obj/item/weapon/weldingtool/proc/get_fuel()
 	return reagents.get_reagent_amount("fuel")
 
+/obj/item/weapon/weldingtool/tool_use_check(mob/living/user, amount)
+	return get_fuel() >= amount
 
 //Removes fuel from the welding tool. If a mob is passed, it will perform an eyecheck on the mob. This should probably be renamed to use()
 /obj/item/weapon/weldingtool/use(used = 1, mob/M = null)

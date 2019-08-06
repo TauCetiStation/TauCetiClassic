@@ -225,7 +225,7 @@
 /mob/living/simple_animal/hostile/proc/OpenFire(the_target)
 
 	var/target = the_target
-	visible_message("\red <b>[src]</b> [ranged_message] at [target]!", 1)
+	visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>", 1)
 
 	var/tturf = get_turf(target)
 	if(rapid)

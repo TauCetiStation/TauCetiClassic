@@ -137,7 +137,7 @@
 					"You hear a ratchet")
 				src.anchored = 0
 			if(2)
-				to_chat(user, "\red The [src.name] needs to be unwelded from the floor.")
+				to_chat(user, "<span class='warning'>The [src.name] needs to be unwelded from the floor.</span>")
 		return
 
 	if(iswelder(W))
@@ -147,7 +147,7 @@
 			return
 		switch(state)
 			if(0)
-				to_chat(user, "\red The [src.name] needs to be wrenched to the floor.")
+				to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor.</span>")
 			if(1)
 				if(user.is_busy()) return
 				if(WT.use(0,user))
@@ -158,7 +158,7 @@
 						state = 2
 						to_chat(user, "You weld the [src] to the floor.")
 				else
-					to_chat(user, "\red You need more welding fuel to complete this task.")
+					to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 			if(2)
 				if(user.is_busy()) return
 				if(WT.use(0,user))
@@ -169,12 +169,12 @@
 						state = 1
 						to_chat(user, "You cut the [src] free from the floor.")
 				else
-					to_chat(user, "\red You need more welding fuel to complete this task.")
+					to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 		return
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(emagged)
-			to_chat(user, "\red The lock seems to be broken")
+			to_chat(user, "<span class='warning'>The lock seems to be broken</span>")
 			return
 		if(src.allowed(user))
 			if(active)
@@ -182,22 +182,20 @@
 				to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
 			else
 				src.locked = 0 //just in case it somehow gets locked
-				to_chat(user, "\red The controls can only be locked when the [src] is online")
+				to_chat(user, "<span class='warning'>The controls can only be locked when the [src] is online</span>")
 		else
-			to_chat(user, "\red Access denied.")
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
-
-
-	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
-		locked = 0
-		emagged = 1
-		user.visible_message("[user.name] emags the [src.name].","\red You short out the lock.")
-		user.SetNextMove(CLICK_CD_INTERACT)
-		return
-
 	..()
 	return
 
+/obj/machinery/zero_point_emitter/emag_act(obj/item/W, mob/user)
+	if(!emagged)
+		locked = 0
+		emagged = 1
+		user.visible_message("[user.name] emags the [src.name].","<span class='warning'>You short out the lock.</span>")
+		return TRUE
+	return FALSE
 
 /obj/machinery/zero_point_emitter/power_change()
 	..()

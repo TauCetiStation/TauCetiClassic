@@ -37,7 +37,6 @@ var/global/list/scrap_base_cache = list()
 
 
 
-
 /obj/structure/scrap/proc/make_cube()
 	var/obj/container = new /obj/structure/scrap_cube(loc, loot_max)
 	forceMove(container)

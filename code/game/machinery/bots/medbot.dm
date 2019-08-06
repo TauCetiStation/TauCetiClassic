@@ -212,14 +212,14 @@
 		if (health < maxhealth && !isscrewdriver(W) && W.force)
 			step_to(src, (get_step_away(src,user)))
 
-/obj/machinery/bot/medbot/Emag(mob/user)
+/obj/machinery/bot/medbot/emag_act(mob/user)
 	..()
 	if(open && !locked)
 		if(user)
 			to_chat(user, "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>")
 		spawn(0)
 			for(var/mob/O in hearers(src, null))
-				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
+				O.show_message("<span class='warning'><B>[src] buzzes oddly!</B></span>", 1)
 		flick("medibot_spark", src)
 		patient = null
 		if(user)
@@ -434,7 +434,7 @@
 		return
 	else
 		icon_state = "medibots"
-		visible_message("\red <B>[src] is trying to inject [patient]!</B>")
+		visible_message("<span class='warning'><B>[src] is trying to inject [patient]!</B></span>")
 		spawn(30)
 			if ((get_dist(src, patient) <= 1) && (on))
 				if((reagent_id == "internal_beaker") && (reagent_glass) && (reagent_glass.reagents.total_volume))
@@ -442,7 +442,7 @@
 					reagent_glass.reagents.reaction(patient, 2)
 				else
 					patient.reagents.add_reagent(reagent_id,injection_amount)
-				visible_message("\red <B>[src] injects [patient] with the syringe!</B>")
+				visible_message("<span class='warning'><B>[src] injects [patient] with the syringe!</B></span>")
 
 			icon_state = "medibot[on]"
 			currently_healing = 0
@@ -466,7 +466,7 @@
 
 /obj/machinery/bot/medbot/explode()
 	on = 0
-	visible_message("\red <B>[src] blows apart!</B>", 1)
+	visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/storage/firstaid(Tsec)

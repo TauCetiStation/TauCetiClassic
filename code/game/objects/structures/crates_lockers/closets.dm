@@ -167,7 +167,7 @@
 	if(user.environment_smash)
 		..()
 		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		visible_message("\red [user] destroys the [src]. ")
+		visible_message("<span class='warning'>[user] destroys the [src]. </span>")
 		open()
 		qdel(src)
 
@@ -240,6 +240,10 @@
 		return
 	if(istype(O, /obj/structure/closet))
 		return
+	if(istype(O, /obj/item))
+		var/obj/item/W = O
+		if(!W.canremove || W.flags & NODROP)
+			return
 	user.SetNextMove(CLICK_CD_INTERACT)
 	step_towards(O, src.loc)
 	if(user != O)

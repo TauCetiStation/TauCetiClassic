@@ -93,7 +93,7 @@
 	icon_state = "seclite"
 	item_state = "seclite"
 	force = 7 // Not as good as a stun baton.
-	hitsound = 'sound/weapons/genhit1.ogg'
+	hitsound = list('sound/weapons/genhit1.ogg')
 
 /obj/item/device/flashlight/pen
 	name = "penlight"

@@ -33,19 +33,19 @@
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
-		to_chat(user, "\red You accidentally cut yourself with [src].")
+		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src].</span>")
 		user.take_bodypart_damage(5, 5)
 	active = !active
 	if (active)
 		force = 30
-		hitsound = 'sound/weapons/blade1.ogg'
+		hitsound = list('sound/weapons/blade1.ogg')
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass1"
 		else
 			icon_state = "sword[item_color]"
 		w_class = ITEM_SIZE_LARGE
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "\blue [src] is now active.")
+		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 
 	else
 		force = 3
@@ -56,7 +56,7 @@
 			icon_state = "sword0"
 		w_class = ITEM_SIZE_SMALL
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "\blue [src] can now be concealed.")
+		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
@@ -81,7 +81,7 @@
 
 /obj/item/weapon/melee/classic_baton/attack(mob/M, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
-		to_chat(user, "\red You club yourself over the head.")
+		to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
 		user.Weaken(3 * force)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -98,13 +98,13 @@
 */
 	if (user.a_intent == "hurt")
 		if(!..()) return
-		playsound(src, "swing_hit", VOL_EFFECTS_MASTER)
+		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 		if (M.stuttering < 8 && (!(HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 			M.stuttering = 8
 		M.Stun(8)
 		M.Weaken(8)
 		for(var/mob/O in viewers(M))
-			if (O.client)	O.show_message("\red <B>[M] has been beaten with \the [src] by [user]!</B>", 1, "\red You hear someone fall", 2)
+			if (O.client)	O.show_message("<span class='warning'><B>[M] has been beaten with \the [src] by [user]!</B></span>", 1, "<span class='warning'>You hear someone fall</span>", 2)
 	else
 		playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 		M.Stun(5)
@@ -115,7 +115,7 @@
 		src.add_fingerprint(user)
 
 		for(var/mob/O in viewers(M))
-			if (O.client)	O.show_message("\red <B>[M] has been stunned with \the [src] by [user]!</B>", 1, "\red You hear someone fall", 2)
+			if (O.client)	O.show_message("<span class='warning'><B>[M] has been stunned with \the [src] by [user]!</B></span>", 1, "<span class='warning'>You hear someone fall</span>", 2)
 
 //Telescopic baton
 /obj/item/weapon/melee/telebaton
@@ -132,8 +132,8 @@
 /obj/item/weapon/melee/telebaton/attack_self(mob/user)
 	on = !on
 	if(on)
-		user.visible_message("\red With a flick of their wrist, [user] extends their telescopic baton.",\
-		"\red You extend the baton.",\
+		user.visible_message("<span class='warning'>With a flick of their wrist, [user] extends their telescopic baton.</span>",\
+		"<span class='warning'>You extend the baton.</span>",\
 		"You hear an ominous click.")
 		icon_state = "telebaton_1"
 		item_state = "telebaton"
@@ -141,8 +141,8 @@
 		force = 15//quite robust
 		attack_verb = list("smacked", "struck", "slapped")
 	else
-		user.visible_message("\blue [user] collapses their telescopic baton.",\
-		"\blue You collapse the baton.",\
+		user.visible_message("<span class='notice'>[user] collapses their telescopic baton.</span>",\
+		"<span class='notice'>You collapse the baton.</span>",\
 		"You hear a click.")
 		icon_state = "telebaton_0"
 		item_state = null
@@ -173,7 +173,7 @@
 /obj/item/weapon/melee/telebaton/attack(mob/target, mob/living/user)
 	if(on)
 		if ((CLUMSY in user.mutations) && prob(50))
-			to_chat(user, "\red You club yourself over the head.")
+			to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
 			user.Weaken(3 * force)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
@@ -183,7 +183,7 @@
 			return
 		if(user.a_intent == I_HELP && ishuman(target))
 			var/mob/living/carbon/human/H = target
-			playsound(src, "swing_hit", VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 			user.do_attack_animation(H)
 			H.adjustHalLoss(25)
 			H.visible_message("<span class='warning'>[user] harmless hit [H] with a telebaton.</span>")
@@ -192,7 +192,7 @@
 			msg_admin_attack("[key_name(user)] harmless hit [key_name(H)] with [src.name].")
 			return
 		if(..())
-			playsound(src, "swing_hit", VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 			return
 	else
 		return ..()
@@ -245,12 +245,12 @@
 /obj/item/weapon/melee/energy/axe/attack_self(mob/user)
 	src.active = !( src.active )
 	if (src.active)
-		to_chat(user, "\blue The axe is now energised.")
+		to_chat(user, "<span class='notice'>The axe is now energised.</span>")
 		src.force = 150
 		src.icon_state = "axe1"
 		src.w_class = ITEM_SIZE_HUGE
 	else
-		to_chat(user, "\blue The axe can now be concealed.")
+		to_chat(user, "<span class='notice'>The axe can now be concealed.</span>")
 		src.force = 40
 		src.icon_state = "axe0"
 		src.w_class = ITEM_SIZE_HUGE

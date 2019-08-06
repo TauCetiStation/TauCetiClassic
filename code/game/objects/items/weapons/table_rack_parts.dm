@@ -24,10 +24,10 @@
 		var/obj/item/stack/rods/R = W
 		if (R.use(4))
 			new /obj/item/weapon/table_parts/reinforced( user.loc )
-			to_chat(user, "\blue You reinforce the [name].")
+			to_chat(user, "<span class='notice'>You reinforce the [name].</span>")
 			qdel(src)
 		else
-			to_chat(user, "\red You need at least four rods to do this.")
+			to_chat(user, "<span class='warning'>You need at least four rods to do this.</span>")
 
 /obj/item/weapon/table_parts/attack_self(mob/user)
 	new /obj/structure/table( user.loc )

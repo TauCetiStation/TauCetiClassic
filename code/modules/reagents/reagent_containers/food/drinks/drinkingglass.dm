@@ -50,6 +50,10 @@
 				icon_state  = "glass_brown"
 				name = "Glass of Space Cola"
 				desc = "A glass of refreshing Space Cola."
+			if("kvass")
+				icon_state  = "kvass"
+				name = "Glass of kvass"
+				desc = "A cool refreshing drink with a taste of socialism."
 			if("nuka_cola")
 				icon_state = "nuka_colaglass"
 				name = "Nuka Cola"
@@ -520,7 +524,7 @@
 	gulp_size = volume
 	if(user.a_intent == "hurt")
 		if(ismob(target) && target.reagents && reagents.total_volume)
-			to_chat(user, "\red You splash your drink in the [target] face!")
+			to_chat(user, "<span class='warning'>You splash your drink in the [target] face!</span>")
 			var/mob/living/M = target
 			var/list/injected = list()
 			for(var/datum/reagent/R in src.reagents.reagent_list)
@@ -531,7 +535,7 @@
 			msg_admin_attack("[user.name] ([user.ckey]) splashed [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 			for(var/mob/O in viewers(world.view, user))
-				O.show_message(text("\red [] has been splashed with [] in the face by []!", target, src, user), 1)
+				O.show_message(text("<span class='warning'>[] has been splashed with [] in the face by []!</span>", target, src, user), 1)
 			src.reagents.reaction(target, TOUCH)
 			addtimer(CALLBACK(reagents, /datum/reagents.proc/clear_reagents), 5)
 			return
@@ -540,14 +544,13 @@
 			gulp_size = volume/10
 			..()
 			return
-	if(icon_state != "glass_empty")
-		var/turf/T = get_turf(user)
-		if(!CanEat(user, target, src, "drink")) return
-		T.visible_message("[user] gulped down the whole [src]. Wow!")
+	if(reagents.total_volume)
+		if(!CanEat(user, target, src, "drink"))
+			return
+		..()
+		target.visible_message("[target] gulped down the whole [src]. Wow!")
+		return
 	..()
-	return
-
-
 
 // for /obj/machinery/vending/sovietsoda
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda

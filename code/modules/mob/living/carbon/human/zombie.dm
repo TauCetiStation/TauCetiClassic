@@ -12,7 +12,7 @@
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
-	hitsound = 'sound/hallucinations/growl1.ogg'
+	hitsound = list('sound/voice/growl1.ogg')
 
 	attack_verb = list("bitten and scratched", "scratched")
 

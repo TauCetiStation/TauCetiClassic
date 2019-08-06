@@ -76,7 +76,7 @@
 
 			if (src.client)
 				if (client.prefs.muted & MUTE_IC)
-					to_chat(src, "\red You cannot send IC messages (muted).")
+					to_chat(src, "<span class='warning'>You cannot send IC messages (muted).</span>")
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return
@@ -215,9 +215,9 @@
 						if(message == "coughs up blood!")
 							if(world.time-lastSoundEmote >= 30)
 								if(gender == FEMALE)
-									playsound(src, 'sound/misc/fbcough.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+									playsound(src, pick(SOUNDIN_FBCOUGH), VOL_EFFECTS_MASTER, null, FALSE)
 								else
-									playsound(src, 'sound/misc/mbcough.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+									playsound(src, pick(SOUNDIN_MBCOUGH), VOL_EFFECTS_MASTER, null, FALSE)
 								lastSoundEmote = world.time
 					message = "<B>[src]</B> [message ? message : "gasps!"]"
 					m_type = 2
@@ -585,12 +585,11 @@
 								m_type = 1
 								lastSoundEmote = world.time
 							else if(world.time-lastSoundEmote >= 30)//prevent scream spam with things like poly spray
-								message = "<B>[src]</B> screams in agony!"
-								var/list/screamSound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg', 'sound/misc/wilhelm.ogg', 'sound/misc/goofy.ogg')
-								if (gender == FEMALE) //Females have their own screams. Trannys be damned.
-									screamSound = list('sound/misc/femalescream1.ogg', 'sound/misc/femalescream2.ogg', 'sound/misc/femalescream3.ogg', 'sound/misc/femalescream4.ogg', 'sound/misc/femalescream5.ogg')
-								var/scream = pick(screamSound)//AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
-								playsound(src, scream, VOL_EFFECTS_MASTER, null, FALSE)
+								message = "<B>[src]</B> screams in agony!" // AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
+								if (gender == FEMALE) // Females have their own screams. Trannys be damned.
+									playsound(src, pick(SOUNDIN_FSCREAM), VOL_EFFECTS_MASTER, null, FALSE)
+								else
+									playsound(src, pick(SOUNDIN_MSCREAM), VOL_EFFECTS_MASTER, null, FALSE)
 								m_type = 2
 								lastSoundEmote = world.time
 						else
@@ -614,7 +613,7 @@
 			to_chat(src, "blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough,\ncry, custom, deathgasp, drool, eyebrow, frown, gasp, giggle, groan, grumble, handshake, hug-(none)/mob, glare-(none)/mob,\ngrin, laugh, look-(none)/mob, moan, mumble, nod, pale, point-atom, raise, salute, shake, shiver, shrug,\nsigh, signal-#1-10, smile, sneeze, sniff, snore, stare-(none)/mob, tremble, twitch, twitch_s, whimper,\nwink, yawn")
 
 		else
-			to_chat(src, "\blue Unusable emote '[act]'. Say *help for a list.")
+			to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 
 	if(message)
 		log_emote("[name]/[key] : [message]")

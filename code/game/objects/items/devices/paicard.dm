@@ -22,6 +22,19 @@
 		pai.death(0)
 	return ..()
 
+/obj/item/device/paicard/attackby(W, mob/living/user)
+	if(istype(W, /obj/item/weapon/paper))
+		var/obj/item/weapon/paper/paper = W
+		if(paper.crumpled)
+			to_chat(usr, "Paper to crumpled for anything.")
+			return
+		var/itemname = paper.name
+		var/info = paper.info
+		to_chat(user, "You hold \the [itemname] up to the pAI...")
+		if(pai.client && !(pai.stat == DEAD))
+			to_chat(pai, "[user.name] holds \a [itemname] up to one of your camera...")
+			pai << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, entity_ja(info)), text("window=[]", itemname))
+	
 /obj/item/device/paicard/attack_self(mob/user)
 	if (!in_range(src, user))
 		return
@@ -148,7 +161,7 @@
 				</td>
 			</table>
 		"}
-		if(pai && (!pai.master_dna || !pai.master))
+		if(!pai.master_dna || !pai.master)
 			dat += {"
 				<table>
 					<td class="button">
@@ -157,25 +170,25 @@
 				</table>
 			"}
 		dat += "<br>"
-		if(radio)
+		if(radio && radio.wires)
 			dat += "<b>Radio Uplink</b>"
 			dat += {"
 				<table class="request">
 					<tr>
 						<td class="radio">Transmit:</td>
-						<td><a href='byond://?src=\ref[src];wires=4'>[(radio.wires & 4) ? "<font color=#55FF55>Enabled</font>" : "<font color=#FF5555>Disabled</font>" ]</a>
+						<td><a href='byond://?src=\ref[src];wires=4'>[!radio.wires.is_index_cut(RADIO_WIRE_TRANSMIT) ? "<font color=#55FF55>Enabled</font>" : "<font color=#FF5555>Disabled</font>" ]</a>
 
 						</td>
 					</tr>
 					<tr>
 						<td class="radio">Receive:</td>
-						<td><a href='byond://?src=\ref[src];wires=2'>[(radio.wires & 2) ? "<font color=#55FF55>Enabled</font>" : "<font color=#FF5555>Disabled</font>" ]</a>
+						<td><a href='byond://?src=\ref[src];wires=2'>[!radio.wires.is_index_cut(RADIO_WIRE_RECEIVE) ? "<font color=#55FF55>Enabled</font>" : "<font color=#FF5555>Disabled</font>" ]</a>
 
 						</td>
 					</tr>
 					<tr>
 						<td class="radio">Signal Pulser:</td>
-						<td><a href='byond://?src=\ref[src];wires=1'>[(radio.wires & 1) ? "<font color=#55FF55>Enabled</font>" : "<font color=#FF5555>Disabled</font>" ]</a>
+						<td><a href='byond://?src=\ref[src];wires=1'>[!radio.wires.is_index_cut(RADIO_WIRE_SIGNAL) ? "<font color=#55FF55>Enabled</font>" : "<font color=#FF5555>Disabled</font>" ]</a>
 
 						</td>
 					</tr>
@@ -255,10 +268,7 @@
 			removePersonality()
 	if(href_list["wires"])
 		var/t1 = text2num(href_list["wires"])
-		if (radio.wires & t1)
-			radio.wires &= ~t1
-		else
-			radio.wires |= t1
+		radio.wires.cut_wire_index(t1)
 	if(href_list["setlaws"])
 		var/newlaws = sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", input_default(pai.pai_laws)) as message)
 		if(newlaws)
@@ -298,7 +308,7 @@
 /obj/item/device/paicard/proc/alertUpdate()
 	var/turf/T = get_turf_or_move(src.loc)
 	for (var/mob/M in viewers(T))
-		M.show_message("\blue [src] flashes a message across its screen, \"Additional personalities available for download.\"", 3, "\blue [src] bleeps electronically.", 2)
+		M.show_message("<span class='notice'>[src] flashes a message across its screen, \"Additional personalities available for download.\"</span>", 3, "<span class='notice'>[src] bleeps electronically.</span>", 2)
 
 /obj/item/device/paicard/emp_act(severity)
 	for(var/mob/M in src)

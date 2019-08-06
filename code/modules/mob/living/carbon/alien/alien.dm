@@ -15,6 +15,7 @@
 	var/nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500
+	var/last_sound_emote = 0 // prevents sounds spam
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/has_fine_manipulation = 0
@@ -266,7 +267,7 @@ Hit Procs
 		damage /= 4
 
 
-	show_message("\red The blob attacks!")
+	show_message("<span class='warning'>The blob attacks!</span>")
 
 	adjustFireLoss(damage)
 
@@ -276,7 +277,7 @@ Hit Procs
 /mob/living/carbon/alien/meteorhit(O)
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))
-			M.show_message(text("\red [] has been hit by []", src, O), 1)
+			M.show_message(text("<span class='warning'>[] has been hit by []</span>", src, O), 1)
 	if (health > 0)
 		adjustFireLoss((istype(O, /obj/effect/meteor/small) ? 10 : 25))
 		adjustFireLoss(30)

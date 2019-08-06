@@ -385,6 +385,12 @@
 					apply_effect(5, WEAKEN, armor)
 					visible_message("<span class='userdanger'>[src] has been knocked down!</span>")
 
+				if(!(damage_flags & (DAM_SHARP|DAM_EDGE)) && prob(I.force + 10)) // A chance to force puke with a blunt hit.
+					for(var/obj/item/weapon/grab/G in grabbed_by)
+						if(G.state >= GRAB_AGGRESSIVE && G.assailant == user)
+							vomit(punched=TRUE)
+							return
+
 				if(bloody)
 					bloody_body(src)
 	return TRUE

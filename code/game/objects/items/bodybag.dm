@@ -105,5 +105,5 @@
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
 	if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
-		to_chat(usr, "\red You can't fold that up anymore..")
+		to_chat(usr, "<span class='warning'>You can't fold that up anymore..</span>")
 	..()

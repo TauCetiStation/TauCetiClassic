@@ -9,8 +9,8 @@
 	layer = FIREDOOR_LAYER
 	base_layer = FIREDOOR_LAYER
 	glass = 0
-	door_open_sound  = 'sound/machines/electric_door_open.ogg'
-	door_close_sound = 'sound/machines/electric_door_open.ogg'
+	door_open_sound  = 'sound/machines/firedoor_open.ogg'
+	door_close_sound = 'sound/machines/firedoor_close.ogg'
 
 	//These are frequenly used with windows, so make sure zones can pass.
 	//Generally if a firedoor is at a place where there should be a zone boundery then there will be a regular door underneath it.
@@ -97,12 +97,12 @@
 /obj/machinery/door/firedoor/attack_paw(mob/user)
 	if(istype(user, /mob/living/carbon/alien/humanoid))
 		if(blocked)
-			to_chat(user, "\red The door is sealed, it cannot be pried open.")
+			to_chat(user, "<span class='warning'>The door is sealed, it cannot be pried open.</span>")
 			return
 		else if(!density)
 			return
 		else if(!user.is_busy(src))
-			to_chat(user, "\red You force your claws between the doors and begin to pry them open...")
+			to_chat(user, "<span class='warning'>You force your claws between the doors and begin to pry them open...</span>")
 			playsound(src, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			if (do_after(user,40,target = src) && src)
 				open(1)
@@ -171,7 +171,7 @@
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.use(0, user))
 			blocked = !blocked
-			user.visible_message("\red \The [user] [blocked ? "welds" : "unwelds"] \the [src] with \a [W].",\
+			user.visible_message("<span class='warning'>\The [user] [blocked ? "welds" : "unwelds"] \the [src] with \a [W].</span>",\
 			"You [blocked ? "weld" : "unweld"] \the [src] with \the [W].",\
 			"You hear something being welded.")
 			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
@@ -207,7 +207,7 @@
 		return
 
 	if(blocked)
-		to_chat(user, "\red \The [src] is welded solid!")
+		to_chat(user, "<span class='warning'>\The [src] is welded solid!</span>")
 		return
 
 	if( iscrowbar(C) || ( istype(C,/obj/item/weapon/twohanded/fireaxe) && C:wielded == 1 ) )
@@ -215,22 +215,22 @@
 			return
 
 		if( blocked && iscrowbar(C) )
-			user.visible_message("\red \The [user] pries at \the [src] with \a [C], but \the [src] is welded in place!",\
+			user.visible_message("<span class='warning'>\The [user] pries at \the [src] with \a [C], but \the [src] is welded in place!</span>",\
 			"You try to pry \the [src] [density ? "open" : "closed"], but it is welded in place!",\
 			"You hear someone struggle and metal straining.")
 			return
 		if(user.is_busy(src)) return
-		user.visible_message("\red \The [user] starts to force \the [src] [density ? "open" : "closed"] with \a [C]!",\
+		user.visible_message("<span class='warning'>\The [user] starts to force \the [src] [density ? "open" : "closed"] with \a [C]!</span>",\
 				"You start forcing \the [src] [density ? "open" : "closed"] with \the [C]!",\
 				"You hear metal strain.")
 		if(C.use_tool(src, user, 30, volume = 50))
 			if( iscrowbar(C) )
 				if( stat & (BROKEN|NOPOWER) || !density)
-					user.visible_message("\red \The [user] forces \the [src] [density ? "open" : "closed"] with \a [C]!",\
+					user.visible_message("<span class='warning'>\The [user] forces \the [src] [density ? "open" : "closed"] with \a [C]!</span>",\
 					"You force \the [src] [density ? "open" : "closed"] with \the [C]!",\
 					"You hear metal strain, and a door [density ? "open" : "close"].")
 			else
-				user.visible_message("\red \The [user] forces \the [ blocked ? "welded" : "" ] [src] [density ? "open" : "closed"] with \a [C]!",\
+				user.visible_message("<span class='warning'>\The [user] forces \the [ blocked ? "welded" : "" ] [src] [density ? "open" : "closed"] with \a [C]!</span>",\
 					"You force \the [ blocked ? "welded" : "" ] [src] [density ? "open" : "closed"] with \the [C]!",\
 					"You hear metal strain and groan, and a door [density ? "open" : "close"].")
 			if(density)

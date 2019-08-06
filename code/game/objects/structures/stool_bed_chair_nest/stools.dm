@@ -44,7 +44,7 @@
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
 			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
-			playsound(src, "sparks", VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'>You hear [src] coming apart.</span>")
 			if(!(flags & NODECONSTRUCT))
 				new /obj/item/stack/sheet/metal(loc)
@@ -70,7 +70,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "stool"
 	force = 10
-	hitsound = 'sound/items/chair_fall.ogg'
+	hitsound = list('sound/items/chair_fall.ogg')
 	throwforce = 10
 	w_class = ITEM_SIZE_HUGE
 	var/obj/structure/stool/origin_stool = null

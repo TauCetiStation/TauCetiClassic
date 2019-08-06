@@ -68,7 +68,7 @@
 			ae.broken = TRUE
 			operating = 0
 	src.density = 0
-	playsound(src, "shatter", VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	if(display_message)
 		visible_message("[src] shatters!")
 	qdel(src)
@@ -208,7 +208,7 @@
 /obj/machinery/door/window/hitby(AM)
 
 	..()
-	visible_message("\red <B>The glass door was hit by [AM].</B>", 1)
+	visible_message("<span class='warning'><B>The glass door was hit by [AM].</B></span>", 1)
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
@@ -269,21 +269,17 @@
 		return
 
 	//Emags and ninja swords? You may pass.
-	if (density && ((istype(I, /obj/item/weapon/card/emag) && hasPower()) || istype(I, /obj/item/weapon/melee/energy/blade)))
+	if (density && istype(I, /obj/item/weapon/melee/energy/blade))
 		flick("[src.base_state]spark", src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		sleep(6)
-		if(istype(I, /obj/item/weapon/melee/energy/blade))
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-			spark_system.set_up(5, 0, src.loc)
-			spark_system.start()
-			playsound(src, "sparks", VOL_EFFECTS_MASTER)
-			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
-			visible_message("<span class='warning'> The glass door was sliced open by [user]!</span>")
-			open(1)
-			return
-		open()
-		operating = -1
+		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		spark_system.set_up(5, 0, src.loc)
+		spark_system.start()
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+		playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+		visible_message("<span class='warning'> The glass door was sliced open by [user]!</span>")
+		open(1)
 		return
 
 	if(!(flags & NODECONSTRUCT))
@@ -367,7 +363,7 @@
 			return
 		var/aforce = I.force
 		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-		visible_message("\red <B>[src] was hit by [I].</B>")
+		visible_message("<span class='warning'><B>[src] was hit by [I].</B></span>")
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			take_damage(aforce)
 		return
@@ -387,6 +383,16 @@
 		do_animate("deny")
 
 	return
+
+/obj/machinery/door/window/emag_act(mob/user)
+	if(density)
+		flick("[src.base_state]spark", src)
+		user.SetNextMove(CLICK_CD_MELEE)
+		sleep(6)
+		open()
+		operating = -1
+		return TRUE
+	return FALSE
 
 /obj/machinery/door/window/brigdoor
 	name = "Secure Door"

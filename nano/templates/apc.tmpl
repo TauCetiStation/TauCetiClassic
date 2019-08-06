@@ -163,6 +163,20 @@
 			{{/if}}
 		</div>
 	</div>
+	
+	{{if !data.locked || data.siliconUser}}
+		<div class="item">
+			<div class="itemLabel">
+				Night Shift Lighting:
+			</div>
+			<div class="itemContent">
+				{{:helper.link(data.nightshift_lights ? 'Disable' : 'Enable', 'power', {'toggle_nightshift' : 1})}}
+				{{if data.nightshift_lights}}
+					{{:helper.link('Change theme', 'lightbulb', {'change_nightshift' : 1})}}
+				{{/if}}
+			</div>
+		</div>
+	{{/if}}
 
 	{{if data.siliconUser}}
 		<h3>System Overrides</h3>

@@ -645,7 +645,7 @@
 				for(var/obj/item/weapon/implant/mindshield/loyalty/I in H.contents)
 					if(I.implanted)
 						qdel(I)
-			to_chat(H, "\blue <Font size =3><B>Your [is_mind_shield ? "mind shield" : "loyalty"] implant has been deactivated.</B></FONT>")
+			to_chat(H, "<span class='notice'><Font size =3><B>Your [is_mind_shield ? "mind shield" : "loyalty"] implant has been deactivated.</B></FONT></span>")
 		if(href_list["implant"] == "add")
 			var/obj/item/weapon/implant/mindshield/L
 			if(is_mind_shield)
@@ -656,20 +656,20 @@
 				L.inject(H)
 				START_PROCESSING(SSobj, L)
 
-			to_chat(H, "\red <Font size =3><B>You somehow have become the recepient of a [is_mind_shield ? "mind shield" : "loyalty"] transplant,\
-			 and it just activated!</B></FONT>")
+			to_chat(H, "<span class='warning'><Font size =3><B>You somehow have become the recepient of a [is_mind_shield ? "mind shield" : "loyalty"] transplant,\
+			 and it just activated!</B></FONT></span>")
 			if(src in ticker.mode.revolutionaries)
 				special_role = null
 				ticker.mode.revolutionaries -= src
 				ticker.mode.update_rev_icons_removed(src)
-				to_chat(src, "\red <Font size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove \
-				 all thoughts about being a revolutionary.  Get back to work!</B></Font>")
+				to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove \
+				 all thoughts about being a revolutionary.  Get back to work!</B></Font></span>")
 			if(!is_mind_shield && (src in ticker.mode.head_revolutionaries))
 				special_role = null
 				ticker.mode.head_revolutionaries -=src
 				ticker.mode.update_rev_icons_removed(src)
-				to_chat(src, "\red <Font size = 3><B>The nanobots in the loyalty implant remove \
-				 all thoughts about being a revolutionary.  Get back to work!</B></Font>")
+				to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the loyalty implant remove \
+				 all thoughts about being a revolutionary.  Get back to work!</B></Font></span>")
 			if(src in ticker.mode.cult)
 				ticker.mode.cult -= src
 				ticker.mode.update_cult_icons_removed(src)
@@ -677,13 +677,13 @@
 				var/datum/game_mode/cult/cult = ticker.mode
 				if (istype(cult))
 					cult.memoize_cult_objectives(src)
-				to_chat(current, "\red <FONT size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove all\
-				 thoughts about being in a cult.  Have a productive day!</B></FONT>")
+				to_chat(current, "<span class='warning'><FONT size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove all\
+				 thoughts about being in a cult.  Have a productive day!</B></FONT></span>")
 				memory = ""
 			if(!is_mind_shield && (src in ticker.mode.traitors))
 				ticker.mode.traitors -= src
 				special_role = null
-				to_chat(current, "\red <FONT size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a traitor to Nanotrasen.  Have a nice day!</B></FONT>")
+				to_chat(current, "<span class='warning'><FONT size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a traitor to Nanotrasen.  Have a nice day!</B></FONT></span>")
 				log_admin("[key_name_admin(usr)] has de-traitor'ed [current].")
 
 	else if (href_list["revolution"])
@@ -693,12 +693,12 @@
 			if("clear")
 				if(src in ticker.mode.revolutionaries)
 					ticker.mode.revolutionaries -= src
-					to_chat(current, "\red <FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary!</B></FONT>")
+					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary!</B></FONT></span>")
 					ticker.mode.update_rev_icons_removed(src)
 					special_role = null
 				if(src in ticker.mode.head_revolutionaries)
 					ticker.mode.head_revolutionaries -= src
-					to_chat(current, "\red <FONT size = 3><B>You have been brainwashed! You are no longer a head revolutionary!</B></FONT>")
+					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a head revolutionary!</B></FONT></span>")
 					ticker.mode.update_rev_icons_removed(src)
 					special_role = null
 					current.verbs -= /mob/living/carbon/human/proc/RevConvert
@@ -708,9 +708,9 @@
 				if(src in ticker.mode.head_revolutionaries)
 					ticker.mode.head_revolutionaries -= src
 					ticker.mode.update_rev_icons_removed(src)
-					to_chat(current, "\red <FONT size = 3><B>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</B></FONT>")
+					to_chat(current, "<span class='warning'><FONT size = 3><B>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</B></FONT></span>")
 				else if(!(src in ticker.mode.revolutionaries))
-					to_chat(current, "\red <FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT>")
+					to_chat(current, "<span class='warning'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>")
 					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 				else
 					return
@@ -723,10 +723,10 @@
 				if(src in ticker.mode.revolutionaries)
 					ticker.mode.revolutionaries -= src
 					ticker.mode.update_rev_icons_removed(src)
-					to_chat(current, "\red <FONT size = 3><B>You have proved your devotion to revoltion! You are a head revolutionary now!</B></FONT>")
+					to_chat(current, "<span class='warning'><FONT size = 3><B>You have proved your devotion to revoltion! You are a head revolutionary now!</B></FONT></span>")
 					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 				else if(!(src in ticker.mode.head_revolutionaries))
-					to_chat(current, "\blue You are a member of the revolutionaries' leadership now!")
+					to_chat(current, "<span class='notice'>You are a member of the revolutionaries' leadership now!</span>")
 				else
 					return
 				if (ticker.mode.head_revolutionaries.len>0)
@@ -749,24 +749,24 @@
 			if("autoobjectives")
 				ticker.mode.forge_revolutionary_objectives(src)
 				ticker.mode.greet_revolutionary(src,0)
-				to_chat(usr, "\blue The objectives for revolution have been generated and shown to [key]")
+				to_chat(usr, "<span class='notice'>The objectives for revolution have been generated and shown to [key]</span>")
 
 			if("flash")
 				if (!ticker.mode.equip_revolutionary(current))
-					to_chat(usr, "\red Spawning flash failed!")
+					to_chat(usr, "<span class='warning'>Spawning flash failed!</span>")
 
 			if("takeflash")
 				var/list/L = current.get_contents()
 				var/obj/item/device/flash/flash = locate() in L
 				if (!flash)
-					to_chat(usr, "\red Deleting flash failed!")
+					to_chat(usr, "<span class='warning'>Deleting flash failed!</span>")
 				qdel(flash)
 
 			if("repairflash")
 				var/list/L = current.get_contents()
 				var/obj/item/device/flash/flash = locate() in L
 				if (!flash)
-					to_chat(usr, "\red Repairing flash failed!")
+					to_chat(usr, "<span class='warning'>Repairing flash failed!</span>")
 				else
 					flash.broken = 0
 
@@ -779,7 +779,7 @@
 				fail |= !ticker.mode.equip_traitor(current, 1)
 				fail |= !ticker.mode.equip_revolutionary(current)
 				if (fail)
-					to_chat(usr, "\red Reequipping revolutionary goes wrong!")
+					to_chat(usr, "<span class='warning'>Reequipping revolutionary goes wrong!</span>")
 
 	else if (href_list["gang"])
 		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
@@ -863,7 +863,7 @@
 					if (istype(cult))
 						if(!config.objectives_disabled)
 							cult.memoize_cult_objectives(src)
-					to_chat(current, "\red <FONT size = 3><B>You have been brainwashed! You are no longer a cultist!</B></FONT>")
+					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a cultist!</B></FONT></span>")
 					memory = ""
 					log_admin("[key_name_admin(usr)] has de-cult'ed [current].")
 			if("cultist")
@@ -893,13 +893,13 @@
 					)
 					var/where = H.equip_in_one_of_slots(T, slots)
 					if (!where)
-						to_chat(usr, "\red Spawning tome failed!")
+						to_chat(usr, "<span class='warning'>Spawning tome failed!</span>")
 					else
 						to_chat(H, "A tome, a message from your new master, appears in your [where].")
 
 			if("amulet")
 				if (!ticker.mode.equip_cultist(current))
-					to_chat(usr, "\red Spawning amulet failed!")
+					to_chat(usr, "<span class='warning'>Spawning amulet failed!</span>")
 
 	else if (href_list["wizard"])
 		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
@@ -910,14 +910,14 @@
 					ticker.mode.wizards -= src
 					special_role = null
 					current.spellremove(current, config.feature_object_spell_system? "object":"verb")
-					to_chat(current, "\red <FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT>")
+					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT></span>")
 					log_admin("[key_name_admin(usr)] has de-wizard'ed [current].")
 			if("wizard")
 				if(!(src in ticker.mode.wizards))
 					ticker.mode.wizards += src
 					special_role = "Wizard"
 					//ticker.mode.learn_basic_spells(current)
-					to_chat(current, "<B>\red You are the Space Wizard!</B>")
+					to_chat(current, "<B><span class='warning'>You are the Space Wizard!</span></B>")
 					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 					log_admin("[key_name_admin(usr)] has wizard'ed [current].")
 			if("lair")
@@ -929,7 +929,7 @@
 			if("autoobjectives")
 				if(!config.objectives_disabled)
 					ticker.mode.forge_wizard_objectives(src)
-					to_chat(usr, "\blue The objectives for wizard [key] have been generated. You can edit them and anounce manually.")
+					to_chat(usr, "<span class='notice'>The objectives for wizard [key] have been generated. You can edit them and anounce manually.</span>")
 
 	else if (href_list["changeling"])
 		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
@@ -956,11 +956,11 @@
 			if("autoobjectives")
 				if(!config.objectives_disabled)
 					ticker.mode.forge_changeling_objectives(src)
-				to_chat(usr, "\blue The objectives for changeling [key] have been generated. You can edit them and anounce manually.")
+				to_chat(usr, "<span class='notice'>The objectives for changeling [key] have been generated. You can edit them and anounce manually.</span>")
 
 			if("initialdna")
 				if( !changeling || !changeling.absorbed_dna.len )
-					to_chat(usr, "\red Resetting DNA failed!")
+					to_chat(usr, "<span class='warning'>Resetting DNA failed!</span>")
 				else
 					current.dna = changeling.absorbed_dna[1]
 					current.real_name = current.dna.real_name
@@ -976,7 +976,7 @@
 			if("clear")
 				if(src in ticker.mode.syndicates)
 					ticker.mode.remove_nuclear(src)
-					to_chat(current, "\red <FONT size = 3><B>You have been brainwashed! You are no longer a syndicate operative!</B></FONT>")
+					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a syndicate operative!</B></FONT></span>")
 					log_admin("[key_name_admin(usr)] has de-nuke op'ed [current].")
 			if("nuclear")
 				if(!(src in ticker.mode.syndicates))
@@ -988,7 +988,7 @@
 						current.real_name = "Gorlex Maradeurs Operative #[ticker.mode.syndicates.len-1]"
 					special_role = "Syndicate"
 					current.faction = "syndicate"
-					to_chat(current, "\blue You are a Gorlex Maradeurs agent!")
+					to_chat(current, "<span class='notice'>You are a Gorlex Maradeurs agent!</span>")
 
 					if(config.objectives_disabled)
 						to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
@@ -1011,7 +1011,7 @@
 				qdel(H.w_uniform)
 
 				if (!ticker.mode.equip_syndicate(current))
-					to_chat(usr, "\red Equipping a syndicate failed!")
+					to_chat(usr, "<span class='warning'>Equipping a syndicate failed!</span>")
 			if("tellcode")
 				var/code
 				for (var/obj/machinery/nuclearbomb/bombue in poi_list)
@@ -1022,7 +1022,7 @@
 					store_memory("<B>Syndicate Nuclear Bomb Code</B>: [code]", 0)
 					to_chat(current, "The nuclear authorization code is: <B>[code]</B>")
 				else
-					to_chat(usr, "\red No valid nuke found!")
+					to_chat(usr, "<span class='warning'>No valid nuke found!</span>")
 
 	else if (href_list["traitor"])
 		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
@@ -1030,14 +1030,14 @@
 			if("clear")
 				if(src in ticker.mode.traitors)
 					ticker.mode.remove_traitor(src)
-					to_chat(current, "\red <FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT>")
+					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT></span>")
 					log_admin("[key_name_admin(usr)] has de-traitor'ed [current].")
 
 			if("traitor")
 				if(!(src in ticker.mode.traitors))
 					ticker.mode.traitors += src
 					special_role = "traitor"
-					to_chat(current, "<B>\red You are a traitor!</B>")
+					to_chat(current, "<B><span class='warning'>You are a traitor!</span></B>")
 					log_admin("[key_name_admin(usr)] has traitor'ed [current].")
 					if (config.objectives_disabled)
 						to_chat(current, "<i>You have been turned into an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>")
@@ -1049,7 +1049,7 @@
 			if("autoobjectives")
 				if (!config.objectives_disabled)
 					ticker.mode.forge_traitor_objectives(src)
-					to_chat(usr, "\blue The objectives for traitor [key] have been generated. You can edit them and anounce manually.")
+					to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
 
 	else if(href_list["shadowling"])
 		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
@@ -1136,7 +1136,7 @@
 					var/mob/living/carbon/monkey/M = current
 					if (istype(H))
 						log_admin("[key_name(usr)] attempting to monkeyize [key_name(current)]")
-						message_admins("\blue [key_name_admin(usr)] attempting to monkeyize [key_name_admin(current)]")
+						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize [key_name_admin(current)]</span>")
 						src = null
 						M = H.monkeyize()
 						src = M.mind
@@ -1151,7 +1151,7 @@
 					var/mob/living/carbon/monkey/M = current
 					if (istype(H))
 						log_admin("[key_name(usr)] attempting to monkeyize and infect [key_name(current)]")
-						message_admins("\blue [key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]", 1)
+						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]</span>", 1)
 						src = null
 						M = H.monkeyize()
 						src = M.mind
@@ -1167,7 +1167,7 @@
 								D.cure(0)
 								sleep(0) //because deleting of virus is doing throught spawn(0)
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
-						message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]")
+						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to humanize [key_name_admin(current)]</span>")
 						var/obj/item/weapon/dnainjector/m2h/m2h = new
 						var/obj/item/weapon/implant/mobfinder = new(M) //hack because humanizing deletes mind --rastaf0
 						src = null
@@ -1257,11 +1257,11 @@
 							total_TC += diff
 			if("uplink")
 				if (!ticker.mode.equip_traitor(current, !(src in ticker.mode.traitors)))
-					to_chat(usr, "\red Equipping a syndicate failed!")
+					to_chat(usr, "<span class='warning'>Equipping a syndicate failed!</span>")
 
 	else if (href_list["obj_announce"])
 		var/obj_count = 1
-		to_chat(current, "\blue Your current objectives:")
+		to_chat(current, "<span class='notice'>Your current objectives:</span>")
 		for(var/datum/objective/objective in objectives)
 			to_chat(current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
@@ -1343,7 +1343,7 @@
 		special_role = "Syndicate"
 		current.faction = "syndicate"
 		assigned_role = "MODE"
-		to_chat(current, "\blue You are a Gorlex Maradeurs agent!")
+		to_chat(current, "<span class='notice'>You are a Gorlex Maradeurs agent!</span>")
 		ticker.mode.forge_syndicate_objectives(src)
 		ticker.mode.greet_syndicate(src)
 

@@ -91,10 +91,8 @@
 	//MONEY
 /var/const/access_crate_cash = 200
 
-/obj/var/list/req_access = null
-/obj/var/req_access_txt = "0"
-/obj/var/list/req_one_access = null
-/obj/var/req_one_access_txt = "0"
+/obj/var/list/req_access = list()
+/obj/var/list/req_one_access = list()
 
 //returns 1 if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
@@ -142,8 +140,6 @@
 		if(Machine.emagged)
 			return TRUE
 
-	generate_access_lists()
-
 	if(!req_access.len && !req_one_access.len) //no requirements
 		return TRUE
 	if(!AM)
@@ -159,8 +155,6 @@
 	return TRUE
 
 /obj/proc/check_access_list(list/L)
-	generate_access_lists()
-
 	if(!req_access.len && !req_one_access.len)
 		return TRUE
 	if(!islist(L))
@@ -174,25 +168,6 @@
 				return TRUE
 		return FALSE
 	return TRUE
-
-/obj/proc/generate_access_lists()
-	if(!islist(req_access))
-		req_access = list()
-		if(req_access_txt)
-			var/list/req_access_str = splittext(req_access_txt,";")
-			for(var/x in req_access_str)
-				var/n = text2num(x)
-				if(n)
-					req_access += n
-
-	if(!islist(req_one_access))
-		req_one_access = list()
-		if(req_one_access_txt)
-			var/list/req_one_access_str = splittext(req_one_access_txt,";")
-			for(var/x in req_one_access_str)
-				var/n = text2num(x)
-				if(n)
-					req_one_access += n
 
 /proc/get_centcom_access(job)
 	switch(job)
@@ -464,6 +439,11 @@
 		"Emergency Response Team Leader",
 		"NanoTrasen Representative")
 
+/proc/get_all_velocity_jobs()
+	return list("Velocity Chief",
+	            "Velocity Officer",
+	            "Velocity Medical Doctor")
+
 //gets the actual job rank (ignoring alt titles)
 //this is used solely for sechuds
 /obj/proc/GetJobRealName()
@@ -559,4 +539,6 @@
 		return jobName
 	if(jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a Centcom job
 		return "Centcom"
+	if(jobName in get_all_velocity_jobs())
+		return jobName
 	return "Unknown" //Return unknown if none of the above apply

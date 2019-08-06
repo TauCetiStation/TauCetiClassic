@@ -5,7 +5,10 @@
 
 	message = sanitize(message)
 
-	if (length(message) >= 2)
+	if(copytext(message, 1, 2) == "*")
+		return emote(copytext(message, 2))
+
+	if (length(message) >= 1)
 		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")
 			message = copytext(message, 3)
 			message = trim(message)
@@ -14,9 +17,9 @@
 			else
 				alien_talk(message)
 		else
-			if (copytext(message, 1, 2) != "*" && !stat)
-				playsound(src, "hiss", VOL_EFFECTS_MASTER, 25)//So aliens can hiss while they hiss yo/N
-			return ..(message, sanitize = 0)
+			if (!stat)
+				playsound(src, pick(SOUNDIN_XENOMORPH_TALK), VOL_EFFECTS_MASTER, 45) // So aliens can hiss while they hiss yo/N
+			return ..("<span class='alien'>[message]</span>", sanitize = 0)
 
 /mob/living/carbon/alien/facehugger/say(message)
 
@@ -25,23 +28,7 @@
 
 	message = sanitize(message)
 
-	if (length(message) >= 2)
-		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")
-			message = copytext(message, 3)
-			message = trim(message)
-			if (stat == DEAD)
-				return say_dead(message)
-			else
-				alien_talk(message)
-
-/mob/living/carbon/alien/larva/say(message)
-
-	if (silent)
-		return
-
-	message = sanitize(message)
-
-	if (length(message) >= 2)
+	if (length(message) >= 1)
 		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")
 			message = copytext(message, 3)
 			message = trim(message)

@@ -11,6 +11,14 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 */
 
+#define SCARY_SOUNDS pick('sound/hallucinations/scary_sound_1.ogg', \
+                          'sound/hallucinations/scary_sound_2.ogg', \
+                          'sound/hallucinations/scary_sound_3.ogg', \
+                          'sound/hallucinations/scary_sound_4.ogg'  )
+#define DEMON_SOUNDS pick('sound/hallucinations/demons_1.ogg', \
+                          'sound/hallucinations/demons_2.ogg', \
+                          'sound/hallucinations/demons_3.ogg', )
+
 /mob/living/carbon
 	var/image/halimage
 	var/image/halbody
@@ -23,18 +31,22 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	if(handling_hal) return
 	handling_hal = 1
 	while(client && hallucination > 20)
-		sleep(rand(200,500)/(hallucination/25))
-		var/halpick = rand(1,100)
-		switch(halpick)
+		sleep(rand(200, 500) / (hallucination / 25))
+		switch(rand(1, 100))
+
+        // SCREWY HUD
+
 			if(0 to 15)
-				//Screwy HUD
-				//src << "Screwy HUD"
-				hal_screwyhud = pick(1,2,3,3,4,4)
+				hal_screwyhud = pick(1, 2, 3, 3, 4, 4)
+				if(hal_screwyhud == 2 && prob(30))
+					to_chat(src, "<span class='userdanger'>[pick("FUCK!", "FOR FUCKS SAKE, END THIS!", "")] I LOST! [pick("NNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHH!", "DAMN THIS GAME IS SO HARD!", "I CAN'T PLAY THIS GAME ANY MORE!")]</span>")
+					playsound_local(null, 'sound/hallucinations/fake_death.ogg', VOL_EFFECTS_MASTER)
 				spawn(rand(100,250))
 					hal_screwyhud = 0
+
+        //STRANGE ITEMS
+
 			if(16 to 25)
-				//Strange items
-				//src << "Traitor Items"
 				if(!halitem)
 					halitem = new
 					var/list/slots_free = list(ui_lhand,ui_rhand)
@@ -76,21 +88,25 @@ Gunshots/explosions/opening doors/less rare audio (done)
 								halitem.icon = 'icons/obj/grenade.dmi'
 								halitem.icon_state = "flashbang1"
 								halitem.name = "Flashbang"
-						if(client) client.screen += halitem
+						if(client)
+							client.screen += halitem
+							if(prob(70))
+								to_chat(src, "<span class='warning'>[pick("W-WHAT?", "AGAIN?!", "H-HA, HA-HA!")] [pick("IT'S TIME FOR REVENGE!", "FINALLY! I'LL SHOW THEM ALL...", "I NEED TO FIND A WORTHY OPPONENT!")]</span>")
+								playsound_local(null, SCARY_SOUNDS, VOL_EFFECTS_MASTER, null, FALSE)
 						spawn(rand(100,250))
 							if(client)
 								client.screen -= halitem
 							halitem = null
+
+        // FLASHES OF DANGER, TURFS
+
 			if(26 to 40)
-				//Flashes of danger
-				//src << "Danger Flash"
 				if(!halimage)
 					var/list/possible_points = list()
 					for(var/turf/simulated/floor/F in view(src,world.view))
 						possible_points += F
 					if(possible_points.len)
 						var/turf/simulated/floor/target = pick(possible_points)
-
 						switch(rand(1,3))
 							if(1)
 								//src << "Space"
@@ -101,61 +117,131 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							if(3)
 								//src << "C4"
 								halimage = image('icons/obj/assemblies.dmi',target,"plastic-explosive2",OBJ_LAYER+0.01)
-
-
-						if(client) client.images += halimage
+						if(prob(60))
+							to_chat(src, "<span class='userdanger'>[pick("O-OH NO!", "SH-SHIT!", "NOT NOW! PLEASE!", "I DON'T WANT TO DIE!")] [pick("I H-HAVE TO RUN!", "QUICKLY! TO THE SHELTER", "")]</span>")
+							playsound_local(null, DEMON_SOUNDS, VOL_EFFECTS_MASTER, null, FALSE)
+							if(ishuman(src))
+								var/mob/living/carbon/human/H = src
+								if(!H.stat)
+									H.emote(pick("scream", "cry", "laugh"), auto = TRUE)
+						if(client)
+							client.images += halimage
 						spawn(rand(10,50)) //Only seen for a brief moment.
 							if(client) client.images -= halimage
 							halimage = null
 
+        // STRANGE AUDIO
 
 			if(41 to 65)
-				//Strange audio
-				//src << "Strange Audio"
-				switch(rand(1,12))
-					if(1)
-						playsound_local(null, 'sound/machines/airlock/airlockToggle.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-					if(2)
-						if(prob(50))
-							playsound_local(null, 'sound/effects/Explosion1.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-						else
-							playsound_local(null, 'sound/effects/Explosion2.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-					if(3)
-						playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-					if(4)
-						playsound_local(null, 'sound/effects/Glassbr1.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-					if(5)
-						playsound_local(null, 'sound/effects/Glassbr2.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-					if(6)
-						playsound_local(null, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-					if(7)
-						playsound_local(null, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-					if(8)
-						playsound_local(null, 'sound/machines/windowdoor.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-					if(9)
-						//To make it more realistic, I added two gunshots (enough to kill)
-						playsound_local(null, 'sound/weapons/guns/gunshot_heavy.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+				var/list/possible_points = list()
+				for(var/turf/simulated/S in view(src, world.view))
+					possible_points += S
+				if(!possible_points.len)
+					handling_hal = 0
+					return
+				var/turf/simulated/target = pick(possible_points)
+				switch(rand(1, 15))
+					if(1) // AIRLOCKS
+						var/list/hallsound = list('sound/machines/airlock/creaking.ogg',
+						                          'sound/machines/airlock/open.ogg',
+						                          'sound/machines/airlock/close.ogg')
+						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
+					if(2) // EXPLOSIONS
+						var/list/hallsound = list('sound/effects/explosionfar.ogg',
+						                          'sound/effects/Explosion2.ogg',
+						                          'sound/effects/Explosion1.ogg')
+						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
+					if(3) // GLASS
+						playsound_local(target, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
+					if(4) // GROWLS
+						var/list/hallsound = list('sound/voice/growl1.ogg',
+						                          'sound/voice/growl2.ogg',
+						                          'sound/voice/growl3.ogg')
+						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
+					if(5) // MACHINERY
+						var/list/hallsound = list('sound/machines/twobeep.ogg',
+						                          'sound/misc/interference.ogg')
+						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
+					if(6) // DEMONS & EMOTES
+						if(prob(80))
+							playsound_local(null, DEMON_SOUNDS, VOL_EFFECTS_MASTER, null, FALSE)
+						if(ishuman(src))
+							var/mob/living/carbon/human/H = src
+							if(!H.stat)
+								H.emote(pick("scream", "cry", "laugh"), auto = TRUE)
+					if(7) // GUNSHOTS
+						var/list/gunsound_list = list('sound/weapons/guns/gunshot_heavy.ogg',
+						                              'sound/weapons/guns/gunshot_ak74.ogg',
+						                              'sound/weapons/guns/gunshot_shotgun.ogg',
+						                              'sound/weapons/guns/gunshot_medium.ogg',
+						                              'sound/weapons/guns/gunshot_light.ogg',
+						                              'sound/weapons/guns/gunshot_colt1911.ogg')
+						var/gunsound = pick(gunsound_list)
+						playsound_local(target, gunsound, VOL_EFFECTS_MASTER)
 						spawn(rand(10,30))
-							playsound_local(null, 'sound/weapons/guns/gunshot_heavy.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-					if(10)
-						playsound_local(null, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-					if(11)
-						//Same as above, but with tasers.
-						playsound_local(null, 'sound/weapons/guns/gunpulse_Taser.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+							playsound_local(target, gunsound, VOL_EFFECTS_MASTER)
+							if(prob(60))
+								playsound_local(target, pick(SOUNDIN_MSCREAM + SOUNDIN_FSCREAM), VOL_EFFECTS_MASTER, null, FALSE)
+					if(8) // MELEE
+						var/list/hallsound = list('sound/weapons/smash.ogg',
+						                          'sound/weapons/polkan_atk.ogg',
+						                          'sound/weapons/Egloves.ogg',
+						                          'sound/weapons/genhit3.ogg',
+						                          'sound/weapons/armbomb.ogg')
+						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
+					if(9) // GUNPULSES
+						var/list/gunsound_list = list('sound/weapons/guns/gunpulse_l10c.ogg',
+						                              'sound/weapons/guns/gunpulse_Taser.ogg',
+						                              'sound/weapons/guns/gunpulse_laser.ogg',
+						                              'sound/weapons/guns/gunpulse_stunrevolver.ogg')
+						var/gunsound = pick(gunsound_list)
+						playsound_local(target, gunsound, VOL_EFFECTS_MASTER)
 						spawn(rand(10,30))
-							playsound_local(null, 'sound/weapons/guns/gunpulse_Taser.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-				//Rare audio
-					if(12)
-//These sounds are (mostly) taken from Hidden: Source
-						var/list/creepyasssounds = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/Heart Beat.ogg', 'sound/effects/screech.ogg',\
-							'sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/far_noise.ogg', 'sound/hallucinations/growl1.ogg', 'sound/hallucinations/growl2.ogg',\
-							'sound/hallucinations/growl3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg',\
-							'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',\
-							'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
-						playsound_local(null, pick(creepyasssounds), VOL_EFFECTS_MASTER, null, FALSE)
+							playsound_local(target, gunsound, VOL_EFFECTS_MASTER)
+					if(10) // GHOSTS AND FAR ROARS
+						var/list/hallsound = list('sound/effects/ghost.ogg',
+						                          'sound/effects/ghost2.ogg',
+						                          'sound/hallucinations/veryfar_noise.ogg',
+						                          'sound/hallucinations/far_noise.ogg',
+						                          'sound/hallucinations/wail.ogg')
+						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
+					if(11) // HIDDEN: SOURCE WHISPERS
+						var/list/hallsound = list('sound/hallucinations/behind_you1.ogg',  'sound/hallucinations/behind_you2.ogg',
+						                          'sound/hallucinations/im_here1.ogg',     'sound/hallucinations/im_here2.ogg',
+						                          'sound/hallucinations/i_see_you_1.ogg',  'sound/hallucinations/i_see_you_2.ogg',
+						                          'sound/hallucinations/look_up1.ogg',     'sound/hallucinations/look_up2.ogg',
+						                          'sound/hallucinations/over_here1.ogg',   'sound/hallucinations/over_here2.ogg',
+						                          'sound/hallucinations/over_here3.ogg',   'sound/hallucinations/turn_around1.ogg',
+						                          'sound/hallucinations/turn_around2.ogg')
+						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE)
+					if(12) // WHISPERS
+						var/list/hallsound = list('sound/hallucinations/whispers_1.ogg',
+						                          'sound/hallucinations/whispers_2.ogg')
+						playsound_local(null, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE)
+						if(ishuman(src))
+							var/mob/living/carbon/human/H = src
+							H.stuttering += 15
+							H.ear_deaf += 8
+							H.Weaken(5)
+							H.Stun(8)
+							to_chat(src, "<span class='userdanger'>[pick("", "Voices in my head...", "WHY?!")] [pick("They're coming back!", "Not again...", "WHAT YOU NEED?!", "I CAN'T TAKE IT ANYMORE!", "GAAAAAAAAAAAAAH!")]</span>")
+							H.emote("scream", auto = TRUE)
+					if(13) // MISC
+						var/list/hallsound = list('sound/effects/Heart Beat.ogg',
+						                          'sound/hallucinations/liar.ogg',
+						                          'sound/hallucinations/i_see_you_3.ogg',
+						                          'sound/hallucinations/fake_poweroff.ogg')
+						playsound_local(null, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE)
+					else   // FAKE EVENTS
+						var/list/hallsound = list('sound/hallucinations/fake_battle_1.ogg',
+						                          'sound/hallucinations/fake_battle_2.ogg',
+						                          'sound/hallucinations/fake_battle_3.ogg',
+						                          'sound/hallucinations/fake_announcement.ogg')
+						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE)
+
+        // FLASHES OF DANGER, MOBS
+
 			if(66 to 70)
-				//Flashes of danger
-				//src << "Danger Flash"
 				if(!halbody)
 					var/list/possible_points = list()
 					for(var/turf/simulated/floor/F in view(src,world.view))
@@ -169,25 +255,31 @@ Gunshots/explosions/opening doors/less rare audio (done)
 								halbody = image('icons/mob/human.dmi',target,"husk_s",TURF_LAYER)
 							if(4)
 								halbody = image('icons/mob/alien.dmi',target,"alienother",TURF_LAYER)
-	//						if(5)
-	//							halbody = image('xcomalien.dmi',target,"chryssalid",TURF_LAYER)
-
-						if(client) client.images += halbody
-						spawn(rand(50,80)) //Only seen for a brief moment.
+						if(client)
+							client.images += halbody
+							playsound_local(null, SCARY_SOUNDS, VOL_EFFECTS_MASTER, null, FALSE)
+						spawn(rand(50,80)) // Only seen for a brief moment.
 							if(client) client.images -= halbody
 							halbody = null
+
+        // FAKE DEATH
+
 			if(71 to 72)
-				//Fake death
-//				src.sleeping_willingly = 1
 				src.sleeping = 20
 				hal_crit = 1
 				hal_screwyhud = 1
+				to_chat(src, "<span class='userdanger'>[pick("FUCK!", "FOR FUCKS SAKE, END THIS!", "", "WHY-Y-Y?!", "NOT AGAIN")] I LOST! [pick("NNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHH!", "DAMN THIS GAME IS SO HARD!", "I CAN'T PLAY THIS GAME ANY MORE!")]</span>")
+				playsound_local(null, 'sound/hallucinations/fake_death.ogg', VOL_EFFECTS_MASTER)
 				spawn(rand(50,100))
-//					src.sleeping_willingly = 0
 					src.sleeping = 0
 					hal_crit = 0
 					hal_screwyhud = 0
+
+
 	handling_hal = 0
+
+#undef SCARY_SOUNDS
+#undef DEMON_SOUNDS
 
 /obj/effect/fake_attacker
 	icon = null
@@ -217,8 +309,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	user.SetNextMove(CLICK_CD_MELEE)
 	step_away(src,my_target,2)
 	for(var/mob/M in oviewers(world.view,my_target))
-		to_chat(M, "\red <B>[my_target] flails around wildly.</B>")
-	my_target.show_message("\red <B>[src] has been attacked by [my_target] </B>", 1) //Lazy.
+		to_chat(M, "<span class='warning'><B>[my_target] flails around wildly.</B></span>")
+	my_target.show_message("<span class='warning'><B>[src] has been attacked by [my_target] </B></span>", 1) //Lazy.
 
 	src.health -= P.force
 
@@ -230,7 +322,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		step_away(src,my_target,2)
 		if(prob(30))
 			for(var/mob/O in oviewers(world.view , my_target))
-				to_chat(O, "\red <B>[my_target] stumbles around.</B>")
+				to_chat(O, "<span class='warning'><B>[my_target] stumbles around.</B></span>")
 
 /obj/effect/fake_attacker/atom_init()
 	. = ..()
@@ -278,16 +370,16 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			if(prob(15))
 				src.do_attack_animation(my_target)
 				if(weapon_name)
-					my_target.playsound_local(null, "swing_hit", VOL_EFFECTS_MASTER)
-					my_target.show_message("\red <B>[my_target] has been attacked with [weapon_name] by [src.name] </B>", 1)
+					my_target.playsound_local(null, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
+					my_target.show_message("<span class='warning'><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", 1)
 					my_target.halloss += 8
 					if(prob(20)) my_target.eye_blurry += 3
 					if(prob(33))
 						if(!locate(/obj/effect/overlay) in my_target.loc)
 							fake_blood(my_target)
 				else
-					my_target.playsound_local(null, "punch", VOL_EFFECTS_MASTER)
-					my_target.show_message("\red <B>[src.name] has punched [my_target]!</B>", 1)
+					my_target.playsound_local(null, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER, 35)
+					my_target.show_message("<span class='warning'><B>[src.name] has punched [my_target]!</B></span>", 1)
 					my_target.halloss += 4
 					if(prob(33))
 						if(!locate(/obj/effect/overlay) in my_target.loc)

@@ -182,7 +182,7 @@
 	frustration = 0
 	anchored = FALSE
 
-/obj/machinery/bot/secbot/Emag(mob/user)
+/obj/machinery/bot/secbot/emag_act(mob/user)
 	..()
 	if(open && !locked)
 		if(user)
@@ -226,14 +226,8 @@
 						icon_state = "[lasercolor][icon_state_arrest]"
 						addtimer(CALLBACK(src, .proc/update_icon), 2)
 						var/mob/living/carbon/M = target
-						var/maxstuns = 4
-						if(M.stuttering < 10 && !(HULK in M.mutations))
-							M.stuttering = 10
-						M.Stun(10)
-						M.Weaken(10)
-						maxstuns--
-						if(maxstuns <= 0)
-							target = null
+						do_attack_animation(M)
+						M.apply_effect(60, AGONY, 0) // As much as a normal stunbaton
 
 						if(declare_arrests)
 							var/area/location = get_area(src)
@@ -253,11 +247,11 @@
 							visible_message("<span class='danger'>[src] beats [target] with the stun baton!</span>")
 							icon_state = "[lasercolor][icon_state_arrest]"
 							addtimer(CALLBACK(src, .proc/update_icon), 2)
-							target.AdjustStunned(10)
+							do_attack_animation(target)
 							target.adjustBruteLoss(15)
 							if(target.stat)
 								forgetCurrentTarget()
-								playsound(src, "law", VOL_EFFECTS_MASTER, null, FALSE)
+								playsound(src, pick(SOUNDIN_BEEPSKY), VOL_EFFECTS_MASTER, null, FALSE)
 
 				else								// not next to perp
 					var/turf/olddist = get_dist(src, target)
@@ -327,7 +321,7 @@
 					var/mob/living/carbon/mob_carbon = target
 					mob_carbon.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(mob_carbon), SLOT_HANDCUFFED)
 				forgetCurrentTarget()
-				playsound(src, "law", VOL_EFFECTS_MASTER, null, FALSE)
+				playsound(src, pick(SOUNDIN_BEEPSKY), VOL_EFFECTS_MASTER, null, FALSE)
 			else if(mode == SECBOT_ARREST)
 				anchored = FALSE
 				mode = SECBOT_HUNT
@@ -614,7 +608,7 @@
 
 /obj/machinery/bot/secbot/explode()
 	walk_to(src,0)
-	visible_message("\red <B>[src] blows apart!</B>", 1)
+	visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)

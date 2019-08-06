@@ -24,7 +24,11 @@ var/datum/subsystem/junkyard/SSjunkyard
 		junk = new/list()
 
 /datum/subsystem/junkyard/proc/populate_junkyard()
-	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
+	var/zlevel = SSmapping.level_by_trait(ZTRAIT_JUNKYARD)
+	if(!zlevel)
+		return
+
+	var/list/turfs_to_init = block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
 	for(var/thing in turfs_to_init)
 		var/turf/T = thing
 		if(istype(T, /turf/simulated/mineral/airfull/junkyard))
@@ -33,7 +37,7 @@ var/datum/subsystem/junkyard/SSjunkyard
 			T.surround_by_scrap()
 		CHECK_TICK
 	junkyard_initialised = 1
-	SSweather.eligible_zlevels.Add(7) //junkyard
+	SSweather.eligible_zlevels.Add(zlevel) //junkyard
 
 /datum/subsystem/junkyard/proc/add_junk_to_stats(junktype)
 	if(!junktype)

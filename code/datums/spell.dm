@@ -54,7 +54,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		to_chat(usr, "<span class='red'> You shouldn't have this spell! Something's wrong.</span>")
 		return 0
 
-	if(usr.z == ZLEVEL_CENTCOMM && !centcomm_cancast) //Certain spells are not allowed on the centcomm zlevel
+	if(is_centcom_level(usr.z) && !centcomm_cancast) //Certain spells are not allowed on the centcomm zlevel
 		return 0
 
 	if(!skipcharge)
@@ -294,7 +294,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.spell_list))
 		return 0
 
-	if(user.z == ZLEVEL_CENTCOMM && !centcomm_cancast) //Certain spells are not allowed on the centcom zlevel
+	if(is_centcom_level(user.z) && !centcomm_cancast) //Certain spells are not allowed on the centcom zlevel
 		return 0
 
 	switch(charge_type)

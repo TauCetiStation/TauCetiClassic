@@ -312,7 +312,7 @@
 	dir = 1
 	},
 /obj/machinery/computer/telecrystals/boss{
-	req_access_txt = "151"
+	req_access = list(151)
 	},
 /turf/space,
 /area/awaymission/challenge/main)
@@ -321,7 +321,7 @@
 	dir = 1
 	},
 /obj/machinery/computer/telecrystals/boss{
-	req_access_txt = "151"
+	req_access = list(151)
 	},
 /turf/unsimulated/wall{
 	icon_state = "plasma9"
@@ -349,7 +349,7 @@
 /obj/machinery/door_control{
 	id = "syndieshutters";
 	name = "remote shutter control";
-	req_access_txt = "150"
+	req_access = list(150)
 	},
 /turf/unsimulated/wall{
 	icon_state = "plasma9"
@@ -389,7 +389,7 @@
 /obj/machinery/door_control{
 	id = "syndieshutters";
 	name = "remote shutter control";
-	req_access_txt = "150"
+	req_access = list(150)
 	},
 /turf/unsimulated/floor{
 	dir = 6;
@@ -601,7 +601,7 @@
 	name = "Blast Door Control";
 	pixel_x = 24;
 	pixel_y = 0;
-	req_access_txt = "101"
+	req_access = list(101)
 	},
 /obj/structure/table/reinforced,
 /turf/simulated/floor{
@@ -621,7 +621,7 @@
 	name = "Warehouse Door Control";
 	pixel_x = -1;
 	pixel_y = -24;
-	req_access_txt = "101"
+	req_access = list(101)
 	},
 /turf/space,
 /area/awaymission/challenge/main)
@@ -645,7 +645,7 @@
 	name = "Blast Door Control";
 	pixel_x = 24;
 	pixel_y = 0;
-	req_access_txt = "101"
+	req_access = list(101)
 	},
 /turf/simulated/floor/carpet,
 /area/awaymission/challenge/end)
@@ -738,7 +738,7 @@
 	name = "Blast Door Control";
 	pixel_x = -25;
 	pixel_y = 0;
-	req_access_txt = "101"
+	req_access = list(101)
 	},
 /turf/simulated/floor/carpet,
 /area/awaymission/challenge/end)
@@ -1199,7 +1199,7 @@
 	opacity = 0
 	},
 /obj/machinery/door/airlock/glass{
-	req_access_txt = "101"
+	req_access = list(101)
 	},
 /obj/machinery/door/airlock/centcom,
 /turf/simulated/floor{

@@ -293,7 +293,7 @@ update_flag
 		return 1
 
 	if(!iswrench(W) && !istype(W, /obj/item/weapon/tank) && !istype(W, /obj/item/device/analyzer) && !istype(W, /obj/item/device/pda))
-		visible_message("\red [user] hits the [src] with a [W]!")
+		visible_message("<span class='warning'>[user] hits the [src] with a [W]!</span>")
 		src.add_fingerprint(user)
 		investigate_log("was smacked with \a [W] by [key_name(user)].", INVESTIGATE_ATMOS)
 		user.SetNextMove(CLICK_CD_MELEE)

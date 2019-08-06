@@ -139,11 +139,11 @@ var/datum/subsystem/ticker/ticker
 					if (mode.station_was_nuked)
 						feedback_set_details("end_proper","nuke")
 						if(!delay_end)
-							to_chat(world, "\blue <B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B>")
+							to_chat(world, "<span class='notice'><B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B></span>")
 					else
 						feedback_set_details("end_proper","proper completion")
 						if(!delay_end)
-							to_chat(world, "\blue <B>Restarting in [restart_timeout/10] seconds</B>")
+							to_chat(world, "<span class='notice'><B>Restarting in [restart_timeout/10] seconds</B></span>")
 
 					if(!delay_end)
 						sleep(restart_timeout)
@@ -183,7 +183,7 @@ var/datum/subsystem/ticker/ticker
 		if(secret_force_mode != "secret")
 			var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
 			if(!smode.can_start())
-				message_admins("\blue Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.")
+				message_admins("<span class='notice'>Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.</span>")
 			else
 				mode = smode
 
@@ -239,7 +239,7 @@ var/datum/subsystem/ticker/ticker
 	round_start_realtime = world.realtime
 
 	if(dbcon.IsConnected())
-		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET start_datetime = Now() WHERE id = [round_id]")
+		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET start_datetime = Now(), map_name = '[sanitize_sql(SSmapping.config.map_name)]' WHERE id = [round_id]")
 		query_round_game_mode.Execute()
 
 	setup_economy()
@@ -315,7 +315,7 @@ var/datum/subsystem/ticker/ticker
 				M.client.screen += cinematic
 			if(M.stat != DEAD)//Just you wait for real destruction!
 				var/turf/T = get_turf(M)
-				if(T && T.z==1)
+				if(T && is_station_level(T.z))
 					M.death(0) //no mercy
 
 	//Now animate the cinematic
@@ -439,7 +439,7 @@ var/datum/subsystem/ticker/ticker
 				num_survivors++
 				if(station_evacuated) //If the shuttle has already left the station
 					var/turf/playerTurf = get_turf(Player)
-					if(playerTurf.z != ZLEVEL_CENTCOMM)
+					if(!is_centcom_level(playerTurf.z))
 						to_chat(Player, "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>")
 					else
 						num_escapees++
@@ -515,7 +515,7 @@ var/datum/subsystem/ticker/ticker
 	mode.declare_completion()//To declare normal completion.
 
 	ai_completions += "<br><h2>Mode Result</h2>"
-	
+
 	if(mode.completion_text)//extendet has empty completion text
 		ai_completions += "<div class='block'>[mode.completion_text]</div>"
 

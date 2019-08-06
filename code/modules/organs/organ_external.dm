@@ -26,6 +26,7 @@
 	var/list/bodypart_organs = list() // Internal organs of this body part
 	var/sabotaged = 0                 // If a prosthetic limb is emagged, it will detonate when it fails.
 	var/list/implants = list()        // Currently implanted objects.
+	var/bandaged = FALSE              // Are there any visual bandages on this bodypart
 
 	// Joint/state stuff.
 	var/cannot_amputate               // Impossible to amputate.
@@ -44,7 +45,7 @@
 	var/tmp/destspawn = 0 //Has it spawned the broken limb?
 	var/tmp/amputated = 0 //Whether this has been cleanly amputated, thus causing no pain
 	var/limb_layer = 0
-	var/damage_msg = "\red You feel an intense pain"
+	var/damage_msg = "<span class='warning'>You feel an intense pain</span>"
 
 	var/regen_bodypart_penalty = 0 // This variable determines how much time it would take to regenerate a bodypart, and the cost of it's regeneration.
 
@@ -759,6 +760,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 				qdel(owner.shoes)
 
 	owner.update_body()
+	if(body_zone == BP_HEAD)
+		owner.update_hair()
 
 	// OK so maybe your limb just flew off, but if it was attached to a pair of cuffs then hooray! Freedom!
 	release_restraints()
@@ -858,16 +861,16 @@ Note that amputating the affected organ does in fact remove the infection from t
 		return
 
 	owner.visible_message(\
-		"\red You hear a loud cracking sound coming from \the [owner].",\
-		"\red <b>Something feels like it shattered in your [name]!</b>",\
+		"<span class='warning'>You hear a loud cracking sound coming from \the [owner].</span>",\
+		"<span class='warning'><b>Something feels like it shattered in your [name]!</b></span>",\
 		"You hear a sickening crack.")
 
 	if(owner.species && !owner.species.flags[NO_PAIN])
 		owner.emote("scream",,, 1)
 
-	playsound(owner, "fracture", VOL_EFFECTS_MASTER, null, null, -2)
+	playsound(owner, pick(SOUNDIN_BONEBREAK), VOL_EFFECTS_MASTER, null, null, -2)
 	status |= ORGAN_BROKEN
-	broken_description = pick("broken","fracture","hairline fracture")
+	broken_description = pick("broken", "fracture", "hairline fracture")
 	perma_injury = brute_dam
 
 	// Fractures have a chance of getting you out of restraints
@@ -1201,13 +1204,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if (disfigured)
 		return
 	if(type == "brute")
-		owner.visible_message("\red You hear a sickening cracking sound coming from \the [owner]'s face.",	\
-		"\red <b>Your face becomes unrecognizible mangled mess!</b>",	\
-		"\red You hear a sickening crack.")
+		owner.visible_message("<span class='warning'>You hear a sickening cracking sound coming from \the [owner]'s face.</span>",	\
+		"<span class='warning'><b>Your face becomes unrecognizible mangled mess!</b></span>",	\
+		"<span class='warning'>You hear a sickening crack.</span>")
 	else
-		owner.visible_message("\red [owner]'s face melts away, turning into mangled mess!",	\
-		"\red <b>Your face melts off!</b>",	\
-		"\red You hear a sickening sizzle.")
+		owner.visible_message("<span class='warning'>[owner]'s face melts away, turning into mangled mess!</span>",	\
+		"<span class='warning'><b>Your face melts off!</b></span>",	\
+		"<span class='warning'>You hear a sickening sizzle.</span>")
 	disfigured = 1
 
 /****************************************************
@@ -1357,18 +1360,18 @@ Note that amputating the affected organ does in fact remove the infection from t
 		switch(brain_op_stage)
 			if(0)
 				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("\red [brainmob] is beginning to have \his head cut open with [W] by [user].", 1)
-				to_chat(brainmob, "\red [user] begins to cut open your head with [W]!")
-				to_chat(user, "\red You cut [brainmob]'s head open with [W]!")
+					O.show_message("<span class='warning'>[brainmob] is beginning to have \his head cut open with [W] by [user].</span>", 1)
+				to_chat(brainmob, "<span class='warning'>[user] begins to cut open your head with [W]!</span>")
+				to_chat(user, "<span class='warning'>You cut [brainmob]'s head open with [W]!</span>")
 
 				brain_op_stage = 1
 
 			if(2)
 				if(!(specie in list(DIONA, IPC)))
 					for(var/mob/O in (oviewers(brainmob) - user))
-						O.show_message("\red [brainmob] is having \his connections to the brain delicately severed with [W] by [user].", 1)
-					to_chat(brainmob, "\red [user] begins to cut open your head with [W]!")
-					to_chat(user, "\red You cut [brainmob]'s head open with [W]!")
+						O.show_message("<span class='warning'>[brainmob] is having \his connections to the brain delicately severed with [W] by [user].</span>", 1)
+					to_chat(brainmob, "<span class='warning'>[user] begins to cut open your head with [W]!</span>")
+					to_chat(user, "<span class='warning'>You cut [brainmob]'s head open with [W]!</span>")
 
 					brain_op_stage = 3.0
 			else
@@ -1377,17 +1380,17 @@ Note that amputating the affected organ does in fact remove the infection from t
 		switch(brain_op_stage)
 			if(1)
 				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("\red [brainmob] has \his head sawed open with [W] by [user].", 1)
-				to_chat(brainmob, "\red [user] begins to saw open your head with [W]!")
-				to_chat(user, "\red You saw [brainmob]'s head open with [W]!")
+					O.show_message("<span class='warning'>[brainmob] has \his head sawed open with [W] by [user].</span>", 1)
+				to_chat(brainmob, "<span class='warning'>[user] begins to saw open your head with [W]!</span>")
+				to_chat(user, "<span class='warning'>You saw [brainmob]'s head open with [W]!</span>")
 
 				brain_op_stage = 2
 			if(3)
 				if(!(specie in list(DIONA, IPC)))
 					for(var/mob/O in (oviewers(brainmob) - user))
-						O.show_message("\red [brainmob] has \his spine's connection to the brain severed with [W] by [user].", 1)
-					to_chat(brainmob, "\red [user] severs your brain's connection to the spine with [W]!")
-					to_chat(user, "\red You sever [brainmob]'s brain's connection to the spine with [W]!")
+						O.show_message("<span class='warning'>[brainmob] has \his spine's connection to the brain severed with [W] by [user].</span>", 1)
+					to_chat(brainmob, "<span class='warning'>[user] severs your brain's connection to the spine with [W]!</span>")
+					to_chat(user, "<span class='warning'>You sever [brainmob]'s brain's connection to the spine with [W]!</span>")
 
 					user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [brainmob.name] ([brainmob.ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)])</font>"
 					brainmob.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)])</font>"

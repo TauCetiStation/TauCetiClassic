@@ -10,7 +10,7 @@
 	throw_range = 4
 	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("called", "rang")
-	hitsound = 'sound/weapons/ring.ogg'
+	hitsound = list('sound/weapons/ring.ogg')
 
 /obj/item/weapon/rsp
 	name = "\improper Rapid-Seed-Producer (RSP)"
@@ -289,7 +289,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
 	force = 3.0
-	hitsound = 'sound/effects/magic.ogg'
+	hitsound = list('sound/effects/magic.ogg')
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
@@ -520,7 +520,7 @@
 	icon_state = "RPED"
 	item_state = "RPED"
 	w_class = ITEM_SIZE_HUGE
-	can_hold = list("/obj/item/weapon/stock_parts")
+	can_hold = list(/obj/item/weapon/stock_parts)
 	storage_slots = 50
 	use_to_pickup = 1
 	allow_quick_gather = 1

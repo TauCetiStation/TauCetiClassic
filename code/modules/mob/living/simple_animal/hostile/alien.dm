@@ -18,7 +18,7 @@
 	melee_damage_upper = 25
 	attacktext = "slashes"
 	a_intent = "harm"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = list('sound/weapons/bladeslice.ogg')
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -94,4 +94,4 @@
 /mob/living/simple_animal/hostile/alien/death()
 	..()
 	visible_message("[src] lets out a waning guttural screech, green blood bubbling from its maw...")
-	playsound(src, 'sound/voice/hiss6.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/voice/xenomorph/death_1.ogg', VOL_EFFECTS_MASTER)

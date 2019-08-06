@@ -309,7 +309,7 @@
 /obj/structure/closet/price = 200
 /obj/structure/device/piano/price = 25000
 /obj/structure/flora/price = 300
-/obj/structure/janitorialcart/price = 3000
+/obj/structure/stool/bed/chair/janitorialcart/price = 3000
 /obj/structure/mopbucket/price = 1500
 /obj/structure/particle_accelerator/price = 20000
 /obj/structure/sign/price = 987

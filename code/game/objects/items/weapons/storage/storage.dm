@@ -22,7 +22,7 @@
 	var/allow_quick_gather	//Set this variable to allow the object to have the 'toggle mode' verb, which quickly collects all items from a tile.
 	var/collection_mode = 1  //0 = pick one at a time, 1 = pick all on tile
 	var/foldable = null	// BubbleWrap - if set, can be folded (when empty) into a sheet of cardboard
-	var/use_sound = "rustle"	//sound played when used. null for no sound.
+	var/list/use_sound = SOUNDIN_RUSTLE	//sound played when used. null for no sound.
 
 	var/storage_ui_path = /datum/storage_ui/default
 	var/datum/storage_ui/storage_ui = null
@@ -96,8 +96,8 @@
 		storage_ui.hide_from(user)
 
 /obj/item/weapon/storage/proc/open(mob/user)
-	if (use_sound)
-		playsound(src, use_sound, VOL_EFFECTS_MASTER, null, null, -5)
+	if (length(use_sound))
+		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
 
 	prepare_ui()
 	storage_ui.on_open(user)
@@ -146,7 +146,7 @@
 	if(can_hold.len)
 		var/ok = FALSE
 		for(var/A in can_hold)
-			if(istype(W, text2path(A) ))
+			if(istype(W, A))
 				ok = TRUE
 				break
 		if(!ok)
@@ -157,7 +157,7 @@
 			return FALSE
 
 	for(var/A in cant_hold) //Check for specific items which this container can't hold.
-		if(istype(W, text2path(A) ))
+		if(istype(W, A))
 			if(!stop_messages)
 				to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
 			return FALSE
@@ -274,7 +274,7 @@
 	..()
 
 	if(isrobot(user))
-		to_chat(user, "\blue You're a robot. No.")
+		to_chat(user, "<span class='notice'>You're a robot. No.</span>")
 		return //Robots can't interact with storage items. FALSE
 
 	if(!can_be_inserted(W))
@@ -287,14 +287,14 @@
 		var/obj/item/weapon/tray/T = W
 		if(T.calc_carry() > 0)
 			if(prob(85))
-				to_chat(user, "\red The tray won't fit in [src].")
+				to_chat(user, "<span class='warning'>The tray won't fit in [src].</span>")
 				return FALSE
 			else
 				W.loc = user.loc
 				if ((user.client && user.s_active != src))
 					user.client.screen -= W
 				W.dropped(user)
-				to_chat(user, "\red God damnit!")
+				to_chat(user, "<span class='warning'>God damnit!</span>")
 
 	if(istype(W, /obj/item/weapon/packageWrap) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
 		return FALSE
@@ -307,17 +307,6 @@
 	return
 
 /obj/item/weapon/storage/attack_hand(mob/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.l_store == src && !H.get_active_hand())	//Prevents opening if it's in a pocket.
-			H.put_in_hands(src)
-			H.l_store = null
-			return
-		if(H.r_store == src && !H.get_active_hand())
-			H.put_in_hands(src)
-			H.r_store = null
-			return
-
 	if (src.loc == user)
 		src.open(user)
 	else
@@ -457,9 +446,9 @@
 	max_w_class = 0
 	max_storage_space = 0
 	for(var/obj/item/I in src)
-		var/texttype = "[I.type]"
-		if(!(texttype in can_hold))
-			can_hold += texttype
+		var/type_ = I.type
+		if(!(type_ in can_hold))
+			can_hold += type_
 		max_w_class = max(I.w_class, max_w_class)
 		max_storage_space += I.get_storage_cost()
 
@@ -507,3 +496,12 @@
 /obj/item/proc/get_storage_cost()
 	//If you want to prevent stuff above a certain w_class from being stored, use max_w_class
 	return base_storage_cost(w_class)
+
+// Useful for spilling the contents of containers all over the floor.
+/obj/item/weapon/storage/proc/spill(dist = 2, turf/T = null)
+	if (!istype(T))
+		T = get_turf(src)
+
+	for(var/obj/O in contents)
+		remove_from_storage(O, T)
+		INVOKE_ASYNC(O, /obj.proc/tumble_async, 2)

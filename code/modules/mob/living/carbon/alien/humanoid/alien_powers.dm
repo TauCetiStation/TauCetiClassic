@@ -8,13 +8,13 @@ Doesn't work on other aliens/AI.*/
 
 /mob/living/carbon/alien/proc/powerc(X, Y)//Y is optional, checks for weed planting. X can be null.
 	if(stat)
-		to_chat(src, "\green You must be conscious to do this.")
+		to_chat(src, "<span class='warning'>You must be conscious to do this.</span>")
 		return 0
 	else if(X && getPlasma() < X)
-		to_chat(src, "\green Not enough plasma stored.")
+		to_chat(src, "<span class='warning'>Not enough plasma stored.</span>")
 		return 0
 	else if(Y && (!isturf(src.loc) || istype(src.loc, /turf/space)))
-		to_chat(src, "\green Bad place for a garden!")
+		to_chat(src, "<span class='warning'>Bad place for a garden!</span>")
 		return 0
 	else	return 1
 
@@ -23,10 +23,14 @@ Doesn't work on other aliens/AI.*/
 	set desc = "Plants some alien weeds."
 	set category = "Alien"
 
+	if(locate(/obj/structure/alien/weeds/node) in get_turf(src))
+		to_chat(src, "There is already a weed's node.")
+		return
+
 	if(powerc(50,1))
 		adjustToxLoss(-50)
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\green <B>[src] has planted some alien weeds!</B>"), 1)
+		playsound(src, 'sound/effects/resin_build.ogg', VOL_EFFECTS_MASTER, 33)
+		visible_message("<span class='notice'><B>[src]</B> has planted some alien weeds.</span>", "<span class='notice'>You plant some alien weeds.</span>")
 		new /obj/structure/alien/weeds/node(loc)
 	return
 
@@ -53,8 +57,8 @@ Doesn't work on other aliens/AI.*/
 		var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
 		if(msg)
 			log_say("AlienWhisper: [key_name(src)]->[M.key] : [msg]")
-			to_chat(M, "\green You hear a strange, alien voice in your head... \italic [msg]")
-			to_chat(src, {"\green You said: "[msg]" to [M]"})
+			to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head... <I>[msg]</I></span>")
+			to_chat(src, "<span class='noticealien'>You said: \"<I>[msg]</I>\" to [M]</span>")
 	return
 
 /mob/living/carbon/alien/humanoid/verb/transfer_plasma(mob/living/carbon/alien/M as mob in oview())
@@ -70,10 +74,10 @@ Doesn't work on other aliens/AI.*/
 				if (get_dist(src,M) <= 1)
 					M.adjustToxLoss(amount)
 					adjustToxLoss(-amount)
-					to_chat(M, "\green [src] has transfered [amount] plasma to you.")
-					to_chat(src, {"\green You have trasferred [amount] plasma to [M]"})
+					to_chat(M, "<span class='noticealien'>[src] has transfered [amount] plasma to you.</span>")
+					to_chat(src, "<span class='noticealien'>You have transfered [amount] plasma to [M]</span>")
 				else
-					to_chat(src, "\green You need to be closer.")
+					to_chat(src, "<span class='warning'>You need to be closer.</span>")
 	return
 
 
@@ -88,27 +92,27 @@ Doesn't work on other aliens/AI.*/
 			if(isobj(O))
 				var/obj/I = O
 				if(I.unacidable)	//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
-					to_chat(src, "\green You cannot dissolve this object.")
+					to_chat(src, "<span class='warning'>You cannot dissolve this object.</span>")
 					return
 			// TURF CHECK
 			else if(istype(O, /turf/simulated))
 				var/turf/T = O
 				// R WALL
 				if(istype(T, /turf/simulated/wall/r_wall))
-					to_chat(src, "\green You cannot dissolve this object.")
+					to_chat(src, "<span class='warning'>You cannot dissolve this object.</span>")
 					return
 				// R FLOOR
 				if(istype(T, /turf/simulated/floor/engine))
-					to_chat(src, "\green You cannot dissolve this object.")
+					to_chat(src, "<span class='warning'>You cannot dissolve this object.</span>")
 					return
 			else// Not a type we can acid.
 				return
 
 			adjustToxLoss(-200)
 			new /obj/effect/alien/acid(get_turf(O), O)
-			visible_message("\green <B>[src] vomits globs of vile stuff all over [O]. It begins to sizzle and melt under the bubbling mess of acid!</B>")
+			visible_message("<span class='danger'>[src] vomits globs of vile stuff all over [O]. It begins to sizzle and melt under the bubbling mess of acid!</span>")
 		else
-			to_chat(src, "\green Target is too far away.")
+			to_chat(src, "<span class='warning'>Target is too far away.</span>")
 	return
 
 /*
@@ -119,13 +123,13 @@ Doesn't work on other aliens/AI.*/
 
 	if(powerc(50))
 		if(isalien(target))
-			to_chat(src, "\green Your allies are not a valid target.")
+			to_chat(src, "<span class='notice'>Your allies are not a valid target.</span>")
 			return
 		adjustToxLoss(-50)
-		to_chat(src, "\green You spit neurotoxin at [target].")
+		to_chat(src, "<span class='notice'>You spit neurotoxin at [target].</span>")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				to_chat(O, "\red [src] spits neurotoxin at [target]!")
+				to_chat(O, "<span class='warning'>[src] spits neurotoxin at [target]!</span>")
 		//I'm not motivated enough to revise this. Prjectile code in general needs update.
 		var/turf/T = loc
 		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
@@ -155,23 +159,42 @@ Doesn't work on other aliens/AI.*/
 	set desc = "Emit a screech that stuns prey."
 	set category = "Alien"
 
-	if(world.time < last_screech + screech_delay)
+	if(stat)
+		to_chat(src, "<span class='warning'>You must be conscious to do this.</span>")
 		return
 
-	playsound(src, 'sound/effects/screech2.ogg', VOL_EFFECTS_MASTER)
+	if(world.time < last_screech + screech_delay)
+		to_chat(src, "<span class='warning'>You're too tired to scream so loud again. You need [round((last_screech + screech_delay - world.time)/10)] seconds to rest...</span>")
+		return
+
+	playsound(src, 'sound/voice/xenomorph/queen_roar.ogg', VOL_EFFECTS_MASTER)
 	for(var/mob/living/carbon/human/H in oviewers())
-		if(H.sdisabilities & DEAF || istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
+		if(H.sdisabilities & DEAF || H.stat == DEAD || istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
+			to_chat(H, "<span class='warning'>You feel strong vibrations and quiet noise...</span>")
+			continue
+		if(H.species.flags[NO_BREATHE] || H.species.flags[NO_PAIN]) // so IPCs, dioneae, abductors, skeletons, zombies, shadowlings, golems and vox armalis get less debuffs
+			to_chat(H, "<span class='danger'>You feel strong vibrations and loud noise, but you're strong enough to stand it!</span>")
+			H.Stun(2)
 			continue
 
-		to_chat(H, "<font color='red' size='7'>HISSSSSS</font>")
+		to_chat(H, pick("<font color='red' size='7'>RRRRRRAAAAAAAAAAAAAAAAAAGHHHHHH! MY EA-A-ARS! ITS TOO LO-O-O-O-O-O-UD! NGGGHHHHHHH!</font>", "<font color='red' size='7'>VVNNNGGGGHHHHHHH! MY EARS! ITS TOO LOUD! HHHHHHOOO!</font>"))
 		H.SetSleeping(0)
 		H.stuttering += 20
-		H.ear_deaf += 30
 		H.Weaken(3)
-		if(prob(30))
+		if(prob(30)) // long stun
+			H.playsound_local(null, 'sound/effects/mob/earring_30s.ogg', VOL_EFFECTS_MASTER)
 			H.Stun(10)
+			H.ear_deaf += 30
+			if(H.stat == CONSCIOUS) // human is trying to yell and hear themselve.
+				H.visible_message("<B>[H.name]</B> falls to their [pick("side", "knees")], covers their [pick("head", "ears")] and [pick("shrivels their face in agony", "it looks like screams loud")]!", "<span class='warning'>You're trying to scream in hopes of hearing your voice...</span>")
+				if(H.gender == FEMALE)
+					H.playsound_local(null, 'sound/effects/mob/earring_yell_female.ogg', VOL_EFFECTS_MASTER)
+				else
+					H.playsound_local(null, 'sound/effects/mob/earring_yell_male.ogg', VOL_EFFECTS_MASTER)
 			H.Paralyse(4)
-		else
+		else // short stun
+			H.ear_deaf += 15
+			H.playsound_local(null, 'sound/effects/mob/earring_15s.ogg', VOL_EFFECTS_MASTER)
 			H.Stun(5)
 			H.Paralyse(2)
 	last_screech = world.time
@@ -214,7 +237,7 @@ Doesn't work on other aliens/AI.*/
 
 /mob/living/carbon/alien/humanoid/proc/split_neurotoxin(atom/target)
 	if(neurotoxin_next_shot > world.time)
-		to_chat(src, "You are not ready.")
+		to_chat(src, "<span class='warning'>You are not ready.</span>")
 		return
 
 		//I'm not motivated enough to revise this. Prjectile code in general needs update.
@@ -248,7 +271,7 @@ Doesn't work on other aliens/AI.*/
 			neurotoxin_next_shot = world.time  + (neurotoxin_delay * 4)
 			adjustToxLoss(-150)
 
-	visible_message("\red <B> [src] spits [BB.name] at [target]!</B>")
+	visible_message("<span class='danger'>[src] spits [BB.name] at [target]!</span>")
 
 	//prepare "bullet"
 	BB.original = target
@@ -268,22 +291,25 @@ Doesn't work on other aliens/AI.*/
 	return
 #undef ALIEN_NEUROTOXIN
 #undef ALIEN_ACID
+#define ALREADY_STRUCTURE_THERE (locate(/obj/structure/alien/air_plant) in get_turf(src))      || (locate(/obj/structure/alien/egg) in get_turf(src)) \
+                             || (locate(/obj/structure/mineral_door/resin) in get_turf(src))   || (locate(/obj/structure/alien/resin/wall) in get_turf(src)) \
+                             || (locate(/obj/structure/alien/resin/membrane) in get_turf(src)) || (locate(/obj/structure/stool/bed/nest) in get_turf(src))
+                             // does anyone have an idea how to make it shorter?
 /mob/living/carbon/alien/humanoid/proc/resin() // -- TLE
 	set name = "Secrete Resin (75)"
 	set desc = "Secrete tough malleable resin."
 	set category = "Alien"
 
-	if((locate(/obj/structure/alien/air_plant) in get_turf(src)) || (locate(/obj/structure/alien/egg) in get_turf(src)) || (locate(/obj/structure/mineral_door/resin) in get_turf(src)) || (locate( /obj/structure/alien/resin/wall) in get_turf(src)) || (locate(/obj/structure/alien/resin/membrane) in get_turf(src)) || (locate(/obj/structure/stool/bed/nest) in get_turf(src)))
+	if(ALREADY_STRUCTURE_THERE)
 		to_chat (src, "There is already a structure there.")
 		return
 
-	if(powerc(75))
+	if(powerc(75, 1))
 		var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in list("resin door","resin wall","resin membrane","resin nest") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
 		if(!choice || !powerc(75))	return
 		adjustToxLoss(-75)
-		to_chat(src, "\green You shape a [choice].")
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\red <B>[src] vomits up a thick purple substance and begins to shape it!</B>"), 1)
+		visible_message("<span class='notice'><B>[src]</B> vomits up a thick purple substance and begins to shape it.</span>", "<span class='notice'>You shape a [choice].</span>")
+		playsound(src, 'sound/effects/resin_build.ogg', VOL_EFFECTS_MASTER)
 		switch(choice)
 			if("resin door")
 				new /obj/structure/mineral_door/resin(loc)
@@ -308,7 +334,7 @@ Doesn't work on other aliens/AI.*/
 					M.loc = loc
 					//M.update_pipe_vision()
 					//Paralyse(10)
-			src.visible_message("\green <B>[src] hurls out the contents of their stomach!</B>")
+			src.visible_message("<span class='warning'>[src] hurls out the contents of their stomach!</span>")
 	return
 
 /mob/living/carbon/alien/humanoid/verb/air_plant()
@@ -316,9 +342,15 @@ Doesn't work on other aliens/AI.*/
 	set desc = "Plants some alien weeds."
 	set category = "Alien"
 
-	if(powerc(250,1))
+	if(ALREADY_STRUCTURE_THERE)
+		to_chat(src, "There is already a structure there.")
+		return
+
+	if(powerc(250, 1))
 		adjustToxLoss(-250)
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\green <B>[src] has planted some alien weeds!</B>"), 1)
+		playsound(src, 'sound/effects/resin_build.ogg', VOL_EFFECTS_MASTER)
+		visible_message("<span class='notice'><B>[src]</B> has planted some alien weeds.</span>", "<span class='notice'>You plant some alien weeds.</span>")
 		new /obj/structure/alien/air_plant(loc)
 	return
+
+#undef ALREADY_STRUCTURE_THERE

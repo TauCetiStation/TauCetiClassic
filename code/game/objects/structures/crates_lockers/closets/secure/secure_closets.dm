@@ -75,28 +75,38 @@
 		user.drop_item()
 		if(W)
 			W.forceMove(src.loc)
-	else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/twohanded/dualsaber)) && !src.broken)
+	else if((istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/twohanded/dualsaber)) && !src.broken)
 		broken = 1
 		locked = 0
 		user.SetNextMove(CLICK_CD_MELEE)
 		desc = "It appears to be broken."
 		icon_state = icon_off
 		flick(icon_broken, src)
-		if(istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/twohanded/dualsaber))
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-			spark_system.set_up(5, 0, src.loc)
-			spark_system.start()
-			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
-			playsound(src, "sparks", VOL_EFFECTS_MASTER)
-			for(var/mob/O in viewers(user, 3))
-				O.show_message("<span class='warning'>The locker has been sliced open by [user] with an [W.name]!</span>", 1, "You hear metal being sliced and sparks flying.", 2)
-		else
-			for(var/mob/O in viewers(user, 3))
-				O.show_message("<span class='warning'>The locker has been broken by [user] with an electromagnetic card!</span>", 1, "You hear a faint electrical spark.", 2)
+		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		spark_system.set_up(5, 0, src.loc)
+		spark_system.start()
+		playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+		for(var/mob/O in viewers(user, 3))
+			O.show_message("<span class='warning'>The locker has been sliced open by [user] with an [W.name]!</span>", 1, "You hear metal being sliced and sparks flying.", 2)
+
 	else if(istype(W,/obj/item/weapon/packageWrap) || iswelder(W))
 		return ..(W,user)
 	else
 		togglelock(user)
+
+/obj/structure/closet/secure_closet/emag_act(mob/user)
+	if(broken)
+		return FALSE
+	broken = 1
+	locked = 0
+	user.SetNextMove(CLICK_CD_MELEE)
+	desc = "It appears to be broken."
+	icon_state = icon_off
+	flick(icon_broken, src)
+	for(var/mob/O in viewers(user, 3))
+		O.show_message("<span class='warning'>The locker has been broken by [user] with an electromagnetic card!</span>", 1, "You hear a faint electrical spark.", 2)
+	return TRUE
 
 /obj/structure/closet/secure_closet/attack_hand(mob/user)
 	src.add_fingerprint(user)

@@ -23,6 +23,7 @@
 	var/alarm_playing = 0 // So they can't abuse alarm's sound
 
 	var/health_analyze_mode = FALSE
+	var/output_to_chat = TRUE
 
 /obj/item/clothing/gloves/pipboy/atom_init()
 	. = ..()
@@ -77,21 +78,48 @@
 	set_light(0)
 	verbs -= /obj/item/clothing/gloves/pipboy/verb/switch_off
 
+/obj/item/clothing/gloves/pipboy/verb/toggle_output()
+	set name = "Toggle Output"
+	set category = "Object"
+
+	output_to_chat = !output_to_chat
+	if(output_to_chat)
+		to_chat(usr, "The scanner now outputs data to chat.")
+	else
+		to_chat(usr, "The scanner now outputs data in a seperate window.")
+
 /obj/item/clothing/gloves/pipboy/attack(mob/living/M, mob/living/user, def_zone)
 	if(!health_analyze_mode || !on)
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT])
-			user.show_message("<span class = 'notice'>Analyzing Results for ERROR:\n&emsp; Overall Status: ERROR</span>")
-			user.show_message("&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font>", 1)
-			user.show_message("&emsp; Damage Specifics: <font color='blue'>?</font> - <font color='green'>?</font> - <font color='#FFA500'>?</font> - <font color='red'>?</font>")
-			user.show_message("<span class = 'notice'>Body Temperature: [H.bodytemperature-T0C]&deg;C ([H.bodytemperature*1.8-459.67]&deg;F)</span>", 1)
-			user.show_message("<span class = 'warning bold'>Warning: Blood Level ERROR: --% --cl.</span><span class = 'notice bold'>Type: ERROR</span>")
-			user.show_message("<span class = 'notice'>Subject's pulse:</span><font color='red'>-- bpm.</font>")
-			return
+			add_fingerprint(user)
+			var/message = ""
+			if(!output_to_chat)
+				message += "<HTML><head><title>[M.name]'s scan results</title></head><BODY>"
+
+			message += "<span class = 'notice'>Analyzing Results for ERROR:\n&emsp; Overall Status: ERROR</span><br>"
+			message += "&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font><br>"
+			message += "&emsp; Damage Specifics: <font color='blue'>?</font> - <font color='green'>?</font> - <font color='#FFA500'>?</font> - <font color='red'>?</font><br>"
+			message += "<span class = 'notice'>Body Temperature: [H.bodytemperature-T0C]&deg;C ([H.bodytemperature*1.8-459.67]&deg;F)</span><br>"
+			message += "<span class = 'warning bold'>Warning: Blood Level ERROR: --% --cl.</span><span class = 'notice bold'>Type: ERROR</span><br>"
+			message += "<span class = 'notice'>Subject's pulse:</span><font color='red'>-- bpm.</font><br>"
+
+			if(!output_to_chat)
+				message += "</BODY></HTML>"
+				user << browse(entity_ja(message), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+				onclose(user, "[M.name]_scan_report")
+			else
+				user.show_message(message)
 		else
-			health_analyze(M, user, TRUE)
+			add_fingerprint(user)
+			var/dat = health_analyze(M, user, TRUE, output_to_chat)
+			if(!output_to_chat)
+				user << browse(entity_ja(dat), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+				onclose(user, "[M.name]_scan_report")
+			else
+				user.show_message(dat)
 	else
 		user.show_message("<span class = 'warning'>Analyzing Results not compiled. Unknown anatomy detected.</span>")
 

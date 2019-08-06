@@ -146,7 +146,7 @@
 	if(shock_damage<1)
 		return 0
 	apply_damage(shock_damage, BURN, def_zone, used_weapon="Electrocution")
-	playsound(src, "sparks", VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	if(shock_damage > 10)
 		visible_message(
 			"<span class='rose'>[src] was shocked by the [source]!</span>", \
@@ -247,7 +247,7 @@
 					status = "weirdly shapen."
 				if(status == "")
 					status = "OK"
-				src.show_message(text("\t []My [] is [].", status == "OK" ? "\blue " : "\red ", BP.name,status), 1)
+				src.show_message(text("\t <span class='[status == "OK" ? "notice " : "warning"]'>My [] is [].</span>", BP.name,status), 1)
 
 			if(roundstart_quirks.len)
 				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
@@ -408,14 +408,20 @@
 	return
 
 /mob/living/carbon/throw_item(atom/target)
-	src.throw_mode_off()
+	throw_mode_off()
 	if(usr.stat || !target)
 		return
-	if(target.type == /obj/screen) return
+	if(target.type == /obj/screen)
+		return
 
-	var/atom/movable/item = src.get_active_hand()
+	var/atom/movable/item = get_active_hand()
+	if(!item)
+		return
 
-	if(!item || !item:canremove) return
+	if(istype(item, /obj/item))
+		var/obj/item/W = item
+		if(!W.canremove || W.flags & NODROP)
+			return
 
 	if (istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
@@ -609,8 +615,8 @@
 	if(B.chemicals >= 100)
 		to_chat(src, "<span class='danger'>Your host twitches and quivers as you rapdly excrete several larvae from your sluglike body.</span>")
 		B.chemicals -= 100
-		var/turf/T = get_turf(src)
-		T.add_vomit_floor(src)
+
+		vomit()
 		new /mob/living/simple_animal/borer(get_turf(src))
 	else
 		to_chat(src, "<span class='info'>You do not have enough chemicals stored to reproduce.</span>")
@@ -857,3 +863,32 @@
 				visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>")
 				attack_log += text("\[[time_stamp()]\] <font color='orange'>Had their internals [internal ? "open" : "close"] by [usr.name] ([usr.ckey])[gas_log_string]</font>")
 				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>[internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name][gas_log_string]</font>")
+
+/mob/living/carbon/vomit(punched = FALSE, masked = FALSE)
+	var/mask_ = masked
+	if(head && (head.flags & HEADCOVERSMOUTH))
+		mask_ = TRUE
+
+	. = ..(punched, mask_)
+	if(. && !mask_)
+		if(reagents.total_volume > 0)
+			var/toxins_puked = 0
+			var/datum/reagents/R = new(10)
+
+			while(TRUE)
+				var/datum/reagent/R_V = pick(reagents.reagent_list)
+				if(istype(R_V, /datum/reagent/water))
+					toxins_puked += 0.5
+				else if(R_V.id == "carbon")
+					toxins_puked += 2
+				else if(R_V.id == "anti_toxin")
+					toxins_puked += 3
+				else if(R_V.id == "thermopsis")
+					toxins_puked += 5
+				reagents.trans_id_to(R, R_V.id, 1)
+				if(R.total_volume >= 10)
+					break
+				if(reagents.total_volume <= 0)
+					break
+			R.reaction(loc)
+			adjustToxLoss(-toxins_puked)

@@ -71,7 +71,7 @@
 	if(powerc(75,1))//Can't plant eggs on spess tiles. That's silly.
 		adjustToxLoss(-75)
 		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\green <B>[src] has laid an egg!</B>"), 1)
+			O.show_message(text("<span class='notice'><B>[src] has laid an egg!</B></span>"), 1)
 		new /obj/structure/alien/egg(loc)
 	return
 

@@ -18,7 +18,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "grips"
-	attack_sound = 'sound/hallucinations/growl1.ogg'
+	attack_sound = list('sound/voice/growl1.ogg')
 
 	min_oxy = 0
 	max_oxy = 0

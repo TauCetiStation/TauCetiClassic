@@ -2263,7 +2263,7 @@
 	normaldoorcontrol = 1;
 	pixel_x = 25;
 	pixel_y = 0;
-	req_access_txt = "0";
+	req_access = list(0);
 	specialfunctions = 4
 	},
 /obj/structure/table/reinforced,
@@ -6857,7 +6857,7 @@
 "oW" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge";
-	req_access_txt = "19"
+	req_access = list(19)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -6921,7 +6921,7 @@
 "pb" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge";
-	req_access_txt = "19"
+	req_access = list(19)
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -7850,7 +7850,7 @@
 /obj/machinery/door/airlock/vault{
 	icon_state = "door_locked";
 	locked = 1;
-	req_access_txt = "53"
+	req_access = list(53)
 	},
 /turf/simulated/floor{
 	icon_state = "vault"

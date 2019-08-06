@@ -117,7 +117,7 @@
 			else if((tool in user.contents) && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
 				S.fail_step(user, M, target_zone, tool)		//malpractice~
 			else	// this failing silently was a pain.
-				to_chat(user, "\red You must remain close to your patient to conduct surgery.")
+				to_chat(user, "<span class='warning'>You must remain close to your patient to conduct surgery.</span>")
 
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M

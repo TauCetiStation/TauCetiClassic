@@ -50,7 +50,6 @@
 		icon_state = "doorctrl_assembly0"
 		return
 	else
-		generate_access_lists()
 		if(req_access.len)
 			req_one_access = req_access.Copy()
 			req_access.Cut()
@@ -104,11 +103,6 @@
 /obj/machinery/door_control/attackby(obj/item/weapon/W, mob/user)
 	switch(buildstage)
 		if(DOOR_CONTROL_COMPLETE)
-			if(istype(W, /obj/item/weapon/card/emag))
-				emagged = TRUE
-				playsound(src, "sparks", VOL_EFFECTS_MASTER)
-				update_icon()
-				return
 			if(!wiresexposed)
 				if(istype(W, /obj/item/device/detective_scanner))
 					return
@@ -192,6 +186,14 @@
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				qdel(src)
 				return
+
+/obj/machinery/door_control/emag_act(mob/user)
+	if((buildstage == DOOR_CONTROL_COMPLETE) && !emagged)
+		emagged = TRUE
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+		update_icon()
+		return TRUE
+	return FALSE
 
 /obj/machinery/door_control/proc/set_up_door_control(mob/user)
 	var/setup_menu = text("<b>Door Control Setup</b><hr>")

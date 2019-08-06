@@ -385,7 +385,22 @@
 						force_down = 0
 						return
 					if(state >= GRAB_AGGRESSIVE)
-						H.apply_pressure(assailant, hit_zone)
+						if(!H.apply_pressure(assailant, hit_zone))
+							if(hit_zone == BP_CHEST)
+								var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(hit_zone)]
+								var/armor_block = H.run_armor_check(BP, "melee")
+
+								var/chance_to_force_vomit = 30
+								if(H.stat >= UNCONSCIOUS)
+									chance_to_force_vomit += 20
+								if(prob(armor_block))
+									chance_to_force_vomit = 0
+								user.visible_message("<span class='notice'>[user] squeezes [H], trying to make them puke.</span>")
+								if(prob(chance_to_force_vomit))
+									H.vomit(punched=TRUE)
+					else if(hit_zone == O_MOUTH && ishuman(user))
+						var/mob/living/carbon/human/H_H = user
+						H_H.force_vomit(H)
 					else
 						inspect_organ(affecting, assailant, hit_zone)
 				if("grab")
@@ -402,7 +417,6 @@
 						H.adjustHalLoss(Clamp(0, 40 - H.halloss, 40)) //up to 40 halloss
 					return
 				if("hurt")
-
 					if(hit_zone == O_EYES)
 						if(state < GRAB_NECK)
 							to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
@@ -424,7 +438,34 @@
 						IO.damage += rand(3,4)
 						if (IO.damage >= IO.min_broken_damage)
 							if(affecting.stat != DEAD)
-								to_chat(affecting, "\red You go blind!")
+								to_chat(affecting, "<span class='warning'>You go blind!</span>")
+					else if(state >= GRAB_AGGRESSIVE && hit_zone == BP_CHEST)
+						var/chance_to_force_vomit = 30
+
+						if(ishuman(user))
+							var/mob/living/carbon/human/H_user = user
+							var/datum/unarmed_attack/attack = H_user.species.unarmed
+
+							var/damage = rand(1, 5)
+							damage += attack.damage
+
+							var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(hit_zone)]
+							var/armor_block = H.run_armor_check(BP, "melee")
+
+							if(attack.damage_flags() & (DAM_SHARP|DAM_EDGE))
+								chance_to_force_vomit = 0
+							else
+								chance_to_force_vomit += attack.damage
+							if(prob(armor_block))
+								chance_to_force_vomit = 0
+							H.apply_damage(damage, BRUTE, BP, armor_block, attack.damage_flags())
+
+						else
+							H.adjustBruteLoss(3)
+
+						user.visible_message("<span class='warning'>[user] punches [H] in the gut, trying to make them puke.</span>")
+						if(prob(chance_to_force_vomit))
+							H.vomit(punched=TRUE)
 //					else if(hit_zone != BP_HEAD)
 //						if(state < GRAB_NECK)
 //							assailant << "<span class='warning'>You require a better grab to do this.</span>"
@@ -446,7 +487,7 @@
 						if(!armor && prob(damage))
 							affecting.apply_effect(20, PARALYZE)
 							affecting.visible_message("<span class='danger'>[affecting] has been knocked unconscious!</span>")
-						playsound(assailant, "swing_hit", VOL_EFFECTS_MASTER)
+						playsound(assailant, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 						assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Headbutted [affecting.name] ([affecting.ckey])</font>")
 						affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Headbutted by [assailant.name] ([assailant.ckey])</font>")
 						msg_admin_attack("[key_name(assailant)] has headbutted [key_name(affecting)]")

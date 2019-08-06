@@ -92,7 +92,7 @@ var/specops_shuttle_timeleft = 0
 
 	for(var/turf/T in get_area_turfs(end_location) )
 		var/mob/M = locate(/mob) in T
-		to_chat(M, "\red You have arrived at Central Command. Operation has ended!")
+		to_chat(M, "<span class='warning'>You have arrived at Central Command. Operation has ended!</span>")
 
 	SSshuttle.dock_act(end_location)
 	SSshuttle.dock_act(/area/centcom/living, "centcomm_specops")
@@ -143,7 +143,7 @@ var/specops_shuttle_timeleft = 0
 		return
 
 	if (!specops_can_move())
-		to_chat(usr, "\red The Special Operations shuttle is unable to leave.")
+		to_chat(usr, "<span class='warning'>The Special Operations shuttle is unable to leave.</span>")
 		return
 
 	var/area/start_location = locate(/area/shuttle/specops/centcom)
@@ -179,7 +179,7 @@ var/specops_shuttle_timeleft = 0
 
 	for(var/turf/T in get_area_turfs(end_location) )
 		var/mob/M = locate(/mob) in T
-		to_chat(M, "\red You have arrived to [station_name]. Commence operation!")
+		to_chat(M, "<span class='warning'>You have arrived to [station_name]. Commence operation!</span>")
 
 	for(var/obj/machinery/computer/specops_shuttle/S in computer_list)
 		S.specops_shuttle_timereset = world.time + SPECOPS_RETURN_DELAY
@@ -195,10 +195,11 @@ var/specops_shuttle_timeleft = 0
 	return 1
 
 /obj/machinery/computer/specops_shuttle/attackby(I, user)
-	if(istype(I,/obj/item/weapon/card/emag))
-		to_chat(user, "\blue The electronic systems in this console are far too advanced for your primitive hacking peripherals.")
-	else
-		return attack_hand(user)
+	attack_hand(user)
+
+/obj/machinery/computer/specops_shuttle/emag_act(mob/user)
+	to_chat(user, "<span class='notice'>The electronic systems in this console are far too advanced for your primitive hacking peripherals.</span>")
+	return TRUE //yep, don't try do that
 
 /obj/machinery/computer/specops_shuttle/ui_interact(mob/user)
 	var/dat
@@ -222,14 +223,14 @@ var/specops_shuttle_timeleft = 0
 		if(!specops_shuttle_at_station || specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
 		if (!specops_can_move())
-			to_chat(usr, "\blue Central Command will not allow the Special Operations shuttle to return yet.")
+			to_chat(usr, "<span class='notice'>Central Command will not allow the Special Operations shuttle to return yet.</span>")
 			if(world.timeofday <= specops_shuttle_timereset)
 				if (((world.timeofday - specops_shuttle_timereset) / 10) > 60)
-					to_chat(usr, "\blue [-((world.timeofday - specops_shuttle_timereset) / 10) / 60] minutes remain!")
-				to_chat(usr, "\blue [-(world.timeofday - specops_shuttle_timereset) / 10] seconds remain!")
+					to_chat(usr, "<span class='notice'>[-((world.timeofday - specops_shuttle_timereset) / 10) / 60] minutes remain!</span>")
+				to_chat(usr, "<span class='notice'>[-(world.timeofday - specops_shuttle_timereset) / 10] seconds remain!</span>")
 			return FALSE
 
-		to_chat(usr, "\blue The Special Operations shuttle will arrive at Central Command in [(SPECOPS_MOVETIME / 10)] seconds.")
+		to_chat(usr, "<span class='notice'>The Special Operations shuttle will arrive at Central Command in [(SPECOPS_MOVETIME / 10)] seconds.</span>")
 
 		temp += "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
@@ -242,10 +243,10 @@ var/specops_shuttle_timeleft = 0
 		if(specops_shuttle_at_station || specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
 		if (!specops_can_move())
-			to_chat(usr, "\red The Special Operations shuttle is unable to leave.")
+			to_chat(usr, "<span class='warning'>The Special Operations shuttle is unable to leave.</span>")
 			return FALSE
 
-		to_chat(usr, "\blue The Special Operations shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds.")
+		to_chat(usr, "<span class='notice'>The Special Operations shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds.</span>")
 
 		temp += "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 

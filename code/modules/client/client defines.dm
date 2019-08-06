@@ -34,8 +34,8 @@
 		///////////////
 		//SOUND STUFF//
 		///////////////
-	var/ambience_playing = null
-	var/played = 0
+	var/sound_next_ambience_play = 0
+	var/sound_old_looped_ambience = null
 
 		////////////
 		//SECURITY//

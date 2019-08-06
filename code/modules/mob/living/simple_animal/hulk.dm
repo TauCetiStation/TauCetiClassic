@@ -28,7 +28,7 @@
 	status_flags = CANPUSH
 	universal_speak = 1
 	universal_understand = 1
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = list('sound/weapons/punch1.ogg')
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -66,7 +66,7 @@
 
 	speed = 2
 
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = list('sound/weapons/bite.ogg')
 
 	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/hulk_mill,
 						/obj/effect/proc_holder/spell/aoe_turf/hulk_gas,
@@ -91,7 +91,7 @@
 
 	speed = 4
 
-	attack_sound =  'sound/items/bikehorn.ogg'
+	attack_sound = list('sound/items/bikehorn.ogg')
 	health_regen = 3
 
 	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/HulkHONK)
@@ -106,7 +106,7 @@
 
 /mob/living/simple_animal/hulk/unathi/Login()
 	..()
-	to_chat(src, "\blue Can eat limbs (left mouse button).")
+	to_chat(src, "<span class='notice'>Can eat limbs (left mouse button).</span>")
 
 /mob/living/simple_animal/hulk/Life()
 	if(health < 1)
@@ -214,16 +214,16 @@
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
+					M.show_message("<span class='warning'><b>[src] has been attacked with [O] by [user].</b></span>")
 		else
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [O] bounces harmlessly off of [src]. ")
+					M.show_message("<span class='warning'><b>[O] bounces harmlessly off of [src].</b></span>")
 	else
-		to_chat(usr, "\red This weapon is ineffective, it does no damage.")
+		to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("\red [user] gently taps [src] with [O]. ")
+				M.show_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
 
 /mob/living/simple_animal/hulk/bullet_act(obj/item/projectile/P)
 	..()
@@ -249,7 +249,7 @@
 	if(D.density)
 		to_chat(src, "<span class='userdanger'>You force your fingers between \
 		 the doors and begin to pry them open...</span>")
-		playsound(D, 'sound/machines/electric_door_open.ogg', VOL_EFFECTS_MASTER, 30, null, -4)
+		playsound(D, 'sound/machines/firedoor_open.ogg', VOL_EFFECTS_MASTER, 30, null, -4)
 		if (!is_busy() && do_after(src, 40, target = D) && D)
 			D.open(1)
 

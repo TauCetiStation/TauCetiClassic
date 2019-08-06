@@ -24,8 +24,8 @@
 	var/block_air_zones = 1 //If set, air zones cannot merge across the door even when it is opened.
 	var/emergency = 0 // Emergency access override
 
-	var/door_open_sound  = 'sound/machines/airlock/airlockToggle_2.ogg'
-	var/door_close_sound = 'sound/machines/airlock/airlockToggle_2.ogg'
+	var/door_open_sound  = 'sound/machines/airlock/toggle.ogg'
+	var/door_close_sound = 'sound/machines/airlock/toggle.ogg'
 
 	var/dock_tag
 
@@ -133,7 +133,7 @@
 		return
 	if(src.operating)
 		return
-	if(src.density && hasPower() && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
+	if(src.density && hasPower() && istype(I, /obj/item/weapon/melee/energy/blade))
 		update_icon(AIRLOCK_EMAG)
 		sleep(6)
 		if(!open())
@@ -157,6 +157,15 @@
 		do_animate("deny")
 	return
 
+/obj/machinery/door/emag_act(mob/user)
+	if(src.density && hasPower())
+		update_icon(AIRLOCK_EMAG)
+		sleep(6)
+		if(!open())
+			update_icon(AIRLOCK_CLOSED)
+		operating = -1
+		return TRUE
+	return FALSE
 
 /obj/machinery/door/blob_act()
 	if(prob(40))

@@ -16,7 +16,7 @@
 
 		if (src.malfhack)
 			if (src.malfhack.aidisabled)
-				to_chat(src, "\red ERROR: APC access disabled, hack attempt canceled.")
+				to_chat(src, "<span class='warning'>ERROR: APC access disabled, hack attempt canceled.</span>")
 				src.malfhacking = 0
 				src.malfhack = null
 

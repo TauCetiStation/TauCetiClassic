@@ -374,3 +374,11 @@
 	icon_state = "ian"
 	body_parts_covered = HEAD
 	flags_inv = BLOCKHAIR|HIDEEARS
+
+/obj/item/clothing/head/byzantine_hat
+	name = "Byzantine skiadion"
+	desc = "Wearing this headdress makes you feel like a basileus."
+	icon_state = "Byzantine_hat"
+	item_state = "Byzantine_hat"
+	body_parts_covered = HEAD
+	flags_inv = BLOCKHAIR

@@ -67,47 +67,12 @@
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
 	var/uses = 10
-	// List of devices that cost a use to emag.
-	var/list/devices = list(
-		/obj/item/robot_parts,
-		/obj/item/weapon/storage/lockbox,
-		/obj/item/weapon/storage/secure,
-		/obj/item/weapon/circuitboard,
-		/obj/item/device/eftpos,
-		/obj/item/device/lightreplacer,
-		/obj/item/device/taperecorder,
-		/obj/item/device/hailer,
-		/obj/item/device/megaphone,
-		/obj/item/clothing/accessory/holobadge,
-		/obj/structure/closet/crate/secure,
-		/obj/structure/closet/secure_closet,
-		/obj/machinery/computer/libraryconsole/bookmanagement,
-		/obj/machinery/computer,
-		/obj/machinery/power,
-		/obj/machinery/suspension_gen,
-		/obj/machinery/shield_capacitor,
-		/obj/machinery/shield_gen,
-		/obj/machinery/zero_point_emitter,
-		/obj/machinery/clonepod,
-		/obj/machinery/deployable,
-		/obj/machinery/door_control,
-		/obj/machinery/porta_turret,
-		/obj/machinery/shieldgen,
-		/obj/machinery/turretid,
-		/obj/machinery/vending,
-		/obj/machinery/bot,
-		/obj/machinery/door,
-		/obj/machinery/telecomms,
-		/obj/machinery/mecha_part_fabricator
-		)
 
+/obj/item/weapon/card/emag/afterattack(atom/target, mob/user)
 
-/obj/item/weapon/card/emag/afterattack(obj/item/weapon/O, mob/user)
-
-	for(var/type in devices)
-		if(istype(O,type))
-			uses--
-			break
+	if(target.emag_act(user))
+		user.SetNextMove(CLICK_CD_INTERACT)
+		uses--
 
 	if(uses<1)
 		user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
@@ -330,7 +295,7 @@
 		src.access |= I.access
 		if(istype(user, /mob/living) && user.mind)
 			if(user.mind.special_role)
-				to_chat(usr, "\blue The card's microscanners activate as you pass it over the ID, copying its access.")
+				to_chat(usr, "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>")
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user)
 	if(!src.registered_name)
@@ -348,7 +313,7 @@
 			return
 		src.assignment = u
 		src.name = "[src.registered_name]'s ID Card ([src.assignment])"
-		to_chat(user, "\blue You successfully forge the ID card.")
+		to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
 		registered_user = user
 	else if(!registered_user || registered_user == user)
 
@@ -368,7 +333,7 @@
 					return
 				src.assignment = u
 				src.name = "[src.registered_name]'s ID Card ([src.assignment])"
-				to_chat(user, "\blue You successfully forge the ID card.")
+				to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
 				return
 			if("Change look")
 				for(var/P in typesof(/obj/item/weapon/card/id))
@@ -434,6 +399,18 @@
 	customizable_view = TRAITOR_VIEW
 
 /obj/item/weapon/card/id/centcom/atom_init()
+	access = get_all_centcom_access()
+	. = ..()
+
+/obj/item/weapon/card/id/velocity
+	name = "\improper Cargo Industries. ID"
+	desc = "An ID designed for Velocity crew workers."
+	icon_state = "velocity"
+	item_state = "velcard_id"
+	registered_name = "Cargo Industries"
+	assignment = "General"
+
+/obj/item/weapon/card/id/velocity/atom_init()
 	access = get_all_centcom_access()
 	. = ..()
 

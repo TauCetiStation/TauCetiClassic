@@ -132,7 +132,7 @@
 
 /obj/machinery/jungle_controller/atom_init()
 	. = ..()
-	to_chat(world, "\red \b Setting up jungle, this may take a bleeding eternity...")
+	to_chat(world, "<span class='warning'><b>Setting up jungle, this may take a bleeding eternity...</b></span>")
 
 	//crash dat shuttle
 	var/area/start_location = locate(/area/jungle/crash_ship_source)
