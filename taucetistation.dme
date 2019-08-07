@@ -1,4 +1,4 @@
-// DM Environment file for taucetistation.dme.
+	// DM Environment file for taucetistation.dme.
 // All manual changes should be made outside the BEGIN_ and END_ blocks.
 // New source code should be placed in .dm files: choose File/New --> Code File.
 // BEGIN_INTERNALS
@@ -1675,6 +1675,7 @@
 #include "code\modules\projectiles\module\chamber.dm"
 #include "code\modules\projectiles\module\frame.dm"
 #include "code\modules\projectiles\module\grip.dm"
+#include "code\modules\projectiles\module\guns.dm"
 #include "code\modules\projectiles\module\magazine.dm"
 #include "code\modules\projectiles\module\module.dm"
 #include "code\modules\projectiles\projectile\beams.dm"

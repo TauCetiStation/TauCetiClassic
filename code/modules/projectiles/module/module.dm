@@ -15,12 +15,13 @@
 /obj/item/weapon/gun_module/proc/attach(obj/item/weapon/gunmodule/gun, var/condition_check = FALSE)
 	if(gun.collected)
 		return FALSE
-	if(condition_check)
+	if(!condition_check)
 		return FALSE
 	parent = gun
 	src.loc = parent
 	change_stat(gun, TRUE)
-	LAZYADD(gun.overlays, icon_overlay)
+	if(icon_overlay)
+		LAZYADD(gun.overlays, icon_overlay)
 	LAZYADD(gun.modules, src)
 	return TRUE
 

@@ -17,6 +17,7 @@
 	var/obj/item/weapon/gun_module/grip/grip = null
 	var/list/obj/item/weapon/gun_module/accessory
 	var/list/obj/item/weapon/gun_module/modules
+	var/max_accessory = 3
 
 
 /obj/item/weapon/gunmodule/attackby(obj/item/A, mob/user)
@@ -27,7 +28,6 @@
 		user.drop_item()
 		module.attach(src)
 		update_icon()
-		to_chat(user, "<span class='danger'>[src] blows up in your face.</span>")
 	else if(isscrewdriver(A))
 		collected = !collected
 		if(collected)
@@ -87,3 +87,6 @@
 	LAZYINITLIST(modules)
 	for(var/obj/item/weapon/gun_module/module in modules)
 		module.loc = src
+		if(istype(module, /obj/item/weapon/gun_module/accessory))
+			var/obj/item/weapon/gun_module/accessory/accessory = module
+			accessory.deactivate(user)

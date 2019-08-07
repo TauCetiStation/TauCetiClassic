@@ -123,11 +123,17 @@
 	caliber = "9mm"
 	gun_type = BULLET
 
+/obj/item/weapon/gun_module/chamber/bullet/condition_check(obj/item/weapon/gunmodule/gun)
+	if(..(gun))
+		return TRUE
+	return FALSE
+
 /obj/item/weapon/gun_module/chamber/bullet/chamber_round()
 	if(!..() && !parent.magazine_supply.ammo_count())
 		return FALSE
 	chambered = parent.magazine_supply.get_round()
-	chambered.loc = src
+	if(chambered)
+		chambered.loc = src
 	if(chambered.BB)
 		if(chambered.reagents && chambered.BB.reagents)
 			var/datum/reagents/casting_reagents = chambered.reagents
@@ -171,7 +177,7 @@
 	var/select = 1
 
 /obj/item/weapon/gun_module/chamber/energy/condition_check(obj/item/weapon/gunmodule/gun)
-	if(..() && lens.len > 0)
+	if(..(gun) && lens.len > 0)
 		return TRUE
 	return FALSE
 
@@ -179,7 +185,8 @@
 	if(!..() && !parent.magazine_supply.ammo_count(lense))
 		return FALSE
 	chambered = parent.magazine_supply.get_round(lense)
-	chambered.loc = src
+	if(chambered)
+		chambered.loc = src
 
 /obj/item/weapon/gun_module/chamber/energy/process_chamber()
 	if(chambered)
@@ -204,11 +211,12 @@
 		to_chat(user, "\red [src] is now set to [shot.select_name].")
 	update_icon()
 
-/obj/item/weapon/gun_module/chamber/energy/attackby(obj/item/A, mob/user)
+/obj/item/weapon/gun_module/chamber/energy/attackby(obj/item/A, mob/user = null)
 	if(istype(A, /obj/item/ammo_casing/energy) && lens.len < max_lens)
 		var/obj/item/ammo_casing/energy/lense = A
 		lens += lense
-		user.drop_item()
+		if(user)
+			user.drop_item()
 		lense.loc = src
 		select = lens.len
 		fire_sound = lense.fire_sound
