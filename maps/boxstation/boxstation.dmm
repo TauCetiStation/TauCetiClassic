@@ -10875,6 +10875,7 @@
 	info_links = "Clown Memo"
 	},
 /obj/item/toy/prize/honk,
+/obj/item/weapon/reagent_containers/spray/watergun,
 /turf/simulated/floor/wood,
 /area/crew_quarters/theatre)
 "asd" = (
