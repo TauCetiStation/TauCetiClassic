@@ -1,5 +1,3 @@
-var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
-
 /obj/item/customitem
 	name = "Custom item"
 
@@ -57,6 +55,7 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	var/info
 
 /client/proc/get_custom_items_slot_count()
+	var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	customItemsCache.cd = "/"
 	var/list/slots = null
 	customItemsCache["slots"] >> slots
@@ -97,6 +96,7 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 			dirty = TRUE
 
 	if(dirty)
+		var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 		customItemsCache.cd = "/items/[ckey]"
 		customItemsCache["items"] << items
 
@@ -104,6 +104,7 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	var/itemCount = 0
 	var/slotCount = get_custom_items_slot_count()
 
+	var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	customItemsCache.cd = "/items/[ckey]"
 	var/list/items = null
 	customItemsCache["items"] >> items
@@ -119,6 +120,7 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	return TRUE
 
 /client/proc/remove_custom_item(itemname)
+	var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	customItemsCache.cd = "/items/[ckey]"
 	var/list/items = null
 	customItemsCache["items"] >> items
@@ -130,6 +132,7 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	customItemsCache["items"] << items
 
 /client/proc/edit_custom_item(datum/custom_item/newitem, oldname)
+	var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	customItemsCache.cd = "/items/[ckey]"
 	var/list/items = null
 	customItemsCache["items"] >> items
@@ -147,6 +150,7 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	return TRUE
 
 /proc/get_custom_items(ckey)
+	var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	customItemsCache.cd = "/items/[ckey]"
 	var/list/items = null
 	customItemsCache["items"] >> items
@@ -155,6 +159,7 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	return items
 
 /proc/get_custom_item(ckey, itemname)
+	var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	customItemsCache.cd = "/items/[ckey]"
 	var/list/items = null
 	customItemsCache["items"] >> items
@@ -164,6 +169,7 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	return items[ckey(itemname)]
 
 /proc/custom_item_changestatus(ckey, itemname, status, moderator_message = "")
+	var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	customItemsCache.cd = "/items/[ckey]"
 	var/list/items = null
 	customItemsCache["items"] >> items
