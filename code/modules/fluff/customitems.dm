@@ -1,3 +1,5 @@
+#define FLUFF_FILE_PATH "data/customItemsCache.sav"
+
 /obj/item/customitem
 	name = "Custom item"
 
@@ -55,7 +57,7 @@
 	var/info
 
 /client/proc/get_custom_items_slot_count()
-	var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
+	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 	customItemsCache.cd = "/"
 	var/list/slots = null
 	customItemsCache["slots"] >> slots
@@ -96,7 +98,7 @@
 			dirty = TRUE
 
 	if(dirty)
-		var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
+		var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 		customItemsCache.cd = "/items/[ckey]"
 		customItemsCache["items"] << items
 
@@ -104,7 +106,7 @@
 	var/itemCount = 0
 	var/slotCount = get_custom_items_slot_count()
 
-	var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
+	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 	customItemsCache.cd = "/items/[ckey]"
 	var/list/items = null
 	customItemsCache["items"] >> items
@@ -120,7 +122,7 @@
 	return TRUE
 
 /client/proc/remove_custom_item(itemname)
-	var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
+	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 	customItemsCache.cd = "/items/[ckey]"
 	var/list/items = null
 	customItemsCache["items"] >> items
@@ -132,7 +134,7 @@
 	customItemsCache["items"] << items
 
 /client/proc/edit_custom_item(datum/custom_item/newitem, oldname)
-	var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
+	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 	customItemsCache.cd = "/items/[ckey]"
 	var/list/items = null
 	customItemsCache["items"] >> items
@@ -150,7 +152,7 @@
 	return TRUE
 
 /proc/get_custom_items(ckey)
-	var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
+	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 	customItemsCache.cd = "/items/[ckey]"
 	var/list/items = null
 	customItemsCache["items"] >> items
@@ -159,7 +161,7 @@
 	return items
 
 /proc/get_custom_item(ckey, itemname)
-	var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
+	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 	customItemsCache.cd = "/items/[ckey]"
 	var/list/items = null
 	customItemsCache["items"] >> items
@@ -169,7 +171,7 @@
 	return items[ckey(itemname)]
 
 /proc/custom_item_changestatus(ckey, itemname, status, moderator_message = "")
-	var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
+	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 	customItemsCache.cd = "/items/[ckey]"
 	var/list/items = null
 	customItemsCache["items"] >> items
