@@ -237,7 +237,7 @@
 /obj/item/weapon/gun/energy/laser/retro/price = 5430
 /obj/item/weapon/gun/energy/lasercannon/price = 6600
 /obj/item/weapon/gun/energy/sniperrifle/price = 5700
-/obj/item/weapon/gun/energy/stunrevolver/price = 3200
+/obj/item/weapon/gun/energy/taser/stunrevolver/price = 3200
 /obj/item/weapon/gun/energy/taser/price = 1800
 /obj/item/weapon/gun/energy/temperature/price = 11000
 /obj/item/weapon/gun/energy/toxgun/price = 8300
