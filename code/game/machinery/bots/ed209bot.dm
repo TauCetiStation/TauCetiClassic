@@ -14,6 +14,7 @@
 	idcheck = 1 //If false, all station IDs are authorized for weapons.
 	check_records = 1 //Does it check security records? Checks arrest status and existence of record
 	var/projectile = null//Holder for projectile type, to avoid so many else if chains
+	var/laser_tag_items = list()
 
 #define SECBOT_IDLE 		0		// idle
 #define SECBOT_HUNT 		1		// found target, hunting
@@ -52,7 +53,9 @@
 		arrest_type = 1
 		if((lasercolor == "b") && (name == "ED-209 Security Robot"))//Picks a name if there isn't already a custome one
 			name = pick("BLUE BALLER","SANIC","BLUE KILLDEATH MURDERBOT")
+			laser_tag_items = list(/obj/item/weapon/gun/energy/laser/lasertag/redtag, /obj/item/clothing/suit/redtag)
 		if((lasercolor == "r") && (name == "ED-209 Security Robot"))
+			laser_tag_items = list(/obj/item/weapon/gun/energy/laser/lasertag/bluetag, /obj/item/clothing/suit/bluetag)
 			name = pick("RED RAMPAGE","RED ROVER","RED KILLDEATH MURDERBOT")
 
 
@@ -221,23 +224,13 @@
 
 	if(lasercolor && ishuman(perp))
 		var/mob/living/carbon/human/hperp = perp
-		if(lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
-			threatcount = 0//They will not, however shoot at people who have guns, because it gets really fucking annoying
-			if(istype(hperp.wear_suit, /obj/item/clothing/suit/redtag))
-				threatcount += 4
-			if(istype(hperp.r_hand, /obj/item/weapon/gun/energy/laser/lasertag/redtag) || istype(hperp.l_hand, /obj/item/weapon/gun/energy/laser/lasertag/redtag))
-				threatcount += 4
-			if(istype(hperp.belt, /obj/item/weapon/gun/energy/laser/lasertag/redtag))
-				threatcount += 2
-
-		else if(lasercolor == "r")
-			threatcount = 0
-			if(istype(hperp.wear_suit, /obj/item/clothing/suit/bluetag))
-				threatcount += 4
-			if(istype(hperp.r_hand, /obj/item/weapon/gun/energy/laser/lasertag/bluetag) || istype(hperp.l_hand, /obj/item/weapon/gun/energy/laser/lasertag/bluetag))
-				threatcount += 4
-			if(istype(hperp.belt, /obj/item/weapon/gun/energy/laser/lasertag/bluetag))
-				threatcount += 2
+		threatcount = 0//They will not, however shoot at people who have guns, because it gets really fucking annoying
+		if(is_type_in_list(hperp.wear_suit, laser_tag_items))
+			threatcount += 4
+		if(is_type_in_list(hperp.r_hand, laser_tag_items) || is_type_in_list(hperp.l_hand, laser_tag_items))
+			threatcount += 4
+		if(is_type_in_list(hperp.belt, laser_tag_items))
+			threatcount += 2
 
 	if(idcheck && allowed(perp) && !lasercolor)
 		threatcount = 0//Corrupt cops cannot exist beep boop
