@@ -73,7 +73,7 @@
 			if(M != usr)
 				usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with hulk_jump</font>"
 				M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_jump</font>"
-				msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_jump")
+				msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_jump [ADMIN_JMP(usr)]")
 				var/mob/living/carbon/human/H = M
 				if(istype(H,/mob/living/carbon/human))
 					playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
@@ -237,7 +237,7 @@
 					if(!M.lying)
 						usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with hulk_dash</font>"
 						M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_dash</font>"
-						msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_dash")
+						msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_dash [ADMIN_JMP(usr)]")
 						var/turf/target = get_turf(get_step(usr,cur_dir))
 						hit = 1
 						playsound(M, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
@@ -360,7 +360,7 @@
 			if(M != usr)
 				usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with hulk_smash</font>"
 				M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_smash</font>"
-				msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_smash")
+				msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_smash [ADMIN_JMP(usr)]")
 				var/mob/living/carbon/human/H = M
 				if(istype(H,/mob/living/carbon/human))
 					playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)

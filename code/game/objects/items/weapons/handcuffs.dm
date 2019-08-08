@@ -47,7 +47,7 @@
 	if (ishuman(target) || isIAN(target) || ismonkey(target))
 		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to handcuff [target.name] ([target.ckey])</font>")
-		msg_admin_attack("[key_name(user)] attempted to handcuff [key_name(target)]")
+		msg_admin_attack("[key_name(user)] attempted to handcuff [key_name(target)] [ADMIN_JMP(user)]")
 
 		if(do_mob(user, target, HUMAN_STRIP_DELAY) && mob_can_equip(target, SLOT_HANDCUFFED))
 			if(!isrobot(user) && !isIAN(user) && user != target)

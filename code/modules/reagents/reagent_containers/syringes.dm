@@ -155,7 +155,7 @@
 					infect_limb(user, target)
 					M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
 					user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject [M.name] ([M.key]). Reagents: [contained]</font>")
-					msg_admin_attack("[user.name] ([user.ckey]) injected [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+					msg_admin_attack("[user.name] ([user.ckey]) injected [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) [ADMIN_JMP(user)]")
 
 					src.reagents.reaction(target, INGEST)
 				else
@@ -171,7 +171,7 @@
 			if(B && istype(target,/mob/living/carbon))
 				var/list/virus2 = B.data["virus2"]
 				if(virus2.len)
-					message_admins("<font color='red'>Injected blood with virus to [target] by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>Jump</a>)</font>",0,1)
+					message_admins("<font color='red'>Injected blood with virus to [target] by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) [ADMIN_JMP(user)]</font>",0,1)
 					log_game("Injected blood with virus to [target] by [user.ckey]([user]) in ([user.x],[user.y],[user.z])")
 				var/mob/living/carbon/C = target
 				C.inject_blood(src,5)
