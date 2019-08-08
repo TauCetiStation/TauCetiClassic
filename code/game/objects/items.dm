@@ -970,3 +970,20 @@ var/global/list/items_blood_overlay_by_type = list()
 		return
 	var/mob/M = loc
 	M.update_inv_item(src)
+
+// Whether or not the given item counts as sharp in terms of dealing damage
+/obj/item/proc/is_sharp()
+	return sharp || edge
+
+// Whether or not the given item counts as cutting with an edge in terms of removing limbs
+/obj/item/proc/has_edge()
+	return edge
+
+/obj/item/damage_flags()
+	. = FALSE
+	if(has_edge())
+		. |= DAM_EDGE
+	if(is_sharp())
+		. |= DAM_SHARP
+		if(damtype == BURN)
+			. |= DAM_LASER
