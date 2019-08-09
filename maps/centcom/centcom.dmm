@@ -7744,7 +7744,7 @@
 /obj/item/weapon/twohanded/shockpaddles/standalone,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/item/weapon/melee/baton,
-/obj/item/weapon/gun/energy/stunrevolver,
+/obj/item/weapon/gun/energy/taser/stunrevolver,
 /obj/structure/window/reinforced/holowindow{
 	dir = 8
 	},
@@ -7833,7 +7833,7 @@
 /obj/item/weapon/twohanded/shockpaddles/standalone,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/item/weapon/melee/baton,
-/obj/item/weapon/gun/energy/stunrevolver,
+/obj/item/weapon/gun/energy/taser/stunrevolver,
 /obj/structure/window/reinforced/holowindow{
 	dir = 8
 	},
@@ -7865,7 +7865,7 @@
 /obj/item/weapon/twohanded/shockpaddles/standalone,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/item/weapon/melee/baton,
-/obj/item/weapon/gun/energy/stunrevolver,
+/obj/item/weapon/gun/energy/taser/stunrevolver,
 /obj/structure/window/reinforced/holowindow{
 	dir = 8
 	},

@@ -123,6 +123,7 @@
 			if(!current_ticket)
 				to_chat(src, "<font color='red'>You can no longer reply to this ticket, please open another one by using the Adminhelp verb if need be.</font>")
 				to_chat(src, "<font color='blue'>Message: [msg]</font>")
+				return
 			else
 				var/replymsg = "<font color='red'>Reply PM from-<b>[key_name(src, recipient, 1)]</b>: <span class='emojify linkify'>[msg]</span></font>"
 				admin_ticket_log(src, replymsg)
