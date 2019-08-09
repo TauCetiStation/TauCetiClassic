@@ -39,7 +39,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/reagent_containers/syringe(), \
 		new /obj/item/ammo_casing/shotgun/beanbag(), \
 		new /obj/item/ammo_box/magazine/c45r(), \
-		new /obj/item/ammo_box/magazine/m9mmr_2(), \
+		new /obj/item/ammo_box/magazine/m9mm_2/rubber(), \
 		new /obj/item/device/taperecorder(), \
 		new /obj/item/device/assembly/igniter(), \
 		new /obj/item/device/assembly/signaler(), \

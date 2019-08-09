@@ -961,12 +961,12 @@
 /obj/machinery/door/window/brigdoor{
 	name = "Weapons locker"
 	},
-/obj/item/ammo_box/magazine/m9mmr_2,
-/obj/item/ammo_box/magazine/m9mmr_2,
-/obj/item/ammo_box/magazine/m9mmr_2,
-/obj/item/ammo_box/magazine/m9mmr_2,
-/obj/item/ammo_box/magazine/m9mmr_2,
-/obj/item/ammo_box/magazine/m9mmr_2,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -1002,9 +1002,9 @@
 /obj/machinery/door/window/brigdoor{
 	name = "Weapons locker"
 	},
-/obj/item/weapon/gun/projectile/sigi,
-/obj/item/weapon/gun/projectile/sigi,
-/obj/item/weapon/gun/projectile/sigi,
+/obj/item/weapon/gun/projectile/wjpp,
+/obj/item/weapon/gun/projectile/wjpp,
+/obj/item/weapon/gun/projectile/wjpp,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
