@@ -172,7 +172,7 @@
 				phrase_sound = 'sound/voice/complionator/dredd.ogg'
 
 		usr.visible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[phrase_text]</b></font>")
-		playsound(src, phrase_sound, VOL_EFFECTS_MASTER, FALSE)
+		playsound(src, phrase_sound, VOL_EFFECTS_MASTER)
 		cooldown = world.time
 
 //Plague Dr suit can be found in clothing/suits/bio.dm
