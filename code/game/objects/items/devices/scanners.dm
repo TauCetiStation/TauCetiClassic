@@ -157,7 +157,7 @@ REAGENT SCANNER
 	if(!irradiate)
 		return
 	if(!used)
-		msg_admin_attack("<span = 'danger'>[user] ([user.ckey]) irradiated [M.name] ([M.ckey]) [ADMIN_JMP(user)]</span>")
+		msg_admin_attack("<span = 'danger'>[user] ([user.ckey]) irradiated [M.name] ([M.ckey])</span>", user)
 		var/cooldown = round(max(10, (intensity*5 - wavelength/4))) * 10
 		used = 1
 		icon_state = "health1"

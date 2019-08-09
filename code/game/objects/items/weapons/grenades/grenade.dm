@@ -71,7 +71,7 @@
 		return
 
 	if(user)
-		msg_admin_attack("[user.name] ([user.ckey]) primed \a [src] [ADMIN_JMP(user)]")
+		msg_admin_attack("[user.name] ([user.ckey]) primed \a [src]", user)
 
 	icon_state = initial(icon_state) + "_active"
 	active = 1

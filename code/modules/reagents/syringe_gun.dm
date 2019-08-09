@@ -94,7 +94,7 @@
 						R += num2text(RA.volume) + "),"
 				M.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
 				user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
-				msg_admin_attack("[user.name] ([user.ckey]) shot [M.name] ([M.ckey]) with a syringegun ([R]) [ADMIN_JMP(user)]")
+				msg_admin_attack("[user.name] ([user.ckey]) shot [M.name] ([M.ckey]) with a syringegun ([R])", user)
 
 				if(!M.check_thickmaterial(target_zone = user.zone_sel.selecting) && !M.isSynthetic(user.zone_sel.selecting))
 					if(D.reagents)

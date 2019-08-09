@@ -37,7 +37,7 @@
 	if(stage > 1 && !active && clown_check(user))
 		to_chat(user, "<span class='warning'>You prime \the [name]!</span>")
 
-		msg_admin_attack("[user.name] ([user.ckey]) primed \a [src]. [ADMIN_JMP(user)]")
+		msg_admin_attack("[user.name] ([user.ckey]) primed \a [src].", user)
 
 		activate()
 		add_fingerprint(user)
@@ -124,7 +124,7 @@
 		icon_state = initial(icon_state) + "_active"
 
 		if(user)
-			msg_admin_attack("[user.name] ([user.ckey]) primed \a [src] [ADMIN_JMP(user)]")
+			msg_admin_attack("[user.name] ([user.ckey]) primed \a [src]", user)
 
 	return
 

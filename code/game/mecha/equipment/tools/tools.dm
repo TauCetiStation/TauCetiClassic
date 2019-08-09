@@ -81,7 +81,7 @@
 
 			chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name]</font>"
 			M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name]</font>"
-			msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name] [ADMIN_JMP(chassis.occupant)]")
+			msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]", chassis.occupant)
 		else
 			step_away(M,chassis)
 			occupant_message("You push [target] out of the way.")
@@ -144,7 +144,7 @@
 					var/mob/living/M = target
 					chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name]</font>"
 					M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name]</font>"
-					msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name] [ADMIN_JMP(chassis.occupant)]")
+					msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]", chassis.occupant)
 
 				log_message("Drilled through [target]")
 				target.ex_act(2)
@@ -209,7 +209,7 @@
 					var/mob/living/M = target
 					chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name]</font>"
 					M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name]</font>"
-					msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name] [ADMIN_JMP(chassis.occupant)]")
+					msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]", chassis.occupant)
 				log_message("Drilled through [target]")
 				target.ex_act(2)
 	return 1

@@ -122,7 +122,7 @@
 
 			Driver.attack_log += text("\[[time_stamp()]\] <font color='red'>drives over [L.name] ([L.ckey])</font>")
 			L.attack_log += text("\[[time_stamp()]\] <font color='orange'>was driven over by [Driver.name] ([Driver.ckey])</font>")
-			msg_admin_attack("[key_name(Driver)] drives over [key_name(L)] with space bike [ADMIN_JMP(Driver)]")
+			msg_admin_attack("[key_name(Driver)] drives over [key_name(L)] with space bike", Driver)
 
 			playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 			L.stop_pulling()

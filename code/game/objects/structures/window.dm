@@ -271,7 +271,7 @@
 					visible_message("<span class='danger'>[user] slams [M] against \the [src]!</span>")
 					M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slammed by [A.name] against \the [src]([A.ckey])</font>"
 					A.attack_log += "\[[time_stamp()]\] <font color='red'>Slams [M.name] against \the [src]([M.ckey])</font>"
-					msg_admin_attack("[key_name(A)] slams [key_name(M)] into \the [src] [ADMIN_JMP(A)]")
+					msg_admin_attack("[key_name(A)] slams [key_name(M)] into \the [src]", A)
 				if(2)
 					if (prob(50))
 						M.Weaken(1)
@@ -280,7 +280,7 @@
 					visible_message("<span class='danger'>[user] bashes [M] against \the [src]!</span>")
 					M.attack_log += "\[[time_stamp()]\] <font color='orange'>Bashed by [A.name] against \the [src]([A.ckey])</font>"
 					A.attack_log += "\[[time_stamp()]\] <font color='red'>Bashes [M.name] against \the [src]([M.ckey])</font>"
-					msg_admin_attack("[key_name(A)] bushes [key_name(M)] against \the [src] ([ADMIN_JMP(A)])")
+					msg_admin_attack("[key_name(A)] bushes [key_name(M)] against \the [src]", A)
 				if(3)
 					M.Weaken(5)
 					M.apply_damage(20)
@@ -288,7 +288,7 @@
 					visible_message("<span class='danger'><big>[user] crushes [M] against \the [src]!</big></span>")
 					M.attack_log += "\[[time_stamp()]\] <font color='orange'>Crushed by [A.name] against \the [src]([A.ckey])</font>"
 					A.attack_log += "\[[time_stamp()]\] <font color='red'>Crushes [M.name] against \the [src]([M.ckey])</font>"
-					msg_admin_attack("[key_name(A)] crushes [key_name(M)] against \the [src] ([ADMIN_JMP(A)])")
+					msg_admin_attack("[key_name(A)] crushes [key_name(M)] against \the [src]", A)
 
 	else if(istype(W,/obj/item/weapon/changeling_hammer))
 		var/obj/item/weapon/changeling_hammer/C = W
