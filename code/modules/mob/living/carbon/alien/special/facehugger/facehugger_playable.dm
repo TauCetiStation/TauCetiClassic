@@ -21,7 +21,8 @@
 	storedPlasma = 50
 	max_plasma = 50
 
-	small = 1
+	density = FALSE
+	small = TRUE
 
 	var/amount_grown = 0
 	var/max_grown = 200
@@ -41,8 +42,9 @@
 	regenerate_icons()
 	a_intent = "grab"
 
-/mob/living/carbon/alien/facehugger/atom_init_late()
-	density = FALSE
+/mob/living/carbon/alien/facehugger/update_canmove(no_transform = FALSE)
+	..()
+	density = initial(density)
 
 /mob/living/carbon/alien/facehugger/start_pulling(atom/movable/AM)
 	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
