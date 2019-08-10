@@ -1855,6 +1855,7 @@
 #include "code\modules\surgery\gender_reassignment.dm"
 #include "code\modules\surgery\generic.dm"
 #include "code\modules\surgery\implant.dm"
+#include "code\modules\surgery\limbs.dm"
 #include "code\modules\surgery\lipoplasty.dm"
 #include "code\modules\surgery\other.dm"
 #include "code\modules\surgery\plastic_surgery.dm"
