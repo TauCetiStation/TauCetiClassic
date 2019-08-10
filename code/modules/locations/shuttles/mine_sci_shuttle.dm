@@ -20,7 +20,7 @@ var/global/area/mine_sci_curr_location = null
 /obj/machinery/computer/mine_sci_shuttle/ui_interact(mob/user)
 	var/dat
 	if(autopilot)
-		var/shuttle_location = "NSS Exodus"
+		var/shuttle_location = station_name()
 		if(istype(autopilot.mine_sci_curr_location, MINE_DOCK))
 			shuttle_location = "Mining Station"
 		else if(istype(autopilot.mine_sci_curr_location, SCI_DOCK))
@@ -28,7 +28,7 @@ var/global/area/mine_sci_curr_location = null
 		dat = {"Location: [shuttle_location]<br>
 		Ready to move[max(autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br>
 		<a href='?src=\ref[src];mine=1'>Mining Station</a> |
-		<a href='?src=\ref[src];station=1'>NSS Exodus</a> |
+		<a href='?src=\ref[src];station=1'>[station_name()]</a> |
 		<a href='?src=\ref[src];sci=1'>Research Outpost</a><br>
 		<a href='?src=\ref[user];mach_close=flightcomputer'>Close</a>"}
 	else
@@ -43,10 +43,10 @@ var/global/area/mine_sci_curr_location = null
 		return
 
 	if(!autopilot)
-		to_chat(usr, "\red Shuttle not found!")
+		to_chat(usr, "<span class='warning'>Shuttle not found!</span>")
 		return FALSE
 	if(autopilot.moving)
-		to_chat(usr, "\blue Shuttle is already moving.")
+		to_chat(usr, "<span class='notice'>Shuttle is already moving.</span>")
 		return FALSE
 
 	var/result = FALSE
@@ -57,7 +57,7 @@ var/global/area/mine_sci_curr_location = null
 	else if(href_list["station"])
 		result = autopilot.mine_sci_move_to(STATION_DOCK)
 	if(result)
-		to_chat(usr, "\blue Shuttle recieved message and will be sent shortly.")
+		to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
 
 	updateUsrDialog()
 

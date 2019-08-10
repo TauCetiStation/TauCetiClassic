@@ -109,7 +109,7 @@
 			shootAt(user)
 
 
-/obj/machinery/bot/secbot/ed209/Emag(mob/user)
+/obj/machinery/bot/secbot/ed209/emag_act(mob/user)
 	..()
 	if(open && !locked)
 		projectile = null
@@ -246,7 +246,7 @@
 
 /obj/machinery/bot/secbot/ed209/explode()
 	walk_to(src, 0)
-	visible_message("\red <B>[src] blows apart!</B>", 1)
+	visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/ed209_assembly/Sa = new /obj/item/weapon/ed209_assembly(Tsec)

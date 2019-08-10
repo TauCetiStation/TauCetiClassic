@@ -12,9 +12,7 @@
 	var/recentpump = 0 // to prevent spammage
 	var/pumped = 0
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
-
-/obj/item/weapon/gun/projectile/shotgun/isHandgun()
-	return 0
+	can_be_holstered = FALSE
 
 /obj/item/weapon/gun/projectile/shotgun/attackby(obj/item/A, mob/user)
 	var/num_loaded = magazine.attackby(A, user, 1)
@@ -80,12 +78,10 @@
 	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "combat=3;materials=1"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
+	can_be_holstered = FALSE
 	var/open = 0
 	var/short = 0
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
-
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/isHandgun()
-	return 0
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/update_icon()
 	if(short)
@@ -126,6 +122,7 @@
 			name = "sawn-off shotgun"
 			desc = "Omar's coming!"
 			short = 1
+			can_be_holstered = TRUE
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attack_self(mob/living/user)
 	add_fingerprint(user)

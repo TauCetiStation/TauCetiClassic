@@ -41,7 +41,7 @@
 	for(var/mob/living/silicon/robot/R in silicon_list)
 		if(R.lawupdate && (R.connected_ai == src))
 			R.throw_alert("newlaw")
-			to_chat(R, "\red " + law + "\red...LAWS UPDATED")
+			to_chat(R, "<span class='warning'>[law]...LAWS UPDATED</span>")
 
 /mob/living/silicon/ai/proc/clear_ion_laws()
 	throw_alert("newlaw")

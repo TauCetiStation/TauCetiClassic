@@ -138,7 +138,7 @@
 	var/result = step(src,direction)
 	if(result)
 		if(!squeak)
-			playsound(src, "clownstep", VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_CLOWNSTEP), VOL_EFFECTS_MASTER)
 			squeak = 1
 		else
 			squeak = 0

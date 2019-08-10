@@ -171,12 +171,7 @@
 		if(iscrowbar(W))
 			default_deconstruction_crowbar(W)
 
-	if (istype(W, /obj/item/weapon/card/emag))
-		src.emagged = 1
-		to_chat(user, "You short out the product lock on [src]")
-		return
-
-	else if(isscrewdriver(W) && anchored)
+	if(isscrewdriver(W) && anchored)
 		src.panel_open = !src.panel_open
 		to_chat(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
 		src.overlays.Cut()
@@ -192,7 +187,7 @@
 		user.drop_item()
 		W.loc = src
 		coin = W
-		to_chat(user, "\blue You insert the [W] into the [src]")
+		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
 		return
 
 	else if(iswrench(W))	//unwrenching vendomats
@@ -245,7 +240,7 @@
 		user.drop_item()
 		W.loc = src
 		ewallet = W
-		to_chat(user, "\blue You insert the [W] into the [src]")
+		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
 
 	else if(src.panel_open)
 		for(var/datum/data/vending_product/R in product_records)
@@ -254,6 +249,13 @@
 				qdel(W)
 	else
 		..()
+
+/obj/machinery/vending/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	src.emagged = 1
+	to_chat(user, "You short out the product lock on [src]")
+	return TRUE
 
 /obj/machinery/vending/default_deconstruction_crowbar(obj/item/O)
 	var/list/all_products = product_records + hidden_records + coin_records
@@ -409,7 +411,7 @@
 		coin.loc = loc
 		if(!usr.get_active_hand())
 			usr.put_in_hands(coin)
-		to_chat(usr, "\blue You remove the [coin] from the [src]")
+		to_chat(usr, "<span class='notice'>You remove the [coin] from the [src]</span>")
 		coin = null
 
 	else if(href_list["remove_ewallet"] && !issilicon(usr) && !isobserver(usr))
@@ -419,7 +421,7 @@
 		ewallet.loc = loc
 		if(!usr.get_active_hand())
 			usr.put_in_hands(ewallet)
-		to_chat(usr, "\blue You remove the [ewallet] from the [src]")
+		to_chat(usr, "<span class='notice'>You remove the [ewallet] from the [src]</span>")
 		ewallet = null
 
 	else if (href_list["vend"] && vend_ready && !currently_vending)
@@ -427,10 +429,10 @@
 		if(isrobot(usr))
 			var/mob/living/silicon/robot/R = usr
 			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
-				to_chat(usr, "\red The vending machine refuses to interface with you, as you are not in its target demographic!")
+				to_chat(usr, "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
 				return FALSE
 		else if(issilicon(usr))
-			to_chat(usr, "\red The vending machine refuses to interface with you, as you are not in its target demographic!")
+			to_chat(usr, "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
 			return FALSE
 
 		if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
@@ -450,7 +452,7 @@
 					ewallet.worth -= R.price
 					src.vend(R, usr)
 				else
-					to_chat(usr, "\red The ewallet doesn't have enough money to pay for that.")
+					to_chat(usr, "<span class='warning'>The ewallet doesn't have enough money to pay for that.</span>")
 					src.currently_vending = R
 					src.updateUsrDialog()
 			else
@@ -474,13 +476,13 @@
 
 	if (R in coin_records)
 		if(!coin)
-			to_chat(user, "\blue You need to insert a coin to get this item.")
+			to_chat(user, "<span class='notice'>You need to insert a coin to get this item.</span>")
 			return
 		if(coin.string_attached)
 			if(prob(50))
-				to_chat(user, "\blue You successfully pull the coin out before the [src] could swallow it.")
+				to_chat(user, "<span class='notice'>You successfully pull the coin out before the [src] could swallow it.</span>")
 			else
-				to_chat(user, "\blue You weren't able to pull the coin out fast enough, the machine ate it, string and all.")
+				to_chat(user, "<span class='notice'>You weren't able to pull the coin out fast enough, the machine ate it, string and all.</span>")
 				QDEL_NULL(coin)
 		else
 			QDEL_NULL(coin)
@@ -505,7 +507,7 @@
 
 /obj/machinery/vending/proc/stock(datum/data/vending_product/R, mob/user)
 	if(src.panel_open)
-		to_chat(user, "\blue You stock the [src] with \a [R.product_name]")
+		to_chat(user, "<span class='notice'>You stock the [src] with \a [R.product_name]</span>")
 		R.amount++
 
 	src.updateUsrDialog()

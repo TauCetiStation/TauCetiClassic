@@ -182,7 +182,7 @@
 	frustration = 0
 	anchored = FALSE
 
-/obj/machinery/bot/secbot/Emag(mob/user)
+/obj/machinery/bot/secbot/emag_act(mob/user)
 	..()
 	if(open && !locked)
 		if(user)
@@ -251,7 +251,7 @@
 							target.adjustBruteLoss(15)
 							if(target.stat)
 								forgetCurrentTarget()
-								playsound(src, "law", VOL_EFFECTS_MASTER, null, FALSE)
+								playsound(src, pick(SOUNDIN_BEEPSKY), VOL_EFFECTS_MASTER, null, FALSE)
 
 				else								// not next to perp
 					var/turf/olddist = get_dist(src, target)
@@ -321,7 +321,7 @@
 					var/mob/living/carbon/mob_carbon = target
 					mob_carbon.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(mob_carbon), SLOT_HANDCUFFED)
 				forgetCurrentTarget()
-				playsound(src, "law", VOL_EFFECTS_MASTER, null, FALSE)
+				playsound(src, pick(SOUNDIN_BEEPSKY), VOL_EFFECTS_MASTER, null, FALSE)
 			else if(mode == SECBOT_ARREST)
 				anchored = FALSE
 				mode = SECBOT_HUNT
@@ -608,7 +608,7 @@
 
 /obj/machinery/bot/secbot/explode()
 	walk_to(src,0)
-	visible_message("\red <B>[src] blows apart!</B>", 1)
+	visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)

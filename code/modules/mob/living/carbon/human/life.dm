@@ -160,7 +160,7 @@
 /mob/living/carbon/human/proc/handle_disabilities()
 	if (disabilities & EPILEPSY || has_trait(TRAIT_EPILEPSY))
 		if ((prob(1) && paralysis < 1))
-			to_chat(src, "\red You have a seizure!")
+			to_chat(src, "<span class='warning'>You have a seizure!</span>")
 			for(var/mob/O in viewers(src, null))
 				if(O == src)
 					continue
@@ -250,15 +250,15 @@
 				custom_pain("Your head feels numb and painful.")
 		if(getBrainLoss() >= 15)
 			if(4 <= rn && rn <= 6) if(eye_blurry <= 0)
-				to_chat(src, "\red It becomes hard to see for some reason.")
+				to_chat(src, "<span class='warning'>It becomes hard to see for some reason.</span>")
 				eye_blurry = 10
 		if(getBrainLoss() >= 35)
 			if(7 <= rn && rn <= 9) if(get_active_hand())
-				to_chat(src, "\red Your hand won't respond properly, you drop what you're holding.")
+				to_chat(src, "<span class='warning'>Your hand won't respond properly, you drop what you're holding.</span>")
 				drop_item()
 		if(getBrainLoss() >= 50)
 			if(10 <= rn && rn <= 12) if(!lying)
-				to_chat(src, "\red Your legs won't respond properly, you fall down.")
+				to_chat(src, "<span class='warning'>Your legs won't respond properly, you fall down.</span>")
 				resting = 1
 
 /mob/living/carbon/human/proc/handle_stasis_bag()
@@ -297,7 +297,7 @@
 			if(!species.flags[RAD_ABSORB])
 				Weaken(10)
 				if(!lying)
-					to_chat(src, "\red You feel weak.")
+					to_chat(src, "<span class='warning'>You feel weak.</span>")
 					emote("collapse")
 
 		if (radiation < 0)
@@ -332,13 +332,13 @@
 					radiation -= 5
 					Weaken(3)
 					if(!lying)
-						to_chat(src, "\red You feel weak.")
+						to_chat(src, "<span class='warning'>You feel weak.</span>")
 						emote("collapse")
 			if(radiation > 75)
 				radiation--
 				damage = 3
 				if(prob(1))
-					to_chat(src, "\red You mutate!")
+					to_chat(src, "<span class='warning'>You mutate!</span>")
 					randmutb(src)
 					domutcheck(src,null)
 					emote("gasp")
@@ -464,13 +464,11 @@
 		if(internal)
 					//internal breath sounds
 			if(internal.distribute_pressure >= 16)
-				var/breathsound = ""
-				if(istype(wear_mask, /obj/item/clothing/mask))
-					breathsound = "breathmask"
+				var/breathsound = pick(SOUNDIN_BREATHMASK)
 				if(istype(wear_mask, /obj/item/clothing/mask/gas))
-					breathsound = "gasmaskbreath"
+					breathsound = 'sound/misc/gasmaskbreath.ogg'
 				if(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space))
-					breathsound = "rigbreath"
+					breathsound = pick(SOUNDIN_RIGBREATH)
 				playsound(src, breathsound, VOL_EFFECTS_MASTER, null, FALSE, -6)
 			return internal.remove_air_volume(volume_needed)
 		else if(internals)
@@ -1049,7 +1047,7 @@
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(FAT in mutations)
 		if(!has_trait(TRAIT_FAT) && overeatduration < 100)
-			to_chat(src, "\blue You feel fit again!")
+			to_chat(src, "<span class='notice'>You feel fit again!</span>")
 			mutations.Remove(FAT)
 			update_body()
 			update_mutantrace()
@@ -1609,8 +1607,8 @@
 /mob/living/carbon/human/proc/handle_random_events()
 	// Puke if toxloss is too high
 	if(!stat)
-		if (getToxLoss() >= 45 && nutrition > 20)
-			vomit()
+		if (getToxLoss() >= 45)
+			invoke_vomit_async()
 
 	//0.1% chance of playing a scary sound to someone who's in complete darkness
 	if(isturf(loc) && rand(1,1000) == 1)

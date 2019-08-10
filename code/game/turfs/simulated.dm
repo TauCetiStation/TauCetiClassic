@@ -36,7 +36,7 @@
 
 /turf/simulated/Entered(atom/A, atom/OL)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		to_chat(usr, "\red Movement is admin-disabled.")//This is to identify lag problems
+		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
 		return
 
 	if (istype(A, /mob/living/simple_animal/hulk))
@@ -64,11 +64,11 @@
 			if(istype(H:shoes, /obj/item/clothing/shoes) && !H.buckled)
 				var/obj/item/clothing/shoes/O = H.shoes
 
-				var/footstepsound = "footsteps"
+				var/footstepsound = pick(SOUNDIN_FOOTSTEPS)
 
 				if(istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
 					if(prob(25))
-						footstepsound = "clownstep"
+						footstepsound = pick(SOUNDIN_CLOWNSTEP)
 				if(H.shoes.wet)
 					footstepsound = 'sound/effects/waterstep.ogg'
 
@@ -164,6 +164,21 @@
 
 	else if( istype(M, /mob/living/silicon/robot ))
 		new /obj/effect/decal/cleanable/blood/oil(src)
+
+/turf/simulated/proc/add_vomit_floor(mob/living/carbon/C, toxvomit = 0)
+	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src)
+	// Make toxins vomit look different
+	if(toxvomit)
+		var/datum/reagent/new_color = locate(/datum/reagent/luminophore) in C.reagents.reagent_list
+		if(!new_color)
+			V.icon_state = "vomittox_[pick(1,4)]"
+		else
+			V.icon_state = "vomittox_nc_[pick(1,4)]"
+			V.alpha = 127
+			V.color = new_color.color
+			V.light_color = V.color
+			V.set_light(3)
+			V.stop_light()
 
 //Wet floor procs.
 /turf/simulated/proc/make_wet_floor(severity = WATER_FLOOR)

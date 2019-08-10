@@ -98,12 +98,7 @@
 // cell: insert it
 // other: chance to knock rider off bot
 /obj/machinery/bot/mulebot/attackby(obj/item/I, mob/user)
-	if(istype(I,/obj/item/weapon/card/emag))
-		locked = !locked
-		to_chat(user, "\blue You [locked ? "lock" : "unlock"] the mulebot's controls!")
-		flick("mulebot-emagged", src)
-		playsound(src, 'sound/effects/sparks1.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	else if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
+	if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
 		var/obj/item/weapon/stock_parts/cell/C = I
 		user.drop_item()
 		C.loc = src
@@ -111,16 +106,16 @@
 		updateDialog()
 	else if(isscrewdriver(I))
 		if(locked)
-			to_chat(user, "\blue The maintenance hatch cannot be opened or closed while the controls are locked.")
+			to_chat(user, "<span class='notice'>The maintenance hatch cannot be opened or closed while the controls are locked.</span>")
 			return
 
 		open = !open
 		if(open)
-			src.visible_message("[user] opens the maintenance hatch of [src]", "\blue You open [src]'s maintenance hatch.")
+			src.visible_message("[user] opens the maintenance hatch of [src]", "<span class='notice'>You open [src]'s maintenance hatch.</span>")
 			on = 0
 			icon_state="mulebot-hatch"
 		else
-			src.visible_message("[user] closes the maintenance hatch of [src]", "\blue You close [src]'s maintenance hatch.")
+			src.visible_message("[user] closes the maintenance hatch of [src]", "<span class='notice'>You close [src]'s maintenance hatch.</span>")
 			icon_state = "mulebot0"
 
 		updateDialog()
@@ -130,21 +125,27 @@
 		if (src.health < maxhealth)
 			src.health = min(maxhealth, src.health+25)
 			user.visible_message(
-				"\red [user] repairs [src]!",
-				"\blue You repair [src]!"
+				"<span class='warning'>[user] repairs [src]!</span>",
+				"<span class='notice'>You repair [src]!</span>"
 			)
 		else
-			to_chat(user, "\blue [src] does not need a repair!")
+			to_chat(user, "<span class='notice'>[src] does not need a repair!</span>")
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1+I.force * 2))
 			unload(0)
-			user.visible_message("\red [user] knocks [load] off [src] with \the [I]!", "\red You knock [load] off [src] with \the [I]!")
+			user.visible_message("<span class='warning'>[user] knocks [load] off [src] with \the [I]!</span>", "<span class='warning'>You knock [load] off [src] with \the [I]!</span>")
 		else
 			to_chat(user, "You hit [src] with \the [I] but to no effect.")
 	else
 		..()
 	return
 
+/obj/machinery/bot/mulebot/emag_act(mob/user)
+	locked = !locked
+	to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the mulebot's controls!</span>")
+	flick("mulebot-emagged", src)
+	playsound(src, 'sound/effects/sparks1.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	return TRUE
 
 /obj/machinery/bot/mulebot/ex_act(severity)
 	unload(0)
@@ -240,14 +241,14 @@
 			if(src.allowed(usr))
 				locked = !locked
 			else
-				to_chat(usr, "\red Access denied.")
+				to_chat(usr, "<span class='warning'>Access denied.</span>")
 				return FALSE
 		if("power")
 			if (src.on)
 				turn_off()
 			else if (cell && !open)
 				if (!turn_on())
-					to_chat(usr, "\red You can't switch on [src].")
+					to_chat(usr, "<span class='warning'>You can't switch on [src].</span>")
 					return FALSE
 			else
 				return FALSE
@@ -261,7 +262,7 @@
 				cell.add_fingerprint(usr)
 				cell = null
 
-				usr.visible_message("\blue [usr] removes the power cell from [src].", "\blue You remove the power cell from [src].")
+				usr.visible_message("<span class='notice'>[usr] removes the power cell from [src].</span>", "<span class='notice'>You remove the power cell from [src].</span>")
 
 		if("cellinsert")
 			if(open && !cell)
@@ -272,7 +273,7 @@
 					C.loc = src
 					C.add_fingerprint(usr)
 
-					usr.visible_message("\blue [usr] inserts a power cell into [src].", "\blue You insert the power cell into [src].")
+					usr.visible_message("<span class='notice'>[usr] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 
 
 		if("stop")
@@ -667,9 +668,9 @@
 		var/mob/M = obs
 		if(ismob(M))
 			if(istype(M,/mob/living/silicon/robot))
-				src.visible_message("\red [src] bumps into [M]!")
+				src.visible_message("<span class='warning'>[src] bumps into [M]!</span>")
 			else
-				src.visible_message("\red [src] knocks over [M]!")
+				src.visible_message("<span class='warning'>[src] knocks over [M]!</span>")
 				M.stop_pulling()
 				M.Stun(8)
 				M.Weaken(5)
@@ -683,7 +684,7 @@
 // called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
 /obj/machinery/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
-	src.visible_message("\red [src] drives over [H]!")
+	src.visible_message("<span class='warning'>[src] drives over [H]!</span>")
 	playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 
 	var/damage = rand(5,15)

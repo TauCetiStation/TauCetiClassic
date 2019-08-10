@@ -16,16 +16,16 @@
 /obj/item/device/megaphone/attack_self(mob/living/user)
 	if (user.client)
 		if(user.client.prefs.muted & MUTE_IC)
-			to_chat(src, "\red You cannot speak in IC (muted).")
+			to_chat(src, "<span class='warning'>You cannot speak in IC (muted).</span>")
 			return
 	if(!ishuman(user))
-		to_chat(user, "\red You don't know how to use this!")
+		to_chat(user, "<span class='warning'>You don't know how to use this!</span>")
 		return
 	if(user.silent || isabductor(user) || user.has_trait(TRAIT_MUTE))
 		to_chat(user, "<span class='userdange'>You can't speak.</span>")
 		return
 	if(spamcheck)
-		to_chat(user, "\red \The [src] needs to recharge!")
+		to_chat(user, "<span class='warning'>\The [src] needs to recharge!</span>")
 		return
 
 	playsound(src, 'sound/items/megaphone.ogg', VOL_EFFECTS_MASTER)
@@ -40,7 +40,7 @@
 					O.show_message("<B>[user]</B> broadcasts, <FONT size=3>\"[pick(insultmsg)]\"</FONT>",2) // 2 stands for hearable message
 				insults--
 			else
-				to_chat(user, "\red *BZZZZzzzzzt*")
+				to_chat(user, "<span class='warning'>*BZZZZzzzzzt*</span>")
 		else
 			for(var/mob/O in (viewers(user)))
 				O.show_message("<B>[user]</B> broadcasts, <FONT size=3>\"[message]\"</FONT>",2) // 2 stands for hearable message
@@ -50,10 +50,10 @@
 			spamcheck = 0
 		return
 
-/obj/item/device/megaphone/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
-		to_chat(user, "\red You overload \the [src]'s voice synthesizer.")
-		emagged = 1
-		insults = rand(1, 3)//to prevent dickflooding
-		return
-	return
+/obj/item/device/megaphone/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	to_chat(user, "<span class='warning'>You overload \the [src]'s voice synthesizer.</span>")
+	emagged = 1
+	insults = rand(1, 3)//to prevent dickflooding
+	return TRUE

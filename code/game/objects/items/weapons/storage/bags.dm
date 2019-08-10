@@ -38,7 +38,7 @@
 	max_w_class = ITEM_SIZE_NORMAL
 	max_storage_space = DEFAULT_BACKPACK_STORAGE
 	w_class = ITEM_SIZE_LARGE //Bigger than a book because physics
-	can_hold = list("/obj/item/weapon/book", "/obj/item/weapon/storage/bible", "/obj/item/weapon/spellbook")
+	can_hold = list(/obj/item/weapon/book, /obj/item/weapon/storage/bible, /obj/item/weapon/spellbook)
 
 // -----------------------------
 //          Trash bag
@@ -137,7 +137,7 @@
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_POCKET
 	w_class = ITEM_SIZE_NORMAL
 	max_storage_space = 100
-	can_hold = list("/obj/item/weapon/ore", "/obj/item/bluespace_crystal")
+	can_hold = list(/obj/item/weapon/ore, /obj/item/bluespace_crystal)
 
 /obj/item/weapon/storage/bag/ore/holding
 	name = "Mining satchel of holding"
@@ -157,7 +157,7 @@
 	max_storage_space = 100
 	max_w_class = ITEM_SIZE_NORMAL
 	w_class = ITEM_SIZE_SMALL
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/grown","/obj/item/seeds","/obj/item/weapon/grown")
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown,/obj/item/seeds,/obj/item/weapon/grown)
 
 
 // -----------------------------
@@ -188,7 +188,7 @@
 		current += S.get_amount()
 	if(capacity == current)//If it's full, you're done
 		if(!stop_messages)
-			to_chat(usr, "\red The snatcher is full.")
+			to_chat(usr, "<span class='warning'>The snatcher is full.</span>")
 		return 0
 	return 1
 
@@ -281,4 +281,4 @@
 	max_storage_space = 100
 	max_w_class = ITEM_SIZE_HUGE
 	w_class = ITEM_SIZE_SMALL
-	can_hold = list("/obj/item/weapon/coin","/obj/item/weapon/spacecash")
+	can_hold = list(/obj/item/weapon/coin,/obj/item/weapon/spacecash)

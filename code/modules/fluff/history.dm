@@ -5,6 +5,7 @@
 	var/ammount
 
 /proc/get_custom_items_history(ckey)
+	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 	customItemsCache.cd = "/"
 	var/list/slots = null
 	customItemsCache["slots_history"] >> slots
@@ -20,6 +21,7 @@
 
 	ammount = round(ammount)
 
+	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 	customItemsCache.cd = "/"
 	var/list/slots = null
 	customItemsCache["slots_history"] >> slots
@@ -43,6 +45,7 @@
 /proc/remove_custom_items_history(player_ckey, index)
 	player_ckey = ckey(player_ckey)
 
+	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 	customItemsCache.cd = "/"
 	var/list/slots = null
 	customItemsCache["slots_history"] >> slots
@@ -65,6 +68,7 @@
 	for(var/datum/custom_items_history/entry in history)
 		ammount += entry.ammount
 
+	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 	customItemsCache.cd = "/"
 	var/list/slots = null
 	customItemsCache["slots"] >> slots
@@ -79,6 +83,7 @@
 	customItemsCache["slots"] << slots
 
 /proc/get_custom_items_slot_all()
+	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 	customItemsCache.cd = "/"
 	var/list/slots = null
 	customItemsCache["slots"] >> slots

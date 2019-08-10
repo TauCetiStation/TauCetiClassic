@@ -99,9 +99,6 @@
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W, mob/user)
 	if(locked)
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if (istype(W, /obj/item/weapon/card/emag))
-			to_chat(user, "<span class='notice'>The crate unlocks!</span>")
-			locked = 0
 		if (ismultitool(W))
 			to_chat(user, "<span class='notice'>DECA-CODE LOCK REPORT:</span>")
 			if (attempts == 1)
@@ -120,3 +117,10 @@
 			..()
 	else
 		..()
+
+/obj/structure/closet/crate/secure/loot/emag_act(mob/user)
+	if(locked)
+		to_chat(user, "<span class='notice'>The crate unlocks!</span>")
+		locked = 0
+		return TRUE
+	return FALSE

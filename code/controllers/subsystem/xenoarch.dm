@@ -59,7 +59,11 @@ var/datum/subsystem/xenoarch/SSxenoarch
 	var/list/artifact_spawning_turfs = list()
 	var/list/digsite_spawning_turfs  = list()
 
-	for(var/turf/simulated/mineral/M in block(locate(1, 1, ZLEVEL_ASTEROID), locate(world.maxx, world.maxy, ZLEVEL_ASTEROID)))
+	var/asteroid_zlevel = SSmapping.level_by_trait(ZTRAIT_MINING)
+	if(!asteroid_zlevel)
+		return
+
+	for(var/turf/simulated/mineral/M in block(locate(1, 1, asteroid_zlevel), locate(world.maxx, world.maxy, asteroid_zlevel)))
 		if(!prob(XENOARCH_SPAWN_CHANCE))
 			continue
 

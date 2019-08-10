@@ -227,6 +227,10 @@
 	name = "NSS Exodus Gateway"
 	block_exile_implant = FALSE
 
+/obj/machinery/gateway/center/station/atom_init()
+	. = ..()
+	name = "[station_name()] Gateway"
+
 /obj/machinery/gateway/center/station/process()
 	..()
 	if(active && !hacked && !config.gateway_enabled)

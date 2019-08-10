@@ -500,7 +500,7 @@
 									   "<span class='shadowling'><b><i>You have returned. One of your masters has brought you from the darkness beyond.</b></i></span>")
 		thrallToRevive.Weaken(4)
 		thrallToRevive.emote("gasp")
-		playsound(thrallToRevive, "bodyfall", VOL_EFFECTS_MASTER)
+		playsound(thrallToRevive, pick(SOUNDIN_BODYFALL), VOL_EFFECTS_MASTER)
 
 // ASCENDANT ABILITIES BEYOND THIS POINT //
 
@@ -675,7 +675,7 @@
 
 /obj/effect/proc_holder/spell/targeted/shadowlingAscendantTransmit/cast(list/targets)
 	for(var/mob/living/user in targets)
-		var/text = sanitize(input(user, "What do you want to say to everything on and near [world.name]?.", "Transmit to World", ""))
+		var/text = sanitize(input(user, "What do you want to say to everything on and near [station_name()]?.", "Transmit to World", ""))
 		if(!text)
 			return
 		to_chat(world, "<font size=4><span class='shadowling'><b>\"[sanitize(text)]\"</b></font></span>")

@@ -48,6 +48,12 @@
 	contents_cost = 700
 	export_types = list(/obj/structure/reagent_dispensers/beerkeg)
 
+/datum/export/large/reagent_dispenser/kvass
+	unit_name = "kvass tank"
+	cost = 400
+	contents_cost = 200
+	export_types = list(/obj/structure/reagent_dispensers/kvasstank)
+
 
 
 // Heavy engineering equipment. Singulo/Tesla parts mostly.

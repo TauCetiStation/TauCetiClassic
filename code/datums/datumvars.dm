@@ -425,7 +425,7 @@ body
 	if(usr.client != src || !holder)
 		return
 	if(href_list["Vars"])
-		if(!check_rights(R_DEBUG|R_VAREDIT))
+		if(!check_rights(R_DEBUG|R_VAREDIT|R_LOG))
 			return
 		debug_variables(locate(href_list["Vars"]))
 
@@ -636,7 +636,7 @@ body
 					to_chat(usr, "No objects of this type exist")
 					return
 				log_admin("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ")
-				message_admins("\blue [key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ")
+				message_admins("<span class='notice'>[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) </span>")
 			if("Type and subtypes")
 				var/i = 0
 				for(var/obj/Obj in world)
@@ -648,7 +648,7 @@ body
 					to_chat(usr, "No objects of this type exist")
 					return
 				log_admin("[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ")
-				message_admins("\blue [key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ")
+				message_admins("<span class='notice'>[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) </span>")
 
 	else if(href_list["explode"])
 		if(!check_rights(R_DEBUG|R_FUN))
@@ -1009,7 +1009,7 @@ body
 
 		if(amount != 0)
 			log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
-			message_admins("\blue [key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
+			message_admins("<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>")
 			href_list["datumrefresh"] = href_list["mobToDamage"]
 
 	else if(href_list["setckey"])
@@ -1026,7 +1026,7 @@ body
 
 		if(new_client == "Cancel") return
 
-		message_admins("\blue [key_name_admin(usr)] set client [new_client.ckey] to [C.name].", 1)
+		message_admins("<span class='notice'>[key_name_admin(usr)] set client [new_client.ckey] to [C.name].</span>", 1)
 		log_admin("[key_name(usr)] set client [new_client.ckey] to [C.name].")
 
 		C.ckey = new_client.ckey

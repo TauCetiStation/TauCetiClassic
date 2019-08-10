@@ -8,7 +8,7 @@
 
 	req_access = list(access_engine)
 
-	var/list/conf_access = null
+	var/list/conf_access = list()
 	var/one_access = 0 //if set to 1, door would receive req_one_access instead of req_access
 	var/last_configurator = null
 	var/locked = 1
@@ -93,17 +93,11 @@
 
 /obj/item/weapon/airlock_electronics/proc/toggle_access(acc)
 	if (acc == "all")
-		conf_access = null
+		conf_access = list()
 	else
 		var/req = text2num(acc)
-
-		if (conf_access == null)
-			conf_access = list()
 
 		if (!(req in conf_access))
 			conf_access += req
 		else
 			conf_access -= req
-			if (!conf_access.len)
-				conf_access = null
-

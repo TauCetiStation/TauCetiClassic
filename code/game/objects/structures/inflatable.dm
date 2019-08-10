@@ -127,7 +127,7 @@
 		return
 
 	if(W.can_puncture())
-		visible_message("\red <b>[user] pierces [src] with [W]!</b>")
+		visible_message("<span class='warning'><b>[user] pierces [src] with [W]!</b></span>")
 		deflate(1)
 	if(W.damtype == BRUTE || W.damtype == BURN)
 		hit(W.force)
@@ -149,7 +149,7 @@
 		src.transfer_fingerprints_to(R)
 		qdel(src)
 	else
-		//user << "\blue You slowly deflate the inflatable wall."
+		//user << "<span class='notice'>You slowly deflate the inflatable wall.</span>"
 		visible_message("[src] slowly deflates.")
 		spawn(50)
 			var/obj/item/inflatable/R = new /obj/item/inflatable(loc)
@@ -273,7 +273,7 @@
 		src.transfer_fingerprints_to(R)
 		qdel(src)
 	else
-		//user << "\blue You slowly deflate the inflatable wall."
+		//user << "<span class='notice'>You slowly deflate the inflatable wall.</span>"
 		visible_message("[src] slowly deflates.")
 		spawn(50)
 			var/obj/item/inflatable/door/R = new /obj/item/inflatable/door(loc)
@@ -288,7 +288,7 @@
 	icon_state = "folded_wall_torn"
 
 /obj/item/inflatable/torn/attack_self(mob/user)
-	to_chat(user, "\blue The inflatable wall is too torn to be inflated!")
+	to_chat(user, "<span class='notice'>The inflatable wall is too torn to be inflated!</span>")
 	add_fingerprint(user)
 
 /obj/item/inflatable/door/torn
@@ -298,7 +298,7 @@
 	icon_state = "folded_door_torn"
 
 /obj/item/inflatable/door/torn/attack_self(mob/user)
-	to_chat(user, "\blue The inflatable door is too torn to be inflated!")
+	to_chat(user, "<span class='notice'>The inflatable door is too torn to be inflated!</span>")
 	add_fingerprint(user)
 
 /obj/item/weapon/storage/briefcase/inflatable

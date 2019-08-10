@@ -239,14 +239,13 @@
 		to_chat(user, "<span class='notice'>\The [src] smartly refuses [O].</span>")
 		return
 
-/obj/machinery/smartfridge/secure/attackby(obj/item/O, mob/user)
-	if (istype(O, /obj/item/weapon/card/emag))
-		emagged = 1
-		locked = -1
-		to_chat(user, "You short out the product lock on [src].")
-		return
-
-	..()
+/obj/machinery/smartfridge/secure/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	emagged = 1
+	locked = -1
+	to_chat(user, "You short out the product lock on [src].")
+	return TRUE
 
 /obj/machinery/smartfridge/attack_ai(mob/user)
 	if(IsAdminGhost(user))
@@ -343,7 +342,7 @@
 	if(!throw_item)
 		return 0
 	throw_item.throw_at(target,16,3,src)
-	src.visible_message("\red <b>[src] launches [throw_item.name] at [target.name]!</b>")
+	src.visible_message("<span class='warning'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
 	return 1
 
 /obj/machinery/smartfridge/proc/shock(mob/user, prb)
@@ -365,5 +364,5 @@
 	if(!.)
 		return
 	if (!allowed(usr) && !emagged && locked != -1 && href_list["vend"])
-		to_chat(usr, "\red Access denied.")
+		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return FALSE

@@ -232,18 +232,18 @@
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
 	if(M.wall_smash)
 		if (istype(src, /turf/simulated/wall/r_wall) && !rotting)
-			to_chat(M, text("\blue This wall is far too strong for you to destroy."))
+			to_chat(M, text("<span class='notice'>This wall is far too strong for you to destroy.</span>"))
 			return
 		else
 			if (prob(40) || rotting)
-				to_chat(M, text("\blue You smash through the wall."))
+				to_chat(M, text("<span class='notice'>You smash through the wall.</span>"))
 				dismantle_wall(1)
 				return
 			else
-				to_chat(M, text("\blue You smash against the wall."))
+				to_chat(M, text("<span class='notice'>You smash against the wall.</span>"))
 				return
 
-	to_chat(M, "\blue You push the wall but nothing happens!")
+	to_chat(M, "<span class='notice'>You push the wall but nothing happens!</span>")
 	return */
 
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
@@ -262,7 +262,7 @@
 				to_chat(M, "<span class='info'>This wall is far too strong for you to destroy.</span>")
 		else
 			if (prob(40) || rotting)
-				to_chat(M, text("\blue You smash through the wall."))
+				to_chat(M, text("<span class='notice'>You smash through the wall.</span>"))
 				dismantle_wall(1)
 			else
 				take_damage(rand(25, 75))
@@ -275,18 +275,18 @@
 	if(HULK in user.mutations) //#Z2 No more chances, just randomized damage and hurt intent
 		if(user.a_intent == "hurt")
 			playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-			to_chat(user, text("\blue You punch the wall."))
+			to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
 			take_damage(rand(15, 50))
 			if(prob(25))
 				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			return //##Z2
 
 	if(rotting)
-		to_chat(user, "\blue The wall crumbles under your touch.")
+		to_chat(user, "<span class='notice'>The wall crumbles under your touch.</span>")
 		dismantle_wall()
 		return
 
-	to_chat(user, "\blue You push the wall but nothing happens!")
+	to_chat(user, "<span class='notice'>You push the wall but nothing happens!</span>")
 	playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER, 25)
 	src.add_fingerprint(user)
 	return
@@ -312,7 +312,7 @@
 					qdel(E)
 				rotting = 0
 				return
-		else if(!is_sharp(W) && W.force >= 10 || W.force >= 20)
+		else if(!W.is_sharp() && W.force >= 10 || W.force >= 20)
 			to_chat(user, "<span class='notice'>\The [src] crumbles away under the force of your [W.name].</span>")
 			src.dismantle_wall(1)
 			return
@@ -334,7 +334,7 @@
 
 			EB.spark_system.start()
 			to_chat(user, "<span class='notice'>You slash \the [src] with \the [EB]; the thermite ignites!</span>")
-			playsound(src, "sparks", VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 
 			thermitemelt(user)
@@ -414,7 +414,7 @@
 
 		EB.spark_system.start()
 		to_chat(user, "<span class='notice'>You stab \the [EB] into the wall and begin to slice it apart.</span>")
-		playsound(src, "sparks", VOL_EFFECTS_MASTER)
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		if(W.use_tool(src, user, 70))
 			if(mineral == "diamond")
 				sleep(70)
@@ -423,7 +423,7 @@
 
 			if(user.loc == T && user.get_active_hand() == W)
 				EB.spark_system.start()
-				playsound(src, "sparks", VOL_EFFECTS_MASTER)
+				playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 				playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 				dismantle_wall(1)
 				for(var/mob/O in viewers(user, 5))

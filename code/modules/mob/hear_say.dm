@@ -71,7 +71,7 @@
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
 
-/mob/proc/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, mob/speaker = null, hard_to_hear = 0, vname ="")
+/mob/proc/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
 
 	if(!client)
 		return
@@ -187,9 +187,9 @@
 		if(prob(20))
 			to_chat(src, "<span class='warning'>You feel your headset vibrate but can hear nothing from it!</span>")
 	else if(track)
-		to_chat(src, "[part_a][track][part_b][formatted]")
+		to_chat(src, "[part_a][track][part_b][formatted][part_c]")
 	else
-		to_chat(src, "[part_a][speaker_name][part_b][formatted]")
+		to_chat(src, "[part_a][speaker_name][part_b][formatted][part_c]")
 
 /mob/proc/hear_signlang(message, verb = "gestures", datum/language/language, mob/speaker = null)
 	if(!client)

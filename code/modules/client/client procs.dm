@@ -101,17 +101,21 @@ var/list/blacklisted_builds = list(
 
 	..()	//redirect to hsrc.Topic()
 
+/client/Destroy()
+	..() // Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
+	return QDEL_HINT_HARDDEL_NOW
+
 /client/proc/handle_spam_prevention(message, mute_type)
 	if(global_message_cooldown && (world.time < last_message_time + 5))
 		return 1
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			to_chat(src, "\red You have exceeded the spam filter limit for identical messages. An auto-mute was applied.")
+			to_chat(src, "<span class='warning'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>")
 			cmd_admin_mute(src.mob, mute_type, 1)
 			return 1
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			to_chat(src, "\red You are nearing the spam filter limit for identical messages.")
+			to_chat(src, "<span class='warning'>You are nearing the spam filter limit for identical messages.</span>")
 			return 0
 	else
 		last_message_time = world.time
@@ -150,7 +154,7 @@ var/list/blacklisted_builds = list(
 		src.preload_rsc = pick(config.resource_urls)
 	else src.preload_rsc = 1 // If config.resource_urls is not set, preload like normal.
 
-	to_chat(src, "\red If the title screen is black, resources are still downloading. Please be patient until the title screen appears.")
+	to_chat(src, "<span class='warning'>If the title screen is black, resources are still downloading. Please be patient until the title screen appears.</span>")
 
 
 	clients += src
@@ -200,6 +204,27 @@ var/list/blacklisted_builds = list(
 
 
 	spawn(50)//should wait for goonchat initialization
+		if(config.client_limit_panic_bunker_count != null)
+			if(!(ckey in admin_datums) && !(src in mentors) && (clients.len > config.client_limit_panic_bunker_count) && !(ckey in joined_player_list))
+				if (config.client_limit_panic_bunker_link)
+					to_chat(src, "<span class='notice'>Player limit is enabled. You are redirected to [config.client_limit_panic_bunker_link].</span>")
+					SEND_LINK(src, config.client_limit_panic_bunker_link)
+				else
+					to_chat(src, "<span class='danger'>Sorry, player limit is enabled. Try to connect later.</span>")
+					log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
+					qdel(src)
+				return
+
+		if(config.registration_panic_bunker_age)
+			if(!(ckey in admin_datums) && !(src in mentors) && is_blocked_by_regisration_panic_bunker())
+				to_chat(src, "<span class='danger'>Sorry, but server is currently accepting only users with registration date before [config.registration_panic_bunker_age]. Try to connect later.</span>")
+				message_admins("<span class='adminnotice'>[key_name(src)] has been blocked by panic bunker. Connection rejected.</span>")
+				log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
+				qdel(src)
+				return
+			if(holder)
+				to_chat("<span class='adminnotice'>Round with registration panic bunker! Panic age: [config.registration_panic_bunker_age]</span>")
+
 		if(config.byond_version_min && byond_version < config.byond_version_min)
 			to_chat(src, "<span class='warning bold'>Your version of Byond is too old. Update to the [config.byond_version_min] or later for playing on our server.</span>")
 			log_access("Failed Login: [key] [computer_id] [address] - byond version less that minimal required: [byond_version].[byond_build])")
@@ -217,16 +242,6 @@ var/list/blacklisted_builds = list(
 			if(!holder)
 				qdel(src)
 				return
-
-		if(config.registration_panic_bunker_age)
-			if(!(src in admin_datums) && !(src in mentors) && is_blocked_by_regisration_panic_bunker())
-				to_chat(src, "<span class='danger'>Sorry, but server is currently accepting only users with registration date before [config.registration_panic_bunker_age]. Try to connect later.</span>")
-				message_admins("<span class='adminnotice'>[key_name(src)] has been blocked by panic bunker. Connection rejected.</span>")
-				log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
-				qdel(src)
-				return
-			if(holder)
-				to_chat("<span class='adminnotice'>Round with registration panic bunker! Panic age: [config.registration_panic_bunker_age]</span>")
 
 	if(custom_event_msg && custom_event_msg != "")
 		to_chat(src, "<h1 class='alert'>Custom Event</h1>")

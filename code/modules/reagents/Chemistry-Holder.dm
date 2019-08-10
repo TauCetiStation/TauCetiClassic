@@ -150,12 +150,19 @@ var/const/INGEST = 2
 /datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
 	if (!target)
 		return
-	if (!target.reagents || src.total_volume<=0 || !src.get_reagent_amount(reagent))
+	if(src.total_volume<=0 || !src.get_reagent_amount(reagent))
 		return
 	if(amount < 0) return
 	if(amount > 2000) return
 
-	var/datum/reagents/R = target.reagents
+	var/datum/reagents/R = null
+	if(istype(target, /datum/reagents))
+		R = target
+	else
+		if(!target.reagents)
+			return
+		R = target.reagents
+
 	if(src.get_reagent_amount(reagent)<amount)
 		amount = src.get_reagent_amount(reagent)
 	amount = min(amount, R.maximum_volume-R.total_volume)
@@ -175,6 +182,8 @@ var/const/INGEST = 2
 	return amount
 
 /datum/reagents/proc/metabolize(mob/M, alien)
+	if(has_reagent("aclometasone")) // Has a "unique" metabolization disabling factor, which just prevents any metabolization at all without affecting hunger. ~Luduk
+		return
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if(M && R)
@@ -195,6 +204,13 @@ var/const/INGEST = 2
 	update_total()
 
 /datum/reagents/proc/handle_reactions()
+	if(!my_atom)
+		/*
+		We are created abstractly, there is no need for us to handle any reactions, unless somebody wants to
+		code in such support.
+		*/
+		return
+
 	if(my_atom.flags & NOREACT) return //Yup, no reactions here. No siree.
 
 
@@ -277,21 +293,21 @@ var/const/INGEST = 2
 
 					var/list/seen = viewers(4, get_turf(my_atom))
 					for(var/mob/M in seen)
-						to_chat(M, "\blue [bicon(my_atom)] The solution begins to bubble.")
+						to_chat(M, "<span class='notice'>[bicon(my_atom)] The solution begins to bubble.</span>")
 
 				/*	if(istype(my_atom, /obj/item/slime_core))
 						var/obj/item/slime_core/ME = my_atom
 						ME.Uses--
 						if(ME.Uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in viewers(4, get_turf(my_atom)) )
-								to_chat(M, "\blue [bicon(my_atom)] The innards begin to boil!")
+								to_chat(M, "<span class='notice'>[bicon(my_atom)] The innards begin to boil!</span>")
 					*/
 					if(istype(my_atom, /obj/item/slime_extract))
 						var/obj/item/slime_extract/ME2 = my_atom
 						ME2.Uses--
 						if(ME2.Uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in seen)
-								to_chat(M, "\blue [bicon(my_atom)] The [my_atom]'s power is consumed in the reaction.")
+								to_chat(M, "<span class='notice'>[bicon(my_atom)] The [my_atom]'s power is consumed in the reaction.</span>")
 								ME2.name = "used slime extract"
 								ME2.desc = "This extract has been used up."
 
@@ -390,7 +406,8 @@ var/const/INGEST = 2
 		if (R.id == reagent)
 			R.volume += amount
 			update_total()
-			my_atom.on_reagent_change()
+			if(my_atom)
+				my_atom.on_reagent_change()
 
 			// mix dem viruses
 			if(R.id == "blood" && reagent == "blood")
@@ -444,7 +461,8 @@ var/const/INGEST = 2
 			R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
 
 		update_total()
-		my_atom.on_reagent_change()
+		if(my_atom)
+			my_atom.on_reagent_change()
 		if(!safety)
 			handle_reactions()
 		return 0
@@ -467,12 +485,23 @@ var/const/INGEST = 2
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
-			my_atom.on_reagent_change()
+			if(my_atom)
+				my_atom.on_reagent_change()
 			return TRUE
 
 	return FALSE
 
 /datum/reagents/proc/has_reagent(reagent, amount = 0)
+	/*
+	Aclometasone prevents: reactions, metabolism, reagent effects, so we make this special snowflake code
+	to prevent all of the above.
+	*/
+	var/datum/reagent/aclometasone/ACLO = locate(/datum/reagent/aclometasone) in reagent_list
+	if(ismob(my_atom) && ACLO)
+		if(reagent == "aclometasone")
+			return ACLO.volume
+		return 0
+
 	for(var/datum/reagent/R in reagent_list)
 		if(R.id == reagent)
 			if(!amount)
@@ -482,6 +511,16 @@ var/const/INGEST = 2
 	return 0
 
 /datum/reagents/proc/get_reagent_amount(reagent)
+	/*
+	Aclometasone prevents: reactions, metabolism, reagent effects, so we make this special snowflake code
+	to prevent all of the above.
+	*/
+	var/datum/reagent/aclometasone/ACLO = locate(/datum/reagent/aclometasone) in reagent_list
+	if(ismob(my_atom) && ACLO)
+		if(reagent == "aclometasone")
+			return ACLO.volume
+		return 0
+
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if (R.id == reagent)

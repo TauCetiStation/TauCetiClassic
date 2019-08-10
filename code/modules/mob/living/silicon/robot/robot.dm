@@ -161,7 +161,7 @@
 		return
 	var/list/modules = list("Standard", "Engineering", "Surgeon", "Crisis", "Miner", "Janitor", "Service", "Security", "Science")
 	if(crisis && security_level == SEC_LEVEL_RED) //Leaving this in until it's balanced appropriately.
-		to_chat(src, "\red Crisis mode active. Combat module available.")
+		to_chat(src, "<span class='warning'>Crisis mode active. Combat module available.</span>")
 		modules+="Combat"
 	modtype = input("Please, select a module!", "Robot", null, null) in modules
 
@@ -420,10 +420,10 @@
 	var/datum/robot_component/C = components[toggle]
 	if(C.toggled)
 		C.toggled = 0
-		to_chat(src, "\red You disable [C.name].")
+		to_chat(src, "<span class='warning'>You disable [C.name].</span>")
 	else
 		C.toggled = 1
-		to_chat(src, "\red You enable [C.name].")
+		to_chat(src, "<span class='warning'>You enable [C.name].</span>")
 
 /mob/living/silicon/robot/blob_act()
 	if (stat != DEAD)
@@ -494,7 +494,7 @@
 
 /mob/living/silicon/robot/meteorhit(obj/O)
 	for(var/mob/M in viewers(src, null))
-		M.show_message(text("\red [src] has been hit by [O]"), 1)
+		M.show_message(text("<span class='warning'>[src] has been hit by [O]</span>"), 1)
 		//Foreach goto(19)
 	if (health > 0)
 		adjustBruteLoss(30)
@@ -545,7 +545,7 @@
 					C.brute_damage = WC.brute
 					C.electronics_damage = WC.burn
 
-				to_chat(usr, "\blue You install the [W.name].")
+				to_chat(usr, "<span class='notice'>You install the [W.name].</span>")
 
 				return
 
@@ -564,7 +564,7 @@
 			updatehealth()
 			add_fingerprint(user)
 			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [user] has fixed some of the dents on [src]!"), 1)
+				O.show_message(text("<span class='warning'>[user] has fixed some of the dents on [src]!</span>"), 1)
 		else
 			to_chat(user, "Need more welding fuel!")
 			return
@@ -580,7 +580,7 @@
 		adjustFireLoss(-30)
 		updatehealth()
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red [user] has fixed some of the burnt wires on [src]!"), 1)
+			O.show_message(text("<span class='warning'>[user] has fixed some of the burnt wires on [src]!</span>"), 1)
 
 	else if (iscrowbar(W))	// crowbar means open or close the cover
 		if(opened)
@@ -692,71 +692,7 @@
 				to_chat(user, "You [ locked ? "lock" : "unlock"] [src]'s interface.")
 				updateicon()
 			else
-				to_chat(user, "\red Access denied.")
-
-	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
-		if(!opened)//Cover is closed
-			if(locked)
-				user.SetNextMove(CLICK_CD_MELEE)
-				if(prob(90))
-					var/obj/item/weapon/card/emag/emag = W
-					emag.uses--
-					to_chat(user, "You emag the cover lock.")
-					locked = 0
-				else
-					to_chat(user, "You fail to emag the cover lock.")
-					to_chat(src, "Hack attempt detected.")
-			else
-				to_chat(user, "The cover is already unlocked.")
-			return
-
-		if(opened)//Cover is open
-			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
-			if(wiresexposed)
-				to_chat(user, "You must close the panel first")
-				return
-			else
-				sleep(6)
-				if(prob(50))
-					throw_alert("hacked")
-					emagged = 1
-					lawupdate = 0
-					connected_ai = null
-					to_chat(user, "You emag [src]'s interface.")
-					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
-					log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
-					clear_supplied_laws()
-					clear_inherent_laws()
-					laws = new /datum/ai_laws/syndicate_override
-					var/time = time2text(world.realtime,"hh:mm:ss")
-					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-					set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
-					to_chat(src, "\red ALERT: Foreign software detected.")
-					sleep(5)
-					to_chat(src, "\red Initiating diagnostics...")
-					sleep(20)
-					to_chat(src, "\red SynBorg v1.7.1 loaded.")
-					sleep(5)
-					to_chat(src, "\red LAW SYNCHRONISATION ERROR")
-					sleep(5)
-					to_chat(src, "\red Would you like to send a report to NanoTraSoft? Y/N")
-					sleep(10)
-					to_chat(src, "\red > N")
-					sleep(20)
-					to_chat(src, "\red ERRORERRORERROR")
-					to_chat(src, "<b>Obey these laws:</b>")
-					laws.show_laws(src)
-					to_chat(src, "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands.")
-					if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
-						for(var/obj/item/weapon/pickaxe/drill/borgdrill/D in src.module.modules)
-							qdel(D)
-						src.module.modules += new /obj/item/weapon/pickaxe/drill/diamond_drill(src.module)
-						src.module.rebuild()
-					updateicon()
-				else
-					to_chat(user, "You fail to hack [src]'s interface.")
-					to_chat(src, "Hack attempt detected.")
-			return
+				to_chat(user, "<span class='warning'>Access denied.</span>")
 
 	else if(istype(W, /obj/item/borg/upgrade))
 		var/obj/item/borg/upgrade/U = W
@@ -779,6 +715,67 @@
 		if( !(istype(W, /obj/item/device/robotanalyzer) || istype(W, /obj/item/device/healthanalyzer)) )
 			spark_system.start()
 		return ..()
+/mob/living/silicon/robot/emag_act(mob/user)
+	if(!opened)//Cover is closed
+		if(locked)
+			if(prob(90))
+				to_chat(user, "You emag the cover lock.")
+				locked = 0
+			else
+				to_chat(user, "You fail to emag the cover lock.")
+				to_chat(src,  "Hack attempt detected.")
+		else
+			to_chat(user, "The cover is already unlocked.")
+		return TRUE
+
+	if(opened)//Cover is open
+		if(emagged)
+			return FALSE//Prevents the X has hit Y with Z message also you cant emag them twice
+		if(wiresexposed)
+			to_chat(user, "You must close the panel first")
+			return FALSE
+		else
+			sleep(6)
+			if(prob(50))
+				throw_alert("hacked")
+				emagged = 1
+				lawupdate = 0
+				connected_ai = null
+				to_chat(user, "You emag [src]'s interface.")
+				message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
+				log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
+				clear_supplied_laws()
+				clear_inherent_laws()
+				laws = new /datum/ai_laws/syndicate_override
+				var/time = time2text(world.realtime,"hh:mm:ss")
+				lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
+				set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
+				to_chat(src, "<span class='warning'>ALERT: Foreign software detected.</span>")
+				sleep(5)
+				to_chat(src, "<span class='warning'>Initiating diagnostics...</span>")
+				sleep(20)
+				to_chat(src, "<span class='warning'>SynBorg v1.7.1 loaded.</span>")
+				sleep(5)
+				to_chat(src, "<span class='warning'>LAW SYNCHRONISATION ERROR</span>")
+				sleep(5)
+				to_chat(src, "<span class='warning'>Would you like to send a report to NanoTraSoft? Y/N</span>")
+				sleep(10)
+				to_chat(src, "<span class='warning'>> N</span>")
+				sleep(20)
+				to_chat(src, "<span class='warning'>ERRORERRORERROR</span>")
+				to_chat(src, "<b>Obey these laws:</b>")
+				laws.show_laws(src)
+				to_chat(src, "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</b></span>")
+				if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
+					for(var/obj/item/weapon/pickaxe/drill/borgdrill/D in src.module.modules)
+						qdel(D)
+					src.module.modules += new /obj/item/weapon/pickaxe/drill/diamond_drill(src.module)
+					src.module.rebuild()
+				updateicon()
+			else
+				to_chat(user, "You fail to hack [src]'s interface.")
+				to_chat(src, "Hack attempt detected.")
+		return TRUE
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (!ticker)
@@ -794,7 +791,7 @@
 		if ("help")
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M] caresses [src]'s plating with its scythe-like arm."), 1)
+					O.show_message(text("<span class='notice'>[M] caresses [src]'s plating with its scythe-like arm.</span>"), 1)
 
 		if ("grab")
 			M.Grab(src)
@@ -806,7 +803,7 @@
 
 				playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 				for(var/mob/O in viewers(src, null))
-					O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
+					O.show_message(text("<span class='warning'><B>[] has slashed at []!</B></span>", M, src), 1)
 				if(prob(8))
 					flash_eyes(affect_silicon = 1)
 				adjustBruteLoss(damage)
@@ -815,7 +812,7 @@
 				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
+						O.show_message(text("<span class='warning'><B>[] took a swipe at []!</B></span>", M, src), 1)
 
 		if ("disarm")
 			if(!(lying))
@@ -827,12 +824,12 @@
 					playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS_MASTER)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] has forced back []!</B>", M, src), 1)
+							O.show_message(text("<span class='warning'><B>[] has forced back []!</B></span>", M, src), 1)
 				else
 					playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] attempted to force back []!</B>", M, src), 1)
+							O.show_message(text("<span class='warning'><B>[] attempted to force back []!</B></span>", M, src), 1)
 	return
 
 
@@ -848,7 +845,7 @@
 
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O.show_message(text("\red <B>The [M.name] glomps []!</B>", src), 1)
+				O.show_message(text("<span class='warning'><B>The [M.name] glomps []!</B></span>", src), 1)
 
 		var/damage = rand(1, 3)
 
@@ -879,7 +876,7 @@
 
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>The [M.name] has electrified []!</B>", src), 1)
+						O.show_message(text("<span class='warning'><B>The [M.name] has electrified []!</B></span>", src), 1)
 
 				flash_eyes(affect_silicon = 1)
 
@@ -900,8 +897,8 @@
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
-		if(M.attack_sound)
-			playsound(src, M.attack_sound, VOL_EFFECTS_MASTER)
+		if(length(M.attack_sound))
+			playsound(src, pick(M.attack_sound), VOL_EFFECTS_MASTER)
 		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
@@ -1032,7 +1029,7 @@
 
 /mob/living/silicon/robot/proc/installed_modules()
 	if(weapon_lock)
-		to_chat(src, "\red Weapon lock active, unable to use modules! Count:[weaponlock_time]")
+		to_chat(src, "<span class='warning'>Weapon lock active, unable to use modules! Count:[weaponlock_time]</span>")
 		return
 
 	if(!module)
@@ -1198,7 +1195,7 @@
 								cleaned_human.shoes.clean_blood()
 								cleaned_human.update_inv_shoes()
 							cleaned_human.clean_blood(1)
-							to_chat(cleaned_human, "\red [src] cleans your face!")
+							to_chat(cleaned_human, "<span class='warning'>[src] cleans your face!</span>")
 
 /mob/living/silicon/robot/proc/self_destruct()
 	gib()

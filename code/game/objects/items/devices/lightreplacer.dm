@@ -72,10 +72,6 @@
 		to_chat(user, "It has [uses] lights remaining.")
 
 /obj/item/device/lightreplacer/attackby(obj/item/W, mob/user)
-	if(istype(W,  /obj/item/weapon/card/emag) && emagged == 0)
-		Emag()
-		return
-
 	if(istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = W
 		if(G.get_amount() - decrement >= 0 && uses < max_uses)
@@ -178,14 +174,15 @@
 		to_chat(U, "There is a working [target.fitting] already inserted.")
 		return
 
-/obj/item/device/lightreplacer/proc/Emag()
+/obj/item/device/lightreplacer/emag_act(mob/user)
 	emagged = !emagged
-	playsound(src, "sparks", VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	if(emagged)
 		name = "Shortcircuited [initial(name)]"
 	else
 		name = initial(name)
 	update_icon()
+	return TRUE
 
 //Can you use it?
 

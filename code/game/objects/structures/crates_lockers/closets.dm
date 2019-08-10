@@ -167,7 +167,7 @@
 	if(user.environment_smash)
 		..()
 		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		visible_message("\red [user] destroys the [src]. ")
+		visible_message("<span class='warning'>[user] destroys the [src]. </span>")
 		open()
 		qdel(src)
 

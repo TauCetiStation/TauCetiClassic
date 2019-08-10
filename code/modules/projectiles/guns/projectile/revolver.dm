@@ -187,7 +187,7 @@
 
 	if(target == user)
 		if(!chambered)
-			user.visible_message("\red *click*", "\red *click*")
+			user.visible_message("<span class='warning'>*click*</span>", "<span class='warning'>*click*</span>")
 			return
 
 		if(isliving(target) && isliving(user))
@@ -199,7 +199,7 @@
 					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(AC.BB, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 					return
 				else
-					user.visible_message("\red *click*", "\red *click*")
+					user.visible_message("<span class='warning'>*click*</span>", "<span class='warning'>*click*</span>")
 					return
 	..()
 
@@ -208,9 +208,6 @@
 	desc = "A legend of Wild West."
 	icon_state = "peacemaker"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45
-
-/obj/item/weapon/gun/projectile/revolver/peacemaker/isHandgun()
-	return 1
 
 /obj/item/weapon/gun/projectile/revolver/peacemaker/attack_self(mob/living/user)
 	var/num_unloaded = 0
@@ -246,6 +243,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	name = "sawn-off shotgun"
 	desc = "Omar's coming!"
+	can_be_holstered = TRUE
 	short = 1
 
 /obj/item/weapon/gun/projectile/revolver/syndie

@@ -237,7 +237,7 @@
 /obj/item/weapon/gun/energy/laser/retro/price = 5430
 /obj/item/weapon/gun/energy/lasercannon/price = 6600
 /obj/item/weapon/gun/energy/sniperrifle/price = 5700
-/obj/item/weapon/gun/energy/stunrevolver/price = 3200
+/obj/item/weapon/gun/energy/taser/stunrevolver/price = 3200
 /obj/item/weapon/gun/energy/taser/price = 1800
 /obj/item/weapon/gun/energy/temperature/price = 11000
 /obj/item/weapon/gun/energy/toxgun/price = 8300
@@ -309,7 +309,7 @@
 /obj/structure/closet/price = 200
 /obj/structure/device/piano/price = 25000
 /obj/structure/flora/price = 300
-/obj/structure/janitorialcart/price = 3000
+/obj/structure/stool/bed/chair/janitorialcart/price = 3000
 /obj/structure/mopbucket/price = 1500
 /obj/structure/particle_accelerator/price = 20000
 /obj/structure/sign/price = 987

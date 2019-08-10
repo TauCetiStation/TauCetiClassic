@@ -87,6 +87,13 @@
 	required_reagents = list("silicon" = 1, "potassium" = 1, "nitrogen" = 1)
 	result_amount = 3
 
+/datum/chemical_reaction/thermopsis
+	name = "Thermopsis"
+	id = "thermopsis"
+	result = "thermopsis"
+	required_reagents = list("anti_toxin" = 1, "sugar" = 1, "carbon" = 1)
+	result_amount = 3
+
 /datum/chemical_reaction/mutagen
 	name = "Unstable mutagen"
 	id = "mutagen"
@@ -633,12 +640,12 @@
 /datum/chemical_reaction/foam/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/mob/M in viewers(5, location))
-		to_chat(M, "\red The solution violently bubbles!")
+		to_chat(M, "<span class='warning'>The solution violently bubbles!</span>")
 
 	location = get_turf(holder.my_atom)
 
 	for(var/mob/M in viewers(5, location))
-		to_chat(M, "\red The solution spews out foam!")
+		to_chat(M, "<span class='warning'>The solution spews out foam!</span>")
 
 	//world << "Holder volume is [holder.total_volume]"
 	//for(var/datum/reagent/R in holder.reagent_list)
@@ -661,7 +668,7 @@
 	var/location = get_turf(holder.my_atom)
 
 	for(var/mob/M in viewers(5, location))
-		to_chat(M, "\red The solution spews out a metalic foam!")
+		to_chat(M, "<span class='warning'>The solution spews out a metalic foam!</span>")
 
 	var/datum/effect/effect/system/foam_spread/s = new()
 	s.set_up(created_volume, location, holder, 1)
@@ -679,7 +686,7 @@
 	var/location = get_turf(holder.my_atom)
 
 	for(var/mob/M in viewers(5, location))
-		to_chat(M, "\red The solution spews out a metalic foam!")
+		to_chat(M, "<span class='warning'>The solution spews out a metalic foam!</span>")
 
 	var/datum/effect/effect/system/foam_spread/s = new()
 	s.set_up(created_volume, location, holder, 2)
@@ -1003,12 +1010,12 @@
 /datum/chemical_reaction/slimefoam/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/mob/M in viewers(5, location))
-		to_chat(M, "\red The solution violently bubbles!")
+		to_chat(M, "<span class='warning'>The solution violently bubbles!</span>")
 
 	location = get_turf(holder.my_atom)
 
 	for(var/mob/M in viewers(5, location))
-		to_chat(M, "\red The solution spews out foam!")
+		to_chat(M, "<span class='warning'>The solution spews out foam!</span>")
 
 	//world << "Holder volume is [holder.total_volume]"
 	//for(var/datum/reagent/R in holder.reagent_list)
@@ -1034,7 +1041,7 @@
 
 /datum/chemical_reaction/slimespawn/on_reaction(datum/reagents/holder)
 	for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
-		O.show_message(text("\red Infused with phoron, the core begins to quiver and grow, and soon a new baby slime emerges from it!"), 1)
+		O.show_message(text("<span class='warning'>Infused with phoron, the core begins to quiver and grow, and soon a new baby slime emerges from it!</span>"), 1)
 	var/mob/living/carbon/slime/S = new /mob/living/carbon/slime
 	S.loc = get_turf_loc(holder.my_atom)
 
@@ -1122,7 +1129,7 @@
 			for(var/j = 1, j <= rand(1, 3), j++)
 				step(C, pick(NORTH,SOUTH,EAST,WEST))*/
 	for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
-		O.show_message(text("\red The slime core fizzles disappointingly,"), 1)
+		O.show_message(text("<span class='warning'>The slime core fizzles disappointingly,</span>"), 1)
 
 //Silver
 /datum/chemical_reaction/slimebork
@@ -1203,12 +1210,12 @@
 
 /datum/chemical_reaction/slimefreeze/on_reaction(datum/reagents/holder)
 	for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
-		O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
+		O.show_message(text("<span class='warning'>The slime extract begins to vibrate violently !</span>"), 1)
 	sleep(50)
 	playsound(holder.my_atom, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 	for(var/mob/living/M in range(get_turf_loc(holder.my_atom), 7))
 		M.bodytemperature -= 140
-		to_chat(M, "\blue You feel a chill!")
+		to_chat(M, "<span class='notice'>You feel a chill!</span>")
 
 //Orange
 /datum/chemical_reaction/slimecasp
@@ -1231,7 +1238,7 @@
 
 /datum/chemical_reaction/slimefire/on_reaction(datum/reagents/holder)
 	for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
-		O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
+		O.show_message(text("<span class='warning'>The slime extract begins to vibrate violently !</span>"), 1)
 	sleep(50)
 	if(!(holder.my_atom && holder.my_atom.loc))
 		return
@@ -1283,7 +1290,7 @@
 
 /datum/chemical_reaction/slimeglow/on_reaction(datum/reagents/holder)
 	for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
-		O.show_message(text("\red The contents of the slime core harden and begin to emit a warm, bright light."), 1)
+		O.show_message(text("<span class='warning'>The contents of the slime core harden and begin to emit a warm, bright light.</span>"), 1)
 	var/obj/item/device/flashlight/slime/F = new /obj/item/device/flashlight/slime
 	F.loc = get_turf(holder.my_atom)
 
@@ -1352,7 +1359,7 @@
 		slime.tame = 0
 		slime.rabid = 1
 		for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
-			O.show_message(text("\red The [slime] is driven into a frenzy!."), 1)
+			O.show_message(text("<span class='warning'>The [slime] is driven into a frenzy!.</span>"), 1)
 
 //Pink
 /datum/chemical_reaction/slimeppotion
@@ -1391,7 +1398,7 @@
 
 /datum/chemical_reaction/slimeexplosion/on_reaction(datum/reagents/holder)
 	for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
-		O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
+		O.show_message(text("<span class='warning'>The slime extract begins to vibrate violently !</span>"), 1)
 	sleep(50)
 	explosion(get_turf_loc(holder.my_atom), 1 ,3, 6)
 	message_admins("Oil slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>)")
@@ -1437,7 +1444,7 @@
 
 /datum/chemical_reaction/slimecrystal/on_reaction(datum/reagents/holder)
 	for(var/mob/O in viewers(get_turf(holder.my_atom), null))
-		O.show_message(text("\red The bluespace crystal appears out of thin air!"), 1)
+		O.show_message(text("<span class='warning'>The bluespace crystal appears out of thin air!</span>"), 1)
 	var/obj/item/bluespace_crystal/I = new /obj/item/bluespace_crystal
 	I.loc = get_turf(holder.my_atom)
 
@@ -2481,3 +2488,25 @@ TODO: Convert everything to custom hair dye,
 	if(new_color_weight >= 10)
 		chd.color_weight = new_color_weight
 		holder.remove_reagent("water", modifier)
+
+/datum/chemical_reaction/metatrombine
+	name = "Metatrombine"
+	id = "metatrombine"
+	result = "metatrombine"
+	required_reagents = list("chlorine" = 1, "nitrogen" = 1, "potassium" = 1)
+	result_amount = 3
+
+/datum/chemical_reaction/stabyzol
+	name = "Stabyzol"
+	id = "stabyzol"
+	result = "stabyzol"
+	required_reagents = list("mutagen" = 1, "ethanol" = 1, "sugar" = 1)
+	result_amount = 2
+
+// This reagent completely stops mob's metabolism. It should be very rare, and by no chance acquired by accident.
+/datum/chemical_reaction/aclometasone
+	name = "Aclometasone"
+	id = "aclometasone"
+	result = "aclometasone"
+	required_reagents = list("mindbreaker" = 3, "hyperzine" = 1, "coffee" = 1, "phoron" = 1)
+	result_amount = 1

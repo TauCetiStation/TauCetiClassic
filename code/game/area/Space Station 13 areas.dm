@@ -1005,8 +1005,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "toxstorage"
 
 /area/rnd/test_area
-	valid_territory = 0
-	name = "Toxins Test Area"
+	name = "Toxins Test Site"
 	icon_state = "toxtest"
 
 /area/rnd/mixing
@@ -1055,6 +1054,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/storage/tech
 	name = "Technical Storage"
 	icon_state = "auxstorage"
+
+/area/storage/tech/north
+	name = "North Technical Storage"
 
 
 //DJSTATION
@@ -1322,6 +1324,30 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "null"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	requires_power = 0
+
+/area/agrospheregarden
+	name = "Agroshere Structure"
+	icon_state = "yellow"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/planetarium
+	name = "Planetarium"
+	icon_state = "yellow"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/robostatoin
+	name = "Robostation"
+	icon_state = "yellow"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/ghostship
+	name = "Ghost Ship"
+	icon_state = "yellow"
+	always_unpowered = 1
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /////////////////////////////////////////////////////////////////////
 /*

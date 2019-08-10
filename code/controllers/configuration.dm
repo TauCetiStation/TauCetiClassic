@@ -64,6 +64,8 @@
 	var/automute_on = 0					//enables automuting/spam prevention
 
 	var/registration_panic_bunker_age = null
+	var/client_limit_panic_bunker_count = null
+	var/client_limit_panic_bunker_link = null
 
 	var/cult_ghostwriter = 1               //Allows ghosts to write in blood in cult rounds...
 	var/cult_ghostwriter_req_cultists = 10 //...so long as this many cultists are active.
@@ -159,11 +161,6 @@
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
 	var/use_overmap = 0
 
-	var/list/station_levels = list(1)				// Defines which Z-levels the station exists on.
-	var/list/admin_levels= list(2)					// Defines which Z-levels which are for admin functionality, for example including such areas as Central Command and the Syndicate Shuttle
-	var/list/contact_levels = list(1, 5)			// Defines which Z-levels which, for example, a Code Red announcement may affect
-	var/list/player_levels = list(1, 3, 4, 5, 6)	// Defines all Z-levels a character can typically reach
-
 	var/chat_bridge = 0
 	var/antigrief_alarm_level = 1
 	var/check_randomizer = 0
@@ -180,6 +177,10 @@
 
 	var/craft_recipes_visibility = FALSE // If false, then users won't see crafting recipes in personal crafting menu until they have all required components and then it will show up.
 	var/starlight = FALSE	// Whether space turfs have ambient light or not
+	var/nightshift = FALSE
+
+	var/list/maplist = list()
+	var/datum/map_config/defaultmap
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -559,18 +560,6 @@
 				if("use_overmap")
 					config.use_overmap = 1
 
-				if("station_levels")
-					config.station_levels = text2numlist(value, ";")
-
-				if("admin_levels")
-					config.admin_levels = text2numlist(value, ";")
-
-				if("contact_levels")
-					config.contact_levels = text2numlist(value, ";")
-
-				if("player_levels")
-					config.player_levels = text2numlist(value, ";")
-
 				if("chat_bridge")
 					config.chat_bridge = value
 
@@ -606,6 +595,12 @@
 
 				if("registration_panic_bunker_age")
 					config.registration_panic_bunker_age = value
+
+				if("client_limit_panic_bunker_count")
+					config.client_limit_panic_bunker_count = text2num(value)
+
+				if("client_limit_panic_bunker_link")
+					config.client_limit_panic_bunker_link = value
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
@@ -652,6 +647,8 @@
 					config.craft_recipes_visibility = TRUE
 				if("starlight")
 					config.starlight = TRUE
+				if("nightshift")
+					config.nightshift = TRUE
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 
@@ -766,3 +763,53 @@
 		statclick = new/obj/effect/statclick/debug(null, "Edit", src)
 
 	stat("[name]:", statclick)
+
+/datum/configuration/proc/loadmaplist(filename)
+	var/list/Lines = file2list(filename)
+
+	var/datum/map_config/currentmap = null
+	for(var/t in Lines)
+		if(!t)
+			continue
+
+		t = trim(t)
+		if(length(t) == 0)
+			continue
+		else if(copytext(t, 1, 2) == "#")
+			continue
+
+		var/pos = findtext(t, " ")
+		var/command = null
+		var/data = null
+
+		if(pos)
+			command = lowertext(copytext(t, 1, pos))
+			data = copytext(t, pos + 1)
+		else
+			command = lowertext(t)
+
+		if(!command)
+			continue
+
+		if (!currentmap && command != "map")
+			continue
+
+		switch (command)
+			if ("map")
+				currentmap = load_map_config("maps/[data].json")
+				if(currentmap.defaulted)
+					error("Failed to load map config for [data]!")
+					currentmap = null
+			if ("minplayers","minplayer")
+				currentmap.config_min_users = text2num(data)
+			if ("maxplayers","maxplayer")
+				currentmap.config_max_users = text2num(data)
+			if ("default","defaultmap")
+				defaultmap = currentmap
+			if ("endmap")
+				maplist[currentmap.map_name] = currentmap
+				currentmap = null
+			if ("disabled")
+				currentmap = null
+			else
+				error("Unknown command in map vote config: '[command]'")

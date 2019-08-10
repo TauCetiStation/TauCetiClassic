@@ -348,7 +348,7 @@
 				M.drowsyness = min(40, (M.drowsyness + 2))
 			if(prob(3) & ishuman(M))
 				var/mob/living/carbon/human/H = M
-				H.vomit()
+				H.invoke_vomit_async()
 		if(volume > 5)
 			if(prob(70))
 				M.adjustOxyLoss(1)
@@ -435,7 +435,7 @@
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.vomit()
+		H.invoke_vomit_async()
 		H.apply_effect(1,IRRADIATE,0)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -665,9 +665,9 @@
 		return
 	if(color_weight < 15 || volume < 5)
 		return
-	var/ind = "[initial(T.icon)][color]"
+	var/ind = "[initial(T.icon)]|[color]"
 	if(!cached_icons[ind])
-		var/icon/overlay = new/icon(initial(T.icon))
+		var/icon/overlay = new/icon(T.icon)
 		overlay.Blend(color, ICON_MULTIPLY)
 		overlay.SetIntensity(color_weight * 0.1)
 		T.icon = overlay

@@ -80,7 +80,7 @@ var/const/SAFETY_COOLDOWN = 100
 		if(safety_mode)
 			safety_mode = 0
 			update_icon()
-		playsound(src, "sparks", VOL_EFFECTS_MASTER)
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>")
 
 /obj/machinery/recycler/update_icon()

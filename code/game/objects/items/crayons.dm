@@ -92,7 +92,7 @@
 			//Check area validity. Reject space, player-created areas, and non-station z-levels.
 			if (gangID)
 				territory = get_area(target)
-				if(territory && (territory.z == ZLEVEL_STATION) && territory.valid_territory)
+				if(territory && is_station_level(territory.z) && territory.valid_territory)
 					//Check if this area is already tagged by a gang
 					if(!(locate(/obj/effect/decal/cleanable/crayon/gang) in target)) //Ignore the check if the tile being sprayed has a gang tag
 						if(territory_claimed(territory, user))

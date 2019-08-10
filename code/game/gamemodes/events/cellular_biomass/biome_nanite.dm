@@ -67,7 +67,7 @@
 	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
 	speak_emote = list("gibbers")
 	attacktext = " bites into"
-	attack_sound = 'sound/weapons/circsawhit.ogg'
+	attack_sound = list('sound/weapons/circsawhit.ogg')
 	faction = "nanite"
 	maxHealth = 60
 	health = 60

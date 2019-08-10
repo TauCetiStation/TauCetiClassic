@@ -452,7 +452,7 @@
 		var/list/L = list()
 		for(var/obj/item/device/radio/beacon/B in radio_beacon_list)
 			var/turf/T = get_turf(B)
-			if(T.z == ZLEVEL_STATION)
+			if(is_station_level(T.z))
 				L += B
 		if(!L.len)
 			to_chat(user, "<span class='notice'>The [src.name] failed to create a wormhole.</span>")
@@ -491,12 +491,9 @@
 				var/mob/living/L = M
 				L.Weaken(3)
 				shake_camera(L, 20, 1)
-				spawn(20)
-					if(L)
-						var/turf/T = get_turf(L)
-						T.add_vomit_floor(L)
-						L.nutrition -= 20
-						L.adjustToxLoss(-3)
+				if(ishuman(L))
+					var/mob/living/carbon/human/H = L
+					H.invoke_vomit_async()
 
 
 /**********************Resonator**********************/
@@ -621,7 +618,7 @@
 	melee_damage_upper = 15
 	environment_smash = 0
 	attacktext = "drills"
-	attack_sound = 'sound/weapons/circsawhit.ogg'
+	attack_sound = list('sound/weapons/circsawhit.ogg')
 	ranged = 1
 	ranged_message = "shoots"
 	ranged_cooldown_cap = 3

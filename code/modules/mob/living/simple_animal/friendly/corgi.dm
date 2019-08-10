@@ -37,7 +37,7 @@
 		if(!stat)
 			for(var/mob/M in viewers(user, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\blue [user] baps [name] on the nose with the rolled up [O]")
+					M.show_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
 					dir = i
@@ -112,24 +112,19 @@
 	butcher_results = list()
 	var/emagged = 0
 
-/mob/living/simple_animal/corgi/borgi/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)
-		user.SetNextMove(CLICK_CD_MELEE)
-		Emag(user)
-	else
-		..()
-
-/mob/living/simple_animal/corgi/borgi/proc/Emag(user)
-	if(!emagged)
+/mob/living/simple_animal/corgi/borgi/emag_act(mob/user)
+	if(!emagged && emagged < 2)
 		emagged = 1
 		visible_message("<span class='warning'>[user] swipes a card through [src].</span>", "<span class='notice'>You overload [src]s internal reactor.</span>")
 		spawn (1000)
 			src.explode()
+		return TRUE
+	return FALSE
 
 /mob/living/simple_animal/corgi/borgi/proc/explode()
 	for(var/mob/M in viewers(src, null))
 		if (M.client)
-			M.show_message("\red [src] makes an odd whining noise.")
+			M.show_message("<span class='warning'>[src] makes an odd whining noise.</span>")
 	sleep(10)
 	explosion(get_turf(src), 0, 1, 4, 7)
 	Die()
