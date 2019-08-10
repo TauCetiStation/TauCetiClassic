@@ -93,7 +93,7 @@
 	icon_state = "seclite"
 	item_state = "seclite"
 	force = 7 // Not as good as a stun baton.
-	hitsound = 'sound/weapons/genhit1.ogg'
+	hitsound = list('sound/weapons/genhit1.ogg')
 
 /obj/item/device/flashlight/pen
 	name = "penlight"
@@ -277,7 +277,7 @@
 			M.visible_message("<span class='danger'>[user] blinks \the [src] at the [A]</span>")
 		else
 			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].</span>")
-		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.</span>")
+		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.")
 		A.emp_act(1)
 	else
 		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")

@@ -44,18 +44,18 @@
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
 	else
-		to_chat(usr, "\red This mob type cannot throw items.")
+		to_chat(usr, "<span class='warning'>This mob type cannot throw items.</span>")
 	return
 
 /client/Northwest()
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		if(!C.get_active_hand())
-			to_chat(usr, "\red You have nothing to drop in your hand.")
+			to_chat(usr, "<span class='warning'>You have nothing to drop in your hand.</span>")
 			return
 		drop_item()
 	else
-		to_chat(usr, "\red This mob type cannot drop items.")
+		to_chat(usr, "<span class='warning'>This mob type cannot drop items.</span>")
 	return
 
 //This gets called when you press the delete button.
@@ -63,7 +63,7 @@
 	set hidden = 1
 
 	if(!usr.pulling)
-		to_chat(usr, "\blue You are not pulling anything.")
+		to_chat(usr, "<span class='notice'>You are not pulling anything.</span>")
 		return
 	usr.stop_pulling()
 
@@ -130,7 +130,7 @@
 
 	if(isobserver(mob))	return mob.Move(n,direct)
 
-	if(moving)	return 0
+	if(moving || mob.throwing)	return 0
 
 	if(world.time < move_delay)	return
 
@@ -189,13 +189,13 @@
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
 					if(!M.restrained() && M.stat == CONSCIOUS && M.canmove && mob.Adjacent(M))
-						to_chat(src, "\blue You're restrained! You can't move!")
+						to_chat(src, "<span class='notice'>You're restrained! You can't move!</span>")
 						return 0
 					else
 						M.stop_pulling()
 
 		if(mob.pinned.len)
-			to_chat(src, "\blue You're pinned to a wall by [mob.pinned[1]]!")
+			to_chat(src, "<span class='notice'>You're pinned to a wall by [mob.pinned[1]]!</span>")
 			return 0
 
 		move_delay = world.time//set move delay

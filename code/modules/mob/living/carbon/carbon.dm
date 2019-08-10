@@ -31,6 +31,8 @@
 		if(germ_level < GERM_LEVEL_MOVE_CAP && prob(8))
 			germ_level++
 
+		handle_rig_move(NewLoc, Dir)
+
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(isessence(user))
 		user.setMoveCooldown(1)
@@ -65,7 +67,7 @@
 				for(var/mob/M in viewers(user, null))
 					if(M.client)
 						M.show_message(text("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>"), 2)
-				playsound(user.loc, 'sound/effects/attackblob.ogg', 50, 1)
+				playsound(user, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 
 				if(prob(src.getBruteLoss() - 50))
 					for(var/atom/movable/A in stomach_contents)
@@ -144,7 +146,7 @@
 	if(shock_damage<1)
 		return 0
 	apply_damage(shock_damage, BURN, def_zone, used_weapon="Electrocution")
-	playsound(loc, "sparks", 50, 1, -1)
+	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	if(shock_damage > 10)
 		visible_message(
 			"<span class='rose'>[src] was shocked by the [source]!</span>", \
@@ -245,7 +247,7 @@
 					status = "weirdly shapen."
 				if(status == "")
 					status = "OK"
-				src.show_message(text("\t []My [] is [].", status == "OK" ? "\blue " : "\red ", BP.name,status), 1)
+				src.show_message(text("\t <span class='[status == "OK" ? "notice " : "warning"]'>My [] is [].</span>", BP.name,status), 1)
 
 			if(roundstart_quirks.len)
 				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
@@ -301,7 +303,7 @@
 			AdjustStunned(-3)
 			AdjustWeakened(-3)
 
-			playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+			playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/proc/crawl_can_use()
 	var/turf/T = get_turf(src)
@@ -324,7 +326,7 @@
 		if(do_after(src, 10, target = src))
 			crawl_getup = FALSE
 			if(!crawl_can_use())
-				playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+				playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
 					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
@@ -406,14 +408,20 @@
 	return
 
 /mob/living/carbon/throw_item(atom/target)
-	src.throw_mode_off()
+	throw_mode_off()
 	if(usr.stat || !target)
 		return
-	if(target.type == /obj/screen) return
+	if(target.type == /obj/screen)
+		return
 
-	var/atom/movable/item = src.get_active_hand()
+	var/atom/movable/item = get_active_hand()
+	if(!item)
+		return
 
-	if(!item || !item:canremove) return
+	if(istype(item, /obj/item))
+		var/obj/item/W = item
+		if(!W.canremove || W.flags & NODROP)
+			return
 
 	if (istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
@@ -606,13 +614,10 @@
 
 	if(B.chemicals >= 100)
 		to_chat(src, "<span class='danger'>Your host twitches and quivers as you rapdly excrete several larvae from your sluglike body.</span>")
-		visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>")
 		B.chemicals -= 100
 
-		new /obj/effect/decal/cleanable/vomit(get_turf(src))
-		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
+		vomit()
 		new /mob/living/simple_animal/borer(get_turf(src))
-
 	else
 		to_chat(src, "<span class='info'>You do not have enough chemicals stored to reproduce.</span>")
 		return
@@ -821,17 +826,31 @@
 			visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>")
 
 			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
+				var/mob/living/carbon/C = src
 				var/gas_log_string = ""
+				var/internalsound
 				if (internal)
 					internal.add_fingerprint(usr)
 					internal = null
 					if (internals)
 						internals.icon_state = "internal0"
+					internalsound = 'sound/misc/internaloff.ogg'
+					if(ishuman(C)) // Because only human can wear a spacesuit
+						var/mob/living/carbon/human/H = C
+						if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
+							internalsound = 'sound/misc/riginternaloff.ogg'
+					playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
 				else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
 					internal = ITEM
 					internal.add_fingerprint(usr)
 					if (internals)
 						internals.icon_state = "internal1"
+					internalsound = 'sound/misc/internalon.ogg'
+					if(ishuman(C)) // Because only human can wear a spacesuit
+						var/mob/living/carbon/human/H = C
+						if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
+							internalsound = 'sound/misc/riginternalon.ogg'
+					playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
 
 					if(ITEM.air_contents && LAZYLEN(ITEM.air_contents.gas))
 						gas_log_string = " (gases:"
@@ -844,3 +863,32 @@
 				visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>")
 				attack_log += text("\[[time_stamp()]\] <font color='orange'>Had their internals [internal ? "open" : "close"] by [usr.name] ([usr.ckey])[gas_log_string]</font>")
 				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>[internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name][gas_log_string]</font>")
+
+/mob/living/carbon/vomit(punched = FALSE, masked = FALSE)
+	var/mask_ = masked
+	if(head && (head.flags & HEADCOVERSMOUTH))
+		mask_ = TRUE
+
+	. = ..(punched, mask_)
+	if(. && !mask_)
+		if(reagents.total_volume > 0)
+			var/toxins_puked = 0
+			var/datum/reagents/R = new(10)
+
+			while(TRUE)
+				var/datum/reagent/R_V = pick(reagents.reagent_list)
+				if(istype(R_V, /datum/reagent/water))
+					toxins_puked += 0.5
+				else if(R_V.id == "carbon")
+					toxins_puked += 2
+				else if(R_V.id == "anti_toxin")
+					toxins_puked += 3
+				else if(R_V.id == "thermopsis")
+					toxins_puked += 5
+				reagents.trans_id_to(R, R_V.id, 1)
+				if(R.total_volume >= 10)
+					break
+				if(reagents.total_volume <= 0)
+					break
+			R.reaction(loc)
+			adjustToxLoss(-toxins_puked)

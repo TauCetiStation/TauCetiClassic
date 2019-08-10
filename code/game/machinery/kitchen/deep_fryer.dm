@@ -40,7 +40,7 @@
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(!anchored)
-		if(istype(I, /obj/item/weapon/wrench))
+		if(iswrench(I))
 			default_unfasten_wrench(user, I)
 		return
 	if(on)
@@ -49,7 +49,7 @@
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))
 		to_chat(user, "<span class='notice'>You cannot doublefry.</span>")
 		return
-	else if(istype(I, /obj/item/weapon/wrench))
+	else if(iswrench(I))
 		if(alert(user,"How do you want to use [I]?","You think...","Unfasten","Cook") == "Unfasten")
 			default_unfasten_wrench(user, I)
 			return
@@ -67,7 +67,7 @@
 	if(frying)
 		fry_time++
 		if(fry_time == 30)
-			playsound(src, "sound/machines/ding.ogg", 50, 1)
+			playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 			visible_message("[src] dings!")
 		else if (fry_time == 60)
 			visible_message("[src] emits an acrid smell!")

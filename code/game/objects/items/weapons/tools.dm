@@ -27,6 +27,7 @@
 	m_amt = 150
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	usesound = 'sound/items/Ratchet.ogg'
 	var/random_color = TRUE
 
 /obj/item/weapon/wrench/atom_init(mapload, param_color)
@@ -35,7 +36,7 @@
 		if(!param_color)
 			param_color = pick("black","red","green","blue","default")
 		icon_state = "wrench_[param_color]"
-		item_state = "wrench"	
+		item_state = "wrench"
 
 /obj/item/weapon/wrench/power
 	name = "Hand Drill"
@@ -46,12 +47,13 @@
 	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
 	force = 8 //might or might not be too high, subject to change
 	throwforce = 8
+	toolspeed = 0.7
 	attack_verb = list("drilled", "screwed", "jabbed")
 	action_button_name = "Change mode"
 	random_color = FALSE
 
 /obj/item/weapon/wrench/power/attack_self(mob/user)
-	playsound(user, 'sound/items/change_drill.ogg', 50, 1)
+	playsound(user, 'sound/items/change_drill.ogg', VOL_EFFECTS_MASTER)
 	var/obj/item/weapon/screwdriver/power/s_drill = new
 	to_chat(user, "<span class='notice'>You attach the screw driver bit to [src].</span>")
 	qdel(src)
@@ -75,7 +77,9 @@
 	g_amt = 0
 	m_amt = 75
 	attack_verb = list("stabbed")
+	usesound = 'sound/items/Screwdriver.ogg'
 	var/random_color = TRUE
+
 
 /obj/item/weapon/screwdriver/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='danger'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
@@ -113,13 +117,14 @@
 	throwforce = 8
 	throw_speed = 2
 	throw_range = 3//it's heavier than a screw driver/wrench, so it does more damage, but can't be thrown as far
+	toolspeed = 0.7
 	attack_verb = list("drilled", "screwed", "jabbed","whacked")
-	hitsound = 'sound/items/drill_hit.ogg'
+	hitsound = list('sound/items/drill_hit.ogg')
 	action_button_name = "Change mode"
 	random_color = FALSE
 
 /obj/item/weapon/screwdriver/power/attack_self(mob/user)
-	playsound(user, 'sound/items/change_drill.ogg', 50, 1)
+	playsound(user, 'sound/items/change_drill.ogg', VOL_EFFECTS_MASTER)
 	var/obj/item/weapon/wrench/power/b_drill = new
 	to_chat(user, "<span class='notice'>You attach the bolt driver bit to [src].</span>")
 	qdel(src)
@@ -143,6 +148,7 @@
 	attack_verb = list("pinched", "nipped")
 	sharp = 1
 	edge = 1
+	usesound = 'sound/items/Wirecutter.ogg'
 	var/random_color = TRUE
 
 /obj/item/weapon/wirecutters/atom_init(mapload, param_color)
@@ -175,10 +181,11 @@
 	origin_tech = "materials=2;engineering=2"
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
 	action_button_name = "Change mode"
+	toolspeed = 0.7
 	random_color = FALSE
 
 /obj/item/weapon/wirecutters/power/attack_self(mob/user)
-	playsound(user, 'sound/items/change_jaws.ogg', 50, 1)
+	playsound(user, 'sound/items/change_jaws.ogg', VOL_EFFECTS_MASTER)
 	var/obj/item/weapon/crowbar/power/pryjaws = new
 	to_chat(user, "<span class='notice'>You attach the pry jaws to [src].</span>")
 	qdel(src)
@@ -195,6 +202,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	action_button_name = "Switch Welding tool"
+	usesound = 'sound/items/Welder2.ogg'
 
 	//Amount of OUCH when it's thrown
 	force = 3.0
@@ -231,7 +239,7 @@
 
 
 /obj/item/weapon/weldingtool/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		if(welding)
 			to_chat(user, "<span class='rose'>Stop welding first!</span>")
 			return
@@ -285,13 +293,13 @@
 			return
 		//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
-			hitsound = 'sound/items/Welder2.ogg'
+			hitsound = list('sound/items/Welder2.ogg')
 			if(src.icon_state != "welder1") //Check that the sprite is correct, if it isnt, it means toggle() was not called
 				src.force = 15
 				src.damtype = "fire"
 				src.icon_state = initial(src.icon_state) + "1"
 			if(prob(5))
-				remove_fuel(1)
+				use(1)
 			light_color = LIGHT_COLOR_FIRE
 			set_light(2)
 
@@ -299,7 +307,7 @@
 		//Is this actually used or set anywhere? - Nodrak
 		if(2)
 			if(prob(75))
-				remove_fuel(1)
+				use(1)
 
 
 	//I'm not sure what this does. I assume it has to do with starting fires...
@@ -317,8 +325,8 @@
 	if(!proximity) return
 	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && !src.welding)
 		O.reagents.trans_to(src, max_fuel)
-		to_chat(user, "<span class='notice'>Welder refueled")
-		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+		to_chat(user, "<span class='notice'>Welder refueled</span>")
+		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 		return
 	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)
 		message_admins("[key_name_admin(user)] triggered a fueltank explosion. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
@@ -328,7 +336,7 @@
 		tank.explode()
 		return
 	if (src.welding)
-		remove_fuel(1)
+		use(1)
 		var/turf/location = get_turf(user)
 		if (istype(location, /turf))
 			location.hotspot_expose(700, 50, src)
@@ -355,13 +363,15 @@
 /obj/item/weapon/weldingtool/proc/get_fuel()
 	return reagents.get_reagent_amount("fuel")
 
+/obj/item/weapon/weldingtool/tool_use_check(mob/living/user, amount)
+	return get_fuel() >= amount
 
 //Removes fuel from the welding tool. If a mob is passed, it will perform an eyecheck on the mob. This should probably be renamed to use()
-/obj/item/weapon/weldingtool/proc/remove_fuel(amount = 1, mob/M = null)
+/obj/item/weapon/weldingtool/use(used = 1, mob/M = null)
 	if(!welding || !check_fuel())
 		return 0
-	if(get_fuel() >= amount)
-		reagents.remove_reagent("fuel", amount)
+	if(get_fuel() >= used)
+		reagents.remove_reagent("fuel", used)
 		check_fuel()
 		if(M)
 			eyecheck(M)
@@ -380,7 +390,7 @@
 /obj/item/weapon/weldingtool/proc/setWelding(temp_welding)
 	//If we're turning it on
 	if(temp_welding > 0)
-		if (remove_fuel(1))
+		if (use(1))
 			to_chat(usr, "<span class='info'>The [src] switches on.</span>")
 			src.force = 15
 			src.damtype = "fire"
@@ -412,7 +422,7 @@
 	if(!usr) return
 	src.welding = !( src.welding )
 	if (src.welding)
-		if (remove_fuel(1))
+		if (use(1))
 			to_chat(usr, "<span class='notice'>You switch the [src] on.</span>")
 			src.force = 15
 			src.damtype = "fire"
@@ -507,6 +517,7 @@
 	w_class = ITEM_SIZE_NORMAL
 	m_amt = 70
 	g_amt = 120
+	toolspeed = 0.5
 	origin_tech = "materials=4;engineering=4;bluespace=2;phorontech=3"
 	var/next_refuel_tick = 0
 
@@ -535,6 +546,7 @@
 	m_amt = 50
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
+	usesound = 'sound/items/Crowbar.ogg'
 
 /obj/item/weapon/crowbar/red
 	icon_state = "red_crowbar"
@@ -548,10 +560,11 @@
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
 	origin_tech = "materials=2;engineering=2"
 	force = 15
+	toolspeed = 0.7
 	action_button_name = "Change mode"
 
 /obj/item/weapon/crowbar/power/attack_self(mob/user)
-	playsound(user, 'sound/items/change_jaws.ogg', 50, 1)
+	playsound(user, 'sound/items/change_jaws.ogg', VOL_EFFECTS_MASTER)
 	var/obj/item/weapon/wirecutters/power/cutjaws = new
 	to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
 	qdel(src)

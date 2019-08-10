@@ -281,7 +281,7 @@
 				var/turf/T = get_turf_or_move(src.loc)
 				src.cable = new /obj/item/weapon/pai_cable(T)
 				for (var/mob/M in viewers(T))
-					M.show_message("\red A port on [src] opens to reveal [src.cable], which promptly falls to the floor.", 3, "\red You hear the soft click of something light and hard falling to the ground.", 2)
+					M.show_message("<span class='warning'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", 3, "<span class='warning'>You hear the soft click of something light and hard falling to the ground.</span>", 2)
 	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
@@ -388,7 +388,7 @@
 	if(answer == "Yes")
 		var/turf/T = get_turf_or_move(P.loc)
 		for (var/mob/v in viewers(T))
-			v.show_message("\blue [M] presses \his thumb against [P].", 3, "\blue [P] makes a sharp clicking sound as it extracts DNA material from [M].", 2)
+			v.show_message("<span class='notice'>[M] presses \his thumb against [P].</span>", 3, "<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>", 2)
 		var/datum/dna/dna = M.dna
 		to_chat(P, "<font color = red><h3>[M]'s UE string : [dna.unique_enzymes]</h3></font>")
 		if(dna.unique_enzymes == P.master_dna)
@@ -500,7 +500,7 @@
 /mob/living/silicon/pai/proc/softwareTranslator()
 	var/dat = {"<h2>Universal Translator</h2><hr>
 				When enabled, this device will automatically convert all spoken and written languages into a format that any known recipient can understand.<br><br>
-				The device is currently [ (src.translator_on) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled</font>.<br>
+				The device is currently [ (src.translator_on) ? "<font color=#55FF55>enabled</font>" : "<font color=#FF5555>disabled</font>" ].<br>
 				<a href='byond://?src=\ref[src];software=translator;sub=0;toggle=1'>Toggle Device</a><br>
 				"}
 	return dat
@@ -509,7 +509,7 @@
 /mob/living/silicon/pai/proc/facialRecognition()
 	var/dat = {"<h2>Facial Recognition Suite</h2><hr>
 				When enabled, this package will scan all viewable faces and compare them against the known criminal database, providing real-time graphical data about any detected persons of interest.<br><br>
-				The suite is currently [ (src.secHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled</font>.<br>
+				The suite is currently [ (src.secHUD) ? "<font color=#55FF55>enabled</font>" : "<font color=#FF5555>disabled</font>" ].<br>
 				<a href='byond://?src=\ref[src];software=securityhud;sub=0;toggle=1'>Toggle Suite</a><br>
 				"}
 	return dat
@@ -521,7 +521,7 @@
 		dat += {"<h2>Medical Analysis Suite</h2><hr>
 				 <h4>Visual Status Overlay</h4>
 					When enabled, this package will scan all nearby crewmembers' vitals and provide real-time graphical data about their state of health.<br><br>
-					The suite is currently [ (src.medHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled</font>.<br>
+					The suite is currently [ (src.medHUD) ? "<font color=#55FF55>enabled</font>" : "<font color=#FF5555>disabled</font>" ].<br>
 					<a href='byond://?src=\ref[src];software=medicalhud;sub=0;toggle=1'>Toggle Suite</a><br>
 					<br>
 					<a href='byond://?src=\ref[src];software=medicalhud;sub=1'>Host Bioscan</a><br>
@@ -542,10 +542,10 @@
 		Overall Status: [M.stat > 1 ? "dead" : "[M.health]% healthy"] <br><br>
 
 		<b>Scan Breakdown</b>: <br>
-		Respiratory: [M.getOxyLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getOxyLoss()]</font><br>
-		Toxicology: [M.getToxLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getToxLoss()]</font><br>
-		Burns: [M.getFireLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getFireLoss()]</font><br>
-		Structural Integrity: [M.getBruteLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getBruteLoss()]</font><br>
+		Respiratory: [M.getOxyLoss() > 50 ? "<font color=#FF5555>[M.getOxyLoss()]</font>" : "<font color=#55FF55>[M.getOxyLoss()]</font>"]<br>
+		Toxicology: [M.getToxLoss() > 50 ? "<font color=#FF5555>[M.getToxLoss()]</font>" : "<font color=#55FF55>[M.getToxLoss()]</font>"]<br>
+		Burns: [M.getFireLoss() > 50 ? "<font color=#FF5555>[M.getFireLoss()]</font>" : "<font color=#55FF55>[M.getFireLoss()]</font>"]<br>
+		Structural Integrity: [M.getBruteLoss() > 50 ? "<font color=#FF5555>[M.getBruteLoss()]</font>" : "<font color=#55FF55>[M.getBruteLoss()]</font>"]<br>
 		Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)<br>
 		"}
 		for(var/datum/disease/D in M.viruses)
@@ -643,6 +643,7 @@
 			src.temp = "Door Jack: Connection to airlock has been lost. Hack aborted."
 			hackprogress = 0
 			src.hackdoor = null
+			QDEL_NULL(src.cable)
 			return
 		if(hackprogress >= 100)		// This is clunky, but works. We need to make sure we don't ever display a progress greater than 100,
 			hackprogress = 100		// but we also need to reset the progress AFTER it's been displayed
@@ -651,6 +652,7 @@
 		if(hackprogress >= 100)
 			src.hackprogress = 0
 			src.cable.machine:open()
+			QDEL_NULL(src.cable)
 		sleep(50)			// Update every 5 seconds
 
 // Digital Messenger
@@ -692,7 +694,7 @@
 		remove_language("Siik'tajr")
 		remove_language("Skrellian")
 
-		to_chat(src, "\blue Translator Module toggled OFF.")
+		to_chat(src, "<span class='notice'>Translator Module toggled OFF.</span>")
 
 	else
 		translator_on = 1
@@ -702,4 +704,4 @@
 		add_language("Siik'tajr", 0)
 		add_language("Skrellian")
 
-		to_chat(src, "\blue Translator Module toggled ON.")
+		to_chat(src, "<span class='notice'>Translator Module toggled ON.</span>")

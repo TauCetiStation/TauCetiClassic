@@ -14,13 +14,6 @@
 	src:Topic(href, href_list)
 	return null
 
-/proc/is_on_same_plane_or_station(z1, z2)
-	if(z1 == z2)
-		return 1
-	if((z1 in config.station_levels) &&	(z2 in config.station_levels))
-		return 1
-	return 0
-
 /proc/get_area(atom/A)
 	if(isarea(A))
 		return A
@@ -50,21 +43,6 @@
 	source.luminosity = lum
 
 	return heard
-
-/proc/isStationLevel(level)
-	return level in config.station_levels
-
-/proc/isNotStationLevel(level)
-	return !isStationLevel(level)
-
-/proc/isPlayerLevel(level)
-	return level in config.player_levels
-
-/proc/isAdminLevel(level)
-	return level in config.admin_levels
-
-/proc/isNotAdminLevel(level)
-	return !isAdminLevel(level)
 
 /proc/circlerange(center=usr,radius=3)
 
@@ -535,6 +513,15 @@
 				return turn(dir,45)
 			else
 				return dir
+
+/proc/window_flash(client/C)
+	if(ismob(C))
+		var/mob/M = C
+		if(M.client)
+			C = M.client
+	if(!C)
+		return
+	winset(C, "mainwindow", "flash=5")
 
 //============VG PORTS============
 /proc/recursive_type_check(atom/O, type = /atom)

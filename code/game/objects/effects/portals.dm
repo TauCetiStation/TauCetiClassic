@@ -78,8 +78,8 @@
 		linked_console.use_power = 1
 		linked_console = null
 	if(linked_portal)
-		playsound(src, 'sound/effects/phasein.ogg', 25, 1)
-		playsound(linked_portal, 'sound/effects/phasein.ogg', 25, 1)
+		playsound(src, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER, 25)
+		playsound(linked_portal, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER, 25)
 		var/obj/effect/portal/tsci_wormhole/LP = linked_portal
 		linked_portal = null
 		LP.linked_portal = null
@@ -109,6 +109,6 @@
 			to_chat(H, "<span class='warning'>[msg]</span>")
 		if(prob(20))
 			bad_effects += 1
-			H.vomit() //No msg required, since vomit() will handle this.
+			H.invoke_vomit_async() //No msg required, since vomit() will handle this.
 		if(bad_effects == 2)
 			H.Paralyse(3)

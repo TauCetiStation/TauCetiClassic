@@ -95,7 +95,7 @@
 			user.drop_from_inventory(W)
 			W.loc = src
 			user.visible_message("<span class='notice'>[user] inserts [W] into \the [src]'s GPS device slot.</span>")
-	else if(istype(W, /obj/item/device/multitool))
+	else if(ismultitool(W))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/telepad))
 			if(telepad)
@@ -221,7 +221,7 @@
 		flick("pad-beam", telepad)
 
 		if(spawn_time > 15) // 1.5 seconds
-			playsound(telepad.loc, 'sound/weapons/flash.ogg', 25, 1)
+			playsound(telepad, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER, 25)
 			// Wait depending on the time the projectile took to get there
 			teleporting = 1
 			temp_msg = "Powering up bluespace crystals.<BR>Please wait."
@@ -257,7 +257,7 @@
 				SS.start()
 
 				flick("pad-beam", telepad)
-				playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1)
+				playsound(telepad, 'sound/weapons/guns/gunpulse_emitter2.ogg', VOL_EFFECTS_MASTER, 25)
 
 			else
 				use_power(power * 1500)
@@ -266,7 +266,7 @@
 				SS.start()
 
 				flick("pad-beam", telepad)
-				playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1)
+				playsound(telepad, 'sound/weapons/guns/gunpulse_emitter2.ogg', VOL_EFFECTS_MASTER, 25)
 				temp_msg = "Error!<BR>Something wrong with the navigation data."
 			updateDialog()
 
@@ -282,9 +282,9 @@
 		telefail()
 		temp_msg = "ERROR!<BR>Elevation is less than 1 or greater than 90."
 		return
-	if(z_co == 2 || z_co < 1 || z_co > 6)
+	if(!SSmapping.has_level(z_co) || is_centcom_level(z_co) || is_junkyard_level(z_co)) // Change this to notele trait or something
 		telefail()
-		temp_msg = "ERROR! Sector is less than 1, <BR>greater than 6, or equal to 2."
+		temp_msg = "ERROR! This sector is unreachable."
 		return
 	if(teles_left > 0)
 		open_wormhole(user)

@@ -69,7 +69,7 @@
 
 
 /obj/machinery/power/am_control_unit/proc/produce_power()
-	playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
+	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
 	var/core_power = reported_core_efficiency//Effectively how much fuel we can safely deal with
 	if(core_power <= 0) return 0//Something is wrong
 	var/core_damage = 0
@@ -85,7 +85,7 @@
 		for(var/obj/machinery/am_shielding/AMS in linked_cores)
 			AMS.stability -= core_damage
 			AMS.check_stability(1)
-		playsound(src.loc, 'sound/effects/bang.ogg', 50, 1)
+		playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 	return
 
 
@@ -147,28 +147,28 @@
 
 /obj/machinery/power/am_control_unit/attackby(obj/item/W, mob/user)
 	if(!istype(W) || !user) return
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		if(!anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("[user.name] secures the [src.name] to the floor.", \
 				"You secure the anchor bolts to the floor.", \
 				"You hear a ratchet")
 			src.anchored = 1
 			connect_to_network()
 		else if(!linked_shielding.len > 0)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("[user.name] unsecures the [src.name].", \
 				"You remove the anchor bolts.", \
 				"You hear a ratchet")
 			src.anchored = 0
 			disconnect_from_network()
 		else
-			to_chat(user, "\red Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!")
+			to_chat(user, "<span class='warning'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>")
 		return
 
 	if(istype(W, /obj/item/weapon/am_containment))
 		if(fueljar)
-			to_chat(user, "\red There is already a [fueljar] inside!")
+			to_chat(user, "<span class='warning'>There is already a [fueljar] inside!</span>")
 			return
 		fueljar = W
 		user.remove_from_mob(W)

@@ -234,7 +234,7 @@
 		if(!inserted_battery)
 			if(user.drop_item(I, src))
 				to_chat(user, "<span class='notice'>You insert the battery.</span>")
-				playsound(src, 'sound/items/buttonswitch.ogg', 50, 1)
+				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
 				inserted_battery = I
 				update_icon()
 	else
@@ -343,35 +343,35 @@
 		return
 	usr.set_machine(src)
 	if(href_list["neg_changetime_max"])
-		playsound(src, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		time += -100
 		if(time > inserted_battery.capacity)
 			time = inserted_battery.capacity
 		else if (time < 0)
 			time = 0
 	if(href_list["neg_changetime"])
-		playsound(src, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		time += -10
 		if(time > inserted_battery.capacity)
 			time = inserted_battery.capacity
 		else if (time < 0)
 			time = 0
 	if(href_list["changetime"])
-		playsound(src, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		time += 10
 		if(time > inserted_battery.capacity)
 			time = inserted_battery.capacity
 		else if (time < 0)
 			time = 0
 	if(href_list["changetime_max"])
-		playsound(src, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		time += 100
 		if(time > inserted_battery.capacity)
 			time = inserted_battery.capacity
 		else if (time < 0)
 			time = 0
 	if(href_list["startup"])
-		playsound(src, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		activated = TRUE
 		timing = FALSE
 		cooldown_to_start = world.time + 10 // so we cant abuse the startup button
@@ -380,13 +380,13 @@
 			message_admins("anomaly battery [inserted_battery.battery_effect.artifact_id]([inserted_battery.battery_effect]) emission started by [key_name(usr)]")
 			inserted_battery.battery_effect.ToggleActivate(1)
 	if(href_list["shutdown"])
-		playsound(src, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		activated = FALSE
 	if(href_list["starttimer"])
 		timing = TRUE
 		archived_time = time
 	if(href_list["ejectbattery"])
-		playsound(src, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		shutdown_emission()
 		inserted_battery.forceMove(get_turf(src))
 		if(ishuman(usr))
@@ -411,7 +411,7 @@
 	var/is_emitting = "_off"
 	if(activated && inserted_battery && inserted_battery.battery_effect)
 		is_emitting = "_on"
-		set_light(2, 1, "#8F66F4")
+		set_light(2, 1, "#8f66f4")
 	else
 		set_light(0)
 	var/power_battery = (inserted_battery.stored_charge / inserted_battery.capacity) * 100

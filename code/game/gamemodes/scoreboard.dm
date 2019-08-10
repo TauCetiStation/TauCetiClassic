@@ -1,32 +1,34 @@
 /datum/subsystem/ticker/proc/scoreboard(completions)
 	if(achievements.len)
-		completions += "<br>[achievement_declare_completion()]"
+		completions += "<div class='block'>[achievement_declare_completion()]</div>"
 
 	// Score Calculation and Display
 
 	// Who is alive/dead, who escaped
 	for (var/mob/living/silicon/ai/I in ai_list)
-		if (I.stat == DEAD && I.z == ZLEVEL_STATION)
+		if (I.stat == DEAD && is_station_level(I.z))
 			score["deadaipenalty"] = 1
-			score["deadcrew"] += 1
+			score["crew_dead"] += 1
 
 	for (var/mob/living/carbon/human/I in human_list)
 //		for (var/datum/ailment/disease/V in I.ailments)
 //			if (!V.vaccine && !V.spread != "Remissive") score["disease"]++
-		if (I.stat == DEAD && I.z == ZLEVEL_STATION)
-			score["deadcrew"] += 1
+		if (I.stat == DEAD && is_station_level(I.z))
+			score["crew_dead"] += 1
 		if (I.job == "Clown")
 			for(var/thing in I.attack_log)
-				if(findtext(thing, "<font color='orange'>"))
+				if(findtext(thing, "<font color='orange'>")) //</font>
 					score["clownabuse"]++
 
 	var/area/escape_zone = locate(/area/shuttle/escape/centcom)
 
+/*
+	moved to /game_mode/proc/declare_completion, where we already count players
 	for(var/mob/living/player in alive_mob_list)
 		if (player.client)
 			var/turf/location = get_turf(player.loc)
 			if (location in escape_zone)
-				score["escapees"] += 1
+				score["crew_escaped"] += 1*/
 //					player.unlock_medal("100M Dash", 1)
 //				player.unlock_medal("Survivor", 1)
 //				for (var/obj/item/weapon/gnomechompski/G in player.get_contents())
@@ -131,7 +133,7 @@
 
 	// Check station's power levels
 	for (var/obj/machinery/power/apc/A in apc_list)
-		if (A.z != ZLEVEL_STATION)
+		if (!is_station_level(A.z))
 			continue
 		for (var/obj/item/weapon/stock_parts/cell/C in A.contents)
 			if (C.charge < 2300)
@@ -139,7 +141,7 @@
 
 	// Check how much uncleaned mess is on the station
 	for (var/obj/effect/decal/cleanable/M in decal_cleanable)
-		if (M.z != ZLEVEL_STATION)
+		if (!is_station_level(M.z))
 			continue
 		if (istype(M, /obj/effect/decal/cleanable/blood/gibs))
 			score["mess"] += 3
@@ -151,11 +153,16 @@
 		if (istype(M, /obj/effect/decal/cleanable/vomit))
 			score["mess"] += 1
 
+	// How many antags did we reconvert using loyalty implant.
+	for(var/reconverted in ticker.reconverted_antags)
+		score["rec_antags"]++
+
 	//Research Levels
 	var/research_levels = 0
 	for(var/obj/machinery/r_n_d/server/core/C in rnd_server_list)
-		for(var/datum/tech/T in C.files.known_tech)
-			research_levels += T.level - 1
+		for(var/tech_tree_id in C.files.tech_trees)
+			var/datum/tech/T = C.files.tech_trees[tech_tree_id]
+			research_levels += T.level
 
 	if(research_levels)
 		score["researchdone"] += research_levels
@@ -163,10 +170,10 @@
 	// Bonus Modifiers
 	//var/traitorwins = score["traitorswon"]
 	var/rolesuccess = score["roleswon"] * 250
-	var/deathpoints = score["deadcrew"] * 250 //done
+	var/deathpoints = score["crew_dead"] * 250 //done
 	var/researchpoints = score["researchdone"] * 30
 	var/eventpoints = score["eventsendured"] * 50
-	var/escapoints = score["escapees"] * 25 //done
+	var/escapoints = score["crew_escaped"] * 25 //done
 	var/harvests = score["stuffharvested"] //done
 	var/shipping = score["stuffshipped"] * 75
 	var/mining = score["oremined"] //done
@@ -197,6 +204,8 @@
 		score["crewscore"] += arrestpoints
 		score["crewscore"] += killpoints
 		score["crewscore"] -= comdeadpts
+
+	score["crewscore"] += score["rec_antags"] * 500
 
 	// Good Things
 	score["crewscore"] += shipping
@@ -238,9 +247,9 @@
 
 
 
-/mob/proc/scorestats(completions)
+/mob/proc/scorestats(completions)//omg why we count this for every player
 	var/dat = completions
-	dat += {"<BR><h2>Round Statistics and Score</h2>"}
+	dat += {"<h2>Round Statistics and Score</h2><div class='block'>"}
 	if (ticker.mode.name == "nuclear emergency")
 		var/foecount = 0
 		var/crewcount = 0
@@ -343,13 +352,14 @@
 	<B>Ore Mined:</B> [score["oremined"]] ([score["oremined"]] Points)<BR>
 	<B>Refreshments Prepared:</B> [score["meals"]] ([score["meals"] * 5] Points)<BR>
 	<B>Research Completed:</B> [score["researchdone"]] ([score["researchdone"] * 30] Points)<BR>"}
-	dat += "<B>Shuttle Escapees:</B> [score["escapees"]] ([score["escapees"] * 25] Points)<BR>"
+	dat += "<B>Shuttle Escapees:</B> [score["crew_escaped"]] ([score["crew_escaped"] * 25] Points)<BR>"
 	dat += {"<B>Random Events Endured:</B> [score["eventsendured"]] ([score["eventsendured"] * 50] Points)<BR>
 	<B>Whole Station Powered:</B> [score["powerbonus"] ? "Yes" : "No"] ([score["powerbonus"] * 2500] Points)<BR>
 	<B>Ultra-Clean Station:</B> [score["mess"] ? "No" : "Yes"] ([score["messbonus"] * 3000] Points)<BR><BR>
 	<U>THE BAD:</U><BR>
 	<B>Roles successful:</B> [score["roleswon"]] (-[score["roleswon"] * 250] Points)<BR>
-	<B>Dead Bodies on Station:</B> [score["deadcrew"]] (-[score["deadcrew"] * 250] Points)<BR>
+	<B>Antags reconverted:</B> [score["rec_antags"]] ([score["rec_antags"] * 500] Points)<BR>
+	<B>Dead Bodies on Station:</B> [score["crew_dead"]] (-[score["crew_dead"] * 250] Points)<BR>
 	<B>Uncleaned Messes:</B> [score["mess"]] (-[score["mess"]] Points)<BR>
 	<B>Station Power Issues:</B> [score["powerloss"]] (-[score["powerloss"] * 30] Points)<BR>
 	<B>Rampant Diseases:</B> [score["disease"]] (-[score["disease"] * 30] Points)<BR>
@@ -363,7 +373,7 @@
 		dat += "<B>Station Deficit:</B> [num2text(profit,50)]<BR>"
 	dat += {"<B>Food Eaten:</b> [score["foodeaten"]]<BR>
 	<B>Times a Clown was Abused:</B> [score["clownabuse"]]<BR><BR>"}
-	if (score["escapees"])
+	if (score["crew_escaped"])
 		dat += "<B>Most Richest Escapee:</B> [score["richestname"]], [score["richestjob"]]: [score["richestcash"]] credits ([score["richestkey"]])<BR>"
 		dat += "<B>Most Battered Escapee:</B> [score["dmgestname"]], [score["dmgestjob"]]: [score["dmgestdamage"]] damage ([score["dmgestkey"]])<BR>"
 	else
@@ -391,6 +401,7 @@
 		if(10000 to 49999) score["rating"] = "The Pride of Science Itself"
 		if(50000 to INFINITY) score["rating"] = "NanoTrasen's Finest"
 	dat += "<B><U>RATING:</U></B> [score["rating"]]"
+	dat += "</div>"
 	for(var/i in 1 to end_icons.len)
 		src << browse_rsc(end_icons[i],"logo_[i].png")
 
@@ -398,5 +409,8 @@
 		endgame_info_logged = 1
 		log_game(dat)
 
-	src << browse(entity_ja(dat), "window=roundstats;size=1000x600")
+	var/datum/browser/popup = new(src, "roundstats", "Round #[round_id] Stats", 1000, 600)
+	popup.set_content(dat)
+	popup.open()
+
 	return

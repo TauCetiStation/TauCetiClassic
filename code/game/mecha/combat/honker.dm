@@ -128,7 +128,7 @@
 		return
 	var/output = "<b>Honk-ON-Systems:</b><div style=\"margin-left: 15px;\">"
 	for(var/obj/item/mecha_parts/mecha_equipment/MT in equipment)
-		output += "[selected==MT?"<b id='\ref[MT]'>":"<a id='\ref[MT]' href='?src=\ref[src];select_equip=\ref[MT]'>"][MT.get_equip_info()][selected==MT?"</b>":"</a>"]<br>"
+		output += "[selected==MT?"<b><span id='\ref[MT]'>":"<a id='\ref[MT]' href='?src=\ref[src];select_equip=\ref[MT]'>"][MT.get_equip_info()][selected==MT?"</span></b>":"</a>"]<br>"
 	output += "</div>"
 	return output
 
@@ -138,7 +138,7 @@
 	var/result = step(src,direction)
 	if(result)
 		if(!squeak)
-			playsound(src, "clownstep", 70, 1)
+			playsound(src, pick(SOUNDIN_CLOWNSTEP), VOL_EFFECTS_MASTER)
 			squeak = 1
 		else
 			squeak = 0
@@ -149,7 +149,7 @@
 	if (href_list["play_sound"])
 		switch(href_list["play_sound"])
 			if("sadtrombone")
-				playsound(src, 'sound/misc/sadtrombone.ogg', 50)
+				playsound(src, 'sound/misc/sadtrombone.ogg', VOL_EFFECTS_MASTER)
 	return
 
 /proc/rand_hex_color()

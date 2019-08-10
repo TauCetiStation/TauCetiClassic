@@ -23,6 +23,7 @@
 	var/alarm_playing = 0 // So they can't abuse alarm's sound
 
 	var/health_analyze_mode = FALSE
+	var/output_to_chat = TRUE
 
 /obj/item/clothing/gloves/pipboy/atom_init()
 	. = ..()
@@ -42,7 +43,7 @@
 				if(P == src)
 					M.visible_message("<span class='warning'>[bicon(src)][src] rings loudly!</span>")
 					alarm_playing = 1
-		playsound(src, 'sound/weapons/ring.ogg',50, 1)
+		playsound(src, 'sound/weapons/ring.ogg', VOL_EFFECTS_MASTER)
 		if(alarm_playing != 1)
 			src.visible_message("<span class='warning'>[bicon(src)][src] rings loudly!</span>")
 			alarm_playing = 1
@@ -53,7 +54,7 @@
 	return
 
 /obj/item/clothing/gloves/pipboy/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/stack/cable_coil) || istype(W, /obj/item/weapon/stock_parts/cell) || istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/weapon/scalpel))
+	if(iscoil(W) || istype(W, /obj/item/weapon/stock_parts/cell) || iswirecutter(W) || istype(W, /obj/item/weapon/scalpel))
 		return
 	..()
 
@@ -72,10 +73,20 @@
 	set name = "Switch Off"
 	set category = "Object"
 	icon_state = "[initial(icon_state)]_off"
-	playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
 	on = 0
 	set_light(0)
 	verbs -= /obj/item/clothing/gloves/pipboy/verb/switch_off
+
+/obj/item/clothing/gloves/pipboy/verb/toggle_output()
+	set name = "Toggle Output"
+	set category = "Object"
+
+	output_to_chat = !output_to_chat
+	if(output_to_chat)
+		to_chat(usr, "The scanner now outputs data to chat.")
+	else
+		to_chat(usr, "The scanner now outputs data in a seperate window.")
 
 /obj/item/clothing/gloves/pipboy/attack(mob/living/M, mob/living/user, def_zone)
 	if(!health_analyze_mode || !on)
@@ -83,15 +94,32 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT])
-			user.show_message("<span class = 'notice'>Analyzing Results for ERROR:\n&emsp; Overall Status: ERROR</span>")
-			user.show_message("&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font>", 1)
-			user.show_message("&emsp; Damage Specifics: <font color='blue'>?</font> - <font color='green'>?</font> - <font color='#FFA500'>?</font> - <font color='red'>?</font>")
-			user.show_message("<span class = 'notice'>Body Temperature: [H.bodytemperature-T0C]&deg;C ([H.bodytemperature*1.8-459.67]&deg;F)</span>", 1)
-			user.show_message("<span class = 'warning bold'>Warning: Blood Level ERROR: --% --cl.</span><span class = 'notice bold'>Type: ERROR</span>")
-			user.show_message("<span class = 'notice'>Subject's pulse:</span><font color='red'>-- bpm.</font>")
-			return
+			add_fingerprint(user)
+			var/message = ""
+			if(!output_to_chat)
+				message += "<HTML><head><title>[M.name]'s scan results</title></head><BODY>"
+
+			message += "<span class = 'notice'>Analyzing Results for ERROR:\n&emsp; Overall Status: ERROR</span><br>"
+			message += "&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font><br>"
+			message += "&emsp; Damage Specifics: <font color='blue'>?</font> - <font color='green'>?</font> - <font color='#FFA500'>?</font> - <font color='red'>?</font><br>"
+			message += "<span class = 'notice'>Body Temperature: [H.bodytemperature-T0C]&deg;C ([H.bodytemperature*1.8-459.67]&deg;F)</span><br>"
+			message += "<span class = 'warning bold'>Warning: Blood Level ERROR: --% --cl.</span><span class = 'notice bold'>Type: ERROR</span><br>"
+			message += "<span class = 'notice'>Subject's pulse:</span><font color='red'>-- bpm.</font><br>"
+
+			if(!output_to_chat)
+				message += "</BODY></HTML>"
+				user << browse(entity_ja(message), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+				onclose(user, "[M.name]_scan_report")
+			else
+				user.show_message(message)
 		else
-			health_analyze(M, user, TRUE)
+			add_fingerprint(user)
+			var/dat = health_analyze(M, user, TRUE, output_to_chat)
+			if(!output_to_chat)
+				user << browse(entity_ja(dat), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+				onclose(user, "[M.name]_scan_report")
+			else
+				user.show_message(dat)
 	else
 		user.show_message("<span class = 'warning'>Analyzing Results not compiled. Unknown anatomy detected.</span>")
 
@@ -102,7 +130,7 @@
 	health_analyze_mode = FALSE
 	if(on)
 		if(profile_name)
-			playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
+			playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
 			var/dat = "<body link='#30CC30' alink='white' bgcolor='#1A351A'><font color='#30CC30'>[name]<br>"
 			switch(screen)
 				if(1)
@@ -177,7 +205,7 @@
 		set_light(2, 1, "#59f65f")
 		on = 1
 		verbs += /obj/item/clothing/gloves/pipboy/verb/switch_off
-		playsound(src, 'sound/mecha/powerup.ogg', 30, 1)
+		playsound(src, 'sound/mecha/powerup.ogg', VOL_EFFECTS_MASTER, 30)
 		return
 
 /obj/item/clothing/gloves/pipboy/Topic(href, href_list, mob/user)
@@ -197,7 +225,7 @@
 	updateSelfDialog()
 
 /obj/item/clothing/gloves/pipboy/proc/create_personality(mob/living/U = usr)
-	playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
 	U.visible_message("<span class='notice'>[U] taps on \his [name]'s screen.</span>")
 	U.last_target_click = world.time
 	var/t = sanitize(input(U, "Please enter your name", name, null) as text)
@@ -215,11 +243,11 @@
 	if(U.stat || U.restrained() || U.paralysis || U.stunned || U.weakened || U.incapacitated())
 		return
 
-	playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
+	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 	profile_name = "[t]"
 
 /obj/item/clothing/gloves/pipboy/proc/create_alarm_clock(mob/living/U = usr, numb_of_alarm)
-	playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
 	U.visible_message("<span class='notice'>[U] taps on \his [name]'s screen.</span>")
 	U.last_target_click = world.time
 	var/alarm = sanitize(input(U, "Please time for the alarm to ring(e.g. 12:00)", name, null) as text)

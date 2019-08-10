@@ -46,6 +46,25 @@
 	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
 	var/air_doors_activated = 0
 
+	var/list/canSmoothWithAreas //typecache to limit the areas that atoms in this area can smooth with
+
+	var/looped_ambience = null
+	var/is_force_ambience = FALSE
+	var/ambience = list(
+		'sound/ambience/general_1.ogg',
+		'sound/ambience/general_2.ogg',
+		'sound/ambience/general_3.ogg',
+		'sound/ambience/general_4.ogg',
+		'sound/ambience/general_5.ogg',
+		'sound/ambience/general_6.ogg',
+		'sound/ambience/general_7.ogg',
+		'sound/ambience/general_8.ogg',
+		'sound/ambience/general_9.ogg',
+		'sound/ambience/general_10.ogg',
+		'sound/ambience/general_11.ogg',
+		'sound/ambience/general_12.ogg'
+	)
+
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -58,7 +77,7 @@ var/list/teleportlocs = list()
 		if(teleportlocs.Find(AR.name))
 			continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z == ZLEVEL_STATION)
+		if (is_station_level(picked.z))
 			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
 	teleportlocs = sortAssoc(teleportlocs)
@@ -75,7 +94,7 @@ var/list/ghostteleportlocs = list()
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z == ZLEVEL_STATION || picked.z == ZLEVEL_ASTEROID || picked.z == ZLEVEL_TELECOMMS)
+		if (is_station_level(picked.z) || is_mining_level(picked.z))
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 	ghostteleportlocs = sortAssoc(ghostteleportlocs)
@@ -86,6 +105,7 @@ var/list/ghostteleportlocs = list()
 	layer = 10
 	uid = ++global_uid
 	all_areas += src
+	areas_by_type[type] = src
 
 	if(!requires_power)
 		power_light = 0
@@ -95,6 +115,7 @@ var/list/ghostteleportlocs = list()
 	..()
 
 /area/atom_init()
+	canSmoothWithAreas = typecacheof(canSmoothWithAreas)
 
 	. = ..()
 
@@ -338,67 +359,49 @@ var/list/ghostteleportlocs = list()
 
 
 /area/Entered(A)
-	if(!istype(A,/mob/living))
+	if (!isliving(A))
 		return
 
 	var/mob/living/L = A
-	if(!L.ckey)
+	if (!L.ckey)
 		return
+
+	if (!L.lastarea)
+		L.lastarea = get_area(L.loc)
+
+	var/area/new_area = get_area(L.loc)
+	var/area/old_area = L.lastarea
 
 	//Jukebox
-	if(!L.lastarea)
-		L.lastarea = get_area(L.loc)
-	var/area/newarea = get_area(L.loc)
-	var/area/oldarea = L.lastarea
-	if(newarea != oldarea)
-		if(L.client)
+	if (new_area != old_area)
+		if (L.client)
 			L.update_music()
-	L.lastarea = newarea
 
-	if((oldarea.has_gravity == 0) && (newarea.has_gravity == 1) && (L.m_intent == "run")) // Being ready when you change areas gives you a chance to avoid falling all together.
+	L.lastarea = new_area
+
+	// Being ready when you change areas gives you a chance to avoid falling all together.
+	if ((old_area.has_gravity == FALSE) && (new_area.has_gravity == TRUE) && (L.m_intent == MOVE_INTENT_RUN))
 		thunk(L)
 
-	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
-	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))
+	if (!L.client || old_area == src)
 		return
 
-	if(!L.client.ambience_playing)
-		L.client.ambience_playing = 1
-		L << sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
+	if (looped_ambience == null)
+		L.client.sound_old_looped_ambience = null
+		L.playsound_stop(CHANNEL_AMBIENT_LOOP)
+	else if (L.client.sound_old_looped_ambience != looped_ambience)
+		L.client.sound_old_looped_ambience = looped_ambience
+		L.playsound_music(looped_ambience, VOL_AMBIENT, TRUE, null, CHANNEL_AMBIENT_LOOP)
 
-	if(prob(35))
-		var/sound = 'sound/ambience/ambigen1.ogg'
+	if (!compare_list(old_area.ambience, new_area.ambience))
+		L.playsound_stop(CHANNEL_AMBIENT)
 
-		if(istype(src, /area/chapel))
-			sound = pick('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg','sound/music/traitor.ogg')
-		else if(istype(src, /area/medical/morgue))
-			sound = pick('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg','sound/music/main.ogg')
-		else if(type == /area)
-			sound = pick('sound/ambience/ambispace.ogg','sound/music/title2.ogg','sound/music/space.ogg','sound/music/main.ogg','sound/music/traitor.ogg','sound/ambience/voidambi.ogg','sound/ambience/timeship_amb1.ogg')
-		else if(istype(src, /area/engine))
-			sound = pick('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
-		else if(istype(src, /area/AIsattele) || istype(src, /area/turret_protected/ai) || istype(src, /area/turret_protected/ai_upload))
-			sound = pick('sound/ambience/ambimalf.ogg')
-		else if(istype(src, /area/mine/explored) || istype(src, /area/mine/unexplored))
-			sound = pick('sound/ambience/ambimine.ogg', 'sound/ambience/song_game.ogg','sound/ambience/mars.ogg')
-		else if(istype(src, /area/tcommsat))
-			sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-		else if (istype(src, /area/syndicate_station) || istype(src, /area/syndicate_station/start) || istype(src,/area/syndicate_station/transit))
-			sound = pick('sound/ambience/omega.ogg')
-		else
-			sound = pick('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
+	if (ambience != null && (is_force_ambience || (prob(50) && L.client.sound_next_ambience_play <= world.time)))
+		L.client.sound_next_ambience_play = world.time + rand(3, 6) MINUTES
+		L.playsound_music(pick(ambience), VOL_AMBIENT, null, null, CHANNEL_AMBIENT)
 
-		if(!L.client.played)
-			L << sound(sound, repeat = 0, wait = 0, volume = 25, channel = 1)
-			L.client.played = TRUE
-			addtimer(CALLBACK(src, .proc/set_played_false, L), 600)
-
-/area/proc/set_played_false(mob/living/L)
-	if(L && L.client)
-		L.client.played = FALSE
 
 /area/proc/gravitychange(gravitystate = 0, area/A)
-
 	A.has_gravity = gravitystate
 	if(gravitystate)
 		for(var/mob/living/carbon/human/M in A)

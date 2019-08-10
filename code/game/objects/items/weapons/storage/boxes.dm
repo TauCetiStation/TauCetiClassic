@@ -316,7 +316,7 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "monkeycubebox"
 	storage_slots = 7
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/monkeycube")
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/monkeycube)
 
 /obj/item/weapon/storage/box/monkeycubes/atom_init()
 	. = ..()
@@ -426,7 +426,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "spbox"
 	storage_slots = 8
-	can_hold = list("/obj/item/toy/snappop")
+	can_hold = list(/obj/item/toy/snappop)
 
 /obj/item/weapon/storage/box/snappops/atom_init()
 	. = ..()
@@ -443,7 +443,7 @@
 	storage_slots = 10
 	w_class = ITEM_SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
-	can_hold = list("/obj/item/weapon/match")
+	can_hold = list(/obj/item/weapon/match)
 
 /obj/item/weapon/storage/box/matches/atom_init()
 	. = ..()
@@ -453,9 +453,9 @@
 /obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W, mob/user)
 	if(istype(W) && !W.lit && !W.burnt)
 		if (prob (20))
-			playsound(src, 'sound/items/matchstick_hit.ogg', 20, 1, 1)
+			playsound(src, 'sound/items/matchstick_hit.ogg', VOL_EFFECTS_MASTER, 20)
 			return
-		playsound(src, 'sound/items/matchstick_light.ogg', 20, 1, 1)
+		playsound(src, 'sound/items/matchstick_light.ogg', VOL_EFFECTS_MASTER, 20)
 		W.lit = 1
 		W.damtype = "burn"
 		W.icon_state = "match_lit"
@@ -483,7 +483,7 @@
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
 	storage_slots = 21
 	max_storage_space = 42
-	can_hold = list("/obj/item/weapon/light/tube", "/obj/item/weapon/light/bulb")
+	can_hold = list(/obj/item/weapon/light/tube, /obj/item/weapon/light/bulb)
 	use_to_pickup = 1 // for picking up broken bulbs, not that most people will try
 
 /obj/item/weapon/storage/box/lights/bulbs/atom_init()
@@ -582,7 +582,7 @@
 	name = "box of shotgun shell"
 	icon_state = "shotgun_ammo_slug"
 	foldable = /obj/item/stack/sheet/cardboard
-	can_hold = list("/obj/item/ammo_casing/shotgun")
+	can_hold = list(/obj/item/ammo_casing/shotgun)
 
 /obj/item/weapon/storage/box/shotgun/slug
 	name = "box of shotgun shell (slug)"

@@ -17,13 +17,13 @@
 
 	if(emagged)
 		if(insults >= 1)
-			playsound(get_turf(src), 'sound/voice/binsult.ogg', 100, 1, vary = 0)//hueheuheuheuheuheuhe
+			playsound(src, 'sound/voice/beepsky/insult.ogg', VOL_EFFECTS_MASTER, null, FALSE)//hueheuheuheuheuheuhe
 			user.show_message("<span class='warning'>[user]'s [name] gurgles, \"FUCK YOUR CUNT YOU SHIT EATING CUNT TILL YOU ARE A MASS EATING SHIT CUNT. EAT PENISES IN YOUR FUCK FACE AND SHIT OUT ABORTIONS TO FUCK UP SHIT IN YOUR ASS YOU COCK FUCK SHIT MONKEY FROM THE DEPTHS OF SHIT\"</span>",2) //It's a hearable message silly!
 			insults--
 		else
-			to_chat(user, "\red *BZZZZcuntZZZZT*")
+			to_chat(user, "<span class='warning'>*BZZZZcuntZZZZT*</span>")
 	else
-		playsound(get_turf(src), 'sound/voice/halt.ogg', 100, 1, vary = 0)
+		playsound(src, 'sound/voice/halt.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		user.show_message("<span class='warning'>[user]'s [name] rasps, \"Halt! Security!\"</span>",1)
 	if(user)
 		var/list/halt_recipients = list()
@@ -37,10 +37,10 @@
 	spawn(20)
 		spamcheck = 0
 
-/obj/item/device/hailer/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
-		to_chat(user, "\red You overload \the [src]'s voice synthesizer.")
-		emagged = 1
-		insults = rand(1, 3)//to prevent dickflooding
-		return
-	return
+/obj/item/device/hailer/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	to_chat(user, "<span class='warning'>You overload \the [src]'s voice synthesizer.</span>")
+	emagged = 1
+	insults = rand(1, 3)//to prevent dickflooding
+	return TRUE

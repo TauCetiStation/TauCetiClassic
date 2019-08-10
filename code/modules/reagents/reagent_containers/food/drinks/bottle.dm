@@ -27,7 +27,7 @@
 	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 	B.icon = I
 
-	playsound(src, "shatter", 70, 1)
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	user.put_in_active_hand(B)
 	src.transfer_fingerprints_to(B)
 
@@ -90,8 +90,8 @@
 
 		//Display an attack message.
 		for(var/mob/O in viewers(user, null))
-			if(target != user) O.show_message(text("\red <B>[target] has been hit over the head with a bottle of [src.name], by [user]!</B>"), 1)
-			else O.show_message(text("\red <B>[target] hit himself with a bottle of [src.name] on the head!</B>"), 1)
+			if(target != user) O.show_message(text("<span class='warning'><B>[target] has been hit over the head with a bottle of [src.name], by [user]!</B></span>"), 1)
+			else O.show_message(text("<span class='warning'><B>[target] hit himself with a bottle of [src.name] on the head!</B></span>"), 1)
 		//Weaken the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
 			target.apply_effect(min(armor_duration, 10) , WEAKEN) // Never weaken more than a flash!
@@ -99,8 +99,8 @@
 	else
 		//Default attack message and don't weaken the target.
 		for(var/mob/O in viewers(user, null))
-			if(target != user) O.show_message(text("\red <B>[target] has been attacked with a bottle of [src.name], by [user]!</B>"), 1)
-			else O.show_message(text("\red <B>[target] has attacked himself with a bottle of [src.name]!</B>"), 1)
+			if(target != user) O.show_message(text("<span class='warning'><B>[target] has been attacked with a bottle of [src.name], by [user]!</B></span>"), 1)
+			else O.show_message(text("<span class='warning'><B>[target] has attacked himself with a bottle of [src.name]!</B></span>"), 1)
 
 	//Attack logs
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has attacked [target.name] ([target.ckey]) with a bottle!</font>")
@@ -110,7 +110,7 @@
 	//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
 	if(src.reagents)
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\blue <B>The contents of the [src] splashes all over [target]!</B>"), 1)
+			O.show_message(text("<span class='notice'><B>The contents of the [src] splashes all over [target]!</B></span>"), 1)
 		src.reagents.reaction(target, TOUCH)
 
 	//Finally, smash the bottle. This kills (del) the bottle.
@@ -136,7 +136,7 @@
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
 
 /obj/item/weapon/broken_bottle/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
 

@@ -58,13 +58,12 @@
 
 	if(iscrowbar(W))
 		if(user.is_busy()) return
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		if(do_after(user, 50, target = src))
+		if(W.use_tool(src, user, 50, volume = 50))
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
 				S.loc = src.loc
 				S.give_glass()
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='notice'>[user] takes the glass off the tracker.</span>")
 			qdel(src)
 		return

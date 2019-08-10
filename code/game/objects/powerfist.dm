@@ -34,7 +34,7 @@
 			updateTank(W, 0, user)
 		else
 			updateTank(W, 1, user)
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(iswrench(W))
 		switch(fisto_setting)
 			if(1)
 				fisto_setting = 2
@@ -42,9 +42,9 @@
 				fisto_setting = 3
 			if(3)
 				fisto_setting = 1
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user,"<span class='notice'>You tweak \the [src]'s piston valve to [fisto_setting].</span>")
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(W))
 		updateTank(tank, 1, user)
 
 
@@ -74,14 +74,14 @@
 		return
 	else if(!tank.air_contents.remove(gasperfist * fisto_setting))
 		to_chat(user,"<span class='warning'>\The [src]'s piston-ram lets out a weak hiss, it needs more gas!</span>")
-		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
+		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
 		return
 	target.apply_damage(force * fisto_setting, BRUTE, def_zone)
 	target.visible_message("<span class='danger'>[user]'s powerfist lets out a loud hiss as they punch [target.name]!</span>", \
 		"<span class='userdanger'>You cry out in pain as [user]'s punch flings you backwards!</span>")
 	new /obj/item/effect/kinetic_blast(target.loc)
-	playsound(loc, 'sound/weapons/resonator_blast.ogg', 50, 1)
-	playsound(loc, 'sound/weapons/genhit2.ogg', 50, 1)
+	playsound(src, 'sound/weapons/guns/resonator_blast.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/weapons/genhit2.ogg', VOL_EFFECTS_MASTER)
 
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 	target.throw_at(throw_target, 5 * fisto_setting, 1)

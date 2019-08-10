@@ -10,7 +10,7 @@
 	force_wielded = 18 // Was 13, Buffed - RR
 	throwforce = 15
 	flags = NOSHIELD
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = list('sound/weapons/bladeslice.ogg')
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 
 /obj/item/weapon/twohanded/spear/update_icon()
@@ -41,7 +41,7 @@
 	item_state = "prod"
 	var/obj/item/weapon/stock_parts/cell/bcell = null
 	var/stunforce = 5
-	var/hitcost = 2500
+	var/hitcost = 2000
 	force = 3
 	throwforce = 5
 	var/status = 0
@@ -55,7 +55,7 @@
 	if(bcell && bcell.charge > hitcost)
 		status = !status
 		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
-		playsound(loc, "sparks", 75, 1, -1)
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	else
 		status = 0
 		if(!bcell)
@@ -79,7 +79,7 @@
 		if(bcell.charge < (hitcost+chrgdeductamt)) // If after the deduction the baton doesn't have enough charge for a stun hit it turns off.
 			status = 0
 			update_icon()
-			playsound(loc, "sparks", 75, 1, -1)
+			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		if(bcell.use(chrgdeductamt))
 			return 1
 		else
@@ -95,15 +95,19 @@
 
 /obj/item/weapon/melee/cattleprod/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
+		var/obj/item/weapon/stock_parts/cell/C = W
+		if(C.maxcharge < hitcost)
+			to_chat(user, "<span class='notice'>[C]'s maximum capacity seems too small to be useful.</span>")
+			return
 		if(!bcell)
 			user.drop_item()
 			W.loc = src
 			bcell = W
-			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
+			to_chat(user, "<span class='notice'>You install a cell in \the [src].</span>")
 			update_icon()
 		else
 			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(W))
 		if(bcell)
 			bcell.updateicon()
 			bcell.loc = get_turf(src.loc)
@@ -134,7 +138,7 @@
 		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Beaten by [user.name] ([user.ckey]) with [src.name]</font>"
 		msg_admin_attack("[user.name] ([user.ckey]) beat [H.name] ([H.ckey]) with [src.name] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		playsound(src.loc, "swing_hit", 50, 1, -1)
+		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 	else if(!status)
 		H.visible_message("<span class='warning'>[M] has been prodded with the [src] by [user]. Luckily it was off.</span>")
 		return
@@ -158,7 +162,7 @@
 		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by [user.name] ([user.ckey]) with [src.name]</font>"
 		msg_admin_attack("[key_name(user)] stunned [key_name(H)] with [src.name]")
 
-		playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 	//	if(charges < 1)
 	//		status = 0
 	//		update_icon()

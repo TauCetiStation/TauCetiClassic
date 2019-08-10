@@ -29,12 +29,12 @@
 				user.drop_item()
 				I.loc = src
 				syringes += I
-				to_chat(user, "\blue You put the syringe in [src].")
-				to_chat(user, "\blue [syringes.len] / [max_syringes] syringes.")
+				to_chat(user, "<span class='notice'>You put the syringe in [src].</span>")
+				to_chat(user, "<span class='notice'>[syringes.len] / [max_syringes] syringes.</span>")
 			else
-				to_chat(usr, "\red [src] cannot hold more syringes.")
+				to_chat(usr, "<span class='warning'>[src] cannot hold more syringes.</span>")
 		else
-			to_chat(usr, "\red This syringe is broken!")
+			to_chat(usr, "<span class='warning'>This syringe is broken!</span>")
 
 
 /obj/item/weapon/gun/syringe/afterattack(obj/target, mob/user , flag)
@@ -52,7 +52,7 @@
 	if(syringes.len)
 		fire_syringe(target, user)
 	else
-		to_chat(usr, "\red [src] is empty.")
+		to_chat(usr, "<span class='warning'>[src] is empty.</span>")
 
 /obj/item/weapon/gun/syringe/proc/fire_syringe(atom/target, mob/user)
 	set waitfor = FALSE
@@ -69,7 +69,7 @@
 	qdel(S)
 	D.icon_state = "syringeproj"
 	D.name = "syringe"
-	playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
+	playsound(user, 'sound/items/syringeproj.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/i = 0 to 6)
 		if(!D) break

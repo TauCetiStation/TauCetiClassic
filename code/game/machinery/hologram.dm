@@ -106,15 +106,16 @@ var/const/HOLOPAD_MODE = 0
 	if(!(stat & NOPOWER) && user.eyeobj.loc == src.loc)//If the projector has power and client eye is on it.
 		if(!hologram)//If there is not already a hologram.
 			create_holo(user)//Create one.
+			playsound(src, 'sound/machines/holopadon.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 			if(user.holohack)
 				change_holo_to_carp(user)
 
 			src.visible_message("A holographic image of [hologram.name] flicks to life right before your eyes!")
 		else
-			to_chat(user, "\red ERROR: \black Image feed in progress.")
+			to_chat(user, "<span class='warning'>ERROR:</span> Image feed in progress.")
 	else
-		to_chat(user, "\red ERROR: \black Unable to project hologram.")
+		to_chat(user, "<span class='warning'>ERROR:</span> Unable to project hologram.")
 	return
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.

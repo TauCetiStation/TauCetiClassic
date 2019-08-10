@@ -4,6 +4,7 @@
 	icon_state = "wheelchair"
 	anchored = 0
 	buckle_movable = 1
+	flags = NODECONSTRUCT
 
 	var/driving = 0
 	var/mob/living/pulling = null
@@ -67,7 +68,7 @@
 		if(user==pulling)
 			return
 	if(pulling && (get_dir(src.loc, pulling.loc) == direction))
-		to_chat(user, "<span class='red'>You cannot go there.")
+		to_chat(user, "<span class='red'>You cannot go there.</span>")
 		return
 	if(pulling && buckled_mob && (buckled_mob == user))
 		to_chat(user, "<span class='red'>You cannot drive while being pushed.</span>")
@@ -129,6 +130,8 @@
 		else
 			if (occupant && (src.loc != occupant.loc))
 				src.loc = occupant.loc // Failsafe to make sure the wheelchair stays beneath the occupant after driving
+	else if(has_gravity(src))
+		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER)
 	handle_rotation()
 
 /obj/structure/stool/bed/chair/wheelchair/attack_hand(mob/living/user)
@@ -177,7 +180,7 @@
 		occupant.apply_effect(6, STUN, 0)
 		occupant.apply_effect(6, WEAKEN, 0)
 		occupant.apply_effect(6, STUTTER, 0)
-		playsound(src.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/punch1.ogg', VOL_EFFECTS_MASTER)
 		if(istype(A, /mob/living))
 			var/mob/living/victim = A
 			victim.apply_effect(6, STUN, 0)

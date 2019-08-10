@@ -174,8 +174,7 @@ var/list/alldepartments = list("Central Command")
 			idcard.loc = src
 			scan = idcard
 
-	else if(istype(O, /obj/item/weapon/wrench))
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+	else if(iswrench(O))
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 	return
@@ -195,7 +194,15 @@ var/list/alldepartments = list("Central Command")
 		to_chat(C, msg)
 
 	send_fax(sender, P, "Central Command")
-	send2slack_custommsg("[key_name(sender)] sent fax to Centcomm", P.info + P.stamp_text, ":fax:")
+
+	add_communication_log(type = "fax-station", author = sender.name, content = P.info + "\n" + P.stamp_text)
+
+	world.send2bridge(
+		type = list(BRIDGE_ADMINCOM),
+		attachment_title = ":fax: **[key_name(sender)]** sent fax to ***Centcomm***",
+		attachment_msg = strip_html_properly(replacetext((P.info + P.stamp_text), "<br>", "\n")),
+		attachment_color = BRIDGE_COLOR_ADMINCOM,
+	)
 
 /proc/send_fax(mob/sender, obj/item/weapon/paper/P, department)
 	for(var/obj/machinery/faxmachine/F in allfaxes)
@@ -207,7 +214,7 @@ var/list/alldepartments = list("Central Command")
 /obj/machinery/faxmachine/proc/print_fax(obj/item/weapon/paper/P)
 	set waitfor = FALSE
 
-	playsound(src, "sound/items/polaroid1.ogg", 50, 1)
+	playsound(src, "sound/items/polaroid1.ogg", VOL_EFFECTS_MASTER)
 	flick("faxreceive", src)
 
 	sleep(20)

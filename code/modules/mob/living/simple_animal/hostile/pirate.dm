@@ -18,7 +18,7 @@
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	attacktext = "slashes"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = list('sound/weapons/bladeslice.ogg')
 
 	min_oxy = 5
 	max_oxy = 0
@@ -41,7 +41,7 @@
 	icon_state = "pirateranged"
 	icon_living = "pirateranged"
 	icon_dead = "piratemelee_dead"
-	projectilesound = 'sound/weapons/laser.ogg'
+	projectilesound = 'sound/weapons/guns/gunpulse_laser.ogg'
 	ranged = 1
 	rapid = 1
 	retreat_distance = 5

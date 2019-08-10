@@ -33,13 +33,13 @@
 				quirk_cost *= -1 //invert it back, since we'd be regaining this amount
 		if(quirk_cost > 0)
 			quirk_cost = "+[quirk_cost]"
-		var/font_color = "#4949B5"
+		var/font_color = "#4949b5"
 		if(initial(T.value) != 0)
 			font_color = initial(T.value) > 0 ? "#007400" : "#690000"
 		if(quirk_conflict)
 			. += "<tr style='vertical-align:top'><td width=15%><b>[quirk_name]</b></td>"
 			. += "<td nowrap style='vertical-align:top'><font color='red'><b>LOCKED</b></font></td>"
-			. += "<td><font size=2><font color='red'>[lock_reason]</font></td>"
+			. += "<td><font size=2><font color='red'>[lock_reason]</font></font></td>"
 		else
 			. += "<tr style='vertical-align:top'><td width=15%><a href='?_src_=prefs;preference=quirk;task=update;quirk=[quirk_name]' style='color: [has_quirk ? "silver" : font_color];'><b>[quirk_name]</b></a></td>"
 			. += "<td nowrap style='vertical-align:top'>[quirk_cost] pts.</a></td>"

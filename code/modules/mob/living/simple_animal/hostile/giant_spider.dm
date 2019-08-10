@@ -12,6 +12,7 @@
 	icon_state = "guard"
 	icon_living = "guard"
 	icon_dead = "guard_dead"
+	icon_move = "guard_move"
 	speak_emote = list("chitters")
 	emote_hear = list("chitters")
 	speak_chance = 5
@@ -44,6 +45,7 @@
 	icon_state = "nurse"
 	icon_living = "nurse"
 	icon_dead = "nurse_dead"
+	icon_move = "nurse_move"
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/spidermeat = 2, /obj/item/weapon/reagent_containers/food/snacks/spiderleg = 8, /obj/item/weapon/reagent_containers/food/snacks/spidereggs = 4)
 	maxHealth = 40
 	health = 40
@@ -60,6 +62,7 @@
 	icon_state = "hunter"
 	icon_living = "hunter"
 	icon_dead = "hunter_dead"
+	icon_move = "hunter_move"
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/spidermeat = 2, /obj/item/weapon/reagent_containers/food/snacks/spiderleg = 8)
 	maxHealth = 120
 	health = 120
@@ -75,7 +78,7 @@
 		if(L.reagents)
 			L.reagents.add_reagent("toxin", poison_per_bite)
 			if(prob(poison_per_bite))
-				to_chat(L, "\red You feel a tiny prick.")
+				to_chat(L, "<span class='warning'>You feel a tiny prick.</span>")
 				L.reagents.add_reagent(poison_type, 5)
 
 /mob/living/simple_animal/hostile/giant_spider/Life()
@@ -122,7 +125,7 @@
 				var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
 				if(!W)
 					busy = SPINNING_WEB
-					src.visible_message("\blue \the [src] begins to secrete a sticky substance.")
+					src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
 					stop_automated_movement = 1
 					spawn(40)
 						if(busy == SPINNING_WEB)
@@ -134,7 +137,7 @@
 					var/obj/effect/spider/eggcluster/E = locate() in get_turf(src)
 					if(!E && fed > 0)
 						busy = LAYING_EGGS
-						src.visible_message("\blue \the [src] begins to lay a cluster of eggs.")
+						src.visible_message("<span class='notice'>\the [src] begins to lay a cluster of eggs.</span>")
 						stop_automated_movement = 1
 						spawn(50)
 							if(busy == LAYING_EGGS)
@@ -162,7 +165,7 @@
 			else if(busy == MOVING_TO_TARGET && cocoon_target)
 				if(get_dist(src, cocoon_target) <= 1)
 					busy = SPINNING_COCOON
-					src.visible_message("\blue \the [src] begins to secrete a sticky substance around \the [cocoon_target].")
+					src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance around \the [cocoon_target].</span>")
 					stop_automated_movement = 1
 					walk(src,0)
 					spawn(50)
@@ -177,7 +180,7 @@
 										continue
 									large_cocoon = 1
 									fed++
-									src.visible_message("\red \the [src] sticks a proboscis into \the [cocoon_target] and sucks a viscous substance out.")
+									src.visible_message("<span class='warning'>\the [src] sticks a proboscis into \the [cocoon_target] and sucks a viscous substance out.</span>")
 									M.loc = C
 									C.pixel_x = M.pixel_x
 									C.pixel_y = M.pixel_y

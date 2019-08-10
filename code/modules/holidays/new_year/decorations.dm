@@ -33,7 +33,7 @@
 
 /obj/item/decoration/garland/atom_init()
 	. = ..()
-	light_color = pick("#FF0000", "#6111FF", "#FFA500", "#44FAFF")
+	light_color = pick("#ff0000", "#6111ff", "#ffa500", "#44faff")
 	update_garland()
 
 /obj/item/decoration/garland/attack_self(mob/user)

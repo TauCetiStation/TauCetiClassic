@@ -88,7 +88,7 @@
 				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
 				if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
 					if(C.flags & THICKMATERIAL )
-						visible_message("<span class='userdanger'> <B>The [P.name] gets absorbed by [src]'s [C.name]!</span>")
+						visible_message("<span class='userdanger'>The [P.name] gets absorbed by [src]'s [C.name]!</span>")
 						qdel(P)
 						return
 
@@ -385,6 +385,12 @@
 					apply_effect(5, WEAKEN, armor)
 					visible_message("<span class='userdanger'>[src] has been knocked down!</span>")
 
+				if(!(damage_flags & (DAM_SHARP|DAM_EDGE)) && prob(I.force + 10)) // A chance to force puke with a blunt hit.
+					for(var/obj/item/weapon/grab/G in grabbed_by)
+						if(G.state >= GRAB_AGGRESSIVE && G.assailant == user)
+							vomit(punched=TRUE)
+							return
+
 				if(bloody)
 					bloody_body(src)
 	return TRUE
@@ -468,5 +474,9 @@
 	var/obj/item/clothing/suit/space/SS = wear_suit
 	var/reduction_dam = (100 - SS.breach_threshold) / 100
 	var/penetrated_dam = max(0, min(50, (damage * reduction_dam) / 1.5)) // - SS.damage)) - Consider uncommenting this if suits seem too hardy on dev.
+
+	if(istype(SS, /obj/item/clothing/suit/space/rig))
+		var/obj/item/clothing/suit/space/rig/rig = SS
+		rig.take_hit(damage)
 
 	if(penetrated_dam) SS.create_breaches(damtype, penetrated_dam)

@@ -102,14 +102,14 @@
 
 
 /obj/machinery/bot/secbot/ed209/beingAttacked(obj/item/weapon/W, mob/user)
-	if(!istype(W, /obj/item/weapon/screwdriver) && W.force && !target)
+	if(!isscrewdriver(W) && W.force && !target)
 		target = user
 		mode = SECBOT_HUNT
 		if(lasercolor)//To make up for the fact that lasertag bots don't hunt
 			shootAt(user)
 
 
-/obj/machinery/bot/secbot/ed209/Emag(mob/user)
+/obj/machinery/bot/secbot/ed209/emag_act(mob/user)
 	..()
 	if(open && !locked)
 		projectile = null
@@ -205,7 +205,7 @@
 			oldtarget_name = L.name
 			speak("Level [threatlevel] infraction alert!")
 			if(!lasercolor)
-				playsound(loc, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/EDPlaceholder.ogg'), 50, 0)
+				playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/EDPlaceholder.ogg'), VOL_EFFECTS_MASTER, null, FALSE)
 			visible_message("<b>[src]</b> points at [L.name]!")
 			mode = SECBOT_HUNT
 			process() // ensure bot quickly responds to a perp
@@ -246,7 +246,7 @@
 
 /obj/machinery/bot/secbot/ed209/explode()
 	walk_to(src, 0)
-	visible_message("\red <B>[src] blows apart!</B>", 1)
+	visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/ed209_assembly/Sa = new /obj/item/weapon/ed209_assembly(Tsec)
@@ -298,7 +298,7 @@
 		return
 
 	//if(lastfired && world.time - lastfired < 100)
-	//	playsound(loc, 'ed209_shoot.ogg', 50, 0)
+	//	playsound(src, 'ed209_shoot.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	if(!projectile)
 		if(!lasercolor)
@@ -411,9 +411,9 @@
 				icon_state = "[lasercolor]ed209_shell"
 
 		if(3)
-			if(istype(W, /obj/item/weapon/weldingtool))
+			if(iswelder(W))
 				var/obj/item/weapon/weldingtool/WT = W
-				if(WT.remove_fuel(0,user))
+				if(WT.use(0,user))
 					build_step++
 					name = "shielded frame assembly"
 					to_chat(user, "<span class='notice'>You welded the vest to [src].</span>")
@@ -438,12 +438,11 @@
 				icon_state = "[lasercolor]ed209_prox"
 
 		if(6)
-			if(istype(W, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/coil = W
+			if(iscoil(W))
 				if(user.is_busy(src)) return
 				to_chat(user, "<span class='notice'>You start to wire [src]...</span>")
-				if(do_after(user, 40, target = src))
-					if(build_step == 6 && coil.use(1))
+				if(W.use_tool(src, user, 40, amount = 1, volume = 50))
+					if(build_step == 6)
 						build_step++
 						to_chat(user, "<span class='notice'>You wire the ED-209 assembly.</span>")
 						name = "wired ED-209 assembly"
@@ -472,11 +471,10 @@
 			qdel(W)
 
 		if(8)
-			if(istype(W, /obj/item/weapon/screwdriver))
+			if(isscrewdriver(W))
 				if(user.is_busy(src)) return
-				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				to_chat(user, "<span class='notice'>Now attaching the gun to the frame...</span>")
-				if(do_after(user, 40, target = src))
+				if(W.use_tool(src, user, 40, volume = 100))
 					if(build_step == 8)
 						build_step++
 						name = "armed [name]"

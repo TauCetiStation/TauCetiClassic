@@ -174,10 +174,12 @@
 					links |= T
 
 /obj/machinery/telecomms/update_icon()
-	if(on)
-		icon_state = initial(icon_state)
+	if(panel_open)
+		icon_state = "[initial(icon_state)]_o"
 	else
-		icon_state = "[initial(icon_state)]_off"
+		icon_state = initial(icon_state)
+	if(!on)
+		icon_state = "[icon_state]_off"
 
 /obj/machinery/telecomms/proc/update_power()
 
@@ -270,6 +272,16 @@
 	heatgen = 0
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/receiver"
 
+/obj/machinery/telecomms/receiver/atom_init()
+	. = ..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/telecomms/receiver(null)
+	component_parts += new /obj/item/weapon/stock_parts/subspace/ansible(null)
+	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+
 /obj/machinery/telecomms/receiver/receive_signal(datum/signal/signal)
 
 	if(!on) // has to be on to receive messages
@@ -329,6 +341,15 @@
 	long_range_link = 1
 	netspeed = 40
 
+/obj/machinery/telecomms/hub/atom_init()
+	. = ..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/telecomms/hub(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
+	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
+	component_parts += new /obj/item/stack/cable_coil(null, 2)
 
 /obj/machinery/telecomms/hub/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	if(is_freq_listening(signal))
@@ -365,6 +386,16 @@
 	long_range_link = 1
 	var/broadcasting = 1
 	var/receiving = 1
+
+/obj/machinery/telecomms/relay/atom_init()
+	. = ..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/telecomms/relay(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
+	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
+	component_parts += new /obj/item/stack/cable_coil(null, 2)
 
 /obj/machinery/telecomms/relay/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
@@ -415,6 +446,15 @@
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/bus"
 	netspeed = 40
 	var/change_frequency = 0
+
+/obj/machinery/telecomms/bus/atom_init()
+	. = ..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/telecomms/bus(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
+	component_parts += new /obj/item/stack/cable_coil(null, 1)
 
 /obj/machinery/telecomms/bus/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
@@ -468,6 +508,20 @@
 	delay = 5
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/processor"
 	var/process_mode = 1 // 1 = Uncompress Signals, 0 = Compress Signals
+
+/obj/machinery/telecomms/processor/atom_init()
+	. = ..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/telecomms/processor(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
+	component_parts += new /obj/item/weapon/stock_parts/subspace/treatment(null)
+	component_parts += new /obj/item/weapon/stock_parts/subspace/treatment(null)
+	component_parts += new /obj/item/weapon/stock_parts/subspace/analyzer(null)
+	component_parts += new /obj/item/weapon/stock_parts/subspace/amplifier(null)
+	component_parts += new /obj/item/stack/cable_coil(null, 2)
 
 /obj/machinery/telecomms/processor/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
@@ -527,8 +581,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
-	RefreshParts()
+	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
 
 /obj/machinery/telecomms/server/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 

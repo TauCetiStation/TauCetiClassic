@@ -104,7 +104,7 @@
 	if(T.intact)
 		return		// prevent intraction when T-scanner revealed
 
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		open = !open
 		user.SetNextMove(CLICK_CD_RAPID)
 
@@ -118,7 +118,7 @@
 				src.locked = !src.locked
 				to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			else
-				to_chat(user, "\red Access denied.")
+				to_chat(user, "<span class='warning'>Access denied.</span>")
 			updateDialog()
 		else
 			to_chat(user, "You must open the cover first!")

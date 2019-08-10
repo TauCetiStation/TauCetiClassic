@@ -27,7 +27,7 @@
 	if(istype(W, /obj/item/weapon/melee/baton))
 		if(cooldown < world.time - 25)
 			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
-			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+			playsound(user, 'sound/effects/shieldbash.ogg', VOL_EFFECTS_MASTER)
 			cooldown = world.time
 	else
 		..()
@@ -89,7 +89,7 @@
 /obj/item/weapon/shield/riot/tele/attack_self(mob/living/user)
 	active = !active
 	icon_state = "teleriot[active]"
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(src, 'sound/weapons/batonextend.ogg', VOL_EFFECTS_MASTER)
 
 	if(active)
 		force = 8
@@ -131,10 +131,10 @@
 /obj/item/weapon/cloaking_device/attack_self(mob/user)
 	src.active = !( src.active )
 	if (src.active)
-		to_chat(user, "\blue The cloaking device is now active.")
+		to_chat(user, "<span class='notice'>The cloaking device is now active.</span>")
 		src.icon_state = "shield1"
 	else
-		to_chat(user, "\blue The cloaking device is now inactive.")
+		to_chat(user, "<span class='notice'>The cloaking device is now inactive.</span>")
 		src.icon_state = "shield0"
 	src.add_fingerprint(user)
 	return

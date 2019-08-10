@@ -41,7 +41,7 @@
 	else
 		state = 5
 	update_icon()
-	playsound(src, 'sound/items/washingmachine.ogg', 100, 1, 1)
+	playsound(src, 'sound/items/washingmachine.ogg', VOL_EFFECTS_MASTER)
 	sleep(210)
 	for(var/atom/A in contents)
 		A.clean_blood()
@@ -215,9 +215,9 @@
 	icon_state = "wm_[state][panel]"
 
 /obj/machinery/washing_machine/attackby(obj/item/weapon/W, mob/user)
-	/*if(istype(W,/obj/item/weapon/screwdriver))
+	/*if(isscrewdriver(W))
 		panel = !panel
-		to_chat(user, "\blue you [panel ? "open" : "close"] the [src]'s maintenance panel")*/
+		to_chat(user, "<span class='notice'>you [panel ? </span>"open" : "close"] the [src]'s maintenance panel")*/
 	if(istype(W,/obj/item/toy/crayon) ||istype(W,/obj/item/weapon/stamp))
 		if( state in list(	1, 3, 6 ) )
 			if(!crayon)
@@ -296,9 +296,9 @@
 				W.loc = src
 				state = 3
 			else
-				to_chat(user, "\blue You can't put the item in right now.")
+				to_chat(user, "<span class='notice'>You can't put the item in right now.</span>")
 		else
-			to_chat(user, "\blue The washing machine is full.")
+			to_chat(user, "<span class='notice'>The washing machine is full.</span>")
 	else
 		..()
 	update_icon()
@@ -327,7 +327,7 @@
 			crayon = null
 			state = 1
 		if(5)
-			to_chat(user, "\red The [src] is busy.")
+			to_chat(user, "<span class='warning'>The [src] is busy.</span>")
 		if(6)
 			state = 7
 		if(7)

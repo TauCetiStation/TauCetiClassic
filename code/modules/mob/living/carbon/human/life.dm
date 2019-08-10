@@ -160,11 +160,11 @@
 /mob/living/carbon/human/proc/handle_disabilities()
 	if (disabilities & EPILEPSY || has_trait(TRAIT_EPILEPSY))
 		if ((prob(1) && paralysis < 1))
-			to_chat(src, "\red You have a seizure!")
+			to_chat(src, "<span class='warning'>You have a seizure!</span>")
 			for(var/mob/O in viewers(src, null))
 				if(O == src)
 					continue
-				O.show_message(text("\red <B>[src] starts having a seizure!"), 1)
+				O.show_message(text("<span class='danger'>[src] starts having a seizure!</span>"), 1)
 			Paralyse(10)
 			make_jittery(1000)
 	if (disabilities & COUGHING || has_trait(TRAIT_COUGH))
@@ -182,7 +182,10 @@
 					if(1)
 						emote("twitch")
 					if(2 to 3)
-						say("[pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
+						if(config.rus_language)
+							say(pick(CYRILLIC_TRAIT_TOURETTE))
+						else
+							say(pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS"))
 				var/old_x = pixel_x
 				var/old_y = pixel_y
 				pixel_x += rand(-2,2)
@@ -202,9 +205,9 @@
 			if(config.rus_language)//TODO:CYRILLIC dictionary?
 				switch(pick(1,2,3))
 					if(1)
-						say(pick("азазаа!", "Я не смалгей!", "ХОС ХУЕСОС!", "[pick("", "ебучий трейтор")] [pick("морган", "моргун", "морген", "мрогун")] [pick("джемес", "джамес", "джаемес")] грефонет миня шпасит;е!!!", "ти можыш дать мне [pick("тилипатию","халку","эпиллепсию")]?", "ХАчу стать боргом!", "ПОЗОвите детектива!", "Хочу стать мартышкой!", "ХВАТЕТ ГРИФОНЕТЬ МИНЯ!!!!", "ШАТОЛ!"))
+						say(pick(CYRILLIC_BRAINDAMAGE_1))
 					if(2)
-						say(pick("Как мин[JA_PLACEHOLDER]ть руки?","ебучие фурри!", "Подебил", "Прокл[JA_PLACEHOLDER]тые трапы!", "лолка!", "вжжжжжжжжж!!!", "джеф скваааад!", "БРАНДЕНБУРГ!", "БУДАПЕШТ!", "ПАУУУУУК!!!!", "ПУКАН БОМБАНУЛ!", "ПУШКА", "РЕВА ПОЦОНЫ", "Пати на хопа!"))
+						say(pick(CYRILLIC_BRAINDAMAGE_2))
 					if(3)
 						emote("drool")
 			else
@@ -217,21 +220,45 @@
 						emote("drool")
 
 	if(stat != DEAD)
+		if(gnomed) // if he's dead he's gnomed foreva-a-ah
+			if(prob(6))
+				say(pick("A-HA-HA-HA!", "U-HU-HU-HU!", "IM A GNOME", "I'm a GnOme!", "Don't GnoMe me!", "I'm gnot a gnoblin!", "You've been GNOMED!"))
+				playsound(src, 'sound/magic/GNOMED.ogg', VOL_EFFECTS_MASTER)
+			gnomed--
+			if(gnomed <= 0)
+				to_chat(src, "<span class='notice'>You are no longer gnomed!</span>")
+				gnomed = FALSE
+				if(wear_mask)
+					wear_mask.canremove = TRUE
+				if(head)
+					head.canremove = TRUE
+				if(w_uniform)
+					w_uniform.canremove = TRUE
+				if(wear_suit)
+					remove_from_mob(wear_suit)
+				var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
+				smoke.set_up(3, 0, src.loc)
+				smoke.start()
+				playsound(src, 'sound/magic/cult_revive.ogg', VOL_EFFECTS_MASTER)
+				if(SMALLSIZE in mutations)
+					dna.SetSEState(SMALLSIZEBLOCK, 0)
+					domutcheck(src, null)
+
 		var/rn = rand(0, 200)
 		if(getBrainLoss() >= 5)
 			if(0 <= rn && rn <= 3)
 				custom_pain("Your head feels numb and painful.")
 		if(getBrainLoss() >= 15)
 			if(4 <= rn && rn <= 6) if(eye_blurry <= 0)
-				to_chat(src, "\red It becomes hard to see for some reason.")
+				to_chat(src, "<span class='warning'>It becomes hard to see for some reason.</span>")
 				eye_blurry = 10
 		if(getBrainLoss() >= 35)
 			if(7 <= rn && rn <= 9) if(get_active_hand())
-				to_chat(src, "\red Your hand won't respond properly, you drop what you're holding.")
+				to_chat(src, "<span class='warning'>Your hand won't respond properly, you drop what you're holding.</span>")
 				drop_item()
 		if(getBrainLoss() >= 50)
 			if(10 <= rn && rn <= 12) if(!lying)
-				to_chat(src, "\red Your legs won't respond properly, you fall down.")
+				to_chat(src, "<span class='warning'>Your legs won't respond properly, you fall down.</span>")
 				resting = 1
 
 /mob/living/carbon/human/proc/handle_stasis_bag()
@@ -270,7 +297,7 @@
 			if(!species.flags[RAD_ABSORB])
 				Weaken(10)
 				if(!lying)
-					to_chat(src, "\red You feel weak.")
+					to_chat(src, "<span class='warning'>You feel weak.</span>")
 					emote("collapse")
 
 		if (radiation < 0)
@@ -296,7 +323,7 @@
 			if(radiation > 50)
 				radiation--
 				damage = 1
-				if(prob(5) && prob(radiation) && (h_style != "Bald" || f_style != "Shaved"))
+				if(prob(5) && species.flags[HAS_HAIR] && prob(radiation) && (h_style != "Bald" || f_style != "Shaved"))
 					h_style = "Bald"
 					f_style = "Shaved"
 					update_hair()
@@ -305,13 +332,13 @@
 					radiation -= 5
 					Weaken(3)
 					if(!lying)
-						to_chat(src, "\red You feel weak.")
+						to_chat(src, "<span class='warning'>You feel weak.</span>")
 						emote("collapse")
 			if(radiation > 75)
 				radiation--
 				damage = 3
 				if(prob(1))
-					to_chat(src, "\red You mutate!")
+					to_chat(src, "<span class='warning'>You mutate!</span>")
 					randmutb(src)
 					domutcheck(src,null)
 					emote("gasp")
@@ -376,8 +403,7 @@
 				if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
 					var/obj/item/clothing/mask/gas/G = wear_mask
 					var/datum/gas_mixture/filtered = new
-
-					for(var/g in  list("phoron", "sleeping_agent"))
+					for(var/g in  G.filter)
 						if(breath.gas[g])
 							filtered.gas[g] = breath.gas[g] * G.gas_filter_strength
 							breath.gas[g] -= filtered.gas[g]
@@ -429,7 +455,6 @@
 				for(var/mob/living/carbon/M in view(1,src))
 					src.spread_disease_to(M)
 
-
 /mob/living/carbon/human/proc/get_breath_from_internal(volume_needed)
 	if(internal)
 		if (!contents.Find(internal))
@@ -437,6 +462,14 @@
 		if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
 			internal = null
 		if(internal)
+					//internal breath sounds
+			if(internal.distribute_pressure >= 16)
+				var/breathsound = pick(SOUNDIN_BREATHMASK)
+				if(istype(wear_mask, /obj/item/clothing/mask/gas))
+					breathsound = 'sound/misc/gasmaskbreath.ogg'
+				if(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space))
+					breathsound = pick(SOUNDIN_RIGBREATH)
+				playsound(src, breathsound, VOL_EFFECTS_MASTER, null, FALSE, -6)
 			return internal.remove_air_volume(volume_needed)
 		else if(internals)
 			internals.icon_state = "internal0"
@@ -1001,7 +1034,7 @@
 		if(light_amount > LIGHT_DAM_THRESHOLD)
 			take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
 			to_chat(src, "<span class='userdanger'>The light burns you!</span>")
-			src << 'sound/weapons/sear.ogg'
+			playsound_local(null, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
 			heal_overall_damage(5,5)
 			adjustToxLoss(-3)
@@ -1014,7 +1047,7 @@
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(FAT in mutations)
 		if(!has_trait(TRAIT_FAT) && overeatduration < 100)
-			to_chat(src, "\blue You feel fit again!")
+			to_chat(src, "<span class='notice'>You feel fit again!</span>")
 			mutations.Remove(FAT)
 			update_body()
 			update_mutantrace()
@@ -1022,7 +1055,7 @@
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 	else
-		if(has_trait(TRAIT_FAT) || overeatduration > 500)
+		if((has_trait(TRAIT_FAT) || overeatduration > 500) && isturf(loc))
 			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
 				mutations.Add(FAT)
 				update_body()
@@ -1112,10 +1145,12 @@
 			if(hallucination >= 20)
 				if(prob(3))
 					fake_attack(src)
+				if(hallucination > 1000)
+					hallucination = 1000
 				if(!handling_hal)
 					spawn handle_hallucinations() //The not boring kind!
 
-			if(hallucination<=2)
+			if(hallucination <= 2)
 				hallucination = 0
 				halloss = 0
 			else
@@ -1446,8 +1481,12 @@
 		switch(get_nutrition())
 			if(NUTRITION_LEVEL_FULL to INFINITY)
 				throw_alert("nutrition","fat")
-			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
-				clear_alert("nutrition")
+			if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+				throw_alert("nutrition", "full")
+			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+				throw_alert("nutrition", "well_fed")
+			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+				throw_alert("nutrition", "fed")
 			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
 				throw_alert("nutrition","hungry")
 			else
@@ -1549,6 +1588,8 @@
 			sightglassesmod = "thermal"
 		else if(istype(glasses, /obj/item/clothing/glasses/science))
 			sightglassesmod = "sci"
+		else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/noir))
+			sightglassesmod = "greyscale"
 
 	if(species.nighteyes)
 		if(sightglassesmod)
@@ -1566,14 +1607,14 @@
 /mob/living/carbon/human/proc/handle_random_events()
 	// Puke if toxloss is too high
 	if(!stat)
-		if (getToxLoss() >= 45 && nutrition > 20)
-			vomit()
+		if (getToxLoss() >= 45)
+			invoke_vomit_async()
 
 	//0.1% chance of playing a scary sound to someone who's in complete darkness
 	if(isturf(loc) && rand(1,1000) == 1)
 		var/turf/T = loc
 		if(T.get_lumcount() < 0.1)
-			playsound_local(src,pick(scarySounds),50, 1, -1)
+			playsound_local(src, pick(scarySounds), VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/human/proc/handle_virus_updates()
 	if(status_flags & GODMODE)	return 0	//godmode
@@ -1657,7 +1698,7 @@
 		return
 
 	if(shock_stage == 10)
-		to_chat(src, "<font color='red'><b>"+pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!"))
+		to_chat(src, "<span class='danger'>[pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")]</span>")
 
 	if(shock_stage >= 30)
 		if(shock_stage == 30) emote("me",1,"is having trouble keeping their eyes open.")
@@ -1665,22 +1706,22 @@
 		stuttering = max(stuttering, 5)
 
 	if(shock_stage == 40)
-		to_chat(src, "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!"))
+		to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 
 	if (shock_stage >= 60)
 		if(shock_stage == 60) emote("me",1,"'s body becomes limp.")
 		if (prob(2))
-			to_chat(src, "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!"))
+			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 			Weaken(20)
 
 	if(shock_stage >= 80)
 		if (prob(5))
-			to_chat(src, "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!"))
+			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 			Weaken(20)
 
 	if(shock_stage >= 120)
 		if (prob(2))
-			to_chat(src, "<font color='red'><b>"+pick("You black out!", "You feel like you could die any moment now.", "You're about to lose consciousness."))
+			to_chat(src, "<span class='danger'>[pick("You black out!", "You feel like you could die any moment now.", "You're about to lose consciousness.")]</span>")
 			Paralyse(5)
 
 	if(shock_stage == 150)
@@ -1700,7 +1741,7 @@
 
 		if(heart_beat >= temp)
 			heart_beat = 0
-			src << sound('sound/effects/singlebeat.ogg',0,0,0,50)
+			playsound_local(null, 'sound/effects/singlebeat.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		else if(temp != 0)
 			heart_beat++
 

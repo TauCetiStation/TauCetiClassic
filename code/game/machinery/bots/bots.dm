@@ -44,13 +44,18 @@
 	if (src.health <= 0)
 		src.explode()
 
-/obj/machinery/bot/proc/Emag(mob/user)
+/obj/machinery/bot/emag_act(mob/user)
+	if(emagged >= 2)
+		return FALSE
 	if(locked)
 		locked = 0
 		emagged = 1
 		to_chat(user, "<span class='warning'>You bypass [src]'s controls.</span>")
+		return TRUE
 	if(!locked && open)
 		emagged = 2
+		return TRUE
+	return FALSE
 
 /obj/machinery/bot/examine(mob/user)
 	..()
@@ -64,8 +69,8 @@
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 	src.health -= rand(15,30)*brute_dam_coeff
-	src.visible_message("\red <B>[user] has slashed [src]!</B>")
-	playsound(src.loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+	src.visible_message("<span class='warning'><B>[user] has slashed [src]!</B></span>")
+	playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER, 25)
 	if(prob(10))
 		new /obj/effect/decal/cleanable/blood/oil(src.loc)
 	healthcheck()
@@ -76,7 +81,7 @@
 	if(M.melee_damage_upper == 0)
 		return
 	src.health -= M.melee_damage_upper
-	src.visible_message("\red <B>[M] has [M.attacktext] [src]!</B>")
+	src.visible_message("<span class='warning'><B>[M] has [M.attacktext] [src]!</B></span>")
 	M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 	if(prob(10))
 		new /obj/effect/decal/cleanable/blood/oil(src.loc)
@@ -86,21 +91,19 @@
 
 
 /obj/machinery/bot/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		if(!locked)
 			open = !open
 			to_chat(user, "<span class='notice'>Maintenance panel is now [src.open ? "opened" : "closed"].</span>")
-	else if(istype(W, /obj/item/weapon/weldingtool))
+	else if(iswelder(W))
 		if(health < maxhealth)
 			if(open)
 				health = min(maxhealth, health+10)
-				user.visible_message("\red [user] repairs [src]!","\blue You repair [src]!")
+				user.visible_message("<span class='warning'>[user] repairs [src]!</span>","<span class='notice'>You repair [src]!</span>")
 			else
 				to_chat(user, "<span class='notice'>Unable to repair with the maintenance panel closed.</span>")
 		else
 			to_chat(user, "<span class='notice'>[src] does not need a repair.</span>")
-	else if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)
-		Emag(user)
 	else
 		if(hasvar(W,"force") && hasvar(W,"damtype"))
 			switch(W.damtype)

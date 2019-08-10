@@ -155,7 +155,7 @@
 			feedback_inc("alert_keycard_auth_maintRevoke",1)
 		if("Emergency Response Team")
 			if(is_ert_blocked())
-				to_chat(usr, "\red All emergency response teams are dispatched and can not be called at this time.")
+				to_chat(usr, "<span class='warning'>All emergency response teams are dispatched and can not be called at this time.</span>")
 				return
 
 			trigger_armed_response_team(1)
@@ -174,9 +174,7 @@ var/global/timer_maint_revoke_id = 0
 		maint_all_access_priority = TRUE
 
 	change_maintenance_access(TRUE)
-
-	to_chat(world, "<font size=4 color='red'>Attention!</font>")
-	to_chat(world, "<font color='red'>The maintenance access requirement has been revoked on all airlocks.</font>")
+	captain_announce("The maintenance access requirement has been revoked on all airlocks.")
 
 /proc/revoke_maint_all_access(var/priority = FALSE)
 	if(priority)
@@ -185,9 +183,7 @@ var/global/timer_maint_revoke_id = 0
 		return
 
 	change_maintenance_access(FALSE)
-
-	to_chat(world, "<font size=4 color='red'>Attention!</font>")
-	to_chat(world, "<font color='red'>The maintenance access requirement has been readded on all maintenance airlocks.</font>")
+	captain_announce("The maintenance access requirement has been readded on all maintenance airlocks.")
 
 /proc/change_maintenance_access(allow_state)
 	for(var/area/maintenance/M in all_areas)

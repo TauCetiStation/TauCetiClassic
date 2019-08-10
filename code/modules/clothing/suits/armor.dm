@@ -153,7 +153,7 @@
 /obj/item/clothing/suit/armor/swat/officer
 	name = "officer jacket"
 	desc = "An armored jacket used in special operations."
-	icon_state = "detective"
+	icon_state = "detective_brown"
 	item_state = "det_suit"
 	blood_overlay_type = "coat"
 	flags_inv = 0
@@ -191,11 +191,11 @@
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
 	src.active = !( src.active )
 	if (src.active)
-		to_chat(user, "\blue The reactive armor is now active.")
+		to_chat(user, "<span class='notice'>The reactive armor is now active.</span>")
 		src.icon_state = "reactive"
 		src.item_state = "reactive"
 	else
-		to_chat(user, "\blue The reactive armor is now inactive.")
+		to_chat(user, "<span class='notice'>The reactive armor is now inactive.</span>")
 		src.icon_state = "reactiveoff"
 		src.item_state = "reactiveoff"
 		src.add_fingerprint(user)
@@ -272,27 +272,27 @@
 	if(usr.stat) return
 
 	if(!holstered)
-		if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
-			to_chat(usr, "\blue You need your gun equiped to holster it.")
+		var/obj/item/I = usr.get_active_hand()
+		if(!istype(I, /obj/item/weapon/gun) && !I.can_be_holstered)
+			to_chat(usr, "<span class='notice'>You need your gun equiped to holster it.</span>")
 			return
-		var/obj/item/weapon/gun/W = usr.get_active_hand()
-		if (!W.isHandgun())
-			to_chat(usr, "\red This gun won't fit in \the belt!")
+		if(!I.can_be_holstered)
+			to_chat(usr, "<span class='warning'>This gun won't fit in \the belt!</span>")
 			return
 		holstered = usr.get_active_hand()
 		usr.drop_item()
 		holstered.loc = src
-		usr.visible_message("\blue \The [usr] holsters \the [holstered].", "You holster \the [holstered].")
+		usr.visible_message("<span class='notice'>\The [usr] holsters \the [holstered].</span>", "You holster \the [holstered].")
 	else
 		if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
-			to_chat(usr, "\red You need an empty hand to draw the gun!")
+			to_chat(usr, "<span class='warning'>You need an empty hand to draw the gun!</span>")
 		else
 			if(usr.a_intent == "hurt")
-				usr.visible_message("\red \The [usr] draws \the [holstered], ready to shoot!", \
-				"\red You draw \the [holstered], ready to shoot!")
+				usr.visible_message("<span class='warning'>\The [usr] draws \the [holstered], ready to shoot!</span>", \
+				"<span class='warning'>You draw \the [holstered], ready to shoot!</span>")
 			else
-				usr.visible_message("\blue \The [usr] draws \the [holstered], pointing it at the ground.", \
-				"\blue You draw \the [holstered], pointing it at the ground.")
+				usr.visible_message("<span class='notice'>\The [usr] draws \the [holstered], pointing it at the ground.</span>", \
+				"<span class='notice'>You draw \the [holstered], pointing it at the ground.</span>")
 			usr.put_in_hands(holstered)
 		holstered = null
 

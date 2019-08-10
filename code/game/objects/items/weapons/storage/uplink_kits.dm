@@ -47,7 +47,7 @@
 			new /obj/item/weapon/implanter/storage(src)
 
 		if("hacker")
-			new /obj/item/weapon/aiModule/syndicate(src)
+			new /obj/item/weapon/aiModule/freeform/syndicate(src)
 			new /obj/item/weapon/card/emag(src)
 			new /obj/item/device/encryptionkey/binary(src)
 			new /obj/item/device/multitool/ai_detect(src)

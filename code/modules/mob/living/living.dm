@@ -331,49 +331,6 @@
 
 // ============================================================
 
-
-/mob/proc/get_contents()
-
-
-//Recursive function to find everything a mob is holding.
-/mob/living/get_contents(var/obj/item/weapon/storage/Storage = null)
-	var/list/L = list()
-
-	if(Storage) //If it called itself
-		L += Storage.return_inv()
-
-		//Leave this commented out, it will cause storage items to exponentially add duplicate to the list
-		//for(var/obj/item/weapon/storage/S in Storage.return_inv()) //Check for storage items
-		//	L += get_contents(S)
-
-		for(var/obj/item/weapon/gift/G in Storage.return_inv()) //Check for gift-wrapped items
-			L += G.gift
-			if(istype(G.gift, /obj/item/weapon/storage))
-				L += get_contents(G.gift)
-
-		for(var/obj/item/smallDelivery/D in Storage.return_inv()) //Check for package wrapped items
-			L += D.wrapped
-			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
-				L += get_contents(D.wrapped)
-		return L
-
-	else
-
-		L += src.contents
-		for(var/obj/item/weapon/storage/S in src.contents)	//Check for storage items
-			L += get_contents(S)
-
-		for(var/obj/item/weapon/gift/G in src.contents) //Check for gift-wrapped items
-			L += G.gift
-			if(istype(G.gift, /obj/item/weapon/storage))
-				L += get_contents(G.gift)
-
-		for(var/obj/item/smallDelivery/D in src.contents) //Check for package wrapped items
-			L += D.wrapped
-			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
-				L += get_contents(D.wrapped)
-		return L
-
 /mob/living/proc/check_contents_for(A)
 	var/list/L = src.get_contents()
 
@@ -821,6 +778,12 @@
 			resisting++
 			switch(G.state)
 				if(GRAB_PASSIVE)
+					if(G.assailant.shoving_fingers)
+						if(iscarbon(src))
+							var/mob/living/carbon/C_ = src
+							if(!istype(C_.wear_mask, /obj/item/clothing/mask/muzzle))
+								G.assailant.adjustBruteLoss(5) // We bit them.
+								G.assailant.shoving_fingers = FALSE
 					qdel(G)
 				if(GRAB_AGGRESSIVE)
 					if(prob(50 - (L.lying ? 35 : 0)))
@@ -938,7 +901,7 @@
 							return
 						for(var/mob/O in viewers(CM))
 							O.show_message(text("<span class='danger'>[] manages to break the legcuffs!</span>", CM), 1)
-						to_chat(CM, "<span class='notice'>You successfully break your legcuffs.")
+						to_chat(CM, "<span class='notice'>You successfully break your legcuffs.</span>")
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						qdel(CM.legcuffed)
 						CM.legcuffed = null
@@ -1121,7 +1084,7 @@
 		if(user.is_busy())
 			return
 		to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
-		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
 		if(do_mob(user, src, 80))
 			harvest(user)
 		return TRUE
@@ -1197,3 +1160,56 @@
 
 /mob/living/proc/get_metabolism_factor()
 	return METABOLISM_FACTOR
+
+/mob/living/proc/CanObtainCentcommMessage()
+	return FALSE
+
+/mob/living/proc/vomit(punched = FALSE, masked = FALSE)
+	if(stat == DEAD && !punched)
+		return FALSE
+
+	Stun(3)
+
+	if(nutrition < 50)
+		visible_message("<span class='warning'>[src] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but there is nothing!</span>")
+		adjustOxyLoss(3)
+		adjustHalLoss(5)
+		return FALSE
+
+	nutrition -= 50
+	eye_blurry = max(5, eye_blurry)
+
+	if(ishuman(src)) // A stupid, snowflakey thing, but I see no point in creating a third argument to define the sound... ~Luduk
+		var/list/vomitsound = list()
+		// The main reason why this is here, and not made into a polymorphized proc, is because we need to know from the subclasses that could cover their face, that they do.
+		if(masked)
+			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>","<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")
+			if(gender == FEMALE)
+				vomitsound = SOUNDIN_FRIGVOMIT
+			else
+				vomitsound = SOUNDIN_MRIGVOMIT
+			eye_blurry = max(10, eye_blurry)
+			losebreath += 20
+		else
+			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>","<span class='warning'>You throw up!</span>")
+			if(gender == FEMALE)
+				vomitsound = SOUNDIN_FEMALEVOMIT
+			else
+				vomitsound = SOUNDIN_MALEVOMIT
+		make_jittery(max(35 - jitteriness, 0))
+		playsound(src, pick(vomitsound), VOL_EFFECTS_MASTER, null, FALSE)
+	else
+		visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>","<span class='warning'>You throw up!</span>")
+		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
+
+	var/turf/simulated/T = loc
+	var/obj/structure/toilet/WC = locate(/obj/structure/toilet) in T
+	if(WC && WC.open)
+		return TRUE
+	if(locate(/obj/structure/sink) in T)
+		return TRUE
+
+	if(istype(T))
+		T.add_vomit_floor(src, getToxLoss() > 0 ? TRUE : FALSE)
+
+	return TRUE

@@ -58,7 +58,7 @@
 	return 0
 
 /obj/item/weapon/implant/proc/meltdown()	//breaks it down, making implant unrecongizible
-	to_chat(imp_in, "\red You feel something melting inside [part ? "your [part.name]" : "you"]!")
+	to_chat(imp_in, "<span class='warning'>You feel something melting inside [part ? "your [part.name]" : "you"]!</span>")
 	if (part)
 		part.take_damage(burn = 15, used_weapon = "Electronics meltdown")
 	else
@@ -189,8 +189,8 @@ Implant Specifics:<BR>"}
 		if(ishuman(imp_in))
 			if (elevel == "Localized Limb")
 				if(part) //For some reason, small_boom() didn't work. So have this bit of working copypaste.
-					imp_in.visible_message("\red Something beeps inside [imp_in][part ? "'s [part.name]" : ""]!")
-					playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
+					imp_in.visible_message("<span class='warning'>Something beeps inside [imp_in][part ? "'s [part.name]" : ""]!</span>")
+					playsound(src, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER)
 					sleep(25)
 					if (istype(part,/obj/item/organ/external/chest) ||	\
 						istype(part,/obj/item/organ/external/groin) ||	\
@@ -253,8 +253,8 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/explosive/proc/small_boom()
 	if (ishuman(imp_in) && part)
-		imp_in.visible_message("\red Something beeps inside [imp_in][part ? "'s [part.name]" : ""]!")
-		playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
+		imp_in.visible_message("<span class='warning'>Something beeps inside [imp_in][part ? "'s [part.name]" : ""]!</span>")
+		playsound(imp_in, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER)
 		spawn(25)
 			if (ishuman(imp_in) && part)
 				//No tearing off these parts since it's pretty much killing
@@ -355,7 +355,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	if (src.uses < 1)	return 0
 	if (emote == "pale")
 		src.uses--
-		to_chat(source, "\blue You feel a sudden surge of energy!")
+		to_chat(source, "<span class='notice'>You feel a sudden surge of energy!</span>")
 		source.SetStunned(0)
 		source.SetWeakened(0)
 		source.SetParalysis(0)

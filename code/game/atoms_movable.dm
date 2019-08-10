@@ -127,9 +127,9 @@
 		A.Bumped(src)
 
 
-/atom/movable/proc/forceMove(atom/destination)
+/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE)
 	if(destination)
-		if(pulledby)
+		if(pulledby && !keep_pulling)
 			pulledby.stop_pulling()
 		var/atom/oldloc = loc
 		var/same_loc = (oldloc == destination)
@@ -158,8 +158,9 @@
 		return TRUE
 	return FALSE
 
-/mob/living/forceMove()
-	stop_pulling()
+/mob/living/forceMove(atom/destination, keep_pulling = FALSE)
+	if(!keep_pulling)
+		stop_pulling()
 	if(buckled)
 		buckled.unbuckle_mob()
 	. = ..()

@@ -45,11 +45,11 @@
 	icon_state = "toilet[open][cistern]"
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(iscrowbar(I))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>")
-		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
-		if(do_after(user, 30, target = src))
+		playsound(src, 'sound/effects/stonedoor_openclose.ogg', VOL_EFFECTS_MASTER)
+		if(I.use_tool(src, user, 30, volume = 0))
 			user.visible_message("<span class='notice'>[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!</span>", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "You hear grinding porcelain.")
 			cistern = !cistern
 			update_icon()
@@ -128,10 +128,10 @@
 	desc = "The Breath Of Lizads-3000, an experimental dryer."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "dryer"
-	density = 0
-	anchored = 1
-	var/busy = 0
-	var/emagged = 0
+	density = FALSE
+	anchored = TRUE
+	var/busy = FALSE
+	var/emagged = FALSE
 
 /obj/structure/dryer/attack_hand(mob/user)
 
@@ -141,14 +141,17 @@
 	if(!Adjacent(user))
 		return
 
+	if(user.is_busy())
+		return
+
 	if(busy)
-		to_chat(user, "\red Someone's already drying here.")
+		to_chat(user, "<span class='warning'>Someone's already drying here.</span>")
 		return
 	user.SetNextMove(CLICK_CD_INTERACT)
-	to_chat(user, "\blue You start drying your hands.")
-	playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
+	to_chat(user, "<span class='notice'>You start drying your hands.</span>")
+	playsound(src, 'sound/items/drying.ogg', VOL_EFFECTS_MASTER)
 	add_fingerprint(user)
-	busy = 1
+	busy = TRUE
 	if(do_after(user, 40, target = src))
 		if(emagged)
 			var/mob/living/carbon/C = user
@@ -160,27 +163,16 @@
 					H.adjustFireLoss(5)
 				else
 					H.adjustFireLoss(20)
-		busy = 0
-		for(var/mob/V in viewers(src, null))
-			V.show_message("\blue [user] dried their hands using \the [src].")
+		busy = FALSE
+		user.visible_message("<span class='notice'>[user] dried their hands using \the [src].</span>")
 	else
-		busy = 0
+		busy = FALSE
 
 /obj/structure/dryer/attackby(obj/item/O, mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 
-	if (istype(O, /obj/item/weapon/card/emag))
-		user.SetNextMove(CLICK_CD_INTERACT)
-		if (emagged)
-			to_chat(user, "\red [src] is already cracked.")
-			return
-		else
-			add_fingerprint(user)
-			emagged = 1
-			flick("dryer-broken",src)
-			playsound(src, 'sound/effects/sparks3.ogg', 50, 1, 1)
-			icon_state = "dryer-emag"
-			to_chat(user, "\red You swipe near [O] and crack it to be hot.")
-			return
+	if(user.is_busy())
+		return
 
 	if((istype(O, /obj/item/weapon/grab)) && !emagged)
 		var/obj/item/weapon/grab/G = O
@@ -193,21 +185,23 @@
 					return
 				user.visible_message("<span class='danger'>[user] slams [GM.name] into the [src]!</span>", "<span class='notice'>You slam [GM.name] into the [src]!</span>")
 				GM.apply_damage(8, BRUTE, BP_HEAD)
-				playsound(src, 'sound/weapons/smash.ogg', 50, 1, 1)
+				playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
 				return
 			else
 				to_chat(user, "<span class='notice'>You need a tighter grip.</span>")
 				return
 
 	if(busy)
-		to_chat(user, "\red Someone's already drying here.")
+		to_chat(user, "<span class='warning'>Someone's already drying here.</span>")
 		return
 
 	var/turf/location = user.loc
-	if(!isturf(location)) return
+	if(!isturf(location))
+		return
 
 	var/obj/item/I = O
-	if(!I || !istype(I,/obj/item)) return
+	if(!I || !istype(I,/obj/item))
+		return
 
 	add_fingerprint(user)
 
@@ -222,52 +216,68 @@
 					if(!GM.loc == get_turf(src))
 						to_chat(user, "<span class='notice'>[GM.name] needs to be near the dryer.</span>")
 						return
-					busy = 1
+					busy = TRUE
 					user.visible_message("<span class='danger'>[user] hold [GM.name] under the [src]!</span>", "<span class='notice'>You hold [GM.name] under the [src]!</span>")
-					playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
+					playsound(src, 'sound/items/drying.ogg', VOL_EFFECTS_MASTER)
 					GM.adjustFireLoss(10)
 					if(do_after(user, 40, target = src))
-						busy = 0
-						if(!Adjacent(user) || !Adjacent(GM)) return		//User or target has moved
+						busy = FALSE
+						if(!Adjacent(user) || !Adjacent(GM))
+							return		//User or target has moved
 						GM.adjustFireLoss(25)
 						user.visible_message("<span class='danger'>[GM.name] skins are burning under the [src]!</span>")
 						return
 					else
-						busy = 0
+						busy = FALSE
 				else
 					to_chat(user, "<span class='notice'>You need a tighter grip.</span>")
 					return
 
-		busy = 1
-		to_chat(usr, "\blue You start drying \the [I].")
-		playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
+		busy = TRUE
+		to_chat(usr, "<span class='notice'>You start drying \the [I].</span>")
+		playsound(src, 'sound/items/drying.ogg', VOL_EFFECTS_MASTER)
 		if(do_after(user, 40, target = src))
 			var/mob/living/carbon/C = user
 			C.apply_damage(25, BURN, C.hand ? BP_L_ARM : BP_R_ARM)
 			to_chat(C, "<span class='danger'>The dryer is burning!</span>")
 			new /obj/effect/decal/cleanable/ash(C.loc)
 			qdel(O)
-			busy = 0
+			busy = FALSE
 			return
 		else
-			busy = 0
+			busy = FALSE
 
-	busy = 1
-	to_chat(usr, "\blue You start drying \the [I].")
-	playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
+	busy = TRUE
+	to_chat(usr, "<span class='notice'>You start drying \the [I].</span>")
+	playsound(src, 'sound/items/drying.ogg', VOL_EFFECTS_MASTER)
 	if(do_after(user, 40, target = src))
-		busy = 0
+		busy = FALSE
 
-		if(user.loc != location) return				//User has moved
-		if(!I) return 								//Item's been destroyed while drying
-		if(user.get_active_hand() != I) return		//Person has switched hands or the item in their hands
+		if(user.loc != location)
+			return //User has moved
+		if(!I)
+			return //Item's been destroyed while drying
+		if(user.get_active_hand() != I)
+			return //Person has switched hands or the item in their hands
 
-		O.wet = 0
+		O.wet = FALSE
 		user.visible_message( \
-			"\blue [user] drying \a [I] using \the [src].", \
-			"\blue You dry \a [I] using \the [src].")
+			"<span class='notice'>[user] drying \a [I] using \the [src].</span>", \
+			"<span class='notice'>You dry \a [I] using \the [src].</span>")
 	else
-		busy = 0
+		busy = FALSE
+
+/obj/structure/dryer/emag_act(mob/user)
+	if(emagged)
+		to_chat(user, "<span class='warning'>[src] is already cracked.</span>")
+		return FALSE
+	add_fingerprint(user)
+	emagged = TRUE
+	flick("dryer-broken",src)
+	playsound(src, 'sound/effects/sparks3.ogg', VOL_EFFECTS_MASTER)
+	icon_state = "dryer-emag"
+	to_chat(user, "<span class='warning'>You swipe near card and crack it to be hot.</span>")
+	return TRUE
 
 /obj/machinery/shower
 	name = "shower"
@@ -317,10 +327,10 @@
 /obj/machinery/shower/attackby(obj/item/I, mob/user)
 	if(I.type == /obj/item/device/analyzer) // istype?
 		to_chat(user, "<span class='notice'>The water temperature seems to be [watertemp].</span>")
-	else if(istype(I, /obj/item/weapon/wrench))
+	else if(iswrench(I))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I].</span>")
-		if(do_after(user, 50, target = src))
+		if(I.use_tool(src, user, 50, volume = 100))
 			switch(watertemp)
 				if("normal")
 					watertemp = "freezing"
@@ -373,11 +383,11 @@
 							station_account.transaction_log.Add(T)
 
 							is_payed = 60
-							to_chat(usr, "[bicon(src)]Thank you, happy washing time and don't turn me off accidently or i will take your precious credits again! Teehee.</span>")
+							to_chat(usr, "[bicon(src)]<span class='notice'>Thank you, happy washing time and don't turn me off accidently or i will take your precious credits again! Teehee.</span>")
 						else
 							to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
 		else
-			to_chat(usr, "[bicon(src)]Is payed, you may turn it on now.</span>")
+			to_chat(usr, "[bicon(src)]<span class='notice'>Is payed, you may turn it on now.</span>")
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
 	overlays.Cut()					//once it's been on for a while, in addition to handling the water overlay.
@@ -574,8 +584,8 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "sink"
 	desc = "A sink used for washing one's hands and face."
-	anchored = 1
-	var/busy = 0 	//Something's being washed at the moment
+	anchored = TRUE
+	var/busy = FALSE 	//Something's being washed at the moment
 
 /obj/structure/sink/attack_hand(mob/user)
 	if(isrobot(user) || isAI(user))
@@ -587,32 +597,33 @@
 	if(user.is_busy())
 		return
 	if(busy)
-		to_chat(user, "\red Someone's already washing here.")
+		to_chat(user, "<span class='warning'>Someone's already washing here.</span>")
 		return
 	user.SetNextMove(CLICK_CD_INTERACT)
-	playsound(src, 'sound/items/wash.ogg', 50, 1, 1)
-	to_chat(user, "\blue You start washing your hands.")
-	busy = 1
+	playsound(src, 'sound/items/wash.ogg', VOL_EFFECTS_MASTER)
+	to_chat(user, "<span class='notice'>You start washing your hands.</span>")
+	busy = TRUE
 	if(do_after(user, 30, target = src))
-		busy = 0
+		busy = FALSE
 		user.clean_blood()
 		if(ishuman(user))
 			user:update_inv_gloves()
-		for(var/mob/V in viewers(src, null))
-			V.show_message("\blue [user] washes their hands using \the [src].")
+		user.visible_message("<span class='notice'>[user] washes their hands using \the [src].</span>")
 	else
-		busy = 0
+		busy = FALSE
 
 /obj/structure/sink/attackby(obj/item/O, mob/user)
-	if(busy)
-		to_chat(user, "\red Someone's already washing here.")
+	if(user.is_busy())
 		return
+	if(busy)
+		to_chat(user, "<span class='warning'>Someone's already washing here.</span>")
+		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	if (istype(O, /obj/item/weapon/reagent_containers) && O.is_open_container())
 		var/obj/item/weapon/reagent_containers/RG = O
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
-		user.visible_message("\blue [user] fills \the [RG] using \the [src].","\blue You fill \the [RG] using \the [src].")
-		user.SetNextMove(CLICK_CD_INTERACT)
+		user.visible_message("<span class='notice'>[user] fills \the [RG] using \the [src].</span>","<span class='notice'>You fill \the [RG] using \the [src].</span>")
 		return
 
 	else if (istype(O, /obj/item/weapon/melee/baton))
@@ -628,34 +639,39 @@
 			else
 				B.charges--
 			user.visible_message( \
-				"[user] was stunned by his wet [O].", \
-				"\red You have wet \the [O], it shocks you!")
+				"<span class='warning'>[user] was stunned by his wet [O].</span>", \
+				"<span class='warning'>You have wet \the [O], it shocks you!</span>")
 			return
 
 	var/turf/location = user.loc
-	if(!isturf(location)) return
+	if(!isturf(location))
+		return
 
 	var/obj/item/I = O
-	if(!I || !istype(I,/obj/item)) return
+	if(!I || !istype(I,/obj/item))
+		return
 
-	to_chat(usr, "\blue You start washing \the [I].")
+	to_chat(usr, "<span class='notice'>You start washing \the [I].</span>")
 
-	playsound(src, 'sound/items/wash.ogg', 50, 1, 1)
-	busy = 1
+	playsound(src, 'sound/items/wash.ogg', VOL_EFFECTS_MASTER)
+	busy = TRUE
 	if(do_after(user, 30, target = src))
-		busy = 0
+		busy = FALSE
 
-		if(user.loc != location) return				//User has moved
-		if(!I) return 								//Item's been destroyed while washing
-		if(user.get_active_hand() != I) return		//Person has switched hands or the item in their hands
+		if(user.loc != location)
+			return //User has moved
+		if(!I)
+			return //Item's been destroyed while washing
+		if(user.get_active_hand() != I)
+			return //Person has switched hands or the item in their hands
 
 		O.clean_blood()
 		O.make_wet()
 		user.visible_message( \
-			"\blue [user] washes \a [I] using \the [src].", \
-			"\blue You wash \a [I] using \the [src].")
+			"<span class='notice'>[user] washes \a [I] using \the [src].</span>", \
+			"<span class='notice'>You wash \a [I] using \the [src].</span>")
 	else
-		busy = 0
+		busy = FALSE
 
 
 /obj/structure/sink/kitchen

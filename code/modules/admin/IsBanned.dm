@@ -9,7 +9,7 @@
 	//Guest Checking
 	if(!guests_allowed && IsGuestKey(key))
 		log_access("Failed Login: [key] - Guests not allowed")
-		message_admins("\blue Failed Login: [key] - Guests not allowed")
+		message_admins("<span class='notice'>Failed Login: [key] - Guests not allowed</span>")
 		return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
 
 	if(config.ban_legacy_system)
@@ -18,7 +18,7 @@
 		. = CheckBan( ckey(key), computer_id, address )
 		if(.)
 			log_access("Failed Login: [key] [computer_id] [address] - Banned [.["reason"]]")
-			message_admins("\blue Failed Login: [key] id:[computer_id] ip:[address] - Banned [.["reason"]]")
+			message_admins("Failed Login: [key] id:[computer_id] ip:[address] - Banned [.["reason"]]")
 			return .
 
 		return ..()	//default pager ban stuff

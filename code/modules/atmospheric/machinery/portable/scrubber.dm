@@ -206,14 +206,14 @@
 		update_connected_network()
 
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/wrench))
+	if(iswrench(I))
 		if(on)
 			to_chat(user, "<span class='warning'>Turn \the [src] off first!</span>")
 			return
 
 		anchored = !anchored
 		user.SetNextMove(CLICK_CD_INTERACT)
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 
 		return
@@ -221,7 +221,7 @@
 	//doesn't use power cells
 	if(istype(I, /obj/item/weapon/stock_parts/cell))
 		return
-	if (istype(I, /obj/item/weapon/screwdriver))
+	if (isscrewdriver(I))
 		return
 
 	//doesn't hold tanks
@@ -235,7 +235,7 @@
 	name = "Stationary Air Scrubber"
 
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/stationary/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		to_chat(user, "<span class='notice'>The bolts are too tight for you to unscrew!</span>")
 		return
 

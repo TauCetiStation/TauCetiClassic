@@ -145,11 +145,11 @@
 
 /obj/item/fluff/ana_issek_2/attack_self(mob/user)
 	if(isliving(user))
-		user.visible_message("\red [user] flashes their golden security badge.\nIt reads: Ana Issek, NT Security.","\red You display the faded bage.\nIt reads: Ana Issek, NT Security.")
+		user.visible_message("<span class='warning'>[user] flashes their golden security badge.\nIt reads: Ana Issek, NT Security.</span>","<span class='warning'>You display the faded bage.\nIt reads: Ana Issek, NT Security.</span>")
 
 /obj/item/fluff/ana_issek_2/attack(mob/living/carbon/human/M, mob/living/user)
 	if(isliving(user))
-		user.visible_message("\red [user] invades [M]'s personal space, thrusting [src] into their face insistently.","\red You invade [M]'s personal space, thrusting [src] into their face insistently. You are the law.")
+		user.visible_message("<span class='warning'>[user] invades [M]'s personal space, thrusting [src] into their face insistently.</span>","<span class='warning'>You invade [M]'s personal space, thrusting [src] into their face insistently. You are the law.</span>")
 
 /obj/item/weapon/soap/fluff/azare_siraj_1 //mister fox: Azare Siraj
 	name = "S'randarr's Tongue Leaf"
@@ -249,7 +249,7 @@
 /obj/item/weapon/fluff/cado_keppel_1/attack_self(mob/user)
 	if(user.r_hand == src || user.l_hand == src)
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red [] uses [] to comb their hair with incredible style and sophistication. What a guy.", user, src), 1)
+			O.show_message(text("<span class='warning'>[] uses [] to comb their hair with incredible style and sophistication. What a guy.</span>", user, src), 1)
 	return
 
 /obj/item/weapon/fluff/hugo_cinderbacth_1 //thatoneguy: Hugo Cinderbatch
@@ -359,14 +359,14 @@
 	update_icon()
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack_self(mob/user)
-	to_chat(user, "\blue You click \the [src] but get no reaction. Must be dead.")
+	to_chat(user, "<span class='notice'>You click \the [src] but get no reaction. Must be dead.</span>")
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack(mob/M, mob/user)
 	if (user.ckey != "nerezza") //Because this can end up in the wrong hands, let's make it useless for them!
-		to_chat(user, "\blue You click \the [src] but get no reaction. Must be dead.")
+		to_chat(user, "<span class='notice'>You click \the [src] but get no reaction. Must be dead.</span>")
 		return
 	if(!reagents.total_volume)
-		to_chat(user, "\red \The [src] is empty.")
+		to_chat(user, "<span class='warning'>\The [src] is empty.</span>")
 		return
 	if (!( istype(M, /mob) ))
 		return
@@ -374,7 +374,7 @@
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
-			to_chat(user, "\blue [trans] units injected. [reagents.total_volume] units remaining in \the [src].")
+			to_chat(user, "<span class='notice'>[trans] units injected. [reagents.total_volume] units remaining in \the [src].</span>")
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/examine(mob/user)
@@ -479,6 +479,8 @@
 	desc = "One of the older meson scanner models retrofitted to perform like its modern counterparts."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "book_berner_1"
+	off_state = "book_berner_1_off"
+	item_state = "glasses"
 
 /obj/item/clothing/glasses/fluff/uzenwa_sissra_1 //sparklysheep: Uzenwa Sissra
 	name = "Scanning Goggles"

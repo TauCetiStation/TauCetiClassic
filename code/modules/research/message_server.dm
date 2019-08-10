@@ -95,7 +95,7 @@
 	if(.)
 		return
 
-//	user << "\blue There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays."
+//	user << "<span class='notice'>There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays.</span>"
 	to_chat(user, "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]")
 	active = !active
 	update_icon()
@@ -273,26 +273,16 @@ var/obj/machinery/blackbox_recorder/blackbox
 	round_end_data_gathering() //round_end time logging and some other data processing
 	establish_db_connection()
 	if(!dbcon.IsConnected()) return
-	var/round_id
-
-	var/DBQuery/query = dbcon.NewQuery("SELECT MAX(round_id) AS round_id FROM erro_feedback")
-	query.Execute()
-	while(query.NextRow())
-		round_id = query.item[1]
-
-	if(!isnum(round_id))
-		round_id = text2num(round_id)
-	round_id++
 
 	for(var/datum/feedback_variable/FV in feedback)
-		var/sql = "INSERT INTO erro_feedback VALUES (null, Now(), [round_id], \"[FV.get_variable()]\", [FV.get_value()], \"[FV.get_details()]\")"
+		var/sql = "INSERT INTO erro_feedback VALUES (null, Now(), [round_id], \"[sanitize_sql(FV.get_variable())]\", [sanitize_sql(FV.get_value())], \"[sanitize_sql(FV.get_details())]\")"
 		var/DBQuery/query_insert = dbcon.NewQuery(sql)
 		query_insert.Execute()
 
 /proc/feedback_set(variable,value)
 	if(!blackbox) return
 
-	variable = sql_sanitize_text(variable)
+	variable = sanitize_sql(variable)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
@@ -303,7 +293,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 /proc/feedback_inc(variable,value)
 	if(!blackbox) return
 
-	variable = sql_sanitize_text(variable)
+	variable = sanitize_sql(variable)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
@@ -314,7 +304,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 /proc/feedback_dec(variable,value)
 	if(!blackbox) return
 
-	variable = sql_sanitize_text(variable)
+	variable = sanitize_sql(variable)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
@@ -325,8 +315,8 @@ var/obj/machinery/blackbox_recorder/blackbox
 /proc/feedback_set_details(variable,details)
 	if(!blackbox) return
 
-	variable = sql_sanitize_text(variable)
-	details = sql_sanitize_text(details)
+	variable = sanitize_sql(variable)
+	details = sanitize_sql(details)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
@@ -337,8 +327,8 @@ var/obj/machinery/blackbox_recorder/blackbox
 /proc/feedback_add_details(variable,details)
 	if(!blackbox) return
 
-	variable = sql_sanitize_text(variable)
-	details = sql_sanitize_text(details)
+	variable = sanitize_sql(variable)
+	details = sanitize_sql(details)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 

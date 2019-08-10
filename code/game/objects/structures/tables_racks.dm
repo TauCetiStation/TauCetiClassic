@@ -271,7 +271,7 @@
 /obj/structure/table/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
 		..()
-		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
+		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		destroy()
 
@@ -383,11 +383,11 @@
 			qdel(W)
 			return
 
-	if (istype(W, /obj/item/weapon/wrench))
-		if(user.is_busy()) return
-		to_chat(user, "\blue Now disassembling table")
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user,50, target = src))
+	if (iswrench(W))
+		if(user.is_busy(src))
+			return
+		to_chat(user, "<span class='notice'>Now disassembling table</span>")
+		if(W.use_tool(src, user, 50, volume = 50))
 			destroy()
 		return
 
@@ -406,8 +406,8 @@
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			playsound(src.loc, "sparks", 50, 1)
+			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'>You hear [src] coming apart.</span>")
 			user.SetNextMove(CLICK_CD_MELEE)
 			destroy()
@@ -429,7 +429,7 @@
 		M.Weaken(5)
 	M.apply_damage(8,def_zone = BP_HEAD)
 	visible_message("<span class='danger'>[G.assailant] slams [G.affecting]'s face against \the [src]!</span>")
-	playsound(src.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 	M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slammed with face by [A.name] against \the [src]([A.ckey])</font>"
 	A.attack_log += "\[[time_stamp()]\] <font color='red'>Slams face of [M.name] against \the [src]([M.ckey])</font>"
 	msg_admin_attack("[key_name(A)] slams [key_name(M)] face against \the [src]")
@@ -573,18 +573,20 @@
 	return 1
 
 /obj/structure/table/glass/proc/shatter()
-	var/list/targets = list(get_step(src,dir),get_step(src,turn(dir, 45)),get_step(src,turn(dir, -45)))
-	for (var/atom/movable/A in get_turf(src))
-		if (!A.anchored)
-			A.throw_at(pick(targets),1,1)
-
 	canconnect = FALSE
 	update_adjacent()
-	playsound(src.loc, "shatter", 50, 1)
-	visible_message("<span class='warning'>[src] breaks!</span>")
-	var/obj/item/weapon/shard/debri = new /obj/item/weapon/shard( src.loc )
-	debri.throw_at(pick(targets),1,1)
+
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
+	visible_message("<span class='warning'>[src] breaks!</span>", "<span class='danger'>You hear breaking glass.</span>")
+
+	var/T = get_turf(src)
+	new /obj/item/weapon/shard(T)
 	qdel(src)
+
+	var/list/targets = list(get_step(T, dir), get_step(T, turn(dir, 45)), get_step(T, turn(dir, -45)))
+	for (var/atom/movable/A in T)
+		if (!A.anchored)
+			A.throw_at(pick(targets), 1, 1)
 
 /obj/structure/table/glass/on_climb(mob/living/user)
 	usr.forceMove(get_turf(src))
@@ -611,7 +613,7 @@
 /obj/structure/table/glass/slam(var/mob/living/A, var/mob/living/M, var/obj/item/weapon/grab/G)
 	M.Weaken(5)
 	visible_message("<span class='danger'>[G.assailant] slams [G.affecting]'s face against \the [src], breaking it!</span>")
-	playsound(src.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 	M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slammed with face by [A.name] against \the [src]([A.ckey]), breaking it</font>"
 	A.attack_log += "\[[time_stamp()]\] <font color='red'>Slams face of [M.name] against \the [src]([M.ckey]), breaking it</font>"
 	msg_admin_attack("[key_name(A)] slams [key_name(M)] face against \the [src], breaking it")
@@ -685,30 +687,31 @@
 		return ..()
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/weldingtool))
+	if (iswelder(W))
 		if(user.is_busy()) return FALSE
 		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0, user))
+		if(WT.use(0, user))
 			if(src.status == 2)
-				to_chat(user, "\blue Now weakening the reinforced table")
-				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50, target = src))
-					if(!src || !WT.isOn()) return
-					to_chat(user, "\blue Table weakened")
+				to_chat(user, "<span class='notice'>Now weakening the reinforced table</span>")
+				if(WT.use_tool(src, user, 50, volume = 50))
+					to_chat(user, "<span class='notice'>Table weakened</span>")
 					src.status = 1
 			else
-				to_chat(user, "\blue Now strengthening the reinforced table")
-				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50, target = src))
-					if(!src || !WT.isOn()) return
-					to_chat(user, "\blue Table strengthened")
+				to_chat(user, "<span class='notice'>Now strengthening the reinforced table</span>")
+				if(WT.use_tool(src, user, 50, volume = 50))
+					to_chat(user, "<span class='notice'>Table strengthened</span>")
 					src.status = 2
 			return FALSE
 		return TRUE
 
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		if(src.status == 2)
 			return TRUE
+
+	else if(istype(W, /obj/item/door_control_frame))
+		var/obj/item/door_control_frame/frame = W
+		frame.try_build(src)
+		return
 
  return ..()
 
@@ -771,9 +774,9 @@
 	return
 
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		new /obj/item/weapon/rack_parts( src.loc )
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
 		return
 	if(istype(W, /obj/item/weapon/melee/energy)||istype(W, /obj/item/weapon/twohanded/dualsaber))
@@ -783,8 +786,8 @@
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			playsound(src.loc, "sparks", 50, 1)
+			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'> You hear [src] coming apart.</span>")
 			destroy()
 			return
@@ -825,7 +828,7 @@
 /obj/structure/rack/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
 		..()
-		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
+		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 		user.do_attack_animation(src)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		destroy()

@@ -110,7 +110,7 @@
 		updateUsrDialog()
 		return
 	if(panel_open)
-		if(istype(W, /obj/item/weapon/crowbar))
+		if(iscrowbar(W))
 			empty_content()
 			default_deconstruction_crowbar(W)
 		return 1
@@ -352,7 +352,7 @@
 		updateUsrDialog()
 		return
 	if(panel_open)
-		if(istype(I, /obj/item/weapon/crowbar))
+		if(iscrowbar(I))
 			default_deconstruction_crowbar(I)
 		return 1
 	..()
@@ -452,7 +452,7 @@
 		var/list/L = list()
 		for(var/obj/item/device/radio/beacon/B in radio_beacon_list)
 			var/turf/T = get_turf(B)
-			if(T.z == ZLEVEL_STATION)
+			if(is_station_level(T.z))
 				L += B
 		if(!L.len)
 			to_chat(user, "<span class='notice'>The [src.name] failed to create a wormhole.</span>")
@@ -463,7 +463,7 @@
 		spawn(100) qdel(J)	//Portal will disappear after 10 sec
 		J.target = chosen_beacon
 		try_move_adjacent(J)
-		playsound(src,'sound/effects/sparks4.ogg',50,1)
+		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
 
 /obj/item/device/wormhole_jaunter/attackby(obj/item/B, mob/user)
@@ -490,16 +490,10 @@
 			if(isliving(M))
 				var/mob/living/L = M
 				L.Weaken(3)
+				shake_camera(L, 20, 1)
 				if(ishuman(L))
-					shake_camera(L, 20, 1)
-					spawn(20)
-						if(L)
-							L.visible_message("<span class='danger'>[L.name] vomits from travelling through the [src.name]!</span>", "<span class='userdanger'>You throw up from travelling through the [src.name]!</span>")
-							L.nutrition -= 20
-							L.adjustToxLoss(-3)
-							var/turf/T = get_turf(L)
-							T.add_vomit_floor(L)
-							playsound(L, 'sound/effects/splat.ogg', 50, 1)
+					var/mob/living/carbon/human/H = L
+					H.invoke_vomit_async()
 
 
 /**********************Resonator**********************/
@@ -517,7 +511,7 @@
 
 /obj/item/weapon/resonator/proc/CreateResonance(target, creator)
 	if(cooldown <= 0)
-		playsound(src,'sound/effects/stealthoff.ogg',50,1)
+		playsound(src, 'sound/effects/stealthoff.ogg', VOL_EFFECTS_MASTER)
 		var/obj/effect/resonance/R = new /obj/effect/resonance(get_turf(target))
 		R.creator = creator
 		cooldown = 1
@@ -554,7 +548,7 @@
 		return
 	if(istype(proj_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = proj_turf
-		playsound(src,'sound/effects/sparks4.ogg',50,1)
+		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 		M.GetDrilled()
 		spawn(5)
 			qdel(src)
@@ -565,7 +559,7 @@
 			name = "strong resonance field"
 			resonance_damage = 60
 		spawn(50)
-			playsound(src,'sound/effects/sparks4.ogg',50,1)
+			playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 			if(creator)
 				for(var/mob/living/L in src.loc)
 					usr.attack_log += text("\[[time_stamp()]\] used a resonator field on [L.name] ([L.ckey])")
@@ -624,12 +618,12 @@
 	melee_damage_upper = 15
 	environment_smash = 0
 	attacktext = "drills"
-	attack_sound = 'sound/weapons/circsawhit.ogg'
+	attack_sound = list('sound/weapons/circsawhit.ogg')
 	ranged = 1
 	ranged_message = "shoots"
 	ranged_cooldown_cap = 3
 	projectiletype = /obj/item/projectile/kinetic
-	projectilesound = 'sound/weapons/Gunshot4.ogg'
+	projectilesound = 'sound/weapons/guns/Gunshot3.ogg'
 	wanted_objects = list(/obj/item/weapon/ore/diamond,
 						  /obj/item/weapon/ore/glass,
 						  /obj/item/weapon/ore/gold,
@@ -643,7 +637,7 @@
 						  /obj/item/weapon/ore/clown)
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/weldingtool))
+	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/W = I
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(W.welding && !stat)
@@ -768,7 +762,7 @@
 					log_game("[user] has revived hostile mob [target] with a lazarus injector")
 				loaded = 0
 				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
-				playsound(src,'sound/effects/refill.ogg',50,1)
+				playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
 				icon_state = "lazarus_empty"
 				return
 			else
@@ -802,22 +796,34 @@
 		return
 	if(istype(O, /obj/item/clothing/suit/space))
 		var/obj/item/clothing/suit/space/C = O
-		if(C.breaches.len)
-			C.breaches.Cut()
-			C.damage = 0
-			C.brute_damage = 0
-			C.burn_damage = 0
-			C.name = C.base_name
-			loaded = 0
-			user.visible_message("<span class='notice'>[user] fix [O] with [src].</span>")
-			playsound(src,'sound/effects/refill.ogg',50,1)
-			icon_state = "patcher_empty"
-			return
-		else
-			to_chat(user, "<span class='info'>[O] absolutely intact.</span>")
-			return
+		fix_spacesuit(C, user)
 	else
 		..()
+
+/obj/item/weapon/patcher/attack(mob/living/M, mob/living/user)
+	if(!loaded)
+		return
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(istype(H.wear_suit, /obj/item/clothing/suit/space))
+			var/obj/item/clothing/suit/space/C = H.wear_suit
+			fix_spacesuit(C, user)
+
+/obj/item/weapon/patcher/proc/fix_spacesuit(obj/item/clothing/suit/space/C, mob/living/user)
+	if(C.breaches.len)
+		C.breaches.Cut()
+		C.damage = 0
+		C.brute_damage = 0
+		C.burn_damage = 0
+		C.name = C.base_name
+		loaded = 0
+		user.visible_message("<span class='notice'>[user] fixes [C] with [src].</span>")
+		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
+		icon_state = "patcher_empty"
+		return TRUE
+	else
+		to_chat(user, "<span class='info'>[C] is absolutely intact.</span>")
+		return FALSE
 
 /obj/item/weapon/patcher/examine(mob/user)
 	..()

@@ -298,8 +298,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if(isAI(src))
 				var/mob/living/silicon/ai/A = src
 				oldname = null//don't bother with the records update crap
-				//world << "<b>[newname] is the AI!</b>"
-				//world << sound('sound/AI/newAI.ogg')
 				// Set eyeobj name
 				if(A.eyeobj)
 					A.eyeobj.name = "[newname] (AI Eye)"
@@ -453,7 +451,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		return -M
 
 
-/proc/key_name(whom, include_link = null, include_name = 1, highlight_special_characters = 1, reply = null)
+/proc/key_name(whom, include_link = null, include_name = 1, highlight_special_characters = 1, reply = null, mentor_pm = FALSE)
 	var/mob/M
 	var/client/C
 	var/key
@@ -478,7 +476,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	if(key)
 		if(include_link && C)
-			. += "<a href='?priv_msg=\ref[C];ahelp_reply=[reply]'>"
+			. += "<a href='?priv_msg=\ref[C][reply ? ";ahelp_reply=[reply]" : ""][mentor_pm ? ";mentor_pm=1" : ""]'>"
 
 		if(C && C.holder && C.holder.fakekey && !include_name)
 			. += "Administrator"
@@ -1139,48 +1137,8 @@ var/global/list/common_tools = list(
 		return 1
 	return 0
 
-/proc/iswrench(O)
-	if(istype(O, /obj/item/weapon/wrench))
-		return 1
-	return 0
-
-/proc/iswelder(O)
-	if(istype(O, /obj/item/weapon/weldingtool))
-		return 1
-	return 0
-
-/proc/iscoil(O)
-	if(istype(O, /obj/item/stack/cable_coil))
-		return 1
-	return 0
-
-/proc/iswirecutter(O)
-	if(istype(O, /obj/item/weapon/wirecutters))
-		return 1
-	return 0
-
-/proc/isscrewdriver(O)
-	if(istype(O, /obj/item/weapon/screwdriver))
-		return 1
-	return 0
-
-/proc/ismultitool(O)
-	if(istype(O, /obj/item/device/multitool))
-		return 1
-	return 0
-
-/proc/iscrowbar(O)
-	if(istype(O, /obj/item/weapon/crowbar))
-		return 1
-	return 0
-
-/proc/iswire(O) // coil, wire... whats the difference here?
-	if(istype(O, /obj/item/stack/cable_coil))
-		return 1
-	return 0
-
 /proc/is_hot(obj/item/W)
-	if(istype(W,/obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.isOn())
 			return 3800
@@ -1222,24 +1180,6 @@ var/global/list/common_tools = list(
 		return 3500
 	else
 		return 0
-	return 0
-
-// Whether or not the given item counts as sharp in terms of dealing damage
-/proc/is_sharp(obj/O)
-	if(!O)
-		return 0
-	if(O.sharp)
-		return 1
-	if(O.edge)
-		return 1
-	return 0
-
-// Whether or not the given item counts as cutting with an edge in terms of removing limbs
-/proc/has_edge(obj/O)
-	if(!O)
-		return 0
-	if(O.edge)
-		return 1
 	return 0
 
 // For items that can puncture e.g. thick plastic but aren't necessarily sharp

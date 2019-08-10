@@ -9,7 +9,7 @@
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60
-	hitsound = 'sound/effects/stamp.ogg' //taken from Baystation build
+	hitsound = list('sound/effects/stamp.ogg') //taken from Baystation build
 	item_color = "cargo"
 	attack_verb = list("stamped")
 	var/stamp_by_message = ""
@@ -81,6 +81,17 @@
 	icon_state = "stamp-syndicate"
 	item_color = "syndicate"
 	stamp_by_message = "Syndicate Command Interception Relay"
+	big_stamp = TRUE
+
+/obj/item/weapon/stamp/cargo_industries
+	name = "cargo industries rubber stamp"
+	icon_state = "stamp-cargo-industries"
+	stamp_by_message = "Cargo Industries Quantum Relay"
+	big_stamp = TRUE
+
+/obj/item/weapon/stamp/velocity
+	name = "velocity rubber stamp"
+	icon_state = "stamp-velocity"
 	big_stamp = TRUE
 
 // Syndicate stamp to forge documents.

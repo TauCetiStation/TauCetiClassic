@@ -344,7 +344,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(standing.len)
 		overlays_standing[MUTANTRACE_LAYER]	= standing
 
-	update_hair()
+	if(species.flags[HAS_HAIR] || !(HUSK in mutations))
+		update_hair()
 
 	apply_overlay(MUTANTRACE_LAYER)
 
@@ -442,7 +443,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				if(A.icon_custom)
 					tie = image("icon" = A.icon_custom, "icon_state" = "[tie_color]_mob", "layer" = -UNIFORM_LAYER + A.layer_priority)
 				else
-					tie = image("icon" = 'icons/mob/ties.dmi', "icon_state" = "[tie_color]", "layer" = -UNIFORM_LAYER + A.layer_priority)
+					tie = image("icon" = 'icons/mob/accessory.dmi', "icon_state" = "[tie_color]", "layer" = -UNIFORM_LAYER + A.layer_priority)
 				tie.color = A.color
 				standing.overlays += tie
 
@@ -450,7 +451,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			if(U.flags & ONESIZEFITSALL)
 				standing.icon	= 'icons/mob/uniform_fat.dmi'
 			else
-				to_chat(src, "\red You burst out of \the [U]!")
+				to_chat(src, "<span class='warning'>You burst out of \the [U]!</span>")
 				drop_from_inventory(U)
 				return
 
@@ -686,7 +687,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		if(FAT in mutations)
 			if(!(wear_suit.flags & ONESIZEFITSALL))
-				to_chat(src, "\red You burst out of \the [wear_suit]!")
+				to_chat(src, "<span class='warning'>You burst out of \the [wear_suit]!</span>")
 				drop_from_inventory(wear_suit)
 				return
 
@@ -843,7 +844,7 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/proc/update_tail_showing()
 	remove_overlay(TAIL_LAYER)
 
-	if(species.tail && species.flags[HAS_TAIL] && !(HUSK in mutations))
+	if(species.tail && species.flags[HAS_TAIL] && !(HUSK in mutations) && bodyparts_by_name[BP_CHEST])
 		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space))
 			var/image/tail_s = image("icon" = 'icons/effects/species.dmi', "icon_state" = "[species.tail]_s")
 
@@ -895,9 +896,11 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	var/list/standing = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
+		BP.bandaged = FALSE
 		if(BP.wounds.len)
 			for(var/datum/wound/W in BP.wounds)
 				if(W.bandaged)
+					BP.bandaged = TRUE
 					standing += image("icon" = 'icons/mob/bandages.dmi', "icon_state" = "[BP.body_zone]", "layer" = -BANDAGE_LAYER)
 
 	if(standing.len)

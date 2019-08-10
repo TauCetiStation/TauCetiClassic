@@ -22,7 +22,7 @@
 	var/obj/structure/cable/attached		// the attached cable
 
 /obj/item/device/powersink/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		if(mode == 0)
 			var/turf/T = loc
 			if(isturf(T) && !T.intact)
@@ -113,7 +113,7 @@
 
 
 		if(power_drained > max_power * 0.95)
-			playsound(src, 'sound/effects/screech.ogg', 100, 1, 1)
+			playsound(src, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER)
 		if(power_drained >= max_power)
 			STOP_PROCESSING(SSobj, src)
 			explosion(src.loc, 3,6,9,12)

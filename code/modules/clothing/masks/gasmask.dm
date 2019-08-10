@@ -12,6 +12,7 @@
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.9
 	var/gas_filter_strength = 1			//For gas mask filters
+	var/filter = list("phoron", "sleeping_agent")
 
 // **** Welding gas mask ****
 
@@ -68,22 +69,22 @@
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | BLOCKHAIR
 
 /obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		switch(aggressiveness)
 			if(1)
-				to_chat(user, "\blue You set the restrictor to the middle position.")
+				to_chat(user, "<span class='notice'>You set the restrictor to the middle position.</span>")
 				aggressiveness = 2
 			if(2)
-				to_chat(user, "\blue You set the restrictor to the last position.")
+				to_chat(user, "<span class='notice'>You set the restrictor to the last position.</span>")
 				aggressiveness = 3
 			if(3)
-				to_chat(user, "\blue You set the restrictor to the first position.")
+				to_chat(user, "<span class='notice'>You set the restrictor to the first position.</span>")
 				aggressiveness = 1
 			if(4)
-				to_chat(user, "\red You adjust the restrictor but nothing happens, probably because its broken.")
-	else if(istype(W, /obj/item/weapon/wirecutters))
+				to_chat(user, "<span class='warning'>You adjust the restrictor but nothing happens, probably because its broken.</span>")
+	else if(iswirecutter(W))
 		if(aggressiveness != 4)
-			to_chat(user, "\red You broke it!")
+			to_chat(user, "<span class='warning'>You broke it!</span>")
 			aggressiveness = 4
 	else
 		..()
@@ -117,61 +118,61 @@
 		switch(phrase)	//sets the properties of the chosen phrase
 			if(1)				// good cop
 				phrase_text = "HALT! HALT! HALT! HALT!"
-				phrase_sound = "halt"
+				phrase_sound = 'sound/voice/complionator/halt.ogg'
 			if(2)
 				phrase_text = "Stop in the name of the Law."
-				phrase_sound = "bobby"
+				phrase_sound = 'sound/voice/complionator/bobby.ogg'
 			if(3)
 				phrase_text = "Compliance is in your best interest."
-				phrase_sound = "compliance"
+				phrase_sound = 'sound/voice/complionator/compliance.ogg'
 			if(4)
 				phrase_text = "Prepare for justice!"
-				phrase_sound = "justice"
+				phrase_sound = 'sound/voice/complionator/justice.ogg'
 			if(5)
 				phrase_text = "Running will only increase your sentence."
-				phrase_sound = "running"
+				phrase_sound = 'sound/voice/complionator/running.ogg'
 			if(6)				// bad cop
 				phrase_text = "Don't move, Creep!"
-				phrase_sound = "dontmove"
+				phrase_sound = 'sound/voice/complionator/dontmove.ogg'
 			if(7)
 				phrase_text = "Down on the floor, Creep!"
 				phrase_sound = "floor"
 			if(8)
 				phrase_text = "Dead or alive you're coming with me."
-				phrase_sound = "robocop"
+				phrase_sound = 'sound/voice/complionator/robocop.ogg'
 			if(9)
 				phrase_text = "God made today for the crooks we could not catch yesterday."
-				phrase_sound = "god"
+				phrase_sound = 'sound/voice/complionator/god.ogg'
 			if(10)
 				phrase_text = "Freeze, Scum Bag!"
-				phrase_sound = "freeze"
+				phrase_sound = 'sound/voice/complionator/freeze.ogg'
 			if(11)
 				phrase_text = "Stop right there, criminal scum!"
-				phrase_sound = "imperial"
+				phrase_sound = 'sound/voice/complionator/imperial.ogg'
 			if(12)				// LA-PD
 				phrase_text = "Stop or I'll bash you."
-				phrase_sound = "bash"
+				phrase_sound = 'sound/voice/complionator/bash.ogg'
 			if(13)
 				phrase_text = "Go ahead, make my day."
-				phrase_sound = "harry"
+				phrase_sound = 'sound/voice/complionator/harry.ogg'
 			if(14)
 				phrase_text = "Stop breaking the law, ass hole."
-				phrase_sound = "asshole"
+				phrase_sound = 'sound/voice/complionator/asshole.ogg'
 			if(15)
 				phrase_text = "You have the right to shut the fuck up."
-				phrase_sound = "stfu"
+				phrase_sound = 'sound/voice/complionator/stfu.ogg'
 			if(16)
 				phrase_text = "Shut up crime!"
-				phrase_sound = "shutup"
+				phrase_sound = 'sound/voice/complionator/shutup.ogg'
 			if(17)
 				phrase_text = "Face the wrath of the golden bolt."
-				phrase_sound = "super"
+				phrase_sound = 'sound/voice/complionator/super.ogg'
 			if(18)
 				phrase_text = "I am, the LAW!"
-				phrase_sound = "dredd"
+				phrase_sound = 'sound/voice/complionator/dredd.ogg'
 
 		usr.visible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[phrase_text]</b></font>")
-		playsound(src.loc, "sound/voice/complionator/[phrase_sound].ogg", 100, 0, 4)
+		playsound(src, phrase_sound, VOL_EFFECTS_MASTER, FALSE)
 		cooldown = world.time
 
 //Plague Dr suit can be found in clothing/suits/bio.dm
@@ -280,3 +281,17 @@
 	. = ..()
 	var/color = pick("orange", "blue")
 	icon_state = "gas_mask_[color]"
+
+/obj/item/clothing/mask/gas/vox
+	name = "vox breath mask"
+	desc = "A weirdly-shaped breath mask."
+	icon_state = "voxmask"
+	item_state = "voxmask"
+	flags = MASKCOVERSMOUTH | MASKINTERNALS | BLOCK_GAS_SMOKE_EFFECT
+	flags_inv = 0
+	body_parts_covered = 0
+	w_class = ITEM_SIZE_SMALL
+	gas_transfer_coefficient = 0.10
+	filter = list("phoron", "sleeping_agent", "oxygen")
+	species_restricted = list(VOX , VOX_ARMALIS)
+	sprite_sheets = list(VOX_ARMALIS = 'icons/mob/species/armalis/mask.dmi')

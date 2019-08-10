@@ -17,7 +17,7 @@
 				return
 			if (src.client)
 				if (client.prefs.muted & MUTE_IC)
-					to_chat(src, "\red You cannot send IC messages (muted).")
+					to_chat(src, "<span class='warning'>You cannot send IC messages (muted).</span>")
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return
@@ -34,7 +34,7 @@
 		if ("chirp")
 			if(istype(src,/mob/living/carbon/monkey/diona))
 				message = "<B>The [src.name]</B> chirps!"
-				playsound(src.loc, 'sound/misc/nymphchirp.ogg', 50, 0)
+				playsound(src, 'sound/misc/nymphchirp.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 				m_type = 2
 		if("sign")
 			if (!src.restrained())

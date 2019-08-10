@@ -48,7 +48,7 @@
 	for(var/mob/living/A in viewers(3, loc))
 		A.confused += SLIGHTLY_CONFUSED
 	loc.visible_message("<span class='warning'>You hear a loud pop, as [src] poofs out of existence.</span>")
-	playsound(loc, 'sound/effects/bubble_pop.ogg', 50, 1)
+	playsound(src, 'sound/effects/bubble_pop.ogg', VOL_EFFECTS_MASTER)
 	qdel(src)
 
 /obj/item/weapon/dice/atom_init()
@@ -229,13 +229,13 @@
 		visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
 
 /obj/item/weapon/dice/d4/Crossed(var/mob/living/carbon/human/H)
-	if(istype(H) && !H.shoes && !H.species.flags[NO_MINORCUTS])
+	if(istype(H) && !H.shoes && !H.species.flags[NO_MINORCUTS] && !H.buckled)
 		to_chat(H, "<span class='userdanger'>You step on the D4!</span>")
 		H.apply_damage(4, BRUTE, pick(BP_L_LEG , BP_R_LEG))
 		H.Weaken(3)
 
 /obj/item/weapon/dice/ghost/d4/Crossed(var/mob/living/carbon/human/H)
-	if(istype(H) && !H.shoes && !H.species.flags[NO_MINORCUTS])
+	if(istype(H) && !H.shoes && !H.species.flags[NO_MINORCUTS] && !H.buckled)
 		to_chat(H, "<span class='userdanger'>You really regret stepping on the accursed D4!</span>")
 		H.apply_damage(4, BRUTE, pick(BP_L_LEG , BP_R_LEG))
 		H.Weaken(3)

@@ -28,7 +28,7 @@ var/list/gurgles = list(
 	. = ..()
 
 /obj/structure/drain/attackby(obj/item/thing, mob/user)
-	if(istype(thing, /obj/item/weapon/weldingtool))
+	if(iswelder(thing))
 		var/obj/item/weapon/weldingtool/WT = thing
 		if(WT.isOn())
 			welded = !welded
@@ -55,4 +55,4 @@ var/list/gurgles = list(
 	T.remove_fluid(ceil(fluid_here*drainage))
 	if(world.time > last_gurgle + 80)
 		last_gurgle = world.time
-		playsound(T, pick(gurgles), 50, 1)
+		playsound(T, pick(gurgles), VOL_EFFECTS_MASTER)

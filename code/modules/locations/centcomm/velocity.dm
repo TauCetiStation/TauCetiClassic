@@ -96,7 +96,7 @@
 
 /obj/structure/closet/secure_closet/velocity_security
 	name = "Velocity Security Officer's Locker"
-	req_access_txt = "101"
+	req_access = list(101)
 	icon = 'code/modules/locations/centcomm/closet.dmi'
 	icon_state = "securevel1"
 	icon_closed = "securevel"
@@ -104,6 +104,36 @@
 	icon_opened = "securevelopen"
 	icon_broken = "securevelbroken"
 	icon_off = "secureveloff"
+
+/obj/structure/closet/secure_closet/velocity_security/full
+
+/obj/structure/closet/secure_closet/velocity_security/full/PopulateContents()
+	new /obj/item/clothing/glasses/sunglasses/sechud(src)
+	new /obj/item/device/flash(src)
+	new /obj/item/weapon/reagent_containers/spray/pepper(src)
+	new /obj/item/weapon/storage/box/handcuffs(src)
+	new /obj/item/weapon/storage/box/flashbangs(src)
+	new /obj/item/weapon/melee/classic_baton(src)
+	new /obj/item/weapon/storage/firstaid/regular(src)
+	new /obj/item/clothing/suit/armor/vest/fluff/deus_blueshield(src)
+	new /obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat(src)
+	new /obj/item/clothing/head/soft/sec/corp(src)
+	new /obj/item/clothing/accessory/storage/webbing(src)
+	new /obj/item/clothing/accessory/storage/black_vest(src)
+	new /obj/item/weapon/storage/backpack/satchel(src)
+	new /obj/item/weapon/storage/backpack/satchel/sec(src)
+	new /obj/item/weapon/storage/belt/security(src)
+	new /obj/item/clothing/gloves/fluff/chal_appara_1(src)
+	new /obj/item/clothing/shoes/combat(src)
+	new /obj/item/clothing/gloves/combat(src)
+	new /obj/item/clothing/shoes/sandal(src)
+	new /obj/item/clothing/under/fluff/olddressuniform(src)
+	new /obj/item/clothing/under/det/fluff/retpoluniform(src)
+	new /obj/item/weapon/storage/pouch/pistol_holster(src)
+	new /obj/item/weapon/storage/pouch/baton_holster(src)
+	new /obj/item/device/radio/headset/velocity(src)
+	new /obj/item/device/contraband_finder(src)
+	new /obj/item/device/reagent_scanner(src)
 
 /obj/structure/object_wall/velocity
 

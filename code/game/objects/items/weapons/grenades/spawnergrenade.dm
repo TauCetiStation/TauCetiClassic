@@ -12,7 +12,7 @@
 /obj/item/weapon/grenade/spawnergrenade/prime()
 	if(spawner_type && deliveryamt)
 		var/turf/T = get_turf(src)
-		playsound(T, 'sound/effects/phasein.ogg', 100, 1)
+		playsound(T, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 		for(var/i=1, i<=deliveryamt, i++)
 			var/atom/movable/x = new spawner_type

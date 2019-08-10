@@ -1,5 +1,5 @@
-#define TIMER_MIN 420
-#define TIMER_MAX 600
+#define TIMER_MIN 600
+#define TIMER_MAX 780
 
 var/bomb_set
 
@@ -15,7 +15,7 @@ var/bomb_set
 	var/extended = 0.0
 	var/lighthack = 0
 	var/opened = 0.0
-	var/timeleft = 600.0
+	var/timeleft = TIMER_MAX
 	var/timing = 0.0
 	var/r_code = "ADMIN"
 	var/code = ""
@@ -45,14 +45,14 @@ var/bomb_set
 	if (timing > 0) // because explode() sets it to -1, which is TRUE.
 		bomb_set = 1 //So long as there is one nuke timing, it means one nuke is armed.
 		timeleft = max(timeleft - 2, 0) // 2 seconds per process()
-		playsound(loc, 'sound/items/timer.ogg', 30, 0)
+		playsound(src, 'sound/items/timer.ogg', VOL_EFFECTS_MASTER, 30, FALSE)
 		if (timeleft <= 0)
 			explode()
 		updateUsrDialog()
 
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon/O, mob/user)
 
-	if (istype(O, /obj/item/weapon/screwdriver))
+	if (isscrewdriver(O))
 		src.add_fingerprint(user)
 		if (removal_stage == 5)
 			if (src.opened == 0)
@@ -99,7 +99,7 @@ var/bomb_set
 	if (src.anchored)
 		switch(removal_stage)
 			if(0)
-				if(istype(O,/obj/item/weapon/weldingtool))
+				if(iswelder(O))
 
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
@@ -110,25 +110,23 @@ var/bomb_set
 						return
 					user.visible_message("[user] starts cutting thru something on [src] like \he knows what to do.", "With [O] you start cutting thru first layer...")
 
-					if(do_after(user,150,target = src))
-						if(!src || !user || !WT.remove_fuel(5, user)) return
+					if(O.use_tool(src, user, 150, amount = 5, volume = 50))
 						user.visible_message("[user] finishes cutting something on [src].", "You cut thru first layer.")
 						removal_stage = 1
 				return
 
 			if(1)
-				if(istype(O,/obj/item/weapon/crowbar))
+				if(iscrowbar(O))
 					user.visible_message("[user] starts smashing [src].", "You start forcing open the covers with [O]...")
 					if(user.is_busy())
 						return
-					if(do_after(user,50,target = src))
-						if(!src || !user) return
+					if(O.use_tool(src, user, 50, volume = 50))
 						user.visible_message("[user] finishes smashing [src].", "You force open covers.")
 						removal_stage = 2
 				return
 
 			if(2)
-				if(istype(O,/obj/item/weapon/weldingtool))
+				if(iswelder(O))
 
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
@@ -139,102 +137,32 @@ var/bomb_set
 						return
 					user.visible_message("[user] starts cutting something on [src].. Again.", "You start cutting apart the safety plate with [O]...")
 
-					if(do_after(user,100,target = src))
-						if(!src || !user || !WT.remove_fuel(5, user)) return
+					if(O.use_tool(src, user, 100, amount = 5, volume = 50))
 						user.visible_message("[user] finishes cutting something on [src].", "You cut apart the safety plate.")
 						removal_stage = 3
 				return
 
 			if(3)
-				if(istype(O,/obj/item/weapon/wrench))
+				if(iswrench(O))
 					if(user.is_busy())
 						return
 					user.visible_message("[user] begins poking inside [src].", "You begin unwrenching bolts...")
-
-					if(do_after(user,75,target = src))
-						if(!src || !user) return
+					if(O.use_tool(src, user, 75, volume = 50))
 						user.visible_message("[user] begins poking inside [src].", "You unwrench bolts.")
 						removal_stage = 4
 				return
 
 			if(4)
-				if(istype(O,/obj/item/weapon/crowbar))
+				if(iscrowbar(O))
 					if(user.is_busy())
 						return
 					user.visible_message("[user] begings hitting [src].", "You begin forcing open last safety layer...")
 
-					if(do_after(user,75,target = src))
-						if(!src || !user) return
+					if(O.use_tool(src, user, 75, volume = 50))
 						user.visible_message("[user] finishes hitting [src].", "You can now get inside the [src]. Use screwdriver to open control panel")
 						//anchored = 0
 						removal_stage = 5
 				return
-			/*if(0)
-				if(istype(O,/obj/item/weapon/weldingtool))
-
-					var/obj/item/weapon/weldingtool/WT = O
-					if(!WT.isOn()) return
-					if (WT.get_fuel() < 5) // uses up 5 fuel.
-						to_chat(user, "\red You need more fuel to complete this task.")
-						return
-
-					user.visible_message("[user] starts cutting loose the anchoring bolt covers on [src].", "You start cutting loose the anchoring bolt covers with [O]...")
-
-					if(do_after(user,40))
-						if(!src || !user || !WT.remove_fuel(5, user)) return
-						user.visible_message("[user] cuts through the bolt covers on [src].", "You cut through the bolt cover.")
-						removal_stage = 1
-				return
-
-			if(1)
-				if(istype(O,/obj/item/weapon/crowbar))
-					user.visible_message("[user] starts forcing open the bolt covers on [src].", "You start forcing open the anchoring bolt covers with [O]...")
-
-					if(do_after(user,15))
-						if(!src || !user) return
-						user.visible_message("[user] forces open the bolt covers on [src].", "You force open the bolt covers.")
-						removal_stage = 2
-				return
-
-			if(2)
-				if(istype(O,/obj/item/weapon/weldingtool))
-
-					var/obj/item/weapon/weldingtool/WT = O
-					if(!WT.isOn()) return
-					if (WT.get_fuel() < 5) // uses up 5 fuel.
-						to_chat(user, "\red You need more fuel to complete this task.")
-						return
-
-					user.visible_message("[user] starts cutting apart the anchoring system sealant on [src].", "You start cutting apart the anchoring system's sealant with [O]...")
-
-					if(do_after(user,40))
-						if(!src || !user || !WT.remove_fuel(5, user)) return
-						user.visible_message("[user] cuts apart the anchoring system sealant on [src].", "You cut apart the anchoring system's sealant.")
-						removal_stage = 3
-				return
-
-			if(3)
-				if(istype(O,/obj/item/weapon/wrench))
-
-					user.visible_message("[user] begins unwrenching the anchoring bolts on [src].", "You begin unwrenching the anchoring bolts...")
-
-					if(do_after(user,50))
-						if(!src || !user) return
-						user.visible_message("[user] unwrenches the anchoring bolts on [src].", "You unwrench the anchoring bolts.")
-						removal_stage = 4
-				return
-
-			if(4)
-				if(istype(O,/obj/item/weapon/crowbar))
-
-					user.visible_message("[user] begins lifting [src] off of the anchors.", "You begin lifting the device off the anchors...")
-
-					if(do_after(user,80))
-						if(!src || !user) return
-						user.visible_message("[user] crowbars [src] off of the anchors. It can now be moved.", "You jam the crowbar under the nuclear device and lift it off its anchors. You can now move it!")
-						anchored = 0
-						removal_stage = 5
-				return*/
 	..()
 
 /obj/machinery/nuclearbomb/attack_hand(mob/user)
@@ -247,7 +175,7 @@ var/bomb_set
 			to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
 			return 1
 		var/turf/current_location = get_turf(usr)//What turf is the user on?
-		if(current_location.z == ZLEVEL_CENTCOMM && user.mind.special_role == "Syndicate")//If turf was not found or they're on z level 2.
+		if(is_centcom_level(current_location.z) && user.mind.special_role == "Syndicate")//If turf was not found or they're on z level 2.
 			to_chat(user, "<span class = 'red'>It's not the best idea to plant a bomb on your own base</span>")
 			return
 	else if (deployable)
@@ -365,7 +293,7 @@ var/bomb_set
 						src.icon_state = "nuclearbomb2"
 					if(!src.safety)
 						var/area/nuclearbombloc = get_area(loc)
-						captain_announce("Bomb has been planted in [initial(nuclearbombloc.name)]. Someone trying to blow up the station!")
+						captain_announce("Detected activation of a nuclear warhead in [initial(nuclearbombloc.name)]. Someone trying to blow up the station!", sound = "nuke")
 						set_security_level("delta")
 						bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
 					else
@@ -383,7 +311,7 @@ var/bomb_set
 
 			//if(removal_stage == 5)
 			//	src.anchored = 0
-			//	visible_message("\red \The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.")
+			//	visible_message("<span class='warning'>\The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.</span>")
 			//	return
 
 			src.anchored = !( src.anchored )
@@ -421,7 +349,7 @@ var/bomb_set
 	src.safety = 1
 	if(!src.lighthack)
 		src.icon_state = "nuclearbomb3"
-	playsound(src,'sound/machines/Alarm.ogg',100,0,5)
+	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, 5)
 	if (ticker && ticker.mode)
 		ticker.mode.explosion_in_progress = 1
 	sleep(100)
@@ -430,7 +358,7 @@ var/bomb_set
 
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
-	if( bomb_location && (bomb_location.z == ZLEVEL_STATION) )
+	if( bomb_location && is_station_level(bomb_location.z) )
 		if( (bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)) )
 			off_station = 1
 		else
@@ -444,7 +372,7 @@ var/bomb_set
 		if(ticker.mode && ticker.mode.name == "nuclear emergency")
 			var/obj/machinery/computer/syndicate_station/syndie_location = locate(/obj/machinery/computer/syndicate_station)
 			if(syndie_location)
-				ticker.mode:syndies_didnt_escape = (syndie_location.z > ZLEVEL_STATION ? 0 : 1)	//muskets will make me change this, but it will do for now
+				ticker.mode:syndies_didnt_escape = is_station_level(syndie_location.z)
 			ticker.mode:nuke_off_station = off_station
 		ticker.station_explosion_cinematic(off_station,null)
 		if(ticker.mode)
@@ -466,7 +394,7 @@ var/bomb_set
 					blackbox.save_all_data_to_sql()
 				sleep(450)
 				log_game("Rebooting due to nuclear detonation")
-				world.Reboot()
+				world.Reboot(end_state = "nuke - unhandled ending")
 				return
 	return
 
@@ -533,7 +461,7 @@ var/bomb_set
 
 /obj/item/weapon/disk/nuclear/process()
 	var/turf/disk_loc = get_turf(src)
-	if(disk_loc.z > ZLEVEL_CENTCOM)
+	if(!is_centcom_level(disk_loc.z) && !is_station_level(disk_loc.z))
 		to_chat(get(src, /mob), "<span class='danger'>You can't help but feel that you just lost something back there...</span>")
 		qdel(src)
 

@@ -47,7 +47,7 @@ var/global/raider_tick = 1
 	item_state = "a28w"
 	silenced = 1
 	mag_type = /obj/item/ammo_box/magazine/m556/nonlethal
-	fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/silenced/nonlethal
 	name = "Silenced pistol NL"
@@ -119,7 +119,7 @@ var/global/raider_tick = 1
 
 /obj/item/weapon/grenade/monsternade/prime()
 	..()
-	playsound(src.loc, 'sound/effects/bang.ogg', 50, 1, 5)
+	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 	switch(rand(1,4))
 		if(1)
 			for(var/i=0,i<2,i++)

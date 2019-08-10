@@ -59,7 +59,7 @@
 
 	on = !on
 	user.SetNextMove(CLICK_CD_INTERACT)
-	playsound(src, 'sound/items/buttonclick.ogg', 20, 1, 1)
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 20)
 
 	area.lightswitch = on
 	area.updateicon()

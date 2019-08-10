@@ -99,3 +99,13 @@
 	mob_trait = TRAIT_STRESS_EATER
 	gain_text = "<span class='danger'>You feel quenchless hunger when hurt.</span>"
 	lose_text = "<span class='notice'>You no longer feel the quenchless hunger when hurt.</span>"
+
+
+
+/datum/quirk/mute
+	name = "Mute"
+	desc = "You are completely and incurably mute."
+	value = -2
+	mob_trait = TRAIT_MUTE
+	gain_text = "<span class='danger'>Your voicebox feels wrong somehow.</span>"
+	lose_text = "<span class='notice'>Your voicebox appears to work now.</span>"

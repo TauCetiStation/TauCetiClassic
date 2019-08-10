@@ -57,7 +57,7 @@ var/global/list/all_objectives = list()
 
 /datum/objective/assassinate/check_completion()
 	if(target && target.current)
-		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > ZLEVEL_EMPTY || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
+		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || !SSmapping.has_level(target.current.z) || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 			return 1
 		return 0
 	return 1
@@ -87,7 +87,7 @@ var/global/list/all_objectives = list()
 		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
 			return 1
 		var/turf/T = get_turf(target.current)
-		if(T && (T.z != ZLEVEL_STATION))			//If they leave the station they count as dead for this
+		if(T && !is_station_level(T.z))			//If they leave the station they count as dead for this
 			return 2
 		return 0
 	return 1
@@ -121,7 +121,7 @@ var/global/list/all_objectives = list()
 			if(target in ticker.mode:head_revolutionaries)
 				return TRUE
 		var/turf/T = get_turf(target.current)
-		if(T && (T.z != ZLEVEL_STATION))			//If they leave the station they count as dead for this
+		if(T && !is_station_level(T.z))			//If they leave the station they count as dead for this
 			return TRUE
 		return FALSE
 	return TRUE
@@ -873,31 +873,16 @@ var/global/list/all_objectives = list()
 	return FALSE
 
 /datum/objective/heist/salvage/choose_target()
-	switch(rand(1,4))
+	switch(rand(1, 3))
 		if(1)
 			target = "metal"
-			target_amount = 300
+			target_amount = pick(150, 200)
 		if(2)
 			target = "glass"
-			target_amount = 200
+			target_amount = pick(150, 200)
 		if(3)
 			target = "plasteel"
-			target_amount = 100
-		if(4)
-			target = "solid phoron"
-			target_amount = 100
-		if(5)
-			target = "silver"
-			target_amount = 50
-		if(6)
-			target = "gold"
-			target_amount = 20
-		if(7)
-			target = "uranium"
-			target_amount = 20
-		if(8)
-			target = "diamond"
-			target_amount = 1
+			target_amount = pick(20, 30, 40, 50)
 
 	explanation_text = "Ransack the station and escape with [target_amount] [target]."
 
@@ -975,7 +960,7 @@ var/heist_rob_total = 0
 		return TRUE
 	return FALSE
 
-#define MAX_VOX_KILLS 10 //Number of kills during the round before the Inviolate is broken.
+#define MAX_VOX_KILLS 13 //Number of kills during the round before the Inviolate is broken.
 						 //Would be nice to use vox-specific kills but is currently not feasible.
 var/global/vox_kills = 0 //Used to check the Inviolate.
 

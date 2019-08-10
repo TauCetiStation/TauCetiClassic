@@ -22,7 +22,7 @@
 	var/sheets_refunded = 2
 
 /obj/item/light_fixture_frame/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 		user.SetNextMove(CLICK_CD_RAPID)
 		qdel(src)
@@ -37,10 +37,10 @@
 		return
 	var/turf/loc = get_turf_loc(usr)
 	if (!istype(loc, /turf/simulated/floor))
-		to_chat(usr, "\red [src.name] cannot be placed on this spot.")
+		to_chat(usr, "<span class='warning'>[src.name] cannot be placed on this spot.</span>")
 		return
 	to_chat(usr, "Attaching [src] to the wall.")
-	playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
+	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 	var/constrdir = usr.dir
 	var/constrloc = usr.loc
 	if (usr.is_busy() || !do_after(usr, 30, target = on_wall))
@@ -99,17 +99,17 @@
 /obj/machinery/light_construct/attackby(obj/item/weapon/W, mob/user)
 	src.add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		if (src.stage == 1)
-			if(user.is_busy()) return
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			if(user.is_busy(src))
+				return
 			to_chat(user, "You begin deconstructing [src].")
-			if (!do_after(usr, 30, target = src))
+			if(!W.use_tool(src, usr, 30, volume = 75))
 				return
 			new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 			user.visible_message("[user.name] deconstructs [src].", \
 				"You deconstruct [src].", "You hear a noise.")
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 75, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 			qdel(src)
 		if (src.stage == 2)
 			to_chat(usr, "You have to remove the wires first.")
@@ -119,7 +119,7 @@
 			to_chat(usr, "You have to unscrew the case first.")
 			return
 
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(iswirecutter(W))
 		if (src.stage != 2)
 			return
 		src.stage = 1
@@ -131,10 +131,10 @@
 		new /obj/item/stack/cable_coil/random(get_turf(src.loc), 1)
 		user.visible_message("[user.name] removes the wiring from [src].", \
 			"You remove the wiring from [src].", "You hear a noise.")
-		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 		return
 
-	if(istype(W, /obj/item/stack/cable_coil))
+	if(iscoil(W))
 		if (src.stage != 1)
 			return
 		var/obj/item/stack/cable_coil/coil = W
@@ -150,7 +150,7 @@
 			"You add wires to [src].")
 		return
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		if (src.stage == 2)
 			switch(fixture_type)
 				if ("tube")
@@ -160,7 +160,7 @@
 			src.stage = 3
 			user.visible_message("[user.name] closes [src]'s casing.", \
 				"You close [src]'s casing.", "You hear a noise.")
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
 			switch(fixture_type)
 
@@ -205,7 +205,7 @@
 	var/static_power_used = 0
 	var/brightness_range = 7	// luminosity when on, also used in power calculation
 	var/brightness_power = 2
-	var/brightness_color = null
+	var/brightness_color = "#ffffff"
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/flickering = 0
 	var/light_type = /obj/item/weapon/light/tube		// the type of light item
@@ -214,6 +214,12 @@
 								// this is used to calc the probability the light burns out
 
 	var/rigged = 0				// true if rigged to explode
+
+	var/nightshift_enabled = FALSE	//Currently in night shift mode?
+	var/nightshift_allowed = TRUE	//Set to FALSE to never let this light get switched to night mode.
+	var/nightshift_light_range = 8
+	var/nightshift_light_power = 0.8
+	var/nightshift_light_color = "#ffdbb5"
 
 // the smaller bulb light fixture
 
@@ -250,8 +256,20 @@
 	. = ..()
 
 // create a new lighting fixture
-/obj/machinery/light/atom_init()
+/obj/machinery/light/atom_init(mapload)
 	..()
+
+	if(!mapload) //sync up nightshift lighting for player made lights
+		var/area/A = get_area(src)
+		var/obj/machinery/power/apc/temp_apc = A.get_apc()
+		if(temp_apc)
+			nightshift_enabled = temp_apc.nightshift_lights
+			var/list/preset_data = lighting_presets[temp_apc.nightshift_preset]
+			if(preset_data)
+				nightshift_light_range = preset_data["range"]
+				nightshift_light_power = preset_data["power"]
+				nightshift_light_color = preset_data["color"]
+
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/light/atom_init_late()
@@ -259,7 +277,7 @@
 	if(A && !A.requires_power)
 		on = 1
 
-	if(src.z == ZLEVEL_STATION || src.z == ZLEVEL_ASTEROID)
+	if(is_station_level(z) || is_mining_level(z))
 		switch(fitting)
 			if("tube","bulb")
 				if(prob(2))
@@ -294,8 +312,19 @@
 
 	update_icon()
 	if(on)
-		if(light_range != brightness_range || light_power != brightness_power || light_color != brightness_color)
+		var/BR = brightness_range
+		var/PO = brightness_power
+		var/CO = brightness_color
+
+		if (nightshift_enabled)
+			BR = nightshift_light_range
+			PO = nightshift_light_power
+			if(!brightness_color || brightness_color == "#ffffff") // Only white lights are overwritten
+				CO = nightshift_light_color
+
+		if(light_range != BR || light_power != PO || light_color != CO)
 			switchcount++
+			playsound(src, 'sound/machines/lightson.ogg', VOL_EFFECTS_MASTER)
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
 
@@ -311,7 +340,7 @@
 					set_light(0)
 			else
 				use_power = 2
-				set_light(brightness_range, brightness_power, brightness_color)
+				set_light(BR, PO, CO)
 	else
 		use_power = 1
 		set_light(0)
@@ -419,8 +448,8 @@
 
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
-		if(istype(W, /obj/item/weapon/screwdriver)) //If it's a screwdriver open it.
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
+		if(isscrewdriver(W)) //If it's a screwdriver open it.
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("[user.name] opens [src]'s casing.", \
 				"You open [src]'s casing.", "You hear a noise.")
 			var/obj/machinery/light_construct/newlight = null
@@ -478,25 +507,25 @@
 // Aliens smash the bulb but do not get electrocuted./N
 /obj/machinery/light/attack_alien(mob/living/carbon/alien/humanoid/user)//So larva don't go breaking light bulbs.
 	if(status == LIGHT_EMPTY||status == LIGHT_BROKEN)
-		to_chat(user, "\green That object is useless to you.")
+		to_chat(user, "<span class='notice'>That object is useless to you.</span>")
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		for(var/mob/M in viewers(src))
-			M.show_message("\red [user.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
+			M.show_message("<span class='warning'>[user.name] smashed the light!</span>", 3, "You hear a tinkle of breaking glass", 2)
 		broken()
 	return
 
 /obj/machinery/light/attack_animal(mob/living/simple_animal/M)
 	if(M.melee_damage_upper == 0)	return
 	if(status == LIGHT_EMPTY||status == LIGHT_BROKEN)
-		to_chat(M, "\red That object is useless to you.")
+		to_chat(M, "<span class='warning'>That object is useless to you.</span>")
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		..()
 		for(var/mob/O in viewers(src))
-			O.show_message("\red [M.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
+			O.show_message("<span class='warning'>[M.name] smashed the light!</span>", 3, "You hear a tinkle of breaking glass", 2)
 		broken()
 // attack with hand - remove tube/bulb
 // if hands aren't protected and the light is on, burn the player
@@ -589,7 +618,7 @@
 
 	if(!skip_sound_and_sparks)
 		if(status == LIGHT_OK || status == LIGHT_BURNED)
-			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 		if(on)
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
@@ -670,7 +699,7 @@
 	var/rigged = 0		// true if rigged to explode
 	var/brightness_range = 2 //how much light it gives off
 	var/brightness_power = 1
-	var/brightness_color = null
+	var/brightness_color = "#ffffff"
 
 /obj/item/weapon/light/tube
 	name = "light tube"
@@ -775,9 +804,9 @@
 
 /obj/item/weapon/light/proc/shatter()
 	if(status == LIGHT_OK || status == LIGHT_BURNED)
-		src.visible_message("\red [name] shatters.","\red You hear a small glass object shatter.")
+		src.visible_message("<span class='warning'>[name] shatters.</span>","<span class='warning'>You hear a small glass object shatter.</span>")
 		status = LIGHT_BROKEN
 		force = 5
 		sharp = 1
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 		update()

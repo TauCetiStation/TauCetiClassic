@@ -632,10 +632,6 @@
 	item_state = "flapper"
 	item_color = "flapper"
 
-/obj/item/clothing/under/det/max_payne
-	icon_state = "max"
-	item_color = "max"
-
 /obj/item/clothing/under/rank/capcamsole
 	desc = "It's a blue feminine camisole with some gold markings denoting the rank of \"Captain\" and gold aquila on it."
 	name = "captain's camisole"

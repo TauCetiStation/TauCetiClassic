@@ -24,11 +24,21 @@
 /proc/testing(msg)
 	world.log << "## TESTING: [msg][log_end]"
 
+/proc/info(msg)
+	world.log << "## INFO: [msg][log_end]"
+
+/proc/round_log(msg)
+	world.log << "\[[time_stamp()]][round_id ? " #[round_id]:" : ""] [msg][log_end]"
+
 /proc/log_admin(text)
 	admin_log.Add(text)
 	if (config.log_admin)
 		diary << "\[[time_stamp()]]ADMIN: [LOG_CLEANING(text)][log_end]"
 
+/proc/log_admin_private(text)
+	admin_log.Add(text)
+	if (config.log_admin)
+		diary << "\[[time_stamp()]]ADMINPRIVATE: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_debug(text)
 	if (config.log_debug)
@@ -86,6 +96,44 @@
 
 /proc/log_misc(text)
 	diary << "\[[time_stamp()]]MISC: [text][log_end]"
+
+/proc/log_sql(text)
+	world.log << "\[[time_stamp()]]SQL: [text][log_end]"
+
+/proc/log_unit_test(text)
+	world.log << "## UNIT_TEST ##: [text]"
+	log_debug(text)
+
+// Helper procs for building detailed log lines
+/datum/proc/get_log_info_line()
+	return "[src] ([type]) (\ref[src])"
+
+/area/get_log_info_line()
+	return "[..()] ([isnum(z) ? "[x],[y],[z]" : "0,0,0"])"
+
+/turf/get_log_info_line()
+	return "[..()] ([x],[y],[z]) ([loc ? loc.type : "NULL"])"
+
+/atom/movable/get_log_info_line()
+	var/turf/t = get_turf(src)
+	return "[..()] ([t ? t : "NULL"]) ([t ? "[t.x],[t.y],[t.z]" : "0,0,0"]) ([t ? t.type : "NULL"])"
+
+/mob/get_log_info_line()
+	return ckey ? "[..()] ([ckey])" : ..()
+
+/proc/log_info_line(datum/D)
+	if(isnull(D))
+		return "*null*"
+	if(islist(D))
+		var/list/L = list()
+		for(var/e in D)
+			// Indexing on numbers just gives us the same number again in the best case and causes an index out of bounds runtime in the worst
+			var/v = isnum(e) ? null : D[e]
+			L += "[log_info_line(e)][v ? " - [log_info_line(v)]" : ""]"
+		return "\[[jointext(L, ", ")]\]" // We format the string ourselves, rather than use json_encode(), because it becomes difficult to read recursively escaped "
+	if(!istype(D))
+		return json_encode(D)
+	return D.get_log_info_line()
 
 //pretty print a direction bitflag, can be useful for debugging.
 /proc/print_dir(dir)
@@ -154,3 +202,37 @@
 	log_game(text)
 
 #undef LOG_CLEANING
+
+/proc/drop_round_stats()
+	var/date = time2text(world.realtime, "YYYY/MM/DD")
+	var/round_stats_loc = "data/stat_logs/[date]/round-"
+
+	if(round_id)
+		round_stats_loc += round_id
+	else
+		var/timestamp = replacetext(time_stamp(), ":", ".")
+		round_stats_loc += "[timestamp]"
+
+	var/list/stats = list()
+
+	stats["round_id"] = round_id
+	stats["start_time"] = time2text(round_start_realtime, "hh:mm:ss")
+	stats["end_time"] = time2text(world.realtime, "hh:mm:ss")
+	stats["duration"] = roundduration2text()
+	stats["mode"] = ticker.mode
+	stats["mode_result"] = ticker.mode.mode_result
+	stats["map"] = SSmapping.config.map_name
+
+	stats["completion_html"] = ticker.mode.completion_text
+	stats["completion_antagonists"] = antagonists_completion//todo: icon2base64 icons?
+
+	stats["score"] = score
+	stats["achievements"] = achievements
+	stats["centcomm_communications"] = centcomm_communications
+
+	var/stat_file = file("[round_stats_loc]/stat.json")
+
+	stat_file << list2json(stats)
+
+/proc/add_communication_log(type = 0, title = 0, author = 0, content = 0, time = roundduration2text())
+	centcomm_communications += list(list("type" = type, "title" = title, "time" = time, "content" = content))

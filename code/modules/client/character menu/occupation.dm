@@ -1,5 +1,5 @@
 /datum/preferences/proc/ShowOccupation(mob/user)
-	var/limit = 20	//The amount of jobs allowed per column. Defaults to 19 to make it look nice.
+	var/limit = 22	//The amount of jobs allowed per column. Defaults to 19 to make it look nice.
 	var/list/splitJobs = list("Chief Medical Officer")	//Allows you split the table by job. You can make different tables for each department by including their heads.
 														//Defaults to CMO to make it look nice.
 	if(!SSjob)
@@ -42,6 +42,9 @@
 		. += "<td width='60%' align='right'>"
 		var/rank = job.title
 		lastJob = job
+		if(!job.map_check())
+			. += "<del>[rank]</del></td><td><b> \[DISABLED]</b></td></tr>"
+			continue
 		if(jobban_isbanned(user, rank))
 			. += "<del>[rank]</del></td><td><b> \[BANNED]</b></td></tr>"
 			continue

@@ -90,16 +90,16 @@ Infestation:
 	return ..()
 
 /datum/game_mode/infestation/proc/greet_xeno(datum/mind/xeno)
-	to_chat(xeno.current, "\green <B>You are a Xenomorph.</b>")
-	to_chat(xeno.current, "\green <B>Your current alien form is a facehugger.</b>")
-	to_chat(xeno.current, "\green <B>Go find some monkeys, corgi or a sleeping human.</b>")
-	to_chat(xeno.current, "\green <B>To leap at someones face, you simply start with left mouse button click.</b>")
-	to_chat(xeno.current, "\green <B>Then check your tail action button, there will be leap available.</b>")
-	to_chat(xeno.current, "\green <B>Leap isnt instant, keep that in mind. There is 1-2 seconds delay, before you can actually leap.</b>")
-	to_chat(xeno.current, "\green <B>You target also must be near, after you prepares to leap.</b>")
-	to_chat(xeno.current, "\blue Use :A to hivetalk.")
-	to_chat(xeno.current, "\green ------------------")
-	//xeno.current << "\red IF YOU HAVE NOT PLAYED A XENOMORPH, REVIEW THIS THREAD: http://tauceti.ru"
+	to_chat(xeno.current, "<span class='notice'><B>You are a Xenomorph.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>Your current alien form is a facehugger.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>Go find some monkeys, corgi or a sleeping human.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>To leap at someones face, you simply start with left mouse button click.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>Then check your tail action button, there will be leap available.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>Leap isnt instant, keep that in mind. There is 1-2 seconds delay, before you can actually leap.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>You target also must be near, after you prepares to leap.</b></span>")
+	to_chat(xeno.current, "<span class='notice'>Use :A to hivetalk.</span>")
+	to_chat(xeno.current, "<span class='notice'>------------------</span>")
+	//xeno.current << "<span class='warning'>IF YOU HAVE NOT PLAYED A XENOMORPH, REVIEW THIS THREAD: http://tauceti.ru</span>"
 
 
 /*
@@ -135,15 +135,20 @@ Infestation:
 	if(xenomorphs.len)
 		if(check_xeno_queen())
 			if(check_xeno_queen() == 1)
-				text += "<font size=3 color=green><b>The Queen is alive!</FONT></b></span>"
+				text += "<span style='color: green; font-weight: bold;'>The Queen is alive!</span>"
 			if(check_xeno_queen() == 2)
-				text += "<span class='danger'><font size=3><b>The Queen has been killed!</b></FONT></span>"
+				text += "<span style='color: red; font-weight: bold;'>The Queen has been killed!</span>"
 		else
-			text += "<font size=3 color=blue><b>The Queen was never born.</FONT></b></span>"
+			text += "<span style='color: orange; font-weight: bold;'>The Queen was never born.</span>"
 		if(count_hive_power())
-			text += "<font size=3 color=green><b>There is [count_hive_power()] xenomorphs alive!</FONT></b></span>"
+			text += "<span style='color: green; font-weight: bold;'>There is [count_hive_power()] xenomorphs alive!</span>"
 		else
-			text += "<span class='danger'><font size=3><b>All xenomorphs were eradicated.</b></FONT></span>"
+			text += "<span style='color: red; font-weight: bold;'>All xenomorphs were eradicated.</span>"
 		if(count_hive_looses())
-			text += "<span class='danger'><font size=3><b>[count_hive_looses()] xenomorphs are dead.</b></FONT></span>"
+			text += "<span style='color: red; font-weight: bold;'>[count_hive_looses()] xenomorphs are dead.</span>"
+		
+	if(text)
+		antagonists_completion += list(list("mode" = "infestation", "html" = text))
+		text = "<div class='block'>[text]</div>"
+		
 	return text

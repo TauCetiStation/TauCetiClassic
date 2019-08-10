@@ -4,7 +4,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "fire_extinguisher0"
 	item_state = "fire_extinguisher"
-	hitsound = 'sound/weapons/smash.ogg'
+	hitsound = list('sound/weapons/smash.ogg')
 	flags = CONDUCT
 	throwforce = 10
 	w_class = ITEM_SIZE_NORMAL
@@ -25,7 +25,7 @@
 	desc = "A light and compact fibreglass-framed model fire extinguisher."
 	icon_state = "miniFE0"
 	item_state = "miniFE"
-	hitsound = null	//it is much lighter, after all.
+	hitsound = list()	//it is much lighter, after all.
 	throwforce = 2
 	w_class = ITEM_SIZE_SMALL
 	force = 3.0
@@ -59,7 +59,7 @@
 		var/obj/O = target
 		O.reagents.trans_to(src, 50)
 		to_chat(user, "<span class='notice'>[src] is now refilled.</span>")
-		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 		return
 
 	if (!safety)
@@ -72,39 +72,41 @@
 
 		src.last_use = world.time
 
-		playsound(src.loc, 'sound/effects/extinguish.ogg', 75, 1, -3)
+		playsound(src, 'sound/effects/extinguish.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 
 		var/direction = get_dir(src,target)
 
-		if(usr.buckled && isobj(usr.buckled) && !usr.buckled.anchored )
-			spawn(0)
-				var/obj/structure/stool/bed/chair/C = null
-				if(istype(usr.buckled, /obj/structure/stool/bed/chair))
-					C = usr.buckled
-				var/obj/B = usr.buckled
-				var/movementdirection = turn(direction,180)
-				if(C)	C.propelled = 4
-				step(B, movementdirection)
-				sleep(1)
-				step(B, movementdirection)
-				if(C)	C.propelled = 3
-				sleep(1)
-				step(B, movementdirection)
-				sleep(1)
-				step(B, movementdirection)
-				if(C)	C.propelled = 2
-				sleep(2)
-				step(B, movementdirection)
-				if(C)	C.propelled = 1
-				sleep(2)
-				step(B, movementdirection)
-				if(C)	C.propelled = 0
-				sleep(3)
-				step(B, movementdirection)
-				sleep(3)
-				step(B, movementdirection)
-				sleep(3)
-				step(B, movementdirection)
+		if(usr.buckled && isobj(usr.buckled) && !usr.buckled.anchored)
+			var/obj/structure/stool/bed/chair/buckled_to = usr.buckled
+			if(!buckled_to.flipped)
+				spawn(0)
+					var/obj/structure/stool/bed/chair/C = null
+					if(istype(usr.buckled, /obj/structure/stool/bed/chair))
+						C = usr.buckled
+					var/obj/B = usr.buckled
+					var/movementdirection = turn(direction,180)
+					if(C)	C.propelled = 4
+					step(B, movementdirection)
+					sleep(1)
+					step(B, movementdirection)
+					if(C)	C.propelled = 3
+					sleep(1)
+					step(B, movementdirection)
+					sleep(1)
+					step(B, movementdirection)
+					if(C)	C.propelled = 2
+					sleep(2)
+					step(B, movementdirection)
+					if(C)	C.propelled = 1
+					sleep(2)
+					step(B, movementdirection)
+					if(C)	C.propelled = 0
+					sleep(3)
+					step(B, movementdirection)
+					sleep(3)
+					step(B, movementdirection)
+					sleep(3)
+					step(B, movementdirection)
 		else
 			user.newtonian_move(turn(direction, 180))
 

@@ -15,7 +15,7 @@
 	melee_damage_upper = 15
 	attacktext = "flails around and hits"
 	move_to_delay = 5
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = list('sound/weapons/bite.ogg')
 
 	var/emp_damage = 0
 	var/nanobot_chance = 40
@@ -45,7 +45,7 @@
 	var/mob/living/L = target
 	if(L.reagents)
 		if(prob(nanobot_chance))
-			visible_message("<b><span class='warning'>[src] injects something from its flailing arm!</span>")
+			visible_message("<span class='warning'>[src] injects something from its flailing arm!</span>")
 			L.reagents.add_reagent("mednanobots", 3)
 
 /mob/living/simple_animal/hostile/cyber_horror/death()

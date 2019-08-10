@@ -29,7 +29,7 @@
 	status_flags = CANPUSH
 	universal_speak = 1
 	universal_understand = 1
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = list('sound/weapons/punch1.ogg')
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -119,7 +119,7 @@
 			if(prob(max(1,L.scp_mark * 4)))
 				src.loc = T
 				src.dir = L.dir
-				playsound(L, 'sound/effects/blobattack.ogg', 100, 1)
+				playsound(L, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
 				L.gib()
 				did_move = 1
 			var/chance = rand(10,65)
@@ -153,7 +153,7 @@
 			target_turf.scp_was_here = 1
 			loc = target_turf
 			dir = pick(cardinal)
-			playsound(src, 'sound/effects/scp_move.ogg', 100, 1)
+			playsound(src, 'sound/effects/scp_move.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/simple_animal/special/scp173/death()
 	return

@@ -55,6 +55,11 @@
 	popup.set_content(dat)
 	popup.open()
 
+// Special paper for the science tool
+/obj/item/weapon/paper/artifact_info
+	var/artifact_type
+	var/artifact_first_effect
+	var/artifact_second_effect
 
 /obj/machinery/artifact_analyser/process()
 	if(scan_in_progress && world.time > scan_completion_time)
@@ -68,24 +73,32 @@
 			reconnect_scanner()
 		if(!owned_scanner)
 			results = "Error communicating with scanner."
-			playsound(src, 'sound/machines/buzz-two.ogg', 20, 1)
+			playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, 20)
 		else if(!scanned_object || scanned_object.loc != owned_scanner.loc)
 			results = "Unable to locate scanned object. Ensure it was not moved in the process."
-			playsound(src, 'sound/machines/buzz-two.ogg', 20, 1)
+			playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, 20)
 		else
 			results = get_scan_info(scanned_object)
 		owned_scanner.icon_state = "xenoarch_scanner"
 		src.visible_message("<b>[name]</b> states, \"Scanning complete.\"")
-		var/obj/item/weapon/paper/P = new(src.loc)
+		var/obj/item/weapon/paper/artifact_info/P = new(src.loc)
 		P.name = "[src] report #[++report_num]"
 		P.info = "<b>[src] analysis report #[report_num]</b><br>"
 		P.info += "<br>"
 		P.info += "[bicon(scanned_object)] [results]"
 		P.update_icon()
+		if(scanned_object)
+			P.artifact_type = scanned_object.type
+			if(istype(scanned_object, /obj/machinery/artifact))
+				var/obj/machinery/artifact/A = scanned_object
+				if(A.my_effect)
+					P.artifact_first_effect = A.my_effect.effect_type
+				if(A.secondary_effect)
+					P.artifact_second_effect = A.secondary_effect.effect_type
 
 		var/obj/item/weapon/stamp/S = new
 		S.stamp_paper(P)
-		playsound(src, 'sound/items/polaroid1.ogg', 50, 1)
+		playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
 
 		if(scanned_object && istype(scanned_object, /obj/machinery/artifact))
 			var/obj/machinery/artifact/A = scanned_object
@@ -93,8 +106,7 @@
 
 /obj/machinery/artifact_analyser/Topic(href, href_list)
 	if(href_list["close"])
-		var/keyboard = pick('sound/machines/keyboard1.ogg', 'sound/machines/keyboard1.ogg')
-		playsound(src, keyboard, 50, 1)
+		playsound(src, pick(SOUNDIN_KEYBOARD), VOL_EFFECTS_MASTER, null, FALSE)
 		usr.unset_machine(src)
 		usr << browse(null, "window=artanalyser")
 		return FALSE
@@ -104,8 +116,7 @@
 		return
 
 	if(href_list["begin_scan"])
-		var/keyboard = pick('sound/machines/keyboard1.ogg', 'sound/machines/keyboard1.ogg')
-		playsound(src, keyboard, 50, 1)
+		playsound(src, pick(SOUNDIN_KEYBOARD), VOL_EFFECTS_MASTER, null, FALSE)
 		if(!owned_scanner)
 			reconnect_scanner()
 		if(owned_scanner)
@@ -124,7 +135,7 @@
 
 				if(artifact_in_use)
 					src.visible_message("<b>[name]</b> states, \"Cannot harvest. Too much interference.\"")
-					playsound(src, 'sound/machines/buzz-two.ogg', 20, 1)
+					playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, 20)
 				else
 					scanned_object = O
 					scan_in_progress = 1
@@ -136,8 +147,7 @@
 			if(!scanned_object)
 				src.visible_message("<b>[name]</b> states, \"Unable to isolate scan target.\"")
 	if(href_list["halt_scan"])
-		var/keyboard = pick('sound/machines/keyboard1.ogg', 'sound/machines/keyboard1.ogg')
-		playsound(src, keyboard, 50, 1)
+		playsound(src, pick(SOUNDIN_KEYBOARD), VOL_EFFECTS_MASTER, null, FALSE)
 		owned_scanner.icon_state = "xenoarch_scanner"
 		scan_in_progress = 0
 		src.visible_message("<b>[name]</b> states, \"Scanning halted.\"")
@@ -147,6 +157,8 @@
 // hardcoded responses, oh well
 /obj/machinery/artifact_analyser/proc/get_scan_info(obj/scanned_obj)
 	switch(scanned_obj.type)
+		if(/obj/item/clothing/glasses/hud/mining/ancient)
+			return "A heads-up display that scans the rocks in view and provides some data about their composition."
 		if(/obj/machinery/auto_cloner)
 			return "Automated cloning pod - appears to rely on organic nanomachines with a self perpetuating \
 			ecosystem involving self cannibalism and a symbiotic relationship with the contained liquid.<br><br>\

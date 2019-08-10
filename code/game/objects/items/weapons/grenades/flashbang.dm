@@ -34,8 +34,8 @@
 	qdel(src)
 
 /obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/carbon/M)						// Added a new proc called 'bang' that takes a location and a person to be banged.
-	to_chat(M, "\red <B>BANG</B>")
-	playsound(src.loc, 'sound/effects/bang.ogg', 50, 1, 5)
+	to_chat(M, "<span class='warning'><B>BANG</B></span>")
+	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, null, null, 5)
 
 //Checking for protections
 	var/eye_safety = 0
@@ -90,21 +90,21 @@
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
 		if (IO.damage >= IO.min_bruised_damage)
-			to_chat(M, "\red Your eyes start to burn badly!")
+			to_chat(M, "<span class='warning'>Your eyes start to burn badly!</span>")
 			if(!banglet && !(istype(src , /obj/item/weapon/grenade/clusterbuster)))
 				if (IO.damage >= IO.min_broken_damage)
-					to_chat(M, "\red You can't see anything!")
+					to_chat(M, "<span class='warning'>You can't see anything!</span>")
 		if(H.species.name == SHADOWLING) // BBQ from shadowling ~Zve
 			H.adjustFireLoss(rand(15,25))
 	if (M.ear_damage >= 15)
-		to_chat(M, "\red Your ears start to ring badly!")
+		to_chat(M, "<span class='warning'>Your ears start to ring badly!</span>")
 		if(!banglet && !(istype(src , /obj/item/weapon/grenade/clusterbuster)))
 			if (prob(M.ear_damage - 10 + 5))
-				to_chat(M, "\red You can't hear anything!")
+				to_chat(M, "<span class='warning'>You can't hear anything!</span>")
 				M.sdisabilities |= DEAF
 	else
 		if (M.ear_damage >= 5)
-			to_chat(M, "\red Your ears start to ring!")
+			to_chat(M, "<span class='warning'>Your ears start to ring!</span>")
 	M.update_icons()
 
 ////////////////////
@@ -124,7 +124,7 @@
 	for(var/i in 1 to numspawned)
 		new /obj/item/weapon/grenade/clusterbuster/segment(loc, payload)	//Creates 'segments' that launches a few more payloads
 
-	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+	playsound(src, 'sound/weapons/armbomb.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 	qdel(src)
 
 
@@ -152,7 +152,7 @@
 		P.active = 1
 		walk_away(P,loc,rand(1,4))
 		addtimer(CALLBACK(P, /obj/item/weapon/grenade.proc/prime), rand(15,60))
-	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+	playsound(src, 'sound/weapons/armbomb.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 	qdel(src)
 
 //////////////////////////////////

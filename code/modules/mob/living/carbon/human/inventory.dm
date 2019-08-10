@@ -11,7 +11,7 @@
 			return
 
 	//	if(istype(I, /obj/item/clothing/head/helmet/space/rig)) // If the item to be equipped is a rigid suit helmet
-	//		src << "\red You must fasten the helmet to a hardsuit first. (Target the head)" // Stop eva helms equipping.
+	//		src << "<span class='warning'>You must fasten the helmet to a hardsuit first. (Target the head)</span>" // Stop eva helms equipping.
 	//		return 0
 
 		if(istype(I, /obj/item/clothing/suit/space)) // If the item to be equipped is a space suit
@@ -357,3 +357,13 @@
 	W.plane = ABOVE_HUD_PLANE
 	W.appearance_flags = APPEARANCE_UI
 	W.slot_equipped = slot
+
+/mob/living/carbon/human/put_in_l_hand(obj/item/W)
+	if(!has_bodypart(BP_L_ARM))
+		return FALSE
+	return ..()
+
+/mob/living/carbon/human/put_in_r_hand(obj/item/W)
+	if(!has_bodypart(BP_R_ARM))
+		return FALSE
+	return ..()

@@ -138,10 +138,10 @@
 		to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
 		return
 	if(user.is_busy(src)) return
-	user.visible_message("\red [user] starts to put [victim] into the gibber!")
+	user.visible_message("<span class='warning'>[user] starts to put [victim] into the gibber!</span>")
 	src.add_fingerprint(user)
 	if(do_after(user, 30, target = src) && victim.Adjacent(src) && user.Adjacent(src) && victim.Adjacent(user) && !occupant)
-		user.visible_message("\red [user] stuffs [victim] into the gibber!")
+		user.visible_message("<span class='warning'>[user] stuffs [victim] into the gibber!</span>")
 		if(victim.client)
 			victim.client.perspective = EYE_PERSPECTIVE
 			victim.client.eye = src
@@ -186,7 +186,7 @@
 	update_icon()
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = gibtime / 100, loop = gibtime) //start shaking
-	playsound(src.loc, 'sound/effects/gibber.ogg', 100, 1)
+	playsound(src, 'sound/effects/gibber.ogg', VOL_EFFECTS_MASTER)
 
 	var/slab_name = occupant.name
 	var/slab_count = 3
@@ -226,7 +226,7 @@
 		qdel(src.occupant)
 		occupant = null
 
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 		operating = 0
 		for (var/obj/item/thing in contents)
 			thing.loc = get_turf(thing) // Drop it onto the turf for throwing.

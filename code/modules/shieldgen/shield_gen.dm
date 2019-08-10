@@ -55,20 +55,11 @@
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			updateDialog()
 		else
-			to_chat(user, "\red Access denied.")
-	else if(istype(W, /obj/item/weapon/card/emag))
-		user.SetNextMove(CLICK_CD_INTERACT)
-		if(prob(75))
-			src.locked = !src.locked
-			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
-			updateDialog()
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(iswrench(W))
 		src.anchored = !src.anchored
-		src.visible_message("\blue [bicon(src)] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].")
+		src.visible_message("<span class='notice'>[bicon(src)] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].</span>")
 
 		if(active)
 			toggle()
@@ -88,6 +79,16 @@
 			owned_capacitor = null
 	else
 		..()
+
+/obj/machinery/shield_gen/emag_act(mob/user)
+	if(prob(75))
+		src.locked = !src.locked
+		to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
+		updateDialog()
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start()
+	return TRUE
 
 /obj/machinery/shield_gen/ui_interact(mob/user)
 	if ( !in_range(src, user) || (stat & (BROKEN|NOPOWER)) )

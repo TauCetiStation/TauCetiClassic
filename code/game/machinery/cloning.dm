@@ -25,7 +25,7 @@
 	var/biomass = CLONE_BIOMASS * 3
 	var/speed_coeff
 	var/efficiency
-	light_color = "#00FF00"
+	light_color = "#00ff00"
 
 /obj/machinery/clonepod/atom_init()
 	. = ..()
@@ -74,12 +74,9 @@
 	. = ..()
 	Initialize()
 	buf.types=DNA2_BUF_UE|DNA2_BUF_UI
-	//data = "066000033000000000AF00330660FF4DB002690"
-	//data = "0C80C80C80C80C80C8000000000000161FBDDEF" - Farmer Jeff
 	buf.dna.real_name="God Emperor of Mankind"
 	buf.dna.unique_enzymes = md5(buf.dna.real_name)
-	buf.dna.UI=list(0x066,0x000,0x033,0x000,0x000,0x000,0xAF0,0x033,0x066,0x0FF,0x4DB,0x002,0x690)
-	//buf.dna.UI=list(0x0C8,0x0C8,0x0C8,0x0C8,0x0C8,0x0C8,0x000,0x000,0x000,0x000,0x161,0xFBD,0xDEF) // Farmer Jeff
+	buf.dna.UI=list(0x066,0x000,0x033,0x000,0x000,0x000,0xAF0,0x000,0x000,0x000,0x033,0x066,0x0FF,0x4DB,0x002,0x690)
 	buf.dna.UpdateUI()
 
 /obj/item/weapon/disk/data/monkey
@@ -335,22 +332,23 @@
 		else
 			src.locked = 0
 			to_chat(user, "System unlocked.")
-	else if (istype(W, /obj/item/weapon/card/emag))
-		if (isnull(src.occupant))
-			return
-		user.SetNextMove(CLICK_CD_INTERACT)
-		to_chat(user, "You force an emergency ejection.")
-		src.locked = 0
-		src.go_out()
-		return
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
-		to_chat(user, "\blue \The [src] processes \the [W].")
+		to_chat(user, "<span class='notice'>\The [src] processes \the [W].</span>")
 		biomass += 50
 		user.drop_item()
 		qdel(W)
 		return
 	else
 		..()
+
+/obj/machinery/clonepod/emag_act(mob/user)
+	if(isnull(src.occupant))
+		return FALSE
+	user.SetNextMove(CLICK_CD_INTERACT)
+	to_chat(user, "You force an emergency ejection.")
+	src.locked = 0
+	src.go_out()
+	return TRUE
 
 //Put messages in the connected computer's temp var for display.
 /obj/machinery/clonepod/proc/connected_message(message)
@@ -384,21 +382,10 @@
 		src.mess = 0
 		gibs(src.loc)
 		src.icon_state = "pod_0"
-
-		/*
-		for(var/obj/O in src)
-			O.loc = src.loc
-		*/
 		return
 
 	if (!(src.occupant))
 		return
-
-	/*
-	for(var/obj/O in src)
-		O.loc = src.loc
-	*/
-
 	if (src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
@@ -499,11 +486,5 @@
 	<i>A good diskette is a great way to counter aforementioned genetic drift!</i><br>
 	<br>
 	<font size=1>This technology produced under license from Thinktronic Systems, LTD.</font>"}
-
-//SOME SCRAPS I GUESS
-/* EMP grenade/spell effect
-		if(istype(A, /obj/machinery/clonepod))
-			A:malfunction()
-*/
 
 #undef CLONE_INITIAL_DAMAGE

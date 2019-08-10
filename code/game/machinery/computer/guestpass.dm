@@ -10,6 +10,7 @@
 
 	var/temp_access = list() // to prevent agent cards stealing access as permanent
 	var/reason = "NOT SPECIFIED"
+	var/issuedby
 
 	var/expiration_time = 0
 	var/is_expired = 0
@@ -21,12 +22,12 @@
 	return
 
 /obj/item/weapon/card/id/guest/proc/expire_warn()
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 20, 1)
+	playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, 20)
 	flick("guest_warn", src)
 	return
 
 /obj/item/weapon/card/id/guest/proc/expire()
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 20, 1)
+	playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, 20)
 	is_expired = 1
 	icon_state = "guest_expired"
 	return
@@ -39,6 +40,7 @@
 
 /obj/item/weapon/card/id/guest/examine(mob/user)
 	..()
+	to_chat(user, "<span class='notice'>Issued to [registered_name] by [issuedby].</span>")
 	if (world.time < expiration_time)
 		var/time_until_expiration = ceil((expiration_time - world.time) / 600) // Sould be in minutes.
 		to_chat(user, "<span class='notice'>This pass expires at [worldtime2text(expiration_time)].<br>There is [time_until_expiration] minutes left.</span>")
@@ -46,6 +48,7 @@
 		to_chat(user, "<span class='warning'>It expired at [worldtime2text(expiration_time)].</span>")
 
 /obj/item/weapon/card/id/guest/read()
+	to_chat(usr, "<span class='notice'>Issued to [registered_name] by [issuedby].</span>")
 	if (world.time > expiration_time)
 		to_chat(usr, "<span class='notice'>This pass expired at [worldtime2text(expiration_time)].</span>")
 	else
@@ -200,10 +203,11 @@
 					pass.registered_name = giv_name
 					pass.expiration_time = world.time + duration*10*60
 					pass.reason = reason
+					pass.issuedby = giver.registered_name
 					pass.name = "guest pass #[number]"
 					pass.count_until_expired()
 				else
-					to_chat(usr, "\red Cannot issue pass without issuing ID.")
+					to_chat(usr, "<span class='warning'>Cannot issue pass without issuing ID.</span>")
 
 	updateUsrDialog()
 

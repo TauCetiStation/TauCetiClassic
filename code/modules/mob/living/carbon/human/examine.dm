@@ -221,7 +221,10 @@
 		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 
 	if(SMALLSIZE in mutations)
-		msg += "[t_He] [t_is] small halfling!\n"
+		if(gnomed)
+			msg += "[t_He] [t_is] a gnome!\n"
+		else
+			msg += "[t_He] [t_is] a small halfling!\n"
 
 	var/distance = get_dist(user,src)
 	if(istype(user, /mob/dead/observer) || user.stat == DEAD) // ghosts can see anything
@@ -315,26 +318,27 @@
 					var/list/flavor_text = list()
 					var/list/no_exclude = list("gaping wound", "big gaping wound", "massive wound", "large bruise",\
 					"huge bruise", "massive bruise", "severe burn", "large burn", "deep burn", "carbonised area")
+					var/span_flavor = "<span class='warning'>"
 					for(var/wound in wound_descriptors)
 						switch(wound_descriptors[wound])
 							if(1)
 								if(!flavor_text.len)
-									flavor_text += "<span class='warning'>[t_He] has[prob(10) && !(wound in no_exclude)  ? " what might be" : ""] a [wound]"
+									flavor_text += "[span_flavor][t_He] has[prob(10) && !(wound in no_exclude)  ? " what might be" : ""] a [wound]"
 								else
 									flavor_text += "[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a [wound]"
 							if(2)
 								if(!flavor_text.len)
-									flavor_text += "<span class='warning'>[t_He] has[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a pair of [wound]s"
+									flavor_text += "[span_flavor][t_He] has[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a pair of [wound]s"
 								else
 									flavor_text += "[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a pair of [wound]s"
 							if(3 to 5)
 								if(!flavor_text.len)
-									flavor_text += "<span class='warning'>[t_He] has several [wound]s"
+									flavor_text += "[span_flavor][t_He] has several [wound]s"
 								else
 									flavor_text += " several [wound]s"
 							if(6 to INFINITY)
 								if(!flavor_text.len)
-									flavor_text += "<span class='warning'>[t_He] has a bunch of [wound]s"
+									flavor_text += "[span_flavor][t_He] has a bunch of [wound]s"
 								else
 									flavor_text += " a ton of [wound]\s"
 					var/flavor_text_string = ""
@@ -409,8 +413,10 @@
 	if(display_gloves)
 		msg += "<span class='warning'><b>[src] has blood running from under [t_his] gloves!</b></span>\n"
 
-	for(var/implant in get_visible_implants(1))
-		msg += "<span class='warning'><b>[src] has \a [implant] sticking out of their flesh!</b></span>\n"
+	var/list/implants = get_visible_implants(1)
+	for(var/implant in implants)
+		var/obj/item/organ/external/BP = implants[implant]
+		msg += "<span class='warning'><b>[src] has \a [implant] sticking out of their [BP.name]!</b></span>\n"
 	if(digitalcamo)
 		msg += "<span class='warning'>[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.</span>\n"
 	if(mind && mind.changeling && mind.changeling.isabsorbing)

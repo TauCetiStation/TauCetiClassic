@@ -594,7 +594,7 @@
 	else if(prob(20) || holder.stage == 2)
 		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
-			H.vomit()
+			H.invoke_vomit_async()
 	else if(holder.stage == 3)
 		to_chat(mob, "<span class='userdanger'>[pick("Your stomach hurts.", "You feel a sharp abdominal pain.")]</span>")
 		mob.reagents.add_reagent(pick("plasticide", "toxin", "amatoxin", "phoron", "lexorin", "carpotoxin", "mindbreaker", "plantbgone", "fluorine"), round(rand(1,3), 1)) // some random toxin
@@ -1187,7 +1187,7 @@
 	level = 1
 
 /datum/disease2/effect/gunck/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	to_chat(mob, "\red Mucous runs down the back of your throat.")*/
+	to_chat(mob, "<span class='warning'>Mucous runs down the back of your throat.</span>")*/
 
 /datum/disease2/effect/drool
 	name = "Drooling"

@@ -65,7 +65,7 @@
 
 	var/blood_datum_path = /datum/dirt_cover/red_blood //Red.
 	var/datum/dirt_cover/blood_datum // this will contain reference and should only be used as read only.
-	var/flesh_color = "#FFC896" //Pink.
+	var/flesh_color = "#ffc896" //Pink.
 	var/base_color      //Used when setting species.
 
 	//Used in icon caching.
@@ -233,7 +233,7 @@
 	,NO_MINORCUTS = TRUE
 	)
 
-	flesh_color = "#34AF10"
+	flesh_color = "#34af10"
 	base_color = "#066000"
 
 /datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J)
@@ -279,7 +279,7 @@
 	,HAS_HAIR = TRUE
 	)
 
-	flesh_color = "#AFA59E"
+	flesh_color = "#afa59e"
 	base_color = "#333333"
 
 /datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J)
@@ -320,7 +320,7 @@
 
 	eyes = "skrell_eyes"
 	blood_datum_path = /datum/dirt_cover/purple_blood
-	flesh_color = "#8CD7A3"
+	flesh_color = "#8cd7a3"
 
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
@@ -351,7 +351,7 @@
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
-	flesh_color = "#808D11"
+	flesh_color = "#808d11"
 
 	sprite_sheets = list(
 		"suit" = 'icons/mob/species/vox/suit.dmi',
@@ -362,7 +362,7 @@
 		)
 
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/vox(src), SLOT_WEAR_MASK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
 	if(!H.r_hand)
 		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), SLOT_R_HAND)
 		H.internal = H.r_hand
@@ -438,7 +438,7 @@
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
-	flesh_color = "#808D11"
+	flesh_color = "#808d11"
 	tail = "armalis_tail"
 	icon_template = 'icons/mob/human_races/r_armalis.dmi'
 
@@ -512,7 +512,7 @@
 		)
 
 	blood_datum_path = /datum/dirt_cover/green_blood
-	flesh_color = "#907E4A"
+	flesh_color = "#907e4a"
 
 	has_gendered_icons = FALSE
 
@@ -563,7 +563,7 @@
 		else
 			qdel(D)
 
-	H.visible_message("\red[H] splits apart with a wet slithering noise!")
+	H.visible_message("<span class='warning'>[H] splits apart with a wet slithering noise!</span>")
 
 /datum/species/machine
 	name = IPC
@@ -606,6 +606,7 @@
 	,BIOHAZZARD_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
 	,NO_MINORCUTS = TRUE
+	,NO_VOMIT = TRUE
 	)
 
 	has_bodypart = list(
@@ -649,6 +650,7 @@
 	,NO_BLOOD = TRUE
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,NO_VOMIT = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/gray_blood
@@ -694,7 +696,7 @@
 /datum/unarmed_attack
 	var/attack_verb = list("attack")	// Empty hand hurt intent verb.
 	var/damage = 0						// Extra empty hand attack damage.
-	var/attack_sound = "punch"
+	var/list/attack_sound = SOUNDIN_PUNCH
 	var/miss_sound = 'sound/weapons/punchmiss.ogg'
 	var/sharp = 0
 	var/edge = 0
@@ -711,12 +713,11 @@
 
 /datum/unarmed_attack/slime_glomp
 	attack_verb = list("glomp")
-	damage = 2
-	attack_sound = 'sound/effects/attackblob.ogg'
+	attack_sound = list('sound/effects/attackblob.ogg')
 
 /datum/unarmed_attack/claws
 	attack_verb = list("scratch", "claw")
-	attack_sound = 'sound/weapons/slice.ogg'
+	attack_sound = list('sound/weapons/slice.ogg')
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	damage = 5
 	sharp = 1
@@ -765,6 +766,7 @@
 	,NO_FINGERPRINT = TRUE
 	,NO_SCAN = TRUE
 	,NO_MINORCUTS = TRUE
+	,NO_VOMIT = TRUE
 	)
 
 	burn_mod = 2
@@ -788,14 +790,14 @@
 	deform = 'icons/mob/human_races/r_golem.dmi'
 	dietflags = 0 //this is ROCK
 
-	total_health = 200
+	total_health = 100
 	oxy_mod = 0
 	tox_mod = 0
 	brain_mod = 0
 	speed_mod = 2
 
 	blood_datum_path = /datum/dirt_cover/adamant_blood
-	flesh_color = "#137E8F"
+	flesh_color = "#137e8f"
 
 	butcher_drops = list(/obj/item/weapon/ore/diamond = 1, /obj/item/weapon/ore/slag = 3)
 
@@ -808,6 +810,7 @@
 		RAD_IMMUNE = TRUE,
 		VIRUS_IMMUNE = TRUE,
 		BIOHAZZARD_IMMUNE = TRUE,
+		NO_VOMIT = TRUE,
 		NO_FINGERPRINT = TRUE,
 		NO_MINORCUTS = TRUE
 		)
@@ -885,7 +888,7 @@
 	tox_mod = 0
 	speed_mod = -0.2
 
-	var/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
+	var/list/spooks = list('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg')
 
 /datum/species/zombie/handle_post_spawn(mob/living/carbon/human/H)
 	return ..()
@@ -929,7 +932,7 @@
 
 	tail = "zombie_tajtail"
 
-	flesh_color = "#AFA59E"
+	flesh_color = "#afa59e"
 	base_color = "#000000"
 
 	flags = list(
@@ -950,7 +953,7 @@
 
 	eyes = "skrell_eyes"
 	blood_datum_path = /datum/dirt_cover/purple_blood
-	flesh_color = "#8CD7A3"
+	flesh_color = "#8cd7a3"
 	base_color = "#000000"
 
 /datum/species/zombie/unathi
@@ -965,7 +968,7 @@
 
 	tail = "zombie_sogtail"
 
-	flesh_color = "#34AF10"
+	flesh_color = "#34af10"
 	base_color = "#000000"
 
 	flags = list(
@@ -987,3 +990,17 @@
 	flesh_color = "#05fffb"
 	unarmed_type = /datum/unarmed_attack/slime_glomp
 	has_gendered_icons = FALSE
+
+	cold_level_1 = 280
+	cold_level_2 = 230
+	cold_level_3 = 150
+
+	flags = list(
+	 NO_BREATHE = TRUE
+	,NO_SCAN = TRUE
+	,NO_PAIN = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,RAD_IMMUNE = TRUE
+	,VIRUS_IMMUNE = TRUE
+	)

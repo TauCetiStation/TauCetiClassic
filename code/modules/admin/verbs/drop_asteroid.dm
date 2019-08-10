@@ -10,7 +10,7 @@
 
 	var/turf/T = get_turf(usr)
 
-	message_admins("\blue [key_name_admin(usr)] creates the [side_x]x[side_y] asteroid on [T.x],[T.y],[T.z] [ADMIN_JMP(T)]")
+	message_admins("<span class='notice'>[key_name_admin(usr)] creates the [side_x]x[side_y] asteroid on [T.x],[T.y],[T.z] [ADMIN_JMP(T)]</span>")
 	log_admin("[key_name_admin(usr)] creates the [side_x]x[side_y] asteroid on [T.x],[T.y],[T.z]")
 
 	var/datum/map_template/asteroid = new(map = generate_asteroid_mapfile(side_x, side_y))
@@ -21,7 +21,7 @@
 
 	for(var/mob/M in player_list)
 		if(M.z == T.z)
-			M << sound('sound/effects/Explosion3.ogg')
+			M.playsound_local(null, 'sound/effects/Explosion3.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 
 	//shake the station!
 	for(var/mob/living/carbon/C in carbon_list)

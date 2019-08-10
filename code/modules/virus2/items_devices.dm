@@ -31,7 +31,7 @@
 		report("Antibodies detected: [antigens2string(C.antibodies)]", user)
 
 /obj/item/device/antibody_scanner/proc/report(text, mob/user)
-	to_chat(user, "\blue [bicon(src)] \The [src] beeps, \"[text]\"")
+	to_chat(user, "<span class='notice'>[bicon(src)] \The [src] beeps, \"[text]\"</span>")
 
 ///////////////VIRUS DISH///////////////
 

@@ -116,8 +116,8 @@ var/list/fusion_cores = list()
 		return
 
 	else if(iswrench(W))
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(anchored)
 			connect_to_network()

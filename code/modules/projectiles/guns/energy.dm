@@ -2,6 +2,7 @@
 	icon_state = "energy"
 	name = "energy gun"
 	desc = "A basic energy-based gun."
+	can_be_holstered = FALSE
 
 	var/obj/item/weapon/stock_parts/cell/power_supply //What type of power cell this uses
 	var/cell_type = /obj/item/weapon/stock_parts/cell
@@ -63,7 +64,7 @@
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	if (shot.select_name)
-		to_chat(user, "\red [src] is now set to [shot.select_name].")
+		to_chat(user, "<span class='warning'>[src] is now set to [shot.select_name].</span>")
 	update_icon()
 	return
 

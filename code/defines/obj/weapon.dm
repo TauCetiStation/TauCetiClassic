@@ -10,7 +10,7 @@
 	throw_range = 4
 	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("called", "rang")
-	hitsound = 'sound/weapons/ring.ogg'
+	hitsound = list('sound/weapons/ring.ogg')
 
 /obj/item/weapon/rsp
 	name = "\improper Rapid-Seed-Producer (RSP)"
@@ -105,7 +105,7 @@
 		if(ishuman(AM))
 			if(isturf(src.loc))
 				var/mob/living/carbon/H = AM
-				if(H.m_intent == "run")
+				if(H.m_intent == "run" && !H.buckled)
 					armed = 0
 					H.legcuffed = src
 					src.loc = H
@@ -135,7 +135,7 @@
 
 /obj/item/weapon/legcuffs/bola/after_throw(datum/callback/callback)
 	..()
-	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, 1)
+	playsound(src,'sound/weapons/bolathrow.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/legcuffs/bola/throw_impact(atom/hit_atom)
 	if(!iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
@@ -204,7 +204,7 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/shard/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
 /obj/item/weapon/shard/afterattack(atom/A, mob/user, proximity)
@@ -289,7 +289,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
 	force = 3.0
-	hitsound = 'sound/effects/magic.ogg'
+	hitsound = list('sound/effects/magic.ogg')
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
@@ -388,6 +388,7 @@
 	w_class = ITEM_SIZE_SMALL
 	item_state = "electronic"
 	flags = CONDUCT
+	usesound = 'sound/items/Deconstruct.ogg'
 	var/mtype = 1						// 1=electronic 2=hardware
 
 /obj/item/weapon/module/card_reader
@@ -444,7 +445,7 @@
 	attack_verb = list("chopped", "torn", "cut")
 
 /obj/item/weapon/hatchet/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
 /obj/item/weapon/hatchet/unathiknife
@@ -519,7 +520,7 @@
 	icon_state = "RPED"
 	item_state = "RPED"
 	w_class = ITEM_SIZE_HUGE
-	can_hold = list("/obj/item/weapon/stock_parts")
+	can_hold = list(/obj/item/weapon/stock_parts)
 	storage_slots = 50
 	use_to_pickup = 1
 	allow_quick_gather = 1
@@ -553,9 +554,9 @@
 /obj/item/weapon/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.
 	if(alt_sound && prob(1))
-		playsound(src, alt_sound, 40, 1)
+		playsound(src, alt_sound, VOL_EFFECTS_MASTER)
 	else
-		playsound(src, pshoom_or_beepboopblorpzingshadashwoosh, 40, 1)
+		playsound(src, pshoom_or_beepboopblorpzingshadashwoosh, VOL_EFFECTS_MASTER)
 
 //Sorts stock parts inside an RPED by their rating.
 //Only use /obj/item/weapon/stock_parts/ with this sort proc!

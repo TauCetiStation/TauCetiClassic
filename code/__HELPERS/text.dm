@@ -14,16 +14,8 @@
 
 // Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
 /proc/sanitize_sql(t)
-	var/sanitized_text = replacetext(t, "'", "\\'")
-	sanitized_text = replacetext(sanitized_text, "\"", "\\\"")
-	return sanitized_text
-
-// Sanitize inputs to avoid SQL injection attacks
-/proc/sql_sanitize_text(text)
-	text = replacetext(text, "'", "''")
-	text = replacetext(text, ";", "")
-	text = replacetext(text, "&", "")
-	return text
+	var/sqltext = dbcon.Quote("[t]") // http://www.byond.com/forum/post/2218538
+	return copytext(sqltext, 2, lentext(sqltext))
 
 /*
  * Text sanitization
@@ -131,8 +123,22 @@
 
 	return output
 
-/proc/sanitize_slack(t)
-	return replacetext(html_decode(reset_ja(t)), "\"", "'")
+/proc/shelleo_url_scrub(url)
+	var/static/regex/bad_chars_regex = regex("\[^#%&./:=?\\w]*", "g")
+	var/scrubbed_url = ""
+	var/bad_match = ""
+	var/last_good = 1
+	var/bad_chars = 1
+	do
+		bad_chars = bad_chars_regex.Find(url)
+		scrubbed_url += copytext(url, last_good, bad_chars)
+		if(bad_chars)
+			bad_match = url_encode(bad_chars_regex.match)
+			scrubbed_url += bad_match
+			last_good = bad_chars + length(bad_match)
+	while(bad_chars)
+	. = scrubbed_url
+
 
 //Returns null if there is any bad text in the string
 /proc/reject_bad_text(text, max_length=512)
@@ -329,23 +335,6 @@
 	for(var/i = length(text); i > 0; i--)
 		new_text += copytext(text, i, i+1)
 	return new_text
-
-//Replaces \red \blue \green \b etc with span classes for to_chat
-/proc/replace_text_macro(match, code, rest)
-	var/regex/text_macro = new("(\\xFF.)(.*)$")
-	switch(code)
-		if("\red")
-			return "<span class='warning'>[text_macro.Replace(rest, /proc/replace_text_macro)]</span>"
-		if("\blue", "\green")
-			return "<span class='notice'>[text_macro.Replace(rest, /proc/replace_text_macro)]</span>"
-		if("\b")
-			return "<b>[text_macro.Replace(rest, /proc/replace_text_macro)]</b>"
-		else
-			return text_macro.Replace(rest, /proc/replace_text_macro)
-
-/proc/macro2html(text)
-	var/static/regex/text_macro = new("(\\xFF.)(.*)$")
-	return text_macro.Replace(text, /proc/replace_text_macro)
 
 /*
  * Byond

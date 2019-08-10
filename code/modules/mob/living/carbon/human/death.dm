@@ -110,6 +110,10 @@
 //		world.log << "k"
 		sql_report_death(src)
 		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
+	if(my_golems)
+		for(var/mob/living/carbon/human/golem in my_golems)
+			golem.death(0)
+
 	return ..(gibbed)
 
 /mob/living/carbon/human/proc/makeSkeleton()
@@ -128,10 +132,15 @@
 /mob/living/carbon/human/proc/ChangeToHusk()
 	if(HUSK in mutations)
 		return
-	if(f_style)
-		f_style = "Shaved"		//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
-	if(h_style)
-		h_style = "Bald"
+	if(species.flags[HAS_HAIR])
+		if(f_style)
+			f_style = "Shaved" // we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
+		if(h_style)
+			h_style = "Bald"
+	else if(species.name == SKRELL)
+		r_hair = 85
+		g_hair = 85 // grey
+		b_hair = 85
 
 	update_hair()
 	mutations.Add(HUSK)

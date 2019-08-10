@@ -109,7 +109,7 @@
 		H.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has been shaved with [src.name] by [AH.name] ([AH.ckey])</font>")
 		AH.attack_log += text("\[[time_stamp()]\] <font color='blue'>Used the [src.name] to shave [H.name] ([H.ckey])</font>")
 	H.update_hair()
-	playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
+	playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER, 20)
 
 
 /obj/item/weapon/razor/attack(mob/M, mob/user, def_zone)
@@ -188,7 +188,7 @@
 
 /obj/item/weapon/haircomb/attack_self(mob/user)
 	if(user.r_hand == src || user.l_hand == src)
-		user.visible_message(text("\red [] uses [] to comb their hair with incredible style and sophistication. What a [].", user, src, user.gender == FEMALE ? "lady" : "guy"))
+		user.visible_message(text("<span class='warning'>[] uses [] to comb their hair with incredible style and sophistication. What a [].</span>", user, src, user.gender == FEMALE ? "lady" : "guy"))
 	return
 
 /obj/item/weapon/scissors

@@ -3,21 +3,21 @@
 	var/alt_name = ""
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "\red Speech is currently admin-disabled.")
+		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
 	log_whisper("[src.name]/[src.key] : [message]")
 
 	if(src.client)
 		if (src.client.prefs.muted & MUTE_IC)
-			to_chat(src, "\red You cannot whisper (muted).")
+			to_chat(src, "<span class='warning'>You cannot whisper (muted).</span>")
 			return
 
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
 	if(!speech_allowed && usr == src)
-		to_chat(usr, "\red You can't speak.")
+		to_chat(usr, "<span class='warning'>You can't speak.</span>")
 		return
 
 	if (src.stat == DEAD)
@@ -39,6 +39,8 @@
 	var/datum/language/speaking = parse_language(message)
 	if(speaking)
 		message = copytext(message,2+length(speaking.key))
+	else if(species.force_racial_language)
+		speaking = all_languages[species.language]
 
 	whisper_say(message, speaking, alt_name)
 
@@ -56,7 +58,7 @@
 	message = capitalize(trim(message))
 
 	//TODO: handle_speech_problems for silent
-	if(!message || silent || miming)
+	if(!message || silent || miming || has_trait(TRAIT_MUTE))
 		return
 
 	// Mute disability

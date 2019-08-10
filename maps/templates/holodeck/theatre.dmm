@@ -119,11 +119,11 @@
 "j" = (
 /obj/structure/rack/holorack,
 /obj/item/clothing/under/kilt,
-/obj/item/clothing/head/beret,
 /obj/item/clothing/under/pirate,
 /obj/item/clothing/suit/pirate,
 /obj/item/clothing/head/pirate,
 /obj/item/clothing/glasses/eyepatch,
+/obj/item/clothing/head/beret/red,
 /turf/simulated/floor/holofloor{
 	dir = 2;
 	icon_state = "cult"

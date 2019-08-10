@@ -9,12 +9,13 @@
 
 
 /datum/event/brand_intelligence/announce()
-	command_alert("Rampant brand intelligence has been detected aboard [station_name()], please stand-by.", "Machine Learning Alert")
+	command_alert("Rampant brand intelligence has been detected aboard [station_name()], please stand-by.", "Machine Learning Alert", "rampbrand")
 
 
 /datum/event/brand_intelligence/start()
 	for(var/obj/machinery/vending/V in machines)
-		if(V.z != ZLEVEL_STATION)	continue
+		if(!is_station_level(V.z))
+			continue
 		vendingMachines.Add(V)
 
 	if(!vendingMachines.len)

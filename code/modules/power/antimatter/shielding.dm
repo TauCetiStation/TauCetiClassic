@@ -68,7 +68,7 @@
 /obj/machinery/am_shielding/Destroy()
 	if(control_unit)	control_unit.remove_shielding(src)
 	if(processing)	shutdown_core()
-	visible_message("\red The [src.name] melts!")
+	visible_message("<span class='warning'>The [src.name] melts!</span>")
 	//Might want to have it leave a mess on the floor but no sprites for now
 	return ..()
 
@@ -214,7 +214,7 @@
 	w_amt = 2000
 
 /obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/device/multitool) && istype(src.loc,/turf))
+	if(ismultitool(I) && istype(src.loc,/turf))
 		new/obj/machinery/am_shielding(src.loc)
 		qdel(src)
 		return

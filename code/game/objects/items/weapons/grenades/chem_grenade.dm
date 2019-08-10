@@ -57,24 +57,24 @@
 			return
 		path = 1
 		to_chat(user, "<span class='notice'>You add [W] to the metal casing.</span>")
-		playsound(src.loc, 'sound/items/Screwdriver2.ogg', 25, -3)
+		playsound(src, 'sound/items/Screwdriver2.ogg', VOL_EFFECTS_MASTER)
 		user.remove_from_mob(det)
 		det.loc = src
 		detonator = det
 		icon_state = initial(icon_state) +"_ass"
 		name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 		stage = 1
-	else if(istype(W,/obj/item/weapon/screwdriver) && path != 2)
+	else if(isscrewdriver(W) && path != 2)
 		if(stage == 1)
 			path = 1
 			if(beakers.len)
 				to_chat(user, "<span class='notice'>You lock the assembly.</span>")
 				name = "grenade"
 			else
-//					user << "\red You need to add at least one beaker before locking the assembly."
+//					user << "<span class='warning'>You need to add at least one beaker before locking the assembly.</span>"
 				to_chat(user, "<span class='notice'>You lock the empty assembly.</span>")
 				name = "fake grenade"
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, -3)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			icon_state = initial(icon_state) +"_locked"
 			stage = 2
 		else if(stage == 2)
@@ -84,7 +84,7 @@
 				return
 			else
 				to_chat(user, "<span class='notice'>You unlock the assembly.</span>")
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, -3)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 				icon_state = initial(icon_state) + (detonator?"_ass":"")
 				stage = 1
@@ -143,10 +143,10 @@
 	active = 0
 	if(!has_reagents)
 		icon_state = initial(icon_state) +"_locked"
-		playsound(src.loc, 'sound/items/Screwdriver2.ogg', 50, 1)
+		playsound(src, 'sound/items/Screwdriver2.ogg', VOL_EFFECTS_MASTER)
 		return
 
-	playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
+	playsound(src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 		G.reagents.trans_to(src, G.reagents.total_volume)

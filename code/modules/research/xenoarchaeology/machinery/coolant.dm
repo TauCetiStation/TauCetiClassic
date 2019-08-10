@@ -4,7 +4,7 @@
 	id = "coolant"
 	description = "Industrial cooling substance."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#c8a5dc" // rgb: 200, 165, 220
 
 /datum/chemical_reaction/coolant
 	name = "Coolant"
@@ -40,7 +40,7 @@
 	//S.attach(src)
 	S.set_up(5, 0, src.loc)
 	S.start()
-	playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
+	playsound(src, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 
 	var/datum/gas_mixture/env = src.loc.return_air()
 	if(env)

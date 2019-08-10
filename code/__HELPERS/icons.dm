@@ -822,7 +822,7 @@ The _flatIcons list is a cache for generated icon files.
 	return composite
 
 /proc/adjust_brightness(color, value)
-	if (!color) return "#FFFFFF"
+	if (!color) return "#ffffff"
 	if (!value) return color
 
 	var/list/RGB = ReadRGB(color)
@@ -852,7 +852,7 @@ The _flatIcons list is a cache for generated icon files.
 
 var/global/list/humanoid_icon_cache = list()
 //For creating consistent icons for human looking simple animals
-/proc/get_flat_human_icon(icon_id,datum/job/J,datum/preferences/prefs)
+/proc/get_flat_human_icon(icon_id,datum/job/J,datum/preferences/prefs, showDirs = cardinal)
 	if(!icon_id || !humanoid_icon_cache[icon_id])
 		var/mob/living/carbon/human/dummy/body = new(null, prefs.species)
 
@@ -863,21 +863,10 @@ var/global/list/humanoid_icon_cache = list()
 
 		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 
-		body.dir = NORTH
-		var/icon/partial = getFlatIcon(body)
-		out_icon.Insert(partial,dir=NORTH)
-
-		body.dir = SOUTH
-		partial = getFlatIcon(body)
-		out_icon.Insert(partial,dir=SOUTH)
-
-		body.dir = WEST
-		partial = getFlatIcon(body)
-		out_icon.Insert(partial,dir=WEST)
-
-		body.dir = EAST
-		partial = getFlatIcon(body)
-		out_icon.Insert(partial,dir=EAST)
+		for(var/D in showDirs)
+			body.dir = D
+			var/icon/partial = getFlatIcon(body)
+			out_icon.Insert(partial,dir=D)
 
 		qdel(body)
 

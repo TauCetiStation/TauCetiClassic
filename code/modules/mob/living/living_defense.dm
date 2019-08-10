@@ -25,9 +25,9 @@
 		var/obj/item/device/assembly/signaler/signaler = get_active_hand()
 		if(signaler.deadman && prob(80))
 			attack_log += "\[[time_stamp()]\]<font color='orange'>triggers their deadman's switch!</font>"
-			message_admins("\blue [key_name_admin(src)] triggers their deadman's switch! ([ADMIN_JMP(src)])")
-			log_game("\blue [key_name(src)] triggers their deadman's switch!")
-			src.visible_message("\red [src] triggers their deadman's switch!")
+			message_admins("<span class='notice'>[key_name_admin(src)] triggers their deadman's switch! ([ADMIN_JMP(src)])</span>")
+			log_game("<span class='notice'>[key_name(src)] triggers their deadman's switch!</span>")
+			src.visible_message("<span class='warning'>[src] triggers their deadman's switch!</span>")
 			signaler.signal()
 
 	//Armor
@@ -110,7 +110,7 @@
 	if(prob(armor))
 		damage_flags &= ~(DAM_SHARP | DAM_EDGE)
 
-	var/created_wound = apply_damage(throw_damage, dtype, null, armor, damage_flags, O)
+	var/created_wound = apply_damage(throw_damage, dtype, zone, armor, damage_flags, O)
 
 	//thrown weapon embedded object code.
 	if(dtype == BRUTE && istype(O, /obj/item))
@@ -118,7 +118,7 @@
 		if(!I.can_embed || I.is_robot_module())
 			return
 
-		var/sharp = is_sharp(I)
+		var/sharp = I.is_sharp()
 
 		var/damage = throw_damage //the effective damage used for embedding purposes, no actual damage is dealt here
 		if (armor)

@@ -39,11 +39,6 @@
 		var/datum/medical_effect/M = new T
 		side_effects[M.name] = T
 
-	//List of job. I can't believe this was calculated multiple times per tick!
-	for(var/T in (subtypesof(/datum/job) - list(/datum/job/ai,/datum/job/cyborg)))
-		var/datum/job/J = new T
-		joblist[J.title] = J
-
 	//Languages and species.
 	for(var/T in subtypesof(/datum/language))
 		var/datum/language/L = new T
@@ -63,6 +58,41 @@
 
 		if(S.flags[IS_WHITELISTED])
 			whitelisted_species += S.name
+
+	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
+	global.chemical_reagents_list = list()
+	for(var/path in subtypesof(/datum/reagent))
+		var/datum/reagent/D = new path()
+		global.chemical_reagents_list[D.id] = D
+
+	//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
+	// It is filtered into multiple lists within a list.
+	// For example:
+	// chemical_reaction_list["phoron"] is a list of all reactions relating to phoron
+	global.chemical_reactions_list = list()
+	for(var/path in subtypesof(/datum/chemical_reaction))
+
+		var/datum/chemical_reaction/D = new path()
+		var/list/reaction_ids = list()
+
+		if(D.required_reagents && D.required_reagents.len)
+			for(var/reaction in D.required_reagents)
+				reaction_ids += reaction
+
+		// Create filters based on each reagent id in the required reagents list
+		for(var/id in reaction_ids)
+			if(!global.chemical_reactions_list[id])
+				global.chemical_reactions_list[id] = list()
+			global.chemical_reactions_list[id] += D
+			break // Don't bother adding ourselves to other reagent ids, it is redundant.
+
+	populate_gear_list()
+
+/proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
+	//List of job. I can't believe this was calculated multiple times per tick!
+	for(var/T in (subtypesof(/datum/job) - list(/datum/job/ai,/datum/job/cyborg)))
+		var/datum/job/J = new T
+		joblist[J.title] = J
 
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()

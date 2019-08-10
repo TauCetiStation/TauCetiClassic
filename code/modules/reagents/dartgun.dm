@@ -71,34 +71,34 @@
 		var/obj/item/weapon/dart_cartridge/D = I
 
 		if(!D.darts)
-			to_chat(user, "\blue [D] is empty.")
+			to_chat(user, "<span class='notice'>[D] is empty.</span>")
 			return 0
 
 		if(cartridge)
 			if(cartridge.darts <= 0)
 				src.remove_cartridge()
 			else
-				to_chat(user, "\blue There's already a cartridge in [src].")
+				to_chat(user, "<span class='notice'>There's already a cartridge in [src].</span>")
 				return 0
 
 		user.drop_item()
 		cartridge = D
 		D.loc = src
-		to_chat(user, "\blue You slot [D] into [src].")
+		to_chat(user, "<span class='notice'>You slot [D] into [src].</span>")
 		update_icon()
 		return
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(!istype(I, container_type))
-			to_chat(user, "\blue [I] doesn't seem to fit into [src].")
+			to_chat(user, "<span class='notice'>[I] doesn't seem to fit into [src].</span>")
 			return
 		if(beakers.len >= max_beakers)
-			to_chat(user, "\blue [src] already has [max_beakers] beakers in it - another one isn't going to fit!")
+			to_chat(user, "<span class='notice'>[src] already has [max_beakers] beakers in it - another one isn't going to fit!</span>")
 			return
 		var/obj/item/weapon/reagent_containers/glass/beaker/B = I
 		user.drop_item()
 		B.loc = src
 		beakers += B
-		to_chat(user, "\blue You slot [B] into [src].")
+		to_chat(user, "<span class='notice'>You slot [B] into [src].</span>")
 		src.updateUsrDialog()
 
 /obj/item/weapon/gun/dartgun/can_fire()
@@ -112,7 +112,7 @@
 
 /obj/item/weapon/gun/dartgun/proc/remove_cartridge()
 	if(cartridge)
-		to_chat(usr, "\blue You pop the cartridge out of [src].")
+		to_chat(usr, "<span class='notice'>You pop the cartridge out of [src].</span>")
 		var/obj/item/weapon/dart_cartridge/C = cartridge
 		C.loc = get_turf(src)
 		C.update_icon()
@@ -148,10 +148,10 @@
 		var/obj/effect/syringe_gun_dummy/D = new/obj/effect/syringe_gun_dummy(get_turf(src))
 		var/obj/item/weapon/reagent_containers/syringe/S = get_mixed_syringe()
 		if(!S)
-			to_chat(user, "\red There are no darts in [src]!")
+			to_chat(user, "<span class='warning'>There are no darts in [src]!</span>")
 			return
 		if(!S.reagents)
-			to_chat(user, "\red There are no reagents available!")
+			to_chat(user, "<span class='warning'>There are no reagents available!</span>")
 			return
 		cartridge.darts--
 		src.update_icon()
@@ -160,7 +160,7 @@
 		D.icon_state = "syringeproj"
 		D.name = "syringe"
 		D.flags |= NOREACT
-		playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
+		playsound(user, 'sound/items/syringeproj.ogg', VOL_EFFECTS_MASTER)
 
 		for(var/i=0, i<6, i++)
 			if(!D) break
@@ -282,7 +282,7 @@
 	if(cartridge)
 		spawn(0) fire_dart(target,user)
 	else
-		to_chat(usr, "\red [src] is empty.")
+		to_chat(usr, "<span class='warning'>[src] is empty.</span>")
 
 
 /obj/item/weapon/gun/dartgun/vox

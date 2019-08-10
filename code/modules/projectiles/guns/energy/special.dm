@@ -9,9 +9,6 @@
 	slot_flags = SLOT_FLAGS_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 
-/obj/item/weapon/gun/energy/ionrifle/isHandgun()
-	return 0
-
 /obj/item/weapon/gun/energy/ionrifle/update_icon()
 	var/ratio = power_supply.charge / power_supply.maxcharge
 	ratio = ceil(ratio * 4) * 25
@@ -48,6 +45,7 @@
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
 	icon_state = "decloner"
 	origin_tech = "combat=5;materials=4;powerstorage=3"
+	can_be_holstered = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
 
 /obj/item/weapon/gun/energy/floragun
@@ -58,6 +56,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/flora/yield, /obj/item/ammo_casing/energy/flora/mut)
 	origin_tech = "materials=2;biotech=3;powerstorage=3"
 	modifystate = 1
+	can_be_holstered = TRUE
 	var/charge_tick = 0
 	var/mode = 0 //0 = mutate, 1 = yield boost
 
@@ -126,6 +125,7 @@
 	item_state = "pen"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	can_be_holstered = TRUE
 	w_class = ITEM_SIZE_TINY
 
 /obj/item/weapon/gun/energy/mindflayer
@@ -133,25 +133,6 @@
 	desc = "A prototype weapon recovered from the ruins of Research-Station Epsilon."
 	icon_state = "xray"
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
-/*
-/obj/item/weapon/gun/energy/staff/focus
-	name = "mental focus"
-	desc = "An artefact that channels the will of the user into destructive bolts of force. If you aren't careful with it, you might poke someone's brain out."
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "focus"
-	item_state = "focus"
-	projectile_type = "/obj/item/projectile/forcebolt"
-
-/obj/item/weapon/gun/energy/staff/focus/attack_self(mob/living/user)
-	if(projectile_type == "/obj/item/projectile/forcebolt")
-		charge_cost = 200
-		to_chat(user, "\red The [src.name] will now strike a small area.")
-		projectile_type = "/obj/item/projectile/forcebolt/strong"
-	else
-		charge_cost = 100
-		to_chat(user, "\red The [src.name] will now strike only a single person.")
-		projectile_type = "/obj/item/projectile/forcebolt"
-	*/
 
 /obj/item/weapon/gun/energy/toxgun
 	name = "phoron pistol"
@@ -159,6 +140,7 @@
 	icon_state = "toxgun"
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=5;phorontech=4"
+	can_be_holstered = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/toxin)
 
 /obj/item/weapon/gun/energy/sniperrifle
@@ -178,9 +160,6 @@
 	. = ..()
 	update_icon()
 
-/obj/item/weapon/gun/energy/sniperrifle/isHandgun()
-	return 0
-
 /obj/item/weapon/gun/energy/sniperrifle/update_icon()
 	var/ratio = power_supply.charge / power_supply.maxcharge
 	ratio = ceil(ratio * 4) * 25
@@ -195,7 +174,13 @@
 	return
 
 /obj/item/weapon/gun/energy/sniperrifle/dropped(mob/user)
-	user.client.view = world.view
+	if(zoom)
+		if(user.client)
+			user.client.view = world.view
+		if(user.hud_used)
+			user.hud_used.show_hud(HUD_STYLE_STANDARD)
+		zoom = 0
+	..()
 
 /*
 This is called from
@@ -253,10 +238,10 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	item_state = "tesla"
 	w_class = ITEM_SIZE_LARGE
 	origin_tech = "combat=5;materials=5;powerstorage=5;magnets=5;engineering=5"
+	can_be_holstered = FALSE
 	var/charge = 0
 	var/charging = FALSE
 	var/cooldown = FALSE
-	var/spinspeed = 1
 
 /obj/item/weapon/gun/tesla/atom_init()
 	. = ..()
@@ -264,10 +249,10 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 /obj/item/weapon/gun/tesla/proc/charge(mob/living/user)
 	set waitfor = FALSE
-	if(do_after(user, 40 * spinspeed, target = src))
+	if(do_after(user, 40 * toolspeed, target = src))
 		if(charging && charge < 3)
 			charge++
-			playsound(loc, "sparks", 75, 1, -1)
+			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			if(charge < 3)
 				charge(user)
 			else
@@ -329,7 +314,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 /obj/item/weapon/gun/tesla/proc/Bolt(mob/origin, mob/living/target, mob/user, jumps)
 	origin.Beam(target, "lightning[rand(1,12)]", 'icons/effects/effects.dmi', time = 5)
 	target.electrocute_act(15 * (jumps + 1), src, , , 1)
-	playsound(target, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+	playsound(target, 'sound/machines/defib_zap.ogg', VOL_EFFECTS_MASTER)
 	var/list/possible_targets = new
 	for(var/mob/living/M in range(2, target))
 		if(user == M || !los_check(target, M) || origin == M || target == M)
@@ -361,4 +346,4 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	item_state = "arctesla"
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = null
-	spinspeed = 0.5
+	toolspeed = 0.5

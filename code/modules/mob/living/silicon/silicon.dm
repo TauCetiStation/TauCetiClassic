@@ -49,8 +49,8 @@
 			src.take_bodypart_damage(10)
 			Stun(rand(1,5))
 	flash_eyes(affect_silicon = 1)
-	to_chat(src, "\red <B>*BZZZT*</B>")
-	to_chat(src, "\red Warning: Electromagnetic pulse detected.")
+	to_chat(src, "<span class='warning'><B>*BZZZT*</B></span>")
+	to_chat(src, "<span class='warning'>Warning: Electromagnetic pulse detected.</span>")
 	..()
 
 /mob/living/silicon/proc/damage_mob(brute = 0, fire = 0, tox = 0)

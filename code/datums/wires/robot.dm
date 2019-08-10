@@ -31,7 +31,7 @@ var/const/BORG_WIRE_CAMERA      = 16
 					R.lawupdate = 1
 			else
 				if(R.lawupdate == 1)
-					to_chat(R, "<span class='notice>LawSync protocol engaged.</span>")
+					to_chat(R, "<span class='notice'>LawSync protocol engaged.</span>")
 					R.show_laws()
 
 		if(BORG_WIRE_AI_CONTROL)
