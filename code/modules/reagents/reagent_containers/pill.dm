@@ -269,7 +269,7 @@
 	reagents.add_reagent("lipozine", 15)
 
 /obj/item/weapon/reagent_containers/pill/spaceacillin
-	name = "Spaceacillin (10u)"
+	name = "Spaceacillin (15u)"
 	desc = "Contains antiviral agents."
 	icon_state = "pill3"
 

@@ -122,6 +122,26 @@
 	. = ..()
 	reagents.add_reagent("anti_toxin", 30)
 
+/obj/item/weapon/reagent_containers/glass/bottle/spaceacillin
+	name = "spaceacillin bottle"
+	desc = "A small bottle of Spaceacillin. Makes infections go right-away."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle1"
+
+/obj/item/weapon/reagent_containers/glass/bottle/spaceacillin/atom_init()
+	. = ..()
+	reagents.add_reagent("spaceacillin", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/sterilizine
+	name = "sterilizine bottle"
+	desc = "A small bottle of Sterilizine. Washes you up in the right ways."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle1"
+
+/obj/item/weapon/reagent_containers/glass/bottle/sterilizine/atom_init()
+	. = ..()
+	reagents.add_reagent("sterilizine", 30)
+
 /obj/item/weapon/reagent_containers/glass/bottle/mutagen
 	name = "unstable mutagen bottle"
 	desc = "A small bottle of unstable mutagen. Randomly changes the DNA structure of whoever comes in contact."

@@ -50,6 +50,7 @@
 		new /obj/item/stack/medical/ointment(src)
 	new /obj/item/device/healthanalyzer(src)
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector( src )
+	new /obj/item/weapon/storage/pill_bottle/spaceacillin(src)
 
 /obj/item/weapon/storage/firstaid/toxin
 	name = "toxin first aid"
@@ -85,6 +86,7 @@
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
 	new /obj/item/weapon/reagent_containers/syringe/inaprovaline(src)
 	new /obj/item/device/healthanalyzer(src)
+	new /obj/item/weapon/storage/pill_bottle/spaceacillin(src) // Yes, it's an O2 firstaid, but antibiotics are mighty important. ~Luduk.
 
 /obj/item/weapon/storage/firstaid/adv
 	name = "advanced first-aid kit"
@@ -204,7 +206,7 @@
 	name = "pill bottle (Spaceacillin)"
 	desc = "A theta-lactam antibiotic. Effective against many diseases likely to be encountered in space."
 
-	startswith = list(/obj/item/weapon/reagent_containers/pill/spaceacillin = 7)
+	startswith = list(/obj/item/weapon/reagent_containers/pill/spaceacillin = 12)
 	wrapper_color = COLOR_PALE_GREEN_GRAY
 
 /obj/item/weapon/storage/pill_bottle/tramadol

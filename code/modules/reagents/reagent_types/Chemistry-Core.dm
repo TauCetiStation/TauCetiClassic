@@ -146,6 +146,15 @@
 /datum/reagent/water/unholywater/on_general_digest(mob/living/M)
 	..()
 	if(iscultist(M) && prob(10))
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			for(var/obj/item/organ/external/BP in H.bodyparts)
+				for(var/datum/wound/W in BP.wounds)
+					W.germ_level -= 2
+				BP.decrease_germ_level(2)
+			for(var/obj/item/organ/internal/IO in H.organs)
+				IO.decrease_germ_level(2)
+		M.decrease_germ_level(2)
 		switch(data)
 			if(1 to 30)
 				M.heal_bodypart_damage(REM, REM)

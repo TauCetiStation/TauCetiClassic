@@ -989,6 +989,9 @@ var/global/list/items_blood_overlay_by_type = list()
 			. |= DAM_LASER
 
 /obj/item/get_germ_level(part = "")
+	var/datum/gas_mixture/environment = loc.return_air()
+	if(environment.temperature > GERM_LEVEL_HEAT_STERILIZATION || environment.temperature < GERM_LEVEL_COLD_STERILIZATION)
+		return 0
 	return germ_level * permeability_coefficient
 
 /obj/item/increase_germ_level(amount, atom/source = null, part = "")

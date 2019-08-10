@@ -9884,7 +9884,7 @@
 	dir = 4;
 	pixel_x = -25
 	},
-/obj/machinery/autoclave,
+/obj/machinery/uv_sterilizer,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralfull"
@@ -22811,7 +22811,7 @@
 /turf/simulated/floor/grass,
 /area/hydroponics)
 "gwu" = (
-/obj/machinery/autoclave,
+/obj/machinery/uv_sterilizer,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralfull"
@@ -66430,7 +66430,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/autoclave,
+/obj/machinery/uv_sterilizer,
 /turf/simulated/floor{
 	icon_state = "blue"
 	},
@@ -72761,7 +72761,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/autoclave,
+/obj/machinery/uv_sterilizer,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "blue"

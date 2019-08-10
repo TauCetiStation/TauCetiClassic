@@ -511,6 +511,9 @@
  * part - the "part" of our atom we are concerned with. For mobs: "arms", "legs", "all", "none", etc.
  */
 /atom/proc/get_germ_level(part = "")
+	var/datum/gas_mixture/environment = loc.return_air()
+	if(environment.temperature > GERM_LEVEL_HEAT_STERILIZATION || environment.temperature < GERM_LEVEL_COLD_STERILIZATION)
+		return 0
 	return germ_level
 
 /*
@@ -539,10 +542,8 @@
 	return FALSE
 
 /atom/proc/decrease_germ_level(amount, atom/source = null, part = "")
-	if(can_increase_germ_level())
-		germ_level -= amount
-		return TRUE
-	return FALSE
+	germ_level = max(0, germ_level - amount)
+	return TRUE
 
 /*
  * Completely removes any germs with all regards to:

@@ -57,7 +57,7 @@
 		var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
 		var/g_level = get_germ_level()
 
-		if(g_level > 0 && g_level < INFECTION_LEVEL_ONE && prob(30))
+		if(g_level > 0 && g_level < INFECTION_LEVEL_ONE && prob(20))
 			decrease_germ_level(1)
 
 		if(g_level >= INFECTION_LEVEL_ONE)

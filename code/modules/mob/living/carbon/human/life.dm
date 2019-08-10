@@ -1251,20 +1251,26 @@
 		if(druggy)
 			druggy = max(druggy-1, 0)
 
+		var/datum/gas_mixture/environment = loc.return_air()
 		var/g_level = get_germ_level()
 
 		var/list/clothes = list(wear_suit, w_uniform, belt, gloves, glasses, l_ear, r_ear,
 		                        wear_id, r_store, l_store, s_store, head, shoes, mouth,
 		                        neck, mouth, l_hand, r_hand)
 
+		if(environment.temperature > GERM_LEVEL_HEAT_STERILIZATION || environment.temperature < GERM_LEVEL_COLD_STERILIZATION)
+			decrease_germ_level(3)
+
 		for(var/obj/item/I in clothes)
 			if(!I)
 				continue
+			if(environment.temperature > GERM_LEVEL_HEAT_STERILIZATION || environment.temperature < GERM_LEVEL_COLD_STERILIZATION)
+				I.decrease_germ_level(3)
 			var/I_g_level = I.get_germ_level()
 			if(I_g_level > 1 && I_g_level > g_level)
-				increase_germ_level(1, I)
-			else if(g_level > 0 && g_level > I_g_level && prob(10))
-				I.increase_germ_level(1, src)
+				increase_germ_level(ceil(I_g_level / INFECTION_LEVEL_ONE), I)
+			else if(g_level > 0 && g_level > I_g_level && prob(20))
+				I.increase_germ_level(ceil(g_level / INFECTION_LEVEL_ONE), src)
 
 	return 1
 

@@ -1996,6 +1996,11 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	if(species.flags[BIOHAZZARD_IMMUNE])
 		return 0
+
+	var/datum/gas_mixture/environment = loc.return_air()
+	if(environment.temperature > GERM_LEVEL_HEAT_STERILIZATION || environment.temperature < GERM_LEVEL_COLD_STERILIZATION)
+		return 0
+
 	return germ_level
 
 /mob/living/carbon/human/increase_germ_level(amount, atom/source = null, part = "")

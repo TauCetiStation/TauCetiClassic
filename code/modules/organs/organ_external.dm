@@ -407,21 +407,22 @@ Note that amputating the affected organ does in fact remove the infection from t
 		handle_germ_effects()
 
 /obj/item/organ/external/proc/handle_germ_sync()
+	var/owner_g_level = owner.get_germ_level()
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
 	for(var/datum/wound/W in wounds)
 		//Open wounds can become infected
-		if(owner.get_germ_level() > W.germ_level && W.infection_check())
-			W.germ_level++
+		if(owner_g_level > W.germ_level && W.infection_check())
+			W.germ_level += ceil(owner_g_level / INFECTION_LEVEL_ONE)
 
 		if(antibiotics < 5 && (W.amount * W.germ_level) > get_germ_level() && W.amount * W.germ_level > INFECTION_LEVEL_ONE)
-			increase_germ_level(W.amount * W.germ_level / INFECTION_LEVEL_ONE)
+			increase_germ_level(ceil(W.amount * W.germ_level / INFECTION_LEVEL_ONE))
 
 /obj/item/organ/external/proc/handle_germ_effects()
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
 
 	var/g_level = get_germ_level()
-	if (g_level > 0 && g_level < INFECTION_LEVEL_ONE && prob(60))	//this could be an else clause, but it looks cleaner this way
-		decrease_germ_level(1) //since germ_level increases at a rate of 1 per second with dirty wounds, prob(60) should give us about 5 minutes before level one.
+	if (g_level > 0 && g_level < INFECTION_LEVEL_ONE && prob(50))	//this could be an else clause, but it looks cleaner this way
+		decrease_germ_level(1) //since germ_level increases at a rate of 1 per second with dirty wounds, prob(50) should give us about 5 minutes before level one.
 
 	if(g_level >= INFECTION_LEVEL_ONE)
 		//having an infection raises your body temperature
