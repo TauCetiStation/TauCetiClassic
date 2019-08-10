@@ -1,11 +1,6 @@
 #define UPGRADE_TAIL_TIMER	100
 
 //Grab levels
-/*
-#define GRAB_PASSIVE	1
-#define GRAB_AGGRESSIVE	2
-#define GRAB_NECK		3
-#define GRAB_KILL		4*/
 #define GRAB_UPGRADING	5
 #define GRAB_EMBRYO		6
 #define GRAB_IMPREGNATE	7
@@ -26,7 +21,6 @@
 	storedPlasma = 50
 	max_plasma = 50
 
-	density = FALSE
 	small = 1
 
 	var/amount_grown = 0
@@ -37,6 +31,7 @@
 	var/obj/item/weapon/l_store = null
 
 /mob/living/carbon/alien/facehugger/atom_init()
+	. = ..()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
@@ -45,7 +40,8 @@
 	real_name = name
 	regenerate_icons()
 	a_intent = "grab"
-	. = ..()
+
+/mob/living/carbon/alien/facehugger/atom_init_late()
 	density = FALSE
 
 /mob/living/carbon/alien/facehugger/start_pulling(atom/movable/AM)
@@ -88,7 +84,7 @@
 /mob/living/carbon/attack_facehugger(mob/living/carbon/alien/facehugger/FH)
 	if((!ishuman(src) && !ismonkey(src)) || istype(src, /mob/living/carbon/human/machine))
 		return FALSE
-	if(FH.a_intent == "grab")
+	if(FH.a_intent == I_GRAB)
 		if(src.stat != DEAD)
 			if(FH == src)
 				return
@@ -474,13 +470,17 @@ When we finish, facehugger's player will be transfered inside embryo.
 			hud.icon_state = "grab/do_impreg"
 			hud.name = "impregnating"
 			assailant.visible_message("<span class='danger'>[assailant] extends its proboscis deep inside [affecting]'s mouth!</span>")
-			spawn(rand(MIN_IMPREGNATION_TIME,MAX_IMPREGNATION_TIME))
-				if(istype(assailant.loc, /obj/item/clothing/mask/facehugger))
-					assailant.visible_message("<span class='danger'>[assailant] falls limp after violating [affecting]'s face!</span>")
-					var/obj/item/clothing/mask/facehugger/FH_mask = assailant.loc
-					FH_mask.canremove = 1
-					FH_mask.Impregnate(affecting, assailant)
-					qdel(src)
+			addtimer(CALLBACK(src, .proc/Impregnate_by_playable_fh, affecting, assailant), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
+
+/obj/item/weapon/fh_grab/proc/Impregnate_by_playable_fh()
+	if(!affecting || !assailant)
+		return
+	if(istype(assailant.loc, /obj/item/clothing/mask/facehugger))
+		assailant.visible_message("<span class='danger'>[assailant] falls limp after violating [affecting]'s face!</span>")
+		var/obj/item/clothing/mask/facehugger/FH_mask = assailant.loc
+		FH_mask.canremove = 1
+		FH_mask.Impregnate(affecting, assailant)
+		qdel(src)
 
 //This is used to make sure the victim hasn't managed to yackety sax away before using the grab.
 /obj/item/weapon/fh_grab/proc/confirm()

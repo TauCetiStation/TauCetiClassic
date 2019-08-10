@@ -9,7 +9,7 @@
 	item_state = "facehugger"
 	w_class = ITEM_SIZE_TINY //note: can be picked up by aliens unlike most other items of w_class below 4
 	density = 1
-	layer = 3.3
+	layer = ABOVE_WINDOW_LAYER
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES
 	body_parts_covered = FACE|EYES
 	throw_range = 1
@@ -23,47 +23,40 @@
 	var/chase_time = 0
 
 /obj/item/clothing/mask/facehugger/atom_init()
-	facehuggers_list += src
 	..()
+	facehuggers_list += src
 	return INITIALIZE_HINT_LATELOAD
-
-/*/obj/item/clothing/mask/facehugger/atom_init_late()
-	START_PROCESSING(SSobj, src)*/
 
 /obj/item/clothing/mask/facehugger/Destroy()
 	target = null
+	facehuggers_list -= src
 	return ..()
 
 /obj/item/clothing/mask/facehugger/CanPass(atom/movable/mover, turf/target, height=0)
-	if(ismob(mover))
-		return TRUE
-	if(stat == DEAD)
-		return TRUE
-	else
-		return FALSE
+	return ismob(mover) || (stat == DEAD)
 
 /obj/item/clothing/mask/facehugger/process()
-	if(!stat)
-		spawn()
-			if(isturf(loc))
-				if(!target)
-					for(var/mob/living/carbon/C in range(7, src))
-						var/obj/effect/vision/V = new /obj/effect/vision(get_turf(src))
-						V.target = C
-						if(V.check())
-							qdel(V)
-							if(CanHug(C, 0))
-								chase_time = 28
-								target = C
-								chase()
-								break
-							else
-								continue
-						else
-							qdel(V)
-							continue
-					if(!target && prob(65))
-						step(src, pick(cardinal))
+	if(stat)
+		return
+	if(isturf(loc))
+		if(!target)
+			for(var/mob/living/carbon/C in range(7, src))
+				var/obj/effect/vision/V = new /obj/effect/vision(get_turf(src))
+				V.target = C
+				if(V.check())
+					qdel(V)
+					if(CanHug(C, 0))
+						chase_time = 28
+						target = C
+						chase()
+						break
+					else
+						continue
+				else
+					qdel(V)
+					continue
+			if(!target && prob(65))
+				step(src, pick(cardinal))
 
 /obj/item/clothing/mask/facehugger/proc/chase()
 	while(target)
@@ -110,11 +103,11 @@
 	var/target = null
 
 /obj/effect/vision/proc/check()
-	for(var/i = 1, i < 9, i++)
+	for(var/i in 1 to 8)
 		if(!src || !target)
 			return FALSE
-		step_to(src,target)
-		if(get_dist(src,target) == 0)
+		step_to(src, target)
+		if(get_dist(src, target) == 0)
 			return TRUE
 	return FALSE
 
@@ -190,9 +183,11 @@
 		return
 	if(stat == CONSCIOUS)
 		icon_state = "[initial(icon_state)]_thrown"
-		spawn(15)
-			if(icon_state == "[initial(icon_state)]_thrown")
-				icon_state = "[initial(icon_state)]"
+		addtimer(CALLBACK(src, .proc/set_active_icon_state), 15)
+
+/obj/item/clothing/mask/facehugger/proc/set_active_icon_state()
+	if(icon_state == "[initial(icon_state)]_thrown")
+		icon_state = "[initial(icon_state)]"
 
 /obj/item/clothing/mask/facehugger/throw_impact(atom/hit_atom)
 	..()
@@ -241,29 +236,24 @@
 	if(!CanHug(C, FALSE))
 		return
 
-	C.visible_message("<span class='danger'>[src] leaps at [C]'s face!</span>", \
-	                  "<span class='userdanger'>[src] leaps at [C]'s face!</span>")
+	C.visible_message("<span class='danger'>[src] leaps at [C]'s face!</span>", "<span class='userdanger'>[src] leaps at [C]'s face!</span>")
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		var/headgear = H.mouth_is_protected()
 		if(headgear)
 			if(prob(40))
-				H.visible_message("<span class='danger'>[src] smashes against [H]'s [headgear], and rips it off in the process!</span>", \
-				                  "<span class='userdanger'>[src] smashes against yours [headgear], and rips it off in the process!</span>")
+				H.visible_message("<span class='danger'>[src] smashes against [H]'s [headgear], and rips it off in the process!</span>", "<span class='userdanger'>[src] smashes against yours [headgear], and rips it off in the process!</span>")
 				H.unEquip(headgear)
 			else
-				H.visible_message("<span class='danger'>[src] smashes against [H]'s [headgear], and fails to rip it off!</span>", \
-				                  "<span class='userdanger'>[src] smashes against yours's [headgear], and fails to rip it off!</span>")
+				H.visible_message("<span class='danger'>[src] smashes against [H]'s [headgear], and fails to rip it off!</span>", "<span class='userdanger'>[src] smashes against yours's [headgear], and fails to rip it off!</span>")
 			if(prob(33))
-				H.visible_message("<span class='danger'>[H]'s [headgear] melts from the acid!</span>", \
-				                  "<span class='userdanger'>Your [headgear] melts from the acid!</span>")
+				H.visible_message("<span class='danger'>[H]'s [headgear] melts from the acid!</span>", "<span class='userdanger'>Your [headgear] melts from the acid!</span>")
 				qdel(headgear)
 			if(prob(66))
 				Die()
 			else
-				H.visible_message("<span class='danger'>[src] bounces off of the [headgear]!</span>", \
-				                  "<span class='userdanger'>[src] bounces off of the [headgear]!</span>")
+				H.visible_message("<span class='danger'>[src] bounces off of the [headgear]!</span>", "<span class='userdanger'>[src] bounces off of the [headgear]!</span>")
 				GoIdle()
 			return FALSE
 	else
@@ -274,8 +264,7 @@
 			if(WM.flags & NODROP)
 				return FALSE
 			target.unEquip(WM)
-			target.visible_message("<span class='danger'>[src] tears [WM] off of [C]'s face!</span>", \
-			                       "<span class='userdanger'>[src] tears [WM] off of [C]'s face!</span>")
+			target.visible_message("<span class='danger'>[src] tears [WM] off of [C]'s face!</span>", "<span class='userdanger'>[src] tears [WM] off of [C]'s face!</span>")
 	STOP_PROCESSING(SSobj, src)
 	C.equip_to_slot_if_possible(src, SLOT_WEAR_MASK, disable_warning = TRUE)
 
@@ -314,8 +303,7 @@
 		target.status_flags |= XENO_HOST
 
 	else
-		target.visible_message("<span class='danger'>[src] violates [target]'s face!</span>", \
-		                       "<span class='userdanger'>[src] violates your face!</span>")
+		target.visible_message("<span class='danger'>[src] violates [target]'s face!</span>", "<span class='userdanger'>[src] violates your face!</span>")
 
 /obj/item/clothing/mask/facehugger/proc/GoActive()
 	if(stat == DEAD || stat == CONSCIOUS)
