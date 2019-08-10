@@ -8,7 +8,7 @@
 /*
  * Lasertag
  */
- /obj/item/clothing/suit/lasertag
+/obj/item/clothing/suit/lasertag
  	name = "laser tag armour"
  	desc = "Be none's man, shoot everybody!"
  	icon_state = "bluetag"
