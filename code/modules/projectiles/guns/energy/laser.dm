@@ -161,7 +161,7 @@
 	clumsy_check = 0
 	can_be_holstered = TRUE
 	var/charge_tick = 0
-	var/armor_to_tag = list(/obj/item/clothing/suit/bluetag, /obj/item/clothing/suit/redtag)
+	var/armor_type = /obj/item/clothing/suit
 
 /obj/item/weapon/gun/energy/laser/lasertag/atom_init()
 	. = ..()
@@ -182,7 +182,7 @@
 
 /obj/item/weapon/gun/energy/laser/lasertag/special_check(mob/living/carbon/human/M)
 	if(ishuman(M))
-		if(is_type_in_list(M.wear_suit, armor_to_tag))
+		if(istype(M.wear_suit, armor_type))
 			return ..()
 		to_chat(M, "<span class='warning'>You need to be wearing your laser tag vest!</span>")
 	return 0
@@ -190,9 +190,9 @@
 /obj/item/weapon/gun/energy/laser/lasertag/bluetag
 	icon_state = "bluetag"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag)
-	armor_to_tag = list(/obj/item/clothing/suit/bluetag)
+	armor_type = /obj/item/clothing/suit/bluetag
 
 /obj/item/weapon/gun/energy/laser/lasertag/redtag
 	icon_state = "redtag"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag)
-	armor_to_tag = list(/obj/item/clothing/suit/redtag)
+	armor_type = /obj/item/clothing/suit/redtag
