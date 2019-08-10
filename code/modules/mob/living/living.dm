@@ -331,49 +331,6 @@
 
 // ============================================================
 
-
-/mob/proc/get_contents()
-
-
-//Recursive function to find everything a mob is holding.
-/mob/living/get_contents(var/obj/item/weapon/storage/Storage = null)
-	var/list/L = list()
-
-	if(Storage) //If it called itself
-		L += Storage.return_inv()
-
-		//Leave this commented out, it will cause storage items to exponentially add duplicate to the list
-		//for(var/obj/item/weapon/storage/S in Storage.return_inv()) //Check for storage items
-		//	L += get_contents(S)
-
-		for(var/obj/item/weapon/gift/G in Storage.return_inv()) //Check for gift-wrapped items
-			L += G.gift
-			if(istype(G.gift, /obj/item/weapon/storage))
-				L += get_contents(G.gift)
-
-		for(var/obj/item/smallDelivery/D in Storage.return_inv()) //Check for package wrapped items
-			L += D.wrapped
-			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
-				L += get_contents(D.wrapped)
-		return L
-
-	else
-
-		L += src.contents
-		for(var/obj/item/weapon/storage/S in src.contents)	//Check for storage items
-			L += get_contents(S)
-
-		for(var/obj/item/weapon/gift/G in src.contents) //Check for gift-wrapped items
-			L += G.gift
-			if(istype(G.gift, /obj/item/weapon/storage))
-				L += get_contents(G.gift)
-
-		for(var/obj/item/smallDelivery/D in src.contents) //Check for package wrapped items
-			L += D.wrapped
-			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
-				L += get_contents(D.wrapped)
-		return L
-
 /mob/living/proc/check_contents_for(A)
 	var/list/L = src.get_contents()
 
@@ -1224,24 +1181,24 @@
 	eye_blurry = max(5, eye_blurry)
 
 	if(ishuman(src)) // A stupid, snowflakey thing, but I see no point in creating a third argument to define the sound... ~Luduk
-		var/vomitsound = ""
+		var/list/vomitsound = list()
 		// The main reason why this is here, and not made into a polymorphized proc, is because we need to know from the subclasses that could cover their face, that they do.
 		if(masked)
 			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>","<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")
 			if(gender == FEMALE)
-				vomitsound = "frigvomit"
+				vomitsound = SOUNDIN_FRIGVOMIT
 			else
-				vomitsound = "mrigvomit"
+				vomitsound = SOUNDIN_MRIGVOMIT
 			eye_blurry = max(10, eye_blurry)
 			losebreath += 20
 		else
 			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>","<span class='warning'>You throw up!</span>")
 			if(gender == FEMALE)
-				vomitsound = "femalevomit"
+				vomitsound = SOUNDIN_FEMALEVOMIT
 			else
-				vomitsound = "malevomit"
+				vomitsound = SOUNDIN_MALEVOMIT
 		make_jittery(max(35 - jitteriness, 0))
-		playsound(src, vomitsound, VOL_EFFECTS_MASTER, null, FALSE)
+		playsound(src, pick(vomitsound), VOL_EFFECTS_MASTER, null, FALSE)
 	else
 		visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>","<span class='warning'>You throw up!</span>")
 		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)

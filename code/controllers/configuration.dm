@@ -64,6 +64,8 @@
 	var/automute_on = 0					//enables automuting/spam prevention
 
 	var/registration_panic_bunker_age = null
+	var/client_limit_panic_bunker_count = null
+	var/client_limit_panic_bunker_link = null
 
 	var/cult_ghostwriter = 1               //Allows ghosts to write in blood in cult rounds...
 	var/cult_ghostwriter_req_cultists = 10 //...so long as this many cultists are active.
@@ -175,6 +177,7 @@
 
 	var/craft_recipes_visibility = FALSE // If false, then users won't see crafting recipes in personal crafting menu until they have all required components and then it will show up.
 	var/starlight = FALSE	// Whether space turfs have ambient light or not
+	var/nightshift = FALSE
 
 	var/list/maplist = list()
 	var/datum/map_config/defaultmap
@@ -593,6 +596,12 @@
 				if("registration_panic_bunker_age")
 					config.registration_panic_bunker_age = value
 
+				if("client_limit_panic_bunker_count")
+					config.client_limit_panic_bunker_count = text2num(value)
+
+				if("client_limit_panic_bunker_link")
+					config.client_limit_panic_bunker_link = value
+
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 
@@ -638,6 +647,8 @@
 					config.craft_recipes_visibility = TRUE
 				if("starlight")
 					config.starlight = TRUE
+				if("nightshift")
+					config.nightshift = TRUE
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 

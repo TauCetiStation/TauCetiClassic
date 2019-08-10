@@ -9,16 +9,13 @@
 	origin_tech = "combat=3;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser)
 	slot_flags = SLOT_FLAGS_BACK
+	can_be_holstered = FALSE
 
 /obj/item/weapon/gun/energy/laser/atom_init()
 	. = ..()
 	if(power_supply)
 		power_supply.maxcharge = 1500
 		power_supply.charge = 1500
-
-
-/obj/item/weapon/gun/energy/laser/isHandgun()
-	return 0
 
 /obj/item/weapon/gun/energy/laser/practice
 	name = "practice laser gun"
@@ -56,6 +53,7 @@
 	name ="retro laser"
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
+	can_be_holstered = TRUE
 
 /obj/item/weapon/gun/energy/laser/selfcharging
 	var/charge_tick = 0
@@ -80,9 +78,6 @@
 	update_icon()
 	return 1
 
-/obj/item/weapon/gun/energy/laser/selfcharging/isHandgun()
-	return 1
-
 /obj/item/weapon/gun/energy/laser/cyborg/newshot()
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
@@ -98,6 +93,7 @@
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
 	force = 10
 	origin_tech = null
+	can_be_holstered = TRUE
 	chargespeed = 1
 
 /obj/item/weapon/gun/energy/laser/selfcharging/alien
@@ -112,6 +108,7 @@
 	name = "scatter laser gun"
 	icon_state = "oldlaser"
 	desc = "A laser gun equipped with a refraction kit that spreads bolts."
+	can_be_holstered = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
 
 /obj/item/weapon/gun/energy/laser/scatter/attack_self(mob/living/user)
@@ -134,9 +131,6 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavy)
 
 	fire_delay = 20
-
-/obj/item/weapon/gun/energy/lasercannon/isHandgun()
-	return 0
 
 /obj/item/weapon/gun/energy/lasercannon/cyborg/newshot()
 	if(isrobot(src.loc))
@@ -165,6 +159,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag)
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
+	can_be_holstered = TRUE
 	var/charge_tick = 0
 
 /obj/item/weapon/gun/energy/laser/bluetag/special_check(mob/living/carbon/human/M)
@@ -200,6 +195,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag)
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
+	can_be_holstered = TRUE
 	var/charge_tick = 0
 
 /obj/item/weapon/gun/energy/laser/redtag/special_check(mob/living/carbon/human/M)

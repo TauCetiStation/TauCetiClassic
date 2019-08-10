@@ -2557,7 +2557,20 @@
 							dat += "<tr><td>[H]</td><td>H.dna = null</td></tr>"
 				dat += "</table>"
 				usr << browse(entity_ja(dat), "window=fingerprints;size=440x410")
-			else
+			if("night_shift_set")
+				var/val = alert(usr, "What do you want to set night shift to?", "Night Shift", "On", "Off", "Automatic")
+				switch(val)
+					if("Automatic")
+						SSnightshift.can_fire = TRUE
+						SSnightshift.check_nightshift()
+					if("On")
+						SSnightshift.can_fire = FALSE
+						SSnightshift.update_nightshift(TRUE)
+					if("Off")
+						SSnightshift.can_fire = FALSE
+						SSnightshift.update_nightshift(FALSE)
+				if(val)
+					message_admins("[key_name_admin(usr)] switched night shift mode to '[val]'.")
 		if (usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsadmin"]]")
 			if (ok)

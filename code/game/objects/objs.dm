@@ -137,13 +137,7 @@
 	..()
 
 /obj/proc/damage_flags()
-	. = 0
-	if(has_edge(src))
-		. |= DAM_EDGE
-	if(is_sharp(src))
-		. |= DAM_SHARP
-		if(damtype == BURN)
-			. |= DAM_LASER
+	return FALSE
 
 /obj/proc/interact(mob/user)
 	return

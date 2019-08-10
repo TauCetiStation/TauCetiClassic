@@ -1806,7 +1806,7 @@ other types of metals and chemistry for reagents).
 	id = "stunrevolver"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000)
-	build_path = /obj/item/weapon/gun/energy/stunrevolver
+	build_path = /obj/item/weapon/gun/energy/taser/stunrevolver
 	category = list("Weapons")
 
 /datum/design/lasercannon

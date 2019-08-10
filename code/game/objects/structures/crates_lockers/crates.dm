@@ -205,7 +205,7 @@
 	overlays += emag
 	overlays += sparks
 	spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
-	playsound(src, "sparks", VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	src.locked = 0
 	src.broken = 1
 	to_chat(user, "<span class='notice'>You unlock \the [src].</span>")
@@ -524,3 +524,15 @@
 	new /obj/item/seeds/plastiseed(src)
 	new /obj/item/seeds/plumpmycelium(src)
 	new /obj/item/seeds/chantermycelium(src)
+
+/obj/structure/closet/crate/seized_inventory
+	name = "crate (seized inventory)"
+
+/obj/structure/closet/crate/seized_inventory/PopulateContents()
+	var/contraband_num = rand(0, 7)
+
+	for(var/i in 1 to contraband_num)
+		var/obj/randomcatcher/CATCH = new /obj/randomcatcher(src)
+		var/obj/item/I = CATCH.get_item(/obj/random/misc/all)
+		if(I)
+			I.forceMove(src)

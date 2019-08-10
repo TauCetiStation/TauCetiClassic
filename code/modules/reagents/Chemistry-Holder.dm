@@ -204,6 +204,13 @@ var/const/INGEST = 2
 	update_total()
 
 /datum/reagents/proc/handle_reactions()
+	if(!my_atom)
+		/*
+		We are created abstractly, there is no need for us to handle any reactions, unless somebody wants to
+		code in such support.
+		*/
+		return
+
 	if(my_atom.flags & NOREACT) return //Yup, no reactions here. No siree.
 
 
@@ -399,7 +406,8 @@ var/const/INGEST = 2
 		if (R.id == reagent)
 			R.volume += amount
 			update_total()
-			my_atom.on_reagent_change()
+			if(my_atom)
+				my_atom.on_reagent_change()
 
 			// mix dem viruses
 			if(R.id == "blood" && reagent == "blood")
@@ -453,7 +461,8 @@ var/const/INGEST = 2
 			R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
 
 		update_total()
-		my_atom.on_reagent_change()
+		if(my_atom)
+			my_atom.on_reagent_change()
 		if(!safety)
 			handle_reactions()
 		return 0
@@ -476,7 +485,8 @@ var/const/INGEST = 2
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
-			my_atom.on_reagent_change()
+			if(my_atom)
+				my_atom.on_reagent_change()
 			return TRUE
 
 	return FALSE

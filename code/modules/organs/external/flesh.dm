@@ -497,9 +497,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(BP.owner.species && !BP.owner.species.flags[NO_PAIN])
 		BP.owner.emote("scream",,, 1)
 
-	playsound(BP.owner, "fracture", VOL_EFFECTS_MASTER, null, null, -2)
+	playsound(BP.owner, pick(SOUNDIN_BONEBREAK), VOL_EFFECTS_MASTER, null, null, -2)
 	BP.status |= ORGAN_BROKEN
-	BP.broken_description = pick("broken","fracture","hairline fracture")
+	BP.broken_description = pick("broken", "fracture", "hairline fracture")
 	BP.perma_injury = BP.brute_dam
 
 	// Fractures have a chance of getting you out of restraints
