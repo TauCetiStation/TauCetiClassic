@@ -451,13 +451,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(prob(50))
 			emote("scream",1,null,1)
 		if(regenerating_organ_time >= regenerating_capacity_penalty) // recover organ
-			if(regenerating_bodypart.is_stump)
-				qdel(regenerating_bodypart)
-				var/bodypart_type = species.has_bodypart[regenerating_bodypart.body_zone]
-				if(bodypart_type)
-					new bodypart_type(null, src)
-			else
-				regenerating_bodypart.rejuvenate()
+			regenerating_bodypart.rejuvenate()
 			regenerating_organ_time = 0
 			if(use_cost)
 				nutrition -= regenerating_capacity_penalty
@@ -1596,7 +1590,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	else
 		to_chat(usr, "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].</span>")
 
-/mob/living/carbon/human/proc/set_species(new_species, force_organs, default_colour)
+/mob/living/carbon/human/proc/set_species(new_species, force_organs = TRUE, default_colour = null)
 
 	if(!new_species)
 		if(dna.species)

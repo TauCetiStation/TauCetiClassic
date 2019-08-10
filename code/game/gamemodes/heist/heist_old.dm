@@ -96,7 +96,7 @@ VOX HEIST ROUNDTYPE
 		raider.name = vox.name
 		vox.age = rand(12,20)
 		vox.dna.mutantrace = "vox"
-		vox.set_species(VOX, TRUE)
+		vox.set_species(VOX)
 		vox.languages = list() // Removing language from chargen.
 		vox.flavor_text = ""
 		vox.add_language("Vox-pidgin")

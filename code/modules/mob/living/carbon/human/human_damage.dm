@@ -304,10 +304,7 @@ This function restores all bodyparts.
 */
 /mob/living/carbon/human/restore_all_bodyparts()
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(istype(BP, /obj/item/organ/external/stump))
-			BP.droplimb(null, TRUE)
-		else
-			BP.rejuvenate()
+		BP.rejuvenate()
 	for(var/BP_ZONE in species.has_bodypart)
 		if(!bodyparts_by_name[BP_ZONE])
 			var/path = species.has_bodypart[BP_ZONE]

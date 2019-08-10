@@ -489,9 +489,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(BP.status & ORGAN_BROKEN)
 		return
 
-	BP.owner.visible_message(\
-		"<span class='warning'>You hear a loud cracking sound coming from \the [BP.owner].</span>",\
-		"<span class='warning'><b>Something feels like it shattered in your [BP.name]!</b></span>",\
+	BP.owner.visible_message(
+		"<span class='warning'>You hear a loud cracking sound coming from \the [BP.owner].</span>",
+		"<span class='warning'><b>Something feels like it shattered in your [BP.name]!</b></span>",
 		"You hear a sickening crack.")
 
 	if(BP.owner.species && !BP.owner.species.flags[NO_PAIN])

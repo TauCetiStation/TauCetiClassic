@@ -618,7 +618,7 @@
 					to_chat(H, "<span class='warning'>You feel unbearable pain inside you!</span>")
 					H.emote("scream",,, 1)
 			if(30)
-				if(H.set_species(SLIME, TRUE))
+				if(H.set_species(SLIME))
 					to_chat(H, "<span class='warning'>Your flesh mutates and you feel free!</span>")
 					H.dna.mutantrace = "slime"
 					H.update_mutantrace()

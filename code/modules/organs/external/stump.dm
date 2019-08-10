@@ -52,3 +52,10 @@
 
 /obj/item/organ/external/stump/damage_state_text()
 	return "--"
+
+/obj/item/organ/external/stump/rejuvenate()
+	if(owner)
+		var/bodypart_type = owner.species.has_bodypart[body_zone]
+		qdel(src)
+		if(bodypart_type)
+			new bodypart_type(null, owner)
