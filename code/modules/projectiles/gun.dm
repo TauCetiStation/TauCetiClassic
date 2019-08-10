@@ -199,7 +199,7 @@
 				playsound(user, fire_sound, VOL_EFFECTS_MASTER, 10)
 			else
 				playsound(user, fire_sound, VOL_EFFECTS_MASTER)
-			if(istype(chambered.BB, /obj/item/projectile/beam/lastertag) || istype(chambered.BB, /obj/item/projectile/beam/practice))
+			if(istype(chambered.BB, /obj/item/projectile/beam/lasertag) || istype(chambered.BB, /obj/item/projectile/beam/practice))
 				user.visible_message("<span class = 'notice'>Nothing happens.</span>",\
 									"<span class = 'notice'>You feel rather silly, trying to commit suicide with a toy.</span>")
 				return
