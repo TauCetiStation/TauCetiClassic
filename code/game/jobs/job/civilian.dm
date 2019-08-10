@@ -210,7 +210,6 @@
 	if(!H)	return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
 	switch(H.backbag)
-		if(1) H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), SLOT_R_HAND)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_hyd(H), SLOT_BACK)
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/hyd(H), SLOT_BACK)
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
