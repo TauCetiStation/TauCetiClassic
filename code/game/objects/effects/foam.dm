@@ -15,7 +15,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/effect/aqueous_foam/atom_init_late()
-	if(loc.density)
+	if(loc.density || !has_gravity(loc) || istype(get_turf(src), /turf/space))
 		addtimer(CALLBACK(src, .proc/disolve), 5 SECONDS)
 	INVOKE_ASYNC(src, .proc/performAction)
 

@@ -144,7 +144,9 @@
 	D.create_reagents(amount_per_transfer_from_this)
 	reagents.trans_to(D, amount_per_transfer_from_this, 1/spray_size)
 	D.icon += mix_color_from_reagents(D.reagents.reagent_list)
-	D.density = chempuff_dense
+
+	if(!chempuff_dense)
+		pass_flags |= PASSBLOB | PASSMOB | PASSCRAWL
 
 	step_towards(D, start)
 	sleep(spray_cloud_move_delay)
