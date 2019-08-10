@@ -61,3 +61,5 @@
 		if(istype(A, /obj/item))
 			var/obj/item/I = A
 			I.extinguish()
+		if(istype(A, /obj/effect/decal/cleanable/liquid_fuel))
+			qdel(A)

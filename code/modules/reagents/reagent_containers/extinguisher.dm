@@ -24,6 +24,8 @@
 	spray_sound = 'sound/effects/refill.ogg'
 	volume_modifier = -3
 
+	chempuff_dense = FALSE
+
 	spray_cloud_move_delay = 2
 	spray_cloud_react_delay = 0
 

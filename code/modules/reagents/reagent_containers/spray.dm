@@ -20,6 +20,8 @@
 
 	action_button_name = "Switch Spray"
 
+	var/chempuff_dense = TRUE // Whether the chempuff can pass through closets and such(and it should).
+
 	var/spray_sound = 'sound/effects/spray2.ogg'
 	var/volume_modifier = -6
 
@@ -142,6 +144,7 @@
 	D.create_reagents(amount_per_transfer_from_this)
 	reagents.trans_to(D, amount_per_transfer_from_this, 1/spray_size)
 	D.icon += mix_color_from_reagents(D.reagents.reagent_list)
+	D.density = chempuff_dense
 
 	step_towards(D, start)
 	sleep(spray_cloud_move_delay)

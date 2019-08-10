@@ -12396,7 +12396,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
@@ -14102,7 +14102,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/flashlight,
@@ -14526,7 +14526,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whitepurple"
@@ -14672,8 +14672,8 @@
 "azv" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
 "azw" = (
@@ -18592,7 +18592,7 @@
 /area/maintenance/science)
 "aGv" = (
 /obj/structure/rack,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /turf/simulated/floor/plating,
 /area/maintenance/science)
 "aGw" = (
@@ -18911,7 +18911,7 @@
 /area/quartermaster/storage)
 "aHd" = (
 /obj/structure/rack,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /obj/item/clothing/mask/gas/coloured,
 /obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
@@ -30729,7 +30729,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/flashlight,
@@ -35590,7 +35590,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/bridge)
 "bnQ" = (
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /turf/simulated/floor/plating,
 /area/maintenance/bridge)
 "bnR" = (
@@ -37375,7 +37375,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /turf/simulated/floor/plating,
 /area/storage/emergency)
 "bsi" = (
@@ -48249,7 +48249,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
@@ -52779,7 +52779,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
@@ -54806,10 +54806,10 @@
 /area/maintenance/engineering)
 "chY" = (
 /obj/structure/rack,
-/obj/item/weapon/extinguisher{
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned{
 	pixel_y = 6
 	},
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
 /area/storage/emergency3)
@@ -69395,7 +69395,7 @@
 /area/medical/reception)
 "fQb" = (
 /obj/structure/rack,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /obj/item/clothing/mask/gas/coloured,
 /turf/simulated/floor/plating,
 /area/hallway/secondary/entry)
@@ -69490,7 +69490,7 @@
 /obj/item/device/flashlight,
 /obj/item/device/flashlight,
 /obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /obj/machinery/power/apc{
 	name = "Port Emergency Storage APC";
 	pixel_y = -24
@@ -71208,7 +71208,7 @@
 /area/hallway/secondary/entry)
 "jkb" = (
 /obj/structure/rack,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /obj/item/weapon/storage/belt/utility,
 /obj/item/clothing/mask/gas/coloured,
 /turf/simulated/floor/plating,
@@ -72157,7 +72157,7 @@
 /area/medical/genetics)
 "lob" = (
 /obj/structure/rack,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "lpb" = (
@@ -72496,7 +72496,7 @@
 /area/medical/cmo)
 "mcb" = (
 /obj/structure/rack,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /obj/item/device/flashlight,
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)

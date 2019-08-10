@@ -560,7 +560,7 @@
 
 /obj/item/rig_module/device/extinguisher/proc/update_foam_ammount()
 	if(device)
-		var/obj/item/weapon/extinguisher/ext = device
+		var/obj/item/weapon/reagent_containers/spray/extinguisher/ext = device
 		charges["aqueous_foam"].charges = ext.reagents.total_volume
 
 /obj/item/rig_module/metalfoam_spray
