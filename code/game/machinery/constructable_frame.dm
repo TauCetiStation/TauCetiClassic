@@ -405,12 +405,12 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/manipulator = 2,
 							/obj/item/stack/cable_coil = 1)
 
-/obj/item/weapon/circuitboard/autoclave
+/obj/item/weapon/circuitboard/uv_sterilizer
 	name = "circuit board (Autoclave)"
-	build_path = /obj/machinery/autoclave
+	build_path = /obj/machinery/uv_sterilizer
 	origin_tech = "programming=1;biotech=3;materials=3"
 	req_components = list(
-							/obj/item/weapon/circuitboard/autoclave = 1,
+							/obj/item/weapon/circuitboard/uv_sterilizer = 1,
 							/obj/item/weapon/stock_parts/micro_laser = 3,
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/stack/cable_coil = 1)

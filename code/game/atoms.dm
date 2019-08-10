@@ -540,7 +540,7 @@
 
 /atom/proc/decrease_germ_level(amount, atom/source = null, part = "")
 	if(can_increase_germ_level())
-		germ_level += amount
+		germ_level -= amount
 		return TRUE
 	return FALSE
 

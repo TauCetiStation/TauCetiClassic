@@ -1,8 +1,10 @@
-/obj/machinery/autoclave
-	name = "autoclave"
+
+
+/obj/machinery/uv_sterilizer
+	name = "UV sterilizer"
 	desc = "Uses some fancy Wey-Med supplied trickery to make dirty things clean, very-very clean."
 	icon = 'icons/obj/medical.dmi'
-	icon_state = "autoclave_idle"
+	icon_state = "uv_sterilizer_idle"
 	density = TRUE
 	anchored = TRUE
 	use_power = TRUE
@@ -14,11 +16,11 @@
 
 	var/obj/item/weapon/storage/internal/updating/shelves
 
-/obj/machinery/autoclave/atom_init(mapload)
+/obj/machinery/uv_sterilizer/atom_init(mapload)
 	. = ..()
 
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/autoclave(null)
+	component_parts += new /obj/item/weapon/circuitboard/uv_sterilizer(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
@@ -29,11 +31,11 @@
 
 	update_icon()
 
-/obj/machinery/autoclave/Destroy()
+/obj/machinery/uv_sterilizer/Destroy()
 	QDEL_NULL(shelves)
 	return ..()
 
-/obj/machinery/autoclave/RefreshParts()
+/obj/machinery/uv_sterilizer/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
 		efficency += M.rating
 
@@ -43,20 +45,21 @@
 	shelves = new(src)
 	shelves.set_slots(slots = (6 * shelves_available), slot_size = ITEM_SIZE_NORMAL)
 
-/obj/machinery/autoclave/proc/clean()
+/obj/machinery/uv_sterilizer/proc/clean()
 	var/cleaned_amount = 0
-	sleep(200 / efficency)
+	sleep(100 / efficency)
 
-	for(var/obj/item/I in contents)
+	for(var/obj/item/I in get_contents())
 		I.clean_blood()
 		I.cleanse_germ_level()
 		cleaned_amount++
 
 	use_power(500 * cleaned_amount / efficency)
 
-/obj/machinery/autoclave/verb/start_cleaning()
+/obj/machinery/uv_sterilizer/verb/start_cleaning()
 	set name = "Start Cleaning Procedure"
 	set desc = "Starts the cleaning procedure."
+	set category = "Object"
 	set src in oview(1)
 
 	var/mob/living/user = usr
@@ -73,29 +76,40 @@
 	processing = TRUE
 	visible_message("<span class='notice'>[src] boops, as it starts up.</span>")
 
-	icon_state = "autoclave_processing"
+	icon_state = "uv_sterilizer_processing"
 	clean()
 	sleep(15)
-	icon_state = "autoclave_idle"
+	icon_state = "uv_sterilizer_idle"
 
 	visible_message("<span class='notice'>[src] beeps, as it stops.</span>")
 	processing = FALSE
 
-/obj/machinery/autoclave/attack_hand(mob/living/user)
-	if(!processing)
+/obj/machinery/uv_sterilizer/attack_hand(mob/living/user)
+	if(!processing && !user.incapacitated())
 		user.SetNextMove(CLICK_CD_MELEE)
 		shelves.open(user)
 		..()
 
-/obj/machinery/autoclave/attackby(obj/item/O, mob/user)
+/obj/machinery/uv_sterilizer/MouseDrop_T(mob/living/target, mob/user)
+	if(!processing && !user.incapacitated() && target == user)
+		shelves.open(user)
+
+/obj/machinery/uv_sterilizer/attackby(obj/item/O, mob/user)
 	if(processing)
 		return
 
-	if(exchange_parts(user, O))
+	if(user.a_intent != I_HELP)
+		if(exchange_parts(user, O))
+			return
+
+		if(default_deconstruction_crowbar(O))
+			return
+
+		if(default_unfasten_wrench(O))
+			return
+
+	if(shelves.can_be_inserted(O))
+		shelves.handle_item_insertion(O)
 		return
 
-	if(default_deconstruction_crowbar(O))
-		return
-
-	if(default_unfasten_wrench(O))
-		return
+	..()

@@ -680,6 +680,9 @@
 	if(alien == SKRELL) //Skrell get very drunk very quickly.
 		d *= 5
 
+	if(M.germ_level > 0 && d >= slur_start)
+		M.decrease_germ_level(boozepwr, part = "mouth")
+
 	M.dizziness += dizzy_adj
 	if(d >= slur_start && d < pass_out)
 		if(!M.slurring)
@@ -718,18 +721,18 @@
 			to_chat(usr, "The solution dissolves the ink on the book.")
 		else
 			to_chat(usr, "It wasn't enough...")
-	O.decrease_germ_level(min(volume * 5, O.get_germ_level()))
+	O.decrease_germ_level(min(volume * boozepwr, O.get_germ_level()))
 
 /datum/reagent/consumable/ethanol/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with ethanol isn't quite as good as fuel.
 	if(!istype(M))
 		return
 	if(method == TOUCH)
-		M.decrease_germ_level(min(volume * 5, M.get_germ_level()), null, "all")
+		M.decrease_germ_level(min(volume * boozepwr, M.get_germ_level()), null, "all")
 		M.adjust_fire_stacks(volume / 15)
 		return
 
 /datum/reagent/consumable/ethanol/reaction_turf(turf/T, volume)
-	T.decrease_germ_level(min(volume * 5, T.get_germ_level()))
+	T.decrease_germ_level(min(volume * boozepwr, T.get_germ_level()))
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
