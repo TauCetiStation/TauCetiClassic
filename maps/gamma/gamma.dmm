@@ -57944,6 +57944,7 @@
 /obj/machinery/camera{
 	c_tag = "Theater Closet"
 	},
+/obj/item/weapon/reagent_containers/spray/watergun,
 /turf/simulated/floor/wood,
 /area/crew_quarters/theater)
 "rZk" = (
@@ -64234,7 +64235,6 @@
 "tWZ" = (
 /obj/structure/safe,
 /obj/item/clothing/under/color/yellow,
-/obj/item/key,
 /obj/item/toy/katana,
 /turf/simulated/floor{
 	dir = 8;
