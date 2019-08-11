@@ -7,7 +7,6 @@
 	flags = OPENCONTAINER
 	var/amount_per_transfer_from_this = 5	//shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 
-
 /obj/structure/mopbucket/atom_init()
 	create_reagents(100)
 	. = ..()
@@ -17,12 +16,13 @@
 	mopbucket_list -= src
 	return ..()
 
+/obj/structure/mopbucket/is_open_container()
+	return TRUE
 
 /obj/structure/mopbucket/examine(mob/user)
 	..()
 	if(src in user)
 		to_chat(user, "[src] contains [reagents.total_volume] unit\s of water!")
-
 
 /obj/structure/mopbucket/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/mop))
