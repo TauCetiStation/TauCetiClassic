@@ -27,6 +27,10 @@
 	facehuggers_list += src
 	return INITIALIZE_HINT_LATELOAD
 
+/obj/item/clothing/mask/facehugger/atom_init_late()
+	if(facehuggers_control_type == FACEHUGGERS_DYNAMIC_AI)
+		START_PROCESSING(SSobj, src)
+
 /obj/item/clothing/mask/facehugger/Destroy()
 	target = null
 	facehuggers_list -= src
@@ -81,7 +85,7 @@
 				else
 					continue
 
-		if(!CanHug(target, TRUE))
+		if(!CanHug(target, FALSE))
 			target = null
 			return
 		else if(get_dist(src,target) < 2)
