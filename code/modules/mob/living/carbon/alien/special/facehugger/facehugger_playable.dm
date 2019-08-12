@@ -224,7 +224,7 @@ This is chestburster mechanic for damaging
 			H.death()
 			// we're fucked. no chance to revive a person
 			H.apply_damage(rand(150, 250), BRUTE, BP_CHEST)
-			H.adjustToxLoss(rand(200, 300)) // Bad but effective solution.
+			H.adjustToxLoss(rand(180, 200)) // Bad but effective solution.
 			H.organs_by_name[O_HEART].damage = rand(50, 100)
 			H.rupture_lung()
 			BP.open = 1
