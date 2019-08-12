@@ -17,6 +17,7 @@
 	volume = 250
 	var/safety = FALSE
 	var/triple_shot = FALSE
+	var/delay = 2
 
 	action_button_name = "Switch Spray"
 
@@ -98,8 +99,8 @@
 			// not its contents. BS12
 			if(get_dist(D, A) == 1 && A.density)
 				D.reagents.reaction(A)
-			sleep(2)
-		sleep(3)
+			sleep(delay)
+		sleep(delay+1)
 	qdel(D)
 
 /obj/item/weapon/reagent_containers/spray/attack_self(mob/user)
@@ -390,7 +391,7 @@
 //Water Gun
 /obj/item/weapon/reagent_containers/spray/watergun
 	name = "hyper soaker"
-	desc = "A water gun that uses manually-pressurized air to shoot water with great power, range, and accuracy."
+	desc = "A  water gun that uses manually-pressurized air to shoot water with great power, range, and accuracy."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "watergun"
 	item_state = "watergun"
@@ -400,3 +401,4 @@
 	origin_tech = "combat=1;materials=1"
 	spray_size = 4
 	spray_sizes = list(4)
+	delay = 0
