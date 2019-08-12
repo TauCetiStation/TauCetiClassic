@@ -408,24 +408,25 @@
 			opened = 0
 			update_icon()
 
-	else if (iscrowbar(W) && !((stat & BROKEN) || malfhack))
-		if(coverlocked && !(stat & MAINT))
-			to_chat(user, "<span class='warning'>The cover is locked and cannot be opened.</span>")
-			return
-		else
-			opened = 1
-			update_icon()
+	else if(iscrowbar(W) && !opened)
+		if (stat & BROKEN)
+			user.visible_message("<span class='warning'>[user.name] try open [src.name] cover.</span>", "<span class='notice'>You try open [src.name] cover.</span>")
+			if(W.use_tool(src, user, 25, volume = 25))
+				opened = 1
+				locked = 0
+				update_icon()
+				if(cell)
+					to_chat(user, "<span class='notice'>Power cell from [src.name] is dropped</span>")
+					cell.forceMove(user.loc)
+					cell = null
 
-	else if (iscrowbar(W) && !opened && (stat & BROKEN))
-		user.visible_message("<span class='warning'>[user.name] try open [src.name] cover.</span>", "<span class='notice'>You try open [src.name] cover.</span>")
-		if(W.use_tool(src, user, 25, volume = 25))
-			opened = 1
-			locked = 0
-			update_icon()
-			if(cell)
-				to_chat(user, "<span class='notice'>Power cell from [src.name] is dropped</span>")
-				cell.loc = user.loc
-				cell = null
+		else if (!(stat & BROKEN) || !malfhack)
+			if(coverlocked && !(stat & MAINT))
+				to_chat(user, "<span class='warning'>The cover is locked and cannot be opened.</span>")
+				return
+			else
+				opened = 1
+				update_icon()
 
 	else if (iswrench(W) && opened && (stat & BROKEN))
 		if(coverlocked)
@@ -602,26 +603,6 @@
 			if (opened==2)
 				opened = 1
 			update_icon()
-	else
-		if (((stat & BROKEN) || malfhack) \
-				&& !opened \
-				&& W.force >= 5 \
-				&& W.w_class >= ITEM_SIZE_NORMAL \
-				&& prob(20) )
-			opened = 2
-			user.visible_message("<span class='warning'>The APC cover was knocked down with the [W.name] by [user.name]!</span>", \
-				"<span class='warning'>You knock down the APC cover with your [W.name]!</span>", \
-				"You hear bang")
-			update_icon()
-		else
-			if (!opened && wiresexposed && is_wire_tool(W))
-				return wires.interact(user)
-			if (istype(user, /mob/living/silicon))
-				return attack_hand(user)
-			user.SetNextMove(CLICK_CD_MELEE)
-			user.visible_message("<span class='warning'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", \
-				"<span class='warning'>You hit the [src.name] with your [W.name]!</span>", \
-				"You hear bang")
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 
