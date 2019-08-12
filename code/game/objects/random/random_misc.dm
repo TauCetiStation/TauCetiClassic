@@ -27,7 +27,6 @@
 						prob(10);/obj/item/weapon/storage/box/lights,\
 						prob(10);/obj/item/weapon/storage/box/lights/tubes,\
 						prob(10);/obj/item/weapon/storage/box/lights/mixed,\
-						prob(40);/obj/item/weapon/storage/box/survival,\
 						prob(10);/obj/item/weapon/storage/box/engineer,\
 						prob(10);/obj/item/weapon/storage/box/gloves,\
 						prob(60);/obj/item/weapon/storage/box/mousetraps,\
