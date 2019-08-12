@@ -1,6 +1,5 @@
 language: generic
 sudo: false
-jdk: openjdk8
 
 env:
   global:
