@@ -412,8 +412,8 @@
 		if (stat & BROKEN)
 			user.visible_message("<span class='warning'>[user.name] try open [src.name] cover.</span>", "<span class='notice'>You try open [src.name] cover.</span>")
 			if(W.use_tool(src, user, 25, volume = 25))
-				opened = 1
-				locked = 0
+				opened = TRUE
+				locked = FALSE
 				update_icon()
 				if(cell)
 					to_chat(user, "<span class='notice'>Power cell from [src.name] is dropped</span>")
@@ -425,17 +425,17 @@
 				to_chat(user, "<span class='warning'>The cover is locked and cannot be opened.</span>")
 				return
 			else
-				opened = 1
+				opened = TRUE
 				update_icon()
 
 	else if (iswrench(W) && opened && (stat & BROKEN))
 		if(coverlocked)
 			to_chat(user, "<span class='notice'>Remove security APC bolts.</span>")
 			if(W.use_tool(src, user, 5, volume = 5))
-				coverlocked = 0
+				coverlocked = FALSE
 				update_icon()
 		else
-			to_chat(user, "<span class='warning'> APC bolts alredy removed.</span>")
+			to_chat(user, "<span class='warning'>APC bolts alredy removed.</span>")
 
 	else if	(istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		if(cell)
