@@ -34,6 +34,7 @@
 /obj/item/clothing/mask/facehugger/Destroy()
 	target = null
 	facehuggers_list -= src
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/clothing/mask/facehugger/CanPass(atom/movable/mover, turf/target, height=0)
