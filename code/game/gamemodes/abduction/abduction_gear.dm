@@ -492,7 +492,7 @@
 
 	L.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> stunned <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
 	user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> stunned <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
-	msg_admin_attack("[user] ([user.ckey]) stunned [L] ([L.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	msg_admin_attack("[user] ([user.ckey]) stunned [L] ([L.ckey]) with a [src]", user)
 	return
 
 /obj/item/weapon/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
@@ -504,7 +504,7 @@
 
 	L.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> put to sleep <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
 	user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> put to sleep <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
-	msg_admin_attack("[user] ([user.ckey]) put to sleep [L] ([L.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	msg_admin_attack("[user] ([user.ckey]) put to sleep [L] ([L.ckey]) with a [src]", user)
 	return
 
 /obj/item/weapon/abductor_baton/proc/CuffAttack(mob/living/L,mob/living/user)
@@ -522,7 +522,7 @@
 				to_chat(user, "<span class='notice'>You handcuff [C].</span>")
 				L.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> handcuffed <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
 				user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> handcuffed <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
-				msg_admin_attack("[user] ([user.ckey]) handcuffed [L] ([L.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+				msg_admin_attack("[user] ([user.ckey]) handcuffed [L] ([L.ckey]) with a [src]", user)
 		else
 			to_chat(user, "<span class='warning'>You fail to handcuff [C].</span>")
 	return

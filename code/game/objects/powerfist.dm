@@ -88,5 +88,5 @@
 
 	target.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been powerfisted by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>powerfisted [target.name]'s ([target.ckey])</font>")
-	msg_admin_attack("[user] ([user.ckey]) powerfisted [target.name] ([target.ckey]) ([ADMIN_JMP(target)])")
+	msg_admin_attack("[user] ([user.ckey]) powerfisted [target.name] ([target.ckey])", user)
 	return
