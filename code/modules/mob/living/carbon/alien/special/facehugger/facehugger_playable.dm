@@ -273,6 +273,7 @@ This is chestburster mechanic for damaging
 		return
 
 /obj/item/weapon/larva_bite/Destroy()
+	STOP_PROCESSING(SSobj, src)
 	hud = null
 	affecting = null
 	chestburster = null
@@ -339,6 +340,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	affecting.LAssailant = assailant
 
 /obj/item/weapon/fh_grab/Destroy()
+	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(hud)
 	affecting = null
 	assailant = null
