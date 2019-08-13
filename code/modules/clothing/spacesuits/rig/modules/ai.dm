@@ -244,13 +244,87 @@
 		"Power is running out, please recharge the suit cell",
 		"The suit power is almost dead, can't help you much",
 		)
+/datum/rig_aivoice/MK_2
+	name = "Mk II"
+	welcome_message= "Hello. It's nice to meet you"
+	damage_message = "Ouch.I am not used to feeling pain"
+	destroyed_message = "Hello... anyone......"
+	health_warnings =list(
+		"I've found some scrathes",
+		"Watch out, you're not looking good",
+		"It would be nice for you, to leave the area you are in",
+		"Please seek help,i don't want you to die",
+		"Please, don't die on me....",
+		)
+	breach_warnings=list(
+		"I'm taking hits",
+		"I'm almost breached",
+		"Integrity is neutralized",
+		)
+	energy_warnings= list(
+		"Power is at 50%",
+		"It would be nice if you recharged me",
+		"Hurry up, the battery is almost dead",
+	)
+/obj/item/rig_module/simple_ai/combat
+	name = "hardsuit combat diagnostic system"
+	origin_tech="programming=3"
+	interface_name="combat diagnostic system"
+	interface_desc="Combat hardsuit ai system"
+/obj/item/rig_module/simple_ai/combat/atom_init()
+	. = ..()
+/obj/item/rig_module/simple_ai/combat/on_rigdamage(mob/living/carbon/human/H, rig_damage)
+	if(rig_damage < 7)
+		return
+	var/obj/item/rig_module/selfrepair/repair_module = holder.find_module(/obj/item/rig_module/selfrepair/)
+	if(repair_module && !repair_module.active)
+		repair_module.activate(forced = TRUE)
+/obj/item/rig_module/simple_ai/combat/on_health(mob/living/carbon/human/H)
+	if(H.stat == DEAD)
+		return
+
+	var/obj/item/rig_module/chem_dispenser/chem_disp = holder.find_module(/obj/item/rig_module/chem_dispenser/)
+	if(!chem_disp)
+		return
+
+	if(H.getOxyLoss() > 40)
+		if(try_inject(H, chem_disp, list("dexalin plus", "dexalin", "inaprovaline", "tricordrazine")))
+			return
+	if(H.getFireLoss() > 40)
+		if(try_inject(H, chem_disp, list("dermaline", "kelotane", "tricordrazine")))
+			return
+	if(H.getBruteLoss() > 40)
+		if(try_inject(H, chem_disp, list("bicaridine", "tricordrazine")))
+			return
+	if(H.traumatic_shock > 40 || H.shock_stage > 40)
+		if(try_inject(H, chem_disp, list("oxycodone", "tramadol", "paracetamol")))
+			return
+	if(H.getToxLoss() > 20)
+		if(try_inject(H, chem_disp, list("dylovene", "tricordrazine")))
+			return
+/obj/item/rig_module/simple_ai/combat/proc/try_inject(mob/living/carbon/human/H, obj/item/rig_module/chem_dispenser/chem_disp, list/reagents)
+	if(holder.cell.charge < chem_disp.use_power_cost)
+		return TRUE
+
+	for(var/reagent in reagents)
+		if(!chem_disp.charges[reagent])
+			continue
+
+		if(H.reagents.get_reagent_amount(chem_disp.charges[reagent].product_type) > 1)
+			continue
+
+		if(chem_disp.use_charge(reagent, show_warnings = FALSE))
+			holder.cell.use(chem_disp.use_power_cost)
+			return TRUE
+	return FALSE
+
+
 
 /obj/item/rig_module/simple_ai/advanced
 	name = "hardsuit advanced diagnostic system"
 	origin_tech = "programming=4"
 	interface_name = "advanced diagnostic system"
-	interface_desc = "System that might actually save you, wow."
-
+	interface_desc = "A more advanced counterpart of combat AI,that actually has a personality."
 /obj/item/rig_module/simple_ai/advanced/proc/get_random_voice()
 	var/voice_type = pick(subtypesof(/datum/rig_aivoice))
 	if(!voice_type)

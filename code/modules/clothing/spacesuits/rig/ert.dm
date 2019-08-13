@@ -44,16 +44,16 @@
 	icon_state = "rig0-ert_commander"
 	item_state = "helm-command"
 	item_color = "ert_commander"
-	armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
+	armor = list(melee = 65, bullet = 70, laser = 60, energy = 60, bomb = 55, bio = 100, rad = 60)
 
 /obj/item/clothing/suit/space/rig/ert/commander
 	name = "emergency response team commander suit"
 	desc = "A suit worn by the commander of a NanoTrasen Emergency Response Team. Has blue highlights. Armoured, space ready, and fire resistant."
 	icon_state = "ert_commander"
 	item_state = "suit-command"
-	armor = list(melee = 60, bullet = 65, laser = 55, energy = 55, bomb = 50, bio = 100, rad = 60)
+	armor = list(melee = 65, bullet = 70, laser = 65, energy = 60, bomb = 55, bio = 100, rad = 66)
 	breach_threshold = 28
-	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/mounted/taser, /obj/item/rig_module/mounted, /obj/item/rig_module/grenade_launcher/flashbang, /obj/item/rig_module/cooling_unit)
+	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/mounted/taser, /obj/item/rig_module/mounted, /obj/item/rig_module/grenade_launcher/flashbang, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/chem_dispenser/combat)
 
 //Security
 /obj/item/clothing/head/helmet/space/rig/ert/security
@@ -62,17 +62,17 @@
 	icon_state = "rig0-ert_security"
 	item_state = "syndicate-helm-black-red"
 	item_color = "ert_security"
-	armor = list(melee = 60, bullet = 60, laser = 60, energy = 30, bomb = 65, bio = 100, rad = 10)
+	armor = list(melee = 65, bullet = 65, laser = 65, energy = 35, bomb = 65, bio = 100, rad = 10)
 
 /obj/item/clothing/suit/space/rig/ert/security
 	name = "emergency response team security suit"
 	desc = "A suit worn by security members of a NanoTrasen Emergency Response Team. Has red highlights. Armoured, space ready, and fire resistant."
 	icon_state = "ert_security"
 	item_state = "syndicate-black-red"
-	armor = list(melee = 60, bullet = 60, laser = 60, energy = 30, bomb = 65, bio = 100, rad = 10)
+	armor = list(melee = 65, bullet = 65, laser = 65, energy = 35, bomb = 65, bio = 100, rad = 10)
 	breach_threshold = 25
 	slowdown = 1.4
-	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/mounted/taser)
+	initial_modules = list(/obj/item/rig_module/simple_ai/combat, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/mounted/taser, /obj/item/rig_module/chem_dispenser/combat)
 
 //Engineer
 /obj/item/clothing/head/helmet/space/rig/ert/engineer
