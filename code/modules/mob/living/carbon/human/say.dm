@@ -7,12 +7,12 @@
 	var/sound_vol
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "<span class='userdange'>You cannot speak in IC (Muted).</span>")
+			to_chat(src, "<span class='userdanger'>You cannot speak in IC (Muted).</span>")
 			return
 
 	//Meme stuff
-	if((!speech_allowed && usr == src) || ((miming || has_trait(TRAIT_MUTE)) && !(copytext(message, 1, 2) == "*")))
-		to_chat(usr, "<span class='userdange'>You can't speak.</span>")
+	if(!speech_allowed && usr == src)
+		to_chat(usr, "<span class='userdanger'>You can't speak.</span>")
 		return
 
 	message =  sanitize(message)
@@ -29,6 +29,10 @@
 
 	if(copytext(message,1,2) == "*")
 		return emote(copytext(message,2))
+
+	if((miming || has_trait(TRAIT_MUTE)) && !(message_mode == "changeling" || message_mode == "alientalk"))
+		to_chat(usr, "<span class='userdanger'>You are mute.</span>")
+		return
 
 	if(!ignore_appearance && name != GetVoice())
 		alt_name = "(as [get_id_name("Unknown")])"

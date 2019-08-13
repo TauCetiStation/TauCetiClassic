@@ -116,6 +116,13 @@
 
 	var/has_gendered_icons = TRUE // if TRUE = use icon_state with _f or _m for respective gender (see get_icon() external organ proc).
 
+	var/list/survival_kit_items = list(/obj/item/clothing/mask/breath,
+	                                   /obj/item/weapon/tank/emergency_oxygen,
+	                                   /obj/item/weapon/reagent_containers/hypospray/autoinjector
+	                                   )
+
+	var/list/prevent_survival_kit_items = list()
+
 /datum/species/New()
 	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
@@ -171,11 +178,24 @@
 	return
 
 /datum/species/proc/after_job_equip(mob/living/carbon/human/H, datum/job/J)
-	var/obj/item/weapon/storage/box/SK
-	if(J.title in list("Shaft Miner", "Chief Engineer", "Station Engineer", "Atmospheric Technician"))
-		SK = new /obj/item/weapon/storage/box/engineer(H)
-	else
-		SK = new /obj/item/weapon/storage/box/survival(H)
+	var/obj/item/weapon/storage/box/survival/SK = new(H)
+
+	species_survival_kit_items:
+		for(var/type in survival_kit_items)
+			/*
+			is_type_in_list only work on instantinated objects.
+			*/
+			for(var/type_to_check in J.prevent_survival_kit_items) // So engineers don't spawn with two oxy tanks.
+				if(ispath(type, type_to_check))
+					continue species_survival_kit_items
+			new type(SK)
+
+	job_survival_kit_items:
+		for(var/type in J.survival_kit_items)
+			for(var/type_to_check in prevent_survival_kit_items) // So IPCs don't spawn with oxy tanks from engi kits
+				if(ispath(type, type_to_check))
+					continue job_survival_kit_items
+			new type(SK)
 
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(SK, SLOT_R_HAND)
@@ -517,6 +537,12 @@
 
 	has_gendered_icons = FALSE
 
+	survival_kit_items = list(/obj/item/device/flashlight/flare,
+	                          /obj/item/device/plant_analyzer
+	                          )
+
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
+
 /datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
@@ -541,12 +567,6 @@
 		H.adjustBruteLoss(-(light_amount))
 		H.adjustToxLoss(-(light_amount))
 		H.adjustOxyLoss(-(light_amount))
-
-/datum/species/diona/after_job_equip(mob/living/carbon/human/H, datum/job/J)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/diona_survival(H), SLOT_R_HAND)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/diona_survival(H), SLOT_IN_BACKPACK)
 
 /datum/species/diona/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_diona_digest(M)
@@ -632,11 +652,11 @@
 	blood_datum_path = /datum/dirt_cover/oil
 	flesh_color = "#575757"
 
-/datum/species/machine/after_job_equip(mob/living/carbon/human/H, datum/job/J)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ipc_survival(H), SLOT_R_HAND)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ipc_survival(H), SLOT_IN_BACKPACK)
+	survival_kit_items = list(/obj/item/weapon/stock_parts/cell/crap,
+	                          /obj/item/device/robotanalyzer
+	                          )
+
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
 
 /datum/species/abductor
 	name = ABDUCTOR

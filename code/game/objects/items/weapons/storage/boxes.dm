@@ -42,31 +42,7 @@
 //Survival boxes, given by NanoTrasen
 /obj/item/weapon/storage/box/survival
 	name = "emergency box"
-	desc = "It's a box, issued to every employee of NanoTrasen, contains a mask and a spare air tank. It has a ton of ads all over its back."
-
-/obj/item/weapon/storage/box/survival/atom_init()
-	. = ..()
-	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/weapon/tank/emergency_oxygen(src)
-	new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
-
-/obj/item/weapon/storage/box/diona_survival
-	name = "emergency box"
-	desc = "It's a box, issued to every diona working for NanoTrasen, contains a flare and a plant analyzer. It has a ton of ads all over its back."
-
-/obj/item/weapon/storage/box/diona_survival/atom_init()
-	. = ..()
-	new /obj/item/device/flashlight/flare(src)
-	new /obj/item/device/plant_analyzer(src)
-
-/obj/item/weapon/storage/box/ipc_survival
-	name = "emergency box"
-	desc = "It's a box, issued to every IPC working for NanoTrasen, contains a flare and a plant analyzer. It has a ton of ads all over its back."
-
-/obj/item/weapon/storage/box/ipc_survival/atom_init()
-	. = ..()
-	new /obj/item/weapon/stock_parts/cell/crap(src)
-	new /obj/item/device/robotanalyzer(src)
+	desc = "It's a box, issued to every employee of NanoTrasen, contains essential items for employee's survival incase of an emergency. It has a ton of ads all over its back."
 
 //Engineer
 /obj/item/weapon/storage/box/engineer

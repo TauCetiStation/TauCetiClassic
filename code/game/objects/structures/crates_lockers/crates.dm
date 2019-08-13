@@ -530,9 +530,37 @@
 
 /obj/structure/closet/crate/seized_inventory/PopulateContents()
 	var/contraband_num = rand(0, 7)
+	var/obj/item/device/contraband_finder/seeker = new(null)
+
+	var/list/contraband_types = seeker.contraband_items
+	var/list/danger_types = seeker.danger_items
+
+	var/list/contraband_reagents = seeker.contraband_reagents
+	var/list/danger_reagents = seeker.danger_reagents
+
+	if(!length(contraband_types) && !length(danger_types))
+		return
 
 	for(var/i in 1 to contraband_num)
-		var/obj/randomcatcher/CATCH = new /obj/randomcatcher(src)
-		var/obj/item/I = CATCH.get_item(/obj/random/misc/all)
-		if(I)
-			I.forceMove(src)
+		var/type_to_spawn
+		if(prob(90) && length(contraband_types))
+			type_to_spawn = pick(contraband_types)
+		else if(length(danger_types))
+			type_to_spawn = pick(danger_types)
+
+		if(type_to_spawn)
+			var/obj/item/I = new type_to_spawn(src)
+
+			if(I && I.reagents && (length(contraband_reagents) || length(danger_reagents)))
+				var/reagents_to_add = rand(0, I.reagents.maximum_volume)
+				spawn_reagents_loop:
+					while(TRUE)
+						var/current_reagent_to_add = rand(1, max(1, reagents_to_add))
+						reagents_to_add -= current_reagent_to_add
+						if(reagents_to_add <= 0)
+							break spawn_reagents_loop
+
+						if(prob(90) && length(contraband_reagents))
+							I.reagents.add_reagent(pick(contraband_reagents), reagents_to_add)
+						else if(length(danger_reagents))
+							I.reagents.add_reagent(pick(danger_reagents), reagents_to_add)

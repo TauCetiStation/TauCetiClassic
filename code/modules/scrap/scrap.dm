@@ -91,9 +91,10 @@ var/global/list/scrap_base_cache = list()
 	if(prob(big_item_chance))
 		var/obj/randomcatcher/CATCH = new /obj/randomcatcher(src)
 		big_item = CATCH.get_item(/obj/random/structures/structure_pack)
-		big_item.forceMove(src)
-		if(prob(66))
-			big_item.make_old()
+		if(big_item)
+			big_item.forceMove(src)
+			if(prob(66))
+				big_item.make_old()
 		qdel(CATCH)
 
 

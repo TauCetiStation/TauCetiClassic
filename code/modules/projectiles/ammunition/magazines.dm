@@ -134,17 +134,17 @@
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
 	max_ammo = 8
-	multiple_sprites = 2
 
-/obj/item/ammo_box/magazine/m9mmr_2
+/obj/item/ammo_box/magazine/m9mm_2/rubber
 	name = "magazine (9mm rubber)"
-	icon_state = "9mm_mag"
-	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c9mmr
-	caliber = "9mm"
-	max_ammo = 8
-	multiple_sprites = 2
 
+/obj/item/ammo_box/magazine/m9mm_2/update_icon()
+	..()
+	if(ammo_count() == 1)
+		icon_state = "[initial(icon_state)]-1"
+	else
+		icon_state = "[initial(icon_state)]-[round(ammo_count(),max_ammo*0.5)]"
 
 /obj/item/ammo_box/magazine/msmg9mm
 	name = "SMG magazine (9mm)"
@@ -157,15 +157,6 @@
 /obj/item/ammo_box/magazine/msmg9mm/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
-/*
-/obj/item/ammo_box/magazine/m10mm
-	name = "magazine (10mm)"
-	icon_state = "9x19p"
-	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/c10mm
-	caliber = "10mm"
-	max_ammo = 8
-	multiple_sprites = 2 */
 
 /obj/item/ammo_box/magazine/m12mm
 	name = "magazine (.45)"
