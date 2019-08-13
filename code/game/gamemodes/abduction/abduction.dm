@@ -359,12 +359,13 @@
 
 /obj/effect/landmark/abductor/console/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
 
+/obj/effect/landmark/abductor/console/atom_init_late()
 	var/obj/machinery/abductor/console/c = new /obj/machinery/abductor/console(src.loc)
 	c.team = team
 	c.Initialize()
-
-	return INITIALIZE_HINT_QDEL
+	qdel(src)
 
 /obj/effect/landmark/abductor/agent
 /obj/effect/landmark/abductor/scientist
