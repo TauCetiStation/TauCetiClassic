@@ -99,10 +99,10 @@
 		safety_disabled = !safety_disabled
 		update_projections()
 		if(safety_disabled)
-			message_admins("[key_name_admin(usr)] overrode the holodeck's safeties")
+			message_admins("[key_name_admin(usr)] overrode the holodeck's safeties. [ADMIN_JMP(usr)]")
 			log_game("[key_name(usr)] overrided the holodeck's safeties")
 		else
-			message_admins("[key_name_admin(usr)] restored the holodeck's safeties")
+			message_admins("[key_name_admin(usr)] restored the holodeck's safeties. [ADMIN_JMP(usr)]")
 			log_game("[key_name(usr)] restored the holodeck's safeties")
 
 	else if(href_list["gravity"])

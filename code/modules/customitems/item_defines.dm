@@ -592,13 +592,6 @@
 	item_state = "leatherjack"
 	item_color = "leatherjack"
 
-/obj/item/clothing/suit/armor/vest/fluff/deus_blueshield //deusdactyl
-	name = "blue shield security armor"
-	desc = "An armored vest with the badge of a Blue Shield Security lieutenant."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "deus_blueshield"
-	item_state = "deus_blueshield"
-
 /obj/item/clothing/suit/fluff/oldscarf //Writerer2: Javaria Zara
 	name = "old scarf"
 	desc = "An old looking scarf, it seems to be fairly worn."
@@ -947,34 +940,6 @@
 	desc = "A suit that protects against minor chemical spills. Has a red stripe on the shoulders and rolled up sleeves."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "labcoat_red_open"
-
-////// Retired Patrol Outfit //desiderium: Rook Maudlin
-
-/obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat
-	name = "retired colony patrolman's coat"
-	desc = "A clean, black nylon windbreaker with the words \"OUTER LIGHT POLICE\" embroidered in gold-dyed thread on the back. \"RETIRED\" is tastefully embroidered below in a smaller font."
-	icon_state = "retpolcoat"
-	item_state = "retpolcoat"
-	item_color = "retpolcoat"
-
-/obj/item/clothing/head/det_hat/fluff/retpolcap
-	name = "retired colony patrolman's cap"
-	desc = "A clean and properly creased colony police cap. The badge is shined and polished, the word \"RETIRED\" engraved professionally under the words \"OUTER LIGHT POLICE.\""
-	icon_state = "retpolcap"
-
-/obj/item/clothing/under/det/fluff/retpoluniform
-	name = "retired colony patrolman's uniform"
-	desc = "A meticulously clean police uniform belonging to Precinct 31, Outer Light Colony. The word \"RETIRED\" is engraved tastefully and professionally in the badge below the number, 501."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "retpoluniform"
-	item_color = "retpoluniform"
-
-/obj/item/clothing/head/det_hat/fluff/kung
-	name = "Kung headband"
-	desc = "Stripe of red cloth.You can wear it on your head."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "kung_headband_w"
-	item_state = "kung_headband_w"
 
 //////////// Weapons ////////////
 
