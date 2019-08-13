@@ -50,8 +50,6 @@
 	// Will be removed, moved or refactored.
 	var/obj/item/hidden = null // relation with cavity
 	var/tmp/perma_injury = 0
-	var/tmp/destspawn = 0 //Has it spawned the broken limb?
-	var/tmp/amputated = 0 //Whether this has been cleanly amputated, thus causing no pain
 	var/limb_layer = 0
 	var/damage_msg = "<span class='warning'>You feel an intense pain</span>"
 
@@ -250,18 +248,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 			   DISMEMBERMENT
 ****************************************************/
 
-//Recursive setting of all child bodyparts to amputated
-/obj/item/organ/external/proc/setAmputatedTree()
-	for(var/obj/item/organ/external/BP in children)
-		BP.amputated = amputated
-		BP.setAmputatedTree()
-
 //Handles dismemberment
 /obj/item/organ/external/proc/droplimb(no_explode = FALSE, clean = FALSE, disintegrate = DROPLIMB_EDGE)
 	if(cannot_amputate)
-		return
-
-	if(destspawn)
 		return
 
 	owner.bodyparts -= src
@@ -308,7 +297,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 		parent.children -= src
 	parent = null
 
-	destspawn = TRUE
 	switch(disintegrate)
 		if(DROPLIMB_EDGE)
 			var/obj/bodypart = src // Dropped limb object

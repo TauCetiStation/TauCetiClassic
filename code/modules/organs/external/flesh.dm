@@ -156,8 +156,6 @@ This function completely restores a damaged organ to perfect condition.
 	BP.damage_state = "00"
 	BP.status = 0
 
-	BP.amputated = 0
-	BP.destspawn = 0
 	BP.perma_injury = 0
 	BP.brute_dam = 0
 	BP.open = 0
