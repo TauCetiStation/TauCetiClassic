@@ -157,11 +157,16 @@
 
 //reset to placeholder for inputs, logs
 /proc/reset_ja(text)
-	return replace_characters(text, list(JA_CODE=JA_PLACEHOLDER, JA_CODE_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
+	return replace_characters(text, list(JA_ENTITY=JA_PLACEHOLDER, JA_ENTITY_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
 
 //replace ja with entity for chat/popup
 /proc/entity_ja(text)
 	return replace_characters(text, list(JA_PLACEHOLDER=JA_ENTITY, JA_ENTITY_ASCII=JA_ENTITY))
+
+//Reset ja to cp1251. Only needed for loading screen ban messages.
+/proc/initial_ja(text)
+	return replace_characters(text, list(JA_ENTITY=JA_CHARACTER, JA_ENTITY_ASCII=JA_CHARACTER, JA_PLACEHOLDER=JA_CHARACTER))
+
 
 /proc/input_default(text)
 	return html_decode(reset_ja(text))//replace br with \n?
