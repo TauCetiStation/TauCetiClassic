@@ -79,7 +79,7 @@
 
 		if(D.stat != DEAD)
 			to_chat(usr, "<span class='warning'>You issue a kill command for the unfortunate drone.</span>")
-			message_admins("[key_name_admin(usr)] issued kill order for drone [key_name_admin(D)] from control console.")
+			message_admins("[key_name_admin(usr)] issued kill order for drone [key_name_admin(D)] from control console. [ADMIN_JMP(usr)]")
 			log_game("[key_name(usr)] issued kill order for [key_name(src)] from control console.")
 			D.shut_down()
 

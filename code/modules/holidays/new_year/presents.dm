@@ -11,7 +11,7 @@
 						/obj/item/weapon/poster/contraband				= 2,
 						/obj/item/weapon/poster/legit					= 2,
 						/obj/item/weapon/storage/box/snappops			= 2,
-						/obj/item/clothing/accessory/holster/waist		= 2,
+						/obj/item/clothing/accessory/holster/armpit		= 2,
 						/obj/item/clothing/accessory/medal/gold			= 2,
 						/obj/item/toy/blink								= 2,
 						/obj/item/clothing/under/syndicate/tacticool	= 2,

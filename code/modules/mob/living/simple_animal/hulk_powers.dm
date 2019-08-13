@@ -58,7 +58,7 @@
 			if(M != usr)
 				usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with hulk_jump</font>"
 				M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_jump</font>"
-				msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_jump")
+				msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_jump", usr)
 				var/mob/living/carbon/human/H = M
 				if(istype(H,/mob/living/carbon/human))
 					playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
@@ -215,7 +215,7 @@
 					if(!M.lying)
 						usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with hulk_dash</font>"
 						M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_dash</font>"
-						msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_dash")
+						msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_dash", usr)
 						var/turf/target = get_turf(get_step(usr,cur_dir))
 						hit = 1
 						playsound(M, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
@@ -333,7 +333,7 @@
 			if(M != usr)
 				usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with hulk_smash</font>"
 				M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_smash</font>"
-				msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_smash")
+				msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_smash", usr)
 				var/mob/living/carbon/human/H = M
 				if(istype(H,/mob/living/carbon/human))
 					playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
@@ -441,7 +441,7 @@
 		return
 
 	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses hulk_mill</font>"
-	msg_admin_attack("[key_name(usr)] uses hulk_mill")
+	msg_admin_attack("[key_name(usr)] uses hulk_mill", usr)
 
 	for(var/i in 1 to 45)
 		if(usr.dir == 1)
@@ -484,7 +484,7 @@
 	TG.prime()
 
 	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses hulk_gas</font>"
-	msg_admin_attack("[key_name(usr)] uses hulk_gas")
+	msg_admin_attack("[key_name(usr)] uses hulk_gas", usr)
 
 /obj/item/projectile/energy/hulkspit
 	name = "spit"
@@ -528,7 +528,7 @@
 		A.process()
 
 	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses hulk_spit</font>"
-	msg_admin_attack("[key_name(usr)] uses hulk_spit")
+	msg_admin_attack("[key_name(usr)] uses hulk_spit", usr)
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_eat
 	name = "Tear or Swallow"
@@ -565,7 +565,7 @@
 		usr.visible_message("<span class='warning'><b>[usr.name]</b> is trying to swallow <b>[target.name]</b>!</span>")
 		if(do_after(usr,50,target = target))
 			usr.attack_log += "\[[time_stamp()]\]<font color='red'> Eats [target.name] ([target.ckey]) with hulk_eat</font>"
-			msg_admin_attack("[key_name(usr)] eats [key_name(target)] body with hulk_eat")
+			msg_admin_attack("[key_name(usr)] eats [key_name(target)] body with hulk_eat", usr)
 			if(isrobot(target))
 				usr.visible_message("<span class='warning'><b>[usr.name]</b> swallows <b>[target.name]</b> and vomits some parts of it!</span> Looks like robots are not so tasty.")
 				SA.health -= 150
@@ -583,7 +583,7 @@
 		if(do_after(usr,20,target = target))
 			usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [target.name] ([target.ckey]) with hulk_eat</font>"
 			target.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_eat</font>"
-			msg_admin_attack("[key_name(usr)] attacked [key_name(target)] with hulk_eat")
+			msg_admin_attack("[key_name(usr)] attacked [key_name(target)] with hulk_eat", usr)
 			if(isrobot(target))
 				usr.visible_message("<span class='warning'><b>[usr.name]</b> rends apart and vomit some parts of <b>[target.name]</b>!</span> Looks like robots are not so tasty.")
 				SA.health -= 45
@@ -631,7 +631,7 @@
 		A.process()
 
 	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses hulk_lazor</font>"
-	msg_admin_attack("[key_name(usr)] uses hulk_lazor")
+	msg_admin_attack("[key_name(usr)] uses hulk_lazor", usr)
 
 /obj/effect/proc_holder/spell/aoe_turf/HulkHONK
 	name = "HulkHONK"
@@ -647,7 +647,7 @@
 		return
 	playsound(usr, 'sound/items/AirHorn.ogg', VOL_EFFECTS_MASTER)
 	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses HulkHONK</font>"
-	msg_admin_attack("[key_name(usr)] uses HulkHONK")
+	msg_admin_attack("[key_name(usr)] uses HulkHONK", usr)
 	for(var/mob/living/carbon/M in ohearers(2))
 		if(CLUMSY in M.mutations)
 			M.heal_bodypart_damage(10, 10)

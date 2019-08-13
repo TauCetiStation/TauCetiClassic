@@ -221,11 +221,11 @@
 			M.attack_log += "\[[time_stamp()]\] <b>[old_firer]/[old_firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
 			old_firer.attack_log += "\[[time_stamp()]\] <b>[old_firer]/[old_firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
 			if(!fake)
-				msg_admin_attack("[old_firer.name] ([old_firer.ckey]) shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(old_firer)] [ADMIN_FLW(old_firer)]") //BS12 EDIT ALG
+				msg_admin_attack("[old_firer.name] ([old_firer.ckey]) shot [M.name] ([M.ckey]) with a [src]", old_firer) //BS12 EDIT ALG
 		else
 			M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 			if(!fake)
-				msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(M)] [ADMIN_FLW(M)]") //BS12 EDIT ALG
+				msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src]", M) //BS12 EDIT ALG
 
 
 	if(istype(A,/turf))
