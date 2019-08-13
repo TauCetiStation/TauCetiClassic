@@ -4785,8 +4785,7 @@
 	},
 /area/crew_quarters/fitness)
 "aif" = (
-/obj/structure/table,
-/obj/item/weapon/surgicaldrill,
+/obj/structure/closet/crate/freezer,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitehall"
@@ -47774,8 +47773,7 @@
 	},
 /area/maintenance/engineering)
 "bQx" = (
-/obj/structure/table,
-/obj/item/weapon/surgicaldrill,
+/obj/structure/closet/crate/freezer,
 /turf/simulated/floor{
 	icon_state = "whitehall"
 	},
@@ -62494,6 +62492,7 @@
 	network = list("SS13","Medical")
 	},
 /obj/structure/disposalpipe/segment,
+/obj/item/weapon/surgicaldrill,
 /turf/simulated/floor,
 /area/medical/surgery2)
 "cAc" = (
@@ -76176,6 +76175,7 @@
 	dir = 4;
 	network = list("SS13","Medical")
 	},
+/obj/item/weapon/surgicaldrill,
 /turf/simulated/floor,
 /area/medical/surgery)
 "sHb" = (
