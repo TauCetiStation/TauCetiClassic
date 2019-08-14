@@ -543,10 +543,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/chances = 100
 
 	if(BP.owner.species.name != BP.species.name)
-		chances *= 0.2
+		chances *= 0.02
 
 	if(blood_incompatible(BP.owner.dna.b_type, BP.b_type))
-		chances *= 0.6
+		chances *= 0.4
 
 	if(prob(chances))
 		BP.is_rejecting = FALSE
