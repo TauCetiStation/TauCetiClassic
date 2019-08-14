@@ -787,3 +787,27 @@
 	item_state = "bl_suit"
 	item_color = "black_sport"
 
+/obj/item/clothing/under/M35_Jacket
+	name = "M35 Filde Jacket"
+	desc = "Standart wehrmacht field uniform."
+	icon_state = "M35_Filde_Jacket"
+	item_state = "g_suit"
+	item_color = "M35_Filde_Jacket"
+	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
+
+/obj/item/clothing/under/M35_Jacket_Oficer
+	name = "M35 Filde Oficer Jacket"
+	desc = "Werhmacht officer jacket uniform."
+	icon_state = "M35_Filde_Jacket_Officer"
+	item_state = "g_suit"
+	item_color = "M35_Filde_Jacket_Officer"
+	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
+
+/obj/item/clothing/under/Waffen_SS_Form
+	name = "Waffen SS Form"
+	desc = "A special uniform for the SS."
+	icon_state = "SS_Form"
+	item_state = "bl_suit"
+	item_color = "SS_Form"
+	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
+

@@ -216,3 +216,10 @@
 
 /obj/item/clothing/shoes/heels/alternate
 	icon_state = "high_shoes2"
+
+/obj/item/clothing/shoes/boots/German
+	name = "Black Boots"
+	desc = "Deutschland army boots."
+	icon_state = "Black_Boots"
+	item_state = "jackboots"
+	item_color = "Black_Boots"

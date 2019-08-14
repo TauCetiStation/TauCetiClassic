@@ -295,3 +295,9 @@
 	filter = list("phoron", "sleeping_agent", "oxygen")
 	species_restricted = list(VOX , VOX_ARMALIS)
 	sprite_sheets = list(VOX_ARMALIS = 'icons/mob/species/armalis/mask.dmi')
+
+/obj/item/clothing/mask/gas/German
+	name = "German Gas Mask"
+	desc = "Soldier's black gas mask."
+	icon_state = "German_gasmask"
+	item_color = "German_gasmask"
