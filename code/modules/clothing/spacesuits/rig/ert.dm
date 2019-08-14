@@ -72,7 +72,7 @@
 	armor = list(melee = 65, bullet = 65, laser = 65, energy = 35, bomb = 65, bio = 100, rad = 10)
 	breach_threshold = 25
 	slowdown = 1.4
-	initial_modules = list(/obj/item/rig_module/simple_ai/combat, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/mounted/taser, /obj/item/rig_module/chem_dispenser/combat)
+	initial_modules = list(/obj/item/rig_module/simple_ai/advanced/combat, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/mounted/taser, /obj/item/rig_module/chem_dispenser/combat)
 
 //Engineer
 /obj/item/clothing/head/helmet/space/rig/ert/engineer

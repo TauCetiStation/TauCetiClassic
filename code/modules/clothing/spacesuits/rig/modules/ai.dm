@@ -266,59 +266,6 @@
 		"It would be nice if you recharged me",
 		"Hurry up, the battery is almost dead",
 	)
-/obj/item/rig_module/simple_ai/combat
-	name = "hardsuit combat diagnostic system"
-	origin_tech="programming=3"
-	interface_name="combat diagnostic system"
-	interface_desc="Combat hardsuit ai system"
-/obj/item/rig_module/simple_ai/combat/atom_init()
-	. = ..()
-/obj/item/rig_module/simple_ai/combat/on_rigdamage(mob/living/carbon/human/H, rig_damage)
-	if(rig_damage < 7)
-		return
-	var/obj/item/rig_module/selfrepair/repair_module = holder.find_module(/obj/item/rig_module/selfrepair/)
-	if(repair_module && !repair_module.active)
-		repair_module.activate(forced = TRUE)
-/obj/item/rig_module/simple_ai/combat/on_health(mob/living/carbon/human/H)
-	if(H.stat == DEAD)
-		return
-
-	var/obj/item/rig_module/chem_dispenser/chem_disp = holder.find_module(/obj/item/rig_module/chem_dispenser/)
-	if(!chem_disp)
-		return
-
-	if(H.getOxyLoss() > 40)
-		if(try_inject(H, chem_disp, list("dexalin plus", "dexalin", "inaprovaline", "tricordrazine")))
-			return
-	if(H.getFireLoss() > 40)
-		if(try_inject(H, chem_disp, list("dermaline", "kelotane", "tricordrazine")))
-			return
-	if(H.getBruteLoss() > 40)
-		if(try_inject(H, chem_disp, list("bicaridine", "tricordrazine")))
-			return
-	if(H.traumatic_shock > 40 || H.shock_stage > 40)
-		if(try_inject(H, chem_disp, list("oxycodone", "tramadol", "paracetamol")))
-			return
-	if(H.getToxLoss() > 20)
-		if(try_inject(H, chem_disp, list("dylovene", "tricordrazine")))
-			return
-/obj/item/rig_module/simple_ai/combat/proc/try_inject(mob/living/carbon/human/H, obj/item/rig_module/chem_dispenser/chem_disp, list/reagents)
-	if(holder.cell.charge < chem_disp.use_power_cost)
-		return TRUE
-
-	for(var/reagent in reagents)
-		if(!chem_disp.charges[reagent])
-			continue
-
-		if(H.reagents.get_reagent_amount(chem_disp.charges[reagent].product_type) > 1)
-			continue
-
-		if(chem_disp.use_charge(reagent, show_warnings = FALSE))
-			holder.cell.use(chem_disp.use_power_cost)
-			return TRUE
-	return FALSE
-
-
 
 /obj/item/rig_module/simple_ai/advanced
 	name = "hardsuit advanced diagnostic system"
@@ -399,3 +346,13 @@
 			holder.cell.use(chem_disp.use_power_cost)
 			return TRUE
 	return FALSE
+/obj/item/rig_module/simple_ai/advanced/combat
+	name = "hardsuit combat diagnostic system"
+	origin_tech="programming=3"
+	interface_name="combat diagnostic system"
+	interface_desc="Combat hardsuit ai system"
+
+/obj/item/rig_module/simple_ai/advanced/combat/get_random_voice()
+	return
+
+
