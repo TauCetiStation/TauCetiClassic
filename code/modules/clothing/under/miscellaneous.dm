@@ -752,3 +752,22 @@
 	item_state = "b_suit"
 	item_color = "dude_shirt"
 
+/obj/item/clothing/under/sport
+	name = "white and black sport uniform"
+	desc = "No pain - no gain."
+	icon_state = "DDR_sport"
+	item_state = "gy_suit"
+	item_color = "DDR_sport"
+
+/obj/item/clothing/under/sport/blue
+	name = "blue sport uniform"
+	icon_state = "blue_sport"
+	item_state = "b_suit"
+	item_color = "blue_sport"
+
+/obj/item/clothing/under/sport/black
+	name = "black sport uniform"
+	icon_state = "black_sport"
+	item_state = "bl_suit"
+	item_color = "black_sport"
+

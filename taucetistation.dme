@@ -907,7 +907,6 @@
 #include "code\game\objects\WalterJ_Items_Pack\M2 FLAMETHROWER\WJ_M2_Flamethrower.dm"
 #include "code\game\objects\WalterJ_Items_Pack\NT PMC\WJ_NT_PMC.dm"
 #include "code\game\objects\WalterJ_Items_Pack\RED FACTION RIG\WJ_Red_Faction_Rig.dm"
-#include "code\game\objects\WalterJ_Items_Pack\SPORT\sport.dm"
 #include "code\game\objects\WalterJ_Items_Pack\TRANSPARANTS\transparant.dm"
 #include "code\game\objects\WalterJ_Items_Pack\UNATHI BLING\Unathi bling.dm"
 #include "code\game\objects\WalterJ_Items_Pack\WERMAHT UNIFORMS\WJ_Wermaht_uniforms.dm"
