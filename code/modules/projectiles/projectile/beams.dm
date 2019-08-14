@@ -75,9 +75,6 @@
 /obj/item/projectile/beam/emitter/singularity_pull()
 	return //don't want the emitters to miss
 
-/obj/item/projectile/beam/lasertag
-	proj_act_sound = list()
-
 /obj/item/projectile/beam/lastertag/blue
 	name = "lasertag beam"
 	icon_state = "bluelaser"
@@ -86,6 +83,7 @@
 	damage_type = BURN
 	fake = 1
 	flag = "laser"
+	proj_act_sound = list()
 
 	muzzle_type = /obj/effect/projectile/laser_blue/muzzle
 	tracer_type = /obj/effect/projectile/laser_blue/tracer
@@ -106,6 +104,7 @@
 	damage_type = BURN
 	fake = 1
 	flag = "laser"
+	proj_act_sound = list()
 
 /obj/item/projectile/beam/lastertag/red/on_hit(atom/target, blocked = 0)
 	if(istype(target, /mob/living/carbon/human))
@@ -121,6 +120,7 @@
 	damage = 0
 	damage_type = BURN
 	flag = "laser"
+	proj_act_sound = list()
 
 	muzzle_type = /obj/effect/projectile/laser_omni/muzzle
 	tracer_type = /obj/effect/projectile/laser_omni/tracer
