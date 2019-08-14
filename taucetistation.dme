@@ -904,7 +904,6 @@
 #include "code\game\objects\structures\stool_bed_chair_nest\roller_syrgery.dm"
 #include "code\game\objects\structures\stool_bed_chair_nest\stools.dm"
 #include "code\game\objects\structures\stool_bed_chair_nest\wheelchair.dm"
-#include "code\game\objects\WalterJ_Items_Pack\TRANSPARANTS\transparant.dm"
 #include "code\game\objects\WalterJ_Items_Pack\UNATHI BLING\Unathi bling.dm"
 #include "code\game\objects\WalterJ_Items_Pack\WERMAHT UNIFORMS\WJ_Wermaht_uniforms.dm"
 #include "code\game\turfs\simulated.dm"
