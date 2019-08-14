@@ -244,34 +244,35 @@
 		"Power is running out, please recharge the suit cell",
 		"The suit power is almost dead, can't help you much",
 		)
+
 /datum/rig_aivoice/MK_2
 	name = "Mk II"
-	welcome_message= "Hello. It's nice to meet you"
-	damage_message = "Ouch.I am not used to feeling pain"
+	welcome_message = "Hello. It's nice to meet you"
+	damage_message = "Ouch. I am not used to feeling pain"
 	destroyed_message = "Hello... anyone......"
-	health_warnings =list(
+	health_warnings = list(
 		"I've found some scrathes",
-		"Watch out, you're not looking good",
+		"Caution, you're not looking good",
 		"It would be nice for you, to leave the area you are in",
-		"Please seek help,i don't want you to die",
+		"Please seek help, I don't want you to die",
 		"Please, don't die on me....",
 		)
-	breach_warnings=list(
+	breach_warnings = list(
 		"I'm taking hits",
 		"I'm almost breached",
 		"Integrity is neutralized",
 		)
-	energy_warnings= list(
+	energy_warnings = list(
 		"Power is at 50%",
 		"It would be nice if you recharged me",
 		"Hurry up, the battery is almost dead",
-	)
+		)
 
 /obj/item/rig_module/simple_ai/advanced
 	name = "hardsuit advanced diagnostic system"
 	origin_tech = "programming=4"
 	interface_name = "advanced diagnostic system"
-	interface_desc = "A more advanced counterpart of combat AI,that actually has a personality."
+	interface_desc = "A more advanced counterpart of combat AI, that actually has a personality."
 /obj/item/rig_module/simple_ai/advanced/proc/get_random_voice()
 	var/voice_type = pick(subtypesof(/datum/rig_aivoice))
 	if(!voice_type)
@@ -348,9 +349,9 @@
 	return FALSE
 /obj/item/rig_module/simple_ai/advanced/combat
 	name = "hardsuit combat diagnostic system"
-	origin_tech="programming=3"
-	interface_name="combat diagnostic system"
-	interface_desc="Combat hardsuit ai system"
+	origin_tech ="programming=3"
+	interface_name = "combat diagnostic system"
+	interface_desc = "Combat hardsuit ai system"
 
 /obj/item/rig_module/simple_ai/advanced/combat/get_random_voice()
 	return
