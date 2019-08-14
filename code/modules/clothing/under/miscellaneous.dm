@@ -745,3 +745,10 @@
 	else if(slot == SLOT_HEAD)
 		body_parts_covered = HEAD
 
+/obj/item/clothing/under/rank/postal_dude_shirt
+	name = "blue shirt"
+	desc = "A blue shirt with image of alien in front."
+	icon_state = "dude_shirt"
+	item_state = "b_suit"
+	item_color = "dude_shirt"
+
