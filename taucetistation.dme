@@ -904,7 +904,6 @@
 #include "code\game\objects\structures\stool_bed_chair_nest\roller_syrgery.dm"
 #include "code\game\objects\structures\stool_bed_chair_nest\stools.dm"
 #include "code\game\objects\structures\stool_bed_chair_nest\wheelchair.dm"
-#include "code\game\objects\WalterJ_Items_Pack\UNATHI BLING\Unathi bling.dm"
 #include "code\game\turfs\simulated.dm"
 #include "code\game\turfs\turf.dm"
 #include "code\game\turfs\unsimulated.dm"

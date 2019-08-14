@@ -75,6 +75,18 @@
 	species_restricted = null
 	body_parts_covered = 0
 
+/obj/item/clothing/shoes/sandal/brown
+	name = "Brown Sandals"
+	desc = "Sweet looking brown sandals. Do not wear them with socks!"
+	icon_state = "sandals-brown"
+	item_color = "sandals-brown"
+
+/obj/item/clothing/shoes/sandal/pink
+	name = "Pink Sandals"
+	desc = "They radiate a cheap plastic aroma like from hell ramen."
+	icon_state = "sandals-pink"
+	item_color = "sandals-pink"
+
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic, black shoes."
 	name = "magic shoes"
@@ -223,3 +235,17 @@
 	icon_state = "Black_Boots"
 	item_state = "jackboots"
 	item_color = "Black_Boots"
+
+/obj/item/clothing/shoes/brown_cut
+	name = "Cut Brown Boots"
+	desc = "Some shoes that was cut to fit unathi foot in it."
+	icon_state = "brown-cut"
+	item_color = "brown-cut"
+	species_restricted = null
+
+/obj/item/clothing/shoes/footwraps
+	name = "Footwraps"
+	desc = "Just some rags that you wrap around your foot to feel more comfortable. Better than nothing."
+	icon_state = "footwraps"
+	item_color = "footwraps"
+	species_restricted = null
