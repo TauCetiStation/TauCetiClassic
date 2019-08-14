@@ -745,6 +745,22 @@
 	else if(slot == SLOT_HEAD)
 		body_parts_covered = HEAD
 
+/obj/item/clothing/under/nt_pmc_uniform
+	name = "NT PCM Uniform"
+	desc = "Uniform used by the private security corporation."
+	icon_state = "nt_pmc_uniform"
+	item_state = "bl_suit"
+	item_color = "nt_pmc_uniform"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/under/nt_pmc_uniform_light
+	name = "NT PCM Light Uniform"
+	desc = "Uniform used by the private security corporation. This one without sleeves."
+	icon_state = "nt_pmc_uniform"
+	item_state = "bl_suit"
+	item_color = "nt_pmc_uniform_light"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
 /obj/item/clothing/under/rank/postal_dude_shirt
 	name = "blue shirt"
 	desc = "A blue shirt with image of alien in front."

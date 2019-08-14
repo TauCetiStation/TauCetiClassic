@@ -194,6 +194,22 @@
 	icon_state = "roman"
 	item_state = "roman"
 
+/obj/item/clothing/shoes/boots/nt_pmc_boots
+	name = "NT PMC Boots"
+	desc = "Private security boots. Now with extra grip."
+	flags = NOSLIP
+	icon_state = "nt_pmc_boots"
+	item_state = "r_feet"
+	item_color = "nt_pmc_boots"
+
+/obj/item/clothing/shoes/boots/lizard_boots
+	name = "Lizard Boots"
+	desc = "Private security boots for Unathi."
+	flags = NOSLIP
+	icon_state = "Lizard_Boots"
+	item_state = "r_feet"
+	item_color = "Lizard_Boots"
+
 /obj/item/clothing/shoes/heels
 	name = "Heels"
 	icon_state = "high_shoes"

@@ -170,3 +170,10 @@
 	desc = "An ancient helmet made of bronze and leather. Has a red crest on top of it."
 	icon_state = "roman_c"
 	item_state = "roman_c"
+
+/obj/item/clothing/head/helmet/M89_Helmet
+	name = "M89 Helmet"
+	desc = "Combat helmet used by the private security corporation."
+	icon_state = "m89_helmet"
+	item_state = "helmet"
+	item_color = "m89_helmet"
