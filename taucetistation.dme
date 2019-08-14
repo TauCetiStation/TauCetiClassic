@@ -905,7 +905,6 @@
 #include "code\game\objects\structures\stool_bed_chair_nest\stools.dm"
 #include "code\game\objects\structures\stool_bed_chair_nest\wheelchair.dm"
 #include "code\game\objects\WalterJ_Items_Pack\M2 FLAMETHROWER\WJ_M2_Flamethrower.dm"
-#include "code\game\objects\WalterJ_Items_Pack\Napoleon Dynamite\napoleon_dynamite.dm"
 #include "code\game\objects\WalterJ_Items_Pack\NT PMC\WJ_NT_PMC.dm"
 #include "code\game\objects\WalterJ_Items_Pack\POSTAL\postal.dm"
 #include "code\game\objects\WalterJ_Items_Pack\RED FACTION RIG\WJ_Red_Faction_Rig.dm"
