@@ -70,6 +70,8 @@
 	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't
 										//  have to be recreated multiple times
 
+	var/list/proj_act_sound = list()
+
 /obj/item/projectile/atom_init()
 	damtype = damage_type // TODO unify these vars properly (Bay12)
 	if(timestop_count)
@@ -201,6 +203,7 @@
 	if(forcedodge == PROJECTILE_FORCE_MISS) // the bullet passes through a dense object!
 		if(M)
 			visible_message("<span class = 'notice'>\The [src] misses [M] narrowly!</span>")
+			playsound(M.loc, pick(SOUNDIN_BULLETMISSACT), VOL_EFFECTS_MASTER)
 
 		if(istype(A, /turf))
 			loc = A

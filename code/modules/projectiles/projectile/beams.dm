@@ -9,6 +9,7 @@
 	eyeblur = 4
 	var/frequency = 1
 	hitscan = 1
+	proj_act_sound = SOUNDIN_LASERACT
 
 	muzzle_type = /obj/effect/projectile/laser/muzzle
 	tracer_type = /obj/effect/projectile/laser/tracer
@@ -23,6 +24,7 @@
 	fake = 1
 	flag = "laser"
 	eyeblur = 2
+	proj_act_sound = list()
 
 /obj/item/projectile/beam/scatter
 	name = "laser pellet"
@@ -72,6 +74,9 @@
 
 /obj/item/projectile/beam/emitter/singularity_pull()
 	return //don't want the emitters to miss
+
+/obj/item/projectile/beam/lasertag
+	proj_act_sound = list()
 
 /obj/item/projectile/beam/lastertag/blue
 	name = "lasertag beam"
@@ -169,6 +174,7 @@
 	damage_type = HALLOSS
 	sharp = FALSE // not a laser
 	stutter = 5
+	proj_act_sound = list()
 
 	muzzle_type = /obj/effect/projectile/stun/muzzle
 	tracer_type = /obj/effect/projectile/stun/tracer

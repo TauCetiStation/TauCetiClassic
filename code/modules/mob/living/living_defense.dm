@@ -43,6 +43,8 @@
 
 	if(!P.nodamage)
 		apply_damage(damage, P.damage_type, def_zone, absorb, flags, P)
+		if(P.proj_act_sound.len)
+			playsound(src, pick(P.proj_act_sound), VOL_EFFECTS_MASTER, null, FALSE, -5)
 	P.on_hit(src, absorb, def_zone)
 
 	return absorb
