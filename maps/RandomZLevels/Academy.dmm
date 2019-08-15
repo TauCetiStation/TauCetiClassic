@@ -752,7 +752,7 @@
 	},
 /area/awaymission/academy/headmaster)
 "cl" = (
-/obj/machinery/portable_atmospherics/scrubber/huge/stationary,
+/obj/machinery/portable_atmospherics/powered/scrubber/huge/stationary,
 /turf/simulated/floor/plating,
 /area/awaymission/academy/headmaster)
 "cm" = (
@@ -876,7 +876,7 @@
 	},
 /area/awaymission/academy/headmaster)
 "cD" = (
-/obj/structure/sign/nosmoking_1,
+/obj/structure/sign/warning/nosmoking,
 /turf/simulated/wall,
 /area/awaymission/academy/headmaster)
 "cE" = (
@@ -954,7 +954,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/pump,
+/obj/machinery/portable_atmospherics/powered/pump,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -1334,11 +1334,11 @@
 	},
 /area/awaymission/academy/classrooms)
 "dP" = (
-/obj/structure/mineral_door/iron,
+/obj/structure/mineral_door/metal,
 /turf/simulated/floor,
 /area/awaymission/academy/classrooms)
 "dQ" = (
-/obj/structure/mineral_door/iron,
+/obj/structure/mineral_door/metal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -2269,7 +2269,7 @@
 /area/awaymission/academy/classrooms)
 "gb" = (
 /obj/structure/bookcase,
-/obj/item/weapon/book/manual/engineering_hacking,
+/obj/item/weapon/book/manual/wiki/engineering_hacking,
 /turf/simulated/floor/wood,
 /area/awaymission/academy/classrooms)
 "gc" = (
@@ -2403,7 +2403,7 @@
 /area/awaymission/academy/classrooms)
 "gs" = (
 /obj/structure/bookcase,
-/obj/item/weapon/book/manual/medical_cloning,
+/obj/item/weapon/book/manual/wiki/medical_genetics,
 /turf/simulated/floor/wood,
 /area/awaymission/academy/classrooms)
 "gt" = (
@@ -2505,12 +2505,12 @@
 /area/awaymission/academy/classrooms)
 "gF" = (
 /obj/structure/bookcase,
-/obj/item/weapon/book/manual/hydroponics_pod_people,
+/obj/item/weapon/book/manual/wiki/hydroponics,
 /turf/simulated/floor/wood,
 /area/awaymission/academy/classrooms)
 "gG" = (
 /obj/structure/bookcase,
-/obj/item/weapon/book/manual/barman_recipes,
+/obj/item/weapon/book/manual/wiki/barman_recipes,
 /obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/floor/wood,
@@ -2536,7 +2536,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/academy/classrooms)
 "gK" = (
-/obj/structure/mineral_door/iron,
+/obj/structure/mineral_door/metal,
 /turf/simulated/floor/carpet,
 /area/awaymission/academy/classrooms)
 "gL" = (
@@ -3208,7 +3208,7 @@
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)
 "ii" = (
-/obj/structure/mineral_door/iron,
+/obj/structure/mineral_door/metal,
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "cafeteria"
