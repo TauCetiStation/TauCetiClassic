@@ -453,7 +453,7 @@
 /area/awaymission/wwmines)
 "bG" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/barman_recipes,
+/obj/item/weapon/book/manual/wiki/barman_recipes,
 /turf/simulated/floor/wood,
 /area/awaymission/wwmines)
 "bH" = (
@@ -466,9 +466,9 @@
 /area/awaymission/wwmines)
 "bJ" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
-/obj/item/weapon/reagent_containers/food/snacks/flour,
-/obj/item/weapon/reagent_containers/food/snacks/flour,
-/obj/item/weapon/reagent_containers/food/snacks/flour,
+/obj/item/weapon/reagent_containers/food/condiment/flour,
+/obj/item/weapon/reagent_containers/food/condiment/flour,
+/obj/item/weapon/reagent_containers/food/condiment/flour,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -476,7 +476,7 @@
 /area/awaymission/wwmines)
 "bK" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/chef_recipes,
+/obj/item/weapon/book/manual/wiki/chefs_recipes,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -1058,10 +1058,6 @@
 /obj/structure/shuttle/engine/propulsion/burst/left,
 /turf/simulated/wall/mineral/sandstone,
 /area/awaymission/wwmines)
-"dl" = (
-/obj/structure/sign/double/maltesefalcon/right,
-/turf/simulated/wall/mineral/sandstone,
-/area/awaymission/wwmines)
 "dm" = (
 /obj/structure/mineral_door/wood{
 	icon_state = "woodopening"
@@ -1560,7 +1556,7 @@
 	},
 /area/awaymission/wwgov)
 "eJ" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/simulated/wall/r_wall,
 /area/awaymission/wwrefine)
 "eK" = (
@@ -33977,7 +33973,7 @@ bj
 bj
 bj
 bj
-dl
+bu
 aT
 bj
 bj
