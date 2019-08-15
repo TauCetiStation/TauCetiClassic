@@ -631,9 +631,9 @@
 	density = 0;
 	pixel_y = 32
 	},
-/obj/item/weapon/book/manual/barman_recipes,
-/obj/item/weapon/book/manual/chef_recipes,
-/obj/item/weapon/book/manual/ripley_build_and_repair,
+/obj/item/weapon/book/manual/wiki/barman_recipes,
+/obj/item/weapon/book/manual/wiki/chefs_recipes,
+/obj/item/weapon/book/manual/wiki/guide_to_robotics,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
