@@ -119,7 +119,7 @@
 /area/awaymission/beach)
 "v" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/barman_recipes,
+/obj/item/weapon/book/manual/wiki/barman_recipes,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
