@@ -45,7 +45,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
 "al" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
 	icon_state = "shock";
 	name = "HIGH VOLTAGE";
@@ -65,7 +65,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/cave)
 "ap" = (
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
 "aq" = (
@@ -114,7 +114,7 @@
 /area/awaymission/labs/cave)
 "ax" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
 "ay" = (
@@ -227,7 +227,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
 "aN" = (
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/unsimulated/desert,
 /area/awaymission/labs/cave)
 "aO" = (
@@ -273,7 +273,7 @@
 	},
 /area/awaymission/labs/cave)
 "aY" = (
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -470,7 +470,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
 "bC" = (
-/obj/machinery/portable_atmospherics/pump,
+/obj/machinery/portable_atmospherics/powered/pump,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -495,7 +495,7 @@
 /turf/simulated/wall/r_wall,
 /area/awaymission/labs/researchdivision)
 "bH" = (
-/obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/portable_atmospherics/powered/scrubber,
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor{
 	icon_state = "white"
@@ -572,11 +572,11 @@
 	pixel_x = 11;
 	pixel_y = 0
 	},
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	on = 1
 	},
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -618,13 +618,13 @@
 	},
 /area/awaymission/labs/cave)
 "bZ" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
 	frequency = 1379;
 	id_tag = "medsci_pump";
 	on = 1
 	},
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -792,7 +792,7 @@
 /area/awaymission/labs/researchdivision)
 "ct" = (
 /obj/structure/stool/bed/chair,
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 101.325;
 	on = 1;
@@ -937,7 +937,7 @@
 	},
 /area/awaymission/labs/researchdivision)
 "cL" = (
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "cM" = (
@@ -1200,7 +1200,7 @@
 "dj" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet,
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	on = 1
 	},
@@ -1221,11 +1221,11 @@
 	},
 /area/awaymission/labs/researchdivision)
 "dm" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
 	on = 1
 	},
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -1300,11 +1300,11 @@
 /area/awaymission/labs/researchdivision)
 "dt" = (
 /obj/machinery/light,
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	on = 1
 	},
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -1374,8 +1374,8 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/atmospherics/unary/vent_pump,
-/obj/effect/alien/weeds{
+/obj/machinery/atmospherics/components/unary/vent_pump,
+/obj/structure/alien/weeds{
 	icon_state = "flesh2"
 	},
 /turf/simulated/floor,
@@ -1472,7 +1472,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/machinery/microwave,
+/obj/machinery/kitchen_machine/microwave,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -1485,7 +1485,7 @@
 /area/awaymission/labs/researchdivision)
 "dP" = (
 /obj/effect/decal/cleanable/blood/gibs/robot/up,
-/obj/effect/alien/weeds,
+/obj/structure/alien/weeds,
 /turf/simulated/floor/airless{
 	icon_state = "damaged2"
 	},
@@ -1573,11 +1573,11 @@
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "ee" = (
-/obj/effect/alien/weeds,
+/obj/structure/alien/weeds,
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "ef" = (
-/obj/machinery/turretcover,
+/obj/machinery/porta_turret,
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "eg" = (
@@ -1703,7 +1703,7 @@
 	},
 /area/awaymission/labs/militarydivision)
 "ev" = (
-/obj/effect/alien/weeds,
+/obj/structure/alien/weeds,
 /turf/simulated/floor/airless{
 	icon_state = "floorscorched1"
 	},
@@ -1776,7 +1776,7 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/obj/machinery/atmospherics/unary/vent_pump,
+/obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "eD" = (
@@ -2030,7 +2030,7 @@
 /area/awaymission/labs/researchdivision)
 "fh" = (
 /obj/structure/table/reinforced,
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	layer = 2.4;
 	on = 1
@@ -2328,7 +2328,7 @@
 	},
 /area/awaymission/labs/militarydivision)
 "fO" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	layer = 2.4;
 	on = 1
@@ -2373,7 +2373,7 @@
 	pixel_x = 2;
 	pixel_y = 8
 	},
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	frequency = 1379;
 	id_tag = "mining_maineast_pump";
@@ -2404,7 +2404,7 @@
 	},
 /area/awaymission/labs/militarydivision)
 "fV" = (
-/obj/machinery/atmospherics/unary/vent_pump,
+/obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -2560,7 +2560,7 @@
 /area/awaymission/labs/militarydivision)
 "gk" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	frequency = 1379;
 	id_tag = "mining_maineast_pump";
@@ -2851,7 +2851,7 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/obj/machinery/atmospherics/unary/vent_scrubber{
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1
 	},
@@ -3155,7 +3155,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
 "hE" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 0;
 	frequency = 1441;
@@ -3180,7 +3180,7 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	on = 1
 	},
@@ -3546,7 +3546,7 @@
 	},
 /area/awaymission/labs/militarydivision)
 "it" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	layer = 2.4;
 	on = 1
@@ -3594,7 +3594,7 @@
 	},
 /area/awaymission/labs/researchdivision)
 "iB" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	external_pressure_bound = 0;
 	frequency = 1441;
@@ -3828,7 +3828,7 @@
 /area/awaymission/labs/researchdivision)
 "jc" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/book/manual/research_and_development{
+/obj/item/weapon/book/manual/wiki/research_and_development{
 	pixel_x = -1;
 	pixel_y = 4
 	},
@@ -3900,7 +3900,7 @@
 	},
 /area/awaymission/labs/militarydivision)
 "jl" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 140;
 	on = 1;
@@ -4112,7 +4112,7 @@
 	},
 /area/awaymission/labs/researchdivision)
 "jE" = (
-/obj/machinery/turretcover,
+/obj/machinery/porta_turret,
 /turf/unsimulated/desert,
 /area/awaymission/desert{
 	dynamic_lighting = 1;
@@ -4163,7 +4163,7 @@
 	},
 /area/awaymission/labs/researchdivision)
 "jJ" = (
-/obj/machinery/porta_turret_cover,
+/obj/machinery/porta_turret,
 /turf/unsimulated/desert,
 /area/awaymission/desert{
 	dynamic_lighting = 1;
@@ -4257,7 +4257,7 @@
 	},
 /area/awaymission/labs/researchdivision)
 "jV" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = 28
 	},
 /turf/simulated/floor,
@@ -4276,7 +4276,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/labs/solars)
 "jY" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_x = 0;
 	pixel_y = 28
 	},
@@ -4288,7 +4288,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	on = 1
 	},
@@ -4299,7 +4299,7 @@
 /area/awaymission/labs/militarydivision)
 "ka" = (
 /obj/structure/table,
-/obj/machinery/microwave{
+/obj/machinery/kitchen_machine/microwave{
 	pixel_x = -2;
 	pixel_y = 8
 	},
@@ -4351,7 +4351,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 140;
 	on = 1;
@@ -4464,7 +4464,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "kt" = (
-/obj/machinery/turretcover,
+/obj/machinery/porta_turret,
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "ku" = (
@@ -4563,7 +4563,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/labs/solars)
 "kz" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 101.325;
 	on = 1;
@@ -4791,7 +4791,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "kT" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	frequency = 1379;
 	id_tag = "engineering_aux_pump";
@@ -4857,7 +4857,7 @@
 	name = "Desert"
 	})
 "kX" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
 	icon_state = "shock";
 	name = "HIGH VOLTAGE";
@@ -5297,7 +5297,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "lG" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
 	frequency = 1379;
 	id_tag = "medsci_pump";
@@ -5571,7 +5571,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "lZ" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	external_pressure_bound = 0;
 	frequency = 1441;
@@ -5583,7 +5583,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "ma" = (
@@ -5791,7 +5791,7 @@
 	},
 /area/awaymission/labs/cargo)
 "mH" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
 	frequency = 1379;
 	id_tag = "medsci_pump";
@@ -5843,7 +5843,7 @@
 /area/awaymission/labs/cargo)
 "mM" = (
 /obj/structure/table,
-/obj/machinery/microwave{
+/obj/machinery/kitchen_machine/microwave{
 	pixel_x = -3;
 	pixel_y = 6
 	},
@@ -5854,7 +5854,7 @@
 /area/awaymission/labs/civilian)
 "mN" = (
 /obj/structure/table,
-/obj/machinery/microwave{
+/obj/machinery/kitchen_machine/microwave{
 	pixel_x = -3;
 	pixel_y = 6
 	},
@@ -5874,7 +5874,7 @@
 	name = "pipe"
 	},
 /obj/structure/table,
-/obj/item/weapon/book/manual/chef_recipes,
+/obj/item/weapon/book/manual/wiki/chefs_recipes,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -5945,7 +5945,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/labs/civilian)
 "mX" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	on = 1
 	},
@@ -5967,7 +5967,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "mZ" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	frequency = 1379;
 	id_tag = "mining_outpost_pump";
@@ -6047,7 +6047,7 @@
 	},
 /area/awaymission/labs/civilian)
 "nk" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	frequency = 1379;
 	id_tag = "engineering_aux_pump";
@@ -6077,7 +6077,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	external_pressure_bound = 0;
 	frequency = 1441;
@@ -6089,7 +6089,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor,
 /area/awaymission/labs/cave)
 "np" = (
@@ -6409,7 +6409,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "oa" = (
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "ob" = (
@@ -6467,7 +6467,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "oh" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
 	on = 1
 	},
@@ -6607,13 +6607,13 @@
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "oy" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 140;
 	on = 1;
 	pressure_checks = 0
 	},
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "oz" = (
@@ -6741,7 +6741,7 @@
 /obj/item/clothing/accessory/medal/gold/heroism,
 /obj/item/clothing/under/rank/head_of_security/corp,
 /obj/item/clothing/accessory/holster/armpit,
-/obj/item/clothing/suit/armor/hos/coat,
+/obj/item/clothing/suit/armor/hos,
 /obj/item/weapon/disk/nuclear,
 /turf/simulated/floor{
 	icon_state = "wood"
@@ -6950,7 +6950,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "pg" = (
-/obj/effect/alien/weeds{
+/obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
 /turf/unsimulated/desert,
@@ -7225,7 +7225,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	frequency = 1379;
 	id_tag = "engineering_aux_pump";
@@ -7271,7 +7271,7 @@
 	},
 /area/awaymission/labs/command)
 "pU" = (
-/obj/effect/alien/weeds{
+/obj/structure/alien/weeds{
 	icon_state = "flesh2"
 	},
 /turf/unsimulated/desert,
@@ -7313,7 +7313,7 @@
 	},
 /area/awaymission/labs/command)
 "pZ" = (
-/obj/effect/alien/weeds,
+/obj/structure/alien/weeds,
 /turf/unsimulated/desert,
 /area/awaymission/labs/cave)
 "qa" = (
@@ -7333,7 +7333,7 @@
 	},
 /area/awaymission/labs/command)
 "qc" = (
-/obj/effect/alien/weeds{
+/obj/structure/alien/weeds{
 	icon_state = "flesh2"
 	},
 /obj/effect/decal/cleanable/blood/gibs/up,
@@ -7465,7 +7465,7 @@
 	},
 /area/awaymission/labs/command)
 "qr" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
 	frequency = 1379;
 	id_tag = "medsci_pump";
@@ -7743,13 +7743,13 @@
 	},
 /area/awaymission/labs/command)
 "qV" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 101.325;
 	on = 1;
 	pressure_checks = 1
 	},
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -7789,7 +7789,7 @@
 	},
 /area/awaymission/labs/command)
 "ra" = (
-/obj/effect/alien/weeds{
+/obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
 /obj/effect/decal/cleanable/blood/gibs/core,
@@ -7817,7 +7817,7 @@
 	},
 /area/awaymission/labs/civilian)
 "rd" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 140;
 	on = 1;
@@ -7826,7 +7826,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "re" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 101.325;
 	on = 1;
@@ -7961,7 +7961,7 @@
 	},
 /area/awaymission/labs/command)
 "rv" = (
-/obj/effect/alien/weeds{
+/obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
 /obj/effect/decal/cleanable/blood/gibs/down,
@@ -8049,7 +8049,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "rI" = (
-/obj/effect/alien/weeds{
+/obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
 /obj/effect/decal/cleanable/blood/gibs/limb,
@@ -8229,7 +8229,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "sg" = (
-/obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "sh" = (
@@ -8285,7 +8285,7 @@
 	},
 /area/awaymission/labs/civilian)
 "so" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	on = 1
 	},
@@ -8664,7 +8664,7 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
 	on = 1
 	},
@@ -8732,7 +8732,7 @@
 /obj/structure/table,
 /obj/item/weapon/folder/white,
 /obj/item/clothing/accessory/stethoscope,
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 101.325;
 	on = 1;
@@ -8766,7 +8766,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/security)
 "tu" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	frequency = 1379;
 	id_tag = "engineering_aux_pump";
@@ -8851,7 +8851,7 @@
 	},
 /area/awaymission/labs/medical)
 "tG" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 101.325;
 	on = 1;
@@ -8903,7 +8903,7 @@
 /area/awaymission/labs/medical)
 "tM" = (
 /obj/machinery/body_scanconsole,
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	frequency = 1379;
 	id_tag = "engineering_aux_pump";
@@ -9267,7 +9267,7 @@
 "uO" = (
 /obj/structure/table,
 /obj/machinery/recharger,
-/obj/item/weapon/gun/energy/stunrevolver{
+/obj/item/weapon/gun/energy/taser/stunrevolver{
 	pixel_y = 6
 	},
 /turf/simulated/floor{
@@ -9277,7 +9277,7 @@
 "uP" = (
 /obj/machinery/recharger,
 /obj/structure/table/reinforced,
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	on = 1
 	},
