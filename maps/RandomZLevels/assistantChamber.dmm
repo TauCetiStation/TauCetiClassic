@@ -123,7 +123,7 @@
 	},
 /area/awaymission)
 "u" = (
-/obj/item/weapon/gun/energy/laser/captain,
+/obj/item/weapon/gun/energy/laser/selfcharging/captain,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
