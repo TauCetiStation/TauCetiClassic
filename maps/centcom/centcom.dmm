@@ -445,6 +445,23 @@
 "aaM" = (
 /turf/space,
 /area/space)
+"aaN" = (
+/obj/structure/centcom_barrier,
+/turf/space,
+/area/space)
+"aaO" = (
+/obj/structure/centcom_barrier,
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/centcom/living)
+"aaP" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	locked = 1;
+	req_access = list(101)
+	},
+/turf/unsimulated,
+/area/space)
 "abb" = (
 /turf/space,
 /area/shuttle/escape_pod1/transit)
@@ -44240,13 +44257,13 @@ aaM
 aaM
 aaM
 aAm
-aBX
+aaO
 aAm
-aBX
+aaO
 aAm
-aBX
+aaO
 aAm
-aBX
+aaO
 aAm
 aHv
 hhb
@@ -51430,7 +51447,7 @@ ayV
 azm
 azm
 ayL
-aaM
+aaN
 aAm
 fBb
 aAM
@@ -52715,7 +52732,7 @@ ayY
 azm
 azG
 ayL
-aaM
+aaN
 aAm
 fDb
 aAM
@@ -55282,7 +55299,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aBp
 bjb
 bib
@@ -55538,8 +55555,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+aaN
+aaN
 aBp
 bkb
 bib
@@ -63227,20 +63244,20 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aaN
+aaN
+aaN
+aaN
+aaN
+aaN
+aaN
+aaN
+aaN
+aaN
+aaN
+aaN
+aaN
+aaN
 aaM
 aaM
 aaM
@@ -63484,7 +63501,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 acd
 acd
@@ -63497,7 +63514,7 @@ aoo
 aoo
 aoo
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -63741,7 +63758,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -63754,7 +63771,7 @@ aaM
 aaM
 aaM
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -63998,7 +64015,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -64011,7 +64028,7 @@ aaM
 aaM
 aaM
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -64255,7 +64272,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -64268,7 +64285,7 @@ aaM
 aaM
 aaM
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -64512,7 +64529,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -64525,7 +64542,7 @@ aaM
 aaM
 aaM
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -64769,7 +64786,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -64782,7 +64799,7 @@ aaM
 aaM
 aaM
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -65026,7 +65043,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -65039,7 +65056,7 @@ aaM
 aaM
 aaM
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -65283,7 +65300,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -65296,7 +65313,7 @@ aaM
 aaM
 aaM
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -65540,7 +65557,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -65553,7 +65570,7 @@ aaM
 aaM
 aaM
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -65797,7 +65814,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -65810,7 +65827,7 @@ aaM
 aaM
 aaM
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -66054,7 +66071,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -66067,7 +66084,7 @@ aaM
 aaM
 aaM
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -66311,7 +66328,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -66324,7 +66341,7 @@ auL
 avb
 aoo
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -66568,7 +66585,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -66581,7 +66598,7 @@ beb
 auM
 arZ
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -66825,7 +66842,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -66838,7 +66855,7 @@ avc
 eCb
 arZ
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -67082,7 +67099,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -67095,7 +67112,7 @@ avd
 eCb
 axV
 ayb
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -67339,7 +67356,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -67352,7 +67369,7 @@ avd
 eCb
 arZ
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -67596,7 +67613,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -67609,7 +67626,7 @@ avd
 eCb
 arZ
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -67853,7 +67870,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -67866,7 +67883,7 @@ avd
 eCb
 arZ
 ayc
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -68110,7 +68127,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -68123,7 +68140,7 @@ avd
 eCb
 arZ
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -68367,7 +68384,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -68380,7 +68397,7 @@ ave
 eCb
 arZ
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -68624,7 +68641,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -68637,7 +68654,7 @@ beb
 auM
 axV
 ayd
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -68881,7 +68898,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -68894,7 +68911,7 @@ avc
 eCb
 arZ
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -69138,7 +69155,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 aaM
 aaM
@@ -69151,7 +69168,7 @@ adx
 eCb
 arZ
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -69395,7 +69412,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aaN
 aoo
 avz
 avS
@@ -69408,7 +69425,7 @@ aoo
 aux
 aux
 aoo
-aaM
+aaN
 aaM
 aaM
 aaM
@@ -75081,7 +75098,7 @@ aAl
 atS
 atS
 atS
-atE
+aaP
 aaM
 aaM
 aaM
