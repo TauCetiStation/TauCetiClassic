@@ -415,7 +415,7 @@
 	},
 /area/awaymission/BMPship3)
 "br" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall1"
 	},
@@ -489,7 +489,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/BMPship1)
 "bB" = (
-/obj/machinery/gateway/centeraway{
+/obj/machinery/gateway{
 	name = "Black Market Gateway"
 	},
 /obj/structure/cable{
