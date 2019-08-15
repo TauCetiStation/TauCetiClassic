@@ -777,7 +777,7 @@
 /area/jungle)
 "cU" = (
 /obj/structure/barricade/wooden,
-/obj/structure/sign/redcross,
+/obj/structure/sign/departments/medbay,
 /turf/unsimulated/floor,
 /area/jungle)
 "cV" = (
@@ -807,7 +807,7 @@
 /area/jungle)
 "cZ" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/pill_bottle/antitox,
+/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,
 /turf/unsimulated/floor,
 /area/jungle)
 "da" = (
@@ -899,7 +899,7 @@
 /area/jungle)
 "ds" = (
 /obj/structure/barricade/wooden,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'DANGEROUS WILDLIFE'. Sounds like some of the local fauna are vicious.";
 	name = "DANGEROUS WILDLIFE"
 	},
