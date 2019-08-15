@@ -155,7 +155,7 @@
 
 /obj/item/projectile/beam/mindflayer
 	name = "flayer ray"
-	proj_act_sound = list()
+	proj_act_sound = null
 
 /obj/item/projectile/beam/mindflayer/on_hit(atom/target, blocked = 0)
 	if(ishuman(target))

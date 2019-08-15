@@ -70,7 +70,7 @@
 	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't
 										//  have to be recreated multiple times
 
-	var/list/proj_act_sound = list()
+	var/list/proj_act_sound = null
 
 /obj/item/projectile/atom_init()
 	damtype = damage_type // TODO unify these vars properly (Bay12)
