@@ -105,7 +105,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_x = 32
 	},
 /obj/item/clothing/under/rank/security,
@@ -118,7 +118,7 @@
 	},
 /area/awaymission/research)
 "aw" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_x = 32
 	},
 /obj/item/clothing/under/rank/security,
@@ -147,7 +147,7 @@
 	},
 /area/awaymission/northblock)
 "az" = (
-/obj/structure/sign/goldenplaque{
+/obj/structure/sign/plaques/golden{
 	pixel_y = 31
 	},
 /turf/simulated/floor{
@@ -155,7 +155,7 @@
 	},
 /area/awaymission/northblock)
 "aA" = (
-/obj/structure/sign/atmosplaque{
+/obj/structure/sign/plaques{
 	pixel_y = 31
 	},
 /turf/simulated/floor{
@@ -761,7 +761,7 @@
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warning"
@@ -1038,7 +1038,7 @@
 	},
 /area/awaymission/research)
 "cT" = (
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -1668,7 +1668,7 @@
 	},
 /area/awaymission/research)
 "eo" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	current_temperature = 80
 	},
 /turf/simulated/floor{
@@ -1676,7 +1676,7 @@
 	},
 /area/awaymission/research)
 "ep" = (
-/obj/machinery/atmospherics/unary/vent_pump,
+/obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -1948,7 +1948,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/weapon/book/manual/research_and_development,
+/obj/item/weapon/book/manual/wiki/research_and_development,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -1975,7 +1975,7 @@
 	},
 /area/awaymission/research)
 "eW" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 120;
 	icon_state = "in";
@@ -2027,7 +2027,7 @@
 /area/awaymission/northblock)
 "fd" = (
 /obj/structure/window/reinforced/tinted,
-/obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/simulated/floor,
 /area/awaymission/northblock)
 "fe" = (
@@ -2174,7 +2174,7 @@
 /area/awaymission/northblock)
 "ft" = (
 /obj/structure/window/reinforced/tinted,
-/obj/machinery/portable_atmospherics/pump,
+/obj/machinery/portable_atmospherics/powered/pump,
 /turf/simulated/floor,
 /area/awaymission/northblock)
 "fu" = (
@@ -2552,7 +2552,7 @@
 /area/awaymission/midblock)
 "gs" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/barman_recipes,
+/obj/item/weapon/book/manual/wiki/barman_recipes,
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
 /turf/simulated/floor,
 /area/awaymission/midblock)
@@ -2781,7 +2781,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/arrivalblock)
 "gW" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_y = 32
 	},
 /obj/effect/decal/remains/human,
@@ -3013,7 +3013,7 @@
 /turf/simulated/floor,
 /area/awaymission/arrivalblock)
 "hz" = (
-/obj/structure/sign/redcross{
+/obj/structure/sign/departments/medbay{
 	pixel_y = -32
 	},
 /obj/structure/cable{
@@ -3143,7 +3143,7 @@
 /area/awaymission/midblock)
 "hR" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/chef_recipes,
+/obj/item/weapon/book/manual/wiki/chefs_recipes,
 /obj/item/weapon/kitchen/rollingpin,
 /turf/simulated/floor,
 /area/awaymission/midblock)
@@ -3627,7 +3627,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_x = 32
 	},
 /obj/item/clothing/under/rank/security,
@@ -3736,7 +3736,7 @@
 /turf/simulated/floor,
 /area/awaymission/arrivalblock)
 "jH" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_y = 32
 	},
 /turf/simulated/floor,
@@ -3868,19 +3868,19 @@
 /turf/simulated/floor,
 /area/awaymission/arrivalblock)
 "kc" = (
-/obj/structure/sign/pods{
+/obj/structure/sign/warning/pods{
 	pixel_y = -32
 	},
 /turf/simulated/floor,
 /area/awaymission/arrivalblock)
 "kd" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_y = -32
 	},
 /turf/simulated/floor,
 /area/awaymission/arrivalblock)
 "ke" = (
-/obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/simulated/floor,
 /area/awaymission/southblock)
 "kf" = (
@@ -4350,7 +4350,7 @@
 /area/awaymission/arrivalblock)
 "lp" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/hydroponics_pod_people,
+/obj/item/weapon/book/manual/wiki/hydroponics,
 /turf/simulated/floor,
 /area/awaymission/arrivalblock)
 "lq" = (
