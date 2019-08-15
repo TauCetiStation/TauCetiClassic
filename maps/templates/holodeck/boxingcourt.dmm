@@ -20,7 +20,6 @@
 "d" = (
 /obj/machinery/door/window/holowindoor{
 	base_state = "right";
-	dir = 2;
 	icon_state = "right";
 	name = "Red Corner"
 	},
@@ -84,7 +83,6 @@
 /area/holodeck/source_boxingcourt)
 "n" = (
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "green"
 	},
 /area/holodeck/source_boxingcourt)

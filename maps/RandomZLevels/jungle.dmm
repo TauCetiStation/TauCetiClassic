@@ -782,22 +782,19 @@
 /area/jungle)
 "cV" = (
 /obj/machinery/gateway{
-	dir = 9;
-	icon_state = "off"
+	dir = 9
 	},
 /turf/unsimulated/floor,
 /area/jungle)
 "cW" = (
 /obj/machinery/gateway{
-	dir = 1;
-	icon_state = "off"
+	dir = 1
 	},
 /turf/unsimulated/floor,
 /area/jungle)
 "cX" = (
 /obj/machinery/gateway{
-	dir = 5;
-	icon_state = "off"
+	dir = 5
 	},
 /turf/unsimulated/floor,
 /area/jungle)
@@ -816,8 +813,7 @@
 /area/jungle)
 "db" = (
 /obj/machinery/gateway{
-	dir = 8;
-	icon_state = "off"
+	dir = 8
 	},
 /turf/unsimulated/floor,
 /area/jungle)
@@ -829,8 +825,7 @@
 /area/jungle)
 "dd" = (
 /obj/machinery/gateway{
-	dir = 4;
-	icon_state = "off"
+	dir = 4
 	},
 /turf/unsimulated/floor,
 /area/jungle)
@@ -845,8 +840,7 @@
 /area/jungle)
 "dg" = (
 /obj/machinery/gateway{
-	dir = 10;
-	icon_state = "off"
+	dir = 10
 	},
 /turf/unsimulated/floor,
 /area/jungle)
@@ -856,8 +850,7 @@
 /area/jungle)
 "di" = (
 /obj/machinery/gateway{
-	dir = 6;
-	icon_state = "off"
+	dir = 6
 	},
 /turf/unsimulated/floor,
 /area/jungle)
@@ -935,7 +928,6 @@
 "dA" = (
 /turf/unsimulated/jungle/path,
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall_f6"
 	},
 /area/jungle/crash_ship_source)
@@ -967,13 +959,11 @@
 /turf/unsimulated/jungle/path,
 /turf/simulated/shuttle/wall{
 	dir = 3;
-	icon_state = "swall_f10";
-	layer = 2
+	icon_state = "swall_f10"
 	},
 /area/jungle/crash_ship_source)
 "dG" = (
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall3"
 	},
 /area/jungle/crash_ship_source)
@@ -1043,7 +1033,6 @@
 "dU" = (
 /turf/unsimulated/jungle/path,
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall_f5"
 	},
 /area/jungle/crash_ship_source)
@@ -1054,14 +1043,12 @@
 /area/jungle/crash_ship_source)
 "dW" = (
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall12"
 	},
 /area/jungle/crash_ship_source)
 "dX" = (
 /turf/unsimulated/jungle/path,
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall_f9"
 	},
 /area/jungle/crash_ship_source)
