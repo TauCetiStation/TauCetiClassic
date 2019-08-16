@@ -385,7 +385,7 @@
 	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, "melee")/2, 1)
 	to_chat(H, "<span class='danger'>You feel, that [src] try to cut your [BP]!</span>")
 
-	if(BP.status & ORGAN_DESTROYED)
+	if(BP.is_stump)
 		return
 
 	BP = BP.parent
