@@ -164,8 +164,8 @@
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/ribcage/remove_embryo
 	allowed_tools = list(
-	/obj/item/weapon/hemostat = 100,	\
-	/obj/item/weapon/wirecutters = 75,	\
+	/obj/item/weapon/hemostat = 100,
+	/obj/item/weapon/wirecutters = 75,
 	/obj/item/weapon/kitchen/utensil/fork = 50
 	)
 	blood_level = 2
