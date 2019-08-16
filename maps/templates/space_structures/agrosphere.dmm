@@ -234,21 +234,9 @@
 	},
 /turf/simulated/floor/plating,
 /area/agrospheregarden)
-"ax" = (
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/agrospheregarden)
 "ay" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/simulated/floor/plating,
-/area/agrospheregarden)
-"az" = (
-/obj/machinery/hydroponics/constructable,
-/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
 /area/agrospheregarden)
 "aA" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom,
@@ -731,12 +719,12 @@ ad
 ab
 ag
 ak
-ax
-ax
-ax
-ax
-ax
-ax
+ac
+ac
+ac
+ac
+ac
+ac
 ad
 aH
 aH
@@ -771,8 +759,8 @@ aB
 aC
 aB
 aD
-ax
-ax
+ac
+ac
 aN
 aH
 aH
@@ -802,13 +790,13 @@ aa
 ad
 at
 ai
-ax
-ax
-ax
-ax
-ax
-ax
-ax
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 ad
 aH
 aH

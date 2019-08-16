@@ -27,8 +27,7 @@
 /area/centcom)
 "ag" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	dir = 5;
@@ -145,7 +144,6 @@
 /obj/item/weapon/cautery,
 /obj/machinery/camera{
 	c_tag = "Surgery Operating 2";
-	dir = 2;
 	network = list("SS13","Medical");
 	pixel_x = 22
 	},
@@ -367,8 +365,7 @@
 /area/centcom)
 "aZ" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
