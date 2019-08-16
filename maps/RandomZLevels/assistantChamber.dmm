@@ -20,8 +20,7 @@
 /area/awaymission)
 "e" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /obj/machinery/porta_turret/stationary,
 /turf/simulated/floor{
@@ -66,8 +65,7 @@
 "l" = (
 /obj/machinery/porta_turret/stationary,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -123,7 +121,7 @@
 	},
 /area/awaymission)
 "u" = (
-/obj/item/weapon/gun/energy/laser/captain,
+/obj/item/weapon/gun/energy/laser/selfcharging/captain,
 /turf/simulated/floor{
 	icon_state = "white"
 	},

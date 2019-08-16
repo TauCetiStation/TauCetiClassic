@@ -10,13 +10,11 @@
 /area/space)
 "d" = (
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall_s6"
 	},
 /area/space)
 "e" = (
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall12"
 	},
 /area/space)
@@ -26,14 +24,12 @@
 /area/space)
 "g" = (
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall_s10"
 	},
 /area/space)
 "h" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall_f9"
 	},
 /area/space)
@@ -63,8 +59,7 @@
 /area/space)
 "m" = (
 /obj/structure/shuttle/engine/heater{
-	dir = 4;
-	icon_state = "heater"
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -147,14 +142,12 @@
 "x" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall_f5"
 	},
 /area/space)
 "y" = (
 /turf/simulated/floor/airless,
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall_f10"
 	},
 /area/space)
@@ -183,13 +176,11 @@
 /area/space)
 "C" = (
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall_s5"
 	},
 /area/space)
 "D" = (
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall_s9"
 	},
 /area/space)
