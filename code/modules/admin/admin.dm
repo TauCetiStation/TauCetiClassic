@@ -252,9 +252,10 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	else return 1
 
 
-/datum/admins/proc/show_player_info(key as text)
+/datum/admins/proc/show_player_info(key)
 	set category = "Admin"
 	set name = "Show Player Info"
+	key = ckey(key)
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
 	if (!istype(src,/datum/admins))
