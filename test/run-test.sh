@@ -134,7 +134,7 @@ function exec_test {
     return $ret
 }
 
-function find_code_deps {
+function find_tool_deps {
     need_cmd grep
     need_cmd awk
     need_cmd md5sum
@@ -164,8 +164,6 @@ function find_code {
 
 function run_code_tests {
     msg "*** running code tests ***"
-    find_code_deps
-    shopt -s globstar
     run_test_fail "code contains no byond escapes" "grep -REnr --include='*.dm' '\\\\(red|blue|green|black|b|i)\s' code/"
     run_test_fail "ensure code, nanoui templates, icons unique" "find code/ nano/templates/ icons/ -type f -exec md5sum {} + | sort | uniq -D -w 32 | grep -w 'code\|nano\|icons'"
     run_test_fail "ensure code, nanoui templates, icons has no empty files" "find code/ nano/templates/ icons/ -empty -type f | grep -w 'code\|nano\|icons'"
@@ -184,20 +182,20 @@ function run_map_tests {
 }
 
 function run_build_tests {
-    msg "*** running build tests ***"
     find_byond_deps
+    msg "*** running build tests ***"
     echo '#include "additional_files.dm"' >> taucetistation.dme # include file with additional includes
     python3 scripts/include-additional-files.py maps/ ".+\.dmm$" # create file itself
     run_test "simple build test" "scripts/dm.sh taucetistation.dme"
     run_test "check no warnings in build" "grep ', 0 warnings' build_log.txt"
-    sed -i '$ d' taucetistation.dme # delete line with additional include
 }
 
 function run_unit_tests {
+    find_byond_deps
     msg "*** running unit tests ***"
     cp config/example/* config/
     run_test "build unit tests" "scripts/dm.sh -DUNIT_TEST taucetistation.dme"
-    run_test "run unit tests" "DreamDaemon taucetistation.dmb -invisible -trusted -core 2>&1 | tee log.txt"
+    run_test "unit tests" "DreamDaemon taucetistation.dmb -invisible -trusted -core 2>&1 | tee log.txt"
     run_test "check tests passed" "grep 'All Unit Tests Passed' log.txt"
     run_test "check no runtimes" "grep 'Caught 0 Runtimes' log.txt"
     run_test_fail "check no runtimes 2" "grep 'runtime error:' log.txt"
@@ -205,13 +203,26 @@ function run_unit_tests {
     run_test_fail "check no errors" "grep 'ERROR:' log.txt"
 }
 
-function run_all_tests {
-    run_code_tests
-    run_map_tests
-    run_build_tests
-    run_unit_tests
+function run_configured_tests {
+    if [[ -z ${TEST+z} ]]; then
+        msg_bad "You must provide TEST in environment; valid options ALL,MAP,WEB,CODE"
+        msg_meh "Note: map tests require MAP_PATH set"
+        exit 1
+    fi
+
+    case $TEST in
+        "LINTING")
+            shopt -s globstar
+            find_tool_deps
+            run_code_tests 
+            run_map_tests
+        ;;
+        "COMPILE") run_build_tests ;;
+        "UNIT") run_unit_tests ;;
+        *) fail "invalid option for \$TEST: '$TEST'" ;;
+    esac
 }
 
 find_code
-run_all_tests
+run_configured_tests
 check_fail
