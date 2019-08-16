@@ -77031,7 +77031,6 @@
 /turf/simulated/floor/plating,
 /area/maintenance/auxsolarstarboard)
 "yhA" = (
-/obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = 7;
 	pixel_y = 1
