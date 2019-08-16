@@ -171,9 +171,9 @@ Please contact me on #coderbus IRC. ~Carn x
 //DAMAGE OVERLAYS
 /mob/living/carbon/human/UpdateDamageIcon(obj/item/organ/external/BP)
 	remove_damage_overlay(BP.limb_layer)
-	if(species.damage_mask && !(BP.status & ORGAN_DESTROYED))
+	if(species.damage_mask && (BP in bodyparts))
 		var/image/standing = image("icon" = 'icons/mob/human_races/damage_overlays.dmi', "icon_state" = "[BP.body_zone]_[BP.damage_state]", "layer" = -DAMAGE_LAYER)
-		standing.color = species.blood_datum.color
+		standing.color = BP.damage_state_color()
 		overlays_damage[BP.limb_layer] = standing
 		apply_damage_overlay(BP.limb_layer)
 
@@ -187,22 +187,11 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/g = (gender == FEMALE ? "f" : "m")
 
 	var/mutable_appearance/base_icon = mutable_appearance(null, null, -BODY_LAYER)
-	var/race_icon =   species.icobase
-	var/deform_icon = species.deform
 
 	for(var/obj/item/organ/external/BP in bodyparts)
-
-		var/mutable_appearance/temp //Hold the bodypart icon for processing.
-
-		if(BP.status & ORGAN_DESTROYED)
+		if(BP.is_stump)
 			continue
-
-		if(BP.body_zone == BP_CHEST)
-			temp = BP.get_icon(race_icon, deform_icon, g, fat)
-		else if (BP.body_zone == BP_GROIN || BP.body_zone == BP_HEAD)
-			temp = BP.get_icon(race_icon, deform_icon, g)
-		else
-			temp = BP.get_icon(race_icon, deform_icon)
+		var/mutable_appearance/temp = BP.get_icon()
 
 		base_icon.overlays += temp
 
@@ -220,7 +209,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(!fat && socks > 0 && socks < socks_t.len && species.flags[HAS_UNDERWEAR])
 		var/obj/item/organ/external/r_foot = bodyparts_by_name[BP_R_LEG]
 		var/obj/item/organ/external/l_foot = bodyparts_by_name[BP_L_LEG]
-		if(r_foot && !(r_foot.status & ORGAN_DESTROYED) && l_foot && !(l_foot.status & ORGAN_DESTROYED))
+		if(r_foot && !r_foot.is_stump && l_foot && !l_foot.is_stump)
 			standing += mutable_appearance('icons/mob/human_socks.dmi', "socks[socks]_s", -BODY_LAYER)
 
 	update_tail_showing()
@@ -235,7 +224,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(HAIR_LAYER)
 
 	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
-	if(!BP || (BP.status & ORGAN_DESTROYED))
+	if(!BP || (BP.is_stump))
 		return
 
 	//masks and helmets can obscure our hair.
@@ -247,7 +236,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(f_style)
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[f_style]
-		if(facial_hair_style && facial_hair_style.species_allowed && (species.name in facial_hair_style.species_allowed))
+		if(facial_hair_style && facial_hair_style.species_allowed && (BP.species.name in facial_hair_style.species_allowed))
 			var/image/facial_s = image("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s", "layer" = -HAIR_LAYER)
 			if(facial_hair_style.do_colouration)
 				if(!facial_painted)
@@ -258,7 +247,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)))
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
-		if(hair_style && hair_style.species_allowed && (species.name in hair_style.species_allowed))
+		if(hair_style && hair_style.species_allowed && (BP.species.name in hair_style.species_allowed))
 			var/image/hair_s = image("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s", "layer" = -HAIR_LAYER)
 			if(hair_style.do_colouration)
 				if(!hair_painted)

@@ -340,10 +340,6 @@
 /obj/structure/barricade/wooden,
 /turf/simulated/floor/plating,
 /area/robostatoin)
-"bq" = (
-/obj/structure/janitorialcart,
-/turf/simulated/floor/plating,
-/area/robostatoin)
 "br" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/stock_parts/micro_laser/quadultra,
@@ -1331,7 +1327,7 @@ ae
 ad
 ae
 ae
-bq
+ar
 bv
 ae
 aa

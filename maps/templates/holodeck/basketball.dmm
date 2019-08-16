@@ -13,8 +13,7 @@
 /area/holodeck/source_basketball)
 "c" = (
 /obj/structure/holohoop{
-	dir = 4;
-	icon_state = "hoop"
+	dir = 4
 	},
 /turf/simulated/floor/holofloor{
 	dir = 8;
@@ -63,8 +62,7 @@
 /area/holodeck/source_basketball)
 "k" = (
 /obj/structure/holohoop{
-	dir = 8;
-	icon_state = "hoop"
+	dir = 8
 	},
 /turf/simulated/floor/holofloor{
 	dir = 4;
@@ -79,15 +77,13 @@
 /area/holodeck/source_basketball)
 "m" = (
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "red"
 	},
 /area/holodeck/source_basketball)
 "n" = (
 /obj/structure/holostool,
 /obj/structure/window/reinforced/holowindow{
-	dir = 1;
-	icon_state = "rwindow"
+	dir = 1
 	},
 /turf/simulated/floor/holofloor{
 	dir = 5;
@@ -132,7 +128,6 @@
 /area/holodeck/source_basketball)
 "v" = (
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "green"
 	},
 /area/holodeck/source_basketball)

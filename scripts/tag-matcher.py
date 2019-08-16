@@ -112,9 +112,7 @@ for file, mismatches_by_tag in mismatches_by_file.iteritems():
 					print('\t\tLine {0}'.format(abs(mismatch_line)))
 
 # Simply prints the total number of mismatches found and if so returns 1 to, for example, fail Travis builds.				
-if(total_mismatches == 0):
-	print('No mismatches found.')
-else:	
+if(total_mismatches != 0):
 	print('')
 	print('Total number of mismatches: {0}'.format(total_mismatches))
 	sys.exit(1)

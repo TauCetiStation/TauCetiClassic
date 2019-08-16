@@ -53,9 +53,7 @@
 /area/holodeck/source_thunderdomecourt)
 "i" = (
 /obj/structure/table/holotable,
-/obj/machinery/readybutton{
-	pixel_y = 0
-	},
+/obj/machinery/readybutton,
 /turf/simulated/floor/holofloor{
 	dir = 5;
 	icon_state = "green"
@@ -97,9 +95,7 @@
 /area/holodeck/source_thunderdomecourt)
 "n" = (
 /obj/structure/table/holotable,
-/obj/machinery/readybutton{
-	pixel_y = 0
-	},
+/obj/machinery/readybutton,
 /turf/simulated/floor/holofloor{
 	dir = 10;
 	icon_state = "red"
@@ -107,7 +103,6 @@
 /area/holodeck/source_thunderdomecourt)
 "o" = (
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "red"
 	},
 /area/holodeck/source_thunderdomecourt)
@@ -116,7 +111,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "red"
 	},
 /area/holodeck/source_thunderdomecourt)
@@ -125,13 +119,11 @@
 	dir = 8
 	},
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "green"
 	},
 /area/holodeck/source_thunderdomecourt)
 "r" = (
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "green"
 	},
 /area/holodeck/source_thunderdomecourt)
@@ -145,8 +137,7 @@
 "t" = (
 /obj/structure/holostool,
 /obj/structure/window/reinforced/holowindow{
-	dir = 1;
-	icon_state = "rwindow"
+	dir = 1
 	},
 /turf/simulated/floor/holofloor{
 	dir = 5;

@@ -32,7 +32,7 @@
 	if(istype(src,/mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src
 		for(var/obj/item/organ/external/BP in M.bodyparts)
-			if((BP.status & ORGAN_DESTROYED) && !BP.amputated)
+			if(BP.is_stump)
 				src.traumatic_shock += 60
 			else if((BP.status & ORGAN_BROKEN) || BP.open)
 				src.traumatic_shock += 30
