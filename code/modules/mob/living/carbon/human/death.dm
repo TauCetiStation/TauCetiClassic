@@ -63,25 +63,6 @@
 	//Handle species-specific deaths.
 	if(species) species.handle_death(src)
 
-	//Handle brain slugs.
-	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
-	var/mob/living/simple_animal/borer/B
-
-	for(var/I in BP.implants)
-		if(istype(I,/mob/living/simple_animal/borer))
-			B = I
-	if(B)
-		if(!B.ckey && ckey && B.controlling)
-			B.ckey = ckey
-			B.controlling = 0
-		if(B.host_brain.ckey)
-			ckey = B.host_brain.ckey
-			B.host_brain.ckey = null
-			B.host_brain.name = "host brain"
-			B.host_brain.real_name = "host brain"
-
-		verbs -= /mob/living/carbon/proc/release_control
-
 	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
 	if(mode)
 		mode.infected_killed(src)
@@ -115,6 +96,62 @@
 			golem.death(0)
 
 	return ..(gibbed)
+
+// Called right after we will lost our head
+/mob/living/carbon/human/proc/handle_decapitation(obj/item/organ/external/head/BP)
+	if(!BP || BP in bodyparts)
+		return
+
+	//Handle brain slugs.
+	var/mob/living/simple_animal/borer/B
+
+	for(var/I in BP.implants)
+		if(istype(I,/mob/living/simple_animal/borer))
+			B = I
+	if(B)
+		if(!B.ckey && ckey && B.controlling)
+			B.ckey = ckey
+			B.controlling = 0
+		if(B.host_brain.ckey)
+			ckey = B.host_brain.ckey
+			B.host_brain.ckey = null
+			B.host_brain.name = "host brain"
+			B.host_brain.real_name = "host brain"
+
+		verbs -= /mob/living/carbon/proc/release_control
+
+
+	organ_head_list += BP
+
+	var/obj/item/organ/internal/IO = organs_by_name[O_BRAIN]
+	if(IO && IO.parent_bodypart == BP_HEAD)
+		BP.transfer_identity(src)
+
+		BP.name = "[real_name]'s head"
+
+		death()
+		BP.brainmob.death()
+
+		tod = null // These lines prevent reanimation if head was cut and then sewn back, you can only clone these bodies
+		timeofdeath = 0
+
+		if(BP.brainmob && BP.brainmob.mind && BP.brainmob.mind.changeling) //cuz fuck runtimes
+			var/datum/changeling/Host = BP.brainmob.mind.changeling
+			if(Host.chem_charges >= 35 && Host.geneticdamage < 10)
+				for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
+					if(istype(crab))
+						crab.sting_action(BP.brainmob)
+						gib()
+
+/obj/item/organ/external/head/proc/transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
+	brainmob = new(src)
+	brainmob.name = H.real_name
+	brainmob.real_name = H.real_name
+	brainmob.dna = H.dna.Clone()
+	if(H.mind)
+		H.mind.transfer_to(brainmob)
+	brainmob.container = src
+
 
 /mob/living/carbon/human/proc/makeSkeleton()
 	if(!species || (species.name == SKELETON))

@@ -12,7 +12,7 @@
 	if(!ishuman(target))
 		return 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	return BP.open >= 2 && !(BP.status & ORGAN_BLEEDING) && (target_zone != BP_CHEST || target.op_stage.ribcage == 2)
+	return BP && BP.open >= 2 && !(BP.status & ORGAN_BLEEDING) && (target_zone != BP_CHEST || target.op_stage.ribcage == 2)
 
 /datum/surgery_step/cavity/proc/get_max_wclass(obj/item/organ/external/BP)
 	switch (BP.body_zone)
@@ -46,7 +46,7 @@
 /datum/surgery_step/cavity/make_space/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-		return !BP.cavity && !BP.hidden
+		return BP && !BP.cavity && !BP.hidden
 
 /datum/surgery_step/cavity/make_space/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -82,7 +82,7 @@
 /datum/surgery_step/cavity/close_space/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-		return BP.cavity
+		return BP && BP.cavity
 
 /datum/surgery_step/cavity/close_space/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -113,7 +113,7 @@
 /datum/surgery_step/cavity/place_item/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-		return !BP.hidden && BP.cavity && tool.w_class <= get_max_wclass(BP)
+		return BP && !BP.hidden && BP.cavity && tool.w_class <= get_max_wclass(BP)
 
 /datum/surgery_step/cavity/place_item/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -167,7 +167,7 @@
 /datum/surgery_step/cavity/implant_removal/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-		return ((BP.open == 3 && BP.body_zone == BP_CHEST) || (BP.open == 2))
+		return BP && ((BP.open == 3 && BP.body_zone == BP_CHEST) || (BP.open == 2))
 
 /datum/surgery_step/cavity/implant_removal/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)

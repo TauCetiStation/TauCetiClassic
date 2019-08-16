@@ -14979,7 +14979,7 @@
 	},
 /area/shuttle/vox/station)
 "aYn" = (
-/obj/item/weapon/organ/r_arm,
+/obj/item/organ/external/r_arm,
 /turf/simulated/shuttle/floor4{
 	name = "red floor";
 	nitrogen = 103.984;
