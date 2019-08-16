@@ -192,9 +192,9 @@ function run_build_tests {
 
 function run_unit_tests {
     find_byond_deps
-    msg "*** running unit tests ***"
     cp config/example/* config/
     mkdir -p data/ && cp maps/$MAP_META.json data/next_map.json
+    msg "*** running unit tests ***"
     run_test "build unit tests" "scripts/dm.sh -DUNIT_TEST taucetistation.dme"
     run_test "unit tests" "DreamDaemon taucetistation.dmb -invisible -trusted -core 2>&1 | tee log.txt"
     run_test "check correct map loaded" "grep 'Loading $MAP_NAME' log.txt"
