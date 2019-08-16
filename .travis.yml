@@ -19,8 +19,31 @@ script:
 
 matrix:
   include:
-    - name: "Unit Tests"
-      env: TEST=UNIT
+    - name: "Code and Map Linting"
+      env: TEST=LINTING
+      addons:
+        apt:
+          packages:
+            - python3.5
+
+    - name: "Unit Tests - Box Station"
+      env: 
+        - TEST=UNIT
+        - MAP_NAME=Box Station
+        - MAP_META=boxstation
+      install:
+        - ./scripts/install-byond.sh
+        - source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
+      addons:
+        apt:
+          packages:
+            - libstdc++6:i386
+
+    - name: "Unit Tests - Gamma Station"
+      env: 
+        - TEST=UNIT
+        - MAP_NAME=Gamma Station
+        - MAP_META=gamma
       install:
         - ./scripts/install-byond.sh
         - source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
@@ -38,10 +61,3 @@ matrix:
         apt:
           packages:
             - libstdc++6:i386
-
-    - name: "Code and Map Linter"
-      env: TEST=LINTING
-      addons:
-        apt:
-          packages:
-            - python3.5

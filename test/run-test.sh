@@ -194,8 +194,10 @@ function run_unit_tests {
     find_byond_deps
     msg "*** running unit tests ***"
     cp config/example/* config/
+    cp maps/$MAP_META.json data/next_map.json
     run_test "build unit tests" "scripts/dm.sh -DUNIT_TEST taucetistation.dme"
     run_test "unit tests" "DreamDaemon taucetistation.dmb -invisible -trusted -core 2>&1 | tee log.txt"
+    run_test "check correct map loaded" "grep 'Loading $MAP_NAME' log.txt"
     run_test "check tests passed" "grep 'All Unit Tests Passed' log.txt"
     run_test "check no runtimes" "grep 'Caught 0 Runtimes' log.txt"
     run_test_fail "check no runtimes 2" "grep 'runtime error:' log.txt"
@@ -205,8 +207,7 @@ function run_unit_tests {
 
 function run_configured_tests {
     if [[ -z ${TEST+z} ]]; then
-        msg_bad "You must provide TEST in environment; valid options ALL,MAP,WEB,CODE"
-        msg_meh "Note: map tests require MAP_PATH set"
+        msg_bad "You must provide TEST in environment; valid options: LINTING, COMPILE, UNIT"
         exit 1
     fi
 
@@ -218,7 +219,14 @@ function run_configured_tests {
             run_map_tests
         ;;
         "COMPILE") run_build_tests ;;
-        "UNIT") run_unit_tests ;;
+        "UNIT")
+            if [[ -z ${MAP_META+z} || -z ${MAP_NAME+z} ]]; then
+                msg_bad "You must provide MAP_META and MAP_NAME in environment to use with unit tests"
+                exit 1
+            fi
+
+            run_unit_tests 
+        ;;
         *) fail "invalid option for \$TEST: '$TEST'" ;;
     esac
 }
