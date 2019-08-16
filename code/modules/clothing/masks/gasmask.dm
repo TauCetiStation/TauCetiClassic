@@ -172,7 +172,7 @@
 				phrase_sound = 'sound/voice/complionator/dredd.ogg'
 
 		usr.visible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[phrase_text]</b></font>")
-		playsound(src, phrase_sound, VOL_EFFECTS_MASTER, FALSE)
+		playsound(src, phrase_sound, VOL_EFFECTS_MASTER, vary = FALSE)
 		cooldown = world.time
 
 //Plague Dr suit can be found in clothing/suits/bio.dm
@@ -295,3 +295,9 @@
 	filter = list("phoron", "sleeping_agent", "oxygen")
 	species_restricted = list(VOX , VOX_ARMALIS)
 	sprite_sheets = list(VOX_ARMALIS = 'icons/mob/species/armalis/mask.dmi')
+
+/obj/item/clothing/mask/gas/German
+	name = "German Gas Mask"
+	desc = "Soldier's black gas mask."
+	icon_state = "German_gasmask"
+	item_color = "German_gasmask"

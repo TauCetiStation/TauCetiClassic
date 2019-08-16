@@ -18,7 +18,7 @@
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/T = W
 		if(T.welding & prob(50))
-			message_admins("[key_name_admin(user)] triggered a welding kit explosion. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			message_admins("[key_name_admin(user)] triggered a welding kit explosion. [ADMIN_JMP(user)]")
 			log_game("[key_name(user)] triggered a fueltank explosion.")
 			to_chat(user, "<span class='warning'>That was stupid of you.</span>")
 			explosion(get_turf(src),-1,0,2)
@@ -49,3 +49,60 @@
 	..()
 	if(src in user)
 		to_chat(user, "[reagents.total_volume] units of fuel left!")
+
+/obj/item/weapon/weldpack/M2_fuelback
+	name = "M2 Flamethrower backpack."
+	desc = "It smells like victory."
+	icon_state = "M2_Tank"
+	item_state = "M2_Tank"
+	var/obj/item/weapon/flamethrower_M2/Connected_Flamethrower = null
+
+/obj/item/weapon/weldpack/M2_fuelback/attackby(obj/item/W, mob/user)
+	if(iswelder(W))
+		var/obj/item/weapon/weldingtool/T = W
+		if(T.welding)
+			message_admins("[key_name_admin(user)] triggered a flamethrower back explosion. [ADMIN_JMP(user)]")
+			log_game("[key_name(user)] triggered a flamethrower back explosion.")
+			to_chat(user, "<span class='warning'>That was stupid of you.</span>")
+		if(Connected_Flamethrower)
+			Connected_Flamethrower.unequip(user)
+			//explosion(get_turf(src),-1,0,2)
+			//NAPALM GRENADE CODE HERE
+		src.reagents.reaction(get_turf(src), TOUCH)
+		spawn(5)
+		src.reagents.clear_reagents()
+		if(src)
+			qdel(src)
+		return
+
+	if(istype(W, /obj/item/weapon/flamethrower_M2))
+		if(src.loc == user)
+			if(!Connected_Flamethrower)
+				to_chat(user, "You connected your M2 flamethrower to fuel backpack.")
+				src.equip(user, W)
+			else
+				to_chat(user, "Flamethrower allready connected.")
+		else
+			to_chat(user, "Put on your fuel backpack first.")
+
+	return
+
+/obj/item/weapon/weldpack/M2_fuelback/proc/unequip(mob/user)
+	if(Connected_Flamethrower)
+		Connected_Flamethrower.unequip(user)
+		Connected_Flamethrower.update_icon()
+		Connected_Flamethrower = null
+
+
+/obj/item/weapon/weldpack/M2_fuelback/proc/equip(mob/user, obj/item/W)
+	if(!Connected_Flamethrower && istype(W, /obj/item/weapon/flamethrower_M2))
+		var/obj/item/weapon/flamethrower_M2/time = W
+		Connected_Flamethrower = time
+		time.equip(user, src)
+
+/obj/item/weapon/weldpack/M2_fuelback/dropped(mob/user)
+	if(user)
+		if(Connected_Flamethrower)
+			Connected_Flamethrower.unequip(user)
+			Connected_Flamethrower = null
+	return

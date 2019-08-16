@@ -382,7 +382,7 @@
 
 	recalling = 0
 	log_game("[key_name(user)] has tried to recall the shuttle with a gangtool.")
-	message_admins("[key_name_admin(user)] has tried to recall the shuttle with a gangtool.", 1)
+	message_admins("[key_name_admin(user)] has tried to recall the shuttle with a gangtool. [ADMIN_JMP(user)]", 1)
 	userturf = get_turf(user)
 	if(is_station_level(userturf.z)) //Check one more time that they are on station.
 		if(cancel_call_proc(user))

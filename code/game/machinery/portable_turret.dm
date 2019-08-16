@@ -172,7 +172,7 @@
 		if(/obj/item/weapon/gun/energy/taser)
 			reqpower = 200
 
-		if(/obj/item/weapon/gun/energy/stunrevolver)
+		if(/obj/item/weapon/gun/energy/taser/stunrevolver)
 			reqpower = 200
 
 		if(/obj/item/weapon/gun/energy/gun)

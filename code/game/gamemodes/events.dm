@@ -189,7 +189,7 @@
 		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
 		return
 
-	var/list/candidates = get_alien_candidates()
+	var/list/candidates = get_larva_candidates()
 
 	if(prob(40)) spawncount++ //sometimes, have two larvae spawn instead of one
 	while((spawncount >= 1) && vents.len && candidates.len)

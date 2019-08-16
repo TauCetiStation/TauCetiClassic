@@ -28,7 +28,7 @@
 	var/list/offset_y //usage by the photocopier
 	var/rigged = 0
 	var/spam_flag = 0
-	var/crumpled = 0
+	var/crumpled = FALSE
 
 	var/const/deffont = "Verdana"
 	var/const/signfont = "Times New Roman"
@@ -63,7 +63,7 @@
 /obj/item/weapon/paper/examine(mob/user)
 	..()
 	if(in_range(user, src) || istype(user, /mob/dead/observer))
-		if(crumpled == 1)
+		if(crumpled)
 			to_chat(user, "<span class='notice'>You can't read anything until it crumpled.</span>")
 			return
 		show_content(user)
@@ -108,19 +108,17 @@
 	set category = "Object"
 	set src in usr
 
-
 	if((CLUMSY in usr.mutations) && prob(50))
 		var/mob/living/carbon/human/H = usr
 		if(istype(H) && !H.species.flags[NO_MINORCUTS])
 			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
 		return
-	if(!(crumpled==1))
-		crumpled = 1
+	if(!crumpled)
+		crumpled = TRUE
 		icon_state = "crumpled"
 		throw_range = 5
 		overlays = null
 	else
-		crumpled = 2
 		icon_state = "scrap"
 		throw_range = 1
 
@@ -162,7 +160,7 @@
 		dist = get_dist(src, user.camera)
 	else //cyborg or AI not seeing through a camera
 		dist = get_dist(src, user)
-	if(crumpled==1)
+	if(crumpled)
 		return
 	if(dist < 2)
 		show_content(user, forceshow = TRUE)
@@ -175,7 +173,7 @@
 	if(def_zone == O_EYES)
 		user.visible_message("<span class='notice'>You show the paper to [M]. </span>", \
 			"<span class='notice'> [user] holds up a paper and shows it to [M]. </span>")
-		if(crumpled == 1)
+		if(crumpled)
 			to_chat(M, "<span class='notice'>You can't read anything until it crumpled.</span>")
 			return
 		show_content(M)
@@ -236,8 +234,8 @@
 	info_links = info
 	var/i = 0
 	for(i=1,i<=fields,i++)
-		addtofield(i, "<font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
-	info_links = info_links + "<font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
+		addtofield(i, " <font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
+	info_links = info_links + " <font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
 
 
 /obj/item/weapon/paper/proc/clearpaper()
@@ -473,6 +471,12 @@
 	if(user.mind && (user.mind.assigned_role == "Clown"))
 		clown = 1
 
+	if(istype(P, /obj/item/weapon/paper))
+		var/obj/item/weapon/paper/paper = P
+		if(paper.crumpled)
+			to_chat(user, "<span class='notice'>Paper too crumpled for anything.</span>")
+			return
+
 	if(crumpled)
 		if(!(istype(P, /obj/item/weapon/lighter)))
 			to_chat(user, "<span class='notice'>Paper too crumpled for anything.</span>")
@@ -631,7 +635,7 @@
 
 /obj/item/weapon/paper/brig_arsenal
 	name = "Armory Inventory"
-	info = "<b>Armory Inventory:</b><ul>6 Deployable Barriers<br>4 Portable Flashers<br>3 Riot Sets:<small><ul><li>Riot Shield<li>Stun Baton<li>Riot Shield<li>Stun Baton</ul></small>3 Marine Sets:<small><ul><li>Marine Jumpsuit<li>Marine Armor<li>Marine Helmet<li>Work Boots<li>Combat Belt<li>Balaclava<li>Tactical Hud<li>Marine Headset<li>Marine Gloves<li>Marine Dufflebag</ul></small>3 Bulletproof Helmets<br>3 Bulletproof Vests<br>3 Ablative Helmets <br>3 Ablative Vests <br>1 Bomb Suit <br>1 Biohazard Suit<br>6 Security Masks<br>3 SIGI p250 Pistols<br>6 Magazines (9mm rubber)</ul><b>Secure Armory Inventory:</b><ul>3 Energy Guns<br>3 Laser Rifles<br>2 Ion Rifles<br>2 L10-c Carbines<br>1 Grenade Launcher<br>1 M79 Grenade Launcher<br>2 Shotguns<br>6 Magazines (9mm)<br>2 Shotgun Shell Boxes (beanbag, 20 shells)<br>1 m79 Grenade Box (40x46 rubber, 7 rounds)<br>1 Chemical Implant Kit<br>1 Tracking Implant Kit<br>1 Mind Shield Implant Kit<br>1 Death Alarm Implant Kit<br>1 Box of Flashbangs<br>2 Boxes of teargas grenades<br>1 Space Security Set:<small><ul><li>Security Hardsuit<li>Security Hardsuit Helmet<li>Magboots<li>Breath Mask</ul></small></ul>"
+	info = "<b>Armory Inventory:</b><ul>6 Deployable Barriers<br>4 Portable Flashers<br>3 Riot Sets:<small><ul><li>Riot Shield<li>Stun Baton<li>Riot Shield<li>Stun Baton</ul></small>3 Marine Sets:<small><ul><li>Marine Jumpsuit<li>Marine Armor<li>Marine Helmet<li>Work Boots<li>Combat Belt<li>Balaclava<li>Tactical Hud<li>Marine Headset<li>Marine Gloves<li>Marine Dufflebag</ul></small>3 Bulletproof Helmets<br>3 Bulletproof Vests<br>3 Ablative Helmets <br>3 Ablative Vests <br>1 Bomb Suit <br>1 Biohazard Suit<br>6 Security Masks<br>3 W&J PP Pistols<br>6 Magazines (9mm rubber)</ul><b>Secure Armory Inventory:</b><ul>3 Energy Guns<br>3 Laser Rifles<br>2 Ion Rifles<br>2 L10-c Carbines<br>1 Grenade Launcher<br>1 M79 Grenade Launcher<br>2 Shotguns<br>6 Magazines (9mm)<br>2 Shotgun Shell Boxes (beanbag, 20 shells)<br>1 m79 Grenade Box (40x46 rubber, 7 rounds)<br>1 Chemical Implant Kit<br>1 Tracking Implant Kit<br>1 Mind Shield Implant Kit<br>1 Death Alarm Implant Kit<br>1 Box of Flashbangs<br>2 Boxes of teargas grenades<br>1 Space Security Set:<small><ul><li>Security Hardsuit<li>Security Hardsuit Helmet<li>Magboots<li>Breath Mask</ul></small></ul>"
 
 /obj/item/weapon/paper/firing_range
 	name = "Firing Range Instructions"

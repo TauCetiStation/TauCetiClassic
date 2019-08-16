@@ -75,6 +75,18 @@
 	species_restricted = null
 	body_parts_covered = 0
 
+/obj/item/clothing/shoes/sandal/brown
+	name = "Brown Sandals"
+	desc = "Sweet looking brown sandals. Do not wear them with socks!"
+	icon_state = "sandals-brown"
+	item_color = "sandals-brown"
+
+/obj/item/clothing/shoes/sandal/pink
+	name = "Pink Sandals"
+	desc = "They radiate a cheap plastic aroma like from hell ramen."
+	icon_state = "sandals-pink"
+	item_color = "sandals-pink"
+
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic, black shoes."
 	name = "magic shoes"
@@ -194,9 +206,46 @@
 	icon_state = "roman"
 	item_state = "roman"
 
+/obj/item/clothing/shoes/boots/nt_pmc_boots
+	name = "NT PMC Boots"
+	desc = "Private security boots. Now with extra grip."
+	flags = NOSLIP
+	icon_state = "nt_pmc_boots"
+	item_state = "r_feet"
+	item_color = "nt_pmc_boots"
+
+/obj/item/clothing/shoes/boots/lizard_boots
+	name = "Lizard Boots"
+	desc = "Private security boots for Unathi."
+	flags = NOSLIP
+	icon_state = "Lizard_Boots"
+	item_state = "r_feet"
+	item_color = "Lizard_Boots"
+
 /obj/item/clothing/shoes/heels
 	name = "Heels"
 	icon_state = "high_shoes"
 
 /obj/item/clothing/shoes/heels/alternate
 	icon_state = "high_shoes2"
+
+/obj/item/clothing/shoes/boots/German
+	name = "Black Boots"
+	desc = "Deutschland army boots."
+	icon_state = "Black_Boots"
+	item_state = "jackboots"
+	item_color = "Black_Boots"
+
+/obj/item/clothing/shoes/brown_cut
+	name = "Cut Brown Boots"
+	desc = "Some shoes that was cut to fit unathi foot in it."
+	icon_state = "brown-cut"
+	item_color = "brown-cut"
+	species_restricted = null
+
+/obj/item/clothing/shoes/footwraps
+	name = "Footwraps"
+	desc = "Just some rags that you wrap around your foot to feel more comfortable. Better than nothing."
+	icon_state = "footwraps"
+	item_color = "footwraps"
+	species_restricted = null

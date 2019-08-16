@@ -593,6 +593,23 @@
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/orescanner, /obj/item/rig_module/device/drill)
 
+//Red Faction mining rig
+/obj/item/clothing/head/helmet/space/rig/RF_mining
+	name = "Red mining helmet"
+	desc = "A special mining helmet designed for work in a hazardous, low pressure environment."
+	icon_state = "rig0-RedMiner"
+	item_state = "RedMiner_helm"
+	item_color = "RedMiner"
+	armor = list(melee = 40, bullet = 10, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 50)
+
+/obj/item/clothing/suit/space/rig/RF_mining
+	name = "Red mining hardsuit"
+	desc = "A special suit that protects against hazardous, has reinforced plating."
+	icon_state = "RedMiner"
+	item_state = "RedMiner"
+	item_color = "RedMiner"
+	armor = list(melee = 40, bullet = 11, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 50)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
 
 //Syndicate rig
 /obj/item/clothing/head/helmet/space/rig/syndi

@@ -439,6 +439,11 @@
 		"Emergency Response Team Leader",
 		"NanoTrasen Representative")
 
+/proc/get_all_velocity_jobs()
+	return list("Velocity Chief",
+	            "Velocity Officer",
+	            "Velocity Medical Doctor")
+
 //gets the actual job rank (ignoring alt titles)
 //this is used solely for sechuds
 /obj/proc/GetJobRealName()
@@ -534,4 +539,6 @@
 		return jobName
 	if(jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a Centcom job
 		return "Centcom"
+	if(jobName in get_all_velocity_jobs())
+		return jobName
 	return "Unknown" //Return unknown if none of the above apply

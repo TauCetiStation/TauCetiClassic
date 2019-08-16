@@ -667,6 +667,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if (istype(I, /obj/item/weapon/implant))
 			continue
 		qdel(I)
+
+	var/obj/item/weapon/card/id/spawned_card = null // If you want them to have an account with money.
+
 	switch(dresscode)
 		if ("strip")
 			//do nothing
@@ -949,25 +952,37 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, SLOT_BELT)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(M), SLOT_GLASSES)
 
-			var/obj/item/weapon/card/id/velocity/W = new(M)
-			W.assignment = "Velocity Officer"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
-			W.access = get_all_accesses()
-			W.access += get_all_centcom_access()
-			W.rank = "Velocity Officer"
-			W.registered_name = M.real_name
-			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
+			spawned_card = new/obj/item/weapon/card/id/velocity(M)
+			spawned_card.assignment = "Velocity Officer"
+			spawned_card.name = "[M.real_name]'s ID Card ([spawned_card.assignment])"
+			spawned_card.access = get_all_centcom_access()
+			spawned_card.rank = "Velocity Officer"
+			spawned_card.registered_name = M.real_name
+			M.equip_to_slot_or_del(spawned_card, SLOT_WEAR_ID)
+
+			if(M.mind)
+				M.mind.assigned_role = "Velocity Officer"
+
+			M.universal_speak = TRUE
+			M.universal_understand = TRUE
 
 		if("velocity chief")
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/det/fluff/retpoluniform(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security/corp(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), SLOT_GLOVES)
-			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/velocity(M), SLOT_L_EAR)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/velocity/chief(M), SLOT_L_EAR)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/sec/hos(M), SLOT_HEAD)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat(M), SLOT_WEAR_SUIT)
 
 			var/obj/item/weapon/storage/backpack/satchel/back_storage = new /obj/item/weapon/storage/backpack/satchel(M)
 			M.equip_to_slot_or_del(back_storage, SLOT_BACK)
 			new /obj/item/weapon/storage/box/handcuffs(back_storage)
 			new /obj/item/device/flash(back_storage)
+			new /obj/item/weapon/storage/belt/security(back_storage)
+			new /obj/item/device/megaphone(back_storage)
+			new /obj/item/device/contraband_finder(back_storage)
+			new /obj/item/device/reagent_scanner(back_storage)
+			new /obj/item/weapon/stamp/cargo_industries(back_storage)
 
 			var/obj/item/device/pda/velocity/pda = new(M)
 			pda.owner = M.real_name
@@ -976,25 +991,36 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/storage/pouch/baton_holster/BH = new(M)
 			new /obj/item/weapon/melee/classic_baton(BH)
+			BH.update_icon()
 			M.equip_to_slot_or_del(BH, SLOT_L_STORE)
 
 			var/obj/item/weapon/storage/pouch/pistol_holster/PH = new(M)
 			var/obj/item/weapon/gun/energy/laser/selfcharging/SG = new /obj/item/weapon/gun/energy/laser/selfcharging(PH)
 			SG.name = "laser pistol rifle"
 			SG.can_be_holstered = TRUE
+			PH.update_icon()
 			M.equip_to_slot_or_del(PH, SLOT_R_STORE)
 
 			M.equip_to_slot_or_del(pda, SLOT_BELT)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(M), SLOT_GLASSES)
 
-			var/obj/item/weapon/card/id/velocity/W = new(M)
-			W.assignment = "Velocity Chief"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
-			W.access = get_all_accesses()
-			W.access += get_all_centcom_access()
-			W.rank = "Velocity Chief"
-			W.registered_name = M.real_name
-			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
+			spawned_card = new/obj/item/weapon/card/id/velocity(M)
+			spawned_card.assignment = "Velocity Chief"
+			spawned_card.name = "[M.real_name]'s ID Card ([spawned_card.assignment])"
+			spawned_card.access = get_all_accesses()
+			spawned_card.access += get_all_centcom_access()
+			spawned_card.rank = "Velocity Chief"
+			spawned_card.registered_name = M.real_name
+			M.equip_to_slot_or_del(spawned_card, SLOT_WEAR_ID)
+
+			var/obj/item/weapon/implant/mindshield/IMP = new(M)
+			IMP.inject(M)
+
+			if(M.mind)
+				M.mind.assigned_role = "Velocity Chief"
+
+			M.universal_speak = TRUE
+			M.universal_understand = TRUE
 
 		if("velocity doctor")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/det/fluff/retpoluniform(M), SLOT_W_UNIFORM)
@@ -1002,7 +1028,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/latex/nitrile(M), SLOT_GLOVES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/blue(M), SLOT_WEAR_SUIT)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/velocity(M), SLOT_L_EAR)
-
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/med(M), SLOT_BACK)
 
 			var/obj/item/device/pda/velocity/doctor/pda = new(M)
@@ -1015,14 +1040,19 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			M.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/hypospray/cmo(M), SLOT_L_STORE)
 
-			var/obj/item/weapon/card/id/velocity/W = new(M)
-			W.assignment = "Velocity Medical Doctor"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
-			W.access = get_all_accesses()
-			W.access += get_all_centcom_access()
-			W.rank = "Velocity Medical Doctor"
-			W.registered_name = M.real_name
-			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
+			spawned_card = new/obj/item/weapon/card/id/velocity(M)
+			spawned_card.assignment = "Velocity Medical Doctor"
+			spawned_card.name = "[M.real_name]'s ID Card ([spawned_card.assignment])"
+			spawned_card.access = get_all_centcom_access()
+			spawned_card.rank = "Velocity Medical Doctor"
+			spawned_card.registered_name = M.real_name
+			M.equip_to_slot_or_del(spawned_card, SLOT_WEAR_ID)
+
+			if(M.mind)
+				M.mind.assigned_role = "Velocity Medical Doctor"
+
+			M.universal_speak = TRUE
+			M.universal_understand = TRUE
 
 		if("emergency response team")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), SLOT_W_UNIFORM)
@@ -1765,7 +1795,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/mime(M), SLOT_WEAR_MASK)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/red(M), SLOT_HEAD)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/suspenders(M), SLOT_WEAR_SUIT)
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(M.back), SLOT_IN_BACKPACK)
 			M.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(M), SLOT_IN_BACKPACK)
 			M.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(M), SLOT_IN_BACKPACK)
 
@@ -1785,7 +1814,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if("clown")
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/clown(M), SLOT_BACK)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(M.back), SLOT_IN_BACKPACK)
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/clown(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/clown_shoes(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/device/pda/clown(M), SLOT_BELT)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(M), SLOT_WEAR_MASK)
@@ -1815,9 +1843,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				qdel(M.mind.initial_account)
 				M.mind.initial_account = null
 				create_random_account_and_store_in_mind(M)
+
+				if(spawned_card)
+					spawned_card.associated_account_number = M.mind.initial_account.account_number
 			//else do nothing
 		else
 			create_random_account_and_store_in_mind(M)
+
+			if(spawned_card)
+				spawned_card.associated_account_number = M.mind.initial_account.account_number
 
 	M.regenerate_icons()
 

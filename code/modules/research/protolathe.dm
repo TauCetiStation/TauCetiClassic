@@ -196,7 +196,7 @@ Note: Must be placed west/left of and R&D console to function.
 		to_chat(usr, "<span class='warning'>The [name] is busy right now</span>")
 		return
 	if (!(D.build_type & PROTOLATHE))
-		message_admins("Protolathe exploit attempted by [key_name(usr, usr.client)]!")
+		message_admins("Protolathe exploit attempted by [key_name(usr, usr.client)]! [ADMIN_JMP(usr)]")
 		return
 
 	busy = TRUE

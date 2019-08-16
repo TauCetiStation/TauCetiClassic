@@ -631,7 +631,7 @@ ________________________________________________________________________________
 									grant_kamikaze(U)//Give them verbs and change variables as necessary.
 									U.regenerate_icons()//Update their clothing.
 									ninjablade()//Summon two energy blades.
-									message_admins("<span class='notice'>[key_name_admin(U)] used KAMIKAZE mode. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[U.x];Y=[U.y];Z=[U.z]'>JMP</a>)</span>")//Let the admins know.
+									message_admins("<span class='notice'>[key_name_admin(U)] used KAMIKAZE mode. [ADMIN_JMP(U)]</span>")//Let the admins know.
 									s_busy = 0
 									return
 							sleep(s_delay)

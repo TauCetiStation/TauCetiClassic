@@ -24,6 +24,7 @@
 	holstered.loc = src
 	holstered.add_fingerprint(user)
 	user.visible_message("<span class='notice'>[user] holsters the [holstered].</span>", "<span class='notice'>You holster the [holstered].</span>")
+	update_icon()
 
 /obj/item/clothing/accessory/holster/proc/unholster(mob/user)
 	if(!holstered)
@@ -43,6 +44,8 @@
 		user.put_in_hands(holstered)
 		holstered.add_fingerprint(user)
 		holstered = null
+		update_icon()
+
 
 /obj/item/clothing/accessory/holster/attack_hand(mob/user)
 	if (has_suit)	//if we are part of a suit
@@ -109,14 +112,12 @@
 /obj/item/clothing/accessory/holster/armpit
 	name = "shoulder holster"
 	desc = "A worn-out handgun holster. Perfect for concealed carry."
-	icon_state = "holster"
+	icon_state = "holster_armpit"
 	item_color = "holster"
 
-/obj/item/clothing/accessory/holster/waist
-	name = "shoulder holster"
-	desc = "A handgun holster. Made of expensive leather."
-	icon_state = "holster"
-	item_color = "holster_low"
+/obj/item/clothing/accessory/holster/armpit/update_icon()
+	..()
+	icon_state = "[initial(icon_state)][holstered ? "_loaded" : ""]"
 
 /obj/item/clothing/accessory/holster/mafia
 	name = "gun holster"

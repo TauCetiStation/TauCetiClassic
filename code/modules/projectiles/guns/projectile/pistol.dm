@@ -9,31 +9,28 @@
 	fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
 	can_be_holstered = TRUE
 
-/obj/item/weapon/gun/projectile/sigi
-	name = "\improper pistol"
-	desc = "A W&J Company designed SIGI p250, found pretty much everywhere humans are. Looks like SIG 250, but it's not. Uses 9mm rounds."
-	icon_state = "sigi250"
-	item_state = "sigi250"
+/obj/item/weapon/gun/projectile/wjpp
+	name = "\improper W&J PP"
+	desc = "Double action semi-automatic 9mm pistol, popular with police and private security for being reliable, concealable and cheap."
+	icon_state = "9mm_wjpp"
+	item_state = "9mm_wjpp"
 	origin_tech = "combat=2;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/m9mmr_2
+	mag_type = /obj/item/ammo_box/magazine/m9mm_2/rubber
 	mag_type2 = /obj/item/ammo_box/magazine/m9mm_2
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 	can_be_holstered = TRUE
-
 	var/mag = null
 
-/obj/item/weapon/gun/projectile/sigi/atom_init()
+/obj/item/weapon/gun/projectile/wjpp/atom_init()
 	. = ..()
 	mag = image('icons/obj/gun.dmi', "mag")
 	overlays += mag
 
-/obj/item/weapon/gun/projectile/sigi/spec
-	name = "\improper pistol"
-	desc = "A W&J Company designed Special SIGI p250, this one has a military coloring. Looks like SIG 250, but it's not. Uses 9mm rounds."
-	icon_state = "sigi250special"
-	item_state = "sigi250special"
+/obj/item/weapon/gun/projectile/wjpp/spec
+	icon_state = "9mm_wjpp_spec"
+	item_state = "9mm_wjpp_spec"
 
-/obj/item/weapon/gun/projectile/sigi/update_icon(load = 0)
+/obj/item/weapon/gun/projectile/wjpp/update_icon(load = 0)
 	..()
 	if(load)
 		icon_state = "[initial(icon_state)]"
@@ -41,11 +38,11 @@
 	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
 	return
 
-/obj/item/weapon/gun/projectile/sigi/attack_self(mob/user)
+/obj/item/weapon/gun/projectile/wjpp/attack_self(mob/user)
 	overlays -= mag
 	..()
 
-/obj/item/weapon/gun/projectile/sigi/attackby(obj/item/A, mob/user)
+/obj/item/weapon/gun/projectile/wjpp/attackby(obj/item/A, mob/user)
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if ((!magazine && (istype(AM, mag_type) || istype(AM, mag_type2))))

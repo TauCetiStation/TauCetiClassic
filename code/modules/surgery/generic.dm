@@ -14,11 +14,11 @@
 	if (!ishuman(target))
 		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (BP == null)
+	if (!BP)
 		return FALSE
-	if (BP.status & ORGAN_DESTROYED)
+	if (BP.is_stump)
 		return FALSE
-	if (BP.status & ORGAN_ROBOT)
+	if (!BP.is_flesh())
 		return FALSE
 	return TRUE
 
@@ -287,9 +287,7 @@
 	if (!ishuman(target))
 		return 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (BP == null)
-		return 0
-	if (BP.status & ORGAN_DESTROYED)
+	if (!BP)
 		return 0
 	return target_zone != BP_CHEST && target_zone != BP_GROIN && target_zone != BP_HEAD
 
@@ -327,9 +325,9 @@
 	if(!ishuman(target))
 		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if(BP == null)
+	if(!BP)
 		return FALSE
-	if(BP.status & ORGAN_DESTROYED)
+	if(BP.is_stump)
 		return FALSE
 	return TRUE
 

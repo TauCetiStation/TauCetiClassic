@@ -375,7 +375,7 @@
 			var/datum/unarmed_attack/attack = M.species.unarmed
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[response_harm] [src.name] ([src.ckey])</font>")
 			attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [pick(attack.attack_verb)]ed by [M.name] ([M.ckey])</font>")
-			msg_admin_attack("[key_name(M)] [response_harm] [key_name(src)]")
+			msg_admin_attack("[key_name(M)] [response_harm] [key_name(src)]", M)
 
 			var/damage = rand(0, 5)
 			if(!damage)
@@ -404,7 +404,7 @@
 			M.do_attack_animation(src)
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
-			msg_admin_attack("[key_name(M)] disarmed [src.name] ([src.ckey])")
+			msg_admin_attack("[key_name(M)] disarmed [src.name] ([src.ckey])", M)
 
 			if(is_armored(M, 25))
 				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
@@ -434,16 +434,6 @@
 				else
 					playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 					visible_message("<span class='danger'>[M] attempted to disarm [src]!</span>")
-
-/mob/living/carbon/ian/attack_facehugger(mob/living/carbon/alien/facehugger/FH)
-	switch(FH.a_intent)
-		if("grab")
-			if(stat != DEAD)
-				if(FH == src)
-					return
-				new /obj/item/weapon/fh_grab(FH, src)
-			else
-				to_chat(FH, "<span class='red'>looks dead.</span>")
 
 /mob/living/carbon/ian/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker.mode)

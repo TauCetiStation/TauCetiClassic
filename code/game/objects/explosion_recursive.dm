@@ -19,8 +19,8 @@ var/explosion_in_progress = 0
 		if(get_dist(W, epicenter) < 10)
 			W.react_explosion(epicenter, power)
 
-	message_admins("Explosion with size ([power]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z] <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</A>)")
-	log_game("Explosion with size ([power]) in area [epicenter.loc.name] ")
+	message_admins("Explosion with size ([power]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z] - [ADMIN_JMP(epicenter)])")
+	log_game("Explosion with size ([power]) in area [epicenter.loc.name]")
 
 	playsound(epicenter, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, null, null, round(power*2,1) )
 	playsound(epicenter, pick(SOUNDIN_EXPLOSION), VOL_EFFECTS_MASTER, null, null, round(power,1) )

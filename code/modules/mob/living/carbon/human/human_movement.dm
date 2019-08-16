@@ -39,7 +39,7 @@
 	if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
 		for(var/bodypart_name in list(BP_L_ARM , BP_R_ARM))
 			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
-			if(!BP || (BP.status & ORGAN_DESTROYED))
+			if(!BP || (BP.is_stump))
 				tally += 6
 			else if(BP.status & ORGAN_SPLINTED)
 				tally += 0.8
@@ -70,7 +70,7 @@
 
 		for(var/bodypart_name in list(BP_L_LEG , BP_R_LEG))
 			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
-			if(!BP || (BP.status & ORGAN_DESTROYED))
+			if(!BP || (BP.is_stump))
 				tally += 6
 			else if(BP.status & ORGAN_SPLINTED)
 				tally += 0.8
