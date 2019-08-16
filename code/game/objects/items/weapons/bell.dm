@@ -6,7 +6,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "bell"
 	flags = NOBLUDGEON
-	hitsound = 'sound/items/oneding.ogg'
+	hitsound = list('sound/items/oneding.ogg')
 	m_amt = 75
 
 /obj/item/weapon/bell/attack_hand(mob/user)

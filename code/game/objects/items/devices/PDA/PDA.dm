@@ -132,6 +132,13 @@
 	message_silent = 1
 	ttone = "silence"
 
+/obj/item/device/pda/velocity
+	default_cartridge = /obj/item/weapon/cartridge/hos
+	icon_state = "pda-velocity"
+
+/obj/item/device/pda/velocity/doctor
+	default_cartridge = /obj/item/weapon/cartridge/medical
+
 /obj/item/device/pda/heads
 	default_cartridge = /obj/item/weapon/cartridge/head
 	icon_state = "pda-h"
@@ -571,7 +578,7 @@
 
 	if(href_list && (last_tap_sound <= world.time))
 		if(iscarbon(usr))
-			playsound(src, "pda", VOL_EFFECTS_MASTER, 15, FALSE)
+			playsound(src, pick(SOUNDIN_PDA_TAPS), VOL_EFFECTS_MASTER, 15, FALSE)
 			last_tap_sound = world.time + 8
 
 	switch(href_list["choice"])
@@ -813,11 +820,11 @@
 							ui.close()
 							detonate_act(src)
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge but failed, blowing themselves up")
-							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge but failed. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[U.x];Y=[U.y];Z=[U.z]'>JMP</a>)")
+							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge but failed. [ADMIN_JMP(U)]")
 						else
 							U.show_message("<span class='notice'>Success!</span>", 1)
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded")
-							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[U.x];Y=[U.y];Z=[U.z]'>JMP</a>)")
+							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded. [ADMIN_JMP(U)]")
 							detonate_act(P)
 					else
 						to_chat(U, "No charges left.")

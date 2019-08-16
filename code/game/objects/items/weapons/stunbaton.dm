@@ -36,7 +36,7 @@
 	if(charges > 0)
 		status = !status
 		to_chat(user, "<span class='notice'>\The [src] is now [status ? "on" : "off"].</span>")
-		playsound(src, "sparks", VOL_EFFECTS_MASTER)
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		update_icon()
 	else
 		status = 0
@@ -63,7 +63,7 @@
 		//H.apply_effect(5, WEAKEN, 0)
 		H.visible_message("<span class='danger'>[M] has been beaten with the [src] by [user]!</span>")
 
-		playsound(src, "swing_hit", VOL_EFFECTS_MASTER)
+		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 
 	if(!status)
 		H.visible_message("<span class='warning'>[M] has been prodded with the [src] by [user]. Luckily it was off.</span>")
@@ -87,7 +87,7 @@
 		if(!(user.a_intent == "hurt"))
 			user.attack_log += "\[[time_stamp()]\]<font color='red'> attempted to stun [H.name] ([H.ckey]) with [src.name]</font>"
 			H.attack_log += "\[[time_stamp()]\]<font color='orange'> stunned by [user.name] ([user.ckey]) with [src.name]</font>"
-			msg_admin_attack("[key_name(user)] attempted to stun [key_name(H)] with [src.name]")
+			msg_admin_attack("[key_name(user)] attempted to stun [key_name(H)] with [src.name]", user)
 
 		playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 		if(charges < 1)
@@ -115,7 +115,7 @@
 				H.visible_message("<span class='danger'>[src], thrown by [foundmob.name], strikes [H]!</span>")
 
 				H.attack_log += "\[[time_stamp()]\]<font color='orange'> Hit by thrown [src.name] last touched by ([src.fingerprintslast])</font>"
-				msg_admin_attack("Flying [src.name], last touched by ([src.fingerprintslast]) hit [key_name(H)]" )
+				msg_admin_attack("Flying [src.name], last touched by ([src.fingerprintslast]) hit [key_name(H)]", H)
 
 /obj/item/weapon/melee/baton/emp_act(severity)
 	switch(severity)

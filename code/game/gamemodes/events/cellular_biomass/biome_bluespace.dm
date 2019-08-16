@@ -74,7 +74,7 @@
 	icon = 'code/game/gamemodes/events/cellular_biomass/bluespace_cellular.dmi'
 	speak_emote = list("buzzing")
 	attacktext = "discarges"
-	attack_sound = 'sound/weapons/blaster.ogg'
+	attack_sound = list('sound/weapons/blaster.ogg')
 	faction = "bluespace"
 	health = 32
 	maxHealth = 32

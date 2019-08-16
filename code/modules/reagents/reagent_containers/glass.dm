@@ -85,7 +85,7 @@
 		var/contained = english_list(injected)
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been splashed with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to splash [M.name] ([M.key]). Reagents: [contained]</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) splashed [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		msg_admin_attack("[user.name] ([user.ckey]) splashed [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
 
 		for(var/mob/O in viewers(world.view, user))
 			O.show_message(text("<span class = 'rose'>[] has been splashed with something by []!</span>", target, user), 1)
@@ -153,7 +153,7 @@
 		src.reagents.reaction(target, TOUCH)
 		spawn(5) src.reagents.clear_reagents()
 		var/turf/T = get_turf(src)
-		message_admins("[key_name_admin(usr)] splashed [src.reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
+		message_admins("[key_name_admin(usr)] splashed [src.reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z]) [ADMIN_JMP(usr)]")
 		log_game("[usr.ckey]([usr]) splashed [src.reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z])")
 		return
 

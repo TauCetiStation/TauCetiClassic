@@ -289,8 +289,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
-		if(M.attack_sound)
-			playsound(src, M.attack_sound, VOL_EFFECTS_MASTER)
+		if(length(M.attack_sound))
+			playsound(src, pick(M.attack_sound), VOL_EFFECTS_MASTER)
 		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
@@ -414,8 +414,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/proc/find_damaged_bodypart()
 	for(var/obj/item/organ/external/BP in bodyparts) // find a broken/destroyed limb
-		if(BP.status & (ORGAN_DESTROYED | ORGAN_BROKEN | ORGAN_SPLINTED))
-			if(BP.parent && (BP.parent.status & ORGAN_DESTROYED))
+		if(BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED) || BP.is_stump)
+			if(BP.parent && (BP.parent.is_stump))
 				continue
 			else
 				return BP
@@ -427,7 +427,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			for(var/datum/reagent/blood/B in vessel.reagent_list)
 				B.volume -= remove_blood_amount
 		var/regenerating_capacity_penalty = 0 // Used as time till organ regeneration.
-		if(regenerating_bodypart.status & ORGAN_DESTROYED)
+		if(regenerating_bodypart.is_stump)
 			regenerating_capacity_penalty = regenerating_bodypart.regen_bodypart_penalty
 		else
 			regenerating_capacity_penalty = regenerating_bodypart.regen_bodypart_penalty/2
@@ -443,11 +443,11 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				if(regenerating_capacity_penalty == regenerating_bodypart.regen_bodypart_penalty/2)
 					visible_message("<span class='notice'>[src] stirs his [regenerating_bodypart.name]...</span>","<span class='userdanger'>You [species && species.flags[NO_PAIN] ? "notice" : "feel"] freedom in moving your [regenerating_bodypart.name]</span>")
 				else
-					visible_message("<span class='notice'>From [src]'s [regenerating_bodypart.parent.name] grows a small meaty sprout...</span>")
+					visible_message("<span class='notice'>From [src]'s [parse_zone(regenerating_bodypart.body_zone)] grows a small meaty sprout...</span>")
 			if(50)
-				visible_message("<span class='notice'>You see something resembling [regenerating_bodypart.name] at [src]'s [regenerating_bodypart.parent.name]...</span>")
+				visible_message("<span class='notice'>You see something resembling [parse_zone(regenerating_bodypart.body_zone)] at [src]'s [regenerating_bodypart.parent.name]...</span>")
 			if(65)
-				visible_message("<span class='userdanger'>A new [regenerating_bodypart.name] has grown from [src]'s [regenerating_bodypart.parent.name]!</span>","<span class='userdanger'>You [species && species.flags[NO_PAIN] ? "notice" : "feel"] your [regenerating_bodypart.name] again!</span>")
+				visible_message("<span class='userdanger'>A new [parse_zone(regenerating_bodypart.body_zone)] has grown from [src]'s [regenerating_bodypart.parent.name]!</span>","<span class='userdanger'>You [species && species.flags[NO_PAIN] ? "notice" : "feel"] your [parse_zone(regenerating_bodypart.body_zone)] again!</span>")
 		if(prob(50))
 			emote("scream",1,null,1)
 		if(regenerating_organ_time >= regenerating_capacity_penalty) // recover organ
@@ -653,10 +653,16 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
-	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
-	if( !BP || BP.disfigured || (BP.status & ORGAN_DESTROYED) || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
+	if(!bodyparts_by_name[BP_HEAD])
 		return "Unknown"
-	return real_name
+
+	if(istype(bodyparts_by_name[BP_HEAD], /obj/item/organ/external/head))
+		var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
+		if( !BP || BP.disfigured || (BP.is_stump) || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
+			return "Unknown"
+		return real_name
+
+	return "Unknown"
 
 //gets name from ID or PDA itself, ID inside PDA doesn't matter
 //Useful when player is being seen by other mobs
@@ -1175,24 +1181,87 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			xylophone=0
 	return
 
-/mob/living/carbon/human/proc/vomit()
+/mob/living/carbon/human/vomit(punched = FALSE, masked = FALSE)
+	var/mask_ = masked
+	if(species.flags[NO_VOMIT])
+		return FALSE
+
+	if(wear_mask && (wear_mask.flags & MASKCOVERSMOUTH))
+		mask_ = TRUE
+
+	return ..(punched, mask_)
+
+
+/mob/living/carbon/human/proc/force_vomit(mob/living/carbon/human/H)
+	if(H.species.flags[IS_SYNTHETIC])
+		to_chat(src, "<span class='warning'>Wait... Where is the mouth?</span>")
+		return
+
+	if((H.head && (H.head.flags & HEADCOVERSMOUTH)) || (H.wear_mask && (H.wear_mask.flags & MASKCOVERSMOUTH)))
+		to_chat(src, "<span class='warning'>You can't slide your fingers through THAT...</span>")
+		return
+
+	if(src != H)
+		visible_message("<span class='notice'>[src] is sliding \his fingers into [H]'s mouth.</span>", "<span class='notice'>You are sliding your fingers into [H]'s mouth.</span>")
+		shoving_fingers = TRUE
+		if(is_busy() || !do_after(src, 3 SECONDS, target = H))
+			return
+		if(!shoving_fingers)
+			return
+
+	if(src != H)
+		visible_message("<span class='warning'>[src] put \his fingers into [H]'s mouth and begins to press on.</span>", "<span class='notice'>You put your fingers into [H]'s mouth and begin to press on.</span>")
+	else
+		visible_message("<span class='warning'>[src] put \his fingers into \his own mouth.</span>", "<span class='notice'>You put your fingers into your own mouth.</span>")
+		shoving_fingers = TRUE
+
+	if(H.species.flags[NO_VOMIT])
+		shoving_fingers = FALSE
+		return
+
+	var/stage = 0
+
+	for(var/i in 1 to 10)
+		if(!shoving_fingers) // They bit us or something.
+			return
+		if(!is_busy() && do_after(src, 7, target = H))
+			if(stage < 3)
+				if(prob(30))
+					switch(stage)
+						if(0)
+							to_chat(H, "<span class='notice'>You feel nauseous.</span>")
+						if(1)
+							to_chat(H, "<span class='warning'>Your stomach feels uneasy.</span>")
+						if(2)
+							to_chat(H, "<span class='warning'>You feel something coming up your throat!</span>")
+					stage++
+			else
+				if(!prob((reagents.total_volume * 9) + 10))
+					visible_message("<span class='warning'>[src] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but it gets stuck in your throat!</span>")
+					adjustOxyLoss(3)
+					adjustHalLoss(5)
+					return FALSE
+				H.vomit()
+		else
+			break
+
+	shoving_fingers = FALSE
+
+/mob/living/carbon/human/proc/invoke_vomit_async()
+	set waitfor = FALSE
 
 	if(species.flags[NO_VOMIT])
 		return // Machines, golems, shadowlings and abductors don't throw up.
 
 	if(!lastpuke)
-		lastpuke = 1
-		src.visible_message("<B>[src]</B> looks kinda like unhealthy.","<span class='warning'>You feel nauseous...</span>")
-		spawn(150) //15 seconds until second warning
-			to_chat(src, "<span class='warning'>You feel like you are about to throw up!</span>")
-			spawn(100) //and you have 10 more for mad dash to the bucket
-				Stun(5)
-				var/turf/T = loc
-				T.add_vomit_floor(src, 1)
-				nutrition -= 40
-				adjustToxLoss(-3)
-				spawn(350) //wait 35 seconds before next volley
-					lastpuke = 0
+		lastpuke = TRUE
+		visible_message("<B>[src]</B> looks kinda like unhealthy.","<span class='warning'>You feel nauseous...</span>")
+		sleep(15 SECONDS) //15 seconds until second warning
+		to_chat(src, "<span class='warning'>You feel like you are about to throw up!</span>")
+		sleep(10 SECONDS) //and you have 10 more for mad dash to the bucket
+		vomit()
+		sleep(35 SECONDS) //wait 35 seconds before next volley
+		lastpuke = FALSE
 
 /mob/living/carbon/human/proc/morph()
 	set name = "Morph"
@@ -1485,7 +1554,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				to_chat(src, msg)
 
 				BP.take_damage(rand(1,3), 0, 0)
-				if(!(BP.status & ORGAN_ROBOT)) //There is no blood in protheses.
+				if(!BP.is_robotic()) //There is no blood in protheses.
 					BP.status |= ORGAN_BLEEDING
 					src.adjustToxLoss(rand(1,3))
 
@@ -1521,7 +1590,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	else
 		to_chat(usr, "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].</span>")
 
-/mob/living/carbon/human/proc/set_species(new_species, force_organs, default_colour)
+/mob/living/carbon/human/proc/set_species(new_species, force_organs = TRUE, default_colour = null)
 
 	if(!new_species)
 		if(dna.species)
@@ -1543,16 +1612,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	species = all_species[new_species]
 	maxHealth = species.total_health
 
-	if(force_organs || !bodyparts.len)
-		species.create_organs(src)
-
-	if(species.language)
-		add_language(species.language)
-
-	if(species.additional_languages)
-		for(var/A in species.additional_languages)
-			add_language(A)
-
 	if(species.base_color && default_colour)
 		//Apply colour.
 		r_skin = hex2num(copytext(species.base_color,2,4))
@@ -1562,6 +1621,18 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		r_skin = 0
 		g_skin = 0
 		b_skin = 0
+
+	if(force_organs || !bodyparts.len)
+		species.create_organs(src, deleteOld = TRUE)
+	else
+		apply_recolor()
+
+	if(species.language)
+		add_language(species.language)
+
+	if(species.additional_languages)
+		for(var/A in species.additional_languages)
+			add_language(A)
 
 	species.handle_post_spawn(src)
 	species.on_gain(src)
@@ -1897,7 +1968,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	else if(organ_check in list(O_LIVER, O_KIDNEYS))
 		BP = bodyparts_by_name[BP_GROIN]
 
-	if(BP && (BP.status & ORGAN_ROBOT))
+	if(BP && BP.is_robotic())
 		return FALSE
 	return species.has_organ[organ_check]
 
@@ -1912,3 +1983,15 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/CanObtainCentcommMessage()
 	return istype(l_ear, /obj/item/device/radio/headset) || istype(r_ear, /obj/item/device/radio/headset)
+
+/mob/living/carbon/human/make_dizzy(amount)
+	dizziness = min(1000, dizziness + amount)	// store what will be new value
+													// clamped to max 1000
+	if(dizziness > 100 && !is_dizzy)
+		INVOKE_ASYNC(src, /mob.proc/dizzy_process)
+
+/mob/living/carbon/human/make_jittery(amount)
+	jitteriness = min(1000, jitteriness + amount)	// store what will be new value
+													// clamped to max 1000
+	if(jitteriness > 30 && !is_jittery)
+		INVOKE_ASYNC(src, /mob.proc/jittery_process)

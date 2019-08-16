@@ -402,6 +402,18 @@
 	access = get_all_centcom_access()
 	. = ..()
 
+/obj/item/weapon/card/id/velocity
+	name = "\improper Cargo Industries. ID"
+	desc = "An ID designed for Velocity crew workers."
+	icon_state = "velocity"
+	item_state = "velcard_id"
+	registered_name = "Cargo Industries"
+	assignment = "General"
+
+/obj/item/weapon/card/id/velocity/atom_init()
+	access = get_all_centcom_access()
+	. = ..()
+
 /obj/item/weapon/card/id/ert
 	name = "\improper CentCom. ID"
 	icon_state = "ert"

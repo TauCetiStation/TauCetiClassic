@@ -87,6 +87,13 @@
 	required_reagents = list("silicon" = 1, "potassium" = 1, "nitrogen" = 1)
 	result_amount = 3
 
+/datum/chemical_reaction/thermopsis
+	name = "Thermopsis"
+	id = "thermopsis"
+	result = "thermopsis"
+	required_reagents = list("anti_toxin" = 1, "sugar" = 1, "carbon" = 1)
+	result_amount = 3
+
 /datum/chemical_reaction/mutagen
 	name = "Unstable mutagen"
 	id = "mutagen"
@@ -1241,7 +1248,7 @@
 		target_tile.assume_gas("phoron", 25, 1400)
 		spawn (0)
 			target_tile.hotspot_expose(700, 400)
-	message_admins("Orange slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>)")
+	message_admins("Orange slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
 	log_game("Orange slime extract activated by [usr.ckey]([usr])")
 
 //Yellow
@@ -1256,7 +1263,7 @@
 
 /datum/chemical_reaction/slimeoverload/on_reaction(datum/reagents/holder, created_volume)
 	empulse(get_turf_loc(holder.my_atom), 3, 7)
-	message_admins("Yellow slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>)")
+	message_admins("Yellow slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
 	log_game("Yellow slime extract activated by [usr.ckey]([usr])")
 
 /datum/chemical_reaction/slimecell
@@ -1394,7 +1401,7 @@
 		O.show_message(text("<span class='warning'>The slime extract begins to vibrate violently !</span>"), 1)
 	sleep(50)
 	explosion(get_turf_loc(holder.my_atom), 1 ,3, 6)
-	message_admins("Oil slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>)")
+	message_admins("Oil slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
 	log_game("Oil slime extract activated by [usr.ckey]([usr])")
 
 //Light Pink
@@ -2481,3 +2488,25 @@ TODO: Convert everything to custom hair dye,
 	if(new_color_weight >= 10)
 		chd.color_weight = new_color_weight
 		holder.remove_reagent("water", modifier)
+
+/datum/chemical_reaction/metatrombine
+	name = "Metatrombine"
+	id = "metatrombine"
+	result = "metatrombine"
+	required_reagents = list("chlorine" = 1, "nitrogen" = 1, "potassium" = 1)
+	result_amount = 3
+
+/datum/chemical_reaction/stabyzol
+	name = "Stabyzol"
+	id = "stabyzol"
+	result = "stabyzol"
+	required_reagents = list("mutagen" = 1, "ethanol" = 1, "sugar" = 1)
+	result_amount = 2
+
+// This reagent completely stops mob's metabolism. It should be very rare, and by no chance acquired by accident.
+/datum/chemical_reaction/aclometasone
+	name = "Aclometasone"
+	id = "aclometasone"
+	result = "aclometasone"
+	required_reagents = list("mindbreaker" = 3, "hyperzine" = 1, "coffee" = 1, "phoron" = 1)
+	result_amount = 1

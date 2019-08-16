@@ -146,13 +146,13 @@
 
 /obj/item/stack/sheet/glass/after_throw(datum/callback/callback)
 	..()
-	playsound(src, "shatter", VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	new /obj/item/weapon/shard(loc)
 	set_amount(get_amount() - rand(5,35))
 
 /obj/item/stack/sheet/rglass/after_throw(datum/callback/callback)
 	..()
-	playsound(src, "shatter", VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	new /obj/item/weapon/shard(loc)
 	set_amount(get_amount() - rand(1,15))
 
@@ -354,7 +354,7 @@
 
 			if(!H.shoes)
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
-				if(BP.status & ORGAN_ROBOT)
+				if(BP.is_robotic())
 					return
 				BP.take_damage(5, 0)
 				if(!H.species.flags[NO_PAIN])

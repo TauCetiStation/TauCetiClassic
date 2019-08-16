@@ -133,7 +133,7 @@
 		return
 
 	if(href_list["harvest"])
-		playsound(src, "keyboard", VOL_EFFECTS_MASTER, null, FALSE)
+		playsound(src, pick(SOUNDIN_KEYBOARD), VOL_EFFECTS_MASTER, null, FALSE)
 
 		if(!inserted_battery)
 			src.visible_message("<b>[src]</b> states, \"Cannot harvest. No battery inserted.\"")
@@ -246,7 +246,7 @@
 								inserted_battery.stored_charge = 0
 
 	if(href_list["stopharvest"])
-		playsound(src, "keyboard", VOL_EFFECTS_MASTER, null, FALSE)
+		playsound(src, pick(SOUNDIN_KEYBOARD), VOL_EFFECTS_MASTER, null, FALSE)
 		if(harvesting)
 			if(harvesting < 0 && inserted_battery.battery_effect && inserted_battery.battery_effect.activated)
 				inserted_battery.battery_effect.ToggleActivate()

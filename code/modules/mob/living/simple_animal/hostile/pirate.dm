@@ -18,7 +18,7 @@
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	attacktext = "slashes"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = list('sound/weapons/bladeslice.ogg')
 
 	min_oxy = 5
 	max_oxy = 0

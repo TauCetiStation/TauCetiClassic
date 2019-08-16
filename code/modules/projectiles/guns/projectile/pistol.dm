@@ -7,34 +7,30 @@
 	origin_tech = "combat=2;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/sm45
 	fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
+	can_be_holstered = TRUE
 
-/obj/item/weapon/gun/projectile/sigi
-	name = "\improper pistol"
-	desc = "A W&J Company designed SIGI p250, found pretty much everywhere humans are. Looks like SIG 250, but it's not. Uses 9mm rounds."
-	icon_state = "sigi250"
-	item_state = "sigi250"
+/obj/item/weapon/gun/projectile/wjpp
+	name = "\improper W&J PP"
+	desc = "Double action semi-automatic 9mm pistol, popular with police and private security for being reliable, concealable and cheap."
+	icon_state = "9mm_wjpp"
+	item_state = "9mm_wjpp"
 	origin_tech = "combat=2;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/m9mmr_2
+	mag_type = /obj/item/ammo_box/magazine/m9mm_2/rubber
 	mag_type2 = /obj/item/ammo_box/magazine/m9mm_2
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
-
+	can_be_holstered = TRUE
 	var/mag = null
 
-/obj/item/weapon/gun/projectile/sigi/atom_init()
+/obj/item/weapon/gun/projectile/wjpp/atom_init()
 	. = ..()
 	mag = image('icons/obj/gun.dmi', "mag")
 	overlays += mag
 
-/obj/item/weapon/gun/projectile/sigi/spec
-	name = "\improper pistol"
-	desc = "A W&J Company designed Special SIGI p250, this one has a military coloring. Looks like SIG 250, but it's not. Uses 9mm rounds."
-	icon_state = "sigi250special"
-	item_state = "sigi250special"
+/obj/item/weapon/gun/projectile/wjpp/spec
+	icon_state = "9mm_wjpp_spec"
+	item_state = "9mm_wjpp_spec"
 
-/obj/item/weapon/gun/projectile/sigi/isHandgun()
-	return 1
-
-/obj/item/weapon/gun/projectile/sigi/update_icon(load = 0)
+/obj/item/weapon/gun/projectile/wjpp/update_icon(load = 0)
 	..()
 	if(load)
 		icon_state = "[initial(icon_state)]"
@@ -42,19 +38,16 @@
 	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
 	return
 
-/obj/item/weapon/gun/projectile/sigi/attack_self(mob/user)
+/obj/item/weapon/gun/projectile/wjpp/attack_self(mob/user)
 	overlays -= mag
 	..()
 
-/obj/item/weapon/gun/projectile/sigi/attackby(obj/item/A, mob/user)
+/obj/item/weapon/gun/projectile/wjpp/attackby(obj/item/A, mob/user)
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if ((!magazine && (istype(AM, mag_type) || istype(AM, mag_type2))))
 			overlays += mag
 			..()
-
-/obj/item/weapon/gun/projectile/automatic/silenced/isHandgun()
-	return 1
 
 /obj/item/weapon/gun/projectile/automatic/silenced/update_icon()
 	..()
@@ -68,10 +61,8 @@
 	item_state = "deagle"
 	force = 14.0
 	mag_type = /obj/item/ammo_box/magazine/m50
+	can_be_holstered = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
-
-/obj/item/weapon/gun/projectile/automatic/deagle/isHandgun()
-	return 1
 
 /obj/item/weapon/gun/projectile/automatic/deagle/afterattack(atom/target, mob/living/user, flag)
 	..()
@@ -122,10 +113,8 @@
 	w_class = ITEM_SIZE_SMALL
 	silenced = 0
 	origin_tech = "combat=2;materials=2;syndicate=2"
+	can_be_holstered = TRUE
 	mag_type = /obj/item/ammo_box/magazine/m9mm
-
-/obj/item/weapon/gun/projectile/automatic/pistol/isHandgun()
-	return 1
 
 /obj/item/weapon/gun/projectile/automatic/pistol/attack_hand(mob/user)
 	if(loc == user)
@@ -151,10 +140,8 @@
 	w_class = ITEM_SIZE_SMALL
 	mag_type = /obj/item/ammo_box/magazine/c45r
 	mag_type2 = /obj/item/ammo_box/magazine/c45m
+	can_be_holstered = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_colt1911.ogg'
-
-/obj/item/weapon/gun/projectile/automatic/colt1911/isHandgun()
-	return 1
 
 /obj/item/weapon/gun/projectile/automatic/colt1911/afterattack(atom/target, mob/living/user, flag)
 	..()
@@ -179,9 +166,6 @@
 /obj/item/weapon/gun/projectile/sec_pistol/atom_init()
 	. = ..()
 	update_icon()
-
-/obj/item/weapon/gun/projectile/sec_pistol/isHandgun()
-	return 1
 
 /obj/item/weapon/gun/projectile/sec_pistol/proc/update_magazine()
 	if(magazine)

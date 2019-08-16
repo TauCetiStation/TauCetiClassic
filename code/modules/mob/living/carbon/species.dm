@@ -116,6 +116,13 @@
 
 	var/has_gendered_icons = TRUE // if TRUE = use icon_state with _f or _m for respective gender (see get_icon() external organ proc).
 
+	var/list/survival_kit_items = list(/obj/item/clothing/mask/breath,
+	                                   /obj/item/weapon/tank/emergency_oxygen,
+	                                   /obj/item/weapon/reagent_containers/hypospray/autoinjector
+	                                   )
+
+	var/list/prevent_survival_kit_items = list()
+
 /datum/species/New()
 	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
@@ -123,7 +130,12 @@
 	if(!has_organ[O_HEART])
 		flags[NO_BLOOD] = TRUE // this status also uncaps vital body parts damage, since such species otherwise will be very hard to kill.
 
-/datum/species/proc/create_organs(mob/living/carbon/human/H) //Handles creation of mob organs.
+/datum/species/proc/create_organs(mob/living/carbon/human/H, deleteOld = FALSE) //Handles creation of mob organs.
+	if(deleteOld)
+		for(var/obj/item/organ/external/BP in H.bodyparts)
+			qdel(BP)
+		for(var/obj/item/organ/internal/IO in H.organs)
+			qdel(IO)
 
 	for(var/type in has_bodypart)
 		var/path = has_bodypart[type]
@@ -134,10 +146,6 @@
 		new path(null, H)
 
 	if(flags[IS_SYNTHETIC])
-		for(var/obj/item/organ/external/BP in H.bodyparts)
-			if(BP.status & (ORGAN_CUT_AWAY | ORGAN_DESTROYED))
-				continue
-			BP.status |= ORGAN_ROBOT
 		for(var/obj/item/organ/internal/IO in H.organs)
 			IO.mechanize()
 
@@ -170,11 +178,24 @@
 	return
 
 /datum/species/proc/after_job_equip(mob/living/carbon/human/H, datum/job/J)
-	var/obj/item/weapon/storage/box/SK
-	if(J.title in list("Shaft Miner", "Chief Engineer", "Station Engineer", "Atmospheric Technician"))
-		SK = new /obj/item/weapon/storage/box/engineer(H)
-	else
-		SK = new /obj/item/weapon/storage/box/survival(H)
+	var/obj/item/weapon/storage/box/survival/SK = new(H)
+
+	species_survival_kit_items:
+		for(var/type in survival_kit_items)
+			/*
+			is_type_in_list only work on instantinated objects.
+			*/
+			for(var/type_to_check in J.prevent_survival_kit_items) // So engineers don't spawn with two oxy tanks.
+				if(ispath(type, type_to_check))
+					continue species_survival_kit_items
+			new type(SK)
+
+	job_survival_kit_items:
+		for(var/type in J.survival_kit_items)
+			for(var/type_to_check in prevent_survival_kit_items) // So IPCs don't spawn with oxy tanks from engi kits
+				if(ispath(type, type_to_check))
+					continue job_survival_kit_items
+			new type(SK)
 
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(SK, SLOT_R_HAND)
@@ -516,6 +537,12 @@
 
 	has_gendered_icons = FALSE
 
+	survival_kit_items = list(/obj/item/device/flashlight/flare,
+	                          /obj/item/device/plant_analyzer
+	                          )
+
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
+
 /datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
@@ -540,12 +567,6 @@
 		H.adjustBruteLoss(-(light_amount))
 		H.adjustToxLoss(-(light_amount))
 		H.adjustOxyLoss(-(light_amount))
-
-/datum/species/diona/after_job_equip(mob/living/carbon/human/H, datum/job/J)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/diona_survival(H), SLOT_R_HAND)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/diona_survival(H), SLOT_IN_BACKPACK)
 
 /datum/species/diona/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_diona_digest(M)
@@ -610,13 +631,13 @@
 	)
 
 	has_bodypart = list(
-		 BP_CHEST  = /obj/item/organ/external/chest
-		,BP_GROIN  = /obj/item/organ/external/groin
-		,BP_HEAD   = /obj/item/organ/external/head/ipc
-		,BP_L_ARM  = /obj/item/organ/external/l_arm
-		,BP_R_ARM  = /obj/item/organ/external/r_arm
-		,BP_L_LEG  = /obj/item/organ/external/l_leg
-		,BP_R_LEG  = /obj/item/organ/external/r_leg
+		 BP_CHEST  = /obj/item/organ/external/chest/robot/ipc
+		,BP_GROIN  = /obj/item/organ/external/groin/robot/ipc
+		,BP_HEAD   = /obj/item/organ/external/head/robot/ipc
+		,BP_L_ARM  = /obj/item/organ/external/l_arm/robot/ipc
+		,BP_R_ARM  = /obj/item/organ/external/r_arm/robot/ipc
+		,BP_L_LEG  = /obj/item/organ/external/l_leg/robot/ipc
+		,BP_R_LEG  = /obj/item/organ/external/r_leg/robot/ipc
 		)
 
 	has_organ = list(
@@ -631,11 +652,11 @@
 	blood_datum_path = /datum/dirt_cover/oil
 	flesh_color = "#575757"
 
-/datum/species/machine/after_job_equip(mob/living/carbon/human/H, datum/job/J)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ipc_survival(H), SLOT_R_HAND)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ipc_survival(H), SLOT_IN_BACKPACK)
+	survival_kit_items = list(/obj/item/weapon/stock_parts/cell/crap,
+	                          /obj/item/device/robotanalyzer
+	                          )
+
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
 
 /datum/species/abductor
 	name = ABDUCTOR
@@ -696,7 +717,7 @@
 /datum/unarmed_attack
 	var/attack_verb = list("attack")	// Empty hand hurt intent verb.
 	var/damage = 0						// Extra empty hand attack damage.
-	var/attack_sound = "punch"
+	var/list/attack_sound = SOUNDIN_PUNCH
 	var/miss_sound = 'sound/weapons/punchmiss.ogg'
 	var/sharp = 0
 	var/edge = 0
@@ -713,11 +734,11 @@
 
 /datum/unarmed_attack/slime_glomp
 	attack_verb = list("glomp")
-	attack_sound = 'sound/effects/attackblob.ogg'
+	attack_sound = list('sound/effects/attackblob.ogg')
 
 /datum/unarmed_attack/claws
 	attack_verb = list("scratch", "claw")
-	attack_sound = 'sound/weapons/slice.ogg'
+	attack_sound = list('sound/weapons/slice.ogg')
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	damage = 5
 	sharp = 1
@@ -790,7 +811,7 @@
 	deform = 'icons/mob/human_races/r_golem.dmi'
 	dietflags = 0 //this is ROCK
 
-	total_health = 200
+	total_health = 100
 	oxy_mod = 0
 	tox_mod = 0
 	brain_mod = 0

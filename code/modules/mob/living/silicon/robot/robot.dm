@@ -742,7 +742,7 @@
 				lawupdate = 0
 				connected_ai = null
 				to_chat(user, "You emag [src]'s interface.")
-				message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
+				message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden. [ADMIN_JMP(user)]")
 				log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
 				clear_supplied_laws()
 				clear_inherent_laws()
@@ -897,8 +897,8 @@
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
-		if(M.attack_sound)
-			playsound(src, M.attack_sound, VOL_EFFECTS_MASTER)
+		if(length(M.attack_sound))
+			playsound(src, pick(M.attack_sound), VOL_EFFECTS_MASTER)
 		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")

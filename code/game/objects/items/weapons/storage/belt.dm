@@ -56,13 +56,15 @@
 	item_state = "medical"
 	can_hold = list(
 		/obj/item/device/healthanalyzer,
+		/obj/item/device/plant_analyzer,
+		/obj/item/device/robotanalyzer,
 		/obj/item/weapon/dnainjector,
 		/obj/item/weapon/reagent_containers/dropper,
 		/obj/item/weapon/reagent_containers/glass/beaker,
 		/obj/item/weapon/reagent_containers/glass/bottle,
 		/obj/item/weapon/reagent_containers/pill,
 		/obj/item/weapon/reagent_containers/syringe,
-		/obj/item/weapon/lighter/zippo,
+		/obj/item/weapon/lighter,
 		/obj/item/weapon/storage/fancy/cigarettes,
 		/obj/item/weapon/storage/pill_bottle,
 		/obj/item/stack/medical,
@@ -135,7 +137,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/donut/normal,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
 		/obj/item/weapon/melee/baton,
-		/obj/item/weapon/lighter/zippo,
+		/obj/item/weapon/lighter,
 		/obj/item/weapon/storage/fancy/cigarettes,
 		/obj/item/clothing/glasses/hud/security,
 		/obj/item/device/flashlight,
@@ -146,6 +148,13 @@
 		/obj/item/weapon/shield/riot/tele,
 		/obj/item/device/flashlight/seclite
 		)
+
+/obj/item/weapon/storage/belt/security/German
+	name = "German Belt"
+	desc = "A belt from military soldier set."
+	icon_state = "Leather_Belt_Officer"
+	icon_state = "Leather_Belt_Officer"
+	item_color = "Leather_Belt_Officer"
 
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"
@@ -191,7 +200,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
 		/obj/item/weapon/melee/baton,
 		/obj/item/weapon/gun/energy/taser,
-		/obj/item/weapon/lighter/zippo,
+		/obj/item/weapon/lighter,
 		/obj/item/weapon/storage/fancy/cigarettes,
 		/obj/item/clothing/glasses/hud/security,
 		/obj/item/device/flashlight,

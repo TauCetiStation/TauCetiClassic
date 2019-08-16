@@ -12,9 +12,6 @@
 /obj/item/weapon/gun/energy/pulse_rifle/attack_self(mob/living/user)
 	select_fire(user)
 
-/obj/item/weapon/gun/energy/pulse_rifle/isHandgun()
-	return 0
-
 /obj/item/weapon/gun/energy/pulse_rifle/cyborg/newshot()
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
@@ -50,7 +47,5 @@
 	desc = "It's not the size of the gun, it's the size of the hole it puts through people."
 	icon_state = "m1911-p"
 	item_state = "gun"
+	can_be_holstered = TRUE
 	cell_type = "/obj/item/weapon/stock_parts/cell/infinite"
-
-/obj/item/weapon/gun/energy/pulse_rifle/M1911/isHandgun()
-	return 1

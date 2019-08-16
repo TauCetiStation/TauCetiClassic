@@ -93,10 +93,7 @@
 	var/maxdam = 0
 	var/obj/item/organ/external/damaged_organ = null
 	for(var/obj/item/organ/external/BP in bodyparts)
-		// amputated limbs don't cause pain
-		if(BP.amputated)
-			continue
-		if(BP.status & ORGAN_DEAD)
+		if(BP.status & ORGAN_DEAD || BP.is_robotic())
 			continue
 		var/dam = BP.get_damage()
 		// make the choice of the organ depend on damage,

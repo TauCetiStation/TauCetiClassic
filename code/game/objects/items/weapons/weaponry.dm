@@ -74,7 +74,7 @@
 
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had the [name] used on him by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [name] on [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey]) ([ADMIN_JMP(user)]) ([ADMIN_FLW(user)])")
+	msg_admin_attack("[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey])", user)
 
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='danger'>The rod slips out of your hand and hits your head.</span>")
@@ -179,7 +179,7 @@
 	throw_range = 6
 	m_amt = 12000
 	origin_tech = "materials=1"
-	hitsound = 'sound/weapons/Genhit.ogg'
+	hitsound = list('sound/weapons/Genhit.ogg')
 	attack_verb = list("stubbed", "poked")
 	var/extended = FALSE
 
@@ -193,7 +193,7 @@
 		edge = TRUE
 		icon_state = "switchblade_ext"
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-		hitsound = 'sound/weapons/bladeslice.ogg'
+		hitsound = list('sound/weapons/bladeslice.ogg')
 	else
 		force = 1
 		w_class = ITEM_SIZE_SMALL
@@ -201,7 +201,7 @@
 		edge = FALSE
 		icon_state = "switchblade"
 		attack_verb = list("stubbed", "poked")
-		hitsound = 'sound/weapons/Genhit.ogg'
+		hitsound = list('sound/weapons/Genhit.ogg')
 
 /obj/item/weapon/switchblade/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting \his own throat with the [src.name]! It looks like \he's trying to commit suicide.</span>")

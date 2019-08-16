@@ -3,11 +3,11 @@
 	name = "Random Handgun"
 	desc = "This is a random security sidearm."
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "sigi250"
+	icon_state = "9mm_wjpp"
 /obj/random/guns/handgun_security/item_to_spawn()
 		return pick(\
-						prob(3);/obj/item/weapon/gun/projectile/sigi,\
-						prob(1);/obj/item/weapon/gun/projectile/sigi/spec
+						prob(3);/obj/item/weapon/gun/projectile/wjpp,\
+						prob(1);/obj/item/weapon/gun/projectile/wjpp/spec
 					)
 
 /obj/random/guns/projectile_security
@@ -53,7 +53,7 @@
 	icon_state = "revolver"
 /obj/random/guns/projectile_handgun/item_to_spawn()
 		return pick(\
-						prob(15);/obj/item/weapon/gun/projectile/sigi,\
+						prob(15);/obj/item/weapon/gun/projectile/wjpp,\
 						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol,\
 						prob(15);/obj/item/weapon/gun/projectile/automatic/colt1911,\
 						prob(15);/obj/item/weapon/gun/projectile/automatic/luger,\
@@ -65,7 +65,7 @@
 						prob(5);/obj/item/weapon/gun/projectile/revolver,\
 						prob(5);/obj/item/weapon/gun/projectile/automatic/deagle,\
 						prob(2);/obj/item/weapon/gun/projectile/automatic/gyropistol,\
-						prob(2);/obj/item/weapon/gun/projectile/sigi/spec,\
+						prob(2);/obj/item/weapon/gun/projectile/wjpp/spec,\
 						prob(2);/obj/item/weapon/gun/projectile/automatic/deagle/gold,\
 						prob(2);/obj/item/weapon/gun/projectile/revolver/mateba\
 					)
@@ -141,7 +141,7 @@
 						prob(25);/obj/item/ammo_casing/c9mmr,\
 						prob(5);/obj/item/ammo_box/c9mm,\
 						prob(2);/obj/item/weapon/gun/projectile/automatic/luger,\
-						prob(2);/obj/item/weapon/gun/projectile/sigi,\
+						prob(2);/obj/item/weapon/gun/projectile/wjpp,\
 						prob(2);/obj/item/weapon/gun/projectile/automatic/pistol,\
 						prob(1);/obj/item/weapon/gun/projectile/automatic/mini_uzi\
 					)

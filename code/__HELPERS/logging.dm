@@ -1,5 +1,5 @@
 #define LOG_CLEANING(text) \
-  replace_characters(text, list("\proper"="","\improper"="", JA_CODE=JA_PLACEHOLDER, JA_CODE_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
+  replace_characters(text, list("\proper"="","\improper"="", JA_ENTITY=JA_PLACEHOLDER, JA_ENTITY_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
 
 //print an error message to world.log
 

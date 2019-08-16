@@ -1,10 +1,11 @@
 /obj/item/weapon/gun/energy/gun
 	name = "energy gun"
 	desc = "A basic energy-based gun with two settings: Stun and kill."
-	icon_state = "energy"
+	icon_state = "energytac"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser)
 	origin_tech = "combat=3;magnets=2"
+	can_be_holstered = TRUE
 	modifystate = 2
 
 /obj/item/weapon/gun/energy/gun/attack_self(mob/living/user)
@@ -15,12 +16,17 @@
 	else
 		user.update_inv_r_hand()
 
+/obj/item/weapon/gun/energy/gun/head
+	desc = "A basic energy-based gun with two settings: Stun and kill. This one has a grip made of wood."
+	icon_state = "energy"
+
 /obj/item/weapon/gun/energy/gun/carbine
 	name = "energy carbine"
 	desc = "A basic energy-based carbine with two settings: Stun and kill."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "ecar"
 	icon_custom = null
+	can_be_holstered = FALSE
 
 /obj/item/weapon/gun/energy/gun/carbine/atom_init()
 	. = ..()
@@ -44,6 +50,7 @@
 	var/lightfail = 0
 	var/charge_tick = 0
 	modifystate = 0
+	can_be_holstered = FALSE
 
 /obj/item/weapon/gun/energy/gun/nuclear/atom_init()
 	. = ..()
@@ -124,6 +131,3 @@
 	update_charge()
 	update_reactor()
 	update_mode()
-
-/obj/item/weapon/gun/energy/gun/nuclear/isHandgun()
-	return 0

@@ -221,7 +221,7 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("<span class='warning'><B>[] has punched [name]!</B></span>", M), 1)
 
-				playsound(src, "punch", VOL_EFFECTS_MASTER)
+				playsound(src, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
 				var/damage = rand(5, 10)
 				if (prob(40))
 					damage = rand(10, 15)
@@ -322,8 +322,8 @@
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
-		if(M.attack_sound)
-			playsound(src, M.attack_sound, VOL_EFFECTS_MASTER)
+		if(length(M.attack_sound))
+			playsound(src, pick(M.attack_sound), VOL_EFFECTS_MASTER)
 		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")

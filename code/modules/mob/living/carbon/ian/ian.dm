@@ -375,7 +375,7 @@
 			var/datum/unarmed_attack/attack = M.species.unarmed
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[response_harm] [src.name] ([src.ckey])</font>")
 			attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [pick(attack.attack_verb)]ed by [M.name] ([M.ckey])</font>")
-			msg_admin_attack("[key_name(M)] [response_harm] [key_name(src)]")
+			msg_admin_attack("[key_name(M)] [response_harm] [key_name(src)]", M)
 
 			var/damage = rand(0, 5)
 			if(!damage)
@@ -386,7 +386,8 @@
 			if(HULK in M.mutations)
 				damage += 5
 
-			playsound(src, attack.attack_sound, VOL_EFFECTS_MASTER)
+			if(length(attack.attack_sound))
+				playsound(src, pick(attack.attack_sound), VOL_EFFECTS_MASTER)
 
 			if(damage >= 5 && prob(15))
 				visible_message("<span class='danger'>[M] has weakened [src]!</span>")
@@ -403,7 +404,7 @@
 			M.do_attack_animation(src)
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
-			msg_admin_attack("[key_name(M)] disarmed [src.name] ([src.ckey])")
+			msg_admin_attack("[key_name(M)] disarmed [src.name] ([src.ckey])", M)
 
 			if(is_armored(M, 25))
 				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
@@ -600,8 +601,8 @@
 	if(!M.melee_damage_upper)
 		M.emote("[M.friendly] [src]")
 	else
-		if(M.attack_sound)
-			playsound(src, M.attack_sound, VOL_EFFECTS_MASTER)
+		if(length(M.attack_sound))
+			playsound(src, pick(M.attack_sound), VOL_EFFECTS_MASTER)
 		if(is_armored(M, 35))
 			return
 		visible_message("<span class='red'><B>[M]</B> [M.attacktext] [src]!</span>")

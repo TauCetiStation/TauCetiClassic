@@ -46,7 +46,7 @@
 	melee_damage_lower = 2
 	melee_damage_upper = 4
 	attacktext = "hits"
-	attack_sound = 'sound/weapons/genhit1.ogg'
+	attack_sound = list('sound/weapons/genhit1.ogg')
 	var/obj/effect/blob/factory/factory = null
 	var/is_zombie = 0
 	faction = "blob"

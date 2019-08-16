@@ -5,10 +5,8 @@
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/msmg9mm
+	can_be_holstered = FALSE
 	var/alarmed = 0
-
-/obj/item/weapon/gun/projectile/automatic/isHandgun()
-	return 0
 
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
@@ -25,6 +23,7 @@
 	icon_state = "mac"
 	item_state = "mac"
 	w_class = ITEM_SIZE_NORMAL
+	can_be_holstered = TRUE
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/uzim9mm
 
@@ -311,6 +310,7 @@
 	icon_state = "c5"
 	item_state = "c5"
 	w_class = ITEM_SIZE_NORMAL
+	can_be_holstered = TRUE
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/c5_9mm
 	fire_sound = 'sound/weapons/guns/gunshot_c5.wav'
@@ -355,9 +355,6 @@
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 
-/obj/item/weapon/gun/projectile/automatic/tommygun/isHandgun()
-	return 0
-
 /obj/item/weapon/gun/projectile/automatic/bar
 	name = "Browning M1918"
 	desc = "Browning Automatic Rifle."
@@ -375,13 +372,11 @@
 	w_class = ITEM_SIZE_SMALL
 	origin_tech = "combat=2;materials=2;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/m9pmm
+	can_be_holstered = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/luger/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
-
-/obj/item/weapon/gun/projectile/automatic/luger/isHandgun()
-	return 1
 
 /obj/item/weapon/gun/projectile/automatic/colt1911/dungeon
 	desc = "A single-action, semi-automatic, magazine-fed, recoil-operated pistol chambered for the .45 ACP cartridge."

@@ -11,6 +11,7 @@
 	var/max_grenades = 3
 	m_amt = 2000
 	slot_flags = SLOT_FLAGS_BACK
+	can_be_holstered = FALSE
 
 /obj/item/weapon/gun/grenadelauncher/examine(mob/user)
 	..()
@@ -49,7 +50,7 @@
 	grenades -= F
 	F.loc = user.loc
 	F.throw_at(target, 30, 2, user)
-	message_admins("[key_name_admin(user)] fired a grenade ([F.name]) from a grenade launcher ([src.name]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	message_admins("[key_name_admin(user)] fired a grenade ([F.name]) from a grenade launcher ([src.name]). [ADMIN_JMP(user)]")
 	log_game("[key_name_admin(user)] used a grenade ([src.name]).")
 	F.active = 1
 	F.icon_state = initial(F.icon_state) + "_active"

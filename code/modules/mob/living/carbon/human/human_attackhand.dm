@@ -31,14 +31,14 @@
 						visible_message("<span class='warning'><B>[M] accidentally touched \himself with the stun gloves!</B></span>")
 						M.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to touch [src.name] ([src.ckey]) with stungloves</font>")
 						src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been unsuccessfully touched with stungloves by [M.name] ([M.ckey])</font>")
-						msg_admin_attack("[M.name] ([M.ckey]) failed to stun [src.name] ([src.ckey]) with stungloves (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
+						msg_admin_attack("[M.name] ([M.ckey]) failed to stun [src.name] ([src.ckey]) with stungloves", M)
 						target = M
 						calc_power = 150 * get_siemens_coefficient_organ(BP)
 					else
 						visible_message("<span class='warning'><B>[src] has been touched with the stun gloves by [M]!</B></span>")
 						M.attack_log += text("\[[time_stamp()]\] <font color='red'>Stungloved [src.name] ([src.ckey])</font>")
 						src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
-						msg_admin_attack("[M.name] ([M.ckey]) stungloved [src.name] ([src.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
+						msg_admin_attack("[M.name] ([M.ckey]) stungloved [src.name] ([src.ckey])", M)
 						calc_power = 100 * get_siemens_coefficient_organ(BP)
 					target.apply_effects(0,0,0,0,2,0,0,calc_power)
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
@@ -64,7 +64,7 @@
 			if(dna && dna.mutantrace == "adamantine")
 				damage += 5
 
-			playsound(src, "punch", VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
 
 			visible_message("<span class='warning'><B>[M] has punched [src]!</B></span>")
 
@@ -86,7 +86,10 @@
 				INVOKE_ASYNC(src, .proc/perform_cpr, M)
 				return 1
 			else if(!(M == src && apply_pressure(M, M.zone_sel.selecting)))
-				help_shake_act(M)
+				if(M.zone_sel.selecting == O_MOUTH && M == src)
+					M.force_vomit(src)
+				else
+					help_shake_act(M)
 				return 1
 
 		if("grab")
@@ -95,11 +98,12 @@
 
 		if("hurt")
 			M.do_attack_animation(src)
-			var/datum/unarmed_attack/attack = M.species.unarmed
+			var/obj/item/organ/external/BPHand = M.bodyparts_by_name[M.hand ? BP_L_ARM : BP_R_ARM]
+			var/datum/unarmed_attack/attack = BPHand.species.unarmed
 
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[pick(attack.attack_verb)]ed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [pick(attack.attack_verb)]ed by [M.name] ([M.ckey])</font>")
-			msg_admin_attack("[key_name(M)] [pick(attack.attack_verb)]ed [key_name(src)]")
+			msg_admin_attack("[key_name(M)] [pick(attack.attack_verb)]ed [key_name(src)]", M)
 
 			var/damage = rand(0, 5)//BS12 EDIT
 			if(!damage)
@@ -114,8 +118,8 @@
 
 			if(HULK in M.mutations)			damage += 5
 
-
-			playsound(src, attack.attack_sound, VOL_EFFECTS_MASTER)
+			if(length(attack.attack_sound))
+				playsound(src, pick(attack.attack_sound), VOL_EFFECTS_MASTER)
 
 			visible_message("<span class='warning'><B>[M] [pick(attack.attack_verb)]ed [src]!</B></span>")
 			//Rearranged, so claws don't increase weaken chance.
@@ -132,7 +136,7 @@
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
 
-			msg_admin_attack("[key_name(M)] disarmed [src.name] ([src.ckey])")
+			msg_admin_attack("[key_name(M)] disarmed [src.name] ([src.ckey])", M)
 
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)
@@ -210,7 +214,7 @@
 */
 /mob/living/carbon/human/proc/apply_pressure(mob/living/user, target_zone)
 	var/obj/item/organ/external/BP = get_bodypart(target_zone)
-	if(!BP || !(BP.status & ORGAN_BLEEDING) || (BP.status & ORGAN_ROBOT))
+	if(!BP || !(BP.status & ORGAN_BLEEDING) || BP.is_robotic())
 		return FALSE
 
 	if(user.is_busy())

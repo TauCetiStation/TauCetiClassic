@@ -58,7 +58,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	attacktext = "chomps"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = list('sound/weapons/bite.ogg')
 	environment_smash = 0
 	speak_emote = list("squeaks")
 	ventcrawler = 2

@@ -293,7 +293,7 @@
 	if(!H.organs_by_name[O_BRAIN])
 		return TRUE
 	var/obj/item/organ/external/bodypart_head = H.bodyparts_by_name[BP_HEAD]
-	if(!bodypart_head || (bodypart_head.status & ORGAN_DESTROYED))
+	if(!bodypart_head || (bodypart_head.is_stump))
 		return TRUE
 	return FALSE
 
@@ -357,7 +357,7 @@
 
 	user.visible_message("<span class='warning'>[user] shocks [H] with [src].</span>", "<span class='warning'>You shock [H] with [src].</span>", "<span class='warning'>You hear electricity zaps flesh.</span>")
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Shock [H.name] ([H.ckey]) with [src.name]</font>"
-	msg_admin_attack("[user.name] ([user.ckey]) shock [H.name] ([H.ckey]) with [src.name] [ADMIN_FLW(user)]")
+	msg_admin_attack("[user.name] ([user.ckey]) shock [H.name] ([H.ckey]) with [src.name]", user)
 	H.apply_effect(4, STUN, 0)
 	H.apply_effect(4, WEAKEN, 0)
 	H.apply_effect(4, STUTTER, 0)
@@ -368,7 +368,7 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, H)
 	s.start()
-	playsound(src, "bodyfall", VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_BODYFALL), VOL_EFFECTS_MASTER)
 	playsound(src, 'sound/items/defib_zap.ogg', VOL_EFFECTS_MASTER)
 	set_cooldown(cooldown_time)
 
@@ -468,7 +468,7 @@
 
 	user.visible_message("[user] shocks [H] with [src].", "<span class='warning'>You shock [H] with [src].</span>", "You hear electricity zaps flesh.")
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Electrocuted [H.name] ([H.ckey]) with [src.name]</font>"
-	msg_admin_attack("[user.name] ([user.ckey]) used [src.name] to electrocute [H.name] ([H.ckey]) [ADMIN_FLW(user)]")
+	msg_admin_attack("[user.name] ([user.ckey]) used [src.name] to electrocute [H.name] ([H.ckey])", user)
 
 /obj/item/weapon/twohanded/shockpaddles/proc/apply_brain_damage(mob/living/carbon/human/H, var/deadtime)
 	if(deadtime < DEFIB_TIME_LOSS)

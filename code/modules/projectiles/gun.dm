@@ -15,6 +15,7 @@
 	origin_tech = "combat=1"
 	attack_verb = list("struck", "hit", "bashed")
 	action_button_name = "Switch Gun"
+	can_be_holstered = TRUE
 	var/obj/item/ammo_casing/chambered = null
 	var/fire_sound = 'sound/weapons/guns/Gunshot.ogg'
 	var/silenced = 0
@@ -160,9 +161,6 @@
 	else
 		src.visible_message("*click click*")
 		playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
-
-/obj/item/weapon/gun/proc/isHandgun()
-	return 1
 
 /obj/item/weapon/gun/attack(mob/living/M, mob/living/user, def_zone)
 	//Suicide handling.

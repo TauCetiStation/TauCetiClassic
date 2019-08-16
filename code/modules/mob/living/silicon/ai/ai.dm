@@ -522,7 +522,7 @@ var/list/ai_verbs_default = list(
 
 	if (href_list["track"])
 		var/mob/target = locate(href_list["track"]) in living_list
-		if(target && (!istype(target, /mob/living/carbon/human) || html_decode(href_list["trackname"]) == target:get_face_name()))
+		if(target || html_decode(href_list["trackname"]) == target:get_visible_name())
 			ai_actual_track(target)
 		else
 			to_chat(src, "<span class='rose'>System error. Cannot locate [html_decode(href_list["trackname"])].</span>")
@@ -602,8 +602,8 @@ var/list/ai_verbs_default = list(
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
-		if(M.attack_sound)
-			playsound(src, M.attack_sound, VOL_EFFECTS_MASTER)
+		if(length(M.attack_sound))
+			playsound(src, pick(M.attack_sound), VOL_EFFECTS_MASTER)
 		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")

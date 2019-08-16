@@ -40,9 +40,9 @@
 	if(I.flags & NOBLUDGEON)
 		return
 	if(!I.force)
-		playsound(loc, 'sound/weapons/tap.ogg')
-	else if(I.hitsound)
-		playsound(loc, I.hitsound)
+		playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER)
+	else if(length(I.hitsound))
+		playsound(loc, pick(I.hitsound), VOL_EFFECTS_MASTER)
 
 	user.do_attack_animation(src)
 

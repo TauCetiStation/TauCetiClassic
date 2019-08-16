@@ -312,7 +312,7 @@
 					qdel(E)
 				rotting = 0
 				return
-		else if(!is_sharp(W) && W.force >= 10 || W.force >= 20)
+		else if(!W.is_sharp() && W.force >= 10 || W.force >= 20)
 			to_chat(user, "<span class='notice'>\The [src] crumbles away under the force of your [W.name].</span>")
 			src.dismantle_wall(1)
 			return
@@ -334,7 +334,7 @@
 
 			EB.spark_system.start()
 			to_chat(user, "<span class='notice'>You slash \the [src] with \the [EB]; the thermite ignites!</span>")
-			playsound(src, "sparks", VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 
 			thermitemelt(user)
@@ -414,7 +414,7 @@
 
 		EB.spark_system.start()
 		to_chat(user, "<span class='notice'>You stab \the [EB] into the wall and begin to slice it apart.</span>")
-		playsound(src, "sparks", VOL_EFFECTS_MASTER)
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		if(W.use_tool(src, user, 70))
 			if(mineral == "diamond")
 				sleep(70)
@@ -423,7 +423,7 @@
 
 			if(user.loc == T && user.get_active_hand() == W)
 				EB.spark_system.start()
-				playsound(src, "sparks", VOL_EFFECTS_MASTER)
+				playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 				playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 				dismantle_wall(1)
 				for(var/mob/O in viewers(user, 5))

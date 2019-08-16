@@ -139,14 +139,14 @@
 	var/obj/effect/fluid/F = locate() in T
 	if(F)
 		attack_log += "\[[time_stamp()]\]<font color='red'> [src] was shocked by the [source] and started chain-reaction with water!</font>"
-		msg_admin_attack("[key_name(src)] was shocked by the [source] and started chain-reaction with water! [ADMIN_JMP(src)]")
+		msg_admin_attack("[key_name(src)] was shocked by the [source] and started chain-reaction with water!", src)
 		F.electrocute_act(shock_damage)
 
 	shock_damage *= siemens_coeff
 	if(shock_damage<1)
 		return 0
 	apply_damage(shock_damage, BURN, def_zone, used_weapon="Electrocution")
-	playsound(src, "sparks", VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	if(shock_damage > 10)
 		visible_message(
 			"<span class='rose'>[src] was shocked by the [source]!</span>", \
@@ -216,6 +216,7 @@
 
 			for(var/obj/item/organ/external/BP in H.bodyparts)
 				var/status = ""
+				var/BPname = BP.name
 				var/brutedamage = BP.brute_dam
 				var/burndamage = BP.burn_dam
 				if(halloss > 0)
@@ -241,13 +242,14 @@
 				else if(burndamage > 0)
 					status += "numb"
 
-				if(BP.status & ORGAN_DESTROYED)
+				if(BP.is_stump)
 					status = "MISSING!"
+					BPname = parse_zone(BP.body_zone)
 				if(BP.status & ORGAN_MUTATED)
 					status = "weirdly shapen."
 				if(status == "")
 					status = "OK"
-				src.show_message(text("\t <span class='[status == "OK" ? "notice " : "warning"]'>My [] is [].</span>", BP.name,status), 1)
+				src.show_message(text("\t <span class='[status == "OK" ? "notice " : "warning"]'>My [] is [].</span>", BPname, status), 1)
 
 			if(roundstart_quirks.len)
 				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
@@ -437,7 +439,7 @@
 
 				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been thrown by [usr.name] ([usr.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]</font>")
 				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]</font>")
-				msg_admin_attack("[usr.name] ([usr.ckey]) has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
+				msg_admin_attack("[usr.name] ([usr.ckey]) has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]", usr)
 
 	if(!item) return //Grab processing has a chance of returning null
 
@@ -615,8 +617,8 @@
 	if(B.chemicals >= 100)
 		to_chat(src, "<span class='danger'>Your host twitches and quivers as you rapdly excrete several larvae from your sluglike body.</span>")
 		B.chemicals -= 100
-		var/turf/T = get_turf(src)
-		T.add_vomit_floor(src)
+
+		vomit()
 		new /mob/living/simple_animal/borer(get_turf(src))
 	else
 		to_chat(src, "<span class='info'>You do not have enough chemicals stored to reproduce.</span>")
@@ -863,3 +865,32 @@
 				visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>")
 				attack_log += text("\[[time_stamp()]\] <font color='orange'>Had their internals [internal ? "open" : "close"] by [usr.name] ([usr.ckey])[gas_log_string]</font>")
 				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>[internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name][gas_log_string]</font>")
+
+/mob/living/carbon/vomit(punched = FALSE, masked = FALSE)
+	var/mask_ = masked
+	if(head && (head.flags & HEADCOVERSMOUTH))
+		mask_ = TRUE
+
+	. = ..(punched, mask_)
+	if(. && !mask_)
+		if(reagents.total_volume > 0)
+			var/toxins_puked = 0
+			var/datum/reagents/R = new(10)
+
+			while(TRUE)
+				var/datum/reagent/R_V = pick(reagents.reagent_list)
+				if(istype(R_V, /datum/reagent/water))
+					toxins_puked += 0.5
+				else if(R_V.id == "carbon")
+					toxins_puked += 2
+				else if(R_V.id == "anti_toxin")
+					toxins_puked += 3
+				else if(R_V.id == "thermopsis")
+					toxins_puked += 5
+				reagents.trans_id_to(R, R_V.id, 1)
+				if(R.total_volume >= 10)
+					break
+				if(reagents.total_volume <= 0)
+					break
+			R.reaction(loc)
+			adjustToxLoss(-toxins_puked)

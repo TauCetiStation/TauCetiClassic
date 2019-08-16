@@ -21,7 +21,7 @@
 	melee_damage_lower = 35
 	melee_damage_upper = 35
 	attacktext = "claws at"
-	attack_sound = 'sound/weapons/slash.ogg'
+	attack_sound = list('sound/weapons/slash.ogg')
 
 	min_oxy = 0
 	max_oxy = 0

@@ -221,6 +221,14 @@
 	M.adjustToxLoss(6 * REM) // Let's just say it's thrice as poisonous.
 	return FALSE
 
+/datum/reagent/metatrombine
+	name = "Metatrombine"
+	id = "metatrombine"
+	description = "Metatrombine is a drug that induces high plateletes production. Can be used to temporarily coagulate blood in internal bleedings."
+	reagent_state = LIQUID
+	color = "#990000"
+	restrict_species = list(IPC, DIONA)
+
 /datum/reagent/tricordrazine
 	name = "Tricordrazine"
 	id = "tricordrazine"
@@ -256,6 +264,23 @@
 	M.drowsyness = max(M.drowsyness - 2 * REM, 0)
 	M.hallucination = max(0, M.hallucination - 5 * REM)
 	M.adjustToxLoss(-2 * REM)
+
+/datum/reagent/thermopsis
+	name = "Thermopsis"
+	id = "thermopsis"
+	description = "Irritates stomach receptors, that leads to reflex rise of vomiting."
+	reagent_state = LIQUID
+	color = "#a0a000"
+	taste_message = "vomit"
+	restrict_species = list(IPC, DIONA)
+	data = 1
+
+/datum/reagent/thermopsis/on_general_digest(mob/living/M)
+	..()
+	data++
+	if(data > 10)
+		M.vomit()
+		data -= rand(0, 10)
 
 /datum/reagent/adminordrazine //An OP chemical for admins
 	name = "Adminordrazine"
@@ -402,6 +427,15 @@
 		for(var/obj/item/organ/internal/IO in H.organs)
 			if(IO.damage > 0 && IO.robotic < 2)
 				IO.damage = max(IO.damage - 0.20, 0)
+
+/datum/reagent/stabyzol
+	name = "Stabyzol"
+	id = "stabyzol"
+	description = "Used to stimulate broken organs to a point where damage to them appears virtual while reagent is in patient's blood stream. Medicate only in small doses."
+	reagent_state = LIQUID
+	color = "#6f2cf2"
+	overdose = 10
+	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/kyphotorin
 	name = "Kyphotorin"
@@ -584,3 +618,11 @@
 	..()
 	M.nutrition = max(M.nutrition - nutriment_factor, 0)
 	M.overeatduration = 0
+
+/datum/reagent/aclometasone
+	name = "Aclometasone"
+	id = "aclometasone"
+	description = "Completely shuts down patient's metabolism, must be manually eliminated from the body, or otherwise patient might die due to extreme blood forming disorders."
+	reagent_state = LIQUID
+	color = "#074232"
+	restrict_species = list(IPC, DIONA)

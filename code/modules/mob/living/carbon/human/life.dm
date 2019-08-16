@@ -464,13 +464,11 @@
 		if(internal)
 					//internal breath sounds
 			if(internal.distribute_pressure >= 16)
-				var/breathsound = ""
-				if(istype(wear_mask, /obj/item/clothing/mask))
-					breathsound = "breathmask"
+				var/breathsound = pick(SOUNDIN_BREATHMASK)
 				if(istype(wear_mask, /obj/item/clothing/mask/gas))
-					breathsound = "gasmaskbreath"
+					breathsound = 'sound/misc/gasmaskbreath.ogg'
 				if(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space))
-					breathsound = "rigbreath"
+					breathsound = pick(SOUNDIN_RIGBREATH)
 				playsound(src, breathsound, VOL_EFFECTS_MASTER, null, FALSE, -6)
 			return internal.remove_air_volume(volume_needed)
 		else if(internals)
@@ -1609,8 +1607,8 @@
 /mob/living/carbon/human/proc/handle_random_events()
 	// Puke if toxloss is too high
 	if(!stat)
-		if (getToxLoss() >= 45 && nutrition > 20)
-			vomit()
+		if (getToxLoss() >= 45)
+			invoke_vomit_async()
 
 	//0.1% chance of playing a scary sound to someone who's in complete darkness
 	if(isturf(loc) && rand(1,1000) == 1)

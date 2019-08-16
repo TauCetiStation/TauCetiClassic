@@ -407,7 +407,7 @@
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
 			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
-			playsound(src, "sparks", VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'>You hear [src] coming apart.</span>")
 			user.SetNextMove(CLICK_CD_MELEE)
 			destroy()
@@ -432,7 +432,7 @@
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 	M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slammed with face by [A.name] against \the [src]([A.ckey])</font>"
 	A.attack_log += "\[[time_stamp()]\] <font color='red'>Slams face of [M.name] against \the [src]([M.ckey])</font>"
-	msg_admin_attack("[key_name(A)] slams [key_name(M)] face against \the [src]")
+	msg_admin_attack("[key_name(A)] slams [key_name(M)] face against \the [src]", A)
 
 /obj/structure/table/proc/straight_table_check(var/direction)
 	var/obj/structure/table/T
@@ -576,7 +576,7 @@
 	canconnect = FALSE
 	update_adjacent()
 
-	playsound(src, "shatter", VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	visible_message("<span class='warning'>[src] breaks!</span>", "<span class='danger'>You hear breaking glass.</span>")
 
 	var/T = get_turf(src)
@@ -616,7 +616,7 @@
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 	M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slammed with face by [A.name] against \the [src]([A.ckey]), breaking it</font>"
 	A.attack_log += "\[[time_stamp()]\] <font color='red'>Slams face of [M.name] against \the [src]([M.ckey]), breaking it</font>"
-	msg_admin_attack("[key_name(A)] slams [key_name(M)] face against \the [src], breaking it")
+	msg_admin_attack("[key_name(A)] slams [key_name(M)] face against \the [src], breaking it", A)
 	if(prob(30) && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
@@ -787,7 +787,7 @@
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
 			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
-			playsound(src, "sparks", VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'> You hear [src] coming apart.</span>")
 			destroy()
 			return

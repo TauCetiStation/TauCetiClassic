@@ -37,7 +37,6 @@ var/global/list/scrap_base_cache = list()
 
 
 
-
 /obj/structure/scrap/proc/make_cube()
 	var/obj/container = new /obj/structure/scrap_cube(loc, loot_max)
 	forceMove(container)
@@ -92,9 +91,10 @@ var/global/list/scrap_base_cache = list()
 	if(prob(big_item_chance))
 		var/obj/randomcatcher/CATCH = new /obj/randomcatcher(src)
 		big_item = CATCH.get_item(/obj/random/structures/structure_pack)
-		big_item.forceMove(src)
-		if(prob(66))
-			big_item.make_old()
+		if(big_item)
+			big_item.forceMove(src)
+			if(prob(66))
+				big_item.make_old()
 		qdel(CATCH)
 
 
@@ -132,7 +132,7 @@ var/global/list/scrap_base_cache = list()
 				return
 			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & LEGS) ) )
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
-				if(BP.status & ORGAN_ROBOT)
+				if(BP.is_robotic())
 					return
 				to_chat(M, "<span class='danger'>You step on the sharp debris!</span>")
 				H.Weaken(3)
@@ -204,7 +204,7 @@ var/global/list/scrap_base_cache = list()
 		var/obj/item/organ/external/BP = victim.bodyparts_by_name[pick(BP_L_ARM , BP_R_ARM)]
 		if(!BP)
 			return 0
-		if(BP.status & ORGAN_ROBOT)
+		if(BP.is_robotic())
 			return 0
 		if(victim.species.flags[NO_MINORCUTS])
 			return 0

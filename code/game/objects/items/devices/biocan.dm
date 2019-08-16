@@ -6,7 +6,7 @@
 	origin_tech = "biotech=3;materials=3;magnets=3"
 	w_class = ITEM_SIZE_NORMAL
 	appearance_flags = KEEP_TOGETHER | TILE_BOUND
-	var/obj/item/weapon/organ/head/headobj = null
+	var/obj/item/organ/external/head/headobj = null
 	var/image/display_headobj = null
 	var/mob/living/carbon/brain/brainmob = null
 	var/commutator_enabled = FALSE
@@ -47,7 +47,7 @@
 		to_chat(brainmob, "<span class='warning'>Your commutating device is now enabled.</span>")
 
 /obj/item/device/biocan/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/organ/head))
+	if(istype(W, /obj/item/organ/external/head))
 		if(!headobj)
 			headobj = W
 			user.drop_item()
@@ -102,5 +102,5 @@
 		headobj.forceMove(get_turf(src))
 		headobj = null
 	new /obj/item/weapon/shard(loc)
-	playsound(src, "shatter", VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	qdel(src)

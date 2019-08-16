@@ -631,7 +631,7 @@ ________________________________________________________________________________
 									grant_kamikaze(U)//Give them verbs and change variables as necessary.
 									U.regenerate_icons()//Update their clothing.
 									ninjablade()//Summon two energy blades.
-									message_admins("<span class='notice'>[key_name_admin(U)] used KAMIKAZE mode. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[U.x];Y=[U.y];Z=[U.z]'>JMP</a>)</span>")//Let the admins know.
+									message_admins("<span class='notice'>[key_name_admin(U)] used KAMIKAZE mode. [ADMIN_JMP(U)]</span>")//Let the admins know.
 									s_busy = 0
 									return
 							sleep(s_delay)
@@ -1045,7 +1045,7 @@ ________________________________________________________________________________
 
 					if (do_after(U,10,target = A))
 						spark_system.start()
-						playsound(A, "sparks", VOL_EFFECTS_MASTER)
+						playsound(A, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 						A.cell.charge-=drain
 						S.cell.charge+=drain
 						totaldrain+=drain
@@ -1073,7 +1073,7 @@ ________________________________________________________________________________
 						maxcapacity = 1
 					if (do_after(U,10,target = A))
 						spark_system.start()
-						playsound(A, "sparks", VOL_EFFECTS_MASTER)
+						playsound(A, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 						A.charge-=drain
 						S.cell.charge+=drain
 						totaldrain+=drain
@@ -1199,7 +1199,7 @@ ________________________________________________________________________________
 						maxcapacity = 1
 					if (do_after(U,10,target = A))
 						A.spark_system.start()
-						playsound(A, "sparks", VOL_EFFECTS_MASTER)
+						playsound(A, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 						A.cell.use(drain)
 						S.cell.charge+=drain
 						totaldrain+=drain
@@ -1222,7 +1222,7 @@ ________________________________________________________________________________
 						maxcapacity = 1
 					if (do_after(U,10,target = A))
 						A.spark_system.start()
-						playsound(A, "sparks", VOL_EFFECTS_MASTER)
+						playsound(A, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 						A.cell.charge-=drain
 						S.cell.charge+=drain
 						totaldrain+=drain

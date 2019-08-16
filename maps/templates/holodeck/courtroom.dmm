@@ -1,7 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "grimy"
 	},
 /area/holodeck/source_courtroom)
@@ -190,15 +189,13 @@
 	icon_state = "chair"
 	},
 /obj/machinery/door/window/holowindoor{
-	dir = 8;
-	icon_state = "left"
+	dir = 8
 	},
 /obj/structure/window/reinforced/holowindow{
 	dir = 4
 	},
 /obj/structure/window/reinforced/holowindow{
-	dir = 1;
-	icon_state = "rwindow"
+	dir = 1
 	},
 /turf/simulated/floor/holofloor{
 	icon_state = "dark"
@@ -245,11 +242,9 @@
 	icon_state = "plant-10"
 	},
 /obj/structure/window/reinforced/holowindow{
-	dir = 1;
-	icon_state = "rwindow"
+	dir = 1
 	},
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "grimy"
 	},
 /area/holodeck/source_courtroom)
@@ -259,17 +254,14 @@
 	name = "Door"
 	},
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "grimy"
 	},
 /area/holodeck/source_courtroom)
 "F" = (
 /obj/structure/window/reinforced/holowindow{
-	dir = 1;
-	icon_state = "rwindow"
+	dir = 1
 	},
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "grimy"
 	},
 /area/holodeck/source_courtroom)
@@ -286,7 +278,6 @@
 	name = "Jury Box"
 	},
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "grimy"
 	},
 /area/holodeck/source_courtroom)

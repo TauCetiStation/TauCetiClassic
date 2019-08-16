@@ -12,7 +12,7 @@
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
-	hitsound = 'sound/voice/growl1.ogg'
+	hitsound = list('sound/voice/growl1.ogg')
 
 	attack_verb = list("bitten and scratched", "scratched")
 
@@ -125,10 +125,10 @@
 	var/obj/item/organ/external/LArm = H.bodyparts_by_name[BP_L_ARM]
 	var/obj/item/organ/external/RArm = H.bodyparts_by_name[BP_R_ARM]
 
-	if(LArm && !(LArm.status & ORGAN_DESTROYED) && !istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
+	if(LArm && !(LArm.is_stump) && !istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
 		H.drop_l_hand()
 		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, SLOT_L_HAND)
-	if(RArm && !(RArm.status & ORGAN_DESTROYED) && !istype(H.r_hand, /obj/item/weapon/melee/zombie_hand/right))
+	if(RArm && !(RArm.is_stump) && !istype(H.r_hand, /obj/item/weapon/melee/zombie_hand/right))
 		H.drop_r_hand()
 		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, SLOT_R_HAND)
 
@@ -145,7 +145,7 @@
 
 /proc/prerevive_zombie(mob/living/carbon/human/H)
 	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-	if(H.organs_by_name[O_BRAIN] && BP && !(BP.status & ORGAN_DESTROYED))
+	if(H.organs_by_name[O_BRAIN] && BP && !(BP.is_stump))
 		if(!H.key && H.mind)
 			for(var/mob/dead/observer/ghost in player_list)
 				if(ghost.mind == H.mind && ghost.can_reenter_corpse)
@@ -158,7 +158,7 @@
 
 /proc/revive_zombie(mob/living/carbon/human/H)
 	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-	if(!H.organs_by_name[O_BRAIN] || !BP || BP.status & ORGAN_DESTROYED)
+	if(!H.organs_by_name[O_BRAIN] || !BP || BP.is_stump)
 		return
 	if(!iszombie(H))
 		H.zombify()
@@ -240,13 +240,13 @@
 
 	switch(species.name)
 		if(TAJARAN)
-			set_species(ZOMBIE_TAJARAN, FALSE, TRUE)
+			set_species(ZOMBIE_TAJARAN, TRUE, TRUE)
 		if(SKRELL)
-			set_species(ZOMBIE_SKRELL, FALSE, TRUE)
+			set_species(ZOMBIE_SKRELL, TRUE, TRUE)
 		if(UNATHI)
-			set_species(ZOMBIE_UNATHI, FALSE, TRUE)
+			set_species(ZOMBIE_UNATHI, TRUE, TRUE)
 		else
-			set_species(ZOMBIE, FALSE, TRUE)
+			set_species(ZOMBIE, TRUE, TRUE)
 
 /proc/zombie_talk(var/message)
 	var/list/message_list = splittext(message, " ")
@@ -281,7 +281,7 @@
 		var/has_leg = FALSE
 		for(var/bodypart_name in list(BP_L_LEG , BP_R_LEG))
 			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
-			if(BP && !(BP.status & ORGAN_DESTROYED))
+			if(BP && !(BP.is_stump))
 				has_leg = TRUE
 		if(!has_leg)
 			tally += 10

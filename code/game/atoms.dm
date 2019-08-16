@@ -424,8 +424,12 @@
 /atom/proc/add_blood(mob/living/carbon/human/M)
 	if(flags & NOBLOODY) return 0
 	.=1
-	if (!( istype(M, /mob/living/carbon/human) ))
+	if(!istype(M))
 		return 0
+
+	if(M.reagents.has_reagent("metatrombine"))
+		return FALSE
+
 	if (!istype(M.dna, /datum/dna))
 		M.dna = new /datum/dna(null)
 		M.dna.real_name = M.real_name
@@ -442,47 +446,6 @@
 	else
 		dirt_overlay.add_dirt(dirt_datum)
 	return 1
-
-/atom/proc/add_vomit_floor(mob/living/carbon/C, toxvomit = 0)
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		if(H.species.flags[NO_VOMIT])
-			return // Machines, golems, shadowlings and abductors don't throw up.
-		var/vomitsound = ""
-		if(istype(H.head, /obj/item/clothing/head/helmet/space))
-			H.visible_message("<B>[H.name]</B> <span class='danger'>throws up in their helmet!</span>","<span class='warning'>You threw up in your helmet, damn it, what could be worse!</span>")
-			if(H.gender == FEMALE)
-				vomitsound = "frigvomit"
-			else
-				vomitsound = "mrigvomit"
-			H.eye_blurry = max(2, H.eye_blurry)
-			H.losebreath += 20
-		else
-			H.visible_message("<B>[H.name]</B> <span class='danger'>throws up!</span>","<span class='warning'>You throw up!</span>")
-			if(H.gender == FEMALE)
-				vomitsound = "femalevomit"
-			else
-				vomitsound = "malevomit"
-		playsound(H, vomitsound, VOL_EFFECTS_MASTER, null, FALSE)
-	else
-		playsound(C, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
-		C.visible_message("<B>[C.name]</B> <span class='danger'>throws up!</span>","<span class='warning'>You throw up!</span>")
-
-	if(istype(src, /turf/simulated) && !istype(C.head, /obj/item/clothing/head/helmet/space))
-		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
-		// Make toxins vomit look different
-		if(toxvomit)
-			var/datum/reagents/R = C.reagents
-			if(!locate(/datum/reagent/luminophore) in R.reagent_list)
-				this.icon_state = "vomittox_[pick(1,4)]"
-			else
-				this.icon_state = "vomittox_nc_[pick(1,4)]"
-				this.alpha = 127
-				var/datum/reagent/new_color = locate(/datum/reagent/luminophore) in R.reagent_list
-				this.color = new_color.color
-				this.light_color = this.color
-				this.set_light(3)
-				this.stop_light()
 
 /atom/proc/clean_blood()
 	src.germ_level = 0
@@ -598,3 +561,42 @@
 
 /turf/space/handle_slip()
 	return
+
+// Recursive function to find everything this atom is holding.
+/atom/proc/get_contents(obj/item/weapon/storage/Storage = null)
+	var/list/L = list()
+
+	if(Storage) //If it called itself
+		L += Storage.return_inv()
+
+		//Leave this commented out, it will cause storage items to exponentially add duplicate to the list
+		//for(var/obj/item/weapon/storage/S in Storage.return_inv()) //Check for storage items
+		//	L += get_contents(S)
+
+		for(var/obj/item/weapon/gift/G in Storage.return_inv()) //Check for gift-wrapped items
+			L += G.gift
+			if(istype(G.gift, /obj/item/weapon/storage))
+				L += get_contents(G.gift)
+
+		for(var/obj/item/smallDelivery/D in Storage.return_inv()) //Check for package wrapped items
+			L += D.wrapped
+			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
+				L += get_contents(D.wrapped)
+		return L
+
+	else
+
+		L += src.contents
+		for(var/obj/item/weapon/storage/S in src.contents)	//Check for storage items
+			L += get_contents(S)
+
+		for(var/obj/item/weapon/gift/G in src.contents) //Check for gift-wrapped items
+			L += G.gift
+			if(istype(G.gift, /obj/item/weapon/storage))
+				L += get_contents(G.gift)
+
+		for(var/obj/item/smallDelivery/D in src.contents) //Check for package wrapped items
+			L += D.wrapped
+			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
+				L += get_contents(D.wrapped)
+		return L

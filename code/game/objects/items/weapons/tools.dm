@@ -119,7 +119,7 @@
 	throw_range = 3//it's heavier than a screw driver/wrench, so it does more damage, but can't be thrown as far
 	toolspeed = 0.7
 	attack_verb = list("drilled", "screwed", "jabbed","whacked")
-	hitsound = 'sound/items/drill_hit.ogg'
+	hitsound = list('sound/items/drill_hit.ogg')
 	action_button_name = "Change mode"
 	random_color = FALSE
 
@@ -293,7 +293,7 @@
 			return
 		//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
-			hitsound = 'sound/items/Welder2.ogg'
+			hitsound = list('sound/items/Welder2.ogg')
 			if(src.icon_state != "welder1") //Check that the sprite is correct, if it isnt, it means toggle() was not called
 				src.force = 15
 				src.damtype = "fire"
@@ -329,7 +329,7 @@
 		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 		return
 	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)
-		message_admins("[key_name_admin(user)] triggered a fueltank explosion. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		message_admins("[key_name_admin(user)] triggered a fueltank explosion. [ADMIN_JMP(user)]")
 		log_game("[key_name(user)] triggered a fueltank explosion.")
 		to_chat(user, "<span class='rose'>That was stupid of you.</span>")
 		var/obj/structure/reagent_dispensers/fueltank/tank = O
@@ -578,7 +578,7 @@
 		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 		if(!BP)
 			return
-		if(!(BP.status & ORGAN_ROBOT) || user.a_intent != "help")
+		if(!(BP.is_robotic()) || user.a_intent != "help")
 			return ..()
 
 		if(H.species.flags[IS_SYNTHETIC])

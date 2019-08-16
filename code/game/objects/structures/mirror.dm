@@ -31,7 +31,7 @@
 		return
 	shattered = 1
 	icon_state = "mirror_broke"
-	playsound(src, "shatter", VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	desc = "Oh no, seven years of bad luck!"
 
 
@@ -143,6 +143,7 @@
 				H.r_skin = hex2num(copytext(new_skin, 2, 4))
 				H.g_skin = hex2num(copytext(new_skin, 4, 6))
 				H.b_skin = hex2num(copytext(new_skin, 6, 8))
+			H.apply_recolor()
 			H.update_hair()
 			H.update_body()
 			H.check_dna(H)

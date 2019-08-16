@@ -155,7 +155,7 @@
 		w_class = ITEM_SIZE_NORMAL
 		edge = 1
 		name = "energy dagger"
-		hitsound = 'sound/weapons/blade1.ogg'
+		hitsound = list('sound/weapons/blade1.ogg')
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER, 5)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")

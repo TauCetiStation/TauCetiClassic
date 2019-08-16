@@ -423,7 +423,7 @@
 	if (M)
 		to_chat(src, "Attempting to recruit [M]...")
 		log_admin("[src]([src.ckey]) attempted to recruit [M] as a loyalist.")
-		message_admins("<span class='warning'>[src]([src.ckey]) attempted to recruit [M] as a loyalist.</span>")
+		message_admins("<span class='warning'>[src]([src.ckey]) attempted to recruit [M] as a loyalist. [ADMIN_JMP(src)]</span>")
 
 		var/choice = alert(M, "Asked by [src]: Will you help me complete Directive X?", "Loyalist recruitment", "No", "Yes")
 		if(choice == "Yes")
@@ -460,7 +460,7 @@
 	if (M)
 		to_chat(src, "Attempting to recruit [M]...")
 		log_admin("[src]([src.ckey]) attempted to recruit [M] as a mutineer.")
-		message_admins("<span class='warning'>[src]([src.ckey]) attempted to recruit [M] as a mutineer.</span>")
+		message_admins("<span class='warning'>[src]([src.ckey]) attempted to recruit [M] as a mutineer. [ADMIN_JMP(src)]</span>")
 
 		var/choice = alert(M, "Asked by [src]: Will you help me stop Directive X?", "Mutineer recruitment", "No", "Yes")
 		if(choice == "Yes")

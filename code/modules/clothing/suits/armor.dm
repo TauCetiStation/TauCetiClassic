@@ -272,11 +272,11 @@
 	if(usr.stat) return
 
 	if(!holstered)
-		if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
+		var/obj/item/I = usr.get_active_hand()
+		if(!istype(I, /obj/item/weapon/gun) && !I.can_be_holstered)
 			to_chat(usr, "<span class='notice'>You need your gun equiped to holster it.</span>")
 			return
-		var/obj/item/weapon/gun/W = usr.get_active_hand()
-		if (!W.isHandgun())
+		if(!I.can_be_holstered)
 			to_chat(usr, "<span class='warning'>This gun won't fit in \the belt!</span>")
 			return
 		holstered = usr.get_active_hand()
@@ -308,3 +308,13 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+
+/obj/item/clothing/suit/armor/m66_kevlarvest
+	name = "M66 Tactical Vest"
+	desc = "Black tactical kevlar vest, used by private security coropation. So tactics."
+	icon_state = "M66_KevlarVest"
+	item_state = "armor"
+	item_color = "M66_KevlarVest"
+	blood_overlay_type = "armor"
+	armor = list(melee = 60, bullet = 80, laser = 40, energy = 50, bomb = 25, bio = 0, rad = 0)
+	siemens_coefficient = 0.7

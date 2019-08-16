@@ -365,6 +365,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				freq_text = "Supply"
 			if(1341)
 				freq_text = "Special Ops"
+			if(1245)
+				freq_text = "Velocity"
 			if(1345)
 				freq_text = "Response Team"
 			if(1447)

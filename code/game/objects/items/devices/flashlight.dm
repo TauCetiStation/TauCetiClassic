@@ -93,7 +93,7 @@
 	icon_state = "seclite"
 	item_state = "seclite"
 	force = 7 // Not as good as a stun baton.
-	hitsound = 'sound/weapons/genhit1.ogg'
+	hitsound = list('sound/weapons/genhit1.ogg')
 
 /obj/item/device/flashlight/pen
 	name = "penlight"
@@ -271,7 +271,7 @@
 
 		if(ismob(A))
 			var/mob/M = A
-			msg_admin_attack("[user] ([user.ckey]) attacked [M.name] ([M.ckey]) with Emp-light <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
+			msg_admin_attack("[user] ([user.ckey]) attacked [M.name] ([M.ckey]) with Emp-light", user)
 			M.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been attacked with Emp-light by [user.name] ([user.ckey])</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked with Emp-light [M.name]'s ([M.ckey])</font>")
 			M.visible_message("<span class='danger'>[user] blinks \the [src] at the [A]</span>")

@@ -60,7 +60,7 @@
 /mob/living/carbon/human/proc/has_bodypart(name)
 	var/obj/item/organ/external/BP = bodyparts_by_name[name]
 
-	return (BP && !(BP.status & ORGAN_DESTROYED) )
+	return (BP && !(BP.is_stump) )
 
 /mob/living/carbon/human/proc/specie_has_slot(slot)
 	if(species && slot in species.restricted_inventory_slots)
