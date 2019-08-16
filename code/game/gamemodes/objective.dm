@@ -486,7 +486,7 @@ var/global/list/all_objectives = list()
 			if(BP.status & ORGAN_BROKEN)
 				already_completed = 1
 				return 1
-			if((BP.status & ORGAN_DESTROYED) && !BP.amputated)
+			if(BP.is_stump)
 				already_completed = 1
 				return 1
 

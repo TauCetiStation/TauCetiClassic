@@ -8496,7 +8496,7 @@
 	},
 /area/mine/explored)
 "sc" = (
-/obj/item/clothing/accessory/holster/waist,
+/obj/item/clothing/accessory/holster/armpit,
 /obj/item/clothing/head/western,
 /obj/structure/table/woodentable,
 /turf/simulated/floor/airless{

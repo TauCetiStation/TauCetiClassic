@@ -328,42 +328,29 @@
 			return M
 	return null
 
-
-// Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
-/proc/get_active_candidates(buffer = 1)
-
+/proc/get_larva_candidates()
 	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
-	var/i = 0
-	while(candidates.len <= 0 && i < 5)
+	var/afk_time = 0
+	var/afk_threesold = 3000
+	while(!candidates.len && afk_time <= afk_threesold)
 		for(var/mob/dead/observer/G in player_list)
-			if(((G.client.inactivity/10)/60) <= buffer + i) // the most active players are more likely to become an alien
-				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+			if(!G.client)
+				continue
+			if((ROLE_ALIEN in G.client.prefs.be_role) && !jobban_isbanned(G, ROLE_ALIEN))
+				if(!G.client.is_afk(afk_time)) // the most active players are more likely to become an alien
 					candidates += G.key
-		i++
-	return candidates
-
-// Same as above but for alien candidates.
-
-/proc/get_alien_candidates()
-
-	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
-	var/i = 0
-	while(candidates.len <= 0 && i < 5)
-		for(var/mob/dead/observer/G in player_list)
-			if(ROLE_ALIEN in G.client.prefs.be_role)
-				if(((G.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER + i) // the most active players are more likely to become an alien
-					if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-						candidates += G.key
-		i++
+		afk_time += 600
 	return candidates
 
 /proc/get_candidates(be_role_type, afk_bracket=3000) //Get candidates for Blob
+	if(!be_role_type)
+		return
 	var/list/candidates = list()
 	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
 	while(!candidates.len && afk_bracket < 6000)
 		for(var/mob/dead/observer/G in player_list)
 			if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-				if(!G.client.is_afk(afk_bracket) && (be_role_type in G.client.prefs.be_role))
+				if(!G.client.is_afk(afk_bracket) && (be_role_type in G.client.prefs.be_role)) // TODO: Replace it with something else. Causes runtimes if there are no ghosts(not observers!)
 					candidates += G.client
 		afk_bracket += 600 // Add a minute to the bracket, for every attempt
 	return candidates

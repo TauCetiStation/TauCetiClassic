@@ -26,7 +26,7 @@
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 
-		if(BP && (BP.status & ORGAN_ROBOT))
+		if(BP && (BP.is_robotic()))
 			if(BP.get_damage())
 				if(!use(1))
 					to_chat(user, "<span class='danger'>You need more nanite paste to do this.</span>")

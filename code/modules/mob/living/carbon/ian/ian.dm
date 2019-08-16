@@ -435,16 +435,6 @@
 					playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 					visible_message("<span class='danger'>[M] attempted to disarm [src]!</span>")
 
-/mob/living/carbon/ian/attack_facehugger(mob/living/carbon/alien/facehugger/FH)
-	switch(FH.a_intent)
-		if("grab")
-			if(stat != DEAD)
-				if(FH == src)
-					return
-				new /obj/item/weapon/fh_grab(FH, src)
-			else
-				to_chat(FH, "<span class='red'>looks dead.</span>")
-
 /mob/living/carbon/ian/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker.mode)
 		to_chat(M, "You cannot attack people before the game has started.")

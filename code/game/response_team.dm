@@ -211,6 +211,7 @@ var/can_call_ert
 		else
 			M.gender = FEMALE
 	//M.rebuild_appearance()
+	M.apply_recolor()
 	M.update_hair()
 	M.update_body()
 	M.check_dna(M)
