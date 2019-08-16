@@ -58,6 +58,7 @@ var/global/list/gateways_list = list()
 var/global/list/conveyor_switch_list = list()
 var/global/list/rnd_server_list = list()
 var/global/list/PDAs = list()
+var/global/list/facehuggers_list = list()
 
 var/global/list/all_areas = list()
 var/global/list/areas_by_type = list()

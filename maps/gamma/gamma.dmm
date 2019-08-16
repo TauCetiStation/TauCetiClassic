@@ -4556,9 +4556,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "aBk" = (
 /obj/structure/flora/plant/random,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -10841,9 +10839,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "cCr" = (
 /obj/structure/flora/junglebush/b,
 /obj/machinery/alarm{
@@ -14631,9 +14627,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "dOM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -24001,9 +23995,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "gQJ" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -24156,9 +24148,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "gTs" = (
 /obj/machinery/pdapainter,
 /obj/machinery/keycard_auth{
@@ -24396,9 +24386,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "gVY" = (
 /obj/structure/table,
 /obj/item/weapon/circular_saw{
@@ -25912,13 +25900,18 @@
 /area/quartermaster/miningoffice)
 "hvw" = (
 /obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/machinery/vending/wallmed2{
 	pixel_y = 32
 	},
+/obj/item/weapon/storage/box/masks{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/weapon/storage/box/gloves,
+/obj/item/weapon/reagent_containers/spray/cleaner,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "greenfull"
@@ -28736,9 +28729,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "iuU" = (
 /obj/structure/object_wall/mining{
 	dir = 8;
@@ -31198,9 +31189,7 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "jni" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -31343,9 +31332,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "jqb" = (
 /obj/machinery/door/poddoor{
 	id = "mixvent";
@@ -31642,9 +31629,7 @@
 /area/medical/sleeper)
 "jwz" = (
 /turf/simulated/wall,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "jxa" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -32330,9 +32315,7 @@
 "jHE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "jHF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/stool,
@@ -34216,9 +34199,7 @@
 "klN" = (
 /obj/machinery/mech_bay_recharge_port,
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "klT" = (
 /obj/structure/table,
 /obj/item/weapon/hand_labeler,
@@ -38724,9 +38705,7 @@
 "lJc" = (
 /obj/structure/computerframe,
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "lJe" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -42259,9 +42238,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "mNG" = (
 /obj/structure/sink{
 	dir = 4;
@@ -46995,9 +46972,7 @@
 /turf/simulated/floor{
 	icon_state = "damaged1"
 	},
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "oqc" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -48803,9 +48778,7 @@
 	req_access = list(23)
 	},
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "oXO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -49493,9 +49466,7 @@
 "pmk" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "pml" = (
 /obj/item/toy/cards,
 /obj/structure/table,
@@ -52944,12 +52915,6 @@
 	},
 /area/maintenance/chapel)
 "qow" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/masks{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/weapon/storage/box/gloves,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -52963,6 +52928,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/structure/closet/crate/freezer,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
@@ -56390,9 +56356,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "rxF" = (
 /obj/structure/window/reinforced,
 /obj/machinery/camera{
@@ -63086,9 +63050,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "tFx" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
@@ -72703,9 +72665,7 @@
 /turf/simulated/floor{
 	icon_state = "floorscorched1"
 	},
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "wJc" = (
 /turf/space,
 /area/vox_station/northwest_solars)
@@ -73542,9 +73502,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "wXH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -74576,9 +74534,7 @@
 /area/maintenance/science)
 "xoB" = (
 /turf/simulated/floor/mech_bay_recharge_floor,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "xoC" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 8
@@ -76822,9 +76778,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "ybI" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/folder,
@@ -77077,7 +77031,6 @@
 /turf/simulated/floor/plating,
 /area/maintenance/auxsolarstarboard)
 "yhA" = (
-/obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = 7;
 	pixel_y = 1

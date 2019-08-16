@@ -16,31 +16,24 @@
 /obj/structure/closet/walllocker/emerglocker
 	name = "emergency locker"
 	desc = "A wall mounted locker with emergency supplies."
-	var/list/spawnitems = list(/obj/item/weapon/tank/emergency_oxygen,/obj/item/clothing/mask/breath)
-	var/amount = 2 // spawns each items X times.
 	icon_state = "emerg"
-
-/obj/structure/closet/walllocker/emerglocker/update_icon() // We don't want any icons manipulation with this.
-	return
+	var/amount = 3 // spawns each items X times.
+	var/list/spawnitems = list(/obj/item/weapon/tank/emergency_oxygen,/obj/item/clothing/mask/breath,
+							   /obj/item/weapon/crowbar/red)
 
 /obj/structure/closet/walllocker/emerglocker/toggle(mob/user)
-	src.attack_hand(user)
-	return
-
-/obj/structure/closet/walllocker/emerglocker/attackby(obj/item/weapon/W, mob/user)
-	return
-
-/obj/structure/closet/walllocker/emerglocker/attack_hand(mob/user)
-	if (istype(user, /mob/living/silicon/ai))	//Added by Strumpetplaya - AI shouldn't be able to
-		return									//activate emergency lockers.  This fixes that.  (Does this make sense, the AI can't call attack_hand, can it? --Mloc)
-	if(!amount)
-		to_chat(user, "<span class='notice'>It's empty..</span>")
-		return
 	if(amount)
 		to_chat(user, "<span class='notice'>You take out some items from \the [src].</span>")
 		for(var/path in spawnitems)
 			new path(src.loc)
 		amount--
+	else
+		to_chat(user, "<span class='notice'>It's empty..</span>")
+
+/obj/structure/closet/walllocker/emerglocker/update_icon() // We don't want any icons manipulation with this.
+	return
+
+/obj/structure/closet/walllocker/emerglocker/attackby(obj/item/weapon/W, mob/user)
 	return
 
 /obj/structure/closet/walllocker/emerglocker/north

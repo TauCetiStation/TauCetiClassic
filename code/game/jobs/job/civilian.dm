@@ -137,6 +137,12 @@
 	minimal_player_ingame_minutes = 480
 	restricted_species = list(TAJARAN)
 
+	survival_kit_items = list(/obj/item/ammo_casing/shotgun/beanbag,
+	                          /obj/item/ammo_casing/shotgun/beanbag,
+	                          /obj/item/ammo_casing/shotgun/beanbag,
+	                          /obj/item/ammo_casing/shotgun/beanbag
+	                          )
+
 /datum/job/bartender/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
@@ -153,18 +159,6 @@
 		return
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda/bar(H), SLOT_BELT)
-	if(H.backbag == 1)
-		var/obj/item/weapon/storage/box/Barpack = new /obj/item/weapon/storage/box(H)
-		H.equip_to_slot_or_del(Barpack, SLOT_R_HAND)
-		new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
-		new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
-		new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
-		new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
-	else
-		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), SLOT_IN_BACKPACK)
-		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), SLOT_IN_BACKPACK)
-		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), SLOT_IN_BACKPACK)
-		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), SLOT_IN_BACKPACK)
 
 	return TRUE
 
@@ -216,7 +210,6 @@
 	if(!H)	return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
 	switch(H.backbag)
-		if(1) H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), SLOT_R_HAND)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_hyd(H), SLOT_BACK)
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/hyd(H), SLOT_BACK)
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
@@ -256,10 +249,6 @@
 		return
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda/janitor(H), SLOT_BELT)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), SLOT_R_HAND)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), SLOT_IN_BACKPACK)
 
 	return TRUE
 

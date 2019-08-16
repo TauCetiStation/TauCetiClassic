@@ -198,4 +198,14 @@
 
 #define BYOND_JOIN_LINK config.server ? "byond://[config.server]" : "byond://[world.address]:[world.port]"
 
+//Facehugger's control type
+#define FACEHUGGERS_STATIC_AI     0   // don't move by themselves
+#define FACEHUGGERS_DYNAMIC_AI    1   // controlled by simple AI
+#define FACEHUGGERS_PLAYABLE      2   // controlled by players
+
+//Time it takes to impregnate someone with facehugger
+#define MIN_IMPREGNATION_TIME 200
+#define MAX_IMPREGNATION_TIME 250
+
 #define DELAY2GLIDESIZE(delay) (world.icon_size / max(ceil(delay / world.tick_lag), 1))
+
