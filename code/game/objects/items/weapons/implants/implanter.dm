@@ -60,11 +60,11 @@
 	. = ..()
 	update()
 
-/obj/item/weapon/implanter/adrenalin
-	name = "implanter-adrenalin"
+/obj/item/weapon/implanter/adrenaline
+	name = "implanter-adrenaline"
 
 /obj/item/weapon/implanter/adrenalin/atom_init()
-	imp = new /obj/item/weapon/implant/adrenalin(src)
+	imp = new /obj/item/weapon/implant/adrenaline(src)
 	. = ..()
 	update()
 

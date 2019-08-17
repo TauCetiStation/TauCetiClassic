@@ -331,7 +331,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 	spawn(20)
 		malfunction--
-
+/*
 /obj/item/weapon/implant/adrenalin
 	name = "adrenalin"
 	desc = "Removes all stuns and knockdowns."
@@ -361,7 +361,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		source.SetParalysis(0)
 
 	return
-
+*/
 
 /obj/item/weapon/implant/adrenalin/implanted(mob/source)
 	source.mind.store_memory("A implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.", 0)
