@@ -43,6 +43,12 @@
 // Footsteps
 #define SOUNDIN_CLOWNSTEP list('sound/effects/clownstep1.ogg', 'sound/effects/clownstep2.ogg')
 #define SOUNDIN_FOOTSTEPS list('sound/effects/tile1.wav', 'sound/effects/tile2.wav', 'sound/effects/tile3.wav', 'sound/effects/tile4.wav')
+// Projectiles' acts
+#define SOUNDIN_BULLETACT     list('sound/effects/projectiles_acts/bullet_1.ogg', 'sound/effects/projectiles_acts/bullet_2.ogg', 'sound/effects/projectiles_acts/bullet_3.ogg')
+#define SOUNDIN_LASERACT      list('sound/effects/projectiles_acts/laser_1.ogg', 'sound/effects/projectiles_acts/laser_2.ogg', 'sound/effects/projectiles_acts/laser_2.ogg')
+#define SOUNDIN_ACIDACT       list('sound/effects/projectiles_acts/acid_1.ogg', 'sound/effects/projectiles_acts/acid_2.ogg', 'sound/effects/projectiles_acts/acid_3.ogg')
+#define SOUNDIN_WEAKBULLETACT list('sound/effects/projectiles_acts/weakbullet_1.ogg', 'sound/effects/projectiles_acts/weakbullet_2.ogg', 'sound/effects/projectiles_acts/weakbullet_3.ogg')
+#define SOUNDIN_BULLETMISSACT list('sound/effects/projectiles_acts/miss_1.ogg', 'sound/effects/projectiles_acts/miss_2.ogg', 'sound/effects/projectiles_acts/miss_3.ogg', 'sound/effects/projectiles_acts/miss_4.ogg')
 
 // ----- Voice -----
 // Human's vomit
