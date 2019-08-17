@@ -10,9 +10,9 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		if(C.holder.rights & reg_flag)
 			to_chat(C, msg)
 
-/proc/msg_admin_attack(text) //Toggleable Attack Messages
+/proc/msg_admin_attack(text, mob/living/target) //Toggleable Attack Messages
 	log_attack(text)
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[text]</span></span>"
+	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[text]</span></span> [ADMIN_PPJMPFLW(target)]"
 	for(var/client/C in admins)
 		if(R_ADMIN & C.holder.rights)
 			if(C.prefs.chat_toggles & CHAT_ATTACKLOGS)
@@ -862,6 +862,29 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	log_admin("[key_name(usr)] toggled Space Ninjas to [toggle_space_ninja].")
 	message_admins("[key_name_admin(usr)] toggled Space Ninjas [toggle_space_ninja ? "on" : "off"].")
 	feedback_add_details("admin_verb","TSN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/datum/admins/proc/change_FH_control_type()
+	set category = "Server"
+	set desc="Change facehuggers control type"
+	set name="Change FH control type"
+	var/FH_control_type = input("Choose a control type of facehuggers.","FH control type") as null|anything in list("Static AI(default)", "Dynamic AI", "Playable(+SAI)")
+	feedback_add_details("admin_verb","CFHAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	switch(FH_control_type)
+		if("Static AI(default)")
+			facehuggers_control_type = FACEHUGGERS_STATIC_AI
+			for(var/obj/item/clothing/mask/facehugger/FH in facehuggers_list)
+				STOP_PROCESSING(SSobj, FH)
+		if("Dynamic AI")
+			facehuggers_control_type = FACEHUGGERS_DYNAMIC_AI
+			for(var/obj/item/clothing/mask/facehugger/FH in facehuggers_list)
+				START_PROCESSING(SSobj, FH)
+		if("Playable(+SAI)")
+			facehuggers_control_type = FACEHUGGERS_PLAYABLE
+			for(var/obj/item/clothing/mask/facehugger/FH in facehuggers_list)
+				STOP_PROCESSING(SSobj, FH)
+	if(FH_control_type)
+		to_chat(observer_list, "<B>Facehuggers' control type was changed. Now you can [(facehuggers_control_type == FACEHUGGERS_PLAYABLE) ? "" : "no longer"] control the facehugger</B>")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] changed facehuggers' control type to: [FH_control_type].</span>")
 
 /datum/admins/proc/delay()
 	set category = "Server"

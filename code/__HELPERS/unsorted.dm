@@ -1182,24 +1182,6 @@ var/global/list/common_tools = list(
 		return 0
 	return 0
 
-// Whether or not the given item counts as sharp in terms of dealing damage
-/proc/is_sharp(obj/O)
-	if(!O)
-		return 0
-	if(O.sharp)
-		return 1
-	if(O.edge)
-		return 1
-	return 0
-
-// Whether or not the given item counts as cutting with an edge in terms of removing limbs
-/proc/has_edge(obj/O)
-	if(!O)
-		return 0
-	if(O.edge)
-		return 1
-	return 0
-
 // For items that can puncture e.g. thick plastic but aren't necessarily sharp
 // Returns 1 if the given item is capable of popping things like balloons, inflatable barriers, or cutting police tape.
 /obj/item/proc/can_puncture()

@@ -54,7 +54,7 @@
 			//var/pip = query.item[2]
 			//var/pcid = query.item[3]
 			var/ackey = query.item[4]
-			var/reason = entity_ja(query.item[5])
+			var/reason = initial_ja(query.item[5])
 			var/expiration = query.item[6]
 			var/duration = query.item[7]
 			var/bantime = query.item[8]

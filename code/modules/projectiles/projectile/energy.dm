@@ -84,3 +84,4 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 40
 	damage_type = BURN
+	proj_act_sound = SOUNDIN_LASERACT

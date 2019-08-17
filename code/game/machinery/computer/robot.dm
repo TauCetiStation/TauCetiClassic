@@ -106,7 +106,7 @@
 	else if (href_list["eject2"])
 		if(allowed(usr))
 			if (!status)
-				message_admins("<span class='notice'>[key_name_admin(usr)] has initiated the global cyborg killswitch! <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a></span>")
+				message_admins("<span class='notice'>[key_name_admin(usr)] has initiated the global cyborg killswitch! [ADMIN_JMP(usr)]</span>")
 				log_game("<span class='notice'>[key_name(usr)] has initiated the global cyborg killswitch!</span>")
 				src.status = 1
 				src.start_sequence()
@@ -150,7 +150,7 @@
 							R.ResetSecurityCodes()
 
 						else
-							message_admins("<span class='notice'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) detonated [R.name]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[R.x];Y=[R.y];Z=[R.z]'>JMP</a>)</span>")
+							message_admins("<span class='notice'>[key_name_admin(usr)] [ADMIN_JMP(usr)] detonated [R.name]! [ADMIN_JMP(R)]</span>")
 							log_game("<span class='notice'>[key_name_admin(usr)] detonated [R.name]!</span>")
 							R.self_destruct()
 		else
@@ -163,7 +163,7 @@
 				var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm")
 					if(R && istype(R))
-						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) [R.canmove ? "locked down" : "released"] [R.name]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[R.x];Y=[R.y];Z=[R.z]'>JMP</a>)")
+						message_admins("[key_name_admin(usr)] [ADMIN_JMP(usr)] [R.canmove ? "locked down" : "released"] [R.name]! [ADMIN_JMP(R)]")
 						log_game("[key_name(usr)] [R.canmove ? "locked down" : "released"] [R.name]!")
 						R.canmove = !R.canmove
 						if (R.lockcharge)

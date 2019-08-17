@@ -22,6 +22,19 @@
 		pai.death(0)
 	return ..()
 
+/obj/item/device/paicard/attackby(W, mob/living/user)
+	if(istype(W, /obj/item/weapon/paper))
+		var/obj/item/weapon/paper/paper = W
+		if(paper.crumpled)
+			to_chat(usr, "Paper to crumpled for anything.")
+			return
+		var/itemname = paper.name
+		var/info = paper.info
+		to_chat(user, "You hold \the [itemname] up to the pAI...")
+		if(pai.client && !(pai.stat == DEAD))
+			to_chat(pai, "[user.name] holds \a [itemname] up to one of your camera...")
+			pai << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, entity_ja(info)), text("window=[]", itemname))
+	
 /obj/item/device/paicard/attack_self(mob/user)
 	if (!in_range(src, user))
 		return

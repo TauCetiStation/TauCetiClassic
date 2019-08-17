@@ -183,7 +183,7 @@
 				return
 			to_chat(src, "<span class='warning'>Attempting to convert [M]...</span>")
 			log_admin("[src]([src.ckey]) attempted to convert [M].")
-			message_admins("<span class='warning'>[src]([src.ckey]) attempted to convert [M]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)</span>")
+			message_admins("<span class='warning'>[src]([src.ckey]) attempted to convert [M]. [ADMIN_JMP(src)]</span>")
 			var/choice = alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
 			if(choice == "Yes!")
 				ticker.mode:add_revolutionary(M.mind)

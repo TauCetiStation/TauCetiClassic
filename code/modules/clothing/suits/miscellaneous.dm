@@ -303,6 +303,13 @@
 	cold_protection = UPPER_TORSO|LOWER_TORSO
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0)
 
+/obj/item/clothing/suit/storage/postal_dude_coat
+	name = "black trenchcoat"
+	desc = "A black trenchcoat."
+	icon_state = "dude_coat"
+	item_state = "jensensuit"
+	item_color = "dude_coat"
+
 //pyjamas
 //originally intended to be pinstripes >.>
 

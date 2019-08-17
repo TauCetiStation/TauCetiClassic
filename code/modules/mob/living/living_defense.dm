@@ -25,7 +25,7 @@
 		var/obj/item/device/assembly/signaler/signaler = get_active_hand()
 		if(signaler.deadman && prob(80))
 			attack_log += "\[[time_stamp()]\]<font color='orange'>triggers their deadman's switch!</font>"
-			message_admins("<span class='notice'>[key_name_admin(src)] triggers their deadman's switch! ([ADMIN_JMP(src)])</span>")
+			message_admins("<span class='notice'>[key_name_admin(src)] triggers their deadman's switch! [ADMIN_JMP(src)]</span>")
 			log_game("<span class='notice'>[key_name(src)] triggers their deadman's switch!</span>")
 			src.visible_message("<span class='warning'>[src] triggers their deadman's switch!</span>")
 			signaler.signal()
@@ -43,6 +43,8 @@
 
 	if(!P.nodamage)
 		apply_damage(damage, P.damage_type, def_zone, absorb, flags, P)
+		if(LAZYLEN(P.proj_act_sound))
+			playsound(src, pick(P.proj_act_sound), VOL_EFFECTS_MASTER, null, FALSE, -5)
 	P.on_hit(src, absorb, def_zone)
 
 	return absorb
@@ -86,7 +88,7 @@
 				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been hit with a [O], thrown by [L.name] ([assailant.ckey])</font>")
 				L.attack_log += text("\[[time_stamp()]\] <font color='red'>Hit [src.name] ([src.ckey]) with a thrown [O]</font>")
 				if(!ismouse(src))
-					msg_admin_attack("[src.name] ([src.ckey]) was hit by a [O], thrown by [L.name] ([assailant.ckey]) [ADMIN_JMP(src)]")
+					msg_admin_attack("[src.name] ([src.ckey]) was hit by a [O], thrown by [L.name] ([assailant.ckey])", L)
 
 		// Begin BS12 momentum-transfer code.
 		if(O.throw_source && AM.fly_speed >= 15)
@@ -118,7 +120,7 @@
 		if(!I.can_embed || I.is_robot_module())
 			return
 
-		var/sharp = is_sharp(I)
+		var/sharp = I.is_sharp()
 
 		var/damage = throw_damage //the effective damage used for embedding purposes, no actual damage is dealt here
 		if (armor)

@@ -96,7 +96,7 @@
 
 			to_chat(M, "<B>You have joined the ranks of the Syndicate and become a traitor to the station!</B>")
 
-			message_admins("[N.name] ([N.ckey]) has accepted a traitor objective from a syndicate beacon. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[N.x];Y=[N.y];Z=[N.z]'>JMP</a>)")
+			message_admins("[N.name] ([N.ckey]) has accepted a traitor objective from a syndicate beacon. [ADMIN_JMP(N)]")
 
 			var/obj_count = 1
 			for(var/datum/objective/OBJ in M.mind.objectives)

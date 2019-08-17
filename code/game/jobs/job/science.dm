@@ -21,20 +21,24 @@
 
 /datum/job/rd/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
+
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/research_director(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), SLOT_WEAR_SUIT)
+
+	switch(H.backbag)
+		if(2)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
+		if(3)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 
 	if(visualsOnly)
 		return
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/rd(H), SLOT_L_EAR)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/heads/rd(H), SLOT_BELT)
-	switch(H.backbag)
-		if(1) H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), SLOT_R_HAND)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 
 	return TRUE
 
@@ -60,6 +64,14 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/science(H), SLOT_WEAR_SUIT)
 
+	switch(H.backbag)
+		if(2)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
+		if(3)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+
 	if(visualsOnly)
 		return
 
@@ -70,12 +82,6 @@
 			access = list(access_tox, access_research)
 		if("Phoron Researcher")
 			access = list(access_research, access_tox_storage)
-
-	switch(H.backbag)
-		if(1) H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), SLOT_R_HAND)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 
 	return TRUE
 
@@ -98,17 +104,19 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/science(H), SLOT_WEAR_SUIT)
 
+	switch(H.backbag)
+		if(2)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
+		if(3)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+
 	if(visualsOnly)
 		return
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sci(H), SLOT_L_EAR)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/science(H), SLOT_BELT)
-
-	switch(H.backbag)
-		if(1) H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), SLOT_R_HAND)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 
 	return TRUE
 
@@ -131,16 +139,19 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/science(H), SLOT_WEAR_SUIT)
 
+	switch(H.backbag)
+		if(2)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
+		if(3)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+
 	if(visualsOnly)
 		return
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sci(H), SLOT_L_EAR)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/science(H), SLOT_BELT)
-	switch(H.backbag)
-		if(1) H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), SLOT_R_HAND)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 
 	return TRUE
 
@@ -196,10 +207,12 @@
 	if(!H)
 		return 0
 	switch(H.backbag)
-		if(1) H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), SLOT_R_HAND)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
+		if(2)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), SLOT_BACK)
+		if(3)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), SLOT_BACK)
+		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist_new(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), SLOT_SHOES)
 

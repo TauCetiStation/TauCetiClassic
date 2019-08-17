@@ -92,3 +92,9 @@
 		)
 	new /obj/item/weapon/hatchet/unathiknife(hold)
 	new /obj/item/weapon/hatchet/unathiknife(hold)
+
+/obj/item/clothing/accessory/storage/black_vest/mauser_belt
+	name = "Mauser holster"
+	desc = "A gun holster."
+	icon_state = "Leather_belt_Mauser"
+	item_color = "Leather_belt_Mauser"
