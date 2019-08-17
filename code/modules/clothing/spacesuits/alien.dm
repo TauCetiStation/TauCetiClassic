@@ -183,6 +183,11 @@
 	STOP_PROCESSING(SSobj, src)
 	..()
 
+/obj/item/clothing/suit/space/vox/medic/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	wearer = null
+	return ..()
+
 /obj/item/clothing/suit/space/vox/medic/process()
 	if(!wearer)
 		STOP_PROCESSING(SSobj, src)
@@ -228,10 +233,15 @@
 /obj/item/clothing/suit/space/vox/stealth/examine(mob/user)
 	..()
 	if(wearer)
-		to_chat(wearer, "On your left wrist you see <span style='color: #00BFFF; background-color: #414141'>\[ [current_charge] \]</span>. [damage ? "Looks like the reactor is damaged" : "The reactor is functioning stably"].")
+		to_chat(wearer, "On your left wrist you see <span class='electronicblue'>\[ [current_charge] \]</span>. [damage ? "Looks like the reactor is damaged" : "The reactor is functioning stably"].")
 
 /obj/item/clothing/suit/space/vox/stealth/ui_action_click()
 	toggle_stealth()
+
+/obj/item/clothing/suit/space/vox/stealth/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	wearer = null
+	return ..()
 
 /obj/item/clothing/suit/space/vox/stealth/process()
 	if(on)
@@ -256,7 +266,7 @@
 			wearer.alpha = 5
 			if(current_charge <= (power_decrease * 15)) // there are 30 seconds to full discharge
 				wearer.playsound_local(null, 'sound/rig/loudbeep.wav', VOL_EFFECTS_MASTER, null, FALSE)
-				to_chat(wearer, "<span class='danger'>Critically low charge:</span> <span style='color: #00BFFF; background-color: #414141'>\[ [current_charge] \]</span>")
+				to_chat(wearer, "<span class='danger'>Critically low charge:</span> <span class='electronicblue'>\[ [current_charge] \]</span>")
 	else
 		var/power_increase = 20 // 30 seconds to full charge
 		if(damage > 0)
