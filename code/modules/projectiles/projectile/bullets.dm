@@ -8,9 +8,12 @@
 	embed = 1
 	sharp = 1
 	var/stoping_power = 0
-	proj_act_sound = SOUNDIN_BULLETACT
 
 	muzzle_type = /obj/effect/projectile/bullet/muzzle
+
+/obj/item/projectile/bullet/atom_init()
+	. = ..()
+	proj_act_sound = SOUNDIN_BULLETACT
 
 /obj/item/projectile/bullet/on_hit(atom/target, blocked = 0)
 	if (..(target, blocked))
@@ -24,6 +27,9 @@
 	agony = 40
 	embed = 0
 	sharp = 0
+
+/obj/item/projectile/bullet/weakbullet/atom_init()
+	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/buckpellet
@@ -78,6 +84,9 @@
 	//impact_force = 5
 	embed = 0
 	sharp = 0
+
+/obj/item/projectile/bullet/grenade/r4046/atom_init()
+	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/chem
@@ -143,12 +152,18 @@
 	name = "co bullet"
 	damage = 20
 	damage_type = OXY
+
+/obj/item/projectile/bullet/suffocationbullet/atom_init()
+	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/cyanideround
 	name = "poison bullet"
 	damage = 40
 	damage_type = TOX
+
+/obj/item/projectile/bullet/cyanideround/atom_init()
+	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/burstbullet//I think this one needs something for the on hit
@@ -167,6 +182,9 @@
 	agony = 60
 	embed = 0
 	sharp = 0
+
+/obj/item/projectile/bullet/stunslug/atom_init()
+	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/a762
@@ -187,6 +205,9 @@
 	damage = 1 // stop trying to murderbone with a fake gun dumbass!!!
 	embed = 0 // nope
 	fake = 1
+
+/obj/item/projectile/bullet/chameleon/atom_init()
+	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/l10
@@ -204,9 +225,12 @@
 	eyeblur = 4
 	sharp = 0
 	edge = 0
-	proj_act_sound = SOUNDIN_LASERACT
 
 	muzzle_type = /obj/effect/projectile/energy/muzzle
+
+/obj/item/projectile/l10/atom_init()
+	. = ..()
+	proj_act_sound = SOUNDIN_LASERACT
 
 /obj/item/projectile/bullet/midbullet3
 	damage = 35
@@ -216,6 +240,9 @@
 	icon_state= "bolter"
 	damage = 5
 	light_range = 8
+
+/obj/item/projectile/bullet/flare/atom_init()
+	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/flare/on_hit(atom/target, blocked = 0)

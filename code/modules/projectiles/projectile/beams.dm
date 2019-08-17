@@ -9,11 +9,14 @@
 	eyeblur = 4
 	var/frequency = 1
 	hitscan = 1
-	proj_act_sound = SOUNDIN_LASERACT
 
 	muzzle_type = /obj/effect/projectile/laser/muzzle
 	tracer_type = /obj/effect/projectile/laser/tracer
 	impact_type = /obj/effect/projectile/laser/impact
+
+/obj/item/projectile/beam/atom_init()
+	. = ..()
+	proj_act_sound = SOUNDIN_LASERACT
 
 /obj/item/projectile/beam/practice
 	name = "laser"

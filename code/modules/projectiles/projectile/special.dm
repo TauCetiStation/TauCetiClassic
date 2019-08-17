@@ -205,6 +205,9 @@
 	damage = 25
 	damage_type = TOX
 	flag = "bullet"
+
+/obj/item/projectile/acid_special/atom_init()
+	. = ..()
 	proj_act_sound = SOUNDIN_ACIDACT
 
 /obj/item/projectile/acid_special/on_hit(atom/target, blocked = 0)
