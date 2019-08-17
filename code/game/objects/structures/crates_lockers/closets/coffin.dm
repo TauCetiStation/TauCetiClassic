@@ -17,7 +17,7 @@
 			var/obj/item/weapon/grab/G = W
 			MouseDrop_T(G.affecting, user)      //act like they were dragged onto the closet
 		if(istype(W,/obj/item/tk_grab))
-			return 0
+			return FALSE
 		if(iscrowbar(W))
 			new /obj/item/stack/sheet/wood(loc, 5)
 			visible_message("<span class='notice'>\The [src] has been disassembled apart by [user] with \the [W].</span>",
