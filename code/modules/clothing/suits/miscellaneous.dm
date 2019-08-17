@@ -9,23 +9,23 @@
  * Lasertag
  */
 /obj/item/clothing/suit/lasertag
- 	name = "laser tag armour"
- 	desc = "Be none's man, shoot everybody!"
- 	icon_state = "bluetag"
- 	item_state = "bluetag"
- 	blood_overlay_type = "aror"
- 	body_parts_covered = UPPER_TORSO
- 	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag)
- 	siemens_coefficient = 3.0
+	name = "laser tag armour"
+	desc = "Be none's man, shoot everybody!"
+	icon_state = "bluetag"
+	item_state = "bluetag"
+	blood_overlay_type = "aror"
+	body_parts_covered = UPPER_TORSO
+	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag)
+	siemens_coefficient = 3.0
 
- 	var/lasertag_color = "none"
+	var/lasertag_color = "none"
 
 /obj/item/clothing/suit/lasertag/bluetag
 	name = "blue laser tag armour"
 	desc = "Blue Pride, Station Wide."
 	icon_state = "bluetag"
 	item_state = "bluetag"
-	allowed = list (/obj/item/weapon/gun/energy/laser/lasertag/bluetag)
+	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag/bluetag)
 	lasertag_color = "blue"
 
 /obj/item/clothing/suit/lasertag/redtag
@@ -33,7 +33,7 @@
 	desc = "Reputed to go faster."
 	icon_state = "redtag"
 	item_state = "redtag"
-	allowed = list (/obj/item/weapon/gun/energy/laser/lasertag/redtag)
+	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag/redtag)
 	lasertag_color = "red"
 
 /*

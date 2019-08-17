@@ -91,7 +91,7 @@
 
 	var/lasertag_color = "none"
 
-/obj/item/projectile/beam/lastertag/atom_init()
+/obj/item/projectile/beam/lasertag/atom_init()
 	. = ..()
 	proj_act_sound = null
 
