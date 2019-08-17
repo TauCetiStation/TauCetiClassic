@@ -780,6 +780,7 @@
 #include "code\game\objects\items\weapons\grenades\smokebomb.dm"
 #include "code\game\objects\items\weapons\grenades\spawnergrenade.dm"
 #include "code\game\objects\items\weapons\implants\implant.dm"
+#include "code\game\objects\items\weapons\implants\implantadrenaline.dm"
 #include "code\game\objects\items\weapons\implants\implantcase.dm"
 #include "code\game\objects\items\weapons\implants\implantchair.dm"
 #include "code\game\objects\items\weapons\implants\implanter.dm"
