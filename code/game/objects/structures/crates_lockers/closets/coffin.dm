@@ -12,7 +12,7 @@
 		icon_state = icon_opened
 
 /obj/structure/closet/coffin/attackby(obj/item/weapon/W, mob/user)
-	if(src.opened)
+	if(opened)
 		if(istype(W, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = W
 			MouseDrop_T(G.affecting, user)      //act like they were dragged onto the closet
