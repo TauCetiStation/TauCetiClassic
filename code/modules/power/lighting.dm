@@ -324,7 +324,7 @@
 
 		if(light_range != BR || light_power != PO || light_color != CO)
 			switchcount++
-			playsound(src, 'sound/machines/lightson.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, 'sound/machines/lightson.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
 

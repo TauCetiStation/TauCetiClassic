@@ -1639,9 +1639,7 @@
 	},
 /area/awaymission/research)
 "eo" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	current_temperature = 80
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -1941,7 +1939,6 @@
 	icon_state = "in";
 	initialize_directions = 1;
 	internal_pressure_bound = 4000;
-	on = 1;
 	pressure_checks = 2;
 	pump_direction = 0
 	},
@@ -3238,9 +3235,7 @@
 /turf/simulated/floor,
 /area/awaymission/midblock)
 "il" = (
-/obj/machinery/portable_atmospherics/canister/phoron{
-	destroyed = 1
-	},
+/obj/machinery/portable_atmospherics/canister/phoron,
 /turf/simulated/shuttle/plating,
 /area/awaymission/syndishuttle)
 "im" = (
