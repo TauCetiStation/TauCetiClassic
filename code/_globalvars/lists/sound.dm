@@ -1,7 +1,3 @@
- /*-----------------------------------------------------*\
-|                         SOUNDIN                         |
- \*-----------------------------------------------------*/
-
 // ----- Effects ------
 var/list/SOUNDIN_SHATTER   = list('sound/effects/glassbr1.ogg', 'sound/effects/glassbr2.ogg', 'sound/effects/glassbr3.ogg')
 var/list/SOUNDIN_EXPLOSION = list('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg')

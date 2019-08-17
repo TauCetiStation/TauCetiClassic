@@ -93,6 +93,9 @@
 	damage = 5
 	stun = 2
 	var/list/beakers					// for grenade
+
+/obj/item/projectile/bullet/chem/atom_init()
+	. = ..()
 	proj_act_sound = null
 
 /obj/item/projectile/bullet/chem/on_hit(atom/target, blocked = 0)
