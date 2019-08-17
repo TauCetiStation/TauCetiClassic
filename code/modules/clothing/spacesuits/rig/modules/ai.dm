@@ -255,17 +255,17 @@
 		"Caution, you're not looking good",
 		"It would be nice for you, to leave the area you are in",
 		"Please seek help, I don't want you to die",
-		"Please, don't die on me....",
+		"Please, don't die on me...."
 		)
 	breach_warnings = list(
 		"I'm taking hits",
 		"I'm almost breached",
-		"Integrity is neutralized",
+		"Integrity is neutralized"
 		)
 	energy_warnings = list(
 		"Power is at 50%",
 		"It would be nice if you recharged me",
-		"Hurry up, the battery is almost dead",
+		"Hurry up, the battery is almost dead"
 		)
 
 /obj/item/rig_module/simple_ai/advanced
@@ -273,6 +273,7 @@
 	origin_tech = "programming=4"
 	interface_name = "advanced diagnostic system"
 	interface_desc = "A more advanced counterpart of combat AI, that actually has a personality."
+
 /obj/item/rig_module/simple_ai/advanced/proc/get_random_voice()
 	var/voice_type = pick(subtypesof(/datum/rig_aivoice))
 	if(!voice_type)
@@ -347,6 +348,7 @@
 			holder.cell.use(chem_disp.use_power_cost)
 			return TRUE
 	return FALSE
+
 /obj/item/rig_module/simple_ai/advanced/combat
 	name = "hardsuit combat diagnostic system"
 	origin_tech ="programming=3"
@@ -355,5 +357,3 @@
 
 /obj/item/rig_module/simple_ai/advanced/combat/get_random_voice()
 	return
-
-
