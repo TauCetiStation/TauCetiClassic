@@ -677,7 +677,7 @@
 	name = "Adrenal Implant"
 	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a chemical cocktail, which has a mild healing effect along with removing all stuns and increasing his speed."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
-	cost = 4
+	cost = 6
 
 // POINTLESS BADASSERY
 
