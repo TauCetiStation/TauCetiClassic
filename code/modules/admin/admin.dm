@@ -252,7 +252,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	else return 1
 
 
-/datum/admins/proc/show_player_info(key)
+/datum/admins/proc/show_player_info(key as text)
 	set category = "Admin"
 	set name = "Show Player Info"
 	key = ckey(key)
