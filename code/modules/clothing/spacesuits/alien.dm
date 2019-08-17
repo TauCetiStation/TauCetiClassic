@@ -349,7 +349,7 @@
 			var/charge_decrease = max(rand(20, 30), round((damage * 25) + rand(1, 5)))
 			current_charge -= charge_decrease
 			if(wearer)
-				to_chat(wearer, "<span class='warning'>Attention. The cloaking system is overloaded. Redistributed [charge_decrease] conventional units of energy</span>")
+				to_chat(wearer, "<span class='warning'>Attention. The cloaking system is overloaded. Redistributed [charge_decrease] conventional units of energy.</span>")
 				wearer.playsound_local(null, 'sound/rig/beep.wav', VOL_EFFECTS_MASTER, null, FALSE)
 			return
 		overload()
