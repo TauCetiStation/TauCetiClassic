@@ -155,6 +155,7 @@
 
 /obj/item/projectile/beam/mindflayer
 	name = "flayer ray"
+	proj_act_sound = null
 
 /obj/item/projectile/beam/mindflayer/on_hit(atom/target, blocked = 0)
 	if(ishuman(target))
@@ -204,6 +205,7 @@
 	damage = 25
 	damage_type = TOX
 	flag = "bullet"
+	proj_act_sound = SOUNDIN_ACIDACT
 
 /obj/item/projectile/acid_special/on_hit(atom/target, blocked = 0)
 	if(issilicon(target))

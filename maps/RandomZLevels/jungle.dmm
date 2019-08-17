@@ -777,27 +777,24 @@
 /area/jungle)
 "cU" = (
 /obj/structure/barricade/wooden,
-/obj/structure/sign/redcross,
+/obj/structure/sign/departments/medbay,
 /turf/unsimulated/floor,
 /area/jungle)
 "cV" = (
 /obj/machinery/gateway{
-	dir = 9;
-	icon_state = "off"
+	dir = 9
 	},
 /turf/unsimulated/floor,
 /area/jungle)
 "cW" = (
 /obj/machinery/gateway{
-	dir = 1;
-	icon_state = "off"
+	dir = 1
 	},
 /turf/unsimulated/floor,
 /area/jungle)
 "cX" = (
 /obj/machinery/gateway{
-	dir = 5;
-	icon_state = "off"
+	dir = 5
 	},
 /turf/unsimulated/floor,
 /area/jungle)
@@ -807,7 +804,7 @@
 /area/jungle)
 "cZ" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/pill_bottle/antitox,
+/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,
 /turf/unsimulated/floor,
 /area/jungle)
 "da" = (
@@ -816,8 +813,7 @@
 /area/jungle)
 "db" = (
 /obj/machinery/gateway{
-	dir = 8;
-	icon_state = "off"
+	dir = 8
 	},
 /turf/unsimulated/floor,
 /area/jungle)
@@ -829,8 +825,7 @@
 /area/jungle)
 "dd" = (
 /obj/machinery/gateway{
-	dir = 4;
-	icon_state = "off"
+	dir = 4
 	},
 /turf/unsimulated/floor,
 /area/jungle)
@@ -845,8 +840,7 @@
 /area/jungle)
 "dg" = (
 /obj/machinery/gateway{
-	dir = 10;
-	icon_state = "off"
+	dir = 10
 	},
 /turf/unsimulated/floor,
 /area/jungle)
@@ -856,8 +850,7 @@
 /area/jungle)
 "di" = (
 /obj/machinery/gateway{
-	dir = 6;
-	icon_state = "off"
+	dir = 6
 	},
 /turf/unsimulated/floor,
 /area/jungle)
@@ -899,7 +892,7 @@
 /area/jungle)
 "ds" = (
 /obj/structure/barricade/wooden,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'DANGEROUS WILDLIFE'. Sounds like some of the local fauna are vicious.";
 	name = "DANGEROUS WILDLIFE"
 	},
@@ -935,7 +928,6 @@
 "dA" = (
 /turf/unsimulated/jungle/path,
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall_f6"
 	},
 /area/jungle/crash_ship_source)
@@ -967,13 +959,11 @@
 /turf/unsimulated/jungle/path,
 /turf/simulated/shuttle/wall{
 	dir = 3;
-	icon_state = "swall_f10";
-	layer = 2
+	icon_state = "swall_f10"
 	},
 /area/jungle/crash_ship_source)
 "dG" = (
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall3"
 	},
 /area/jungle/crash_ship_source)
@@ -1043,7 +1033,6 @@
 "dU" = (
 /turf/unsimulated/jungle/path,
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall_f5"
 	},
 /area/jungle/crash_ship_source)
@@ -1054,14 +1043,12 @@
 /area/jungle/crash_ship_source)
 "dW" = (
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall12"
 	},
 /area/jungle/crash_ship_source)
 "dX" = (
 /turf/unsimulated/jungle/path,
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall_f9"
 	},
 /area/jungle/crash_ship_source)

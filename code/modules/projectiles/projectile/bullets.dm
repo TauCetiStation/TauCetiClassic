@@ -8,6 +8,7 @@
 	embed = 1
 	sharp = 1
 	var/stoping_power = 0
+	proj_act_sound = SOUNDIN_BULLETACT
 
 	muzzle_type = /obj/effect/projectile/bullet/muzzle
 
@@ -23,6 +24,7 @@
 	agony = 40
 	embed = 0
 	sharp = 0
+	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/buckpellet
 	name = "buckpellet"
@@ -76,11 +78,13 @@
 	//impact_force = 5
 	embed = 0
 	sharp = 0
+	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/chem
 	damage = 5
 	stun = 2
 	var/list/beakers					// for grenade
+	proj_act_sound = null
 
 /obj/item/projectile/bullet/chem/on_hit(atom/target, blocked = 0)
 	if(beakers != null)
@@ -139,13 +143,13 @@
 	name = "co bullet"
 	damage = 20
 	damage_type = OXY
-
+	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/cyanideround
 	name = "poison bullet"
 	damage = 40
 	damage_type = TOX
-
+	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/burstbullet//I think this one needs something for the on hit
 	name = "exploding bullet"
@@ -163,6 +167,7 @@
 	agony = 60
 	embed = 0
 	sharp = 0
+	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/a762
 	damage = 50
@@ -182,6 +187,7 @@
 	damage = 1 // stop trying to murderbone with a fake gun dumbass!!!
 	embed = 0 // nope
 	fake = 1
+	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/l10
 	name ="projectile"
@@ -198,6 +204,7 @@
 	eyeblur = 4
 	sharp = 0
 	edge = 0
+	proj_act_sound = SOUNDIN_LASERACT
 
 	muzzle_type = /obj/effect/projectile/energy/muzzle
 
@@ -209,6 +216,7 @@
 	icon_state= "bolter"
 	damage = 5
 	light_range = 8
+	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/flare/on_hit(atom/target, blocked = 0)
 	if(istype(target, /mob/living/carbon))

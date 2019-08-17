@@ -241,6 +241,7 @@
 						var/splint = ""
 						var/arterial_bleeding = ""
 						var/lung_ruptured = ""
+						var/rejecting = ""
 						if(BP.status & ORGAN_ARTERY_CUT)
 							arterial_bleeding = "<br>Arterial bleeding"
 						if(istype(BP, /obj/item/organ/external/chest) && occupant.is_lung_ruptured())
@@ -251,10 +252,12 @@
 							bled = "Bleeding:"
 						if(BP.status & ORGAN_BROKEN)
 							AN = "[BP.broken_description]:"
-						if(BP.status & ORGAN_ROBOT)
+						if(BP.is_robotic())
 							robot = "Prosthetic:"
 						if(BP.open)
 							open = "Open:"
+						if(BP.is_rejecting)
+							rejecting = "Genetic Rejection:"
 						switch (BP.germ_level)
 							if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 								infected = "Mild Infection:"
@@ -282,12 +285,19 @@
 							imp += "Unknown body present:"
 						if(!AN && !open && !infected & !imp)
 							AN = "None:"
-						if(!(BP.status & ORGAN_DESTROYED))
-							dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][lung_ruptured]</td>"
-							storedinfo += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][lung_ruptured]</td>"
+						if(!(BP.is_stump))
+							dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][lung_ruptured][rejecting]</td>"
+							storedinfo += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][lung_ruptured][rejecting]</td>"
 						else
-							dat += "<td>[BP.name]</td><td>-</td><td>-</td><td>Not Found</td>"
-							storedinfo += "<td>[BP.name]</td><td>-</td><td>-</td><td>Not Found</td>"
+							dat += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
+							storedinfo += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
+						dat += "</tr>"
+						storedinfo += "</tr>"
+					for(var/missing_zone in occupant.get_missing_bodyparts())
+						dat += "<tr>"
+						storedinfo += "<tr>"
+						dat += "<td>[parse_zone(missing_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
+						storedinfo += "<td>[parse_zone(missing_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
 						dat += "</tr>"
 						storedinfo += "</tr>"
 					for(var/obj/item/organ/internal/IO in occupant.organs)
