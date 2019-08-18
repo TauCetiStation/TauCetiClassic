@@ -31299,6 +31299,10 @@
 /area/crew_quarters/captain)
 "beE" = (
 /obj/structure/flora/plant/random,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain)
 "beF" = (
