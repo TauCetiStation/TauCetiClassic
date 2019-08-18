@@ -33628,17 +33628,12 @@
 	},
 /area/rnd/test_area)
 "bjc" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/camera{
-	c_tag = "Central Hallway East";
-	dir = 4;
-	network = list("MiniSat")
+/obj/structure/table/woodentable,
+/obj/machinery/faxmachine{
+	department = "Captain's Office"
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "bluecorner"
-	},
-/area/hallway/primary/central)
+/turf/simulated/floor/wood,
+/area/crew_quarters/captain)
 "bjd" = (
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -33742,13 +33737,9 @@
 /area/medical/reception)
 "bjq" = (
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 2;
+	icon_state = "0-2";
+	pixel_y = 1
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -33996,6 +33987,17 @@
 	icon_state = "whitebluefull"
 	},
 /area/medical/hallway)
+"bjP" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/status_display{
+	layer = 4;
+	pixel_x = -32
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bluecorner"
+	},
+/area/hallway/primary/central)
 "bjQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -35103,11 +35105,24 @@
 /turf/simulated/wall,
 /area/quartermaster/storage)
 "bme" = (
-/obj/machinery/faxmachine{
-	department = "Captain's Office"
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/obj/structure/table/woodentable,
-/turf/simulated/floor/wood,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "Captain_private"
+	},
+/obj/structure/cable,
+/turf/simulated,
 /area/crew_quarters/captain)
 "bmf" = (
 /obj/structure/stool/bed/chair/office/light{
@@ -46358,13 +46373,17 @@
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
 "bNb" = (
-/obj/machinery/computer/arcade,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
+/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/camera{
+	c_tag = "Central Hallway East";
+	dir = 4
 	},
-/turf/simulated/floor/wood,
-/area/crew_quarters/captain)
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bluecorner"
+	},
+/area/hallway/primary/central)
 "bNc" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor,
@@ -112374,12 +112393,12 @@ bat
 bad
 bdc
 beE
-bNb
+bjc
 bjn
 bjC
 bjM
 bkA
-bme
+bfC
 bgW
 blB
 bkc
@@ -112631,8 +112650,8 @@ bau
 iYb
 bdc
 bdc
-bdc
 bjq
+bme
 bjE
 bdc
 bdc
@@ -112887,13 +112906,13 @@ aML
 bav
 bbF
 bBy
+bNb
+bBy
+bBy
+bBy
 bDK
-bjc
 bBy
-bBy
-bDK
-bBy
-bBy
+bjP
 bXu
 cah
 bBy
