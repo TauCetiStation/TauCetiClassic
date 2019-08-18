@@ -399,6 +399,7 @@
 		B.loc = src
 		to_chat(user, "You add the beaker to the machine!")
 		src.updateUsrDialog()
+		nanomanager.update_uis(src) // update all UIs attached to src
 		icon_state = "mixer1"
 
 	else if(!condi && istype(B, /obj/item/weapon/storage/pill_bottle))
@@ -411,6 +412,7 @@
 		B.loc = src
 		to_chat(user, "You add the pill bottle into the dispenser slot!")
 		src.updateUsrDialog()
+		nanomanager.update_uis(src) // update all UIs attached to src
 
 	return
 
