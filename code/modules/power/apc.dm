@@ -603,6 +603,15 @@
 				opened = 1
 			update_icon()
 
+	else if(!opened && wiresexposed && is_wire_tool(W))
+		return wires.interact(user)
+		if (istype(user, /mob/living/silicon))
+			return attack_hand(user)
+		user.SetNextMove(CLICK_CD_MELEE)
+		user.visible_message("<span class='warning'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", \
+			"<span class='warning'>You hit the [src.name] with your [W.name]!</span>", \
+			"You hear bang")
+
 // attack with hand - remove cell (if cover open) or interact with the APC
 
 /obj/machinery/power/apc/interact(mob/user)
