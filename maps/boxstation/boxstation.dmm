@@ -18295,15 +18295,18 @@
 	},
 /area/gateway)
 "aFV" = (
-/obj/machinery/door/airlock/medical{
-	name = "Medbay";
-	req_access = list(5)
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	icon_state = "whitebluefull"
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/area/medical/hallway)
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated,
+/area/rnd/lab)
 "aFW" = (
 /obj/structure/rack,
 /obj/item/clothing/shoes/magboots,
@@ -32990,16 +32993,15 @@
 	},
 /area/medical/surgeryobs)
 "bhN" = (
-/obj/structure/table/woodentable,
-/obj/machinery/recharger{
-	pixel_y = 4
+/obj/item/device/radio/intercom{
+	dir = 0;
+	name = "Station Intercom (General)";
+	pixel_x = 27
 	},
-/obj/machinery/camera{
-	c_tag = "Captain's Office";
-	dir = 8
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
 	},
-/turf/simulated/floor/wood,
-/area/crew_quarters/captain)
+/area/hallway/primary/central)
 "bhO" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -33616,24 +33618,27 @@
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain)
 "bja" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 39;
-	pixel_y = 1
-	},
-/obj/item/weapon/pinpointer/advpinpointer,
-/obj/item/weapon/disk/nuclear,
-/obj/structure/bobross{
-	pixel_x = 32
-	},
+/obj/structure/flora/plant/random,
 /turf/simulated/floor/wood,
-/area/crew_quarters/captain)
+/area/security/vacantoffice)
 "bjb" = (
 /turf/simulated/floor/plating/airless{
 	dir = 1;
 	icon_state = "warnplate"
 	},
 /area/rnd/test_area)
+"bjc" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/camera{
+	c_tag = "Central Hallway East";
+	dir = 4;
+	network = list("MiniSat")
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bluecorner"
+	},
+/area/hallway/primary/central)
 "bjd" = (
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -33649,6 +33654,22 @@
 	icon_state = "dark"
 	},
 /area/bridge/meeting_room)
+"bjg" = (
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/crew_quarters/captain)
 "bjh" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -33668,6 +33689,14 @@
 	icon_state = "dark"
 	},
 /area/bridge/meeting_room)
+"bjj" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood,
+/area/crew_quarters/captain)
 "bjk" = (
 /turf/simulated/wall,
 /area/medical/reception)
@@ -33681,6 +33710,21 @@
 	icon_state = "warning"
 	},
 /area/medical/chemistry)
+"bjn" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/table/woodentable,
+/obj/machinery/door_control{
+	id = "Captain_private";
+	name = "Shutters Control";
+	pixel_x = 0;
+	req_access = list(20)
+	},
+/turf/simulated/floor/wood,
+/area/crew_quarters/captain)
 "bjo" = (
 /obj/structure/stool/bed/chair/comfy/teal{
 	dir = 4
@@ -33696,6 +33740,25 @@
 	icon_state = "red"
 	},
 /area/medical/reception)
+"bjq" = (
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "Captain_private"
+	},
+/turf/simulated,
+/area/crew_quarters/captain)
 "bjr" = (
 /obj/machinery/light_switch{
 	pixel_y = 28
@@ -33799,6 +33862,13 @@
 "bjB" = (
 /turf/simulated/wall,
 /area/storage/emergency)
+"bjC" = (
+/obj/structure/table/woodentable,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/turf/simulated/floor/wood,
+/area/crew_quarters/captain)
 "bjD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -33810,6 +33880,17 @@
 	icon_state = "dark"
 	},
 /area/chapel/main)
+"bjE" = (
+/obj/structure/cable,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "Captain_private"
+	},
+/turf/simulated,
+/area/crew_quarters/captain)
 "bjF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -33880,6 +33961,23 @@
 	icon_state = "dark"
 	},
 /area/chapel/main)
+"bjM" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 39;
+	pixel_y = 1
+	},
+/obj/item/weapon/pinpointer/advpinpointer,
+/obj/item/weapon/disk/nuclear,
+/obj/structure/bobross{
+	pixel_x = 32
+	},
+/obj/machinery/camera{
+	c_tag = "Captain's Office";
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/crew_quarters/captain)
 "bjN" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -33892,6 +33990,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/engineering)
+"bjO" = (
+/obj/machinery/door/airlock/medical/glass,
+/turf/simulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/medical/hallway)
 "bjQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -36682,6 +36786,9 @@
 	},
 /obj/item/weapon/stock_parts/scanning_module,
 /obj/structure/table,
+/obj/machinery/alarm{
+	pixel_y = 26
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warning"
@@ -37019,14 +37126,18 @@
 /turf/simulated/floor/wood,
 /area/security/vacantoffice)
 "brm" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = 27
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/turf/simulated/floor{
-	icon_state = "neutralcorner"
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/area/hallway/primary/central)
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated,
+/area/security/vacantoffice)
 "bro" = (
 /turf/simulated/floor{
 	dir = 6;
@@ -39402,15 +39513,16 @@
 	},
 /area/server)
 "bwT" = (
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -25
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "whitepurple"
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/area/rnd/lab)
+/turf/simulated,
+/area/security/vacantoffice)
 "bwU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -41221,12 +41333,16 @@
 	},
 /area/bridge)
 "bBs" = (
-/obj/structure/flora/plant/random,
-/obj/machinery/light_switch{
-	pixel_x = 27
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/turf/simulated/floor/wood,
-/area/security/vacantoffice)
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated,
+/area/rnd/lab)
 "bBt" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor{
@@ -45220,20 +45336,11 @@
 /turf/simulated/floor/plating,
 /area/maintenance/atmos)
 "bKE" = (
-/obj/machinery/camera{
-	c_tag = "Central Hallway East";
-	dir = 4
+/obj/machinery/light_switch{
+	pixel_x = 28
 	},
-/obj/machinery/status_display{
-	layer = 4;
-	pixel_x = -32
-	},
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "bluecorner"
-	},
-/area/hallway/primary/central)
+/turf/simulated/floor/wood,
+/area/security/vacantoffice)
 "bKF" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -104040,8 +104147,8 @@ cin
 boS
 brl
 btN
-aZw
-bBs
+bKE
+bja
 bDs
 aYb
 aSP
@@ -104298,8 +104405,8 @@ aWW
 aWW
 btq
 aWW
-aWW
-aWW
+brm
+bwT
 aWW
 aSP
 aSP
@@ -111754,7 +111861,7 @@ aAk
 bdc
 beC
 blp
-blp
+bjg
 bpv
 btE
 beQ
@@ -112011,7 +112118,7 @@ oIb
 bdc
 beD
 bfC
-bfC
+bjj
 bfC
 biZ
 bfC
@@ -112268,9 +112375,9 @@ bad
 bdc
 beE
 bNb
-bfC
-bhN
-bja
+bjn
+bjC
+bjM
 bkA
 bme
 bgW
@@ -112525,8 +112632,8 @@ iYb
 bdc
 bdc
 bdc
-bdc
-bdc
+bjq
+bjE
 bdc
 bdc
 bdc
@@ -112781,8 +112888,8 @@ bav
 bbF
 bBy
 bDK
+bjc
 bBy
-bKE
 bBy
 bDK
 bBy
@@ -113291,8 +113398,8 @@ bnG
 bfA
 bfA
 bfA
-brm
 bfA
+bhN
 bfA
 jeb
 aPE
@@ -113547,8 +113654,8 @@ bFH
 bjy
 bjy
 bjy
-bjy
-bjy
+aFV
+bBs
 bjy
 bjy
 bjy
@@ -113563,8 +113670,8 @@ bkE
 bkE
 bkE
 bkE
-aFV
-aFV
+bjO
+bjO
 bxi
 aRD
 aMS
@@ -113804,7 +113911,7 @@ ble
 bjy
 bqz
 bue
-bwT
+bBF
 bBF
 bEG
 bHZ
