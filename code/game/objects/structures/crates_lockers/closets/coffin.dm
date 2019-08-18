@@ -21,7 +21,7 @@
 		if(iscrowbar(W))
 			new /obj/item/stack/sheet/wood(loc, 5)
 			visible_message("<span class='notice'>\The [src] has been disassembled apart by [user] with \the [W].</span>",
-							"You hear splitting wood.")
+							"<span class='notice'>You hear splitting wood.</span>")
 			qdel(src)
 			return
 		if(!W.canremove || W.flags & NODROP || isrobot(user))
@@ -37,6 +37,6 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 		src.welded = !src.welded
 		visible_message("<span class='warning'>[src] has been [welded?"screwed":"unscrewed"] by [user].</span>",
-						"You hear screwing.")
+						"<span class='warning'>You hear screwing.</span>")
 	else
 		attack_hand(user)

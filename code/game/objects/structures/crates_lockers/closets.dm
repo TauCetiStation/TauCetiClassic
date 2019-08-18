@@ -197,7 +197,8 @@
 				to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 				return
 			new /obj/item/stack/sheet/metal(loc)
-			visible_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", "You hear welding.")
+			visible_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>",
+							"<span class='notice'>You hear welding.</span>")
 			qdel(src)
 			return
 		if(isrobot(user))
@@ -215,11 +216,12 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!WT.use(0,user))
-			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
+			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 			return
 		src.welded = !src.welded
 		src.update_icon()
-		visible_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>", "You hear welding.")
+		visible_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>",
+						"<span class='warning'>You hear welding.</span>")
 	else
 		attack_hand(user)
 
