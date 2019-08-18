@@ -258,6 +258,11 @@
 	if(update & 1) // Updating the icon state
 		if(update_state & UPSTATE_ALLGOOD)
 			icon_state = "apc0"
+		else if(update_state & UPSTATE_BROKE)
+			if(update_state & UPSTATE_OPENED1)
+				icon_state = "apc1-b-nocover"
+			else
+				icon_state = "apc-b"
 		else if(update_state & (UPSTATE_OPENED1|UPSTATE_OPENED2))
 			var/basestate = "apc[ cell ? "2" : "1" ]"
 			if(update_state & UPSTATE_OPENED1)
@@ -265,10 +270,6 @@
 					icon_state = "apcmaint" //disabled APC cannot hold cell
 				else
 					icon_state = basestate
-			else if(update_state & UPSTATE_OPENED2)
-				icon_state = "[basestate]-nocover"
-		else if(update_state & UPSTATE_BROKE)
-			icon_state = "apc-b"
 		else if(update_state & UPSTATE_BLUESCREEN)
 			icon_state = "apcemag"
 		else if(update_state & UPSTATE_WIREEXP)
@@ -313,8 +314,6 @@
 	if(opened)
 		if(opened==1)
 			update_state |= UPSTATE_OPENED1
-		if(opened==2)
-			update_state |= UPSTATE_OPENED2
 	else if(emagged || malfai)
 		update_state |= UPSTATE_BLUESCREEN
 	else if(wiresexposed)
@@ -414,11 +413,11 @@
 			if(W.use_tool(src, user, 25, volume = 25))
 				opened = TRUE
 				locked = FALSE
-				update_icon()
 				if(cell)
 					to_chat(user, "<span class='notice'>Power cell from [src.name] is dropped</span>")
 					cell.forceMove(user.loc)
 					cell = null
+				update_icon()
 
 		else if (!(stat & BROKEN) || !malfhack)
 			if(coverlocked && !(stat & MAINT))
@@ -477,7 +476,7 @@
 
 		else if(emagged)
 			to_chat(user, "The interface is broken.")
-		else
+		else if(!(stat & BROKEN))
 			wiresexposed = !wiresexposed
 			to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 			update_icon()
