@@ -129,16 +129,13 @@
 	new /obj/item/weapon/implanter/explosive(src)
 	. = ..()
 
-/obj/item/weapon/storage/box/syndie_kit/imp_adrenaline
-	name = "boxed adrenaline implant (with injector)"
-
-/obj/item/weapon/storage/box/syndie_kit/imp_adrenal/atom_init()
+/obj/item/weapon/storage/box/syndie_kit/imp_adrenaline/atom_init()
 	. = ..()
 	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/adrenaline(O)
 	O.update()
 
-/obj/item/weapon/storage/box/syndie_kit/imp_adrenal
+/obj/item/weapon/storage/box/syndie_kit/imp_adrenaline
 	name = "box (A)"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink

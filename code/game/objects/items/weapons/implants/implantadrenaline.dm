@@ -1,9 +1,21 @@
 /obj/item/weapon/implant/adrenaline
 	name = "adrenaline implant"
-	desc = "Used after stuns."
+	desc = "Removes all stuns and knockdowns."
 	var/activation_emote = "chuckle"
 	var/uses = 1.0
 
+/obj/item/weapon/implant/adrenaline/get_data()
+	var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> Cybersun Industries Adrenalin Implant<BR>
+<b>Life:</b> Five days.<BR>
+<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
+<HR>
+<b>Implant Details:</b> Subjects injected with implant can activate a massive injection of adrenalin.<BR>
+<b>Function:</b> Contains nanobots to stimulate body to mass-produce Adrenalin.<BR>
+<b>Special Features:</b> Will prevent and cure most forms of brainwashing.<BR>
+<b>Integrity:</b> Implant can only be used three times before the nanobots are depleted."}
+	return dat
 
 /obj/item/weapon/implant/adrenaline/atom_init()
 	activation_emote = pick("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
@@ -34,3 +46,5 @@
 	source.mind.store_memory("Adrenaline implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0)
 	to_chat(source, "The implanted adrenaline implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
 	return 1
+
+

@@ -674,9 +674,9 @@
 	cost = 7
 
 /datum/uplink_item/implants/adrenaline
-	name = "Adrenal Implant"
+	name = "Adrenaline Implant"
 	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a chemical cocktail, which has a mild healing effect along with removing all stuns and increasing his speed."
-	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenaline
 	cost = 6
 
 // POINTLESS BADASSERY

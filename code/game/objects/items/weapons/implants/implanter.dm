@@ -61,9 +61,9 @@
 	update()
 
 /obj/item/weapon/implanter/adrenaline
-	name = "implanter-adrenaline"
+	name = "implanter (A)"
 
-/obj/item/weapon/implanter/adrenalin/atom_init()
+/obj/item/weapon/implanter/adrenaline/atom_init()
 	imp = new /obj/item/weapon/implant/adrenaline(src)
 	. = ..()
 	update()

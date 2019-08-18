@@ -108,7 +108,6 @@ Implant Specifics:<BR>"}
 	spawn(delay)
 		malfunction--
 
-
 /obj/item/weapon/implant/dexplosive
 	name = "explosive"
 	desc = "And boom goes the weasel."
@@ -127,12 +126,10 @@ Implant Specifics:<BR>"}
 <b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
 	return dat
 
-
 /obj/item/weapon/implant/dexplosive/trigger(emote, source)
 	if(emote == "deathgasp")
 		src.activate("death")
 	return
-
 
 /obj/item/weapon/implant/dexplosive/activate(cause)
 	if((!cause) || (!src.imp_in))	return 0
@@ -331,11 +328,13 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 	spawn(20)
 		malfunction--
+
 /*
 /obj/item/weapon/implant/adrenalin
 	name = "adrenalin"
 	desc = "Removes all stuns and knockdowns."
 	var/uses
+
 
 /obj/item/weapon/implant/adrenalin/get_data()
 	var/dat = {"
@@ -351,6 +350,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	return dat
 
 
+
 /obj/item/weapon/implant/adrenalin/trigger(emote, mob/source)
 	if (src.uses < 1)	return 0
 	if (emote == "pale")
@@ -361,12 +361,14 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		source.SetParalysis(0)
 
 	return
-*/
 
-/obj/item/weapon/implant/adrenalin/implanted(mob/source)
+
+/obj/item/weapon/implant/adrenaline/implanted(mob/source)
 	source.mind.store_memory("A implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.", 0)
 	to_chat(source, "The implanted freedom implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.")
 	return 1
+*/
+
 
 
 /obj/item/weapon/implant/death_alarm
