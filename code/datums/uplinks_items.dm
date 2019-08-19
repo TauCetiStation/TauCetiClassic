@@ -675,9 +675,15 @@
 
 /datum/uplink_item/implants/adrenaline
 	name = "Adrenaline Implant"
-	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a chemical cocktail, which has a mild healing effect along with removing all stuns and increasing his speed."
+	desc = "An implant, that will inject a chemical cocktail, which has a mild healing effect along with removing all stuns and increasing his speed can be activated at the user's will."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenaline
 	cost = 6
+
+/datum/uplink_item/implants/emp
+	name = "EMP Implant"
+	desc = "An implant, that contains power of three emp grenades, can be activated at the user's will."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_emp
+	cost = 3
 
 // POINTLESS BADASSERY
 

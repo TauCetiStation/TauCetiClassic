@@ -10,6 +10,7 @@
 	item_color = "b"
 	var/allow_reagents = 0
 	var/malfunction = 0
+	var/uses = -1
 
 /obj/item/weapon/implant/atom_init()
 	. = ..()
@@ -263,6 +264,21 @@ Implant Specifics:<BR>"}
 				else
 					part.droplimb(null, null, DROPLIMB_BLUNT)
 			explosion(get_turf(imp_in), -1, -1, 2, 3)
+			qdel(src)
+
+/obj/item/weapon/implant/emp
+	name = "emp implant"
+	desc = "Triggers an EMP."
+	icon_state = "emp"
+	uses = 3
+
+	action_button_name = "EMP pulse"
+	action_button_is_hands_free = 1
+
+	/obj/item/weapon/implant/emp/ui_action_click()
+		uses--
+		empulse(imp_in, 3, 5)
+		if(!uses)
 			qdel(src)
 
 /obj/item/weapon/implant/chem

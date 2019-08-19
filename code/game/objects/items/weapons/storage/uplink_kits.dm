@@ -138,6 +138,15 @@
 /obj/item/weapon/storage/box/syndie_kit/imp_adrenaline
 	name = "box (A)"
 
+/obj/item/weapon/storage/box/syndie_kit/imp_emp/atom_init()
+	. = ..()
+	var/obj/item/weapon/implanter/O = new(src)
+	O.imp = new /obj/item/weapon/implant/emp(O)
+	O.update()
+
+/obj/item/weapon/storage/box/syndie_kit/imp_emp
+	name = "box (M)"
+
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	name = "boxed uplink implant (with injector)"
 

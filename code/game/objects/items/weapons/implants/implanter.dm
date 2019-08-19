@@ -68,6 +68,14 @@
 	. = ..()
 	update()
 
+/obj/item/weapon/implanter/emp
+	name = "implanter (M)"
+
+/obj/item/weapon/implanter/emp/atom_init()
+	imp = new /obj/item/weapon/implant/emp(src)
+	. = ..()
+	update()
+
 /obj/item/weapon/implanter/compressed
 	name = "implanter (C)"
 	icon_state = "cimplanter1"

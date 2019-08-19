@@ -5,7 +5,7 @@
 	desc = "Use this to escape from those evil Red Shirts."
 	item_color = "r"
 	var/activation_emote = "chuckle"
-	var/uses = 1.0
+	uses = 3
 
 
 /obj/item/weapon/implant/freedom/atom_init()
