@@ -31,7 +31,7 @@
 /obj/item/weapon/storage/backpack/equipped(mob/user, slot)
 	if (slot == SLOT_BACK && length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
-		if(reachable_while_equipped == FALSE)
+		if(!reachable_while_equipped)
 			close(loc)
 	..(user, slot)
 
@@ -127,7 +127,7 @@
 	desc = "It's a very fancy satchel made with fine leather."
 	icon_state = "satchel"
 	item_state = "satchel"
-	max_storage_space = DEFAULT_BACKPACK_STORAGE - 10
+	max_storage_space = DEFAULT_SATCHEL_STORAGE
 	reachable_while_equipped = TRUE
 
 /obj/item/weapon/storage/backpack/satchel/withwallet

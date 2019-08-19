@@ -16,5 +16,6 @@
 #define base_storage_capacity(w_class) (7*(w_class-1))
 
 #define DEFAULT_BACKPACK_STORAGE base_storage_capacity(5)
+#define DEFAULT_SATCHEL_STORAGE (DEFAULT_BACKPACK_STORAGE - 10)
 #define DEFAULT_LARGEBOX_STORAGE base_storage_capacity(4)
 #define DEFAULT_BOX_STORAGE base_storage_capacity(3)

@@ -49,7 +49,7 @@
 				to_chat(usr, "<span class='warning'>You can't reach into your [name] while it's equipped!</span>")
 				return
 			else
-				src.open(usr)
+				open(usr)
 				return
 
 		if (!( istype(over_object, /obj/screen) ))
@@ -317,7 +317,7 @@
 			to_chat(user, "<span class='warning'>You can't reach into your [name] while it's equipped!</span>")
 			return
 		else
-			src.open(user)
+			open(user)
 	else
 		..()
 		storage_ui.on_hand_attack(user)
