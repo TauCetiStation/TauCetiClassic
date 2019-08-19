@@ -275,11 +275,11 @@ Implant Specifics:<BR>"}
 	action_button_name = "EMP pulse"
 	action_button_is_hands_free = 1
 
-	/obj/item/weapon/implant/emp/ui_action_click()
-		uses--
-		empulse(imp_in, 3, 5)
-		if(!uses)
-			qdel(src)
+/obj/item/weapon/implant/emp/ui_action_click()
+	uses--
+	empulse(imp_in, 3, 5)
+	if(!uses)
+		qdel(src)
 
 /obj/item/weapon/implant/chem
 	name = "chemical implant"
