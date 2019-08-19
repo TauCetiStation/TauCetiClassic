@@ -341,7 +341,7 @@
 
 /obj/structure/closet/wardrobe/grey/PopulateContents()
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/under/color/grey(src)
+		new /obj/item/clothing/under/color(src)
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/shoes/black(src)
 	for (var/i in 1 to 3)

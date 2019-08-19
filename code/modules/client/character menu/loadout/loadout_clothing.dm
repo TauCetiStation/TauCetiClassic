@@ -148,7 +148,7 @@
 
 /datum/gear/under/jumpsuit
 	display_name = "Generic jumpsuits"
-	path = /obj/item/clothing/under/color/grey
+	path = /obj/item/clothing/under/color
 
 /datum/gear/under/jumpsuit/New()
 	..()
