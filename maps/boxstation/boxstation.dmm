@@ -37136,14 +37136,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/security/vacantoffice)
-"brl" = (
-/obj/structure/sign/poster{
-	dir = 6;
-	official = 1;
-	pixel_x = 32
-	},
-/turf/simulated/floor/wood,
-/area/security/vacantoffice)
 "brm" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -55056,6 +55048,9 @@
 "cin" = (
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/structure/sign/poster{
+	pixel_x = 32
 	},
 /turf/simulated/floor/wood,
 /area/security/vacantoffice)
@@ -104168,9 +104163,9 @@ aWW
 ceg
 cin
 boS
-brl
-btN
 bKE
+btN
+aZw
 bja
 bDs
 aYb
