@@ -41801,6 +41801,11 @@
 	},
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/structure/table,
+/obj/item/device/radio/intercom{
+	dir = 0;
+	name = "Station Intercom (General)";
+	pixel_x = 27
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -42761,10 +42766,6 @@
 /turf/simulated/floor/plating,
 /area/storage/tech)
 "bEG" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = -28
-	},
 /obj/structure/sink{
 	dir = 8;
 	pixel_x = -12
