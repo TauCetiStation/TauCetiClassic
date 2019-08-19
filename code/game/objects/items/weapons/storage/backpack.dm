@@ -13,6 +13,7 @@
 	action_button_name = "Storage"
 	max_w_class = ITEM_SIZE_NORMAL
 	max_storage_space = DEFAULT_BACKPACK_STORAGE
+	reachable_while_equipped = FALSE
 	var/opened = 0
 
 /obj/item/weapon/storage/backpack/ui_action_click()
@@ -30,6 +31,8 @@
 /obj/item/weapon/storage/backpack/equipped(mob/user, slot)
 	if (slot == SLOT_BACK && length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
+		if(reachable_while_equipped == FALSE)
+			close(loc)
 	..(user, slot)
 
 /*
@@ -124,6 +127,8 @@
 	desc = "It's a very fancy satchel made with fine leather."
 	icon_state = "satchel"
 	item_state = "satchel"
+	max_storage_space = DEFAULT_BACKPACK_STORAGE - 10
+	reachable_while_equipped = TRUE
 
 /obj/item/weapon/storage/backpack/satchel/withwallet
 
@@ -270,7 +275,6 @@
 	icon_state = "satchel-flat"
 	item_state = "satchel-flat"
 	w_class = ITEM_SIZE_NORMAL //Can fit in backpacks itself.
-	max_storage_space = DEFAULT_BACKPACK_STORAGE - 10
 	level = 1
 	cant_hold = list(/obj/item/weapon/storage/backpack/satchel/flat) //muh recursive backpacks
 

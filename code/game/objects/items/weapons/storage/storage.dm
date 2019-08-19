@@ -15,6 +15,7 @@
 	var/max_w_class = ITEM_SIZE_SMALL //Max size of objects that this object can store (in effect only if can_hold isn't set)
 	var/max_storage_space = null //Total storage cost of items this can hold. Will be autoset based on storage_slots if left null.
 	var/storage_slots = null //The number of storage slots in this container.
+	var/reachable_while_equipped = TRUE
 
 	var/use_to_pickup	//Set this to make it possible to use this item in an inverse way, so you can have the item in your hand and click items on the floor to pick them up.
 	var/display_contents_with_number	//Set this to make the storage item group contents of the same type and display them as a number.
@@ -44,8 +45,12 @@
 			return
 
 		if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
-			src.open(usr)
-			return
+			if(usr.back == src && reachable_while_equipped == FALSE)
+				to_chat(usr, "<span class='warning'>You can't reach into your [name] while it's equipped!</span>")
+				return
+			else
+				src.open(usr)
+				return
 
 		if (!( istype(over_object, /obj/screen) ))
 			return ..()
@@ -307,8 +312,12 @@
 	return
 
 /obj/item/weapon/storage/attack_hand(mob/user)
-	if (src.loc == user)
-		src.open(user)
+	if (loc == user)
+		if(!reachable_while_equipped && user.back == src)
+			to_chat(user, "<span class='warning'>You can't reach into your [name] while it's equipped!</span>")
+			return
+		else
+			src.open(user)
 	else
 		..()
 		storage_ui.on_hand_attack(user)
