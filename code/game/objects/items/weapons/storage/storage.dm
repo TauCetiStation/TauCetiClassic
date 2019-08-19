@@ -45,7 +45,7 @@
 			return
 
 		if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
-			if(usr.back == src && reachable_while_equipped == FALSE)
+			if(usr.back == src && !reachable_while_equipped)
 				to_chat(usr, "<span class='warning'>You can't reach into your [name] while it's equipped!</span>")
 				return
 			else
