@@ -39,7 +39,7 @@
 				H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(H), SLOT_GLASSES)
 				H.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(H), SLOT_L_STORE)
 			if("Reporter")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/black(H), SLOT_W_UNIFORM)
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer(H), SLOT_W_UNIFORM)
 				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
 				H.equip_to_slot_or_del(new /obj/item/device/pda/reporter(H), SLOT_BELT)
 				H.equip_to_slot_or_del(new /obj/item/device/camera(H), SLOT_L_STORE)
