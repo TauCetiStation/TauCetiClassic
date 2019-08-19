@@ -645,5 +645,5 @@
 	M.AdjustWeakened(-3)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.halloss -= 25
-		H.shock_stage -= 25
+		H.adjustHalLoss(-30)
+		H.shock_stage -= 20
