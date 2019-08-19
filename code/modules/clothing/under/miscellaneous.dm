@@ -14,13 +14,6 @@
 	item_state = "w_suit"
 	flags = ONESIZEFITSALL
 
-/obj/item/clothing/under/captain_fly
-	name = "rogue captains uniform"
-	desc = "For the man who doesn't care because he's still free."
-	icon_state = "captain_fly"
-	item_state = "captain_fly"
-	item_color = "captain_fly"
-
 /obj/item/clothing/under/scratch
 	name = "white suit"
 	desc = "A white suit, suitable for an excellent host."
@@ -56,14 +49,6 @@
 	icon_state = "mailman"
 	item_state = "b_suit"
 	item_color = "mailman"
-
-/obj/item/clothing/under/sexyclown
-	name = "sexy-clown suit"
-	desc = "It makes you look HONKable!"
-	icon_state = "sexyclown"
-	item_state = "sexyclown"
-	item_color = "sexyclown"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/under/rank/vice
 	name = "vice officer's jumpsuit"
@@ -262,21 +247,6 @@
 	item_color = "rogue_jacket"
 	flags = ONESIZEFITSALL
 
-/obj/item/clothing/under/blackskirt
-	name = "black skirt"
-	desc = "A black skirt, very fancy!"
-	icon_state = "blackskirt"
-	item_color = "blackskirt"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-
-/obj/item/clothing/under/schoolgirl
-	name = "schoolgirl uniform"
-	desc = "It's just like one of my Japanese animes!"
-	icon_state = "schoolgirl"
-	item_state = "schoolgirl"
-	item_color = "schoolgirl"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
-
 /obj/item/clothing/under/overalls
 	name = "laborer's overalls"
 	desc = "A set of durable overalls for getting the job done."
@@ -314,14 +284,6 @@
 	item_color = "kilt"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
-/obj/item/clothing/under/sexymime
-	name = "sexy mime outfit"
-	desc = "The only time when you DON'T enjoy looking at someone's rack."
-	icon_state = "sexymime"
-	item_state = "sexymime"
-	item_color = "sexymime"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
-
 /obj/item/clothing/under/gladiator
 	name = "gladiator uniform"
 	desc = "Are you not entertained? Is that not why you are here?"
@@ -333,6 +295,60 @@
 //dress
 /obj/item/clothing/under/dress
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+
+/obj/item/clothing/under/dress/schoolgirl
+	name = "schoolgirl uniform"
+	desc = "It's just like one of my Japanese animes!"
+	icon_state = "schoolgirl"
+	item_state = "schoolgirl"
+	item_color = "schoolgirl"
+
+/obj/item/clothing/under/dress/sukeban_dress
+	name = "sukeban dress"
+	desc = "A Dress of Japanese schoolgirls"
+	icon_state = "sukeban_dress"
+	item_color = "sukeban_dress"
+
+/obj/item/clothing/under/dress/sundress
+	name = "sundress"
+	desc = "Makes you want to frolic in a field of daisies."
+	icon_state = "sundress"
+	item_state = "sundress"
+	item_color = "sundress"
+
+/obj/item/clothing/under/dress/sexyclown
+	name = "sexy-clown suit"
+	desc = "It makes you look HONKable!"
+	icon_state = "sexyclown"
+	item_state = "sexyclown"
+	item_color = "sexyclown"
+
+/obj/item/clothing/under/dress/sexymime
+	name = "sexy mime outfit"
+	desc = "The only time when you DON'T enjoy looking at someone's rack."
+	icon_state = "sexymime"
+	item_state = "sexymime"
+	item_color = "sexymime"
+
+/obj/item/clothing/under/dress/pretty_dress
+	name = "pretty dress"
+	desc = "An Enchanting blue dress."
+	icon_state = "pretty_dress"
+	item_color = "pretty_dress"
+
+/obj/item/clothing/under/dress/captain_fly
+	name = "rogue captains uniform"
+	desc = "For the man who doesn't care because he's still free."
+	icon_state = "captain_fly"
+	item_state = "captain_fly"
+	item_color = "captain_fly"
+
+/obj/item/clothing/under/dress/blackskirt
+	name = "black skirt"
+	desc = "A black skirt, very fancy!"
+	icon_state = "blackskirt"
+	item_color = "blackskirt"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 /obj/item/clothing/under/dress/dress_fire
 	name = "flame dress"
@@ -394,7 +410,6 @@
 	icon_state = "dress_party"
 	item_color = "dress_party"
 
-
 /obj/item/clothing/under/dress/dress_cap
 	name = "captain dress uniform"
 	desc = "Feminine fashion for the style concious captain."
@@ -441,51 +456,39 @@
 	flags = ONESIZEFITSALL
 
 //wedding stuff
-/obj/item/clothing/under/wedding
+/obj/item/clothing/under/dress/wedding
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
+	flags_inv = HIDESHOES
 
-/obj/item/clothing/under/wedding/bride_orange
+/obj/item/clothing/under/dress/wedding/bride_orange
 	name = "orange wedding dress"
 	desc = "A big and puffy orange dress."
 	icon_state = "bride_orange"
 	item_color = "bride_orange"
-	flags_inv = HIDESHOES
 
-/obj/item/clothing/under/wedding/bride_purple
+/obj/item/clothing/under/dress/wedding/bride_purple
 	name = "purple wedding dress"
 	desc = "A big and puffy purple dress."
 	icon_state = "bride_purple"
 	item_color = "bride_purple"
-	flags_inv = HIDESHOES
 
-/obj/item/clothing/under/wedding/bride_blue
+/obj/item/clothing/under/dress/wedding/bride_blue
 	name = "blue wedding dress"
 	desc = "A big and puffy blue dress."
 	icon_state = "bride_blue"
 	item_color = "bride_blue"
-	flags_inv = HIDESHOES
 
-/obj/item/clothing/under/wedding/bride_red
+/obj/item/clothing/under/dress/wedding/bride_red
 	name = "red wedding dress"
 	desc = "A big and puffy red dress."
 	icon_state = "bride_red"
 	item_color = "bride_red"
-	flags_inv = HIDESHOES
 
-/obj/item/clothing/under/wedding/bride_white
+/obj/item/clothing/under/dress/wedding/bride_white
 	name = "silky wedding dress"
 	desc = "A white wedding gown made from the finest silk."
 	icon_state = "bride_white"
 	item_color = "bride_white"
-	flags_inv = HIDESHOES
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
-
-/obj/item/clothing/under/sundress
-	name = "sundress"
-	desc = "Makes you want to frolic in a field of daisies."
-	icon_state = "sundress"
-	item_state = "sundress"
-	item_color = "sundress"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/under/rank/mecha_operator
@@ -683,23 +686,11 @@
 	icon_state = "patient_gown"
 	item_color = "patient_gown"
 
-/obj/item/clothing/under/pretty_dress
-	name = "pretty dress"
-	desc = "An Enchanting blue dress."
-	icon_state = "pretty_dress"
-	item_color = "pretty_dress"
-
 /obj/item/clothing/under/sukeban_pants
 	name = "sukeban pants"
 	desc = "A white shirt with wide baggy pants"
 	icon_state = "sukeban_pants"
 	item_color = "sukeban_pants"
-
-/obj/item/clothing/under/sukeban_dress
-	name = "sukeban dress"
-	desc = "A Dress of Japanese schoolgirls"
-	icon_state = "sukeban_dress"
-	item_color = "sukeban_dress"
 
 /obj/item/clothing/under/karate
 	name = "karate underwear"
