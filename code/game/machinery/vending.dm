@@ -6,8 +6,6 @@
 	var/price = 0
 	var/display_color = "blue"
 
-
-
 /obj/machinery/vending
 	name = "Vendomat"
 	desc = "A generic vending machine."
@@ -44,7 +42,7 @@
 	var/icon_vend //Icon_state when vending!
 	var/icon_deny //Icon_state when vending!
 	//var/emagged = 0 //Ignores if somebody doesn't have card access to that machine.
-	var/seconds_electrified = 0 //Shock customers like an airlock.
+	var/electrified_until = 0 //Shock customers like an airlock.
 	var/shoot_inventory = 0 //Fire items at customers! We're broken!
 	var/shut_up = 1 //Stop spouting those godawful pitches!
 	var/extended_inventory = 0 //can we access the hidden inventory?
@@ -75,6 +73,7 @@
 	build_inventory(contraband, 1)
 	build_inventory(premium, 0, 1)
 	power_change()
+	update_wires_check()
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -339,7 +338,7 @@
 		to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access vendor account. Please record the machine ID and call CentComm Support.</span>")
 
 /obj/machinery/vending/ui_interact(mob/user)
-	if(seconds_electrified && !issilicon(user) && !isobserver(user))
+	if((world.time < electrified_until || electrified_until < 0) && !issilicon(user) && !isobserver(user))
 		if(shock(user, 100))
 			return
 
@@ -512,26 +511,38 @@
 
 	src.updateUsrDialog()
 
+// Vending machines don't use power so we are free to do this
 /obj/machinery/vending/process()
+	return PROCESS_KILL
+
+/obj/machinery/vending/proc/say_slogan()
 	if(stat & (BROKEN|NOPOWER))
 		return
 
-	if(!src.active)
+	//Pitch to the people!  Really sell it!
+	if(slogan_list.len > 0 && !shut_up)
+		var/slogan = pick(slogan_list)
+		speak(slogan)
+
+		addtimer(CALLBACK(src, .proc/say_slogan), slogan_delay + rand(0, 1000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
+
+/obj/machinery/vending/proc/shoot_inventory_timer()
+	if(stat & (BROKEN|NOPOWER))
 		return
 
-	if(src.seconds_electrified > 0)
-		src.seconds_electrified--
+	if(shoot_inventory)
+		throw_item()
 
-	//Pitch to the people!  Really sell it!
-	if(((src.last_slogan + src.slogan_delay) <= world.time) && (src.slogan_list.len > 0) && (!src.shut_up) && prob(5))
-		var/slogan = pick(src.slogan_list)
-		src.speak(slogan)
-		src.last_slogan = world.time
+		addtimer(CALLBACK(src, .proc/shoot_inventory_timer), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
 
-	if(src.shoot_inventory && prob(2))
-		src.throw_item()
+/obj/machinery/vending/proc/update_wires_check()
+	if(stat & (BROKEN|NOPOWER))
+		return
 
-	return
+	if(slogan_list.len > 0 && !shut_up)
+		addtimer(CALLBACK(src, .proc/say_slogan), rand(0, slogan_delay), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
+	if(shoot_inventory)
+		addtimer(CALLBACK(src, .proc/shoot_inventory_timer), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
 
 /obj/machinery/vending/proc/speak(message)
 	if(stat & NOPOWER)
