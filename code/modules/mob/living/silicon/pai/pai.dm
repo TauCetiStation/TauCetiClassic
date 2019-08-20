@@ -10,16 +10,16 @@
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
 
-	var/ram = 100	// Used as currency to purchase different abilities
+	var/maxram = 100					// We will reset ram to this value in the future.
+	var/ram = 100						// Used as currency to purchase different abilities
 	var/list/software = list()
-	var/userDNA		// The DNA string of our assigned user
+	var/userDNA							// The DNA string of our assigned user
 	var/obj/item/device/paicard/card	// The card we inhabit
 	var/obj/item/device/radio/radio		// Our primary radio
 
 	var/speakStatement = "states"
 	var/speakExclamation = "declares"
 	var/speakQuery = "queries"
-
 
 	var/obj/item/weapon/pai_cable/cable		// The cable we produce and use when door or camera jacking
 
@@ -46,8 +46,10 @@
 	var/datum/data/record/securityActive1		// Could probably just combine all these into one
 	var/datum/data/record/securityActive2
 
-	var/obj/machinery/door/hackdoor		// The airlock being hacked
-	var/hackprogress = 0				// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
+	var/obj/hackobj							// The device being hacked
+	var/hacksuccess							// The hack is complete?
+	var/list/markedobjects = new/list()		// Marked devices that pAI may access remotely
+	var/hackprogress = 0		    		// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
 
 	var/obj/item/radio/integrated/signal/sradio // AI's signaller
 
@@ -219,13 +221,14 @@
 	if (!C)
 		src.unset_machine()
 		src.reset_view(null)
+		src.current = null
 		return 0
 	if (stat == DEAD || !C.status || !(src.network in C.network)) return 0
 
 	// ok, we're alive, camera is good and in our network...
 
 	src.set_machine(src)
-	src:current = C
+	src.current = C
 	src.reset_view(C)
 	return 1
 
@@ -251,11 +254,12 @@
 		to_chat(usr, "You can't change your camera network because you are dead!")
 		return
 
-	for (var/obj/machinery/camera/C in Cameras)
+	for (var/obj/machinery/camera/C in cameranet.cameras)
 		if(!C.status)
 			continue
 		else
 			if(C.network != "CREED" && C.network != "thunder" && C.network != "RD" && C.network != "phoron" && C.network != "Prison") COMPILE ERROR! This will have to be updated as camera.network is no longer a string, but a list instead
+			//if(!C.network.Find("RD","Research","Prison","thunder","phoron","CREED","Toxins Test Area","MiniSat","tcommsat")) Tried to fix
 				cameralist[C.network] = C.network
 
 	src.network = input(usr, "Which network would you like to view?") as null|anything in cameralist

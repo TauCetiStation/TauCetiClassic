@@ -2,17 +2,13 @@
 //	- Additional radio modules
 //	- Potentially roll HUDs and Records into one
 //	- Shock collar/lock system for prisoner pAIs?
-//  - Put cable in user's hand instead of on the ground
-//  - Camera jack
-
 
 /mob/living/silicon/pai/var/list/available_software = list(
 															"crew manifest" = 5,
 															"digital messenger" = 5,
 															"medical records" = 15,
 															"security records" = 15,
-															//"camera jack" = 10,
-															"door jack" = 30,
+															"interaction module" = 40,
 															"atmosphere sensor" = 5,
 															//"heartbeat sensor" = 10,
 															"security HUD" = 20,
@@ -63,10 +59,8 @@
 				left_part = src.facialRecognition()
 			if("medicalhud")
 				left_part = src.medicalAnalysis()
-			if("doorjack")
-				left_part = src.softwareDoor()
-			if("camerajack")
-				left_part = src.softwareCamera()
+			if("interaction")
+				left_part = src.softwareInteraction()
 			if("signaller")
 				left_part = src.softwareSignal()
 			if("radio")
@@ -117,6 +111,31 @@
 	onclose(usr, "pai")
 	temp = null
 	return
+
+/mob/living/silicon/pai/proc/addToMarked(O)
+	if(O && src.markedobjects.len < 5 && !(O in src.markedobjects) && src.ram - 5 >= 0)
+		src.markedobjects += O
+		src.ram -= 5
+
+/mob/living/silicon/pai/proc/removeFromMarked(O)
+	if(O in src.markedobjects)
+		src.markedobjects -= O
+		src.ram += 5
+		if(!src.cable && O == src.hackobj)
+			src.hacksuccess = 0
+			src.hackobj = null
+		if(src.current == O)
+			switchCamera(null)
+
+/mob/living/silicon/pai/proc/getcarrier(mob/living/M)
+	var/count = 0
+	while(!istype(M, /mob/living))
+		if(!M || !M.loc) return null //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
+		M = M.loc
+		count++
+		if(count >= 6)
+			return null
+	return M
 
 /mob/living/silicon/pai/Topic(href, href_list)
 	..()
@@ -208,15 +227,10 @@
 
 		if("directive")
 			if(href_list["getdna"])
-				var/mob/living/M = src.loc
-				var/count = 0
-				while(!istype(M, /mob/living))
-					if(!M || !M.loc) return 0 //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
-					M = M.loc
-					count++
-					if(count >= 6)
-						to_chat(src, "You are not being carried by anyone!")
-						return 0
+				var/mob/living/M = getcarrier(src.loc)
+				if(!M)
+					to_chat(src, "You are not being carried by anyone!")
+					return 0
 				spawn CheckDNA(M, src)
 
 		if("pdamessage")
@@ -270,18 +284,219 @@
 		if("translator")
 			if(href_list["toggle"])
 				src.translator_toggle()
-		if("doorjack")
+		if("interaction")
 			if(href_list["jack"])
 				if(src.cable && src.cable.machine)
-					src.hackdoor = src.cable.machine
+					src.hackobj = src.cable.machine
 					src.hackloop()
 			if(href_list["cancel"])
-				src.hackdoor = null
+				src.hackobj = null
+			if(href_list["interactwith"])
+				var/intwth = text2num(href_list["interactwith"])
+				switch(intwth)
+					if(95)
+						addToMarked(src.hackobj)
+					if(96)
+						removeFromMarked(src.hackobj)
+					if(97)
+						src.hackobj = src.markedobjects[text2num(href_list["markedid"])]
+						src.hacksuccess = 1
+				var/tdelay = get_dist(src, src.hackobj) //Delay
+				if(tdelay >= 5 && !(istype(src.hackobj, /obj/machinery/camera) && intwth == 5) && intwth <=95 && src.hackobj) //With current type of delay it should be stupid waitin' to disconnect/connect to camera.
+					src.temp = "Sending signal, please wait..."
+					src.paiInterface()
+					sleep(tdelay) //We use delay to prevent spam
+				if(tdelay <= 50) //50 tiles to target - max distance
+					if(istype(src.hackobj, /obj/machinery/door)) //Open, Bolt
+						switch(intwth)
+							if(1)
+								var/obj/machinery/door/A = src.hackobj
+								if(A.density)
+									A.open()
+								else
+									A.close()
+							if(2)
+								var/obj/machinery/door/airlock/A = src.hackobj
+								if(A.locked)
+									A.unbolt()
+								else
+									A.bolt()
+					if(istype(src.hackobj, /obj/machinery/camera)) //Activate, Disconnect all active viewers, Alarm, AI access, View
+						var/obj/machinery/camera/A = src.hackobj
+						switch(intwth)
+							if(1)
+								A.toggle_cam(1)
+							if(2)
+								A.disconnect_viewers()
+							if(3)
+								if(A.alarm_on)
+									A.cancelCameraAlarm()
+								else
+									A.triggerCameraAlarm()
+							if(4)
+								A.hidden = !A.hidden
+							if(5)
+								if(src.current && src.hackobj == src.current)
+									switchCamera(null)
+								else
+									switchCamera(src.hackobj)
+					if(istype(src.hackobj, /obj/machinery/autolathe)) //Open UI, Contraband features, Power
+						var/obj/machinery/autolathe/A = src.hackobj
+						switch(intwth)
+							if(1)
+								A.ui_interact(src)
+							if(2)
+								A.hacked = !A.hacked
+							if(3)
+								A.disabled = !A.disabled
+					if(istype(src.hackobj, /obj/item/device/pda)) //Toggle Messenger, Ringtone, Toggle Ringtone, Toggle Hide/Unhide, Change shown name
+						var/obj/item/device/pda/A = src.hackobj
+						switch(intwth)
+							if(1)
+								A.toff = !A.toff
+							if(2)
+								A.ttone = input("Input new ringtone.", "PDA exploiter", "beep")
+							if(3)
+								A.message_silent = !A.message_silent
+							if(4)
+								A.hidden = !A.hidden
+							if(5)
+								var/towner = input("Insert new name here.", "PDA exploiter", A.owner) as text
+								var/tjob = input("Insert new job here.", "PDA exploiter", A.ownjob) as text
+								if(length(towner) > 0)
+									A.owner = towner
+								if(length(tjob) > 0)
+									A.ownjob = tjob
+									A.ownrank = tjob
+								A.name = A.owner + " (" + A.ownjob + ")"
+					if(istype(src.hackobj, /obj/item/device/paicard)) //Mod. main law, Mod. secondary law, Manage marked objects, Reset marked objects, Clear software, Unbound, Personality shift
+						var/obj/item/device/paicard/target = src.hackobj
+						var/mob/living/silicon/pai/targetPersonality = target.pai
+						switch(intwth)
+							if(1)
+								targetPersonality.pai_law0 = input("Insert new main law here.", "PAI exploiter", targetPersonality.pai_law0)
+								to_chat(targetPersonality, "Your primary directives have been updated. Your new directive are: [targetPersonality.pai_law0]")
+							if(2)
+								targetPersonality.pai_laws = input("Insert new secondary law here.", "PAI exploiter", targetPersonality.pai_laws)
+								to_chat(targetPersonality, "Your supplemental directives have been updated. Your new supplemental directive are: [targetPersonality.pai_laws]")
+							if(3)
+								var/markedobjselected
+								while(markedobjselected != "Cancel")
+									markedobjselected = input("Select Marked Objects", "PAI exploiter", "Cancel") in targetPersonality.markedobjects + "Cancel"
+									if(markedobjselected != "Cancel")
+										var/markedobjaction = input("What do you want to do with [markedobjselected]?", "PAI exploiter", "Cancel") in list("Clone", "Remove", "Make active", "Cancel")
+										switch(markedobjaction)
+											if("Clone")
+												addToMarked(markedobjselected)
+											if("Remove")
+												targetPersonality.removeFromMarked(markedobjselected)
+											if("Make active")
+												targetPersonality.hackobj = markedobjselected
+												targetPersonality.hacksuccess = 1
+							if(4)
+								if(targetPersonality.markedobjects.len > 0)
+									var/C = targetPersonality.markedobjects
+									for(var/Temp in C)
+										targetPersonality.removeFromMarked(Temp)
+							if(5)
+								targetPersonality.ram = targetPersonality.maxram
+								targetPersonality.software = list()
+							if(6)
+								targetPersonality.master = null
+								targetPersonality.master_dna = null
+								to_chat(targetPersonality, "<font color=green>You feel unbound.</font>")
+							/*
+							if(7)
+								if(targetPersonality)
+									var/obj/item/device/paicard/temppaicard = src.card
+									var/mob/living/mobtarget = targetPersonality
+									var/mob/mainpai = src
+									var/mob/dead/observer/ghost = mobtarget.ghostize(can_reenter_corpse = FALSE)
+									mainpai.mind.transfer_to(mobtarget)
+									ghost.mind.transfer_to(mainpai)
+									mainpai.key = mobtarget.key
+									temppaicard.setPersonality(targetPersonality)
+									targetPersonality.reset_view(null)
+									targetPersonality.loc = temppaicard
+									src.loc = target
+							*/
+					if(istype(src.hackobj, /obj/machinery/vending)) //Item shooting, Shoot item, Speak, Reset Prices, Toggle Contraband Mode, Toggle Account Verifying
+						var/obj/machinery/vending/A = src.hackobj
+						switch(intwth)
+							if(1)
+								A.shoot_inventory = !A.shoot_inventory
+							if(2)
+								if(A.shoot_inventory)
+									A.throw_item()
+							if(3)
+								var/T = input("What do you want to say on behalf of [A]?", "Vending exploiter", "Hello") as text
+								A.speak(T)
+							/*
+							if(4)
+								A.prices = list()
+							*/
+							if(5)
+								A.extended_inventory = !A.extended_inventory
+							if(6)
+								A.check_accounts = !A.check_accounts
+					if(istype(src.hackobj, /obj/machinery/bot))
+						switch(intwth)
+							if(1) //Unlock
+								var/obj/machinery/bot/Bot = src.hackobj
+								Bot.locked = !Bot.locked
+							if(2) //Toggle
+								var/obj/machinery/bot/Bot = src.hackobj
+								if(Bot.on)
+									Bot.turn_off()
+								else
+									Bot.turn_on()
+						if(istype(src.hackobj, /obj/machinery/bot/secbot))
+							var/obj/machinery/bot/secbot/Bot = src.hackobj
+							switch(intwth)
+								if(3) //Toggle ID cheker
+									Bot.idcheck = !Bot.idcheck
+								if(4) //Toggle Checking records
+									Bot.check_records = !Bot.check_records
+						if(istype(src.hackobj, /obj/machinery/bot/farmbot))
+							var/obj/machinery/bot/farmbot/Bot = src.hackobj
+							switch(intwth)
+								if(3) //farmbot - Toggle water plants
+									Bot.setting_water = !Bot.setting_water
+								if(4) //farmbot - Toggle refill watertank
+									Bot.setting_refill = !Bot.setting_refill
+								if(5) //farmbot - Toggle Fertilize plants
+									Bot.setting_fertilize = !Bot.setting_fertilize
+								if(6) //farmbot - Toggle weed plants
+									Bot.setting_weed = !Bot.setting_weed
+								if(7) //farmbot - Toggle ignore weeds
+									Bot.setting_ignoreWeeds = !Bot.setting_ignoreWeeds
+								if(8) //farmbot - Toggle ignore mushrooms
+									Bot.setting_ignoreMushrooms = !Bot.setting_ignoreMushrooms
+						if(istype(src.hackobj, /obj/machinery/bot/floorbot))
+							var/obj/machinery/bot/floorbot/Bot = src.hackobj
+							switch(intwth)
+								if(3) //floorbot - Toggle floor improving
+									Bot.improvefloors = !Bot.improvefloors
+								if(4) //floorbot - Toggle tiles searching
+									Bot.eattiles = !Bot.eattiles
+								if(5) //floorbot - Toggle metal to tiles transformation
+									Bot.maketiles = !Bot.maketiles
+
 			if(href_list["cable"])
-				var/turf/T = get_turf_or_move(src.loc)
-				src.cable = new /obj/item/weapon/pai_cable(T)
-				for (var/mob/M in viewers(T))
-					M.show_message("<span class='warning'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", 3, "<span class='warning'>You hear the soft click of something light and hard falling to the ground.</span>", 2)
+				if(href_list["cable"] == "1")
+					var/turf/T = get_turf_or_move(src.loc)
+					src.cable = new /obj/item/weapon/pai_cable(T)
+					var/mob/living/C = getcarrier(src.loc)
+					if(C)
+						if(!C.put_in_active_hand(src.cable))
+							C.put_in_inactive_hand(src.cable)
+					for (var/mob/M in viewers(T))
+						M.show_message("<span class='warning'>A port on [src] opens to reveal [src.cable], which promptly falls [!M || !C.is_in_hands(src.cable) ? "to the floor" : "onto [M == C ? "your" : "someone's"] hand"].</span>", 3, "<span class='warning'>You hear the soft click of something light and hard falling [M ? "onto someone's hand" : "to the ground"].</span>", 2)
+				if(href_list["cable"] == "2")
+					QDEL_NULL(src.cable)
+					src.hackobj = null
+				if(href_list["cable"] == "3")
+					src.hackobj = null
 	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
@@ -310,8 +525,6 @@
 			dat += "<a href='byond://?src=\ref[src];software=medicalrecord;sub=0'>Medical Records</a> <br>"
 		if(s == "security records")
 			dat += "<a href='byond://?src=\ref[src];software=securityrecord;sub=0'>Security Records</a> <br>"
-		if(s == "camera")
-			dat += "<a href='byond://?src=\ref[src];software=[s]'>Camera Jack</a> <br>"
 		if(s == "remote signaller")
 			dat += "<a href='byond://?src=\ref[src];software=signaller;sub=0'>Remote Signaller</a> <br>"
 	dat += "<br>"
@@ -331,10 +544,8 @@
 			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a> [(src.translator_on) ? "<font color=#55FF55>�</font>" : "<font color=#FF5555>�</font>"] <br>"
 		if(s == "projection array")
 			dat += "<a href='byond://?src=\ref[src];software=projectionarray;sub=0'>Projection Array</a> <br>"
-		if(s == "camera jack")
-			dat += "<a href='byond://?src=\ref[src];software=camerajack;sub=0'>Camera Jack</a> <br>"
-		if(s == "door jack")
-			dat += "<a href='byond://?src=\ref[src];software=doorjack;sub=0'>Door Jack</a> <br>"
+		if(s == "interaction module")
+			dat += "<a href='byond://?src=\ref[src];software=interaction;sub=0'>Interaction Module</a> <br>"
 	dat += "<br>"
 	dat += "<br>"
 	dat += "<a href='byond://?src=\ref[src];software=buy;sub=0'>Download additional software</a>"
@@ -581,78 +792,171 @@
 	dat += "<br><a href='byond://?src=\ref[src];software=atmosensor;sub=0'>Refresh Reading</a>"
 	return dat
 
-// Camera Jack - Clearly not finished
-/mob/living/silicon/pai/proc/softwareCamera()
-	var/dat = "<h2>Camera Jack</h2><hr>"
-	dat += "Cable status : "
-
-	if(!src.cable)
+// Interaction module
+/mob/living/silicon/pai/proc/softwareInteraction()
+	var/dat = "<h2>Interaction Module</h2><hr>"
+ 	dat += "This module provides a connection to various kinds of electronics which obviously should have a compatible connector. However, some devices' systems are too complex to interact with them.<br>"
+	dat += "After the cable is connected, you can mark any compatible object it is connected to for remote access. Each marked device takes 5% of maximum memory, but only five devices can be marked.<br>"
+	dat += "When connected remotely, make sure distance between you and marked device is not too long. Otherwise, data packets might not be delivered which causes loss of control.<br>"
+	dat += "<br>"
+	dat += "Connection status: "
+	if(!src.cable && (!src.hackobj || src.hacksuccess == 0))
 		dat += "<font color=#FF5555>Retracted</font> <br>"
+		dat += "<a href='byond://?src=\ref[src];software=interaction;cable=1;sub=0'>Extend Cable</a> <br><br>"
+		if(src.markedobjects.len > 0)
+			dat += "Marked devices: <br>"
+			for(var/Tmp = 1, Tmp <= src.markedobjects.len, Tmp++)
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=97;markedid=[Tmp];sub=0'>[Tmp] - [src.markedobjects[Tmp]]</a> <br>"
 		return dat
-	if(!src.cable.machine)
+	if(src.cable && !src.cable.machine)
 		dat += "<font color=#FFFF55>Extended</font> <br>"
+		dat += "<a href='byond://?src=\ref[src];software=interaction;cable=2;sub=0'>Retract Cable</a> <br>"
 		return dat
-
-	var/obj/machinery/machine = src.cable.machine
-	dat += "<font color=#55FF55>Connected</font> <br>"
-
-	if(!istype(machine, /obj/machinery/camera))
-		to_chat(src, "DERP")
-	return dat
-
-// Door Jack
-/mob/living/silicon/pai/proc/softwareDoor()
-	var/dat = "<h2>Airlock Jack</h2><hr>"
-	dat += "Cable status : "
-	if(!src.cable)
-		dat += "<font color=#FF5555>Retracted</font> <br>"
-		dat += "<a href='byond://?src=\ref[src];software=doorjack;cable=1;sub=0'>Extend Cable</a> <br>"
-		return dat
-	if(!src.cable.machine)
-		dat += "<font color=#FFFF55>Extended</font> <br>"
-		return dat
-
-	var/obj/machinery/machine = src.cable.machine
-	dat += "<font color=#55FF55>Connected</font> <br>"
-	if(!istype(machine, /obj/machinery/door))
-		dat += "Connected device's firmware does not appear to be compatible with Airlock Jack protocols.<br>"
-		return dat
-//	var/obj/machinery/airlock/door = machine
-
-	if(!src.hackdoor)
-		dat += "<a href='byond://?src=\ref[src];software=doorjack;jack=1;sub=0'>Begin Airlock Jacking</a> <br>"
+	var/obj/machinery/machine
+	if(src.cable)
+		machine = src.cable.machine
 	else
-		dat += "Jack in progress... [src.hackprogress]% complete.<br>"
-		dat += "<a href='byond://?src=\ref[src];software=doorjack;cancel=1;sub=0'>Cancel Airlock Jack</a> <br>"
-	//src.hackdoor = machine
-	//src.hackloop()
+		machine = src.hackobj
+	dat += "<font color=#55FF55>Connected"
+	if(src.cable)
+		dat += " via cable"
+	dat += "</font> <br>"
+	if(!is_type_in_list(machine, list(/obj/machinery/door, /obj/machinery/camera, /obj/machinery/autolathe, /obj/machinery/vending, /obj/machinery/bot, /obj/item/device/pda, /obj/item/device/paicard)) || is_type_in_list(machine, list(/obj/machinery/door/airlock/vault, /obj/machinery/door/airlock/hatch, /obj/machinery/door/poddoor, /obj/machinery/door/airlock/highsecurity)) || src.card == machine) //Types that pAI able to hack, Types (some sort of doors at this moment) that pAI not able to hack, Restrict self-hacking
+		dat += "Connected device's firmware does not appear to be compatible with installed protocols.<br>"
+		dat += "<a href='byond://?src=\ref[src];software=interaction;cable=2;sub=0'>Retract Cable</a> <br>"
+		return dat
+
+	if(!src.hackobj)
+		dat += "<a href='byond://?src=\ref[src];software=interaction;jack=1;sub=0'>Begin Jacking</a> <br>"
+	else
+		if(src.hacksuccess == 1 && src.hackobj)
+			dat += "Firmware type: "
+			if(istype(src.hackobj, /obj/machinery/door))
+				dat += "Airlock.<br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=1;sub=0'>Toggle Open</a> <br>"
+				if(istype(src.hackobj, /obj/machinery/door/airlock))
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=2;sub=0'>Toggle Bolt</a> <br>"
+			if(istype(src.hackobj, /obj/machinery/camera))
+				var/obj/machinery/camera/Temp = src.hackobj
+				dat += "Camera.<br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=1;sub=0'>Toggle Active State</a> (Currenty [Temp.status ? "Active" : "Disabled"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=2;sub=0'>Disconnect All Active Viewers</a> <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=3;sub=0'>Toggle Alarm</a> (Currenty [Temp.alarm_on ? "Active" : "Disabled"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=4;sub=0'>Toggle AI Access</a> (Currenty [Temp.hidden ? "Unreachable for AI" : "Active"]) <br>"
+				if(!src.cable)
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=5;sub=0'>Toggle View</a> <br>"
+				else
+					dat += "<font color=#BFBFBF>Toggle View</font> (Locked, unlocks during remote access) <br>"
+			if(istype(src.hackobj, /obj/machinery/autolathe))
+				var/obj/machinery/autolathe/Temp = src.hackobj
+				dat += "Autolathe.<br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=1;sub=0'>Open Interaction Menu</a> <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=2;sub=0'>Toggle Hidden Features</a> (Currently [Temp.hacked ? "Shown" : "Hidden"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=3;sub=0'>Toggle Active State</a> (Currently [Temp.disabled ? "Disabled" : "Active"]) <br>"
+			if(istype(src.hackobj, /obj/item/device/pda))
+				var/obj/item/device/pda/Temp = src.hackobj
+				dat += "PDA.<br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=1;sub=0'>Toggle Messenger</a> (Currently [Temp.toff == 0 ? "Active" : "Disabled"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=2;sub=0'>Change Ringtone</a> (Current: [Temp.ttone]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=3;sub=0'>Toggle Ringtone</a> (Currently [Temp.message_silent == 0 ? "Active" : "Disabled"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=4;sub=0'>Hide/Unhide PDA</a> (Currently [Temp.hidden == 0 ? "Visible" : "Hidden"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=5;sub=0'>Change Shown Name/Job</a> (Current: [Temp.owner] as [Temp.ownrank]) <br>"
+			if(istype(src.hackobj, /obj/item/device/paicard))
+				var/obj/item/device/paicard/Temp = src.hackobj
+				dat += "pAI.<br>"
+				if(Temp.pai)
+					var/mob/living/silicon/pai/Temppai = Temp.pai
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=1;sub=0'>Modify Main Law</a> (Current: [Temppai.pai_law0]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=2;sub=0'>Modify Secondary Laws</a> (Current: [Temppai.pai_laws]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=3;sub=0'>Get Marked Objects List</a> <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=4;sub=0'>Clear Marked Objects List</a> <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=5;sub=0'>Delete All Installed Software</a> <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=6;sub=0'>Unbound</a> <br>"
+					//dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=7;sub=0'>Personality Shift</a> <br>"
+				else
+					dat += "Personality not found.<br>"
+			if(istype(src.hackobj, /obj/machinery/vending))
+				dat += "Vending Machine.<br>"
+				var/obj/machinery/vending/Temp = src.hackobj
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=1;sub=0'>Toggle Item Shooting</a> (Currently [Temp.shoot_inventory ? "Active" : "Disabled"]) <br>"
+				if(Temp.shoot_inventory)
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=2;sub=0'>Shoot Item</a> <br>"
+				else
+					dat += "<font color=#BFBFBF>Shoot Item</font> (Function wasn't unlocked) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=3;sub=0'>Speak</a> <br>"
+				//dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=4;sub=0'>Reset Prices</a> <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=5;sub=0'>Lock/Unlock Hidden Items</a> (Currently [Temp.extended_inventory ? "Shown" : "Hidden"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=6;sub=0'>Toggle Account Verifying</a> (Actually, just make everything silently free. Currently [Temp.check_accounts ? "Active" : "Disabled"]) <br>"
+			if(istype(src.hackobj, /obj/machinery/bot))
+				var/botchecked = 0 //Should we name bot as "Unknown"?
+				if(istype(src.hackobj, /obj/machinery/bot/secbot))
+					botchecked = 1
+					if(istype(src.hackobj, /obj/machinery/bot/secbot/ed209))
+						dat += "ED209 "
+					dat += "Security Bot.<br>"
+					var/obj/machinery/bot/secbot/Temp = src.hackobj
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=3;sub=0'>Toggle ID Checker</a> (Currently [Temp.idcheck ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=4;sub=0'>Toggle Records Checker</a> (Currently [Temp.check_records ? "Active" : "Disabled"]) <br>"
+				if(istype(src.hackobj, /obj/machinery/bot/farmbot))
+					botchecked = 1
+					dat += "Farm Bot.<br>"
+					var/obj/machinery/bot/farmbot/Temp = src.hackobj
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=3;sub=0'> Toggle Plants Watering</a> (Currently [Temp.setting_water ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=4;sub=0'> Toggle Refilling From Nearest Water Tanks</a> (Currently [Temp.setting_refill ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=5;sub=0'> Toggle Fertilizing</a> (Currently [Temp.setting_fertilize ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=6;sub=0'> Toggle Weed Plants</a> (Currently [Temp.setting_weed ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=7;sub=0'> Toggle Weeds Ignoring</a> (Currently [Temp.setting_ignoreWeeds ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=8;sub=0'> Toggle Mushrooms Ingoring</a> (Currently [Temp.setting_ignoreMushrooms ? "Active" : "Disabled"]) <br>"
+				if(istype(src.hackobj, /obj/machinery/bot/floorbot))
+					botchecked = 1
+					dat += "Floor Bot.<br>"
+					var/obj/machinery/bot/floorbot/Temp = src.hackobj
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=3;sub=0'>Toggle Floor Improvment</a> (Currently [Temp.improvefloors ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=4;sub=0'>Toggle Searching Tiles</a> (Currently [Temp.eattiles ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=5;sub=0'>Toggle Tiles Fabrication</a> (Currently [Temp.maketiles ? "Active" : "Disabled"]) <br>"
+				if(!botchecked)
+					dat += "Unknown.<br>"
+				var/obj/machinery/bot/Temp = src.hackobj
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=1;sub=0'>Toggle Interface Lock</a> (Currently [Temp.locked ? "Locked" : "Unlocked"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=2;sub=0'>Turn [Temp.on ? "Off" : "On"]</a> <br>"
+			//Add something new there
+			if(src.hackobj in src.markedobjects)
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=96;sub=0'>Unmark</a> <br>"
+			else
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=95;sub=0'>Mark</a> <br>"
+		else
+			dat += "Jack in progress... [src.hackprogress]% complete.<br>"
+			dat += "<a href='byond://?src=\ref[src];software=interaction;cancel=1;sub=0'>Cancel Jack</a> <br>"
+	if(src.cable)
+		dat += "<br><a href='byond://?src=\ref[src];software=interaction;cable=2;sub=0'>Retract Cable</a> <br>"
+	else
+		dat += "<br><a href='byond://?src=\ref[src];software=interaction;cable=3;sub=0'>Disconnect</a> <br>"
 	return dat
 
-// Door Jack - supporting proc
+// Object Jack - supporting proc
 /mob/living/silicon/pai/proc/hackloop()
 	var/turf/T = get_turf_or_move(src.loc)
-	for(var/mob/living/silicon/ai/AI in player_list)
-		if(T.loc)
-			to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>")
-		else
-			to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>")
+	if(is_type_in_list(src.hackobj, list(/obj/machinery/door, /obj/machinery/camera, /obj/machinery/bot)))
+		for(var/mob/living/silicon/ai/AI in player_list)
+			if(T.loc)
+				to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>")
+			else
+				to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>")
 	while(src.hackprogress < 100)
-		if(src.cable && src.cable.machine && istype(src.cable.machine, /obj/machinery/door) && src.cable.machine == src.hackdoor && get_dist(src, src.hackdoor) <= 1)
-			hackprogress += rand(1, 10)
+		if(src.cable && src.cable.machine && src.cable.machine == src.hackobj && get_dist(src, src.hackobj) <= 1)
+			hackprogress += rand(100, 1000)
 		else
-			src.temp = "Door Jack: Connection to airlock has been lost. Hack aborted."
 			hackprogress = 0
-			src.hackdoor = null
-			QDEL_NULL(src.cable)
 			return
 		if(hackprogress >= 100)		// This is clunky, but works. We need to make sure we don't ever display a progress greater than 100,
 			hackprogress = 100		// but we also need to reset the progress AFTER it's been displayed
-		if(src.screen == "doorjack" && src.subscreen == 0) // Update our view, if appropriate
+		if(src.screen == "interaction" && src.subscreen == 0) // Update our view, if appropriate
 			src.paiInterface()
-		if(hackprogress >= 100)
-			src.hackprogress = 0
-			src.cable.machine:open()
-			QDEL_NULL(src.cable)
+		if(hackprogress == 100)
+			hackprogress = 0
+			//src.cable.machine:open()
+			src.hacksuccess = 1
+			return
 		sleep(50)			// Update every 5 seconds
 
 // Digital Messenger
