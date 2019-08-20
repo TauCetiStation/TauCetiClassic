@@ -119,7 +119,6 @@
 	can_hold = list(/obj/item/weapon/reagent_containers/pill,/obj/item/weapon/dice,/obj/item/weapon/paper)
 	allow_quick_gather = 1
 	use_to_pickup = 1
-	use_sound = list('sound/effects/pillbottle.ogg')
 	var/wrapper_color
 	var/label
 
@@ -142,6 +141,7 @@
 
 /obj/item/weapon/storage/pill_bottle/atom_init()
 	. = ..()
+	use_sound = list('sound/effects/pillbottle.ogg')
 	update_icon()
 
 /obj/item/weapon/storage/pill_bottle/update_icon()

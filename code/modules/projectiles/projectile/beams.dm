@@ -9,11 +9,14 @@
 	eyeblur = 4
 	var/frequency = 1
 	hitscan = 1
-	proj_act_sound = SOUNDIN_LASERACT
 
 	muzzle_type = /obj/effect/projectile/laser/muzzle
 	tracer_type = /obj/effect/projectile/laser/tracer
 	impact_type = /obj/effect/projectile/laser/impact
+
+/obj/item/projectile/beam/atom_init()
+	. = ..()
+	proj_act_sound = SOUNDIN_LASERACT
 
 /obj/item/projectile/beam/practice
 	name = "laser"
@@ -24,6 +27,9 @@
 	fake = 1
 	flag = "laser"
 	eyeblur = 2
+
+/obj/item/projectile/beam/practice/atom_init()
+	. = ..()
 	proj_act_sound = null
 
 /obj/item/projectile/beam/scatter
@@ -75,6 +81,10 @@
 /obj/item/projectile/beam/emitter/singularity_pull()
 	return //don't want the emitters to miss
 
+/obj/item/projectile/beam/lastertag/atom_init()
+	. = ..()
+	proj_act_sound = null
+
 /obj/item/projectile/beam/lastertag/blue
 	name = "lasertag beam"
 	icon_state = "bluelaser"
@@ -83,7 +93,6 @@
 	damage_type = BURN
 	fake = 1
 	flag = "laser"
-	proj_act_sound = null
 
 	muzzle_type = /obj/effect/projectile/laser_blue/muzzle
 	tracer_type = /obj/effect/projectile/laser_blue/tracer
@@ -104,7 +113,6 @@
 	damage_type = BURN
 	fake = 1
 	flag = "laser"
-	proj_act_sound = null
 
 /obj/item/projectile/beam/lastertag/red/on_hit(atom/target, blocked = 0)
 	if(istype(target, /mob/living/carbon/human))
@@ -120,7 +128,6 @@
 	damage = 0
 	damage_type = BURN
 	flag = "laser"
-	proj_act_sound = null
 
 	muzzle_type = /obj/effect/projectile/laser_omni/muzzle
 	tracer_type = /obj/effect/projectile/laser_omni/tracer
@@ -174,8 +181,11 @@
 	damage_type = HALLOSS
 	sharp = FALSE // not a laser
 	stutter = 5
-	proj_act_sound = null
 
 	muzzle_type = /obj/effect/projectile/stun/muzzle
 	tracer_type = /obj/effect/projectile/stun/tracer
 	impact_type = /obj/effect/projectile/stun/impact
+
+/obj/item/projectile/beam/stun/atom_init()
+	. = ..()
+	proj_act_sound = null
