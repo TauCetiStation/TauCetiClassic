@@ -469,6 +469,8 @@
 					breathsound = 'sound/misc/gasmaskbreath.ogg'
 				if(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space))
 					breathsound = pick(SOUNDIN_RIGBREATH)
+				if(alpha < 50)
+					breathsound = pick(SOUNDIN_BREATHMASK) // the quietest breath for stealth
 				playsound(src, breathsound, VOL_EFFECTS_MASTER, null, FALSE, -6)
 			return internal.remove_air_volume(volume_needed)
 		else if(internals)
