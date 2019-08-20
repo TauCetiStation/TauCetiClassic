@@ -511,10 +511,6 @@
 
 	src.updateUsrDialog()
 
-// Vending machines don't use power so we are free to do this
-/obj/machinery/vending/process()
-	return PROCESS_KILL
-
 /obj/machinery/vending/proc/say_slogan()
 	if(stat & (BROKEN|NOPOWER))
 		return
