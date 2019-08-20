@@ -283,11 +283,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 
 	if(href_list["make"])
 		var/coeff = 2 ** prod_coeff
-		var/turf/T
-		if(istype(usr, /mob/living/silicon/pai))
-			T = src.loc
-		else
-			T = get_step(src.loc, get_dir(src,usr))
+		var/turf/T = src.loc
 		// critical exploit fix start -walter0o
 		var/obj/item/template = null
 		var/attempting_to_build = locate(href_list["make"])
