@@ -266,6 +266,33 @@ Implant Specifics:<BR>"}
 			explosion(get_turf(imp_in), -1, -1, 2, 3)
 			qdel(src)
 
+/obj/item/weapon/implant/adrenaline
+	name = "adrenaline implant"
+	desc = "Removes all stuns and knockdowns."
+	icon_state = "implant"
+	uses = 3
+
+	action_button_name = "Adrenaline implant"
+	action_button_is_hands_free = 1
+
+/obj/item/weapon/implant/adrenaline/ui_action_click()
+	uses--
+	to_chat(imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
+	if(ishuman(imp_in))
+		var/mob/living/carbon/human/H = imp_in
+		H.halloss = 0
+		H.shock_stage = 0
+	imp_in.stat = CONSCIOUS
+	imp_in.SetParalysis(0)
+	imp_in.SetStunned(0)
+	imp_in.SetWeakened(0)
+	imp_in.lying = 0
+	imp_in.update_canmove()
+	imp_in.reagents.add_reagent("hyperzine", 1)
+	imp_in.reagents.add_reagent("stimulants", 4)
+	if (!uses)
+		qdel(src)
+
 /obj/item/weapon/implant/emp
 	name = "emp implant"
 	desc = "Triggers an EMP."
