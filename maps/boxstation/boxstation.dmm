@@ -18305,6 +18305,14 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Biohazard";
+	name = "Biohazard Shutter";
+	opacity = 0
+	},
+/obj/machinery/door/firedoor,
 /turf/simulated,
 /area/rnd/lab)
 "aFW" = (
@@ -33752,6 +33760,7 @@
 /obj/machinery/door/poddoor/shutters{
 	id = "Captain_private"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated,
 /area/crew_quarters/captain)
 "bjr" = (
@@ -33884,6 +33893,7 @@
 /obj/machinery/door/poddoor/shutters{
 	id = "Captain_private"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated,
 /area/crew_quarters/captain)
 "bjF" = (
@@ -33987,6 +33997,7 @@
 /area/maintenance/engineering)
 "bjO" = (
 /obj/machinery/door/airlock/medical/glass,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -35126,6 +35137,7 @@
 	id = "Captain_private"
 	},
 /obj/structure/cable,
+/obj/machinery/door/firedoor,
 /turf/simulated,
 /area/crew_quarters/captain)
 "bmf" = (
@@ -37147,6 +37159,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated,
 /area/security/vacantoffice)
 "bro" = (
@@ -39532,6 +39545,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated,
 /area/security/vacantoffice)
 "bwU" = (
@@ -41352,6 +41366,14 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Biohazard";
+	name = "Biohazard Shutter";
+	opacity = 0
+	},
+/obj/machinery/door/firedoor,
 /turf/simulated,
 /area/rnd/lab)
 "bBt" = (
