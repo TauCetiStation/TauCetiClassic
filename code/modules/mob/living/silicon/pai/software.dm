@@ -944,7 +944,7 @@
 				to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>")
 	while(src.hackprogress < 100)
 		if(src.cable && src.cable.machine && src.cable.machine == src.hackobj && get_dist(src, src.hackobj) <= 1)
-			hackprogress += rand(100, 1000)
+			hackprogress += rand(1, 10)
 		else
 			hackprogress = 0
 			return
