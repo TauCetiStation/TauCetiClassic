@@ -202,7 +202,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	..()
 
 /obj/machinery/autolathe/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/pai_cable))
+	if(I.flags && NODECONSTRUCT)
 		return 
 	if (busy)
 		to_chat(user, "<span class='warning'>The autolathe is busy. Please wait for completion of previous operation.</span>")
