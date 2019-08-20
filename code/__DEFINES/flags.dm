@@ -18,6 +18,7 @@
 #define ON_BORDER       128    // Item has priority to check when entering or leaving.
 #define THICKMATERIAL   256    // Prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with NOSLIP for shoes)
 #define NOSLIP          256    // Prevents from slipping on wet floors, in space etc.
+#define NOATTACKANIMATION	512	   // Removes attack animation
 
 #define GLASSESCOVERSEYES   256
 #define MASKCOVERSEYES      256    // Get rid of some of the other retardation in these flags.
