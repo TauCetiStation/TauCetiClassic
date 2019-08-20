@@ -328,10 +328,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 0;
-	pixel_y = 0
-	},
+/obj/item/weapon/storage/box/donkpockets,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -14982,7 +14979,7 @@
 	},
 /area/shuttle/vox/station)
 "aYn" = (
-/obj/item/weapon/organ/r_arm,
+/obj/item/organ/external/r_arm,
 /turf/simulated/shuttle/floor4{
 	name = "red floor";
 	nitrogen = 103.984;
@@ -21083,9 +21080,7 @@
 	},
 /area/centcom/holding)
 "knb" = (
-/obj/structure/closet/secure_closet/bar{
-	req_access = list(25)
-	},
+/obj/structure/closet/secure_closet/bar,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},

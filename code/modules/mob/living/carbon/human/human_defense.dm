@@ -264,7 +264,7 @@
 			continue
 		O.emp_act(severity)
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.status & ORGAN_DESTROYED)
+		if(BP.is_stump)
 			continue
 		BP.emp_act(severity)
 		for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
@@ -288,9 +288,7 @@
 
 	var/obj/item/organ/external/BP = get_bodypart(target_zone)
 	if (!BP)
-		return FALSE
-	if(BP.status & ORGAN_DESTROYED)
-		to_chat(user, "What [BP.name]?")
+		to_chat(user, "What [parse_zone(target_zone)]?")
 		return FALSE
 	var/hit_area = BP.name
 
@@ -300,7 +298,7 @@
 			return 0
 
 	if(istype(I,/obj/item/weapon/card/emag))
-		if(!(BP.status & ORGAN_ROBOT))
+		if(!BP.is_robotic())
 			to_chat(user, "<span class='userdanger'>That limb isn't robotic.</span>")
 			return
 		if(BP.sabotaged)
@@ -453,7 +451,7 @@
 	if(target_zone)
 		BP = get_bodypart(target_zone)
 
-	if(!BP || (BP.status & ORGAN_DESTROYED))
+	if(!BP || (BP.is_stump))
 		return NOLIMB
 
 	var/list/items = get_equipped_items() - list(l_hand, r_hand)

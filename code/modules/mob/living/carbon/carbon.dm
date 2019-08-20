@@ -216,6 +216,7 @@
 
 			for(var/obj/item/organ/external/BP in H.bodyparts)
 				var/status = ""
+				var/BPname = BP.name
 				var/brutedamage = BP.brute_dam
 				var/burndamage = BP.burn_dam
 				if(halloss > 0)
@@ -241,13 +242,14 @@
 				else if(burndamage > 0)
 					status += "numb"
 
-				if(BP.status & ORGAN_DESTROYED)
+				if(BP.is_stump)
 					status = "MISSING!"
+					BPname = parse_zone(BP.body_zone)
 				if(BP.status & ORGAN_MUTATED)
 					status = "weirdly shapen."
 				if(status == "")
 					status = "OK"
-				src.show_message(text("\t <span class='[status == "OK" ? "notice " : "warning"]'>My [] is [].</span>", BP.name,status), 1)
+				src.show_message(text("\t <span class='[status == "OK" ? "notice " : "warning"]'>My [] is [].</span>", BPname, status), 1)
 
 			if(roundstart_quirks.len)
 				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")

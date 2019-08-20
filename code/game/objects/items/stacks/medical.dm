@@ -42,7 +42,7 @@
 				to_chat(user, "<span class='warning'>You can't apply [src] through [H.wear_suit]!</span>")
 				return 1
 
-		if(BP.status & ORGAN_ROBOT)
+		if(BP.is_robotic())
 			to_chat(user, "<span class='warning'>This isn't useful at all on a robotic limb..</span>")
 			return 1
 	else
