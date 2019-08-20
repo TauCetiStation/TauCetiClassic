@@ -401,6 +401,9 @@
 							if(5)
 								targetPersonality.ram = targetPersonality.maxram
 								targetPersonality.software = list()
+								targetPersonality.markedobjects = list()
+								targetPersonality.hackobj = null
+
 							if(6)
 								targetPersonality.master = null
 								targetPersonality.master_dna = null
@@ -901,12 +904,12 @@
 					botchecked = 1
 					dat += "Farm Bot.<br>"
 					var/obj/machinery/bot/farmbot/Temp = src.hackobj
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=3;sub=0'> Toggle Plants Watering</a> (Currently [Temp.setting_water ? "Active" : "Disabled"]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=4;sub=0'> Toggle Refilling From Nearest Water Tanks</a> (Currently [Temp.setting_refill ? "Active" : "Disabled"]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=5;sub=0'> Toggle Fertilizing</a> (Currently [Temp.setting_fertilize ? "Active" : "Disabled"]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=6;sub=0'> Toggle Weed Plants</a> (Currently [Temp.setting_weed ? "Active" : "Disabled"]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=7;sub=0'> Toggle Weeds Ignoring</a> (Currently [Temp.setting_ignoreWeeds ? "Active" : "Disabled"]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=8;sub=0'> Toggle Mushrooms Ingoring</a> (Currently [Temp.setting_ignoreMushrooms ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=3;sub=0'>Toggle Plants Watering</a> (Currently [Temp.setting_water ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=4;sub=0'>Toggle Refilling From Nearest Water Tanks</a> (Currently [Temp.setting_refill ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=5;sub=0'>Toggle Fertilizing</a> (Currently [Temp.setting_fertilize ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=6;sub=0'>Toggle Weed Plants</a> (Currently [Temp.setting_weed ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=7;sub=0'>Toggle Weeds Ignoring</a> (Currently [Temp.setting_ignoreWeeds ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=8;sub=0'>Toggle Mushrooms Ingoring</a> (Currently [Temp.setting_ignoreMushrooms ? "Active" : "Disabled"]) <br>"
 				if(istype(src.hackobj, /obj/machinery/bot/floorbot))
 					botchecked = 1
 					dat += "Floor Bot.<br>"
