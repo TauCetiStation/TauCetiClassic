@@ -101,7 +101,7 @@
 		overlays += "nucgun-whee"
 		return
 	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = ceil(ratio * 4) * 25
+	ratio = CEIL(ratio * 4) * 25
 	overlays += "nucgun-[ratio]"
 
 /obj/item/weapon/gun/energy/gun/nuclear/proc/update_reactor()

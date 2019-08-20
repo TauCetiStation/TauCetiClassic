@@ -41,8 +41,8 @@
 		equalize_avg_temp += F.temperature
 
 	if(islist(equalizing_fluids) && equalizing_fluids.len > 1)
-		equalize_avg_depth = Floor(equalize_avg_depth / equalizing_fluids.len)
-		equalize_avg_temp = Floor(equalize_avg_temp / equalizing_fluids.len)
+		equalize_avg_depth = FLOOR(equalize_avg_depth / equalizing_fluids.len, 1)
+		equalize_avg_temp = FLOOR(equalize_avg_temp / equalizing_fluids.len, 1)
 		for(var/obj/effect/fluid/F in equalizing_fluids)
 			if(QDELETED(F))
 				continue

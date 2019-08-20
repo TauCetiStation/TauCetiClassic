@@ -151,7 +151,7 @@
 	else
 		var/tmp_charges = refill.charges
 		for(var/datum/data/vending_product/machine_content in machine)
-			var/restock = ceil(((machine_content.max_amount - machine_content.amount) / to_restock) * tmp_charges)
+			var/restock = CEIL(((machine_content.max_amount - machine_content.amount) / to_restock) * tmp_charges)
 			if(restock > refill.charges)
 				restock = refill.charges
 			machine_content.amount += restock

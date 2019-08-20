@@ -17,7 +17,7 @@
 	aSignal.code = rand(1,100)
 
 	aSignal.frequency = rand(1200, 1599)
-	if(IsMultiple(aSignal.frequency, 2))//signaller frequencies are always uneven!
+	if(ISMULTIPLE(aSignal.frequency, 2))//signaller frequencies are always uneven!
 		aSignal.frequency++
 
 /obj/effect/anomaly/Destroy()

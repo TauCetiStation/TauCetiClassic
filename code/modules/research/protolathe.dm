@@ -231,7 +231,7 @@ Note: Must be placed west/left of and R&D console to function.
 
 /obj/machinery/r_n_d/protolathe/proc/eject_sheet(sheet_type, amount)
 	if(loaded_materials[sheet_type])
-		var/available_num_sheets = Floor(loaded_materials[sheet_type].amount / loaded_materials[sheet_type].sheet_size)
+		var/available_num_sheets = FLOOR(loaded_materials[sheet_type].amount / loaded_materials[sheet_type].sheet_size, 1)
 		if(available_num_sheets > 0)
 			var/S = loaded_materials[sheet_type].sheet_type
 			var/obj/item/stack/sheet/sheet = new S(loc)
