@@ -24,14 +24,14 @@
 	overlays.Add(fore_image)
 
 	var/turf/src_turf = get_turf(src)
-	for(var/dir_ in cardinal)
-		var/turf/T = get_step(src_turf, dir_)
+	for(var/dir in cardinal)
+		var/turf/T = get_step(src_turf, dir)
 		var/obj/effect/effect/aqueous_foam/AFFF = locate(/obj/effect/effect/aqueous_foam) in T
 		if(AFFF && !AFFF.disolving)
 			AFFF.update_icon()
 		else
-			var/image/I = image(icon, icon_state="afff_foam_border", dir=dir_, layer=src.layer)
-			switch(dir_)
+			var/image/I = image(icon, icon_state="afff_foam_border", dir=dir, layer=src.layer)
+			switch(dir)
 				if(NORTH)
 					I.pixel_y = 32
 				if(SOUTH)
@@ -52,12 +52,12 @@
 	overlays.Add(fore_image)
 
 	var/turf/src_turf = get_turf(src)
-	for(var/dir_ in cardinal)
-		var/turf/T = get_step(src_turf, dir_)
+	for(var/dir in cardinal)
+		var/turf/T = get_step(src_turf, dir)
 		var/obj/effect/effect/aqueous_foam/AFFF = locate(/obj/effect/effect/aqueous_foam) in T
 		if(!AFFF || AFFF.disolving)
-			var/image/I = image(icon, icon_state="afff_foam_border", dir=dir_, layer=src.layer)
-			switch(dir_)
+			var/image/I = image(icon, icon_state="afff_foam_border", dir=dir, layer=src.layer)
+			switch(dir)
 				if(NORTH)
 					I.pixel_y = 32
 				if(SOUTH)
@@ -79,8 +79,8 @@
 
 	var/turf/src_turf = get_turf(src)
 
-	for(var/dir_ in cardinal)
-		var/turf/T = get_step(src_turf, dir_)
+	for(var/dir in cardinal)
+		var/turf/T = get_step(src_turf, dir)
 		var/obj/effect/effect/aqueous_foam/AFFF = locate(/obj/effect/effect/aqueous_foam) in T
 		if(AFFF  && !AFFF.disolving)
 			AFFF.update_icon()
@@ -98,7 +98,7 @@
 
 	if(ismob(AM))
 		var/mob/M = AM
-		if(M.lying || M.resting)
+		if(M.lying || M.crawling)
 			return
 
 		if(isslime(AM)) // Slimes are vulnerable to us and shouldn't be able to destroy us.
