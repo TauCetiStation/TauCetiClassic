@@ -104,19 +104,19 @@
 
 /mob/living/simple_animal/hostile/carp/dog
 	name = "REX"
-	desc = "That's a cute little doge... WAIT, WHAT???!!"
+	desc = "That's a cute little dog."
 	icon = 'icons/mob/doge.dmi'
 	icon_state = "shepherd"
-	maxHealth = 9001
-	health = 9001
+	maxHealth = 120
+	health = 100
 	a_intent = "harm"
 
 	turns_per_move = 5
 	speed = -15
 	move_to_delay = -15
 
-	melee_damage_lower = 400
-	melee_damage_upper = 400
+	melee_damage_lower = 0
+	melee_damage_upper = 0
 
 	attacktext = "licks"
 
