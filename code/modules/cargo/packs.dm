@@ -102,8 +102,11 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
-					/obj/item/weapon/pen/paralysis)
-	cost = 1750
+					/obj/item/weapon/storage/box/syndie_kit/chameleon,
+					/obj/item/weapon/storage/toolbox/syndicate,
+					/obj/item/weapon/storage/box/syndie_kit/posters,
+					)
+	cost = 10000
 	crate_name = "Special Ops crate"
 	group = "Security"
 	hidden = TRUE
