@@ -9,7 +9,7 @@
 		typing_indicator.layer = MOB_LAYER + 1
 
 	if(typing_indicator.icon_state != indi_icon)
-		if(typing)
+		if(typing && state)
 			overlays.Remove(typing_indicator)
 		typing_indicator.icon_state = indi_icon
 
@@ -26,9 +26,6 @@
 /mob/verb/say_wrapper()
 	set name = ".Say"
 	set hidden = TRUE
-
-	if(typing)
-		return
 
 	set_typing_indicator(TRUE)
 	var/message = input("","say (text)") as text|null

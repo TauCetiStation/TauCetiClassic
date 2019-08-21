@@ -159,7 +159,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		to_chat(usr, "<span class='warning'>The [name] is busy right now</span>")
 		return
 	if (!(D.build_type & IMPRINTER))
-		message_admins("Circuit imprinter exploit attempted by [key_name(usr, usr.client)]!")
+		message_admins("Circuit imprinter exploit attempted by [key_name(usr, usr.client)]! [ADMIN_JMP(usr)]")
 		return
 
 	busy = TRUE

@@ -961,12 +961,12 @@
 /obj/machinery/door/window/brigdoor{
 	name = "Weapons locker"
 	},
-/obj/item/ammo_box/magazine/m9mmr_2,
-/obj/item/ammo_box/magazine/m9mmr_2,
-/obj/item/ammo_box/magazine/m9mmr_2,
-/obj/item/ammo_box/magazine/m9mmr_2,
-/obj/item/ammo_box/magazine/m9mmr_2,
-/obj/item/ammo_box/magazine/m9mmr_2,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -1002,9 +1002,9 @@
 /obj/machinery/door/window/brigdoor{
 	name = "Weapons locker"
 	},
-/obj/item/weapon/gun/projectile/sigi,
-/obj/item/weapon/gun/projectile/sigi,
-/obj/item/weapon/gun/projectile/sigi,
+/obj/item/weapon/gun/projectile/wjpp,
+/obj/item/weapon/gun/projectile/wjpp,
+/obj/item/weapon/gun/projectile/wjpp,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -4793,8 +4793,7 @@
 	},
 /area/crew_quarters/fitness)
 "aif" = (
-/obj/structure/table,
-/obj/item/weapon/surgicaldrill,
+/obj/structure/closet/crate/freezer,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitehall"
@@ -10888,6 +10887,7 @@
 	info_links = "Clown Memo"
 	},
 /obj/item/toy/prize/honk,
+/obj/item/weapon/reagent_containers/spray/watergun,
 /turf/simulated/floor/wood,
 /area/crew_quarters/theatre)
 "asd" = (
@@ -11270,7 +11270,7 @@
 	name = "exterior access button";
 	pixel_x = -25;
 	pixel_y = -25;
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -47786,8 +47786,7 @@
 	},
 /area/maintenance/engineering)
 "bQx" = (
-/obj/structure/table,
-/obj/item/weapon/surgicaldrill,
+/obj/structure/closet/crate/freezer,
 /turf/simulated/floor{
 	icon_state = "whitehall"
 	},
@@ -53247,7 +53246,7 @@
 	name = "interior access button";
 	pixel_x = -25;
 	pixel_y = -25;
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -54973,7 +54972,7 @@
 	name = "interior access button";
 	pixel_x = -20;
 	pixel_y = -20;
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -55433,7 +55432,7 @@
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "engineering_west_airlock";
 	pixel_x = 25;
-	req_access = list(10, 13);
+	req_access = list(10,13);
 	tag_airpump = "engineering_west_pump";
 	tag_chamber_sensor = "engineering_west_sensor";
 	tag_exterior_door = "engineering_west_outer";
@@ -55468,7 +55467,7 @@
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "engineering_east_airlock";
 	pixel_x = -25;
-	req_access = list(10, 13);
+	req_access = list(10,13);
 	tag_airpump = "engineering_east_pump";
 	tag_chamber_sensor = "engineering_east_sensor";
 	tag_exterior_door = "engineering_east_outer";
@@ -58142,7 +58141,7 @@
 	id_tag = "robotics_solar_outer";
 	locked = 1;
 	name = "Engineering External Access";
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/portsolar)
@@ -61170,7 +61169,7 @@
 	id_tag = "solar_xeno_outer";
 	locked = 1;
 	name = "Engineering External Access";
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -61562,7 +61561,7 @@
 	name = "exterior access button";
 	pixel_x = -20;
 	pixel_y = 20;
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -62065,7 +62064,7 @@
 	name = "exterior access button";
 	pixel_x = 25;
 	pixel_y = 25;
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /obj/structure/cable,
 /turf/simulated/floor/plating/airless/catwalk,
@@ -62506,6 +62505,7 @@
 	network = list("SS13","Medical")
 	},
 /obj/structure/disposalpipe/segment,
+/obj/item/weapon/surgicaldrill,
 /turf/simulated/floor,
 /area/medical/surgery2)
 "cAc" = (
@@ -63247,7 +63247,7 @@
 	id_tag = "engineering_west_outer";
 	locked = 1;
 	name = "Engineering External Access";
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /turf/simulated/floor/plating,
 /area/engine/engineering)
@@ -63358,7 +63358,7 @@
 	name = "exterior access button";
 	pixel_x = 20;
 	pixel_y = 20;
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/engine/engineering)
@@ -63377,7 +63377,7 @@
 	id_tag = "engineering_east_outer";
 	locked = 1;
 	name = "Engineering External Access";
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /turf/simulated/floor/plating,
 /area/engine/engineering)
@@ -63432,7 +63432,7 @@
 	name = "exterior access button";
 	pixel_x = 20;
 	pixel_y = 20;
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -65511,7 +65511,7 @@
 	id_tag = "engineering_west_inner";
 	locked = 1;
 	name = "Engineering External Access";
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/door/firedoor,
@@ -65673,7 +65673,7 @@
 	id_tag = "engineering_east_inner";
 	locked = 1;
 	name = "Engineering External Access";
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/door/firedoor,
@@ -66378,7 +66378,7 @@
 	name = "interior access button";
 	pixel_x = -20;
 	pixel_y = -20;
-	req_access = list(10, 13)
+	req_access = list(10,13)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -76182,6 +76182,7 @@
 	dir = 4;
 	network = list("SS13","Medical")
 	},
+/obj/item/weapon/surgicaldrill,
 /turf/simulated/floor,
 /area/medical/surgery)
 "sHb" = (
@@ -119654,9 +119655,9 @@ ceO
 ceO
 ceO
 ceO
-bjc
+ceO
 bjb
-bjc
+ceO
 aaa
 aaa
 aaa

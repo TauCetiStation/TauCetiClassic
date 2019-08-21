@@ -221,7 +221,7 @@
 	var/pressure = air_contents.return_pressure()
 	if(pressure > TANK_FRAGMENT_PRESSURE)
 		if(!istype(src.loc,/obj/item/device/transfer_valve))
-			message_admins("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+			message_admins("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast]. [ADMIN_JMP(src)]")
 			log_game("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
 		//world << "<span class='notice'>[x],[y] tank is exploding: [pressure] kPa</span>"
 		//Give the gas a chance to build up more pressure through reacting

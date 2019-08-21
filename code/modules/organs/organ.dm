@@ -29,7 +29,7 @@
 
 	return ..()
 
-/obj/item/organ/proc/insert_organ(mob/living/carbon/human/H)
+/obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE)
 	STOP_PROCESSING(SSobj, src)
 
 	loc = null
@@ -60,6 +60,21 @@
 		germ_level -= 6	//at germ_level == 500, this should cure the infection in a minute
 	else
 		germ_level -= 2 //at germ_level == 1000, this will cure the infection in 5 minutes
+
+/obj/item/organ/proc/is_preserved()
+	if(istype(loc,/obj/item/organ))
+		var/obj/item/organ/O = loc
+		return O.is_preserved()
+	else
+		return (istype(loc,/obj/structure/closet/secure_closet/freezer) || istype(loc,/obj/structure/closet/crate/freezer))
+
+/obj/item/organ/examine(mob/user)
+	. = ..(user)
+	show_decay_status(user)
+
+/obj/item/organ/proc/show_decay_status(mob/user)
+	if(status & ORGAN_DEAD)
+		to_chat(user, "<span class='notice'>The decay has set into \the [src].</span>")
 
 //Handles chem traces
 /mob/living/carbon/human/proc/handle_trace_chems()
@@ -103,7 +118,8 @@
 		return
 
 	for(var/obj/item/organ/external/BP in bad_bodyparts)
-		if(!BP)
+		if(!BP || QDELETED(BP))
+			bad_bodyparts -= BP
 			continue
 		if(!BP.need_process())
 			bad_bodyparts -= BP

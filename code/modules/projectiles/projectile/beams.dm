@@ -14,6 +14,10 @@
 	tracer_type = /obj/effect/projectile/laser/tracer
 	impact_type = /obj/effect/projectile/laser/impact
 
+/obj/item/projectile/beam/atom_init()
+	. = ..()
+	proj_act_sound = SOUNDIN_LASERACT
+
 /obj/item/projectile/beam/practice
 	name = "laser"
 	icon_state = "laser"
@@ -23,6 +27,10 @@
 	fake = 1
 	flag = "laser"
 	eyeblur = 2
+
+/obj/item/projectile/beam/practice/atom_init()
+	. = ..()
+	proj_act_sound = null
 
 /obj/item/projectile/beam/scatter
 	name = "laser pellet"
@@ -72,6 +80,10 @@
 
 /obj/item/projectile/beam/emitter/singularity_pull()
 	return //don't want the emitters to miss
+
+/obj/item/projectile/beam/lastertag/atom_init()
+	. = ..()
+	proj_act_sound = null
 
 /obj/item/projectile/beam/lastertag/blue
 	name = "lasertag beam"
@@ -173,3 +185,7 @@
 	muzzle_type = /obj/effect/projectile/stun/muzzle
 	tracer_type = /obj/effect/projectile/stun/tracer
 	impact_type = /obj/effect/projectile/stun/impact
+
+/obj/item/projectile/beam/stun/atom_init()
+	. = ..()
+	proj_act_sound = null

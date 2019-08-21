@@ -126,7 +126,7 @@
 					if(security_level != old_level)
 						//Only notify the admins if an actual change happened
 						log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
-						message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
+						message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()]. [ADMIN_JMP(usr)]")
 						switch(security_level)
 							if(SEC_LEVEL_GREEN)
 								feedback_inc("alert_comms_green",1)
@@ -152,7 +152,7 @@
 					return
 				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
 				log_say("[key_name(usr)] has made a captain announcement: [input]")
-				message_admins("[key_name_admin(usr)] has made a captain announcement. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
+				message_admins("[key_name_admin(usr)] has made a captain announcement. [ADMIN_JMP(usr)]")
 
 		if("callshuttle")
 			src.state = STATE_DEFAULT
@@ -471,7 +471,7 @@
 
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
-	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	message_admins("[key_name_admin(user)] has called the shuttle. [ADMIN_JMP(user)]")
 	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
 
 	make_maint_all_access(FALSE)
@@ -511,7 +511,7 @@
 	SSshuttle.shuttlealert(1)
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
-	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	message_admins("[key_name_admin(user)] has called the shuttle. [ADMIN_JMP(user)]")
 	captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "crew_shut_called")
 
 	return
@@ -530,7 +530,7 @@
 	if(SSshuttle.direction != -1 && SSshuttle.online) //check that shuttle isn't already heading to centcomm
 		SSshuttle.recall()
 		log_game("[key_name(user)] has recalled the shuttle.")
-		message_admins("[key_name_admin(user)] has recalled the shuttle. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		message_admins("[key_name_admin(user)] has recalled the shuttle. [ADMIN_JMP(user)]")
 
 		if(timer_maint_revoke_id)
 			deltimer(timer_maint_revoke_id)
