@@ -20,7 +20,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/effect/aqueous_foam/atom_init_late()
-	fore_image += image(icon, icon_state="afff_foam_fore", layer=OBJ_LAYER + 0.9)
+	fore_image += image(icon, icon_state="afff_foam_fore", layer=MOB_LAYER + 0.9)
 	overlays.Add(fore_image)
 
 	var/turf/src_turf = get_turf(src)
@@ -96,11 +96,17 @@
 		if(I.w_class <= ITEM_SIZE_TINY)
 			return
 
-	if(isslime(AM)) // Slimes are vulnerable to us and shouldn't be able to destroy us.
-		var/mob/living/carbon/slime/S = AM
-		S.Stun(5)
-	else
-		INVOKE_ASYNC(src, .proc/disolve) // You should never call procs with delay from BYOND movement procs.
+	if(ismob(AM))
+		var/mob/M = AM
+		if(M.lying || M.resting)
+			return
+
+		if(isslime(AM)) // Slimes are vulnerable to us and shouldn't be able to destroy us.
+			var/mob/living/carbon/slime/S = AM
+			S.Stun(5)
+			return
+
+	INVOKE_ASYNC(src, .proc/disolve) // You should never call procs with delay from BYOND movement procs.
 
 /obj/effect/effect/aqueous_foam/attack_hand(mob/user)
 	disolve()

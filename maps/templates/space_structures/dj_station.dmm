@@ -94,7 +94,7 @@
 /turf/simulated/floor/plating,
 /area/djstation)
 "ap" = (
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/djstation)
 "aq" = (
