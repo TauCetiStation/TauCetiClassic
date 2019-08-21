@@ -45,7 +45,7 @@
 			return
 
 		if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
-			if(usr.back == src && !reachable_while_equipped)
+			if(slot_equipped == SLOT_BACK && !reachable_while_equipped)
 				to_chat(usr, "<span class='warning'>You can't reach into your [name] while it's equipped!</span>")
 				return
 			else
@@ -313,7 +313,7 @@
 
 /obj/item/weapon/storage/attack_hand(mob/user)
 	if (loc == user)
-		if(!reachable_while_equipped && user.back == src)
+		if(!reachable_while_equipped && slot_equipped == SLOT_BACK)
 			to_chat(user, "<span class='warning'>You can't reach into your [name] while it's equipped!</span>")
 			return
 		else
