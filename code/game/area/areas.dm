@@ -297,11 +297,11 @@ var/list/ghostteleportlocs = list()
 	if(always_unpowered)
 		return 0
 	switch(chan)
-		if(EQUIP, STATIC_EQUIP)
+		if(STATIC_EQUIP)
 			return power_equip
-		if(LIGHT, STATIC_LIGHT)
+		if(STATIC_LIGHT)
 			return power_light
-		if(ENVIRON, STATIC_ENVIRON)
+		if(STATIC_ENVIRON)
 			return power_environ
 
 	return 0
@@ -317,20 +317,14 @@ var/list/ghostteleportlocs = list()
 /area/proc/usage(chan)
 	var/used = 0
 	switch(chan)
-		if(LIGHT)
-			used += used_light
-		if(EQUIP)
-			used += used_equip
-		if(ENVIRON)
-			used += used_environ
 		if(TOTAL)
-			used += used_light + used_equip + used_environ
+			used += static_light + static_equip + static_environ + used_equip + used_light + used_environ
 		if(STATIC_EQUIP)
-			used += static_equip
+			used += static_equip + used_equip
 		if(STATIC_LIGHT)
-			used += static_light
+			used += static_light + used_light
 		if(STATIC_ENVIRON)
-			used += static_environ
+			used += static_environ + used_environ
 	return used
 
 /area/proc/addStaticPower(value, powerchannel)
@@ -351,13 +345,12 @@ var/list/ghostteleportlocs = list()
 	used_environ = 0
 
 /area/proc/use_power(var/amount, var/chan)
-
 	switch(chan)
-		if(EQUIP)
+		if(STATIC_EQUIP)
 			used_equip += amount
-		if(LIGHT)
+		if(STATIC_LIGHT)
 			used_light += amount
-		if(ENVIRON)
+		if(STATIC_ENVIRON)
 			used_environ += amount
 
 

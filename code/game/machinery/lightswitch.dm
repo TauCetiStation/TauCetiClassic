@@ -73,7 +73,7 @@
 /obj/machinery/light_switch/power_change()
 
 	if(!otherarea)
-		if(powered(LIGHT))
+		if(powered(power_channel))
 			stat &= ~NOPOWER
 		else
 			stat |= NOPOWER
