@@ -40,7 +40,7 @@
 	fire_sound = 'sound/weapons/guns/gunpulse.ogg'
 
 /obj/item/ammo_casing/energy/laser/omnitag
-	projectile_type = /obj/item/projectile/beam/lastertag/omni
+	projectile_type = /obj/item/projectile/beam/lasertag/omni
 	select_name = "omnitag"
 
 /obj/item/ammo_casing/energy/laser/bluetag
