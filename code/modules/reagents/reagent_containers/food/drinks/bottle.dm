@@ -62,6 +62,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/update_icon()
 	show_filler_on_icon(3, 24, 0)
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user, def_zone)
 
 	if(!target)
