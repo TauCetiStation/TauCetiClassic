@@ -258,6 +258,11 @@
 	if(update & 1) // Updating the icon state
 		if(update_state & UPSTATE_ALLGOOD)
 			icon_state = "apc0"
+		else if(update_state & UPSTATE_BROKE)
+			if(update_state & UPSTATE_OPENED1)
+				icon_state = "apc1-b-nocover"
+			else
+				icon_state = "apc-b"
 		else if(update_state & (UPSTATE_OPENED1|UPSTATE_OPENED2))
 			var/basestate = "apc[ cell ? "2" : "1" ]"
 			if(update_state & UPSTATE_OPENED1)
@@ -265,10 +270,6 @@
 					icon_state = "apcmaint" //disabled APC cannot hold cell
 				else
 					icon_state = basestate
-			else if(update_state & UPSTATE_OPENED2)
-				icon_state = "[basestate]-nocover"
-		else if(update_state & UPSTATE_BROKE)
-			icon_state = "apc-b"
 		else if(update_state & UPSTATE_BLUESCREEN)
 			icon_state = "apcemag"
 		else if(update_state & UPSTATE_WIREEXP)
@@ -313,8 +314,6 @@
 	if(opened)
 		if(opened==1)
 			update_state |= UPSTATE_OPENED1
-		if(opened==2)
-			update_state |= UPSTATE_OPENED2
 	else if(emagged || malfai)
 		update_state |= UPSTATE_BLUESCREEN
 	else if(wiresexposed)
@@ -407,13 +406,36 @@
 		else if (opened!=2) //cover isn't removed
 			opened = 0
 			update_icon()
-	else if (iscrowbar(W) && !((stat & BROKEN) || malfhack) )
-		if(coverlocked && !(stat & MAINT))
-			to_chat(user, "<span class='warning'>The cover is locked and cannot be opened.</span>")
-			return
+
+	else if(iscrowbar(W) && !opened)
+		if (stat & BROKEN)
+			user.visible_message("<span class='warning'>[user.name] try open [src.name] cover.</span>", "<span class='notice'>You try open [src.name] cover.</span>")
+			if(W.use_tool(src, user, 25, volume = 25))
+				opened = TRUE
+				locked = FALSE
+				if(cell)
+					to_chat(user, "<span class='notice'>Power cell from [src.name] is dropped</span>")
+					cell.forceMove(user.loc)
+					cell = null
+				update_icon()
+
+		else if (!(stat & BROKEN) || !malfhack)
+			if(coverlocked && !(stat & MAINT))
+				to_chat(user, "<span class='warning'>The cover is locked and cannot be opened.</span>")
+				return
+			else
+				opened = TRUE
+				update_icon()
+
+	else if (iswrench(W) && opened && (stat & BROKEN))
+		if(coverlocked)
+			to_chat(user, "<span class='notice'>Remove security APC bolts.</span>")
+			if(W.use_tool(src, user, 5, volume = 5))
+				coverlocked = FALSE
+				update_icon()
 		else
-			opened = 1
-			update_icon()
+			to_chat(user, "<span class='warning'>APC bolts alredy removed.</span>")
+
 	else if	(istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		if(cell)
 			to_chat(user, "There is a power cell already installed.")
@@ -430,6 +452,7 @@
 				"You insert the power cell.")
 			chargecount = 0
 			update_icon()
+
 	else if	(isscrewdriver(W))	// haxing
 		if(opened)
 			if (cell)
@@ -450,9 +473,10 @@
 					to_chat(user, "<span class='warning'>There is nothing to secure.</span>")
 					return
 				update_icon()
+
 		else if(emagged)
 			to_chat(user, "The interface is broken.")
-		else
+		else if(!(stat & BROKEN))
 			wiresexposed = !wiresexposed
 			to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 			update_icon()
@@ -473,6 +497,7 @@
 				update_icon()
 			else
 				to_chat(user, "<span class='warning'>Access denied.</span>")
+
 	else if (istype(W, /obj/item/weapon/card/emag) && !(emagged || malfhack))		// trying to unlock with an emag card
 		if(opened)
 			to_chat(user, "You must close the cover to swipe an ID card.")
@@ -492,6 +517,7 @@
 					update_icon()
 				else
 					to_chat(user, "You fail to [ locked ? "unlock" : "lock"] the APC interface.")
+
 	else if (iscoil(W) && !terminal && opened && has_electronics != 2)
 		if (src.loc:intact)
 			to_chat(user, "<span class='warning'>You must remove the floor plating in front of the APC first.</span>")
@@ -576,26 +602,15 @@
 			if (opened==2)
 				opened = 1
 			update_icon()
-	else
-		if (((stat & BROKEN) || malfhack) \
-				&& !opened \
-				&& W.force >= 5 \
-				&& W.w_class >= ITEM_SIZE_NORMAL \
-				&& prob(20) )
-			opened = 2
-			user.visible_message("<span class='warning'>The APC cover was knocked down with the [W.name] by [user.name]!</span>", \
-				"<span class='warning'>You knock down the APC cover with your [W.name]!</span>", \
-				"You hear bang")
-			update_icon()
-		else
-			if (!opened && wiresexposed && is_wire_tool(W))
-				return wires.interact(user)
-			if (istype(user, /mob/living/silicon))
-				return attack_hand(user)
-			user.SetNextMove(CLICK_CD_MELEE)
-			user.visible_message("<span class='warning'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", \
-				"<span class='warning'>You hit the [src.name] with your [W.name]!</span>", \
-				"You hear bang")
+
+	else if(!opened && wiresexposed && is_wire_tool(W))
+		return wires.interact(user)
+		if (istype(user, /mob/living/silicon))
+			return attack_hand(user)
+		user.SetNextMove(CLICK_CD_MELEE)
+		user.visible_message("<span class='warning'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", \
+			"<span class='warning'>You hit the [src.name] with your [W.name]!</span>", \
+			"You hear bang")
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 
@@ -1124,7 +1139,6 @@
 		update()
 	else if (last_ch != charging)
 		queue_icon_update()
-	src.updateDialog()
 
 // val 0=off, 1=off(auto) 2=on 3=on(auto)
 // on 0=off, 1=on, 2=autooff
