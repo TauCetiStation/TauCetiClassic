@@ -155,7 +155,6 @@
 
 /obj/item/projectile/beam/mindflayer
 	name = "flayer ray"
-	proj_act_sound = null
 
 /obj/item/projectile/beam/mindflayer/on_hit(atom/target, blocked = 0)
 	if(ishuman(target))
@@ -163,7 +162,9 @@
 		M.adjustBrainLoss(20)
 		M.hallucination += 20
 
-
+/obj/item/projectile/beam/mindflayer/atom_init()
+	. = ..()
+	proj_act_sound = null
 
 /obj/item/projectile/missile
 	name ="rocket"
@@ -205,6 +206,9 @@
 	damage = 25
 	damage_type = TOX
 	flag = "bullet"
+
+/obj/item/projectile/acid_special/atom_init()
+	. = ..()
 	proj_act_sound = SOUNDIN_ACIDACT
 
 /obj/item/projectile/acid_special/on_hit(atom/target, blocked = 0)
