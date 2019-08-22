@@ -271,7 +271,7 @@
 	set name = "Examine"
 	set category = "IC"
 
-	if(sdisabilities & BLIND || blinded || stat == UNCONSCIOUS)
+	if((sdisabilities & BLIND || blinded) && !in_range(A, usr) || stat == UNCONSCIOUS)
 		to_chat(usr, "<span class='notice'>Something is there but you can't see it.</span>")
 		return
 

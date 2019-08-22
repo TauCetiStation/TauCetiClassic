@@ -28,23 +28,24 @@
 				if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src, null)))
 					M.show_message(message)
 
-
+		var/list/to_check
 		// Type 1 (Visual) emotes are sent to anyone in view of the item
-		if (m_type & 1)
-			for (var/mob/O in viewers(src, null))
-				if(O.status_flags & PASSEMOTES)
-					for(var/obj/item/weapon/holder/thing in O.contents)
-						thing.show_message(message, m_type)
-				O.show_message(message, m_type)
-
+		if(m_type & 1)
+			to_check = viewers(src, null)
+			to_check |= oview(1, usr)
 		// Type 2 (Audible) emotes are sent to anyone in hear range
 		// of the *LOCATION* -- this is important for pAIs to be heard
-		else if (m_type & 2)
-			for (var/mob/O in hearers(get_turf(src), null))
-				if(O.status_flags & PASSEMOTES)
-					for(var/obj/item/weapon/holder/thing in O.contents)
-						thing.show_message(message, m_type)
-				O.show_message(message, m_type)
+		else if(m_type & 2)
+			to_check = hearers(get_turf(src), null)
+
+		for(var/mob/O in to_check)
+			if(O.status_flags & PASSEMOTES)
+				for(var/obj/item/weapon/holder/thing in O.contents)
+					thing.show_message(message, m_type)
+			if(m_type & 1 && in_range(O, src))
+				O.show_message(message)
+				continue
+			O.show_message(message, m_type)
 
 /mob/proc/emote_dead(message)
 
