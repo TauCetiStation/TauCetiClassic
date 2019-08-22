@@ -106,7 +106,7 @@
 	w_class = ITEM_SIZE_NORMAL
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank)
 	slowdown = 1.5
-	armor = list(melee = 60, bullet = 50, laser = 40,energy = 15, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 60, bullet = 50, laser = 40, energy = 15, bomb = 30, bio = 30, rad = 30)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = list(VOX , VOX_ARMALIS)
@@ -129,12 +129,15 @@
 	icon_state = "vox-pressure"
 	item_state = "vox-pressure"
 	desc = "Hey, wasn't this a prop in \'The Abyss\'?"
+	armor = list(melee = 80, bullet = 75, laser = 50, energy = 10, bomb = 35, bio = 30, rad = 30)
 
 /obj/item/clothing/suit/space/vox/pressure
 	name = "alien pressure suit"
 	icon_state = "vox-pressure"
 	item_state = "vox-pressure"
 	desc = "A huge, armoured, pressurized suit, designed for distinctly nonhuman proportions."
+	slowdown = 2
+	armor = list(melee = 80, bullet = 75, laser = 50, energy = 10, bomb = 35, bio = 30, rad = 30)
 
 /obj/item/clothing/head/helmet/space/vox/carapace
 	name = "alien visor"
@@ -142,12 +145,67 @@
 	item_state = "vox-carapace"
 	desc = "A glowing visor, perhaps stolen from a depressed Cylon."
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	armor = list(melee = 65, bullet = 50, laser = 70, energy = 20, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/suit/space/vox/carapace
 	name = "alien carapace armour"
 	icon_state = "vox-carapace"
 	item_state = "vox-carapace"
 	desc = "An armoured, segmented carapace with glowing purple lights. It looks pretty run-down."
+	armor = list(melee = 65, bullet = 50, laser = 70, energy = 20, bomb = 30, bio = 30, rad = 30)
+
+/obj/item/clothing/head/helmet/space/vox/medic
+	name = "alien goggled helmet"
+	icon_state = "vox-medic"
+	item_state = "vox-medic"
+	desc = "An alien helmet with enormous goggled lenses."
+	armor = list(melee = 50, bullet = 40, laser = 45, energy = 15, bomb = 25, bio = 30, rad = 30)
+
+/obj/item/clothing/suit/space/vox/medic
+	name = "alien armour"
+	icon_state = "vox-medic"
+	item_state = "vox-medic"
+	desc = "An almost organic looking nonhuman pressure suit."
+	slowdown = 1
+	var/mob/living/carbon/human/wearer
+	armor = list(melee = 50, bullet = 40, laser = 45, energy = 15, bomb = 25, bio = 30, rad = 30)
+
+/obj/item/clothing/suit/space/vox/medic/equipped(mob/user, slot)
+	..()
+	if(slot == SLOT_WEAR_SUIT)
+		wearer = user
+		START_PROCESSING(SSobj, src)
+		wearer.playsound_local(null, 'sound/rig/shortbeep.wav', VOL_EFFECTS_MASTER, null, FALSE)
+		to_chat(wearer, "<span class='notice'>The medical system is ready for use. Make sure your helmet supports this system.</span>")
+
+/obj/item/clothing/suit/space/vox/medic/dropped(mob/user)
+	wearer = null
+	STOP_PROCESSING(SSobj, src)
+	..()
+
+/obj/item/clothing/suit/space/vox/medic/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	wearer = null
+	return ..()
+
+/obj/item/clothing/suit/space/vox/medic/process()
+	if(!wearer)
+		STOP_PROCESSING(SSobj, src)
+		return
+	if(wearer.stat == DEAD)
+		STOP_PROCESSING(SSobj, src)
+		return
+	if(!istype(wearer.head, /obj/item/clothing/head/helmet/space/vox/medic))
+		return
+	if(damage > 9)
+		wearer.adjustToxLoss(0.7) // this will kill the wearer after a while if the suit is not repaired or removed
+	else if(wearer.reagents.get_reagent_amount("tricordrazine") > 5)
+		return // safe tricordrazine injection
+	if(damage > 19)
+		wearer.adjustToxLoss(1) // this will kill the wearer much faster
+	wearer.reagents.add_reagent("tricordrazine", REAGENTS_METABOLISM)
+
+#define MAX_STEALTH_SPACESUIT_CHARGE 300
 
 /obj/item/clothing/head/helmet/space/vox/stealth
 	name = "alien stealth helmet"
@@ -155,7 +213,7 @@
 	item_state = "vox-stealth"
 	desc = "A smoothly contoured, matte-black alien helmet."
 
-	armor = list(melee = 60, bullet = 30, laser = 30, energy = 15, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 45, bullet = 20, laser = 25, energy = 5, bomb = 15, bio = 30, rad = 30)
 
 /obj/item/clothing/suit/space/vox/stealth
 	name = "alien stealth suit"
@@ -163,24 +221,66 @@
 	item_state = "vox-stealth"
 	desc = "A sleek black suit. It seems to have a tail, and is very heavy."
 
-	armor = list(melee = 60, bullet = 30, laser = 30, energy = 15, bomb = 30, bio = 30, rad = 30)
-	slowdown = 0.5
+	armor = list(melee = 45, bullet = 20, laser = 25, energy = 5, bomb = 15, bio = 30, rad = 30)
 
+	slowdown = 0.5
 	action_button_name = "Toggle Stealth Technology"
 	var/on = FALSE
 	var/mob/living/carbon/human/wearer
+	var/current_charge = MAX_STEALTH_SPACESUIT_CHARGE
+	var/last_try = 0
+
+/obj/item/clothing/suit/space/vox/stealth/examine(mob/user)
+	..()
+	if(wearer)
+		to_chat(wearer, "On your left wrist you see <span class='electronicblue'>\[ [current_charge] \]</span>. [damage ? "Looks like the reactor is damaged" : "The reactor is functioning stably"].")
 
 /obj/item/clothing/suit/space/vox/stealth/ui_action_click()
 	toggle_stealth()
 
-/obj/item/clothing/suit/space/vox/stealth/process()
-	if(!on)
-		return
+/obj/item/clothing/suit/space/vox/stealth/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	wearer = null
+	return ..()
 
-	if(is_damaged())
-		toggle_stealth(TRUE)
+/obj/item/clothing/suit/space/vox/stealth/process()
+	if(on)
+		var/power_decrease = 2 // 5 minutes to full discharge
+		if(damage > 0)
+			power_decrease = 5 // 2 minutes to full discharge
+		if(damage > 3)
+			power_decrease = 10 // 1 minute to full discharge
+		if(damage > 6)
+			power_decrease = 0
+			current_charge = 0
+			STOP_PROCESSING(SSobj, src)
+		current_charge -= power_decrease
+		if(is_damaged())
+			toggle_stealth(TRUE)
+			return
+		if(current_charge <= 0)
+			current_charge = 0
+			toggle_stealth(TRUE)
+			return
+		if(wearer)
+			wearer.alpha = 5
+			if(current_charge <= (power_decrease * 15)) // there are 30 seconds to full discharge
+				wearer.playsound_local(null, 'sound/rig/loudbeep.wav', VOL_EFFECTS_MASTER, null, FALSE)
+				to_chat(wearer, "<span class='danger'>Critically low charge:</span> <span class='electronicblue'>\[ [current_charge] \]</span>")
 	else
-		wearer.alpha = 4
+		var/power_increase = 20 // 30 seconds to full charge
+		if(damage > 0)
+			power_increase = 10 // 1 minutes to full charge
+		if(damage > 3)
+			power_increase = 5 // 2 minutes to full charge
+		if(damage > 6)
+			power_increase = 0
+			current_charge = 0
+			STOP_PROCESSING(SSobj, src)
+		current_charge += power_increase
+		if(current_charge > MAX_STEALTH_SPACESUIT_CHARGE)
+			current_charge = 300
+			STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/vox/stealth/equipped(mob/user, slot)
 	..()
@@ -194,30 +294,44 @@
 
 /obj/item/clothing/suit/space/vox/stealth/proc/toggle_stealth(deactive = FALSE)
 	if(on)
+		playsound(src, 'sound/rig/stealthrig_turn_off.ogg', VOL_EFFECTS_MASTER, null, null, -4)
 		on = FALSE
-		STOP_PROCESSING(SSobj, src)
+		slowdown = 0.5
 		wearer.alpha = 255
 	else if(!deactive)
-		if(wearer.is_busy()) return
+		if(!istype(wearer.head, /obj/item/clothing/head/helmet/space/vox/stealth))
+			to_chat(wearer, "<span class='warning'>The cloaking system cannot function without a helmet.</span>")
+		if(last_try > world.time)
+			return
+		if(wearer.is_busy())
+			return
+		last_try = world.time + 4 SECONDS
 		to_chat(wearer, "<span class='notice'>Turning on stealth mode...</span>")
-		if(do_after(wearer, 40, target = wearer))
+		playsound(src, 'sound/rig/stealthrig_starting_up.ogg', VOL_EFFECTS_MASTER, null, FALSE, -5)
+		if(do_after(wearer, 20, target = wearer))
 			if(!istype(wearer) || wearer.wear_suit != src)
 				return
-			if(is_damaged())
+			if(is_damaged(TRUE))
 				return
+			playsound(src, 'sound/rig/stealthrig_turn_on.ogg', VOL_EFFECTS_MASTER, null, null, -5)
 			on = TRUE
 			to_chat(wearer, "<span class='notice'>Stealth mode in now on!</span>")
+			slowdown = 2
+			wearer.alpha = 5
 			START_PROCESSING(SSobj, src)
 
-/obj/item/clothing/suit/space/vox/stealth/proc/is_damaged()
-	if(damage >= 2)
+/obj/item/clothing/suit/space/vox/stealth/proc/is_damaged(low_damage_check = FALSE)
+	if(damage > 6)
 		to_chat(wearer, "<span class='warning'>[src] is too damaged to support stealth mode!</span>")
 		var/datum/effect/effect/system/spark_spread/s = new
 		s.set_up(5, 1, src)
 		s.start()
 		return TRUE
-	else
-		return FALSE
+	else if(low_damage_check)
+		if(prob(33) && (damage > 3))
+			to_chat(wearer, "<span class='warning'>[src] is damaged and failed to generate a cloaking field!</span>")
+			return TRUE
+	return FALSE
 
 /obj/item/clothing/suit/space/vox/stealth/proc/overload()
 	wearer.visible_message(
@@ -230,23 +344,17 @@
 	toggle_stealth()
 
 /obj/item/clothing/suit/space/vox/stealth/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
-	if(reaction_type == REACTION_ITEM_TAKE || reaction_type == REACTION_ITEM_TAKEOFF)
-		return
-
 	if(on)
+		if(reaction_type == REACTION_ITEM_TAKE || reaction_type == REACTION_ITEM_TAKEOFF)
+			var/charge_decrease = max(rand(20, 30), round((damage * 25) + rand(1, 5)))
+			current_charge -= charge_decrease
+			if(wearer)
+				to_chat(wearer, "<span class='warning'>Attention. The cloaking system is overloaded. Redistributed [charge_decrease] conventional units of energy.</span>")
+				wearer.playsound_local(null, 'sound/rig/beep.wav', VOL_EFFECTS_MASTER, null, FALSE)
+			return
 		overload()
 
-/obj/item/clothing/head/helmet/space/vox/medic
-	name = "alien goggled helmet"
-	icon_state = "vox-medic"
-	item_state = "vox-medic"
-	desc = "An alien helmet with enormous goggled lenses."
-
-/obj/item/clothing/suit/space/vox/medic
-	name = "alien armour"
-	icon_state = "vox-medic"
-	item_state = "vox-medic"
-	desc = "An almost organic looking nonhuman pressure suit."
+#undef MAX_STEALTH_SPACESUIT_CHARGE
 
 /obj/item/clothing/under/vox
 	has_sensor = 0

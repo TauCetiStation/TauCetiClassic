@@ -163,6 +163,17 @@
 	var/charge_tick = 0
 	var/armor_type = /obj/item/clothing/suit
 
+	var/lasertag_color = "none"
+
+/obj/item/weapon/gun/energy/laser/lasertag/special_check(mob/living/carbon/human/M)
+	if(ishuman(M))
+		if(istype(M.wear_suit, /obj/item/clothing/suit/lasertag))
+			var/obj/item/clothing/suit/lasertag/L = M.wear_suit
+			if(L.lasertag_color == lasertag_color)
+				return ..()
+		to_chat(M, "<span class='warning'>You need to be wearing your appropriate color laser tag vest!</span>")
+	return 0
+
 /obj/item/weapon/gun/energy/laser/lasertag/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)
@@ -173,26 +184,22 @@
 
 /obj/item/weapon/gun/energy/laser/lasertag/process()
 	charge_tick++
-	if(charge_tick < 4) return 0
+	if(charge_tick < 4)
+		return FALSE
 	charge_tick = 0
-	if(!power_supply) return 0
+	if(!power_supply)
+		return FALSE
 	power_supply.give(100)
 	update_icon()
-	return 1
-
-/obj/item/weapon/gun/energy/laser/lasertag/special_check(mob/living/carbon/human/M)
-	if(ishuman(M))
-		if(istype(M.wear_suit, armor_type))
-			return ..()
-		to_chat(M, "<span class='warning'>You need to be wearing your laser tag vest!</span>")
-	return 0
+	return TRUE
 
 /obj/item/weapon/gun/energy/laser/lasertag/bluetag
 	icon_state = "bluetag"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag)
-	armor_type = /obj/item/clothing/suit/bluetag
+	lasertag_color = "blue"
 
 /obj/item/weapon/gun/energy/laser/lasertag/redtag
 	icon_state = "redtag"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag)
-	armor_type = /obj/item/clothing/suit/redtag
+	lasertag_color = "red"
+
