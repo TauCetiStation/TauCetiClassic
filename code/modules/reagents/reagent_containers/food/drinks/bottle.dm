@@ -11,6 +11,29 @@
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
 	var/is_glass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 	var/is_transparent = 1 //Determines whether an overlay of liquid should be added to bottle when it fills
+	var/spinned = 0
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle()
+	var/matrix/M = matrix()
+	set name = "Spin bottle"
+	set category = "Object"
+	set src in view(1)
+	spinned = 1
+	M.Turn(pick(0, 45, 90, 135, 180, 225, 270, 315))
+	animate(src, transform = turn(matrix(), 120), time = 2, loop = 3)
+	animate(transform = turn(matrix(), 240), time = 2)
+	animate(transform = null, time = 2)
+	sleep(8)
+	animate(src, transform = M, time = 4)
+	if (usr.client)
+		usr.client.drop_item()
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/verb/stop_spin_bottle()
+	set name = "Stop spin"
+	set category = "Object"
+	set src in view(1)
+	if (spinned == 1)
+		transform = null
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user)
 
@@ -39,7 +62,6 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/update_icon()
 	show_filler_on_icon(3, 24, 0)
-
 /obj/item/weapon/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user, def_zone)
 
 	if(!target)
