@@ -684,11 +684,17 @@
 	},
 /area/syndicate_mothership)
 "abD" = (
-/turf/unsimulated/wall{
-	dir = 9;
-	icon_state = "riveted2"
+/obj/structure/disposalpipe/trunk{
+	dir = 8
 	},
-/area/space)
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "brown"
+	},
+/area/centcom/arrival)
 "abE" = (
 /turf/unsimulated/wall{
 	dir = 5;
@@ -1757,8 +1763,15 @@
 	},
 /area/centcom/arrival)
 "aeD" = (
-/turf/unsimulated/wall,
-/area/space)
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "incerator_velocity"
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/centcom/arrival)
 "aeE" = (
 /obj/structure/sign/velocity_overlay/reklama{
 	desc = "Summer in NeoTokyo.";
@@ -1780,28 +1793,37 @@
 /turf/simulated/shuttle/plating,
 /area/centcom/arrival)
 "aeH" = (
-/obj/machinery/door/poddoor,
-/turf/unsimulated/floor{
-	icon_state = "circuit"
+/mob/living/silicon/decoy{
+	icon_state = "ai-malf";
+	name = "GLaDOS"
 	},
-/area/centcom/arrival)
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/syndicate_mothership/control)
 "aeI" = (
-/obj/structure/rail_centcomm{
-	icon_state = "rail_03"
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	dir = 1;
+	freerange = 1;
+	frequency = 1213;
+	name = "Syndicate Ops Intercom";
+	subspace_transmission = 1;
+	syndie = 1
 	},
-/obj/machinery/door/poddoor,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/unsimulated/floor{
-	icon_state = "circuit"
+	name = "plating"
 	},
-/area/centcom/arrival)
+/area/syndicate_mothership)
 "aeJ" = (
-/obj/structure/rail_centcomm{
-	icon_state = "rail_01"
-	},
 /obj/machinery/door/poddoor,
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
+/turf/simulated/shuttle/plating,
 /area/centcom/arrival)
 "aeK" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -1814,24 +1836,33 @@
 	},
 /area/centcom/arrival)
 "aeL" = (
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
-/area/centcom/arrival)
-"aeM" = (
 /obj/structure/rail_centcomm{
 	icon_state = "rail_03"
 	},
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
+/obj/machinery/door/poddoor,
+/turf/simulated/shuttle/plating,
 /area/centcom/arrival)
-"aeN" = (
+"aeM" = (
 /obj/structure/rail_centcomm{
 	icon_state = "rail_01"
 	},
+/obj/machinery/door/poddoor,
+/turf/simulated/shuttle/plating,
+/area/centcom/arrival)
+"aeN" = (
+/obj/machinery/door/poddoor{
+	id = "velocity_main";
+	name = "Security Doors"
+	},
+/obj/item/device/flashlight/lamp/green{
+	anchored = 1;
+	invisibility = 61;
+	name = "invisibly light";
+	pixel_x = 1;
+	pixel_y = 5
+	},
 /turf/unsimulated/floor{
-	icon_state = "circuit"
+	icon_state = "floor"
 	},
 /area/centcom/arrival)
 "aeO" = (
@@ -1855,7 +1886,7 @@
 "aeR" = (
 /obj/structure/closet/emcloset,
 /turf/unsimulated/floor{
-	icon_state = "circuit"
+	icon_state = "floor"
 	},
 /area/centcom/arrival)
 "aeS" = (
@@ -1864,7 +1895,7 @@
 	dir = 1
 	},
 /turf/unsimulated/floor{
-	icon_state = "circuit"
+	icon_state = "floor"
 	},
 /area/centcom/arrival)
 "aeT" = (
@@ -1885,7 +1916,7 @@
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
-	icon_state = "circuit"
+	icon_state = "floor"
 	},
 /area/centcom/arrival)
 "aeW" = (
@@ -1936,7 +1967,7 @@
 "afd" = (
 /obj/structure/table,
 /turf/unsimulated/floor{
-	icon_state = "circuit"
+	icon_state = "floor"
 	},
 /area/centcom/arrival)
 "afe" = (
@@ -2042,7 +2073,7 @@
 "afu" = (
 /obj/structure/rack,
 /turf/unsimulated/floor{
-	icon_state = "circuit"
+	icon_state = "floor"
 	},
 /area/centcom/arrival)
 "afv" = (
@@ -2957,34 +2988,18 @@
 	},
 /area/shuttle/syndicate_elite/mothership)
 "aib" = (
-/mob/living/silicon/decoy{
-	icon_state = "ai-malf";
-	name = "GLaDOS"
+/turf/simulated/floor/airless{
+	icon_state = "plating"
 	},
-/turf/unsimulated/floor{
-	icon_state = "whiteshiny"
-	},
-/area/syndicate_mothership/control)
+/area/space)
 "aic" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 1;
-	freerange = 1;
-	frequency = 1213;
-	name = "Syndicate Ops Intercom";
-	subspace_transmission = 1;
-	syndie = 1
+/obj/structure/sign/mark{
+	icon_state = "b3"
 	},
-/obj/structure/window/reinforced{
-	dir = 4
+/turf/simulated/floor/airless{
+	icon_state = "plating"
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
-/area/syndicate_mothership)
+/area/space)
 "aid" = (
 /obj/structure/lattice,
 /obj/structure/grille{
@@ -3580,27 +3595,42 @@
 /turf/simulated/floor/plating/airless,
 /area/shuttle/syndicate_elite/mothership)
 "ajB" = (
-/turf/unsimulated/wall{
-	icon_state = "riveted3"
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "incerator_velocity"
 	},
-/area/space)
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/centcom/arrival)
 "ajC" = (
 /turf/unsimulated/wall{
 	icon_state = "riveted2"
 	},
 /area/centcom/control)
 "ajD" = (
-/turf/unsimulated/wall{
-	dir = 8;
-	icon_state = "riveted4"
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/deliveryChute{
+	dir = 8
 	},
-/area/space)
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "brown"
+	},
+/area/centcom/arrival)
 "ajE" = (
-/turf/unsimulated/wall{
-	dir = 8;
-	icon_state = "riveted3"
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/area/space)
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/centcom/arrival)
 "ajF" = (
 /turf/unsimulated/wall{
 	dir = 6;
@@ -3645,10 +3675,16 @@
 	},
 /area/syndicate_mothership/droppod_garage)
 "ajL" = (
-/turf/unsimulated/wall{
-	icon_state = "riveted2"
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/area/space)
+/obj/machinery/conveyor_switch/oneway{
+	id = "incerator_velocity"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/arrival)
 "ajM" = (
 /obj/effect/landmark/droppod_spawn{
 	pods_spawned = 1
@@ -3818,11 +3854,15 @@
 	},
 /area/syndicate_station/start)
 "akf" = (
-/turf/unsimulated/wall{
-	dir = 2;
-	icon_state = "riveted4"
+/obj/machinery/door/window/southleft{
+	dir = 1;
+	name = "Security";
+	req_access = list(101)
 	},
-/area/space)
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/arrival)
 "akg" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 8
@@ -3967,11 +4007,16 @@
 	},
 /area/space)
 "akB" = (
-/turf/unsimulated/wall{
+/obj/machinery/door/window/southright{
 	dir = 1;
-	icon_state = "riveted2"
+	name = "Security";
+	req_access = list(101)
 	},
-/area/space)
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "browncorner"
+	},
+/area/centcom/arrival)
 "akC" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "16,4";
@@ -5140,27 +5185,35 @@
 	},
 /area/tdome)
 "anp" = (
-/obj/machinery/atmospherics/components/unary/tank/phoron{
-	dir = 4
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/conveyor_switch/oneway{
+	id = "incerator_velocity"
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "brown"
 	},
 /area/centcom/arrival)
 "anq" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "brown"
 	},
 /area/centcom/arrival)
 "anr" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 1
+/obj/structure/window/reinforced{
+	dir = 8
 	},
+/obj/structure/disposalpipe/segment,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 6;
+	icon_state = "brown"
 	},
 /area/centcom/arrival)
 "ans" = (
@@ -5206,11 +5259,12 @@
 	},
 /area/centcom/arrival)
 "anu" = (
-/obj/machinery/atmospherics/components/unary/tank/oxygen{
-	dir = 4
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 8;
+	icon_state = "brown"
 	},
 /area/centcom/arrival)
 "anv" = (
@@ -5222,11 +5276,20 @@
 	},
 /area/syndicate_station/start)
 "anw" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 9
+/obj/machinery/ignition_switch{
+	id = "Incinerator_v";
+	pixel_x = 24;
+	pixel_y = -6
+	},
+/obj/machinery/door_control{
+	id = "velocity_firedoor";
+	name = "Fire Protect Shutters";
+	pixel_x = 24;
+	pixel_y = 5
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 4;
+	icon_state = "brown"
 	},
 /area/centcom/arrival)
 "anx" = (
@@ -5369,7 +5432,10 @@
 	},
 /area/centcom/evac)
 "anM" = (
-/turf/unsimulated/wall,
+/turf/unsimulated/wall{
+	dir = 6;
+	icon_state = "riveted2"
+	},
 /area/start)
 "anN" = (
 /turf/unsimulated/wall{
@@ -5612,44 +5678,37 @@
 	},
 /area/tdome)
 "aou" = (
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/structure/disposaloutlet{
+/obj/machinery/atmospherics/components/unary/tank/phoron{
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 8;
+	icon_state = "brown"
 	},
 /area/centcom/arrival)
 "aov" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "incerator_velocity"
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/arrival)
-"aow" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "incerator_velocity"
-	},
-/obj/machinery/light{
+/obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 1
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "floor"
+	},
+/area/centcom/arrival)
+"aow" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
 /area/centcom/arrival)
 "aox" = (
-/obj/structure/disposalpipe/trunk,
-/obj/machinery/disposal/deliveryChute{
-	dir = 8
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 4;
+	icon_state = "brown"
 	},
 /area/centcom/arrival)
 "aoy" = (
@@ -5666,62 +5725,70 @@
 /turf/unsimulated/wall,
 /area/centcom/arrival)
 "aoA" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/arrival)
-"aoB" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/conveyor_switch/oneway{
-	id = "incerator_velocity"
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/arrival)
-"aoC" = (
-/obj/machinery/door/window/southleft{
-	dir = 1;
-	name = "Security";
-	req_access = list(101)
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/arrival)
-"aoD" = (
-/obj/machinery/door/window/southright{
-	dir = 1;
-	name = "Security";
-	req_access = list(101)
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/arrival)
-"aoE" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
+/obj/machinery/atmospherics/components/unary/tank/oxygen{
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 10;
+	icon_state = "brown"
+	},
+/area/centcom/arrival)
+"aoB" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 9
+	},
+/turf/unsimulated/floor{
+	icon_state = "brown"
+	},
+/area/centcom/arrival)
+"aoC" = (
+/obj/machinery/door_control{
+	id = "velocity_main2";
+	name = "Maintenance Door Control";
+	pixel_x = -1;
+	pixel_y = -24;
+	req_access = list(101)
+	},
+/turf/unsimulated/floor{
+	icon_state = "brown"
+	},
+/area/centcom/arrival)
+"aoD" = (
+/obj/machinery/conveyor_switch/oneway{
+	id = "incerator_velocity2"
+	},
+/obj/machinery/door_control{
+	id = "velocity_drop";
+	name = "Drop Protect Shutters";
+	pixel_x = 5;
+	pixel_y = -24
+	},
+/obj/machinery/light,
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "brown"
+	},
+/area/centcom/arrival)
+"aoE" = (
+/obj/item/weapon/extinguisher,
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "brown"
 	},
 /area/centcom/arrival)
 "aoF" = (
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
-/obj/structure/disposalpipe/segment,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/closet/toolcloset,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 1;
+	icon_state = "brown"
 	},
 /area/centcom/arrival)
 "aoG" = (
@@ -5738,32 +5805,36 @@
 	},
 /area/syndicate_mothership)
 "aoI" = (
-/obj/machinery/light{
-	dir = 8
+/obj/machinery/power/smes/magical{
+	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
+	name = "power storage unit"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 5;
+	icon_state = "brown"
 	},
 /area/centcom/arrival)
 "aoJ" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "floor"
 	},
 /area/centcom/arrival)
 "aoK" = (
-/obj/machinery/ignition_switch{
-	id = "Incinerator_v";
-	pixel_x = 24;
-	pixel_y = -6
-	},
-/obj/machinery/door_control{
-	id = "velocity_firedoor";
-	name = "Fire Protect Shutters";
-	pixel_x = 24;
-	pixel_y = 5
+/obj/machinery/power/terminal{
+	dir = 1
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 4;
+	icon_state = "brown"
 	},
 /area/centcom/arrival)
 "aoL" = (
@@ -5824,11 +5895,10 @@
 	},
 /area/shuttle/vox/station)
 "aoR" = (
-/obj/machinery/atmospherics/components/binary/valve{
-	dir = 4
-	},
+/obj/item/weapon/storage/box/lights/mixed,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 10;
+	icon_state = "brown"
 	},
 /area/centcom/arrival)
 "aoS" = (
@@ -5905,30 +5975,20 @@
 	},
 /area/alien)
 "aoZ" = (
-/obj/machinery/door_control{
-	id = "velocity_main2";
-	name = "Maintenance Door Control";
-	pixel_x = -1;
-	pixel_y = -24;
-	req_access = list(101)
+/obj/machinery/power/apc{
+	name = "Worn-out APC";
+	pixel_y = -24
 	},
+/obj/structure/cable,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "brown"
 	},
 /area/centcom/arrival)
 "apa" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "incerator_velocity2"
-	},
-/obj/machinery/door_control{
-	id = "velocity_drop";
-	name = "Drop Protect Shutters";
-	pixel_x = 5;
-	pixel_y = -24
-	},
-/obj/machinery/light,
+/obj/structure/reagent_dispensers/watertank,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 6;
+	icon_state = "brown"
 	},
 /area/centcom/arrival)
 "apb" = (
@@ -6042,38 +6102,25 @@
 	},
 /area/alien)
 "apm" = (
-/obj/item/weapon/extinguisher,
-/turf/unsimulated/floor{
-	icon_state = "sandwater"
+/obj/structure/sign/mark{
+	icon_state = "b2"
 	},
-/area/centcom/arrival)
+/turf/simulated/floor/airless{
+	icon_state = "plating"
+	},
+/area/space)
 "apn" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/closet/toolcloset,
 /turf/unsimulated/floor{
-	icon_state = "sandwater"
+	dir = 9;
+	icon_state = "darkpurple"
 	},
-/area/centcom/arrival)
+/area/alien)
 "apo" = (
-/obj/machinery/power/smes/magical{
-	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
-	name = "power storage unit"
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /turf/unsimulated/floor{
-	icon_state = "sandwater"
+	dir = 1;
+	icon_state = "darkpurple"
 	},
-/area/centcom/arrival)
+/area/alien)
 "app" = (
 /turf/unsimulated/wall{
 	icon_state = "riveted2"
@@ -6113,52 +6160,95 @@
 /area/centcom/arrival)
 "apv" = (
 /turf/unsimulated/floor{
-	icon_state = "sandwater"
+	dir = 5;
+	icon_state = "darkpurple"
 	},
-/area/centcom/arrival)
+/area/alien)
 "apw" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkpurple"
+	},
+/area/alien)
+"apx" = (
+/obj/item/weapon/paper{
+	info = "Some stuff is missing...";
+	name = "Insert alien artifacts here."
 	},
 /turf/unsimulated/floor{
-	icon_state = "sandwater"
+	icon_state = "dark"
 	},
-/area/centcom/arrival)
+/area/alien)
+"apy" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "darkpurple"
+	},
+/area/alien)
 "apz" = (
+/obj/machinery/door/airlock/hatch,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "dark"
+	},
+/area/alien)
+"apA" = (
+/obj/structure/closet/acloset,
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "darkpurple"
+	},
+/area/alien)
+"apB" = (
+/obj/structure/closet/acloset,
+/turf/unsimulated/floor{
+	dir = 2;
+	icon_state = "darkpurple"
+	},
+/area/alien)
+"apC" = (
+/obj/structure/closet/acloset,
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "darkpurple"
 	},
 /area/alien)
 "apD" = (
-/obj/item/weapon/storage/box/lights/mixed,
 /turf/unsimulated/floor{
-	icon_state = "sandwater"
+	icon_state = "dark"
 	},
-/area/centcom/arrival)
-"apE" = (
-/obj/machinery/power/apc{
-	name = "Worn-out APC";
-	pixel_y = -24
-	},
-/obj/structure/cable,
-/turf/unsimulated/floor{
-	icon_state = "sandwater"
-	},
-/area/centcom/arrival)
+/area/alien)
 "apF" = (
-/obj/structure/reagent_dispensers/watertank,
 /turf/unsimulated/floor{
-	icon_state = "sandwater"
+	dir = 1;
+	icon_state = "darkpurplecorners"
 	},
-/area/centcom/arrival)
+/area/alien)
 "apG" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "0,2"
 	},
 /turf/space,
 /area/supply/dock)
+"apI" = (
+/obj/structure/stool/bed/alien,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "darkpurple"
+	},
+/area/alien)
+"apJ" = (
+/obj/structure/closet/acloset,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkpurple"
+	},
+/area/alien)
+"apK" = (
+/turf/unsimulated/floor{
+	dir = 2;
+	icon_state = "darkpurple"
+	},
+/area/alien)
 "apL" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "0,1"
@@ -6194,20 +6284,20 @@
 /turf/space,
 /area/supply/dock)
 "apR" = (
-/obj/item/weapon/paper{
-	info = "Some stuff is missing...";
-	name = "Insert alien artifacts here."
-	},
+/obj/structure/stool/bed/alien,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 6;
+	icon_state = "darkpurple"
 	},
 /area/alien)
 "apS" = (
-/obj/machinery/door/airlock/hatch,
-/turf/unsimulated/floor{
-	icon_state = "floor5"
+/obj/machinery/light{
+	dir = 4
 	},
-/area/alien)
+/turf/unsimulated/floor{
+	icon_state = "grass2"
+	},
+/area/centcom/specops)
 "apT" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -6327,6 +6417,32 @@
 	name = "plating"
 	},
 /area/syndicate_mothership)
+"aqc" = (
+/obj/machinery/seed_extractor,
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "darkgreen"
+	},
+/area/centcom/living)
+"aqd" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/watertank,
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "darkgreen"
+	},
+/area/centcom/living)
+"aqe" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "darkgreen"
+	},
+/area/centcom/living)
 "aqf" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "1,0"
@@ -6343,11 +6459,18 @@
 /turf/unsimulated/wall/splashscreen,
 /area/start)
 "aqi" = (
-/obj/structure/closet/acloset,
+/obj/machinery/vending/hydronutrients,
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	dir = 5;
+	icon_state = "darkgreen"
 	},
-/area/alien)
+/area/centcom/living)
+"aqj" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkgreen"
+	},
+/area/centcom/living)
 "aqk" = (
 /obj/structure/closet/crate/seized_inventory,
 /obj/item/toy/cards,
@@ -6408,6 +6531,25 @@
 	icon_state = "floor"
 	},
 /area/centcom/arrival)
+"aqr" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "darkgreen"
+	},
+/area/centcom/living)
+"aqs" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkgreen"
+	},
+/area/centcom/living)
 "aqt" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
@@ -6458,6 +6600,31 @@
 	icon_state = "engine"
 	},
 /area/centcom/arrival)
+"aqz" = (
+/obj/machinery/vending/hydroseeds{
+	slogan_delay = 700
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "darkgreen"
+	},
+/area/centcom/living)
+"aqA" = (
+/obj/structure/table,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkgreen"
+	},
+/area/centcom/living)
+"aqB" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "darkgreen"
+	},
+/area/centcom/living)
 "aqC" = (
 /turf/unsimulated/floor{
 	name = "plating"
@@ -6490,6 +6657,42 @@
 "aqH" = (
 /turf/space,
 /area/shuttle/alien/base)
+"aqI" = (
+/obj/structure/window/reinforced,
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "darkgreen"
+	},
+/area/centcom/living)
+"aqJ" = (
+/obj/structure/window/reinforced,
+/obj/machinery/biogenerator,
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "darkgreen"
+	},
+/area/centcom/living)
+"aqK" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/spray/plantbgone{
+	pixel_x = 13;
+	pixel_y = 5
+	},
+/obj/item/weapon/reagent_containers/spray/plantbgone{
+	pixel_x = 10;
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/spray/plantbgone{
+	pixel_y = 7
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkgreen"
+	},
+/area/centcom/living)
 "aqL" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
@@ -6537,6 +6740,15 @@
 	icon_state = "floor"
 	},
 /area/centcom/arrival)
+"aqS" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "darkgreen"
+	},
+/area/centcom/living)
 "aqT" = (
 /obj/structure/closet/crate/seized_inventory,
 /obj/item/weapon/game_kit/random,
@@ -6545,6 +6757,22 @@
 	icon_state = "brown"
 	},
 /area/centcom/arrival)
+"aqU" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "darkgreencorners"
+	},
+/area/centcom/living)
+"aqV" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/hydroponics/constructable,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "darkgreen"
+	},
+/area/centcom/living)
 "aqW" = (
 /obj/item/weapon/storage/box/bodybags{
 	pixel_x = 3;
@@ -6559,6 +6787,32 @@
 /obj/structure/disposalpipe/trunk,
 /turf/simulated/floor/engine,
 /area/centcom/arrival)
+"aqY" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/hydroponics/constructable,
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "darkgreen"
+	},
+/area/centcom/living)
+"aqZ" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "darkgreen"
+	},
+/area/centcom/living)
+"ara" = (
+/obj/structure/closet/secure_closet/hydroponics,
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "darkgreen"
+	},
+/area/centcom/living)
 "arb" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,0"
@@ -6585,6 +6839,37 @@
 	name = "plating"
 	},
 /area/centcom/arrival)
+"arf" = (
+/obj/structure/closet/crate/hydroponics,
+/obj/item/weapon/shovel/spade,
+/obj/item/weapon/wrench,
+/obj/item/weapon/screwdriver,
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/unsimulated/floor{
+	dir = 2;
+	icon_state = "darkgreen"
+	},
+/area/centcom/living)
+"arg" = (
+/obj/machinery/hydroponics/constructable,
+/turf/unsimulated/floor{
+	dir = 2;
+	icon_state = "darkgreen"
+	},
+/area/centcom/living)
+"arh" = (
+/obj/machinery/hydroponics/constructable,
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "darkgreen"
+	},
+/area/centcom/living)
+"ari" = (
+/turf/unsimulated/wall{
+	dir = 4;
+	icon_state = "riveted4"
+	},
+/area/start)
 "arj" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -6652,6 +6937,12 @@
 	name = "plating"
 	},
 /area/centcom/arrival)
+"arm" = (
+/turf/unsimulated/wall{
+	dir = 10;
+	icon_state = "riveted2"
+	},
+/area/start)
 "arn" = (
 /obj/structure/sign/mark{
 	icon_state = "*";
@@ -6684,6 +6975,12 @@
 	icon_state = "floor"
 	},
 /area/centcom/arrival)
+"arq" = (
+/turf/unsimulated/wall{
+	dir = 1;
+	icon_state = "riveted4"
+	},
+/area/start)
 "arr" = (
 /obj/structure/plasticflaps{
 	opacity = 1
@@ -6705,12 +7002,24 @@
 	name = "plating"
 	},
 /area/centcom/arrival)
-"aru" = (
-/obj/structure/stool/bed/alien,
-/turf/unsimulated/floor{
-	icon_state = "floor5"
+"art" = (
+/turf/unsimulated/wall{
+	dir = 8;
+	icon_state = "riveted4"
 	},
-/area/alien)
+/area/start)
+"aru" = (
+/turf/unsimulated/wall{
+	dir = 5;
+	icon_state = "riveted2"
+	},
+/area/start)
+"arv" = (
+/turf/unsimulated/wall{
+	dir = 9;
+	icon_state = "riveted2"
+	},
+/area/start)
 "arw" = (
 /obj/machinery/door_control{
 	desc = "A remote control switch for port-side blast doors.";
@@ -6744,6 +7053,12 @@
 	icon_state = "wood"
 	},
 /area/centcom/arrival)
+"ary" = (
+/turf/unsimulated/wall{
+	dir = 1;
+	icon_state = "riveted2"
+	},
+/area/start)
 "arz" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -6771,6 +7086,12 @@
 	name = "plating"
 	},
 /area/centcom/arrival)
+"arA" = (
+/turf/unsimulated/wall{
+	dir = 4;
+	icon_state = "riveted2"
+	},
+/area/start)
 "arJ" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "1,1"
@@ -8199,13 +8520,6 @@
 	icon_state = "brown"
 	},
 /area/centcom/arrival)
-"awZ" = (
-/obj/structure/centcom_barrier,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "brown"
-	},
-/area/centcom/arrival)
 "axa" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Cargo";
@@ -8966,22 +9280,6 @@
 	icon_state = "1,5"
 	},
 /area/supply/dock)
-"azP" = (
-/obj/machinery/door/poddoor{
-	id = "velocity_main";
-	name = "Security Doors"
-	},
-/obj/item/device/flashlight/lamp/green{
-	anchored = 1;
-	invisibility = 61;
-	name = "invisibly light";
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
-/area/centcom/arrival)
 "azQ" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "diagonalWall3"
@@ -10367,16 +10665,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
-"aEe" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "asteroid8";
-	name = "sand"
-	},
-/area/centcom/specops)
 "aEi" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -11743,11 +12031,6 @@
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "warning"
-	},
-/area/centcom/evac)
-"aIP" = (
-/turf/unsimulated/floor{
-	icon_state = "floor5"
 	},
 /area/centcom/evac)
 "aIS" = (
@@ -14395,35 +14678,6 @@
 	icon_state = "grimy"
 	},
 /area/centcom/living)
-"aSV" = (
-/obj/machinery/seed_extractor,
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/living)
-"aSW" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/reagent_dispensers/watertank,
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/living)
-"aSX" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/living)
-"aSY" = (
-/obj/machinery/vending/hydronutrients,
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/living)
 "aSZ" = (
 /obj/structure/closet/secure_closet/freezer/meat,
 /obj/machinery/light{
@@ -14451,11 +14705,6 @@
 	icon_state = "warningcorner"
 	},
 /area/centcom/evac)
-"aTi" = (
-/turf/simulated/floor/airless{
-	icon_state = "circuit"
-	},
-/area/space)
 "aTj" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,1"
@@ -14595,31 +14844,6 @@
 	icon_state = "grimy"
 	},
 /area/centcom/living)
-"aTz" = (
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/living)
-"aTA" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/item/weapon/reagent_containers/glass/bucket,
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/living)
-"aTB" = (
-/obj/machinery/vending/hydroseeds{
-	slogan_delay = 700
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/living)
 "aTC" = (
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave{
@@ -14722,25 +14946,6 @@
 	icon_state = "grimy"
 	},
 /area/centcom/living)
-"aTS" = (
-/obj/structure/table,
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/living)
-"aTT" = (
-/obj/structure/window/reinforced,
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/living)
-"aTU" = (
-/obj/structure/window/reinforced,
-/obj/machinery/biogenerator,
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/living)
 "aTV" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Courthouse"
@@ -14777,34 +14982,6 @@
 	icon_state = "green"
 	},
 /area/tdome)
-"aUe" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/spray/plantbgone{
-	pixel_x = 13;
-	pixel_y = 5
-	},
-/obj/item/weapon/reagent_containers/spray/plantbgone{
-	pixel_x = 10;
-	pixel_y = 4
-	},
-/obj/item/weapon/reagent_containers/spray/plantbgone{
-	pixel_y = 7
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/living)
-"aUf" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/living)
 "aUg" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
@@ -14872,15 +15049,6 @@
 /obj/item/weapon/bedsheet/blue,
 /turf/unsimulated/floor{
 	icon_state = "grimy"
-	},
-/area/centcom/living)
-"aUw" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/hydroponics/constructable,
-/turf/unsimulated/floor{
-	icon_state = "floor5"
 	},
 /area/centcom/living)
 "aUx" = (
@@ -14956,14 +15124,6 @@
 	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
-	},
-/area/centcom/living)
-"aUM" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor5"
 	},
 /area/centcom/living)
 "aUO" = (
@@ -15135,28 +15295,6 @@
 /obj/item/weapon/storage/box/donkpockets,
 /turf/unsimulated/floor{
 	icon_state = "grimy"
-	},
-/area/centcom/living)
-"aVo" = (
-/obj/structure/closet/secure_closet/hydroponics,
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/living)
-"aVp" = (
-/obj/structure/closet/crate/hydroponics,
-/obj/item/weapon/shovel/spade,
-/obj/item/weapon/wrench,
-/obj/item/weapon/screwdriver,
-/obj/item/weapon/reagent_containers/glass/bucket,
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/living)
-"aVq" = (
-/obj/machinery/hydroponics/constructable,
-/turf/unsimulated/floor{
-	icon_state = "floor5"
 	},
 /area/centcom/living)
 "aVr" = (
@@ -18600,14 +18738,6 @@
 /turf/unsimulated/floor{
 	dir = 6;
 	icon_state = "brown"
-	},
-/area/centcom/arrival)
-"crb" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	icon_state = "sandwater"
 	},
 /area/centcom/arrival)
 "csb" = (
@@ -22708,22 +22838,6 @@
 	icon_state = "greencorner"
 	},
 /area/centcom/control)
-"lSb" = (
-/obj/structure/sign/mark{
-	icon_state = "b3"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "circuit"
-	},
-/area/space)
-"lTb" = (
-/obj/structure/sign/mark{
-	icon_state = "b2"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "circuit"
-	},
-/area/space)
 "lUb" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -24487,19 +24601,19 @@ aaM
 aaM
 aaM
 anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
+arq
+arq
+arq
+arq
+arq
+arq
+arq
+arq
+arq
+arq
+arq
+arq
+ary
 aqh
 aaM
 aaM
@@ -24660,9 +24774,9 @@ aaM
 aaM
 aaM
 aaM
-aaa
-abi
-abE
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -24743,21 +24857,21 @@ aaM
 aaM
 aaM
 aaM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
+ari
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+arA
 aaM
 aaM
 aaM
@@ -24917,9 +25031,9 @@ aaM
 aaM
 aaM
 aaM
-ajB
-ajD
-abj
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -25000,21 +25114,21 @@ aaM
 aaM
 aaM
 aaM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
+ari
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+ari
 aaM
 aaM
 aaM
@@ -25174,11 +25288,11 @@ aaM
 aaM
 aaM
 aaM
-abg
-ajE
-abD
 aaM
-ajS
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -25257,21 +25371,21 @@ aaM
 aaM
 aaM
 aaM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
+ari
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+ari
 aaM
 aaM
 aaM
@@ -25435,7 +25549,7 @@ aaM
 aaM
 aaM
 aaM
-abf
+aaM
 aaM
 aaM
 "}
@@ -25514,21 +25628,21 @@ aaM
 aaM
 aaM
 aaM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
+ari
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+ari
 aaM
 aaM
 aaM
@@ -25690,10 +25804,10 @@ aaM
 aaM
 aaM
 aaM
-ajL
-abh
-akf
-akB
+aaM
+aaM
+aaM
+aaM
 aaM
 "}
 (6,1,1) = {"
@@ -25771,21 +25885,21 @@ aaM
 aaM
 aaM
 aaM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
+ari
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+ari
 aaM
 aaM
 aaM
@@ -25949,7 +26063,7 @@ aaM
 aaM
 aaM
 aaM
-akA
+aaM
 aaM
 aaM
 "}
@@ -26028,21 +26142,21 @@ aaM
 aaM
 aaM
 aaM
+ari
+art
+art
+art
+art
+art
 anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
+arq
+aru
+art
+art
+art
+art
+art
+ari
 aaM
 aaM
 aaM
@@ -26208,7 +26322,7 @@ aaM
 aaM
 aaM
 aaM
-aeD
+aaM
 "}
 (8,1,1) = {"
 ahG
@@ -26285,21 +26399,21 @@ aaM
 aaM
 aaM
 aaM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
+ari
+art
+art
+art
+art
+art
+ari
 alA
-anM
-anM
-anM
-anM
-anM
-anM
-anM
+ari
+art
+art
+art
+art
+art
+ari
 aaM
 aaM
 aaM
@@ -26542,21 +26656,21 @@ aaM
 aaM
 aaM
 aaM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
+ari
+art
+art
+art
+art
+art
+arm
+arq
+arv
+art
+art
+art
+art
+art
+ari
 aaM
 aaM
 aaM
@@ -26799,21 +26913,21 @@ aaM
 aaM
 aaM
 aaM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
+ari
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+ari
 aaM
 aaM
 aaM
@@ -27056,21 +27170,21 @@ aaM
 aaM
 aaM
 aaM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
+ari
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+ari
 aaM
 aaM
 aaM
@@ -27313,21 +27427,21 @@ aaM
 aaM
 aaM
 aaM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
+ari
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+ari
 aaM
 aaM
 aaM
@@ -27570,21 +27684,21 @@ aaM
 aaM
 aaM
 aaM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
+ari
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+ari
 aaM
 aaM
 aaM
@@ -27827,21 +27941,21 @@ aaM
 aaM
 aaM
 aaM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
+ari
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+art
+ari
 aaM
 aaM
 aaM
@@ -28084,21 +28198,21 @@ aaM
 aaM
 aaM
 aaM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
-anM
+arm
+arq
+arq
+arq
+arq
+arq
+arq
+arq
+arq
+arq
+arq
+arq
+arq
+arq
+arv
 aaM
 aaM
 aaM
@@ -43838,7 +43952,7 @@ aaM
 aaM
 aaM
 aHI
-aIP
+aIy
 aHI
 aaM
 aaM
@@ -44863,7 +44977,7 @@ hyb
 aIy
 hOb
 hSb
-aIP
+aIy
 hZb
 hyb
 aIy
@@ -50716,7 +50830,7 @@ aaM
 aaM
 aaM
 apq
-apS
+apz
 apq
 aaM
 aaM
@@ -50973,7 +51087,7 @@ apk
 apk
 apk
 apr
-apz
+apD
 aoY
 aaM
 aaM
@@ -51226,11 +51340,11 @@ aaM
 aaM
 aaM
 aoY
-apz
-apz
-aqi
+apn
+apw
+apA
 aoY
-apS
+apz
 aoY
 aaM
 aaM
@@ -51483,11 +51597,11 @@ aaM
 aaM
 aaM
 aoY
-apz
-apR
-aqi
+apo
+apx
+apB
 aoY
-apz
+apD
 apj
 apk
 apk
@@ -51740,14 +51854,14 @@ aaM
 aaM
 aaM
 aoY
-apz
-apz
-aqi
+apv
+apy
+apC
 aoY
-apz
-apz
-aqi
-aqi
+apn
+apw
+apJ
+apA
 aoY
 aaM
 aaM
@@ -51998,13 +52112,13 @@ aaM
 aaM
 aph
 apl
-apS
+apz
 app
 aps
-apz
-apz
-apz
-apz
+apo
+apD
+apD
+apK
 aoY
 aaM
 aaM
@@ -52254,14 +52368,14 @@ aaM
 aaM
 aaM
 aoY
-apz
-apz
-apz
-apz
-apz
-apz
-apz
-apz
+apn
+apw
+apw
+apw
+apF
+apD
+apD
+apK
 aoY
 aaM
 aaM
@@ -52511,14 +52625,14 @@ aaM
 aaM
 aaM
 aoY
-apz
-apz
-apz
-apz
-apz
-aru
-aru
-aru
+apv
+apy
+apy
+apy
+apy
+apI
+apI
+apR
 aoY
 aaM
 aaM
@@ -53890,7 +54004,7 @@ lqb
 lxb
 alC
 aaM
-aTi
+aib
 aKu
 aaM
 ane
@@ -54147,7 +54261,7 @@ lqb
 lyb
 alJ
 aaM
-lSb
+aic
 aKu
 aaM
 ane
@@ -54404,7 +54518,7 @@ lqb
 lyb
 alJ
 aaM
-lTb
+apm
 aKu
 aaM
 ane
@@ -54661,7 +54775,7 @@ lqb
 lzb
 amg
 aaM
-lTb
+apm
 aKu
 aaM
 ane
@@ -54918,7 +55032,7 @@ lrb
 lAb
 amw
 aaM
-aTi
+aib
 aKu
 aaM
 ane
@@ -55175,7 +55289,7 @@ aOF
 lBb
 alv
 aaM
-aTi
+aib
 aKu
 aaM
 ane
@@ -55432,7 +55546,7 @@ aOF
 lqb
 alv
 aaM
-aTi
+aib
 aKu
 aaM
 ane
@@ -55689,7 +55803,7 @@ aOF
 lqb
 alw
 aaM
-aTi
+aib
 aKu
 aaM
 ane
@@ -55946,7 +56060,7 @@ aON
 lqb
 alC
 aaM
-aTi
+aib
 aKu
 aaM
 ane
@@ -56161,7 +56275,7 @@ aCr
 aCP
 aDq
 aDK
-aEe
+apS
 aEv
 aEQ
 aEO
@@ -56203,7 +56317,7 @@ aOO
 lCb
 amg
 aaM
-aTi
+aib
 aKu
 aaM
 ane
@@ -56460,7 +56574,7 @@ aOP
 lqb
 amw
 aaM
-aTi
+aib
 aKu
 aaM
 ane
@@ -66337,7 +66451,7 @@ aaM
 aaM
 aaM
 abl
-aib
+aeH
 abp
 aiH
 aiI
@@ -66482,13 +66596,13 @@ lkb
 aBK
 aRW
 aSp
-aSV
-aTz
-aTS
-aUe
-aTS
-aTz
-aVo
+aqc
+aqj
+aqA
+aqK
+aqA
+aqj
+ara
 aeX
 aaM
 aaM
@@ -66594,7 +66708,7 @@ aaM
 aaM
 aaM
 abl
-aic
+aeI
 abl
 aiJ
 aiM
@@ -66739,13 +66853,13 @@ lkb
 aBK
 aRW
 aSq
-aSW
-aTA
-aTz
-aUf
-aTz
-aTz
-aVp
+aqd
+aqr
+aqB
+aqS
+aqU
+aAM
+arf
 aeX
 aaM
 aaM
@@ -67000,9 +67114,9 @@ aBK
 aBK
 aBK
 aBK
-aUw
-aTz
-aVq
+aqV
+aAM
+arg
 aeX
 aaM
 aaM
@@ -67253,13 +67367,13 @@ lkb
 aBK
 aRW
 aSr
-aSX
-aSX
-aTT
+aqe
+aqs
+aqI
 aBK
-aUw
-aTz
-aVq
+aqV
+aAM
+arg
 aeX
 aaM
 aaM
@@ -67510,13 +67624,13 @@ lkb
 aBK
 aRW
 aSs
-aSY
-aTB
-aTU
+aqi
+aqz
+aqJ
 aBK
-aUw
-aUM
-aVq
+aqY
+aqZ
+arh
 aeX
 aaM
 aaM
@@ -73833,14 +73947,14 @@ aaM
 aaM
 aaM
 abG
+abD
+ajE
+anu
 aou
 aoA
-aoI
-anp
-anu
 abS
 ckb
-awZ
+clb
 cnb
 csb
 cnb
@@ -73884,9 +73998,9 @@ azh
 axV
 abS
 aeS
-aeL
-aeL
-aeL
+arZ
+arZ
+arZ
 abG
 fRb
 arZ
@@ -74090,11 +74204,11 @@ aaM
 aaM
 aaM
 abG
+aeD
+ajL
+arZ
 aov
 aoB
-aoJ
-anr
-anw
 api
 clb
 cnb
@@ -74139,11 +74253,11 @@ eNb
 apu
 eCb
 ffb
-azP
-aeL
-aeL
-aeL
-aeL
+aeN
+arZ
+arZ
+arZ
+arZ
 abG
 aBA
 aBV
@@ -74347,11 +74461,11 @@ aaM
 aaM
 aaM
 abG
-aov
+aeD
+akf
+arZ
+aow
 aoC
-aoJ
-anq
-aoZ
 abO
 cmb
 cob
@@ -74398,9 +74512,9 @@ arZ
 azD
 abO
 aeV
-aeL
-aeL
-aeL
+arZ
+arZ
+arZ
 abI
 abJ
 adx
@@ -74604,11 +74718,11 @@ aaM
 aaM
 aaM
 abG
-aov
+aeD
+akB
+anw
+aox
 aoD
-aoK
-aoR
-apa
 abH
 abW
 abK
@@ -74654,13 +74768,13 @@ abX
 abJ
 abJ
 abU
-ask
-ask
-ask
-ask
-ask
+auV
+auV
+auV
+auV
+auV
 afF
-aeL
+ade
 abI
 abK
 aaM
@@ -74861,16 +74975,16 @@ aaM
 aaM
 aaM
 abG
-aov
-aoB
+aeD
+anp
 abO
 ans
 apb
 abG
 abG
-apm
-apv
-apD
+aoE
+awY
+aoR
 abG
 aqu
 aqW
@@ -74907,18 +75021,18 @@ aeG
 ade
 ade
 ade
-aeH
-aeL
-aeL
-aeL
+aeJ
+ade
+ade
+ade
 dIb
 aAA
 aAA
 aAA
 enb
-aeL
-aeL
-aeL
+ade
+ade
+ade
 afS
 aaM
 aaM
@@ -75118,16 +75232,16 @@ aaM
 aaM
 aaM
 abG
-aow
-aoE
+ajB
+anq
 abG
 ant
 apc
 abG
 abG
-apn
-apw
-apE
+aoF
+aoJ
+aoZ
 abG
 aqv
 aqx
@@ -75164,18 +75278,18 @@ adf
 adf
 adf
 adf
-aeI
-aeM
-aeM
-aeM
+aeL
+adf
+adf
+adf
 aAj
 aAB
 aAB
 aAB
 aAj
-aeM
-aeM
-aeM
+adf
+adf
+adf
 acY
 aaM
 aaM
@@ -75375,16 +75489,16 @@ aaM
 aaM
 aaM
 abG
-aox
-aoF
+ajD
+anr
 abP
 aoU
 apd
 abG
 abG
-apo
-crb
-apF
+aoI
+aoK
+apa
 abG
 aqw
 aqx
@@ -75421,18 +75535,18 @@ adg
 adg
 adg
 adg
-aeJ
-aeN
-aeN
-aeN
+aeM
+adg
+adg
+adg
 dKb
 fyb
 fAb
 fGb
 dKb
-aeN
-aeN
-aeN
+adg
+adg
+adg
 acY
 aaM
 aaM
@@ -75678,18 +75792,18 @@ ade
 ade
 ade
 ade
-aeH
-aeL
-aeL
-aeL
+aeJ
+ade
+ade
+ade
 auI
 dNb
 dNb
 dNb
 eqb
-aeL
-aeL
-aeL
+ade
+ade
+ade
 acY
 aaM
 aaM
