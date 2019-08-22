@@ -102,7 +102,7 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 	var/sourceIconWidthHalfStart = sourceIconWidthHalf + 1
 	var/sourceIconHeightHalfStart = sourceIconHeightHalf + 1
 
-	if(!ISEVEN(sourceIconWidth / 2) || !ISEVEN(sourceIconHeight / 2))
+	if(!IS_EVEN(sourceIconWidth / 2) || !IS_EVEN(sourceIconHeight / 2))
 		CRASH("Unexpected dimension: Uneven icon width or height, expected each [sourceIconWidth]x[sourceIconHeight] to be divided by 2.")
 
 	if(states.len < STATE_COUNT_NORMAL)

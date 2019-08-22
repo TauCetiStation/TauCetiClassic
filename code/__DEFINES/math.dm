@@ -63,21 +63,21 @@
 // Used for calculating the radioactive strength falloff
 #define INVERSE_SQUARE(initial_strength,cur_distance,initial_distance) ( (initial_strength)*((initial_distance)**2/(cur_distance)**2) )
 
-#define ISABOUTEQUAL(a, b, deviation) (deviation ? abs((a) - (b)) <= deviation : abs((a) - (b)) <= 0.1)
+#define IS_ABOUT_EQUAL(a, b, deviation) (deviation ? abs((a) - (b)) <= deviation : abs((a) - (b)) <= 0.1)
 
-#define ISEVEN(x) (x % 2 == 0)
+#define IS_EVEN(x) (x % 2 == 0)
 
-#define ISODD(x) (x % 2 != 0)
+#define IS_ODD(x) (x % 2 != 0)
 
 // Returns true if val is from min to max, inclusive.
-#define ISINRANGE(val, min, max) (min <= val && val <= max)
+#define IS_IN_RANGE(val, min, max) (min <= val && val <= max)
 
 // Same as above, exclusive.
-#define ISINRANGE_EX(val, min, max) (min < val && val < max)
+#define IS_IN_RANGE_EX(val, min, max) (min < val && val < max)
 
-#define ISINTEGER(x) (round(x) == x)
+#define IS_INTEGER(x) (round(x) == x)
 
-#define ISMULTIPLE(x, y) ((x) % (y) == 0)
+#define IS_MULTIPLE(x, y) ((x) % (y) == 0)
 
 // Performs a linear interpolation between a and b.
 // Note that amount=0 returns a, amount=1 returns b, and
@@ -102,7 +102,7 @@
 		return
 	. += (-b - root) / bottom
 
-#define TODEGREES(radians) ((radians) * 57.2957795)
+#define TO_DEGREES(radians) ((radians) * 57.2957795)
 
 #define TORADIANS(degrees) ((degrees) * 0.0174532925)
 
@@ -210,7 +210,7 @@ var/normal_next
 
 #define EXP_DISTRIBUTION(desired_mean) ( -(1/(1/desired_mean)) * log(rand(1, 1000) * 0.001) )
 
-#define LORENTZ_DISTRIBUTION(x, s) ( s*TAN(TODEGREES(PI*(rand()-0.5))) + x )
+#define LORENTZ_DISTRIBUTION(x, s) ( s*TAN(TO_DEGREES(PI*(rand()-0.5))) + x )
 #define LORENTZ_CUMULATIVE_DISTRIBUTION(x, y, s) ( (1/PI)*TORADIANS(arctan((x-y)/s)) + 1/2 )
 
 #define RULE_OF_THREE(a, b, x) ((a*x)/b)

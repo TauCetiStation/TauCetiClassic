@@ -146,7 +146,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	storedcrystals = agent_numbers * TELECRYSTALS_PER_ONE_OPERATIVE + INITIAL_NUCLEAR_TELECRYSTALS
 	danger = active_players
 
-	while(!ISMULTIPLE(++danger,10))//Just round up to the nearest multiple of ten.
+	while(!IS_MULTIPLE(++danger,10))//Just round up to the nearest multiple of ten.
 	storedcrystals += danger
 
 /////////
