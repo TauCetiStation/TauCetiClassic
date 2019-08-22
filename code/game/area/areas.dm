@@ -297,11 +297,11 @@ var/list/ghostteleportlocs = list()
 	if(always_unpowered)
 		return 0
 	switch(chan)
-		if(EQUIP)
+		if(EQUIP, STATIC_EQUIP)
 			return power_equip
-		if(LIGHT)
+		if(LIGHT, STATIC_LIGHT)
 			return power_light
-		if(ENVIRON)
+		if(ENVIRON, STATIC_ENVIRON)
 			return power_environ
 
 	return 0
@@ -341,6 +341,9 @@ var/list/ghostteleportlocs = list()
 			static_light += value
 		if(STATIC_ENVIRON)
 			static_environ += value
+
+/area/proc/removeStaticPower(value, powerchannel)
+	addStaticPower(-value, powerchannel)
 
 /area/proc/clear_usage()
 	used_equip = 0

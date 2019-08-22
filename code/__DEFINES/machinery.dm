@@ -10,6 +10,11 @@
 #define STATIC_LIGHT	6
 #define STATIC_ENVIRON	7
 
+//Power use
+#define NO_POWER_USE 0
+#define IDLE_POWER_USE 1
+#define ACTIVE_POWER_USE 2
+
 //used in design to specify which machine can build it
 #define IMPRINTER	1	//For circuits. Uses glass/chemicals.
 #define PROTOLATHE	2	//New stuff. Uses glass/metal/chemicals
