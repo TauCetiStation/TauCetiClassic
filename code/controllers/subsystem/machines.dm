@@ -52,8 +52,7 @@ var/datum/subsystem/machines/SSmachine
 		currentrun.len--
 		if (QDELETED(thing) || thing.process(seconds) == PROCESS_KILL)
 			processing -= thing
-			if (!QDELETED(thing))
-				thing.isprocessing = 0
+			thing.isprocessing = FALSE
 		if (MC_TICK_CHECK)
 			return
 
