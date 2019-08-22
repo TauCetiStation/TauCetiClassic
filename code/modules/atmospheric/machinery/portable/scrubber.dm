@@ -185,10 +185,13 @@
 
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/process_atmos()
 	if(!on || (stat & (NOPOWER | BROKEN)))
-		set_power_use(NO_POWER_USE)
+		if(use_power)
+			set_power_use(NO_POWER_USE)
 		last_flow_rate = 0
 		last_power_draw = 0
 		return FALSE
+	if(!use_power)
+		set_power_use(IDLE_POWER_USE)
 
 	var/power_draw = -1
 

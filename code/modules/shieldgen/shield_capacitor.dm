@@ -102,13 +102,14 @@
 /obj/machinery/shield_capacitor/process()
 	//
 	if(active)
-		set_power_use(ACTIVE_POWER_USE)
+		if(use_power == IDLE_POWER_USE)
+			set_power_use(ACTIVE_POWER_USE)
 		if(stored_charge + charge_rate > max_charge)
 			active_power_usage = max_charge - stored_charge
 		else
 			active_power_usage = charge_rate
 		stored_charge += active_power_usage
-	else
+	else if(use_power == ACTIVE_POWER_USE)
 		set_power_use(IDLE_POWER_USE)
 
 	time_since_fail++
