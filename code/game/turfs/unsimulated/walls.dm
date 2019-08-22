@@ -10,6 +10,13 @@
 	icon_state = "fakewindows"
 	opacity = 0
 
+/turf/unsimulated/wall/smooth
+	name = "wall"
+	icon = 'icons/turf/walls/riveted.dmi'
+	icon_state = "box"
+	canSmoothWith = list(/turf/unsimulated/wall/smooth)
+	smooth = 1
+
 /turf/unsimulated/wall/splashscreen
 	name = "Space Station 13"
 	icon = 'icons/misc/fullscreen_loading.dmi'
