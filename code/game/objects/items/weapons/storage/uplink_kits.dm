@@ -145,7 +145,7 @@
 	O.imp = new /obj/item/weapon/implant/emp(O)
 	O.update()
 
- /obj/item/weapon/storage/box/syndie_kit/imp_emp
+/obj/item/weapon/storage/box/syndie_kit/imp_emp
 	name = "box (M)"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink

@@ -679,7 +679,7 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenaline
 	cost = 6
 
- /datum/uplink_item/implants/emp
+/datum/uplink_item/implants/emp
 	name = "EMP Implant"
 	desc = "An implant, that contains power of three emp grenades, can be activated at the user's will."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_emp
