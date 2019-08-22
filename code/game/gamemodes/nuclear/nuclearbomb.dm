@@ -10,7 +10,7 @@ var/bomb_set
 	icon_state = "nuclearbomb0"
 	density = TRUE
 	can_buckle = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	var/deployable = 0.0
 	var/extended = 0.0
 	var/lighthack = 0

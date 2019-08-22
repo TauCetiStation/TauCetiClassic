@@ -39,6 +39,7 @@
 	else
 		stat |= ~NOPOWER
 		icon_state = "[base_state]1-p"
+	update_power_use()
 
 //Don't want to render prison breaks impossible
 /obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user)

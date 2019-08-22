@@ -311,10 +311,10 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"
 	anchored = 1.0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	var/ready = 0
 	var/area/currentarea = null
 	var/eventstarted = 0

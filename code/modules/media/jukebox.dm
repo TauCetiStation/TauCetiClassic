@@ -352,6 +352,6 @@ var/global/loopModeNames=list(
 		"lobby" = "Lobby Mix"
 	)
 	playlist_id = "lobby"
-	use_power = 0
+	use_power = NO_POWER_USE
 	invisibility=101
 	autoplay = 1

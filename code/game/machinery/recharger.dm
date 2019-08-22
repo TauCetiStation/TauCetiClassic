@@ -6,7 +6,7 @@
 	icon_state = "recharger0"
 	desc = "A charging dock for energy based weaponry."
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
 	active_power_usage = 250
 	interact_offline = TRUE
@@ -55,7 +55,7 @@
 		G.loc = src
 		charging = G
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
-		use_power = 2
+		set_power_use(ACTIVE_POWER_USE)
 		update_icon()
 	else if(iswrench(G))
 		if(charging)
@@ -86,7 +86,7 @@
 		charging.loc = loc
 		charging = null
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 		update_icon()
 
 /obj/machinery/recharger/process()

@@ -15,10 +15,10 @@
 	//1 = select event
 	//2 = authenticate
 	anchored = 1.0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 
 /obj/machinery/keycard_auth/attack_ai(mob/user)
 	if(IsAdminGhost(user))
@@ -51,6 +51,7 @@
 		icon_state = "auth_off"
 	else
 		stat |= NOPOWER
+	update_power_use()
 
 /obj/machinery/keycard_auth/ui_interact(mob/user)
 	if(stat & (NOPOWER|BROKEN))

@@ -141,7 +141,7 @@
 	volume = 50000
 	volume_rate = 5000
 
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 500      //internal circuitry, friction losses and stuff
 	active_power_usage = 100000 //100 kW ~ 135 HP
 
@@ -185,7 +185,7 @@
 
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/process_atmos()
 	if(!on || (stat & (NOPOWER | BROKEN)))
-		update_use_power(0)
+		set_power_use(NO_POWER_USE)
 		last_flow_rate = 0
 		last_power_draw = 0
 		return FALSE

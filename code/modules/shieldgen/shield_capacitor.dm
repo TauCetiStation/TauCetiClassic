@@ -15,7 +15,7 @@
 	var/charge_limit = 200000
 	var/locked = 0
 	//
-	use_power = 1			//0 use nothing
+	use_power = IDLE_POWER_USE			//0 use nothing
 							//1 use idle power
 							//2 use active power
 	idle_power_usage = 10
@@ -102,14 +102,14 @@
 /obj/machinery/shield_capacitor/process()
 	//
 	if(active)
-		use_power = 2
+		set_power_use(ACTIVE_POWER_USE)
 		if(stored_charge + charge_rate > max_charge)
 			active_power_usage = max_charge - stored_charge
 		else
 			active_power_usage = charge_rate
 		stored_charge += active_power_usage
 	else
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 
 	time_since_fail++
 	if(stored_charge < active_power_usage * 1.5)
@@ -128,9 +128,9 @@
 	if( href_list["toggle"] )
 		active = !active
 		if(active)
-			use_power = 2
+			set_power_use(ACTIVE_POWER_USE)
 		else
-			use_power = 1
+			set_power_use(IDLE_POWER_USE)
 	if( href_list["charge_rate"] )
 		charge_rate += text2num(href_list["charge_rate"])
 		if(charge_rate > charge_limit)
@@ -154,6 +154,8 @@
 			spawn(rand(0, 15))
 				src.icon_state = "capacitor"
 				stat |= NOPOWER
+				update_power_use()
+	update_power_use()
 
 /obj/machinery/shield_capacitor/verb/rotate()
 	set name = "Rotate capacitor clockwise"

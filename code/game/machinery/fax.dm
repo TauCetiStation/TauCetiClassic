@@ -8,10 +8,9 @@ var/list/alldepartments = list("Central Command")
 	req_one_access = list(access_lawyer, access_heads)
 	anchored = 1
 	density = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
 	active_power_usage = 200
-	power_channel = EQUIP
 	interact_offline = TRUE
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/weapon/card/id/scan = null // identification
@@ -175,9 +174,7 @@ var/list/alldepartments = list("Central Command")
 			scan = idcard
 
 	else if(iswrench(O))
-		anchored = !anchored
-		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
-	return
+		default_unfasten_wrench(user, O)
 
 /proc/centcomm_fax(mob/sender, obj/item/weapon/paper/P)
 	var/msg = text("<span class='notice'><b>[] [] [] [] [] [] []</b>: Receiving '[P.name]' via secure connection ... []</span>",

@@ -390,7 +390,7 @@
 // timed process
 // charge the gas reservoir and perform flush if ready
 /obj/machinery/disposal/process()
-	use_power = 0
+	set_power_use(NO_POWER_USE)
 	if(stat & BROKEN)			// nothing can happen if broken
 		return
 
@@ -413,13 +413,13 @@
 	if(stat & NOPOWER)			// won't charge if no power
 		return
 
-	use_power = 1
+	set_power_use(IDLE_POWER_USE)
 
 	if(mode != 1)		// if off or ready, no need to charge
 		return
 
 	// otherwise charge
-	use_power = 2
+	set_power_use(ACTIVE_POWER_USE)
 
 	var/atom/L = loc						// recharging from loc turf
 

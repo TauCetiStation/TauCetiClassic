@@ -5,7 +5,7 @@
 	desc = "Nothing is being built."
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 5000
 	req_access = list(access_robotics)
@@ -168,10 +168,10 @@
 	desc = "It's building \a [initial(D.name)]."
 	remove_resources(D)
 	overlays += "fab-active"
-	use_power = 2
+	set_power_use(ACTIVE_POWER_USE)
 	updateUsrDialog()
 	sleep(get_construction_time_w_coeff(D))
-	use_power = 1
+	set_power_use(IDLE_POWER_USE)
 	overlays -= "fab-active"
 	desc = initial(desc)
 

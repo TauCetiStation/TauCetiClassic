@@ -8,7 +8,7 @@
 	icon_state = "light1"
 	anchored = TRUE
 	idle_power_usage = 20
-	power_channel = LIGHT
+	power_channel = STATIC_LIGHT
 	var/on = TRUE
 	var/area/area = null
 	var/otherarea = null
@@ -79,6 +79,7 @@
 			stat |= NOPOWER
 
 		updateicon()
+	update_power_use()
 
 /obj/machinery/light_switch/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))

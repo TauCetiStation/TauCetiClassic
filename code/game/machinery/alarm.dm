@@ -37,10 +37,10 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm0"
 	anchored = TRUE
-	use_power = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 80
 	active_power_usage = 1000 // For heating/cooling rooms. 1000 joules equates to about 1 degree every 2 seconds for a single tile of air.
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	frequency = 1439
 	allowed_checks = ALLOWED_CHECK_NONE
@@ -189,7 +189,7 @@
 	if(!regulating_temperature)
 		//check for when we should start adjusting temperature
 		if(allow_regulate && !get_danger_level(target_temperature, TLV["temperature"]) && abs(environment.temperature - target_temperature) > 2.0)
-			update_use_power(2)
+			set_power_use(ACTIVE_POWER_USE)
 			regulating_temperature = 1
 			visible_message(
 				"\The [src] clicks as it starts [environment.temperature > target_temperature ? "cooling" : "heating"] the room.",
@@ -197,7 +197,7 @@
 	else
 		//check for when we should stop adjusting temperature
 		if (!allow_regulate || get_danger_level(target_temperature, TLV["temperature"]) || abs(environment.temperature - target_temperature) <= 0.5)
-			update_use_power(1)
+			set_power_use(IDLE_POWER_USE)
 			regulating_temperature = 0
 			visible_message(
 				"\The [src] clicks quietly as it stops [environment.temperature > target_temperature ? "cooling" : "heating"] the room.",
@@ -874,6 +874,7 @@
 		stat |= NOPOWER
 	spawn(rand(0,15))
 		update_icon()
+	update_power_use()
 
 /obj/machinery/alarm/examine(mob/user)
 	..()
@@ -953,10 +954,10 @@ FIRE ALARM
 	var/timing = 0.0
 	var/lockdownbyai = 0
 	anchored = 1.0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/last_process = 0
 	var/wiresexposed = 0
@@ -1081,6 +1082,8 @@ FIRE ALARM
 		spawn(rand(0,15))
 			stat |= NOPOWER
 			update_icon()
+			update_power_use()
+	update_power_use()
 
 /obj/machinery/firealarm/ui_interact(mob/user)
 	if (buildstage != 2)

@@ -44,7 +44,7 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "apc0"
 	anchored = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	req_access = list(access_engine_equip)
 	allowed_checks = ALLOWED_CHECK_NONE
 	unacidable = TRUE
