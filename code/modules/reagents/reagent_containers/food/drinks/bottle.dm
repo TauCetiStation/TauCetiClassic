@@ -19,14 +19,14 @@
 	set src in view(1)
 	verbs += /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/stop_spin_bottle
 	transform = 0
+	if (usr.client)
+		usr.client.drop_item()
 	M.Turn(pick(0, 45, 90, 135, 180, 225, 270, 315))
 	animate(src, transform = turn(matrix(), 120), time = 3, loop = 8)
 	animate(transform = turn(matrix(), 240), time = 3)
 	animate(transform = null, time = 3)
 	sleep(14)
 	animate(src, transform = M, time = 4)
-	if (usr.client)
-		usr.client.drop_item()
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/stop_spin_bottle()
 	set name = "Stop spin"
