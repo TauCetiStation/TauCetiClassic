@@ -161,7 +161,6 @@
 	clumsy_check = 0
 	can_be_holstered = TRUE
 	var/charge_tick = 0
-	var/armor_type = /obj/item/clothing/suit
 
 	var/lasertag_color = "none"
 
