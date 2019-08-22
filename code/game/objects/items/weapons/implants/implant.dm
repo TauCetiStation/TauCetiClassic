@@ -272,7 +272,7 @@ Implant Specifics:<BR>"}
 	uses = 3
 
 	action_button_name = "Adrenaline implant"
-	action_button_is_hands_free = 1
+	action_button_is_hands_free = TRUE
 
 /obj/item/weapon/implant/adrenaline/ui_action_click()
 	uses--
@@ -299,7 +299,7 @@ Implant Specifics:<BR>"}
 	uses = 3
 
 	action_button_name = "EMP pulse"
-	action_button_is_hands_free = 1
+	action_button_is_hands_free = TRUE
 
 /obj/item/weapon/implant/emp/ui_action_click()
 	uses--
