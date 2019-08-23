@@ -216,17 +216,26 @@
 			M.client.prefs.permamuted &= ~mute_type
 			M.client.prefs.save_preferences()
 	else
-		muteunmute = "muted"
-		M.client.prefs.muted |= mute_type
 		if(alert("Would you like to make it permament?","Permamute?","Yes","No, round only") == "Yes")
-			muteunmute = "permamuted"
-			M.client.prefs.permamuted |= mute_type
-			M.client.prefs.save_preferences()
+			var/permmutreason = input("Permamute notice:", "Permamute Reason") as  null|text
+			if(permmutreason)
+				muteunmute = "permamuted"
+				M.client.prefs.permamuted |= mute_type
+				M.client.prefs.save_preferences()
+				M.client.prefs.muted |= mute_type
+				notes_add(M.key, "Permamute on [mute_string]: [permmutreason]", usr.client)
+				to_chat(M, "<span class='alert'><span class='reallybig bold'>You have been permamuted from [usr.key].</span><br>Permamuted [mute_string] reason: [permmutreason].</span>")
+			else
+				to_chat(usr, "<span class='alert'>Abort permamuted: Empty reason.</span>")
+				return
 
+		else
+			muteunmute = "muted"
+			M.client.prefs.muted |= mute_type
+			to_chat(M, "You have been [muteunmute] from [mute_string].")
 
 	log_admin("[key_name(usr)] has [muteunmute] [key_name(M)] from [mute_string]")
 	message_admins("[key_name_admin(usr)] has [muteunmute] [key_name_admin(M)] from [mute_string].")
-	to_chat(M, "You have been [muteunmute] from [mute_string].")
 	feedback_add_details("admin_verb","MUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
