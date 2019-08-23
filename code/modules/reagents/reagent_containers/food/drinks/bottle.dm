@@ -13,26 +13,51 @@
 	var/is_transparent = 1 //Determines whether an overlay of liquid should be added to bottle when it fills
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle()
-	var/matrix/M = matrix()
 	set name = "Spin bottle"
 	set category = "Object"
 	set src in view(1)
-	verbs += /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/stop_spin_bottle
+	var/angle_to_stop = pick(0, 45, 90, 135, 180, 225, 270, 315)
+	var/matrix/M = matrix()
+	if(!config.ghost_interaction && isobserver(usr))
+		return
+	if(ismouse(usr))
+		return
+	if(!usr || !isturf(usr.loc))
+		return
+	if(usr.incapacitated())
+		return
+	verbs += /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/stop_spin_bottle
+	//drop_from_inventory(bottle)
 	transform = 0
-	if (usr.client)
-		usr.client.drop_item()
-	M.Turn(pick(0, 45, 90, 135, 180, 225, 270, 315))
-	animate(src, transform = turn(matrix(), 120), time = 3, loop = 8)
-	animate(transform = turn(matrix(), 240), time = 3)
-	animate(transform = null, time = 3)
-	sleep(14)
-	animate(src, transform = M, time = 4)
+	M.Turn(angle_to_stop)
+	animate(src, transform = turn(matrix(), 120), time = 3, loop = 5) //Spin bottle
+	animate(transform = turn(matrix(), 240), time = 3, loop = 5)
+	animate(transform = null, time = 3, loop = 5)
+	sleep(45)
+	if(120 > angle_to_stop && angle_to_stop >= 0) //Torsion result
+		animate(src, transform = M, time = 4)
+	if(226 > angle_to_stop && angle_to_stop > 119)
+		animate(src, transform = turn(matrix(), 120), time = 3)
+		animate(transform = M, time = 3)
+	if(316 > angle_to_stop && angle_to_stop > 241)
+		animate(src, transform = turn(matrix(), 120), time = 3)
+		animate(transform = turn(matrix(), 240), time = 3)
+		animate(transform = M, time = 3)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/verb/stop_spin_bottle()
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/proc/stop_spin_bottle()
 	set name = "Stop spin"
 	set category = "Object"
 	set src in view(1)
-	verbs -= /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/stop_spin_bottle
+	if(!config.ghost_interaction && isobserver(usr))
+		return
+	if(ismouse(usr))
+		return
+	if(!usr || !isturf(usr.loc))
+		return
+	if(usr.incapacitated())
+		return
+	verbs -= /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/stop_spin_bottle
 	transform = null
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user)
