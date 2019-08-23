@@ -32,7 +32,6 @@
 		// Type 1 (Visual) emotes are sent to anyone in view of the item
 		if(m_type & 1)
 			to_check = viewers(src, null)
-			to_check |= oview(1, usr)
 		// Type 2 (Audible) emotes are sent to anyone in hear range
 		// of the *LOCATION* -- this is important for pAIs to be heard
 		else if(m_type & 2)
