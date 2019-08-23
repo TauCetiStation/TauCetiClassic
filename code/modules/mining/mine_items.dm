@@ -495,6 +495,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/power = 4
 
 /obj/item/projectile/kinetic/atom_init()
+	. = ..()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))
 		return INITIALIZE_HINT_QDEL
@@ -503,7 +504,6 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if(pressure < 50)
 		name = "full strength kinetic force"
 		damage *= 4
-	. = ..()
 
 /obj/item/projectile/kinetic/Range()
 	range--
