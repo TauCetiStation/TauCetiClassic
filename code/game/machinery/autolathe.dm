@@ -283,7 +283,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 
 	if(href_list["make"])
 		var/coeff = 2 ** prod_coeff
-		var/turf/T = src.loc
+		var/turf/T = get_turf(src)
 		// critical exploit fix start -walter0o
 		var/obj/item/template = null
 		var/attempting_to_build = locate(href_list["make"])
