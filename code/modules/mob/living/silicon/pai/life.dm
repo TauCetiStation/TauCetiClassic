@@ -7,11 +7,11 @@
 			for (var/mob/M in viewers(T))
 				M.show_message("<span class='warning'>The data cable rapidly retracts back into its spool.</span>", 3, "<span class='warning'>You hear a click and the sound of wire spooling rapidly.</span>", 2)
 			QDEL_NULL(src.cable)
-			src.hacksuccess = 0
-			src.hackobj = null
+			hacksuccess = FALSE
+			hackobj = null
 	else
-		if(src.hacksuccess == 1 && !src.hackobj)
-			src.hacksuccess = 0
+		if(hacksuccess && !src.hackobj)
+			hacksuccess = FALSE
 
 	add_ingame_age()
 	regular_hud_updates()
