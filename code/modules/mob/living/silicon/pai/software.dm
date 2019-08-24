@@ -122,7 +122,7 @@
 		markedobjects -= O
 		ram += 5
 		if(!cable && O == hackobj)
-			hacksuccess = 0
+			hacksuccess = FALSE
 			hackobj = null
 		if(current == O)
 			switchCamera(null)
@@ -300,7 +300,7 @@
 						removeFromMarked(hackobj)
 					if(97)
 						hackobj = markedobjects[text2num(href_list["markedid"])]
-						hacksuccess = 1
+						hacksuccess = TRUE
 				var/tdelay = get_dist(src, hackobj) //Delay
 				if(tdelay >= 5 && !(istype(hackobj, /obj/machinery/camera) && intwth == 5) && intwth <=95 && hackobj) //With current type of delay it should be stupid waitin' to disconnect/connect to camera.
 					src.temp = "Sending signal, please wait..."
@@ -392,7 +392,7 @@
 												targetPersonality.removeFromMarked(markedobjselected)
 											if("Make active")
 												targetPersonality.hackobj = markedobjselected
-												targetPersonality.hacksuccess = 1
+												targetPersonality.hacksuccess = TRUE
 							if(4)
 								if(targetPersonality.markedobjects.len > 0)
 									var/C = targetPersonality.markedobjects
@@ -804,7 +804,7 @@
 	dat += "When connected remotely, make sure distance between you and marked device is not too long. Otherwise, data packets might not be delivered which causes loss of control.<br>"
 	dat += "<br>"
 	dat += "Connection status: "
-	if(!cable && (!hackobj || hacksuccess == 0))
+	if(!cable && (!hackobj || !hacksuccess))
 		dat += "<font color=#FF5555>Retracted</font> <br>"
 		dat += "<a href='byond://?src=\ref[src];software=interaction;cable=1;sub=0'>Extend Cable</a> <br><br>"
 		if(markedobjects.len > 0)
@@ -959,7 +959,7 @@
 		if(hackprogress == 100)
 			hackprogress = 0
 			//src.cable.machine:open()
-			src.hacksuccess = 1
+			src.hacksuccess = TRUE
 			return
 		sleep(50)			// Update every 5 seconds
 
