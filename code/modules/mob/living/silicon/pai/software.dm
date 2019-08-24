@@ -486,8 +486,8 @@
 									Bot.maketiles = !Bot.maketiles
 
 			if(href_list["cable"])
+				var/turf/T = get_turf_or_move(loc)
 				if(href_list["cable"] == "1")
-					var/turf/T = get_turf_or_move(loc)
 					cable = new /obj/item/weapon/pai_cable(T)
 					var/mob/living/C = getcarrier(loc)
 					if(C)
@@ -498,7 +498,7 @@
 				if(href_list["cable"] == "2")
 					if(cable)
 						QDEL_NULL(cable)
-						for (var/mob/M in viewers(T))
+						for (var/mob/M in viewers())
 							M.show_message("<span class='warning'>The data cable rapidly retracts back into its spool.</span>", 3, "<span class='warning'>You hear a click and the sound of wire spooling rapidly.</span>", 2)
 					hackobj = null
 	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
@@ -809,7 +809,7 @@
 		dat += "<a href='byond://?src=\ref[src];software=interaction;cable=1;sub=0'>Extend Cable</a> <br><br>"
 		if(markedobjects.len > 0)
 			dat += "Marked devices: <br>"
-			for(var/Tmp = 1, Tmp <= .markedobjects.len, Tmp++)
+			for(var/Tmp = 1, Tmp <= markedobjects.len, Tmp++)
 				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=97;markedid=[Tmp];sub=0'>[Tmp] - [markedobjects[Tmp]]</a> <br>"
 		return dat
 	if(cable && !cable.machine)
