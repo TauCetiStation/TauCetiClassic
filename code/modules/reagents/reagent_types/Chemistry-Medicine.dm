@@ -390,7 +390,7 @@
 /datum/reagent/imidazoline
 	name = "Imidazoline"
 	id = "imidazoline"
-	description = "Heals eye damage"
+	description = "Heals eye damage."
 	reagent_state = LIQUID
 	color = "#a0dbff" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
@@ -407,6 +407,21 @@
 		if(istype(IO))
 			if(IO.damage > 0 && IO.robotic < 2)
 				IO.damage = max(IO.damage - 1, 0)
+
+/datum/reagent/inacusiate
+	name = "Inacusiate"
+	id = "inacusiate"
+	description = "A chemical compound that instantly restores all hearing to the patient."
+	reagent_state = LIQUID
+	color = "#87cefa" // rgb: 135, 206, 250
+	overdose = REAGENTS_OVERDOSE * 0.5
+	taste_message = "earwax"
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/inacusiate/on_general_digest(mob/living/M)
+	..()
+	if(volume == 15)
+		M.ear_deaf = 0
 
 /datum/reagent/peridaxon
 	name = "Peridaxon"

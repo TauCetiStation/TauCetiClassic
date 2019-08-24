@@ -2510,3 +2510,10 @@ TODO: Convert everything to custom hair dye,
 	result = "aclometasone"
 	required_reagents = list("mindbreaker" = 3, "hyperzine" = 1, "coffee" = 1, "phoron" = 1)
 	result_amount = 1
+
+/datum/chemical_reaction/inacusiate
+	name = "Inacusiate"
+	id = "inacusiate"
+	result = "inacusiate"
+	required_reagents = list("nitrogen" = 1, "oxygen" = 1, "anti_toxin" = 1)
+	result_amount = 2
