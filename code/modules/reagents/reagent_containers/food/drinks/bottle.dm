@@ -26,7 +26,6 @@
 		return
 	if(usr.incapacitated())
 		return
-	verbs += /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/stop_spin_bottle
 	//drop_from_inventory(bottle)
 	transform = 0
 	M.Turn(angle_to_stop)
@@ -43,21 +42,11 @@
 		animate(src, transform = turn(matrix(), 120), time = 3)
 		animate(transform = turn(matrix(), 240), time = 3)
 		animate(transform = M, time = 3)
+	if(slot_equipped)
+		transform = null
 
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/proc/stop_spin_bottle()
-	set name = "Stop spin"
-	set category = "Object"
-	set src in view(1)
-	if(!config.ghost_interaction && isobserver(usr))
-		return
-	if(ismouse(usr))
-		return
-	if(!usr || !isturf(usr.loc))
-		return
-	if(usr.incapacitated())
-		return
-	verbs -= /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/stop_spin_bottle
+/obj/item/weapon/reagent_containers/food/drinks/bottle/pickup(mob/living/user)
 	transform = null
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user)
