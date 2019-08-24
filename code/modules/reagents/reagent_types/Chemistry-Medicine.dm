@@ -420,8 +420,7 @@
 
 /datum/reagent/inacusiate/on_general_digest(mob/living/M)
 	..()
-	if(volume == 15)
-		M.ear_deaf = 0
+	M.ear_deaf -= 1
 
 /datum/reagent/peridaxon
 	name = "Peridaxon"
