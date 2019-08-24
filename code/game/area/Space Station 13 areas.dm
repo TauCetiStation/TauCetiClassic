@@ -1424,3 +1424,7 @@ var/list/the_station_areas = list (
 /area/derelict/lab
 	name = "Abandoned Lab"
 	icon_state = "yellow"
+
+/area/tophat
+	name = "Tophat"
+	icon_state = "tophat-room"
