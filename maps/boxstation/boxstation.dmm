@@ -32125,10 +32125,6 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = 12
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitehall"
