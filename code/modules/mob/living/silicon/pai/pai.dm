@@ -86,6 +86,10 @@
 
 	. = ..()
 
+/mob/living/silicon/pai/Destroy()
+	hackobj = null
+    markedobjects.Cut()
+
 /mob/living/silicon/pai/Stat()
 	..()
 	if(statpanel("Status"))
