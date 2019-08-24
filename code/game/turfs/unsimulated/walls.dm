@@ -11,11 +11,9 @@
 	opacity = 0
 
 /turf/unsimulated/wall/smooth
-	name = "wall"
 	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "box"
-	canSmoothWith = list(/turf/unsimulated/wall/smooth)
-	smooth = 1
+	smooth = SMOOTH_TRUE
 
 /turf/unsimulated/wall/splashscreen
 	name = "Space Station 13"
