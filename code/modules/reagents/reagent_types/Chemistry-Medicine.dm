@@ -420,7 +420,7 @@
 
 /datum/reagent/inacusiate/on_general_digest(mob/living/M)
 	..()
-	M.ear_deaf -= 1
+	M.ear_deaf = max(M.ear_deaf - 1, 0)
 
 /datum/reagent/peridaxon
 	name = "Peridaxon"
