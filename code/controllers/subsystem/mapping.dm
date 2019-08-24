@@ -98,10 +98,10 @@ var/datum/subsystem/mapping/SSmapping
 			// Space reservation
 			var/datum/reserved_space/S = new
 			S.z = T.z
-			S.x1 = Floor(T.x - structure.width / 2)
-			S.y1 = Floor(T.y - structure.height / 2)
-			S.x2 = ceil(T.x + structure.width / 2)
-			S.y2 = ceil(T.y + structure.height / 2)
+			S.x1 = FLOOR(T.x - structure.width / 2, 1)
+			S.y1 = FLOOR(T.y - structure.height / 2, 1)
+			S.x2 = CEIL(T.x + structure.width / 2)
+			S.y2 = CEIL(T.y + structure.height / 2)
 			reserved_space += S
 
 			structure.load(T, centered = TRUE, initBounds = FALSE)
@@ -111,7 +111,7 @@ var/datum/subsystem/mapping/SSmapping
 #endif
 
 /datum/subsystem/mapping/proc/find_spot(datum/map_template/space_structure/structure)
-	var/structure_size = ceil(max(structure.width / 2, structure.height / 2))
+	var/structure_size = CEIL(max(structure.width / 2, structure.height / 2))
 	var/structure_padding = structure_size + TRANSITIONEDGE + 5
 	for (var/try_count in 1 to 10)
 		var/turf/space/T = locate(rand(structure_padding, world.maxx - structure_padding), rand(structure_padding, world.maxy - structure_padding), pick(levels_by_trait(ZTRAIT_SPACE_RUINS)))

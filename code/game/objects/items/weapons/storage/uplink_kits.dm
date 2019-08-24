@@ -90,7 +90,6 @@
 
 		if("gadgets")
 			new /obj/item/clothing/gloves/yellow(src)
-			new /obj/item/weapon/pen/paralysis(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/device/flashlight/emp(src)
 			new /obj/item/clothing/shoes/syndigaloshes(src)
