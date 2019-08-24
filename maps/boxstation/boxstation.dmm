@@ -38330,7 +38330,7 @@
 /area/hallway/primary/central)
 "btY" = (
 /obj/machinery/camera{
-	c_tag = "Bridge West"
+	c_tag = "Bridge East"
 	},
 /obj/item/weapon/storage/fancy/donut_box,
 /obj/structure/noticeboard{
