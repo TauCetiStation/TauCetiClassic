@@ -13,7 +13,7 @@
 	desc = "Be none's man, shoot everybody!"
 	icon_state = "bluetag"
 	item_state = "bluetag"
-	blood_overlay_type = "aror"
+	blood_overlay_type = "armor"
 	body_parts_covered = UPPER_TORSO
 	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag)
 	siemens_coefficient = 3.0
