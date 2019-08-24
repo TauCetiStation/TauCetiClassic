@@ -14,6 +14,8 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if (!BP)
 		return 0
+	if (BP.is_stump)
+		return FALSE
 	return target_zone == O_EYES
 
 /datum/surgery_step/eye/cut_open

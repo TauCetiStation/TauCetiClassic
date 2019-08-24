@@ -52,7 +52,7 @@ var/list/gurgles = list(
 	if(fluid_here <= 0)
 		return
 
-	T.remove_fluid(ceil(fluid_here*drainage))
+	T.remove_fluid(CEIL(fluid_here*drainage))
 	if(world.time > last_gurgle + 80)
 		last_gurgle = world.time
 		playsound(T, pick(gurgles), VOL_EFFECTS_MASTER)

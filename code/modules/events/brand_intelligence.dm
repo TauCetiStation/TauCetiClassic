@@ -34,7 +34,7 @@
 		kill()
 		return
 
-	if(IsMultiple(activeFor, 5))
+	if(IS_MULTIPLE(activeFor, 5))
 		if(prob(15))
 			var/obj/machinery/vending/infectedMachine = pick(vendingMachines)
 			vendingMachines.Remove(infectedMachine)
@@ -42,7 +42,7 @@
 			infectedMachine.shut_up = 0
 			infectedMachine.shoot_inventory = 1
 
-			if(IsMultiple(activeFor, 12))
+			if(IS_MULTIPLE(activeFor, 12))
 				originMachine.speak(pick("Try our aggressive new marketing strategies!", \
 										 "You should buy products to feed your lifestyle obsession!", \
 										 "Consume!", \

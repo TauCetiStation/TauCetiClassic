@@ -15,6 +15,16 @@
 	var/process_accuracy = 0    // Damage multiplier for organs, that have damage values.
 	var/robotic = 0             // For being a robot
 
+/obj/item/organ/internal/Destroy()
+	if(parent)
+		parent.children -= src
+		parent = null
+	if(owner)
+		owner.organs -= src
+		if(owner.organs_by_name[organ_tag] == src)
+			owner.organs_by_name -= organ_tag
+	return ..()
+
 /obj/item/organ/internal/insert_organ()
 	..()
 

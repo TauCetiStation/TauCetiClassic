@@ -1,7 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "wooden"
 	},
 /area/holodeck/source_meetinghall)
@@ -10,7 +9,6 @@
 	icon_state = "plant-6"
 	},
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "wooden"
 	},
 /area/holodeck/source_meetinghall)
@@ -34,17 +32,14 @@
 /area/holodeck/source_meetinghall)
 "f" = (
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "grimy"
 	},
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "siding1"
 	},
 /area/holodeck/source_meetinghall)
 "g" = (
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "wood_stairs2"
 	},
 /area/holodeck/source_meetinghall)
@@ -71,7 +66,6 @@
 /area/holodeck/source_meetinghall)
 "k" = (
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "grimy"
 	},
 /area/holodeck/source_meetinghall)

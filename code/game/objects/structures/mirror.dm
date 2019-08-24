@@ -143,6 +143,7 @@
 				H.r_skin = hex2num(copytext(new_skin, 2, 4))
 				H.g_skin = hex2num(copytext(new_skin, 4, 6))
 				H.b_skin = hex2num(copytext(new_skin, 6, 8))
+			H.apply_recolor()
 			H.update_hair()
 			H.update_body()
 			H.check_dna(H)

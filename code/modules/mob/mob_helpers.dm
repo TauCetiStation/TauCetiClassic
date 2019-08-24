@@ -30,14 +30,14 @@
 	if(isnull(full_prosthetic))
 		robolimb_count = 0
 		for(var/obj/item/organ/external/BP in bodyparts)
-			if(BP.status & ORGAN_ROBOT)
+			if(BP.is_robotic())
 				robolimb_count++
 		full_prosthetic = (robolimb_count == bodyparts.len)
 
 	if(!full_prosthetic && target_zone)
 		var/obj/item/organ/external/BP = get_bodypart(target_zone)
 		if(BP)
-			return BP.status & ORGAN_ROBOT
+			return BP.is_robotic()
 
 	return full_prosthetic
 

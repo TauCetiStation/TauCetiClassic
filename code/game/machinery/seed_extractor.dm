@@ -39,9 +39,9 @@
 
 	default_deconstruction_crowbar(O)
 
-	if(istype(O, /obj/item/weapon/organ))
-		var/obj/item/weapon/organ/IO = O
-		if(IO.specie == DIONA)
+	if(istype(O, /obj/item/organ/external))
+		var/obj/item/organ/external/IO = O
+		if(IO.species.name == DIONA)
 			to_chat(user, "<span class='notice'>You extract some seeds from the [IO.name].</span>")
 			var/t_amount = 0
 			var/t_max = rand(1,4)
