@@ -113,7 +113,7 @@
 	return
 
 /mob/living/silicon/pai/proc/addToMarked(O)
-	if(O && markedobjects.len < 5 && !(O in markedobjects) && ram - 5 >= 0)
+	if(O && markedobjects.len < 5 && !(O in markedobjects) && ram >= 5)
 		markedobjects += O
 		ram -= 5
 
