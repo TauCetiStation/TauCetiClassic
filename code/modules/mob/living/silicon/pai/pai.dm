@@ -219,17 +219,17 @@
 		var/mob/living/U = usr
 		U.cameraFollow = null
 	if (!C)
-		src.unset_machine()
-		src.reset_view(null)
-		src.current = null
+		unset_machine()
+		reset_view(null)
+		current = null
 		return 0
 	if (stat == DEAD || !C.status || !(src.network in C.network)) return 0
 
 	// ok, we're alive, camera is good and in our network...
 
-	src.set_machine(src)
-	src.current = C
-	src.reset_view(C)
+	set_machine(src)
+	current = C
+	reset_view(C)
 	return 1
 
 
@@ -254,12 +254,11 @@
 		to_chat(usr, "You can't change your camera network because you are dead!")
 		return
 
-	for (var/obj/machinery/camera/C in cameranet.cameras)
+	for (var/obj/machinery/camera/C in Cameras)
 		if(!C.status)
 			continue
 		else
 			if(C.network != "CREED" && C.network != "thunder" && C.network != "RD" && C.network != "phoron" && C.network != "Prison") COMPILE ERROR! This will have to be updated as camera.network is no longer a string, but a list instead
-			//if(!C.network.Find("RD","Research","Prison","thunder","phoron","CREED","Toxins Test Area","MiniSat","tcommsat")) Tried to fix
 				cameralist[C.network] = C.network
 
 	src.network = input(usr, "Which network would you like to view?") as null|anything in cameralist
