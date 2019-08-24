@@ -30,10 +30,10 @@
 	var/datum/industry/industry = null
 
 /datum/stock/proc/changeOptimism(dn)
-	optimism = Clamp(optimism + dn, OPTIMISM_MIN, OPTIMISM_MAX)
+	optimism = CLAMP(optimism + dn, OPTIMISM_MIN, OPTIMISM_MAX)
 
 /datum/stock/proc/setOptimism(n)
-	optimism = Clamp(n, OPTIMISM_MIN, OPTIMISM_MAX)
+	optimism = CLAMP(n, OPTIMISM_MIN, OPTIMISM_MAX)
 
 /datum/stock/proc/addEvent(datum/stockEvent/E)
 	events |= E
@@ -88,7 +88,7 @@
 			changeOptimism(0.01)
 
 	if(performance)
-		performance = Clamp(rand(900,1050) * 0.001 * performance, PERFORMANCE_MIN, PERFORMANCE_MAX)
+		performance = CLAMP(rand(900,1050) * 0.001 * performance, PERFORMANCE_MIN, PERFORMANCE_MAX)
 
 	disp_value_change = (change > 0) ? 1 : ((change < 0) ? -1 : 0)
 	last_value = current_value

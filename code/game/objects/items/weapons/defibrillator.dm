@@ -52,7 +52,7 @@
 				new_overlays += "[initial(icon_state)]-powered"
 
 	if(bcell)
-		var/ratio = ceil(bcell.percent()/25) * 25
+		var/ratio = CEIL(bcell.percent()/25) * 25
 		new_overlays += "[initial(icon_state)]-charge[ratio]"
 	else
 		new_overlays += "[initial(icon_state)]-nocell"
@@ -481,7 +481,7 @@
 	if(!brain)
 		return //no brain
 
-	var/brain_damage = Clamp((deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS) * MAX_BRAIN_DAMAGE, H.getBrainLoss(), MAX_BRAIN_DAMAGE)
+	var/brain_damage = CLAMP((deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS) * MAX_BRAIN_DAMAGE, H.getBrainLoss(), MAX_BRAIN_DAMAGE)
 	H.setBrainLoss(brain_damage)
 
 /obj/item/weapon/twohanded/shockpaddles/proc/make_announcement(message)

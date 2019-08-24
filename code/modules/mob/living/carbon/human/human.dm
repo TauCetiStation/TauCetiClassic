@@ -372,7 +372,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/human/proc/wield(/obj/item/I, name, wieldsound = null)
+/mob/living/carbon/human/proc/wield(obj/item/I, name, wieldsound = null)
 	if(!can_use_two_hands())
 		to_chat(src, "<span class='warning'>You need both of your hands to be intact to do this.</span>")
 		return FALSE
