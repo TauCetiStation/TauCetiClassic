@@ -88,7 +88,7 @@
 
 /mob/living/silicon/pai/Destroy()
 	hackobj = null
-    markedobjects.Cut()
+	markedobjects.Cut()
 
 /mob/living/silicon/pai/Stat()
 	..()
