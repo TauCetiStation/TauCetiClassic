@@ -26,7 +26,9 @@
 		return
 	if(usr.incapacitated())
 		return
-	//drop_from_inventory(bottle)
+	var/mob/living/user = usr
+	if(istype(user))
+		user.drop_from_inventory(src, get_turf(src))
 	transform = 0
 	M.Turn(angle_to_stop)
 	animate(src, transform = turn(matrix(), 120), time = 3, loop = 5) //Spin bottle
