@@ -36,46 +36,33 @@
 	if(hungry >= 70)
 		tally += hungry / 50
 
+	if(buckled) // so, if we buckled we have large debuff
+		tally += 5.5
+
+	var/hands_or_legs
 	if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
-		for(var/bodypart_name in list(BP_L_ARM , BP_R_ARM))
-			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
-			if(!BP || (BP.is_stump))
-				tally += 6
-			else if(BP.status & ORGAN_SPLINTED)
-				tally += 0.8
-			else if(BP.status & ORGAN_BROKEN)
-				tally += 3
+		hands_or_legs = list(BP_L_ARM , BP_R_ARM)
 	else
-		var/chem_nullify_debuff = FALSE
-		if(!species.flags[NO_BLOOD] && ( reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola") )) // hyperzine removes equipment slowdowns (no blood = no chemical effects).
-			chem_nullify_debuff = TRUE
+		hands_or_legs = list(BP_L_LEG , BP_R_LEG)
 
-		if(wear_suit && wear_suit.slowdown && !(wear_suit.slowdown > 0 && chem_nullify_debuff))
-			tally += wear_suit.slowdown
+	for(var/bodypart_name in hands_or_legs)
+		var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
+		if(!BP || (BP.is_stump))
+			tally += 6
+		else if(BP.status & ORGAN_SPLINTED)
+			tally += 0.8
+		else if(BP.status & ORGAN_BROKEN)
+			tally += 3
 
-		if(back && back.slowdown && !(back.slowdown > 0 && chem_nullify_debuff))
-			tally += back.slowdown
+	// hyperzine removes equipment slowdowns (no blood = no chemical effects).
+	if(species.flags[NO_BLOOD] || !species.flags[NO_BLOOD] && !(reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")))
+		for(var/obj/item/I in list(wear_suit, back, shoes))
+			tally += I.slowdown
 
-		if(shoes && shoes.slowdown && !(shoes.slowdown > 0 && chem_nullify_debuff))
-			tally += shoes.slowdown
-
-		if(!chem_nullify_debuff)
-			for(var/x in list(l_hand, r_hand))
-				var/obj/item/O = x
-				if(O && !(O.flags & ABSTRACT) && O.w_class >= ITEM_SIZE_NORMAL)
-					tally += 0.5 * (O.w_class - 2) // (3 = 0.5) || (4 = 1) || (5 = 1.5)
-
-		if(buckled) // so, if we buckled we have large debuff
-			tally += 5.5
-
-		for(var/bodypart_name in list(BP_L_LEG , BP_R_LEG))
-			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
-			if(!BP || (BP.is_stump))
-				tally += 6
-			else if(BP.status & ORGAN_SPLINTED)
-				tally += 0.8
-			else if(BP.status & ORGAN_BROKEN)
-				tally += 3
+		for(var/x in list(l_hand, r_hand))
+			var/obj/item/I = x
+			if(I && !(I.flags & ABSTRACT) && I.w_class >= ITEM_SIZE_NORMAL)
+				tally += 0.5 * (I.w_class - 2) // (3 = 0.5) || (4 = 1) || (5 = 1.5)
 
 	if(shock_stage >= 10)
 		tally += round(log(3.5, shock_stage), 0.1) // (40 = ~3.0) and (starts at ~1.83)
