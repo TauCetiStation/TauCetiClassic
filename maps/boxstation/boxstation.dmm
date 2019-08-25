@@ -70246,13 +70246,14 @@
 	},
 /area/shuttle/mining/station)
 "hhg" = (
+/obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
-	c_tag = "Central Hallway South-East";
-	dir = 8
+	c_tag = "Central Hallway East";
+	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
+	dir = 1;
+	icon_state = "bluecorner"
 	},
 /area/hallway/primary/central)
 "hib" = (
@@ -112942,7 +112943,7 @@ bBy
 bjP
 bXu
 cah
-bBy
+hhg
 bBy
 mtb
 bBy
@@ -113456,7 +113457,7 @@ bWl
 aPE
 bXR
 cav
-hhg
+aPE
 aPE
 qMb
 aMN
