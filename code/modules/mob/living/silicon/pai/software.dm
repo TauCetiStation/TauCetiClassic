@@ -127,7 +127,7 @@
 		if(current == O)
 			switchCamera(null)
 
-/mob/living/silicon/pai/proc/getcarrier(mob/living/M)
+/mob/living/silicon/pai/proc/get_carrier(mob/living/M)
 	var/count = 0
 	while(!istype(M, /mob/living))
 		if(!M || !M.loc) return null //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
@@ -227,7 +227,7 @@
 
 		if("directive")
 			if(href_list["getdna"])
-				var/mob/living/M = getcarrier(src.loc)
+				var/mob/living/M = get_carrier(src.loc)
 				if(!M)
 					to_chat(src, "You are not being carried by anyone!")
 					return 0
@@ -490,7 +490,7 @@
 				if(href_list["cable"] == "1")
 					if(!cable)
 						cable = new /obj/item/weapon/pai_cable(T)
-					var/mob/living/C = getcarrier(loc)
+					var/mob/living/C = get_carrier(loc)
 					if(C)
 						if(!C.put_in_active_hand(cable))
 							C.put_in_inactive_hand(cable)
