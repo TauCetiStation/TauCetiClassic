@@ -408,21 +408,6 @@
 								targetPersonality.master = null
 								targetPersonality.master_dna = null
 								to_chat(targetPersonality, "<font color=green>You feel unbound.</font>")
-							/*
-							if(7)
-								if(targetPersonality)
-									var/obj/item/device/paicard/temppaicard = card
-									var/mob/living/mobtarget = targetPersonality
-									var/mob/mainpai = src
-									var/mob/dead/observer/ghost = mobtarget.ghostize(can_reenter_corpse = FALSE)
-									mainpai.mind.transfer_to(mobtarget)
-									ghost.mind.transfer_to(mainpai)
-									mainpai.key = mobtarget.key
-									temppaicard.setPersonality(targetPersonality)
-									targetPersonality.reset_view(null)
-									targetPersonality.loc = temppaicard
-									loc = target
-							*/
 					if(istype(hackobj, /obj/machinery/vending)) //Item shooting, Shoot item, Speak, Reset Prices, Toggle Contraband Mode, Toggle Account Verifying
 						var/obj/machinery/vending/A = hackobj
 						switch(intwth)
@@ -877,7 +862,6 @@
 					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=4;sub=0'>Clear Marked Objects List</a> <br>"
 					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=5;sub=0'>Delete All Installed Software</a> <br>"
 					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=6;sub=0'>Unbound</a> <br>"
-					//dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=7;sub=0'>Personality Shift</a> <br>"
 				else
 					dat += "Personality not found.<br>"
 			if(istype(hackobj, /obj/machinery/vending))
