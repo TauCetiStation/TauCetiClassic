@@ -89,6 +89,7 @@
 /mob/living/silicon/pai/Destroy()
 	hackobj = null
 	markedobjects.Cut()
+	return ..()
 
 /mob/living/silicon/pai/Stat()
 	..()
