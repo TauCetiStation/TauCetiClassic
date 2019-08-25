@@ -76,6 +76,9 @@
 	if(bodytemperature < species.cold_level_1)
 		tally += (species.cold_level_1 - bodytemperature) / 10 * 1.75
 
+	if(get_species() == UNATHI && bodytemperature > BODYTEMP_NORMAL)
+		tally -= min((bodytemperature - BODYTEMP_NORMAL) / 10 * 1.3, 1.4) //1.4 (fast like tajara) will be on the border of heat_level_1
+
 	tally += max(2 * stance_damage, 0) //damaged/missing feet or legs is slow
 
 	return (tally + config.human_delay)
