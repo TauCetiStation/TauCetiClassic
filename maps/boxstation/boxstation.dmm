@@ -21972,9 +21972,16 @@
 /area/quartermaster/office)
 "aMU" = (
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Checkpoint1N";
+	name = "Doors";
+	opacity = 0
+	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "escape"
+	icon_state = "loadingarea"
 	},
 /area/hallway/secondary/entry)
 "aMV" = (
@@ -22440,25 +22447,15 @@
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
 "aNS" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "Security_private";
-	opacity = 0
+	id = "Security_private"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor,
 /area/security/checkpoint)
 "aNT" = (
 /turf/simulated/floor/wood{
@@ -23127,17 +23124,13 @@
 "aPf" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/brigdoor{
-	dir = 4
+	dir = 8
 	},
+/obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "Security_private";
-	opacity = 0
+	id = "Security_private"
 	},
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
+/turf/simulated/floor,
 /area/security/checkpoint)
 "aPg" = (
 /obj/structure/stool,
@@ -24537,16 +24530,15 @@
 /turf/simulated/floor/plating,
 /area/quartermaster/office)
 "aRP" = (
-/obj/structure/stool/bed/chair/office/dark{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/door_control{
-	id = "Security_private";
-	name = "Shutters Control";
-	pixel_x = -28;
-	pixel_y = -6
+/obj/machinery/door/firedoor,
+/obj/structure/table/reinforced,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/obj/machinery/door/poddoor/shutters{
+	id = "Security_private"
 	},
 /turf/simulated/floor,
 /area/security/checkpoint)
@@ -25447,9 +25439,27 @@
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
 "aTE" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 8
+	},
+/obj/machinery/door_control{
+	id = "Checkpoint1N";
+	name = "Security Doors North";
+	pixel_x = -25;
+	pixel_y = 33
+	},
+/obj/machinery/door_control{
+	id = "Security_private";
+	name = "Shutters Control";
+	pixel_x = -10;
+	pixel_y = -25
+	},
+/obj/machinery/door_control{
+	id = "Checkpoint1S";
+	name = "Security Doors South";
+	pixel_x = -25;
+	pixel_y = 22
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "red"
@@ -26045,6 +26055,8 @@
 	pixel_y = 4
 	},
 /obj/structure/table/reinforced,
+/obj/item/weapon/crowbar,
+/obj/item/device/flash,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "red"
@@ -26993,8 +27005,16 @@
 /area/hallway/secondary/entry)
 "aWv" = (
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Checkpoint1S";
+	name = "Doors";
+	opacity = 0
+	},
 /turf/simulated/floor{
-	icon_state = "escape"
+	dir = 1;
+	icon_state = "loadingarea"
 	},
 /area/hallway/secondary/entry)
 "aWw" = (
@@ -27015,8 +27035,6 @@
 /turf/simulated/wall,
 /area/crew_quarters/kitchen)
 "aWz" = (
-/obj/item/weapon/crowbar,
-/obj/item/device/flash,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -33722,7 +33740,6 @@
 /obj/machinery/door_control{
 	id = "Captain_private";
 	name = "Shutters Control";
-	pixel_x = 0;
 	req_access = list(20)
 	},
 /turf/simulated/floor/wood,
@@ -50483,8 +50500,16 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Checkpoint1S";
+	name = "Doors";
+	opacity = 0
+	},
 /turf/simulated/floor{
-	icon_state = "escape"
+	dir = 1;
+	icon_state = "loadingarea"
 	},
 /area/hallway/secondary/entry)
 "bWz" = (
@@ -94919,7 +94944,7 @@ aOp
 aQJ
 aTB
 aUO
-bhj
+aWt
 bhj
 aWv
 aYU
@@ -95177,7 +95202,7 @@ aFG
 afW
 aNS
 aPf
-aNS
+aRP
 aFG
 aFG
 bbw
@@ -95690,7 +95715,7 @@ aFG
 aPJ
 aQM
 aRZ
-aRP
+aRZ
 aRZ
 aWA
 afW
