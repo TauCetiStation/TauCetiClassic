@@ -1365,10 +1365,10 @@
 	},
 /area/security/main)
 "acs" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warning"
@@ -10461,10 +10461,10 @@
 /turf/simulated/floor,
 /area/hallway/primary/fore)
 "arm" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurplecorner"
@@ -10487,10 +10487,10 @@
 /turf/simulated/floor,
 /area/hallway/primary/fore)
 "arr" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -13581,10 +13581,10 @@
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
 "axv" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurplecorner"
@@ -21748,12 +21748,12 @@
 	},
 /area/rnd/storage)
 "aMw" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
@@ -23482,7 +23482,7 @@
 	},
 /area/storage/tools)
 "aPM" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -27205,7 +27205,7 @@
 	},
 /area/storage/primary)
 "aWQ" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "neutral"
@@ -34039,6 +34039,10 @@
 	icon_state = "chapel"
 	},
 /area/chapel/main)
+"bjS" = (
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor/plating,
+/area/engine/engineering)
 "bjT" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
@@ -41097,7 +41101,8 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/obj/structure/mopbucket,
+/obj/item/weapon/mop,
 /turf/simulated/floor,
 /area/janitor)
 "bAL" = (
@@ -41639,11 +41644,6 @@
 	},
 /area/medical/sleeper)
 "bBY" = (
-/obj/structure/mopbucket,
-/obj/item/weapon/mop,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -45368,6 +45368,7 @@
 	name = "Janitoral Delivery";
 	req_access = list(26)
 	},
+/obj/structure/window/reinforced,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -54223,9 +54224,15 @@
 	},
 /area/rnd/xenobiology)
 "cgr" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/simulated/floor/plating,
-/area/storage/emergency3)
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bot"
+	},
+/area/janitor)
 "cgs" = (
 /obj/machinery/optable,
 /turf/simulated/floor{
@@ -55061,14 +55068,9 @@
 /turf/simulated/floor,
 /area/atmos)
 "cil" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/reagent_dispensers/watertank,
-/turf/simulated/floor,
-/area/atmos)
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor/plating,
+/area/storage/emergency3)
 "cim" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -60653,13 +60655,13 @@
 /area/maintenance/starboardsolar)
 "cuR" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor,
-/area/engine/break_room)
+/area/atmos)
 "cuS" = (
 /obj/machinery/power/smes,
 /obj/structure/cable{
@@ -63224,9 +63226,14 @@
 /turf/simulated/floor,
 /area/assembly/assembly_line)
 "cBt" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/simulated/floor/plating,
-/area/engine/engineering)
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
+/turf/simulated/floor,
+/area/engine/break_room)
 "cBv" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -68931,7 +68938,7 @@
 /turf/simulated/floor/grass,
 /area/garden)
 "eOb" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor/plating,
@@ -77211,10 +77218,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank,
 /turf/simulated/floor/plating,
 /area/storage/emergency2)
 "uLb" = (
@@ -110934,7 +110941,7 @@ chw
 chO
 civ
 cAN
-cBt
+bjS
 crH
 dAb
 cDT
@@ -111409,7 +111416,7 @@ bxX
 ccT
 aMR
 bKB
-bJe
+cgr
 mLb
 bJe
 bEY
@@ -111696,7 +111703,7 @@ crR
 cAY
 cut
 bUd
-cuR
+cBt
 cBZ
 cCi
 cCm
@@ -112462,7 +112469,7 @@ bYD
 bYT
 bUk
 bUk
-cil
+cuR
 cbh
 ccg
 clH
@@ -124272,7 +124279,7 @@ cbz
 cbz
 cEy
 cfB
-cgr
+cil
 cbz
 aaa
 aaa

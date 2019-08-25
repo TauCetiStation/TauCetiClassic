@@ -146,7 +146,7 @@
 	D.icon += mix_color_from_reagents(D.reagents.reagent_list)
 
 	if(!chempuff_dense)
-		pass_flags |= PASSBLOB | PASSMOB | PASSCRAWL
+		D.pass_flags |= PASSBLOB | PASSMOB | PASSCRAWL
 
 	step_towards(D, start)
 	sleep(spray_cloud_move_delay)

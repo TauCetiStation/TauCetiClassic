@@ -30,7 +30,7 @@
 		if(AFFF && !AFFF.disolving)
 			AFFF.update_icon()
 		else
-			var/image/I = image(icon, icon_state="afff_foam_border", dir=dir, layer=src.layer)
+			var/image/I = image(icon, icon_state="afff_foam_border", dir=dir, layer=layer)
 			switch(dir)
 				if(NORTH)
 					I.pixel_y = 32
@@ -56,7 +56,7 @@
 		var/turf/T = get_step(src_turf, dir)
 		var/obj/effect/effect/aqueous_foam/AFFF = locate(/obj/effect/effect/aqueous_foam) in T
 		if(!AFFF || AFFF.disolving)
-			var/image/I = image(icon, icon_state="afff_foam_border", dir=dir, layer=src.layer)
+			var/image/I = image(icon, icon_state="afff_foam_border", dir=dir, layer=layer)
 			switch(dir)
 				if(NORTH)
 					I.pixel_y = 32
