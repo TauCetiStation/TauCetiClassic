@@ -22,6 +22,9 @@
 	if(RUN in mutations)
 		tally -= 0.5
 
+	if(FAT in mutations)
+		tally += 1.5
+
 	if(crawling)
 		tally += 7
 
@@ -69,9 +72,6 @@
 
 	if(pull_debuff)
 		tally += pull_debuff
-
-	if(FAT in mutations)
-		tally += 1.5
 
 	if(bodytemperature < species.cold_level_1)
 		tally += (species.cold_level_1 - bodytemperature) / 10 * 1.75
