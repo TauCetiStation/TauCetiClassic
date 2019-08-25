@@ -25446,19 +25446,22 @@
 	id = "Checkpoint1N";
 	name = "Security Doors North";
 	pixel_x = -25;
-	pixel_y = 33
+	pixel_y = 34;
+	req_access = list(1)
 	},
 /obj/machinery/door_control{
 	id = "Security_private";
 	name = "Shutters Control";
 	pixel_x = -10;
-	pixel_y = -25
+	pixel_y = -25;
+	req_access = list(1)
 	},
 /obj/machinery/door_control{
 	id = "Checkpoint1S";
 	name = "Security Doors South";
 	pixel_x = -25;
-	pixel_y = 22
+	pixel_y = 22;
+	req_access = list(1)
 	},
 /turf/simulated/floor{
 	dir = 8;
