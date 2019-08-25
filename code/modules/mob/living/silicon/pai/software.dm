@@ -810,8 +810,8 @@
 		dat += "<a href='byond://?src=\ref[src];software=interaction;cable=1;sub=0'>Extend Cable</a> <br><br>"
 		if(markedobjects.len > 0)
 			dat += "Marked devices: <br>"
-			for(var/Tmp = 1, Tmp <= markedobjects.len, Tmp++)
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=97;markedid=[Tmp];sub=0'>[Tmp] - [markedobjects[Tmp]]</a> <br>"
+			for(var/i in 1 to markedobjects.len)
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=97;markedid=[i];sub=0'>[i] - [markedobjects[i]]</a> <br>"
 		return dat
 	if(cable && !cable.machine)
 		dat += "<font color=#FFFF55>Extended</font> <br>"
