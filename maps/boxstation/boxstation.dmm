@@ -33722,7 +33722,6 @@
 /obj/machinery/door_control{
 	id = "Captain_private";
 	name = "Shutters Control";
-	pixel_x = 0;
 	req_access = list(20)
 	},
 /turf/simulated/floor/wood,
@@ -70246,6 +70245,16 @@
 	icon_state = "ming2_floor"
 	},
 /area/shuttle/mining/station)
+"hhg" = (
+/obj/machinery/camera{
+	c_tag = "Central Hallway South-East";
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutralcorner"
+	},
+/area/hallway/primary/central)
 "hib" = (
 /obj/structure/stool/bed/chair/schair{
 	dir = 4
@@ -113447,7 +113456,7 @@ bWl
 aPE
 bXR
 cav
-aPE
+hhg
 aPE
 qMb
 aMN
