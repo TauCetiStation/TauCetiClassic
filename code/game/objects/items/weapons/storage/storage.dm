@@ -22,13 +22,18 @@
 	var/allow_quick_gather	//Set this variable to allow the object to have the 'toggle mode' verb, which quickly collects all items from a tile.
 	var/collection_mode = 1  //0 = pick one at a time, 1 = pick all on tile
 	var/foldable = null	// BubbleWrap - if set, can be folded (when empty) into a sheet of cardboard
-	var/list/use_sound = SOUNDIN_RUSTLE	//sound played when used. null for no sound.
+	var/list/use_sound // sound played when used. null for no sound.
 
 	var/storage_ui_path = /datum/storage_ui/default
 	var/datum/storage_ui/storage_ui = null
 	//initializes the contents of the storage with some items based on an assoc list. The assoc key must be an item path,
 	//the assoc value can either be the quantity, or a list whose first value is the quantity and the rest are args.
 	var/list/startswith
+
+/obj/item/weapon/storage/atom_init()
+	. = ..()
+	use_sound = SOUNDIN_RUSTLE
+
 /obj/item/weapon/storage/Destroy()
 	QDEL_NULL(storage_ui)
 	return ..()

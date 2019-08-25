@@ -21,38 +21,15 @@
 	icon_state = "asteroid"
 	},
 /area/holodeck/source_desert)
-"e" = (
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "asteroid8"
-	},
-/area/holodeck/source_desert)
 "f" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/simulated/floor/holofloor{
 	icon_state = "asteroid"
 	},
 /area/holodeck/source_desert)
-"g" = (
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "asteroid11"
-	},
-/area/holodeck/source_desert)
 "h" = (
 /turf/simulated/floor/holofloor{
 	icon_state = "asteroid7"
-	},
-/area/holodeck/source_desert)
-"i" = (
-/turf/simulated/floor/holofloor{
-	icon_state = "asteroid5"
-	},
-/area/holodeck/source_desert)
-"j" = (
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "asteroid1"
 	},
 /area/holodeck/source_desert)
 "k" = (
@@ -143,7 +120,7 @@ a
 h
 d
 a
-j
+a
 a
 "}
 (8,1,1) = {"
@@ -162,7 +139,7 @@ k
 a
 a
 a
-g
+a
 a
 a
 a
@@ -172,11 +149,11 @@ a
 "}
 (10,1,1) = {"
 a
-e
 a
 a
 a
-i
+a
+a
 f
 a
 h
