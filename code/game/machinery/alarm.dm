@@ -182,9 +182,6 @@
 		if(RCON_YES)
 			remote_control = 1
 
-	updateDialog()
-	return
-
 /obj/machinery/alarm/proc/handle_heating_cooling(datum/gas_mixture/environment)
 	if(!regulating_temperature)
 		//check for when we should start adjusting temperature

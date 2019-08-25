@@ -133,7 +133,7 @@
 
 	if(href_list["amount"])
 		amount = round(text2num(href_list["amount"]), 5) // round to nearest 5
-		amount = Clamp(amount, 0, 100) // Since the user can actually type the commands himself, some sanity checking
+		amount = CLAMP(amount, 0, 100) // Since the user can actually type the commands himself, some sanity checking
 
 	if(href_list["dispense"])
 		if (dispensable_reagents.Find(href_list["dispense"]) && beaker != null)
@@ -700,7 +700,7 @@
 
 /obj/machinery/chem_master/proc/isgoodnumber(num)
 	if(isnum(num))
-		return Clamp(round(num), 0, 200)
+		return CLAMP(round(num), 0, 200)
 	else
 		return 0
 

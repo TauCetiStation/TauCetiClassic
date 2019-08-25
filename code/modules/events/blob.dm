@@ -23,5 +23,5 @@
 	if(!Blob)
 		kill()
 		return
-	if(IsMultiple(activeFor, 3))
+	if(IS_MULTIPLE(activeFor, 3))
 		Blob.process()

@@ -212,7 +212,7 @@
 /obj/machinery/vending/make_old()
 	..()
 	if(prob(60))
-		seconds_electrified = -1
+		electrified_until = -1
 	if(prob(60))
 		shut_up = 0
 	if(prob(60))
@@ -223,6 +223,7 @@
 			var/removed_item = pick(product_records)
 			product_records -= removed_item
 			qdel(removed_item)
+	update_wires_check()
 
 /obj/structure/closet/critter/make_old()
 	..()
