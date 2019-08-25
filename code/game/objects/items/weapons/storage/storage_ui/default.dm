@@ -278,7 +278,7 @@
 		var/matrix/M_continue = matrix()
 		var/matrix/M_end = matrix()
 		M_start.Translate(startpoint,0)
-		M_continue.Scale(ceil(endpoint-startpoint-stored_cap_width*2)/32,1)
+		M_continue.Scale(CEIL(endpoint-startpoint-stored_cap_width*2)/32,1)
 		M_continue.Translate(startpoint+stored_cap_width+(endpoint-startpoint-stored_cap_width*2)/2 - 16,0)
 		M_end.Translate(endpoint-stored_cap_width,0)
 		stored_start.transform = M_start
