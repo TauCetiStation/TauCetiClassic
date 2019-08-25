@@ -104,6 +104,7 @@
 		if(isslime(AM)) // Slimes are vulnerable to us and shouldn't be able to destroy us.
 			var/mob/living/carbon/slime/S = AM
 			S.Stun(5)
+			S.adjustToxLoss(10)
 			return
 
 	INVOKE_ASYNC(src, .proc/disolve) // You should never call procs with delay from BYOND movement procs.

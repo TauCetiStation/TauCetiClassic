@@ -2843,7 +2843,7 @@
 /area/storage/tools)
 "aeD" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "cupboard"
+	name = "storeroom"
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -3168,8 +3168,6 @@
 /obj/machinery/newscaster{
 	pixel_x = 30
 	},
-/obj/item/weapon/legcuffs/beartrap,
-/obj/item/weapon/legcuffs/beartrap,
 /turf/simulated/floor,
 /area/janitor)
 "aeY" = (
@@ -5126,7 +5124,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
@@ -15209,7 +15207,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/maintenance/bridge)
 "dZA" = (
@@ -27404,6 +27402,10 @@
 	},
 /area/storage/tech)
 "hYI" = (
+/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/weapon/storage/box/mousetraps,
+/obj/item/weapon/storage/box/mousetraps,
+/obj/item/weapon/legcuffs/beartrap,
 /turf/simulated/floor,
 /area/janitor)
 "hYJ" = (
@@ -39100,7 +39102,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
@@ -45064,7 +45066,7 @@
 "nHz" = (
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/structure/rack,
 /obj/effect/decal/cleanable/liquid_fuel,
 /turf/simulated/floor/plating,
@@ -45291,7 +45293,7 @@
 /area/maintenance/cargo)
 "nLK" = (
 /obj/structure/rack,
-/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "nMj" = (
@@ -49471,8 +49473,6 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/pen,
-/obj/item/weapon/storage/box/mousetraps,
-/obj/item/weapon/storage/box/mousetraps,
 /turf/simulated/floor,
 /area/janitor)
 "pmk" = (
@@ -49777,7 +49777,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/flashlight,
@@ -51803,7 +51803,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
@@ -53054,7 +53054,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /obj/item/device/flashlight,
@@ -56158,7 +56158,7 @@
 /area/engine/equip)
 "rtL" = (
 /obj/structure/rack,
-/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/weapon/storage/belt/utility,
 /obj/item/clothing/mask/gas/coloured,
 /turf/simulated/floor/plating,
@@ -57800,7 +57800,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
 "rXe" = (
@@ -65602,7 +65602,7 @@
 /obj/structure/sign/warning/fire{
 	pixel_y = 32
 	},
-/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
 /area/maintenance/bridge)
 "utp" = (
@@ -72860,7 +72860,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
 /obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
@@ -97178,7 +97178,7 @@ chJ
 khF
 sZH
 trO
-leM
+qgu
 wRi
 aet
 hqa
@@ -97435,7 +97435,7 @@ chJ
 pme
 abe
 eyG
-qgu
+leM
 wRi
 jOl
 lmA
@@ -97692,7 +97692,7 @@ chJ
 dlP
 hYI
 tKH
-hDE
+mFj
 wRi
 nxc
 mOK
@@ -97949,7 +97949,7 @@ chJ
 tOD
 rhd
 iuu
-mFj
+hDE
 wRi
 khY
 wxs
