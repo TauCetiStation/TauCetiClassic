@@ -411,7 +411,7 @@
 /datum/reagent/inacusiate
 	name = "Inacusiate"
 	id = "inacusiate"
-	description = "A chemical compound that instantly restores all hearing to the patient."
+	description = "A chemical compound that rapidly restores all hearing to the patient."
 	reagent_state = LIQUID
 	color = "#87cefa" // rgb: 135, 206, 250
 	overdose = REAGENTS_OVERDOSE * 0.5
