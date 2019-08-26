@@ -16,40 +16,38 @@
 	set name = "Spin bottle"
 	set category = "Object"
 	set src in view(1)
-	var/angle_to_stop = pick(0, 45, 90, 135, 180, 225, 270, 315)
-	var/matrix/M = matrix()
-	if(!config.ghost_interaction && isobserver(usr))
+
+	var/mob/H = usr //Checking human
+	if(!ishuman(H))
 		return
-	if(ismouse(usr))
-		return
-	if(!usr || !isturf(usr.loc))
-		return
-	if(usr.incapacitated())
-		return
-	var/mob/living/user = usr
+
+	var/mob/living/user = usr //Drop bottle from inventory
 	if(istype(user))
 		user.drop_from_inventory(src, get_turf(src))
-	transform = 0
-	M.Turn(angle_to_stop)
-	animate(src, transform = turn(matrix(), 120), time = 3, loop = 5) //Spin bottle
-	animate(transform = turn(matrix(), 240), time = 3, loop = 5)
-	animate(transform = null, time = 3, loop = 5)
-	sleep(45)
-	if(120 > angle_to_stop && angle_to_stop >= 0) //Torsion result
-		animate(src, transform = M, time = 4)
-	if(226 > angle_to_stop && angle_to_stop > 119)
-		animate(src, transform = turn(matrix(), 120), time = 3)
-		animate(transform = M, time = 3)
-	if(316 > angle_to_stop && angle_to_stop > 241)
-		animate(src, transform = turn(matrix(), 120), time = 3)
-		animate(transform = turn(matrix(), 240), time = 3)
-		animate(transform = M, time = 3)
-	if(slot_equipped)
-		transform = null
 
+	if(is_glass)
+		var/angle_to_stop = pick(0, 45, 90, 135, 180, 225, 270, 315) //Random result
+		var/matrix/M = matrix()
+		transform = 0
+		M.Turn(angle_to_stop)
+		animate(src, transform = turn(matrix(), 120), time = 3, loop = 5) //Spin bottle
+		animate(transform = turn(matrix(), 240), time = 3, loop = 5)
+		animate(transform = null, time = 3, loop = 5)
+		sleep(45)
+		if(120 > angle_to_stop && angle_to_stop >= 0) //Torsion result
+			animate(src, transform = M, time = 3)
+		if(226 > angle_to_stop && angle_to_stop > 119)
+			animate(src, transform = turn(matrix(), 120), time = 3)
+			animate(transform = M, time = 3)
+		if(316 > angle_to_stop && angle_to_stop > 241)
+			animate(src, transform = turn(matrix(), 120), time = 3)
+			animate(transform = turn(matrix(), 240), time = 3)
+			animate(transform = M, time = 3)
+	else
+		verbs -= /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/pickup(mob/living/user)
-	transform = null
+	transform = null //Restore bottle to its original position
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user)
 
