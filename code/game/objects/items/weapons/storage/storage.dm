@@ -97,16 +97,16 @@
 		storage_ui.hide_from(user)
 
 /obj/item/weapon/storage/proc/open(mob/user)
+	if(!reachable_while_equipped && slot_equipped == SLOT_BACK)
+		to_chat(user, "<span class='warning'>You can't reach into your [name] while it's equipped!</span>")
+		return
+
 	if (length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
 
-	if(!reachable_while_equipped && slot_equipped == SLOT_BACK)
-		to_chat(loc, "<span class='warning'>You can't reach into your [name] while it's equipped!</span>")
-		return
-	else
-		prepare_ui()
-		storage_ui.on_open(user)
-		storage_ui.show_to(user)
+	prepare_ui()
+	storage_ui.on_open(user)
+	storage_ui.show_to(user)
 
 /obj/item/weapon/storage/proc/prepare_ui()
 	storage_ui.prepare_ui()
