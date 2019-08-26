@@ -33722,7 +33722,6 @@
 /obj/machinery/door_control{
 	id = "Captain_private";
 	name = "Shutters Control";
-	pixel_x = 0;
 	req_access = list(20)
 	},
 /turf/simulated/floor/wood,
@@ -68616,6 +68615,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/light/small/emergency,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warndark"
@@ -68645,13 +68645,10 @@
 	pixel_y = -24
 	},
 /obj/structure/rack,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/suit/space/rig/security,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/security,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warndark"
