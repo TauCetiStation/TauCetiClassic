@@ -57,13 +57,13 @@
 	playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 
 	if(reagents.has_reagent("sacid"))
-		message_admins("[key_name_admin(user)] fired sulphuric acid from \a [src]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		message_admins("[key_name_admin(user)] fired sulphuric acid from \a [src]. [ADMIN_JMP(user)]")
 		log_game("[key_name(user)] fired sulphuric acid from \a [src].")
 	if(reagents.has_reagent("pacid"))
-		message_admins("[key_name_admin(user)] fired Polyacid from \a [src]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		message_admins("[key_name_admin(user)] fired Polyacid from \a [src]. [ADMIN_JMP(user)]")
 		log_game("[key_name(user)] fired Polyacid from \a [src].")
 	if(reagents.has_reagent("lube"))
-		message_admins("[key_name_admin(user)] fired Space lube from \a [src]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		message_admins("[key_name_admin(user)] fired Space lube from \a [src]. [ADMIN_JMP(user)]")
 		log_game("[key_name(user)] fired Space lube from \a [src].")
 
 	user.SetNextMove(CLICK_CD_INTERACT * 2)
@@ -386,3 +386,17 @@
 /obj/item/weapon/reagent_containers/spray/plantbgone/atom_init()
 	. = ..()
 	reagents.add_reagent("plantbgone", 100)
+
+//Water Gun
+/obj/item/weapon/reagent_containers/spray/watergun
+	name = "hyper soaker"
+	desc = "A water gun that uses manually-pressurized air to shoot water with great power, range, and accuracy."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "watergun"
+	item_state = "watergun"
+	amount_per_transfer_from_this = 5
+	possible_transfer_amounts = null
+	volume = 35
+	origin_tech = "combat=1;materials=1"
+	spray_size = 4
+	spray_sizes = list(4)

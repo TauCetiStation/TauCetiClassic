@@ -407,10 +407,6 @@ var/datum/subsystem/job/SSjob
 		job.equip(H)
 		job.apply_fingerprints(H)
 
-		if(H.species)
-			H.species.after_job_equip(H, job)
-
-
 		for(var/thing in custom_equip_leftovers)
 			var/datum/gear/G = gear_datums[thing]
 			if(G.slot in custom_equip_slots)
@@ -484,20 +480,21 @@ var/datum/subsystem/job/SSjob
 			if("Clown")	//don't need bag preference stuff!
 			else
 				switch(H.backbag) //BS12 EDIT
-					if(1)
-						H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), SLOT_R_HAND)
 					if(2)
 						var/obj/item/weapon/storage/backpack/BPK = new(H)
-						new /obj/item/weapon/storage/box/survival(BPK)
 						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 					if(3)
 						var/obj/item/weapon/storage/backpack/satchel/norm/BPK = new(H)
-						new /obj/item/weapon/storage/box/survival(BPK)
 						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 					if(4)
 						var/obj/item/weapon/storage/backpack/satchel/BPK = new(H)
-						new /obj/item/weapon/storage/box/survival(BPK)
 						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
+
+	/*
+	Placed here so the backpack that spawns if there is no job backpack has already spawned by now.
+	*/
+	if(H.species)
+		H.species.after_job_equip(H, job)
 
 	// Happy Valentines day!
 	if(Holiday == "Valentine's Day")

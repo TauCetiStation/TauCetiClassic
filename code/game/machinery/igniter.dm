@@ -122,7 +122,7 @@
 
 	active = 1
 	icon_state = "launcheract"
-	message_admins("Ignition switch was activated at ([x],[y],[z]) [ADMIN_JMP(src)] Last touched by: [key_name(usr)]")
+	message_admins("Ignition switch was activated at ([x],[y],[z]) [ADMIN_JMP(src)] Last touched by: [key_name(usr)] [ADMIN_JMP(usr)]")
 	log_game("Ignition switch was activated at ([x],[y],[z]) Last touched by: [key_name(usr)]")
 
 	for(var/obj/machinery/sparker/M in machines)

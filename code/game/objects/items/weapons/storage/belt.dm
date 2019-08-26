@@ -149,6 +149,13 @@
 		/obj/item/device/flashlight/seclite
 		)
 
+/obj/item/weapon/storage/belt/security/German
+	name = "German Belt"
+	desc = "A belt from military soldier set."
+	icon_state = "Leather_Belt_Officer"
+	icon_state = "Leather_Belt_Officer"
+	item_color = "Leather_Belt_Officer"
+
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"
 	desc = "Designed for ease of access to the shards during a fight, as to not let a single enemy spirit slip away."

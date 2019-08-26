@@ -8,6 +8,8 @@ var/global/list/all_objectives = list()
 	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
 	var/completed = 0					//currently only used for custom objectives.
 
+	var/list/protected_jobs = list("Velocity Officer", "Velocity Chief", "Velocity Medical Doctor") // They can't be targets of any objective.
+
 /datum/objective/New(var/text)
 	all_objectives |= src
 	if(text)
@@ -23,6 +25,8 @@ var/global/list/all_objectives = list()
 /datum/objective/proc/find_target()
 	var/list/possible_targets = list()
 	for(var/datum/mind/possible_target in ticker.minds)
+		if(possible_target.assigned_role in protected_jobs)
+			continue
 		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != DEAD))
 			possible_targets += possible_target
 	if(possible_targets.len > 0)
@@ -482,7 +486,7 @@ var/global/list/all_objectives = list()
 			if(BP.status & ORGAN_BROKEN)
 				already_completed = 1
 				return 1
-			if((BP.status & ORGAN_DESTROYED) && !BP.amputated)
+			if(BP.is_stump)
 				already_completed = 1
 				return 1
 

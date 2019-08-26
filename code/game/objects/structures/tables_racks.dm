@@ -420,8 +420,8 @@
 			//Center the icon where the user clicked.
 			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 				return
-			W.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-			W.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			W.pixel_x = CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			W.pixel_y = CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 	return
 
 /obj/structure/table/proc/slam(var/mob/living/A, var/mob/living/M, var/obj/item/weapon/grab/G)
@@ -432,7 +432,7 @@
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 	M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slammed with face by [A.name] against \the [src]([A.ckey])</font>"
 	A.attack_log += "\[[time_stamp()]\] <font color='red'>Slams face of [M.name] against \the [src]([M.ckey])</font>"
-	msg_admin_attack("[key_name(A)] slams [key_name(M)] face against \the [src]")
+	msg_admin_attack("[key_name(A)] slams [key_name(M)] face against \the [src]", A)
 
 /obj/structure/table/proc/straight_table_check(var/direction)
 	var/obj/structure/table/T
@@ -616,7 +616,7 @@
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 	M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slammed with face by [A.name] against \the [src]([A.ckey]), breaking it</font>"
 	A.attack_log += "\[[time_stamp()]\] <font color='red'>Slams face of [M.name] against \the [src]([M.ckey]), breaking it</font>"
-	msg_admin_attack("[key_name(A)] slams [key_name(M)] face against \the [src], breaking it")
+	msg_admin_attack("[key_name(A)] slams [key_name(M)] face against \the [src], breaking it", A)
 	if(prob(30) && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]

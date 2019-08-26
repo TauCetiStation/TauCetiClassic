@@ -11,7 +11,7 @@
 
 /obj/item/weapon/gun/energy/ionrifle/update_icon()
 	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = ceil(ratio * 4) * 25
+	ratio = CEIL(ratio * 4) * 25
 	switch(modifystate)
 		if (0)
 			if(ratio > 100)
@@ -162,7 +162,7 @@
 
 /obj/item/weapon/gun/energy/sniperrifle/update_icon()
 	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = ceil(ratio * 4) * 25
+	ratio = CEIL(ratio * 4) * 25
 	switch(modifystate)
 		if (0)
 			if(ratio > 100)
@@ -323,7 +323,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	if(!possible_targets.len)
 		return
 	var/mob/living/next = pick(possible_targets)
-	msg_admin_attack("[origin.name] ([origin.ckey]) shot [target.name] ([target.ckey]) with a tesla bolt [ADMIN_JMP(origin)] [ADMIN_FLW(origin)]")
+	msg_admin_attack("[origin.name] ([origin.ckey]) shot [target.name] ([target.ckey]) with a tesla bolt", origin)
 	if(next && jumps > 0)
 		Bolt(target, next, user, --jumps)
 

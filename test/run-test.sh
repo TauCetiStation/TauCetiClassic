@@ -134,11 +134,12 @@ function exec_test {
     return $ret
 }
 
-function find_code_deps {
+function find_tool_deps {
     need_cmd grep
     need_cmd awk
     need_cmd md5sum
     need_cmd python2
+    need_cmd python3
 }
 
 function find_byond_deps {
@@ -163,27 +164,40 @@ function find_code {
 
 function run_code_tests {
     msg "*** running code tests ***"
-    find_code_deps
-    shopt -s globstar
-	run_test_fail "code contains no byond escapes" "grep -REnr --include='*.dm' '\\\\(red|blue|green|black|b|i)\s' code/"
-    run_test_fail "maps contain no step_[xy]" "grep -n 'step_[xy]' maps/**/*.dmm"
-    run_test_fail "maps contain no tag" "grep -n '\<tag =' maps/**/*.dmm"
+    run_test_fail "code contains no byond escapes" "grep -REnr --include='*.dm' '\\\\(red|blue|green|black|b|i)\s' code/"
     run_test_fail "ensure code, nanoui templates, icons unique" "find code/ nano/templates/ icons/ -type f -exec md5sum {} + | sort | uniq -D -w 32 | grep -w 'code\|nano\|icons'"
     run_test_fail "ensure code, nanoui templates, icons has no empty files" "find code/ nano/templates/ icons/ -empty -type f | grep -w 'code\|nano\|icons'"
-    run_test_fail "no invalid spans" "grep -En \"<\s*span\s+class\s*=\s*('[^'>]+|[^'>]+')\s*>\" **/*.dm"
+    run_test_fail "no invalid spans" "grep -REnr --include='*.dm' \"<\s*span\s+class\s*=\s*('[^'>]+|[^'>]+')\s*>\" code/"
     run_test "indentation check" "awk -f scripts/indentation.awk **/*.dm"
     run_test "check tags" "python2 scripts/tag-matcher.py ."
     run_test "check color hex" "python2 scripts/color-hex-checker.py ."
     run_test "check playsound volume_channel argument" "python2 scripts/playsound-checker.py ."
 }
 
-function run_byond_tests {
+function run_map_tests {
     msg "*** running map tests ***"
+    run_test "maps contains TGM header" "python3 scripts/maps-tgm-checker.py maps/"
+    run_test_fail "maps contains no step_[xy]" "grep -REnr --include='*.dmm' 'step_[xy]' maps/"
+    run_test_fail "maps contains no tag" "grep -REnr --include='*.dmm' '\<tag =' maps/"
+}
+
+function run_build_tests {
+    find_byond_deps
+    msg "*** running build tests ***"
+    echo '#include "additional_files.dm"' >> taucetistation.dme # include file with additional includes
+    python3 scripts/include-additional-files.py maps/ ".+\.dmm$" # create file itself
+    run_test "simple build test" "scripts/dm.sh taucetistation.dme"
+    run_test "check no warnings in build" "grep ', 0 warnings' build_log.txt"
+}
+
+function run_unit_tests {
     find_byond_deps
     cp config/example/* config/
-    run_test "build map unit tests" "scripts/dm.sh -DUNIT_TEST taucetistation.dme"
-    run_test "check no warnings in build" "grep ', 0 warnings' build_log.txt"
-    run_test "run unit tests" "DreamDaemon taucetistation.dmb -invisible -trusted -core 2>&1 | tee log.txt"
+    mkdir -p data/ && cp maps/$MAP_META.json data/next_map.json
+    msg "*** running unit tests ***"
+    run_test "build unit tests" "scripts/dm.sh -DUNIT_TEST taucetistation.dme"
+    run_test "unit tests" "DreamDaemon taucetistation.dmb -invisible -trusted -core 2>&1 | tee log.txt"
+    run_test "check correct map loaded" "grep 'Loading $MAP_NAME' log.txt"
     run_test "check tests passed" "grep 'All Unit Tests Passed' log.txt"
     run_test "check no runtimes" "grep 'Caught 0 Runtimes' log.txt"
     run_test_fail "check no runtimes 2" "grep 'runtime error:' log.txt"
@@ -191,11 +205,32 @@ function run_byond_tests {
     run_test_fail "check no errors" "grep 'ERROR:' log.txt"
 }
 
-function run_all_tests {
-    run_code_tests
-    run_byond_tests
+function run_configured_tests {
+    if [[ -z ${TEST+z} ]]; then
+        msg_bad "You must provide TEST in environment; valid options: LINTING, COMPILE, UNIT"
+        exit 1
+    fi
+
+    case $TEST in
+        "LINTING")
+            shopt -s globstar
+            find_tool_deps
+            run_code_tests 
+            run_map_tests
+        ;;
+        "COMPILE") run_build_tests ;;
+        "UNIT")
+            if [[ -z ${MAP_META+z} || -z ${MAP_NAME+z} ]]; then
+                msg_bad "You must provide MAP_META and MAP_NAME in environment to use with unit tests"
+                exit 1
+            fi
+
+            run_unit_tests 
+        ;;
+        *) fail "invalid option for \$TEST: '$TEST'" ;;
+    esac
 }
 
 find_code
-run_all_tests
+run_configured_tests
 check_fail

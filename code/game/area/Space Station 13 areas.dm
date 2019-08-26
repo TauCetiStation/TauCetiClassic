@@ -659,8 +659,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/holodeck/source_basketball
 	name = "Holodeck - Basketball Court"
 
+/area/holodeck/source_boxingcourt
+	name = "Holodeck - Boxing Court"
+
 /area/holodeck/source_thunderdomecourt
 	name = "Holodeck - Thunderdome Court"
+
+/area/holodeck/source_burntest
+	name = "Holodeck - Burn test"
 
 /area/holodeck/source_courtroom
 	name = "Holodeck - Courtroom"

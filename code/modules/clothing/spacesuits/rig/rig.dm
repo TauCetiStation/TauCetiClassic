@@ -212,7 +212,7 @@
 	data["seals"] =     "[src.offline]"
 	data["charge"] =       cell ? round(cell.charge,1) : 0
 	data["maxcharge"] =    cell ? cell.maxcharge : 0
-	data["chargestatus"] = cell ? Floor(cell.percent()/2) : 0
+	data["chargestatus"] = cell ? FLOOR(cell.percent()/2, 1) : 0
 
 	var/list/module_list = list()
 	var/i = 1
@@ -593,6 +593,23 @@
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/orescanner, /obj/item/rig_module/device/drill)
 
+//Red Faction mining rig
+/obj/item/clothing/head/helmet/space/rig/RF_mining
+	name = "Red mining helmet"
+	desc = "A special mining helmet designed for work in a hazardous, low pressure environment."
+	icon_state = "rig0-RedMiner"
+	item_state = "RedMiner_helm"
+	item_color = "RedMiner"
+	armor = list(melee = 40, bullet = 10, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 50)
+
+/obj/item/clothing/suit/space/rig/RF_mining
+	name = "Red mining hardsuit"
+	desc = "A special suit that protects against hazardous, has reinforced plating."
+	icon_state = "RedMiner"
+	item_state = "RedMiner"
+	item_color = "RedMiner"
+	armor = list(melee = 40, bullet = 11, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 50)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
 
 //Syndicate rig
 /obj/item/clothing/head/helmet/space/rig/syndi
@@ -733,12 +750,14 @@
 			can_breach = FALSE
 			flags_pressure &= ~STOPS_PRESSUREDMAGE
 			playsound(usr, 'sound/effects/air_release.ogg', VOL_EFFECTS_MASTER)
+			slowdown = 0
 			usr.visible_message("<span class='notice'>[usr]'s suit depressurizes, exposing armor plates.</span>")
 		else
 			canremove = TRUE
 			can_breach = TRUE
 			flags_pressure |= STOPS_PRESSUREDMAGE
 			playsound(usr, 'sound/effects/inflate.ogg', VOL_EFFECTS_MASTER, 30)
+			slowdown = 1.4
 			usr.visible_message("<span class='notice'>[usr]'s suit inflates and pressurizes.</span>")
 		update_icon(usr)
 
