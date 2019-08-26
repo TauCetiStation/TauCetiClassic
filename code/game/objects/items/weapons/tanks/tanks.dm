@@ -230,12 +230,12 @@
 		air_contents.react()
 		pressure = air_contents.return_pressure()
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
-		range = min(range, MAX_EXPLOSION_RANGE)		// was 8 - - - Changed to a configurable define -- TLE
+		var/effrange = min(range, MAX_EXPLOSION_RANGE)		// was 8 - - - Changed to a configurable define -- TLE
 		var/turf/epicenter = get_turf(loc)
 
 		//world << "<span class='notice'>Exploding Pressure: [pressure] kPa, intensity: [range]</span>"
 
-		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
+		explosion(epicenter, round(CLAMP(range*0.25,effrange*0.25,effrange-2)), round(CLAMP(range*0.5,effrange*0.5,effrange-1)), round(effrange), round(effrange*1.5))
 		qdel(src)
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)
