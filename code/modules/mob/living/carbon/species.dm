@@ -264,6 +264,12 @@
 /datum/species/unathi/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_unathi_digest(M)
 
+/datum/species/unathi/on_gain(mob/living/M)
+	M.verbs += /mob/living/carbon/human/proc/air_sample
+
+/datum/species/unathi/on_loose(mob/living/M)
+	M.verbs -= /mob/living/carbon/human/proc/air_sample
+
 /datum/species/tajaran
 	name = TAJARAN
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'
