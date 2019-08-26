@@ -18,11 +18,7 @@
 
 /obj/item/weapon/storage/backpack/ui_action_click()
 	if(!opened)
-		if(!reachable_while_equipped && slot_equipped == SLOT_BACK)
-			to_chat(loc, "<span class='warning'>You can't reach into your [name] while it's equipped!</span>")
-			return
-		else
-			open(loc)
+		open(loc)
 	else
 		close(loc)
 	opened = !opened

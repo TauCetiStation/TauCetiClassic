@@ -45,12 +45,8 @@
 			return
 
 		if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
-			if(slot_equipped == SLOT_BACK && !reachable_while_equipped)
-				to_chat(usr, "<span class='warning'>You can't reach into your [name] while it's equipped!</span>")
-				return
-			else
-				open(usr)
-				return
+			open(usr)
+			return
 
 		if (!( istype(over_object, /obj/screen) ))
 			return ..()
@@ -104,9 +100,13 @@
 	if (length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
 
-	prepare_ui()
-	storage_ui.on_open(user)
-	storage_ui.show_to(user)
+	if(!reachable_while_equipped && slot_equipped == SLOT_BACK)
+		to_chat(loc, "<span class='warning'>You can't reach into your [name] while it's equipped!</span>")
+		return
+	else
+		prepare_ui()
+		storage_ui.on_open(user)
+		storage_ui.show_to(user)
 
 /obj/item/weapon/storage/proc/prepare_ui()
 	storage_ui.prepare_ui()
@@ -313,11 +313,7 @@
 
 /obj/item/weapon/storage/attack_hand(mob/user)
 	if (loc == user)
-		if(!reachable_while_equipped && slot_equipped == SLOT_BACK)
-			to_chat(user, "<span class='warning'>You can't reach into your [name] while it's equipped!</span>")
-			return
-		else
-			open(user)
+		open(user)
 	else
 		..()
 		storage_ui.on_hand_attack(user)
