@@ -47,7 +47,7 @@
 
 	//Antag number should scale to active crew.
 	var/n_players = num_players()
-	agent_number = Clamp((n_players/5), 2, 6)
+	agent_number = CLAMP((n_players/5), 2, 6)
 
 	if(antag_candidates.len < agent_number)
 		agent_number = antag_candidates.len

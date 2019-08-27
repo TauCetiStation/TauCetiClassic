@@ -15,6 +15,7 @@ var/datum/subsystem/mapping/SSmapping
 
 	var/const/max_secret_rooms = 3
 	var/list/spawned_structures = list()
+	var/list/reserved_space = list()
 
 	// Z-manager stuff
 	var/station_start  // should only be used for maploading-related tasks
@@ -60,6 +61,13 @@ var/datum/subsystem/mapping/SSmapping
 		var/datum/ore_distribution/distro = new
 		distro.populate_distribution_map(z)
 
+/datum/reserved_space
+	var/z
+	var/x1 // left-bottom
+	var/y1
+	var/x2 // right-top
+	var/y2
+
 /datum/subsystem/mapping/proc/spawn_space_structures()
 	if(!levels_by_trait(ZTRAIT_SPACE_RUINS).len)
 		return
@@ -84,28 +92,53 @@ var/datum/subsystem/mapping/SSmapping
 			// coords might point to any turf inside the structure and some extra deviation
 			var/xcoord = T.x + rand(-structure.width / 2 - 10, structure.width / 2 + 10)
 			var/ycoord = T.y + rand(-structure.height / 2 - 10, structure.height / 2 + 10)
+
 			spawned_structures += list(list("id" = structure_id, "desc" = structure.desc, "turf" = T, "x" = xcoord, "y" = ycoord, "z" = T.z))
+
+			// Space reservation
+			var/datum/reserved_space/S = new
+			S.z = T.z
+			S.x1 = FLOOR(T.x - structure.width / 2, 1)
+			S.y1 = FLOOR(T.y - structure.height / 2, 1)
+			S.x2 = CEIL(T.x + structure.width / 2)
+			S.y2 = CEIL(T.y + structure.height / 2)
+			reserved_space += S
+
 			structure.load(T, centered = TRUE, initBounds = FALSE)
 #ifdef SPACE_STRUCTURES_DEBUG
+			info("[structure_id] was created in [T.x],[T.y],[T.z]")
 			message_admins("[structure_id] was created in [T.x],[T.y],[T.z] [ADMIN_JMP(T)]")
 #endif
 
 /datum/subsystem/mapping/proc/find_spot(datum/map_template/space_structure/structure)
-	var/structure_size = ceil(max(structure.width / 2, structure.height / 2))
-	var/structure_padding = structure_size + TRANSITIONEDGE
+	var/structure_size = CEIL(max(structure.width / 2, structure.height / 2))
+	var/structure_padding = structure_size + TRANSITIONEDGE + 5
 	for (var/try_count in 1 to 10)
 		var/turf/space/T = locate(rand(structure_padding, world.maxx - structure_padding), rand(structure_padding, world.maxy - structure_padding), pick(levels_by_trait(ZTRAIT_SPACE_RUINS)))
 		if(!istype(T))
 			continue
 
-		var/space_block = block(locate(T.x - structure_size, T.y - structure_size, T.z), locate(T.x + structure_size, T.y + structure_size, T.z))
-		if(locate(/turf/simulated) in space_block)
-			continue
-		if(locate(/obj) in space_block)
+		var/x1 = T.x - structure_padding
+		var/y1 = T.y - structure_padding
+		var/x2 = T.x + structure_padding
+		var/y2 = T.y + structure_padding
+
+		var/is_empty = TRUE
+		for(var/datum/reserved_space/S in reserved_space)
+			if(S.z != T.z)
+				continue
+
+			// Rectangle-Rectangle (or AABB) collision check
+			if(x1 < S.x2 && x2 > S.x1 && y1 < S.y2 && y2 > S.y1)
+				is_empty = FALSE
+				break
+
+		if(!is_empty)
 			continue
 
 		return T
 #ifdef SPACE_STRUCTURES_DEBUG
+	info("Couldn't find position for [structure.structure_id]")
 	message_admins("Couldn't find position for [structure.structure_id]")
 #endif
 	return null

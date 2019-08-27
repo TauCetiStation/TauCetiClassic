@@ -311,6 +311,8 @@ var/list/ghostteleportlocs = list()
 	powerupdate = 2
 	for(var/obj/machinery/M in src)	// for each machine in the area
 		M.power_change()				// reverify power status (to update icons etc.)
+	for(var/obj/item/device/radio/intercom/I in src)	// Intercoms are not machinery so we need a different loop
+		I.power_change()
 	if (fire || eject || party)
 		updateicon()
 

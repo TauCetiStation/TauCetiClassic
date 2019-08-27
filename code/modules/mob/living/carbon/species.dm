@@ -130,7 +130,12 @@
 	if(!has_organ[O_HEART])
 		flags[NO_BLOOD] = TRUE // this status also uncaps vital body parts damage, since such species otherwise will be very hard to kill.
 
-/datum/species/proc/create_organs(mob/living/carbon/human/H) //Handles creation of mob organs.
+/datum/species/proc/create_organs(mob/living/carbon/human/H, deleteOld = FALSE) //Handles creation of mob organs.
+	if(deleteOld)
+		for(var/obj/item/organ/external/BP in H.bodyparts)
+			qdel(BP)
+		for(var/obj/item/organ/internal/IO in H.organs)
+			qdel(IO)
 
 	for(var/type in has_bodypart)
 		var/path = has_bodypart[type]
@@ -141,10 +146,6 @@
 		new path(null, H)
 
 	if(flags[IS_SYNTHETIC])
-		for(var/obj/item/organ/external/BP in H.bodyparts)
-			if(BP.status & (ORGAN_CUT_AWAY | ORGAN_DESTROYED))
-				continue
-			BP.status |= ORGAN_ROBOT
 		for(var/obj/item/organ/internal/IO in H.organs)
 			IO.mechanize()
 
@@ -630,13 +631,13 @@
 	)
 
 	has_bodypart = list(
-		 BP_CHEST  = /obj/item/organ/external/chest
-		,BP_GROIN  = /obj/item/organ/external/groin
-		,BP_HEAD   = /obj/item/organ/external/head/ipc
-		,BP_L_ARM  = /obj/item/organ/external/l_arm
-		,BP_R_ARM  = /obj/item/organ/external/r_arm
-		,BP_L_LEG  = /obj/item/organ/external/l_leg
-		,BP_R_LEG  = /obj/item/organ/external/r_leg
+		 BP_CHEST  = /obj/item/organ/external/chest/robot/ipc
+		,BP_GROIN  = /obj/item/organ/external/groin/robot/ipc
+		,BP_HEAD   = /obj/item/organ/external/head/robot/ipc
+		,BP_L_ARM  = /obj/item/organ/external/l_arm/robot/ipc
+		,BP_R_ARM  = /obj/item/organ/external/r_arm/robot/ipc
+		,BP_L_LEG  = /obj/item/organ/external/l_leg/robot/ipc
+		,BP_R_LEG  = /obj/item/organ/external/r_leg/robot/ipc
 		)
 
 	has_organ = list(
@@ -716,10 +717,13 @@
 /datum/unarmed_attack
 	var/attack_verb = list("attack")	// Empty hand hurt intent verb.
 	var/damage = 0						// Extra empty hand attack damage.
-	var/list/attack_sound = SOUNDIN_PUNCH
 	var/miss_sound = 'sound/weapons/punchmiss.ogg'
 	var/sharp = 0
 	var/edge = 0
+	var/list/attack_sound
+
+/datum/unarmed_attack/New()
+	attack_sound = SOUNDIN_PUNCH
 
 /datum/unarmed_attack/proc/damage_flags()
 	return (sharp ? DAM_SHARP : 0) | (edge ? DAM_EDGE : 0)
@@ -733,15 +737,19 @@
 
 /datum/unarmed_attack/slime_glomp
 	attack_verb = list("glomp")
+
+/datum/unarmed_attack/slime_glomp/New()
 	attack_sound = list('sound/effects/attackblob.ogg')
 
 /datum/unarmed_attack/claws
 	attack_verb = list("scratch", "claw")
-	attack_sound = list('sound/weapons/slice.ogg')
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	damage = 5
 	sharp = 1
 	edge = 1
+
+/datum/unarmed_attack/claws/New()
+	attack_sound = list('sound/weapons/slice.ogg')
 
 /datum/unarmed_attack/claws/armalis
 	attack_verb = list("slash", "claw")

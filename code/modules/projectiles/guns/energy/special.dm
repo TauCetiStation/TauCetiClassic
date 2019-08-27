@@ -11,7 +11,7 @@
 
 /obj/item/weapon/gun/energy/ionrifle/update_icon()
 	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = ceil(ratio * 4) * 25
+	ratio = CEIL(ratio * 4) * 25
 	switch(modifystate)
 		if (0)
 			if(ratio > 100)
@@ -162,7 +162,7 @@
 
 /obj/item/weapon/gun/energy/sniperrifle/update_icon()
 	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = ceil(ratio * 4) * 25
+	ratio = CEIL(ratio * 4) * 25
 	switch(modifystate)
 		if (0)
 			if(ratio > 100)

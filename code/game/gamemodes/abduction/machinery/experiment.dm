@@ -51,10 +51,10 @@
 	preview_icon.Blend(temp, ICON_OVERLAY)
 
 	for(var/obj/item/organ/external/BP in H.bodyparts)
-		if((BP.status & ORGAN_CUT_AWAY) || (BP.status & ORGAN_DESTROYED))
+		if((BP.status & ORGAN_CUT_AWAY) || (BP.is_stump))
 			continue
 		temp = new /icon(icobase, "[BP.body_zone]")
-		if(BP.status & ORGAN_ROBOT)
+		if(BP.is_robotic())
 			temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 		preview_icon.Blend(temp, ICON_OVERLAY)
 

@@ -98,7 +98,8 @@
 
 		if("hurt")
 			M.do_attack_animation(src)
-			var/datum/unarmed_attack/attack = M.species.unarmed
+			var/obj/item/organ/external/BPHand = M.bodyparts_by_name[M.hand ? BP_L_ARM : BP_R_ARM]
+			var/datum/unarmed_attack/attack = BPHand.species.unarmed
 
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[pick(attack.attack_verb)]ed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [pick(attack.attack_verb)]ed by [M.name] ([M.ckey])</font>")
@@ -213,7 +214,7 @@
 */
 /mob/living/carbon/human/proc/apply_pressure(mob/living/user, target_zone)
 	var/obj/item/organ/external/BP = get_bodypart(target_zone)
-	if(!BP || !(BP.status & ORGAN_BLEEDING) || (BP.status & ORGAN_ROBOT))
+	if(!BP || !(BP.status & ORGAN_BLEEDING) || BP.is_robotic())
 		return FALSE
 
 	if(user.is_busy())
