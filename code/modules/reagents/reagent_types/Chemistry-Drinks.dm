@@ -657,7 +657,7 @@
 	taste_message = "liquid fire"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/consumable/ethanol/on_mob_life(mob/living/M, alien) // There's a multiplier for Skrells, which can't be inbuilt in any other reasonable way.
+/datum/reagent/consumable/ethanol/on_mob_life(mob/living/M)
 	if(!..())
 		return
 
@@ -677,7 +677,7 @@
 		if(isnum(A.data))
 			d += A.data
 
-	if(alien == SKRELL) //Skrell get very drunk very quickly.
+	if(M.get_species() == SKRELL) //Skrell get very drunk very quickly.
 		d *= 5
 
 	M.dizziness += dizzy_adj

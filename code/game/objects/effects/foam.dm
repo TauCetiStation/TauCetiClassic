@@ -103,8 +103,8 @@
 
 		if(isslime(AM)) // Slimes are vulnerable to us and shouldn't be able to destroy us.
 			var/mob/living/carbon/slime/S = AM
-			S.Stun(5)
-			S.adjustToxLoss(10)
+			S.Weaken(5)
+			S.adjustToxLoss(rand(15, 20))
 			return
 
 	INVOKE_ASYNC(src, .proc/disolve) // You should never call procs with delay from BYOND movement procs.
@@ -136,6 +136,8 @@
 	for(var/atom/A in perform_on)
 		if(isliving(A))
 			var/mob/living/L = A
+			if(isslime(A)) // If only ExtinguishMob wasn't so vague, this could be there.
+				L.adjustToxLoss(rand(15, 20))
 			L.ExtinguishMob()
 		else if(istype(A, /obj/structure/bonfire)) // Currently very snowflakey please fix later ~Luduk.
 			var/obj/structure/bonfire/B = A
