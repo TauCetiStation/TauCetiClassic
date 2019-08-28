@@ -397,25 +397,6 @@ var/bomb_set
 				return
 	return
 
-/obj/machinery/nuclearbomb/MouseDrop_T(mob/living/M, mob/living/user)
-	if(!ishuman(M) || !ishuman(user))
-		return
-	if(user.is_busy())
-		return
-	if(buckled_mob)
-		do_after(usr, 30, 1, src)
-		unbuckle_mob()
-	else if(do_after(usr, 30, 1, src))
-		M.loc = loc
-		..()
-
-/obj/machinery/nuclearbomb/post_buckle_mob(mob/living/M)
-	..()
-	if(M == buckled_mob)
-		M.pixel_y = 10
-	else
-		M.pixel_y = 0
-
 /obj/machinery/nuclearbomb/bullet_act(obj/item/projectile/Proj)
 	if(buckled_mob)
 		buckled_mob.bullet_act(Proj)
