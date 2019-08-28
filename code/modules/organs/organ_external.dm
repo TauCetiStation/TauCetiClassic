@@ -35,6 +35,7 @@
 	var/list/implants = list()        // Currently implanted objects.
 	var/bandaged = FALSE              // Are there any visual bandages on this bodypart
 	var/is_stump = FALSE              // Is it just a leftover of a destroyed bodypart
+	var/leaves_stump = TRUE           // Does this bodypart leaves a stump when destroyed
 
 	// Joint/state stuff.
 	var/cannot_amputate               // Impossible to amputate.
@@ -391,7 +392,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		owner.death()
 
 	owner.UpdateDamageIcon(src)
-	if(!clean)
+	if(!clean && leaves_stump)
 		new /obj/item/organ/external/stump(null, owner, src)
 	owner.updatehealth()
 

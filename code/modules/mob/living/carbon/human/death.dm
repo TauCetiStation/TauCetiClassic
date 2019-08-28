@@ -129,11 +129,12 @@
 
 		BP.name = "[real_name]'s head"
 
-		death()
-		BP.brainmob.death()
+		if(BP.vital)
+			death()
+			BP.brainmob.death()
 
-		tod = null // These lines prevent reanimation if head was cut and then sewn back, you can only clone these bodies
-		timeofdeath = 0
+			tod = null // These lines prevent reanimation if head was cut and then sewn back, you can only clone these bodies
+			timeofdeath = 0
 
 		if(BP.brainmob && BP.brainmob.mind && BP.brainmob.mind.changeling) //cuz fuck runtimes
 			var/datum/changeling/Host = BP.brainmob.mind.changeling

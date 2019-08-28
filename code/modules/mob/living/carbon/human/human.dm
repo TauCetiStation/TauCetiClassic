@@ -84,6 +84,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/slime/atom_init(mapload)
 	. = ..(mapload, SLIME)
 
+/mob/living/carbon/human/skeleton/atom_init(mapload)
+	. = ..(mapload, SKELETON)
+
 /mob/living/carbon/human/atom_init(mapload, new_species)
 
 	dna = new
