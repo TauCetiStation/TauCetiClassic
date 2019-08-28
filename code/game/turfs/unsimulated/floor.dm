@@ -1,7 +1,7 @@
 /turf/unsimulated/floor
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
-	icon_state = "plating"
+	icon_state = "Floor3"
 
 /turf/unsimulated/floor/abductor
 	name = "alien floor"
