@@ -96,14 +96,17 @@
 			open = !open
 			to_chat(user, "<span class='notice'>Maintenance panel is now [src.open ? "opened" : "closed"].</span>")
 	else if(iswelder(W))
-		if(health < maxhealth)
-			if(open)
-				health = min(maxhealth, health+10)
-				user.visible_message("<span class='warning'>[user] repairs [src]!</span>","<span class='notice'>You repair [src]!</span>")
+		if(W.use(0, user))
+			if(health < maxhealth)
+				if(open)
+					user.visible_message("<span class='warning'>[user] start repair [src]!</span>","<span class='notice'>You start repair [src]!</span>")
+					if(W.use_tool(src, user, 20, volume = 50))
+						health = min(maxhealth, health+10)
+						user.visible_message("<span class='warning'>[user] repaired [src]!</span>","<span class='notice'>You repaired [src]!</span>")
+				else
+					to_chat(user, "<span class='notice'>Unable to repair with the maintenance panel closed.</span>")
 			else
-				to_chat(user, "<span class='notice'>Unable to repair with the maintenance panel closed.</span>")
-		else
-			to_chat(user, "<span class='notice'>[src] does not need a repair.</span>")
+				to_chat(user, "<span class='notice'>[src] does not need a repair.</span>")
 	else
 		if(hasvar(W,"force") && hasvar(W,"damtype"))
 			switch(W.damtype)
