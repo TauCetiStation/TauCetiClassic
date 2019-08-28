@@ -33722,7 +33722,6 @@
 /obj/machinery/door_control{
 	id = "Captain_private";
 	name = "Shutters Control";
-	pixel_x = 0;
 	req_access = list(20)
 	},
 /turf/simulated/floor/wood,
@@ -33991,7 +33990,9 @@
 /turf/simulated/floor/plating,
 /area/maintenance/engineering)
 "bjO" = (
-/obj/machinery/door/airlock/medical/glass,
+/obj/machinery/door/airlock/medical/glass{
+	req_access = list(5)
+	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
