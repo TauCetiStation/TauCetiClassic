@@ -583,7 +583,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			qdel(spark_system)
 
 /obj/item/organ/external/proc/embed(obj/item/weapon/W, silent = 0, supplied_message, datum/wound/supplied_wound)
-	if(owner.species.flags[NO_EMBED])
+	if(!owner || owner.species.flags[NO_EMBED])
 		return
 
 	if(!silent)
