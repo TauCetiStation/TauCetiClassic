@@ -218,28 +218,30 @@
 			to_chat(M, "<span class='notice'>You have been [mute_string] unmuted from [usr.key].</span>")
 	else
 		if(alert("Would you like to make it permament?","Permamute?","Yes","No, round only") == "Yes")
-			var/permmutreason = input("Permamute notice:", "Permamute Reason") as  null|text
+			var/permmutreason = sanitize(input("Permamute Notice:", text("Permamute Reason")) as text)
 			if(permmutreason)
 				muteunmute = "permamuted"
 				M.client.prefs.permamuted |= mute_type
 				M.client.prefs.save_preferences()
 				M.client.prefs.muted |= mute_type
-				notes_add(M.key, "Permamute on [mute_string]: [permmutreason]", usr.client)
-				to_chat(M, "<span class='alert'><span class='reallybig bold'>You have been permamuted from [usr.key]. </span><br>Permamuted [mute_string]. Reason: [permmutreason].</span>")
+				notes_add(M.key, "Permamute from [mute_string]: [permmutreason]", usr.client)
+				to_chat(M, "<span class='alert big bold'>You have been permamuted from [mute_string] by [usr.key].<br>Reason: [permmutreason]</span>")
 			else
 				to_chat(usr, "<span class='alert'>Abort permamuted: Empty reason.</span>")
 				return
 
-		else
-			var/mutereason = input("Mute notice:", "Mute Reason") as null|text
+		else if (alert("Add notice for round mute?", "Mute Notice?", "Yes","No") == "Yes")
+			var/mutereason = sanitize(input("Mute Notice:", text("Mute Reason")) as text)
 			if(mutereason)
-				notes_add(M.key, "Muted on [mute_string]: [mutereason]", usr.client)
+				notes_add(M.key, "Muted from [mute_string]: [mutereason]", usr.client)
+				to_chat(M, "<span class='alert big bold'>You have been muted from [mute_string] by [usr.key].<br>Reason: [mutereason]</span>")
 			else
-				mutereason = "Violation of the rules of communication"
+				return
+		else
+			to_chat(M, "<span class='alert big bold'>You have been muted from [mute_string] by [usr.key].</span>")
 
-			muteunmute = "muted"
-			M.client.prefs.muted |= mute_type
-			to_chat(M, "<span class='alert'>You have been muted from [usr.key]. Muted [mute_string]. Reason: [mutereason].</span>")
+		muteunmute = "muted"
+		M.client.prefs.muted |= mute_type
 
 	log_admin("[key_name(usr)] has [muteunmute] [key_name(M)] from [mute_string]")
 	message_admins("[key_name_admin(usr)] has [muteunmute] [key_name_admin(M)] from [mute_string].")
