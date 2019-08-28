@@ -578,6 +578,9 @@
 	},
 /turf/unsimulated/wall,
 /area/centcom/arrival)
+"abo" = (
+/turf/unsimulated/wall/fakeglass,
+/area/centcom/evac)
 "abu" = (
 /turf/unsimulated/wall/fakeglass{
 	dir = 2;
@@ -10367,20 +10370,6 @@
 	},
 /turf/simulated/shuttle/plating,
 /area/centcom/evac)
-"aHI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/centcom/evac)
 "aHJ" = (
 /obj/machinery/door/airlock/external{
 	name = "Salvage Shuttle Dock"
@@ -10473,36 +10462,6 @@
 	name = "plating"
 	},
 /area/syndicate_mothership)
-"aIc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/turf/unsimulated/floor,
-/area/centcom/evac)
-"aId" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/centcom/evac)
-"aIe" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor,
-/area/centcom/evac)
 "aIf" = (
 /obj/machinery/door/airlock{
 	name = "Unit 1"
@@ -10558,11 +10517,6 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/centcom/evac)
-"aIt" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/turf/unsimulated/floor,
 /area/centcom/evac)
 "aIy" = (
 /turf/unsimulated/floor{
@@ -10705,13 +10659,6 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
-/area/centcom/evac)
-"aJa" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor,
 /area/centcom/evac)
 "aJb" = (
 /obj/machinery/light{
@@ -39740,9 +39687,9 @@ aHb
 aHb
 aHb
 hEb
-aIt
+anY
 aII
-aJa
+anY
 aaM
 ahJ
 aaM
@@ -39997,9 +39944,9 @@ aHb
 aHb
 hJb
 hVb
-aIt
+anQ
 aII
-aJa
+anQ
 ahJ
 ahJ
 ahJ
@@ -40254,9 +40201,9 @@ hCb
 hCb
 hVb
 aaM
-aIt
+anQ
 aII
-aJa
+anQ
 aaM
 ahJ
 aaM
@@ -40511,9 +40458,9 @@ aaM
 aaM
 aaM
 aaM
-aIt
+anQ
 aII
-aJa
+anQ
 aaM
 ahJ
 aaM
@@ -40768,9 +40715,9 @@ aaM
 aaM
 aaM
 abY
-aHI
+anZ
 aIJ
-aHI
+anZ
 abY
 aaM
 aaM
@@ -41280,13 +41227,13 @@ aaM
 aaM
 aaM
 aaM
-aHI
+abo
 hgb
 hxb
 ifb
 hNb
 hRb
-aHI
+abo
 aaM
 aaM
 aKu
@@ -41794,13 +41741,13 @@ aKl
 aKl
 aKl
 aaM
-aHI
+abo
 hhb
 hzb
 hIb
 hPb
 hRb
-aHI
+abo
 aaM
 aaM
 aKu
@@ -42567,9 +42514,9 @@ aKl
 aaM
 aaM
 aaM
-aHI
+abo
 aIy
-aHI
+abo
 aaM
 aaM
 aaM
@@ -42818,9 +42765,9 @@ aBX
 abP
 aaM
 abY
-aHI
+abo
 aIJ
-aHI
+abo
 abY
 aaM
 abY
@@ -43336,13 +43283,13 @@ hxb
 hHb
 hNb
 hRb
-aHI
+abo
 hgb
 hxb
 ifb
 hNb
 hRb
-aHI
+abo
 aaM
 aaM
 aKu
@@ -43850,13 +43797,13 @@ hzb
 hIb
 hPb
 hRb
-aHI
+abo
 hhb
 hzb
 ihb
 hPb
 hRb
-aHI
+abo
 aaM
 aID
 adC
@@ -44617,21 +44564,21 @@ aBX
 abP
 aaM
 aaM
-aHI
+abo
 aHJ
-aHI
+abo
 aaM
 aaM
 aaM
-aIc
+anY
 aFf
-aIc
+anY
 aaM
 aaM
 aaM
-aIc
+anY
 bNb
-aIc
+anY
 aaM
 aaM
 aaM
@@ -44880,15 +44827,15 @@ aaM
 aaM
 aaM
 aaM
-aIe
+anQ
 aIS
-aIe
+anQ
 aaM
 aaM
 aaM
-aIe
+anQ
 aIS
-aIe
+anQ
 aaM
 aaM
 abY
@@ -45137,15 +45084,15 @@ aaM
 aaM
 aaM
 aaM
-aIe
+anQ
 aII
-aIe
+anQ
 aaM
 aaM
 aaM
-aIe
+anQ
 aII
-aIe
+anQ
 aaM
 aaM
 abY
@@ -45394,15 +45341,15 @@ aaM
 abY
 abY
 abY
-aId
+anZ
 aFf
-aId
+anZ
 abY
 abY
 abY
-aId
+anZ
 bNb
-aId
+anZ
 abY
 abY
 abY
@@ -45650,7 +45597,7 @@ aaM
 aaM
 abY
 hWb
-aIc
+anY
 aIy
 aIy
 aIy
@@ -45660,7 +45607,7 @@ hgb
 aIy
 aIy
 aIy
-aIc
+anY
 hWb
 abY
 aLL
@@ -45907,7 +45854,7 @@ aaM
 aaM
 abY
 hWb
-aId
+anZ
 aIB
 aIy
 aIy
@@ -45917,7 +45864,7 @@ hgb
 aIy
 aIy
 aIB
-aId
+anZ
 hWb
 abY
 iLb
@@ -46421,7 +46368,7 @@ aaM
 aaM
 abY
 hWb
-aIc
+anY
 aIC
 hGb
 hGb
@@ -46678,7 +46625,7 @@ aaM
 aaM
 abY
 hWb
-aIe
+anQ
 aIy
 aIy
 aIy
@@ -46935,7 +46882,7 @@ aaM
 aaM
 abY
 hWb
-aIe
+anQ
 aIy
 aIy
 aIy
@@ -47192,7 +47139,7 @@ abP
 abP
 abY
 hWb
-aId
+anZ
 aIB
 aIO
 aIO
@@ -47706,7 +47653,7 @@ aAM
 aAM
 abP
 hWb
-aIc
+anY
 aIC
 aIy
 aIy
@@ -47716,7 +47663,7 @@ hgb
 aIy
 aIy
 aIC
-aIc
+anY
 hWb
 abY
 abY
@@ -47963,7 +47910,7 @@ aAM
 aEp
 abP
 hWb
-aId
+anZ
 aIy
 aIy
 aIy
@@ -47973,7 +47920,7 @@ hgb
 aIy
 aIy
 aIy
-aId
+anZ
 hWb
 abY
 aaM
@@ -48221,15 +48168,15 @@ bfv
 abP
 abY
 abY
-aIc
+anY
 aFf
-aIc
+anY
 abY
 abY
 abY
-aIc
+anY
 aFf
-aIc
+anY
 abY
 abY
 abY
@@ -48478,15 +48425,15 @@ aAM
 abP
 aaM
 aaM
-aIe
+anQ
 aIS
-aIe
+anQ
 aaM
 aaM
 aaM
-aIe
+anQ
 aKw
-aIe
+anQ
 aaM
 aaM
 aaM
@@ -48735,15 +48682,15 @@ aAM
 abP
 aaM
 aaM
-aId
+anZ
 aFf
-aId
+anZ
 aaM
 aaM
 aaM
-aId
+anZ
 aFf
-aId
+anZ
 aaM
 aaM
 aaM
