@@ -42,7 +42,7 @@
 				for(var/obj/item/weapon/holder/thing in O.contents)
 					thing.show_message(message, m_type)
 			if(m_type & 1 && in_range(O, src))
-				O.show_message(message)
+				O.show_message(message, FEEL)
 				continue
 			O.show_message(message, m_type)
 
