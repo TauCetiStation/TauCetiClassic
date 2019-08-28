@@ -320,7 +320,7 @@
 						if(!C.put_in_active_hand(cable))
 							C.put_in_inactive_hand(cable)
 					for (var/mob/M in viewers(T))
-						M.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls [!M || (C && !C.is_in_hands(cable)) ? "to the floor" : "onto [M == C ? "your" : "someone's"] hand"].</span>")
+						M.show_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls [!M || (C && !C.is_in_hands(cable)) ? "to the floor" : "onto [M == C ? "your" : "someone's"] hand"].</span>", 1, "<span class='warning'>You hear the soft click of something light and hard falling [M ? "onto someone's hand" : "to the ground"].</span>", 2)
 				if(href_list["cable"] == "2")
 					if(cable)
 						QDEL_NULL(cable)
