@@ -206,8 +206,6 @@
 	if(!client)
 		return 0
 
-	handle_vision()
-
 	if (stat == DEAD || (XRAY in src.mutations))
 		sight |= SEE_TURFS
 		sight |= SEE_MOBS
