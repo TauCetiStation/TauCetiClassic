@@ -442,9 +442,343 @@
 "aaM" = (
 /turf/space,
 /area/space)
+"aaN" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 2;
+	icon_state = "fakewindows2"
+	},
+/area/syndicate_mothership)
+"aaO" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 1
+	},
+/area/syndicate_mothership)
+"aaP" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 1;
+	icon_state = "fakewindows2"
+	},
+/area/syndicate_mothership)
+"aaQ" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 4;
+	icon_state = "fakewindows2"
+	},
+/area/space)
+"aaR" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 4
+	},
+/area/space)
+"aaS" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 8;
+	icon_state = "fakewindows2"
+	},
+/area/syndicate_mothership)
+"aaT" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 2;
+	icon_state = "fakewindows2"
+	},
+/area/wizard_station)
+"aaU" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 4;
+	icon_state = "fakewindows2"
+	},
+/area/wizard_station)
+"aaV" = (
+/turf/unsimulated/wall/fakeglass{
+	icon_state = "fakewindows3"
+	},
+/area/wizard_station)
+"aaW" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 6;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/arrival)
+"aaX" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 10;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/arrival)
+"aaY" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 4;
+	icon_state = "fakewindows3"
+	},
+/area/centcom/arrival)
+"aaZ" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 8;
+	icon_state = "fakewindows3"
+	},
+/area/centcom/arrival)
+"aba" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 9;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/arrival)
 "abb" = (
 /turf/space,
 /area/shuttle/escape_pod1/transit)
+"abc" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 1
+	},
+/area/centcom/arrival)
+"abd" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 5;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/arrival)
+"abe" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 2;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/arrival)
+"abf" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 4;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/arrival)
+"abg" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 4
+	},
+/area/centcom/arrival)
+"abh" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 8;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/arrival)
+"abi" = (
+/obj/structure/sign/velocity_overlay/reklama{
+	desc = "Now It?s Pepsi for Those Who Think Young";
+	icon_state = "SuperPepsi";
+	name = "\improper billboard"
+	},
+/turf/unsimulated/wall/fakeglass{
+	dir = 1;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/arrival)
+"abj" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 1;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/arrival)
+"abk" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 4;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/specops)
+"abl" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 4
+	},
+/area/centcom/specops)
+"abm" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 8;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/specops)
+"abn" = (
+/turf/unsimulated/wall/fakeglass,
+/area/centcom/evac)
+"abo" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 4;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/evac)
+"abp" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 4
+	},
+/area/centcom/evac)
+"abq" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 8;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/evac)
+"abr" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 4;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/control)
+"abs" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 8;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/control)
+"abt" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 4;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/living)
+"abu" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 4
+	},
+/area/centcom/living)
+"abv" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 8;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/living)
+"abw" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 4
+	},
+/area/centcom/control)
+"abx" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 4;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/holding)
+"aby" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 4
+	},
+/area/centcom/holding)
+"abz" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 8;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/holding)
+"abA" = (
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 60
+	},
+/turf/unsimulated/wall/fakeglass{
+	dir = 2;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/living)
+"abB" = (
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 60
+	},
+/turf/unsimulated/wall/fakeglass{
+	dir = 1
+	},
+/area/centcom/living)
+"abC" = (
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 60
+	},
+/turf/unsimulated/wall/fakeglass,
+/area/centcom/living)
+"abD" = (
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 60
+	},
+/turf/unsimulated/wall/fakeglass{
+	dir = 1;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/living)
+"abE" = (
+/obj/structure/sign/warning/docking,
+/turf/unsimulated/wall/fakeglass{
+	dir = 2;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/evac)
+"abF" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 2;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/evac)
+"abG" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 1
+	},
+/area/centcom/evac)
+"abH" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 4;
+	icon_state = "fakewindows3"
+	},
+/area/centcom/evac)
+"abI" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 8;
+	icon_state = "fakewindows3"
+	},
+/area/centcom/evac)
+"abJ" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 4;
+	icon_state = "fakewindows2"
+	},
+/area/tdome)
+"abK" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 4
+	},
+/area/tdome)
+"abL" = (
+/obj/structure/disposalpipe/segment,
+/turf/unsimulated/wall/fakeglass{
+	dir = 4
+	},
+/area/tdome)
+"abM" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 8;
+	icon_state = "fakewindows2"
+	},
+/area/tdome)
+"abN" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 1;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/evac)
+"abO" = (
+/obj/structure/sign/warning/airlock,
+/turf/unsimulated/wall/fakeglass{
+	dir = 1;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/evac)
+"abP" = (
+/turf/unsimulated/wall/fakeglass{
+	dir = 9;
+	icon_state = "fakewindows2"
+	},
+/area/centcom/evac)
+"abQ" = (
+/turf/unsimulated/wall/fakeglass,
+/area/tdome)
+"abR" = (
+/turf/unsimulated/wall/fakeglass,
+/area/syndicate_mothership/elite_squad)
 "acb" = (
 /turf/space,
 /area/shuttle/escape/transit)
@@ -779,22 +1113,6 @@
 	icon_state = "black"
 	},
 /area/syndicate_mothership/droppod_garage)
-"adx" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/grille,
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/centcom/arrival)
 "adA" = (
 /obj/structure/lattice,
 /turf/space,
@@ -1047,16 +1365,6 @@
 	icon_state = "swall2"
 	},
 /area/shuttle/escape/centcom)
-"afx" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor,
-/area/centcom/evac)
 "afy" = (
 /obj/machinery/flasher{
 	id = "shutflash";
@@ -1195,19 +1503,6 @@
 	},
 /turf/space,
 /area/shuttle/transport1/centcom)
-"agt" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor,
-/area/centcom/evac)
 "agu" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "3,9"
@@ -1953,19 +2248,6 @@
 	icon_state = "floor4"
 	},
 /area/syndicate_mothership)
-"aiQ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor,
-/area/syndicate_mothership)
 "aiR" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/syndie,
@@ -1986,32 +2268,12 @@
 	icon_state = "grimy"
 	},
 /area/syndicate_mothership)
-"aiU" = (
-/obj/effect/landmark/blockway,
-/turf/space,
-/area/space)
 "aiV" = (
 /obj/effect/landmark/syndie_gateway,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/syndicate_mothership)
-"aiY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/syndicate_mothership/elite_squad)
 "aiZ" = (
 /obj/machinery/light{
 	dir = 4
@@ -2028,16 +2290,6 @@
 	icon_state = "floor4"
 	},
 /area/syndicate_mothership/elite_squad)
-"ajb" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/syndicate_mothership)
 "ajc" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/syndie,
@@ -2098,17 +2350,6 @@
 	name = "plating"
 	},
 /area/syndicate_mothership/elite_squad)
-"ajj" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/turf/unsimulated/floor,
-/area/syndicate_mothership)
 "ajk" = (
 /obj/machinery/gateway{
 	dir = 4
@@ -2841,20 +3082,6 @@
 "alt" = (
 /turf/space,
 /area/syndicate_mothership)
-"alw" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/turf/unsimulated/floor,
-/area/syndicate_mothership)
 "alx" = (
 /obj/machinery/computer/telecrystals/uplinker,
 /turf/unsimulated/floor{
@@ -2900,15 +3127,6 @@
 	icon_state = "floor6"
 	},
 /area/syndicate_station/start)
-"alC" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/syndicate_mothership)
 "alD" = (
 /obj/structure/table,
 /obj/item/weapon/tank/jetpack/oxygen/harness,
@@ -3324,17 +3542,6 @@
 	icon_state = "floor3"
 	},
 /area/syndicate_station/start)
-"amw" = (
-/obj/structure/lattice,
-/obj/structure/window/reinforced,
-/obj/effect/landmark/blockway,
-/turf/space,
-/area/space)
-"amx" = (
-/obj/structure/window/reinforced,
-/obj/effect/landmark/blockway,
-/turf/space,
-/area/space)
 "amy" = (
 /obj/machinery/vending/snack,
 /turf/unsimulated/floor{
@@ -3465,21 +3672,6 @@
 	icon_state = "dark"
 	},
 /area/syndicate_mothership)
-"amK" = (
-/obj/structure/lattice,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/effect/landmark/blockway,
-/turf/space,
-/area/space)
-"amL" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/effect/landmark/blockway,
-/turf/space,
-/area/space)
 "amM" = (
 /obj/machinery/vending/cigarette,
 /turf/unsimulated/floor{
@@ -5701,27 +5893,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/arrival)
-"aus" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/obj/structure/sign/velocity_overlay/reklama{
-	desc = "Now It?s Pepsi for Those Who Think Young";
-	icon_state = "SuperPepsi";
-	name = "\improper billboard"
-	},
-/turf/unsimulated/floor,
-/area/centcom/arrival)
 "aut" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -5860,24 +6031,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/arrival)
-"auL" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/turf/unsimulated/floor,
-/area/centcom/arrival)
 "auM" = (
 /turf/unsimulated/floor{
 	icon_state = "bot"
@@ -5952,67 +6105,6 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/arrival)
-"avb" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/turf/unsimulated/floor,
-/area/centcom/arrival)
-"avc" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/turf/unsimulated/floor,
-/area/centcom/arrival)
-"avd" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/grille,
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/turf/unsimulated/floor,
-/area/centcom/arrival)
-"ave" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/turf/unsimulated/floor,
 /area/centcom/arrival)
 "avf" = (
 /obj/structure/object_wall/erokez{
@@ -6124,33 +6216,6 @@
 	icon_state = "loadingarea"
 	},
 /area/centcom/control)
-"avz" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/turf/unsimulated/floor,
-/area/centcom/arrival)
-"avA" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/turf/unsimulated/floor,
-/area/centcom/arrival)
 "avB" = (
 /obj/machinery/light{
 	dir = 8
@@ -6199,18 +6264,6 @@
 	icon_state = "swall3"
 	},
 /area/shuttle/escape/centcom)
-"avS" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/turf/unsimulated/floor,
-/area/centcom/arrival)
 "avT" = (
 /obj/structure/sign/velocity_tablo{
 	icon_state = "velocity_tablo";
@@ -6280,19 +6333,6 @@
 	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/transport1/centcom)
-"awk" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/grille,
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/turf/unsimulated/floor,
-/area/centcom/arrival)
 "awl" = (
 /obj/structure/closet/wardrobe/black,
 /obj/structure/disposalpipe/segment,
@@ -6427,21 +6467,6 @@
 	},
 /turf/unsimulated/floor/abductor,
 /area/abductor_ship)
-"awF" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/turf/unsimulated/floor,
-/area/centcom/arrival)
 "awG" = (
 /obj/machinery/computer/arrival_shuttle/dock{
 	dir = 4
@@ -6574,21 +6599,6 @@
 	icon_state = "3,3"
 	},
 /area/supply/dock)
-"axe" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/turf/unsimulated/floor,
-/area/centcom/arrival)
 "axf" = (
 /obj/structure/closet/wardrobe/white,
 /obj/structure/disposalpipe/segment,
@@ -6693,19 +6703,6 @@
 	icon_state = "0,5"
 	},
 /area/supply/dock)
-"axF" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/turf/unsimulated/floor,
-/area/centcom/arrival)
 "axG" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "3,4"
@@ -7071,51 +7068,6 @@
 /area/prison/solitary{
 	requires_power = 0
 	})
-"ayF" = (
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor,
-/area/centcom/arrival)
-"ayG" = (
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor,
-/area/centcom/arrival)
-"ayH" = (
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/centcom/arrival)
 "ayI" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -9999,20 +9951,6 @@
 	},
 /turf/simulated/shuttle/plating,
 /area/centcom/evac)
-"aHI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/centcom/evac)
 "aHJ" = (
 /obj/machinery/door/airlock/external{
 	name = "Salvage Shuttle Dock"
@@ -10196,11 +10134,6 @@
 	icon_state = "floor4"
 	},
 /area/centcom/evac)
-"aIt" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/turf/unsimulated/floor,
-/area/centcom/evac)
 "aIy" = (
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -10348,13 +10281,6 @@
 	icon_state = "floor4"
 	},
 /area/centcom/evac)
-"aJa" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor,
-/area/centcom/evac)
 "aJb" = (
 /obj/machinery/light{
 	dir = 4
@@ -10455,32 +10381,6 @@
 /area/centcom/living)
 "aJu" = (
 /turf/unsimulated/wall,
-/area/centcom/control)
-"aJv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/control)
-"aJw" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
 /area/centcom/control)
 "aJx" = (
 /obj/machinery/door/airlock/centcom{
@@ -10987,21 +10887,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/control)
-"aKU" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor,
-/area/centcom/arrival)
 "aKX" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -11113,19 +10998,6 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
-"aLp" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/obj/structure/window/reinforced,
-/turf/unsimulated/floor,
-/area/centcom/arrival)
 "aLq" = (
 /obj/machinery/computer/communications,
 /turf/unsimulated/floor{
@@ -11457,36 +11329,6 @@
 	icon_state = "white"
 	},
 /area/centcom/evac)
-"aMZ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/turf/unsimulated/floor,
-/area/centcom/control)
-"aNa" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor,
-/area/centcom/control)
-"aNb" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/centcom/control)
 "aNl" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -11531,14 +11373,6 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced,
-/turf/unsimulated/floor,
-/area/centcom/holding)
-"aNu" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "aNv" = (
@@ -12379,20 +12213,6 @@
 	icon_state = "freezerfloor"
 	},
 /area/centcom/holding)
-"aQA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor,
-/area/centcom/evac)
-"aQB" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/centcom/evac)
 "aQE" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
@@ -13144,23 +12964,6 @@
 	icon_state = "cafeteria"
 	},
 /area/centcom/living)
-"aTc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
-	},
-/turf/unsimulated/floor,
-/area/centcom/living)
 "aTd" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -13353,20 +13156,6 @@
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
-/area/centcom/living)
-"aTE" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
-	},
-/turf/unsimulated/floor,
 /area/centcom/living)
 "aTF" = (
 /obj/machinery/conveyor{
@@ -13700,21 +13489,6 @@
 	icon_state = "floor5"
 	},
 /area/centcom/living)
-"aUN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
-	},
-/turf/unsimulated/floor,
-/area/centcom/living)
 "aUO" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
@@ -13736,17 +13510,6 @@
 	icon_state = "4,6"
 	},
 /area/supply/dock)
-"aUR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/turf/unsimulated/floor,
-/area/centcom/evac)
 "aUS" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "3,6"
@@ -14363,31 +14126,6 @@
 	icon_state = "dark"
 	},
 /area/tdome)
-"aWW" = (
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
-	},
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/turf/unsimulated/floor,
-/area/tdome)
-"aWX" = (
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
-	},
-/obj/effect/forcefield{
-	desc = "You can't get in. Heh.";
-	layer = 1;
-	name = "Blocker"
-	},
-/obj/structure/disposalpipe/segment,
-/turf/unsimulated/floor,
-/area/tdome)
 "aWY" = (
 /obj/structure/rack,
 /obj/item/clothing/under/color/green,
@@ -14558,14 +14296,6 @@
 	oxygen = 0
 	},
 /area/shuttle/vox/station)
-"aXo" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/centcom/evac)
 "aXt" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomeaxe";
@@ -16066,9 +15796,6 @@
 	icon_state = "wood"
 	},
 /area/wizard_station)
-"bbI" = (
-/turf/unsimulated/wall/fakeglass,
-/area/wizard_station)
 "bbJ" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -16294,11 +16021,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
-"bda" = (
-/turf/unsimulated/wall/fakeglass{
-	dir = 8
-	},
-/area/wizard_station)
 "bdb" = (
 /turf/unsimulated/wall/fakeglass{
 	dir = 8;
@@ -23282,37 +23004,11 @@
 	icon_state = "swall12"
 	},
 /area/shuttle/escape/centcom)
-"pIb" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/sign/warning/docking,
-/turf/unsimulated/floor,
-/area/centcom/evac)
 "pJb" = (
 /obj/machinery/door/airlock/external{
 	name = "Arrival Airlock";
 	req_access = list(1)
 	},
-/turf/unsimulated/floor,
-/area/centcom/evac)
-"pKb" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/sign/warning/airlock,
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "pLb" = (
@@ -23480,19 +23176,6 @@
 /obj/structure/grille,
 /turf/simulated/shuttle/plating,
 /area/shuttle/escape/centcom)
-"qdb" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor,
-/area/centcom/evac)
 "qeb" = (
 /obj/machinery/conveyor{
 	dir = 5;
@@ -28407,7 +28090,7 @@ bav
 bav
 bbd
 bav
-bda
+aaU
 nRb
 nSb
 bar
@@ -28664,7 +28347,7 @@ bbo
 bbo
 bbo
 bav
-bdb
+bdd
 nSb
 nWb
 bar
@@ -28921,7 +28604,7 @@ avG
 bbX
 bco
 bav
-bdb
+bdd
 nSb
 nRb
 bar
@@ -29178,9 +28861,9 @@ bbG
 bbY
 bcp
 bav
+aaV
 bdc
 bbw
-bbI
 bar
 aaM
 aaM
@@ -29435,7 +29118,7 @@ bbr
 bbr
 bbr
 bav
-bdb
+bdd
 nTb
 nXb
 bar
@@ -29692,7 +29375,7 @@ bav
 bav
 bav
 bav
-bdb
+bdd
 nUb
 nYb
 bar
@@ -29949,7 +29632,7 @@ nLb
 nLb
 nLb
 nLb
-bdb
+bdd
 nVb
 nUb
 bar
@@ -30206,9 +29889,9 @@ nLb
 nLb
 nLb
 nLb
+aaV
 bdc
 bbw
-bbI
 bar
 aaM
 aaM
@@ -30463,7 +30146,7 @@ nLb
 nLb
 nLb
 nLb
-bdb
+bdd
 bds
 bdN
 bar
@@ -30720,7 +30403,7 @@ nLb
 nLb
 nLb
 nLb
-bdb
+bdd
 bds
 bdO
 bar
@@ -30972,12 +30655,12 @@ bar
 nGb
 bar
 bar
+aaT
 bbw
-bbI
 nMb
 nLb
 nLb
-bdb
+bdd
 bdt
 bds
 bar
@@ -31234,9 +30917,9 @@ bbJ
 nLb
 nLb
 nLb
+aaV
 bdc
 bbw
-bbI
 bar
 aaM
 aaM
@@ -31491,7 +31174,7 @@ bbK
 nLb
 nOb
 nLb
-bdb
+bdd
 bdu
 bdP
 bar
@@ -31748,7 +31431,7 @@ bbJ
 nLb
 nPb
 nLb
-bdb
+bdd
 bdv
 bdQ
 bar
@@ -32005,7 +31688,7 @@ bbK
 nNb
 nQb
 nLb
-bdd
+bdb
 bdw
 bdR
 bar
@@ -39922,11 +39605,11 @@ pcb
 afi
 pub
 olb
-pIb
-afx
-afx
-afx
-aUR
+abE
+abG
+abG
+abG
+abN
 aHv
 aaM
 aaM
@@ -40139,9 +39822,9 @@ aHb
 aHb
 aHb
 hEb
-aIt
+abo
 aII
-aJa
+abo
 aaM
 ahJ
 aaM
@@ -40396,9 +40079,9 @@ aHb
 aHb
 hJb
 hVb
-aIt
+abp
 aII
-aJa
+abp
 ahJ
 ahJ
 ahJ
@@ -40436,9 +40119,9 @@ afh
 afp
 aUT
 aEw
-agt
-afx
-aUR
+abF
+abG
+abN
 hgb
 mSb
 aWR
@@ -40653,9 +40336,9 @@ hCb
 hCb
 hVb
 aaM
-aIt
+abp
 aII
-aJa
+abp
 aaM
 ahJ
 aaM
@@ -40910,9 +40593,9 @@ aaM
 aaM
 aaM
 aaM
-aIt
+abp
 aII
-aJa
+abp
 aaM
 ahJ
 aaM
@@ -40950,9 +40633,9 @@ avJ
 aVy
 pxb
 pHb
-qdb
-aQA
-pKb
+abF
+abH
+abO
 hgb
 hRb
 mXb
@@ -41167,9 +40850,9 @@ aaM
 aaM
 aaM
 aHv
-aHI
+abq
 aIJ
-aHI
+abq
 aHv
 aaM
 aaM
@@ -41208,7 +40891,7 @@ aVy
 aeT
 mdb
 aaM
-afz
+abp
 aQV
 aSC
 hRb
@@ -41465,7 +41148,7 @@ aVy
 pyb
 okb
 aaM
-aIe
+abp
 mOb
 aIy
 hRb
@@ -41679,13 +41362,13 @@ aaM
 aaM
 aaM
 aaM
-aHI
+abn
 hgb
 hxb
 ifb
 hNb
 hRb
-aHI
+abn
 aaM
 aaM
 aKu
@@ -41722,7 +41405,7 @@ aVy
 aeT
 olb
 aaM
-aIe
+abp
 aRG
 aTd
 hRb
@@ -41978,9 +41661,9 @@ avJ
 aVy
 qbb
 aUE
-agt
-aQB
-pKb
+abF
+abI
+abO
 hgb
 mSb
 nab
@@ -42193,13 +41876,13 @@ aKl
 aKl
 aKl
 aaM
-aHI
+abn
 hhb
 hzb
 hIb
 hPb
 hRb
-aHI
+abn
 aaM
 aaM
 aKu
@@ -42749,9 +42432,9 @@ avJ
 aVy
 omb
 qcb
-pIb
-afx
-aUR
+abE
+abG
+abN
 hgb
 hRb
 aHv
@@ -42966,9 +42649,9 @@ aKl
 aaM
 aaM
 aaM
-aHI
+abn
 aIP
-aHI
+abn
 aaM
 aaM
 aaM
@@ -43217,9 +42900,9 @@ aBX
 aAm
 aaM
 aHv
-aHI
+abn
 aIJ
-aHI
+abn
 aHv
 aaM
 aHv
@@ -43735,13 +43418,13 @@ hxb
 hHb
 hNb
 hRb
-aHI
+abn
 hgb
 hxb
 ifb
 hNb
 hRb
-aHI
+abn
 aaM
 aaM
 aKu
@@ -44249,13 +43932,13 @@ hzb
 hIb
 hPb
 hRb
-aHI
+abn
 hhb
 hzb
 ihb
 hPb
 hRb
-aHI
+abn
 aaM
 aID
 adC
@@ -45016,21 +44699,21 @@ aBX
 aAm
 aaM
 aaM
-aHI
+abn
 aHJ
-aHI
+abn
 aaM
 aaM
 aaM
-aIc
+abo
 aFf
-aIc
+abo
 aaM
 aaM
 aaM
-aIc
+abo
 bNb
-aIc
+abo
 aaM
 aaM
 aaM
@@ -45068,10 +44751,10 @@ afF
 hgb
 aYp
 aHv
-agt
-afx
+abF
+abN
 bQb
-aIc
+abo
 aaM
 aaM
 aaM
@@ -45279,15 +44962,15 @@ aaM
 aaM
 aaM
 aaM
-aIe
+abp
 aIS
-aIe
+abp
 aaM
 aaM
 aaM
-aIe
+abp
 aIS
-aIe
+abp
 aaM
 aaM
 aHv
@@ -45328,7 +45011,7 @@ aFf
 aII
 aXj
 aII
-aIe
+abp
 aaM
 aaM
 aaM
@@ -45536,15 +45219,15 @@ aaM
 aaM
 aaM
 aaM
-aIe
+abp
 aII
-aIe
+abp
 aaM
 aaM
 aaM
-aIe
+abp
 aII
-aIe
+abp
 aaM
 aaM
 aHv
@@ -45582,10 +45265,10 @@ aIe
 hgb
 aNq
 aHv
-agt
-afx
-afx
-aXo
+abF
+abG
+abG
+abP
 aaM
 aaM
 aaM
@@ -45793,15 +45476,15 @@ aaM
 aHv
 aHv
 aHv
-aId
+abq
 aFf
-aId
+abq
 aHv
 aHv
 aHv
-aId
+abq
 bNb
-aId
+abq
 aHv
 aHv
 aHv
@@ -48620,15 +48303,15 @@ bfv
 aAm
 aHv
 aHv
-aIc
+abo
 aFf
-aIc
+abo
 aHv
 aHv
 aHv
-aIc
+abo
 aFf
-aIc
+abo
 aHv
 aHv
 aHv
@@ -48640,7 +48323,7 @@ aaM
 aKu
 aaM
 aaM
-aNt
+abx
 aOG
 aOF
 aOF
@@ -48877,15 +48560,15 @@ aAM
 aAm
 aaM
 aaM
-aIe
+abp
 aIS
-aIe
+abp
 aaM
 aaM
 aaM
-aIe
+abp
 aKw
-aIe
+abp
 aaM
 aaM
 aaM
@@ -48897,7 +48580,7 @@ aaM
 aKu
 aaM
 aaM
-aNu
+aby
 aOG
 aOF
 aRx
@@ -49134,15 +48817,15 @@ aAM
 aAm
 aaM
 aaM
-aId
+abq
 aFf
-aId
+abq
 aaM
 aaM
 aaM
-aId
+abq
 aFf
-aId
+abq
 aaM
 aaM
 aaM
@@ -49154,7 +48837,7 @@ aaM
 aKu
 aaM
 aaM
-aNu
+aby
 aOG
 kvb
 aRx
@@ -49411,7 +49094,7 @@ aaM
 aKu
 aaM
 aaM
-aNv
+abz
 aOG
 aOF
 aRx
@@ -51735,7 +51418,7 @@ aNs
 aNs
 aSF
 aSF
-aNt
+abx
 aaM
 aaM
 aaM
@@ -51992,7 +51675,7 @@ lub
 aSi
 aSF
 aSF
-aNu
+aby
 aaM
 aaM
 aaM
@@ -52249,7 +51932,7 @@ lqb
 aNs
 aSF
 aSF
-aNu
+aby
 aaM
 aaM
 aaM
@@ -52506,7 +52189,7 @@ lvb
 aNs
 aSF
 aSF
-aNv
+abz
 aaM
 aaM
 aaM
@@ -53004,11 +52687,11 @@ aAm
 iNb
 iTb
 jcb
-aMF
+abt
 aaM
 aKu
 aaM
-aNt
+abx
 jTb
 jRb
 jRb
@@ -53017,7 +52700,7 @@ kWb
 lcb
 lqb
 lxb
-aNt
+abx
 aaM
 aTi
 aKu
@@ -53261,11 +52944,11 @@ aAm
 iNb
 iTb
 jcb
-aMG
+abu
 aaM
 aKu
 aaM
-aNu
+aby
 jUb
 jRb
 jRb
@@ -53274,7 +52957,7 @@ kWb
 ldb
 lqb
 lyb
-aNu
+aby
 aaM
 lSb
 aKu
@@ -53518,11 +53201,11 @@ aJL
 iNb
 iTb
 jcb
-aMG
+abu
 aaM
 aKu
 aaM
-aNu
+aby
 jUb
 jRb
 jRb
@@ -53531,7 +53214,7 @@ kWb
 leb
 lqb
 lyb
-aNu
+aby
 aaM
 lTb
 aKu
@@ -53775,11 +53458,11 @@ aJf
 iNb
 iTb
 jcb
-aMH
+abv
 aaM
 aKu
 ahJ
-aNv
+abz
 jVb
 jRb
 jRb
@@ -53788,7 +53471,7 @@ kWb
 lcb
 lqb
 lzb
-aNv
+abz
 aaM
 lTb
 aKu
@@ -55064,7 +54747,7 @@ aJu
 aJu
 aKu
 aaM
-aNt
+abx
 jXb
 aON
 kyb
@@ -55073,7 +54756,7 @@ kVb
 lcb
 aON
 lqb
-aNt
+abx
 aaM
 aTi
 aKu
@@ -55321,7 +55004,7 @@ aJP
 aJu
 aKu
 aaM
-aNv
+abz
 jYb
 aOO
 kzb
@@ -55330,7 +55013,7 @@ aPy
 lfb
 aOO
 lCb
-aNv
+abz
 aaM
 aTi
 aKu
@@ -55343,7 +55026,7 @@ mvb
 mzb
 mzb
 mzb
-aWW
+abJ
 aXu
 aXv
 aXv
@@ -55352,7 +55035,7 @@ aXv
 aXv
 aXv
 aXu
-aWW
+abJ
 nlb
 nlb
 nlb
@@ -55562,7 +55245,7 @@ aaM
 aaM
 aaM
 aaM
-aJv
+abr
 aJP
 aJP
 aJP
@@ -55575,7 +55258,7 @@ aJP
 aJP
 aJP
 aJP
-aMZ
+abr
 aKu
 ahJ
 aNs
@@ -55600,7 +55283,7 @@ mwb
 mBb
 mzb
 mBb
-aWW
+abK
 aXv
 aXv
 aXv
@@ -55609,7 +55292,7 @@ aXv
 aXv
 aXv
 aXv
-aWW
+abK
 nmb
 nlb
 nlb
@@ -55819,7 +55502,7 @@ aaM
 aaM
 aaM
 aaM
-aJw
+abs
 aJP
 aKe
 aKo
@@ -55832,10 +55515,10 @@ aKo
 aKo
 jfb
 aJP
-aNa
+abw
 aKu
 aaM
-aNt
+abx
 jXb
 aON
 kyb
@@ -55857,7 +55540,7 @@ mxb
 mBb
 mEb
 mBb
-aWW
+abK
 aXv
 aXv
 aXv
@@ -55866,7 +55549,7 @@ aXv
 aXv
 aXv
 aXv
-aWW
+abK
 nmb
 nqb
 nlb
@@ -56089,10 +55772,10 @@ aJu
 aJu
 jgb
 aJP
-aNb
+abs
 aKu
 aaM
-aNv
+abz
 jYb
 aOO
 kAb
@@ -56114,7 +55797,7 @@ mwb
 mBb
 mFb
 mBb
-aWW
+abK
 aXv
 aXv
 aXv
@@ -56123,7 +55806,7 @@ aXv
 aXv
 aXv
 aXv
-aWW
+abK
 nmb
 nlb
 ntb
@@ -56371,7 +56054,7 @@ myb
 mBb
 mEb
 mBb
-aWW
+abK
 aXv
 aXv
 aXv
@@ -56380,7 +56063,7 @@ aXv
 aXv
 aXv
 aXv
-aWW
+abK
 nmb
 nqb
 ntb
@@ -56628,7 +56311,7 @@ mzb
 mBb
 mzb
 mBb
-aWW
+abK
 aXv
 aXv
 aXv
@@ -56637,7 +56320,7 @@ aXv
 aXv
 aXv
 aXv
-aWW
+abM
 nmb
 nlb
 ntb
@@ -56885,7 +56568,7 @@ mzb
 mzb
 mzb
 mzb
-aWW
+abK
 aXv
 aXv
 aXv
@@ -57142,7 +56825,7 @@ mzb
 mzb
 mzb
 mzb
-aWW
+abK
 aXw
 aXv
 aXv
@@ -57151,7 +56834,7 @@ aYF
 aXv
 aXv
 aXv
-aWW
+abQ
 nob
 nlb
 nlb
@@ -57399,7 +57082,7 @@ mzb
 mzb
 mzb
 mzb
-aWW
+abK
 aXv
 aXv
 aXv
@@ -57656,7 +57339,7 @@ mzb
 mBb
 mzb
 mBb
-aWW
+abK
 aXv
 aXv
 aXv
@@ -57665,7 +57348,7 @@ aXv
 aXv
 aXv
 aXv
-aWW
+abJ
 nmb
 nlb
 ntb
@@ -57913,7 +57596,7 @@ myb
 mBb
 mEb
 mBb
-aWW
+abK
 aXv
 aXv
 aXv
@@ -57922,7 +57605,7 @@ aXv
 aXv
 aXv
 aXv
-aWW
+abK
 nmb
 nqb
 ntb
@@ -58113,7 +57796,7 @@ avI
 aaM
 aaM
 aaM
-aCt
+abk
 geb
 gtb
 gtb
@@ -58127,7 +57810,7 @@ aFW
 aFW
 aFW
 aHx
-aCt
+abk
 aaM
 aaM
 aaM
@@ -58145,7 +57828,7 @@ aJu
 aJu
 jgb
 aJP
-aMZ
+abr
 aaM
 aaM
 aNs
@@ -58170,7 +57853,7 @@ mzb
 mBb
 mFb
 mBb
-aWW
+abK
 aXv
 aXv
 aXv
@@ -58179,7 +57862,7 @@ aXv
 aXv
 aXv
 aXv
-aWW
+abK
 nmb
 nlb
 ntb
@@ -58370,7 +58053,7 @@ avI
 aaM
 aaM
 aaM
-aCu
+abl
 gfb
 gtb
 gtb
@@ -58384,12 +58067,12 @@ aFW
 aFW
 aFW
 aHy
-aCu
+abl
 aaM
 aaM
 aaM
 aaM
-aJv
+abr
 aJP
 iqb
 isb
@@ -58402,7 +58085,7 @@ isb
 isb
 jhb
 aJP
-aNa
+abw
 aaM
 aaM
 aNs
@@ -58427,7 +58110,7 @@ myb
 mBb
 mEb
 mBb
-aWW
+abK
 aXv
 aXv
 aXv
@@ -58436,7 +58119,7 @@ aXv
 aXv
 aXv
 aXv
-aWW
+abK
 nmb
 nqb
 ntb
@@ -58627,7 +58310,7 @@ aaM
 aaM
 aaM
 aaM
-aCv
+abm
 ggb
 gtb
 gtb
@@ -58641,12 +58324,12 @@ aFW
 aFW
 aFW
 aHz
-aCv
+abm
 aaM
 aaM
 aaM
 aaM
-aJw
+abs
 aJP
 aJP
 aJP
@@ -58659,7 +58342,7 @@ aJP
 aJP
 aJP
 aJP
-aNb
+abs
 aaM
 aaM
 aaM
@@ -58684,7 +58367,7 @@ mzb
 mCb
 mGb
 mGb
-aWX
+abL
 aXx
 aXx
 aXx
@@ -58693,7 +58376,7 @@ aXx
 aXx
 aXx
 aXx
-aWX
+abL
 npb
 nsb
 ntb
@@ -58941,7 +58624,7 @@ mAb
 mDb
 mzb
 mzb
-aWW
+abM
 aXu
 aXv
 aXv
@@ -58950,7 +58633,7 @@ aXv
 aXv
 aXv
 aXu
-aWW
+abM
 nlb
 nlb
 nlb
@@ -59914,7 +59597,7 @@ aaM
 aaM
 aaM
 aaM
-aCt
+abk
 aCV
 aCV
 aBp
@@ -60171,7 +59854,7 @@ aaM
 aaM
 aaM
 aaM
-aCu
+abl
 aDQ
 aCV
 aBp
@@ -60428,7 +60111,7 @@ aaM
 aaM
 aaM
 aaM
-aCv
+abm
 aCV
 aCV
 aBp
@@ -61199,7 +60882,7 @@ aaM
 aaM
 aaM
 aaM
-aCt
+abk
 aCV
 aCV
 aBp
@@ -61456,7 +61139,7 @@ aaM
 aaM
 aaM
 aaM
-aCu
+abl
 aDQ
 aCV
 gub
@@ -61713,7 +61396,7 @@ aaM
 aaM
 aaM
 aaM
-aCv
+abm
 aCV
 aCV
 bxb
@@ -62791,7 +62474,7 @@ aUd
 aJf
 aJf
 aVi
-aMF
+abt
 aaM
 aaM
 aaM
@@ -63048,7 +62731,7 @@ aJr
 aJf
 aUI
 aVj
-aMG
+abu
 aaM
 aaM
 aaM
@@ -63305,7 +62988,7 @@ aAm
 aJf
 aJf
 aVk
-aMH
+abv
 aaM
 aaM
 aaM
@@ -65212,10 +64895,10 @@ ahM
 ahM
 ahM
 aiH
-aiY
+abR
 ajh
 ajn
-aiY
+abR
 aiH
 aiH
 ahM
@@ -66315,8 +65998,8 @@ acr
 acD
 acD
 adn
-auL
-avb
+abe
+abj
 aoo
 aoo
 aaM
@@ -66829,7 +66512,7 @@ act
 acF
 acJ
 ado
-avc
+abf
 eCb
 arZ
 aoo
@@ -67086,7 +66769,7 @@ agl
 acG
 agU
 adq
-avd
+abg
 eCb
 axV
 ayb
@@ -67343,7 +67026,7 @@ agj
 acG
 agI
 adp
-avd
+abg
 eCb
 arZ
 aoo
@@ -67600,7 +67283,7 @@ acy
 acG
 acO
 ads
-avd
+abg
 eCb
 arZ
 aoo
@@ -67857,7 +67540,7 @@ agm
 acG
 akm
 adr
-avd
+abg
 eCb
 arZ
 ayc
@@ -68114,7 +67797,7 @@ agH
 acG
 ako
 aeZ
-avd
+abg
 eCb
 arZ
 aoo
@@ -68371,7 +68054,7 @@ acz
 acF
 acP
 adt
-ave
+abh
 eCb
 arZ
 aoo
@@ -68885,7 +68568,7 @@ acB
 acD
 acD
 afb
-avc
+abf
 eCb
 arZ
 aoo
@@ -69142,7 +68825,7 @@ acC
 acH
 acU
 adu
-adx
+abh
 eCb
 arZ
 aoo
@@ -69214,7 +68897,7 @@ aAm
 aAm
 aTV
 aAm
-aUN
+abC
 aAm
 aAm
 aaM
@@ -69392,13 +69075,13 @@ aaM
 aaM
 aaM
 aoo
-avz
-avS
-avS
-avS
-awF
-avS
-axF
+aaW
+aaY
+aaY
+aaY
+abc
+aaY
+abd
 aoo
 aux
 aux
@@ -69649,14 +69332,14 @@ aaM
 aaM
 aoo
 aoo
-aKU
-avA
-avA
-awk
+aaX
+aaZ
+aaZ
+aba
 awG
-axe
-aLp
-aus
+aaX
+aaZ
+abi
 auy
 auy
 aoo
@@ -70437,7 +70120,7 @@ arZ
 ayq
 atq
 atq
-ayF
+abf
 aaM
 azb
 azv
@@ -70694,7 +70377,7 @@ arZ
 ayr
 atq
 asB
-ayG
+abg
 aaM
 eUb
 azw
@@ -70951,7 +70634,7 @@ arZ
 ayq
 atq
 atq
-ayH
+abh
 aaM
 eVb
 fbb
@@ -71008,12 +70691,12 @@ aaM
 aaM
 aAm
 aAm
-aTc
-aTE
-aTE
-aTE
-aTE
-aUN
+abA
+abB
+abB
+abB
+abB
+abD
 aAm
 aAm
 aaM
@@ -80389,9 +80072,9 @@ aaM
 aaM
 aaM
 aaM
-amx
+aaQ
 amJ
-amL
+aaQ
 aaM
 aaM
 aaM
@@ -80635,20 +80318,20 @@ aaM
 aaM
 aaM
 aaM
-aiU
-aiU
-aiU
 aaM
 aaM
 aaM
-aiU
-aiU
-aiU
-aiU
-ahI
-amw
-alC
-amK
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaR
+aii
+aaR
 aaM
 aaM
 aaM
@@ -80892,20 +80575,20 @@ aaM
 aaM
 ahF
 aie
-aiQ
-ajb
-ajj
+aaN
+aaO
+aaP
 aie
 alt
 aie
-aiQ
-ajb
-ajb
-ajj
+aaN
+aaO
+aaO
+aaP
 aie
-alw
+aaS
 alI
-alw
+aaS
 aie
 aaM
 aaM
