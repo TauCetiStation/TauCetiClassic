@@ -7,6 +7,7 @@
 	lessfiredelay = 0
 	lessrecoil = 0
 	size = 0
+	var/magazine = FALSE
 	var/external = TRUE
 	var/caliber
 	attackbying = INTERRUPT
@@ -66,6 +67,7 @@
 		power_supply.update_icon()
 		user.put_in_hands(power_supply)
 		power_supply = null
+		magazine = FALSE
 
 /obj/item/weapon/gun_module/magazine/energy/ammo_count(var/obj/item/ammo_casing/energy/ammo = null)
 	if(ammo == null)
@@ -122,6 +124,7 @@
 			user.drop_item()
 			modul.loc = src
 			bullet_supply = modul
+			magazine = TRUE
 
 		if(!mag_type2 && !istype(modul, mag_type))
 			if(modul.caliber == caliber)
@@ -130,6 +133,7 @@
 			user.drop_item()
 			modul.loc = src
 			bullet_supply = modul
+			magazine = TRUE
 
 	if(istype(A, /obj/item/ammo_casing) && bullet_supply && !external)
 		bullet_supply.attackby(A, user)
@@ -140,6 +144,7 @@
 		bullet_supply.update_icon()
 		user.put_in_hands(bullet_supply)
 		bullet_supply = null
+		magazine = FALSE
 
 /obj/item/weapon/gun_module/magazine/bullet/ammo_count()
 	if(bullet_supply)

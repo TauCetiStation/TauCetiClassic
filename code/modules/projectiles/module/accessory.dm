@@ -17,7 +17,7 @@
 	return FALSE
 
 /obj/item/weapon/gun_module/accessory/condition_check(obj/item/weapon/gunmodule/gun)
-	if(gun.chamber && !gun.collected && LAZYLEN(parent.accessory) < parent.max_accessory)
+	if(gun.chamber && !gun.collected && LAZYLEN(gun.accessory) < gun.max_accessory)
 		return TRUE
 	return FALSE
 
@@ -62,6 +62,8 @@
 		if(usr.hud_used)
 			usr.hud_used.show_hud(HUD_STYLE_REDUCED)
 		usr.client.view = range
+		x_lock = usr.loc.x
+		y_lock = usr.loc.y
 		START_PROCESSING(SSobj, src)
 		zoom = TRUE
 	else
@@ -70,11 +72,21 @@
 			usr.hud_used.show_hud(HUD_STYLE_STANDARD)
 		STOP_PROCESSING(SSobj, src)
 		zoom = FALSE
+		x_lock = null
+		y_lock = null
 	to_chat(usr, "<font color='[zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>")
 	return
 
 /obj/item/weapon/gun_module/accessory/optical/process()
-
+	if((usr.loc.x != x_lock || usr.loc.y != y_lock) || usr.get_active_hand() != parent)
+		if(usr.client)
+			usr.client.view = world.view
+		if(usr.hud_used)
+			usr.hud_used.show_hud(HUD_STYLE_STANDARD)
+		zoom = FALSE
+		x_lock = null
+		y_lock = null
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/weapon/gun_module/accessory/optical/deactivate(mob/user)
 	if(zoom)
@@ -83,3 +95,4 @@
 		if(user.hud_used)
 			user.hud_used.show_hud(HUD_STYLE_STANDARD)
 		zoom = FALSE
+		STOP_PROCESSING(SSobj, src)

@@ -70,6 +70,8 @@
 	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't
 										//  have to be recreated multiple times
 
+	var/lessdamage = 0
+
 /obj/item/projectile/atom_init()
 	damtype = damage_type // TODO unify these vars properly (Bay12)
 	if(timestop_count)
@@ -106,7 +108,7 @@
 	if(!isliving(target))	return 0
 	if(isanimal(target))	return 0
 	var/mob/living/L = target
-	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
+	return L.apply_effects(stun - lessdamage, weaken - lessdamage, paralyze - lessdamage, irradiate - lessdamage, stutter - lessdamage, eyeblur - lessdamage, drowsy - lessdamage, agony - lessdamage, blocked - lessdamage) // add in AGONY!
 
 	//called when the projectile stops flying because it collided with something
 /obj/item/projectile/proc/on_impact(atom/A)

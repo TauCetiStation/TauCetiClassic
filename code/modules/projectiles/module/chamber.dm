@@ -51,8 +51,8 @@
 		if (world.time % 3) //to prevent spam
 			to_chat(user, "<span class='warning'>[src] is not ready to fire again!</span>")
 		return
-
-	chamber_round()
+	if(parent.magazine_supply.magazine)
+		chamber_round()
 	if(chambered)
 		if(point_blank)
 			user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
@@ -61,6 +61,9 @@
 			silenced = parent.barrel.silenced
 		else
 			chambered.BB.dispersion = 4
+
+		chambered.BB.lessdamage = parent.lessdamage
+		chambered.BB.dispersion -= lessdispersion
 
 		if(!chambered.fire(target, user, params, , silenced))
 			shoot_with_empty_chamber(user)
