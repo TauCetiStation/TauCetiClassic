@@ -111,7 +111,7 @@
 		if (!working)
 			nanomanager.update_uis(src)
 			icon_state = "incubator"
-		if(!powered(EQUIP))
+		if(!powered(power_channel))
 			icon_state = "incubator"
 
 	if(beaker)

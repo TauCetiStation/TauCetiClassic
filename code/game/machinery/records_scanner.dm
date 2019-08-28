@@ -33,9 +33,11 @@
 		spawn(rand(0, 15))
 			icon_state = "scanner_off"
 			stat |= NOPOWER
+			update_power_use()
 	else
 		icon_state = "scanner_idle"
 		stat &= ~NOPOWER
+	update_power_use()
 
 //todo: rewrite to datacore.manifest_inject ?
 /obj/machinery/scanner/attack_hand(mob/living/carbon/human/user)
