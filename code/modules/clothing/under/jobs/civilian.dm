@@ -126,11 +126,8 @@
 
 
 /obj/item/clothing/under/lawyer
-	desc = "Slick threads."
 	name = "lawyer suit"
-
-
-/obj/item/clothing/under/lawyer/black
+	desc = "Slick threads."
 	icon_state = "lawyer_black"
 	item_state = "lawyer_black"
 	item_color = "lawyer_black"
@@ -140,19 +137,16 @@
 	icon_state = "black_suit_fem"
 	item_state = "black_suit_fem"
 	item_color = "black_suit_fem"
-	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/lawyer/red
 	icon_state = "lawyer_red"
 	item_state = "lawyer_red"
 	item_color = "lawyer_red"
-	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/lawyer/blue
 	icon_state = "lawyer_blue"
 	item_state = "lawyer_blue"
 	item_color = "lawyer_blue"
-	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/lawyer/bluesuit
 	name = "blue suit"
@@ -160,14 +154,12 @@
 	icon_state = "bluesuit"
 	item_state = "bluesuit"
 	item_color = "bluesuit"
-	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/lawyer/purpsuit
 	name = "purple suit"
 	icon_state = "lawyer_purp"
 	item_state = "lawyer_purp"
 	item_color = "lawyer_purp"
-	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/lawyer/oldman
 	name = "old man's suit"
@@ -175,7 +167,6 @@
 	icon_state = "oldman"
 	item_state = "oldman"
 	item_color = "oldman"
-	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/librarian
 	name = "sensible suit"

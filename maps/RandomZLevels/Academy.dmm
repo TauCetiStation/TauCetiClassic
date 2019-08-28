@@ -2926,25 +2926,25 @@
 "hL" = (
 /obj/structure/closet,
 /obj/item/weapon/storage/belt/soulstone,
-/obj/item/clothing/under/schoolgirl,
+/obj/item/clothing/under/dress/schoolgirl,
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)
 "hM" = (
 /obj/structure/closet,
-/obj/item/clothing/under/blackskirt,
+/obj/item/clothing/under/dress/blackskirt,
 /obj/item/clothing/glasses/regular,
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)
 "hN" = (
 /obj/structure/closet,
-/obj/item/clothing/under/lightpurple,
+/obj/item/clothing/under/color/lightpurple,
 /obj/item/clothing/shoes/sandal,
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)
 "hO" = (
 /obj/structure/closet,
 /obj/item/weapon/lipstick/random,
-/obj/item/clothing/under/schoolgirl,
+/obj/item/clothing/under/dress/schoolgirl,
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)
 "hP" = (
@@ -2952,7 +2952,7 @@
 /area/awaymission/academy/academyaft)
 "hQ" = (
 /obj/structure/closet,
-/obj/item/clothing/under/lightpurple,
+/obj/item/clothing/under/color/lightpurple,
 /obj/item/weapon/staff,
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)
@@ -2970,7 +2970,7 @@
 /area/awaymission/academy/academyaft)
 "hT" = (
 /obj/structure/closet,
-/obj/item/clothing/under/purple,
+/obj/item/clothing/under/color/purple,
 /obj/item/weapon/poster/contraband,
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)

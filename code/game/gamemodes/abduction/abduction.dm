@@ -209,7 +209,7 @@
 	R.set_frequency(radio_freq)
 	agent.equip_to_slot_or_del(R, SLOT_L_EAR)
 	agent.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(agent), SLOT_SHOES)
-	agent.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(agent), SLOT_W_UNIFORM) //they're greys gettit
+	agent.equip_to_slot_or_del(new /obj/item/clothing/under/color(agent), SLOT_W_UNIFORM) //they're greys gettit
 	agent.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(agent), SLOT_BACK)
 
 /datum/game_mode/abduction/proc/get_team_console(team)
