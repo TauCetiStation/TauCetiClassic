@@ -50,6 +50,8 @@
 	var/hacksuccess							// The hack is complete?
 	var/list/markedobjects = list()		// Marked devices that pAI may access remotely
 	var/hackprogress = 0		    		// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
+	var/usetime								// Used in delay, last time delay was called
+	var/intwth								// Interaction type
 
 	var/obj/item/radio/integrated/signal/sradio // AI's signaller
 
