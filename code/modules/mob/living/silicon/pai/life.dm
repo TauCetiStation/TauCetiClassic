@@ -12,6 +12,8 @@
 	else
 		if(hacksuccess && !src.hackobj)
 			hacksuccess = FALSE
+	if(usetime && world.time >= usetime)
+		run_interact()
 
 	add_ingame_age()
 	regular_hud_updates()
