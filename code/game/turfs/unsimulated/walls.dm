@@ -1,25 +1,25 @@
 /turf/unsimulated/wall
 	name = "wall"
-	icon = 'icons/turf/walls.dmi'
-	icon_state = "riveted"
+	icon = 'icons/turf/walls/riveted.dmi'
+	icon_state = "box"
 	opacity = 1
 	density = 1
+	smooth = SMOOTH_TRUE
+
 
 /turf/unsimulated/wall/fakeglass
 	name = "window"
+	icon = 'icons/turf/walls.dmi'
 	icon_state = "fakewindows"
 	opacity = 0
-
-/turf/unsimulated/wall/smooth
-	icon = 'icons/turf/walls/riveted.dmi'
-	icon_state = "box"
-	smooth = SMOOTH_TRUE
+	smooth = FALSE
 
 /turf/unsimulated/wall/splashscreen
 	name = "Space Station 13"
 	icon = 'icons/misc/fullscreen_loading.dmi'
 	icon_state = "title"
 	layer = FLY_LAYER
+	smooth = FALSE
 
 /turf/unsimulated/wall/splashscreen/atom_init()
 	. = ..()
@@ -32,4 +32,6 @@
 		icon = pick('icons/misc/fullscreen_standart.dmi', 'icons/misc/fullscreen_leshiy.dmi')
 
 /turf/unsimulated/wall/abductor
+	icon = 'icons/turf/walls.dmi'
 	icon_state = "alien1"
+	smooth = FALSE
