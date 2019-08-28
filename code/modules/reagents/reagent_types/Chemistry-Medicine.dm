@@ -628,7 +628,7 @@
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/stimulants
-	name = "stimulants"
+	name = "Stimulants"
 	id = "stimulants"
 	description = "Stimulants to keep you up in a critical moment"
 	reagent_state = LIQUID
@@ -643,7 +643,6 @@
 	M.AdjustParalysis(-3)
 	M.AdjustStunned(-3)
 	M.AdjustWeakened(-3)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.adjustHalLoss(-30)
-		H.shock_stage -= 20
+	var/mob/living/carbon/human/H = M
+	H.adjustHalLoss(-30)
+	H.shock_stage -= 20
