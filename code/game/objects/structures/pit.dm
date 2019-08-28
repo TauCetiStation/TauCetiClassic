@@ -144,7 +144,7 @@
 		/obj/item/clothing/under/pants/jeans,
 		/obj/item/clothing/under/pants/camo,
 		/obj/item/clothing/under/det,
-		/obj/item/clothing/under/color/brown,
+		/obj/item/clothing/under/brown,
 		/obj/item/clothing/under/jetsons,
 		/obj/item/clothing/under/jetsons/j2
 		)

@@ -24,8 +24,8 @@
 /obj/structure/rack/holorack,
 /obj/item/clothing/under/gladiator,
 /obj/item/clothing/head/helmet/gladiator,
-/obj/item/clothing/under/dress/sexyclown,
-/obj/item/clothing/under/dress/sexymime,
+/obj/item/clothing/under/sexyclown,
+/obj/item/clothing/under/sexymime,
 /obj/item/clothing/mask/gas/sexyclown,
 /obj/item/clothing/mask/gas/sexymime,
 /turf/simulated/floor/holofloor{
@@ -46,11 +46,11 @@
 /area/holodeck/source_theatre)
 "e" = (
 /obj/structure/rack/holorack,
-/obj/item/clothing/under/dress/schoolgirl,
+/obj/item/clothing/under/schoolgirl,
 /obj/item/clothing/head/kitty,
 /obj/item/clothing/under/waiter,
 /obj/item/clothing/suit/apron,
-/obj/item/clothing/under/dress/blackskirt,
+/obj/item/clothing/under/blackskirt,
 /obj/item/clothing/head/rabbitears,
 /obj/item/clothing/glasses/sunglasses/blindfold,
 /turf/simulated/floor/holofloor{
@@ -87,7 +87,7 @@
 /obj/item/clothing/suit/wizrobe/marisa/fake,
 /obj/item/clothing/head/wizard/marisa/fake,
 /obj/item/clothing/head/witchwig,
-/obj/item/clothing/under/dress/sundress,
+/obj/item/clothing/under/sundress,
 /obj/item/weapon/staff/broom,
 /obj/item/weapon/staff,
 /obj/item/clothing/suit/wizrobe/fake,

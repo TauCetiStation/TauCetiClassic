@@ -202,7 +202,7 @@
 	for(var/obj/item/I in target)
 		target.remove_from_mob(I)
 	target.equip_to_slot_or_del(new /obj/item/device/radio/headset(target), SLOT_L_EAR)
-	target.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(target), SLOT_W_UNIFORM)
+	target.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(target), SLOT_W_UNIFORM)
 	target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(target), SLOT_SHOES)
 	target.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(target), SLOT_WEAR_SUIT)
 	target.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(target), SLOT_HEAD)

@@ -153,13 +153,13 @@
 
 /obj/effect/landmark/costume/nyangirl/atom_init()
 	..()
-	new /obj/item/clothing/under/dress/schoolgirl(loc)
+	new /obj/item/clothing/under/schoolgirl(loc)
 	new /obj/item/clothing/head/kitty(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/costume/maid/atom_init()
 	..()
-	new /obj/item/clothing/under/dress/blackskirt(loc)
+	new /obj/item/clothing/under/blackskirt(loc)
 	var/CHOICE = pick(/obj/item/clothing/head/chep, /obj/item/clothing/head/rabbitears)
 	new CHOICE(loc)
 	new /obj/item/clothing/glasses/sunglasses/blindfold(loc)
@@ -254,7 +254,7 @@
 
 /obj/effect/landmark/costume/cutewitch/atom_init()
 	..()
-	new /obj/item/clothing/under/dress/sundress(loc)
+	new /obj/item/clothing/under/sundress(loc)
 	new /obj/item/clothing/head/witchwig(loc)
 	new /obj/item/weapon/staff/broom(loc)
 	return INITIALIZE_HINT_QDEL
@@ -269,13 +269,13 @@
 /obj/effect/landmark/costume/sexyclown/atom_init()
 	..()
 	new /obj/item/clothing/mask/gas/sexyclown(loc)
-	new /obj/item/clothing/under/dress/sexyclown(loc)
+	new /obj/item/clothing/under/sexyclown(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/costume/sexymime/atom_init()
 	..()
 	new /obj/item/clothing/mask/gas/sexymime(loc)
-	new /obj/item/clothing/under/dress/sexymime(loc)
+	new /obj/item/clothing/under/sexymime(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/blockway

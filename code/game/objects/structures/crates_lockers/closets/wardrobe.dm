@@ -76,7 +76,7 @@
 	new /obj/item/clothing/suit/chaplain_hoodie(src)
 	new /obj/item/clothing/head/chaplain_hood(src)
 	new /obj/item/clothing/suit/holidaypriest(src)
-	new /obj/item/clothing/under/dress/wedding/bride_white(src)
+	new /obj/item/clothing/under/wedding/bride_white(src)
 	new /obj/item/weapon/storage/backpack/cultpack (src)
 	new /obj/item/weapon/game_kit/chaplain(src)
 	new /obj/item/weapon/reagent_containers/spray/thurible(src)
@@ -341,7 +341,7 @@
 
 /obj/structure/closet/wardrobe/grey/PopulateContents()
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/under/color(src)
+		new /obj/item/clothing/under/color/grey(src)
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/shoes/black(src)
 	for (var/i in 1 to 3)
