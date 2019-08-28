@@ -18,8 +18,6 @@
 				user.adjustOxyLoss(rand(200,300))
 			if("tox")
 				user.adjustToxLoss(rand(200,300))
-			if("fire")
-				user.adjustFireLoss(rand(200,300))
 			if("clone")
 				user.adjustCloneLoss(rand(200,300))
 
