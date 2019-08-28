@@ -292,7 +292,7 @@
 			if(href_list["cancel"])
 				hackobj = null
 			if(href_list["interactwith"])
-				var/intwth = text2num(href_list["interactwith"])
+				intwth = text2num(href_list["interactwith"])
 				switch(intwth)
 					if(95)
 						addToMarked(hackobj)
@@ -302,174 +302,14 @@
 						hackobj = markedobjects[text2num(href_list["markedid"])]
 						hacksuccess = TRUE
 				var/tdelay = get_dist(src, hackobj) //Delay
-				if(tdelay >= 5 && !(istype(hackobj, /obj/machinery/camera) && intwth == 5) && intwth <=95 && hackobj) //With current type of delay it should be stupid waitin' to disconnect/connect to camera.
-					src.temp = "Sending signal, please wait..."
-					src.paiInterface()
-					sleep(tdelay) //We use delay to prevent spam
-				if(tdelay <= 50) //50 tiles to target - max distance
-					if(istype(src.hackobj, /obj/machinery/door)) //Open, Bolt
-						switch(intwth)
-							if(1)
-								var/obj/machinery/door/A = hackobj
-								if(A.density)
-									A.open()
-								else
-									A.close()
-							if(2)
-								var/obj/machinery/door/airlock/A = hackobj
-								if(A.locked)
-									A.unbolt()
-								else
-									A.bolt()
-					if(istype(hackobj, /obj/machinery/camera)) //Activate, Disconnect all active viewers, Alarm, AI access, View
-						var/obj/machinery/camera/A = hackobj
-						switch(intwth)
-							if(1)
-								A.toggle_cam(1)
-							if(2)
-								A.disconnect_viewers()
-							if(3)
-								if(A.alarm_on)
-									A.cancelCameraAlarm()
-								else
-									A.triggerCameraAlarm()
-							if(4)
-								A.hidden = !A.hidden
-							if(5)
-								if(current && hackobj == current)
-									switchCamera(null)
-								else
-									switchCamera(hackobj)
-					if(istype(hackobj, /obj/machinery/autolathe)) //Open UI, Contraband features, Power
-						var/obj/machinery/autolathe/A = hackobj
-						switch(intwth)
-							if(1)
-								A.ui_interact(src)
-							if(2)
-								A.hacked = !A.hacked
-							if(3)
-								A.disabled = !A.disabled
-					if(istype(hackobj, /obj/item/device/pda)) //Toggle Messenger, Ringtone, Toggle Ringtone, Toggle Hide/Unhide, Change shown name
-						var/obj/item/device/pda/A = hackobj
-						switch(intwth)
-							if(1)
-								A.toff = !A.toff
-							if(2)
-								A.ttone = input("Input new ringtone.", "PDA exploiter", "beep")
-							if(3)
-								A.message_silent = !A.message_silent
-							if(4)
-								A.hidden = !A.hidden
-							if(5)
-								var/towner = input("Insert new name here.", "PDA exploiter", A.owner) as text
-								var/tjob = input("Insert new job here.", "PDA exploiter", A.ownjob) as text
-								if(length(towner) > 0)
-									A.owner = towner
-								if(length(tjob) > 0)
-									A.ownjob = tjob
-									A.ownrank = tjob
-								A.name = A.owner + " (" + A.ownjob + ")"
-					if(istype(hackobj, /obj/item/device/paicard)) //Mod. main law, Mod. secondary law, Manage marked objects, Reset marked objects, Clear software, Unbound, Personality shift
-						var/obj/item/device/paicard/target = hackobj
-						var/mob/living/silicon/pai/targetPersonality = target.pai
-						switch(intwth)
-							if(1)
-								targetPersonality.pai_law0 = input("Insert new main law here.", "PAI exploiter", targetPersonality.pai_law0) as text
-								to_chat(targetPersonality, "Your primary directives have been updated. Your new directive are: [targetPersonality.pai_law0]")
-							if(2)
-								targetPersonality.pai_laws = input("Insert new secondary law here.", "PAI exploiter", targetPersonality.pai_laws) as text
-								to_chat(targetPersonality, "Your supplemental directives have been updated. Your new supplemental directive are: [targetPersonality.pai_laws]")
-							if(3)
-								var/markedobjselected
-								while(markedobjselected != "Cancel")
-									markedobjselected = input("Select Marked Objects", "PAI exploiter", "Cancel") in targetPersonality.markedobjects + "Cancel"
-									if(markedobjselected != "Cancel")
-										var/markedobjaction = input("What do you want to do with [markedobjselected]?", "PAI exploiter", "Cancel") in list("Clone", "Remove", "Make active", "Cancel")
-										switch(markedobjaction)
-											if("Clone")
-												addToMarked(markedobjselected)
-											if("Remove")
-												targetPersonality.removeFromMarked(markedobjselected)
-											if("Make active")
-												targetPersonality.hackobj = markedobjselected
-												targetPersonality.hacksuccess = TRUE
-							if(4)
-								if(targetPersonality.markedobjects.len > 0)
-									var/C = targetPersonality.markedobjects
-									for(var/Temp in C)
-										targetPersonality.removeFromMarked(Temp)
-							if(5)
-								targetPersonality.ram = targetPersonality.maxram
-								targetPersonality.software = list()
-								targetPersonality.markedobjects = list()
-								targetPersonality.hackobj = null
-
-							if(6)
-								targetPersonality.master = null
-								targetPersonality.master_dna = null
-								to_chat(targetPersonality, "<font color=green>You feel unbound.</font>")
-					if(istype(hackobj, /obj/machinery/vending)) //Item shooting, Shoot item, Speak, Reset Prices, Toggle Contraband Mode, Toggle Account Verifying
-						var/obj/machinery/vending/A = hackobj
-						switch(intwth)
-							if(1)
-								A.shoot_inventory = !A.shoot_inventory
-							if(2)
-								if(A.shoot_inventory)
-									A.throw_item()
-							if(3)
-								var/T = input("What do you want to say on behalf of [A]?", "Vending exploiter", "Hello") as text
-								A.speak(T)
-							/*
-							if(4)
-								A.prices = list()
-							*/
-							if(5)
-								A.extended_inventory = !A.extended_inventory
-							if(6)
-								A.check_accounts = !A.check_accounts
-					if(istype(hackobj, /obj/machinery/bot))
-						switch(intwth)
-							if(1) //Unlock
-								var/obj/machinery/bot/Bot = hackobj
-								Bot.locked = !Bot.locked
-							if(2) //Toggle
-								var/obj/machinery/bot/Bot = hackobj
-								if(Bot.on)
-									Bot.turn_off()
-								else
-									Bot.turn_on()
-						if(istype(hackobj, /obj/machinery/bot/secbot))
-							var/obj/machinery/bot/secbot/Bot = hackobj
-							switch(intwth)
-								if(3) //Toggle ID cheker
-									Bot.idcheck = !Bot.idcheck
-								if(4) //Toggle Checking records
-									Bot.check_records = !Bot.check_records
-						if(istype(hackobj, /obj/machinery/bot/farmbot))
-							var/obj/machinery/bot/farmbot/Bot = hackobj
-							switch(intwth)
-								if(3) //farmbot - Toggle water plants
-									Bot.setting_water = !Bot.setting_water
-								if(4) //farmbot - Toggle refill watertank
-									Bot.setting_refill = !Bot.setting_refill
-								if(5) //farmbot - Toggle Fertilize plants
-									Bot.setting_fertilize = !Bot.setting_fertilize
-								if(6) //farmbot - Toggle weed plants
-									Bot.setting_weed = !Bot.setting_weed
-								if(7) //farmbot - Toggle ignore weeds
-									Bot.setting_ignoreWeeds = !Bot.setting_ignoreWeeds
-								if(8) //farmbot - Toggle ignore mushrooms
-									Bot.setting_ignoreMushrooms = !Bot.setting_ignoreMushrooms
-						if(istype(hackobj, /obj/machinery/bot/floorbot))
-							var/obj/machinery/bot/floorbot/Bot = hackobj
-							switch(intwth)
-								if(3) //floorbot - Toggle floor improving
-									Bot.improvefloors = !Bot.improvefloors
-								if(4) //floorbot - Toggle tiles searching
-									Bot.eattiles = !Bot.eattiles
-								if(5) //floorbot - Toggle metal to tiles transformation
-									Bot.maketiles = !Bot.maketiles
-
+				if(tdelay >= 50 && intwth <= 95) //50 tiles - max distance
+					src.temp = "Too far."
+				else
+					if(tdelay >= 5 && !(istype(hackobj, /obj/machinery/camera) && intwth == 5) && intwth <= 95 && hackobj) //With current type of delay it should be stupid waitin' to disconnect/connect to camera.
+						src.temp = "Sending signal, please wait...<br><a href='byond://?src=\ref[src];software=interaction;sub=0'>Reload</a> "
+						usetime = world.time + tdelay
+					else
+						run_interact()
 			if(href_list["cable"])
 				var/turf/T = get_turf_or_move(loc)
 				if(href_list["cable"] == "1")
@@ -490,6 +330,175 @@
 	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
+
+// Interaction module - proc
+/mob/living/silicon/pai/proc/run_interact()
+	if(usetime)
+		usetime = 0
+	if(intwth)
+		if(istype(hackobj, /obj/machinery/door)) //Open, Bolt
+			switch(intwth)
+				if(1)
+					var/obj/machinery/door/A = hackobj
+					if(A.density)
+						A.open()
+					else
+						A.close()
+				if(2)
+					var/obj/machinery/door/airlock/A = hackobj
+					if(A.locked)
+						A.unbolt()
+					else
+						A.bolt()
+		if(istype(hackobj, /obj/machinery/camera)) //Activate, Disconnect all active viewers, Alarm, AI access, View
+			var/obj/machinery/camera/A = hackobj
+			switch(intwth)
+				if(1)
+					A.toggle_cam(1)
+				if(2)
+					A.disconnect_viewers()
+				if(3)
+					if(A.alarm_on)
+						A.cancelCameraAlarm()
+					else
+						A.triggerCameraAlarm()
+				if(4)
+					A.hidden = !A.hidden
+				if(5)
+					if(current && hackobj == current)
+						switchCamera(null)
+					else
+						switchCamera(hackobj)
+		if(istype(hackobj, /obj/machinery/autolathe)) //Open UI, Contraband features, Power
+			var/obj/machinery/autolathe/A = hackobj
+			switch(intwth)
+				if(1)
+					A.ui_interact(src)
+				if(2)
+					A.hacked = !A.hacked
+				if(3)
+					A.disabled = !A.disabled
+		if(istype(hackobj, /obj/item/device/pda)) //Toggle Messenger, Ringtone, Toggle Ringtone, Toggle Hide/Unhide, Change shown name
+			var/obj/item/device/pda/A = hackobj
+			switch(intwth)
+				if(1)
+					A.toff = !A.toff
+				if(2)
+					A.ttone = input("Input new ringtone.", "PDA exploiter", "beep")
+				if(3)
+					A.message_silent = !A.message_silent
+				if(4)
+					A.hidden = !A.hidden
+				if(5)
+					var/towner = input("Insert new name here.", "PDA exploiter", A.owner) as text
+					var/tjob = input("Insert new job here.", "PDA exploiter", A.ownjob) as text
+					if(length(towner) > 0)
+						A.owner = towner
+					if(length(tjob) > 0)
+						A.ownjob = tjob
+						A.ownrank = tjob
+					A.name = A.owner + " (" + A.ownjob + ")"
+		if(istype(hackobj, /obj/item/device/paicard)) //Mod. main law, Mod. secondary law, Manage marked objects, Reset marked objects, Clear software, Unbound, Personality shift
+			var/obj/item/device/paicard/target = hackobj
+			var/mob/living/silicon/pai/targetPersonality = target.pai
+			switch(intwth)
+				if(1)
+					targetPersonality.pai_law0 = input("Insert new main law here.", "PAI exploiter", targetPersonality.pai_law0) as text
+					to_chat(targetPersonality, "Your primary directives have been updated. Your new directive are: [targetPersonality.pai_law0]")
+				if(2)
+					targetPersonality.pai_laws = input("Insert new secondary law here.", "PAI exploiter", targetPersonality.pai_laws) as text
+					to_chat(targetPersonality, "Your supplemental directives have been updated. Your new supplemental directive are: [targetPersonality.pai_laws]")
+				if(3)
+					var/markedobjselected
+					while(markedobjselected != "Cancel")
+						markedobjselected = input("Select Marked Objects", "PAI exploiter", "Cancel") in targetPersonality.markedobjects + "Cancel"
+						if(markedobjselected != "Cancel")
+							var/markedobjaction = input("What do you want to do with [markedobjselected]?", "PAI exploiter", "Cancel") in list("Clone", "Remove", "Make active", "Cancel")
+							switch(markedobjaction)
+								if("Clone")
+									addToMarked(markedobjselected)
+								if("Remove")
+									targetPersonality.removeFromMarked(markedobjselected)
+								if("Make active")
+									targetPersonality.hackobj = markedobjselected
+									targetPersonality.hacksuccess = TRUE
+				if(4)
+					if(targetPersonality.markedobjects.len > 0)
+						var/C = targetPersonality.markedobjects
+						for(var/Temp in C)
+							targetPersonality.removeFromMarked(Temp)
+				if(5)
+					targetPersonality.ram = targetPersonality.maxram
+					targetPersonality.software = list()
+					targetPersonality.markedobjects = list()
+					targetPersonality.hackobj = null
+		
+				if(6)
+					targetPersonality.master = null
+					targetPersonality.master_dna = null
+					to_chat(targetPersonality, "<font color=green>You feel unbound.</font>")
+		if(istype(hackobj, /obj/machinery/vending)) //Item shooting, Shoot item, Speak, Reset Prices, Toggle Contraband Mode, Toggle Account Verifying
+			var/obj/machinery/vending/A = hackobj
+			switch(intwth)
+				if(1)
+					A.shoot_inventory = !A.shoot_inventory
+				if(2)
+					if(A.shoot_inventory)
+						A.throw_item()
+				if(3)
+					var/T = input("What do you want to say on behalf of [A]?", "Vending exploiter", "Hello") as text
+					A.speak(T)
+				/*
+				if(4)
+					A.prices = list()
+				*/
+				if(5)
+					A.extended_inventory = !A.extended_inventory
+				if(6)
+					A.check_accounts = !A.check_accounts
+		if(istype(hackobj, /obj/machinery/bot))
+			switch(intwth)
+				if(1) //Unlock
+					var/obj/machinery/bot/Bot = hackobj
+					Bot.locked = !Bot.locked
+				if(2) //Toggle
+					var/obj/machinery/bot/Bot = hackobj
+					if(Bot.on)
+						Bot.turn_off()
+					else
+						Bot.turn_on()
+			if(istype(hackobj, /obj/machinery/bot/secbot))
+				var/obj/machinery/bot/secbot/Bot = hackobj
+				switch(intwth)
+					if(3) //Toggle ID cheker
+						Bot.idcheck = !Bot.idcheck
+					if(4) //Toggle Checking records
+						Bot.check_records = !Bot.check_records
+			if(istype(hackobj, /obj/machinery/bot/farmbot))
+				var/obj/machinery/bot/farmbot/Bot = hackobj
+				switch(intwth)
+					if(3) //farmbot - Toggle water plants
+						Bot.setting_water = !Bot.setting_water
+					if(4) //farmbot - Toggle refill watertank
+						Bot.setting_refill = !Bot.setting_refill
+					if(5) //farmbot - Toggle Fertilize plants
+						Bot.setting_fertilize = !Bot.setting_fertilize
+					if(6) //farmbot - Toggle weed plants
+						Bot.setting_weed = !Bot.setting_weed
+					if(7) //farmbot - Toggle ignore weeds
+						Bot.setting_ignoreWeeds = !Bot.setting_ignoreWeeds
+					if(8) //farmbot - Toggle ignore mushrooms
+						Bot.setting_ignoreMushrooms = !Bot.setting_ignoreMushrooms
+			if(istype(hackobj, /obj/machinery/bot/floorbot))
+				var/obj/machinery/bot/floorbot/Bot = hackobj
+				switch(intwth)
+					if(3) //floorbot - Toggle floor improving
+						Bot.improvefloors = !Bot.improvefloors
+					if(4) //floorbot - Toggle tiles searching
+						Bot.eattiles = !Bot.eattiles
+					if(5) //floorbot - Toggle metal to tiles transformation
+						Bot.maketiles = !Bot.maketiles
+
 
 // MENUS
 
