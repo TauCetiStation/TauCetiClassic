@@ -72,6 +72,8 @@
 		return
 	if(H.bodyparts_by_name[BP.body_zone])
 		return
+	if(BP.parent_bodypart && !H.bodyparts_by_name[BP.parent_bodypart])
+		return
 
 	usr.remove_from_mob(BP)
 	BP.insert_organ(H)
@@ -117,6 +119,9 @@
 	leaves_stump = FALSE
 	force = 8
 	controller_type = /datum/bodypart_controller/skeleton
+
+	cannot_amputate = FALSE
+	vital = FALSE
 
 /obj/item/organ/external/groin/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
