@@ -81,7 +81,7 @@
 	new /obj/item/clothing/under/dress/dress_hop(src)
 	new /obj/item/clothing/under/dress/dress_hr(src)
 	new /obj/item/clothing/under/lawyer/female(src)
-	new /obj/item/clothing/under/lawyer(src)
+	new /obj/item/clothing/under/lawyer/black(src)
 	new /obj/item/clothing/under/lawyer/red(src)
 	new /obj/item/clothing/under/lawyer/oldman(src)
 	new /obj/item/clothing/shoes/brown(src)
