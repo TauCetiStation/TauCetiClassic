@@ -7,8 +7,10 @@
 
 /turf/unsimulated/wall/fakeglass
 	name = "window"
-	icon_state = "fakewindows"
+	icon = 'icons/turf/walls/fakeglass.dmi'
+	icon_state = "box"
 	opacity = 0
+	smooth = SMOOTH_TRUE
 
 /turf/unsimulated/wall/splashscreen
 	name = "Space Station 13"
