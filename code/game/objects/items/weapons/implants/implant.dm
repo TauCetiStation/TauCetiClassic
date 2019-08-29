@@ -274,7 +274,7 @@ Implant Specifics:<BR>"}
 	action_button_name = "Adrenaline implant"
 	action_button_is_hands_free = TRUE
 
-/obj/item/weapon/implant/adrenalin/get_data()
+/obj/item/weapon/implant/adrenaline/get_data()
 	var/dat = {"
 <b>Implant Specifications:</b><BR>
 <b>Name:</b> Cybersun Industries Adrenalin Implant<BR>
