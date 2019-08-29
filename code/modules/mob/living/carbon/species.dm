@@ -717,10 +717,13 @@
 /datum/unarmed_attack
 	var/attack_verb = list("attack")	// Empty hand hurt intent verb.
 	var/damage = 0						// Extra empty hand attack damage.
-	var/list/attack_sound = SOUNDIN_PUNCH
 	var/miss_sound = 'sound/weapons/punchmiss.ogg'
 	var/sharp = 0
 	var/edge = 0
+	var/list/attack_sound
+
+/datum/unarmed_attack/New()
+	attack_sound = SOUNDIN_PUNCH
 
 /datum/unarmed_attack/proc/damage_flags()
 	return (sharp ? DAM_SHARP : 0) | (edge ? DAM_EDGE : 0)
@@ -734,15 +737,19 @@
 
 /datum/unarmed_attack/slime_glomp
 	attack_verb = list("glomp")
+
+/datum/unarmed_attack/slime_glomp/New()
 	attack_sound = list('sound/effects/attackblob.ogg')
 
 /datum/unarmed_attack/claws
 	attack_verb = list("scratch", "claw")
-	attack_sound = list('sound/weapons/slice.ogg')
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	damage = 5
 	sharp = 1
 	edge = 1
+
+/datum/unarmed_attack/claws/New()
+	attack_sound = list('sound/weapons/slice.ogg')
 
 /datum/unarmed_attack/claws/armalis
 	attack_verb = list("slash", "claw")

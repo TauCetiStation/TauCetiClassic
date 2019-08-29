@@ -469,6 +469,8 @@
 					breathsound = 'sound/misc/gasmaskbreath.ogg'
 				if(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space))
 					breathsound = pick(SOUNDIN_RIGBREATH)
+				if(alpha < 50)
+					breathsound = pick(SOUNDIN_BREATHMASK) // the quietest breath for stealth
 				playsound(src, breathsound, VOL_EFFECTS_MASTER, null, FALSE, -6)
 			return internal.remove_air_volume(volume_needed)
 		else if(internals)
@@ -574,7 +576,7 @@
 	if(toxins_pp > safe_toxins_max)
 		var/ratio = (poison/safe_toxins_max) * 10
 		if(reagents)
-			reagents.add_reagent("toxin", Clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
+			reagents.add_reagent("toxin", CLAMP(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
 		breath.adjust_gas(species.poison_type, -poison / 6, update = FALSE) //update after
 		throw_alert("tox_in_air")
 	else

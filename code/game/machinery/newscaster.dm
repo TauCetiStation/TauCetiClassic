@@ -179,7 +179,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.ispowered = 0
 			stat |= NOPOWER
 			src.update_icon()
-
+	update_power_use()
 
 /obj/machinery/newscaster/ex_act(severity)
 	switch(severity)

@@ -23,57 +23,61 @@
 
 	var/hotkey_mode = {"<font color='purple'>
 Hotkey-Mode: (hotkey-mode must be on)
-\tTAB = toggle hotkey-mode
-\ta = left
-\ts = down
-\td = right
-\tw = up
-\tq = drop
-\te = equip
-\tr = throw
-\tt = say
-\tx = swap-hand
-\tz = activate held object (or y)
-\tf = cycle-intents-left
-\tg = cycle-intents-right
-\t1 = help-intent
-\t2 = disarm-intent
-\t3 = grab-intent
-\t4 = harm-intent
+\t TAB = toggle hotkey-mode
+\t a = left
+\t s = down
+\t d = right
+\t w = up
+\t q = drop
+\t e = equip
+\t r = throw
+\t t = say
+\t h = holder/unholder
+\t x = swap-hand
+\t z = click on held object (or y)
+\t b = click on self
+\t f = cycle-intents-left
+\t g = cycle-intents-right
+\t 1 = help-intent
+\t 2 = disarm-intent
+\t 3 = grab-intent
+\t 4 = harm-intent
 </font>"}
 
 	var/other = {"<font color='purple'>
 Any-Mode: (hotkey doesn't need to be on)
-\tCtrl+a = left
-\tCtrl+s = down
-\tCtrl+d = right
-\tCtrl+w = up
-\tCtrl+q = drop
-\tCtrl+e = equip
-\tCtrl+r = throw
-\tCtrl+x = swap-hand
-\tCtrl+z = activate held object (or Ctrl+y)
-\tCtrl+f = cycle-intents-left
-\tCtrl+g = cycle-intents-right
-\tCtrl+1 = help-intent
-\tCtrl+2 = disarm-intent
-\tCtrl+3 = grab-intent
-\tCtrl+4 = harm-intent
-\tDEL = pull
-\tINS = cycle-intents-right
-\tHOME = drop
-\tPGUP = swap-hand
-\tPGDN = activate held object
-\tEND = throw
+\t Ctrl+a = left
+\t Ctrl+s = down
+\t Ctrl+d = right
+\t Ctrl+w = up
+\t Ctrl+q = drop
+\t Ctrl+e = equip
+\t Ctrl+r = throw
+\t Ctrl+h = holder/unholder
+\t Ctrl+x = swap-hand
+\t Ctrl+z = click on held object (or Ctrl+y)
+\t Ctrl+b = click on self
+\t Ctrl+f = cycle-intents-left
+\t Ctrl+g = cycle-intents-right
+\t Ctrl+1 = help-intent
+\t Ctrl+2 = disarm-intent
+\t Ctrl+3 = grab-intent
+\t Ctrl+4 = harm-intent
+\t DEL = pull
+\t INS = cycle-intents-right
+\t HOME = drop
+\t PGUP = swap-hand
+\t PGDN = click on held object
+\t END = throw
 </font>"}
 
 	var/admin = {"<font color='purple'>
 Admin:
-\tF5 = Asay
-\tF6 = player-panel-new
-\tF7 = admin-pm
-\tF8 = Invisimin
-\tF9 = Mentorhelp
+\t F5 = Asay
+\t F6 = player-panel-new
+\t F7 = admin-pm
+\t F8 = Invisimin
+\t F9 = Mentorhelp
 </font>"}
 
 	to_chat(src, hotkey_mode)

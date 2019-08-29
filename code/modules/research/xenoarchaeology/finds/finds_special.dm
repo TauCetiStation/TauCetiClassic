@@ -28,7 +28,7 @@ var/list/bad_messages = list("Never take me off, please!",
 		"I want to be only yours!",
 		"Help me!")
 
-/obj/item/clothing/mask/gas/poltergeist/process(/mob/living/H)
+/obj/item/clothing/mask/gas/poltergeist/process(mob/living/H)
 	if(heard_talk.len && istype(src.loc, /mob/living) && prob(20))
 		var/mob/living/M = src.loc
 		M.say(pick(heard_talk))

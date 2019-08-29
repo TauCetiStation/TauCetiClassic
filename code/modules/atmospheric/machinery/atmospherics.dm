@@ -17,7 +17,7 @@ Pipelines + Other Objects -> Pipe network
 	anchored = TRUE
 	idle_power_usage = 0
 	active_power_usage = 0
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	layer = GAS_PIPE_HIDDEN_LAYER // under wires
 
 	var/nodealert = FALSE
