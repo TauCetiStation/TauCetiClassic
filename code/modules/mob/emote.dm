@@ -29,8 +29,10 @@
 					M.show_message(message)
 
 		var/list/to_check
+		var/list/feel_emote
 		// Type 1 (Visual) emotes are sent to anyone in view of the item
 		if(m_type & SHOWMSG_VISUAL)
+			feel_emote = view(1, src)
 			to_check = viewers(src, null)
 		// Type 2 (Audible) emotes are sent to anyone in hear range
 		// of the *LOCATION* -- this is important for pAIs to be heard
@@ -41,7 +43,7 @@
 			if(O.status_flags & PASSEMOTES)
 				for(var/obj/item/weapon/holder/thing in O.contents)
 					thing.show_message(message, m_type)
-			if(m_type & SHOWMSG_VISUAL && in_range(O, src))
+			if(m_type & SHOWMSG_VISUAL && O in feel_emote)
 				O.show_message(message, SHOWMSG_FEEL)
 				continue
 			O.show_message(message, m_type)
