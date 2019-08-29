@@ -225,6 +225,7 @@
 	if(boss)
 		to_chat(syndicate.current, "<span class = 'info'>You are a <font color='red'>Gorlex Maradeurs Commander</font>!</span>")
 	var/obj_count = 1
+	syndicate.current.playsound_local(null, 'sound/antag/ops.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in syndicate.objectives)
