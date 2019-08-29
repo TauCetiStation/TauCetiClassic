@@ -23,7 +23,7 @@
 
 	level = PIPE_HIDDEN_LEVEL
 
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 7500			//7500 W ~ 10 HP
 
@@ -226,10 +226,10 @@
 		return FALSE
 
 	if(signal.data["power"])
-		use_power = text2num(signal.data["power"])
+		set_power_use(text2num(signal.data["power"]))
 
 	if(signal.data["power_toggle"])
-		use_power = !use_power
+		set_power_use(!use_power)
 
 	if(signal.data["direction"])
 		pump_direction = text2num(signal.data["direction"])

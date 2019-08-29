@@ -1226,17 +1226,6 @@
 		to_chat(R, "Buffers flushed and reset. Camera system shutdown.  All systems operational.")
 		src.verbs -= /mob/living/silicon/robot/proc/ResetSecurityCodes
 
-/mob/living/silicon/robot/mode()
-	set name = "Activate Held Object"
-	set category = "IC"
-	set src = usr
-
-	var/obj/item/W = get_active_hand()
-	if (W)
-		W.attack_self(src)
-
-	return
-
 /mob/living/silicon/robot/verb/pose()
 	set name = "Set Pose"
 	set desc = "Sets a description which will be shown when someone examines you."

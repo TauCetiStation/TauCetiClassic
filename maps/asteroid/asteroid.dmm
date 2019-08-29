@@ -7150,7 +7150,6 @@
 	network = list("Anomaly Isolation");
 	pixel_x = -32
 	},
-/obj/structure/window/reinforced,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
@@ -12927,6 +12926,9 @@
 /area/mine/production)
 "Sb" = (
 /obj/machinery/artifact_scanpad,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/engine,
 /area/research_outpost/iso2)
 "Sc" = (

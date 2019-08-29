@@ -130,7 +130,7 @@
 	name = "airlock sensor"
 
 	anchored = TRUE
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	interact_offline = TRUE // this is very strange that power_channel is defined, use_power = 1 (parent), when this element has no unpowered features and sprites.
 
 	var/id_tag
@@ -210,7 +210,7 @@
 
 	layer = 3.3	//Above windows
 	anchored = TRUE
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	interact_offline = TRUE
 
 	var/master_tag

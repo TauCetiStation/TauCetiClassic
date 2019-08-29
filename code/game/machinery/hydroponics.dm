@@ -694,6 +694,8 @@
 			anchored = 0
 			to_chat(user, "You unwrench [src].")
 
+		wrenched_change()
+
 	else if(iswirecutter(O) && unwrenchable)
 
 		if(anchored)
@@ -707,6 +709,7 @@
 				anchored = 2
 				to_chat(user, "<span class='notice'>You reconnect \the [src]'s hoses.</span>")
 
+			wrenched_change()
 			update_icon()
 
 	else if ( istype(O, /obj/item/weapon/pestspray) )
@@ -981,7 +984,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "soil"
 	density = FALSE
-	use_power = FALSE
+	use_power = NO_POWER_USE
 	unwrenchable = FALSE
 
 /obj/machinery/hydroponics/soil/update_icon()//as a regular tray but without overlays under it (awter level, nutri, weeds, etc)
