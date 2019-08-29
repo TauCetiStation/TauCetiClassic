@@ -218,22 +218,24 @@
 			to_chat(M, "<span class='notice'>You have been [mute_string] unmuted from [usr.key].</span>")
 	else
 		if(alert("Would you like to make it permament?","Permamute?","Yes","No, round only") == "Yes")
-			var/permmutreason = sanitize(input("Permamute Notice:", text("Permamute Reason")) as text)
+			var/permmutreason = input("Permamute Reason") as text
 			if(permmutreason)
 				muteunmute = "permamuted"
 				M.client.prefs.permamuted |= mute_type
 				M.client.prefs.save_preferences()
 				M.client.prefs.muted |= mute_type
 				notes_add(M.key, "Permamute from [mute_string]: [permmutreason]", usr.client)
+				permmutreason = sanitize(permmutreason)
 				to_chat(M, "<span class='alert big bold'>You have been permamuted from [mute_string] by [usr.key].<br>Reason: [permmutreason]</span>")
 			else
-				to_chat(usr, "<span class='alert'>Abort permamuted: Empty reason.</span>")
+				to_chat(usr, "<span class='alert'>Could not apply permamute: Reason is empty</span>")
 				return
 
-		else if (alert("Add notice for round mute?", "Mute Notice?", "Yes","No") == "Yes")
-			var/mutereason = sanitize(input("Mute Notice:", text("Mute Reason")) as text)
+		else if (alert("Add a notice for round mute?", "Mute Notice?", "Yes","No") == "Yes")
+			var/mutereason = input("Mute Reason") as text
 			if(mutereason)
 				notes_add(M.key, "Muted from [mute_string]: [mutereason]", usr.client)
+				mutereason = sanitize(mutereason)
 				to_chat(M, "<span class='alert big bold'>You have been muted from [mute_string] by [usr.key].<br>Reason: [mutereason]</span>")
 			else
 				return
