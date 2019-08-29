@@ -40,19 +40,19 @@
 		return FALSE
 
 	if(type)
-		if((type & 1) && ((sdisabilities & BLIND) || blinded || paralysis) )//Vision related
+		if((type & SHOWMSG_VISUAL) && ((sdisabilities & BLIND) || blinded || paralysis) )//Vision related
 			if(!alt)
 				return FALSE
 			else
 				msg = alt
 				type = alt_type
-		if((type & 2) && ((sdisabilities & DEAF) || ear_deaf))//Hearing related
+		if((type & SHOWMSG_SOUND) && ((sdisabilities & DEAF) || ear_deaf))//Hearing related
 			if (!alt)
 				return FALSE
 			else
 				msg = alt
 				type = alt_type
-				if (((type & 1) && (sdisabilities & BLIND)))
+				if (((type & SHOWMSG_VISUAL) && (sdisabilities & BLIND)))
 					return FALSE
 	// Added voice muffling for Issue 41.
 	if(stat == UNCONSCIOUS || sleeping > 0)

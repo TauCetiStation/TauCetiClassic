@@ -1,12 +1,12 @@
 // All mobs should have custom emote, really..
-/mob/proc/custom_emote(m_type=1,message = null)
+/mob/proc/custom_emote(m_type = SHOWMSG_VISUAL, message = null)
 
 	if(stat || !use_me && usr == src)
 		to_chat(usr, "You are unable to emote.")
 		return
 
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
-	if(m_type == 2 && muzzled) return
+	if(m_type == SHOWMSG_SOUND && muzzled) return
 
 	if(!message)
 		message = sanitize(input(src,"Choose an emote to display.") as text|null)
@@ -30,19 +30,19 @@
 
 		var/list/to_check
 		// Type 1 (Visual) emotes are sent to anyone in view of the item
-		if(m_type & 1)
+		if(m_type & SHOWMSG_VISUAL)
 			to_check = viewers(src, null)
 		// Type 2 (Audible) emotes are sent to anyone in hear range
 		// of the *LOCATION* -- this is important for pAIs to be heard
-		else if(m_type & 2)
+		else if(m_type & SHOWMSG_SOUND)
 			to_check = hearers(get_turf(src), null)
 
 		for(var/mob/O in to_check)
 			if(O.status_flags & PASSEMOTES)
 				for(var/obj/item/weapon/holder/thing in O.contents)
 					thing.show_message(message, m_type)
-			if(m_type & 1 && in_range(O, src))
-				O.show_message(message, FEEL)
+			if(m_type & SHOWMSG_VISUAL && in_range(O, src))
+				O.show_message(message, SHOWMSG_FEEL)
 				continue
 			O.show_message(message, m_type)
 
