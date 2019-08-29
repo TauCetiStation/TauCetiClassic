@@ -876,6 +876,5 @@
 	item_state = "atmos_hardsuit"
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 65, bio = 100, rad = 50)
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	slowdown = 1.4
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/metalfoam_spray)
