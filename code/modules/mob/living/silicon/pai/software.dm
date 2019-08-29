@@ -321,11 +321,11 @@
 							C.put_in_inactive_hand(cable)
 					else
 						C = cable
-					C.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls [istype(C, /obj/mob) && !C.is_in_hands(cable) ? "to the floor" : "onto someone's hand"].</span>", "<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls [istype(C, /obj/mob) && !C.is_in_hands(cable) ? "to the floor" : "onto your hand"].</span>", "<span class='warning'>You hear the soft click of something light and hard falling [C ? "onto someone's hand" : "to the ground"].</span>")
+					C.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls [istype(C, /mob) && !C.is_in_hands(cable) ? "to the floor" : "onto someone's hand"].</span>", "<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls [istype(C, /mob) && !C.is_in_hands(cable) ? "to the floor" : "onto your hand"].</span>", "<span class='warning'>You hear the soft click of something light and hard falling [C ? "onto someone's hand" : "to the ground"].</span>")
 				if(href_list["cable"] == "2")
 					if(cable)
 						QDEL_NULL(cable)
-						cable.show_message("<span class='warning'>The data cable rapidly retracts back into its spool.</span>", "", "<span class='warning'>You hear a click and the sound of wire spooling rapidly.</span>")
+						cable.visible_message("<span class='warning'>The data cable rapidly retracts back into its spool.</span>", "", "<span class='warning'>You hear a click and the sound of wire spooling rapidly.</span>")
 					hackobj = null
 	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
