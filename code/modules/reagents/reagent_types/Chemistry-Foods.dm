@@ -79,7 +79,6 @@
 	name = "Sprinkles"
 	id = "sprinkles"
 	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
-	nutriment_factor = 4
 	color = "#ff00ff" // rgb: 255, 0, 255
 	taste_message = "sweetness"
 
@@ -92,7 +91,6 @@
 	name = "Cream filling"
 	id = "syndicream"
 	description = "Delicious cream filling of a mysterious origin. Tastes criminally good."
-	nutriment_factor = 4
 	color = "#ab7878" // rgb: 171, 120, 120
 
 /datum/reagent/consumable/syndicream/on_general_digest(mob/living/M)
@@ -130,7 +128,7 @@
 	id = "flour"
 	description = "This is what you rub all over yourself to pretend to be a ghost."
 	reagent_state = LIQUID
-	nutriment_factor = 8
+	nutriment_factor = 2
 	color = "#f5eaea" // rgb: 245, 234, 234
 	taste_message = "flour"
 	diet_flags = DIET_PLANT
@@ -337,7 +335,7 @@
 	id = "cornoil"
 	description = "An oil derived from various types of corn."
 	reagent_state = LIQUID
-	nutriment_factor = 40
+	nutriment_factor = 10
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "oil"
 	diet_flags = DIET_PLANT
@@ -378,7 +376,7 @@
 	id = "hot_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 4
+	nutriment_factor = 1
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "ramen"
 
@@ -392,7 +390,7 @@
 	id = "hell_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 4
+	nutriment_factor = 1
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "SPICY ramen"
 
@@ -405,7 +403,7 @@
 	id = "rice"
 	description = "Enjoy the great taste of nothing."
 	reagent_state = SOLID
-	nutriment_factor = 8
+	nutriment_factor = 2
 	color = "#ffffff" // rgb: 0, 0, 0
 	taste_message = "rice"
 	diet_flags = DIET_PLANT
@@ -415,7 +413,7 @@
 	id = "cherryjelly"
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	reagent_state = LIQUID
-	nutriment_factor = 8
+	nutriment_factor = 2
 	color = "#801e28" // rgb: 128, 30, 40
 	taste_message = "cherry jelly"
 	diet_flags = DIET_PLANT
@@ -425,7 +423,6 @@
 	id = "egg"
 	description = "A runny and viscous mixture of clear and yellow fluids."
 	reagent_state = LIQUID
-	nutriment_factor = 4
 	color = "#f0c814"
 	taste_message = "eggs"
 	diet_flags = DIET_MEAT
@@ -435,7 +432,6 @@
 	id = "cheese"
 	description = "Some cheese. Pour it out to make it solid."
 	reagent_state = SOLID
-	nutriment_factor = 4
 	color = "#ffff00"
 	taste_message = "cheese"
 	diet_flags = DIET_DAIRY
@@ -445,7 +441,6 @@
 	id = "beans"
 	description = "A dish made of mashed beans cooked with lard."
 	reagent_state = LIQUID
-	nutriment_factor = 4
 	color = "#684435"
 	taste_message = "burritos"
 	diet_flags = DIET_MEAT
@@ -455,7 +450,6 @@
 	id = "bread"
 	description = "Bread! Yep, bread."
 	reagent_state = SOLID
-	nutriment_factor = 4
 	color = "#9c5013"
 	taste_message = "bread"
 	diet_flags = DIET_PLANT
