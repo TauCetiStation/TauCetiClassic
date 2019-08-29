@@ -1,3 +1,5 @@
 #define SEE  1 //if src sees the cause of the message
 #define HEAR 2 //if src hears the reason for the message
-#define FEEL 3 //if src feels the cause of the message
+#define SHOWMSG_VISUAL (1<<0)
+#define SHOWMSG_SOUND  (1<<1)
+#define SHOWMSG_FEEL   (1<<2) // smell && taste && touch senses (no need to separate if we don't have related disabilities)
