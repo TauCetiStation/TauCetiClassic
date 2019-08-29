@@ -1,7 +1,7 @@
 /datum/reagent/consumable
 	name = "Consumable"
 	id = "consumable"
-	custom_metabolism = FOOD_METABOLISM
+	custom_metabolism = FOOD_METABOLISM * 0.25
 	nutriment_factor = 1
 	taste_message = null
 	var/last_volume = 0 // Check digestion code below.
@@ -335,7 +335,7 @@
 	id = "cornoil"
 	description = "An oil derived from various types of corn."
 	reagent_state = LIQUID
-	nutriment_factor = 10
+	nutriment_factor = 40
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "oil"
 	diet_flags = DIET_PLANT
@@ -376,7 +376,7 @@
 	id = "hot_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 1
+	nutriment_factor = 4
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "ramen"
 
@@ -390,7 +390,7 @@
 	id = "hell_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 1
+	nutriment_factor = 4
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "SPICY ramen"
 
@@ -403,7 +403,7 @@
 	id = "rice"
 	description = "Enjoy the great taste of nothing."
 	reagent_state = SOLID
-	nutriment_factor = 2
+	nutriment_factor = 8
 	color = "#ffffff" // rgb: 0, 0, 0
 	taste_message = "rice"
 	diet_flags = DIET_PLANT
@@ -413,7 +413,7 @@
 	id = "cherryjelly"
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	reagent_state = LIQUID
-	nutriment_factor = 2
+	nutriment_factor = 8
 	color = "#801e28" // rgb: 128, 30, 40
 	taste_message = "cherry jelly"
 	diet_flags = DIET_PLANT
@@ -423,6 +423,7 @@
 	id = "egg"
 	description = "A runny and viscous mixture of clear and yellow fluids."
 	reagent_state = LIQUID
+	nutriment_factor = 4
 	color = "#f0c814"
 	taste_message = "eggs"
 	diet_flags = DIET_MEAT
@@ -432,6 +433,7 @@
 	id = "cheese"
 	description = "Some cheese. Pour it out to make it solid."
 	reagent_state = SOLID
+	nutriment_factor = 4
 	color = "#ffff00"
 	taste_message = "cheese"
 	diet_flags = DIET_DAIRY
@@ -441,6 +443,7 @@
 	id = "beans"
 	description = "A dish made of mashed beans cooked with lard."
 	reagent_state = LIQUID
+	nutriment_factor = 4
 	color = "#684435"
 	taste_message = "burritos"
 	diet_flags = DIET_MEAT
@@ -450,6 +453,7 @@
 	id = "bread"
 	description = "Bread! Yep, bread."
 	reagent_state = SOLID
+	nutriment_factor = 4
 	color = "#9c5013"
 	taste_message = "bread"
 	diet_flags = DIET_PLANT
