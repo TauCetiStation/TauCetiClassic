@@ -140,7 +140,6 @@
 	new /obj/item/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
-	new /obj/item/weapon/gun/projectile/wjpp(src)
 	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
@@ -186,7 +185,6 @@
 	new /obj/item/device/hailer(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
-	new /obj/item/weapon/gun/projectile/wjpp(src)
 	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
@@ -227,7 +225,6 @@
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
-	new /obj/item/weapon/gun/projectile/wjpp(src)
 	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
