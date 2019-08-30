@@ -15689,7 +15689,6 @@
 "ego" = (
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/structure/window/reinforced{
@@ -15724,7 +15723,6 @@
 /obj/structure/closet/secure_closet/security,
 /obj/machinery/light,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
@@ -38595,7 +38593,6 @@
 	name = "Head of Security RC";
 	pixel_y = 30
 	},
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/clothing/mask/gas/sechailer,
 /turf/simulated/floor{
@@ -43093,7 +43090,6 @@
 	},
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
@@ -43853,7 +43849,6 @@
 	dir = 1
 	},
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/device/radio/intercom{
@@ -44845,7 +44840,6 @@
 	},
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
@@ -50776,7 +50770,6 @@
 "pHQ" = (
 /obj/structure/closet/secure_closet/warden,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
