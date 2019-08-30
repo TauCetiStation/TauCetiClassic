@@ -27,6 +27,7 @@ var/datum/subsystem/quirks/SSquirks
 		SetupQuirks()
 
 	quirk_blacklist = list(
+		list("Strong mind", "Tourette"),
 		list("Blind", "Nearsighted")
 		)
 

@@ -291,7 +291,7 @@
 			message = wear_mask.speechModification(message)
 		handled = 1
 
-	if((HULK in mutations) && health >= 25 && length(message))
+	if((HULK in mutations) && health >= 25 && length(message) && !has_trait(TRAIT_STRONGMIND))
 		message = "[uppertext_(message)]!!!"
 		verb = pick("yells","roars","hollers")
 		handled = 1
@@ -305,7 +305,7 @@
 		handled = 1
 
 	var/braindam = getBrainLoss()
-	if(braindam >= 60)
+	if(braindam >= 60 && !has_trait(TRAIT_STRONGMIND))
 		handled = 1
 		if(prob(braindam/4))
 			message = stutter(message)
