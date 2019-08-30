@@ -126,6 +126,29 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	access = access_brig
 	group = "Security"
 
+/datum/supply_pack/weapons
+	name = "9mm pistol crate"
+	contains = list(/obj/item/weapon/gun/projectile/wjpp,
+					/obj/item/weapon/gun/projectile/wjpp,
+					/obj/item/weapon/gun/projectile/wjpp,
+					/obj/item/ammo_box/magazine/m9mm_2/rubber,
+					/obj/item/ammo_box/magazine/m9mm_2/rubber,
+					/obj/item/ammo_box/magazine/m9mm_2/rubber,
+					/obj/item/ammo_box/magazine/m9mm_2/rubber,
+					/obj/item/ammo_box/magazine/m9mm_2/rubber,
+					/obj/item/ammo_box/magazine/m9mm_2/rubber,
+					/obj/item/ammo_box/magazine/m9mm_2,
+					/obj/item/ammo_box/magazine/m9mm_2,
+					/obj/item/ammo_box/magazine/m9mm_2,
+					/obj/item/ammo_box/magazine/m9mm_2,
+					/obj/item/ammo_box/magazine/m9mm_2,
+					/obj/item/ammo_box/magazine/m9mm_2)
+	cost = 6000
+	crate_type = /obj/structure/closet/crate/secure/weapon
+	crate_name = "9mm pistol crate"
+	access = access_brig
+	group = "Security"
+
 /datum/supply_pack/eweapons
 	name = "Experimental weapons crate"
 	contains = list(/obj/item/weapon/flamethrower/full,
