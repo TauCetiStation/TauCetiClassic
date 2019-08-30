@@ -15689,9 +15689,6 @@
 "ego" = (
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -15724,9 +15721,6 @@
 /obj/structure/closet/secure_closet/security,
 /obj/machinery/light,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -38595,8 +38589,6 @@
 	name = "Head of Security RC";
 	pixel_y = 30
 	},
-/obj/item/weapon/gun/projectile/wjpp,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/clothing/mask/gas/sechailer,
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -43093,9 +43085,6 @@
 	},
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -43853,9 +43842,6 @@
 	dir = 1
 	},
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/device/radio/intercom{
 	pixel_y = 25
 	},
@@ -44845,9 +44831,6 @@
 	},
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -50776,10 +50759,6 @@
 "pHQ" = (
 /obj/structure/closet/secure_closet/warden,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Sergeant APC";
