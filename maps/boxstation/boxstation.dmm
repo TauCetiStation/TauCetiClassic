@@ -10207,20 +10207,19 @@
 /area/rnd/xenobiology)
 "aqM" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r6"
+	icon_state = "1-1"
 	},
 /turf/space,
 /area/shuttle/mining/station)
 "aqN" = (
-/turf/simulated/shuttle/wall/newes_shuttle/mining{
-	icon_state = "ming2_wall"
+/obj/structure/object_wall/mining{
+	icon_state = "1-3"
 	},
+/turf/space,
 /area/shuttle/mining/station)
 "aqO" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r1"
+	icon_state = "1-2"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -10247,8 +10246,7 @@
 /area/maintenance/engineering)
 "aqS" = (
 /obj/structure/object_wall/mining{
-	dir = 4;
-	icon_state = "ming_l4"
+	icon_state = "1-7"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -10485,21 +10483,14 @@
 /area/rnd/xenobiology)
 "ars" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r7"
-	},
-/obj/structure/shuttle/engine/propulsion/burst/new_shuttle{
-	density = 0;
-	dir = 8;
-	icon_state = "ming_left";
-	opacity = 0
+	icon_state = "2-1"
 	},
 /turf/space,
 /area/shuttle/mining/station)
 "art" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming2_r2"
+	icon_state = "2-2";
+	opacity = 0
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -10859,8 +10850,7 @@
 /area/quartermaster/office)
 "asb" = (
 /obj/structure/object_wall/mining{
-	dir = 4;
-	icon_state = "ming_l2"
+	icon_state = "2-9"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -11223,8 +11213,7 @@
 /area/maintenance/dormitory)
 "asJ" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r8"
+	icon_state = "3-1"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -11236,11 +11225,10 @@
 	},
 /area/maintenance/science)
 "asL" = (
-/obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r3"
+/obj/structure/closet/mining,
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "3-2"
 	},
-/turf/space,
 /area/shuttle/mining/station)
 "asM" = (
 /obj/machinery/door/airlock/maintenance{
@@ -11706,8 +11694,7 @@
 /area/hallway/primary/fore)
 "atH" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r9"
+	icon_state = "4-1"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -11716,8 +11703,8 @@
 /area/maintenance/auxsolarport)
 "atJ" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming2_r4"
+	icon_state = "4-2";
+	opacity = 0
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -11735,11 +11722,9 @@
 	},
 /area/crew_quarters)
 "atL" = (
-/obj/structure/object_wall/mining{
-	dir = 4;
-	icon_state = "ming_l1"
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "4-5"
 	},
-/turf/space,
 /area/shuttle/mining/station)
 "atM" = (
 /obj/machinery/door/window/northleft{
@@ -11823,12 +11808,10 @@
 /turf/simulated/floor/plating,
 /area/maintenance/eva)
 "atS" = (
-/obj/structure/shuttle/window/new_shuttle{
-	dir = 1;
-	icon_state = "ming2_window_w"
+/obj/machinery/light,
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "4-7"
 	},
-/obj/structure/grille,
-/turf/simulated/shuttle/plating,
 /area/shuttle/mining/station)
 "atT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -12147,27 +12130,19 @@
 /area/maintenance/cargo)
 "aux" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r10"
-	},
-/obj/structure/shuttle/engine/propulsion/burst/new_shuttle{
-	density = 0;
-	dir = 8;
-	icon_state = "ming_left";
-	opacity = 0
+	icon_state = "5-1"
 	},
 /turf/space,
 /area/shuttle/mining/station)
 "auy" = (
-/turf/simulated/shuttle/wall/newes_shuttle/mining{
-	dir = 1;
-	icon_state = "ming2_wall"
+/obj/structure/object_wall/mining{
+	icon_state = "4-9"
 	},
+/turf/space,
 /area/shuttle/mining/station)
 "auz" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r5"
+	icon_state = "5-2"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -12182,7 +12157,8 @@
 /area/hallway/primary/starboard)
 "auB" = (
 /obj/structure/object_wall/mining{
-	icon_state = "ming_l4"
+	icon_state = "4-8";
+	opacity = 0
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -16390,11 +16366,8 @@
 	},
 /area/ai_monitored/storage/eva)
 "aCw" = (
-/obj/machinery/door/unpowered/shuttle/mining{
-	dock_tag = "arrival_minesci"
-	},
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+	icon_state = "4-4,6"
 	},
 /area/shuttle/mining/station)
 "aCx" = (
@@ -22675,6 +22648,9 @@
 	},
 /area/rnd/mixing)
 "aOn" = (
+/obj/structure/object_wall/mining{
+	icon_state = "1-8"
+	},
 /turf/space,
 /area/shuttle/mining/station)
 "aOo" = (
@@ -33635,12 +33611,11 @@
 	},
 /area/rnd/test_area)
 "bjc" = (
-/obj/structure/table/woodentable,
-/obj/machinery/faxmachine{
-	department = "Captain's Office"
+/obj/structure/object_wall/mining{
+	icon_state = "5-3"
 	},
-/turf/simulated/floor/wood,
-/area/crew_quarters/captain)
+/turf/space,
+/area/shuttle/mining/station)
 "bjd" = (
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -33657,21 +33632,11 @@
 	},
 /area/bridge/meeting_room)
 "bjg" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 8
+/obj/structure/window/reinforced/shuttle/mining{
+	icon_state = "5-4"
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/carpet/blue2,
-/area/crew_quarters/captain)
+/turf/space,
+/area/shuttle/mining/station)
 "bjh" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -33692,13 +33657,11 @@
 	},
 /area/bridge/meeting_room)
 "bjj" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/door/unpowered/shuttle/wagon,
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "5-5"
 	},
-/turf/simulated/floor/wood,
-/area/crew_quarters/captain)
+/area/shuttle/mining/station)
 "bjk" = (
 /turf/simulated/wall,
 /area/medical/reception)
@@ -33713,19 +33676,11 @@
 	},
 /area/medical/chemistry)
 "bjn" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/structure/window/reinforced/shuttle/mining{
+	icon_state = "5-6"
 	},
-/obj/structure/table/woodentable,
-/obj/machinery/door_control{
-	id = "Captain_private";
-	name = "Shutters Control";
-	req_access = list(20)
-	},
-/turf/simulated/floor/wood,
-/area/crew_quarters/captain)
+/turf/space,
+/area/shuttle/mining/station)
 "bjo" = (
 /obj/structure/stool/bed/chair/comfy/teal{
 	dir = 4
@@ -33742,21 +33697,11 @@
 	},
 /area/medical/reception)
 "bjq" = (
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
+/obj/structure/object_wall/mining{
+	icon_state = "5-7"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/machinery/door/poddoor/shutters{
-	id = "Captain_private"
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated,
-/area/crew_quarters/captain)
+/turf/space,
+/area/shuttle/mining/station)
 "bjr" = (
 /obj/machinery/light_switch{
 	pixel_y = 28
@@ -33861,12 +33806,11 @@
 /turf/simulated/wall,
 /area/storage/emergency)
 "bjC" = (
-/obj/structure/table/woodentable,
-/obj/machinery/recharger{
-	pixel_y = 4
+/obj/structure/object_wall/mining{
+	icon_state = "5-8"
 	},
-/turf/simulated/floor/wood,
-/area/crew_quarters/captain)
+/turf/space,
+/area/shuttle/mining/station)
 "bjD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -33879,17 +33823,11 @@
 	},
 /area/chapel/main)
 "bjE" = (
-/obj/structure/cable,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/object_wall/mining{
+	icon_state = "5-9"
 	},
-/obj/machinery/door/poddoor/shutters{
-	id = "Captain_private"
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated,
-/area/crew_quarters/captain)
+/turf/space,
+/area/shuttle/mining/station)
 "bjF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -33961,22 +33899,10 @@
 	},
 /area/chapel/main)
 "bjM" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 39;
-	pixel_y = 1
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "2-7"
 	},
-/obj/item/weapon/pinpointer/advpinpointer,
-/obj/item/weapon/disk/nuclear,
-/obj/structure/bobross{
-	pixel_x = 32
-	},
-/obj/machinery/camera{
-	c_tag = "Captain's Office";
-	dir = 8
-	},
-/turf/simulated/floor/wood,
-/area/crew_quarters/captain)
+/area/shuttle/mining/station)
 "bjN" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -34028,6 +33954,20 @@
 	icon_state = "chapel"
 	},
 /area/chapel/main)
+"bjS" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/table/woodentable,
+/obj/machinery/door_control{
+	id = "Captain_private";
+	name = "Shutters Control";
+	req_access = list(20)
+	},
+/turf/simulated/floor/wood,
+/area/crew_quarters/captain)
 "bjT" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
@@ -34054,6 +33994,29 @@
 	},
 /turf/simulated/floor,
 /area/hallway/primary/central)
+"bjV" = (
+/obj/structure/table/woodentable,
+/obj/machinery/faxmachine{
+	department = "Captain's Office"
+	},
+/turf/simulated/floor/wood,
+/area/crew_quarters/captain)
+"bjW" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2";
+	pixel_y = 1
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "Captain_private"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated,
+/area/crew_quarters/captain)
 "bjX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -34121,6 +34084,66 @@
 	},
 /turf/simulated/floor,
 /area/medical/surgery2)
+"bke" = (
+/obj/structure/table/woodentable,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/turf/simulated/floor/wood,
+/area/crew_quarters/captain)
+"bkf" = (
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/crew_quarters/captain)
+"bkg" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood,
+/area/crew_quarters/captain)
+"bkh" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 39;
+	pixel_y = 1
+	},
+/obj/item/weapon/pinpointer/advpinpointer,
+/obj/item/weapon/disk/nuclear,
+/obj/structure/bobross{
+	pixel_x = 32
+	},
+/obj/machinery/camera{
+	c_tag = "Captain's Office";
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/crew_quarters/captain)
+"bki" = (
+/obj/structure/cable,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "Captain_private"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated,
+/area/crew_quarters/captain)
 "bkj" = (
 /obj/machinery/camera{
 	c_tag = "Central Hallway West";
@@ -70142,18 +70165,10 @@
 	},
 /area/hallway/primary/fore)
 "gVb" = (
-/obj/structure/object_wall/mining{
-	density = 0;
-	dir = 8;
-	icon_state = "window_frame";
-	name = "window frame";
-	opacity = 0
-	},
-/obj/structure/grille,
 /obj/structure/window/reinforced/shuttle/mining{
-	icon_state = "rwindow0"
+	icon_state = "1-4,6"
 	},
-/turf/simulated/shuttle/plating,
+/turf/space,
 /area/shuttle/mining/station)
 "gWb" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
@@ -70184,31 +70199,29 @@
 /turf/simulated/floor/wood,
 /area/library)
 "gZb" = (
-/obj/structure/closet/emcloset,
-/turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+/obj/structure/object_wall/mining{
+	icon_state = "1-5"
 	},
+/turf/space,
 /area/shuttle/mining/station)
 "hab" = (
-/obj/structure/stool/bed/chair/schair,
-/turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+/obj/structure/object_wall/mining{
+	icon_state = "1-9"
 	},
+/turf/space,
 /area/shuttle/mining/station)
 "hbb" = (
-/obj/structure/object_wall/mining{
-	icon_state = "ming_l3"
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
 	},
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+	icon_state = "2-3"
 	},
 /area/shuttle/mining/station)
 "hcb" = (
-/obj/structure/shuttle/window/new_shuttle{
-	icon_state = "ming2_window_w"
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "2-4,5,6"
 	},
-/obj/structure/grille,
-/turf/simulated/shuttle/plating,
 /area/shuttle/mining/station)
 "hdb" = (
 /obj/structure/stool/bed/chair{
@@ -70235,44 +70248,39 @@
 /area/hallway/secondary/exit)
 "hgb" = (
 /obj/machinery/light{
-	dir = 8
+	dir = 1
 	},
-/obj/structure/closet/crate,
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+	icon_state = "2-4,5,6"
 	},
 /area/shuttle/mining/station)
 "hhb" = (
-/turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+/obj/structure/object_wall/mining{
+	icon_state = "2-8";
+	opacity = 0
 	},
+/turf/space,
 /area/shuttle/mining/station)
 "hib" = (
-/obj/structure/stool/bed/chair/schair{
+/obj/structure/stool/bed/chair/schair/wagon{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+	icon_state = "3-3"
 	},
 /area/shuttle/mining/station)
 "hjb" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/machinery/computer/mine_sci_shuttle/flight_comp{
-	dir = 8
-	},
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+	icon_state = "3-4,5,6"
 	},
 /area/shuttle/mining/station)
 "hkb" = (
-/obj/structure/shuttle/window/new_shuttle{
-	dir = 8;
-	icon_state = "ming2_window_w"
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
 	},
-/obj/structure/grille,
-/turf/simulated/shuttle/plating,
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "3-7"
+	},
 /area/shuttle/mining/station)
 "hlb" = (
 /obj/structure/disposalpipe/segment{
@@ -70291,19 +70299,18 @@
 	},
 /area/hallway/secondary/exit)
 "hnb" = (
-/obj/structure/ore_box,
+/obj/machinery/computer/mine_sci_shuttle/flight_comp{
+	dir = 8
+	},
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+	icon_state = "3-8"
 	},
 /area/shuttle/mining/station)
 "hob" = (
-/obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_l3"
+/obj/structure/window/reinforced/shuttle/mining{
+	icon_state = "3-9"
 	},
-/turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
-	},
+/turf/space,
 /area/shuttle/mining/station)
 "hpb" = (
 /obj/machinery/door/airlock{
@@ -70337,18 +70344,13 @@
 	},
 /area/library)
 "hsb" = (
-/obj/structure/object_wall/mining{
-	density = 0;
-	dir = 4;
-	icon_state = "window_frame";
-	name = "window frame";
-	opacity = 0
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/shuttle/mining{
-	icon_state = "rwindow0"
+/obj/machinery/light,
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "4-3"
 	},
-/turf/simulated/shuttle/plating,
 /area/shuttle/mining/station)
 "htb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -87721,10 +87723,10 @@ aaa
 aaa
 aah
 aqN
-gZb
-hgb
-hnb
-auy
+hbb
+hib
+hsb
+bjc
 apT
 aEb
 aEb
@@ -87978,10 +87980,10 @@ aaa
 aaa
 aah
 gVb
-hab
-hhb
-hhb
-hsb
+hcb
+hjb
+aCw
+bjg
 aEb
 aWq
 aXO
@@ -88234,11 +88236,11 @@ aaa
 aaa
 aaa
 aah
-aqN
-hab
-hhb
-hhb
-aCw
+gZb
+hgb
+hjb
+atL
+bjj
 aUN
 aWt
 aXQ
@@ -88492,10 +88494,10 @@ aaa
 aaa
 aah
 gVb
-hab
-hhb
-hhb
-hsb
+hcb
+hjb
+aCw
+bjn
 hub
 aWt
 aXR
@@ -88749,10 +88751,10 @@ aaa
 aaa
 aah
 aqS
-hbb
-hib
-hob
-auB
+bjM
+hkb
+atS
+bjq
 apT
 aWu
 aXS
@@ -89006,10 +89008,10 @@ aaa
 aaa
 aah
 aOn
-hcb
-hjb
-atS
-aOn
+hhb
+hnb
+auB
+bjC
 apT
 apT
 bvg
@@ -89262,11 +89264,11 @@ aaa
 aaa
 aaa
 aah
-aaa
+hab
 asb
-hkb
-atL
-aaa
+hob
+auy
+bjE
 aaa
 apT
 aXT
@@ -111899,7 +111901,7 @@ aAk
 bdc
 beC
 blp
-bjg
+bkf
 bpv
 btE
 beQ
@@ -112156,7 +112158,7 @@ oIb
 bdc
 beD
 bfC
-bjj
+bkg
 bfC
 biZ
 bfC
@@ -112412,10 +112414,10 @@ bat
 bad
 bdc
 beE
-bjc
-bjn
-bjC
-bjM
+bjV
+bjS
+bke
+bkh
 bkA
 bfC
 bgW
@@ -112669,9 +112671,9 @@ bau
 iYb
 bdc
 bdc
-bjq
+bjW
 bme
-bjE
+bki
 bdc
 bdc
 bdc
