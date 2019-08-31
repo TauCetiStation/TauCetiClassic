@@ -421,22 +421,30 @@
 
 
 //returns 1 if made bloody, returns 0 otherwise
-/atom/proc/add_blood(mob/living/carbon/human/M)
+/atom/proc/add_blood(mob/living/carbon/M)
 	if(flags & NOBLOODY) return 0
 	.=1
 	if(!istype(M))
 		return 0
+	var/blood_dat = null
+	if(ismonkey(M))
+		var/mob/living/carbon/monkey/Monkey = M
+		blood_dat = new Monkey.blood_datum
 
 	if(M.reagents.has_reagent("metatrombine"))
 		return FALSE
 
-	if (!istype(M.dna, /datum/dna))
-		M.dna = new /datum/dna(null)
-		M.dna.real_name = M.real_name
-	M.check_dna()
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if (!istype(M.dna, /datum/dna))
+			H.dna = new /datum/dna(null)
+			H.dna.real_name = H.real_name
+		H.check_dna()
+		blood_dat = H.species.blood_datum
+		
 	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
-	add_dirt_cover(M.species.blood_datum)
+	add_dirt_cover(blood_dat)
 
 /atom/proc/add_dirt_cover(dirt_datum)
 	if(flags & NOBLOODY) return 0

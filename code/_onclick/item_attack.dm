@@ -196,6 +196,7 @@
 						var/turf/location = M.loc
 						if (istype(location, /turf/simulated))
 							location:add_blood_floor(M)
+						src.add_blood(M)
 			if("fire")
 				if (!(COLD_RESISTANCE in M.mutations))
 					M.take_bodypart_damage(0, power)
