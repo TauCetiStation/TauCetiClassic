@@ -193,6 +193,7 @@
 	to_chat(host, "<span class='warning'>You feel something crawling in your skin.</span>")
 	if(uses == initial(uses))
 		host.faction = "spiders"
+	msg_admin_attack("[host.name] ([host.ckey]) have gland ability to produce spiders! [ADMIN_PPJMPFLW(host)]", host)
 	new /obj/effect/spider/spiderling(host.loc)
 
 
