@@ -87,7 +87,6 @@
 				icon_state = icon_state + "-"
 			if (tabledirs & turn(dir, -90))
 				icon_state = icon_state + "+"
-		return 1
 	else
 		smooth = initial(smooth)
 		queue_smooth_neighbors(src)
