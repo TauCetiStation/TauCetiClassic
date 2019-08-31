@@ -249,45 +249,69 @@
 /datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, volume)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(istype(M,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			if(H.lip_style)
-				H.lip_style = null
-				H.update_body()
 		if(C.r_hand)
-			C.r_hand.clean_blood()
+			if(C.r_hand.clean_blood())
+				C.r_hand.clean_blood()
 		if(C.l_hand)
-			C.l_hand.clean_blood()
+			if(C.l_hand.clean_blood())
+				C.l_hand.clean_blood()
 		if(C.wear_mask)
 			if(C.wear_mask.clean_blood())
 				C.update_inv_wear_mask()
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = C
-			if(H.head)
-				if(H.head.clean_blood())
-					H.update_inv_head()
-			if(H.wear_suit)
-				if(H.wear_suit.clean_blood())
-					H.update_inv_wear_suit()
-			else if(H.w_uniform)
-				if(H.w_uniform.clean_blood())
-					H.update_inv_w_uniform()
-			if(H.shoes)
-				if(H.shoes.clean_blood())
-					H.update_inv_shoes()
-			var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
-			var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
-			var/no_legs = FALSE
-			if(!l_foot && !r_foot)
-				no_legs = TRUE
-			if(!no_legs)
-				if(H.shoes && H.shoes.clean_blood())
-					H.update_inv_shoes()
-				else
-					H.feet_blood_DNA = null
-					H.feet_dirt_color = null
-					H.update_inv_shoes()
-		M.clean_blood()
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.glasses) //some glasses can be blood-stained
+			if(H.glasses.clean_blood())
+				H.update_inv_glasses()
+		if(H.lip_style)
+			H.lip_style = null
+			H.update_body()
+		if(!H.gloves) // If no gloves
+			H.hand_dirt_datum = null // we will clear "red blood-stained hands"
+			H.update_inv_gloves()
+		if(H.gloves)
+			if(H.gloves.clean_blood())
+				H.update_inv_gloves()
+		if(H.back)
+			if(H.back.clean_blood())
+				H.update_inv_back()
+		if(H.l_ear) // we have blood-stained radio on ear slot
+			if(H.l_ear.clean_blood())
+				H.update_inv_ears()
+		if(H.r_ear) // we have blood-stained radio on ear slot
+			if(H.r_ear.clean_blood())
+				H.update_inv_ears()
+		if(H.head)
+			if(H.head.clean_blood())
+				H.update_inv_head()
+		if(H.wear_suit)
+			if(H.wear_suit.clean_blood())
+				H.update_inv_wear_suit()
+		if(H.w_uniform)
+			if(H.w_uniform.clean_blood())
+				H.update_inv_w_uniform()
+		if(H.belt)	
+			if(H.belt.clean_blood())
+				H.update_inv_belt()
+		if(H.wear_id)
+			if(H.wear_id.clean_blood())
+				H.update_inv_wear_id()
+		if(H.shoes)
+			if(H.shoes.clean_blood())
+				H.update_inv_shoes()
+		var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
+		var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
+		var/no_legs = FALSE
+		if(!l_foot && !r_foot)
+			no_legs = TRUE
+		if(!no_legs)
+			if(H.shoes && H.shoes.clean_blood())
+				H.update_inv_shoes()
+			else
+				H.feet_blood_DNA = null
+				H.feet_dirt_color = null
+				H.update_inv_shoes()
+	// M.clean_blood()
 
 /datum/reagent/xenomicrobes
 	name = "Xenomicrobes"
