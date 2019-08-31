@@ -1,7 +1,7 @@
 /datum/reagent/consumable
 	name = "Consumable"
 	id = "consumable"
-	custom_metabolism = FOOD_METABOLISM * 0.25
+	custom_metabolism = FOOD_METABOLISM
 	nutriment_factor = 1
 	taste_message = null
 	var/last_volume = 0 // Check digestion code below.
@@ -11,7 +11,7 @@
 	var/mob_met_factor = 1
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		mob_met_factor = C.get_metabolism_factor()
+		mob_met_factor = C.get_metabolism_factor() * 0.25
 	if(volume > last_volume)
 		var/to_add = rand(0, volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor
 		M.reagents.add_reagent("nutriment", ((volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor) - to_add)
