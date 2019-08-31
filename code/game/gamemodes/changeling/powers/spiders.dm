@@ -14,4 +14,5 @@
 		Sp.amount_grown = 1
 
 	feedback_add_details("changeling_powers","SI")
+	msg_admin_attack("[user.name] ([user.ckey]) used ability to produce spiders! [ADMIN_PPJMPFLW(user)]", user)
 	return 1
