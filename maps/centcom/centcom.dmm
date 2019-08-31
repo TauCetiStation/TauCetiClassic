@@ -11090,28 +11090,6 @@
 "aNs" = (
 /turf/unsimulated/wall,
 /area/centcom/holding)
-"aNt" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/turf/unsimulated/floor,
-/area/centcom/holding)
-"aNv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/centcom/holding)
 "aNw" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -43915,14 +43893,14 @@ aaM
 aaM
 aaM
 aaM
-aNt
+aaU
 kkb
 aOF
 aOF
 aOF
 aOF
 lmb
-aNt
+aaU
 aaM
 aUE
 oxb
@@ -44172,14 +44150,14 @@ aaM
 aaM
 aaM
 aaM
-aNv
+aaU
 kkb
 aOF
 aOF
 aOF
 aOF
 lnb
-aNv
+aaU
 aaM
 aem
 oRb
