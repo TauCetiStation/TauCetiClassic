@@ -92,7 +92,6 @@
 		smooth = initial(smooth)
 		queue_smooth_neighbors(src)
 		queue_smooth(src)
-	return
 
 
 /obj/structure/table/ex_act(severity)
