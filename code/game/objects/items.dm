@@ -913,7 +913,8 @@
 	if(uncleanable)
 		return
 	if(blood_overlay)
-		overlays.Remove(blood_overlay)
+		overlays.Cut(1, 0)
+		blood_overlay = null
 	if(istype(src, /obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = src
 		G.transfer_blood = 0
@@ -927,11 +928,12 @@
 			overlays.Remove(blood_overlay)
 			blood_overlay.color = dirt_overlay.color
 			overlays += blood_overlay
+		else if(blood_overlay) 
+			overlays += blood_overlay
 
-/obj/item/add_blood(mob/living/carbon/human/M)
+/obj/item/add_blood(mob/living/carbon/M)
 	if (!..())
 		return 0
-
 	if(blood_DNA[M.dna.unique_enzymes])
 		return 0 //already bloodied with this blood. Cannot add more.
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
