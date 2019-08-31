@@ -200,7 +200,7 @@
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
-	use_power = 0
+	use_power = NO_POWER_USE
 	anchored = TRUE
 
 	var/position = 0			// 0 off, -1 reverse, 1 forward

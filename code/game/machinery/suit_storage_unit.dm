@@ -81,6 +81,8 @@
 			src.isopen = 1
 			src.dump_everything()
 			src.update_icon()
+			update_power_use()
+	update_power_use()
 
 
 /obj/machinery/suit_storage_unit/ex_act(severity)

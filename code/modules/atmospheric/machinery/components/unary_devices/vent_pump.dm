@@ -15,7 +15,7 @@
 	desc = "Has a valve and pump attached to it."
 
 	can_unwrench = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 7500			//7500 W ~ 10 HP
 
@@ -46,18 +46,18 @@
 	var/pressure_checks_default = PRESSURE_CHECKS
 
 /obj/machinery/atmospherics/components/unary/vent_pump/on
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	icon_state = "map_vent_out"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon
 	pump_direction = 0
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	icon_state = "map_vent_in"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	icon_state = "map_vent_in"
 	external_pressure_bound = 0
 	external_pressure_bound_default = 0
@@ -96,12 +96,12 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
 	name = "Large Air Vent"
-	power_channel = EQUIP
+	power_channel = STATIC_EQUIP
 	power_rating = 15000	//15 kW ~ 20 HP
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on
 	icon_state = "map_vent_out"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/atom_init()
 	. = ..()
@@ -111,7 +111,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/engine
 	name = "Engine Core Vent"
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	power_rating = 30000	//15 kW ~ 20 HP
 
 /obj/machinery/atmospherics/components/unary/vent_pump/engine/atom_init()
@@ -185,7 +185,7 @@
 	if (hibernate > world.time)
 		return
 	if (!NODE1)
-		use_power = 0
+		set_power_use(NO_POWER_USE)
 	if(!can_pump())
 		return
 
@@ -292,10 +292,10 @@
 		pump_direction = 1
 
 	if(signal.data["power"] != null)
-		use_power = text2num(signal.data["power"])
+		set_power_use(text2num(signal.data["power"]))
 
 	if(signal.data["power_toggle"] != null)
-		use_power = !use_power
+		set_power_use(!use_power)
 
 	if(signal.data["checks"] != null)
 		if (signal.data["checks"] == "default")

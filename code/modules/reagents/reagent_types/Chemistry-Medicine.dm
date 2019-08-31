@@ -626,3 +626,23 @@
 	reagent_state = LIQUID
 	color = "#074232"
 	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/stimulants
+	name = "Stimulants"
+	id = "stimulants"
+	description = "Stimulants to keep you up in a critical moment"
+	reagent_state = LIQUID
+	color = "#99ccff" // rgb: 200, 165, 220
+	custom_metabolism = 0.5
+	overdose = REAGENTS_OVERDOSE
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/stimulants/on_general_digest(mob/living/M)
+	..()
+	M.drowsyness = max(M.drowsyness - 5, 0)
+	M.AdjustParalysis(-3)
+	M.AdjustStunned(-3)
+	M.AdjustWeakened(-3)
+	var/mob/living/carbon/human/H = M
+	H.adjustHalLoss(-30)
+	H.shock_stage -= 20

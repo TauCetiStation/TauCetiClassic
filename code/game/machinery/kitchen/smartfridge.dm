@@ -157,6 +157,7 @@
 		stat |= NOPOWER
 		if(!isbroken)
 			icon_state = icon_off
+	update_power_use()
 
 /*******************
 *   Item Adding

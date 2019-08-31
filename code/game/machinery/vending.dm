@@ -207,6 +207,7 @@
 					icon_state = initial(icon_state)
 					stat &= ~NOPOWER
 					set_light(light_range_on, light_power_on)
+				wrenched_change()
 
 	else if(currently_vending && istype(W, /obj/item/device/pda) && W.GetID())
 		var/obj/item/weapon/card/I = W.GetID()
@@ -564,6 +565,8 @@
 				src.icon_state = "[initial(icon_state)]-off"
 				stat |= NOPOWER
 				set_light(0)
+				update_power_use()
+	update_power_use()
 
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()

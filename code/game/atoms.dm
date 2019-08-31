@@ -600,3 +600,7 @@
 			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
 				L += get_contents(D.wrapped)
 		return L
+
+// Called after we wrench/unwrench this object
+/obj/proc/wrenched_change()
+	return
