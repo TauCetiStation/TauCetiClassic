@@ -71,7 +71,7 @@
 		var/tabledirs = 0
 		for(var/direction in list(turn(dir, 90), turn(dir, -90)) )
 			var/obj/structure/table/T = locate() in get_step(src, direction)
-			if (canconnect && T && T.flipped && src.type == T.type && T.canconnect && T.dir == dir)
+			if (canconnect && !QDELETED(T) && T.flipped && src.type == T.type && T.canconnect && T.dir == dir)
 				type++
 				tabledirs |= direction
 
