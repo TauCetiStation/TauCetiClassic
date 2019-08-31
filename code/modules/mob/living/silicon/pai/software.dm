@@ -448,10 +448,6 @@
 				if(3)
 					var/T = input("What do you want to say on behalf of [A]?", "Vending exploiter", "Hello") as text
 					A.speak(T)
-				/*
-				if(4)
-					A.prices = list()
-				*/
 				if(5)
 					A.extended_inventory = !A.extended_inventory
 				if(6)
@@ -952,7 +948,6 @@
 			src.paiInterface()
 		if(hackprogress == 100)
 			hackprogress = 0
-			//src.cable.machine:open()
 			src.hacksuccess = TRUE
 			return
 		sleep(50)			// Update every 5 seconds
