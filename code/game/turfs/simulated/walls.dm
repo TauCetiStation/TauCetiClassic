@@ -5,6 +5,8 @@
 	icon_state = "box"
 	plane = GAME_PLANE
 
+	baseturfs = /turf/simulated/floor/plating
+
 	var/mineral = "metal"
 	var/rotting = 0
 
@@ -37,7 +39,6 @@
 	for(var/obj/effect/E in src)
 		if(E.name == "Wallrot")
 			qdel(E)
-	dismantle_wall()
 	return ..()
 
 /turf/simulated/wall/ChangeTurf()
@@ -135,7 +136,7 @@
 			P.roll_and_drop(src)
 		else
 			O.loc = src
-	ChangeTurf(/turf/simulated/floor/plating)
+	ScrapeAway()
 
 /turf/simulated/wall/proc/break_wall()
 	if(istype(src, /turf/simulated/wall/cult))
@@ -156,7 +157,7 @@
 /turf/simulated/wall/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			src.ChangeTurf(basetype)
+			ScrapeAway()
 			return
 		if(2.0)
 			if(prob(75))
@@ -202,7 +203,7 @@
 	O.density = 1
 	O.layer = 5
 
-	src.ChangeTurf(/turf/simulated/floor/plating)
+	ScrapeAway()
 
 	var/turf/simulated/floor/F = src
 	F.burn_tile()
@@ -218,7 +219,7 @@
 	if (prob(15) && !rotting)
 		dismantle_wall()
 	else if(prob(70) && !rotting)
-		ChangeTurf(/turf/simulated/floor/plating)
+		ScrapeAway()
 	else
 		ReplaceWithLattice()
 	return 0

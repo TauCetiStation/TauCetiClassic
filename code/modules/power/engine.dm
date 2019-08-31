@@ -4,20 +4,17 @@
 /turf/simulated/floor/engine/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			ChangeTurf(basetype)
-			qdel(src)
+			ScrapeAway()
 			return
 		if(2.0)
 			if (prob(50))
-				ChangeTurf(basetype)
-				qdel(src)
+				ScrapeAway()
 				return
 		else
 	return
 
 /turf/simulated/floor/engine/blob_act()
 	if (prob(25))
-		ChangeTurf(basetype)
-		qdel(src)
+		ScrapeAway()
 		return
 	return

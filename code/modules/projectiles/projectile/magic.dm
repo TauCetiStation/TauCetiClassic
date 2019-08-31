@@ -169,7 +169,7 @@
 	if(!(getOPressureDifferential(target) >= FIREDOOR_MAX_PRESSURE_DIFF))
 		if(istype(target, /turf/simulated/wall))
 			var/turf/place = target
-			place.ChangeTurf(/turf/simulated/floor/plating)
+			place.ScrapeAway()
 			var/pickedtype = pick(doors)
 			new pickedtype(place)
 		else if(istype(target, /obj/machinery/door))

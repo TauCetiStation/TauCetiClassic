@@ -100,7 +100,7 @@ RCD
 				if(useResource(1, user))
 					to_chat(user, "Building Floor...")
 					activate()
-					A:ChangeTurf(/turf/simulated/floor/plating/airless)
+					A:PlaceOnTop(/turf/simulated/floor/plating/airless)
 					return 1
 				return 0
 
@@ -112,7 +112,7 @@ RCD
 						if(!useResource(3, user))
 							return 0
 						activate()
-						A:ChangeTurf(/turf/simulated/wall)
+						A:PlaceOnTop(/turf/simulated/wall)
 						return 1
 				return 0
 
@@ -145,7 +145,7 @@ RCD
 						if(!useResource(5, user))
 							return 0
 						activate()
-						A:ChangeTurf(/turf/simulated/floor/plating/airless)
+						A:ScrapeAway()
 						return 1
 				return 0
 

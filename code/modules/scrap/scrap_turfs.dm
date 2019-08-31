@@ -37,7 +37,7 @@
 			new subtype(T)
 
 /turf/simulated/mineral/airfull
-	basetype = /turf/simulated/floor/plating/ironsand
+	baseturfs = /turf/simulated/floor/plating/ironsand
 	name = "Mineral deposit"
 	icon_state = "rock"
 

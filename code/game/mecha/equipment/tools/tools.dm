@@ -330,7 +330,7 @@
 				if(do_after_cooldown(target))
 					if(disabled) return
 					chassis.spark_system.start()
-					target:ChangeTurf(/turf/simulated/floor/plating)
+					target:ScrapeAway()
 					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					chassis.use_power(energy_drain)
 			else if (istype(target, /turf/simulated/floor))
@@ -357,7 +357,7 @@
 				set_ready_state(0)
 				if(do_after_cooldown(target))
 					if(disabled) return
-					target:ChangeTurf(/turf/simulated/floor/plating)
+					target:PlaceOnTop(/turf/simulated/floor/plating)
 					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					chassis.spark_system.start()
 					chassis.use_power(energy_drain*2)
@@ -366,7 +366,7 @@
 				set_ready_state(0)
 				if(do_after_cooldown(target))
 					if(disabled) return
-					target:ChangeTurf(/turf/simulated/wall)
+					target:PlaceOnTop(/turf/simulated/wall)
 					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					chassis.spark_system.start()
 					chassis.use_power(energy_drain*2)

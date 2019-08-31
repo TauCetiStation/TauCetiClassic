@@ -82,13 +82,13 @@
 			return
 		if(isscrewdriver(W))
 			user.visible_message("[user] tightens some bolts on the wall.", "You tighten the bolts on the wall.")
-			T.ChangeTurf(walltype)
+			T.PlaceOnTop(walltype)
 			qdel(src)
 
 		if( iswelder(W) )
 			var/obj/item/weapon/weldingtool/WT = W
 			if( WT.welding )
-				T.ChangeTurf(walltype)
+				T.PlaceOnTop(walltype)
 				if(walltype != /turf/simulated/wall/mineral/phoron)//Stupid shit keeps me from pushing the attackby() to phoron walls -Sieve
 					T = get_turf(src)
 					T.attackby(W, user)
@@ -98,7 +98,7 @@
 
 	if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
 		var/turf/T = get_turf(src)
-		T.ChangeTurf(walltype)
+		T.PlaceOnTop(walltype)
 		if(walltype != /turf/simulated/wall/mineral/phoron)
 			T = get_turf(src)
 			T.attackby(W, user)
@@ -107,14 +107,14 @@
 	//DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		var/turf/T = get_turf(src)
-		T.ChangeTurf(walltype)
+		T.PlaceOnTop(walltype)
 		T = get_turf(src)
 		T.attackby(W, user)
 		qdel(src)
 
 	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
 		var/turf/T = get_turf(src)
-		T.ChangeTurf(walltype)
+		T.PlaceOnTop(walltype)
 		if(walltype != /turf/simulated/wall/mineral/phoron)
 			T = get_turf(src)
 			T.attackby(W, user)

@@ -274,7 +274,7 @@
 /turf/simulated/floor/plating/ironsand
 	name = "Iron Sand"
 	icon_state = "ironsand1"
-	basetype = /turf/simulated/floor/plating/ironsand
+	baseturfs = /turf/simulated/floor/plating/ironsand
 
 /turf/simulated/floor/plating/ironsand/ex_act()
 	return 0
@@ -287,7 +287,7 @@
 	icon_state = "ironsand[rand(1,15)]"
 
 /turf/simulated/floor/plating/snow
-	basetype = /turf/simulated/floor/plating/ironsand
+	baseturfs = /turf/simulated/floor/plating/ironsand
 	name = "snow"
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"

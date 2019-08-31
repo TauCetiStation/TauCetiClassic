@@ -708,7 +708,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		feedback_add_details("admin_verb","DEL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		if(isturf(O))
 			var/turf/T = O
-			T.ChangeTurf(T.basetype)
+			T.ScrapeAway()
 		else
 			qdel(O)
 

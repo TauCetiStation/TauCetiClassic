@@ -98,7 +98,7 @@
 /turf/simulated/wall/mineral/phoron/proc/PhoronBurn(temperature)
 	spawn(2)
 	new /obj/structure/girder(src)
-	src.ChangeTurf(/turf/simulated/floor)
+	ScrapeAway()
 	for(var/turf/simulated/floor/target_tile in range(0,src))
 		/*if(target_tile.parent && target_tile.parent.group_processing)
 			target_tile.parent.suspend_group_processing()*/
@@ -106,7 +106,7 @@
 		target_tile.hotspot_expose(400 + T0C, 400)
 	for(var/obj/structure/falsewall/phoron/F in range(3,src))//Hackish as fuck, but until temperature_expose works, there is nothing I can do -Sieve
 		var/turf/T = get_turf(F)
-		T.ChangeTurf(/turf/simulated/wall/mineral/phoron)
+		T.PlaceOnTop(/turf/simulated/wall/mineral/phoron)
 		qdel(F)
 	for(var/turf/simulated/wall/mineral/phoron/W in range(3,src))
 		W.ignite((temperature/4))//Added so that you can't set off a massive chain reaction with a small flame

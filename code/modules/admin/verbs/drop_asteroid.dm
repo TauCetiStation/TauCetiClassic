@@ -56,7 +56,7 @@
 	for(var/turf/T2 in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
 		                   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
 		if(istype(T, /turf/simulated/floor/plating/airless/asteroid) || istype(T, /turf/simulated/mineral))
-			T2.basetype = /turf/simulated/floor/plating/airless/asteroid
+			T2.baseturfs = /turf/simulated/floor/plating/airless/asteroid
 
 #define SPACETURF    "a"
 #define FLOORTURF    "b"

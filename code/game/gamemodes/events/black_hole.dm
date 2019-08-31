@@ -25,7 +25,7 @@
 		for(var/obj/O in orange(1,src))
 			qdel(O)
 		for(var/turf/simulated/ST in orange(1,src))
-			ST.ChangeTurf(/turf/space)
+			ST.ScrapeAway()
 
 		sleep(6)
 		grav(10, 4, 10, 0 )
@@ -82,5 +82,5 @@
 	//Destroying the turf
 	if( T && istype(T,/turf/simulated) && prob(turf_removal_chance) )
 		var/turf/simulated/ST = T
-		ST.ChangeTurf(/turf/space)
+		ST.ScrapeAway()
 	return
