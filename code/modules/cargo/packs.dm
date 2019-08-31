@@ -145,7 +145,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/ammo_box/magazine/m9mm_2,
 					/obj/item/ammo_box/magazine/m9mm_2,
 					/obj/item/ammo_box/magazine/m9mm_2)
-	cost = 1000
+	cost = 2000
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "9mm magazine"
 	access = access_armory
@@ -159,7 +159,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/ammo_box/magazine/m9mm_2/rubber,
 					/obj/item/ammo_box/magazine/m9mm_2/rubber,
 					/obj/item/ammo_box/magazine/m9mm_2/rubber)
-	cost = 500
+	cost = 1000
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "9mm magazine (rubber)"
 	access = access_brig
