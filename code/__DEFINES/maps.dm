@@ -30,11 +30,14 @@
     // CROSSLINKED - mixed in with the cross-linked space pool
     #define CROSSLINKED "Cross"
 
+// string - type path of the z-level's baseturf (defaults to space)
+#define ZTRAIT_BASETURF "Baseturf"
+
 // default trait definitions, used by SSmapping
 #define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE)
 #define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE)
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
-#define ZTRAITS_ASTEROID list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_MINING = TRUE)
+#define ZTRAITS_ASTEROID list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_MINING = TRUE, ZTRAIT_BASETURF = "/turf/simulated/floor/plating/airless/asteroid")
 
 #define DL_NAME "name"
 #define DL_TRAITS "traits"

@@ -5,10 +5,10 @@
 	var/mappath = null
 	var/mapfile = null
 	var/loaded = 0 // Times loaded this round
-	var/list/loaded_stuff = list()
-	var/list/bounds
+	var/datum/parsed_map/cached_map
+	var/keep_cached_map = FALSE
 
-/datum/map_template/New(path = null, map = null, rename = null)
+/datum/map_template/New(path = null, rename = null, cache = FALSE, map = null)
 	if(path)
 		mappath = path
 	if(map)
@@ -20,19 +20,15 @@
 	if(rename)
 		name = rename
 
-/datum/map_template/proc/preload_size(path)
-	loaded_stuff = maploader.load_map(get_file(), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
-	if(loaded_stuff && loaded_stuff.len)
-		bounds = loaded_stuff["bounds"]
-		if(bounds && bounds.len)
-			width = bounds[MAP_MAXX] // Assumes all templates are rectangular, have a single Z level, and begin at 1,1,1
-			height = bounds[MAP_MAXY]
-			. = bounds
-			loaded_stuff.Cut()
-		else
-			. = null
-	else
-		. = null
+/datum/map_template/proc/preload_size(path, cache = FALSE)
+	var/datum/parsed_map/parsed = new(get_file())
+	var/bounds = parsed?.bounds
+	if(bounds)
+		width = bounds[MAP_MAXX] // Assumes all templates are rectangular, have a single Z level, and begin at 1,1,1
+		height = bounds[MAP_MAXY]
+		if(cache)
+			cached_map = parsed
+	return bounds
 
 /proc/initTemplateBounds(list/bounds)
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
@@ -66,25 +62,23 @@
 	if(T.y+height > world.maxy)
 		return
 
-	loaded_stuff = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
-	if(!loaded_stuff || !loaded_stuff.len)
-		return 0
+	// Accept cached maps, but don't save them automatically - we don't want
+	// ruins clogging up memory for the whole round.
+	var/datum/parsed_map/parsed = cached_map || new(get_file())
+	cached_map = keep_cached_map ? parsed : null
+	var/list/stuff = parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE)
+	if(!stuff)
+		return
+	var/list/bounds = parsed.bounds
+	if(!bounds)
+		return
 
-	bounds = loaded_stuff["bounds"]
-	if(!bounds || !bounds.len)
-		return 0
-
-	var/list/stuff = loaded_stuff["stuff"]
-	. = stuff
 	//initialize things that are normally initialized after map load
 	if(initBounds)
 		initTemplateBounds(bounds)
 
 	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
-	loaded_stuff.Cut()
-
-/datum/map_template/proc/loadMap(z)
-	return maploader.load_map(get_file(), 1, 1, z, cropMap=TRUE)
+	return stuff // We return list of spawned objects because that information is needed for holodeck
 
 /datum/map_template/proc/get_file()
 	if(mapfile)

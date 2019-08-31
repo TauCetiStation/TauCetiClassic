@@ -165,8 +165,7 @@ var/datum/subsystem/mapping/SSmapping
 	var/list/parsed_maps = list()
 	for (var/file in files)
 		var/full_path = "maps/[path]/[file]"
-		//var/datum/parsed_map/pm = new(file(full_path))
-		var/datum/map_template/pm = new(full_path)
+		var/datum/parsed_map/pm = new(file(full_path))
 		var/bounds = pm.bounds
 		if (!bounds)
 			errorList |= full_path
@@ -193,9 +192,9 @@ var/datum/subsystem/mapping/SSmapping
 
 	// load the maps
 	for (var/P in parsed_maps)
-		var/datum/map_template/pm = P
-		if (!pm.loadMap(start_z + parsed_maps[P]))
-			errorList |= pm.mappath
+		var/datum/parsed_map/pm = P
+		if (!pm.load(1, 1, start_z + parsed_maps[P], no_changeturf = TRUE))
+			errorList |= pm.original_path
 	if(!silent)
 		INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
 	return parsed_maps

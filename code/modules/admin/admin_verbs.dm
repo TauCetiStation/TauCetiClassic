@@ -1044,7 +1044,7 @@ var/list/admin_verbs_hideable = list(
 	message_admins("[key_name_admin(src)] started loading event-map [choice]")
 	log_admin("[key_name_admin(src)] started loading event-map [choice]")
 
-	if(maploader.load_new_z_level(choice))//, load_speed = 100)
+	if(load_new_z_level(choice, "Away Mission"))//, load_speed = 100)
 		message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
 		log_admin("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
 	else
