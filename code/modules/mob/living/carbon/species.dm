@@ -227,7 +227,7 @@
 	icobase = 'icons/mob/human_races/r_lizard.dmi'
 	deform = 'icons/mob/human_races/r_def_lizard.dmi'
 	language = "Sinta'unathi"
-	tail = "sogtail"
+	tail = "unathi"
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_MEAT | DIET_DAIRY
 	primitive = /mob/living/carbon/monkey/unathi
@@ -270,7 +270,7 @@
 	deform = 'icons/mob/human_races/r_def_tajaran.dmi'
 	language = "Siik'maas"
 	additional_languages = list("Siik'tajr")
-	tail = "tajtail"
+	tail = "tajaran"
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
 	taste_sensitivity = TASTE_SENSITIVITY_SHARP
@@ -460,7 +460,7 @@
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
 	flesh_color = "#808d11"
-	tail = "armalis_tail"
+	tail = "vox_armalis"
 	icon_template = 'icons/mob/human_races/r_armalis.dmi'
 
 	sprite_sheets = list(
@@ -958,7 +958,7 @@
 	burn_mod = 1.2
 	speed_mod = -0.8
 
-	tail = "zombie_tajtail"
+	tail = "tajaran_zombie"
 
 	flesh_color = "#afa59e"
 	base_color = "#000000"
@@ -994,7 +994,7 @@
 	burn_mod = 0.90
 	speed_mod = -0.2
 
-	tail = "zombie_sogtail"
+	tail = "unathi_zombie"
 
 	flesh_color = "#34af10"
 	base_color = "#000000"
