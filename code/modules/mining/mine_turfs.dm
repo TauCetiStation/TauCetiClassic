@@ -12,7 +12,8 @@
 	var/mineral/mineral
 	var/mined_ore = 0
 	var/last_act = 0
-	basetype = /turf/simulated/floor/plating/airless/asteroid
+	baseturfs = /turf/simulated/floor/plating/airless/asteroid
+	var/turf/simulated/floor/plating/turf_type = /turf/simulated/floor/plating/airless/asteroid
 	var/datum/geosample/geologic_data
 	var/excavation_level = 0
 	var/list/finds
@@ -135,10 +136,7 @@
 			var/turf/simulated/mineral/random/target_turf = get_step(src, trydir)
 			if(istype(target_turf, /turf/simulated/mineral/random/caves))
 				if(prob(2))
-					if(ticker.current_state > GAME_STATE_SETTING_UP)
-						ChangeTurf(/turf/simulated/floor/plating/airless/asteroid/cave)
-					else
-						new/turf/simulated/floor/plating/airless/asteroid/cave(src)
+					target_turf.ChangeTurf(/turf/simulated/floor/plating/airless/asteroid/cave)
 
 //Not even going to touch this pile of spaghetti
 /turf/simulated/mineral/attackby(obj/item/weapon/W, mob/user)
@@ -336,7 +334,7 @@
 				if(prob(50))
 					M.Stun(5)
 			M.apply_effect(25, IRRADIATE)
-	var/turf/N = ChangeTurf(basetype)
+	var/turf/N = ScrapeAway()
 	N.update_overlays_full()
 	for(var/turf/simulated/floor/plating/airless/asteroid/D in RANGE_TURFS(1, src))
 		D.update_overlays()
@@ -472,7 +470,7 @@
 
 /**********************Caves**************************/
 /turf/simulated/floor/plating/airless/asteroid
-	basetype = /turf/simulated/floor/plating/airless/asteroid
+	baseturfs = /turf/simulated/floor/plating/airless/asteroid
 
 /turf/simulated/floor/plating/airless/asteroid/cave
 	var/length = 20
@@ -529,11 +527,8 @@
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
 			if(i > 3 && prob(20))
-				if(ticker.current_state > GAME_STATE_SETTING_UP)
-					var/list/arguments = list(tunnel, rand(10, 15), 0, dir)
-					ChangeTurf(src.type, arguments)
-				else
-					new src.type(tunnel, rand(10, 15), 0, dir)
+				var/list/arguments = list(rand(10, 15), 0, dir)
+				tunnel.ChangeTurf(type, arguments = arguments)
 			else
 				SpawnFloor(tunnel)
 		else //if(!istype(tunnel, src.parent)) // We hit space/normal/wall, stop our tunnel.
@@ -554,11 +549,7 @@
 		return
 
 	SpawnMonster(T)
-	var/turf/t
-	if(ticker.current_state > GAME_STATE_SETTING_UP)
-		t = new basetype(T)
-	else
-		t = T.ChangeTurf(basetype)
+	var/turf/t = T.ChangeTurf(/turf/simulated/floor/plating/airless/asteroid)
 	spawn(2)
 		t.update_overlays_full()
 

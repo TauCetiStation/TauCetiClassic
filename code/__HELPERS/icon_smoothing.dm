@@ -395,9 +395,9 @@
 	return FALSE
 
 /turf/simulated/mineral/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
-	if(basetype)
-		underlay_appearance.icon = initial(basetype.icon)
-		underlay_appearance.icon_state = initial(basetype.icon_state)
+	if(turf_type)
+		underlay_appearance.icon = initial(turf_type.icon)
+		underlay_appearance.icon_state = initial(turf_type.icon_state)
 		return TRUE
 	return ..()
 

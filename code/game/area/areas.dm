@@ -433,3 +433,7 @@ var/list/ghostteleportlocs = list()
 	else if(A && A.has_gravity) // Areas which always has gravity
 		return 1
 	return 0
+
+/// A hook so areas can modify the incoming args (of what??)
+/area/proc/PlaceOnTopReact(list/new_baseturfs, turf/fake_turf_type, flags)
+	return flags

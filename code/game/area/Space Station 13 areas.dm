@@ -55,6 +55,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 		canSmoothWithAreas = type
 	. = ..()
 
+/area/shuttle/PlaceOnTopReact(list/new_baseturfs, turf/fake_turf_type, flags)
+	. = ..()
+	if(length(new_baseturfs) > 1 || fake_turf_type)
+		return // More complicated larger changes indicate this isn't a player
+	if(ispath(new_baseturfs[1], /turf/simulated/floor/plating))
+		new_baseturfs.Insert(1, /turf/baseturf_skipover/shuttle)
+
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
 

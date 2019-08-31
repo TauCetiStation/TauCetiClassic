@@ -1,7 +1,13 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
 	level = 1.0
-	var/turf/basetype = /turf/space
+
+	// baseturfs can be either a list or a single turf type.
+	// In class definition like here it should always be a single type.
+	// A list will be created in initialization that figures out the baseturf's baseturf etc.
+	// In the case of a list it is sorted from bottom layer to top.
+	// This shouldn't be modified directly, use the helper procs.
+	var/list/baseturfs = /turf/baseturf_bottom
 	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 	var/intact = 1
 
@@ -30,6 +36,8 @@
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
+
+	assemble_baseturfs()
 
 	if(smooth)
 		queue_smooth(src)
@@ -172,6 +180,55 @@
 /turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
 	return 0
 
+// A proc in case it needs to be recreated or badmins want to change the baseturfs
+/turf/proc/assemble_baseturfs(turf/fake_baseturf_type)
+	var/static/list/created_baseturf_lists = list()
+	var/turf/current_target
+	if(fake_baseturf_type)
+		if(length(fake_baseturf_type)) // We were given a list, just apply it and move on
+			baseturfs = fake_baseturf_type
+			return
+		current_target = fake_baseturf_type
+	else
+		if(length(baseturfs))
+			return // No replacement baseturf has been given and the current baseturfs value is already a list/assembled
+		if(!baseturfs)
+			current_target = initial(baseturfs) || type // This should never happen but just in case...
+			stack_trace("baseturfs var was null for [type]. Failsafe activated and it has been given a new baseturfs value of [current_target].")
+		else
+			current_target = baseturfs
+
+	// If we've made the output before we don't need to regenerate it
+	if(created_baseturf_lists[current_target])
+		var/list/premade_baseturfs = created_baseturf_lists[current_target]
+		if(length(premade_baseturfs))
+			baseturfs = premade_baseturfs.Copy()
+		else
+			baseturfs = premade_baseturfs
+		return baseturfs
+
+	var/turf/next_target = initial(current_target.baseturfs)
+	//Most things only have 1 baseturf so this loop won't run in most cases
+	if(current_target == next_target)
+		baseturfs = current_target
+		created_baseturf_lists[current_target] = current_target
+		return current_target
+	var/list/new_baseturfs = list(current_target)
+	for(var/i=0;current_target != next_target;i++)
+		if(i > 100)
+			// A baseturfs list over 100 members long is silly
+			// Because of how this is all structured it will only runtime/message once per type
+			stack_trace("A turf <[type]> created a baseturfs list over 100 members long. This is most likely an infinite loop.")
+			message_admins("A turf <[type]> created a baseturfs list over 100 members long. This is most likely an infinite loop.")
+			break
+		new_baseturfs.Insert(1, next_target)
+		current_target = next_target
+		next_target = initial(current_target.baseturfs)
+
+	baseturfs = new_baseturfs
+	created_baseturf_lists[new_baseturfs[new_baseturfs.len]] = new_baseturfs.Copy()
+	return new_baseturfs
+
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
 		if(O.level == 1)
@@ -189,193 +246,15 @@
 	if(L)
 		qdel(L)
 
-//Creates a new turf
-/turf/proc/ChangeTurf(path, force_lighting_update, list/arguments = list())
-	if (!path)
-		return
-
-	if (path == type)
-		return src
-
-	/*if(istype(src, path))
-		stack_trace("Warning: [src]([type]) changeTurf called for same turf!")
-		return*/
-
-	// Back all this data up, so we can set it after the turf replace.
-	// If you're wondering how this proc'll keep running since the turf should be "deleted":
-	// BYOND never deletes turfs, when you "delete" a turf, it actually morphs the turf into a new one.
-	// Running procs do NOT get stopped due to this.
-	var/old_opacity = opacity
-	var/old_dynamic_lighting = dynamic_lighting
-	var/old_affecting_lights = affecting_lights
-	var/old_lighting_object = lighting_object
-	var/old_corners = corners
-
-	var/old_basetype = basetype
-	var/old_flooded = flooded
-	var/obj/effect/fluid/F = locate() in src
-
-	var/list/temp_res = resources
-
-	//world << "Replacing [src.type] with [N]"
-
-	if(connections)
-		connections.erase_all()
-
-	if(istype(src, /turf/simulated))
-		//Yeah, we're just going to rebuild the whole thing.
-		//Despite this being called a bunch during explosions,
-		//the zone will only really do heavy lifting once.
-		var/turf/simulated/S = src
-		if(S.zone)
-			S.zone.rebuild()
-
-	arguments.Insert(0, src)
-
-	//BEGIN: ECS SHIT (UNTIL SOMEONE MAKES POSSIBLE TO USE QDEL IN THIS PROC FOR TURFS)
-	signal_enabled = FALSE
-
-	var/list/dc = datum_components
-	if(dc)
-		var/all_components = dc[/datum/component]
-		if(length(all_components))
-			for(var/I in all_components)
-				var/datum/component/C = I
-				qdel(C, FALSE, TRUE)
-		else
-			var/datum/component/C = all_components
-			qdel(C, FALSE, TRUE)
-		dc.Cut()
-
-	var/list/lookup = comp_lookup
-	if(lookup)
-		for(var/sig in lookup)
-			var/list/comps = lookup[sig]
-			if(length(comps))
-				for(var/i in comps)
-					var/datum/component/comp = i
-					comp.UnregisterSignal(src, sig)
-			else
-				var/datum/component/comp = comps
-				comp.UnregisterSignal(src, sig)
-		comp_lookup = lookup = null
-
-	for(var/target in signal_procs)
-		UnregisterSignal(target, signal_procs[target])
-	//END: ECS SHIT
-
-	var/turf/W = new path(arglist(arguments))
-
-	W.has_resources = has_resources
-	W.resources = temp_res
-
-	if(ispath(path, /turf/simulated/floor))
-		if (istype(W, /turf/simulated/floor))
-			W.RemoveLattice()
-
-	if(SSair)
-		SSair.mark_for_update(W)
-
-	W.levelupdate()
-
-	basetype = old_basetype
-
-	queue_smooth_neighbors(W)
-
-	if(SSlighting.initialized)
-		recalc_atom_opacity()
-		lighting_object = old_lighting_object
-		affecting_lights = old_affecting_lights
-		corners = old_corners
-		if (old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
-			reconsider_lights()
-
-		if (dynamic_lighting != old_dynamic_lighting)
-			if (IS_DYNAMIC_LIGHTING(src))
-				lighting_build_overlay()
-			else
-				lighting_clear_overlay()
-
-		for(var/turf/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-			S.update_starlight()
-
-	if(F)
-		F.forceMove(src)
-		F.start_loc = src
-		fluid_update()
-
-	if(old_flooded)
-		flooded = 1
-		update_icon()
-
-	return W
-
 /turf/proc/MoveTurf(turf/target, move_unmovable = 0)
-	if(type != basetype || move_unmovable)
-		. = target.ChangeTurf(src.type)
-		ChangeTurf(basetype)
+	if(!istype(src, /turf/space) || move_unmovable)
+		. = target.CopyOnTop(src)
+		ChangeTurf(/turf/baseturf_bottom)
 	else
 		return target
 
 /turf/proc/BreakToBase()
-	ChangeTurf(basetype)
-
-//Commented out by SkyMarshal 5/10/13 - If you are patching up space, it should be vacuum.
-//  If you are replacing a wall, you have increased the volume of the room without increasing the amount of gas in it.
-//  As such, this will no longer be used.
-
-//////Assimilate Air//////
-/*
-/turf/simulated/proc/Assimilate_Air()
-	var/aoxy = 0//Holders to assimilate air from nearby turfs
-	var/anitro = 0
-	var/aco = 0
-	var/atox = 0
-	var/atemp = 0
-	var/turf_count = 0
-
-	for(var/direction in cardinal)//Only use cardinals to cut down on lag
-		var/turf/T = get_step(src,direction)
-		if(istype(T,/turf/space))//Counted as no air
-			turf_count++//Considered a valid turf for air calcs
-			continue
-		else if(istype(T,/turf/simulated/floor))
-			var/turf/simulated/S = T
-			if(S.air)//Add the air's contents to the holders
-				aoxy += S.air.oxygen
-				anitro += S.air.nitrogen
-				aco += S.air.carbon_dioxide
-				atox += S.air.toxins
-				atemp += S.air.temperature
-			turf_count ++
-	air.oxygen = (aoxy/max(turf_count,1))//Averages contents of the turfs, ignoring walls and the like
-	air.nitrogen = (anitro/max(turf_count,1))
-	air.carbon_dioxide = (aco/max(turf_count,1))
-	air.toxins = (atox/max(turf_count,1))
-	air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
-	air.update_values()
-
-	//cael - duplicate the averaged values across adjacent turfs to enforce a seamless atmos change
-	for(var/direction in cardinal)//Only use cardinals to cut down on lag
-		var/turf/T = get_step(src,direction)
-		if(istype(T,/turf/space))//Counted as no air
-			continue
-		else if(istype(T,/turf/simulated/floor))
-			var/turf/simulated/S = T
-			if(S.air)//Add the air's contents to the holders
-				S.air.oxygen = air.oxygen
-				S.air.nitrogen = air.nitrogen
-				S.air.carbon_dioxide = air.carbon_dioxide
-				S.air.toxins = air.toxins
-				S.air.temperature = air.temperature
-				S.air.update_values()
-*/
-
-
-/turf/proc/ReplaceWithLattice()
-	src.ChangeTurf(basetype)
-	spawn()
-		new /obj/structure/lattice( locate(src.x, src.y, src.z) )
+	ScrapeAway()
 
 /turf/proc/kill_creatures(mob/U = null)//Will kill people/creatures and damage mechs./N
 //Useful to batch-add creatures to the list.
@@ -419,7 +298,7 @@
 				continue
 			if(O.invisibility == 101)
 				O.singularity_act()
-	ChangeTurf(/turf/space)
+	ScrapeAway()
 	return(2)
 
 /turf/hitby(atom/movable/AM)
