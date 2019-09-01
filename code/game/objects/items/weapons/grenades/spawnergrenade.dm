@@ -15,11 +15,11 @@
 		playsound(T, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 		// Spawn some enemies
-		for(var/i in deliveryamt)
+		for(var/i in 1 to deliveryamt)
 			var/atom/movable/x = new spawner_type
 			x.loc = T
 			if(prob(50))
-				for(var/j in rand(1, 3))
+				for(var/j in 1 to rand(1, 3))
 					step(x, pick(NORTH,SOUTH,EAST,WEST))
 	qdel(src)
 	return

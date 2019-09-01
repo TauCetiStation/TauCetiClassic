@@ -26,7 +26,7 @@
 
 /obj/item/weapon/grenade/examine(mob/user)
 	..()
-	to_chat(user, "The timer is set [det_time = 1 ? "for instant" : "to [det_time/10]"] seconds.")
+	to_chat(user, "The timer is set [det_time = 1 ? "for instant detonation" : "to [det_time/10]  seconds"].")
 
 /obj/item/weapon/grenade/attack_self(mob/user)
 	if(active)
@@ -49,7 +49,7 @@
 		msg_admin_attack("[user.name] ([user.ckey]) primed \a [src]", user)
 		var/turf/T = get_turf(src)
 		if(T)
-			log_game("[key_name(usr)] has primed a [name] for detonation at [T.loc] ([T.x],[T.y],[T.z]).")
+			log_game("[key_name(usr)] has primed a [name] for detonation at [T.loc] [COORD(T)].")
 
 	icon_state = initial(icon_state) + "_active"
 	active = 1
