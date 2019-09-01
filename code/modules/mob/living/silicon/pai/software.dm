@@ -30,9 +30,9 @@
 		left_part = temp
 	else if(src.stat == DEAD)						// Show some flavor text if the pAI is dead
 		if(config.rus_language)
-			left_part = "<b><font color=red>�Rr�R �a�� ��Rr����o�</font></b>"	//This file has to be saved as ANSI or this will not display correctly
+			left_part = "<b><font color=red>?Rr?R ?a?? ??Rr????o?</font></b>"	//This file has to be saved as ANSI or this will not display correctly
 		else
-			left_part = "<b><font color=red>3Rr0R �a�A C0RrU?�ion</font></b>"
+			left_part = "<b><font color=red>3Rr0R ?a?A C0RrU??ion</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
 
 	else
@@ -292,8 +292,8 @@
 			if(href_list["cancel"])
 				hackobj = null
 			if(href_list["interactwith"])
-				intwth = text2num(href_list["interactwith"])
-				switch(intwth)
+				interaction_type = text2num(href_list["interactwith"])
+				switch(interaction_type)
 					if(95)
 						addToMarked(hackobj)
 					if(96)
@@ -302,10 +302,10 @@
 						hackobj = markedobjects[text2num(href_list["markedid"])]
 						hacksuccess = TRUE
 				var/tdelay = get_dist(src, hackobj) //Delay
-				if(tdelay >= 50 && intwth <= 95) //50 tiles - max distance
+				if(tdelay >= 50 && interaction_type <= 95) //50 tiles - max distance
 					src.temp = "Too far."
 				else
-					if(tdelay >= 5 && !(istype(hackobj, /obj/machinery/camera) && intwth == 5) && intwth <= 95 && hackobj) //With current type of delay it should be stupid waitin' to disconnect/connect to camera.
+					if(tdelay >= 5 && !(istype(hackobj, /obj/machinery/camera) && interaction_type == 5) && interaction_type <= 95 && hackobj) //With current type of delay it should be stupid waitin' to disconnect/connect to camera.
 						src.temp = "Sending signal, please wait...<br><a href='byond://?src=\ref[src];software=interaction;sub=0'>Reload</a> "
 						usetime = world.time + tdelay
 					else
@@ -335,9 +335,9 @@
 /mob/living/silicon/pai/proc/run_interact()
 	if(usetime)
 		usetime = 0
-	if(intwth)
+	if(interaction_type)
 		if(istype(hackobj, /obj/machinery/door)) //Open, Bolt
-			switch(intwth)
+			switch(interaction_type)
 				if(1)
 					var/obj/machinery/door/A = hackobj
 					if(A.density)
@@ -352,7 +352,7 @@
 						A.bolt()
 		if(istype(hackobj, /obj/machinery/camera)) //Activate, Disconnect all active viewers, Alarm, AI access, View
 			var/obj/machinery/camera/A = hackobj
-			switch(intwth)
+			switch(interaction_type)
 				if(1)
 					A.toggle_cam(1)
 				if(2)
@@ -371,7 +371,7 @@
 						switchCamera(hackobj)
 		if(istype(hackobj, /obj/machinery/autolathe)) //Open UI, Contraband features, Power
 			var/obj/machinery/autolathe/A = hackobj
-			switch(intwth)
+			switch(interaction_type)
 				if(1)
 					A.ui_interact(src)
 				if(2)
@@ -380,7 +380,7 @@
 					A.disabled = !A.disabled
 		if(istype(hackobj, /obj/item/device/pda)) //Toggle Messenger, Ringtone, Toggle Ringtone, Toggle Hide/Unhide, Change shown name
 			var/obj/item/device/pda/A = hackobj
-			switch(intwth)
+			switch(interaction_type)
 				if(1)
 					A.toff = !A.toff
 				if(2)
@@ -401,7 +401,7 @@
 		if(istype(hackobj, /obj/item/device/paicard)) //Mod. main law, Mod. secondary law, Manage marked objects, Reset marked objects, Clear software, Unbound, Personality shift
 			var/obj/item/device/paicard/target = hackobj
 			var/mob/living/silicon/pai/targetPersonality = target.pai
-			switch(intwth)
+			switch(interaction_type)
 				if(1)
 					targetPersonality.pai_law0 = input("Insert new main law here.", "PAI exploiter", targetPersonality.pai_law0) as text
 					to_chat(targetPersonality, "Your primary directives have been updated. Your new directive are: [targetPersonality.pai_law0]")
@@ -439,7 +439,7 @@
 					to_chat(targetPersonality, "<font color=green>You feel unbound.</font>")
 		if(istype(hackobj, /obj/machinery/vending)) //Item shooting, Shoot item, Speak, Reset Prices, Toggle Contraband Mode, Toggle Account Verifying
 			var/obj/machinery/vending/A = hackobj
-			switch(intwth)
+			switch(interaction_type)
 				if(1)
 					A.shoot_inventory = !A.shoot_inventory
 				if(2)
@@ -453,7 +453,7 @@
 				if(6)
 					A.check_accounts = !A.check_accounts
 		if(istype(hackobj, /obj/machinery/bot))
-			switch(intwth)
+			switch(interaction_type)
 				if(1) //Unlock
 					var/obj/machinery/bot/Bot = hackobj
 					Bot.locked = !Bot.locked
@@ -465,14 +465,14 @@
 						Bot.turn_on()
 			if(istype(hackobj, /obj/machinery/bot/secbot))
 				var/obj/machinery/bot/secbot/Bot = hackobj
-				switch(intwth)
+				switch(interaction_type)
 					if(3) //Toggle ID cheker
 						Bot.idcheck = !Bot.idcheck
 					if(4) //Toggle Checking records
 						Bot.check_records = !Bot.check_records
 			if(istype(hackobj, /obj/machinery/bot/farmbot))
 				var/obj/machinery/bot/farmbot/Bot = hackobj
-				switch(intwth)
+				switch(interaction_type)
 					if(3) //farmbot - Toggle water plants
 						Bot.setting_water = !Bot.setting_water
 					if(4) //farmbot - Toggle refill watertank
@@ -487,7 +487,7 @@
 						Bot.setting_ignoreMushrooms = !Bot.setting_ignoreMushrooms
 			if(istype(hackobj, /obj/machinery/bot/floorbot))
 				var/obj/machinery/bot/floorbot/Bot = hackobj
-				switch(intwth)
+				switch(interaction_type)
 					if(3) //floorbot - Toggle floor improving
 						Bot.improvefloors = !Bot.improvefloors
 					if(4) //floorbot - Toggle tiles searching
@@ -513,7 +513,7 @@
 	dat += "<b>Basic</b> <br>"
 	for(var/s in src.software)
 		if(s == "digital messenger")
-			dat += "<a href='byond://?src=\ref[src];software=pdamessage;sub=0'>Digital Messenger</a> [(pda.toff) ? "<font color=#FF5555>�</font>" : "<font color=#55FF55>�</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=pdamessage;sub=0'>Digital Messenger</a> [(pda.toff) ? "<font color=#FF5555>?</font>" : "<font color=#55FF55>?</font>"] <br>"
 		if(s == "crew manifest")
 			dat += "<a href='byond://?src=\ref[src];software=manifest;sub=0'>Crew Manifest</a> <br>"
 		if(s == "medical records")
@@ -532,11 +532,11 @@
 		if(s == "heartbeat sensor")
 			dat += "<a href='byond://?src=\ref[src];software=[s]'>Heartbeat Sensor</a> <br>"
 		if(s == "security HUD")	//This file has to be saved as ANSI or this will not display correctly
-			dat += "<a href='byond://?src=\ref[src];software=securityhud;sub=0'>Facial Recognition Suite</a> [(src.secHUD) ? "<font color=#55FF55>�</font>" : "<font color=#FF5555>�</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=securityhud;sub=0'>Facial Recognition Suite</a> [(src.secHUD) ? "<font color=#55FF55>?</font>" : "<font color=#FF5555>?</font>"] <br>"
 		if(s == "medical HUD")	//This file has to be saved as ANSI or this will not display correctly
-			dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Medical Analysis Suite</a> [(src.medHUD) ? "<font color=#55FF55>�</font>" : "<font color=#FF5555>�</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Medical Analysis Suite</a> [(src.medHUD) ? "<font color=#55FF55>?</font>" : "<font color=#FF5555>?</font>"] <br>"
 		if(s == "universal translator")	//This file has to be saved as ANSI or this will not display correctly
-			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a> [(src.translator_on) ? "<font color=#55FF55>�</font>" : "<font color=#FF5555>�</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a> [(src.translator_on) ? "<font color=#55FF55>?</font>" : "<font color=#FF5555>?</font>"] <br>"
 		if(s == "projection array")
 			dat += "<a href='byond://?src=\ref[src];software=projectionarray;sub=0'>Projection Array</a> <br>"
 		if(s == "interaction module")
