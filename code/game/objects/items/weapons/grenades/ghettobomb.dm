@@ -11,6 +11,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	active = 0
 	det_time = 50
+	activate_sound = 'sound/items/matchstick_light.ogg'
 	var/range = 3
 	var/list/times
 
@@ -61,7 +62,7 @@
 /obj/item/weapon/grenade/cancasing/attack_self(mob/user)
 	if(!active)
 		if(clown_check(user))
-			playsound(src, 'sound/items/matchstick_light.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, activate_sound, VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src]!</span>", "<span class='warning'>[bicon(src)] You light \the [name]!</span>")
 			active = 1
 			update_icon()
@@ -129,7 +130,7 @@
 			is_W_lit = TRUE
 	if(is_W_lit)
 		if(clown_check(user))
-			playsound(src, 'sound/items/matchstick_light.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, activate_sound, VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [W]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W]!</span>")
 			active = 1
 			update_icon()

@@ -11,6 +11,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	var/active = 0
 	var/det_time = 50
+	var/activate_sound = 'sound/weapons/armbomb.ogg'
 
 	action_button_name = "Activate Grenade"
 
@@ -52,7 +53,7 @@
 
 	icon_state = initial(icon_state) + "_active"
 	active = 1
-	playsound(src, 'sound/weapons/armbomb.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, null, -3)
 	addtimer(CALLBACK(src, .proc/prime), det_time)
 
 /obj/item/weapon/grenade/proc/prime()
