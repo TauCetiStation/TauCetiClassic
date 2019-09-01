@@ -3,6 +3,10 @@
 //	- Potentially roll HUDs and Records into one
 //	- Shock collar/lock system for prisoner pAIs?
 
+#define INTERACTION_ADD_TO_MARKED		95
+#define INTERACTION_REMOVE_FROM_MARKED	96
+#define INTERACTION_CONNECT_TO_MARKED	97
+
 /mob/living/silicon/pai/var/list/available_software = list(
 															"crew manifest" = 5,
 															"digital messenger" = 5,
@@ -294,11 +298,11 @@
 			if(href_list["interactwith"])
 				interaction_type = text2num(href_list["interactwith"])
 				switch(interaction_type)
-					if(95)
+					if(INTERACTION_ADD_TO_MARKED)
 						addToMarked(hackobj)
-					if(96)
+					if(INTERACTION_REMOVE_FROM_MARKED)
 						removeFromMarked(hackobj)
-					if(97)
+					if(INTERACTION_CONNECT_TO_MARKED)
 						hackobj = markedobjects[text2num(href_list["markedid"])]
 						hacksuccess = TRUE
 				var/tdelay = get_dist(src, hackobj) //Delay
@@ -801,7 +805,7 @@
 		if(markedobjects.len > 0)
 			dat += "Marked devices: <br>"
 			for(var/i in 1 to markedobjects.len)
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=97;markedid=[i];sub=0'>[i] - [markedobjects[i]]</a> <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_CONNECT_TO_MARKED];markedid=[i];sub=0'>[i] - [markedobjects[i]]</a> <br>"
 		return dat
 	if(cable && !cable.machine)
 		dat += "<font color=#FFFF55>Extended</font> <br>"
@@ -915,9 +919,9 @@
 				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=2;sub=0'>Turn [Temp.on ? "Off" : "On"]</a> <br>"
 			//Add something new there
 			if(hackobj in markedobjects)
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=96;sub=0'>Unmark</a> <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_REMOVE_FROM_MARKED];sub=0'>Unmark</a> <br>"
 			else
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=95;sub=0'>Mark</a> <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_ADD_TO_MARKED];sub=0'>Mark</a> <br>"
 		else
 			dat += "Jack in progress... [src.hackprogress]% complete.<br>"
 			dat += "<a href='byond://?src=\ref[src];software=interaction;cancel=1;sub=0'>Cancel Jack</a> <br>"
@@ -1002,3 +1006,7 @@
 		add_language("Skrellian")
 
 		to_chat(src, "<span class='notice'>Translator Module toggled ON.</span>")
+
+#undef INTERACTION_ADD_TO_MARKED 
+#undef INTERACTION_REMOVE_FROM_MARKED
+#undef INTERACTION_CONNECT_TO_MARKED 
