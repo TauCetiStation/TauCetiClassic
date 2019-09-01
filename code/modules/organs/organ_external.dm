@@ -251,7 +251,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 //Handles dismemberment
 /obj/item/organ/external/proc/droplimb(no_explode = FALSE, clean = FALSE, disintegrate = DROPLIMB_EDGE)
-	if(cannot_amputate)
+	if(cannot_amputate || !owner)
 		return
 
 	owner.bodyparts -= src

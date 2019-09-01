@@ -18,6 +18,7 @@
 	var/burn_mod = 1                                     // Burn damage multiplier.
 	var/oxy_mod = 1                                      // Oxyloss multiplier.
 	var/tox_mod = 1                                      // Toxloss multiplier.
+	var/clone_mod = 1                                    // Cloneloss multiplier
 	var/brain_mod = 1                                    // Brainloss multiplier.
 	var/speed_mod =  0                                   // How fast or slow specific specie.
 	var/siemens_coefficient = 1                          // How conductive is the specie.
@@ -690,10 +691,11 @@
 	icobase = 'icons/mob/human_races/r_skeleton.dmi'
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
 	damage_mask = FALSE
-	dietflags = 0
+	dietflags = DIET_ALL
 
 	oxy_mod = 0
 	tox_mod = 0
+	clone_mod = 0
 	siemens_coefficient = 0
 
 	butcher_drops = list()
@@ -706,6 +708,9 @@
 	,NO_FINGERPRINT = TRUE
 	,NO_BLOOD_TRAILS = TRUE
 	,NO_PAIN = TRUE
+	,RAD_IMMUNE = TRUE
+	,NO_EMBED = TRUE
+	,NO_MINORCUTS = TRUE
 	)
 
 	has_bodypart = list(

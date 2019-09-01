@@ -6,10 +6,11 @@
 	icon = null
 	invisibility = 101
 
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
+	if(!species.flags[NO_BLOOD_TRAILS])
+		animation = new(loc)
+		animation.icon_state = "blank"
+		animation.icon = 'icons/mob/mob.dmi'
+		animation.master = src
 
 	for(var/obj/item/organ/external/BP in bodyparts)
 		// Only make the limb drop if it's not too damaged
@@ -17,11 +18,9 @@
 			// Override the current limb status and don't cause an explosion
 			BP.droplimb(TRUE, null, DROPLIMB_EDGE)
 
-	flick("gibbed-h", animation)
-	if(species)
+	if(!species.flags[NO_BLOOD_TRAILS])
+		flick("gibbed-h", animation)
 		hgibs(loc, viruses, dna, species.flesh_color, species.blood_datum)
-	else
-		hgibs(loc, viruses, dna)
 
 	spawn(15)
 		if(animation)	qdel(animation)
