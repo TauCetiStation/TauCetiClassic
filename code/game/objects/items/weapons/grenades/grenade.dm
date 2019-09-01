@@ -72,7 +72,7 @@
 				det_time = 5 SECONDS
 			if(5 SECONDS)
 				det_time = 1
-		to_chat(user, "<span class='notice'>You set the [name] for [det_time == 1 ? "instant" : "[det_time/10] second"] detonation time.</span>")
+		to_chat(user, "<span class='notice'>You set the [name] for [det_time == 1 ? "instant detonation" : "[det_time/10] second detonation time"].</span>")
 		add_fingerprint(user)
 	..()
 
