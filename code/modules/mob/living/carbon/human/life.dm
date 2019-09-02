@@ -736,6 +736,7 @@
 			drowsyness = max(drowsyness, 10)
 		else if(prob(10))
 			drowsyness = max(drowsyness, 2)
+			emote("yawn")
 
 	// Account for massive pressure differences.  Done by Polymorph
 	// Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an axe sticking from his head for his previous hardcoded nonsense!
