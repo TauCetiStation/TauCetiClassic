@@ -248,6 +248,11 @@
 	network = list("NUKE")
 	light_color = "#a91515"
 
+/obj/machinery/computer/security/nuclear/shiv
+	name = "pilot camera monitor"
+	desc = "Console used by fighter pilot to monitor the battlefield."
+	network = list("shiv")
+
 /obj/machinery/computer/security/abductor_ag
 	name = "agent observation monitor"
 	desc = "Used to access the cameras in agent helmet."
