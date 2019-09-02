@@ -7311,16 +7311,6 @@
 "aAm" = (
 /turf/unsimulated/wall,
 /area/centcom/living)
-"aAn" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/living)
 "aAr" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Brig";
@@ -51047,7 +51037,7 @@ ayW
 azm
 azm
 ayL
-aAn
+abC
 aAm
 aAM
 aAM
@@ -51818,7 +51808,7 @@ ayX
 azm
 azF
 ayL
-aAn
+abC
 aAm
 aAP
 aAM
