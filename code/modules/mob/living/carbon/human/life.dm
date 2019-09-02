@@ -732,11 +732,10 @@
 	if(bodytemperature < species.cold_level_1 && get_species() == UNATHI)
 		if(bodytemperature < species.cold_level_3)
 			drowsyness  = max(drowsyness, 20)
-		else if(bodytemperature < species.cold_level_2)
-			eye_blurry = max(eye_blurry, 10)
+		else if(prob(50) && bodytemperature < species.cold_level_2)
+			drowsyness = max(drowsyness, 10)
 		else if(prob(10))
-			Weaken(2)
-			emote("yawn")
+			drowsyness = max(drowsyness, 2)
 
 	// Account for massive pressure differences.  Done by Polymorph
 	// Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an axe sticking from his head for his previous hardcoded nonsense!
