@@ -959,7 +959,8 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker"
+	name = "Weapons locker";
+	req_access = list(3)
 	},
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
@@ -1000,7 +1001,8 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker"
+	name = "Weapons locker";
+	req_access = list(3)
 	},
 /obj/item/weapon/gun/projectile/wjpp,
 /obj/item/weapon/gun/projectile/wjpp,
@@ -1016,7 +1018,8 @@
 	},
 /obj/structure/closet/wardrobe/tactical,
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker"
+	name = "Weapons locker";
+	req_access = list(3)
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -1066,7 +1069,8 @@
 	dir = 8
 	},
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker"
+	name = "Weapons locker";
+	req_access = list(3)
 	},
 /obj/structure/closet/wardrobe/tactical,
 /turf/simulated/floor{
@@ -1083,7 +1087,8 @@
 	dir = 1
 	},
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker"
+	name = "Weapons locker";
+	req_access = list(3)
 	},
 /obj/item/clothing/suit/storage/flak/bulletproof,
 /obj/item/clothing/suit/storage/flak/bulletproof,
@@ -1108,7 +1113,8 @@
 	},
 /obj/structure/closet/wardrobe/tactical,
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker"
+	name = "Weapons locker";
+	req_access = list(3)
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -1150,7 +1156,8 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
-	name = "Weapons locker"
+	name = "Weapons locker";
+	req_access = list(3)
 	},
 /obj/item/clothing/suit/armor/laserproof,
 /obj/item/clothing/suit/armor/laserproof,
@@ -1706,7 +1713,8 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	name = "Weapons locker"
+	name = "Weapons locker";
+	req_access = list(3)
 	},
 /obj/item/weapon/melee/baton,
 /obj/item/clothing/suit/armor/riot,
@@ -1821,7 +1829,8 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	name = "Weapons locker"
+	name = "Weapons locker";
+	req_access = list(3)
 	},
 /obj/item/weapon/melee/baton,
 /obj/item/clothing/suit/armor/riot,
@@ -1837,7 +1846,8 @@
 /obj/structure/window/reinforced,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	name = "Weapons locker"
+	name = "Weapons locker";
+	req_access = list(3)
 	},
 /obj/item/weapon/melee/baton,
 /obj/item/clothing/suit/armor/riot,
