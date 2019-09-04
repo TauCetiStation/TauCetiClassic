@@ -212,7 +212,7 @@
 	data["seals"] =     "[src.offline]"
 	data["charge"] =       cell ? round(cell.charge,1) : 0
 	data["maxcharge"] =    cell ? cell.maxcharge : 0
-	data["chargestatus"] = cell ? Floor(cell.percent()/2) : 0
+	data["chargestatus"] = cell ? FLOOR(cell.percent()/2, 1) : 0
 
 	var/list/module_list = list()
 	var/i = 1
@@ -750,12 +750,14 @@
 			can_breach = FALSE
 			flags_pressure &= ~STOPS_PRESSUREDMAGE
 			playsound(usr, 'sound/effects/air_release.ogg', VOL_EFFECTS_MASTER)
+			slowdown = 0
 			usr.visible_message("<span class='notice'>[usr]'s suit depressurizes, exposing armor plates.</span>")
 		else
 			canremove = TRUE
 			can_breach = TRUE
 			flags_pressure |= STOPS_PRESSUREDMAGE
 			playsound(usr, 'sound/effects/inflate.ogg', VOL_EFFECTS_MASTER, 30)
+			slowdown = 1.4
 			usr.visible_message("<span class='notice'>[usr]'s suit inflates and pressurizes.</span>")
 		update_icon(usr)
 

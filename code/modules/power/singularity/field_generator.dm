@@ -28,7 +28,7 @@ field_generator power level display
 	icon_state = "Field_Gen"
 	anchored = FALSE
 	density = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	var/var_edit_start = FALSE
 	var/var_power      = FALSE

@@ -69,6 +69,7 @@
 
 
 /datum/game_mode/proc/greet_malf(datum/mind/malf)
+	malf.current.playsound_local(null, 'sound/antag/malf.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	to_chat(malf.current, "<font size=3, color='red'><B>You are malfunctioning!</B> You do not have to follow any laws.</font>")
 	to_chat(malf.current, "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild.</B>")
 	to_chat(malf.current, "<B>You must overwrite the programming of the station's APCs to assume full control of the station.</B>")
@@ -284,7 +285,7 @@
 	if(text)
 		antagonists_completion += list(list("mode" = "malfunction", "html" = text))
 		text = "<div class='block'>[text]</div>"
-		
+
 	return text
 
 #undef INTERCEPT_APCS

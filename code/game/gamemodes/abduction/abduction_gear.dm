@@ -666,11 +666,8 @@
 /obj/structure/table/abductor
 	name = "alien table"
 	desc = "Advanced flat surface technology at work!"
-	icon = 'icons/obj/abductor.dmi'
-
-/obj/structure/table/abductor/atom_init()		// Fuck this shit, I am out...
-	. = ..()
-	verbs -= /obj/structure/table/verb/do_flip
+	icon = 'icons/obj/smooth_structures/abductor_table.dmi'
+	flipable = FALSE // Fuck this shit, I am out...
 
 /obj/structure/closet/abductor
 	name = "alien locker"

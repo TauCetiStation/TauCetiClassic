@@ -5,8 +5,7 @@
 	desc = "Use this to escape from those evil Red Shirts."
 	item_color = "r"
 	var/activation_emote = "chuckle"
-	var/uses = 1.0
-
+	uses = 1.0
 
 /obj/item/weapon/implant/freedom/atom_init()
 	activation_emote = pick("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")

@@ -317,7 +317,7 @@
 	density = TRUE
 	req_access = list(access_research)
 	flags = CONDUCT
-	use_power = 0
+	use_power = NO_POWER_USE
 	var/active = FALSE
 	var/power = 0
 	var/state = 0

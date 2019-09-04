@@ -56,8 +56,8 @@
 
 
 
-/datum/quirk/epileptic
-	name = "Twitching"
+/datum/quirk/tourette
+	name = "Tourette"
 	desc = "You have incurable twitching."
 	value = -1
 	mob_trait = TRAIT_TOURETTE

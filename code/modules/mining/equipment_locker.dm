@@ -640,15 +640,17 @@
 	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/W = I
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(W.welding && !stat)
+		if(W.use(0, user) && !stat)
 			if(stance != HOSTILE_STANCE_IDLE)
 				to_chat(user, "<span class='info'>[src] is moving around too much to repair!</span>")
 				return
 			if(maxHealth == health)
 				to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
 			else
-				health += 10
-				to_chat(user, "<span class='info'>You repair some of the armor on [src].</span>")
+				to_chat(user, "<span class='info'>You start repair some of the armor on [src].</span>")
+				if(W.use_tool(src, user, 20, volume = 50))
+					health += 10
+					to_chat(user, "<span class='info'>You repaired some of the armor on [src].</span>")
 			return
 	..()
 
