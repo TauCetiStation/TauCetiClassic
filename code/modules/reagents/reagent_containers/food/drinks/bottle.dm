@@ -11,7 +11,12 @@
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
 	var/is_glass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 	var/is_transparent = 1 //Determines whether an overlay of liquid should be added to bottle when it fills
-	var/STOP = 0 //Gotta stop the rotation. An additional mechanism to stop the rotation of the bottle when you pick up
+	var/stop_spin_bottle = 0 //Gotta stop the rotation. An additional mechanism to stop the rotation of the bottle when you pick up
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/atom_init() //Check this
+	. = ..()
+	if (!is_glass)
+		verbs -= /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle()
 	set name = "Spin bottle"
@@ -26,35 +31,39 @@
 	if(usr.is_busy())
 		return
 
-	if(usr.get_active_hand(src) || usr.get_inactive_hand(src)) //Drop bottle from inventory
-		if(is_glass && STOP == 0)
-			H.drop_from_inventory(src)
+	if(stop_spin_bottle == 0)
+		var/bottle_dropped = 0
+		if(usr.get_active_hand() || usr.get_inactive_hand())
+			bottle_dropped = 1
+			usr.drop_from_inventory(src)
+		else
+			if(isturf(loc))
+				bottle_dropped = 1
 
-	if(is_glass == 1)
-		is_glass = 2
-		if(is_glass == 2)
+		if(bottle_dropped == 1)
 			var/angle_to_stop = pick(0, 45, 90, 135, 180, 225, 270, 315) //Random result
 			var/matrix/M = matrix()
+			stop_spin_bottle = 2
 			transform = 0
 			M.Turn(angle_to_stop)
 			animate(src, transform = turn(matrix(), 120), time = 3, loop = 5) //Spin bottle
 			animate(transform = turn(matrix(), 240), time = 3, loop = 5)
 			animate(transform = null, time = 3, loop = 5)
 			sleep(45)
-			if(angle_to_stop >= 0 && angle_to_stop < 120 && STOP == 0) //Torsion result
+			if(angle_to_stop >= 0 && angle_to_stop < 120 && stop_spin_bottle == 2) //Torsion result
 				animate(src, transform = M, time = 3)
-			if(angle_to_stop > 119 && angle_to_stop < 226 && STOP == 0)
+			if(angle_to_stop > 119 && angle_to_stop < 226 && stop_spin_bottle == 2)
 				animate(src, transform = turn(matrix(), 120), time = 3)
 				animate(transform = M, time = 3)
-			if(angle_to_stop > 241 && angle_to_stop < 316 && STOP == 0)
+			if(angle_to_stop > 241 && angle_to_stop < 316 && stop_spin_bottle == 2)
 				animate(src, transform = turn(matrix(), 120), time = 3)
 				animate(transform = turn(matrix(), 240), time = 3)
 				animate(transform = M, time = 3)
-			is_glass = 1
-			STOP = 0
+			stop_spin_bottle = 0
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/pickup(mob/living/user)
-	STOP = 1
+	if(stop_spin_bottle == 2)
+		stop_spin_bottle = 1 //It is necessary that after sleep there is no result
 	animate(src, transform = null, ANIMATION_END_NOW) //Restore bottle to its original position
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user)
@@ -339,6 +348,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao/atom_init()
 	. = ..()
 	reagents.add_reagent("bluecuracao", 100)
+	verbs -= /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle //very bad sprite for spin
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine
 	name = "Briar Rose Grenadine Syrup"
@@ -371,7 +381,6 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice/atom_init()
 	. = ..()
 	reagents.add_reagent("orangejuice", 100)
-	verbs -= /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/cream
 	name = "Milk Cream"
@@ -383,7 +392,6 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/cream/atom_init()
 	. = ..()
 	reagents.add_reagent("cream", 100)
-	verbs -= /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "Tomato Juice"
@@ -395,7 +403,6 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice/atom_init()
 	. = ..()
 	reagents.add_reagent("tomatojuice", 100)
-	verbs -= /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice
 	name = "Lime Juice"
@@ -407,7 +414,6 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice/atom_init()
 	. = ..()
 	reagents.add_reagent("limejuice", 100)
-	verbs -= /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/ale
 	name = "Magm-Ale"
