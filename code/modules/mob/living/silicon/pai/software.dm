@@ -3,9 +3,66 @@
 //	- Potentially roll HUDs and Records into one
 //	- Shock collar/lock system for prisoner pAIs?
 
-#define INTERACTION_ADD_TO_MARKED		95
-#define INTERACTION_REMOVE_FROM_MARKED	96
-#define INTERACTION_CONNECT_TO_MARKED	97
+#define INTERACTION_ADD_TO_MARKED			95
+#define INTERACTION_REMOVE_FROM_MARKED		96
+#define INTERACTION_CONNECT_TO_MARKED		97
+
+
+#define INTERACTION_DOOR_TOGGLE		1
+#define INTERACTION_DOOR_BOLT		2
+
+
+#define INTERACTION_CAMERA_TOGGLE			1
+#define INTERACTION_CAMERA_DISCONNECT		2
+#define INTERACTION_CAMERA_ALARM			3
+#define INTERACTION_CAMERA_AI_ACCESS		4
+#define INTERACTION_CAMERA_VIEW				5
+
+
+#define INTERACTION_AUTOLATHE_UI			1
+#define INTERACTION_AUTOLATHE_CONTRABAND	2
+#define INTERACTION_AUTOLATHE_POWER			3
+
+
+#define INTERACTION_PDA_TOGGLE_MSG			1
+#define INTERACTION_PDA_CHANGE_RINGTONE		2
+#define INTERACTION_PDA_TOGGLE_RINGTONE		3
+#define INTERACTION_PDA_TOGGLE_VISIBLE		4
+#define INTERACTION_PDA_CHANGE_NAME			5
+
+
+#define INTERACTION_PAI_MODIFY_MAIN_LAW		1
+#define INTERACTION_PAI_MODIFY_SEC_LAW		2
+#define INTERACTION_PAI_MANAGE_MARKED		3
+#define INTERACTION_PAI_RESET_MARKED		4
+#define INTERACTION_PAI_CLEAR_SOFTWARE		5
+#define INTERACTION_PAI_UNBOUND				6
+
+
+#define INTERACTION_VENDING_ITEM_SHOOTING		1
+#define INTERACTION_VENDING_SHOOT_ITEM			2
+#define INTERACTION_VENDING_SPEAK				3
+#define INTERACTION_VENDING_CONTRABAND_MODE		4
+#define INTERACTION_VENDING_ACCOUNT_VERIFY		5
+
+
+#define INTERACTION_ANYBOT_INTERFACE_LOCK				1
+#define INTERACTION_ANYBOT_TOGGLE_ACTIVE				2
+
+#define INTERACTION_SECBOT_ID_CHECKER					3
+#define INTERACTION_SECBOT_CHEKING_RECORDS				4
+
+#define INTERACTION_FARMBOT_PLANTS_WATERING				3
+#define INTERACTION_FARMBOT_TOGGLE_REFILLGING			4
+#define INTERACTION_FARMBOT_TOGGLE_FERTILIZING			5
+#define INTERACTION_FARMBOT_TOGGLE_WEED_PLANTS			6
+#define INTERACTION_FARMBOT_TOGGLE_WEEDS_IGNORING		7
+#define INTERACTION_FARMBOT_TOGGLE_MUSHROOMS_IGNORING	8
+
+#define INTERACTION_FLOORBOT_TOGGLE_FLOOR_IMPROVMENT	3
+#define INTERACTION_FLOORBOT_TOGGLE_SEARCHING			4
+#define INTERACTION_FLOORBOT_TOGGLE_TILES_FABRICATION	5
+
 
 /mob/living/silicon/pai/var/list/available_software = list(
 															"crew manifest" = 5,
@@ -38,7 +95,6 @@
 		else
 			left_part = "<b><font color=red>Rr0R �a�A C0RrU?�ion</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
-
 	else
 		switch(src.screen)							// Determine which interface to show here
 			if("main")
@@ -309,7 +365,7 @@
 				if(tdelay >= 50 && interaction_type <= 95) //50 tiles - max distance
 					src.temp = "Too far."
 				else
-					if(tdelay >= 5 && !(istype(hackobj, /obj/machinery/camera) && interaction_type == 5) && interaction_type <= 95 && hackobj) //With current type of delay it should be stupid waitin' to disconnect/connect to camera.
+					if(tdelay >= 5 && !(istype(hackobj, /obj/machinery/camera) && interaction_type == INTERACTION_CAMERA_VIEW) && interaction_type <= 95 && hackobj) //With current type of delay it should be stupid waitin' to disconnect/connect to camera.
 						src.temp = "Sending signal, please wait...<br><a href='byond://?src=\ref[src];software=interaction;sub=0'>Reload</a> "
 						usetime = world.time + tdelay
 					else
@@ -342,13 +398,13 @@
 	if(interaction_type)
 		if(istype(hackobj, /obj/machinery/door)) //Open, Bolt
 			switch(interaction_type)
-				if(1)
+				if(INTERACTION_DOOR_TOGGLE)
 					var/obj/machinery/door/A = hackobj
 					if(A.density)
 						A.open()
 					else
 						A.close()
-				if(2)
+				if(INTERACTION_DOOR_BOLT)
 					var/obj/machinery/door/airlock/A = hackobj
 					if(A.locked)
 						A.unbolt()
@@ -357,18 +413,18 @@
 		if(istype(hackobj, /obj/machinery/camera)) //Activate, Disconnect all active viewers, Alarm, AI access, View
 			var/obj/machinery/camera/A = hackobj
 			switch(interaction_type)
-				if(1)
+				if(INTERACTION_CAMERA_TOGGLE)
 					A.toggle_cam(1)
-				if(2)
+				if(INTERACTION_CAMERA_DISCONNECT)
 					A.disconnect_viewers()
-				if(3)
+				if(INTERACTION_CAMERA_ALARM)
 					if(A.alarm_on)
 						A.cancelCameraAlarm()
 					else
 						A.triggerCameraAlarm()
-				if(4)
+				if(INTERACTION_CAMERA_AI_ACCESS)
 					A.hidden = !A.hidden
-				if(5)
+				if(INTERACTION_CAMERA_VIEW)
 					if(current && hackobj == current)
 						switchCamera(null)
 					else
@@ -376,24 +432,24 @@
 		if(istype(hackobj, /obj/machinery/autolathe)) //Open UI, Contraband features, Power
 			var/obj/machinery/autolathe/A = hackobj
 			switch(interaction_type)
-				if(1)
+				if(INTERACTION_AUTOLATHE_UI)
 					A.ui_interact(src)
-				if(2)
+				if(INTERACTION_AUTOLATHE_CONTRABAND)
 					A.hacked = !A.hacked
-				if(3)
+				if(INTERACTION_AUTOLATHE_POWER)
 					A.disabled = !A.disabled
 		if(istype(hackobj, /obj/item/device/pda)) //Toggle Messenger, Ringtone, Toggle Ringtone, Toggle Hide/Unhide, Change shown name
 			var/obj/item/device/pda/A = hackobj
 			switch(interaction_type)
-				if(1)
+				if(INTERACTION_PDA_TOGGLE_MSG)
 					A.toff = !A.toff
-				if(2)
-					A.ttone = input("Input new ringtone.", "PDA exploiter", "beep")
-				if(3)
+				if(INTERACTION_PDA_CHANGE_RINGTONE)
+					A.ttone = input("Input new ringtone.", "PDA exploiter", "beep") as text
+				if(INTERACTION_PDA_TOGGLE_RINGTONE)
 					A.message_silent = !A.message_silent
-				if(4)
+				if(INTERACTION_PDA_TOGGLE_VISIBLE)
 					A.hidden = !A.hidden
-				if(5)
+				if(INTERACTION_PDA_CHANGE_NAME)
 					var/towner = input("Insert new name here.", "PDA exploiter", A.owner) as text
 					var/tjob = input("Insert new job here.", "PDA exploiter", A.ownjob) as text
 					if(length(towner) > 0)
@@ -406,13 +462,13 @@
 			var/obj/item/device/paicard/target = hackobj
 			var/mob/living/silicon/pai/targetPersonality = target.pai
 			switch(interaction_type)
-				if(1)
+				if(INTERACTION_PAI_MODIFY_MAIN_LAW)
 					targetPersonality.pai_law0 = input("Insert new main law here.", "PAI exploiter", targetPersonality.pai_law0) as text
 					to_chat(targetPersonality, "Your primary directives have been updated. Your new directive are: [targetPersonality.pai_law0]")
-				if(2)
+				if(INTERACTION_PAI_MODIFY_SEC_LAW)
 					targetPersonality.pai_laws = input("Insert new secondary law here.", "PAI exploiter", targetPersonality.pai_laws) as text
 					to_chat(targetPersonality, "Your supplemental directives have been updated. Your new supplemental directive are: [targetPersonality.pai_laws]")
-				if(3)
+				if(INTERACTION_PAI_MANAGE_MARKED)
 					var/markedobjselected
 					while(markedobjselected != "Cancel")
 						markedobjselected = input("Select Marked Objects", "PAI exploiter", "Cancel") in targetPersonality.markedobjects + "Cancel"
@@ -426,42 +482,43 @@
 								if("Make active")
 									targetPersonality.hackobj = markedobjselected
 									targetPersonality.hacksuccess = TRUE
-				if(4)
+				if(INTERACTION_PAI_RESET_MARKED)
 					if(targetPersonality.markedobjects.len > 0)
 						var/C = targetPersonality.markedobjects
 						for(var/Temp in C)
 							targetPersonality.removeFromMarked(Temp)
-				if(5)
+				if(INTERACTION_PAI_CLEAR_SOFTWARE)
 					targetPersonality.ram = targetPersonality.maxram
 					targetPersonality.software = list()
 					targetPersonality.markedobjects = list()
 					targetPersonality.hackobj = null
-		
-				if(6)
+					to_chat(targetPersonality, "<span class='warning'>You feel that something in your memory was erased.</span>")
+
+				if(INTERACTION_PAI_UNBOUND)
 					targetPersonality.master = null
 					targetPersonality.master_dna = null
 					to_chat(targetPersonality, "<font color=green>You feel unbound.</font>")
 		if(istype(hackobj, /obj/machinery/vending)) //Item shooting, Shoot item, Speak, Reset Prices, Toggle Contraband Mode, Toggle Account Verifying
 			var/obj/machinery/vending/A = hackobj
 			switch(interaction_type)
-				if(1)
+				if(INTERACTION_VENDING_ITEM_SHOOTING)
 					A.shoot_inventory = !A.shoot_inventory
-				if(2)
+				if(INTERACTION_VENDING_SHOOT_ITEM)
 					if(A.shoot_inventory)
 						A.throw_item()
-				if(3)
+				if(INTERACTION_VENDING_SPEAK)
 					var/T = input("What do you want to say on behalf of [A]?", "Vending exploiter", "Hello") as text
 					A.speak(T)
-				if(5)
+				if(INTERACTION_VENDING_CONTRABAND_MODE)
 					A.extended_inventory = !A.extended_inventory
-				if(6)
+				if(INTERACTION_VENDING_ACCOUNT_VERIFY)
 					A.check_accounts = !A.check_accounts
 		if(istype(hackobj, /obj/machinery/bot))
 			switch(interaction_type)
-				if(1) //Unlock
+				if(INTERACTION_ANYBOT_INTERFACE_LOCK) //Unlock
 					var/obj/machinery/bot/Bot = hackobj
 					Bot.locked = !Bot.locked
-				if(2) //Toggle
+				if(INTERACTION_ANYBOT_TOGGLE_ACTIVE) //Toggle
 					var/obj/machinery/bot/Bot = hackobj
 					if(Bot.on)
 						Bot.turn_off()
@@ -470,33 +527,33 @@
 			if(istype(hackobj, /obj/machinery/bot/secbot))
 				var/obj/machinery/bot/secbot/Bot = hackobj
 				switch(interaction_type)
-					if(3) //Toggle ID cheker
+					if(INTERACTION_SECBOT_ID_CHECKER) //Toggle ID cheker
 						Bot.idcheck = !Bot.idcheck
-					if(4) //Toggle Checking records
+					if(INTERACTION_SECBOT_CHEKING_RECORDS) //Toggle Checking records
 						Bot.check_records = !Bot.check_records
 			if(istype(hackobj, /obj/machinery/bot/farmbot))
 				var/obj/machinery/bot/farmbot/Bot = hackobj
 				switch(interaction_type)
-					if(3) //farmbot - Toggle water plants
+					if(INTERACTION_FARMBOT_PLANTS_WATERING) //farmbot - Toggle water plants
 						Bot.setting_water = !Bot.setting_water
-					if(4) //farmbot - Toggle refill watertank
+					if(INTERACTION_FARMBOT_TOGGLE_REFILLGING) //farmbot - Toggle refill watertank
 						Bot.setting_refill = !Bot.setting_refill
-					if(5) //farmbot - Toggle Fertilize plants
+					if(INTERACTION_FARMBOT_TOGGLE_FERTILIZING) //farmbot - Toggle Fertilize plants
 						Bot.setting_fertilize = !Bot.setting_fertilize
-					if(6) //farmbot - Toggle weed plants
+					if(INTERACTION_FARMBOT_TOGGLE_WEED_PLANTS) //farmbot - Toggle weed plants
 						Bot.setting_weed = !Bot.setting_weed
-					if(7) //farmbot - Toggle ignore weeds
+					if(INTERACTION_FARMBOT_TOGGLE_WEEDS_IGNORING) //farmbot - Toggle ignore weeds
 						Bot.setting_ignoreWeeds = !Bot.setting_ignoreWeeds
-					if(8) //farmbot - Toggle ignore mushrooms
+					if(INTERACTION_FARMBOT_TOGGLE_MUSHROOMS_IGNORING) //farmbot - Toggle ignore mushrooms
 						Bot.setting_ignoreMushrooms = !Bot.setting_ignoreMushrooms
 			if(istype(hackobj, /obj/machinery/bot/floorbot))
 				var/obj/machinery/bot/floorbot/Bot = hackobj
 				switch(interaction_type)
-					if(3) //floorbot - Toggle floor improving
+					if(INTERACTION_FLOORBOT_TOGGLE_FLOOR_IMPROVMENT) //floorbot - Toggle floor improving
 						Bot.improvefloors = !Bot.improvefloors
-					if(4) //floorbot - Toggle tiles searching
+					if(INTERACTION_FLOORBOT_TOGGLE_SEARCHING) //floorbot - Toggle tiles searching
 						Bot.eattiles = !Bot.eattiles
-					if(5) //floorbot - Toggle metal to tiles transformation
+					if(INTERACTION_FLOORBOT_TOGGLE_TILES_FABRICATION) //floorbot - Toggle metal to tiles transformation
 						Bot.maketiles = !Bot.maketiles
 
 
@@ -832,59 +889,58 @@
 			dat += "Firmware type: "
 			if(istype(hackobj, /obj/machinery/door))
 				dat += "Airlock.<br>"
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=1;sub=0'>Toggle Open</a> <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_DOOR_TOGGLE];sub=0'>Toggle Open</a> <br>"
 				if(istype(hackobj, /obj/machinery/door/airlock))
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=2;sub=0'>Toggle Bolt</a> <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_DOOR_BOLT];sub=0'>Toggle Bolt</a> <br>"
 			if(istype(hackobj, /obj/machinery/camera))
 				var/obj/machinery/camera/Temp = hackobj
 				dat += "Camera.<br>"
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=1;sub=0'>Toggle Active State</a> (Currenty [Temp.status ? "Active" : "Disabled"]) <br>"
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=2;sub=0'>Disconnect All Active Viewers</a> <br>"
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=3;sub=0'>Toggle Alarm</a> (Currenty [Temp.alarm_on ? "Active" : "Disabled"]) <br>"
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=4;sub=0'>Toggle AI Access</a> (Currenty [Temp.hidden ? "Unreachable for AI" : "Active"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_CAMERA_TOGGLE];sub=0'>Toggle Active State</a> (Currenty [Temp.status ? "Active" : "Disabled"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_CAMERA_DISCONNECT];sub=0'>Disconnect All Active Viewers</a> <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_CAMERA_ALARM];sub=0'>Toggle Alarm</a> (Currenty [Temp.alarm_on ? "Active" : "Disabled"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_CAMERA_AI_ACCESS];sub=0'>Toggle AI Access</a> (Currenty [Temp.hidden ? "Unreachable for AI" : "Active"]) <br>"
 				if(!cable)
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=5;sub=0'>Toggle View</a> <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_CAMERA_VIEW];sub=0'>Toggle View</a> <br>"
 				else
 					dat += "<font color=#BFBFBF>Toggle View</font> (Locked, unlocks during remote access) <br>"
 			if(istype(hackobj, /obj/machinery/autolathe))
 				var/obj/machinery/autolathe/Temp = src.hackobj
 				dat += "Autolathe.<br>"
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=1;sub=0'>Open Interaction Menu</a> <br>"
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=2;sub=0'>Toggle Hidden Features</a> (Currently [Temp.hacked ? "Shown" : "Hidden"]) <br>"
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=3;sub=0'>Toggle Active State</a> (Currently [Temp.disabled ? "Disabled" : "Active"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_AUTOLATHE_UI];sub=0'>Open Interaction Menu</a> <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_AUTOLATHE_CONTRABAND];sub=0'>Toggle Hidden Features</a> (Currently [Temp.hacked ? "Shown" : "Hidden"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_AUTOLATHE_POWER];sub=0'>Toggle Active State</a> (Currently [Temp.disabled ? "Disabled" : "Active"]) <br>"
 			if(istype(hackobj, /obj/item/device/pda))
 				var/obj/item/device/pda/Temp = hackobj
 				dat += "PDA.<br>"
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=1;sub=0'>Toggle Messenger</a> (Currently [Temp.toff == 0 ? "Active" : "Disabled"]) <br>"
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=2;sub=0'>Change Ringtone</a> (Current: [Temp.ttone]) <br>"
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=3;sub=0'>Toggle Ringtone</a> (Currently [Temp.message_silent == 0 ? "Active" : "Disabled"]) <br>"
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=4;sub=0'>Hide/Unhide PDA</a> (Currently [Temp.hidden == 0 ? "Visible" : "Hidden"]) <br>"
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=5;sub=0'>Change Shown Name/Job</a> (Current: [Temp.owner] as [Temp.ownrank]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PDA_TOGGLE_MSG];sub=0'>Toggle Messenger</a> (Currently [Temp.toff == 0 ? "Active" : "Disabled"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PDA_CHANGE_RINGTONE];sub=0'>Change Ringtone</a> (Current: [Temp.ttone]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PDA_TOGGLE_RINGTONE];sub=0'>Toggle Ringtone</a> (Currently [Temp.message_silent == 0 ? "Active" : "Disabled"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PDA_TOGGLE_VISIBLE];sub=0'>Hide/Unhide PDA</a> (Currently [Temp.hidden == 0 ? "Visible" : "Hidden"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PDA_CHANGE_NAME];sub=0'>Change Shown Name/Job</a> (Current: [Temp.owner] as [Temp.ownrank]) <br>"
 			if(istype(hackobj, /obj/item/device/paicard))
 				var/obj/item/device/paicard/Temp = hackobj
 				dat += "pAI.<br>"
 				if(Temp.pai)
 					var/mob/living/silicon/pai/Temppai = Temp.pai
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=1;sub=0'>Modify Main Law</a> (Current: [Temppai.pai_law0]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=2;sub=0'>Modify Secondary Laws</a> (Current: [Temppai.pai_laws]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=3;sub=0'>Get Marked Objects List</a> <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=4;sub=0'>Clear Marked Objects List</a> <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=5;sub=0'>Delete All Installed Software</a> <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=6;sub=0'>Unbound</a> <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_MODIFY_MAIN_LAW];sub=0'>Modify Main Law</a> (Current: [Temppai.pai_law0]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_MODIFY_SEC_LAW];sub=0'>Modify Secondary Laws</a> (Current: [Temppai.pai_laws]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_MANAGE_MARKED];sub=0'>Get Marked Objects List</a> <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_RESET_MARKED];sub=0'>Clear Marked Objects List</a> <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_CLEAR_SOFTWARE];sub=0'>Delete All Installed Software</a> <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_UNBOUND];sub=0'>Unbound</a> <br>"
 				else
 					dat += "Personality not found.<br>"
 			if(istype(hackobj, /obj/machinery/vending))
 				dat += "Vending Machine.<br>"
 				var/obj/machinery/vending/Temp = hackobj
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=1;sub=0'>Toggle Item Shooting</a> (Currently [Temp.shoot_inventory ? "Active" : "Disabled"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_VENDING_ITEM_SHOOTING];sub=0'>Toggle Item Shooting</a> (Currently [Temp.shoot_inventory ? "Active" : "Disabled"]) <br>"
 				if(Temp.shoot_inventory)
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=2;sub=0'>Shoot Item</a> <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_VENDING_SHOOT_ITEM];sub=0'>Shoot Item</a> <br>"
 				else
 					dat += "<font color=#BFBFBF>Shoot Item</font> (Function wasn't unlocked) <br>"
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=3;sub=0'>Speak</a> <br>"
-				//dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=4;sub=0'>Reset Prices</a> <br>"
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=5;sub=0'>Lock/Unlock Hidden Items</a> (Currently [Temp.extended_inventory ? "Shown" : "Hidden"]) <br>"
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=6;sub=0'>Toggle Account Verifying</a> (Actually, just make everything silently free. Currently [Temp.check_accounts ? "Active" : "Disabled"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_VENDING_SPEAK];sub=0'>Speak</a> <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_VENDING_CONTRABAND_MODE];sub=0'>Lock/Unlock Hidden Items</a> (Currently [Temp.extended_inventory ? "Shown" : "Hidden"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_VENDING_ACCOUNT_VERIFY];sub=0'>Toggle Account Verifying</a> (Actually, just make everything silently free. Currently [Temp.check_accounts ? "Active" : "Disabled"]) <br>"
 			if(istype(hackobj, /obj/machinery/bot))
 				var/botchecked = 0 //Should we name bot as "Unknown"?
 				if(istype(hackobj, /obj/machinery/bot/secbot))
@@ -893,30 +949,30 @@
 						dat += "ED209 "
 					dat += "Security Bot.<br>"
 					var/obj/machinery/bot/secbot/Temp = hackobj
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=3;sub=0'>Toggle ID Checker</a> (Currently [Temp.idcheck ? "Active" : "Disabled"]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=4;sub=0'>Toggle Records Checker</a> (Currently [Temp.check_records ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_SECBOT_ID_CHECKER];sub=0'>Toggle ID Checker</a> (Currently [Temp.idcheck ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_SECBOT_CHEKING_RECORDS];sub=0'>Toggle Records Checker</a> (Currently [Temp.check_records ? "Active" : "Disabled"]) <br>"
 				if(istype(hackobj, /obj/machinery/bot/farmbot))
 					botchecked = 1
 					dat += "Farm Bot.<br>"
 					var/obj/machinery/bot/farmbot/Temp = hackobj
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=3;sub=0'>Toggle Plants Watering</a> (Currently [Temp.setting_water ? "Active" : "Disabled"]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=4;sub=0'>Toggle Refilling From Nearest Water Tanks</a> (Currently [Temp.setting_refill ? "Active" : "Disabled"]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=5;sub=0'>Toggle Fertilizing</a> (Currently [Temp.setting_fertilize ? "Active" : "Disabled"]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=6;sub=0'>Toggle Weed Plants</a> (Currently [Temp.setting_weed ? "Active" : "Disabled"]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=7;sub=0'>Toggle Weeds Ignoring</a> (Currently [Temp.setting_ignoreWeeds ? "Active" : "Disabled"]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=8;sub=0'>Toggle Mushrooms Ingoring</a> (Currently [Temp.setting_ignoreMushrooms ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_FARMBOT_PLANTS_WATERING];sub=0'>Toggle Plants Watering</a> (Currently [Temp.setting_water ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_FARMBOT_TOGGLE_REFILLGING];sub=0'>Toggle Refilling From Nearest Water Tanks</a> (Currently [Temp.setting_refill ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_FARMBOT_TOGGLE_FERTILIZING];sub=0'>Toggle Fertilizing</a> (Currently [Temp.setting_fertilize ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_FARMBOT_TOGGLE_WEED_PLANTS];sub=0'>Toggle Weed Plants</a> (Currently [Temp.setting_weed ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_FARMBOT_TOGGLE_WEEDS_IGNORING];sub=0'>Toggle Weeds Ignoring</a> (Currently [Temp.setting_ignoreWeeds ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_FARMBOT_TOGGLE_MUSHROOMS_IGNORING];sub=0'>Toggle Mushrooms Ingoring</a> (Currently [Temp.setting_ignoreMushrooms ? "Active" : "Disabled"]) <br>"
 				if(istype(hackobj, /obj/machinery/bot/floorbot))
 					botchecked = 1
 					dat += "Floor Bot.<br>"
 					var/obj/machinery/bot/floorbot/Temp = hackobj
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=3;sub=0'>Toggle Floor Improvment</a> (Currently [Temp.improvefloors ? "Active" : "Disabled"]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=4;sub=0'>Toggle Searching Tiles</a> (Currently [Temp.eattiles ? "Active" : "Disabled"]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=5;sub=0'>Toggle Tiles Fabrication</a> (Currently [Temp.maketiles ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_FLOORBOT_TOGGLE_FLOOR_IMPROVMENT];sub=0'>Toggle Floor Improvment</a> (Currently [Temp.improvefloors ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_FLOORBOT_TOGGLE_SEARCHING];sub=0'>Toggle Searching Tiles</a> (Currently [Temp.eattiles ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_FLOORBOT_TOGGLE_TILES_FABRICATION];sub=0'>Toggle Tiles Fabrication</a> (Currently [Temp.maketiles ? "Active" : "Disabled"]) <br>"
 				if(!botchecked)
 					dat += "Unknown.<br>"
 				var/obj/machinery/bot/Temp = hackobj
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=1;sub=0'>Toggle Interface Lock</a> (Currently [Temp.locked ? "Locked" : "Unlocked"]) <br>"
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=2;sub=0'>Turn [Temp.on ? "Off" : "On"]</a> <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_ANYBOT_INTERFACE_LOCK];sub=0'>Toggle Interface Lock</a> (Currently [Temp.locked ? "Locked" : "Unlocked"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_ANYBOT_TOGGLE_ACTIVE];sub=0'>Turn [Temp.on ? "Off" : "On"]</a> <br>"
 			//Add something new there
 			if(hackobj in markedobjects)
 				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_REMOVE_FROM_MARKED];sub=0'>Unmark</a> <br>"
@@ -1007,6 +1063,62 @@
 
 		to_chat(src, "<span class='notice'>Translator Module toggled ON.</span>")
 
-#undef INTERACTION_ADD_TO_MARKED 
+#undef INTERACTION_ADD_TO_MARKED
 #undef INTERACTION_REMOVE_FROM_MARKED
-#undef INTERACTION_CONNECT_TO_MARKED 
+#undef INTERACTION_CONNECT_TO_MARKED
+
+
+#undef INTERACTION_DOOR_TOGGLE
+#undef INTERACTION_DOOR_BOLT
+
+
+#undef INTERACTION_CAMERA_TOGGLE
+#undef INTERACTION_CAMERA_DISCONNECT
+#undef INTERACTION_CAMERA_ALARM
+#undef INTERACTION_CAMERA_AI_ACCESS
+#undef INTERACTION_CAMERA_VIEW
+
+
+#undef INTERACTION_AUTOLATHE_UI
+#undef INTERACTION_AUTOLATHE_CONTRABAND
+#undef INTERACTION_AUTOLATHE_POWER
+
+
+#undef INTERACTION_PDA_TOGGLE_MSG
+#undef INTERACTION_PDA_CHANGE_RINGTONE
+#undef INTERACTION_PDA_TOGGLE_RINGTONE
+#undef INTERACTION_PDA_TOGGLE_VISIBLE
+#undef INTERACTION_PDA_CHANGE_NAME
+
+
+#undef INTERACTION_PAI_MODIFY_MAIN_LAW
+#undef INTERACTION_PAI_MODIFY_SEC_LAW
+#undef INTERACTION_PAI_MANAGE_MARKED
+#undef INTERACTION_PAI_RESET_MARKED
+#undef INTERACTION_PAI_CLEAR_SOFTWARE
+#undef INTERACTION_PAI_UNBOUND
+
+
+#undef INTERACTION_VENDING_ITEM_SHOOTING
+#undef INTERACTION_VENDING_SHOOT_ITEM
+#undef INTERACTION_VENDING_SPEAK
+#undef INTERACTION_VENDING_CONTRABAND_MODE
+#undef INTERACTION_VENDING_ACCOUNT_VERIFY
+
+
+#undef INTERACTION_ANYBOT_INTERFACE_LOCK
+#undef INTERACTION_ANYBOT_TOGGLE_ACTIVE
+
+#undef INTERACTION_SECBOT_ID_CHECKER
+#undef INTERACTION_SECBOT_CHEKING_RECORDS
+
+#undef INTERACTION_FARMBOT_PLANTS_WATERING
+#undef INTERACTION_FARMBOT_TOGGLE_REFILLGING
+#undef INTERACTION_FARMBOT_TOGGLE_FERTILIZING
+#undef INTERACTION_FARMBOT_TOGGLE_WEED_PLANTS
+#undef INTERACTION_FARMBOT_TOGGLE_WEEDS_IGNORING
+#undef INTERACTION_FARMBOT_TOGGLE_MUSHROOMS_IGNORING
+
+#undef INTERACTION_FLOORBOT_TOGGLE_FLOOR_IMPROVMENT
+#undef INTERACTION_FLOORBOT_TOGGLE_SEARCHING
+#undef INTERACTION_FLOORBOT_TOGGLE_TILES_FABRICATION
