@@ -91,6 +91,7 @@
 	desc = "A suit of armor with padding to protect against melee attacks."
 	icon_state = "riot"
 	item_state = "swat_suit"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	armor = list(melee = 80, bullet = 10, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 
