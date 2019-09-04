@@ -948,3 +948,8 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 		new /obj/effect/effect/aqueous_foam(T)
 	else
 		INVOKE_ASYNC(F, /obj/effect/effect/aqueous_foam.proc/performAction) // So we don't instantinate a new object, but still make the room slightly colder.
+
+/datum/reagent/aqueous_foam/on_slime_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(REM)
+	return FALSE

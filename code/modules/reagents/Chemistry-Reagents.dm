@@ -147,6 +147,9 @@
 /datum/reagent/proc/on_golem_digest(mob/living/M)
 	return TRUE
 
+/datum/reagent/proc/on_slime_digest(mob/living/M)
+	return TRUE
+
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
 	holder = null

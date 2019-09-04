@@ -79,6 +79,11 @@
 	M.nutrition += REM
 	return FALSE
 
+/datum/reagent/water/on_slime_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(REM)
+	return FALSE
+
 /datum/reagent/water/holywater // May not be a "core" reagent, but I decided to keep the subtypes near  their parents.
 	name = "Holy Water"
 	id = "holywater"

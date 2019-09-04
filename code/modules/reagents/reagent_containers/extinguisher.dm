@@ -15,8 +15,8 @@
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 
 	triple_shot = TRUE
-	spray_size = 4
-	spray_sizes = list(4)
+	spray_size = 3
+	spray_sizes = list(3)
 
 	amount_per_transfer_from_this = 10
 	volume = 600
