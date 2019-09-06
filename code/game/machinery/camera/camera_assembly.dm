@@ -89,6 +89,7 @@
 
 				state = 4
 				var/obj/machinery/camera/C = new(src.loc)
+				qdel(src)
 				src.loc = C
 				C.assembly = src
 

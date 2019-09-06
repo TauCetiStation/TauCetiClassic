@@ -147,7 +147,7 @@
 
 	else if(iswelder(W) && wires.is_deconstructable())
 		if(weld(W, user))
-			drop_assembly(1)
+			drop_assembly()
 			qdel(src)
 	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
 		if(!isXRay())
