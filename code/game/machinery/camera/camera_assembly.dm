@@ -89,9 +89,11 @@
 
 				state = 4
 				var/obj/machinery/camera/C = new(src.loc)
-				qdel(src)
 				src.loc = C
+				C.contents = list(src)
 				C.assembly = src
+				C.assembly.anchored = 0
+				C.assembly.icon_state = "cameracase"
 
 				C.auto_turn()
 

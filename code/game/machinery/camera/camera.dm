@@ -149,6 +149,7 @@
 		if(weld(W, user))
 			drop_assembly()
 			qdel(src)
+
 	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
 		if(!isXRay())
 			upgradeXRay()
