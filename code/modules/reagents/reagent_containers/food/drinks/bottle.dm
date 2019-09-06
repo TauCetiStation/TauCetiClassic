@@ -32,33 +32,30 @@
 		return
 
 	if(stop_spin_bottle == 0)
-		var/bottle_dropped = 0
-		if(usr.get_active_hand() || usr.get_inactive_hand())
-			bottle_dropped = 1
+		var/bottle = /obj/item/weapon/reagent_containers/food/drinks/bottle
+		if(istype(usr.get_active_hand(), bottle) || istype(usr.get_inactive_hand(), bottle))
 			usr.drop_from_inventory(src)
-		else
-			if(isturf(loc))
-				bottle_dropped = 1
 
-		if(bottle_dropped == 1)
-			var/angle_to_stop = pick(0, 45, 90, 135, 180, 225, 270, 315) //Random result
-			var/matrix/M = matrix()
+		if(isturf(loc))
+			var/speed = rand(1, 8)
+			var/loops
+			var/sleep_not_stacking
+			switch(speed) //At a low speed, the bottle should not make 10 loops
+				if(7 to 8)
+					loops = rand(3, 5)
+					sleep_not_stacking = 40
+				if(3 to 6)
+					loops = rand(5, 10)
+					sleep_not_stacking = 40
+				if(1 to 2)
+					loops = rand(10, 15)
+					sleep_not_stacking = 25
+
 			stop_spin_bottle = 2
 			transform = 0
-			M.Turn(angle_to_stop)
-			animate(src, transform = turn(matrix(), 120), time = 3, loop = 5) //Spin bottle
-			animate(transform = turn(matrix(), 240), time = 3, loop = 5)
-			animate(transform = null, time = 3, loop = 5)
-			sleep(45)
-			if(angle_to_stop >= 0 && angle_to_stop < 120 && stop_spin_bottle == 2) //Torsion result
-				animate(src, transform = M, time = 3)
-			if(angle_to_stop > 119 && angle_to_stop < 226 && stop_spin_bottle == 2)
-				animate(src, transform = turn(matrix(), 120), time = 3)
-				animate(transform = M, time = 3)
-			if(angle_to_stop > 241 && angle_to_stop < 316 && stop_spin_bottle == 2)
-				animate(src, transform = turn(matrix(), 120), time = 3)
-				animate(transform = turn(matrix(), 240), time = 3)
-				animate(transform = M, time = 3)
+			SpinAnimation(speed, loops, pick(0, 1)) //SpinAnimation(speed, loops, clockwise, segments)
+			transform = turn(matrix(), dir2angle(pick(alldirs)))
+			sleep(sleep_not_stacking) //Not stacking
 			stop_spin_bottle = 0
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/pickup(mob/living/user)
