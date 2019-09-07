@@ -246,13 +246,13 @@ to destroy them and players will be able to make replacements.
 /obj/item/weapon/circuitboard/vendor/attackby(obj/item/I, mob/user)
 	if(isscrewdriver(I))
 		var/list/names = list(/obj/machinery/vending/boozeomat = "Booze-O-Mat",
-							/obj/machinery/vending/snack/red = "Getmore Chocolate Corp (Red)",
+							/obj/machinery/vending/snack = "Getmore Chocolate Corp (Red)",
 							/obj/machinery/vending/snack/blue = "Getmore Chocolate Corp (Blue)",
 							/obj/machinery/vending/snack/orange = "Getmore Chocolate Corp (Orange)",
 							/obj/machinery/vending/snack/green = "Getmore Chocolate Corp (Green)",
 							/obj/machinery/vending/snack/teal = "Getmore Chocolate Corp (Teal)",
 							/obj/machinery/vending/coffee = "Hot Drinks",
-							/obj/machinery/vending/cola/blue = "Robust Softdrinks (Blue)",
+							/obj/machinery/vending/cola = "Robust Softdrinks (Blue)",
 							/obj/machinery/vending/cola/black = "Robust Softdrinks (Black)",
 							/obj/machinery/vending/cola/red = "Robust Softdrinks (Red)",
 							/obj/machinery/vending/cola/spaceup = "Robust Softdrinks (Space-Up!)",
