@@ -32,8 +32,7 @@
 		return
 
 	if(stop_spin_bottle == 0)
-		var/bottle = /obj/item/weapon/reagent_containers/food/drinks/bottle
-		if(istype(usr.get_active_hand(), bottle) || istype(usr.get_inactive_hand(), bottle))
+		if(usr.is_in_hands(src) && !isturf(loc))
 			usr.drop_from_inventory(src)
 
 		if(isturf(loc))
@@ -52,7 +51,7 @@
 					sleep_not_stacking = 25
 
 			stop_spin_bottle = 2
-			transform = 0
+			//transform = 0
 			SpinAnimation(speed, loops, pick(0, 1)) //SpinAnimation(speed, loops, clockwise, segments)
 			transform = turn(matrix(), dir2angle(pick(alldirs)))
 			sleep(sleep_not_stacking) //Not stacking
