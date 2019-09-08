@@ -18,6 +18,7 @@
 	var/burn_mod = 1                                     // Burn damage multiplier.
 	var/oxy_mod = 1                                      // Oxyloss multiplier.
 	var/tox_mod = 1                                      // Toxloss multiplier.
+	var/clone_mod = 1                                    // Cloneloss multiplier
 	var/brain_mod = 1                                    // Brainloss multiplier.
 	var/speed_mod =  0                                   // How fast or slow specific specie.
 	var/siemens_coefficient = 1                          // How conductive is the specie.
@@ -696,8 +697,11 @@
 	icobase = 'icons/mob/human_races/r_skeleton.dmi'
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
 	damage_mask = FALSE
-	dietflags = 0
+	dietflags = DIET_ALL
 
+	oxy_mod = 0
+	tox_mod = 0
+	clone_mod = 0
 	siemens_coefficient = 0
 
 	butcher_drops = list()
@@ -708,7 +712,27 @@
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
+	,NO_BLOOD_TRAILS = TRUE
+	,NO_PAIN = TRUE
+	,RAD_IMMUNE = TRUE
+	,NO_EMBED = TRUE
+	,NO_MINORCUTS = TRUE
 	)
+
+	has_bodypart = list(
+		 BP_CHEST  = /obj/item/organ/external/chest/skeleton
+		,BP_GROIN  = /obj/item/organ/external/groin/skeleton
+		,BP_HEAD   = /obj/item/organ/external/head/skeleton
+		,BP_L_ARM  = /obj/item/organ/external/l_arm/skeleton
+		,BP_R_ARM  = /obj/item/organ/external/r_arm/skeleton
+		,BP_L_LEG  = /obj/item/organ/external/l_leg/skeleton
+		,BP_R_LEG  = /obj/item/organ/external/r_leg/skeleton
+		)
+
+	has_organ = list(
+		 O_BRAIN   = /obj/item/organ/internal/brain
+		,O_EYES    = /obj/item/organ/internal/eyes
+		)
 
 /datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
