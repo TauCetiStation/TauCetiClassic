@@ -216,6 +216,12 @@
 	desc = "A spacious backpack with lots of pockets, worn by medical members of a Nanotrasen Emergency Response Team."
 	icon_state = "ert_medical"
 
+//Stealth
+/obj/item/weapon/storage/backpack/ert/stealth
+	name = "emergency response team stealth backpack"
+	desc = "A backpack worn by stealth members of a NanoTrasen Emergency Response Team"
+	icon_state = "ert_stealth"
+
 /obj/item/weapon/storage/backpack/kitbag
 	name = "kitbag"
 	icon_state = "kitbag"
