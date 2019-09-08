@@ -17,7 +17,7 @@
 #define NODECONSTRUCT    64    // For machines and structures that should not break into parts, eg, holodeck stuff.
 #define ON_BORDER       128    // Item has priority to check when entering or leaving.
 #define THICKMATERIAL   256    // Prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with NOSLIP for shoes)
-#define NOSLIP          256    // Prevents from slipping on wet floors, in space etc.
+#define NOSLIP          512    // Prevents from slipping on wet floors, in space etc.
 #define NOATTACKANIMATION 512	   // Removes attack animation
 
 #define GLASSESCOVERSEYES   256
