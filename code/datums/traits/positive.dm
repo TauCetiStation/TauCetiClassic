@@ -21,3 +21,11 @@
 	var/obj/item/clothing/head/bearpelt/B = new(H.loc)
 	if(!H.equip_to_slot_if_possible(B, SLOT_HEAD, null, TRUE))
 		H.put_in_hands(B)
+
+/datum/quirk/strong_mind
+	name = "Strong mind"
+	desc = "You can distinguish between lies and truth of your consciousness."
+	value = 2
+	mob_trait = TRAIT_STRONGMIND
+	gain_text = "<span class='notice'>You feel confident in your sense.</span>"
+	lose_text = "<span class='danger'>You feel insecure about your consciousness.</span>"

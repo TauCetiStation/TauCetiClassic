@@ -427,6 +427,9 @@
 	if(!istype(M))
 		return 0
 
+	if(M.species.flags[NO_BLOOD_TRAILS])
+		return 0
+
 	if(M.reagents.has_reagent("metatrombine"))
 		return FALSE
 

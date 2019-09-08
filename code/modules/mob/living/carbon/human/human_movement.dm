@@ -89,6 +89,9 @@
 	if(bodytemperature < 283.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 
+	if(get_species() == UNATHI && bodytemperature > species.body_temperature)
+		tally -= min((bodytemperature - species.body_temperature) / 10, 1) //will be on the border of heat_level_1
+
 	tally += max(2 * stance_damage, 0) //damaged/missing feet or legs is slow
 
 	return (tally + config.human_delay)

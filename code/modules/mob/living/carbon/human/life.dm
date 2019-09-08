@@ -245,7 +245,7 @@
 					resting = 1
 
 			if(13 to 18)
-				if(getBrainLoss() >= 60)
+				if(getBrainLoss() >= 60 && !has_trait(TRAIT_STRONGMIND))
 					if(config.rus_language)//TODO:CYRILLIC dictionary?
 						switch(rand(1, 3))
 							if(1)
@@ -731,6 +731,14 @@
 	else
 		clear_alert("temp")
 
+	if(bodytemperature < species.cold_level_1 && get_species() == UNATHI)
+		if(bodytemperature < species.cold_level_3)
+			drowsyness  = max(drowsyness, 20)
+		else if(prob(50) && bodytemperature < species.cold_level_2)
+			drowsyness = max(drowsyness, 10)
+		else if(prob(10))
+			drowsyness = max(drowsyness, 2)
+
 	// Account for massive pressure differences.  Done by Polymorph
 	// Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an axe sticking from his head for his previous hardcoded nonsense!
 
@@ -1091,7 +1099,8 @@
 	if (drowsyness)
 		drowsyness--
 		eye_blurry = max(2, eye_blurry)
-		if (prob(5))
+		if(prob(5))
+			emote("yawn")
 			sleeping += 1
 			Paralyse(5)
 
