@@ -200,7 +200,7 @@
 			stuttering = max(10, stuttering)
 	// No. -- cib
 	//Oh, really?
-	if (getBrainLoss() >= 60 && stat != DEAD)
+	if (getBrainLoss() >= 60 && stat != DEAD && !has_trait(TRAIT_STRONGMIND))
 		if(prob(3))
 			if(config.rus_language)//TODO:CYRILLIC dictionary?
 				switch(pick(1,2,3))
