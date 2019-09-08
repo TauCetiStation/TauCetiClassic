@@ -51,7 +51,6 @@
 					sleep_not_stacking = 25
 
 			stop_spin_bottle = 2
-			//transform = 0
 			SpinAnimation(speed, loops, pick(0, 1)) //SpinAnimation(speed, loops, clockwise, segments)
 			transform = turn(matrix(), dir2angle(pick(alldirs)))
 			sleep(sleep_not_stacking) //Not stacking
