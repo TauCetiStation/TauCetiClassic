@@ -4053,8 +4053,7 @@
 /area/medical/chemistry)
 "arF" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/structure/lattice,
 /turf/space,
@@ -7021,8 +7020,7 @@
 	dir = 8
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
@@ -10497,8 +10495,7 @@
 	dir = 4
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "small"
@@ -12538,8 +12535,7 @@
 /area/maintenance/science)
 "dcz" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
@@ -14907,8 +14903,7 @@
 /area/atmos)
 "dSZ" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -25141,11 +25136,10 @@
 	},
 /area/hallway/secondary/entry)
 "hhJ" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/structure/lattice,
+/obj/structure/grille{
+	destroyed = 1
+	},
 /turf/space,
 /area/engine)
 "hid" = (
@@ -28450,11 +28444,10 @@
 	},
 /area/rnd/hallway)
 "iqQ" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/grille{
+	destroyed = 1
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/eva)
 "irw" = (
@@ -30093,7 +30086,6 @@
 	},
 /area/maintenance/bridge)
 "iSH" = (
-/obj/structure/closet/mining,
 /turf/simulated/shuttle/floor/mining{
 	icon_state = "3-2"
 	},
@@ -30719,8 +30711,7 @@
 /area/crew_quarters/security)
 "jfx" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -38722,11 +38713,10 @@
 /turf/simulated/floor/whitegreed,
 /area/turret_protected/aisat_interior)
 "lIT" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/structure/reagent_dispensers/watertank,
+/obj/structure/grille{
+	destroyed = 1
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
 "lIV" = (
@@ -40172,8 +40162,7 @@
 	dir = 8
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
@@ -40300,11 +40289,10 @@
 	},
 /area/toxins/brainstorm_center)
 "mgu" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/item/weapon/caution/cone,
+/obj/structure/grille{
+	destroyed = 1
+	},
 /turf/simulated/floor/plating/airless{
 	dir = 10;
 	icon_state = "warnplate"
@@ -44194,11 +44182,10 @@
 /turf/simulated/floor/plating,
 /area/security/vacantoffice)
 "nth" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/item/weapon/scrap_lump,
+/obj/structure/grille{
+	destroyed = 1
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -46308,8 +46295,7 @@
 	dir = 4
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -47528,8 +47514,7 @@
 /area/maintenance/chapel)
 "oBS" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard,
 /obj/item/weapon/shard{
@@ -50238,8 +50223,7 @@
 	dir = 8
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "small"
@@ -52218,12 +52202,11 @@
 /area/medical/chemistry)
 "qdp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/structure/window/reinforced{
 	dir = 4
+	},
+/obj/structure/grille{
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/cargo)
@@ -52974,8 +52957,7 @@
 	pixel_x = -12
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
@@ -53436,11 +53418,10 @@
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
 "qwM" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/item/weapon/shard,
+/obj/structure/grille{
+	destroyed = 1
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "qwT" = (
@@ -55857,14 +55838,13 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
 /obj/item/weapon/shard,
+/obj/structure/grille{
+	destroyed = 1
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "rpE" = (
@@ -57611,14 +57591,13 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
 /obj/item/weapon/shard,
+/obj/structure/grille{
+	destroyed = 1
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/science)
 "rTt" = (
@@ -57861,11 +57840,10 @@
 /area/rnd/xenobiology)
 "rXq" = (
 /obj/structure/lattice,
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/item/stack/rods,
+/obj/structure/grille{
+	destroyed = 1
+	},
 /turf/space,
 /area/space)
 "rXx" = (
@@ -61000,8 +60978,7 @@
 /area/crew_quarters)
 "sYC" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken4"
@@ -61563,8 +61540,7 @@
 /area/medical/hallway/outbranch)
 "tgW" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/wood,
 /area/maintenance/eva)
@@ -65268,12 +65244,11 @@
 	},
 /area/toxins/brainstorm_center)
 "upf" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/item/stack/rods,
 /obj/structure/lattice,
+/obj/structure/grille{
+	destroyed = 1
+	},
 /turf/space,
 /area/space)
 "upp" = (
@@ -67882,11 +67857,10 @@
 /turf/simulated/floor/plating,
 /area/engine/engineering)
 "vhw" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /mob/living/simple_animal/mouse,
+/obj/structure/grille{
+	destroyed = 1
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/eva)
 "vhD" = (
@@ -68680,8 +68654,7 @@
 /area/atmos)
 "vvC" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/bridge)
@@ -68945,15 +68918,14 @@
 /area/assembly/robotics)
 "vzw" = (
 /obj/structure/window/reinforced,
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
+	},
+/obj/structure/grille{
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
@@ -69930,8 +69902,7 @@
 "vKB" = (
 /obj/structure/lattice,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/space,
 /area/space)
@@ -71026,8 +70997,7 @@
 /area/crew_quarters/gym)
 "waO" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken3"
@@ -71763,8 +71733,7 @@
 /area/crew_quarters/captain)
 "wnr" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/eva)
@@ -73371,10 +73340,6 @@
 /area/crew_quarters/captain)
 "wVH" = (
 /obj/item/weapon/scrap_lump,
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/item/stack/rods,
 /obj/structure/window/reinforced{
 	dir = 4
@@ -73385,6 +73350,9 @@
 	},
 /obj/item/weapon/shard{
 	icon_state = "small"
+	},
+/obj/structure/grille{
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
@@ -73891,8 +73859,7 @@
 /area/rnd/mixing)
 "xcX" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/science)
@@ -73915,10 +73882,6 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
@@ -73926,6 +73889,9 @@
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/structure/grille{
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/bridge)
@@ -85419,7 +85385,7 @@ kHU
 plf
 lgc
 lgc
-arF
+vKB
 lgc
 goK
 plf
@@ -87734,7 +87700,7 @@ plf
 plf
 plf
 plf
-arF
+vKB
 plf
 plf
 plf
@@ -88746,7 +88712,7 @@ plf
 plf
 plf
 plf
-arF
+vKB
 plf
 plf
 plf
@@ -99406,7 +99372,7 @@ plf
 plf
 plf
 lgc
-arF
+vKB
 lgc
 lgc
 lgc
@@ -101971,7 +101937,7 @@ plf
 plf
 plf
 goK
-arF
+vKB
 lgc
 plf
 kHU
@@ -103531,7 +103497,7 @@ lgc
 goK
 lgc
 lgc
-arF
+vKB
 lgc
 lgc
 plf
@@ -111120,7 +111086,7 @@ pYX
 goK
 lgc
 kHU
-arF
+vKB
 lgc
 goK
 plf
@@ -111893,7 +111859,7 @@ jGc
 plf
 plf
 plf
-arF
+vKB
 plf
 plf
 plf
@@ -126557,7 +126523,7 @@ kHU
 kHU
 kHU
 kHU
-arF
+vKB
 plf
 ssy
 cCf
