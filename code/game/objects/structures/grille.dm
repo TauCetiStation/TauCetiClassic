@@ -120,7 +120,7 @@
 	if(iswirecutter(W))
 		if(!shock(user, 100))
 			playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
-			if(!destroyed)
+			if(destroyed)
 				new /obj/item/stack/rods(get_turf(src), 1)
 			else
 				new /obj/item/stack/rods(get_turf(src), 2)
