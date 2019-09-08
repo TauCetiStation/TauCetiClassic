@@ -25136,10 +25136,10 @@
 	},
 /area/hallway/secondary/entry)
 "hhJ" = (
-/obj/structure/lattice,
 /obj/structure/grille{
 	destroyed = 1
 	},
+/obj/structure/lattice,
 /turf/space,
 /area/engine)
 "hid" = (
@@ -28444,10 +28444,10 @@
 	},
 /area/rnd/hallway)
 "iqQ" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/grille{
 	destroyed = 1
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/maintenance/eva)
 "irw" = (
@@ -30086,6 +30086,7 @@
 	},
 /area/maintenance/bridge)
 "iSH" = (
+/obj/structure/closet/mining,
 /turf/simulated/shuttle/floor/mining{
 	icon_state = "3-2"
 	},
@@ -38713,10 +38714,10 @@
 /turf/simulated/floor/whitegreed,
 /area/turret_protected/aisat_interior)
 "lIT" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/structure/grille{
 	destroyed = 1
 	},
+/obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
 "lIV" = (
@@ -40289,10 +40290,10 @@
 	},
 /area/toxins/brainstorm_center)
 "mgu" = (
-/obj/item/weapon/caution/cone,
 /obj/structure/grille{
 	destroyed = 1
 	},
+/obj/item/weapon/caution/cone,
 /turf/simulated/floor/plating/airless{
 	dir = 10;
 	icon_state = "warnplate"
@@ -44182,10 +44183,10 @@
 /turf/simulated/floor/plating,
 /area/security/vacantoffice)
 "nth" = (
-/obj/item/weapon/scrap_lump,
 /obj/structure/grille{
 	destroyed = 1
 	},
+/obj/item/weapon/scrap_lump,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -52202,11 +52203,11 @@
 /area/medical/chemistry)
 "qdp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/grille{
 	destroyed = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/cargo)
@@ -53418,10 +53419,10 @@
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
 "qwM" = (
-/obj/item/weapon/shard,
 /obj/structure/grille{
 	destroyed = 1
 	},
+/obj/item/weapon/shard,
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "qwT" = (
@@ -55838,13 +55839,13 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/structure/grille{
+	destroyed = 1
+	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
 /obj/item/weapon/shard,
-/obj/structure/grille{
-	destroyed = 1
-	},
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "rpE" = (
@@ -57591,13 +57592,13 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/structure/grille{
+	destroyed = 1
+	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
 /obj/item/weapon/shard,
-/obj/structure/grille{
-	destroyed = 1
-	},
 /turf/simulated/floor/plating,
 /area/maintenance/science)
 "rTt" = (
@@ -57840,10 +57841,10 @@
 /area/rnd/xenobiology)
 "rXq" = (
 /obj/structure/lattice,
-/obj/item/stack/rods,
 /obj/structure/grille{
 	destroyed = 1
 	},
+/obj/item/stack/rods,
 /turf/space,
 /area/space)
 "rXx" = (
@@ -65244,11 +65245,11 @@
 	},
 /area/toxins/brainstorm_center)
 "upf" = (
-/obj/item/stack/rods,
-/obj/structure/lattice,
 /obj/structure/grille{
 	destroyed = 1
 	},
+/obj/item/stack/rods,
+/obj/structure/lattice,
 /turf/space,
 /area/space)
 "upp" = (
@@ -67857,10 +67858,10 @@
 /turf/simulated/floor/plating,
 /area/engine/engineering)
 "vhw" = (
-/mob/living/simple_animal/mouse,
 /obj/structure/grille{
 	destroyed = 1
 	},
+/mob/living/simple_animal/mouse,
 /turf/simulated/floor/plating,
 /area/maintenance/eva)
 "vhD" = (
@@ -68918,14 +68919,14 @@
 /area/assembly/robotics)
 "vzw" = (
 /obj/structure/window/reinforced,
+/obj/structure/grille{
+	destroyed = 1
+	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
-	},
-/obj/structure/grille{
-	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
@@ -73340,6 +73341,9 @@
 /area/crew_quarters/captain)
 "wVH" = (
 /obj/item/weapon/scrap_lump,
+/obj/structure/grille{
+	destroyed = 1
+	},
 /obj/item/stack/rods,
 /obj/structure/window/reinforced{
 	dir = 4
@@ -73350,9 +73354,6 @@
 	},
 /obj/item/weapon/shard{
 	icon_state = "small"
-	},
-/obj/structure/grille{
-	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/chapel)
@@ -73882,6 +73883,9 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/structure/grille{
+	destroyed = 1
+	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
@@ -73889,9 +73893,6 @@
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
 	dir = 4
-	},
-/obj/structure/grille{
-	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/bridge)
@@ -85385,7 +85386,7 @@ kHU
 plf
 lgc
 lgc
-vKB
+arF
 lgc
 goK
 plf
@@ -87700,7 +87701,7 @@ plf
 plf
 plf
 plf
-vKB
+arF
 plf
 plf
 plf
@@ -88712,7 +88713,7 @@ plf
 plf
 plf
 plf
-vKB
+arF
 plf
 plf
 plf
@@ -99372,7 +99373,7 @@ plf
 plf
 plf
 lgc
-vKB
+arF
 lgc
 lgc
 lgc
@@ -101937,7 +101938,7 @@ plf
 plf
 plf
 goK
-vKB
+arF
 lgc
 plf
 kHU
@@ -103497,7 +103498,7 @@ lgc
 goK
 lgc
 lgc
-vKB
+arF
 lgc
 lgc
 plf
@@ -111086,7 +111087,7 @@ pYX
 goK
 lgc
 kHU
-vKB
+arF
 lgc
 goK
 plf
@@ -111859,7 +111860,7 @@ jGc
 plf
 plf
 plf
-vKB
+arF
 plf
 plf
 plf
@@ -126523,7 +126524,7 @@ kHU
 kHU
 kHU
 kHU
-vKB
+arF
 plf
 ssy
 cCf
