@@ -592,7 +592,7 @@
 			dat += "<a href='byond://?src=\ref[src];software=atmosensor;sub=0'>Atmospheric Sensor</a> <br>"
 		if(s == "heartbeat sensor")
 			dat += "<a href='byond://?src=\ref[src];software=[s]'>Heartbeat Sensor</a> <br>"
-if(s == "security HUD")	//This file has to be saved as ANSI or this will not display correctly
+		if(s == "security HUD")	//This file has to be saved as ANSI or this will not display correctly
 			dat += "<a href='byond://?src=\ref[src];software=securityhud;sub=0'>Facial Recognition Suite</a> [(src.secHUD) ? "<font color=#55FF55>�</font>" : "<font color=#FF5555>�</font>"] <br>"
 		if(s == "medical HUD")	//This file has to be saved as ANSI or this will not display correctly
 			dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Medical Analysis Suite</a> [(src.medHUD) ? "<font color=#55FF55>�</font>" : "<font color=#FF5555>�</font>"] <br>"
