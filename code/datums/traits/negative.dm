@@ -119,11 +119,3 @@
 	mob_trait = TRAIT_LIGHT_DRINKER
 	gain_text = "<span class='danger'>Just the thought of drinking alcohol makes your head spin.</span>"
 	lose_text = "<span class='notice'>You're no longer severely affected by alcohol.</span>"
-
-
-
-/datum/quirk/prosopagnosia
-	name = "Prosopagnosia"
-	desc = "You have a mental disorder that prevents you from being able to recognize faces at all."
-	value = -1
-	mob_trait = TRAIT_PROSOPAGNOSIA
