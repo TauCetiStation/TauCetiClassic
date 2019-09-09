@@ -50,7 +50,11 @@
 				t_his = "her"
 				t_him = "her"
 
-	msg += "<EM>[src.name]"
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!L.has_trait(TRAIT_PROSOPAGNOSIA))
+			msg += "<EM>[src.name]"
+		else msg += "<EM>Unknown"
 	if(!(skipface && skipjumpsuit))
 		var/species_name = "\improper [get_species()]"
 		msg += ", <span color='[species.flesh_color]'>\a [species_name]</span>"

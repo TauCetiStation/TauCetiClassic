@@ -109,3 +109,21 @@
 	mob_trait = TRAIT_MUTE
 	gain_text = "<span class='danger'>Your voicebox feels wrong somehow.</span>"
 	lose_text = "<span class='notice'>Your voicebox appears to work now.</span>"
+
+
+
+/datum/quirk/light_drinker
+	name = "Light Drinker"
+	desc = "You just can't handle your drinks and get drunk very quickly."
+	value = -1
+	mob_trait = TRAIT_LIGHT_DRINKER
+	gain_text = "<span class='danger'>Just the thought of drinking alcohol makes your head spin.</span>"
+	lose_text = "<span class='notice'>You're no longer severely affected by alcohol.</span>"
+
+
+
+/datum/quirk/prosopagnosia
+	name = "Prosopagnosia"
+	desc = "You have a mental disorder that prevents you from being able to recognize faces at all."
+	value = -1
+	mob_trait = TRAIT_PROSOPAGNOSIA
