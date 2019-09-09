@@ -617,7 +617,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 
 /obj/machinery/computer/forensic_scanning/detective
 	icon_state = "computer_old"
-	req_access = null
+	req_access = list()
 	name = "PowerScan Mk.I"
 	light_color = "#3550b6"
 	state_broken_preset = null
