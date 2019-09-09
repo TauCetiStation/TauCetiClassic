@@ -83,6 +83,11 @@
 	icon_state = "blackimageoverlay"
 	layer = BLIND_LAYER
 	plane = FULLSCREEN_PLANE
+	mouse_opacity = MOUSE_OPACITY_ICON
+
+/obj/screen/fullscreen/blind/Click(location, control, params)
+	if(usr.client.void)
+		usr.client.void.Click(location, control, params)
 
 /obj/screen/fullscreen/impaired
 	icon_state = "impairedoverlay"
