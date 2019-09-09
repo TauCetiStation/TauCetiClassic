@@ -759,8 +759,7 @@
 
 /datum/reagent/consumable/ethanol/kahlua/on_general_digest(mob/living/M)
 	..()
-	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
-		M.make_jittery(5)
+	M.make_jittery(5)
 
 /datum/reagent/consumable/ethanol/whiskey
 	name = "Whiskey"
@@ -1001,7 +1000,8 @@
 
 /datum/reagent/consumable/ethanol/deadrum/on_general_digest(mob/living/M)
 	..()
-	M.dizziness += 5
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.dizziness += 5
 
 /datum/reagent/consumable/ethanol/sake
 	name = "Sake"
