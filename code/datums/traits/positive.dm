@@ -24,6 +24,16 @@
 
 
 
+/datum/quirk/strong_mind
+	name = "Strong mind"
+	desc = "You can distinguish between lies and truth of your consciousness."
+	value = 2
+	mob_trait = TRAIT_STRONGMIND
+	gain_text = "<span class='notice'>You feel confident in your sense.</span>"
+	lose_text = "<span class='danger'>You feel insecure about your consciousness.</span>"
+
+
+
 /datum/quirk/alcohol_tolerance
 	name = "Alcohol Tolerance"
 	desc = "You become drunk more slowly and suffer fewer drawbacks from alcohol."

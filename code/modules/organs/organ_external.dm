@@ -35,6 +35,7 @@
 	var/list/implants = list()        // Currently implanted objects.
 	var/bandaged = FALSE              // Are there any visual bandages on this bodypart
 	var/is_stump = FALSE              // Is it just a leftover of a destroyed bodypart
+	var/leaves_stump = TRUE           // Does this bodypart leaves a stump when destroyed
 
 	// Joint/state stuff.
 	var/cannot_amputate               // Impossible to amputate.
@@ -250,7 +251,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 //Handles dismemberment
 /obj/item/organ/external/proc/droplimb(no_explode = FALSE, clean = FALSE, disintegrate = DROPLIMB_EDGE)
-	if(cannot_amputate)
+	if(cannot_amputate || !owner)
 		return
 
 	owner.bodyparts -= src
@@ -391,7 +392,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		owner.death()
 
 	owner.UpdateDamageIcon(src)
-	if(!clean)
+	if(!clean && leaves_stump)
 		new /obj/item/organ/external/stump(null, owner, src)
 	owner.updatehealth()
 
@@ -582,7 +583,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			qdel(spark_system)
 
 /obj/item/organ/external/proc/embed(obj/item/weapon/W, silent = 0, supplied_message, datum/wound/supplied_wound)
-	if(owner.species.flags[NO_EMBED])
+	if(!owner || owner.species.flags[NO_EMBED])
 		return
 
 	if(!silent)
