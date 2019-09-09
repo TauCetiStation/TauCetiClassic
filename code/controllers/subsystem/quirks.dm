@@ -27,6 +27,8 @@ var/datum/subsystem/quirks/SSquirks
 		SetupQuirks()
 
 	quirk_blacklist = list(
+		list("Light Drinker", "Alcohol Tolerance"),
+		list("Blind", "Prosopagnosia"),
 		list("Blind", "Nearsighted")
 		)
 
