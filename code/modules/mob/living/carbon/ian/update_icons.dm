@@ -265,6 +265,8 @@
 		if(POSE_STAT)
 			icon_state = "corgi_stat"
 
+	check_crawling()
+
 	update_inv_head()
 	update_inv_mouth()
 	update_inv_back()
@@ -273,11 +275,15 @@
 
 	. = ..(TRUE)
 
-	if(buckled || resting)
+	if(buckled)
 		pose_last = POSE_SIT
 	else if(stat || weakened || stunned)
 		pose_last = POSE_STAT
-	else if(crawling)
+	else if(sitting)
+		pose_last = POSE_SIT
+		canmove = FALSE
+		. = FALSE
+	else if(resting)
 		pose_last = POSE_REST
 	else
 		pose_last = POSE_NORM

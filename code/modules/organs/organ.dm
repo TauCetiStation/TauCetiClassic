@@ -184,20 +184,17 @@
 
 	// standing is poor
 	if(stance_damage >= 4 || (stance_damage >= 2 && prob(5)))
-		if(iszombie(src)) //zombies crawl when they can't stand
-			if(!crawling && !lying && !resting)
-				if(crawl_can_use())
-					crawl()
-				else
-					emote("collapse")
-					Weaken(5)
+		var/has_arm = FALSE
+		for(var/limb_tag in list(BP_L_ARM, BP_R_ARM))
+			var/obj/item/organ/external/E = bodyparts_by_name[limb_tag]
+			if(E && E.is_usable())
+				has_arm = TRUE
+				break
 
-			var/has_arm = FALSE
-			for(var/limb_tag in list(BP_L_ARM, BP_R_ARM))
-				var/obj/item/organ/external/E = bodyparts_by_name[limb_tag]
-				if(E && E.is_usable())
-					has_arm = TRUE
-					break
+		if(iszombie(src)) //zombies crawl when they can't stand
+			if(!lying)
+				rest_on()
+
 			if(!has_arm) //need atleast one hand to crawl
 				Weaken(5)
 			return
@@ -212,4 +209,6 @@
 				if(do_we_scream)
 					emote("scream", auto = TRUE)
 			emote("collapse")
-		Weaken(5) //can't emote while weakened, apparently.
+
+		if(!has_arm)
+			Weaken(5) //can't emote while weakened, apparently.

@@ -405,7 +405,7 @@
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)
 		H.leap_icon = new /obj/screen/leap()
-		H.leap_icon.screen_loc = "CENTER+3:20,SOUTH:5"
+		H.leap_icon.screen_loc = "CENTER+3:22,SOUTH:-8"
 
 		if(H.hud_used)
 			H.hud_used.adding += H.leap_icon

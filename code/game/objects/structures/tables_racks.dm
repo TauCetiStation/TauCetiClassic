@@ -169,7 +169,6 @@
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
-		mover.layer = 2.7
 		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return 1
@@ -211,7 +210,6 @@
 	if(istype(O) && O.checkpass(PASSTABLE))
 		return 1
 	if(istype(O) && O.checkpass(PASSCRAWL))
-		O.layer = 4.0
 		return 1
 	if (flipped)
 		if (get_dir(loc, target) == dir)

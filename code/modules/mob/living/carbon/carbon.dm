@@ -33,6 +33,9 @@
 
 		handle_rig_move(NewLoc, Dir)
 
+		if(resting && !crawling) // We fell of the table or something
+			check_crawling()
+
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(isessence(user))
 		user.setMoveCooldown(1)
@@ -269,12 +272,8 @@
 			if(lying)
 				src.sleeping = max(0,src.sleeping-5)
 				if (!M.lying)
-					if(!src.sleeping)
-						src.resting = 0
-					if(src.crawling)
-						if(crawl_can_use() && src.pass_flags & PASSCRAWL)
-							src.pass_flags ^= PASSCRAWL
-							src.crawling = 0
+					if(!sleeping && ((crawling && crawl_can_use()) || !crawling))
+						rest_off()
 					M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You shake [src] trying to wake [t_him] up!</span>")
 				else
@@ -312,47 +311,6 @@
 	if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) || (locate(/obj/structure/plasticflaps) in T))
 		return FALSE
 	return TRUE
-
-/mob/living/carbon/var/crawl_getup = FALSE
-/mob/living/carbon/proc/crawl()
-	set name = "Crawl"
-	set category = "IC"
-
-	if( stat || weakened || stunned || paralysis || resting || sleeping || (status_flags & FAKEDEATH) || buckled)
-		return
-	if(crawl_getup)
-		return
-
-	if(crawling)
-		crawl_getup = TRUE
-		if(do_after(src, 10, target = src))
-			crawl_getup = FALSE
-			if(!crawl_can_use())
-				playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-				if(ishuman(src))
-					var/mob/living/carbon/human/H = src
-					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-					BP.take_damage(5, used_weapon = "Facepalm") // what?.. that guy was insane anyway.
-				else
-					take_overall_damage(5, used_weapon = "Table")
-				Stun(1)
-				to_chat(src, "<span class='danger'>Ouch!</span>")
-				return
-			layer = 4.0
-		else
-			crawl_getup = FALSE
-			return
-	else
-		if(!crawl_can_use())
-			to_chat(src, "<span class='notice'>You can't crawl here!</span>")
-			return
-		layer = 3.9
-
-	pass_flags ^= PASSCRAWL
-	crawling = !crawling
-
-	to_chat(src, "<span class='notice'>You are now [crawling ? "crawling" : "getting up"].</span>")
-	update_canmove()
 
 /mob/living/carbon/proc/eyecheck()
 	return 0
@@ -894,3 +852,46 @@
 					break
 			R.reaction(loc)
 			adjustToxLoss(-toxins_puked)
+
+// This proc checks if we are on top of some object or crawling on the floor and changes our layer and pass_flags accordingly
+/mob/living/carbon/proc/check_crawling()
+	var/final_layer
+
+	if(!lying)
+		crawling = FALSE
+		pass_flags ^= PASSCRAWL
+		final_layer = initial(layer)
+	else
+		if(crawl_can_use())
+			final_layer = 2.7
+			crawling = TRUE
+			pass_flags |= PASSCRAWL
+		else
+			final_layer = 3.9
+			crawling = FALSE
+			pass_flags ^= PASSCRAWL
+
+	if(final_layer)
+		animate(src, time = 2, easing = EASE_IN|EASE_OUT, layer = final_layer)
+
+/mob/living/carbon/proc/toggle_rest(verbal = FALSE)
+	if (resting)
+		rest_off()
+		if(verbal)
+			to_chat(src, "<span class='notice'>You will stand up as soon as possible.</span>")
+	else
+		rest_on()
+		if(!lying)
+			update_canmove() // Getting up is slow, dropping to the floor is instant
+		if(verbal)
+			to_chat(src, "<span class='notice'>You are now resting.</span>")
+
+/mob/living/carbon/proc/rest_off()
+	resting = FALSE
+	if(rest_icon)
+		rest_icon.icon_state = "rest_off"
+
+/mob/living/carbon/proc/rest_on()
+	resting = TRUE
+	if(rest_icon)
+		rest_icon.icon_state = "rest_on"

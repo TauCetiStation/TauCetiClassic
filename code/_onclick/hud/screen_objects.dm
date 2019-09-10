@@ -402,6 +402,8 @@
 		if("drop")
 			if(usr.client)
 				usr.client.drop_item()
+		if("rest")
+			usr:toggle_rest(verbal = TRUE)
 
 		if("module")
 			if(isrobot(usr))

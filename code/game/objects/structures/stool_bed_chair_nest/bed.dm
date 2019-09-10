@@ -30,16 +30,6 @@
 /obj/structure/stool/bed/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/structure/stool/bed/CanPass(atom/movable/mover)
-	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
-		mover.layer = 2.7
-	return ..()
-
-/obj/structure/stool/bed/CheckExit(atom/movable/O as mob|obj)
-	if(istype(O) && O.checkpass(PASSCRAWL))
-		O.layer = 4.0
-	return ..()
-
 /obj/structure/stool/bed/Process_Spacemove(movement_dir = 0)
 	if(buckled_mob)
 		return buckled_mob.Process_Spacemove(movement_dir)
@@ -75,8 +65,11 @@
 		..()
 
 /obj/structure/stool/bed/roller/CanPass(atom/movable/mover)
-	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
-		return 0
+	if(iscarbon(mover) && mover.checkpass(PASSCRAWL)) // put us above the roller bed
+		var/mob/living/carbon/C = mover
+		C.layer = 3.9
+		C.crawling = FALSE
+		C.pass_flags ^= PASSCRAWL
 	return ..()
 
 /obj/structure/stool/bed/roller/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)

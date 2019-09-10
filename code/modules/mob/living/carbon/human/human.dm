@@ -17,6 +17,7 @@
 	var/seer = 0 // used in cult datum /cult/seer
 	var/gnomed = 0 // timer used by gnomecurse.dm
 
+	can_crawl = TRUE
 	throw_range = 2
 
 /mob/living/carbon/human/dummy
@@ -125,8 +126,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		dna.real_name = real_name
 
 	handcrafting = new()
-
-	verbs += /mob/living/carbon/proc/crawl
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
@@ -1797,7 +1796,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /obj/screen/leap
 	name = "toggle leap"
 	icon = 'icons/mob/screen1_action.dmi'
-	icon_state = "action"
+	icon_state = "actionsmall"
 
 	var/on = FALSE
 	var/time_used = 0

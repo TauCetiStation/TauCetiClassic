@@ -46,6 +46,8 @@
 	var/facehugger = FALSE
 	var/pose_prev = 0
 	var/pose_last = 0
+	var/sitting = FALSE
+	can_crawl = TRUE
 
 /mob/living/carbon/ian/atom_init()
 	reagents = new(1000)
@@ -59,8 +61,6 @@
 	dna.SetUIState(DNA_UI_GENDER)
 
 	. = ..()
-
-	verbs += /mob/living/carbon/proc/crawl
 
 /mob/living/carbon/ian/UnarmedAttack(atom/A)
 	..()
@@ -284,7 +284,7 @@
 	return FALSE
 
 /mob/living/carbon/ian/movement_delay(tally = 0)
-	if(crawling)
+	if(lying)
 		tally += 5
 	else if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
 		return -1

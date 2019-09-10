@@ -158,6 +158,12 @@
 	mymob.throw_icon.name = "throw"
 	mymob.throw_icon.screen_loc = ui_drop_throw
 
+	mymob.rest_icon = new /obj/screen()
+	mymob.rest_icon.icon = ui_style
+	mymob.rest_icon.icon_state = "rest_off"
+	mymob.rest_icon.name = "rest"
+	mymob.rest_icon.screen_loc = ui_rest
+
 	mymob.internals = new /obj/screen()
 	mymob.internals.icon = ui_style
 	mymob.internals.icon_state = "internal0"
@@ -219,6 +225,6 @@
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay, mymob.rest_icon) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other
 	mymob.client.screen += mymob.client.void

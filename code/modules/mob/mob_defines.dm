@@ -20,6 +20,7 @@
 	var/obj/screen/m_select = null
 	var/obj/screen/healths = null
 	var/obj/screen/throw_icon = null
+	var/obj/screen/rest_icon = null
 	var/obj/screen/pressure = null
 	var/obj/screen/pain = null
 	var/obj/screen/gun/item/item_use_icon = null
@@ -82,7 +83,8 @@
 	var/lying = 0
 	var/lying_prev = 0
 	var/lying_current = 0
-	var/crawling = 0 //For crawling
+	var/crawling = 0 // TRUE = crawling on the floor and under beds/tables, FALSE = we are lying on top of the bed/table or just standing
+	var/can_crawl = 0 // Can we move while resting
 	var/canmove = 1
 	var/lastpuke = 0
 	var/unacidable = 0

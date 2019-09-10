@@ -942,6 +942,11 @@
 		to_chat(R, "<span class='notice'>You toggle all your components.</span>")
 		return
 
+	if(iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		C.toggle_rest(verbal = TRUE)
+		return
+
 //Already resting and have others debuffs
 	if( resting && (sleeping || weakened || paralysis || stunned) )
 		to_chat(src, "<span class='rose'>You can't wake up.</span>")

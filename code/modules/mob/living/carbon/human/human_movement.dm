@@ -22,7 +22,7 @@
 	if(RUN in mutations)
 		tally -= 0.5
 
-	if(crawling)
+	if(lying)
 		tally += 7
 
 	if(embedded_flag)
