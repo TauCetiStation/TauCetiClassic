@@ -32,6 +32,39 @@
 	else
 		..()
 
+/obj/item/weapon/shield/riot/attack(mob/living/M, mob/user)
+	if(user.a_intent == I_DISARM && M != user)
+		if(istype(src, /obj/item/weapon/shield/riot/tele))
+			var/obj/item/weapon/shield/riot/tele/TS = src
+			if(TS.active)
+				user.do_attack_animation(M)
+				user.visible_message("<span class='warning'>[user.name] pushed away [M.name] with a [src.name]</span>")
+				M.dir = user.dir
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, M, user.dir), 1)
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, M, user.dir), 2)
+			else
+				..()
+				return
+		else
+			user.do_attack_animation(M)
+			user.visible_message("<span class='warning'>[user.name] pushed away [M.name] with a [src.name]</span>")
+			M.dir = user.dir
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, M, M.dir), 1)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, M, M.dir), 2)
+
+		if(prob(35))
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.shoes || H.wear_suit)
+					if(H.shoes.flags & NOSLIP || H.wear_suit.armor["melee"] >= 20)
+						return
+
+				M.Weaken(3)
+
+		return
+
+	..()
+
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
 	desc = "A shield capable of stopping most projectile and melee attacks. It can be retracted, expanded, and stored anywhere."
