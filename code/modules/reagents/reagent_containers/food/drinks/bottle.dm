@@ -32,7 +32,7 @@
 		return
 
 	if(stop_spin_bottle == 0)
-		if(src == usr.get_active_hand() || src == usr.get_inactive_hand())
+		if(usr.get_active_hand() == src || usr.get_inactive_hand() == src)
 			usr.drop_from_inventory(src)
 
 		if(isturf(loc))
