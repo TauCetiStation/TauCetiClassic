@@ -32,18 +32,18 @@
 		return
 
 	if(stop_spin_bottle == 0)
-		if(usr.is_in_hands(src) && !isturf(loc))
+		if(src == usr.get_active_hand() || src == usr.get_inactive_hand())
 			usr.drop_from_inventory(src)
 
 		if(isturf(loc))
-			var/speed = rand(1, 8)
+			var/speed = rand(1, 6)
 			var/loops
 			var/sleep_not_stacking
 			switch(speed) //At a low speed, the bottle should not make 10 loops
-				if(7 to 8)
-					loops = rand(3, 5)
+				if(5 to 6)
+					loops = rand(5, 7)
 					sleep_not_stacking = 40
-				if(3 to 6)
+				if(3 to 4)
 					loops = rand(5, 10)
 					sleep_not_stacking = 40
 				if(1 to 2)
@@ -57,9 +57,7 @@
 			stop_spin_bottle = 0
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/pickup(mob/living/user)
-	if(stop_spin_bottle == 2)
-		stop_spin_bottle = 1 //It is necessary that after sleep there is no result
-	animate(src, transform = null, ANIMATION_END_NOW) //Restore bottle to its original position
+	animate(src, transform = null, 1) //Restore bottle to its original position
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user)
 
