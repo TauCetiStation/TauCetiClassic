@@ -149,6 +149,10 @@
 		feedback_add_details("handcuffs","B")
 		to_chat(C,"<span class='userdanger'>\The [src] ensnares you!</span>")
 		C.Weaken(weaken)
+		var/mob/M = get_mob_by_key(src.fingerprintslast)
+		C.attack_log += text("\[[time_stamp()]\] <font color='orange'>Was caught [src.name] by [M.name] ([M.ckey])</font>")
+		M.attack_log += text("\[[time_stamp()]\] <font color='red'>Caught to [src.name] [C.name] ([C.ckey])</font>")
+		msg_admin_attack("[M.name] ([M.ckey]) threw [src.name] in [key_name(C)]", M)
 
 /obj/item/weapon/legcuffs/bola/tactical//traitor variant
 	name = "reinforced bola"
