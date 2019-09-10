@@ -36,13 +36,10 @@
 			usr.drop_from_inventory(src)
 
 		if(isturf(loc))
-			var/speed = rand(1, 4)
+			var/speed = rand(1, 3)
 			var/loops
 			var/sleep_not_stacking
 			switch(speed) //At a low speed, the bottle should not make 10 loops
-				if(4)
-					loops = rand(5, 7)
-					sleep_not_stacking = 40
 				if(3)
 					loops = rand(7, 10)
 					sleep_not_stacking = 40
