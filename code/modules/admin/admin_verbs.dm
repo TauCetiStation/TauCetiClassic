@@ -1104,25 +1104,11 @@ var/centcom_barriers_stat = 1
 	if(!check_rights(R_FUN))
 		return
 
-	for(var/obj/effect/landmark/trololo/L in landmarks_list)
-		L.active = centcom_barriers_stat
 	for(var/obj/structure/centcom_barrier/B in centcom_barrier_list)
 		B.density = centcom_barriers_stat
 
 	log_admin("[key_name(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")
 	message_admins("[key_name_admin(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")
-
-/obj/effect/landmark/trololo
-	name = "Rickroll"
-	//var/melody = 'sound/Never_Gonna_Give_You_Up.ogg'	//NOPE
-	var/message = "<i><span class='notice'>It's not the door you're looking for...</span></i>"
-	var/active = 1
-	var/lchannel = 999
-
-/obj/effect/landmark/trololo/Crossed(mob/M)
-	if(!active) return
-	/*if(istype(M, /mob/living/carbon))
-		M.playsound_local(null, melody, VOL_EFFECTS_MASTER, 20, FALSE, channel = lchannel, wait = TRUE, ignore_environment = TRUE)*/
 
 /obj/structure/centcom_barrier
 	name = "Invisible wall"
