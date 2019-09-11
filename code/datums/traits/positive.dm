@@ -21,3 +21,10 @@
 	var/obj/item/clothing/head/bearpelt/B = new(H.loc)
 	if(!H.equip_to_slot_if_possible(B, SLOT_HEAD, null, TRUE))
 		H.put_in_hands(B)
+
+/datum/quirk/high_pain_threshold
+	name = "High pain threshold"
+	desc = "You can take pain more easily. This quirk only affects sounds."
+	mob_trait = TRAIT_HIGH_PAIN_THRESHOLD
+	gain_text = "<span class='danger'>You want to show how strong you are. You will try to ignore any pain.</span>"
+	lose_text = "<span class='notice'>You no longer want to endure pain, it scares you.</span>"

@@ -109,3 +109,10 @@
 	mob_trait = TRAIT_MUTE
 	gain_text = "<span class='danger'>Your voicebox feels wrong somehow.</span>"
 	lose_text = "<span class='notice'>Your voicebox appears to work now.</span>"
+
+/datum/quirk/low_pain_threshold
+	name = "Low pain threshold"
+	desc = "You endure pain more difficult. This quirk only affects sounds"
+	mob_trait = TRAIT_LOW_PAIN_THRESHOLD
+	gain_text = "<span class='danger'>Just the thought of pain makes you tremble in fear.</span>"
+	lose_text = "<span class='notice'>You don't want to show yourself to other people anymore that you're a wimp. Now you're trying to ignore the pain.</span>"
