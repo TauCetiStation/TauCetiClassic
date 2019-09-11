@@ -446,6 +446,10 @@
 		src.slowdown += boots.slowdown_off
 		magpulse = 1
 		to_chat(H, "You enable the mag-pulse traction system.")
+	H.update_gravity(H.mob_has_gravity())
+
+/obj/item/clothing/suit/space/rig/negates_gravity()
+	return flags & NOSLIP
 
 /obj/item/clothing/suit/space/rig/examine(mob/user)
 	..()
