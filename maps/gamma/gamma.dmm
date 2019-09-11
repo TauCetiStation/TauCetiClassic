@@ -3991,7 +3991,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/escape_pod1/station)
 "ari" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -16650,7 +16650,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/escape_pod1/station)
 "evI" = (
 /obj/structure/table,
@@ -17151,7 +17151,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/escape_pod3/station)
 "eFO" = (
 /obj/structure/window/reinforced/tinted{
@@ -18770,7 +18770,7 @@
 	dir = 1;
 	icon_state = "2,0"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/escape_pod5/station)
 "fgh" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
@@ -20492,7 +20492,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/escape_pod3/station)
 "fIm" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
@@ -24399,7 +24399,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/escape_pod1/station)
 "gVR" = (
 /turf/simulated/floor{
@@ -26060,7 +26060,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/escape_pod3/station)
 "hxm" = (
 /obj/structure/table/woodentable,
@@ -32082,7 +32082,7 @@
 	dir = 1;
 	icon_state = "1,0"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/escape_pod5/station)
 "jDH" = (
 /obj/structure/disposalpipe/segment{
@@ -33771,7 +33771,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/escape_pod1/station)
 "kdy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -35077,7 +35077,7 @@
 	dir = 1;
 	icon_state = "0,0"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/escape_pod5/station)
 "kAt" = (
 /obj/structure/sign/poster{
@@ -39366,7 +39366,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/escape_pod3/station)
 "lSN" = (
 /obj/structure/table,
@@ -42497,7 +42497,7 @@
 	name = "shuttle window";
 	opacity = 0
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/escape_pod1/station)
 "mRu" = (
 /obj/structure/disposalpipe/sortjunction/flipped{
@@ -43742,7 +43742,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/escape_pod3/station)
 "nnp" = (
 /obj/machinery/gateway{
@@ -47308,7 +47308,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/escape_pod1/station)
 "owT" = (
 /obj/structure/flora/plant/random,
@@ -48222,7 +48222,7 @@
 	dir = 1;
 	icon_state = "2,2"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/escape_pod5/station)
 "oNQ" = (
 /obj/structure/table,
@@ -57214,7 +57214,7 @@
 	dir = 1;
 	icon_state = "1,2"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/escape_pod5/station)
 "rMj" = (
 /obj/machinery/door/airlock/glass{
@@ -58711,7 +58711,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/escape_pod3/station)
 "sls" = (
 /obj/structure/stool/bed/chair/office/light{
@@ -71829,7 +71829,7 @@
 	dir = 1;
 	icon_state = "0,2"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/escape_pod5/station)
 "woZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -75509,7 +75509,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/escape_pod1/station)
 "xFH" = (
 /obj/machinery/computer/security/telescreen{
