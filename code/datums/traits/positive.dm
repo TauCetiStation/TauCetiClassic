@@ -28,3 +28,11 @@
 	mob_trait = TRAIT_HIGH_PAIN_THRESHOLD
 	gain_text = "<span class='danger'>You want to show how strong you are. You will try to ignore any pain.</span>"
 	lose_text = "<span class='notice'>You no longer want to endure pain, it scares you.</span>"
+
+/datum/quirk/strong_mind
+	name = "Strong mind"
+	desc = "You can distinguish between lies and truth of your consciousness."
+	value = 2
+	mob_trait = TRAIT_STRONGMIND
+	gain_text = "<span class='notice'>You feel confident in your sense.</span>"
+	lose_text = "<span class='danger'>You feel insecure about your consciousness.</span>"

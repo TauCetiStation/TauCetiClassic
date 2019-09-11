@@ -13,6 +13,7 @@
 #define TRAIT_MUTE                "mute"
 #define TRAIT_HIGH_PAIN_THRESHOLD "high_pain_threshold"
 #define TRAIT_LOW_PAIN_THRESHOLD  "low_pain_threshold"
+#define TRAIT_STRONGMIND          "strong_mind"
 
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
