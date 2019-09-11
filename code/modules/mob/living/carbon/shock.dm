@@ -83,4 +83,4 @@
 				pain_sound_name = "scream"
 	if(pain_sound_name)
 		emote(pain_sound_name, auto = TRUE)
-		last_pain_emote_sound = world.time + (has_trait(TRAIT_LOW_PAIN_THRESHOLD) ? rand(40, 60) : rand(60, 100))
+		last_pain_emote_sound = world.time + (has_trait(TRAIT_LOW_PAIN_THRESHOLD) ? rand(15 SECONDS, 30 SECONDS) : rand(30 SECONDS, 1 MINUTE))
