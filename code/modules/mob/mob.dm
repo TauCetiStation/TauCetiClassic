@@ -182,37 +182,20 @@
 	return
 
 /mob/verb/mode()
-	set name = "Activate Held Object"
-	set category = "Object"
-	set src = usr
+	set name = "Click On Held Object"
+	set category = "IC"
 
-	if(istype(loc,/obj/mecha))
+	var/obj/item/W = get_active_hand()
+	if(!W)
 		return
 
-	if(hand)
-		var/obj/item/W = l_hand
-		if(W)
-			W.attack_self(src)
-			update_inv_l_hand()
-	else
-		var/obj/item/W = r_hand
-		if(W)
-			W.attack_self(src)
-			update_inv_r_hand()
-	if(next_move < world.time)
-		next_move = world.time + 2
-	return
+	ClickOn(W)
 
-/*
-/mob/verb/dump_source()
+/mob/verb/click_on_self()
+	set name = "Click On Self"
+	set category = "IC"
 
-	var/master = "<PRE>"
-	for(var/t in typesof(/area))
-		master += text("[]\n", t)
-		//Foreach goto(26)
-	src << browse(master)
-	return
-*/
+	ClickOn(usr)
 
 /mob/verb/memory()
 	set name = "Notes"
@@ -1088,29 +1071,3 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/can_unbuckle(mob/user)
 	return 1
-
-/*
-/mob/living/on_varedit(modified_var)
-	switch(modified_var)
-		if("weakened")
-			SetWeakened(weakened)
-		if("stunned")
-			SetStunned(stunned)
-		if("paralysis")
-			SetParalysis(paralysis)
-		if("sleeping")
-			SetSleeping(sleeping)
-		if("eye_blind")
-			set_blindness(eye_blind)
-		if("eye_damage")
-			set_eye_damage(eye_damage)
-		if("eye_blurry")
-			set_blurriness(eye_blurry)
-		if("ear_deaf")
-			setEarDamage(-1, ear_deaf)
-		if("ear_damage")
-			setEarDamage(ear_damage, -1)
-		if("maxHealth")
-			updatehealth()
-		if("resize")
-			update_transform()*/

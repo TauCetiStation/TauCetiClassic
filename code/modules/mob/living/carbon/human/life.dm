@@ -200,7 +200,7 @@
 			stuttering = max(10, stuttering)
 	// No. -- cib
 	//Oh, really?
-	if (getBrainLoss() >= 60 && stat != DEAD)
+	if (getBrainLoss() >= 60 && stat != DEAD && !has_trait(TRAIT_STRONGMIND))
 		if(prob(3))
 			if(config.rus_language)//TODO:CYRILLIC dictionary?
 				switch(pick(1,2,3))
@@ -576,7 +576,7 @@
 	if(toxins_pp > safe_toxins_max)
 		var/ratio = (poison/safe_toxins_max) * 10
 		if(reagents)
-			reagents.add_reagent("toxin", Clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
+			reagents.add_reagent("toxin", CLAMP(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
 		breath.adjust_gas(species.poison_type, -poison / 6, update = FALSE) //update after
 		throw_alert("tox_in_air")
 	else
@@ -728,6 +728,14 @@
 			clear_alert("temp")
 	else
 		clear_alert("temp")
+
+	if(bodytemperature < species.cold_level_1 && get_species() == UNATHI)
+		if(bodytemperature < species.cold_level_3)
+			drowsyness  = max(drowsyness, 20)
+		else if(prob(50) && bodytemperature < species.cold_level_2)
+			drowsyness = max(drowsyness, 10)
+		else if(prob(10))
+			drowsyness = max(drowsyness, 2)
 
 	// Account for massive pressure differences.  Done by Polymorph
 	// Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an axe sticking from his head for his previous hardcoded nonsense!
@@ -1089,7 +1097,8 @@
 	if (drowsyness)
 		drowsyness--
 		eye_blurry = max(2, eye_blurry)
-		if (prob(5))
+		if(prob(5))
+			emote("yawn")
 			sleeping += 1
 			Paralyse(5)
 

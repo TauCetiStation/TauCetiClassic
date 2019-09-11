@@ -163,8 +163,8 @@
 		use_power = light_max_power
 	else
 		var/temp_mod = ((plasma_temperature - 5000) / 20000)
-		use_range = light_min_range + ceil((light_max_range - light_min_range) * temp_mod)
-		use_power = light_min_power + ceil((light_max_power - light_min_power) * temp_mod)
+		use_range = light_min_range + CEIL((light_max_range - light_min_range) * temp_mod)
+		use_power = light_min_power + CEIL((light_max_power - light_min_power) * temp_mod)
 
 	if(last_range != use_range || last_power != use_power)
 		set_light(use_range,use_power)
@@ -235,7 +235,7 @@
 /obj/effect/fusion_em_field/proc/Rupture()
 	visible_message("<span class='danger'>\The [src] shudders like a dying animal before flaring to eye-searing brightness and rupturing!</span>")
 	set_light(15, 15, "#ccccff")
-	empulse(get_turf(src), ceil(plasma_temperature / 1000), ceil(plasma_temperature / 300))
+	empulse(get_turf(src), CEIL(plasma_temperature / 1000), CEIL(plasma_temperature / 300))
 	sleep(5)
 	RadiateAll()
 	explosion(get_turf(owned_core), -1, -1, 8, 10) // Blow out all the windows.
@@ -301,8 +301,8 @@
 
 /obj/effect/fusion_em_field/proc/Radiate()
 	if(isturf(loc))
-		var/empsev = max(1, min(3, ceil(size / 2)))
-		for(var/atom/movable/AM in range(max(1, Floor(size / 2)), loc))
+		var/empsev = max(1, min(3, CEIL(size / 2)))
+		for(var/atom/movable/AM in range(max(1, FLOOR(size / 2, 1)), loc))
 
 			if(AM == src || AM == owned_core || !AM.simulated || AM.invisibility)
 				continue
@@ -381,7 +381,7 @@
 		//determine a random amount to actually react this cycle, and remove it from the standard pool
 		//this is a hack, and quite nonrealistic :(
 		for(var/reactant in react_pool)
-			react_pool[reactant] = rand(Floor(react_pool[reactant] / 2),react_pool[reactant])
+			react_pool[reactant] = rand(FLOOR(react_pool[reactant] / 2, 1),react_pool[reactant])
 			reactants[reactant] -= react_pool[reactant]
 			if(!react_pool[reactant])
 				react_pool -= reactant

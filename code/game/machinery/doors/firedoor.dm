@@ -88,7 +88,7 @@
 
 
 /obj/machinery/door/firedoor/power_change()
-	if(powered(ENVIRON))
+	if(powered(STATIC_ENVIRON))
 		stat &= ~NOPOWER
 	else
 		stat |= NOPOWER

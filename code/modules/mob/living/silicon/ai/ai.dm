@@ -190,8 +190,7 @@ var/list/ai_verbs_default = list(
 /obj/machinery/ai_powersupply
 	name="Power Supply"
 	active_power_usage=1000
-	use_power = 2
-	power_channel = EQUIP
+	use_power = ACTIVE_POWER_USE
 	var/mob/living/silicon/ai/powered_ai = null
 	invisibility = 100
 
@@ -215,9 +214,9 @@ var/list/ai_verbs_default = list(
 		return
 	if(!powered_ai.anchored)
 		forceMove(powered_ai.loc)
-		use_power = 0
+		set_power_use(NO_POWER_USE)
 	if(powered_ai.anchored)
-		use_power = 2
+		set_power_use(ACTIVE_POWER_USE)
 
 /mob/living/silicon/ai/proc/pick_icon()
 	set category = "AI Commands"

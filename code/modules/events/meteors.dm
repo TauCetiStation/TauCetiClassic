@@ -12,7 +12,7 @@
 	command_alert("Meteors have been detected on collision course with the station. The energy field generator is disabled or missing.", "Meteor Alert", "meteors")
 
 /datum/event/meteor_wave/tick()
-	if(IsMultiple(activeFor, 3))
+	if(IS_MULTIPLE(activeFor, 3))
 		spawn_meteors(rand(2,5))
 
 /datum/event/meteor_wave/end()

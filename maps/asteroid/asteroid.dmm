@@ -3216,10 +3216,6 @@
 /obj/structure/lattice,
 /turf/space,
 /area/space)
-"gJ" = (
-/obj/structure/lattice,
-/turf/space,
-/area/shuttle/research)
 "gK" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
@@ -7150,7 +7146,6 @@
 	network = list("Anomaly Isolation");
 	pixel_x = -32
 	},
-/obj/structure/window/reinforced,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
@@ -12927,6 +12922,9 @@
 /area/mine/production)
 "Sb" = (
 /obj/machinery/artifact_scanpad,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/engine,
 /area/research_outpost/iso2)
 "Sc" = (
@@ -49340,7 +49338,7 @@ ar
 fv
 aJ
 ge
-aa
+ar
 mo
 mo
 mo
@@ -49597,7 +49595,7 @@ af
 aJ
 ge
 aa
-aa
+ar
 mo
 mo
 mo
@@ -49854,7 +49852,7 @@ gd
 ge
 aa
 aa
-aa
+ar
 mo
 mo
 mo
@@ -50111,7 +50109,7 @@ at
 aa
 aa
 aa
-aa
+ar
 mo
 mo
 mo
@@ -50368,7 +50366,7 @@ ar
 aa
 aa
 aa
-aa
+ar
 mo
 mo
 mo
@@ -50625,7 +50623,7 @@ ar
 aa
 aa
 aa
-aa
+ar
 mo
 mo
 mo
@@ -50882,7 +50880,7 @@ ar
 aa
 aa
 aa
-aa
+ar
 mo
 mo
 mo
@@ -51139,12 +51137,12 @@ ar
 ar
 aa
 aa
-aa
-aa
+ar
 mo
 mo
 mo
-aa
+mo
+mo
 hp
 An
 Bb
@@ -51397,11 +51395,11 @@ ar
 ar
 ar
 ar
-ar
-gJ
-gJ
-gJ
-ar
+mo
+mo
+mo
+mo
+mo
 hp
 gT
 hJ
@@ -51653,7 +51651,7 @@ ac
 ac
 aa
 aa
-aa
+ar
 ar
 ar
 ar
@@ -53069,15 +53067,15 @@ xv
 zU
 wA
 ar
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
 Be
 ar
 lA
@@ -53325,16 +53323,16 @@ aa
 xw
 zi
 wB
-ar
-ar
-ar
-ar
-ar
-ar
-ar
-ar
-ar
-ar
+zA
+zA
+zA
+zA
+zA
+aa
+aa
+aa
+aa
+aa
 Be
 ar
 aa
@@ -54101,11 +54099,11 @@ zA
 zA
 zA
 zA
-aa
-aa
-aa
-aa
-aa
+kc
+kc
+kc
+kc
+kc
 Be
 ar
 aa
@@ -54358,10 +54356,10 @@ zA
 zA
 zA
 zA
-kc
-kc
-kc
-kc
+At
+We
+Gf
+Nf
 kc
 Be
 ar
@@ -54615,9 +54613,9 @@ zA
 zA
 zA
 zA
-At
-We
-Gf
+Lc
+Xe
+wN
 Nf
 kc
 Be
@@ -54872,8 +54870,8 @@ zA
 zA
 zA
 zA
-Lc
-Xe
+kc
+wN
 wN
 Nf
 kc
@@ -55381,11 +55379,11 @@ lA
 kc
 zl
 kc
-aa
 zA
 zA
 zA
-aa
+zA
+zA
 kc
 wN
 Bu
@@ -55639,9 +55637,9 @@ kc
 zk
 kc
 kc
-zA
-zA
-zA
+aa
+aa
+aa
 kc
 Mc
 AU

@@ -21,7 +21,7 @@
 	icon_state = "autolathe"
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 1000
 
@@ -30,13 +30,13 @@
 		return
 
 	if(!busy)
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 		if(input.len)
 			milled_item = input[1]
 			input -= milled_item
 			progress = 0
 			busy = 1
-			use_power = 2
+			set_power_use(ACTIVE_POWER_USE)
 		return
 
 	progress++
@@ -93,7 +93,7 @@
 	icon_state = "autolathe"
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 500
 
@@ -102,13 +102,13 @@
 		return
 
 	if(!busy)
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 		if(input.len)
 			fermenting_item = input[1]
 			input -= fermenting_item
 			progress = 0
 			busy = 1
-			use_power = 2
+			set_power_use(ACTIVE_POWER_USE)
 		return
 
 	if(!water_level)
@@ -163,7 +163,7 @@
 	icon_state = "autolathe"
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 10000
 
@@ -172,13 +172,13 @@
 		return
 
 	if(!busy)
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 		if(input.len)
 			destilling_item = input[1]
 			input -= destilling_item
 			progress = 0
 			busy = 1
-			use_power = 2
+			set_power_use(ACTIVE_POWER_USE)
 		return
 
 	progress++
@@ -229,7 +229,7 @@
 	icon_state = "autolathe"
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 500
 
@@ -253,7 +253,7 @@
 	icon_state = "autolathe"
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 10000
 
@@ -262,13 +262,13 @@
 		return
 
 	if(!busy)
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 		if(input.len)
 			spinning_item = input[1]
 			input -= spinning_item
 			progress = 0
 			busy = 1
-			use_power = 2
+			set_power_use(ACTIVE_POWER_USE)
 		return
 
 	progress++

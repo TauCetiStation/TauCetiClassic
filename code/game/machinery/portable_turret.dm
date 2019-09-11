@@ -20,10 +20,9 @@
 	anchored = TRUE
 
 	density = FALSE
-	use_power = TRUE				//this turret uses and requires power
+	use_power = IDLE_POWER_USE				//this turret uses and requires power
 	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
-	power_channel = EQUIP	//drains power from the EQUIPMENT channel
 	allowed_checks = ALLOWED_CHECK_NONE
 
 	var/raised = FALSE			//if the turret cover is "open" and the turret is raised
@@ -128,15 +127,15 @@
 	eshot_sound = shot_sound
 
 	switch(installation)
-		if(/obj/item/weapon/gun/energy/laser/bluetag)
-			eprojectile = /obj/item/projectile/beam/lastertag/omni //This bolt will stun ERRYONE with a vest
+		if(/obj/item/weapon/gun/energy/laser/lasertag/bluetag)
+			eprojectile = /obj/item/projectile/beam/lasertag/omni //This bolt will stun ERRYONE with a vest
 			reqpower = 100
 			req_one_access.Cut()
 			req_access = list(access_maint_tunnels)
 			shot_delay = 30
 
-		if(/obj/item/weapon/gun/energy/laser/redtag)
-			eprojectile = /obj/item/projectile/beam/lastertag/omni
+		if(/obj/item/weapon/gun/energy/laser/lasertag/redtag)
+			eprojectile = /obj/item/projectile/beam/lasertag/omni
 			reqpower = 100
 			req_one_access.Cut()
 			req_access = list(access_maint_tunnels)
@@ -314,10 +313,12 @@ var/list/turret_icons
 		update_icon()
 	else
 		addtimer(CALLBACK(src, .proc/power_change_post), rand(1, 15))
+	update_power_use()
 
 /obj/machinery/porta_turret/proc/power_change_post()
 	stat |= NOPOWER
 	update_icon()
+	update_power_use()
 
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user)
 	if(stat & BROKEN)
@@ -738,7 +739,7 @@ var/list/turret_icons
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turret_frame"
 	density = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 	var/build_step = 0			//the current step in the building process
 	var/finish_name="turret"	//the name applied to the product turret
 	var/installation = null		//the gun type installed
