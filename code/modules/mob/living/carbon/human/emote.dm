@@ -373,14 +373,35 @@
 					m_type = 2
 
 		if ("moan")
+			m_type = 2
 			if(miming)
 				message = "<B>[src]</B> appears to moan!"
 				m_type = 1
-			else if(has_trait(TRAIT_MUTE))
-				message = "<B>[src]</B> moans silently!"
+			else if(auto)
+				if(!message)
+					message = "<B>[src]</B> moans!"
+				if(muzzled || has_trait(TRAIT_MUTE))
+					message = "<B>[src]</B> moans silently!"
+				else if(auto)
+					if(lastSoundEmote >= world.time)
+						return
+					message = "<B>[src]</B> [pick("grunts in pain", "grunts", "wrinkles [gender == FEMALE ? "her" : "his"] face and grunts")]!"
+					playsound(src, pick(gender == FEMALE ? SOUNDIN_FEMALE_LIGHT_PAIN : SOUNDIN_MALE_LIGHT_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
+					lastSoundEmote = world.time + 4 SECONDS
+
+		if ("pain")
+			if(muzzled)
+				message = "<B>[src]</B> makes a weak noise."
 				m_type = 1
+			else if(auto)
+				message = "<B>[src]</B> [pick("moans in pain", "slightly winces in pain and moans", "presses [gender == FEMALE ? "her" : "his"] lips together in pain and moans")]."
+				m_type = 2
+				if((species?.name != SKRELL) && has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(50)) // skrells don't have much emotions to cry in pain, but they can still moan
+					playsound(src, pick(gender == FEMALE ? SOUNDIN_FEMALE_WHINER_PAIN : SOUNDIN_MALE_WHINER_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
+				else
+					playsound(src, pick(gender == FEMALE ? SOUNDIN_FEMALE_PASSIVE_PAIN : SOUNDIN_MALE_PASSIVE_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
 			else
-				message = "<B>[src]</B> moans!"
+				message = "<B>[src]</B> slightly moans feigning pain"
 				m_type = 2
 
 		if ("johnny")
@@ -580,18 +601,17 @@
 				if(virus_scream || !(species && species.flags[NO_PAIN]))
 					if (!muzzled)
 						if (auto)
-							if(has_trait(TRAIT_MUTE) && world.time-lastSoundEmote >= 30)
+							if(has_trait(TRAIT_MUTE))
 								message = "<B>[src]</B> twists their face into an agonised expression!"
 								m_type = 1
-								lastSoundEmote = world.time
-							else if(world.time-lastSoundEmote >= 30)//prevent scream spam with things like poly spray
-								message = "<B>[src]</B> screams in agony!" // AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
+							else if(lastSoundEmote <= world.time) // prevent scream spam with things like poly spray
+								message = "<B>[src]</B> [pick("screams in agony", "writhes in heavy pain and screams", "screams in pain as much as [gender == FEMALE ? "she" : "he"] can", "screams in pain loudly")]!"
 								if (gender == FEMALE) // Females have their own screams. Trannys be damned.
-									playsound(src, pick(SOUNDIN_FSCREAM), VOL_EFFECTS_MASTER, null, FALSE)
-								else
-									playsound(src, pick(SOUNDIN_MSCREAM), VOL_EFFECTS_MASTER, null, FALSE)
+									playsound(src, pick(SOUNDIN_FEMALE_HEAVY_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
+								else if(gender == MALE)
+									playsound(src, pick(SOUNDIN_MALE_HEAVY_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
 								m_type = 2
-								lastSoundEmote = world.time
+								lastSoundEmote = world.time + 4 SECONDS
 						else
 							if(!message)
 								message = "<B>[src]</B> screams!"
