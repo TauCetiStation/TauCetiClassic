@@ -36,11 +36,6 @@
 	if(M.pulling)
 		M.stop_pulling()
 
-	if(istype(src, /obj/item/weapon/shield/riot/tele))
-		var/obj/item/weapon/shield/riot/tele/TS = src
-		if(!TS.active)
-			return
-
 	user.do_attack_animation(M)
 	user.visible_message("<span class='warning'>[user.name] pushed away [M.name] with a [src.name]</span>")
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, M, user.dir), 1)
@@ -56,12 +51,15 @@
 			shake_camera(M, 1, 1)
 
 /obj/item/weapon/shield/riot/attack(mob/living/M, mob/user)
-	if(user.a_intent != I_HURT && M != user)
+	var/obj/item/weapon/shield/riot/tele/TS
+	if(istype(src, /obj/item/weapon/shield/riot/tele))
+		TS = src
+
+	if((M != user && !TS) || (M != user && TS && TS.active))
 		shield_push(M, user)
-	else
+
+	if(user.a_intent == I_HURT || M == user || (TS && !TS.active))
 		..()
-		if(user.a_intent == I_HURT && M != user)
-			shield_push(M, user)
 
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
