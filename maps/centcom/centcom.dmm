@@ -445,9 +445,6 @@
 "aaN" = (
 /turf/unsimulated/wall/fakeglass,
 /area/syndicate_mothership)
-"aaO" = (
-/turf/unsimulated/wall/fakeglass,
-/area/space)
 "aaP" = (
 /turf/unsimulated/wall/fakeglass,
 /area/centcom/arrival)
@@ -1746,9 +1743,6 @@
 	icon_state = "black"
 	},
 /area/syndicate_mothership/droppod_garage)
-"aig" = (
-/turf/simulated/mineral,
-/area/syndicate_mothership)
 "aih" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
@@ -1911,9 +1905,6 @@
 	icon_state = "floor6"
 	},
 /area/syndicate_station/start)
-"aiH" = (
-/turf/space,
-/area/syndicate_mothership/elite_squad)
 "aiI" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -2804,9 +2795,6 @@
 	dir = 10;
 	icon_state = "podhatch"
 	},
-/area/syndicate_mothership)
-"alt" = (
-/turf/space,
 /area/syndicate_mothership)
 "alx" = (
 /obj/machinery/computer/telecrystals/uplinker,
@@ -5275,9 +5263,6 @@
 	name = "plating"
 	},
 /area/centcom/arrival)
-"atm" = (
-/turf/unsimulated/wall,
-/area/centcom/suppy)
 "atn" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "4,0"
@@ -11051,9 +11036,6 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
-"aNm" = (
-/turf/unsimulated/wall,
-/area/centcom/test)
 "aNo" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -14552,9 +14534,6 @@
 "aYG" = (
 /turf/space,
 /area/shuttle/officer/centcomm)
-"aYJ" = (
-/turf/space,
-/area/centcom/evac)
 "aYL" = (
 /obj/structure/stool/bed/chair/metal/white,
 /turf/unsimulated/beach/sand,
@@ -31604,9 +31583,9 @@ aaM
 aaM
 aaM
 aaM
-bar
-bar
-bar
+aaM
+aaM
+aaM
 bar
 bar
 bar
@@ -47764,7 +47743,7 @@ aHv
 mRb
 mUb
 aHv
-aYJ
+aaM
 agG
 agV
 ahm
@@ -48021,7 +48000,7 @@ aHv
 mRb
 hRb
 aHv
-aYJ
+aaM
 agL
 agX
 ahp
@@ -62899,7 +62878,7 @@ aaM
 aaM
 aaM
 aaM
-aJu
+aaM
 aAm
 kdb
 kdb
@@ -63156,7 +63135,7 @@ aaM
 aaM
 aaM
 aaM
-aJu
+aaM
 aAm
 aAm
 aAm
@@ -63413,7 +63392,7 @@ aaM
 aaM
 aaM
 aaM
-aJu
+aaM
 aAm
 aOh
 aPc
@@ -63670,7 +63649,7 @@ aaM
 aaM
 aaM
 aaM
-aJu
+aaM
 aAm
 aHm
 aHm
@@ -63927,7 +63906,7 @@ aaM
 aaM
 aaM
 aaM
-aJu
+aaM
 aAm
 aHm
 aHm
@@ -64184,7 +64163,7 @@ aaM
 aaM
 aaM
 aaM
-aJu
+aaM
 aAm
 keb
 keb
@@ -64441,7 +64420,7 @@ aaM
 aaM
 aaM
 aaM
-atm
+aaM
 jMb
 kfb
 ksb
@@ -64566,13 +64545,13 @@ ahM
 ahM
 ahM
 ahM
-aiH
+aaM
 abR
 ajh
 ajn
 abR
-aiH
-aiH
+aaM
+aaM
 ahM
 aaM
 aaM
@@ -64698,7 +64677,7 @@ aaM
 aaM
 aaM
 aaM
-atm
+aaM
 jNb
 kgb
 aAM
@@ -64955,7 +64934,7 @@ aaM
 aaM
 aaM
 aaM
-atm
+aaM
 jNb
 khb
 ktb
@@ -65212,7 +65191,7 @@ aaM
 aaM
 aaM
 aaM
-atm
+aaM
 aAm
 kib
 kib
@@ -65469,7 +65448,7 @@ aaM
 aaM
 aaM
 aaM
-aNm
+aaM
 aAm
 aHm
 aHm
@@ -65726,7 +65705,7 @@ aaM
 aaM
 aaM
 aaM
-aNm
+aaM
 aAm
 aHm
 aHm
@@ -65983,7 +65962,7 @@ aaM
 aaM
 aaM
 aaM
-aNm
+aaM
 aAm
 aOn
 aPg
@@ -66240,7 +66219,7 @@ aaM
 aaM
 aaM
 aaM
-aNm
+aaM
 aAm
 aAm
 aAm
@@ -66497,7 +66476,7 @@ aaM
 aaM
 aaM
 aaM
-aNm
+aaM
 aaM
 aaM
 aAm
@@ -66754,7 +66733,7 @@ aaM
 aaM
 aaM
 aaM
-aNm
+aaM
 aaM
 aaM
 aAm
@@ -67736,15 +67715,15 @@ aaM
 aaM
 aaM
 aaM
-aeD
-aeD
-atB
-atB
-atB
-atB
-atB
-aeD
-aeD
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -79744,9 +79723,9 @@ aaM
 aaM
 aaM
 aaM
-aaO
+aaN
 amJ
-aaO
+aaN
 aaM
 aaM
 aaM
@@ -80001,9 +79980,9 @@ aaM
 aaM
 aaM
 aaM
-aaO
+aaN
 aii
-aaO
+aaN
 aaM
 aaM
 aaM
@@ -80251,7 +80230,7 @@ aaN
 aaN
 aaN
 aie
-alt
+aaM
 aie
 aaN
 aaN
@@ -81293,7 +81272,7 @@ alN
 alW
 amZ
 aie
-alt
+aaM
 aaM
 aaM
 aaM
@@ -82063,8 +82042,8 @@ alF
 alF
 als
 aie
-aeD
-aeD
+aie
+aie
 aaM
 aaM
 aaM
@@ -85641,7 +85620,7 @@ ahF
 ahF
 ahF
 ahF
-aig
+ahF
 aie
 ajG
 ajN
@@ -85898,7 +85877,7 @@ ahF
 ahF
 ahF
 ahF
-aig
+ahF
 aie
 ajH
 ajN
@@ -86155,7 +86134,7 @@ ahF
 ahF
 ahF
 ahF
-aig
+ahF
 aie
 ajI
 ajN
@@ -86412,7 +86391,7 @@ ahF
 ahF
 ahF
 ahF
-aig
+ahF
 aie
 ajJ
 ajO
@@ -86669,7 +86648,7 @@ ahF
 ahF
 ahF
 ahF
-aig
+ahF
 aie
 aie
 aie
