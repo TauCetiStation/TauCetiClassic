@@ -42,6 +42,8 @@
 	if(src.traumatic_shock < 0)
 		src.traumatic_shock = 0
 
+	play_pain_sound()
+
 	return src.traumatic_shock
 
 /mob/living/carbon/human/updateshock()
@@ -51,3 +53,34 @@
 
 /mob/living/carbon/proc/handle_shock()
 	updateshock()
+
+/mob/living/carbon/proc/play_pain_sound()
+	return
+
+/mob/living/carbon/human/play_pain_sound()
+	if(stat != CONSCIOUS)
+		return
+	if(last_pain_emote_sound > world.time)
+		return
+	if(species?.flags[NO_PAIN] || species.flags[IS_SYNTHETIC])
+		return
+	if(time_of_last_damage + 15 SECONDS > world.time) // don't cry from the pain that just came
+		return
+
+	var/pain_sound_name
+	var/current_health = round(100 - (traumatic_shock - (getOxyLoss() + 0.7 * getToxLoss()))) // don't consider suffocation and toxins
+	switch(current_health)
+		if(80 to 99)
+			if(has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(20))
+				pain_sound_name = "pain"
+		if(40 to 80)
+			if(!(has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && prob(current_health * 0.7)))
+				pain_sound_name = "pain"
+		if(-INFINITY to 39)
+			if(has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && prob(15))
+				pain_sound_name = "pain"
+			else
+				pain_sound_name = "scream"
+	if(pain_sound_name)
+		emote(pain_sound_name, auto = TRUE)
+		last_pain_emote_sound = world.time + (has_trait(TRAIT_LOW_PAIN_THRESHOLD) ? rand(40, 60) : rand(60, 100))
