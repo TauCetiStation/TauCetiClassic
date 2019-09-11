@@ -513,25 +513,25 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "1,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acf" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "0,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acg" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "3,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "ach" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "2,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "aci" = (
 /obj/machinery/door/poddoor{
@@ -579,7 +579,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "9,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acn" = (
 /obj/structure/object_wall/wagon{
@@ -593,19 +593,19 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "11,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acp" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "10,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acq" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "12,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acr" = (
 /obj/structure/object_wall/wagon{
@@ -617,7 +617,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "0,3"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "act" = (
 /obj/structure/object_wall/wagon{
@@ -649,7 +649,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "12,3"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acD" = (
 /turf/simulated/shuttle/floor/wagon{
@@ -660,7 +660,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "0,2"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acF" = (
 /obj/machinery/door/airlock/wagon,
@@ -673,13 +673,13 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "12,2"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acI" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "0,1"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acJ" = (
 /obj/structure/object_wall/wagon,
@@ -723,7 +723,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "12,1"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acV" = (
 /obj/structure/object_wall/wagon{
@@ -751,7 +751,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "0,0"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "adk" = (
 /obj/structure/object_wall/wagon{
@@ -825,7 +825,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "12,0"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "adv" = (
 /obj/machinery/light{
@@ -10328,6 +10328,7 @@
 /turf/space,
 /area/supply/dock)
 "aKj" = (
+/turf/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s6"
 	},
@@ -13660,6 +13661,7 @@
 /turf/unsimulated/beach/sand,
 /area/beach)
 "aWF" = (
+/turf/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s10"
 	},
@@ -13689,6 +13691,7 @@
 	},
 /area/space)
 "aWK" = (
+/turf/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s9"
 	},
@@ -13760,6 +13763,7 @@
 	},
 /area/shuttle/vox/station)
 "aWP" = (
+/turf/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
 	},
@@ -15475,26 +15479,31 @@
 	},
 /area/wizard_station)
 "bbL" = (
+/turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien20"
 	},
 /area/abductor_ship)
 "bbM" = (
+/turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien21"
 	},
 /area/abductor_ship)
 "bbN" = (
+/turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien22"
 	},
 /area/abductor_ship)
 "bbO" = (
+/turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien23"
 	},
 /area/abductor_ship)
 "bbP" = (
+/turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien24"
 	},
@@ -15521,6 +15530,7 @@
 	},
 /area/wizard_station)
 "bcb" = (
+/turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien16"
 	},
@@ -15556,6 +15566,7 @@
 	},
 /area/abductor_ship)
 "bch" = (
+/turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien19"
 	},
@@ -15599,6 +15610,7 @@
 	},
 /area/wizard_station)
 "bct" = (
+/turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien14"
 	},
@@ -15617,6 +15629,7 @@
 /turf/unsimulated/floor/abductor,
 /area/abductor_ship)
 "bcx" = (
+/turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien15"
 	},
@@ -15628,6 +15641,7 @@
 /turf/unsimulated/floor/abductor,
 /area/abductor_ship)
 "bcI" = (
+/turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien12"
 	},
@@ -15657,6 +15671,7 @@
 /turf/unsimulated/floor/abductor,
 /area/abductor_ship)
 "bcO" = (
+/turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien13"
 	},
@@ -15689,6 +15704,7 @@
 	},
 /area/centcom/living)
 "bde" = (
+/turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien10"
 	},
@@ -15698,6 +15714,7 @@
 /turf/unsimulated/floor/abductor,
 /area/abductor_ship)
 "bdh" = (
+/turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien11"
 	},
@@ -15735,6 +15752,7 @@
 	},
 /area/wizard_station)
 "bdx" = (
+/turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien6"
 	},
@@ -15756,6 +15774,7 @@
 	},
 /area/abductor_ship)
 "bdD" = (
+/turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien9"
 	},
@@ -15802,24 +15821,29 @@
 	},
 /area/wizard_station)
 "bdS" = (
+/turf/space,
 /turf/unsimulated/wall/abductor,
 /area/abductor_ship)
 "bdT" = (
+/turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien2"
 	},
 /area/abductor_ship)
 "bdU" = (
+/turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien3"
 	},
 /area/abductor_ship)
 "bdV" = (
+/turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien4"
 	},
 /area/abductor_ship)
 "bdW" = (
+/turf/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien5"
 	},
@@ -19326,6 +19350,7 @@
 	},
 /area/centcom/arrival)
 "hrb" = (
+/turf/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s6"
 	},
@@ -19351,6 +19376,7 @@
 /turf/space,
 /area/centcom/evac)
 "hvb" = (
+/turf/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s10"
 	},
@@ -19503,11 +19529,13 @@
 	},
 /area/centcom)
 "hUb" = (
+/turf/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
 	},
 /area/centcom/evac)
 "hVb" = (
+/turf/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s9"
 	},
@@ -20983,6 +21011,7 @@
 	},
 /area/centcom/control)
 "lJb" = (
+/turf/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s6"
 	},
@@ -21186,6 +21215,7 @@
 	},
 /area/centcom/control)
 "mcb" = (
+/turf/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
 	},
@@ -22157,6 +22187,7 @@
 	},
 /area/shuttle/escape/centcom)
 "ovb" = (
+/turf/space,
 /turf/simulated/shuttle/wall{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -22769,6 +22800,7 @@
 /turf/simulated/shuttle/plating,
 /area/shuttle/escape/centcom)
 "pXb" = (
+/turf/space,
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "diagonalWall3"
