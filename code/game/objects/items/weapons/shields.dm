@@ -34,6 +34,9 @@
 
 /obj/item/weapon/shield/riot/attack(mob/living/M, mob/user)
 	if(user.a_intent == I_DISARM && M != user)
+		if(M.pulling)
+			M.stop_pulling()
+		
 		if(istype(src, /obj/item/weapon/shield/riot/tele))
 			var/obj/item/weapon/shield/riot/tele/TS = src
 			if(TS.active)
@@ -55,12 +58,10 @@
 		if(prob(35))
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if(H.shoes || H.wear_suit)
-					if(H.shoes.flags & NOSLIP || H.wear_suit.armor["melee"] >= 20)
+				if(H.shoes)
+					if(H.shoes.flags & NOSLIP)
 						return
-
 				M.Weaken(3)
-
 		return
 
 	..()
