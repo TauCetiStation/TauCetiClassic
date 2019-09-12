@@ -385,7 +385,7 @@
 				else if(auto)
 					if(lastSoundEmote >= world.time)
 						return
-					message = "<B>[src]</B> [pick("grunts in pain", "grunts", "wrinkles [gender == FEMALE ? "her" : "his"] face and grunts")]!"
+					message = pick("<B>[src]</B> grunts in pain!", "<B>[src]</B> grunts!", "<B>[src]</B> wrinkles \his face and grunts!")
 					playsound(src, pick(gender == FEMALE ? SOUNDIN_FEMALE_LIGHT_PAIN : SOUNDIN_MALE_LIGHT_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
 					lastSoundEmote = world.time + 4 SECONDS
 
@@ -394,9 +394,9 @@
 				message = "<B>[src]</B> makes a weak noise."
 				m_type = 1
 			else if(auto)
-				message = "<B>[src]</B> [pick("moans in pain", "slightly winces in pain and moans", "presses [gender == FEMALE ? "her" : "his"] lips together in pain and moans")]."
+				message = pick("<B>[src]</B> moans in pain.", "<B>[src]</B> slightly winces in pain and moans.", "<B>[src]</B> presses \his lips together in pain and moans.")
 				m_type = 2
-				if((species?.name != SKRELL) && has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(50)) // skrells don't have much emotions to cry in pain, but they can still moan
+				if((species.name != SKRELL) && has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(50)) // skrells don't have much emotions to cry in pain, but they can still moan
 					playsound(src, pick(gender == FEMALE ? SOUNDIN_FEMALE_WHINER_PAIN : SOUNDIN_MALE_WHINER_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
 				else
 					playsound(src, pick(gender == FEMALE ? SOUNDIN_FEMALE_PASSIVE_PAIN : SOUNDIN_MALE_PASSIVE_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
