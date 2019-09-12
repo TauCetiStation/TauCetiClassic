@@ -377,7 +377,7 @@
 			if(miming)
 				message = "<B>[src]</B> appears to moan!"
 				m_type = 1
-			else if(auto)
+			else
 				if(!message)
 					message = "<B>[src]</B> moans!"
 				if(muzzled || has_trait(TRAIT_MUTE))
