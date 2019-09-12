@@ -93,7 +93,7 @@
 	var/pain_emote_name
 	var/previous_pain_emote_name
 	var/total_weapon_damage = round(brute + burn)
-	if(BP.owner?.stat == CONSCIOUS)
+	if(BP.owner.stat == CONSCIOUS)
 		switch(total_weapon_damage)
 			if(1 to 4)
 				if(BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(total_weapon_damage * 15))
