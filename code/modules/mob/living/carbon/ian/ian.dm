@@ -402,6 +402,7 @@
 
 		if("disarm")
 			if(CHECK_ROBUST_DIR(M, src))
+				to_chat(M, MSG_DISARM_DIR_FAIL)
 				return
 
 			M.do_attack_animation(src)
