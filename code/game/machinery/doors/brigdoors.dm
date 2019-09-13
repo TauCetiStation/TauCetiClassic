@@ -1,4 +1,4 @@
-define CHARS_PER_LINE 5
+#define CHARS_PER_LINE 5
 #define FONT_SIZE "5pt"
 #define FONT_COLOR "#09f"
 #define FONT_STYLE "Arial Black"
