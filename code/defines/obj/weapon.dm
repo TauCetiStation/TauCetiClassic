@@ -197,6 +197,8 @@
 	item_state = "shard-glass"
 	g_amt = 3750
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
+	var/on_step_sound = 'sound/effects/glass_step.ogg'
+
 
 /obj/item/weapon/shard/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='danger'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
@@ -243,10 +245,12 @@
 	origin_tech = "magnets=2;syndicate=3"*/
 
 /obj/item/weapon/shard/shrapnel
+
 	name = "shrapnel"
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "shrapnellarge"
 	desc = "A bunch of tiny bits of shattered metal."
+	on_step_sound = 'sound/effects/metalstep.ogg'
 
 /obj/item/weapon/shard/shrapnel/atom_init()
 	. = ..()
