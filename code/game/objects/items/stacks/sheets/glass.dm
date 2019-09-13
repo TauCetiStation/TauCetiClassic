@@ -335,7 +335,7 @@
 /obj/item/weapon/shard/Crossed(atom/movable/AM)
 	if(ismob(AM))
 		var/mob/M = AM
-		to_chat(M, "<span class='warning'><B>You step in the [src]!</B></span>")
+		to_chat(M, "<span class='warning'><B>You step on the [src]!</B></span>")
 		playsound(src, on_step_sound, VOL_EFFECTS_MASTER)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
