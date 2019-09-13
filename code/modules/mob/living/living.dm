@@ -119,7 +119,14 @@
 //					return
 		if(pulling == AM)
 			stop_pulling()
+		var/old_dir
+		if(ismob(AM))
+			var/mob/M = AM
+			if(M.a_intent == I_DISARM)
+				old_dir = M.dir
 		step(AM, t)
+		if(old_dir)
+			AM.set_dir(old_dir)
 		now_pushing = 0
 
 //mob verbs are a lot faster than object verbs
