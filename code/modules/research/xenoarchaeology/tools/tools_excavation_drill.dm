@@ -3,7 +3,7 @@
 	name = "excavation drill"
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "excavationdrill0"
-	item_state = "excavationdrill"
+	inhand_state = "excavationdrill"
 	excavation_amount = 0.5
 	toolspeed = 0.6
 	desc = "Basic archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision. The tip is adjustable from 1 to 30 cms."
@@ -46,7 +46,7 @@
 /obj/item/weapon/pickaxe/excavationdrill/adv
 	name = "diamond excavation drill"
 	icon_state = "Dexcavationdrill0"
-	item_state = "Dexcavationdrill"
+	inhand_state = "Dexcavationdrill"
 	toolspeed = 0.3
 	desc = "Advanced archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision. The diamond tip is adjustable from 1 to 100 cms."
 

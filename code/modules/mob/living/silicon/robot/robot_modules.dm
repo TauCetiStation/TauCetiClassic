@@ -3,7 +3,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
 	w_class = ITEM_SIZE_NO_CONTAINER
-	item_state = "electronic"
+	inhand_state = "electronic"
 	flags = CONDUCT
 	var/channels = list()
 	var/list/modules = list()

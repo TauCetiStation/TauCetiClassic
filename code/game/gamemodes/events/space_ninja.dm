@@ -574,11 +574,11 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		if(U.mind.protector_role == 1)
 			icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
 			U:gloves.icon_state = "s-ninjak"
-			U:gloves.item_state = "s-ninjak"
+			U:gloves.inhand_state = "s-ninjak"
 		else
 			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
 			U:gloves.icon_state = "s-ninjan"
-			U:gloves.item_state = "s-ninjan"
+			U:gloves.inhand_state = "s-ninjan"
 	else
 		if(U.mind.special_role!="Ninja")
 			to_chat(U, "<span class='warning'><B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAU?HORIZED USÈ DETÈC???eD\nCoMMÈNCING SUB-R0U?IN3 13...\nTÈRMInATING U-U-USÈR...</span>")
@@ -620,7 +620,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		n_shoes.slowdown++
 	if(n_gloves)
 		n_gloves.icon_state = "s-ninja"
-		n_gloves.item_state = "s-ninja"
+		n_gloves.inhand_state = "s-ninja"
 		n_gloves.canremove=1
 		n_gloves.candrain=0
 		n_gloves.draining=0
@@ -711,7 +711,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
 	if(n_gloves)
 		n_gloves.icon_state = "s-ninjak"
-		n_gloves.item_state = "s-ninjak"
+		n_gloves.inhand_state = "s-ninjak"
 		n_gloves.candrain = 0
 		n_gloves.draining = 0
 		n_gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/toggled

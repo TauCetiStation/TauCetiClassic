@@ -6,7 +6,7 @@
 	desc = "a pill."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = null
-	item_state = "pill"
+	inhand_state = "pill"
 	possible_transfer_amounts = null
 	w_class = ITEM_SIZE_TINY
 	volume = 50

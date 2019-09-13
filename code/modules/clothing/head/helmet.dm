@@ -3,7 +3,7 @@
 	desc = "Standard Security gear. Protects the head from impacts."
 	icon_state = "helmet"
 	flags = HEADCOVERSEYES | THICKMATERIAL
-	item_state = "helmet"
+	inhand_state = "helmet"
 	armor = list(melee = 50, bullet = 60, laser = 50,energy = 20, bomb = 35, bio = 0, rad = 0)
 	flags_inv = HIDEEARS|HIDEEYES
 	cold_protection = HEAD
@@ -22,7 +22,7 @@
 	name = "head of security's hat"
 	desc = "The hat of the Head of Security. For showing the officers who's in charge."
 	icon_state = "hoshat"
-	item_state = "hoshat"
+	inhand_state = "hoshat"
 	flags = HEADCOVERSEYES
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 	flags_inv = HIDEEARS
@@ -33,7 +33,7 @@
 	name = "dermal armour patch"
 	desc = "You're not quite sure how you manage to take it on and off, but it implants nicely in your head."
 	icon_state = "dermal"
-	item_state = "dermal"
+	inhand_state = "dermal"
 	siemens_coefficient = 0.6
 	body_parts_covered = 1
 
@@ -41,7 +41,7 @@
 	name = "riot helmet"
 	desc = "It's a helmet specifically designed to protect against close range attacks."
 	icon_state = "riot"
-	item_state = "helmet"
+	inhand_state = "helmet"
 	flags = HEADCOVERSEYES | THICKMATERIAL | HEADCOVERSMOUTH
 	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
@@ -95,7 +95,7 @@
 	desc = "They're often used by highly trained Swat Members."
 	icon_state = "swat"
 	flags = HEADCOVERSEYES | THICKMATERIAL
-	item_state = "swat"
+	inhand_state = "swat"
 	armor = list(melee = 80, bullet = 75, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags_inv = HIDEEARS|HIDEEYES
 	cold_protection = HEAD
@@ -107,7 +107,7 @@
 	desc = "<i>'Let the battle commence!'</i>"
 	icon_state = "thunderdome"
 	flags = HEADCOVERSEYES
-	item_state = "thunderdome"
+	inhand_state = "thunderdome"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
@@ -118,7 +118,7 @@
 	desc = "Ave, Imperator, morituri te salutant."
 	icon_state = "gladiator"
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
-	item_state = "gladiator"
+	inhand_state = "gladiator"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	siemens_coefficient = 1
 
@@ -126,7 +126,7 @@
 	name = "tactical helmet"
 	desc = "An armored helmet capable of being fitted with a multitude of attachments."
 	icon_state = "swathelm"
-	item_state = "helmet"
+	inhand_state = "helmet"
 	flags = HEADCOVERSEYES
 	armor = list(melee = 62, bullet = 60, laser = 50,energy = 35, bomb = 10, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
@@ -136,14 +136,14 @@
 	name = "marine helmet"
 	desc = "Spectrum alloy helmet. Lightweight and ready for action."
 	icon_state = "marinad"
-	item_state = "marinad_helmet"
+	inhand_state = "marinad_helmet"
 
 
 /obj/item/clothing/head/helmet/helmet_of_justice
 	name = "helmet of justice"
 	desc = "Prepare for Justice!"
 	icon_state = "shitcuritron_0"
-	item_state = "helmet"
+	inhand_state = "helmet"
 	var/on = 0
 	action_button_name = "Toggle Helmet"
 
@@ -156,33 +156,33 @@
 	name = "warden's hat"
 	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
 	icon_state = "oldwardenhelm"
-	item_state = "helmet"
+	inhand_state = "helmet"
 
 /obj/item/clothing/head/helmet/roman
 	name = "roman helmet"
 	desc = "An ancient helmet made of bronze and leather."
 	armor = list(melee = 25, bullet = 0, laser = 25, energy = 10, bomb = 10, bio = 0, rad = 0)
 	icon_state = "roman"
-	item_state = "roman"
+	inhand_state = "roman"
 
 /obj/item/clothing/head/helmet/roman/legionaire
 	name = "roman legionaire helmet"
 	desc = "An ancient helmet made of bronze and leather. Has a red crest on top of it."
 	icon_state = "roman_c"
-	item_state = "roman_c"
+	inhand_state = "roman_c"
 
 /obj/item/clothing/head/helmet/M89_Helmet
 	name = "M89 Helmet"
 	desc = "Combat helmet used by the private security corporation."
 	icon_state = "m89_helmet"
-	item_state = "helmet"
+	inhand_state = "helmet"
 	item_color = "m89_helmet"
 
 /obj/item/clothing/head/helmet/M35_Helmet
 	name = "M35 Helmet"
 	desc = "The Basic werhmacht army helmet."
 	icon_state = "M35_Helmet"
-	item_state = "helmet"
+	inhand_state = "helmet"
 	item_color = "M35_Helmet"
 
 /obj/item/clothing/head/helmet/Waffen_SS_Helmet
@@ -190,5 +190,5 @@
 	desc = "A helmet from SS uniform set."
 
 	icon_state = "SS_Helmet"
-	item_state = "helmet"
+	inhand_state = "helmet"
 	item_color = "SS_Helmet"

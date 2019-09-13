@@ -3,7 +3,7 @@
 	name = "delivery grenade"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "delivery"
-	item_state = "flashbang"
+	inhand_state = "flashbang"
 	origin_tech = "materials=3;magnets=4"
 	var/banglet = 0
 	var/spawner_type = null // must be an object path

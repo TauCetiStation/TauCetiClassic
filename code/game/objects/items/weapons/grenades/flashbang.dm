@@ -1,7 +1,7 @@
 /obj/item/weapon/grenade/flashbang
 	name = "flashbang"
 	icon_state = "flashbang"
-	item_state = "flashbang"
+	inhand_state = "flashbang"
 	origin_tech = "materials=2;combat=1"
 	var/banglet = FALSE
 	var/flashbang_range = 7 //how many tiles away the mob will be stunned.

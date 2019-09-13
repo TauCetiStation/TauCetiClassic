@@ -216,7 +216,7 @@
 /obj/item/device/science_tool
 	name = "science tool"
 	icon_state = "science"
-	item_state = "sciencetool"
+	inhand_state = "sciencetool"
 	desc = "A hand-held device capable of extracting usefull data from various sources, such as paper reports and slime cores."
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
@@ -304,7 +304,7 @@
 	desc = "Looks a disk with some important information stored. Scientists might know what to do with it"
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
-	item_state = "card-id"
+	inhand_state = "card-id"
 	w_class = ITEM_SIZE_SMALL
 	m_amt = 30
 	g_amt = 10

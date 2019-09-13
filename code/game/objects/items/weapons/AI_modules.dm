@@ -10,7 +10,7 @@ AI MODULES
 	name = "\improper AI module"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
-	item_state = "electronic"
+	inhand_state = "electronic"
 	desc = "An AI Module for transmitting encrypted instructions to the AI."
 	flags = CONDUCT
 	force = 5.0
@@ -367,7 +367,7 @@ AI MODULES
 	..()
 	var/new_lawpos = input("Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority (15+)", lawpos) as num
 
-	if(new_lawpos < 15)	
+	if(new_lawpos < 15)
 		return
 
 	lawpos = min(new_lawpos, 50)

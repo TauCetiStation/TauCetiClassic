@@ -2,7 +2,7 @@
 	name = "shotgun"
 	desc = "Useful for sweeping alleys."
 	icon_state = "shotgun"
-	item_state = "shotgun"
+	inhand_state = "shotgun"
 	w_class = ITEM_SIZE_LARGE
 	force = 10
 	flags =  CONDUCT
@@ -71,7 +71,7 @@
 	name = "double-barreled shotgun"
 	desc = "A true classic."
 	icon_state = "dshotgun"
-	item_state = "shotgun"
+	inhand_state = "shotgun"
 	w_class = ITEM_SIZE_LARGE
 	force = 10
 	flags =  CONDUCT
@@ -115,7 +115,7 @@
 		if(!user.is_busy() && A.use_tool(src, user, 30, volume = 50))
 			icon_state = "sawnshotgun[open ? "-o" : ""]"
 			w_class = ITEM_SIZE_NORMAL
-			item_state = "gun"
+			inhand_state = "gun"
 			slot_flags &= ~SLOT_FLAGS_BACK	//you can't sling it on your back
 			slot_flags |= SLOT_FLAGS_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 			to_chat(user, "<span class='warning'>You shorten the barrel of \the [src]!</span>")
@@ -171,7 +171,7 @@
 	name = "repeater rifle"
 	desc = "Winchester Model 1894."
 	icon_state = "repeater"
-	item_state = "repeater"
+	inhand_state = "repeater"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/repeater
 	w_class = ITEM_SIZE_HUGE
@@ -201,7 +201,7 @@
 	name = "bolt-action rifle"
 	desc = "Springfield M1903."
 	icon_state = "bolt-action"
-	item_state = "bolt-action"
+	inhand_state = "bolt-action"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/a3006_clip
 	w_class = ITEM_SIZE_HUGE

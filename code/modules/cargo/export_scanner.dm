@@ -2,7 +2,7 @@
 	name = "export scanner"
 	desc = "A device used to check objects against Nanotrasen exports database."
 	icon_state = "export_scanner"
-	item_state = "radio"
+	inhand_state = "radio"
 	flags = NOBLUDGEON
 	w_class = ITEM_SIZE_SMALL
 	siemens_coefficient = 1

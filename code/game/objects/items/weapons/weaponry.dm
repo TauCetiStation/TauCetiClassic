@@ -18,7 +18,7 @@
 	name = "null rod"
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of paranormal phenomenae."
 	icon_state = "nullrod"
-	item_state = "nullrod"
+	inhand_state = "nullrod"
 	slot_flags = SLOT_FLAGS_BELT
 	force = 15
 	throw_speed = 1
@@ -104,7 +104,7 @@
 	name = "claymore"
 	desc = "What are you standing around staring at this for? Get to killing!"
 	icon_state = "claymore"
-	item_state = "claymore"
+	inhand_state = "claymore"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	force = 40
@@ -133,7 +133,7 @@
 	name = "katana"
 	desc = "Woefully underpowered in D20."
 	icon_state = "katana"
-	item_state = "katana"
+	inhand_state = "katana"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 	force = 40
@@ -160,7 +160,7 @@
 	edge = 0
 	desc = "Tharr she blows!"
 	icon_state = "harpoon"
-	item_state = "harpoon"
+	inhand_state = "harpoon"
 	force = 20
 	throwforce = 15
 	w_class = ITEM_SIZE_NORMAL

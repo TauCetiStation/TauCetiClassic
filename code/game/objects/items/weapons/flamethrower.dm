@@ -3,7 +3,7 @@
 	desc = "You are a firestarter!"
 	icon = 'icons/obj/flamethrower.dmi'
 	icon_state = "flamethrowerbase"
-	item_state = "flamethrower_0"
+	inhand_state = "flamethrower_0"
 	flags = CONDUCT
 	force = 3.0
 	throwforce = 10.0
@@ -51,9 +51,9 @@
 		overlays += "+ptank"
 	if(lit)
 		overlays += "+lit"
-		item_state = "flamethrower_1"
+		inhand_state = "flamethrower_1"
 	else
-		item_state = "flamethrower_0"
+		inhand_state = "flamethrower_0"
 
 /obj/item/weapon/flamethrower/afterattack(atom/target, mob/user, proximity)
 	// Make sure our user is still holding us
@@ -206,7 +206,7 @@
 	desc = "Best tool for starting a fire since 1943."
 	icon = 'icons/obj/flamethrower.dmi'
 	icon_state = "M2_Flamethrower"
-	item_state = "M2_Flamethrower"
+	inhand_state = "M2_Flamethrower"
 	flags = CONDUCT
 	force = 3.0
 	throwforce = 10.0

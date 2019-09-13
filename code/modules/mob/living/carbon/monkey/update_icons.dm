@@ -50,7 +50,7 @@
 
 /mob/living/carbon/monkey/update_inv_r_hand(var/update_icons=1)
 	if(r_hand)
-		var/t_state = r_hand.item_state
+		var/t_state = r_hand.inhand_state
 		if(!t_state)	t_state = r_hand.icon_state
 		if(r_hand:icon_custom)
 			overlays_standing[M_R_HAND_LAYER]	= image("icon" = r_hand:icon_custom, "icon_state" = "[t_state]_r")
@@ -65,7 +65,7 @@
 
 /mob/living/carbon/monkey/update_inv_l_hand(var/update_icons=1)
 	if(l_hand)
-		var/t_state = l_hand.item_state
+		var/t_state = l_hand.inhand_state
 		if(!t_state)	 t_state = l_hand.icon_state
 		if(l_hand:icon_custom)
 			overlays_standing[M_L_HAND_LAYER]	= image("icon" = l_hand:icon_custom, "icon_state" = "[t_state]_l")

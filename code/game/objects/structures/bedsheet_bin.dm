@@ -9,7 +9,7 @@ LINEN BINS
 	desc = "A surprisingly soft linen bedsheet."
 	icon = 'icons/obj/bedsheets.dmi'
 	icon_state = "sheet"
-	item_state = "bedsheet"
+	inhand_state = "bedsheet"
 	slot_flags = SLOT_FLAGS_BACK
 	layer = 4.0
 	throwforce = 1
@@ -156,7 +156,7 @@ LINEN BINS
 	name = "gar bedsheet"
 	desc = "A surprisingly soft gar bedsheet."
 	icon_state = "sheetgurren"
-	item_state = "bedsheet"
+	inhand_state = "bedsheet"
 	item_color = "gurren"
 
 

@@ -1,7 +1,7 @@
 /obj/item/weapon/grenade/chem_grenade
 	name = "grenade casing"
 	icon_state = "chemg"
-	item_state = "flashbang"
+	inhand_state = "flashbang"
 	desc = "A hand made chemical grenade."
 	w_class = ITEM_SIZE_SMALL
 	force = 2.0

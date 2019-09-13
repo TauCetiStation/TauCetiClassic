@@ -9,7 +9,7 @@
 	name = "syringe"
 	desc = "A syringe."
 	icon = 'icons/obj/syringe.dmi'
-	item_state = "syringe_0"
+	inhand_state = "syringe_0"
 	icon_state = "0"
 	g_amt = 150
 	amount_per_transfer_from_this = 5
@@ -240,7 +240,7 @@
 				injoverlay = "inject"
 		overlays += injoverlay
 	icon_state = "[rounded_vol]"
-	item_state = "syringe_[rounded_vol]"
+	inhand_state = "syringe_[rounded_vol]"
 
 	if(reagents.total_volume)
 		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "syringe10")
@@ -268,7 +268,7 @@
 	name = "Lethal Injection Syringe"
 	desc = "A syringe used for lethal injections."
 	icon = 'icons/obj/syringe.dmi'
-	item_state = "syringe_0"
+	inhand_state = "syringe_0"
 	icon_state = "0"
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = null //list(5,10,15)
@@ -373,7 +373,7 @@
 		icon_state = "[mode_t][rounded_vol]"
 	else
 		icon_state = "[rounded_vol]"
-	item_state = "syringe_[rounded_vol]"
+	inhand_state = "syringe_[rounded_vol]"
 
 
 ////////////////////////////////////////////////////////////////////////////////

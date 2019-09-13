@@ -25,7 +25,7 @@
 	var/function = "storage"
 	var/data = "null"
 	var/special = null
-	item_state = "card-id"
+	inhand_state = "card-id"
 
 /obj/item/weapon/card/data/verb/label(t as text)
 	set name = "Label Disk"
@@ -42,7 +42,7 @@
 /obj/item/weapon/card/data/clown
 	name = "\proper the coordinates to clown planet"
 	icon_state = "data"
-	item_state = "card-id"
+	inhand_state = "card-id"
 	layer = 3
 	level = 2
 	desc = "This card contains coordinates to the fabled Clown Planet. Handle with care."
@@ -57,14 +57,14 @@
 	desc = "It's a card with a magnetic strip attached to some circuitry. It looks too busted to be used for anything but salvage."
 	name = "broken cryptographic sequencer"
 	icon_state = "emag"
-	item_state = "card-id"
+	inhand_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
 
 /obj/item/weapon/card/emag
 	desc = "It's a card with a magnetic strip attached to some circuitry."
 	name = "cryptographic sequencer"
 	icon_state = "emag"
-	item_state = "card-id"
+	inhand_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
 	var/uses = 10
 
@@ -88,7 +88,7 @@
 	name = "identification card"
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
-	item_state = "card-id"
+	inhand_state = "card-id"
 	var/mining_points = 0 //For redeeming at mining equipment lockers
 	var/access = list()
 	var/registered_name = "Unknown" // The name registered_name on the card
@@ -157,115 +157,115 @@
 	name = "identification card"
 	desc = "A silver card which shows honour and dedication."
 	icon_state = "silver"
-	item_state = "silver_id"
+	inhand_state = "silver_id"
 
 /obj/item/weapon/card/id/gold
 	name = "identification card"
 	desc = "A golden card which shows power and might."
 	icon_state = "gold"
-	item_state = "gold_id"
+	inhand_state = "gold_id"
 
 /obj/item/weapon/card/id/civ
 	name = "identification card"
 	desc = "A card issued to civilian staff."
 	icon_state = "civ"
-	item_state = "civ_id"
+	inhand_state = "civ_id"
 
 /obj/item/weapon/card/id/civGold //This is not the HoP. There's no position that uses this right now.
 	name = "identification card"
 	desc = "A card which represents common sense and responsibility."
 	icon_state = "civGold"
-	item_state = "civGold_id"
+	inhand_state = "civGold_id"
 
 /obj/item/weapon/card/id/sec
 	name = "identification card"
 	desc = "A card issued to security staff."
 	icon_state = "sec"
-	item_state = "sec_id"
+	inhand_state = "sec_id"
 
 /obj/item/weapon/card/id/int
 	name = "identification card"
 	desc = "A card issued to internal affairs agent."
 	icon_state = "int"
-	item_state = "int_id"
+	inhand_state = "int_id"
 
 /obj/item/weapon/card/id/secGold
 	name = "identification card"
 	desc = "A card which represents honor and protection."
 	icon_state = "secGold"
-	item_state = "secGold_id"
+	inhand_state = "secGold_id"
 
 /obj/item/weapon/card/id/eng
 	name = "identification card"
 	desc = "A card issued to engineering staff."
 	icon_state = "eng"
-	item_state = "eng_id"
+	inhand_state = "eng_id"
 
 /obj/item/weapon/card/id/engGold
 	name = "identification card"
 	desc = "A card which represents creativity and ingenuity."
 	icon_state = "engGold"
-	item_state = "engGold_id"
+	inhand_state = "engGold_id"
 
 /obj/item/weapon/card/id/med
 	name = "identification card"
 	desc = "A card issued to medical staff."
 	icon_state = "med"
-	item_state = "med_id"
+	inhand_state = "med_id"
 
 /obj/item/weapon/card/id/medGold
 	name = "identification card"
 	desc = "A card which represents care and compassion."
 	icon_state = "medGold"
-	item_state = "medGold_id"
+	inhand_state = "medGold_id"
 
 /obj/item/weapon/card/id/sci
 	name = "identification card"
 	desc = "A card issued to science staff."
 	icon_state = "sci"
-	item_state = "sci_id"
+	inhand_state = "sci_id"
 
 /obj/item/weapon/card/id/sciGold
 	name = "identification card"
 	desc = "A card which represents knowledge and reasoning."
 	icon_state = "sciGold"
-	item_state = "sciGold_id"
+	inhand_state = "sciGold_id"
 
 /obj/item/weapon/card/id/clown
 	name = "identification card"
 	desc = "A card which represents laugh and robust."
 	icon_state = "clown"
-	item_state = "clown_id"
+	inhand_state = "clown_id"
 
 /obj/item/weapon/card/id/clownGold //not in use
 	name = "identification card"
 	desc = "A golden card which represents laugh and robust."
 	icon_state = "clownGold"
-	item_state = "clownGold_id"
+	inhand_state = "clownGold_id"
 
 /obj/item/weapon/card/id/mime
 	name = "identification card"
 	desc = "A card which represents tears and silence."
 	icon_state = "mime"
-	item_state = "mime_id"
+	inhand_state = "mime_id"
 
 /obj/item/weapon/card/id/mimeGold //not in use
 	name = "identification card"
 	desc = "A golden card which represents tears and silence."
 	icon_state = "mimeGold"
-	item_state = "mimeGold_id"
+	inhand_state = "mimeGold_id"
 
 /obj/item/weapon/card/id/cargo
 	name = "identification card"
 	desc = "A card issued to cargo staff."
 	icon_state = "cargo"
-	item_state = "cargo_id"
+	inhand_state = "cargo_id"
 
 /obj/item/weapon/card/id/cargoGold
 	name = "identification card"
 	desc = "A card which represents service and planning."
 	icon_state = "cargoGold"
-	item_state = "cargoGold_id"
+	inhand_state = "cargoGold_id"
 
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
@@ -381,7 +381,7 @@
 	name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
 	icon_state = "gold"
-	item_state = "gold_id"
+	inhand_state = "gold_id"
 	registered_name = "Captain"
 	assignment = "Captain"
 
@@ -406,7 +406,7 @@
 	name = "\improper Cargo Industries. ID"
 	desc = "An ID designed for Velocity crew workers."
 	icon_state = "velocity"
-	item_state = "velcard_id"
+	inhand_state = "velcard_id"
 	registered_name = "Cargo Industries"
 	assignment = "General"
 

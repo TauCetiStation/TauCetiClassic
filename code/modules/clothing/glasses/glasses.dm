@@ -37,7 +37,7 @@
 	name = "optical meson scanner"
 	desc = "Used for seeing walls, floors, and stuff through anything."
 	icon_state = "meson"
-	item_state = "glasses"
+	inhand_state = "glasses"
 	action_button_name = "Toggle Goggles"
 	origin_tech = "magnets=2;engineering=2"
 	toggleable = 1
@@ -52,7 +52,7 @@
 	name = "science goggles"
 	desc = "The goggles do nothing!"
 	icon_state = "purple"
-	item_state = "glasses"
+	inhand_state = "glasses"
 	action_button_name = "Toggle Goggles"
 	toggleable = 1
 
@@ -60,7 +60,7 @@
 	name = "night vision goggles"
 	desc = "You can totally see in the dark now!"
 	icon_state = "night"
-	item_state = "glasses"
+	inhand_state = "glasses"
 	origin_tech = "magnets=2"
 //	darkness_view = 3
 //	vision_flags = SEE_SELF
@@ -75,21 +75,21 @@
 	name = "eyepatch"
 	desc = "Yarr."
 	icon_state = "eyepatch"
-	item_state = "eyepatch"
+	inhand_state = "eyepatch"
 	body_parts_covered = 0
 
 /obj/item/clothing/glasses/monocle
 	name = "monocle"
 	desc = "Such a dapper eyepiece!"
 	icon_state = "monocle"
-	item_state = "headset" // lol
+	inhand_state = "headset" // lol
 	body_parts_covered = 0
 
 /obj/item/clothing/glasses/material
 	name = "optical material scanner"
 	desc = "Very confusing glasses."
 	icon_state = "material"
-	item_state = "glasses"
+	inhand_state = "glasses"
 	origin_tech = "magnets=3;engineering=3"
 	toggleable = 1
 	action_button_name = "Toggle Goggles"
@@ -124,7 +124,7 @@
 	name = "prescription glasses"
 	desc = "Made by Nerd. Co."
 	icon_state = "glasses"
-	item_state = "glasses"
+	inhand_state = "glasses"
 	prescription = 1
 	body_parts_covered = 0
 
@@ -132,34 +132,34 @@
 	name = "prescription glasses"
 	desc = "Made by Uncool. Co."
 	icon_state = "hipster_glasses"
-	item_state = "hipster_glasses"
+	inhand_state = "hipster_glasses"
 
 /obj/item/clothing/glasses/threedglasses
 	desc = "A long time ago, people used these glasses to makes images from screens threedimensional."
 	name = "3D glasses"
 	icon_state = "3d"
-	item_state = "3d"
+	inhand_state = "3d"
 	body_parts_covered = 0
 
 /obj/item/clothing/glasses/gglasses
 	name = "green glasses"
 	desc = "Forest green glasses, like the kind you'd wear when hatching a nasty scheme."
 	icon_state = "gglasses"
-	item_state = "gglasses"
+	inhand_state = "gglasses"
 	body_parts_covered = 0
 
 /obj/item/clothing/glasses/sunglasses
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
 	name = "sunglasses"
 	icon_state = "sun"
-	item_state = "sunglasses"
+	inhand_state = "sunglasses"
 	darkness_view = -1
 
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
 	desc = "Protects the eyes from welders, approved by the mad scientist association."
 	icon_state = "welding-g"
-	item_state = "welding-g"
+	inhand_state = "welding-g"
 	action_button_name = "Flip Welding Goggles"
 	var/up = 0
 
@@ -192,20 +192,20 @@
 	name = "superior welding goggles"
 	desc = "Welding goggles made from more expensive materials, strangely smells like potatoes."
 	icon_state = "rwelding-g"
-	item_state = "rwelding-g"
+	inhand_state = "rwelding-g"
 
 /obj/item/clothing/glasses/sunglasses/blindfold
 	name = "blindfold"
 	desc = "Covers the eyes, preventing sight."
 	icon_state = "blindfold"
-	item_state = "blindfold"
+	inhand_state = "blindfold"
 	//vision_flags = BLIND  	// This flag is only supposed to be used if it causes permanent blindness, not temporary because of glasses
 
 /obj/item/clothing/glasses/sunglasses/blindfold/white
 	name = "blind personnel blindfold"
 	desc = "Indicates that the wearer suffers from blindness."
 	icon_state = "blindfoldwhite"
-	item_state = "blindfoldwhite"
+	inhand_state = "blindfoldwhite"
 	var/colored_before = FALSE
 
 /obj/item/clothing/glasses/sunglasses/blindfold/white/equipped(mob/living/carbon/human/user, slot)
@@ -225,7 +225,7 @@
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks many flashes."
 	icon_state = "bigsunglasses"
-	item_state = "bigsunglasses"
+	inhand_state = "bigsunglasses"
 
 /obj/item/clothing/glasses/sunglasses/sechud
 	name = "HUDsunglasses"
@@ -246,7 +246,7 @@
 	name = "optical thermal scanner"
 	desc = "Thermals in the shape of glasses."
 	icon_state = "thermal"
-	item_state = "glasses"
+	inhand_state = "glasses"
 	origin_tech = "magnets=3"
 	vision_flags = SEE_MOBS
 	invisa_view = 2
@@ -285,7 +285,7 @@
 	name = "optical thermal eyepatch"
 	desc = "An eyepatch with built-in thermal optics."
 	icon_state = "eyepatch"
-	item_state = "eyepatch"
+	inhand_state = "eyepatch"
 	body_parts_covered = 0
 	toggleable = 0
 	action_button_name = null
@@ -294,13 +294,13 @@
 	name = "optical thermal implants"
 	desc = "A set of implantable lenses designed to augment your vision."
 	icon_state = "thermalimplants"
-	item_state = "syringe_kit"
+	inhand_state = "syringe_kit"
 
 /obj/item/clothing/glasses/thermal/hos_thermals
 	name = "augmented shades"
 	desc = "Polarized bioneural eyewear, designed to augment your vision."
 	icon_state = "hos_shades"
-	item_state = "hos_shades"
+	inhand_state = "hos_shades"
 	toggleable = 0
 	action_button_name = null
 
@@ -317,39 +317,39 @@
 /obj/item/clothing/glasses/gar
 	name = "gar glasses"
 	icon_state = "gar"
-	item_state = "gar"
+	inhand_state = "gar"
 
 /obj/item/clothing/glasses/sunglasses/gar
 	name = "gar sunglasses"
 	icon_state = "garb"
-	item_state = "garb"
+	inhand_state = "garb"
 
 /obj/item/clothing/glasses/meson/gar
 	name = "gar meson scanner"
 	icon_state = "garm"
-	item_state = "garm"
+	inhand_state = "garm"
 	toggleable = 0
 	action_button_name = null
 
 /obj/item/clothing/glasses/sunglasses/sechud/gar
 	name = "gar HUDsunglasses"
 	icon_state = "gars"
-	item_state = "gars"
+	inhand_state = "gars"
 
 /obj/item/clothing/glasses/sunglasses/gar/super
 	name = "supergar sunglasses"
 	icon_state = "supergarb"
-	item_state = "supergarb"
+	inhand_state = "supergarb"
 
 /obj/item/clothing/glasses/sunglasses/sechud/gar/super
 	name = "supergar HUDSunglasses"
 	icon_state = "supergars"
-	item_state = "supergars"
+	inhand_state = "supergars"
 
 /obj/item/clothing/glasses/gar/super
 	name = "supergar glasses"
 	icon_state = "supergar"
-	item_state = "supergar"
+	inhand_state = "supergar"
 	toggleable = 0
 
 /obj/item/clothing/glasses/sunglasses/noir

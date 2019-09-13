@@ -2391,14 +2391,14 @@
 						continue
 					W.icon = 'icons/obj/gun.dmi'
 					W.icon_state = "revolver"
-					W.item_state = "gun"
+					W.inhand_state = "gun"
 				message_admins("[key_name_admin(usr)] made every item look like a gun")
 			if("schoolgirl")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","SG")
 				for(var/obj/item/clothing/under/W in world)
 					W.icon_state = "schoolgirl"
-					W.item_state = "w_suit"
+					W.inhand_state = "w_suit"
 					W.item_color = "schoolgirl"
 				message_admins("[key_name_admin(usr)] activated Japanese Animes mode")
 				station_announce(sound = "animes")

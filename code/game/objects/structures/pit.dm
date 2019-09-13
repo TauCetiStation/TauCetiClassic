@@ -224,7 +224,7 @@
 /obj/item/weapon/gun/energy/laser/retro/jetsons
 	name ="unwanted laser"
 	icon_state = "jetsons"
-	item_state = "jetsons"
+	inhand_state = "jetsons"
 	desc = "Very unusual version of laser gun, oldschool style"
 	origin_tech = "combat=2;magnets=1"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice/jetsons)

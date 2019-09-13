@@ -82,7 +82,7 @@
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candlebox"
 	icon_type = "candle"
-	item_state = "candlebox"
+	inhand_state = "candlebox"
 	storage_slots = 5
 	throwforce = 2
 	slot_flags = SLOT_FLAGS_BELT
@@ -123,7 +123,7 @@
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "black_candlebox5"
 	icon_type = "black_candle"
-	item_state = "black_candlebox5"
+	inhand_state = "black_candlebox5"
 	storage_slots = 5
 	throwforce = 2
 	slot_flags = SLOT_FLAGS_BELT
@@ -280,7 +280,7 @@
 	desc = "The most popular brand of Space Cigarettes, sponsors of the Space Olympics."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigpacket"
-	item_state = "cigpacket"
+	inhand_state = "cigpacket"
 	w_class = ITEM_SIZE_TINY
 	throwforce = 2
 	slot_flags = SLOT_FLAGS_BELT
@@ -329,7 +329,7 @@
 	name = "\improper DromedaryCo packet"
 	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
 	icon_state = "Dpacket"
-	item_state = "Dpacket"
+	inhand_state = "Dpacket"
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
 	name = "unknown"
@@ -370,7 +370,7 @@
 	desc = "A locked box for keeping things away from children."
 	icon = 'icons/obj/vialbox.dmi'
 	icon_state = "vialbox0"
-	item_state = "syringe_kit"
+	inhand_state = "syringe_kit"
 	max_w_class = ITEM_SIZE_NORMAL
 	can_hold = list(/obj/item/weapon/reagent_containers/glass/beaker/vial)
 	storage_slots = 6

@@ -4,7 +4,7 @@
 	name = "Glass Case"
 	desc = "A case containing an implant."
 	icon_state = "implantcase-0"
-	item_state = "implantcase"
+	inhand_state = "implantcase"
 	throw_speed = 1
 	throw_range = 5
 	w_class = ITEM_SIZE_TINY

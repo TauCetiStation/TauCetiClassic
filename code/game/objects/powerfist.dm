@@ -2,7 +2,7 @@
 	name = "power-fist"
 	desc = "A metal gauntlet with a piston-powered ram ontop for that extra 'ompfh' in your punch."
 	icon_state = "powerfist"
-	item_state = "powerfist"
+	inhand_state = "powerfist"
 	flags = CONDUCT
 	attack_verb = list("whacked", "fisted", "power-punched")
 	force = 20

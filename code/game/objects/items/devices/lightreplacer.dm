@@ -45,7 +45,7 @@
 
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "lightreplacer0"
-	item_state = "electronic"
+	inhand_state = "electronic"
 
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT

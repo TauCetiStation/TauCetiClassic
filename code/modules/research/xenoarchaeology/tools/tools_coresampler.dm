@@ -19,7 +19,7 @@
 	desc = "Used to extract geological core samples."
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "sampler_empty"
-	item_state = "sampler"
+	inhand_state = "sampler"
 	w_class = ITEM_SIZE_TINY
 	//slot_flags = SLOT_FLAGS_BELT
 	var/sampled_turf = ""
@@ -86,6 +86,6 @@
 			filled_bag.loc = get_turf(src)
 		filled_bag = null
 		icon_state = "sampler_empty"
-		item_state = "sampler"
+		inhand_state = "sampler"
 	else
 		to_chat(usr, "<span class='warning'>The core sampler is empty.</span>")

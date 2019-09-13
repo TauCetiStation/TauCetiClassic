@@ -7,7 +7,7 @@
 	desc = "Extracts information on wounds."
 	icon = 'icons/obj/autopsy_scanner.dmi'
 	icon_state = "autopsy_main"
-	item_state = "autopsy"
+	inhand_state = "autopsy"
 	flags = CONDUCT
 	w_class = ITEM_SIZE_SMALL
 	origin_tech = "materials=1;biotech=1"

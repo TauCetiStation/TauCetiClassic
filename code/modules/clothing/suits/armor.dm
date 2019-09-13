@@ -13,7 +13,7 @@
 	name = "armor"
 	desc = "An armored vest that protects against some damage."
 	icon_state = "armor"
-	item_state = "armor"
+	inhand_state = "armor"
 	blood_overlay_type = "armor"
 	flags = THICKMATERIAL
 	armor = list(melee = 50, bullet = 45, laser = 40, energy = 25, bomb = 35, bio = 0, rad = 0)
@@ -22,13 +22,13 @@
 	name = "security armor"
 	desc = "An armored vest that protects against some damage. This one has NanoTrasen corporate badge."
 	icon_state = "armorsec"
-	item_state = "armor"
+	inhand_state = "armor"
 
 /obj/item/clothing/suit/storage/flak
 	name = "security armor"
 	desc = "An armored vest that protects against some damage. This one has four pockets for storage."
 	icon_state = "armorsec"
-	item_state = "armor"
+	inhand_state = "armor"
 	blood_overlay_type = "armor"
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
@@ -49,7 +49,7 @@
 	name = "marine armor"
 	desc = "This thing will protect you from any angry flora or fauna."
 	icon_state = "marinad"
-	item_state = "marinad_armor"
+	inhand_state = "marinad_armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	slowdown = 1
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 60, bomb = 40, bio = 0, rad = 0)
@@ -57,21 +57,21 @@
 	name = "Warden's jacket"
 	desc = "An armoured jacket with gold rank pips and livery."
 	icon_state = "warden_jacket"
-	item_state = "armor"
+	inhand_state = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 /obj/item/clothing/suit/storage/flak/warden
 	name = "Warden's jacket"
 	desc = "An armoured jacket with gold rank pips and livery."
 	icon_state = "warden_jacket"
-	item_state = "armor"
+	inhand_state = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 /obj/item/clothing/suit/armor/vest/leather
 	name = "security overcoat"
 	desc = "Lightly armored leather overcoat meant as casual wear for high-ranking officers. Bears the crest of Nanotrasen Security."
 	icon_state = "leather_overcoat-sec"
-	item_state = "hostrench"
+	inhand_state = "hostrench"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -80,7 +80,7 @@
 	name = "armored coat"
 	desc = "A greatcoat enhanced with a special alloy for some protection and style."
 	icon_state = "hos"
-	item_state = "hos"
+	inhand_state = "hos"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	armor = list(melee = 80, bullet = 60, laser = 55, energy = 35, bomb = 50, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
@@ -90,7 +90,7 @@
 	name = "riot suit"
 	desc = "A suit of armor with heavy padding to protect against melee attacks. Looks like it might impair movement."
 	icon_state = "riot"
-	item_state = "swat_suit"
+	inhand_state = "swat_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	slowdown = 1
 	armor = list(melee = 70, bullet = 10, laser = 5, energy = 10, bomb = 0, bio = 0, rad = 0)
@@ -100,7 +100,7 @@
 	name = "bulletproof Vest"
 	desc = "A vest that excels in protecting the wearer against high-velocity solid projectiles."
 	icon_state = "bulletproof"
-	item_state = "armor"
+	inhand_state = "armor"
 	blood_overlay_type = "armor"
 	armor = list(melee = 10, bullet = 80, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 
@@ -108,7 +108,7 @@
 	name = "bulletproof Vest"
 	desc = "A vest that excels in protecting the wearer against high-velocity solid projectiles."
 	icon_state = "bulletproof"
-	item_state = "armor"
+	inhand_state = "armor"
 	blood_overlay_type = "armor"
 	armor = list(melee = 10, bullet = 80, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 
@@ -121,7 +121,7 @@
 	name = "ablative armor vest"
 	desc = "A vest that excels in protecting the wearer against energy projectiles."
 	icon_state = "armor_reflec"
-	item_state = "armor_reflec"
+	inhand_state = "armor_reflec"
 	blood_overlay_type = "armor"
 	armor = list(melee = 10, bullet = 10, laser = 65, energy = 75, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0
@@ -137,7 +137,7 @@
 	name = "swat suit"
 	desc = "A heavily armored suit that protects against moderate damage. Used in special operations."
 	icon_state = "deathsquad"
-	item_state = "swat_suit"
+	inhand_state = "swat_suit"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags = THICKMATERIAL
@@ -154,7 +154,7 @@
 	name = "officer jacket"
 	desc = "An armored jacket used in special operations."
 	icon_state = "detective_brown"
-	item_state = "det_suit"
+	inhand_state = "det_suit"
 	blood_overlay_type = "coat"
 	flags_inv = 0
 	body_parts_covered = UPPER_TORSO|ARMS
@@ -164,7 +164,7 @@
 	name = "armor"
 	desc = "An armored vest with a detective's badge on it."
 	icon_state = "detective-armor"
-	item_state = "armor"
+	inhand_state = "armor"
 	blood_overlay_type = "armor"
 	flags = ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
@@ -178,7 +178,7 @@
 	desc = "Someone seperated our Research Director from his own head!"
 	var/active = 0.0
 	icon_state = "reactiveoff"
-	item_state = "reactiveoff"
+	inhand_state = "reactiveoff"
 	blood_overlay_type = "armor"
 	slowdown = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
@@ -193,18 +193,18 @@
 	if (src.active)
 		to_chat(user, "<span class='notice'>The reactive armor is now active.</span>")
 		src.icon_state = "reactive"
-		src.item_state = "reactive"
+		src.inhand_state = "reactive"
 	else
 		to_chat(user, "<span class='notice'>The reactive armor is now inactive.</span>")
 		src.icon_state = "reactiveoff"
-		src.item_state = "reactiveoff"
+		src.inhand_state = "reactiveoff"
 		src.add_fingerprint(user)
 	return
 
 /obj/item/clothing/suit/armor/reactive/emp_act(severity)
 	active = 0
 	src.icon_state = "reactiveoff"
-	src.item_state = "reactiveoff"
+	src.inhand_state = "reactiveoff"
 	..()
 
 
@@ -215,7 +215,7 @@
 	name = "Cent. Com. armor"
 	desc = "A suit that protects against some damage."
 	icon_state = "centcom"
-	item_state = "centcom"
+	inhand_state = "centcom"
 	w_class = ITEM_SIZE_LARGE//bulky item
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
@@ -228,7 +228,7 @@
 	name = "heavy armor"
 	desc = "A heavily armored suit that protects against moderate damage."
 	icon_state = "heavy"
-	item_state = "swat_suit"
+	inhand_state = "swat_suit"
 	w_class = ITEM_SIZE_LARGE//bulky item
 	gas_transfer_coefficient = 0.90
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -244,21 +244,21 @@
 	name = "thunderdome suit (red)"
 	desc = "Reddish armor."
 	icon_state = "tdred"
-	item_state = "tdred"
+	inhand_state = "tdred"
 	siemens_coefficient = 1
 
 /obj/item/clothing/suit/armor/tdome/green
 	name = "thunderdome suit (green)"
 	desc = "Pukish armor."
 	icon_state = "tdgreen"
-	item_state = "tdgreen"
+	inhand_state = "tdgreen"
 	siemens_coefficient = 1
 
 /obj/item/clothing/suit/armor/tactical
 	name = "tactical armor"
 	desc = "A suit of armor most often used by Special Weapons and Tactics squads. Includes padded vest with pockets along with shoulder and kneeguards."
 	icon_state = "swatarmor"
-	item_state = "armor"
+	inhand_state = "armor"
 	var/obj/item/weapon/gun/holstered = null
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	slowdown = 1
@@ -299,7 +299,7 @@
 /obj/item/clothing/suit/armor/syndiassault
 	name = "assault armor"
 	icon_state = "assaultarmor"
-	item_state = "assaultarmor"
+	inhand_state = "assaultarmor"
 	flags = THICKMATERIAL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	armor = list(melee = 50, bullet = 60, laser = 40, energy = 70, bomb = 50, bio = 0, rad = 50)
@@ -312,7 +312,7 @@
 	name = "M66 Tactical Vest"
 	desc = "Black tactical kevlar vest, used by private security coropation. So tactics."
 	icon_state = "M66_KevlarVest"
-	item_state = "armor"
+	inhand_state = "armor"
 	item_color = "M66_KevlarVest"
 	blood_overlay_type = "armor"
 	armor = list(melee = 60, bullet = 80, laser = 40, energy = 50, bomb = 25, bio = 0, rad = 0)

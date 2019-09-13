@@ -879,7 +879,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.assignment = "NanoTrasen Navy Representative"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.icon_state = "centcom"
-			W.item_state = "id_inv"
+			W.inhand_state = "id_inv"
 			W.access = get_all_accesses()
 			W.access += list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer")
 			W.rank = "NanoTrasen Representative"

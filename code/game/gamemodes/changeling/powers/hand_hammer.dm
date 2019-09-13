@@ -18,7 +18,7 @@
 	flags = ABSTRACT | DROPDEL
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_hammer"
-	item_state = "arm_hammer"
+	inhand_state = "arm_hammer"
 
 /obj/item/weapon/changeling_hammer/atom_init()
 	. = ..()

@@ -18,7 +18,7 @@
 	var/listening = 1.0
 	flags = CONDUCT
 	w_class = ITEM_SIZE_SMALL
-	item_state = "electronic"
+	inhand_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 400
@@ -127,7 +127,7 @@ Frequency:
 	desc = "A portable item using blue-space technology."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hand_tele"
-	item_state = "electronic"
+	inhand_state = "electronic"
 	throwforce = 5
 	w_class = ITEM_SIZE_SMALL
 	throw_speed = 3

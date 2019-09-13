@@ -7,7 +7,7 @@
 	desc = "Triangulates the approximate co-ordinates using a nearby satellite network."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
-	item_state = "locator"
+	inhand_state = "locator"
 	w_class = ITEM_SIZE_SMALL
 
 /obj/item/device/gps/attack_self(mob/user)
@@ -19,7 +19,7 @@
 	desc = "A coiled metallic tape used to check dimensions and lengths."
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "measuring"
-	item_state = "measuring"
+	inhand_state = "measuring"
 	w_class = ITEM_SIZE_SMALL
 
 /obj/item/weapon/storage/bag/fossils
@@ -27,7 +27,7 @@
 	desc = "Transports delicate fossils in suspension so they don't break during transit."
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "fossil_satchel"
-	item_state = "fossil_satchel"
+	inhand_state = "fossil_satchel"
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_POCKET
 	w_class = ITEM_SIZE_NORMAL
 	storage_slots = 50

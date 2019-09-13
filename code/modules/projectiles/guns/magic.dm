@@ -3,7 +3,7 @@
 	desc = "This staff is boring to watch because even though it came first you've seen everything it can do in other staves for years."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
-	item_state = "staff"
+	inhand_state = "staff"
 	fire_sound = 'sound/weapons/guns/gunpulse_emitter.ogg'
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK

@@ -810,7 +810,7 @@
 	name = "adamantine skin"
 	desc = "A golem's skin."
 	icon_state = "golem"
-	item_state = "golem"
+	inhand_state = "golem"
 	item_color = "golem"
 	has_sensor = 0
 	canremove = 0
@@ -822,7 +822,7 @@
 	name = "golem's feet"
 	desc = "Sturdy adamantine feet."
 	icon_state = "golem"
-	item_state = null
+	inhand_state = null
 	canremove = 0
 	flags = ABSTRACT | DROPDEL | NOSLIP
 	unacidable = 1
@@ -832,7 +832,7 @@
 	name = "golem's face"
 	desc = "The imposing face of an adamantine golem."
 	icon_state = "golem"
-	item_state = "golem"
+	inhand_state = "golem"
 	canremove = 0
 	siemens_coefficient = 0
 	unacidable = 1
@@ -844,7 +844,7 @@
 	name = "golem's hands"
 	desc = "Strong adamantine hands."
 	icon_state = "golem"
-	item_state = null
+	inhand_state = null
 	siemens_coefficient = 0
 	canremove = 0
 	unacidable = 1
@@ -853,7 +853,7 @@
 
 /obj/item/clothing/head/helmet/space/golem
 	icon_state = "golem"
-	item_state = "dermal"
+	inhand_state = "dermal"
 	item_color = "dermal"
 	name = "golem's head"
 	desc = "A golem's head."
@@ -880,7 +880,7 @@
 	name = "adamantine shell"
 	desc = "A golem's thick outter shell."
 	icon_state = "golem"
-	item_state = "golem"
+	inhand_state = "golem"
 	w_class = ITEM_SIZE_LARGE//bulky item
 	allowed = null
 

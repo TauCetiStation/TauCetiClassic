@@ -2,7 +2,7 @@
 	name = "\improper CentComm. hat"
 	icon_state = "centcom"
 	desc = "It's good to be emperor."
-	item_state = "centhat"
+	inhand_state = "centhat"
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
 
@@ -10,26 +10,26 @@
 	name = "hair flower pin"
 	icon_state = "hairflower"
 	desc = "Smells nice."
-	item_state = "hairflower"
+	inhand_state = "hairflower"
 	body_parts_covered = 0
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
 	desc = "A powdered wig."
 	icon_state = "pwig"
-	item_state = "pwig"
+	inhand_state = "pwig"
 
 /obj/item/clothing/head/chep
 	name = "Maid cap"
 	desc = "Smells like trooly cleaned house."
 	icon_state = "chep"
-	item_state = "chep"
+	inhand_state = "chep"
 
 /obj/item/clothing/head/tacticool_hat
 	name = "tacticool hat"
 	desc = "Black synthcloth hat."
 	icon_state = "tacticool_hat"
-	item_state = "tacticool_hat"
+	inhand_state = "tacticool_hat"
 	flags = BLOCKHAIR
 	siemens_coefficient = 2.0
 
@@ -38,7 +38,7 @@
 	name = "top-hat"
 	desc = "It's an amish looking hat."
 	icon_state = "tophat"
-	item_state = "that"
+	inhand_state = "that"
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
 
@@ -79,7 +79,7 @@
 /obj/item/clothing/head/syndicatefake
 	name = "red space-helmet replica"
 	icon_state = "syndicate-helm"
-	item_state = "syndicate-helm"
+	inhand_state = "syndicate-helm"
 	desc = "A plastic replica of a syndicate agent's space helmet, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	flags = BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
@@ -91,7 +91,7 @@
 	desc = "A large, featureless white orb mean to be worn on your head. How do you even see out of this thing?"
 	icon_state = "cueball"
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
-	item_state="cueball"
+	inhand_state="cueball"
 	flags_inv = 0
 	body_parts_covered = HEAD|FACE|EYES
 
@@ -99,7 +99,7 @@
 	name = "cardborg helmet"
 	desc = "A helmet made out of a box."
 	icon_state = "cardborg_h"
-	item_state = "cardborg_h"
+	inhand_state = "cardborg_h"
 	flags = HEADCOVERSEYES | HEADCOVERSMOUTH
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
@@ -108,26 +108,26 @@
 	name = "justice hat"
 	desc = "Fight for what's righteous!"
 	icon_state = "justicered"
-	item_state = "justicered"
+	inhand_state = "justicered"
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
 
 /obj/item/clothing/head/justice/blue
 	icon_state = "justiceblue"
-	item_state = "justiceblue"
+	inhand_state = "justiceblue"
 
 /obj/item/clothing/head/justice/yellow
 	icon_state = "justiceyellow"
-	item_state = "justiceyellow"
+	inhand_state = "justiceyellow"
 
 /obj/item/clothing/head/justice/green
 	icon_state = "justicegreen"
-	item_state = "justicegreen"
+	inhand_state = "justicegreen"
 
 /obj/item/clothing/head/justice/pink
 	icon_state = "justicepink"
-	item_state = "justicepink"
+	inhand_state = "justicepink"
 
 /obj/item/clothing/head/rabbitears
 	name = "rabbit ears"
@@ -139,34 +139,34 @@
 	name = "flat cap"
 	desc = "A working man's cap."
 	icon_state = "flat_cap"
-	item_state = "detective"
+	inhand_state = "detective"
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/head/pirate
 	name = "pirate hat"
 	desc = "Yarr."
 	icon_state = "pirate"
-	item_state = "pirate"
+	inhand_state = "pirate"
 	body_parts_covered = 0
 
 /obj/item/clothing/head/hgpiratecap
 	name = "pirate hat"
 	desc = "Yarr."
 	icon_state = "hgpiratecap"
-	item_state = "hgpiratecap"
+	inhand_state = "hgpiratecap"
 	body_parts_covered = 0
 
 /obj/item/clothing/head/bandana
 	name = "pirate bandana"
 	desc = "Yarr."
 	icon_state = "bandana"
-	item_state = "bandana"
+	inhand_state = "bandana"
 
 /obj/item/clothing/head/bowler
 	name = "bowler-hat"
 	desc = "Gentleman, elite aboard!"
 	icon_state = "bowler"
-	item_state = "bowler"
+	inhand_state = "bowler"
 	body_parts_covered = 0
 
 //stylish bs12 hats
@@ -174,13 +174,13 @@
 /obj/item/clothing/head/feathertrilby
 	name = "\improper feather trilby"
 	icon_state = "feather_trilby"
-	item_state = "feather_trilby"
+	inhand_state = "feather_trilby"
 	desc = "A sharp, stylish hat with a feather."
 
 /obj/item/clothing/head/fez
 	name = "\improper fez"
 	icon_state = "fez"
-	item_state = "fez"
+	inhand_state = "fez"
 	desc = "You should wear a fez. Fezzes are cool."
 
 //end bs12 hats
@@ -189,7 +189,7 @@
 	name = "witch costume wig"
 	desc = "Eeeee~heheheheheheh!"
 	icon_state = "witch"
-	item_state = "witch"
+	inhand_state = "witch"
 	flags = BLOCKHAIR
 	siemens_coefficient = 2.0
 
@@ -197,7 +197,7 @@
 	name = "chicken suit head"
 	desc = "Bkaw!"
 	icon_state = "chickenhead"
-	item_state = "chickensuit"
+	inhand_state = "chickensuit"
 	flags = BLOCKHAIR
 	siemens_coefficient = 2.0
 	body_parts_covered = HEAD|FACE|EYES
@@ -206,14 +206,14 @@
 	name = "bear pelt hat"
 	desc = "Fuzzy."
 	icon_state = "bearpelt"
-	item_state = "bearpelt"
+	inhand_state = "bearpelt"
 	flags = BLOCKHAIR
 	siemens_coefficient = 2.0
 
 /obj/item/clothing/head/headscarf
 	name = "zhan headscarf"
 	icon_state = "zhan_scarf"
-	item_state = "zhan_scarf"
+	inhand_state = "zhan_scarf"
 	desc = "White headscarf"
 	body_parts_covered = 0
 	species_restricted = list(UNATHI , TAJARAN , HUMAN , DIONA , IPC)
@@ -221,7 +221,7 @@
 /obj/item/clothing/head/skrell_headwear
 	name = "skrell yellow headwear"
 	icon_state = "skrell_yellow"
-	item_state = "skrell_yellow"
+	inhand_state = "skrell_yellow"
 	desc = "Just two pieces of yellow cloth"
 	body_parts_covered = 0
 	species_restricted = list(SKRELL)
@@ -229,7 +229,7 @@
 /obj/item/clothing/head/skrell_headwear/red
 	name = "skrell red headwear"
 	icon_state = "skrell_red"
-	item_state = "skrell_red"
+	inhand_state = "skrell_red"
 	desc = "Just two pieces of red cloth"
 	body_parts_covered = 0
 	species_restricted = list(SKRELL)
@@ -237,7 +237,7 @@
 /obj/item/clothing/head/skrell_headwear/blue
 	name = "skrell blue headwear"
 	icon_state = "skrell_blue"
-	item_state = "skrell_blue"
+	inhand_state = "skrell_blue"
 	desc = "Just two pieces of blue cloth"
 	body_parts_covered = 0
 	species_restricted = list(SKRELL)
@@ -245,7 +245,7 @@
 /obj/item/clothing/head/xenos
 	name = "xenos helmet"
 	icon_state = "xenos"
-	item_state = "xenos_helm"
+	inhand_state = "xenos_helm"
 	desc = "A helmet made out of chitinous alien hide."
 	flags = BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
@@ -255,7 +255,7 @@
 /obj/item/clothing/head/fedora
 	name = "black fedora"
 	icon_state = "fedora"
-	item_state = "fedora"
+	inhand_state = "fedora"
 	desc = "Unless you are good at guessing, it is not much use being a detective." // Hercule Poirot reference
 	action_button_name = "Tip Fedora"
 
@@ -299,7 +299,7 @@
 	name = "Batman helmet"
 	desc = "It's not who you are underneath, it's what you do that defines you."
 	icon_state = "batman_helmet"
-	item_state = "batman_helmet"
+	inhand_state = "batman_helmet"
 	flags = HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
@@ -307,43 +307,43 @@
 /obj/item/clothing/head/sombrero
 	name = "sombrero"
 	icon_state = "sombrero"
-	item_state = "helmet"
+	inhand_state = "helmet"
 	desc = "You feel mexican just wearing this."
 
 /obj/item/clothing/head/sombrero/green
 	name = "green sombrero"
 	icon_state = "greensombrero"
-	item_state = "greensombrero"
+	inhand_state = "greensombrero"
 	desc = "As elegant as a dancing cactus."
 
 /obj/item/clothing/head/sombrero/shamebrero
 	name = "shamebrero"
 	icon_state = "shamebrero"
-	item_state = "shamebrero"
+	inhand_state = "shamebrero"
 	desc = "You never asked for this."
 
 /obj/item/clothing/head/western
 	name = "western hat"
 	icon_state = "western_hat"
-	item_state = "western_hat"
+	inhand_state = "western_hat"
 
 /obj/item/clothing/head/western/cowboy
 	name = "cowboy hat"
 	icon_state = "cowboy_hat"
-	item_state = "cowboy_hat"
+	inhand_state = "cowboy_hat"
 	desc = "Howdy, partner!"
 
 /obj/item/clothing/head/indiana
 	name = "leather hat"
 	icon_state = "indiana_hat"
-	item_state = "indiana_hat"
+	inhand_state = "indiana_hat"
 	desc = "Be aware of rolling boulders."
 
 /obj/item/clothing/head/necromancer_hood
 	name = "necromancer's hood"
 	desc = "It's hood that covers the head."
 	icon_state = "necromancer"
-	item_state = "necromancer"
+	inhand_state = "necromancer"
 	flags = HEADCOVERSEYES|BLOCKHAIR
 	siemens_coefficient = 0.9
 
@@ -379,7 +379,7 @@
 	name = "Byzantine skiadion"
 	desc = "Wearing this headdress makes you feel like a basileus."
 	icon_state = "Byzantine_hat"
-	item_state = "Byzantine_hat"
+	inhand_state = "Byzantine_hat"
 	body_parts_covered = HEAD
 	flags_inv = BLOCKHAIR
 
@@ -387,12 +387,12 @@
 	name = "Waffen SS Cap"
 	desc = "An officer's SS cap."
 	icon_state = "SS_cap"
-	item_state = "that"
+	inhand_state = "that"
 	item_color = "SS_cap"
 
 /obj/item/clothing/head/Nazi_Officer_Cap
 	name = "Nazi Officer Cap"
 	desc = "A nazi officer's cap."
 	icon_state = "officer_cap"
-	item_state = "that"
+	inhand_state = "that"
 	item_color = "officer_cap"

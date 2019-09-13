@@ -2,7 +2,7 @@
 	name = "black shoes"
 	icon_state = "black"
 	item_color = "black"
-	item_state = "bl_shoes"
+	inhand_state = "bl_shoes"
 	desc = "A pair of black shoes."
 	clipped_status = CLIPPABLE
 
@@ -20,7 +20,7 @@
 	desc = "A pair of brown shoes."
 	icon_state = "brown"
 	item_color = "brown"
-	item_state = "b_shoes"
+	inhand_state = "b_shoes"
 	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/brown/captain
@@ -71,7 +71,7 @@
 	desc = "Stylish red shoes."
 	icon_state = "red"
 	item_color = "red"
-	item_state = "r_shoes"
+	inhand_state = "r_shoes"
 	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/white
@@ -79,7 +79,7 @@
 	icon_state = "white"
 	permeability_coefficient = 0.01
 	item_color = "white"
-	item_state = "w_shoes"
+	inhand_state = "w_shoes"
 	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/leather
@@ -100,7 +100,7 @@
 	name = "orange shoes"
 	icon_state = "orange"
 	item_color = "orange"
-	item_state = "o_shoes"
+	inhand_state = "o_shoes"
 	var/obj/item/weapon/handcuffs/chained = null
 	clipped_status = CLIPPABLE
 
@@ -113,7 +113,7 @@
 	slowdown = 15
 	name = "shackles"
 	icon_state = "orange1"
-	item_state = "o_shoes1"
+	inhand_state = "o_shoes1"
 
 /obj/item/clothing/shoes/orange/proc/remove_cuffs()
 	if (!src.chained)
@@ -122,7 +122,7 @@
 	slowdown = initial(slowdown)
 	name = initial(name)
 	icon_state = "orange"
-	item_state = "o_shoes"
+	inhand_state = "o_shoes"
 	chained = null
 
 /obj/item/clothing/shoes/orange/attack_self(mob/user)
@@ -154,4 +154,4 @@
 	slowdown = 15
 	name = "shackles"
 	icon_state = "orange1"
-	item_state = "o_shoes1"
+	inhand_state = "o_shoes1"

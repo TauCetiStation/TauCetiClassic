@@ -4,7 +4,7 @@
 
 	icon = 'icons/obj/valentines.dmi'
 	icon_state = "heartbox"
-	item_state = "heartbox"
+	inhand_state = "heartbox"
 	icon_type = "heart"
 
 	storage_slots = 5
@@ -27,7 +27,7 @@
 	if(!opened)
 		overlays.Cut()
 		icon_state = "heartbox_full"
-		item_state = "heartbox"
+		inhand_state = "heartbox"
 		return
 	icon_state = "heartbox"
 	var/list/candy_overlays = list()

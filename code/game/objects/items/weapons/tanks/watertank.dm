@@ -5,7 +5,7 @@
 	slot_flags = SLOT_FLAGS_BACK
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "waterbackpack"
-	item_state = "waterbackpack"
+	inhand_state = "waterbackpack"
 	flags = OPENCONTAINER
 	w_class = ITEM_SIZE_LARGE
 	action_button_name = "Toggle Mister"
@@ -103,7 +103,7 @@
 	desc = "A mister nozzle attached to a water tank."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "mister"
-	item_state = "mister"
+	inhand_state = "mister"
 	w_class = ITEM_SIZE_LARGE
 	throwforce = 0 //we shall not abuse
 	amount_per_transfer_from_this = 25
@@ -143,7 +143,7 @@
 	name = "backpack water tank"
 	desc = "A janitorial watertank backpack with nozzle to clean dirt and graffiti."
 	icon_state = "waterbackpackjani"
-	item_state = "waterbackpackjani"
+	inhand_state = "waterbackpackjani"
 	noz = /obj/item/weapon/reagent_containers/spray/mister/janitor
 
 /obj/item/weapon/reagent_containers/watertank_backpack/janitor/atom_init()
@@ -156,7 +156,7 @@
 	desc = "A janitorial spray nozzle attached to a watertank, designed to clean up large messes."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "misterjani"
-	item_state = "misterjani"
+	inhand_state = "misterjani"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(5, 10)
 	spray_size = 1

@@ -67,7 +67,7 @@
 	desc = "Some sort of bizarre assembly."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "helmet_signaler"
-	item_state = "helmet"
+	inhand_state = "helmet"
 	var/build_step = 0
 	var/created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
 

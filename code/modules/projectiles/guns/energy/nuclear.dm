@@ -2,7 +2,7 @@
 	name = "energy gun"
 	desc = "A basic energy-based gun with two settings: Stun and kill."
 	icon_state = "energytac"
-	item_state = null	//so the human update icon uses the icon_state instead.
+	inhand_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser)
 	origin_tech = "combat=3;magnets=2"
 	can_be_holstered = TRUE

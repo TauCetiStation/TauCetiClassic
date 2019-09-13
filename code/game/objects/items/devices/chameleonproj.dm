@@ -3,7 +3,7 @@
 	icon_state = "shield0"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
-	item_state = "electronic"
+	inhand_state = "electronic"
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5

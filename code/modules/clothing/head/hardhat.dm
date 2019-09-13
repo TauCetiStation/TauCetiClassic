@@ -2,7 +2,7 @@
 	name = "hard hat"
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight."
 	icon_state = "hardhat"
-	item_state = "hardhat"
+	inhand_state = "hardhat"
 	item_color = "standard"
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
@@ -32,7 +32,7 @@
 
 /obj/item/clothing/head/hardhat/update_icon()
 	icon_state = "[initial(icon_state)][on]_[item_color]"
-	item_state = icon_state
+	inhand_state = icon_state
 
 /obj/item/clothing/head/hardhat/yellow
 	item_color = "yellow"

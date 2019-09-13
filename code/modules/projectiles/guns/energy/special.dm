@@ -2,7 +2,7 @@
 	name = "ion rifle"
 	desc = "A man portable anti-armor weapon designed to disable mechanical threats."
 	icon_state = "ionrifle"
-	item_state = "ionrifle"
+	inhand_state = "ionrifle"
 	origin_tech = "combat=2;magnets=4"
 	w_class = ITEM_SIZE_LARGE
 	flags =  CONDUCT
@@ -16,10 +16,10 @@
 		if (0)
 			if(ratio > 100)
 				icon_state = "[initial(icon_state)]100"
-				item_state = "[initial(item_state)]100"
+				inhand_state = "[initial(inhand_state)]100"
 			else
 				icon_state = "[initial(icon_state)][ratio]"
-				item_state = "[initial(item_state)][ratio]"
+				inhand_state = "[initial(inhand_state)][ratio]"
 	return
 
 /obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
@@ -33,12 +33,12 @@
 	name = "ion rifle"
 	desc = "A man portable anti-armor weapon designed to disable mechanical threats."
 	icon_state = "oldion"
-	item_state = "oldion"
+	inhand_state = "oldion"
 	slot_flags = null
 
 /obj/item/weapon/gun/energy/ionrifle/tactifool
 	icon_state = "tfionrifle"
-	item_state = "tfionrifle"
+	inhand_state = "tfionrifle"
 
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
@@ -52,7 +52,7 @@
 	name = "floral somatoray"
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells."
 	icon_state = "flora"
-	item_state = "gun"
+	inhand_state = "gun"
 	ammo_type = list(/obj/item/ammo_casing/energy/flora/yield, /obj/item/ammo_casing/energy/flora/mut)
 	origin_tech = "materials=2;biotech=3;powerstorage=3"
 	modifystate = 1
@@ -88,7 +88,7 @@
 	name = "meteor gun"
 	desc = "For the love of god, make sure you're aiming this the right way!"
 	icon_state = "riotgun"
-	item_state = "c20r"
+	inhand_state = "c20r"
 	w_class = ITEM_SIZE_LARGE
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
 	cell_type = "/obj/item/weapon/stock_parts/cell/potato"
@@ -122,7 +122,7 @@
 	desc = "The pen is mightier than the sword."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "pen"
-	item_state = "pen"
+	inhand_state = "pen"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	can_be_holstered = TRUE
@@ -148,7 +148,7 @@
 	desc = "Designed by W&J Company, W2500-E sniper rifle constructed of lightweight materials, fitted with a SMART aiming-system scope."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "w2500e"
-	item_state = "w2500e"
+	inhand_state = "w2500e"
 	origin_tech = "combat=6;materials=5;powerstorage=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/sniper)
 	slot_flags = SLOT_FLAGS_BACK
@@ -167,10 +167,10 @@
 		if (0)
 			if(ratio > 100)
 				icon_state = "[initial(icon_state)]100"
-				item_state = "[initial(item_state)]100"
+				inhand_state = "[initial(inhand_state)]100"
 			else
 				icon_state = "[initial(icon_state)][ratio]"
-				item_state = "[initial(item_state)][ratio]"
+				inhand_state = "[initial(inhand_state)][ratio]"
 	return
 
 /obj/item/weapon/gun/energy/sniperrifle/dropped(mob/user)
@@ -223,7 +223,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	desc = "With this weapon you'll be the boss at any Arena."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "relsotron"
-	item_state = "relsotron"
+	inhand_state = "relsotron"
 	origin_tech = null
 	ammo_type = list(/obj/item/ammo_casing/energy/rails)
 	fire_delay = 20
@@ -235,7 +235,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	desc = "Cannon which uses electrical charge to damage multiple targets. Spin the generator handle to charge it up"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "tesla"
-	item_state = "tesla"
+	inhand_state = "tesla"
 	w_class = ITEM_SIZE_LARGE
 	origin_tech = "combat=5;materials=5;powerstorage=5;magnets=5;engineering=5"
 	can_be_holstered = FALSE
@@ -343,7 +343,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	desc = "Rifle which uses electrical charge to damage multiple targets. Spin the generator handle to charge it up"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "arctesla"
-	item_state = "arctesla"
+	inhand_state = "arctesla"
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = null
 	toolspeed = 0.5

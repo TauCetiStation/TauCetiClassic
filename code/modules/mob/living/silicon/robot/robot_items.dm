@@ -136,7 +136,7 @@
 	name = "paper dispenser"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper_bin1"
-	item_state = "sheet-metal"
+	inhand_state = "sheet-metal"
 
 /obj/item/weapon/form_printer/attack(mob/living/carbon/M, mob/living/carbon/user)
 	return
@@ -182,7 +182,7 @@
 /obj/item/device/lustmodule
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
-	item_state = "locator"
+	inhand_state = "locator"
 	name = "Slime bloodlust pulse emitter"
 	desc = "Highly dangeroues experimental device that makes nearby slimes completely loose it. Has 5 uses."
 	var/uses = 5

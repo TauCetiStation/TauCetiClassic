@@ -2,7 +2,7 @@
 	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
 	name = "magboots"
 	icon_state = "magboots0"
-	item_state = "magboots"
+	inhand_state = "magboots"
 	species_restricted = null
 	var/magpulse = 0
 	var/magboot_state = "magboots"

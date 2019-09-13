@@ -204,7 +204,7 @@
 	desc = "A small storage unit containing an antimatter reactor section.  To use place near an antimatter control unit or deployed antimatter reactor section and use a multitool to activate this package."
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "box"
-	item_state = "electronic"
+	inhand_state = "electronic"
 	w_class = ITEM_SIZE_LARGE
 	flags = CONDUCT
 	throwforce = 5

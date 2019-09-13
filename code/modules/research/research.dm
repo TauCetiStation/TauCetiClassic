@@ -209,7 +209,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	desc = "Wow. Is that a save icon?"
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
-	item_state = "card-id"
+	inhand_state = "card-id"
 	w_class = ITEM_SIZE_SMALL
 	m_amt = 30
 	g_amt = 10

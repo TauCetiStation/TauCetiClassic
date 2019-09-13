@@ -703,7 +703,7 @@
 	desc = "A replacement light tube."
 	icon_state = "ltube"
 	base_state = "ltube"
-	item_state = "c_tube"
+	inhand_state = "c_tube"
 	g_amt = 100
 	brightness_range = 8
 	brightness_power = 3
@@ -719,7 +719,7 @@
 	desc = "A replacement light bulb."
 	icon_state = "lbulb"
 	base_state = "lbulb"
-	item_state = "contvapour"
+	inhand_state = "contvapour"
 	g_amt = 100
 	brightness_range = 5
 	brightness_power = 2
@@ -734,7 +734,7 @@
 	desc = "A replacement fire bulb."
 	icon_state = "fbulb"
 	base_state = "fbulb"
-	item_state = "egg4"
+	inhand_state = "egg4"
 	g_amt = 100
 	brightness_range = 5
 	brightness_power = 2

@@ -9,7 +9,7 @@
 	desc = "A shard capable of resurrecting humans as skeleton thralls."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "necrostone"
-	item_state = "electronic"
+	inhand_state = "electronic"
 	origin_tech = "bluespace=4;materials=4"
 	w_class = ITEM_SIZE_TINY
 	var/list/spooky_scaries = list()

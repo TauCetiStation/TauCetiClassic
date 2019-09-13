@@ -561,7 +561,7 @@
 	desc = "It's an excellent prop for a comedy."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banana"
-	item_state = "banana"
+	inhand_state = "banana"
 	filling_color = "#fcf695"
 	can_be_holstered = TRUE
 	trash = /obj/item/weapon/bananapeel

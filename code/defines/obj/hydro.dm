@@ -9,7 +9,7 @@
 	g_amt = 50
 	origin_tech = "materials=1;biotech=1"
 	icon_state = "hydro"
-	item_state = "plantanalyzer"
+	inhand_state = "plantanalyzer"
 
 	var/output_to_chat = TRUE
 
@@ -1325,7 +1325,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	name = "weed-spray"
 	icon_state = "weedspray"
-	item_state = "spray"
+	inhand_state = "spray"
 	flags = OPENCONTAINER | NOBLUDGEON
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 4
@@ -1344,7 +1344,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	name = "pest-spray"
 	icon_state = "pestspray"
-	item_state = "spraycan"
+	inhand_state = "spraycan"
 	flags = OPENCONTAINER | NOBLUDGEON
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 4
@@ -1363,7 +1363,7 @@
 	desc = "It's used for removing weeds or scratching your back."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hoe"
-	item_state = "hoe"
+	inhand_state = "hoe"
 	flags = CONDUCT | NOBLUDGEON
 	force = 5.0
 	throwforce = 7.0

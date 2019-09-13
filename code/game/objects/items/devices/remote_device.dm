@@ -7,7 +7,7 @@
 	name = "Remote Controller Device"
 	icon = 'icons/obj/remote_device.dmi'
 	icon_state = "rdc_white"
-	item_state = "electronic"
+	inhand_state = "electronic"
 	w_class = ITEM_SIZE_SMALL
 	var/mode = REMOTE_OPEN
 	var/region_access = list(0, 1, 2, 3, 4, 5, 6, 7) // look at access.dm

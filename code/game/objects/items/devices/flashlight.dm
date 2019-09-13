@@ -3,7 +3,7 @@
 	desc = "A hand-held emergency light."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
-	item_state = "flashlight"
+	inhand_state = "flashlight"
 	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
@@ -91,7 +91,7 @@
 	name = "seclite"
 	desc = "A robust flashlight used by security."
 	icon_state = "seclite"
-	item_state = "seclite"
+	inhand_state = "seclite"
 	force = 7 // Not as good as a stun baton.
 	hitsound = list('sound/weapons/genhit1.ogg')
 
@@ -99,7 +99,7 @@
 	name = "penlight"
 	desc = "A pen-sized light, used by medical staff."
 	icon_state = "penlight"
-	item_state = ""
+	inhand_state = ""
 	flags = CONDUCT
 	brightness_on = 2
 	w_class = ITEM_SIZE_TINY
@@ -108,7 +108,7 @@
 	name = "low-power flashlight"
 	desc = "A miniature lamp, that might be used by small robots."
 	icon_state = "penlight"
-	item_state = ""
+	inhand_state = ""
 	flags = CONDUCT
 	brightness_on = 2
 	w_class = ITEM_SIZE_TINY
@@ -119,7 +119,7 @@
 	name = "desk lamp"
 	desc = "A desk lamp with an adjustable mount."
 	icon_state = "lamp"
-	item_state = "lamp"
+	inhand_state = "lamp"
 	brightness_on = 4
 	w_class = ITEM_SIZE_LARGE
 	flags = CONDUCT
@@ -132,7 +132,7 @@
 /obj/item/device/flashlight/lamp/green
 	desc = "A classic green-shaded desk lamp."
 	icon_state = "lampgreen"
-	item_state = "lampgreen"
+	inhand_state = "lampgreen"
 	brightness_on = 4
 
 
@@ -152,7 +152,7 @@
 	w_class = ITEM_SIZE_SMALL
 	brightness_on = 4
 	icon_state = "flare"
-	item_state = "flare"
+	inhand_state = "flare"
 	action_button_name = null //just pull it manually, neckbeard.
 	var/fuel = 0
 	var/on_damage = 7
@@ -175,7 +175,7 @@
 		turn_off()
 		if(!fuel)
 			icon_state = "[initial(icon_state)]-empty"
-			item_state = icon_state
+			inhand_state = icon_state
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/proc/turn_off()
@@ -203,7 +203,7 @@
 		user.visible_message("<span class='notice'>[user] activates the flare.</span>", "<span class='notice'>You pull the cord on the flare, activating it!</span>")
 		src.force = on_damage
 		src.damtype = "fire"
-		item_state = icon_state
+		inhand_state = icon_state
 		if(user.hand)
 			user.update_inv_l_hand()
 		else
@@ -216,7 +216,7 @@
 	desc = "A glowing ball of what appears to be amber."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floor1" //not a slime extract sprite but... something close enough!
-	item_state = "slime"
+	inhand_state = "slime"
 	w_class = ITEM_SIZE_TINY
 	m_amt = 0
 	g_amt = 0

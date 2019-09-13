@@ -32,7 +32,7 @@
 	desc = "A bag for knowledge."
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bookbag"
-	item_state = "bookbag"
+	inhand_state = "bookbag"
 	display_contents_with_number = 0 //This would look really stupid otherwise
 	storage_slots = 7
 	max_w_class = ITEM_SIZE_NORMAL
@@ -48,7 +48,7 @@
 	desc = "It's the heavy-duty black polymer kind. Time to take out the trash!"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "trashbag"
-	item_state = "trashbag"
+	inhand_state = "trashbag"
 
 	w_class = ITEM_SIZE_SMALL
 	max_w_class = ITEM_SIZE_NORMAL
@@ -117,7 +117,7 @@
 	desc = "It's a very flimsy, very noisy alternative to a bag."
 	icon = 'icons/obj/trash.dmi'
 	icon_state = "plasticbag"
-	item_state = "plasticbag"
+	inhand_state = "plasticbag"
 
 	w_class = ITEM_SIZE_LARGE
 	max_w_class = ITEM_SIZE_NORMAL

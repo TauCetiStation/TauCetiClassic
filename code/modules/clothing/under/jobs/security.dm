@@ -12,7 +12,7 @@
 	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for more robust protection. It has the word \"Warden\" written on the shoulders."
 	name = "warden's jumpsuit"
 	icon_state = "warden"
-	item_state = "r_suit"
+	inhand_state = "r_suit"
 	item_color = "warden"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL
@@ -22,7 +22,7 @@
 	name = "security officer's jumpsuit"
 	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for robust protection."
 	icon_state = "security"
-	item_state = "r_suit"
+	inhand_state = "r_suit"
 	item_color = "secred"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL
@@ -32,7 +32,7 @@
 	name = "dispatcher's uniform"
 	desc = "A dress shirt and khakis with a security patch sewn on."
 	icon_state = "dispatch"
-	item_state = "dispatch"
+	inhand_state = "dispatch"
 	item_color = "dispatch"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
@@ -42,7 +42,7 @@
 	name = "security officer's uniform"
 	desc = "It's made of a slightly sturdier material, to allow for robust protection."
 	icon_state = "redshirt2"
-	item_state = "r_suit"
+	inhand_state = "r_suit"
 	item_color = "redshirt2"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL
@@ -50,13 +50,13 @@
 
 /obj/item/clothing/under/rank/security/corp
 	icon_state = "sec_corporate"
-	item_state = "sec_corporate"
+	inhand_state = "sec_corporate"
 	item_color = "sec_corporate"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/rank/warden/corp
 	icon_state = "warden_corporate"
-	item_state = "warden_corporate"
+	inhand_state = "warden_corporate"
 	item_color = "warden_corporate"
 	flags = ONESIZEFITSALL
 
@@ -64,7 +64,7 @@
 	name = "tactical jumpsuit"
 	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for robust protection."
 	icon_state = "swatunder"
-	item_state = "swatunder"
+	inhand_state = "swatunder"
 	item_color = "swatunder"
 	armor = list(melee = 10, bullet = 5, laser = 5,energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
@@ -73,7 +73,7 @@
 	name = "marine jumpsuit"
 	desc = "Boots and Utes"
 	icon_state = "marinad"
-	item_state = "johnny"
+	inhand_state = "johnny"
 	item_color = "marinad"
 	armor = list(melee = 10, bullet = 5, laser = 5,energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
@@ -85,7 +85,7 @@
 	name = "white hard-worn suit with brown pants"
 	desc = "Someone who wears this means business."
 	icon_state = "detective"
-	item_state = "det"
+	inhand_state = "det"
 	item_color = "detective"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL
@@ -124,7 +124,7 @@
 	desc = "It's a jumpsuit worn by those few with the dedication to achieve the position of \"Head of Security\". It has additional armor to protect the wearer."
 	name = "head of security's jumpsuit"
 	icon_state = "hos"
-	item_state = "r_suit"
+	inhand_state = "r_suit"
 	item_color = "hosred"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL
@@ -134,12 +134,12 @@
 	name = "head of security's turtleneck"
 	icon_state = "hos_turtleneck"
 	item_color = "hos_turtleneck"
-	item_state = "hos_turtleneck"
+	inhand_state = "hos_turtleneck"
 	flags = 0
 
 /obj/item/clothing/under/rank/head_of_security/corp
 	icon_state = "hos_corporate"
-	item_state = "hos_corporate"
+	inhand_state = "hos_corporate"
 	item_color = "hos_corporate"
 	flags = ONESIZEFITSALL
 
@@ -148,7 +148,7 @@
 	desc = "You never asked for anything that stylish."
 	name = "head of security's jumpsuit"
 	icon_state = "jensen"
-	item_state = "jensen"
+	inhand_state = "jensen"
 	item_color = "jensen"
 	siemens_coefficient = 0.6
 
@@ -156,7 +156,7 @@
 	name = "armored trenchcoat"
 	desc = "A trenchcoat augmented with a special alloy for some protection and style."
 	icon_state = "jensencoat"
-	item_state = "jensencoat"
+	inhand_state = "jensencoat"
 	flags_inv = 0
 	siemens_coefficient = 0.6
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS

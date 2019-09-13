@@ -6,7 +6,7 @@
 //starts off as black
 	name = "black jumpsuit"
 	icon_state = "black"
-	item_state = "bl_suit"
+	inhand_state = "bl_suit"
 	item_color = "black"
 	desc = "It's a plain jumpsuit. It seems to have a small dial on the wrist."
 	origin_tech = "syndicate=3"
@@ -23,7 +23,7 @@
 	name = "psychedelic"
 	desc = "Groovy!"
 	icon_state = "psyche"
-	item_state = "psyche"
+	inhand_state = "psyche"
 	item_color = "psyche"
 	update_icon()
 	update_inv_mob()
@@ -52,7 +52,7 @@
 	desc = A.desc
 	name = A.name
 	icon_state = A.icon_state
-	item_state = A.item_state
+	inhand_state = A.inhand_state
 	item_color = A.item_color
 	body_parts_covered = A.body_parts_covered
 	update_inv_mob()
@@ -64,7 +64,7 @@
 /obj/item/clothing/head/chameleon
 	name = "grey cap"
 	icon_state = "greysoft"
-	item_state = "greysoft"
+	inhand_state = "greysoft"
 	item_color = "grey"
 	desc = "It looks like a plain hat, but upon closer inspection, there's an advanced holographic array installed inside. It seems to have a small dial inside."
 	origin_tech = "syndicate=3"
@@ -83,7 +83,7 @@
 	name = "grey cap"
 	desc = "It's a baseball hat in a tasteful grey colour."
 	icon_state = "greysoft"
-	item_state = "greysoft"
+	inhand_state = "greysoft"
 	item_color = "grey"
 	update_icon()
 	update_inv_mob()
@@ -111,7 +111,7 @@
 	desc = A.desc
 	name = A.name
 	icon_state = A.icon_state
-	item_state = A.item_state
+	inhand_state = A.inhand_state
 	item_color = A.item_color
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
@@ -124,7 +124,7 @@
 /obj/item/clothing/suit/chameleon
 	name = "armor"
 	icon_state = "armor"
-	item_state = "armor"
+	inhand_state = "armor"
 	desc = "It appears to be a vest of standard armor, except this is embedded with a hidden holographic cloaker, allowing it to change it's appearance, but offering no protection.. It seems to have a small dial inside."
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
@@ -142,7 +142,7 @@
 	name = "armor"
 	desc = "An armored vest that protects against some damage."
 	icon_state = "armor"
-	item_state = "armor"
+	inhand_state = "armor"
 	item_color = "armor"
 	update_icon()
 	update_inv_mob()
@@ -170,7 +170,7 @@
 	desc = A.desc
 	name = A.name
 	icon_state = A.icon_state
-	item_state = A.item_state
+	inhand_state = A.inhand_state
 	item_color = A.item_color
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
@@ -182,7 +182,7 @@
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
 	icon_state = "black"
-	item_state = "bl_shoes"
+	inhand_state = "bl_shoes"
 	item_color = "black"
 	desc = "They're comfy black shoes, with clever cloaking technology built in. It seems to have a small dial on the back of each shoe."
 	origin_tech = "syndicate=3"
@@ -200,7 +200,7 @@
 	name = "black shoes"
 	desc = "A pair of black shoes."
 	icon_state = "black"
-	item_state = "bl_shoes"
+	inhand_state = "bl_shoes"
 	item_color = "black"
 	update_icon()
 	update_inv_mob()
@@ -228,7 +228,7 @@
 	desc = A.desc
 	name = A.name
 	icon_state = A.icon_state
-	item_state = A.item_state
+	inhand_state = A.inhand_state
 	item_color = A.item_color
 	update_inv_mob()
 
@@ -238,7 +238,7 @@
 /obj/item/weapon/storage/backpack/chameleon
 	name = "backpack"
 	icon_state = "backpack"
-	item_state = "backpack"
+	inhand_state = "backpack"
 	desc = "A backpack outfitted with cloaking tech. It seems to have a small dial inside, kept away from the storage."
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
@@ -254,7 +254,7 @@
 	name = "backpack"
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
-	item_state = "backpack"
+	inhand_state = "backpack"
 	update_icon()
 	update_inv_mob()
 
@@ -281,7 +281,7 @@
 	desc = A.desc
 	name = A.name
 	icon_state = A.icon_state
-	item_state = A.item_state
+	inhand_state = A.inhand_state
 	item_color = A.item_color
 	update_inv_mob()
 
@@ -292,7 +292,7 @@
 /obj/item/clothing/gloves/chameleon
 	name = "black gloves"
 	icon_state = "black"
-	item_state = "bgloves"
+	inhand_state = "bgloves"
 	item_color = "brown"
 	desc = "It looks like a pair of gloves, but it seems to have a small dial inside."
 	origin_tech = "syndicate=3"
@@ -309,7 +309,7 @@
 	name = "black gloves"
 	desc = "It looks like a pair of gloves, but it seems to have a small dial inside."
 	icon_state = "black"
-	item_state = "bgloves"
+	inhand_state = "bgloves"
 	item_color = "brown"
 	update_icon()
 	update_inv_mob()
@@ -337,7 +337,7 @@
 	desc = A.desc
 	name = A.name
 	icon_state = A.icon_state
-	item_state = A.item_state
+	inhand_state = A.inhand_state
 	item_color = A.item_color
 	flags_inv = A.flags_inv
 	update_inv_mob()
@@ -349,7 +349,7 @@
 /obj/item/clothing/mask/chameleon
 	name = "gas mask"
 	icon_state = "gas_mask_tc"
-	item_state = "gas_mask_tc"
+	inhand_state = "gas_mask_tc"
 	desc = "It looks like a plain gask mask, but on closer inspection, it seems to have a small dial inside."
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
@@ -365,7 +365,7 @@
 /obj/item/clothing/mask/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "gas mask"
 	desc = "It's a gas mask."
-	item_state = "gas_mask_tc"
+	inhand_state = "gas_mask_tc"
 	icon_state = "gas_mask_tc"
 	update_icon()
 	update_inv_mob()
@@ -393,7 +393,7 @@
 	desc = A.desc
 	name = A.name
 	icon_state = A.icon_state
-	item_state = A.item_state
+	inhand_state = A.inhand_state
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
 	update_inv_mob()
@@ -405,7 +405,7 @@
 /obj/item/clothing/glasses/chameleon
 	name = "optical meson scanner"
 	icon_state = "meson"
-	item_state = "glasses"
+	inhand_state = "glasses"
 	desc = "It looks like a plain set of mesons, but on closer inspection, it seems to have a small dial inside."
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
@@ -421,7 +421,7 @@
 	name = "optical meson scanner"
 	desc = "It's a set of mesons."
 	icon_state = "meson"
-	item_state = "glasses"
+	inhand_state = "glasses"
 	update_icon()
 	update_inv_mob()
 
@@ -448,7 +448,7 @@
 	desc = A.desc
 	name = A.name
 	icon_state = A.icon_state
-	item_state = A.item_state
+	inhand_state = A.inhand_state
 	flags_inv = A.flags_inv
 	update_inv_mob()
 
@@ -459,7 +459,7 @@
 	name = "desert eagle"
 	desc = "A fake Desert Eagle with a dial on the side to change the gun's disguise."
 	icon_state = "deagle"
-	item_state = "deagle"
+	inhand_state = "deagle"
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=2;materials=2;syndicate=3"
 	mag_type = /obj/item/ammo_box/magazine/chameleon
@@ -476,7 +476,7 @@
 	name = "desert eagle"
 	desc = "It's a desert eagle."
 	icon_state = "deagle"
-	item_state = "deagle"
+	inhand_state = "deagle"
 	update_icon()
 	update_inv_mob()
 
@@ -503,6 +503,6 @@
 	desc = A.desc
 	name = A.name
 	icon_state = A.icon_state
-	item_state = A.item_state
+	inhand_state = A.inhand_state
 	flags_inv = A.flags_inv
 	update_inv_mob()

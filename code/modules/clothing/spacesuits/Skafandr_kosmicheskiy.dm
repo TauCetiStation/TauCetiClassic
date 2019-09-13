@@ -2,7 +2,7 @@
 	name = "skafandr kosmicheskiy helmet"
 	desc = "SK-1 Spacesuit helmet. The first spacesuit helmet ever used. Reminds you of Vostok spaceflight and Yuri Gagarin"
 	icon_state = "sk"
-	item_state = "sk"
+	inhand_state = "sk"
 	flags_pressure = STOPS_LOWPRESSUREDMAGE
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 0)
 	siemens_coefficient = 0.65
@@ -11,7 +11,7 @@
 /obj/item/clothing/suit/space/sk
 	name = "skafandr kosmicheskiy"
 	icon_state = "sk"
-	item_state = "sk"
+	inhand_state = "sk"
 	desc = "SK-1 Spacesuit. The first spacesuit ever used. Reminds you of Vostok spaceflight and Yuri Gagarin"
 	flags_pressure = STOPS_LOWPRESSUREDMAGE
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 0)

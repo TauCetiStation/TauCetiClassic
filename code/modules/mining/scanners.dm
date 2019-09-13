@@ -2,7 +2,7 @@
 	name = "Geological Analyzer"
 	icon = 'icons/obj/mining/geoscanner.dmi'
 	icon_state = "geoscanner"
-	item_state = "analyzer"
+	inhand_state = "analyzer"
 	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
@@ -41,7 +41,7 @@
 	icon_custom = 'icons/obj/mining/geoscanner.dmi'
 	icon = 'icons/obj/mining/geoscanner.dmi'
 	icon_state = "mininghud"
-	item_state = "mininghud"
+	inhand_state = "mininghud"
 //	vision_flags = SEE_TURFS
 //	invisa_view = 2
 	var/error
@@ -69,5 +69,5 @@
 	icon = 'icons/obj/xenoarchaeology/finds.dmi'
 	icon_custom = 'icons/mob/eyes.dmi'
 	icon_state = "HUDmining"
-	item_state = "HUDmining"
+	inhand_state = "HUDmining"
 	vision_flags = SEE_MOBS

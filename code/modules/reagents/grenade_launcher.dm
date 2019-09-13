@@ -2,7 +2,7 @@
 	name = "grenade launcher"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "riotgun"
-	item_state = "riotgun"
+	inhand_state = "riotgun"
 	w_class = ITEM_SIZE_LARGE
 	throw_speed = 2
 	throw_range = 10

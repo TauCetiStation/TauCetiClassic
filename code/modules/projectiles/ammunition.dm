@@ -62,7 +62,7 @@
 	icon = 'icons/obj/ammo.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
-	item_state = "syringe_kit"
+	inhand_state = "syringe_kit"
 	m_amt = 500
 	throwforce = 2
 	w_class = ITEM_SIZE_SMALL

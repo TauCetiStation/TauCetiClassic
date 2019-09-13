@@ -3,7 +3,7 @@
 	desc = "A large gas-powered cannon."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "pneumatic"
-	item_state = "pneumatic"
+	inhand_state = "pneumatic"
 	w_class = ITEM_SIZE_HUGE
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
@@ -46,7 +46,7 @@
 		tank.loc = usr.loc
 		tank = null
 		icon_state = "pneumatic"
-		item_state = "pneumatic"
+		inhand_state = "pneumatic"
 		usr.update_icons()
 	else
 		to_chat(usr, "There's no tank in [src].")
@@ -58,7 +58,7 @@
 		tank.loc = src.tank_container
 		user.visible_message("[user] jams [W] into [src]'s valve and twists it closed.","You jam [W] into [src]'s valve and twist it closed.")
 		icon_state = "pneumatic-tank"
-		item_state = "pneumatic-tank"
+		inhand_state = "pneumatic-tank"
 		user.update_icons()
 	else
 		..()
@@ -150,7 +150,7 @@
 	name = "pneumatic cannon frame"
 	desc = "A half-finished pneumatic cannon."
 	icon_state = "pneumatic0"
-	item_state = "pneumatic"
+	inhand_state = "pneumatic"
 
 	var/buildstate = 0
 

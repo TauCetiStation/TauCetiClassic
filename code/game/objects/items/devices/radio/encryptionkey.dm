@@ -3,7 +3,7 @@
 	desc = "An encyption key for a radio headset.  Has no special codes in it.  WHY DOES IT EXIST?  ASK NANOTRASEN."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "cypherkey"
-	item_state = ""
+	inhand_state = ""
 	w_class = ITEM_SIZE_SMALL
 	var/translate_binary = 0
 	var/translate_hive = 0

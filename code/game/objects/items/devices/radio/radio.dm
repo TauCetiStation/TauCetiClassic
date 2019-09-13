@@ -8,7 +8,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	name = "station bounced radio"
 	suffix = "\[3\]"
 	icon_state = "walkietalkie"
-	item_state = "walkietalkie"
+	inhand_state = "walkietalkie"
 	var/on = 1 // 0 for off
 	var/last_transmission
 	var/frequency = 1459 //common chat

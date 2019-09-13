@@ -4,7 +4,7 @@
 	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "grenade"
-	item_state = "flashbang"
+	inhand_state = "flashbang"
 	throw_speed = 4
 	throw_range = 20
 	flags = CONDUCT
@@ -120,7 +120,7 @@
 	desc = "A syndicate manufactured explosive used to sow destruction and chaos."
 	name = "syndicate minibomb"
 	icon_state = "syndicate"
-	item_state = "flashbang"
+	inhand_state = "flashbang"
 	origin_tech = "materials=3;magnets=4;syndicate=4"
 
 /obj/item/weapon/grenade/syndieminibomb/prime()

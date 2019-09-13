@@ -4,7 +4,7 @@
 	name = "chef's hat"
 	desc = "It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work."
 	icon_state = "chef"
-	item_state = "chefhat"
+	inhand_state = "chefhat"
 	desc = "The commander in chef's head wear."
 	siemens_coefficient = 0.9
 
@@ -13,7 +13,7 @@
 	name = "captain's hat"
 	icon_state = "captain"
 	desc = "It's good being the king."
-	item_state = "caphat"
+	inhand_state = "caphat"
 	siemens_coefficient = 0.9
 
 //Captain: This probably shouldn't be space-worthy
@@ -49,7 +49,7 @@
 	name = "head of security's peaked cap"
 	desc = "The peaked cap of the Head of Security. I heard you, criminal scum. Now go to GOOLAG."
 	icon_state = "hos_peakedcap"
-	item_state = "hos_peakedcap"
+	inhand_state = "hos_peakedcap"
 	w_class = ITEM_SIZE_SMALL
 	siemens_coefficient = 0.9
 	body_parts_covered = 0

@@ -2,7 +2,7 @@
 	name = "muzzle"
 	desc = "To stop that awful noise."
 	icon_state = "muzzle"
-	item_state = "muzzle"
+	inhand_state = "muzzle"
 	flags = MASKCOVERSMOUTH
 	body_parts_covered = 0
 	w_class = ITEM_SIZE_SMALL
@@ -21,7 +21,7 @@
 	name = "sterile mask"
 	desc = "A sterile mask designed to help prevent the spread of diseases."
 	icon_state = "sterile"
-	item_state = "sterile"
+	inhand_state = "sterile"
 	w_class = ITEM_SIZE_SMALL
 	flags = MASKCOVERSMOUTH
 	body_parts_covered = 0
@@ -56,7 +56,7 @@
 	name = "scarf"
 	desc = "A simple neck scarf."
 	icon_state = "bluescarf"
-	item_state = "bluescarf"
+	inhand_state = "bluescarf"
 	flags = MASKCOVERSMOUTH
 	w_class = ITEM_SIZE_SMALL
 	gas_transfer_coefficient = 0.90
@@ -67,31 +67,31 @@
 	name = "blue neck scarf"
 	desc = "A blue neck scarf."
 	icon_state = "bluescarf"
-	item_state = "bluescarf"
+	inhand_state = "bluescarf"
 
 /obj/item/clothing/mask/scarf/red
 	name = "red scarf"
 	desc = "A red neck scarf."
 	icon_state = "redscarf"
-	item_state = "redscarf"
+	inhand_state = "redscarf"
 
 /obj/item/clothing/mask/scarf/green
 	name = "green scarf"
 	desc = "A green neck scarf."
 	icon_state = "greenscarf"
-	item_state = "greenscarf"
+	inhand_state = "greenscarf"
 
 /obj/item/clothing/mask/scarf/yellow
 	name = "yellow scarf"
 	desc = "A yellow neck scarf."
 	icon_state = "yellowscarf"
-	item_state = "yellowscarf"
+	inhand_state = "yellowscarf"
 
 /obj/item/clothing/mask/scarf/violet
 	name = "violet scarf"
 	desc = "A violet neck scarf."
 	icon_state = "violetscarf"
-	item_state = "violetscarf"
+	inhand_state = "violetscarf"
 
 /obj/item/clothing/mask/scarf/attack_self(mob/user)
 
@@ -120,7 +120,7 @@
 	name = "ninja scarf"
 	desc = "A stealthy, dark scarf."
 	icon_state = "ninja_scarf"
-	item_state = "ninja_scarf"
+	inhand_state = "ninja_scarf"
 	flags = MASKCOVERSMOUTH
 	w_class = ITEM_SIZE_SMALL
 	gas_transfer_coefficient = 0.90
@@ -130,7 +130,7 @@
 	name = "pig mask"
 	desc = "A rubber pig mask."
 	icon_state = "pig"
-	item_state = "pig"
+	inhand_state = "pig"
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
 	w_class = ITEM_SIZE_SMALL
@@ -146,7 +146,7 @@
 	name = "horse head mask"
 	desc = "A mask made of soft vinyl and latex, representing the head of a horse."
 	icon_state = "horsehead"
-	item_state = "horsehead"
+	inhand_state = "horsehead"
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
@@ -162,7 +162,7 @@
 	name = "cowface"
 	desc = "It looks like a mask, but closer inspection reveals it's melded onto this persons face!"
 	icon_state = "cowmask"
-	item_state = "cowmask"
+	inhand_state = "cowmask"
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
@@ -259,7 +259,7 @@
 	name = "electronic cigarette"
 	desc = "An electronic cigarette. Most of the relief of a real cigarette with none of the side effects. Often used by smokers who are trying to quit the habit."
 	icon_state = "ecig"
-	item_state = "ecig"
+	inhand_state = "ecig"
 	throw_speed = 0.5
 	w_class = ITEM_SIZE_TINY
 	body_parts_covered = null
@@ -269,11 +269,11 @@
 	if(world.time > last_time_used + 20)
 		if(icon_state == "ecig")
 			icon_state = "ecig_on"
-			item_state = "ecig_on"
+			inhand_state = "ecig_on"
 			to_chat(user, "<span class='notice'>You turn the [src] on</span>")
 		else
 			icon_state = "ecig"
-			item_state = "ecig"
+			inhand_state = "ecig"
 			to_chat(user, "<span class='notice'>You turn the [src] off</span>")
 		last_time_used = world.time
 	return

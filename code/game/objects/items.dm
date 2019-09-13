@@ -3,7 +3,7 @@
 	icon = 'icons/obj/items.dmi'
 	var/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
 	var/abstract = 0
-	var/item_state = null
+	var/inhand_state = null
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	var/r_speed = 1.0

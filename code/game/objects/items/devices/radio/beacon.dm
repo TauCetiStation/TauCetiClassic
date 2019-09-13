@@ -2,7 +2,7 @@
 	name = "Tracking Beacon"
 	desc = "A beacon used by a teleporter."
 	icon_state = "beacon"
-	item_state = "beacon"
+	inhand_state = "beacon"
 	var/code = "electronic"
 	origin_tech = "bluespace=1"
 
@@ -61,7 +61,7 @@
 	desc = "A beacon used by a body teleporter."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "beacon_med"
-	item_state = "signaler"
+	inhand_state = "signaler"
 	origin_tech = "bluespace=1"
 
 /obj/item/device/beacon/medical/atom_init()
@@ -80,7 +80,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/device.dmi'
 	icon_state = "medicon"
-	item_state = "signaler"
+	inhand_state = "signaler"
 	flags = NOBLUDGEON
 	origin_tech = "bluespace=1"
 	var/timer = 10

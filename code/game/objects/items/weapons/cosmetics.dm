@@ -184,7 +184,7 @@
 	w_class = ITEM_SIZE_TINY
 	icon = 'icons/obj/items.dmi'
 	icon_state = "purplecomb"
-	item_state = "purplecomb"
+	inhand_state = "purplecomb"
 
 /obj/item/weapon/haircomb/attack_self(mob/user)
 	if(user.r_hand == src || user.l_hand == src)
@@ -196,7 +196,7 @@
 	desc = "These can cut hair."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "scissors"
-	item_state = "scissors"
+	inhand_state = "scissors"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	force = 6.0

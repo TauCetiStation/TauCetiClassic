@@ -169,7 +169,7 @@ This is chestburster mechanic for damaging
 
 	layer = 21
 	abstract = 1
-	item_state = "nothing"
+	inhand_state = "nothing"
 	w_class = ITEM_SIZE_HUGE
 
 
@@ -316,7 +316,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 
 	layer = 21
 	abstract = 1
-	item_state = "nothing"
+	inhand_state = "nothing"
 	w_class = ITEM_SIZE_HUGE
 
 

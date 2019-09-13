@@ -44,7 +44,7 @@ var/global/raider_tick = 1
 /obj/item/weapon/gun/projectile/automatic/a28/nonlethal
 	name = "A28 assault rifle NL"
 	icon_state = "a28w"
-	item_state = "a28w"
+	inhand_state = "a28w"
 	silenced = 1
 	mag_type = /obj/item/ammo_box/magazine/m556/nonlethal
 	fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
@@ -114,7 +114,7 @@ var/global/raider_tick = 1
 	name = "pocketnade"
 	desc = "<span class='danger'>Warning:</span> use with extreme caution! Contains various hostile creatures which will hunt anyone on sight and you are not an exception!"
 	icon_state = "pocketnade"
-	item_state = "flashbang"
+	inhand_state = "flashbang"
 	origin_tech = "materials=2;combat=1"
 
 /obj/item/weapon/grenade/monsternade/prime()

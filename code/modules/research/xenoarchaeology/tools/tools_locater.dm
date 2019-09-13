@@ -7,7 +7,7 @@
 	desc = "Used to scan and locate signals on a particular frequency according ."
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "newpinoff" // pinonfar, pinonmedium, pinonclose, pinondirect, pinonnull
-	item_state = "electronic"
+	inhand_state = "electronic"
 	var/frequency = 1459
 	var/scan_ticks = 0
 	var/obj/item/device/radio/target_radio

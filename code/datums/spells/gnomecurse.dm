@@ -100,7 +100,7 @@
 	name = "gnome's outfit"
 	desc = "It's a handy gnome suit, fits you very well."
 	icon_state = "gnome"
-	item_state = "gnome"
+	inhand_state = "gnome"
 	item_color = "gnome"
 	flags = ONESIZEFITSALL
 

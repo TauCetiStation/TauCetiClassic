@@ -5,7 +5,7 @@
 	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/glowsticks.dmi'
 	icon_state = null
-	item_state = null
+	inhand_state = null
 	action_button_name = null	//just pull it manually, neckbeard.
 	slot_flags = SLOT_FLAGS_BELT
 	light_power = 2
@@ -20,7 +20,7 @@
 	name = "[colourName] glowstick"
 	desc = "A Nanotrasen issued [colourName] glowstick. There are instructions on the side, it reads 'bend it, make light'."
 	icon_state = "glowstick_[colourName]"
-	item_state = "glowstick_[colourName]"
+	inhand_state = "glowstick_[colourName]"
 	. = ..()
 	add_fuel()
 

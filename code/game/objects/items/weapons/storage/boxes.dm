@@ -35,7 +35,7 @@
 	name = "box"
 	desc = "It's just an ordinary box. Nothing special."
 	icon_state = "box"
-	item_state = "syringe_kit"
+	inhand_state = "syringe_kit"
 	max_storage_space = DEFAULT_BOX_STORAGE
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
@@ -415,7 +415,7 @@
 	desc = "A small box of 'Space-Proof' premium matches."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "matchbox"
-	item_state = "zippo"
+	inhand_state = "zippo"
 	storage_slots = 10
 	w_class = ITEM_SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
@@ -455,7 +455,7 @@
 	name = "box of replacement bulbs"
 	icon_state = "lightbulb_box"
 	desc = "This box is shaped on the inside so that only light tubes and bulbs fit."
-	item_state = "syringe_kit"
+	inhand_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
 	storage_slots = 21
 	max_storage_space = 42

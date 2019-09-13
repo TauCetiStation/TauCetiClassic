@@ -2,7 +2,7 @@
 	name = "hand labeler"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler0"
-	item_state = "flight"
+	inhand_state = "flight"
 	m_amt = 800
 	origin_tech = "materials=1"
 	var/label = null

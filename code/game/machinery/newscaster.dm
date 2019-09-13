@@ -52,7 +52,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	name = "newscaster frame"
 	desc = "Used to build newscasters, just secure to the wall."
 	icon_state = "newscaster"
-	item_state = "syringe_kit"
+	inhand_state = "syringe_kit"
 	m_amt = 25000
 	g_amt = 15000
 

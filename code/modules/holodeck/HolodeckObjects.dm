@@ -88,7 +88,7 @@
 	name = "boxing gloves"
 	desc = "Because you really needed another excuse to punch your crewmates."
 	icon_state = "boxing"
-	item_state = "boxing"
+	inhand_state = "boxing"
 
 /obj/structure/window/reinforced/holowindow/attackby(obj/item/W, mob/user)
 	if(!istype(W)) return//I really wish I did not need this
@@ -257,7 +257,7 @@
 	icon = 'icons/obj/basketball.dmi'
 	icon_state = "basketball"
 	name = "basketball"
-	item_state = "basketball"
+	inhand_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
 	w_class = ITEM_SIZE_LARGE //Stops people from hiding it in their bags/pockets
 

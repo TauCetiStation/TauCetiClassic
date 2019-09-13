@@ -152,7 +152,7 @@
 	name = "earmuffs"
 	desc = "Protects your hearing from loud noises, and quiet ones as well."
 	icon_state = "earmuffs"
-	item_state = "earmuffs"
+	inhand_state = "earmuffs"
 	slot_flags = SLOT_FLAGS_EARS | SLOT_FLAGS_TWOEARS
 
 //Glasses
@@ -299,7 +299,7 @@ BLIND     // can't see anything
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
 	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | THICKMATERIAL | PHORONGUARD
 	flags_pressure = STOPS_PRESSUREDMAGE
-	item_state = "space"
+	inhand_state = "space"
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
@@ -314,7 +314,7 @@ BLIND     // can't see anything
 	name = "space suit"
 	desc = "A suit that protects against low pressure environments. \"NSS EXODUS\" is written in large block letters on the back."
 	icon_state = "space"
-	item_state = "s_suit"
+	inhand_state = "s_suit"
 	w_class = ITEM_SIZE_LARGE//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02

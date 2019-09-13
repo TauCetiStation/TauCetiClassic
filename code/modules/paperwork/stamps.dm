@@ -3,7 +3,7 @@
 	desc = "A rubber stamp for stamping important documents."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "stamp-qm"
-	item_state = "stamp"
+	inhand_state = "stamp"
 	throwforce = 0
 	w_class = ITEM_SIZE_TINY
 	throw_speed = 7

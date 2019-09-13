@@ -160,7 +160,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/device/flashlight/lantern
 	name = "lantern"
 	icon_state = "lantern"
-	item_state = "lantern"
+	inhand_state = "lantern"
 	desc = "A mining lantern."
 	brightness_on = 4			// luminosity when on
 
@@ -173,7 +173,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 //	slot_flags = SLOT_FLAGS_BELT
 	force = 15.0
 	throwforce = 4.0
-	item_state = "pickaxe"
+	inhand_state = "pickaxe"
 	w_class = ITEM_SIZE_LARGE
 	m_amt = 3750 //one sheet, but where can you make them?
 	toolspeed = 1 //moving the delay to an item var so R&D can make improved picks. --NEO
@@ -193,7 +193,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/pickaxe/silver
 	name = "silver pickaxe"
 	icon_state = "spickaxe"
-	item_state = "spickaxe"
+	inhand_state = "spickaxe"
 	toolspeed = 0.9
 	origin_tech = "materials=3"
 	desc = "This makes no metallurgic sense."
@@ -201,7 +201,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/pickaxe/gold
 	name = "golden pickaxe"
 	icon_state = "gpickaxe"
-	item_state = "gpickaxe"
+	inhand_state = "gpickaxe"
 	toolspeed = 0.9
 	origin_tech = "materials=4"
 	desc = "This makes no metallurgic sense."
@@ -209,7 +209,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/pickaxe/plasmacutter
 	name = "plasma cutter"
 	icon_state = "plasmacutter"
-	item_state = "plasmacutter"
+	inhand_state = "plasmacutter"
 	w_class = ITEM_SIZE_NORMAL //it is smaller than the pickaxe
 	damtype = "fire"
 	toolspeed = 0.4 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
@@ -220,7 +220,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond pickaxe"
 	icon_state = "dpickaxe"
-	item_state = "dpickaxe"
+	inhand_state = "dpickaxe"
 	toolspeed = 0.2
 	origin_tech = "materials=6;engineering=4"
 	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
@@ -236,7 +236,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	slot_flags = SLOT_FLAGS_BELT
 	force = 8.0
 	throwforce = 4.0
-	item_state = "shovel"
+	inhand_state = "shovel"
 	w_class = ITEM_SIZE_NORMAL
 	m_amt = 50
 	origin_tech = "materials=1;engineering=1"
@@ -246,7 +246,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "spade"
 	desc = "A small tool for digging and moving dirt."
 	icon_state = "spade"
-	item_state = "spade"
+	inhand_state = "spade"
 	force = 5.0
 	throwforce = 7.0
 	w_class = ITEM_SIZE_SMALL
@@ -270,7 +270,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon = 'icons/obj/mining/hand_tools.dmi'
 	icon_custom = 'icons/obj/mining/hand_tools.dmi'
 	icon_state = "hand_drill"
-	item_state = "drill"
+	inhand_state = "drill"
 	origin_tech = "materials=2;powerstorage=3;engineering=2"
 	flags = CONDUCT
 	slot_flags = null
@@ -379,7 +379,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/pickaxe/drill/borgdrill
 	name = "cyborg mining drill"
 	icon_state = "diamond_drill"
-	item_state = "jackhammer"
+	inhand_state = "jackhammer"
 	toolspeed = 0.4
 	desc = ""
 	drill_verb = "drilling"
@@ -396,7 +396,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	gender = PLURAL
 	icon = 'icons/obj/mining/explosives.dmi'
 	icon_state = "charge_basic"
-	item_state = "flashbang"
+	inhand_state = "flashbang"
 	flags = NOBLUDGEON
 	w_class = ITEM_SIZE_SMALL
 	var/timer = 10
@@ -450,7 +450,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon = 'icons/obj/mining/hand_tools.dmi'
 	icon_custom = 'icons/obj/mining/hand_tools.dmi'
 	icon_state = "kineticgun"
-	item_state = "kineticgun"
+	inhand_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
 	var/overheat = 0

@@ -149,7 +149,7 @@
 	desc = "Hulking reinforced armour for something huge."
 	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "armalis_armour"
-	item_state = "armalis_armour"
+	inhand_state = "armalis_armour"
 
 /obj/item/vox/armalis_amp
 
@@ -157,4 +157,4 @@
 	desc = "A series of metallic lenses and chains."
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "amp"
-	item_state = "amp"
+	inhand_state = "amp"

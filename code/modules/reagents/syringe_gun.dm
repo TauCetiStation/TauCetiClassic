@@ -6,7 +6,7 @@
 	desc = "A spring loaded rifle designed to fit syringes, designed to incapacitate unruly patients from a distance."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "syringegun"
-	item_state = "syringegun"
+	inhand_state = "syringegun"
 	w_class = ITEM_SIZE_NORMAL
 	throw_speed = 2
 	throw_range = 10
@@ -135,7 +135,7 @@
 	name = "dart pistol"
 	desc = "A small spring-loaded sidearm that functions identically to a syringe gun."
 	icon_state = "syringe_pistol"
-	item_state = "gun"
+	inhand_state = "gun"
 	w_class = ITEM_SIZE_SMALL
 	origin_tech = "combat=2;syndicate=2;biotech=3"
 	force = 2

@@ -29,7 +29,7 @@
 	desc = "A reminder of meals gone by."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "corncob"
-	item_state = "corncob"
+	inhand_state = "corncob"
 	w_class = ITEM_SIZE_SMALL
 	throwforce = 0
 	throw_speed = 4
@@ -51,7 +51,7 @@
 	desc = "A cane used by a true gentlemen. Or a clown."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cane"
-	item_state = "stick"
+	inhand_state = "stick"
 	flags = CONDUCT
 	force = 5.0
 	throwforce = 7.0
@@ -66,7 +66,7 @@
 	icon_state = "gift3"
 	var/size = 3.0
 	var/obj/item/gift = null
-	item_state = "gift"
+	inhand_state = "gift"
 	w_class = ITEM_SIZE_LARGE
 
 /obj/item/weapon/legcuffs
@@ -194,7 +194,7 @@
 	w_class = ITEM_SIZE_SMALL
 	force = 5.0
 	throwforce = 8.0
-	item_state = "shard-glass"
+	inhand_state = "shard-glass"
 	g_amt = 3750
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 
@@ -236,7 +236,7 @@
 	var/obj/item/device/radio/origradio = null
 	flags = CONDUCT | ONBELT
 	w_class = ITEM_SIZE_SMALL
-	item_state = "radio"
+	inhand_state = "radio"
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100
@@ -275,7 +275,7 @@
 	var/obj/item/device/radio/origradio = null
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
-	item_state = "radio"
+	inhand_state = "radio"
 	throwforce = 5
 	w_class = ITEM_SIZE_SMALL
 	throw_speed = 4
@@ -308,14 +308,14 @@
 	desc = "An ebony can with an ivory tip."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cane"
-	item_state = "stick"
+	inhand_state = "stick"
 
 /obj/item/weapon/staff/stick
 	name = "stick"
 	desc = "A great tool to drag someone else's drinks across the bar."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "stick"
-	item_state = "stick"
+	inhand_state = "stick"
 	force = 3.0
 	throwforce = 5.0
 	throw_speed = 1
@@ -386,7 +386,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
 	w_class = ITEM_SIZE_SMALL
-	item_state = "electronic"
+	inhand_state = "electronic"
 	flags = CONDUCT
 	usesound = 'sound/items/Deconstruct.ogg'
 	var/mtype = 1						// 1=electronic 2=hardware
@@ -485,7 +485,7 @@
 	desc = "The most robust cigars on the planet."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigarpacket"
-	item_state = "cigarpacket"
+	inhand_state = "cigarpacket"
 	w_class = ITEM_SIZE_TINY
 	throwforce = 2
 	var/cigarcount = 6
@@ -507,7 +507,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "plastic-explosive0"
-	item_state = "plasticx"
+	inhand_state = "plasticx"
 	flags = NOBLUDGEON
 	w_class = ITEM_SIZE_SMALL
 	origin_tech = "syndicate=2"
@@ -520,7 +520,7 @@
 	name = "Rapid Part Exchange Device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "RPED"
-	item_state = "RPED"
+	inhand_state = "RPED"
 	w_class = ITEM_SIZE_HUGE
 	can_hold = list(/obj/item/weapon/stock_parts)
 	storage_slots = 50
@@ -545,7 +545,7 @@
 	name = "bluespace rapid part exchange device"
 	desc = "A version of the RPED that allows for replacement of parts and scanning from a distance, along with higher capacity for parts."
 	icon_state = "BS_RPED"
-	item_state = "BS_RPED"
+	inhand_state = "BS_RPED"
 	w_class = ITEM_SIZE_NORMAL
 	storage_slots = 400
 	max_w_class = ITEM_SIZE_NORMAL

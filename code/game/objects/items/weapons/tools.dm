@@ -36,13 +36,13 @@
 		if(!param_color)
 			param_color = pick("black","red","green","blue","default")
 		icon_state = "wrench_[param_color]"
-		item_state = "wrench"
+		inhand_state = "wrench"
 
 /obj/item/weapon/wrench/power
 	name = "Hand Drill"
 	desc ="A simple powered drill with a bolt bit"
 	icon_state = "drill_bolt"
-	item_state = "drill"
+	inhand_state = "drill"
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
 	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
 	force = 8 //might or might not be too high, subject to change
@@ -92,7 +92,7 @@
 		if(!param_color)
 			param_color = pick("red", "blue", "purple", "brown", "green", "cyan", "yellow")
 		icon_state = "screwdriver_[param_color]"
-		item_state = "screwdriver_[param_color]"
+		inhand_state = "screwdriver_[param_color]"
 
 	pixel_y = rand(-6, 6)
 	pixel_x = rand(-4, 4)
@@ -110,7 +110,7 @@
 	name = "Hand Drill"
 	desc = "A simple hand drill with a screwdriver bit attached."
 	icon_state = "drill_screw"
-	item_state = "drill"
+	inhand_state = "drill"
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
 	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
 	force = 8 //might or might not be too high, subject to change
@@ -157,7 +157,7 @@
 		if(!param_color)
 			param_color = pick("yellow","red","green","black","blue")
 		icon_state = "cutters_[param_color]"
-		item_state = "cutters_[param_color]"
+		inhand_state = "cutters_[param_color]"
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/weapon/handcuffs/cable))
@@ -177,7 +177,7 @@
 	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a cutting head."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "jaws_cutter"
-	item_state = "jawsoflife"
+	inhand_state = "jawsoflife"
 	origin_tech = "materials=2;engineering=2"
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
 	action_button_name = "Change mode"
@@ -541,7 +541,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
 	throwforce = 7.0
-	item_state = "crowbar"
+	inhand_state = "crowbar"
 	w_class = ITEM_SIZE_SMALL
 	m_amt = 50
 	origin_tech = "engineering=1"
@@ -550,13 +550,13 @@
 
 /obj/item/weapon/crowbar/red
 	icon_state = "red_crowbar"
-	item_state = "crowbar_red"
+	inhand_state = "crowbar_red"
 
 /obj/item/weapon/crowbar/power
 	name = "Jaws of Life"
 	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a prying head"
 	icon_state = "jaws_pry"
-	item_state = "jawsoflife"
+	inhand_state = "jawsoflife"
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
 	origin_tech = "materials=2;engineering=2"
 	force = 15

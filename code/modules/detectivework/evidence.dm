@@ -5,7 +5,7 @@
 	desc = "An empty evidence bag."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "evidenceobj"
-	item_state = ""
+	inhand_state = ""
 	w_class = ITEM_SIZE_SMALL
 
 /obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user, proximity)
@@ -99,7 +99,7 @@
 	icon = 'icons/obj/card.dmi'
 	icon_state = "fingerprint0"
 	var/amount = 10.0
-	item_state = "paper"
+	inhand_state = "paper"
 	throwforce = 1
 	w_class = ITEM_SIZE_TINY
 	throw_speed = 3
@@ -111,4 +111,4 @@
 	desc = "Apply finger print card."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "fcardholder0"
-	item_state = "clipboard"
+	inhand_state = "clipboard"

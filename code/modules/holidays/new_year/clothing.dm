@@ -14,7 +14,7 @@
 	name = "Santa's suit"
 	desc = "Festive!"
 	icon_state = "santa"
-	item_state = "santa"
+	inhand_state = "santa"
 	allowed = list(/obj/item) //for stuffing exta special presents
 
 
@@ -57,7 +57,7 @@
 	icon = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_state = "coatwinter"
-	item_state = "coatwinter"
+	inhand_state = "coatwinter"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HEAD
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
@@ -122,7 +122,7 @@
 	icon = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_state = "winterboots"
-	item_state = "winterboots"
+	inhand_state = "winterboots"
 	cold_protection = LEGS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = LEGS
@@ -134,7 +134,7 @@
 	icon = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_state = "labcoat_emt"
-	item_state = "labcoat_emt"
+	inhand_state = "labcoat_emt"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	cold_protection = UPPER_TORSO | LOWER_TORSO | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
@@ -147,17 +147,17 @@
 	icon = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_state = "ushankadown"
-	item_state = "ushankadown"
+	inhand_state = "ushankadown"
 	cold_protection = HEAD
 
 /obj/item/clothing/head/ushanka/attack_self(mob/user)
 	if(src.icon_state == "ushankadown")
 		src.icon_state = "ushankaup"
-		src.item_state = "ushankaup"
+		src.inhand_state = "ushankaup"
 		to_chat(user, "You raise the ear flaps on the ushanka.")
 	else
 		src.icon_state = "ushankadown"
-		src.item_state = "ushankadown"
+		src.inhand_state = "ushankadown"
 		to_chat(user, "You lower the ear flaps on the ushanka.")
 
 /obj/item/clothing/head/santa
@@ -166,7 +166,7 @@
 	icon = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_state = "santa"
-	item_state = "santa"
+	inhand_state = "santa"
 	flags_inv = HIDEEARS
 	cold_protection = HEAD
 
@@ -174,7 +174,7 @@
 	name = "sexy santa suit"
 	desc = "Prepare to jingle all the bells."
 	icon_state = "sexy_santa"
-	item_state = "sexy_santa"
+	inhand_state = "sexy_santa"
 	item_color = "sexy_santa"
 	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE

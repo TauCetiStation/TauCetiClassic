@@ -3,7 +3,7 @@
 	desc = "A spray bottle, with an unscrewable top."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "cleaner"
-	item_state = "cleaner"
+	inhand_state = "cleaner"
 	flags = OPENCONTAINER | NOBLUDGEON
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
@@ -129,7 +129,7 @@
 	desc = "Changes hair colour! Don't forget to read the label!"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "hairspray"
-	item_state = "hairspray"
+	inhand_state = "hairspray"
 	amount_per_transfer_from_this = 1
 	possible_transfer_amounts = list(1,5,10)
 	spray_size = 1
@@ -160,7 +160,7 @@
 	desc = "Is used to burn incense. Or heretics. Both? Both is good."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "thurible"
-	item_state = "thurible"
+	inhand_state = "thurible"
 	amount_per_transfer_from_this = 1
 	possible_transfer_amounts = list(1, 5, 10)
 	spray_size = 1
@@ -323,7 +323,7 @@
 	desc = "Manufactured by UhangInc, used to blind and down an opponent quickly."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "pepperspray"
-	item_state = "pepperspray"
+	inhand_state = "pepperspray"
 	possible_transfer_amounts = null
 	volume = 40
 	safety = 1
@@ -348,7 +348,7 @@
 	desc = "A seemingly innocent sunflower...with a twist."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
-	item_state = "sunflower"
+	inhand_state = "sunflower"
 	amount_per_transfer_from_this = 1
 	possible_transfer_amounts = null
 	volume = 10
@@ -363,7 +363,7 @@
 	desc = "A utility used to spray large amounts of reagent in a given area."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "chemsprayer"
-	item_state = "chemsprayer"
+	inhand_state = "chemsprayer"
 	throwforce = 3
 	w_class = ITEM_SIZE_NORMAL
 	possible_transfer_amounts = null
@@ -379,7 +379,7 @@
 	desc = "Kills those pesky weeds!"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "plantbgone"
-	item_state = "plantbgone"
+	inhand_state = "plantbgone"
 	volume = 100
 
 
@@ -393,7 +393,7 @@
 	desc = "A water gun that uses manually-pressurized air to shoot water with great power, range, and accuracy."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "watergun"
-	item_state = "watergun"
+	inhand_state = "watergun"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = null
 	volume = 35

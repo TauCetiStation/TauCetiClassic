@@ -31,7 +31,7 @@
 	desc = "Some sort of bizarre assembly."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "ed209_frame"
-	item_state = "ed209_frame"
+	inhand_state = "ed209_frame"
 	var/build_step = 0
 	var/created_name = "ED-209 Security Robot" //To preserve the name if it's a unique securitron I guess
 	var/lasertag_color = ""
@@ -387,10 +387,10 @@
 				to_chat(user, "<span class='notice'>You add the robot leg to [src].</span>")
 				name = "legs/frame assembly"
 				if(build_step == 1)
-					item_state = "ed209_leg"
+					inhand_state = "ed209_leg"
 					icon_state = "ed209_leg"
 				else
-					item_state = "ed209_legs"
+					inhand_state = "ed209_legs"
 					icon_state = "ed209_legs"
 
 		if(2)
@@ -404,7 +404,7 @@
 				build_step++
 				to_chat(user, "<span class='notice'>You add the armor to [src].</span>")
 				name = "vest/legs/frame assembly"
-				item_state = "[lasertag_color]ed209_shell"
+				inhand_state = "[lasertag_color]ed209_shell"
 				icon_state = "[lasertag_color]ed209_shell"
 
 		if(3)
@@ -421,7 +421,7 @@
 				build_step++
 				to_chat(user, "<span class='notice'>You add the helmet to [src].</span>")
 				name = "covered and shielded frame assembly"
-				item_state = "[lasertag_color]ed209_hat"
+				inhand_state = "[lasertag_color]ed209_hat"
 				icon_state = "[lasertag_color]ed209_hat"
 
 		if(5)
@@ -431,7 +431,7 @@
 				build_step++
 				to_chat(user, "<span class='notice'>You add the prox sensor to [src].</span>")
 				name = "covered, shielded and sensored frame assembly"
-				item_state = "[lasertag_color]ed209_prox"
+				inhand_state = "[lasertag_color]ed209_prox"
 				icon_state = "[lasertag_color]ed209_prox"
 
 		if(6)
@@ -462,7 +462,7 @@
 					return
 			build_step++
 			to_chat(user, "<span class='notice'>You add [W] to [src].</span>")
-			item_state = "[lasertag_color]ed209_taser"
+			inhand_state = "[lasertag_color]ed209_taser"
 			icon_state = "[lasertag_color]ed209_taser"
 			user.drop_item()
 			qdel(W)

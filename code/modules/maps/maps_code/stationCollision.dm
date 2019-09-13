@@ -52,7 +52,7 @@
 	B.name = "The Holy book of the Geometer"
 	B.deity_name = "Narsie"
 	B.icon_state = "melted"
-	B.item_state = "melted"
+	B.inhand_state = "melted"
 	new /obj/item/weapon/paper/sc_safehint_paper_bible(B)
 	new /obj/item/weapon/pen(B)
 	return INITIALIZE_HINT_QDEL

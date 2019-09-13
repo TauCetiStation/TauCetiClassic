@@ -17,7 +17,7 @@
 	flags = ABSTRACT | DROPDEL
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_whip"
-	item_state = "arm_whip"
+	inhand_state = "arm_whip"
 	var/next_click
 
 /obj/item/weapon/changeling_whip/atom_init()

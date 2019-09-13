@@ -446,7 +446,7 @@ var/bomb_set
 /obj/item/weapon/disk
 	icon = 'icons/obj/items.dmi'
 	w_class = ITEM_SIZE_TINY
-	item_state = "card-id"
+	inhand_state = "card-id"
 	icon_state = "datadisk0"
 
 /obj/item/weapon/disk/nuclear

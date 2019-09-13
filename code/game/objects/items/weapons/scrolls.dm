@@ -5,7 +5,7 @@
 	icon_state = "scroll"
 	var/uses = 4.0
 	w_class = ITEM_SIZE_SMALL
-	item_state = "paper"
+	inhand_state = "paper"
 	throw_speed = 4
 	throw_range = 20
 	origin_tech = "bluespace=4"

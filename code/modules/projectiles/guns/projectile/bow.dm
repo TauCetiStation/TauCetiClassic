@@ -4,7 +4,7 @@
 	desc = "It's got a tip for you - get the point?"
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bolt"
-	item_state = "bolt"
+	inhand_state = "bolt"
 	throwforce = 8
 	w_class = ITEM_SIZE_NORMAL
 	sharp = 1
@@ -19,7 +19,7 @@
 	desc = "A wickedly barbed quill from some bizarre animal."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "quill"
-	item_state = "quill"
+	inhand_state = "quill"
 	throwforce = 5
 
 /obj/item/weapon/arrow/rod
@@ -41,7 +41,7 @@
 	desc = "A 2557AD twist on an old classic. Pick up that can."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "crossbow"
-	item_state = "crossbow-solid"
+	inhand_state = "crossbow-solid"
 	w_class = ITEM_SIZE_HUGE
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
@@ -211,7 +211,7 @@
 	name = "crossbow frame"
 	desc = "A half-finished crossbow."
 	icon_state = "crossbowframe0"
-	item_state = "crossbow-solid"
+	inhand_state = "crossbow-solid"
 
 	var/buildstate = 0
 

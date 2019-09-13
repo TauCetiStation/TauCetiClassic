@@ -433,7 +433,7 @@
 	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to blue space for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "Jaunter"
-	item_state = "electronic"
+	inhand_state = "electronic"
 	throwforce = 0
 	w_class = ITEM_SIZE_SMALL
 	throw_speed = 3
@@ -502,7 +502,7 @@
 	name = "resonator"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "resonator"
-	item_state = "resonator"
+	inhand_state = "resonator"
 	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vaccuum."
 	w_class = ITEM_SIZE_NORMAL
 	force = 10
@@ -742,7 +742,7 @@
 	desc = "An injector with a cocktail of nanomachines and chemicals, this device can seemingly raise animals from the dead, making them become friendly to the user. Unfortunately, the process is useless on higher forms of life and incredibly costly, so these were hidden in storage until an executive thought they'd be great motivation for some of their employees."
 	icon = 'icons/obj/syringe.dmi'
 	icon_state = "lazarus_hypo"
-	item_state = "hypo"
+	inhand_state = "hypo"
 	throwforce = 0
 	w_class = ITEM_SIZE_SMALL
 	throw_speed = 3
@@ -786,7 +786,7 @@
 	desc = "Suit patcher will recover your space rig from breaches. It is for one use only."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "patcher"
-	item_state = "patcher"
+	inhand_state = "patcher"
 	throwforce = 0
 	w_class = ITEM_SIZE_SMALL
 	throw_speed = 3

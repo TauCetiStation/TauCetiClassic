@@ -161,7 +161,7 @@
 	name = "secure briefcase"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "secure"
-	item_state = "secure-r"
+	inhand_state = "secure-r"
 	desc = "A large briefcase with a digital locking system."
 	force = 8.0
 	throw_speed = 1
@@ -195,9 +195,9 @@
 
 /obj/item/weapon/storage/secure/briefcase/update_icon()
 	if(!locked || emagged)
-		item_state = "secure-g"
+		inhand_state = "secure-g"
 	else
-		item_state = "secure-r"
+		inhand_state = "secure-r"
 
 	if(ismob(loc))
 		var/mob/M = loc

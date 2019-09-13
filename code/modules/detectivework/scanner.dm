@@ -8,7 +8,7 @@
 	var/amount = 20.0
 	var/list/stored = list()
 	w_class = ITEM_SIZE_NORMAL
-	item_state = "electronic"
+	inhand_state = "electronic"
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_FLAGS_BELT
 

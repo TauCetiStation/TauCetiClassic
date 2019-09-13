@@ -30,7 +30,7 @@
 	name = "Battle Bucket"
 	desc = "This one protects your head and makes your enemies tremble."
 	icon_state = "battle_bucket"
-	item_state = "bucket"
+	inhand_state = "bucket"
 	armor = list(melee = 20, bullet = 5, laser = 5,energy = 3, bomb = 5, bio = 0, rad = 0)
 
 /obj/item/weapon/melee/cattleprod
@@ -38,7 +38,7 @@
 	name = "stunprod"
 	desc = "An improvised stun baton."
 	icon_state = "stunprod"
-	item_state = "prod"
+	inhand_state = "prod"
 	var/obj/item/weapon/stock_parts/cell/bcell = null
 	var/stunforce = 5
 	var/hitcost = 2000
@@ -182,7 +182,7 @@
 	icon_state = "wirerod"
 	name = "wired rod"
 	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
-	item_state = "rods"
+	inhand_state = "rods"
 	flags = CONDUCT
 	force = 9
 	throwforce = 10
@@ -193,11 +193,11 @@
 /obj/item/weapon/transparant
 	icon_custom ='icons/mob/inhands/transparant.dmi'
 	icon_state = "blank"
-	item_state = "blank"
+	inhand_state = "blank"
 	name = "blank sign"
 	desc = "Nothing."
 	var/not_bloody_state
-	var/not_bloody_item_state
+	var/not_bloody_inhand_state
 	force = 8
 	w_class = ITEM_SIZE_LARGE
 	throwforce = 5
@@ -210,7 +210,7 @@
 /obj/item/weapon/transparant/atom_init()
 	. = ..()
 	not_bloody_state = icon_state
-	not_bloody_item_state = item_state
+	not_bloody_inhand_state = inhand_state
 
 /obj/item/weapon/transparant/attackby(obj/item/I, mob/user)
 	..()
@@ -251,10 +251,10 @@
 /obj/item/weapon/transparant/update_icon()
 	if(blood_DNA)
 		icon_state = "bloody"
-		item_state = "bloody"
+		inhand_state = "bloody"
 	else
 		icon_state = not_bloody_state
-		item_state = not_bloody_item_state
+		inhand_state = not_bloody_inhand_state
 	..()
 	if(istype(src.loc, /mob/living))
 		var/mob/living/user = src.loc
@@ -271,19 +271,19 @@
 
 /obj/item/weapon/transparant/no_nt
 	icon_state = "no_nt"
-	item_state = "no_nt"
+	inhand_state = "no_nt"
 	name = "no NT sign"
 	desc = "Nanotrasen go home! Nanotrasen go home!"
 
 /obj/item/weapon/transparant/peace
 	icon_state = "peace"
-	item_state = "peace"
+	inhand_state = "peace"
 	name = "peace sign"
 	desc = "No more war! No more opression! No more violence!"
 
 /obj/item/weapon/transparant/text
 	icon_state = "text"
-	item_state = "text"
+	inhand_state = "text"
 	name = "text sign"
 	desc = "..."
 

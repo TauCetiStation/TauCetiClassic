@@ -168,7 +168,7 @@
 		brokenhud.desc = src.desc
 		brokenhud.icon = src.icon
 		brokenhud.icon_state = src.icon_state
-		brokenhud.item_state = src.item_state
+		brokenhud.inhand_state = src.inhand_state
 		brokenhud.make_old()
 		qdel(src)
 	..()

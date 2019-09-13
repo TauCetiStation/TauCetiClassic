@@ -24,7 +24,7 @@ var/datum/subsystem/ticker/ticker
 
 	//These bible variables should be a preference
 	var/Bible_icon_state					//icon_state the chaplain has chosen for his bible
-	var/Bible_item_state					//item_state the chaplain has chosen for his bible
+	var/Bible_inhand_state					//inhand_state the chaplain has chosen for his bible
 	var/Bible_name							//name of the bible
 	var/Bible_deity_name					//name of chaplin's deity
 

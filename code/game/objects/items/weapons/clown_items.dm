@@ -14,7 +14,7 @@
 	desc = "A peel from a banana."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banana_peel"
-	item_state = "banana_peel"
+	inhand_state = "banana_peel"
 	w_class = ITEM_SIZE_SMALL
 	throwforce = 0
 	throw_speed = 4
@@ -175,7 +175,7 @@
 	desc = "A horn off of a bicycle."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "bike_horn"
-	item_state = "bike_horn"
+	inhand_state = "bike_horn"
 	throwforce = 3
 	w_class = ITEM_SIZE_TINY
 	throw_speed = 3
@@ -199,7 +199,7 @@
 	desc = "This adorable toy is made with super soft plush and has a squeaker inside for added entertainment."	//Woof!
 	icon = 'icons/obj/items.dmi'
 	icon_state = "dogtoy"
-	item_state = "dogtoy"
+	inhand_state = "dogtoy"
 
 //////////////////////////////////////////////////////
 //			       Fake Laugh Button   			    //

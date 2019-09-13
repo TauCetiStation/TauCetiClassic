@@ -3,7 +3,7 @@
 	desc = "A data cartridge for portable microcomputers."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "cart"
-	item_state = "electronic"
+	inhand_state = "electronic"
 	w_class = ITEM_SIZE_TINY
 
 	var/obj/item/radio/integrated/radio = null

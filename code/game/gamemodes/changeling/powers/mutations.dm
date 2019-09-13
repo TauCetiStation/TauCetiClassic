@@ -110,7 +110,7 @@
 	desc = "A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
-	item_state = "arm_blade"
+	inhand_state = "arm_blade"
 	flags = ABSTRACT | DROPDEL
 	canremove = 0
 	w_class = ITEM_SIZE_HUGE
@@ -179,7 +179,7 @@
 	flags = ABSTRACT | DROPDEL
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "ling_shield"
-	item_state = "ling_shield"
+	inhand_state = "ling_shield"
 	block_chance = 80
 	var/remaining_uses = 6
 

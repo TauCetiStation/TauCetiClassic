@@ -305,7 +305,7 @@
 	name = "inflatable barrier box"
 	desc = "Contains inflatable walls and doors."
 	icon_state = "inf_box"
-	item_state = "inf_box"
+	inhand_state = "inf_box"
 
 /obj/item/weapon/storage/briefcase/inflatable/atom_init()
 	. = ..()

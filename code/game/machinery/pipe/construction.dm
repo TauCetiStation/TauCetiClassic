@@ -10,7 +10,7 @@ Buildable meters
 	force = 7
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "simple"
-	item_state = "buildpipe"
+	inhand_state = "buildpipe"
 	w_class = ITEM_SIZE_NORMAL
 	level = 2
 
@@ -757,7 +757,7 @@ Buildable meters
 	desc = "A meter that can be laid on pipes."
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "meter"
-	item_state = "buildpipe"
+	inhand_state = "buildpipe"
 	w_class = ITEM_SIZE_LARGE
 
 /obj/item/pipe_meter/attackby(obj/item/weapon/W, mob/user)

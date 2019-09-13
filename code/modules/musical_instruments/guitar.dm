@@ -3,7 +3,7 @@
 	desc = "It's made of wood and has steel strings.<br>The leather belt is folded behind it and the letters J.C. are engraved on the headstock."
 	icon = 'icons/obj/musician.dmi'
 	icon_state = "guitar"
-	item_state = "guitar"
+	inhand_state = "guitar"
 	hitsound = list('sound/musical_instruments/guitar/1hit.ogg')
 	force = 10
 	attack_verb = list("played metal", "made concert", "crashed", "smashed")
@@ -29,6 +29,6 @@
 	name = "electric guitar"
 	desc = "Space Rock'n'Roll"
 	icon_state = "eguitar"
-	item_state = "eguitar"
+	inhand_state = "eguitar"
 
 	sound_path = "sound/musical_instruments/eguitar"

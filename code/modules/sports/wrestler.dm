@@ -4,7 +4,7 @@
 	icon = 'code/modules/sports/wrestling.dmi'
 	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "robust-black"
-	item_state = "robust-black"
+	inhand_state = "robust-black"
 	item_color = "robust-black"
 
 /obj/item/clothing/shoes/boxing
@@ -13,7 +13,7 @@
 	icon = 'code/modules/sports/wrestling.dmi'
 	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "boots-black"
-	item_state = "boots-black"
+	inhand_state = "boots-black"
 	item_color = "boots-black"
 
 /obj/item/clothing/under/boxing/green
@@ -22,7 +22,7 @@
 	icon = 'code/modules/sports/wrestling.dmi'
 	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "robust-green"
-	item_state = "robust-green"
+	inhand_state = "robust-green"
 	item_color = "robust-green"
 
 /obj/item/clothing/shoes/boxing/gray
@@ -31,7 +31,7 @@
 	icon = 'code/modules/sports/wrestling.dmi'
 	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "boots-green"
-	item_state = "boots-black"
+	inhand_state = "boots-black"
 	item_color = "boots-green"
 
 /obj/item/clothing/gloves/wrestling
@@ -48,7 +48,7 @@
 	icon = 'code/modules/sports/wrestling.dmi'
 	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "robust-red"
-	item_state = "robust-red"
+	inhand_state = "robust-red"
 	item_color = "robust-red"
 
 /obj/item/clothing/shoes/boxing/red
@@ -57,7 +57,7 @@
 	icon = 'code/modules/sports/wrestling.dmi'
 	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "boots-red"
-	item_state = "boots-black"
+	inhand_state = "boots-black"
 	item_color = "boots-red"
 
 /obj/item/clothing/under/boxing/white
@@ -66,7 +66,7 @@
 	icon = 'code/modules/sports/wrestling.dmi'
 	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "robust-white"
-	item_state = "robust-white"
+	inhand_state = "robust-white"
 	item_color = "robust-white"
 
 /obj/item/clothing/shoes/boxing/white
@@ -75,7 +75,7 @@
 	icon = 'code/modules/sports/wrestling.dmi'
 	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "boots-white"
-	item_state = "boots-black"
+	inhand_state = "boots-black"
 	item_color = "boots-white"
 
 /obj/item/clothing/mask/luchador/white
@@ -84,7 +84,7 @@
 	icon = 'code/modules/sports/wrestling.dmi'
 	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "mask-white"
-	item_state = "mask-white"
+	inhand_state = "mask-white"
 
 /obj/item/clothing/under/boxing/pink
 	name = "Pink fighting outfit"
@@ -92,7 +92,7 @@
 	icon = 'code/modules/sports/wrestling.dmi'
 	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "robust-pink"
-	item_state = "robust-pink"
+	inhand_state = "robust-pink"
 	item_color = "robust-pink"
 
 /obj/item/clothing/shoes/boxing/pink
@@ -101,7 +101,7 @@
 	icon = 'code/modules/sports/wrestling.dmi'
 	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "boots-pink"
-	item_state = "boots-black"
+	inhand_state = "boots-black"
 	item_color = "boots-pink"
 
 /obj/item/clothing/gloves/wrestling/pink
@@ -118,10 +118,10 @@
 	icon = 'code/modules/sports/wrestling.dmi'
 	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "mask-pink"
-	item_state = "mask-pink"
+	inhand_state = "mask-pink"
 
 /obj/item/weapon/storage/belt/champion/alt
 	icon = 'code/modules/sports/wrestling.dmi'
 	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "champ"
-	item_state = "champ"
+	inhand_state = "champ"

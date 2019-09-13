@@ -6,7 +6,7 @@
 	desc = "It has some sort of a tube at the end of its tail."
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "facehugger"
-	item_state = "facehugger"
+	inhand_state = "facehugger"
 	w_class = ITEM_SIZE_TINY //note: can be picked up by aliens unlike most other items of w_class below 4
 	density = 1
 	layer = ABOVE_WINDOW_LAYER

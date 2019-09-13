@@ -8,7 +8,7 @@
 	desc = "A device that delivers powerful shocks via detachable paddles to resuscitate incapacitated patients."
 	icon = 'icons/obj/defibrillator.dmi'
 	icon_state = "defibunit"
-	item_state = "defibunit"
+	inhand_state = "defibunit"
 	slot_flags = SLOT_FLAGS_BACK
 	force = 5
 	throwforce = 6
@@ -172,7 +172,7 @@
 	name = "compact defibrillator"
 	desc = "A belt-equipped defibrillator that can be rapidly deployed."
 	icon_state = "defibcompact"
-	item_state = "defibcompact"
+	inhand_state = "defibcompact"
 	w_class = ITEM_SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = list("biotech" = 3, "powerstorage" = 2)
@@ -204,7 +204,7 @@
 	desc = "A pair of plastic-gripped paddles with flat metal surfaces that are used to deliver powerful electric shocks."
 	icon = 'icons/obj/defibrillator.dmi'
 	icon_state = "defibpaddles0"
-	item_state = "defibpaddles"
+	inhand_state = "defibpaddles"
 	gender = PLURAL
 	force = 2
 	force_unwielded = 2
@@ -596,7 +596,7 @@
 /obj/item/weapon/twohanded/offhand/shockpaddles
 	icon = 'icons/obj/defibrillator.dmi'
 	icon_state = "defibpaddleso"
-	item_state = "defibpaddles"
+	inhand_state = "defibpaddles"
 
 /obj/item/weapon/twohanded/offhand/shockpaddles/atom_init()
 	. = ..()

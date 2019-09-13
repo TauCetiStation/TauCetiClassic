@@ -2,7 +2,7 @@
 	name = "briefcase"
 	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
 	icon_state = "briefcase"
-	item_state = "briefcase"
+	inhand_state = "briefcase"
 	flags = CONDUCT
 	force = 8.0
 	throw_speed = 1
@@ -47,4 +47,4 @@
 
 /obj/item/weapon/storage/briefcase/centcomm
 	icon_state = "briefcase-centcomm"
-	item_state = "briefcase-centcomm"
+	inhand_state = "briefcase-centcomm"

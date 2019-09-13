@@ -2,7 +2,7 @@
 	name = "remote signaling device"
 	desc = "Used to remotely activate devices."
 	icon_state = "signaller"
-	item_state = "signaler"
+	inhand_state = "signaler"
 	m_amt = 1000
 	g_amt = 200
 	w_amt = 100
@@ -196,7 +196,7 @@ Code:
 	name = "anomaly core"
 	desc = "The neutralized core of an anomaly. It'd probably be valuable for research."
 	icon_state = "anomaly core"
-	item_state = "electronic"
+	inhand_state = "electronic"
 
 /obj/item/device/assembly/signaler/anomaly/receive_signal(datum/signal/signal)
 	if(!signal)

@@ -13,7 +13,7 @@
 	name = "\improper W&J PP"
 	desc = "Double action semi-automatic 9mm pistol, popular with police and private security for being reliable, concealable and cheap."
 	icon_state = "9mm_wjpp"
-	item_state = "9mm_wjpp"
+	inhand_state = "9mm_wjpp"
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/m9mm_2/rubber
 	mag_type2 = /obj/item/ammo_box/magazine/m9mm_2
@@ -28,7 +28,7 @@
 
 /obj/item/weapon/gun/projectile/wjpp/spec
 	icon_state = "9mm_wjpp_spec"
-	item_state = "9mm_wjpp_spec"
+	inhand_state = "9mm_wjpp_spec"
 
 /obj/item/weapon/gun/projectile/wjpp/update_icon(load = 0)
 	..()
@@ -58,7 +58,7 @@
 	name = "desert eagle"
 	desc = "A robust handgun that uses .50 AE ammo."
 	icon_state = "deagle"
-	item_state = "deagle"
+	inhand_state = "deagle"
 	force = 14.0
 	mag_type = /obj/item/ammo_box/magazine/m50
 	can_be_holstered = TRUE
@@ -80,7 +80,7 @@
 /obj/item/weapon/gun/projectile/automatic/deagle/gold
 	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
 	icon_state = "deagleg"
-	item_state = "deagleg"
+	inhand_state = "deagleg"
 
 /obj/item/weapon/gun/projectile/automatic/gyropistol
 	name = "gyrojet pistol"
@@ -136,7 +136,7 @@
 	desc = "A cheap Martian knock-off of a Colt M1911. Uses less-than-lethal .45 rounds."
 	name = "\improper Colt M1911"
 	icon_state = "colt"
-	item_state = "colt"
+	inhand_state = "colt"
 	w_class = ITEM_SIZE_SMALL
 	mag_type = /obj/item/ammo_box/magazine/c45r
 	mag_type2 = /obj/item/ammo_box/magazine/c45m
@@ -186,7 +186,7 @@
 	name = "\improper pistol"
 	desc = "Seegert ACM38 pistol - when you need be TACTICOOL."
 	icon_state = "acm38"
-	item_state = "colt"
+	inhand_state = "colt"
 	fire_sound = 'sound/weapons/guns/gunshot_acm38.ogg'
 	mag_type = /obj/item/ammo_box/magazine/acm38_38
 

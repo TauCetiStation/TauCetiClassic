@@ -3,7 +3,7 @@
 	desc = "Can hold various things."
 	icon = 'icons/obj/pouches.dmi'
 	icon_state = "pouch"
-	item_state = "pouch"
+	inhand_state = "pouch"
 
 	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_FLAGS_POCKET|SLOT_FLAGS_BELT //Pouches can be worn on belt
@@ -38,7 +38,7 @@
 	name = "small generic pouch"
 	desc = "Can hold anything in it, but only about once."
 	icon_state = "small_generic"
-	item_state = "small_generic"
+	inhand_state = "small_generic"
 	storage_slots = null //Uses generic capacity
 	max_storage_space = ITEM_SIZE_TINY * 3
 	max_w_class = ITEM_SIZE_SMALL
@@ -47,7 +47,7 @@
 	name = "medium generic pouch"
 	desc = "Can hold anything in it, but only about twice."
 	icon_state = "medium_generic"
-	item_state = "medium_generic"
+	inhand_state = "medium_generic"
 	storage_slots = null //Uses generic capacity
 	max_storage_space = ITEM_SIZE_TINY * 5
 	max_w_class = ITEM_SIZE_NORMAL
@@ -56,7 +56,7 @@
 	name = "large generic pouch"
 	desc = "A mini satchel. Can hold a fair bit, but it won't fit in your pocket"
 	icon_state = "large_generic"
-	item_state = "large_generic"
+	inhand_state = "large_generic"
 	w_class = ITEM_SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BELT|SLOT_FLAGS_DENYPOCKET
 	storage_slots = null //Uses generic capacity
@@ -67,7 +67,7 @@
 	name = "medical supply pouch"
 	desc = "Can hold medical equipment. But only about three pieces of it."
 	icon_state = "medical_supply"
-	item_state = "medical_supply"
+	inhand_state = "medical_supply"
 
 	storage_slots = 3
 	max_w_class = ITEM_SIZE_NORMAL
@@ -100,7 +100,7 @@
 	name = "engineering tools pouch"
 	desc = "Can hold small engineering tools. But only about three pieces of them."
 	icon_state = "engineering_tool"
-	item_state = "engineering_tool"
+	inhand_state = "engineering_tool"
 
 	storage_slots = 3
 	max_w_class = ITEM_SIZE_SMALL
@@ -134,7 +134,7 @@
 	name = "engineering supply pouch"
 	desc = "Can hold engineering equipment. But only about two pieces of it."
 	icon_state = "engineering_supply"
-	item_state = "engineering_supply"
+	inhand_state = "engineering_supply"
 
 	storage_slots = 2
 	w_class = ITEM_SIZE_NORMAL
@@ -156,7 +156,7 @@
 	desc = "Can hold ammo boxes and bullets."
 	// desc = "Can hold ammo magazines and bullets, not the boxes though."
 	icon_state = "ammo"
-	item_state = "ammo"
+	inhand_state = "ammo"
 
 	storage_slots = 3
 	w_class = ITEM_SIZE_NORMAL
@@ -171,7 +171,7 @@
 	name = "flares pouch"
 	desc = "Can hold about five flares in. In fact, anything cylindrical and small... Makes you think."
 	icon_state = "flare"
-	item_state = "flare"
+	inhand_state = "flare"
 
 	storage_slots = 5
 	w_class = ITEM_SIZE_NORMAL
@@ -201,7 +201,7 @@
 	name = "pistol holster"
 	desc = "Can hold a handgun in."
 	icon_state = "pistol_holster"
-	item_state = "pistol_holster"
+	inhand_state = "pistol_holster"
 
 	storage_slots = 1
 	w_class = ITEM_SIZE_NORMAL
@@ -224,7 +224,7 @@
 	name = "baton sheath"
 	desc = "Can hold a baton, or indeed most weapon shafts."
 	icon_state = "baton_holster"
-	item_state = "baton_holster"
+	inhand_state = "baton_holster"
 
 	storage_slots = 1
 	max_w_class = ITEM_SIZE_LARGE

@@ -2,7 +2,7 @@
 	name = "electropack"
 	desc = "Dance my monkeys! DANCE!!!"
 	icon_state = "electropack0"
-	item_state = "electropack"
+	inhand_state = "electropack"
 	frequency = 1449
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BACK

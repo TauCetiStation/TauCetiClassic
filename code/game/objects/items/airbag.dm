@@ -3,7 +3,7 @@
 	desc = "One-use protection from high-speed collisions"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "airbag"
-	item_state = "syringe_kit"
+	inhand_state = "syringe_kit"
 	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 

@@ -272,7 +272,7 @@
 	name = "flour sack"
 	desc = "A small bag filled with some flour."
 	icon_state = "flour"
-	item_state = "flour"
+	inhand_state = "flour"
 	empty_icon = "flour_empty"
 	list_reagents = list("flour" = 30)
 
@@ -280,7 +280,7 @@
 	name = "sugar sack"
 	desc = "Tastey space sugar!"
 	icon_state = "sugar"
-	item_state = "sugar"
+	inhand_state = "sugar"
 	empty_icon = "sugar_empty"
 	list_reagents = list("sugar" = 40)
 
@@ -288,7 +288,7 @@
 	name = "rice sack"
 	desc = "Salt. From space oceans, presumably. Good for cooking!"
 	icon_state = "rice"
-	item_state = "rice"
+	inhand_state = "rice"
 	empty_icon = "rice_empty"
 	list_reagents = list("rice" = 30)
 
@@ -334,7 +334,7 @@
 	name = "universal enzyme"
 	desc = "Used in cooking various dishes."
 	icon_state = "enzyme"
-	item_state = "enzyme"
+	inhand_state = "enzyme"
 	empty_icon = "enzyme_empty"
 	list_reagents = list("enzyme" = 50)
 

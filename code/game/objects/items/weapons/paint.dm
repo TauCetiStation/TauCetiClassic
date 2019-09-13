@@ -7,7 +7,7 @@ var/global/list/cached_icons = list()
 	name = "paint bucket"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "paint_neutral"
-	item_state = "paintcan"
+	inhand_state = "paintcan"
 	m_amt = 200
 	g_amt = 0
 	w_class = ITEM_SIZE_NORMAL
@@ -25,7 +25,7 @@ var/global/list/cached_icons = list()
 		reagents.reaction(target, TOUCH)
 		reagents.remove_any(5)
 		log_game("[usr.ckey]([usr]) splashed [src.reagents.get_reagents()] on [target], location ([target.x],[target.y],[target.z])")
-	else 
+	else
 		..()
 
 /obj/item/weapon/reagent_containers/glass/paint/atom_init()
@@ -83,7 +83,7 @@ var/global/list/cached_icons = list()
 	icon = 'icons/obj/items.dmi'
 	icon_state = "paint_neutral"
 	color = "FFFFFF"
-	item_state = "paintcan"
+	inhand_state = "paintcan"
 	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/weapon/paint/red

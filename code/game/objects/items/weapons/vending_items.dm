@@ -4,7 +4,7 @@
 
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "refill_unk"
-	item_state = "restock_unit"
+	inhand_state = "restock_unit"
 	flags = CONDUCT
 	force = 7.0
 	throwforce = 15.0

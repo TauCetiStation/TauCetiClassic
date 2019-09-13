@@ -748,7 +748,7 @@
 	name = "Drop Pod inititalizer"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "recaller"
-	item_state = "walkietalkie"
+	inhand_state = "walkietalkie"
 	var/drop_type = /obj/structure/droppod
 
 /obj/item/device/drop_caller/attack_self(mob/user)

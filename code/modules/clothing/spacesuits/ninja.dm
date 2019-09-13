@@ -2,7 +2,7 @@
 	desc = "What may appear to be a simple black garment is in fact a highly sophisticated nano-weave helmet. Standard issue ninja gear."
 	name = "ninja hood"
 	icon_state = "s-ninja"
-	item_state = "s-ninja_mask"
+	inhand_state = "s-ninja_mask"
 	allowed = list(/obj/item/weapon/stock_parts/cell)
 	armor = list(melee = 60, bullet = 50, laser = 60,energy = 45, bomb = 50, bio = 100, rad = 50)
 	species_restricted = null
@@ -13,7 +13,7 @@
 	name = "ninja suit"
 	desc = "A unique, vaccum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
 	icon_state = "s-ninja"
-	item_state = "s-ninja_suit"
+	inhand_state = "s-ninja_suit"
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/stock_parts/cell)
 	slowdown = 0
 	armor = list(melee = 60, bullet = 50, laser = 60,energy = 45, bomb = 30, bio = 100, rad = 50)

@@ -395,7 +395,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	g_amt = 20
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
-	item_state = "coil"
+	inhand_state = "coil"
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
 	full_w_class = ITEM_SIZE_SMALL
@@ -627,7 +627,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /////////////////////////////
 
 /obj/item/stack/cable_coil/cut
-	item_state = "coil2"
+	inhand_state = "coil2"
 
 /obj/item/stack/cable_coil/cut/atom_init(mapload)
 	. = ..(mapload, rand(1,2))

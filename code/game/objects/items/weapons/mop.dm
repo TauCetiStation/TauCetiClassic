@@ -253,7 +253,7 @@
 	desc = "The most advanced tool in a custodian's arsenal. Just think of all the viscera you will clean up with this!"
 	name = "advanced mop"
 	icon_state = "advmop"
-	item_state = "advmop"
+	inhand_state = "advmop"
 	force = 6.0
 	throwforce = 10.0
 	throw_range = 10.0

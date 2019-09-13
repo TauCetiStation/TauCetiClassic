@@ -158,7 +158,7 @@
 	name = "velocity officer's coat"
 	desc = "A clean, black nylon windbreaker with the words \"OFFICER OF THE LAW\" embroidered in gold-dyed thread on the back. \"VELOCITY\" is tastefully embroidered below in a smaller font."
 	icon_state = "retpolcoat"
-	item_state = "retpolcoat"
+	inhand_state = "retpolcoat"
 	item_color = "retpolcoat"
 
 /obj/item/clothing/head/det_hat/fluff/retpolcap
@@ -181,7 +181,7 @@
 	desc = "Stripe of red cloth.You can wear it on your head."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "kung_headband_w"
-	item_state = "kung_headband_w"
+	inhand_state = "kung_headband_w"
 
 /*
  * Originally - blue shield security armor
@@ -193,4 +193,4 @@
 	desc = "An armored vest with the badge of a Blue Shield squadron of CITS \"Velocity\"'s Security lieutenant."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "deus_blueshield"
-	item_state = "deus_blueshield"
+	inhand_state = "deus_blueshield"

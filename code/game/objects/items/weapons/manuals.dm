@@ -49,7 +49,7 @@
 /obj/item/weapon/book/manual/wiki/basic_engineering
 	name = "Basic Engineering"
 	icon_state ="bookBasicEngineering"
-	item_state ="book3"
+	inhand_state ="book3"
 	author = "Einstein Engines Inc"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
 	title = "Basic Engineering"
 	wiki_page = "Guide_to_Engineering"
@@ -57,7 +57,7 @@
 /obj/item/weapon/book/manual/wiki/construction
 	name = "Guide to Construction"
 	icon_state ="bookConstruction"
-	item_state ="book3"
+	inhand_state ="book3"
 	author = "Engineering Encyclopedia"
 	title = "Guide to Construction"
 	wiki_page = "Guide_to_Constructions"
@@ -65,7 +65,7 @@
 /obj/item/weapon/book/manual/wiki/atmospipes
 	name = "Pipes and You: Getting To Know Atmospherics"
 	icon_state = "bookAtmos"
-	item_state ="book3"
+	inhand_state ="book3"
 	author = "Einstein Engines Inc"
 	title = "Pipes and You: Getting To Know Atmospherics"
 	wiki_page = "Atmospherics"
@@ -73,7 +73,7 @@
 /obj/item/weapon/book/manual/wiki/supermatter_engine
 	name = "Supermatter Engine User's Guide"
 	icon_state = "bookSupermatter"
-	item_state ="book3"
+	inhand_state ="book3"
 	author = "Einstein Engines Inc"
 	title = "Supermatter Engine User's Guide"
 	wiki_page = "Supermatter_Engine"
@@ -81,7 +81,7 @@
 /obj/item/weapon/book/manual/wiki/engineering_hacking
 	name = "Hacking"
 	icon_state ="bookHacking"
-	item_state ="book3"
+	inhand_state ="book3"
 	author = "Einstein Engines Inc"
 	title = "Hacking"
 	wiki_page = "Hacking"
@@ -89,7 +89,7 @@
 /obj/item/weapon/book/manual/wiki/engineering_singularity
 	name = "How to set up the Singularity Engine"
 	icon_state ="bookSingularityEngine"
-	item_state ="book3"
+	inhand_state ="book3"
 	author = "Einstein Engines Inc"
 	title = "How to set up the Singularity Engine"
 	wiki_page = "Singularity_Engine"
@@ -97,7 +97,7 @@
 /obj/item/weapon/book/manual/wiki/engineering_tesla
 	name = "How to set up the Telsa Engine"
 	icon_state ="bookTeslaEngine"
-	item_state ="book3"
+	inhand_state ="book3"
 	author = "Einstein Engines Inc"
 	title = "How to set up the Telsa Engine"
 	wiki_page = "Tesla_Engine"
@@ -105,7 +105,7 @@
 /obj/item/weapon/book/manual/wiki/engineering_solars
 	name = "How to set up the Solars"
 	icon_state ="bookSolars"
-	item_state ="book3"
+	inhand_state ="book3"
 	author = "Einstein Engines Inc"
 	title = "How to set up the Solars"
 	wiki_page = "Solars"
@@ -115,7 +115,7 @@
 /obj/item/weapon/book/manual/wiki/medical_guide_to_medicine
 	name = "Medicine Manual"
 	icon_state ="bookMedical"
-	item_state ="book4"
+	inhand_state ="book4"
 	author = "NanoTrasen"
 	title = "Medicine Manual"
 	wiki_page = "Guide_to_Medicine"
@@ -123,7 +123,7 @@
 /obj/item/weapon/book/manual/wiki/medical_genetics
 	name = "Wonders of Genetics"
 	icon_state ="bookGenetics"
-	item_state ="book7"
+	inhand_state ="book7"
 	author = "NanoTrasen"
 	title = "Wonders of Genetics"
 	wiki_page = "Guide_to_Genetics"
@@ -131,7 +131,7 @@
 /obj/item/weapon/book/manual/wiki/medical_surgery
 	name = "Guide to Surgery"
 	icon_state ="bookSurgery"
-	item_state ="book7"
+	inhand_state ="book7"
 	author = "NanoTrasen"
 	title = "Guide to Surgery"
 	wiki_page = "Surgery"
@@ -139,7 +139,7 @@
 /obj/item/weapon/book/manual/wiki/medical_virology
 	name = "Virology Protocols"
 	icon_state ="bookVirology"
-	item_state ="book7"
+	inhand_state ="book7"
 	author = "NanoTrasen"
 	title = "Virology Protocols"
 	wiki_page = "Guide_to_Virology"
@@ -147,7 +147,7 @@
 /obj/item/weapon/book/manual/wiki/medical_chemistry
 	name = "Chemical Formulas"
 	icon_state ="bookChemistry"
-	item_state ="book7"
+	inhand_state ="book7"
 	author = "NanoTrasen"
 	title = "Chemical Formulas"
 	wiki_page = "Guide_to_Chemistry"
@@ -157,7 +157,7 @@
 /obj/item/weapon/book/manual/wiki/research_and_development
 	name = "Basics of Research"
 	icon_state = "bookBasicsOfResearch"
-	item_state ="book6"
+	inhand_state ="book6"
 	author = "NanoTrasen"
 	title = "Basics of Research"
 	wiki_page = "Guide_to_Research_and_Development"
@@ -165,7 +165,7 @@
 /obj/item/weapon/book/manual/wiki/guide_to_robotics
 	name = "Robotics for Dummies"
 	icon_state = "bookGuideToRobotics"
-	item_state ="book6"
+	inhand_state ="book6"
 	author = "BioTech"
 	title = "Robotics for Dummies"
 	wiki_page = "Guide_to_Robotics"
@@ -173,7 +173,7 @@
 /obj/item/weapon/book/manual/wiki/guide_to_toxins
 	name = "Study of Phoron Properties"
 	icon_state = "bookGuideToToxins"
-	item_state ="book6"
+	inhand_state ="book6"
 	author = "Cybersun Industries"
 	title = "Study of Phoron Properties"
 	wiki_page = "Guide_to_toxins"
@@ -181,7 +181,7 @@
 /obj/item/weapon/book/manual/wiki/guide_to_xenobiology
 	name = "Xenobilogy: Grow and Study"
 	icon_state = "bookXenobiology"
-	item_state ="book6"
+	inhand_state ="book6"
 	author = "NanoTrasen"
 	title = "Xenobilogy: Grow and Study"
 	wiki_page = "Guide_to_xenobiology"
@@ -189,7 +189,7 @@
 /obj/item/weapon/book/manual/wiki/guide_to_exosuits
 	name = "Exosuits Construction"
 	icon_state = "bookExosuits"
-	item_state ="book6"
+	inhand_state ="book6"
 	author = "NanoTrasen"
 	title = "Exosuits Construction"
 	wiki_page = "Guide_to_Exosuits"
@@ -197,7 +197,7 @@
 /obj/item/weapon/book/manual/wiki/guide_to_telescience
 	name = "TeleScience: Science of Time and Space"
 	icon_state = "bookTelescience"
-	item_state ="book6"
+	inhand_state ="book6"
 	author = "NanoTrasen"
 	title = "TeleScience: Science of Time and Space"
 	wiki_page = "Guide_To_Telescience"
@@ -208,7 +208,7 @@
 	name = "Space Law"
 	desc = "A set of NanoTrasen guidelines for keeping law and order on their space stations."
 	icon_state = "bookSpaceLaw"
-	item_state = "book2"
+	inhand_state = "book2"
 	author = "NanoTrasen"
 	title = "Space Law"
 	wiki_page = "Space Law"
@@ -216,7 +216,7 @@
 /obj/item/weapon/book/manual/wiki/sop
 	name = "Standard Operating Procedure"
 	icon_state = "bookSOP"
-	item_state = "book9"
+	inhand_state = "book9"
 	author = "NanoTrasen"
 	title = "Standard Operating Procedure"
 	wiki_page = "Standard_Operating_Procedure"
@@ -224,7 +224,7 @@
 /obj/item/weapon/book/manual/detective
 	name = "The Film Noir: Proper Procedures for Investigations"
 	icon_state ="bookDetective"
-	item_state = "book2"
+	inhand_state = "book2"
 	author = "NanoTrasen"
 	title = "The Film Noir: Proper Procedures for Investigations"
 
@@ -270,7 +270,7 @@
 /obj/item/weapon/book/manual/wiki/chefs_recipes
 	name = "Bon Appetite: Chef's Recipes"
 	icon_state = "bookChefsRecipes"
-	item_state = "book10"
+	inhand_state = "book10"
 	author = "Victoria Ponsonby"
 	title = "Bon Appetite: Chef's Recipes"
 	wiki_page = "Guide_to_Food"
@@ -278,7 +278,7 @@
 /obj/item/weapon/book/manual/wiki/barman_recipes
 	name = "Barman Recipes"
 	icon_state = "bookDrinks"
-	item_state = "book4"
+	inhand_state = "book4"
 	author = "Sir John Rose"
 	title = "Barman Recipes"
 	wiki_page = "Drinks"
@@ -286,7 +286,7 @@
 /obj/item/weapon/book/manual/wiki/hydroponics
 	name = "From Seed to Fruit: Hydroponics for dummies"
 	icon_state ="bookHydroponics"
-	item_state = "book5"
+	inhand_state = "book5"
 	author = "Farmer John"
 	title = "From Seed to Fruit: Hydroponics for dummies"
 	wiki_page = "Guide_to_Hydroponics"
@@ -294,7 +294,7 @@
 /obj/item/weapon/book/manual/wiki/supply_crates
 	name = "Supply Crates Official List"
 	icon_state ="bookSupplyCrates"
-	item_state = "book8"
+	inhand_state = "book8"
 	author = "NanoTrasen"
 	title = "Supply Crates Official List"
 	wiki_page = "Supply_crates"
@@ -305,7 +305,7 @@
 	name = "Rules"
 	desc = "Don't be a jerk. This is a corollary of ignore all rules, and most behavioural rules are special cases of this one."
 	icon_state = "bookRules"
-	item_state = "book2"
+	inhand_state = "book2"
 	author = "Tau Ceti Classic"
 	title = "Rules"
 	wiki_page = "Rules"
@@ -315,7 +315,7 @@
 /obj/item/weapon/book/manual/hydroponics_beekeeping
 	name = "The Ins and Outs of Apiculture - A Precise Art"
 	icon_state ="bookHydroponicsBees"
-	item_state ="book5"
+	inhand_state ="book5"
 	author = "Beekeeper Dave"
 	title = "The Ins and Outs of Apiculture - A Precise Art"
 	dat = {"<html>
@@ -347,7 +347,7 @@
 /obj/item/weapon/book/manual/nuclear
 	name = "Fission Mailed: Nuclear Sabotage 101"
 	icon_state ="bookNuclear"
-	item_state = "book10"
+	inhand_state = "book10"
 	author = "Syndicate"
 	title = "Fission Mailed: Nuclear Sabotage 101"
 

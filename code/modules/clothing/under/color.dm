@@ -1,7 +1,7 @@
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
 	icon_state = "black"
-	item_state = "bl_suit"
+	inhand_state = "bl_suit"
 	item_color = "black"
 	flags = ONESIZEFITSALL
 
@@ -9,27 +9,27 @@
 	name = "feminine black jumpsuit"
 	desc = "It's very smart and in a ladies-size!"
 	icon_state = "black"
-	item_state = "bl_suit"
+	inhand_state = "bl_suit"
 	item_color = "blackf"
 
 /obj/item/clothing/under/color/blue
 	name = "blue jumpsuit"
 	icon_state = "blue"
-	item_state = "b_suit"
+	inhand_state = "b_suit"
 	item_color = "blue"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/color/green
 	name = "green jumpsuit"
 	icon_state = "green"
-	item_state = "g_suit"
+	inhand_state = "g_suit"
 	item_color = "green"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"
 	icon_state = "grey"
-	item_state = "gy_suit"
+	inhand_state = "gy_suit"
 	item_color = "grey"
 	flags = ONESIZEFITSALL
 
@@ -37,7 +37,7 @@
 	name = "orange jumpsuit"
 	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
 	icon_state = "orange"
-	item_state = "o_suit"
+	inhand_state = "o_suit"
 	item_color = "orange"
 	has_sensor = 2
 	sensor_mode = 3
@@ -46,28 +46,28 @@
 /obj/item/clothing/under/color/pink
 	name = "pink jumpsuit"
 	icon_state = "pink"
-	item_state = "p_suit"
+	inhand_state = "p_suit"
 	item_color = "pink"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/color/red
 	name = "red jumpsuit"
 	icon_state = "red"
-	item_state = "r_suit"
+	inhand_state = "r_suit"
 	item_color = "red"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/color/white
 	name = "white jumpsuit"
 	icon_state = "white"
-	item_state = "w_suit"
+	inhand_state = "w_suit"
 	item_color = "white"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/color/yellow
 	name = "yellow jumpsuit"
 	icon_state = "yellow"
-	item_state = "y_suit"
+	inhand_state = "y_suit"
 	item_color = "yellow"
 	flags = ONESIZEFITSALL
 
@@ -95,7 +95,7 @@
 	name = "purple"
 	desc = "purple"
 	icon_state = "purple"
-	item_state = "p_suit"
+	inhand_state = "p_suit"
 	item_color = "purple"
 
 /obj/item/clothing/under/lightpurple

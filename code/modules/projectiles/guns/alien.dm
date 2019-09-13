@@ -10,7 +10,7 @@
 	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "metal-rod"
-	item_state = "bolt"
+	inhand_state = "bolt"
 
 //Launcher.
 /obj/item/weapon/spikethrower
@@ -31,7 +31,7 @@
 
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "spikethrower3"
-	item_state = "spikethrower"
+	inhand_state = "spikethrower"
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 
@@ -131,7 +131,7 @@
 
 	icon = 'icons/obj/gun.dmi' //Actual on-sprite is handled by icon_override.
 	icon_state = "noisecannon"
-	item_state = "noisecannon"
+	inhand_state = "noisecannon"
 	recoil = 1
 
 	force = 10

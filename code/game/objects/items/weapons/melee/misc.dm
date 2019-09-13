@@ -2,7 +2,7 @@
 	name = "chain of command"
 	desc = "A tool used by great men to placate the frothing masses."
 	icon_state = "chain"
-	item_state = "chain"
+	inhand_state = "chain"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	force = 10
@@ -20,7 +20,7 @@
 	name = "ice pick"
 	desc = "Used for chopping ice. Also excellent for mafia esque murders."
 	icon_state = "ice_pick"
-	item_state = "ice_pick"
+	inhand_state = "ice_pick"
 	force = 15
 	throwforce = 10
 	w_class = ITEM_SIZE_SMALL

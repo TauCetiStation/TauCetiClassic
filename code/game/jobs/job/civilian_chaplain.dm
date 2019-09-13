@@ -80,62 +80,62 @@
 			switch(new_book_style)
 				if("Koran")
 					B.icon_state = "koran"
-					B.item_state = "koran"
+					B.inhand_state = "koran"
 					for(var/area/chapel/main/A in all_areas)
 						for(var/turf/T in A.contents)
 							if(T.icon_state == "carpetsymbol")
 								T.dir = 4
 				if("Scrapbook")
 					B.icon_state = "scrapbook"
-					B.item_state = "scrapbook"
+					B.inhand_state = "scrapbook"
 				if("Creeper")
 					B.icon_state = "creeper"
-					B.item_state = "syringe_kit"
+					B.inhand_state = "syringe_kit"
 				if("White Bible")
 					B.icon_state = "white"
-					B.item_state = "syringe_kit"
+					B.inhand_state = "syringe_kit"
 				if("Holy Light")
 					B.icon_state = "holylight"
-					B.item_state = "syringe_kit"
+					B.inhand_state = "syringe_kit"
 				if("Athiest")
 					B.icon_state = "athiest"
-					B.item_state = "syringe_kit"
+					B.inhand_state = "syringe_kit"
 					for(var/area/chapel/main/A in all_areas)
 						for(var/turf/T in A.contents)
 							if(T.icon_state == "carpetsymbol")
 								T.dir = 10
 				if("Tome")
 					B.icon_state = "tome"
-					B.item_state = "syringe_kit"
+					B.inhand_state = "syringe_kit"
 				if("The King in Yellow")
 					B.icon_state = "kingyellow"
-					B.item_state = "kingyellow"
+					B.inhand_state = "kingyellow"
 				if("Ithaqua")
 					B.icon_state = "ithaqua"
-					B.item_state = "ithaqua"
+					B.inhand_state = "ithaqua"
 				if("Scientology")
 					B.icon_state = "scientology"
-					B.item_state = "scientology"
+					B.inhand_state = "scientology"
 					for(var/area/chapel/main/A in all_areas)
 						for(var/turf/T in A.contents)
 							if(T.icon_state == "carpetsymbol")
 								T.dir = 8
 				if("the bible melts")
 					B.icon_state = "melted"
-					B.item_state = "melted"
+					B.inhand_state = "melted"
 				if("Necronomicon")
 					B.icon_state = "necronomicon"
-					B.item_state = "necronomicon"
+					B.inhand_state = "necronomicon"
 				else
 					// if christian bible, revert to default
 					B.icon_state = "bible"
-					B.item_state = "bible"
+					B.inhand_state = "bible"
 					for(var/area/chapel/main/A in all_areas)
 						for(var/turf/T in A.contents)
 							if(T.icon_state == "carpetsymbol")
 								T.dir = 2
 
-			H.update_inv_l_hand() // so that it updates the bible's item_state in his hand
+			H.update_inv_l_hand() // so that it updates the bible's inhand_state in his hand
 
 			switch(input(H,"Look at your bible - is this what you want?") in list("Yes","No"))
 				if("Yes")
@@ -147,7 +147,7 @@
 
 		if(ticker)
 			ticker.Bible_icon_state = B.icon_state
-			ticker.Bible_item_state = B.item_state
+			ticker.Bible_inhand_state = B.inhand_state
 			ticker.Bible_name = B.name
 			ticker.Bible_deity_name = B.deity_name
 		feedback_set_details("religion_deity","[new_deity]")

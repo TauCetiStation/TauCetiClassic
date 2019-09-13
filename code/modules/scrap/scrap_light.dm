@@ -3,7 +3,7 @@
 	desc = "A torch fashioned from some rags and a plank."
 	w_class = ITEM_SIZE_NORMAL
 	icon_state = "torch"
-	item_state = "torch"
+	inhand_state = "torch"
 	light_color = LIGHT_COLOR_FIRE
 	on_damage = 10
 	slot_flags = null
@@ -27,7 +27,7 @@
 	src.damtype = "fire"
 	on = !on
 	update_brightness(user)
-	item_state = icon_state
+	inhand_state = icon_state
 	if(user.hand && loc == user)
 		user.update_inv_r_hand()
 	else

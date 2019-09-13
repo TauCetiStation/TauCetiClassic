@@ -3,7 +3,7 @@
 	desc = "Uses 40x46 ammunition."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "m79"
-	item_state = "m79"
+	inhand_state = "m79"
 	w_class = ITEM_SIZE_LARGE
 	force = 10
 	slot_flags = SLOT_FLAGS_BACK

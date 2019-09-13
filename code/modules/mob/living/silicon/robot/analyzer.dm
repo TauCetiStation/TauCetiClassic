@@ -4,7 +4,7 @@
 /obj/item/device/robotanalyzer
 	name = "cyborg analyzer"
 	icon_state = "robotanalyzer"
-	item_state = "analyzer"
+	inhand_state = "analyzer"
 	desc = "A hand-held scanner able to diagnose robotic injuries."
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT

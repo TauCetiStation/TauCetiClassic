@@ -75,7 +75,7 @@
 	desc = "A wooden truncheon for beating criminal scum."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "baton"
-	item_state = "classic_baton"
+	inhand_state = "classic_baton"
 	slot_flags = SLOT_FLAGS_BELT
 	force = 10
 
@@ -123,7 +123,7 @@
 	desc = "A compact yet rebalanced personal defense weapon. Can be concealed when folded."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "telebaton_0"
-	item_state = null
+	inhand_state = null
 	slot_flags = SLOT_FLAGS_BELT
 	w_class = ITEM_SIZE_SMALL
 	force = 3
@@ -136,7 +136,7 @@
 		"<span class='warning'>You extend the baton.</span>",\
 		"You hear an ominous click.")
 		icon_state = "telebaton_1"
-		item_state = "telebaton"
+		inhand_state = "telebaton"
 		w_class = ITEM_SIZE_NORMAL
 		force = 15//quite robust
 		attack_verb = list("smacked", "struck", "slapped")
@@ -145,7 +145,7 @@
 		"<span class='notice'>You collapse the baton.</span>",\
 		"You hear a click.")
 		icon_state = "telebaton_0"
-		item_state = null
+		inhand_state = null
 		w_class = ITEM_SIZE_SMALL
 		force = 3//not so robust now
 		attack_verb = list("hit", "punched")

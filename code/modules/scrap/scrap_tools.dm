@@ -3,7 +3,7 @@
 	desc = "Instead of usual trash bag, this one comes with self-compressing mechanism, which allows it to hold a huge amount of trash inside. It has a smart vacuum pull system which takes in only trash. Very expensive for a trash bag!"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "trashbag"
-	item_state = "trashbag"
+	inhand_state = "trashbag"
 	color = "red"
 
 	max_storage_space = 120

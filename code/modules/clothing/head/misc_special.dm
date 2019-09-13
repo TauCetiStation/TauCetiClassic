@@ -16,7 +16,7 @@
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
 	icon_state = "welding"
 	flags = (HEADCOVERSEYES | HEADCOVERSMOUTH)
-	item_state = "welding"
+	inhand_state = "welding"
 	m_amt = 3000
 	g_amt = 1000
 	var/up = 0
@@ -102,17 +102,17 @@
 	name = "ushanka"
 	desc = "Perfect for winter in Siberia, da?"
 	icon_state = "ushankadown"
-	item_state = "ushankadown"
+	inhand_state = "ushankadown"
 	flags_inv = HIDEEARS
 
 /obj/item/clothing/head/ushanka/attack_self(mob/user)
 	if(src.icon_state == "ushankadown")
 		src.icon_state = "ushankaup"
-		src.item_state = "ushankaup"
+		src.inhand_state = "ushankaup"
 		to_chat(user, "You raise the ear flaps on the ushanka.")
 	else
 		src.icon_state = "ushankadown"
-		src.item_state = "ushankadown"
+		src.inhand_state = "ushankadown"
 		to_chat(user, "You lower the ear flaps on the ushanka.")
 
 /*
@@ -122,7 +122,7 @@
 	name = "carved pumpkin"
 	desc = "A jack o' lantern! Believed to ward off evil spirits."
 	icon_state = "hardhat0_pumpkin"//Could stand to be renamed
-	item_state = "hardhat0_pumpkin"
+	inhand_state = "hardhat0_pumpkin"
 	item_color = "pumpkin"
 	flags = HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
@@ -137,7 +137,7 @@
 		return
 	on = !on
 	icon_state = "hardhat[on]_[item_color]"
-	item_state = "hardhat[on]_[item_color]"
+	inhand_state = "hardhat[on]_[item_color]"
 
 	if(on)	set_light(brightness_on)
 	else	set_light(0)

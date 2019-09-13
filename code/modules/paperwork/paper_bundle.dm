@@ -3,7 +3,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
-	item_state = "paper"
+	inhand_state = "paper"
 	throwforce = 0
 	w_class = ITEM_SIZE_TINY
 	throw_range = 2

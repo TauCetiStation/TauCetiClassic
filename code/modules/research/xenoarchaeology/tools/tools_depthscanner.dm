@@ -8,7 +8,7 @@
 	desc = "Used to check spatial depth and density of rock outcroppings."
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "depth_analysis_scanner"
-	item_state = "depth_scanner"
+	inhand_state = "depth_scanner"
 	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	var/list/positive_locations = list()

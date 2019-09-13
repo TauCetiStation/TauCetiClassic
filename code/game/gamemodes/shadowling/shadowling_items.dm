@@ -2,7 +2,7 @@
 	name = "blackened flesh"
 	desc = "Black, chitonous skin."
 	icon_state = "golem"
-	item_state = "golem"
+	inhand_state = "golem"
 	item_color = "golem"
 	has_sensor = 0
 	canremove = 0
@@ -15,7 +15,7 @@
 	name = "chitin shell"
 	desc = "Dark, semi-transparent shell. Protects against vacuum, but not against the light of the stars." //Still takes damage from spacewalking but is immune to space itself
 	icon_state = "shadowling_armor"
-	item_state = "golem"
+	inhand_state = "golem"
 	body_parts_covered = FULL_BODY //Shadowlings are immune to space
 	cold_protection = FULL_BODY
 	//min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
@@ -43,7 +43,7 @@
 	name = "chitin mask"
 	desc = "A mask-like formation with slots for facial features. A red film covers the eyes."
 	icon_state = "golem"
-	item_state = "golem"
+	inhand_state = "golem"
 	origin_tech = null
 	siemens_coefficient = 0
 	unacidable = 1
@@ -56,7 +56,7 @@
 	name = "chitin hands"
 	desc = "An electricity-resistant yet thin covering of the hands."
 	icon_state = "shadowling_gloves"
-	item_state = null
+	inhand_state = null
 	origin_tech = null
 	siemens_coefficient = 0
 	unacidable = 1
@@ -68,7 +68,7 @@
 	name = "chitin helm"
 	desc = "A helmet-like enclosure of the head."
 	icon_state = "shadowling_head"
-	item_state = null
+	inhand_state = null
 	origin_tech = null
 	unacidable = 1
 	flags = ABSTRACT | DROPDEL
@@ -81,7 +81,7 @@
 	desc = "A shadowling's eyes. Very light-sensitive and can detect body heat through walls."
 	icon = null
 	icon_state = null
-	item_state = null
+	inhand_state = null
 	origin_tech = null
 	vision_flags = SEE_MOBS
 	alpha = 0

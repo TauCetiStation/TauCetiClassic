@@ -2,7 +2,7 @@
 	name = "labcoat"
 	desc = "A suit that protects against minor chemical spills."
 	icon_state = "labcoat"
-	item_state = "labcoat"
+	inhand_state = "labcoat"
 	blood_overlay_type = "coat"
 	var/can_button_up = 1
 	var/is_button_up = 1
@@ -40,44 +40,44 @@
 	name = "red labcoat"
 	desc = "A suit that protects against minor chemical spills. This one is red."
 	icon_state = "red_labcoat"
-	item_state = "red_labcoat"
+	inhand_state = "red_labcoat"
 
 /obj/item/clothing/suit/storage/labcoat/blue
 	name = "blue labcoat"
 	desc = "A suit that protects against minor chemical spills. This one is blue."
 	icon_state = "blue_labcoat"
-	item_state = "blue_labcoat"
+	inhand_state = "blue_labcoat"
 
 /obj/item/clothing/suit/storage/labcoat/purple
 	name = "purple labcoat"
 	desc = "A suit that protects against minor chemical spills. This one is purple."
 	icon_state = "purple_labcoat"
-	item_state = "purple_labcoat"
+	inhand_state = "purple_labcoat"
 
 /obj/item/clothing/suit/storage/labcoat/orange
 	name = "orange labcoat"
 	desc = "A suit that protects against minor chemical spills. This one is orange."
 	icon_state = "orange_labcoat"
-	item_state = "orange_labcoat"
+	inhand_state = "orange_labcoat"
 
 /obj/item/clothing/suit/storage/labcoat/green
 	name = "green labcoat"
 	desc = "A suit that protects against minor chemical spills. This one is green."
 	icon_state = "green_labcoat"
-	item_state = "green_labcoat"
+	inhand_state = "green_labcoat"
 
 /obj/item/clothing/suit/storage/labcoat/cmo
 	name = "chief medical officer's labcoat"
 	desc = "Bluer than the standard model."
 	icon_state = "labcoat_cmo"
-	item_state = "labcoat_cmo"
+	inhand_state = "labcoat_cmo"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 70, rad = 10)
 
 /obj/item/clothing/suit/storage/labcoat/mad
 	name = "The Mad's labcoat"
 	desc = "It makes you look capable of konking someone on the noggin and shooting them into space."
 	icon_state = "labgreen"
-	item_state = "labgreen"
+	inhand_state = "labgreen"
 
 /obj/item/clothing/suit/storage/labcoat/genetics
 	name = "geneticist labcoat"

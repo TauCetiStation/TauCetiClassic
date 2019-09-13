@@ -10,7 +10,7 @@
 	desc = "A vest outfitted with mind influence stealth technology. It has two modes - combat and stealth."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "vest_stealth"
-	item_state = "armor"
+	inhand_state = "armor"
 	blood_overlay_type = "armor"
 	origin_tech = "materials=5;biotech=4;powerstorage=5"
 	armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15)
@@ -161,7 +161,7 @@
 	desc = "A dual-mode tool for retrieving specimens and scanning appearances. Scanning can be done through cameras."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "gizmo_scan"
-	item_state = "gizmo"
+	inhand_state = "gizmo"
 	origin_tech = "materials=5;programming=5;bluespace=6"
 	var/mode = GIZMO_SCAN
 	var/obj/machinery/abductor/console/console
@@ -245,7 +245,7 @@
 	desc = "A compact device used to shut down communications equipment."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "silencer"
-	item_state = "silencer"
+	inhand_state = "silencer"
 	origin_tech = "materials=5;programming=5"
 
 /obj/item/device/abductor/silencer/attack(mob/living/M, mob/user)
@@ -319,7 +319,7 @@
 	desc = "An odd device that resembles human weapon."
 	origin_tech = "materials=6;biotech=4;combat=5"
 	icon_state = "alienpistol"
-	item_state = "alienpistol"
+	inhand_state = "alienpistol"
 
 /obj/item/weapon/gun/energy/decloner/alien/special_check(mob/living/carbon/human/M)
 	if(M.species.name != ABDUCTOR)
@@ -336,7 +336,7 @@
 	name = "agent headgear"
 	desc = "Abduct with style - spiky style. Prevents digital tracking."
 	icon_state = "alienhelmet"
-	item_state = "alienhelmet"
+	inhand_state = "alienhelmet"
 	origin_tech = "materials=5;biotech=5"
 	action_button_name = "Activate Helmet"
 
@@ -351,7 +351,7 @@
 		..(user)
 	else
 		icon_state = "alienhelmet_a"
-		item_state = "alienhelmet_a"
+		inhand_state = "alienhelmet_a"
 		user.update_inv_head()
 		team = user.team
 		helm_cam = new /obj/machinery/camera(src)
@@ -392,7 +392,7 @@
 	var/mode = BATON_STUN
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "wonderprodStun"
-	item_state = "wonderprod"
+	inhand_state = "wonderprod"
 	origin_tech = "materials=6;combat=5;biotech=7"
 	slot_flags = SLOT_FLAGS_BELT
 	force = 7
@@ -426,16 +426,16 @@
 	switch(mode)
 		if(BATON_STUN)
 			icon_state = "wonderprodStun"
-			item_state = "wonderprodStun"
+			inhand_state = "wonderprodStun"
 		if(BATON_SLEEP)
 			icon_state = "wonderprodSleep"
-			item_state = "wonderprodSleep"
+			inhand_state = "wonderprodSleep"
 		if(BATON_CUFF)
 			icon_state = "wonderprodCuff"
-			item_state = "wonderprodCuff"
+			inhand_state = "wonderprodCuff"
 		if(BATON_PROBE)
 			icon_state = "wonderprodProbe"
-			item_state = "wonderprodProbe"
+			inhand_state = "wonderprodProbe"
 
 /obj/item/weapon/abductor_baton/proc/IsAbductor(mob/living/user)
 	if(!ishuman(user))

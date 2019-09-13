@@ -120,7 +120,7 @@
 
 	//for all items here:
 	//icon_state
-	//item_state
+	//inhand_state
 	switch(find_type)
 		if(1)
 			item_type = "bowl"

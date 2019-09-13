@@ -2,7 +2,7 @@
 	name = "personal AI device"
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pai"
-	item_state = "electronic"
+	inhand_state = "electronic"
 	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "programming=2"
@@ -34,7 +34,7 @@
 		if(pai.client && !(pai.stat == DEAD))
 			to_chat(pai, "[user.name] holds \a [itemname] up to one of your camera...")
 			pai << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, entity_ja(info)), text("window=[]", itemname))
-	
+
 /obj/item/device/paicard/attack_self(mob/user)
 	if (!in_range(src, user))
 		return

@@ -21,7 +21,7 @@
 	name = "Mac-10"
 	desc = "A lightweight, fast firing gun, for when you want someone dead. Uses 9mm rounds."
 	icon_state = "mac"
-	item_state = "mac"
+	inhand_state = "mac"
 	w_class = ITEM_SIZE_NORMAL
 	can_be_holstered = TRUE
 	origin_tech = "combat=5;materials=2;syndicate=8"
@@ -37,7 +37,7 @@
 	name = "C-20r SMG"
 	desc = "A lightweight, compact bullpup SMG. Uses .45 ACP rounds in medium-capacity magazines and has a threaded barrel for silencers. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
 	icon_state = "c20r"
-	item_state = "c20r"
+	inhand_state = "c20r"
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/m12mm
@@ -89,7 +89,7 @@
 	name = "\improper L6 SAW"
 	desc = "A heavily modified light machine gun with a tactical plasteel frame resting on a rather traditionally-made ballistic weapon. Has 'Aussec Armoury - 2531' engraved on the reciever, as well as '7.62x51mm'."
 	icon_state = "l6closed100"
-	item_state = "l6closedmag"
+	inhand_state = "l6closedmag"
 	w_class = ITEM_SIZE_HUGE
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
@@ -201,7 +201,7 @@
 	name = "thompson SMG"
 	desc = "Based on the classic 'Chicago Typewriter'."
 	icon_state = "tommygun"
-	item_state = "shotgun"
+	inhand_state = "shotgun"
 	w_class = ITEM_SIZE_HUGE
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
@@ -226,7 +226,7 @@
 	name = "L10-c"
 	desc = "A basic energy-based carbine with fast rate of fire."
 	icon_state = "l10-car"
-	item_state = "l10-car"
+	inhand_state = "l10-car"
 	w_class = ITEM_SIZE_LARGE
 	origin_tech = "combat=3;magnets=2"
 	mag_type = /obj/item/ammo_box/magazine/l10mag
@@ -286,16 +286,16 @@
 /obj/item/weapon/gun/projectile/automatic/l10c/update_icon(mob/M)
 	if(!magazine)
 		icon_state = "[initial(icon_state)]-e"
-		item_state = "[initial(item_state)]-e"
+		inhand_state = "[initial(inhand_state)]-e"
 	else if(chambered)
 		icon_state = "[initial(icon_state)]"
-		item_state = "[initial(item_state)]"
+		inhand_state = "[initial(inhand_state)]"
 	else if(magazine && magazine.ammo_count())
 		icon_state = "[initial(icon_state)]"
-		item_state = "[initial(item_state)]"
+		inhand_state = "[initial(inhand_state)]"
 	else
 		icon_state = "[initial(icon_state)]-0"
-		item_state = "[initial(item_state)]-0"
+		inhand_state = "[initial(inhand_state)]-0"
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.update_inv_l_hand()
@@ -308,7 +308,7 @@
 	name = "security submachine gun"
 	desc = "C-5 submachine gun - cheap and light. Uses 9mm ammo."
 	icon_state = "c5"
-	item_state = "c5"
+	inhand_state = "c5"
 	w_class = ITEM_SIZE_NORMAL
 	can_be_holstered = TRUE
 	origin_tech = "combat=4;materials=2"
@@ -317,7 +317,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/c5/update_icon(mob/M)
 	icon_state = "c5[magazine ? "" : "-e"]"
-	item_state = "c5[magazine ? "" : "-e"]"
+	inhand_state = "c5[magazine ? "" : "-e"]"
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.update_inv_l_hand()
@@ -329,7 +329,7 @@
 	name = "security submachine gun"
 	desc = "L13 personal defense weapon - for combat security operations. Uses .38 ammo."
 	icon_state = "l13"
-	item_state = "l13"
+	inhand_state = "l13"
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/l13_38
@@ -337,7 +337,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l13/update_icon(mob/M)
 	icon_state = "l13[magazine ? "" : "-e"]"
-	item_state = "l13[magazine ? "" : "-e"]"
+	inhand_state = "l13[magazine ? "" : "-e"]"
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.update_inv_l_hand()
@@ -349,7 +349,7 @@
 	name = "tommy gun"
 	desc = "A genuine Chicago Typewriter."
 	icon_state = "tommygun"
-	item_state = "tommygun"
+	inhand_state = "tommygun"
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
@@ -359,7 +359,7 @@
 	name = "Browning M1918"
 	desc = "Browning Automatic Rifle."
 	icon_state = "bar"
-	item_state = "bar"
+	inhand_state = "bar"
 	w_class = ITEM_SIZE_HUGE
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/m3006
@@ -408,7 +408,7 @@
 	name = "V15 Bulldog shotgun"
 	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Compatible only with specialized magazines."
 	icon_state = "bulldog"
-	item_state = "bulldog"
+	inhand_state = "bulldog"
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
@@ -442,7 +442,7 @@
 	name = "A28 assault rifle"
 	desc = ""
 	icon_state = "a28"
-	item_state = "a28"
+	inhand_state = "a28"
 	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m556
@@ -465,7 +465,7 @@
 	mag_type = /obj/item/ammo_box/magazine/a74mm
 	w_class = ITEM_SIZE_NORMAL
 	icon_state = "a74"
-	item_state = "a74"
+	inhand_state = "a74"
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	fire_sound = 'sound/weapons/guns/gunshot_ak74.ogg'
 	var/icon/mag_icon = icon('icons/obj/gun.dmi',"mag-a74")
@@ -478,6 +478,6 @@
 	overlays.Cut()
 	if(magazine)
 		overlays += mag_icon
-		item_state = "[initial(icon_state)]"
+		inhand_state = "[initial(icon_state)]"
 	else
-		item_state = "[initial(icon_state)]-e"
+		inhand_state = "[initial(icon_state)]-e"

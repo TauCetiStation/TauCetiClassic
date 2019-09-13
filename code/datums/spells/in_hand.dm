@@ -184,7 +184,7 @@
 	desc = "Pew Pew Pew"
 	s_fire = 'sound/weapons/guns/gunpulse_emitter.ogg'
 	icon_state = "arcane_barrage"
-	item_state = "arcane_barrage"
+	inhand_state = "arcane_barrage"
 	uses = 30
 	proj_path = /obj/item/projectile/magic/Arcane_barrage
 
@@ -310,7 +310,7 @@
 	name = "healing touch"
 	invoke = "In Mani"
 	icon_state = "heal_"
-	item_state = "healing"
+	inhand_state = "healing"
 
 	s_fire = 'sound/magic/heal.ogg'
 	proj_path = /obj/item/projectile/magic/healing_ball

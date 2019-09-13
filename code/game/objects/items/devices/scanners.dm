@@ -14,7 +14,7 @@ REAGENT SCANNER
 	icon_state = "t-ray0"
 	slot_flags = SLOT_FLAGS_BELT
 	w_class = ITEM_SIZE_SMALL
-	item_state = "electronic"
+	inhand_state = "electronic"
 	m_amt = 150
 	origin_tech = "magnets=1;engineering=1"
 
@@ -65,7 +65,7 @@ REAGENT SCANNER
 /obj/item/device/healthanalyzer
 	name = "Health Analyzer"
 	icon_state = "health"
-	item_state = "healthanalyzer"
+	inhand_state = "healthanalyzer"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
@@ -225,7 +225,7 @@ REAGENT SCANNER
 	desc = "A hand-held environmental scanner which reports current gas levels."
 	name = "analyzer"
 	icon_state = "atmos"
-	item_state = "analyzer"
+	inhand_state = "analyzer"
 	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
@@ -275,7 +275,7 @@ REAGENT SCANNER
 	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
 	name = "mass-spectrometer"
 	icon_state = "spectrometer"
-	item_state = "analyzer"
+	inhand_state = "analyzer"
 	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT | OPENCONTAINER
 	slot_flags = SLOT_FLAGS_BELT
@@ -348,7 +348,7 @@ REAGENT SCANNER
 	name = "reagent scanner"
 	desc = "A hand-held reagent scanner which identifies chemical agents."
 	icon_state = "spectrometer"
-	item_state = "analyzer"
+	inhand_state = "analyzer"
 	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
@@ -409,7 +409,7 @@ REAGENT SCANNER
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	w_class = ITEM_SIZE_SMALL
-	item_state = "electronic"
+	inhand_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 500
@@ -460,7 +460,7 @@ REAGENT SCANNER
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	w_class = ITEM_SIZE_SMALL
-	item_state = "electronic"
+	inhand_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 500
@@ -480,7 +480,7 @@ REAGENT SCANNER
 /obj/item/device/contraband_finder
 	name = "Contrband Finder"
 	icon_state = "contraband_scanner"
-	item_state = "contraband_scanner"
+	inhand_state = "contraband_scanner"
 	desc = "A hand-held body scanner able to detect items that can't go past customs."
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
@@ -627,7 +627,7 @@ REAGENT SCANNER
 
 /obj/item/device/contraband_finder/proc/reset_color()
 	icon_state = "contraband_scanner"
-	item_state = "contraband_scanner"
+	inhand_state = "contraband_scanner"
 	if(ismob(loc))
 		var/mob/M = loc
 		if(M.is_in_hands(src))
@@ -710,7 +710,7 @@ REAGENT SCANNER
 			playsound(user, 'sound/rig/longbeep.wav', VOL_EFFECTS_MASTER)
 
 	icon_state = "contraband_scanner_[danger_color]"
-	item_state = "contraband_scanner_[danger_color]"
+	inhand_state = "contraband_scanner_[danger_color]"
 	if(user.hand)
 		user.update_inv_l_hand()
 	else

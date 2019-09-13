@@ -15,7 +15,7 @@
 	name = "tabletop assistant"
 	icon = 'icons/obj/tabletop_assistant.dmi'
 	icon_state = "tabletop"
-	item_state = "analyzer"
+	inhand_state = "analyzer"
 	w_class = ITEM_SIZE_NORMAL
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT

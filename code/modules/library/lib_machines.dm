@@ -322,9 +322,9 @@
 				if(!bibledelay)
 
 					var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible(src.loc)
-					if(ticker && ( ticker.Bible_icon_state && ticker.Bible_item_state) )
+					if(ticker && ( ticker.Bible_icon_state && ticker.Bible_inhand_state) )
 						B.icon_state = ticker.Bible_icon_state
-						B.item_state = ticker.Bible_item_state
+						B.inhand_state = ticker.Bible_inhand_state
 						B.name = ticker.Bible_name
 						B.deity_name = ticker.Bible_deity_name
 

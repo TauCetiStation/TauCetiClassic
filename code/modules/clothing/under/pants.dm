@@ -83,12 +83,12 @@
 /obj/item/clothing/under/pants/gar
 	name = "gar pants"
 	icon_state = "garpants"
-	item_state = "garpants"
+	inhand_state = "garpants"
 	item_color = "garpants"
 
 /obj/item/clothing/under/pants/gar/bandages
 	icon_state = "garpantsband"
-	item_state = "garpantsband"
+	inhand_state = "garpantsband"
 	item_color = "garpantsband"
 
 /obj/item/clothing/under/pants/milipants_army
@@ -112,17 +112,17 @@
 /obj/item/clothing/under/pants/ddr_sport
 	name = "Black sport pants"
 	icon_state = "DDR_sport_pants"
-	item_state = "gy_suit"
+	inhand_state = "gy_suit"
 	item_color = "DDR_sport_pants"
 
 /obj/item/clothing/under/pants/blue_sport
 	name = "Blue sport pants"
 	icon_state = "blue_sport_pants"
-	item_state = "b_suit"
+	inhand_state = "b_suit"
 	item_color = "blue_sport_pants"
 
 /obj/item/clothing/under/pants/black_sport
 	name = "Black sport pants"
 	icon_state = "black_sport_pants"
-	item_state = "bl_suit"
+	inhand_state = "bl_suit"
 	item_color = "black_sport_pants"

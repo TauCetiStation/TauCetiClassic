@@ -47,7 +47,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	burnt = 1
 	damtype = "brute"
 	icon_state = "match_burnt"
-	item_state = "cigoff"
+	inhand_state = "cigoff"
 	name = "burnt match"
 	desc = "A match. This one has seen better days."
 	STOP_PROCESSING(SSobj, src)
@@ -60,7 +60,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A roll of tobacco and nicotine."
 	icon_state = "cigoff"
 	throw_speed = 0.5
-	item_state = "cigoff"
+	inhand_state = "cigoff"
 	w_class = ITEM_SIZE_TINY
 	body_parts_covered = 0
 	attack_verb = list("burnt", "singed")
@@ -149,7 +149,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		flags &= ~NOREACT // allowing reagents to react after being lit
 		reagents.handle_reactions()
 		icon_state = icon_on
-		item_state = icon_on
+		inhand_state = icon_on
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
 		START_PROCESSING(SSobj, src)
@@ -228,7 +228,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_off = "cigar2off"
 	type_butt = /obj/item/weapon/cigbutt/cigarbutt
 	throw_speed = 0.5
-	item_state = "cigaroff"
+	inhand_state = "cigaroff"
 	smoketime = 1500
 	chem_volume = 20
 
@@ -304,7 +304,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "smoking pipe"
 	desc = "A pipe, for smoking. Probably made of meershaum or something."
 	icon_state = "pipeoff"
-	item_state = "pipeoff"
+	inhand_state = "pipeoff"
 	icon_on = "pipeon"  //Note - these are in masks.dmi
 	icon_off = "pipeoff"
 	smoketime = 100
@@ -315,7 +315,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		src.lit = 1
 		damtype = "fire"
 		icon_state = icon_on
-		item_state = icon_on
+		inhand_state = icon_on
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
 		START_PROCESSING(SSobj, src)
@@ -334,7 +334,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			to_chat(M, "<span class='notice'>Your [name] goes out, and you empty the ash.</span>")
 			lit = 0
 			icon_state = icon_off
-			item_state = icon_off
+			inhand_state = icon_off
 			M.update_inv_wear_mask(0)
 		STOP_PROCESSING(SSobj, src)
 		return
@@ -347,7 +347,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		user.visible_message("<span class='notice'>[user] puts out [src].</span>")
 		lit = 0
 		icon_state = icon_off
-		item_state = icon_off
+		inhand_state = icon_off
 		STOP_PROCESSING(SSobj, src)
 		return
 	if(smoketime <= 0)
@@ -383,7 +383,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "corn cob pipe"
 	desc = "A nicotine delivery system popularized by folksy backwoodsmen, kept popular in the modern age and beyond by space hipsters."
 	icon_state = "cobpipeoff"
-	item_state = "cobpipeoff"
+	inhand_state = "cobpipeoff"
 	icon_on = "cobpipeon"  //Note - these are in masks.dmi
 	icon_off = "cobpipeoff"
 	smoketime = 400
@@ -398,7 +398,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A cheap-as-free lighter."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "lighter-g"
-	item_state = "lighter-g"
+	inhand_state = "lighter-g"
 	var/icon_on = "lighter-g-on"
 	var/icon_off = "lighter-g"
 	w_class = ITEM_SIZE_TINY
@@ -414,7 +414,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "\improper Zippo lighter"
 	desc = "The zippo."
 	icon_state = "zippo"
-	item_state = "zippo"
+	inhand_state = "zippo"
 	icon_on = "zippoon"
 	icon_off = "zippo"
 
@@ -432,7 +432,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(!lit)
 			lit = 1
 			icon_state = icon_on
-			item_state = icon_on
+			inhand_state = icon_on
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
 				playsound(src, 'sound/items/zippo.ogg', VOL_EFFECTS_MASTER, 20)
 				user.visible_message("<span class='rose'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
@@ -453,7 +453,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		else
 			lit = 0
 			icon_state = icon_off
-			item_state = icon_off
+			inhand_state = icon_off
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
 				playsound(src, 'sound/items/zippo.ogg', VOL_EFFECTS_MASTER, 20)
 				user.visible_message("<span class='rose'>You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing.</span>")

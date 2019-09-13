@@ -6,7 +6,7 @@
 	name = "empty jar"
 	desc = "A jar. You're not sure what it's supposed to hold."
 	icon_state = "jar"
-	item_state = "beaker"
+	inhand_state = "beaker"
 
 /obj/item/weapon/reagent_containers/food/drinks/jar/atom_init()
 	. = ..()

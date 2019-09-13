@@ -28,7 +28,7 @@
 	desc = "A translucent balloon. There's nothing in it."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "waterballoon-e"
-	item_state = "balloon-empty"
+	inhand_state = "balloon-empty"
 
 /obj/item/toy/balloon/atom_init()
 	var/datum/reagents/R = new/datum/reagents(10)
@@ -80,10 +80,10 @@
 /obj/item/toy/balloon/update_icon()
 	if(src.reagents.total_volume >= 1)
 		icon_state = "waterballoon"
-		item_state = "balloon"
+		inhand_state = "balloon"
 	else
 		icon_state = "waterballoon-e"
-		item_state = "balloon-empty"
+		inhand_state = "balloon-empty"
 
 /obj/item/toy/syndicateballoon
 	name = "syndicate balloon"
@@ -94,7 +94,7 @@
 	force = 0
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "syndballoon"
-	item_state = "syndballoon"
+	inhand_state = "syndballoon"
 	w_class = ITEM_SIZE_LARGE
 
 /*
@@ -105,7 +105,7 @@
 	desc = "Blink.  Blink.  Blink. Ages 8 and up."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "beacon"
-	item_state = "signaler"
+	inhand_state = "signaler"
 
 /*
  * Fake singularity
@@ -124,7 +124,7 @@
 	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps!"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "revolver"
-	item_state = "gun"
+	inhand_state = "gun"
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 	can_be_holstered = TRUE
@@ -203,7 +203,7 @@
 	desc = "A weapon favored by many overactive children. Ages 8 and up."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "crossbow"
-	item_state = "crossbow"
+	inhand_state = "crossbow"
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 	can_be_holstered = TRUE
@@ -320,7 +320,7 @@
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "sword0"
-	item_state = "sword0"
+	inhand_state = "sword0"
 	var/active = 0.0
 	w_class = ITEM_SIZE_SMALL
 	flags = NOSHIELD
@@ -332,13 +332,13 @@
 		to_chat(user, "<span class='notice'>You extend the plastic blade with a quick flick of your wrist.</span>")
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		src.icon_state = "swordblue"
-		src.item_state = "swordblue"
+		src.inhand_state = "swordblue"
 		src.w_class = ITEM_SIZE_LARGE
 	else
 		to_chat(user, "<span class='notice'>You push the plastic blade back down into the handle.</span>")
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		src.icon_state = "sword0"
-		src.item_state = "sword0"
+		src.inhand_state = "sword0"
 		src.w_class = ITEM_SIZE_SMALL
 
 	if(istype(user,/mob/living/carbon/human))
@@ -354,7 +354,7 @@
 	desc = "Woefully underpowered in D20."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "katana"
-	item_state = "katana"
+	inhand_state = "katana"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 	force = 5
@@ -404,7 +404,7 @@
 	desc = "A seemingly innocent sunflower...with a twist."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
-	item_state = "sunflower"
+	inhand_state = "sunflower"
 	var/empty = 0
 
 /obj/item/toy/waterflower/atom_init()
@@ -557,7 +557,7 @@
 	desc = "Woefully underpowered in D20."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "katana"
-	item_state = "katana"
+	inhand_state = "katana"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 	force = 5
@@ -580,7 +580,7 @@
 	name = "inflatable duck"
 	desc = "No bother to sink or swim when you can just float!"
 	icon_state = "inflatable"
-	item_state = "inflatable"
+	inhand_state = "inflatable"
 	icon = 'icons/obj/clothing/belts.dmi'
 	slot_flags = SLOT_FLAGS_BELT
 
@@ -1270,7 +1270,7 @@ Owl & Griffin toys
 	desc = "An adorable stuffed toy that resembles a space carp."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "carpplushie"
-	item_state = "carp_plushie"
+	inhand_state = "carp_plushie"
 	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("bitten", "eaten", "fin slapped")
 	var/bitesound = 'sound/weapons/bite.ogg'

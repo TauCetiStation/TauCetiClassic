@@ -2,7 +2,7 @@
 	name = "Cult Blade"
 	desc = "An arcane weapon wielded by the followers of Nar-Sie."
 	icon_state = "cultblade"
-	item_state = "cultblade"
+	inhand_state = "cultblade"
 	w_class = ITEM_SIZE_LARGE
 	force = 30
 	throwforce = 10
@@ -40,17 +40,17 @@
 
 /obj/item/clothing/head/culthood/alt
 	icon_state = "cult_hoodalt"
-	item_state = "cult_hoodalt"
+	inhand_state = "cult_hoodalt"
 
 /obj/item/clothing/suit/cultrobes/alt
 	icon_state = "cultrobesalt"
-	item_state = "cultrobesalt"
+	inhand_state = "cultrobesalt"
 
 /obj/item/clothing/suit/cultrobes
 	name = "cult robes"
 	desc = "A set of armored robes worn by the followers of Nar-Sie."
 	icon_state = "cultrobes"
-	item_state = "cultrobes"
+	inhand_state = "cultrobes"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/book/tome,/obj/item/weapon/melee/cultblade)
 	armor = list(melee = 50, bullet = 15, laser = 15,energy = 20, bomb = 25, bio = 10, rad = 0)
@@ -60,7 +60,7 @@
 /obj/item/clothing/head/magus
 	name = "magus helm"
 	icon_state = "magus"
-	item_state = "magus"
+	inhand_state = "magus"
 	desc = "A helm worn by the followers of Nar-Sie."
 	flags_inv = HIDEFACE
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
@@ -72,7 +72,7 @@
 	name = "magus robes"
 	desc = "A set of armored robes worn by the followers of Nar-Sie."
 	icon_state = "magusred"
-	item_state = "magusred"
+	inhand_state = "magusred"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/book/tome,/obj/item/weapon/melee/cultblade)
 	armor = list(melee = 50, bullet = 15, laser = 25,energy = 20, bomb = 25, bio = 10, rad = 0)
@@ -83,7 +83,7 @@
 	name = "cult helmet"
 	desc = "A space worthy helmet used by the followers of Nar-Sie."
 	icon_state = "cult_helmet"
-	item_state = "cult_helmet"
+	inhand_state = "cult_helmet"
 	armor = list(melee = 60, bullet = 25, laser = 25,energy = 15, bomb = 30, bio = 30, rad = 30)
 	siemens_coefficient = 0
 
@@ -91,7 +91,7 @@
 /obj/item/clothing/suit/space/cult
 	name = "cult armour"
 	icon_state = "cult_armour"
-	item_state = "cult_armour"
+	inhand_state = "cult_armour"
 	desc = "A bulky suit of armour, bristling with spikes. It looks space proof."
 	w_class = ITEM_SIZE_NORMAL
 	allowed = list(/obj/item/weapon/book/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/suit_cooling_unit)

@@ -81,7 +81,7 @@
 
 /mob/living/carbon/alien/humanoid/update_inv_wear_suit(var/update_icons=1)
 	if(wear_suit)
-		var/t_state = wear_suit.item_state
+		var/t_state = wear_suit.inhand_state
 		if(!t_state)	t_state = wear_suit.icon_state
 		var/image/standing	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "[t_state]")
 
@@ -106,7 +106,7 @@
 
 /mob/living/carbon/alien/humanoid/update_inv_head(var/update_icons=1)
 	if (head)
-		var/t_state = head.item_state
+		var/t_state = head.inhand_state
 		if(!t_state)	t_state = head.icon_state
 		var/image/standing	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "[t_state]")
 		if(head.blood_DNA)
@@ -126,7 +126,7 @@
 
 /mob/living/carbon/alien/humanoid/update_inv_r_hand(var/update_icons=1)
 	if(r_hand)
-		var/t_state = r_hand.item_state
+		var/t_state = r_hand.inhand_state
 		if(!t_state)	t_state = r_hand.icon_state
 		r_hand.screen_loc = ui_rhand
 		overlays_standing[X_R_HAND_LAYER]	= image("icon" = r_hand.righthand_file, "icon_state" = t_state)
@@ -136,7 +136,7 @@
 
 /mob/living/carbon/alien/humanoid/update_inv_l_hand(var/update_icons=1)
 	if(l_hand)
-		var/t_state = l_hand.item_state
+		var/t_state = l_hand.inhand_state
 		if(!t_state)	t_state = l_hand.icon_state
 		l_hand.screen_loc = ui_lhand
 		overlays_standing[X_L_HAND_LAYER]	= image("icon" = l_hand.lefthand_file, "icon_state" = t_state)

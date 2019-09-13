@@ -121,7 +121,7 @@
 	if(client && hud_used && hud_used.hud_shown)
 		client.screen += mouth
 
-	var/t_state = mouth.item_state
+	var/t_state = mouth.inhand_state
 	if(!t_state)
 		t_state = mouth.icon_state
 

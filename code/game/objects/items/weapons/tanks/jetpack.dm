@@ -5,7 +5,7 @@
 	desc = "A tank of compressed gas for use as propulsion in zero-gravity areas. Use with caution."
 	icon_state = "jetpack"
 	w_class = ITEM_SIZE_LARGE
-	item_state = "jetpack"
+	inhand_state = "jetpack"
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 	var/datum/effect/effect/system/ion_trail_follow/ion_trail
 	var/on = 0.0
@@ -73,7 +73,7 @@
 	name = "Void Jetpack (Oxygen)"
 	desc = "It works well in a void."
 	icon_state = "jetpack-void"
-	item_state =  "jetpack-void"
+	inhand_state =  "jetpack-void"
 
 /obj/item/weapon/tank/jetpack/void/atom_init()
 	. = ..()
@@ -83,7 +83,7 @@
 	name = "Jetpack (Oxygen)"
 	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas. Use with caution."
 	icon_state = "jetpack"
-	item_state = "jetpack"
+	inhand_state = "jetpack"
 
 /obj/item/weapon/tank/jetpack/oxygen/atom_init()
 	. = ..()
@@ -94,7 +94,7 @@
 	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals."
 	distribute_pressure = 0
 	icon_state = "jetpack-black"
-	item_state =  "jetpack-black"
+	inhand_state =  "jetpack-black"
 
 /obj/item/weapon/tank/jetpack/carbondioxide/atom_init()
 	. = ..()
@@ -104,7 +104,7 @@
 	name = "jet harness (oxygen)"
 	desc = "A lightweight tactical harness, used by those who don't want to be weighed down by traditional jetpacks."
 	icon_state = "jetpack-mini"
-	item_state = "jetpack-mini"
+	inhand_state = "jetpack-mini"
 	volume = 40
 	throw_range = 7
 	w_class = ITEM_SIZE_NORMAL

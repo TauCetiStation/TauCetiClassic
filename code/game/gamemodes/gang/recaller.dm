@@ -3,7 +3,7 @@
 	name = "suspicious device"
 	desc = "A strange device of sorts. Hard to really make out what it actually does just by looking."
 	icon_state = "gangtool"
-	item_state = "walkietalkie"
+	inhand_state = "walkietalkie"
 	throwforce = 0
 	w_class = ITEM_SIZE_TINY
 	throw_speed = 3

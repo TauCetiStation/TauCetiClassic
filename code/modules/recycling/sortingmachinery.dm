@@ -178,7 +178,7 @@
 	var/currTag = 0
 
 	w_class = ITEM_SIZE_SMALL
-	item_state = "electronic"
+	inhand_state = "electronic"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 3000

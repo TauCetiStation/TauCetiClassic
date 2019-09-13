@@ -54,7 +54,7 @@
 	name = "M2 Flamethrower backpack."
 	desc = "It smells like victory."
 	icon_state = "M2_Tank"
-	item_state = "M2_Tank"
+	inhand_state = "M2_Tank"
 	var/obj/item/weapon/flamethrower_M2/Connected_Flamethrower = null
 
 /obj/item/weapon/weldpack/M2_fuelback/attackby(obj/item/W, mob/user)

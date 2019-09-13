@@ -2,7 +2,7 @@
 	name = "pulse rifle"
 	desc = "A heavy-duty, pulse-based energy weapon, preferred by front-line combat personnel."
 	icon_state = "pulse"
-	item_state = "pulse"
+	inhand_state = "pulse"
 	force = 10
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	cell_type = "/obj/item/weapon/stock_parts/cell/super"
@@ -46,6 +46,6 @@
 	name = "m1911-P"
 	desc = "It's not the size of the gun, it's the size of the hole it puts through people."
 	icon_state = "m1911-p"
-	item_state = "gun"
+	inhand_state = "gun"
 	can_be_holstered = TRUE
 	cell_type = "/obj/item/weapon/stock_parts/cell/infinite"

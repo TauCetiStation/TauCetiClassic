@@ -13,7 +13,7 @@
 	name = "firesuit"
 	desc = "A suit that protects against fire and heat."
 	icon_state = "fire"
-	item_state = "fire_suit"
+	inhand_state = "fire_suit"
 	w_class = ITEM_SIZE_LARGE//bulky item
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
@@ -29,14 +29,14 @@
 
 /obj/item/clothing/suit/fire/firefighter
 	icon_state = "firesuit"
-	item_state = "firefighter"
+	inhand_state = "firefighter"
 
 
 /obj/item/clothing/suit/fire/heavy
 	name = "firesuit"
 	desc = "A suit that protects against extreme fire and heat."
 	//icon_state = "thermal"
-	item_state = "ro_suit"
+	inhand_state = "ro_suit"
 	w_class = ITEM_SIZE_LARGE//bulky item
 	slowdown = 1.5
 
@@ -58,7 +58,7 @@
 	name = "bomb suit"
 	desc = "A suit designed for safety when handling explosives."
 	icon_state = "bombsuit"
-	item_state = "bombsuit"
+	inhand_state = "bombsuit"
 	w_class = ITEM_SIZE_LARGE//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
@@ -72,12 +72,12 @@
 
 /obj/item/clothing/head/bomb_hood/security
 	icon_state = "bombsuitsec"
-	item_state = "bombsuitsec"
+	inhand_state = "bombsuitsec"
 	body_parts_covered = HEAD
 
 /obj/item/clothing/suit/bomb_suit/security
 	icon_state = "bombsuitsec"
-	item_state = "bombsuitsec"
+	inhand_state = "bombsuitsec"
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
@@ -97,7 +97,7 @@
 	name = "radiation suit"
 	desc = "A suit that protects against radiation. Label: Made with lead, do not eat insulation."
 	icon_state = "rad"
-	item_state = "rad_suit"
+	inhand_state = "rad_suit"
 	w_class = ITEM_SIZE_LARGE//bulky item
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50

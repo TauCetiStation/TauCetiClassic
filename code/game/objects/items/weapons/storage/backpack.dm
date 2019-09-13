@@ -7,7 +7,7 @@
 	name = "backpack"
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
-	item_state = "backpack"
+	inhand_state = "backpack"
 	w_class = ITEM_SIZE_LARGE
 	slot_flags = SLOT_FLAGS_BACK	//ERROOOOO
 	action_button_name = "Storage"
@@ -75,7 +75,7 @@
 	name = "Santa's Gift Bag"
 	desc = "Space Santa uses this to deliver toys to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
-	item_state = "giftbag"
+	inhand_state = "giftbag"
 	w_class = ITEM_SIZE_LARGE
 	max_w_class = ITEM_SIZE_NORMAL
 	max_storage_space = 80 // can store a ton of shit!
@@ -89,31 +89,31 @@
 	name = "Giggles von Honkerton"
 	desc = "It's a backpack made by Honk! Co."
 	icon_state = "clownpack"
-	item_state = "clownpack"
+	inhand_state = "clownpack"
 
 /obj/item/weapon/storage/backpack/medic
 	name = "medical backpack"
 	desc = "It's a backpack especially designed for use in a sterile environment."
 	icon_state = "medicalpack"
-	item_state = "medicalpack"
+	inhand_state = "medicalpack"
 
 /obj/item/weapon/storage/backpack/security
 	name = "security backpack"
 	desc = "It's a very robust backpack."
 	icon_state = "securitypack"
-	item_state = "securitypack"
+	inhand_state = "securitypack"
 
 /obj/item/weapon/storage/backpack/captain
 	name = "captain's backpack"
 	desc = "It's a special backpack made exclusively for Nanotrasen officers."
 	icon_state = "captainpack"
-	item_state = "captainpack"
+	inhand_state = "captainpack"
 
 /obj/item/weapon/storage/backpack/industrial
 	name = "industrial backpack"
 	desc = "It's a tough backpack for the daily grind of station life."
 	icon_state = "engiepack"
-	item_state = "engiepack"
+	inhand_state = "engiepack"
 
 /*
  * Satchel Types
@@ -123,7 +123,7 @@
 	name = "leather satchel"
 	desc = "It's a very fancy satchel made with fine leather."
 	icon_state = "satchel"
-	item_state = "satchel"
+	inhand_state = "satchel"
 
 /obj/item/weapon/storage/backpack/satchel/withwallet
 
@@ -141,13 +141,13 @@
 	name = "industrial satchel"
 	desc = "A tough satchel with extra pockets."
 	icon_state = "satchel-eng"
-	item_state = "engiepack"
+	inhand_state = "engiepack"
 
 /obj/item/weapon/storage/backpack/satchel/med
 	name = "medical satchel"
 	desc = "A sterile satchel used in medical departments."
 	icon_state = "satchel-med"
-	item_state = "medicalpack"
+	inhand_state = "medicalpack"
 
 /obj/item/weapon/storage/backpack/satchel/vir
 	name = "virologist satchel"
@@ -173,7 +173,7 @@
 	name = "security satchel"
 	desc = "A robust satchel for security related needs."
 	icon_state = "satchel-sec"
-	item_state = "securitypack"
+	inhand_state = "securitypack"
 
 /obj/item/weapon/storage/backpack/satchel/hyd
 	name = "hydroponics satchel"
@@ -184,14 +184,14 @@
 	name = "captain's satchel"
 	desc = "An exclusive satchel for Nanotrasen officers."
 	icon_state = "satchel-cap"
-	item_state = "captainpack"
+	inhand_state = "captainpack"
 
 //ERT backpacks.
 /obj/item/weapon/storage/backpack/ert
 	name = "emergency response team backpack"
 	desc = "A spacious backpack with lots of pockets, used by members of the Nanotrasen Emergency Response Team."
 	icon_state = "ert_commander"
-	item_state = "backpack"
+	inhand_state = "backpack"
 
 //Commander
 /obj/item/weapon/storage/backpack/ert/commander
@@ -226,49 +226,49 @@
 
 /obj/item/weapon/storage/backpack/alt
 	icon_state = "backpack-alt"
-	item_state = "backpack"
+	inhand_state = "backpack"
 
 /obj/item/weapon/storage/backpack/backpack_vir
 	name = "virologist backpack"
 	desc = "A sterile backpack with virologist colours."
 	icon_state = "backpack-vir"
-	item_state = "backpack-vir"
+	inhand_state = "backpack-vir"
 
 /obj/item/weapon/storage/backpack/backpack_chem
 	name = "chemist backpack"
 	desc = "A sterile backpack with chemist colours."
 	icon_state = "backpack-chem"
-	item_state = "backpack-chem"
+	inhand_state = "backpack-chem"
 
 /obj/item/weapon/storage/backpack/backpack_gen
 	name = "geneticist backpack"
 	desc = "A sterile backpack with geneticist colours."
 	icon_state = "backpack-gen"
-	item_state = "backpack-gen"
+	inhand_state = "backpack-gen"
 
 /obj/item/weapon/storage/backpack/backpack_tox
 	name = "scientist backpack"
 	desc = "Useful for holding research materials."
 	icon_state = "backpack-tox"
-	item_state = "backpack-tox"
+	inhand_state = "backpack-tox"
 
 /obj/item/weapon/storage/backpack/backpack_hyd
 	name = "hydroponics backpack"
 	desc = "A green backpack for plant related work."
 	icon_state = "backpack-hyd"
-	item_state = "backpack-hyd"
+	inhand_state = "backpack-hyd"
 
 /obj/item/weapon/storage/backpack/mime
 	name = "Parcel Parceaux"
 	desc = "A silent backpack made for those silent workers. Silence Co."
 	icon_state = "mimepack"
-	item_state = "mimepack"
+	inhand_state = "mimepack"
 
 /obj/item/weapon/storage/backpack/satchel/flat
 	name = "smuggler's satchel"
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
-	item_state = "satchel-flat"
+	inhand_state = "satchel-flat"
 	w_class = ITEM_SIZE_NORMAL //Can fit in backpacks itself.
 	max_storage_space = DEFAULT_BACKPACK_STORAGE - 10
 	level = 1
@@ -293,7 +293,7 @@
 	name = "suspicious looking dufflebag"
 	desc = "A large dufflebag for holding extra tactical supplies."
 	icon_state = "duffle-syndie"
-	item_state = "duffle-syndie"
+	inhand_state = "duffle-syndie"
 	origin_tech = "syndicate=1"
 	max_storage_space = DEFAULT_BACKPACK_STORAGE + 10
 	slowdown = 1
@@ -302,7 +302,7 @@
 	name = "marine dufflebag"
 	desc = "A large dufflebag for holding extra tactical supplies. Waterproof."
 	icon_state = "marinad"
-	item_state = "marinad_duffle"
+	inhand_state = "marinad_duffle"
 	origin_tech = ""
 
 /obj/item/weapon/storage/backpack/dufflebag/c4/atom_init()
@@ -314,13 +314,13 @@
 	name = "medical dufflebag"
 	desc = "A large dufflebag for holding extra tactical medical supplies."
 	icon_state = "duffle-syndiemed"
-	item_state = "duffle-syndiemed"
+	inhand_state = "duffle-syndiemed"
 
 /obj/item/weapon/storage/backpack/dufflebag/surgery
 	name = "surgery dufflebag"
 	desc = "A suspicious looking dufflebag for holding surgery tools."
 	icon_state = "duffle-syndiemed"
-	item_state = "duffle-syndiemed"
+	inhand_state = "duffle-syndiemed"
 	max_storage_space = DEFAULT_BACKPACK_STORAGE + 20
 
 /obj/item/weapon/storage/backpack/dufflebag/surgery/atom_init()

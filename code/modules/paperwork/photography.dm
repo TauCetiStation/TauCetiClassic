@@ -15,7 +15,7 @@
 	icon = 'icons/obj/items.dmi'
 	desc = "A camera film cartridge. Insert it into a camera to reload it."
 	icon_state = "film"
-	item_state = "electropack"
+	inhand_state = "electropack"
 	w_class = ITEM_SIZE_TINY
 
 
@@ -26,7 +26,7 @@
 	name = "photo"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "photo"
-	item_state = "paper"
+	inhand_state = "paper"
 	w_class = ITEM_SIZE_SMALL
 	var/icon/img	//Big photo image
 	var/scribble	//Scribble on the back.
@@ -109,7 +109,7 @@
 	name = "Photo album"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "album"
-	item_state = "briefcase"
+	inhand_state = "briefcase"
 	can_hold = list("/obj/item/weapon/photo",)
 	max_storage_space = DEFAULT_BOX_STORAGE
 
@@ -147,7 +147,7 @@
 	icon = 'icons/obj/items.dmi'
 	desc = "A polaroid camera."
 	icon_state = "camera"
-	item_state = "photocamera"
+	inhand_state = "photocamera"
 	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT

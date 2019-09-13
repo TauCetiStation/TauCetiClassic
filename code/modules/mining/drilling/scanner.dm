@@ -3,7 +3,7 @@
 	desc = "A complex device used to locate ore deep underground."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "forensic0-old" //GET A BETTER SPRITE.
-	item_state = "electronic"
+	inhand_state = "electronic"
 	var/range = 2
 	var/speed = 50
 	var/list/ore_list = list(

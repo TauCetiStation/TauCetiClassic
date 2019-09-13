@@ -36,7 +36,7 @@
 	name = "anesthetic tank"
 	desc = "A tank with an N2O/O2 gas mix."
 	icon_state = "anesthetic"
-	item_state = "an_tank"
+	inhand_state = "an_tank"
 
 /obj/item/weapon/tank/anesthetic/atom_init()
 	. = ..()
@@ -64,7 +64,7 @@
 	name = "phoron tank"
 	desc = "Contains dangerous phoron. Do not inhale. Warning: extremely flammable."
 	icon_state = "phoron"
-	item_state = "plasma"
+	inhand_state = "plasma"
 	flags = CONDUCT
 	slot_flags = null	//they have no straps!
 

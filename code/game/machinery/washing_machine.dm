@@ -67,12 +67,12 @@
 
 		if(wash_color)
 			var/new_jumpsuit_icon_state = ""
-			var/new_jumpsuit_item_state = ""
+			var/new_jumpsuit_inhand_state = ""
 			var/new_jumpsuit_name = ""
-			var/new_glove_fingerless_item_state = ""
+			var/new_glove_fingerless_inhand_state = ""
 			var/new_glove_fingerless_icon_state = ""
 			var/new_glove_fingerless_name = ""
-			var/new_glove_item_state = ""
+			var/new_glove_inhand_state = ""
 			var/new_glove_icon_state = ""
 			var/new_glove_name = ""
 			var/new_shoe_icon_state = ""
@@ -87,17 +87,17 @@
 				//world << "DEBUG: [color] == [J.color]"
 				if(wash_color == J.item_color)
 					new_jumpsuit_icon_state = J.icon_state
-					new_jumpsuit_item_state = J.item_state
+					new_jumpsuit_inhand_state = J.inhand_state
 					new_jumpsuit_name = J.name
 					qdel(J)
-					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
+					//world << "DEBUG: YUP! [new_icon_state] and [new_inhand_state]"
 					break
 				qdel(J)
 			for(var/T in typesof(/obj/item/clothing/gloves/fingerless))
 				var/obj/item/clothing/gloves/fingerless/G = new T
 				if(wash_color == G.item_color)
 					new_glove_fingerless_icon_state = G.icon_state
-					new_glove_fingerless_item_state = G.item_state
+					new_glove_fingerless_inhand_state = G.inhand_state
 					new_glove_fingerless_name = G.name
 					qdel(G)
 					break
@@ -106,7 +106,7 @@
 				var/obj/item/clothing/gloves/G = new T
 				if(wash_color == G.item_color)
 					new_glove_icon_state = G.icon_state
-					new_glove_item_state = G.item_state
+					new_glove_inhand_state = G.inhand_state
 					new_glove_name = G.name
 					qdel(G)
 					break
@@ -118,7 +118,7 @@
 					new_shoe_icon_state = S.icon_state
 					new_shoe_name = S.name
 					qdel(S)
-					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
+					//world << "DEBUG: YUP! [new_icon_state] and [new_inhand_state]"
 					break
 				qdel(S)
 			for(var/T in typesof(/obj/item/weapon/bedsheet))
@@ -128,7 +128,7 @@
 					new_sheet_icon_state = B.icon_state
 					new_sheet_name = B.name
 					qdel(B)
-					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
+					//world << "DEBUG: YUP! [new_icon_state] and [new_inhand_state]"
 					break
 				qdel(B)
 			for(var/T in typesof(/obj/item/clothing/head/soft))
@@ -138,29 +138,29 @@
 					new_softcap_icon_state = H.icon_state
 					new_softcap_name = H.name
 					qdel(H)
-					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
+					//world << "DEBUG: YUP! [new_icon_state] and [new_inhand_state]"
 					break
 				qdel(H)
-			if(new_jumpsuit_icon_state && new_jumpsuit_item_state && new_jumpsuit_name)
+			if(new_jumpsuit_icon_state && new_jumpsuit_inhand_state && new_jumpsuit_name)
 				for(var/obj/item/clothing/under/J in contents)
 					//world << "DEBUG: YUP! FOUND IT!"
-					J.item_state = new_jumpsuit_item_state
+					J.inhand_state = new_jumpsuit_inhand_state
 					J.icon_state = new_jumpsuit_icon_state
 					J.item_color = wash_color
 					J.name = new_jumpsuit_name
 					J.desc = new_desc
-			if(new_glove_name && new_glove_item_state && new_glove_icon_state||new_glove_fingerless_name && new_glove_fingerless_item_state && new_glove_fingerless_icon_state)
+			if(new_glove_name && new_glove_inhand_state && new_glove_icon_state||new_glove_fingerless_name && new_glove_fingerless_inhand_state && new_glove_fingerless_icon_state)
 				for(var/obj/item/clothing/gloves/G in contents)
 					if(istype(G, /obj/item/clothing/gloves/fingerless))
-						if(new_glove_fingerless_name && new_glove_fingerless_item_state && new_glove_fingerless_icon_state)
-							G.item_state = new_glove_fingerless_item_state
+						if(new_glove_fingerless_name && new_glove_fingerless_inhand_state && new_glove_fingerless_icon_state)
+							G.inhand_state = new_glove_fingerless_inhand_state
 							G.icon_state = new_glove_fingerless_icon_state
 							G.item_color = wash_color
 							G.name = new_glove_fingerless_name
 							G.desc = new_desc
 					else
-						if (new_glove_name && new_glove_item_state && new_glove_icon_state)
-							G.item_state = new_glove_item_state
+						if (new_glove_name && new_glove_inhand_state && new_glove_icon_state)
+							G.inhand_state = new_glove_inhand_state
 							G.icon_state = new_glove_icon_state
 							G.item_color = wash_color
 							G.name = new_glove_name

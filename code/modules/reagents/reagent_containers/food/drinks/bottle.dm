@@ -7,7 +7,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle
 	amount_per_transfer_from_this = 10
 	volume = 100
-	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
+	inhand_state = "broken_beer" //Generic held-item sprite until unique ones are made.
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
 	var/is_glass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 	var/is_transparent = 1 //Determines whether an overlay of liquid should be added to bottle when it fills
@@ -129,7 +129,7 @@
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
-	item_state = "beer"
+	inhand_state = "beer"
 	attack_verb = list("stabbed", "slashed", "attacked")
 	sharp = 1
 	edge = 0
@@ -320,7 +320,7 @@
 	name = "Orange Juice"
 	desc = "Full of vitamins and deliciousness!"
 	icon_state = "orangejuice"
-	item_state = "carton"
+	inhand_state = "carton"
 	is_glass = 0
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice/atom_init()
@@ -331,7 +331,7 @@
 	name = "Milk Cream"
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
 	icon_state = "cream"
-	item_state = "carton"
+	inhand_state = "carton"
 	is_glass = 0
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/cream/atom_init()
@@ -342,7 +342,7 @@
 	name = "Tomato Juice"
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
 	icon_state = "tomatojuice"
-	item_state = "carton"
+	inhand_state = "carton"
 	is_glass = 0
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice/atom_init()
@@ -353,7 +353,7 @@
 	name = "Lime Juice"
 	desc = "Sweet-sour goodness."
 	icon_state = "limejuice"
-	item_state = "carton"
+	inhand_state = "carton"
 	is_glass = 0
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice/atom_init()

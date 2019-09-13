@@ -2,7 +2,7 @@
 	name = "Goliath missile launcher"
 	desc = "The Goliath is a single-shot shoulder-fired multipurpose missile launcher."
 	icon_state = "rocket"
-	item_state = "rocket"
+	inhand_state = "rocket"
 	w_class = ITEM_SIZE_LARGE
 	force = 5
 	flags =  CONDUCT

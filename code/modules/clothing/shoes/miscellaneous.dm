@@ -2,7 +2,7 @@
 	desc = "A pair of brown shoes. They seem to have extra grip."
 	name = "brown shoes"
 	icon_state = "brown"
-	item_state = "brown"
+	inhand_state = "brown"
 	permeability_coefficient = 0.05
 	flags = NOSLIP
 	origin_tech = "syndicate=3"
@@ -20,7 +20,7 @@
 	name = "\improper SWAT shoes"
 	desc = "When you want to turn up the heat."
 	icon_state = "swat"
-	item_state = "wjboots"
+	inhand_state = "wjboots"
 	flags = NOSLIP
 	siemens_coefficient = 0.6
 	clipped_status = CLIPPABLE
@@ -29,7 +29,7 @@
 	name = "combat boots"
 	desc = "When you REALLY want to turn up the heat"
 	icon_state = "swat"
-	item_state = "wjboots"
+	inhand_state = "wjboots"
 	flags = NOSLIP
 	siemens_coefficient = 0.6
 	clipped_status = CLIPPABLE
@@ -106,7 +106,7 @@
 	desc = "The prankster's standard-issue clowning shoes. Damn they're huge!"
 	name = "clown shoes"
 	icon_state = "clown"
-	item_state = "clown_shoes"
+	inhand_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN+1
 	item_color = "clown"
 //	var/footstep = 1	//used for squeeks whilst walking
@@ -116,7 +116,7 @@
 	name = "jackboots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "wjboots"
-	item_state = "wjboots"
+	inhand_state = "wjboots"
 	item_color = "hosred"
 	siemens_coefficient = 0.7
 	clipped_status = CLIPPABLE
@@ -125,7 +125,7 @@
 	name = "boots"
 	desc = "A pair of boots worn by the followers of Nar-Sie."
 	icon_state = "cult"
-	item_state = "cult"
+	inhand_state = "cult"
 	item_color = "cult"
 	siemens_coefficient = 0.7
 
@@ -144,7 +144,7 @@
 	name = "bunny slippers"
 	desc = "Fluffy!"
 	icon_state = "slippers"
-	item_state = "slippers"
+	inhand_state = "slippers"
 	species_restricted = null
 	w_class = ITEM_SIZE_SMALL
 
@@ -152,7 +152,7 @@
 	name = "worn bunny slippers"
 	desc = "Fluffy..."
 	icon_state = "slippers_worn"
-	item_state = "slippers_worn"
+	inhand_state = "slippers_worn"
 	w_class = ITEM_SIZE_SMALL
 
 /obj/item/clothing/shoes/laceup
@@ -197,21 +197,21 @@
 	name = "work boots"
 	icon_state = "workboots"
 	item_color = "workboots"
-	item_state = "b_shoes"  // need sprites for this
+	inhand_state = "b_shoes"  // need sprites for this
 	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/roman
 	name = "roman sandals"
 	desc = "Sandals with buckled leather straps on it."
 	icon_state = "roman"
-	item_state = "roman"
+	inhand_state = "roman"
 
 /obj/item/clothing/shoes/boots/nt_pmc_boots
 	name = "NT PMC Boots"
 	desc = "Private security boots. Now with extra grip."
 	flags = NOSLIP
 	icon_state = "nt_pmc_boots"
-	item_state = "r_feet"
+	inhand_state = "r_feet"
 	item_color = "nt_pmc_boots"
 
 /obj/item/clothing/shoes/boots/lizard_boots
@@ -219,7 +219,7 @@
 	desc = "Private security boots for Unathi."
 	flags = NOSLIP
 	icon_state = "Lizard_Boots"
-	item_state = "r_feet"
+	inhand_state = "r_feet"
 	item_color = "Lizard_Boots"
 
 /obj/item/clothing/shoes/heels
@@ -233,7 +233,7 @@
 	name = "Black Boots"
 	desc = "Deutschland army boots."
 	icon_state = "Black_Boots"
-	item_state = "jackboots"
+	inhand_state = "jackboots"
 	item_color = "Black_Boots"
 
 /obj/item/clothing/shoes/brown_cut

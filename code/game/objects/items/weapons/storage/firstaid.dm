@@ -21,7 +21,7 @@
 	name = "fire first-aid kit"
 	desc = "It's an emergency medical kit for when the toxins lab <i>-spontaneously-</i> burns down."
 	icon_state = "ointment"
-	item_state = "firstaid-ointment"
+	inhand_state = "firstaid-ointment"
 
 /obj/item/weapon/storage/firstaid/fire/atom_init()
 	. = ..()
@@ -55,7 +55,7 @@
 	name = "toxin first aid"
 	desc = "Used to treat when you have a high amoutn of toxins in your body."
 	icon_state = "antitoxin"
-	item_state = "firstaid-toxin"
+	inhand_state = "firstaid-toxin"
 
 /obj/item/weapon/storage/firstaid/toxin/atom_init()
 	. = ..()
@@ -74,7 +74,7 @@
 	name = "oxygen deprivation first aid"
 	desc = "A box full of oxygen goodies."
 	icon_state = "o2"
-	item_state = "firstaid-o2"
+	inhand_state = "firstaid-o2"
 
 /obj/item/weapon/storage/firstaid/o2/atom_init()
 	. = ..()
@@ -90,7 +90,7 @@
 	name = "advanced first-aid kit"
 	desc = "Contains advanced medical treatments."
 	icon_state = "advfirstaid"
-	item_state = "firstaid-advanced"
+	inhand_state = "firstaid-advanced"
 
 /obj/item/weapon/storage/firstaid/adv/atom_init()
 	. = ..()
@@ -112,7 +112,7 @@
 	desc = "It's an airtight container for storing medication."
 	icon_state = "pill_canister"
 	icon = 'icons/obj/chemical.dmi'
-	item_state = "contsolid"
+	inhand_state = "contsolid"
 	flags = NOBLUDGEON
 	w_class = ITEM_SIZE_SMALL
 	max_storage_space = 21

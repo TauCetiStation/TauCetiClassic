@@ -3,7 +3,7 @@
 	name = "hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
 	icon_state = "rig0-engineering"
-	item_state = "eng_helm"
+	inhand_state = "eng_helm"
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 20)
 
 	action_button_name = "Toggle Helmet Light"
@@ -33,7 +33,7 @@
 		return
 	on = !on
 	icon_state = "rig[on]-[item_color]"
-//	item_state = "rig[on]-[color]"
+//	inhand_state = "rig[on]-[color]"
 	usr.update_inv_head()
 
 	if(on)	set_light(brightness_on)
@@ -47,7 +47,7 @@
 	name = "hardsuit"
 	desc = "A special space suit for environments that might pose hazards beyond just the vacuum of space. Provides more protection than a standard space suit."
 	icon_state = "rig-engineering"
-	item_state = "eng_hardsuit"
+	inhand_state = "eng_hardsuit"
 	slowdown = 1
 	var/offline_slowdown = 5
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 20)
@@ -543,7 +543,7 @@
 	name = "engineering hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
 	icon_state = "rig0-engineering"
-	item_state = "eng_helm"
+	inhand_state = "eng_helm"
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 80)
 	siemens_coefficient = 0
 
@@ -551,7 +551,7 @@
 	name = "engineering hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding. Heavy insulation layer adds additional weight"
 	icon_state = "rig-engineering"
-	item_state = "eng_hardsuit"
+	inhand_state = "eng_hardsuit"
 	slowdown = 3
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 80)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
@@ -564,7 +564,7 @@
 	name = "advanced hardsuit helmet"
 	desc = "An advanced helmet designed for work in a hazardous, low pressure environment. Shines with a high polish."
 	icon_state = "rig0-chief"
-	item_state = "ce_helm"
+	inhand_state = "ce_helm"
 	item_color = "chief"
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 
@@ -572,7 +572,7 @@
 	icon_state = "rig-chief"
 	name = "advanced hardsuit"
 	desc = "An advanced suit that protects against hazardous, low pressure environments. Shines with a high polish."
-	item_state = "ce_hardsuit"
+	inhand_state = "ce_hardsuit"
 	slowdown = 1
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	max_mounted_devices = 6
@@ -583,7 +583,7 @@
 	name = "mining hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has reinforced plating."
 	icon_state = "rig0-mining"
-	item_state = "mining_helm"
+	inhand_state = "mining_helm"
 	item_color = "mining"
 	armor = list(melee = 60, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 20)
 
@@ -591,7 +591,7 @@
 	icon_state = "rig-mining"
 	name = "mining hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has reinforced plating."
-	item_state = "mining_hardsuit"
+	inhand_state = "mining_hardsuit"
 	armor = list(melee = 90, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 20)
 	breach_threshold = 26
 	max_mounted_devices = 4
@@ -602,7 +602,7 @@
 	name = "Red mining helmet"
 	desc = "A special mining helmet designed for work in a hazardous, low pressure environment."
 	icon_state = "rig0-RedMiner"
-	item_state = "RedMiner_helm"
+	inhand_state = "RedMiner_helm"
 	item_color = "RedMiner"
 	armor = list(melee = 40, bullet = 10, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 50)
 
@@ -610,7 +610,7 @@
 	name = "Red mining hardsuit"
 	desc = "A special suit that protects against hazardous, has reinforced plating."
 	icon_state = "RedMiner"
-	item_state = "RedMiner"
+	inhand_state = "RedMiner"
 	item_color = "RedMiner"
 	armor = list(melee = 40, bullet = 11, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 50)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
@@ -620,7 +620,7 @@
 	name = "blood-red hybrid helmet"
 	desc = "An advanced helmet designed for work in special operations. Property of Gorlex Marauders."
 	icon_state = "rig0-syndie"
-	item_state = "syndie_helm"
+	inhand_state = "syndie_helm"
 	armor = list(melee = 60, bullet = 55, laser = 30,energy = 30, bomb = 50, bio = 100, rad = 60)
 	var/obj/machinery/camera/camera
 	var/combat_mode = FALSE
@@ -715,7 +715,7 @@
 	name = "blood-red hybrid suit"
 	desc = "An advanced suit that protects against injuries during special operations. Property of Gorlex Marauders."
 	icon_state = "rig-syndie"
-	item_state = "syndie_hardsuit"
+	inhand_state = "syndie_hardsuit"
 	slowdown = 1.4
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,
@@ -771,7 +771,7 @@
 	name = "gem-encrusted hardsuit helmet"
 	desc = "A bizarre gem-encrusted helmet that radiates magical energies."
 	icon_state = "rig0-wiz"
-	item_state = "wiz_helm"
+	inhand_state = "wiz_helm"
 	item_color = "wiz"
 	unacidable = 1 //No longer shall our kind be foiled by lone chemists with spray bottles!
 	armor = list(melee = 40, bullet = 33, laser = 33,energy = 33, bomb = 33, bio = 100, rad = 66)
@@ -780,7 +780,7 @@
 	icon_state = "rig-wiz"
 	name = "gem-encrusted hardsuit"
 	desc = "A bizarre gem-encrusted suit that radiates magical energies."
-	item_state = "wiz_hardsuit"
+	inhand_state = "wiz_hardsuit"
 	slowdown = 1
 	unacidable = 1
 	armor = list(melee = 40, bullet = 33, laser = 33,energy = 33, bomb = 33, bio = 100, rad = 66)
@@ -792,7 +792,7 @@
 	name = "medical hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has minor radiation shielding."
 	icon_state = "rig0-medical"
-	item_state = "medical_helm"
+	inhand_state = "medical_helm"
 	item_color = "medical"
 	armor = list(melee = 30, bullet = 5, laser = 10,energy = 5, bomb = 25, bio = 100, rad = 50)
 
@@ -800,7 +800,7 @@
 	icon_state = "rig-medical"
 	name = "medical hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has minor radiation shielding."
-	item_state = "medical_hardsuit"
+	inhand_state = "medical_hardsuit"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
 	armor = list(melee = 30, bullet = 5, laser = 10,energy = 5, bomb = 25, bio = 100, rad = 50)
 	max_mounted_devices = 4
@@ -811,14 +811,14 @@
 	name = "advanced medical hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has minor radiation shielding."
 	icon_state = "rig0-cmo"
-	item_state = "medical_helm"
+	inhand_state = "medical_helm"
 	item_color = "cmo"
 
 /obj/item/clothing/suit/space/rig/medical/cmo
 	icon_state = "rig-cmo"
 	name = "advanced medical hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has minor radiation shielding."
-	item_state = "medical_hardsuit"
+	inhand_state = "medical_hardsuit"
 	slowdown = 0.5
 	max_mounted_devices = 6
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/med_teleport, /obj/item/rig_module/chem_dispenser/medical, /obj/item/rig_module/device/healthscanner)
@@ -828,7 +828,7 @@
 	name = "security hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
 	icon_state = "rig0-sec"
-	item_state = "sec_helm"
+	inhand_state = "sec_helm"
 	item_color = "sec"
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 30, bomb = 65, bio = 100, rad = 10)
 
@@ -836,7 +836,7 @@
 	icon_state = "rig-sec"
 	name = "security hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
-	item_state = "sec_hardsuit"
+	inhand_state = "sec_hardsuit"
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 30, bomb = 65, bio = 100, rad = 10)
 	allowed = list(/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/melee/baton)
 	breach_threshold = 20
@@ -849,14 +849,14 @@
 	name = "advanced security hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
 	icon_state = "rig0-hos"
-	item_state = "sec_helm"
+	inhand_state = "sec_helm"
 	item_color = "hos"
 
 /obj/item/clothing/suit/space/rig/security/hos
 	icon_state = "rig-hos"
 	name = "advanced security hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
-	item_state = "sec_hardsuit"
+	inhand_state = "sec_hardsuit"
 	slowdown = 0.7
 	max_mounted_devices = 6
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/mounted/taser, /obj/item/rig_module/med_teleport, /obj/item/rig_module/chem_dispenser/combat, /obj/item/rig_module/grenade_launcher/flashbang)
@@ -866,7 +866,7 @@
 	desc = "A special helmet designed for work in a hazardous, low pressure environments. Has improved thermal protection and minor radiation shielding."
 	name = "atmospherics hardsuit helmet"
 	icon_state = "rig0-atmos"
-	item_state = "atmos_helm"
+	inhand_state = "atmos_helm"
 	item_color = "atmos"
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 50)
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
@@ -875,7 +875,7 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Has improved thermal protection and minor radiation shielding."
 	icon_state = "rig-atmos"
 	name = "atmos hardsuit"
-	item_state = "atmos_hardsuit"
+	inhand_state = "atmos_hardsuit"
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 50)
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	max_mounted_devices = 4

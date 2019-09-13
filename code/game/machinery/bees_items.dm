@@ -11,7 +11,7 @@
 	desc = "For catching rogue bees."
 	icon = 'icons/obj/apiary_bees_etc.dmi'
 	icon_state = "bee_net"
-	item_state = "bedsheet"
+	inhand_state = "bedsheet"
 	w_class = ITEM_SIZE_NORMAL
 	var/caught_bees = 0
 
@@ -58,7 +58,7 @@
 	name = "moveable apiary"
 	icon = 'icons/obj/apiary_bees_etc.dmi'
 	icon_state = "apiary_item"
-	item_state = "giftbag"
+	inhand_state = "giftbag"
 	w_class = ITEM_SIZE_HUGE
 
 /obj/item/beezeez

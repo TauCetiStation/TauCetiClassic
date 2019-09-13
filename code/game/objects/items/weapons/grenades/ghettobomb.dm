@@ -4,7 +4,7 @@
 	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/makeshift.dmi'
 	icon_state = "can_grenade_preview"
-	item_state = "flashbang"
+	inhand_state = "flashbang"
 	throw_speed = 4
 	throw_range = 20
 	flags = CONDUCT

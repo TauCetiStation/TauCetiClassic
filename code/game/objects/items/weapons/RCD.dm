@@ -206,7 +206,7 @@ RCD
 	desc = "Highly compressed matter for the RCD."
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "rcd"
-	item_state = "rcdammo"
+	inhand_state = "rcdammo"
 	opacity = 0
 	density = 0
 	anchored = 0.0

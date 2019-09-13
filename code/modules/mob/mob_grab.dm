@@ -24,7 +24,7 @@
 
 	layer = 21
 	abstract = 1
-	item_state = "nothing"
+	inhand_state = "nothing"
 	w_class = ITEM_SIZE_HUGE
 
 /mob/proc/Grab(atom/movable/target, force_state, show_warnings = TRUE)

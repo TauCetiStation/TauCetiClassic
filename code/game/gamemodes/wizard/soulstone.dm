@@ -2,7 +2,7 @@
 	name = "Soul Stone Shard"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "soulstone"
-	item_state = "electronic"
+	inhand_state = "electronic"
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefacts power."
 	w_class = ITEM_SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT

@@ -591,7 +591,7 @@
 
 /obj/item/weapon/paper/flag
 	icon_state = "flag_neutral"
-	item_state = "paper"
+	inhand_state = "paper"
 	anchored = 1.0
 
 /obj/item/weapon/paper/jobs
@@ -602,7 +602,7 @@
 	name = "photo"
 	icon_state = "photo"
 	var/photo_id = 0.0
-	item_state = "paper"
+	inhand_state = "paper"
 
 /obj/item/weapon/paper/sop
 	name = "paper- 'Standard Operating Procedure'"

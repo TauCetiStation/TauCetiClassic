@@ -3,7 +3,7 @@
 	desc = "Much blues. So amaze. Wow."
 	icon = 'icons/obj/musician.dmi'
 	icon_state = "harmonica"
-	item_state = "harmonica"
+	inhand_state = "harmonica"
 	force = 5
 	w_class = ITEM_SIZE_SMALL
 	m_amt = 500

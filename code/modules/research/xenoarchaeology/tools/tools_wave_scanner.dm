@@ -7,7 +7,7 @@
 	desc = "Aids in triangulation of exotic particles."
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "anoscanner_borg"
-	item_state = "lampgreen"
+	inhand_state = "lampgreen"
 	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	var/nearest_artifact_id = "unknown"
@@ -60,7 +60,7 @@
 	slot_flags = SLOT_FLAGS_BACK
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "wave_scanner"
-	item_state = "wave_scanner"
+	inhand_state = "wave_scanner"
 	w_class = ITEM_SIZE_LARGE
 	action_button_name = "Toggle Searcher"
 
@@ -147,7 +147,7 @@
 	desc = "Searches for exotic waves."
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "wave_searcher"
-	item_state = "wave_searcher"
+	inhand_state = "wave_searcher"
 	w_class = ITEM_SIZE_LARGE
 	throwforce = 0 // we shall not abuse
 	throw_range = 0

@@ -3,7 +3,7 @@
 	desc = "Sleepwear."
 	icon_state = "red_pyjamas"
 	item_color = "red_pyjamas"
-	item_state = "w_suit"
+	inhand_state = "w_suit"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/pj/blue
@@ -11,21 +11,21 @@
 	desc = "Sleepwear."
 	icon_state = "blue_pyjamas"
 	item_color = "blue_pyjamas"
-	item_state = "w_suit"
+	inhand_state = "w_suit"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/captain_fly
 	name = "rogue captains uniform"
 	desc = "For the man who doesn't care because he's still free."
 	icon_state = "captain_fly"
-	item_state = "captain_fly"
+	inhand_state = "captain_fly"
 	item_color = "captain_fly"
 
 /obj/item/clothing/under/scratch
 	name = "white suit"
 	desc = "A white suit, suitable for an excellent host."
 	icon_state = "scratch"
-	item_state = "scratch"
+	inhand_state = "scratch"
 	item_color = "scratch"
 
 /obj/item/clothing/under/sl_suit
@@ -38,7 +38,7 @@
 	name = "waiter's outfit"
 	desc = "It's a very smart uniform with a special pocket for tip."
 	icon_state = "waiter"
-	item_state = "waiter"
+	inhand_state = "waiter"
 	item_color = "waiter"
 	flags = ONESIZEFITSALL
 
@@ -46,7 +46,7 @@
 	name = "hawaiian shirt"
 	desc = "How gauche."
 	icon_state = "tourist"
-	item_state = "tourist"
+	inhand_state = "tourist"
 	item_color = "tourist"
 	flags = ONESIZEFITSALL
 
@@ -54,14 +54,14 @@
 	name = "mailman's jumpsuit"
 	desc = "<i>'Special delivery!'</i>"
 	icon_state = "mailman"
-	item_state = "b_suit"
+	inhand_state = "b_suit"
 	item_color = "mailman"
 
 /obj/item/clothing/under/sexyclown
 	name = "sexy-clown suit"
 	desc = "It makes you look HONKable!"
 	icon_state = "sexyclown"
-	item_state = "sexyclown"
+	inhand_state = "sexyclown"
 	item_color = "sexyclown"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
@@ -69,7 +69,7 @@
 	name = "vice officer's jumpsuit"
 	desc = "It's the standard issue pretty-boy outfit, as seen on Holo-Vision."
 	icon_state = "vice"
-	item_state = "gy_suit"
+	inhand_state = "gy_suit"
 	item_color = "vice"
 	flags = ONESIZEFITSALL
 
@@ -77,28 +77,28 @@
 	desc = "It's a jumpsuit worn by CentCom Officers."
 	name = "\improper CentCom officer's jumpsuit"
 	icon_state = "officer"
-	item_state = "g_suit"
+	inhand_state = "g_suit"
 	item_color = "officer"
 
 /obj/item/clothing/under/rank/centcom_commander
 	desc = "It's a jumpsuit worn by CentCom's highest-tier Commanders."
 	name = "\improper CentCom officer's jumpsuit"
 	icon_state = "centcom"
-	item_state = "dg_suit"
+	inhand_state = "dg_suit"
 	item_color = "centcom"
 
 /obj/item/clothing/under/ert
 	name = "ERT tactical uniform"
 	desc = "A short-sleeved black uniform, paired with grey digital-camo cargo pants. It looks very tactical."
 	icon_state = "ert_uniform"
-	item_state = "bl_suit"
+	inhand_state = "bl_suit"
 	item_color = "ert_uniform"
 
 /obj/item/clothing/under/space
 	name = "\improper NASA jumpsuit"
 	desc = "It has a NASA logo on it and is made of space-proofed materials."
 	icon_state = "black"
-	item_state = "bl_suit"
+	inhand_state = "bl_suit"
 	item_color = "black"
 	w_class = ITEM_SIZE_LARGE//bulky item
 	gas_transfer_coefficient = 0.01
@@ -110,7 +110,7 @@
 /obj/item/clothing/under/acj
 	name = "administrative cybernetic jumpsuit"
 	icon_state = "syndicate"
-	item_state = "bl_suit"
+	inhand_state = "bl_suit"
 	item_color = "syndicate"
 	desc = "it's a cybernetically enhanced jumpsuit used for administrative duties."
 	gas_transfer_coefficient = 0.01
@@ -139,7 +139,7 @@
 	name = "rainbow"
 	desc = "rainbow"
 	icon_state = "rainbow"
-	item_state = "rainbow"
+	inhand_state = "rainbow"
 	item_color = "rainbow"
 	flags = ONESIZEFITSALL
 
@@ -147,7 +147,7 @@
 	name = "dark undersuit"
 	desc = "A thick, layered grey undersuit lined with power cables. Feels a little like wearing an electrical storm."
 	icon_state = "psysuit"
-	item_state = "psysuit"
+	inhand_state = "psysuit"
 	item_color = "psysuit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
@@ -155,14 +155,14 @@
 	name = "gentlemans suit"
 	desc = "A silk black shirt with a white tie and a matching gray vest and slacks. Feels proper."
 	icon_state = "gentlesuit"
-	item_state = "gentlesuit"
+	inhand_state = "gentlesuit"
 	item_color = "gentlesuit"
 
 /obj/item/clothing/under/gimmick/rank/captain/suit
 	name = "captain's suit"
 	desc = "A green suit and yellow necktie. Exemplifies authority."
 	icon_state = "green_suit"
-	item_state = "dg_suit"
+	inhand_state = "dg_suit"
 	item_color = "green_suit"
 	flags = ONESIZEFITSALL
 
@@ -170,7 +170,7 @@
 	name = "head of personnel's suit"
 	desc = "A teal suit and yellow necktie. An authoritative yet tacky ensemble."
 	icon_state = "teal_suit"
-	item_state = "g_suit"
+	inhand_state = "g_suit"
 	item_color = "teal_suit"
 	flags = ONESIZEFITSALL
 
@@ -178,14 +178,14 @@
 	name = "black suit"
 	desc = "A black suit and red tie. Very formal."
 	icon_state = "black_suit"
-	item_state = "bl_suit"
+	inhand_state = "bl_suit"
 	item_color = "black_suit"
 
 /obj/item/clothing/under/suit_jacket/reinforced //armored jackets for special agents
 	name = "black suit"
 	desc = "A black suit and red tie. Very formal. This one looks a bit stronger than others."
 	icon_state = "black_suit"
-	item_state = "bl_suit"
+	inhand_state = "bl_suit"
 	item_color = "black_suit"
 	body_parts_covered = UPPER_TORSO|ARMS
 	armor = list(melee = 18, bullet = 12, laser = 5, energy = 5, bomb = 0, bio = 0, rad = 0)
@@ -194,21 +194,21 @@
 	name = "executive suit"
 	desc = "A formal black suit and red tie, intended for the station's finest."
 	icon_state = "really_black_suit"
-	item_state = "bl_suit"
+	inhand_state = "bl_suit"
 	item_color = "black_suit"
 
 /obj/item/clothing/under/suit_jacket/female
 	name = "executive suit"
 	desc = "A formal trouser suit for women, intended for the station's finest."
 	icon_state = "black_suit_fem"
-	item_state = "black_suit_fem"
+	inhand_state = "black_suit_fem"
 	item_color = "black_suit_fem"
 
 /obj/item/clothing/under/suit_jacket/red
 	name = "red suit"
 	desc = "A red suit and blue tie. Somewhat formal."
 	icon_state = "red_suit"
-	item_state = "r_suit"
+	inhand_state = "r_suit"
 	item_color = "red_suit"
 	flags = ONESIZEFITSALL
 
@@ -216,49 +216,49 @@
 	name = "charcoal suit"
 	desc = "A charcoal suit and red tie. Very professional."
 	icon_state = "charcoal_suit"
-	item_state = "charcoal_suit"
+	inhand_state = "charcoal_suit"
 	item_color = "charcoal_suit"
 
 /obj/item/clothing/under/suit_jacket/navy
 	name = "navy suit"
 	desc = "A navy suit and red tie, intended for the station's finest."
 	icon_state = "navy_suit"
-	item_state = "navy_suit"
+	inhand_state = "navy_suit"
 	item_color = "navy_suit"
 
 /obj/item/clothing/under/suit_jacket/burgundy
 	name = "burgundy suit"
 	desc = "A burgundy suit and black tie. Somewhat formal."
 	icon_state = "burgundy_suit"
-	item_state = "burgundy_suit"
+	inhand_state = "burgundy_suit"
 	item_color = "burgundy_suit"
 
 /obj/item/clothing/under/suit_jacket/checkered
 	name = "checkered suit"
 	desc = "That's a very nice suit you have there. Shame if something were to happen to it, eh?"
 	icon_state = "checkered_suit"
-	item_state = "checkered_suit"
+	inhand_state = "checkered_suit"
 	item_color = "checkered_suit"
 
 /obj/item/clothing/under/suit_jacket/tan
 	name = "tan suit"
 	desc = "A tan suit with a yellow tie. Smart, but casual."
 	icon_state = "tan_suit"
-	item_state = "tan_suit"
+	inhand_state = "tan_suit"
 	item_color = "tan_suit"
 
 /obj/item/clothing/under/suit_jacket/white
 	name = "white suit"
 	desc = "A white suit and jacket with a blue shirt. You wanna play rough? OKAY!."
 	icon_state = "white_suit"
-	item_state = "white_suit"
+	inhand_state = "white_suit"
 	item_color = "white_suit"
 
 /obj/item/clothing/under/suit_jacket/rouge
 	name = "rogue jacket"
 	desc = "A  suit and jacket with a jeans. For the bad guy!"
 	icon_state = "rogue_jacket"
-	item_state = "rogue_jacket"
+	inhand_state = "rogue_jacket"
 	item_color = "rogue_jacket"
 	flags = ONESIZEFITSALL
 
@@ -273,7 +273,7 @@
 	name = "schoolgirl uniform"
 	desc = "It's just like one of my Japanese animes!"
 	icon_state = "schoolgirl"
-	item_state = "schoolgirl"
+	inhand_state = "schoolgirl"
 	item_color = "schoolgirl"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
@@ -281,14 +281,14 @@
 	name = "laborer's overalls"
 	desc = "A set of durable overalls for getting the job done."
 	icon_state = "overalls"
-	item_state = "lb_suit"
+	inhand_state = "lb_suit"
 	item_color = "overalls"
 
 /obj/item/clothing/under/pirate
 	name = "pirate outfit"
 	desc = "Yarr."
 	icon_state = "pirate"
-	item_state = "pirate"
+	inhand_state = "pirate"
 	item_color = "pirate"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
@@ -296,21 +296,21 @@
 	name = "soviet uniform"
 	desc = "For the Motherland!"
 	icon_state = "soviet"
-	item_state = "soviet"
+	inhand_state = "soviet"
 	item_color = "soviet"
 
 /obj/item/clothing/under/redcoat
 	name = "redcoat uniform"
 	desc = "Looks old."
 	icon_state = "redcoat"
-	item_state = "redcoat"
+	inhand_state = "redcoat"
 	item_color = "redcoat"
 
 /obj/item/clothing/under/kilt
 	name = "kilt"
 	desc = "Includes shoes and plaid."
 	icon_state = "kilt"
-	item_state = "kilt"
+	inhand_state = "kilt"
 	item_color = "kilt"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
@@ -318,7 +318,7 @@
 	name = "sexy mime outfit"
 	desc = "The only time when you DON'T enjoy looking at someone's rack."
 	icon_state = "sexymime"
-	item_state = "sexymime"
+	inhand_state = "sexymime"
 	item_color = "sexymime"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
@@ -326,7 +326,7 @@
 	name = "gladiator uniform"
 	desc = "Are you not entertained? Is that not why you are here?"
 	icon_state = "gladiator"
-	item_state = "gladiator"
+	inhand_state = "gladiator"
 	item_color = "gladiator"
 	body_parts_covered = LOWER_TORSO
 
@@ -484,7 +484,7 @@
 	name = "sundress"
 	desc = "Makes you want to frolic in a field of daisies."
 	icon_state = "sundress"
-	item_state = "sundress"
+	inhand_state = "sundress"
 	item_color = "sundress"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
@@ -492,7 +492,7 @@
 	desc = "It's a slimming black with reinforced seams."
 	name = "pilot's jumpsuit"
 	icon_state = "robotics2"
-	item_state = "robotics"
+	inhand_state = "robotics"
 	item_color = "robotics2"
 	flags = ONESIZEFITSALL
 
@@ -500,7 +500,7 @@
 	desc = ""
 	name = "security cadet's uniform"
 	icon_state = "officertanclothes"
-	item_state = "r_suit"
+	inhand_state = "r_suit"
 	item_color = "officertanclothes"
 	flags = ONESIZEFITSALL
 
@@ -508,7 +508,7 @@
 	desc = "It has a Forensics rank stripe on it."
 	name = "forensics jumpsuit"
 	icon_state = "forensicsred"
-	item_state = "r_suit"
+	inhand_state = "r_suit"
 	item_color = "forensicsred"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL
@@ -518,14 +518,14 @@
 	name = "quartermaster's dress"
 	desc = "It's a jumpsuit worn by the quartermaster. It's specially designed to prevent back injuries caused by pushing paper."
 	icon_state = "qm_f"
-	item_state = "lb_suit"
+	inhand_state = "lb_suit"
 	item_color = "qm_f"
 
 /obj/item/clothing/under/rank/head_of_security_fem
 	desc = "It's a jumpsuit worn by those few with the dedication to achieve the position of \"Head of Security\". It has additional armor to protect the wearer."
 	name = "head of security's dress"
 	icon_state = "hos_f"
-	item_state = "r_suit"
+	inhand_state = "r_suit"
 	item_color = "hos_f"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.8
@@ -534,7 +534,7 @@
 	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for more robust protection. It has the word \"Warden\" written on the shoulders."
 	name = "warden's dress"
 	icon_state = "warden_f"
-	item_state = "r_suit"
+	inhand_state = "r_suit"
 	item_color = "warden_f"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
@@ -543,14 +543,14 @@
 	desc = "It's a slimming black with reinforced seams; great for industrial work."
 	name = "roboticist's female jumpsuit"
 	icon_state = "roboticist_f"
-	item_state = "robo"
+	inhand_state = "robo"
 	item_color = "roboticist_f"
 
 /obj/item/clothing/under/rank/hydroponics_fem
 	desc = "It's a jumpsuit designed to protect against minor plant-related hazards."
 	name = "botanist's female jumpsuit"
 	icon_state = "hydroponics_f"
-	item_state = "g_suit"
+	inhand_state = "g_suit"
 	item_color = "hydroponics_f"
 	permeability_coefficient = 0.50
 
@@ -558,13 +558,13 @@
 	desc = "It looks like it could use some more flair."
 	name = "bartender's female uniform"
 	icon_state = "bar_f"
-	item_state = "ba_suit"
+	inhand_state = "ba_suit"
 	item_color = "bar_f"
 
 /obj/item/clothing/under/kimono
 	name = "kimono"
 	icon_state = "kimono"
-	item_state = "kimono"
+	inhand_state = "kimono"
 	item_color = "kimono"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
@@ -572,21 +572,21 @@
 	name = "black tango dress"
 	desc = "Filled with latin fire."
 	icon_state = "tango"
-	item_state = "wcoat"
+	inhand_state = "wcoat"
 	item_color = "tango"
 
 /obj/item/clothing/under/rank/centcom_officer_old
 	desc = "It's a jumpsuit worn by Centcom Officers."
 	name = "\improper Centcom officer's jumpsuit"
 	icon_state = "officer_old"
-	item_state = "g_suit"
+	inhand_state = "g_suit"
 	item_color = "officer_old"
 
 /obj/item/clothing/under/rank/centcom_commander_old
 	desc = "It's a jumpsuit worn by Centcom's highest-tier Commanders."
 	name = "\improper Centcom officer's jumpsuit"
 	icon_state = "centcom_old"
-	item_state = "dg_suit"
+	inhand_state = "dg_suit"
 	item_color = "centcom_old"
 
 //Mafia
@@ -594,63 +594,63 @@
 	name = "mafia outfit"
 	desc = "The business of the mafia is business."
 	icon_state = "mafia"
-	item_state = "mafia"
+	inhand_state = "mafia"
 	item_color = "mafia"
 
 /obj/item/clothing/under/mafia/vest
 	name = "mafia vest"
 	desc = "Extreme problems often require extreme solutions."
 	icon_state = "mafia_vest"
-	item_state = "mafia_vest"
+	inhand_state = "mafia_vest"
 	item_color = "mafia_vest"
 
 /obj/item/clothing/under/mafia/white
 	name = "white mafia outfit"
 	desc = "The best defense against the treacherous is treachery."
 	icon_state = "mafia_white"
-	item_state = "mafia_white"
+	inhand_state = "mafia_white"
 	item_color = "mafia_white"
 
 /obj/item/clothing/under/mafia/sue
 	name = "mafia vest"
 	desc = "The business is born into."
 	icon_state = "sue_vest"
-	item_state = "sue_vest"
+	inhand_state = "sue_vest"
 	item_color = "sue_vest"
 
 /obj/item/clothing/under/mafia/tan
 	name = "leather mafia outfit"
 	desc = "The big drum sounds good only from a distance."
 	icon_state = "mafia_tan"
-	item_state = "mafia_tan"
+	inhand_state = "mafia_tan"
 	item_color = "mafia_tan"
 
 /obj/item/clothing/under/mafia/flappers
 	name = "flappers"
 	desc = "Nothing like the roaring 20s, flapping the night away on the dance floor."
 	icon_state = "flapper"
-	item_state = "flapper"
+	inhand_state = "flapper"
 	item_color = "flapper"
 
 /obj/item/clothing/under/rank/capcamsole
 	desc = "It's a blue feminine camisole with some gold markings denoting the rank of \"Captain\" and gold aquila on it."
 	name = "captain's camisole"
 	icon_state = "capcamisole"
-	item_state = "capcamisole"
+	inhand_state = "capcamisole"
 	item_color = "capcamisole"
 
 /obj/item/clothing/under/rank/goodman_shirt
 	name = "head of personnel's suit"
 	desc = "A good suit for good men."
 	icon_state = "gmshirt"
-	item_state = "gmshirt"
+	inhand_state = "gmshirt"
 	item_color = "gmshirt"
 
 /obj/item/clothing/under/rank/centcom/representative
 	desc = "Gold trim on space-black cloth, this uniform displays the rank of \"Ensign\" and bears \"N.C.V. Fearless CV-286\" on the left shounder."
 	name = "\improper NanoTrasen navy uniform"
 	icon_state = "officer"
-	item_state = "g_suit"
+	inhand_state = "g_suit"
 	item_color = "officer"
 	displays_id = 0
 
@@ -658,7 +658,7 @@
 	desc = "Gold trim on space-black cloth, this uniform displays the rank of \"Lieutenant Commander\" and bears \"N.C.V. Fearless CV-286\" on the left shounder."
 	name = "\improper NanoTrasen officers uniform"
 	icon_state = "officer"
-	item_state = "g_suit"
+	inhand_state = "g_suit"
 	item_color = "officer"
 	displays_id = 0
 
@@ -666,7 +666,7 @@
 	desc = "Gold trim on space-black cloth, this uniform displays the rank of \"Captain\" and bears \"N.C.V. Fearless CV-286\" on the left shounder."
 	name = "\improper NanoTrasen captains uniform"
 	icon_state = "centcom"
-	item_state = "dg_suit"
+	inhand_state = "dg_suit"
 	item_color = "centcom"
 	displays_id = 0
 
@@ -674,7 +674,7 @@
 	name = "roman armor"
 	desc = "Ancient Roman armor. Made of metallic and leather straps."
 	icon_state = "roman"
-	item_state = "roman"
+	inhand_state = "roman"
 	item_color = "roman"
 
 /obj/item/clothing/under/patient_gown
@@ -749,7 +749,7 @@
 	name = "NT PCM Uniform"
 	desc = "Uniform used by the private security corporation."
 	icon_state = "nt_pmc_uniform"
-	item_state = "bl_suit"
+	inhand_state = "bl_suit"
 	item_color = "nt_pmc_uniform"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
@@ -757,7 +757,7 @@
 	name = "NT PCM Light Uniform"
 	desc = "Uniform used by the private security corporation. This one without sleeves."
 	icon_state = "nt_pmc_uniform"
-	item_state = "bl_suit"
+	inhand_state = "bl_suit"
 	item_color = "nt_pmc_uniform_light"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
@@ -765,33 +765,33 @@
 	name = "blue shirt"
 	desc = "A blue shirt with image of alien in front."
 	icon_state = "dude_shirt"
-	item_state = "b_suit"
+	inhand_state = "b_suit"
 	item_color = "dude_shirt"
 
 /obj/item/clothing/under/sport
 	name = "white and black sport uniform"
 	desc = "No pain - no gain."
 	icon_state = "DDR_sport"
-	item_state = "gy_suit"
+	inhand_state = "gy_suit"
 	item_color = "DDR_sport"
 
 /obj/item/clothing/under/sport/blue
 	name = "blue sport uniform"
 	icon_state = "blue_sport"
-	item_state = "b_suit"
+	inhand_state = "b_suit"
 	item_color = "blue_sport"
 
 /obj/item/clothing/under/sport/black
 	name = "black sport uniform"
 	icon_state = "black_sport"
-	item_state = "bl_suit"
+	inhand_state = "bl_suit"
 	item_color = "black_sport"
 
 /obj/item/clothing/under/M35_Jacket
 	name = "M35 Filde Jacket"
 	desc = "Standart wehrmacht field uniform."
 	icon_state = "M35_Filde_Jacket"
-	item_state = "g_suit"
+	inhand_state = "g_suit"
 	item_color = "M35_Filde_Jacket"
 	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
 
@@ -799,7 +799,7 @@
 	name = "M35 Filde Oficer Jacket"
 	desc = "Werhmacht officer jacket uniform."
 	icon_state = "M35_Filde_Jacket_Officer"
-	item_state = "g_suit"
+	inhand_state = "g_suit"
 	item_color = "M35_Filde_Jacket_Officer"
 	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
 
@@ -807,7 +807,7 @@
 	name = "Waffen SS Form"
 	desc = "A special uniform for the SS."
 	icon_state = "SS_Form"
-	item_state = "bl_suit"
+	inhand_state = "bl_suit"
 	item_color = "SS_Form"
 	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
 

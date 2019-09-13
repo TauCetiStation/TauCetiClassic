@@ -2,7 +2,7 @@
 	name = "Strange bag"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "backpack"
-	item_state = "backpack"
+	inhand_state = "backpack"
 	w_class = ITEM_SIZE_LARGE
 	slot_flags = SLOT_FLAGS_BACK
 
@@ -48,4 +48,4 @@
 	name = "Santa's Gift Bag"
 	desc = "Space Santa uses this to deliver toys to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
-	item_state = "giftbag"
+	inhand_state = "giftbag"

@@ -2,7 +2,7 @@
 	name = "universal painter"
 	desc = "An advanced autopainter preprogrammed with several paintjobs for airlocks, windows and pipes. Use it on an airlock during or after construction to change the paintjob, or on window or pipe."
 	icon_state = "paint sprayer"
-	item_state = "paint sprayer"
+	inhand_state = "paint sprayer"
 
 	w_class = ITEM_SIZE_SMALL
 

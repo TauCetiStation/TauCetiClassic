@@ -98,7 +98,7 @@
 	desc = "A sign with adhesive backing."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
-	item_state = "sheet-metal"
+	inhand_state = "sheet-metal"
 	w_class = ITEM_SIZE_LARGE
 	var/sign_path = /obj/structure/sign/basic //the type of sign that will be created when placed on a turf
 

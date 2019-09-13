@@ -475,7 +475,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				gloves.screen_loc = ui_gloves		//...draw the item in the inventory screen
 			client.screen += gloves					//Either way, add the item to the HUD
 
-		var/t_state = gloves.item_state
+		var/t_state = gloves.inhand_state
 		if(!t_state)	t_state = gloves.icon_state
 		var/image/standing
 		if(!gloves:icon_custom || gloves.icon_override || species.sprite_sheets["gloves"])
@@ -589,7 +589,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(client && hud_used)
 			client.screen += s_store
 
-		var/t_state = s_store.item_state
+		var/t_state = s_store.inhand_state
 		if(!t_state)	t_state = s_store.icon_state
 		var/image/standing = image("icon"='icons/mob/belt_mirror.dmi', "icon_state"="[t_state]", "layer"=-SUIT_STORE_LAYER)
 		standing.color = s_store.color
@@ -635,7 +635,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(client && hud_used)
 			client.screen += belt
 
-		var/t_state = belt.item_state
+		var/t_state = belt.inhand_state
 		if(!t_state)	t_state = belt.icon_state
 		var/image/standing
 		if(!belt:icon_custom || belt.icon_override || species.sprite_sheets["belt"])
@@ -788,7 +788,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(client && hud_used)
 			client.screen += r_hand
 
-		var/t_state = r_hand.item_state
+		var/t_state = r_hand.inhand_state
 		if(!t_state)
 			t_state = r_hand.icon_state
 		var/image/standing
@@ -813,7 +813,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(client && hud_used)
 			client.screen += l_hand
 
-		var/t_state = l_hand.item_state
+		var/t_state = l_hand.inhand_state
 		if(!t_state)
 			t_state = l_hand.icon_state
 		var/image/standing

@@ -14,7 +14,7 @@
 	name = "pen"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "pen"
-	item_state = "pen"
+	inhand_state = "pen"
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_EARS
 	throwforce = 0
 	w_class = ITEM_SIZE_TINY
@@ -164,11 +164,11 @@
 /obj/item/weapon/pen/edagger/update_icon()
 	if(on)
 		icon_state = "edagger"
-		item_state = "edagger"
+		inhand_state = "edagger"
 	else
 		clean_blood()
 		icon_state = initial(icon_state) //looks like a normal pen when off.
-		item_state = initial(item_state)
+		inhand_state = initial(inhand_state)
 
 /*
  * Chameleon pen

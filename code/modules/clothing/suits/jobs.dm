@@ -7,7 +7,7 @@
 	name = "apron"
 	desc = "A basic blue apron."
 	icon_state = "apron"
-	item_state = "overalls"
+	inhand_state = "overalls"
 	blood_overlay_type = "armor"
 	body_parts_covered = 0
 	allowed = list (/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/plant_analyzer,/obj/item/seeds,/obj/item/nutrient,/obj/item/weapon/minihoe)
@@ -17,7 +17,7 @@
 	name = "captain's parade tunic"
 	desc = "Worn by a Captain to show their class."
 	icon_state = "captunic"
-	item_state = "bio_suit"
+	inhand_state = "bio_suit"
 	body_parts_covered = UPPER_TORSO|ARMS
 	flags_inv = HIDEJUMPSUIT
 
@@ -25,7 +25,7 @@
 	name = "captain's uniform jacket"
 	desc = "A less formal jacket for everyday captain use."
 	icon_state = "capjacket"
-	item_state = "bio_suit"
+	inhand_state = "bio_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 
@@ -34,7 +34,7 @@
 	name = "chaplain hoodie"
 	desc = "This suit says to you 'hush'!"
 	icon_state = "chaplain_hoodie"
-	item_state = "chaplain_hoodie"
+	inhand_state = "chaplain_hoodie"
 	body_parts_covered = UPPER_TORSO|ARMS
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/suit.dmi')
 
@@ -43,7 +43,7 @@
 	name = "nun robe"
 	desc = "Maximum piety in this star system."
 	icon_state = "nun"
-	item_state = "nun"
+	inhand_state = "nun"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
@@ -52,7 +52,7 @@
 	name = "chef's apron"
 	desc = "An apron used by a high class chef."
 	icon_state = "chef"
-	item_state = "chef"
+	inhand_state = "chef"
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
@@ -63,7 +63,7 @@
 	name = "A classic chef's apron."
 	desc = "A basic, dull, white chef's apron."
 	icon_state = "apronchef"
-	item_state = "apronchef"
+	inhand_state = "apronchef"
 	blood_overlay_type = "armor"
 	body_parts_covered = 0
 
@@ -72,7 +72,7 @@
 	name = "brown coat"
 	desc = "An 18th-century multi-purpose trenchcoat. Someone who wears this means serious business."
 	icon_state = "detective_brown"
-	item_state = "det_suit"
+	inhand_state = "det_suit"
 	blood_overlay_type = "coat"
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
 	body_parts_covered = UPPER_TORSO|ARMS
@@ -91,13 +91,13 @@
 	name = "dark grey trenchcoat"
 	desc = "A hard-boiled private investigator's dark grey trenchcoat."
 	icon_state = "trenchcoat_darkgrey"
-	item_state = "trenchcoat_darkgrey"
+	inhand_state = "trenchcoat_darkgrey"
 
 //Forensics
 /obj/item/clothing/suit/storage/forensics
 	name = "jacket"
 	desc = "A forensics technician jacket."
-	item_state = "det_suit"
+	inhand_state = "det_suit"
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
 	body_parts_covered = UPPER_TORSO|ARMS
 	armor = list(melee = 10, bullet = 10, laser = 15, energy = 10, bomb = 0, bio = 0, rad = 0)
@@ -117,7 +117,7 @@
 	name = "hazard vest"
 	desc = "A high-visibility vest used in work zones."
 	icon_state = "hazard"
-	item_state = "hazard"
+	inhand_state = "hazard"
 	blood_overlay_type = "armor"
 	allowed = list (/obj/item/device/analyzer, /obj/item/device/flashlight, /obj/item/device/multitool, /obj/item/device/radio, /obj/item/device/t_scanner,
 	/obj/item/weapon/crowbar, /obj/item/weapon/screwdriver, /obj/item/weapon/weldingtool, /obj/item/weapon/wirecutters, /obj/item/weapon/wrench, /obj/item/weapon/tank/emergency_oxygen,
@@ -129,7 +129,7 @@
 	name = "blue suit jacket"
 	desc = "A snappy dress jacket."
 	icon_state = "suitjacket_blue_open"
-	item_state = "suitjacket_blue_open"
+	inhand_state = "suitjacket_blue_open"
 	blood_overlay_type = "coat"
 	body_parts_covered = UPPER_TORSO|ARMS
 
@@ -137,7 +137,7 @@
 	name = "purple suit jacket"
 	desc = "A snappy dress jacket."
 	icon_state = "suitjacket_purp"
-	item_state = "suitjacket_purp"
+	inhand_state = "suitjacket_purp"
 	blood_overlay_type = "coat"
 	body_parts_covered = UPPER_TORSO|ARMS
 
@@ -146,7 +146,7 @@
 	name = "internal affairs jacket"
 	desc = "A smooth black jacket."
 	icon_state = "ia_jacket_open"
-	item_state = "ia_jacket"
+	inhand_state = "ia_jacket"
 	blood_overlay_type = "coat"
 	body_parts_covered = UPPER_TORSO|ARMS
 
@@ -175,7 +175,7 @@
 	name = "first responder jacket"
 	desc = "A high-visibility jacket worn by medical first responders."
 	icon_state = "fr_jacket_open"
-	item_state = "fr_jacket"
+	inhand_state = "fr_jacket"
 	blood_overlay_type = "armor"
 	allowed = list(/obj/item/stack/medical, /obj/item/weapon/reagent_containers/dropper, /obj/item/weapon/reagent_containers/hypospray, /obj/item/weapon/reagent_containers/syringe,
 	/obj/item/device/healthanalyzer, /obj/item/device/flashlight, /obj/item/device/radio, /obj/item/weapon/tank/emergency_oxygen)
@@ -213,7 +213,7 @@
     desc = "This is Recycler vest."
     icon = 'icons/obj/clothing/suits.dmi'
     icon_state = "recycler_vest_open"
-    item_state = "recycler_vest"
+    inhand_state = "recycler_vest"
     blood_overlay_type = "coat" //it's the less thing that I can put here
     body_parts_covered = 0
     action_button_name = "Toggle vest buttons"
@@ -238,7 +238,7 @@
 	name = "surgical apron"
 	desc = "A sterile blue apron for performing surgery."
 	icon_state = "surgical"
-	item_state = "surgical"
+	inhand_state = "surgical"
 	blood_overlay_type = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	allowed = list(/obj/item/stack/medical, /obj/item/weapon/reagent_containers/dropper, /obj/item/weapon/reagent_containers/hypospray, /obj/item/weapon/reagent_containers/syringe,

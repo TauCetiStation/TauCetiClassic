@@ -2,7 +2,7 @@
 /obj/item/clothing/head/helmet/space/capspace
 	name = "space helmet"
 	icon_state = "capspace"
-	item_state = "capspacehelmet"
+	inhand_state = "capspacehelmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Only for the most fashionable of military figureheads."
 	flags = HEADCOVERSEYES | BLOCKHAIR
 	flags_pressure = STOPS_LOWPRESSUREDMAGE
@@ -16,7 +16,7 @@
 	name = "captain's armor"
 	desc = "A bulky, heavy-duty piece of exclusive Nanotrasen armor. YOU are in charge!"
 	icon_state = "caparmor"
-	item_state = "capspacesuit"
+	inhand_state = "capspacesuit"
 	w_class = ITEM_SIZE_LARGE
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02

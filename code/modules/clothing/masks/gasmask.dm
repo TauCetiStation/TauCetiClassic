@@ -7,7 +7,7 @@
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = FACE|EYES
 	w_class = ITEM_SIZE_NORMAL
-	item_state = "gas_mask_tc"
+	inhand_state = "gas_mask_tc"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.9
@@ -20,7 +20,7 @@
 	name = "welding mask"
 	desc = "A gas mask with built-in welding goggles and a face shield. Looks like a skull - clearly designed by a nerd."
 	icon_state = "weldingmask"
-	item_state = "weldingmask"
+	inhand_state = "weldingmask"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_inv = (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 	origin_tech = "materials=2;engineering=2"
@@ -180,7 +180,7 @@
 	name = "plague doctor mask"
 	desc = "A modernised version of the classic design, this mask will not only filter out phoron but it can also be connected to an air supply."
 	icon_state = "plaguedoctor"
-	item_state = "gas_mask"
+	inhand_state = "gas_mask"
 	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 75, rad = 0)
 	body_parts_covered = HEAD|FACE
 
@@ -195,7 +195,7 @@
 	name = "syndicate mask"
 	desc = "A close-fitting tactical mask that can be connected to an air supply."
 	icon_state = "mask_syndi"
-	item_state = "mask_syndi"
+	inhand_state = "mask_syndi"
 	siemens_coefficient = 0.7
 
 /obj/item/clothing/mask/gas/voice
@@ -211,7 +211,7 @@
 	name = "ninja mask"
 	desc = "A close-fitting mask that acts both as an air filter and a post-modern fashion statement."
 	icon_state = "s-ninja"
-	item_state = "s-ninja_mask"
+	inhand_state = "s-ninja_mask"
 	vchange = 1
 	siemens_coefficient = 0.2
 
@@ -219,14 +219,14 @@
 	name = "clown wig and mask"
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
 	icon_state = "clown"
-	item_state = "clown_hat"
+	inhand_state = "clown_hat"
 	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy-clown wig and mask"
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
 	icon_state = "sexyclown"
-	item_state = "sexyclown"
+	inhand_state = "sexyclown"
 	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
 /obj/item/clothing/mask/gas/mime
@@ -244,7 +244,7 @@
 	name = "monkey mask"
 	desc = "A mask used when acting as a monkey."
 	icon_state = "monkeymask"
-	item_state = "monkeymask"
+	inhand_state = "monkeymask"
 	body_parts_covered = HEAD|FACE|EYES
 
 /obj/item/clothing/mask/gas/sexymime
@@ -256,7 +256,7 @@
 /obj/item/clothing/mask/gas/death_commando
 	name = "death commando mask"
 	icon_state = "death_commando_mask"
-	item_state = "death_commando_mask"
+	inhand_state = "death_commando_mask"
 	siemens_coefficient = 0.2
 
 /obj/item/clothing/mask/gas/cyborg
@@ -286,7 +286,7 @@
 	name = "vox breath mask"
 	desc = "A weirdly-shaped breath mask."
 	icon_state = "voxmask"
-	item_state = "voxmask"
+	inhand_state = "voxmask"
 	flags = MASKCOVERSMOUTH | MASKINTERNALS | BLOCK_GAS_SMOKE_EFFECT
 	flags_inv = 0
 	body_parts_covered = 0

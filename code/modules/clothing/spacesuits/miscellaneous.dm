@@ -3,7 +3,7 @@
 	name = "deathsquad helmet"
 	desc = "That's not red paint. That's real blood."
 	icon_state = "deathsquad"
-	item_state = "deathsquad"
+	inhand_state = "deathsquad"
 	armor = list(melee = 80, bullet = 70, laser = 70,energy = 70, bomb = 70, bio = 30, rad = 30)
 
 /obj/item/clothing/head/helmet/space/deathsquad/beret
@@ -27,7 +27,7 @@
 	name = "Santa's suit"
 	desc = "Festive!"
 	icon_state = "santa"
-	item_state = "santa"
+	inhand_state = "santa"
 	slowdown = 0
 	flags = ONESIZEFITSALL
 	allowed = list(/obj/item) //for stuffing exta special presents
@@ -35,20 +35,20 @@
 /obj/item/clothing/head/helmet/syndiassault
 	name = "assault helmet"
 	icon_state = "assaulthelmet_b"
-	item_state = "assaulthelmet_b"
+	inhand_state = "assaulthelmet_b"
 	armor = list(melee = 50, bullet = 60, laser = 45, energy = 70, bomb = 50, bio = 0, rad = 50)
 	siemens_coefficient = 0.2
 
 /obj/item/clothing/head/helmet/syndiassault/alternate
 	icon_state = "assaulthelmet"
-	item_state = "assaulthelmet"
+	inhand_state = "assaulthelmet"
 
 //Space pirate outfit
 /obj/item/clothing/head/helmet/space/pirate
 	name = "pirate hat"
 	desc = "Yarr."
 	icon_state = "pirate"
-	item_state = "pirate"
+	inhand_state = "pirate"
 	armor = list(melee = 60, bullet = 35, laser = 60,energy = 60, bomb = 30, bio = 30, rad = 30)
 	flags = HEADCOVERSEYES | BLOCKHAIR
 
@@ -56,7 +56,7 @@
 	name = "pirate coat"
 	desc = "Yarr."
 	icon_state = "pirate"
-	item_state = "pirate"
+	inhand_state = "pirate"
 	w_class = ITEM_SIZE_NORMAL
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank)
 	slowdown = 0
@@ -79,24 +79,24 @@
 	name = "mime hardsuit helmet"
 	desc = "A hardsuit helmet specifically designed for the mime."
 	icon_state = "mim"
-	item_state = "mim"
+	inhand_state = "mim"
 
 /obj/item/clothing/suit/space/mime
 	name = "mime hardsuit"
 	desc = "A hardsuit specifically designed for the mime."
 	icon_state = "mime"
-	item_state = "mime"
+	inhand_state = "mime"
 	allowed = list(/obj/item/weapon/tank)
 
 /obj/item/clothing/head/helmet/space/clown
 	name = "clown hardsuit helmet"
 	desc = "A hardsuit helmet specifically designed for the clown. SPESSHONK!"
 	icon_state = "kluwne"
-	item_state = "kluwne"
+	inhand_state = "kluwne"
 
 /obj/item/clothing/suit/space/clown
 	name = "clown hardsuit"
 	desc = "A hardsuit specifically designed for the clown. SPESSHONK!"
 	icon_state = "clowan"
-	item_state = "clowan"
+	inhand_state = "clowan"
 	allowed = list(/obj/item/weapon/tank)

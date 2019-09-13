@@ -2,7 +2,7 @@
 	name = "hailer"
 	desc = "Used by obese officers to save their breath for running."
 	icon_state = "voice0"
-	item_state = "flashbang"	//looks exactly like a flash (and nothing like a flashbang)
+	inhand_state = "flashbang"	//looks exactly like a flash (and nothing like a flashbang)
 	action_button_name = "Toggle Hailer"
 	w_class = ITEM_SIZE_TINY
 	flags = CONDUCT

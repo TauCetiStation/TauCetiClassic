@@ -195,7 +195,7 @@
 	desc = "A solar panel assembly kit, allows constructions of a solar panel, or with a tracking circuit board, a solar tracker."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "sp_base"
-	item_state = "electropack"
+	inhand_state = "electropack"
 	w_class = ITEM_SIZE_LARGE // Pretty big!
 	anchored = 0
 	var/tracker = 0

@@ -8,12 +8,12 @@
 
 /obj/item/clothing/head/helmet/space/skrell/white
 	icon_state = "skrell_helmet_white"
-	item_state = "skrell_helmet_white"
+	inhand_state = "skrell_helmet_white"
 	item_color = "skrell_helmet_white"
 
 /obj/item/clothing/head/helmet/space/skrell/black
 	icon_state = "skrell_helmet_black"
-	item_state = "skrell_helmet_black"
+	inhand_state = "skrell_helmet_black"
 	item_color = "skrell_helmet_black"
 
 /obj/item/clothing/suit/space/skrell
@@ -27,12 +27,12 @@
 
 /obj/item/clothing/suit/space/skrell/white
 	icon_state = "skrell_suit_white"
-	item_state = "skrell_suit_white"
+	inhand_state = "skrell_suit_white"
 	item_color = "skrell_suit_white"
 
 /obj/item/clothing/suit/space/skrell/black
 	icon_state = "skrell_suit_black"
-	item_state = "skrell_suit_black"
+	inhand_state = "skrell_suit_black"
 	item_color = "skrell_suit_black"
 
 //Unathi space gear. Huge and restrictive.
@@ -47,7 +47,7 @@
 	name = "NT breacher helmet"
 	desc = "Hey! Watch it with that thing! It's a knock-off of a Unathi battle-helm, and that spike could put someone's eye out."
 	icon_state = "unathi_helm_cheap"
-	item_state = "unathi_helm_cheap"
+	inhand_state = "unathi_helm_cheap"
 	item_color = "unathi_helm_cheap"
 
 	action_button_name = "Toggle Helmet Light"
@@ -82,21 +82,21 @@
 	name = "NT breacher chassis"
 	desc = "A cheap NT knock-off of a Unathi battle-rig. Looks like a fish, moves like a fish, steers like a cow."
 	icon_state = "rig-unathi-cheap"
-	item_state = "rig-unathi-cheap"
+	inhand_state = "rig-unathi-cheap"
 	slowdown = 2.3
 
 /obj/item/clothing/head/helmet/space/unathi/breacher
 	name = "breacher helm"
 	desc = "Weathered, ancient and battle-scarred. The helmet is too."
 	icon_state = "unathi_breacher"
-	item_state = "unathi_breacher"
+	inhand_state = "unathi_breacher"
 	item_color = "unathi_breacher"
 
 /obj/item/clothing/suit/space/unathi/breacher
 	name = "breacher chassis"
 	desc = "Huge, bulky and absurdly heavy. It must be like wearing a tank."
 	icon_state = "unathi_breacher"
-	item_state = "unathi_breacher"
+	inhand_state = "unathi_breacher"
 	item_color = "unathi_breacher"
 	slowdown = 1
 
@@ -127,14 +127,14 @@
 /obj/item/clothing/head/helmet/space/vox/pressure
 	name = "alien helmet"
 	icon_state = "vox-pressure"
-	item_state = "vox-pressure"
+	inhand_state = "vox-pressure"
 	desc = "Hey, wasn't this a prop in \'The Abyss\'?"
 	armor = list(melee = 80, bullet = 75, laser = 50, energy = 10, bomb = 35, bio = 30, rad = 30)
 
 /obj/item/clothing/suit/space/vox/pressure
 	name = "alien pressure suit"
 	icon_state = "vox-pressure"
-	item_state = "vox-pressure"
+	inhand_state = "vox-pressure"
 	desc = "A huge, armoured, pressurized suit, designed for distinctly nonhuman proportions."
 	slowdown = 2
 	armor = list(melee = 80, bullet = 75, laser = 50, energy = 10, bomb = 35, bio = 30, rad = 30)
@@ -142,7 +142,7 @@
 /obj/item/clothing/head/helmet/space/vox/carapace
 	name = "alien visor"
 	icon_state = "vox-carapace"
-	item_state = "vox-carapace"
+	inhand_state = "vox-carapace"
 	desc = "A glowing visor, perhaps stolen from a depressed Cylon."
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	armor = list(melee = 65, bullet = 50, laser = 70, energy = 20, bomb = 30, bio = 30, rad = 30)
@@ -150,21 +150,21 @@
 /obj/item/clothing/suit/space/vox/carapace
 	name = "alien carapace armour"
 	icon_state = "vox-carapace"
-	item_state = "vox-carapace"
+	inhand_state = "vox-carapace"
 	desc = "An armoured, segmented carapace with glowing purple lights. It looks pretty run-down."
 	armor = list(melee = 65, bullet = 50, laser = 70, energy = 20, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/head/helmet/space/vox/medic
 	name = "alien goggled helmet"
 	icon_state = "vox-medic"
-	item_state = "vox-medic"
+	inhand_state = "vox-medic"
 	desc = "An alien helmet with enormous goggled lenses."
 	armor = list(melee = 50, bullet = 40, laser = 45, energy = 15, bomb = 25, bio = 30, rad = 30)
 
 /obj/item/clothing/suit/space/vox/medic
 	name = "alien armour"
 	icon_state = "vox-medic"
-	item_state = "vox-medic"
+	inhand_state = "vox-medic"
 	desc = "An almost organic looking nonhuman pressure suit."
 	slowdown = 1
 	var/mob/living/carbon/human/wearer
@@ -210,7 +210,7 @@
 /obj/item/clothing/head/helmet/space/vox/stealth
 	name = "alien stealth helmet"
 	icon_state = "vox-stealth"
-	item_state = "vox-stealth"
+	inhand_state = "vox-stealth"
 	desc = "A smoothly contoured, matte-black alien helmet."
 
 	armor = list(melee = 45, bullet = 20, laser = 25, energy = 5, bomb = 15, bio = 30, rad = 30)
@@ -218,7 +218,7 @@
 /obj/item/clothing/suit/space/vox/stealth
 	name = "alien stealth suit"
 	icon_state = "vox-stealth"
-	item_state = "vox-stealth"
+	inhand_state = "vox-stealth"
 	desc = "A sleek black suit. It seems to have a tail, and is very heavy."
 
 	armor = list(melee = 45, bullet = 20, laser = 25, energy = 5, bomb = 15, bio = 30, rad = 30)
@@ -365,7 +365,7 @@
 	desc = "This doesn't look very comfortable."
 	icon_state = "vox-casual-1"
 	item_color = "vox-casual-1"
-	item_state = "vox-casual-1"
+	inhand_state = "vox-casual-1"
 	body_parts_covered = LEGS
 
 /obj/item/clothing/under/vox/vox_robes
@@ -373,13 +373,13 @@
 	desc = "Weird and flowing!"
 	icon_state = "vox-casual-2"
 	item_color = "vox-casual-2"
-	item_state = "vox-casual-2"
+	inhand_state = "vox-casual-2"
 
 /obj/item/clothing/gloves/yellow/vox
 	desc = "These bizarre gauntlets seem to be fitted for... bird claws?"
 	name = "insulated gauntlets"
 	icon_state = "gloves-vox"
-	item_state = "gloves-vox"
+	inhand_state = "gloves-vox"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	item_color = "gloves-vox"
@@ -392,7 +392,7 @@
 
 	desc = "A pair of heavy, jagged armoured foot pieces, seemingly suitable for a velociraptor."
 	name = "vox magclaws"
-	item_state = "boots-vox"
+	inhand_state = "boots-vox"
 	icon_state = "boots-vox"
 
 	species_restricted = list(VOX , VOX_ARMALIS)

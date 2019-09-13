@@ -111,7 +111,7 @@
 	name = "roman shield"
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
 	icon_state = "roman_shield"
-	item_state = "roman_shield"
+	inhand_state = "roman_shield"
 
 /*
 /obj/item/weapon/cloaking_device
@@ -121,7 +121,7 @@
 	icon_state = "shield0"
 	var/active = 0.0
 	flags = CONDUCT
-	item_state = "electronic"
+	inhand_state = "electronic"
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 10

@@ -8,7 +8,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "white_candle"
-	item_state = "white_candle"
+	inhand_state = "white_candle"
 
 	var/candle_color
 	w_class = ITEM_SIZE_TINY
@@ -49,9 +49,9 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		lighning_stage = 3
 	icon_state = "[initial(icon_state)][lighning_stage][lit ? "_lit" : ""]"
 	if(lit)
-		item_state = "[initial(icon_state)]_lit"
+		inhand_state = "[initial(icon_state)]_lit"
 	else
-		item_state = "[initial(icon_state)]"
+		inhand_state = "[initial(icon_state)]"
 	if(istype(loc, /mob))
 		var/mob/M = loc
 		if(ishuman(M))
@@ -114,7 +114,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	name = "black candle"
 
 	icon_state = "black_candle"
-	item_state = "black_candle"
+	inhand_state = "black_candle"
 
 	light_color = LIGHT_COLOR_GHOST_CANDLE
 
@@ -190,7 +190,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	name = "red candle"
 
 	icon_state = "red_candle"
-	item_state = "red_candle"
+	inhand_state = "red_candle"
 
 	faded_candle = /obj/item/trash/candle/red
 

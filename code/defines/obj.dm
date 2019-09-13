@@ -289,7 +289,7 @@ var/global/ManifestJSON
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "ball"
 	name = "beach ball"
-	item_state = "beachball"
+	inhand_state = "beachball"
 	density = 0
 	anchored = 0
 	w_class = ITEM_SIZE_SMALL
