@@ -3,7 +3,7 @@
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight."
 	icon_state = "hardhat"
 	inhand_state = "hardhat"
-	item_color = "standard"
+	onmob_state = "standard"
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
 	armor = list(melee = 30, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
@@ -31,34 +31,34 @@
 	user.update_inv_head()
 
 /obj/item/clothing/head/hardhat/update_icon()
-	icon_state = "[initial(icon_state)][on]_[item_color]"
+	icon_state = "[initial(icon_state)][on]_[onmob_state]"
 	inhand_state = icon_state
 
 /obj/item/clothing/head/hardhat/yellow
-	item_color = "yellow"
+	onmob_state = "yellow"
 
 /obj/item/clothing/head/hardhat/yellow/visor
 	name = "visor hard hat"
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight and visor, which may protect eyes."
-	item_color = "yellow_visor"
+	onmob_state = "yellow_visor"
 	body_parts_covered = HEAD|FACE|EYES
 	flags = MASKCOVERSEYES
 
 /obj/item/clothing/head/hardhat/orange
-	item_color = "orange"
+	onmob_state = "orange"
 
 /obj/item/clothing/head/hardhat/red
 	name = "firefighter helmet"
-	item_color = "red"
+	onmob_state = "red"
 	flags_pressure = STOPS_HIGHPRESSUREDMAGE
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/head/hardhat/white
-	item_color = "white"
+	onmob_state = "white"
 	flags_pressure = STOPS_HIGHPRESSUREDMAGE
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/head/hardhat/dblue
-	item_color = "dblue"
+	onmob_state = "dblue"

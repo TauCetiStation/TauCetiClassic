@@ -251,11 +251,11 @@
 	name = "old overall"
 	desc = "Mr. Spacely's favorite overalls"
 	icon_state = "jetsons_s"
-	item_color = "jetsons_s"
+	onmob_state = "jetsons_s"
 
 /obj/item/clothing/under/jetsons/j2
 	name = "old dress"
 	desc = "Jetson is coming appart"
 	icon_state = "jetsons_f"
-	item_color = "jetsons_f"
+	onmob_state = "jetsons_f"
 

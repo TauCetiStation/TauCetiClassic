@@ -5,7 +5,7 @@
 	name = "bartender's uniform"
 	icon_state = "ba_suit"
 	inhand_state = "ba_suit"
-	item_color = "ba_suit"
+	onmob_state = "ba_suit"
 	flags = ONESIZEFITSALL
 
 
@@ -14,7 +14,7 @@
 	name = "captain's jumpsuit"
 	icon_state = "captain"
 	inhand_state = "caparmor"
-	item_color = "captain"
+	onmob_state = "captain"
 	flags = ONESIZEFITSALL
 
 
@@ -23,7 +23,7 @@
 	desc = "It's a jumpsuit worn by the quartermaster. It's specially designed to prevent back injuries caused by pushing paper."
 	icon_state = "qm"
 	inhand_state = "lb_suit"
-	item_color = "qm"
+	onmob_state = "qm"
 	flags = ONESIZEFITSALL
 
 
@@ -32,7 +32,7 @@
 	desc = "Shooooorts! They're comfy and easy to wear!"
 	icon_state = "cargotech"
 	inhand_state = "lb_suit"
-	item_color = "cargo"
+	onmob_state = "cargo"
 	flags = ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
@@ -41,7 +41,7 @@
 	desc = "Stinks."
 	icon_state = "recycler"
 	inhand_state = "lb_suit"
-	item_color = "recycler"
+	onmob_state = "recycler"
 	flags = ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
@@ -50,7 +50,7 @@
 	desc = "Stinks."
 	icon_state = "recyclercasual"
 	inhand_state = "lb_suit"
-	item_color = "recyclercasual"
+	onmob_state = "recyclercasual"
 	flags = ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
@@ -59,7 +59,7 @@
 	name = "chaplain's jumpsuit"
 	icon_state = "chaplain"
 	inhand_state = "bl_suit"
-	item_color = "chapblack"
+	onmob_state = "chapblack"
 	flags = ONESIZEFITSALL
 
 
@@ -67,7 +67,7 @@
 	desc = "It's an apron which is given only to the most <b>hardcore</b> chefs in space."
 	name = "chef's uniform"
 	icon_state = "chef"
-	item_color = "chef"
+	onmob_state = "chef"
 	flags = ONESIZEFITSALL
 
 
@@ -76,7 +76,7 @@
 	desc = "<i>'HONK!'</i>"
 	icon_state = "clown"
 	inhand_state = "clown"
-	item_color = "clown"
+	onmob_state = "clown"
 	flags = ONESIZEFITSALL
 
 
@@ -85,7 +85,7 @@
 	name = "head of personnel's jumpsuit"
 	icon_state = "hop"
 	inhand_state = "b_suit"
-	item_color = "hop"
+	onmob_state = "hop"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/rank/head_of_personnel_whimsy
@@ -93,7 +93,7 @@
 	name = "head of personnel's suit"
 	icon_state = "hopwhimsy"
 	inhand_state = "hopwhimsy"
-	item_color = "hopwhimsy"
+	onmob_state = "hopwhimsy"
 	flags = ONESIZEFITSALL
 
 
@@ -102,7 +102,7 @@
 	name = "botanist's jumpsuit"
 	icon_state = "hydroponics"
 	inhand_state = "g_suit"
-	item_color = "hydroponics"
+	onmob_state = "hydroponics"
 	permeability_coefficient = 0.50
 	flags = ONESIZEFITSALL
 
@@ -112,7 +112,7 @@
 	name = "internal affairs uniform"
 	icon_state = "internalaffairs"
 	inhand_state = "internalaffairs"
-	item_color = "internalaffairs"
+	onmob_state = "internalaffairs"
 	flags = ONESIZEFITSALL
 
 
@@ -120,7 +120,7 @@
 	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."
 	name = "janitor's jumpsuit"
 	icon_state = "janitor"
-	item_color = "janitor"
+	onmob_state = "janitor"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = ONESIZEFITSALL
 
@@ -133,25 +133,25 @@
 /obj/item/clothing/under/lawyer/black
 	icon_state = "lawyer_black"
 	inhand_state = "lawyer_black"
-	item_color = "lawyer_black"
+	onmob_state = "lawyer_black"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/lawyer/female
 	icon_state = "black_suit_fem"
 	inhand_state = "black_suit_fem"
-	item_color = "black_suit_fem"
+	onmob_state = "black_suit_fem"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/lawyer/red
 	icon_state = "lawyer_red"
 	inhand_state = "lawyer_red"
-	item_color = "lawyer_red"
+	onmob_state = "lawyer_red"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/lawyer/blue
 	icon_state = "lawyer_blue"
 	inhand_state = "lawyer_blue"
-	item_color = "lawyer_blue"
+	onmob_state = "lawyer_blue"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/lawyer/bluesuit
@@ -159,14 +159,14 @@
 	desc = "A classy suit and tie."
 	icon_state = "bluesuit"
 	inhand_state = "bluesuit"
-	item_color = "bluesuit"
+	onmob_state = "bluesuit"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/lawyer/purpsuit
 	name = "purple suit"
 	icon_state = "lawyer_purp"
 	inhand_state = "lawyer_purp"
-	item_color = "lawyer_purp"
+	onmob_state = "lawyer_purp"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/lawyer/oldman
@@ -174,7 +174,7 @@
 	desc = "A classic suit for the older gentleman with built in back support."
 	icon_state = "oldman"
 	inhand_state = "oldman"
-	item_color = "oldman"
+	onmob_state = "oldman"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/librarian
@@ -182,7 +182,7 @@
 	desc = "It's very... sensible."
 	icon_state = "red_suit"
 	inhand_state = "red_suit"
-	item_color = "red_suit"
+	onmob_state = "red_suit"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/mime
@@ -190,7 +190,7 @@
 	desc = "It's not very colourful."
 	icon_state = "mimesuit"
 	inhand_state = "mimesuit"
-	item_color = "mimesuit"
+	onmob_state = "mimesuit"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/rank/miner
@@ -198,7 +198,7 @@
 	name = "shaft miner's jumpsuit"
 	icon_state = "miner"
 	inhand_state = "miner"
-	item_color = "miner"
+	onmob_state = "miner"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/rank/barber
@@ -206,5 +206,5 @@
 	name = "barber's uniform"
 	icon_state = "barber"
 	inhand_state = "barber"
-	item_color = "barber"
+	onmob_state = "barber"
 	flags = ONESIZEFITSALL

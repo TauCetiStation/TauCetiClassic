@@ -388,11 +388,11 @@
 	desc = "An officer's SS cap."
 	icon_state = "SS_cap"
 	inhand_state = "that"
-	item_color = "SS_cap"
+	onmob_state = "SS_cap"
 
 /obj/item/clothing/head/Nazi_Officer_Cap
 	name = "Nazi Officer Cap"
 	desc = "A nazi officer's cap."
 	icon_state = "officer_cap"
 	inhand_state = "that"
-	item_color = "officer_cap"
+	onmob_state = "officer_cap"

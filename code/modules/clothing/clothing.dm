@@ -583,10 +583,10 @@ BLIND     // can't see anything
 	if(!istype(usr, /mob/living)) return
 	if(usr.stat) return
 
-	if(copytext(item_color,-2) != "_d")
-		basecolor = item_color
+	if(copytext(onmob_state,-2) != "_d")
+		basecolor = onmob_state
 	if(basecolor + "_d_s" in icon_states('icons/mob/uniform.dmi'))
-		item_color = item_color == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
+		onmob_state = onmob_state == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
 		usr.update_inv_w_uniform()
 	else
 		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")

@@ -2,7 +2,7 @@
 	name = "load bearing equipment"
 	desc = "Used to hold things when you don't have enough hands."
 	icon_state = "webbing"
-	item_color = "webbing"
+	onmob_state = "webbing"
 	slot = "utility"
 	var/slots = 3
 	var/max_w_class = ITEM_SIZE_SMALL //pocket sized
@@ -51,34 +51,34 @@
 	name = "webbing"
 	desc = "Strudy mess of synthcotton belts and buckles, ready to share your burden."
 	icon_state = "webbing"
-	item_color = "webbing"
+	onmob_state = "webbing"
 
 /obj/item/clothing/accessory/storage/black_vest
 	name = "black webbing vest"
 	desc = "Robust black synthcotton vest with lots of pockets to hold whatever you need, but cannot hold in hands."
 	icon_state = "vest_black"
-	item_color = "vest_black"
+	onmob_state = "vest_black"
 	slots = 5
 
 /obj/item/clothing/accessory/storage/brown_vest
 	name = "brown webbing vest"
 	desc = "Worn brownish synthcotton vest with lots of pockets to unload your hands."
 	icon_state = "vest_brown"
-	item_color = "vest_brown"
+	onmob_state = "vest_brown"
 	slots = 5
 
 /obj/item/clothing/accessory/storage/syndi_vest
 	name = "suspicious webbing vest"
 	desc = "A villainous red synthcotton vest with lots of pockets to unload your hands."
 	icon_state = "syndi_vest"
-	item_color = "syndi_vest"
+	onmob_state = "syndi_vest"
 	slots = 5
 
 /obj/item/clothing/accessory/storage/knifeharness
 	name = "decorated harness"
 	desc = "A heavily decorated harness of sinew and leather with two knife-loops."
 	icon_state = "unathiharness2"
-	item_color = "unathiharness2"
+	onmob_state = "unathiharness2"
 	slots = 2
 	max_w_class = ITEM_SIZE_NORMAL //for knives
 
@@ -97,4 +97,4 @@
 	name = "Mauser holster"
 	desc = "A gun holster."
 	icon_state = "Leather_belt_Mauser"
-	item_color = "Leather_belt_Mauser"
+	onmob_state = "Leather_belt_Mauser"

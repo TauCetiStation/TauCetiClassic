@@ -13,7 +13,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/animate
 	icon_state = "staffofanimation"
 	inhand_state = "staffofanimation"
-	item_color = "staffofanimation"
+	onmob_state = "staffofanimation"
 
 /obj/item/weapon/gun/magic/healing
 	name = "staff of healing"

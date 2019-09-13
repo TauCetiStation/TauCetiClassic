@@ -408,7 +408,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			client.screen += w_uniform				//Either way, add the item to the HUD
 
 		var/obj/item/clothing/under/U = w_uniform
-		var/t_color = U.item_color
+		var/t_color = U.onmob_state
 		if(!t_color)		t_color = icon_state
 		var/image/standing = image("icon_state"="[t_color]_s", "layer"=-UNIFORM_LAYER)
 		if(!U.icon_custom || U.icon_override || species.sprite_sheets["uniform"])
@@ -425,7 +425,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		if(U.accessories.len)
 			for(var/obj/item/clothing/accessory/A in w_uniform:accessories)
-				var/tie_color = A.item_color
+				var/tie_color = A.onmob_state
 				if(!tie_color)
 					tie_color = A.icon_state
 				var/image/tie

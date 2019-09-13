@@ -2399,7 +2399,7 @@
 				for(var/obj/item/clothing/under/W in world)
 					W.icon_state = "schoolgirl"
 					W.inhand_state = "w_suit"
-					W.item_color = "schoolgirl"
+					W.onmob_state = "schoolgirl"
 				message_admins("[key_name_admin(usr)] activated Japanese Animes mode")
 				station_announce(sound = "animes")
 			if("eagles")//SCRAW

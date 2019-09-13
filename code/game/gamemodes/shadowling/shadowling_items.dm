@@ -3,7 +3,7 @@
 	desc = "Black, chitonous skin."
 	icon_state = "golem"
 	inhand_state = "golem"
-	item_color = "golem"
+	onmob_state = "golem"
 	has_sensor = 0
 	canremove = 0
 	origin_tech = null

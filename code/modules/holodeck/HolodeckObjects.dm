@@ -208,13 +208,13 @@
 
 /obj/item/weapon/holo/esword/green/atom_init()
 	. = ..()
-	item_color = "green"
+	onmob_state = "green"
 
 /obj/item/weapon/holo/esword/red
 
 /obj/item/weapon/holo/esword/red/atom_init()
 	. = ..()
-	item_color = "red"
+	onmob_state = "red"
 
 /obj/item/weapon/holo/esword/Get_shield_chance()
 	if(active)
@@ -226,13 +226,13 @@
 
 /obj/item/weapon/holo/esword/atom_init()
 	. = ..()
-	item_color = pick("red","blue","green","purple")
+	onmob_state = pick("red","blue","green","purple")
 
 /obj/item/weapon/holo/esword/attack_self(mob/living/user)
 	active = !active
 	if (active)
 		force = 30
-		icon_state = "sword[item_color]"
+		icon_state = "sword[onmob_state]"
 		w_class = ITEM_SIZE_LARGE
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")

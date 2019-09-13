@@ -255,7 +255,7 @@
 		item.icon_custom = custom_item_info.icon
 		item.icon_state = custom_item_info.icon_state
 		item.inhand_state = custom_item_info.icon_state
-		item.item_color = custom_item_info.icon_state
+		item.onmob_state = custom_item_info.icon_state
 		if(custom_item_info.item_type == "small")
 			item.w_class = ITEM_SIZE_SMALL
 

@@ -175,7 +175,7 @@
 	desc = "Prepare to jingle all the bells."
 	icon_state = "sexy_santa"
 	inhand_state = "sexy_santa"
-	item_color = "sexy_santa"
+	onmob_state = "sexy_santa"
 	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 10, rad = 0)

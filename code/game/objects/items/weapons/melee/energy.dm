@@ -59,7 +59,7 @@
 		if(!hacked)
 			hacked = 1
 			to_chat(user,"<span class='warning'>RNBW_ENGAGE</span>")
-			item_color = "rainbow"
+			onmob_state = "rainbow"
 			if (active)
 				active = 0
 				icon_state = "sword0"

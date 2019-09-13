@@ -141,7 +141,7 @@
 	desc = "A faded badge, backed with leather, that reads 'NT Security Force' across the front. It bears the emblem of the Forensic division."
 	icon_state = "ana_badge"
 	inhand_state = "ana_badge"
-	item_color = "ana_badge"
+	onmob_state = "ana_badge"
 
 /obj/item/fluff/ana_issek_2/attack_self(mob/user)
 	if(isliving(user))
@@ -455,7 +455,7 @@
 	inhand_state = "lgloves"
 	siemens_coefficient = 0.30
 	permeability_coefficient = 0.01
-	item_color="white"
+	onmob_state="white"
 	species_restricted = list("exclude" , UNATHI)
 
 /obj/item/clothing/gloves/fluff/walter_brooks_1 //botanistpower: Walter Brooks
@@ -464,7 +464,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "walter_brooks_1"
 	inhand_state = "bluegloves"
-	item_color="blue"
+	onmob_state="blue"
 
 /obj/item/clothing/gloves/fluff/chal_appara_1 //furlucis: Chal Appara
 	name = "Left Black Glove"
@@ -590,7 +590,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "leatherjack"
 	inhand_state = "leatherjack"
-	item_color = "leatherjack"
+	onmob_state = "leatherjack"
 
 /obj/item/clothing/suit/fluff/oldscarf //Writerer2: Javaria Zara
 	name = "old scarf"
@@ -615,7 +615,7 @@
 	name = "Kung Jeans"
 	desc = "Pair of old jeans combined with a red tank-top"
 	icon_state = "kung_suit"
-	item_color = "kung_suit"
+	onmob_state = "kung_suit"
 	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/clothing/under/fluff/milo_hachert //Field Dress Uniform - Milo Hachert - Commissar_Drew
@@ -624,7 +624,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "milohachert"
 	inhand_state = "milohachert"
-	item_color = "milohachert"
+	onmob_state = "milohachert"
 
 
 /obj/item/clothing/under/fluff/kaine_kalim_2
@@ -633,7 +633,7 @@
     icon = 'icons/obj/custom_items.dmi'
     icon_state = "kaineuniform"
     inhand_state = "kaineuniform"
-    item_color = "kaineuniform"
+    onmob_state = "kaineuniform"
 
 /obj/item/clothing/under/fluff/jumpsuitdown //searif: Yuki Matsuda
 	name = "rolled down jumpsuit"
@@ -641,7 +641,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "jumpsuitdown"
 	inhand_state = "jumpsuitdown"
-	item_color = "jumpsuitdown"
+	onmob_state = "jumpsuitdown"
 
 /obj/item/clothing/under/fluff/lilith_vinous_1 //slyhidden: Lilith Vinous
 	name = "casual security uniform"
@@ -649,7 +649,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "lilith_uniform"
 	inhand_state = "lilith_uniform"
-	item_color = "lilith_uniform"
+	onmob_state = "lilith_uniform"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
 /obj/item/clothing/under/fluff/ana_issek_1 //suethecake: Ana Issek
@@ -658,7 +658,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "ana_uniform"
 	inhand_state = "ana_uniform"
-	item_color = "ana_uniform"
+	onmob_state = "ana_uniform"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
 /obj/item/clothing/under/fluff/olddressuniform //desiderium: Momiji Inubashiri
@@ -667,14 +667,14 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "olddressuniform"
 	inhand_state = "olddressuniform"
-	item_color = "olddressuniform"
+	onmob_state = "olddressuniform"
 
 /obj/item/clothing/under/rank/security/fluff/jeremy_wolf_1 //whitewolf41: Jeremy Wolf
 	name = "worn officer's uniform"
 	desc = "An old red security jumpsuit. Seems to have some slight modifications."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "jeremy_wolf_1"
-	item_color = "jeremy_wolf_1"
+	onmob_state = "jeremy_wolf_1"
 
 /obj/item/clothing/under/fluff/tian_dress //phaux: Tian Yinhu
 	name = "purple dress"
@@ -682,7 +682,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "tian_dress"
 	inhand_state = "tian_dress"
-	item_color = "tian_dress"
+	onmob_state = "tian_dress"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/under/rank/bartender/fluff/classy	//searif: Ara Al-Jazari
@@ -691,7 +691,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "ara_bar_uniform"
 	inhand_state = "ara_bar_uniform"
-	item_color = "ara_bar_uniform"
+	onmob_state = "ara_bar_uniform"
 
 /obj/item/clothing/under/fluff/callum_suit //roaper: Callum Leamus
 	name = "knockoff suit"
@@ -699,7 +699,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "callum_suit"
 	inhand_state = "callum_suit"
-	item_color = "callum_suit"
+	onmob_state = "callum_suit"
 
 /obj/item/clothing/under/fluff/solara_light_1 //bluefishie: Solara Born-In-Light
 	name = "Elaborate Purple Dress"
@@ -707,20 +707,20 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "solara_dress"
 	inhand_state = "solara_dress"
-	item_color = "solara_dress"
+	onmob_state = "solara_dress"
 
 /obj/item/clothing/under/fluff/terezi_suit
 	name = "legislacerator suit"
 	desc = "A very classy coat. Perhaps the only non-crappy attire of this person."
 	icon_state = "terezi"
 	inhand_state = "terezi"
-	item_color = "terezi"
+	onmob_state = "terezi"
 
 /obj/item/clothing/under/fluff/indiana
 	name = "leather suit"
 	icon_state = "indiana"
 	inhand_state = "indiana"
-	item_color = "indiana"
+	onmob_state = "indiana"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/fluff/cowboy
@@ -728,45 +728,45 @@
 	desc = "Revolver is your best friend."
 	icon_state = "cowboy"
 	inhand_state = "cowboy"
-	item_color = "cowboy"
+	onmob_state = "cowboy"
 
 /obj/item/clothing/under/fluff/cowboy/brown
 	icon_state = "cowboy_brown"
 	inhand_state = "cowboy_brown"
-	item_color = "cowboy_brown"
+	onmob_state = "cowboy_brown"
 
 /obj/item/clothing/under/fluff/cowboy/grey
 	icon_state = "cowboy_grey"
 	inhand_state = "cowboy_grey"
-	item_color = "cowboy_grey"
+	onmob_state = "cowboy_grey"
 
 /obj/item/clothing/under/fluff/maid_suit
 	name = "maid suit"
 	desc = "For your dirty ERP needs."
 	icon_state = "maid"
 	inhand_state = "maid"
-	item_color = "maid"
+	onmob_state = "maid"
 
 /obj/item/clothing/under/fluff/maid_suit/sakuya
 	name = "maid suit"
 	desc = "For a women who like to throw knifes"
 	icon_state = "sakuya"
 	inhand_state = "sakuya"
-	item_color = "sakuya"
+	onmob_state = "sakuya"
 
 /obj/item/clothing/under/rank/medical/fluff/rosa
 	name = "short sleeve medical dress"
 	desc = "Made of a special fiber that gives special protection against biohazards. Has a cross on the chest denoting that the wearer is trained medical personnel and short sleeves."
 	icon_state = "rosa"
 	inhand_state = "rosa"
-	item_color = "rosa"
+	onmob_state = "rosa"
 
 /obj/item/clothing/under/fluff/napoleon_dynamite_shirt
 	name = "white shirt"
 	desc = "VOTE FOR PEDRO."
 	icon_state = "NapoleonTshirt"
 	inhand_state = "ba_suit"
-	item_color = "NapoleonTshirt"
+	onmob_state = "NapoleonTshirt"
 
 /////// NT-SID Suit //Zuhayr: Jane Doe
 
@@ -777,7 +777,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "jane_sid_suit"
 	inhand_state = "jane_sid_suit"
-	item_color = "jane_sid_suit"
+	onmob_state = "jane_sid_suit"
 	has_sensor = 2
 	sensor_mode = 3
 	flags = ONESIZEFITSALL
@@ -792,14 +792,14 @@
 		return 0
 
 	if(src.icon_state == "jane_sid_suit_down")
-		src.item_color = "jane_sid_suit"
+		src.onmob_state = "jane_sid_suit"
 		to_chat(usr, "You zip up the [src].")
 	else
-		src.item_color = "jane_sid_suit_down"
+		src.onmob_state = "jane_sid_suit_down"
 		to_chat(usr, "You unzip and roll down the [src].")
 
-	src.icon_state = "[item_color]"
-	src.inhand_state = "[item_color]"
+	src.icon_state = "[onmob_state]"
+	src.inhand_state = "[onmob_state]"
 	usr.update_inv_w_uniform()
 
 ////// Wyatt's Ex-Commander Jumpsuit - RawrTaicho
@@ -810,7 +810,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "wyatt_uniform"
 	inhand_state = "wyatt_uniform"
-	item_color = "wyatt_uniform"
+	onmob_state = "wyatt_uniform"
 
 ////// Black Dress - Lillian Amsel - PapaDrow
 /obj/item/clothing/under/fluff/lillian_amsel_1
@@ -819,7 +819,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "lillian_dress"
 	inhand_state = "lillian_dress"
-	item_color = "lillian_dress"
+	onmob_state = "lillian_dress"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 //////////// Masks ////////////
@@ -844,7 +844,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "altair_locket"
 	inhand_state = "altair_locket"
-	item_color = "altair_locket"
+	onmob_state = "altair_locket"
 	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_FLAGS_MASK | SLOT_FLAGS_TIE
 
@@ -856,7 +856,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "konaahirano"
 	inhand_state = "konaahirano"
-	item_color = "konaahirano"
+	onmob_state = "konaahirano"
 	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_FLAGS_MASK | SLOT_FLAGS_TIE
 	var/obj/item/held //Item inside locket.
@@ -927,7 +927,7 @@
 	desc = "I command you to dance!"
 	icon_state = "Moonboots"
 	inhand_state = "wjboots"
-	item_color = "Moonboots"
+	onmob_state = "Moonboots"
 
 //////////// Sets ////////////
 
@@ -946,7 +946,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "medical_short"
 	inhand_state = "medical_short"
-	item_color = "medical_short"
+	onmob_state = "medical_short"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
 /obj/item/clothing/suit/storage/labcoat/fluff/red
@@ -1024,7 +1024,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "mai_yang"
 	inhand_state = "mai_yang"
-	item_color = "mai_yang"
+	onmob_state = "mai_yang"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/under/fluff/sakura_hokkaido_kimono
@@ -1033,7 +1033,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "sakura_hokkaido_kimono"
 	inhand_state = "sakura_hokkaido_kimono"
-	item_color = "sakura_hokkaido_kimono"
+	onmob_state = "sakura_hokkaido_kimono"
 
 ///////////////////////////// Astronovus - Harold's Cane ////////////////////////////
 

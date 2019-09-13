@@ -13,7 +13,7 @@
 /obj/item/clothing/shoes/mime
 	name = "mime shoes"
 	icon_state = "mime"
-	item_color = "mime"
+	onmob_state = "mime"
 	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/swat
@@ -79,13 +79,13 @@
 	name = "Brown Sandals"
 	desc = "Sweet looking brown sandals. Do not wear them with socks!"
 	icon_state = "sandals-brown"
-	item_color = "sandals-brown"
+	onmob_state = "sandals-brown"
 
 /obj/item/clothing/shoes/sandal/pink
 	name = "Pink Sandals"
 	desc = "They radiate a cheap plastic aroma like from hell ramen."
 	icon_state = "sandals-pink"
-	item_color = "sandals-pink"
+	onmob_state = "sandals-pink"
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic, black shoes."
@@ -108,7 +108,7 @@
 	icon_state = "clown"
 	inhand_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN+1
-	item_color = "clown"
+	onmob_state = "clown"
 //	var/footstep = 1	//used for squeeks whilst walking
 	species_restricted = null
 
@@ -117,7 +117,7 @@
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "wjboots"
 	inhand_state = "wjboots"
-	item_color = "hosred"
+	onmob_state = "hosred"
 	siemens_coefficient = 0.7
 	clipped_status = CLIPPABLE
 
@@ -126,7 +126,7 @@
 	desc = "A pair of boots worn by the followers of Nar-Sie."
 	icon_state = "cult"
 	inhand_state = "cult"
-	item_color = "cult"
+	onmob_state = "cult"
 	siemens_coefficient = 0.7
 
 	cold_protection = LEGS
@@ -178,13 +178,13 @@
 /obj/item/clothing/shoes/rosas_shoes
 	name = "white shoes"
 	icon_state = "rosas_shoes"
-	item_color = "rosas_shoes"
+	onmob_state = "rosas_shoes"
 	permeability_coefficient = 0.01
 
 /obj/item/clothing/shoes/western
 	name = "western boots"
 	icon_state = "western_boots"
-	item_color = "western_boots"
+	onmob_state = "western_boots"
 
 /obj/item/clothing/shoes/magboots/syndie
 	desc = "Light-weighted magnetic boots that have a custom syndicate paintjob for use in combat."
@@ -196,7 +196,7 @@
 /obj/item/clothing/shoes/workboots
 	name = "work boots"
 	icon_state = "workboots"
-	item_color = "workboots"
+	onmob_state = "workboots"
 	inhand_state = "b_shoes"  // need sprites for this
 	clipped_status = CLIPPABLE
 
@@ -212,7 +212,7 @@
 	flags = NOSLIP
 	icon_state = "nt_pmc_boots"
 	inhand_state = "r_feet"
-	item_color = "nt_pmc_boots"
+	onmob_state = "nt_pmc_boots"
 
 /obj/item/clothing/shoes/boots/lizard_boots
 	name = "Lizard Boots"
@@ -220,7 +220,7 @@
 	flags = NOSLIP
 	icon_state = "Lizard_Boots"
 	inhand_state = "r_feet"
-	item_color = "Lizard_Boots"
+	onmob_state = "Lizard_Boots"
 
 /obj/item/clothing/shoes/heels
 	name = "Heels"
@@ -234,18 +234,18 @@
 	desc = "Deutschland army boots."
 	icon_state = "Black_Boots"
 	inhand_state = "jackboots"
-	item_color = "Black_Boots"
+	onmob_state = "Black_Boots"
 
 /obj/item/clothing/shoes/brown_cut
 	name = "Cut Brown Boots"
 	desc = "Some shoes that was cut to fit unathi foot in it."
 	icon_state = "brown-cut"
-	item_color = "brown-cut"
+	onmob_state = "brown-cut"
 	species_restricted = null
 
 /obj/item/clothing/shoes/footwraps
 	name = "Footwraps"
 	desc = "Just some rags that you wrap around your foot to feel more comfortable. Better than nothing."
 	icon_state = "footwraps"
-	item_color = "footwraps"
+	onmob_state = "footwraps"
 	species_restricted = null

@@ -10,7 +10,7 @@
 	throw_range = 15
 	m_amt = 60
 	hitsound = list('sound/effects/stamp.ogg') //taken from Baystation build
-	item_color = "cargo"
+	onmob_state = "cargo"
 	attack_verb = list("stamped")
 	var/stamp_by_message = ""
 	var/big_stamp = FALSE
@@ -18,68 +18,68 @@
 /obj/item/weapon/stamp/captain
 	name = "captain's rubber stamp"
 	icon_state = "stamp-cap"
-	item_color = "captain"
+	onmob_state = "captain"
 	big_stamp = TRUE
 
 /obj/item/weapon/stamp/hop
 	name = "head of personnel's rubber stamp"
 	icon_state = "stamp-hop"
-	item_color = "hop"
+	onmob_state = "hop"
 
 /obj/item/weapon/stamp/hos
 	name = "head of security's rubber stamp"
 	icon_state = "stamp-hos"
-	item_color = "hosred"
+	onmob_state = "hosred"
 
 /obj/item/weapon/stamp/ce
 	name = "chief engineer's rubber stamp"
 	icon_state = "stamp-ce"
-	item_color = "chief"
+	onmob_state = "chief"
 
 /obj/item/weapon/stamp/rd
 	name = "research director's rubber stamp"
 	icon_state = "stamp-rd"
-	item_color = "director"
+	onmob_state = "director"
 
 /obj/item/weapon/stamp/cmo
 	name = "chief medical officer's rubber stamp"
 	icon_state = "stamp-cmo"
-	item_color = "cmo"
+	onmob_state = "cmo"
 
 /obj/item/weapon/stamp/denied
 	name = "\improper DENIED rubber stamp"
 	icon_state = "stamp-deny"
-	item_color = "redcoat"
+	onmob_state = "redcoat"
 
 /obj/item/weapon/stamp/clown
 	name = "clown's rubber stamp"
 	icon_state = "stamp-clown"
-	item_color = "clown"
+	onmob_state = "clown"
 	stamp_by_message = "strange pink stamp"
 
 /obj/item/weapon/stamp/internalaffairs
 	name = "internal affairs rubber stamp"
 	icon_state = "stamp-intaff"
-	item_color = "intaff"
+	onmob_state = "intaff"
 
 /obj/item/weapon/stamp/centcomm
 	name = "centcomm rubber stamp"
 	icon_state = "stamp-cent"
-	item_color = "centcomm"
+	onmob_state = "centcomm"
 	stamp_by_message = "Central Command Quantum Relay"
 	big_stamp = TRUE
 
 /obj/item/weapon/stamp/fakecentcomm
 	name = "cantcom rubber stamp"
 	icon_state = "stamp-fakecentcom"
-	item_color = "fakecentcom"
+	onmob_state = "fakecentcom"
 	stamp_by_message = "Central Compound Quantum Relay"
 	big_stamp = TRUE
 
 /obj/item/weapon/stamp/syndicate
 	name = "syndicate rubber stamp"
 	icon_state = "stamp-syndicate"
-	item_color = "syndicate"
+	onmob_state = "syndicate"
 	stamp_by_message = "Syndicate Command Interception Relay"
 	big_stamp = TRUE
 

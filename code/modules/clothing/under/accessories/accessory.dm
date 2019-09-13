@@ -4,7 +4,7 @@
 	icon = 'icons/obj/clothing/accessory.dmi'
 	icon_state = "bluetie"
 	inhand_state = "" // no inhands
-	item_color = "bluetie"
+	onmob_state = "bluetie"
 	slot_flags = SLOT_FLAGS_TIE
 	w_class = ITEM_SIZE_SMALL
 
@@ -15,7 +15,7 @@
 
 /obj/item/clothing/accessory/atom_init()
 	. = ..()
-	inv_overlay = image("icon" = 'icons/obj/clothing/accessory_overlay.dmi', "icon_state" = "[item_color ? "[item_color]" : "[icon_state]"]")
+	inv_overlay = image("icon" = 'icons/obj/clothing/accessory_overlay.dmi', "icon_state" = "[onmob_state ? "[onmob_state]" : "[icon_state]"]")
 
 //when user attached an accessory to S
 /obj/item/clothing/accessory/proc/on_attached(obj/item/clothing/under/S, mob/user, silent)
@@ -49,29 +49,29 @@
 /obj/item/clothing/accessory/tie/blue
 	name = "blue tie"
 	icon_state = "bluetie"
-	item_color = "bluetie"
+	onmob_state = "bluetie"
 
 /obj/item/clothing/accessory/tie/red
 	name = "red tie"
 	icon_state = "redtie"
-	item_color = "redtie"
+	onmob_state = "redtie"
 
 /obj/item/clothing/accessory/tie/black
 	name = "black tie"
 	icon_state = "blacktie"
-	item_color = "blacktie"
+	onmob_state = "blacktie"
 
 /obj/item/clothing/accessory/tie/horrible
 	name = "horrible tie"
 	desc = "A neosilk clip-on tie. This one is disgusting."
 	icon_state = "horribletie"
-	item_color = "horribletie"
+	onmob_state = "horribletie"
 
 /obj/item/clothing/accessory/stethoscope
 	name = "stethoscope"
 	desc = "An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing."
 	icon_state = "stethoscope"
-	item_color = "stethoscope"
+	onmob_state = "stethoscope"
 	layer_priority = 0.1
 
 /obj/item/clothing/accessory/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
@@ -134,14 +134,14 @@
 	name = "bronze medal"
 	desc = "A bronze medal."
 	icon_state = "bronze"
-	item_color = "bronze"
+	onmob_state = "bronze"
 	layer_priority = 0.1
 
 /obj/item/clothing/accessory/holy
     name = "holy cross"
     desc = "Time to take the Jerusalem!"
     icon_state = "holycross"
-    item_color = "holycross"
+    onmob_state = "holycross"
 
 /obj/item/clothing/accessory/medal/conduct
 	name = "distinguished conduct medal"
@@ -160,7 +160,7 @@
 	name = "silver medal"
 	desc = "A silver medal."
 	icon_state = "silver"
-	item_color = "silver"
+	onmob_state = "silver"
 
 /obj/item/clothing/accessory/medal/silver/valor
 	name = "medal of valor"
@@ -174,7 +174,7 @@
 	name = "gold medal"
 	desc = "A prestigious golden medal."
 	icon_state = "gold"
-	item_color = "gold"
+	onmob_state = "gold"
 
 /obj/item/clothing/accessory/medal/gold/captain
 	name = "medal of captaincy"
@@ -196,7 +196,7 @@
 	name = "holobadge"
 	desc = "This glowing blue badge marks the holder as THE LAW."
 	icon_state = "holobadge"
-	item_color = "holobadge"
+	onmob_state = "holobadge"
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_TIE
 
 	var/emagged = FALSE // Emagging removes Sec check.
@@ -204,7 +204,7 @@
 
 /obj/item/clothing/accessory/holobadge/cord
 	icon_state = "holobadge-cord"
-	item_color = "holobadge-cord"
+	onmob_state = "holobadge-cord"
 	slot_flags = SLOT_FLAGS_MASK | SLOT_FLAGS_TIE
 
 /obj/item/clothing/accessory/holobadge/attack_self(mob/user)

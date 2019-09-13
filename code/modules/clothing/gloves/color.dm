@@ -5,7 +5,7 @@
 	inhand_state = "ygloves"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
-	item_color="yellow"
+	onmob_state="yellow"
 
 /obj/item/clothing/gloves/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap copies of the coveted gloves, no way this can end badly."
@@ -15,7 +15,7 @@
 	siemens_coefficient = 1			//Set to a default of 1, gets overridden in New()
 	permeability_coefficient = 0.05
 
-	item_color="yellow"
+	onmob_state="yellow"
 
 /obj/item/clothing/gloves/fyellow/atom_init()
 	. = ..()
@@ -27,7 +27,7 @@
 	name = "black gloves"
 	icon_state = "black"
 	inhand_state = "bgloves"
-	item_color="brown"
+	onmob_state="brown"
 
 	cold_protection = ARMS
 	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECTION_TEMPERATURE
@@ -40,11 +40,11 @@
 
 /obj/item/clothing/gloves/black/hos
 	name = "head of security's gloves"
-	item_color = "hosred"		//Exists for washing machines.
+	onmob_state = "hosred"		//Exists for washing machines.
 
 /obj/item/clothing/gloves/black/ce
 	name = "chief engineer's gloves"
-	item_color = "chief"			//Exists for washing machines.
+	onmob_state = "chief"			//Exists for washing machines.
 
 
 /obj/item/clothing/gloves/orange
@@ -52,24 +52,24 @@
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "orange"
 	inhand_state = "orangegloves"
-	item_color="orange"
+	onmob_state="orange"
 
 /obj/item/clothing/gloves/red
 	name = "red gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "red"
 	inhand_state = "redgloves"
-	item_color = "red"
+	onmob_state = "red"
 
 /obj/item/clothing/gloves/rainbow
 	name = "rainbow gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "rainbow"
 	inhand_state = "rainbowgloves"
-	item_color = "rainbow"
+	onmob_state = "rainbow"
 
 /obj/item/clothing/gloves/rainbow/clown
-	item_color = "clown"
+	onmob_state = "clown"
 
 
 /obj/item/clothing/gloves/blue
@@ -77,34 +77,34 @@
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "blue"
 	inhand_state = "bluegloves"
-	item_color="blue"
+	onmob_state="blue"
 
 /obj/item/clothing/gloves/purple
 	name = "purple gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "purple"
 	inhand_state = "purplegloves"
-	item_color="purple"
+	onmob_state="purple"
 
 /obj/item/clothing/gloves/green
 	name = "green gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "green"
 	inhand_state = "greengloves"
-	item_color="green"
+	onmob_state="green"
 
 /obj/item/clothing/gloves/grey
 	name = "grey gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "gray"
 	inhand_state = "graygloves"
-	item_color="grey"
+	onmob_state="grey"
 
 /obj/item/clothing/gloves/grey/rd
-	item_color = "director"			//Exists for washing machines. Is not different from gray gloves in any way.
+	onmob_state = "director"			//Exists for washing machines. Is not different from gray gloves in any way.
 
 /obj/item/clothing/gloves/grey/hop
-	item_color = "hop"				//Exists for washing machines. Is not different from gray gloves in any way.
+	onmob_state = "hop"				//Exists for washing machines. Is not different from gray gloves in any way.
 
 
 /obj/item/clothing/gloves/light_brown
@@ -112,14 +112,14 @@
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "lightbrown"
 	inhand_state = "lightbrowngloves"
-	item_color="light brown"
+	onmob_state="light brown"
 
 /obj/item/clothing/gloves/brown
 	name = "brown gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "brown"
 	inhand_state = "browngloves"
-	item_color="brown"
+	onmob_state="brown"
 
 /obj/item/clothing/gloves/brown/cargo
-	item_color = "cargo"				//Exists for washing machines. Is not different from brown gloves in any way.
+	onmob_state = "cargo"				//Exists for washing machines. Is not different from brown gloves in any way.

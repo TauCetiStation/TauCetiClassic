@@ -3,7 +3,7 @@
 	name = "captain's gloves"
 	icon_state = "captain"
 	inhand_state = "egloves"
-	item_color = "captain"
+	onmob_state = "captain"
 	cold_protection = ARMS
 	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = ARMS
@@ -48,7 +48,7 @@
 	inhand_state = "lgloves"
 	siemens_coefficient = 0.30
 	permeability_coefficient = 0.01
-	item_color="white"
+	onmob_state="white"
 	germ_level = 0
 
 /obj/item/clothing/gloves/latex/nitrile
@@ -82,7 +82,7 @@
 	name = "black fingerless gloves"
 	icon_state = "fingerless_black"
 	inhand_state = "fingerless_black"
-	item_color="black"
+	onmob_state="black"
 	clipped = TRUE
 	species_restricted = list("exclude","stunglove")
 
@@ -90,43 +90,43 @@
 	name = "red fingerless gloves"
 	icon_state = "fingerless_red"
 	inhand_state = "fingerless_red"
-	item_color="red"
+	onmob_state="red"
 
 /obj/item/clothing/gloves/fingerless/orange
 	name = "orange fingerless gloves"
 	icon_state = "fingerless_orange"
 	inhand_state = "fingerless_orange"
-	item_color="orange"
+	onmob_state="orange"
 
 /obj/item/clothing/gloves/fingerless/green
 	name = "green fingerless gloves"
 	icon_state = "fingerless_green"
 	inhand_state = "fingerless_green"
-	item_color="green"
+	onmob_state="green"
 
 /obj/item/clothing/gloves/fingerless/blue
 	name = "blue fingerless gloves"
 	icon_state = "fingerless_blue"
 	inhand_state = "fingerless_blue"
-	item_color="blue"
+	onmob_state="blue"
 
 /obj/item/clothing/gloves/fingerless/purple
 	name = "purple fingerless gloves"
 	icon_state = "fingerless_purple"
 	inhand_state = "fingerless_purple"
-	item_color="purple"
+	onmob_state="purple"
 
 /obj/item/clothing/gloves/fingerless/yellow
 	name = "yellow fingerless gloves"
 	icon_state = "fingerless_yellow"
 	inhand_state = "fingerless_yellow"
-	item_color="yellow"
+	onmob_state="yellow"
 
 /obj/item/clothing/gloves/fingerless/rainbow
 	name = "rainbow fingerless gloves"
 	icon_state = "fingerless_rainbow"
 	inhand_state = "fingerless_rainbow"
-	item_color="rainbow"
+	onmob_state="rainbow"
 
 /obj/item/clothing/gloves/security/marinad
 	desc = "These were made to hold a full automatic gun."

@@ -7,7 +7,7 @@
 	name = "black jumpsuit"
 	icon_state = "black"
 	inhand_state = "bl_suit"
-	item_color = "black"
+	onmob_state = "black"
 	desc = "It's a plain jumpsuit. It seems to have a small dial on the wrist."
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
@@ -24,7 +24,7 @@
 	desc = "Groovy!"
 	icon_state = "psyche"
 	inhand_state = "psyche"
-	item_color = "psyche"
+	onmob_state = "psyche"
 	update_icon()
 	update_inv_mob()
 
@@ -53,7 +53,7 @@
 	name = A.name
 	icon_state = A.icon_state
 	inhand_state = A.inhand_state
-	item_color = A.item_color
+	onmob_state = A.onmob_state
 	body_parts_covered = A.body_parts_covered
 	update_inv_mob()
 
@@ -65,7 +65,7 @@
 	name = "grey cap"
 	icon_state = "greysoft"
 	inhand_state = "greysoft"
-	item_color = "grey"
+	onmob_state = "grey"
 	desc = "It looks like a plain hat, but upon closer inspection, there's an advanced holographic array installed inside. It seems to have a small dial inside."
 	origin_tech = "syndicate=3"
 	body_parts_covered = 0
@@ -84,7 +84,7 @@
 	desc = "It's a baseball hat in a tasteful grey colour."
 	icon_state = "greysoft"
 	inhand_state = "greysoft"
-	item_color = "grey"
+	onmob_state = "grey"
 	update_icon()
 	update_inv_mob()
 
@@ -112,7 +112,7 @@
 	name = A.name
 	icon_state = A.icon_state
 	inhand_state = A.inhand_state
-	item_color = A.item_color
+	onmob_state = A.onmob_state
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
 	update_inv_mob()
@@ -143,7 +143,7 @@
 	desc = "An armored vest that protects against some damage."
 	icon_state = "armor"
 	inhand_state = "armor"
-	item_color = "armor"
+	onmob_state = "armor"
 	update_icon()
 	update_inv_mob()
 
@@ -171,7 +171,7 @@
 	name = A.name
 	icon_state = A.icon_state
 	inhand_state = A.inhand_state
-	item_color = A.item_color
+	onmob_state = A.onmob_state
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
 	update_inv_mob()
@@ -183,7 +183,7 @@
 	name = "black shoes"
 	icon_state = "black"
 	inhand_state = "bl_shoes"
-	item_color = "black"
+	onmob_state = "black"
 	desc = "They're comfy black shoes, with clever cloaking technology built in. It seems to have a small dial on the back of each shoe."
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
@@ -201,7 +201,7 @@
 	desc = "A pair of black shoes."
 	icon_state = "black"
 	inhand_state = "bl_shoes"
-	item_color = "black"
+	onmob_state = "black"
 	update_icon()
 	update_inv_mob()
 
@@ -229,7 +229,7 @@
 	name = A.name
 	icon_state = A.icon_state
 	inhand_state = A.inhand_state
-	item_color = A.item_color
+	onmob_state = A.onmob_state
 	update_inv_mob()
 
 //**********************
@@ -282,7 +282,7 @@
 	name = A.name
 	icon_state = A.icon_state
 	inhand_state = A.inhand_state
-	item_color = A.item_color
+	onmob_state = A.onmob_state
 	update_inv_mob()
 
 //********************
@@ -293,7 +293,7 @@
 	name = "black gloves"
 	icon_state = "black"
 	inhand_state = "bgloves"
-	item_color = "brown"
+	onmob_state = "brown"
 	desc = "It looks like a pair of gloves, but it seems to have a small dial inside."
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
@@ -310,7 +310,7 @@
 	desc = "It looks like a pair of gloves, but it seems to have a small dial inside."
 	icon_state = "black"
 	inhand_state = "bgloves"
-	item_color = "brown"
+	onmob_state = "brown"
 	update_icon()
 	update_inv_mob()
 
@@ -338,7 +338,7 @@
 	name = A.name
 	icon_state = A.icon_state
 	inhand_state = A.inhand_state
-	item_color = A.item_color
+	onmob_state = A.onmob_state
 	flags_inv = A.flags_inv
 	update_inv_mob()
 

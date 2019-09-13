@@ -152,7 +152,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = ITEM_SIZE_SMALL
-	item_color = "green"
+	onmob_state = "green"
 	force_unwielded = 3
 	force_wielded = 45
 	var/hacked
@@ -169,8 +169,8 @@
 /obj/item/weapon/twohanded/dualsaber/atom_init()
 	. = ..()
 	reflect_chance = rand(50, 65)
-	item_color = pick("red", "blue", "green", "purple","yellow","pink","black")
-	switch(item_color)
+	onmob_state = pick("red", "blue", "green", "purple","yellow","pink","black")
+	switch(onmob_state)
 		if("red")
 			light_color = COLOR_RED
 		if("blue")
@@ -189,7 +189,7 @@
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()
 	if(wielded)
-		icon_state = "dualsaber[item_color][wielded]"
+		icon_state = "dualsaber[onmob_state][wielded]"
 	else
 		icon_state = "dualsaber0"
 	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
@@ -220,7 +220,7 @@
 		if(!hacked)
 			hacked = 1
 			to_chat(user,"<span class='warning'>2XRNBW_ENGAGE</span>")
-			item_color = "rainbow"
+			onmob_state = "rainbow"
 			light_color = ""
 			update_icon()
 		else

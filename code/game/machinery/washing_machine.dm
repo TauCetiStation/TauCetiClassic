@@ -63,7 +63,7 @@
 			wash_color = CR.colourName
 		else if(istype(crayon,/obj/item/weapon/stamp))
 			var/obj/item/weapon/stamp/ST = crayon
-			wash_color = ST.item_color
+			wash_color = ST.onmob_state
 
 		if(wash_color)
 			var/new_jumpsuit_icon_state = ""
@@ -85,7 +85,7 @@
 			for(var/T in typesof(/obj/item/clothing/under))
 				var/obj/item/clothing/under/J = new T
 				//world << "DEBUG: [color] == [J.color]"
-				if(wash_color == J.item_color)
+				if(wash_color == J.onmob_state)
 					new_jumpsuit_icon_state = J.icon_state
 					new_jumpsuit_inhand_state = J.inhand_state
 					new_jumpsuit_name = J.name
@@ -95,7 +95,7 @@
 				qdel(J)
 			for(var/T in typesof(/obj/item/clothing/gloves/fingerless))
 				var/obj/item/clothing/gloves/fingerless/G = new T
-				if(wash_color == G.item_color)
+				if(wash_color == G.onmob_state)
 					new_glove_fingerless_icon_state = G.icon_state
 					new_glove_fingerless_inhand_state = G.inhand_state
 					new_glove_fingerless_name = G.name
@@ -104,7 +104,7 @@
 				qdel(G)
 			for(var/T in typesof(/obj/item/clothing/gloves))
 				var/obj/item/clothing/gloves/G = new T
-				if(wash_color == G.item_color)
+				if(wash_color == G.onmob_state)
 					new_glove_icon_state = G.icon_state
 					new_glove_inhand_state = G.inhand_state
 					new_glove_name = G.name
@@ -114,7 +114,7 @@
 			for(var/T in typesof(/obj/item/clothing/shoes))
 				var/obj/item/clothing/shoes/S = new T
 				//world << "DEBUG: [color] == [J.color]"
-				if(wash_color == S.item_color)
+				if(wash_color == S.onmob_state)
 					new_shoe_icon_state = S.icon_state
 					new_shoe_name = S.name
 					qdel(S)
@@ -124,7 +124,7 @@
 			for(var/T in typesof(/obj/item/weapon/bedsheet))
 				var/obj/item/weapon/bedsheet/B = new T
 				//world << "DEBUG: [color] == [J.color]"
-				if(wash_color == B.item_color)
+				if(wash_color == B.onmob_state)
 					new_sheet_icon_state = B.icon_state
 					new_sheet_name = B.name
 					qdel(B)
@@ -134,7 +134,7 @@
 			for(var/T in typesof(/obj/item/clothing/head/soft))
 				var/obj/item/clothing/head/soft/H = new T
 				//world << "DEBUG: [color] == [J.color]"
-				if(wash_color == H.item_color)
+				if(wash_color == H.onmob_state)
 					new_softcap_icon_state = H.icon_state
 					new_softcap_name = H.name
 					qdel(H)
@@ -146,7 +146,7 @@
 					//world << "DEBUG: YUP! FOUND IT!"
 					J.inhand_state = new_jumpsuit_inhand_state
 					J.icon_state = new_jumpsuit_icon_state
-					J.item_color = wash_color
+					J.onmob_state = wash_color
 					J.name = new_jumpsuit_name
 					J.desc = new_desc
 			if(new_glove_name && new_glove_inhand_state && new_glove_icon_state||new_glove_fingerless_name && new_glove_fingerless_inhand_state && new_glove_fingerless_icon_state)
@@ -155,14 +155,14 @@
 						if(new_glove_fingerless_name && new_glove_fingerless_inhand_state && new_glove_fingerless_icon_state)
 							G.inhand_state = new_glove_fingerless_inhand_state
 							G.icon_state = new_glove_fingerless_icon_state
-							G.item_color = wash_color
+							G.onmob_state = wash_color
 							G.name = new_glove_fingerless_name
 							G.desc = new_desc
 					else
 						if (new_glove_name && new_glove_inhand_state && new_glove_icon_state)
 							G.inhand_state = new_glove_inhand_state
 							G.icon_state = new_glove_icon_state
-							G.item_color = wash_color
+							G.onmob_state = wash_color
 							G.name = new_glove_name
 							G.desc = new_desc
 			if(new_shoe_icon_state && new_shoe_name)
@@ -173,21 +173,21 @@
 						if (L.chained)
 							L.remove_cuffs()
 					S.icon_state = new_shoe_icon_state
-					S.item_color = wash_color
+					S.onmob_state = wash_color
 					S.name = new_shoe_name
 					S.desc = new_desc
 			if(new_sheet_icon_state && new_sheet_name)
 				for(var/obj/item/weapon/bedsheet/B in contents)
 					//world << "DEBUG: YUP! FOUND IT!"
 					B.icon_state = new_sheet_icon_state
-					B.item_color = wash_color
+					B.onmob_state = wash_color
 					B.name = new_sheet_name
 					B.desc = new_desc
 			if(new_softcap_icon_state && new_softcap_name)
 				for(var/obj/item/clothing/head/soft/H in contents)
 					//world << "DEBUG: YUP! FOUND IT!"
 					H.icon_state = new_softcap_icon_state
-					H.item_color = wash_color
+					H.onmob_state = wash_color
 					H.name = new_softcap_name
 					H.desc = new_desc
 		qdel(crayon)

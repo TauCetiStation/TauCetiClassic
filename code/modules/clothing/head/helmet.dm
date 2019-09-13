@@ -176,14 +176,14 @@
 	desc = "Combat helmet used by the private security corporation."
 	icon_state = "m89_helmet"
 	inhand_state = "helmet"
-	item_color = "m89_helmet"
+	onmob_state = "m89_helmet"
 
 /obj/item/clothing/head/helmet/M35_Helmet
 	name = "M35 Helmet"
 	desc = "The Basic werhmacht army helmet."
 	icon_state = "M35_Helmet"
 	inhand_state = "helmet"
-	item_color = "M35_Helmet"
+	onmob_state = "M35_Helmet"
 
 /obj/item/clothing/head/helmet/Waffen_SS_Helmet
 	name = "Waffen SS Helmet"
@@ -191,4 +191,4 @@
 
 	icon_state = "SS_Helmet"
 	inhand_state = "helmet"
-	item_color = "SS_Helmet"
+	onmob_state = "SS_Helmet"

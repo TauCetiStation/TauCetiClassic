@@ -534,41 +534,41 @@
 
 		to_chat(usr, "<span class='notice'>You color \the [src] [clr].</span>")
 		icon_state = "egg-[clr]"
-		item_color = clr
+		onmob_state = clr
 	else
 		..()
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/blue
 	icon_state = "egg-blue"
-	item_color = "blue"
+	onmob_state = "blue"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/green
 	icon_state = "egg-green"
-	item_color = "green"
+	onmob_state = "green"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/mime
 	icon_state = "egg-mime"
-	item_color = "mime"
+	onmob_state = "mime"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/orange
 	icon_state = "egg-orange"
-	item_color = "orange"
+	onmob_state = "orange"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/purple
 	icon_state = "egg-purple"
-	item_color = "purple"
+	onmob_state = "purple"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/rainbow
 	icon_state = "egg-rainbow"
-	item_color = "rainbow"
+	onmob_state = "rainbow"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/red
 	icon_state = "egg-red"
-	item_color = "red"
+	onmob_state = "red"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/yellow
 	icon_state = "egg-yellow"
-	item_color = "yellow"
+	onmob_state = "yellow"
 
 /obj/item/weapon/reagent_containers/food/snacks/friedegg
 	name = "Fried egg"

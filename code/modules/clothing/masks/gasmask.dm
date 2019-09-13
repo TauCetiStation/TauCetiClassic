@@ -300,4 +300,4 @@
 	name = "German Gas Mask"
 	desc = "Soldier's black gas mask."
 	icon_state = "German_gasmask"
-	item_color = "German_gasmask"
+	onmob_state = "German_gasmask"
