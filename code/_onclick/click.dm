@@ -296,6 +296,9 @@
 	var/dy = A.y - y
 	if(!dx && !dy) return
 
+	if(client && world.time < client.move_delay) // block turning, if we are in moving state.
+		return
+
 	if(abs(dx) < abs(dy))
 		if(dy > 0)	usr.dir = NORTH
 		else		usr.dir = SOUTH

@@ -132,6 +132,9 @@
 
 
 		if("disarm")
+			if(CHECK_ROBUST_DIR(M, src))
+				return
+
 			M.do_attack_animation(src)
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
