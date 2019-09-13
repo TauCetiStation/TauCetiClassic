@@ -57,7 +57,7 @@
 		last_used = world.time
 
 	if(recharge)
-		to_chat(user, "<span class='warning'>[src.name] still is recharging. </span>")
+		to_chat(user, "<span class='warning'>[src.name] is still recharging. </span>")
 	else
 		toggle()
 
