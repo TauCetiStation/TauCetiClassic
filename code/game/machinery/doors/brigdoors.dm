@@ -29,10 +29,9 @@
 	var/timetoset = 0		// Used to set releasetime upon starting the timer
 	var/timer_activator = "Unknown"	//Mob.name who activate timer
 	var/flag30sec = 0	//30 seconds notification flag
-	var/prisoner_name = ""; // ��� ������� ������ ����� by Saravan
-	var/prisoner_reason = ""; // ��� ������� ������ ������� ������� by Saravan
-	var/obj/item/device/radio/intercom/radio
-	//var/obj/item/device/radio/intercom/radio
+	var/prisoner_name = "";
+	var/prisoner_reason = ""; // by Saravan
+	var/obj/item/device/radio/intercom/radio // for /s announce by Saravan
 
 
 	maptext_height = 26
@@ -43,6 +42,8 @@
 	pixel_x = ((dir & 3)? (0) : (dir == 4 ? 32 : -32))
 	pixel_y = ((dir & 3)? (dir == 1 ? 24 : -32) : (0))
 	cell_open()
+	radio = new (src)
+	. = ..() // for /s announce
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/door_timer/atom_init_late()
@@ -188,11 +189,10 @@
 	dat += "<HR>Timer System:</hr>"
 	dat += " <b>Door [src.id] controls</b><br/>"
 
-	//prisoner name and reason by Saravan
+	// Prisoner name and reason, steal in newcaster.
 
-	dat += "<HR><B><A href='?src=\ref[src];set_prisoner_name=1'>Name</A>:</B> [src.prisoner_name]<BR>" // ����� ����� ������������. �������� �� newscaster.
-	dat += "<br/><B><A href='?src=\ref[src];set_prisoner_reason=1'>Reason</A>:</B> [src.prisoner_reason]<BR>"
-	dat += "<HR></hr>"
+	dat += "<HR><B><A href='?src=\ref[src];set_prisoner_name=TRUE'>Name</A>:</B> [src.prisoner_name]<BR>"
+	dat += "<br/><B><A href='?src=\ref[src];set_prisoner_reason=TRUE'>Reason</A>:</B> [src.prisoner_reason]<BR><HR></hr>"
 
 	// Start/Stop timer
 	if (src.timing)
@@ -241,10 +241,10 @@
 
 	if(href_list["set_prisoner_name"])
 		src.prisoner_name = sanitize_safe(input(usr, "Provide a prisoner Name", "Prison Timer", input_default(prisoner_name)), MAX_LNAME_LEN)
-		//����������� ������ � ������ ����� ������������. �������� �� newscaster.
 
 	if(href_list["set_prisoner_reason"])
 		src.prisoner_reason = sanitize_safe(input(usr, "Provide a reason for arrest", "Prison Timer", input_default(prisoner_reason)), MAX_LNAME_LEN)
+		// for Name and Reason input.
 
 	if(!src.allowed(usr))
 		return
@@ -254,6 +254,8 @@
 
 		if(src.timing)
 			src.timer_start(usr.name)
+			radio.autosay("Prisoner [prisoner_name] placed in [id]. Reason: [prisoner_reason]", "Prison Timer", freq = radiochannels["Security"])
+			// function /s announce
 			cell_close()
 		else
 			src.timer_end()
