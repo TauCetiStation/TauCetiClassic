@@ -2532,7 +2532,7 @@
 	},
 /area/security/main)
 "aei" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -3401,7 +3401,7 @@
 	},
 /area/security/brig)
 "afJ" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "red"
@@ -11697,7 +11697,7 @@
 	},
 /area/lawoffice)
 "atG" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -11926,7 +11926,7 @@
 	},
 /area/lawoffice)
 "aub" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -21936,7 +21936,7 @@
 /turf/simulated/wall,
 /area/hallway/primary/central)
 "aMS" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -22565,7 +22565,7 @@
 /turf/simulated/floor/plating,
 /area/bridge)
 "aOe" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -25681,7 +25681,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/rnd/mixing)
 "aUf" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /obj/machinery/camera{
 	c_tag = "Research Break";
 	dir = 4;
@@ -25693,10 +25693,10 @@
 	},
 /area/rnd/scibreak)
 "aUg" = (
-/obj/machinery/vending/cola,
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
@@ -27899,7 +27899,7 @@
 /turf/simulated/wall,
 /area/quartermaster/storage)
 "aYo" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "warndark"
@@ -32810,7 +32810,7 @@
 	},
 /area/hallway/primary/port)
 "bhw" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -32831,7 +32831,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/science)
 "bhA" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -37847,7 +37847,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/cargo)
 "bsV" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkblue"
@@ -37888,7 +37888,7 @@
 	},
 /area/medical/surgeryobs)
 "btb" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /obj/machinery/status_display{
 	layer = 4;
 	pixel_y = 32
@@ -40881,7 +40881,7 @@
 /turf/space,
 /area/shuttle/escape_pod2/station)
 "bAo" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /obj/machinery/camera{
 	c_tag = "Central Hallway South-East";
 	dir = 8
@@ -41406,7 +41406,7 @@
 /turf/simulated,
 /area/rnd/lab)
 "bBt" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -47416,7 +47416,7 @@
 /turf/simulated/floor,
 /area/hallway/primary/starboard)
 "bPv" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /obj/item/device/radio/intercom{
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
@@ -48574,11 +48574,11 @@
 /turf/simulated/floor/plating,
 /area/atmos)
 "bRN" = (
-/obj/machinery/vending/cola,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -54558,7 +54558,7 @@
 /turf/simulated/floor,
 /area/engine/break_room)
 "che" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor,
 /area/engine/break_room)
 "chf" = (
@@ -57316,7 +57316,7 @@
 	},
 /area/ai_monitored/storage/secure)
 "cnF" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor,
 /area/engine/break_room)
 "cnG" = (
@@ -60214,13 +60214,13 @@
 	},
 /area/medical/reception)
 "ctK" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/hallway/primary/starboard)
 "ctM" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -64668,7 +64668,7 @@
 /turf/simulated/floor/whitegreed,
 /area/turret_protected/ai)
 "cEG" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "warndark"
@@ -68572,7 +68572,7 @@
 /turf/simulated/floor/wood,
 /area/library)
 "ecb" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor/wood,
 /area/library)
@@ -68604,11 +68604,11 @@
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain)
 "ehb" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor/wood,
 /area/bridge/meeting_room)
 "eib" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain)
 "ejb" = (
@@ -68626,7 +68626,7 @@
 	},
 /area/medical/reception)
 "ekb" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor/wood,
 /area/bridge/meeting_room)
 "elb" = (
@@ -76900,7 +76900,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

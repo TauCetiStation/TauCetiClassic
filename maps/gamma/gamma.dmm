@@ -486,7 +486,7 @@
 	},
 /area/ai_monitored/storage/eva)
 "aaK" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /obj/machinery/status_display{
 	layer = 4;
 	pixel_x = 32
@@ -3686,7 +3686,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -7835,7 +7835,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/eva)
 "bDP" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -10533,7 +10533,7 @@
 	},
 /area/rnd/telesci)
 "cxi" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -19997,7 +19997,7 @@
 	},
 /area/crew_quarters/bar)
 "fzm" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -20915,7 +20915,7 @@
 /turf/simulated/floor,
 /area/storage/tools)
 "fOG" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -37837,7 +37837,7 @@
 /obj/machinery/camera{
 	c_tag = "Dorm West"
 	},
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -38845,7 +38845,7 @@
 	dir = 1
 	},
 /obj/machinery/light,
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "escape"
 	},
@@ -49257,7 +49257,7 @@
 	},
 /area/toxins/server)
 "pfH" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor/wood,
 /area/bridge/meeting_room)
 "pfQ" = (
@@ -52537,7 +52537,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "qjw" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitegreenfull"
@@ -54809,7 +54809,7 @@
 	},
 /area/chapel/office)
 "qUo" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -57886,7 +57886,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "rYL" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -73990,7 +73990,7 @@
 	},
 /area/maintenance/science)
 "xeL" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /obj/machinery/light/small{
 	dir = 1
 	},
