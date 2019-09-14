@@ -121,6 +121,10 @@
 	..()
 	var/obj/item/weapon/broken_bottle/BB =  new /obj/item/weapon/broken_bottle(loc)
 	BB.icon_state = src.icon_state
+	var/icon/II = new('icons/obj/drinks.dmi', src.icon_state)
+	II.Blend(BB.broken_outline, ICON_OVERLAY, rand(5), 1)
+	II.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
+	BB.icon = II
 	playsound(src, "shatter", 70, 1)
 	new /obj/item/weapon/shard(loc)
 	if(reagents.total_volume)
