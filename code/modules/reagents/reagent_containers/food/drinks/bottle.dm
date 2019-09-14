@@ -11,9 +11,9 @@
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
 	var/is_glass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 	var/is_transparent = 1 //Determines whether an overlay of liquid should be added to bottle when it fills
-	var/stop_spin_bottle = 0 //Gotta stop the rotation. An additional mechanism to stop the rotation of the bottle when you pick up
+	var/stop_spin_bottle = FALSE //Gotta stop the rotation.
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/atom_init() //Check this
+/obj/item/weapon/reagent_containers/food/drinks/bottle/atom_init()
 	. = ..()
 	if (!is_glass)
 		verbs -= /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle
@@ -23,15 +23,14 @@
 	set category = "Object"
 	set src in view(1)
 
-	var/mob/living/carbon/human/H = usr //Checking human and status
-	if(!ishuman(H))
+	if(!ishuman(usr))  //Checking human and status
 		return
-	if(usr.restrained() || usr.lying || usr.stat || !isliving(usr) || usr.paralysis || usr.stunned)
+	if(usr.incapacitated() || usr.stat || usr.lying)
 		return
 	if(usr.is_busy())
 		return
 
-	if(stop_spin_bottle == 0)
+	if(!stop_spin_bottle)
 		if(usr.get_active_hand() == src || usr.get_inactive_hand() == src)
 			usr.drop_from_inventory(src)
 
@@ -47,11 +46,11 @@
 					loops = rand(10, 15)
 					sleep_not_stacking = 25
 
-			stop_spin_bottle = 2
+			stop_spin_bottle = TRUE
 			SpinAnimation(speed, loops, pick(0, 1)) //SpinAnimation(speed, loops, clockwise, segments)
 			transform = turn(matrix(), dir2angle(pick(alldirs)))
 			sleep(sleep_not_stacking) //Not stacking
-			stop_spin_bottle = 0
+			stop_spin_bottle = FALSE
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/pickup(mob/living/user)
 	animate(src, transform = null, time = 0) //Restore bottle to its original position
