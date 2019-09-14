@@ -276,7 +276,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/vending/blood{
+/obj/random/vending/blood{
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
@@ -287,7 +287,7 @@
 /obj/structure/sign/barber{
 	pixel_y = 32
 	},
-/obj/machinery/vending/barbervend{
+/obj/random/vending/barbervend{
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
@@ -361,7 +361,7 @@
 	},
 /area/centcom/arrival)
 "aaD" = (
-/obj/machinery/vending/medical{
+/obj/random/vending/medical{
 	req_access = list(101)
 	},
 /turf/unsimulated/floor{
@@ -1773,7 +1773,7 @@
 	},
 /area/syndicate_mothership)
 "adP" = (
-/obj/machinery/vending/boozeomat{
+/obj/random/vending/boozeomat{
 	req_access = list(0)
 	},
 /turf/unsimulated/wall,
@@ -2172,7 +2172,7 @@
 	},
 /area/centcom/evac)
 "afQ" = (
-/obj/machinery/vending/wallmed1{
+/obj/random/vending/wallmed1{
 	name = "Emergency NanoMed";
 	pixel_y = -32;
 	req_access = list(0)
@@ -2191,7 +2191,7 @@
 /turf/space/transit/east/shuttlespace_ew3,
 /area/space)
 "aga" = (
-/obj/machinery/vending/wallmed1{
+/obj/random/vending/wallmed1{
 	name = "Emergency NanoMed";
 	pixel_x = 30;
 	req_access = list(0)
@@ -4267,7 +4267,7 @@
 	},
 /area/syndicate_station/start)
 "amy" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/unsimulated/floor{
 	icon_state = "bar"
 	},
@@ -4397,7 +4397,7 @@
 	},
 /area/syndicate_mothership)
 "amM" = (
-/obj/machinery/vending/cigarette,
+/obj/random/vending/cigarette,
 /turf/unsimulated/floor{
 	icon_state = "bar"
 	},
@@ -5082,7 +5082,7 @@
 	},
 /area/centcom/arrival)
 "aql" = (
-/obj/machinery/vending/cigarette,
+/obj/random/vending/cigarette,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -5092,7 +5092,7 @@
 	},
 /area/centcom/arrival)
 "aqm" = (
-/obj/machinery/vending/coffee,
+/obj/random/vending/coffee,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -5821,14 +5821,14 @@
 	},
 /area/supply/dock)
 "asN" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
 	},
 /area/centcom/arrival)
 "asO" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /obj/machinery/light,
 /turf/unsimulated/floor{
 	dir = 8;
@@ -6267,7 +6267,7 @@
 	},
 /area/centcom/arrival)
 "auq" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "green"
@@ -6345,7 +6345,7 @@
 	},
 /area/centcom/arrival)
 "auz" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -6966,7 +6966,7 @@
 	},
 /area/centcom/arrival)
 "axb" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/unsimulated/floor{
 	icon_state = "cult";
 	name = "plating"
@@ -7239,7 +7239,7 @@
 /turf/unsimulated/wall,
 /area/centcom/arrival)
 "aye" = (
-/obj/machinery/vending/coffee,
+/obj/random/vending/coffee,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -7286,7 +7286,7 @@
 	},
 /area/centcom/arrival)
 "ayl" = (
-/obj/machinery/vending/cigarette,
+/obj/random/vending/cigarette,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -8256,7 +8256,7 @@
 	},
 /area/centcom/living)
 "aBm" = (
-/obj/machinery/vending/tool,
+/obj/random/vending/tool,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -8866,7 +8866,7 @@
 	},
 /area/centcom/specops)
 "aDb" = (
-/obj/machinery/vending/coffee,
+/obj/random/vending/coffee,
 /turf/unsimulated/floor{
 	icon_state = "cult";
 	name = "plating"
@@ -9166,7 +9166,7 @@
 	},
 /area/centcom/living)
 "aEl" = (
-/obj/machinery/vending/engivend,
+/obj/random/vending/engivend,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -9481,7 +9481,7 @@
 	},
 /area/shuttle/administration/centcom)
 "aFm" = (
-/obj/machinery/vending/engineering,
+/obj/random/vending/engineering,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -9635,7 +9635,7 @@
 	},
 /area/centcom/specops)
 "aFC" = (
-/obj/machinery/vending/medical{
+/obj/random/vending/medical{
 	pixel_x = -2
 	},
 /turf/unsimulated/floor{
@@ -9643,17 +9643,17 @@
 	},
 /area/centcom/specops)
 "aFD" = (
-/obj/machinery/vending/boozeomat,
+/obj/random/vending/boozeomat,
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
 /area/shuttle/administration/centcom)
 "aFE" = (
-/obj/machinery/vending/coffee,
+/obj/random/vending/coffee,
 /turf/simulated/shuttle/floor,
 /area/shuttle/administration/centcom)
 "aFF" = (
-/obj/machinery/vending/cigarette,
+/obj/random/vending/cigarette,
 /turf/simulated/shuttle/floor,
 /area/shuttle/administration/centcom)
 "aFG" = (
@@ -9971,7 +9971,7 @@
 	},
 /area/shuttle/administration/centcom)
 "aGV" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/shuttle/floor,
 /area/shuttle/administration/centcom)
 "aGW" = (
@@ -10103,7 +10103,7 @@
 	},
 /area/shuttle/administration/centcom)
 "aHr" = (
-/obj/machinery/vending/wallmed1{
+/obj/random/vending/wallmed1{
 	name = "Emergency NanoMed";
 	pixel_x = -30;
 	req_access = list(0)
@@ -10118,7 +10118,7 @@
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aHu" = (
-/obj/machinery/vending/wallmed1{
+/obj/random/vending/wallmed1{
 	name = "Emergency NanoMed";
 	pixel_x = 30;
 	req_access = list(0)
@@ -10626,7 +10626,7 @@
 /turf/simulated/shuttle/plating,
 /area/shuttle/administration/centcom)
 "aJm" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aJo" = (
@@ -10735,7 +10735,7 @@
 /turf/simulated/shuttle/plating,
 /area/centcom/evac)
 "aJD" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aJE" = (
@@ -10745,7 +10745,7 @@
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "aJF" = (
-/obj/machinery/vending/coffee{
+/obj/random/vending/coffee{
 	pixel_x = -5
 	},
 /obj/machinery/light{
@@ -10756,7 +10756,7 @@
 	},
 /area/centcom/evac)
 "aJG" = (
-/obj/machinery/vending/cigarette{
+/obj/random/vending/cigarette{
 	pixel_x = 5
 	},
 /obj/machinery/light{
@@ -10821,7 +10821,7 @@
 	},
 /area/centcom/control)
 "aJU" = (
-/obj/machinery/vending/medical,
+/obj/random/vending/medical,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
@@ -10855,7 +10855,7 @@
 /turf/simulated/shuttle/plating,
 /area/centcom/evac)
 "aJZ" = (
-/obj/machinery/vending/coffee,
+/obj/random/vending/coffee,
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aKa" = (
@@ -10987,7 +10987,7 @@
 /turf/unsimulated/floor,
 /area/centcom/control)
 "aKt" = (
-/obj/machinery/vending/wallmed1{
+/obj/random/vending/wallmed1{
 	name = "Emergency NanoMed";
 	pixel_x = -30;
 	req_access = list(0)
@@ -11083,7 +11083,7 @@
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aKI" = (
-/obj/machinery/vending/cigarette,
+/obj/random/vending/cigarette,
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aKK" = (
@@ -11828,7 +11828,7 @@
 	},
 /area/centcom/living)
 "aOf" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -12102,7 +12102,7 @@
 	},
 /area/centcom/living)
 "aPb" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -12254,7 +12254,7 @@
 	},
 /area/centcom/living)
 "aPF" = (
-/obj/machinery/vending/coffee,
+/obj/random/vending/coffee,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -12348,7 +12348,7 @@
 	},
 /area/centcom/holding)
 "aQa" = (
-/obj/machinery/vending/cigarette,
+/obj/random/vending/cigarette,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "neutral"
@@ -12362,7 +12362,7 @@
 	},
 /area/syndicate_mothership)
 "aQg" = (
-/obj/machinery/vending/coffee,
+/obj/random/vending/coffee,
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "aQi" = (
@@ -12405,7 +12405,7 @@
 	},
 /area/centcom/living)
 "aQp" = (
-/obj/machinery/vending/cigarette,
+/obj/random/vending/cigarette,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -13016,7 +13016,7 @@
 	},
 /area/centcom/living)
 "aSA" = (
-/obj/machinery/vending/cigarette,
+/obj/random/vending/cigarette,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -13204,7 +13204,7 @@
 	},
 /area/centcom/living)
 "aSY" = (
-/obj/machinery/vending/hydronutrients,
+/obj/random/vending/hydronutrients,
 /turf/unsimulated/floor{
 	icon_state = "floor5"
 	},
@@ -13395,7 +13395,7 @@
 	},
 /area/centcom/living)
 "aTB" = (
-/obj/machinery/vending/hydroseeds{
+/obj/random/vending/hydroseeds{
 	slogan_delay = 700
 	},
 /obj/machinery/light{
@@ -13831,7 +13831,7 @@
 	},
 /area/centcom/living)
 "aVf" = (
-/obj/machinery/vending/security,
+/obj/random/vending/security,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -13911,7 +13911,7 @@
 	},
 /area/centcom/living)
 "aVm" = (
-/obj/machinery/vending/medical{
+/obj/random/vending/medical{
 	pixel_x = -2
 	},
 /turf/unsimulated/floor{
@@ -13949,7 +13949,7 @@
 	},
 /area/centcom/living)
 "aVr" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -13958,7 +13958,7 @@
 	},
 /area/centcom/living)
 "aVs" = (
-/obj/machinery/vending/coffee,
+/obj/random/vending/coffee,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -15367,7 +15367,7 @@
 	},
 /area/wizard_station)
 "bba" = (
-/obj/machinery/vending/magivend,
+/obj/random/vending/magivend,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -19220,7 +19220,7 @@
 	},
 /area/centcom/evac)
 "hhb" = (
-/obj/machinery/vending/wallmed1{
+/obj/random/vending/wallmed1{
 	name = "Emergency NanoMed";
 	pixel_x = 30;
 	req_access = list(0)
@@ -19793,7 +19793,7 @@
 	},
 /area/centcom/evac)
 "iMb" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/unsimulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -19832,7 +19832,7 @@
 	},
 /area/centcom/evac)
 "iSb" = (
-/obj/machinery/vending/coffee,
+/obj/random/vending/coffee,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -19912,7 +19912,7 @@
 	},
 /area/centcom/evac)
 "jbb" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/unsimulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -20014,7 +20014,7 @@
 	},
 /area/centcom/living)
 "jpb" = (
-/obj/machinery/vending/dinnerware,
+/obj/random/vending/dinnerware,
 /turf/unsimulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -20503,7 +20503,7 @@
 	},
 /area/centcom/holding)
 "kwb" = (
-/obj/machinery/vending/coffee,
+/obj/random/vending/coffee,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "green"
@@ -20871,7 +20871,7 @@
 	},
 /area/centcom/holding)
 "lvb" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/unsimulated/floor{
 	icon_state = "brown"
 	},
@@ -20917,7 +20917,7 @@
 	},
 /area/centcom/holding)
 "lBb" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/unsimulated/floor{
 	icon_state = "brown"
 	},
@@ -21340,7 +21340,7 @@
 	},
 /area/centcom/evac)
 "mvb" = (
-/obj/machinery/vending/cigarette,
+/obj/random/vending/cigarette,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "redbluefull"
@@ -21384,7 +21384,7 @@
 	},
 /area/tdome/tdomeobserve)
 "mAb" = (
-/obj/machinery/vending/coffee,
+/obj/random/vending/coffee,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "redbluefull"
@@ -21409,7 +21409,7 @@
 	},
 /area/tdome/tdomeobserve)
 "mDb" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "redbluefull"
@@ -22085,7 +22085,7 @@
 /area/shuttle/escape/centcom)
 "oob" = (
 /obj/structure/table,
-/obj/machinery/vending/wallmed1{
+/obj/random/vending/wallmed1{
 	name = "Emergency NanoMed";
 	pixel_y = 32;
 	req_access = list(0)
@@ -22319,7 +22319,7 @@
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
 "oRb" = (
-/obj/machinery/vending/wallmed1,
+/obj/random/vending/wallmed1,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall1"
 	},
@@ -22806,7 +22806,7 @@
 "qbb" = (
 /obj/machinery/light,
 /obj/structure/flora/plant/random,
-/obj/machinery/vending/wallmed1{
+/obj/random/vending/wallmed1{
 	name = "Emergency NanoMed";
 	pixel_y = -32;
 	req_access = list(0)
