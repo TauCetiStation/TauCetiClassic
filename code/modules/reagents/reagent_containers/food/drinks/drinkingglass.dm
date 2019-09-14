@@ -8,7 +8,11 @@
 	volume = 25
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/after_throw(datum/callback/callback)
 	..()
+<<<<<<< HEAD
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
+=======
+	playsound(src, "shatter", VOL_EFFECTS_MASTER)
+>>>>>>> 680caf6cf944059ebeb454e8512332338d86fd75
 	new /obj/item/weapon/shard(loc)
 	if(reagents.total_volume)
 		spawn_fluid(loc, reagents.total_volume)
