@@ -136,7 +136,7 @@
 			mode_result = "loss - revolution stopped"
 			feedback_set_details("round_end_result",mode_result)
 			completion_text += "<span style='color: red; font-weight: bold;'>The heads of staff managed to stop the revolution!</span>"
-		..()
+	..()
 	return 1
 /datum/game_mode/revolution/rp_revolution/process()
 	// only perform rev checks once in a while
