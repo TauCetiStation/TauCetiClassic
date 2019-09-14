@@ -21,6 +21,9 @@
 	req_access = list(access_brig)
 	anchored = 1.0    		// can't pick it up
 	density = 0       		// can walk through it.
+	var/screen = 0
+		// 0 = main menu
+		// 1 = ERROR: Invalid Prisoner Data
 	var/id = null     		// id of door it controls.
 	var/releasetime = 0		// when world.timeofday reaches it - release the prisoner
 	var/timing = 0    		// boolean, true/1 timer is on, false/0 means it's not timing
@@ -192,49 +195,59 @@
 	// dat
 	var/dat = "<HTML><BODY><TT>"
 
-	dat += "<HR>Timer System:</hr>"
-	dat += " <b>Door [src.id] controls</b><br/>"
+	switch(screen)
+		if(0)
+			dat += "<HR>Timer System:</hr>"
+			dat += " <b>Door [src.id] controls</b><br/>"
+			dat +={"
+				<HR><B>All lines must be filled in correctly</B>
+				<br/><B><A href='?src=\ref[src];set_prisoner_name=TRUE'>Name</A>:</B> [src.prisoner_name]
+				<br/><B><A href='?src=\ref[src];set_prisoner_crimes=TRUE'>Crimes</A>:</B> [src.prisoner_crimes]
+				<br/><B><A href='?src=\ref[src];set_prisoner_details=TRUE'>Details</A>:</B> [src.prisoner_details]<BR>
+				<br/><B>Authorized by:</B> <FONT COLOR='green'>[src.timer_activator]</FONT><HR></hr>
+			"}
 
-	// Prisoner name and reason, steal in newcaster.
-	dat +={"
-		<HR><B><A href='?src=\ref[src];set_prisoner_name=TRUE'>Name</A>:</B> [src.prisoner_name]
-		<br/><B><A href='?src=\ref[src];set_prisoner_crimes=TRUE'>Crimes</A>:</B> [src.prisoner_crimes]
-		<br/><B><A href='?src=\ref[src];set_prisoner_details=TRUE'>Details</A>:</B> [src.prisoner_details]<BR>
-		<br/><B>Authorized by:</B> [src.timer_activator]<HR></hr>
-	"}
+			// Start/Stop timer
+			if (src.timing)
+				dat += "<a href='?src=\ref[src];timing=0'>Stop Timer and open door</a><br/>"
+			else
+				dat += "<a href='?src=\ref[src];timing=1'>Activate Timer and close door</a><br/>"
 
-	// Start/Stop timer
-	if (src.timing)
-		dat += "<a href='?src=\ref[src];timing=0'>Stop Timer and open door</a><br/>"
-	else
-		dat += "<a href='?src=\ref[src];timing=1'>Activate Timer and close door</a><br/>"
+			// Time Left display (uses releasetime)
+			dat += "Time Left: [(minute ? text("[minute]:") : null)][second] <br/>"
+			dat += "<br/>"
 
-	// Time Left display (uses releasetime)
-	dat += "Time Left: [(minute ? text("[minute]:") : null)][second] <br/>"
-	dat += "<br/>"
+			// Set Timer display (uses timetoset)
+			if(src.timing)
+				dat += "Set Timer: [(setminute ? text("[setminute]:") : null)][setsecond]  <a href='?src=\ref[src];change=1'>Set</a><br/>"
+			else
+				dat += "Set Timer: [(setminute ? text("[setminute]:") : null)][setsecond]<br/>"
 
-	// Set Timer display (uses timetoset)
-	if(src.timing)
-		dat += "Set Timer: [(setminute ? text("[setminute]:") : null)][setsecond]  <a href='?src=\ref[src];change=1'>Set</a><br/>"
-	else
-		dat += "Set Timer: [(setminute ? text("[setminute]:") : null)][setsecond]<br/>"
+			// Controls
+			dat += "<a href='?src=\ref[src];tp=-60'>-</a> <a href='?src=\ref[src];tp=-1'>-</a> <a href='?src=\ref[src];tp=1'>+</a> <A href='?src=\ref[src];tp=60'>+</a><br/>"
 
-	// Controls
-	dat += "<a href='?src=\ref[src];tp=-60'>-</a> <a href='?src=\ref[src];tp=-1'>-</a> <a href='?src=\ref[src];tp=1'>+</a> <A href='?src=\ref[src];tp=60'>+</a><br/>"
+			// Mounted flash controls
+			for(var/obj/machinery/flasher/F in targets)
+				if(F.last_flash && (F.last_flash + 150) > world.time)
+					dat += "<br/><A href='?src=\ref[src];fc=1'>Flash Charging</A>"
+				else
+					dat += "<br/><A href='?src=\ref[src];fc=1'>Activate Flash</A>"
 
-	// Mounted flash controls
-	for(var/obj/machinery/flasher/F in targets)
-		if(F.last_flash && (F.last_flash + 150) > world.time)
-			dat += "<br/><A href='?src=\ref[src];fc=1'>Flash Charging</A>"
-		else
-			dat += "<br/><A href='?src=\ref[src];fc=1'>Activate Flash</A>"
+			dat += "<br/><br/><a href='?src=\ref[user];mach_close=computer'>Close</a>"
+			dat += "</TT></BODY></HTML>"
 
-	dat += "<br/><br/><a href='?src=\ref[user];mach_close=computer'>Close</a>"
-	dat += "</TT></BODY></HTML>"
+		if(1)
+			dat+="<B><FONT COLOR='maroon'>ERROR: Invalid prisoner data</B></FONT><HR><BR>"
+			if(src.prisoner_name == "")
+				dat+="<FONT COLOR='maroon'>•Invalid prisoner name.</FONT><BR>"
+			if(src.prisoner_crimes == "")
+				dat+="<FONT COLOR='maroon'>•Invalid crimes number.</FONT><BR>"
+			if(src.prisoner_details == "")
+				dat+="<FONT COLOR='maroon'>•Invalid details text.</FONT><BR>"
+			dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
 
 	user << browse(entity_ja(dat), "window=computer;size=400x500")
 	onclose(user, "computer")
-
 
 //Function for using door_timer dialog input, checks if user has permission
 // href_list to
@@ -261,17 +274,19 @@
 		return
 
 	if(href_list["timing"])
-		src.timing = text2num(href_list["timing"])
-
-		if(src.timing)
-			src.timer_start(usr.name)
-			var/say_minute = round(timetoset / 600)
-			radio.autosay("[timer_activator] placed [prisoner_name] into [id]. Crimes: [prisoner_crimes]. Details: [prisoner_details]. Time: [say_minute] min.", "Prison Timer", freq = radiochannels["Security"])
-			// function /s announce
-			cell_close()
+		if(src.prisoner_name == "" || src.prisoner_crimes == "" || src.prisoner_details == "" )
+			src.screen = 1
 		else
-			src.timer_end()
-			cell_open()
+			src.timing = text2num(href_list["timing"])
+
+			if(src.timing)
+				src.timer_start(usr.name)
+				var/prison_minute = round(timetoset / 600)
+				radio.autosay("[timer_activator] placed [prisoner_name] into [id]. Crimes: [prisoner_crimes]. Details: [prisoner_details]. Time: [prison_minute] min.", "Prison Timer", freq = radiochannels["Security"])
+				cell_close()
+			else
+				src.timer_end()
+				cell_open()
 	else
 		if(href_list["tp"])  //adjust timer, close door if not already closed
 			var/tp = text2num(href_list["tp"])
@@ -288,6 +303,9 @@
 		if(href_list["change"])
 			src.timer_start(usr.name)
 			cell_close()
+
+	if(href_list["setScreen"])
+		src.screen = text2num(href_list["setScreen"])
 
 	src.updateUsrDialog()
 	src.update_icon()
@@ -352,7 +370,6 @@
 		ID.pixel_y = py
 		I.overlays += ID
 	return I
-
 
 /obj/machinery/door_timer/cell_1
 	name = "Cell 1"
