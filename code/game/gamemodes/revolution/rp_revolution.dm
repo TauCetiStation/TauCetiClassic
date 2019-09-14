@@ -70,7 +70,6 @@
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
-		rev_mind.current.verbs += /mob/living/carbon/human/proc/RevConvert
 		equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
 
 	modePlayer += head_revolutionaries
@@ -98,25 +97,6 @@
 		if(M && !(M.mind in head_revolutionaries) && !(M in already_considered))
 			to_chat(rev_mob, "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them.")
 			rev_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
-
-///////////////////////////////////////////////////
-//Deals with converting players to the revolution//
-///////////////////////////////////////////////////
-/datum/game_mode/revolution/rp_revolution/add_revolutionary(datum/mind/rev_mind)
-	// overwrite this func to make it so even heads can be converted
-	var/mob/living/carbon/human/H = rev_mind.current//Check to see if the potential rev is implanted
-	if(ismindshielded(H))
-		return 0
-	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
-		return 0
-	revolutionaries += rev_mind
-	to_chat(rev_mind.current, "<span class='warning'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill, capture or convert the heads to win the revolution!</FONT></span>")
-	rev_mind.special_role = "Revolutionary"
-	if(config.objectives_disabled)
-		to_chat(rev_mind.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
-	update_all_rev_icons()
-	H.hud_updateflag |= 1 << SPECIALROLE_HUD
-	return 1
 
 /////////////////////////////
 //Checks for a head victory//
@@ -156,44 +136,8 @@
 			mode_result = "loss - revolution stopped"
 			feedback_set_details("round_end_result",mode_result)
 			completion_text += "<span style='color: red; font-weight: bold;'>The heads of staff managed to stop the revolution!</span>"
-	..()
+		..()
 	return 1
-
-/mob/living/carbon/human/proc/RevConvert()
-	set name = "Rev-Convert"
-	set category = "IC"
-	var/list/Possible = list()
-	for (var/mob/living/carbon/human/P in oview(src))
-		if(!stat && P.client && P.mind && !P.mind.special_role)
-			Possible += P
-	if(!Possible.len)
-		to_chat(src, "<span class='warning'>There doesn't appear to be anyone available for you to convert here.</span>")
-		return
-	var/mob/living/carbon/human/M = input("Select a person to convert", "Viva la revolution!", null) as mob in Possible
-	if(((src.mind in ticker.mode:head_revolutionaries) || (src.mind in ticker.mode:revolutionaries)))
-		if((M.mind in ticker.mode:head_revolutionaries) || (M.mind in ticker.mode:revolutionaries))
-			to_chat(src, "<span class='warning'><b>[M] is already be a revolutionary!</b></span>")
-		else if(ismindshielded(M))
-			to_chat(src, "<span class='warning'><b>[M] is implanted with a loyalty implant - Remove it first!</b></span>")
-		else if(jobban_isbanned(M, ROLE_REV) || jobban_isbanned(M, "Syndicate") || role_available_in_minutes(M, ROLE_REV))
-			to_chat(src, "<span class='warning'><b>[M] is a blacklisted player!</b></span>")
-		else
-			if(world.time < M.mind.rev_cooldown)
-				to_chat(src, "<span class='warning'>Wait five seconds before reconversion attempt.</span>")
-				return
-			to_chat(src, "<span class='warning'>Attempting to convert [M]...</span>")
-			log_admin("[src]([src.ckey]) attempted to convert [M].")
-			message_admins("<span class='warning'>[src]([src.ckey]) attempted to convert [M]. [ADMIN_JMP(src)]</span>")
-			var/choice = alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
-			if(choice == "Yes!")
-				ticker.mode:add_revolutionary(M.mind)
-				to_chat(M, "<span class='notice'>You join the revolution!</span>")
-				to_chat(src, "<span class='notice'><b>[M] joins the revolution!</b></span>")
-			else if(choice == "No!")
-				to_chat(M, "<span class='warning'>You reject this traitorous cause!</span>")
-				to_chat(src, "<span class='warning'><b>[M] does not support the revolution!</b></span>")
-			M.mind.rev_cooldown = world.time+50
-
 /datum/game_mode/revolution/rp_revolution/process()
 	// only perform rev checks once in a while
 	if(tried_to_add_revheads < world.time)
@@ -206,7 +150,7 @@
 		if(active_revs == 0)
 			log_debug("There are zero active heads of revolution, trying to add some..")
 			var/added_heads = 0
-			for(var/mob/living/carbon/human/H in human_list) if(H.stat != DEAD && H.client && H.mind && H.client.inactivity <= 10*60*20 && H.mind in revolutionaries)
+			for(var/mob/living/carbon/human/H in human_list) if(H.stat != DEAD && H.client && H.mind && H.client.inactivity <= 10*60*20 && !(H.mind.assigned_role in command_positions) && (ROLE_REV in H.client.prefs.be_role))
 				head_revolutionaries += H.mind
 				for(var/datum/mind/head_mind in heads)
 					var/datum/objective/mutiny/rp/rev_obj = new
@@ -216,9 +160,8 @@
 					H.mind.objectives += rev_obj
 
 				update_all_rev_icons()
-				H.verbs += /mob/living/carbon/human/proc/RevConvert
 
-				to_chat(H, "<span class='warning'>Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion.</span>")
+				to_chat(H, "<span class='warning'>You are a member of the revolutionaries' leadership!</span>")
 				added_heads = 1
 				break
 

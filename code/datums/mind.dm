@@ -169,9 +169,9 @@
 			text += uppertext(text)
 		text = "<i><b>[text]</b></i>: "
 		if (istype(current, /mob/living/carbon/monkey) || ismindshielded(H))
-			text += "<b>LOYAL EMPLOYEE</b>|headrev|rev"
+			text += "<b>LOYAL EMPLOYEE</b>|headrev"
 		else if (src in ticker.mode.head_revolutionaries)
-			text += "<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
+			text += "<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>HEADREV</b>"
 			text += "<br>Flash: <a href='?src=\ref[src];revolution=flash'>give</a>"
 
 			var/list/L = current.get_contents()
@@ -187,10 +187,8 @@
 			text += " <a href='?src=\ref[src];revolution=reequip'>Reequip</a> (gives traitor uplink)."
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! <a href='?src=\ref[src];revolution=autoobjectives'>Set to kill all heads</a>."
-		else if (src in ticker.mode.revolutionaries)
-			text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<b>REV</b>"
 		else
-			text += "head|loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
+			text += "head|loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>"
 		if(current && current.client && (ROLE_REV in current.client.prefs.be_role))
 			text += "|Enabled in Prefs"
 		else
@@ -701,23 +699,7 @@
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a head revolutionary!</B></FONT></span>")
 					ticker.mode.update_rev_icons_removed(src)
 					special_role = null
-					current.verbs -= /mob/living/carbon/human/proc/RevConvert
 				log_admin("[key_name_admin(usr)] has de-rev'ed [current].")
-
-			if("rev")
-				if(src in ticker.mode.head_revolutionaries)
-					ticker.mode.head_revolutionaries -= src
-					ticker.mode.update_rev_icons_removed(src)
-					to_chat(current, "<span class='warning'><FONT size = 3><B>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</B></FONT></span>")
-				else if(!(src in ticker.mode.revolutionaries))
-					to_chat(current, "<span class='warning'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>")
-					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
-				else
-					return
-				ticker.mode.revolutionaries += src
-				ticker.mode.update_all_rev_icons()
-				special_role = "Revolutionary"
-				log_admin("[key_name(usr)] has rev'ed [current].")
 
 			if("headrev")
 				if(src in ticker.mode.revolutionaries)
@@ -740,7 +722,6 @@
 							rev_obj.explanation_text = "Assassinate [O.target.name], the [O.target.assigned_role]."
 							objectives += rev_obj
 						ticker.mode.greet_revolutionary(src,0)
-				current.verbs += /mob/living/carbon/human/proc/RevConvert
 				ticker.mode.head_revolutionaries += src
 				ticker.mode.update_all_rev_icons()
 				special_role = "Head Revolutionary"
