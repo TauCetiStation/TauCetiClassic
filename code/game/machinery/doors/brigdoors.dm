@@ -27,10 +27,11 @@
 	var/picture_state		// icon_state of alert picture, if not displaying text/numbers
 	var/list/obj/machinery/targets = list()
 	var/timetoset = 0		// Used to set releasetime upon starting the timer
-	var/timer_activator = "Unknown"	//Mob.name who activate timer
+	var/timer_activator = ""	//Mob.name who activate timer
 	var/flag30sec = 0	//30 seconds notification flag
-	var/prisoner_name = "";
-	var/prisoner_reason = ""; // by Saravan
+	var/prisoner_name = ""
+	var/prisoner_crimes = "" // by Saravan
+	var/prisoner_details = ""
 	var/obj/item/device/radio/intercom/radio // for /s announce by Saravan
 
 
@@ -137,9 +138,13 @@
 	src.timing = 0
 	flag30sec = 0
 	releasetime = 0
-	timer_activator = "Unknown"
+	prisoner_name = ""
+	prisoner_crimes = ""
+	prisoner_details = ""
+	timer_activator = ""
 
 	return
+
 //Opens and unlocks door, closet
 /obj/machinery/door_timer/proc/cell_open()
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
@@ -174,6 +179,7 @@
 //Opens dialog window when someone clicks on door timer
 // Allows altering timer and the timing boolean.
 // Flasher activation limited to 150 seconds
+
 /obj/machinery/door_timer/ui_interact(mob/user)
 	// Used for the 'time left' display
 	var/second = round(timeleft() % 60)
@@ -190,9 +196,12 @@
 	dat += " <b>Door [src.id] controls</b><br/>"
 
 	// Prisoner name and reason, steal in newcaster.
-
-	dat += "<HR><B><A href='?src=\ref[src];set_prisoner_name=TRUE'>Name</A>:</B> [src.prisoner_name]<BR>"
-	dat += "<br/><B><A href='?src=\ref[src];set_prisoner_reason=TRUE'>Reason</A>:</B> [src.prisoner_reason]<BR><HR></hr>"
+	dat +={"
+		<HR><B><A href='?src=\ref[src];set_prisoner_name=TRUE'>Name</A>:</B> [src.prisoner_name]
+		<br/><B><A href='?src=\ref[src];set_prisoner_crimes=TRUE'>Crimes</A>:</B> [src.prisoner_crimes]
+		<br/><B><A href='?src=\ref[src];set_prisoner_details=TRUE'>Details</A>:</B> [src.prisoner_details]<BR>
+		<br/><B>Authorized by:</B> [src.timer_activator]<HR></hr>
+	"}
 
 	// Start/Stop timer
 	if (src.timing)
@@ -240,11 +249,13 @@
 		return
 
 	if(href_list["set_prisoner_name"])
-		src.prisoner_name = sanitize_safe(input(usr, "Provide a prisoner Name", "Prison Timer", input_default(prisoner_name)), MAX_LNAME_LEN)
+		src.prisoner_name = sanitize_safe(input(usr, "Enter Name", "Prison Timer", input_default(prisoner_name)), MAX_LNAME_LEN)
 
-	if(href_list["set_prisoner_reason"])
-		src.prisoner_reason = sanitize_safe(input(usr, "Provide a reason for arrest", "Prison Timer", input_default(prisoner_reason)), MAX_LNAME_LEN)
-		// for Name and Reason input.
+	if(href_list["set_prisoner_crimes"])
+		src.prisoner_crimes = sanitize_safe(input(usr, "Enter Crimes", "Prison Timer", input_default(prisoner_crimes)), MAX_LNAME_LEN)
+
+	if(href_list["set_prisoner_details"])
+		src.prisoner_details = sanitize_safe(input(usr, "Enter Details", "Prison Timer", input_default(prisoner_details)), MAX_LNAME_LEN)
 
 	if(!src.allowed(usr))
 		return
@@ -254,11 +265,8 @@
 
 		if(src.timing)
 			src.timer_start(usr.name)
-			var/saved_incapacitator_name = usr.name
-			var/mob/living/carbon/human/user = usr
-			if(istype(user))
-				saved_incapacitator_name = user.get_authentification_name(saved_incapacitator_name)
-			radio.autosay("[saved_incapacitator_name] placed [prisoner_name] into [id]. Reason: [prisoner_reason]", "Prison Timer", freq = radiochannels["Security"])
+			var/say_minute = round(timetoset / 600)
+			radio.autosay("[timer_activator] placed [prisoner_name] into [id]. Crimes: [prisoner_crimes]. Details: [prisoner_details]. Time: [say_minute] min.", "Prison Timer", freq = radiochannels["Security"])
 			// function /s announce
 			cell_close()
 		else
