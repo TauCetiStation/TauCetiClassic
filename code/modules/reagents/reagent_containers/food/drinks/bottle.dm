@@ -152,7 +152,7 @@
 	return ..()
 /obj/item/weapon/broken_bottle/after_throw(datum/callback/callback)
 	..()
-	playsound(src, "shatter", 70, 1)
+	playsound(src, "shatter", VOL_EFFECTS_MASTER)
 	new /obj/item/weapon/shard(loc)
 	qdel(src)
 
