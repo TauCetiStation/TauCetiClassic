@@ -124,7 +124,7 @@
 	I.Blend(BB.broken_outline, ICON_OVERLAY, rand(5), 1)
 	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 	BB.icon = I
-	playsound(src, "shatter", VOL_EFFECTS_MASTER)
+	playsound((src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER))
 	new /obj/item/weapon/shard(loc)
 	if(reagents.total_volume)
 		spawn_fluid(loc, reagents.total_volume)
