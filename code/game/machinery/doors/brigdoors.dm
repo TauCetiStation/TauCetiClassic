@@ -149,7 +149,6 @@
 	timer_activator = ""
 
 	return
-
 //Opens and unlocks door, closet
 /obj/machinery/door_timer/proc/cell_open()
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
@@ -184,7 +183,6 @@
 //Opens dialog window when someone clicks on door timer
 // Allows altering timer and the timing boolean.
 // Flasher activation limited to 150 seconds
-
 /obj/machinery/door_timer/ui_interact(mob/user)
 	// Used for the 'time left' display
 	var/second = round(timeleft() % 60)
