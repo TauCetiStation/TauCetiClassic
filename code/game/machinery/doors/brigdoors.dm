@@ -2,6 +2,8 @@
 #define FONT_SIZE "5pt"
 #define FONT_COLOR "#09f"
 #define FONT_STYLE "Arial Black"
+#define MAIN_SCREEN 0
+#define ERROR_SCREEN 1
 
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
@@ -196,7 +198,7 @@
 	var/dat = "<HTML><BODY><TT>"
 
 	switch(screen)
-		if(0)
+		if(MAIN_SCREEN)
 			dat += "<HR>Timer System:</hr>"
 			dat += " <b>Door [src.id] controls</b><br/>"
 			dat +={"
@@ -236,7 +238,7 @@
 			dat += "<br/><br/><a href='?src=\ref[user];mach_close=computer'>Close</a>"
 			dat += "</TT></BODY></HTML>"
 
-		if(1)
+		if(ERROR_SCREEN)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Invalid prisoner data</B></FONT><HR><BR>"
 			if(src.prisoner_name == "")
 				dat+="<FONT COLOR='maroon'>•Invalid prisoner name.</FONT><BR>"
@@ -244,7 +246,7 @@
 				dat+="<FONT COLOR='maroon'>•Invalid crimes number.</FONT><BR>"
 			if(src.prisoner_details == "")
 				dat+="<FONT COLOR='maroon'>•Invalid details text.</FONT><BR>"
-			dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
+			dat+="<BR><A href='?src=\ref[src];setScreen=[MAIN_SCREEN]'>Return</A><BR>"
 
 	user << browse(entity_ja(dat), "window=computer;size=400x500")
 	onclose(user, "computer")
@@ -282,7 +284,7 @@
 			if(src.timing)
 				src.timer_start(usr.name)
 				var/prison_minute = round(timetoset / 600)
-				radio.autosay("[timer_activator] placed [prisoner_name] into [id]. Crimes: [prisoner_crimes]. Details: [prisoner_details]. Time: [prison_minute] min.", "Prison Timer", freq = radiochannels["Security"])
+				radio.autosay("[timer_activator] placed [prisoner_name] into [id]. Crimes: [prisoner_crimes]. Details: [prisoner_details]. Prison term: [prison_minute] min.", "Prison Timer", freq = radiochannels["Security"])
 				cell_close()
 			else
 				src.timer_end()
@@ -416,3 +418,5 @@
 #undef FONT_COLOR
 #undef FONT_STYLE
 #undef CHARS_PER_LINE
+#undef MAIN_SCREEN
+#undef ERROR_SCREEN
