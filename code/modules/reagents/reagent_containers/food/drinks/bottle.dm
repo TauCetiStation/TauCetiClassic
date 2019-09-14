@@ -120,12 +120,11 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/after_throw(datum/callback/callback)
 	..()
 	var/obj/item/weapon/broken_bottle/BB =  new /obj/item/weapon/broken_bottle(loc)
-	BB.icon_state = src.icon_state
-	var/icon/II = new('icons/obj/drinks.dmi', src.icon_state)
-	II.Blend(BB.broken_outline, ICON_OVERLAY, rand(5), 1)
-	II.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
-	BB.icon = II
-	playsound(src, "shatter", 70, 1)
+	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
+	I.Blend(BB.broken_outline, ICON_OVERLAY, rand(5), 1)
+	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
+	BB.icon = I
+	playsound(src, "shatter", VOL_EFFECTS_MASTER)
 	new /obj/item/weapon/shard(loc)
 	if(reagents.total_volume)
 		spawn_fluid(loc, reagents.total_volume)
