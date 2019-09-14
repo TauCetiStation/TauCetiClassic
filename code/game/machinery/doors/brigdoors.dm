@@ -254,11 +254,7 @@
 
 		if(src.timing)
 			src.timer_start(usr.name)
-			var/saved_incapacitator_name = usr.name
-			var/mob/living/carbon/human/user = usr
-			if(istype(user))
-				saved_incapacitator_name = user.get_authentification_name(saved_incapacitator_name)
-			radio.autosay("[saved_incapacitator_name] placed [prisoner_name] into [id]. Reason: [prisoner_reason]", "Prison Timer", freq = radiochannels["Security"])
+			radio.autosay("Prisoner [prisoner_name] placed in [id]. Reason: [prisoner_reason]", "Prison Timer", freq = radiochannels["Security"])
 			// function /s announce
 			cell_close()
 		else
