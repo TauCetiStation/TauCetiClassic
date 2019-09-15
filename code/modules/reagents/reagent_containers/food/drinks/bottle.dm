@@ -128,7 +128,6 @@
 		new /obj/item/weapon/shard(loc)
 		if(reagents && reagents.total_volume)
 			src.reagents.reaction(loc, TOUCH)
-		spawn(5) src.reagents.clear_reagents()
 		qdel(src)
 
 

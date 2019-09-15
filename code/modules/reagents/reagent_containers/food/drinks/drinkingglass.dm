@@ -12,7 +12,6 @@
 	new /obj/item/weapon/shard(loc)
 	if(reagents && reagents.total_volume)
 		src.reagents.reaction(loc, TOUCH)
-		spawn(5) src.reagents.clear_reagents()
 	qdel(src)
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
 	/*if(reagents.reagent_list.len > 1 )
