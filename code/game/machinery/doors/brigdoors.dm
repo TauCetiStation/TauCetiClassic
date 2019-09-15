@@ -46,8 +46,7 @@
 	pixel_x = ((dir & 3)? (0) : (dir == 4 ? 32 : -32))
 	pixel_y = ((dir & 3)? (dir == 1 ? 24 : -32) : (0))
 	cell_open()
-	radio = new (src)
-	. = ..() // for /s announce
+	radio = new (src)  // for /s announce
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/door_timer/atom_init_late()
