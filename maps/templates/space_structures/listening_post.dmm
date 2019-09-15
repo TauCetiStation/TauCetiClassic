@@ -276,7 +276,7 @@
 /turf/simulated/floor,
 /area/listening_post)
 "aJ" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor,
 /area/listening_post)
 "aK" = (
@@ -299,7 +299,7 @@
 /turf/simulated/floor,
 /area/listening_post)
 "aO" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor,
 /area/listening_post)
 "aP" = (
