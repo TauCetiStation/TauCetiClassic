@@ -16,7 +16,7 @@
 	. = ..()
 	if(destroyed)
 		icon_state = "brokengrille"
-		density = 0
+		density = FALSE
 		health = 0
 
 /obj/structure/grille/ex_act(severity)
