@@ -156,9 +156,6 @@
 	..()
 <<<<<<< HEAD
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-=======
-	playsound(playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER))
->>>>>>> fbd418b90a23ebfb214cfed3d7293cb74eeba651
 	new /obj/item/weapon/shard(loc)
 	qdel(src)
 
