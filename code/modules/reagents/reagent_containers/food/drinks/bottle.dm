@@ -154,7 +154,6 @@
 	return ..()
 /obj/item/weapon/broken_bottle/after_throw(datum/callback/callback)
 	..()
-<<<<<<< HEAD
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	new /obj/item/weapon/shard(loc)
 	qdel(src)
