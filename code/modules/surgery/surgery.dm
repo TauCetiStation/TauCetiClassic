@@ -1,13 +1,23 @@
 /* SURGERY STEPS */
 /datum/surgery_step
 	var/priority = 0	//steps with higher priority would be attempted first
-	var/list/allowed_tools = null // type path referencing tools that can be used for this step, and how well are they suited for it
-	var/list/allowed_species = list("exclude", IPC) // type paths referencing mutantraces that this step applies to.
-	var/min_duration = 0 // min duration of the step
-	var/max_duration = 0 // max duration of the step
-	var/can_infect = 0  // evil infection stuff that will make everyone hate me
-	var/blood_level = 0 //How much blood this step can get on surgeon. 1 - hands, 2 - full body.
-	var/clothless = 1 //Cloth check
+
+	//type path referencing tools that can be used for this step, and how well are they suited for it
+	var/list/allowed_tools = null
+	// type paths referencing mutantraces that this step applies to.
+	var/list/allowed_species = list("exclude", IPC)
+
+	//duration of the step
+	var/min_duration = 0
+	var/max_duration = 0
+
+	//evil infection stuff that will make everyone hate me
+	var/can_infect = 0
+	//How much blood this step can get on surgeon. 1 - hands, 2 - full body.
+	var/blood_level = 0
+
+	//Cloth check
+	var/clothless = 1
 
 // returns how well tool is suited for this step
 /datum/surgery_step/proc/tool_quality(obj/item/tool)
@@ -18,8 +28,9 @@
 
 // Checks if this step applies to the mutantrace of the user.
 /datum/surgery_step/proc/is_valid_mutantrace(mob/living/carbon/human/target)
-	if(ishuman(target) && allowed_species && ("exclude" in allowed_species) == (target.get_species() in allowed_species))
-		return FALSE
+	if(ishuman(target) && allowed_species)
+		if(("exclude" in allowed_species) == (target.get_species() in allowed_species))
+			return FALSE
 	return TRUE
 
 // checks whether this step can be applied with the given user and target
@@ -62,7 +73,7 @@
 /proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 	if(!istype(M))
 		return FALSE
-	if(user.a_intent == "hurt")	//check for Hippocratic Oath
+	if(user.a_intent == I_HURT)	//check for Hippocratic Oath
 		return FALSE
 	if(user.is_busy(null)) // No target so we allow multiple players to do surgeries on one pawn.
 		return FALSE
