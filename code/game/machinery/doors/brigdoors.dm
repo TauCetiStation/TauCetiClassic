@@ -23,9 +23,7 @@
 	req_access = list(access_brig)
 	anchored = 1.0    		// can't pick it up
 	density = 0       		// can walk through it.
-	var/screen = 0
-		// 0 = main menu
-		// 1 = ERROR: Invalid Prisoner Data
+	var/screen = MAIN_SCREEN
 	var/id = null     		// id of door it controls.
 	var/releasetime = 0		// when world.timeofday reaches it - release the prisoner
 	var/timing = 0    		// boolean, true/1 timer is on, false/0 means it's not timing
@@ -149,6 +147,7 @@
 	timer_activator = ""
 
 	return
+
 //Opens and unlocks door, closet
 /obj/machinery/door_timer/proc/cell_open()
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
@@ -183,6 +182,7 @@
 //Opens dialog window when someone clicks on door timer
 // Allows altering timer and the timing boolean.
 // Flasher activation limited to 150 seconds
+
 /obj/machinery/door_timer/ui_interact(mob/user)
 	// Used for the 'time left' display
 	var/second = round(timeleft() % 60)
@@ -275,7 +275,7 @@
 
 	if(href_list["timing"])
 		if(src.prisoner_name == "" || src.prisoner_crimes == "" || src.prisoner_details == "" )
-			src.screen = 1
+			src.screen = ERROR_SCREEN
 		else
 			src.timing = text2num(href_list["timing"])
 
