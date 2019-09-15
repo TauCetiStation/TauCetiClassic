@@ -119,7 +119,6 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/after_throw(datum/callback/callback)
 	if(is_glass)
-		..()
 		var/obj/item/weapon/broken_bottle/BB =  new /obj/item/weapon/broken_bottle(loc)
 		var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
 		I.Blend(BB.broken_outline, ICON_OVERLAY, rand(5), 1)
@@ -127,8 +126,9 @@
 		BB.icon = I
 		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 		new /obj/item/weapon/shard(loc)
-		if(reagents.total_volume)
-			spawn_fluid(loc, reagents.total_volume)
+		if(reagents && reagents.total_volume)
+			src.reagents.reaction(loc, TOUCH)
+		spawn(5) src.reagents.clear_reagents()
 		qdel(src)
 
 
@@ -154,7 +154,7 @@
 	return ..()
 /obj/item/weapon/broken_bottle/after_throw(datum/callback/callback)
 	..()
-	playsound(src, "shatter", 70, 1)
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	new /obj/item/weapon/shard(loc)
 	qdel(src)
 
