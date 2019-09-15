@@ -98,7 +98,7 @@
 /turf/simulated/wall/r_wall,
 /area/cloning_lab)
 "q" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor,
 /area/cloning_lab)
 "r" = (
