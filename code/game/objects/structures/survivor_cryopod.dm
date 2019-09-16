@@ -19,7 +19,7 @@
 	density = FALSE
 
 /obj/structure/survivor_cryopod/attack_hand(mob/user)
-	if(user.is_busy())
+	if(user.is_busy(src))
 		return
 
 	user.SetNextMove(CLICK_CD_INTERACT)
@@ -43,7 +43,7 @@
 	addtimer(CALLBACK(src, .proc/stop_search), 350)
 
 /obj/structure/survivor_cryopod/proc/request_player()
-	for(var/mob/dead/observer/O in player_list)
+	for(var/mob/dead/observer/O in observer_list)
 		if(O.has_enabled_antagHUD && config.antag_hud_restricted)
 			continue
 		if(jobban_isbanned(O, ROLE_SURVIVOR))
