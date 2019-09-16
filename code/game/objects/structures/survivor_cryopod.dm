@@ -138,7 +138,7 @@
 
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/nasavoid(H), SLOT_WEAR_SUIT)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/nasavoid(H), SLOT_HEAD)
-	H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(H), SLOT_S_STORE)
+	H.equip_to_slot_or_del(new /obj/item/weapon/tank/jetpack/oxygen(H), SLOT_BACK)
 
 /obj/structure/survivor_cryopod/civilian/equip_survivor(mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(H), SLOT_W_UNIFORM)
