@@ -56,10 +56,10 @@
 				INVOKE_ASYNC(src, .proc/question, C)
 
 /obj/structure/survivor_cryopod/proc/question(client/C)
-	if(!C)
+	if(QDELETED(C))
 		return
 	var/response = alert(C, "Survivor role is available. Would you like to play?", "Survivor role request", "No", "Yes", "Never for this round")
-	if(!C || !searching)
+	if(QDELETED(C) || !searching)
 		return
 	if(response == "Yes")
 		searching = FALSE
