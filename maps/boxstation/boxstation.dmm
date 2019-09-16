@@ -48644,6 +48644,7 @@
 	pixel_x = 5;
 	pixel_y = -5
 	},
+/obj/item/weapon/wirecutters,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
