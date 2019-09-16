@@ -29,8 +29,7 @@ var/datum/subsystem/quirks/SSquirks
 	quirk_blacklist = list(
 		list("Blind", "Nearsighted"),
 		list("Low pain threshold", "High pain threshold"),
-		list("Strong mind", "Twitching"),
-		list("Blind", "Nearsighted")
+		list("Strong mind", "Twitching")
 		)
 
 	quirk_blacklist_species = list(
