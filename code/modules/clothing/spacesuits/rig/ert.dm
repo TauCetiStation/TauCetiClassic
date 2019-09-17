@@ -42,7 +42,7 @@
 	name = "emergency response team commander helmet"
 	desc = "A helmet worn by the commander of a NanoTrasen Emergency Response Team. Has blue highlights. Armoured and space ready."
 	icon_state = "rig0-ert_commander"
-	item_state = "ert_commander"
+	item_state = "ert_commander_head"
 	item_color = "ert_commander"
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 
@@ -60,7 +60,7 @@
 	name = "emergency response team security helmet"
 	desc = "A helmet worn by security members of a NanoTrasen Emergency Response Team. Has red highlights. Armoured and space ready."
 	icon_state = "rig0-ert_security"
-	item_state = "ert_security"
+	item_state = "ert_security_head"
 	item_color = "ert_security"
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 30, bomb = 65, bio = 100, rad = 10)
 
@@ -79,7 +79,7 @@
 	name = "emergency response team engineer helmet"
 	desc = "A helmet worn by engineering members of a NanoTrasen Emergency Response Team. Has orange highlights. Armoured and space ready."
 	icon_state = "rig0-ert_engineer"
-	item_state = "ert_engineer"
+	item_state = "ert_engineer_head"
 	item_color = "ert_engineer"
 	siemens_coefficient = 0
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 75)
@@ -98,7 +98,7 @@
 	name = "emergency response team medical helmet"
 	desc = "A helmet worn by medical members of a NanoTrasen Emergency Response Team. Has white highlights. Armoured and space ready."
 	icon_state = "rig0-ert_medical"
-	item_state = "ert_medical"
+	item_state = "ert_medical_head"
 	item_color = "ert_medical"
 
 /obj/item/clothing/suit/space/rig/ert/medical
@@ -114,7 +114,7 @@
 	desc = "A helmet worn by stealth members of a NanoTrasen Emergency Response Team."
 	icon_state = "rig0-ert_stealth"
 	item_color = "ert_stealth"
-	item_state = "ert_stealth"
+	item_state = "ert_stealth_head"
 	armor = list(melee = 30, bullet = 15, laser = 20,energy = 5, bomb = 20, bio = 100, rad = 100)
 	light_color = "#c388eb"
 	action_button_name = "Toggle Helmet Visor Light"
