@@ -171,7 +171,7 @@
 	origin_tech = "materials=1;biotech=3"
 	w_class = ITEM_SIZE_SMALL
 	var/usage_amount = 10
-	usesound = 'sound/items/Fix_o_vein.ogg'
+	usesound = 'sound/items/Fix-O-vein.ogg'
 /obj/item/weapon/bonesetter
 	name = "bone setter"
 	icon = 'icons/obj/surgery.dmi'
@@ -182,4 +182,4 @@
 	throw_range = 5
 	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("attacked", "hit", "bludgeoned")
-	usesound = 'sound/items/Boneset.ogg'
+	usesound = 'sound/items/BonSet.ogg'
