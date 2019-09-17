@@ -58,6 +58,13 @@
 /obj/item/weapon/implant/proc/islegal()
 	return 0
 
+/obj/item/weapon/implant/proc/apply_brain_damage()
+	var/mob/living/carbon/human/H = imp_in
+	if(istype(H))
+		H.visible_message("[H] suddenly goes very red and starts writhing. There is a strange smell in the air...", \
+		"<span class='userdanger'>Suddenly the horrible pain strikes your body! Your mind is in complete disorder! Blood pulses and starts burning! The pain is impossible!!!</span>")
+		H.adjustBrainLoss(80)
+
 /obj/item/weapon/implant/proc/meltdown()	//breaks it down, making implant unrecongizible
 	to_chat(imp_in, "<span class='warning'>You feel something melting inside [part ? "your [part.name]" : "you"]!</span>")
 	if (part)

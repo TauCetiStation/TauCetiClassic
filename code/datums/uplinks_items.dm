@@ -685,6 +685,12 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_emp
 	cost = 3
 
+/datum/uplink_item/implants/loyalty
+	name = "Loyalty Implant"
+	desc = "An implant, that makes victim as Syndicate fanatic. Like you."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_loyalty
+	cost = 13
+
 // POINTLESS BADASSERY
 
 /datum/uplink_item/badass

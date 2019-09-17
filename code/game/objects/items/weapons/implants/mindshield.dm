@@ -37,9 +37,7 @@
 		to_chat(H, "<span class='notice'>You feel a sense of peace and security. You are now protected from brainwashing.</span>")
 
 	if(prob(50))
-		H.visible_message("[H] suddenly goes very red and starts writhing. There is a strange smell in the air...", \
-		"<span class='userdanger'>Suddenly the horrible pain strikes your body! Your mind is in complete disorder! Blood pulses and starts burning! The pain is impossible!!!</span>")
-		H.adjustBrainLoss(80)
+		apply_brain_damage()
 
 	return TRUE
 
