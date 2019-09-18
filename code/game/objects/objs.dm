@@ -19,6 +19,7 @@
 	var/icon_custom = null //Default Bay12 sprite or not
 
 	var/being_shocked = 0
+	var/prevent_crawl = FALSE // If TRUE prevents us from getting up from under this object, used for beds
 
 /obj/item/proc/is_used_on(obj/O, mob/user)
 

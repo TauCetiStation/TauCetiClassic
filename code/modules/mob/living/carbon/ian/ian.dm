@@ -48,6 +48,7 @@
 	var/pose_last = 0
 	var/sitting = FALSE
 	can_crawl = TRUE
+	rest_on_fall = TRUE
 
 /mob/living/carbon/ian/atom_init()
 	reagents = new(1000)

@@ -274,6 +274,7 @@
 				if (!M.lying)
 					if(!sleeping && ((crawling && crawl_can_use()) || !crawling))
 						rest_off()
+						update_canmove(instant_standup = TRUE)
 					M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You shake [src] trying to wake [t_him] up!</span>")
 				else
@@ -308,8 +309,9 @@
 
 /mob/living/carbon/proc/crawl_can_use()
 	var/turf/T = get_turf(src)
-	if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) || (locate(/obj/structure/plasticflaps) in T))
-		return FALSE
+	for(var/obj/O in T.contents)
+		if(O.density || O.prevent_crawl)
+			return FALSE
 	return TRUE
 
 /mob/living/carbon/proc/eyecheck()
@@ -877,21 +879,11 @@
 /mob/living/carbon/proc/toggle_rest(verbal = FALSE)
 	if (resting)
 		rest_off()
-		if(verbal)
+		if(!canmove && verbal)
 			to_chat(src, "<span class='notice'>You will stand up as soon as possible.</span>")
 	else
 		rest_on()
-		if(!lying)
-			update_canmove() // Getting up is slow, dropping to the floor is instant
 		if(verbal)
 			to_chat(src, "<span class='notice'>You are now resting.</span>")
 
-/mob/living/carbon/proc/rest_off()
-	resting = FALSE
-	if(rest_icon)
-		rest_icon.icon_state = "rest_off"
-
-/mob/living/carbon/proc/rest_on()
-	resting = TRUE
-	if(rest_icon)
-		rest_icon.icon_state = "rest_on"
+	update_canmove()

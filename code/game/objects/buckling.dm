@@ -39,7 +39,7 @@
 		. = buckled_mob
 		buckled_mob.buckled = null
 		buckled_mob.anchored = initial(buckled_mob.anchored)
-		buckled_mob.update_canmove()
+		buckled_mob.update_canmove(instant_standup = TRUE)
 		buckled_mob.clear_alert("buckled")
 		correct_pixel_shift(buckled_mob)
 		buckled_mob = null

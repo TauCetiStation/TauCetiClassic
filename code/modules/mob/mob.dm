@@ -678,15 +678,33 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 // Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 // We need speed out of this proc, thats why using incapacitated() helper here is a bad idea.
-/mob/proc/update_canmove(no_transform = FALSE)
+/mob/proc/update_canmove(no_transform = FALSE, instant_standup = FALSE)
 
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
 
-	lying = (ko || resting) && !captured && !buckled && !pinned.len
+	var/new_lying = (ko || resting || getting_up) && !captured && !buckled && !pinned.len
 	canmove = !(ko || stunned || captured || pinned.len)
-	if(!can_crawl && lying)
+	if(!can_crawl && new_lying)
 		canmove = FALSE
 	anchored = captured || pinned.len
+
+	if(getting_up)
+		return
+
+	if(!instant_standup && lying && !new_lying && !buckled) // Handling non-instant getting up
+		getting_up = TRUE
+		visible_message("<span class='notice'>[src] attempts to get up.</span>")
+		if(!do_after(src, 10, target = src))
+			getting_up = FALSE // Failed to get up
+			rest_on()
+			return
+		visible_message("<span class='notice'>[src] got up on \his feet.</span>")
+		getting_up = FALSE
+
+	if(!lying && new_lying && rest_on_fall && !buckled) // If we fell we switch to resting
+		rest_on()
+
+	lying = new_lying
 
 	if(buckled)
 		if(buckled.buckle_lying != -1)
@@ -833,7 +851,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/AdjustWeakened(amount)
 	if(status_flags & CANWEAKEN)
 		weakened = max(weakened + amount, 0)
-		update_canmove()
+		update_canmove(instant_standup = TRUE)
 	else
 		weakened = 0
 
@@ -1073,3 +1091,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/can_unbuckle(mob/user)
 	return 1
+
+/mob/proc/rest_off()
+	resting = FALSE
+	if(rest_icon)
+		rest_icon.icon_state = "rest_off"
+
+/mob/proc/rest_on()
+	resting = TRUE
+	if(rest_icon)
+		rest_icon.icon_state = "rest_on"

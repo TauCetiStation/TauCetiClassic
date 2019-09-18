@@ -27,8 +27,6 @@
 			changed++
 			ntransform.TurnTo(0,lying_current)
 			check_crawling()
-			if(!buckled)
-				rest_on() // We fell, lets relax
 			pixel_y = get_standard_pixel_y_offset()
 			pixel_x = get_standard_pixel_x_offset()
 			final_pixel_y = get_standard_pixel_y_offset(lying_current)
@@ -39,8 +37,6 @@
 		if(lying != lying_prev)
 			lying_prev = lying
 			check_crawling()
-			if(client)
-				client.move_delay += 4
 			changed++
 			ntransform.TurnTo(lying_current,0)
 			final_pixel_y = get_standard_pixel_y_offset()

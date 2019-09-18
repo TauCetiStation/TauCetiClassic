@@ -42,7 +42,7 @@
 	regenerate_icons()
 	a_intent = "grab"
 
-/mob/living/carbon/alien/facehugger/update_canmove(no_transform = FALSE)
+/mob/living/carbon/alien/facehugger/update_canmove()
 	..()
 	density = initial(density)
 

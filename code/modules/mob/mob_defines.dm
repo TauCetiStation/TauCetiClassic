@@ -85,6 +85,8 @@
 	var/lying_current = 0
 	var/crawling = 0 // TRUE = crawling on the floor and under beds/tables, FALSE = we are lying on top of the bed/table or just standing
 	var/can_crawl = 0 // Can we move while resting
+	var/getting_up = 0 // Are we getting up from resting
+	var/rest_on_fall = 0 // Should we switch to resting if we fell for some reason. FALSE will make us wake up as soon as possible
 	var/canmove = 1
 	var/lastpuke = 0
 	var/unacidable = 0

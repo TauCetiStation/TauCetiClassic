@@ -18,6 +18,7 @@
 	var/gnomed = 0 // timer used by gnomecurse.dm
 
 	can_crawl = TRUE
+	rest_on_fall = TRUE
 	throw_range = 2
 
 /mob/living/carbon/human/dummy
