@@ -21,6 +21,7 @@
 	flags = CONDUCT
 	w_class = ITEM_SIZE_SMALL
 	origin_tech = "materials=1;biotech=1"
+	usesound = 'sound/items/surgery/Retract.ogg'
 
 /*
  * Hemostat
@@ -36,6 +37,7 @@
 	w_class = ITEM_SIZE_SMALL
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
+	usesound = 'sound/items/surgery/Hemostat.ogg'
 
 /*
  * Cautery
@@ -51,7 +53,7 @@
 	w_class = ITEM_SIZE_SMALL
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
-	usesound = 'sound/items/cautery.ogg'
+	usesound = 'sound/items/surgery/cautery.ogg'
 
 /*
  * Surgical Drill
@@ -69,6 +71,7 @@
 	w_class = ITEM_SIZE_SMALL
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
+	usesound = 'sound/items/surgery/SurgDrill.ogg'
 
 /obj/item/weapon/surgicaldrill/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='warning'><b>[user] is pressing the [src.name] to \his temple and activating it! It looks like \he's trying to commit suicide.</b></span>", \
@@ -110,21 +113,21 @@
 	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks basic and could be improved."
 	icon_state = "scalpel_laser1_on"
 	damtype = "fire"
-	usesound = 'sound/items/laserscalp.ogg'
+	usesound = 'sound/items/surgery/laserscalp.ogg'
 /obj/item/weapon/scalpel/laser2
 	name = "laser scalpel"
 	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks somewhat advanced."
 	icon_state = "scalpel_laser2_on"
 	damtype = "fire"
 	force = 12.0
-	usesound = 'sound/items/laserscalp.ogg'
+	usesound = 'sound/items/surgery/laserscalp.ogg'
 /obj/item/weapon/scalpel/laser3
 	name = "laser scalpel"
 	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks to be the pinnacle of precision energy cutlery!"
 	icon_state = "scalpel_laser3_on"
 	damtype = "fire"
 	force = 15.0
-	usesound = 'sound/items/laserscalp.ogg'
+	usesound = 'sound/items/surgery/laserscalp.ogg'
 /obj/item/weapon/scalpel/manager
 	name = "incision management system"
 	desc = "A true extension of the surgeon's body, this marvel instantly and completely prepares an incision allowing for the immediate commencement of therapeutic steps."
@@ -152,7 +155,7 @@
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharp = 1
 	edge = 1
-	usesound = 'sound/items/Bone_Saw.ogg'
+	usesound = 'sound/items/surgery/Bone_Saw.ogg'
 //misc, formerly from code/defines/weapons.dm
 /obj/item/weapon/bonegel
 	name = "bone gel"
@@ -171,7 +174,7 @@
 	origin_tech = "materials=1;biotech=3"
 	w_class = ITEM_SIZE_SMALL
 	var/usage_amount = 10
-	usesound = 'sound/items/Fix-O-vein.ogg'
+	usesound = 'sound/items/surgery/Fix-O-vein.ogg'
 /obj/item/weapon/bonesetter
 	name = "bone setter"
 	icon = 'icons/obj/surgery.dmi'
@@ -182,4 +185,4 @@
 	throw_range = 5
 	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("attacked", "hit", "bludgeoned")
-	usesound = 'sound/items/BonSet.ogg'
+	usesound = 'sound/items/surgery/BonSet.ogg'
