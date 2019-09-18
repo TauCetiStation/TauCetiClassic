@@ -59,9 +59,6 @@
 		else
 			msg += "<span class='warning'>[t_He] [t_is] [bicon(handcuffed)] handcuffed!</span>\n"
 
-	if(legcuffed)
-		msg += "<span class='warning'>[t_He] [t_has] [bicon(legcuffed)] [legcuffed.name] on [t_his] paws!</span>\n"
-
 	//buckled
 	if(buckled)
 		msg += "<span class='warning'>[t_He] [t_is] [bicon(buckled)] buckled to [buckled]!</span>\n"

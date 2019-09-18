@@ -91,8 +91,6 @@
 			return l_hand
 		if(SLOT_R_HAND)
 			return r_hand
-		if(SLOT_LEGCUFFED)
-			return legcuffed
 
 /mob/living/carbon/ian/get_slot_ref(slot)
 	switch(slot)
@@ -104,8 +102,6 @@
 			return neck
 		if(SLOT_BACK)
 			return back
-		if(SLOT_LEGCUFFED)
-			return legcuffed
 
 /mob/living/carbon/human/get_slot_ref(slot)
 	. = ..()

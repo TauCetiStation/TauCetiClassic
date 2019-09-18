@@ -140,9 +140,6 @@
 	else if (W == back)
 		back = null
 		update_inv_back()
-	else if (W == legcuffed)
-		legcuffed = null
-		update_inv_back()
 
 /mob/living/carbon/ian/proc/update_corgi_ability()
 	name = real_name
