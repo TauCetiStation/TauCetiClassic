@@ -65,25 +65,26 @@
 
 	if(src.table.check_victim())
 		if(dpmlast < world.time - dpmtime)
-			if(victim.pulse == 1)
-				{playsound(src, 'sound/machines/cardio/cardionormal.ogg', VOL_EFFECTS_MASTER, vary = FALSE)}
-				dpmtime = 19
-				dpmlast = world.time
-			else if(victim.pulse == 2)
-				{playsound(src, 'sound/machines/cardio/cardionormal.ogg', VOL_EFFECTS_MASTER, vary = FALSE)}
-				dpmtime = 9
-				dpmlast = world.time
-			else if(victim.pulse == 3)
-				{playsound(src, 'sound/machines/cardio/cardiofast.ogg', VOL_EFFECTS_MASTER, vary = FALSE)}
-				dpmtime = 29
-				dpmlast = world.time
-			else if(victim.pulse == 4)
-				{playsound(src, 'sound/machines/cardio/cardiofaster.ogg', VOL_EFFECTS_MASTER, vary = FALSE)}
-				dpmtime = 19
-				dpmlast = world.time
-			else if(victim.pulse == 5)
-				{playsound(src, 'sound/machines/cardio/cardiofastest.ogg', VOL_EFFECTS_MASTER, vary = FALSE)}
-				dpmtime = 39
-				dpmlast = world.time
-			else
-				{playsound(src, 'sound/machines/cardio/dead.ogg', VOL_EFFECTS_MASTER, vary = FALSE)}
+			switch(victim.pulse)
+				if(1)
+					playsound(src, 'sound/machines/cardio/cardionormal.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+					dpmtime = 19
+					dpmlast = world.time
+				if(2)
+					playsound(src, 'sound/machines/cardio/cardionormal.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+					dpmtime = 9
+					dpmlast = world.time
+				if(3)
+					playsound(src, 'sound/machines/cardio/cardiofast.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+					dpmtime = 29
+					dpmlast = world.time
+				if(4)
+					playsound(src, 'sound/machines/cardio/cardiofaster.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+					dpmtime = 19
+					dpmlast = world.time
+				if(5)
+					playsound(src, 'sound/machines/cardio/cardiofastest.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+					dpmtime = 39
+					dpmlast = world.time
+				else
+					playsound(src, 'sound/machines/cardio/dead.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
