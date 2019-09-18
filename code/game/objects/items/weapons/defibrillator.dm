@@ -444,7 +444,7 @@
 		to_chat(user, "<span class='warning'>You can't do that while the safety is enabled.</span>")
 		return
 
-	playsound(src, 'sound/items/defib_charge.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	playsound(src, 'sound/items/surgery/defib_charge.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	audible_message("<span class='warning'>\The [src] lets out a steadily rising hum...</span>")
 
 	if(!do_after(user, charge_time, H))

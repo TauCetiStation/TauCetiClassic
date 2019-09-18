@@ -164,7 +164,7 @@
 	force = 0
 	w_class = ITEM_SIZE_SMALL
 	throwforce = 1.0
-	usesound = 'sound/items/Bone_Gel.ogg'
+	usesound = 'sound/items/surgery/Bone_Gel.ogg'
 /obj/item/weapon/FixOVein
 	name = "FixOVein"
 	icon = 'icons/obj/surgery.dmi'
