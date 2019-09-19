@@ -694,7 +694,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(!instant_standup && lying && !new_lying && !buckled) // Handling non-instant getting up
 		getting_up = TRUE
 		visible_message("<span class='notice'>[src] attempts to get up.</span>")
-		if(!do_after(src, 10, target = src))
+		if(!do_after(src, 10, target = src, can_move = TRUE))
 			getting_up = FALSE // Failed to get up
 			rest_on()
 			return
