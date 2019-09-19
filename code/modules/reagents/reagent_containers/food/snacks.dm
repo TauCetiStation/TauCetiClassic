@@ -520,7 +520,7 @@
 	..()
 	new /obj/effect/decal/cleanable/egg_smudge(loc)
 	if(prob(13))
-		if(chicken_count < MAX_CHICKENS)
+		if(global.chicken_count < MAX_CHICKENS)
 			new /mob/living/simple_animal/chick(loc)
 	reagents.reaction(hit_atom, TOUCH)
 	visible_message("<span class='rose'>\The [src.name] has been squashed.</span>", "<span class='rose'>You hear a smack.</span>")
