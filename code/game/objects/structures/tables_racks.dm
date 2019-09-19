@@ -250,6 +250,8 @@
 			else
 				G.affecting.forceMove(loc)
 				G.affecting.Weaken(5)
+				G.affecting.crawling = FALSE // puts us above the table if we were crawling
+				G.affecting.check_crawling()
 				visible_message("<span class='danger'>[G.assailant] puts [G.affecting] on \the [src].</span>")
 				M.attack_log += "\[[time_stamp()]\] <font color='orange'>Was laied by [A.name] on \the [src]([A.ckey])</font>"
 				A.attack_log += "\[[time_stamp()]\] <font color='red'>Put [M.name] on \the [src]([M.ckey])</font>"
