@@ -10,7 +10,7 @@
 	speak_emote = list("squeeks","squeeks","squiks")
 	emote_hear = list("squeeks","squeaks","squiks")
 	emote_see = list("runs in a circle", "shakes", "scritches at something")
-	pass_flags = PASSTABLE
+	pass_flags = PASSTABLE | PASSMOB
 	small = TRUE
 	speak_chance = 1
 	turns_per_move = 8
