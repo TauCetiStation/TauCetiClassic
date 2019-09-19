@@ -17,7 +17,7 @@
 	icon_state = "box"
 	density = 1
 	anchored = 1.0
-	layer = CONTAINER_STRUCTURE_LAYER
+	layer = STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.")
 	climbable = 1
 	smooth = SMOOTH_TRUE
