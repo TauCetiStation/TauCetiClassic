@@ -851,7 +851,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/AdjustWeakened(amount)
 	if(status_flags & CANWEAKEN)
 		weakened = max(weakened + amount, 0)
-		update_canmove(instant_standup = TRUE)
+		update_canmove(null, TRUE)
 	else
 		weakened = 0
 

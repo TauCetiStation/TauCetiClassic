@@ -274,7 +274,7 @@
 				if (!M.lying)
 					if(!sleeping && ((crawling && crawl_can_use()) || !crawling))
 						rest_off()
-						update_canmove(instant_standup = TRUE)
+						update_canmove(null, TRUE)
 					M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You shake [src] trying to wake [t_him] up!</span>")
 				else
