@@ -486,7 +486,7 @@
 	},
 /area/ai_monitored/storage/eva)
 "aaK" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /obj/machinery/status_display{
 	layer = 4;
 	pixel_x = 32
@@ -3686,7 +3686,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -7833,7 +7833,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/eva)
 "bDP" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -10530,7 +10530,7 @@
 	},
 /area/rnd/telesci)
 "cxi" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -15717,7 +15717,6 @@
 "ego" = (
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/structure/window/reinforced{
@@ -15752,7 +15751,6 @@
 /obj/structure/closet/secure_closet/security,
 /obj/machinery/light,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
@@ -19992,7 +19990,7 @@
 	},
 /area/crew_quarters/bar)
 "fzm" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -20910,7 +20908,7 @@
 /turf/simulated/floor,
 /area/storage/tools)
 "fOG" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -37829,7 +37827,7 @@
 /obj/machinery/camera{
 	c_tag = "Dorm West"
 	},
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -38619,7 +38617,6 @@
 	name = "Head of Security RC";
 	pixel_y = 30
 	},
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/clothing/mask/gas/sechailer,
 /turf/simulated/floor{
@@ -38836,7 +38833,7 @@
 	dir = 1
 	},
 /obj/machinery/light,
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "escape"
 	},
@@ -43098,7 +43095,6 @@
 	},
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
@@ -43859,7 +43855,6 @@
 	dir = 1
 	},
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/device/radio/intercom{
@@ -44851,7 +44846,6 @@
 	},
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
@@ -49243,7 +49237,7 @@
 	},
 /area/toxins/server)
 "pfH" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor/wood,
 /area/bridge/meeting_room)
 "pfQ" = (
@@ -50779,7 +50773,6 @@
 "pHQ" = (
 /obj/structure/closet/secure_closet/warden,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
@@ -52521,7 +52514,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "qjw" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitegreenfull"
@@ -54791,7 +54784,7 @@
 	},
 /area/chapel/office)
 "qUo" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -57865,7 +57858,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "rYL" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -73957,7 +73950,7 @@
 	},
 /area/maintenance/science)
 "xeL" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /obj/machinery/light/small{
 	dir = 1
 	},

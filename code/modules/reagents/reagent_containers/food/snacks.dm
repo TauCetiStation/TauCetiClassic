@@ -798,7 +798,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/brainburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("protein", 4)
 	reagents.add_reagent("alkysine", 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/ghostburger
@@ -827,7 +828,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/human/burger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("protein", 4)
 	reagents.add_reagent("vitamin", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/cheeseburger
@@ -837,7 +839,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/cheeseburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("cheese", 4)
 	reagents.add_reagent("vitamin", 1)
 
 
@@ -850,7 +853,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeyburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("protein", 4)
 	reagents.add_reagent("vitamin", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/fishburger
@@ -1797,7 +1801,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/bigbiteburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 14)
+	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("protein", 10)
 	reagents.add_reagent("vitamin", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/enchiladas
@@ -2146,7 +2151,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/superbiteburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 50)
+	reagents.add_reagent("nutriment", 32)
+	reagents.add_reagent("cheese", 4)
+	reagents.add_reagent("protein", 16)
 	reagents.add_reagent("vitamin", 5)
 	bitesize = 10
 

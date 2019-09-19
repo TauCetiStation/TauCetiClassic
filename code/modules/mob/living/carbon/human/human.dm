@@ -84,6 +84,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/slime/atom_init(mapload)
 	. = ..(mapload, SLIME)
 
+/mob/living/carbon/human/skeleton/atom_init(mapload)
+	. = ..(mapload, SKELETON)
+
 /mob/living/carbon/human/atom_init(mapload, new_species)
 
 	dna = new
@@ -1925,6 +1928,45 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		M.apply_damage(50,BRUTE)
 		if(M.stat == DEAD)
 			M.gib()
+
+/mob/living/carbon/human/proc/air_sample()
+	set category = "IC"
+	set name = "Air sample"
+	set desc = "pull out the tongue and understand the approximate state of the air"
+
+	if(stat)
+		return
+	if(wear_mask && wear_mask.flags & HEADCOVERSMOUTH || head && head.flags & MASKCOVERSMOUTH)
+		to_chat(usr,"<span class='notice'>I can't get my tongue out.</span>")
+		return
+
+	visible_message("<span class='notice'>[src] quickly pulled out and put the tongue back</span>")
+	to_chat(src,"<span class='notice'>Ressults air sample:</span>")
+	var/datum/gas_mixture/mixture = return_air()
+	var/pressure = mixture.return_pressure()
+	var/total_moles = mixture.total_moles
+
+	if(total_moles > 0)
+		if(pressure - ONE_ATMOSPHERE * 2 <= 10)
+			to_chat(src,"<span class='notice'>The pressure of about: [round(pressure, 20)] kPa.</span>")
+		else
+			to_chat(src,"<span class='warning'>The pressure extremely high.</span>")
+
+		for(var/mix in mixture.gas)
+			if(mix == "sleeping_agent" && mixture.gas[mix] > 1)
+				to_chat(src,"<span class='warning'>Sssleepy.</span>")
+			else if(mix == "phoron" && mixture.gas[mix] > 1)
+				to_chat(src,"<span class='warning'>Deadly.</span>")
+			else if(mix == "oxygen")
+				if(mixture.gas[mix] > 22)
+					to_chat(src,"<span class='notice'>Airfull.</span>")
+				else if(mixture.gas[mix] < 19)
+					to_chat(src,"<span class='notice'>Airless.</span>")
+
+		to_chat(src,"<span class='notice'>Temperature around [round(mixture.temperature-T0C, 5)]&deg;C.</span>")
+		return
+	to_chat(src,"<span class='warning'>Well... I need my mask back.</span>")
+
 
 /mob/living/carbon/human/has_eyes()
 	if(organs_by_name[O_EYES])
