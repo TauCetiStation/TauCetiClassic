@@ -31,6 +31,7 @@
 	post_buckle_mob(M)
 	M.throw_alert("buckled", new_master = src)
 	correct_pixel_shift(M)
+	M.check_crawling() // puts us above the object if we were under it
 	M.update_canmove()
 	return 1
 

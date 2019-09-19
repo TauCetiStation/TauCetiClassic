@@ -5,7 +5,7 @@
 	var/final_dir = dir
 	var/changed = 0
 
-	if(lying_prev && !lying && crawling && !crawl_can_use())
+	if(lying_prev && !lying && !buckled && crawling && !crawl_can_use())
 		lying = TRUE
 		rest_on()
 		playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)

@@ -862,7 +862,7 @@
 			adjustToxLoss(-toxins_puked)
 
 // This proc checks if we are on top of some object or crawling on the floor and changes our layer and pass_flags accordingly
-/mob/living/carbon/proc/check_crawling()
+/mob/living/carbon/check_crawling()
 	var/final_layer
 
 	if(!lying)
@@ -870,7 +870,7 @@
 		pass_flags ^= PASSCRAWL
 		final_layer = initial(layer)
 	else
-		if(crawl_can_use())
+		if(crawl_can_use() && !buckled)
 			final_layer = 2.7
 			crawling = TRUE
 			pass_flags |= PASSCRAWL

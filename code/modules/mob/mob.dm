@@ -749,6 +749,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 		regenerate_icons()
 	return canmove
 
+/mob/proc/check_crawling()
+	return
 
 /mob/proc/facedir(ndir)
 	if(!canface())
