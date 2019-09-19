@@ -1729,8 +1729,7 @@
 "aid" = (
 /obj/structure/lattice,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/space,
 /area/space)
@@ -3269,7 +3268,7 @@
 	},
 /area/syndicate_station/start)
 "amy" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/unsimulated/floor{
 	icon_state = "bar"
 	},
@@ -5124,14 +5123,14 @@
 	},
 /area/supply/dock)
 "asN" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
 	},
 /area/centcom/arrival)
 "asO" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /obj/machinery/light,
 /turf/unsimulated/floor{
 	dir = 8;
@@ -5602,7 +5601,7 @@
 	},
 /area/centcom/arrival)
 "auq" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "green"
@@ -5680,7 +5679,7 @@
 	},
 /area/centcom/arrival)
 "auz" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -6309,7 +6308,7 @@
 	},
 /area/centcom/arrival)
 "axb" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/unsimulated/floor{
 	icon_state = "cult";
 	name = "plating"
@@ -9413,7 +9412,7 @@
 /turf/space,
 /area/shuttle/administration/centcom)
 "aGT" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -10052,7 +10051,7 @@
 /turf/unsimulated/floor,
 /area/shuttle/administration/centcom)
 "aJm" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aJo" = (
@@ -10161,7 +10160,7 @@
 /turf/simulated/shuttle/plating,
 /area/centcom/evac)
 "aJD" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aJE" = (
@@ -11256,7 +11255,7 @@
 	},
 /area/centcom/living)
 "aOf" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -11530,7 +11529,7 @@
 	},
 /area/centcom/living)
 "aPb" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -13377,7 +13376,7 @@
 	},
 /area/centcom/living)
 "aVr" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -19825,7 +19824,7 @@
 	},
 /area/centcom/evac)
 "iMb" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/unsimulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -19944,7 +19943,7 @@
 	},
 /area/centcom/evac)
 "jbb" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/unsimulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -20903,7 +20902,7 @@
 	},
 /area/centcom/holding)
 "lvb" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/unsimulated/floor{
 	icon_state = "brown"
 	},
@@ -20949,7 +20948,7 @@
 	},
 /area/centcom/holding)
 "lBb" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/unsimulated/floor{
 	icon_state = "brown"
 	},
@@ -21439,7 +21438,7 @@
 	},
 /area/tdome/tdomeobserve)
 "mDb" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "redbluefull"
