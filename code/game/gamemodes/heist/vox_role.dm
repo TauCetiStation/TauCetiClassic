@@ -10,9 +10,7 @@ var/global/vox_tick = 1
 	equip_to_slot_or_del(new /obj/item/clothing/shoes/magboots/vox, SLOT_SHOES) // REPLACE THESE WITH CODED VOX ALTERNATIVES.
 	equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow/vox, SLOT_GLOVES) // AS ABOVE.
 	equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/kitbag, SLOT_BACK)
-	equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/dry_ramen, SLOT_IN_BACKPACK)
-	equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/dry_ramen, SLOT_IN_BACKPACK)
-	equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle, SLOT_IN_BACKPACK)
+	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment, SLOT_IN_BACKPACK)
 
 	switch(vox_tick)
 		if(1) // Vox raider!
