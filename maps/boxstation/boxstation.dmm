@@ -1225,6 +1225,7 @@
 /obj/item/weapon/crowbar,
 /obj/item/weapon/wrench,
 /obj/item/weapon/screwdriver,
+/obj/item/weapon/wirecutters,
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -48643,6 +48644,7 @@
 	pixel_x = 5;
 	pixel_y = -5
 	},
+/obj/item/weapon/wirecutters,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
