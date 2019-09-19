@@ -111,8 +111,10 @@
 	if (C.client)
 		C.client.perspective = EYE_PERSPECTIVE
 		C.client.eye = src
-	C.resting = 1
+	C.rest_on()
 	C.loc = src.loc
+	C.crawling = FALSE
+	C.check_crawling()
 	for(var/obj/O in src)
 		O.loc = src.loc
 	src.add_fingerprint(user)
