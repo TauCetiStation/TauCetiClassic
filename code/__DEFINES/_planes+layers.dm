@@ -95,8 +95,8 @@ What is the naming convention for planes or layers?
 #define GAS_PUMP_LAYER                  2.49
 #define LOW_OBJ_LAYER                   2.491 // Currently used only by unused machinery
 #define FIREDOOR_LAYER                  2.5
-#define BELOW_CONTAINERS_LAYER          2.7   // Below closets, crates...
-#define CONTAINER_STRUCTURE_LAYER       2.8   // Layer for closets, crates, bags, racks, tables
+#define BELOW_CONTAINERS_LAYER          2.55   // Below closets, crates...
+#define CONTAINER_STRUCTURE_LAYER       2.6   // Layer for closets, crates, bags, racks, tables
 #define DOOR_LAYER                      2.82
 #define BELOW_MACHINERY_LAYER           2.83  // Currently for grilles only, because they should be below machinery
 #define DEFAULT_MACHINERY_LAYER         2.85  // Every /obj/machinery by default have this layer
