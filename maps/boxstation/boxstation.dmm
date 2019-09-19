@@ -40969,7 +40969,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/medical{
-	name = "Patient Room 2"
+	name = "Patient Room 2";
+	req_access = list(5)
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -43185,7 +43186,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/medical{
-	name = "Patient Room 1"
+	name = "Patient Room 1";
+	req_access = list(5)
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
