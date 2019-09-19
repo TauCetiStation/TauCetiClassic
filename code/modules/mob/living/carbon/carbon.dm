@@ -310,6 +310,12 @@
 /mob/living/carbon/proc/crawl_can_use()
 	var/turf/T = get_turf(src)
 	for(var/obj/O in T.contents)
+		if(istype(O, /obj/structure/window)) // Some special cases where object has density but doesn't occupy the whole tile
+			var/obj/structure/window/W = O
+			if(!W.is_fulltile())
+				continue
+		if(istype(O, /obj/machinery/door/window))
+			continue
 		if(O.density || O.prevent_crawl)
 			return FALSE
 	return TRUE
