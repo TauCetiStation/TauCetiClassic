@@ -170,12 +170,12 @@
 	..()
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),2)]"
 
-/obj/item/ammo_box/magazine/m12mm/ap
-	name = "magazine (.45 AP)"
-	desc = "Magazine, full of armor-piercing submachinegun ammo."
+/obj/item/ammo_box/magazine/m12mm/hp
+	name = "magazine (.45 HP)"
+	desc = "Magazine, full of high power submachinegun ammo."
 	icon_state = "12mmap"
 	origin_tech = "combat=3"
-	ammo_type = /obj/item/ammo_casing/c45ap
+	ammo_type = /obj/item/ammo_casing/c45hp
 	caliber = ".45S"
 	max_ammo = 15
 

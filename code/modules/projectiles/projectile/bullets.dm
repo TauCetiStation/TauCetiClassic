@@ -52,18 +52,18 @@
 	name = "submachinegun bullet"
 	damage = 20
 
-/obj/item/projectile/bullet/smg_ap
-	name = "submachinegun armor-piercing bullet"
+/obj/item/projectile/bullet/smg_hp
+	name = "high power bullet"
 	damage = 35
 
 /obj/item/projectile/bullet/smg_imp
-	name = "submachinegun impact bullet"
+	name = "impact bullet"
 	damage = 20
 	impact_force = 1
 	stoping_power = 4
 
 /obj/item/projectile/bullet/smg_hv
-	name = "submachinegun high velocity bullet"
+	name = "high velocity bullet"
 	damage = 20
 	hitscan = 1
 

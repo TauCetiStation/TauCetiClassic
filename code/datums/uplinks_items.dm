@@ -277,10 +277,10 @@
 	cost = 4
 	uplink_types = list("nuclear")
 
-/datum/uplink_item/ammo/smg_ap
-	name = "Ammo-.45 ACP Armor Piercing"
-	desc = "A 15-round .45 ACP AP magazine for use in the C-20r submachine gun. These rounds have better overall damage."
-	item = /obj/item/ammo_box/magazine/m12mm/ap
+/datum/uplink_item/ammo/smg_hp
+	name = "Ammo-.45 ACP High Power"
+	desc = "A 15-round .45 ACP HP magazine for use in the C-20r submachine gun. These rounds have better overall damage."
+	item = /obj/item/ammo_box/magazine/m12mm/hp
 	cost = 5
 	uplink_types = list("nuclear")
 

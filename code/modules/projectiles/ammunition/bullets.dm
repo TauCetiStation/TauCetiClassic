@@ -38,10 +38,10 @@
 	caliber = ".45"
 	projectile_type = "/obj/item/projectile/bullet/smg"
 
-/obj/item/ammo_casing/c45ap
-	desc = "A .45 AP bullet casing."
+/obj/item/ammo_casing/c45hp
+	desc = "A .45 HP bullet casing."
 	caliber = ".45S"
-	projectile_type = "/obj/item/projectile/bullet/smg_ap"
+	projectile_type = "/obj/item/projectile/bullet/smg_hp"
 
 /obj/item/ammo_casing/c45hv
 	desc = "A .45 HV bullet casing."
