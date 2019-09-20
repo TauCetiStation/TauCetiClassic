@@ -36,7 +36,23 @@
 /obj/item/ammo_casing/c45
 	desc = "A .45 bullet casing."
 	caliber = ".45"
-	projectile_type = "/obj/item/projectile/bullet/midbullet"
+	projectile_type = "/obj/item/projectile/bullet/smg"
+
+/obj/item/ammo_casing/c45ap
+	desc = "A .45 AP bullet casing."
+	caliber = ".45S"
+	projectile_type = "/obj/item/projectile/bullet/smg_ap"
+
+/obj/item/ammo_casing/c45hv
+	desc = "A .45 HV bullet casing."
+	caliber = ".45S"
+	projectile_type = "/obj/item/projectile/bullet/smg_hv"
+
+/obj/item/ammo_casing/c45imp
+	icon_state = "ap-casing"
+	desc = "A .45 AP bullet casing."
+	caliber = ".45S"
+	projectile_type = "/obj/item/projectile/bullet/smg_imp"
 
 /obj/item/ammo_casing/c45r
 	desc = "A .45 rubber bullet casing."

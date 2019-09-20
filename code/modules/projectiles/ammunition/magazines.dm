@@ -170,6 +170,33 @@
 	..()
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),2)]"
 
+/obj/item/ammo_box/magazine/m12mm/ap
+	name = "magazine (.45 AP)"
+	desc = "Magazine, full of armor-piercing submachinegun ammo."
+	icon_state = "12mmap"
+	origin_tech = "combat=3"
+	ammo_type = /obj/item/ammo_casing/c45ap
+	caliber = ".45S"
+	max_ammo = 15
+
+/obj/item/ammo_box/magazine/m12mm/hv
+	name = "magazine (.45 HV)"
+	desc = "Magazine, full of high velocity submachinegun ammo."
+	icon_state = "12mmhv"
+	origin_tech = "combat=3"
+	ammo_type = /obj/item/ammo_casing/c45hv
+	caliber = ".45S"
+	max_ammo = 15
+
+/obj/item/ammo_box/magazine/m12mm/imp
+	name = "magazine (.45 IMP)"
+	desc = "Magazine, full of impact submachinegun ammo."
+	icon_state = "12mmap"
+	origin_tech = "combat=3"
+	ammo_type = /obj/item/ammo_casing/c45imp
+	caliber = ".45S"
+	max_ammo = 15
+
 /obj/item/ammo_box/magazine/sm45
 	name = "magazine (.45)"
 	icon_state = "9x19p"
