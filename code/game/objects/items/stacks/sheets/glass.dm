@@ -402,6 +402,23 @@
 			if(H.species.flags[NO_MINORCUTS])
 				return
 
+/obj/item/weapon/shard/shrapnel/Crossed(atom/movable/AM)
+	if(ismob(AM))
+		var/mob/M = AM
+		to_chat(M, "<span class='warning'><B>You step in the metalling srapnel!</B></span>")
+		playsound(src, 'sound/effects/metal_step.ogg', VOL_EFFECTS_MASTER)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+
+			if(H.species.flags[IS_SYNTHETIC])
+				return
+
+			if(H.wear_suit && (H.wear_suit.body_parts_covered & LEGS) && H.wear_suit.flags & THICKMATERIAL)
+				return
+
+			if(H.species.flags[NO_MINORCUTS])
+				return
+
 			if(H.buckled)
 				return
 
