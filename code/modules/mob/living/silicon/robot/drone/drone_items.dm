@@ -23,7 +23,9 @@
 		/obj/item/weapon/rack_parts,
 		/obj/item/weapon/camera_assembly,
 		/obj/item/weapon/tank,
-		/obj/item/weapon/circuitboard
+		/obj/item/weapon/circuitboard,
+		/obj/item/weapon/light/tube,
+		/obj/item/weapon/light/bulb
 		)
 
 	//Item currently being held.
