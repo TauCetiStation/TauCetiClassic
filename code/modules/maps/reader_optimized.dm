@@ -295,6 +295,7 @@ var/global/dmm_suite/preloader/_preloader = new
 			return FALSE
 
 		//initialize things that are normally initialized after map load
+		SSmapping.add_new_zlevel(mappath, list(ZTRAIT_AWAY = TRUE))
 		initTemplateBounds(bounds)
 		log_game("Z-level loaded [world.maxz]")
 		return TRUE

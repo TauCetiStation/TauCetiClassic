@@ -27,7 +27,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	wax = rand(600, 800)
 	if(start_lit)
 		// No visible message
-		light(show_message = FALSE)
+		light(flavor_text = FALSE)
 	update_icon()
 
 /obj/item/candle/proc/light(flavor_text = "<span class='warning'>[usr] lights the [name].</span>")

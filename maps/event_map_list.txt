@@ -16,3 +16,5 @@ maps/RandomZLevels/z3.dmm
 maps/RandomZLevels/z4.dmm
 maps/RandomZLevels/z5.dmm
 maps/RandomZLevels/z6.dmm
+maps/RandomZLevels/z6.dmm
+maps/teamchallenge/teamchallenge.dmm
