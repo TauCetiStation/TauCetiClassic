@@ -309,7 +309,6 @@ var/list/admin_verbs_hideable = list(
 			verbs += admin_verbs_whitelist
 		if(holder.rights & R_EVENT)
 			verbs += admin_verbs_event
-			verbs += event_verbs
 		if(holder.rights & R_LOG)
 			verbs += admin_verbs_log
 		if(holder.rights & R_VAREDIT)
@@ -334,7 +333,6 @@ var/list/admin_verbs_hideable = list(
 		admin_verbs_sounds,
 		admin_verbs_spawn,
 		admin_verbs_event,
-		event_verbs, 
 		admin_verbs_log,
 		admin_verbs_variables,
 		//Debug verbs added by "show debug verbs",
@@ -1043,12 +1041,17 @@ var/list/admin_verbs_hideable = list(
 	var/choice = input("Select a map", , "CANCEL") in AllowedMaps
 	if(choice == "--CANCEL--") return
 
+	var/linkage = input("Linkage", , "None") in list("Self", "Cross", "None")
+
+	if(linkage == "None")
+		linkage = null
+
 	message_admins("[key_name_admin(src)] started loading event-map [choice]")
 	log_admin("[key_name_admin(src)] started loading event-map [choice]")
 
-	if(maploader.load_new_z_level(choice))//, load_speed = 100)
-		message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
-		log_admin("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
+	if(maploader.load_new_z_level(choice, linkage))//, load_speed = 100)
+		message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz], linkage [linkage]")
+		log_admin("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz], linkage [linkage]")
 	else
 		message_admins("[key_name_admin(src)] failed to load event-map [choice].")
 
