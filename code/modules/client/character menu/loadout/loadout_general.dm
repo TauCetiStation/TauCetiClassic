@@ -32,6 +32,14 @@
 	display_name = "Vacuum-flask"
 	path = /obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask
 
+/datum/gear/preflunchbox
+	display_name = "Home Lunchbox"
+	path = /obj/item/weapon/storage/box/preflunchbox
+
+/datum/gear/paperpack
+	display_name = "Paper pack"
+	path = /obj/item/weapon/storage/box/paperpack
+
 /datum/gear/zippo
 	display_name = "Zippo lighter"
 	path = /obj/item/weapon/lighter/zippo

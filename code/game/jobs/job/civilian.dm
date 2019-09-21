@@ -351,6 +351,7 @@
 	H.equip_to_slot_or_del(new /obj/item/device/flash(H), SLOT_R_STORE)
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_int(H), SLOT_L_EAR)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/lawyer(H), SLOT_BELT)
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/lunchboxvip(H), SLOT_IN_BACKPACK)
 
 	var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)
 	L.inject(H)

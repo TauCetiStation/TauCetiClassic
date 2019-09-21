@@ -3019,6 +3019,8 @@
 "gh" = (
 /obj/structure/table,
 /obj/item/weapon/folder,
+/obj/item/weapon/pen,
+/obj/item/weapon/stamp,
 /turf/simulated/floor/wood,
 /area/research_outpost/hallway)
 "gi" = (
@@ -8491,6 +8493,7 @@
 "sc" = (
 /obj/item/clothing/accessory/holster/armpit,
 /obj/item/clothing/head/western,
+/obj/item/weapon/storage/box/paperpack,
 /obj/structure/table/woodentable,
 /turf/simulated/floor/airless{
 	icon_state = "wood"
@@ -8749,6 +8752,8 @@
 /area/mine/west_outpost)
 "sR" = (
 /obj/structure/table,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -9973,6 +9978,7 @@
 "vJ" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets,
+/obj/item/weapon/storage/box/lunchboxnt,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -10051,11 +10057,12 @@
 /area/mine/explored)
 "vS" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/weapon/storage/box/lunchboxnt,
+/obj/item/weapon/storage/box/lunchboxnt,
+/obj/item/weapon/storage/box/lunchboxnt,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -11781,8 +11788,8 @@
 /area/research_outpost/hallway)
 "AO" = (
 /obj/structure/table,
-/obj/item/weapon/stamp,
-/obj/item/weapon/pen,
+/obj/item/weapon/storage/box/lunchboxnt,
+/obj/item/weapon/storage/box/lunchboxnt,
 /turf/simulated/floor/wood,
 /area/research_outpost/hallway)
 "AP" = (

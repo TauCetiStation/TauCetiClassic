@@ -149,7 +149,7 @@
 	desc = "The bluntest of blades."
 	icon_state = "pknife"
 	force = 0
-	w_class = ITEM_SIZE_SMALL
+	w_class = ITEM_SIZE_TINY
 	throwforce = 0
 
 /obj/item/weapon/kitchenknife/ritual

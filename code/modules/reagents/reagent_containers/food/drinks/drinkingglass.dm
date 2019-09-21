@@ -566,3 +566,17 @@
 	. = ..()
 	reagents.add_reagent("cola", volume)
 	on_reagent_change()
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/nuka_cola
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/nuka_cola/atom_init()
+	. = ..()
+	reagents.add_reagent("nuka_cola", volume)
+	on_reagent_change()
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/kvass
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/kvass/atom_init()
+	. = ..()
+	reagents.add_reagent("kvass", volume)
+	on_reagent_change()
