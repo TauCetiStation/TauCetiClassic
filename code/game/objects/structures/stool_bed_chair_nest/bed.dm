@@ -69,7 +69,7 @@
 		var/mob/living/carbon/C = mover
 		C.layer = 3.9
 		C.crawling = FALSE
-		C.pass_flags ^= PASSCRAWL
+		C.pass_flags &= ~PASSCRAWL
 	return ..()
 
 /obj/structure/stool/bed/roller/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
@@ -127,10 +127,6 @@
 
 /obj/structure/stool/bed/roller/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)
-		if(M.crawling)
-			M.pass_flags &= ~PASSCRAWL
-			M.crawling = FALSE
-			M.layer = 4.0
 		density = 1
 		icon_state = "up"
 	else

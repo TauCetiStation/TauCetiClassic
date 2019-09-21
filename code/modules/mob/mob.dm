@@ -676,6 +676,23 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(restrained())					return 0
 	return 1
 
+/mob/proc/getup_check()
+	getting_up = TRUE
+	visible_message("<span class='notice'>[src] attempts to get up.</span>")
+	if(!do_after(src, 10, target = src, can_move = TRUE))
+		getting_up = FALSE // Failed to get up
+		rest_on()
+		return
+	getting_up = FALSE
+
+	getup_checks()
+
+	update_canmove(null, TRUE)
+
+// Any extra checks that run after you get up should go here
+/mob/proc/getup_checks()
+	return
+
 // Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 // We need speed out of this proc, thats why using incapacitated() helper here is a bad idea.
 /mob/proc/update_canmove(no_transform = FALSE, instant_standup = FALSE)
@@ -688,21 +705,14 @@ note dizziness decrements automatically in the mob's Life() proc.
 		canmove = FALSE
 	anchored = captured || pinned.len
 
-	if(getting_up)
-		return
+	if(!getting_up)
+		if(!instant_standup && lying && !new_lying && !buckled) // Handling non-instant getting up
+			getting_up = TRUE
+			new_lying = TRUE
+			INVOKE_ASYNC(src, /mob/proc/getup_check)
 
-	if(!instant_standup && lying && !new_lying && !buckled) // Handling non-instant getting up
-		getting_up = TRUE
-		visible_message("<span class='notice'>[src] attempts to get up.</span>")
-		if(!do_after(src, 10, target = src, can_move = TRUE))
-			getting_up = FALSE // Failed to get up
+		if(!lying && new_lying && rest_on_fall && !buckled) // If we fell we switch to resting
 			rest_on()
-			return
-		visible_message("<span class='notice'>[src] got up on \his feet.</span>")
-		getting_up = FALSE
-
-	if(!lying && new_lying && rest_on_fall && !buckled) // If we fell we switch to resting
-		rest_on()
 
 	lying = new_lying
 
@@ -741,6 +751,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 	//Temporarily moved here from the various life() procs
 	//I'm fixing stuff incrementally so this will likely find a better home.
 	//It just makes sense for now. ~Carn
+	if(lying != lying_prev)
+		check_crawling()
 
 	if(!no_transform && lying != lying_prev)
 		update_transform()

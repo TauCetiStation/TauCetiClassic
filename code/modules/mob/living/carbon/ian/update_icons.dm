@@ -265,15 +265,13 @@
 		if(POSE_STAT)
 			icon_state = "corgi_stat"
 
-	check_crawling()
-
 	update_inv_head()
 	update_inv_mouth()
 	update_inv_back()
 
-/mob/living/carbon/ian/update_canmove()
+/mob/living/carbon/ian/update_canmove(no_transform = FALSE, instant_standup = FALSE)
 
-	. = ..(TRUE)
+	. = ..(TRUE, instant_standup)
 
 	if(buckled)
 		pose_last = POSE_SIT

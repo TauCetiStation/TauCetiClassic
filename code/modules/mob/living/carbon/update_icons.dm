@@ -5,20 +5,6 @@
 	var/final_dir = dir
 	var/changed = 0
 
-	if(lying_prev && !lying && !buckled && crawling && !crawl_can_use())
-		lying = TRUE
-		rest_on()
-		playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-		if(ishuman(src))
-			var/mob/living/carbon/human/H = src
-			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-			BP.take_damage(5, used_weapon = "Facepalm") // what?.. that guy was insane anyway.
-		else
-			take_overall_damage(5, used_weapon = "Table")
-		Stun(1)
-		to_chat(src, "<span class='danger'>Ouch!</span>")
-		return
-
 	if(lying)
 		if(lying != lying_prev)
 			lying_prev = lying

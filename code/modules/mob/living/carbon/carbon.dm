@@ -311,9 +311,7 @@
 	var/turf/T = get_turf(src)
 	for(var/obj/O in T.contents)
 		if(istype(O, /obj/structure/window)) // Some special cases where object has density but doesn't occupy the whole tile
-			var/obj/structure/window/W = O
-			if(!W.is_fulltile())
-				continue
+			continue
 		if(istype(O, /obj/machinery/door/window))
 			continue
 		if(O.density || O.prevent_crawl)
@@ -867,7 +865,7 @@
 
 	if(!lying)
 		crawling = FALSE
-		pass_flags ^= PASSCRAWL
+		pass_flags &= ~PASSCRAWL
 		final_layer = initial(layer)
 	else
 		if(crawl_can_use() && !buckled)
@@ -877,7 +875,7 @@
 		else
 			final_layer = 3.9
 			crawling = FALSE
-			pass_flags ^= PASSCRAWL
+			pass_flags &= ~PASSCRAWL
 
 	if(final_layer)
 		animate(src, time = 2, easing = EASE_IN|EASE_OUT, layer = final_layer)
@@ -893,3 +891,17 @@
 			to_chat(src, "<span class='notice'>You are now resting.</span>")
 
 	update_canmove()
+
+/mob/living/carbon/getup_checks()
+	if(crawling && !crawl_can_use())
+		rest_on()
+		playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+			BP.take_damage(5, used_weapon = "Facepalm") // what?.. that guy was insane anyway.
+		else
+			take_overall_damage(5, used_weapon = "Table")
+		Stun(1)
+		to_chat(src, "<span class='danger'>Ouch!</span>")
+		return
