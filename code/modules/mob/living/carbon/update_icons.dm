@@ -12,7 +12,6 @@
 			playsound(src, pick(SOUNDIN_BODYFALL), VOL_EFFECTS_MASTER)
 			changed++
 			ntransform.TurnTo(0,lying_current)
-			check_crawling()
 			pixel_y = get_standard_pixel_y_offset()
 			pixel_x = get_standard_pixel_x_offset()
 			final_pixel_y = get_standard_pixel_y_offset(lying_current)
@@ -22,7 +21,6 @@
 	else
 		if(lying != lying_prev)
 			lying_prev = lying
-			check_crawling()
 			changed++
 			ntransform.TurnTo(lying_current,0)
 			final_pixel_y = get_standard_pixel_y_offset()

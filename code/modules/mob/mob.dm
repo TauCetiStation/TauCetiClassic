@@ -685,12 +685,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 		return
 	getting_up = FALSE
 
-	getup_checks()
+	getup_extra_checks()
 
 	update_canmove(null, TRUE)
 
 // Any extra checks that run after you get up should go here
-/mob/proc/getup_checks()
+/mob/proc/getup_extra_checks()
 	return
 
 // Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.

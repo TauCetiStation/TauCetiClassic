@@ -892,7 +892,7 @@
 
 	update_canmove()
 
-/mob/living/carbon/getup_checks()
+/mob/living/carbon/getup_extra_checks()
 	if(crawling && !crawl_can_use())
 		rest_on()
 		playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
