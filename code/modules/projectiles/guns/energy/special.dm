@@ -218,6 +218,11 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	to_chat(usr, "<font color='[zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>")
 	return
 
+/obj/item/weapon/gun/energy/sniperrifle/equipped(mob/user, slot)
+	if(zoom)
+		zoom
+	..(user, slot)
+
 /obj/item/weapon/gun/energy/sniperrifle/rails
 	name = "Rails rifle"
 	desc = "With this weapon you'll be the boss at any Arena."
