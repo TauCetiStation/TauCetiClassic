@@ -754,72 +754,24 @@
 	name = "Paper pack"
 	desc = "It's a Paper pack, you took from your home, contains some snacks."
 	icon_state = "cpaperpack"
-	item_state = "cpaperpack"
-	max_storage_space = DEFAULT_PACK_STORAGE
-	foldable = FALSE
-	body_parts_covered = HEAD
-	slot_flags = SLOT_FLAGS_HEAD
-	gas_transfer_coefficient = 0.60
-	var is_closed = 1
+	max_storage_space = DEFAULT_BOX_STORAGE
 
 /obj/item/weapon/storage/box/paperpack/verb/toggle()
 	set name = "Open/Close Paper pack"
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canmove || usr.stat || usr.restrained())
-		return 0
-
-	if(is_closed == 0)
-		icon_state = "cpaperpack"
-		item_state = "cpaperpack"
-		to_chat(usr, "You closed your paper pack.")
-		is_closed = 1
-		update_inv_mob()
-	else
-		icon_state = "opaperpack"
-		item_state = "opaperpack"
-		to_chat(usr, "You opened your paper pack.")
-		is_closed = 0
-		update_inv_mob()
-
-/obj/item/weapon/storage/box/paperpack/atom_init()
-	. = ..()
-	new /obj/item/weapon/reagent_containers/food/snacks/candy/fudge(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/candy/fudge/cherry(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/candy/fudge/cookies_n_cream(src)
-
-/obj/item/weapon/storage/box/paperpackempty
-	name = "Paper pack"
-	desc = "It's a Paper pack, you took from your home, contains some snacks."
-	icon_state = "cpaperpack"
-	item_state = "cpaperpack"
-	max_storage_space = DEFAULT_PACK_STORAGE
-	foldable = FALSE
-	body_parts_covered = HEAD
-	slot_flags = SLOT_FLAGS_HEAD
-	gas_transfer_coefficient = 0.60
 	var is_closed = 1
 
-/obj/item/weapon/storage/box/paperpackempty/verb/toggle()
-	set name = "Open/Close Paper pack"
-	set category = "Object"
-	set src in usr
-
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return 0
 
-	if(is_closed == 0)
+	if(!is_closed)
 		icon_state = "cpaperpack"
-		item_state = "cpaperpack"
 		to_chat(usr, "You closed your paper pack.")
 		is_closed = 1
-		usr.update_icons()
-		update_inv_mob()
 	else
 		icon_state = "opaperpack"
-		item_state = "opaperpack"
 		to_chat(usr, "You opened your paper pack.")
 		is_closed = 0
-		usr.update_icons()
-		update_inv_mob()
+	usr.update_inv_wear_suit()

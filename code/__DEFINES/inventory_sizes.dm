@@ -18,3 +18,4 @@
 #define DEFAULT_BACKPACK_STORAGE base_storage_capacity(5)
 #define DEFAULT_LARGEBOX_STORAGE base_storage_capacity(4)
 #define DEFAULT_BOX_STORAGE base_storage_capacity(3)
+#define DEFAULT_PACK_STORAGE base_storage_capacity(2)

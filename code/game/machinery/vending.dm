@@ -1051,9 +1051,11 @@
 		/obj/item/weapon/kitchen/mould/cane = 1,
 		/obj/item/weapon/kitchen/mould/cash = 1,
 		/obj/item/weapon/kitchen/mould/coin = 1,
-		/obj/item/weapon/kitchen/mould/loli = 1
+		/obj/item/weapon/kitchen/mould/loli = 1,
+		/obj/item/weapon/storage/box/lunchboxntempty = 5,
+		/obj/item/weapon/storage/box/paperpackempty = 5
 	)
-	contraband = list(/obj/item/weapon/kitchen/utensil/spoon = 2,/obj/item/weapon/kitchen/rollingpin = 2, /obj/item/weapon/butch = 2)
+	contraband = list(/obj/item/weapon/kitchen/utensil/spoon = 2,/obj/item/weapon/kitchen/rollingpin = 2, /obj/item/weapon/butch = 2, /obj/item/weapon/storage/box/lunchboxvip = 2)
 	refill_canister = /obj/item/weapon/vending_refill/dinnerware
 
 /obj/machinery/vending/sovietsoda

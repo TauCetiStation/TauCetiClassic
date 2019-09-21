@@ -540,6 +540,28 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "Dinnerware supply crate"
 	group = "Hospitality"
 
+/datum/supply_pack/lb_fastfood
+	name = "LB fast food lunch boxes"
+	contains = list(/obj/item/weapon/storage/box/lunchboxlb,
+					/obj/item/weapon/storage/box/lunchboxlb,
+					/obj/item/weapon/storage/box/lunchboxlb)
+	cost = 2000
+	crate_type = /obj/structure/closet/crate/freezer
+	crate_name = "Dinnerware supply crate"
+	group = "Hospitality"
+
+/datum/supply_pack/nt_foodsupply
+	name = "NT food supply lunch boxes"
+	contains = list(/obj/item/weapon/storage/box/lunchboxnt,
+					/obj/item/weapon/storage/box/lunchboxnt,
+					/obj/item/weapon/storage/box/lunchboxnt,
+					/obj/item/weapon/storage/box/lunchboxnt,
+					/obj/item/weapon/storage/box/lunchboxnt)
+	cost = 1000
+	crate_type = /obj/structure/closet/crate/freezer
+	crate_name = "Dinnerware supply crate"
+	group = "Hospitality"
+
 /datum/supply_pack/party
 	name = "Party equipment"
 	contains = list(/obj/item/weapon/storage/box/drinkingglasses,

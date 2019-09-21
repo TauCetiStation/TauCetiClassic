@@ -165,3 +165,11 @@
 	var/icon/earbit2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner2")
 	mob.Blend(earbit, ICON_OVERLAY)
 	mob2.Blend(earbit2, ICON_OVERLAY)
+
+/obj/item/clothing/head/paperpackhelmet
+	name = "Paper pack helmet"
+	desc = "It's a Paper pack with holes made for eyes and mouth"
+	icon_state = "hpaperpack"
+	item_state = "hpaperpack"
+	body_parts_covered = HEAD
+	slot_flags = SLOT_FLAGS_HEAD
