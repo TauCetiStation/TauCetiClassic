@@ -174,3 +174,142 @@
 			to_chat(user, "<span class='notice'>No chemicals are attached.</span>")
 
 		to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")
+
+
+
+
+
+
+/obj/machinery/av_drip
+	name = "\improper AV drip"
+	icon = 'icons/obj/iv_drip.dmi'
+	icon_state = "av_drip"
+	anchored = 0
+	density = 0
+	interact_offline = TRUE
+	var/mob/living/carbon/human/attached = null
+
+
+/obj/machinery/av_drip/atom_init()
+	. = ..()
+	update_icon()
+
+/obj/machinery/av_drip/update_icon()
+	if(attached)
+		icon_state = "ventilating"
+	else
+		icon_state = "av_drip"
+
+/obj/machinery/av_drip/MouseDrop(over_object, src_location, over_location)
+	..()
+	if(!iscarbon(usr) && !isrobot(usr))
+		return
+	if(attached)
+		visible_message("[src.attached] is detached from \the [src]")
+		src.attached = null
+		src.update_icon()
+		return
+
+	if(in_range(src, usr) && ishuman(over_object) && get_dist(over_object, src) <= 1)
+		visible_message("[usr] attaches \the [src] to \the [over_object].")
+		src.attached = over_object
+		src.update_icon()
+
+
+/obj/machinery/av_drip/process()
+	//set background = 1
+//	var/avoxy = return_air(get_turf(src))
+	if(src.attached)
+		if(!(get_dist(src, src.attached) <= 1 && isturf(src.attached.loc)))
+			visible_message("The tube is ripped out of [src.attached]'s lungs, doesn't that hurt?")
+			src.attached:apply_damage(10, BRUTE, O_LUNGS)
+			src.attached = null
+			src.update_icon()
+//		if(avoxy > 0)
+		src.attached.adjustOxyLoss(-4)
+		return
+
+
+/obj/machinery/av_drip/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return ..()
+
+/obj/machinery/av_drip/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
+
+/obj/machinery/av_drip/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")
+
+
+
+
+/obj/machinery/cpb_drip
+	name = "\improper CPB drip"
+	icon = 'icons/obj/iv_drip.dmi'
+	icon_state = "cpb_drip"
+	anchored = 0
+	density = 0
+	interact_offline = TRUE
+	var/mob/living/carbon/human/attached = null
+	var/bloodlast = 0
+/mob/living/carbon/human/var/datum/reagents/vessel
+
+/obj/machinery/av_drip/atom_init()
+	. = ..()
+	update_icon()
+
+
+/obj/machinery/cpb_drip/update_icon()
+	if(attached)
+		icon_state = "pumping"
+	else
+		icon_state = "cpb_drip"
+
+/obj/machinery/cpb_drip/MouseDrop(over_object, src_location, over_location)
+	..()
+	if(!iscarbon(usr) && !isrobot(usr))
+		return
+	if(attached)
+		visible_message("[src.attached] is detached from \the [src]")
+		src.attached = null
+		src.update_icon()
+		src.attached.vessel = bloodlast
+		return
+
+	if(in_range(src, usr) && ishuman(over_object) && get_dist(over_object, src) <= 1)
+		visible_message("[usr] attaches \the [src] to \the [over_object].")
+		src.attached = over_object
+		src.update_icon()
+		bloodlast = src.attached.vessel
+
+
+/obj/machinery/cpb_drip/process()
+	//set background = 1
+//	var/avoxy = return_air(get_turf(src))
+	if(src.attached)
+		if(!(get_dist(src, src.attached) <= 1 && isturf(src.attached.loc)))
+			visible_message("The tubes is ripped out of [src.attached]'s heart, doesn't that hurt?")
+			src.attached:apply_damage(15, BRUTE, O_HEART)
+			src.attached = null
+			src.update_icon()
+		src.attached.vessel = 501
+
+
+
+/obj/machinery/cpb_drip/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return ..()
+
+/obj/machinery/cpb_drip/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
+
+/obj/machinery/cpb_drip/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")
