@@ -220,7 +220,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 /obj/item/weapon/gun/energy/sniperrifle/equipped(mob/user, slot)
 	if(zoom)
-		zoom
+		zoom()
 	..(user, slot)
 
 /obj/item/weapon/gun/energy/sniperrifle/rails
