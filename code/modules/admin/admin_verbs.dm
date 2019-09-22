@@ -309,6 +309,7 @@ var/list/admin_verbs_hideable = list(
 			verbs += admin_verbs_whitelist
 		if(holder.rights & R_EVENT)
 			verbs += admin_verbs_event
+			verbs += event_verbs
 		if(holder.rights & R_LOG)
 			verbs += admin_verbs_log
 		if(holder.rights & R_VAREDIT)
@@ -333,6 +334,7 @@ var/list/admin_verbs_hideable = list(
 		admin_verbs_sounds,
 		admin_verbs_spawn,
 		admin_verbs_event,
+		event_verbs,
 		admin_verbs_log,
 		admin_verbs_variables,
 		//Debug verbs added by "show debug verbs",

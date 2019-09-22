@@ -83,7 +83,7 @@
 		var/obj/item/stack/sheet/S = W
 		switch(S.type)
 
-			if(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/metal/cyborg)
+			if(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/metal/cyborg, /obj/item/stack/sheet/metal/fifty)//todo istype
 				if(!anchored)
 					if(!S.use(2))
 						return
@@ -103,7 +103,7 @@
 						qdel(src)
 					return
 
-			if(/obj/item/stack/sheet/plasteel)
+			if(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/plasteel/fifty)//todo same
 				if(!anchored)
 					if(!S.use(2))
 						return

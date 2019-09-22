@@ -70,15 +70,28 @@
 
 //Fake shield barrier preventing teams from attacking each other during construction phase. After first phase has concluded - use Del-all, or make a proper code for a switch.
 
+var/event_field_stage = 1 //1 - nothing, 2 - objects, 3 - all
+
 /obj/effect/decal/teamchallenge
 	name = "force field"
 	desc = "It prevents teams from attacking each other too early."
-	density = 1
+	density = 0
 	anchored = 1
 	layer = 2
 	light_range = 3
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "energyshield"
+
+/obj/effect/decal/teamchallenge/ex_act()
+	return
+
+/obj/effect/decal/teamchallenge/CanPass(atom/movable/mover)
+	if(event_field_stage==3)
+		return 1
+	else if(isobj(mover) && event_field_stage==2)
+		return 1
+	else
+		return 0
 
 //Colorful lights
 
@@ -167,7 +180,7 @@
 	item_color = "ert_security"
 
 /obj/item/clothing/suit/space/rig/ert/scrapheap/red
-	name = "yellow team suit"
+	name = "red team suit"
 	desc = "A suit worn by the red team members of Space Scrapheap Challenge."
 	icon_state = "ert_security"
 	item_state = "ert_security"
@@ -339,4 +352,85 @@
 	name = "entertainment monitor"
 	desc = "Hopefully that thing can broadcast something interesting."
 	network = list("ERT")
-	
+
+
+/* bomb spawner */
+var/list/bomb_spawners = list()
+
+/obj/structure/bomb_telepad
+	name = "bomb bluespace transporter"
+	desc = "A bluespace telepad used for teleporting objects to and from a location."
+	icon = 'icons/obj/telescience.dmi'
+	icon_state = "pad-idle-o"
+	anchored = 0
+
+	var/spawntype = /obj/structure/reagent_dispensers/fueltank/warhead/red
+
+/obj/structure/bomb_telepad/red
+	name = "red team bomb bluespace transporter"
+	spawntype = /obj/structure/reagent_dispensers/fueltank/warhead/red
+
+/obj/structure/bomb_telepad/yellow
+	name = "yellow team bomb bluespace transporter"
+	spawntype = /obj/structure/reagent_dispensers/fueltank/warhead/yellow
+
+/obj/structure/bomb_telepad/blue
+	name = "blue team bomb bluespace transporter"
+	spawntype = /obj/structure/reagent_dispensers/fueltank/warhead/blue
+
+/obj/structure/bomb_telepad/green
+	name = "green team bomb bluespace transporter"
+	spawntype = /obj/structure/reagent_dispensers/fueltank/warhead/green
+
+/obj/structure/bomb_telepad/atom_init()
+	bomb_spawners += src
+
+/obj/structure/bomb_telepad/attackby(obj/item/weapon/W, mob/user)
+	if(iswrench(W))
+		to_chat(user, "<span class='notice'>You [anchored ? "unattached" : "attached"] the [src].</span>")
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+		anchored = !anchored
+		icon_state = anchored ? "pad-idle" : "pad-idle-o"
+
+/obj/structure/bomb_telepad/proc/do_spawn()
+	new spawntype(loc)
+
+
+/*
+todo:
+* spawn as с записью в титры
+*/
+
+/* verbs */
+
+var/list/event_verbs = list(/client/proc/toggle_fields, /client/proc/spawn_bomb)
+
+//1 - nothing, 2 - objects, 3 - all
+/client/proc/toggle_fields()
+	set category = "Event"
+	set name = "Toggle Event Fields"
+
+	var/msg
+	if(event_field_stage==1)
+		event_field_stage=2
+		msg = "OBJECTS may pass"
+	else if(event_field_stage==2)
+		event_field_stage=3
+		msg = "OBJECTS and MOBS may pass"
+	else if(event_field_stage==3)
+		event_field_stage=1
+		msg = "NOTHING may pass"
+
+	log_admin("[usr.key] has toggled event field, now [msg].")
+	message_admins("[key_name_admin(usr)] has toggled event field now [msg].")
+
+/client/proc/spawn_bomb()
+	set category = "Event"
+	set name = "Spawn Bomb"
+
+	log_admin("[usr.key] has spawned Bombs.")
+	message_admins("[key_name_admin(usr)] has spawned Bombs.")
+
+	for(var/obj/structure/bomb_telepad/T in bomb_spawners)
+		if(T.anchored)
+			T.do_spawn()
