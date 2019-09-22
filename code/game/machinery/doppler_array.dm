@@ -53,3 +53,4 @@ var/list/doppler_arrays = list()
 		else
 			icon_state = "[initial(icon_state)]-off"
 			stat |= NOPOWER
+	update_power_use()

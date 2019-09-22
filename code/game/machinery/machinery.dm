@@ -99,14 +99,16 @@ Class Procs:
 	layer = DEFAULT_MACHINERY_LAYER
 	var/stat = 0
 	var/emagged = 0
-	var/use_power = 1
+	var/use_power = IDLE_POWER_USE
 		//0 = dont run the auto
 		//1 = run auto, use idle
 		//2 = run auto, use active
 	var/idle_power_usage = 0
 	var/active_power_usage = 0
-	var/power_channel = EQUIP
+	var/power_channel = STATIC_EQUIP
 		//EQUIP,ENVIRON or LIGHT
+	var/current_power_usage = 0 // How much power are we currently using, dont change by hand, change power_usage vars and then use set_power_use
+	var/area/current_power_area // What area are we powering currently
 	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
 	var/uid
 	var/manual = 0
@@ -128,10 +130,12 @@ Class Procs:
 	machines += src
 	START_PROCESSING(SSmachine, src)
 	power_change()
+	update_power_use()
 
 /obj/machinery/Destroy()
 	if(frequency)
 		set_frequency(null)
+	set_power_use(NO_POWER_USE)
 	machines -= src
 	STOP_PROCESSING(SSmachine, src)
 
@@ -226,30 +230,34 @@ Class Procs:
 	if(prob(50))
 		qdel(src)
 
-//sets the use_power var and then forces an area power update @ 7e65984ae2ec4e7eaaecc8da0bfa75642c3489c7 bay12
-/obj/machinery/proc/update_use_power(new_use_power, force_update = 0)
-	if ((new_use_power == use_power) && !force_update)
-		return	//don't need to do anything
+// The main proc that controls power usage of a machine, change use_power only with this proc
+/obj/machinery/proc/set_power_use(new_use_power)
+	if(current_power_usage && current_power_area) // We are tracking the area that is powering us so we can remove power from the right one if we got moved or something
+		current_power_area.removeStaticPower(current_power_usage, power_channel)
+		current_power_area = null
 
+	current_power_usage = 0
 	use_power = new_use_power
 
-	//force area power update
-	//use_power() forces an area power update on the next tick so have to pass the correct power amount for this tick
-	if (use_power >= 2)
-		use_power(active_power_usage)
-	else if (use_power == 1)
-		use_power(idle_power_usage)
-	else
-		use_power(0)
+	var/area/A = get_area(src)
+	if(!A || !anchored || stat & NOPOWER) // Unwrenched machines aren't plugged in, unpowered machines don't use power
+		return
 
-/obj/machinery/proc/auto_use_power()
-	if(!powered(power_channel))
-		return 0
-	if(src.use_power == 1)
-		use_power(idle_power_usage,power_channel, 1)
-	else if(src.use_power >= 2)
-		use_power(active_power_usage,power_channel, 1)
-	return 1
+	if(use_power == IDLE_POWER_USE && idle_power_usage)
+		current_power_area = A
+		current_power_usage = idle_power_usage
+		current_power_area.addStaticPower(current_power_usage, power_channel)
+	else if(use_power == ACTIVE_POWER_USE && active_power_usage)
+		current_power_area = A
+		current_power_usage = active_power_usage
+		current_power_area.addStaticPower(current_power_usage, power_channel)
+
+/obj/machinery/proc/update_power_use()
+	set_power_use(use_power)
+
+// Unwrenching = unpluging from a power source
+/obj/machinery/wrenched_change()
+	update_power_use()
 
 //By default, we check everything.
 //But sometimes, we need to override this check.
@@ -410,6 +418,7 @@ Class Procs:
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 			anchored = !anchored
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
+			wrenched_change()
 		return 1
 	return 0
 

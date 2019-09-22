@@ -47,7 +47,7 @@
 
 	//Antag number should scale to active crew.
 	var/n_players = num_players()
-	agent_number = Clamp((n_players/5), 2, 6)
+	agent_number = CLAMP((n_players/5), 2, 6)
 
 	if(antag_candidates.len < agent_number)
 		agent_number = antag_candidates.len
@@ -225,6 +225,7 @@
 	if(boss)
 		to_chat(syndicate.current, "<span class = 'info'>You are a <font color='red'>Gorlex Maradeurs Commander</font>!</span>")
 	var/obj_count = 1
+	syndicate.current.playsound_local(null, 'sound/antag/ops.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in syndicate.objectives)

@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 0
 
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 100 //Watts, I hope.  Just enough to do the computer and display things.
 
 	var/obj/machinery/atmospherics/components/binary/circulator/circ1
@@ -119,7 +119,7 @@
 	if(iswrench(W))
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor.</span>")
-		use_power = anchored
+		set_power_use(anchored)
 		reconnect()
 	else
 		..()

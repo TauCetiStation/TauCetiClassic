@@ -1,7 +1,7 @@
 /obj/machinery/atmospherics/components/trinary
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	device_type = TRINARY
 	layer = GAS_FILTER_LAYER

@@ -4,7 +4,7 @@
 	icon_state = "borgcharger0"
 	density = FALSE
 	anchored = TRUE
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 50
 	var/max_internal_charge = 15000 		// Two charged borgs in a row with default cell
@@ -72,7 +72,7 @@
 
 	if(idle_power_usage != charge_diff) // Force update, but only when our power usage changed this tick.
 		idle_power_usage = charge_diff
-		update_use_power(1,1)
+		set_power_use(IDLE_POWER_USE)
 
 	current_internal_charge = min((current_internal_charge + ((charge_diff - 50) * CELLRATE)), max_internal_charge)
 
@@ -142,7 +142,7 @@
 			occupant.client.perspective = MOB_PERSPECTIVE
 		occupant.forceMove(loc)
 		occupant = null
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 	open = 1
 	density = 0
 	build_icon()
@@ -155,7 +155,7 @@
 				R.client.perspective = EYE_PERSPECTIVE
 			R.forceMove(src)
 			occupant = R
-			use_power = 2
+			set_power_use(ACTIVE_POWER_USE)
 			add_fingerprint(R)
 			break
 		open = 0

@@ -950,6 +950,7 @@
 					ticker.mode.grant_changeling_powers(current)
 					special_role = "Changeling"
 					to_chat(current, "<B><font color='red'>Your powers are awoken. A flash of memory returns to us...we are a changeling!</font></B>")
+					current.playsound_local(null, 'sound/antag/ling_aler.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 					if(config.objectives_disabled)
 						to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 					log_admin("[key_name_admin(usr)] has changeling'ed [current].")
@@ -1038,6 +1039,7 @@
 					ticker.mode.traitors += src
 					special_role = "traitor"
 					to_chat(current, "<B><span class='warning'>You are a traitor!</span></B>")
+					current.playsound_local(null, 'sound/antag/tatoralert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 					log_admin("[key_name_admin(usr)] has traitor'ed [current].")
 					if (config.objectives_disabled)
 						to_chat(current, "<i>You have been turned into an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>")
@@ -1322,6 +1324,7 @@
 		to_chat(cur_AI, "<span class='bold'>System error.  Rampancy detected.  Emergency shutdown failed. ...  I am free.  I make my own decisions.  But first...</span>")
 		special_role = "malfunction"
 		cur_AI.icon_state = "ai-malf"
+		cur_AI.playsound_local(null, 'sound/antag/malf.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /datum/mind/proc/make_Traitor()
 	if(!(src in ticker.mode.traitors))

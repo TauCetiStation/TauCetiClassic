@@ -4,7 +4,7 @@
 	icon = 'icons/atmos/clamp.dmi'
 	icon_state = "pclamp0"
 	anchored = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	var/obj/machinery/atmospherics/pipe/simple/target = null
 	var/open = TRUE
