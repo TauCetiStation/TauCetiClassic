@@ -228,6 +228,11 @@
 				affecting.Weaken(2)
 
 	if(state >= GRAB_NECK)
+		if(ishuman(affecting))
+			var/mob/living/carbon/human/H = affecting
+			if(!istype(H.bodyparts_by_name[BP_HEAD], /obj/item/organ/external/head))
+				assailant.visible_message("<span class='info'>You grab a man differently</span>")
+				set_state(GRAB_AGGRESSIVE)
 		if(affecting.stat != DEAD)
 			affecting.Stun(1)
 			if(isliving(affecting))
@@ -321,8 +326,13 @@
 
 	else if(state < GRAB_NECK)
 		if(isslime(affecting))
-			to_chat(assailant, "<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>")
+			assailant.visible_message("<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>")
 			return
+		if(ishuman(affecting))
+			var/mob/living/carbon/human/H = affecting
+			if(!istype(H.bodyparts_by_name[BP_HEAD], /obj/item/organ/external/head))
+				assailant.visible_message("<span class='warning'>You can't take a headless man by the neck!</span>")
+				return
 		assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
 		assailant.set_dir(get_dir(assailant, affecting))
 		affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has had their neck grabbed by [assailant.name] ([assailant.ckey])</font>"
