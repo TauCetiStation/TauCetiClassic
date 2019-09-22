@@ -181,7 +181,7 @@
 		if(istype(item_in_hand, /obj/item/weapon/gun/energy/sniperrifle))
 			var/obj/item/weapon/gun/energy/sniperrifle/s = item_in_hand
 			if(s.zoom)
-				s.zoom()
+				s.toggle_zoom()
 	src.hand = !( src.hand )
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
 		if(hand)	//This being 1 means the left hand is in use

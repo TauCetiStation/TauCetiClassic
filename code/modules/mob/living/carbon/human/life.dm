@@ -1342,7 +1342,7 @@
 				if(locate(/obj/item/weapon/gun/energy/sniperrifle, contents))
 					var/obj/item/weapon/gun/energy/sniperrifle/s = locate() in src
 					if(s.zoom)
-						s.zoom()
+						s.toggle_zoom()
 
 	else
 		sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
