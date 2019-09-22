@@ -486,12 +486,124 @@
 "aaY" = (
 /turf/unsimulated/wall/fakeglass,
 /area/wizard_station)
+"aaZ" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron6"
+	},
+/area/tophat)
+"aba" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron12"
+	},
+/area/tophat)
 "abb" = (
 /turf/space,
 /area/shuttle/escape_pod1/transit)
+"abc" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron3"
+	},
+/area/tophat)
+"abd" = (
+/obj/machinery/computer/arcade,
+/obj/structure/sign/velocity_overlay/reklama{
+	name = "\improper It's in the Hat!";
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abe" = (
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abf" = (
+/obj/effect/tophat_portal{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abg" = (
+/obj/machinery/vending/tophat_vend,
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abh" = (
+/obj/machinery/vending/boozeomat{
+	req_access = list()
+	},
+/obj/item/weapon/reagent_containers/food/drinks/shaker,
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abi" = (
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/device/flashlight/lamp/green,
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abj" = (
+/obj/structure/stool/bar,
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abk" = (
+/obj/structure/table/woodentable/fancy/black,
+/obj/machinery/chem_dispenser/soda{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abl" = (
+/obj/structure/table/woodentable/fancy/black,
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abm" = (
+/obj/structure/table/woodentable/fancy/black,
+/obj/machinery/chem_dispenser/beer{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
 "abn" = (
 /turf/unsimulated/wall/fakeglass,
 /area/centcom/evac)
+"abo" = (
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/weapon/reagent_containers/glass/rag,
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abp" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron5"
+	},
+/area/tophat)
+"abq" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron9"
+	},
+/area/tophat)
 "abC" = (
 /obj/structure/window/reinforced{
 	dir = 5;
@@ -25702,13 +25814,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aaZ
+abc
+abc
+abc
+abc
+abc
+abp
 aaM
 aaM
 aaM
@@ -25959,13 +26071,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aba
+abd
+abe
+abh
+abk
+abm
+aba
 aaM
 aaM
 aaM
@@ -26216,13 +26328,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aba
+abe
+abe
+abe
+abe
+abe
+aba
 aaM
 aaM
 aaM
@@ -26473,13 +26585,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aba
+abf
+abe
+abi
+abl
+abo
+aba
 aaM
 aaM
 aaM
@@ -26730,13 +26842,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aba
+abe
+abe
+abj
+abj
+abj
+aba
 aaM
 aaM
 aaM
@@ -26987,13 +27099,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aba
+abg
+abe
+abe
+abe
+abe
+aba
 aaM
 aaM
 aaM
@@ -27244,13 +27356,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aaZ
+abc
+abc
+abc
+abc
+abc
+abq
 aaM
 aaM
 aaM
