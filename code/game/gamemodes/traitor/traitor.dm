@@ -158,8 +158,10 @@
 /datum/game_mode/proc/finalize_traitor(datum/mind/traitor)
 	if (istype(traitor.current, /mob/living/silicon))
 		add_law_zero(traitor.current)
+		traitor.current.playsound_local(null, 'sound/antag/tatoralert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	else
 		equip_traitor(traitor.current)
+		traitor.current.playsound_local(null, 'sound/antag/tatoralert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	return
 
 /datum/game_mode/proc/remove_traitor(datum/mind/M)

@@ -496,6 +496,8 @@
 	name = "data cable"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "wire1"
+	flags = NOBLUDGEON | NOATTACKANIMATION | CONDUCT
+	w_class = ITEM_SIZE_SMALL
 
 	var/obj/machinery/machine
 

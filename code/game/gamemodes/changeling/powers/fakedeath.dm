@@ -12,14 +12,12 @@
 /obj/effect/proc_holder/changeling/fakedeath/sting_action(mob/living/user)
 
 	if(user.fake_death)
-		var/fake_pick = pick("oxy", "tox", "fire", "clone")
+		var/fake_pick = pick("oxy", "tox", "clone")
 		switch(fake_pick)
 			if("oxy")
 				user.adjustOxyLoss(rand(200,300))
 			if("tox")
 				user.adjustToxLoss(rand(200,300))
-			if("fire")
-				user.adjustFireLoss(rand(200,300))
 			if("clone")
 				user.adjustCloneLoss(rand(200,300))
 

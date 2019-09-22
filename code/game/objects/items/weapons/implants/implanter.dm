@@ -60,11 +60,19 @@
 	. = ..()
 	update()
 
-/obj/item/weapon/implanter/adrenalin
-	name = "implanter-adrenalin"
+/obj/item/weapon/implanter/adrenaline
+	name = "implanter (A)"
 
-/obj/item/weapon/implanter/adrenalin/atom_init()
-	imp = new /obj/item/weapon/implant/adrenalin(src)
+/obj/item/weapon/implanter/adrenaline/atom_init()
+	imp = new /obj/item/weapon/implant/adrenaline(src)
+	. = ..()
+	update()
+
+/obj/item/weapon/implanter/emp
+	name = "implanter (M)"
+
+/obj/item/weapon/implanter/emp/atom_init()
+	imp = new /obj/item/weapon/implant/emp(src)
 	. = ..()
 	update()
 

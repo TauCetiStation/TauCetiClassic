@@ -143,7 +143,7 @@
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 	var/use_ingame_minutes_restriction_for_jobs = 0 //Do jobs use in-game minutes instead account age for restrictions?
 
-	var/add_player_age_value = 4000 //default minuts added with admin "Increase player age" button
+	var/add_player_age_value = 4320 //default minuts added with admin "Increase player age" button. 4320 minutes = 72 hours = 3 days
 
 	var/byond_version_min = 0
 	var/byond_version_recommend = 0

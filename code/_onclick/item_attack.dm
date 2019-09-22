@@ -1,5 +1,5 @@
 
-// Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
+// Called when the item is in the active hand, and clicked; alternately, there is an 'Click On Held Object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
 	return
 
@@ -8,7 +8,8 @@
 	return
 
 /atom/movable/attackby(obj/item/W, mob/user, params)
-	user.do_attack_animation(src)
+	if(!(W.flags & NOATTACKANIMATION))
+		user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 	add_fingerprint(user)
 	if(W && !(W.flags & NOBLUDGEON))

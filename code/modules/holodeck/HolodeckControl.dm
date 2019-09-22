@@ -3,7 +3,7 @@
 	desc = "A computer used to control a nearby holodeck."
 	icon_state = "holocontrol"
 
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	active_power_usage = 8000 //8kW for the scenery + 500W per holoitem
 	var/item_power_usage = 500
 
@@ -195,7 +195,7 @@
 			damaged = 1
 			loadIdProgram()
 			active = 0
-			use_power = 1
+			set_power_use(IDLE_POWER_USE)
 			for(var/mob/M in range(10,src))
 				M.show_message("The holodeck overloads!")
 
@@ -248,7 +248,7 @@
 
 	last_change = world.time
 	active = 1
-	use_power = 2
+	set_power_use(ACTIVE_POWER_USE)
 
 	for(var/item in holographic_objs)
 		derez(item)
@@ -316,7 +316,7 @@
 
 	last_gravity_change = world.time
 	active = 1
-	use_power = 1
+	set_power_use(IDLE_POWER_USE)
 
 	if(A.has_gravity)
 		A.gravitychange(0,A)
@@ -337,5 +337,5 @@
 		linkedholodeck.gravitychange(1,linkedholodeck)
 
 	active = 0
-	use_power = 1
+	set_power_use(IDLE_POWER_USE)
 	current_scene = null
