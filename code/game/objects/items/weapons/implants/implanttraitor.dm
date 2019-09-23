@@ -3,22 +3,25 @@
 	desc = "Makes you loyal or such.."
 	var/datum/mind/implant_master
 	var/forgotten = FALSE
+	var/datum/mind/target_imp
 
 /obj/item/weapon/implant/syndi_loyalty/inject(mob/living/carbon/C, def_zone)
 	. = ..()
 
-	var/mob/living/carbon/human/newtraitor = C
+	var/mob/living/carbon/human/imptraitor = C
 	implant_master = usr.mind
 
-	if(!istype(newtraitor) || !istype(implant_master))
+	target_imp = imp_in
+
+	if(!istype(imptraitor) || !istype(implant_master))
 		return
 
-	ticker.mode.traitors += newtraitor.mind
+	ticker.mode.traitors += imptraitor.mind
 
-	to_chat(newtraitor, "<span class='userdanger'> <B>ATTENTION:</B>You were implanted with Syndicate loyalty implant...</span>")
-	to_chat(newtraitor, "<B>You are now a special traitor.</B>")
+	to_chat(imptraitor, "<span class='userdanger'> <B>ATTENTION:</B>You were implanted with Syndicate loyalty implant...</span>")
+	to_chat(imptraitor, "<B>You are now a special traitor.</B>")
 
-	newtraitor.mind.special_role = "traitor"
+	imptraitor.mind.special_role = "traitor"
 
 	var/datum/objective/protect/protect_objective = new("Protect [implant_master.current.real_name], the [implant_master.assigned_role].")
 	protect_objective.target = implant_master
@@ -26,19 +29,19 @@
 	var/datum/objective/obey_objective = new("Follow [implant_master.current.real_name]'s orders, even at the cost of living.")
 	obey_objective.completed = 1
 
-	newtraitor.mind.objectives += protect_objective
-	newtraitor.mind.objectives += obey_objective
+	imptraitor.mind.objectives += protect_objective
+	imptraitor.mind.objectives += obey_objective
 
-	to_chat(newtraitor, "<span class='notice'> Your current objectives:</span>")
+	to_chat(imptraitor, "<span class='notice'> Your current objectives:</span>")
 	var/obj_count = 1
-	for(var/datum/objective/objective in newtraitor.mind.objectives)
-		to_chat(newtraitor, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+	for(var/datum/objective/objective in imptraitor.mind.objectives)
+		to_chat(imptraitor, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 	ticker.mode.update_all_synd_icons()
 
 	apply_brain_damage()
 
-	return 1
+	return TRUE
 
 /obj/item/weapon/implant/syndi_loyalty/Destroy()
 	forget()
@@ -99,12 +102,12 @@
 /obj/item/weapon/implant/syndi_loyalty/get_data()
 	var/dat = {"
 	<b>Implant Specifications:</b><BR>
-	<b>Name:</b> Unknown<BR>
+	<b>Name:</b> Unknown.<BR>
 	<b>Life:</b> Unknown.<BR>
 	<b>Important Notes:</b> Unknown.<BR>
 	<HR>
 	<b>Implant Details:</b><BR>
 	<b>Function:</b> Unknown.<BR>
 	<b>Special Features:</b> Unknown.<BR>
-	<b>Integrity:</b> Unknown"}
+	<b>Integrity:</b> Unknow.n"}
 	return dat

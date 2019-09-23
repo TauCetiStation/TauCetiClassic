@@ -1886,14 +1886,16 @@
 						break
 		hud_list[WANTED_HUD] = holder
 
-	if(hud_updateflag & 1 << IMPLOYAL_HUD || hud_updateflag & 1 << IMPCHEM_HUD || hud_updateflag & 1 << IMPTRACK_HUD)
+	if(hud_updateflag & 1 << IMPLOYAL_HUD || hud_updateflag & 1 << IMPCHEM_HUD || hud_updateflag & 1 << IMPTRACK_HUD || hud_updateflag & 1 << SYNDI_LOYAL_HUD)
 		var/image/holder1 = hud_list[IMPTRACK_HUD]
 		var/image/holder2 = hud_list[IMPLOYAL_HUD]
 		var/image/holder3 = hud_list[IMPCHEM_HUD]
+		var/image/holder4 = hud_list[SYNDI_LOYAL_HUD]
 
 		holder1.icon_state = "hudblank"
 		holder2.icon_state = "hudblank"
 		holder3.icon_state = "hudblank"
+		holder4.icon_state = "hudblank"
 
 		var/has_loyal_implant = FALSE
 		for(var/obj/item/weapon/implant/I in src)
@@ -1908,6 +1910,9 @@
 						holder2.icon_state = "hud_imp_mindshield"
 				if(istype(I,/obj/item/weapon/implant/chem))
 					holder3.icon_state = "hud_imp_chem"
+				if(istype(I,/obj/item/weapon/implant/syndi_loyalty))
+					var/randoming_icon = pick("hud_imp_loyal_syndi", "hud_imp_loyal_syndi2")
+					holder4.icon_state = randoming_icon
 
 		hud_list[IMPTRACK_HUD] = holder1
 		hud_list[IMPLOYAL_HUD] = holder2

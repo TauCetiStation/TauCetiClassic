@@ -87,6 +87,8 @@
 			A.put_in_any_hand_if_possible(I)
 			U.purchase_log += {"[user] ([user.ckey]) bought <img src="logo_[tempstate].png"> [name] for [cost]."}
 			if(user.mind)
+				if(bundlename == "Loyalty Implant")
+					user.mind.uplink_items_bought += "imp" //IDK how transfer .png in traitor.dm
 				user.mind.uplink_items_bought += {"<img src="logo_[tempstate].png"> [bundlename]"}
 				user.mind.spent_TC += cost
 		U.interact(user)

@@ -246,8 +246,14 @@
 				if(traitor.spent_TC)
 					text += "<br><b>TC Remaining:</b> [traitor.total_TC - traitor.spent_TC]/[traitor.total_TC]"
 					text += "<br><b>The tools used by the traitor were:</b>"
+					var/implant = "imp"
 					for(var/entry in traitor.uplink_items_bought)
+						if(implant in traitor.uplink_items_bought)
+							text += ""
 						text += "<br>[entry]"
+					if(implant in traitor.uplink_items_bought)
+						var/obj/item/weapon/implant/syndi_loyalty/target_imp
+						text += "<br>Loyalty Implant implanted [target_imp]" //target_imp.current.real_name THIS DONT WORK, BUT I DONT KNOW HOW 
 				else
 					text += "<br>The traitor was a smooth operator this round (did not purchase any uplink items)."
 

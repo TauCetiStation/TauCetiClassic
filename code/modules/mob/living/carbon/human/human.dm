@@ -4,7 +4,7 @@
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
 	//icon_state = "body_m_s"
-	var/list/hud_list[9]
+	var/list/hud_list[10]
 	var/datum/species/species //Contains icon generation and language information, set during New().
 	var/dog_owner
 	var/heart_beat = 0
