@@ -49,7 +49,7 @@
 		M.attack_log += "\[[time_stamp()]\]<font color='orange'>pushed [user.name] ([user.ckey]) with [src.name].</font>"
 		msg_admin_attack("[key_name(user)] pushed [key_name(M)] with [src.name].", user)
 
-		if(prob(35))
+		if(prob(20))
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.shoes)
