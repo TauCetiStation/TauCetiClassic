@@ -228,7 +228,6 @@
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/projectile/wjpp(src)
-	new /obj/item/clothing/mask/gas/sechailer(src)
 	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
