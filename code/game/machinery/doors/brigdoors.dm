@@ -197,13 +197,13 @@
 	switch(screen)
 		if(MAIN_SCREEN)
 			dat += "<HR>Timer System:</hr>"
-			dat += " <b>Door [src.id] controls</b><br/>"
+			dat += " <b>Door [id] controls</b><br/>"
 			dat +={"
 				<HR><B>All lines must be filled in correctly</B>
-				<br/><B><A href='?src=\ref[src];set_prisoner_name=TRUE'>Name</A>:</B> [src.prisoner_name]
-				<br/><B><A href='?src=\ref[src];set_prisoner_crimes=TRUE'>Crimes</A>:</B> [src.prisoner_crimes]
-				<br/><B><A href='?src=\ref[src];set_prisoner_details=TRUE'>Details</A>:</B> [src.prisoner_details]<BR>
-				<br/><B>Authorized by:</B> <FONT COLOR='green'>[src.timer_activator]</FONT><HR></hr>
+				<br/><B><A href='?src=\ref[src];set_prisoner_name=TRUE'>Name</A>:</B> [prisoner_name]
+				<br/><B><A href='?src=\ref[src];set_prisoner_crimes=TRUE'>Crimes</A>:</B> [prisoner_crimes]
+				<br/><B><A href='?src=\ref[src];set_prisoner_details=TRUE'>Details</A>:</B> [prisoner_details]<BR>
+				<br/><B>Authorized by:</B> <FONT COLOR='green'>[timer_activator]</FONT><HR></hr>
 			"}
 
 			// Start/Stop timer
@@ -237,11 +237,11 @@
 
 		if(ERROR_SCREEN)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Invalid prisoner data</B></FONT><HR><BR>"
-			if(src.prisoner_name == "")
+			if(prisoner_name == "")
 				dat+="<FONT COLOR='maroon'>•Invalid prisoner name.</FONT><BR>"
-			if(src.prisoner_crimes == "")
+			if(prisoner_crimes == "")
 				dat+="<FONT COLOR='maroon'>•Invalid crimes number.</FONT><BR>"
-			if(src.prisoner_details == "")
+			if(prisoner_details == "")
 				dat+="<FONT COLOR='maroon'>•Invalid details text.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];setScreen=[MAIN_SCREEN]'>Return</A><BR>"
 
@@ -261,19 +261,19 @@
 		return
 
 	if(href_list["set_prisoner_name"])
-		src.prisoner_name = sanitize_safe(input(usr, "Enter Name", "Prison Timer", input_default(prisoner_name)), MAX_LNAME_LEN)
+		prisoner_name = sanitize_safe(input(usr, "Enter Name", "Prison Timer", input_default(prisoner_name)), MAX_LNAME_LEN)
 
 	if(href_list["set_prisoner_crimes"])
-		src.prisoner_crimes = sanitize_safe(input(usr, "Enter Crimes", "Prison Timer", input_default(prisoner_crimes)), MAX_LNAME_LEN)
+		prisoner_crimes = sanitize_safe(input(usr, "Enter Crimes", "Prison Timer", input_default(prisoner_crimes)), MAX_LNAME_LEN)
 
 	if(href_list["set_prisoner_details"])
-		src.prisoner_details = sanitize_safe(input(usr, "Enter Details", "Prison Timer", input_default(prisoner_details)), MAX_LNAME_LEN)
+		prisoner_details = sanitize_safe(input(usr, "Enter Details", "Prison Timer", input_default(prisoner_details)), MAX_LNAME_LEN)
 
 	if(!src.allowed(usr))
 		return
 
 	if(href_list["timing"])
-		if(src.prisoner_name == "" || src.prisoner_crimes == "" || src.prisoner_details == "" )
+		if(prisoner_name == "" || prisoner_crimes == "" || prisoner_details == "" )
 			src.screen = ERROR_SCREEN
 		else
 			src.timing = text2num(href_list["timing"])
