@@ -68652,6 +68652,14 @@
 	dir = 1;
 	pixel_y = -24
 	},
+/obj/structure/rack,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warndark"
