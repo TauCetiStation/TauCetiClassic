@@ -230,21 +230,20 @@
 	if(state >= GRAB_NECK)
 		if(ishuman(affecting))
 			var/mob/living/carbon/human/H = affecting
-			if(!istype(H.bodyparts_by_name[BP_HEAD], /obj/item/organ/external/head))
-				assailant.visible_message("<span class='info'>You grab a man differently</span>")
-				set_state(GRAB_AGGRESSIVE)
-		if(affecting.stat != DEAD)
-			affecting.Stun(1)
-			if(isliving(affecting))
-				var/mob/living/L = affecting
-				L.adjustOxyLoss(1)
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+			if(!BP || BP.is_stump)
+				qdel(src)
+				return PROCESS_KILL
+		affecting.Stun(1)
+		if(isliving(affecting))
+			var/mob/living/L = affecting
+			L.adjustOxyLoss(1)
 
 	if(state >= GRAB_KILL)
-		if(affecting.stat != DEAD)
-			//affecting.apply_effect(STUTTER, 5) //would do this, but affecting isn't declared as mob/living for some stupid reason.
-			affecting.stuttering = max(affecting.stuttering, 5) //It will hamper your voice, being choked and all.
-			affecting.Weaken(5)	//Should keep you down unless you get help.
-			affecting.losebreath = max(affecting.losebreath + 2, 3)
+		//affecting.apply_effect(STUTTER, 5) //would do this, but affecting isn't declared as mob/living for some stupid reason.
+		affecting.stuttering = max(affecting.stuttering, 5) //It will hamper your voice, being choked and all.
+		affecting.Weaken(5)	//Should keep you down unless you get help.
+		affecting.losebreath = max(affecting.losebreath + 2, 3)
 
 	adjust_position()
 
@@ -330,7 +329,8 @@
 			return
 		if(ishuman(affecting))
 			var/mob/living/carbon/human/H = affecting
-			if(!istype(H.bodyparts_by_name[BP_HEAD], /obj/item/organ/external/head))
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+			if(!BP || BP.is_stump)
 				assailant.visible_message("<span class='warning'>You can't take a headless man by the neck!</span>")
 				return
 		assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
