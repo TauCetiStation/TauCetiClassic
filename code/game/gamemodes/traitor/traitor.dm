@@ -255,10 +255,6 @@
 				text += "<br><b>Implanted Creatures:</b>"
 				for(var/peoples in syndi_implanted_people)
 					text += "<br>[peoples]"
-				break
-
-
-
 
 	if(ticker.reconverted_antags.len)
 		text += "<br><hr>"
