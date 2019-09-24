@@ -325,13 +325,13 @@
 
 	else if(state < GRAB_NECK)
 		if(isslime(affecting))
-			assailant.visible_message("<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>")
+			to_chat(assailant, "<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>")
 			return
 		if(ishuman(affecting))
 			var/mob/living/carbon/human/H = affecting
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 			if(!BP || BP.is_stump)
-				assailant.visible_message("<span class='warning'>You can't take a headless man by the neck!</span>")
+				to_chat(assailant, "<span class='warning'>You can't take a headless man by the neck!</span>")
 				return
 		assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
 		assailant.set_dir(get_dir(assailant, affecting))
