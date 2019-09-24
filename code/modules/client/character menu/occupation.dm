@@ -12,7 +12,7 @@
 		if(BE_ASSISTANT)
 			. += "<u><a href='?_src_=prefs;preference=job;task=random'><font color=red>\[Be assistant if preference unavailable\]</font></a></u>"
 		if(RETURN_TO_LOBBY)
-			. += "<u><a href='?_src_=prefs;preference=job;task=random'><font color=purple>\[Return to lobby if preference unavailable\]</font></a></u>"
+			. += "<u><a href='?_src_=prefs;preference=job;task=random'><font color=purple>\[Return to lobby if preference unavailable. You will not be on the list of antag candidates for round start!\]</font></a></u>"
 
 	. += "<br><a href='?_src_=prefs;preference=job;task=reset'>\[Reset\]</a>"
 

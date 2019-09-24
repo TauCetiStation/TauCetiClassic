@@ -305,7 +305,7 @@ Implants;
 
 	// Assemble a list of active players without jobbans.
 	for(var/mob/dead/new_player/player in new_player_list)
-		if(player.client && player.ready)
+		if(player.client && player.ready && player.client.prefs.alternate_option != RETURN_TO_LOBBY)
 			if(role in player.client.prefs.be_role)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role) && !role_available_in_minutes(player, role))
 					players += player
