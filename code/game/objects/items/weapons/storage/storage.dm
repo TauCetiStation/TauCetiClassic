@@ -34,6 +34,29 @@
 	. = ..()
 	use_sound = SOUNDIN_RUSTLE
 
+	if(allow_quick_empty)
+		verbs += /obj/item/weapon/storage/proc/quick_empty
+
+	if(allow_quick_gather)
+		verbs += /obj/item/weapon/storage/proc/toggle_gathering_mode
+
+	if(isnull(max_storage_space) && !isnull(storage_slots))
+		max_storage_space = storage_slots * base_storage_cost(max_w_class)
+
+	if(startswith)
+		for(var/item_path in startswith)
+			var/list/data = startswith[item_path]
+			if(islist(data))
+				var/qty = data[1]
+				var/list/argsl = data.Copy()
+				argsl[1] = src
+				for(var/i in 1 to qty)
+					new item_path(arglist(argsl))
+			else
+				for(var/i in 1 to (isnull(data)? 1 : data))
+					new item_path(src)
+		update_icon()
+
 /obj/item/weapon/storage/Destroy()
 	QDEL_NULL(storage_ui)
 	return ..()
@@ -370,31 +393,6 @@
 	for(var/obj/item/I in contents)
 		remove_from_storage(I, T, NoUpdate = TRUE)
 	finish_bulk_removal()
-
-/obj/item/weapon/storage/atom_init()
-	. = ..()
-	if(allow_quick_empty)
-		verbs += /obj/item/weapon/storage/proc/quick_empty
-
-	if(allow_quick_gather)
-		verbs += /obj/item/weapon/storage/proc/toggle_gathering_mode
-
-	if(isnull(max_storage_space) && !isnull(storage_slots))
-		max_storage_space = storage_slots * base_storage_cost(max_w_class)
-
-	if(startswith)
-		for(var/item_path in startswith)
-			var/list/data = startswith[item_path]
-			if(islist(data))
-				var/qty = data[1]
-				var/list/argsl = data.Copy()
-				argsl[1] = src
-				for(var/i in 1 to qty)
-					new item_path(arglist(argsl))
-			else
-				for(var/i in 1 to (isnull(data)? 1 : data))
-					new item_path(src)
-		update_icon()
 
 /obj/item/weapon/storage/emp_act(severity)
 	if(!istype(src.loc, /mob/living))
