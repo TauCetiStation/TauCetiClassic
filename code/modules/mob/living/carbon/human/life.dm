@@ -1911,12 +1911,12 @@
 				if(istype(I,/obj/item/weapon/implant/chem))
 					holder3.icon_state = "hud_imp_chem"
 				if(istype(I,/obj/item/weapon/implant/syndi_loyalty))
-					var/randoming_icon = pick("hud_imp_loyal_syndi", "hud_imp_loyal_syndi2")
-					holder4.icon_state = randoming_icon
+					holder4.icon_state = pick("hud_imp_loyal_syndi", "hud_imp_loyal_syndi2")
 
 		hud_list[IMPTRACK_HUD] = holder1
 		hud_list[IMPLOYAL_HUD] = holder2
 		hud_list[IMPCHEM_HUD] = holder3
+		hud_list[SYNDI_LOYAL_HUD] = holder4
 
 	if(hud_updateflag & 1 << SPECIALROLE_HUD)
 		var/image/holder = hud_list[SPECIALROLE_HUD]

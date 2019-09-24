@@ -125,7 +125,7 @@
 	hud_list[IMPCHEM_HUD]     = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[SYNDI_LOYAL_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[SYNDI_LOYAL_HUD] = image('icons/mob/hud.dmi', src, "hudblank") //Runtime in robot.dm, line 128: list index out of bounds
 
 /mob/living/silicon/robot/proc/init()
 	aiCamera = new/obj/item/device/camera/siliconcam/robot_camera(src)

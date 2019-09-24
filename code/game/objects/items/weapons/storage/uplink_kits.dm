@@ -163,9 +163,7 @@
 
 /obj/item/weapon/storage/box/syndie_kit/imp_loyalty/atom_init()
 	. = ..()
-	var/obj/item/weapon/implanter/O = new(src)
-	O.imp = new /obj/item/weapon/implant/syndi_loyalty(O)
-	O.update()
+	new /obj/item/weapon/implanter/syndi_loyalty(src)
 
 /obj/item/weapon/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
