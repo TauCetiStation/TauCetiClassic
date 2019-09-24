@@ -346,7 +346,7 @@
 	else
 		to_chat(user, "<span class='notice'>You fail to pick anything up with \the [src].</span>")
 
-/obj/item/weapon/storage/verb/toggle_gathering_mode()
+/obj/item/weapon/storage/proc/toggle_gathering_mode()
 	set name = "Switch Gathering Method"
 	set category = "Object"
 
@@ -358,7 +358,7 @@
 			to_chat(usr, "[src] now picks up one item at a time.")
 
 
-/obj/item/weapon/storage/verb/quick_empty()
+/obj/item/weapon/storage/proc/quick_empty()
 	set name = "Empty Contents"
 	set category = "Object"
 
@@ -374,17 +374,13 @@
 /obj/item/weapon/storage/atom_init()
 	. = ..()
 	if(allow_quick_empty)
-		verbs += /obj/item/weapon/storage/verb/quick_empty
-	else
-		verbs -= /obj/item/weapon/storage/verb/quick_empty
+		verbs += /obj/item/weapon/storage/proc/quick_empty
 
 	if(allow_quick_gather)
-		verbs += /obj/item/weapon/storage/verb/toggle_gathering_mode
-	else
-		verbs -= /obj/item/weapon/storage/verb/toggle_gathering_mode
+		verbs += /obj/item/weapon/storage/proc/toggle_gathering_mode
 
 	if(isnull(max_storage_space) && !isnull(storage_slots))
-		max_storage_space = storage_slots*base_storage_cost(max_w_class)
+		max_storage_space = storage_slots * base_storage_cost(max_w_class)
 
 	if(startswith)
 		for(var/item_path in startswith)
@@ -411,7 +407,7 @@
 
 	//Clicking on itself will empty it, if it has the verb to do that.
 	if(user.get_active_hand() == src)
-		if(src.verbs.Find(/obj/item/weapon/storage/verb/quick_empty))
+		if(src.verbs.Find(/obj/item/weapon/storage/proc/quick_empty))
 			src.quick_empty()
 			return
 
