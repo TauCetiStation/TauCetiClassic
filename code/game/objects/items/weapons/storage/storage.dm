@@ -109,6 +109,9 @@
 	storage_ui.show_to(user)
 
 /obj/item/weapon/storage/proc/prepare_ui()
+	if(!storage_ui)
+		storage_ui = new storage_ui_path(src)
+
 	storage_ui.prepare_ui()
 
 /obj/item/weapon/storage/proc/close(mob/user)
@@ -316,7 +319,8 @@
 		src.open(user)
 	else
 		..()
-		storage_ui.on_hand_attack(user)
+		if(storage_ui)
+			storage_ui.on_hand_attack(user)
 	src.add_fingerprint(user)
 
 //Should be merged into attack_hand() later, i mean whole attack_paw() proc, but thats probably a lot of work.
@@ -381,9 +385,6 @@
 
 	if(isnull(max_storage_space) && !isnull(storage_slots))
 		max_storage_space = storage_slots*base_storage_cost(max_w_class)
-
-	storage_ui = new storage_ui_path(src)
-	prepare_ui()
 
 	if(startswith)
 		for(var/item_path in startswith)
