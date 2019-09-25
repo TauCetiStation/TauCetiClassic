@@ -172,9 +172,6 @@
 	else if(feet_dirt_color)
 		msg += "<span class='warning'>[t_He] [t_has] [feet_dirt_color.name]-stained feet!</span>\n"
 
-	if(legcuffed)
-		msg += "<span class='warning'>[t_He] [t_has] [bicon(legcuffed)] [legcuffed.name] on [t_his] legs!</span>\n"
-
 	//mask
 	if(wear_mask && !skipmask)
 		if(wear_mask.dirt_overlay)
