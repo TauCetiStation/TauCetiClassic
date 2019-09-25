@@ -389,21 +389,6 @@
 					playsound(src, pick(gender == FEMALE ? SOUNDIN_FEMALE_LIGHT_PAIN : SOUNDIN_MALE_LIGHT_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
 					lastSoundEmote = world.time + 4 SECONDS
 
-		if ("pain")
-			if(muzzled)
-				message = "<B>[src]</B> makes a weak noise."
-				m_type = 1
-			else if(auto)
-				message = pick("<B>[src]</B> moans in pain.", "<B>[src]</B> slightly winces in pain and moans.", "<B>[src]</B> presses \his lips together in pain and moans.")
-				m_type = 2
-				if((species.name != SKRELL) && has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(50)) // skrells don't have much emotions to cry in pain, but they can still moan
-					playsound(src, pick(gender == FEMALE ? SOUNDIN_FEMALE_WHINER_PAIN : SOUNDIN_MALE_WHINER_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
-				else
-					playsound(src, pick(gender == FEMALE ? SOUNDIN_FEMALE_PASSIVE_PAIN : SOUNDIN_MALE_PASSIVE_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
-			else
-				message = "<B>[src]</B> slightly moans feigning pain"
-				m_type = 2
-
 		if ("johnny")
 			var/M
 			if (param)
@@ -583,14 +568,20 @@
 					message = "<B>[src]</B> sadly can't find anybody to give daps to, and daps \himself. Shameful."
 
 		if("pain")
-			if(miming)
-				message = "<span class='bold'>[src]</span> appears to be in pain!"
+			if(muzzled)
+				message = "<B>[src]</B> makes a weak noise."
 				m_type = 1 // Can't we get defines for these?
+			else if(auto)
+				message = pick("<B>[src]</B> moans in pain.", "<B>[src]</B> slightly winces in pain and moans.", "<B>[src]</B> presses \his lips together in pain and moans.", "<B>[src]</B> twists in pain.")
+				m_type = 2
+				cloud_emote = "cloud-pain"
+				if((species.name != SKRELL) && has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(50)) // skrells don't have much emotions to cry in pain, but they can still moan
+					playsound(src, pick(gender == FEMALE ? SOUNDIN_FEMALE_WHINER_PAIN : SOUNDIN_MALE_WHINER_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
+				else
+					playsound(src, pick(gender == FEMALE ? SOUNDIN_FEMALE_PASSIVE_PAIN : SOUNDIN_MALE_PASSIVE_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
 			else
-				message = "<span class='bold'>[src]</span> [message ? message : "twists in pain"]."
-				m_type = 1
-
-			cloud_emote = "cloud-pain"
+				message = "<B>[src]</B> [pick("slightly moans feigning pain.", "appears to be in pain!")]"
+				m_type = 2
 
 		if ("scream")
 			if(miming)
