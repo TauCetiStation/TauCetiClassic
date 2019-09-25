@@ -1,6 +1,6 @@
-var/global/obj/machinery/vending/tophat_vend/global_tophat_vend
-var/global/obj/effect/tophat_portal/global_tophat_portal
-var/global/list/global_tophats_list = list()
+var/global/obj/machinery/vending/tophat_vend/tophat_vend
+var/global/obj/effect/tophat_portal/tophat_portal
+var/global/list/tophats_list = list()
 
 /obj/machinery/vending/tophat_vend
 	name = "Tophat-Vend"
@@ -24,11 +24,14 @@ var/global/list/global_tophats_list = list()
 
 /obj/machinery/vending/tophat_vend/atom_init()
 	. = ..()
-	global_tophat_vend = src
+	if(tophat_vend)
+		return INITIALIZE_HINT_QDEL
+	tophat_vend = src
 
 
 /obj/machinery/vending/tophat_vend/Destroy()
-	global_tophat_vend = null
+	if(tophat_vend == src)
+		tophat_vend = null
 	return ..()
 
 /obj/machinery/vending/tophat_vend/proc/get_mousetrap()
@@ -78,10 +81,13 @@ var/global/list/global_tophats_list = list()
 
 /obj/effect/tophat_portal/atom_init()
 	. = ..()
-	global_tophat_portal = src
+	if(tophat_portal)
+		return INITIALIZE_HINT_QDEL
+	tophat_portal = src
 
 /obj/effect/tophat_portal/Destroy()
-	global_tophat_portal = null
+	if(tophat_portal == src)
+		tophat_portal = null
 	return ..()
 
 /obj/effect/tophat_portal/proc/go_into(atom/movable/AM)
@@ -99,7 +105,7 @@ var/global/list/global_tophats_list = list()
 		return
 	diving_in = TRUE
 
-	var/obj/item/clothing/head/wizard/tophat/TP = pick(global_tophats_list)
+	var/obj/item/clothing/head/wizard/tophat/TP = pick(tophats_list)
 	if(TP)
 		AM.forceMove(get_turf(src))
 		var/matrix/saved_transform = matrix(AM.transform)
@@ -143,7 +149,7 @@ var/global/list/global_tophats_list = list()
 		return
 	if(AM.anchored)
 		return
-	if(global_tophats_list.len == 0)
+	if(tophats_list.len == 0)
 		return
 	if(!user.mind || user.mind.special_role != "Wizard")
 		if(AM == user)
@@ -173,19 +179,19 @@ var/global/list/global_tophats_list = list()
 
 /obj/item/clothing/head/wizard/tophat/atom_init()
 	. = ..()
-	global_tophats_list += src
+	tophats_list += src
 
 	var/matrix/M = matrix()
 	M.Turn(180)
 	animate(src, transform=M, time=3)
 
 /obj/item/clothing/head/wizard/tophat/Destroy()
-	global_tophats_list -= src
+	tophats_list -= src
 
-	forceMove(get_turf(src))
+	var/turf/src_turf = get_turf(src)
 
 	var/list/pos_turfs = get_area_turfs(get_area(src))
-	if(pos_turfs.len)
+	if(pos_turfs.len && src_turf)
 		visible_message("<span class='danger'>[src] rips and tears, as EVERYTHING flies out of it...</span>")
 
 		var/list/to_exit = get_area_turfs(/area/tophat)
@@ -194,13 +200,13 @@ var/global/list/global_tophats_list = list()
 			for(var/atom/movable/AM in T)
 				if(!istype(AM, /obj/effect/tophat_portal))
 					AM.anchored = FALSE
-					AM.forceMove(get_turf(src))
+					AM.forceMove(src_turf)
 					AM.throw_at(pick(pos_turfs), 4, 2)
 
 	return ..()
 
 /obj/item/clothing/head/wizard/tophat/proc/try_get_monkey(mob/living/target)
-	var/obj/machinery/vending/tophat_vend/TP = global_tophat_vend
+	var/obj/machinery/vending/tophat_vend/TP = tophat_vend
 	if(TP)
 		var/mob/living/carbon/monkey/M = TP.get_bunnymonkey()
 		if(M)
@@ -211,7 +217,7 @@ var/global/list/global_tophats_list = list()
 
 // Returns TRUE on succesful mousetrapping.
 /obj/item/clothing/head/wizard/tophat/proc/try_mousetrap(mob/living/target)
-	var/obj/machinery/vending/tophat_vend/TP = global_tophat_vend
+	var/obj/machinery/vending/tophat_vend/TP = tophat_vend
 	if(TP)
 		var/obj/item/device/assembly/mousetrap/MT = TP.get_mousetrap()
 		if(MT)
@@ -255,7 +261,7 @@ var/global/list/global_tophats_list = list()
 		sleep(5)
 
 	user.visible_message("<span class='warning'>[AM] dissapears into [src]!</span>")
-	global_tophat_portal.go_into(AM)
+	tophat_portal.go_into(AM)
 
 	if(AM == user)
 		animate(user, transform=saved_transform, time=3, alpha=saved_alpha)
@@ -273,7 +279,7 @@ var/global/list/global_tophats_list = list()
 		return
 	if(!user.mind || user.mind.special_role != "Wizard")
 		return
-	if(!global_tophat_portal)
+	if(!tophat_portal)
 		to_chat(user, "<span class='warning'>Are you crazy? This hat could never fit [AM] in...</span>")
 		return
 
@@ -328,7 +334,7 @@ var/global/list/global_tophats_list = list()
 
 /obj/item/clothing/head/wizard/tophat/attackby(obj/item/I, mob/living/user)
 	if(I.w_class <= w_class)
-		if(!global_tophat_portal)
+		if(!tophat_portal)
 			to_chat(user, "<span class='warning'>Are you crazy? This hat could never fit [I] in...</span>")
 			return
 		user.drop_from_inventory(I)
