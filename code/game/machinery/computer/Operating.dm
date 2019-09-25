@@ -59,4 +59,3 @@
 /obj/machinery/computer/operating/process()
 	if(..())
 		src.updateDialog()
-	src.victim = src.table.victim
