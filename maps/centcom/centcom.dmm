@@ -493,21 +493,9 @@
 	smooth = 0
 	},
 /area/tophat)
-"aba" = (
-/turf/unsimulated/wall{
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "iron12"
-	},
-/area/tophat)
 "abb" = (
 /turf/space,
 /area/shuttle/escape_pod1/transit)
-"abc" = (
-/turf/unsimulated/wall{
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "iron3"
-	},
-/area/tophat)
 "abd" = (
 /obj/machinery/computer/arcade,
 /obj/structure/sign/velocity_overlay/reklama{
@@ -25840,8 +25828,8 @@ aaM
 aaM
 aaZ
 abr
-abc
-abc
+abr
+abr
 abr
 abr
 abs
@@ -26609,7 +26597,7 @@ aaM
 aaM
 aaM
 aaM
-aba
+abp
 abf
 abe
 abi
@@ -27385,7 +27373,7 @@ abr
 abr
 abr
 abr
-abc
+abr
 abt
 aaM
 aaM
