@@ -489,7 +489,8 @@
 "aaZ" = (
 /turf/unsimulated/wall{
 	icon = 'icons/turf/walls.dmi';
-	icon_state = "iron6"
+	icon_state = "iron6";
+	smooth = 0
 	},
 /area/tophat)
 "aba" = (
@@ -595,13 +596,36 @@
 "abp" = (
 /turf/unsimulated/wall{
 	icon = 'icons/turf/walls.dmi';
-	icon_state = "iron5"
+	icon_state = "iron12";
+	smooth = 0
 	},
 /area/tophat)
 "abq" = (
 /turf/unsimulated/wall{
 	icon = 'icons/turf/walls.dmi';
-	icon_state = "iron9"
+	icon_state = "iron10";
+	smooth = 0
+	},
+/area/tophat)
+"abr" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron3";
+	smooth = 0
+	},
+/area/tophat)
+"abs" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron5";
+	smooth = 0
+	},
+/area/tophat)
+"abt" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron9";
+	smooth = 0
 	},
 /area/tophat)
 "abC" = (
@@ -25815,12 +25839,12 @@ aaM
 aaM
 aaM
 aaZ
+abr
 abc
 abc
-abc
-abc
-abc
-abp
+abr
+abr
+abs
 aaM
 aaM
 aaM
@@ -26071,13 +26095,13 @@ aaM
 aaM
 aaM
 aaM
-aba
+abp
 abd
 abe
 abh
 abk
 abm
-aba
+abp
 aaM
 aaM
 aaM
@@ -26328,13 +26352,13 @@ aaM
 aaM
 aaM
 aaM
-aba
+abp
 abe
 abe
 abe
 abe
 abe
-aba
+abp
 aaM
 aaM
 aaM
@@ -26591,7 +26615,7 @@ abe
 abi
 abl
 abo
-aba
+abp
 aaM
 aaM
 aaM
@@ -26842,13 +26866,13 @@ aaM
 aaM
 aaM
 aaM
-aba
+abp
 abe
 abe
 abj
 abj
 abj
-aba
+abp
 aaM
 aaM
 aaM
@@ -27099,13 +27123,13 @@ aaM
 aaM
 aaM
 aaM
-aba
+abp
 abg
 abe
 abe
 abe
 abe
-aba
+abp
 aaM
 aaM
 aaM
@@ -27356,13 +27380,13 @@ aaM
 aaM
 aaM
 aaM
-aaZ
-abc
-abc
-abc
-abc
-abc
 abq
+abr
+abr
+abr
+abr
+abc
+abt
 aaM
 aaM
 aaM
