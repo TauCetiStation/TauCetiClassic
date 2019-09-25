@@ -76,7 +76,7 @@
 			to_chat(who, "<span class='warning'>\The [this_item.name] doesn't fit in that place!</span>")
 			return
 
-		if(!slot_ref.onStripPanelUnEquip(who, strip_gloves))
+		if(!this_item.onStripPanelUnEquip(who, strip_gloves))
 			return
 
 		who.remove_from_mob(this_item)

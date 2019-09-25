@@ -512,7 +512,7 @@
 	},
 /area/tophat)
 "abf" = (
-/obj/effect/tophat_portal{
+/obj/effect/overlay/tophat_portal{
 	pixel_y = 32
 	},
 /turf/unsimulated/floor{
