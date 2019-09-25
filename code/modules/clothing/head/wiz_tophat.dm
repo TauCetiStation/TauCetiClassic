@@ -363,5 +363,5 @@ var/global/list/tophats_list = list()
 	else
 		..()
 
-/obj/item/clothing/head/wizard/tophat/on_stripPanelUnEquip(mob/living/who, strip_gloves = FALSE)
+/obj/item/clothing/head/wizard/tophat/onStripPanelUnEquip(mob/living/who, strip_gloves = FALSE)
 	return !try_mousetrap(who)
