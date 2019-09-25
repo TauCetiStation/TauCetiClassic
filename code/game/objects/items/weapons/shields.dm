@@ -32,6 +32,35 @@
 	else
 		..()
 
+/obj/item/weapon/shield/riot/attack(mob/living/M, mob/user)
+	var/obj/item/weapon/shield/riot/tele/TS
+	if(istype(src, /obj/item/weapon/shield/riot/tele))
+		TS = src
+
+	if(M != user && ((TS && TS.active) || !TS) && !isrobot(M))
+		if(M.pulling)
+			M.stop_pulling()
+
+		user.do_attack_animation(M)
+		user.visible_message("<span class='warning'>[user.name] pushed away [M.name] with a [src.name]</span>")
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, M, user.dir), 1)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, M, user.dir), 2)
+		user.attack_log += "\[[time_stamp()]\]<font color='red'>pushed [M.name] ([M.ckey]) with [src.name].</font>"
+		M.attack_log += "\[[time_stamp()]\]<font color='orange'>pushed [user.name] ([user.ckey]) with [src.name].</font>"
+		msg_admin_attack("[key_name(user)] pushed [key_name(M)] with [src.name].", user)
+
+		if(prob(20))
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.shoes)
+					if(H.shoes.flags & NOSLIP)
+						return
+				M.Weaken(3)
+				shake_camera(M, 1, 1)
+
+	if(user.a_intent == I_HURT || M == user || (TS && !TS.active) || isrobot(M))
+		..()
+
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
 	desc = "A shield capable of stopping most projectile and melee attacks. It can be retracted, expanded, and stored anywhere."
