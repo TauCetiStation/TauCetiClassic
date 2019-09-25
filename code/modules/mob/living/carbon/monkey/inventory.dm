@@ -21,10 +21,6 @@
 		if(SLOT_HANDCUFFED)
 			src.handcuffed = W
 			update_inv_handcuffed(redraw_mob)
-		if(SLOT_LEGCUFFED)
-			src.legcuffed = W
-			W.equipped(src, slot)
-			update_inv_legcuffed(redraw_mob)
 		if(SLOT_L_HAND)
 			src.l_hand = W
 			W.equipped(src, slot)
