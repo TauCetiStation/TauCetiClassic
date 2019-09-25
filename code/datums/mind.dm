@@ -69,8 +69,6 @@
 	var/total_TC = 0
 	var/spent_TC = 0
 
-	var/implant_syndi_buyed = FALSE
-
 /datum/mind/New(var/key)
 	src.key = key
 

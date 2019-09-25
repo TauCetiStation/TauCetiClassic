@@ -6,17 +6,11 @@
 	var/mob/implant_master_mob 
 	var/forgotten = FALSE
 	var/mob/implant_target_mob
-					/*if(implant in traitor.uplink_items_bought)
-						var/obj/item/weapon/implant/syndi_loyalty/S
-						for(S in implant)
-							var/mob/living/carbon/human/H = S.implant_target_mob.real_name
-							text += "<br>Loyalty Implant implanted <b>[H]</b>"*/
-
 
 /obj/item/weapon/implant/syndi_loyalty/implanted(mob/M)
 	implant_master_mob = usr
 	implant_target_mob = M
-	syndi_implanted_people += "<b>[implant_master_mob]</b> implanted <b>[implant_target_mob]</b>"
+	syndi_implanted_people += "<b>[implant_master_mob]</b> implanted <b>[implant_target_mob]</b> with syndicate loyalty implant"
 	return 1
 
 /obj/item/weapon/implant/syndi_loyalty/inject(mob/living/carbon/C, def_zone)

@@ -95,3 +95,5 @@ var/list/ignore_vision_inside = list(
 	/obj/structure/droppod,
 	/obj/item/organ/external/head/skeleton,
 	)
+
+var/global/implant_syndi_buyed = FALSE

@@ -251,11 +251,6 @@
 				else
 					text += "<br>The traitor was a smooth operator this round (did not purchase any uplink items)."
 
-			if(traitor.implant_syndi_buyed)
-				text += "<br><b>Implanted Creatures:</b>"
-				for(var/peoples in syndi_implanted_people)
-					text += "<br>[peoples]"
-
 	if(ticker.reconverted_antags.len)
 		text += "<br><hr>"
 		for(var/reconverted in ticker.reconverted_antags)
