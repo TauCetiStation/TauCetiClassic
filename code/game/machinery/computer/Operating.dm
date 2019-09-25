@@ -11,7 +11,6 @@
 	circuit = /obj/item/weapon/circuitboard/operating
 	var/mob/living/carbon/human/victim = null
 	var/obj/machinery/optable/table = null
-	var/dpmlast = 0
 
 /obj/machinery/computer/operating/atom_init()
 	. = ..()
@@ -61,24 +60,3 @@
 	if(..())
 		src.updateDialog()
 	src.victim = src.table.victim
-
-	if(src.table.check_victim())
-		if(dpmlast < world.time)
-			switch(victim.pulse)
-				if(1)
-					playsound(src, 'sound/machines/cardio/cardionormal.ogg', VOL_EFFECTS_MASTER, vary = FALSE, extrarange = -4)
-					dpmlast = world.time + 19
-				if(2)
-					playsound(src, 'sound/machines/cardio/cardionormal.ogg', VOL_EFFECTS_MASTER, vary = FALSE, extrarange = -4)
-					dpmlast = world.time + 9
-				if(3)
-					playsound(src, 'sound/machines/cardio/cardiofast.ogg', VOL_EFFECTS_MASTER, vary = FALSE, extrarange = -4)
-					dpmlast = world.time + 29
-				if(4)
-					playsound(src, 'sound/machines/cardio/cardiofaster.ogg', VOL_EFFECTS_MASTER, vary = FALSE, extrarange = -4)
-					dpmlast = world.time + 19
-				if(5)
-					playsound(src, 'sound/machines/cardio/cardiofastest.ogg', VOL_EFFECTS_MASTER, vary = FALSE, extrarange = -4)
-					dpmlast = world.time + 39
-				else
-					playsound(src, 'sound/machines/cardio/dead.ogg', VOL_EFFECTS_MASTER, vary = FALSE, extrarange = -4)
