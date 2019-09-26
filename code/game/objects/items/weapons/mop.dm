@@ -14,7 +14,9 @@
 
 	can_push = TRUE
 	can_push_on_chair = TRUE
+	hit_on_harm_push = FALSE
 	can_pull = TRUE
+	hit_on_harm_pull = FALSE
 
 	can_sweep = TRUE
 	can_spin = TRUE
@@ -79,16 +81,6 @@
 			else
 				step_to(I, T_target)
 
-/obj/item/weapon/mop/on_sweep_push_success(atom/target, mob/user)
-	var/turf/T_target = get_turf(target)
-
-	if(!has_gravity(src) && !istype(target, /turf/space))
-		step_away(user, T_target)
-	else if(istype(target, /atom/movable))
-		var/atom/movable/AM = target
-		if(!AM.anchored)
-			step_away(target, get_turf(src))
-
 /obj/item/weapon/mop/on_sweep_pull(atom/target, turf/T, mob/user)
 	var/turf/src_turf = get_turf(src)
 
@@ -103,16 +95,6 @@
 				TR.handle_item_insertion(I, prevent_warning = TRUE)
 			else
 				step_to(I, src_turf)
-
-/obj/item/weapon/mop/on_sweep_pull_success(atom/target, mob/user)
-	var/turf/T_target = get_turf(target)
-
-	if(!has_gravity(src) && !istype(target, /turf/space))
-		step_to(user, T_target)
-	else if(istype(target, /atom/movable))
-		var/atom/movable/AM = target
-		if(!AM.anchored)
-			step_to(target, get_turf(src))
 
 /obj/item/weapon/mop/afterattack(atom/A, mob/living/user, proximity)
 	if(!proximity)

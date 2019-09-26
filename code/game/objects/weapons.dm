@@ -15,8 +15,10 @@
 	var/interupt_on_sweep_hit_types = list(/atom) // By default we interupt on any hit.
 
 	var/can_push = FALSE
+	var/hit_on_harm_push = FALSE
 	var/can_push_on_chair = FALSE
 	var/can_pull = FALSE
+	var/hit_on_harm_pull = FALSE
 
 	var/can_sweep = FALSE
 	var/can_spin = FALSE
@@ -135,7 +137,19 @@
 	return
 
 /obj/item/weapon/proc/on_sweep_push_success(atom/target, mob/user)
-	return
+	var/turf/T_target = get_turf(target)
+
+	if(hit_on_harm_push && user.a_intent != I_HELP)
+		var/resolved = target.attackby(src, user, list())
+		if(!resolved && src)
+			afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+
+	if(!has_gravity(src) && !istype(target, /turf/space))
+		step_away(user, T_target)
+	else if(istype(target, /atom/movable))
+		var/atom/movable/AM = target
+		if(!AM.anchored)
+			step_away(target, get_turf(src))
 
 /obj/item/weapon/proc/sweep_push(atom/target, mob/user)
 	var/s_time = sweep_step * 2
@@ -162,7 +176,19 @@
 	return
 
 /obj/item/weapon/proc/on_sweep_pull_success(atom/target, mob/user)
-	return
+	var/turf/T_target = get_turf(target)
+
+	if(hit_on_harm_pull && user.a_intent != I_HELP)
+		var/resolved = target.attackby(src, user, list())
+		if(!resolved && src)
+			afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+
+	if(!has_gravity(src) && !istype(target, /turf/space))
+		step_to(user, T_target)
+	else if(istype(target, /atom/movable))
+		var/atom/movable/AM = target
+		if(!AM.anchored)
+			step_to(target, get_turf(src))
 
 /obj/item/weapon/proc/sweep_pull(atom/target, mob/user)
 	var/s_time = sweep_step * 2

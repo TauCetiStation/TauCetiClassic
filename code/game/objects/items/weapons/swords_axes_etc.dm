@@ -141,7 +141,9 @@
 	interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep)
 
 	can_push = TRUE
+	hit_on_harm_push = TRUE
 	can_pull = TRUE
+	hit_on_harm_pull = TRUE
 
 /obj/item/weapon/melee/telebaton/can_sweep()
 	return can_sweep && on
@@ -154,36 +156,6 @@
 
 /obj/item/weapon/melee/telebaton/can_pull()
 	return can_pull && on
-
-/obj/item/weapon/melee/telebaton/on_sweep_push_success(atom/target, mob/user)
-	var/turf/T_target = get_turf(target)
-
-	if(user.a_intent != I_HELP)
-		var/resolved = target.attackby(src, user, list())
-		if(!resolved && src)
-			afterattack(target, user, TRUE, list()) // 1 indicates adjacency
-
-	if(!has_gravity(src) && !istype(target, /turf/space))
-		step_away(user, T_target)
-	else if(istype(target, /atom/movable))
-		var/atom/movable/AM = target
-		if(!AM.anchored)
-			step_away(target, get_turf(src))
-
-/obj/item/weapon/melee/telebaton/on_sweep_pull_success(atom/target, mob/user)
-	var/turf/T_target = get_turf(target)
-
-	if(user.a_intent != I_HELP)
-		var/resolved = target.attackby(src, user, list())
-		if(!resolved && src)
-			afterattack(target, user, TRUE, list()) // 1 indicates adjacency
-
-	if(!has_gravity(src) && !istype(target, /turf/space))
-		step_to(user, T_target)
-	else if(istype(target, /atom/movable))
-		var/atom/movable/AM = target
-		if(!AM.anchored)
-			step_to(target, get_turf(src))
 
 /obj/item/weapon/melee/telebaton/attack_self(mob/user)
 	on = !on

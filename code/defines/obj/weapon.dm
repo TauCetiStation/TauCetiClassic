@@ -60,27 +60,9 @@
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
 	can_push = TRUE
+	hit_on_harm_push = FALSE
 	can_pull = TRUE
-
-/obj/item/weapon/cane/on_sweep_push_success(atom/target, mob/user)
-	var/turf/T_target = get_turf(target)
-
-	if(!has_gravity(src) && !istype(target, /turf/space))
-		step_away(user, T_target)
-	else if(istype(target, /atom/movable))
-		var/atom/movable/AM = target
-		if(!AM.anchored)
-			step_away(target, get_turf(src))
-
-/obj/item/weapon/cane/on_sweep_pull_success(atom/target, mob/user)
-	var/turf/T_target = get_turf(target)
-
-	if(!has_gravity(src) && !istype(target, /turf/space))
-		step_to(user, T_target)
-	else if(istype(target, /atom/movable))
-		var/atom/movable/AM = target
-		if(!AM.anchored)
-			step_to(target, get_turf(src))
+	hit_on_harm_pull = FALSE
 
 /obj/item/weapon/gift
 	name = "gift"
@@ -321,27 +303,9 @@
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 
 	can_push = TRUE
+	hit_on_harm_push = FALSE
 	can_pull = TRUE
-
-/obj/item/weapon/staff/on_sweep_push_success(atom/target, mob/user)
-	var/turf/T_target = get_turf(target)
-
-	if(!has_gravity(src) && !istype(target, /turf/space))
-		step_away(user, T_target)
-	else if(istype(target, /atom/movable))
-		var/atom/movable/AM = target
-		if(!AM.anchored)
-			step_away(target, get_turf(src))
-
-/obj/item/weapon/staff/on_sweep_pull_success(atom/target, mob/user)
-	var/turf/T_target = get_turf(target)
-
-	if(!has_gravity(src) && !istype(target, /turf/space))
-		step_to(user, T_target)
-	else if(istype(target, /atom/movable))
-		var/atom/movable/AM = target
-		if(!AM.anchored)
-			step_to(target, get_turf(src))
+	hit_on_harm_pull = FALSE
 
 /obj/item/weapon/staff/broom
 	name = "broom"
