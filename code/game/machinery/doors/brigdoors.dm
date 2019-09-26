@@ -242,11 +242,11 @@
 		if(ERROR_SCREEN)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Invalid prisoner data</B></FONT><HR><BR>"
 			if(prisoner_name == "")
-				dat+="<FONT COLOR='maroon'>•Invalid prisoner name.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>â€¢Invalid prisoner name.</FONT><BR>"
 			if(prisoner_crimes == "")
-				dat+="<FONT COLOR='maroon'>•Invalid crimes number.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>â€¢Invalid crimes number.</FONT><BR>"
 			if(prisoner_details == "")
-				dat+="<FONT COLOR='maroon'>•Invalid details text.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>â€¢Invalid details text.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];setScreen=[MAIN_SCREEN]'>Return</A><BR>"
 
 	user << browse(entity_ja(dat), "window=computer;size=400x500")
