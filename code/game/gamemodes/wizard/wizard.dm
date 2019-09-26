@@ -114,7 +114,7 @@
 	var/wizard_name_second = pick(wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	spawn(0)
-		var/newname = sanitize_safe(input(wizard_mob, "You are the Space Wizard. Would you like to change your name to something else?", "Name change", randomname) as null|text, MAX_NAME_LEN)
+		var/newname = sanitize_safe(input(wizard_mob, "You are the Space Wizard. Would you like to change your name to something else?", "Name change", randomname) as null|text, wizard_mob.species.max_name_len)
 
 		if (!newname)
 			newname = randomname
@@ -280,7 +280,7 @@
 	if(text)
 		antagonists_completion += list(list("mode" = "wizard", "html" = text))
 		text = "<div class='block'>[text]</div>"
-		
+
 	return text
 
 //OTHER PROCS

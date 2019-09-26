@@ -116,7 +116,7 @@
 
 	switch(choice)
 		if("name")
-			var/newname = sanitize_safe(input(H, "Who are we again?", "Name change", H.name) as null|text, MAX_NAME_LEN)
+			var/newname = sanitize_safe(input(H, "Who are we again?", "Name change", H.name) as null|text, H.species.max_name_len)
 
 			if(!newname)
 				return

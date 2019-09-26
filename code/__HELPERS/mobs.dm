@@ -37,9 +37,10 @@
 
 		return f_style
 
-/proc/random_name(gender, species = HUMAN)
-	if(gender==FEMALE)	return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
-	else				return capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+/proc/random_name(gender, species_name=HUMAN)
+	var/datum/species/specie_obj = all_species[species_name]
+
+	return specie_obj.get_random_name(gender) // Why do even care about gender? It's 2563...
 
 /proc/random_skin_tone()
 	switch(pick(60;"caucasian", 15;"afroamerican", 10;"african", 10;"latino", 5;"albino"))

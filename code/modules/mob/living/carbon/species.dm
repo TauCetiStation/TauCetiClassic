@@ -4,6 +4,7 @@
 
 /datum/species
 	var/name                     // Species name.
+	var/max_name_len = MAX_NAME_LEN
 
 	var/icobase = 'icons/mob/human_races/r_human.dmi'    // Normal icon set.
 	var/deform = 'icons/mob/human_races/r_def_human.dmi' // Mutated icon set.
@@ -206,6 +207,15 @@
 /datum/species/proc/on_life(mob/living/carbon/human/H)
 	return
 
+/datum/species/proc/get_random_name(gender)
+	var/datum/language/L = all_languages[language]
+	if(!L)
+		return "John Doe"
+
+	var/first_name = L.get_random_word()
+	var/last_name = L.get_random_word()
+	return capitalize(first_name) + " " + capitalize(last_name)
+
 /datum/species/human
 	name = HUMAN
 	language = "Sol Common"
@@ -222,6 +232,12 @@
 
 	//If you wanted to add a species-level ability:
 	/*abilities = list(/client/proc/test_ability)*/
+
+/datum/species/human/get_random_name(gender)
+	if(gender == FEMALE)
+		return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
+	else
+		return capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 
 /datum/species/unathi
 	name = UNATHI
@@ -319,6 +335,8 @@
 
 /datum/species/skrell
 	name = SKRELL
+	max_name_len = MAX_NAME_LEN * 1.5
+
 	icobase = 'icons/mob/human_races/r_skrell.dmi'
 	deform = 'icons/mob/human_races/r_def_skrell.dmi'
 	language = "Skrellian"
@@ -388,6 +406,10 @@
 		"feet" = 'icons/mob/species/vox/shoes.dmi',
 		"gloves" = 'icons/mob/species/vox/gloves.dmi'
 		)
+
+/datum/species/vox/get_random_name(gender)
+	var/datum/language/L = all_languages[language]
+	return capitalize(L.get_random_word())
 
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
@@ -480,6 +502,8 @@
 
 /datum/species/diona
 	name = DIONA
+	max_name_len = MAX_NAME_LEN * 2
+
 	icobase = 'icons/mob/human_races/r_diona.dmi'
 	deform = 'icons/mob/human_races/r_def_plant.dmi'
 	language = "Rootspeak"
@@ -549,6 +573,37 @@
 	                          )
 
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
+
+	// Used in random name generation.
+	var/pos_adjectives = list(
+							"Great", "Sunny", "Adoring", "Endearing", "Evergrowing", "Eternal", "Long-living",
+							"Small", "Rainy", "Futile",
+							)
+	var/pos_nouns = list(
+						"Nature", "Tree", "Leaf", "Leaves", "Root", "Memory", "Past", "Future",
+						"Journey", "Attempt", "Hope",
+						)
+
+/datum/species/diona/get_random_name(gender)
+	var/essay_len = rand(3, 10)
+	var/output_name = ""
+	var/adjectives = rand(0, 3)
+	for(var/i in 1 to essay_len)
+		var/tie_in_words = list(" ")
+		if(i == essay_len)
+			tie_in_words = list("")
+		if(adjectives > 0)
+			output_name += pick(pos_adjectives)
+			adjectives--
+			if(adjectives != 0 && i != essay_len)
+				tie_in_words += list(" and ", " or ")
+		else
+			adjectives = rand(0, 3)
+			output_name += pick(pos_nouns)
+			if(adjectives == 0 && i != essay_len)
+				tie_in_words += list(" of ", " and ", " or ")
+		output_name += pick(tie_in_words)
+	return pick(list("", "\an ", "\the ")) + output_name
 
 /datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -664,6 +719,9 @@
 	                          )
 
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
+
+/datum/species/machine/get_random_name(gender)
+	return pick(ai_names)
 
 /datum/species/abductor
 	name = ABDUCTOR
@@ -1005,6 +1063,7 @@
 
 /datum/species/zombie/skrell
 	name = ZOMBIE_SKRELL
+	max_name_len = MAX_NAME_LEN * 1.5
 
 	icobase = 'icons/mob/human_races/r_zombie_skrell.dmi'
 	deform = 'icons/mob/human_races/r_zombie_skrell.dmi'

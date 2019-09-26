@@ -152,7 +152,7 @@
 /obj/structure/morgue/attackby(P, mob/user)
 	if(istype(P, /obj/item/weapon/pen))
 
-		var/t = sanitize_safe(input(user, "What would you like the label to be?", src.name, null)  as text, MAX_NAME_LEN)
+		var/t = sanitize_safe(input(user, "What would you like the label to be?", src.name, null)  as text, MAX_LNAME_LEN)
 		if (user.get_active_hand() != P)
 			return
 		if ((!in_range(src, usr) && loc != user))
@@ -333,7 +333,7 @@
 
 /obj/structure/crematorium/attackby(P, mob/user)
 	if(istype(P, /obj/item/weapon/pen))
-		var/t = sanitize_safe(input(user, "What would you like the label to be?", src.name, null)  as text, MAX_NAME_LEN)
+		var/t = sanitize_safe(input(user, "What would you like the label to be?", src.name, null)  as text, MAX_LNAME_LEN)
 		if (user.get_active_hand() != P)
 			return
 		if ((!in_range(src, usr) > 1 && src.loc != user))

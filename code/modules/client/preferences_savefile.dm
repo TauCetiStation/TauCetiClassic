@@ -320,7 +320,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(isnull(species)) species = HUMAN
 	if(isnull(language)) language = "None"
 	if(isnull(nanotrasen_relation)) nanotrasen_relation = initial(nanotrasen_relation)
-	if(!real_name) real_name = random_name(gender)
+	if(!real_name) real_name = random_name(gender, species)
 	if(!gear) gear = list()
 	if(!custom_items) custom_items = list()
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))

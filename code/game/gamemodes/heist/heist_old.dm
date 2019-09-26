@@ -82,16 +82,8 @@ VOX HEIST ROUNDTYPE
 		raider.current.loc = raider_spawn[index]
 		index++
 
-		var/sounds = rand(2, 8)
-		var/i = 0
-		var/newname = ""
-
-		while(i <= sounds)
-			i++
-			newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
-
 		var/mob/living/carbon/human/vox = raider.current
-		vox.real_name = capitalize(newname)
+		vox.real_name = random_name(vox.gender, VOX)
 		vox.name = vox.real_name
 		raider.name = vox.name
 		vox.age = rand(12,20)

@@ -349,7 +349,7 @@
 		if(checkoutperiod < 1)
 			checkoutperiod = 1
 	if(href_list["editbook"])
-		buffer_book = sanitize_safe(input("Enter the book's title:") as text|null, MAX_NAME_LEN)
+		buffer_book = sanitize_safe(input("Enter the book's title:") as text|null, MAX_LNAME_LEN)
 	if(href_list["editmob"])
 		buffer_mob = sanitize(input("Enter the recipient's name:") as text|null, MAX_NAME_LEN)
 	if(href_list["checkout"])

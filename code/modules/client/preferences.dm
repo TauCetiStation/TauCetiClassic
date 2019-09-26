@@ -285,7 +285,7 @@ var/const/MAX_SAVE_SLOTS = 10
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1)
 	if(be_random_name)
-		real_name = random_name(gender)
+		real_name = random_name(gender, character.get_species())
 
 	if(config.humans_need_surnames)
 		var/firstspace = findtext(real_name, " ")

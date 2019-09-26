@@ -318,7 +318,7 @@ What a mess.*/
 			switch(href_list["field"])
 				if("name")
 					if (istype(active1, /datum/data/record))
-						var/t1 = sanitize(input("Please input name:", "Secure. records", input_default(active1.fields["name"]), null)  as text, MAX_NAME_LEN)
+						var/t1 = sanitize(input("Please input name:", "Secure. records", input_default(active1.fields["name"]), null)  as text, MAX_LNAME_LEN)
 						if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr))) || active1 != a1)
 							return FALSE
 						active1.fields["name"] = t1

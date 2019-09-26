@@ -1,6 +1,29 @@
 /*
 	Datum based languages. Easily editable and modular.
 */
+#define SYLLABLE_STOPPERS list("b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", \
+							   "w", "x", "y", "z", "á", "â", "ã", "ä", "æ", "ç", "é", "ê", "ë", "ì", "í", "ï", "ð", \
+							   "ñ", "ò", "ô", "õ", "ö", "÷", "ø", "ù")
+#define SYLLABLE_VOWELS list("a", "e", "i", "o", "u", "à", "î", "è", "å", "¸", "ý", "û", "ó", "þ", "ÿ")
+#define SENTENCE_DELIMITERS list(".", "!", "?")
+#define IN_WORD_DELIMITERS list("-")
+#define IN_SENTENCE_DELIMITERS list(",", ":")
+
+/*
+/obj/item/language_test_radio
+	icon = 'icons/obj/radio.dmi'
+	name = "UBER COOL DEVICE TO LONELY DEBUG WHAT THE XENO SCUM SAYS"
+	desc = "READ THE NAME"
+	suffix = "\[3\]"
+	icon_state = "walkietalkie"
+	item_state = "walkietalkie"
+
+/obj/item/language_test_radio/hear_talk(atom/source, message, verb, datum/language/speaking)
+	if(speaking)
+		visible_message("[bicon(src)] [speaking.format_message(speaking.scramble(message))]")
+	else
+		visible_message("[bicon(src)] pings.")
+*/
 
 /datum/language
 	var/name = "an unknown language" // Fluff name of language if any.
@@ -14,9 +37,14 @@
 	var/flags = 0                    // Various language flags.
 	var/native                       // If set, non-native speakers will have trouble speaking.
 	var/list/syllables               // Used when scrambling text for a non-speaker.
-	var/list/space_chance = 55 // Likelihood of getting a space in the random scramble string.
+
+	// These are used for random words generation. For example, for names.
+	var/syllables_in_word_min = 1
+	var/syllables_in_word_max = 5
+
 	var/list/allowed_species	 // A name of species, Which can use this lang as secondary.
 
+	var/list/mapped_syllables = list() // An assoc list in form of "syllable" = "this_language_syllable"
 
 /datum/language/proc/format_message(message, verb)
 	return "[verb], <span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
@@ -25,35 +53,86 @@
 	return "[verb], <span class='[colour]'>\"[capitalize(message)]\"</span>"
 
 /datum/language/proc/scramble(input)
-
 	if(!syllables || !syllables.len)
 		return stars(input)
 
-	var/input_size = length(input)
 	var/scrambled_text = ""
-	var/capitalize = 1
+	var/capitalize_next = TRUE
 
-	while(length(scrambled_text) < input_size)
-		var/next = pick(syllables)
-		if(capitalize)
-			next = capitalize(next)
-			capitalize = 0
-		scrambled_text += next
-		var/chance = rand(100)
-		if(chance <= 5)
-			scrambled_text += ". "
-			capitalize = 1
-		else if(chance > 5 && chance <= space_chance)
-			scrambled_text += " "
+	var/list/tokens = splittext(input, " ")
 
-	scrambled_text = trim(scrambled_text)
-	var/ending = copytext(scrambled_text, length(scrambled_text))
-	if(ending == ".")
-		scrambled_text = copytext(scrambled_text,1,length(scrambled_text)-1)
-	var/input_ending = copytext(input, input_size)
-	if(input_ending in list("!","?","."))
-		scrambled_text += input_ending
-	return scrambled_text
+	for(var/token in tokens)
+		var/list/word_delim_obj = get_word_for(token)
+		var/word = word_delim_obj["word"]
+		var/delimiters = word_delim_obj["delimeters"]
+
+		if(capitalize_next)
+			word = capitalize(word)
+			capitalize_next = FALSE
+
+		delim_loop:
+			for(var/i in 1 to length(delimiters))
+				var/delim = copytext(delimiters, i, i + 1)
+				if(delim in SENTENCE_DELIMITERS)
+					capitalize_next = TRUE
+					break delim_loop
+
+		scrambled_text += word + delimiters + " "
+
+	return trim(scrambled_text)
+
+/datum/language/proc/get_random_word()
+	var/output_word = ""
+	var/syllables_am = rand(syllables_in_word_min, syllables_in_word_max)
+
+	for(var/i in 1 to syllables_am)
+		output_word += pick(syllables)
+
+	return output_word
+
+/datum/language/proc/get_word_for(token)
+	var/output_word = ""
+	var/current_syllable = ""
+	var/list/word_syllables = list()
+	var/delimeters = ""
+
+	token = lowertext(token)
+
+	var/list/vowels_encountered = list()
+
+	for(var/i in 1 to length(token))
+		var/symbol = copytext(token, i, i + 1)
+		if(symbol in SENTENCE_DELIMITERS)
+			delimeters += symbol
+			continue
+		if(symbol in IN_SENTENCE_DELIMITERS)
+			delimeters += symbol
+			continue
+		if(symbol in IN_WORD_DELIMITERS)
+			word_syllables += symbol
+			continue
+		if(symbol in SYLLABLE_STOPPERS)
+			current_syllable += symbol
+			word_syllables += current_syllable
+			current_syllable = ""
+			continue
+		if((symbol in SYLLABLE_VOWELS) && !(symbol in vowels_encountered))
+			current_syllable += symbol
+
+	if(current_syllable != "")
+		word_syllables += current_syllable
+
+	for(var/syllable in word_syllables)
+		if(mapped_syllables[syllable])
+			output_word += mapped_syllables[syllable]
+			continue
+		if(syllable in IN_WORD_DELIMITERS) // Edge-case for "-"
+			output_word += syllable
+			continue
+		mapped_syllables[syllable] = pick(syllables)
+		output_word += mapped_syllables[syllable]
+
+	return list("word" = output_word, "delimeters" = delimeters)
 
 /datum/language/proc/get_spoken_verb(msg_end)
 	switch(msg_end)
@@ -72,7 +151,9 @@
 	colour = "soghun"
 	key = list("o", "ù")
 	allowed_species = list(IPC)
-	syllables = list("ss","ss","ss","ss","skak","seeki","resh","las","esi","kor","sh")
+	syllables = list("ss","ss","ss","skak","seeki","resh","las","esi","kor","rek","pes","sep","sov","sh")
+	syllables_in_word_min = 1
+	syllables_in_word_max = 7
 
 /datum/language/tajaran
 	name = "Siik'maas"
@@ -87,6 +168,8 @@
 	"mi","jri","dynh","manq","rhe","zar","rrhaz","kal","chur","eech","thaa","dra","jurl","mah","sanu","dra","ii'r", \
 	"ka","aasi","far","wa","baq","ara","qara","zir","sam","mak","hrar","nja","rir","khan","jun","dar","rik","kah", \
 	"hal","ket","jurl","mah","tul","cresh","azu","ragh")
+	syllables_in_word_min = 2
+	syllables_in_word_max = 5
 
 /datum/language/tajaran_sign
 	name = "Siik'tajr"
@@ -108,7 +191,9 @@
 	colour = "skrell"
 	key = list("k", "ë")
 	allowed_species = list(IPC)
-	syllables = list("qr","qrr","xuq","qil","quum","xuqm","vol","xrim","zaoo","qu-uu","qix","qoo","zix","*","!")
+	syllables = list("qr","qrr","xuq","qil","quum","xuqm","vol","xrim","zaoo","qu-uu","qix","qoo","qu","qua","qer","zix","*","!")
+	syllables_in_word_min = 3
+	syllables_in_word_max = 7
 
 /datum/language/vox
 	name = "Vox-pidgin"
@@ -121,6 +206,8 @@
 	flags = RESTRICTED
 	syllables = list("ti","ti","ti","hi","hi","ki","ki","ki","ki","ya","ta","ha","ka","ya","chi","cha","kah", \
 	"SKRE","AHK","EHK","RAWK","KRA","AAA","EEE","KI","II","KRI","KA")
+	syllables_in_word_min = 5
+	syllables_in_word_max = 10
 
 /datum/language/diona
 	name = "Rootspeak"
@@ -132,6 +219,8 @@
 	colour = "soghun"
 	key = list("q", "é")
 	syllables = list("hs","zt","kr","st","sh")
+	syllables_in_word_min = 1
+	syllables_in_word_max = 5
 
 /datum/language/diona_space
 	name = "Rootsong"
@@ -152,6 +241,8 @@
 	key = list("1")
 	allowed_species = list(IPC, DIONA, SKRELL, UNATHI, TAJARAN)
 	syllables = list("tao","shi","tzu","yi","com","be","is","i","op","vi","ed","lec","mo","cle","te","dis","e")
+	syllables_in_word_min = 2
+	syllables_in_word_max = 5
 
 /datum/language/ipc
 	name = "Trinary"
@@ -164,6 +255,8 @@
 	//need to find a way to resolve possesive macros
 	allowed_species = list(IPC)
 	syllables = list("000", "111", "222", "001", "010", "100", "002", "020", "200", "011", "101", "110", "022", "202", "220", "112", "121", "211", "122", "212", "221", "012", "021", "120", "210", "102", "201")
+	syllables_in_word_min = 1
+	syllables_in_word_max = 1
 
 // Galactic common languages (systemwide accepted standards).
 /datum/language/trader
@@ -181,6 +274,8 @@
 					 "voluptate", "velit", "esse", "cillum", "dolore", "eu", "fugiat", "nulla",
 					 "pariatur", "excepteur", "sint", "occaecat", "cupidatat", "non", "proident", "sunt",
 					 "in", "culpa", "qui", "officia", "deserunt", "mollit", "anim", "id", "est", "laborum")
+	syllables_in_word_min = 1
+	syllables_in_word_max = 1
 
 /datum/language/gutter
 	name = "Gutter"
@@ -190,6 +285,8 @@
 	key = list("3")
 	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN)
 	syllables = list ("gra","ba","ba","breh","bra","rah","dur","ra","ro","gro","go","ber","bar","geh","heh", "gra")
+	syllables_in_word_min = 3
+	syllables_in_word_max = 7
 
 // Language handling.
 /mob/proc/add_language(language)
@@ -229,3 +326,7 @@
 
 	src << browse(entity_ja(dat), "window=checklanguage")
 	return
+
+#undef SYLLABLE_STOPPERS
+#undef SENTENCE_DELIMETERS
+#undef IN_SENTENCE_DELIMITERS
