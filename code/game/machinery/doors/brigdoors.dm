@@ -35,7 +35,7 @@
 	var/prisoner_name = ""
 	var/prisoner_crimes = ""
 	var/prisoner_details = ""
-	var/obj/item/device/radio/intercom/radio // for /s announce by Saravan
+	var/obj/item/device/radio/intercom/radio // for /s announce
 
 
 	maptext_height = 26
