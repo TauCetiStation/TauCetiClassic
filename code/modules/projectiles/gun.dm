@@ -210,12 +210,12 @@
 				return
 
 			chambered.BB.on_hit(M)
-			if (chambered.BB.damage_type != HALLOSS)
-				user.apply_damage(chambered.BB.damage * 2.5, chambered.BB.damage_type, BP_HEAD, null, chambered.BB.damage_flags(), "Point blank shot in the mouth with \a [chambered.BB]")
-				user.death()
-			else
+			if(chambered.BB.damage_type == HALLOSS)
 				to_chat(user, "<span class = 'notice'>Ow...</span>")
 				user.apply_effect(110,AGONY,0)
+			else if(!chambered.BB.nodamage)
+				user.apply_damage(chambered.BB.damage * 2.5, chambered.BB.damage_type, BP_HEAD, null, chambered.BB.damage_flags(), "Point blank shot in the mouth with \a [chambered.BB]")
+				user.death()
 			chambered.BB = null
 			chambered.update_icon()
 			update_icon()
