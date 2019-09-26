@@ -13,14 +13,14 @@
 	hitsound = list('sound/weapons/bladeslice.ogg')
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 
-	__can_push = TRUE
-	__can_pull = TRUE
+	can_push = TRUE
+	can_pull = TRUE
 
 /obj/item/weapon/twohanded/spear/can_push()
-	return __can_push && wielded
+	return can_push && wielded
 
 /obj/item/weapon/twohanded/spear/can_pull()
-	return __can_pull && wielded
+	return can_pull && wielded
 
 /obj/item/weapon/twohanded/spear/on_sweep_push_success(atom/target, mob/user)
 	var/turf/T_target = get_turf(target)
@@ -86,8 +86,8 @@
 	var/status = 0
 	slot_flags = null
 
-	__can_push = TRUE
-	__can_pull = TRUE
+	can_push = TRUE
+	can_pull = TRUE
 
 /obj/item/weapon/melee/cattleprod/atom_init()
 	. = ..()

@@ -12,28 +12,28 @@
 	name = "weapon"
 	icon = 'icons/obj/weapons.dmi'
 
-	var/__interupt_on_sweep_hit_types = list(/atom) // By default we interupt on any hit.
+	var/interupt_on_sweep_hit_types = list(/atom) // By default we interupt on any hit.
 
-	var/__can_push = FALSE
+	var/can_push = FALSE
 	var/can_push_on_chair = FALSE
-	var/__can_pull = FALSE
+	var/can_pull = FALSE
 
-	var/__can_sweep = FALSE
-	var/__can_spin = FALSE
+	var/can_sweep = FALSE
+	var/can_spin = FALSE
 	var/spin_on_middleclick = FALSE
 	var/sweep_step = 4
 
 /obj/item/weapon/proc/can_push()
-	return __can_push
+	return can_push
 
 /obj/item/weapon/proc/can_pull()
-	return __can_pull
+	return can_pull
 
 /obj/item/weapon/proc/can_sweep()
-	return __can_sweep
+	return can_sweep
 
 /obj/item/weapon/proc/can_spin()
-	return __can_spin
+	return can_spin
 
 /obj/item/weapon/proc/on_sweep_move(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, mob/living/user)
 	user.face_atom(current_turf)
@@ -49,7 +49,7 @@
  * Return TRUE to call on_sweep_interupt, and stun the player or whatever.
  */
 /obj/item/weapon/proc/on_sweep_hit(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, atom/A, mob/living/user)
-	var/is_stunned = is_type_in_list(A, __interupt_on_sweep_hit_types)
+	var/is_stunned = is_type_in_list(A, interupt_on_sweep_hit_types)
 	if(is_stunned)
 		to_chat(user, "<span class='warning'>Your [src] has hit [A]! There's not enough space for broad sweeps here!</span>")
 
@@ -114,6 +114,7 @@
 		to_check += current_turf.contents
 		to_check += current_turf
 		to_check -= sweep_image
+		to_check.Remove(user)
 		// Get out of the way, fellows!
 		for(var/atom/A in to_check)
 			if(can_sweep_hit(A, user))

@@ -14,11 +14,11 @@
 
 	origin_tech = "combat=2"
 
-	__can_sweep = TRUE
-	__can_spin = TRUE
+	can_sweep = TRUE
+	can_spin = TRUE
 	spin_on_middleclick = TRUE
 	sweep_step = 2
-	__interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep)
+	interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep)
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='warning'><b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b></span>")

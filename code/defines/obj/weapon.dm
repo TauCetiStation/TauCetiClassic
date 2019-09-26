@@ -59,8 +59,8 @@
 	m_amt = 50
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
-	__can_push = TRUE
-	__can_pull = TRUE
+	can_push = TRUE
+	can_pull = TRUE
 
 /obj/item/weapon/cane/on_sweep_push_success(atom/target, mob/user)
 	var/turf/T_target = get_turf(target)
@@ -320,8 +320,8 @@
 	flags = NOSHIELD
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 
-	__can_push = TRUE
-	__can_pull = TRUE
+	can_push = TRUE
+	can_pull = TRUE
 
 /obj/item/weapon/staff/on_sweep_push_success(atom/target, mob/user)
 	var/turf/T_target = get_turf(target)
@@ -490,8 +490,8 @@
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")
 
-	__can_sweep = TRUE
-	__can_spin = TRUE
+	can_sweep = TRUE
+	can_spin = TRUE
 
 /obj/item/weapon/hatchet/attack(mob/living/carbon/M, mob/living/carbon/user)
 	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
@@ -520,9 +520,9 @@
 	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 
-	__can_sweep = TRUE
-	__can_spin = TRUE
-	__interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep)
+	can_sweep = TRUE
+	can_spin = TRUE
+	interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep)
 
 /obj/item/weapon/scythe/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
@@ -880,8 +880,8 @@
 	desc = "This broom is made with the branches and leaves of a tree which secretes aromatic oils."
 	icon_state = "broom_sauna"
 
-	__can_sweep = TRUE
-	__can_spin = TRUE
+	can_sweep = TRUE
+	can_spin = TRUE
 
 /obj/item/weapon/broom/attack(mob/living/carbon/human/M, mob/living/user, def_zone)
 	if(!istype(M) || user.a_intent == "hurt")

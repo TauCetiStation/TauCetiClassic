@@ -118,21 +118,21 @@
 	force_wielded = 40
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
-	__can_sweep = TRUE
-	__can_spin = TRUE
+	can_sweep = TRUE
+	can_spin = TRUE
 	spin_on_middleclick = TRUE
 	sweep_step = 5
-	__interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep)
+	interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep)
 
 /obj/item/weapon/twohanded/fireaxe/atom_init()
 	. = ..()
 	hitsound = SOUNDIN_DESCERATION
 
 /obj/item/weapon/twohanded/fireaxe/can_sweep()
-	return __can_sweep && wielded
+	return can_sweep && wielded
 
 /obj/item/weapon/twohanded/fireaxe/can_spin()
-	return __can_spin && wielded
+	return can_spin && wielded
 
 /obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
@@ -178,13 +178,13 @@
 	edge = 1
 	can_embed = 0
 
-	__can_spin = TRUE
+	can_spin = TRUE
 	spin_on_middleclick = TRUE
 	sweep_step = 2
-	__interupt_on_sweep_hit_types = list(/obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
+	interupt_on_sweep_hit_types = list(/obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
 
 /obj/item/weapon/twohanded/dualsaber/can_spin()
-	return __can_spin && wielded
+	return can_spin && wielded
 
 /obj/item/weapon/twohanded/dualsaber/sweep_spin(mob/user)
 	var/rot_dir = 1

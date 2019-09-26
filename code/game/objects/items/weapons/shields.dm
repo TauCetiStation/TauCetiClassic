@@ -2,11 +2,11 @@
 	name = "shield"
 	var/block_chance = 65
 
-	__can_sweep = TRUE
-	__interupt_on_sweep_hit_types = list(/turf, /obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
+	can_sweep = TRUE
+	interupt_on_sweep_hit_types = list(/turf, /obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
 
 /obj/item/weapon/shield/on_sweep_hit(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, atom/A, mob/living/user)
-	var/is_stunned = is_type_in_list(A, __interupt_on_sweep_hit_types)
+	var/is_stunned = is_type_in_list(A, interupt_on_sweep_hit_types)
 	if(is_stunned)
 		to_chat(user, "<span class='warning'>Your [src] has hit [A]! There's not enough space for broad sweeps here!</span>")
 

@@ -12,14 +12,14 @@
 	var/mopping = 0
 	var/mopcount = 0
 
-	__can_push = TRUE
+	can_push = TRUE
 	can_push_on_chair = TRUE
-	__can_pull = TRUE
+	can_pull = TRUE
 
-	__can_sweep = TRUE
-	__can_spin = TRUE
+	can_sweep = TRUE
+	can_spin = TRUE
 	sweep_step = 4
-	__interupt_on_sweep_hit_types = list(/atom)
+	interupt_on_sweep_hit_types = list(/atom)
 
 /obj/item/weapon/mop/atom_init()
 	create_reagents(5)

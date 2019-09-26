@@ -3,18 +3,18 @@
 	flags = NOBLOODY
 	can_embed = 0
 
-	__can_sweep = TRUE
-	__can_spin = TRUE
+	can_sweep = TRUE
+	can_spin = TRUE
 	spin_on_middleclick = TRUE
 	sweep_step = 2
 
-	__interupt_on_sweep_hit_types = list(/obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
+	interupt_on_sweep_hit_types = list(/obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
 
 /obj/item/weapon/melee/energy/can_sweep()
-	return __can_sweep && active
+	return can_sweep && active
 
 /obj/item/weapon/melee/energy/can_spin()
-	return __can_spin && active
+	return can_spin && active
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='warning'><b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b></span>", \
