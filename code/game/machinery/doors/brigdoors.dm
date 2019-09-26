@@ -33,9 +33,9 @@
 	var/timer_activator = ""	//Mob.name who activate timer
 	var/flag30sec = 0	//30 seconds notification flag
 	var/prisoner_name = ""
-	var/prisoner_crimes = "" // by Saravan
+	var/prisoner_crimes = ""
 	var/prisoner_details = ""
-	var/obj/item/device/radio/intercom/radio // for /s announce by Saravan
+	var/obj/item/device/radio/intercom/radio // for /s announce
 
 
 	maptext_height = 26
@@ -101,6 +101,10 @@
 	..()
 	update_icon()
 	return
+
+/obj/machinery/door_timer/Destroy()
+	QDEL_NULL(radio)
+	return ..()
 
 
 // open/closedoor checks if door_timer has power, if so it checks if the
