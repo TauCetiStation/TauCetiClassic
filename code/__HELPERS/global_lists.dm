@@ -86,6 +86,15 @@
 			global.chemical_reactions_list[id] += D
 			break // Don't bother adding ourselves to other reagent ids, it is redundant.
 
+	global.combat_combos = list()
+	for(var/path in subtypesof(/datum/combat_combo))
+		var/datum/combat_combo/CC = new path()
+		var/list/hashes = CC.get_hash()
+		for(var/hash in hashes)
+			if(global.combat_combos[hash])
+				world.log << "WARNING! [CC.name] IS CONFLICTING WITH [combat_combos[hash]]!"
+			global.combat_combos[hash] = CC
+
 	populate_gear_list()
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs

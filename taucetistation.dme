@@ -1369,6 +1369,7 @@
 #include "code\modules\mob\living\logout.dm"
 #include "code\modules\mob\living\say.dm"
 #include "code\modules\mob\living\status_procs.dm"
+#include "code\modules\mob\living\unarmed_combat.dm"
 #include "code\modules\mob\living\carbon\carbon.dm"
 #include "code\modules\mob\living\carbon\carbon_defines.dm"
 #include "code\modules\mob\living\carbon\give.dm"

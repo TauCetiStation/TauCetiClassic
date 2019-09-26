@@ -3,6 +3,8 @@
 	living_list += src
 
 /mob/living/Destroy()
+	QDEL_LIST(combos_performed)
+	QDEL_LIST(combos_saved)
 	living_list -= src
 	..()
 	return QDEL_HINT_HARDDEL_NOW

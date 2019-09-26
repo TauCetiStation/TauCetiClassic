@@ -16,6 +16,7 @@
 	update_gravity(mob_has_gravity())
 
 	handle_actions()
+	handle_combat()
 
 	if(client)
 		handle_regular_hud_updates()

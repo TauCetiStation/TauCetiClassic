@@ -64,6 +64,9 @@
 			if(dna && dna.mutantrace == "adamantine")
 				damage += 5
 
+			if(M.engage_combat(src, M.a_intent, damage)) // We did a combo-wombo of some sort.
+				return
+
 			playsound(src, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
 
 			visible_message("<span class='warning'><B>[M] has punched [src]!</B></span>")
@@ -79,9 +82,11 @@
 //			log_debug("No gloves, [M] is truing to infect [src]")
 			M.spread_disease_to(src, "Contact")
 
-
 	switch(M.a_intent)
-		if("help")
+		if(I_HELP)
+			if(M.disengage_combat(src)) // We were busy disengaging.
+				return 1
+
 			if(health > config.health_threshold_dead && health < config.health_threshold_crit)
 				INVOKE_ASYNC(src, .proc/perform_cpr, M)
 				return 1
@@ -92,11 +97,14 @@
 					help_shake_act(M)
 				return 1
 
-		if("grab")
+		if(I_GRAB)
+			if(M.engage_combat(src, I_GRAB, 0))
+				return
+
 			M.Grab(src)
 			return 1
 
-		if("hurt")
+		if(I_HURT)
 			M.do_attack_animation(src)
 			var/obj/item/organ/external/BPHand = M.bodyparts_by_name[M.hand ? BP_L_ARM : BP_R_ARM]
 			var/datum/unarmed_attack/attack = BPHand.species.unarmed
@@ -111,98 +119,51 @@
 				visible_message("<span class='warning'><B>[M] tried to [pick(attack.attack_verb)] [src]!</B></span>")
 				return 0
 
-
-
 			var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
 			var/armor_block = run_armor_check(BP, "melee")
 
 			if(HULK in M.mutations)			damage += 5
 
+			if(M.engage_combat(src, I_HURT, damage * 2)) // We did a combo-wombo of some sort.
+				return
+
 			if(length(attack.attack_sound))
 				playsound(src, pick(attack.attack_sound), VOL_EFFECTS_MASTER)
 
 			visible_message("<span class='warning'><B>[M] [pick(attack.attack_verb)]ed [src]!</B></span>")
-			//Rearranged, so claws don't increase weaken chance.
-			if(damage >= 5 && prob(50))
-				visible_message("<span class='warning'><B>[M] has weakened [src]!</B></span>")
-				apply_effect(2, WEAKEN, armor_block)
 
 			damage += attack.damage
 			apply_damage(damage, BRUTE, BP, armor_block, attack.damage_flags())
 
-
-		if("disarm")
+		if(I_DISARM)
 			M.do_attack_animation(src)
-			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
-			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
-
-			msg_admin_attack("[key_name(M)] disarmed [src.name] ([src.ckey])", M)
 
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)
-			var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
 
-			if(istype(r_hand,/obj/item/weapon/gun) || istype(l_hand,/obj/item/weapon/gun))
-				var/obj/item/weapon/gun/W = null
-				var/chance = 0
+			var/combo_value = 3
+			if(!anchored) // Just to be sure...
+				var/turf/to_move = get_step(src, get_dir(M, src))
+				step_away(src, get_turf(M))
+				if(loc != to_move)
+					combo_value *= 2
 
-				if (istype(l_hand,/obj/item/weapon/gun))
-					W = l_hand
-					chance = hand ? 40 : 20
-
-				if (istype(r_hand,/obj/item/weapon/gun))
-					W = r_hand
-					chance = !hand ? 40 : 20
-
-				if (prob(chance))
-					visible_message("<span class='danger'>[src]'s [W] goes off during struggle!</span>")
-					var/list/turfs = list()
-					for(var/turf/T in view())
-						turfs += T
-					var/turf/target = pick(turfs)
-					return W.afterattack(target,src)
-
-			var/randn = rand(1, 100)
-			if (randn <= 25)
-				var/armor_check = run_armor_check(BP, "melee")
-				apply_effect(3, WEAKEN, armor_check)
-				playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-				if(armor_check < 2)
-					visible_message("<span class='danger'>[M] has pushed [src]!</span>")
-				else
-					visible_message("<span class='warning'>[M] attempted to push [src]!</span>")
+			if(M.engage_combat(src, I_DISARM, combo_value)) // We did a combo-wombo of some sort.
 				return
 
-			var/talked = 0	// BubbleWrap
-
-			if(randn <= 60)
-				//BubbleWrap: Disarming breaks a pull
-				if(pulling)
-					visible_message("<span class='warning'><b>[M] has broken [src]'s grip on [pulling]!</B></span>")
-					talked = 1
-					stop_pulling()
-
+			if(pulling)
+				visible_message("<span class='warning'><b>[M] has broken [src]'s grip on [pulling]!</B></span>")
+				stop_pulling()
+			else
 				//BubbleWrap: Disarming also breaks a grab - this will also stop someone being choked, won't it?
 				for(var/obj/item/weapon/grab/G in GetGrabs())
 					if(G.affecting)
 						visible_message("<span class='warning'><b>[M] has broken [src]'s grip on [G.affecting]!</B></span>")
-						talked = 1
 					qdel(G)
 				//End BubbleWrap
 
-				if(!talked)	//BubbleWrap
-					if( (l_hand && l_hand.flags & ABSTRACT) || (r_hand && r_hand.flags & ABSTRACT) )
-						return
-					else
-						drop_item()
-						visible_message("<span class='warning'><B>[M] has disarmed [src]!</B></span>")
-				playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-				return
-
-
-			playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
-			visible_message("<span class='warning'><B>[M] attempted to disarm [src]!</B></span>")
-	return
+			playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
+			visible_message("<span class='warning'><B>[M] pushed [src]!</B></span>")
 
 /*
 	We want to ensure that a mob may only apply pressure to one bodypart of one mob at any given time. Currently this is done mostly implicitly through

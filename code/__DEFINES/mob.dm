@@ -40,6 +40,8 @@
 #define O_KIDNEYS  "kidneys"
 #define O_APPENDIX "appendix"
 
+#define TARGET_ZONE_ALL list(BP_CHEST, BP_GROIN, BP_HEAD, BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG, O_EYES, O_MOUTH)
+
 #define AGE_MIN 25			//youngest a character can be
 #define AGE_MAX 85			//oldest a character can be
 
