@@ -18,11 +18,29 @@
 /atom/MouseDrop(atom/over)
 	if(!usr || !over)
 		return
-	if(!Adjacent(usr) || !over.Adjacent(usr))
-		return // should stop you from dragging through windows
 
-	INVOKE_ASYNC(over, /atom.proc/MouseDrop_T, src, usr)
+	INVOKE_ASYNC(usr, /mob.proc/onMouseDrop, over, src)
 
 // recieve a mousedrop
 /atom/proc/MouseDrop_T(atom/dropping, mob/user)
 	return
+
+/mob/proc/canMouseDrop_T(atom/dropping, atom/target)
+	return target.Adjacent(src) && dropping.Adjacent(src)
+
+// Call the MouseDrop_T here if you must.
+/mob/proc/onMouseDrop(atom/target, atom/dropping)
+	if(!canMouseDrop_T(target, dropping))
+		return // should stop you from dragging through windows
+
+	INVOKE_ASYNC(target, /atom.proc/MouseDrop_T, dropping, src)
+
+/mob/living/onMouseDrop(atom/target, atom/dropping)
+	var/obj/item/I = get_active_hand()
+	if(I && I.onUserMouseDrop(target, dropping, src))
+		return
+
+	if(!canMouseDrop_T(target, dropping))
+		return // should stop you from dragging through windows
+
+	INVOKE_ASYNC(target, /atom.proc/MouseDrop_T, dropping, src)

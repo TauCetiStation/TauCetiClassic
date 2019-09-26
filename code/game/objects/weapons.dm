@@ -253,8 +253,8 @@
 
 	var/turf/T = get_turf(target)
 	var/direction = get_dir(get_turf(src), T)
-	var/list/turfs = list(turn(direction, 45), direction, turn(direction, -45))
-	sweep(turfs, user, sweep_step)
+	var/list/directions = list(turn(direction, 45), direction, turn(direction, -45))
+	sweep(directions, user, sweep_step)
 	return TRUE
 
 /obj/item/weapon/proc/sweep_spin(mob/user)
@@ -262,11 +262,11 @@
 	if(user.dir == SOUTH || user.dir == WEST) // South-west rotate anti-clockwise.
 		rot_dir = -1
 
-	var/list/turfs = list(user.dir, turn(user.dir, rot_dir * 45), turn(user.dir, rot_dir * 90), turn(user.dir, rot_dir * 135), turn(user.dir, rot_dir * 180), turn(user.dir, rot_dir * 225), turn(user.dir, rot_dir * 270), turn(user.dir, rot_dir * 315), user.dir)
+	var/list/directions = list(user.dir, turn(user.dir, rot_dir * 45), turn(user.dir, rot_dir * 90), turn(user.dir, rot_dir * 135), turn(user.dir, rot_dir * 180), turn(user.dir, rot_dir * 225), turn(user.dir, rot_dir * 270), turn(user.dir, rot_dir * 315), user.dir)
 
 	var/saved_sweep_step = sweep_step
 	sweep_step *= 0.5
-	sweep(turfs, user, sweep_step)
+	sweep(directions, user, sweep_step)
 	sweep_step = saved_sweep_step
 
 /obj/item/weapon/MiddleClickAction(atom/target, mob/user)
@@ -302,10 +302,33 @@
 			if(M.buckled)
 				M.buckled.user_unbuckle_mob(M)
 
-			M.apply_effect(3, STUN, 0)
-			M.apply_effect(3, WEAKEN, 0)
-			M.apply_effect(6, STUTTER, 0)
+			M.apply_effect(2, STUN, 0)
+			M.apply_effect(2, WEAKEN, 0)
+			M.apply_effect(4, STUTTER, 0)
 			shake_camera(M, 1, 1)
+
+/obj/item/weapon/onUserMouseDrop(atom/target, atom/dropping, mob/user)
+	var/turf/target_turf = get_turf(target)
+	var/turf/dropping_turf = get_turf(dropping)
+
+	var/list/turfs = getline(dropping_turf, target_turf)
+	var/list/directions = list()
+	for(var/turf/T in turfs)
+		if(!in_range(user, T))
+			if(get_dir(dropping, target) == get_dir(user, target))
+				if(can_push())
+					sweep_push(target, user)
+					return TRUE
+			else
+				if(can_pull())
+					sweep_pull(target, user)
+					return TRUE
+		directions += get_dir(user, T)
+
+	if(directions.len == 3 && can_sweep())
+		sweep(directions, user, sweep_step)
+		return TRUE
+	return FALSE
 
 /obj/item/weapon/throwing_star
 	name = "throwing star"

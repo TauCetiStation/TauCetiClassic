@@ -987,3 +987,7 @@ var/global/list/items_blood_overlay_by_type = list()
 		. |= DAM_SHARP
 		if(damtype == BURN)
 			. |= DAM_LASER
+
+// Return TRUE to prevent a MouseDrop_T call.
+/obj/item/proc/onUserMouseDrop(atom/target, atom/dropping, mob/user)
+	return FALSE

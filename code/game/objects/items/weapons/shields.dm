@@ -7,10 +7,17 @@
 	can_sweep = TRUE
 	interupt_on_sweep_hit_types = list(/turf, /obj/structure/table, /obj/machinery/disposal, /obj/structure/rack)
 
+	var/next_shield_push = 0
+
 /obj/item/weapon/shield/on_sweep_hit(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, atom/A, mob/living/user)
 	var/is_stunned = is_type_in_list(A, interupt_on_sweep_hit_types)
 	if(is_stunned)
 		to_chat(user, "<span class='warning'>Your [src] has hit [A]! There's not enough space for broad sweeps here!</span>")
+
+	if(user.a_intent != I_HELP)
+		var/resolved = A.attackby(src, user, list())
+		if(!resolved && src)
+			afterattack(A, user, TRUE, list()) // 1 indicates adjacency
 
 	if(isliving(A) && prob(Get_shield_chance())) // Better shields have more chance to stun.
 		var/mob/living/M = A
@@ -18,14 +25,10 @@
 		if(M.buckled)
 			M.buckled.user_unbuckle_mob(M)
 
-		M.apply_effect(3, STUN, 0)
-		M.apply_effect(3, WEAKEN, 0)
-		M.apply_effect(6, STUTTER, 0)
+		M.apply_effect(2, STUN, 0)
+		M.apply_effect(2, WEAKEN, 0)
+		M.apply_effect(4, STUTTER, 0)
 		shake_camera(M, 1, 1)
-
-	var/resolved = A.attackby(src, user, list())
-	if(!resolved && src)
-		afterattack(A, user, TRUE, list()) // 1 indicates adjacency
 
 	return is_stunned
 
@@ -42,9 +45,10 @@
 	else if(istype(target, /atom/movable))
 		var/atom/movable/AM = target
 		if(!AM.anchored)
-			var/old_loc = AM.loc
+			var/turf/to_move = get_step(target, get_dir(user, target))
 			step_away(target, get_turf(src))
-			if(old_loc == AM.loc && isliving(AM)) // We tried pushing them, but pushed them into something, IT'S FALLING DOWN TIME.
+			if(AM.loc != to_move && isliving(AM) && next_shield_push < world.time) // We tried pushing them, but pushed them into something, IT'S FALLING DOWN TIME.
+				next_shield_push = world.time + 4 SECONDS
 				var/mob/living/M = AM
 
 				user.attack_log += "\[[time_stamp()]\]<font color='red'>pushed [M.name] ([M.ckey]) with [src.name].</font>"
@@ -54,9 +58,9 @@
 				if(M.buckled)
 					M.buckled.user_unbuckle_mob(M)
 
-				M.apply_effect(3, STUN, 0)
-				M.apply_effect(3, WEAKEN, 0)
-				M.apply_effect(6, STUTTER, 0)
+				M.apply_effect(2, STUN, 0)
+				M.apply_effect(2, WEAKEN, 0)
+				M.apply_effect(4, STUTTER, 0)
 				shake_camera(M, 1, 1)
 
 /obj/item/weapon/shield/riot
