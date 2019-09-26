@@ -39,7 +39,7 @@
 	if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
 		for(var/bodypart_name in list(BP_L_ARM , BP_R_ARM))
 			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
-			if(!BP || (BP.status & ORGAN_DESTROYED))
+			if(!BP || (BP.is_stump))
 				tally += 6
 			else if(BP.status & ORGAN_SPLINTED)
 				tally += 0.8
@@ -70,7 +70,7 @@
 
 		for(var/bodypart_name in list(BP_L_LEG , BP_R_LEG))
 			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
-			if(!BP || (BP.status & ORGAN_DESTROYED))
+			if(!BP || (BP.is_stump))
 				tally += 6
 			else if(BP.status & ORGAN_SPLINTED)
 				tally += 0.8
@@ -88,6 +88,9 @@
 
 	if(bodytemperature < 283.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
+
+	if(get_species() == UNATHI && bodytemperature > species.body_temperature)
+		tally -= min((bodytemperature - species.body_temperature) / 10, 1) //will be on the border of heat_level_1
 
 	tally += max(2 * stance_damage, 0) //damaged/missing feet or legs is slow
 
@@ -112,4 +115,4 @@
 			. = 1
 
 /mob/living/carbon/human/mob_negates_gravity()
-	return shoes && shoes.negates_gravity()
+	return ((shoes && shoes.negates_gravity()) || (wear_suit && wear_suit.negates_gravity()))

@@ -187,7 +187,7 @@
 
 /obj/machinery/computer/telescience/proc/close_wormhole()
 	if(active_wormhole)
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 		qdel(active_wormhole)
 		active_wormhole = null
 
@@ -204,15 +204,15 @@
 		return
 
 	if(telepad)
-		var/truePower = Clamp(power + power_off, 1, 1000)
+		var/truePower = CLAMP(power + power_off, 1, 1000)
 		var/trueRotation = rotation + rotation_off
-		var/trueAngle = Clamp(angle + angle_off, 1, 90)
+		var/trueAngle = CLAMP(angle + angle_off, 1, 90)
 
 		var/datum/projectile_data/proj_data = projectile_trajectory(telepad.x, telepad.y, trueRotation, trueAngle, truePower)
 		last_tele_data = proj_data
 
-		var/trueX = Clamp(round(proj_data.dest_x, 1), 1, world.maxx)
-		var/trueY = Clamp(round(proj_data.dest_y, 1), 1, world.maxy)
+		var/trueX = CLAMP(round(proj_data.dest_x, 1), 1, world.maxx)
+		var/trueY = CLAMP(round(proj_data.dest_y, 1), 1, world.maxy)
 		var/spawn_time = round(proj_data.time) * 10
 
 		var/turf/target = locate(trueX, trueY, z_co)
@@ -239,7 +239,7 @@
 
 				// use a lot of power
 				use_power(power * 1500)
-				use_power = 2
+				set_power_use(ACTIVE_POWER_USE)
 
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, get_turf(telepad))
@@ -316,14 +316,14 @@
 		var/new_rot = input("Please input desired bearing in degrees.", name, rotation) as num
 		if(!..()) // Check after we input a value, as they could've moved after they entered something
 			return
-		rotation = Clamp(new_rot, -900, 900)
+		rotation = CLAMP(new_rot, -900, 900)
 		rotation = round(rotation, 0.01)
 
 	if(href_list["setangle"])
 		var/new_angle = input("Please input desired elevation in degrees.", name, angle) as num
 		if(!..())
 			return
-		angle = Clamp(round(new_angle, 0.1), 1, 9999)
+		angle = CLAMP(round(new_angle, 0.1), 1, 9999)
 
 	if(href_list["setpower"])
 		var/index = href_list["setpower"]
@@ -335,7 +335,7 @@
 		var/new_z = input("Please input desired sector.", name, z_co) as num
 		if(!..())
 			return
-		z_co = Clamp(round(new_z), 1, 10)
+		z_co = CLAMP(round(new_z), 1, 10)
 
 	if(href_list["ejectGPS"])
 		inserted_gps.loc = loc
@@ -367,7 +367,7 @@
 
 /obj/machinery/computer/telescience/proc/recalibrate()
 	if(telepad)
-		teles_left = Clamp(crystals.len * telepad.efficiency * 4 + rand(-5, 0), 0, 65)
+		teles_left = CLAMP(crystals.len * telepad.efficiency * 4 + rand(-5, 0), 0, 65)
 	else
 		teles_left = 0
 	angle_off = rand(-25, 25)

@@ -72,7 +72,7 @@
 	var/ratio = 0
 	if(power_supply.maxcharge)
 		ratio = power_supply.charge / power_supply.maxcharge
-		ratio = ceil(ratio * 4) * 25
+		ratio = CEIL(ratio * 4) * 25
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	switch(modifystate)
 		if (0)

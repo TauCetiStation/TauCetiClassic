@@ -212,7 +212,7 @@
 	data["seals"] =     "[src.offline]"
 	data["charge"] =       cell ? round(cell.charge,1) : 0
 	data["maxcharge"] =    cell ? cell.maxcharge : 0
-	data["chargestatus"] = cell ? Floor(cell.percent()/2) : 0
+	data["chargestatus"] = cell ? FLOOR(cell.percent()/2, 1) : 0
 
 	var/list/module_list = list()
 	var/i = 1
@@ -446,6 +446,10 @@
 		src.slowdown += boots.slowdown_off
 		magpulse = 1
 		to_chat(H, "You enable the mag-pulse traction system.")
+	H.update_gravity(H.mob_has_gravity())
+
+/obj/item/clothing/suit/space/rig/negates_gravity()
+	return flags & NOSLIP
 
 /obj/item/clothing/suit/space/rig/examine(mob/user)
 	..()
@@ -540,7 +544,7 @@
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
 	icon_state = "rig0-engineering"
 	item_state = "eng_helm"
-	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 80)
+	armor = list(melee = 50, bullet = 5, laser = 10,energy = 5, bomb = 65, bio = 100, rad = 80)
 	siemens_coefficient = 0
 
 /obj/item/clothing/suit/space/rig/engineering
@@ -549,7 +553,7 @@
 	icon_state = "rig-engineering"
 	item_state = "eng_hardsuit"
 	slowdown = 3
-	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 80)
+	armor = list(melee = 50, bullet = 5, laser = 10,energy = 5, bomb = 65, bio = 100, rad = 80)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
 	siemens_coefficient = 0
 	max_mounted_devices = 4
@@ -562,6 +566,7 @@
 	icon_state = "rig0-chief"
 	item_state = "ce_helm"
 	item_color = "chief"
+	armor = list(melee = 55, bullet = 5, laser = 15,energy = 10, bomb = 65, bio = 100, rad = 90)
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/suit/space/rig/engineering/chief
@@ -570,6 +575,7 @@
 	desc = "An advanced suit that protects against hazardous, low pressure environments. Shines with a high polish."
 	item_state = "ce_hardsuit"
 	slowdown = 1
+	armor = list(melee = 55, bullet = 5, laser = 15,energy = 10, bomb = 65, bio = 100, rad = 90)
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	max_mounted_devices = 6
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/rcd, /obj/item/rig_module/nuclear_generator, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit)
@@ -593,6 +599,23 @@
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/orescanner, /obj/item/rig_module/device/drill)
 
+//Red Faction mining rig
+/obj/item/clothing/head/helmet/space/rig/RF_mining
+	name = "Red mining helmet"
+	desc = "A special mining helmet designed for work in a hazardous, low pressure environment."
+	icon_state = "rig0-RedMiner"
+	item_state = "RedMiner_helm"
+	item_color = "RedMiner"
+	armor = list(melee = 40, bullet = 10, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 50)
+
+/obj/item/clothing/suit/space/rig/RF_mining
+	name = "Red mining hardsuit"
+	desc = "A special suit that protects against hazardous, has reinforced plating."
+	icon_state = "RedMiner"
+	item_state = "RedMiner"
+	item_color = "RedMiner"
+	armor = list(melee = 40, bullet = 11, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 50)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
 
 //Syndicate rig
 /obj/item/clothing/head/helmet/space/rig/syndi
@@ -733,12 +756,14 @@
 			can_breach = FALSE
 			flags_pressure &= ~STOPS_PRESSUREDMAGE
 			playsound(usr, 'sound/effects/air_release.ogg', VOL_EFFECTS_MASTER)
+			slowdown = 0
 			usr.visible_message("<span class='notice'>[usr]'s suit depressurizes, exposing armor plates.</span>")
 		else
 			canremove = TRUE
 			can_breach = TRUE
 			flags_pressure |= STOPS_PRESSUREDMAGE
 			playsound(usr, 'sound/effects/inflate.ogg', VOL_EFFECTS_MASTER, 30)
+			slowdown = 1.4
 			usr.visible_message("<span class='notice'>[usr]'s suit inflates and pressurizes.</span>")
 		update_icon(usr)
 
@@ -845,7 +870,7 @@
 	icon_state = "rig0-atmos"
 	item_state = "atmos_helm"
 	item_color = "atmos"
-	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 50)
+	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 65, bio = 100, rad = 50)
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/suit/space/rig/atmos
@@ -853,7 +878,7 @@
 	icon_state = "rig-atmos"
 	name = "atmos hardsuit"
 	item_state = "atmos_hardsuit"
-	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 50)
+	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 65, bio = 100, rad = 50)
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/metalfoam_spray)

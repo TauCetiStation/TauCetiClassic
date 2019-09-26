@@ -35,7 +35,7 @@
 
 /mob/camera/blob/proc/add_points(points)
 	if(points != 0)
-		blob_points = Clamp(blob_points + points, 0, max_blob_points)
+		blob_points = CLAMP(blob_points + points, 0, max_blob_points)
 /mob/camera/blob/say(var/message)
 	if (!message)
 		return

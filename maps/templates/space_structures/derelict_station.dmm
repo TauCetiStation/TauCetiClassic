@@ -149,8 +149,7 @@
 	},
 /obj/machinery/power/solar_control{
 	id = "derelictsolar";
-	name = "Primary Solar Control";
-	track = 0
+	name = "Primary Solar Control"
 	},
 /turf/simulated/floor,
 /area/derelict/solar_control)
@@ -199,8 +198,7 @@
 /area/derelict/solar_control)
 "aC" = (
 /obj/machinery/power/terminal{
-	dir = 1;
-	icon_state = "term"
+	dir = 1
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -849,15 +847,6 @@
 	icon_state = "damaged2"
 	},
 /area/derelict/singularity_engine)
-"ct" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/turf/simulated/floor,
-/area/derelict/bridge/access)
 "cu" = (
 /obj/machinery/door/window/eastleft{
 	name = "Heads of Staff";
@@ -892,8 +881,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -902,21 +890,11 @@
 	},
 /turf/simulated/floor,
 /area/derelict/bridge/access)
-"cA" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/turf/simulated/floor,
-/area/derelict/bridge/access)
 "cB" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/derelict/bridge/access)
@@ -927,20 +905,10 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/derelict/bridge/access)
-"cD" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/turf/simulated/floor,
-/area/derelict/bridge)
 "cE" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -976,8 +944,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/derelict/bridge)
@@ -1015,12 +982,10 @@
 "cO" = (
 /obj/item/weapon/shard,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/effect/decal/remains/human{
 	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
-	icon_state = "remains";
 	name = "Syndicate agent remains"
 	},
 /turf/simulated/floor/airless{
@@ -1137,7 +1102,6 @@
 /area/derelict/bridge)
 "dh" = (
 /obj/machinery/door/window{
-	dir = 2;
 	name = "Captain's Quarters";
 	req_access = list(20)
 	},
@@ -1254,8 +1218,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/airless,
 /area/derelict/bridge/access)
@@ -1263,8 +1226,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/airless,
 /area/derelict/bridge/access)
@@ -1323,15 +1285,6 @@
 	icon_state = "circuit"
 	},
 /area/derelict/singularity_engine)
-"dG" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/turf/simulated/floor/airless,
-/area/derelict/bridge/access)
 "dH" = (
 /turf/simulated/floor/plating/airless,
 /area/derelict/bridge/access)
@@ -1604,8 +1557,7 @@
 /area/derelict/singularity_engine)
 "ew" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/derelict/singularity_engine)
@@ -1789,8 +1741,7 @@
 "fe" = (
 /obj/item/weapon/shard,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/derelict/medical)
@@ -1857,15 +1808,6 @@
 	icon_state = "damaged4"
 	},
 /area/derelict/singularity_engine)
-"fr" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/turf/simulated/floor/plating/airless,
-/area/derelict/hallway/primary)
 "fs" = (
 /obj/structure/window/basic{
 	dir = 4
@@ -1893,8 +1835,7 @@
 /area/derelict/medical/chapel)
 "fw" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor/airless{
 	icon_state = "white"
@@ -1960,7 +1901,6 @@
 /area/derelict/arrival)
 "fH" = (
 /obj/machinery/door/morgue{
-	dir = 2;
 	name = "coffin storage";
 	req_access = list(22)
 	},
@@ -2059,8 +1999,7 @@
 /area/derelict/medical)
 "fV" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/derelict/medical)
@@ -2118,15 +2057,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/derelict/medical)
-"ge" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/turf/simulated/floor/airless,
-/area/derelict/hallway/primary)
 "gf" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor,
@@ -2190,8 +2120,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor/airless{
 	icon_state = "white"
@@ -2207,17 +2136,6 @@
 	icon_state = "white"
 	},
 /area/derelict/medical)
-"gp" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/turf/simulated/floor/airless{
-	icon_state = "white"
-	},
-/area/derelict/medical)
 "gq" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -2227,8 +2145,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/airless{
 	icon_state = "white"
@@ -2318,7 +2235,6 @@
 "gD" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	icon_state = "mass_driver";
 	id = "derelict_gun"
 	},
 /obj/machinery/door/window{
@@ -2348,8 +2264,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/simulated/floor/airless,
 /area/derelict/medical/chapel)
@@ -2411,15 +2326,13 @@
 /area/space)
 "gQ" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/derelict/arrival)
 "gR" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/derelict/arrival)
@@ -3253,8 +3166,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Worn-out APC";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/simulated/floor/airless,
 /area/derelict/hallway/secondary)
@@ -3487,8 +3399,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/wall/r_wall,
 /area/derelict/bridge/ai_upload)
@@ -3544,8 +3455,7 @@
 /area/derelict/bridge/ai_upload)
 "jV" = (
 /obj/machinery/power/terminal{
-	dir = 1;
-	icon_state = "term"
+	dir = 1
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -3564,8 +3474,7 @@
 /obj/structure/cable,
 /obj/machinery/power/solar_control{
 	id = "derelictsolar";
-	name = "Primary Solar Control";
-	track = 0
+	name = "Primary Solar Control"
 	},
 /turf/simulated/floor/airless,
 /area/derelict/bridge/ai_upload)
@@ -3578,8 +3487,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/simulated/floor/plating/airless,
 /area/derelict/bridge/ai_upload)
@@ -3641,7 +3549,6 @@
 "kg" = (
 /obj/effect/decal/remains/human{
 	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
-	icon_state = "remains";
 	name = "Syndicate agent remains"
 	},
 /turf/simulated/floor/airless,
@@ -5909,7 +5816,7 @@ fl
 fl
 fl
 fl
-gp
+go
 fl
 dV
 hl
@@ -6012,7 +5919,7 @@ fl
 fl
 fl
 fl
-gp
+go
 fl
 dV
 dY
@@ -8787,12 +8694,12 @@ aa
 ek
 ee
 ee
-fr
+ee
 dW
 dW
 fM
 fM
-ge
+gy
 gy
 gy
 hc
@@ -9188,7 +9095,7 @@ aa
 aY
 dn
 dw
-dG
+ds
 aZ
 dW
 ee
@@ -10211,9 +10118,9 @@ bC
 be
 bw
 cl
-ct
+be
 cz
-ct
+be
 be
 df
 ds
@@ -10315,7 +10222,7 @@ bb
 bb
 bA
 bb
-cA
+bg
 bb
 aY
 aY
@@ -10624,7 +10531,7 @@ bK
 bY
 bZ
 bZ
-cD
+cE
 bM
 cV
 dg
@@ -10727,7 +10634,7 @@ bL
 bZ
 bZ
 bZ
-cD
+cE
 bM
 cW
 dg

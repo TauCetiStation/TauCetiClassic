@@ -12,7 +12,7 @@
 
 /obj/structure/flora/attackby(obj/item/weapon/W, mob/user)
 	. = ..()
-	if(can_be_cut && is_sharp(W) && W.force >= damage_threshhold)
+	if(can_be_cut && W.is_sharp() && W.force >= damage_threshhold)
 		playsound(src, cutting_sound, VOL_EFFECTS_MASTER)
 		health_flora -= W.force
 		if(health_flora <= 0)

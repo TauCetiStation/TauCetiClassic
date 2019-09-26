@@ -745,3 +745,69 @@
 	else if(slot == SLOT_HEAD)
 		body_parts_covered = HEAD
 
+/obj/item/clothing/under/nt_pmc_uniform
+	name = "NT PCM Uniform"
+	desc = "Uniform used by the private security corporation."
+	icon_state = "nt_pmc_uniform"
+	item_state = "bl_suit"
+	item_color = "nt_pmc_uniform"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/under/nt_pmc_uniform_light
+	name = "NT PCM Light Uniform"
+	desc = "Uniform used by the private security corporation. This one without sleeves."
+	icon_state = "nt_pmc_uniform"
+	item_state = "bl_suit"
+	item_color = "nt_pmc_uniform_light"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/under/rank/postal_dude_shirt
+	name = "blue shirt"
+	desc = "A blue shirt with image of alien in front."
+	icon_state = "dude_shirt"
+	item_state = "b_suit"
+	item_color = "dude_shirt"
+
+/obj/item/clothing/under/sport
+	name = "white and black sport uniform"
+	desc = "No pain - no gain."
+	icon_state = "DDR_sport"
+	item_state = "gy_suit"
+	item_color = "DDR_sport"
+
+/obj/item/clothing/under/sport/blue
+	name = "blue sport uniform"
+	icon_state = "blue_sport"
+	item_state = "b_suit"
+	item_color = "blue_sport"
+
+/obj/item/clothing/under/sport/black
+	name = "black sport uniform"
+	icon_state = "black_sport"
+	item_state = "bl_suit"
+	item_color = "black_sport"
+
+/obj/item/clothing/under/M35_Jacket
+	name = "M35 Filde Jacket"
+	desc = "Standart wehrmacht field uniform."
+	icon_state = "M35_Filde_Jacket"
+	item_state = "g_suit"
+	item_color = "M35_Filde_Jacket"
+	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
+
+/obj/item/clothing/under/M35_Jacket_Oficer
+	name = "M35 Filde Oficer Jacket"
+	desc = "Werhmacht officer jacket uniform."
+	icon_state = "M35_Filde_Jacket_Officer"
+	item_state = "g_suit"
+	item_color = "M35_Filde_Jacket_Officer"
+	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
+
+/obj/item/clothing/under/Waffen_SS_Form
+	name = "Waffen SS Form"
+	desc = "A special uniform for the SS."
+	icon_state = "SS_Form"
+	item_state = "bl_suit"
+	item_color = "SS_Form"
+	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
+

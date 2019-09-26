@@ -203,7 +203,7 @@ var/global/loopModeNames=list(
 		update_icon()
 
 	if (href_list["song"])
-		current_song=Clamp(text2num(href_list["song"]), 1, playlist.len)
+		current_song=CLAMP(text2num(href_list["song"]), 1, playlist.len)
 		update_music()
 		update_icon()
 
@@ -352,6 +352,6 @@ var/global/loopModeNames=list(
 		"lobby" = "Lobby Mix"
 	)
 	playlist_id = "lobby"
-	use_power = 0
+	use_power = NO_POWER_USE
 	invisibility=101
 	autoplay = 1

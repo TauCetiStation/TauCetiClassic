@@ -219,7 +219,7 @@
 					var/mob/living/carbon/human/driver = mob.buckled
 					var/obj/item/organ/external/l_hand = driver.bodyparts_by_name[BP_L_ARM]
 					var/obj/item/organ/external/r_hand = driver.bodyparts_by_name[BP_R_ARM]
-					if((!l_hand || (l_hand.status & ORGAN_DESTROYED)) && (!r_hand || (r_hand.status & ORGAN_DESTROYED)))
+					if((!l_hand || (l_hand.is_stump)) && (!r_hand || (r_hand.is_stump)))
 						return // No hands to drive your chair? Tough luck!
 				move_delay += 2
 				return mob.buckled.relaymove(mob,direct)
@@ -416,7 +416,7 @@
 
 /mob/living/carbon/human/slip(weaken_duration, obj/slipped_on, lube)
 	if(!(lube & GALOSHES_DONT_HELP))
-		if(shoes && (shoes.flags & NOSLIP))
+		if((shoes && (shoes.flags & NOSLIP)) || (wear_suit && (wear_suit.flags & NOSLIP)))
 			return FALSE
 	return ..()
 

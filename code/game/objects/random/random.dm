@@ -32,4 +32,4 @@
 /obj/randomcatcher/proc/get_item(type)
 	new type(src)
 	if(length(contents))
-		. = pick(contents)
+		return pick(contents)

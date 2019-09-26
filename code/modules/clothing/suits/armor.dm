@@ -93,7 +93,7 @@
 	item_state = "swat_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	slowdown = 1
-	armor = list(melee = 70, bullet = 10, laser = 5, energy = 10, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 80, bullet = 10, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 
 /obj/item/clothing/suit/armor/bulletproof
@@ -302,9 +302,18 @@
 	item_state = "assaultarmor"
 	flags = THICKMATERIAL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	slowdown = 0.5
 	armor = list(melee = 50, bullet = 60, laser = 40, energy = 70, bomb = 50, bio = 0, rad = 50)
 	siemens_coefficient = 0.2
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+
+/obj/item/clothing/suit/armor/m66_kevlarvest
+	name = "M66 Tactical Vest"
+	desc = "Black tactical kevlar vest, used by private security coropation. So tactics."
+	icon_state = "M66_KevlarVest"
+	item_state = "armor"
+	item_color = "M66_KevlarVest"
+	blood_overlay_type = "armor"
+	armor = list(melee = 60, bullet = 80, laser = 40, energy = 50, bomb = 25, bio = 0, rad = 0)
+	siemens_coefficient = 0.7

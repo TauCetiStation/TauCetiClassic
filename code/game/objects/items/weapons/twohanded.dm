@@ -110,7 +110,6 @@
 	name = "fire axe"
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	force = 5
-	hitsound = SOUNDIN_DESCERATION
 	sharp = 1
 	edge = 1
 	w_class = ITEM_SIZE_LARGE
@@ -124,6 +123,10 @@
 	spin_on_middleclick = TRUE
 	sweep_step = 5
 	__interupt_on_sweep_hit_types = list(/turf, /obj/machinery/disposal, /obj/structure/table, /obj/structure/rack, /obj/effect/effect/weapon_sweep)
+
+/obj/item/weapon/twohanded/fireaxe/atom_init()
+	. = ..()
+	hitsound = SOUNDIN_DESCERATION
 
 /obj/item/weapon/twohanded/fireaxe/can_sweep()
 	return __can_sweep && wielded

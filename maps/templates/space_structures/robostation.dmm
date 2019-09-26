@@ -5,8 +5,7 @@
 "ab" = (
 /obj/structure/lattice,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/space,
 /area/space)
@@ -338,10 +337,6 @@
 /area/robostatoin)
 "bp" = (
 /obj/structure/barricade/wooden,
-/turf/simulated/floor/plating,
-/area/robostatoin)
-"bq" = (
-/obj/structure/janitorialcart,
 /turf/simulated/floor/plating,
 /area/robostatoin)
 "br" = (
@@ -1331,7 +1326,7 @@ ae
 ad
 ae
 ae
-bq
+ar
 bv
 ae
 aa

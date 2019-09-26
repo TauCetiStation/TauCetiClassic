@@ -93,7 +93,7 @@
 		if(!(user.a_intent == "hurt"))
 			user.attack_log += "\[[time_stamp()]\]<font color='red'> attempted to stun [H.name] ([H.ckey]) with [src.name]</font>"
 			H.attack_log += "\[[time_stamp()]\]<font color='orange'> stunned by [user.name] ([user.ckey]) with [src.name]</font>"
-			msg_admin_attack("[key_name(user)] attempted to stun [key_name(H)] with [src.name]")
+			msg_admin_attack("[key_name(user)] attempted to stun [key_name(H)] with [src.name]", user)
 
 		playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 		if(charges < 1)
@@ -121,7 +121,7 @@
 				H.visible_message("<span class='danger'>[src], thrown by [foundmob.name], strikes [H]!</span>")
 
 				H.attack_log += "\[[time_stamp()]\]<font color='orange'> Hit by thrown [src.name] last touched by ([src.fingerprintslast])</font>"
-				msg_admin_attack("Flying [src.name], last touched by ([src.fingerprintslast]) hit [key_name(H)]" )
+				msg_admin_attack("Flying [src.name], last touched by ([src.fingerprintslast]) hit [key_name(H)]", H)
 
 /obj/item/weapon/melee/baton/emp_act(severity)
 	switch(severity)

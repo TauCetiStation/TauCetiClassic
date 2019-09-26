@@ -126,7 +126,7 @@
 				qdel(G)
 				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Has placed [GM.name] ([GM.ckey]) in disposals.</font>"
 				GM.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [usr.name] ([usr.ckey])</font>"
-				msg_admin_attack("[usr.name] ([usr.ckey]) placed [GM.name] ([GM.ckey]) in a disposals unit. [ADMIN_JMP(usr)]")
+				msg_admin_attack("[usr.name] ([usr.ckey]) placed [GM.name] ([GM.ckey]) in a disposals unit.", usr)
 		return
 
 
@@ -134,7 +134,7 @@
 		for(var/mob/holdermob in I.contents)
 			usr.attack_log += "\[[time_stamp()]\] <font color='red'>Has placed [holdermob.name] ([holdermob.ckey]) in disposals.</font>"
 			holdermob.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [usr.name] ([usr.ckey])</font>"
-			msg_admin_attack("[usr.name] ([usr.ckey]) placed [holdermob.name] ([holdermob.ckey]) in a disposals unit [ADMIN_JMP(usr)]")
+			msg_admin_attack("[usr.name] ([usr.ckey]) placed [holdermob.name] ([holdermob.ckey]) in a disposals unit", usr)
 
 	if(!I || !I.canremove || I.flags & NODROP)
 		return
@@ -186,7 +186,7 @@
 
 		user.attack_log += "\[[time_stamp()]\] <font color='red'>Has placed [target.name] ([target.ckey]) in disposals.</font>"
 		target.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>"
-		msg_admin_attack("[user.name] ([user.ckey]) placed [target.name] ([target.ckey]) in a disposals unit. [ADMIN_JMP(usr)]")
+		msg_admin_attack("[user.name] ([user.ckey]) placed [target.name] ([target.ckey]) in a disposals unit.", usr)
 	else
 		return
 
@@ -390,7 +390,6 @@
 // timed process
 // charge the gas reservoir and perform flush if ready
 /obj/machinery/disposal/process()
-	use_power = 0
 	if(stat & BROKEN)			// nothing can happen if broken
 		return
 
@@ -413,13 +412,10 @@
 	if(stat & NOPOWER)			// won't charge if no power
 		return
 
-	use_power = 1
-
 	if(mode != 1)		// if off or ready, no need to charge
 		return
 
 	// otherwise charge
-	use_power = 2
 
 	var/atom/L = loc						// recharging from loc turf
 
@@ -438,6 +434,7 @@
 	// if full enough, switch to ready mode
 	if(air_contents.return_pressure() >= SEND_PRESSURE)
 		mode = 2
+		set_power_use(IDLE_POWER_USE)
 		update()
 	return
 
@@ -478,6 +475,7 @@
 	flush = 0
 	if(mode == 2)	// if was ready,
 		mode = 1	// switch to charging
+		set_power_use(ACTIVE_POWER_USE)
 	update()
 	return
 

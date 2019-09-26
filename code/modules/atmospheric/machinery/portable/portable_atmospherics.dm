@@ -1,7 +1,7 @@
 
 /obj/machinery/portable_atmospherics
 	name = "atmoalter"
-	use_power = 0
+	use_power = NO_POWER_USE
 	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/datum/gas_mixture/air_contents
@@ -186,4 +186,4 @@
 		else
 			gases = gas
 	log_admin("[usr] ([usr.ckey]) opened '[src.name]' containing [gases].")
-	message_admins("[usr] ([usr.ckey]) opened '[src.name]' containing [gases].")
+	message_admins("[usr] ([usr.ckey]) opened '[src.name]' containing [gases]. [ADMIN_JMP(src)]")

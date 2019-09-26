@@ -7,7 +7,7 @@
 	opacity = 1
 	density = 1
 	layer = DOOR_LAYER
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	var/base_layer = DOOR_LAYER
 	var/icon_state_open  = "door0"
 	var/icon_state_close = "door1"

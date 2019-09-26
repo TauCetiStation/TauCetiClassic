@@ -127,7 +127,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	var/blood_max = 0
 	var/list/do_spray = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.status & ORGAN_ROBOT)
+		if(BP.is_robotic())
 			continue
 
 		var/open_wound
@@ -152,7 +152,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 						blood_max += W.damage / 40
 
 		if(BP.status & ORGAN_ARTERY_CUT)
-			var/bleed_amount = Floor((vessel.total_volume / (BP.applied_pressure ? 400 : 250)) * BP.arterial_bleed_severity)
+			var/bleed_amount = FLOOR((vessel.total_volume / (BP.applied_pressure ? 400 : 250)) * BP.arterial_bleed_severity, 1)
 			if(bleed_amount)
 				if(open_wound)
 					blood_max += bleed_amount
@@ -183,7 +183,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			visible_message("<span class='danger'>Blood squirts from [pick(do_spray)]!</span>")
 		next_blood_squirt = world.time + 50
 		var/turf/sprayloc = get_turf(src)
-		blood_max -= drip(ceil(blood_max / 3), sprayloc)
+		blood_max -= drip(CEIL(blood_max / 3), sprayloc)
 		if(blood_max > 0)
 			blood_max -= blood_squirt(blood_max, sprayloc)
 			if(blood_max > 0)
@@ -264,7 +264,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		return
 
 	var/spraydir = pick(alldirs)
-	amt = ceil(amt / BLOOD_SPRAY_DISTANCE)
+	amt = CEIL(amt / BLOOD_SPRAY_DISTANCE)
 	var/bled = 0
 
 	var/turf/old_sprayloc = sprayloc

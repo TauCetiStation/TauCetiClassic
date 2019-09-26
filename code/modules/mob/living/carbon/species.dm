@@ -18,6 +18,7 @@
 	var/burn_mod = 1                                     // Burn damage multiplier.
 	var/oxy_mod = 1                                      // Oxyloss multiplier.
 	var/tox_mod = 1                                      // Toxloss multiplier.
+	var/clone_mod = 1                                    // Cloneloss multiplier
 	var/brain_mod = 1                                    // Brainloss multiplier.
 	var/speed_mod =  0                                   // How fast or slow specific specie.
 	var/siemens_coefficient = 1                          // How conductive is the specie.
@@ -116,6 +117,13 @@
 
 	var/has_gendered_icons = TRUE // if TRUE = use icon_state with _f or _m for respective gender (see get_icon() external organ proc).
 
+	var/list/survival_kit_items = list(/obj/item/clothing/mask/breath,
+	                                   /obj/item/weapon/tank/emergency_oxygen,
+	                                   /obj/item/weapon/reagent_containers/hypospray/autoinjector
+	                                   )
+
+	var/list/prevent_survival_kit_items = list()
+
 /datum/species/New()
 	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
@@ -123,7 +131,12 @@
 	if(!has_organ[O_HEART])
 		flags[NO_BLOOD] = TRUE // this status also uncaps vital body parts damage, since such species otherwise will be very hard to kill.
 
-/datum/species/proc/create_organs(mob/living/carbon/human/H) //Handles creation of mob organs.
+/datum/species/proc/create_organs(mob/living/carbon/human/H, deleteOld = FALSE) //Handles creation of mob organs.
+	if(deleteOld)
+		for(var/obj/item/organ/external/BP in H.bodyparts)
+			qdel(BP)
+		for(var/obj/item/organ/internal/IO in H.organs)
+			qdel(IO)
 
 	for(var/type in has_bodypart)
 		var/path = has_bodypart[type]
@@ -134,10 +147,6 @@
 		new path(null, H)
 
 	if(flags[IS_SYNTHETIC])
-		for(var/obj/item/organ/external/BP in H.bodyparts)
-			if(BP.status & (ORGAN_CUT_AWAY | ORGAN_DESTROYED))
-				continue
-			BP.status |= ORGAN_ROBOT
 		for(var/obj/item/organ/internal/IO in H.organs)
 			IO.mechanize()
 
@@ -170,11 +179,24 @@
 	return
 
 /datum/species/proc/after_job_equip(mob/living/carbon/human/H, datum/job/J)
-	var/obj/item/weapon/storage/box/SK
-	if(J.title in list("Shaft Miner", "Chief Engineer", "Station Engineer", "Atmospheric Technician"))
-		SK = new /obj/item/weapon/storage/box/engineer(H)
-	else
-		SK = new /obj/item/weapon/storage/box/survival(H)
+	var/obj/item/weapon/storage/box/survival/SK = new(H)
+
+	species_survival_kit_items:
+		for(var/type in survival_kit_items)
+			/*
+			is_type_in_list only work on instantinated objects.
+			*/
+			for(var/type_to_check in J.prevent_survival_kit_items) // So engineers don't spawn with two oxy tanks.
+				if(ispath(type, type_to_check))
+					continue species_survival_kit_items
+			new type(SK)
+
+	job_survival_kit_items:
+		for(var/type in J.survival_kit_items)
+			for(var/type_to_check in prevent_survival_kit_items) // So IPCs don't spawn with oxy tanks from engi kits
+				if(ispath(type, type_to_check))
+					continue job_survival_kit_items
+			new type(SK)
 
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(SK, SLOT_R_HAND)
@@ -206,7 +228,7 @@
 	icobase = 'icons/mob/human_races/r_lizard.dmi'
 	deform = 'icons/mob/human_races/r_def_lizard.dmi'
 	language = "Sinta'unathi"
-	tail = "sogtail"
+	tail = "unathi"
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_MEAT | DIET_DAIRY
 	primitive = /mob/living/carbon/monkey/unathi
@@ -243,13 +265,19 @@
 /datum/species/unathi/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_unathi_digest(M)
 
+/datum/species/unathi/on_gain(mob/living/M)
+	M.verbs += /mob/living/carbon/human/proc/air_sample
+
+/datum/species/unathi/on_loose(mob/living/M)
+	M.verbs -= /mob/living/carbon/human/proc/air_sample
+
 /datum/species/tajaran
 	name = TAJARAN
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_def_tajaran.dmi'
 	language = "Siik'maas"
 	additional_languages = list("Siik'tajr")
-	tail = "tajtail"
+	tail = "tajaran"
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
 	taste_sensitivity = TASTE_SENSITIVITY_SHARP
@@ -439,7 +467,7 @@
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
 	flesh_color = "#808d11"
-	tail = "armalis_tail"
+	tail = "vox_armalis"
 	icon_template = 'icons/mob/human_races/r_armalis.dmi'
 
 	sprite_sheets = list(
@@ -516,6 +544,12 @@
 
 	has_gendered_icons = FALSE
 
+	survival_kit_items = list(/obj/item/device/flashlight/flare,
+	                          /obj/item/device/plant_analyzer
+	                          )
+
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
+
 /datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
@@ -540,12 +574,6 @@
 		H.adjustBruteLoss(-(light_amount))
 		H.adjustToxLoss(-(light_amount))
 		H.adjustOxyLoss(-(light_amount))
-
-/datum/species/diona/after_job_equip(mob/living/carbon/human/H, datum/job/J)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/diona_survival(H), SLOT_R_HAND)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/diona_survival(H), SLOT_IN_BACKPACK)
 
 /datum/species/diona/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_diona_digest(M)
@@ -610,13 +638,13 @@
 	)
 
 	has_bodypart = list(
-		 BP_CHEST  = /obj/item/organ/external/chest
-		,BP_GROIN  = /obj/item/organ/external/groin
-		,BP_HEAD   = /obj/item/organ/external/head/ipc
-		,BP_L_ARM  = /obj/item/organ/external/l_arm
-		,BP_R_ARM  = /obj/item/organ/external/r_arm
-		,BP_L_LEG  = /obj/item/organ/external/l_leg
-		,BP_R_LEG  = /obj/item/organ/external/r_leg
+		 BP_CHEST  = /obj/item/organ/external/chest/robot/ipc
+		,BP_GROIN  = /obj/item/organ/external/groin/robot/ipc
+		,BP_HEAD   = /obj/item/organ/external/head/robot/ipc
+		,BP_L_ARM  = /obj/item/organ/external/l_arm/robot/ipc
+		,BP_R_ARM  = /obj/item/organ/external/r_arm/robot/ipc
+		,BP_L_LEG  = /obj/item/organ/external/l_leg/robot/ipc
+		,BP_R_LEG  = /obj/item/organ/external/r_leg/robot/ipc
 		)
 
 	has_organ = list(
@@ -631,11 +659,11 @@
 	blood_datum_path = /datum/dirt_cover/oil
 	flesh_color = "#575757"
 
-/datum/species/machine/after_job_equip(mob/living/carbon/human/H, datum/job/J)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ipc_survival(H), SLOT_R_HAND)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ipc_survival(H), SLOT_IN_BACKPACK)
+	survival_kit_items = list(/obj/item/weapon/stock_parts/cell/crap,
+	                          /obj/item/device/robotanalyzer
+	                          )
+
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
 
 /datum/species/abductor
 	name = ABDUCTOR
@@ -669,8 +697,11 @@
 	icobase = 'icons/mob/human_races/r_skeleton.dmi'
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
 	damage_mask = FALSE
-	dietflags = 0
+	dietflags = DIET_ALL
 
+	oxy_mod = 0
+	tox_mod = 0
+	clone_mod = 0
 	siemens_coefficient = 0
 
 	butcher_drops = list()
@@ -681,7 +712,27 @@
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
+	,NO_BLOOD_TRAILS = TRUE
+	,NO_PAIN = TRUE
+	,RAD_IMMUNE = TRUE
+	,NO_EMBED = TRUE
+	,NO_MINORCUTS = TRUE
 	)
+
+	has_bodypart = list(
+		 BP_CHEST  = /obj/item/organ/external/chest/skeleton
+		,BP_GROIN  = /obj/item/organ/external/groin/skeleton
+		,BP_HEAD   = /obj/item/organ/external/head/skeleton
+		,BP_L_ARM  = /obj/item/organ/external/l_arm/skeleton
+		,BP_R_ARM  = /obj/item/organ/external/r_arm/skeleton
+		,BP_L_LEG  = /obj/item/organ/external/l_leg/skeleton
+		,BP_R_LEG  = /obj/item/organ/external/r_leg/skeleton
+		)
+
+	has_organ = list(
+		 O_BRAIN   = /obj/item/organ/internal/brain
+		,O_EYES    = /obj/item/organ/internal/eyes
+		)
 
 /datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -696,10 +747,13 @@
 /datum/unarmed_attack
 	var/attack_verb = list("attack")	// Empty hand hurt intent verb.
 	var/damage = 0						// Extra empty hand attack damage.
-	var/list/attack_sound = SOUNDIN_PUNCH
 	var/miss_sound = 'sound/weapons/punchmiss.ogg'
 	var/sharp = 0
 	var/edge = 0
+	var/list/attack_sound
+
+/datum/unarmed_attack/New()
+	attack_sound = SOUNDIN_PUNCH
 
 /datum/unarmed_attack/proc/damage_flags()
 	return (sharp ? DAM_SHARP : 0) | (edge ? DAM_EDGE : 0)
@@ -713,15 +767,19 @@
 
 /datum/unarmed_attack/slime_glomp
 	attack_verb = list("glomp")
+
+/datum/unarmed_attack/slime_glomp/New()
 	attack_sound = list('sound/effects/attackblob.ogg')
 
 /datum/unarmed_attack/claws
 	attack_verb = list("scratch", "claw")
-	attack_sound = list('sound/weapons/slice.ogg')
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	damage = 5
 	sharp = 1
 	edge = 1
+
+/datum/unarmed_attack/claws/New()
+	attack_sound = list('sound/weapons/slice.ogg')
 
 /datum/unarmed_attack/claws/armalis
 	attack_verb = list("slash", "claw")
@@ -930,7 +988,7 @@
 	burn_mod = 1.2
 	speed_mod = -0.8
 
-	tail = "zombie_tajtail"
+	tail = "tajaran_zombie"
 
 	flesh_color = "#afa59e"
 	base_color = "#000000"
@@ -966,7 +1024,7 @@
 	burn_mod = 0.90
 	speed_mod = -0.2
 
-	tail = "zombie_sogtail"
+	tail = "unathi_zombie"
 
 	flesh_color = "#34af10"
 	base_color = "#000000"

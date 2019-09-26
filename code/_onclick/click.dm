@@ -79,11 +79,10 @@
 		return
 
 	face_atom(A) // change direction to face what you clicked on
-
 	if(next_move > world.time) // in the year 2000...
 		return
 
-	if(istype(loc,/obj/mecha))
+	if(istype(loc, /obj/mecha))
 		if(!locate(/turf) in list(A, A.loc)) // Prevents inventory from being drilled
 			return
 		var/obj/mecha/M = loc
@@ -97,17 +96,13 @@
 		throw_item(A)
 		return
 
-	if(!istype(A,/obj/item/weapon/gun) && !isturf(A) && !istype(A,/obj/screen))
+	if(!istype(A, /obj/item/weapon/gun) && !isturf(A) && !istype(A, /obj/screen))
 		last_target_click = world.time
 
 	var/obj/item/W = get_active_hand()
-
 	if(W == A)
 		W.attack_self(src)
-		if(hand)
-			update_inv_l_hand()
-		else
-			update_inv_r_hand()
+		W.update_inv_mob()
 		return
 
 	// operate two STORAGE levels deep here (item in backpack in src; NOT item in box in backpack in src)
@@ -116,8 +111,7 @@
 
 		// No adjacency needed
 		if(W)
-
-			var/resolved = A.attackby(W,src,params)
+			var/resolved = A.attackby(W, src, params)
 			if(!resolved && A && W)
 				W.afterattack(A, src, 1, params) // 1 indicates adjacency
 		else

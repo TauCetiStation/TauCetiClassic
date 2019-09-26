@@ -486,7 +486,7 @@
 	},
 /area/ai_monitored/storage/eva)
 "aaK" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /obj/machinery/status_display{
 	layer = 4;
 	pixel_x = 32
@@ -3185,6 +3185,42 @@
 	icon_state = "warningline"
 	},
 /area/rnd/xenobiology)
+"aeX" = (
+/obj/structure/object_wall/mining{
+	icon_state = "5-2"
+	},
+/turf/space,
+/area/shuttle/mining/station)
+"aeY" = (
+/obj/structure/object_wall/mining{
+	icon_state = "5-3"
+	},
+/turf/space,
+/area/shuttle/mining/station)
+"aeZ" = (
+/obj/structure/window/reinforced/shuttle/mining{
+	icon_state = "5-4"
+	},
+/turf/space,
+/area/shuttle/mining/station)
+"afa" = (
+/obj/machinery/door/unpowered/shuttle/wagon,
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "5-5"
+	},
+/area/shuttle/mining/station)
+"afb" = (
+/obj/structure/window/reinforced/shuttle/mining{
+	icon_state = "5-6"
+	},
+/turf/space,
+/area/shuttle/mining/station)
+"afc" = (
+/obj/structure/object_wall/mining{
+	icon_state = "5-7"
+	},
+/turf/space,
+/area/shuttle/mining/station)
 "afd" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -3197,6 +3233,23 @@
 	icon_state = "warning"
 	},
 /area/engine/engineering)
+"afe" = (
+/obj/structure/object_wall/mining{
+	icon_state = "5-8"
+	},
+/turf/space,
+/area/shuttle/mining/station)
+"aff" = (
+/obj/structure/object_wall/mining{
+	icon_state = "5-9"
+	},
+/turf/space,
+/area/shuttle/mining/station)
+"afg" = (
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "2-7"
+	},
+/area/shuttle/mining/station)
 "afh" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -3333,10 +3386,10 @@
 /turf/simulated/floor/plating,
 /area/maintenance/eva)
 "agX" = (
-/obj/machinery/door/unpowered/shuttle/mining,
-/turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+/obj/structure/object_wall/mining{
+	icon_state = "5-1"
 	},
+/turf/space,
 /area/shuttle/mining/station)
 "aha" = (
 /obj/structure/table,
@@ -3633,7 +3686,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -4000,8 +4053,7 @@
 /area/medical/chemistry)
 "arF" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/structure/lattice,
 /turf/space,
@@ -4116,8 +4168,7 @@
 /area/rnd/telesci)
 "atn" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r9"
+	icon_state = "4-1"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -4556,9 +4607,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "aBk" = (
 /obj/structure/flora/plant/random,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -4624,14 +4673,7 @@
 /area/medical/hallway)
 "aBX" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r10"
-	},
-/obj/structure/shuttle/engine/propulsion/burst/new_shuttle{
-	density = 0;
-	dir = 8;
-	icon_state = "ming_left";
-	opacity = 0
+	icon_state = "4-9"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -6978,8 +7020,7 @@
 	dir = 8
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
@@ -7779,12 +7820,9 @@
 	},
 /area/security/brig)
 "bCJ" = (
-/obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_l3"
-	},
+/obj/machinery/light,
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+	icon_state = "4-7"
 	},
 /area/shuttle/mining/station)
 "bDN" = (
@@ -7795,7 +7833,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/eva)
 "bDP" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -10400,8 +10438,7 @@
 /area/ai_monitored/storage/eva)
 "cvK" = (
 /obj/structure/object_wall/mining{
-	dir = 4;
-	icon_state = "ming_l4"
+	icon_state = "1-7"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -10458,8 +10495,7 @@
 	dir = 4
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "small"
@@ -10494,7 +10530,7 @@
 	},
 /area/rnd/telesci)
 "cxi" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -10841,9 +10877,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "cCr" = (
 /obj/structure/flora/junglebush/b,
 /obj/machinery/alarm{
@@ -11449,18 +11483,10 @@
 	},
 /area/rnd/hallway)
 "cNf" = (
-/obj/structure/object_wall/mining{
-	density = 0;
-	dir = 8;
-	icon_state = "window_frame";
-	name = "window frame";
-	opacity = 0
-	},
-/obj/structure/grille,
 /obj/structure/window/reinforced/shuttle/mining{
-	icon_state = "rwindow0"
+	icon_state = "1-4,6"
 	},
-/turf/simulated/shuttle/plating,
+/turf/space,
 /area/shuttle/mining/station)
 "cNr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -12509,8 +12535,7 @@
 /area/maintenance/science)
 "dcz" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
@@ -14631,9 +14656,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "dOM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -14880,8 +14903,7 @@
 /area/atmos)
 "dSZ" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -15695,9 +15717,8 @@
 "ego" = (
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/sigi,
-/obj/item/ammo_box/magazine/m9mmr_2,
-/obj/item/ammo_box/magazine/m9mmr_2,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -15730,9 +15751,8 @@
 /obj/structure/closet/secure_closet/security,
 /obj/machinery/light,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/sigi,
-/obj/item/ammo_box/magazine/m9mmr_2,
-/obj/item/ammo_box/magazine/m9mmr_2,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -16555,12 +16575,12 @@
 	},
 /area/hallway/primary/central)
 "evh" = (
-/obj/structure/shuttle/window/new_shuttle{
-	dir = 1;
-	icon_state = "ming2_window_w"
+/obj/machinery/light{
+	dir = 1
 	},
-/obj/structure/grille,
-/turf/simulated/shuttle/plating,
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "2-4,5,6"
+	},
 /area/shuttle/mining/station)
 "evk" = (
 /obj/machinery/porta_turret/station_default,
@@ -19970,7 +19990,7 @@
 	},
 /area/crew_quarters/bar)
 "fzm" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -20888,7 +20908,7 @@
 /turf/simulated/floor,
 /area/storage/tools)
 "fOG" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -22045,9 +22065,11 @@
 	},
 /area/quartermaster/office)
 "ghk" = (
-/obj/structure/ore_box,
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+	icon_state = "3-7"
 	},
 /area/shuttle/mining/station)
 "ghK" = (
@@ -22476,11 +22498,11 @@
 /turf/simulated/floor/plating/airless,
 /area/quartermaster/recycler)
 "gqq" = (
-/obj/structure/shuttle/window/new_shuttle{
-	icon_state = "ming2_window_w"
+/obj/structure/object_wall/mining{
+	icon_state = "2-8";
+	opacity = 0
 	},
-/obj/structure/grille,
-/turf/simulated/shuttle/plating,
+/turf/space,
 /area/shuttle/mining/station)
 "gqz" = (
 /obj/structure/table,
@@ -24001,9 +24023,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "gQJ" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -24156,9 +24176,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "gTs" = (
 /obj/machinery/pdapainter,
 /obj/machinery/keycard_auth{
@@ -24181,8 +24199,7 @@
 /area/engine/chiefs_office)
 "gTP" = (
 /obj/structure/object_wall/mining{
-	dir = 4;
-	icon_state = "ming_l2"
+	icon_state = "2-9"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -24396,9 +24413,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "gVY" = (
 /obj/structure/table,
 /obj/item/weapon/circular_saw{
@@ -24710,12 +24725,11 @@
 /turf/space,
 /area/space)
 "hcd" = (
-/obj/machinery/light{
-	dir = 8
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
 	},
-/obj/structure/closet/crate,
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+	icon_state = "3-3"
 	},
 /area/shuttle/mining/station)
 "hcq" = (
@@ -25121,8 +25135,7 @@
 /area/hallway/secondary/entry)
 "hhJ" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/structure/lattice,
 /turf/space,
@@ -25912,13 +25925,18 @@
 /area/quartermaster/miningoffice)
 "hvw" = (
 /obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/machinery/vending/wallmed2{
 	pixel_y = 32
 	},
+/obj/item/weapon/storage/box/masks{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/weapon/storage/box/gloves,
+/obj/item/weapon/reagent_containers/spray/cleaner,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "greenfull"
@@ -26098,11 +26116,13 @@
 /turf/simulated/floor/plating,
 /area/quartermaster/recycleroffice)
 "hyL" = (
-/obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r5"
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
 	},
-/turf/space,
+/obj/machinery/light,
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "4-3"
+	},
 /area/shuttle/mining/station)
 "hyO" = (
 /obj/structure/table,
@@ -28423,8 +28443,7 @@
 /area/rnd/hallway)
 "iqQ" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
@@ -28736,13 +28755,11 @@
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "iuU" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming2_r2"
+	icon_state = "2-2";
+	opacity = 0
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -30067,11 +30084,10 @@
 	},
 /area/maintenance/bridge)
 "iSH" = (
-/obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r3"
+/obj/structure/closet/mining,
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "3-2"
 	},
-/turf/space,
 /area/shuttle/mining/station)
 "iSJ" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -30694,8 +30710,7 @@
 /area/crew_quarters/security)
 "jfx" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -31198,9 +31213,7 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "jni" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -31343,9 +31356,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "jqb" = (
 /obj/machinery/door/poddoor{
 	id = "mixvent";
@@ -31455,12 +31466,10 @@
 	},
 /area/crew_quarters)
 "jsz" = (
-/obj/structure/shuttle/window/new_shuttle{
-	dir = 8;
-	icon_state = "ming2_window_w"
+/obj/structure/window/reinforced/shuttle/mining{
+	icon_state = "3-9"
 	},
-/obj/structure/grille,
-/turf/simulated/shuttle/plating,
+/turf/space,
 /area/shuttle/mining/station)
 "jtc" = (
 /obj/structure/disposalpipe/trunk{
@@ -31642,9 +31651,7 @@
 /area/medical/sleeper)
 "jwz" = (
 /turf/simulated/wall,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "jxa" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -32330,9 +32337,7 @@
 "jHE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "jHF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/stool,
@@ -34167,11 +34172,9 @@
 /turf/simulated/floor,
 /area/ai_monitored/storage/eva)
 "kkh" = (
-/obj/structure/object_wall/mining{
-	dir = 4;
-	icon_state = "ming_l1"
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "4-4,6"
 	},
-/turf/space,
 /area/shuttle/mining/station)
 "kli" = (
 /obj/machinery/door/airlock/maintenance{
@@ -34216,9 +34219,7 @@
 "klN" = (
 /obj/machinery/mech_bay_recharge_port,
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "klT" = (
 /obj/structure/table,
 /obj/item/weapon/hand_labeler,
@@ -34845,9 +34846,11 @@
 	},
 /area/engine/equip)
 "kwN" = (
-/obj/structure/closet/emcloset,
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+	icon_state = "2-3"
 	},
 /area/shuttle/mining/station)
 "kwP" = (
@@ -34858,10 +34861,10 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/gun/projectile/sigi,
-/obj/item/weapon/gun/projectile/sigi,
-/obj/item/weapon/gun/projectile/sigi,
-/obj/item/weapon/gun/projectile/sigi,
+/obj/item/weapon/gun/projectile/wjpp,
+/obj/item/weapon/gun/projectile/wjpp,
+/obj/item/weapon/gun/projectile/wjpp,
+/obj/item/weapon/gun/projectile/wjpp,
 /obj/structure/window/reinforced,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
@@ -37824,7 +37827,7 @@
 /obj/machinery/camera{
 	c_tag = "Dorm West"
 	},
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -38614,8 +38617,7 @@
 	name = "Head of Security RC";
 	pixel_y = 30
 	},
-/obj/item/weapon/gun/projectile/sigi,
-/obj/item/ammo_box/magazine/m9mmr_2,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/clothing/mask/gas/sechailer,
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -38710,8 +38712,7 @@
 /area/turret_protected/aisat_interior)
 "lIT" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
@@ -38724,9 +38725,7 @@
 "lJc" = (
 /obj/structure/computerframe,
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "lJe" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -38834,7 +38833,7 @@
 	dir = 1
 	},
 /obj/machinery/light,
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "escape"
 	},
@@ -38998,8 +38997,8 @@
 /area/lawoffice)
 "lNh" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming2_r4"
+	icon_state = "4-2";
+	opacity = 0
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -40161,8 +40160,7 @@
 	dir = 8
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
@@ -40290,8 +40288,7 @@
 /area/toxins/brainstorm_center)
 "mgu" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/caution/cone,
 /turf/simulated/floor/plating/airless{
@@ -41325,18 +41322,9 @@
 /turf/simulated/floor/plating,
 /area/maintenance/eva)
 "mwo" = (
-/obj/structure/object_wall/mining{
-	density = 0;
-	dir = 4;
-	icon_state = "window_frame";
-	name = "window frame";
-	opacity = 0
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "4-5"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/shuttle/mining{
-	icon_state = "rwindow0"
-	},
-/turf/simulated/shuttle/plating,
 /area/shuttle/mining/station)
 "mwL" = (
 /obj/effect/decal/cleanable/blood/drip,
@@ -42259,9 +42247,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "mNG" = (
 /obj/structure/sink{
 	dir = 4;
@@ -43068,14 +43054,7 @@
 /area/engine/break_room)
 "naJ" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r7"
-	},
-/obj/structure/shuttle/engine/propulsion/burst/new_shuttle{
-	density = 0;
-	dir = 8;
-	icon_state = "ming_left";
-	opacity = 0
+	icon_state = "2-1"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -43116,9 +43095,8 @@
 	},
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/sigi,
-/obj/item/ammo_box/magazine/m9mmr_2,
-/obj/item/ammo_box/magazine/m9mmr_2,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -43523,9 +43501,10 @@
 /turf/simulated/floor/carpet,
 /area/chapel/main)
 "nib" = (
-/turf/simulated/shuttle/wall/newes_shuttle/mining{
-	icon_state = "ming2_wall"
+/obj/structure/object_wall/mining{
+	icon_state = "1-3"
 	},
+/turf/space,
 /area/shuttle/mining/station)
 "nic" = (
 /obj/structure/stool,
@@ -43876,9 +43855,8 @@
 	dir = 1
 	},
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/sigi,
-/obj/item/ammo_box/magazine/m9mmr_2,
-/obj/item/ammo_box/magazine/m9mmr_2,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/device/radio/intercom{
 	pixel_y = 25
 	},
@@ -44201,8 +44179,7 @@
 /area/security/vacantoffice)
 "nth" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/scrap_lump,
 /turf/simulated/floor{
@@ -44373,14 +44350,15 @@
 /area/rnd/telesci)
 "nxZ" = (
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+	icon_state = "3-4,5,6"
 	},
 /area/shuttle/mining/station)
 "nyd" = (
-/turf/simulated/shuttle/wall/newes_shuttle/mining{
-	dir = 1;
-	icon_state = "ming2_wall"
+/obj/structure/object_wall/mining{
+	icon_state = "4-8";
+	opacity = 0
 	},
+/turf/space,
 /area/shuttle/mining/station)
 "nyp" = (
 /obj/machinery/firealarm{
@@ -44868,9 +44846,8 @@
 	},
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/sigi,
-/obj/item/ammo_box/magazine/m9mmr_2,
-/obj/item/ammo_box/magazine/m9mmr_2,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -46313,8 +46290,7 @@
 	dir = 4
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -46995,9 +46971,7 @@
 /turf/simulated/floor{
 	icon_state = "damaged1"
 	},
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "oqc" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -47535,8 +47509,7 @@
 /area/maintenance/chapel)
 "oBS" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard,
 /obj/item/weapon/shard{
@@ -48803,9 +48776,7 @@
 	req_access = list(23)
 	},
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "oXO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -49266,7 +49237,7 @@
 	},
 /area/toxins/server)
 "pfH" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor/wood,
 /area/bridge/meeting_room)
 "pfQ" = (
@@ -49493,9 +49464,7 @@
 "pmk" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "pml" = (
 /obj/item/toy/cards,
 /obj/structure/table,
@@ -50249,8 +50218,7 @@
 	dir = 8
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "small"
@@ -50805,10 +50773,9 @@
 "pHQ" = (
 /obj/structure/closet/secure_closet/warden,
 /obj/item/clothing/mask/gas/sechailer,
-/obj/item/weapon/gun/projectile/sigi,
-/obj/item/ammo_box/magazine/m9mmr_2,
-/obj/item/ammo_box/magazine/m9mmr_2,
-/obj/item/ammo_box/magazine/m9mmr_2,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Sergeant APC";
@@ -52230,8 +52197,7 @@
 "qdp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -52548,7 +52514,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "qjw" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitegreenfull"
@@ -52944,12 +52910,6 @@
 	},
 /area/maintenance/chapel)
 "qow" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/masks{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/weapon/storage/box/gloves,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -52963,6 +52923,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/structure/closet/crate/freezer,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
@@ -52990,8 +52951,7 @@
 	pixel_x = -12
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
@@ -53453,8 +53413,7 @@
 /area/maintenance/chapel)
 "qwM" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard,
 /turf/simulated/floor/plating,
@@ -54825,7 +54784,7 @@
 	},
 /area/chapel/office)
 "qUo" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -55874,8 +55833,7 @@
 	dir = 4
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -56390,9 +56348,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "rxF" = (
 /obj/structure/window/reinforced,
 /obj/machinery/camera{
@@ -57630,8 +57586,7 @@
 	dir = 1
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -57880,8 +57835,7 @@
 "rXq" = (
 /obj/structure/lattice,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/stack/rods,
 /turf/space,
@@ -57904,7 +57858,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/medbay)
 "rYL" = (
-/obj/machinery/vending/cola,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -57944,6 +57898,7 @@
 /obj/machinery/camera{
 	c_tag = "Theater Closet"
 	},
+/obj/item/weapon/reagent_containers/spray/watergun,
 /turf/simulated/floor/wood,
 /area/crew_quarters/theater)
 "rZk" = (
@@ -58827,8 +58782,7 @@
 /area/ai_monitored/storage/eva)
 "smT" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r6"
+	icon_state = "1-1"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -61018,8 +60972,7 @@
 /area/crew_quarters)
 "sYC" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken4"
@@ -61087,9 +61040,8 @@
 /turf/simulated/floor,
 /area/ai_monitored/storage/eva)
 "sZw" = (
-/obj/structure/stool/bed/chair/schair,
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
+	icon_state = "2-4,5,6"
 	},
 /area/shuttle/mining/station)
 "sZH" = (
@@ -61582,8 +61534,7 @@
 /area/medical/hallway/outbranch)
 "tgW" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/wood,
 /area/maintenance/eva)
@@ -63085,9 +63036,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "tFx" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
@@ -64234,7 +64183,6 @@
 "tWZ" = (
 /obj/structure/safe,
 /obj/item/clothing/under/color/yellow,
-/obj/item/key,
 /obj/item/toy/katana,
 /turf/simulated/floor{
 	dir = 8;
@@ -65291,8 +65239,7 @@
 /area/toxins/brainstorm_center)
 "upf" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/stack/rods,
 /obj/structure/lattice,
@@ -66854,12 +66801,10 @@
 	},
 /area/maintenance/science)
 "uOh" = (
-/obj/structure/stool/bed/chair/schair{
-	dir = 4
+/obj/structure/object_wall/mining{
+	icon_state = "1-5"
 	},
-/turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
-	},
+/turf/space,
 /area/shuttle/mining/station)
 "uOt" = (
 /obj/machinery/power/solar_control{
@@ -66948,11 +66893,9 @@
 /area/supply/station)
 "uQg" = (
 /obj/structure/object_wall/mining{
-	icon_state = "ming_l3"
+	icon_state = "1-8"
 	},
-/turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
-	},
+/turf/space,
 /area/shuttle/mining/station)
 "uQk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -67909,8 +67852,7 @@
 /area/engine/engineering)
 "vhw" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /mob/living/simple_animal/mouse,
 /turf/simulated/floor/plating,
@@ -68706,8 +68648,7 @@
 /area/atmos)
 "vvC" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/bridge)
@@ -68972,8 +68913,7 @@
 "vzw" = (
 /obj/structure/window/reinforced,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -69956,8 +69896,7 @@
 "vKB" = (
 /obj/structure/lattice,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/space,
 /area/space)
@@ -70149,15 +70088,10 @@
 	name = "Food Court Maintenance"
 	})
 "vNW" = (
-/obj/machinery/light{
-	dir = 4
+/obj/structure/object_wall/mining{
+	icon_state = "1-9"
 	},
-/obj/machinery/computer/mine_sci_shuttle/flight_comp{
-	dir = 8
-	},
-/turf/simulated/shuttle/floor/mining{
-	icon_state = "ming2_floor"
-	},
+/turf/space,
 /area/shuttle/mining/station)
 "vOc" = (
 /turf/simulated/floor/plating,
@@ -71057,8 +70991,7 @@
 /area/crew_quarters/gym)
 "waO" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken3"
@@ -71794,8 +71727,7 @@
 /area/crew_quarters/captain)
 "wnr" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/eva)
@@ -72703,9 +72635,7 @@
 /turf/simulated/floor{
 	icon_state = "floorscorched1"
 	},
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "wJc" = (
 /turf/space,
 /area/vox_station/northwest_solars)
@@ -72877,8 +72807,7 @@
 /area/tcommsat/chamber)
 "wMe" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r1"
+	icon_state = "1-2"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -73406,8 +73335,7 @@
 "wVH" = (
 /obj/item/weapon/scrap_lump,
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/stack/rods,
 /obj/structure/window/reinforced{
@@ -73542,9 +73470,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "wXH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -73927,8 +73853,7 @@
 /area/rnd/mixing)
 "xcX" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/science)
@@ -73952,8 +73877,7 @@
 	dir = 1
 	},
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -74026,7 +73950,7 @@
 	},
 /area/maintenance/science)
 "xeL" = (
-/obj/machinery/vending/snack,
+/obj/random/vending/snack,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -74576,9 +74500,7 @@
 /area/maintenance/science)
 "xoB" = (
 /turf/simulated/floor/mech_bay_recharge_floor,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "xoC" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 8
@@ -75367,8 +75289,7 @@
 /area/rnd/mixing)
 "xCd" = (
 /obj/structure/object_wall/mining{
-	dir = 8;
-	icon_state = "ming_r8"
+	icon_state = "3-1"
 	},
 /turf/space,
 /area/shuttle/mining/station)
@@ -76822,9 +76743,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/storage/tech{
-	name = "North Technical Storage"
-	})
+/area/storage/tech/north)
 "ybI" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/folder,
@@ -77077,7 +76996,6 @@
 /turf/simulated/floor/plating,
 /area/maintenance/auxsolarstarboard)
 "yhA" = (
-/obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = 7;
 	pixel_y = 1
@@ -77271,10 +77189,12 @@
 /turf/simulated/floor/wood,
 /area/crew_quarters/dormthree)
 "ylV" = (
-/obj/structure/object_wall/mining{
-	icon_state = "ming_l4"
+/obj/machinery/computer/mine_sci_shuttle/flight_comp{
+	dir = 8
 	},
-/turf/space,
+/turf/simulated/shuttle/floor/mining{
+	icon_state = "3-8"
+	},
 /area/shuttle/mining/station)
 "ylX" = (
 /obj/machinery/door/firedoor,
@@ -91543,7 +91463,7 @@ smT
 naJ
 xCd
 atn
-aBX
+agX
 smh
 smh
 smh
@@ -91800,7 +91720,7 @@ wMe
 iuU
 iSH
 lNh
-hyL
+aeX
 smh
 qJH
 vpM
@@ -92056,8 +91976,8 @@ kHU
 nib
 kwN
 hcd
-ghk
-nyd
+hyL
+aeY
 smh
 qJH
 vpM
@@ -92313,8 +92233,8 @@ kHU
 cNf
 sZw
 nxZ
-nxZ
-mwo
+kkh
+aeZ
 smh
 xHd
 rIG
@@ -92567,11 +92487,11 @@ pcn
 kHU
 kHU
 kHU
-nib
-sZw
+uOh
+evh
 nxZ
-nxZ
-agX
+mwo
+afa
 ouY
 qJH
 wjC
@@ -92827,8 +92747,8 @@ kHU
 cNf
 sZw
 nxZ
-nxZ
-mwo
+kkh
+afb
 cZY
 vBU
 yeh
@@ -93082,10 +93002,10 @@ plf
 plf
 kHU
 cvK
-uQg
-uOh
+afg
+ghk
 bCJ
-ylV
+afc
 wqE
 iFh
 pgt
@@ -93338,11 +93258,11 @@ plf
 plf
 plf
 kHU
-kHU
+uQg
 gqq
-vNW
-evh
-kHU
+ylV
+nyd
+afe
 wqE
 wrF
 oCz
@@ -93595,11 +93515,11 @@ plf
 plf
 plf
 kHU
-kHU
+vNW
 gTP
 jsz
-kkh
-kHU
+aBX
+aff
 wqE
 smh
 wco

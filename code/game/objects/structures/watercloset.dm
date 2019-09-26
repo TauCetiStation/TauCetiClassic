@@ -286,7 +286,7 @@
 	icon_state = "shower"
 	density = 0
 	anchored = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	var/on = 0
 	var/obj/effect/mist/mymist = null
 	var/ismist = 0				//needs a var so we can make it linger~
@@ -497,7 +497,7 @@
 				var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
 				var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
 				var/no_legs = FALSE
-				if((!l_foot || (l_foot && (l_foot.status & ORGAN_DESTROYED))) && (!r_foot || (r_foot && (r_foot.status & ORGAN_DESTROYED))))
+				if((!l_foot || (l_foot && (l_foot.is_stump))) && (!r_foot || (r_foot && (r_foot.is_stump))))
 					no_legs = TRUE
 				if(!no_legs)
 					H.feet_blood_DNA = null

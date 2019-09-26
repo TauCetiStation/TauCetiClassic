@@ -47,6 +47,10 @@
 
 	var/list/restricted_species = list()
 
+	var/list/survival_kit_items = list()
+
+	var/list/prevent_survival_kit_items = list()
+
 /datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	return TRUE
 

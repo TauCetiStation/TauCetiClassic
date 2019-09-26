@@ -116,7 +116,7 @@
 		M.Weaken(5)
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
-		msg_admin_attack("[key_name(user)] attacked [key_name(user)] with [src.name] (INTENT: [uppertext(user.a_intent)])")
+		msg_admin_attack("[key_name(user)] attacked [key_name(user)] with [src.name] (INTENT: [uppertext(user.a_intent)])", user)
 		src.add_fingerprint(user)
 
 		for(var/mob/O in viewers(M))
@@ -241,11 +241,22 @@
 			var/mob/living/carbon/human/H = target
 			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 			user.do_attack_animation(H)
-			H.adjustHalLoss(25)
+
+			if(H.wear_suit)
+				var/obj/item/clothing/suit/S = H.wear_suit
+				var/meleearm = S.armor["melee"]
+				if(meleearm)
+					if(meleearm != 100)
+						H.adjustHalLoss(round(35 - (35 / 100 * meleearm)))
+				else
+					H.adjustHalLoss(35)
+			else
+				H.adjustHalLoss(35)
+
 			H.visible_message("<span class='warning'>[user] harmless hit [H] with a telebaton.</span>")
 			user.attack_log += "\[[time_stamp()]\]<font color='red'>harmless hit [H.name] ([H.ckey]) with [src.name].</font>"
 			H.attack_log += "\[[time_stamp()]\]<font color='orange'>harmless hited [user.name] ([user.ckey]) with [src.name].</font>"
-			msg_admin_attack("[key_name(user)] harmless hit [key_name(H)] with [src.name].")
+			msg_admin_attack("[key_name(user)] harmless hit [key_name(H)] with [src.name].", user)
 			return
 		if(..())
 			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
