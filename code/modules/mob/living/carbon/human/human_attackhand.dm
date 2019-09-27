@@ -16,6 +16,7 @@
 	var/retFlags = attack.damage_flags()
 	var/retVerb = pick(attack.attack_verb)
 	var/retSound = null
+	var/retMissSound = attack.miss_sound
 
 	if(length(attack.attack_sound))
 		retSound = pick(attack.attack_sound)
@@ -23,7 +24,8 @@
 	if(HULK in mutations)
 		retDam += 5
 
-	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound)
+	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound,
+				"miss_sound" = retMissSound)
 
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/attacker)
 	// COPYPASTE, somewhat unavoidable atm.

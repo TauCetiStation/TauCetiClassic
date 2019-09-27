@@ -18,9 +18,8 @@
 	health = 40
 
 	harm_intent_damage = 8
-	melee_damage_lower = 10
-	melee_damage_upper = 20
-	attacktext = "bites"
+	melee_damage = 15
+	attacktext = "gnaw"
 	attack_sound = list('sound/weapons/bite.ogg')
 
 	// Space carp aren't affected by atmos.
@@ -48,8 +47,7 @@
 		carp_randomify()
 
 /mob/living/simple_animal/hostile/carp/proc/carp_randomify()
-	melee_damage_lower = rand(0.8 * initial(melee_damage_lower), initial(melee_damage_lower))
-	melee_damage_upper = rand(initial(melee_damage_upper), (1.2 * initial(melee_damage_upper)))
+	melee_damage = rand(0.8 * initial(melee_damage), 1.2 * initial(melee_damage))
 	maxHealth = rand(initial(maxHealth), (1.5 * initial(maxHealth)))
 	health = maxHealth
 
@@ -99,8 +97,7 @@
 
 	randomify = FALSE
 
-	melee_damage_lower = 15
-	melee_damage_upper = 25
+	melee_damage = 20
 
 /mob/living/simple_animal/hostile/carp/dog
 	name = "REX"
@@ -115,10 +112,9 @@
 	speed = -15
 	move_to_delay = -15
 
-	melee_damage_lower = 400
-	melee_damage_upper = 400
+	melee_damage = 400
 
-	attacktext = "licks"
+	attacktext = "lick"
 
 	var/idle_snd_chance = 5
 

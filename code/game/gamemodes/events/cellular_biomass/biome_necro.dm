@@ -67,8 +67,7 @@
 	faction = "necro"
 	health = 60
 	maxHealth = 60
-	melee_damage_lower = 10
-	melee_damage_upper = 20
+	melee_damage = 15
 	move_speed = 0
 
 /mob/living/simple_animal/hostile/cellular/necro/atom_init()

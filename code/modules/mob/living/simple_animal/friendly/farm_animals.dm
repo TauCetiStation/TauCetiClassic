@@ -17,10 +17,9 @@
 	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
 	faction = "goat"
-	attacktext = "kicks"
+	attacktext = "kick"
 	health = 40
-	melee_damage_lower = 1
-	melee_damage_upper = 5
+	melee_damage = 3
 	var/datum/reagents/udder = null
 
 /mob/living/simple_animal/hostile/retaliate/goat/atom_init()

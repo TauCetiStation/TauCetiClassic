@@ -512,7 +512,7 @@
 /obj/structure/droppod/attack_animal(mob/living/simple_animal/M)
 	..()
 	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
-	take_damage(rand(M.melee_damage_lower, M.melee_damage_upper))
+	take_damage(M.melee_damage)
 
 /********Stats********/
 

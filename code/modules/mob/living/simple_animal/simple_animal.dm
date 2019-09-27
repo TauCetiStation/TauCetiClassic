@@ -46,8 +46,8 @@
 
 
 	// LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly
-	var/melee_damage_lower = 0
-	var/melee_damage_upper = 0
+	var/melee_damage = 0
+	var/melee_damtype = BRUTE
 	var/attacktext = "attacks"
 	var/list/attack_sound = list()
 	var/friendly = "nuzzles" // If the mob does no damage with it's attack
@@ -56,6 +56,37 @@
 	var/speed = 0 // LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
 	var/animalistic = TRUE // Determines whether the being here is an animal or nah.
+
+/mob/living/simple_animal/helpReaction(mob/living/attacker)
+	if(health > 0)
+		visible_message("<span class='notice'>[attacker] [response_help] [src]</span>")
+	return ..()
+
+/mob/living/simple_animal/disarmReaction(mob/living/attacker)
+	if(health > 0)
+		visible_message("<span class='notice'>[attacker] [response_disarm] [src]</span>")
+	return ..()
+
+/mob/living/simple_animal/hurtReaction(mob/living/attacker)
+	if(health > 0)
+		visible_message("<span class='notice'>[attacker] [response_harm] [src]</span>")
+	return ..()
+
+/mob/living/simple_animal/get_unarmed_attack()
+	var/retDam = melee_damage
+	var/retDamType = melee_damtype
+	var/retFlags = 0
+	var/retVerb = attacktext
+	var/retSound = null
+	if(length(attack_sound) > 0)
+		retSound = pick(attack_sound)
+	var/retMissSound = 'sound/weapons/punchmiss.ogg'
+
+	if(HULK in mutations)
+		retDam += 5
+
+	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound,
+				"miss_sound" = retMissSound)
 
 /mob/living/simple_animal/updatehealth()
 	return
@@ -196,24 +227,6 @@
 		if(act == "scream")	act = "whimper" //ugly hack to stop animals screaming when crushed :P
 		..(act, type, desc)
 
-/mob/living/simple_animal/attack_animal(mob/living/simple_animal/M)
-	if(src == M)
-		return TRUE
-	..()
-	if(M.melee_damage_upper == 0)
-		M.emote("[M.friendly] [src]")
-		return TRUE
-	else
-		if(length(M.attack_sound))
-			playsound(src, pick(M.attack_sound), VOL_EFFECTS_MASTER)
-		visible_message("<span class='userdanger'><B>[M]</B> [M.attacktext] [src]!</span>")
-		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
-		return TRUE
-	return FALSE
-
 /mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
 		return
@@ -331,6 +344,9 @@
 			adjustBruteLoss(30)
 
 /mob/living/simple_animal/adjustBruteLoss(damage)
+	var/perc_block = (10 - harm_intent_damage) / 10 // #define MAX_HARM_INTENT_DAMAGE 10. Turn harm_intent_damage into armor or something. ~Luduk
+	damage *= perc_block
+
 	health = CLAMP(health - damage, 0, maxHealth)
 	if(health < 1 && stat != DEAD)
 		death()

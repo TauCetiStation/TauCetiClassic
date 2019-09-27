@@ -14,9 +14,8 @@
 	response_help  = "puts their hand through"
 	response_disarm = "flails at"
 	response_harm   = "punches the"
-	melee_damage_lower = 5
-	melee_damage_upper = 15
-	attacktext = "drains the life from"
+	melee_damage = 10
+	attacktext = "drain"
 	minbodytemp = 0
 	maxbodytemp = 4000
 	min_oxy = 0

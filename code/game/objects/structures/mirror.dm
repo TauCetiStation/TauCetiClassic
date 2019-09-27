@@ -77,7 +77,7 @@
 	..()
 
 	var/mob/living/simple_animal/M = user
-	if(M.melee_damage_upper <= 0)
+	if(M.melee_damage <= 0)
 		return
 	if(shattered)
 		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)

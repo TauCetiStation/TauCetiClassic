@@ -109,9 +109,9 @@
 	var/mob/living/simple_animal/M = user
 	..()
 
-	if(M.melee_damage_upper <= 0)
+	if(M.melee_damage <= 0)
 		return
-	attack_generic(M, M.melee_damage_upper)
+	attack_generic(M, M.melee_damage)
 
 
 /obj/structure/inflatable/attack_slime(mob/user)

@@ -199,7 +199,7 @@
 			 "<span class='warning'>You smash against [src].</span>", \
 			 "You hear twisting metal.")
 		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		health -= M.melee_damage_upper
+		health -= M.melee_damage
 		if(health <= 0)
 			new /obj/item/stack/sheet/metal(get_turf(src))
 			qdel(src)

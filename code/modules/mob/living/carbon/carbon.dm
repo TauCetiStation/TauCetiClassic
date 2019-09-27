@@ -75,13 +75,12 @@
 						stomach_contents.Remove(A)
 					src.gib()
 
-/mob/living/carbon/attack_animal(mob/living/simple_animal/M)
-	..()
-	if(istype(M,/mob/living/simple_animal/headcrab))
-		var/mob/living/simple_animal/headcrab/crab = M
+/mob/living/carbon/attack_animal(mob/living/simple_animal/attacker)
+	if(istype(attacker, /mob/living/simple_animal/headcrab))
+		var/mob/living/simple_animal/headcrab/crab = attacker
 		crab.Infect(src)
 		return TRUE
-	return FALSE
+	return ..()
 
 /mob/living/carbon/gib()
 	for(var/mob/M in src)
@@ -900,6 +899,7 @@
 	var/retFlags = 0
 	var/retVerb = "attacks"
 	var/retSound = null
+	var/retMissSound = 'sound/weapons/punchmiss.ogg'
 
 	var/specie = get_species()
 	if(all_species[specie])
@@ -913,4 +913,7 @@
 		if(length(attack.attack_sound))
 			retSound = pick(attack.attack_sound)
 
-	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound)
+		retMissSound = 'sound/weapons/punchmiss.ogg'
+
+	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound,
+				"miss_sound" = retMissSound)

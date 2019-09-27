@@ -16,10 +16,9 @@
 	maxHealth = 250
 	health = 250
 
-	harm_intent_damage = 5
-	melee_damage_lower = 8
-	melee_damage_upper = 12
-	attacktext = "attacks"
+	harm_intent_damage = 7
+	melee_damage = 10
+	attacktext = "attack"
 	attack_sound = list('sound/weapons/bite.ogg')
 
 	min_oxy = 0
@@ -169,13 +168,11 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			destroy_objects = 1
 			if(O.density && O.anchored)
 				knockdown_people = 1
-				melee_damage_lower *= 2
-				melee_damage_upper *= 2
+				melee_damage *= 2
 		else if(istype(O, /obj/item))
 			var/obj/item/I = O
 			health = 15 * I.w_class
-			melee_damage_lower = 2 + I.force
-			melee_damage_upper = 2 + I.force
+			melee_damage = 2 + I.force
 			move_to_delay = 2 * I.w_class
 
 		maxHealth = health

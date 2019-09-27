@@ -55,9 +55,8 @@
 	gender = NEUTER
 	health = 50
 	maxHealth = 50
-	melee_damage_lower = 5
-	melee_damage_upper = 5
-	attacktext = "chomps"
+	melee_damage = 5
+	attacktext = "chomp"
 	attack_sound = list('sound/weapons/bite.ogg')
 	environment_smash = 0
 	speak_emote = list("squeaks")

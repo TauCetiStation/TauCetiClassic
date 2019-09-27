@@ -67,9 +67,8 @@
 	health = 50
 
 	harm_intent_damage = 8
-	melee_damage_lower = 15
-	melee_damage_upper = 15
-	attacktext = "slashes"
+	melee_damage = 15
+	attacktext = "gnaw"
 	attack_sound = list('sound/weapons/bite.ogg')
 
 	layer = 3.1		//so they can stay hidde under the /obj/structure/bush
@@ -125,9 +124,8 @@
 	health = 25
 
 	harm_intent_damage = 2
-	melee_damage_lower = 3
-	melee_damage_upper = 10
-	attacktext = "bites"
+	melee_damage = 7
+	attacktext = "gnaw"
 	attack_sound = list('sound/weapons/bite.ogg')
 
 	layer = 3.1		//so they can stay hidde under the /obj/structure/bush

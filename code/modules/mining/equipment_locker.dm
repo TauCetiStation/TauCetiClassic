@@ -614,10 +614,9 @@
 	minimum_distance = 2
 	health = 100
 	maxHealth = 100
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	melee_damage = 15
 	environment_smash = 0
-	attacktext = "drills"
+	attacktext = "drill"
 	attack_sound = list('sound/weapons/circsawhit.ogg')
 	ranged = 1
 	ranged_message = "shoots"

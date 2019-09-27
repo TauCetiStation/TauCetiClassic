@@ -25,8 +25,7 @@
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 200
 	health = 200
-	melee_damage_lower = 15
-	melee_damage_upper = 20
+	melee_damage = 13
 	heat_damage_per_tick = 20
 	cold_damage_per_tick = 20
 	var/poison_per_bite = 5
@@ -49,8 +48,7 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/spidermeat = 2, /obj/item/weapon/reagent_containers/food/snacks/spiderleg = 8, /obj/item/weapon/reagent_containers/food/snacks/spidereggs = 4)
 	maxHealth = 40
 	health = 40
-	melee_damage_lower = 5
-	melee_damage_upper = 10
+	melee_damage = 8
 	poison_per_bite = 10
 	var/atom/cocoon_target
 	poison_type = "stoxin"
@@ -66,8 +64,7 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/spidermeat = 2, /obj/item/weapon/reagent_containers/food/snacks/spiderleg = 8)
 	maxHealth = 120
 	health = 120
-	melee_damage_lower = 10
-	melee_damage_upper = 20
+	melee_damage = 15
 	poison_per_bite = 5
 	move_to_delay = 4
 

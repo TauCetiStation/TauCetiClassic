@@ -15,12 +15,18 @@
 				"miss_sound" = retMissSound)
 
 /mob/living/attack_hand(mob/living/carbon/human/attacker)
-	attack_unarmed(attacker)
+	return attack_unarmed(attacker)
 
 /mob/living/attack_paw(mob/living/carbon/attacker)
 	if(istype(attacker.wear_mask, /obj/item/clothing/mask/muzzle))
-		return
-	attack_unarmed(attacker) // So carbons have a chance to pass us their filthy diseases.
+		return FALSE
+	return attack_unarmed(attacker)
+
+/mob/living/attack_animal(mob/living/simple_animal/attacker)
+	if(attacker.melee_damage <= 0)
+		attacker.emote("[attacker.friendly] [src]")
+		return TRUE
+	return attack_unarmed(attacker)
 
 /mob/living/proc/attack_unarmed(mob/living/attacker)
 	if(isturf(loc) && istype(loc.loc, /area/start))

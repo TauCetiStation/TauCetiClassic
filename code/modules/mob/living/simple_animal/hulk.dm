@@ -17,9 +17,8 @@
 	response_harm   = "punches"
 
 	harm_intent_damage = 0
-	melee_damage_lower = 5
-	melee_damage_upper = 20
-	attacktext = "brutally crushes"
+	melee_damage = 13
+	attacktext = "brutally crush"
 	environment_smash = 2
 
 	speed = 1
@@ -60,9 +59,8 @@
 	maxHealth = 400
 	health = 400
 
-	melee_damage_lower = 15
-	melee_damage_upper = 15
-	attacktext = "brutally bites"
+	melee_damage = 15
+	attacktext = "brutally gnaw"
 
 	speed = 2
 
@@ -85,8 +83,7 @@
 	icon_living = "Clowan"
 	maxHealth = 400
 	health = 400
-	melee_damage_lower = 5
-	melee_damage_upper = 5
+	melee_damage = 5
 	attacktext = "brutally HONK"
 
 	speed = 4
