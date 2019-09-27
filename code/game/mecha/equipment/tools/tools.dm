@@ -313,7 +313,7 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/tool/rcd/action(atom/target)
-	if(istype(target,/area/shuttle)||istype(target, /turf/space/transit))//>implying these are ever made -Sieve
+	if(istype(target,/area/shuttle))//>implying these are ever made -Sieve
 		disabled = 1
 	else
 		disabled = 0
