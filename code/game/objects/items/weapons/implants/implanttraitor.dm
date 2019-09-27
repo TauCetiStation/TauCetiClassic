@@ -3,14 +3,15 @@
 	desc = "Makes you loyal or such.."
 
 	var/datum/mind/implant_master
-	var/mob/implant_master_mob 
+	var/mob/implant_master_mob  //The man who injected the implant
 	var/forgotten = FALSE
-	var/mob/implant_target_mob
+	var/mob/implant_target_mob //Victim with implant
 
 /obj/item/weapon/implant/syndi_loyalty/implanted(mob/M)
+	//Save ref for mobs
 	implant_master_mob = usr
 	implant_target_mob = M
-	syndi_implanted_people += "<b>[implant_master_mob]</b> implanted <b>[implant_target_mob]</b> with syndicate loyalty implant"
+	syndi_implanted_people += "<b>[implant_master_mob]</b> implanted <b>[implant_target_mob]</b> with syndicate loyalty implant" //For print in scroreboard.
 	return 1
 
 /obj/item/weapon/implant/syndi_loyalty/inject(mob/living/carbon/C, def_zone)

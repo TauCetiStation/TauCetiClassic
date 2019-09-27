@@ -96,4 +96,4 @@ var/list/ignore_vision_inside = list(
 	/obj/item/organ/external/head/skeleton,
 	)
 
-var/global/implant_syndi_buyed = FALSE
+var/global/implant_syndi_buyed = FALSE //whether the implant was purchased through uplink

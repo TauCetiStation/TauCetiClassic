@@ -251,7 +251,7 @@
 	var/dat = completions
 	dat += {"<h2>Round Statistics and Score</h2><div class='block'>"}
 	
-	if(implant_syndi_buyed)
+	if(implant_syndi_buyed) //Conclusion of statistics on traitor implants
 		dat += "<b>Implanted Creatures:</b>"
 		for(var/peoples in syndi_implanted_people)
 			dat += "<br>[peoples]"
@@ -353,7 +353,7 @@
 	var/totalfunds = station_account.money
 
 	var/br = ""
-	if(implant_syndi_buyed)
+	if(implant_syndi_buyed) //Indent so beautiful
 		br = "<br>"
 
 	dat += {"<B><U>[br]GENERAL STATS</U></B><BR>
