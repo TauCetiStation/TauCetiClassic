@@ -324,11 +324,13 @@
 /mob/living/proc/adjustHalLoss(amount)
 	if(status_flags & GODMODE)
 		return
+	add_combo_value_all(amount)
 	halloss = CLAMP(halloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setHalLoss(amount)
 	if(status_flags & GODMODE)
 		return
+	add_combo_value_all(amount - halloss)
 	halloss = CLAMP(amount, 0, maxHealth * 2)
 
 // ============================================================

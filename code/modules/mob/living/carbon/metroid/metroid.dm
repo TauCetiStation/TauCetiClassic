@@ -352,7 +352,6 @@
 				updatehealth()
 	return
 
-
 /mob/living/carbon/slime/attack_hand(mob/living/carbon/human/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
@@ -426,66 +425,7 @@
 
 			return
 
-
-
-
-	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
-		var/obj/item/clothing/gloves/G = M.gloves
-		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
-				if(G.cell.charge >= 2500)
-					G.cell.use(2500)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message("<span class='warning'><B>[src] has been touched with the stun gloves by [M]!</B></span>", 1, "<span class='warning'>You hear someone fall.</span>", 2)
-					return
-				else
-					to_chat(M, "<span class='warning'>Not enough charge! </span>")
-					return
-
-	switch(M.a_intent)
-
-		if ("help")
-			help_shake_act(M)
-
-		if ("grab")
-			M.Grab(src)
-
-		else
-
-			var/damage = rand(1, 9)
-
-			attacked += 10
-			if (prob(90))
-				if (HULK in M.mutations)
-					damage += 5
-					if(Victim)
-						Victim = null
-						anchored = 0
-						if(prob(80) && !client)
-							Discipline++
-					spawn(0)
-
-						step_away(src,M,15)
-						sleep(3)
-						step_away(src,M,15)
-
-
-				playsound(src, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has punched []!</B></span>", M, src), 1)
-
-				adjustBruteLoss(damage)
-				updatehealth()
-			else
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has attempted to punch []!</B></span>", M, src), 1)
-	return
-
-
+	return ..()
 
 /mob/living/carbon/slime/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (!ticker)

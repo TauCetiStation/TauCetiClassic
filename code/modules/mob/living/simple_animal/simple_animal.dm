@@ -222,29 +222,6 @@
 	adjustBruteLoss(Proj.damage)
 	return 0
 
-/mob/living/simple_animal/attack_hand(mob/living/carbon/human/M)
-	..()
-
-	switch(M.a_intent)
-
-		if("help")
-			if (health > 0)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("<span class='notice'>[M] [response_help] [src]</span>")
-
-		if("grab")
-			M.Grab(src)
-
-		if("hurt", "disarm")
-			M.do_attack_animation(src)
-			adjustBruteLoss(harm_intent_damage)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message("<span class='warning'>[M] [response_harm] [src]</span>")
-
-	return
-
 /mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M)
 
 	switch(M.a_intent)

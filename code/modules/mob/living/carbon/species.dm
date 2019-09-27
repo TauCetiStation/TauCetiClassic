@@ -747,6 +747,7 @@
 /datum/unarmed_attack
 	var/attack_verb = list("attack")	// Empty hand hurt intent verb.
 	var/damage = 0						// Extra empty hand attack damage.
+	var/damType = BRUTE
 	var/miss_sound = 'sound/weapons/punchmiss.ogg'
 	var/sharp = 0
 	var/edge = 0
@@ -767,6 +768,7 @@
 
 /datum/unarmed_attack/slime_glomp
 	attack_verb = list("glomp")
+	damType = CLONE
 
 /datum/unarmed_attack/slime_glomp/New()
 	attack_sound = list('sound/effects/attackblob.ogg')

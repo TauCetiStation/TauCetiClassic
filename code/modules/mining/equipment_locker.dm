@@ -666,17 +666,14 @@
 	. = ..()
 	SetCollectBehavior()
 
-/mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
-	if(M.a_intent == "help")
-		switch(search_objects)
-			if(0)
-				SetCollectBehavior()
-				to_chat(M, "<span class='info'>[src] has been set to search and store loose ore.</span>")
-			if(2)
-				SetOffenseBehavior()
-				to_chat(M, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
-		return
-	..()
+/mob/living/simple_animal/hostile/mining_drone/helpReaction(mob/living/carbon/human/attacker)
+	switch(search_objects)
+		if(0)
+			SetCollectBehavior()
+			to_chat(attacker, "<span class='info'>[src] has been set to search and store loose ore.</span>")
+		if(2)
+			SetOffenseBehavior()
+			to_chat(attacker, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
 	stop_automated_movement_when_pulled = 1

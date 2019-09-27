@@ -107,30 +107,25 @@
 	else
 		..()
 
-/mob/living/carbon/attack_hand(mob/M)
-	if(!iscarbon(M))
-		return
+/mob/living/carbon/attack_unarmed(mob/living/carbon/attacker)
+	if(istype(attacker))
+		var/spread = TRUE
+		if(ishuman(attacker))
+			var/mob/living/carbon/human/H = attacker
+			if(H.gloves)
+				spread = FALSE
 
-	for(var/datum/disease/D in viruses)
-		if(D.spread_by_touch())
-			M.contract_disease(D, 0, 1, CONTACT_HANDS)
+		if(spread)
+			attacker.spread_disease_to(src, "Contact")
 
-	for(var/datum/disease/D in M.viruses)
-		if(D.spread_by_touch())
-			contract_disease(D, 0, 1, CONTACT_HANDS)
+			for(var/datum/disease/D in viruses)
+				if(D.spread_by_touch())
+					attacker.contract_disease(D, 0, 1, CONTACT_HANDS)
 
-
-/mob/living/carbon/attack_paw(mob/M)
-	if(!iscarbon(M))
-		return
-
-	for(var/datum/disease/D in viruses)
-		if(D.spread_by_touch())
-			M.contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	for(var/datum/disease/D in M.viruses)
-		if(D.spread_by_touch())
-			contract_disease(D, 0, 1, CONTACT_HANDS)
+			for(var/datum/disease/D in attacker.viruses)
+				if(D.spread_by_touch())
+					contract_disease(D, 0, 1, CONTACT_HANDS)
+	return ..()
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 	if(status_flags & GODMODE)	return 0	//godmode
@@ -204,6 +199,10 @@
 
 	if(selhand != src.hand)
 		swap_hand()
+
+/mob/living/carbon/helpReaction(mob/living/carbon/human/attacker)
+	help_shake_act(attacker)
+	return TRUE
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if (src.health >= config.health_threshold_crit)
@@ -894,3 +893,24 @@
 					break
 			R.reaction(loc)
 			adjustToxLoss(-toxins_puked)
+
+/mob/living/carbon/get_unarmed_attack()
+	var/retDam = 2
+	var/retDamType = BRUTE
+	var/retFlags = 0
+	var/retVerb = "attacks"
+	var/retSound = null
+
+	var/specie = get_species()
+	if(all_species[specie])
+		var/datum/unarmed_attack/attack = all_species[specie]
+
+		retDam = 2 + attack.damage
+		retDamType = attack.damType
+		retFlags = attack.damage_flags()
+		retVerb = pick(attack.attack_verb)
+
+		if(length(attack.attack_sound))
+			retSound = pick(attack.attack_sound)
+
+	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound)

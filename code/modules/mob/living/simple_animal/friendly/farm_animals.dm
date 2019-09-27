@@ -149,19 +149,19 @@
 	if(. && prob(55))
 		playsound(src, 'sound/misc/cowbell.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 
-/mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
-	if(!stat && M.a_intent == "disarm" && icon_state != icon_dead)
-		M.visible_message("<span class='warning'>[M] tips over [src].</span>","<span class='notice'>You tip over [src].</span>")
+/mob/living/simple_animal/cow/disarmReaction(mob/living/carbon/attacker)
+	if(!stat && icon_state != icon_dead)
+		attacker.visible_message("<span class='warning'>[attacker] tips over [src].</span>","<span class='notice'>You tip over [src].</span>")
 		Weaken(30)
 		icon_state = icon_dead
 		spawn(rand(20,50))
-			if(!stat && M)
+			if(!stat && attacker)
 				icon_state = icon_living
 				var/list/responses = list(	"[src] looks at you imploringly.",
 											"[src] looks at you pleadingly",
 											"[src] looks at you with a resigned expression.",
 											"[src] seems resigned to its fate.")
-				to_chat(M, pick(responses))
+				to_chat(attacker, pick(responses))
 	else
 		..()
 

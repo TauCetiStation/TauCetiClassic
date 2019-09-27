@@ -10,3 +10,9 @@
 	severity = "Medium"
 	//stage_prob = 100
 	agent = "Kongey Vibrion M-909"
+
+/datum/disease/jungle_fever/stage_act()
+	if(ishuman(affected_mob))
+		var/mob/living/carbon/human/H = affected_mob
+		var/mob/living/carbon/monkey/M = H.monkeyize()
+		M.contract_disease(src, 1, 0)

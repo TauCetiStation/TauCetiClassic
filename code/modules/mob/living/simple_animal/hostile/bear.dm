@@ -105,12 +105,12 @@
 		target = user
 	..()
 
-/mob/living/simple_animal/hostile/bear/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/hostile/bear/attack_hand(mob/living/carbon/human/attacker)
 	if(stance != HOSTILE_STANCE_ATTACK && stance != HOSTILE_STANCE_ATTACKING)
 		stance = HOSTILE_STANCE_ALERT
 		stance_step = 6
-		target = M
-	..()
+		target = attacker
+	return ..()
 
 /mob/living/simple_animal/hostile/bear/Process_Spacemove(movement_dir = 0)
 	return	//No drifting in space for space bears!
