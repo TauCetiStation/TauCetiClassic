@@ -313,7 +313,7 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/tool/rcd/action(atom/target)
-	if(istype(target,/area/shuttle)||istype(target, /turf/space/transit))//>implying these are ever made -Sieve
+	if(istype(target,/area/shuttle))//>implying these are ever made -Sieve
 		disabled = 1
 	else
 		disabled = 0
@@ -771,7 +771,7 @@
 	range = 0
 	var/datum/global_iterator/pr_energy_relay
 	var/coeff = 100
-	var/list/use_channels = list(EQUIP,ENVIRON,LIGHT)
+	var/list/use_channels = list(STATIC_EQUIP,STATIC_ENVIRON,STATIC_LIGHT)
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/atom_init()
 	. = ..()
@@ -848,7 +848,7 @@
 		var/area/A = get_area(ER.chassis)
 		if(A)
 			var/pow_chan
-			for(var/c in list(EQUIP,ENVIRON,LIGHT))
+			for(var/c in list(STATIC_EQUIP,STATIC_ENVIRON,STATIC_LIGHT))
 				if(A.powered(c))
 					pow_chan = c
 					break

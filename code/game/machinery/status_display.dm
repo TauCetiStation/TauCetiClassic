@@ -17,7 +17,7 @@
 	name = "status display"
 	anchored = 1
 	density = 0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	var/mode = 5	// 0 = Blank
 					// 1 = Shuttle timer

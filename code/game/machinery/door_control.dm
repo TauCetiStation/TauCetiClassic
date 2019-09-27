@@ -14,9 +14,9 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl0"
 	desc = "A remote control-switch for a door."
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	anchored = TRUE
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
 	allowed_checks = ALLOWED_CHECK_A_HAND

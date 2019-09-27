@@ -18,7 +18,7 @@
 	icon_state = "sp_base"
 	anchored = 1
 	density = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
 	var/id = 0
@@ -264,7 +264,7 @@
 	light_color = "#b88b2e"
 	anchored = 1
 	density = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 20
 	var/light_range_on = 1.5
@@ -475,6 +475,8 @@
 		spawn(rand(0, 15))
 			stat |= NOPOWER
 			update_icon()
+			update_power_use()
+	update_power_use()
 
 
 /obj/machinery/power/solar_control/proc/broken()

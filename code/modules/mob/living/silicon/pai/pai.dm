@@ -10,16 +10,16 @@
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
 
-	var/ram = 100	// Used as currency to purchase different abilities
+	var/maxram = 100					// We will reset ram to this value in the future.
+	var/ram = 100						// Used as currency to purchase different abilities
 	var/list/software = list()
-	var/userDNA		// The DNA string of our assigned user
+	var/userDNA							// The DNA string of our assigned user
 	var/obj/item/device/paicard/card	// The card we inhabit
 	var/obj/item/device/radio/radio		// Our primary radio
 
 	var/speakStatement = "states"
 	var/speakExclamation = "declares"
 	var/speakQuery = "queries"
-
 
 	var/obj/item/weapon/pai_cable/cable		// The cable we produce and use when door or camera jacking
 
@@ -46,8 +46,12 @@
 	var/datum/data/record/securityActive1		// Could probably just combine all these into one
 	var/datum/data/record/securityActive2
 
-	var/obj/machinery/door/hackdoor		// The airlock being hacked
-	var/hackprogress = 0				// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
+	var/obj/hackobj							// The device being hacked
+	var/hacksuccess							// The hack is complete?
+	var/list/markedobjects = list()			// Marked devices that pAI may access remotely
+	var/hackprogress = 0		    		// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
+	var/usetime								// Used in delay, last time delay was called
+	var/interaction_type					// Interaction type
 
 	var/obj/item/radio/integrated/signal/sradio // AI's signaller
 
@@ -83,6 +87,11 @@
 		pda.toff = 1
 
 	. = ..()
+
+/mob/living/silicon/pai/Destroy()
+	hackobj = null
+	markedobjects.Cut()
+	return ..()
 
 /mob/living/silicon/pai/Stat()
 	..()
@@ -217,16 +226,17 @@
 		var/mob/living/U = usr
 		U.cameraFollow = null
 	if (!C)
-		src.unset_machine()
-		src.reset_view(null)
+		unset_machine()
+		reset_view(null)
+		current = null
 		return 0
 	if (stat == DEAD || !C.status || !(src.network in C.network)) return 0
 
 	// ok, we're alive, camera is good and in our network...
 
-	src.set_machine(src)
-	src:current = C
-	src.reset_view(C)
+	set_machine(src)
+	current = C
+	reset_view(C)
 	return 1
 
 
