@@ -5,7 +5,7 @@
 	desc = "Nothing is being built."
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 5000
 	req_access = list(access_robotics)
@@ -168,10 +168,10 @@
 	desc = "It's building \a [initial(D.name)]."
 	remove_resources(D)
 	overlays += "fab-active"
-	use_power = 2
+	set_power_use(ACTIVE_POWER_USE)
 	updateUsrDialog()
 	sleep(get_construction_time_w_coeff(D))
-	use_power = 1
+	set_power_use(IDLE_POWER_USE)
 	overlays -= "fab-active"
 	desc = initial(desc)
 
@@ -206,7 +206,7 @@
 	return queue.len
 
 /obj/machinery/mecha_part_fabricator/proc/remove_from_queue(index)
-	if(!isnum(index) || !IsInteger(index) || !istype(queue) || (index<1 || index>queue.len))
+	if(!isnum(index) || !IS_INTEGER(index) || !istype(queue) || (index<1 || index>queue.len))
 		return 0
 	queue.Cut(index,++index)
 	return 1
@@ -419,8 +419,8 @@
 	if(href_list["queue_move"] && href_list["index"])
 		var/index = F.getNum("index")
 		var/new_index = index + F.getNum("queue_move")
-		if(isnum(index) && isnum(new_index) && IsInteger(index) && IsInteger(new_index))
-			if(IsInRange(new_index,1,queue.len))
+		if(isnum(index) && isnum(new_index) && IS_INTEGER(index) && IS_INTEGER(new_index))
+			if(IS_IN_RANGE(new_index,1,queue.len))
 				queue.Swap(index,new_index)
 		return update_queue_on_page()
 

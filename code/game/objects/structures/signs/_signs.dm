@@ -115,9 +115,10 @@
 
 /obj/item/sign_backing/attackby(obj/item/weapon/W, mob/user)
 	if (iswelder(W))
-		playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER)
-		new /obj/item/stack/sheet/mineral/plastic(user.loc, 2)
-		qdel(src)
+		if(W.use(0, user))
+			if(W.use_tool(src, user, 20, volume = 50))
+				new /obj/item/stack/sheet/mineral/plastic(user.loc, 2)
+				qdel(src)
 
 /obj/structure/sign/nanotrasen
 	name = "\improper Nanotrasen Logo"

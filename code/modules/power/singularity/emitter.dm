@@ -9,7 +9,7 @@
 	density = TRUE
 	req_access = list(access_engine_equip)
 
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 300
 	allowed_checks = ALLOWED_CHECK_NONE
@@ -121,7 +121,7 @@
 /*	if((severity == 1)&&prob(1)&&prob(1))
 		if(src.active)
 			src.active = 0
-			src.use_power = 1	*/
+			set_power_use(IDLE_POWER_USE)	*/
 	return 1
 
 /obj/machinery/containment_field/meteorhit()

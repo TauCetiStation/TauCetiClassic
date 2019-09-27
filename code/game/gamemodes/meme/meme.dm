@@ -55,8 +55,8 @@
 
 	//testing("[player_list.len] cur players")
 
-	//var/meme_limit = Clamp((num_players()/20), 1, 3)
-	var/meme_limit = Clamp((player_list.len/13), 1, 3)
+	//var/meme_limit = CLAMP((num_players()/20), 1, 3)
+	var/meme_limit = CLAMP((player_list.len/13), 1, 3)
 	//testing("Current meme limit is [meme_limit]")
 	var/i = 0
 

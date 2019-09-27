@@ -6,7 +6,7 @@
 	icon_state = "blackbox"
 	density = TRUE
 	anchored = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	var/captains_key
 	var/secondary_key

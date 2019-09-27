@@ -124,6 +124,8 @@
 		spawn(rand(0, 15))
 			src.icon_state = "body_scannerconsole-p"
 			stat |= NOPOWER
+			update_power_use()
+	update_power_use()
 
 /obj/machinery/body_scanconsole
 	var/obj/machinery/bodyscanner/connected

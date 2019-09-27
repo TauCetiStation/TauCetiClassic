@@ -8,7 +8,7 @@
 
 	idle_power_usage = 100
 	active_power_usage = 1000
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	interact_offline = TRUE
 
 	var/spawn_progress_time = 0
@@ -110,7 +110,7 @@
 			max_spawn_time = rand(30,100)
 
 			if(!spawning_types.len || !stored_materials.len)
-				use_power = 1
+				set_power_use(IDLE_POWER_USE)
 				icon_state = "replicator"
 
 		else if(prob(5))
@@ -151,7 +151,7 @@
 
 				spawning_types.Add(construction[construction[index]])
 				spawn_progress_time = 0
-				use_power = 2
+				set_power_use(ACTIVE_POWER_USE)
 				icon_state = "replicator_active"
 			else
 				src.visible_message(fail_message)

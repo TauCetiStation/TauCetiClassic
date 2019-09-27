@@ -6,7 +6,7 @@
 	name = "gas mixer"
 
 	can_unwrench = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 150 // internal circuitry, friction losses and stuff
 	power_rating = 3700    // This also doubles as a measure of how powerful the mixer is, in Watts. 3700 W ~ 5 HP
 	allowed_checks = ALLOWED_CHECK_TOPIC
@@ -22,7 +22,7 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/on
 	icon_state = "map_on"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon(safety = FALSE)
 	..()
@@ -39,7 +39,7 @@
 		icon_state += use_power ? "on" : "off"
 	else
 		icon_state += "off"
-		use_power = 0
+		set_power_use(NO_POWER_USE)
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_underlays()
 	if(..())
@@ -174,7 +174,7 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/t_mixer/on
 	icon_state = "tmap_on"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 
 /obj/machinery/atmospherics/components/trinary/mixer/t_mixer/SetInitDirections()
 	switch(dir)
@@ -195,7 +195,7 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/m_mixer/on
 	icon_state = "mmap_on"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 
 /obj/machinery/atmospherics/components/trinary/mixer/m_mixer/SetInitDirections()
 	switch(dir)

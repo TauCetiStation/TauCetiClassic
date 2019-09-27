@@ -199,7 +199,7 @@
 				playsound(user, fire_sound, VOL_EFFECTS_MASTER, 10)
 			else
 				playsound(user, fire_sound, VOL_EFFECTS_MASTER)
-			if(istype(chambered.BB, /obj/item/projectile/beam/lastertag) || istype(chambered.BB, /obj/item/projectile/beam/practice))
+			if(istype(chambered.BB, /obj/item/projectile/beam/lasertag) || istype(chambered.BB, /obj/item/projectile/beam/practice))
 				user.visible_message("<span class = 'notice'>Nothing happens.</span>",\
 									"<span class = 'notice'>You feel rather silly, trying to commit suicide with a toy.</span>")
 				return
@@ -210,12 +210,12 @@
 				return
 
 			chambered.BB.on_hit(M)
-			if (chambered.BB.damage_type != HALLOSS)
-				user.apply_damage(chambered.BB.damage * 2.5, chambered.BB.damage_type, BP_HEAD, null, chambered.BB.damage_flags(), "Point blank shot in the mouth with \a [chambered.BB]")
-				user.death()
-			else
+			if(chambered.BB.damage_type == HALLOSS)
 				to_chat(user, "<span class = 'notice'>Ow...</span>")
 				user.apply_effect(110,AGONY,0)
+			else if(!chambered.BB.nodamage)
+				user.apply_damage(chambered.BB.damage * 2.5, chambered.BB.damage_type, BP_HEAD, null, chambered.BB.damage_flags(), "Point blank shot in the mouth with \a [chambered.BB]")
+				user.death()
 			chambered.BB = null
 			chambered.update_icon()
 			update_icon()
