@@ -258,19 +258,6 @@
 	icon_state = "wood"
 	},
 /area/centcom/arrival)
-"aaw" = (
-/obj/effect/step_trigger/teleporter/random{
-	affect_ghosts = 1;
-	name = "escapeshuttle_leave";
-	teleport_x = 25;
-	teleport_x_offset = 245;
-	teleport_y = 25;
-	teleport_y_offset = 245;
-	teleport_z = 6;
-	teleport_z_offset = 6
-	},
-/turf/space/transit/east/shuttlespace_ew5,
-/area/space)
 "aax" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -376,19 +363,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/arrival)
-"aaF" = (
-/obj/effect/step_trigger/teleporter/random{
-	affect_ghosts = 1;
-	name = "escapeshuttle_leave";
-	teleport_x = 25;
-	teleport_x_offset = 245;
-	teleport_y = 25;
-	teleport_y_offset = 245;
-	teleport_z = 6;
-	teleport_z_offset = 6
-	},
-/turf/space/transit/east/shuttlespace_ew14,
-/area/space)
 "aaG" = (
 /obj/machinery/door/airlock/medical/glass,
 /obj/structure/curtain/medical,
@@ -893,42 +867,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/holding)
-"adU" = (
-/obj/effect/step_trigger/thrower{
-	affect_ghosts = 1;
-	direction = 4;
-	name = "thrower_escapeshuttletop(right)";
-	tiles = 0
-	},
-/turf/space/transit/east/shuttlespace_ew9,
-/area/space)
-"adV" = (
-/obj/effect/step_trigger/thrower{
-	affect_ghosts = 1;
-	direction = 4;
-	name = "thrower_escapeshuttletop(right)";
-	tiles = 0
-	},
-/turf/space/transit/east/shuttlespace_ew8,
-/area/space)
-"adW" = (
-/obj/effect/step_trigger/thrower{
-	affect_ghosts = 1;
-	direction = 4;
-	name = "thrower_escapeshuttletop(right)";
-	tiles = 0
-	},
-/turf/space/transit/east/shuttlespace_ew10,
-/area/space)
-"adX" = (
-/obj/effect/step_trigger/thrower{
-	affect_ghosts = 1;
-	direction = 4;
-	name = "thrower_escapeshuttletop(right)";
-	tiles = 0
-	},
-/turf/space/transit/east/shuttlespace_ew2,
-/area/space)
 "adY" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -1160,15 +1098,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom)
-"afX" = (
-/obj/effect/step_trigger/thrower{
-	affect_ghosts = 1;
-	direction = 4;
-	name = "thrower_escapeshuttletop(right)";
-	tiles = 0
-	},
-/turf/space/transit/east/shuttlespace_ew3,
-/area/space)
 "aga" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
@@ -1206,15 +1135,6 @@
 /obj/structure/stool/bed/chair/schair/wagon/bench,
 /turf/simulated/shuttle/floor/wagon,
 /area/shuttle/arrival/pre_game)
-"ago" = (
-/obj/effect/step_trigger/thrower{
-	affect_ghosts = 1;
-	direction = 4;
-	name = "thrower_escapeshuttletop(right)";
-	tiles = 0
-	},
-/turf/space/transit/east/shuttlespace_ew4,
-/area/space)
 "agr" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "19,10";
@@ -4003,33 +3923,6 @@
 	icon_state = "warnplate"
 	},
 /area/centcom/arrival)
-"ape" = (
-/obj/effect/step_trigger/thrower{
-	affect_ghosts = 1;
-	direction = 4;
-	name = "thrower_escapeshuttletop(right)";
-	tiles = 0
-	},
-/turf/space/transit/east/shuttlespace_ew11,
-/area/space)
-"apf" = (
-/obj/effect/step_trigger/thrower{
-	affect_ghosts = 1;
-	direction = 4;
-	name = "thrower_escapeshuttletop(right)";
-	tiles = 0
-	},
-/turf/space/transit/east/shuttlespace_ew12,
-/area/space)
-"apg" = (
-/obj/effect/step_trigger/thrower{
-	affect_ghosts = 1;
-	direction = 4;
-	name = "thrower_escapeshuttletop(right)";
-	tiles = 0
-	},
-/turf/space/transit/east/shuttlespace_ew13,
-/area/space)
 "api" = (
 /obj/machinery/door/poddoor{
 	id = "velocity_main2";
@@ -74375,8 +74268,8 @@ aaM
 aaM
 aaM
 aeD
-adX
-adV
+alT
+alT
 aeD
 aaM
 aaM
@@ -74632,8 +74525,8 @@ aaM
 aaM
 aaM
 aeD
-afX
-adU
+alT
+alT
 aeD
 aaM
 aaM
@@ -74889,8 +74782,8 @@ aaM
 aaM
 aaM
 aeD
-ago
-adW
+alT
+alT
 aeD
 aaM
 aaM
@@ -75146,8 +75039,8 @@ aaM
 aaM
 aaM
 aeD
-adX
-ape
+alT
+alT
 aeD
 aaM
 aaM
@@ -75403,8 +75296,8 @@ aaM
 aaM
 aaM
 aeD
-afX
-apf
+alT
+alT
 aeD
 aaM
 aaM
@@ -75660,8 +75553,8 @@ aaM
 aaM
 aaM
 aeD
-ago
-apg
+alT
+alT
 aeD
 aaM
 aaM
@@ -75917,8 +75810,8 @@ aaM
 aaM
 aaM
 aeD
-aaw
-aaF
+ahG
+ahG
 aeD
 aaM
 aaM
