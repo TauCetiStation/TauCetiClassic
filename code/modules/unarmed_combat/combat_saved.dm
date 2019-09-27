@@ -108,7 +108,7 @@
 
 	if(next_combo)
 		var/datum/combat_combo/CC = next_combo
-		if((target_zone in CC.allowed_target_zones) && fullness >= CC.fullness_lose_on_execute)
+		if(CC.can_execute(src))
 			next_combo = null
 			INVOKE_ASYNC(CC, /datum/combat_combo.proc/animate_combo, victim, attacker)
 			CC.pre_execute(victim, attacker)
@@ -127,7 +127,7 @@
 			combo_hash += "[CE]#"
 
 		var/datum/combat_combo/CC = combat_combos[combo_hash]
-		if(CC && fullness >= CC.fullness_lose_on_execute)
+		if(CC.can_execute(src))
 			next_combo = combat_combos[combo_hash]
 			set_combo_icon(next_combo.get_combo_icon())
 			next_combo.on_ready(victim, attacker)
