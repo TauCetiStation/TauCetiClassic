@@ -625,6 +625,7 @@
 	item_state = "syndie_helm"
 	armor = list(melee = 60, bullet = 55, laser = 30,energy = 30, bomb = 50, bio = 100, rad = 60)
 	var/obj/machinery/camera/camera
+	action_button_name = "Toggle Helmet Mode"
 	var/combat_mode = FALSE
 	species_restricted = list("exclude" , SKRELL , DIONA, VOX)
 	var/image/lamp = null
@@ -663,7 +664,11 @@
 			user.overlays += lamp
 		user.update_inv_head()
 
-/obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
+/obj/item/clothing/head/helmet/space/rig/syndi/verb/toggle_light(mob/user)
+	set category = "Object"
+	set name = "Toggle helmet light"
+	set src in usr
+
 	if(camera)
 		on = !on
 	else
@@ -675,7 +680,10 @@
 	checklight()
 	update_icon(user)
 
-/obj/item/clothing/head/helmet/space/rig/syndi/verb/toggle()
+/obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
+	toggle_light(user)
+
+/obj/item/clothing/head/helmet/space/rig/syndi/verb/toggle_mode()
 	set category = "Object"
 	set name = "Adjust helmet"
 	set src in usr
@@ -711,6 +719,9 @@
 		P.reagents.trans_to_ingest(user, W.reagents.total_volume)
 		to_chat(user, "<span class='notice'>[src] consumes [W] and injected reagents to you!</span>")
 		qdel(W)
+
+/obj/item/clothing/head/helmet/space/rig/syndi/ui_action_click()
+	toggle_mode()
 
 
 /obj/item/clothing/suit/space/rig/syndi
