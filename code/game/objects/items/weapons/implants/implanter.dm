@@ -52,6 +52,15 @@
 	. = ..()
 	update()
 
+/obj/item/weapon/implanter/syndi_loyalty
+	name = "implanter-loyalty"
+	desc = "The most imperceptible of all implanters"
+
+/obj/item/weapon/implanter/syndi_loyalty/atom_init()
+	imp = new /obj/item/weapon/implant/syndi_loyalty(src)
+	. = ..()
+	update()
+
 /obj/item/weapon/implanter/explosive
 	name = "implanter (E)"
 

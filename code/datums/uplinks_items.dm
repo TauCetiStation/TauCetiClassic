@@ -87,6 +87,9 @@
 			A.put_in_any_hand_if_possible(I)
 			U.purchase_log += {"[user] ([user.ckey]) bought <img src="logo_[tempstate].png"> [name] for [cost]."}
 			if(user.mind)
+				if(bundlename == "Loyalty Implant") //For scoreboard
+					if(!implant_syndi_buyed)
+						implant_syndi_buyed = TRUE
 				user.mind.uplink_items_bought += {"<img src="logo_[tempstate].png"> [bundlename]"}
 				user.mind.spent_TC += cost
 		U.interact(user)

@@ -250,6 +250,12 @@
 /mob/proc/scorestats(completions)//omg why we count this for every player
 	var/dat = completions
 	dat += {"<h2>Round Statistics and Score</h2><div class='block'>"}
+	
+	if(implant_syndi_buyed) //Conclusion of statistics on traitor implants
+		dat += "<b>Implanted Creatures:</b>"
+		for(var/peoples in syndi_implanted_people)
+			dat += "<br>[peoples]"
+
 	if (ticker.mode.name == "nuclear emergency")
 		var/foecount = 0
 		var/crewcount = 0
@@ -345,7 +351,12 @@
 		<B>All Revolution Heads Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>
 		<HR>"}
 	var/totalfunds = station_account.money
-	dat += {"<B><U>GENERAL STATS</U></B><BR>
+
+	var/br = ""
+	if(implant_syndi_buyed) //Indent so beautiful
+		br = "<br>"
+
+	dat += {"<B><U>[br]GENERAL STATS</U></B><BR>
 	<U>THE GOOD:</U><BR>
 	<B>Useful Crates Shipped:</B> [score["stuffshipped"]] ([score["stuffshipped"] * 75] Points)<BR>
 	<B>Hydroponics Harvests:</B> [score["stuffharvested"]] ([score["stuffharvested"]] Points)<BR>

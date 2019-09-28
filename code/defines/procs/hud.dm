@@ -47,6 +47,7 @@ the HUD updates properly! */
 			P.Client.images += perp.hud_list[IMPTRACK_HUD]
 			P.Client.images += perp.hud_list[IMPLOYAL_HUD]
 			P.Client.images += perp.hud_list[IMPCHEM_HUD]
+			P.Client.images += perp.hud_list[SYNDI_LOYAL_HUD]
 
 /proc/process_broken_hud(mob/M, advanced_mode, mob/Alt)
 	if(!can_process_hud(M))
