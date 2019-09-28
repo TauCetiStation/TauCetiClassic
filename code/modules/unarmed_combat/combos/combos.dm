@@ -1,9 +1,5 @@
-#define COMBO_DISARM "Weapon Disarm"
-#define COMBO_PUSH "Push"
-#define COMBO_SUPLEX "Suplex"
-
 /datum/combat_combo/disarm
-	name = COMBO_DISARM
+	name = "Weapon Disarm"
 	combo_icon_state = "weapon_disarm"
 	fullness_lose_on_execute = 20
 	combo_elements = list(I_DISARM, I_DISARM, I_DISARM, I_DISARM)
@@ -32,10 +28,10 @@
 
 
 /datum/combat_combo/push
-	name = COMBO_PUSH
+	name = "Push"
 	combo_icon_state = "push"
 	fullness_lose_on_execute = 50
-	combo_elements = list(COMBO_DISARM, I_DISARM, I_DISARM, I_DISARM)
+	combo_elements = list("Weapon Disarm", I_DISARM, I_DISARM, I_DISARM)
 
 	allowed_target_zones = TARGET_ZONE_ALL
 
@@ -59,7 +55,7 @@
 
 
 /datum/combat_combo/suplex
-	name = COMBO_SUPLEX
+	name = "Suplex"
 	combo_icon_state = "suplex"
 	fullness_lose_on_execute = 75
 	combo_elements = list(I_HURT, I_HURT, I_HURT, I_GRAB)
@@ -84,6 +80,10 @@
 	var/prev_pix_x = attacker.pixel_x
 	var/prev_pix_y = attacker.pixel_y
 
+	var/prev_victim_anchored = victim.anchored
+	var/prev_attacker_anchored = attacker.anchored
+	victim.anchored = TRUE
+	attacker.anchored = TRUE
 	victim.Stun(2)
 	attacker.Stun(2) // So he doesn't do something funny during the trick.
 
@@ -100,14 +100,16 @@
 	prev_pix_y = victim.pixel_y
 	animate(victim, transform = M, time = 2)
 	sleep(2)
-	animate(victim, pixel_y = victim.pixel_y + 15, time = 5)
-	sleep(5)
-	animate(victim, pixel_x = victim.pixel_x - shift_x, pixel_y = victim.pixel_y - 15 - shift_y, time = 2)
+	animate(victim, pixel_y = victim.pixel_y + 20, time = 6)
+	sleep(6)
+	animate(victim, pixel_x = victim.pixel_x - shift_x, pixel_y = victim.pixel_y - 20 - shift_y, time = 2)
 	sleep(2)
 	victim.transform = victim_M
 	victim.forceMove(get_step(victim, victim_dir))
 	victim.pixel_x = prev_pix_x
 	victim.pixel_y = prev_pix_y
+	victim.anchored = prev_victim_anchored
+	attacker.anchored = prev_attacker_anchored
 
 	var/armor_check = 0
 	if(ishuman(victim))
@@ -115,8 +117,8 @@
 		var/obj/item/organ/external/BP = H.get_bodypart(BP_CHEST)
 		armor_check = victim.run_armor_check(BP, "melee")
 
-	victim.apply_effect(6, WEAKEN, armor_check)
-	victim.adjustBruteLoss(20)
+	victim.apply_effect(7, WEAKEN, armor_check)
+	victim.apply_damage(40, BRUTE, armor_check)
 
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	victim.visible_message("<span class='danger'>[attacker] has thrown [victim] over their shoulder!</span>")
@@ -125,6 +127,61 @@
 /datum/combat_combo/suplex/execute(mob/living/victim, mob/living/attacker)
 	return
 
-#undef COMBO_DISARM
-#undef COMBO_PUSH
-#undef COMBO_SUPLEX
+
+
+/datum/combat_combo/charge
+	name = "Charge"
+	combo_icon_state = "charge"
+	fullness_lose_on_execute = 90
+	combo_elements = list(I_GRAB, I_HURT, I_HURT, I_GRAB)
+
+	allowed_target_zones = list(BP_CHEST)
+
+/datum/combat_combo/charge/animate_combo(mob/living/victim, mob/living/attacker)
+	sleep(3)
+	var/prev_victim_anchored = victim.anchored
+	var/prev_attacker_anchored = attacker.anchored
+	victim.anchored = TRUE
+	attacker.anchored = TRUE
+	victim.Stun(2)
+	attacker.Stun(2) // So he doesn't do something funny during the trick.
+
+	if(victim.buckled)
+		victim.buckled.unbuckle_mob()
+	attacker.Grab(victim, GRAB_AGGRESSIVE)
+	var/success = FALSE
+	for(var/obj/item/weapon/grab/G in attacker.GetGrabs())
+		if(G.affecting == victim)
+			if(G.state != GRAB_AGGRESSIVE)
+				G.set_state(GRAB_AGGRESSIVE)
+			success = TRUE
+			break
+
+	if(success)
+		var/try_steps = 4
+
+		for(var/try_to_step in 1 to try_steps)
+			var/turf/T = get_step(attacker, attacker.dir)
+			step(attacker, attacker.dir)
+			if(T != attacker.loc) // We bumped into something, so we bumped our victim into it...
+				var/armor_check = 0
+				if(ishuman(victim))
+					var/mob/living/carbon/human/H = victim
+					var/obj/item/organ/external/BP = H.get_bodypart(BP_CHEST)
+					armor_check = victim.run_armor_check(BP, "melee")
+
+				victim.apply_effect(7, WEAKEN, armor_check)
+				victim.apply_damage(40, BRUTE, armor_check)
+
+				playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
+				victim.visible_message("<span class='danger'>[attacker] slams [victim] into an obstacle!</span>")
+
+				break
+			sleep(attacker.movement_delay() * 0.5)
+
+	victim.anchored = prev_victim_anchored
+	attacker.anchored = prev_attacker_anchored
+
+// We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
+/datum/combat_combo/charge/execute(mob/living/victim, mob/living/attacker)
+	return

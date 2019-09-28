@@ -11,7 +11,7 @@
 	var/obj/item/organ/external/BPHand = get_bodypart(hand ? BP_L_ARM : BP_R_ARM)
 	var/datum/unarmed_attack/attack = BPHand.species.unarmed
 
-	var/retDam = 3 + attack.damage
+	var/retDam = 2 + attack.damage
 	var/retDamType = attack.damType
 	var/retFlags = attack.damage_flags()
 	var/retVerb = pick(attack.attack_verb)
@@ -22,7 +22,7 @@
 		retSound = pick(attack.attack_sound)
 
 	if(HULK in mutations)
-		retDam += 5
+		retDam += 4
 
 	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound,
 				"miss_sound" = retMissSound)

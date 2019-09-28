@@ -83,7 +83,7 @@
 	var/retMissSound = 'sound/weapons/punchmiss.ogg'
 
 	if(HULK in mutations)
-		retDam += 5
+		retDam += 4
 
 	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound,
 				"miss_sound" = retMissSound)

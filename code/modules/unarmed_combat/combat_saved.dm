@@ -5,8 +5,8 @@
 
 	var/datum/progressbar/progbar
 	var/list/combo_elements = list()
-	var/mob/living/carbon/human/attacker
-	var/mob/living/carbon/human/victim
+	var/mob/living/attacker
+	var/mob/living/victim
 	var/datum/combat_combo/next_combo
 
 	var/last_hand_hit = 0 // Switching hands doubles fullness gained.

@@ -24,14 +24,22 @@ var/global/list/combat_combos = list()
 			cur_hash += "[CE]#"
 		. += cur_hash
 
-/datum/combat_combo/proc/can_execute(datum/combat_saved/CS)
+/datum/combat_combo/proc/can_execute(datum/combo_saved/CS)
+	if(CS.attacker.incapacitated())
+		return FALSE
 	if(CS.fullness < fullness_lose_on_execute)
 		return FALSE
-	if(!(target_zone in CC.allowed_target_zones))
-		return FALSE
+
 	if(!is_type_in_list(CS.attacker, allowed_to_mob_types))
 		return FALSE
 	if(!is_type_in_list(CS.victim, allowed_on_mob_types))
+		return FALSE
+	var/target_zone
+	if(CS.attacker.zone_sel)
+		target_zone = CS.attacker.zone_sel
+	else
+		target_zone = ran_zone(BP_CHEST)
+	if(!(target_zone in allowed_target_zones))
 		return FALSE
 	return TRUE
 
