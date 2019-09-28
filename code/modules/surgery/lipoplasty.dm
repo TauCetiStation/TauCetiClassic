@@ -41,6 +41,7 @@
 	..()
 
 /datum/surgery_step/lipoplasty/cut_fat/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+
 	if(!target.has_trait(TRAIT_FAT))
 		if (target.overeatduration > 0)
 			user.visible_message("<span class='notice'>[user] cuts [target]'s excess fat loose with \the [tool].</span>",
@@ -50,6 +51,7 @@
 			user.visible_message("<span class='notice'>Unfortunately, there is nothing to cut on [target] with \the [tool].</span>",
 				"<span class='notice'>Unfortunately, there is nothing to cut on [target] with \the [tool].</span>")
 	else
+
 		user.visible_message("<span class='notice'>[user] realizes, that there is no known solution to resolve [target]'s fatness problem.</span>",
 			"<span class='notice'>Unfortunately, there is nothing you can do with the [target]'s excess fat.</span>")
 

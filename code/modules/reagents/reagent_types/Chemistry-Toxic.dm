@@ -149,7 +149,7 @@
 
 /datum/reagent/toxin/minttoxin/on_general_digest(mob/living/M)
 	..()
-	if(FAT in M.mutations)
+	if(M.is_fat())
 		M.gib()
 
 /datum/reagent/toxin/carpotoxin

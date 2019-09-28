@@ -1057,24 +1057,25 @@
 			SetStunned(0)
 
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
-	if(FAT in mutations)
-		if(!has_trait(TRAIT_FAT) && overeatduration < 100)
-			to_chat(src, "<span class='notice'>You feel fit again!</span>")
-			mutations.Remove(FAT)
-			update_body()
-			update_mutantrace()
-			update_mutations()
-			update_inv_w_uniform()
-			update_inv_wear_suit()
-	else
-		if((has_trait(TRAIT_FAT) || overeatduration > 500) && isturf(loc))
-			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
-				mutations.Add(FAT)
+	if (can_get_fit())
+		if(is_fat())
+			if(!has_trait(TRAIT_FAT) && overeatduration < 100)
+				to_chat(src, "<span class='notice'>You feel fit again!</span>")
+				mutations.Remove(FAT)
 				update_body()
 				update_mutantrace()
 				update_mutations()
 				update_inv_w_uniform()
 				update_inv_wear_suit()
+		else
+			if((has_trait(TRAIT_FAT) || overeatduration > 500) && isturf(loc))
+				if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
+					mutations.Add(FAT)
+					update_body()
+					update_mutantrace()
+					update_mutations()
+					update_inv_w_uniform()
+					update_inv_wear_suit()
 
 
 	// nutrition decrease

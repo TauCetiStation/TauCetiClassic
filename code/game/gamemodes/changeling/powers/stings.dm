@@ -271,7 +271,7 @@
 /obj/effect/proc_holder/changeling/sting/unfat/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
 		return 0
-	if(FAT in target.mutations)
+	if(target.is_fat())
 		target.overeatduration = 0
 		target.nutrition -= 100
 		to_chat(target, "<span class='danger'>You feel a small prick as stomach churns violently and you become to feel skinnier.</span>")

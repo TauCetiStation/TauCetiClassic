@@ -47,6 +47,7 @@
 
 
 /datum/quirk/fatness
+
 	name = "Fatness"
 	desc = "You are incurably fat."
 	value = -1

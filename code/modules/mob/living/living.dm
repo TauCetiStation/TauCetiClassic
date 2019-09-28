@@ -53,7 +53,7 @@
 				return 1
 
 		//Fat
-		if(FAT in M.mutations)
+		if(is_fat())
 			var/ran = 40
 			if(isrobot(src))
 				ran = 20
@@ -1214,3 +1214,13 @@
 		T.add_vomit_floor(src, getToxLoss() > 0 ? TRUE : FALSE)
 
 	return TRUE
+
+/mob/living/proc/is_fat()
+
+	if ((FAT in mutations) || (get_species() == DIONA || has_trait(TRAIT_FAT)))
+		return TRUE
+
+
+/mob/living/proc/can_get_fit()
+	if (!get_species() == DIONA)
+		return TRUE

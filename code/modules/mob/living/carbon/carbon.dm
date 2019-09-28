@@ -24,7 +24,7 @@
 				nutrition -= met_factor * getHalLoss() * (m_intent == "run" ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
 			if(m_intent == "run")
 				nutrition -= met_factor * 0.01
-		if((FAT in mutations) && m_intent == "run" && bodytemperature <= 360)
+		if((is_fat()) && m_intent == "run" && bodytemperature <= 360)
 			bodytemperature += 2
 
 		// Moving around increases germ_level faster

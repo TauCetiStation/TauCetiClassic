@@ -106,7 +106,7 @@
 	var/fat
 	var/g
 	if(body_zone == BP_CHEST)
-		fat = (FAT in mutations) ? "fat" : null
+		fat = (owner.is_fat()) ? "fat" : null
 	if(body_zone in list(BP_CHEST, BP_GROIN, BP_HEAD))
 		g = (gender == FEMALE ? "f" : "m")
 
