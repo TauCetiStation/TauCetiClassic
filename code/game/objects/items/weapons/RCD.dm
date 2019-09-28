@@ -89,7 +89,7 @@ RCD
 		return
 	if(disabled && !isrobot(user))
 		return 0
-	if(istype(A, /area/shuttle)||istype(A,/turf/space/transit))
+	if(istype(A, /area/shuttle))
 		return 0
 	if(!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock)))
 		return 0

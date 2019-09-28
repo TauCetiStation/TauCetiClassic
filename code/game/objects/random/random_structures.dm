@@ -155,8 +155,8 @@
 					/obj/machinery/vending/boozeomat,\
 					/obj/machinery/vending/assist,\
 					/obj/machinery/vending/coffee,\
-					/obj/machinery/vending/snack,\
-					/obj/machinery/vending/cola,\
+					/obj/random/vending/cola,\
+					/obj/random/vending/snack,\
 					/obj/machinery/vending/cart,\
 					/obj/machinery/vending/cigarette,\
 					/obj/machinery/vending/medical,\
