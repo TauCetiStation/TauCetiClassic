@@ -569,7 +569,7 @@
 				message = "<span class='bold'>[src]</span> [message ? message : "twists in pain"]."
 				m_type = 1
 
-			add_combo_value_all(10)
+			add_combo_value_all(15)
 
 			cloud_emote = "cloud-pain"
 
@@ -609,7 +609,7 @@
 							message = "<B>[src]</B> makes a very loud noise."
 							m_type = 2
 
-			add_combo_value_all(10)
+			add_combo_value_all(15)
 
 			cloud_emote = "cloud-scream"
 

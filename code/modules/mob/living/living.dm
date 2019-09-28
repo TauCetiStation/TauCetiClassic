@@ -324,13 +324,15 @@
 /mob/living/proc/adjustHalLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	add_combo_value_all(amount)
+	if(amount > 0)
+		add_combo_value_all(amount)
 	halloss = CLAMP(halloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setHalLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	add_combo_value_all(amount - halloss)
+	if(amount - halloss > 0)
+		add_combo_value_all(amount - halloss)
 	halloss = CLAMP(amount, 0, maxHealth * 2)
 
 // ============================================================
@@ -1218,3 +1220,8 @@
 		T.add_vomit_floor(src, getToxLoss() > 0 ? TRUE : FALSE)
 
 	return TRUE
+
+/mob/living/get_targetzone()
+	if(zone_sel)
+		return zone_sel.selecting
+	return pick(TARGET_ZONE_ALL)

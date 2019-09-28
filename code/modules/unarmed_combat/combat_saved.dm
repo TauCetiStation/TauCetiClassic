@@ -1,4 +1,7 @@
 /datum/combo_saved
+	var/last_hit_registered = 0
+	var/delete_after_no_hits = 15 SECONDS
+
 	var/fullness = 0
 	var/image/combo_icon
 	var/list/combo_elements_icons = list()
@@ -12,6 +15,8 @@
 	var/last_hand_hit = 0 // Switching hands doubles fullness gained.
 
 /datum/combo_saved/New(mob/living/victim, mob/living/attacker, combo_element, combo_value)
+	last_hit_registered = world.time + delete_after_no_hits
+
 	src.attacker = attacker
 	src.victim = victim
 	progbar = new(attacker, 100, victim)
@@ -47,6 +52,10 @@
 		sleep(1)
 
 /datum/combo_saved/proc/animate_attack(combo_element, combo_value)
+	if(attacker.attack_animation || attacker.combo_animation)
+		return
+	attacker.attack_animation = TRUE
+
 	switch(combo_element)
 		if(I_DISARM, I_HURT)
 			var/matrix/saved_transform = attacker.transform
@@ -55,19 +64,41 @@
 				M.Turn(-combo_value)
 			else
 				M.Turn(combo_value)
+			if(!attacker)
+				attacker.transform = saved_transform
+				return
 			animate(attacker, transform=M, time=2)
 			sleep(2)
+			if(!attacker)
+				attacker.transform = saved_transform
+				return
 			animate(attacker, transform=saved_transform, time=1)
+			sleep(1)
+
+	attacker.attack_animation = FALSE
+
+/datum/combo_saved/proc/get_next_combo()
+	var/target_zone = attacker.get_targetzone()
+
+	var/combo_hash = "[target_zone]|"
+	for(var/CE in combo_elements)
+		combo_hash += "[CE]#"
+
+	var/datum/combat_combo/CC = combat_combos[combo_hash]
+	if(CC && CC.can_execute(src))
+		next_combo = combat_combos[combo_hash]
+		set_combo_icon(next_combo.get_combo_icon())
+		next_combo.on_ready(victim, attacker)
+		combo_elements.Cut()
 
 /datum/combo_saved/proc/register_attack(combo_element, combo_value)
-	var/target_zone
-	if(attacker.zone_sel)
-		target_zone = attacker.zone_sel.selecting
-	else
-		target_zone = ran_zone(BP_CHEST)
+	if(!attacker)
+		return
 
+	last_hit_registered = world.time
 	if(combo_elements.len == 4)
 		combo_elements.Cut(1, 2)
+
 	if(attacker.hand != last_hand_hit)
 		combo_value *= 2
 		last_hand_hit = attacker.hand
@@ -78,6 +109,27 @@
 		combo_value *= 0.5
 
 	combo_elements += combo_element
+
+	fullness = min(100, fullness + combo_value)
+
+	if(next_combo)
+		var/datum/combat_combo/CC = next_combo
+		if(CC.can_execute(src, show_warning=TRUE))
+			next_combo = null
+			CC.pre_execute(victim, attacker)
+			INVOKE_ASYNC(CC, /datum/combat_combo.proc/animate_combo, victim, attacker)
+			CC.execute(victim, attacker)
+			fullness -= CC.fullness_lose_on_execute
+			set_combo_icon(null)
+			combo_elements.Cut()
+			register_attack(CC.name, 0)
+			return TRUE
+		else
+			set_combo_icon(null)
+			next_combo = null
+			combo_elements.Cut()
+	else
+		get_next_combo()
 
 	if(attacker.client)
 		for(var/combo_element_icon in combo_elements_icons)
@@ -104,44 +156,26 @@
 			attacker.client.images += C_EL_I
 			i++
 
-	fullness = min(100, fullness + combo_value)
-
-	if(next_combo)
-		var/datum/combat_combo/CC = next_combo
-		if(CC.can_execute(src))
-			next_combo = null
-			INVOKE_ASYNC(CC, /datum/combat_combo.proc/animate_combo, victim, attacker)
-			CC.pre_execute(victim, attacker)
-			CC.execute(victim, attacker)
-			fullness -= CC.fullness_lose_on_execute
-			set_combo_icon(null)
-			combo_elements = list()
-			register_attack(CC.name, 0)
-			return TRUE
-		else
-			set_combo_icon(null)
-			next_combo = null
-	else
-		var/combo_hash = "[target_zone]|"
-		for(var/CE in combo_elements)
-			combo_hash += "[CE]#"
-
-		var/datum/combat_combo/CC = combat_combos[combo_hash]
-		if(CC.can_execute(src))
-			next_combo = combat_combos[combo_hash]
-			set_combo_icon(next_combo.get_combo_icon())
-			next_combo.on_ready(victim, attacker)
+	INVOKE_ASYNC(src, .proc/animate_attack, combo_element, combo_value)
 
 	return FALSE
 
 /datum/combo_saved/proc/update()
+	if(!attacker)
+		return
+
 	if(combo_icon && (SSmob.times_fired % 3) == 0)
 		INVOKE_ASYNC(src, .proc/shake_combo_icon)
 
-	if(progbar)
-		progbar.update(fullness)
-	fullness--
-	if(fullness < 0)
+	if(!next_combo)
+		get_next_combo()
+
+	progbar.update(fullness)
+
+	var/fullness_to_remove = 0.7
+	fullness_to_remove = max(0.3, fullness_to_remove - length(attacker.combos_performed) * 0.1)
+	fullness -= fullness_to_remove
+	if(fullness < 0 || last_hit_registered + delete_after_no_hits < world.time)
 		attacker.combos_performed -= src
 		victim.combos_saved -= src
 
@@ -155,8 +189,10 @@
 			attacker.client.images -= c_el_i
 	combo_icon = null
 	combo_elements_icons.Cut()
-	QDEL_NULL(progbar)
-	victim = null
+	attacker.combo_animation = FALSE
+	attacker.attack_animation = FALSE
 	attacker = null
+	victim = null
+	QDEL_NULL(progbar)
 	next_combo = null
 	return ..()

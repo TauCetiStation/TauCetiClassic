@@ -10,7 +10,7 @@
 	using = new /obj/screen()
 	using.name = "act_intent"
 	using.icon = ui_style
-	using.icon_state = "intent_"+mymob.a_intent
+	using.icon_state = "intent_" + mymob.a_intent
 	using.screen_loc = ui_acti
 	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
@@ -76,7 +76,7 @@
 	using = new /obj/screen()
 	using.name = "mov_intent"
 	using.icon = ui_style
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
+	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	using.screen_loc = ui_movi
 	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE

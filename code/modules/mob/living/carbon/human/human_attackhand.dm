@@ -31,7 +31,7 @@
 	// COPYPASTE, somewhat unavoidable atm.
 	if(isturf(loc) && istype(loc.loc, /area/start))
 		to_chat(attacker, "No attacking people at spawn, you jackass.")
-		return
+		return FALSE
 
 	if((attacker != src) && check_shields(0, attacker.name, get_dir(attacker, src)))
 		visible_message("<span class='warning'><B>[attacker] attempted to touch [src]!</B></span>")

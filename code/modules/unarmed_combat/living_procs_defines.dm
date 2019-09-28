@@ -4,6 +4,77 @@
 	var/list/combos_performed = list()
 	var/list/combos_saved = list()
 
+	var/attack_animation = FALSE
+	var/combo_animation = FALSE
+
+var/global/combos_cheat_sheet = ""
+
+/mob/living/verb/read_possible_combos()
+	set name = "Combos Cheat Sheet"
+	set desc = "A list of all possible combos with rough descriptions."
+	set category = "IC"
+
+	if(!global.combos_cheat_sheet)
+		var/dat = "<center><b>Combos Cheat Sheet</b></center>"
+		for(var/CC_type in subtypesof(/datum/combat_combo))
+			var/datum/combat_combo/CC = new CC_type
+			dat += "<hr><p>"
+			dat += "<b>Name:</b> <i>[CC.name]</i><br>"
+			dat += "<b>Desc:</b> [CC.desc]<br>"
+			dat += "<b>Combopoints cost:</b> [CC.fullness_lose_on_execute]%<br>"
+
+			var/tz_txt = ""
+			var/first = TRUE
+			for(var/tz in CC.allowed_target_zones)
+				switch(tz)
+					if(BP_HEAD)
+						tz = "head"
+					if(BP_CHEST)
+						tz = "chest"
+					if(BP_GROIN)
+						tz = "groin"
+					if(BP_L_ARM)
+						tz = "left arm"
+					if(BP_R_ARM)
+						tz = "right arm"
+					if(BP_L_LEG)
+						tz = "left leg"
+					if(BP_R_LEG)
+						tz = "right leg"
+					if(O_EYES)
+						tz = "eyes"
+					if(O_MOUTH)
+						tz = "mouth"
+				if(first)
+					tz_txt += capitalize(tz)
+					first = FALSE
+				else
+					tz_txt += ", " + tz
+
+			dat += "<b>Allowed target zones:</b> [tz_txt]<br>"
+
+			var/combo_txt = ""
+			for(var/c_el in CC.combo_elements)
+				switch(c_el)
+					if(I_DISARM)
+						c_el = "<font color='dodgerblue'>[capitalize(c_el)]</font>"
+					if(I_GRAB)
+						c_el = "<font color='yellow'>[capitalize(c_el)]</font>"
+					if(I_HURT)
+						c_el = "<font color='red'>[capitalize(c_el)]</font>"
+					else
+						c_el = "<font color='grey'>[c_el]</font>"
+				combo_txt += c_el + " "
+
+			dat += "<b>Combo required:</b> [combo_txt]<br>"
+			dat += "</p></hr>"
+
+		global.combos_cheat_sheet = dat
+
+	var/datum/browser/popup = new /datum/browser(usr, "combos_list", "Combos Cheat Sheet", 500, 350)
+	popup.set_content(global.combos_cheat_sheet)
+	popup.open()
+
 /mob/living/proc/get_unarmed_attack()
 	var/retDam = 2
 	var/retDamType = BRUTE
@@ -99,12 +170,11 @@
 			return helpReaction(attacker)
 
 		if(I_DISARM)
-			var/combo_value = 3
+			var/combo_value = 2
 			if(!anchored) // Just to be sure...
 				var/turf/to_move = get_step(src, get_dir(attacker, src))
 				var/atom/A = get_step_away(src, get_turf(attacker))
 				if(A != to_move)
-					adjustHalLoss(3)
 					combo_value *= 2
 
 			if(attacker.engage_combat(src, I_DISARM, combo_value)) // We did a combo-wombo of some sort.
@@ -129,8 +199,11 @@
 /mob/living/proc/disarmReaction(mob/living/carbon/human/attacker)
 	attacker.do_attack_animation(src)
 
-	if(!anchored && (!attacker.small || small))
+	if(!anchored && (!attacker.small || small) && (attacker.maxHealth >= maxHealth)) // maxHealth is the current best size estimate.
+		var/turf/to_move = get_step(src, get_dir(attacker, src))
 		step_away(src, get_turf(attacker))
+		if(loc != to_move)
+			adjustHalLoss(4)
 
 	if(pulling)
 		visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [pulling]!</B></span>")
@@ -153,7 +226,7 @@
 /mob/living/proc/hurtReaction(mob/living/carbon/human/attacker)
 	attacker.do_attack_animation(src)
 
-	var/attack_obj = get_unarmed_attack()
+	var/attack_obj = attacker.get_unarmed_attack()
 	var/damage = attack_obj["damage"]
 	var/damType = attack_obj["type"]
 	var/damFlags = attack_obj["flags"]
@@ -172,10 +245,10 @@
 	msg_admin_attack("[key_name(attacker)] [damVerb]ed [key_name(src)]", attacker)
 
 	var/armor_block = 0
-	var/obj/item/organ/external/BP = ran_zone(attacker.zone_sel.selecting) // apply_damage accepts both the bodypart and the zone.
+	var/obj/item/organ/external/BP = attacker.get_targetzone() // apply_damage accepts both the bodypart and the zone.
 	if(ishuman(src)) // This is stupid. TODO: abstract get_armor() proc.
 		var/mob/living/carbon/human/H = src
-		BP = H.get_bodypart(ran_zone(attacker.zone_sel.selecting))
+		BP = H.get_bodypart(ran_zone(BP))
 		armor_block = run_armor_check(BP, "melee")
 
 	if(damSound)
@@ -199,10 +272,12 @@
 	if(!updates_combat)
 		return FALSE
 
+	if(src == target)
+		return FALSE
+
 	for(var/datum/combo_saved/CE in target.combos_saved)
 		if(CE.attacker == src)
-			INVOKE_ASYNC(CE, /datum/combo_saved.proc/animate_attack, combo_element, combo_value)
-			return CE.register_attack(combo_element, combo_value, zone_sel ? ran_zone(BP_CHEST) : zone_sel.selecting)
+			return CE.register_attack(combo_element, combo_value)
 
 	if(combo_value == 0) // We don't engage into combat with grabs.
 		return FALSE
@@ -211,8 +286,7 @@
 	target.combos_saved += CS
 	combos_performed += CS
 
-	INVOKE_ASYNC(CS, /datum/combo_saved.proc/animate_attack, combo_element, combo_value)
-	return CS.register_attack(combo_element, combo_value, zone_sel ? ran_zone(BP_CHEST) : zone_sel.selecting)
+	return CS.register_attack(combo_element, combo_value)
 
 // Returns TRUE if combo-combat is disengaged.
 /mob/living/proc/disengage_combat(mob/living/target, combo_element, combo_value)

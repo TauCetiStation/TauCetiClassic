@@ -92,6 +92,7 @@
 	return
 
 /mob/living/simple_animal/Life()
+	handle_combat() // Even in death we still fight.
 
 	// Health
 	if(stat == DEAD)

@@ -121,8 +121,8 @@
 			mob.control_object.loc = get_step(mob.control_object,direct)
 	return
 
-
-/client/Move(n, direct)
+// We don't use step_x and step_y, these are here so G-D FORBID SOMEBODY PASSES forced INTO step_x! ~Luduk
+/client/Move(n, direct, step_x = 0,step_y = 0, forced = FALSE)
 	if(!mob)
 		return // Moved here to avoid nullrefs below
 
@@ -130,9 +130,12 @@
 
 	if(isobserver(mob))	return mob.Move(n,direct)
 
-	if(moving || mob.throwing)	return 0
+	if(!forced)
+		if(moving || mob.throwing)
+			return FALSE
 
-	if(world.time < move_delay)	return
+		if(world.time < move_delay)
+			return FALSE
 
 	if(mob.stat==DEAD)	return
 
@@ -170,7 +173,7 @@
 			direct = pick(cardinal)
 		return mob.buckled.relaymove(mob,direct)
 
-	if(!mob.canmove)
+	if(!forced && !mob.canmove)
 		return
 
 	if(!mob.lastarea)

@@ -13,6 +13,7 @@
 	pass_flags = PASSTABLE | PASSMOB
 	small = TRUE
 	speak_chance = 1
+	melee_damage = 1
 	turns_per_move = 8
 	see_in_dark = 6
 	maxHealth = 15
@@ -21,6 +22,7 @@
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "stamps on the"
+	attacktext = "gnaw"
 	density = FALSE
 	var/body_color //brown, gray and white, leave blank for random
 	layer = MOB_LAYER

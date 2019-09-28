@@ -244,7 +244,7 @@
 			var/mob/living/A = G.assailant
 			user.SetNextMove(CLICK_CD_MELEE)
 			if (G.state < GRAB_AGGRESSIVE)
-				if(user.a_intent == "hurt")
+				if(user.a_intent == I_HURT)
 					slam(A, M, G)
 				else
 					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
