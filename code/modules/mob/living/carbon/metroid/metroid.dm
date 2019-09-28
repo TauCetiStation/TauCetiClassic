@@ -277,135 +277,26 @@
 		adjustFireLoss(30)
 
 		updatehealth()
-	return
 
-
-/mob/living/carbon/slime/attack_slime(mob/living/carbon/slime/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if(Victim) return // can't attack while eating!
-
-	if (health > -100)
-
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("<span class='warning'><B>The [M.name] has glomped []!</B></span>", src), 1)
-
-		var/damage = rand(1, 3)
-		attacked += 5
-
-		if(istype(src, /mob/living/carbon/slime/adult))
-			damage = rand(1, 6)
-		else
-			damage = rand(1, 3)
-
-		adjustBruteLoss(damage)
-
-
-		updatehealth()
-
-/mob/living/carbon/slime/attack_paw(mob/living/carbon/monkey/M)
-	if(!(istype(M, /mob/living/carbon/monkey)))	return//Fix for aliens receiving double messages when attacking other aliens.
-
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-	..()
-
-	switch(M.a_intent)
-
-		if ("help")
-			help_shake_act(M)
-		else
-			if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
-				return
-			if (health > 0)
-				attacked += 10
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[M.name] has attacked [src]!</B></span>"), 1)
-				adjustBruteLoss(rand(1, 3))
-				updatehealth()
-	return
-
-/mob/living/carbon/slime/attack_hand(mob/living/carbon/human/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-
-	..()
-
+/mob/living/carbon/slime/hurtReaction(mob/living/attacker)
 	if(Victim)
-		if(Victim == M)
-			if(prob(60))
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("<span class='warning'>[M] attempts to wrestle \the [name] off!</span>", 1)
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
-
-			else
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("<span class='warning'>[M] manages to wrestle \the [name] off!</span>", 1)
-				playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-
-				if(prob(90) && !client)
-					Discipline++
-
-				spawn()
-					SStun = 1
-					sleep(rand(45,60))
-					if(src)
-						SStun = 0
-
-				Victim = null
-				anchored = 0
-				step_away(src,M)
-
-			return
-
+		if(Victim == attacker)
+			visible_message("<span class='warning'>[attacker] attempts to wrestle \the [src] off!</span>")
+			playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+			return FALSE
 		else
-			M.do_attack_animation(src)
 			if(prob(30))
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [Victim]!</span>", 1)
+				visible_message("<span class='warning'>[attacker] attempts to wrestle \the [src] off!</span>")
 				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+				return FALSE
 
-			else
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message("<span class='warning'>[M] manages to wrestle \the [name] off of [Victim]!</span>", 1)
-				playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
+			if(prob(90) && !client)
+				Discipline++
 
-				if(prob(80) && !client)
-					Discipline++
-
-					if(!istype(src, /mob/living/carbon/slime/adult))
-						if(Discipline == 1)
-							attacked = 0
-
-				spawn()
-					SStun = 1
-					sleep(rand(55,65))
-					if(src)
-						SStun = 0
-
-				Victim = null
-				anchored = 0
-				step_away(src,M)
-
-			return
+			Victim = null
+			anchored = FALSE
+			step_away(src, attacker)
+			return TRUE
 
 	return ..()
 

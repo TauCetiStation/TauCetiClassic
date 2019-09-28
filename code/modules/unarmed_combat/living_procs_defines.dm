@@ -41,6 +41,48 @@
 /mob/living/attack_larva(mob/living/carbon/alien/larva/attacker)
 	return attack_unarmed(attacker)
 
+/mob/living/attack_slime(mob/living/carbon/slime/attacker)
+	if(attacker.Victim)
+		return FALSE
+	if(health <= -100)
+		return FALSE
+	attacker.attacked += 5
+
+	if(attacker.powerlevel > 0)
+		var/stunprob = 10
+		var/power = attacker.powerlevel + rand(0,3)
+
+		switch(attacker.powerlevel)
+			if(1 to 2) stunprob = 20
+			if(3 to 4) stunprob = 30
+			if(5 to 6) stunprob = 40
+			if(7 to 8) stunprob = 60
+			if(9) 	   stunprob = 70
+			if(10) 	   stunprob = 95
+
+		if(prob(stunprob))
+			attacker.powerlevel -= 3
+			if(attacker.powerlevel < 0)
+				attacker.powerlevel = 0
+
+			visible_message("<span class='warning bold'>The [attacker] has shocked [src]!</span>")
+
+			Weaken(power)
+			if(stuttering < power)
+				stuttering = power
+			Stun(power)
+
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			s.set_up(5, 1, src)
+			s.start()
+
+			flash_eyes(affect_silicon = TRUE)
+
+			if(prob(stunprob) && attacker.powerlevel >= 8)
+				adjustFireLoss(attacker.powerlevel * rand(6, 10))
+
+	return attack_unarmed(attacker)
+
 /mob/living/proc/attack_unarmed(mob/living/attacker)
 	if(isturf(loc) && istype(loc.loc, /area/start))
 		to_chat(attacker, "No attacking people at spawn, you jackass.")

@@ -33,8 +33,5 @@
 		layer = MOB_LAYER
 		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
 
-//Actual picking-up event.
-/mob/living/silicon/robot/drone/attack_hand(mob/living/carbon/human/attacker)
-	if(attacker.a_intent == I_HELP)
-		get_scooped(attacker)
-	..()
+/mob/living/silicon/robot/drone/helpReaction(mob/living/carbon/human/attacker)
+	get_scooped(attacker)

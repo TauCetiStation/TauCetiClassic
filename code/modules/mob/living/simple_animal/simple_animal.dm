@@ -243,29 +243,6 @@
 	return ..()
 
 
-/mob/living/simple_animal/attack_slime(mob/living/carbon/slime/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if(M.Victim)
-		return // can't attack while eating!
-
-	visible_message("<span class='danger'>The [M.name] glomps [src]!</span>")
-
-	var/damage = rand(1, 3)
-
-	if(istype(src, /mob/living/carbon/slime/adult))
-		damage = rand(20, 40)
-	else
-		damage = rand(5, 35)
-
-	adjustBruteLoss(damage)
-
-
-	return
-
-
 /mob/living/simple_animal/attackby(obj/item/O, mob/user) // Marker -Agouri
 	if(istype(O, /obj/item/stack/medical))
 		if(stat != DEAD)
