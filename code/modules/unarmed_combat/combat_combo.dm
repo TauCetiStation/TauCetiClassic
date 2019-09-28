@@ -16,6 +16,8 @@ var/global/list/combat_combos = list()
 
 	var/needs_logging = TRUE // Do we need to PM admins about this combo?
 
+	var/victimMaxHealth = 200 // Current best size estimate.
+
 /datum/combat_combo/proc/get_hash()
 	. = list()
 	for(var/TZ in allowed_target_zones)
@@ -26,6 +28,10 @@ var/global/list/combat_combos = list()
 
 /datum/combat_combo/proc/can_execute(datum/combo_saved/CS)
 	if(CS.attacker.incapacitated())
+		return FALSE
+	if(CS.attacker.small && !CS.victim.small)
+		return FALSE
+	if(CS.victim.maxHealth > victimMaxHealth)
 		return FALSE
 	if(CS.fullness < fullness_lose_on_execute)
 		return FALSE

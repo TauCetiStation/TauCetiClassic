@@ -1,41 +1,19 @@
 /*----------------------------------------
 This is what happens, when we attack aliens.
 ----------------------------------------*/
-/mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
+/mob/living/carbon/alien/get_unarmed_attack()
+	var/retDam = 23
+	var/retDamType = BRUTE
+	var/retFlags = DAM_SHARP
+	var/retVerb = "slash"
+	var/retSound = 'sound/weapons/slice.ogg'
+	var/retMissSound = 'sound/weapons/slashmiss.ogg'
 
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
+	if(HULK in mutations)
+		retDam += 4
 
-	..()
-
-	switch(M.a_intent)
-
-		if ("help")
-			sleeping = max(0,sleeping-5)
-			resting = 0
-			AdjustParalysis(-3)
-			AdjustStunned(-3)
-			AdjustWeakened(-3)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='notice'>[M.name] nuzzles [] trying to wake it up!</span>", src), 1)
-
-		else
-			if (health > 0)
-				playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
-				var/damage = rand(1, 3)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[M.name] has bit []!</B></span>", src), 1)
-				adjustBruteLoss(damage)
-				updatehealth()
-			else
-				to_chat(M, "<span class='notice'><B>[name] is too injured for that.</B></span>")
-	return
+	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound,
+				"miss_sound" = retMissSound)
 
 /mob/living/carbon/alien/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker)

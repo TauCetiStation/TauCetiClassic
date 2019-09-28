@@ -12,7 +12,6 @@
 	neurotoxin_delay = 10
 	ventcrawler = 0
 
-
 /mob/living/carbon/alien/humanoid/queen/atom_init()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R

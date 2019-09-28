@@ -231,25 +231,6 @@
 			parrot_state |= PARROT_FLEE		//Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
 
-/mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/monkey/M)
-	attack_hand(M)
-
-/mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/monkey/M)
-	attack_hand(M)
-
-//Simple animals
-/mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/attacker)
-	if(!client)
-		if(parrot_state == PARROT_PERCH)
-			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
-
-		if(attacker.melee_damage > 0)
-			parrot_interest = attacker
-			parrot_state = PARROT_SWOOP | PARROT_ATTACK //Attack other animals regardless
-			icon_state = "parrot_fly"
-
-	return ..()
-
 //Mobs with objects
 /mob/living/simple_animal/parrot/attackby(obj/item/O, mob/user)
 	..()

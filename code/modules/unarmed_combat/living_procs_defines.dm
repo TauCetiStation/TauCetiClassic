@@ -32,6 +32,15 @@
 		return TRUE
 	return attack_unarmed(attacker)
 
+/mob/living/attack_alien(mob/living/carbon/alien/attacker)
+	return attack_unarmed(attacker)
+
+/mob/living/attack_facehugger(mob/living/carbon/alien/facehugger/attacker)
+	return attack_unarmed(attacker)
+
+/mob/living/attack_larva(mob/living/carbon/alien/larva/attacker)
+	return attack_unarmed(attacker)
+
 /mob/living/proc/attack_unarmed(mob/living/attacker)
 	if(isturf(loc) && istype(loc.loc, /area/start))
 		to_chat(attacker, "No attacking people at spawn, you jackass.")
@@ -78,7 +87,7 @@
 /mob/living/proc/disarmReaction(mob/living/carbon/human/attacker)
 	attacker.do_attack_animation(src)
 
-	if(!anchored)
+	if(!anchored && (!attacker.small || small))
 		step_away(src, get_turf(attacker))
 
 	if(pulling)

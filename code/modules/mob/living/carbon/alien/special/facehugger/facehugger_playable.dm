@@ -82,26 +82,47 @@
 /mob/living/carbon/alien/facehugger/attack_ui(slot_id)
 	return
 
-// This is modified grab mechanic for facehugger
-/mob/living/carbon/attack_facehugger(mob/living/carbon/alien/facehugger/FH)
-	if((!ishuman(src) && !ismonkey(src)) || istype(src, /mob/living/carbon/human/machine))
+/mob/living/carbon/alien/facehugger/get_unarmed_attack()
+	var/retDam = 2
+	var/retDamType = BRUTE
+	var/retFlags = DAM_SHARP
+	var/retVerb = "gnaw"
+	var/retSound = 'sound/weapons/bite.ogg'
+	var/retMissSound = 'sound/weapons/punchmiss.ogg'
+
+	if(HULK in mutations)
+		retDam += 4
+
+	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound,
+				"miss_sound" = retMissSound)
+
+/mob/living/carbon/alien/facehugger/Grab(atom/movable/target, force_state, show_warnings = TRUE)
+	if((!ishuman(target) && !ismonkey(target)))
+		if(show_warnings)
+			to_chat(src, "<span class='warning'>[target] is incompatible.</span>")
 		return FALSE
-	if(FH.a_intent == I_GRAB)
-		if(src.stat != DEAD)
-			if(FH == src)
-				return
-			var/obj/item/weapon/fh_grab/G = new /obj/item/weapon/fh_grab(FH, src)
 
-			FH.put_in_active_hand(G)
+	var/mob/living/carbon/C = target
+	if(C.get_species() in list(DIONA, IPC, GOLEM, SLIME, SHADOWLING))
+		if(show_warnings)
+			to_chat(src, "<span class='warning'>[target] is incompatible.</span>")
+		return FALSE
 
-			grabbed_by += G
-			FH.SetNextMove(CLICK_CD_ACTION)
-			G.synch()
-			LAssailant = FH
+	if(C.stat == DEAD)
+		if(show_warnings)
+			to_chat(src, "<span class='warning'>[target] looks dead.</span>")
+		return FALSE
 
-			FH.visible_message("<span class='danger'>[FH] atempts to leap at [src] face!</span>")
-		else
-			to_chat(FH, "<span class='warning'>looks dead.</span>")
+	var/obj/item/weapon/fh_grab/G = new /obj/item/weapon/fh_grab(src, target)
+
+	put_in_active_hand(G)
+
+	C.grabbed_by += G
+	SetNextMove(CLICK_CD_ACTION)
+	G.synch()
+	C.LAssailant = src
+
+	target.visible_message("<span class='danger'>[src] atempts to leap at [C]'s face!</span>")
 
 /*
  * This is called when facehugger has grabbed(left click) and then

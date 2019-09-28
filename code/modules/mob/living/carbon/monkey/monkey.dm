@@ -184,64 +184,6 @@
 	help_shake_act(attacker)
 	get_scooped(attacker)
 
-/mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-
-	switch(M.a_intent)
-		if ("help")
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>"), 1)
-
-		if ("hurt")
-			if ((prob(95) && health > 0))
-				playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
-				var/damage = rand(15, 30)
-				if (damage >= 25)
-					damage = rand(20, 40)
-					if (paralysis < 15)
-						Paralyse(rand(10, 15))
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='warning'><B>[] has wounded [name]!</B></span>", M), 1)
-				else
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='warning'><B>[] has slashed [name]!</B></span>", M), 1)
-				adjustBruteLoss(damage)
-				updatehealth()
-			else
-				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has attempted to lunge at [name]!</B></span>", M), 1)
-
-		if ("grab")
-			M.Grab(src)
-
-		if ("disarm")
-			playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS_MASTER)
-			var/damage = 5
-			if(prob(95))
-				Weaken(15)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has tackled down [name]!</B></span>", M), 1)
-			else
-				drop_item()
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has disarmed [name]!</B></span>", M), 1)
-			adjustBruteLoss(damage)
-			updatehealth()
-	return
-
 /mob/living/carbon/monkey/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")

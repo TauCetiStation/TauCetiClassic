@@ -235,40 +235,12 @@
 	adjustBruteLoss(Proj.damage)
 	return 0
 
-/mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M)
-
-	switch(M.a_intent)
-
-		if ("help")
-
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>"), 1)
-		if ("grab")
-			M.Grab(src)
-
-		if("hurt", "disarm")
-			var/damage = rand(15, 30)
-			visible_message("<span class='warning'><B>[M] has slashed at [src]!</B></span>")
-			adjustBruteLoss(damage)
-
-	return
-
-/mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L)
-
-	switch(L.a_intent)
-		if("help")
-			visible_message("<span class='notice'>[L] rubs it's head against [src]</span>")
-
-
-		else
-
-			var/damage = rand(5, 10)
-			visible_message("<span class='warning'><B>[L] bites [src]!</B></span>")
-
-			if(stat != DEAD)
-				adjustBruteLoss(damage)
-				L.amount_grown = min(L.amount_grown + damage, L.max_grown)
+/mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/attacker)
+	if(attacker.a_intent == I_HURT && stat != DEAD)
+		var/attack_obj = attacker.get_unarmed_attack()
+		var/atk_damage = attack_obj["damage"]
+		attacker.amount_grown = min(attacker.amount_grown + atk_damage, attacker.max_grown)
+	return ..()
 
 
 /mob/living/simple_animal/attack_slime(mob/living/carbon/slime/M)

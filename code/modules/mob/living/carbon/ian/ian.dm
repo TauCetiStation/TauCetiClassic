@@ -445,49 +445,6 @@
 	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound,
 				"miss_sound" = retMissSound)
 
-/mob/living/carbon/ian/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if (!ticker.mode)
-		to_chat(M, "<span class='warning'>You cannot attack people before the game has started.</span>")
-		return
-
-	switch(M.a_intent)
-		if ("help")
-			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
-		if ("hurt")
-			if(prob(95))
-				if(is_armored(M, 25))
-					playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-					return
-				playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
-				var/damage = rand(15, 30)
-				if (damage >= 25)
-					damage = rand(20, 40)
-					if (paralysis < 15)
-						Paralyse(rand(10, 15))
-					visible_message("<span class='danger'>has wounded [name]!</span>")
-				else
-					visible_message("<span class='danger'>has slashed [name]!</span>")
-				adjustBruteLoss(damage)
-				updatehealth()
-			else
-				playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-				visible_message("<span class='danger'>has attempted to lunge at [name]!</span>")
-		if ("grab")
-			M.Grab(src)
-		if ("disarm")
-			playsound(src, 'sound/weapons/pierce.ogg', VOL_EFFECTS_MASTER)
-			if(is_armored(M, 35))
-				return
-			var/damage = 5
-			if(prob(95))
-				Weaken(8)
-				visible_message("<span class='danger'>[M] has tackled down [name]!</span>")
-			else
-				drop_item()
-				visible_message("<span class='danger'>[M] has disarmed [name]!</span>")
-			adjustBruteLoss(damage)
-			updatehealth()
-
 /mob/living/carbon/ian/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
 		return
