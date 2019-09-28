@@ -164,6 +164,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/after_throw(datum/callback/callback)
+	..()
 	if(is_glass)
 		var/obj/item/weapon/broken_bottle/BB =  new /obj/item/weapon/broken_bottle(loc)
 		var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
