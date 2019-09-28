@@ -218,7 +218,7 @@ var/can_call_ert
 
 	M.real_name = commando_name
 	M.name = commando_name
-	M.age = !leader_selected ? rand(M.species.min_age, M.species.max_age) : rand(M.species.min_age * 1.25, M.species.max_age * 1.25)
+	M.age = !leader_selected ? rand(M.species.min_age, M.species.min_age * 1.5) : rand(M.species.min_age * 1.25, M.species.min_age * 1.75)
 
 	M.dna.ready_dna(M)//Creates DNA.
 
