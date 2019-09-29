@@ -1,4 +1,5 @@
 var/global/list/combat_combos = list()
+var/global/list/combat_combos_by_name = list()
 
 /datum/combat_combo
 	var/name = "Combat_Combo" // These are used as combo_elements...

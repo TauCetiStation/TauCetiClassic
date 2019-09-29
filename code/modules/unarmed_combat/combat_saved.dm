@@ -1,6 +1,6 @@
 /datum/combo_saved
 	var/last_hit_registered = 0
-	var/delete_after_no_hits = 15 SECONDS
+	var/delete_after_no_hits = 10 SECONDS
 
 	var/fullness = 0
 	var/image/combo_icon
@@ -28,17 +28,21 @@
 	if(new_icon)
 		combo_icon = new_icon
 		combo_icon.loc = victim
-		attacker.client.images += combo_icon
-		var/matrix/M = matrix()
-		M.Scale(0.1)
-		combo_icon.transform = M
-		var/matrix/N = matrix()
-		animate(combo_icon, transform=N, time=2)
+		if(attacker.client)
+			attacker.client.images += combo_icon
+			var/matrix/M = matrix()
+			M.Scale(0.1)
+			combo_icon.transform = M
+			var/matrix/N = matrix()
+			animate(combo_icon, transform=N, time=2)
 
 		INVOKE_ASYNC(src, .proc/shake_combo_icon)
 
 /datum/combo_saved/proc/shake_combo_icon()
 	sleep(2) // This is here for set_combo_icon to properly animate the icon.
+
+	if(!attacker.client)
+		return
 
 	var/matrix/M = matrix()
 	for(var/i in 1 to 3)
@@ -76,9 +80,9 @@
 	for(var/CE in combo_elements)
 		combo_hash += "[CE]#"
 
-	var/datum/combat_combo/CC = combat_combos[combo_hash]
+	var/datum/combat_combo/CC = global.combat_combos[combo_hash]
 	if(CC && CC.can_execute(src))
-		next_combo = combat_combos[combo_hash]
+		next_combo = global.combat_combos[combo_hash]
 		set_combo_icon(next_combo.get_combo_icon())
 		next_combo.on_ready(victim, attacker)
 		combo_elements.Cut()
