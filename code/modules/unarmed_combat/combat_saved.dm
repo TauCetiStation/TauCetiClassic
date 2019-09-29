@@ -104,6 +104,11 @@
 	if(victim.incapacitated())
 		combo_value *= 0.5
 
+	if(attacker.crawling) // Suffer, crawling scum.
+		combo_value *= 0.5
+	if(victim.crawling) // SUFFER CRAWLING SCUM.
+		combo_value *= 2.0
+
 	combo_elements += combo_element
 
 	fullness = min(100, fullness + combo_value)
