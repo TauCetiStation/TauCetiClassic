@@ -571,22 +571,23 @@
 	if(attacker.buckled)
 		attacker.buckled.unbuckle_mob()
 
-	var/DTM = get_dir(attacker, victim)
+	var/dropkick_dir = get_dir(attacker, victim)
+	var/face_dir = get_dir(victim, attacker)
 	var/shift_x = 0
 	var/shift_y = 0
 
 	var/matrix/M = matrix()
 
-	if(DTM & NORTH)
+	if(dropkick_dir & NORTH)
 		shift_y = 16
 		M.Turn(pick(180, -180))
-	else if(DTM & SOUTH)
+	else if(dropkick_dir & SOUTH)
 		shift_y = -16
 
-	if(DTM & EAST)
+	if(dropkick_dir & EAST)
 		shift_x = 16
 		M.Turn(-90)
-	else if(DTM & WEST)
+	else if(dropkick_dir & WEST)
 		shift_x = -16
 		M.Turn(90)
 
@@ -601,9 +602,6 @@
 
 	animate(attacker, pixel_x = attacker.pixel_x + shift_x, pixel_y = attacker.pixel_y + shift_y, transform  = M, time = 3)
 	sleep(3)
-
-	var/dropkick_dir = get_dir(attacker, victim)
-	var/face_dir = get_dir(victim, attacker)
 
 	attacker.pixel_x = prev_pix_x
 	attacker.pixel_y = prev_pix_y
@@ -633,7 +631,7 @@
 
 	var/i = 1
 	for(var/try_step in 1 to try_steps)
-		var/cur_movers = list() + movers
+		var/cur_movers = list() + collected
 
 		for(var/mob/living/L in cur_movers)
 			var/atom/old_L_loc = L.loc
@@ -816,7 +814,7 @@
 
 					victim_G.adjust_position(adjust_time=0, force_loc = TRUE, force_dir = attacker.dir)
 
-					victim.Stun(min(0, 2 - victim.stunned))
+					victim.Stun(max(0, 2 - victim.stunned))
 
 					if(!do_after(attacker, cur_spin_time, target = victim, progress = FALSE))
 						break grab_stages_loop

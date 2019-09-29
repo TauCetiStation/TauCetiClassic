@@ -22,6 +22,9 @@
 	progbar = new(attacker, 100, victim)
 
 /datum/combo_saved/proc/set_combo_icon(image/new_icon)
+	if(!attacker)
+		return
+
 	if(combo_icon && attacker.client)
 		attacker.client.images -= combo_icon
 
@@ -41,7 +44,7 @@
 /datum/combo_saved/proc/shake_combo_icon()
 	sleep(2) // This is here for set_combo_icon to properly animate the icon.
 
-	if(!attacker.client)
+	if(!attacker || !attacker.client)
 		return
 
 	var/matrix/M = matrix()

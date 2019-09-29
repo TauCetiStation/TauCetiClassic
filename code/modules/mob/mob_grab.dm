@@ -517,7 +517,7 @@
 						assailant.visible_message("<span class='danger'>[assailant] thrusts \his head into [affecting]'s skull!</span>")
 						var/damage = 20
 						if(iscarbon(assailant))
-							var/mob/living/carbon/assailant_C
+							var/mob/living/carbon/assailant_C = assailant
 							var/obj/item/clothing/hat = assailant_C.head
 							if(istype(hat))
 								damage += hat.force * 10
