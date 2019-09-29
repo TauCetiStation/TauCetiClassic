@@ -19,7 +19,7 @@
 
 	src.attacker = attacker
 	src.victim = victim
-	progbar = new(attacker, 100, victim)
+	progbar = new(attacker, 100, victim, my_icon_state="combat_prog_bar", insert_under=TRUE)
 
 /datum/combo_saved/proc/set_combo_icon(image/new_icon)
 	if(!attacker)
@@ -30,6 +30,7 @@
 
 	if(new_icon)
 		combo_icon = new_icon
+		combo_icon.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		combo_icon.loc = victim
 		if(attacker.client)
 			attacker.client.images += combo_icon
@@ -76,6 +77,35 @@
 
 	A.attack_animation = FALSE
 
+/datum/combo_saved/proc/update_combo_elements()
+	if(attacker && attacker.client)
+		for(var/combo_element_icon in combo_elements_icons)
+			attacker.client.images -= combo_element_icon
+
+		var/i = 1
+		for(var/c_el in combo_elements)
+			var/CC_icon_state = "combo_element_combo"
+			switch(c_el)
+				if(I_HELP)
+					CC_icon_state = "combo_element_help"
+				if(I_DISARM)
+					CC_icon_state = "combo_element_disarm"
+				if(I_GRAB)
+					CC_icon_state = "combo_element_grab"
+				if(I_HURT)
+					CC_icon_state = "combo_element_hurt"
+			var/image/C_EL_I = image(icon='icons/mob/unarmed_combat_combos.dmi', icon_state="[CC_icon_state]_[i]")
+			C_EL_I.loc = victim
+			C_EL_I.layer = ABOVE_HUD_LAYER
+			C_EL_I.plane = ABOVE_HUD_PLANE
+			C_EL_I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+			C_EL_I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+			C_EL_I.pixel_x = 8
+			C_EL_I.pixel_y = -2
+			combo_elements_icons += C_EL_I
+			attacker.client.images += C_EL_I
+			i++
+
 /datum/combo_saved/proc/get_next_combo()
 	var/target_zone = attacker.get_targetzone()
 
@@ -89,6 +119,9 @@
 		set_combo_icon(next_combo.get_combo_icon())
 		next_combo.on_ready(victim, attacker)
 		combo_elements.Cut()
+
+		return TRUE
+	return FALSE
 
 /datum/combo_saved/proc/register_attack(combo_element, combo_value)
 	if(!attacker)
@@ -135,32 +168,7 @@
 	else
 		get_next_combo()
 
-	if(attacker.client)
-		for(var/combo_element_icon in combo_elements_icons)
-			attacker.client.images -= combo_element_icon
-
-		var/i = 1
-		for(var/c_el in combo_elements)
-			var/CC_icon_state = "combo_element_combo"
-			switch(c_el)
-				if(I_HELP)
-					CC_icon_state = "combo_element_help"
-				if(I_DISARM)
-					CC_icon_state = "combo_element_disarm"
-				if(I_GRAB)
-					CC_icon_state = "combo_element_grab"
-				if(I_HURT)
-					CC_icon_state = "combo_element_hurt"
-			var/image/C_EL_I = image(icon='icons/mob/unarmed_combat_combos.dmi', icon_state="[CC_icon_state]_[i]")
-			C_EL_I.loc = victim
-			C_EL_I.layer = ABOVE_HUD_LAYER
-			C_EL_I.plane = ABOVE_HUD_PLANE
-			C_EL_I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-			C_EL_I.pixel_y = -2
-			C_EL_I.pixel_x = 3
-			combo_elements_icons += C_EL_I
-			attacker.client.images += C_EL_I
-			i++
+	update_combo_elements()
 
 	if(combo_element == I_DISARM || combo_element == I_HURT)
 		INVOKE_ASYNC(src, .proc/animate_attack, combo_element, combo_value, victim, attacker)
@@ -174,8 +182,8 @@
 	if(combo_icon && (SSmob.times_fired % 3) == 0)
 		INVOKE_ASYNC(src, .proc/shake_combo_icon)
 
-	if(!next_combo)
-		get_next_combo()
+	if(!next_combo && get_next_combo())
+		update_combo_elements()
 
 	progbar.update(fullness)
 

@@ -27,13 +27,23 @@
 	item_state = "nothing"
 	w_class = ITEM_SIZE_HUGE
 
-/mob/proc/Grab(atom/movable/target, force_state, show_warnings = TRUE)
+/mob/proc/canGrab(atom/movable/target, show_warnings = TRUE)
 	if(QDELETED(src) || QDELETED(target))
+		return FALSE
+	if(target == src)
+		return FALSE
+	if(!isturf(target.loc))
+		return FALSE
+	if(incapacitated())
+		return FALSE
+	if(target.anchored)
+		return FALSE
+	return TRUE
+
+/mob/proc/Grab(atom/movable/target, force_state, show_warnings = TRUE)
+	if(!canGrab(target, show_warnings))
 		return
-	if(lying || target == src || target.anchored)
-		return
-	if(!isturf(target.loc) || restrained())
-		return
+
 	for(var/obj/item/weapon/grab/G in GetGrabs())
 		if(G.affecting == target)
 			if(show_warnings)

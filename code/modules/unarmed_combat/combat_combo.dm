@@ -16,8 +16,6 @@ var/global/list/combat_combos_by_name = list()
 
 	var/needs_logging = TRUE // Do we need to PM admins about this combo?
 
-	var/victimMaxHealth = 200 // Current best size estimate.
-
 /datum/combat_combo/proc/get_hash()
 	. = list()
 	for(var/TZ in allowed_target_zones)
@@ -47,7 +45,7 @@ var/global/list/combat_combos_by_name = list()
 		if(show_warning)
 			to_chat(CS.attacker, "<span class='notice'>[CS.victim] is too big for you to perform <b>[name]</b>.</span>")
 		return FALSE
-	if(CS.victim.maxHealth > victimMaxHealth)
+	if(CS.victim.maxHealth > CS.attacker.maxHealth) // Current best size estimate.
 		if(show_warning)
 			to_chat(CS.attacker, "<span class='notice'>[CS.victim] is too big for you to perform <b>[name]</b>.</span>")
 		return FALSE

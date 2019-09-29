@@ -627,38 +627,44 @@
 
 	var/list/collected = list(victim)
 	var/list/movers = list("1" = victim)
-	var/list/prev_pixs = list("1" = list("pix_x" = victim.pixel_x, "pix_y" = victim.pixel_y))
+	var/list/prev_info = list("1" = list("pix_x" = victim.pixel_x, "pix_y" = victim.pixel_y, "pass_flags" = victim.pass_flags))
 
 	var/i = 1
 	for(var/try_step in 1 to try_steps)
 		var/cur_movers = list() + collected
 
-		for(var/mob/living/L in cur_movers)
-			var/atom/old_L_loc = L.loc
-			step(L, dropkick_dir)
+		var/atom/old_V_loc = victim.loc
+		step(victim, dropkick_dir)
 
-			if(old_L_loc == L.loc)
-				new_movers:
-					for(var/mob/living/new_mover in L.loc)
-						if(new_mover == attacker)
-							continue new_movers
-						if(new_mover in collected)
-							continue new_movers
-						if(!new_mover.anchored)
-							collected += new_mover
-							new_mover.Stun(1)
-							i++
-							movers["[i]"] = new_mover
-							prev_pixs["[i]"] = list("pix_x" = new_mover.pixel_x, "pix_y" = new_mover.pixel_y)
-							new_mover.pixel_x += rand(-8, 8)
-							new_mover.pixel_y += rand(-8, 8)
+		if(old_V_loc != victim.loc)
+			var/list/candidates = victim.loc.contents - list(victim)
+			new_movers:
+				for(var/mob/living/new_mover in candidates)
+					if(new_mover == attacker)
+						continue new_movers
+					if(new_mover in collected)
+						continue new_movers
+					if(!new_mover.anchored)
+						collected += new_mover
+						new_mover.Stun(1)
+						i++
+						movers["[i]"] = new_mover
+						prev_info["[i]"] = list("pix_x" = new_mover.pixel_x, "pix_y" = new_mover.pixel_y, "pass_flags" = new_mover.pass_flags)
+						new_mover.pixel_x += rand(-8, 8)
+						new_mover.pixel_y += rand(-8, 8)
+						new_mover.pass_flags |= PASSMOB|PASSCRAWL
+
+		for(var/mob/living/L in cur_movers)
+			INVOKE_ASYNC(GLOBAL_PROC, .proc/_step, L, dropkick_dir)
+
 		sleep(attacker.movement_delay() * 0.75) // Since they were the one to push.
 
 	for(var/j in 1 to i)
 		var/mob/living/L = movers["[j]"]
-		var/list/prev_pixs_el = prev_pixs["[j]"]
-		L.pixel_x = prev_pixs_el["pix_x"]
-		L.pixel_y = prev_pixs_el["pix_y"]
+		var/list/prev_info_el = prev_info["[j]"]
+		L.pixel_x = prev_info_el["pix_x"]
+		L.pixel_y = prev_info_el["pix_y"]
+		L.pass_flags = prev_info_el["pass_flags"]
 		L.apply_effect(5, WEAKEN, blocked = 0)
 
 	attacker.become_not_busy(victim, _hand = 0)
