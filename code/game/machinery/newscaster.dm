@@ -719,27 +719,23 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 	if (src.isbroken)
 		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
-		for (var/mob/O in hearers(5, src.loc))
-			O.show_message("<EM>[user.name]</EM> further abuses the shattered [src.name].")
+		user.visible_message("<EM>[user.name]</EM> further abuses the shattered [src.name].")
 	else
 		if(istype(I, /obj/item/weapon) )
 			user.do_attack_animation(src)
 			user.SetNextMove(CLICK_CD_MELEE)
 			var/obj/item/weapon/W = I
 			if(W.force <15)
-				for (var/mob/O in hearers(5, src.loc))
-					O.show_message("[user.name] hits the [src.name] with the [W.name] with no visible effect." )
-					playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+				user.visible_message("[user.name] hits the [src.name] with the [W.name] with no visible effect.")
+				playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 			else
 				src.hitstaken++
 				if(src.hitstaken==3)
-					for (var/mob/O in hearers(5, src.loc))
-						O.show_message("[user.name] smashes the [src.name]!" )
+					user.visible_message("[user.name] smashes the [src.name]!")
 					src.isbroken=1
 					playsound(src, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER)
 				else
-					for (var/mob/O in hearers(5, src.loc))
-						O.show_message("[user.name] forcefully slams the [src.name] with the [I.name]!" )
+					user.visible_message("[user.name] forcefully slams the [src.name] with the [I.name]!")
 					playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 		else
 			to_chat(user, "<span class='info'>This does nothing.</span>")
@@ -964,19 +960,16 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 ///obj/machinery/newscaster/process()       //Was thinking of doing the icon update through process, but multiple iterations per second does not
 //	return                                  //bode well with a newscaster network of 10+ machines. Let's just return it, as it's added in the machines list.
 
-/obj/machinery/newscaster/proc/newsAlert(channel)   //This isn't Agouri's work, for it is ugly and vile.
-	var/turf/T = get_turf(src)                      //Who the fuck uses spawn(600) anyway, jesus christ
+/obj/machinery/newscaster/proc/newsAlert(channel)
 	if(channel)
-		for(var/mob/O in hearers(world.view-1, T))
-			O.show_message("<span class='newscaster'><EM>[src.name]</EM> beeps, \"Breaking news from [channel]!\"</span>",2)
-		src.alert = 1
-		src.update_icon()
+		audible_message("<span class='newscaster'><EM>[name]</EM> beeps, \"Breaking news from [channel]!\"</span>")
+		alert = 1
+		update_icon()
 		spawn(300)
-			src.alert = 0
-			src.update_icon()
+			alert = 0
+			update_icon()
 		playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 	else
-		for(var/mob/O in hearers(world.view-1, T))
-			O.show_message("<span class='newscaster'><EM>[src.name]</EM> beeps, \"Attention! Wanted issue distributed!\"</span>",2)
+		audible_message("<span class='newscaster'><EM>[name]</EM> beeps, \"Attention! Wanted issue distributed!\"</span>")
 		playsound(src, 'sound/machines/warning-buzzer.ogg', VOL_EFFECTS_MASTER)
 	return

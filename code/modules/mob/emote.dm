@@ -6,7 +6,8 @@
 		return
 
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
-	if(m_type == SHOWMSG_SOUND && muzzled) return
+	if(m_type == SHOWMSG_AUDIO && muzzled)
+		return
 
 	if(!message)
 		message = sanitize(input(src,"Choose an emote to display.") as text|null)
@@ -19,14 +20,11 @@
 
 	if (message)
 		log_emote("[name]/[key] : [message]")
- //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
- // Maybe some people are okay with that.
-		if(findtext(message," snores.") == 0)
-			for(var/mob/M in player_list)
-				if(isnewplayer(M))
-					continue
-				if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src, null)))
-					M.show_message(message)
+ 		
+		if(findtext(message," snores.") == 0) // Hearing gasp and such every five seconds is not good emotes were not global for a reason.
+			for(var/mob/M in observer_list)
+				if((M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src, null)))
+					to_chat(M, message)
 
 		var/list/to_check
 		var/list/feel_emote
@@ -36,7 +34,7 @@
 			to_check = viewers(src, null)
 		// Type 2 (Audible) emotes are sent to anyone in hear range
 		// of the *LOCATION* -- this is important for pAIs to be heard
-		else if(m_type & SHOWMSG_SOUND)
+		else if(m_type & SHOWMSG_AUDIO)
 			to_check = hearers(get_turf(src), null)
 
 		for(var/mob/O in to_check)
@@ -84,4 +82,4 @@
 				to_chat(M, message)
 
 			else if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD)) // Show the emote to regular ghosts with deadchat toggled on
-				M.show_message(message, 2)
+				to_chat(M, message)

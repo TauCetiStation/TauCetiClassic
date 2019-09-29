@@ -920,7 +920,7 @@ var/list/cult_runes = list()
 			C.disabilities |= NEARSIGHTED
 			if(prob(10))
 				C.sdisabilities |= BLIND
-		C.show_message("<span class='userdanger'>Suddenly you see red flash that blinds you.</span>", 3)
+		C.show_message("<span class='userdanger'>Suddenly you see red flash that blinds you.</span>", SHOWMSG_VISUAL)
 	qdel(holder)
 
 /datum/cult/bloodboil
@@ -969,7 +969,7 @@ var/list/cult_runes = list()
 			C.stuttering = 1
 			C.Weaken(stun_modifier)
 			C.Stun(stun_modifier)
-			C.show_message("<span class='userdanger'>The rune explodes in a bright flash.</span>", 3)
+			C.show_message("<span class='userdanger'>The rune explodes in a bright flash.</span>", SHOWMSG_VISUAL)
 	qdel(holder)
 
 /datum/cult/stun/talisman_reaction(mob/living/carbon/user, mob/living/affected)

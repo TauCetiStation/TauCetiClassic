@@ -142,7 +142,7 @@
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(broken)
-		user.show_message("<span class='warning'>The [src.name] is broken</span>", 2)
+		to_chat(user, "<span class='warning'>The [src.name] is broken</span>")
 		return
 
 	flash_recharge()
@@ -158,7 +158,7 @@
 				return
 			times_used++
 		else	//can only use it  5 times a minute
-			user.show_message("<span class='warning'>*click* *click*</span>", 2)
+			to_chat(user, "<span class='warning'>*click* *click*</span>")
 			return
 	playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
 	flick("flash2", src)
@@ -197,8 +197,7 @@
 				if(safety <= 0)
 					M.Weaken(10)
 					M.flash_eyes()
-					for(var/mob/O in viewers(M, null))
-						O.show_message("<span class='disarm'>[M] is blinded by the flash!</span>")
+					M.visible_message("<span class='disarm'>[M] is blinded by the flash!</span>")
 	..()
 
 /obj/item/device/flash/synthetic

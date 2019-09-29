@@ -19,18 +19,23 @@
 	if(!in_range(user, A))
 		return
 	var/turf/simulated/mineral/M = A
+	var/data_message = ""
+	
 	user.visible_message("<span class='notice'>[user] scans [A], the air around them humming gently.</span>")
-	user.show_message("<span class='notice'><B>Results:</B></span>", 1)
+
+	data_message +="<span class='notice'><B>Results:</B></span>"
 	if(M.mineral)
-		user.show_message("<span class='notice'>Mineral found</span>", 1)
-		user.show_message("<span class='notice'>Ore class: [M.mineral.ore_type]</span>", 1)
-		user.show_message("<span class='notice'>Mineral type: [M.mineral]</span>", 1)
-		user.show_message("<span class='notice'>Ore amount: [M.ore_amount]</span>", 1)
+		data_message +="<span class='notice'>Mineral found</span>"
+		data_message +="<span class='notice'>Ore class: [M.mineral.ore_type]</span>"
+		data_message +="<span class='notice'>Mineral type: [M.mineral]</span>"
+		data_message +="<span class='notice'>Ore amount: [M.ore_amount]</span>"
 	else
-		user.show_message("<span class='warning'>No minerals found in [M]</span>", 1)
+		data_message +="<span class='warning'>No minerals found in [M]</span>"
 
 	if(M.finds && M.finds.len || M.artifact_find)
-		user.show_message("<span class='warning'>Unidentified signature in [M]. Report to nearby xenoarchaeologist/anomalist.</span>", 1)
+		data_message +="<span class='warning'>Unidentified signature in [M]. Report to nearby xenoarchaeologist/anomalist.</span>"
+
+	to_chat(user, data_message)
 
 //	user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>","<span class='notice'>You paint \the [P] [mode].</span>")
 //	user << "[M.mineral], [M.toughness], [M.ore_amount]"

@@ -132,4 +132,4 @@
 	if(watching.len)
 		var/rendered = "<span class='game say'><span class='name'>[src.name]</span> whispers something.</span>"
 		for (var/mob/M in watching)
-			M.show_message(rendered, 2)
+			M.show_message(rendered, SHOWMSG_VISUAL|SHOWMSG_AUDIO)

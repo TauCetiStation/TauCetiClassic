@@ -215,8 +215,7 @@
 				if(E.name == "Wallrot")
 					qdel(E)
 
-			for(var/mob/O in viewers(W, null))
-				O.show_message("<span class='notice'>The fungi are completely dissolved by the solution!</span>", 1)
+			W.visible_message("<span class='notice'>The fungi are completely dissolved by the solution!</span>")
 
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, volume)
 	if(istype(O,/obj/structure/alien/weeds))

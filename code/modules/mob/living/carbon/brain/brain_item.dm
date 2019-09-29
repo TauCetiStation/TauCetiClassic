@@ -63,14 +63,11 @@
 
 //since these people will be dead M != usr
 
-	if(M:brain_op_stage == 4.0)
-		for(var/mob/O in viewers(M, null))
-			if(O == (user || M))
-				continue
-			if(M == user)
-				O.show_message(text("<span class='warning'>[user] inserts [src] into his head!</span>"), 1)
-			else
-				O.show_message(text("<span class='warning'>[M] has [src] inserted into his head by [user].</span>"), 1)
+	if(M.brain_op_stage == 4.0)
+		if(M == user)
+			M.visible_message("<span class='warning'>[user] inserts [src] into his head!</span>", 1)
+		else
+			M.visible_message("<span class='warning'>[M] has [src] inserted into his head by [user].</span>", 1)
 
 		if(M != user)
 			to_chat(M, "<span class='warning'>[user] inserts [src] into your head!</span>")

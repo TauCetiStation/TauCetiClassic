@@ -202,8 +202,8 @@
 
 	if(src.status_flags & PASSEMOTES)
 		for(var/obj/item/weapon/holder/H in src.contents)
-			H.show_message(message)
-	show_message(message)
+			H.show_message(message, SHOWMSG_VISUAL)
+	show_message(message, SHOWMSG_VISUAL)
 
 /mob/proc/hear_sleep(message)
 	var/heard = ""

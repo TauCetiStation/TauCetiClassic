@@ -193,8 +193,7 @@
 		for(var/mob/living/carbon/slime/slime in viewers(get_turf_loc(user), null))
 			slime.tame = 0
 			slime.rabid = 1
-			for(var/mob/O in viewers(get_turf_loc(user), null))
-				O.show_message(text("<span class='warning'>The [slime] is driven into a frenzy!.</span>"), 1)
+			user.visible_message("<span class='warning'>The [slime] is driven into a frenzy!.</span>")
 		uses -= 1
 		to_chat(user, "Bloodlust emitter sends a pulse.")
 	else

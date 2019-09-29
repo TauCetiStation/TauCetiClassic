@@ -780,7 +780,7 @@
 
 
 /obj/machinery/alarm/attack_alien(mob/living/carbon/alien/humanoid/user)
-	user.show_message("You don't want to break these things", 1);
+	to_chat(user, "You don't want to break these things");
 	return
 
 /obj/machinery/alarm/attackby(obj/item/W, mob/user)

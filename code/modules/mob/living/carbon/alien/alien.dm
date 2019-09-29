@@ -267,7 +267,7 @@ Hit Procs
 		damage /= 4
 
 
-	show_message("<span class='warning'>The blob attacks!</span>")
+	to_chat(src, "<span class='warning'>The blob attacks!</span>")
 
 	adjustFireLoss(damage)
 
@@ -275,9 +275,7 @@ Hit Procs
 	return
 
 /mob/living/carbon/alien/meteorhit(O)
-	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
-			M.show_message(text("<span class='warning'>[] has been hit by []</span>", src, O), 1)
+	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
 	if (health > 0)
 		adjustFireLoss((istype(O, /obj/effect/meteor/small) ? 10 : 25))
 		adjustFireLoss(30)

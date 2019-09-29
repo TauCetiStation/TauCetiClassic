@@ -735,8 +735,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(istype(W,/obj/item/weapon/scalpel))
 		switch(brain_op_stage)
 			if(0)
+				//todo: should be replaced with visible_message
 				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("<span class='warning'>[brainmob] is beginning to have \his head cut open with [W] by [user].</span>", 1)
+					O.show_message("<span class='warning'>[brainmob] is beginning to have \his head cut open with [W] by [user].</span>", SHOWMSG_VISUAL)
 				to_chat(brainmob, "<span class='warning'>[user] begins to cut open your head with [W]!</span>")
 				to_chat(user, "<span class='warning'>You cut [brainmob]'s head open with [W]!</span>")
 
@@ -745,7 +746,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(2)
 				if(!(species in list(DIONA, IPC)))
 					for(var/mob/O in (oviewers(brainmob) - user))
-						O.show_message("<span class='warning'>[brainmob] is having \his connections to the brain delicately severed with [W] by [user].</span>", 1)
+						O.show_message("<span class='warning'>[brainmob] is having \his connections to the brain delicately severed with [W] by [user].</span>", SHOWMSG_VISUAL)
 					to_chat(brainmob, "<span class='warning'>[user] begins to cut open your head with [W]!</span>")
 					to_chat(user, "<span class='warning'>You cut [brainmob]'s head open with [W]!</span>")
 
@@ -756,7 +757,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		switch(brain_op_stage)
 			if(1)
 				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("<span class='warning'>[brainmob] has \his head sawed open with [W] by [user].</span>", 1)
+					O.show_message("<span class='warning'>[brainmob] has \his head sawed open with [W] by [user].</span>", SHOWMSG_VISUAL)
 				to_chat(brainmob, "<span class='warning'>[user] begins to saw open your head with [W]!</span>")
 				to_chat(user, "<span class='warning'>You saw [brainmob]'s head open with [W]!</span>")
 
@@ -764,7 +765,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(3)
 				if(!(species in list(DIONA, IPC)))
 					for(var/mob/O in (oviewers(brainmob) - user))
-						O.show_message("<span class='warning'>[brainmob] has \his spine's connection to the brain severed with [W] by [user].</span>", 1)
+						O.show_message("<span class='warning'>[brainmob] has \his spine's connection to the brain severed with [W] by [user].</span>", SHOWMSG_VISUAL)
 					to_chat(brainmob, "<span class='warning'>[user] severs your brain's connection to the spine with [W]!</span>")
 					to_chat(user, "<span class='warning'>You sever [brainmob]'s brain's connection to the spine with [W]!</span>")
 

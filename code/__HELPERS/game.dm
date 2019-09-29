@@ -170,7 +170,7 @@
 
 	return hear
 
-
+// todo: tg
 /proc/get_hearers_in_view(R, atom/source)
 	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)

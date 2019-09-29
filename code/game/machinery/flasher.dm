@@ -121,11 +121,11 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 
 		if (!src.anchored)
-			user.show_message(text("<span class='warning'>[src] can now be moved.</span>"))
+			to_chat(user, "<span class='warning'>[src] can now be moved.</span>")
 			src.overlays.Cut()
 
 		else if (src.anchored)
-			user.show_message(text("<span class='warning'>[src] is now secured.</span>"))
+			to_chat(user, "<span class='warning'>[src] is now secured.</span>")
 			src.overlays += "[base_state]-s"
 
 /obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user)
