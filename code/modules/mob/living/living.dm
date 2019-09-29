@@ -1214,3 +1214,8 @@
 		T.add_vomit_floor(src, getToxLoss() > 0 ? TRUE : FALSE)
 
 	return TRUE
+
+
+/mob/living/proc/can_get_fit()
+	if (!get_species() == DIONA)
+		return TRUE
