@@ -460,12 +460,136 @@
 "aaY" = (
 /turf/unsimulated/wall/fakeglass,
 /area/wizard_station)
+"aaZ" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron6";
+	smooth = 0
+	},
+/area/tophat)
 "abb" = (
 /turf/space,
 /area/shuttle/escape_pod1/transit)
+"abd" = (
+/obj/machinery/computer/arcade,
+/obj/structure/sign/velocity_overlay/reklama{
+	name = "\improper It's in the Hat!";
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abe" = (
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abf" = (
+/obj/effect/overlay/tophat_portal{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abg" = (
+/obj/machinery/vending/tophat_vend,
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abh" = (
+/obj/machinery/vending/boozeomat{
+	req_access = list()
+	},
+/obj/item/weapon/reagent_containers/food/drinks/shaker,
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abi" = (
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/device/flashlight/lamp/green,
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abj" = (
+/obj/structure/stool/bar,
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abk" = (
+/obj/structure/table/woodentable/fancy/black,
+/obj/machinery/chem_dispenser/soda{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abl" = (
+/obj/structure/table/woodentable/fancy/black,
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abm" = (
+/obj/structure/table/woodentable/fancy/black,
+/obj/machinery/chem_dispenser/beer{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
 "abn" = (
 /turf/unsimulated/wall/fakeglass,
 /area/centcom/evac)
+"abo" = (
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/weapon/reagent_containers/glass/rag,
+/turf/unsimulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/tophat)
+"abp" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron12";
+	smooth = 0
+	},
+/area/tophat)
+"abq" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron10";
+	smooth = 0
+	},
+/area/tophat)
+"abr" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron3";
+	smooth = 0
+	},
+/area/tophat)
+"abs" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron5";
+	smooth = 0
+	},
+/area/tophat)
+"abt" = (
+/turf/unsimulated/wall{
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "iron9";
+	smooth = 0
+	},
+/area/tophat)
 "abC" = (
 /obj/structure/window/reinforced{
 	dir = 5;
@@ -25595,13 +25719,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aaZ
+abr
+abr
+abr
+abr
+abr
+abs
 aaM
 aaM
 aaM
@@ -25852,13 +25976,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+abp
+abd
+abe
+abh
+abk
+abm
+abp
 aaM
 aaM
 aaM
@@ -26109,13 +26233,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+abp
+abe
+abe
+abe
+abe
+abe
+abp
 aaM
 aaM
 aaM
@@ -26366,13 +26490,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+abp
+abf
+abe
+abi
+abl
+abo
+abp
 aaM
 aaM
 aaM
@@ -26623,13 +26747,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+abp
+abe
+abe
+abj
+abj
+abj
+abp
 aaM
 aaM
 aaM
@@ -26880,13 +27004,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+abp
+abg
+abe
+abe
+abe
+abe
+abp
 aaM
 aaM
 aaM
@@ -27137,13 +27261,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+abq
+abr
+abr
+abr
+abr
+abr
+abt
 aaM
 aaM
 aaM

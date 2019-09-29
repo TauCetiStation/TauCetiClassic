@@ -20,6 +20,7 @@
 #define ROLE_MUTINEER          "Mutineer"
 #define ROLE_SHADOWLING        "Shadowling"
 #define ROLE_ABDUCTOR          "Abductor"
+#define ROLE_SURVIVOR          "Survivor"
 
 #define ROLE_ERT               "Emergency Response Team"
 #define ROLE_DRONE             "Maintenance Drone"
@@ -43,4 +44,5 @@ var/global/list/special_roles = list(
 	ROLE_MUTINEER,
 	ROLE_SHADOWLING,
 	ROLE_ABDUCTOR,
+	ROLE_SURVIVOR,
 )

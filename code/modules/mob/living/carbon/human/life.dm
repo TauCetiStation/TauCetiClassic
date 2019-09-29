@@ -1340,7 +1340,7 @@
 				if(locate(/obj/item/weapon/gun/energy/sniperrifle, contents))
 					var/obj/item/weapon/gun/energy/sniperrifle/s = locate() in src
 					if(s.zoom)
-						s.zoom()
+						s.toggle_zoom()
 
 	else
 		sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
@@ -1569,6 +1569,8 @@
 					to_chat(src, "Too hard to concentrate...")
 					remoteview_target = null
 					reset_view(null)//##Z2
+			if(force_remote_viewing)
+				isRemoteObserve = TRUE
 			if(!isRemoteObserve && client && !client.adminobs)
 				remoteview_target = null
 				reset_view(null)
@@ -1625,7 +1627,7 @@
 	if(isturf(loc) && rand(1,1000) == 1)
 		var/turf/T = loc
 		if(T.get_lumcount() < 0.1)
-			playsound_local(src, pick(scarySounds), VOL_EFFECTS_MASTER)
+			playsound_local(src, pick(SOUNDIN_SCARYSOUNDS), VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/human/proc/handle_virus_updates()
 	if(status_flags & GODMODE)	return 0	//godmode
