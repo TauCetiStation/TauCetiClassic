@@ -115,6 +115,7 @@
 	icon_state = "scalpel_laser1_on"
 	damtype = "fire"
 	usesound = 'sound/items/surgery/laserscalp.ogg'
+	toolspeed = 1.2
 
 /obj/item/weapon/scalpel/laser2
 	name = "laser scalpel"
@@ -131,12 +132,14 @@
 	damtype = "fire"
 	force = 15.0
 	usesound = 'sound/items/surgery/laserscalp.ogg'
+	toolspeed = 0.6
 
 /obj/item/weapon/scalpel/manager
 	name = "incision management system"
 	desc = "A true extension of the surgeon's body, this marvel instantly and completely prepares an incision allowing for the immediate commencement of therapeutic steps."
 	icon_state = "scalpel_manager_on"
 	force = 7.5
+	toolspeed = 0.6
 
 /*
  * Circular Saw

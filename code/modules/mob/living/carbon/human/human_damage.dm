@@ -145,7 +145,12 @@
 // =============================================
 
 /mob/living/carbon/human/adjustCloneLoss(amount)
-	..()
+	if(species.clone_mod == 0)
+		cloneloss = 0
+		return
+	else
+		amount = amount * species.clone_mod
+		..(amount)
 
 	if(species.flags[IS_SYNTHETIC])
 		return
