@@ -22258,7 +22258,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/meter,
 /turf/simulated/floor{
-	dir = 1;
+	dir = 8;
 	icon_state = "warnwhitecorner"
 	},
 /area/rnd/mixing)
