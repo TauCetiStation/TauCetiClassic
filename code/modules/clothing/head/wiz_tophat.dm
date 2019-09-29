@@ -165,23 +165,24 @@ var/global/list/tophats_list = list()
 		user.drop_from_inventory(AM)
 	tp_to_tophat(AM)
 
-/obj/effect/overlay/tophat_portal/examine(mob/user)
+/obj/effect/overlay/tophat_portal/examine(mob/living/user)
 	..()
 	if(user.client && global.tophats_list.len && in_range(user, src))
 		user.visible_message("<span class='notice'>[user] peaks through [src].</span>", "<span class='notice'>You peak through [src].</span>")
-		var/old_client_eye = user.client.eye
-		var/old_client_perspective = user.client.perspective
 		var/obj/item/clothing/head/wizard/tophat/TP = pick(global.tophats_list)
 
-		for(var/i in 1 to 50)
-			if(do_after(user, 0.3 SECONDS, needhand = FALSE, target = src, progress = FALSE))
-				user.client.eye = TP.loc
-				user.client.perspective = EYE_PERSPECTIVE
-			else
-				break
+		if(TP)
+			user.force_remote_viewing = TRUE
+			user.reset_view(TP)
 
-		user.client.eye = old_client_eye
-		user.client.perspective = old_client_perspective
+			for(var/i in 1 to 30)
+				if(do_after(user, 1 SECONDS, needhand = FALSE, target = src, progress = FALSE))
+					user.reset_view(TP)
+				else
+					break
+
+			user.reset_view(null)
+			user.force_remote_viewing = FALSE
 
 /obj/effect/overlay/tophat_portal/get_listeners()
 	. = list()

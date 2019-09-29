@@ -1571,6 +1571,8 @@
 					to_chat(src, "Too hard to concentrate...")
 					remoteview_target = null
 					reset_view(null)//##Z2
+			if(force_remote_viewing)
+				isRemoteObserve = TRUE
 			if(!isRemoteObserve && client && !client.adminobs)
 				remoteview_target = null
 				reset_view(null)
