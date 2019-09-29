@@ -143,6 +143,8 @@
 		for(var/c_el in combo_elements)
 			var/CC_icon_state = "combo_element_combo"
 			switch(c_el)
+				if(I_HELP)
+					CC_icon_state = "combo_element_help"
 				if(I_DISARM)
 					CC_icon_state = "combo_element_disarm"
 				if(I_GRAB)

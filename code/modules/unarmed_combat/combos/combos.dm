@@ -645,13 +645,13 @@
 						if(new_mover in collected)
 							continue new_movers
 						if(!new_mover.anchored)
+							collected += new_mover
 							new_mover.Stun(1)
 							i++
 							movers["[i]"] = new_mover
 							prev_pixs["[i]"] = list("pix_x" = new_mover.pixel_x, "pix_y" = new_mover.pixel_y)
 							new_mover.pixel_x += rand(-8, 8)
 							new_mover.pixel_y += rand(-8, 8)
-
 		sleep(attacker.movement_delay() * 0.75) // Since they were the one to push.
 
 	for(var/j in 1 to i)
