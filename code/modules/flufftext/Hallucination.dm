@@ -262,9 +262,13 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							if(client) client.images -= halbody
 							halbody = null
 
+			if(71 to 73)
+				if(!has_trait(TRAIT_STRONGMIND))
+					fake_attack(src)
+
         // FAKE DEATH
 
-			if(71 to 72)
+			if(74 to 75)
 				src.sleeping = 20
 				hal_crit = 1
 				hal_screwyhud = 1
