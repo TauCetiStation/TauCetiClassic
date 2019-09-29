@@ -63,8 +63,9 @@
 
 /datum/combat_combo/slide_kick/animate_combo(mob/living/victim, mob/living/attacker)
 	attacker.combo_animation = TRUE
-	attacker.become_busy(0)
-	attacker.become_busy(1)
+	attacker.become_busy(victim, _hand = 0)
+	attacker.become_busy(victim, _hand = 1)
+	victim.in_use_action = TRUE
 	victim.Stun(1)
 	sleep(3)
 
@@ -140,8 +141,8 @@
 
 	attacker.update_canmove()
 
-	attacker.become_not_busy(0)
-	attacker.become_not_busy(1)
+	attacker.become_not_busy(victim, _hand = 0)
+	attacker.become_not_busy(victim, _hand = 1)
 	attacker.combo_animation = FALSE
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
@@ -210,8 +211,8 @@
 
 /datum/combat_combo/uppercut/animate_combo(mob/living/victim, mob/living/attacker)
 	victim.Stun(2)
-	attacker.become_busy(0)
-	attacker.become_busy(1)
+	attacker.become_busy(victim, _hand = 0)
+	attacker.become_busy(victim, _hand = 1)
 	attacker.combo_animation = TRUE
 	sleep(3)
 
@@ -261,8 +262,8 @@
 
 		victim.layer = prev_victim_layer
 
-		attacker.become_not_busy(0)
-		attacker.become_not_busy(1)
+		attacker.become_not_busy(victim, _hand = 0)
+		attacker.become_not_busy(victim, _hand = 1)
 		attacker.combo_animation = FALSE
 		return
 
@@ -299,8 +300,8 @@
 		BP = H.get_bodypart(BP)
 		armor_check = H.run_armor_check(BP, "melee")
 
-	victim.apply_effect(3, WEAKEN, BP, blocked = armor_check)
-	victim.apply_damage(30, BRUTE, BP, blocked = armor_check)
+	victim.apply_effect(2, WEAKEN, BP, blocked = armor_check)
+	victim.apply_damage(20, BRUTE, BP, blocked = armor_check)
 	victim.visible_message("<span class='danger'>[attacker] has performed an uppercut on [victim]!</span>")
 
 	if(iscarbon(victim))
@@ -314,8 +315,8 @@
 
 			VH.throw_at(target, VH.throw_range, VH.throw_speed, attacker)
 
-	attacker.become_not_busy(0)
-	attacker.become_not_busy(1)
+	attacker.become_not_busy(victim, _hand = 0)
+	attacker.become_not_busy(victim, _hand = 1)
 	attacker.combo_animation = FALSE
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
@@ -335,8 +336,8 @@
 
 /datum/combat_combo/suplex/animate_combo(mob/living/victim, mob/living/attacker)
 	victim.Stun(2)
-	attacker.become_busy(0)
-	attacker.become_busy(1)
+	attacker.become_busy(victim, _hand = 0)
+	attacker.become_busy(victim, _hand = 1)
 	attacker.combo_animation = TRUE
 	sleep(3)
 
@@ -368,8 +369,8 @@
 		attacker.pixel_x = prev_pix_x
 		attacker.pixel_y = prev_pix_y
 
-		attacker.become_not_busy(0)
-		attacker.become_not_busy(1)
+		attacker.become_not_busy(victim, _hand = 0)
+		attacker.become_not_busy(victim, _hand = 1)
 		attacker.combo_animation = FALSE
 		return
 
@@ -387,8 +388,8 @@
 	if(!do_after(attacker, 2, target = victim, progress = FALSE))
 		victim.transform = victim_M
 
-		attacker.become_not_busy(0)
-		attacker.become_not_busy(1)
+		attacker.become_not_busy(victim, _hand = 0)
+		attacker.become_not_busy(victim, _hand = 1)
 		attacker.combo_animation = FALSE
 		return
 
@@ -431,8 +432,8 @@
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	victim.visible_message("<span class='danger'>[attacker] has thrown [victim] over their shoulder!</span>")
 
-	attacker.become_not_busy(0)
-	attacker.become_not_busy(1)
+	attacker.become_not_busy(victim, _hand = 0)
+	attacker.become_not_busy(victim, _hand = 1)
 	attacker.combo_animation = FALSE
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
@@ -452,8 +453,8 @@
 
 /datum/combat_combo/diving_elbow_drop/animate_combo(mob/living/victim, mob/living/attacker)
 	victim.Stun(2)
-	attacker.become_busy(0)
-	attacker.become_busy(1)
+	attacker.become_busy(victim, _hand = 0)
+	attacker.become_busy(victim, _hand = 1)
 	attacker.combo_animation = TRUE
 	sleep(3)
 
@@ -483,8 +484,8 @@
 	if(!do_after(attacker, 5, target = victim, progress = FALSE))
 		attacker.pixel_y += 4
 
-		attacker.become_not_busy(0)
-		attacker.become_not_busy(1)
+		attacker.become_not_busy(victim, _hand = 0)
+		attacker.become_not_busy(victim, _hand = 1)
 		attacker.combo_animation = FALSE
 		return
 
@@ -529,8 +530,8 @@
 	attacker.pixel_x = prev_pix_x
 	attacker.pixel_y = prev_pix_y
 
-	attacker.become_not_busy(0)
-	attacker.become_not_busy(1)
+	attacker.become_not_busy(victim, _hand = 0)
+	attacker.become_not_busy(victim, _hand = 1)
 	attacker.combo_animation = FALSE
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
@@ -550,8 +551,8 @@
 /datum/combat_combo/dropkick/animate_combo(mob/living/victim, mob/living/attacker)
 	victim.Stun(2)
 	attacker.Stun(2)
-	attacker.become_busy(0)
-	attacker.become_busy(1)
+	attacker.become_busy(victim, _hand = 0)
+	attacker.become_busy(victim, _hand = 1)
 	attacker.combo_animation = TRUE
 	sleep(3)
 
@@ -592,6 +593,9 @@
 	animate(attacker, pixel_x = attacker.pixel_x + shift_x, pixel_y = attacker.pixel_y + shift_y, transform  = M, time = 3)
 	sleep(3)
 
+	var/dropkick_dir = get_dir(attacker, victim)
+	var/face_dir = get_dir(victim, attacker)
+
 	attacker.pixel_x = prev_pix_x
 	attacker.pixel_y = prev_pix_y
 	attacker.forceMove(victim.loc)
@@ -604,8 +608,6 @@
 	attacker.visible_message("<span class='danger'>[attacker] dropkicks [victim], pushing them onward!</span>")
 
 	var/try_steps = 5
-	var/dropkick_dir = get_dir(attacker, victim)
-	var/face_dir = get_dir(victim, attacker)
 
 	if(face_dir & NORTH)
 		face_dir = NORTH
@@ -651,8 +653,8 @@
 		L.pixel_y = prev_pixs_el["pix_y"]
 		L.apply_effect(5, WEAKEN, blocked = 0)
 
-	attacker.become_not_busy(0)
-	attacker.become_not_busy(1)
+	attacker.become_not_busy(victim, _hand = 0)
+	attacker.become_not_busy(victim, _hand = 1)
 	attacker.combo_animation = FALSE
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
@@ -672,8 +674,8 @@
 
 /datum/combat_combo/charge/animate_combo(mob/living/victim, mob/living/attacker)
 	victim.Stun(2)
-	attacker.become_busy(0)
-	attacker.become_busy(1)
+	attacker.become_busy(victim, _hand = 0)
+	attacker.become_busy(victim, _hand = 1)
 	attacker.combo_animation = TRUE
 	sleep(3)
 
@@ -716,10 +718,8 @@
 			victim_G.adjust_position(adjust_time = 0, force_loc = TRUE, force_dir = charge_dir)
 
 			if(T != attacker.loc) // We bumped into something, so we bumped our victim into it...
-				for(var/mob/living/L in attacker.loc)
-					if(L == attacker)
-						continue
-
+				var/list/to_check = T.contents + attacker.loc.contents - list(attacker)
+				for(var/mob/living/L in to_check)
 					var/obj/item/organ/external/BP = BP_CHEST
 					var/armor_check = 0
 					if(ishuman(L))
@@ -748,8 +748,8 @@
 			attacker.drop_from_inventory(G)
 			break
 
-	attacker.become_not_busy(0)
-	attacker.become_not_busy(1)
+	attacker.become_not_busy(victim, _hand = 0)
+	attacker.become_not_busy(victim, _hand = 1)
 	attacker.combo_animation = FALSE
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
@@ -769,8 +769,8 @@
 
 /datum/combat_combo/spin_throw/animate_combo(mob/living/victim, mob/living/attacker)
 	victim.Stun(2)
-	attacker.become_busy(0)
-	attacker.become_busy(1)
+	attacker.become_busy(victim, _hand = 0)
+	attacker.become_busy(victim, _hand = 1)
 	attacker.combo_animation = TRUE
 	sleep(3)
 
@@ -855,6 +855,9 @@
 						if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
 							var/obj/item/clothing/suit/V = H.wear_suit
 							V.attack_reaction(H, REACTION_THROWITEM)
+
+					attacker.become_not_busy(victim, _hand = 0)
+					attacker.become_not_busy(victim, _hand = 1)
 					attacker.combo_animation = FALSE
 					return
 
@@ -863,8 +866,8 @@
 			attacker.drop_from_inventory(G)
 			break
 
-	attacker.become_not_busy(0)
-	attacker.become_not_busy(1)
+	attacker.become_not_busy(victim, _hand = 0)
+	attacker.become_not_busy(victim, _hand = 1)
 	attacker.combo_animation = FALSE
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.

@@ -785,12 +785,13 @@
 			resisting++
 			switch(G.state)
 				if(GRAB_PASSIVE)
-					if(G.assailant.shoving_fingers)
-						if(iscarbon(src))
+					if(ishuman(G.assailant))
+						var/mob/living/carbon/human/H = G.assailant
+						if(H.shoving_fingers && iscarbon(src))
 							var/mob/living/carbon/C_ = src
 							if(!istype(C_.wear_mask, /obj/item/clothing/mask/muzzle))
-								G.assailant.adjustBruteLoss(5) // We bit them.
-								G.assailant.shoving_fingers = FALSE
+								H.adjustBruteLoss(5) // We bit them.
+								H.shoving_fingers = FALSE
 					qdel(G)
 				if(GRAB_AGGRESSIVE)
 					if(prob(50 - (L.lying ? 35 : 0)))
@@ -1225,3 +1226,6 @@
 	if(zone_sel)
 		return zone_sel.selecting
 	return pick(TARGET_ZONE_ALL)
+
+/mob/living/is_busy()
+	return combo_animation || attack_animation || ..()

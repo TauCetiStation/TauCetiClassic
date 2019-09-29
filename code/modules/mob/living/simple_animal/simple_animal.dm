@@ -57,6 +57,9 @@
 
 	var/animalistic = TRUE // Determines whether the being here is an animal or nah.
 
+/mob/living/simple_animal/Grab(atom/movable/target, force_state, show_warnings = TRUE)
+	return
+
 /mob/living/simple_animal/helpReaction(mob/living/attacker)
 	if(health > 0)
 		visible_message("<span class='notice'>[attacker] [response_help] [src]</span>")

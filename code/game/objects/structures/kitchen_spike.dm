@@ -48,6 +48,8 @@
 		else
 			to_chat(user, "<span class='notice'>You can't do that while something's on the spike!</span>")
 	else if(istype(I, /obj/item/weapon/grab))
+		if(user.is_busy())
+			return
 		var/obj/item/weapon/grab/G = I
 		if(istype(G.affecting, /mob/living))
 			if(!buckled_mob)
@@ -85,9 +87,11 @@
 
 /obj/structure/kitchenspike/user_unbuckle_mob(mob/living/carbon/human/user)
 	if(buckled_mob)
+		if(user.is_busy())
+			return
+
 		var/mob/living/L = buckled_mob
 		if(L != user)
-			if(user.is_busy()) return
 			L.visible_message(\
 				"<span class='notice'>[user.name] tries to pull [L.name] free of the [src]!</span>",\
 				"<span class='warning'>[user.name] is trying to pull you off the [src], opening up fresh wounds!</span>",\

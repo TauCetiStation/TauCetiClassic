@@ -51,31 +51,25 @@
 		animate(combo_icon, transform=M, time=1)
 		sleep(1)
 
-/datum/combo_saved/proc/animate_attack(combo_element, combo_value)
-	if(attacker.attack_animation || attacker.combo_animation)
+/datum/combo_saved/proc/animate_attack(combo_element, combo_value, mob/living/V, mob/living/A)
+	if(A.attack_animation || A.combo_animation)
 		return
-	attacker.attack_animation = TRUE
+	A.attack_animation = TRUE
 
 	switch(combo_element)
 		if(I_DISARM, I_HURT)
-			var/matrix/saved_transform = attacker.transform
+			var/matrix/saved_transform = A.transform
 			var/matrix/M = matrix()
-			if(attacker.hand)
+			if(A.hand)
 				M.Turn(-combo_value)
 			else
 				M.Turn(combo_value)
-			if(!attacker)
-				attacker.transform = saved_transform
-				return
-			animate(attacker, transform=M, time=2)
+			animate(A, transform=M, time=2)
 			sleep(2)
-			if(!attacker)
-				attacker.transform = saved_transform
-				return
-			animate(attacker, transform=saved_transform, time=1)
+			animate(A, transform=saved_transform, time=1)
 			sleep(1)
 
-	attacker.attack_animation = FALSE
+	A.attack_animation = FALSE
 
 /datum/combo_saved/proc/get_next_combo()
 	var/target_zone = attacker.get_targetzone()
@@ -108,7 +102,9 @@
 	if(victim.incapacitated())
 		combo_value *= 0.5
 
+	to_chat(world, "Adding combo_element [combo_element] [combo_elements.len]")
 	combo_elements += combo_element
+	to_chat(world, "Added combo_element [combo_element] [combo_elements.len]")
 
 	fullness = min(100, fullness + combo_value)
 
@@ -156,7 +152,7 @@
 			attacker.client.images += C_EL_I
 			i++
 
-	INVOKE_ASYNC(src, .proc/animate_attack, combo_element, combo_value)
+	INVOKE_ASYNC(src, .proc/animate_attack, combo_element, combo_value, victim, attacker)
 
 	return FALSE
 
@@ -176,9 +172,6 @@
 	fullness_to_remove = max(0.3, fullness_to_remove - length(attacker.combos_performed) * 0.1)
 	fullness -= fullness_to_remove
 	if(fullness < 0 || last_hit_registered + delete_after_no_hits < world.time)
-		attacker.combos_performed -= src
-		victim.combos_saved -= src
-
 		qdel(src)
 
 /datum/combo_saved/Destroy()
@@ -191,6 +184,8 @@
 	combo_elements_icons.Cut()
 	attacker.combo_animation = FALSE
 	attacker.attack_animation = FALSE
+	attacker.combos_performed -= src
+	victim.combos_saved -= src
 	attacker = null
 	victim = null
 	QDEL_NULL(progbar)

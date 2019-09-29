@@ -126,9 +126,7 @@
 		return FALSE
 
 	var/busy_hand = user.hand
-	user.become_busy(_hand = busy_hand)
-
-	target.in_use_action = TRUE
+	user.become_busy(target, _hand = busy_hand)
 
 	if(check_target_zone)
 		check_target_zone = user.zone_sel.selecting
@@ -174,23 +172,20 @@
 	if(progress)
 		qdel(progbar)
 	if(user)
-		user.become_not_busy(_hand = busy_hand)
-	if(target)
-		target.in_use_action = FALSE
+		user.become_not_busy(target, _hand = busy_hand)
 
 /proc/do_after(mob/user, delay, needhand = TRUE, atom/target = null, can_move = FALSE, progress = TRUE, datum/callback/extra_checks = null)
 	if(!user || target && QDELING(target))
 		return FALSE
 
 	var/busy_hand = user.hand
-	user.become_busy(_hand = busy_hand)
+	user.become_busy(target, _hand = busy_hand)
 
 	var/target_null = TRUE
 	var/atom/Tloc = null
 	if(target)
 		target_null = FALSE
 		if(target != user)
-			target.in_use_action = TRUE
 			Tloc = target.loc
 
 	var/atom/Uloc = null
@@ -250,6 +245,4 @@
 	if(progress)
 		qdel(progbar)
 	if(user)
-		user.become_not_busy(_hand = busy_hand)
-	if(target)
-		target.in_use_action = FALSE
+		user.become_not_busy(target, _hand = busy_hand)

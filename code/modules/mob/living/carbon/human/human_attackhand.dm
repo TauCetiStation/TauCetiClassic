@@ -49,11 +49,12 @@
 	return ..()
 
 /mob/living/carbon/human/helpReaction(mob/living/carbon/human/attacker)
+	var/target_zone = attacker.get_targetzone()
 	if(health > config.health_threshold_dead && health < config.health_threshold_crit)
 		INVOKE_ASYNC(src, .proc/perform_cpr, attacker)
 		return TRUE
-	else if(!(attacker == src && apply_pressure(attacker, attacker.zone_sel.selecting)))
-		if(attacker.zone_sel.selecting == O_MOUTH && attacker == src)
+	else if(!(attacker == src && apply_pressure(attacker, target_zone)))
+		if(target_zone == O_MOUTH && attacker == src)
 			attacker.force_vomit(src)
 		else
 			help_shake_act(attacker)

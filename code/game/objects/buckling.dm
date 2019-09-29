@@ -63,6 +63,10 @@
 	if(!user.Adjacent(M) || user.incapacitated() || user.lying || ispAI(user) || ismouse(user))
 		return
 
+	if(user.is_busy())
+		to_chat(user, "<span class='warning'>You can't buckle [M] while being doing something.</span>")
+		return
+
 	if(istype(M, /mob/living/simple_animal/construct))
 		to_chat(user, "<span class='warning'>The [M] is floating in the air and can't be buckled.</span>")
 		return
@@ -91,6 +95,10 @@
 				"<span class='notice'>You hear metal clanking.</span>")
 
 /atom/movable/proc/user_unbuckle_mob(mob/user)
+	if(user.is_busy())
+		to_chat(user, "<span class='warning'>You can't unbuckle [src] while being doing something.</span>")
+		return
+
 	var/mob/living/M = unbuckle_mob()
 	if(M)
 		if(M != user)
