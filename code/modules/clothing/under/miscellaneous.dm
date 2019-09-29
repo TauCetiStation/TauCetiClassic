@@ -682,6 +682,7 @@
 	desc = "A long loose piece of clothing worn in a hospital by someone doing or having an operation. It can be used as clothing for bedridden patients."
 	icon_state = "patient_gown"
 	item_color = "patient_gown"
+	body_parts_covered = 0
 
 /obj/item/clothing/under/pretty_dress
 	name = "pretty dress"
