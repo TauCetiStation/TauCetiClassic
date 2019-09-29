@@ -991,3 +991,7 @@ var/global/list/items_blood_overlay_by_type = list()
 // Return TRUE to prevent a MouseDrop_T call.
 /obj/item/proc/onUserMouseDrop(atom/target, atom/dropping, mob/user)
 	return FALSE
+
+// Is called when somebody is stripping us using the panel. Return TRUE to allow the strip, FALSE to disallow.
+/obj/item/proc/onStripPanelUnEquip(mob/living/who, strip_gloves = FALSE)
+	return TRUE
