@@ -31,7 +31,7 @@
 #define MAX_DIONATEMPO_RATE 200
 
 // Cache holder for sound() instances.
-var/datum/notes_storage/note_cache_storage = new
+var/global/datum/notes_storage/note_cache_storage = new
 
 /datum/notes_storage
 	var/list/instrument_sound_notes = list() // associative list.
@@ -272,9 +272,9 @@ var/datum/notes_storage/note_cache_storage = new
 						// because this is the only case where we use dynamic path for sounds, as they should be avoided normally.
 						// Without cache dynamic paths eat 10~ times more CPU than doing same with hardcoded paths, so cache is required.
 
-						var/sound/S = note_cache_storage.instrument_sound_notes["[sound_path]/[current_note]"]
+						var/sound/S = global.note_cache_storage.instrument_sound_notes["[sound_path]/[current_note]"]
 						if(!S)
-							S = note_cache_storage.instrument_sound_notes["[sound_path]/[current_note]"] = sound("[sound_path]/[current_note].ogg")
+							S = global.note_cache_storage.instrument_sound_notes["[sound_path]/[current_note]"] = sound("[sound_path]/[current_note].ogg")
 
 						playsound(instrument, S, VOL_EFFECTS_INSTRUMENT, volume, FALSE, falloff = 5)
 
