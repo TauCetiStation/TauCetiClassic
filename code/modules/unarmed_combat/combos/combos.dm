@@ -214,6 +214,10 @@
 	attacker.become_busy(victim, _hand = 0)
 	attacker.become_busy(victim, _hand = 1)
 	attacker.combo_animation = TRUE
+
+	var/prev_attacker_M = attacker.transform
+	var/prev_victim_M = victim.transform
+
 	sleep(3)
 
 	attacker.set_dir(pick(NORTH, SOUTH)) // So they will appear sideways, as if they are actually knocking with their fist.
@@ -269,9 +273,6 @@
 
 	var/prev_victim_pix_y = victim.pixel_y
 
-	var/prev_attacker_M = attacker.transform
-	var/prev_victim_M = victim.transform
-
 	animate(attacker, transform = M, pixel_y = attacker.pixel_y + 8, time = 2)
 	sleep(2)
 	animate(attacker, transform = prev_attacker_M, pixel_y = attacker.pixel_y + 8, time = 2)
@@ -290,6 +291,7 @@
 	animate(victim, pixel_y = prev_victim_pix_y, time = 2)
 	sleep(2)
 
+	attacker.transform = prev_attacker_M
 	victim.transform = prev_victim_M
 	victim.layer = prev_victim_layer
 
@@ -339,6 +341,9 @@
 	attacker.become_busy(victim, _hand = 0)
 	attacker.become_busy(victim, _hand = 1)
 	attacker.combo_animation = TRUE
+
+	var/matrix/victim_M = victim.transform
+
 	sleep(3)
 
 	var/DTM = get_dir(attacker, victim)
@@ -380,7 +385,7 @@
 
 	var/matrix/M = matrix()
 	M.Turn(pick(90, -90))
-	var/matrix/victim_M = victim.transform
+
 	prev_pix_x = victim.pixel_x
 	prev_pix_y = victim.pixel_y
 
@@ -456,6 +461,9 @@
 	attacker.become_busy(victim, _hand = 0)
 	attacker.become_busy(victim, _hand = 1)
 	attacker.combo_animation = TRUE
+
+	var/prev_transform = attacker.transform
+
 	sleep(3)
 
 	var/DTM = get_dir(attacker, victim)
@@ -492,7 +500,6 @@
 	var/prev_anchored = attacker.anchored
 	var/prev_canmove = attacker.canmove
 	var/prev_density = attacker.density
-	var/prev_transform = attacker.transform
 	attacker.anchored = TRUE
 	attacker.canmove = FALSE
 	attacker.density = FALSE // We are in the air
@@ -546,7 +553,7 @@
 	fullness_lose_on_execute = 25
 	combo_elements = list(I_DISARM, I_HURT, I_DISARM, I_HURT)
 
-	allowed_target_zones = list(BP_CHEST)
+	allowed_target_zones = list(BP_GROIN)
 
 /datum/combat_combo/dropkick/animate_combo(mob/living/victim, mob/living/attacker)
 	victim.Stun(2)
@@ -554,6 +561,9 @@
 	attacker.become_busy(victim, _hand = 0)
 	attacker.become_busy(victim, _hand = 1)
 	attacker.combo_animation = TRUE
+
+	var/prev_transform = attacker.transform
+
 	sleep(3)
 
 	if(victim.buckled)
@@ -584,7 +594,6 @@
 	var/prev_pix_y = attacker.pixel_y
 
 	var/prev_anchored = attacker.anchored
-	var/prev_transform = attacker.transform
 
 	attacker.anchored = TRUE
 
@@ -638,6 +647,7 @@
 						if(new_mover in collected)
 							continue new_movers
 						if(!new_mover.anchored)
+							new_mover.Stun(1)
 							i++
 							movers["[i]"] = new_mover
 							prev_pixs["[i]"] = list("pix_x" = new_mover.pixel_x, "pix_y" = new_mover.pixel_y)

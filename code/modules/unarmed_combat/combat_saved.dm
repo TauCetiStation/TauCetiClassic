@@ -56,18 +56,16 @@
 		return
 	A.attack_animation = TRUE
 
-	switch(combo_element)
-		if(I_DISARM, I_HURT)
-			var/matrix/saved_transform = A.transform
-			var/matrix/M = matrix()
-			if(A.hand)
-				M.Turn(-combo_value)
-			else
-				M.Turn(combo_value)
-			animate(A, transform=M, time=2)
-			sleep(2)
-			animate(A, transform=saved_transform, time=1)
-			sleep(1)
+	var/matrix/saved_transform = A.transform
+	var/matrix/M = matrix()
+	if(A.hand)
+		M.Turn(-combo_value)
+	else
+		M.Turn(combo_value)
+	animate(A, transform=M, time=2)
+	sleep(2)
+	animate(A, transform=saved_transform, time=1)
+	sleep(1)
 
 	A.attack_animation = FALSE
 
@@ -102,9 +100,7 @@
 	if(victim.incapacitated())
 		combo_value *= 0.5
 
-	to_chat(world, "Adding combo_element [combo_element] [combo_elements.len]")
 	combo_elements += combo_element
-	to_chat(world, "Added combo_element [combo_element] [combo_elements.len]")
 
 	fullness = min(100, fullness + combo_value)
 
@@ -152,7 +148,8 @@
 			attacker.client.images += C_EL_I
 			i++
 
-	INVOKE_ASYNC(src, .proc/animate_attack, combo_element, combo_value, victim, attacker)
+	if(combo_element == I_DISARM || combo_element == I_HURT)
+		INVOKE_ASYNC(src, .proc/animate_attack, combo_element, combo_value, victim, attacker)
 
 	return FALSE
 
@@ -180,8 +177,8 @@
 			attacker.client.images -= combo_icon
 		for(var/c_el_i in combo_elements_icons)
 			attacker.client.images -= c_el_i
-	combo_icon = null
-	combo_elements_icons.Cut()
+	QDEL_NULL(combo_icon)
+	QDEL_LIST(combo_elements_icons)
 	attacker.combo_animation = FALSE
 	attacker.attack_animation = FALSE
 	attacker.combos_performed -= src
