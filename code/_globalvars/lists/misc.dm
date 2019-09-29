@@ -1,15 +1,3 @@
-var/global/list/scarySounds = list(
-	'sound/weapons/thudswoosh.ogg',
-    'sound/weapons/guns/gunpulse_Taser.ogg', 'sound/weapons/armbomb.ogg',
-    'sound/voice/xenomorph/hiss_1.ogg', 'sound/voice/xenomorph/hiss_2.ogg',
-    'sound/voice/xenomorph/hiss_3.ogg',
-    'sound/voice/xenomorph/growl_1.ogg', 'sound/voice/xenomorph/growl_2.ogg',
-    'sound/effects/Glassbr1.ogg', 'sound/effects/Glassbr2.ogg',
-    'sound/effects/Glassbr3.ogg', 'sound/items/Welder.ogg',
-    'sound/items/Welder2.ogg','sound/machines/airlock/toggle.ogg',
-    'sound/effects/clownstep1.ogg', 'sound/effects/clownstep2.ogg'
-	)
-
 //added for Xenoarchaeology, might be useful for other stuff
 var/global/list/alphabet_uppercase = list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
 

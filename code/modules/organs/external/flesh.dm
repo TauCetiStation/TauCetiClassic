@@ -51,8 +51,6 @@
 		if(laser)
 			burn /= 2
 
-	if((BP.status & ORGAN_BROKEN) && prob(40) && brute)
-		BP.owner.emote("scream",,, 1)	//getting hit on broken hand hurts
 	if(used_weapon)
 		BP.add_autopsy_data("[used_weapon]", brute + burn)
 
@@ -88,6 +86,57 @@
 	// sync the organ's damage with its wounds
 	BP.update_damages()
 	BP.owner.updatehealth() //droplimb will call updatehealth() again if it does end up being called
+	BP.owner.time_of_last_damage = world.time
+
+	// sounds
+	var/current_bp_damage = BP.get_damage()
+	var/pain_emote_name
+	var/previous_pain_emote_name
+	var/total_weapon_damage = round(brute + burn)
+	if(BP.owner.stat == CONSCIOUS)
+		switch(total_weapon_damage)
+			if(1 to 4)
+				if(BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(total_weapon_damage * 15))
+					previous_pain_emote_name = "moan"
+			if(5 to 19)
+				if(BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(total_weapon_damage * 5))
+					pain_emote_name = "scream"
+				else if(BP.owner.has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && prob(total_weapon_damage * 5))
+					previous_pain_emote_name = "moan"
+				else
+					previous_pain_emote_name = "moan"
+			if(20 to INFINITY)
+				if(BP.owner.has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && !prob(total_weapon_damage))
+					pain_emote_name = "moan"
+				else if(BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) || prob(total_weapon_damage * 3))
+					previous_pain_emote_name = "scream"
+				else
+					previous_pain_emote_name = "moan"
+		switch(current_bp_damage)
+			if(1 to 15)
+				if((!BP.owner.has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && prob(current_bp_damage * 4)) || (BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(current_bp_damage * 6)))
+					pain_emote_name = "moan"
+			if(15 to 29)
+				if(total_weapon_damage < 20)
+					if(BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD) && prob(current_bp_damage * 3))
+						pain_emote_name = "scream"
+					else if(BP.owner.has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && prob(current_bp_damage * 3))
+						pain_emote_name = "moan"
+					else
+						pain_emote_name = "moan"
+			if(30 to INFINITY)
+				if(BP.owner.has_trait(TRAIT_HIGH_PAIN_THRESHOLD) && !prob(current_bp_damage))
+					pain_emote_name = "moan"
+				else if(prob(current_bp_damage) || BP.owner.has_trait(TRAIT_LOW_PAIN_THRESHOLD))
+					pain_emote_name = "scream"
+				else
+					pain_emote_name = "moan"
+		if(pain_emote_name)
+			BP.owner.time_of_last_damage = world.time // don't cry from the pain that just came
+			if(previous_pain_emote_name == "scream" || pain_emote_name == "scream") // "scream" sounds have priority
+				BP.owner.emote("scream", auto = TRUE)
+			else
+				BP.owner.emote("moan", auto = TRUE)
 
 	//If limb took enough damage, try to cut or tear it off
 	if(BP.owner && !(BP.is_stump))
