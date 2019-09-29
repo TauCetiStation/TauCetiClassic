@@ -15,10 +15,7 @@
 
 // Arena map itself is perfect for any space-based team challenges, including but not limited to the following game modes:
 // 1. Scrapheap Challenge (as described above)
-// 2. Capture the Flag (optimal if there are four participating teams)
-// First phase is almost the same as SC, although improvised weapon arrays can be directed anywhere players want, but most important are the second phase differences: no warheads, teams get stun batons, iVend-o-Mat is a flag - team that steals the most "flags" within the time limit - wins.
-// Sidenote for CtF: it's not allowed to surround machine with real or fake walls without building functional doorways that freely connect all rooms of the space station. Fake walls and hidden crew compartments are allowed. Door hacking - bolting and/or electrocutions are NOT allowed.
-// 3. Battle of the Void (optimal if there are 20-40 participants):
+// 2. Battle of the Void (optimal if there are 20-40 participants):
 // All participants form two opposing teams - instead of standard team equipment, players receive colored jumpsuits and emergency space suits (that can only prolong life for a few minutes until they breach from temperatures and pressure).
 // One team gets Marauder mechs, the other gets Mauler mechs (equal stats - different look). Both teams receive identical mech modules to install on their improvised starships.
 // Event locked z-layer will ensure all players will keep finding each other and flying around until only one team survives due to luck or ace piloting skills of some veterans.
@@ -32,6 +29,18 @@
 	name = "Team Challenge Satellite"
 	icon_state = "observatory"
 	looped_ambience = 'sound/ambience/loop_regular.ogg'
+
+//Ladders that limit the construction areas while allowing easier movement in space. Use Del-all when construction phase is over.
+
+/obj/effect/decal/ladders
+	name = "space ladder"
+	desc = "It marks the construction area and improves movement of astronauts in the vacuum of space."
+	density = 1
+	anchored = 1
+	layer = 2
+	light_range = 3
+	icon = 'code/modules/teamchallenge/challenge.dmi'
+	icon_state = "ladders"
 
 //Adds Control Room ambience without making it separate area, as well as gives common sense advice for beginner event masters.
 
@@ -64,34 +73,9 @@
 	density = 0
 	anchored = 1
 	layer = 2
-	light_range = 3
+	light_range = 7
 	icon = 'code/modules/teamchallenge/challenge.dmi'
 	icon_state = "arrow"
-
-//Fake shield barrier preventing teams from attacking each other during construction phase. After first phase has concluded - use Del-all, or make a proper code for a switch.
-
-var/event_field_stage = 1 //1 - nothing, 2 - objects, 3 - all
-
-/obj/effect/decal/teamchallenge
-	name = "force field"
-	desc = "It prevents teams from attacking each other too early."
-	density = 0
-	anchored = 1
-	layer = 2
-	light_range = 3
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "energyshield"
-
-/obj/effect/decal/teamchallenge/ex_act()
-	return
-
-/obj/effect/decal/teamchallenge/CanPass(atom/movable/mover)
-	if(event_field_stage==3)
-		return 1
-	else if(isobj(mover) && event_field_stage==2)
-		return 1
-	else
-		return 0
 
 //Colorful lights
 
@@ -224,12 +208,44 @@ var/event_field_stage = 1 //1 - nothing, 2 - objects, 3 - all
 	icon_state = "ert_commander"
 	item_state = "ert_commander"
 
-//90 matter RCD - allows to build exactly one small sized room with an airlock.
+//ID cards
+
+/obj/item/weapon/card/id/noteam
+	name = "identification card"
+	desc = "A card with orange lining, issued to NanoTrasen convicts."
+	icon_state = "eng"
+	item_state = "eng_id"
+
+/obj/item/weapon/card/id/redteam
+	name = "identification card"
+	desc = "A card with red lining which shows courage and strength."
+	icon_state = "sec"
+	item_state = "sec_id"
+
+/obj/item/weapon/card/id/yellowteam
+	name = "identification card"
+	desc = "A card with yellow lining which shows loyalty and optimism."
+	icon_state = "cargoGold"
+	item_state = "cargo_id"
+
+/obj/item/weapon/card/id/greenteam
+	name = "identification card"
+	desc = "A card with green lining which shows harmony and dedication."
+	icon_state = "id"
+	item_state = "card-id"
+
+/obj/item/weapon/card/id/blueteam
+	name = "identification card"
+	desc = "A card with blue lining which shows honor and wisdom."
+	icon_state = "civ"
+	item_state = "civ_id"
+
+//150 matter RCD - allows to build exactly one average sized room with an airlock.
 
 /obj/item/weapon/rcd/scrapheap
 	name = "overcharged rapid-construction-device (RCD)"
 	desc = "A device used to rapidly build walls/floor and basic airlocks."
-	matter = 90
+	matter = 150
 
 //Resource full stacks
 
@@ -251,12 +267,12 @@ var/event_field_stage = 1 //1 - nothing, 2 - objects, 3 - all
 	name = "liquid junkfood autoinjector"
 	desc = "A label on it reads: <i>Warning: Do not use more than one at a time, may cause nausea! Nutrition Facts: total fat 50%, total carbohydrate 30%, protein 20%</i>"
 	icon_state = "auto_minig_t3"
-	volume = 16
+	volume = 10
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/junkfood/atom_init()
 	. = ..()
 	reagents.clear_reagents()
-	reagents.add_reagent("nutriment", 16)
+	reagents.add_reagent("nutriment", 10)
 	update_icon()
 
 //iVend-o-mat / iVent / Event-o-mat - Softheart wuz here.
@@ -317,14 +333,33 @@ var/event_field_stage = 1 //1 - nothing, 2 - objects, 3 - all
 
 /obj/item/weapon/storage/toolbox/scrapheap/green
 	name = "green challenge toolbox"
-	desc = "Wait a minute! This doesn't look green at all!"
-	icon_state = "blue"
-	item_state = "toolbox_blue"
+	icon_state = "yellow"
+	item_state = "toolbox_yellow"
+	color = "#00ff00"
 
 /obj/item/weapon/storage/toolbox/scrapheap/blue
 	name = "blue challenge toolbox"
 	icon_state = "blue"
 	item_state = "toolbox_blue"
+
+//Crude "green" oxygen tank
+
+/obj/item/weapon/tank/oxygen/yellow/green
+	desc = "A tank of oxygen, this one is green."
+	color = "#00ff00"
+
+//If you change camera computers networks manually in-game with VV (security, detective, entertainment and others) - the networks won't switch. So here is a dedicated telescreen that can be spawned anywhere anytime.
+
+/obj/machinery/computer/security/telescreen/entertainment/teamchallenge
+	name = "entertainment monitor"
+	desc = "Hopefully that thing can broadcast something interesting."
+	network = list("ERT")
+
+//Glowing magic mirror instead of lights that are easily abused for improvised stun batons roundstart.
+
+/obj/structure/mirror/magic/glowing
+	light_range = 7
+	light_power = 2
 
 //The crate that held the Ark of the Covenant following its discovery by Indiana Jones in 1936.
 
@@ -346,19 +381,12 @@ var/event_field_stage = 1 //1 - nothing, 2 - objects, 3 - all
 	max_water = 777
 	spray_range = 7
 
-//If you change camera computers networks manually in-game with VV (security, detective, entertainment and others) - the networks won't switch. So here is a dedicated telescreen that can be spawned anywhere anytime.
+//Bomb spawner
 
-/obj/machinery/computer/security/telescreen/entertainment/teamchallenge
-	name = "entertainment monitor"
-	desc = "Hopefully that thing can broadcast something interesting."
-	network = list("ERT")
-
-
-/* bomb spawner */
 var/list/bomb_spawners = list()
 
 /obj/structure/bomb_telepad
-	name = "bomb bluespace transporter"
+	name = "warhead transporter"
 	desc = "A bluespace telepad used for teleporting objects to and from a location."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "pad-idle-o"
@@ -367,19 +395,19 @@ var/list/bomb_spawners = list()
 	var/spawntype = /obj/structure/reagent_dispensers/fueltank/warhead/red
 
 /obj/structure/bomb_telepad/red
-	name = "red team bomb bluespace transporter"
+	name = "red warhead transporter"
 	spawntype = /obj/structure/reagent_dispensers/fueltank/warhead/red
 
 /obj/structure/bomb_telepad/yellow
-	name = "yellow team bomb bluespace transporter"
+	name = "yellow warhead transporter"
 	spawntype = /obj/structure/reagent_dispensers/fueltank/warhead/yellow
 
 /obj/structure/bomb_telepad/blue
-	name = "blue team bomb bluespace transporter"
+	name = "blue warhead transporter"
 	spawntype = /obj/structure/reagent_dispensers/fueltank/warhead/blue
 
 /obj/structure/bomb_telepad/green
-	name = "green team bomb bluespace transporter"
+	name = "green warhead transporter"
 	spawntype = /obj/structure/reagent_dispensers/fueltank/warhead/green
 
 /obj/structure/bomb_telepad/atom_init()
@@ -395,17 +423,70 @@ var/list/bomb_spawners = list()
 /obj/structure/bomb_telepad/proc/do_spawn()
 	new spawntype(loc)
 
+//Fake shield barrier preventing teams from attacking each other during construction and bombardment phases.
 
-/*
-todo:
-* spawn as с записью в титры
-*/
+var/event_field_stage = 1 //1 - nothing, 2 - objects, 3 - all
 
-/* verbs */
+var/list/team_shields = list()
+
+/proc/set_event_field_stage(value)
+	event_field_stage = value
+
+	for(var/obj/effect/decal/teamchallenge/shield in team_shields)
+		shield.update_icon()
+
+/obj/effect/decal/teamchallenge
+	name = "force field"
+	desc = "It prevents teams from attacking each other too early. Nothing can pass through the field."
+	density = 0
+	anchored = 1
+	layer = 2
+	light_range = 3
+	icon = 'code/modules/teamchallenge/challenge.dmi'
+	icon_state = "energyshield"
+	color = "#66ccff"
+
+/obj/effect/decal/teamchallenge/atom_init()
+	. = ..()
+	team_shields += src
+	update_icon()
+
+/obj/effect/decal/teamchallenge/Destroy()
+	team_shields -= src
+	return ..()
+
+/obj/effect/decal/teamchallenge/ex_act()
+	return
+
+/obj/effect/decal/teamchallenge/CanPass(atom/movable/mover)
+	if(event_field_stage==3)
+		return 1
+	else if(isobj(mover) && event_field_stage==2)
+		return 1
+	else
+		return 0
+
+/obj/effect/decal/teamchallenge/update_icon()
+	switch(event_field_stage)
+		if(1)
+			desc = "It prevents teams from attacking each other too early. Nothing can pass through the field."
+			icon_state = "energyshield"
+			color = "#66ccff"
+		if(2)
+			desc = "Looks like this field is less dense than usual. Only inanimate objects can pass through the field."
+			icon_state = "energyshield"
+			color = "#ffcc66"
+		if(3)
+			desc = "Robust at last! Anything can pass through the field when it's green."
+			icon_state = "energyshield"
+			color = "#00ff00"
+
+//Admin verb toggles
 
 var/list/event_verbs = list(/client/proc/toggle_fields, /client/proc/spawn_bomb)
 
 //1 - nothing, 2 - objects, 3 - all
+
 /client/proc/toggle_fields()
 	set category = "Event"
 	set name = "Toggle Event Fields"
@@ -421,15 +502,18 @@ var/list/event_verbs = list(/client/proc/toggle_fields, /client/proc/spawn_bomb)
 		event_field_stage=1
 		msg = "NOTHING may pass"
 
-	log_admin("[usr.key] has toggled event field, now [msg].")
-	message_admins("[key_name_admin(usr)] has toggled event field now [msg].")
+	log_admin("[usr.key] has toggled event force field, now [msg].")
+	message_admins("[key_name_admin(usr)] has toggled event force field, now [msg].")
+
+	for(var/obj/effect/decal/teamchallenge/shield in team_shields)
+		shield.update_icon()
 
 /client/proc/spawn_bomb()
 	set category = "Event"
 	set name = "Spawn Bomb"
 
-	log_admin("[usr.key] has spawned Bombs.")
-	message_admins("[key_name_admin(usr)] has spawned Bombs.")
+	log_admin("[usr.key] has spawned event bombs.")
+	message_admins("[key_name_admin(usr)] has spawned event bombs.")
 
 	for(var/obj/structure/bomb_telepad/T in bomb_spawners)
 		if(T.anchored)

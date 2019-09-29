@@ -591,6 +591,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/list/dresspacks = list(
 		"strip",
 		"standard space gear",
+		"red teammate",
+		"yellow teammate",
+		"green teammate",
+		"blue teammate",
 		"tournament standard red",
 		"tournament standard green",
 		"tournament gangster",
@@ -673,6 +677,82 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	switch(dresscode)
 		if ("strip")
 			//do nothing
+		if("red teammate")
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M), SLOT_WEAR_MASK)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/ert/scrapheap/red(M), SLOT_HEAD)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/red(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/ert/scrapheap/red(M), SLOT_WEAR_SUIT)
+			M.equip_to_slot_or_del(new /obj/item/weapon/tank/oxygen/red(M), SLOT_S_STORE)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(M), SLOT_BELT)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(M), SLOT_BACK)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/toolbox/scrapheap/red(M), SLOT_L_HAND)
+			M.equip_to_slot_or_del(new /obj/item/toy/crayon/red(M), SLOT_R_STORE)
+			M.equip_to_slot_or_del(new /obj/item/device/radio(M), SLOT_L_STORE)
+
+			var/obj/item/weapon/card/id/redteam/W = new(M)
+			W.assignment = "Red Teammate"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_maint_tunnels, access_external_airlocks, access_construction)
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
+		if("yellow teammate")
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M), SLOT_WEAR_MASK)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/ert/scrapheap/yellow(M), SLOT_HEAD)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/yellow(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/ert/scrapheap/yellow(M), SLOT_WEAR_SUIT)
+			M.equip_to_slot_or_del(new /obj/item/weapon/tank/oxygen/yellow(M), SLOT_S_STORE)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(M), SLOT_BELT)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(M), SLOT_BACK)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/toolbox/scrapheap/yellow(M), SLOT_L_HAND)
+			M.equip_to_slot_or_del(new /obj/item/toy/crayon/yellow(M), SLOT_R_STORE)
+			M.equip_to_slot_or_del(new /obj/item/device/radio(M), SLOT_L_STORE)
+
+			var/obj/item/weapon/card/id/yellowteam/W = new(M)
+			W.assignment = "Yellow Teammate"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_maint_tunnels, access_external_airlocks, access_construction)
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
+		if("green teammate")
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M), SLOT_WEAR_MASK)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/ert/scrapheap/green(M), SLOT_HEAD)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/green(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/ert/scrapheap/green(M), SLOT_WEAR_SUIT)
+			M.equip_to_slot_or_del(new /obj/item/weapon/tank/oxygen/yellow/green(M), SLOT_S_STORE)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(M), SLOT_BELT)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(M), SLOT_BACK)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/toolbox/scrapheap/green(M), SLOT_L_HAND)
+			M.equip_to_slot_or_del(new /obj/item/toy/crayon/green(M), SLOT_R_STORE)
+			M.equip_to_slot_or_del(new /obj/item/device/radio(M), SLOT_L_STORE)
+
+			var/obj/item/weapon/card/id/greenteam/W = new(M)
+			W.assignment = "Green Teammate"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_maint_tunnels, access_external_airlocks, access_construction)
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
+		if("blue teammate")
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M), SLOT_WEAR_MASK)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/ert/scrapheap/blue(M), SLOT_HEAD)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/lightblue(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/ert/scrapheap/blue(M), SLOT_WEAR_SUIT)
+			M.equip_to_slot_or_del(new /obj/item/weapon/tank/oxygen(M), SLOT_S_STORE)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(M), SLOT_BELT)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(M), SLOT_BACK)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/toolbox/scrapheap/blue(M), SLOT_L_HAND)
+			M.equip_to_slot_or_del(new /obj/item/toy/crayon/blue(M), SLOT_R_STORE)
+			M.equip_to_slot_or_del(new /obj/item/device/radio(M), SLOT_L_STORE)
+
+			var/obj/item/weapon/card/id/blueteam/W = new(M)
+			W.assignment = "Blue Teammate"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_maint_tunnels, access_external_airlocks, access_construction)
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 		if ("standard space gear")
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), SLOT_SHOES)
 
