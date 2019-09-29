@@ -1156,8 +1156,6 @@
 
 		if(hallucination)
 			if(hallucination >= 20)
-				if(prob(3))
-					fake_attack(src)
 				if(hallucination > 1000)
 					hallucination = 1000
 				if(!handling_hal)
