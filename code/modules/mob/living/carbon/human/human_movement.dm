@@ -11,9 +11,6 @@
 		return -1 // It's hard to be slowed down in space by... anything
 
 	var/tally = species.speed_mod
-	var/speed_mod_no_shoes = 0
-	if (get_species() == DIONA)
-		speed_mod_no_shoes = -2
 
 	if(is_type_organ(O_HEART, /obj/item/organ/internal/heart/ipc)) // IPC's heart is a servomotor, damaging it influences speed.
 		var/obj/item/organ/internal/IO = organs_by_name[O_HEART]
@@ -62,7 +59,7 @@
 		if(shoes && shoes.slowdown && !(shoes.slowdown > 0 && chem_nullify_debuff))
 			tally += shoes.slowdown
 		else
-			tally += speed_mod_no_shoes
+			tally +=  species.speed_mode_no_shoes
 
 		if(!chem_nullify_debuff)
 			for(var/x in list(l_hand, r_hand))
