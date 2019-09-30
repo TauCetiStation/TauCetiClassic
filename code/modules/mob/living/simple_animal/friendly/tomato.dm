@@ -15,3 +15,5 @@
 	response_harm   = "smacks the"
 	harm_intent_damage = 5
 	melee_damage = 3
+
+	has_head = TRUE

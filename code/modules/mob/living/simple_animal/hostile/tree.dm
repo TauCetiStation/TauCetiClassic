@@ -34,6 +34,8 @@
 	minbodytemp = 0
 
 	faction = "carp"
+	has_head = TRUE
+	has_arm = TRUE
 
 /mob/living/simple_animal/hostile/tree/FindTarget()
 	. = ..()

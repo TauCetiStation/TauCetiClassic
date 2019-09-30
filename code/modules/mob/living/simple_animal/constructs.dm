@@ -27,6 +27,8 @@
 	var/list/construct_spells = list()
 
 	animalistic = FALSE
+	has_head = TRUE
+	has_arm = TRUE
 
 /mob/living/simple_animal/construct/atom_init()
 	. = ..()

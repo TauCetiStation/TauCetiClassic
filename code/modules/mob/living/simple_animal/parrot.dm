@@ -82,6 +82,8 @@
 	//Parrots are kleptomaniacs. This variable ... stores the item a parrot is holding.
 	var/obj/item/held_item = null
 
+	has_head = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/parrot/atom_init()
 	. = ..()

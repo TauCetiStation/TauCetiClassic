@@ -34,6 +34,9 @@
 	faction = "pirate"
 
 	animalistic = FALSE
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/hostile/pirate/ranged
 	name = "Pirate Gunner"

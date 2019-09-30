@@ -45,6 +45,10 @@
 	var/next_cicle = 10
 	var/activated = 0 //So, it wont start its massacre right away and can be delayed for event or what ever...
 
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
+
 /mob/living/var/scp_mark = 0
 /turf/var/scp_was_here = 0
 

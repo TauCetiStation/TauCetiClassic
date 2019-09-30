@@ -56,6 +56,9 @@
 	var/speed = 0 // LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
 	var/animalistic = TRUE // Determines whether the being here is an animal or nah.
+	var/has_head = FALSE
+	var/has_arm = FALSE
+	var/has_leg = FALSE
 
 /mob/living/simple_animal/Grab(atom/movable/target, force_state, show_warnings = TRUE)
 	return
@@ -379,3 +382,12 @@
 	. = ..()
 	if(icon_move && !stat)
 		flick(icon_move, src)
+
+/mob/living/simple_animal/has_head(targetzone = null)
+	return has_head
+
+/mob/living/simple_animal/has_arm(targetzone = null)
+	return has_arm
+
+/mob/living/simple_animal/has_leg(targetzone = null)
+	return has_leg

@@ -33,6 +33,9 @@
 	status_flags = CANPUSH
 
 	animalistic = FALSE
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/hostile/russian/ranged
 	icon_state = "russianranged"

@@ -33,6 +33,10 @@
 	holder_type = /obj/item/weapon/holder/mouse
 	ventcrawler = 2
 
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
+
 /mob/living/simple_animal/mouse/Life()
 	..()
 	if(!stat && prob(speak_chance))

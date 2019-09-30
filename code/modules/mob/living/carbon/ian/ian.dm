@@ -462,3 +462,12 @@
 	message = capitalize(trim_left(message))
 
 	..(message, null, verb, sanitize = 0)
+
+/mob/living/carbon/ian/has_head(targetzone = null)
+	return TRUE
+
+/mob/living/carbon/ian/has_arm(targetzone = null)
+	return FALSE
+
+/mob/living/carbon/ian/has_leg(targetzone = null)
+	return TRUE

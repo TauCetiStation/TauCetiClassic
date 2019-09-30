@@ -33,6 +33,9 @@
 	minbodytemp = 0
 	heat_damage_per_tick = 20
 
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"

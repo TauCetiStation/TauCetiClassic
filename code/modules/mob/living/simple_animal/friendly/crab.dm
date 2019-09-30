@@ -22,6 +22,10 @@
 	var/obj/item/inventory_mask
 	ventcrawler = 2
 
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
+
 /mob/living/simple_animal/crab/Life()
 	..()
 	//CRAB movement

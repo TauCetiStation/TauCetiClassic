@@ -19,6 +19,9 @@
 	see_in_dark = 5
 	var/facehugger
 
+	has_head = TRUE
+	has_leg = TRUE
+
 /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	name = "Corgi meat"
 	desc = "Tastes like... well you know..."

@@ -35,6 +35,7 @@
 	move_to_delay = 8
 
 	animalistic = FALSE
+	has_head = TRUE
 
 /mob/living/simple_animal/hostile/mimic/FindTarget()
 	. = ..()

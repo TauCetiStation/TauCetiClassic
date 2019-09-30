@@ -38,6 +38,9 @@
 	environment_smash = 1
 	weather_immunities = list("ash", "acid")
 
+	has_head = TRUE
+	has_leg = TRUE
+
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/giant_spider/nurse
 	desc = "Furry and black, it makes you shudder to look at it. This one has brilliant green eyes."

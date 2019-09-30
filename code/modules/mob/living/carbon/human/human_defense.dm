@@ -478,3 +478,21 @@
 		rig.take_hit(damage)
 
 	if(penetrated_dam) SS.create_breaches(damtype, penetrated_dam)
+
+/mob/living/carbon/human/has_head(targetzone = null)
+	var/obj/item/organ/external/BP = get_bodypart(targetzone)
+	if(BP)
+		return BP.is_head && !BP.is_stump
+	return FALSE
+
+/mob/living/carbon/human/has_arm(targetzone = null)
+	var/obj/item/organ/external/BP = get_bodypart(targetzone)
+	if(BP)
+		return BP.is_arm && !BP.is_stump
+	return FALSE
+
+/mob/living/carbon/human/has_leg(targetzone = null)
+	var/obj/item/organ/external/BP = get_bodypart(targetzone)
+	if(BP)
+		return BP.is_leg && !BP.is_stump
+	return FALSE

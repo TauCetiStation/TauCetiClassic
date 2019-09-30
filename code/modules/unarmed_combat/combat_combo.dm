@@ -13,6 +13,13 @@ var/global/list/combat_combos_by_name = list()
 	var/combo_icon_state = "combo"
 
 	var/list/allowed_target_zones = TARGET_ZONE_ALL
+	var/require_head = FALSE
+	var/require_arm = FALSE
+	var/require_leg = FALSE
+
+	var/require_head_to_perform = FALSE
+	var/require_arm_to_perform = FALSE
+	var/require_leg_to_perform = FALSE
 
 	var/needs_logging = TRUE // Do we need to PM admins about this combo?
 
@@ -68,6 +75,34 @@ var/global/list/combat_combos_by_name = list()
 	if(!(target_zone in allowed_target_zones))
 		if(show_warning)
 			to_chat(CS.attacker, "<span class='notice'>You can't perform <b>[name]</b> on [CS.victim]'s [target_zone].</span>")
+		return FALSE
+
+	if(require_head && !CS.victim.has_head(target_zone))
+		if(show_warning)
+			to_chat(CS.attacker, "<span class='notice'>You can't perform <b>[name]</b> on [CS.victim], since they don't have a head...</span>")
+		return FALSE
+	if(require_arm && !CS.victim.has_arm(target_zone))
+		if(show_warning)
+			to_chat(CS.attacker, "<span class='notice'>You can't perform <b>[name]</b> on [CS.victim], since they don't have an arm...</span>")
+		return FALSE
+	if(require_leg && !CS.victim.has_leg(target_zone))
+		if(show_warning)
+			to_chat(CS.attacker, "<span class='notice'>You can't perform <b>[name]</b> on [CS.victim], since they don't have a leg...</span>")
+		return FALSE
+
+	if(require_head_to_perform && !CS.attacker.has_head())
+		if(show_warning)
+			to_chat(CS.attacker, "<span class='notice'>You can't perform <b>[name]</b>, since you don't have a head...</span>")
+		return FALSE
+
+	if(require_arm_to_perform && !CS.attacker.has_arm())
+		if(show_warning)
+			to_chat(CS.attacker, "<span class='notice'>You can't perform <b>[name]</b>, since you don't have an arm...</span>")
+		return FALSE
+
+	if(require_leg_to_perform && !CS.attacker.has_leg())
+		if(show_warning)
+			to_chat(CS.attacker, "<span class='notice'>You can't perform <b>[name]</b>, since you don't have a leg...</span>")
 		return FALSE
 
 	return TRUE

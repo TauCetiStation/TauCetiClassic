@@ -24,6 +24,9 @@
 	ventcrawler = 2
 	holder_type = /obj/item/weapon/holder/lizard
 
+	has_head = TRUE
+	has_leg = TRUE
+
 /mob/living/simple_animal/lizard/death()
 	. = ..()
 	desc = "It doesn't hiss anymore."

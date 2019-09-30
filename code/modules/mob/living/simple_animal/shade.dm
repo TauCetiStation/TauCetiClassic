@@ -28,6 +28,8 @@
 	status_flags = CANPUSH
 
 	animalistic = FALSE
+	has_head = TRUE
+	has_arm = TRUE
 
 /mob/living/simple_animal/shade/Life()
 	..()

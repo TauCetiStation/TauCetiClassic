@@ -24,6 +24,9 @@
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
 
+	has_head = TRUE
+	has_leg = TRUE
+
 /obj/item/weapon/reagent_containers/food/snacks/meat/shiba
 	name = "shiba meat"
 	desc = "Tastes like... well you know..."

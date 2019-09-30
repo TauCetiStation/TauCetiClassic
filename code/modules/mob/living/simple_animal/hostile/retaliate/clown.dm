@@ -38,6 +38,9 @@
 	unsuitable_atoms_damage = 10
 
 	animalistic = FALSE
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/hostile/clown //Here's CopyPasta!!
 	name = "Clown"

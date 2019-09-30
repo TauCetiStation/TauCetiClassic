@@ -15,6 +15,8 @@
 	var/colour = "grey"
 	ventcrawler = 2
 
+	has_head = TRUE
+
 /mob/living/simple_animal/adultslime
 	name = "pet slime"
 	desc = "A lovable, domesticated slime."

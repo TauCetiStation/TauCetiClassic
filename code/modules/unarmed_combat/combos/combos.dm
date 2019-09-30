@@ -61,6 +61,9 @@
 
 	allowed_target_zones = list(BP_L_LEG, BP_R_LEG)
 
+	require_leg = TRUE
+	require_leg_to_perform = TRUE
+
 /datum/combat_combo/slide_kick/animate_combo(mob/living/victim, mob/living/attacker)
 	attacker.combo_animation = TRUE
 	attacker.become_busy(victim, _hand = 0)
@@ -160,6 +163,8 @@
 
 	allowed_target_zones = list(BP_L_ARM, BP_R_ARM)
 
+	require_arm = TRUE
+
 /datum/combat_combo/capture/execute(mob/living/victim, mob/living/attacker)
 	victim.Stun(2)
 
@@ -208,6 +213,9 @@
 	combo_elements = list(I_HURT, I_HURT, I_HURT, I_HURT)
 
 	allowed_target_zones = list(BP_HEAD)
+
+	require_head = TRUE
+	require_arm_to_perform = TRUE
 
 /datum/combat_combo/uppercut/animate_combo(mob/living/victim, mob/living/attacker)
 	victim.Stun(2)
@@ -456,6 +464,8 @@
 
 	allowed_target_zones = list(BP_CHEST)
 
+	require_arm_to_perform = TRUE
+
 /datum/combat_combo/diving_elbow_drop/animate_combo(mob/living/victim, mob/living/attacker)
 	victim.Stun(2)
 	attacker.become_busy(victim, _hand = 0)
@@ -554,6 +564,8 @@
 	combo_elements = list(I_DISARM, I_HURT, I_DISARM, I_HURT)
 
 	allowed_target_zones = list(BP_GROIN)
+
+	require_leg_to_perform = TRUE
 
 /datum/combat_combo/dropkick/animate_combo(mob/living/victim, mob/living/attacker)
 	victim.Stun(2)

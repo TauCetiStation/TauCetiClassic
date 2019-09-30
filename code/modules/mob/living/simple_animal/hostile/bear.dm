@@ -36,6 +36,10 @@
 
 	faction = "russian"
 
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
+
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson
 	name = "Hudson"

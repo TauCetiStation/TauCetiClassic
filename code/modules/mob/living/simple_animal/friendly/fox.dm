@@ -20,6 +20,9 @@
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
 
+	has_head = TRUE
+	has_leg = TRUE
+
 //Captain fox
 /mob/living/simple_animal/fox/Renault
 	name = "Renault"

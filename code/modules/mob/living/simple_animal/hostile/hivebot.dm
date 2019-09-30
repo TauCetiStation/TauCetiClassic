@@ -28,6 +28,8 @@
 	speed = 4
 
 	animalistic = FALSE
+	has_arm = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/hostile/hivebot/range
 	name = "Hivebot"

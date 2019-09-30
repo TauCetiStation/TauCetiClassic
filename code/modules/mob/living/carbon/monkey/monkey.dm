@@ -238,3 +238,12 @@
 	message = capitalize(trim_left(message))
 
 	..(message, speaking, verb, alt_name, italics, message_range, used_radios)
+
+/mob/living/carbon/monkey/has_head(targetzone = null)
+	return TRUE
+
+/mob/living/carbon/monkey/has_arm(targetzone = null)
+	return TRUE
+
+/mob/living/carbon/monkey/has_leg(targetzone = null)
+	return TRUE

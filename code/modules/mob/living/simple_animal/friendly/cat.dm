@@ -24,6 +24,9 @@
 	holder_type = /obj/item/weapon/holder/cat
 	var/obj/item/inventory_mouth
 
+	has_head = TRUE
+	has_leg = TRUE
+
 /mob/living/simple_animal/cat/Life()
 	//MICE!
 	if((src.loc) && isturf(src.loc))

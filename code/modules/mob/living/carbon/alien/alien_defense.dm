@@ -14,3 +14,12 @@ This is what happens, when we attack aliens.
 
 	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound,
 				"miss_sound" = retMissSound)
+
+/mob/living/carbon/alien/has_head(targetzone = null)
+	return TRUE
+
+/mob/living/carbon/alien/has_arm(targetzone = null)
+	return TRUE
+
+/mob/living/carbon/alien/has_leg(targetzone = null)
+	return TRUE

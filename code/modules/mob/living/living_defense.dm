@@ -300,3 +300,14 @@
 /mob/living/incapacitated(restrained_type = ARMS)
 	if(stat || paralysis || stunned || weakened || restrained(restrained_type))
 		return 1
+
+// These procs define whether this mob has a limb at a given targetzone. Heavily used in combo-combat.
+// If targetzone is not specified, returns TRUE if the mob has the bodypart in general.
+/mob/living/proc/has_head(targetzone = null)
+	return FALSE
+
+/mob/living/proc/has_arm(targetzone = null)
+	return FALSE
+
+/mob/living/proc/has_leg(targetzone = null)
+	return FALSE

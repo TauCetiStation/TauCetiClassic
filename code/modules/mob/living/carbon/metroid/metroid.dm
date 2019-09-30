@@ -741,6 +741,15 @@
 /mob/living/carbon/slime/getTrail()
 	return null
 
+/mob/living/carbon/slime/has_head(targetzone = null)
+	return TRUE
+
+/mob/living/carbon/slime/has_arm(targetzone = null)
+	return FALSE
+
+/mob/living/carbon/slime/has_leg(targetzone = null)
+	return FALSE
+
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 
 /*

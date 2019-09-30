@@ -41,6 +41,8 @@
 
 	var/carp_color = "purple" // holder for icon set
 
+	has_head = TRUE
+
 /mob/living/simple_animal/hostile/carp/atom_init()
 	. = ..()
 	if(randomify)

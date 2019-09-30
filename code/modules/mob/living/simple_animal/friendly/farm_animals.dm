@@ -22,6 +22,9 @@
 	melee_damage = 3
 	var/datum/reagents/udder = null
 
+	has_head = TRUE
+	has_leg = TRUE
+
 /mob/living/simple_animal/hostile/retaliate/goat/atom_init()
 	udder = new(50)
 	udder.my_atom = src
@@ -113,6 +116,9 @@
 	health = 50
 	var/datum/reagents/udder = null
 
+	has_head = TRUE
+	has_leg = TRUE
+
 /mob/living/simple_animal/cow/atom_init()
 	udder = new(50)
 	udder.my_atom = src
@@ -182,6 +188,9 @@
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE
 	small = 1
+
+	has_head = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/chick/atom_init()
 	. = ..()
@@ -291,6 +300,9 @@ var/global/chicken_count = 0
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/ham = 6)
 	health = 50
 
+	has_head = TRUE
+	has_leg = TRUE
+
 /mob/living/simple_animal/turkey
 	name = "turkey"
 	desc = "Benjamin Franklin would be proud."
@@ -305,6 +317,9 @@ var/global/chicken_count = 0
 	see_in_dark = 6
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 4)
 	health = 50
+
+	has_head = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/goose
 	name = "goose"
@@ -321,6 +336,9 @@ var/global/chicken_count = 0
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
 	health = 50
 
+	has_head = TRUE
+	has_leg = TRUE
+
 /mob/living/simple_animal/seal
 	name = "seal"
 	desc = "A beautiful white seal."
@@ -336,6 +354,10 @@ var/global/chicken_count = 0
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
 	health = 50
 
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
+
 /mob/living/simple_animal/walrus
 	name = "walrus"
 	desc = "A big brown walrus."
@@ -350,3 +372,6 @@ var/global/chicken_count = 0
 	see_in_dark = 6
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
 	health = 50
+
+	has_head = TRUE
+	has_arm = TRUE
