@@ -13883,31 +13883,6 @@
 	pixel_y = 24
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_x = -3;
-	pixel_y = 8
-	},
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_x = -2
-	},
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_y = 6
-	},
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_x = 2;
-	pixel_y = -2
-	},
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_x = 3;
-	pixel_y = 9
-	},
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_x = 6;
-	pixel_y = 2
-	},
-/obj/item/weapon/storage/backpack/kitbag{
-	pixel_x = -1
-	},
 /turf/simulated/shuttle/floor4{
 	name = "red floor";
 	nitrogen = 103.984;
