@@ -199,7 +199,7 @@
 	name = "Uppercut"
 	desc = "A move where you lunge your fist from below into opponent's chin, knocking their helmet off."
 	combo_icon_state = "uppercut"
-	fullness_lose_on_execute = 50
+	fullness_lose_on_execute = 60
 	combo_elements = list(I_HURT, I_HURT, I_HURT, I_HURT)
 
 	allowed_target_zones = list(BP_HEAD)
@@ -558,7 +558,7 @@
 
 	var/i = 1
 	for(var/try_step in 1 to try_steps)
-		var/cur_movers = list() + collected
+		var/cur_movers = list() + collected - list(victim)
 
 		var/atom/old_V_loc = victim.loc
 		step(victim, dropkick_dir)
@@ -629,51 +629,52 @@
 		var/try_steps = 6
 		var/charge_dir = attacker.dir
 
-		for(var/try_to_step in 1 to try_steps)
-			var/obj/item/weapon/grab/victim_G
-			grab_search:
-				for(var/obj/item/weapon/grab/G in attacker.GetGrabs())
-					if(G.affecting == victim)
-						victim_G = G
-						break grab_search
+		try_steps_loop:
+			for(var/try_to_step in 1 to try_steps)
+				var/obj/item/weapon/grab/victim_G
+				grab_search:
+					for(var/obj/item/weapon/grab/G in attacker.GetGrabs())
+						if(G.affecting == victim)
+							victim_G = G
+							break grab_search
 
-			if(!victim_G) // Somebody disarmed us, stop this.
-				break
-
-			var/turf/T = get_step(attacker, charge_dir)
-			if(attacker.client)
-				attacker.client.Move(T, charge_dir, forced=TRUE)
-			else
-				attacker.Move(T, charge_dir, forced=TRUE)
-
-			attacker.set_dir(charge_dir)
-			victim_G.adjust_position(adjust_time = 0, force_loc = TRUE, force_dir = charge_dir)
-
-			if(T != attacker.loc) // We bumped into something, so we bumped our victim into it...
-				var/list/to_check = T.contents + attacker.loc.contents - list(attacker)
-				for(var/mob/living/L in to_check)
-					var/obj/item/organ/external/BP = BP_CHEST
-					var/armor_check = 0
-					if(ishuman(L))
-						var/mob/living/carbon/human/H = victim
-						BP = H.get_bodypart(BP)
-						armor_check = H.run_armor_check(H, "melee")
-
-					var/obj/structure/table/facetable = locate() in T
-					if(facetable)
-						facetable.attackby(victim_G, attacker)
-						playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-						victim.visible_message("<span class='danger'>[attacker] slams [victim] into an obstacle!</span>")
-					else
-						playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-						victim.visible_message("<span class='danger'>[attacker] slams [victim] into an obstacle!</span>")
-
-					L.apply_effect(6, WEAKEN, blocked = armor_check)
-					L.apply_damage(40, BRUTE, blocked = armor_check)
+				if(!victim_G) // Somebody disarmed us, stop this.
 					break
 
-			if(!do_after(attacker, attacker.movement_delay() * 0.75, can_move = TRUE, target = victim, progress = FALSE))
-				break
+				var/turf/T = get_step(attacker, charge_dir)
+				if(attacker.client)
+					attacker.client.Move(T, charge_dir, forced=TRUE)
+				else
+					attacker.Move(T, charge_dir, forced=TRUE)
+
+				attacker.set_dir(charge_dir)
+				victim_G.adjust_position(adjust_time = 0, force_loc = TRUE, force_dir = charge_dir)
+
+				if(T != attacker.loc) // We bumped into something, so we bumped our victim into it...
+					var/list/to_check = T.contents + attacker.loc.contents - list(attacker)
+					for(var/mob/living/L in to_check)
+						var/obj/item/organ/external/BP = BP_CHEST
+						var/armor_check = 0
+						if(ishuman(L))
+							var/mob/living/carbon/human/H = victim
+							BP = H.get_bodypart(BP)
+							armor_check = H.run_armor_check(H, "melee")
+
+						var/obj/structure/table/facetable = locate() in T
+						if(facetable)
+							facetable.attackby(victim_G, attacker)
+							playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
+							victim.visible_message("<span class='danger'>[attacker] slams [victim] into an obstacle!</span>")
+						else
+							playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
+							victim.visible_message("<span class='danger'>[attacker] slams [victim] into an obstacle!</span>")
+
+						L.apply_effect(6, WEAKEN, blocked = armor_check)
+						L.apply_damage(40, BRUTE, blocked = armor_check)
+					break try_steps_loop
+
+				if(!do_after(attacker, attacker.movement_delay() * 0.75, can_move = TRUE, target = victim, progress = FALSE))
+					break try_steps_loop
 
 	for(var/obj/item/weapon/grab/G in attacker.GetGrabs())
 		if(G.affecting == victim)

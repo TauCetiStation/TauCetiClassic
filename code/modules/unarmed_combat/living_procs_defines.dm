@@ -267,6 +267,13 @@ var/global/combos_cheat_sheet = ""
 	for(var/datum/combo_saved/CS in combos_saved)
 		CS.fullness += value
 
+// Returns TRUE if a combo was executed.
+/mob/living/proc/try_combo(mob/living/target)
+	for(var/datum/combo_saved/CS in combos_performed)
+		if(CS.victim == target)
+			return CS.activate_combo()
+	return FALSE
+
 // Returns TRUE if a combo was used, so you can prevent grabbing/disarming/etc.
 /mob/living/proc/engage_combat(mob/living/target, combo_element, combo_value)
 	if(!updates_combat)

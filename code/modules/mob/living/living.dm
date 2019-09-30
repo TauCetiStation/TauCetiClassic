@@ -944,6 +944,9 @@
 								"<span class='notice'>You successfully remove \the [CM.legcuffed].</span>")
 						CM.drop_from_inventory(CM.legcuffed)
 
+/mob/living/proc/on_lay_down()
+	return
+
 /mob/living/verb/lay_down()
 	set name = "Rest"
 	set category = "IC"
@@ -971,6 +974,7 @@
 		to_chat(src, "<span class='rose'>You can't control yourself.</span>")
 
 	else
+		on_lay_down()
 		resting = !resting
 		to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 

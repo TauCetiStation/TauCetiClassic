@@ -17,7 +17,8 @@
 	if(!say_understands(speaker,language))
 		if(isanimal(speaker))
 			var/mob/living/simple_animal/S = speaker
-			message = pick(S.speak)
+			if(S.speak && S.speak.len)
+				message = pick(S.speak)
 		else if(isIAN(speaker))
 			var/mob/living/carbon/ian/IAN = speaker
 			message = pick(IAN.speak)

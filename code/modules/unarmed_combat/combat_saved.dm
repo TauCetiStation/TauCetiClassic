@@ -14,12 +14,16 @@
 
 	var/last_hand_hit = 0 // Switching hands doubles fullness gained.
 
-/datum/combo_saved/New(mob/living/victim, mob/living/attacker, combo_element, combo_value)
+	var/max_combo_elements = 4
+
+/datum/combo_saved/New(mob/living/victim, mob/living/attacker, combo_element, combo_value, max_combo_elements = 4)
 	last_hit_registered = world.time + delete_after_no_hits
 
 	src.attacker = attacker
 	src.victim = victim
 	progbar = new(attacker, 100, victim, my_icon_state="combat_prog_bar", insert_under=TRUE)
+
+	src.max_combo_elements = max_combo_elements // Take note, that there are only sprites for 4 atm.
 
 /datum/combo_saved/proc/set_combo_icon(image/new_icon)
 	if(!attacker)
@@ -123,12 +127,44 @@
 		return TRUE
 	return FALSE
 
+// Returns TRUE if a we want to cancel the AltClick/whatever was there. But actually, basically always
+// returns TRUE.
+/datum/combo_saved/proc/activate_combo()
+	if(!attacker)
+		return FALSE
+
+	if(!next_combo) // A little feature, which allows us to reset the combo bar.
+		combo_elements.Cut()
+		update_combo_elements()
+		return TRUE
+
+	var/datum/combat_combo/CC = next_combo
+	if(CC.can_execute(src, show_warning = TRUE))
+		next_combo = null
+		CC.pre_execute(victim, attacker)
+
+		if(CC.heavy_animation)
+			CC.before_animation(victim, attacker)
+		INVOKE_ASYNC(CC, /datum/combat_combo.proc/animate_combo, victim, attacker)
+
+		CC.execute(victim, attacker)
+		fullness -= CC.fullness_lose_on_execute
+		set_combo_icon(null)
+		combo_elements.Cut()
+		register_attack(CC.name, 0)
+	else
+		set_combo_icon(null)
+		next_combo = null
+		combo_elements.Cut()
+		update_combo_elements()
+	return TRUE
+
 /datum/combo_saved/proc/register_attack(combo_element, combo_value)
 	if(!attacker)
 		return
 
 	last_hit_registered = world.time
-	if(combo_elements.len == 4)
+	if(combo_elements.len == max_combo_elements)
 		combo_elements.Cut(1, 2)
 
 	if(attacker.hand != last_hand_hit)
@@ -150,25 +186,8 @@
 	fullness = min(100, fullness + combo_value)
 
 	if(next_combo)
-		var/datum/combat_combo/CC = next_combo
-		if(CC.can_execute(src, show_warning=TRUE))
-			next_combo = null
-			CC.pre_execute(victim, attacker)
-
-			if(CC.heavy_animation)
-				CC.before_animation(victim, attacker)
-			INVOKE_ASYNC(CC, /datum/combat_combo.proc/animate_combo, victim, attacker)
-
-			CC.execute(victim, attacker)
-			fullness -= CC.fullness_lose_on_execute
-			set_combo_icon(null)
-			combo_elements.Cut()
-			register_attack(CC.name, 0)
-			return TRUE
-		else
-			set_combo_icon(null)
-			next_combo = null
-			combo_elements.Cut()
+		set_combo_icon(null)
+		next_combo = null
 	else
 		get_next_combo()
 
