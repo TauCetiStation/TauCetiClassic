@@ -39,7 +39,7 @@ var/global/list/combat_combos_by_name = list()
 		return FALSE
 	if(CS.attacker.is_busy(CS.victim))
 		if(show_warning)
-			to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> while doing something else,</span>")
+			to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> while doing something else.</span>")
 		return FALSE
 	if(CS.attacker.attack_animation || CS.attacker.combo_animation)
 		if(show_warning)
@@ -96,7 +96,7 @@ var/global/list/combat_combos_by_name = list()
 			to_chat(CS.attacker, "<span class='notice'>You can't perform <b>[name]</b>, since you don't have a head...</span>")
 		return FALSE
 
-	if(require_arm_to_perform && !CS.attacker.has_arm())
+	if(require_arm_to_perform && !CS.attacker.has_arm(CS.attacker.hand ? BP_L_ARM : BP_R_ARM))
 		if(show_warning)
 			to_chat(CS.attacker, "<span class='notice'>You can't perform <b>[name]</b>, since you don't have an arm...</span>")
 		return FALSE
@@ -127,12 +127,13 @@ var/global/list/combat_combos_by_name = list()
 
 		attacker.become_busy(victim, _hand = 0)
 		attacker.become_busy(victim, _hand = 1)
-		victim.in_use_action = TRUE
 
 		if(victim.buckled)
 			victim.buckled.unbuckle_mob()
 		if(attacker.buckled)
 			attacker.buckled.unbuckle_mob()
+
+		victim.in_use_action = TRUE
 
 // Please remember, that the default animation of attack takes 3 ticks. So put at least sleep(3) here
 // before anything.
@@ -153,9 +154,9 @@ var/global/list/combat_combos_by_name = list()
 		attacker.pixel_y = attacker.default_pixel_y
 		attacker.layer = attacker.default_layer
 
-		victim.in_use_action = FALSE
 		attacker.become_not_busy(victim, _hand = 0)
 		attacker.become_not_busy(victim, _hand = 1)
+		victim.in_use_action = FALSE
 		attacker.combo_animation = FALSE
 
 // This is for technical stuff, such as fingerprints leaving, admin PM.

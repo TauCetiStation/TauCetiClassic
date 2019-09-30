@@ -480,18 +480,32 @@
 	if(penetrated_dam) SS.create_breaches(damtype, penetrated_dam)
 
 /mob/living/carbon/human/has_head(targetzone = null)
+	if(isnull(targetzone))
+		var/obj/item/organ/external/head = get_bodypart(BP_HEAD)
+		if(head && head.is_head && !head.is_stump)
+			return TRUE
 	var/obj/item/organ/external/BP = get_bodypart(targetzone)
 	if(BP)
 		return BP.is_head && !BP.is_stump
 	return FALSE
 
 /mob/living/carbon/human/has_arm(targetzone = null)
+	if(isnull(targetzone))
+		var/list/pos_arms = list(get_bodypart(BP_L_ARM), get_bodypart(BP_R_ARM))
+		for(var/obj/item/organ/external/arm in pos_arms)
+			if(arm && arm.is_arm && !arm.is_stump)
+				return TRUE
 	var/obj/item/organ/external/BP = get_bodypart(targetzone)
 	if(BP)
 		return BP.is_arm && !BP.is_stump
 	return FALSE
 
 /mob/living/carbon/human/has_leg(targetzone = null)
+	if(isnull(targetzone))
+		var/list/pos_legs = list(get_bodypart(BP_L_LEG), get_bodypart(BP_R_LEG))
+		for(var/obj/item/organ/external/leg in pos_legs)
+			if(leg && leg.is_leg && !leg.is_stump)
+				return TRUE
 	var/obj/item/organ/external/BP = get_bodypart(targetzone)
 	if(BP)
 		return BP.is_leg && !BP.is_stump

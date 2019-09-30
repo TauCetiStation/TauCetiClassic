@@ -473,11 +473,5 @@ var/list/intents = list("help","disarm","grab","hurt")
 /mob/proc/become_busy(atom/target, _hand = 0)
 	busy_with_action = TRUE
 
-	if(target)
-		target.in_use_action = TRUE
-
 /mob/proc/become_not_busy(atom/target, _hand = 0)
 	busy_with_action = FALSE
-
-	if(target)
-		target.in_use_action = FALSE

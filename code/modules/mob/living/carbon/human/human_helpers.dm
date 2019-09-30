@@ -17,9 +17,6 @@
 		busy_right_hand = TRUE
 	busy_with_action = TRUE
 
-	if(target)
-		target.in_use_action = TRUE
-
 /mob/living/carbon/human/become_not_busy(atom/target, _hand = 0) // See remark above.
 	if(_hand)
 		busy_left_hand = FALSE
@@ -27,6 +24,3 @@
 		busy_right_hand = FALSE
 	if(!busy_left_hand && !busy_right_hand)
 		busy_with_action = FALSE
-
-	if(target)
-		target.in_use_action = FALSE
