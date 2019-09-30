@@ -38,7 +38,7 @@
 			if(istype(W, /obj/item/weapon/melee/energy/sword)) qdel(src)
 			else if(iswelder(W))
 				var/obj/item/weapon/weldingtool/WT = W
-				if(WT.remove_fuel(0, user)) qdel(src)
+				if(WT.use(0, user)) qdel(src)
 			else
 				user_unbuckle_mob(user)
 				return
@@ -222,4 +222,4 @@
 		if(turfs.len) //Pick a turf to spawn at if we can
 			var/turf/simulated/floor/T = pick(turfs)
 			new/obj/effect/spacevine_controller(T) //spawn a controller at turf
-			message_admins("\blue Event: Spacevines spawned at [T.loc] ([T.x],[T.y],[T.z])")
+			message_admins("<span class='notice'>Event: Spacevines spawned at [T.loc] ([T.x],[T.y],[T.z]) [ADMIN_JMP(T)]</span>")

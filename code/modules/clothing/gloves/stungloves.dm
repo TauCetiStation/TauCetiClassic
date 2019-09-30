@@ -58,8 +58,8 @@
 
 		//clipping fingertips
 		if(!clipped)
-			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			user.visible_message("\red [user] cuts the fingertips off of the [src].","\red You cut the fingertips off of the [src].")
+			playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
+			user.visible_message("<span class='warning'>[user] cuts the fingertips off of the [src].</span>","<span class='warning'>You cut the fingertips off of the [src].</span>")
 
 			clipped = TRUE
 			name = "mangled [name]"

@@ -38,8 +38,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 /mob/living/carbon/var/tmp/next_blood_squirt = 0 // until this moved to heart or not...
 /mob/living/carbon/human/proc/handle_blood(blood_volume = 0)
 
-	//Blood regeneration if there is some space
-	if(blood_volume < BLOOD_VOLUME_NORMAL && blood_volume)
+	// Aclometasone prevents blood forming, by preventing metabolism.
+	// *Blood regeneration is here, for some reason* ~Luduk
+	if(blood_volume < BLOOD_VOLUME_NORMAL && blood_volume && !reagents.has_reagent("aclometasone"))
 		var/datum/reagent/blood/B = locate() in vessel.reagent_list //Grab some blood
 		if(B) // Make sure there's some blood at all
 			if(B.data["donor"] != src) //If it's not theirs, then we look for theirs
@@ -60,12 +61,13 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	// being pumped properly anymore.
 	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
 
-	if(IO.damage > 1 && IO.damage < IO.min_bruised_damage)
-		blood_volume *= 0.8
-	else if(IO.damage >= IO.min_bruised_damage && IO.damage < IO.min_broken_damage)
-		blood_volume *= 0.6
-	else if(IO.damage >= IO.min_broken_damage && IO.damage < INFINITY)
-		blood_volume *= 0.3
+	if(!reagents.has_reagent("stabyzol") || IO.robotic)
+		if(IO.damage > 1 && IO.damage < IO.min_bruised_damage)
+			blood_volume *= 0.8
+		else if(IO.damage >= IO.min_bruised_damage && IO.damage < IO.min_broken_damage)
+			blood_volume *= 0.6
+		else if(IO.damage >= IO.min_broken_damage && IO.damage < INFINITY)
+			blood_volume *= 0.3
 
 	//Effects of bloodloss
 	switch(blood_volume)
@@ -78,10 +80,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				pale = 1
 				update_body()
 				var/word = pick("dizzy","woosey","faint")
-				to_chat(src, "\red You feel [word]")
+				to_chat(src, "<span class='warning'>You feel [word]</span>")
 			if(prob(1))
 				var/word = pick("dizzy","woosey","faint")
-				to_chat(src, "\red You feel [word]")
+				to_chat(src, "<span class='warning'>You feel [word]</span>")
 			if(oxyloss < 20)
 				oxyloss += 3
 		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
@@ -95,13 +97,13 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			if(prob(15))
 				Paralyse(rand(1,3))
 				var/word = pick("dizzy","woosey","faint")
-				to_chat(src, "\red You feel extremely [word]")
+				to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
 		if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 			oxyloss += 5
 			toxloss += 3
 			if(prob(15))
 				var/word = pick("dizzy","woosey","faint")
-				to_chat(src, "\red You feel extremely [word]")
+				to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
 		if(0 to BLOOD_VOLUME_SURVIVE)
 			// There currently is a strange bug here. If the mob is not below -100 health
 			// when death() is called, apparently they will be just fine, and this way it'll
@@ -117,11 +119,15 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		else if(nutrition >= 200)
 			nutrition -= 3
 
+	// We don't bleed out at all if metatrombine is injected.
+	if(reagents.has_reagent("metatrombine"))
+		return
+
 	//Bleeding out
 	var/blood_max = 0
 	var/list/do_spray = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.status & ORGAN_ROBOT)
+		if(BP.is_robotic())
 			continue
 
 		var/open_wound
@@ -146,7 +152,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 						blood_max += W.damage / 40
 
 		if(BP.status & ORGAN_ARTERY_CUT)
-			var/bleed_amount = Floor((vessel.total_volume / (BP.applied_pressure ? 400 : 250)) * BP.arterial_bleed_severity)
+			var/bleed_amount = FLOOR((vessel.total_volume / (BP.applied_pressure ? 400 : 250)) * BP.arterial_bleed_severity, 1)
 			if(bleed_amount)
 				if(open_wound)
 					blood_max += bleed_amount
@@ -177,7 +183,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			visible_message("<span class='danger'>Blood squirts from [pick(do_spray)]!</span>")
 		next_blood_squirt = world.time + 50
 		var/turf/sprayloc = get_turf(src)
-		blood_max -= drip(ceil(blood_max / 3), sprayloc)
+		blood_max -= drip(CEIL(blood_max / 3), sprayloc)
 		if(blood_max > 0)
 			blood_max -= blood_squirt(blood_max, sprayloc)
 			if(blood_max > 0)
@@ -187,6 +193,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 //Makes a blood drop, leaking certain amount of blood from the mob
 /mob/living/carbon/human/proc/drip(amt, tar = src, ddir)
+	if(reagents.has_reagent("metatrombine"))
+		return 0
+
 	if(remove_blood(amt))
 		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, basedatum = species.blood_datum)
 		return amt
@@ -255,7 +264,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		return
 
 	var/spraydir = pick(alldirs)
-	amt = ceil(amt / BLOOD_SPRAY_DISTANCE)
+	amt = CEIL(amt / BLOOD_SPRAY_DISTANCE)
 	var/bled = 0
 
 	var/turf/old_sprayloc = sprayloc

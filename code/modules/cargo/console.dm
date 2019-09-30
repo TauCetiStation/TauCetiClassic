@@ -3,6 +3,8 @@
 	desc = "Used to order supplies, approve requests, and control the shuttle."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "supply"
+	state_broken_preset = "techb"
+	state_nopower_preset = "tech0"
 	light_color = "#b88b2e"
 	req_access = list(access_cargo)
 	circuit = /obj/item/weapon/circuitboard/computer/cargo
@@ -218,20 +220,20 @@
 
 	updateUsrDialog()
 
-/obj/machinery/computer/cargo/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/card/emag) && !hacked)
-		to_chat(user, "\blue Special supplies unlocked.")
-		hacked = TRUE
-		contraband = TRUE
-		user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
-		"<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
+/obj/machinery/computer/cargo/emag_act(mob/user)
+	if(hacked)
+		return FALSE
+	to_chat(user, "<span class='notice'>Special supplies unlocked.</span>")
+	hacked = TRUE
+	contraband = TRUE
+	user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
+	"<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
 
-		// This also permamently sets this on the circuit board
-		var/obj/item/weapon/circuitboard/computer/cargo/board = circuit
-		board.contraband_enabled = TRUE
-		board.hacked = TRUE
-	else
-		..()
+	// This also permamently sets this on the circuit board
+	var/obj/item/weapon/circuitboard/computer/cargo/board = circuit
+	board.contraband_enabled = TRUE
+	board.hacked = TRUE
+	return TRUE
 
 /obj/machinery/computer/cargo/proc/post_signal(command)
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)

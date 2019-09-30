@@ -88,7 +88,7 @@
 
 				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-				msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
+				msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])", user)
 
 				for(var/mob/O in viewers(world.view, user))
 					O.show_message("<span class='rose'>[user] feeds [M] [src].</span>", 1)
@@ -99,7 +99,7 @@
 
 
 		if(reagents)								//Handle ingestion of the reagent.
-			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+			playsound(M, 'sound/items/eatfood.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 			if(reagents.total_volume)
 				if(reagents.total_volume > bitesize)
 					/*
@@ -519,6 +519,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	..()
 	new /obj/effect/decal/cleanable/egg_smudge(loc)
+	if(prob(13))
+		if(global.chicken_count < MAX_CHICKENS)
+			new /mob/living/simple_animal/chick(loc)
 	reagents.reaction(hit_atom, TOUCH)
 	visible_message("<span class='rose'>\The [src.name] has been squashed.</span>", "<span class='rose'>You hear a smack.</span>")
 	qdel(src)
@@ -595,15 +598,6 @@
 	reagents.add_reagent("nutriment", 2)
 	reagents.add_reagent("vitamin", 1)
 	reagents.add_reagent("egg", 5)
-
-/obj/item/weapon/reagent_containers/food/snacks/flour
-	name = "flour"
-	desc = "A small bag filled with some flour."
-	icon_state = "flour"
-
-/obj/item/weapon/reagent_containers/food/snacks/flour/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/appendix
 //yes, this is the same as meat. I might do something different in future
@@ -807,7 +801,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/brainburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("protein", 4)
 	reagents.add_reagent("alkysine", 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/ghostburger
@@ -836,7 +831,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/human/burger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("protein", 4)
 	reagents.add_reagent("vitamin", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/cheeseburger
@@ -846,7 +842,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/cheeseburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("cheese", 4)
 	reagents.add_reagent("vitamin", 1)
 
 
@@ -859,7 +856,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeyburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("protein", 4)
 	reagents.add_reagent("vitamin", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/fishburger
@@ -1806,7 +1804,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/bigbiteburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 14)
+	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("protein", 10)
 	reagents.add_reagent("vitamin", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/enchiladas
@@ -2155,7 +2154,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/superbiteburger/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 50)
+	reagents.add_reagent("nutriment", 32)
+	reagents.add_reagent("cheese", 4)
+	reagents.add_reagent("protein", 16)
 	reagents.add_reagent("vitamin", 5)
 	bitesize = 10
 
@@ -3129,14 +3130,6 @@
 ///////////////////////////////////////////
 // new old food stuff from bs12
 ///////////////////////////////////////////
-
-/* Egg + flour = dough
-/obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/flour))
-		new /obj/item/weapon/reagent_containers/food/snacks/dough(src)
-		to_chat(user, "<span class='notice'>You make some dough.</span>")
-		qdel(W)
-		qdel(src) */
 
 /obj/item/weapon/reagent_containers/food/snacks/dough
 	name = "dough"

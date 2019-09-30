@@ -28,7 +28,7 @@
 	id = "orangejuice"
 	description = "Both delicious AND rich in Vitamin C, what more do you need?"
 	color = "#e78108" // rgb: 231, 129, 8
-	taste_message = "orange juice"
+	taste_message = "orange"
 
 /datum/reagent/consumable/drink/orangejuice/on_general_digest(mob/living/M)
 	..()
@@ -40,7 +40,7 @@
 	id = "tomatojuice"
 	description = "Tomatoes made into juice. What a waste of big, juicy tomatoes, huh?"
 	color = "#731008" // rgb: 115, 16, 8
-	taste_message = "tomato juice"
+	taste_message = "tomato"
 
 /datum/reagent/consumable/drink/tomatojuice/on_general_digest(mob/living/M)
 	..()
@@ -52,7 +52,7 @@
 	id = "limejuice"
 	description = "The sweet-sour juice of limes."
 	color = "#365e30" // rgb: 54, 94, 48
-	taste_message = "lime juice"
+	taste_message = "lime"
 
 /datum/reagent/consumable/drink/limejuice/on_general_digest(mob/living/M)
 	..()
@@ -64,7 +64,7 @@
 	id = "carrotjuice"
 	description = "It is just like a carrot but without crunching."
 	color = "#973800" // rgb: 151, 56, 0
-	taste_message = "carrot juice"
+	taste_message = "carrot"
 
 /datum/reagent/consumable/drink/carrotjuice/on_general_digest(mob/living/M)
 	..()
@@ -85,21 +85,21 @@
 	id = "berryjuice"
 	description = "A delicious blend of several different kinds of berries."
 	color = "#990066" // rgb: 153, 0, 102
-	taste_message = "berry juice"
+	taste_message = "berry"
 
 /datum/reagent/consumable/drink/grapejuice
 	name = "Grape Juice"
 	id = "grapejuice"
 	description = "It's grrrrrape!"
 	color = "#863333" // rgb: 134, 51, 51
-	taste_message = "grape juice"
+	taste_message = "grape"
 
 /datum/reagent/consumable/drink/grapesoda
 	name = "Grape Soda"
 	id = "grapesoda"
 	description = "Grapes made into a fine drank."
 	color = "#421c52" // rgb: 98, 57, 53
-	taste_message = "grape juice"
+	taste_message = "grape"
 	adj_drowsy 	= 	-3
 
 /datum/reagent/consumable/drink/poisonberryjuice
@@ -118,7 +118,7 @@
 	id = "watermelonjuice"
 	description = "Delicious juice made from watermelon."
 	color = "#863333" // rgb: 134, 51, 51
-	taste_message = "watermelon juice"
+	taste_message = "watermelon"
 
 /datum/reagent/consumable/drink/lemonjuice
 	name = "Lemon Juice"
@@ -132,7 +132,7 @@
 	id = "banana"
 	description = "The raw essence of a banana."
 	color = "#863333" // rgb: 175, 175, 0
-	taste_message = "banana juice"
+	taste_message = "banana"
 
 /datum/reagent/consumable/drink/nothing
 	name = "Nothing"
@@ -439,6 +439,15 @@
 	..()
 	M.make_jittery(5)
 
+/datum/reagent/consumable/drink/cold/kvass
+	name = "kvass"
+	id = "kvass"
+	description = "A cool refreshing drink with a taste of socialism."
+	reagent_state = LIQUID
+	color = "#381600" // rgb: 56, 22, 0
+	adj_temp = -7
+	taste_message = "communism"
+
 /datum/reagent/consumable/doctor_delight
 	name = "The Doctor's Delight"
 	id = "doctorsdelight"
@@ -464,6 +473,29 @@
 	if(M.confused !=0)
 		M.confused = max(0, M.confused - 5)
 
+/datum/reagent/consumable/honey
+	name = "Honey"
+	id = "Honey"
+	description = "A golden yellow syrup, loaded with sugary sweetness."
+	reagent_state = LIQUID
+	color = "#feae00"
+	nutriment_factor = 15 * REAGENTS_METABOLISM
+	taste_message = "honey"
+
+/datum/reagent/consumable/honey/on_general_digest(mob/living/M)
+	..()
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(!holder)
+			return
+		H.nutrition += 15
+		if(H.getBruteLoss() && prob(60))
+			M.heal_bodypart_damage(2, 0)
+		if(H.getFireLoss() && prob(50))
+			M.heal_bodypart_damage(0, 2)
+		if(H.getToxLoss() && prob(50))
+			H.adjustToxLoss(-2)
+
 //////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
 
 /datum/reagent/consumable/atomicbomb
@@ -478,8 +510,9 @@
 /datum/reagent/consumable/atomicbomb/on_general_digest(mob/living/M)
 	..()
 	M.druggy = max(M.druggy, 50)
-	M.confused = max(M.confused + 2,0)
-	M.make_dizzy(10)
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.confused = max(M.confused + 2,0)
+		M.make_dizzy(10)
 	if(!M.stuttering)
 		M.stuttering = 1
 	M.stuttering += 3
@@ -645,6 +678,12 @@
 		if(isnum(A.data))
 			d += A.data
 
+	if(M.has_trait(TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
+		d *= 0.7
+
+	if(M.has_trait(TRAIT_LIGHT_DRINKER))
+		d *= 2
+
 	if(alien == SKRELL) //Skrell get very drunk very quickly.
 		d *= 5
 
@@ -754,7 +793,8 @@
 	M.drowsyness = max(0, M.drowsyness - 7)
 	if(M.bodytemperature > BODYTEMP_NORMAL)
 		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-	M.make_jittery(5)
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.make_jittery(5)
 
 /datum/reagent/consumable/ethanol/vodka
 	name = "Vodka"
@@ -960,7 +1000,8 @@
 
 /datum/reagent/consumable/ethanol/deadrum/on_general_digest(mob/living/M)
 	..()
-	M.dizziness += 5
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.dizziness += 5
 
 /datum/reagent/consumable/ethanol/sake
 	name = "Sake"
@@ -1103,7 +1144,8 @@
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_general_digest(mob/living/M)
 	..()
-	M.Stun(10)
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.Stun(10)
 
 /datum/reagent/consumable/ethanol/irish_cream
 	name = "Irish Cream"

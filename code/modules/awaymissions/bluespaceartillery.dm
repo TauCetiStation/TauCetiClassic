@@ -50,8 +50,8 @@
 		var/loc = pick(L)
 		if(loc)
 			if(intensity)
-				command_alert("Bluespace artillery fire detected in [thearea.name]. Brace for impact.")
-				message_admins("[key_name_admin(usr)] has launched an artillery strike at [thearea.name].")
+				command_alert("Bluespace artillery fire detected in [thearea.name]. Brace for impact.", "artillery")
+				message_admins("[key_name_admin(usr)] has launched an artillery strike at [thearea.name]. [ADMIN_JMP(thearea)]")
 				explosion(loc,2,5,11)
 			else
 				explosion(loc,2,1,0)

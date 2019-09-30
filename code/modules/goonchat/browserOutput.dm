@@ -68,9 +68,6 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 		if("analyzeClientData")
 			data = analyzeClientData(arglist(params))
 
-		if("setAdminSoundVolume")
-			data = setAdminSoundVolume(arglist(params))
-
 	if(data)
 		ehjax_send(data = data)
 
@@ -113,15 +110,6 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	if(islist(data))
 		data = json_encode(data)
 	C << output("[data]", "[window]:ehjaxCallback")
-
-/datum/chatOutput/proc/setAdminSoundVolume(volume = "")
-	owner.adminSoundVolume = Clamp(text2num(volume), 0, 100)
-	
-	var/sound/S = new()
-	S.channel = CHANNEL_ADMIN
-	S.volume = owner.adminSoundVolume
-	S.status = SOUND_UPDATE | SOUND_STREAM
-	owner << S
 
 /datum/chatOutput/proc/sendClientData()
 	var/list/deets = list("clientData" = list())
@@ -212,7 +200,13 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	return "<img [class] src='data:image/png;base64,[bicon_cache[key]]'>"
 
 /proc/to_chat(target, message, handle_whitespace=TRUE)
-	if(!target) //shitty fix, but it's works
+	if(!Master.init_time || !SSchat) // This is supposed to be Master.current_runlevel == RUNLEVEL_INIT || !SSchat?.initialized but we don't have these variables
+		to_chat_immediate(target, message, handle_whitespace)
+		return
+	SSchat.queue(target, message, handle_whitespace)
+
+/proc/to_chat_immediate(target, message, handle_whitespace = TRUE)
+	if(!target || !message)
 		return
 
 	//if(istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !(ismob(target) || islist(target) || isclient(target) || target == world))
@@ -226,7 +220,6 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	var/original_message = message
 
 	//Some macros remain in the string even after parsing and fuck up the eventual output
-	message = macro2html(message)
 	message = replacetext(message, "\improper", "")
 	message = replacetext(message, "\proper", "")
 	if(handle_whitespace)

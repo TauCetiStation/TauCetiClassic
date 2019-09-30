@@ -26,13 +26,22 @@
 /obj/machinery/computer/libraryconsole
 	name = "visitor computer"
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "library"
+	icon_state = "computer_regular_library"
 	circuit = /obj/item/weapon/circuitboard/libraryconsole
+
+	state_broken_preset = "computer_regularb"
+	state_nopower_preset = "computer_regular0"
+
 	var/screenstate = 0
 	var/title
 	var/category = "Any"
 	var/author
 	var/page = 0
+
+/obj/machinery/computer/libraryconsole/old // an older-looking version, looks fancy
+	icon_state = "computer_old"
+	state_broken_preset = "computer_oldb"
+	state_nopower_preset = "computer_old0"
 
 /obj/machinery/computer/libraryconsole/ui_interact(mob/user)
 	var/dat = "<HEAD><TITLE>Library Visitor</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
@@ -145,6 +154,11 @@
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 
 	var/bibledelay = 0
+
+/obj/machinery/computer/libraryconsole/bookmanagement/old // an older-looking version, looks fancy
+	icon_state = "computer_old"
+	state_broken_preset = "computer_oldb"
+	state_nopower_preset = "computer_old0"
 
 /obj/machinery/computer/libraryconsole/bookmanagement/atom_init()
 	. = ..()
@@ -270,9 +284,6 @@
 	popup.open()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W, mob/user)
-	if (src.density && istype(W, /obj/item/weapon/card/emag))
-		src.emagged = 1
-		user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W, /obj/item/weapon/barcodescanner))
 		var/obj/item/weapon/barcodescanner/scanner = W
 		scanner.computer = src
@@ -281,6 +292,12 @@
 			V.show_message("[src] lets out a low, short blip.", 2)
 	else
 		..()
+
+/obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	emagged = 1
+	return TRUE
 
 /obj/machinery/computer/libraryconsole/bookmanagement/Topic(href, href_list)
 	. = ..()

@@ -56,10 +56,10 @@
 			src.density = 0
 			src.destroyed = 1
 			new /obj/item/weapon/shard( src.loc )
-			playsound(src, "shatter", 70, 1)
+			playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 			update_icon()
 	else
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 	return
 
 /obj/structure/displaycase/update_icon()
@@ -83,7 +83,7 @@
 /obj/structure/displaycase/attack_hand(mob/user)
 	if (src.destroyed && src.occupied)
 		new /obj/item/weapon/gun/energy/laser/selfcharging/captain( src.loc )
-		to_chat(user, "\b You deactivate the hover field built into the case.")
+		to_chat(user, "<b>You deactivate the hover field built into the case.</b>")
 		src.occupied = 0
 		src.add_fingerprint(user)
 		update_icon()

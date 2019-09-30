@@ -1,7 +1,7 @@
 
 /obj/machinery/portable_atmospherics
 	name = "atmoalter"
-	use_power = 0
+	use_power = NO_POWER_USE
 	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/datum/gas_mixture/air_contents
@@ -104,7 +104,7 @@
 			if(connected_port)
 				disconnect()
 				user.SetNextMove(CLICK_CD_RAPID)
-				playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				user.visible_message(
 					"[user] disconnects [src].",
 					"<span class='notice'>You unfasten [src] from the port.</span>",
@@ -119,7 +119,7 @@
 					to_chat(user, "<span class='notice'>[name] failed to connect to the port.</span>")
 					return
 				user.SetNextMove(CLICK_CD_RAPID)
-				playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				user.visible_message(
 					"[user] connects [src].",
 					"<span class='notice'>You fasten [src] to the port.</span>",
@@ -186,4 +186,4 @@
 		else
 			gases = gas
 	log_admin("[usr] ([usr.ckey]) opened '[src.name]' containing [gases].")
-	message_admins("[usr] ([usr.ckey]) opened '[src.name]' containing [gases].")
+	message_admins("[usr] ([usr.ckey]) opened '[src.name]' containing [gases]. [ADMIN_JMP(src)]")

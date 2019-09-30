@@ -3,7 +3,7 @@
 	name = "revolver"
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
-	fire_sound = 'sound/weapons/guns/revolver_shot.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round()
 	if (chambered || !magazine)
@@ -91,7 +91,7 @@
 				afterattack(user, user)	//you know the drill
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
-			if(!user.is_busy() && do_after(user, 30, target = src))
+			if(!user.is_busy() && A.use_tool(src, user, 30, volume = 50))
 				if(magazine.ammo_count())
 					to_chat(user, "<span class='notice'>You can't modify it!</span>")
 					return
@@ -104,7 +104,7 @@
 				afterattack(user, user)	//and again
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
-			if(!user.is_busy() && do_after(user, 30, target = src))
+			if(!user.is_busy() && A.use_tool(src, user, 30, volume = 50))
 				if(magazine.ammo_count())
 					to_chat(user, "<span class='notice'>You can't modify it!</span>")
 					return
@@ -187,7 +187,7 @@
 
 	if(target == user)
 		if(!chambered)
-			user.visible_message("\red *click*", "\red *click*")
+			user.visible_message("<span class='warning'>*click*</span>", "<span class='warning'>*click*</span>")
 			return
 
 		if(isliving(target) && isliving(user))
@@ -195,11 +195,11 @@
 				var/obj/item/ammo_casing/AC = chambered
 				if(AC.fire(user, user))
 					user.apply_damage(300, BRUTE, def_zone, null, DAM_SHARP)
-					playsound(user, fire_sound, 50, 1)
+					playsound(user, fire_sound, VOL_EFFECTS_MASTER)
 					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(AC.BB, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 					return
 				else
-					user.visible_message("\red *click*", "\red *click*")
+					user.visible_message("<span class='warning'>*click*</span>", "<span class='warning'>*click*</span>")
 					return
 	..()
 
@@ -208,9 +208,6 @@
 	desc = "A legend of Wild West."
 	icon_state = "peacemaker"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45
-
-/obj/item/weapon/gun/projectile/revolver/peacemaker/isHandgun()
-	return 1
 
 /obj/item/weapon/gun/projectile/revolver/peacemaker/attack_self(mob/living/user)
 	var/num_unloaded = 0
@@ -246,6 +243,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	name = "sawn-off shotgun"
 	desc = "Omar's coming!"
+	can_be_holstered = TRUE
 	short = 1
 
 /obj/item/weapon/gun/projectile/revolver/syndie

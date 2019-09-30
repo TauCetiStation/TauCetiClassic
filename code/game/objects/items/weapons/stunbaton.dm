@@ -15,7 +15,7 @@
 	origin_tech = "combat=2"
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
-	to_chat(viewers(user), "\red <b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b></span>")
 	return (FIRELOSS)
 
 /obj/item/weapon/melee/baton/update_icon()
@@ -26,7 +26,7 @@
 
 /obj/item/weapon/melee/baton/attack_self(mob/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))
-		to_chat(user, "\red You grab the [src] on the wrong side.")
+		to_chat(user, "<span class='warning'>You grab the [src] on the wrong side.</span>")
 		user.Weaken(30)
 		charges--
 		if(charges < 1)
@@ -36,7 +36,7 @@
 	if(charges > 0)
 		status = !status
 		to_chat(user, "<span class='notice'>\The [src] is now [status ? "on" : "off"].</span>")
-		playsound(src.loc, "sparks", 75, 1, -1)
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		update_icon()
 	else
 		status = 0
@@ -63,7 +63,7 @@
 		//H.apply_effect(5, WEAKEN, 0)
 		H.visible_message("<span class='danger'>[M] has been beaten with the [src] by [user]!</span>")
 
-		playsound(src.loc, "swing_hit", 50, 1, -1)
+		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 
 	if(!status)
 		H.visible_message("<span class='warning'>[M] has been prodded with the [src] by [user]. Luckily it was off.</span>")
@@ -87,9 +87,9 @@
 		if(!(user.a_intent == "hurt"))
 			user.attack_log += "\[[time_stamp()]\]<font color='red'> attempted to stun [H.name] ([H.ckey]) with [src.name]</font>"
 			H.attack_log += "\[[time_stamp()]\]<font color='orange'> stunned by [user.name] ([user.ckey]) with [src.name]</font>"
-			msg_admin_attack("[key_name(user)] attempted to stun [key_name(H)] with [src.name]")
+			msg_admin_attack("[key_name(user)] attempted to stun [key_name(H)] with [src.name]", user)
 
-		playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 		if(charges < 1)
 			status = 0
 			update_icon()
@@ -115,7 +115,7 @@
 				H.visible_message("<span class='danger'>[src], thrown by [foundmob.name], strikes [H]!</span>")
 
 				H.attack_log += "\[[time_stamp()]\]<font color='orange'> Hit by thrown [src.name] last touched by ([src.fingerprintslast])</font>"
-				msg_admin_attack("Flying [src.name], last touched by ([src.fingerprintslast]) hit [key_name(H)]" )
+				msg_admin_attack("Flying [src.name], last touched by ([src.fingerprintslast]) hit [key_name(H)]", H)
 
 /obj/item/weapon/melee/baton/emp_act(severity)
 	switch(severity)

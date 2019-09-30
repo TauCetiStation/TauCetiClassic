@@ -37,10 +37,10 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm0"
 	anchored = TRUE
-	use_power = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 80
 	active_power_usage = 1000 // For heating/cooling rooms. 1000 joules equates to about 1 degree every 2 seconds for a single tile of air.
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	frequency = 1439
 	allowed_checks = ALLOWED_CHECK_NONE
@@ -182,14 +182,11 @@
 		if(RCON_YES)
 			remote_control = 1
 
-	updateDialog()
-	return
-
 /obj/machinery/alarm/proc/handle_heating_cooling(datum/gas_mixture/environment)
 	if(!regulating_temperature)
 		//check for when we should start adjusting temperature
 		if(allow_regulate && !get_danger_level(target_temperature, TLV["temperature"]) && abs(environment.temperature - target_temperature) > 2.0)
-			update_use_power(2)
+			set_power_use(ACTIVE_POWER_USE)
 			regulating_temperature = 1
 			visible_message(
 				"\The [src] clicks as it starts [environment.temperature > target_temperature ? "cooling" : "heating"] the room.",
@@ -197,7 +194,7 @@
 	else
 		//check for when we should stop adjusting temperature
 		if (!allow_regulate || get_danger_level(target_temperature, TLV["temperature"]) || abs(environment.temperature - target_temperature) <= 0.5)
-			update_use_power(1)
+			set_power_use(IDLE_POWER_USE)
 			regulating_temperature = 0
 			visible_message(
 				"\The [src] clicks quietly as it stops [environment.temperature > target_temperature ? "cooling" : "heating"] the room.",
@@ -280,6 +277,7 @@
 
 	if (environment_pressure <= pressure_levels[1])		//low pressures
 		if (!(mode == AALARM_MODE_PANIC || mode == AALARM_MODE_CYCLE))
+			playsound(src, 'sound/machines/alarm_air.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			return 1
 
 	return 0
@@ -541,7 +539,8 @@
 						"power"     = info["power"],
 						"checks"    = info["checks"],
 						"direction" = info["direction"],
-						"external"  = info["external"]
+						"external"  = info["external"],
+						"internal"  = info["internal"]
 					)
 			data["vents"] = vents
 		if(AALARM_SCREEN_SCRUB)
@@ -668,7 +667,17 @@
 					return FALSE
 
 				if("reset_external_pressure")
-					send_signal(device_id, list(href_list["command"] = ONE_ATMOSPHERE))
+					send_signal(device_id, list(href_list["command"] = TRUE))
+					return FALSE
+
+				if("set_internal_pressure")
+					var/input_pressure = input("What pressure you like the system to mantain?", "Pressure Controls") as num|null
+					if(isnum(input_pressure))
+						send_signal(device_id, list(href_list["command"] = input_pressure))
+					return FALSE
+
+				if("reset_internal_pressure")
+					send_signal(device_id, list(href_list["command"] = TRUE))
 					return FALSE
 
 				if( "power",
@@ -788,7 +797,7 @@
 
 			if (iswirecutter(W) && wiresexposed && wires.is_all_cut())
 				user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
-				playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				new /obj/item/stack/cable_coil/random(loc, 5)
 				buildstage = 1
 				update_icon()
@@ -801,10 +810,10 @@
 				else
 					if(allowed(usr) && !wires.is_index_cut(AALARM_WIRE_IDSCAN))
 						locked = !locked
-						to_chat(user, "\blue You [ locked ? "lock" : "unlock"] the Air Alarm interface.")
+						to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the Air Alarm interface.</span>")
 						updateUsrDialog()
 					else
-						to_chat(user, "\red Access denied.")
+						to_chat(user, "<span class='warning'>Access denied.</span>")
 
 			if(wiresexposed && is_wire_tool(W))
 				wires.interact(user)
@@ -831,8 +840,7 @@
 				if(user.is_busy())
 					return
 				to_chat(user, "You start prying out the circuit.")
-				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-				if(do_after(user,20,target = src))
+				if(W.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "You pry out the circuit!")
 					var/obj/item/weapon/airalarm_electronics/circuit = new /obj/item/weapon/airalarm_electronics()
 					circuit.loc = user.loc
@@ -851,7 +859,7 @@
 				to_chat(user, "You remove the fire alarm assembly from the wall!")
 				var/obj/item/alarm_frame/frame = new /obj/item/alarm_frame()
 				frame.loc = user.loc
-				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				qdel(src)
 
 	return ..()
@@ -863,6 +871,7 @@
 		stat |= NOPOWER
 	spawn(rand(0,15))
 		update_icon()
+	update_power_use()
 
 /obj/machinery/alarm/examine(mob/user)
 	..()
@@ -897,7 +906,7 @@ Code shamelessly copied from apc_frame
 	flags = CONDUCT
 
 /obj/item/alarm_frame/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
+	if(iswrench(W))
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)
@@ -915,14 +924,14 @@ Code shamelessly copied from apc_frame
 	var/turf/loc = get_turf_loc(usr)
 	var/area/A = loc.loc
 	if (!istype(loc, /turf/simulated/floor))
-		to_chat(usr, "\red Air Alarm cannot be placed on this spot.")
+		to_chat(usr, "<span class='warning'>Air Alarm cannot be placed on this spot.</span>")
 		return
 	if (A.requires_power == 0 || A.name == "Space")
-		to_chat(usr, "\red Air Alarm cannot be placed in this area.")
+		to_chat(usr, "<span class='warning'>Air Alarm cannot be placed in this area.</span>")
 		return
 
 	if(gotwallitem(loc, ndir))
-		to_chat(usr, "\red There's already an item on this wall!")
+		to_chat(usr, "<span class='warning'>There's already an item on this wall!</span>")
 		return
 
 	new /obj/machinery/alarm(loc, ndir, 1)
@@ -942,10 +951,10 @@ FIRE ALARM
 	var/timing = 0.0
 	var/lockdownbyai = 0
 	anchored = 1.0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/last_process = 0
 	var/wiresexposed = 0
@@ -993,13 +1002,13 @@ FIRE ALARM
 				if (ismultitool(W))
 					detecting = !detecting
 					if (detecting)
-						user.visible_message("\red [user] has reconnected [src]'s detecting unit!", "You have reconnected [src]'s detecting unit.")
+						user.visible_message("<span class='warning'>[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
 					else
-						user.visible_message("\red [user] has disconnected [src]'s detecting unit!", "You have disconnected [src]'s detecting unit.")
+						user.visible_message("<span class='warning'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
 				else if (iswirecutter(W))
-					user.visible_message("\red [user] has cut the wires inside \the [src]!", "You have cut the wires inside \the [src].")
+					user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
 					new /obj/item/stack/cable_coil/random(loc, 5)
-					playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
+					playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 					buildstage = 1
 					update_icon()
 			if(1)
@@ -1015,8 +1024,7 @@ FIRE ALARM
 
 				else if(iscrowbar(W))
 					to_chat(user, "You start prying out the circuit.")
-					playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-					if(do_after(user,20,target = src))
+					if(W.use_tool(src, user, 20, volume = 50))
 						to_chat(user, "You pry out the circuit!")
 						var/obj/item/weapon/firealarm_electronics/circuit = new /obj/item/weapon/firealarm_electronics()
 						circuit.loc = user.loc
@@ -1031,10 +1039,12 @@ FIRE ALARM
 					update_icon()
 
 				else if(iswrench(W))
+					if(user.is_busy())
+						return
 					to_chat(user, "You remove the fire alarm assembly from the wall!")
 					var/obj/item/firealarm_frame/frame = new /obj/item/firealarm_frame()
 					frame.loc = user.loc
-					playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+					playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 					qdel(src)
 		return
 
@@ -1062,13 +1072,15 @@ FIRE ALARM
 	return
 
 /obj/machinery/firealarm/power_change()
-	if(powered(ENVIRON))
+	if(powered(power_channel))
 		stat &= ~NOPOWER
 		update_icon()
 	else
 		spawn(rand(0,15))
 			stat |= NOPOWER
 			update_icon()
+			update_power_use()
+	update_power_use()
 
 /obj/machinery/firealarm/ui_interact(mob/user)
 	if (buildstage != 2)
@@ -1147,6 +1159,7 @@ FIRE ALARM
 	for(var/obj/machinery/firealarm/FA in A)
 		FA.detecting = FALSE
 		FA.update_icon()
+		playsound(src, 'sound/machines/alarm_fire.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/machinery/firealarm/atom_init(mapload, dir, building)
 	. = ..()
@@ -1165,7 +1178,7 @@ FIRE ALARM
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 
-	if(z == ZLEVEL_STATION || z == ZLEVEL_ASTEROID)
+	if(is_station_level(z) || is_mining_level(z))
 		if(security_level)
 			overlays += image('icons/obj/monitors.dmi', "overlay_[get_security_level()]")
 		else
@@ -1204,7 +1217,7 @@ Code shamelessly copied from apc_frame
 	flags = CONDUCT
 
 /obj/item/firealarm_frame/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
+	if(iswrench(W))
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)
@@ -1222,14 +1235,14 @@ Code shamelessly copied from apc_frame
 	var/turf/loc = get_turf_loc(usr)
 	var/area/A = get_area(src)
 	if (!istype(loc, /turf/simulated/floor))
-		to_chat(usr, "\red Fire Alarm cannot be placed on this spot.")
+		to_chat(usr, "<span class='warning'>Fire Alarm cannot be placed on this spot.</span>")
 		return
 	if (A.requires_power == 0 || A.name == "Space")
-		to_chat(usr, "\red Fire Alarm cannot be placed in this area.")
+		to_chat(usr, "<span class='warning'>Fire Alarm cannot be placed in this area.</span>")
 		return
 
 	if(gotwallitem(loc, ndir))
-		to_chat(usr, "\red There's already an item on this wall!")
+		to_chat(usr, "<span class='warning'>There's already an item on this wall!</span>")
 		return
 
 	new /obj/machinery/firealarm(loc, ndir, 1)

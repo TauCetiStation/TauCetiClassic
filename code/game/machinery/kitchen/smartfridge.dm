@@ -86,7 +86,7 @@
 /obj/machinery/smartfridge/secure/extract
 	name = "\improper Slime Extract Storage"
 	desc = "A refrigerated storage unit for slime extracts."
-	req_access_txt = "47"
+	req_access = list(47)
 
 /obj/machinery/smartfridge/secure/extract/accept_check(obj/item/O)
 	if(istype(O,/obj/item/slime_extract))
@@ -98,7 +98,7 @@
 	desc = "A refrigerated storage unit for storing medicine and chemicals."
 	icon_state = "smartfridge" //To fix the icon in the map editor.
 	icon_on = "smartfridge_chem"
-	req_one_access_txt = "5;33"
+	req_one_access = list(5, 33)
 
 /obj/machinery/smartfridge/secure/medbay/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/reagent_containers/glass))
@@ -112,7 +112,7 @@
 /obj/machinery/smartfridge/secure/virology
 	name = "\improper Refrigerated Virus Storage"
 	desc = "A refrigerated storage unit for storing viral material."
-	req_access_txt = "39"
+	req_access = list(39)
 	icon_state = "smartfridge_virology"
 	icon_on = "smartfridge_virology"
 	icon_off = "smartfridge_virology-off"
@@ -157,6 +157,7 @@
 		stat |= NOPOWER
 		if(!isbroken)
 			icon_state = icon_off
+	update_power_use()
 
 /*******************
 *   Item Adding
@@ -239,14 +240,13 @@
 		to_chat(user, "<span class='notice'>\The [src] smartly refuses [O].</span>")
 		return
 
-/obj/machinery/smartfridge/secure/attackby(obj/item/O, mob/user)
-	if (istype(O, /obj/item/weapon/card/emag))
-		emagged = 1
-		locked = -1
-		to_chat(user, "You short out the product lock on [src].")
-		return
-
-	..()
+/obj/machinery/smartfridge/secure/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	emagged = 1
+	locked = -1
+	to_chat(user, "You short out the product lock on [src].")
+	return TRUE
 
 /obj/machinery/smartfridge/attack_ai(mob/user)
 	if(IsAdminGhost(user))
@@ -343,7 +343,7 @@
 	if(!throw_item)
 		return 0
 	throw_item.throw_at(target,16,3,src)
-	src.visible_message("\red <b>[src] launches [throw_item.name] at [target.name]!</b>")
+	src.visible_message("<span class='warning'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
 	return 1
 
 /obj/machinery/smartfridge/proc/shock(mob/user, prb)
@@ -365,5 +365,5 @@
 	if(!.)
 		return
 	if (!allowed(usr) && !emagged && locked != -1 && href_list["vend"])
-		to_chat(usr, "\red Access denied.")
+		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return FALSE

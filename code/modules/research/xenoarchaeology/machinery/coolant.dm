@@ -26,7 +26,7 @@
 
 /obj/structure/reagent_dispensers/coolanttank/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
-		if(!istype(Proj ,/obj/item/projectile/beam/lastertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
+		if(!istype(Proj ,/obj/item/projectile/beam/lasertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
 			explode()
 
 /obj/structure/reagent_dispensers/coolanttank/blob_act()
@@ -40,7 +40,7 @@
 	//S.attach(src)
 	S.set_up(5, 0, src.loc)
 	S.start()
-	playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
+	playsound(src, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 
 	var/datum/gas_mixture/env = src.loc.return_air()
 	if(env)

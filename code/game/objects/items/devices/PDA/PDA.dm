@@ -29,6 +29,7 @@
 	var/tnote[0]  //Current Texts
 	var/last_text //No text spamming
 	var/last_honk //Also no honk spamming that's bad too
+	var/last_tap_sound = 0 // prevents tap sounds spam
 	var/ttone = "beep" //The PDA ringtone!
 	var/lock_code = "" // Lockcode to unlock uplink
 	var/honkamt = 0 //How many honks left when infected with honk.exe
@@ -130,6 +131,13 @@
 	icon_state = "pda-mime"
 	message_silent = 1
 	ttone = "silence"
+
+/obj/item/device/pda/velocity
+	default_cartridge = /obj/item/weapon/cartridge/hos
+	icon_state = "pda-velocity"
+
+/obj/item/device/pda/velocity/doctor
+	default_cartridge = /obj/item/weapon/cartridge/medical
 
 /obj/item/device/pda/heads
 	default_cartridge = /obj/item/weapon/cartridge/head
@@ -323,7 +331,7 @@
 /obj/item/device/pda/silicon/attack_self(mob/user)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
-		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
+		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER, 30)
 	return
 
 //Special PDA for robots
@@ -568,6 +576,11 @@
 	add_fingerprint(U)
 	U.set_machine(src)
 
+	if(href_list && (last_tap_sound <= world.time))
+		if(iscarbon(usr))
+			playsound(src, pick(SOUNDIN_PDA_TAPS), VOL_EFFECTS_MASTER, 15, FALSE)
+			last_tap_sound = world.time + 8
+
 	switch(href_list["choice"])
 
 //BASIC FUNCTIONS===================================
@@ -652,7 +665,7 @@
 				scanmode = 4
 		if("Honk")
 			if ( !(last_honk && world.time < last_honk + 20) )
-				playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
+				playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER)
 				last_honk = world.time
 		if("Gas Scan")
 			if(scanmode == 5)
@@ -722,7 +735,7 @@
 				if(!isnull(P))
 					if (!P.toff && cartridge.charges > 0)
 						cartridge.charges--
-						U.show_message("\blue Virus sent!", 1)
+						U.show_message("<span class='notice'>Virus sent!</span>", 1)
 						P.honkamt = (rand(15,20))
 				else
 					to_chat(U, "PDA not found.")
@@ -735,7 +748,7 @@
 				if(!isnull(P))
 					if (!P.toff && cartridge.charges > 0)
 						cartridge.charges--
-						U.show_message("\blue Virus sent!", 1)
+						U.show_message("<span class='notice'>Virus sent!</span>", 1)
 						P.message_silent = 1
 						P.ttone = "silence"
 				else
@@ -779,10 +792,10 @@
 
 			if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
 				if(!(useMS && useTC))
-					U.show_message("\red An error flashes on your [src]: Connection unavailable", 1)
+					U.show_message("<span class='warning'>An error flashes on your [src]: Connection unavailable</span>", 1)
 					return
 				if(useTC != 2) // Does our recepient have a broadcaster on their level?
-					U.show_message("\red An error flashes on your [src]: Recipient unavailable", 1)
+					U.show_message("<span class='warning'>An error flashes on your [src]: Recipient unavailable</span>", 1)
 					return
 				var/obj/item/device/pda/P = locate(href_list["target"])
 				if(!isnull(P))
@@ -801,17 +814,17 @@
 								difficulty += 3
 
 						if(prob(difficulty))
-							U.show_message("\red An error flashes on your [src].", 1)
+							U.show_message("<span class='warning'>An error flashes on your [src].</span>", 1)
 						else if (prob(difficulty * 7))
-							U.show_message("\red Energy feeds back into your [src]!", 1)
+							U.show_message("<span class='warning'>Energy feeds back into your [src]!</span>", 1)
 							ui.close()
 							detonate_act(src)
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge but failed, blowing themselves up")
-							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge but failed. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[U.x];Y=[U.y];Z=[U.z]'>JMP</a>)")
+							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge but failed. [ADMIN_JMP(U)]")
 						else
-							U.show_message("\blue Success!", 1)
+							U.show_message("<span class='notice'>Success!</span>", 1)
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded")
-							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[U.x];Y=[U.y];Z=[U.z]'>JMP</a>)")
+							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded. [ADMIN_JMP(U)]")
 							detonate_act(P)
 					else
 						to_chat(U, "No charges left.")
@@ -850,7 +863,7 @@
 
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
-		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
+		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER, 30)
 
 	return 1 // return 1 tells it to refresh the UI in NanoUI
 
@@ -898,14 +911,14 @@
 		var/datum/effect/effect/system/smoke_spread/S = new /datum/effect/effect/system/smoke_spread
 		S.attach(P.loc)
 		S.set_up(n = 10, c = 0, loca = P.loc, direct = 0)
-		playsound(P.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
+		playsound(P, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 		S.start()
 		message += "Large clouds of smoke billow forth from your [P]!"
 	if(i>=40 && i<=45) //Bad smoke
 		var/datum/effect/effect/system/smoke_spread/bad/B = new /datum/effect/effect/system/smoke_spread/bad
 		B.attach(P.loc)
 		B.set_up(n = 10, c = 0, loca = P.loc, direct = 0)
-		playsound(P.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
+		playsound(P, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 		B.start()
 		message += "Large clouds of noxious smoke billow forth from your [P]!"
 	if(i>=65 && i<=75) //Weaken
@@ -933,7 +946,7 @@
 			message += "Your [P] shatters in a thousand pieces!"
 
 	if(M && isliving(M))
-		message = "\red" + message
+		message = "<span class='warning'></span>" + message
 		M.show_message(message, 1)
 
 /obj/item/device/pda/proc/remove_id()
@@ -947,7 +960,7 @@
 		id = null
 
 /obj/item/device/pda/proc/create_message(mob/living/U = usr, obj/item/device/pda/P, tap = 1)
-	if(tap)
+	if(tap && iscarbon(U))
 		U.visible_message("<span class='notice'>[U] taps on \his PDA's screen.</span>")
 	U.last_target_click = world.time
 	var/t = sanitize(input(U, "Please enter message", name, null) as text)
@@ -1022,7 +1035,7 @@
 		nanomanager.update_user_uis(U, src) // Update the sending user's PDA UI so that they can see the new message
 
 		if (!P.message_silent)
-			playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
+			playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 		for (var/mob/O in hearers(3, P.loc))
 			if(!P.message_silent) O.show_message(text("[bicon(P)] *[P.ttone]*"))
 		//Search for holder of the PDA.
@@ -1096,7 +1109,7 @@
 				if(M.get_active_hand() == null)
 					M.put_in_hands(O)
 					to_chat(usr, "<span class='notice'>You remove \the [O] from \the [src].</span>")
-					playsound(src, 'sound/items/penclick.ogg', 20, 1, 1)
+					playsound(src, 'sound/items/penclick.ogg', VOL_EFFECTS_MASTER, 20)
 					return
 			O.loc = get_turf(src)
 		else
@@ -1179,56 +1192,60 @@
 			if(1)
 
 				for (var/mob/O in viewers(C, null))
-					O.show_message("\red [user] has analyzed [C]'s vitals!", 1)
+					O.show_message("<span class='warning'>[user] has analyzed [C]'s vitals!</span>", 1)
 
-				user.show_message("\blue Analyzing Results for [C]:")
-				user.show_message("\blue &emsp; Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]", 1)
-				user.show_message("\blue &emsp; Damage Specifics: [C.getOxyLoss() > 50 ? "\red" : "\blue"][C.getOxyLoss()]-[C.getToxLoss() > 50 ? "\red" : "\blue"][C.getToxLoss()]-[C.getFireLoss() > 50 ? "\red" : "\blue"][C.getFireLoss()]-[C.getBruteLoss() > 50 ? "\red" : "\blue"][C.getBruteLoss()]", 1)
-				user.show_message("\blue &emsp; Key: Suffocation/Toxin/Burns/Brute", 1)
-				user.show_message("\blue &emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)", 1)
+				user.show_message("<span class='notice'>Analyzing Results for [C]:</span>")
+				user.show_message("<span class='notice'>&emsp; Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]</span>", 1)
+				var/has_oxy_damage = (C.getOxyLoss() > 50)
+				var/has_tox_damage = (C.getToxLoss() > 50)
+				var/has_fire_damage = (C.getFireLoss() > 50)
+				var/has_brute_damage = (C.getBruteLoss() > 50)
+				user.show_message("<span class='notice'>&emsp; Damage Specifics: <span class='[has_oxy_damage ? "warning" : "notice"]'>[C.getOxyLoss()]</span>-<span class='[has_tox_damage ? "warning" : "notice"]'>[C.getToxLoss()]</span>-<span class='[has_fire_damage ? "warning" : "notice"]'>[C.getFireLoss()]</span>-<span class='[has_brute_damage ? "warning" : "notice"]'>[C.getBruteLoss()]</span></span>", 1)
+				user.show_message("<span class='notice'>&emsp; Key: Suffocation/Toxin/Burns/Brute</span>", 1)
+				user.show_message("<span class='notice'>&emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)</span>", 1)
 				if(C.tod && (C.stat == DEAD || (C.status_flags & FAKEDEATH)))
-					user.show_message("\blue &emsp; Time of Death: [C.tod]")
+					user.show_message("<span class='notice'>&emsp; Time of Death: [C.tod]</span>")
 				if(istype(C, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = C
 					var/list/damaged = H.get_damaged_bodyparts(1, 1)
-					user.show_message("\blue Localized Damage, Brute/Burn:",1)
+					user.show_message("<span class='notice'>Localized Damage, Brute/Burn:</span>",1)
 					if(length(damaged)>0)
 						for(var/obj/item/organ/external/BP in damaged)
-							user.show_message(text("\blue &emsp; []: []\blue-[]",capitalize(BP.name),(BP.brute_dam > 0)?"\red [BP.brute_dam]":0,(BP.burn_dam > 0)?"\red [BP.burn_dam]":0),1)
+							user.show_message(text("<span class='notice'>&emsp; []: []-[]</span>",capitalize(BP.name),(BP.brute_dam > 0)?"<span class='warning'>[BP.brute_dam]</span>":0,(BP.burn_dam > 0)?"<span class='warning'>[BP.burn_dam]</span>":0),1)
 					else
-						user.show_message("\blue &emsp; Limbs are OK.",1)
+						user.show_message("<span class='notice'>&emsp; Limbs are OK.</span>",1)
 
 				for(var/datum/disease/D in C.viruses)
 					if(!D.hidden[SCANNER])
-						user.show_message(text("\red <b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]"))
+						user.show_message(text("<span class='warning'><b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span>"))
 
 			if(2)
 				if (!istype(C:dna, /datum/dna))
-					to_chat(user, "\blue No fingerprints found on [C]")
+					to_chat(user, "<span class='notice'>No fingerprints found on [C]</span>")
 				else if(!istype(C, /mob/living/carbon/monkey))
 					if(!isnull(C:gloves))
-						to_chat(user, "\blue No fingerprints found on [C]")
+						to_chat(user, "<span class='notice'>No fingerprints found on [C]</span>")
 				else
-					to_chat(user, text("\blue [C]'s Fingerprints: [md5(C:dna.uni_identity)]"))
+					to_chat(user, text("<span class='notice'>[C]'s Fingerprints: [md5(C:dna.uni_identity)]</span>"))
 				if ( !(C:blood_DNA) )
-					to_chat(user, "\blue No blood found on [C]")
+					to_chat(user, "<span class='notice'>No blood found on [C]</span>")
 					if(C:blood_DNA)
 						C:blood_DNA = null
 				else
-					to_chat(user, "\blue Blood found on [C]. Analysing...")
+					to_chat(user, "<span class='notice'>Blood found on [C]. Analysing...</span>")
 					spawn(15)
 						for(var/blood in C:blood_DNA)
-							to_chat(user, "\blue Blood type: [C:blood_DNA[blood]]\nDNA: [blood]")
+							to_chat(user, "<span class='notice'>Blood type: [C:blood_DNA[blood]]\nDNA: [blood]</span>")
 
 			if(4)
 				for (var/mob/O in viewers(C, null))
-					O.show_message("\red [user] has analyzed [C]'s radiation levels!", 1)
+					O.show_message("<span class='warning'>[user] has analyzed [C]'s radiation levels!</span>", 1)
 
-				user.show_message("\blue Analyzing Results for [C]:")
+				user.show_message("<span class='notice'>Analyzing Results for [C]:</span>")
 				if(C.radiation)
-					user.show_message("\green Radiation Level: \black [C.radiation]")
+					user.show_message("<span class='notice'>Radiation Level:</span> [C.radiation]")
 				else
-					user.show_message("\blue No radiation detected.")
+					user.show_message("<span class='notice'>No radiation detected.</span>")
 
 /obj/item/device/pda/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
@@ -1240,20 +1257,20 @@
 			if(!isnull(A.reagents))
 				if(A.reagents.reagent_list.len > 0)
 					var/reagents_length = A.reagents.reagent_list.len
-					to_chat(user, "\blue [reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.")
+					to_chat(user, "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.</span>")
 					for (var/re in A.reagents.reagent_list)
-						to_chat(user, "\blue &emsp; [re]")
+						to_chat(user, "<span class='notice'>&emsp; [re]</span>")
 				else
-					to_chat(user, "\blue No active chemical agents found in [A].")
+					to_chat(user, "<span class='notice'>No active chemical agents found in [A].</span>")
 			else
-				to_chat(user, "\blue No significant chemical agents found in [A].")
+				to_chat(user, "<span class='notice'>No significant chemical agents found in [A].</span>")
 
 		if(5)
 			analyze_gases(A, user)
 
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
 		note = A:info
-		to_chat(user, "\blue Paper scanned.")//concept of scanning paper copyright brainoblivion 2009
+		to_chat(user, "<span class='notice'>Paper scanned.</span>")//concept of scanning paper copyright brainoblivion 2009
 
 
 /obj/item/device/pda/proc/explode() //This needs tuning. //Sure did.

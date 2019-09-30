@@ -20,7 +20,7 @@
 
 /datum/game_mode/wizard/announce()
 	to_chat(world, "<B>The current game mode is - Wizard!</B>")
-	to_chat(world, "<B>There is a \red SPACE WIZARD\black on the station. You can't let him achieve his objective!</B>")
+	to_chat(world, "<B>There is a <span class='warning'>SPACE WIZARD</span> on the station. You can't let him achieve his objective!</B>")
 
 
 /datum/game_mode/wizard/can_start()//This could be better, will likely have to recode it later
@@ -209,23 +209,26 @@
 /datum/game_mode/wizard/declare_completion()
 	var/prefinal_text = ""
 	var/final_text = ""
-	completion_text += "<B>Wizard mode resume:</B><BR>"
+	completion_text += "<h3>Wizard mode resume:</h3>"
 
 	for(var/datum/mind/wizard in wizards)
 		if(wizard.current.stat == DEAD || finished)
-			feedback_set_details("round_end_result","loss - wizard killed")
-			prefinal_text = "<FONT size = 3>Wizard <b>[wizard.name]</b><i> ([wizard.key])</i> has been <font color='red'><b>killed</b></font> by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</FONT><BR>"
+			mode_result = "loss - wizard killed"
+			feedback_set_details("round_end_result",mode_result)
+			prefinal_text = "<span>Wizard <b>[wizard.name]</b> <i>([wizard.key])</i> has been <span style='color: red; font-weight: bold;'>killed</span> by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span><br>"
 		else
 			var/failed = 0
 			for(var/datum/objective/objective in wizard.objectives)
 				if(!objective.check_completion())
 					failed = 1
 			if(!failed)
-				feedback_set_details("round_end_result","win - wizard alive")
-				prefinal_text = "<FONT size = 3>Wizard <b>[wizard.name]</b><i> ([wizard.key])</i> managed to <font color='green'><B>complete</B></font> his mission! The Space Wizards Federation understood that station crew - easy target and will use them next time.</FONT><BR>"
+				mode_result = "win - wizard alive"
+				feedback_set_details("round_end_result",mode_result)
+				prefinal_text = "<span>Wizard <b>[wizard.name]</b> <i>([wizard.key])</i> managed to <span style='color: green; font-weight: bold;'>complete</span> his mission! The Space Wizards Federation understood that station crew - easy target and will use them next time.</span><br>"
 			else
-				feedback_set_details("round_end_result","loss - wizard alive")
-				prefinal_text = "<FONT size = 3>Wizard <b>[wizard.name]</b><i> ([wizard.key])</i> managed to stay alive, but <font color='red'><B>failed</B></font> his mission! The Space Wizards Federation wouldn't forget this shame!</FONT><BR>"
+				mode_result = "loss - wizard alive"
+				feedback_set_details("round_end_result",mode_result)
+				prefinal_text = "<span>Wizard <b>[wizard.name]</b><i> ([wizard.key])</i> managed to stay alive, but <span style='color: red; font-weight: bold;'>failed</span> his mission! The Space Wizards Federation wouldn't forget this shame!</span><br>"
 		final_text += "[prefinal_text]"
 
 	completion_text += "[final_text]"
@@ -246,34 +249,38 @@
 			if(!config.objectives_disabled)
 				for(var/datum/objective/objective in wizard.objectives)
 					if(objective.check_completion())
-						text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
 						feedback_add_details("wizard_objective","[objective.type]|SUCCESS")
 					else
-						text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
 						feedback_add_details("wizard_objective","[objective.type]|FAIL")
 						wizardwin = 0
 					count++
 
 				if(wizard.current && wizard.current.stat!=2 && wizardwin)
-					text += "<BR><FONT color='green'><B>The wizard was successful!</B></FONT>"
+					text += "<br><FONT color='green'><b>The wizard was successful!</b></FONT>"
 					feedback_add_details("wizard_success","SUCCESS")
 					score["roleswon"]++
 				else
-					text += "<BR><FONT color='red'><B>The wizard has failed!</B></FONT>"
+					text += "<br><FONT color='red'><b>The wizard has failed!</b></FONT>"
 					feedback_add_details("wizard_success","FAIL")
 				if(wizard.current && wizard.current.spell_list)
-					text += "<BR><B>[wizard.name] used the following spells: </B>"
+					text += "<br><b>[wizard.name] used the following spells: </b>"
 					var/i = 1
 					for(var/obj/effect/proc_holder/spell/S in wizard.current.spell_list)
 						var/icon/spellicon = icon('icons/mob/actions.dmi', S.action_icon_state)
 						end_icons += spellicon
 						var/tempstate = end_icons.len
-						text += {"<BR><img src="logo_[tempstate].png"> [S.name]"}
+						text += {"<br><img src="logo_[tempstate].png"> [S.name]"}
 						if(wizard.current.spell_list.len > i)
 							text += ", "
 						i++
-				text += "<BR>"
-		text += "<HR>"
+				text += "<br>"
+
+	if(text)
+		antagonists_completion += list(list("mode" = "wizard", "html" = text))
+		text = "<div class='block'>[text]</div>"
+		
 	return text
 
 //OTHER PROCS

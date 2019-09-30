@@ -28,7 +28,7 @@ field_generator power level display
 	icon_state = "Field_Gen"
 	anchored = FALSE
 	density = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	var/var_edit_start = FALSE
 	var/var_power      = FALSE
@@ -72,7 +72,7 @@ field_generator power level display
 			warming_up = 3
 			start_fields()
 			update_icon()
-			playsound(src, 'sound/machines/cfieldstart.ogg', 100, 0)
+			playsound(src, 'sound/machines/cfieldstart.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		var_edit_start = FALSE
 
 	if(active == FG_ONLINE)
@@ -95,7 +95,7 @@ field_generator power level display
 					"<span class='notice'>You turn on the [src].</span>",
 					"<span class='notice'>You hear heavy droning.</span>")
 				turn_on()
-				playsound(src, 'sound/machines/cfieldbeforestart.ogg', 100, 0)
+				playsound(src, 'sound/machines/cfieldbeforestart.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 				investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
 	else
 		to_chat(user, "<span class='notice'>The [src] needs to be firmly secured to the floor first.</span>")
@@ -109,7 +109,7 @@ field_generator power level display
 		switch(state)
 			if(FG_UNSECURED)
 				state = FG_SECURED
-				playsound(src, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				user.visible_message(
 					"<span class='notice'>[user] secures [src] to the floor.</span>",
 					"<span class='notice'>You secure the external reinforcing bolts to the floor.</span>",
@@ -117,7 +117,7 @@ field_generator power level display
 				anchored = TRUE
 			if(FG_SECURED)
 				state = FG_UNSECURED
-				playsound(src, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				user.visible_message(
 					"<span class='notice'>[user] unsecures [src] reinforcing bolts from the floor.</span>",
 					"<span class='notice'>You undo the external reinforcing bolts.</span>",
@@ -131,27 +131,21 @@ field_generator power level display
 			if(FG_UNSECURED)
 				to_chat(user, "<span class='red'>The [src] needs to be wrenched to the floor.</span>")
 			if(FG_SECURED)
-				if (!user.is_busy() && WT.remove_fuel(0, user))
-					playsound(src, 'sound/items/Welder2.ogg', 50, 1)
+				if(!user.is_busy() && WT.use(0, user))
 					user.visible_message(
 						"<span class='notice'>[user.name] starts to weld the [src.name] to the floor.</span>",
 						"<span class='notice'>You start to weld the [src] to the floor.</span>",
 						"<span class='notice'>You hear welding.</span>")
-					if (do_after(user, 20, target = src))
-						if(!src || !WT.isOn())
-							return
+					if(WT.use_tool(src, user, 20, volume = 50))
 						state = FG_WELDED
 						to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
 			if(FG_WELDED)
-				if (!user.is_busy() && WT.remove_fuel(0, user))
-					playsound(src, 'sound/items/Welder2.ogg', 50, 1)
+				if (!user.is_busy() && WT.use(0, user))
 					user.visible_message(
 						"<span class='notice'>[user.name] starts to cut the [src.name] free from the floor.</span>",
 						"<span class='notice'>You start to cut the [src] free from the floor.</span>",
 						"<span class='notice'>You hear welding.</span>")
-					if (do_after(user, 20, target = src))
-						if(!src || !WT.isOn())
-							return
+					if (WT.use_tool(src, user, 20, volume = 50))
 						state = FG_SECURED
 						to_chat(user, "<span class='notice'>You cut the [src] free from the floor.</span>")
 	else
@@ -204,7 +198,7 @@ field_generator power level display
 		update_icon()
 		if(warming_up >= 3)
 			start_fields()
-			playsound(src, 'sound/machines/cfieldstart.ogg', 100, 1)
+			playsound(src, 'sound/machines/cfieldstart.ogg', VOL_EFFECTS_MASTER)
 
 /obj/machinery/field_generator/proc/calc_power()
 	if(var_power)
@@ -216,7 +210,7 @@ field_generator power level display
 	if(!draw_power(round(power_draw / 2, 1)))
 		visible_message("<span class='warning'>The [src] shuts down!</span>")
 		turn_off()
-		playsound(src, 'sound/machines/cfieldfail.ogg', 100, 0)
+		playsound(src, 'sound/machines/cfieldfail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		investigate_log("ran out of power and <font color='red'>deactivated</font>","singulo")
 		power = 0
 

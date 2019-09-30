@@ -87,7 +87,7 @@
 	on = !on
 	update_brightness(user)
 	action_button_name = null
-	playsound(src, 'sound/weapons/glowstick_bend.ogg', 35, 0)
+	playsound(src, 'sound/weapons/glowstick_bend.ogg', VOL_EFFECTS_MASTER, 35, FALSE)
 	user.visible_message("<span class='notice'>[user] bends the [name].</span>", "<span class='notice'>You bend the [name]!</span>")
 	START_PROCESSING(SSobj, src)
 
@@ -125,7 +125,7 @@
 
 				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-				msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
+				msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])", user)
 
 				for(var/mob/O in viewers(world.view, user))
 					O.show_message("<span class='danger'>[user] feeds [M] [src].</span>", 1)
@@ -135,7 +135,7 @@
 				return
 
 		if(reagents)								//Handle ingestion of the reagent.
-			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+			playsound(M, 'sound/items/eatfood.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 			if(reagents.total_volume)
 				var/datum/reagent/my_reagent = locate(/datum/reagent/luminophore) in reagents.reagent_list
 				var/list/list_regs = list()

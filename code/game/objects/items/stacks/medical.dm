@@ -42,7 +42,7 @@
 				to_chat(user, "<span class='warning'>You can't apply [src] through [H.wear_suit]!</span>")
 				return 1
 
-		if(BP.status & ORGAN_ROBOT)
+		if(BP.is_robotic())
 			to_chat(user, "<span class='warning'>This isn't useful at all on a robotic limb..</span>")
 			return 1
 	else
@@ -72,7 +72,7 @@
 				to_chat(user, "<span class='warning'>The wounds on [M]'s [BP.name] have already been bandaged.</span>")
 				return 1
 			else
-				playsound(src, "bandg", 15, 1)
+				playsound(src, pick(SOUNDIN_BANDAGE), VOL_EFFECTS_MASTER, 15)
 				user.visible_message("<span class='notice'>\The [user] starts treating [M]'s [BP.name].</span>", \
 									"<span class='notice'>You start treating [M]'s [BP.name].</span>")
 
@@ -116,7 +116,8 @@
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
 
 /obj/item/stack/medical/bruise_pack/update_icon()
-	icon_state = "[initial(icon_state)][amount]"
+	var/icon_amount = min(amount, max_amount)
+	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/ointment
 	name = "ointment"
@@ -161,7 +162,8 @@
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
 
 /obj/item/stack/medical/ointment/update_icon()
-	icon_state = "[initial(icon_state)][amount]"
+	var/icon_amount = min(amount, max_amount)
+	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/bruise_pack/tajaran
 	name = "\improper S'rendarr's Hand leaf"
@@ -211,7 +213,7 @@
 				to_chat(user, "<span class='warning'>The wounds on [M]'s [BP.name] have already been treated.</span>")
 				return 1
 			else
-				playsound(src, "bandg", 15, 1)
+				playsound(src, pick(SOUNDIN_BANDAGE), VOL_EFFECTS_MASTER, 15)
 				user.visible_message("<span class='notice'>\The [user] starts treating [M]'s [BP.name].</span>", \
 									"<span class='notice'>You start treating [M]'s [BP.name].</span>")
 

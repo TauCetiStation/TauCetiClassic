@@ -79,7 +79,7 @@
 
 	if (disabilities & EPILEPSY || has_trait(TRAIT_EPILEPSY))
 		if ((prob(1) && paralysis < 10))
-			to_chat(src, "\red You have a seizure!")
+			to_chat(src, "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
 	if (disabilities & COUGHING || has_trait(TRAIT_COUGH))
 		if ((prob(5) && paralysis <= 1))
@@ -109,7 +109,7 @@
 
 	if ((HULK in mutations) && health <= 25)
 		mutations.Remove(HULK)
-		to_chat(src, "\red You suddenly feel very weak.")
+		to_chat(src, "<span class='warning'>You suddenly feel very weak.</span>")
 		Weaken(3)
 		emote("collapse")
 
@@ -128,7 +128,7 @@
 			radiation = 100
 			Weaken(10)
 			if(!lying)
-				to_chat(src, "\red You feel weak.")
+				to_chat(src, "<span class='warning'>You feel weak.</span>")
 				emote("collapse")
 
 		switch(radiation)
@@ -144,14 +144,14 @@
 					radiation -= 5
 					Weaken(3)
 					if(!lying)
-						to_chat(src, "\red You feel weak.")
+						to_chat(src, "<span class='warning'>You feel weak.</span>")
 						emote("collapse")
 
 			if(75 to 100)
 				radiation -= 3
 				adjustToxLoss(3)
 				if(prob(1))
-					to_chat(src, "\red You mutate!")
+					to_chat(src, "<span class='warning'>You mutate!</span>")
 					randmutb(src)
 					domutcheck(src,null)
 					emote("gasp")
@@ -349,9 +349,9 @@
 
 	if(Toxins_pp > safe_phoron_max) // Too much phoron
 		var/ratio = (breath.gas["phoron"] / safe_phoron_max) * 10
-		//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
+		//adjustToxLoss(CLAMP(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 		if(reagents)
-			reagents.add_reagent("toxin", Clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
+			reagents.add_reagent("toxin", CLAMP(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
 		phoron_alert = max(phoron_alert, 1)
 	else
 		phoron_alert = 0
@@ -370,7 +370,7 @@
 
 	if(breath.temperature > (T0C + 66)) // Hot air hurts :(
 		if(prob(20))
-			to_chat(src, "\red You feel a searing heat in your lungs!")
+			to_chat(src, "<span class='warning'>You feel a searing heat in your lungs!</span>")
 		fire_alert = max(fire_alert, 2)
 	else
 		fire_alert = 0

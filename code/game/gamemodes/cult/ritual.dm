@@ -109,7 +109,7 @@ var/list/cult_datums = list()
 	for(var/obj/effect/rune/R in cult_runes)
 		if(!istype(R.power, power.type) || R == src)
 			continue
-		if(R.power.word3 == power.word3 && R.loc.z != ZLEVEL_CENTCOMM)
+		if(R.power.word3 == power.word3 && !is_centcom_level(R.loc.z))
 			allrunes += R
 	if(length(allrunes) > 0)
 		user.forceMove(get_turf(pick(allrunes)))
@@ -277,7 +277,7 @@ var/list/cult_datums = list()
 
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had the [name] used on him by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [name] on [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	msg_admin_attack("[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey])", user)
 
 	if(istype(M, /mob/dead))
 		M.invisibility = 0

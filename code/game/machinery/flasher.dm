@@ -39,6 +39,7 @@
 	else
 		stat |= ~NOPOWER
 		icon_state = "[base_state]1-p"
+	update_power_use()
 
 //Don't want to render prison breaks impossible
 /obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user)
@@ -47,9 +48,9 @@
 		src.disable = !src.disable
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if (src.disable)
-			user.visible_message("\red [user] has disconnected the [src]'s flashbulb!", "\red You disconnect the [src]'s flashbulb!")
+			user.visible_message("<span class='warning'>[user] has disconnected the [src]'s flashbulb!</span>", "<span class='warning'>You disconnect the [src]'s flashbulb!</span>")
 		if (!src.disable)
-			user.visible_message("\red [user] has connected the [src]'s flashbulb!", "\red You connect the [src]'s flashbulb!")
+			user.visible_message("<span class='warning'>[user] has connected the [src]'s flashbulb!</span>", "<span class='warning'>You connect the [src]'s flashbulb!</span>")
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai(mob/user)
@@ -65,7 +66,7 @@
 	if ((src.disable) || (src.last_flash && world.time < src.last_flash + 150))
 		return
 
-	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
 	flick("[base_state]_flash", src)
 	flash_lighting_fx(FLASH_LIGHT_RANGE, light_power, light_color)
 	src.last_flash = world.time
@@ -120,11 +121,11 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 
 		if (!src.anchored)
-			user.show_message(text("\red [src] can now be moved."))
+			user.show_message(text("<span class='warning'>[src] can now be moved.</span>"))
 			src.overlays.Cut()
 
 		else if (src.anchored)
-			user.show_message(text("\red [src] is now secured."))
+			user.show_message(text("<span class='warning'>[src] is now secured.</span>"))
 			src.overlays += "[base_state]-s"
 
 /obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user)

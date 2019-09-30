@@ -27,7 +27,7 @@
 
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/A, mob/user)
 	if(istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
-	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart))
+	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink) || istype(A, /obj/structure/stool/bed/chair/janitorialcart))
 		return
 
 	if(istype(A, /obj/effect/proc_holder/spell))
@@ -54,16 +54,16 @@
 		to_chat(usr, "<span class = 'warning'>The safety is on!</span>")
 		return
 
-	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+	playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 
 	if(reagents.has_reagent("sacid"))
-		message_admins("[key_name_admin(user)] fired sulphuric acid from \a [src]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		message_admins("[key_name_admin(user)] fired sulphuric acid from \a [src]. [ADMIN_JMP(user)]")
 		log_game("[key_name(user)] fired sulphuric acid from \a [src].")
 	if(reagents.has_reagent("pacid"))
-		message_admins("[key_name_admin(user)] fired Polyacid from \a [src]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		message_admins("[key_name_admin(user)] fired Polyacid from \a [src]. [ADMIN_JMP(user)]")
 		log_game("[key_name(user)] fired Polyacid from \a [src].")
 	if(reagents.has_reagent("lube"))
-		message_admins("[key_name_admin(user)] fired Space lube from \a [src]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		message_admins("[key_name_admin(user)] fired Space lube from \a [src]. [ADMIN_JMP(user)]")
 		log_game("[key_name(user)] fired Space lube from \a [src].")
 
 	user.SetNextMove(CLICK_CD_INTERACT * 2)
@@ -233,7 +233,7 @@
 				var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
 				S.attach(location)
 				S.set_up(evaporate, evaporated_volume, 0, location)
-				playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+				playsound(location, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 				S.start()
 				temperature -= rand(evaporated_volume*3,evaporated_volume*6) // Release the "hot" gas, and chill.
 		fuel = max(fuel - 1, 0)
@@ -386,3 +386,17 @@
 /obj/item/weapon/reagent_containers/spray/plantbgone/atom_init()
 	. = ..()
 	reagents.add_reagent("plantbgone", 100)
+
+//Water Gun
+/obj/item/weapon/reagent_containers/spray/watergun
+	name = "hyper soaker"
+	desc = "A water gun that uses manually-pressurized air to shoot water with great power, range, and accuracy."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "watergun"
+	item_state = "watergun"
+	amount_per_transfer_from_this = 5
+	possible_transfer_amounts = null
+	volume = 35
+	origin_tech = "combat=1;materials=1"
+	spray_size = 4
+	spray_sizes = list(4)

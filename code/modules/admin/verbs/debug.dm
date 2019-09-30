@@ -230,7 +230,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M:Alienize()
 			feedback_add_details("admin_verb","MKAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(usr)] made [key_name(M)] into an alien.")
-		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into an alien.")
+		message_admins("<span class='notice'>[key_name_admin(usr)] made [key_name(M)] into an alien.</span>")
 	else
 		alert("Invalid mob")
 
@@ -247,7 +247,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M:slimeize()
 			feedback_add_details("admin_verb","MKMET") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(usr)] made [key_name(M)] into a slime.")
-		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into a slime.")
+		message_admins("<span class='notice'>[key_name_admin(usr)] made [key_name(M)] into a slime.</span>")
 	else
 		alert("Invalid mob")
 
@@ -329,28 +329,28 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			return
 		else
 			if(alert("Spawn that person a tome?",,"Yes","No")=="Yes")
-				to_chat(M, "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie. A tome, a message from your new master, appears on the ground.")
+				to_chat(M, "<span class='warning'>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie. A tome, a message from your new master, appears on the ground.</span>")
 				new /obj/item/weapon/book/tome(M.loc)
 			else
-				to_chat(M, "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.")
+				to_chat(M, "<span class='warning'>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</span>")
 			var/glimpse=pick("1","2","3","4","5","6","7","8")
 			switch(glimpse)
 				if("1")
-					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["travel"]] is travel...")
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["travel"]] is travel...</span>")
 				if("2")
-					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["blood"]] is blood...")
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["blood"]] is blood...</span>")
 				if("3")
-					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["join"]] is join...")
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["join"]] is join...</span>")
 				if("4")
-					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["hell"]] is Hell...")
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["hell"]] is Hell...</span>")
 				if("5")
-					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["destroy"]] is destroy...")
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["destroy"]] is destroy...</span>")
 				if("6")
-					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["technology"]] is technology...")
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["technology"]] is technology...</span>")
 				if("7")
-					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["self"]] is self...")
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["self"]] is self...</span>")
 				if("8")
-					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["see"]] is see...")
+					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["see"]] is see...</span>")
 
 			if(M.mind)
 				M.mind.special_role = "Cultist"
@@ -456,7 +456,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		alert("Invalid mob")
 	feedback_add_details("admin_verb","GFA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(src)] has granted [M.key] full access.")
-	message_admins("\blue [key_name_admin(usr)] has granted [M.key] full access.")
+	message_admins("<span class='notice'>[key_name_admin(usr)] has granted [M.key] full access.</span>")
 
 /client/proc/cmd_assume_direct_control(mob/M in mob_list)
 	set category = "Admin"
@@ -471,7 +471,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		else
 			var/mob/dead/observer/ghost = new/mob/dead/observer(M,1)
 			ghost.ckey = M.ckey
-	message_admins("\blue [key_name_admin(usr)] assumed direct control of [M].")
+	message_admins("<span class='notice'>[key_name_admin(usr)] assumed direct control of [M].</span>")
 	log_admin("[key_name(usr)] assumed direct control of [M].")
 	var/mob/adminmob = src.mob
 	M.ckey = src.ckey
@@ -613,6 +613,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"nanotrasen representative",
 		"nanotrasen officer",
 		"nanotrasen captain",
+		"velocity officer",
+		"velocity chief",
+		"velocity doctor",
 		"captain",
 		"hop",
 		"hos",
@@ -664,6 +667,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if (istype(I, /obj/item/weapon/implant))
 			continue
 		qdel(I)
+
+	var/obj/item/weapon/card/id/spawned_card = null // If you want them to have an account with money.
+
 	switch(dresscode)
 		if ("strip")
 			//do nothing
@@ -931,6 +937,123 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
+		if("velocity officer")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/det/fluff/retpoluniform(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), SLOT_GLOVES)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/velocity(M), SLOT_L_EAR)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), SLOT_BACK)
+
+			var/obj/item/device/pda/velocity/pda = new(M)
+			pda.owner = M.real_name
+			pda.ownjob = "Velocity Officer"
+			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+
+			M.equip_to_slot_or_del(pda, SLOT_BELT)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(M), SLOT_GLASSES)
+
+			spawned_card = new/obj/item/weapon/card/id/velocity(M)
+			spawned_card.assignment = "Velocity Officer"
+			spawned_card.name = "[M.real_name]'s ID Card ([spawned_card.assignment])"
+			spawned_card.access = get_all_centcom_access()
+			spawned_card.rank = "Velocity Officer"
+			spawned_card.registered_name = M.real_name
+			M.equip_to_slot_or_del(spawned_card, SLOT_WEAR_ID)
+
+			if(M.mind)
+				M.mind.assigned_role = "Velocity Officer"
+
+			M.universal_speak = TRUE
+			M.universal_understand = TRUE
+
+		if("velocity chief")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security/corp(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), SLOT_GLOVES)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/velocity/chief(M), SLOT_L_EAR)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/sec/hos(M), SLOT_HEAD)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat(M), SLOT_WEAR_SUIT)
+
+			var/obj/item/weapon/storage/backpack/satchel/back_storage = new /obj/item/weapon/storage/backpack/satchel(M)
+			M.equip_to_slot_or_del(back_storage, SLOT_BACK)
+			new /obj/item/weapon/storage/box/handcuffs(back_storage)
+			new /obj/item/device/flash(back_storage)
+			new /obj/item/weapon/storage/belt/security(back_storage)
+			new /obj/item/device/megaphone(back_storage)
+			new /obj/item/device/contraband_finder(back_storage)
+			new /obj/item/device/reagent_scanner(back_storage)
+			new /obj/item/weapon/stamp/cargo_industries(back_storage)
+
+			var/obj/item/device/pda/velocity/pda = new(M)
+			pda.owner = M.real_name
+			pda.ownjob = "Velocity Chief"
+			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+
+			var/obj/item/weapon/storage/pouch/baton_holster/BH = new(M)
+			new /obj/item/weapon/melee/classic_baton(BH)
+			BH.update_icon()
+			M.equip_to_slot_or_del(BH, SLOT_L_STORE)
+
+			var/obj/item/weapon/storage/pouch/pistol_holster/PH = new(M)
+			var/obj/item/weapon/gun/energy/laser/selfcharging/SG = new /obj/item/weapon/gun/energy/laser/selfcharging(PH)
+			SG.name = "laser pistol rifle"
+			SG.can_be_holstered = TRUE
+			PH.update_icon()
+			M.equip_to_slot_or_del(PH, SLOT_R_STORE)
+
+			M.equip_to_slot_or_del(pda, SLOT_BELT)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(M), SLOT_GLASSES)
+
+			spawned_card = new/obj/item/weapon/card/id/velocity(M)
+			spawned_card.assignment = "Velocity Chief"
+			spawned_card.name = "[M.real_name]'s ID Card ([spawned_card.assignment])"
+			spawned_card.access = get_all_accesses()
+			spawned_card.access += get_all_centcom_access()
+			spawned_card.rank = "Velocity Chief"
+			spawned_card.registered_name = M.real_name
+			M.equip_to_slot_or_del(spawned_card, SLOT_WEAR_ID)
+
+			var/obj/item/weapon/implant/mindshield/IMP = new(M)
+			IMP.inject(M)
+
+			if(M.mind)
+				M.mind.assigned_role = "Velocity Chief"
+
+			M.universal_speak = TRUE
+			M.universal_understand = TRUE
+
+		if("velocity doctor")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/det/fluff/retpoluniform(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/latex/nitrile(M), SLOT_GLOVES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/blue(M), SLOT_WEAR_SUIT)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/velocity(M), SLOT_L_EAR)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/med(M), SLOT_BACK)
+
+			var/obj/item/device/pda/velocity/doctor/pda = new(M)
+			pda.owner = M.real_name
+			pda.ownjob = "Velocity Medical Doctor"
+			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+
+			M.equip_to_slot_or_del(pda, SLOT_BELT)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/health(M), SLOT_GLASSES)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/hypospray/cmo(M), SLOT_L_STORE)
+
+			spawned_card = new/obj/item/weapon/card/id/velocity(M)
+			spawned_card.assignment = "Velocity Medical Doctor"
+			spawned_card.name = "[M.real_name]'s ID Card ([spawned_card.assignment])"
+			spawned_card.access = get_all_centcom_access()
+			spawned_card.rank = "Velocity Medical Doctor"
+			spawned_card.registered_name = M.real_name
+			M.equip_to_slot_or_del(spawned_card, SLOT_WEAR_ID)
+
+			if(M.mind)
+				M.mind.assigned_role = "Velocity Medical Doctor"
+
+			M.universal_speak = TRUE
+			M.universal_understand = TRUE
+
 		if("emergency response team")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(M), SLOT_SHOES)
@@ -1062,7 +1185,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/card/id/silver/W = new(M)
 			W.assignment = "Head of Personnel"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
-			W.access = list(access_security, access_sec_doors, access_brig, access_court, access_forensics_lockers,
+			W.access = list(access_security, access_sec_doors, access_brig, access_forensics_lockers,
 			            access_medical, access_engine, access_change_ids, access_ai_upload, access_eva, access_heads,
 			            access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor, access_construction, access_morgue,
 			            access_crematorium, access_kitchen, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
@@ -1087,7 +1210,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/card/id/secGold/W = new(M)
 			W.assignment = "Head of Security"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
-			W.access = list(access_security, access_sec_doors, access_brig, access_armory, access_court,
+			W.access = list(access_security, access_sec_doors, access_brig, access_armory,
 			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
 			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
 			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_detective)
@@ -1176,7 +1299,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/card/id/sec/W = new(M)
 			W.assignment = "Warden"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
-			W.access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels)
+			W.access = list(access_security, access_sec_doors, access_brig, access_armory, access_maint_tunnels)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 		if("security officer")
@@ -1195,7 +1318,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/card/id/sec/W = new(M)
 			W.assignment = "Security Officer"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
-			W.access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
+			W.access = list(access_security, access_sec_doors, access_brig, access_maint_tunnels)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 		if("detective")
@@ -1216,7 +1339,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/card/id/sec/W = new(M)
 			W.assignment = "Detective"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
-			W.access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels, access_court)
+			W.access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 		if("doctor")
@@ -1614,7 +1737,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/card/id/civ/W = new(M)
 			W.assignment = "Internal Affairs Agent"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
-			W.access = list(access_lawyer, access_court, access_sec_doors)
+			W.access = list(access_lawyer, access_sec_doors)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
@@ -1672,7 +1795,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/mime(M), SLOT_WEAR_MASK)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/red(M), SLOT_HEAD)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/suspenders(M), SLOT_WEAR_SUIT)
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(M.back), SLOT_IN_BACKPACK)
 			M.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(M), SLOT_IN_BACKPACK)
 			M.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(M), SLOT_IN_BACKPACK)
 
@@ -1692,7 +1814,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if("clown")
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/clown(M), SLOT_BACK)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(M.back), SLOT_IN_BACKPACK)
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/clown(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/clown_shoes(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/device/pda/clown(M), SLOT_BELT)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(M), SLOT_WEAR_MASK)
@@ -1722,14 +1843,20 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				qdel(M.mind.initial_account)
 				M.mind.initial_account = null
 				create_random_account_and_store_in_mind(M)
+
+				if(spawned_card)
+					spawned_card.associated_account_number = M.mind.initial_account.account_number
 			//else do nothing
 		else
 			create_random_account_and_store_in_mind(M)
 
+			if(spawned_card)
+				spawned_card.associated_account_number = M.mind.initial_account.account_number
+
 	M.regenerate_icons()
 
 	log_admin("[key_name(usr)] changed the equipment of [key_name(M)] to [dresscode].")
-	message_admins("\blue [key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode]..")
+	message_admins("<span class='notice'>[key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode]..</span>")
 	return
 
 /client/proc/startSinglo()
@@ -1848,7 +1975,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			SMES.output = 75000
 
 	if(!found_the_pump && response == "Setup Completely")
-		to_chat(src, "\red Unable to locate air supply to fill up with coolant, adding some coolant around the supermatter")
+		to_chat(src, "<span class='warning'>Unable to locate air supply to fill up with coolant, adding some coolant around the supermatter</span>")
 		var/turf/simulated/T = SM.loc
 		T.zone.air.gas["nitrogen"] += 450
 		T.zone.air.temperature = 50
@@ -1856,7 +1983,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 
 	log_admin("[key_name(usr)] setup the supermatter engine [response == "Setup except coolant" ? "without coolant" : ""]")
-	message_admins("\blue [key_name_admin(usr)] setup the supermatter engine  [response == "Setup except coolant" ? "without coolant": ""]")
+	message_admins("[key_name_admin(usr)] setup the supermatter engine  [response == "Setup except coolant" ? "without coolant": ""]")
 	return
 
 

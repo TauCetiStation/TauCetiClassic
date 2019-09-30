@@ -271,10 +271,10 @@
 	else if(iswelder(W))
 		if(buildstate == 1)
 			var/obj/item/weapon/weldingtool/T = W
-			if(T.remove_fuel(0, user))
+			if(T.use(0, user))
 				if(!T.isOn())
 					return
-				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+				playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You weld the rods into place.</span>")
 			buildstate++
 			update_icon()

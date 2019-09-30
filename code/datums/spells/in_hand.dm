@@ -58,7 +58,7 @@
 			return FALSE
 
 	if(s_fire)
-		playsound(user, s_fire, 100, 1)
+		playsound(user, s_fire, VOL_EFFECTS_MASTER)
 	if(invoke)
 		user.say(invoke)
 
@@ -182,7 +182,7 @@
 /obj/item/weapon/magic/arcane_barrage
 	name = "arcane barrage"
 	desc = "Pew Pew Pew"
-	s_fire = 'sound/weapons/emitter.ogg'
+	s_fire = 'sound/weapons/guns/gunpulse_emitter.ogg'
 	icon_state = "arcane_barrage"
 	item_state = "arcane_barrage"
 	uses = 30
@@ -264,11 +264,11 @@
 	animate(animation, alpha = 255, time = 10)
 	sleep(10)
 
-	playsound(animation, 'sound/magic/resurrection_cast.ogg', 100, 1)
+	playsound(animation, 'sound/magic/resurrection_cast.ogg', VOL_EFFECTS_MASTER)
 	animate(animation, pixel_y = -5, time = 25, easing = SINE_EASING)
 	sleep(25)
 
-	playsound(animation, 'sound/magic/resurrection_end.ogg', 100, 1)
+	playsound(animation, 'sound/magic/resurrection_end.ogg', VOL_EFFECTS_MASTER)
 	var/matrix/Mx = matrix()
 	Mx.Scale(0)
 	animate(animation, transform = Mx, time = 5)

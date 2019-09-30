@@ -278,7 +278,7 @@
 			var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
 			var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
 			var/no_legs = FALSE
-			if((!l_foot || (l_foot && (l_foot.status & ORGAN_DESTROYED))) && (!r_foot || (r_foot && (r_foot.status & ORGAN_DESTROYED))))
+			if(!l_foot && !r_foot)
 				no_legs = TRUE
 			if(!no_legs)
 				if(H.shoes && H.shoes.clean_blood())
@@ -331,20 +331,29 @@
 /datum/reagent/nicotine/on_mob_life(mob/living/M)
 	if(!..())
 		return
-	if(volume >= 0.85)
-		if(world.time > (alert_time + 90 SECONDS))
-			to_chat(M, pick("<span class='danger'>You feel dizzy and weak</span>"))
-			alert_time = world.time
-		if(prob(60))
-			M.adjustOxyLoss(1)
-	if(volume < 0.7)
-		if(prob(10))
-			M.AdjustStunned(-1)
-			M.AdjustWeakened(-1)
-	if(volume > 1)
-		if(prob(80))
-			M.adjustOxyLoss(1)
-			M.drowsyness = min(40, (M.drowsyness + 2))
+	if(!holder.has_reagent("alkysine"))
+		if(volume >= 0.85)
+			if(world.time > (alert_time + 90 SECONDS))
+				to_chat(M, pick("<span class='danger'>You feel dizzy and weak</span>"))
+				alert_time = world.time
+			if(prob(60))
+				M.adjustOxyLoss(1)
+		if(volume < 0.7)
+			if(prob(10))
+				M.AdjustStunned(-1)
+				M.AdjustWeakened(-1)
+		if(volume > 1)
+			if(prob(80))
+				M.adjustOxyLoss(1)
+				M.drowsyness = min(40, (M.drowsyness + 2))
+			if(prob(3) & ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.invoke_vomit_async()
+		if(volume > 5)
+			if(prob(70))
+				M.adjustOxyLoss(1)
+	if(holder.has_reagent("anti_toxin"))
+		holder.remove_reagent("nicotine", 0.065)
 	return TRUE
 
 /datum/reagent/ammonia
@@ -426,7 +435,7 @@
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.vomit()
+		H.invoke_vomit_async()
 		H.apply_effect(1,IRRADIATE,0)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -587,7 +596,7 @@
 				spawn(60)
 					if(spawning_horror)
 						to_chat(M, pick( "<b><span class='warning'>Something bursts out from inside you!</span></b>"))
-						message_admins("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots. (<A HREF='?_src_=holder;adminmoreinfo=\ref[H]'>?</A>)")
+						message_admins("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots. (<A HREF='?_src_=holder;adminmoreinfo=\ref[H]'>?</A>) [ADMIN_JMP(H)]")
 						log_game("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots")
 						new /mob/living/simple_animal/hostile/cyber_horror(H.loc)
 						spawning_horror = 0
@@ -656,9 +665,9 @@
 		return
 	if(color_weight < 15 || volume < 5)
 		return
-	var/ind = "[initial(T.icon)][color]"
+	var/ind = "[initial(T.icon)]|[color]"
 	if(!cached_icons[ind])
-		var/icon/overlay = new/icon(initial(T.icon))
+		var/icon/overlay = new/icon(T.icon)
 		overlay.Blend(color, ICON_MULTIPLY)
 		overlay.SetIntensity(color_weight * 0.1)
 		T.icon = overlay
@@ -680,41 +689,41 @@
 			H.eye_blind = max(H.eye_blind, 1)
 		if(volume >= 10 && H.species.flags[HAS_SKIN_COLOR])
 			if(!H.wear_suit && !H.w_uniform && !H.shoes && !H.head && !H.wear_mask) // You either paint the full body, or beard/hair
-				H.r_skin = Clamp(round(H.r_skin * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255) // Full body painting is costly! Hence, *0.1
-				H.g_skin = Clamp(round(H.g_skin * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
-				H.b_skin = Clamp(round(H.b_skin * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
-				H.dyed_r_hair = Clamp(round(H.dyed_r_hair * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255) // If you're painting full body, all the painting is costly.
-				H.dyed_g_hair = Clamp(round(H.dyed_g_hair * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
-				H.dyed_b_hair = Clamp(round(H.dyed_b_hair * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
+				H.r_skin = CLAMP(round(H.r_skin * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255) // Full body painting is costly! Hence, *0.1
+				H.g_skin = CLAMP(round(H.g_skin * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
+				H.b_skin = CLAMP(round(H.b_skin * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
+				H.dyed_r_hair = CLAMP(round(H.dyed_r_hair * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255) // If you're painting full body, all the painting is costly.
+				H.dyed_g_hair = CLAMP(round(H.dyed_g_hair * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
+				H.dyed_b_hair = CLAMP(round(H.dyed_b_hair * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
 				H.hair_painted = TRUE
-				H.dyed_r_facial = Clamp(round(H.dyed_r_facial * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255)
-				H.dyed_g_facial = Clamp(round(H.dyed_g_facial * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
-				H.dyed_b_facial = Clamp(round(H.dyed_b_facial * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
+				H.dyed_r_facial = CLAMP(round(H.dyed_r_facial * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255)
+				H.dyed_g_facial = CLAMP(round(H.dyed_g_facial * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
+				H.dyed_b_facial = CLAMP(round(H.dyed_b_facial * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
 				H.facial_painted = TRUE
 				hair_changes_occured = TRUE
 				body_changes_occured = TRUE
 		else if(H.species && H.species.name in list(HUMAN, UNATHI, TAJARAN))
 			if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
 				if(!H.hair_painted)
-					H.dyed_r_hair = Clamp(round(H.r_hair * volume_coefficient + r_tweak), 0, 255)
-					H.dyed_g_hair = Clamp(round(H.g_hair * volume_coefficient + g_tweak), 0, 255)
-					H.dyed_b_hair = Clamp(round(H.b_hair * volume_coefficient + b_tweak), 0, 255)
+					H.dyed_r_hair = CLAMP(round(H.r_hair * volume_coefficient + r_tweak), 0, 255)
+					H.dyed_g_hair = CLAMP(round(H.g_hair * volume_coefficient + g_tweak), 0, 255)
+					H.dyed_b_hair = CLAMP(round(H.b_hair * volume_coefficient + b_tweak), 0, 255)
 					H.hair_painted = TRUE
 				else
-					H.dyed_r_hair = Clamp(round(H.dyed_r_hair * volume_coefficient + r_tweak), 0, 255)
-					H.dyed_g_hair = Clamp(round(H.dyed_g_hair * volume_coefficient + g_tweak), 0, 255)
-					H.dyed_b_hair = Clamp(round(H.dyed_b_hair * volume_coefficient + b_tweak), 0, 255)
+					H.dyed_r_hair = CLAMP(round(H.dyed_r_hair * volume_coefficient + r_tweak), 0, 255)
+					H.dyed_g_hair = CLAMP(round(H.dyed_g_hair * volume_coefficient + g_tweak), 0, 255)
+					H.dyed_b_hair = CLAMP(round(H.dyed_b_hair * volume_coefficient + b_tweak), 0, 255)
 				hair_changes_occured = TRUE
 			if(!((H.wear_mask && (H.wear_mask.flags & HEADCOVERSMOUTH)) || (H.head && (H.head.flags & HEADCOVERSMOUTH))) && H.f_style != "Shaved")
 				if(!H.facial_painted)
-					H.dyed_r_facial = Clamp(round(H.r_facial * volume_coefficient + r_tweak), 0, 255)
-					H.dyed_g_facial = Clamp(round(H.g_facial * volume_coefficient + g_tweak), 0, 255)
-					H.dyed_b_facial = Clamp(round(H.b_facial * volume_coefficient + b_tweak), 0, 255)
+					H.dyed_r_facial = CLAMP(round(H.r_facial * volume_coefficient + r_tweak), 0, 255)
+					H.dyed_g_facial = CLAMP(round(H.g_facial * volume_coefficient + g_tweak), 0, 255)
+					H.dyed_b_facial = CLAMP(round(H.b_facial * volume_coefficient + b_tweak), 0, 255)
 					H.facial_painted = TRUE
 				else
-					H.dyed_r_facial = Clamp(round(H.dyed_r_facial * volume_coefficient + r_tweak), 0, 255)
-					H.dyed_g_facial = Clamp(round(H.dyed_g_facial * volume_coefficient + g_tweak), 0, 255)
-					H.dyed_b_facial = Clamp(round(H.dyed_b_facial * volume_coefficient + b_tweak), 0, 255)
+					H.dyed_r_facial = CLAMP(round(H.dyed_r_facial * volume_coefficient + r_tweak), 0, 255)
+					H.dyed_g_facial = CLAMP(round(H.dyed_g_facial * volume_coefficient + g_tweak), 0, 255)
+					H.dyed_b_facial = CLAMP(round(H.dyed_b_facial * volume_coefficient + b_tweak), 0, 255)
 				hair_changes_occured = TRUE
 		if(!H.head && !H.wear_mask && H.h_style == "Bald" && H.f_style == "Shaved" && volume >= 5)
 			H.lip_style = "spray_face"

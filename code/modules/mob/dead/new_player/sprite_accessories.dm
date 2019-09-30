@@ -46,7 +46,7 @@
 /datum/sprite_accessory/hair/bald
 	name = "Bald"
 	icon_state = "bald"
-	gender = MALE
+	species_allowed = list(HUMAN , UNATHI , DIONA)
 
 /datum/sprite_accessory/hair/short
 	name = "Short Hair"	  // try to capatilize the names please~

@@ -11,6 +11,49 @@
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
 	var/is_glass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 	var/is_transparent = 1 //Determines whether an overlay of liquid should be added to bottle when it fills
+	var/stop_spin_bottle = FALSE //Gotta stop the rotation.
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/atom_init()
+	. = ..()
+	if (!is_glass)
+		verbs -= /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle()
+	set name = "Spin bottle"
+	set category = "Object"
+	set src in view(1)
+
+	if(!ishuman(usr))  //Checking human and status
+		return
+	if(usr.incapacitated() || usr.stat || usr.lying)
+		return
+	if(usr.is_busy())
+		return
+
+	if(!stop_spin_bottle)
+		if(usr.get_active_hand() == src || usr.get_inactive_hand() == src)
+			usr.drop_from_inventory(src)
+
+		if(isturf(loc))
+			var/speed = rand(1, 3)
+			var/loops
+			var/sleep_not_stacking
+			switch(speed) //At a low speed, the bottle should not make 10 loops
+				if(3)
+					loops = rand(7, 10)
+					sleep_not_stacking = 40
+				if(1 to 2)
+					loops = rand(10, 15)
+					sleep_not_stacking = 25
+
+			stop_spin_bottle = TRUE
+			SpinAnimation(speed, loops, pick(0, 1)) //SpinAnimation(speed, loops, clockwise, segments)
+			transform = turn(matrix(), dir2angle(pick(alldirs)))
+			sleep(sleep_not_stacking) //Not stacking
+			stop_spin_bottle = FALSE
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/pickup(mob/living/user)
+	animate(src, transform = null, time = 0) //Restore bottle to its original position
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user)
 
@@ -27,7 +70,7 @@
 	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 	B.icon = I
 
-	playsound(src, "shatter", 70, 1)
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	user.put_in_active_hand(B)
 	src.transfer_fingerprints_to(B)
 
@@ -90,8 +133,8 @@
 
 		//Display an attack message.
 		for(var/mob/O in viewers(user, null))
-			if(target != user) O.show_message(text("\red <B>[target] has been hit over the head with a bottle of [src.name], by [user]!</B>"), 1)
-			else O.show_message(text("\red <B>[target] hit himself with a bottle of [src.name] on the head!</B>"), 1)
+			if(target != user) O.show_message(text("<span class='warning'><B>[target] has been hit over the head with a bottle of [src.name], by [user]!</B></span>"), 1)
+			else O.show_message(text("<span class='warning'><B>[target] hit himself with a bottle of [src.name] on the head!</B></span>"), 1)
 		//Weaken the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
 			target.apply_effect(min(armor_duration, 10) , WEAKEN) // Never weaken more than a flash!
@@ -99,18 +142,18 @@
 	else
 		//Default attack message and don't weaken the target.
 		for(var/mob/O in viewers(user, null))
-			if(target != user) O.show_message(text("\red <B>[target] has been attacked with a bottle of [src.name], by [user]!</B>"), 1)
-			else O.show_message(text("\red <B>[target] has attacked himself with a bottle of [src.name]!</B>"), 1)
+			if(target != user) O.show_message(text("<span class='warning'><B>[target] has been attacked with a bottle of [src.name], by [user]!</B></span>"), 1)
+			else O.show_message(text("<span class='warning'><B>[target] has attacked himself with a bottle of [src.name]!</B></span>"), 1)
 
 	//Attack logs
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has attacked [target.name] ([target.ckey]) with a bottle!</font>")
 	target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been smashed with a bottle by [user.name] ([user.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) attacked [target.name] ([target.ckey]) with a bottle. (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	msg_admin_attack("[user.name] ([user.ckey]) attacked [target.name] ([target.ckey]) with a bottle. (INTENT: [uppertext(user.a_intent)])", user)
 
 	//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
 	if(src.reagents)
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\blue <B>The contents of the [src] splashes all over [target]!</B>"), 1)
+			O.show_message(text("<span class='notice'><B>The contents of the [src] splashes all over [target]!</B></span>"), 1)
 		src.reagents.reaction(target, TOUCH)
 
 	//Finally, smash the bottle. This kills (del) the bottle.
@@ -123,6 +166,7 @@
 
 	name = "Broken Bottle"
 	desc = "A bottle with a sharp broken bottom."
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "broken_bottle"
 	force = 9.0
@@ -136,7 +180,7 @@
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
 
 /obj/item/weapon/broken_bottle/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
 
@@ -294,6 +338,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao/atom_init()
 	. = ..()
 	reagents.add_reagent("bluecuracao", 100)
+	verbs -= /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle //very bad sprite for spin
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine
 	name = "Briar Rose Grenadine Syrup"

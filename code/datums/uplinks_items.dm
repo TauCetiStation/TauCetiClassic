@@ -593,7 +593,7 @@
 /datum/uplink_item/device_tools/hacked_module
 	name = "Hacked AI Law Upload Module"
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. Be careful with their wording, as artificial intelligences may look for loopholes to exploit."
-	item = /obj/item/weapon/aiModule/syndicate
+	item = /obj/item/weapon/aiModule/freeform/syndicate
 	cost = 12
 
 /datum/uplink_item/device_tools/plastic_explosives
@@ -673,12 +673,17 @@
 	item = /obj/item/weapon/implanter/storage
 	cost = 7
 
-/*
-/datum/uplink_item/implants/adrenal
-	name = "Adrenal Implant"
-	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a chemical cocktail, which has a mild healing effect along with removing all stuns and increasing his speed."
-	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
-	cost = 4 */
+/datum/uplink_item/implants/adrenaline
+	name = "Adrenaline Implant"
+	desc = "An implant, that will inject a chemical cocktail, which has a mild healing effect along with removing all stuns and increasing his speed can be activated at the user's will."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenaline
+	cost = 6
+
+/datum/uplink_item/implants/emp
+	name = "EMP Implant"
+	desc = "An implant, that contains power of three emp grenades, can be activated at the user's will."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_emp
+	cost = 3
 
 // POINTLESS BADASSERY
 

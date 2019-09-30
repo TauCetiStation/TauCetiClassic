@@ -365,7 +365,7 @@
 
 		helm_cam.hidden = 1
 		blockTracking = 1
-		to_chat(user, "\blue Abductor detected. Camera activated.")
+		to_chat(user, "<span class='notice'>Abductor detected. Camera activated.</span>")
 		return
 
 /obj/item/clothing/head/helmet/abductor/proc/IsAbductor(mob/living/user)
@@ -488,11 +488,11 @@
 
 	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
 							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
-	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 
 	L.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> stunned <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
 	user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> stunned <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
-	msg_admin_attack("[user] ([user.ckey]) stunned [L] ([L.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	msg_admin_attack("[user] ([user.ckey]) stunned [L] ([L.ckey]) with a [src]", user)
 	return
 
 /obj/item/weapon/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
@@ -500,11 +500,11 @@
 		L.SetSleeping(60)
 	L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
-	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 
 	L.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> put to sleep <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
 	user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> put to sleep <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
-	msg_admin_attack("[user] ([user.ckey]) put to sleep [L] ([L.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	msg_admin_attack("[user] ([user.ckey]) put to sleep [L] ([L.ckey]) with a [src]", user)
 	return
 
 /obj/item/weapon/abductor_baton/proc/CuffAttack(mob/living/L,mob/living/user)
@@ -512,7 +512,7 @@
 		return
 	var/mob/living/carbon/C = L
 	if(!C.handcuffed)
-		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
+		playsound(src, 'sound/weapons/cablecuff.ogg', VOL_EFFECTS_MASTER, 30)
 		C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
 								"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
 		if(do_mob(user, C, 30))
@@ -522,7 +522,7 @@
 				to_chat(user, "<span class='notice'>You handcuff [C].</span>")
 				L.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> handcuffed <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
 				user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> handcuffed <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
-				msg_admin_attack("[user] ([user.ckey]) handcuffed [L] ([L.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+				msg_admin_attack("[user] ([user.ckey]) handcuffed [L] ([L.ckey]) with a [src]", user)
 		else
 			to_chat(user, "<span class='warning'>You fail to handcuff [C].</span>")
 	return
@@ -567,27 +567,33 @@
 /obj/item/weapon/scalpel/alien
 	name = "alien scalpel"
 	icon = 'icons/obj/abductor.dmi'
+	toolspeed = 0.3
 
 /obj/item/weapon/hemostat/alien
 	name = "alien hemostat"
 	icon = 'icons/obj/abductor.dmi'
+	toolspeed = 0.3
 
 /obj/item/weapon/retractor/alien
 	name = "alien retractor"
 	icon = 'icons/obj/abductor.dmi'
+	toolspeed = 0.3
 
 /obj/item/weapon/circular_saw/alien
 	name = "alien saw"
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "saw"
+	toolspeed = 0.3
 
 /obj/item/weapon/surgicaldrill/alien
 	name = "alien drill"
 	icon = 'icons/obj/abductor.dmi'
+	toolspeed = 0.3
 
 /obj/item/weapon/cautery/alien
 	name = "alien cautery"
 	icon = 'icons/obj/abductor.dmi'
+	toolspeed = 0.3
 
 
 // OPERATING TABLE / BEDS / LOCKERS	/ OTHER
@@ -666,11 +672,8 @@
 /obj/structure/table/abductor
 	name = "alien table"
 	desc = "Advanced flat surface technology at work!"
-	icon = 'icons/obj/abductor.dmi'
-
-/obj/structure/table/abductor/atom_init()		// Fuck this shit, I am out...
-	. = ..()
-	verbs -= /obj/structure/table/verb/do_flip
+	icon = 'icons/obj/smooth_structures/abductor_table.dmi'
+	flipable = FALSE // Fuck this shit, I am out...
 
 /obj/structure/closet/abductor
 	name = "alien locker"
@@ -726,7 +729,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		M.revive()
 		loaded = 0
 		user.visible_message("<span class='notice'>[user] injects [M] with [src], fully heal it.</span>")
-		playsound(src, 'sound/effects/refill.ogg', 50, 1)
+		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
 		icon_state = "abductor_empty"
 
 /obj/machinery/recharger/wallcharger/alien

@@ -14,7 +14,7 @@
 	melee_damage_lower = 2
 	melee_damage_upper = 3
 	attacktext = "claws"
-	projectilesound = 'sound/weapons/Gunshot.ogg'
+	projectilesound = 'sound/weapons/guns/Gunshot.ogg'
 	projectiletype = /obj/item/projectile/hivebotbullet
 	faction = "hivebot"
 	min_oxy = 0
@@ -81,12 +81,12 @@
 	var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 	smoke.set_up(5, 0, src.loc)
 	smoke.start()
-	visible_message("\red <B>The [src] warps in!</B>")
-	playsound(src.loc, 'sound/effects/EMPulse.ogg', 25, 1)
+	visible_message("<span class='warning'><B>The [src] warps in!</B></span>")
+	playsound(src, 'sound/effects/EMPulse.ogg', VOL_EFFECTS_MASTER, 25)
 
 /mob/living/simple_animal/hostile/hivebot/tele/proc/warpbots()
 	icon_state = "def_radar"
-	visible_message("\red The [src] turns on!")
+	visible_message("<span class='warning'>The [src] turns on!</span>")
 	while(bot_amt > 0)
 		bot_amt--
 		switch(bot_type)

@@ -23,6 +23,7 @@
 		else
 			icon_state = "motion0"
 			stat |= NOPOWER
+	update_power_use()
 
 /obj/machinery/ai_slipper/proc/setState(enabled, uses)
 	src.disabled = disabled
@@ -46,7 +47,7 @@
 				if (user.machine==src)
 					src.attack_hand(usr)
 		else
-			to_chat(user, "\red Access denied.")
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 			return
 	return
 

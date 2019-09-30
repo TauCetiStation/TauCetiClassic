@@ -1,13 +1,15 @@
 /obj/machinery/computer/stockexchange
 	name = "Stock exchange computer"
-	icon_state = "oldcomp"
+	icon_state = "computer_regular_stock"
+	state_broken_preset = "computer_regularb"
+	state_nopower_preset = "computer_regular0"
 	circuit = /obj/item/weapon/circuitboard/computer/stockexchange
 	var/logged_in = "Cargo Department"
 	var/vmode = 1
 
 /obj/machinery/computer/stockexchange/atom_init()
 	. = ..()
-	logged_in = "[world.name] Cargo Department"
+	logged_in = "[station_name()] Cargo Department"
 
 /obj/machinery/computer/stockexchange/proc/balance()
 	if(!logged_in)

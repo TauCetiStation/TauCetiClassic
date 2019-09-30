@@ -90,7 +90,7 @@
 				dancing = 1
 
 	synch()
-	playsound(victim, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 
 	if(state == GRAB_PASSIVE)
 		assailant.visible_message("<span class='red'>[assailant] has grabbed [affecting] passively!</span>")
@@ -228,6 +228,12 @@
 				affecting.Weaken(2)
 
 	if(state >= GRAB_NECK)
+		if(ishuman(affecting))
+			var/mob/living/carbon/human/H = affecting
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+			if(!BP || BP.is_stump)
+				qdel(src)
+				return PROCESS_KILL
 		affecting.Stun(1)
 		if(isliving(affecting))
 			var/mob/living/L = affecting
@@ -321,11 +327,17 @@
 		if(isslime(affecting))
 			to_chat(assailant, "<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>")
 			return
+		if(ishuman(affecting))
+			var/mob/living/carbon/human/H = affecting
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+			if(!BP || BP.is_stump)
+				to_chat(assailant, "<span class='warning'>You can't take a headless man by the neck!</span>")
+				return
 		assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
 		assailant.set_dir(get_dir(assailant, affecting))
 		affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has had their neck grabbed by [assailant.name] ([assailant.ckey])</font>"
 		assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Grabbed the neck of [affecting.name] ([affecting.ckey])</font>"
-		msg_admin_attack("[key_name(assailant)] grabbed the neck of [key_name(affecting)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[assailant.x];Y=[assailant.y];Z=[assailant.z]'>JMP</A>)")
+		msg_admin_attack("[key_name(assailant)] grabbed the neck of [key_name(affecting)]", assailant)
 		affecting.Stun(10) //10 ticks of ensured grab
 		set_state(GRAB_NECK)
 
@@ -339,7 +351,7 @@
 		assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
 		affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been strangled (kill intent) by [assailant.name] ([assailant.ckey])</font>"
 		assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>"
-		msg_admin_attack("[key_name(assailant)] strangled (kill intent) [key_name(affecting)]")
+		msg_admin_attack("[key_name(assailant)] strangled (kill intent) [key_name(affecting)]", assailant)
 
 		affecting.losebreath += 1
 		affecting.set_dir(WEST)
@@ -385,7 +397,22 @@
 						force_down = 0
 						return
 					if(state >= GRAB_AGGRESSIVE)
-						H.apply_pressure(assailant, hit_zone)
+						if(!H.apply_pressure(assailant, hit_zone))
+							if(hit_zone == BP_CHEST)
+								var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(hit_zone)]
+								var/armor_block = H.run_armor_check(BP, "melee")
+
+								var/chance_to_force_vomit = 30
+								if(H.stat >= UNCONSCIOUS)
+									chance_to_force_vomit += 20
+								if(prob(armor_block))
+									chance_to_force_vomit = 0
+								user.visible_message("<span class='notice'>[user] squeezes [H], trying to make them puke.</span>")
+								if(prob(chance_to_force_vomit))
+									H.vomit(punched=TRUE)
+					else if(hit_zone == O_MOUTH && ishuman(user))
+						var/mob/living/carbon/human/H_H = user
+						H_H.force_vomit(H)
 					else
 						inspect_organ(affecting, assailant, hit_zone)
 				if("grab")
@@ -399,10 +426,9 @@
 					var/armor = H.run_armor_check(H, "melee")
 					if(armor < 2)
 						to_chat(H, "<span class='danger'>You feel extreme pain!</span>")
-						H.adjustHalLoss(Clamp(0, 40 - H.halloss, 40)) //up to 40 halloss
+						H.adjustHalLoss(CLAMP(0, 40 - H.halloss, 40)) //up to 40 halloss
 					return
 				if("hurt")
-
 					if(hit_zone == O_EYES)
 						if(state < GRAB_NECK)
 							to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
@@ -419,18 +445,45 @@
 						to_chat(affecting, "<span class='danger'>You experience immense pain as you feel digits being pressed into your eyes!</span>")
 						assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Pressed fingers into the eyes of [affecting.name] ([affecting.ckey])</font>")
 						affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had fingers pressed into their eyes by [assailant.name] ([assailant.ckey])</font>")
-						msg_admin_attack("[key_name(assailant)] has pressed his fingers into [key_name(affecting)]'s eyes.")
+						msg_admin_attack("[key_name(assailant)] has pressed his fingers into [key_name(affecting)]'s eyes.", assailant)
 						var/obj/item/organ/internal/eyes/IO = affecting:organs_by_name[O_EYES]
 						IO.damage += rand(3,4)
 						if (IO.damage >= IO.min_broken_damage)
 							if(affecting.stat != DEAD)
-								to_chat(affecting, "\red You go blind!")
+								to_chat(affecting, "<span class='warning'>You go blind!</span>")
+					else if(state >= GRAB_AGGRESSIVE && hit_zone == BP_CHEST)
+						var/chance_to_force_vomit = 30
+
+						if(ishuman(user))
+							var/mob/living/carbon/human/H_user = user
+							var/datum/unarmed_attack/attack = H_user.species.unarmed
+
+							var/damage = rand(1, 5)
+							damage += attack.damage
+
+							var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(hit_zone)]
+							var/armor_block = H.run_armor_check(BP, "melee")
+
+							if(attack.damage_flags() & (DAM_SHARP|DAM_EDGE))
+								chance_to_force_vomit = 0
+							else
+								chance_to_force_vomit += attack.damage
+							if(prob(armor_block))
+								chance_to_force_vomit = 0
+							H.apply_damage(damage, BRUTE, BP, armor_block, attack.damage_flags())
+
+						else
+							H.adjustBruteLoss(3)
+
+						user.visible_message("<span class='warning'>[user] punches [H] in the gut, trying to make them puke.</span>")
+						if(prob(chance_to_force_vomit))
+							H.vomit(punched=TRUE)
 //					else if(hit_zone != BP_HEAD)
 //						if(state < GRAB_NECK)
 //							assailant << "<span class='warning'>You require a better grab to do this.</span>"
 //							return
 //						if(affecting:grab_joint(assailant))
-//							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+//							playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 //							return
 					else
 						if(affecting.lying)
@@ -446,10 +499,10 @@
 						if(!armor && prob(damage))
 							affecting.apply_effect(20, PARALYZE)
 							affecting.visible_message("<span class='danger'>[affecting] has been knocked unconscious!</span>")
-						playsound(assailant.loc, "swing_hit", 25, 1, -1)
+						playsound(assailant, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 						assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Headbutted [affecting.name] ([affecting.ckey])</font>")
 						affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Headbutted by [assailant.name] ([assailant.ckey])</font>")
-						msg_admin_attack("[key_name(assailant)] has headbutted [key_name(affecting)]")
+						msg_admin_attack("[key_name(assailant)] has headbutted [key_name(affecting)]", assailant)
 						assailant.drop_from_inventory(src)
 						src.loc = null
 						qdel(src)
@@ -521,7 +574,7 @@
 
 	var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
 
-	if(!BP || (BP.status & ORGAN_DESTROYED))
+	if(!BP || (BP.is_stump))
 		to_chat(user, "<span class='notice'>[H] is missing that bodypart.</span>")
 		return
 

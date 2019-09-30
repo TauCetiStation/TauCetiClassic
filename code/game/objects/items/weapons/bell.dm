@@ -6,7 +6,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "bell"
 	flags = NOBLUDGEON
-	hitsound = 'sound/items/oneding.ogg'
+	hitsound = list('sound/items/oneding.ogg')
 	m_amt = 75
 
 /obj/item/weapon/bell/attack_hand(mob/user)
@@ -14,8 +14,8 @@
 		return ..()
 	else if (user.a_intent == I_HURT)
 		user.visible_message("<span class='warning'>\The [user] hammers \the [src]!</span>")
-		playsound(user.loc, 'sound/items/manydings.ogg', 60)
+		playsound(user, 'sound/items/manydings.ogg', VOL_EFFECTS_MASTER)
 	else
 		user.visible_message("<span class='notice'>\The [user] rings \the [src].</span>")
-		playsound(user.loc, 'sound/items/oneding.ogg', 20)
+		playsound(user, 'sound/items/oneding.ogg', VOL_EFFECTS_MASTER, 20)
 	user.SetNextMove(CLICK_CD_INTERACT * 8)

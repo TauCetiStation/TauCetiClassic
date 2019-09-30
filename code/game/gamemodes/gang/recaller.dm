@@ -229,7 +229,7 @@
 
 					var/area/usrarea = get_area(usr.loc)
 					var/usrturf = get_turf(usr.loc)
-					if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/space) || usr.z != ZLEVEL_STATION)
+					if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/space) || !is_station_level(usr.z))
 						to_chat(usr, "<span class='warning'>You can only use this on the station!</span>")
 						return
 
@@ -277,7 +277,7 @@
 	var/message = sanitize(input(user,"Discreetly send a gang-wide message.","Send Message") as null|text)
 	if(!message || (message == "") || !can_use(user))
 		return
-	if(user.z > ZLEVEL_CENTCOMM)
+	if(!is_centcom_level(user.z) && !is_station_level(user.z))
 		to_chat(user, "<span class='info'>[bicon(src)]Error: Station out of range.</span>")
 		return
 	var/list/members = list()
@@ -366,7 +366,7 @@
 		return 0
 
 	var/turf/userturf = get_turf(user)
-	if(userturf.z != ZLEVEL_STATION) //Shuttle can only be recalled while on station
+	if(!is_station_level(userturf.z)) //Shuttle can only be recalled while on station
 		to_chat(user, "<span class='info'>[bicon(src)]Error: Device out of range of station communication arrays.</span>")
 		recalling = 0
 		return 0
@@ -382,9 +382,9 @@
 
 	recalling = 0
 	log_game("[key_name(user)] has tried to recall the shuttle with a gangtool.")
-	message_admins("[key_name_admin(user)] has tried to recall the shuttle with a gangtool.", 1)
+	message_admins("[key_name_admin(user)] has tried to recall the shuttle with a gangtool. [ADMIN_JMP(user)]", 1)
 	userturf = get_turf(user)
-	if(userturf.z == ZLEVEL_STATION) //Check one more time that they are on station.
+	if(is_station_level(userturf.z)) //Check one more time that they are on station.
 		if(cancel_call_proc(user))
 			return 1
 

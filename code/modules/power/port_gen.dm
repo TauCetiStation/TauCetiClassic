@@ -10,7 +10,7 @@
 	icon_state = "portgen0"
 	density = 1
 	anchored = 0
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	var/active = 0
 	var/power_gen = 5000
@@ -66,8 +66,8 @@
 	component_parts = list()
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/stack/cable_coil/random(src, 1)
-	component_parts += new /obj/item/stack/cable_coil/random(src, 1)
+	component_parts += new /obj/item/stack/cable_coil/red(src, 1)
+	component_parts += new /obj/item/stack/cable_coil/red(src, 1)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 	component_parts += new board_path(src)
 	RefreshParts()
@@ -167,10 +167,6 @@
 		addstack.use(amount)
 		updateUsrDialog()
 		return
-	else if (istype(O, /obj/item/weapon/card/emag))
-		emagged = 1
-		user.SetNextMove(CLICK_CD_INTERACT)
-		emp_act(1)
 	else if(!active)
 
 		if(exchange_parts(user, O))
@@ -187,17 +183,25 @@
 				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
 				anchored = 0
 
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 
 		else if(isscrewdriver(O))
 			panel_open = !panel_open
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			if(panel_open)
 				to_chat(user, "<span class='notice'>You open the access panel.</span>")
 			else
 				to_chat(user, "<span class='notice'>You close the access panel.</span>")
 		else if(iscrowbar(O) && panel_open)
 			default_deconstruction_crowbar(O)
+
+/obj/machinery/power/port_gen/pacman/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	emagged = 1
+	user.SetNextMove(CLICK_CD_INTERACT)
+	emp_act(1)
+	return TRUE
 
 /obj/machinery/power/port_gen/pacman/ui_interact(mob/user)
 	if ((get_dist(src, user) > 1) && !issilicon(user) && !isobserver(user))

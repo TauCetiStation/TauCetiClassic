@@ -7,7 +7,7 @@
 	config_tag = "traitor"
 	role_type = ROLE_TRAITOR
 	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
-	protected_jobs = list("Internal Affairs Agent", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")//AI", Currently out of the list as malf does not work for shit
+	protected_jobs = list("Security Cadet", "Internal Affairs Agent", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Velocity Officer", "Velocity Chief", "Velocity Medical Doctor")//AI", Currently out of the list as malf does not work for shit
 	required_players = 1
 	required_enemies = 1
 	required_players_secret = 1
@@ -158,8 +158,10 @@
 /datum/game_mode/proc/finalize_traitor(datum/mind/traitor)
 	if (istype(traitor.current, /mob/living/silicon))
 		add_law_zero(traitor.current)
+		traitor.current.playsound_local(null, 'sound/antag/tatoralert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	else
 		equip_traitor(traitor.current)
+		traitor.current.playsound_local(null, 'sound/antag/tatoralert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	return
 
 /datum/game_mode/proc/remove_traitor(datum/mind/M)
@@ -172,7 +174,7 @@
 
 /datum/game_mode/traitor/declare_completion()
 	..()
-	return//Traitors will be checked as part of check_extra_completion. Leaving this here as a reminder.
+	return//Traitors will be checked as part of check_extra_completion. Leaving this here as a reminder.//WHERE IS check_extra_completion?!?!
 
 /datum/game_mode/traitor/process()
 	// Make sure all objectives are processed regularly, so that objectives
@@ -192,12 +194,12 @@
 	//Begin code phrase.
 	to_chat(killer, "The Syndicate provided you with the following information on how to identify their agents:")
 	if(prob(80))
-		to_chat(killer, "\red Code Phrase: \black [syndicate_code_phrase]")
+		to_chat(killer, "<span class='warning'>Code Phrase:</span> [syndicate_code_phrase]")
 		killer.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
 	else
 		to_chat(killer, "Unfortunately, the Syndicate did not provide you with a code phrase.")
 	if(prob(80))
-		to_chat(killer, "\red Code Response: \black [syndicate_code_response]")
+		to_chat(killer, "<span class='warning'>Code Response:</span> [syndicate_code_response]")
 		killer.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
 	else
 		to_chat(killer, "Unfortunately, the Syndicate did not provide you with a code response.")
@@ -218,10 +220,10 @@
 				var/count = 1
 				for(var/datum/objective/objective in traitor.objectives)
 					if(objective.check_completion())
-						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
 						feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
 					else
-						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
 						feedback_add_details("traitor_objective","[objective.type]|FAIL")
 						traitorwin = 0
 					count++
@@ -233,27 +235,31 @@
 				special_role_text = "antagonist"
 			if(!config.objectives_disabled)
 				if(traitorwin)
-					text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
+					text += "<br><span style='color: green; font-weight: bold;'>The [special_role_text] was successful!</span>"
 					feedback_add_details("traitor_success","SUCCESS")
 					score["roleswon"]++
 				else
-					text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
+					text += "<br><span style='color: red; font-weight: bold;'>The [special_role_text] has failed!</span>"
 					feedback_add_details("traitor_success","FAIL")
 
 			if(traitor.total_TC)
 				if(traitor.spent_TC)
-					text += "<BR><B>TC Remaining:</B> [traitor.total_TC - traitor.spent_TC]/[traitor.total_TC]"
-					text += "<BR><B>The tools used by the traitor were:</B>"
+					text += "<br><b>TC Remaining:</b> [traitor.total_TC - traitor.spent_TC]/[traitor.total_TC]"
+					text += "<br><b>The tools used by the traitor were:</b>"
 					for(var/entry in traitor.uplink_items_bought)
 						text += "<br>[entry]"
 				else
 					text += "<br>The traitor was a smooth operator this round (did not purchase any uplink items)."
-		text += "<BR><HR>"
+
 	if(ticker.reconverted_antags.len)
+		text += "<br><hr>"
 		for(var/reconverted in ticker.reconverted_antags)
 			text += printplayerwithicon(ticker.reconverted_antags[reconverted])
 			text += "<br> Has been deconverted, and is now a [pick("loyal", "effective", "nominal")] [pick("dog", "pig", "underdog", "servant")] of [pick("corporation", "NanoTrasen")]"
-		text += "<BR><HR>"
+	if(text)
+		antagonists_completion += list(list("mode" = "traitor", "html" = text))
+		text = "<div class='block'>[text]</div>"
+
 	return text
 
 
@@ -351,12 +357,12 @@
 	if(!safety)//If they are not a rev. Can be added on to.
 		to_chat(traitor_mob, "The Syndicate provided you with the following information on how to identify other agents:")
 		if(prob(80))
-			to_chat(traitor_mob, "\red Code Phrase: \black [syndicate_code_phrase]")
+			to_chat(traitor_mob, "<span class='warning'>Code Phrase:</span> [syndicate_code_phrase]")
 			traitor_mob.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
 		else
 			to_chat(traitor_mob, "Unfortunetly, the Syndicate did not provide you with a code phrase.")
 		if(prob(80))
-			to_chat(traitor_mob, "\red Code Response: \black [syndicate_code_response]")
+			to_chat(traitor_mob, "<span class='warning'>Code Response:</span> [syndicate_code_response]")
 			traitor_mob.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
 		else
 			to_chat(traitor_mob, "Unfortunately, the Syndicate did not provide you with a code response.")

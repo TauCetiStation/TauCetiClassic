@@ -10,7 +10,7 @@
 	speak_emote = list("squeeks","squeeks","squiks")
 	emote_hear = list("squeeks","squeaks","squiks")
 	emote_see = list("runs in a circle", "shakes", "scritches at something")
-	pass_flags = PASSTABLE
+	pass_flags = PASSTABLE | PASSMOB
 	small = TRUE
 	speak_chance = 1
 	turns_per_move = 8
@@ -35,7 +35,7 @@
 	..()
 	if(!stat && prob(speak_chance))
 		for(var/mob/M in view())
-			M << 'sound/effects/mousesqueek.ogg'
+			M.playsound_local(loc, 'sound/effects/mousesqueek.ogg', VOL_EFFECTS_MASTER)
 
 	if(!ckey && stat == CONSCIOUS && prob(0.5))
 		stat = UNCONSCIOUS
@@ -107,7 +107,7 @@
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
-		to_chat(src, text("\blue You are now hiding."))
+		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
 		/*
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
@@ -115,7 +115,7 @@
 		*/
 	else
 		layer = MOB_LAYER
-		to_chat(src, text("\blue You have stopped hiding."))
+		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
 		/*
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
@@ -153,8 +153,8 @@
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM
-			to_chat(M, "\blue [bicon(src)] Squeek!")
-			M << 'sound/effects/mousesqueek.ogg'
+			to_chat(M, "<span class='notice'>[bicon(src)] Squeek!</span>")
+			playsound(src, 'sound/effects/mousesqueek.ogg', VOL_EFFECTS_MASTER)
 	..()
 
 /mob/living/simple_animal/mouse/death()

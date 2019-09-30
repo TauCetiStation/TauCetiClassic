@@ -188,7 +188,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.ventcrawler = 1
-		to_chat(H, "\blue \b Ventcrawling allowed")
+		to_chat(H, "<span class='notice'><b>Ventcrawling allowed</b></span>")
 
 	var/matrix/Mx = matrix()
 	Mx.Scale(0.8) //Makes our hulk to be bigger than any normal human.
@@ -240,25 +240,23 @@
 		M.mind.hulkizing = 0   //We don't want to waste user's try, so user can mutate once later.
 		return
 
-	message_admins("[M.name] ([M.ckey]) is a <span class='warning'>Monster</span> (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
+	message_admins("[M.name] ([M.ckey]) is a <span class='warning'>Monster</span> [ADMIN_JMP(M)]")
 	if(istype(M.loc, /obj/machinery/dna_scannernew))
 		var/obj/machinery/dna_scannernew/DSN = M.loc
 		DSN.occupant = null
 		DSN.icon_state = "scanner_0"
-
 	var/mob/living/simple_animal/hulk/Monster
-	if(istype(M, /mob/living/carbon/human/unathi))
+	if(CLUMSY in M.mutations)
+		Monster = new /mob/living/simple_animal/hulk/Clowan(get_turf(M))
+	else if(M.get_species() == UNATHI || prob(19))
 		Monster = new /mob/living/simple_animal/hulk/unathi(get_turf(M))
 	else
-		if(prob(19))
-			Monster = new /mob/living/simple_animal/hulk/unathi(get_turf(M))
-		else
-			Monster = new /mob/living/simple_animal/hulk/human(get_turf(M))
+		Monster = new /mob/living/simple_animal/hulk/human(get_turf(M))
 
 	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
 	smoke.set_up(10, 0, M.loc)
 	smoke.start()
-	playsound(M.loc, 'sound/effects/bamf.ogg', 50, 2)
+	playsound(M, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 
 	Monster.original_body = M
 	M.forceMove(Monster)

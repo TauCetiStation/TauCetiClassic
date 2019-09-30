@@ -3,7 +3,7 @@
 	desc = "A computer used to control a nearby holodeck."
 	icon_state = "holocontrol"
 
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	active_power_usage = 8000 //8kW for the scenery + 500W per holoitem
 	var/item_power_usage = 500
 
@@ -99,10 +99,10 @@
 		safety_disabled = !safety_disabled
 		update_projections()
 		if(safety_disabled)
-			message_admins("[key_name_admin(usr)] overrode the holodeck's safeties")
+			message_admins("[key_name_admin(usr)] overrode the holodeck's safeties. [ADMIN_JMP(usr)]")
 			log_game("[key_name(usr)] overrided the holodeck's safeties")
 		else
-			message_admins("[key_name_admin(usr)] restored the holodeck's safeties")
+			message_admins("[key_name_admin(usr)] restored the holodeck's safeties. [ADMIN_JMP(usr)]")
 			log_game("[key_name(usr)] restored the holodeck's safeties")
 
 	else if(href_list["gravity"])
@@ -110,21 +110,18 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/computer/HolodeckControl/attackby(obj/item/weapon/D, mob/user)
-	if(istype(D, /obj/item/weapon/card/emag))
-		user.SetNextMove(CLICK_CD_INTERACT)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
-		last_to_emag = user //emag again to change the owner
-		if (!emagged)
-			emagged = 1
-			safety_disabled = 1
-			update_projections()
-			to_chat(user, "<span class='notice'>You vastly increase projector power and override the safety and security protocols.</span>")
-			to_chat(user, "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator.")
-			log_game("[key_name(usr)] emagged the Holodeck Control Computer")
-		src.updateUsrDialog()
-	else
-		..()
+/obj/machinery/computer/HolodeckControl/emag_act(mob/user)
+	playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
+	last_to_emag = user //emag again to change the owner
+	if(!emagged)
+		emagged = 1
+		safety_disabled = 1
+		update_projections()
+		to_chat(user, "<span class='notice'>You vastly increase projector power and override the safety and security protocols.</span>")
+		to_chat(user, "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator.")
+		log_game("[key_name(usr)] emagged the Holodeck Control Computer")
+	src.updateUsrDialog()
+	return TRUE
 
 /obj/machinery/computer/HolodeckControl/proc/update_projections()
 	if (safety_disabled)
@@ -198,7 +195,7 @@
 			damaged = 1
 			loadIdProgram()
 			active = 0
-			use_power = 1
+			set_power_use(IDLE_POWER_USE)
 			for(var/mob/M in range(10,src))
 				M.show_message("The holodeck overloads!")
 
@@ -245,13 +242,13 @@
 		if(world.time < (last_change + 15))//To prevent super-spam clicking, reduced process size and annoyance -Sieve
 			return
 		for(var/mob/M in range(3,src))
-			M.show_message("\b ERROR. Recalibrating projection apparatus.")
+			M.show_message("<b>ERROR. Recalibrating projection apparatus.</b>")
 			last_change = world.time
 			return
 
 	last_change = world.time
 	active = 1
-	use_power = 2
+	set_power_use(ACTIVE_POWER_USE)
 
 	for(var/item in holographic_objs)
 		derez(item)
@@ -313,13 +310,13 @@
 		if(world.time < (last_gravity_change + 15))//To prevent super-spam clicking
 			return
 		for(var/mob/M in range(3,src))
-			M.show_message("\b ERROR. Recalibrating gravity field.")
+			M.show_message("<b>ERROR. Recalibrating gravity field.</b>")
 			last_change = world.time
 			return
 
 	last_gravity_change = world.time
 	active = 1
-	use_power = 1
+	set_power_use(IDLE_POWER_USE)
 
 	if(A.has_gravity)
 		A.gravitychange(0,A)
@@ -340,5 +337,5 @@
 		linkedholodeck.gravitychange(1,linkedholodeck)
 
 	active = 0
-	use_power = 1
+	set_power_use(IDLE_POWER_USE)
 	current_scene = null

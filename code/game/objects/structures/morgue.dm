@@ -95,7 +95,7 @@
 
 	if (has_clonable_bodies())
 		if(beeper)
-			playsound(src, 'sound/weapons/smg_empty_alarm.ogg', 50, 0)
+			playsound(src, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		icon_state = "morgue3"
 	else
 		update()
@@ -108,16 +108,16 @@
 				if(ismob(A))
 					var/mob/M = A
 					M.instant_vision_update(1,src)
-		playsound(src, 'sound/effects/roll.ogg', 10, 1)
-		playsound(src, 'sound/items/Deconstruct.ogg', 25, 1)
+		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER, 10)
+		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER, 25)
 		qdel(connected)
 		connected = null
 		update()
 
 /obj/structure/morgue/proc/open()
 	if (!connected)
-		playsound(src, 'sound/items/Deconstruct.ogg', 25, 1)
-		playsound(src, 'sound/effects/roll.ogg', 10, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER, 25)
+		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER, 10)
 		connected = new /obj/structure/m_tray( loc )
 		step(connected, dir)
 		connected.layer = BELOW_CONTAINERS_LAYER
@@ -297,7 +297,7 @@
 
 /obj/structure/crematorium/attack_hand(mob/user)
 //	if (cremating) AWW MAN! THIS WOULD BE SO MUCH MORE FUN ... TO WATCH
-//		user.show_message("\red Uh-oh, that was a bad idea.", 1)
+//		user.show_message("<span class='warning'>Uh-oh, that was a bad idea.</span>", 1)
 //		//usr << "Uh-oh, that was a bad idea."
 //		src:loc:poison += 20000000
 //		src:loc:firelevel = src:loc:poison
@@ -310,11 +310,11 @@
 		for(var/atom/movable/A in src.connected.loc)
 			if(!A.anchored)
 				A.loc = src
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		qdel(src.connected)
 		src.connected = null
 	else if (src.locked == 0)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		src.connected = new /obj/structure/c_tray( src.loc )
 		step(src.connected, SOUTH)
 		src.connected.layer = BELOW_CONTAINERS_LAYER
@@ -405,7 +405,7 @@
 		sleep(30)
 		cremating = 0
 		locked = 0
-		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+		playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 	return
 
 
@@ -462,5 +462,5 @@
 			if (!C.cremating)
 				for(var/mob/living/M in C.contents)
 					user.attack_log += "\[[time_stamp()]\]<font color='red'> Cremated [M.name] ([M.ckey])</font>"
-					message_admins("[user.name] ([user.ckey]) <font color='red'>Cremating</font> [M.name] ([M.ckey]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+					message_admins("[user.name] ([user.ckey]) <font color='red'>Cremating</font> [M.name] ([M.ckey]). [ADMIN_JMP(user)]")
 				C.cremate(user)

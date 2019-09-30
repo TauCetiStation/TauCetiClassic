@@ -5,7 +5,7 @@
 	desc = "Nothing is being built."
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 5000
 	req_access = list(access_robotics)
@@ -45,7 +45,8 @@
 								"Exosuit Equipment",
 								"Cyborg Upgrade Modules",
 								"Cyborg Components",
-								"Misc"
+								"Misc",
+								"Stock Parts",
 								)
 
 /obj/machinery/mecha_part_fabricator/atom_init()
@@ -94,7 +95,7 @@
 			return 0
 	return 1
 
-/obj/machinery/mecha_part_fabricator/proc/emag()
+/obj/machinery/mecha_part_fabricator/emag_act(mob/user)
 	switch(emagged)
 		if(0)
 			emagged = 0.5
@@ -105,13 +106,15 @@
 			visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"User DB corrupted \[Code 0x00FA\]. Truncating data structure...\"")
 			sleep(30)
 			visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"User DB truncated. Please contact your Nanotrasen system operator for future assistance.\"")
-			req_access = null
+			req_access = list()
 			emagged = 1
 		if(0.5)
 			visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"DB not responding \[Code 0x0003\]...\"")
+			return FALSE
 		if(1)
 			visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"No records in User DB\"")
-	return
+			return FALSE
+	return TRUE
 
 /obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)
 	var/output = ""
@@ -165,10 +168,10 @@
 	desc = "It's building \a [initial(D.name)]."
 	remove_resources(D)
 	overlays += "fab-active"
-	use_power = 2
+	set_power_use(ACTIVE_POWER_USE)
 	updateUsrDialog()
 	sleep(get_construction_time_w_coeff(D))
-	use_power = 1
+	set_power_use(IDLE_POWER_USE)
 	overlays -= "fab-active"
 	desc = initial(desc)
 
@@ -203,7 +206,7 @@
 	return queue.len
 
 /obj/machinery/mecha_part_fabricator/proc/remove_from_queue(index)
-	if(!isnum(index) || !IsInteger(index) || !istype(queue) || (index<1 || index>queue.len))
+	if(!isnum(index) || !IS_INTEGER(index) || !istype(queue) || (index<1 || index>queue.len))
 		return 0
 	queue.Cut(index,++index)
 	return 1
@@ -250,19 +253,24 @@
 	if(!files)
 		return
 	var/output
-	for(var/datum/tech/T in files.known_tech)
+	for(var/tech_tree_id in files.tech_trees)
+		var/datum/tech/T = files.tech_trees[tech_tree_id]
 		if(T && T.level > 1)
 			var/diff
 			switch(T.id)
-				if("materials")
+				if("engineering")
 					//one materials level is 1/32, so that max level is 0.75 coefficient
 					diff = round(initial(resource_coeff_tech) - (initial(resource_coeff_tech)*(T.level-1))/32,0.01)
+					if(diff < 0.75)
+						diff = 0.75
 					if(resource_coeff_tech>diff)
 						resource_coeff_tech = diff
 						output+="Production efficiency increased.<br>"
-				if("programming")
+				if("robotics")
 					//one materials level is 1/40, so that max level is 0.8 coefficient
 					diff = round(initial(time_coeff_tech) - (initial(time_coeff_tech)*(T.level-1))/40,0.1)
+					if(diff < 0.8)
+						diff = 0.8
 					if(time_coeff_tech>diff)
 						time_coeff_tech = diff
 						output+="Production routines updated.<br>"
@@ -277,11 +285,7 @@
 	for(var/obj/machinery/computer/rdconsole/RDC in oview(7,src))
 		if(!RDC.sync)
 			continue
-		for(var/datum/tech/T in RDC.files.known_tech)
-			files.AddTech2Known(T)
-		for(var/datum/design/D in RDC.files.known_designs)
-			files.AddDesign2Known(D)
-		files.RefreshResearch()
+		files.download_from(RDC.files)
 		temp = "Processed equipment designs.<br>"
 		//check if the tech coefficients have changed
 		temp += update_tech()
@@ -415,8 +419,8 @@
 	if(href_list["queue_move"] && href_list["index"])
 		var/index = F.getNum("index")
 		var/new_index = index + F.getNum("queue_move")
-		if(isnum(index) && isnum(new_index) && IsInteger(index) && IsInteger(new_index))
-			if(IsInRange(new_index,1,queue.len))
+		if(isnum(index) && isnum(new_index) && IS_INTEGER(index) && IS_INTEGER(new_index))
+			if(IS_IN_RANGE(new_index,1,queue.len))
 				queue.Swap(index,new_index)
 		return update_queue_on_page()
 
@@ -500,11 +504,6 @@
 
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/W, mob/user, params)
-
-	if(istype(W, /obj/item/weapon/card/emag))
-		emag()
-		return
-
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
 		return
 

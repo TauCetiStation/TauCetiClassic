@@ -21,7 +21,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 20
 	attacktext = "bites"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = list('sound/weapons/bite.ogg')
 
 	// Space carp aren't affected by atmos.
 	min_oxy = 0
@@ -122,7 +122,7 @@
 
 	var/idle_snd_chance = 5
 
-	attack_sound = 'sound/weapons/polkan_atk.ogg'
+	attack_sound = list('sound/weapons/polkan_atk.ogg')
 
 	randomify = FALSE
 
@@ -137,4 +137,4 @@
 
 	if(rand(0,100) < idle_snd_chance)
 		var/list/idle_snd = list('sound/voice/polkan/idle1.ogg','sound/voice/polkan/idle2.ogg')
-		playsound(src, pick(idle_snd), 50, 1, -3)
+		playsound(src, pick(idle_snd), VOL_EFFECTS_MASTER, null, null, -3)

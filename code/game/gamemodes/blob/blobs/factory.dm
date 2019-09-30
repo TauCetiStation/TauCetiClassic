@@ -46,7 +46,7 @@
 	melee_damage_lower = 2
 	melee_damage_upper = 4
 	attacktext = "hits"
-	attack_sound = 'sound/weapons/genhit1.ogg'
+	attack_sound = list('sound/weapons/genhit1.ogg')
 	var/obj/effect/blob/factory/factory = null
 	var/is_zombie = 0
 	faction = "blob"
@@ -63,7 +63,7 @@
 
 /mob/living/simple_animal/hostile/blobspore/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
-	adjustBruteLoss(Clamp(0.01 * exposed_temperature, 1, 5))
+	adjustBruteLoss(CLAMP(0.01 * exposed_temperature, 1, 5))
 
 /mob/living/simple_animal/hostile/blobspore/blob_act()
 	return

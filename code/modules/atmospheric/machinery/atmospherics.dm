@@ -17,7 +17,7 @@ Pipelines + Other Objects -> Pipe network
 	anchored = TRUE
 	idle_power_usage = 0
 	active_power_usage = 0
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	layer = GAS_PIPE_HIDDEN_LAYER // under wires
 
 	var/nodealert = FALSE
@@ -166,14 +166,13 @@ Pipelines + Other Objects -> Pipe network
 			var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
 
 			add_fingerprint(user)
-			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 
 			if (internal_pressure > 2 * ONE_ATMOSPHERE)
 				to_chat(user, "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>")
 				unsafe_wrenching = TRUE //Oh dear oh dear
 
-			if (do_after(user, 20 * W.toolspeed, target = src) && !QDELETED(src))
+			if (W.use_tool(src, user, 20, volume = 50))
 				user.visible_message(
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src].</span>",

@@ -1,0 +1,719 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/space,
+/area/space)
+"b" = (
+/turf/simulated/mineral,
+/area/space)
+"c" = (
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
+"d" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s6"
+	},
+/area/space)
+"e" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall12"
+	},
+/area/space)
+"f" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/floor/airless,
+/area/space)
+"g" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s10"
+	},
+/area/space)
+"h" = (
+/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f9"
+	},
+/area/space)
+"i" = (
+/obj/effect/landmark/corpse/clown,
+/turf/simulated/floor/airless,
+/area/space)
+"j" = (
+/turf/simulated/floor/airless,
+/area/space)
+"k" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/ore/clown,
+/obj/item/weapon/ore/clown,
+/obj/item/weapon/ore/clown,
+/obj/item/weapon/ore/clown,
+/obj/item/weapon/ore/clown,
+/turf/simulated/floor/airless,
+/area/space)
+"l" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen";
+	opened = 1
+	},
+/obj/item/weapon/ore/clown,
+/turf/simulated/floor/airless,
+/area/space)
+"m" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"n" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "propulsion_l"
+	},
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "burst_r"
+	},
+/turf/space,
+/area/space)
+"o" = (
+/obj/item/weapon/shard{
+	icon_state = "small"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
+"p" = (
+/obj/item/weapon/ore/clown,
+/turf/simulated/floor/airless,
+/area/space)
+"q" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "propulsion_l"
+	},
+/turf/space,
+/area/space)
+"r" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/obj/structure/stool/bed/chair/metal{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
+"s" = (
+/obj/effect/landmark/corpse/clown{
+	name = "Clown Pilot"
+	},
+/turf/simulated/floor/airless,
+/area/space)
+"t" = (
+/obj/item/weapon/paper{
+	info = "The call has gone out! Our ancestral home has been rediscovered! Not a small patch of land, but a true clown nation, a true Clown Planet! We're on our way home at last!"
+	},
+/turf/simulated/floor/airless,
+/area/space)
+"u" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"v" = (
+/obj/item/weapon/shard,
+/obj/structure/stool/bed/chair/metal{
+	dir = 8
+	},
+/turf/simulated/floor/airless,
+/area/space)
+"w" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor/airless,
+/area/space)
+"x" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f5"
+	},
+/area/space)
+"y" = (
+/turf/simulated/floor/airless,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f10"
+	},
+/area/space)
+"z" = (
+/obj/item/weapon/pickaxe,
+/turf/simulated/floor/airless,
+/area/space)
+"A" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/ore/clown,
+/obj/item/weapon/ore/clown,
+/obj/item/weapon/ore/clown,
+/obj/item/weapon/ore/clown,
+/turf/simulated/floor/airless,
+/area/space)
+"B" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "propulsion_l"
+	},
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "propulsion_l"
+	},
+/turf/space,
+/area/space)
+"C" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s5"
+	},
+/area/space)
+"D" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s9"
+	},
+/area/space)
+
+(1,1,1) = {"
+a
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+b
+b
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+b
+b
+b
+b
+b
+b
+a
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(6,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(7,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+"}
+(8,1,1) = {"
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+"}
+(9,1,1) = {"
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+a
+a
+a
+"}
+(10,1,1) = {"
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+c
+a
+a
+a
+"}
+(11,1,1) = {"
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+c
+c
+a
+a
+"}
+(12,1,1) = {"
+c
+c
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+c
+a
+"}
+(13,1,1) = {"
+c
+c
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(14,1,1) = {"
+a
+b
+b
+b
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+b
+a
+"}
+(15,1,1) = {"
+a
+b
+b
+b
+c
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(16,1,1) = {"
+a
+b
+a
+a
+a
+d
+b
+b
+u
+x
+b
+b
+b
+b
+b
+b
+b
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+e
+b
+b
+j
+e
+b
+b
+b
+b
+c
+b
+b
+"}
+(18,1,1) = {"
+a
+a
+a
+a
+d
+h
+b
+r
+v
+y
+C
+b
+b
+b
+c
+b
+b
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+e
+c
+o
+s
+j
+j
+e
+b
+b
+b
+c
+c
+c
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+e
+i
+j
+j
+w
+z
+e
+b
+b
+b
+a
+a
+a
+"}
+(21,1,1) = {"
+a
+a
+a
+a
+f
+j
+j
+t
+j
+j
+f
+b
+b
+a
+a
+a
+a
+"}
+(22,1,1) = {"
+a
+a
+a
+a
+f
+j
+j
+p
+i
+j
+f
+b
+b
+a
+a
+a
+a
+"}
+(23,1,1) = {"
+a
+a
+a
+a
+e
+k
+j
+j
+j
+A
+e
+b
+a
+a
+a
+a
+a
+"}
+(24,1,1) = {"
+a
+a
+a
+a
+e
+k
+j
+p
+j
+k
+e
+b
+a
+a
+a
+a
+a
+"}
+(25,1,1) = {"
+a
+a
+a
+a
+e
+l
+p
+j
+j
+k
+e
+b
+a
+a
+a
+a
+a
+"}
+(26,1,1) = {"
+a
+a
+a
+a
+e
+j
+j
+p
+p
+j
+e
+a
+a
+a
+a
+a
+a
+"}
+(27,1,1) = {"
+a
+a
+a
+a
+g
+m
+m
+m
+m
+m
+D
+a
+a
+a
+a
+a
+a
+"}
+(28,1,1) = {"
+a
+a
+a
+a
+a
+n
+q
+q
+q
+B
+a
+a
+a
+a
+a
+a
+a
+"}

@@ -110,13 +110,13 @@
 /obj/structure/alien/resin/hitby(AM)
 	..()
 	for(var/mob/O in viewers(src, null))
-		O.show_message("\red <B>[src] was hit by [AM].</B>", 1)
+		O.show_message("<span class='warning'><B>[src] was hit by [AM].</B></span>", 1)
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 10
 	else
 		tforce = AM:throwforce
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	health = max(0, health - tforce)
 	healthcheck()
 	..()
@@ -126,14 +126,14 @@
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if (HULK in user.mutations)
-		to_chat(user, "\blue You easily destroy the [name].")
+		to_chat(user, "<span class='notice'>You easily destroy the [name].</span>")
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [user] destroys the [name]!", 1)
+			O.show_message("<span class='warning'>[user] destroys the [name]!</span>", 1)
 		health = 0
 	else
-		to_chat(user, "\blue You claw at the [name].")
+		to_chat(user, "<span class='notice'>You claw at the [name].</span>")
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [user] claws at the [name]!", 1)
+			O.show_message("<span class='warning'>[user] claws at the [name]!</span>", 1)
 		health -= rand(5,10)
 	healthcheck()
 	return
@@ -146,15 +146,15 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	if (islarva(usr) || isfacehugger(usr))//Safety check for larva. /N
 		return
-	to_chat(usr, "\green You claw at the [name].")
+	to_chat(usr, "<span class='notice'>You claw at the [name].</span>")
 	for(var/mob/O in oviewers(src))
-		O.show_message("\red [usr] claws at the resin!", 1)
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+		O.show_message("<span class='warning'>[usr] claws at the resin!</span>", 1)
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	health -= rand(40, 60)
 	if(health <= 0)
-		to_chat(usr, "\green You slice the [name] to pieces.")
+		to_chat(usr, "<span class='notice'>You slice the [name] to pieces.</span>")
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] slices the [name] apart!", 1)
+			O.show_message("<span class='warning'>[usr] slices the [name] apart!</span>", 1)
 	healthcheck()
 	return
 
@@ -162,7 +162,7 @@
 	var/aforce = W.force
 	user.SetNextMove(CLICK_CD_MELEE)
 	health = max(0, health - aforce)
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	healthcheck()
 	..()
 	return
@@ -271,9 +271,9 @@
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 
-		if(WT.remove_fuel(0, user))
+		if(WT.use(0, user))
 			damage = 15
-			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 
 	health -= damage
 	healthcheck()
@@ -366,7 +366,7 @@
 	if(ticks >= target_strength)
 
 		for(var/mob/O in hearers(src, null))
-			O.show_message("\green <B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B>", 1)
+			O.show_message("<span class='notice'><B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B></span>", 1)
 
 		if(istype(target, /turf/simulated/wall)) // I hate turf code.
 			var/turf/simulated/wall/W = target
@@ -382,26 +382,26 @@
 
 	switch(target_strength - ticks)
 		if(6)
-			visible_message("\green <B>[src.target] is holding up against the acid!</B>")
+			visible_message("<span class='notice'><B>[src.target] is holding up against the acid!</B></span>")
 		if(4)
-			visible_message("\green <B>[src.target]\s structure is being melted by the acid!</B>")
+			visible_message("<span class='notice'><B>[src.target]\s structure is being melted by the acid!</B></span>")
 		if(2)
-			visible_message("\green <B>[src.target] is struggling to withstand the acid!</B>")
+			visible_message("<span class='notice'><B>[src.target] is struggling to withstand the acid!</B></span>")
 		if(0 to 1)
-			visible_message("\green <B>[src.target] begins to crumble under the acid!</B>")
+			visible_message("<span class='notice'><B>[src.target] begins to crumble under the acid!</B></span>")
 	spawn(rand(150, 200)) tick()
 
 /*
  * Egg
  */
-/var/const //for the status var
-	BURST = 0
-	BURSTING = 1
-	GROWING = 2
-	GROWN = 3
-
-	MIN_GROWTH_TIME = 1800 //time it takes to grow a hugger
-	MAX_GROWTH_TIME = 3000
+// egg's status
+#define BURST      0
+#define BURSTING   1
+#define GROWING    2
+#define GROWN      3
+// time it takes to grow a hugger
+#define MIN_GROWTH_TIME 1800
+#define MAX_GROWTH_TIME 3000
 
 /obj/structure/alien/egg
 	desc = "It looks like a weird egg."
@@ -412,24 +412,27 @@
 
 	var/health = 100
 	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
-	var/used = 0
 
 /obj/structure/alien/egg/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
+	addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 
 /obj/structure/alien/egg/attack_paw(mob/user)
 	if(isalien(user))
 		switch(status)
-			if(GROWING)
-				to_chat(user, "\red The child is not developed yet.")
+			if(GROWN)
+				to_chat(user, "<span class='notice'>You retrieve the child.</span>")
+				Burst(FALSE)
 				return
 			if(BURST)
-				to_chat(user, "You clear the hatched egg.")
+				user.visible_message("[user] clears the hatched egg.", "You clear the hatched egg.")
 				user.SetNextMove(CLICK_CD_MELEE)
-				playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+				playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 				qdel(src)
+				return
+			if(GROWING)
+				to_chat(user, "<span class='warning'>The facehugger hasn't grown yet.</span>")
 				return
 	else
 		return attack_hand(user)
@@ -443,7 +446,7 @@
 	status = GROWN
 	new /obj/item/clothing/mask/facehugger(src)
 
-/obj/structure/alien/egg/proc/Burst()
+/obj/structure/alien/egg/proc/Burst(kill_fh = TRUE)
 	STOP_PROCESSING(SSobj, src)
 	if(status == GROWN || status == GROWING)
 		icon_state = "egg_hatched"
@@ -451,24 +454,29 @@
 		status = BURSTING
 		spawn(15)
 			status = BURST
+			var/obj/item/clothing/mask/facehugger/FH = new /obj/item/clothing/mask/facehugger(get_turf(src))
+			if(kill_fh)
+				FH.Die()
 
 
 /obj/structure/alien/egg/attack_ghost(mob/living/user)
+	if(facehuggers_control_type != FACEHUGGERS_PLAYABLE)
+		to_chat(user, "<span class='notice'>You can't control the facehugger! This feature is disabled by the administrator, you can ask him to enable this feature.</span>")
+		return
 	if(!(src in view()))
 		to_chat(user, "Your soul is too far away.")
 		return
-	if(used)
-		to_chat(user, "Someone else used that egg.")
-		return
 	switch(status)
+		if(BURST, BURSTING)
+			to_chat(user, "<span class='warning'>Someone else used that egg.</span>")
+			return
 		if(GROWING)
-			to_chat(user, "\red The child is not developed yet.")
+			to_chat(user, "<span class='warning'>The facehugger hasn't grown yet.</span>")
 			return
 		if(GROWN)
-			used = 1
 			var/mob/living/carbon/alien/facehugger/FH = new /mob/living/carbon/alien/facehugger(get_turf(src))
 			FH.key = user.key
-			to_chat(FH, "\green You are now a facehugger, go hug some human faces <3")
+			to_chat(FH, "<span class='notice'>You are now a facehugger, go hug some human faces <3</span>")
 			icon_state = "egg_hatched"
 			flick("egg_opening", src)
 			status = BURSTING
@@ -505,9 +513,9 @@
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 
-		if(WT.remove_fuel(0, user))
+		if(WT.use(0, user))
 			damage = 15
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 
 	src.health -= damage
 	src.healthcheck()
@@ -522,6 +530,13 @@
 		health -= 5
 		healthcheck()
 
+#undef BURST
+#undef BURSTING
+#undef GROWING
+#undef GROWN
+
+#define MIN_GROWTH_TIME
+#define MAX_GROWTH_TIME
 
 /*
  * Air generator
@@ -571,7 +586,7 @@
 	var/aforce = W.force
 	user.SetNextMove(CLICK_CD_MELEE)
 	health = max(0, health - aforce)
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	healthcheck()
 	..()
 	return

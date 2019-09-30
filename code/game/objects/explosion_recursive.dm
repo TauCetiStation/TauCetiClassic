@@ -15,11 +15,15 @@ var/explosion_in_progress = 0
 	epicenter = get_turf(epicenter)
 	if(!epicenter) return
 
-	message_admins("Explosion with size ([power]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z] <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</A>)")
-	log_game("Explosion with size ([power]) in area [epicenter.loc.name] ")
+	for(var/obj/item/device/radio/beacon/explosion_watcher/W in explosion_watcher_list)
+		if(get_dist(W, epicenter) < 10)
+			W.react_explosion(epicenter, power)
 
-	playsound(epicenter, 'sound/effects/explosionfar.ogg', 100, 1, round(power*2,1) )
-	playsound(epicenter, "explosion", 100, 1, round(power,1) )
+	message_admins("Explosion with size ([power]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z] - [ADMIN_JMP(epicenter)])")
+	log_game("Explosion with size ([power]) in area [epicenter.loc.name]")
+
+	playsound(epicenter, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, null, null, round(power*2,1) )
+	playsound(epicenter, pick(SOUNDIN_EXPLOSION), VOL_EFFECTS_MASTER, null, null, round(power,1) )
 
 	explosion_in_progress = 1
 	explosion_turfs = list()

@@ -27,9 +27,38 @@
 	if(istype(W, /obj/item/weapon/melee/baton))
 		if(cooldown < world.time - 25)
 			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
-			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+			playsound(user, 'sound/effects/shieldbash.ogg', VOL_EFFECTS_MASTER)
 			cooldown = world.time
 	else
+		..()
+
+/obj/item/weapon/shield/riot/attack(mob/living/M, mob/user)
+	var/obj/item/weapon/shield/riot/tele/TS
+	if(istype(src, /obj/item/weapon/shield/riot/tele))
+		TS = src
+
+	if(M != user && ((TS && TS.active) || !TS) && !isrobot(M))
+		if(M.pulling)
+			M.stop_pulling()
+
+		user.do_attack_animation(M)
+		user.visible_message("<span class='warning'>[user.name] pushed away [M.name] with a [src.name]</span>")
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, M, user.dir), 1)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, M, user.dir), 2)
+		user.attack_log += "\[[time_stamp()]\]<font color='red'>pushed [M.name] ([M.ckey]) with [src.name].</font>"
+		M.attack_log += "\[[time_stamp()]\]<font color='orange'>pushed [user.name] ([user.ckey]) with [src.name].</font>"
+		msg_admin_attack("[key_name(user)] pushed [key_name(M)] with [src.name].", user)
+
+		if(prob(20))
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.shoes)
+					if(H.shoes.flags & NOSLIP)
+						return
+				M.Weaken(3)
+				shake_camera(M, 1, 1)
+
+	if(user.a_intent == I_HURT || M == user || (TS && !TS.active) || isrobot(M))
 		..()
 
 /obj/item/weapon/shield/energy
@@ -89,7 +118,7 @@
 /obj/item/weapon/shield/riot/tele/attack_self(mob/living/user)
 	active = !active
 	icon_state = "teleriot[active]"
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(src, 'sound/weapons/batonextend.ogg', VOL_EFFECTS_MASTER)
 
 	if(active)
 		force = 8
@@ -131,10 +160,10 @@
 /obj/item/weapon/cloaking_device/attack_self(mob/user)
 	src.active = !( src.active )
 	if (src.active)
-		to_chat(user, "\blue The cloaking device is now active.")
+		to_chat(user, "<span class='notice'>The cloaking device is now active.</span>")
 		src.icon_state = "shield1"
 	else
-		to_chat(user, "\blue The cloaking device is now inactive.")
+		to_chat(user, "<span class='notice'>The cloaking device is now inactive.</span>")
 		src.icon_state = "shield0"
 	src.add_fingerprint(user)
 	return

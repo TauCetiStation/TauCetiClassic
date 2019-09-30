@@ -15,7 +15,7 @@
 	var/charge_limit = 200000
 	var/locked = 0
 	//
-	use_power = 1			//0 use nothing
+	use_power = IDLE_POWER_USE			//0 use nothing
 							//1 use idle power
 							//2 use active power
 	idle_power_usage = 10
@@ -42,20 +42,10 @@
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			updateDialog()
 		else
-			to_chat(user, "\red Access denied.")
-	else if(istype(W, /obj/item/weapon/card/emag))
-		user.SetNextMove(CLICK_CD_INTERACT)
-		if(prob(75))
-			src.locked = !src.locked
-			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
-			updateDialog()
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
-
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 	else if(iswrench(W))
 		src.anchored = !src.anchored
-		src.visible_message("\blue [bicon(src)] [src] has been [anchored ? "bolted to the floor" : "unbolted from the floor"] by [user].")
+		src.visible_message("<span class='notice'>[bicon(src)] [src] has been [anchored ? "bolted to the floor" : "unbolted from the floor"] by [user].</span>")
 
 		if(anchored)
 			spawn(0)
@@ -70,6 +60,16 @@
 			owned_gen = null
 	else
 		..()
+
+/obj/machinery/shield_capacitor/emag_act(mob/user)
+	if(prob(75))
+		src.locked = !src.locked
+		to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
+		updateDialog()
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start()
+	return TRUE
 
 /obj/machinery/shield_capacitor/ui_interact(mob/user)
 	if ( !in_range(src, user) || (stat & (BROKEN|NOPOWER)) )
@@ -102,14 +102,15 @@
 /obj/machinery/shield_capacitor/process()
 	//
 	if(active)
-		use_power = 2
+		if(use_power == IDLE_POWER_USE)
+			set_power_use(ACTIVE_POWER_USE)
 		if(stored_charge + charge_rate > max_charge)
 			active_power_usage = max_charge - stored_charge
 		else
 			active_power_usage = charge_rate
 		stored_charge += active_power_usage
-	else
-		use_power = 1
+	else if(use_power == ACTIVE_POWER_USE)
+		set_power_use(IDLE_POWER_USE)
 
 	time_since_fail++
 	if(stored_charge < active_power_usage * 1.5)
@@ -128,9 +129,9 @@
 	if( href_list["toggle"] )
 		active = !active
 		if(active)
-			use_power = 2
+			set_power_use(ACTIVE_POWER_USE)
 		else
-			use_power = 1
+			set_power_use(IDLE_POWER_USE)
 	if( href_list["charge_rate"] )
 		charge_rate += text2num(href_list["charge_rate"])
 		if(charge_rate > charge_limit)
@@ -154,6 +155,8 @@
 			spawn(rand(0, 15))
 				src.icon_state = "capacitor"
 				stat |= NOPOWER
+				update_power_use()
+	update_power_use()
 
 /obj/machinery/shield_capacitor/verb/rotate()
 	set name = "Rotate capacitor clockwise"

@@ -35,13 +35,13 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 			can_fire = FALSE
 
 /datum/subsystem/icon_smooth/Initialize()
-	smooth_zlevel(ZLEVEL_STATION, TRUE)
-	smooth_zlevel(ZLEVEL_CENTCOM, TRUE)
+	for(var/zlevel in SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_CENTCOM, ZTRAIT_MINING, ZTRAIT_SPACE_RUINS)))
+		smooth_zlevel(zlevel, TRUE)
 	var/queue = smooth_queue
 	smooth_queue = list()
 	for(var/V in queue)
 		var/atom/A = V
-		if(!A || A.z <= ZLEVEL_CENTCOM)
+		if(!A)
 			continue
 		smooth_icon(A)
 		CHECK_TICK
@@ -102,7 +102,7 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 	var/sourceIconWidthHalfStart = sourceIconWidthHalf + 1
 	var/sourceIconHeightHalfStart = sourceIconHeightHalf + 1
 
-	if(!IsEven(sourceIconWidth / 2) || !IsEven(sourceIconHeight / 2))
+	if(!IS_EVEN(sourceIconWidth / 2) || !IS_EVEN(sourceIconHeight / 2))
 		CRASH("Unexpected dimension: Uneven icon width or height, expected each [sourceIconWidth]x[sourceIconHeight] to be divided by 2.")
 
 	if(states.len < STATE_COUNT_NORMAL)

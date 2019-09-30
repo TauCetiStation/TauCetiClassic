@@ -30,8 +30,8 @@
 /obj/machinery/computer/teleporter/proc/link_power_station()
 	if(power_station)
 		return
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		power_station = locate(/obj/machinery/teleport/station, get_step(src, dir))
+	for(var/newdir in cardinal)
+		power_station = locate(/obj/machinery/teleport/station, get_step(src, newdir))
 		if(power_station)
 			break
 	return power_station
@@ -159,7 +159,7 @@
 			var/turf/T = get_turf(R)
 			if (!T)
 				continue
-			if(T.z == ZLEVEL_CENTCOMM || T.z > 7)
+			if(is_centcom_level(T.z) || !SSmapping.has_level(T.z))
 				continue
 			var/tmpname = T.loc.name
 			if(areaindex[tmpname])
@@ -178,7 +178,8 @@
 						continue
 				var/turf/T = get_turf(M)
 				if(!T)	continue
-				if(T.z == ZLEVEL_CENTCOMM)	continue
+				if(is_centcom_level(T.z))
+					continue
 				var/tmpname = M.real_name
 				if(areaindex[tmpname])
 					tmpname = "[tmpname] ([++areaindex[tmpname]])"
@@ -200,7 +201,7 @@
 			var/turf/T = get_turf(R)
 			if (!T || !R.teleporter_hub || !R.teleporter_console)
 				continue
-			if(T.z == ZLEVEL_CENTCOMM)
+			if(is_centcom_level(T.z))
 				continue
 			var/tmpname = T.loc.name
 			if(areaindex[tmpname])
@@ -233,7 +234,7 @@
 	desc = "It's the hub of a teleporting machine."
 	icon_state = "tele0"
 	var/accurate = 0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 2000
 	var/obj/machinery/teleport/station/power_station
@@ -275,7 +276,7 @@
 	return power_station
 
 /obj/machinery/teleport/hub/Bumped(M)
-	if(z == ZLEVEL_CENTCOMM)
+	if(is_centcom_level(z))
 		to_chat(M, "You can't use this here.")
 	if(is_ready())
 		teleport(M)
@@ -298,7 +299,7 @@
 	if (!com.target)
 		visible_message("<span class='notice'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
-	if(com.target.z == ZLEVEL_CENTCOMM)
+	if(is_centcom_level(com.target.z))
 		visible_message("<span class='notice'>Unknown coordinates. Please reinstate coordinate matrix.</span>")
 		return
 	if (istype(M, /atom/movable))
@@ -344,7 +345,7 @@
 	name = "station"
 	desc = "It's the station thingy of a teleport thingy." //seriously, wtf.
 	icon_state = "controller"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 2000
 	var/engaged = 0

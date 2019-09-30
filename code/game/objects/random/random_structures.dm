@@ -155,8 +155,8 @@
 					/obj/machinery/vending/boozeomat,\
 					/obj/machinery/vending/assist,\
 					/obj/machinery/vending/coffee,\
-					/obj/machinery/vending/snack,\
-					/obj/machinery/vending/cola,\
+					/obj/random/vending/cola,\
+					/obj/random/vending/snack,\
 					/obj/machinery/vending/cart,\
 					/obj/machinery/vending/cigarette,\
 					/obj/machinery/vending/medical,\
@@ -199,7 +199,7 @@
 					prob(100);/obj/machinery/portable_atmospherics/powered/pump,\
 					prob(100);/obj/machinery/portable_atmospherics/powered/scrubber,\
 					prob(100);/obj/structure/kitchenspike,\
-					prob(75);/obj/structure/janitorialcart,\
+					prob(75);/obj/structure/stool/bed/chair/janitorialcart,\
 					prob(40);/obj/machinery/power/grounding_rod,\
 					prob(40);/obj/machinery/field_generator,\
 					prob(40);/obj/machinery/power/rad_collector,\

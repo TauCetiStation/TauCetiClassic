@@ -12,17 +12,15 @@
 /obj/item/weapon/grenade/spawnergrenade/prime()
 	if(spawner_type && deliveryamt)
 		var/turf/T = get_turf(src)
-		playsound(T, 'sound/effects/phasein.ogg', 100, 1)
+		playsound(T, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
-		for(var/i=1, i<=deliveryamt, i++)
+		// Spawn some enemies
+		for(var/i in 1 to deliveryamt)
 			var/atom/movable/x = new spawner_type
 			x.loc = T
 			if(prob(50))
-				for(var/j = 1, j <= rand(1, 3), j++)
+				for(var/j in 1 to rand(1, 3))
 					step(x, pick(NORTH,SOUTH,EAST,WEST))
-
-			// Spawn some enemies
-
 	qdel(src)
 	return
 

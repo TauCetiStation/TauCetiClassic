@@ -80,6 +80,8 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	new/datum/stack_recipe("apc frame", /obj/item/apc_frame, 2),
 	new/datum/stack_recipe("air alarm frame", /obj/item/alarm_frame, 2),
 	new/datum/stack_recipe("fire alarm frame", /obj/item/firealarm_frame, 2),
+	new/datum/stack_recipe("door control frame", /obj/item/door_control_frame, 1),
+	new/datum/stack_recipe("metal picture frame", /obj/item/weapon/picture_frame/metal, 1, time = 15),
 	null,
 	new/datum/stack_recipe("metal door", /obj/structure/mineral_door/metal, 20, one_per_turf = TRUE, on_floor = TRUE)
 )
@@ -89,7 +91,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	desc = "Sheets made out off metal. It has been dubbed Metal Sheets."
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
-	hitsound = 'sound/items/trayhit2.ogg'
+	hitsound = list('sound/items/trayhit2.ogg')
 	m_amt = 3750
 	throwforce = 14.0
 	flags = CONDUCT
@@ -137,6 +139,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
  */
 var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("wooden sandals", /obj/item/clothing/shoes/sandal, 1), \
+	new/datum/stack_recipe("condiment shelf", /obj/item/weapon/condiment_shelf, 5, time = 15), \
 	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20), \
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts/wood, 2), \
 	new/datum/stack_recipe("fancy table parts", /obj/item/weapon/table_parts/wood/fancy, 2), \
@@ -147,6 +150,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("bonfire", /obj/structure/bonfire, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("coffin", /obj/structure/closet/coffin, 5, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("wooden picture frame", /obj/item/weapon/picture_frame/wooden, 1, time = 15)
 //	new/datum/stack_recipe("apiary", /obj/item/apiary, 10, time = 25, one_per_turf = FALSE, on_floor = FALSE)
 	)
 

@@ -15,7 +15,7 @@
 		return ..()
 	user.SetNextMove(CLICK_CD_MELEE)
 	user.visible_message("<span class='warning'>[user] pushes over [src]!</span>", "<span class='danger'>You push over [src]!</span>")
-	playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+	playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 	push_over()
 
 /obj/item/cardboard_cutout/proc/push_over()
@@ -40,9 +40,9 @@
 	if(I.flags & NOBLUDGEON)
 		return
 	if(!I.force)
-		playsound(loc, 'sound/weapons/tap.ogg')
-	else if(I.hitsound)
-		playsound(loc, I.hitsound)
+		playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER)
+	else if(length(I.hitsound))
+		playsound(loc, pick(I.hitsound), VOL_EFFECTS_MASTER)
 
 	user.do_attack_animation(src)
 
@@ -56,7 +56,7 @@
 
 /obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>[src] has been hit by [P]!</span>")
-	playsound(src, 'sound/weapons/slice.ogg', 50, 1)
+	playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
 	if(prob(P.damage))
 		push_over()
 

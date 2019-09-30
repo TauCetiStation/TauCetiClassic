@@ -42,6 +42,17 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/lastchangelog = ""              //Saved changlog filesize to detect if there was a change
 
+	//sound volume preferences
+	var/snd_music_vol = 100
+	var/snd_ambient_vol = 100
+	var/snd_effects_master_vol = 100
+	var/snd_effects_voice_announcement_vol = 100
+	var/snd_effects_misc_vol = 100
+	var/snd_effects_instrument_vol = 100
+	var/snd_notifications_vol = 100
+	var/snd_admin_vol = 100
+	var/snd_jukebox_vol = 100
+
 	//antag preferences
 	var/list/be_role = list()
 	var/uplinklocation = "PDA"
@@ -333,11 +344,18 @@ var/const/MAX_SAVE_SLOTS = 10
 		var/status = organ_data[name]
 
 		if(status == "amputated")
-			BP.amputated = 1
-			BP.status |= ORGAN_DESTROYED
-			BP.destspawn = 1
+			qdel(BP) // Destroy will handle everything
 		if(status == "cyborg")
-			BP.status |= ORGAN_ROBOT
+			qdel(BP)
+			switch(BP.body_zone)
+				if(BP_L_ARM)
+					new /obj/item/organ/external/l_arm/robot(null, character)
+				if(BP_R_ARM)
+					new /obj/item/organ/external/r_arm/robot(null, character)
+				if(BP_L_LEG)
+					new /obj/item/organ/external/l_leg/robot(null, character)
+				if(BP_R_LEG)
+					new /obj/item/organ/external/r_leg/robot(null, character)
 		if(status == "assisted")
 			IO.mechassist()
 		else if(status == "mechanical")
@@ -345,10 +363,13 @@ var/const/MAX_SAVE_SLOTS = 10
 
 		else continue
 
+	// Apply skin color
+	character.apply_recolor()
+
 	// Wheelchair necessary?
 	var/obj/item/organ/external/l_leg = character.bodyparts_by_name[BP_L_LEG]
 	var/obj/item/organ/external/r_leg = character.bodyparts_by_name[BP_R_LEG]
-	if((!l_leg || l_leg.status & ORGAN_DESTROYED) && (!r_leg || r_leg.status & ORGAN_DESTROYED)) // TODO cane if its only single leg.
+	if(!l_leg && !r_leg) // TODO cane if its only single leg.
 		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
 		character.buckled = W
 		character.update_canmove()

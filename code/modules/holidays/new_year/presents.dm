@@ -11,7 +11,7 @@
 						/obj/item/weapon/poster/contraband				= 2,
 						/obj/item/weapon/poster/legit					= 2,
 						/obj/item/weapon/storage/box/snappops			= 2,
-						/obj/item/clothing/accessory/holster/waist		= 2,
+						/obj/item/clothing/accessory/holster/armpit		= 2,
 						/obj/item/clothing/accessory/medal/gold			= 2,
 						/obj/item/toy/blink								= 2,
 						/obj/item/clothing/under/syndicate/tacticool	= 2,
@@ -107,7 +107,7 @@
 			bad_chance += 5
 	user.drop_item()
 	user.visible_message("<span class='notice'>[user] carefully open [src].</span>","<span class='notice'>You carefully open [src].</span>")
-	playsound(src, 'sound/items/crumple.ogg', 40, 1, 1)
+	playsound(src, 'sound/items/crumple.ogg', VOL_EFFECTS_MASTER)
 
 	// For absolutely bad players we have special presents ;D
 	if(bad_chance >= 20)
@@ -116,10 +116,11 @@
 		new /obj/item/weapon/ore/coal/special(src.loc)
 		if(prob(5) && ishuman(user))
 			var/mob/living/carbon/human/H = user
-			H.visible_message("[user] begins balding.", \
-									 "<span class='notice'>You become bald from shame.</span>")
-			H.h_style = "Bald"
-			H.update_hair()
+			if(H.species.flags[HAS_HAIR])
+				H.visible_message("[user] begins balding.", \
+										 "<span class='notice'>You become bald from shame.</span>")
+				H.h_style = "Bald"
+				H.update_hair()
 		qdel(src)
 		return
 

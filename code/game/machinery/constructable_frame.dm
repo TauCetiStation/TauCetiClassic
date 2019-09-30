@@ -6,7 +6,7 @@
 	icon_state = "box_0"
 	density = 1
 	anchored = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/list/components = null
 	var/list/req_components = null
@@ -68,10 +68,10 @@
 				if(C.get_amount() < 5)
 					to_chat(user, "<span class='warning'>You need five length of cable to wire the frame!</span>")
 					return
-				if(user.is_busy()) return
-				playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+				if(user.is_busy(src))
+					return
 				to_chat(user, "<span class='notice'>You start to add cables to the frame.</span>")
-				if(do_after(user, 20/P.toolspeed, target = src))
+				if(P.use_tool(src, user, 20, target = src, volume = 50))
 					if(state == 1)
 						if(!C.use(5))
 							return
@@ -81,11 +81,11 @@
 						icon_state = "box_1"
 
 			else if(isscrewdriver(P) && !anchored)
-				if(user.is_busy()) return
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				if(user.is_busy(src))
+					return
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
-				if(do_after(user, 40/P.toolspeed, target = src))
+				if(P.use_tool(src, user, 40, volume = 50))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
 						var/obj/item/stack/sheet/metal/M = new (loc, 5)
@@ -93,19 +93,19 @@
 						qdel(src)
 
 			else if(iswrench(P))
-				if(user.is_busy()) return
+				if(user.is_busy())
+					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				if(do_after(user, 40/P.toolspeed, target = src))
+				if(P.use_tool(src, user, 40, volume = 75))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 						anchored = !anchored
 		if(2)
 			if(iswrench(P))
-				if(user.is_busy()) return
+				if(user.is_busy())
+					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				if(do_after(user, 40/P.toolspeed, target = src))
+				if(P.use_tool(src, user, 40, volume = 75))
 					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 					anchored = !anchored
 
@@ -117,7 +117,7 @@
 				if(B.board_type == "machine")
 					if(!user.drop_item())
 						return
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					to_chat(user, "<span class='notice'>You add the circuit board to the frame.</span>")
 					circuit = P
 					P.loc = src
@@ -130,7 +130,7 @@
 				else
 					to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
 			if(iswirecutter(P))
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 1
 				icon_state = "box_0"
@@ -138,7 +138,7 @@
 
 		if(3)
 			if(iscrowbar(P))
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				state = 2
 				circuit.loc = src.loc
 				components.Remove(circuit)
@@ -161,7 +161,7 @@
 						component_check = 0
 						break
 				if(component_check)
-					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+					playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc)
 					transfer_fingerprints_to(new_machine)
 					new_machine.construction()
@@ -246,10 +246,31 @@ to destroy them and players will be able to make replacements.
 /obj/item/weapon/circuitboard/vendor/attackby(obj/item/I, mob/user)
 	if(isscrewdriver(I))
 		var/list/names = list(/obj/machinery/vending/boozeomat = "Booze-O-Mat",
-							/obj/machinery/vending/coffee = "Getmore Chocolate Corp",
-							/obj/machinery/vending/snack = "Hot Drinks",
-							/obj/machinery/vending/cola = "Robust Softdrinks",
-							/obj/machinery/vending/cigarette = "Cigarette")
+							/obj/machinery/vending/snack = "Getmore Chocolate Corp (Red)",
+							/obj/machinery/vending/snack/blue = "Getmore Chocolate Corp (Blue)",
+							/obj/machinery/vending/snack/orange = "Getmore Chocolate Corp (Orange)",
+							/obj/machinery/vending/snack/green = "Getmore Chocolate Corp (Green)",
+							/obj/machinery/vending/snack/teal = "Getmore Chocolate Corp (Teal)",
+							/obj/machinery/vending/coffee = "Hot Drinks",
+							/obj/machinery/vending/cola = "Robust Softdrinks (Blue)",
+							/obj/machinery/vending/cola/black = "Robust Softdrinks (Black)",
+							/obj/machinery/vending/cola/red = "Robust Softdrinks (Red)",
+							/obj/machinery/vending/cola/spaceup = "Robust Softdrinks (Space-Up!)",
+							/obj/machinery/vending/cola/starkist = "Robust Softdrinks (Starkist)",
+							/obj/machinery/vending/cola/soda = "Robust Softdrinks (Soda)",
+							/obj/machinery/vending/cola/gib = "Robust Softdrinks (Dr. Gibb)",
+							/obj/machinery/vending/cigarette = "Cigarette",
+							/obj/machinery/vending/barbervend = "Fab-O-Vend",
+							/obj/machinery/vending/chinese = "\improper Mr. Chang",
+							/obj/machinery/vending/medical = "NanoMed Plus",
+							/obj/machinery/vending/hydronutrients = "NutriMax",
+							/obj/machinery/vending/hydroseeds = "MegaSeed Servitor",
+							/obj/machinery/vending/dinnerware = "Dinnerware",
+							/obj/machinery/vending/tool = "YouTool",
+							/obj/machinery/vending/engivend = "Engi-Vend",
+							/obj/machinery/vending/clothing = "ClothesMate",
+							/obj/machinery/vending/blood = "Blood'O'Matic",
+							/obj/machinery/vending/junkfood = "McNuffin's Fast Food")
 //							/obj/machinery/vending/autodrobe = "AutoDrobe")
 
 		build_path = pick(names)

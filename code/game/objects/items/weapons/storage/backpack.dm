@@ -23,13 +23,13 @@
 	opened = !opened
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user)
-	if (src.use_sound)
-		playsound(src.loc, src.use_sound, 50, 1, -5)
+	if (length(use_sound))
+		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
 	return ..()
 
 /obj/item/weapon/storage/backpack/equipped(mob/user, slot)
-	if (slot == SLOT_BACK && src.use_sound)
-		playsound(src.loc, src.use_sound, 50, 1, -5)
+	if (slot == SLOT_BACK && length(use_sound))
+		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
 	..(user, slot)
 
 /*
@@ -215,6 +215,12 @@
 	name = "emergency response team medical backpack"
 	desc = "A spacious backpack with lots of pockets, worn by medical members of a Nanotrasen Emergency Response Team."
 	icon_state = "ert_medical"
+
+//Stealth
+/obj/item/weapon/storage/backpack/ert/stealth
+	name = "emergency response team stealth backpack"
+	desc = "A backpack worn by stealth members of a NanoTrasen Emergency Response Team"
+	icon_state = "ert_stealth"
 
 /obj/item/weapon/storage/backpack/kitbag
 	name = "kitbag"

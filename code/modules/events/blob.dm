@@ -6,8 +6,7 @@
 
 
 /datum/event/blob/announce()
-	command_alert("Confirmed outbreak of level 7 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-	world << sound('sound/AI/outbreak7.ogg')
+	command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak. The station crew isolation protocols are now active.", "Biohazard Alert", "outbreak5")
 
 
 /datum/event/blob/start()
@@ -24,5 +23,5 @@
 	if(!Blob)
 		kill()
 		return
-	if(IsMultiple(activeFor, 3))
+	if(IS_MULTIPLE(activeFor, 3))
 		Blob.process()

@@ -212,14 +212,14 @@
 		if (health < maxhealth && !isscrewdriver(W) && W.force)
 			step_to(src, (get_step_away(src,user)))
 
-/obj/machinery/bot/medbot/Emag(mob/user)
+/obj/machinery/bot/medbot/emag_act(mob/user)
 	..()
 	if(open && !locked)
 		if(user)
 			to_chat(user, "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>")
 		spawn(0)
 			for(var/mob/O in hearers(src, null))
-				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
+				O.show_message("<span class='warning'><B>[src] buzzes oddly!</B></span>", 1)
 		flick("medibot_spark", src)
 		patient = null
 		if(user)
@@ -263,7 +263,7 @@
 			var/list/messagevoice = list("Radar, put a mask on!" = 'sound/voice/medbot/radar.ogg',"There's always a catch, and I'm the best there is." = 'sound/voice/medbot/catch.ogg',"I knew it, I should've been a plastic surgeon." = 'sound/voice/medbot/surgeon.ogg',"What kind of medbay is this? Everyone's dropping like flies." = 'sound/voice/medbot/flies.ogg',"Delicious!" = 'sound/voice/medbot/delicious.ogg')
 			var/message = pick(messagevoice)
 			speak(message)
-			playsound(src, messagevoice[message], 50)
+			playsound(src, messagevoice[message], VOL_EFFECTS_MASTER, null, FALSE)
 
 		for (var/mob/living/carbon/C in view(7,src)) //Time to find a patient!
 			if ((C.stat == DEAD) || !istype(C, /mob/living/carbon/human))
@@ -282,7 +282,7 @@
 						var/message = pick(messagevoice)
 						speak(message)
 						last_newpatient_speak = world.time
-						playsound(src, messagevoice[message], 50, 0)
+						playsound(src, messagevoice[message], VOL_EFFECTS_MASTER, null, FALSE)
 						if(declare_treatment)
 							var/area/location = get_area(src)
 							broadcast_medical_hud_message("[name] is treating <b>[C]</b> in <b>[location]</b>", src)
@@ -382,7 +382,7 @@
 		var/list/messagevoice = list("No! Stay with me!" = 'sound/voice/medbot/no.ogg',"Live, damnit! LIVE!" = 'sound/voice/medbot/live.ogg',"I...I've never lost a patient before. Not today, I mean." = 'sound/voice/medbot/lost.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
-		playsound(src, messagevoice[message], 50)
+		playsound(src, messagevoice[message], VOL_EFFECTS_MASTER, null, FALSE)
 		oldpatient = patient
 		patient = null
 		currently_healing = 0
@@ -430,11 +430,11 @@
 		var/list/messagevoice = list("All patched up!" = 'sound/voice/medbot/patchedup.ogg',"An apple a day keeps me away." = 'sound/voice/medbot/apple.ogg',"Feel better soon!" = 'sound/voice/medbot/feelbetter.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
-		playsound(src, messagevoice[message], 50)
+		playsound(src, messagevoice[message], VOL_EFFECTS_MASTER, null, FALSE)
 		return
 	else
 		icon_state = "medibots"
-		visible_message("\red <B>[src] is trying to inject [patient]!</B>")
+		visible_message("<span class='warning'><B>[src] is trying to inject [patient]!</B></span>")
 		spawn(30)
 			if ((get_dist(src, patient) <= 1) && (on))
 				if((reagent_id == "internal_beaker") && (reagent_glass) && (reagent_glass.reagents.total_volume))
@@ -442,7 +442,7 @@
 					reagent_glass.reagents.reaction(patient, 2)
 				else
 					patient.reagents.add_reagent(reagent_id,injection_amount)
-				visible_message("\red <B>[src] injects [patient] with the syringe!</B>")
+				visible_message("<span class='warning'><B>[src] injects [patient] with the syringe!</B></span>")
 
 			icon_state = "medibot[on]"
 			currently_healing = 0
@@ -466,7 +466,7 @@
 
 /obj/machinery/bot/medbot/explode()
 	on = 0
-	visible_message("\red <B>[src] blows apart!</B>", 1)
+	visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/storage/firstaid(Tsec)
@@ -483,7 +483,7 @@
 		new /obj/item/robot_parts/l_arm(Tsec)
 
 	if(emagged && prob(25))
-		playsound(src, 'sound/voice/medbot/insult.ogg', 50)	
+		playsound(src, 'sound/voice/medbot/insult.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)

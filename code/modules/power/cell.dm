@@ -20,7 +20,7 @@
 	return 100.0*charge/maxcharge
 
 // use power from a cell, returns the amount actually used
-/obj/item/weapon/stock_parts/cell/proc/use(amount)
+/obj/item/weapon/stock_parts/cell/use(amount)
 	if(rigged && amount > 0)
 		explode()
 		return 0
@@ -78,7 +78,7 @@
 			rigged = 1
 
 			log_admin("LOG: [user.name] ([user.ckey]) injected a power cell with phoron, rigging it to explode.")
-			message_admins("LOG: [user.name] ([user.ckey]) injected a power cell with phoron, rigging it to explode. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			message_admins("LOG: [user.name] ([user.ckey]) injected a power cell with phoron, rigging it to explode. [ADMIN_JMP(user)]")
 
 		S.reagents.clear_reagents()
 
@@ -104,7 +104,7 @@
 	//explosion(T, 0, 1, 2, 2)
 
 	log_admin("LOG: Rigged power cell explosion, last touched by [fingerprintslast]")
-	message_admins("LOG: Rigged power cell explosion, last touched by [fingerprintslast]")
+	message_admins("LOG: Rigged power cell explosion, last touched by [fingerprintslast] [ADMIN_JMP(T)]")
 
 	explosion(T, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 

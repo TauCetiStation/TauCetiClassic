@@ -99,7 +99,7 @@
 		if(sound)
 			spawn(0)
 				src = null
-				playsound(location,sound,60,1)
+				playsound(location, sound, VOL_EFFECTS_MASTER)
 	return
 
 //do the monkey dance

@@ -8,7 +8,7 @@
 	var/deviation = 0 //Inaccuracy of shots.
 	var/fire_cooldown = 0 //Duration of sleep between firing projectiles in single shot.
 	var/fire_sound //Sound played while firing.
-	var/fire_volume = 50 //How loud it is played.
+	var/fire_volume = null //How loud it is played (null to use playsound's default value)
 	var/auto_rearm = 0 //Does the weapon reload itself after each shot?
 
 /obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/combat/M)
@@ -38,7 +38,7 @@
 			aimloc = locate(targloc.x+GaussRandRound(deviation,1),targloc.y+GaussRandRound(deviation,1),targloc.z)
 		if(!aimloc || aimloc == curloc)
 			break
-		playsound(chassis, fire_sound, fire_volume, 1)
+		playsound(chassis, fire_sound, VOL_EFFECTS_MASTER, fire_volume)
 		projectiles--
 		var/P = new projectile(curloc)
 		Fire(P, target, aimloc)
@@ -75,7 +75,7 @@
 	icon_state = "mecha_laser"
 	energy_drain = 30
 	projectile = /obj/item/projectile/beam
-	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/guns/gunpulse_laser.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
 	equip_cooldown = 15
@@ -83,7 +83,7 @@
 	icon_state = "mecha_laser"
 	energy_drain = 60
 	projectile = /obj/item/projectile/beam/heavylaser
-	fire_sound = 'sound/weapons/lasercannonfire.ogg'
+	fire_sound = 'sound/weapons/guns/lasercannonfire.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
 	equip_cooldown = 40
@@ -91,7 +91,7 @@
 	icon_state = "mecha_ion"
 	energy_drain = 120
 	projectile = /obj/item/projectile/ion
-	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/guns/gunpulse_laser.ogg'
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
@@ -101,7 +101,7 @@
 	energy_drain = 120
 	origin_tech = "materials=3;combat=6;powerstorage=4"
 	projectile = /obj/item/projectile/beam/pulse/heavy
-	fire_sound = 'sound/weapons/marauder.ogg'
+	fire_sound = 'sound/weapons/guns/marauder.ogg'
 
 
 /obj/item/projectile/beam/pulse/heavy
@@ -122,7 +122,7 @@
 	energy_drain = 20
 	equip_cooldown = 8
 	projectile = /obj/item/projectile/beam/stun
-	fire_sound = 'sound/weapons/Taser.ogg'
+	fire_sound = 'sound/weapons/guns/gunpulse_Taser.ogg'
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker
@@ -145,7 +145,7 @@
 	if(!equip_ready)
 		return 0
 
-	playsound(chassis, 'sound/items/AirHorn.ogg', 100, 1)
+	playsound(chassis, 'sound/items/AirHorn.ogg', VOL_EFFECTS_MASTER)
 	chassis.occupant_message("<font color='red' size='5'>HONK</font>")
 	for(var/mob/living/carbon/M in ohearers(6, chassis))
 		if(istype(M, /mob/living/carbon/human))
@@ -207,7 +207,7 @@
 	icon_state = "mecha_carbine"
 	equip_cooldown = 5
 	projectile = /obj/item/projectile/bullet/incendiary
-	fire_sound = 'sound/weapons/Gunshot.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 	projectiles = 24
 	projectile_energy_cost = 15
 
@@ -216,8 +216,7 @@
 	icon_state = "mecha_scatter"
 	equip_cooldown = 20
 	projectile = /obj/item/projectile/bullet/midbullet
-	fire_sound = 'sound/weapons/Gunshot.ogg'
-	fire_volume = 80
+	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 	projectiles = 40
 	projectiles_per_shot = 4
 	deviation = 0.7
@@ -228,7 +227,7 @@
 	icon_state = "mecha_uac2"
 	equip_cooldown = 10
 	projectile = /obj/item/projectile/bullet/midbullet
-	fire_sound = 'sound/weapons/Gunshot.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 	projectiles = 300
 	projectiles_per_shot = 3
 	deviation = 0.3

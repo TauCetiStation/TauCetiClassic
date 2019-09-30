@@ -21,6 +21,8 @@ var/datum/subsystem/job/SSjob
 
 
 /datum/subsystem/job/Initialize(timeofday)
+	SSmapping.LoadMapConfig() // Required before SSmapping initialization so we can modify the jobs
+	init_joblist()
 	SetupOccupations()
 	LoadJobs("config/jobs.txt")
 	..()
@@ -74,6 +76,8 @@ var/datum/subsystem/job/SSjob
 			return 0
 		if(!job.player_old_enough(player.client))
 			return 0
+		if(!job.map_check())
+			return 0
 		var/position_limit = job.total_positions
 		if(!latejoin)
 			position_limit = job.spawn_positions
@@ -104,6 +108,8 @@ var/datum/subsystem/job/SSjob
 		if(!job.player_old_enough(player.client))
 			Debug("FOC player not old enough, Player: [player]")
 			continue
+		if(!job.map_check())
+			continue
 		if(flag && (!(flag in player.client.prefs.be_role)))
 			Debug("FOC flag failed, Player: [player], Flag: [flag], ")
 			continue
@@ -125,6 +131,9 @@ var/datum/subsystem/job/SSjob
 			continue
 
 		if(!job.is_species_permitted(player.client))
+			continue
+
+		if(!job.map_check())
 			continue
 
 		if(jobban_isbanned(player, job.title))
@@ -309,6 +318,9 @@ var/datum/subsystem/job/SSjob
 					Debug("DO player not old enough, Player: [player], Job:[job.title]")
 					continue
 
+				if(!job.map_check())
+					continue
+
 				// If the player wants that job on this level, then try give it to him.
 				if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
 
@@ -395,10 +407,6 @@ var/datum/subsystem/job/SSjob
 		job.equip(H)
 		job.apply_fingerprints(H)
 
-		if(H.species)
-			H.species.after_job_equip(H, job)
-
-
 		for(var/thing in custom_equip_leftovers)
 			var/datum/gear/G = gear_datums[thing]
 			if(G.slot in custom_equip_slots)
@@ -456,7 +464,7 @@ var/datum/subsystem/job/SSjob
 		H.mind.store_memory(remembered_info)
 
 	spawn(0)
-		to_chat(H, "\blue<b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b>")
+		to_chat(H, "<span class='notice'><b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b></span>")
 
 	var/alt_title = null
 	if(H.mind)
@@ -472,20 +480,21 @@ var/datum/subsystem/job/SSjob
 			if("Clown")	//don't need bag preference stuff!
 			else
 				switch(H.backbag) //BS12 EDIT
-					if(1)
-						H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), SLOT_R_HAND)
 					if(2)
 						var/obj/item/weapon/storage/backpack/BPK = new(H)
-						new /obj/item/weapon/storage/box/survival(BPK)
 						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 					if(3)
 						var/obj/item/weapon/storage/backpack/satchel/norm/BPK = new(H)
-						new /obj/item/weapon/storage/box/survival(BPK)
 						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 					if(4)
 						var/obj/item/weapon/storage/backpack/satchel/BPK = new(H)
-						new /obj/item/weapon/storage/box/survival(BPK)
 						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
+
+	/*
+	Placed here so the backpack that spawns if there is no job backpack has already spawned by now.
+	*/
+	if(H.species)
+		H.species.after_job_equip(H, job)
 
 	// Happy Valentines day!
 	if(Holiday == "Valentine's Day")

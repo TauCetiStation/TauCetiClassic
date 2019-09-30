@@ -28,7 +28,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	power_equip = 0
 	power_environ = 0
 	valid_territory = 0
-
+	looped_ambience = 'sound/ambience/loop_space.ogg'
+	is_force_ambience = TRUE
+	ambience = list(
+		'sound/ambience/space_1.ogg',
+		'sound/ambience/space_2.ogg',
+		'sound/ambience/space_3.ogg',
+		'sound/ambience/space_4.ogg',
+		'sound/ambience/space_5.ogg',
+		'sound/ambience/space_6.ogg',
+		'sound/ambience/space_7.ogg',
+		'sound/ambience/space_8.ogg'
+	)
 
 //These are shuttle areas, they must contain two areas in a subgroup if you want to move a shuttle from one
 //place to another. Look at escape shuttle for example.
@@ -59,6 +70,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/shuttle/arrival/station
 	name = "NSS Exodus"
 	icon_state = "shuttle"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/shuttle/escape
 	name = "Emergency Shuttle"
@@ -66,6 +78,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/shuttle/escape/station
 	name = "Emergency Shuttle Station"
 	icon_state = "shuttle2"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/shuttle/escape/centcom
 	name = "Emergency Shuttle Centcom"
@@ -134,9 +147,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/shuttle/mining/station
 	icon_state = "shuttle2"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/shuttle/mining/outpost
 	icon_state = "shuttle"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/shuttle/transport1/centcom
 	icon_state = "shuttle"
@@ -145,6 +160,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/shuttle/transport1/station
 	icon_state = "shuttle"
 	name = "Transport Shuttle"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/shuttle/alien/base
 	icon_state = "shuttle"
@@ -163,6 +179,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/shuttle/specops/station
 	name = "Special Ops Shuttle"
 	icon_state = "shuttlered2"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/shuttle/syndicate_elite/mothership
 	name = "Syndicate Elite Shuttle"
@@ -171,6 +188,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/shuttle/syndicate_elite/station
 	name = "Syndicate Elite Shuttle"
 	icon_state = "shuttlered2"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/shuttle/administration/centcom
 	name = "Administration Shuttle Centcom"
@@ -179,10 +197,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/shuttle/administration/station
 	name = "Administration Shuttle"
 	icon_state = "shuttlered2"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/shuttle/research
 	name = "Research Shuttle"
 	icon_state = "shuttle"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/shuttle/vox/station
 	name = "Vox Skipjack"
@@ -312,6 +332,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "yellow"
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	ambience = 'sound/ambience/syndicate_station.ogg'
 
 /area/syndicate_station/start
 	name = "Syndicate Forward Operating Base"
@@ -320,30 +341,37 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/syndicate_station/southwest
 	name = "south-west of SS13"
 	icon_state = "southwest"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/syndicate_station/northwest
 	name = "north-west of SS13"
 	icon_state = "northwest"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/syndicate_station/northeast
 	name = "north-east of SS13"
 	icon_state = "northeast"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/syndicate_station/southeast
 	name = "south-east of SS13"
 	icon_state = "southeast"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/syndicate_station/north
 	name = "north of SS13"
 	icon_state = "north"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/syndicate_station/south
 	name = "south of SS13"
 	icon_state = "south"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/syndicate_station/mining
 	name = "north east of the mining asteroid"
 	icon_state = "north"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/syndicate_station/transit
 	name = "hyperspace"
@@ -374,30 +402,35 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "southwest"
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/vox_station/northwest_solars
 	name = "Fore port solars"
 	icon_state = "northwest"
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/vox_station/northeast_solars
 	name = "Fore starboard solars"
 	icon_state = "northeast"
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/vox_station/southeast_solars
 	name = "Aft starboard solars"
 	icon_state = "southeast"
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/vox_station/mining
 	name = "Nearby mining asteroid"
 	icon_state = "north"
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 
 //PRISON
@@ -414,6 +447,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Maintenance
 /area/maintenance
+	looped_ambience = 'sound/ambience/loop_maintenance.ogg'
 	valid_territory = 0
 
 /area/maintenance/eva
@@ -591,6 +625,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/chapel/main
 	name = "Chapel"
 	icon_state = "chapel"
+	ambience = list('sound/ambience/chapel_1.ogg', 'sound/ambience/chapel_2.ogg', 'sound/ambience/chapel_3.ogg', 'sound/ambience/chapel_4.ogg')
 
 /area/chapel/office
 	name = "Chapel Office"
@@ -624,8 +659,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/holodeck/source_basketball
 	name = "Holodeck - Basketball Court"
 
+/area/holodeck/source_boxingcourt
+	name = "Holodeck - Boxing Court"
+
 /area/holodeck/source_thunderdomecourt
 	name = "Holodeck - Thunderdome Court"
+
+/area/holodeck/source_burntest
+	name = "Holodeck - Burn test"
 
 /area/holodeck/source_courtroom
 	name = "Holodeck - Courtroom"
@@ -670,6 +711,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/engine
 	icon_state = "engine"
+	looped_ambience = 'sound/ambience/loop_engine.ogg'
 
 /area/engine/drone_fabrication
 	name = "Drone Fabrication"
@@ -677,9 +719,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/engineering
 	name = "Engineering"
 	icon_state = "engine_smes"
+	ambience = list('sound/ambience/engine_1.ogg', 'sound/ambience/engine_2.ogg', 'sound/ambience/engine_3.ogg', 'sound/ambience/engine_4.ogg')
 
 /area/engine/singularity
 	name = "Singularity Area"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/engine/break_room
 	name = "Engineering Break Room"
@@ -695,6 +739,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
 	valid_territory = 0
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/solar/auxport
 	name = "Fore Port Solar Array"
@@ -807,6 +852,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/morgue
 	name = "Morgue"
 	icon_state = "morgue"
+	ambience = list('sound/ambience/morgue_1.ogg', 'sound/ambience/morgue_2.ogg', 'sound/ambience/morgue_3.ogg')
 
 /area/medical/chemistry
 	name = "Chemistry"
@@ -965,8 +1011,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "toxstorage"
 
 /area/rnd/test_area
-	valid_territory = 0
-	name = "Toxins Test Area"
+	name = "Toxins Test Site"
 	icon_state = "toxtest"
 
 /area/rnd/mixing
@@ -1016,6 +1061,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Technical Storage"
 	icon_state = "auxstorage"
 
+/area/storage/tech/north
+	name = "North Technical Storage"
+
 
 //DJSTATION
 
@@ -1033,6 +1081,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/derelict
 	name = "Derelict Station"
 	icon_state = "storage"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/derelict/hallway/primary
 	name = "Derelict Primary Hallway"
@@ -1081,6 +1130,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/solar/derelict_starboard
 	name = "Derelict Starboard Solar Array"
 	icon_state = "panelsS"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/solar/derelict_aft
 	name = "Derelict Aft Solar Array"
@@ -1115,6 +1165,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/turret_protected/ai
 	name = "AI Chamber"
 	icon_state = "ai_chamber"
+	ambience = 'sound/ambience/aicore.ogg'
 
 /area/turret_protected/aisat
 	name = "AI Satellite"
@@ -1134,6 +1185,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/tcommsat/chamber
 	name = "Telecoms Central Compartment"
 	icon_state = "tcomsatcham"
+	ambience = list('sound/ambience/engine_2.ogg', 'sound/ambience/tcomms.ogg')
 
 /area/tcommsat/computer
 	name = "Telecoms Control Room"
@@ -1278,58 +1330,65 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "null"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	requires_power = 0
-	var/sound/mysound = null
-/* hello copypasta of area/beach (this idea with this area is Eeeeuuuuuwwww)
-/area/awaymission/beach/New()
-	..()
-	var/sound/S = new/sound()
-	mysound = S
-	S.file = 'sound/ambience/shore.ogg'
-	S.repeat = 1
-	S.wait = 0
-	S.channel = 123
-	S.volume = 100
-	S.priority = 255
-	S.status = SOUND_UPDATE
-	process()
 
-/area/awaymission/beach/Entered(atom/movable/Obj,atom/OldLoc)
-	if(ismob(Obj))
-		if(Obj:client)
-			mysound.status = SOUND_UPDATE
-			Obj << mysound
-	return
+/area/agrospheregarden
+	name = "Agroshere Structure"
+	icon_state = "yellow"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
-/area/awaymission/beach/Exited(atom/movable/Obj)
-	if(ismob(Obj))
-		if(Obj:client)
-			mysound.status = SOUND_PAUSED | SOUND_UPDATE
-			Obj << mysound
+/area/planetarium
+	name = "Planetarium"
+	icon_state = "yellow"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
-/area/awaymission/beach/process()
-	var/sound/S = null
-	var/sound_delay = 0
-	if(prob(25))
-		S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=100)
-		sound_delay = rand(0, 50)
+/area/robostatoin
+	name = "Robostation"
+	icon_state = "yellow"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
-	for(var/mob/living/carbon/human/H in src)
-		if(H.s_tone > -55)
-			H.s_tone--
-			H.update_body()
-		if(H.client)
-			mysound.status = SOUND_UPDATE
-			H << mysound
-			if(S)
-				addtimer(CALLBACK(src, .proc/send_sound, H, S), sound_delay)
+/area/ghostship
+	name = "Ghost Ship"
+	icon_state = "yellow"
+	always_unpowered = 1
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
-	addtimer(CALLBACK(src, .process), 60)
+/area/delivery_shuttle
+	name = "Delivery Shuttle"
+	icon_state = "shuttle"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
-/area/proc/send_sound(mob/living/carbon/human/target, sound)
-	if(!target || !sound)
-		return
-	target << sound
-*/
+/area/cloning_lab
+	name = "Cloning Facility"
+	icon_state = "purple"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/listening_post
+	name = "Listening Post"
+	icon_state = "syndie-elite"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/syndicate_fighter
+	name = "Shiv Fighter"
+	icon_state = "syndie-elite"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	requires_power = 0
+
+/area/iss
+	name = "Ancient Space Station"
+	icon_state = "yellow"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	requires_power = 0
+
+/area/nasa_satellite
+	name = "NASA_satellite"
+	icon_state = "yellow"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	looped_ambience = 'sound/music/space_oddity.ogg'
+
 /////////////////////////////////////////////////////////////////////
 /*
  Lists of areas to be used with is_type_in_list.
@@ -1395,47 +1454,11 @@ var/list/the_station_areas = list (
 	icon_state = "null"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	requires_power = 0
-	var/sound/mysound = null
-/* hello copypasta of area/away_mission/beach
-/area/beach/New()
-	..()
-	var/sound/S = new/sound()
-	mysound = S
-	S.file = 'sound/ambience/shore.ogg'
-	S.repeat = 1
-	S.wait = 0
-	S.channel = 123
-	S.volume = 100
-	S.priority = 255
-	S.status = SOUND_UPDATE
-	process()
 
-/area/beach/Entered(atom/movable/Obj,atom/OldLoc)
-	if(ismob(Obj))
-		if(Obj:client)
-			mysound.status = SOUND_UPDATE
-			Obj << mysound
-	return
+/area/derelict/lab
+	name = "Abandoned Lab"
+	icon_state = "yellow"
 
-/area/beach/Exited(atom/movable/Obj)
-	if(ismob(Obj))
-		if(Obj:client)
-			mysound.status = SOUND_PAUSED | SOUND_UPDATE
-			Obj << mysound
-
-/area/beach/process()
-	var/sound/S = null
-	var/sound_delay = 0
-	if(prob(25))
-		S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=100)
-		sound_delay = rand(0, 50)
-
-	for(var/mob/living/carbon/human/H in src)
-		if(H.client)
-			mysound.status = SOUND_UPDATE
-			H << mysound
-			if(S)
-				addtimer(CALLBACK(src, .proc/send_sound, H, S), sound_delay)
-
-	addtimer(CALLBACK(src, .process), 60)
-*/
+/area/tophat
+	name = "Tophat"
+	icon_state = "tophat-room"

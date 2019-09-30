@@ -20,10 +20,10 @@
 	name = "cult"
 	config_tag = "cult"
 	role_type = ROLE_CULTIST
-	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent")
+	restricted_jobs = list("Security Cadet", "Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent")
 	protected_jobs = list()
 	required_players = 5
-	required_players_secret = 15
+	required_players_secret = 20
 
 	required_enemies = 3
 	recommended_enemies = 4
@@ -281,16 +281,18 @@
 /datum/game_mode/cult/declare_completion()
 	if(config.objectives_disabled)
 		return 1
-	completion_text += "<B>Cult mode resume:</B><BR>"
+	completion_text += "<h3>Cult mode resume:</h3>"
 	if(!check_cult_victory())
-		feedback_set_details("round_end_result","win - cult win")
+		mode_result = "win - cult win"
+		feedback_set_details("round_end_result",mode_result)
 		feedback_set("round_end_result",acolytes_survived)
-		completion_text += "<FONT size = 3 color='red'><B>The cult <font color='green'>wins</font>! It has succeeded in serving its dark masters!</B></FONT>"
+		completion_text += "<span class='color: red; font-weight: bold;'>The cult <span style='color: green'>wins</span>! It has succeeded in serving its dark masters!</span><br>"
 		score["roleswon"]++
 	else
-		feedback_set_details("round_end_result","loss - staff stopped the cult")
+		mode_result = "loss - staff stopped the cult"
+		feedback_set_details("round_end_result",mode_result)
 		feedback_set("round_end_result",acolytes_survived)
-		completion_text += "<FONT size = 3 color='red'><B>The staff managed to stop the cult!</B></FONT><BR>"
+		completion_text += "<span class='color: red; font-weight: bold;'>The staff managed to stop the cult!</span><br>"
 
 	var/text = "<b>Cultists escaped:</b> [acolytes_survived]"
 	if(!config.objectives_disabled)
@@ -301,33 +303,33 @@
 				switch(objectives[obj_count])
 					if("survive")
 						if(!check_survive())
-							explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. <font color='green'><B>Success!</B></font>"
+							explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. <span style='color: green; font-weight: bold;'>Success!</span>"
 							feedback_add_details("cult_objective","cult_survive|SUCCESS|[acolytes_needed]")
 						else
-							explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. <font color='red'>Fail.</font>"
+							explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. <span style='color: red; font-weight: bold;'>Fail.</span>"
 							feedback_add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
 					if("sacrifice")
 						if(sacrifice_target)
 							if(sacrifice_target in sacrificed)
-								explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <font color='green'><B>Success!</B></font>"
+								explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <span style='color: green; font-weight: bold;'>Success!</span>"
 								feedback_add_details("cult_objective","cult_sacrifice|SUCCESS")
 							else if(sacrifice_target && sacrifice_target.current)
-								explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <font color='red'>Fail.</font>"
+								explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <span style='color: red; font-weight: bold;'>Fail.</span>"
 								feedback_add_details("cult_objective","cult_sacrifice|FAIL")
 							else
-								explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <font color='red'>Fail (Gibbed).</font>"
+								explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <span style='color: red; font-weight: bold;'>Fail (Gibbed).</span>"
 								feedback_add_details("cult_objective","cult_sacrifice|FAIL|GIBBED")
 						else
-							explanation = "Free objective. <font color='green'><B>Success!</B></font>"
+							explanation = "Free objective. <span style='color: green; font-weight: bold;'>Success!</span>"
 							feedback_add_details("cult_objective","cult_free_objective|SUCCESS")
 					if("eldergod")
 						if(!eldergod)
-							explanation = "Summon Nar-Sie. <font color='green'><B>Success!</B></font>"
+							explanation = "Summon Nar-Sie. <span style='color: green; font-weight: bold;'>Success!</span>"
 							feedback_add_details("cult_objective","cult_narsie|SUCCESS")
 						else
-							explanation = "Summon Nar-Sie. <font color='red'>Fail.</font>"
+							explanation = "Summon Nar-Sie. <span style='color: red; font-weight: bold;'>Fail.</span>"
 						feedback_add_details("cult_objective","cult_narsie|FAIL")
-				text += "<BR><B>Objective #[obj_count]</B>: [explanation]"
+				text += "<br><b>Objective #[obj_count]</b>: [explanation]"
 
 	completion_text += text
 	..()
@@ -339,5 +341,9 @@
 		text += printlogo("cult", "cultists")
 		for(var/datum/mind/cultist in cult)
 			text += printplayerwithicon(cultist)
-		text += "<BR><HR>"
+
+	if(text)
+		antagonists_completion += list(list("mode" = "cult", "html" = text))
+		text = "<div class='block'>[text]</div>"
+		
 	return text

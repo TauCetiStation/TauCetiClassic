@@ -74,7 +74,7 @@
 
 /obj/effect/proc_holder/spell/targeted/shadow_walk/cast(list/targets)
 	for(var/mob/living/user in targets)
-		playsound(user.loc, 'sound/effects/bamf.ogg', 50, 1)
+		playsound(user, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("<span class='warning'>[user] vanishes in a puff of black mist!</span>", "<span class='shadowling'>You enter the space between worlds as a passageway.</span>")
 		user.SetStunned(0)
 		user.SetWeakened(0)
@@ -100,7 +100,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze/cast(list/targets)
 	to_chat(usr, "<span class='shadowling'>You freeze the nearby air.</span>")
-	playsound(usr.loc, 'sound/effects/ghost2.ogg', 50, 1)
+	playsound(usr, 'sound/effects/ghost2.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/turf/T in targets)
 		for(var/mob/living/carbon/human/target in T.contents)
@@ -354,7 +354,7 @@
 	for(var/mob/living/user in targets)
 		user.visible_message("<span class='warning'>[user] suddenly bends over and coughs out a cloud of black smoke, which begins to spread rapidly!</span>")
 		to_chat(user, "<span class='shadowling'>You regurgitate a vast cloud of blinding smoke.</span>")
-		playsound(user, 'sound/effects/bamf.ogg', 50, 1)
+		playsound(user, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 		var/datum/effect/effect/system/smoke_spread/chem/S = new
 		var/turf/location = get_turf(user)
 		create_reagents(10)
@@ -396,7 +396,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech/cast(list/targets)
 	//usr.audible_message("<span class='warning'><b>[usr] lets out a horrible scream!</b></span>")
 	usr.emote("scream", 1, "<span class='warning'><b>lets out a horrible scream!</b></span>")
-	playsound(usr.loc, 'sound/effects/screech.ogg', 100, 1)
+	playsound(usr, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/turf/T in targets)
 		for(var/mob/target in T.contents)
@@ -415,8 +415,7 @@
 			else if(issilicon(target))
 				var/mob/living/silicon/S = target
 				to_chat(S, "<span class='warning'><b>ERROR $!(@ ERROR )#^! SENSOR OVERLOAD \[$(!@#</b></span>")
-				S << 'sound/misc/interference.ogg'
-				playsound(S, 'sound/machines/warning-buzzer.ogg', 50, 1)
+				playsound(S, 'sound/misc/interference.ogg', VOL_EFFECTS_MASTER)
 				var/datum/effect/effect/system/spark_spread/sp = new /datum/effect/effect/system/spark_spread
 				sp.set_up(5, 1, S)
 				sp.start()
@@ -484,15 +483,15 @@
 		var/mob/dead/observer/ghost = thrallToRevive.get_ghost()
 		if(ghost)
 			to_chat(ghost, "<span class='ghostalert'>Your masters are resuscitating you! Return to your corpse if you wish to be brought to life.</span> (Verbs -> Ghost -> Re-enter corpse)")
-			ghost << 'sound/effects/genetics.ogg'
+			ghost.playsound_local(null, 'sound/effects/genetics.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 		if(!do_mob(usr, thrallToRevive, 100))
 			to_chat(usr, "<span class='warning'>Your concentration snaps. The flow of energy ebbs.</span>")
 			charge_counter= charge_max
 			return
 		to_chat(usr, "<span class='shadowling'><b><i>You release a massive surge of energy into [thrallToRevive]!</b></i></span>")
 		usr.visible_message("<span class='boldannounce'><i>Red lightning surges from [usr]'s hands into [thrallToRevive]'s chest!</i></span>")
-		playsound(thrallToRevive, 'sound/weapons/Egloves.ogg', 50, 1)
-		playsound(thrallToRevive, 'sound/machines/defib_zap.ogg', 50, 1)
+		playsound(thrallToRevive, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
+		playsound(thrallToRevive, 'sound/machines/defib_zap.ogg', VOL_EFFECTS_MASTER)
 		sleep(20)
 		thrallToRevive.revive()
 		thrallToRevive.timeofdeath = 0
@@ -501,7 +500,7 @@
 									   "<span class='shadowling'><b><i>You have returned. One of your masters has brought you from the darkness beyond.</b></i></span>")
 		thrallToRevive.Weaken(4)
 		thrallToRevive.emote("gasp")
-		playsound(thrallToRevive, "bodyfall", 50, 1)
+		playsound(thrallToRevive, pick(SOUNDIN_BODYFALL), VOL_EFFECTS_MASTER)
 
 // ASCENDANT ABILITIES BEYOND THIS POINT //
 
@@ -535,7 +534,7 @@
 		if(istype(boom,/mob/living/simple_animal/hostile/carp/dog))
 			to_chat(SHA,"<span class='shadowling'>Probably, trying to explode [boom] wasn't good idea....</span>")
 			boom = usr
-		playsound(boom, 'sound/effects/splat.ogg', 100, 1)
+		playsound(boom, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 		boom.visible_message("<span class='userdanger'>[boom] explodes!</span>")
 		boom.gib()
 
@@ -627,7 +626,7 @@
 		return
 
 	to_chat(usr, "<span class='shadowling'>You freeze the nearby air.</span>")
-	playsound(usr.loc, 'sound/effects/ghost2.ogg', 100, 1)
+	playsound(usr, 'sound/effects/ghost2.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/turf/T in targets)
 		for(var/mob/living/carbon/human/target in T.contents)
@@ -676,7 +675,7 @@
 
 /obj/effect/proc_holder/spell/targeted/shadowlingAscendantTransmit/cast(list/targets)
 	for(var/mob/living/user in targets)
-		var/text = sanitize(input(user, "What do you want to say to everything on and near [world.name]?.", "Transmit to World", ""))
+		var/text = sanitize(input(user, "What do you want to say to everything on and near [station_name()]?.", "Transmit to World", ""))
 		if(!text)
 			return
 		to_chat(world, "<font size=4><span class='shadowling'><b>\"[sanitize(text)]\"</b></font></span>")

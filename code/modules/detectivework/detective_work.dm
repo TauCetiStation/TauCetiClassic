@@ -54,6 +54,8 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 /obj/machinery/computer/forensic_scanning
 	name = "\improper High-Res Forensic Scanning Computer"
 	icon_state = "forensic"
+	state_broken_preset = "securityb"
+	state_nopower_preset = "security0"
 	light_color = "#a91515"
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/scanning
@@ -163,7 +165,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				if(!card.fingerprints)
 					card.fingerprints = list()
 				if(card.amount > 1 || !card.fingerprints.len)
-					to_chat(usr, "\red ERROR: No prints/too many cards.")
+					to_chat(usr, "<span class='warning'>ERROR: No prints/too many cards.</span>")
 					if(card.loc == src)
 						card.loc = src.loc
 					card = null
@@ -172,7 +174,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				I.loc = src
 				process_card()
 			else
-				to_chat(usr, "\red Invalid Object Rejected.")
+				to_chat(usr, "<span class='warning'>Invalid Object Rejected.</span>")
 		if("database") //Viewing all records in each database
 			canclear = 1
 			if(href_list["delete_record"])
@@ -596,7 +598,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 			to_chat(usr, "No match found.")
 		qdel(card)
 	else
-		to_chat(usr, "\red ERROR: No prints/too many cards.")
+		to_chat(usr, "<span class='warning'>ERROR: No prints/too many cards.</span>")
 		if(card.loc == src)
 			card.loc = src.loc
 		card = null
@@ -614,6 +616,9 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 	return
 
 /obj/machinery/computer/forensic_scanning/detective
-	icon_state = "library"
+	icon_state = "computer_old"
+	req_access = list()
 	name = "PowerScan Mk.I"
 	light_color = "#3550b6"
+	state_broken_preset = null
+	state_nopower_preset = null

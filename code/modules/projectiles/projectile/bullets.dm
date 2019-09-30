@@ -11,6 +11,10 @@
 
 	muzzle_type = /obj/effect/projectile/bullet/muzzle
 
+/obj/item/projectile/bullet/atom_init()
+	. = ..()
+	proj_act_sound = SOUNDIN_BULLETACT
+
 /obj/item/projectile/bullet/on_hit(atom/target, blocked = 0)
 	if (..(target, blocked))
 		var/mob/living/L = target
@@ -23,6 +27,15 @@
 	agony = 40
 	embed = 0
 	sharp = 0
+
+/obj/item/projectile/bullet/weakbullet/atom_init()
+	. = ..()
+	proj_act_sound = SOUNDIN_WEAKBULLETACT
+
+/obj/item/projectile/bullet/buckpellet
+	name = "buckpellet"
+	damage = 14
+	dispersion = 2.5
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
@@ -72,10 +85,18 @@
 	embed = 0
 	sharp = 0
 
+/obj/item/projectile/bullet/grenade/r4046/atom_init()
+	. = ..()
+	proj_act_sound = SOUNDIN_WEAKBULLETACT
+
 /obj/item/projectile/bullet/chem
 	damage = 5
 	stun = 2
 	var/list/beakers					// for grenade
+
+/obj/item/projectile/bullet/chem/atom_init()
+	. = ..()
+	proj_act_sound = null
 
 /obj/item/projectile/bullet/chem/on_hit(atom/target, blocked = 0)
 	if(beakers != null)
@@ -135,12 +156,18 @@
 	damage = 20
 	damage_type = OXY
 
+/obj/item/projectile/bullet/suffocationbullet/atom_init()
+	. = ..()
+	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/cyanideround
 	name = "poison bullet"
 	damage = 40
 	damage_type = TOX
 
+/obj/item/projectile/bullet/cyanideround/atom_init()
+	. = ..()
+	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/burstbullet//I think this one needs something for the on hit
 	name = "exploding bullet"
@@ -158,6 +185,10 @@
 	agony = 60
 	embed = 0
 	sharp = 0
+
+/obj/item/projectile/bullet/stunslug/atom_init()
+	. = ..()
+	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/a762
 	damage = 50
@@ -178,6 +209,10 @@
 	embed = 0 // nope
 	fake = 1
 
+/obj/item/projectile/bullet/chameleon/atom_init()
+	. = ..()
+	proj_act_sound = SOUNDIN_WEAKBULLETACT
+
 /obj/item/projectile/l10
 	name ="projectile"
 	icon = 'icons/obj/projectiles.dmi'
@@ -196,6 +231,10 @@
 
 	muzzle_type = /obj/effect/projectile/energy/muzzle
 
+/obj/item/projectile/l10/atom_init()
+	. = ..()
+	proj_act_sound = SOUNDIN_LASERACT
+
 /obj/item/projectile/bullet/midbullet3
 	damage = 35
 
@@ -204,6 +243,10 @@
 	icon_state= "bolter"
 	damage = 5
 	light_range = 8
+
+/obj/item/projectile/bullet/flare/atom_init()
+	. = ..()
+	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/flare/on_hit(atom/target, blocked = 0)
 	if(istype(target, /mob/living/carbon))

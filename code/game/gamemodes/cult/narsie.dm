@@ -18,7 +18,7 @@
 		if(O.client)
 			to_chat(O, "<span class='ghostalert'>[message]</span>")
 			if(ghost_sound)
-				O << sound(ghost_sound)
+				O.playsound_local(null, ghost_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
 /* Old TG code that didn't work
 
@@ -166,8 +166,8 @@
 	G.real_name = pick("harvester([rand(1, 10)])", "reaper([rand(1, 10)])")
 	G.loc = src.loc
 	G.key = user.key
-	to_chat(G, "\red You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
-		Bring those who still cling to this world of illusion back to the Geometer so they may know Truth")
+	to_chat(G, "<span class='warning'>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
+		Bring those who still cling to this world of illusion back to the Geometer so they may know Truth</span>")
 
 
 /obj/singularity/narsie/process()

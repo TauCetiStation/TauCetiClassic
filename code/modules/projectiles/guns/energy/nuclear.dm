@@ -1,10 +1,11 @@
 /obj/item/weapon/gun/energy/gun
 	name = "energy gun"
 	desc = "A basic energy-based gun with two settings: Stun and kill."
-	icon_state = "energy"
+	icon_state = "energytac"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser)
 	origin_tech = "combat=3;magnets=2"
+	can_be_holstered = TRUE
 	modifystate = 2
 
 /obj/item/weapon/gun/energy/gun/attack_self(mob/living/user)
@@ -15,12 +16,17 @@
 	else
 		user.update_inv_r_hand()
 
+/obj/item/weapon/gun/energy/gun/head
+	desc = "A basic energy-based gun with two settings: Stun and kill. This one has a grip made of wood."
+	icon_state = "energy"
+
 /obj/item/weapon/gun/energy/gun/carbine
 	name = "energy carbine"
 	desc = "A basic energy-based carbine with two settings: Stun and kill."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "ecar"
 	icon_custom = null
+	can_be_holstered = FALSE
 
 /obj/item/weapon/gun/energy/gun/carbine/atom_init()
 	. = ..()
@@ -44,6 +50,7 @@
 	var/lightfail = 0
 	var/charge_tick = 0
 	modifystate = 0
+	can_be_holstered = FALSE
 
 /obj/item/weapon/gun/energy/gun/nuclear/atom_init()
 	. = ..()
@@ -73,16 +80,16 @@
 	if (prob(src.reliability))
 		for (var/mob/living/M in range(0,src)) //Only a minor failure, enjoy your radiation if you're in the same tile or carrying it
 			if (src in M.contents)
-				to_chat(M, "\red Your gun feels pleasantly warm for a moment.")
+				to_chat(M, "<span class='warning'>Your gun feels pleasantly warm for a moment.</span>")
 			else
-				to_chat(M, "\red You feel a warm sensation.")
+				to_chat(M, "<span class='warning'>You feel a warm sensation.</span>")
 			M.apply_effect(rand(3,120), IRRADIATE)
 		lightfail = 1
 	else
 		for (var/mob/living/M in range(rand(1,4),src)) //Big failure, TIME FOR RADIATION BITCHES
 			if (src in M.contents)
-				to_chat(M, "\red Your gun's reactor overloads!")
-			to_chat(M, "\red You feel a wave of heat wash over you.")
+				to_chat(M, "<span class='warning'>Your gun's reactor overloads!</span>")
+			to_chat(M, "<span class='warning'>You feel a wave of heat wash over you.</span>")
 			M.apply_effect(300, IRRADIATE)
 		crit_fail = 1 //break the gun so it stops recharging
 		STOP_PROCESSING(SSobj, src)
@@ -94,7 +101,7 @@
 		overlays += "nucgun-whee"
 		return
 	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = ceil(ratio * 4) * 25
+	ratio = CEIL(ratio * 4) * 25
 	overlays += "nucgun-[ratio]"
 
 /obj/item/weapon/gun/energy/gun/nuclear/proc/update_reactor()
@@ -124,6 +131,3 @@
 	update_charge()
 	update_reactor()
 	update_mode()
-
-/obj/item/weapon/gun/energy/gun/nuclear/isHandgun()
-	return 0

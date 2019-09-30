@@ -242,7 +242,7 @@ var/req_console_information = list()
 			priority = -1
 
 	if(href_list["writeAnnouncement"])
-		var/new_message = sanitize(input(usr, "Write your message:", "Awaiting Input", ""))
+		var/new_message = sanitize(input(usr, "Write your message:", "Awaiting Input", "") as null|message)
 		if(new_message)
 			message = new_message
 			switch(href_list["priority"])
@@ -258,9 +258,9 @@ var/req_console_information = list()
 	if(href_list["sendAnnouncement"])
 		if(!announcementConsole)
 			return FALSE
-		for(var/mob/M in player_list)
-			if(!isnewplayer(M))
-				to_chat(M, "<b><font size='3'><font color='red'>[department] announcement:</font> [message]</font></b>")
+
+		captain_announce(message, "[department] announcement")
+
 		announceAuth = 0
 		message = ""
 		screen = 0
@@ -295,7 +295,7 @@ var/req_console_information = list()
 									Console.newmessagepriority = 2
 									Console.icon_state = "req_comp2"
 								if(!Console.silent)
-									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
+									playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 									for (var/mob/O in hearers(5, Console.loc))
 										O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [department]'"))
 								Console.messages += "<B><FONT color='red'>High Priority message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[sending]"
@@ -305,7 +305,7 @@ var/req_console_information = list()
 		//							Console.newmessagepriority = 3
 		//							Console.icon_state = "req_comp3"
 		//						if(!Console.silent)
-		//							playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
+		//							playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 		//							for (var/mob/O in hearers(7, Console.loc))
 		//								O.show_message(text("[bicon(Console)] *The Requests Console yells: 'EXTREME PRIORITY alert in [department]'"))
 		//						Console.messages += "<B><FONT color='red'>Extreme Priority message from [ckey(department)]</FONT></B><BR>[message]"
@@ -315,7 +315,7 @@ var/req_console_information = list()
 									Console.newmessagepriority = 1
 									Console.icon_state = "req_comp1"
 								if(!Console.silent)
-									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
+									playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 									for (var/mob/O in hearers(4, Console.loc))
 										O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'Message from [department]'"))
 								Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></B><BR>[message]"
@@ -373,28 +373,6 @@ var/req_console_information = list()
 
 					//err... hacking code, which has no reason for existing... but anyway... it's supposed to unlock priority 3 messanging on that console (EXTREME priority...) the code for that actually exists.
 /obj/machinery/requests_console/attackby(obj/item/weapon/O, mob/user)
-	/*
-	if (iscrowbar(O))
-		if(open)
-			open = 0
-			icon_state="req_comp0"
-		else
-			open = 1
-			if(hackState == 0)
-				icon_state="req_comp_open"
-			else if(hackState == 1)
-				icon_state="req_comp_rewired"
-	if (isscrewdriver(O))
-		if(open)
-			if(hackState == 0)
-				hackState = 1
-				icon_state="req_comp_rewired"
-			else if(hackState == 1)
-				hackState = 0
-				icon_state="req_comp_open"
-		else
-			to_chat(user, "You can't do much with that.")*/
-
 	if (istype(O, /obj/item/weapon/card/id))
 		if(screen == 9)
 			var/obj/item/weapon/card/id/T = O
@@ -406,7 +384,7 @@ var/req_console_information = list()
 				announceAuth = 1
 			else
 				announceAuth = 0
-				to_chat(user, "\red You are not authorized to send announcements.")
+				to_chat(user, "<span class='warning'>You are not authorized to send announcements.</span>")
 			updateUsrDialog()
 	if (istype(O, /obj/item/weapon/stamp))
 		if(screen == 9)

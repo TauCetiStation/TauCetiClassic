@@ -43,10 +43,10 @@
 
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
 	if(iswrench(C))
-		if(user.is_busy()) return
-		to_chat(user, "\blue Removing rods...")
-		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
-		if(do_after(user, 30, target = src))
+		if(user.is_busy(src))
+			return
+		to_chat(user, "<span class='notice'>Removing rods...</span>")
+		if(C.use_tool(src, user, 30, volume = 80))
 			new /obj/item/stack/rods(src, 2)
 			ChangeTurf(/turf/simulated/floor)
 			var/turf/simulated/floor/F = src
@@ -337,7 +337,7 @@
 	if(isscrewdriver(C))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		ReplaceWithLattice()
-		playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		return
 
 	if(iscoil(C))

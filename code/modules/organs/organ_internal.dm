@@ -15,6 +15,16 @@
 	var/process_accuracy = 0    // Damage multiplier for organs, that have damage values.
 	var/robotic = 0             // For being a robot
 
+/obj/item/organ/internal/Destroy()
+	if(parent)
+		parent.children -= src
+		parent = null
+	if(owner)
+		owner.organs -= src
+		if(owner.organs_by_name[organ_tag] == src)
+			owner.organs_by_name -= organ_tag
+	return ..()
+
 /obj/item/organ/internal/insert_organ()
 	..()
 
@@ -29,9 +39,15 @@
 	damage = 0
 
 /obj/item/organ/internal/proc/is_bruised()
+	// If not robotic, and owner has stabyzol in bloodstream, we are considered not bruised.
+	if(!robotic && owner.reagents.has_reagent("stabyzol"))
+		return FALSE
 	return damage >= min_bruised_damage
 
 /obj/item/organ/internal/proc/is_broken()
+	// If not robotic, and owner has stabyzol in bloodstream, we are considered not bruised.
+	if(!robotic && owner.reagents.has_reagent("stabyzol"))
+		return FALSE
 	return damage >= min_broken_damage
 
 
@@ -205,7 +221,7 @@
 	..()
 	if (germ_level > INFECTION_LEVEL_ONE)
 		if(prob(1))
-			to_chat(owner, "\red Your skin itches.")
+			to_chat(owner, "<span class='warning'>Your skin itches.</span>")
 	if (germ_level > INFECTION_LEVEL_TWO)
 		if(prob(1))
 			INVOKE_ASYNC(owner, /mob/living/carbon/human.proc/vomit)

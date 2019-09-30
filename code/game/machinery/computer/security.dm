@@ -36,8 +36,8 @@
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
 /obj/machinery/computer/secure_data/ui_interact(mob/user)
-	if (src.z > ZLEVEL_EMPTY)
-		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
+	if (!SSmapping.has_level(z))
+		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return
 
 	var/dat
@@ -410,7 +410,7 @@ What a mess.*/
 				screen = 3
 
 		if("New Record (General)")
-			active1 = CreateGeneralRecord()
+			active1 = CreateGeneralRecord() // todo: datacore.manifest_inject or scaner (Identity Analyser)
 			active2 = null
 
 //FIELD FUNCTIONS

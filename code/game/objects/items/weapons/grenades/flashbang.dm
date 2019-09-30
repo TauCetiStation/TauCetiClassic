@@ -26,16 +26,16 @@
 	for(var/mob/living/carbon/M in hear(flashbang_range, flashbang_turf))
 		bang(flashbang_turf, M)
 
-	for(var/obj/effect/blob/B in hear(flashbang_range + 1, flashbang_turf))       		//Blob damage here
+	for(var/obj/effect/blob/B in hear(flashbang_range + 1, flashbang_turf))	//Blob damage here
 		var/damage = round(30 / (get_dist(B, flashbang_turf) + 1))
 		B.health -= damage
 		B.update_icon()
 
 	qdel(src)
 
-/obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/carbon/M)						// Added a new proc called 'bang' that takes a location and a person to be banged.
-	to_chat(M, "\red <B>BANG</B>")
-	playsound(src.loc, 'sound/effects/bang.ogg', 50, 1, 5)
+/obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/carbon/M)	// Added a new proc called 'bang' that takes a location and a person to be banged.
+	to_chat(M, "<span class='warning'><B>BANG</B></span>")
+	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, null, null, 5)
 
 //Checking for protections
 	var/eye_safety = 0
@@ -43,23 +43,23 @@
 	if(iscarbon(M))
 		eye_safety = M.eyecheck()
 		if(ishuman(M))
-			if(istype(M:l_ear, /obj/item/clothing/ears/earmuffs) || istype(M:r_ear, /obj/item/clothing/ears/earmuffs))
+			var/mob/living/carbon/human/H = M
+			if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
 				ear_safety += 2
 			if(HULK in M.mutations)
 				ear_safety += 1
-			if(istype(M:head, /obj/item/clothing/head/helmet))
+			if(istype(H.head, /obj/item/clothing/head/helmet))
 				ear_safety += 1
 
 //Flashing everyone
-	if(eye_safety<1)
+	if(eye_safety < 1)
 		M.flash_eyes()
 		M.Stun(2)
 		M.Weaken(10)
 
-
-
 //Now applying sound
-	if((get_dist(M, T) <= 2 || src.loc == M.loc || src.loc == M))
+	var/distance = get_dist(M, T)
+	if((distance <= 2 || loc == M.loc || loc == M))
 		if(ear_safety > 1)
 			M.Stun(1.5)
 		else if(ear_safety > 0)
@@ -68,43 +68,42 @@
 		else
 			M.Stun(10)
 			M.Weaken(3)
-			if ((prob(14) || (M == src.loc && prob(70))))
+			if((prob(14) || (M == loc && prob(70))))
 				M.ear_damage += rand(1, 10)
 			else
 				M.ear_damage += rand(0, 5)
-				M.ear_deaf = max(M.ear_deaf,15)
+				M.ear_deaf = max(M.ear_deaf, 15)
 
-	else if(get_dist(M, T) <= 5)
+	else if(distance <= 5)
 		if(!ear_safety)
 			M.Stun(8)
 			M.ear_damage += rand(0, 3)
-			M.ear_deaf = max(M.ear_deaf,10)
+			M.ear_deaf = max(M.ear_deaf, 10)
 
 	else if(!ear_safety)
 		M.Stun(4)
 		M.ear_damage += rand(0, 1)
-		M.ear_deaf = max(M.ear_deaf,5)
+		M.ear_deaf = max(M.ear_deaf, 5)
 
 //This really should be in mob not every check
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
-		if (IO.damage >= IO.min_bruised_damage)
-			to_chat(M, "\red Your eyes start to burn badly!")
+		if(IO.damage >= IO.min_bruised_damage)
+			to_chat(M, "<span class='warning'>Your eyes start to burn badly!</span>")
 			if(!banglet && !(istype(src , /obj/item/weapon/grenade/clusterbuster)))
-				if (IO.damage >= IO.min_broken_damage)
-					to_chat(M, "\red You can't see anything!")
+				if(IO.damage >= IO.min_broken_damage)
+					to_chat(M, "<span class='warning'>You can't see anything!</span>")
 		if(H.species.name == SHADOWLING) // BBQ from shadowling ~Zve
-			H.adjustFireLoss(rand(15,25))
-	if (M.ear_damage >= 15)
-		to_chat(M, "\red Your ears start to ring badly!")
+			H.adjustFireLoss(rand(15, 25))
+	if(M.ear_damage >= 15)
+		to_chat(M, "<span class='warning'>Your ears start to ring badly!</span>")
 		if(!banglet && !(istype(src , /obj/item/weapon/grenade/clusterbuster)))
-			if (prob(M.ear_damage - 10 + 5))
-				to_chat(M, "\red You can't hear anything!")
+			if(prob(M.ear_damage - 5))
+				to_chat(M, "<span class='warning'>You can't hear anything!</span>")
 				M.sdisabilities |= DEAF
-	else
-		if (M.ear_damage >= 5)
-			to_chat(M, "\red Your ears start to ring!")
+	else if(M.ear_damage >= 5)
+		to_chat(M, "<span class='warning'>Your ears start to ring!</span>")
 	M.update_icons()
 
 ////////////////////
@@ -124,7 +123,7 @@
 	for(var/i in 1 to numspawned)
 		new /obj/item/weapon/grenade/clusterbuster/segment(loc, payload)	//Creates 'segments' that launches a few more payloads
 
-	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+	playsound(src, 'sound/weapons/armbomb.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 	qdel(src)
 
 
@@ -152,7 +151,7 @@
 		P.active = 1
 		walk_away(P,loc,rand(1,4))
 		addtimer(CALLBACK(P, /obj/item/weapon/grenade.proc/prime), rand(15,60))
-	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+	playsound(src, 'sound/weapons/armbomb.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 	qdel(src)
 
 //////////////////////////////////

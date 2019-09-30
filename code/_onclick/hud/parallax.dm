@@ -244,7 +244,7 @@
 	if (!view)
 		view = world.view
 	var/list/new_overlays = list()
-	var/count = ceil(view/(480/world.icon_size))+1
+	var/count = CEIL(view/(480/world.icon_size))+1
 	for(var/x in -count to count)
 		for(var/y in -count to count)
 			if(x == 0 && y == 0)
@@ -283,7 +283,7 @@
 
 /obj/screen/parallax_layer/planet/update_status(mob/M)
 	var/turf/T = get_turf(M)
-	if(T && T.z == ZLEVEL_STATION)
+	if(T && is_station_level(T.z))
 		invisibility = 0
 	else
 		invisibility = INVISIBILITY_ABSTRACT

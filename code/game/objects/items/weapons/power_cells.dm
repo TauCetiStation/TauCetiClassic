@@ -18,7 +18,7 @@
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
 
 /obj/item/weapon/stock_parts/cell/suicide_act(mob/user)
-	to_chat(viewers(user), "\red <b>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</b>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
 	return (FIRELOSS)
 
 /obj/item/weapon/stock_parts/cell/crap

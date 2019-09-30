@@ -60,7 +60,7 @@
 	desc = "You can drill using this item. You dig?"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "drill"
-	hitsound = 'sound/weapons/circsawhit.ogg'
+	hitsound = list('sound/weapons/circsawhit.ogg')
 	m_amt = 15000
 	g_amt = 10000
 	flags = CONDUCT
@@ -70,8 +70,8 @@
 	attack_verb = list("drilled")
 
 /obj/item/weapon/surgicaldrill/suicide_act(mob/user)
-	to_chat(viewers(user), pick("\red <b>[user] is pressing the [src.name] to \his temple and activating it! It looks like \he's trying to commit suicide.</b>", \
-						"\red <b>[user] is pressing [src.name] to \his chest and activating it! It looks like \he's trying to commit suicide.</b>"))
+	to_chat(viewers(user), pick("<span class='warning'><b>[user] is pressing the [src.name] to \his temple and activating it! It looks like \he's trying to commit suicide.</b></span>", \
+						"<span class='warning'><b>[user] is pressing [src.name] to \his chest and activating it! It looks like \he's trying to commit suicide.</b></span>"))
 	return (BRUTELOSS)
 
 /*
@@ -96,9 +96,9 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/scalpel/suicide_act(mob/user)
-	to_chat(viewers(user), pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-						"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-						"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>"))
+	to_chat(viewers(user), pick("<span class='warning'><b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b></span>", \
+						"<span class='warning'><b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b></span>", \
+						"<span class='warning'><b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b></span>"))
 	return (BRUTELOSS)
 
 /*
@@ -109,6 +109,7 @@
 	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks basic and could be improved."
 	icon_state = "scalpel_laser1_on"
 	damtype = "fire"
+	toolspeed = 1.2
 
 /obj/item/weapon/scalpel/laser2
 	name = "laser scalpel"
@@ -123,12 +124,14 @@
 	icon_state = "scalpel_laser3_on"
 	damtype = "fire"
 	force = 15.0
+	toolspeed = 0.6
 
 /obj/item/weapon/scalpel/manager
 	name = "incision management system"
 	desc = "A true extension of the surgeon's body, this marvel instantly and completely prepares an incision allowing for the immediate commencement of therapeutic steps."
 	icon_state = "scalpel_manager_on"
 	force = 7.5
+	toolspeed = 0.6
 
 /*
  * Circular Saw
@@ -138,7 +141,7 @@
 	desc = "For heavy duty cutting."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw"
-	hitsound = 'sound/weapons/circsawhit.ogg'
+	hitsound = list('sound/weapons/circsawhit.ogg')
 	flags = CONDUCT
 	force = 15.0
 	w_class = ITEM_SIZE_SMALL

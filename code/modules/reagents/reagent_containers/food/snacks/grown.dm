@@ -58,14 +58,14 @@
 					if (S.contents.len < S.capacity)
 						S.contents += G
 					else
-						to_chat(user, "\blue The plant bag is full.")
+						to_chat(user, "<span class='notice'>The plant bag is full.</span>")
 						return
-			to_chat(user, "\blue You pick up all the plants and seeds.")
+			to_chat(user, "<span class='notice'>You pick up all the plants and seeds.</span>")
 		else
 			if (S.contents.len < S.capacity)
 				S.contents += src;
 			else
-				to_chat(user, "\blue The plant bag is full.")*/
+				to_chat(user, "<span class='notice'>The plant bag is full.</span>")*/
 	return
 
 /*/obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
@@ -77,14 +77,14 @@
 					if (S.contents.len < S.capacity)
 						S.contents += G
 					else
-						to_chat(user, "\blue The plant bag is full.")
+						to_chat(user, "<span class='notice'>The plant bag is full.</span>")
 						return
-			to_chat(user, "\blue You pick up all the plants and seeds.")
+			to_chat(user, "<span class='notice'>You pick up all the plants and seeds.</span>")
 		else
 			if (S.contents.len < S.capacity)
 				S.contents += src;
 			else
-				to_chat(user, "\blue The plant bag is full.")
+				to_chat(user, "<span class='notice'>The plant bag is full.</span>")
 	return*/
 
 /obj/item/weapon/grown/attackby(obj/item/O, mob/user)
@@ -563,6 +563,7 @@
 	icon_state = "banana"
 	item_state = "banana"
 	filling_color = "#fcf695"
+	can_be_holstered = TRUE
 	trash = /obj/item/weapon/bananapeel
 	bitesize = 5
 
@@ -715,10 +716,11 @@
 			return
 
 		M.stop_pulling()
-		to_chat(M, "\blue You slipped on the [name]!")
-		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-		M.Stun(8)
-		M.Weaken(5)
+		to_chat(M, "<span class='notice'>You slipped on the [name]!</span>")
+		playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+		if(!M.buckled)
+			M.Stun(8)
+			M.Weaken(5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	seed = "/obj/item/seeds/wheatseed"

@@ -1,5 +1,5 @@
 #define LOG_CLEANING(text) \
-  replace_characters(text, list("\proper"="","\improper"="", JA_CODE=JA_PLACEHOLDER, JA_CODE_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
+  replace_characters(text, list("\proper"="","\improper"="", JA_ENTITY=JA_PLACEHOLDER, JA_ENTITY_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
 
 //print an error message to world.log
 
@@ -27,11 +27,18 @@
 /proc/info(msg)
 	world.log << "## INFO: [msg][log_end]"
 
+/proc/round_log(msg)
+	world.log << "\[[time_stamp()]][round_id ? " #[round_id]:" : ""] [msg][log_end]"
+
 /proc/log_admin(text)
 	admin_log.Add(text)
 	if (config.log_admin)
 		diary << "\[[time_stamp()]]ADMIN: [LOG_CLEANING(text)][log_end]"
 
+/proc/log_admin_private(text)
+	admin_log.Add(text)
+	if (config.log_admin)
+		diary << "\[[time_stamp()]]ADMINPRIVATE: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_debug(text)
 	if (config.log_debug)
@@ -89,6 +96,9 @@
 
 /proc/log_misc(text)
 	diary << "\[[time_stamp()]]MISC: [text][log_end]"
+
+/proc/log_sql(text)
+	world.log << "\[[time_stamp()]]SQL: [text][log_end]"
 
 /proc/log_unit_test(text)
 	world.log << "## UNIT_TEST ##: [text]"
@@ -192,3 +202,37 @@
 	log_game(text)
 
 #undef LOG_CLEANING
+
+/proc/drop_round_stats()
+	var/date = time2text(world.realtime, "YYYY/MM/DD")
+	var/round_stats_loc = "data/stat_logs/[date]/round-"
+
+	if(round_id)
+		round_stats_loc += round_id
+	else
+		var/timestamp = replacetext(time_stamp(), ":", ".")
+		round_stats_loc += "[timestamp]"
+
+	var/list/stats = list()
+
+	stats["round_id"] = round_id
+	stats["start_time"] = time2text(round_start_realtime, "hh:mm:ss")
+	stats["end_time"] = time2text(world.realtime, "hh:mm:ss")
+	stats["duration"] = roundduration2text()
+	stats["mode"] = ticker.mode
+	stats["mode_result"] = ticker.mode.mode_result
+	stats["map"] = SSmapping.config.map_name
+
+	stats["completion_html"] = ticker.mode.completion_text
+	stats["completion_antagonists"] = antagonists_completion//todo: icon2base64 icons?
+
+	stats["score"] = score
+	stats["achievements"] = achievements
+	stats["centcomm_communications"] = centcomm_communications
+
+	var/stat_file = file("[round_stats_loc]/stat.json")
+
+	stat_file << list2json(stats)
+
+/proc/add_communication_log(type = 0, title = 0, author = 0, content = 0, time = roundduration2text())
+	centcomm_communications += list(list("type" = type, "title" = title, "time" = time, "content" = content))

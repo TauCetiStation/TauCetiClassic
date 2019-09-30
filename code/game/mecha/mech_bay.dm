@@ -33,7 +33,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
 	RefreshParts()
 	recharging_turf = get_step(loc, dir)
 
@@ -91,6 +91,8 @@
 	anchored = 1
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "recharge_comp"
+	state_broken_preset = "techb"
+	state_nopower_preset = "tech0"
 	light_color = "#a97faa"
 	circuit = /obj/item/weapon/circuitboard/mech_bay_power_console
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
@@ -153,6 +155,7 @@
 	update_icon()
 
 /obj/machinery/computer/mech_bay_power_console/update_icon()
+	. = ..()
 	if(!recharge_port || !recharge_port.recharging_mech || !recharge_port.recharging_mech.cell || !(recharge_port.recharging_mech.cell.charge < recharge_port.recharging_mech.cell.maxcharge))
 		icon_state = "recharge_comp"
 	else

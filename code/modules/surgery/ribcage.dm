@@ -35,13 +35,13 @@
 	..()
 
 /datum/surgery_step/ribcage/saw_ribcage/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("\blue [user] has cut [target]'s ribcage open with \the [tool].",		\
-	"\blue You have cut [target]'s ribcage open with \the [tool].")
+	user.visible_message("<span class='notice'>[user] has cut [target]'s ribcage open with \the [tool].</span>",		\
+	"<span class='notice'>You have cut [target]'s ribcage open with \the [tool].</span>")
 	target.op_stage.ribcage = 1
 
 /datum/surgery_step/ribcage/saw_ribcage/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("\red [user]'s hand slips, cracking [target]'s ribcage with \the [tool]!" , \
-	"\red Your hand slips, cracking [target]'s ribcage with \the [tool]!" )
+	user.visible_message("<span class='warning'>[user]'s hand slips, cracking [target]'s ribcage with \the [tool]!</span>" , \
+	"<span class='warning'>Your hand slips, cracking [target]'s ribcage with \the [tool]!</span>" )
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.createwound(CUT, 20)
 	BP.fracture()
@@ -71,8 +71,8 @@
 	..()
 
 /datum/surgery_step/ribcage/retract_ribcage/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/msg = "\blue [user] forces open [target]'s ribcage with \the [tool]."
-	var/self_msg = "\blue You force open [target]'s ribcage with \the [tool]."
+	var/msg = "<span class='notice'>[user] forces open [target]'s ribcage with \the [tool].</span>"
+	var/self_msg = "<span class='notice'>You force open [target]'s ribcage with \the [tool].</span>"
 	user.visible_message(msg, self_msg)
 	target.op_stage.ribcage = 2
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -83,8 +83,8 @@
 		BP.fracture()
 
 /datum/surgery_step/ribcage/retract_ribcage/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/msg = "\red [user]'s hand slips, breaking [target]'s ribcage!"
-	var/self_msg = "\red Your hand slips, breaking [target]'s ribcage!"
+	var/msg = "<span class='warning'>[user]'s hand slips, breaking [target]'s ribcage!</span>"
+	var/self_msg = "<span class='warning'>Your hand slips, breaking [target]'s ribcage!</span>"
 	user.visible_message(msg, self_msg)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.createwound(BRUISE, 20)
@@ -112,8 +112,8 @@
 	..()
 
 /datum/surgery_step/ribcage/close_ribcage/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/msg = "\blue [user] bends [target]'s ribcage back into place with \the [tool]."
-	var/self_msg = "\blue You bend [target]'s ribcage back into place with \the [tool]."
+	var/msg = "<span class='notice'>[user] bends [target]'s ribcage back into place with \the [tool].</span>"
+	var/self_msg = "<span class='notice'>You bend [target]'s ribcage back into place with \the [tool].</span>"
 	user.visible_message(msg, self_msg)
 
 	target.op_stage.ribcage = 1
@@ -121,14 +121,14 @@
 	BP.open = 2
 
 /datum/surgery_step/ribcage/close_ribcage/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/msg = "\red [user]'s hand slips, bending [target]'s ribs the wrong way!"
-	var/self_msg = "\red Your hand slips, bending [target]'s ribs the wrong way!"
+	var/msg = "<span class='warning'>[user]'s hand slips, bending [target]'s ribs the wrong way!</span>"
+	var/self_msg = "<span class='warning'>Your hand slips, bending [target]'s ribs the wrong way!</span>"
 	user.visible_message(msg, self_msg)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
 	BP.createwound(BRUISE, 20)
 	BP.fracture()
 	if (prob(40))
-		user.visible_message("\red A rib pierces the lung!")
+		user.visible_message("<span class='warning'>A rib pierces the lung!</span>")
 		target.rupture_lung()
 
 /datum/surgery_step/ribcage/mend_ribcage
@@ -151,8 +151,8 @@
 	..()
 
 /datum/surgery_step/ribcage/mend_ribcage/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/msg = "\blue [user] applied \the [tool] to [target]'s ribcage."
-	var/self_msg = "\blue You applied \the [tool] to [target]'s ribcage."
+	var/msg = "<span class='notice'>[user] applied \the [tool] to [target]'s ribcage.</span>"
+	var/self_msg = "<span class='notice'>You applied \the [tool] to [target]'s ribcage.</span>"
 	user.visible_message(msg, self_msg)
 
 	target.op_stage.ribcage = 0
@@ -164,8 +164,8 @@
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/ribcage/remove_embryo
 	allowed_tools = list(
-	/obj/item/weapon/hemostat = 100,	\
-	/obj/item/weapon/wirecutters = 75,	\
+	/obj/item/weapon/hemostat = 100,
+	/obj/item/weapon/wirecutters = 75,
 	/obj/item/weapon/kitchen/utensil/fork = 50
 	)
 	blood_level = 2
@@ -184,7 +184,7 @@
 	..()
 
 /datum/surgery_step/ribcage/remove_embryo/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("\red [user] rips the larva out of [target]'s ribcage!",
+	user.visible_message("<span class='warning'>[user] rips the larva out of [target]'s ribcage!</span>",
 						 "You rip the larva out of [target]'s ribcage!")
 
 	for(var/obj/item/alien_embryo/A in target)
@@ -231,8 +231,8 @@
 				user.visible_message("[user] starts treating damage to [target]'s [IO.name] with [tool_name].", \
 				"You start treating damage to [target]'s [IO.name] with [tool_name]." )
 			else
-				user.visible_message("\blue [user] attempts to repair [target]'s mechanical [IO.name] with [tool_name]...", \
-				"\blue You attempt to repair [target]'s mechanical [IO.name] with [tool_name]...")
+				user.visible_message("<span class='notice'>[user] attempts to repair [target]'s mechanical [IO.name] with [tool_name]...</span>", \
+				"<span class='notice'>You attempt to repair [target]'s mechanical [IO.name] with [tool_name]...</span>")
 
 	target.custom_pain("The pain in your chest is living hell!",1)
 	..()
@@ -251,16 +251,16 @@
 		if(IO && IO.damage > 0)
 			if(IO.robotic < 2)
 				user.visible_message("[user] treats damage to [target]'s [IO.name] with [tool_name].", \
-				"\blue You treat damage to [target]'s [IO.name] with [tool_name]." )
+				"<span class='notice'>You treat damage to [target]'s [IO.name] with [tool_name].</span>" )
 				IO.damage = 0
 			else
-				user.visible_message("\blue [user] pokes [target]'s mechanical [IO.name] with [tool_name]...", \
-				"\blue You poke [target]'s mechanical [IO.name] with [tool_name]... \red For no effect, since it's robotic.")
+				user.visible_message("<span class='notice'>[user] pokes [target]'s mechanical [IO.name] with [tool_name]...</span>", \
+				"<span class='notice'>You poke [target]'s mechanical [IO.name] with [tool_name]... <span class='warning'>For no effect, since it's robotic.</span></span>")
 
 /datum/surgery_step/ribcage/fix_chest_internal/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
-	user.visible_message("\red [user]'s hand slips, getting mess and tearing the inside of [target]'s chest with \the [tool]!", \
-	"\red Your hand slips, getting mess and tearing the inside of [target]'s chest with \the [tool]!")
+	user.visible_message("<span class='warning'>[user]'s hand slips, getting mess and tearing the inside of [target]'s chest with \the [tool]!</span>", \
+	"<span class='warning'>Your hand slips, getting mess and tearing the inside of [target]'s chest with \the [tool]!</span>")
 	var/dam_amt = 2
 
 	if (istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
@@ -398,7 +398,7 @@
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
-	msg_admin_attack("[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	msg_admin_attack("[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])", user)
 
 	target.chest_brain_op_stage = 2.0
 	target.death()
@@ -467,7 +467,7 @@
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
-	msg_admin_attack("[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	msg_admin_attack("[user.name] ([user.ckey]) debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])", user)
 
 	var/obj/item/device/mmi/posibrain/P = new(target.loc)
 	P.transfer_identity(target)

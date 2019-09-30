@@ -4,7 +4,9 @@
 	name = "Gravity Generator Control"
 	desc = "A computer to control a local gravity generator.  Qualified personnel only."
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "airtunnel0e"
+	icon_state = "airtunnel"
+	state_broken_preset = "atmosb"
+	state_nopower_preset = "atmos0"
 	anchored = 1
 	density = 1
 	var/obj/machinery/gravity_generator = null
@@ -17,7 +19,7 @@
 	icon_state = "TheSingGen"
 	anchored = 1
 	density = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 1000
 	var/on = 1

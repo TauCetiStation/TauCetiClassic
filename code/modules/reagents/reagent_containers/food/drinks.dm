@@ -46,7 +46,7 @@
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, gulp_size)
 
-		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
 	else
 		if(istype(M, /mob/living/carbon/human))
@@ -63,7 +63,7 @@
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-		msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])", user)
 
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, gulp_size)
@@ -74,7 +74,7 @@
 			var/refill = R.get_master_reagent_id()
 			addtimer(CALLBACK(R, /datum/reagents.proc/add_reagent, refill, fillevel), 600)
 
-		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
 
 	return 0

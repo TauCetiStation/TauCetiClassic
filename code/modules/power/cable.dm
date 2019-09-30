@@ -399,10 +399,10 @@ By design, d1 is the smallest direction and d2 is the highest
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
 	full_w_class = ITEM_SIZE_SMALL
+	merge_type = /obj/item/stack/cable_coil
 
 /obj/item/stack/cable_coil/cyborg
-	merge_type = /obj/item/stack/cable_coil
-	max_amount = 50
+	max_amount = 90
 	m_amt = 0
 	g_amt = 0
 
@@ -429,7 +429,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		var/mob/living/carbon/human/H = M
 
 		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
-		if(!(BP.status & ORGAN_ROBOT) || user.a_intent != "help")
+		if(!BP.is_robotic() || user.a_intent != "help")
 			return ..()
 
 		if(H.species.flags[IS_SYNTHETIC])
@@ -656,6 +656,19 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/cable_coil/red
 	color = COLOR_RED
 
-/obj/item/stack/cable_coil/random/atom_init()
-	color = pick(COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_CYAN, COLOR_PINK, COLOR_YELLOW, COLOR_ORANGE, COLOR_WHITE, COLOR_GRAY)
-	. = ..()
+/obj/item/stack/cable_coil/gray
+	color = COLOR_GRAY
+
+/obj/item/stack/cable_coil/random/atom_init(mapload, new_amount = null)
+	..()
+	var/new_type = pick(/obj/item/stack/cable_coil/yellow,
+						/obj/item/stack/cable_coil/blue,
+						/obj/item/stack/cable_coil/green,
+						/obj/item/stack/cable_coil/pink,
+						/obj/item/stack/cable_coil/orange,
+						/obj/item/stack/cable_coil/cyan,
+						/obj/item/stack/cable_coil/red,
+						/obj/item/stack/cable_coil/gray,
+						/obj/item/stack/cable_coil)
+	new new_type(loc, new_amount)
+	return INITIALIZE_HINT_QDEL

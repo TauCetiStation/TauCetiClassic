@@ -5,7 +5,7 @@
 	icon = 'icons/obj/machines/broadcast.dmi'
 	icon_state = "broadcaster"
 	light_color="#4285f4"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 1000
 
@@ -89,10 +89,10 @@
 	if(on)
 		overlays+="broadcaster on"
 		set_light(3) // OH FUUUUCK
-		use_power = 2
+		set_power_use(ACTIVE_POWER_USE)
 	else
 		set_light(1) // Only the tile we're on.
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 	if(sources.len)
 		overlays+="broadcaster linked"
 
@@ -130,7 +130,7 @@
 				media_frequency = newfreq
 				connect_frequency()
 			else
-				to_chat(usr, "\red Invalid FM frequency. (90.0, 200.0)")
+				to_chat(usr, "<span class='warning'>Invalid FM frequency. (90.0, 200.0)</span>")
 
 	updateUsrDialog()
 

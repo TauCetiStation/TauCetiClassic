@@ -1,27 +1,22 @@
 /obj/item/projectile/magic
 	name = "bolt of nothing"
 	icon_state = "energy"
-	damage = 0
-	damage_type = OXY
+	light_color = "#00ff00"
+	light_power = 2
+	light_range = 2
 	nodamage = 1
 	flag = "magic"
 
 	var/power_of_spell = 1
 
+/obj/item/projectile/magic/atom_init(mapload, power_of_spell = 1)
+	src.power_of_spell = power_of_spell
+	. = ..()
+
 /obj/item/projectile/magic/change
 	name = "bolt of change"
 	icon_state = "ice_1"
 	light_color = "#00bfff"
-	light_power = 2
-	light_range = 2
-	damage = 0
-	damage_type = BURN
-	nodamage = 1
-	flag = "magic"
-
-/obj/item/projectile/magic/atom_init(mapload, power_of_spell = 1)
-	src.power_of_spell = power_of_spell
-	. = ..()
 
 /obj/item/projectile/magic/change/on_hit(atom/change)
 	wabbajack(change)
@@ -134,12 +129,6 @@
 	name = "bolt of animation"
 	icon_state = "red_1"
 	light_color = "#ff0000"
-	light_power = 2
-	light_range = 2
-	damage = 0
-	damage_type = BURN
-	nodamage = 1
-	flag = "magic"
 
 /obj/item/projectile/magic/animate/Bump(atom/change)
 	. = ..()
@@ -151,23 +140,10 @@
 		var/mob/living/simple_animal/hostile/mimic/copy/C = change
 		C.ChangeOwner(firer)
 
-
-/*
-/obj/item/projectile/magic/death
-	name = "bolt of death"
-	icon_state = "pulse1_bl"
-	damage = 9001
-	damage_type = OXY
-	nodamage = 0
-	flag = "magic"*/
-
 /obj/item/projectile/magic/resurrection
 	name = "bolt of resurrection"
 	icon_state = "ion"
-	damage = 0
-	damage_type = OXY
-	nodamage = 1
-	flag = "magic"
+	light_color = "#a9e2f3"
 
 /obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	if(!istype(target))
@@ -186,11 +162,6 @@
 
 /obj/item/projectile/magic/door
 	name = "bolt of door creation"
-	icon_state = "energy"
-	damage = 0
-	damage_type = OXY
-	nodamage = 1
-	flag = "magic"
 	var/list/doors = list(/obj/structure/mineral_door/metal, /obj/structure/mineral_door/silver,/obj/structure/mineral_door/gold, /obj/structure/mineral_door/uranium,
 					/obj/structure/mineral_door/sandstone, /obj/structure/mineral_door/transparent/diamond, /obj/structure/mineral_door/wood)
 
@@ -209,25 +180,16 @@
 			D.Open()
 	qdel(src)
 
-/*/obj/item/projectile/magic/teleport
-	name = "bolt of teleportation"
-	icon_state = "bluespace"
-	damage = 0
-	damage_type = OXY
-	nodamage = 1
-	flag = "magic"
-	var/inner_tele_radius = 0
-	var/outer_tele_radius = 6
+/obj/item/projectile/magic/forcebolt
+	name = "force bolt"
+	icon_state = "ice_1"
+	light_color = "#00bfff"
+	damage = 20
+	nodamage = 0
 
-/obj/item/projectile/magic/teleport/on_hit(mob/target)
-	var/teleammount = 0
-	var/teleloc = target
-	if(!isturf(target))
-		teleloc = target.loc
-	for(var/atom/movable/stuff in teleloc)
-		if(!stuff.anchored && stuff.loc)
-			teleammount++
-			do_teleport(stuff, stuff, 10)
-			var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
-			smoke.set_up(max(round(10 - teleammount),1), 0, stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
-			smoke.start()*/
+/obj/item/projectile/magic/forcebolt/on_hit(atom/target, blocked = 0)
+
+	var/obj/T = target
+	var/throwdir = get_dir(firer,target)
+	T.throw_at(get_edge_target_turf(target, throwdir),10,10)
+	return 1

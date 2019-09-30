@@ -128,7 +128,7 @@
 		return
 	if(iswrench(I))
 		if(!(stat & BROKEN))
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			dir = turn(dir,-45)
 			update_move_direction()
 			to_chat(user, "<span class='notice'>You rotate [src].</span>")
@@ -200,7 +200,7 @@
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
-	use_power = 0
+	use_power = NO_POWER_USE
 	anchored = TRUE
 
 	var/position = 0			// 0 off, -1 reverse, 1 forward
