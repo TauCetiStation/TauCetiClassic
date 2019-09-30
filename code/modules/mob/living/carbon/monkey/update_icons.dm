@@ -1,12 +1,13 @@
 //Monkey Overlays Indexes////////
-#define M_MASK_LAYER			1
-#define M_BACK_LAYER			2
-#define M_HANDCUFF_LAYER		3
-#define M_L_HAND_LAYER			4
-#define M_R_HAND_LAYER			5
-#define TARGETED_LAYER			6
-#define M_FIRE_LAYER			7
-#define M_TOTAL_LAYERS			7
+#define M_HEAD_LAYER 			1
+#define M_MASK_LAYER			2
+#define M_BACK_LAYER			3
+#define M_HANDCUFF_LAYER		4
+#define M_L_HAND_LAYER			5
+#define M_R_HAND_LAYER			6
+#define TARGETED_LAYER			7
+#define M_FIRE_LAYER			8
+#define M_TOTAL_LAYERS			8
 /////////////////////////////////
 
 /mob/living/carbon/monkey
@@ -14,6 +15,7 @@
 
 /mob/living/carbon/monkey/regenerate_icons()
 	..()
+	update_inv_head(0)
 	update_inv_wear_mask(0)
 	update_inv_back(0)
 	update_inv_r_hand(0)
@@ -36,6 +38,13 @@
 
 
 ////////
+/mob/living/carbon/monkey/update_inv_head(update_icons=TRUE)
+	if(head)
+		overlays_standing[M_HEAD_LAYER] = image("icon"= 'icons/mob/head.dmi', "icon_state" = "[head.icon_state]")
+		overlays_standing[M_HEAD_LAYER].pixel_y = -2
+	if(update_icons)
+		update_icons()
+
 /mob/living/carbon/monkey/update_inv_wear_mask(var/update_icons=1)
 	if( wear_mask && istype(wear_mask, /obj/item/clothing/mask) )
 		if(wear_mask:icon_custom)
@@ -125,6 +134,7 @@
 		overlays_standing[M_FIRE_LAYER]		= null
 
 //Monkey Overlays Indexes////////
+#undef M_HEAD_LAYER
 #undef M_MASK_LAYER
 #undef M_BACK_LAYER
 #undef M_HANDCUFF_LAYER
