@@ -5,7 +5,8 @@
 "ab" = (
 /obj/structure/lattice,
 /obj/structure/grille{
-	destroyed = 1
+	density = 0;
+	icon_state = "brokengrille"
 	},
 /turf/space,
 /area/space)

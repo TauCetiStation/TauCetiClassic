@@ -945,7 +945,8 @@
 /area/jungle/crash_ship_source)
 "dD" = (
 /obj/structure/grille{
-	destroyed = 1
+	density = 0;
+	icon_state = "brokengrille"
 	},
 /turf/unsimulated/floor,
 /area/jungle/crash_ship_source)
@@ -999,7 +1000,8 @@
 /area/jungle/crash_ship_source)
 "dO" = (
 /obj/structure/grille{
-	destroyed = 1
+	density = 0;
+	icon_state = "brokengrille"
 	},
 /turf/unsimulated/jungle/path,
 /area/jungle/crash_ship_source)

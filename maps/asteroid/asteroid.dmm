@@ -8064,13 +8064,14 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/structure/grille{
+	density = 0;
+	icon_state = "brokengrille"
+	},
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
 /obj/item/stack/rods,
-/obj/structure/grille{
-	destroyed = 1
-	},
 /turf/simulated/floor/plating,
 /area/mine/abandoned)
 "qU" = (
@@ -8258,11 +8259,12 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/structure/grille{
+	density = 0;
+	icon_state = "brokengrille"
+	},
 /obj/item/stack/rods,
 /obj/item/weapon/shard,
-/obj/structure/grille{
-	destroyed = 1
-	},
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},

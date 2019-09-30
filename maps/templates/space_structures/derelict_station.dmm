@@ -982,7 +982,8 @@
 "cO" = (
 /obj/item/weapon/shard,
 /obj/structure/grille{
-	destroyed = 1
+	density = 0;
+	icon_state = "brokengrille"
 	},
 /obj/effect/decal/remains/human{
 	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
@@ -1557,7 +1558,8 @@
 /area/derelict/singularity_engine)
 "ew" = (
 /obj/structure/grille{
-	destroyed = 1
+	density = 0;
+	icon_state = "brokengrille"
 	},
 /turf/simulated/floor/plating/airless,
 /area/derelict/singularity_engine)
@@ -1741,7 +1743,8 @@
 "fe" = (
 /obj/item/weapon/shard,
 /obj/structure/grille{
-	destroyed = 1
+	density = 0;
+	icon_state = "brokengrille"
 	},
 /turf/simulated/floor/plating/airless,
 /area/derelict/medical)

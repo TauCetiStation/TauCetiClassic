@@ -433,7 +433,8 @@
 /area/awaymission/labs/cave)
 "by" = (
 /obj/structure/grille{
-	destroyed = 1
+	density = 0;
+	icon_state = "brokengrille"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
