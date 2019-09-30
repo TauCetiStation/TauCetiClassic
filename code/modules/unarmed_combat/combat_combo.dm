@@ -21,7 +21,7 @@ var/global/list/combat_combos_by_name = list()
 	var/require_arm_to_perform = FALSE
 	var/require_leg_to_perform = FALSE
 
-	var/heavy_animation = TRUE // Determines whether we call the before_animation and after_animation procs.
+	var/heavy_animation = FALSE // Determines whether we call the before_animation and after_animation procs.
 	var/needs_logging = TRUE // Do we need to PM admins about this combo?
 
 /datum/combat_combo/proc/get_hash()
@@ -37,9 +37,7 @@ var/global/list/combat_combos_by_name = list()
 		if(show_warning)
 			to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> while being incapacitated.</span>")
 		return FALSE
-	if(CS.attacker.is_busy(CS.victim))
-		if(show_warning)
-			to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> while doing something else.</span>")
+	if(CS.attacker.is_busy(CS.victim, show_warning))
 		return FALSE
 	if(CS.attacker.attack_animation || CS.attacker.combo_animation)
 		if(show_warning)
@@ -123,17 +121,17 @@ var/global/list/combat_combos_by_name = list()
 /datum/combat_combo/proc/before_animation(mob/living/victim, mob/living/attacker)
 	if(heavy_animation)
 		victim.Stun(2)
-		attacker.combo_animation = TRUE
-
-		attacker.become_busy(victim, _hand = 0)
-		attacker.become_busy(victim, _hand = 1)
 
 		if(victim.buckled)
 			victim.buckled.unbuckle_mob()
 		if(attacker.buckled)
 			attacker.buckled.unbuckle_mob()
 
+		attacker.become_busy(victim, _hand = 0)
+		attacker.become_busy(victim, _hand = 1)
 		victim.in_use_action = TRUE
+
+		attacker.combo_animation = TRUE
 
 // Please remember, that the default animation of attack takes 3 ticks. So put at least sleep(3) here
 // before anything.
@@ -154,9 +152,10 @@ var/global/list/combat_combos_by_name = list()
 		attacker.pixel_y = attacker.default_pixel_y
 		attacker.layer = attacker.default_layer
 
-		attacker.become_not_busy(victim, _hand = 0)
-		attacker.become_not_busy(victim, _hand = 1)
+		attacker.become_not_busy(_hand = 0)
+		attacker.become_not_busy(_hand = 1)
 		victim.in_use_action = FALSE
+
 		attacker.combo_animation = FALSE
 
 // This is for technical stuff, such as fingerprints leaving, admin PM.

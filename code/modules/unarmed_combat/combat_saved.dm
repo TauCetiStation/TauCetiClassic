@@ -155,7 +155,8 @@
 			next_combo = null
 			CC.pre_execute(victim, attacker)
 
-			CC.before_animation(victim, attacker)
+			if(CC.heavy_animation)
+				CC.before_animation(victim, attacker)
 			INVOKE_ASYNC(CC, /datum/combat_combo.proc/animate_combo, victim, attacker)
 
 			CC.execute(victim, attacker)

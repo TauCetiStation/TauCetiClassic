@@ -49,9 +49,7 @@
 /atom/movable/proc/correct_pixel_shift(mob/living/carbon/C)
 	if(!istype(C))
 		return
-	if(C.lying)
-		C.pixel_x = C.get_standard_pixel_x_offset()
-		C.pixel_y = C.get_standard_pixel_y_offset()
+	C.update_transform()
 
 /atom/movable/proc/post_buckle_mob(mob/living/M)
 	return

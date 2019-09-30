@@ -988,10 +988,10 @@
 	return 1
 
 //-TG Port for smooth standing/lying animations
-/mob/living/proc/get_standard_pixel_x_offset(lying_current = 0)
+/mob/living/proc/get_pixel_x_offset(lying_current = FALSE)
 	return initial(pixel_x)
 
-/mob/living/proc/get_standard_pixel_y_offset(lying_current = 0)
+/mob/living/proc/get_pixel_y_offset(lying_current = FALSE)
 	return initial(pixel_y)
 
 //Attack animation port below
@@ -1029,7 +1029,7 @@
 
 
 /mob/living/do_attack_animation(atom/A)
-	var/final_pixel_y = get_standard_pixel_y_offset(lying_current)
+	var/final_pixel_y = default_pixel_y
 	..(A, final_pixel_y)
 
 	//Show an image of the wielded weapon over the person who got dunked.

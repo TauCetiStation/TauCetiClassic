@@ -75,7 +75,7 @@
 					var/matrix/m = matrix(H.transform)
 					m.Turn(180)
 					animate(H, transform = m, time = 3)
-					H.pixel_y = H.get_standard_pixel_y_offset()
+					H.pixel_y = H.default_pixel_y
 					qdel(G)
 		else
 			to_chat(user, "<span class='danger'>You can't use that on the spike!</span>")
@@ -120,7 +120,7 @@
 		var/matrix/m = matrix(L.transform)
 		m.Turn(180)
 		animate(L, transform = m, time = 3)
-		L.pixel_y = L.get_standard_pixel_y_offset()
+		L.pixel_y = L.default_pixel_y
 		L.adjustBruteLoss(15)
 		visible_message(text("<span class='danger'>[L] falls free of the [src]!</span>"))
 		unbuckle_mob()
