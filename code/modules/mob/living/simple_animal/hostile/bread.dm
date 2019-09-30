@@ -4,8 +4,8 @@
 	icon_state = "bread"
 	icon_living = "bread"
 	icon_dead = "bread-dead"
-	health = 20
-	maxHealth = 20
+	health = 30
+	maxHealth = 30
 	melee_damage_lower = 5
 	melee_damage_upper = 7
 	attacktext = "bite"
