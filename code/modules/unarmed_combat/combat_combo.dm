@@ -21,6 +21,7 @@ var/global/list/combat_combos_by_name = list()
 	var/require_arm_to_perform = FALSE
 	var/require_leg_to_perform = FALSE
 
+	var/heavy_animation = TRUE // Determines whether we call the before_animation and after_animation procs.
 	var/needs_logging = TRUE // Do we need to PM admins about this combo?
 
 /datum/combat_combo/proc/get_hash()
@@ -119,10 +120,43 @@ var/global/list/combat_combos_by_name = list()
 /datum/combat_combo/proc/on_ready(mob/living/victim, mob/living/attacker)
 	attacker.emote("scream")
 
+/datum/combat_combo/proc/before_animation(mob/living/victim, mob/living/attacker)
+	if(heavy_animation)
+		victim.Stun(2)
+		attacker.combo_animation = TRUE
+
+		attacker.become_busy(victim, _hand = 0)
+		attacker.become_busy(victim, _hand = 1)
+		victim.in_use_action = TRUE
+
+		if(victim.buckled)
+			victim.buckled.unbuckle_mob()
+		if(attacker.buckled)
+			attacker.buckled.unbuckle_mob()
+
 // Please remember, that the default animation of attack takes 3 ticks. So put at least sleep(3) here
 // before anything.
 /datum/combat_combo/proc/animate_combo(mob/living/victim, mob/living/attacker)
 	return
+
+// THIS SHOULD BE CALLED MANUALLY FROM ALL RETURN POINTS IN ANIMATE_COMBO
+// SINCE IT IS ASYNC.
+/datum/combat_combo/proc/after_animation(mob/living/victim, mob/living/attacker)
+	if(heavy_animation)
+		victim.transform = victim.default_transform
+		victim.pixel_x = victim.default_pixel_x
+		victim.pixel_y = victim.default_pixel_y
+		victim.layer = victim.default_layer
+
+		attacker.transform = attacker.default_transform
+		attacker.pixel_x = attacker.default_pixel_x
+		attacker.pixel_y = attacker.default_pixel_y
+		attacker.layer = attacker.default_layer
+
+		victim.in_use_action = FALSE
+		attacker.become_not_busy(victim, _hand = 0)
+		attacker.become_not_busy(victim, _hand = 1)
+		attacker.combo_animation = FALSE
 
 // This is for technical stuff, such as fingerprints leaving, admin PM.
 /datum/combat_combo/proc/pre_execute(mob/living/victim, mob/living/attacker)

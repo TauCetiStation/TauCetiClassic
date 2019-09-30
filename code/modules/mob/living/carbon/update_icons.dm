@@ -33,6 +33,10 @@
 			ntransform.Scale(resize)
 			resize = RESIZE_DEFAULT_SIZE
 	if(changed)
+		default_transform = ntransform
+		default_pixel_x = final_pixel_x
+		default_pixel_y = final_pixel_y
+		default_layer = final_layer
 		animate(src, transform = ntransform, time = 2, pixel_y = final_pixel_y, pixel_x = final_pixel_x, dir = final_dir, easing = EASE_IN|EASE_OUT, layer = final_layer)
 		floating = 0
 

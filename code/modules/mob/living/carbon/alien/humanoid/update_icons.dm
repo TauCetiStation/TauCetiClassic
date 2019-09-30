@@ -50,6 +50,10 @@
 		pixel_x = get_standard_pixel_x_offset(lying)
 		pixel_y = get_standard_pixel_y_offset(lying)
 
+		default_transform = transform
+		default_pixel_x = pixel_x
+		default_pixel_y = pixel_y
+
 /mob/living/carbon/alien/humanoid/regenerate_icons()
 	..()
 	if (monkeyizing)	return

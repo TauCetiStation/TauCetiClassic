@@ -2,6 +2,11 @@
 	. = ..()
 	living_list += src
 
+	default_transform = transform
+	default_pixel_x = pixel_x
+	default_pixel_y = pixel_y
+	default_layer = layer
+
 /mob/living/Destroy()
 	QDEL_LIST(combos_performed)
 	QDEL_LIST(combos_saved)
