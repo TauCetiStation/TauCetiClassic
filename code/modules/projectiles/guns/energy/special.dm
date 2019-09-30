@@ -189,9 +189,9 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 */
 
 /obj/item/weapon/gun/energy/sniperrifle/attack_self()
-	toggle_zoom()
+	zoom()
 
-/obj/item/weapon/gun/energy/sniperrifle/verb/toggle_zoom()
+/obj/item/weapon/gun/energy/sniperrifle/verb/zoom()
 	set category = "Object"
 	set name = "Use Sniper Scope"
 	set popup_menu = 0
@@ -217,11 +217,6 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		zoom = 0
 	to_chat(usr, "<font color='[zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>")
 	return
-
-/obj/item/weapon/gun/energy/sniperrifle/equipped(mob/user, slot)
-	if(zoom)
-		toggle_zoom()
-	..(user, slot)
 
 /obj/item/weapon/gun/energy/sniperrifle/rails
 	name = "Rails rifle"

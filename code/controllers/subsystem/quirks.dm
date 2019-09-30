@@ -27,20 +27,14 @@ var/datum/subsystem/quirks/SSquirks
 		SetupQuirks()
 
 	quirk_blacklist = list(
-		list("Light Drinker", "Alcohol Tolerance"),
 		list("Strong mind", "Twitching"),
-		list("Blind", "Nearsighted"),
-		list("Low pain threshold", "High pain threshold")
+		list("Blind", "Nearsighted")
 		)
 
 	quirk_blacklist_species = list(
 		"Fatness" = list(DIONA, IPC),
 		"Child of Nature" = list(HUMAN, SKRELL, TAJARAN, UNATHI, IPC),
-		"Stress Eater" = list(DIONA, IPC),
-		"High pain threshold" = list(DIONA, IPC),
-		"Low pain threshold" = list(DIONA, IPC),
-		"Alcohol Tolerance" = list(DIONA, IPC),
-		"Light Drinker" = list(DIONA, IPC)
+		"Stress Eater" = list(DIONA, IPC)
 		)
 
 	..()

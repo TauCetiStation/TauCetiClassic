@@ -22258,7 +22258,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/meter,
 /turf/simulated/floor{
-	dir = 8;
+	dir = 1;
 	icon_state = "warnwhitecorner"
 	},
 /area/rnd/mixing)
@@ -50040,7 +50040,9 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/dispenser,
+/obj/structure/dispenser{
+	pixel_x = -1
+	},
 /turf/simulated/floor,
 /area/engine/break_room)
 "bVy" = (

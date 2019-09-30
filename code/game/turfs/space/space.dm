@@ -13,7 +13,9 @@
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
-	icon_state = SPACE_ICON_STATE
+
+	if(!istype(src, /turf/space/transit))
+		icon_state = SPACE_ICON_STATE
 
 	if(light_power && light_range)
 		update_light()

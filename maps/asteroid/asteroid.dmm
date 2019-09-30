@@ -892,7 +892,7 @@
 	dir = 10
 	},
 /turf/simulated/floor{
-	dir = 8;
+	dir = 1;
 	icon_state = "warnwhitecorner"
 	},
 /area/research_outpost/spectro)
@@ -12567,7 +12567,7 @@
 	dir = 5
 	},
 /turf/simulated/floor{
-	dir = 8;
+	dir = 1;
 	icon_state = "warnwhitecorner"
 	},
 /area/mine/living_quarters)
