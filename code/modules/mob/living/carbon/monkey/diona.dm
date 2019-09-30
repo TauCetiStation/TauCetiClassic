@@ -28,7 +28,7 @@
 	blood_datum = /datum/dirt_cover/green_blood
 
 
-/mob/living/carbon/monkey/diona/grabReaction(mob/living/carbon/human/attacker)
+/mob/living/carbon/monkey/diona/grabReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	if(attacker.get_species() == DIONA)
 		visible_message("<span class='notice'>[attacker] starts to merge [src] into themselves.</span>","<span class='notice'>You start merging [src] into you.</span>")
 		if(attacker.is_busy() || !do_after(attacker, 4 SECONDS, target = src))

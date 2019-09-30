@@ -214,7 +214,7 @@
 /*
  * Attack responces
  */
-/mob/living/simple_animal/parrot/hurtReaction(mob/living/carbon/human/attacker)
+/mob/living/simple_animal/parrot/hurtReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	. = ..()
 	if(client)
 		return

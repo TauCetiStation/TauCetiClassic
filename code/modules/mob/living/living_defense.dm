@@ -303,6 +303,9 @@
 
 // These procs define whether this mob has a limb at a given targetzone. Heavily used in combo-combat.
 // If targetzone is not specified, returns TRUE if the mob has the bodypart in general.
+/mob/living/proc/has_eyes()
+	return TRUE
+
 /mob/living/proc/has_head(targetzone = null)
 	return FALSE
 
@@ -310,4 +313,26 @@
 	return FALSE
 
 /mob/living/proc/has_leg(targetzone = null)
+	return FALSE
+
+/mob/living/proc/can_hit_zone(mob/living/attacker, targetzone)
+	switch(targetzone)
+		if(O_EYES)
+			return has_eyes() && has_head()
+		if(BP_HEAD, O_MOUTH)
+			return has_head(targetzone)
+		if(BP_L_ARM, BP_R_ARM)
+			return has_arm(targetzone)
+		if(BP_L_LEG, BP_R_LEG)
+			return has_leg(targetzone)
+		else
+			return TRUE
+	return FALSE // This is probably unused.
+
+// This proc guarantees no mouse vs queen tomfuckery.
+/mob/living/proc/is_bigger_than(mob/living/target)
+	if(target.small && !small)
+		return TRUE
+	if(maxHealth > target.maxHealth)
+		return TRUE
 	return FALSE

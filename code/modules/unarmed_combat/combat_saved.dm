@@ -1,3 +1,7 @@
+#define ANIM_MAX_HIT_TURN_ANGLE 40
+#define COMBOPOINTS_LOSE_PER_TICK 0.7
+#define MIN_COMBOPOINTS_LOSE_PER_TICK 0.3
+
 /datum/combo_saved
 	var/last_hit_registered = 0
 	var/delete_after_no_hits = 10 SECONDS
@@ -68,16 +72,22 @@
 		return
 	A.attack_animation = TRUE
 
-	var/matrix/saved_transform = A.transform
-	var/matrix/M = matrix()
-	if(A.hand)
-		M.Turn(-combo_value)
+	combo_value = min(ANIM_MAX_HIT_TURN_ANGLE, combo_value)
+
+	var/matrix/M = matrix(A.default_transform)
+	if(iscarbon(A))
+		if(A.hand)
+			M.Turn(-combo_value)
+		else
+			M.Turn(combo_value)
 	else
-		M.Turn(combo_value)
+		M.Turn(pick(-combo_value, combo_value))
+
 	animate(A, transform=M, time=2)
 	sleep(2)
-	animate(A, transform=saved_transform, time=1)
+	animate(A, transform=A.default_transform, time=1)
 	sleep(1)
+	A.transform = A.default_transform
 
 	A.attack_animation = FALSE
 
@@ -210,8 +220,8 @@
 
 	progbar.update(fullness)
 
-	var/fullness_to_remove = 0.7
-	fullness_to_remove = max(0.3, fullness_to_remove - length(attacker.combos_performed) * 0.1)
+	var/fullness_to_remove = COMBOPOINTS_LOSE_PER_TICK
+	fullness_to_remove = max(MIN_COMBOPOINTS_LOSE_PER_TICK, fullness_to_remove - length(attacker.combos_performed) * 0.1)
 	fullness -= fullness_to_remove
 	if(fullness < 0 || last_hit_registered + delete_after_no_hits < world.time)
 		qdel(src)
@@ -233,3 +243,7 @@
 	QDEL_NULL(progbar)
 	next_combo = null
 	return ..()
+
+#undef ANIM_MAX_HIT_TURN_ANGLE
+#undef COMBOPOINTS_LOSE_PER_TICK
+#undef MIN_COMBOPOINTS_LOSE_PER_TICK

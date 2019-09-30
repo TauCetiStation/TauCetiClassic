@@ -63,20 +63,20 @@
 /mob/living/simple_animal/Grab(atom/movable/target, force_state, show_warnings = TRUE)
 	return
 
-/mob/living/simple_animal/helpReaction(mob/living/attacker)
+/mob/living/simple_animal/helpReaction(mob/living/attacker, show_message = TRUE)
 	if(health > 0)
 		visible_message("<span class='notice'>[attacker] [response_help] [src]</span>")
-	return ..()
+	return ..(attacker, show_message = FALSE)
 
-/mob/living/simple_animal/disarmReaction(mob/living/attacker)
+/mob/living/simple_animal/disarmReaction(mob/living/attacker, show_message = TRUE)
 	if(health > 0)
-		visible_message("<span class='notice'>[attacker] [response_disarm] [src]</span>")
-	return ..()
+		visible_message("<span class='warning'>[attacker] [response_disarm] [src]</span>")
+	return ..(attacker, show_message = FALSE)
 
-/mob/living/simple_animal/hurtReaction(mob/living/attacker)
+/mob/living/simple_animal/hurtReaction(mob/living/attacker, show_message = TRUE)
 	if(health > 0)
-		visible_message("<span class='notice'>[attacker] [response_harm] [src]</span>")
-	return ..()
+		visible_message("<span class='warning'>[attacker] [response_harm] [src]</span>")
+	return ..(attacker, show_message = FALSE)
 
 /mob/living/simple_animal/get_unarmed_attack()
 	var/retDam = melee_damage

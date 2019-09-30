@@ -22,28 +22,14 @@
 	see &= enemies // Remove all entries that aren't in enemies
 	return see
 
-/mob/living/simple_animal/hostile/retaliate/proc/Retaliate()
-	..()
-	var/list/around = view(src, 7)
-
-	for(var/atom/movable/A in around)
-		if(A == src)
-			continue
-		if(isliving(A))
-			var/mob/living/M = A
-			if(!attack_same && M.faction != faction)
-				enemies |= M
-		else if(istype(A, /obj/mecha))
-			var/obj/mecha/M = A
-			if(M.occupant)
-				enemies |= M
-				enemies |= M.occupant
-
-	for(var/mob/living/simple_animal/hostile/retaliate/H in around)
-		if(!attack_same && !H.attack_same && H.faction == faction)
-			H.enemies |= enemies
+/mob/living/simple_animal/hostile/retaliate/proc/Retaliate(mob/living/attacker)
+	enemies |= attacker
 	return 0
 
-/mob/living/simple_animal/hostile/retaliate/adjustBruteLoss(damage)
-	..(damage)
-	Retaliate()
+/mob/living/simple_animal/hostile/retaliate/disarmReaction(attacker, show_message = TRUE)
+	..()
+	Retaliate(attacker)
+
+/mob/living/simple_animal/hostile/retaliate/hurtReaction(attacker, show_message = TRUE)
+	..()
+	Retaliate(attacker)

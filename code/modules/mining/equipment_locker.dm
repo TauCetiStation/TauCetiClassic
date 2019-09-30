@@ -665,7 +665,7 @@
 	. = ..()
 	SetCollectBehavior()
 
-/mob/living/simple_animal/hostile/mining_drone/helpReaction(mob/living/carbon/human/attacker)
+/mob/living/simple_animal/hostile/mining_drone/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	switch(search_objects)
 		if(0)
 			SetCollectBehavior()

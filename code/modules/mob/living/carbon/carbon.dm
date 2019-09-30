@@ -203,7 +203,7 @@
 	if(selhand != src.hand)
 		swap_hand()
 
-/mob/living/carbon/helpReaction(mob/living/carbon/human/attacker)
+/mob/living/carbon/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	help_shake_act(attacker)
 	return TRUE
 
@@ -286,7 +286,7 @@
 					else
 						M.visible_message("<span class='notice'>[M] gently touches [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You gently touch [src] trying to wake [t_him] up!</span>")
-			else switch(M.zone_sel.selecting)
+			else switch(M.get_targetzone())
 				if(BP_R_ARM || BP_L_ARM)
 					M.visible_message( "<span class='notice'>[M] shakes [src]'s hand.</span>", \
 									"<span class='notice'>You shake [src]'s hand.</span>", )

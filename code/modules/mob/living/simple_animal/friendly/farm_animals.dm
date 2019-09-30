@@ -154,7 +154,7 @@
 	if(. && prob(55))
 		playsound(src, 'sound/misc/cowbell.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 
-/mob/living/simple_animal/cow/disarmReaction(mob/living/carbon/attacker)
+/mob/living/simple_animal/cow/disarmReaction(mob/living/carbon/attacker, show_message = TRUE)
 	if(!stat && icon_state != icon_dead)
 		attacker.visible_message("<span class='warning'>[attacker] tips over [src].</span>","<span class='notice'>You tip over [src].</span>")
 		Weaken(30)

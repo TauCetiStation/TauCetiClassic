@@ -163,6 +163,32 @@ var/global/combos_cheat_sheet = ""
 		visible_message("<span class='warning'><B>[attacker] attempted to touch [src]!</B></span>")
 		return FALSE
 
+	var/tz = attacker.get_targetzone()
+	if(!can_hit_zone(attacker, tz))
+		var/tz_txt = ""
+		switch(tz)
+			if(BP_HEAD)
+				tz_txt = " head"
+			if(BP_CHEST)
+				tz_txt = " chest"
+			if(BP_GROIN)
+				tz_txt = " groin"
+			if(BP_L_ARM)
+				tz_txt = " left arm"
+			if(BP_R_ARM)
+				tz_txt = " right arm"
+			if(BP_L_LEG)
+				tz_txt = " left leg"
+			if(BP_R_LEG)
+				tz_txt = " right leg"
+			if(O_EYES)
+				tz_txt = " eyes"
+			if(O_MOUTH)
+				tz_txt = " mouth"
+
+		to_chat(attacker, "<span class='danger'>What[tz_txt]?</span>")
+		return
+
 	switch(attacker.a_intent)
 		if(I_HELP)
 			if(attacker.disengage_combat(src)) // We were busy disengaging.
@@ -171,7 +197,7 @@ var/global/combos_cheat_sheet = ""
 
 		if(I_DISARM)
 			var/combo_value = 2
-			if(!anchored) // Just to be sure...
+			if(!anchored && !is_bigger_than(attacker) && src != attacker)
 				var/turf/to_move = get_step(src, get_dir(attacker, src))
 				var/atom/A = get_step_away(src, get_turf(attacker))
 				if(A != to_move)
@@ -193,13 +219,13 @@ var/global/combos_cheat_sheet = ""
 				return TRUE
 			return hurtReaction(attacker)
 
-/mob/living/proc/helpReaction(mob/living/carbon/human/attacker)
+/mob/living/proc/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	return TRUE
 
-/mob/living/proc/disarmReaction(mob/living/carbon/human/attacker)
+/mob/living/proc/disarmReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	attacker.do_attack_animation(src)
 
-	if(!anchored && (!attacker.small || small) && (attacker.maxHealth >= maxHealth)) // maxHealth is the current best size estimate.
+	if(!anchored && !is_bigger_than(attacker) && src != attacker) // maxHealth is the current best size estimate.
 		var/turf/to_move = get_step(src, get_dir(attacker, src))
 		step_away(src, get_turf(attacker))
 		if(loc != to_move)
@@ -217,13 +243,14 @@ var/global/combos_cheat_sheet = ""
 		//End BubbleWrap
 
 	playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-	visible_message("<span class='warning'><B>[attacker] pushed [src]!</B></span>")
+	if(show_message)
+		visible_message("<span class='warning'><B>[attacker] pushed [src]!</B></span>")
 
-/mob/living/proc/grabReaction(mob/living/carbon/human/attacker)
+/mob/living/proc/grabReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	attacker.Grab(src)
 	return TRUE
 
-/mob/living/proc/hurtReaction(mob/living/carbon/human/attacker)
+/mob/living/proc/hurtReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	attacker.do_attack_animation(src)
 
 	var/attack_obj = attacker.get_unarmed_attack()
@@ -254,7 +281,8 @@ var/global/combos_cheat_sheet = ""
 	if(damSound)
 		playsound(src, damSound, VOL_EFFECTS_MASTER)
 
-	visible_message("<span class='warning'><B>[attacker] [damVerb]ed [src]!</B></span>")
+	if(show_message)
+		visible_message("<span class='warning'><B>[attacker] [damVerb]ed [src]!</B></span>")
 
 	apply_damage(damage, damType, BP, armor_block, damFlags)
 

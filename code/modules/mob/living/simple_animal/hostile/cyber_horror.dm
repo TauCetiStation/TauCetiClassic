@@ -21,6 +21,7 @@
 
 	animalistic = FALSE
 
+	has_head = TRUE
 	has_arm = TRUE
 	has_leg = TRUE
 

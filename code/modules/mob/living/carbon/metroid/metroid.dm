@@ -278,7 +278,7 @@
 
 		updatehealth()
 
-/mob/living/carbon/slime/hurtReaction(mob/living/attacker)
+/mob/living/carbon/slime/hurtReaction(mob/living/attacker, show_message = TRUE)
 	if(Victim)
 		if(Victim == attacker)
 			visible_message("<span class='warning'>[attacker] attempts to wrestle \the [src] off!</span>")

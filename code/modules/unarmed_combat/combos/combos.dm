@@ -8,20 +8,16 @@
 	allowed_target_zones = TARGET_ZONE_ALL
 
 /datum/combat_combo/disarm/execute(mob/living/victim, mob/living/attacker)
-	for(var/obj/item/weapon/gun/G in list(victim.get_active_hand(), victim.get_inactive_hand()))
-		var/chance = 0
-		if(victim.get_active_hand() == G)
-			chance = 40
-		else
-			chance = 20
+	var/list/pos_guns = list(victim.get_active_hand())
+	if(attacker.has_trait(TRAIT_MULTITASKING))
+		pos_guns += victim.get_inactive_hand()
 
-		if(prob(chance))
+	for(var/obj/item/weapon/gun/G in pos_guns)
+		if(G)
 			victim.visible_message("<span class='danger'>[victim]'s [G] goes off during struggle!</span>")
-			var/list/turfs = list()
-			for(var/turf/T in view(7, victim))
-				turfs += T
-			var/turf/target = pick(turfs)
-			return G.afterattack(target, victim)
+			var/list/dir_to_shoot = pick(list(NORTH, SOUTH, WEST, EAST, NORTHWEST, NORTHEAST,
+									   SOUTHWEST, SOUTHEAST))
+			G.afterattack(get_step(attacker, dir_to_shoot), victim, FALSE) // So we shoot in their general direction.
 
 	victim.drop_item()
 	victim.visible_message("<span class='warning'><B>[attacker] has disarmed [victim]!</B></span>")
@@ -94,38 +90,51 @@
 		if(T != attacker.loc)
 			break
 
-		for(var/mob/living/L in T)
-			if(L == attacker)
-				continue
+		slide_kick_loop:
+			for(var/mob/living/L in T)
+				if(L == attacker)
+					continue slide_kick_loop
 
-			var/obj/item/organ/external/BP = attacker.get_targetzone()
-			var/armor_check = 0
-			if(ishuman(L))
-				var/mob/living/carbon/human/H = victim
-				BP = H.get_bodypart(BP)
-				armor_check = H.run_armor_check(BP, "melee")
+				if(L.is_bigger_than(attacker))
+					continue slide_kick_loop
 
-			L.apply_effect(2, WEAKEN, BP, blocked = armor_check)
-
-			var/end_string = "to the ground!"
-			if(CLUMSY in attacker.mutations) // Make a funny
+				var/obj/item/organ/external/BP = attacker.get_targetzone()
+				var/armor_check = 0
 				if(ishuman(L))
-					var/mob/living/carbon/human/H = L
-					var/obj/item/clothing/PANTS = H.w_uniform
-					var/obj/item/clothing/BELT = H.belt
+					var/mob/living/carbon/human/H = victim
+					BP = H.get_bodypart(BP)
+					armor_check = H.run_armor_check(BP, "melee")
 
-					var/first = TRUE
-					for(var/obj/item/I in list(PANTS, BELT))
-						if(!I)
-							continue
-						if(first)
-							end_string = ", taking off their [I]"
-						else
-							end_string += ", [I]"
-					if(!first)
-						end_string += "!"
-			L.visible_message("<span class='danger'>[attacker] slide-kicks [L][end_string]</span>")
+				L.apply_effect(2, WEAKEN, BP, blocked = armor_check)
 
+				var/end_string = "to the ground!"
+				if(CLUMSY in attacker.mutations) // Make a funny
+					if(ishuman(L))
+						var/mob/living/carbon/human/H = L
+						var/obj/item/clothing/PANTS = H.w_uniform
+						var/obj/item/clothing/BELT = H.belt
+
+						var/first = TRUE
+						pants_takeoff_loop:
+							for(var/obj/item/I in list(BELT, PANTS))
+								if(!I)
+									continue pants_takeoff_loop
+								if(I.loc != L) // Perhaps they fell off during this or something.
+									continue pants_takeoff_loop
+								if(I.flags & (ABSTRACT|NODROP) && I.canremove)
+									continue pants_takeoff_loop
+								if(first)
+									end_string = ", taking off their [I]"
+								else
+									end_string += ", [I]"
+								end_string += "!"
+								L.drop_from_inventory(I, L.loc)
+								// attacker is crawling, so they can't anyway.
+								// attacker.put_in_hands(I)
+
+						if(!first)
+							end_string += "!"
+				L.visible_message("<span class='danger'>[attacker] slide-kicks [L][end_string]</span>")
 
 		if(!do_after(attacker, attacker.movement_delay() * 0.5, can_move = TRUE, target = victim, progress = FALSE))
 			break
@@ -290,7 +299,7 @@
 
 	if(iscarbon(victim))
 		var/mob/living/carbon/C = victim
-		if(C.head && !(C.head.flags & (ABSTRACT|NODROP)) && !istype(C.loc, /obj/item/clothing/suit/space/rig))
+		if(C.head && !(C.head.flags & (ABSTRACT|NODROP)) && C.head.canremove)
 			var/obj/item/clothing/VH = C.head
 			victim.drop_from_inventory(VH, victim.loc)
 			attacker.newtonian_move(get_dir(victim, attacker))
@@ -403,7 +412,7 @@
 	name = "Diving Elbow Drop"
 	desc = "A move in which you jump up high, and then fall onto your opponent, hitting them with your elbow."
 	combo_icon_state = "diving_elbow_drop"
-	fullness_lose_on_execute = 40
+	fullness_lose_on_execute = 50
 	combo_elements = list("Suplex", I_HURT, I_DISARM, I_HURT)
 
 	allowed_target_zones = list(BP_CHEST)
@@ -451,7 +460,7 @@
 	animate(attacker, transform = M, pixel_x = attacker.pixel_x + shift_x, pixel_y = attacker.pixel_y + shift_y + 36, time = 4)
 	sleep(4)
 
-	sleep(2) // Hover ominously.
+	sleep(3) // Hover ominously.
 
 	attacker.pixel_x = prev_pix_x
 	attacker.pixel_y = prev_pix_y + 32
@@ -557,34 +566,37 @@
 	var/list/prev_info = list("1" = list("pix_x" = victim.pixel_x, "pix_y" = victim.pixel_y, "pass_flags" = victim.pass_flags))
 
 	var/i = 1
-	for(var/try_step in 1 to try_steps)
-		var/cur_movers = list() + collected - list(victim)
+	try_steps_loop:
+		for(var/try_step in 1 to try_steps)
+			var/cur_movers = list() + collected - list(victim)
 
-		var/atom/old_V_loc = victim.loc
-		step(victim, dropkick_dir)
+			var/atom/old_V_loc = victim.loc
+			step(victim, dropkick_dir)
 
-		if(old_V_loc != victim.loc)
-			var/list/candidates = victim.loc.contents - list(victim)
-			new_movers:
-				for(var/mob/living/new_mover in candidates)
-					if(new_mover == attacker)
-						continue new_movers
-					if(new_mover in collected)
-						continue new_movers
-					if(!new_mover.anchored)
-						collected += new_mover
-						new_mover.Stun(1)
-						i++
-						movers["[i]"] = new_mover
-						prev_info["[i]"] = list("pix_x" = new_mover.pixel_x, "pix_y" = new_mover.pixel_y, "pass_flags" = new_mover.pass_flags)
-						new_mover.pixel_x += rand(-8, 8)
-						new_mover.pixel_y += rand(-8, 8)
-						new_mover.pass_flags |= PASSMOB|PASSCRAWL
+			if(old_V_loc != victim.loc)
+				var/list/candidates = victim.loc.contents - list(victim)
+				new_movers:
+					for(var/mob/living/new_mover in candidates)
+						if(new_mover == attacker)
+							continue new_movers
+						if(new_mover in collected)
+							continue new_movers
+						if(new_mover.is_bigger_than(victim))
+							break try_steps_loop
+						if(!new_mover.anchored)
+							collected += new_mover
+							new_mover.Stun(1)
+							i++
+							movers["[i]"] = new_mover
+							prev_info["[i]"] = list("pix_x" = new_mover.pixel_x, "pix_y" = new_mover.pixel_y, "pass_flags" = new_mover.pass_flags)
+							new_mover.pixel_x += rand(-8, 8)
+							new_mover.pixel_y += rand(-8, 8)
+							new_mover.pass_flags |= PASSMOB|PASSCRAWL
 
-		for(var/mob/living/L in cur_movers)
-			INVOKE_ASYNC(GLOBAL_PROC, .proc/_step, L, dropkick_dir)
+			for(var/mob/living/L in cur_movers)
+				INVOKE_ASYNC(GLOBAL_PROC, .proc/_step, L, dropkick_dir)
 
-		sleep(attacker.movement_delay() * 0.75) // Since they were the one to push.
+			sleep(attacker.movement_delay() * 0.75) // Since they were the one to push.
 
 	for(var/j in 1 to i)
 		var/mob/living/L = movers["[j]"]
@@ -653,6 +665,8 @@
 				if(T != attacker.loc) // We bumped into something, so we bumped our victim into it...
 					var/list/to_check = T.contents + attacker.loc.contents - list(attacker)
 					for(var/mob/living/L in to_check)
+						if(L.is_bigger_than(victim))
+							continue
 						var/obj/item/organ/external/BP = BP_CHEST
 						var/armor_check = 0
 						if(ishuman(L))
@@ -713,6 +727,7 @@
 			break
 
 	if(success)
+		victim.forceMove(attacker.loc)
 		var/cur_spin_time = 3
 		grab_stages_loop:
 			for(var/grab_stages in list(GRAB_AGGRESSIVE, GRAB_NECK, GRAB_NECK, GRAB_KILL))
@@ -755,9 +770,9 @@
 						break grab_stages_loop
 
 					var/mob/living/M = victim_G.throw_held()
+					qdel(victim_G)
 					if(!istype(M))
 						break grab_stages_loop
-					qdel(victim_G)
 
 					M.visible_message("<span class='rose'>[attacker] has thrown [M] with immense force!</span>")
 
@@ -770,8 +785,8 @@
 					attacker.attack_log += text("\[[time_stamp()]\] <font color='red'>Has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]</font>")
 					msg_admin_attack("[attacker.name] ([attacker.ckey]) has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]", attacker)
 
-					M.throw_at(target, 7, 5, attacker)
-					victim.apply_damage(30, BRUTE, blocked = 0) // We threw a guy over 7 tiles distance. Armor probably ain't helping.
+					M.throw_at(target, 7, 10, attacker)
+					M.apply_damage(30, BRUTE, blocked = 0) // We threw a guy over 7 tiles distance. Armor probably ain't helping.
 					M.apply_effect(6, WEAKEN, blocked = 0)
 
 					if(ishuman(src))
@@ -780,7 +795,7 @@
 							var/obj/item/clothing/suit/V = H.wear_suit
 							V.attack_reaction(H, REACTION_THROWITEM)
 
-					after_animation(victim, attacker)
+					after_animation(M, attacker)
 					return
 
 	for(var/obj/item/weapon/grab/G in attacker.GetGrabs())

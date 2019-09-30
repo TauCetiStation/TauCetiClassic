@@ -33,6 +33,20 @@ var/global/list/combat_combos_by_name = list()
 		. += cur_hash
 
 /datum/combat_combo/proc/can_execute(datum/combo_saved/CS, show_warning = FALSE)
+	if(heavy_animation)
+		if(CS.attacker.pinned.len)
+			if(show_warning)
+				to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> because you are pinned to a wall.</span>")
+			return FALSE
+		if(CS.victim.pinned.len)
+			if(show_warning)
+				to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> because they are pinned to a wall.</span>")
+			return FALSE
+		if(CS.attacker.anchored || !CS.attacker.canmove)
+			if(show_warning)
+				to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> while not being able to move.</span>")
+			return FALSE
+
 	if(CS.attacker.incapacitated())
 		if(show_warning)
 			to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> while being incapacitated.</span>")
@@ -47,13 +61,9 @@ var/global/list/combat_combos_by_name = list()
 		if(show_warning)
 			to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> while [CS.victim] is performing something.</span>")
 		return FALSE
-	if(CS.attacker.small && !CS.victim.small)
+	if(CS.victim.is_bigger_than(CS.attacker))
 		if(show_warning)
-			to_chat(CS.attacker, "<span class='notice'>[CS.victim] is too big for you to perform <b>[name]</b>.</span>")
-		return FALSE
-	if(CS.victim.maxHealth > CS.attacker.maxHealth) // Current best size estimate.
-		if(show_warning)
-			to_chat(CS.attacker, "<span class='notice'>[CS.victim] is too big for you to perform <b>[name]</b>.</span>")
+			to_chat(CS.attacker, "<span class='notice'>[CS.victim] is too big for you to perform <b>[name]</b> on them.</span>")
 		return FALSE
 	if(CS.fullness < fullness_lose_on_execute)
 		if(show_warning)

@@ -988,9 +988,6 @@
 				clear_fullscreen("flash", 25)
 		return 1
 
-/mob/living/proc/has_eyes()
-	return 1
-
 //-TG Port for smooth standing/lying animations
 /mob/living/proc/get_pixel_x_offset(lying_current = FALSE)
 	return initial(pixel_x)

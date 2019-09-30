@@ -48,7 +48,7 @@
 
 	return ..()
 
-/mob/living/carbon/human/helpReaction(mob/living/carbon/human/attacker)
+/mob/living/carbon/human/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	var/target_zone = attacker.get_targetzone()
 	if(health > config.health_threshold_dead && health < config.health_threshold_crit)
 		INVOKE_ASYNC(src, .proc/perform_cpr, attacker)
@@ -60,7 +60,7 @@
 			help_shake_act(attacker)
 	return TRUE
 
-/mob/living/carbon/human/disarmReaction(mob/living/carbon/human/attacker)
+/mob/living/carbon/human/disarmReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	if(w_uniform)
 		w_uniform.add_fingerprint(attacker)
 	return ..()

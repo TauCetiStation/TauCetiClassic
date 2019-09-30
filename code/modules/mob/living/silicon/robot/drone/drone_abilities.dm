@@ -33,5 +33,5 @@
 		layer = MOB_LAYER
 		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
 
-/mob/living/silicon/robot/drone/helpReaction(mob/living/carbon/human/attacker)
+/mob/living/silicon/robot/drone/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	get_scooped(attacker)

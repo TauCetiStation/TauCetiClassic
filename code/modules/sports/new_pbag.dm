@@ -11,28 +11,38 @@
 
 	maxHealth = 100
 
+	var/list/ghosts_were_here = list()
+
 	var/swinging = FALSE
 
 /mob/living/pbag/atom_init()
 	. = ..()
 
-	if(!anchored)
-		hang()
-
 	color = random_color()
 	alive_mob_list -= src
+
+/mob/living/pbag/incapacitated()
+	return !anchored
+
+/mob/living/pbag/restrained()
+	return FALSE
 
 /mob/living/pbag/attack_ghost(mob/dead/observer/attacker)
 	if(ckey)
 		to_chat(attacker, "<span class='notice'>[src] is already possesed.</span>")
 		return
 
-	if(stat)
+	if(ckey in ghosts_were_here)
+		to_chat(attacker, "<span class='notice'>You were already exiled from [src].</span>")
+		return
+
+	if(incapacitated())
 		to_chat(attacker, "<span class='notice'>[src] seems to be too upbeat to be possesed.</span>")
 		return
 
 	ghostize(can_reenter_corpse = FALSE) // If there was a @ckey before or something.
 	ckey = attacker.ckey
+	ghosts_were_here += ckey
 	qdel(attacker)
 
 /mob/living/pbag/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE)
@@ -51,26 +61,26 @@
 
 /mob/living/pbag/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=FALSE, message_range = world.view, list/used_radios = list(), sound/speech_sound, sound_vol, sanitize = TRUE, message_mode = FALSE)
 	if(ckey)
-		. = ..(message, verb = "whispers", message_range = 1)
+		. = ..(capitalize(message), verb = "whispers", message_range = 1)
 
 /mob/living/pbag/emote(act, type, message)
 	if(ckey)
 		visible_message("<span class='notice'>[bicon(src)] [src] swings ominously...</span>")
 		INVOKE_ASYNC(src, /mob/living/pbag.proc/swing)
 
-/mob/living/pbag/helpReaction(mob/living/attacker)
-	if(!anchored)
-		hang(attacker)
+/mob/living/pbag/helpReaction(mob/living/attacker, show_message = TRUE)
+	if(incapacitated())
+		hang_up(attacker)
 
 /mob/living/pbag/death()
 	return
 
 /mob/living/pbag/Life()
-	if(anchored)
+	if(!incapacitated())
 		handle_combat()
 
 /mob/living/pbag/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, used_weapon = null)
-	if(!anchored)
+	if(incapacitated())
 		return
 
 	hit(damage, damagetype)
@@ -85,7 +95,7 @@
 
 	var/def_zone_txt = ""
 	switch(def_zone)
-		if(BP_HEAD)
+		if(BP_HEAD, O_EYES, O_MOUTH)
 			def_zone_txt = "the upper part"
 		if(BP_CHEST)
 			def_zone_txt = "the middle part"
@@ -99,16 +109,12 @@
 			def_zone_txt = "slightly to the left of the lower part"
 		if(BP_R_LEG)
 			def_zone_txt = "slightly to the right of the lower part"
-		if(O_EYES)
-			def_zone_txt = "the upper part"
-		if(O_MOUTH)
-			def_zone_txt = "the upper part"
 
 	var/mes = "[bicon(src)] [src] has been hit [wep_mes]for [damage] [damagetype] damage in [def_zone_txt][flags_mes]."
 	visible_message("<span class='notice'>[mes]</span>")
 
 /mob/living/pbag/apply_effect(effect = 0, effecttype = STUN, blocked = 0)
-	if(!anchored)
+	if(incapacitated())
 		return
 
 	if(effecttype == WEAKEN || effecttype == PARALYZE)
@@ -119,7 +125,7 @@
 	if(damagetype != BRUTE)
 		return
 
-	if(!anchored)
+	if(incapacitated())
 		return
 
 	adjustBruteLoss(damage)
@@ -146,8 +152,9 @@
 	animate(src, pixel_y = pixel_y - 4, time = 1)
 
 /mob/living/pbag/proc/swing(time = rand(0.5 SECONDS, 2 SECONDS))
-	if(swinging)
+	if(swinging || incapacitated())
 		return
+
 	time = min(time, 2 SECONDS)
 	swinging = TRUE
 	icon_state = "pbaghit"
@@ -155,28 +162,75 @@
 	icon_state = my_icon_state
 	swinging = FALSE
 
-/mob/living/pbag/verb/hang(mob/living/user)
+/mob/living/pbag/rejuvenate()
+	if(reagents)
+		reagents.clear_reagents()
+
+	// shut down various types of badness
+	setToxLoss(0)
+	setOxyLoss(0)
+	setCloneLoss(0)
+	setBrainLoss(0)
+	setHalLoss(0)
+	SetParalysis(0)
+	SetStunned(0)
+	SetWeakened(0)
+
+	// shut down ongoing problems
+	radiation = 0
+	bodytemperature = T20C
+	sdisabilities = 0
+	disabilities = 0
+	ExtinguishMob()
+	fire_stacks = 0
+
+	if(pinned.len)
+		for(var/obj/O in pinned)
+			O.forceMove(loc)
+		pinned.Cut()
+
+	// fix blindness and deafness
+	blinded = 0
+	eye_blind = 0
+	eye_blurry = 0
+	ear_deaf = 0
+	ear_damage = 0
+	heal_overall_damage(getBruteLoss(), getFireLoss())
+
+	//restore all HP
+	if(health != maxHealth)
+		health = maxHealth
+
+	// restore us to conciousness
+	stat = CONSCIOUS
+
+	icon_state = "pbag"
+	my_icon_state = "pbag"
+	pixel_y = 0
+	anchored = TRUE
+
+/mob/living/pbag/verb/user_hang()
 	set name = "Hang Bag"
 	set category = "Object"
 	set src in view(1)
 
-	if(!user)
-		user = usr
+	hang_up(usr)
 
-	if(isliving(user))
+/mob/living/pbag/proc/hang_up(mob/living/user)
+	if(isliving(user) && !is_bigger_than(user))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-		anchored = !anchored
+
+		if(!incapacitated())
+			drop_down()
+		else
+			rejuvenate()
+
 		user.visible_message("<span class='notice'>[user] [anchored ? "secures" : "unsecures"] \the [src].</span>",
-			"<span class='notice'>You [anchored? "secure":"undo"] \the [src].</span>",
+			"<span class='notice'>You [anchored? "secure" : "unsecure"] \the [src].</span>",
 			"<span class='notice'>You hear a ratchet.</span>")
 
-		if(anchored)
-			icon_state = "pbag"
-			my_icon_state = "pbag"
-			pixel_y = 0
-			rejuvenate()
-		else
-			drop_down()
+/mob/living/pbag/has_eyes()
+	return TRUE
 
 /mob/living/pbag/has_head(targetzone = null)
 	return TRUE

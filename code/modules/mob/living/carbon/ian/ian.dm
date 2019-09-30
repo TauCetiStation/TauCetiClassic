@@ -331,7 +331,7 @@
 		return
 	..()
 
-/mob/living/carbon/ian/helpReaction(mob/living/carbon/attacker)
+/mob/living/carbon/ian/helpReaction(mob/living/carbon/attacker, show_message = TRUE)
 	if(health >= config.health_threshold_crit)
 		help_shake_act(attacker)
 		return

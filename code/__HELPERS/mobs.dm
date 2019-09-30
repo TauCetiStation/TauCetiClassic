@@ -126,7 +126,7 @@
 		return FALSE
 
 	var/busy_hand = user.hand
-	user.become_busy(target, _hand = busy_hand)
+	user.become_busy(_hand = busy_hand)
 
 	target.in_use_action = TRUE
 
@@ -175,15 +175,15 @@
 		qdel(progbar)
 	if(user)
 		user.become_not_busy(_hand = busy_hand)
-
-	target.in_use_action = FALSE
+	if(target)
+		target.in_use_action = FALSE
 
 /proc/do_after(mob/user, delay, needhand = TRUE, atom/target = null, can_move = FALSE, progress = TRUE, datum/callback/extra_checks = null)
 	if(!user || target && QDELING(target))
 		return FALSE
 
 	var/busy_hand = user.hand
-	user.become_busy(target, _hand = busy_hand)
+	user.become_busy(_hand = busy_hand)
 
 	var/target_null = TRUE
 	var/atom/Tloc = null

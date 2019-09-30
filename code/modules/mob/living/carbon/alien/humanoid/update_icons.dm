@@ -47,10 +47,10 @@
 			var/old_icon = icon
 			icon = alt_icon
 			alt_icon = old_icon
+
 		pixel_x = get_pixel_x_offset(lying)
 		pixel_y = get_pixel_y_offset(lying)
 
-		default_transform = transform
 		default_pixel_x = pixel_x
 		default_pixel_y = pixel_y
 

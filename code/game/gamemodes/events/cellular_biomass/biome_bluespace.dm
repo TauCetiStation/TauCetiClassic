@@ -73,7 +73,7 @@
 	desc = "It's impossible to deEF*E((F((F(CVP"
 	icon = 'code/game/gamemodes/events/cellular_biomass/bluespace_cellular.dmi'
 	speak_emote = list("buzzing")
-	attacktext = "discarg"
+	attacktext = "discargh"
 	attack_sound = list('sound/weapons/blaster.ogg')
 	faction = "bluespace"
 	health = 32
