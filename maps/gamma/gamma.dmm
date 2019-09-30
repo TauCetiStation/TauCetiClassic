@@ -23638,7 +23638,7 @@
 	},
 /area/quartermaster/office)
 "gJM" = (
-/obj/structure/pbag,
+/mob/living/pbag,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -32169,7 +32169,7 @@
 	},
 /area/security/prison)
 "jFE" = (
-/obj/structure/pbag,
+/mob/living/pbag,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -76411,7 +76411,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/bridge)
 "xWI" = (
-/obj/structure/pbag,
+/mob/living/pbag,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "white"

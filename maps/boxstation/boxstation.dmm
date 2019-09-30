@@ -8979,7 +8979,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/pbag,
+/mob/living/pbag,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -9695,7 +9695,7 @@
 /turf/simulated/wall,
 /area/hallway/secondary/entry)
 "apU" = (
-/obj/structure/pbag,
+/mob/living/pbag,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -17515,7 +17515,7 @@
 	},
 /area/crew_quarters/gym)
 "aEI" = (
-/obj/structure/pbag,
+/mob/living/pbag,
 /obj/machinery/light_switch{
 	pixel_y = 25
 	},
