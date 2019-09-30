@@ -29,7 +29,7 @@ matrix:
     - name: "Unit Tests - Box Station"
       env: 
         - TEST=UNIT
-        - MAP_NAME=Box Station
+        - MAP_NAME="Box Station"
         - MAP_META=boxstation
       install:
         - ./scripts/install-byond.sh
@@ -42,7 +42,7 @@ matrix:
     - name: "Unit Tests - Gamma Station"
       env: 
         - TEST=UNIT
-        - MAP_NAME=Gamma Station
+        - MAP_NAME="Gamma Station"
         - MAP_META=gamma
       install:
         - ./scripts/install-byond.sh

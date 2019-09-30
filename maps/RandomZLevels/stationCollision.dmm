@@ -2735,7 +2735,7 @@
 "gX" = (
 /obj/effect/decal/remains/human,
 /turf/simulated/floor{
-	dir = 1;
+	dir = 8;
 	icon_state = "warningcorner"
 	},
 /area/awaymission/arrivalblock)
@@ -4092,7 +4092,7 @@
 	pixel_y = -2
 	},
 /turf/simulated/floor{
-	dir = 8;
+	dir = 4;
 	icon_state = "warningcorner"
 	},
 /area/awaymission/gateroom)
@@ -4123,7 +4123,7 @@
 /obj/structure/table,
 /obj/item/device/camera,
 /turf/simulated/floor{
-	dir = 4;
+	dir = 1;
 	icon_state = "warningcorner"
 	},
 /area/awaymission/gateroom)

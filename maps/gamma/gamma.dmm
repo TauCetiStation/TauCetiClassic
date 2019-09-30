@@ -23843,7 +23843,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating{
-	dir = 8;
+	dir = 4;
 	icon_state = "warnplatecorner"
 	},
 /area/maintenance/cargo)
@@ -69689,7 +69689,7 @@
 	dir = 6
 	},
 /turf/simulated/floor{
-	dir = 4;
+	dir = 1;
 	icon_state = "warnwhitecorner"
 	},
 /area/rnd/lab)
