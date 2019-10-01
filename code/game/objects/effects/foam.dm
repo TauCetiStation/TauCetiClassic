@@ -15,6 +15,8 @@
 	var/disolving = FALSE
 	var/image/fore_image
 
+	var/shaking = FALSE
+
 	canSmoothWith = list(/obj/effect/effect/aqueous_foam)
 	smooth = SMOOTH_MORE
 
@@ -57,6 +59,41 @@
 	flick("afff_foam-disolve", src)
 	QDEL_IN(src, 5)
 
+/obj/effect/effect/aqueous_foam/proc/shake(max_shift = 5)
+	if(QDELETED(src))
+		return
+
+	shaking = TRUE
+
+	var/prev_pix_x = pixel_x
+	var/prev_pix_y = pixel_y
+	var/prev_icon_state = icon_state
+	var/prev_smooth = smooth
+	var/prev_appearance_flags = appearance_flags
+	smooth = SMOOTH_FALSE
+	appearance_flags |= PIXEL_SCALE|KEEP_TOGETHER
+
+	var/pix_shift_x = rand(0, max_shift)
+	var/pix_shift_y = rand(0, max_shift)
+
+	var/matrix/M = matrix()
+	M.Scale(1.2)
+
+	icon_state = "box"
+	animate(src, pixel_x = pixel_x + pix_shift_x, pixel_y = pixel_y + pix_shift_y, transform = M, time = 2)
+	sleep(2)
+	animate(src, pixel_x = prev_pix_x, pixel_y = prev_pix_y, transform = matrix(), time = 2)
+	sleep(2)
+
+	icon_state = prev_icon_state
+	smooth = prev_smooth
+	appearance_flags = prev_appearance_flags
+
+	if(smooth)
+		queue_smooth(src)
+
+	shaking = FALSE
+
 /obj/effect/effect/aqueous_foam/Crossed(atom/movable/AM)
 	if(istype(AM, /obj/effect/decal/chempuff))
 		return
@@ -69,6 +106,7 @@
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(L.lying || L.crawling)
+			INVOKE_ASYNC(src, .proc/shake)
 			return
 
 		if(L.get_species() == SLIME) // Slimes are vulnerable to us and shouldn't be able to destroy us.
