@@ -1,6 +1,7 @@
 /obj/effect/effect/aqueous_foam
 	name = "aqueous film forming foam"
-	icon_state = "afff_foam"
+	icon = 'icons/obj/smooth_objects/afff_foam.dmi'
+	icon_state = "box"
 
 	opacity = FALSE
 	anchored = TRUE
@@ -14,8 +15,16 @@
 	var/disolving = FALSE
 	var/image/fore_image
 
+	canSmoothWith = list(/obj/effect/effect/aqueous_foam)
+	smooth = SMOOTH_MORE
+
 /obj/effect/effect/aqueous_foam/atom_init()
 	. = ..()
+	if(smooth)
+		queue_smooth(src)
+		queue_smooth_neighbors(src)
+	pixel_x = -6
+	pixel_y = -6 //so the sprites line up right in the map editor
 	playsound(src, 'sound/effects/bubbles2.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 	return INITIALIZE_HINT_LATELOAD
 
@@ -23,50 +32,20 @@
 	fore_image += image(icon, icon_state="afff_foam_fore", layer=MOB_LAYER + 0.9)
 	overlays.Add(fore_image)
 
-	var/turf/src_turf = get_turf(src)
-	for(var/dir in cardinal)
-		var/turf/T = get_step(src_turf, dir)
-		var/obj/effect/effect/aqueous_foam/AFFF = locate(/obj/effect/effect/aqueous_foam) in T
-		if(AFFF && !AFFF.disolving)
-			AFFF.update_icon()
-		else
-			var/image/I = image(icon, icon_state="afff_foam_border", dir=dir, layer=layer)
-			switch(dir)
-				if(NORTH)
-					I.pixel_y = 32
-				if(SOUTH)
-					I.pixel_y = -32
-				if(WEST)
-					I.pixel_x = -32
-				if(EAST)
-					I.pixel_x = 32
-			overlays.Add(I)
-
 	if(loc.density || !has_gravity(loc) || istype(get_turf(src), /turf/space))
 		addtimer(CALLBACK(src, .proc/disolve), 5 SECONDS)
 
 	INVOKE_ASYNC(src, .proc/performAction)
 
+/obj/effect/effect/aqueous_foam/Destroy()
+	if(smooth)
+		queue_smooth_neighbors(src)
+	QDEL_NULL(fore_image)
+	return ..()
+
 /obj/effect/effect/aqueous_foam/update_icon()
 	overlays.Cut()
 	overlays.Add(fore_image)
-
-	var/turf/src_turf = get_turf(src)
-	for(var/dir in cardinal)
-		var/turf/T = get_step(src_turf, dir)
-		var/obj/effect/effect/aqueous_foam/AFFF = locate(/obj/effect/effect/aqueous_foam) in T
-		if(!AFFF || AFFF.disolving)
-			var/image/I = image(icon, icon_state="afff_foam_border", dir=dir, layer=layer)
-			switch(dir)
-				if(NORTH)
-					I.pixel_y = 32
-				if(SOUTH)
-					I.pixel_y = -32
-				if(WEST)
-					I.pixel_x = -32
-				if(EAST)
-					I.pixel_x = 32
-			overlays.Add(I)
 
 /obj/effect/effect/aqueous_foam/proc/disolve()
 	if(disolving)
@@ -74,18 +53,9 @@
 	disolving = TRUE
 
 	overlays.Remove(fore_image)
-	flick("[icon_state]-disolve", src)
-	sleep(5)
-
-	var/turf/src_turf = get_turf(src)
-
-	for(var/dir in cardinal)
-		var/turf/T = get_step(src_turf, dir)
-		var/obj/effect/effect/aqueous_foam/AFFF = locate(/obj/effect/effect/aqueous_foam) in T
-		if(AFFF  && !AFFF.disolving)
-			AFFF.update_icon()
-
-	qdel(src)
+	layer -= 0.01
+	flick("afff_foam-disolve", src)
+	QDEL_IN(src, 5)
 
 /obj/effect/effect/aqueous_foam/Crossed(atom/movable/AM)
 	if(istype(AM, /obj/effect/decal/chempuff))
@@ -96,15 +66,14 @@
 		if(I.w_class <= ITEM_SIZE_TINY)
 			return
 
-	if(ismob(AM))
-		var/mob/M = AM
-		if(M.lying || M.crawling)
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(L.lying || L.crawling)
 			return
 
-		if(isslime(AM)) // Slimes are vulnerable to us and shouldn't be able to destroy us.
-			var/mob/living/carbon/slime/S = AM
-			S.Weaken(5)
-			S.adjustToxLoss(rand(15, 20))
+		if(L.get_species() == SLIME) // Slimes are vulnerable to us and shouldn't be able to destroy us.
+			L.Weaken(5)
+			L.adjustToxLoss(rand(15, 20))
 			return
 
 	INVOKE_ASYNC(src, .proc/disolve) // You should never call procs with delay from BYOND movement procs.
@@ -136,7 +105,7 @@
 	for(var/atom/A in perform_on)
 		if(isliving(A))
 			var/mob/living/L = A
-			if(isslime(A)) // If only ExtinguishMob wasn't so vague, this could be there.
+			if(L.get_species() == SLIME) // If only ExtinguishMob wasn't so vague, this could be there.
 				L.adjustToxLoss(rand(15, 20))
 			L.ExtinguishMob()
 		else if(istype(A, /obj/structure/bonfire)) // Currently very snowflakey please fix later ~Luduk.

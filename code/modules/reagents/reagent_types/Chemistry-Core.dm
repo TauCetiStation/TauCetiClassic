@@ -408,7 +408,7 @@
 
 /datum/reagent/sugar/on_general_digest(mob/living/M)
 	..()
-	M.nutrition += REM
+	M.nutrition += 4 * REM
 
 /datum/reagent/radium
 	name = "Radium"

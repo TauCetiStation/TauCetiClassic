@@ -126,6 +126,45 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	access = access_brig
 	group = "Security"
 
+/datum/supply_pack/pistol
+	name = "9mm pistol crate"
+	contains = list(/obj/item/weapon/gun/projectile/wjpp,
+					/obj/item/weapon/gun/projectile/wjpp,
+					/obj/item/weapon/gun/projectile/wjpp)
+	cost = 4500
+	crate_type = /obj/structure/closet/crate/secure/weapon
+	crate_name = "9mm pistol crate"
+	access = access_brig
+	group = "Security"
+
+/datum/supply_pack/pistol_magazine
+	name = "9mm magazine"
+	contains = list(/obj/item/ammo_box/magazine/m9mm_2,
+					/obj/item/ammo_box/magazine/m9mm_2,
+					/obj/item/ammo_box/magazine/m9mm_2,
+					/obj/item/ammo_box/magazine/m9mm_2,
+					/obj/item/ammo_box/magazine/m9mm_2,
+					/obj/item/ammo_box/magazine/m9mm_2)
+	cost = 2000
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "9mm magazine"
+	access = access_armory
+	group = "Security"
+
+/datum/supply_pack/pistol_magazine_rubber
+	name = "9mm magazine (rubber)"
+	contains = list(/obj/item/ammo_box/magazine/m9mm_2/rubber,
+					/obj/item/ammo_box/magazine/m9mm_2/rubber,
+					/obj/item/ammo_box/magazine/m9mm_2/rubber,
+					/obj/item/ammo_box/magazine/m9mm_2/rubber,
+					/obj/item/ammo_box/magazine/m9mm_2/rubber,
+					/obj/item/ammo_box/magazine/m9mm_2/rubber)
+	cost = 1000
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "9mm magazine (rubber)"
+	access = access_brig
+	group = "Security"
+
 /datum/supply_pack/eweapons
 	name = "Experimental weapons crate"
 	contains = list(/obj/item/weapon/flamethrower/full,

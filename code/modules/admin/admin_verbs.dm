@@ -61,7 +61,6 @@ var/list/admin_verbs_admin = list(
 	/datum/admins/proc/show_player_info,
 	/client/proc/free_slot,			//frees slot for chosen job,
 	/client/proc/cmd_admin_change_custom_event,
-	/client/proc/cmd_admin_rejuvenate,
 	/client/proc/toggleattacklogs,
 	/client/proc/toggledebuglogs,
 	/client/proc/toggleghostwriters,
@@ -192,6 +191,7 @@ var/list/admin_verbs_permissions = list(
 	/client/proc/regisration_panic_bunker
 	)
 var/list/admin_verbs_rejuv = list(
+	/client/proc/cmd_admin_rejuvenate,
 	/client/proc/respawn_character
 	)
 var/list/admin_verbs_whitelist = list(

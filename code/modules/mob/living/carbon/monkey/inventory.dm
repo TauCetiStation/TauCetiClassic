@@ -10,6 +10,10 @@
 	W.loc = src
 
 	switch(slot)
+		if(SLOT_HEAD)
+			head = W
+			W.equipped(src, slot)
+			update_inv_head(redraw_mob)
 		if(SLOT_BACK)
 			src.back = W
 			W.equipped(src, slot)

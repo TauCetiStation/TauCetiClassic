@@ -145,10 +145,17 @@
 // =============================================
 
 /mob/living/carbon/human/adjustCloneLoss(amount)
-	..()
+	if(species.clone_mod == 0)
+		cloneloss = 0
+		return
+	else
+		amount = amount * species.clone_mod
+		..(amount)
 
 	if(species.flags[IS_SYNTHETIC])
 		return
+
+	time_of_last_damage = world.time
 
 	var/heal_prob = max(0, 80 - getCloneLoss())
 	var/mut_prob = min(80, getCloneLoss()+10)

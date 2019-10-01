@@ -92,7 +92,12 @@
 	var/my_master = 0
 	var/my_golems = list()
 
-	var/lastSoundEmote = 0 // Prevent sound emotes spam in some situations
+	// Prevent sound emotes spam in some situations
+	var/last_high_priority_sound_emote = 0 // high priority. these sounds can only be overlaid by sounds with the same priority
+	var/lastSoundEmote = 0 // medium priority. these sounds is not overlapped by lower priority sounds. TODO: make a variable of sound with a low priority and refactor emote system
+	var/last_pain_emote_sound = 0 // don't cry in pain too often
+	var/time_of_last_damage = 0 // don't cry from the pain that just came
+
 	var/name_override //For temporary visible name changes
 
 	var/full_prosthetic    // We are a robutt.

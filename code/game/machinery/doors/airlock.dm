@@ -904,7 +904,7 @@ var/list/airlock_overlays = list()
 		return attack_hand(user)
 	else if(istype(C, /obj/item/weapon/pai_cable))	// -- TLE
 		var/obj/item/weapon/pai_cable/cable = C
-		cable.plugin(src, user)
+		cable.afterattack(src, user)
 	else if(iscrowbar(C) || istype(C, /obj/item/weapon/twohanded/fireaxe) )
 		var/beingcrowbarred = null
 		if(iscrowbar(C) )

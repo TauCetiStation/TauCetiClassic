@@ -13,7 +13,7 @@
 	layer = MOB_LAYER+1 // Overhead
 	anchored = 1
 	density = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 300
 
 	var/safety_mode = 0 // Temporality stops the machine if it detects a mob

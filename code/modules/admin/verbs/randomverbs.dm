@@ -215,18 +215,38 @@
 		if(M.client.prefs.permamuted & mute_type)
 			M.client.prefs.permamuted &= ~mute_type
 			M.client.prefs.save_preferences()
+			to_chat(M, "<span class='notice'>You have been [mute_string] unmuted from [usr.key].</span>")
 	else
+		if(alert("Would you like to make it permament?","Permamute?","Yes","No, round only") == "Yes")
+			var/permmutreason = input("Permamute Reason") as text
+			if(permmutreason)
+				muteunmute = "permamuted"
+				M.client.prefs.permamuted |= mute_type
+				M.client.prefs.save_preferences()
+				M.client.prefs.muted |= mute_type
+				notes_add(M.key, "Permamute from [mute_string]: [permmutreason]", usr.client)
+				permmutreason = sanitize(permmutreason)
+				to_chat(M, "<span class='alert big bold'>You have been permamuted from [mute_string] by [usr.key].<br>Reason: [permmutreason]</span>")
+			else
+				to_chat(usr, "<span class='alert'>Could not apply permamute: Reason is empty</span>")
+				return
+
+		else if (alert("Add a notice for round mute?", "Mute Notice?", "Yes","No") == "Yes")
+			var/mutereason = input("Mute Reason") as text
+			if(mutereason)
+				notes_add(M.key, "Muted from [mute_string]: [mutereason]", usr.client)
+				mutereason = sanitize(mutereason)
+				to_chat(M, "<span class='alert big bold'>You have been muted from [mute_string] by [usr.key].<br>Reason: [mutereason]</span>")
+			else
+				return
+		else
+			to_chat(M, "<span class='alert big bold'>You have been muted from [mute_string] by [usr.key].</span>")
+
 		muteunmute = "muted"
 		M.client.prefs.muted |= mute_type
-		if(alert("Would you like to make it permament?","Permamute?","Yes","No, round only") == "Yes")
-			muteunmute = "permamuted"
-			M.client.prefs.permamuted |= mute_type
-			M.client.prefs.save_preferences()
-
 
 	log_admin("[key_name(usr)] has [muteunmute] [key_name(M)] from [mute_string]")
 	message_admins("[key_name_admin(usr)] has [muteunmute] [key_name_admin(M)] from [mute_string].")
-	to_chat(M, "You have been [muteunmute] from [mute_string].")
 	feedback_add_details("admin_verb","MUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

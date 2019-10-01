@@ -11,7 +11,7 @@
 	var/mob_met_factor = 1
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		mob_met_factor = C.get_metabolism_factor()
+		mob_met_factor = C.get_metabolism_factor() * 0.25
 	if(volume > last_volume)
 		var/to_add = rand(0, volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor
 		M.reagents.add_reagent("nutriment", ((volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor) - to_add)
@@ -31,7 +31,7 @@
 	id = "nutriment"
 	description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
 	reagent_state = SOLID
-	nutriment_factor = 2 // 1 nutriment reagent is 2.5 nutrition actually, which is confusing, but it works.
+	nutriment_factor = 8 // 1 nutriment reagent is 10 nutrition actually, which is confusing, but it works.
 	custom_metabolism = FOOD_METABOLISM * 2 // It's balanced so you gain the nutrition, but slightly faster.
 	color = "#664330" // rgb: 102, 67, 48
 	taste_message = "bland food"
@@ -376,7 +376,7 @@
 	id = "hot_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 10
+	nutriment_factor = 4
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "ramen"
 
@@ -390,7 +390,7 @@
 	id = "hell_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 10
+	nutriment_factor = 4
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "SPICY ramen"
 
@@ -403,7 +403,7 @@
 	id = "rice"
 	description = "Enjoy the great taste of nothing."
 	reagent_state = SOLID
-	nutriment_factor = 2
+	nutriment_factor = 8
 	color = "#ffffff" // rgb: 0, 0, 0
 	taste_message = "rice"
 	diet_flags = DIET_PLANT
@@ -413,7 +413,7 @@
 	id = "cherryjelly"
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	reagent_state = LIQUID
-	nutriment_factor = 2
+	nutriment_factor = 8
 	color = "#801e28" // rgb: 128, 30, 40
 	taste_message = "cherry jelly"
 	diet_flags = DIET_PLANT
@@ -423,6 +423,7 @@
 	id = "egg"
 	description = "A runny and viscous mixture of clear and yellow fluids."
 	reagent_state = LIQUID
+	nutriment_factor = 4
 	color = "#f0c814"
 	taste_message = "eggs"
 	diet_flags = DIET_MEAT
@@ -432,6 +433,7 @@
 	id = "cheese"
 	description = "Some cheese. Pour it out to make it solid."
 	reagent_state = SOLID
+	nutriment_factor = 4
 	color = "#ffff00"
 	taste_message = "cheese"
 	diet_flags = DIET_DAIRY
@@ -441,6 +443,7 @@
 	id = "beans"
 	description = "A dish made of mashed beans cooked with lard."
 	reagent_state = LIQUID
+	nutriment_factor = 4
 	color = "#684435"
 	taste_message = "burritos"
 	diet_flags = DIET_MEAT
@@ -450,6 +453,7 @@
 	id = "bread"
 	description = "Bread! Yep, bread."
 	reagent_state = SOLID
+	nutriment_factor = 4
 	color = "#9c5013"
 	taste_message = "bread"
 	diet_flags = DIET_PLANT
