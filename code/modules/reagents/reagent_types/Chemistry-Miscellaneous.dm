@@ -944,10 +944,10 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 
 /datum/reagent/aqueous_foam/reaction_turf(turf/T, method=TOUCH, volume)
 	var/obj/effect/effect/aqueous_foam/F = locate(/obj/effect/effect/aqueous_foam) in T
-	if(!F)
-		new /obj/effect/effect/aqueous_foam(T)
-	else
+	if(F)
 		INVOKE_ASYNC(F, /obj/effect/effect/aqueous_foam.proc/performAction) // So we don't instantinate a new object, but still make the room slightly colder.
+	else if(!T.density)
+		new /obj/effect/effect/aqueous_foam(T)
 
 /datum/reagent/aqueous_foam/on_slime_digest(mob/living/M)
 	..()
