@@ -3,7 +3,7 @@
 	desc = "Science is cool"
 	icon = 'icons/obj/biocan.dmi'
 	icon_state = "breadgrenade"
-	origin_tech = "biotech=5;materials=4;magnets=4"
+	origin_tech = "biotech=4;materials=4;magnets=4"
 	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/device/breadgrenade/throw_impact(atom/hit_atom)
