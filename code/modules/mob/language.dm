@@ -193,7 +193,7 @@
 
 /datum/language/syndi
 	name = "Sy-Code"
-	desc = "Artificial language, used by syndicate agents and operatives. Consists of NATO alphabet and booze. The definition of each syllable is predetermined by current operation."
+	desc = "Constructed language, used by syndicate agents and operatives. Consists of NATO alphabet and booze. The definition of each syllable is predetermined by current operation."
 	speech_verb = "signals"
 	colour = "syndcode"
 	key = list("0")

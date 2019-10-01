@@ -398,13 +398,14 @@
 
 /obj/item/weapon/syndcodebook
 	name = "black-red book"
-	desc = "Omnious book with some gabblery written on yellow pages."
+	desc = "Ominous book with some gabblery written on yellow pages."
 	icon = 'icons/obj/library.dmi'
 	icon_state ="syndicate"
 	item_state ="book"
 
 /obj/item/weapon/syndcodebook/attack_self(mob/user)
-	if(user.is_busy()) return
+	if(user.is_busy())
+		return
 	user.visible_message(
 		"<span class='notice'>[user] starts reading \the [src] intently...</span>",
 		"<span class='notice'>You start reading \the [src]...</span>"
