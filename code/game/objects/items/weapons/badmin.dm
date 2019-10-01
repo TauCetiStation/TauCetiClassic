@@ -55,7 +55,7 @@
 /* MAGIC HAT */
 
 /obj/item/clothing/head/collectable/tophat/badmin_magic_hat
-	name = "wabbajack hat"
+	name = "Hat"
 	desc = "A magic hat that can break the world."
 
 /obj/item/clothing/head/collectable/tophat/badmin_magic_hat/atom_init()
@@ -78,11 +78,10 @@
 			to_chat(user, "<span class='italic'>Nothing. Try again.</span>")
 			return
 
-		//message_admins("<span class='notice'>Magic hat: [A.name]:[A.type]</span>")
 		
 		user.visible_message("<span class='notice'>\the [user] takes <span class='bold'>\a [A]</span> from \a [src]!</span>")
 
-		if (istype(A, /obj/item/))
+		if (istype(A, /obj/item))
 			user.put_in_hands(A)
 		else
 			A.forceMove(get_turf(user))
@@ -96,20 +95,20 @@
 
 		entity = pick(world.contents)
 
+		if(QDELETED(entity)) // not a really problem I think, can we comment out this? 
+			continue
+
 		if(!istype(entity)) // turfs
 			continue
 		if(entity.flags & (NODROP | ABSTRACT) || !entity.simulated) // not real things
 			continue
-		if(QDELING(entity)) // not a really problem I think, can we comment out this? 
+		if(istype(entity, /obj/effect) || istype(entity, /obj/screen)) // service things (eh)
 			continue
-		if(istype(entity, /obj/effect/) || istype(entity, /obj/screen/)) // service things (eh)
+		if(istype(entity, /mob/living/carbon/human/dummy)) // also service things
 			continue
-		if(istype(entity, /mob/living/carbon/human/dummy/)) // also service things
-			continue
-		if(istype(entity, /obj/machinery/atmospherics/) && entity.anchored) // too many pipes, not interesting
+		if(istype(entity, /obj/machinery/atmospherics) && entity.anchored) // too many pipes, not interesting
 			continue
 		if(istype(entity, /obj/structure/cable) && entity.anchored) // same
 			continue
 		
-		. = entity
-		break
+		return entity
