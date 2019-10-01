@@ -89,6 +89,7 @@
 		underlays.Cut()
 	return
 
+
 /obj/item/device/biocan/throw_impact(atom/hit_atom)
 	visible_message("<span class='red'>\The [src.name] has been shattered. </span>")
 	if(headobj)
@@ -104,3 +105,11 @@
 	new /obj/item/weapon/shard(loc)
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	qdel(src)
+
+/obj/item/device/biocan/Crossed(AM as mob|obj)
+	if(headobj || brainmob)
+		return
+	if (isbread(AM))
+		new /obj/item/device/breadgrenade(get_turf(AM))
+		qdel(AM)
+		qdel(src)
